@@ -31,10 +31,9 @@
 | **core** | `src/command/effect.ts` | Hệ thống Effect & Audit Log | **L3 (Đã kiểm thử)** | Bổ sung `CLOCK_ADVANCE` và trường `allocated`/`deficit` vào `RESOURCE_DELTA`. |
 | **simulation**| `src/dispatcher.ts` | Command Dispatcher & Authority Gate | **L3 (Đã kiểm thử)** | Pipeline 4 bước (state -> command -> authority -> handler); phân biệt rõ lỗi `FORBIDDEN` (Legacy) và `COMMAND_NOT_YET_IMPLEMENTED` (Active); atomicity rollback. |
 | **simulation**| `src/economy.ts` | Tính toán sản xuất & Tiêu thụ | **L3 (Đã kiểm thử)** | Đã sửa lỗi ngày báo cáo (truyền ngày hiện tại); thực thi cơ chế Nhu cầu -> Cấp phát -> Thiếu hụt (Sàn 0). |
-| **content** | `src/buildings.json` | Danh mục bản vẽ công trình | **L2 (Đã triển khai)** | Có 3 bản vẽ mẫu. Nối vào vòng xây dựng và sản xuất ở R2. |
+| **content** | `src/buildings.json` | Danh mục bản vẽ công trình | **L2 (Đã triển khai)** | Có 3 bản vẽ mẫu. Sẽ kết nối vào Foundation II / future production integration. |
 | **persistence**| `src/schema.ts` | Lược đồ lưu trữ Save Game | **L1 (Đã định nghĩa)** | Đã cấu trúc `WorldSaveData` đồng bộ 100% với `GameState`. **Chưa có logic đọc/ghi save.** |
 | **ui** | `src/App.svelte` | Giao diện Dashboard Svelte 5 | **L4 (Đã tích hợp)** | Đã xóa bỏ toàn bộ state mutation trực tiếp. UI dispatch command tới simulation và render state mới; đã pass Playwright smoke test. |
-| **core** | `src/social/*` | Năng lực Xã hội & Quy đổi Macro (POP-01A) | **L1 (Đã định nghĩa - Sẵn sàng thi công)** | Đã đặc tả trọn vẹn trong WP-HAVEN-02 v1.5 (G1 Approved tại `913d981`). Khóa chuẩn Fixed-Point, 6-way resolver, Fixtures A/B nghiệm thu. Chờ thi công G2. |
 
 ---
 
@@ -110,17 +109,21 @@
 * [ ] **POP-01C: Labor Allocation**: **DESIGN ONLY**
   - Phân bổ năng lực lao động (Effective $\rightarrow$ Allocated Labor), không phân bổ từng đầu người.
 * [ ] **POP-02: Population Dynamics**: **DESIGN ONLY**
-  - Sinh tử, di cư, tháp tuổi, phân tầng dịch chuyển giai cấp vĩ mô.
+  - Di cư, xuất cư, dịch chuyển giai cấp, ngưỡng sức chứa bền vững, dòng người nộp đơn nhập cư (Immigration, Emigration, Class Mobility, Sustainable Capacity, Outside Applicants, Headcount flows - chưa bao gồm Sinh/Tử, Tháp tuổi hay mô phỏng thế hệ).
 * [ ] **POP-03: Law & Social Conflict**: **DESIGN ONLY**
   - Chính sách giai cấp, xung đột quyền lợi, biến động trật tự xã hội.
 
 ---
 
 ### FOUNDATION II — RESOURCE CORE & SURVIVAL LOOP
-* [ ] **RES-01: Resource Inventory & Flow Integration**:
-  - Kết nối Capacity & Demand từ Population Core vào vòng sản xuất - tiêu thụ vật lý.
-  - Phân công công nhân công trình $\rightarrow$ Sản lượng bù đắp tiêu thụ.
-  - Xây dựng công trình cơ bản (`BUILD_FACILITY`).
+* [ ] **RES-01: Resource Model, Stock & Invariants**:
+  - Mô hình kho và biến thiên vật lý, bảo toàn sàn 0, tách biệt Physical Resources vs Social Capacities.
+* [ ] **RES-02: Demand $\rightarrow$ Allocation $\rightarrow$ Deficit / Surplus**:
+  - Động cơ cấp phát lương thực và nhu yếu phẩm từ đầu vào của Population Core.
+* [ ] **RES-03: Production, Conversion & Inflow-Outflow**:
+  - Chuyển hóa nguyên liệu thô, sản lượng, hao hụt tự nhiên.
+* [ ] **RES-04: Building & Physical Activity Integration**:
+  - Xây dựng công trình (`BUILD_FACILITY`), bố trí địa điểm, tích hợp hạ tầng vật lý sau khi Resource Core đã đứng vững độc lập.
 
 ---
 

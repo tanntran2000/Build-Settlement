@@ -36,9 +36,9 @@ flowchart TD
 
 ### Gói R1: Lõi Thực Thi & Luật Bất Biến (ĐÃ HOÀN THÀNH)
 * [x] Đồng bộ một Clock duy nhất trong `GameState` (loại bỏ biến `day` cục bộ trong UI).
-* [x] Xây dựng Command Dispatcher trung tâm (`executeCommand(state, command) -> { nextState, effects, auditLog }`).
+* [x] Xây dựng Command Dispatcher trung tâm (`executeCommand(state, command) -> { success, nextState, effects, auditEntries, data? }`).
 * [x] Hoàn thiện Invariant Validator:
-  * `createNamedCharacter`: Deep clone object mặc định, chặn tuổi âm, clamp chỉ số [0, 100].
+  * `createNamedCharacter`: Deep clone object mặc định, chặn tuổi âm, reject giá trị ngoài [0, 100].
   * `PopulationCohort`: Bổ sung trường `socialClass` bắt buộc theo đúng thiết kế 3 trục thân phận.
   * Validation Invariants hai chiều (0 hoặc 1 Active Settlement, Key-ID matching, tài nguyên không âm).
 * [x] Viết 51 Unit Tests tự động và 1 Playwright smoke test chứng minh: Lệnh sai bị từ chối; State không bị mutate dở dang; Invariant được bảo toàn.
@@ -62,20 +62,19 @@ flowchart TD
   * [ ] **POP-01C: Labor Allocation**: **DESIGN ONLY**
     * Phân bổ năng lực lao động (Effective $\rightarrow$ Allocated Labor), không phân bổ từng đầu người.
   * [ ] **POP-02: Population Dynamics**: **DESIGN ONLY**
-    * Sinh tử, di cư, tháp tuổi, biến động nhân khẩu học vĩ mô.
+    * Di cư, xuất cư, dịch chuyển giai cấp, ngưỡng sức chứa bền vững, dòng người nộp đơn nhập cư (Immigration, Emigration, Class Mobility, Sustainable Capacity, Outside Applicants, Headcount flows - chưa bao gồm Sinh/Tử, Tháp tuổi hay mô phỏng thế hệ).
   * [ ] **POP-03: Law & Social Conflict**: **DESIGN ONLY**
     * Chính sách giai cấp, xung đột quyền lợi, trật tự xã hội.
 
 ---
 
 ### Foundation II: Tài Nguyên & Vòng Sinh Tồn (Resource Core & Survival Loop)
-* **Mục tiêu**: Kết nối Capacity & Demand từ Population Core vào vòng lặp Xây dựng $\rightarrow$ Sản xuất $\rightarrow$ Tiêu thụ vật lý.
+* **Mục tiêu**: Xây dựng mô hình tài nguyên vật lý độc lập, kết nối Capacity & Demand từ Population Core vào vòng lặp Cấp phát $\rightarrow$ Tiêu thụ $\rightarrow$ Sản xuất.
 * **Các đầu việc cụ thể**:
-  * [ ] Tích hợp đầu vào Labor Capacity & Survival Food Need từ Population Core vào `simulateDailyEconomy`.
-  * [ ] Hiện thực hóa lệnh `BUILD_FACILITY` với 3 bản vẽ hiện có:
-    * Kiểm tra điều kiện & trừ chi phí kho $\rightarrow$ Tạo công trình.
-    * Gán công nhân lao động (Labor Units) $\rightarrow$ Tính toán sản lượng hàng ngày (`production`) bù đắp tiêu thụ.
-  * [ ] Viết Unit Test và Browser smoke test kiểm chứng kho không âm và sản xuất hoạt động.
+  * [ ] **RES-01: Resource Model, Stock & Invariants**: Mô hình kho và biến thiên vật lý, bảo toàn sàn 0, tách biệt Physical Resources vs Social Capacities.
+  * [ ] **RES-02: Demand $\rightarrow$ Allocation $\rightarrow$ Deficit / Surplus**: Động cơ cấp phát lương thực và nhu yếu phẩm từ đầu vào của Population Core.
+  * [ ] **RES-03: Production, Conversion & Inflow-Outflow**: Chuyển hóa nguyên liệu thô, sản lượng, hao hụt tự nhiên.
+  * [ ] **RES-04: Building & Physical Activity Integration**: Xây dựng công trình (`BUILD_FACILITY`), bố trí địa điểm, tích hợp hạ tầng vật lý sau khi Resource Core đã đứng vững độc lập.
 
 ---
 
