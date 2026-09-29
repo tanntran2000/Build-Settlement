@@ -41,9 +41,9 @@
 
 * **Bộ Test Tự Động (`npm test` - Vitest)**:
   - `packages/core/src/__tests__/architecture.test.ts` (3 tests): Xác minh `core` không import `simulation`, không chứa DOM; `simulation` không chứa UI/DOM; phát hiện thành công fixture vi phạm mẫu.
-  - `packages/core/src/domain/__tests__/domain.test.ts` (17 tests): Kiểm định toàn diện factory, validation biên, cô lập object, invariant 0/1 active hai chiều, key-ID matching, và bước nhảy đồng hồ qua năm.
-  - `packages/simulation/src/__tests__/dispatcher.test.ts` (9 tests): Kiểm định phân biệt mã lỗi `INVALID_STATE`, `INVALID_COMMAND`, `FORBIDDEN` (Legacy) vs `COMMAND_NOT_YET_IMPLEMENTED` (Active); kiểm định lệnh `ADVANCE_DAY` tiến ngày, báo cáo ngày $T$, kinh tế sàn 0, thiếu hụt không chặn tiến ngày, world 0 active, bảo vệ legacy nguyên vẹn, và tính nguyên tử (immutability).
-  *(Tổng cộng: 29 tests passed, 0 failed).*
+  - `packages/core/src/domain/__tests__/domain.test.ts` (26 tests): Kiểm định toàn diện factory, validation biên, cô lập object graph (deep clone `memories.tags`, named characters, cohorts), invariant 0/1 active hai chiều, key-ID matching, tính nhất quán toán học của clock, và kiểm tra cấu trúc/khóa bắt buộc toàn diện.
+  - `packages/simulation/src/__tests__/dispatcher.test.ts` (22 tests): Thẩm định cú pháp command trước quyền hạn (`INVALID_COMMAND`), thẩm định state trước thực thi (`INVALID_STATE`), phân biệt quyền hạn `FORBIDDEN` (Legacy) vs `COMMAND_NOT_YET_IMPLEMENTED` (Active); kiểm định lệnh `ADVANCE_DAY` tiến ngày, báo cáo ngày $T$, kinh tế sàn 0, thiếu hụt không chặn tiến ngày, world 0 active, bảo vệ legacy nguyên vẹn, chuẩn hóa exception thành `EXECUTION_ERROR`, và tính nguyên tử rollback khi hậu kiểm draft thất bại (`INVARIANT_VIOLATION`).
+  *(Tổng cộng: 51 tests passed, 0 failed).*
 
 * **Bộ Test Giao Diện Trình Duyệt (`npm run test:smoke` - Playwright)**:
   - `tests/e2e/smoke.spec.ts` (1 test): Khởi động preview server port 4173; mở prototype; bấm nút "Tiến Sang Ngày Mới"; xác nhận Ngày 1 -> 2; xác nhận kho giảm; xác nhận audit log hiển thị `[Ngày 1]`; bấm liên tục đến cạn kiệt; xác nhận kho lương thực chạm sàn 0 nhưng tuyệt đối không âm; xác nhận ngày vẫn tiến khi thiếu hụt và log ghi nhận rõ lượng thiếu hụt.
@@ -55,7 +55,8 @@
   *(0 errors, 0 warnings).*
 
 * **Quy Trình CI (GitHub Actions)**:
-  - `.github/workflows/ci.yml` chuẩn hóa job `quality-gate`: checkout -> setup Node 20 -> `npm ci` -> `npm run typecheck` -> `npm test` -> `npm run build` -> `playwright install chromium` -> `npm run test:smoke`. Concurrency hủy run cũ khi có commit mới.
+  - `.github/workflows/ci.yml` chuẩn hóa job `quality-gate`: checkout -> setup Node 20 -> `npm ci` -> `npm run typecheck` -> `npm test` -> `npm run build` -> `playwright install chromium` -> `npm run test:smoke`.
+  - **CI Run Post-Merge trên `main`**: Run `36527428842` thành công (49s) tại commit `375b60e`.
 
 ---
 
@@ -69,6 +70,11 @@
    - *Đã giải quyết*: Đã xây dựng `executeCommand` trong `simulation`; UI xóa bỏ 100% các phép tính cộng/trừ tài nguyên và biến `day` cục bộ; UI dispatch command và render kết quả.
 4. **Invariant 0 hoặc 1 Lãnh Địa Trực Trị (LAW-05)**:
    - *Đã giải quyết*: Cưỡng chế hai chiều: 0 active $\iff$ pointer null; 1 active $\iff$ pointer trỏ đúng ID; cấm lệnh quản trị trực tiếp tới Legacy (`FORBIDDEN`).
+5. **Bộ 4 Finding Review R1-F01 → R1-F04**:
+   - *R1-F01 (Miền số & Cấu trúc)*: Khắc phục triệt để lỗ hổng cohort âm tạo lương thực; kiểm tra tính nhất quán toán học của clock; kiểm tra container trước khi đọc; bắt buộc đủ 9 tài nguyên kho, đủ 6 needs, 8 emotions, 5 skills, 8 trục quan hệ, chặn object rỗng `{}`.
+   - *R1-F02 (Object Isolation)*: Deep clone toàn bộ mảng `memories.tags` và các nhân vật/cohort lồng nhau trong factory.
+   - *R1-F03 (Command Syntax Gate)*: `validateCommandSyntax` kiểm tra loại lệnh và trường bắt buộc trước khi thẩm định quyền hạn.
+   - *R1-F04 (Transactional Error & Atomicity)*: Bọc try/catch chuẩn hóa runtime exception thành `EXECUTION_ERROR`, hậu kiểm draft vi phạm trả `INVARIANT_VIOLATION`, đảm bảo tính nguyên tử all-or-nothing.
 
 ---
 
@@ -79,10 +85,10 @@
   - Thay thế CI bằng Node/npm workflow chuẩn.
   - Cập nhật Tracker trung thực với 4 cấp độ L1-L4.
 * [x] **R1: Lõi Thực Thi & Luật Bất Biến (Execution Core & Invariants)**:
-  - *(Đã hoàn thành và kiểm thử toàn diện trên nhánh `feat/r1-execution-core`; Save/Load chưa triển khai; chờ Human merge và hậu kiểm G6)*.
+  - *(Đã hoàn thành trọn vẹn G0 -> G6; merge commit `375b60e` trên `main`; post-merge CI `36527428842` đạt 100%)*.
   - Đồng hồ thời gian duy nhất trong `GameState`.
   - Khởi tạo Command Dispatcher trung tâm (`executeCommand`).
-  - Validation Invariants (chặn số âm, chặn dữ liệu rác, bọc deep copy cho factory).
+  - Validation Invariants (chặn số âm, kiểm tra container, kiểm tra đủ khóa bắt buộc, cô lập object graph).
   - Tách biệt kiểm tra kiến trúc và browser smoke test.
 * [ ] **R2: Vòng Sinh Tồn - Xây Dựng (Survival & Building Loop)**:
   - Hiện thực hóa lệnh Xây dựng (`BUILD_FACILITY`) cho 3 bản vẽ hiện có.
