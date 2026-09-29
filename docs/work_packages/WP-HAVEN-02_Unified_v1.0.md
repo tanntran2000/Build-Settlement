@@ -1,11 +1,14 @@
 # Kế Hoạch Công Việc Thống Nhất: Dân Cư, Năng Lực Xã Hội & Quản Trị Lãnh Địa
-# Mã Gói: WP-HAVEN-02 | Phiên Bản: 1.4 (ARCHITECTURE FREEZE & POP-01A CONTRACT)
+# Mã Gói: WP-HAVEN-02 | Phiên Bản: 1.5 (POPULATION COHORT CORE & POP-01A CONTRACT)
 
-> **Trạng thái**: `ARCHITECTURE FREEZE & POP-01A IMPLEMENTATION CONTRACT` — Khóa dứt điểm kiến trúc nền tảng và contract kỹ thuật cho POP-01A. Phân biệt rõ Hard Invariant vs Configurable Balance, tách Survival vs Lifestyle Food, xác lập trật tự thời gian $T \rightarrow T+1$.  
+> **Trạng thái**: `POPULATION COHORT CORE ARCHITECTURE FREEZE` — Thu hẹp phạm vi chính thức: Cắt toàn bộ Named NPC sang gói riêng `NPC-01 Future`. Đóng khung 100% vào cấp độ Population Cohort. Khóa contract thi công cho POP-01A.  
 > **Commit nền**: `8111bf1e0fa5d3a49e30404ea65a9fd6ff4ccc17` (nhánh `main`).  
 > **Nhánh thực hiện PR**: `docs/wp-haven-02` (Pull Request #2).  
 > **Triết lý trung tâm**:
-> > **Dân số thật tạo ra các năng lực xã hội. Nhu cầu và mức ủng hộ quyết định bao nhiêu năng lực đó thực sự sử dụng được. Player phân bổ năng lực, không phân bổ từng đầu người.**
+> > **Dân số thật tạo ra các năng lực xã hội. Nhu cầu và mức ủng hộ quyết định bao nhiêu năng lực đó thực sự sử dụng được. Player phân bổ năng lực, không phân bổ từng đầu người.**  
+>
+> **Scope Law (Luật Phạm Vi Bất Biến)**:
+> > **WP-HAVEN-02 mô phỏng dân cư ở cấp Population Cohort. Nó không mô phỏng năng lực, xuất thân, tâm lý hay quan hệ của Named NPC. Economic class/profile trong WP này chỉ dùng để tính các đại lượng vĩ mô của dân số. Named NPC sẽ được thiết kế trong một hệ thống riêng sau khi Population Core ổn định.**
 
 ---
 
@@ -104,11 +107,13 @@ $$\mathbf{100\ cư\ dân = 1\ Population\ Block}$$
 
 ---
 
-## V. Giữ Thiết Kế Ba Trục Thân Phận & Khóa Resolver Cho Servile Profile
+## V. Giữ Thiết Kế Ba Trục Thân Phận Ở Cấp Độ Population Cohort
 
-* Kiến trúc kiên định duy trì 3 trục độc lập:
+* Kiến trúc kiên định duy trì 3 trục độc lập ở cấp độ **Population Cohort**:
   $$\mathbf{Occupation} \quad \times \quad \mathbf{SocialClass} \quad \times \quad \mathbf{LegalStatus}$$
-* `enslaved` **không phải là một SocialClass mới**. Một người bị tước đoạt tự do vẫn là `LegalStatus = "enslaved"`.
+* **Nguyên tắc phạm vi Cohort**:
+  * Class hiện tại **chỉ có ý nghĩa ở cấp Population Cohort**. Ví dụ $10.000$ cư dân Lower Class tạo ra năng lực lao động vĩ mô $150\text{ units}$, đây là **thống kê của một khối dân cư**, tuyệt đối không suy diễn thành *"một cá nhân Lower mặc định giỏi lao động gấp 1.5 lần"*. Năng lực cá nhân cụ thể thuộc về hệ thống NPC sau này.
+  * `enslaved` cũng chỉ xét ở cấp Cohort (`LegalStatus = "enslaved"`) để engine nhận diện quan hệ kinh tế và chọn **macro economic profile**, không phải là một SocialClass mới và không cần quan tâm từng người cụ thể là ai.
 * **Khóa Quy Tắc Giải Định Tuyến Profile (Economic Profile Resolver Contract)**:
   Để tránh Builder tự quyết, POP-01A khóa thuật toán chọn profile:
   ```text
@@ -266,17 +271,13 @@ $$\mathbf{EffectiveLabor} = \lfloor \text{LaborCapacity} \times \text{NeedReadin
 
 ---
 
-## XIV. Named NPC Đứng Trên `Fulfilled Labor` (Khuếch Đại Hiệu Suất)
+## XIV. Tách Bạch Tuyệt Đối Named NPC (Chuyển Toàn Bộ Sang Gói Độc Lập NPC-01)
 
-Named NPC không tự tạo ra Labor Units, mà đóng vai trò chuyên môn hóa và khuếch đại năng suất của lực lượng lao động thực tế:
-
-$$\mathbf{BaseOutput} = f(\text{FulfilledLabor})$$
-
-$$\mathbf{FinalOutput} = \lfloor \text{BaseOutput} \times (1 + \sum \text{NPCModifiers}) \rfloor$$
-
-* **Luật bất biến (Hard Invariant)**:
-  $$\text{FulfilledLabor} = 0 \implies \mathbf{FinalOutput = 0}$$
-  *Nếu không có công nhân nào làm việc ngoài đồng, dù có chỉ định Maria ($+5\%$) hay Mila ($+5\%$) vào quản lý thì sản lượng vẫn bằng 0.*
+* **Khóa Scope Law**: Named NPC (Maria, Mila...), Origin, Personality, 8D Relationships, NPC Skills, NPC Modifiers, NPC Memories, NPC Reactions **tuyệt đối không tham gia bất kỳ tính toán nào của POP-01A, POP-01B, POP-01C, POP-02, POP-03**.
+* **Loại bỏ hoàn toàn NPC khỏi chuỗi giá trị lao động hiện tại**:
+  * Sản xuất ở POP-01C dừng lại ở mức **Macro Output của Fulfilled Labor**, không bị khuếch đại hay can thiệp bởi bất kỳ nhân vật Named NPC nào.
+  * Mọi khái niệm `NPCModifier`, quản lý xưởng/đồng ruộng của Maria/Mila được chuyển hoàn toàn sang gói thiết kế riêng **`NPC-01 Future`**.
+* *Ý nghĩa*: Đảm bảo lõi dân cư và năng lực xã hội hoàn toàn độc lập, sạch sẽ và có thể kiểm thử trọn vẹn mà không phụ thuộc vào hệ thống nhân vật phức tạp.
 
 ---
 
@@ -337,35 +338,39 @@ Player quản lý lãnh địa thông qua 2 báo cáo độc lập:
 
 ---
 
-## XXI. Lộ Trình Triển Khai Thực Tế
+## XXI. Lộ Trình Triển Khai Thực Tế (Không Dependency Vào NPC)
 
-Hệ thống được chia nhỏ thành các lát cắt kỹ thuật độc lập; **chỉ `POP-01A` được chuyển sang trạng thái sẵn sàng triển khai (Implementation-Ready)**, các lát cắt sau tiếp tục giữ trạng thái thiết kế nối tiếp:
+Hệ thống được chia nhỏ thành 5 lát cắt kỹ thuật độc lập; **chỉ `POP-01A` được chuyển sang trạng thái sẵn sàng triển khai (Implementation-Ready)**, các lát cắt sau tiếp tục giữ trạng thái thiết kế nối tiếp; Named NPC được tách hẳn thành gói riêng:
 
 | Gói Việc | Trọng Tâm Kỹ Thuật | Phạm Vi Triển Khai | Những Điều Chưa Làm |
 | :--- | :--- | :--- | :--- |
-| **POP-01A** | **Class Resource Core** | Integer Headcount $\rightarrow$ Derived Blocks $\rightarrow$ Profile $\rightarrow$ Capacities & Demands $\rightarrow$ Social Resource Report. | Chưa có assignment, activity, Maria/Mila, support effects, migration, law. |
-| **POP-01B** | **Needs & Effective Capacity** | Allocation $\rightarrow$ Satisfaction (Survival vs Lifestyle) $\rightarrow$ Support/Readiness $\rightarrow$ Effective Capacity ngày $T+1$. | Chưa có activity production, chưa có lệnh phân bổ. |
-| **POP-01C** | **Labor Allocation** | `ASSIGN_LABOR` $\rightarrow$ Committed vs Fulfilled $\rightarrow$ Labor Deficit $\rightarrow$ Activity Output. | Chưa có Named NPC modifiers. |
-| **POP-01D** | **Named NPC Amplifier** | Fulfilled Labor $\rightarrow$ Base Output $\rightarrow$ Maria/Mila Configured Modifier ($+5\%$) $\rightarrow$ Final Output. Invariant 0 Fulfilled = 0 Output. | Chưa có skill progression engine. |
-| **POP-02** | **Population Dynamics** | Immigration, Emigration, Class Mobility, Sustainable Capacity 2 cổng. | Chưa có hệ thống Law sâu. |
-| **POP-03** | **Law & Social Conflict** | Policy $\rightarrow$ Needs/Eligibility $\rightarrow$ Class Reaction $\rightarrow$ Xung đột xã hội. | Chưa có Map / Grid. |
+| **POP-01A** | **Class Resource Core** | Integer Headcount $\rightarrow$ Derived Blocks $\rightarrow$ Economic Profile $\rightarrow$ Capacities & Demands $\rightarrow$ Social Resource Snapshot. | Chưa có assignment, activity, support effects, migration, law. |
+| **POP-01B** | **Needs & Effective Capacity** | Need Demand $\rightarrow$ Allocation $\rightarrow$ Satisfaction (Survival vs Lifestyle) $\rightarrow$ Support/Readiness $\rightarrow$ Effective Capacity ngày $T+1$. | Chưa có activity production, chưa có lệnh phân bổ. |
+| **POP-01C** | **Labor Allocation** | Effective Capacity $\rightarrow$ `ASSIGN_LABOR` $\rightarrow$ Committed vs Fulfilled $\rightarrow$ Labor Deficit $\rightarrow$ Macro Output. | Hoàn toàn không có Named NPC modifiers. |
+| **POP-02** | **Population Dynamics** | Immigration, Emigration, Class Mobility, Sustainable Capacity 2 cổng, Headcount derivation. | Chưa có hệ thống Law sâu. |
+| **POP-03** | **Law & Social Conflict** | Policy $\rightarrow$ Allocation Rules / Needs / Eligibility $\rightarrow$ Class Reaction $\rightarrow$ Xung đột xã hội. | Chưa có Map / Grid. |
+| **NPC-01** *(Future)* | **Named NPC System** | Maria/Mila, Origin, Personality, 8D Relationships, NPC Skills, Memories, Reactions. | **Gói riêng, không phải dependency của Population Core.** |
 
 ```mermaid
 flowchart TD
     subgraph POP01 ["Gói POP-01: Bộ Khung Năng Lực Xã Hội (Social Resource Core)"]
         A["POP-01A: Class Resource Core (READY)<br>• Headcount (int) → Derived Blocks<br>• Configurable Profile (Labor, Purchase, Food)<br>• Base Capacity & Demands Calculation"]
-        B["POP-01B: Needs & Effective Capacity<br>• Survival vs Lifestyle Satisfaction<br>• Temporal Causality T → T+1<br>• Effective Labor = Capacity * Readiness * Coop"]
-        C["POP-01C: Labor Allocation<br>• ASSIGN_LABOR(units)<br>• Committed vs Fulfilled<br>• Labor Deficit & Activity Output"]
-        D["POP-01D: Named NPC Amplifier<br>• Fulfilled Labor → Base Output<br>• Configured NPC Modifier (+5%)<br>• Invariant: 0 Fulfilled = 0 Output"]
-        A --> B --> C --> D
+        B["POP-01B: Needs & Effective Capacity<br>• Need Demand → Allocation → Satisfaction<br>• Temporal Causality T → T+1<br>• Effective Labor = Capacity * Readiness * Coop"]
+        C["POP-01C: Labor Allocation<br>• ASSIGN_LABOR(units)<br>• Committed vs Fulfilled<br>• Labor Deficit & Macro Output"]
+        A --> B --> C
     end
 
-    subgraph FutureSlices ["Các Gói Tiếp Theo"]
+    subgraph FutureSlices ["Các Gói Dân Cư Tiếp Theo"]
         P2["POP-02: Population Dynamics (Immigration, Emigration, Mobility, Capacity)"]
         P3["POP-03: Law & Social Conflict (Policy Causality, Class Demands)"]
     end
 
+    subgraph DetachedNPC ["Hệ Thống Độc Lập Sau Khi Population Core Ổn Định"]
+        NPC["NPC-01: Named NPC System (Maria, Mila, Relationships, Skills)"]
+    end
+
     POP01 --> P2 --> P3
+    P3 -.->|Tích hợp sau| NPC
 ```
 
 ---
@@ -373,18 +378,19 @@ flowchart TD
 ## XXII. Những Điều Tuyệt Đối CHƯA Làm (Out Of Scope)
 
 Để triệt tiêu nguy cơ trôi dạt phạm vi (Scope Creep), các hạng mục sau nghiêm cấm đưa vào giai đoạn này:
+* **Tuyệt đối không có Named NPC**: Không Maria, không Mila, không Origin, không Personality, không 8D Relationships.
+* **Chưa có NPC Mechanics**: Không NPC Skills, không NPC Modifiers, không NPC Memories, không NPC Reactions.
 * Chưa làm bản đồ, lưới ô cờ (grid), vị trí địa lý, footprint hay tìm đường (pathfinding).
 * Chưa làm quy trình xây dựng vật lý (chưa code lệnh `BUILD_FACILITY`, trừ kho vật liệu hay đếm nhịp thi công).
 * Chưa làm hệ thống tiền tệ/thuế khóa phức tạp.
 * Chưa làm hệ thống ý thức hệ xã hội (Future Societies).
 * Chưa làm hệ thống nội dung trưởng thành chi tiết.
 * Chưa làm cơ chế sinh/tử (Birth/Death).
-* Chưa làm thuật toán tự động chuyển đổi kỹ năng sang NPC modifier.
 * Chưa làm balance cuối cùng (các hệ số chỉ là baseline v0.1).
 
 ---
 
-## XXIII. Bảng Phân Loại Các Quyết Định Kỹ Thuật (D17–D24)
+## XXIII. Bảng Phân Loại Các Quyết Định Kỹ Thuật (D17–D25)
 
 Để quản trị rõ ràng ranh giới giữa kiến trúc không đổi và tham số có thể tinh chỉnh, các quyết định được gán nhãn phân loại minh bạch:
 
@@ -398,6 +404,7 @@ flowchart TD
 | **D22** | **Composable Identity & Servile Resolver**: Thân phận nô lệ (`LegalStatus = enslaved`) là một layer độc lập. Khóa resolver ưu tiên Servile Profile cho 3 metrics POP-01A mà không xóa Occupation/SocialClass. | **ARCHITECTURE** |
 | **D23** | **Fixed-Point Scale & Rounding Policy**: Khóa quy chuẩn `SOCIAL_RESOURCE_SCALE = 1000` và chính sách làm tròn `Math.floor` cho toàn bộ tài nguyên xã hội dẫn xuất. | **ARCHITECTURE** |
 | **D24** | **Pure Derived Snapshot Calculator**: Calculator là hàm thuần túy, chỉ trả snapshot, không mutate GameState, không phát sinh Command hay thay đổi kho. | **ARCHITECTURE** |
+| **D25** | **Scope Law & NPC Decoupling**: Dân cư chỉ mô phỏng ở cấp độ Cohort. Cắt toàn bộ Named NPC sang gói riêng `NPC-01 Future`. Không tạo hệ class thứ hai. | **ARCHITECTURE** |
 
 ---
 
@@ -407,7 +414,9 @@ flowchart TD
 
 ### 1. Phạm Vi Files Cho Phép Sửa Đổi / Bổ Sung (Strict Allowlist với Exact Paths)
 Nhất quán sử dụng module con chuyên biệt `packages/core/src/social/`:
-* `packages/core/src/social/types.ts`: Định nghĩa kiểu dữ liệu thuần túy (`SocialClass`, `LegalStatus`, `PopulationCohort`, `ClassResourceProfile`, `SocialResourceSnapshot`).
+* `packages/core/src/social/types.ts`:  
+  * **Import trực tiếp** `PopulationCohort`, `SocialClass`, `LegalStatus` từ canonical model hiện có (`packages/core/src/domain/population.js`). **Tuyệt đối không tái định nghĩa** các kiểu này để tránh tạo ra hệ thống class thứ hai.  
+  * **Chỉ định nghĩa các kiểu macro mới**: `EconomicProfileKey = 'servile' | 'lower' | 'middle' | 'upper'`, `ClassResourceProfile`, `SocialResourceSnapshot`.
 * `packages/core/src/social/profile.ts`: Cấu hình hằng số `SOCIAL_RESOURCE_SCALE = 1000` và `INITIAL_BALANCE_PROFILE` (pure config constants).
 * `packages/core/src/social/calculator.ts`: Hàm tính toán thuần túy (pure deterministic functions): `calculatePopulationBlocks(count)`, `resolveEconomicProfile(cohort)`, `calculateSocialResources(cohorts, profile)`.
 * `packages/core/src/social/__tests__/pop01a_resource_core.test.ts`: Test suite kiểm chứng độc lập.
