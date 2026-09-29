@@ -43,3 +43,45 @@ export interface Settlement {
   
   dayCreated: number;
 }
+
+export function createSettlement(params: Settlement): Settlement {
+  if (!params.id || typeof params.id !== "string" || params.id.trim() === "") {
+    throw new Error("Settlement ID must be a non-empty string");
+  }
+  if (!params.name || typeof params.name !== "string" || params.name.trim() === "") {
+    throw new Error("Settlement name must be a non-empty string");
+  }
+  if (!Number.isFinite(params.authority) || params.authority < 0 || params.authority > 100) {
+    throw new Error(`Settlement authority must be in [0, 100], received: ${params.authority}`);
+  }
+  if (!Number.isFinite(params.reputation) || params.reputation < 0 || params.reputation > 100) {
+    throw new Error(`Settlement reputation must be in [0, 100], received: ${params.reputation}`);
+  }
+  if (!Number.isFinite(params.dayCreated) || params.dayCreated < 1) {
+    throw new Error(`Settlement dayCreated must be positive integer, received: ${params.dayCreated}`);
+  }
+
+  // Deep clone inventory
+  const inventory: ResourceInventory = { ...params.inventory };
+  for (const [res, count] of Object.entries(inventory)) {
+    if (!Number.isFinite(count) || count < 0) {
+      throw new Error(`Settlement initial inventory for ${res} cannot be negative or invalid: ${count}`);
+    }
+  }
+
+  return {
+    id: params.id.trim(),
+    name: params.name.trim(),
+    status: params.status,
+    trajectory: params.trajectory,
+    governorId: params.governorId,
+    inventory,
+    facilities: params.facilities.map(f => ({ ...f })),
+    namedCharacters: params.namedCharacters.map(c => ({ ...c })),
+    cohorts: params.cohorts.map(c => ({ ...c })),
+    authority: params.authority,
+    reputation: params.reputation,
+    dayCreated: params.dayCreated,
+  };
+}
+

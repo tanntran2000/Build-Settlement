@@ -13,12 +13,18 @@
     "typecheck:simulation": "tsc -p packages/simulation/tsconfig.json --noEmit",
     "typecheck:persistence": "tsc -p packages/persistence/tsconfig.json --noEmit",
     "typecheck:content": "tsc -p packages/content/tsconfig.json --noEmit",
-    "typecheck": "npm run typecheck:core && npm run typecheck:simulation && npm run typecheck:persistence && npm run typecheck:content",
+    "typecheck:ui": "npm run check --workspace=@haven/ui",
+    "typecheck": "npm run typecheck:core && npm run typecheck:simulation && npm run typecheck:persistence && npm run typecheck:content && npm run typecheck:ui",
+
     "build": "npm run build --workspaces --if-present",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:smoke": "playwright test"
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.6.3",
+    "svelte-check": "^4.7.6",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"
   }

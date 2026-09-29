@@ -31,11 +31,17 @@ jobs:
       - name: Install dependencies from lockfile
         run: npm ci
 
-      - name: Strict workspace typecheck
+      - name: Strict workspace typecheck (Core, Simulation, Persistence, Content, UI)
         run: npm run typecheck
 
-      - name: Run automated unit tests (Vitest)
+      - name: Run automated unit & architecture tests (Vitest)
         run: npm test
 
       - name: Build UI package (Vite)
         run: npm run build --workspace=@haven/ui
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run browser smoke tests (Playwright)
+        run: npm run test:smoke

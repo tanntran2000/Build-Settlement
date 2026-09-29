@@ -5,8 +5,8 @@ export interface WorldSaveData {
   gameVersion: string;
   worldSeed: number;
   currentDate: GameDate;
-  activeSettlement: Settlement;
-  legacySettlements: Settlement[];
+  settlements: Record<string, Settlement>;
+  activeSettlementId: string | null;
 }
 
 export interface PlayerProfileData {
