@@ -1,0 +1,44 @@
+{
+  "buildings": [
+    {
+      "id": "shelter_basic",
+      "name": "Nơi trú ẩn tạm",
+      "type": "housing",
+      "capacity": 20,
+      "cost": {
+        "building_materials": 40
+      },
+      "description": "Lán trại bằng gỗ và tôn cũ, che mưa nắng cơ bản."
+    },
+    {
+      "id": "farm_primitive",
+      "name": "Nông trại thủ công",
+      "type": "food_production",
+      "capacity": 10,
+      "workersRequired": 4,
+      "dailyOutput": {
+        "food": 15
+      },
+      "cost": {
+        "building_materials": 50,
+        "tools": 5
+      },
+      "description": "Khai hoang đất ven nguồn nước để trồng trọt."
+    },
+    {
+      "id": "water_well",
+      "name": "Giếng nước ngầm",
+      "type": "water_production",
+      "capacity": 5,
+      "workersRequired": 2,
+      "dailyOutput": {
+        "clean_water": 25
+      },
+      "cost": {
+        "building_materials": 30,
+        "tools": 3
+      },
+      "description": "Khai thác và lọc nước ngọt ngầm phục vụ cư dân."
+    }
+  ]
+}

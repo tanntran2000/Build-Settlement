@@ -1,0 +1,17 @@
+{
+  "name": "@haven/simulation",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "dependencies": {
+    "@haven/core": "*"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}
