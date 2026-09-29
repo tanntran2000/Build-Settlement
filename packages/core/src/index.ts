@@ -4,6 +4,8 @@ export * from "./domain/relationship.js";
 export * from "./domain/memory.js";
 export * from "./domain/resource.js";
 export * from "./domain/settlement.js";
+export * from "./domain/economy.js";
+export * from "./domain/gamestate.js";
 export * from "./command/command.js";
 export * from "./command/effect.js";
 export * from "./time/clock.js";
