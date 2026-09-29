@@ -95,7 +95,34 @@ import type { EconomicProfileKey, ClassResourceProfile, SocialResourceSnapshot }
 import { SOCIAL_RESOURCE_SCALE } from "./profile.js";
 
 export function calculatePopulationBlocks(headcount: number): number;
-export function resolveEconomicProfile(cohort: PopulationCohort): EconomicProfileKey;
+
+/**
+ * Ánh xạ giai cấp và thân phận sang hồ sơ kinh tế vĩ mô.
+ * Sử dụng exhaustive switch trên toàn bộ các giá trị của canonical SocialClass
+ * kết hợp exhaustiveness guard với TypeScript `never`.
+ * Tuyệt đối không dùng fallback ngầm và không thêm exception subsystem.
+ */
+export function resolveEconomicProfile(cohort: PopulationCohort): EconomicProfileKey {
+  if (cohort.legalStatus === "enslaved") {
+    return "servile";
+  }
+
+  switch (cohort.socialClass) {
+    case "lower":
+      return "lower";
+    case "common":
+    case "skilled":
+      return "middle";
+    case "administrative":
+    case "elite":
+      return "upper";
+    default: {
+      const _exhaustive: never = cohort.socialClass;
+      return _exhaustive;
+    }
+  }
+}
+
 export function calculateSocialResources(
   cohorts: PopulationCohort[],
   profileMap: Record<EconomicProfileKey, ClassResourceProfile>
@@ -111,15 +138,15 @@ export function calculateSocialResources(
 ```mermaid
 flowchart TD
     T1["Task 1: Canonical Types & 10 Resolver Cases"] --> T2["Task 2: Balance Profile & Scale Constants"]
-    T2 --> T3["Task 3: Calculator Engine & Benchmark Fixtures A/B"]
-    T3 --> T4["Task 4: Custom Profile, Edge Cases & Purity"]
-    T4 --> T5["Task 5: Full Workspace Regression Verification"]
+    T2 --> T3["Task 3: Full Calculator Test Suite (RED) & Implementation (GREEN)"]
+    T3 --> T4["Task 4: Contract & Boundary Verification"]
+    T4 --> T5["Task 5: Full Workspace Regression Verification (Typecheck, Test, Build, Smoke, Diff)"]
 ```
 
 ---
 
 ### Task 1: Canonical Types & 10 Resolver Test Cases
-*Mục tiêu*: Thiết lập định nghĩa kiểu macro và kiểm chứng bộ giải mã kinh tế với 10 ca kiểm thử bảo đảm quyền ưu tiên tuyệt đối của `enslaved`.
+*Mục tiêu*: Thiết lập định nghĩa kiểu macro và kiểm chứng bộ giải mã kinh tế với 10 ca kiểm thử bảo đảm quyền ưu tiên tuyệt đối của `enslaved`, sử dụng exhaustive switch mapping với TypeScript `never` guard (không fallback ngầm, không exception subsystem).
 
 - [ ] **Step 1.1**: Tạo file `packages/core/src/social/types.ts` với đầy đủ các types macro (`EconomicProfileKey`, `ClassResourceProfile`, `SocialResourceSnapshot`) và import canonical `PopulationCohort`, `SocialClass`, `LegalStatus`.
 - [ ] **Step 1.2**: Tạo file test `packages/core/src/social/__tests__/pop01a_resource_core.test.ts`. Viết test suite `describe("resolveEconomicProfile")` gồm đúng **10 test cases**:
@@ -138,13 +165,27 @@ flowchart TD
   npx vitest run packages/core/src/social/__tests__/pop01a_resource_core.test.ts
   ```
   *Kỳ vọng RED*: Lỗi thực thi do hàm `resolveEconomicProfile` chưa tồn tại trong `calculator.ts`.
-- [ ] **Step 1.4**: Tạo file `packages/core/src/social/calculator.ts`. Triển khai hàm tối thiểu:
+- [ ] **Step 1.4**: Tạo file `packages/core/src/social/calculator.ts`. Triển khai hàm `resolveEconomicProfile` với exhaustive switch và `never` guard:
   ```ts
   export function resolveEconomicProfile(cohort: PopulationCohort): EconomicProfileKey {
-    if (cohort.legalStatus === "enslaved") return "servile";
-    if (cohort.socialClass === "lower") return "lower";
-    if (cohort.socialClass === "common" || cohort.socialClass === "skilled") return "middle";
-    return "upper"; // administrative | elite
+    if (cohort.legalStatus === "enslaved") {
+      return "servile";
+    }
+
+    switch (cohort.socialClass) {
+      case "lower":
+        return "lower";
+      case "common":
+      case "skilled":
+        return "middle";
+      case "administrative":
+      case "elite":
+        return "upper";
+      default: {
+        const _exhaustive: never = cohort.socialClass;
+        return _exhaustive;
+      }
+    }
   }
   ```
 - [ ] **Step 1.5 (GREEN)**: Chạy lại lệnh test:
@@ -159,9 +200,9 @@ flowchart TD
   *Kỳ vọng*: 0 errors.
 - [ ] **Step 1.7 (Commit Checkpoint)**: Commit checkpoint Task 1:
   ```bash
-  git commit -m "feat(social): define macro types and implement 10-case resolveEconomicProfile"
+  git commit -m "feat(social): define macro types and implement exhaustive 10-case resolveEconomicProfile"
   ```
-- [ ] **Step 1.8 (Reviewer Gate)**: Reviewer xác nhận: Đúng 10 cases, không tái định nghĩa canonical types, không export ra `core/src/index.ts`.
+- [ ] **Step 1.8 (Reviewer Gate)**: Reviewer xác nhận: Đúng 10 cases, exhaustive switch có `never` guard, không fallback ngầm, không tái định nghĩa canonical types, không export ra `core/src/index.ts`.
 
 ---
 
@@ -195,39 +236,40 @@ flowchart TD
 
 ---
 
-### Task 3: Calculator Engine & Benchmark Fixtures A/B
-*Mục tiêu*: Hiện thực hóa công thức tính toán tài nguyên xã hội với Integer Math (`Math.floor`) và vượt qua 2 bộ Benchmark bắt buộc.
+### Task 3: Full Calculator Test Suite (RED) & Implementation (GREEN)
+*Mục tiêu*: Áp dụng TDD trung thực: Viết toàn bộ các test cases cho Calculator (bao gồm Benchmark A/B, Custom Profile, Edge Cases 1/99/101, Input Rỗng, và Tính Bất Biến Immutability) **TRƯỚC KHI** triển khai hàm `calculateSocialResources`. Chứng minh trạng thái RED thực sự trước khi GREEN.
 
-- [ ] **Step 3.1**: Viết test suite `describe("calculateSocialResources - Benchmark Fixtures")`:
-  - **Fixture A (Canonical Scale)**:
-    - Đầu vào: 10.000 lower (`citizen`), 1.000 enslaved (`lower`), 3.000 middle (`citizen`, `common`), 500 upper (`citizen`, `elite`).
-    - Gọi: `calculateSocialResources(cohortsA, INITIAL_BALANCE_PROFILE)`.
-    - Kỳ vọng:
-      - `headcount`: 14.500
-      - `populationBlocks`: 145.0
-      - `laborCapacityMilli`: 202.500
-      - `purchaseDemandCapacityMilli`: 165.000
-      - `survivalFoodNeedMilli`: 145.000
-      - `lifestyleFoodDemandMilli`: 145.000
-  - **Fixture B (Formula Discrimination)**:
-    - Đầu vào: 9.700 lower (`citizen`), 1.000 enslaved (`lower`), 3.000 middle (`citizen`, `skilled`), 800 upper (`citizen`, `administrative`).
-    - Gọi: `calculateSocialResources(cohortsB, INITIAL_BALANCE_PROFILE)`.
-    - Kỳ vọng:
-      - `headcount`: 14.500
-      - `populationBlocks`: 145.0
-      - `laborCapacityMilli`: 199.500
-      - `purchaseDemandCapacityMilli`: 168.000
-      - `survivalFoodNeedMilli`: 145.000
-      - `lifestyleFoodDemandMilli`: 148.000
-    - **Khẳng định bắt buộc**:
-      ```ts
-      expect(resultB.survivalFoodNeedMilli).not.toBe(resultB.lifestyleFoodDemandMilli);
-      ```
-- [ ] **Step 3.2 (RED)**: Chạy test:
+- [ ] **Step 3.1**: Viết toàn bộ test suites cho Calculator trong `pop01a_resource_core.test.ts`:
+  - **Suite 1 — Benchmark Fixtures**:
+    - **Fixture A (Canonical Scale)**:
+      - Đầu vào: 10.000 lower (`citizen`), 1.000 enslaved (`lower`), 3.000 middle (`citizen`, `common`), 500 upper (`citizen`, `elite`).
+      - Gọi: `calculateSocialResources(cohortsA, INITIAL_BALANCE_PROFILE)`.
+      - Khẳng định: `headcount === 14500`, `populationBlocks === 145.0`, `laborCapacityMilli === 202500`, `purchaseDemandCapacityMilli === 165000`, `survivalFoodNeedMilli === 145000`, `lifestyleFoodDemandMilli === 145000`.
+    - **Fixture B (Formula Discrimination)**:
+      - Đầu vào: 9.700 lower (`citizen`), 1.000 enslaved (`lower`), 3.000 middle (`citizen`, `skilled`), 800 upper (`citizen`, `administrative`).
+      - Gọi: `calculateSocialResources(cohortsB, INITIAL_BALANCE_PROFILE)`.
+      - Khẳng định: `headcount === 14500`, `populationBlocks === 145.0`, `laborCapacityMilli === 199500`, `purchaseDemandCapacityMilli === 168000`, `survivalFoodNeedMilli === 145000`, `lifestyleFoodDemandMilli === 148000`.
+      - Khẳng định phân biệt công thức bắt buộc:
+        ```ts
+        expect(resultB.survivalFoodNeedMilli).not.toBe(resultB.lifestyleFoodDemandMilli);
+        ```
+  - **Suite 2 — Parameter Usage & Robustness**:
+    - **Custom Profile Test**: Truyền một `customProfileMap` có hệ số khác (ví dụ: `lower.laborMultiplierMilli = 3000`). Khẳng định `laborCapacityMilli` thay đổi tương ứng theo multiplier mới (chứng minh tham số `profileMap` thực sự được sử dụng và không bị hardcode).
+    - **Edge Cases Blocks & Labor**:
+      - 1 dân Lower: `populationBlocks === 0.01`, `laborCapacityMilli === 15`
+      - 99 dân Lower: `populationBlocks === 0.99`, `laborCapacityMilli === 1485` (chứng minh loại bỏ vách đá cliff về 0)
+      - 101 dân Lower: `populationBlocks === 1.01`, `laborCapacityMilli === 1515`
+      - 0 dân (hoặc danh sách rỗng `[]`): mọi giá trị snapshot đều là `0`.
+  - **Suite 3 — Purity & Immutability**:
+    - Chuẩn bị mảng `cohorts` và `profileMap`. Tạo deep clone snapshot của cả hai trước khi gọi.
+    - Gọi: `calculateSocialResources(cohorts, profileMap)`.
+    - Khẳng định: `cohorts` đầu vào giữ nguyên 100% (không bị thêm/bớt/sửa property).
+    - Khẳng định: `profileMap` đầu vào giữ nguyên 100% (không bị mutate).
+- [ ] **Step 3.2 (RED)**: Chạy lệnh test:
   ```bash
   npx vitest run packages/core/src/social/__tests__/pop01a_resource_core.test.ts
   ```
-  *Kỳ vọng RED*: Lỗi do `calculateSocialResources` và `calculatePopulationBlocks` chưa được export/implement.
+  *Kỳ vọng RED*: Lỗi thực thi do `calculateSocialResources` và `calculatePopulationBlocks` chưa được triển khai/export trong `calculator.ts`.
 - [ ] **Step 3.3**: Triển khai trong `packages/core/src/social/calculator.ts`:
   ```ts
   export function calculatePopulationBlocks(headcount: number): number {
@@ -269,64 +311,70 @@ flowchart TD
   ```bash
   npx vitest run packages/core/src/social/__tests__/pop01a_resource_core.test.ts
   ```
-  *Kỳ vọng GREEN*: Fixture A và Fixture B đều PASS tuyệt đối.
+  *Kỳ vọng GREEN*: Toàn bộ tests (Benchmarks A/B, Custom Profile, Edge Cases 1/99/101, Input rỗng, và Immutability) đều PASS 100%.
 - [ ] **Step 3.5 (Commit Checkpoint)**: Commit checkpoint Task 3:
   ```bash
-  git commit -m "feat(social): implement calculateSocialResources and verify Benchmarks A/B"
+  git commit -m "feat(social): implement calculateSocialResources and pass complete benchmark & robustness suite"
   ```
-- [ ] **Step 3.6 (Reviewer Gate)**: Reviewer xác nhận: Không dùng default argument, kiểm tra phân biệt công thức sinh học vs lối sống thành công.
+- [ ] **Step 3.6 (Reviewer Gate)**: Reviewer xác nhận: TDD trung thực, hàm thuần túy không mutate, không dùng default argument, parameter `profileMap` có hiệu lực thực thi, phân biệt công thức thành công.
 
 ---
 
-### Task 4: Custom Profile, Edge Cases 1/99/101 & Purity Verification
-*Mục tiêu*: Chứng minh `profileMap` thực sự được sử dụng, chứng minh loại bỏ block cliff, và chứng minh zero mutation.
+### Task 4: Contract & Boundary Verification
+*Mục tiêu*: Thẩm định tĩnh và động các ràng buộc hợp đồng kỹ thuật, exhaustiveness check và ranh giới module.
 
-- [ ] **Step 4.1**: Bổ sung test suite `describe("calculateSocialResources - Edge Cases & Robustness")`:
-  - **Custom Profile Test**: Truyền một `customProfileMap` với hệ số gấp đôi (ví dụ: `laborMultiplierMilli = 3000` cho lower). Kết quả `laborCapacityMilli` phải tăng tương ứng theo hệ số mới (chứng minh hàm không ngầm dùng `INITIAL_BALANCE_PROFILE`).
-  - **Edge Cases Blocks & Labor**:
-    - 1 dân Lower: `populationBlocks === 0.01`, `laborCapacityMilli === 15`
-    - 99 dân Lower: `populationBlocks === 0.99`, `laborCapacityMilli === 1485` (không bị vách đá cliff về 0)
-    - 101 dân Lower: `populationBlocks === 1.01`, `laborCapacityMilli === 1515`
-    - 0 dân (hoặc danh sách cohort rỗng `[]`): mọi đại lượng đều là `0`
-  - **Purity & Immutability Test**:
-    - Chuẩn bị một mảng `cohorts` và một `profileMap`. Tạo deep clone snapshot của cả hai trước khi gọi.
-    - Thực thi: `calculateSocialResources(cohorts, profileMap)`.
-    - Khẳng định: `cohorts` đầu vào bằng 100% snapshot ban đầu (không bị thêm/bớt/sửa property).
-    - Khẳng định: `profileMap` đầu vào bằng 100% snapshot ban đầu (không bị mutate).
-- [ ] **Step 4.2**: Chạy test suite:
+- [ ] **Step 4.1 (Contract Signature Audit)**: Kiểm tra chữ ký hàm trong `calculator.ts`, xác nhận `calculateSocialResources(cohorts: PopulationCohort[], profileMap: Record<EconomicProfileKey, ClassResourceProfile>): SocialResourceSnapshot` không có default argument.
+- [ ] **Step 4.2 (Exhaustive Switch Audit)**: Kiểm tra `resolveEconomicProfile` trong `calculator.ts`, xác nhận switch bao phủ đủ các case của canonical `SocialClass` và có nhánh `default: { const _exhaustive: never = cohort.socialClass; return _exhaustive; }`. Không tồn tại fallback ngầm `return "upper"`.
+- [ ] **Step 4.3 (Precondition & Anti-YAGNI Audit)**: Rà soát toàn bộ file `calculator.ts`, xác nhận KHÔNG thêm duplicate validation cho count âm, NaN, chuỗi rỗng hay malformed state. Tuân thủ domain preconditions của R1.
+- [ ] **Step 4.4 (Module Boundary Audit)**: Kiểm tra `packages/core/src/index.ts`, xác nhận **KHÔNG** export module `social`.
+- [ ] **Step 4.5 (Commit Checkpoint)**: Commit checkpoint Task 4:
   ```bash
-  npx vitest run packages/core/src/social/__tests__/pop01a_resource_core.test.ts
+  git commit -m "test(social): verify contract signatures, exhaustiveness, and module boundaries"
   ```
-  *Kỳ vọng GREEN*: Toàn bộ tests edge cases và purity đều PASS.
-- [ ] **Step 4.3 (Commit Checkpoint)**: Commit checkpoint Task 4:
-  ```bash
-  git commit -m "test(social): add custom profile usage, cliff edge cases, and immutability tests"
-  ```
-- [ ] **Step 4.4 (Reviewer Gate)**: Reviewer xác nhận: Cả `cohorts` và `profileMap` được chứng minh bất biến; tham số `profileMap` có hiệu lực thực thi.
+- [ ] **Step 4.6 (Reviewer Gate)**: Reviewer xác nhận toàn bộ ràng buộc hợp đồng và ranh giới kiến trúc đã được bảo toàn.
 
 ---
 
 ### Task 5: Full Workspace Regression Verification
-*Mục tiêu*: Đảm bảo không có bất kỳ hồi quy nào trên toàn bộ workspace.
+*Mục tiêu*: Bảo đảm toàn bộ kiểm tra chất lượng của repo đều xanh tuyệt đối và diff nằm trọn vẹn trong allowlist.
 
-- [ ] **Step 5.1**: Chạy kiểm tra kiểu toàn diện:
+- [ ] **Step 5.1 (Typecheck)**: Chạy kiểm tra kiểu toàn diện trên 5 packages:
   ```bash
   npm run typecheck
   ```
-  *Kỳ vọng*: 0 errors, 0 warnings trên cả 5 packages (`core`, `simulation`, `persistence`, `content`, `ui`).
-- [ ] **Step 5.2**: Chạy toàn bộ test suites của repo:
+  *Kỳ vọng*: 0 errors, 0 warnings.
+- [ ] **Step 5.2 (Unit Tests)**: Chạy toàn bộ test suite Vitest:
   ```bash
   npm test
   ```
-  *Kỳ vọng*: Toàn bộ 51 tests cũ + toàn bộ tests mới của `pop01a_resource_core.test.ts` đều PASS.
-- [ ] **Step 5.3**: Kiểm tra ranh giới kiến trúc:
+  *Kỳ vọng*: 51 tests cũ + test suite mới của `pop01a_resource_core.test.ts` đều PASS.
+- [ ] **Step 5.3 (Production Build)**: Chạy build toàn diện ứng dụng:
   ```bash
-  npx vitest run packages/core/src/__tests__/architecture.test.ts
+  npm run build
   ```
-  *Kỳ vọng*: `core` không import `simulation` hay DOM/UI.
-- [ ] **Step 5.4**: Kiểm tra allowlist exports:
-  Mở `packages/core/src/index.ts`, xác nhận **KHÔNG** chứa `export * from "./social/..."`.
-- [ ] **Step 5.5 (Final Checkpoint)**: Commit hoàn thành lát cắt POP-01A sẵn sàng mở PR review.
+  *Kỳ vọng*: Build Vite thành công, bundle không lỗi.
+- [ ] **Step 5.4 (Browser Smoke Test)**: Chạy Playwright smoke test trên headless browser:
+  ```bash
+  npm run test:smoke
+  ```
+  *Kỳ vọng*: 1/1 passed trên Chromium headless.
+- [ ] **Step 5.5 (Allowlist/Denylist Diff Inspection)**: Kiểm tra git diff và git status:
+  ```bash
+  git status
+  git diff --stat origin/main
+  ```
+  *Kỳ vọng*:
+  - Chỉ có đúng 4 files được tạo/sửa:
+    - `packages/core/src/social/types.ts`
+    - `packages/core/src/social/profile.ts`
+    - `packages/core/src/social/calculator.ts`
+    - `packages/core/src/social/__tests__/pop01a_resource_core.test.ts`
+  - Không có file nào ngoài allowlist bị chạm tới (UI, simulation, persistence, content, `core/src/index.ts` giữ nguyên 100%).
+  - Kiến trúc deterministic: `packages/core/src/__tests__/architecture.test.ts` PASS (không import simulation, không chứa DOM/UI).
+- [ ] **Step 5.6 (Final Checkpoint)**: Commit hoàn thành lát cắt POP-01A sẵn sàng cho Human Review & Merge:
+  ```bash
+  git commit -m "feat(social): complete POP-01A implementation and pass full quality gate"
+  ```
 
 ---
 
@@ -337,10 +385,11 @@ flowchart TD
 | **AC-POP01A-01** | Hằng số `SOCIAL_RESOURCE_SCALE = 1000`. Integer milli-units với `Math.floor`. | Unit Test | [ ] |
 | **AC-POP01A-02** | Fixture A khớp chính xác 100% với bảng đặc tả. | Unit Test | [ ] |
 | **AC-POP01A-03** | Fixture B chứng minh $\text{Survival Food} (145.000) \ne \text{Lifestyle Food} (148.000)$. | Unit Test | [ ] |
-| **AC-POP01A-04** | Edge cases 1, 99, 101 cư dân xác nhận lũy tiến liên tục, blocks = 0.01/0.99/1.01, không cliff. | Unit Test | [ ] |
+| **AC-POP01A-04** | Edge cases 1, 99, 101 cư dân xác nhận lũy tiến liên tục, blocks = 0.01/0.99/1.01, không cliff; input rỗng `[]` = 0. | Unit Test | [ ] |
 | **AC-POP01A-05** | `calculateSocialResources` là pure function, zero mutation trên cả `cohorts` và `profileMap`. | Unit Test | [ ] |
-| **AC-POP01A-06** | `resolveEconomicProfile` kiểm chứng đủ 10 cases (5 enslaved across classes + 5 non-enslaved). | Unit Test | [ ] |
+| **AC-POP01A-06** | `resolveEconomicProfile` kiểm chứng đủ 10 cases (5 enslaved across classes + 5 non-enslaved) bằng exhaustive switch có `never` guard, không fallback ngầm. | Unit Test & Code Inspection | [ ] |
 | **AC-POP01A-07** | `types.ts` import canonical từ `domain/population.js` & `domain/character.js`; không tái định nghĩa. | Architecture / Typecheck | [ ] |
 | **AC-POP01A-08** | Không có default parameter trong signature của `calculateSocialResources(cohorts, profileMap)`. | Code Inspection | [ ] |
 | **AC-POP01A-09** | Tham số tùy biến `profileMap` được chứng minh có hiệu lực thông qua Unit Test. | Unit Test | [ ] |
 | **AC-POP01A-10** | Không export module `social` ra ngoài `packages/core/src/index.ts`. | Code Inspection | [ ] |
+| **AC-POP01A-11** | Full Quality Gate: `typecheck`, `test`, `build`, `test:smoke`, và allowlist diff inspection đều đạt 100%. | CI / Automation | [ ] |
