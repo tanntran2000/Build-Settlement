@@ -1,0 +1,36 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install dependencies from lockfile
+        run: npm ci
+
+      - name: Typecheck core package
+        run: npm --prefix packages/core run build --if-present
+
+      - name: Run automated unit tests (Vitest)
+        run: npm test
+
+      - name: Build UI package (Vite)
+        run: npm run build --workspace=@haven/ui

@@ -38,16 +38,16 @@
 
 | Thuật Ngữ Kỹ Thuật (Code / English) | Thuật Ngữ Hiển Thị (Tiếng Việt) | Định Nghĩa & Ngữ Cảnh |
 | :--- | :--- | :--- |
-| `Trust` | **Tin Cậy** | Niềm tin rằng đối phương sẽ không bội phản hoặc hãm hại mình. |
-| `Respect` | **Tôn Trọng** | Sự kính phục trước năng lực, bản lĩnh hoặc tài năng của người khác. |
-| `Affection` | **Yêu Mến / Tình Cảm** | Mức độ gắn kết cảm xúc cá nhân thân thiết. |
-| `Fear` | **Sợ Hãi / Khiếp Sợ** | Nỗi sợ trước bạo lực, trừng phạt hoặc quyền lực tối thượng. |
-| `Debt` | **Ân Nợ / Mang Ơn** | Cảm giác mắc nợ ân nghĩa hoặc tiền bạc đối với người khác. |
-| `Lust` | **Dục Vọng / Hấp Dẫn Thể Xác**| Mức độ ham muốn tình dục và khao khát thân xác đối phương. |
-| `Obedience` | **Phục Tùng** | Mức độ ngoan ngoãn chấp hành mệnh lệnh. |
-| `Resentment` | **Bất Mãn / Uất Hận** | Sự căm phẫn tích tụ do bị áp bức, bóc lột hoặc đối xử bất công. |
-| `Willpower` | **Ý Chí Kháng Cự** | Sức mạnh tinh thần chống lại sự quy phục và áp chế. |
-| `Trauma` | **Chấn Thương Tâm Lý** | Vết thương lòng sâu sắc do bạo lực hoặc ngược đãi gây ra. |
+| `trust` | **Tin Cậy** | Niềm tin rằng đối phương sẽ không bội phản hoặc hãm hại mình. |
+| `affection` | **Yêu Mến / Tình Cảm** | Mức độ gắn kết cảm xúc cá nhân thân thiết. |
+| `attraction` | **Sức Hút / Hấp Dẫn Thể Xác**| Mức độ lôi cuốn tình dục và khao khát thân xác đối phương. |
+| `respect` | **Tôn Trọng** | Sự kính phục trước năng lực, bản lĩnh hoặc tài năng của người khác. |
+| `fear` | **Sợ Hãi / Khiếp Sợ** | Nỗi sợ trước bạo lực, trừng phạt hoặc quyền lực tối thượng. |
+| `resentment` | **Bất Mãn / Uất Hận** | Sự căm phẫn tích tụ do bị áp bức, bóc lột hoặc đối xử bất công. |
+| `dependency` | **Lệ Thuộc / Phụ Thuộc** | Mức độ phụ thuộc về kinh tế, bảo bọc hoặc chỗ dựa tâm lý. |
+| `familiarity` | **Quen Thuộc** | Mức độ hiểu biết, thời gian tiếp xúc và gần gũi giữa hai bên. |
+| `willpower` | **Ý Chí Kháng Cự** | Sức mạnh tinh thần chống lại sự quy phục và áp chế. |
+| `trauma` | **Chấn Thương Tâm Lý** | Vết thương lòng sâu sắc do bạo lực hoặc ngược đãi gây ra. |
 | `Stockholm Devotion` | **Sùng Kính Stockholm** | Trạng thái lệ thuộc tâm lý và sùng kính kẻ giam cầm mình sau quá trình ân uy song hành. |
 | `Memory Decay` | **Phai Mờ Ký Ức** | Tỷ lệ giảm dần ảnh hưởng cảm xúc của ký ức theo thời gian. |
 

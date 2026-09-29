@@ -1,5 +1,3 @@
-import { ResourceType } from "../domain/resource.js";
-
 export type Command =
   | { type: "BUILD_FACILITY"; settlementId: string; facilityType: string; name: string }
   | { type: "ASSIGN_MANAGER"; settlementId: string; facilityId: string; characterId: string }

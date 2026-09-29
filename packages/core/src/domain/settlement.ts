@@ -1,6 +1,6 @@
 import { NamedCharacter } from "./character.js";
 import { PopulationCohort } from "./population.js";
-import { ResourceInventory, createDefaultInventory } from "./resource.js";
+import { ResourceInventory } from "./resource.js";
 
 export type SettlementStatus =
   | "unexplored"
