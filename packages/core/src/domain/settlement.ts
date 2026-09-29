@@ -1,5 +1,5 @@
-import { NamedCharacter } from "./character.js";
-import { PopulationCohort } from "./population.js";
+import { NamedCharacter, createNamedCharacter } from "./character.js";
+import { PopulationCohort, createPopulationCohort } from "./population.js";
 import { ResourceInventory } from "./resource.js";
 
 export type SettlementStatus =
@@ -57,15 +57,15 @@ export function createSettlement(params: Settlement): Settlement {
   if (!Number.isFinite(params.reputation) || params.reputation < 0 || params.reputation > 100) {
     throw new Error(`Settlement reputation must be in [0, 100], received: ${params.reputation}`);
   }
-  if (!Number.isFinite(params.dayCreated) || params.dayCreated < 1) {
+  if (!Number.isInteger(params.dayCreated) || params.dayCreated < 1) {
     throw new Error(`Settlement dayCreated must be positive integer, received: ${params.dayCreated}`);
   }
 
   // Deep clone inventory
   const inventory: ResourceInventory = { ...params.inventory };
   for (const [res, count] of Object.entries(inventory)) {
-    if (!Number.isFinite(count) || count < 0) {
-      throw new Error(`Settlement initial inventory for ${res} cannot be negative or invalid: ${count}`);
+    if (!Number.isInteger(count) || count < 0) {
+      throw new Error(`Settlement initial inventory for ${res} must be a non-negative integer, received: ${count}`);
     }
   }
 
@@ -77,11 +77,10 @@ export function createSettlement(params: Settlement): Settlement {
     governorId: params.governorId,
     inventory,
     facilities: params.facilities.map(f => ({ ...f })),
-    namedCharacters: params.namedCharacters.map(c => ({ ...c })),
-    cohorts: params.cohorts.map(c => ({ ...c })),
+    namedCharacters: params.namedCharacters.map(c => createNamedCharacter(c)),
+    cohorts: params.cohorts.map(c => createPopulationCohort(c)),
     authority: params.authority,
     reputation: params.reputation,
     dayCreated: params.dayCreated,
   };
 }
-

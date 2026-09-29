@@ -4,6 +4,7 @@ import { createPopulationCohort } from "../population.js";
 import { createSettlement, Settlement } from "../settlement.js";
 import { createDefaultInventory } from "../resource.js";
 import { advanceTime } from "../../time/clock.js";
+import { Memory } from "../memory.js";
 import { GameState, validateGameState } from "../gamestate.js";
 
 describe("Domain Models, Invariants & Object Isolation (LAW-04 & LAW-05)", () => {
@@ -31,6 +32,7 @@ describe("Domain Models, Invariants & Object Isolation (LAW-04 & LAW-05)", () =>
       expect(() => createNamedCharacter({ id: "", name: "Test" })).toThrow(/non-empty/);
       expect(() => createNamedCharacter({ id: "id1", name: "" })).toThrow(/non-empty/);
       expect(() => createNamedCharacter({ id: "id1", name: "Test", age: -5 })).toThrow(/non-negative/);
+      expect(() => createNamedCharacter({ id: "id1", name: "Test", age: 22.5 })).toThrow(/non-negative integer/);
       expect(() => createNamedCharacter({ id: "id1", name: "Test", age: NaN })).toThrow(/non-negative/);
       expect(() => createNamedCharacter({ id: "id1", name: "Test", health: 150 })).toThrow(/\[0, 100\]/);
       expect(() => createNamedCharacter({ id: "id1", name: "Test", health: -1 })).toThrow(/\[0, 100\]/);
@@ -66,6 +68,22 @@ describe("Domain Models, Invariants & Object Isolation (LAW-04 & LAW-05)", () =>
 
       expect(npc.needs.nutrition).toBe(50);
       expect(npc.skills.combat).toBe(20);
+    });
+
+    it("deep-clones memory tags so mutating external memory tags does not affect character (R1-F02)", () => {
+      const mem: Memory = {
+        id: "m1",
+        sourceCharacterId: "char_tag",
+        title: "T",
+        description: "D",
+        importance: 1,
+        timestamp: 1,
+        decayRate: 0.1,
+        tags: ["initial_tag"],
+      };
+      const npc = createNamedCharacter({ id: "char_tag", name: "TagTest", memories: [mem] });
+      mem.tags.push("injected_tag");
+      expect(npc.memories[0].tags).toEqual(["initial_tag"]);
     });
   });
 
@@ -104,7 +122,23 @@ describe("Domain Models, Invariants & Object Isolation (LAW-04 & LAW-05)", () =>
           loyalty: 85,
           livingStandard: "decent",
         })
-      ).toThrow(/non-negative/);
+      ).toThrow(/non-negative integer/);
+
+      expect(() =>
+        createPopulationCohort({
+          id: "cohort_err_float",
+          occupation: "worker",
+          socialClass: "common",
+          legalStatus: "citizen",
+          count: 45.5,
+          averageHealth: 80,
+          morale: 70,
+          productivity: 75,
+          resentment: 5,
+          loyalty: 85,
+          livingStandard: "decent",
+        })
+      ).toThrow(/non-negative integer/);
 
       expect(() =>
         createPopulationCohort({
@@ -124,7 +158,7 @@ describe("Domain Models, Invariants & Object Isolation (LAW-04 & LAW-05)", () =>
     });
   });
 
-  describe("createSettlement & Object Isolation", () => {
+  describe("createSettlement & Object Isolation (R1-F02)", () => {
     it("creates valid settlement and deep clones inventory", () => {
       const rawInv = createDefaultInventory();
       const settlement = createSettlement({
@@ -144,6 +178,42 @@ describe("Domain Models, Invariants & Object Isolation (LAW-04 & LAW-05)", () =>
       expect(settlement.inventory.food).toBe(100);
     });
 
+    it("deep-clones named characters and cohorts for complete settlement object isolation (R1-F02)", () => {
+      const lan = createNamedCharacter({ id: "lan", name: "Lan" });
+      const cohort = createPopulationCohort({
+        id: "c1",
+        occupation: "worker",
+        socialClass: "common",
+        legalStatus: "citizen",
+        count: 40,
+        averageHealth: 80,
+        morale: 80,
+        productivity: 80,
+        resentment: 0,
+        loyalty: 80,
+        livingStandard: "decent",
+      });
+      const s1 = createSettlement({
+        id: "s1",
+        name: "S1",
+        status: "active",
+        authority: 50,
+        reputation: 50,
+        dayCreated: 1,
+        inventory: createDefaultInventory(),
+        facilities: [],
+        namedCharacters: [lan],
+        cohorts: [cohort],
+      });
+
+      // Mutate original NPC and cohort outside
+      lan.needs.nutrition = 1;
+      cohort.count = 999;
+
+      expect(s1.namedCharacters[0].needs.nutrition).toBe(80);
+      expect(s1.cohorts[0].count).toBe(40);
+    });
+
     it("rejects invalid or negative initial inventory", () => {
       const badInv = createDefaultInventory();
       badInv.food = -10;
@@ -160,11 +230,11 @@ describe("Domain Models, Invariants & Object Isolation (LAW-04 & LAW-05)", () =>
           namedCharacters: [],
           cohorts: [],
         })
-      ).toThrow(/cannot be negative/);
+      ).toThrow(/must be a non-negative integer/);
     });
   });
 
-  describe("validateGameState (Two-Way 0/1 Active Settlement Invariant LAW-05)", () => {
+  describe("validateGameState (Two-Way 0/1 Active Settlement Invariant LAW-05 & R1-F01)", () => {
     const buildSettlement = (id: string, status: Settlement["status"]): Settlement => ({
       id,
       name: `Settlement ${id}`,
@@ -289,6 +359,97 @@ describe("Domain Models, Invariants & Object Isolation (LAW-04 & LAW-05)", () =>
       const res = validateGameState(state);
       expect(res.valid).toBe(false);
       expect(res.code).toBe("NEGATIVE_INVENTORY");
+    });
+
+    // R1-F01 Tests
+    it("rejects state with negative cohort count (R1-F01)", () => {
+      const s = buildSettlement("s1", "active");
+      s.cohorts = [
+        {
+          id: "c1",
+          occupation: "worker",
+          socialClass: "common",
+          legalStatus: "citizen",
+          count: -50,
+          averageHealth: 80,
+          morale: 80,
+          productivity: 80,
+          resentment: 0,
+          loyalty: 80,
+          livingStandard: "decent",
+        },
+      ];
+      const state: GameState = {
+        currentDate: { day: 1, week: 1, year: 1 },
+        worldMetadata: { worldSeed: 1, gameVersion: "0.1.0" },
+        settlements: { s1: s },
+        activeSettlementId: "s1",
+      };
+      const res = validateGameState(state);
+      expect(res.valid).toBe(false);
+      expect(res.code).toBe("INVALID_POPULATION");
+    });
+
+    it("rejects state with non-integer or Infinity cohort count (R1-F01)", () => {
+      const s = buildSettlement("s1", "active");
+      s.cohorts = [
+        {
+          id: "c1",
+          occupation: "worker",
+          socialClass: "common",
+          legalStatus: "citizen",
+          count: 45.5,
+          averageHealth: 80,
+          morale: 80,
+          productivity: 80,
+          resentment: 0,
+          loyalty: 80,
+          livingStandard: "decent",
+        },
+      ];
+      const state: GameState = {
+        currentDate: { day: 1, week: 1, year: 1 },
+        worldMetadata: { worldSeed: 1, gameVersion: "0.1.0" },
+        settlements: { s1: s },
+        activeSettlementId: "s1",
+      };
+      expect(validateGameState(state).code).toBe("INVALID_POPULATION");
+
+      s.cohorts[0].count = Infinity;
+      expect(validateGameState(state).code).toBe("INVALID_POPULATION");
+    });
+
+    it("rejects non-integer clock day or mathematically inconsistent week/year (R1-F01)", () => {
+      const s = buildSettlement("s1", "active");
+      const state1: GameState = {
+        currentDate: { day: 1.5, week: 1, year: 1 },
+        worldMetadata: { worldSeed: 1, gameVersion: "0.1.0" },
+        settlements: { s1: s },
+        activeSettlementId: "s1",
+      };
+      expect(validateGameState(state1).code).toBe("INVALID_CLOCK");
+
+      const state2: GameState = {
+        currentDate: { day: 1, week: 999, year: 999 },
+        worldMetadata: { worldSeed: 1, gameVersion: "0.1.0" },
+        settlements: { s1: s },
+        activeSettlementId: "s1",
+      };
+      expect(validateGameState(state2).code).toBe("INVALID_CLOCK");
+    });
+
+    it("rejects state containing character with health outside [0, 100] (R1-F01)", () => {
+      const s = buildSettlement("s1", "active");
+      const npc = createNamedCharacter({ id: "n1", name: "N1" });
+      npc.health = 150;
+      s.namedCharacters = [npc];
+      const state: GameState = {
+        currentDate: { day: 1, week: 1, year: 1 },
+        worldMetadata: { worldSeed: 1, gameVersion: "0.1.0" },
+        settlements: { s1: s },
+        activeSettlementId: "s1",
+      };
+      expect(validateGameState(state).code).toBe("INVALID_CHARACTER");
     });
   });
 

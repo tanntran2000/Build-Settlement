@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import {
   GameState,
   Settlement,
@@ -8,6 +8,7 @@ import {
   createPopulationCohort,
 } from "@haven/core";
 import { executeCommand } from "../dispatcher.js";
+import * as advanceDayModule from "../handlers/advanceDay.js";
 
 function buildTestSettlement(
   id: string,
@@ -71,34 +72,152 @@ function buildTestGameState(activeFood = 100, activeWater = 100): GameState {
 }
 
 describe("Command Dispatcher & Execution Pipeline (LAW-02, LAW-03, LAW-04, LAW-05)", () => {
-  it("rejects when input GameState violates invariants (INVALID_STATE)", () => {
-    const invalidState: GameState = {
-      currentDate: { day: 1, week: 1, year: 1 },
-      worldMetadata: { worldSeed: 1, gameVersion: "0.1.0" },
-      settlements: {
-        s1: buildTestSettlement("s1", "active"),
-      },
-      activeSettlementId: null, // Invalid: active settlement exists but pointer is null
-    };
+  describe("State Integrity Guard before Execution (R1-F01)", () => {
+    it("rejects when input GameState violates active settlement invariant (INVALID_STATE)", () => {
+      const invalidState: GameState = {
+        currentDate: { day: 1, week: 1, year: 1 },
+        worldMetadata: { worldSeed: 1, gameVersion: "0.1.0" },
+        settlements: {
+          s1: buildTestSettlement("s1", "active"),
+        },
+        activeSettlementId: null, // Invalid: active settlement exists but pointer is null
+      };
 
-    const res = executeCommand(invalidState, { type: "ADVANCE_DAY" });
-    expect(res.success).toBe(false);
-    if (!res.success) {
-      expect(res.error.code).toBe("INVALID_STATE");
-      expect(res.state).toBe(invalidState); // Untouched input state
-    }
+      const res = executeCommand(invalidState, { type: "ADVANCE_DAY" });
+      expect(res.success).toBe(false);
+      if (!res.success) {
+        expect(res.error.code).toBe("INVALID_STATE");
+        expect(res.state).toBe(invalidState); // Untouched input state
+      }
+    });
+
+    it("rejects ADVANCE_DAY and prevents negative consumption when cohort count is negative (-50)", () => {
+      const state = buildTestGameState(100, 100);
+      // Simulating corrupted input state: cohort count = -50
+      state.settlements["haven_active"].cohorts[0].count = -50;
+
+      const res = executeCommand(state, { type: "ADVANCE_DAY" });
+      expect(res.success).toBe(false);
+      if (!res.success) {
+        expect(res.error.code).toBe("INVALID_STATE");
+        expect(res.state).toBe(state);
+      }
+      // Critical check: food MUST NOT increase from 100 to 124!
+      expect(state.settlements["haven_active"].inventory.food).toBe(100);
+      expect(state.currentDate.day).toBe(7);
+    });
+
+    it("rejects ADVANCE_DAY when population count is a float or invalid", () => {
+      const state = buildTestGameState(100, 100);
+      state.settlements["haven_active"].cohorts[0].count = 45.5;
+
+      const res = executeCommand(state, { type: "ADVANCE_DAY" });
+      expect(res.success).toBe(false);
+      if (!res.success) {
+        expect(res.error.code).toBe("INVALID_STATE");
+        expect(res.state).toBe(state);
+      }
+      expect(state.settlements["haven_active"].inventory.food).toBe(100);
+    });
+
+    it("rejects ADVANCE_DAY when clock is float or desynced", () => {
+      const state = buildTestGameState(100, 100);
+      state.currentDate.day = 1.5;
+
+      const res = executeCommand(state, { type: "ADVANCE_DAY" });
+      expect(res.success).toBe(false);
+      if (!res.success) {
+        expect(res.error.code).toBe("INVALID_STATE");
+        expect(res.state).toBe(state);
+      }
+      expect(state.currentDate.day).toBe(1.5);
+    });
+
+    it("rejects ADVANCE_DAY when named character health is out of bounds (> 100)", () => {
+      const state = buildTestGameState(100, 100);
+      state.settlements["haven_active"].namedCharacters[0].health = 150;
+
+      const res = executeCommand(state, { type: "ADVANCE_DAY" });
+      expect(res.success).toBe(false);
+      if (!res.success) {
+        expect(res.error.code).toBe("INVALID_STATE");
+        expect(res.state).toBe(state);
+      }
+    });
   });
 
-  it("rejects when command payload is invalid (INVALID_COMMAND)", () => {
-    const state = buildTestGameState();
-    const badCmd = null as unknown as Command;
+  describe("Command Syntax Validation Gate (R1-F03)", () => {
+    it("rejects invalid command payloads (null, undefined, primitives)", () => {
+      const state = buildTestGameState();
+      for (const badCmd of [null, undefined, "ADVANCE_DAY", 123]) {
+        const res = executeCommand(state, badCmd);
+        expect(res.success).toBe(false);
+        if (!res.success) {
+          expect(res.error.code).toBe("INVALID_COMMAND");
+        }
+      }
+    });
 
-    const res = executeCommand(state, badCmd);
-    expect(res.success).toBe(false);
-    if (!res.success) {
-      expect(res.error.code).toBe("INVALID_COMMAND");
-      expect(res.state).toBe(state);
-    }
+    it("rejects unrecognized command types with INVALID_COMMAND, not NOT_IMPLEMENTED", () => {
+      const state = buildTestGameState();
+      const resUnknown = executeCommand(state, { type: "NOT_A_COMMAND" });
+      expect(resUnknown.success).toBe(false);
+      if (!resUnknown.success) {
+        expect(resUnknown.error.code).toBe("INVALID_COMMAND");
+        expect(resUnknown.error.message).toContain("Unrecognized command type");
+      }
+
+      const resNumber = executeCommand(state, { type: 42 });
+      expect(resNumber.success).toBe(false);
+      if (!resNumber.success) {
+        expect(resNumber.error.code).toBe("INVALID_COMMAND");
+      }
+    });
+
+    it("rejects commands with missing or malformed required payload fields", () => {
+      const state = buildTestGameState();
+
+      // BUILD_FACILITY with missing fields
+      const resMissingFacility = executeCommand(state, { type: "BUILD_FACILITY" });
+      expect(resMissingFacility.success).toBe(false);
+      if (!resMissingFacility.success) {
+        expect(resMissingFacility.error.code).toBe("INVALID_COMMAND");
+        expect(resMissingFacility.error.message).toContain("settlementId");
+      }
+
+      // BUILD_FACILITY with wrong field types
+      const resMalformedFacility = executeCommand(state, {
+        type: "BUILD_FACILITY",
+        settlementId: "haven_active",
+        facilityType: 123,
+        name: ["barracks"],
+      });
+      expect(resMalformedFacility.success).toBe(false);
+      if (!resMalformedFacility.success) {
+        expect(resMalformedFacility.error.code).toBe("INVALID_COMMAND");
+      }
+
+      // ASSIGN_MANAGER with missing characterId
+      const resMissingManager = executeCommand(state, {
+        type: "ASSIGN_MANAGER",
+        settlementId: "haven_active",
+      });
+      expect(resMissingManager.success).toBe(false);
+      if (!resMissingManager.success) {
+        expect(resMissingManager.error.code).toBe("INVALID_COMMAND");
+      }
+
+      // SET_RATION with invalid rationLevel
+      const resBadRation = executeCommand(state, {
+        type: "SET_RATION",
+        settlementId: "haven_active",
+        rationLevel: "excessive",
+      });
+      expect(resBadRation.success).toBe(false);
+      if (!resBadRation.success) {
+        expect(resBadRation.error.code).toBe("INVALID_COMMAND");
+      }
+    });
   });
 
   describe("Authority Gate vs Implementation Gate (Distinguishing FORBIDDEN vs NOT_IMPLEMENTED)", () => {
@@ -229,7 +348,7 @@ describe("Command Dispatcher & Execution Pipeline (LAW-02, LAW-03, LAW-04, LAW-0
       }
     });
 
-    it("guarantees immutability and atomicity: input state is never modified", () => {
+    it("guarantees immutability and atomicity: input state is never modified on success", () => {
       const state = buildTestGameState(100, 100);
       const originalFood = state.settlements["haven_active"].inventory.food;
       const originalDay = state.currentDate.day;
@@ -240,6 +359,61 @@ describe("Command Dispatcher & Execution Pipeline (LAW-02, LAW-03, LAW-04, LAW-0
       // Verify input state is 100% untouched
       expect(state.settlements["haven_active"].inventory.food).toBe(originalFood);
       expect(state.currentDate.day).toBe(originalDay);
+    });
+
+    it("returns INVARIANT_VIOLATION and preserves state when draft violates invariants post-execution (R1-F04)", () => {
+      const state = buildTestGameState(100, 100);
+      const originalFood = state.settlements["haven_active"].inventory.food;
+      const originalDay = state.currentDate.day;
+
+      // Simulate a handler creating an invariant-violating state (e.g. negative food stock)
+      const spy = vi.spyOn(advanceDayModule, "handleAdvanceDay").mockImplementation((draft) => {
+        draft.settlements["haven_active"].inventory.food = -999;
+        return {
+          effects: [{ type: "RESOURCE_DELTA", resource: "food", delta: -1099, reason: "Test violation delta" }],
+          auditEntries: [],
+          data: { fromDay: 7, toDay: 8, report: null },
+        };
+      });
+
+      try {
+        const res = executeCommand(state, { type: "ADVANCE_DAY" });
+        expect(res.success).toBe(false);
+        if (!res.success) {
+          expect(res.error.code).toBe("INVARIANT_VIOLATION");
+          expect(res.state).toBe(state); // Rollback to untouched state
+        }
+        // State remains pristine
+        expect(state.settlements["haven_active"].inventory.food).toBe(originalFood);
+        expect(state.currentDate.day).toBe(originalDay);
+      } finally {
+        spy.mockRestore();
+      }
+    });
+
+    it("catches handler exceptions cleanly into EXECUTION_ERROR without leaking or modifying state (R1-F04)", () => {
+      const state = buildTestGameState(100, 100);
+      const originalFood = state.settlements["haven_active"].inventory.food;
+      const originalDay = state.currentDate.day;
+
+      const spy = vi.spyOn(advanceDayModule, "handleAdvanceDay").mockImplementation(() => {
+        throw new Error("Simulated unexpected crash during calculation");
+      });
+
+      try {
+        const res = executeCommand(state, { type: "ADVANCE_DAY" });
+        expect(res.success).toBe(false);
+        if (!res.success) {
+          expect(res.error.code).toBe("EXECUTION_ERROR");
+          expect(res.error.message).toContain("Simulated unexpected crash during calculation");
+          expect(res.state).toBe(state);
+        }
+        // State remains pristine
+        expect(state.settlements["haven_active"].inventory.food).toBe(originalFood);
+        expect(state.currentDate.day).toBe(originalDay);
+      } finally {
+        spy.mockRestore();
+      }
     });
   });
 });

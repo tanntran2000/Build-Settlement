@@ -1,7 +1,13 @@
-import { GameState, Command, CommandResult, validateGameState } from "@haven/core";
-import { handleAdvanceDay } from "./handlers/advanceDay.js";
+import {
+  GameState,
+  Command,
+  CommandResult,
+  validateGameState,
+  validateCommandSyntax,
+} from "@haven/core";
+import * as advanceDayModule from "./handlers/advanceDay.js";
 
-export function executeCommand(state: GameState, command: Command): CommandResult {
+export function executeCommand(state: GameState, rawCommand: unknown): CommandResult {
   // 1. Thẩm định tính toàn vẹn của GameState
   const stateVal = validateGameState(state);
   if (!stateVal.valid) {
@@ -15,17 +21,19 @@ export function executeCommand(state: GameState, command: Command): CommandResul
     };
   }
 
-  // 2. Thẩm định cú pháp Command
-  if (!command || typeof command !== "object" || !("type" in command)) {
+  // 2. Thẩm định cú pháp Command (R1-F03)
+  const syntaxCheck = validateCommandSyntax(rawCommand);
+  if (!syntaxCheck.valid) {
     return {
       success: false,
       error: {
         code: "INVALID_COMMAND",
-        message: "Command must be an object containing a valid 'type'",
+        message: syntaxCheck.error,
       },
       state,
     };
   }
+  const command: Command = syntaxCheck.command;
 
   // 3. Thẩm định quyền hạn (Authority Gate - LAW-05)
   // Lệnh quản trị trực tiếp không được phép nhắm vào Legacy Settlement hoặc Settlement không trực trị
@@ -53,36 +61,47 @@ export function executeCommand(state: GameState, command: Command): CommandResul
     }
   }
 
-  // 4. Điều phối Handler & Thực thi nguyên tử trên Draft State
+  // 4. Điều phối Handler & Thực thi nguyên tử trên Draft State (R1-F04)
   if (command.type === "ADVANCE_DAY") {
     // Deep clone to draft state (structuredClone guarantees deep isolation)
     const draftState: GameState = structuredClone(state);
 
-    const result = handleAdvanceDay(draftState);
+    try {
+      const result = advanceDayModule.handleAdvanceDay(draftState);
 
-    // Thẩm định lại state sau khi chạy handler (Post-execution invariant check)
-    const postVal = validateGameState(draftState);
-    if (!postVal.valid) {
+      // Thẩm định lại state sau khi chạy handler (Post-execution invariant check)
+      const postVal = validateGameState(draftState);
+      if (!postVal.valid) {
+        return {
+          success: false,
+          error: {
+            code: "INVARIANT_VIOLATION",
+            message: postVal.message || "Post-execution state violated invariants",
+          },
+          state, // Rollback to original untouched input state
+        };
+      }
+
+      return {
+        success: true,
+        nextState: draftState,
+        effects: result.effects,
+        auditEntries: result.auditEntries,
+        data: result.data,
+      };
+    } catch (err: unknown) {
       return {
         success: false,
         error: {
-          code: "INVARIANT_VIOLATION",
-          message: postVal.message || "Post-execution state violated invariants",
+          code: "EXECUTION_ERROR",
+          message: err instanceof Error ? err.message : String(err),
         },
         state, // Rollback to original untouched input state
       };
     }
-
-    return {
-      success: true,
-      nextState: draftState,
-      effects: result.effects,
-      auditEntries: result.auditEntries,
-      data: result.data,
-    };
   }
 
-  // Các lệnh quản trị khác đã được thẩm định quyền hạn nhưng chưa có handler
+  // Các lệnh quản trị khác đã được thẩm định cú pháp và quyền hạn nhưng chưa có handler
   return {
     success: false,
     error: {

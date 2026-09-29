@@ -20,8 +20,8 @@ export function createPopulationCohort(params: PopulationCohort): PopulationCoho
   if (!params.id || typeof params.id !== "string" || params.id.trim() === "") {
     throw new Error("Cohort ID must be a non-empty string");
   }
-  if (!Number.isFinite(params.count) || params.count < 0) {
-    throw new Error(`Invalid cohort count: ${params.count}. Must be non-negative finite integer.`);
+  if (!Number.isInteger(params.count) || params.count < 0) {
+    throw new Error(`Invalid cohort count: ${params.count}. Must be non-negative integer.`);
   }
   const checkRange = (val: number, name: string) => {
     if (!Number.isFinite(val) || val < 0 || val > 100) {

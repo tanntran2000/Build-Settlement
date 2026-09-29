@@ -93,8 +93,8 @@ export function createNamedCharacter(params: Partial<NamedCharacter> & { id: str
     throw new Error("Character name must be a non-empty string");
   }
   const age = params.age ?? 22;
-  if (!Number.isFinite(age) || age < 0) {
-    throw new Error(`Character age must be a non-negative finite number, received: ${age}`);
+  if (!Number.isInteger(age) || age < 0) {
+    throw new Error(`Character age must be a non-negative integer, received: ${age}`);
   }
   const health = params.health ?? 100;
   checkRange(health, "health");
@@ -145,7 +145,10 @@ export function createNamedCharacter(params: Partial<NamedCharacter> & { id: str
     checkRange(v, `relationshipToPlayer.${k}`);
   }
 
-  const memories = params.memories ? params.memories.map(m => ({ ...m })) : [];
+  const memories = params.memories
+    ? params.memories.map(m => ({ ...m, tags: [...(m.tags || [])] }))
+    : [];
+
 
   return {
     id: params.id.trim(),
