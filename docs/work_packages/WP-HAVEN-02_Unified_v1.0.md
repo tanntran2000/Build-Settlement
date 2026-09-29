@@ -1,11 +1,11 @@
 # Kế Hoạch Công Việc Thống Nhất: Dân Cư, Tầng Lớp & Quản Trị Lãnh Địa
-# Mã Gói: WP-HAVEN-02 | Phiên Bản: 1.1 (DRAFT_FOR_G1)
+# Mã Gói: WP-HAVEN-02 | Phiên Bản: 1.2 (LOCKED_FOR_G1)
 
-> **Trạng thái**: `DRAFT_FOR_G1` — Cập nhật sau phản hồi Review PR #2 (`CHANGES_REQUESTED`), chờ Human duyệt G1.  
+> **Trạng thái**: `LOCKED_FOR_G1` — Đã hoàn thiện toàn bộ hợp đồng kỹ thuật và khóa chặt các ranh giới kiến trúc, sẵn sàng để Human phê duyệt chuyển sang G2.  
 > **Commit nền**: `8111bf1e0fa5d3a49e30404ea65a9fd6ff4ccc17` (nhánh `main`).  
 > **Nhánh thực hiện PR**: `docs/wp-haven-02` (Pull Request #2).  
-> **Head Commit trước chỉnh sửa**: `25ce8adc754fd4f0d50ce7ffb41c47375b9a95a9`.  
-> **Trọng tâm tái cấu trúc**: Chuyển đổi từ "Building/Construction R2" sang **Umbrella WP về Population & Society**, chia 3 lát cắt phụ thuộc. Lát cắt đầu tiên code ngay là **`POP-01: Workforce Contribution Core`**. Toàn bộ việc xây dựng vật lý (BUILD, construction stage, map/grid) được tách riêng và hoãn lại phía sau.
+> **Head Commit trước chỉnh sửa**: `eecacb7a89945433a78811daead3b24591bdefaf`.  
+> **Trọng tâm tái cấu trúc**: Umbrella WP về **Population, Society & Governance**, chia 3 lát cắt phụ thuộc. Lát cắt đầu tiên triển khai code ngay là **`POP-01: Workforce Contribution Core`**. Toàn bộ việc xây dựng vật lý (BUILD, chi phí vật liệu, thời gian thi công, map/grid/footprint) được hoãn lại phía sau.
 
 ---
 
@@ -58,19 +58,19 @@ $$\mathbf{Con\ người\ (Population)} \longrightarrow \mathbf{Phân\ công\ (Wo
 ```mermaid
 flowchart TD
     subgraph Slice1 ["Slice 1: POP-01 (Bắt đầu code ngay)"]
-        P1["Workforce Contribution Core<br>• Activity Target có sẵn (Field A)<br>• Cohort Base + Named NPC Modifier<br>• Output = Base * (1 + SumModifiers)<br>• Invariant: 0 dân = 0 output"]
+        P1["Workforce Contribution Core<br>• Activity Target nằm trong Settlement.activities<br>• Phân quyền theo settlementId<br>• Explicit output.resource & baseAmount<br>• Cohort Base + Named NPC Modifier (Amplifier)<br>• Cấm Overstaff (Assigned <= Required)<br>• Invariant: 0 dân = 0 output"]
     end
 
     subgraph Slice2 ["Slice 2: POP-02 (Sau POP-01)"]
-        P2["Population Dynamics & Report<br>• Dân số là Ledger bảo toàn<br>• Sustainable Capacity 3 vùng<br>• Class Mobility In/Out<br>• Ruler Population Report"]
+        P2["Population Dynamics & Report<br>• Dân số là Ledger bảo toàn nguồn - đích<br>• Sustainable Capacity: Hard Gate vs Attraction<br>• Class Mobility In/Out<br>• Ruler Population Report (kèm WHY)"]
     end
 
     subgraph Slice3 ["Slice 3: POP-03 (Sau POP-02)"]
-        P3["Law → Population Causality<br>• Law đổi Eligibility / Pressure<br>• Population Engine sinh flow<br>• Cấm sửa trực tiếp population"]
+        P3["Law → Population Causality<br>• Law đổi Eligibility / Pressure<br>• Population Engine sinh flow<br>• Cấm sửa trực tiếp population count"]
     end
 
     subgraph Later ["Các mốc sau (Chưa thuộc WP này)"]
-        Spatial["Construction & Spatial Loop<br>• BUILD_FACILITY, Chi phí vật liệu<br>• Chu kỳ thi công 1 ngày<br>• Map placement, Grid, Footprint"]
+        Spatial["Construction & Spatial Loop<br>• BUILD_FACILITY, Chi phí vật liệu kho<br>• Chu kỳ thi công 1 ngày<br>• Map placement, Grid, Footprint"]
     end
 
     Slice1 --> Slice2 --> Slice3 -.-> Later
@@ -80,36 +80,93 @@ flowchart TD
 
 ## 4. Chi Tiết Kỹ Thuật Lát Cắt POP-01: Workforce Contribution Core (CODE NGAY)
 
-### 4.1. Khái niệm Activity Target
-* Trong `POP-01`, công trình (ví dụ: `field_alpha`) được định nghĩa là một **Activity Target** trong simulation.
-* Không yêu cầu lệnh `BUILD_FACILITY`, không trừ tài nguyên vật liệu kho, không có thời gian chờ thi công.
-* Activity Target chứa:
-  * `id`: Định danh duy nhất (UUID/slug).
-  * `targetType`: Loại hoạt động (ví dụ: `agriculture`, `water_extraction`).
-  * `workersRequired`: Số lượng công nhân tối ưu để đạt 100% BaseOutput.
-  * `baseOutput`: Sản lượng cơ sở tại 100% nhân lực.
-  * `assignedCohorts`: Bảng gán nhân lực theo cohort: `Record<CohortId, number>`.
-  * `assignedNamedNpcs`: Danh sách ID các Named NPC được chỉ định hỗ trợ/quản lý.
+### 4.1. Vị trí Lưu Trữ Trong State & Ranh Giới Quản Trị (State Location & Authority Gate)
+* **Vị trí lưu trữ**: `ActivityTarget` được lưu trữ trực tiếp bên trong cấu trúc `Settlement`:
+  ```ts
+  interface Settlement {
+    id: SettlementId;
+    name: string;
+    inventory: Inventory;
+    population: Population;
+    facilities: Record<FacilityId, Facility>; // Công trình vật lý cũ (giữ nguyên không phá vỡ)
+    activities: Record<ActivityId, ActivityTarget>; // KHÓA MỚI CHO POP-01
+  }
+  ```
+* **Ranh giới thẩm quyền (Authority Gate - LAW-05)**:
+  * Player chỉ được phép gửi Command tác động vào các Activity Target nằm trong **Active Settlement** (`settlementId === state.activeSettlementId`).
+  * Mọi Command gửi đến Lãnh địa Di sản (Legacy Settlement) hoặc Settlement không tồn tại đều bị từ chối ngay lập tức với mã lỗi `SETTLEMENT_IMMUTABLE_LEGACY` hoặc `SETTLEMENT_NOT_FOUND`.
 
-### 4.2. Mô Hình Đóng Góp Hai Tầng (Two-Tier Contribution Model)
-Sản lượng thực tế được tính toán nghiêm ngặt qua 2 bước:
+### 4.2. Hợp Đồng Dữ Liệu ActivityTarget & Explicit Output Resource
+`ActivityTarget` không suy diễn ngầm loại tài nguyên từ tên hay loại hình, mà bắt buộc phải **khai báo tường minh (explicit)**:
+```ts
+interface ActivityOutput {
+  resource: ResourceType; // Ví dụ: "food", "clean_water", "materials"
+  baseAmount: number;     // Sản lượng cơ sở ở 100% nhân lực yêu cầu
+}
 
-$$\text{BaseOutput} = \left\lfloor \text{TargetBaseOutput} \times \frac{\sum \text{AssignedWorkers}}{\text{WorkersRequired}} \right\rfloor$$
+interface ActivityTarget {
+  id: ActivityId;
+  settlementId: SettlementId;
+  targetType: string;         // "agriculture", "water_extraction", "handicraft"
+  workersRequired: number;    // Số công nhân tối đa để đạt 100% BaseOutput
+  output: ActivityOutput;     // KHAI BÁO RÕ RÀNG LOẠI VÀ SẢN LƯỢNG
+  assignedCohorts: Record<CohortId, number>; // Bảng phân bổ nhân lực theo Cohort
+  assignedNamedNpcs: CharacterId[];          // Danh sách Named NPC quản lý/khuếch đại
+}
+```
 
-$$\text{OperationalOutput} = \left\lfloor \text{BaseOutput} \times \left(1 + \sum_{\text{npc} \in \text{AssignedNamedNpcs}} \text{NPCModifier}_{\text{npc}}\right) \right\rfloor$$
+### 4.3. Mô Hình Đóng Góp Hai Tầng & Khóa Chặt Overstaff (Two-Tier Model & Anti-Overstaff)
+Sản lượng thực tế được tính toán nghiêm ngặt theo 2 bước:
 
-* **Luật bất biến (State Invariant)**:
-  $$\text{BaseOutput} = 0 \implies \text{OperationalOutput} = 0$$
-  Nếu không có dân công vận hành cơ sở ($\sum \text{AssignedWorkers} = 0$), thì **dù có gán Maria hay Mila vào, sản lượng vẫn tuyệt đối bằng 0**. Named NPC là người lãnh đạo, chuyên môn hóa lực lượng, không phải người tự tay thay thế 50 lao động phổ thông.
+1. **Kiểm tra giới hạn nhân lực (Chống Overstaff)**:
+   $$0 \le \sum_{c} \text{assignedCohorts}[c] \le \text{workersRequired}$$
+   *Quy tắc*: Cánh đồng cần 100 người thì tối đa chỉ được phân bổ 100 người. Mọi lệnh cố tình nhồi nhét vượt quá `workersRequired` đều bị từ chối với mã lỗi `ACTIVITY_CAPACITY_EXCEEDED`.
+2. **Tính sản lượng cơ sở (BaseOutput)**:
+   $$\text{BaseOutput} = \left\lfloor \text{output.baseAmount} \times \frac{\sum_{c} \text{assignedCohorts}[c]}{\text{workersRequired}} \right\rfloor$$
+3. **Tính sản lượng vận hành khuếch đại (OperationalOutput)**:
+   $$\text{OperationalOutput} = \left\lfloor \text{BaseOutput} \times \left(1 + \sum_{\text{npc} \in \text{assignedNamedNpcs}} \text{NPCModifier}_{\text{npc}}\right) \right\rfloor$$
+4. **Luật bất biến cốt lõi (Hard Invariant)**:
+   $$\text{BaseOutput} = 0 \implies \text{OperationalOutput} = 0$$
+   *Ý nghĩa*: Nếu không có dân công vận hành ($\sum \text{assignedCohorts} = 0$), thì **dù có gán Maria hay Mila vào, sản lượng bắt buộc bằng 0**. Named NPC là người lãnh đạo, tối ưu hóa quy trình; không tự tay thay thế 50 lao động phổ thông.
 
-### 4.3. Cơ chế Phân công Lao động (`ASSIGN_WORKERS` & `ASSIGN_NAMED_NPC`)
-* **Lệnh `ASSIGN_WORKERS`**: Payload `{ targetId, cohortId, targetWorkerCount }`.
-  * *Idempotency*: Gán 50 người hai lần liên tiếp kết quả vẫn là 50, không cộng dồn thành 100. Đặt bằng 0 để rút toàn bộ công nhân về.
-  * *Bảo toàn nhân lực*: Tổng số người gán vào mọi Activity Target từ một cohort không vượt quá quy mô của cohort đó.
-  * *Bảo toàn tiêu thụ*: Người đi làm việc vẫn tiêu thụ 0.5 ăn và 0.5 nước/ngày như mọi cư dân khác.
-* **Lệnh `ASSIGN_NAMED_NPC`**: Payload `{ targetId, characterId }`.
-  * 1 Named NPC chỉ được phân công vào tối đa 1 Activity Target tại một thời điểm.
-  * Named NPC mang lại Modifier khuếch đại (ví dụ: Maria $+5\%$, Mila $+5\%$).
+### 4.4. Quy Định Modifier Của Named NPC Trong POP-01
+* Giá trị `+0.05` của Maria và Mila là **Configured Fixture Modifier** được cấu hình phục vụ riêng cho vertical slice POP-01.
+* **Nghiêm cấm Builder tự thiết kế công thức suy diễn từ `skills` hay `traits` sang modifier** trong slice này. Logic chuyển đổi từ thuộc tính kỹ năng sang modifier sẽ được đặc tả trong một WP chuyên biệt về Character RPG.
+
+### 4.5. Hợp Đồng Các Lệnh Phân Công (Command Contracts)
+Tất cả các command đều bắt buộc mang `settlementId` để phục vụ Pipeline phân quyền:
+
+```ts
+// 1. Phân bổ công nhân từ Cohort
+interface AssignWorkersCommand {
+  type: "ASSIGN_WORKERS";
+  settlementId: SettlementId;
+  targetId: ActivityId;
+  cohortId: CohortId;
+  targetWorkerCount: number;
+}
+
+// 2. Chỉ định Named NPC hỗ trợ
+interface AssignNamedNpcCommand {
+  type: "ASSIGN_NAMED_NPC";
+  settlementId: SettlementId;
+  targetId: ActivityId;
+  characterId: CharacterId;
+}
+
+// 3. Rút Named NPC khỏi cơ sở
+interface UnassignNamedNpcCommand {
+  type: "UNASSIGN_NAMED_NPC";
+  settlementId: SettlementId;
+  targetId: ActivityId;
+  characterId: CharacterId;
+}
+```
+
+* **Luật Idempotency & Chuyển công tác của Named NPC**:
+  * *Idempotency*: Gán Maria vào `field_alpha` khi cô ấy đã ở đó $\rightarrow$ Không lỗi, không tăng modifier, giữ nguyên 1 Maria duy nhất ($+5\%$).
+  * *Chống di chuyển ngầm (No Auto-Move)*: Nếu Maria đang được phân công tại `field_alpha` mà Player gửi lệnh `ASSIGN_NAMED_NPC` vào `field_beta` $\rightarrow$ **Lệnh bị từ chối ngay lập tức** với mã lỗi `CHARACTER_ALREADY_ASSIGNED`. Player bắt buộc phải gửi lệnh `UNASSIGN_NAMED_NPC` khỏi `field_alpha` trước, rồi mới được gán sang `field_beta`.
+  * *Bảo toàn tiêu thụ*: Người và NPC đi làm vẫn tiêu thụ nhu yếu phẩm (ăn/uống) đầy đủ hàng ngày trong cộng đồng.
 
 ---
 
@@ -117,13 +174,18 @@ $$\text{OperationalOutput} = \left\lfloor \text{BaseOutput} \times \left(1 + \su
 
 ### 5.1. Slice POP-02: Động Thái Dân Cư & Báo Cáo Quản Trị (Population Dynamics & Report)
 * **Nguyên tắc Bảo toàn Dân số (Population Conservation Ledger)**:
-  Không có người nào tự động sinh ra hay mất đi mà không có dòng lưu chuyển nguồn - đích rõ ràng:
+  Mọi biến động dân số đều phải thể hiện qua dòng lưu chuyển nguồn - đích rõ ràng:
   $$P_{T+1} = P_T + \text{Immigration} - \text{Emigration} + \text{MobilityIn} - \text{MobilityOut} + \text{ForcedIn} - \text{ForcedOut}$$
-* **Sức Chứa Bền Vững (Sustainable Capacity)**:
-  Khả năng thu hút dân số phụ thuộc vào 5 trụ cột: *Food, Water, Housing, Employment, QoL & Security*. Chia làm 3 vùng trạng thái:
-  * *Over Capacity*: Thiếu thốn tài nguyên, di cư tự nguyện tắt hẳn, áp lực rời đi tăng cao.
-  * *Near Capacity*: Tăng trưởng chậm dần, yêu cầu đầu tư hạ tầng.
-  * *Healthy Reserve*: Có dư thừa sinh kế, thu hút mạnh mẽ người nhập cư.
+  *(Lưu ý kiến trúc: POP-02 ban đầu chưa mô phỏng Birth/Death tự nhiên. Khi hệ thống nhân khẩu học chuyên sâu được triển khai, Birth và Death sẽ là các dòng Population Flow độc lập có nguyên nhân và bằng chứng rõ ràng, tuân thủ nghiêm ngặt Conservation Ledger)*.
+* **Sức Chứa Bền Vững Hai Tầng (Sustainable Capacity: Hard Gate vs Attraction)**:
+  * **Tầng 1 - Cổng sinh tồn tối thiểu (Hard Minimum Gate)**:
+    Dân cư thường trú (Resident Population) chỉ được phép tăng trưởng khi lãnh địa bảo đảm mức sống tối thiểu:
+    $$\text{Resident Growth} > 0 \iff \text{FoodStock} \ge \text{MinFood} \land \text{WaterStock} \ge \text{MinWater} \land \text{HousingCapacity} > \text{CurrentPopulation}$$
+    Nếu vi phạm bất kỳ điều kiện nào $\rightarrow \mathbf{Resident\ Growth = 0}$.
+  * **Tầng 2 - Lực hút & Cơ cấu giai cấp (Attraction & Composition)**:
+    Sau khi vượt qua Hard Gate, các yếu tố `Employment` + `QoL` + `Security` + `Law` sẽ quyết định quy mô và tỷ trọng các tầng lớp (Lower, Middle, Upper) nhập cư hoặc rời bỏ lãnh địa.
+  * **Người lưu vong ngoại vi (Arrivals / Outside Settlement)**:
+    Người tìm đến khi lãnh địa đang Over-capacity sẽ ở trạng thái chờ tiếp nhận ngoài cổng thành (`Outside Settlement / Applicants`), **tuyệt đối không được tính vào Resident Population** cho đến khi có đủ chỗ ở và được Player chấp thuận.
 * **Báo cáo Dân cư của Lãnh chúa (`PopulationReport`)**:
   Là một domain output có cấu trúc đầy đủ, không ghi chung chung `Poor -50`, mà ghi rõ dòng **WHY**:
   ```text
@@ -132,7 +194,7 @@ $$\text{OperationalOutput} = \left\lfloor \text{BaseOutput} \times \left(1 + \su
   ├── Lao động nghèo: 5.500 -> 5.480 (-20)
   │     ├── +28 lao động nhập cư mới
   │     ├── -48 người thăng tầng lên thường dân ổn định
-  │     └── 0 người lưu vong được nhận
+  │     └── 0 người lưu vong được nhận (Do chính sách No Refugees)
   └── Thường dân ổn định: 3.000 -> 3.119 (+119)
         ├── +81 lao động tay nghề nhập cư
         ├── +48 thăng tầng từ lao động nghèo
@@ -152,38 +214,43 @@ $$\text{OperationalOutput} = \left\lfloor \text{BaseOutput} \times \left(1 + \su
 ## 6. Kịch Bản Nghiệm Thu Số Học POP-01 (Acceptance Scenario)
 
 ### 6.1. Thiết lập thử nghiệm ban đầu (Fixture Setup)
+* **Settlement**: `settlement_alpha` (Active Settlement).
 * **Dân số**: 200 lao động phổ thông (`cohort_lower_labor`).
 * **Named NPCs**: 
-  * `Maria`: Kỹ năng nông vụ, mang lại modifier $+5\%$ ($+0.05$).
-  * `Mila`: Quản đốc tổ chức, mang lại modifier $+5\%$ ($+0.05$).
-* **Activity Target dựng sẵn**: `field_alpha`
-  * `workersRequired`: 100 công nhân.
-  * `baseOutput`: 100 đơn vị lương thực tại đủ 100 công nhân (hệ số 1.0 lương thực/người).
+  * `Maria`: Configured Modifier $+5\%$ ($+0.05$).
+  * `Mila`: Configured Modifier $+5\%$ ($+0.05$).
+* **Activity Targets dựng sẵn**:
+  * `field_alpha`: `workersRequired = 100`, `output = { resource: "food", baseAmount: 100 }`.
+  * `field_beta`: `workersRequired = 50`, `output = { resource: "food", baseAmount: 50 }`.
 
 ### 6.2. Chuỗi thao tác kiểm chứng và kết quả kỳ vọng
 
-| Bước | Thao tác lệnh | Nhân sự gán tại Field | BaseOutput | Named NPC Modifiers | Output Cuối Cùng | Ghi chú kiểm chứng |
+| Bước | Thao tác lệnh | Nhân sự gán tại Field Alpha | BaseOutput | Named NPC Modifiers | Output Cuối Cùng | Ghi chú kiểm chứng |
 | :---: | :--- | :--- | :---: | :---: | :---: | :--- |
-| **0** | Khởi tạo | 0 công nhân | 0 | Không có | **0** | Trạng thái nghỉ |
-| **1** | `ASSIGN_WORKERS(50)` | 50 / 200 công nhân | 50 | Không có | **50** | Đạt 50% công suất cơ sở |
-| **2** | `ASSIGN_NAMED_NPC(Maria)`| 50 công nhân + Maria | 50 | $+5\%$ ($+0.05$) | $\lfloor 50 \times 1.05 \rfloor = \mathbf{52}$ | Maria khuếch đại Base |
-| **3** | `ASSIGN_NAMED_NPC(Mila)` | 50 công nhân + Maria + Mila | 50 | $+10\%$ ($+0.10$) | $\lfloor 50 \times 1.10 \rfloor = \mathbf{55}$ | 2 NPC cộng dồn modifier |
-| **4** | `ASSIGN_WORKERS(100)` | 100 / 200 công nhân + 2 NPC | 100 | $+10\%$ ($+0.10$) | $\lfloor 100 \times 1.10 \rfloor = \mathbf{110}$ | Nâng công suất Base lên 100 |
-| **5** | Rút Maria (`UNASSIGN`) | 100 công nhân + Mila | 100 | $+5\%$ ($+0.05$) | $\lfloor 100 \times 1.05 \rfloor = \mathbf{105}$ | Giảm modifier mượt mà |
-| **6** | Lặp lại `ASSIGN_WORKERS(100)`| 100 công nhân + Mila | 100 | $+5\%$ ($+0.05$) | **105** | Idempotent, không đúp người |
-| **7** | Rút hết công nhân (`ASSIGN(0)`)| 0 công nhân + Mila | 0 | $+5\%$ ($+0.05$) | **0** | **NPC không tự tạo sản lượng** |
-| **8** | Rút toàn bộ | 0 công nhân, 0 NPC | 0 | Không có | **0** | Hoàn trả 200 dân về cohort |
+| **0** | Khởi tạo | 0 công nhân | 0 | Không có | **0 food** | Trạng thái nghỉ ban đầu |
+| **1** | `ASSIGN_WORKERS(alpha, lower, 50)` | 50 / 200 công nhân | 50 | Không có | **50 food** | Đạt 50% công suất cơ sở |
+| **2** | `ASSIGN_NAMED_NPC(alpha, Maria)` | 50 công nhân + Maria | 50 | $+5\%$ ($+0.05$) | $\lfloor 50 \times 1.05 \rfloor = \mathbf{52\text{ food}}$ | Maria khuếch đại Base |
+| **3** | `ASSIGN_NAMED_NPC(alpha, Mila)` | 50 công nhân + Maria + Mila | 50 | $+10\%$ ($+0.10$) | $\lfloor 50 \times 1.10 \rfloor = \mathbf{55\text{ food}}$ | 2 NPC cộng dồn modifier |
+| **4** | `ASSIGN_WORKERS(alpha, lower, 100)`| 100 / 200 công nhân + 2 NPC | 100 | $+10\%$ ($+0.10$) | $\lfloor 100 \times 1.10 \rfloor = \mathbf{110\text{ food}}$ | Nâng công suất Base lên 100 |
+| **5** | Thử overstaff: `ASSIGN(alpha, lower, 120)`| Không thay đổi | 100 | $+10\%$ ($+0.10$) | **110 food** | **Bị từ chối lỗi OVERSTAFF** |
+| **6** | Lặp lại: `ASSIGN_NAMED_NPC(alpha, Maria)`| Không thay đổi | 100 | $+10\%$ ($+0.10$) | **110 food** | **Idempotent, không đúp modifier** |
+| **7** | Gán Maria sang Beta: `ASSIGN(beta, Maria)` | Không thay đổi | 100 | $+10\%$ ($+0.10$) | **110 food** | **Từ chối: ALREADY_ASSIGNED** |
+| **8** | `UNASSIGN_NAMED_NPC(alpha, Maria)` | 100 công nhân + Mila | 100 | $+5\%$ ($+0.05$) | $\lfloor 100 \times 1.05 \rfloor = \mathbf{105\text{ food}}$ | Rút Maria thành công |
+| **9** | Rút hết công nhân: `ASSIGN(alpha, lower, 0)` | 0 công nhân + Mila | 0 | $+5\%$ ($+0.05$) | **0 food** | **0 dân = 0 sản lượng** |
+| **10**| Rút toàn bộ | 0 công nhân, 0 NPC | 0 | Không có | **0 food** | Hoàn trả 200 dân khả dụng |
 
 ---
 
 ## 7. Sổ Quyết Định Kỹ Thuật (Decision Records D09–D16)
 
-* **D09 (Kiến trúc Activity Target)**: Trong giai đoạn hiện tại, các cơ sở (`field_alpha`, `well_alpha`...) được định nghĩa là các Activity Targets trong simulation; hoãn toàn bộ bài toán không gian (grid map, footprint, pathfinding) và chi phí xây dựng.
-* **D10 (Mô hình đóng góp 2 tầng)**:
-  $$\text{OperationalOutput} = \text{BaseOutput}(\text{Cohorts}) \times (1 + \sum \text{NPCModifiers})$$
-  Named NPC đóng vai trò khuếch đại trên lực lượng lao động cơ sở; nếu BaseOutput bằng 0 thì OperationalOutput bắt buộc bằng 0.
-* **D11 (Nguyên tắc Bảo toàn Dân số - Population Conservation)**: Không có người tự sinh ra hay biến mất; mọi biến động dân số phải ghi nhận qua ledger nguồn - đích (Immigration, Emigration, Mobility, Forced).
-* **D12 (Sức chứa Bền vững - Sustainable Capacity)**: Giới hạn tăng dân dựa trên Food, Water, Housing, Employment và QoL theo 3 vùng: Over Capacity, Near Capacity, Healthy Reserve.
+* **D09 (Kiến trúc Activity Target & Settlement State)**:
+  Activity Targets được lưu trữ trực tiếp trong `Settlement.activities`. Mọi tương tác tuân thủ chặt chẽ ranh giới thẩm quyền của Active Settlement (`settlementId`). Hoãn toàn bộ bài toán bản đồ/grid/footprint.
+* **D10 (Mô hình đóng góp 2 tầng & Anti-Overstaff)**:
+  $$\text{OperationalOutput} = \text{BaseOutput}(\text{AssignedCohorts}) \times (1 + \sum \text{NPCModifiers})$$
+  Số lượng công nhân gán bị chặn cứng: $0 \le \text{Assigned} \le \text{WorkersRequired}$. Named NPC chỉ là hệ số khuếch đại; $BaseOutput = 0 \implies OperationalOutput = 0$.
+* **D11 (Nguyên tắc Bảo toàn Dân số - Population Conservation)**: Không có người tự sinh ra hay biến mất; mọi biến động dân số phải ghi nhận qua ledger nguồn - đích (Immigration, Emigration, Mobility, Forced). Birth/Death tạm thời chưa đưa vào POP-02.
+* **D12 (Sức chứa Bền vững 2 Tầng - Sustainable Capacity)**:
+  Tách riêng: (1) Hard Minimum Gate dựa trên Food, Water, Housing; (2) Lực hút và cơ cấu tầng lớp dựa trên Employment, QoL, Security, Law. Dân tị nạn chưa được tiếp nhận nằm ngoài resident population.
 * **D13 (Tính Nhân Quả Của Chính Sách - Policy Causality)**: Luật pháp chỉ thay đổi điều kiện môi trường và tính đủ điều kiện tiếp nhận; tuyệt đối cấm code sửa trực tiếp số lượng dân số.
 * **D14 (Dịch Chuyển Giai Cấp - Class Mobility)**: Công dân có thể thăng tầng hoặc giáng tầng dựa trên điều kiện sống và kinh tế; tổng dân số trong sự chuyển dịch phải được bảo toàn.
 * **D15 (Sức Hút Theo Giai Cấp - Class-specific Attraction)**: Mỗi tầng lớp có hàm đo lường sức hút riêng biệt (Lower quan tâm lương thực/việc làm; Commoners quan tâm dịch vụ; Elites quan tâm an ninh/đặc quyền).
@@ -191,15 +258,16 @@ $$\text{OperationalOutput} = \left\lfloor \text{BaseOutput} \times \left(1 + \su
 
 ---
 
-## 8. Danh Mục Tệp Được Phép Chỉnh Sửa Trong POP-01 (Allowlist)
+## 8. Danh Mục Tệp Được Phép Chỉnh Sửa Trong POP-01 (Allowlist Chính Xác)
 
-### Được phép chỉnh sửa/tạo mới:
-* `packages/core/src/domain/activity.ts` (hoặc `facility.ts`): Định nghĩa Activity Target, assignments của Cohort và Named NPC.
-* `packages/core/src/domain/population.ts`: Bổ sung helper kiểm tra và bảo toàn quỹ lao động của Cohort.
-* `packages/core/src/domain/command.ts`: Khai báo lệnh `ASSIGN_WORKERS`, `ASSIGN_NAMED_NPC`, `UNASSIGN_NAMED_NPC`.
-* `packages/core/src/rules/workforce.ts` (hoặc rules tương đương): Logic tính toán BaseOutput và OperationalOutput hai tầng.
-* `packages/simulation/src/`: Command Dispatcher xử lý các lệnh phân công và cập nhật nhịp đóng góp.
-* Các file test tương ứng trong `__tests__/`.
+### Được phép chỉnh sửa/tạo mới (Exact Paths):
+* `packages/core/src/domain/activity.ts` (Định nghĩa kiểu dữ liệu `ActivityTarget`, `ActivityOutput`, `ActivityId`).
+* `packages/core/src/domain/settlement.ts` (Thêm trường `activities: Record<ActivityId, ActivityTarget>` vào interface `Settlement`).
+* `packages/core/src/domain/population.ts` (Helper kiểm tra quỹ lao động khả dụng của Cohort).
+* `packages/core/src/command/command.ts` (Định nghĩa các command `ASSIGN_WORKERS`, `ASSIGN_NAMED_NPC`, `UNASSIGN_NAMED_NPC` mang `settlementId`).
+* `packages/core/src/rules/workforce.ts` (Logic tính toán BaseOutput, OperationalOutput hai tầng, kiểm tra overstaff).
+* `packages/simulation/src/dispatcher/` (Dispatcher thực thi 3 command phân công và validation).
+* Các file test tương ứng trong `packages/core/src/**/__tests__/` và `packages/simulation/src/**/__tests__/`.
 
 ### Nghiêm cấm đụng vào trong POP-01:
 * Lệnh `BUILD_FACILITY`, trừ kho vật liệu, thời gian chờ thi công 1 ngày.
@@ -208,28 +276,31 @@ $$\text{OperationalOutput} = \left\lfloor \text{BaseOutput} \times \left(1 + \su
 
 ---
 
-## 9. Tiêu Chí Nghiệm Thu Slice POP-01 (Acceptance Criteria POP01–POP10)
+## 9. Tiêu Chí Nghiệm Thu Slice POP-01 (Acceptance Criteria AC-POP01–AC-POP12)
 
-1. **AC-POP01 (Phân công hợp lệ)**: Gán số lượng công nhân $\le$ dân số khả dụng thành công; cập nhật chính xác bảng phân công.
-2. **AC-POP02 (Vượt quá dân số)**: Lệnh gán số lượng công nhân vượt quá dân số khả dụng của Cohort bị từ chối với mã lỗi rõ ràng.
-3. **AC-POP03 (Tính Idempotent)**: Gán cùng một số lượng công nhân liên tiếp nhiều lần không làm thay đổi trạng thái và không nhân đôi số người.
-4. **AC-POP04 (Rút nhân lực)**: Gán số lượng bằng 0 giải phóng toàn bộ công nhân về lại quỹ lao động tự do của Cohort.
-5. **AC-POP05 (BaseOutput)**: Sản lượng cơ sở tỷ lệ chính xác theo số công nhân gán trên số công nhân yêu cầu (làm tròn sàn).
-6. **AC-POP06 (Named NPC Amplifier)**: Gán Named NPC áp dụng đúng modifier nhân trên BaseOutput hiện có.
-7. **AC-POP07 (Cộng dồn NPC)**: Gán nhiều Named NPC cộng dồn modifier tuyến tính $(1 + \text{mod}_1 + \text{mod}_2)$.
-8. **AC-POP08 (Luật 0 dân = 0 output)**: Khi công nhân bằng 0, sản lượng bắt buộc bằng 0 dù có bao nhiêu Named NPC được gán.
-9. **AC-POP09 (Bảo toàn tiêu thụ)**: Công nhân đang làm việc vẫn được tính vào danh sách tiêu thụ nhu yếu phẩm hàng ngày.
-10. **AC-POP10 (Hồi quy R1)**: Toàn bộ 51 unit tests hiện có của R1 vẫn PASS 100%.
+1. **AC-POP01 (Phân công hợp lệ trong Active Settlement)**: Gán số lượng công nhân $\le$ dân số khả dụng thành công; cập nhật chính xác bảng phân công trong `settlement.activities`.
+2. **AC-POP02 (Từ chối Settlement không hợp lệ)**: Gửi lệnh vào Legacy Settlement hoặc Settlement không tồn tại bị từ chối ngay lập tức với mã lỗi `SETTLEMENT_IMMUTABLE_LEGACY` hoặc `SETTLEMENT_NOT_FOUND`.
+3. **AC-POP03 (Vượt quá dân số Cohort)**: Gán số lượng công nhân vượt quá dân số khả dụng của Cohort bị từ chối với mã lỗi `INSUFFICIENT_COHORT_POPULATION`.
+4. **AC-POP04 (Khóa Overstaff)**: Gán số lượng công nhân khiến tổng nhân lực tại target vượt quá `workersRequired` bị từ chối với mã lỗi `ACTIVITY_CAPACITY_EXCEEDED`.
+5. **AC-POP05 (Idempotent Cohort)**: Gán cùng một số lượng công nhân liên tiếp nhiều lần không làm thay đổi trạng thái và không nhân đôi số người.
+6. **AC-POP06 (Rút nhân lực)**: Gán số lượng bằng 0 giải phóng toàn bộ công nhân về lại quỹ lao động tự do của Cohort.
+7. **AC-POP07 (Explicit Output Resource)**: Sinh ra chính xác loại tài nguyên khai báo trong `output.resource` với số lượng tính theo BaseOutput.
+8. **AC-POP08 (Named NPC Amplifier)**: Gán Named NPC áp dụng đúng configured modifier nhân trên BaseOutput hiện có.
+9. **AC-POP09 (Idempotent Named NPC)**: Gán trùng cùng một Named NPC vào cùng một target không tạo ra duplicate modifier.
+10. **AC-POP10 (Chống Auto-Move Named NPC)**: Gán Named NPC đang làm việc ở target này sang target khác bị từ chối với mã lỗi `CHARACTER_ALREADY_ASSIGNED`. Bắt buộc phải unassign trước.
+11. **AC-POP11 (Luật 0 dân = 0 output)**: Khi công nhân bằng 0, sản lượng bắt buộc bằng 0 dù có Named NPC được gán.
+12. **AC-POP12 (Bảo toàn tiêu thụ & Hồi quy R1)**: Công nhân đang làm việc vẫn tiêu thụ lương thực/nước; toàn bộ 51 tests hiện có của R1 vẫn PASS 100%.
 
 ---
 
 ## 10. Bằng Chứng Kỹ Thuật & Quy Trình Review PR #2
 
-* **Head Commit ban đầu của PR #2**: `25ce8adc754fd4f0d50ce7ffb41c47375b9a95a9`.
-* **CI Quality Gate ban đầu**: Run ID `36538827716` (Status: PASS).
+* **Head Commit trước cập nhật**: `eecacb7a89945433a78811daead3b24591bdefaf`.
+* **CI Quality Gate ban đầu**: Run ID `36539546787` (Status: SUCCESS).
 * **Quy trình tiếp theo**:
-  1. Commit bản cập nhật v1.1 này vào branch `docs/wp-haven-02`.
+  1. Commit bản cập nhật v1.2 này vào branch `docs/wp-haven-02`.
   2. Push lên remote origin để GitHub tự động cập nhật PR #2.
   3. Lấy SHA đầy đủ mới nhất từ `git rev-parse HEAD` làm bằng chứng.
-  4. Chờ CI quality-gate chạy lại trên commit mới.
-  5. Dừng tại G4/G5 để Human review và quyết định merge.
+  4. Cập nhật body PR #2 bằng GitHub CLI.
+  5. Chờ CI quality-gate chạy lại trên commit mới.
+  6. **Dừng lại ở G4/G5 để Human review và quyết định merge. Tuyệt đối không tự ý merge vào `main`**.
