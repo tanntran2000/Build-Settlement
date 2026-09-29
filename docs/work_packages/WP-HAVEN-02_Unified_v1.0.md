@@ -107,24 +107,30 @@ $$\mathbf{100\ cư\ dân = 1\ Population\ Block}$$
 
 ---
 
-## V. Giữ Thiết Kế Ba Trục Thân Phận Ở Cấp Độ Population Cohort
+## V. Giữ Thiết Kế Ba Trục Thân Phận & Khóa Resolver Macro Economic Profile
 
 * Kiến trúc kiên định duy trì 3 trục độc lập ở cấp độ **Population Cohort**:
   $$\mathbf{Occupation} \quad \times \quad \mathbf{SocialClass} \quad \times \quad \mathbf{LegalStatus}$$
-* **Nguyên tắc phạm vi Cohort**:
-  * Class hiện tại **chỉ có ý nghĩa ở cấp Population Cohort**. Ví dụ $10.000$ cư dân Lower Class tạo ra năng lực lao động vĩ mô $150\text{ units}$, đây là **thống kê của một khối dân cư**, tuyệt đối không suy diễn thành *"một cá nhân Lower mặc định giỏi lao động gấp 1.5 lần"*. Năng lực cá nhân cụ thể thuộc về hệ thống NPC sau này.
-  * `enslaved` cũng chỉ xét ở cấp Cohort (`LegalStatus = "enslaved"`) để engine nhận diện quan hệ kinh tế và chọn **macro economic profile**, không phải là một SocialClass mới và không cần quan tâm từng người cụ thể là ai.
-* **Khóa Quy Tắc Giải Định Tuyến Profile (Economic Profile Resolver Contract)**:
-  Để tránh Builder tự quyết, POP-01A khóa thuật toán chọn profile:
+* **Hệ thống kiểu Canonical của R1 (Single Source of Truth)**:
+  * `SocialClass` gồm 5 bậc chuẩn: `"lower" | "common" | "skilled" | "administrative" | "elite"`.
+  * `LegalStatus` gồm 6 trạng thái chuẩn: `"citizen" | "free_resident" | "contract_bound" | "enslaved" | "prisoner" | "outsider"`. (Tuyệt đối không dùng `"free"` vì không tồn tại trong canonical model).
+* **Khóa Thuật Toán Resolver (Economic Profile Resolver Contract)**:
+  Để loại bỏ hoàn toàn việc Builder phải phỏng đoán (`common = middle? skilled = middle? administrative = upper?`), POP-01A khóa chặt chẽ thuật toán ánh xạ:
   ```text
   NẾU cohort.legalStatus === "enslaved":
-      → Sử dụng "Servile Economic Profile" cho việc tính Labor, Purchase Demand và Lifestyle Food.
+      → "servile"
   NGƯỢC LẠI:
-      → Sử dụng Economic Profile tương ứng theo cohort.socialClass (Lower, Middle, Upper).
+      NẾU cohort.socialClass === "lower":
+          → "lower"
+      NẾU cohort.socialClass === "common" HOẶC cohort.socialClass === "skilled":
+          → "middle"
+      NẾU cohort.socialClass === "administrative" HOẶC cohort.socialClass === "elite":
+          → "upper"
   ```
-* **Nguyên tắc Phối hợp Đa Lớp (Composable Identity Layers)**:
-  * Đây chỉ là **economic profile resolution cho 3 metrics cơ bản của POP-01A**. Việc áp dụng Servile Profile **tuyệt đối không thay đổi hay xóa bỏ `occupation`, `socialClass` hay skills** của thực thể nhân vật.
-  * Trong các giai đoạn tiếp theo, `Occupation` sẽ được overlay để tính Skilled Labor, Medical/Technical Capacity mà không bị gãy cấu trúc.
+* **Nguyên tắc cốt lõi: Không Tạo Hệ Class Thứ Hai**:
+  * `"middle"` và `"upper"` ở đây **CHỈ là `EconomicProfileKey`** phục vụ việc tra cứu bộ multiplier vĩ mô (`INITIAL_BALANCE_PROFILE`), **tuyệt đối không phải SocialClass mới**.
+  * Input của hệ thống luôn là canonical `PopulationCohort` với `SocialClass` và `LegalStatus` gốc.
+  * Việc áp dụng Servile Profile theo `LegalStatus = "enslaved"` không làm thay đổi hay xóa bỏ `occupation`, `socialClass` hay skills của thực thể nhân vật.
 
 ---
 
@@ -401,7 +407,7 @@ flowchart TD
 | **D19** | **Tách Đôi Nhu Cầu Lương Thực**: Survival Food Need (sinh học $\times 1.0$) tách riêng Lifestyle Food Demand (tiêu chuẩn lối sống phân tầng). | **ARCHITECTURE** |
 | **D20** | **Support Tác Động Labor Qua Nhịp $T \rightarrow T+1$**: Support tham gia tính Readiness cho ngày tiếp theo. | **ARCHITECTURE DIRECTION**<br>*(Chưa code ở A, dành cho B)* |
 | **D21** | **Temporal Causality $T \rightarrow T+1$**: Khóa trật tự pha tick rời rạc, feedback loop trễ 1 ngày chống circular dependency trong cùng ngày. | **ARCHITECTURE** |
-| **D22** | **Composable Identity & Servile Resolver**: Thân phận nô lệ (`LegalStatus = enslaved`) là một layer độc lập. Khóa resolver ưu tiên Servile Profile cho 3 metrics POP-01A mà không xóa Occupation/SocialClass. | **ARCHITECTURE** |
+| **D22** | **Composable Identity & Resolver Contract**: Khóa resolver 6 nhánh từ canonical `SocialClass` và `LegalStatus` sang `EconomicProfileKey` (`servile`, `lower`, `middle`, `upper`). Không tạo class system thứ hai. | **ARCHITECTURE** |
 | **D23** | **Fixed-Point Scale & Rounding Policy**: Khóa quy chuẩn `SOCIAL_RESOURCE_SCALE = 1000` và chính sách làm tròn `Math.floor` cho toàn bộ tài nguyên xã hội dẫn xuất. | **ARCHITECTURE** |
 | **D24** | **Pure Derived Snapshot Calculator**: Calculator là hàm thuần túy, chỉ trả snapshot, không mutate GameState, không phát sinh Command hay thay đổi kho. | **ARCHITECTURE** |
 | **D25** | **Scope Law & NPC Decoupling**: Dân cư chỉ mô phỏng ở cấp độ Cohort. Cắt toàn bộ Named NPC sang gói riêng `NPC-01 Future`. Không tạo hệ class thứ hai. | **ARCHITECTURE** |
@@ -415,8 +421,18 @@ flowchart TD
 ### 1. Phạm Vi Files Cho Phép Sửa Đổi / Bổ Sung (Strict Allowlist với Exact Paths)
 Nhất quán sử dụng module con chuyên biệt `packages/core/src/social/`:
 * `packages/core/src/social/types.ts`:  
-  * **Import trực tiếp** `PopulationCohort`, `SocialClass`, `LegalStatus` từ canonical model hiện có (`packages/core/src/domain/population.js`). **Tuyệt đối không tái định nghĩa** các kiểu này để tránh tạo ra hệ thống class thứ hai.  
-  * **Chỉ định nghĩa các kiểu macro mới**: `EconomicProfileKey = 'servile' | 'lower' | 'middle' | 'upper'`, `ClassResourceProfile`, `SocialResourceSnapshot`.
+  * **Import đúng từ canonical model R1**:
+    ```ts
+    import type { PopulationCohort } from "../domain/population.js";
+    import type { SocialClass, LegalStatus } from "../domain/character.js";
+    ```
+    **Tuyệt đối không tái định nghĩa** các kiểu này để tránh tạo ra hệ thống class thứ hai.  
+  * **Chỉ định nghĩa các kiểu macro mới**:
+    ```ts
+    export type EconomicProfileKey = "servile" | "lower" | "middle" | "upper";
+    export interface ClassResourceProfile { ... }
+    export interface SocialResourceSnapshot { ... }
+    ```
 * `packages/core/src/social/profile.ts`: Cấu hình hằng số `SOCIAL_RESOURCE_SCALE = 1000` và `INITIAL_BALANCE_PROFILE` (pure config constants).
 * `packages/core/src/social/calculator.ts`: Hàm tính toán thuần túy (pure deterministic functions): `calculatePopulationBlocks(count)`, `resolveEconomicProfile(cohort)`, `calculateSocialResources(cohorts, profile)`.
 * `packages/core/src/social/__tests__/pop01a_resource_core.test.ts`: Test suite kiểm chứng độc lập.
@@ -425,6 +441,8 @@ Nhất quán sử dụng module con chuyên biệt `packages/core/src/social/`:
 
 ### 2. Contract Calculator Thuần Túy (No State Mutation)
 ```ts
+export type EconomicProfileKey = "servile" | "lower" | "middle" | "upper";
+
 export interface SocialResourceSnapshot {
   headcount: number;
   populationBlocks: number; // derived display (e.g. 124.5)
@@ -434,20 +452,22 @@ export interface SocialResourceSnapshot {
   lifestyleFoodDemandMilli: number; // integer milli-units
 }
 
+export function resolveEconomicProfile(cohort: PopulationCohort): EconomicProfileKey;
+
 export function calculateSocialResources(
   cohorts: PopulationCohort[],
-  profileMap: Record<string, ClassResourceProfile>
+  profileMap: Record<EconomicProfileKey, ClassResourceProfile>
 ): SocialResourceSnapshot;
 ```
 
 ### 3. Hai Fixture Kiểm Thử Nghiệm Thu Chuẩn (Deterministic Benchmark Fixtures)
 
 #### Fixture A — Canonical Scale
-Đầu vào kiểm thử:
-* `Lower Class`: $10.000$ cư dân (`LegalStatus: "free"`)
-* `Enslaved`: $1.000$ cư dân (`LegalStatus: "enslaved"`)
-* `Middle Class`: $3.000$ cư dân (`LegalStatus: "free"`)
-* `Upper Class`: $500$ cư dân (`LegalStatus: "free"`)
+Đầu vào kiểm thử (Canonical R1 types, không dùng `"free"`):
+* `Lower Class`: $10.000$ cư dân (`socialClass: "lower"`, `legalStatus: "citizen"`) $\rightarrow$ profile `lower`
+* `Enslaved`: $1.000$ cư dân (`socialClass: "lower"`, `legalStatus: "enslaved"`) $\rightarrow$ profile `servile`
+* `Middle Class`: $3.000$ cư dân (`socialClass: "common"`, `legalStatus: "citizen"`) $\rightarrow$ profile `middle`
+* `Upper Class`: $500$ cư dân (`socialClass: "elite"`, `legalStatus: "citizen"`) $\rightarrow$ profile `upper`
 
 Bảng kết quả đầu ra bắt buộc khớp chính xác tuyệt đối:
 
@@ -460,13 +480,13 @@ Bảng kết quả đầu ra bắt buộc khớp chính xác tuyệt đối:
 | **TỔNG CỘNG** | $\mathbf{14.500}$ | $\mathbf{145,0}$ | $\mathbf{202.500}$ ($\mathbf{202,5}$) | $\mathbf{165.000}$ ($\mathbf{165,0}$) | $\mathbf{145.000}$ ($\mathbf{145,0}$) | $\mathbf{145.000}$ ($\mathbf{145,0}$) |
 
 #### Fixture B — Formula Discrimination (Bẫy Test & Bắt Lỗi Thuật Toán)
-*Mục đích*: Hóa giải sự trùng hợp ngẫu nhiên của Fixture A ($145 = 145$). Fixture B buộc $\text{Survival Food} \ne \text{Lifestyle Food}$ để bắt lỗi nếu Builder code nhầm `lifestyleFood = survivalFood`.
+*Mục đích*: Hóa giải sự trùng hợp ngẫu nhiên của Fixture A ($145 = 145$). Fixture B buộc $\text{Survival Food} \ne \text{Lifestyle Food}$ để bắt lỗi nếu Builder code nhầm `lifestyleFood = survivalFood`. Đồng thời kiểm thử các bậc SocialClass còn lại (`skilled`, `administrative`).
 
-Đầu vào kiểm thử:
-* `Lower Class`: $9.700$ cư dân (`LegalStatus: "free"`)
-* `Enslaved`: $1.000$ cư dân (`LegalStatus: "enslaved"`)
-* `Middle Class`: $3.000$ cư dân (`LegalStatus: "free"`)
-* `Upper Class`: $800$ cư dân (`LegalStatus: "free"`)
+Đầu vào kiểm thử (Canonical R1 types, không dùng `"free"`):
+* `Lower Class`: $9.700$ cư dân (`socialClass: "lower"`, `legalStatus: "citizen"`) $\rightarrow$ profile `lower`
+* `Enslaved`: $1.000$ cư dân (`socialClass: "lower"`, `legalStatus: "enslaved"`) $\rightarrow$ profile `servile`
+* `Middle Class`: $3.000$ cư dân (`socialClass: "skilled"`, `legalStatus: "citizen"`) $\rightarrow$ profile `middle`
+* `Upper Class`: $800$ cư dân (`socialClass: "administrative"`, `legalStatus: "citizen"`) $\rightarrow$ profile `upper`
 
 Bảng kết quả đầu ra bắt buộc khớp chính xác tuyệt đối:
 
@@ -492,4 +512,11 @@ $$\mathbf{SurvivalFoodMilli (145.000) \ne LifestyleFoodDemandMilli (148.000)}$$
 * **AC-POP01A-03**: Fixture B (Formula discrimination) chứng minh rõ ràng $\text{Survival Food} (145.000) \ne \text{Lifestyle Food} (148.000)$; chặn đứng lỗi code đồng nhất 2 công thức.
 * **AC-POP01A-04**: Edge cases $1$, $99$, $101$ cư dân xác nhận tính lũy tiến liên tục, $99$ cư dân tạo ra đúng $1.485\text{ milli}$, không có cliff.
 * **AC-POP01A-05**: `calculateSocialResources` là pure function, chỉ tính toán snapshot, không mutate GameState, không phụ thuộc DOM hay UI libraries.
-* **AC-POP01A-06**: `resolveEconomicProfile` ưu tiên Servile Economic Profile khi `legalStatus === "enslaved"`, ngược lại phân giải theo `socialClass`.
+* **AC-POP01A-06**: `resolveEconomicProfile(cohort)` ánh xạ đúng và đủ 100% cho 6 nhánh canonical, không có fallback ngầm:
+  * `legalStatus === "enslaved"` (bất kể `socialClass`) $\rightarrow$ `"servile"`
+  * `socialClass === "lower"` (`legalStatus !== "enslaved"`) $\rightarrow$ `"lower"`
+  * `socialClass === "common"` (`legalStatus !== "enslaved"`) $\rightarrow$ `"middle"`
+  * `socialClass === "skilled"` (`legalStatus !== "enslaved"`) $\rightarrow$ `"middle"`
+  * `socialClass === "administrative"` (`legalStatus !== "enslaved"`) $\rightarrow$ `"upper"`
+  * `socialClass === "elite"` (`legalStatus !== "enslaved"`) $\rightarrow$ `"upper"`
+* **AC-POP01A-07**: `packages/core/src/social/types.ts` import canonical `PopulationCohort` từ `domain/population.js`, `SocialClass` và `LegalStatus` từ `domain/character.js`; tuyệt đối không tái định nghĩa các kiểu này.
