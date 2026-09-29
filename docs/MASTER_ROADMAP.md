@@ -6,13 +6,15 @@
 
 ## 1. Tiêu Chuẩn Kỹ Thuật & Điều Kiện Hoàn Thành (Definition of Done - DoD)
 
-Bất kỳ tính năng hoặc giai đoạn (Phase) nào được coi là hoàn thành khi và chỉ khi thỏa mãn đồng thời 5 tiêu chí sau:
+Bất kỳ tính năng hoặc giai đoạn (Phase) nào được coi là hoàn thành khi và chỉ khi thỏa mãn đồng thời 7 tiêu chí sau:
 
 1. **Tuân thủ Kiến trúc Headless**: Mã nguồn mô phỏng nằm trong `packages/core` và `packages/simulation` hoàn toàn độc lập với DOM và UI framework.
 2. **Type Safety 100%**: Biên dịch thành công với TypeScript Strict Mode, không có `any`, không có lỗi cú pháp hoặc cảnh báo kiểu.
 3. **Độ bao phủ Kiểm thử (Automated Tests)**: Mọi domain model và hàm tính toán mới đều có ít nhất 1 test suite trong Vitest kiểm chứng các trường hợp thông thường (*happy path*) và trường hợp biên (*edge cases*).
 4. **Build Thành Công**: Lệnh `npm test` và `npm run build` chạy thành công không có lỗi.
 5. **Cập nhật Tiến độ & Bách khoa toàn thư**: Đã ghi nhận thay đổi vào [INTERNAL_PROGRESS_TRACKER.md](file:///d:/NghienCuuTiemNang/Build-Settlement/docs/INTERNAL_PROGRESS_TRACKER.md) và cập nhật cơ chế vào [ENCYCLOPEDIA_MECHANICS.md](file:///d:/NghienCuuTiemNang/Build-Settlement/docs/ENCYCLOPEDIA_MECHANICS.md).
+6. **Tiêu chuẩn Siêu Nhẹ (Lightweight Footprint)**: Giữ dung lượng tải về và mức tiêu thụ RAM ở mức tối thiểu. Gói UI build ra duy trì dưới 200KB gzip. Không dùng thư viện bên ngoài nếu có thể tự viết bằng logic thuần.
+7. **Kiến trúc Hướng Modding (Modding-First)**: Mọi định nghĩa về công trình, sự kiện, lời thoại, trait tính cách PHẢI được lưu ở dạng file JSON/Data Schema trong `packages/content/`, sẵn sàng cho cơ chế nạp đè (override) từ thư mục `mods/`.
 
 ---
 
@@ -119,10 +121,13 @@ flowchart TD
 
 ---
 
-### Phase 7: Đóng Gói Phân Phối Đa Nền Tảng & Đồng Bộ Save
-* **Mục tiêu**: Xuất xưởng đồng thời bản Web Online và bản PC Desktop Offline.
+### Phase 7: Đóng Gói Đa Nền Tảng, Đồng Bộ Save & Modding Engine
+* **Mục tiêu**: Xuất xưởng đồng thời bản Web Online và bản PC Desktop Offline, mở toang khả năng Modding cho cộng đồng.
 * **Các đầu việc cụ thể**:
   * [ ] Hệ thống Lưu trữ IndexedDB trên Web: Tự động lưu mỗi ngày (Day Tick), không giới hạn dung lượng.
   * [ ] Nút Xuất Save (`.sav` / JSON nén) và Nhập Save chéo giữa Web và Máy tính.
   * [ ] Cấu hình **Tauri** để biên dịch thành file cài đặt Desktop `.exe` siêu nhẹ cho Windows/macOS.
-  * [ ] Hỗ trợ thư mục mở `custom_portraits/` để người chơi dễ dàng thêm ảnh cá nhân vào game.
+  * [ ] **Hệ thống Nạp Mod Ngoại Vi (External Mod Loader)**:
+    * Tự động quét thư mục `mods/portraits/` để nạp ảnh chân dung AI của người chơi tự chế đè lên ảnh gốc.
+    * Tự động quét thư mục `mods/buildings/` và `mods/events/` để nạp thêm công trình và sự kiện 18+ viết bằng JSON.
+    * Hệ thống Event Hooks (`onDayTick`, `onIntimacy`, `onChildbirth`) cho phép modder can thiệp vào logic game.

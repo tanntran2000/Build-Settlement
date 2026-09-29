@@ -37,6 +37,11 @@
      - Giá trị thay đổi (+ / -).
      - Diễn giải dễ hiểu cho người chơi.
 
+6. **Siêu Nhẹ & Mở Cho Modding (Lightweight & Modding-First)**:
+   - **Tối ưu tài nguyên**: Không cài đặt thư viện thứ ba cồng kềnh. Sử dụng định dạng ảnh WebP nén cao và lazy-loading. Bundle UI khi build phải duy trì ở mức siêu nhẹ (< 200KB gzip).
+   - **Tách rời Logic & Dữ liệu (Data-Driven)**: Mọi dữ liệu về công trình, tài nguyên, chỉ số cơ thể, sự kiện 18+ và kịch bản thoại PHẢI được định nghĩa qua file cấu hình JSON/TypeScript schema riêng biệt trong `packages/content/`, tuyệt đối không hard-code vào logic tính toán.
+   - Luôn thiết kế các Hook mở rộng để người chơi dễ dàng ghi đè (override) dữ liệu và ném ảnh chân dung tùy biến từ thư mục ngoài `mods/`.
+
 ---
 
 ## 2. Bản Đồ Mã Nguồn (Codebase Map)

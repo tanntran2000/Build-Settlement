@@ -85,3 +85,21 @@ Sự kết hợp hài hòa giữa **Pixel Art cổ điển** và **AI Generated 
 3. **Cơ chế Chuyển Đổi Save Chéo (Cross-save Interchangeability)**:
    - Hỗ trợ nút **"Xuất file lưu" (Export Save)** và **"Nhập file lưu" (Import Save)**.
    - Người chơi có thể xuất save từ bản Web mang về nạp vào bản PC để chơi tiếp, và ngược lại.
+
+---
+
+## 5. Triết Lý Thiết Kế: Siêu Nhẹ & Mở Hoàn Toàn Cho Modding (Lightweight & Modding-First)
+
+Sức sống bất diệt của các tựa game như *Free Cities* hay *RimWorld* đến từ hai yếu tố sống còn:
+
+### 5.1. Tối Ưu Siêu Nhẹ (Zero-Bloat)
+* **Khởi động tức thì**: Dung lượng UI và mã nguồn nén chỉ vài chục KB. Game có thể mở lên trong chớp mắt ngay cả trên mạng 3G hoặc máy tính cấu hình văn phòng.
+* **Bộ nhớ RAM cực thấp**: Chạy trên Desktop qua Tauri chỉ tiêu tốn 15–30MB RAM (so với 200MB+ của các ứng dụng Electron cồng kềnh).
+* **Tối ưu hóa hình ảnh**: Toàn bộ đồ họa sử dụng Pixel Art nén và định dạng ảnh WebP thế hệ mới, tích hợp cơ chế nạp lười (*lazy-loading*) để đảm bảo không bao giờ giật lag.
+
+### 5.2. Mở Toàn Diện Cho Cộng Đồng Modding (Modding-First)
+Toàn bộ trò chơi được xây dựng theo kiến trúc **Data-Driven (Điều khiển bằng Dữ liệu)**:
+* **Modding Chân dung AI (Cực dễ)**: Người chơi chỉ cần ném ảnh vào thư mục `mods/portraits/`, game sẽ tự động nhận diện và gán cho NPC mà không cần động vào mã nguồn.
+* **Modding Kịch bản & Cơ chế (JSON Content)**: Mọi công trình, tài nguyên, sự kiện 18+, lời thoại và luật lệ đều được lưu dưới dạng file JSON trong sáng, dễ đọc. Bất kỳ ai cũng có thể tự tạo một kịch bản hoặc công trình 18+ mới chỉ bằng một trình soạn thảo văn bản đơn giản.
+* **Hệ thống Điểm Móc (Event Hooks)**: Cung cấp các điểm can thiệp vào vòng lặp mô phỏng (`onDayTick`, `onIntimacy`, `onChildbirth`) để các modder nâng cao tự do mở rộng logic theo ý muốn.
+
