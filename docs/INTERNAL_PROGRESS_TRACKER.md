@@ -34,6 +34,7 @@
 | **content** | `src/buildings.json` | Danh mục bản vẽ công trình | **L2 (Đã triển khai)** | Có 3 bản vẽ mẫu. Nối vào vòng xây dựng và sản xuất ở R2. |
 | **persistence**| `src/schema.ts` | Lược đồ lưu trữ Save Game | **L1 (Đã định nghĩa)** | Đã cấu trúc `WorldSaveData` đồng bộ 100% với `GameState`. **Chưa có logic đọc/ghi save.** |
 | **ui** | `src/App.svelte` | Giao diện Dashboard Svelte 5 | **L4 (Đã tích hợp)** | Đã xóa bỏ toàn bộ state mutation trực tiếp. UI dispatch command tới simulation và render state mới; đã pass Playwright smoke test. |
+| **core** | `src/social/*` | Năng lực Xã hội & Quy đổi Macro (POP-01A) | **L1 (Đã định nghĩa - Sẵn sàng thi công)** | Đã đặc tả trọn vẹn trong WP-HAVEN-02 v1.5 (G1 Approved tại `913d981`). Khóa chuẩn Fixed-Point, 6-way resolver, Fixtures A/B nghiệm thu. Chờ thi công G2. |
 
 ---
 
@@ -78,7 +79,7 @@
 
 ---
 
-## 5. Lộ Trình Tái Cơ Cấu Thực Tế (Phân Kỳ R0 - R5 Cho Vertical Slice)
+## 5. Lộ Trình Tái Cơ Cấu Thực Tế (Hạ Tầng Nền Tảng Cho Vertical Slice)
 
 * [x] **R0: Đối chiếu tiến độ + Sửa CI**:
   - Dọn sạch unused imports (`settlement.ts`, `command.ts`).
@@ -90,17 +91,53 @@
   - Khởi tạo Command Dispatcher trung tâm (`executeCommand`).
   - Validation Invariants (chặn số âm, kiểm tra container, kiểm tra đủ khóa bắt buộc, cô lập object graph).
   - Tách biệt kiểm tra kiến trúc và browser smoke test.
-* [ ] **R2: Vòng Sinh Tồn - Xây Dựng (Survival & Building Loop)**:
-  - Hiện thực hóa lệnh Xây dựng (`BUILD_FACILITY`) cho 3 bản vẽ hiện có.
-  - Phân công công nhân $\rightarrow$ Sinh sản lượng $\rightarrow$ Cân đối tiêu thụ.
-  - Tác động của thiếu hụt tài nguyên (Deficit) lên Sĩ khí và Sức khỏe cư dân.
-* [ ] **R3: Lưu Trữ & Vòng Đời Ván Chơi (Persistence & Session Lifecycle)**:
-  - Logic đọc/ghi Save game thực tế (`serialize` / `deserialize`).
-  - Xuất/nhập file save (`.json`), xử lý save lỗi trên file tạm.
-  - Cơ chế New Game, Continue, và nền móng New Game+.
-* [ ] **R4: Cơ Chế Bàn Giao Thật (Atomic Handoff)**:
-  - Giao dịch bàn giao nguyên tử: Bổ nhiệm Governor, chuyển giao tài sản, tước quyền điều khiển trực tiếp của Player.
-  - Lãnh địa cũ trở thành Legacy Settlement tự cập nhật trong nền.
-* [ ] **R5: Hệ Thống Sự Kiện & Tính Chơi Lại (Event Loop & Replayability)**:
-  - Event scheduler có điều kiện kích hoạt, cooldown, lịch sử lựa chọn.
-  - Giới hạn độ dài nhật ký log để chống phình bộ nhớ.
+
+---
+
+### FOUNDATION I — POPULATION (Trọng Tâm Kỹ Thuật Hiện Tại)
+
+> **Quy tắc phân tách ranh giới**:
+> - **Named NPC $\rightarrow$ `NPC-01 Future`**: Decouple hoàn toàn khỏi Population Core. Không mô phỏng tâm lý, quan hệ cá nhân hay kỹ năng Named NPC trong Population Core.
+> - **Resource Core $\rightarrow$ Foundation II**: Chỉ triển khai sau khi Population Core cung cấp đủ input Demand và Capacity ổn định.
+
+* [ ] **POP-01A: Class Resource Core**: **READY FOR IMPLEMENTATION** *(G1 Approved / Closed tại commit `913d981`)*
+  - Khóa hằng số `SOCIAL_RESOURCE_SCALE = 1000` (integer milli-units, `Math.floor`).
+  - 6-way resolver `resolveEconomicProfile` từ canonical `SocialClass` & `LegalStatus`.
+  - Pure snapshot calculator `calculateSocialResources` (không mutate state, không side effects).
+  - 2 Benchmark Fixtures A/B nghiệm thu tuyệt đối + Edge cases 1/99/101 chống block cliff.
+* [ ] **POP-01B: Needs & Effective Capacity**: **DESIGN ONLY**
+  - Cơ chế Satisfaction, Tác động thiếu hụt & Mức ủng hộ (Support) sang nhịp $T \rightarrow T+1$.
+* [ ] **POP-01C: Labor Allocation**: **DESIGN ONLY**
+  - Phân bổ năng lực lao động (Effective $\rightarrow$ Allocated Labor), không phân bổ từng đầu người.
+* [ ] **POP-02: Population Dynamics**: **DESIGN ONLY**
+  - Sinh tử, di cư, tháp tuổi, phân tầng dịch chuyển giai cấp vĩ mô.
+* [ ] **POP-03: Law & Social Conflict**: **DESIGN ONLY**
+  - Chính sách giai cấp, xung đột quyền lợi, biến động trật tự xã hội.
+
+---
+
+### FOUNDATION II — RESOURCE CORE & SURVIVAL LOOP
+* [ ] **RES-01: Resource Inventory & Flow Integration**:
+  - Kết nối Capacity & Demand từ Population Core vào vòng sản xuất - tiêu thụ vật lý.
+  - Phân công công nhân công trình $\rightarrow$ Sản lượng bù đắp tiêu thụ.
+  - Xây dựng công trình cơ bản (`BUILD_FACILITY`).
+
+---
+
+### FOUNDATION III — PERSISTENCE & SESSION LIFECYCLE (R3 Cũ)
+* [ ] Logic đọc/ghi Save game thực tế (`serialize` / `deserialize`).
+* [ ] Xuất/nhập file save (`.json`), xử lý save lỗi trên file tạm.
+* [ ] Cơ chế New Game, Continue, và nền móng New Game+.
+
+---
+
+### FOUNDATION IV — ATOMIC HANDOFF (R4 Cũ)
+* [ ] Giao dịch bàn giao nguyên tử: Bổ nhiệm Governor, chuyển giao tài sản, tước quyền điều khiển trực tiếp của Player.
+* [ ] Lãnh địa cũ trở thành Legacy Settlement tự cập nhật trong nền.
+
+---
+
+### FOUNDATION V — EVENT LOOP & REPLAYABILITY (R5 Cũ)
+* [ ] Event scheduler có điều kiện kích hoạt, cooldown, lịch sử lựa chọn.
+* [ ] Giới hạn độ dài nhật ký log để chống phình bộ nhớ.
+
