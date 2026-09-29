@@ -108,16 +108,21 @@ flowchart TD
 
 ---
 
-### Phase 6: Tích Hợp Đồ Họa Đa Tầng (Pixel Tilemap & AI Portraits)
-* **Mục tiêu**: Nâng cấp giao diện từ Dashboard số liệu thuần túy sang trải nghiệm thị giác sống động.
+### Phase 6: Tích Hợp Đồ Họa 100% Thuần Pixel Art & Bản Đồ Ô Bàn Cờ (Chessboard Grid)
+* **Mục tiêu**: Nâng cấp giao diện với phong cách 100% Thuần Pixel Art, bản đồ lưới ô bàn cờ chiến thuật và bảng màu dịu mắt, thuận thị giác.
 * **Các đầu việc cụ thể**:
-  * [ ] Xây dựng Canvas hiển thị Lãnh địa Pixel Art:
-    * Bản đồ ô đất (Settlement Grid 2D) hiển thị các công trình đã xây.
-    * Sprite cư dân tí hon đại diện cho các nhóm Cohort đi lại trong khu vực.
-  * [ ] Xây dựng Trình hiển thị Chân dung AI (AI Portrait Viewer):
-    * Khung ảnh bán thân hiển thị ảnh AI được tối ưu theo định dạng WebP.
-    * Cơ chế ghép lớp (*Layered Avatar*): Biểu cảm khuôn mặt + Bụng bầu theo tuần thai.
-  * [ ] Khung hiển thị Tranh Minh họa Toàn cảnh (CG Milestone Gallery) cho các sự kiện 18+ đặc sắc.
+  * [ ] Xây dựng Bản Đồ Lưới Ô Bàn Cờ (Chessboard Grid Canvas):
+    * Lưới ô vuông/isometric kiểu bàn cờ phân chia các ô đất, ô tài nguyên (nước, đá, rừng).
+    * Cơ chế tương tác kề cận (Adjacency Bonus: Xây xưởng gần kho giúp tăng sản lượng, xây nhà thổ gần doanh trại giúp giảm nhanh bất mãn).
+    * Sprite công trình và cư dân tí hon chuyển động dạng Pixel Art.
+  * [ ] Xây dựng Trình Hiển Thị Chân Dung Pixel Art (Pixel Doll Portrait):
+    * Khung hiển thị chân dung nhân vật 100% Pixel Art độ nét cao (16/32-bit).
+    * Ghép lớp linh hoạt (*Pixel Doll Layers*): Khuôn mặt, kiểu tóc, trang phục, các giai đoạn bụng bầu, vết xăm/vòng cổ nô lệ.
+  * [ ] Bộ Sưu Tập Tranh Toàn Cảnh Pixel Art (Pixel CG Milestones):
+    * Các bức tranh sự kiện 18+ toàn màn hình vẽ theo phong cách Pixel Art nghệ thuật.
+  * [ ] Thiết Kế Giao Diện Tối Ưu, Màu Sắc Thuận Mắt (Ergonomic Eye-friendly Theme):
+    * Bảng màu êm dịu, tương phản vừa phải (Warm Dark / Earthy Retro), bảo vệ mắt người chơi khi trải nghiệm lâu.
+    * Hỗ trợ nút gạt chuyển đổi **Song Ngữ Song Song (EN / VI)** trực tiếp trên thanh điều hướng.
 
 ---
 

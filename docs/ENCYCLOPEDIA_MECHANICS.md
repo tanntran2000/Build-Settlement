@@ -178,3 +178,33 @@ Trước khi bàn giao thuộc địa, người chơi ban hành Hiến chương 
   * `free_settlement` (Thuộc địa tự do): Tự chủ kinh tế, chỉ giữ quan hệ ngoại giao thương mại bình đẳng.
   * `rival_aligned` (Thuộc địa ngả phe đối thủ): Thống đốc bất mãn ly khai, cạnh tranh tài nguyên với người chơi.
   * `hostile_successor` (Thuộc địa thù địch): Nổi loạn lật đổ trật tự cũ, trở thành mối đe dọa quân sự cần trấn áp.
+
+---
+
+## Chương 8: Không Gian Lãnh Địa (Bản Đồ Ô Bàn Cờ) & Hệ Thống Song Ngữ
+
+### 8.1. Bản Đồ Lãnh Địa Dạng Ô Bàn Cờ (Chessboard Grid System)
+Quy hoạch lãnh địa được mô hình hóa thành một mạng lưới ô vuông/isometric như bàn cờ chiến thuật:
+* **Kích thước Lưới**: Khởi đầu với $8 \times 8$ ô, mở rộng dần lên $12 \times 12$ và $16 \times 16$ ô theo quy mô lãnh địa.
+* **Các Loại Ô Địa Hình (Tile Types)**:
+  * `fertile_soil` (Đất màu mỡ): Thích hợp đặt nông trại, tăng +25% sản lượng lương thực.
+  * `water_source` (Mạch nước ngầm): Đặt giếng nước hoặc trạm bơm lọc nước sạch.
+  * `mineral_rock` (Núi đá/Mỏ quặng): Xây dựng lò luyện kim, xưởng vật liệu xây dựng.
+  * `timber_forest` (Rừng nguyên sinh): Khai thác gỗ và thảo dược.
+  * `settlement_plain` (Đất bằng phẳng): Phù hợp xây dựng khu nhà ở, nhà thổ, dinh thự.
+* **Cơ Chế Thưởng Vị Trí Kề Cận (Adjacency Bonuses)**:
+  * Đặt *Nhà Thổ (Brothel)* cạnh *Doanh Trại Lính Bảo An*: Giảm 50% thời gian di chuyển, tăng gấp đôi tốc độ hồi phục Sĩ khí (*Morale*).
+  * Đặt *Trại Huấn Luyện (Conditioning Camp)* xa *Khu Dân Cư Tự Do*: Tránh tiếng la hét gây hoang mang bất mãn cho dân thường.
+  * Đặt *Xưởng Sản Xuất* cạnh *Kho Bãi*: Giảm chi phí hao hụt nguyên vật liệu.
+
+### 8.2. Kiến Trúc Song Ngữ Song Song (Bilingual Parallel Architecture)
+* **Tách rời Bản địa hóa (Localization Decoupling)**: Mọi chuỗi văn bản không được gán cứng vào code mà được lưu trong bảng từ khóa `i18n`:
+  ```json
+  {
+    "building.brothel.name": { "vi": "Nhà Thổ Lãnh Địa", "en": "Settlement Brothel" },
+    "stat.obedience.desc": { "vi": "Độ phục tùng mệnh lệnh", "en": "Willingness to obey commands" }
+  }
+  ```
+* **Bộ Giải Quyết Xưng Hô Động (PronounResolver)**: Tự động điều chỉnh đại từ nhân xưng theo giới tính, thân phận và mối quan hệ:
+  * Trong tiếng Việt: *Chủ nhân - Nô tì*, *Đại nhân - Thuộc hạ*, *Chàng - Thiếp*, *Ngài - Thần*.
+  * Trong tiếng Anh: *Master - Slave*, *Lord - Subject*, *Governor - Citizen*.

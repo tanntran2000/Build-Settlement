@@ -55,18 +55,24 @@ Toàn bộ hệ thống 18+ từ *Free Cities* được tái cấu trúc thành 
 * **Tâm lý thuần hóa & Tẩy não**: Quá trình chuyển hóa tâm lý giữa Phục tùng (*Obedience*), Tôn sùng (*Devotion*), Khiếp sợ (*Fear*) đối đầu với Vết thương tâm lý (*Trauma*).
 * **Cơ sở hạ tầng 18+**: Nhà thổ sinh lời, Dinh thự lãnh chúa, Trại huấn luyện nô lệ, Viện nghiên cứu gen và dưỡng thai.
 
+### 2.6. Cơ Chế Song Ngữ Song Song Anh - Việt (Bilingual Parallel Engine)
+* Trò chơi xây dựng kiến trúc đa ngữ từ gốc (**i18n first**).
+* Toàn bộ văn bản (Tên công trình, lời thoại, sự kiện 18+, nhật ký nhân quả "WHY", bảng chỉ số) được thiết kế song ngữ **Tiếng Anh (EN) - Tiếng Việt (VI)** song song.
+* Người chơi có thể tự do chuyển đổi ngôn ngữ hiển thị bất kỳ lúc nào chỉ bằng 1 cú nhấp chuột, hoặc hiển thị phụ đề song ngữ đối chiếu.
+
 ---
 
-## 3. Định Hướng Nghệ Thuật & Thị Giác (Art Direction)
+## 3. Định Hướng Nghệ Thuật & Thị Giác (100% Thuần Pixel Art & Bản Đồ Ô Bàn Cờ)
 
-Sự kết hợp hài hòa giữa **Pixel Art cổ điển** và **AI Generated Art hiện đại**:
+Trò chơi kiên định với phong cách **100% Thuần Pixel Art Cổ Điển**, kết hợp tư duy quy hoạch **Lưới Ô Bàn Cờ (Chessboard Grid)** và bảng màu **Êm Dịu / Thuận Mắt (Eye-friendly)**:
 
-| Thành phần | Phong cách Đồ họa | Vai trò & Trải nghiệm |
+| Thành phần | Phong cách Đồ họa | Đặc trưng Thiết kế & Trải nghiệm |
 | :--- | :--- | :--- |
-| **Bản đồ Lãnh địa & Ô đất** | **Pixel Art (Top-down / Isometric)** | Thể hiện bố cục quy hoạch, nhà cửa, đường xá, kho tàng, cư dân di chuyển tí hon. Tạo cảm giác trực quan, nhẹ nhàng, hoài niệm. |
-| **Biểu tượng & Giao diện** | **Pixel Art / Retro UI** | Icon tài nguyên (thức ăn, nước, tiền tệ, công cụ), các nút bấm điều khiển, huy hiệu lãnh địa. |
-| **Chân dung Nhân vật (Portraits)** | **AI Generated Art (WebP)** | Chân dung bán thân (Bust portrait) chất lượng cao cho Named NPC. Hỗ trợ hệ thống ghép lớp (*Layered Avatar*): thay đổi trang phục, biểu cảm khuôn mặt, và bụng bầu. |
-| **Minh họa Sự kiện (Event CG)** | **AI Generated Art (Illustrations)** | Các bức tranh minh họa toàn màn hình khi diễn ra các sự kiện 18+ hoặc cột mốc cốt truyện lớn (Đấu giá nô lệ, buổi tuyển thiếp, lễ tế thần, sinh con). |
+| **Bản đồ Lãnh địa (Map)** | **Lưới Ô Bàn Cờ (Chessboard Grid Pixel)** | Bản đồ phân chia thành các ô vuông/isometric như bàn cờ chiến thuật. Mỗi ô là một vị trí đặt công trình, địa hình (đất, nước, mỏ đá, rừng cây). Có thưởng liên kết kề cận (Adjacency Bonus) rõ ràng và trực quan. |
+| **Chân dung Nhân vật (Portraits)** | **100% Pixel Art Chân Dung (16/32-bit)** | Chân dung Pixel Art sắc nét, biểu cảm phong phú. Hỗ trợ hệ thống ghép lớp Pixel (*Modular Pixel Doll*): tóc, mắt, trang phục nô lệ/quý tộc, các giai đoạn bụng bầu và vết tích. |
+| **Công trình & Kiến trúc** | **Pixel Art Isometric / Top-down** | Các khối nhà, xưởng sản xuất, nhà thổ, dinh thự được vẽ dạng Pixel tinh tế, vừa vặn từng ô trên bàn cờ. |
+| **Minh họa Sự kiện (Event CG)** | **Tranh Toàn Cảnh Pixel Art (Pixel CG)** | Các phân cảnh 18+ và sự kiện cốt truyện lớn được vẽ bằng tranh Pixel Art khổ lớn đầy tính nghệ thuật và chiều sâu cảm xúc. |
+| **Bảng Màu & Giao Diện (UI Palette)** | **Thuận Mắt, Êm Dịu (Ergonomic & Calm)** | Sử dụng bảng màu ấm/tối hài hòa (dịu mắt, độ tương phản vừa phải), tối ưu hóa việc đọc văn bản và theo dõi số liệu trong nhiều giờ mà không bị mỏi mắt. |
 
 ---
 

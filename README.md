@@ -26,15 +26,17 @@
   * **Tâm lý thuần hóa (FC Conditioning)**: Đấu tranh giữa Phục tùng (*Obedience*), Tôn sùng (*Devotion*), Khiếp sợ (*Fear*) đối đầu với Chấn thương tâm lý (*Trauma*) và Hội chứng Stockholm.
   * **Cơ sở hạ tầng chuyên biệt**: Nhà thổ sinh lời (*Arcade/Brothel*), Dinh thự lãnh chúa (*Master Quarters*), Trại huấn luyện nô lệ, Viện nhân giống và dưỡng thai.
 
-* **Nghệ Thuật Kết Hợp (Pixel Art + AI Generated Art)**:
-  * Pixel Art cổ điển cho Bản đồ lãnh địa ô đất (Grid), công trình kiến trúc và icon tài nguyên.
-  * AI Generated Art chân thực, chất lượng cao cho Chân dung Named NPC (hỗ trợ ghép lớp biểu cảm, bụng bầu) và Tranh minh họa sự kiện CG 18+.
+* **100% Thuần Pixel Art & Bản Đồ Lưới Ô Bàn Cờ (Chessboard Grid)**:
+  * Toàn bộ đồ họa (chân dung nhân vật, công trình, icon tài nguyên và tranh sự kiện CG 18+) đều là **Pixel Art cổ điển**, tạo sự đồng nhất nghệ thuật và tối ưu dung lượng siêu nhẹ.
+  * Bản đồ quy hoạch phân chia theo dạng **Lưới Ô Bàn Cờ chiến thuật**, dễ quan sát, hỗ trợ hiệu ứng thưởng vị trí kề cận (Adjacency Bonus).
+  * Giao diện tối ưu, sử dụng bảng màu êm dịu (Warm Dark / Earthy Retro), thuận thị giác, không gây mỏi mắt khi chơi lâu.
+
+* **Song Ngữ Song Song Anh - Việt (Bilingual First - EN/VI)**:
+  * Hỗ trợ song ngữ Anh - Việt trọn vẹn, chuyển đổi ngôn ngữ tức thì với 1 cú nhấp chuột.
+  * Tích hợp bộ giải quyết đại từ nhân xưng động (*PronounResolver*) thích ứng theo giới tính và thân phận chủ - tớ.
 
 * **Nhật Ký Nhân Quả Minh Bạch (Explanation Layer - "WHY")**:
   Mọi biến động về tài nguyên, lòng trung thành, sĩ khí hay bất mãn đều có audit log chi tiết giải thích rõ nguyên nhân cốt lõi.
-
-* **Thuần Việt & Offline-first**:
-  Giao diện và cốt truyện viết bằng tiếng Việt tự nhiên, có bộ phân giải xưng hô động (*PronounResolver*), chơi hoàn toàn offline không phụ thuộc internet hay API bên thứ ba.
 
 ---
 

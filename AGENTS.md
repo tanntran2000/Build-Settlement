@@ -17,12 +17,18 @@
    - Không ép kiểu cưỡng bức (`as unknown as ...`) trừ khi có lý do kỹ thuật bất khả kháng và phải có comment giải trình.
    - Ưu tiên sử dụng *Branded Types* hoặc *String Literal Enums* để tránh nhầm lẫn giữa các định danh (ví dụ: `CharacterId`, `SettlementId`, `ResourceId`).
 
-3. **Thuần Việt & Đa Ngữ (Localization-first)**:
-   - Toàn bộ nội dung hiển thị cho người chơi (Tên công trình, sự kiện, nhật ký nhân quả, tên tài nguyên, xưng hô) mặc định viết bằng **Tiếng Việt tự nhiên**.
-   - Phải hỗ trợ bộ giải quyết đại từ nhân xưng động (`PronounResolver`) để thích ứng với giới tính, địa vị pháp lý, và mối quan hệ giữa người nói và người nghe.
+3. **Song Ngữ Song Song Anh - Việt (Bilingual First - EN/VI)**:
+   - Toàn bộ nội dung hiển thị cho người chơi (Tên công trình, sự kiện, nhật ký nhân quả, tên tài nguyên, xưng hô, kịch bản 18+) phải hỗ trợ **song ngữ Anh - Việt song song** thông qua hệ thống từ điển i18n (`vi` và `en`).
+   - Người chơi có thể tự do chuyển đổi ngôn ngữ hoặc hiển thị song ngữ.
+   - Hỗ trợ bộ giải quyết đại từ nhân xưng động (`PronounResolver`) thích ứng với giới tính, địa vị pháp lý, và mối quan hệ giữa người nói và người nghe.
    - Mã nguồn (Tên biến, Tên hàm, Interface, Commit message) sử dụng **Tiếng Anh chuẩn**. Tham chiếu [GLOSSARY.md](file:///d:/NghienCuuTiemNang/Build-Settlement/docs/GLOSSARY.md) để đồng nhất.
 
-4. **Kiểm Thử Tự Động Trước Khi Hoàn Tất (Test-Driven Verification)**:
+4. **Phong Cách Nghệ Thuật: 100% Thuần Pixel Art & Bản Đồ Ô Bàn Cờ (Chessboard Grid)**:
+   - **100% Pixel Art**: Toàn bộ hình ảnh trong game (Chân dung nhân vật, biểu cảm, công trình, bản đồ, icon và tranh minh họa sự kiện 18+) ĐỀU PHẢI là Pixel Art. Tuyệt đối không pha tạp phong cách đồ họa khác để giữ tính đồng nhất và siêu nhẹ.
+   - **Bản đồ Lãnh địa dạng Ô Bàn Cờ**: Bản đồ chia theo lưới ô vuông/isometric kiểu bàn cờ (Grid/Chessboard). Mỗi ô là một vị trí đặt công trình, địa hình (đất, nước, đá, rừng) có tương tác vị trí kề cận (adjacency bonus).
+   - **Giao Diện Tối Ưu, Màu Sắc Thuận Mắt**: Sử dụng bảng màu hài hòa, êm dịu (eye-friendly retro palette), không dùng màu quá chói, bố cục rõ ràng để người chơi theo dõi dữ liệu lâu không bị mỏi mắt.
+
+5. **Kiểm Thử Tự Động Trước Khi Hoàn Tất (Test-Driven Verification)**:
    - Mọi cơ chế mô phỏng mới, thay đổi công thức toán học, hoặc bổ sung domain model bắt buộc phải có Unit Test tương ứng trong thư mục `__tests__/`.
    - Trước khi báo cáo hoàn thành nhiệm vụ, Agent **bắt buộc phải chạy và kiểm tra**:
      ```bash
@@ -31,13 +37,13 @@
      ```
    - Không được để tồn tại test fail hoặc lỗi biên dịch (build error).
 
-5. **Giải Trình Nhân Quả Minh Bạch (Explanation Layer - "WHY")**:
+6. **Giải Trình Nhân Quả Minh Bạch (Explanation Layer - "WHY")**:
    - Mọi biến động số học trong game (Tài nguyên tăng/giảm, Chỉ số Sĩ khí, Lòng tin, Thai kỳ, Sức khỏe) đều phải sinh ra bản ghi `AuditEntry` ghi lại:
      - Nguồn gốc phát sinh (Công trình, Sự kiện, NPC tác động).
      - Giá trị thay đổi (+ / -).
      - Diễn giải dễ hiểu cho người chơi.
 
-6. **Siêu Nhẹ & Mở Cho Modding (Lightweight & Modding-First)**:
+7. **Siêu Nhẹ & Mở Cho Modding (Lightweight & Modding-First)**:
    - **Tối ưu tài nguyên**: Không cài đặt thư viện thứ ba cồng kềnh. Sử dụng định dạng ảnh WebP nén cao và lazy-loading. Bundle UI khi build phải duy trì ở mức siêu nhẹ (< 200KB gzip).
    - **Tách rời Logic & Dữ liệu (Data-Driven)**: Mọi dữ liệu về công trình, tài nguyên, chỉ số cơ thể, sự kiện 18+ và kịch bản thoại PHẢI được định nghĩa qua file cấu hình JSON/TypeScript schema riêng biệt trong `packages/content/`, tuyệt đối không hard-code vào logic tính toán.
    - Luôn thiết kế các Hook mở rộng để người chơi dễ dàng ghi đè (override) dữ liệu và ném ảnh chân dung tùy biến từ thư mục ngoài `mods/`.
