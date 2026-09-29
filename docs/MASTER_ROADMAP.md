@@ -1,139 +1,98 @@
 # Bản Đồ Lộ Trình Kỹ Thuật Tổng Thể (MASTER_ROADMAP.md)
 
-> **Mục đích**: Tài liệu này đóng vai trò là "Thước đo chuẩn mực" và "Bản đồ thi công" phân kỳ cho toàn bộ các AI Agent và lập trình viên tham gia phát triển dự án.
+> **Mục đích**: Bản đồ lộ trình thống nhất và duy nhất của dự án. Khóa chặt mục tiêu xây dựng **Bản Cắt Dọc Tối Thiểu (Vertical Slice R0 $\rightarrow$ R5)** trước khi mở rộng sang bất kỳ nội dung chuyên sâu nào.
 
 ---
 
-## 1. Tiêu Chuẩn Kỹ Thuật & Điều Kiện Hoàn Thành (Definition of Done - DoD)
+## 1. Mục Tiêu Tối Thượng: Bản Cắt Dọc Tối Thiểu (Vertical Slice)
 
-Bất kỳ tính năng hoặc giai đoạn (Phase) nào được coi là hoàn thành khi và chỉ khi thỏa mãn đồng thời 8 tiêu chí sau:
+Mục tiêu giai đoạn hiện tại không phải là hoàn thiện toàn bộ các hệ thống 18+ hay đồ họa phức tạp, mà là chứng minh **vòng chơi quản lý sinh tồn cốt lõi hoạt động ổn định và có thể kiểm chứng được**:
 
-1. **Tuân thủ Kiến trúc Headless**: Mã nguồn mô phỏng nằm trong `packages/core` và `packages/simulation` hoàn toàn độc lập với DOM và UI framework.
-2. **Type Safety 100%**: Biên dịch thành công với TypeScript Strict Mode, không có `any`, không có lỗi cú pháp hoặc cảnh báo kiểu.
-3. **Độ bao phủ Kiểm thử (Automated Tests)**: Mọi domain model và hàm tính toán mới đều có ít nhất 1 test suite trong Vitest kiểm chứng các trường hợp thông thường (*happy path*) và trường hợp biên (*edge cases*).
-4. **Build Thành Công**: Lệnh `npm test` và `npm run build` chạy thành công không có lỗi.
-5. **Cập nhật Tiến độ & Bách khoa toàn thư**: Đã ghi nhận thay đổi vào [INTERNAL_PROGRESS_TRACKER.md](file:///d:/NghienCuuTiemNang/Build-Settlement/docs/INTERNAL_PROGRESS_TRACKER.md) và cập nhật cơ chế vào [ENCYCLOPEDIA_MECHANICS.md](file:///d:/NghienCuuTiemNang/Build-Settlement/docs/ENCYCLOPEDIA_MECHANICS.md).
-6. **Tiêu chuẩn Siêu Nhẹ (Lightweight Footprint)**: Giữ dung lượng tải về và mức tiêu thụ RAM ở mức tối thiểu. Gói UI build ra duy trì dưới 200KB gzip. Không dùng thư viện bên ngoài nếu có thể tự viết bằng logic thuần.
-7. **Kiến trúc Hướng Modding (Modding-First)**: Mọi định nghĩa về công trình, sự kiện, lời thoại, trait tính cách PHẢI được lưu ở dạng file JSON/Data Schema trong `packages/content/`, sẵn sàng cho cơ chế nạp đè (override) từ thư mục `mods/`.
-8. **Chống Phình Code & Thân Thiện Với Context AI (The 200-Line Limit)**: Không cho phép bất kỳ file mã nguồn nào vượt quá 200 dòng. Khi một file có nguy cơ phình to, Agent bắt buộc phải chia tách thành module con độc lập để đảm bảo bất kỳ Agent nào kế thừa cũng đọc hiểu trọn vẹn trong 1 lần gọi công cụ.
+> **Kịch bản nghiệm thu Vertical Slice**:  
+> *Tạo world mới $\rightarrow$ Xây dựng nông trại & giếng nước $\rightarrow$ Phân công nhân lực $\rightarrow$ Tiến nhịp ngày (Day Tick) $\rightarrow$ Thấy sản xuất & tiêu thụ rõ ràng (tài nguyên không âm, thiếu hụt có giải trình nhân quả) $\rightarrow$ Lưu và tải lại game an toàn $\rightarrow$ Thực hiện Bàn giao (Handoff nguyên tử) $\rightarrow$ Lập thuộc địa mới (thuộc địa cũ trở thành Legacy tự vận hành) $\rightarrow$ Bắt đầu New Game+ mà world nguồn không bị phá hủy.*
 
 ---
 
-## 2. Phân Kỳ Các Giai Đoạn Phát Triển (Development Phases)
+## 2. Lộ Trình Triển Khai: Chặng 1 - Vertical Slice (R0 $\rightarrow$ R5)
 
 ```mermaid
 flowchart TD
-    P0["Phase 0: Monorepo & Khung Cơ Sở"] --> P1["Phase 1: Domain Cốt Lõi & Vòng Lặp Lãnh Địa"]
-    P1 --> P2["Phase 2: Giải Phẫu Cơ Thể & Thể Chất 18+"]
-    P2 --> P3["Phase 3: Sinh Học & Chu Kỳ Thai Sản (Pregmod)"]
-    P3 --> P4["Phase 4: Tâm Lý Thuần Hóa & Kỷ Cương (FC)"]
-    P4 --> P5["Phase 5: Kinh Tế Chuyên Biệt & Công Trình 18+"]
-    P5 --> P6["Phase 6: Tích Hợp Đồ Họa (Pixel Map + AI Portrait)"]
-    P6 --> P7["Phase 7: Đóng Gói Tauri Desktop & Xuất/Nhập Save"]
+    R0["R0: Sửa CI & Đối Chiếu Tiến Độ (XONG)"] --> R1["R1: Lõi Thực Thi & Luật Bất Biến"]
+    R1 --> R2["R2: Vòng Sinh Tồn & Xây Dựng"]
+    R2 --> R3["R3: Lưu Trữ & Vòng Đời Ván Chơi"]
+    R3 --> R4["R4: Bàn Giao Thật (Atomic Handoff)"]
+    R4 --> R5["R5: Hệ Thống Sự Kiện & Tính Chơi Lại"]
+    R5 --> MILESTONE["🏆 MỐC NGHIỆM THU VERTICAL SLICE"]
 ```
 
----
-
-### Phase 0: Hạ Tầng Monorepo & Công Cụ Phát Triển (ĐÃ HOÀN THÀNH)
-* [x] Cấu hình npm workspaces với 5 packages: `core`, `simulation`, `content`, `persistence`, `ui`.
-* [x] Cấu hình `tsconfig.base.json` theo chế độ TypeScript Strict.
-* [x] Cấu hình bộ khung kiểm thử Vitest và đóng gói giao diện Vite + Svelte 5.
-* [x] Thiết lập kho lưu trữ Git và kiểm thử tự động.
+### Gói R0: Đối Chiếu Tiến Độ & Chuẩn Hóa CI (ĐÃ HOÀN THÀNH)
+* [x] Xóa bỏ workflow Deno không tương thích, thiết lập `.github/workflows/ci.yml` chuẩn Node.js 20.
+* [x] Dọn sạch 2 unused imports gây lỗi lint trong `settlement.ts` và `command.ts`.
+* [x] Chuẩn hóa [INTERNAL_PROGRESS_TRACKER.md](INTERNAL_PROGRESS_TRACKER.md) theo 4 cấp độ (L1: Đã định nghĩa $\rightarrow$ L4: Đã tích hợp).
+* [x] Đồng bộ hóa Schema Quan hệ 8D giữa code và [GLOSSARY.md](GLOSSARY.md).
 
 ---
 
-### Phase 1: Lõi Domain Nền Tảng & Vòng Đời Lãnh Địa (ĐÃ HOÀN THÀNH)
-* [x] Mô hình 3 trục thân phận độc lập (`Occupation`, `SocialClass`, `LegalStatus`).
-* [x] Hệ thống Quan hệ 8 chiều (`trust, respect, affection, fear, debt, lust, obedience, resentment`).
-* [x] Hệ thống Ký ức nhân vật (`MemoryEntry`, `MemoryEffect`).
-* [x] Hai tầng dân số (`Named NPC` và `PopulationCohort`).
-* [x] Vòng đời lãnh địa (`SettlementLifecycle: unexplored -> active -> handoff -> legacy`).
-* [x] Đồng hồ thời gian và Lõi kinh tế cơ bản hàng ngày (Tiêu thụ lương thực, nước sạch).
-* [x] Giao diện mẫu Svelte 5 hiển thị Dashboard tài nguyên và Audit Log ("WHY").
-
----
-
-### Phase 2: Hệ Thống Giải Phẫu Cơ Thể & Chỉ Số 18+ (TIẾP THEO)
-* **Mục tiêu**: Hiện thực hóa mô hình thể chất chi tiết kế thừa từ *Free Cities*.
+### Gói R1: Lõi Thực Thi & Luật Bất Biến (ƯU TIÊN SỐ 1)
+* **Mục tiêu**: Thiết lập luồng xử lý Command $\rightarrow$ Invariant $\rightarrow$ Effect tập trung, loại bỏ hoàn toàn việc UI trực tiếp sửa state.
 * **Các đầu việc cụ thể**:
-  * [ ] Tạo `packages/core/src/domain/anatomy.ts`:
-    * Chỉ số đo lường cơ thể: Chiều cao, cân nặng, tỷ lệ eo/hông/ngực, kích thước vòng 1, vòng 3, cơ quan sinh dục.
-    * Ngoại hình & Độ quyến rũ: Điểm nhan sắc tự nhiên (*beauty*), màu da, màu mắt, kiểu tóc.
-    * Tình trạng trinh tiết (*virginity*) và kinh nghiệm quan hệ ở từng khía cạnh.
-  * [ ] Cơ chế Biến đổi Thể chất (*Modifications & Augmentations*):
-    * Vết xăm nô lệ định danh (*Slave tattoo*), xỏ khuyên, vòng cổ (*Collar*).
-    * Sẹo vết thương chiến tranh và phẫu thuật tạo hình.
-  * [ ] Viết Unit Test xác thực tính toán điểm quyến rũ (*Attractiveness score*) và biến động chỉ số.
+  * [ ] Đồng bộ một Clock duy nhất trong `GameState` (loại bỏ biến `day` cục bộ trong UI).
+  * [ ] Xây dựng Command Dispatcher trung tâm (`executeCommand(state, command) -> { nextState, effects, auditLog }`).
+  * [ ] Hoàn thiện Invariant Validator:
+    * `createNamedCharacter`: Deep clone object mặc định, chặn tuổi âm, clamp chỉ số [0, 100].
+    * `PopulationCohort`: Bổ sung trường `socialClass` còn thiếu theo đúng thiết kế 3 trục thân phận.
+  * [ ] Viết Unit Test tự động chứng minh: Lệnh sai bị từ chối; State không bị mutate dở dang; Invariant được bảo toàn.
 
 ---
 
-### Phase 3: Động Cơ Sinh Sản & Di Truyền Học (Pregmod Core)
-* **Mục tiêu**: Đưa toàn bộ cơ chế mang thai, sinh nở và di truyền nhiều thế hệ vào chu kỳ thời gian hàng ngày.
+### Gói R2: Vòng Sinh Tồn & Xây Dựng (Survival & Building Loop)
+* **Mục tiêu**: Khắc phục dứt điểm lỗi kho âm và hoàn thiện vòng lặp Xây dựng $\rightarrow$ Sản xuất $\rightarrow$ Tiêu thụ.
 * **Các đầu việc cụ thể**:
-  * [ ] Tạo `packages/core/src/domain/gestation.ts`:
-    * Độ màu mỡ sinh sản (*Fertility*), chu kỳ rụng trứng, tỷ lệ thụ tinh thành công.
-    * Trạng thái thai kỳ: Người cha danh nghĩa, ngày thụ thai, tuần thai hiện tại, biến chứng tiềm ẩn.
-  * [ ] Tạo `packages/simulation/src/gestation.ts`:
-    * Hàm tick hàng ngày `tickGestation()`: Cập nhật kích thước bụng bầu, tác động lên năng suất lao động và sức khỏe.
-    * Tự động kích hoạt sự kiện chuyển dạ sinh nở (*Childbirth event*) khi đạt đủ thời gian thai kỳ.
-  * [ ] Cơ chế Di truyền thế hệ con cháu (*Genetics Inheritance*):
-    * Đứa trẻ sinh ra thừa hưởng các đặc điểm dung mạo, màu tóc, chỉ số tiềm năng từ cha và mẹ.
-    * Thêm NPC mới vào danh sách dân cư của lãnh địa.
-  * [ ] Cơ chế Tiết sữa mẹ (*Lactation*) và điều trị y tế sản khoa.
+  * [ ] Triển khai logic tài nguyên sàn $0$: **Nhu Cầu (Demand) - Cấp Phát (Allocated) - Thiếu Hụt (Deficit)**. Kho không bao giờ âm; thiếu hụt sinh Effect trừ Sĩ khí/Sức khỏe kèm dòng giải trình WHY.
+  * [ ] Sửa lỗi ngày báo cáo kinh tế: `simulateDailyEconomy` nhận vào ngày mô phỏng thực tế (thay vì cố định `dayCreated`).
+  * [ ] Hiện thực hóa lệnh `BUILD_FACILITY` với 3 bản vẽ hiện có:
+    * Kiểm tra điều kiện & trừ chi phí kho $\rightarrow$ Tạo công trình.
+    * Gán công nhân lao động $\rightarrow$ Tính toán sản lượng hàng ngày (`production`) bù đắp tiêu thụ.
+  * [ ] Viết Unit Test và Browser smoke test kiểm chứng kho không âm và sản xuất hoạt động.
 
 ---
 
-### Phase 4: Hệ Thống Tâm Lý Thuần Hóa & Kỷ Cương (FC Conditioning)
-* **Mục tiêu**: Xây dựng cơ chế tương tác quyền lực, kỷ luật và thuần hóa giữa Lãnh chúa và cư dân/nô lệ.
+### Gói R3: Lưu Trữ & Vòng Đời Ván Chơi (Persistence & Session Lifecycle)
+* **Mục tiêu**: Đảm bảo tiến trình chơi được lưu và khôi phục an toàn, chuẩn bị nền tảng New Game+.
 * **Các đầu việc cụ thể**:
-  * [ ] Tạo `packages/core/src/domain/conditioning.ts`:
-    * 4 chỉ số tâm lý rèn luyện: Phục tùng (*Obedience*), Tôn sùng (*Devotion*), Sợ hãi (*Fear*), Lòng tin (*Trust*).
-    * Ý chí kháng cự (*Willpower*) và ngưỡng sụp đổ tinh thần (*Mental break*).
-    * Danh mục sở thích tình dục (*Kinks/Fetishes*): Thích thuần phục (*submissive*), thích mang thai (*breeding fetish*), khổ dâm (*masochist*)...
-  * [ ] Luật Tương Tác Tâm Lý:
-    * Thưởng/Phạt, thẩm vấn, cưỡng chế, nuông chiều, ban tặng ân huệ.
-    * Chấn thương tâm lý (*Trauma*) vs. Hội chứng lệ thuộc sùng kính (*Stockholm Syndrome*).
-  * [ ] Tích hợp chặt chẽ với `MemorySystem`: Tạo ra các ký ức sâu đậm thay đổi vĩnh viễn thái độ của NPC.
+  * [ ] Hiện thực hóa logic tuần tự hóa (`serializeWorld` / `deserializeWorld`).
+  * [ ] Xử lý Save an toàn trên bản sao tạm (ngăn chặn hỏng save cũ khi ghi/đọc thất bại).
+  * [ ] Hỗ trợ Xuất/Nhập file Save (`.json`) chéo giữa Web và máy tính.
+  * [ ] Quy tắc vòng đời: New Game cô lập; Continue khôi phục chính xác toàn bộ Clock, NPC, Kho; New Game+ không làm hỏng World nguồn.
 
 ---
 
-### Phase 5: Kinh Tế Chuyên Biệt & Cơ Sở Hạ Tầng 18+
-* **Mục tiêu**: Kết nối các cơ sở đặc thù vào mạng lưới tài nguyên và ngân khố của lãnh địa.
+### Gói R4: Bàn Giao Thật (Atomic Handoff)
+* **Mục tiêu**: Hiện thực hóa cơ chế đặc trưng nhất của game với sự bảo vệ tuyệt đối về luật chơi.
 * **Các đầu việc cụ thể**:
-  * [ ] Bổ sung các bản vẽ công trình vào `packages/content/src/buildings.json`:
-    * **Nhà Thổ Lãnh Địa (Arcade / Brothel)**: Phân công nhân sự phục vụ, tạo thu nhập Ngân khố, giảm bất mãn của khối Công nhân & Lính bảo an.
-    * **Dinh Thự Lãnh Chúa (Master Quarters)**: Không gian riêng cho Lãnh chúa và các ái thiếp/nô lệ yêu thích.
-    * **Trại Huấn Luyện Nô Lệ (Conditioning Center)**: Tăng tốc độ tăng Obedience, giảm Willpower.
-    * **Viện Dưỡng Thai & Nhân Giống (Breeding Nursery)**: Tối ưu hóa tỷ lệ sinh nở an toàn và nuôi dưỡng thế hệ sau.
-  * [ ] Thiết lập Hiến chương Tình dục & Hôn nhân (*Sexual Policies & Charters*).
+  * [ ] Giao dịch Handoff nguyên tử: Bổ nhiệm Governor, phân chia tài sản, thu hồi quyền điều khiển trực tiếp của Player.
+  * [ ] Cho phép Player có $0$ hoặc $1$ Active Settlement.
+  * [ ] Thuộc địa cũ chuyển thành `legacy` và tự động cập nhật nền theo 4 quỹ đạo.
+  * [ ] Viết Test chứng minh: Không nhân đôi NPC/tài sản; cấm Player gửi lệnh điều hành vào Legacy Settlement.
 
 ---
 
-### Phase 6: Tích Hợp Đồ Họa 100% Thuần Pixel Art & Bản Đồ Ô Bàn Cờ (Chessboard Grid)
-* **Mục tiêu**: Nâng cấp giao diện với phong cách 100% Thuần Pixel Art, bản đồ lưới ô bàn cờ chiến thuật và bảng màu dịu mắt, thuận thị giác.
+### Gói R5: Hệ Thống Sự Kiện & Tính Chơi Lại (Event Loop & Replayability)
+* **Mục tiêu**: Đưa yếu tố ngẫu nhiên có kiểm soát và sự kiện có hệ quả vào game.
 * **Các đầu việc cụ thể**:
-  * [ ] Xây dựng Bản Đồ Lưới Ô Bàn Cờ (Chessboard Grid Canvas):
-    * Lưới ô vuông/isometric kiểu bàn cờ phân chia các ô đất, ô tài nguyên (nước, đá, rừng).
-    * Cơ chế tương tác kề cận (Adjacency Bonus: Xây xưởng gần kho giúp tăng sản lượng, xây nhà thổ gần doanh trại giúp giảm nhanh bất mãn).
-    * Sprite công trình và cư dân tí hon chuyển động dạng Pixel Art.
-  * [ ] Xây dựng Trình Hiển Thị Chân Dung Pixel Art (Pixel Doll Portrait):
-    * Khung hiển thị chân dung nhân vật 100% Pixel Art độ nét cao (16/32-bit).
-    * Ghép lớp linh hoạt (*Pixel Doll Layers*): Khuôn mặt, kiểu tóc, trang phục, các giai đoạn bụng bầu, vết xăm/vòng cổ nô lệ.
-  * [ ] Bộ Sưu Tập Tranh Toàn Cảnh Pixel Art (Pixel CG Milestones):
-    * Các bức tranh sự kiện 18+ toàn màn hình vẽ theo phong cách Pixel Art nghệ thuật.
-  * [ ] Thiết Kế Giao Diện Tối Ưu, Màu Sắc Thuận Mắt (Ergonomic Eye-friendly Theme):
-    * Bảng màu êm dịu, tương phản vừa phải (Warm Dark / Earthy Retro), bảo vệ mắt người chơi khi trải nghiệm lâu.
-    * Hỗ trợ nút gạt chuyển đổi **Song Ngữ Song Song (EN / VI)** trực tiếp trên thanh điều hướng.
+  * [ ] Event Scheduler với RNG có seed (`worldSeed`).
+  * [ ] Vài nhóm sự kiện sinh tồn mẫu (nguồn nước, bất mãn lao động, thương nhân vãng lai) có điều kiện kích hoạt, lịch sử lựa chọn và cooldown.
+  * [ ] Giới hạn độ dài nhật ký lưu trữ (bounded log buffer) chống tràn bộ nhớ trong các ván chơi dài ngày.
 
 ---
 
-### Phase 7: Đóng Gói Đa Nền Tảng, Đồng Bộ Save & Modding Engine
-* **Mục tiêu**: Xuất xưởng đồng thời bản Web Online và bản PC Desktop Offline, mở toang khả năng Modding cho cộng đồng.
-* **Các đầu việc cụ thể**:
-  * [ ] Hệ thống Lưu trữ IndexedDB trên Web: Tự động lưu mỗi ngày (Day Tick), không giới hạn dung lượng.
-  * [ ] Nút Xuất Save (`.sav` / JSON nén) và Nhập Save chéo giữa Web và Máy tính.
-  * [ ] Cấu hình **Tauri** để biên dịch thành file cài đặt Desktop `.exe` siêu nhẹ cho Windows/macOS.
-  * [ ] **Hệ thống Nạp Mod Ngoại Vi (External Mod Loader)**:
-    * Tự động quét thư mục `mods/portraits/` để nạp ảnh chân dung AI của người chơi tự chế đè lên ảnh gốc.
-    * Tự động quét thư mục `mods/buildings/` và `mods/events/` để nạp thêm công trình và sự kiện 18+ viết bằng JSON.
-    * Hệ thống Event Hooks (`onDayTick`, `onIntimacy`, `onChildbirth`) cho phép modder can thiệp vào logic game.
+## 3. Lộ Trình Mở Rộng: Chặng 2 - Nội Dung Chuyên Sâu (Post-Vertical Slice)
+
+*Chỉ được phép kích hoạt sau khi Chặng 1 đã vượt qua toàn bộ tiêu chuẩn nghiệm thu và được Human phê duyệt:*
+
+* **Phase C1**: Hệ thống Thể chất, Giải phẫu & Chỉ số 18+ (Anatomy, Beauty, Virginity).
+* **Phase C2**: Động cơ Sinh sản & Di truyền học nhiều thế hệ (Pregmod Core).
+* **Phase C3**: Tâm lý Thuần hóa, Kỷ cương & Sở thích tình dục (FC Conditioning).
+* **Phase C4**: Cơ sở hạ tầng 18+ & Kinh tế chuyên biệt (Nhà thổ, Dinh thự, Viện nhân giống).
+* **Phase C5**: Tích hợp Đồ họa 100% Thuần Pixel Art (Bản đồ Lưới ô bàn cờ, Chân dung Pixel Dolls, Ambient VFX).
+* **Phase C6**: Đóng gói Đa nền tảng (Tauri Desktop) & Trình Nạp Mod Ngoại Vi (External Mod Loader).

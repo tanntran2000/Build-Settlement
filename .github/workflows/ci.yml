@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Quality Gate CI
 
 on:
   push:
@@ -6,11 +6,16 @@ on:
   pull_request:
     branches: ["main"]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
 jobs:
-  build-and-test:
+  quality-gate:
+    name: quality-gate
     runs-on: ubuntu-latest
 
     steps:
@@ -26,8 +31,8 @@ jobs:
       - name: Install dependencies from lockfile
         run: npm ci
 
-      - name: Typecheck core package
-        run: npm --prefix packages/core run build --if-present
+      - name: Strict workspace typecheck
+        run: npm run typecheck
 
       - name: Run automated unit tests (Vitest)
         run: npm test

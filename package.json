@@ -9,6 +9,11 @@
   ],
   "scripts": {
     "dev": "npm run dev --workspace=@haven/ui",
+    "typecheck:core": "tsc -p packages/core/tsconfig.json --noEmit",
+    "typecheck:simulation": "tsc -p packages/simulation/tsconfig.json --noEmit",
+    "typecheck:persistence": "tsc -p packages/persistence/tsconfig.json --noEmit",
+    "typecheck:content": "tsc -p packages/content/tsconfig.json --noEmit",
+    "typecheck": "npm run typecheck:core && npm run typecheck:simulation && npm run typecheck:persistence && npm run typecheck:content",
     "build": "npm run build --workspaces --if-present",
     "test": "vitest run",
     "test:watch": "vitest"

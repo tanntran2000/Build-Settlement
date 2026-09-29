@@ -1,107 +1,82 @@
-# Haven: Sovereign Frontier (Build-Settlement)
+# Haven: Sovereign Frontier
 
-> Trò chơi mô phỏng quản lý lãnh địa và xã hội hậu tận thế, kết hợp chiều sâu quản trị vĩ mô với hệ sinh thái cơ chế 18+ kế thừa từ *Free Cities* và *Pregmod*.  
-> Xây dựng trên nền tảng **TypeScript Strict, Svelte 5 và Vite**, hỗ trợ song song **Trình duyệt Web** và **Phần mềm Máy tính Offline**.
+**Dựng một nơi trú ẩn. Gây dựng một cộng đồng. Để những lựa chọn của bạn tạo nên câu chuyện.**
 
----
-
-## 1. Điểm Nhấn Trò Chơi (Key Highlights)
-
-* **Vòng Lặp Vĩ Mô Độc Đáo (Macro Handoff Loop)**:
-  * Người chơi chỉ trực tiếp điều hành **1 Lãnh Địa Trực Trị (Active Settlement)** tại một thời điểm để giữ trọn vẹn sự tập trung và chiều sâu vi mô.
-  * Khi thuộc địa phát triển hưng thịnh, bạn ban hành **Hiến Chương Sáng Lập (Founder Charter)**, bổ nhiệm một Named NPC đáng tin cậy làm **Thống Đốc (Governor)** và thực hiện **Bàn Giao (Handoff)**.
-  * Thuộc địa cũ trở thành **Lãnh Địa Di Sản (Legacy Settlement)** tự động vận hành trong nền, trong khi bạn dẫn dắt đoàn người khai hoang tiến sâu vào biên cương mới.
-
-* **Hệ Thống Dân Số 2 Tầng (Two-Tier Population)**:
-  * **Nhân Vật Cốt Cán (Named NPC)**: Cá nhân hóa sâu sắc với tên riêng, số đo cơ thể, nhan sắc, tâm lý, ký ức và **Ma trận Quan hệ 8 Chiều** (*Tin cậy, Tôn trọng, Tình cảm, Sợ hãi, Ân nợ, Dục vọng, Phục tùng, Uất hận*).
-  * **Quần Thể Dân Cư (Population Cohort)**: Khối đông cư dân (Công nhân, Nông dân, Kỹ thuật viên, Lính bảo an, Nô lệ lao dịch) quản lý theo chỉ số bình quân: Sĩ khí, Năng suất, Bất mãn.
-
-* **Ba Trục Thân Phận Độc Lập**:
-  $$\text{Nghề Nghiệp (Occupation)} \neq \text{Tầng Lớp (Social Class)} \neq \text{Địa Vị Pháp Lý (Legal Status)}$$
-  *Nô lệ hóa hay Công dân tự do là Địa vị pháp lý trước bộ luật, không phải là một nghề nghiệp đơn thuần.*
-
-* **Hệ Sinh Thái Cơ Chế 18+ Toàn Diện (Free Cities & Pregmod)**:
-  * **Giải phẫu học chi tiết**: Vóc dáng, số đo 3 vòng, tình trạng trinh tiết, biến đổi thể chất (vết xăm nô lệ, xỏ khuyên, phẫu thuật).
-  * **Chu kỳ Thai sản & Di truyền (Pregmod Core)**: Thụ thai theo chu kỳ rụng trứng, thai kỳ biến đổi thể chất theo ngày tick, sinh nở an toàn/nguy hiểm, và di truyền phẩm chất cho thế hệ F1/F2.
-  * **Tâm lý thuần hóa (FC Conditioning)**: Đấu tranh giữa Phục tùng (*Obedience*), Tôn sùng (*Devotion*), Khiếp sợ (*Fear*) đối đầu với Chấn thương tâm lý (*Trauma*) và Hội chứng Stockholm.
-  * **Cơ sở hạ tầng chuyên biệt**: Nhà thổ sinh lời (*Arcade/Brothel*), Dinh thự lãnh chúa (*Master Quarters*), Trại huấn luyện nô lệ, Viện nhân giống và dưỡng thai.
-
-* **100% Thuần Pixel Art & Bản Đồ Lưới Ô Bàn Cờ (Chessboard Grid)**:
-  * Toàn bộ đồ họa (chân dung nhân vật, công trình, icon tài nguyên và tranh sự kiện CG 18+) đều là **Pixel Art cổ điển**, tạo sự đồng nhất nghệ thuật và tối ưu dung lượng siêu nhẹ.
-  * Bản đồ quy hoạch phân chia theo dạng **Lưới Ô Bàn Cờ chiến thuật**, dễ quan sát, hỗ trợ hiệu ứng thưởng vị trí kề cận (Adjacency Bonus).
-  * Giao diện tối ưu, sử dụng bảng màu êm dịu (Warm Dark / Earthy Retro), thuận thị giác, không gây mỏi mắt khi chơi lâu.
-
-* **Song Ngữ Song Song Anh - Việt (Bilingual First - EN/VI)**:
-  * Hỗ trợ song ngữ Anh - Việt trọn vẹn, chuyển đổi ngôn ngữ tức thì với 1 cú nhấp chuột.
-  * Tích hợp bộ giải quyết đại từ nhân xưng động (*PronounResolver*) thích ứng theo giới tính và thân phận chủ - tớ.
-
-* **Nhật Ký Nhân Quả Minh Bạch (Explanation Layer - "WHY")**:
-  Mọi biến động về tài nguyên, lòng trung thành, sĩ khí hay bất mãn đều có audit log chi tiết giải thích rõ nguyên nhân cốt lõi.
+Haven: Sovereign Frontier là dự án game quản lý lãnh địa và tường thuật hậu tận thế đang được phát triển. Giữa một thế giới đổ vỡ, thực phẩm, nước sạch và nơi ở chỉ là khởi đầu. Điều khó hơn là tổ chức công việc, lựa chọn người để tin tưởng và xây dựng một cộng đồng có thể đứng vững trước những thay đổi.
 
 ---
 
-## 2. Hai Hình Thức Trải Nghiệm (Web & PC Offline)
+## Trải nghiệm chúng tôi đang hướng tới
 
-Nhờ kiến trúc mã nguồn thống nhất, trò chơi hỗ trợ đồng thời cả hai cách chơi:
+### Quản lý con người, không chỉ tài nguyên
+Một quyết định về công việc hay điều kiện sống có thể ảnh hưởng đến cả một cộng đồng. Dự án hướng tới việc kết nối nhân vật, nguồn lực và sự phát triển của lãnh địa trong cùng một vòng chơi.
 
-1. **Chơi Trực Tiếp Trên Web (Zero-Install)**:
-   * Mở đường link trên bất kỳ trình duyệt nào (Chrome, Edge, Firefox, Safari) là chơi được ngay, không cần đăng ký tài khoản.
-   * Dữ liệu tự động lưu an toàn vào `IndexedDB` của trình duyệt.
-2. **Tải Về Máy Tính Chơi Offline (Giống Free Cities)**:
-   * Tải file `.zip` về giải nén, click đúp file `index.html` để chơi 100% offline.
-   * Hoặc sử dụng bản cài đặt Desktop `.exe` độc lập siêu nhẹ (đóng gói qua **Tauri**), hỗ trợ thư mục `custom_portraits/` để người chơi tự thêm ảnh cá nhân.
-3. **Chuyển Đổi Save Game Chéo**:
-   * Tính năng **"Xuất file lưu" (Export Save)** và **"Nhập file lưu" (Import Save)** cho phép bạn chơi dở trên Web ở cơ quan rồi mang file về nạp vào máy tính cá nhân ở nhà chơi tiếp.
+### Những lựa chọn có nguyên nhân và hệ quả
+Không chỉ biết một chỉ số tăng hay giảm, người chơi cần hiểu điều gì đã dẫn đến thay đổi đó. Khả năng quan sát và giải thích kết quả (Explanation Layer) là một trọng tâm của thiết kế.
+
+### Tường thuật dễ đọc, có chiều sâu để khám phá
+Văn bản là phần cốt lõi của trải nghiệm. Hình ảnh pixel art và chuyển động nhỏ được định hướng làm lớp hỗ trợ, thay vì thay thế câu chuyện hoặc quyết định của người chơi.
 
 ---
 
-## 3. Hệ Thống Tài Liệu Dự Án (Documentation)
+## Trạng thái hiện tại
 
-Hệ thống tài liệu đầy đủ được tổ chức trong thư mục `docs/`:
+**Early prototype — chưa phải bản game hoàn chỉnh.**
 
-* 📖 **[Tầm Nhìn & Thiết Kế Ý Tưởng (VISION_AND_CONCEPT.md)](file:///d:/NghienCuuTiemNang/Build-Settlement/docs/VISION_AND_CONCEPT.md)**: Triết lý thiết kế, bối cảnh thế giới và hướng tiếp cận thẩm mỹ.
-* 🗺️ **[Bản Đồ Lộ Trình Kỹ Thuật (MASTER_ROADMAP.md)](file:///d:/NghienCuuTiemNang/Build-Settlement/docs/MASTER_ROADMAP.md)**: Thước đo tiêu chuẩn, phân kỳ các Phase phát triển và tiêu chí hoàn thành (DoD).
-* 📚 **[Bách Khoa Toàn Thư Cơ Chế (ENCYCLOPEDIA_MECHANICS.md)](file:///d:/NghienCuuTiemNang/Build-Settlement/docs/ENCYCLOPEDIA_MECHANICS.md)**: Hướng dẫn tra cứu toàn diện về mọi hệ thống toán học, giải phẫu, thai sản và thuần hóa 18+.
-* 📊 **[Bảng Theo Dõi Tiến Độ Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)](file:///d:/NghienCuuTiemNang/Build-Settlement/docs/INTERNAL_PROGRESS_TRACKER.md)**: Bảng theo dõi trạng thái các module mã nguồn trong `packages/*` và backlog kỹ thuật.
-* 🔤 **[Từ Điển Thuật Ngữ Chuẩn Hóa (GLOSSARY.md)](file:///d:/NghienCuuTiemNang/Build-Settlement/docs/GLOSSARY.md)**: Đối chiếu chuẩn hóa thuật ngữ chuyên môn giữa Code (Tiếng Anh) và UI (Tiếng Việt).
-* 🤖 **[Quy Chuẩn Hoạt Động Cho AI Agent (AGENTS.md)](file:///d:/NghienCuuTiemNang/Build-Settlement/AGENTS.md)**: Cẩm nang kỹ thuật bắt buộc dành cho bất kỳ AI nào tham gia code dự án.
+Bản hiện tại có giao diện thử nghiệm hiển thị tài nguyên, nhân vật, quần thể dân cư, danh mục công trình và mô phỏng tiêu thụ theo ngày kèm nhật ký ban đầu. Vòng xây dựng–sản xuất, lưu/khôi phục tiến trình và các hệ thống dài hạn đang được hoàn thiện.
+
+Những trải nghiệm mô tả trong phần định hướng không có nghĩa đã hiện diện đầy đủ trong prototype. Dữ liệu và cơ chế có thể thay đổi giữa các phiên bản thử nghiệm.
 
 ---
 
-## 4. Hướng Dẫn Kỹ Thuật Dành Cho Nhà Phát Triển
+## Chạy prototype từ mã nguồn
 
-### Cấu Trúc Monorepo
-```
-Build-Settlement/
-├── packages/
-│   ├── core/           # Domain Model thuần túy: Character, Anatomy, Memory, Relationship, Invariants
-│   ├── simulation/     # Lõi tính toán: Kinh tế hàng ngày, Thai sản Pregmod, Thuần hóa FC
-│   ├── content/        # Dữ liệu tĩnh: Bản vẽ công trình, Danh mục tài nguyên, Sự kiện 18+
-│   ├── persistence/    # Quản lý lưu trữ: Schema Save/Load, Nén dữ liệu, Export/Import
-│   └── ui/             # Giao diện người dùng Svelte 5 + Vite: Dashboard, Chân dung, Nhật ký WHY
-├── docs/               # Hệ thống tài liệu toàn diện
-├── AGENTS.md           # Quy chuẩn dành cho AI Agent
-├── package.json        # Quản lý npm workspaces
-└── tsconfig.base.json  # TypeScript Strict Mode
-```
+Cần Git, Node.js và npm. Đối chiếu phiên bản môi trường với cấu hình CI của repository trước khi chạy.
 
-### Yêu Cầu Môi Trường
-* Node.js >= 20.0.0
-* npm >= 10.0.0
-
-### Khởi Chạy Giao Diện Phát Triển
 ```bash
+git clone https://github.com/tanntran2000/Build-Settlement.git
+cd Build-Settlement
+npm ci
 npm run dev
 ```
-Trình duyệt sẽ hiển thị tại `http://localhost:3000`.
 
-### Kiểm Thử Tự Động (Unit Tests)
+Mở địa chỉ được terminal hiển thị (mặc định: `http://localhost:3000`).
+
+Kiểm thử hiện có:
 ```bash
 npm test
 ```
 
-### Đóng Gói Ứng Dụng (Production Build)
+Build giao diện web:
 ```bash
-npm run build
+npm run build --workspace=@haven/ui
 ```
-Kết quả biên dịch tĩnh sẽ nằm tại `packages/ui/dist/`.
+
+---
+
+## Góp ý và báo lỗi
+
+Ưu tiên phản hồi về độ rõ ràng của giao diện, các thay đổi khó hiểu và lỗi có thể tái hiện.
+
+Khi báo lỗi, vui lòng ghi:
+* Phiên bản hoặc commit hash
+* Trình duyệt và hệ điều hành
+* Các bước tái hiện cụ thể
+* Kết quả mong đợi và kết quả thực tế
+
+*Lưu ý: Vui lòng không gửi dữ liệu cá nhân hoặc thông tin bảo mật.*
+
+---
+
+## Định hướng nội dung
+
+Dự án hướng tới người chơi trưởng thành (18+). Thông tin cảnh báo và phạm vi nội dung sẽ được công bố rõ cho từng bản phát hành.
+
+Trang giới thiệu này chỉ trình bày tổng quan, không tiết lộ toàn bộ cơ chế hoặc diễn biến của trò chơi.
+
+---
+
+## Công nghệ và giấy phép
+
+* Nền tảng: TypeScript · Svelte 5 · Vite
+* Giấy phép: Xem [LICENSE](LICENSE) để biết điều kiện sử dụng mã nguồn.

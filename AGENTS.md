@@ -1,111 +1,69 @@
-# Quy Chuẩn & Cẩm Nang Kỹ Thuật Dành Cho AI Agent (AGENTS.md)
+# Quy Chuẩn Quản Trị & Cẩm Nang Kỹ Thuật Cho AI Agent (AGENTS.md)
 
 > **Dự án**: Haven: Sovereign Frontier (Build-Settlement)  
-> **Mục đích**: Tài liệu này là kim chỉ nam bắt buộc cho bất kỳ AI Agent nào (Gemini, Claude, GPT, v.v.) tham gia vào quá trình lập trình, bảo trì, hoặc mở rộng dự án.
+> **Mục đích**: Tài liệu này là bộ khung quản trị kỹ thuật bắt buộc cho toàn bộ các AI Agent (Gemini, Claude, GPT...) tham gia phát triển dự án. Bộ quy chuẩn phân tách rõ: **Luật bắt buộc (Hard Laws)**, **Hướng dẫn chất lượng (Quality Guidelines)**, và **Quy trình kiểm soát (Lifecycle Gates)**.
 
 ---
 
-## 1. Triết Lý & Nguyên Tắc Bất Di Bất Dịch
+## 1. Tám Nhóm Luật Bắt Buộc (Hard Laws)
 
-1. **Kiến Trúc Headless (Tách biệt tuyệt đối Mô phỏng & Giao diện)**:
-   - Các gói `packages/core` và `packages/simulation` là **Pure TypeScript (Deterministic)**.
-   - **CẤM**: Tuyệt đối không import bất kỳ API nào liên quan đến DOM (`document`, `window`), Canvas, hay thư viện UI (`svelte`, `react`) vào trong `packages/core` hoặc `packages/simulation`.
-   - Lõi mô phỏng chỉ nhận vào trạng thái hiện tại (State) + Lệnh (Command) $\rightarrow$ xử lý theo luật $\rightarrow$ trả về Trạng thái mới (New State) + Hiệu ứng phụ (Effects / Audit Log).
+Mọi thay đổi mã nguồn vi phạm bất kỳ điều nào dưới đây sẽ bị **từ chối merge ngay lập tức**:
 
-2. **Type Safety Khắt Khe (TypeScript Strict Mode)**:
-   - Không được phép sử dụng `any`. Mọi dữ liệu phải có kiểu tường minh (Interface, Type, Enum).
-   - Không ép kiểu cưỡng bức (`as unknown as ...`) trừ khi có lý do kỹ thuật bất khả kháng và phải có comment giải trình.
-   - Ưu tiên sử dụng *Branded Types* hoặc *String Literal Enums* để tránh nhầm lẫn giữa các định danh (ví dụ: `CharacterId`, `SettlementId`, `ResourceId`).
-
-3. **Song Ngữ Song Song Anh - Việt (Bilingual First - EN/VI)**:
-   - Toàn bộ nội dung hiển thị cho người chơi (Tên công trình, sự kiện, nhật ký nhân quả, tên tài nguyên, xưng hô, kịch bản 18+) phải hỗ trợ **song ngữ Anh - Việt song song** thông qua hệ thống từ điển i18n (`vi` và `en`).
-   - Người chơi có thể tự do chuyển đổi ngôn ngữ hoặc hiển thị song ngữ.
-   - Hỗ trợ bộ giải quyết đại từ nhân xưng động (`PronounResolver`) thích ứng với giới tính, địa vị pháp lý, và mối quan hệ giữa người nói và người nghe.
-   - Mã nguồn (Tên biến, Tên hàm, Interface, Commit message) sử dụng **Tiếng Anh chuẩn**. Tham chiếu [GLOSSARY.md](file:///d:/NghienCuuTiemNang/Build-Settlement/docs/GLOSSARY.md) để đồng nhất.
-
-4. **Phong Cách Nghệ Thuật: 100% Thuần Pixel Art, Bản Đồ Ô Bàn Cờ & Hoạt Ảnh Vi Mô (Micro-animations)**:
-   - **100% Pixel Art & Giàu Hình Ảnh**: Toàn bộ hình ảnh (Chân dung nhân vật, công trình, bản đồ, icon và tranh minh họa sự kiện 18+) ĐỀU LÀ Pixel Art. Tuyệt đối không để xảy ra tình trạng "bức tường chữ" trơ trọi (No Wall-of-Text) như Twine cũ; mọi sự kiện, đối thoại quan trọng đều phải lồng ghép tranh minh họa hoặc chân dung cảm xúc.
-   - **Văn Bản Cô Đọng, Sắc Bén**: Giữ chiều sâu mô phỏng tâm lý/xã hội của *Free Cities* nhưng tinh gọn số lượng chữ, tập trung vào hành động, sự chuyển biến chỉ số và lựa chọn chiến lược.
-   - **Hoạt Ảnh Vi Mô Tạo Điểm Nhấn (Ambient Micro-animations)**: Giao diện và bản đồ không được chết cứng. Sử dụng các hoạt ảnh pixel/CSS siêu nhẹ để tạo sức sống: cờ bay trên tháp canh, khói bốc từ lò rèn, ngọn cỏ đung đưa theo gió, chim bay ngang trời, nhân vật có nhịp thở và chớp mắt nhẹ.
-   - **Bản đồ Lãnh địa dạng Ô Bàn Cờ**: Bản đồ chia theo lưới ô vuông/isometric kiểu bàn cờ (Grid/Chessboard). Mỗi ô là một vị trí đặt công trình, địa hình (đất, nước, đá, rừng) có tương tác vị trí kề cận (adjacency bonus).
-   - **Giao Diện Tối Ưu, Màu Sắc Thuận Mắt**: Sử dụng bảng màu hài hòa, êm dịu (eye-friendly retro palette), không dùng màu quá chói, bố cục rõ ràng để người chơi theo dõi dữ liệu lâu không bị mỏi mắt.
-
-5. **Kiểm Thử Tự Động Trước Khi Hoàn Tất (Test-Driven Verification)**:
-   - Mọi cơ chế mô phỏng mới, thay đổi công thức toán học, hoặc bổ sung domain model bắt buộc phải có Unit Test tương ứng trong thư mục `__tests__/`.
-   - Trước khi báo cáo hoàn thành nhiệm vụ, Agent **bắt buộc phải chạy và kiểm tra**:
-     ```bash
-     npm test
-     npm run build
-     ```
-   - Không được để tồn tại test fail hoặc lỗi biên dịch (build error).
-
-6. **Giải Trình Nhân Quả Minh Bạch (Explanation Layer - "WHY")**:
-   - Mọi biến động số học trong game (Tài nguyên tăng/giảm, Chỉ số Sĩ khí, Lòng tin, Thai kỳ, Sức khỏe) đều phải sinh ra bản ghi `AuditEntry` ghi lại:
-     - Nguồn gốc phát sinh (Công trình, Sự kiện, NPC tác động).
-     - Giá trị thay đổi (+ / -).
-     - Diễn giải dễ hiểu cho người chơi.
-
-7. **Siêu Nhẹ & Mở Cho Modding (Lightweight & Modding-First)**:
-   - **Tối ưu tài nguyên**: Không cài đặt thư viện thứ ba cồng kềnh. Sử dụng định dạng ảnh WebP nén cao và lazy-loading. Bundle UI khi build phải duy trì ở mức siêu nhẹ (< 200KB gzip).
-   - **Tách rời Logic & Dữ liệu (Data-Driven)**: Mọi dữ liệu về công trình, tài nguyên, chỉ số cơ thể, sự kiện 18+ và kịch bản thoại PHẢI được định nghĩa qua file cấu hình JSON/TypeScript schema riêng biệt trong `packages/content/`, tuyệt đối không hard-code vào logic tính toán.
-   - Luôn thiết kế các Hook mở rộng để người chơi dễ dàng ghi đè (override) dữ liệu và ném ảnh chân dung tùy biến từ thư mục ngoài `mods/`.
-
-8. **Luật Tối Thượng: Chống Phình Code & Thân Thiện Với Context Của AI (AI-Context & Lean Architecture Law)**:
-   - **Mô hình Hợp tác (Human-Vision, AI-Execution)**: Đây là tựa game ưu tiên xây dựng bởi AI Agent dưới sự chỉ đạo ý tưởng và định hướng của Người dùng (Human). Mã nguồn phải được thiết kế để bất kỳ Agent nào kế thừa cũng có thể đọc hiểu và sửa đổi chính xác trong tích tắc.
-   - **Quy tắc Giới hạn 200 Dòng (The 200-Line Limit)**: Giữ các file mã nguồn (`.ts`, `.svelte`) ở trạng thái tinh gọn, lý tưởng từ **50 đến tối đa 200 dòng**. Tuyệt đối tránh các file "quái vật" (Monolithic files) hàng ngàn dòng như Twine cũ của Free Cities.
-   - **Cơ chế Chia tách Chủ động (Active Decomposition)**: Bất cứ khi nào một file có dấu hiệu phình to hoặc đảm nhận nhiều hơn một trách nhiệm, Agent **BẮT BUỘC PHẢI TÁCH FILE** thành một thư mục module con (ví dụ: chuyển `anatomy.ts` thành thư mục `anatomy/` gồm `types.ts`, `measurements.ts`, `modifications.ts`, và `index.ts` để re-export).
-   - **Đơn Trách Nhiệm (Single Responsibility Principle - SRP)**: Luôn tách biệt:
-     - Khai báo Kiểu dữ liệu (`types.ts`).
-     - Thuật toán & Công thức tính toán (`calculator.ts` / `rules.ts`).
-     - Điều kiện bất biến & Ràng buộc an toàn (`invariants.ts`).
-   - **Không Hard-code Dữ liệu Dài**: Các danh sách, mảng dữ liệu, bảng đối chiếu dài phải tách sang file `.json` riêng trong `packages/content/`, không được nhồi nhét vào file mã nguồn logic.
-   - **Đảm bảo Agent đọc trọn vẹn trong 1 lần**: File nhỏ gọn giúp Agent đọc toàn bộ nội dung mà không bao giờ bị cắt cụt (truncated content), triệt tiêu hoàn toàn lỗi suy đoán sai (*hallucination*) hoặc ghi đè nhầm code của nhau.
+| Mã Luật | Tên Luật | Nội Dung Bắt Buộc | Cách Thức Kiểm Chứng | Thẩm Quyền Ngoại Lệ |
+| :---: | :--- | :--- | :--- | :---: |
+| **LAW-01** | **Kỷ Luật Phạm Vi (Scope Discipline)** | Chỉ thực hiện đúng mục tiêu và phạm vi gói việc (WP) đã được duyệt. Tuyệt đối không tự ý thêm subsystem mới, đổi tech stack hoặc sửa luật để làm bài toán dễ hơn. | Đối chiếu Git diff với Work Package (WP); Reviewer kiểm tra các thay đổi ngoài phạm vi. | **Human duy nhất** |
+| **LAW-02** | **Ranh Giới Kiến Trúc (Architectural Boundaries)** | `packages/core` và `packages/simulation` là **Pure TypeScript (Deterministic)**, cấm import DOM (`document`, `window`), Canvas hay UI libraries. UI không được trực tiếp sửa state nghiệp vụ (phải thông qua Command Dispatcher). | Lệnh kiểm tra import/dependency kết hợp rà soát luồng thực thi trong code review. | **Không có** |
+| **LAW-03** | **Tính Nhất Quán & Một Clock (Determinism & Clock)** | Chỉ tồn tại duy nhất một đồng hồ thời gian (`Clock`) trong `GameState`. Random trong gameplay phải có trạng thái kiểm soát được (`seed`). Bật/tắt animation hoặc thay đổi UI không bao giờ làm lệch kết quả mô phỏng. | Unit test chứng minh cùng đầu vào và chuỗi lệnh luôn cho ra cùng một trạng thái kết quả. | **Không có** |
+| **LAW-04** | **Toàn Vẹn State & Luật Bất Biến (State Invariants)** | Lệnh không hợp lệ không được tạo ra thay đổi một phần (all-or-nothing). Tài nguyên vật lý **không bao giờ được âm** (áp dụng logic Nhu cầu $\rightarrow$ Cấp phát $\rightarrow$ Thiếu hụt). Chỉ số nhân vật phải hữu hạn, clamp [0, 100]. Không đếm trùng nhân lực giữa Cohort và Named NPC. | Unit test kiểm tra trường hợp biên, bảo toàn tài nguyên sàn $0$, và kịch bản lỗi giữa giao dịch. | **Không có** |
+| **LAW-05** | **Vòng Đời & Quyền Quản Trị (Lifecycle & Authority)** | Người chơi được quản trị tối đa một lãnh địa trực trị tại một thời điểm (số lượng có thể là $0$ hoặc $1$). Giao dịch Bàn Giao (Handoff) phải là nguyên tử: không nhân đôi tài sản/NPC và cấm người chơi gửi lệnh can thiệp vào Lãnh địa Di sản (Legacy). | Test chuyển trạng thái, kiểm tra thu hồi quyền điều khiển và kiểm tra sau Save/Load. | **Không có** |
+| **LAW-06** | **Bảo Vệ Tiến Trình (Persistence Integrity)** | Thao tác Import, Export hoặc Migration schema thất bại tuyệt đối không được làm hỏng bản lưu cũ (phải thực hiện trên bản sao tạm). Chế độ New Game+ không được ghi đè hoặc làm hỏng World nguồn. | Test round-trip serialization, test migration với payload hỏng, test cô lập world. | **Không có** |
+| **LAW-07** | **Bằng Chứng Thực Nghiệm (Evidence-Based)** | Tuyệt đối không báo PASS hoặc hoàn thành khi chưa chạy kiểm tra thực tế. Mọi kết luận phải gắn kèm commit hash cụ thể, log kiểm thử, exit code và đối chiếu trực tiếp với tiêu chí nghiệm thu. | CI Run log trên GitHub và bằng chứng thực thi độc lập. | **Không có** |
+| **LAW-08** | **Quản Trị, Công Bố & An Toàn (Governance & Safety)** | Không đẩy bí mật, API key hoặc nội dung chưa được duyệt công bố lên repo. Không tự ý merge vào `main`. Cấm làm suy yếu kiểm tra CI (cấm dùng `continue-on-error`, `|| true`, bỏ test lỗi, hoặc dùng `--if-present` để né script bắt buộc). | Pre-push scan, Review PR độc lập và Branch Protection trên GitHub. | **Human duy nhất** |
 
 ---
 
-## 2. Bản Đồ Mã Nguồn (Codebase Map)
+## 2. Hướng Dẫn Chất Lượng (Quality Guidelines)
 
-Mã nguồn được tổ chức theo mô hình **Monorepo (npm workspaces)**:
+Khác với Luật bắt buộc, các hướng dẫn dưới đây là **chuẩn mực kỹ thuật (Heuristics)** để định hướng thiết kế và review, tránh áp dụng máy móc:
 
-```
-Build-Settlement/
-├── packages/
-│   ├── core/           # Chứa Domain Models, Value Objects, Time Tick, Invariants, Command & Effect
-│   │   └── src/
-│   │       ├── domain/ # Character, Anatomy, Settlement, Population, Resource, Relationship, Memory
-│   │       ├── command/# Command definitions, Command Handlers
-│   │       └── time/   # Clock, Day Tick Manager
-│   ├── simulation/     # Các subsystem tính toán chu kỳ kinh tế, nhu cầu, sinh học
-│   │   └── src/
-│   │       ├── economy.ts    # Sản xuất, Tiêu thụ hàng ngày, Cân đối kho bãi
-│   │       ├── gestation.ts  # [Pregmod] Tiến trình thai kỳ & Sinh nở theo ngày
-│   │       └── conditioning.ts# [FC 18+] Tâm lý thuần hóa, biến động Obedience/Devotion
-│   ├── content/        # Dữ liệu tĩnh (Static Data): Bản vẽ công trình, danh mục tài nguyên, cây công nghệ
-│   ├── persistence/    # Quản lý Save/Load: Schema phiên bản hóa, nén dữ liệu, xuất/nhập JSON
-│   └── ui/             # Giao diện người dùng Svelte 5 + Vite (Dashboard, Chân dung, Nhật ký WHY)
-├── docs/               # Hệ thống tài liệu toàn diện (Vision, Roadmap, Encyclopedia, Progress, Glossary)
-├── package.json        # Cấu hình workspace gốc
-├── tsconfig.base.json  # Cấu hình TypeScript Strict kế thừa cho tất cả packages
-└── AGENTS.md           # [File này]
+1. **Trách Nhiệm & Độ Dài File (File Responsibility & Sizing)**:
+   - Ngưỡng **200 dòng** là tín hiệu cảnh báo cần review kiến trúc, không phải lý do để chia tách file mù quáng.
+   - Ưu tiên hàng đầu là **Đơn Trách Nhiệm (Single Responsibility Principle)**: Tách riêng Định nghĩa kiểu (`types.ts`), Thuật toán (`rules.ts`/`calculator.ts`), và Ràng buộc an toàn (`invariants.ts`). Không băm nhỏ hàm logic liền mạch chỉ để giảm số dòng.
+2. **Thẩm Mỹ Giàu Hình Ảnh & Hoạt Ảnh Vi Mô (Visual-Rich & Ambient VFX)**:
+   - Định hướng văn bản cô đọng, sắc bén (No Wall-of-Text); mỗi sự kiện quan trọng nên có tranh minh họa Pixel Art dẫn dắt.
+   - Hoạt ảnh vi mô (cờ bay, chim bay, khói lò, nhịp thở nhân vật) là **lớp hỗ trợ thị giác**. Nếu thiếu asset, hệ thống phải có phương án hiển thị dự phòng (fallback); hoạt ảnh không được làm gián đoạn hay phụ thuộc vào luồng logic mô phỏng.
+3. **Ngân Sách Hiệu Năng & Dung Lượng (Performance Budget)**:
+   - Tính "nhẹ" phải được đo lường bằng con số cụ thể: Bundle JS/CSS của UI duy trì mức tối ưu (< 200KB gzip), asset ảnh chuyển sang WebP, thời gian nạp trang < 1 giây, thời gian xử lý nhịp ngày (tick) < 50ms với 100 nhân vật.
+4. **Chính Sách Thư Viện Phụ Thuộc (Dependency Policy)**:
+   - Mọi thư viện mới bổ sung vào `package.json` đều phải giải trình: Lý do cần thiết, phạm vi sử dụng, kích thước bundle và chi phí bảo trì lâu dài. Tránh cài cắm tùy tiện nhưng cũng không tự viết lại những giải pháp phức tạp đã có chuẩn mực an toàn.
+
+---
+
+## 3. Quy Trình Phát Triển 7 Cổng Kiểm Soát (Lifecycle Gates: G0 $\rightarrow$ G6)
+
+Quy trình chuẩn hóa từ lúc tiếp nhận ý tưởng đến khi code an toàn trên nhánh `main`:
+
+```mermaid
+flowchart LR
+    G0["G0: Làm Rõ"] --> G1["G1: Duyệt Kế Hoạch"]
+    G1 --> G2["G2: Triển Khai (Branch)"]
+    G2 --> G3["G3: Chuẩn Bị PR"]
+    G3 --> G4["G4: CI & Review"]
+    G4 --> G5["G5: Human Merge"]
+    G5 --> G6["G6: Hậu Kiểm (Main)"]
 ```
 
+* **G0 — Làm Rõ Yêu Cầu (Scope Framing)**: Human và Agent xác định rõ kết quả người chơi cần nhận được, giới hạn phạm vi và những điều *dứt khoát không làm* trong đợt này.
+* **G1 — Duyệt Kế Hoạch (Work Package Approval)**: Agent lập văn bản kế hoạch (Work Package - WP) gồm: mục tiêu, commit nền, luật bất biến liên quan, các test case nghiệm thu, và rủi ro save/content. **Human duyệt phiên bản WP cụ thể trước khi code**.
+* **G2 — Triển Khai (Implementation)**: Agent tạo nhánh làm việc riêng (ví dụ: `feat/r1-execution-core`), viết test hồi quy trước khi sửa code, đảm bảo thay đổi gói gọn trong phạm vi đã duyệt.
+* **G3 — Chuẩn Bị PR (Pre-PR Review)**: Rà soát toàn bộ Git diff, kiểm tra lint, typecheck toàn bộ workspace, chạy unit test local và quét bí mật trước khi push.
+* **G4 — CI & Review PR (Quality Gate)**: Mở PR trên GitHub. Chạy workflow CI bắt buộc (`quality-gate`). Reviewer độc lập (hoặc Human) đối chiếu diff cuối cùng với tiêu chí nghiệm thu.
+* **G5 — Merge Quyết Định (Human Authority)**: **Chỉ duy nhất Human có quyền duyệt merge PR vào `main`**. Agent không được tự approve PR của chính mình.
+* **G6 — Hậu Kiểm & Đóng Việc (Post-Merge Verification)**: Kiểm tra trạng thái commit trên `main`, cập nhật [INTERNAL_PROGRESS_TRACKER.md](docs/INTERNAL_PROGRESS_TRACKER.md) tương ứng và liên kết bằng chứng hoàn thành.
+
 ---
 
-## 3. Quy Trình Làm Việc Tiêu Chuẩn Cho Agent (Standard Workflow)
+## 4. Quy Tắc Chống Lặp Vô Hạn (Anti-Loop & Hold Rule)
 
-Khi nhận một nhiệm vụ mới từ người dùng:
-1. **Bước 1: Nghiên Cứu & Đối Chiếu**:
-   - Đọc kỹ [MASTER_ROADMAP.md](file:///d:/NghienCuuTiemNang/Build-Settlement/docs/MASTER_ROADMAP.md) để biết nhiệm vụ thuộc Phase nào.
-   - Tra cứu [ENCYCLOPEDIA_MECHANICS.md](file:///d:/NghienCuuTiemNang/Build-Settlement/docs/ENCYCLOPEDIA_MECHANICS.md) để nắm rõ logic nghiệp vụ và cơ chế 18+ liên quan.
-   - Kiểm tra [INTERNAL_PROGRESS_TRACKER.md](file:///d:/NghienCuuTiemNang/Build-Settlement/docs/INTERNAL_PROGRESS_TRACKER.md) để xem các module liên quan hiện đang ở trạng thái nào.
-2. **Bước 2: Lập Kế Hoạch & Thiết Kế Interface**:
-   - Định nghĩa trước các kiểu dữ liệu trong `packages/core/src/domain/`.
-   - Đảm bảo tính tương thích ngược với các file save cũ trong `packages/persistence/`.
-3. **Bước 3: Hiện Thực Hóa Logic (Implementation)**:
-   - Viết logic mô phỏng vào `packages/core` hoặc `packages/simulation`.
-   - Kết nối với tầng giao diện `packages/ui` nếu yêu cầu có phần hiển thị.
-4. **Bước 4: Kiểm Thử & Xác Minh (Verification)**:
-   - Viết Unit Test bằng Vitest. Chạy `npm test`.
-   - Kiểm tra build UI: `npm run build`.
-5. **Bước 5: Cập Nhật Tài Liệu Nội Bộ**:
-   - Cập nhật [INTERNAL_PROGRESS_TRACKER.md](file:///d:/NghienCuuTiemNang/Build-Settlement/docs/INTERNAL_PROGRESS_TRACKER.md) (đánh dấu hoàn thành, ghi chú nợ kỹ thuật nếu có).
+* Nếu một lỗi hoặc test case không thể giải quyết sau **2 lượt sửa (2 iterations)**, Agent phải lập tức chuyển trạng thái sang **HOLD**, dừng code và báo cáo Human để đánh giá lại nguyên nhân gốc rễ hoặc phạm vi bài toán.
+* Tuyệt đối không tự động mở rộng cuộc tái cấu trúc (refactor loop) kéo theo các subsystem khác ngoài phạm vi được giao.
