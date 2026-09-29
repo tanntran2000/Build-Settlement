@@ -1,5 +1,6 @@
 import { Settlement } from "./settlement.js";
 import { GameDate } from "../time/clock.js";
+import { ResourceType } from "./resource.js";
 
 export interface WorldMetadata {
   worldSeed: number;
@@ -24,12 +25,121 @@ export interface StateValidationResult {
     | "KEY_ID_MISMATCH"
     | "NEGATIVE_INVENTORY"
     | "INVALID_POPULATION"
-    | "INVALID_CHARACTER";
+    | "INVALID_CHARACTER"
+    | "INVALID_STATE";
   message?: string;
 }
 
+export const REQUIRED_RESOURCES: readonly ResourceType[] = [
+  "food",
+  "clean_water",
+  "fuel",
+  "medicine",
+  "building_materials",
+  "metal",
+  "tools",
+  "weapons",
+  "currency",
+] as const;
+
+export const REQUIRED_NEEDS = [
+  "safety",
+  "nutrition",
+  "autonomy",
+  "recognition",
+  "intimacy",
+  "purpose",
+] as const;
+
+export const REQUIRED_EMOTIONS = [
+  "joy",
+  "fear",
+  "anger",
+  "sadness",
+  "shame",
+  "jealousy",
+  "hope",
+  "stress",
+] as const;
+
+export const REQUIRED_SKILLS = [
+  "management",
+  "technical",
+  "medical",
+  "combat",
+  "negotiation",
+] as const;
+
+export const REQUIRED_RELATIONSHIP = [
+  "trust",
+  "affection",
+  "attraction",
+  "respect",
+  "fear",
+  "resentment",
+  "dependency",
+  "familiarity",
+] as const;
+
+export const REQUIRED_COHORT_METRICS = [
+  "averageHealth",
+  "morale",
+  "productivity",
+  "resentment",
+  "loyalty",
+] as const;
+
+function validateMetricsDict(
+  dict: unknown,
+  requiredKeys: readonly string[],
+  groupName: string,
+  charId: string
+): { valid: true } | { valid: false; message: string } {
+  if (!dict || typeof dict !== "object" || Array.isArray(dict)) {
+    return {
+      valid: false,
+      message: `Character '${charId}' is missing or has non-object '${groupName}'`,
+    };
+  }
+  const record = dict as Record<string, unknown>;
+  for (const key of requiredKeys) {
+    const val = record[key];
+    if (typeof val !== "number" || !Number.isFinite(val) || val < 0 || val > 100) {
+      return {
+        valid: false,
+        message: `Character '${charId}' ${groupName} is missing or has invalid value for '${key}': ${val}. Must be in [0, 100].`,
+      };
+    }
+  }
+  for (const [k, v] of Object.entries(record)) {
+    if (typeof v !== "number" || !Number.isFinite(v) || v < 0 || v > 100) {
+      return {
+        valid: false,
+        message: `Character '${charId}' ${groupName} has invalid value for '${k}': ${v}. Must be in [0, 100].`,
+      };
+    }
+  }
+  return { valid: true };
+}
+
 export function validateGameState(state: GameState): StateValidationResult {
+  // 0. Container check for state
+  if (!state || typeof state !== "object" || Array.isArray(state)) {
+    return {
+      valid: false,
+      code: "INVALID_STATE",
+      message: "GameState must be a non-null object",
+    };
+  }
+
   // 1. Clock validation & consistency
+  if (!state.currentDate || typeof state.currentDate !== "object" || Array.isArray(state.currentDate)) {
+    return {
+      valid: false,
+      code: "INVALID_CLOCK",
+      message: "GameState is missing currentDate object",
+    };
+  }
   const { day, week, year } = state.currentDate;
   if (!Number.isInteger(day) || day < 1 || !Number.isInteger(week) || week < 1 || !Number.isInteger(year) || year < 1) {
     return {
@@ -49,9 +159,34 @@ export function validateGameState(state: GameState): StateValidationResult {
     };
   }
 
+  // World metadata container check
+  if (!state.worldMetadata || typeof state.worldMetadata !== "object" || Array.isArray(state.worldMetadata)) {
+    return {
+      valid: false,
+      code: "INVALID_STATE",
+      message: "GameState is missing worldMetadata object",
+    };
+  }
+
   // 2. Key-ID Matching & Settlement Contents validation
+  if (!state.settlements || typeof state.settlements !== "object" || Array.isArray(state.settlements)) {
+    return {
+      valid: false,
+      code: "INVALID_STATE",
+      message: "GameState is missing settlements dictionary",
+    };
+  }
+
   const entries = Object.entries(state.settlements);
   for (const [key, settlement] of entries) {
+    if (!settlement || typeof settlement !== "object" || Array.isArray(settlement)) {
+      return {
+        valid: false,
+        code: "INVALID_STATE",
+        message: `Settlement '${key}' must be a non-null object`,
+      };
+    }
+
     if (key !== settlement.id) {
       return {
         valid: false,
@@ -60,19 +195,53 @@ export function validateGameState(state: GameState): StateValidationResult {
       };
     }
 
-    // Inventory validation: must be non-negative integers
+    // Inventory validation: must have all required resources as non-negative integers
+    if (!settlement.inventory || typeof settlement.inventory !== "object" || Array.isArray(settlement.inventory)) {
+      return {
+        valid: false,
+        code: "NEGATIVE_INVENTORY",
+        message: `Settlement '${settlement.id}' is missing inventory object`,
+      };
+    }
+
+    for (const res of REQUIRED_RESOURCES) {
+      const count = settlement.inventory[res];
+      if (!Number.isInteger(count) || count < 0) {
+        return {
+          valid: false,
+          code: "NEGATIVE_INVENTORY",
+          message: `Settlement '${settlement.id}' is missing or has invalid inventory for '${res}': ${count}. Must be non-negative integer.`,
+        };
+      }
+    }
+
     for (const [res, count] of Object.entries(settlement.inventory)) {
       if (!Number.isInteger(count) || count < 0) {
         return {
           valid: false,
           code: "NEGATIVE_INVENTORY",
-          message: `Settlement '${settlement.id}' has invalid inventory for ${res}: ${count}. Must be non-negative integer.`,
+          message: `Settlement '${settlement.id}' has invalid inventory for '${res}': ${count}. Must be non-negative integer.`,
         };
       }
     }
 
-    // Cohorts validation (R1-F01)
+    // Cohorts validation
+    if (!Array.isArray(settlement.cohorts)) {
+      return {
+        valid: false,
+        code: "INVALID_POPULATION",
+        message: `Settlement '${settlement.id}' cohorts must be an array`,
+      };
+    }
+
     for (const cohort of settlement.cohorts) {
+      if (!cohort || typeof cohort !== "object" || Array.isArray(cohort)) {
+        return {
+          valid: false,
+          code: "INVALID_POPULATION",
+          message: `Settlement '${settlement.id}' contains invalid cohort entry`,
+        };
+      }
       if (!cohort.id || typeof cohort.id !== "string" || cohort.id.trim() === "") {
         return {
           valid: false,
@@ -87,26 +256,35 @@ export function validateGameState(state: GameState): StateValidationResult {
           message: `Cohort '${cohort.id}' in '${settlement.id}' has invalid count: ${cohort.count}. Must be non-negative integer.`,
         };
       }
-      const metricCheck = (val: number, name: string) => {
-        return Number.isFinite(val) && val >= 0 && val <= 100;
-      };
-      if (
-        !metricCheck(cohort.averageHealth, "averageHealth") ||
-        !metricCheck(cohort.morale, "morale") ||
-        !metricCheck(cohort.productivity, "productivity") ||
-        !metricCheck(cohort.resentment, "resentment") ||
-        !metricCheck(cohort.loyalty, "loyalty")
-      ) {
-        return {
-          valid: false,
-          code: "INVALID_POPULATION",
-          message: `Cohort '${cohort.id}' in '${settlement.id}' has metrics outside [0, 100] range`,
-        };
+      for (const metric of REQUIRED_COHORT_METRICS) {
+        const val = cohort[metric];
+        if (typeof val !== "number" || !Number.isFinite(val) || val < 0 || val > 100) {
+          return {
+            valid: false,
+            code: "INVALID_POPULATION",
+            message: `Cohort '${cohort.id}' in '${settlement.id}' is missing or has invalid metric '${metric}': ${val}. Must be in [0, 100].`,
+          };
+        }
       }
     }
 
-    // Named Characters validation (R1-F01)
+    // Named Characters validation
+    if (!Array.isArray(settlement.namedCharacters)) {
+      return {
+        valid: false,
+        code: "INVALID_CHARACTER",
+        message: `Settlement '${settlement.id}' namedCharacters must be an array`,
+      };
+    }
+
     for (const npc of settlement.namedCharacters) {
+      if (!npc || typeof npc !== "object" || Array.isArray(npc)) {
+        return {
+          valid: false,
+          code: "INVALID_CHARACTER",
+          message: `Settlement '${settlement.id}' contains invalid character entry`,
+        };
+      }
       if (!npc.id || typeof npc.id !== "string" || npc.id.trim() === "") {
         return {
           valid: false,
@@ -121,39 +299,55 @@ export function validateGameState(state: GameState): StateValidationResult {
           message: `Character '${npc.id}' has invalid age: ${npc.age}. Must be non-negative integer.`,
         };
       }
-      if (!Number.isFinite(npc.health) || npc.health < 0 || npc.health > 100) {
+      if (typeof npc.health !== "number" || !Number.isFinite(npc.health) || npc.health < 0 || npc.health > 100) {
         return {
           valid: false,
           code: "INVALID_CHARACTER",
           message: `Character '${npc.id}' has invalid health: ${npc.health}. Must be in [0, 100].`,
         };
       }
-      // Check needs, emotions, skills, relationship
-      const checkDict = (dict: object) => {
-        for (const [, v] of Object.entries(dict)) {
-          if (typeof v !== "number" || !Number.isFinite(v) || v < 0 || v > 100) {
-            return false;
-          }
-        }
-        return true;
-      };
-      if (
-        !checkDict(npc.needs) ||
-        !checkDict(npc.emotions) ||
-        !checkDict(npc.skills) ||
-        !checkDict(npc.relationshipToPlayer)
-      ) {
-        return {
-          valid: false,
-          code: "INVALID_CHARACTER",
-          message: `Character '${npc.id}' has attributes outside [0, 100] range`,
-        };
+
+      // Validate required metric dictionaries (R1-F01)
+      const needsCheck = validateMetricsDict(npc.needs, REQUIRED_NEEDS, "needs", npc.id);
+      if (!needsCheck.valid) {
+        return { valid: false, code: "INVALID_CHARACTER", message: needsCheck.message };
+      }
+
+      const emotionsCheck = validateMetricsDict(npc.emotions, REQUIRED_EMOTIONS, "emotions", npc.id);
+      if (!emotionsCheck.valid) {
+        return { valid: false, code: "INVALID_CHARACTER", message: emotionsCheck.message };
+      }
+
+      const skillsCheck = validateMetricsDict(npc.skills, REQUIRED_SKILLS, "skills", npc.id);
+      if (!skillsCheck.valid) {
+        return { valid: false, code: "INVALID_CHARACTER", message: skillsCheck.message };
+      }
+
+      const relCheck = validateMetricsDict(npc.relationshipToPlayer, REQUIRED_RELATIONSHIP, "relationshipToPlayer", npc.id);
+      if (!relCheck.valid) {
+        return { valid: false, code: "INVALID_CHARACTER", message: relCheck.message };
       }
     }
   }
 
   // 3. Two-way Active Settlement Invariant (LAW-05)
-  const activeSettlements = Object.values(state.settlements).filter(s => s.status === "active");
+  if (!("activeSettlementId" in state)) {
+    return {
+      valid: false,
+      code: "INVALID_STATE",
+      message: "GameState is missing activeSettlementId field",
+    };
+  }
+
+  if (state.activeSettlementId !== null && typeof state.activeSettlementId !== "string") {
+    return {
+      valid: false,
+      code: "INVALID_STATE",
+      message: "activeSettlementId must be string or null",
+    };
+  }
+
+  const activeSettlements = Object.values(state.settlements).filter(s => s && s.status === "active");
 
   if (activeSettlements.length === 0) {
     if (state.activeSettlementId !== null) {

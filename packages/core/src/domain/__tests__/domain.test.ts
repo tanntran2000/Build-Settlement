@@ -451,6 +451,78 @@ describe("Domain Models, Invariants & Object Isolation (LAW-04 & LAW-05)", () =>
       };
       expect(validateGameState(state).code).toBe("INVALID_CHARACTER");
     });
+
+    it("rejects state with missing or malformed currentDate object (R1-F01 structural)", () => {
+      const s = buildSettlement("s1", "active");
+      const state = {
+        worldMetadata: { worldSeed: 1, gameVersion: "0.1.0" },
+        settlements: { s1: s },
+        activeSettlementId: "s1",
+      } as unknown as GameState;
+      const res = validateGameState(state);
+      expect(res.valid).toBe(false);
+      expect(res.code).toBe("INVALID_CLOCK");
+    });
+
+    it("rejects state when inventory is missing required keys like food or tools (R1-F01 structural)", () => {
+      const s1 = buildSettlement("s1", "active");
+      // @ts-expect-error test missing key
+      delete s1.inventory.food;
+      const state1: GameState = {
+        currentDate: { day: 1, week: 1, year: 1 },
+        worldMetadata: { worldSeed: 1, gameVersion: "0.1.0" },
+        settlements: { s1: s1 },
+        activeSettlementId: "s1",
+      };
+      const res1 = validateGameState(state1);
+      expect(res1.valid).toBe(false);
+      expect(res1.code).toBe("NEGATIVE_INVENTORY");
+
+      const s2 = buildSettlement("s2", "active");
+      // @ts-expect-error test missing key
+      delete s2.inventory.tools;
+      const state2: GameState = {
+        currentDate: { day: 1, week: 1, year: 1 },
+        worldMetadata: { worldSeed: 1, gameVersion: "0.1.0" },
+        settlements: { s2: s2 },
+        activeSettlementId: "s2",
+      };
+      const res2 = validateGameState(state2);
+      expect(res2.valid).toBe(false);
+      expect(res2.code).toBe("NEGATIVE_INVENTORY");
+    });
+
+    it("rejects state when named character is missing needs object or needs is empty {} (R1-F01 structural)", () => {
+      const s1 = buildSettlement("s1", "active");
+      const npc1 = createNamedCharacter({ id: "n1", name: "N1" });
+      // @ts-expect-error test missing needs
+      delete npc1.needs;
+      s1.namedCharacters = [npc1];
+      const state1: GameState = {
+        currentDate: { day: 1, week: 1, year: 1 },
+        worldMetadata: { worldSeed: 1, gameVersion: "0.1.0" },
+        settlements: { s1: s1 },
+        activeSettlementId: "s1",
+      };
+      const res1 = validateGameState(state1);
+      expect(res1.valid).toBe(false);
+      expect(res1.code).toBe("INVALID_CHARACTER");
+
+      const s2 = buildSettlement("s2", "active");
+      const npc2 = createNamedCharacter({ id: "n2", name: "N2" });
+      // @ts-expect-error test empty needs object
+      npc2.needs = {};
+      s2.namedCharacters = [npc2];
+      const state2: GameState = {
+        currentDate: { day: 1, week: 1, year: 1 },
+        worldMetadata: { worldSeed: 1, gameVersion: "0.1.0" },
+        settlements: { s2: s2 },
+        activeSettlementId: "s2",
+      };
+      const res2 = validateGameState(state2);
+      expect(res2.valid).toBe(false);
+      expect(res2.code).toBe("INVALID_CHARACTER");
+    });
   });
 
   describe("Clock & Time Progression (LAW-03)", () => {

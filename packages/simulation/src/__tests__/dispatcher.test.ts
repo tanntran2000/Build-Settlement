@@ -144,6 +144,81 @@ describe("Command Dispatcher & Execution Pipeline (LAW-02, LAW-03, LAW-04, LAW-0
         expect(res.state).toBe(state);
       }
     });
+
+    it("rejects ADVANCE_DAY when state is null or non-object without uncaught exception", () => {
+      // @ts-expect-error test null state
+      const resNull = executeCommand(null, { type: "ADVANCE_DAY" });
+      expect(resNull.success).toBe(false);
+      if (!resNull.success) {
+        expect(resNull.error.code).toBe("INVALID_STATE");
+      }
+    });
+
+    it("rejects ADVANCE_DAY when currentDate is missing without TypeError escaping", () => {
+      const state = buildTestGameState(100, 100);
+      // @ts-expect-error test missing currentDate
+      delete state.currentDate;
+
+      const res = executeCommand(state, { type: "ADVANCE_DAY" });
+      expect(res.success).toBe(false);
+      if (!res.success) {
+        expect(res.error.code).toBe("INVALID_STATE");
+        expect(res.state).toBe(state);
+      }
+    });
+
+    it("rejects ADVANCE_DAY before calculation when inventory.food is missing", () => {
+      const state = buildTestGameState(100, 100);
+      // @ts-expect-error test missing food key
+      delete state.settlements["haven_active"].inventory.food;
+
+      const res = executeCommand(state, { type: "ADVANCE_DAY" });
+      expect(res.success).toBe(false);
+      if (!res.success) {
+        expect(res.error.code).toBe("INVALID_STATE");
+        expect(res.state).toBe(state);
+      }
+      expect(state.currentDate.day).toBe(7);
+    });
+
+    it("rejects ADVANCE_DAY when inventory.tools is missing", () => {
+      const state = buildTestGameState(100, 100);
+      // @ts-expect-error test missing tools key
+      delete state.settlements["haven_active"].inventory.tools;
+
+      const res = executeCommand(state, { type: "ADVANCE_DAY" });
+      expect(res.success).toBe(false);
+      if (!res.success) {
+        expect(res.error.code).toBe("INVALID_STATE");
+        expect(res.state).toBe(state);
+      }
+      expect(state.currentDate.day).toBe(7);
+    });
+
+    it("rejects ADVANCE_DAY when named character needs is missing or empty object {}", () => {
+      const stateMissing = buildTestGameState(100, 100);
+      // @ts-expect-error test missing needs
+      delete stateMissing.settlements["haven_active"].namedCharacters[0].needs;
+
+      const resMissing = executeCommand(stateMissing, { type: "ADVANCE_DAY" });
+      expect(resMissing.success).toBe(false);
+      if (!resMissing.success) {
+        expect(resMissing.error.code).toBe("INVALID_STATE");
+        expect(resMissing.state).toBe(stateMissing);
+      }
+
+      const stateEmpty = buildTestGameState(100, 100);
+      // @ts-expect-error test empty needs
+      stateEmpty.settlements["haven_active"].namedCharacters[0].needs = {};
+
+      const resEmpty = executeCommand(stateEmpty, { type: "ADVANCE_DAY" });
+      expect(resEmpty.success).toBe(false);
+      if (!resEmpty.success) {
+        expect(resEmpty.error.code).toBe("INVALID_STATE");
+        expect(resEmpty.state).toBe(stateEmpty);
+      }
+      expect(stateEmpty.currentDate.day).toBe(7);
+    });
   });
 
   describe("Command Syntax Validation Gate (R1-F03)", () => {
