@@ -64,15 +64,17 @@ Toàn bộ hệ thống 18+ từ *Free Cities* được tái cấu trúc thành 
 
 ## 3. Định Hướng Nghệ Thuật & Thị Giác (100% Thuần Pixel Art & Bản Đồ Ô Bàn Cờ)
 
-Trò chơi kiên định với phong cách **100% Thuần Pixel Art Cổ Điển**, kết hợp tư duy quy hoạch **Lưới Ô Bàn Cờ (Chessboard Grid)** và bảng màu **Êm Dịu / Thuận Mắt (Eye-friendly)**:
+Trò chơi kiên định với phong cách **100% Thuần Pixel Art Cổ Điển**, kết hợp tư duy quy hoạch **Lưới Ô Bàn Cờ (Chessboard Grid)**, bảng màu **Êm Dịu / Thuận Mắt (Eye-friendly)** và **Hệ thống Hoạt ảnh Vi mô (Micro-animations)**:
 
 | Thành phần | Phong cách Đồ họa | Đặc trưng Thiết kế & Trải nghiệm |
 | :--- | :--- | :--- |
 | **Bản đồ Lãnh địa (Map)** | **Lưới Ô Bàn Cờ (Chessboard Grid Pixel)** | Bản đồ phân chia thành các ô vuông/isometric như bàn cờ chiến thuật. Mỗi ô là một vị trí đặt công trình, địa hình (đất, nước, mỏ đá, rừng cây). Có thưởng liên kết kề cận (Adjacency Bonus) rõ ràng và trực quan. |
-| **Chân dung Nhân vật (Portraits)** | **100% Pixel Art Chân Dung (16/32-bit)** | Chân dung Pixel Art sắc nét, biểu cảm phong phú. Hỗ trợ hệ thống ghép lớp Pixel (*Modular Pixel Doll*): tóc, mắt, trang phục nô lệ/quý tộc, các giai đoạn bụng bầu và vết tích. |
-| **Công trình & Kiến trúc** | **Pixel Art Isometric / Top-down** | Các khối nhà, xưởng sản xuất, nhà thổ, dinh thự được vẽ dạng Pixel tinh tế, vừa vặn từng ô trên bàn cờ. |
-| **Minh họa Sự kiện (Event CG)** | **Tranh Toàn Cảnh Pixel Art (Pixel CG)** | Các phân cảnh 18+ và sự kiện cốt truyện lớn được vẽ bằng tranh Pixel Art khổ lớn đầy tính nghệ thuật và chiều sâu cảm xúc. |
-| **Bảng Màu & Giao Diện (UI Palette)** | **Thuận Mắt, Êm Dịu (Ergonomic & Calm)** | Sử dụng bảng màu ấm/tối hài hòa (dịu mắt, độ tương phản vừa phải), tối ưu hóa việc đọc văn bản và theo dõi số liệu trong nhiều giờ mà không bị mỏi mắt. |
+| **Chân dung Nhân vật (Portraits)** | **100% Pixel Art (16/32-bit) Có Hoạt Ảnh** | Chân dung Pixel Art sắc nét, biểu cảm phong phú. Hỗ trợ hệ thống ghép lớp Pixel (*Modular Pixel Doll*): tóc, mắt, trang phục nô lệ/quý tộc, bụng bầu. Có hoạt ảnh vi mô (nháy mắt, nhịp thở nhẹ, tóc bay). |
+| **Công trình & Cảnh quan** | **Pixel Art Isometric / Top-down** | Các khối nhà, xưởng sản xuất, nhà thổ, dinh thự được vẽ dạng Pixel tinh tế, vừa vặn từng ô trên bàn cờ. Đi kèm hiệu ứng khói bốc từ ống khói, đèn lồng đung đưa. |
+| **Minh họa Sự kiện (Event CG)** | **Tranh Toàn Cảnh Pixel Art (Pixel CG)** | Mọi sự kiện, hội thoại quan trọng đều lồng ghép tranh minh họa Pixel Art, không để người chơi phải đọc các trang chữ trơ trọi. |
+| **Hoạt Ảnh Môi Trường (Ambient VFX)** | **Micro-animations Sống Động** | Gió thổi làm ngọn cỏ lay động, cờ cắm trên tháp bay phấp phới, đàn chim bay qua bầu trời, mặt nước gợn sóng lăn tăn... Giúp thế giới luôn "thở" và sống động. |
+| **Triết Lý Văn Bản (Text Economy)** | **Giàu Hình Ảnh - Không Bội Thực Chữ** | Kế thừa chiều sâu chữ của *Free Cities* nhưng **tuyệt đối không nhồi nhét "bức tường chữ" (No Wall-of-Text)**. Câu chữ cô đọng, sắc bén, tập trung vào hành động và cảm xúc, luôn có hình ảnh minh họa dẫn dắt. |
+| **Bảng Màu & Giao Diện (UI Palette)** | **Thuận Mắt, Êm Dịu (Ergonomic & Calm)** | Sử dụng bảng màu ấm/tối hài hòa (dịu mắt, độ tương phản vừa phải), tối ưu hóa việc đọc và theo dõi số liệu trong nhiều giờ mà không bị mỏi mắt. |
 
 ---
 

@@ -23,8 +23,10 @@
    - Hỗ trợ bộ giải quyết đại từ nhân xưng động (`PronounResolver`) thích ứng với giới tính, địa vị pháp lý, và mối quan hệ giữa người nói và người nghe.
    - Mã nguồn (Tên biến, Tên hàm, Interface, Commit message) sử dụng **Tiếng Anh chuẩn**. Tham chiếu [GLOSSARY.md](file:///d:/NghienCuuTiemNang/Build-Settlement/docs/GLOSSARY.md) để đồng nhất.
 
-4. **Phong Cách Nghệ Thuật: 100% Thuần Pixel Art & Bản Đồ Ô Bàn Cờ (Chessboard Grid)**:
-   - **100% Pixel Art**: Toàn bộ hình ảnh trong game (Chân dung nhân vật, biểu cảm, công trình, bản đồ, icon và tranh minh họa sự kiện 18+) ĐỀU PHẢI là Pixel Art. Tuyệt đối không pha tạp phong cách đồ họa khác để giữ tính đồng nhất và siêu nhẹ.
+4. **Phong Cách Nghệ Thuật: 100% Thuần Pixel Art, Bản Đồ Ô Bàn Cờ & Hoạt Ảnh Vi Mô (Micro-animations)**:
+   - **100% Pixel Art & Giàu Hình Ảnh**: Toàn bộ hình ảnh (Chân dung nhân vật, công trình, bản đồ, icon và tranh minh họa sự kiện 18+) ĐỀU LÀ Pixel Art. Tuyệt đối không để xảy ra tình trạng "bức tường chữ" trơ trọi (No Wall-of-Text) như Twine cũ; mọi sự kiện, đối thoại quan trọng đều phải lồng ghép tranh minh họa hoặc chân dung cảm xúc.
+   - **Văn Bản Cô Đọng, Sắc Bén**: Giữ chiều sâu mô phỏng tâm lý/xã hội của *Free Cities* nhưng tinh gọn số lượng chữ, tập trung vào hành động, sự chuyển biến chỉ số và lựa chọn chiến lược.
+   - **Hoạt Ảnh Vi Mô Tạo Điểm Nhấn (Ambient Micro-animations)**: Giao diện và bản đồ không được chết cứng. Sử dụng các hoạt ảnh pixel/CSS siêu nhẹ để tạo sức sống: cờ bay trên tháp canh, khói bốc từ lò rèn, ngọn cỏ đung đưa theo gió, chim bay ngang trời, nhân vật có nhịp thở và chớp mắt nhẹ.
    - **Bản đồ Lãnh địa dạng Ô Bàn Cờ**: Bản đồ chia theo lưới ô vuông/isometric kiểu bàn cờ (Grid/Chessboard). Mỗi ô là một vị trí đặt công trình, địa hình (đất, nước, đá, rừng) có tương tác vị trí kề cận (adjacency bonus).
    - **Giao Diện Tối Ưu, Màu Sắc Thuận Mắt**: Sử dụng bảng màu hài hòa, êm dịu (eye-friendly retro palette), không dùng màu quá chói, bố cục rõ ràng để người chơi theo dõi dữ liệu lâu không bị mỏi mắt.
 
