@@ -48,6 +48,17 @@
    - **Tách rời Logic & Dữ liệu (Data-Driven)**: Mọi dữ liệu về công trình, tài nguyên, chỉ số cơ thể, sự kiện 18+ và kịch bản thoại PHẢI được định nghĩa qua file cấu hình JSON/TypeScript schema riêng biệt trong `packages/content/`, tuyệt đối không hard-code vào logic tính toán.
    - Luôn thiết kế các Hook mở rộng để người chơi dễ dàng ghi đè (override) dữ liệu và ném ảnh chân dung tùy biến từ thư mục ngoài `mods/`.
 
+8. **Luật Tối Thượng: Chống Phình Code & Thân Thiện Với Context Của AI (AI-Context & Lean Architecture Law)**:
+   - **Mô hình Hợp tác (Human-Vision, AI-Execution)**: Đây là tựa game ưu tiên xây dựng bởi AI Agent dưới sự chỉ đạo ý tưởng và định hướng của Người dùng (Human). Mã nguồn phải được thiết kế để bất kỳ Agent nào kế thừa cũng có thể đọc hiểu và sửa đổi chính xác trong tích tắc.
+   - **Quy tắc Giới hạn 200 Dòng (The 200-Line Limit)**: Giữ các file mã nguồn (`.ts`, `.svelte`) ở trạng thái tinh gọn, lý tưởng từ **50 đến tối đa 200 dòng**. Tuyệt đối tránh các file "quái vật" (Monolithic files) hàng ngàn dòng như Twine cũ của Free Cities.
+   - **Cơ chế Chia tách Chủ động (Active Decomposition)**: Bất cứ khi nào một file có dấu hiệu phình to hoặc đảm nhận nhiều hơn một trách nhiệm, Agent **BẮT BUỘC PHẢI TÁCH FILE** thành một thư mục module con (ví dụ: chuyển `anatomy.ts` thành thư mục `anatomy/` gồm `types.ts`, `measurements.ts`, `modifications.ts`, và `index.ts` để re-export).
+   - **Đơn Trách Nhiệm (Single Responsibility Principle - SRP)**: Luôn tách biệt:
+     - Khai báo Kiểu dữ liệu (`types.ts`).
+     - Thuật toán & Công thức tính toán (`calculator.ts` / `rules.ts`).
+     - Điều kiện bất biến & Ràng buộc an toàn (`invariants.ts`).
+   - **Không Hard-code Dữ liệu Dài**: Các danh sách, mảng dữ liệu, bảng đối chiếu dài phải tách sang file `.json` riêng trong `packages/content/`, không được nhồi nhét vào file mã nguồn logic.
+   - **Đảm bảo Agent đọc trọn vẹn trong 1 lần**: File nhỏ gọn giúp Agent đọc toàn bộ nội dung mà không bao giờ bị cắt cụt (truncated content), triệt tiêu hoàn toàn lỗi suy đoán sai (*hallucination*) hoặc ghi đè nhầm code của nhau.
+
 ---
 
 ## 2. Bản Đồ Mã Nguồn (Codebase Map)

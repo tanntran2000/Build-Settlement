@@ -6,7 +6,7 @@
 
 ## 1. Tiêu Chuẩn Kỹ Thuật & Điều Kiện Hoàn Thành (Definition of Done - DoD)
 
-Bất kỳ tính năng hoặc giai đoạn (Phase) nào được coi là hoàn thành khi và chỉ khi thỏa mãn đồng thời 7 tiêu chí sau:
+Bất kỳ tính năng hoặc giai đoạn (Phase) nào được coi là hoàn thành khi và chỉ khi thỏa mãn đồng thời 8 tiêu chí sau:
 
 1. **Tuân thủ Kiến trúc Headless**: Mã nguồn mô phỏng nằm trong `packages/core` và `packages/simulation` hoàn toàn độc lập với DOM và UI framework.
 2. **Type Safety 100%**: Biên dịch thành công với TypeScript Strict Mode, không có `any`, không có lỗi cú pháp hoặc cảnh báo kiểu.
@@ -15,6 +15,7 @@ Bất kỳ tính năng hoặc giai đoạn (Phase) nào được coi là hoàn t
 5. **Cập nhật Tiến độ & Bách khoa toàn thư**: Đã ghi nhận thay đổi vào [INTERNAL_PROGRESS_TRACKER.md](file:///d:/NghienCuuTiemNang/Build-Settlement/docs/INTERNAL_PROGRESS_TRACKER.md) và cập nhật cơ chế vào [ENCYCLOPEDIA_MECHANICS.md](file:///d:/NghienCuuTiemNang/Build-Settlement/docs/ENCYCLOPEDIA_MECHANICS.md).
 6. **Tiêu chuẩn Siêu Nhẹ (Lightweight Footprint)**: Giữ dung lượng tải về và mức tiêu thụ RAM ở mức tối thiểu. Gói UI build ra duy trì dưới 200KB gzip. Không dùng thư viện bên ngoài nếu có thể tự viết bằng logic thuần.
 7. **Kiến trúc Hướng Modding (Modding-First)**: Mọi định nghĩa về công trình, sự kiện, lời thoại, trait tính cách PHẢI được lưu ở dạng file JSON/Data Schema trong `packages/content/`, sẵn sàng cho cơ chế nạp đè (override) từ thư mục `mods/`.
+8. **Chống Phình Code & Thân Thiện Với Context AI (The 200-Line Limit)**: Không cho phép bất kỳ file mã nguồn nào vượt quá 200 dòng. Khi một file có nguy cơ phình to, Agent bắt buộc phải chia tách thành module con độc lập để đảm bảo bất kỳ Agent nào kế thừa cũng đọc hiểu trọn vẹn trong 1 lần gọi công cụ.
 
 ---
 
