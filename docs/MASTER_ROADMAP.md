@@ -17,12 +17,13 @@ Mục tiêu giai đoạn hiện tại không phải là hoàn thiện toàn bộ
 
 ```mermaid
 flowchart TD
-    R0["R0: Sửa CI & Đối Chiếu Tiến Độ (XONG)"] --> R1["R1: Lõi Thực Thi & Luật Bất Biến"]
-    R1 --> R2["R2: Vòng Sinh Tồn & Xây Dựng"]
-    R2 --> R3["R3: Lưu Trữ & Vòng Đời Ván Chơi"]
-    R3 --> R4["R4: Bàn Giao Thật (Atomic Handoff)"]
-    R4 --> R5["R5: Hệ Thống Sự Kiện & Tính Chơi Lại"]
-    R5 --> MILESTONE["🏆 MỐC NGHIỆM THU VERTICAL SLICE"]
+    R0["R0: Sửa CI & Đối Chiếu Tiến Độ (XONG)"] --> R1["R1: Lõi Thực Thi & Luật Bất Biến (XONG)"]
+    R1 --> F1["Foundation I: Dân Cư & Năng Lực Xã Hội (POP)"]
+    F1 --> F2["Foundation II: Tài Nguyên & Sinh Tồn (RES)"]
+    F2 --> F3["Foundation III: Lưu Trữ & Vòng Đời Ván Chơi"]
+    F3 --> F4["Foundation IV: Bàn Giao Thật (Atomic Handoff)"]
+    F4 --> F5["Foundation V: Hệ Thống Sự Kiện & Tính Chơi Lại"]
+    F5 --> MILESTONE["🏆 MỐC NGHIỆM THU VERTICAL SLICE"]
 ```
 
 ### Gói R0: Đối Chiếu Tiến Độ & Chuẩn Hóa CI (ĐÃ HOÀN THÀNH)
@@ -33,27 +34,47 @@ flowchart TD
 
 ---
 
-### Gói R1: Lõi Thực Thi & Luật Bất Biến (ƯU TIÊN SỐ 1)
-* **Mục tiêu**: Thiết lập luồng xử lý Command $\rightarrow$ Invariant $\rightarrow$ Effect tập trung, loại bỏ hoàn toàn việc UI trực tiếp sửa state.
-* **Các đầu việc cụ thể**:
-  * [ ] Đồng bộ một Clock duy nhất trong `GameState` (loại bỏ biến `day` cục bộ trong UI).
-  * [ ] Xây dựng Command Dispatcher trung tâm (`executeCommand(state, command) -> { nextState, effects, auditLog }`).
-  * [ ] Hoàn thiện Invariant Validator:
-    * `createNamedCharacter`: Deep clone object mặc định, chặn tuổi âm, clamp chỉ số [0, 100].
-    * `PopulationCohort`: Bổ sung trường `socialClass` còn thiếu theo đúng thiết kế 3 trục thân phận.
-  * [ ] Viết Unit Test tự động chứng minh: Lệnh sai bị từ chối; State không bị mutate dở dang; Invariant được bảo toàn.
+### Gói R1: Lõi Thực Thi & Luật Bất Biến (ĐÃ HOÀN THÀNH)
+* [x] Đồng bộ một Clock duy nhất trong `GameState` (loại bỏ biến `day` cục bộ trong UI).
+* [x] Xây dựng Command Dispatcher trung tâm (`executeCommand(state, command) -> { success, nextState, effects, auditEntries, data? }`).
+* [x] Hoàn thiện Invariant Validator:
+  * `createNamedCharacter`: Deep clone object mặc định, chặn tuổi âm, reject giá trị ngoài [0, 100].
+  * `PopulationCohort`: Bổ sung trường `socialClass` bắt buộc theo đúng thiết kế 3 trục thân phận.
+  * Validation Invariants hai chiều (0 hoặc 1 Active Settlement, Key-ID matching, tài nguyên không âm).
+* [x] Viết 51 Unit Tests tự động và 1 Playwright smoke test chứng minh: Lệnh sai bị từ chối; State không bị mutate dở dang; Invariant được bảo toàn.
+* [x] Merge PR #1 (`375b60e`) vào `main`, hậu kiểm CI `36527428842` pass 100%.
 
 ---
 
-### Gói R2: Vòng Sinh Tồn & Xây Dựng (Survival & Building Loop)
-* **Mục tiêu**: Khắc phục dứt điểm lỗi kho âm và hoàn thiện vòng lặp Xây dựng $\rightarrow$ Sản xuất $\rightarrow$ Tiêu thụ.
+### Foundation I: Dân Cư & Năng Lực Xã Hội (WP-HAVEN-02) (ƯU TIÊN HIỆN TẠI)
+* **Triết lý**: Dân số thật tạo ra các năng lực xã hội. Nhu cầu và mức ủng hộ quyết định bao nhiêu năng lực đó thực sự sử dụng được. Player phân bổ năng lực, không phân bổ từng đầu người.
+* **Ranh giới phạm vi**:
+  * **Named NPC $\rightarrow$ `NPC-01 Future`**: Decouple hoàn toàn khỏi Population Core.
+  * **Resource Core $\rightarrow$ Foundation II**: Chỉ triển khai sau khi Population Core cung cấp đủ input Demand và Capacity ổn định.
 * **Các đầu việc cụ thể**:
-  * [ ] Triển khai logic tài nguyên sàn $0$: **Nhu Cầu (Demand) - Cấp Phát (Allocated) - Thiếu Hụt (Deficit)**. Kho không bao giờ âm; thiếu hụt sinh Effect trừ Sĩ khí/Sức khỏe kèm dòng giải trình WHY.
-  * [ ] Sửa lỗi ngày báo cáo kinh tế: `simulateDailyEconomy` nhận vào ngày mô phỏng thực tế (thay vì cố định `dayCreated`).
-  * [ ] Hiện thực hóa lệnh `BUILD_FACILITY` với 3 bản vẽ hiện có:
-    * Kiểm tra điều kiện & trừ chi phí kho $\rightarrow$ Tạo công trình.
-    * Gán công nhân lao động $\rightarrow$ Tính toán sản lượng hàng ngày (`production`) bù đắp tiêu thụ.
-  * [ ] Viết Unit Test và Browser smoke test kiểm chứng kho không âm và sản xuất hoạt động.
+  * [ ] **POP-01A: Class Resource Core**: **READY FOR IMPLEMENTATION** *(G1 Approved / Closed tại commit `913d981`)*
+    * Khóa chuẩn Fixed-Point `SOCIAL_RESOURCE_SCALE = 1000` (integer milli-units, `Math.floor`).
+    * 6-way resolver `resolveEconomicProfile` từ canonical `SocialClass` & `LegalStatus`.
+    * Pure snapshot calculator `calculateSocialResources` (không mutate state, không side effects).
+    * Nghiệm thu tuyệt đối 2 Benchmark Fixtures A/B và Edge cases 1/99/101 dân.
+  * [ ] **POP-01B: Needs & Effective Capacity**: **DESIGN ONLY**
+    * Cơ chế Satisfaction, Tác động thiếu hụt & Mức ủng hộ (Support) sang nhịp $T \rightarrow T+1$.
+  * [ ] **POP-01C: Labor Allocation**: **DESIGN ONLY**
+    * Phân bổ năng lực lao động (Effective $\rightarrow$ Allocated Labor), không phân bổ từng đầu người.
+  * [ ] **POP-02: Population Dynamics**: **DESIGN ONLY**
+    * Di cư, xuất cư, dịch chuyển giai cấp, ngưỡng sức chứa bền vững, dòng người nộp đơn nhập cư (Immigration, Emigration, Class Mobility, Sustainable Capacity, Outside Applicants, Headcount flows - chưa bao gồm Sinh/Tử, Tháp tuổi hay mô phỏng thế hệ).
+  * [ ] **POP-03: Law & Social Conflict**: **DESIGN ONLY**
+    * Chính sách giai cấp, xung đột quyền lợi, trật tự xã hội.
+
+---
+
+### Foundation II: Tài Nguyên & Vòng Sinh Tồn (Resource Core & Survival Loop)
+* **Mục tiêu**: Xây dựng mô hình tài nguyên vật lý độc lập, kết nối Capacity & Demand từ Population Core vào vòng lặp Cấp phát $\rightarrow$ Tiêu thụ $\rightarrow$ Sản xuất.
+* **Các đầu việc cụ thể**:
+  * [ ] **RES-01: Resource Model, Stock & Invariants**: Mô hình kho và biến thiên vật lý, bảo toàn sàn 0, tách biệt Physical Resources vs Social Capacities.
+  * [ ] **RES-02: Demand $\rightarrow$ Allocation $\rightarrow$ Deficit / Surplus**: Động cơ cấp phát lương thực và nhu yếu phẩm từ đầu vào của Population Core.
+  * [ ] **RES-03: Production, Conversion & Inflow-Outflow**: Chuyển hóa nguyên liệu thô, sản lượng, hao hụt tự nhiên.
+  * [ ] **RES-04: Building & Physical Activity Integration**: Xây dựng công trình (`BUILD_FACILITY`), bố trí địa điểm, tích hợp hạ tầng vật lý sau khi Resource Core đã đứng vững độc lập.
 
 ---
 
