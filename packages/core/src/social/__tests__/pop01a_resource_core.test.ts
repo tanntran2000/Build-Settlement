@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import type { PopulationCohort } from "../../domain/population.js";
 import { resolveEconomicProfile } from "../calculator.js";
+import { SOCIAL_RESOURCE_SCALE, INITIAL_BALANCE_PROFILE } from "../profile.js";
 
 function createMockCohort(socialClass: PopulationCohort["socialClass"], legalStatus: PopulationCohort["legalStatus"]): PopulationCohort {
   return {
@@ -70,6 +71,43 @@ describe("resolveEconomicProfile", () => {
     it("maps citizen + elite -> upper", () => {
       const cohort = createMockCohort("elite", "citizen");
       expect(resolveEconomicProfile(cohort)).toBe("upper");
+    });
+  });
+});
+
+describe("INITIAL_BALANCE_PROFILE & Scale", () => {
+  it("defines SOCIAL_RESOURCE_SCALE as exactly 1000", () => {
+    expect(SOCIAL_RESOURCE_SCALE).toBe(1000);
+  });
+
+  it("contains exactly the 4 required EconomicProfileKey entries", () => {
+    const keys = Object.keys(INITIAL_BALANCE_PROFILE).sort();
+    expect(keys).toEqual(["lower", "middle", "servile", "upper"]);
+  });
+
+  it("defines approved v0.1 multiplier values for all profiles", () => {
+    expect(INITIAL_BALANCE_PROFILE.servile).toEqual({
+      laborMultiplierMilli: 2000,
+      purchaseDemandMultiplierMilli: 1000,
+      lifestyleFoodMultiplierMilli: 500,
+    });
+
+    expect(INITIAL_BALANCE_PROFILE.lower).toEqual({
+      laborMultiplierMilli: 1500,
+      purchaseDemandMultiplierMilli: 1000,
+      lifestyleFoodMultiplierMilli: 1000,
+    });
+
+    expect(INITIAL_BALANCE_PROFILE.middle).toEqual({
+      laborMultiplierMilli: 1000,
+      purchaseDemandMultiplierMilli: 1500,
+      lifestyleFoodMultiplierMilli: 1000,
+    });
+
+    expect(INITIAL_BALANCE_PROFILE.upper).toEqual({
+      laborMultiplierMilli: 500,
+      purchaseDemandMultiplierMilli: 2000,
+      lifestyleFoodMultiplierMilli: 2000,
     });
   });
 });
