@@ -198,8 +198,11 @@ flowchart TD
   npm run typecheck:core
   ```
   *Kỳ vọng*: 0 errors.
-- [ ] **Step 1.7 (Commit Checkpoint)**: Commit checkpoint Task 1:
+- [ ] **Step 1.7 (Commit Checkpoint)**: Stage đúng các file thuộc Task 1 và commit checkpoint:
   ```bash
+  git add packages/core/src/social/types.ts \
+          packages/core/src/social/calculator.ts \
+          packages/core/src/social/__tests__/pop01a_resource_core.test.ts
   git commit -m "feat(social): define macro types and implement exhaustive 10-case resolveEconomicProfile"
   ```
 - [ ] **Step 1.8 (Reviewer Gate)**: Reviewer xác nhận: Đúng 10 cases, exhaustive switch có `never` guard, không fallback ngầm, không tái định nghĩa canonical types, không export ra `core/src/index.ts`.
@@ -228,8 +231,10 @@ flowchart TD
   npx vitest run packages/core/src/social/__tests__/pop01a_resource_core.test.ts
   ```
   *Kỳ vọng GREEN*: Tests profile và scale đều PASS.
-- [ ] **Step 2.5 (Commit Checkpoint)**: Commit checkpoint Task 2:
+- [ ] **Step 2.5 (Commit Checkpoint)**: Stage đúng các file thuộc Task 2 và commit checkpoint:
   ```bash
+  git add packages/core/src/social/profile.ts \
+          packages/core/src/social/__tests__/pop01a_resource_core.test.ts
   git commit -m "feat(social): add SOCIAL_RESOURCE_SCALE and INITIAL_BALANCE_PROFILE config"
   ```
 - [ ] **Step 2.6 (Reviewer Gate)**: Reviewer xác nhận: Config độc lập, pure constants, đúng giá trị v0.1.
@@ -312,8 +317,10 @@ flowchart TD
   npx vitest run packages/core/src/social/__tests__/pop01a_resource_core.test.ts
   ```
   *Kỳ vọng GREEN*: Toàn bộ tests (Benchmarks A/B, Custom Profile, Edge Cases 1/99/101, Input rỗng, và Immutability) đều PASS 100%.
-- [ ] **Step 3.5 (Commit Checkpoint)**: Commit checkpoint Task 3:
+- [ ] **Step 3.5 (Commit Checkpoint)**: Stage đúng các file thuộc Task 3 và commit checkpoint:
   ```bash
+  git add packages/core/src/social/calculator.ts \
+          packages/core/src/social/__tests__/pop01a_resource_core.test.ts
   git commit -m "feat(social): implement calculateSocialResources and pass complete benchmark & robustness suite"
   ```
 - [ ] **Step 3.6 (Reviewer Gate)**: Reviewer xác nhận: TDD trung thực, hàm thuần túy không mutate, không dùng default argument, parameter `profileMap` có hiệu lực thực thi, phân biệt công thức thành công.
@@ -327,11 +334,10 @@ flowchart TD
 - [ ] **Step 4.2 (Exhaustive Switch Audit)**: Kiểm tra `resolveEconomicProfile` trong `calculator.ts`, xác nhận switch bao phủ đủ các case của canonical `SocialClass` và có nhánh `default: { const _exhaustive: never = cohort.socialClass; return _exhaustive; }`. Không tồn tại fallback ngầm `return "upper"`.
 - [ ] **Step 4.3 (Precondition & Anti-YAGNI Audit)**: Rà soát toàn bộ file `calculator.ts`, xác nhận KHÔNG thêm duplicate validation cho count âm, NaN, chuỗi rỗng hay malformed state. Tuân thủ domain preconditions của R1.
 - [ ] **Step 4.4 (Module Boundary Audit)**: Kiểm tra `packages/core/src/index.ts`, xác nhận **KHÔNG** export module `social`.
-- [ ] **Step 4.5 (Commit Checkpoint)**: Commit checkpoint Task 4:
-  ```bash
-  git commit -m "test(social): verify contract signatures, exhaustiveness, and module boundaries"
-  ```
-- [ ] **Step 4.6 (Reviewer Gate)**: Reviewer xác nhận toàn bộ ràng buộc hợp đồng và ranh giới kiến trúc đã được bảo toàn.
+- [ ] **Step 4.5 (Audit Checkpoint Rule)**:
+  - Nếu toàn bộ các khâu thẩm định tĩnh và động (Step 4.1 – 4.4) đều đạt và không phát sinh thay đổi file: **NO COMMIT REQUIRED** (không thực hiện commit rỗng).
+  - Nếu phát hiện vi phạm hợp đồng hoặc ranh giới: chuyển ngay sang trạng thái **HOLD for Reviewer** để đánh giá lại nguyên nhân gốc rễ (Anti-Loop Rule); tuyệt đối không tự ý sửa đổi kiến trúc hay scope trong bước thẩm định.
+- [ ] **Step 4.6 (Reviewer Gate)**: Reviewer xác nhận toàn bộ ràng buộc hợp đồng và ranh giới kiến trúc đã được bảo toàn nguyên vẹn.
 
 ---
 
@@ -358,23 +364,23 @@ flowchart TD
   npm run test:smoke
   ```
   *Kỳ vọng*: 1/1 passed trên Chromium headless.
-- [ ] **Step 5.5 (Allowlist/Denylist Diff Inspection)**: Kiểm tra git diff và git status:
+- [ ] **Step 5.5 (Allowlist/Denylist Diff Inspection với BASE_SHA)**: Kiểm tra git diff so với exact G2 `BASE_SHA` bất biến và kiểm tra trạng thái working tree:
   ```bash
-  git status
-  git diff --stat origin/main
+  git diff --stat "$BASE_SHA"...HEAD
+  git diff --name-only "$BASE_SHA"...HEAD
+  git status --short
   ```
   *Kỳ vọng*:
-  - Chỉ có đúng 4 files được tạo/sửa:
+  - Tập hợp file thay đổi bắt buộc phải khớp chính xác 100% với 4 files trong allowlist:
     - `packages/core/src/social/types.ts`
     - `packages/core/src/social/profile.ts`
     - `packages/core/src/social/calculator.ts`
     - `packages/core/src/social/__tests__/pop01a_resource_core.test.ts`
-  - Không có file nào ngoài allowlist bị chạm tới (UI, simulation, persistence, content, `core/src/index.ts` giữ nguyên 100%).
+  - Tuyệt đối không có file thứ năm nào bị thêm mới hoặc chỉnh sửa (UI, simulation, persistence, content, `core/src/index.ts` giữ nguyên 100%).
   - Kiến trúc deterministic: `packages/core/src/__tests__/architecture.test.ts` PASS (không import simulation, không chứa DOM/UI).
-- [ ] **Step 5.6 (Final Checkpoint)**: Commit hoàn thành lát cắt POP-01A sẵn sàng cho Human Review & Merge:
-  ```bash
-  git commit -m "feat(social): complete POP-01A implementation and pass full quality gate"
-  ```
+- [ ] **Step 5.6 (Final Verification Gate & Hand-off)**:
+  - Khi toàn bộ 5 bước kiểm chứng (Step 5.1 – 5.5) đều xanh và working tree sạch: **NO FINAL COMMIT REQUIRED** (không tạo commit rỗng).
+  - Thu thập đầy đủ bằng chứng nghiệm thu thực nghiệm (test logs, typecheck, exit code, diff set), mở PR và dừng lại để **Human Review & Merge Decision**.
 
 ---
 
