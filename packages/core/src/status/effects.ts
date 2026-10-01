@@ -26,6 +26,10 @@ const VALID_SOURCES: Set<CityEffectSource> = new Set(["status", "event"]);
 export function createCityEffectCandidate(
   input: CityEffectCandidate
 ): CityEffectCandidate {
+  if (!input || typeof input !== "object") {
+    throw new RangeError("City effect candidate must be a non-null object.");
+  }
+
   if (!VALID_FAMILIES.has(input.family)) {
     throw new RangeError(`Invalid city effect family: ${input.family}`);
   }
@@ -91,6 +95,10 @@ export function createCityEffectCandidate(
  * Ném RangeError nếu thuộc tính candidate không hợp lệ hoặc remainingWeeks không thuộc [1, CITY_EFFECT_DURATION_WEEKS].
  */
 export function assertValidActiveCityEffect(effect: ActiveCityEffect): void {
+  if (!effect || typeof effect !== "object") {
+    throw new RangeError("Active city effect must be a non-null object.");
+  }
+
   createCityEffectCandidate(effect);
 
   if (

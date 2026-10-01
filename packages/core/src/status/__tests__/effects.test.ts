@@ -418,5 +418,14 @@ describe("City Effect Lifecycle & Validation", () => {
       expect(() => advanceCityEffectWeek(invalidFamily)).toThrow(RangeError);
       expect(() => reconcileCityEffect(invalidFamily, validCandidate)).toThrow(RangeError);
     });
+
+    it("rejects null, undefined, or non-object active city effect inputs with RangeError", () => {
+      expect(() => advanceCityEffectWeek(null as any)).toThrow(RangeError);
+      expect(() => advanceCityEffectWeek(undefined as any)).toThrow(RangeError);
+      expect(() => advanceCityEffectWeek(123 as any)).toThrow(RangeError);
+      expect(() => reconcileCityEffect(undefined as any, validCandidate)).toThrow(RangeError);
+      expect(() => reconcileCityEffect("invalid" as any, validCandidate)).toThrow(RangeError);
+      expect(() => reconcileCityEffect(123 as any, validCandidate)).toThrow(RangeError);
+    });
   });
 });
