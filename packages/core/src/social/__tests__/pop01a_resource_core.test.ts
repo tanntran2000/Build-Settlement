@@ -110,7 +110,7 @@ describe("INITIAL_BALANCE_PROFILE & Scale", () => {
     });
 
     expect(INITIAL_BALANCE_PROFILE.upper).toEqual({
-      laborMultiplierMilli: 500,
+      laborMultiplierMilli: 0,
       purchaseDemandMultiplierMilli: 2000,
       lifestyleFoodMultiplierMilli: 2000,
     });
@@ -142,7 +142,7 @@ describe("calculateSocialResources - Full Acceptance Suite", () => {
       expect(snapshot).toEqual({
         headcount: 14500,
         populationBlocks: 145,
-        laborCapacityMilli: 202500,
+        laborCapacityMilli: 2000000,
         purchaseDemandCapacityMilli: 165000,
         survivalFoodNeedMilli: 145000,
         lifestyleFoodDemandMilli: 145000,
@@ -162,7 +162,7 @@ describe("calculateSocialResources - Full Acceptance Suite", () => {
       expect(snapshot).toEqual({
         headcount: 14500,
         populationBlocks: 145,
-        laborCapacityMilli: 199500,
+        laborCapacityMilli: 1955000,
         purchaseDemandCapacityMilli: 168000,
         survivalFoodNeedMilli: 145000,
         lifestyleFoodDemandMilli: 148000,
@@ -187,7 +187,7 @@ describe("calculateSocialResources - Full Acceptance Suite", () => {
       const cohorts = [createMockCohort("lower", "citizen", 10000)];
       const snapshot = calculateSocialResources(cohorts, customProfileMap);
 
-      expect(snapshot.laborCapacityMilli).toBe(300000); // 10000 * 3000 / 100 = 300,000
+      expect(snapshot.laborCapacityMilli).toBe(3000000); // 10000 * 3000 / 10 = 3,000,000
       expect(snapshot.purchaseDemandCapacityMilli).toBe(200000);
       expect(snapshot.lifestyleFoodDemandMilli).toBe(200000);
       expect(snapshot.survivalFoodNeedMilli).toBe(100000); // Vẫn dùng SOCIAL_RESOURCE_SCALE = 1000
@@ -197,17 +197,17 @@ describe("calculateSocialResources - Full Acceptance Suite", () => {
       // 1 cư dân
       const res1 = calculateSocialResources([createMockCohort("lower", "citizen", 1)], INITIAL_BALANCE_PROFILE);
       expect(res1.populationBlocks).toBe(0.01);
-      expect(res1.laborCapacityMilli).toBe(15); // floor(1 * 1500 / 100) = 15
+      expect(res1.laborCapacityMilli).toBe(150); // floor(1 * 1500 / 10) = 150
 
       // 99 cư dân (chứng minh không cliff về 0)
       const res99 = calculateSocialResources([createMockCohort("lower", "citizen", 99)], INITIAL_BALANCE_PROFILE);
       expect(res99.populationBlocks).toBe(0.99);
-      expect(res99.laborCapacityMilli).toBe(1485); // floor(99 * 1500 / 100) = 1485
+      expect(res99.laborCapacityMilli).toBe(14850); // floor(99 * 1500 / 10) = 14,850
 
       // 101 cư dân
       const res101 = calculateSocialResources([createMockCohort("lower", "citizen", 101)], INITIAL_BALANCE_PROFILE);
       expect(res101.populationBlocks).toBe(1.01);
-      expect(res101.laborCapacityMilli).toBe(1515); // floor(101 * 1500 / 100) = 1515
+      expect(res101.laborCapacityMilli).toBe(15150); // floor(101 * 1500 / 10) = 15,150
     });
 
     it("handles empty cohorts array [] returning all zeros", () => {
