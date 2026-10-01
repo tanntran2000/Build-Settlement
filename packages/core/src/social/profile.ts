@@ -1,4 +1,4 @@
-﻿import type { EconomicProfileKey, ClassResourceProfile } from "./types.js";
+import type { EconomicProfileKey, ClassResourceProfile } from "./types.js";
 
 /**
  * Hằng số quy chuẩn chuyển đổi Fixed-Point:

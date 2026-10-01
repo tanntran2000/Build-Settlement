@@ -1,4 +1,4 @@
-﻿export type CityEffectFamily =
+export type CityEffectFamily =
   | "economy"
   | "security"
   | "qol"

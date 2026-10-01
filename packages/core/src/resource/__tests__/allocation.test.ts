@@ -1,4 +1,4 @@
-﻿import { describe, it, expect } from "vitest";
+import { describe, it, expect } from "vitest";
 import { allocateResource, resolveResourceFlow } from "../allocation.js";
 
 describe("Resource Allocation & Flow Primitives", () => {

@@ -1,4 +1,4 @@
-﻿import type { PopulationCohort } from "../domain/population.js";
+import type { PopulationCohort } from "../domain/population.js";
 import type { SocialClass, LegalStatus } from "../domain/character.js";
 
 export type EconomicProfileKey = "servile" | "lower" | "middle" | "upper";

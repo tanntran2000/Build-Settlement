@@ -1,4 +1,4 @@
-﻿export interface ResourceAllocationInput {
+export interface ResourceAllocationInput {
   demand: number;
   available: number;
 }

@@ -1,4 +1,4 @@
-﻿import type { PopulationCohort } from "../domain/population.js";
+import type { PopulationCohort } from "../domain/population.js";
 import type {
   EconomicProfileKey,
   ClassResourceProfile,
