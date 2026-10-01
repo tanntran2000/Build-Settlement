@@ -49,3 +49,46 @@ export function calculateWorkforceHeadcount(
     directAssignableHeadcount,
   };
 }
+
+/**
+ * Tính toán Effective Workforce theo công thức số học cố định (Fixed-Point):
+ * effectiveWorkforceMilli = floor(baseWorkforceMilli * (10000 + modifierBps) / 10000)
+ *
+ * Ràng buộc:
+ * - baseWorkforceMilli: số nguyên hữu hạn >= 0
+ * - modifierBps: số nguyên hữu hạn, là bội số của 50, nằm trong khoảng [-500, 500] (0 cho phép)
+ */
+export function calculateEffectiveWorkforceMilli(
+  baseWorkforceMilli: number,
+  modifierBps: number
+): number {
+  if (
+    !Number.isFinite(baseWorkforceMilli) ||
+    !Number.isInteger(baseWorkforceMilli) ||
+    baseWorkforceMilli < 0
+  ) {
+    throw new RangeError(
+      `baseWorkforceMilli must be a finite non-negative integer. Received: ${baseWorkforceMilli}`
+    );
+  }
+
+  if (!Number.isFinite(modifierBps) || !Number.isInteger(modifierBps)) {
+    throw new RangeError(
+      `modifierBps must be a finite integer. Received: ${modifierBps}`
+    );
+  }
+
+  if (Math.abs(modifierBps) > 500) {
+    throw new RangeError(
+      `modifierBps must be in range [-500, 500]. Received: ${modifierBps}`
+    );
+  }
+
+  if (Math.abs(modifierBps) % 50 !== 0) {
+    throw new RangeError(
+      `modifierBps must be a multiple of 50 bps. Received: ${modifierBps}`
+    );
+  }
+
+  return Math.floor((baseWorkforceMilli * (10000 + modifierBps)) / 10000);
+}
