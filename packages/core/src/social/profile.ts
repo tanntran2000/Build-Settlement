@@ -1,4 +1,4 @@
-import type { EconomicProfileKey, ClassResourceProfile } from "./types.js";
+﻿import type { EconomicProfileKey, ClassResourceProfile } from "./types.js";
 
 /**
  * Hằng số quy chuẩn chuyển đổi Fixed-Point:
@@ -27,7 +27,7 @@ export const INITIAL_BALANCE_PROFILE: Record<EconomicProfileKey, ClassResourcePr
     lifestyleFoodMultiplierMilli: 1000,
   },
   upper: {
-    laborMultiplierMilli: 500,
+    laborMultiplierMilli: 0,
     purchaseDemandMultiplierMilli: 2000,
     lifestyleFoodMultiplierMilli: 2000,
   },
