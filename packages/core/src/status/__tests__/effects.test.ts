@@ -348,4 +348,75 @@ describe("City Effect Lifecycle & Validation", () => {
       expect(JSON.stringify(happyII)).toBe(candJsonBefore);
     });
   });
+
+  describe("ActiveCityEffect Input Validation in reconcileCityEffect & advanceCityEffectWeek", () => {
+    const validCandidate: CityEffectCandidate = {
+      family: "economy",
+      tier: 1,
+      modifierBps: 50,
+      source: "status",
+    };
+
+    const invalidRemainingWeeks = [0, 4, 2.5, -1, NaN, Infinity, -Infinity];
+
+    for (const rw of invalidRemainingWeeks) {
+      it("advanceCityEffectWeek rejects remainingWeeks = " + rw + " with RangeError", () => {
+        const invalidActive: any = {
+          family: "economy",
+          tier: 1,
+          modifierBps: 50,
+          source: "status",
+          remainingWeeks: rw,
+        };
+        expect(() => advanceCityEffectWeek(invalidActive)).toThrow(RangeError);
+      });
+
+      it("reconcileCityEffect rejects remainingWeeks = " + rw + " with RangeError", () => {
+        const invalidActive: any = {
+          family: "economy",
+          tier: 1,
+          modifierBps: 50,
+          source: "status",
+          remainingWeeks: rw,
+        };
+        expect(() => reconcileCityEffect(invalidActive, validCandidate)).toThrow(RangeError);
+      });
+    }
+
+    it("rejects malformed current tier in advanceCityEffectWeek and reconcileCityEffect", () => {
+      const invalidTier: any = {
+        family: "economy",
+        tier: 0,
+        modifierBps: 0,
+        source: "status",
+        remainingWeeks: 2,
+      };
+      expect(() => advanceCityEffectWeek(invalidTier)).toThrow(RangeError);
+      expect(() => reconcileCityEffect(invalidTier, validCandidate)).toThrow(RangeError);
+    });
+
+    it("rejects malformed current modifierBps in advanceCityEffectWeek and reconcileCityEffect", () => {
+      const invalidMod: any = {
+        family: "economy",
+        tier: 1,
+        modifierBps: 75,
+        source: "status",
+        remainingWeeks: 2,
+      };
+      expect(() => advanceCityEffectWeek(invalidMod)).toThrow(RangeError);
+      expect(() => reconcileCityEffect(invalidMod, validCandidate)).toThrow(RangeError);
+    });
+
+    it("rejects malformed current family or source in advanceCityEffectWeek and reconcileCityEffect", () => {
+      const invalidFamily: any = {
+        family: "unknown",
+        tier: 1,
+        modifierBps: 50,
+        source: "status",
+        remainingWeeks: 2,
+      };
+      expect(() => advanceCityEffectWeek(invalidFamily)).toThrow(RangeError);
+      expect(() => reconcileCityEffect(invalidFamily, validCandidate)).toThrow(RangeError);
+    });
+  });
 });

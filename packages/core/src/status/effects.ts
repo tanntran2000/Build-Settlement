@@ -87,6 +87,24 @@ export function createCityEffectCandidate(
 }
 
 /**
+ * Xác thực fail-fast cho ActiveCityEffect.
+ * Ném RangeError nếu thuộc tính candidate không hợp lệ hoặc remainingWeeks không thuộc [1, CITY_EFFECT_DURATION_WEEKS].
+ */
+export function assertValidActiveCityEffect(effect: ActiveCityEffect): void {
+  createCityEffectCandidate(effect);
+
+  if (
+    !Number.isInteger(effect.remainingWeeks) ||
+    effect.remainingWeeks < 1 ||
+    effect.remainingWeeks > CITY_EFFECT_DURATION_WEEKS
+  ) {
+    throw new RangeError(
+      `Active city effect remainingWeeks must be an integer between 1 and ${CITY_EFFECT_DURATION_WEEKS}. Received: ${effect.remainingWeeks}`
+    );
+  }
+}
+
+/**
  * Khởi tạo chu kỳ hiệu ứng thành phố mới với thời lượng 3 tuần mặc định.
  */
 export function startCityEffect(
@@ -102,6 +120,7 @@ export function startCityEffect(
 /**
  * Điều hòa hiệu ứng thành phố trong chu kỳ sống chung:
  * - current === null: bắt đầu chu kỳ 3 tuần mới.
+ * - current không hợp lệ: ném RangeError (fail-fast).
  * - Khác family: ném RangeError.
  * - Cùng phân cực, tier <= current: giữ nguyên, không reset đếm ngược.
  * - Cùng phân cực, tier > current: nâng cấp tier, giữ nguyên remainingWeeks hiện tại.
@@ -116,6 +135,8 @@ export function reconcileCityEffect(
   if (current === null) {
     return startCityEffect(validated);
   }
+
+  assertValidActiveCityEffect(current);
 
   if (current.family !== validated.family) {
     throw new RangeError(
@@ -147,11 +168,14 @@ export function reconcileCityEffect(
 
 /**
  * Chuyển nhịp tuần cho hiệu ứng thành phố:
- * Giảm remainingWeeks đi 1. Nếu về 0 hoặc nhỏ hơn, hiệu ứng hết hạn (trả về null).
+ * - current không hợp lệ: ném RangeError (fail-fast).
+ * - Giảm remainingWeeks đi 1. Nếu về 0 hoặc nhỏ hơn, hiệu ứng hết hạn (trả về null).
  */
 export function advanceCityEffectWeek(
   current: ActiveCityEffect
 ): ActiveCityEffect | null {
+  assertValidActiveCityEffect(current);
+
   const nextWeeks = current.remainingWeeks - 1;
   if (nextWeeks <= 0) {
     return null;
