@@ -29,3 +29,44 @@ export function calculateWorkforceHeadcount(
 
   return summary;
 }
+
+import {
+  CITY_EFFECT_ABSOLUTE_MAX_BPS,
+  CITY_EFFECT_STEP_BPS,
+} from "../status/effects.js";
+
+export function calculateEffectiveWorkforceMilli(
+  baseWorkforceMilli: number,
+  modifierBps: number
+): number {
+  if (
+    !Number.isFinite(baseWorkforceMilli) ||
+    !Number.isInteger(baseWorkforceMilli) ||
+    baseWorkforceMilli < 0
+  ) {
+    throw new RangeError(
+      `baseWorkforceMilli must be a finite non-negative integer, received: ${baseWorkforceMilli}`
+    );
+  }
+
+  if (
+    !Number.isFinite(modifierBps) ||
+    !Number.isInteger(modifierBps) ||
+    Math.abs(modifierBps) > CITY_EFFECT_ABSOLUTE_MAX_BPS ||
+    Math.abs(modifierBps) % CITY_EFFECT_STEP_BPS !== 0
+  ) {
+    throw new RangeError(
+      `modifierBps must be an integer multiple of 50 in [-500, 500], received: ${modifierBps}`
+    );
+  }
+
+  const result = Math.floor(
+    (baseWorkforceMilli * (10_000 + modifierBps)) / 10_000
+  );
+
+  if (!Number.isFinite(result) || !Number.isInteger(result) || result < 0) {
+    throw new RangeError("effective workforce result is outside supported numeric range");
+  }
+
+  return result;
+}
