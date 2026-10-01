@@ -20,6 +20,9 @@ const FAMILIES: readonly CityEffectFamily[] = [
 const SOURCES: readonly CityEffectSource[] = ["status", "event"];
 
 function assertCandidate(input: CityEffectCandidate): void {
+  if (!input || typeof input !== "object") {
+    throw new RangeError("City Effect candidate must be a non-null object");
+  }
   if (!FAMILIES.includes(input.family)) {
     throw new RangeError(`Invalid City Effect family: ${String(input.family)}`);
   }
@@ -69,6 +72,9 @@ export function startCityEffect(
 }
 
 function assertActiveEffect(current: ActiveCityEffect): void {
+  if (!current || typeof current !== "object") {
+    throw new RangeError("Active City Effect must be a non-null object");
+  }
   assertCandidate(current);
   if (
     !Number.isInteger(current.remainingWeeks) ||

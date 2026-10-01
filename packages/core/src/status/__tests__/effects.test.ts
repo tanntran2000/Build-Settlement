@@ -197,4 +197,23 @@ describe("City Effect shared three-week lifecycle", () => {
   it("starts a fresh three-week cycle when there is no current effect", () => {
     expect(reconcileCityEffect(null, happyII).remainingWeeks).toBe(3);
   });
+
+  it("rejects non-object candidates with RangeError", () => {
+    expect(() => createCityEffectCandidate(null as any)).toThrow(RangeError);
+    expect(() => createCityEffectCandidate(undefined as any)).toThrow(RangeError);
+    expect(() => createCityEffectCandidate(123 as any)).toThrow(RangeError);
+    expect(() => createCityEffectCandidate("invalid" as any)).toThrow(RangeError);
+  });
+
+  it("rejects non-object active city effect inputs with RangeError in advanceCityEffectWeek and reconcileCityEffect", () => {
+    expect(() => advanceCityEffectWeek(null as any)).toThrow(RangeError);
+    expect(() => advanceCityEffectWeek(undefined as any)).toThrow(RangeError);
+    expect(() => advanceCityEffectWeek(123 as any)).toThrow(RangeError);
+    expect(() => advanceCityEffectWeek("invalid" as any)).toThrow(RangeError);
+
+    expect(() => reconcileCityEffect(undefined as any, happyI)).toThrow(RangeError);
+    expect(() => reconcileCityEffect(123 as any, happyI)).toThrow(RangeError);
+    expect(() => reconcileCityEffect("invalid" as any, happyI)).toThrow(RangeError);
+  });
 });
+
