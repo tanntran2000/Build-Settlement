@@ -72,9 +72,6 @@ export function startCityEffect(
 }
 
 function assertActiveEffect(current: ActiveCityEffect): void {
-  if (!current || typeof current !== "object") {
-    throw new RangeError("Active City Effect must be a non-null object");
-  }
   assertCandidate(current);
   if (
     !Number.isInteger(current.remainingWeeks) ||
