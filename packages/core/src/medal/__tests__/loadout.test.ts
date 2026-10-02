@@ -316,4 +316,3 @@ describe("Medal Loadout Transitions: Assign & Unequip (Task 3: M09, M13-M17, M25
     expect(unequip1).toEqual(unequip2);
   });
 });
-
