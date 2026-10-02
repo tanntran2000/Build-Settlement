@@ -29,6 +29,10 @@
 | **core** | `src/time/clock.ts` | Đồng hồ thời gian mô phỏng | **L3 (Đã kiểm thử)** | Đã kiểm thử tiến ngày, tuần, năm deterministic. Tích hợp làm clock duy nhất trong `GameState`. |
 | **core** | `src/command/command.ts` | Hệ thống Lệnh (Commands) | **L3 (Đã kiểm thử)** | Đã có `Command`, `CommandResult`, `AdvanceDayResultData`, `AuditEntry`. Dispatcher điều phối tại simulation. |
 | **core** | `src/command/effect.ts` | Hệ thống Effect & Audit Log | **L3 (Đã kiểm thử)** | Bổ sung `CLOCK_ADVANCE` và trường `allocated`/`deficit` vào `RESOURCE_DELTA`. |
+| **core** | `src/social/calculator.ts` | Tính toán năng lực xã hội vĩ mô (POP-01A) | **L3 (Đã kiểm thử)** | Pure snapshot calculator: tính headcount, populationBlocks, laborCapacityMilli, purchaseDemandCapacityMilli, survivalFoodNeedMilli, lifestyleFoodDemandMilli; chưa cung cấp Military/Tax capacity hay Assigned WF. |
+| **core** | `src/social/workforce.ts` | Mô hình nhân lực Foundation v2 | **L3 (Đã kiểm thử)** | Quy đổi 10 dân = 1 Base WF (1 WF = 1000 milli-WF), hệ số giai cấp (Servile 2.0x, Lower 1.5x, Middle 1.0x, High 0x); tính toán số học Effective WF từ City Effects; chưa bao gồm phân bổ công việc (job assignment). |
+| **core** | `src/resource/allocation.ts` | Nguyên tắc phân bổ tài nguyên sàn 0 | **L3 (Đã kiểm thử)** | Các hàm nguyên thủy phân bổ tài nguyên vật lý (Demand -> Allocated -> Deficit), bảo toàn tài nguyên sàn 0 và bảo toàn số lượng, kiểm định RangeError. |
+| **core** | `src/status/effects.ts` | Vòng đời hiệu ứng đô thị (City Effects) | **L3 (Đã kiểm thử)** | Kiểm định candidate (single non-object boundary `assertCandidate`), vòng đời timed City Effect 3 tuần dùng chung, thay thế bậc và chống làm mới chu kỳ (anti-refresh). Chưa chứa bộ giải mã Status -> City Effect. |
 | **simulation**| `src/dispatcher.ts` | Command Dispatcher & Authority Gate | **L3 (Đã kiểm thử)** | Pipeline 4 bước (state -> command -> authority -> handler); phân biệt rõ lỗi `FORBIDDEN` (Legacy) và `COMMAND_NOT_YET_IMPLEMENTED` (Active); atomicity rollback. |
 | **simulation**| `src/economy.ts` | Tính toán sản xuất & Tiêu thụ | **L3 (Đã kiểm thử)** | Đã sửa lỗi ngày báo cáo (truyền ngày hiện tại); thực thi cơ chế Nhu cầu -> Cấp phát -> Thiếu hụt (Sàn 0). |
 | **content** | `src/buildings.json` | Danh mục bản vẽ công trình | **L2 (Đã triển khai)** | Có 3 bản vẽ mẫu. Sẽ kết nối vào Foundation II / future production integration. |
@@ -39,24 +43,34 @@
 
 ## 3. Trạng Thái Kiểm Thử Thật Sự (Audit Verification)
 
-* **Bộ Test Tự Động (`npm test` - Vitest)**:
-  - `packages/core/src/__tests__/architecture.test.ts` (3 tests): Xác minh `core` không import `simulation`, không chứa DOM; `simulation` không chứa UI/DOM; phát hiện thành công fixture vi phạm mẫu.
-  - `packages/core/src/domain/__tests__/domain.test.ts` (26 tests): Kiểm định toàn diện factory, validation biên, cô lập object graph (deep clone `memories.tags`, named characters, cohorts), invariant 0/1 active hai chiều, key-ID matching, tính nhất quán toán học của clock, và kiểm tra cấu trúc/khóa bắt buộc toàn diện.
-  - `packages/simulation/src/__tests__/dispatcher.test.ts` (22 tests): Thẩm định cú pháp command trước quyền hạn (`INVALID_COMMAND`), thẩm định state trước thực thi (`INVALID_STATE`), phân biệt quyền hạn `FORBIDDEN` (Legacy) vs `COMMAND_NOT_YET_IMPLEMENTED` (Active); kiểm định lệnh `ADVANCE_DAY` tiến ngày, báo cáo ngày $T$, kinh tế sàn 0, thiếu hụt không chặn tiến ngày, world 0 active, bảo vệ legacy nguyên vẹn, chuẩn hóa exception thành `EXECUTION_ERROR`, và tính nguyên tử rollback khi hậu kiểm draft thất bại (`INVARIANT_VIOLATION`).
-  *(Tổng cộng: 51 tests passed, 0 failed).*
-
-* **Bộ Test Giao Diện Trình Duyệt (`npm run test:smoke` - Playwright)**:
-  - `tests/e2e/smoke.spec.ts` (1 test): Khởi động preview server port 4173; mở prototype; bấm nút "Tiến Sang Ngày Mới"; xác nhận Ngày 1 -> 2; xác nhận kho giảm; xác nhận audit log hiển thị `[Ngày 1]`; bấm liên tục đến cạn kiệt; xác nhận kho lương thực chạm sàn 0 nhưng tuyệt đối không âm; xác nhận ngày vẫn tiến khi thiếu hụt và log ghi nhận rõ lượng thiếu hụt.
-  *(1 passed trên Chromium headless).*
+* **Bộ Test Tự Động Toàn Dự Án Hiện Tại (`npm test` - Vitest)**:
+  - **8 test files / 173 tests passed** (0 failed, exit code 0):
+    * `packages/core/src/__tests__/architecture.test.ts` (3 tests): Bảo vệ ranh giới kiến trúc, không import chéo, không DOM.
+    * `packages/core/src/domain/__tests__/domain.test.ts` (26 tests): Invariants, factory, validation biên, cô lập object graph.
+    * `packages/core/src/social/__tests__/pop01a_resource_core.test.ts` (21 tests): POP-01A benchmark fixtures A/B, rounding, zero cliff.
+    * `packages/core/src/social/__tests__/foundation_v2_social.test.ts` (8 tests): Quy đổi headcount -> base WF, hệ số giai cấp.
+    * `packages/core/src/social/__tests__/effective_workforce.test.ts` (16 tests): Tác động của City Effects lên Effective Workforce.
+    * `packages/core/src/resource/__tests__/allocation.test.ts` (24 tests): Các hàm nguyên thủy phân bổ tài nguyên vật lý sàn 0 và bảo toàn.
+    * `packages/core/src/status/__tests__/effects.test.ts` (53 tests): Vòng đời City Effect, timed countdown, chống lạm dụng refresh, RangeError contract.
+    * `packages/simulation/src/__tests__/dispatcher.test.ts` (22 tests): Pipeline điều phối lệnh, rollback atomicity, authority gate.
+  *(Ghi chú lịch sử: 51 tests là số liệu nghiệm thu cũ của riêng gói R1 trước khi triển khai Foundation v2).*
 
 * **Kiểm Tra Kiểu Toàn Diện (`npm run typecheck`)**:
   - `typecheck:core`, `typecheck:simulation`, `typecheck:persistence`, `typecheck:content` (TypeScript strict).
   - `typecheck:ui` (`svelte-check` trên toàn bộ component Svelte).
-  *(0 errors, 0 warnings).*
+  *(0 errors, 0 warnings trên toàn bộ 5 packages).*
+
+* **Kiểm Tra Build UI (`npm run build --workspace=@haven/ui`)**:
+  - Vite production build hoàn thành thành công (exit code 0).
+
+* **Bộ Test Giao Diện Trình Duyệt (`npm run test:smoke` - Playwright)**:
+  - `tests/e2e/smoke.spec.ts` (1 test): Khởi động preview server port 4173; mở prototype; bấm nút "Tiến Sang Ngày Mới"; xác nhận Ngày 1 -> 2; xác nhận kho giảm; xác nhận audit log hiển thị `[Ngày 1]`; bấm liên tục đến cạn kiệt; xác nhận kho lương thực chạm sàn 0 nhưng tuyệt đối không âm; xác nhận ngày vẫn tiến khi thiếu hụt và log ghi nhận rõ lượng thiếu hụt.
+  *(1 passed trên Chromium headless, exit code 0).*
 
 * **Quy Trình CI (GitHub Actions)**:
   - `.github/workflows/ci.yml` chuẩn hóa job `quality-gate`: checkout -> setup Node 20 -> `npm ci` -> `npm run typecheck` -> `npm test` -> `npm run build` -> `playwright install chromium` -> `npm run test:smoke`.
-  - **CI Run Post-Merge trên `main`**: Run `36527428842` thành công (49s) tại commit `375b60e`.
+  - **Bằng Chứng CI Gần Nhất (PR #7 HEAD)**: GitHub Quality Gate Run `36965142356` SUCCESS (HEAD `c7beed21a27896d12796d008bfd5248630410a22` trước khi merge vào `main` tại `a5b6baec17e5ab086af39d0f64dd45d795fba0db`).
+  - *(Lưu ý chuẩn xác: Đây là bằng chứng CI đã xác thực cho HEAD của PR #7 được merge vào `main`; không ghi nhận CI run riêng biệt sau merge trên commit `a5b6baec17e5ab086af39d0f64dd45d795fba0db`).*
 
 ---
 
@@ -99,11 +113,11 @@
 > - **Named NPC $\rightarrow$ `NPC-01 Future`**: Decouple hoàn toàn khỏi Population Core. Không mô phỏng tâm lý, quan hệ cá nhân hay kỹ năng Named NPC trong Population Core.
 > - **Resource Core $\rightarrow$ Foundation II**: Chỉ triển khai sau khi Population Core cung cấp đủ input Demand và Capacity ổn định.
 
-* [ ] **POP-01A: Class Resource Core**: **READY FOR IMPLEMENTATION** *(G1 Approved / Closed tại commit `913d981`)*
+* [x] **POP-01A: Class Resource Core**: **L3 (ĐÃ KIỂM THỬ)** *(Merged PR #4 tại commit `b5c72e9`)*:
   - Khóa hằng số `SOCIAL_RESOURCE_SCALE = 1000` (integer milli-units, `Math.floor`).
-  - 6-way resolver `resolveEconomicProfile` từ canonical `SocialClass` & `LegalStatus`.
-  - Pure snapshot calculator `calculateSocialResources` (không mutate state, không side effects).
-  - 2 Benchmark Fixtures A/B nghiệm thu tuyệt đối + Edge cases 1/99/101 chống block cliff.
+  - 10-way resolver `resolveEconomicProfile` từ canonical `SocialClass` & `LegalStatus`.
+  - Pure snapshot calculator `calculateSocialResources` (headcount, populationBlocks, laborCapacityMilli, purchaseDemandCapacityMilli, survivalFoodNeedMilli, lifestyleFoodDemandMilli; chưa bao gồm Military/Tax capacity hay Assigned WF).
+  - 2 Benchmark Fixtures A/B nghiệm thu tuyệt đối + Edge cases 1/99/101 chống block cliff. Chưa tích hợp UI/lưu trữ (chưa đạt L4).
 * [ ] **POP-01B: Needs & Effective Capacity**: **DESIGN ONLY**
   - Cơ chế Satisfaction, Tác động thiếu hụt & Mức ủng hộ (Support) sang nhịp $T \rightarrow T+1$.
 * [ ] **POP-01C: Labor Allocation**: **DESIGN ONLY**
@@ -115,7 +129,15 @@
 
 ---
 
+### FOUNDATION V2 — QUẢN TRỊ & HỢP NHẤT NỀN TẢNG (GOVERNANCE STATUS)
+* **PR #5 (Canonical Foundation v2)**: Đã merge vào `main` tại commit `699f32c` (Workforce v2, Resource primitives sàn 0, City Effect lifecycle 3 tuần dùng chung, Effective Workforce arithmetic).
+* **PR #7 (City Effect Contract Correction)**: Đã merge vào `main` tại commit `a5b6bae` (HEAD PR #7: `c7beed2`, CI Quality Gate run `36965142356` SUCCESS). Chốt chặn RangeError cho input không phải object tại duy nhất một ranh giới `assertCandidate`.
+* **PR #6 (Independent Comparison)**: Nhánh `feat/foundation-v2-antigravity-01` đã đóng (superseded/closed), không phải bản canonical.
+
+---
+
 ### FOUNDATION II — RESOURCE CORE & SURVIVAL LOOP
+* **Hiện trạng**: Foundation v2 đã thiết lập các hàm nguyên thủy phân bổ/dòng chảy sàn 0 (`packages/core/src/resource/allocation.ts`), nhưng việc tích hợp toàn diện Resource Core (RES-01..04) vẫn đang mở.
 * [ ] **RES-01: Resource Model, Stock & Invariants**:
   - Mô hình kho và biến thiên vật lý, bảo toàn sàn 0, tách biệt Physical Resources vs Social Capacities.
 * [ ] **RES-02: Demand $\rightarrow$ Allocation $\rightarrow$ Deficit / Surplus**:
