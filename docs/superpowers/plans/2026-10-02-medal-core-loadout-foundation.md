@@ -89,7 +89,7 @@ These five failure modes are easy to miss even when the happy path works. Each i
 1. **Malformed runtime containers** — null, arrays where objects are required, malformed registries/states must throw `RangeError`, not incidental `TypeError`. Task 1 pins this.
 2. **Unsafe numeric modifier input** — `NaN`, infinities, fractions, zero/negative values, and values above `Number.MAX_SAFE_INTEGER` must reject. Task 1 pins this.
 3. **Returned-state aliasing** — successful assign/unequip must return fresh arrays so later mutation of the returned state cannot mutate the original state. Task 3 pins this.
-4. **Runtime-invalid slot indices** — values such as `-1`, `3`, `1.5`, and `NaN` passed through JavaScript/casts must throw `RangeError`. Tasks 2–3 pin this.
+4. **Runtime-invalid slot indices** — values such as `-1`, `3`, `1.5`, and `NaN` passed through JavaScript/casts must throw `RangeError`. Task 3 pins this.
 5. **Registry-order dependence** — modifier projection order must be slot order `0 -> 1 -> 2`, even if registry definition order changes. Task 4 pins this.
 
 ---
@@ -346,6 +346,8 @@ expect(next.equippedSlots).not.toBe(state.equippedSlots);
 
 Then mutate the returned arrays in the test and verify the original state is unchanged.
 
+Also call `assignMedalToSlot` twice with the same original input and arguments, and call `unequipMedalFromSlot` twice with the same original input and slot. Each pair of returned states must be deeply equal, proving the transition portion of M25.
+
 - [ ] **Step 3: Run the loadout test to verify RED**
 
 ```bash
@@ -521,18 +523,18 @@ git commit -m "feat(core): project equipped medal modifiers"
 After Task 4, run fresh evidence in this exact order:
 
 ```bash
-npm run typecheck:core
+npm run typecheck
 npx vitest run packages/core/src/medal/__tests__
 npx vitest run packages/core/src/status/__tests__/effects.test.ts
 npm test
 git diff --name-only 56a3ad853f4ce182b1724b6251807adc8298047e...HEAD
-git diff -- packages/core/src/status/effects.ts packages/persistence docs/INTERNAL_PROGRESS_TRACKER.md packages/core/src/index.ts
+git diff 56a3ad853f4ce182b1724b6251807adc8298047e...HEAD -- packages/core/src/status/effects.ts packages/persistence docs/INTERNAL_PROGRESS_TRACKER.md packages/core/src/index.ts
 git status --short
 ```
 
 Expected:
 
-- core typecheck exit 0;
+- full workspace typecheck exit 0;
 - all Medal tests pass;
 - existing City Effect suite passes unchanged, preserving fixed three-week behavior;
 - full Vitest suite passes with 0 failures;
@@ -540,13 +542,17 @@ Expected:
 - protected-path diff prints no output;
 - working tree is clean before PR preparation.
 
-Also inspect:
+Also inspect whitespace and the new-code diff for obvious secret-like material:
 
 ```bash
 git diff --check 56a3ad853f4ce182b1724b6251807adc8298047e...HEAD
+if git diff 56a3ad853f4ce182b1724b6251807adc8298047e...HEAD -- packages/core/src/medal | grep -Ein '(api[_-]?key|secret|password|private[_-]?key|bearer[[:space:]])'; then
+  echo "Potential secret-like material found in Medal diff"
+  exit 1
+fi
 ```
 
-Expected: no whitespace errors.
+Expected: no whitespace errors and no secret-like match.
 
 If any final verification fails, do not claim completion. Apply at most two bounded fix iterations for the same issue; on the second unsuccessful iteration, **HOLD**.
 
@@ -561,7 +567,8 @@ Before opening the PR, the Builder reports:
 - targeted Medal test command/results;
 - City Effect regression command/results;
 - full `npm test` result;
-- `npm run typecheck:core` result;
+- full-workspace `npm run typecheck` result;
+- pre-push secret-like diff scan result;
 - confirmation that protected-path diff is empty.
 
 PR target is `main`. Human remains the only merge authority.
