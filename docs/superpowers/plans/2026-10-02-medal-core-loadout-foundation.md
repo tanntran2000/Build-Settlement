@@ -209,7 +209,9 @@ Expected: both exit 0; all Task 1 tests PASS.
 - [ ] **Step 6: Commit Task 1**
 
 ```bash
-git add packages/core/src/medal/types.ts         packages/core/src/medal/validation.ts         packages/core/src/medal/__tests__/validation.test.ts
+git add packages/core/src/medal/types.ts \
+        packages/core/src/medal/validation.ts \
+        packages/core/src/medal/__tests__/validation.test.ts
 git commit -m "feat(core): add medal contracts and validation"
 ```
 
@@ -289,7 +291,8 @@ Expected: exit 0.
 - [ ] **Step 5: Commit Task 2**
 
 ```bash
-git add packages/core/src/medal/loadout.ts         packages/core/src/medal/__tests__/loadout.test.ts
+git add packages/core/src/medal/loadout.ts \
+        packages/core/src/medal/__tests__/loadout.test.ts
 git commit -m "feat(core): add medal slot eligibility"
 ```
 
@@ -394,7 +397,8 @@ Expected: exit 0.
 - [ ] **Step 7: Commit Task 3**
 
 ```bash
-git add packages/core/src/medal/loadout.ts         packages/core/src/medal/__tests__/loadout.test.ts
+git add packages/core/src/medal/loadout.ts \
+        packages/core/src/medal/__tests__/loadout.test.ts
 git commit -m "feat(core): add atomic medal loadout transitions"
 ```
 
@@ -482,7 +486,9 @@ Expected: exit 0.
 - [ ] **Step 6: Commit Task 4**
 
 ```bash
-git add packages/core/src/medal/projection.ts         packages/core/src/medal/index.ts         packages/core/src/medal/__tests__/projection.test.ts
+git add packages/core/src/medal/projection.ts \
+        packages/core/src/medal/index.ts \
+        packages/core/src/medal/__tests__/projection.test.ts
 git commit -m "feat(core): project equipped medal modifiers"
 ```
 
