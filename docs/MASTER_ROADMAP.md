@@ -54,7 +54,7 @@ flowchart TD
 * **Các đầu việc cụ thể**:
   * [x] **POP-01A: Class Resource Core** — **ĐÃ TRIỂN KHAI & KIỂM THỬ (L3 - Tested)** *(Merged PR #4 tại commit `b5c72e9`)*:
     * Khóa chuẩn Fixed-Point `SOCIAL_RESOURCE_SCALE = 1000` (integer milli-units, `Math.floor`).
-    * Bộ giải mã `resolveEconomicProfile` từ canonical `PopulationCohort` (`SocialClass` & `LegalStatus`).
+    * Bộ giải mã chuẩn tắc `resolveEconomicProfile` từ canonical `PopulationCohort` với tiền lệ nô lệ (enslaved precedence) và ánh xạ toàn diện `SocialClass` (exhaustive SocialClass mapping).
     * Quy đổi các khối dân số trung gian (Population Blocks).
     * Hàm tính toán snapshot tổng hợp `calculateSocialResources` (pure calculator, không mutate state, tính toán headcount, populationBlocks, laborCapacityMilli, purchaseDemandCapacityMilli, survivalFoodNeedMilli, lifestyleFoodDemandMilli; chưa bao gồm Military/Tax capacity).
     * Nghiệm thu tuyệt đối 2 Benchmark Fixtures A/B và Edge cases 1/99/101 dân. Chưa tích hợp trực tiếp vào vòng chơi/UI/lưu trữ (chưa đạt L4).
@@ -77,7 +77,7 @@ flowchart TD
   * Quy đổi vĩ mô: **10 cư dân = 1 Base WF**; đơn vị nội bộ fixed-point **1 WF = 1000 milli-WF**.
   * Hệ số lao động giai cấp: Servile (2.0×), Lower (1.5×), Middle (1.0×), Upper/High (0× direct WF).
 * **Effective Workforce Arithmetic (L3)**:
-  * Hàm tính toán thuần túy `calculateEffectiveWorkforceMilli(...)` kết nối bổ trợ từ City Effects vào Effective WF; chưa thực hiện phân bổ công việc (`Assigned`/`Available` WF chưa triển khai).
+  * `calculateEffectiveWorkforceMilli(...)` là ranh giới số học thuần túy (pure arithmetic boundary), áp dụng hệ số điều chỉnh basis-point đã cung cấp (`modifierBps`) đúng một lần; không tự động tích hợp hay đọc trực tiếp City Effects, không thực hiện bộ giải mã Status $\rightarrow$ Effect; chưa thực hiện phân bổ công việc (`Assigned`/`Available` WF chưa triển khai).
 * **Generic Resource Primitives (L3)**:
   * Các hàm nguyên thủy phân bổ tài nguyên bảo toàn sàn 0 và quy luật bảo toàn (`packages/core/src/resource/allocation.ts`); tách biệt rõ Nhu cầu $\rightarrow$ Cấp phát $\rightarrow$ Thiếu hụt.
   * *Lưu ý*: Foundation v2 đã thiết lập các hàm nguyên thủy phân bổ/dòng chảy (primitives), nhưng việc tích hợp toàn diện vào Resource Core (RES-01..04) vẫn đang mở.

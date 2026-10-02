@@ -30,7 +30,7 @@
 | **core** | `src/command/command.ts` | Hệ thống Lệnh (Commands) | **L3 (Đã kiểm thử)** | Đã có `Command`, `CommandResult`, `AdvanceDayResultData`, `AuditEntry`. Dispatcher điều phối tại simulation. |
 | **core** | `src/command/effect.ts` | Hệ thống Effect & Audit Log | **L3 (Đã kiểm thử)** | Bổ sung `CLOCK_ADVANCE` và trường `allocated`/`deficit` vào `RESOURCE_DELTA`. |
 | **core** | `src/social/calculator.ts` | Tính toán năng lực xã hội vĩ mô (POP-01A) | **L3 (Đã kiểm thử)** | Pure snapshot calculator: tính headcount, populationBlocks, laborCapacityMilli, purchaseDemandCapacityMilli, survivalFoodNeedMilli, lifestyleFoodDemandMilli; chưa cung cấp Military/Tax capacity hay Assigned WF. |
-| **core** | `src/social/workforce.ts` | Mô hình nhân lực Foundation v2 | **L3 (Đã kiểm thử)** | Quy đổi 10 dân = 1 Base WF (1 WF = 1000 milli-WF), hệ số giai cấp (Servile 2.0x, Lower 1.5x, Middle 1.0x, High 0x); tính toán số học Effective WF từ City Effects; chưa bao gồm phân bổ công việc (job assignment). |
+| **core** | `src/social/workforce.ts` | Tổng hợp nhân lực & Ranh giới số học Effective WF | **L3 (Đã kiểm thử)** | Cung cấp hàm tổng hợp quy mô nhân lực / điều kiện lao động trực tiếp (`calculateWorkforceHeadcount`) và ranh giới số học thuần túy Effective WF áp dụng `modifierBps` đã cung cấp đúng một lần (`calculateEffectiveWorkforceMilli`); không tự động tích hợp City Effects; không bao gồm phân bổ công việc (job assignment). |
 | **core** | `src/resource/allocation.ts` | Nguyên tắc phân bổ tài nguyên sàn 0 | **L3 (Đã kiểm thử)** | Các hàm nguyên thủy phân bổ tài nguyên vật lý (Demand -> Allocated -> Deficit), bảo toàn tài nguyên sàn 0 và bảo toàn số lượng, kiểm định RangeError. |
 | **core** | `src/status/effects.ts` | Vòng đời hiệu ứng đô thị (City Effects) | **L3 (Đã kiểm thử)** | Kiểm định candidate (single non-object boundary `assertCandidate`), vòng đời timed City Effect 3 tuần dùng chung, thay thế bậc và chống làm mới chu kỳ (anti-refresh). Chưa chứa bộ giải mã Status -> City Effect. |
 | **simulation**| `src/dispatcher.ts` | Command Dispatcher & Authority Gate | **L3 (Đã kiểm thử)** | Pipeline 4 bước (state -> command -> authority -> handler); phân biệt rõ lỗi `FORBIDDEN` (Legacy) và `COMMAND_NOT_YET_IMPLEMENTED` (Active); atomicity rollback. |
@@ -115,7 +115,7 @@
 
 * [x] **POP-01A: Class Resource Core**: **L3 (ĐÃ KIỂM THỬ)** *(Merged PR #4 tại commit `b5c72e9`)*:
   - Khóa hằng số `SOCIAL_RESOURCE_SCALE = 1000` (integer milli-units, `Math.floor`).
-  - 10-way resolver `resolveEconomicProfile` từ canonical `SocialClass` & `LegalStatus`.
+  - Bộ giải mã chuẩn tắc `resolveEconomicProfile` với tiền lệ nô lệ (enslaved precedence) và ánh xạ toàn diện `SocialClass` (exhaustive SocialClass mapping).
   - Pure snapshot calculator `calculateSocialResources` (headcount, populationBlocks, laborCapacityMilli, purchaseDemandCapacityMilli, survivalFoodNeedMilli, lifestyleFoodDemandMilli; chưa bao gồm Military/Tax capacity hay Assigned WF).
   - 2 Benchmark Fixtures A/B nghiệm thu tuyệt đối + Edge cases 1/99/101 chống block cliff. Chưa tích hợp UI/lưu trữ (chưa đạt L4).
 * [ ] **POP-01B: Needs & Effective Capacity**: **DESIGN ONLY**
