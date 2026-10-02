@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 import type { MedalDefinition, PlayerMedalState } from "../types.js";
-import { getMedalSlotOptions } from "../loadout.js";
+import {
+  assignMedalToSlot,
+  getMedalSlotOptions,
+  unequipMedalFromSlot,
+} from "../loadout.js";
 
 describe("Medal Slot Eligibility Query (Task 2: M10-M12, M25)", () => {
   const foodBronze: MedalDefinition = {
@@ -144,3 +148,172 @@ describe("Medal Slot Eligibility Query (Task 2: M10-M12, M25)", () => {
     expect(() => getMedalSlotOptions(null as any, registry, "food-bronze")).toThrow(RangeError);
   });
 });
+
+describe("Medal Loadout Transitions: Assign & Unequip (Task 3: M09, M13-M17, M25)", () => {
+  const foodBronze: MedalDefinition = {
+    id: "food-bronze",
+    category: "food",
+    grade: "bronze",
+    tier: 1,
+    modifier: { target: "food_output", modifierBps: 1000 },
+  };
+
+  const foodGold: MedalDefinition = {
+    id: "food-gold",
+    category: "food",
+    grade: "gold",
+    tier: 3,
+    modifier: { target: "food_output", modifierBps: 2000 },
+  };
+
+  const happinessBronze: MedalDefinition = {
+    id: "happiness-bronze",
+    category: "happiness",
+    grade: "bronze",
+    tier: 1,
+    modifier: { target: "happiness", modifierBps: 500 },
+  };
+
+  const securitySilver: MedalDefinition = {
+    id: "security-silver",
+    category: "security",
+    grade: "silver",
+    tier: 2,
+    modifier: { target: "security", modifierBps: 750 },
+  };
+
+  const securityGold: MedalDefinition = {
+    id: "security-gold",
+    category: "security",
+    grade: "gold",
+    tier: 3,
+    modifier: { target: "security", modifierBps: 1500 },
+  };
+
+  const registry: readonly MedalDefinition[] = Object.freeze([
+    foodBronze,
+    foodGold,
+    happinessBronze,
+    securitySilver,
+    securityGold,
+  ]);
+
+  it("M09: equips unlocked Medal into an eligible empty slot", () => {
+    const state: PlayerMedalState = {
+      unlockedMedalIds: ["food-bronze", "happiness-bronze"],
+      equippedSlots: ["food-bronze", null, null],
+    };
+    const next = assignMedalToSlot(state, registry, "happiness-bronze", 1);
+    expect(next.equippedSlots).toEqual(["food-bronze", "happiness-bronze", null]);
+  });
+
+  it("M13: same-category Medal atomically replaces the existing same-category slot", () => {
+    const state: PlayerMedalState = {
+      unlockedMedalIds: ["food-bronze", "food-gold", "security-silver"],
+      equippedSlots: ["food-bronze", "security-silver", null],
+    };
+    const next = assignMedalToSlot(state, registry, "food-gold", 0);
+    expect(next.equippedSlots).toEqual(["food-gold", "security-silver", null]);
+  });
+
+  it("M14: invalid replacement into a locked slot throws RangeError and leaves original state unchanged", () => {
+    const state: PlayerMedalState = {
+      unlockedMedalIds: ["food-bronze", "food-gold", "security-silver"],
+      equippedSlots: ["food-bronze", "security-silver", null],
+    };
+    const snapshot = JSON.parse(JSON.stringify(state));
+
+    expect(() => assignMedalToSlot(state, registry, "food-gold", 1)).toThrow(RangeError);
+    expect(() => assignMedalToSlot(state, registry, "food-gold", 2)).toThrow(RangeError);
+    expect(state).toEqual(snapshot);
+  });
+
+  it("M15: already-equipped Medal cannot be assigned to another slot", () => {
+    const state: PlayerMedalState = {
+      unlockedMedalIds: ["food-bronze", "security-silver"],
+      equippedSlots: ["food-bronze", null, null],
+    };
+    expect(() => assignMedalToSlot(state, registry, "food-bronze", 1)).toThrow(RangeError);
+  });
+
+  it("M16: unequip occupied slot sets that slot to null", () => {
+    const state: PlayerMedalState = {
+      unlockedMedalIds: ["food-bronze", "security-silver"],
+      equippedSlots: ["food-bronze", "security-silver", null],
+    };
+    const next = unequipMedalFromSlot(state, 0);
+    expect(next.equippedSlots).toEqual([null, "security-silver", null]);
+  });
+
+  it("M17: unequip empty slot throws RangeError and leaves original state unchanged", () => {
+    const state: PlayerMedalState = {
+      unlockedMedalIds: ["food-bronze"],
+      equippedSlots: ["food-bronze", null, null],
+    };
+    const snapshot = JSON.parse(JSON.stringify(state));
+
+    expect(() => unequipMedalFromSlot(state, 1)).toThrow(RangeError);
+    expect(() => unequipMedalFromSlot(state, 2)).toThrow(RangeError);
+    expect(state).toEqual(snapshot);
+  });
+
+  it("Review Focus: rejects runtime-invalid slot indices for assign and unequip", () => {
+    const state: PlayerMedalState = {
+      unlockedMedalIds: ["food-bronze", "security-gold"],
+      equippedSlots: ["food-bronze", null, null],
+    };
+
+    for (const invalidSlot of [-1, 3, 1.5, NaN, Infinity, "1" as any, null as any]) {
+      expect(() => assignMedalToSlot(state, registry, "security-gold", invalidSlot as any)).toThrow(
+        RangeError
+      );
+      expect(() => unequipMedalFromSlot(state, invalidSlot as any)).toThrow(RangeError);
+    }
+  });
+
+  it("Review Focus: ensures fresh arrays and isolation on assign and unequip", () => {
+    const state: PlayerMedalState = {
+      unlockedMedalIds: ["food-bronze", "happiness-bronze"],
+      equippedSlots: ["food-bronze", null, null],
+    };
+
+    const assigned = assignMedalToSlot(state, registry, "happiness-bronze", 1);
+    expect(assigned).not.toBe(state);
+    expect(assigned.unlockedMedalIds).not.toBe(state.unlockedMedalIds);
+    expect(assigned.equippedSlots).not.toBe(state.equippedSlots);
+
+    // Mutate assigned arrays
+    assigned.unlockedMedalIds.push("security-silver");
+    assigned.equippedSlots[2] = "security-silver";
+
+    expect(state.unlockedMedalIds).toEqual(["food-bronze", "happiness-bronze"]);
+    expect(state.equippedSlots).toEqual(["food-bronze", null, null]);
+
+    const unequipped = unequipMedalFromSlot(state, 0);
+    expect(unequipped).not.toBe(state);
+    expect(unequipped.unlockedMedalIds).not.toBe(state.unlockedMedalIds);
+    expect(unequipped.equippedSlots).not.toBe(state.equippedSlots);
+
+    unequipped.unlockedMedalIds.push("mutated");
+    unequipped.equippedSlots[0] = "mutated";
+
+    expect(state.unlockedMedalIds).toEqual(["food-bronze", "happiness-bronze"]);
+    expect(state.equippedSlots).toEqual(["food-bronze", null, null]);
+  });
+
+  it("M25: identical calls to assign and unequip return deeply equal states", () => {
+    const state: PlayerMedalState = {
+      unlockedMedalIds: ["food-bronze", "security-silver", "security-gold"],
+      equippedSlots: ["food-bronze", "security-silver", null],
+    };
+
+    const assign1 = assignMedalToSlot(state, registry, "security-gold", 1);
+    const assign2 = assignMedalToSlot(state, registry, "security-gold", 1);
+    expect(assign1).toEqual(assign2);
+
+    const unequip1 = unequipMedalFromSlot(state, 0);
+    const unequip2 = unequipMedalFromSlot(state, 0);
+    expect(unequip1).toEqual(unequip2);
+  });
+});
+
