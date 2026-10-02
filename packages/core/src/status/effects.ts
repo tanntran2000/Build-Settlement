@@ -20,6 +20,9 @@ const FAMILIES: readonly CityEffectFamily[] = [
 const SOURCES: readonly CityEffectSource[] = ["status", "event"];
 
 function assertCandidate(input: CityEffectCandidate): void {
+  if (!input || typeof input !== "object") {
+    throw new RangeError("City Effect candidate must be a non-null object");
+  }
   if (!FAMILIES.includes(input.family)) {
     throw new RangeError(`Invalid City Effect family: ${String(input.family)}`);
   }

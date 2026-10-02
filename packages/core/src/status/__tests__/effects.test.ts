@@ -197,4 +197,50 @@ describe("City Effect shared three-week lifecycle", () => {
   it("starts a fresh three-week cycle when there is no current effect", () => {
     expect(reconcileCityEffect(null, happyII).remainingWeeks).toBe(3);
   });
+
+  it.each([
+    ["null", null],
+    ["undefined", undefined],
+    ["number", 123],
+    ["string", "invalid"],
+    ["boolean (true)", true],
+    ["boolean (false)", false],
+    ["array", []],
+    ["array-like malformed object", { length: 0 }],
+  ])("rejects non-object candidate (%s) with RangeError", (_label, input) => {
+    expect(() => createCityEffectCandidate(input as any)).toThrow(RangeError);
+  });
+
+  const invalidActiveStateCases: Array<[string, unknown]> = [
+    ["remainingWeeks = 0", { ...happyI, remainingWeeks: 0 }],
+    ["remainingWeeks = 4", { ...happyI, remainingWeeks: 4 }],
+    ["remainingWeeks = 2.5", { ...happyI, remainingWeeks: 2.5 }],
+    ["remainingWeeks = -1", { ...happyI, remainingWeeks: -1 }],
+    ["remainingWeeks = NaN", { ...happyI, remainingWeeks: NaN }],
+    ["remainingWeeks = Infinity", { ...happyI, remainingWeeks: Infinity }],
+    ["remainingWeeks = -Infinity", { ...happyI, remainingWeeks: -Infinity }],
+    ["malformed current family", { ...happyI, remainingWeeks: 2, family: "unknown" }],
+    ["malformed current source", { ...happyI, remainingWeeks: 2, source: "unknown" }],
+    ["malformed current tier", { ...happyI, remainingWeeks: 2, tier: 0 }],
+    ["malformed current modifierBps", { ...happyI, remainingWeeks: 2, modifierBps: 999 }],
+    ["boolean (true)", true],
+    ["boolean (false)", false],
+    ["array", []],
+    ["array-like malformed object", { length: 0 }],
+    ["primitive number", 123],
+    ["primitive string", "invalid"],
+    ["undefined", undefined],
+  ];
+
+  it.each(invalidActiveStateCases)(
+    "rejects invalid active state (%s) with RangeError in advanceCityEffectWeek and reconcileCityEffect",
+    (_label, invalidCurrent) => {
+      expect(() => advanceCityEffectWeek(invalidCurrent as any)).toThrow(RangeError);
+      expect(() => reconcileCityEffect(invalidCurrent as any, happyI)).toThrow(RangeError);
+    }
+  );
+
+  it("rejects null active effect with RangeError in advanceCityEffectWeek", () => {
+    expect(() => advanceCityEffectWeek(null as any)).toThrow(RangeError);
+  });
 });
