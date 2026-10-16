@@ -15,8 +15,8 @@
     "typecheck:content": "tsc -p packages/content/tsconfig.json --noEmit",
     "typecheck:ui": "npm run check --workspace=@haven/ui",
     "typecheck": "npm run typecheck:core && npm run typecheck:simulation && npm run typecheck:persistence && npm run typecheck:content && npm run typecheck:ui",
-
-    "build": "npm run build --workspaces --if-present",
+    "build": "npm run build --workspace=@haven/core && npm run build --workspace=@haven/simulation && npm run build --workspace=@haven/ui",
+    "lint": "eslint . --max-warnings=0",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:smoke": "playwright test"
@@ -24,8 +24,12 @@
   "devDependencies": {
     "@playwright/test": "^1.63.0",
     "@types/node": "^26.6.3",
+    "@typescript-eslint/parser": "8.71.2",
+    "eslint": "10.12.0",
+    "eslint-plugin-svelte": "3.23.1",
     "svelte-check": "^4.7.6",
     "typescript": "^5.7.2",
-    "vitest": "^2.1.8"
+    "vitest": "4.1.11",
+    "yaml": "^2.4.2"
   }
 }

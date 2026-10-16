@@ -523,6 +523,503 @@ describe("Domain Models, Invariants & Object Isolation (LAW-04 & LAW-05)", () =>
       expect(res2.valid).toBe(false);
       expect(res2.code).toBe("INVALID_CHARACTER");
     });
+
+    it("rejects state containing duplicate NamedCharacter IDs within a settlement or across settlements (LAW-04)", () => {
+      const s1 = buildSettlement("s1", "active");
+      s1.namedCharacters = [
+        createNamedCharacter({ id: "npc1", name: "NPC One" }),
+        createNamedCharacter({ id: "npc1", name: "NPC One Duplicate" }),
+      ];
+      const sameSettlementDupState: GameState = {
+        currentDate: { day: 1, week: 1, year: 1 },
+        worldMetadata: { worldSeed: 1, gameVersion: "0.1.0" },
+        settlements: { s1 },
+        activeSettlementId: "s1",
+      };
+      const resSame = validateGameState(sameSettlementDupState);
+      expect(resSame.valid).toBe(false);
+      expect(resSame.code).toBe("INVALID_CHARACTER");
+
+      const activeS = buildSettlement("s1", "active");
+      const legacyS = buildSettlement("s2", "legacy");
+      activeS.namedCharacters = [createNamedCharacter({ id: "npc_shared", name: "Shared A" })];
+      legacyS.namedCharacters = [createNamedCharacter({ id: "npc_shared", name: "Shared B" })];
+      const crossSettlementDupState: GameState = {
+        currentDate: { day: 1, week: 1, year: 1 },
+        worldMetadata: { worldSeed: 1, gameVersion: "0.1.0" },
+        settlements: { s1: activeS, s2: legacyS },
+        activeSettlementId: "s1",
+      };
+      const resCross = validateGameState(crossSettlementDupState);
+      expect(resCross.valid).toBe(false);
+      expect(resCross.code).toBe("INVALID_CHARACTER");
+    });
+
+    it("accepts state when multiple NamedCharacters have distinct IDs", () => {
+      const s1 = buildSettlement("s1", "active");
+      s1.namedCharacters = [
+        createNamedCharacter({ id: "npc1", name: "NPC One" }),
+        createNamedCharacter({ id: "npc2", name: "NPC Two" }),
+        createNamedCharacter({ id: "npc3", name: "NPC Three" }),
+      ];
+      const state: GameState = {
+        currentDate: { day: 1, week: 1, year: 1 },
+        worldMetadata: { worldSeed: 1, gameVersion: "0.1.0" },
+        settlements: { s1 },
+        activeSettlementId: "s1",
+      };
+      const res = validateGameState(state);
+      expect(res.valid).toBe(true);
+    });
+
+    describe("World Metadata Guards (WP-VALIDATION-GUARDS-01)", () => {
+      it("rejects state with missing or non-finite worldSeed", () => {
+        const base = (): GameState => ({
+          currentDate: { day: 1, week: 1, year: 1 },
+          worldMetadata: { worldSeed: 2026, gameVersion: "0.1.0" },
+          settlements: { s1: buildSettlement("s1", "active") },
+          activeSettlementId: "s1",
+        });
+
+        // null / undefined / string / NaN / Infinity / -Infinity
+        const seeds = [null, undefined, "2026", NaN, Infinity, -Infinity];
+        for (const badSeed of seeds) {
+          const state = base();
+          (state.worldMetadata as unknown as Record<string, unknown>).worldSeed = badSeed;
+          const res = validateGameState(state);
+          expect(res.valid).toBe(false);
+          expect(res.code).toBe("INVALID_STATE");
+        }
+      });
+
+      it("rejects state with missing or non-string gameVersion", () => {
+        const base = (): GameState => ({
+          currentDate: { day: 1, week: 1, year: 1 },
+          worldMetadata: { worldSeed: 2026, gameVersion: "0.1.0" },
+          settlements: { s1: buildSettlement("s1", "active") },
+          activeSettlementId: "s1",
+        });
+
+        const versions = [null, undefined, 1.0, true, {}];
+        for (const badVersion of versions) {
+          const state = base();
+          (state.worldMetadata as unknown as Record<string, unknown>).gameVersion = badVersion;
+          const res = validateGameState(state);
+          expect(res.valid).toBe(false);
+          expect(res.code).toBe("INVALID_STATE");
+        }
+      });
+
+      it("accepts valid worldMetadata variations: seed 0, negative, fractional, and empty gameVersion", () => {
+        const base = (seed: number, ver: string): GameState => ({
+          currentDate: { day: 1, week: 1, year: 1 },
+          worldMetadata: { worldSeed: seed, gameVersion: ver },
+          settlements: { s1: buildSettlement("s1", "active") },
+          activeSettlementId: "s1",
+        });
+
+        expect(validateGameState(base(0, "0.1.0")).valid).toBe(true);
+        expect(validateGameState(base(-42, "0.1.0")).valid).toBe(true);
+        expect(validateGameState(base(3.1415, "0.1.0")).valid).toBe(true);
+        expect(validateGameState(base(2026, "")).valid).toBe(true);
+      });
+    });
+
+    describe("Authority & Reputation Guards (WP-VALIDATION-GUARDS-01)", () => {
+      it("rejects authority outside [0, 100] or non-finite", () => {
+        const base = (): GameState => ({
+          currentDate: { day: 1, week: 1, year: 1 },
+          worldMetadata: { worldSeed: 2026, gameVersion: "0.1.0" },
+          settlements: { s1: buildSettlement("s1", "active") },
+          activeSettlementId: "s1",
+        });
+
+        const badAuthorities = [-1, -0.01, 100.1, 150, NaN, Infinity, -Infinity, null, undefined, "50"];
+        for (const val of badAuthorities) {
+          const state = base();
+          (state.settlements.s1 as unknown as Record<string, unknown>).authority = val;
+          const res = validateGameState(state);
+          expect(res.valid).toBe(false);
+          expect(res.code).toBe("INVALID_STATE");
+        }
+      });
+
+      it("rejects reputation outside [0, 100] or non-finite", () => {
+        const base = (): GameState => ({
+          currentDate: { day: 1, week: 1, year: 1 },
+          worldMetadata: { worldSeed: 2026, gameVersion: "0.1.0" },
+          settlements: { s1: buildSettlement("s1", "active") },
+          activeSettlementId: "s1",
+        });
+
+        const badReputations = [-1, -0.5, 101, NaN, Infinity, -Infinity, null, undefined, "80"];
+        for (const val of badReputations) {
+          const state = base();
+          (state.settlements.s1 as unknown as Record<string, unknown>).reputation = val;
+          const res = validateGameState(state);
+          expect(res.valid).toBe(false);
+          expect(res.code).toBe("INVALID_STATE");
+        }
+      });
+
+      it("accepts authority and reputation within [0, 100] including boundary and decimals", () => {
+        const base = (auth: number, rep: number): GameState => {
+          const s = buildSettlement("s1", "active");
+          s.authority = auth;
+          s.reputation = rep;
+          return {
+            currentDate: { day: 1, week: 1, year: 1 },
+            worldMetadata: { worldSeed: 2026, gameVersion: "0.1.0" },
+            settlements: { s1: s },
+            activeSettlementId: "s1",
+          };
+        };
+
+        expect(validateGameState(base(0, 0)).valid).toBe(true);
+        expect(validateGameState(base(100, 100)).valid).toBe(true);
+        expect(validateGameState(base(50.5, 75.25)).valid).toBe(true);
+      });
+    });
+
+    describe("Settlement Status & Facilities Guards (WP-VALIDATION-GUARDS-01)", () => {
+      it("rejects invalid settlement status", () => {
+        const base = (): GameState => ({
+          currentDate: { day: 1, week: 1, year: 1 },
+          worldMetadata: { worldSeed: 2026, gameVersion: "0.1.0" },
+          settlements: { s1: buildSettlement("s1", "legacy") },
+          activeSettlementId: null,
+        });
+
+        const badStatuses = ["unknown", "destroyed", "ACTIVE", "", null, undefined, 1];
+        for (const status of badStatuses) {
+          const state = base();
+          (state.settlements.s1 as unknown as Record<string, unknown>).status = status;
+          const res = validateGameState(state);
+          expect(res.valid).toBe(false);
+          expect(res.code).toBe("INVALID_STATE");
+        }
+      });
+
+      it("accepts canonical settlement statuses with proper pointer", () => {
+        const statuses = ["unexplored", "discovered", "handoff", "legacy"] as const;
+        for (const st of statuses) {
+          const state: GameState = {
+            currentDate: { day: 1, week: 1, year: 1 },
+            worldMetadata: { worldSeed: 2026, gameVersion: "0.1.0" },
+            settlements: { s1: buildSettlement("s1", st) },
+            activeSettlementId: null,
+          };
+          expect(validateGameState(state).valid).toBe(true);
+        }
+
+        const activeState: GameState = {
+          currentDate: { day: 1, week: 1, year: 1 },
+          worldMetadata: { worldSeed: 2026, gameVersion: "0.1.0" },
+          settlements: { s1: buildSettlement("s1", "active") },
+          activeSettlementId: "s1",
+        };
+        expect(validateGameState(activeState).valid).toBe(true);
+      });
+
+      it("rejects non-array or malformed facilities", () => {
+        const base = (): GameState => ({
+          currentDate: { day: 1, week: 1, year: 1 },
+          worldMetadata: { worldSeed: 2026, gameVersion: "0.1.0" },
+          settlements: { s1: buildSettlement("s1", "active") },
+          activeSettlementId: "s1",
+        });
+
+        // Non-array facilities
+        for (const badFac of [null, undefined, {}, "fac", 123]) {
+          const state = base();
+          (state.settlements.s1 as unknown as Record<string, unknown>).facilities = badFac;
+          const res = validateGameState(state);
+          expect(res.valid).toBe(false);
+          expect(res.code).toBe("INVALID_STATE");
+        }
+
+        // Malformed facility members
+        const badMembers = [
+          null,
+          undefined,
+          "not_object",
+          [],
+          { name: "No ID", type: "housing", level: 1, stage: "operational", capacity: 50, assignedWorkerCount: 0 },
+          { id: "fac1", name: "Bad Stage", type: "housing", level: 1, stage: "invalid_stage", capacity: 50, assignedWorkerCount: 0 },
+          { id: "fac1", name: "Bad Level", type: "housing", level: NaN, stage: "operational", capacity: 50, assignedWorkerCount: 0 },
+          { id: "fac1", name: "Bad Cap", type: "housing", level: 1, stage: "operational", capacity: Infinity, assignedWorkerCount: 0 },
+          { id: "fac1", name: "Bad Workers", type: "housing", level: 1, stage: "operational", capacity: 50, assignedWorkerCount: null },
+          { id: "fac1", name: "Bad Mgr", type: "housing", level: 1, stage: "operational", capacity: 50, assignedWorkerCount: 0, assignedManagerId: 123 },
+        ];
+
+        for (const badMember of badMembers) {
+          const state = base();
+          state.settlements.s1.facilities = [badMember as unknown as import("../settlement.js").Facility];
+          const res = validateGameState(state);
+          expect(res.valid).toBe(false);
+          expect(res.code).toBe("INVALID_STATE");
+        }
+      });
+
+      it("accepts valid facilities including template shelter and optional manager", () => {
+        const state: GameState = {
+          currentDate: { day: 1, week: 1, year: 1 },
+          worldMetadata: { worldSeed: 2026, gameVersion: "0.1.0" },
+          settlements: { s1: buildSettlement("s1", "active") },
+          activeSettlementId: "s1",
+        };
+
+        state.settlements.s1.facilities = [
+          {
+            id: "fac_shelter",
+            name: "Khu trú ẩn cơ bản",
+            type: "housing",
+            level: 1,
+            stage: "operational",
+            capacity: 50,
+            assignedWorkerCount: 0,
+          },
+          {
+            id: "fac_farm",
+            name: "Nông trại",
+            type: "agriculture",
+            level: 2,
+            stage: "construction",
+            capacity: 20,
+            assignedWorkerCount: 5,
+            assignedManagerId: "char_lan",
+          },
+        ];
+
+        const res = validateGameState(state);
+        expect(res.valid).toBe(true);
+      });
+
+      it("safely handles unconvertible objects ({ toString: null, valueOf: null }) without throwing TypeError (R1-VALIDATION-CORRECTION-01)", () => {
+        const base = (): GameState => ({
+          currentDate: { day: 1, week: 1, year: 1 },
+          worldMetadata: { worldSeed: 2026, gameVersion: "0.1.0" },
+          settlements: { s1: buildSettlement("s1", "active") },
+          activeSettlementId: "s1",
+        });
+
+        const unconvertible = { toString: null, valueOf: null };
+
+        // 1. worldSeed
+        const stateSeed = base();
+        (stateSeed.worldMetadata as unknown as Record<string, unknown>).worldSeed = unconvertible;
+        expect(() => validateGameState(stateSeed)).not.toThrow();
+        const resSeed = validateGameState(stateSeed);
+        expect(resSeed.valid).toBe(false);
+        expect(resSeed.code).toBe("INVALID_STATE");
+
+        // 2. authority
+        const stateAuth = base();
+        (stateAuth.settlements.s1 as unknown as Record<string, unknown>).authority = unconvertible;
+        expect(() => validateGameState(stateAuth)).not.toThrow();
+        const resAuth = validateGameState(stateAuth);
+        expect(resAuth.valid).toBe(false);
+        expect(resAuth.code).toBe("INVALID_STATE");
+
+        // 3. reputation
+        const stateRep = base();
+        (stateRep.settlements.s1 as unknown as Record<string, unknown>).reputation = unconvertible;
+        expect(() => validateGameState(stateRep)).not.toThrow();
+        const resRep = validateGameState(stateRep);
+        expect(resRep.valid).toBe(false);
+        expect(resRep.code).toBe("INVALID_STATE");
+
+        // 4. status
+        const stateStatus = base();
+        (stateStatus.settlements.s1 as unknown as Record<string, unknown>).status = unconvertible;
+        expect(() => validateGameState(stateStatus)).not.toThrow();
+        const resStatus = validateGameState(stateStatus);
+        expect(resStatus.valid).toBe(false);
+        expect(resStatus.code).toBe("INVALID_STATE");
+
+        // 5. facility.stage
+        const stateStage = base();
+        stateStage.settlements.s1.facilities = [
+          {
+            id: "fac_test",
+            name: "Test Facility",
+            type: "housing",
+            level: 1,
+            stage: unconvertible as unknown as "operational",
+            capacity: 10,
+            assignedWorkerCount: 0,
+          },
+        ];
+        expect(() => validateGameState(stateStage)).not.toThrow();
+        const resStage = validateGameState(stateStage);
+        expect(resStage.valid).toBe(false);
+        expect(resStage.code).toBe("INVALID_STATE");
+
+        // Positive control: valid state passes
+        expect(validateGameState(base()).valid).toBe(true);
+      });
+
+      it("validates individual facility string fields (id, name, type) missing or wrong type", () => {
+        const base = (): GameState => ({
+          currentDate: { day: 1, week: 1, year: 1 },
+          worldMetadata: { worldSeed: 2026, gameVersion: "0.1.0" },
+          settlements: { s1: buildSettlement("s1", "active") },
+          activeSettlementId: "s1",
+        });
+
+        const template = {
+          id: "fac_ok",
+          name: "Name OK",
+          type: "housing",
+          level: 1,
+          stage: "operational" as const,
+          capacity: 10,
+          assignedWorkerCount: 0,
+        };
+
+        const badStringCases = [
+          { ...template, id: undefined },
+          { ...template, id: 123 },
+          { ...template, id: null },
+          { ...template, name: undefined },
+          { ...template, name: 456 },
+          { ...template, name: null },
+          { ...template, type: undefined },
+          { ...template, type: 789 },
+          { ...template, type: null },
+        ];
+
+        for (const badFac of badStringCases) {
+          const state = base();
+          state.settlements.s1.facilities = [badFac as unknown as import("../settlement.js").Facility];
+          const res = validateGameState(state);
+          expect(res.valid).toBe(false);
+          expect(res.code).toBe("INVALID_STATE");
+        }
+      });
+
+      it("validates individual facility numeric fields (level, capacity, assignedWorkerCount) missing or non-finite", () => {
+        const base = (): GameState => ({
+          currentDate: { day: 1, week: 1, year: 1 },
+          worldMetadata: { worldSeed: 2026, gameVersion: "0.1.0" },
+          settlements: { s1: buildSettlement("s1", "active") },
+          activeSettlementId: "s1",
+        });
+
+        const template = {
+          id: "fac_ok",
+          name: "Name OK",
+          type: "housing",
+          level: 1,
+          stage: "operational" as const,
+          capacity: 10,
+          assignedWorkerCount: 0,
+        };
+
+        const badNumericCases = [
+          { ...template, level: undefined },
+          { ...template, level: NaN },
+          { ...template, level: Infinity },
+          { ...template, level: -Infinity },
+          { ...template, level: "1" },
+          { ...template, capacity: undefined },
+          { ...template, capacity: NaN },
+          { ...template, capacity: Infinity },
+          { ...template, capacity: -Infinity },
+          { ...template, capacity: "10" },
+          { ...template, assignedWorkerCount: undefined },
+          { ...template, assignedWorkerCount: NaN },
+          { ...template, assignedWorkerCount: Infinity },
+          { ...template, assignedWorkerCount: -Infinity },
+          { ...template, assignedWorkerCount: "0" },
+        ];
+
+        for (const badFac of badNumericCases) {
+          const state = base();
+          state.settlements.s1.facilities = [badFac as unknown as import("../settlement.js").Facility];
+          const res = validateGameState(state);
+          expect(res.valid).toBe(false);
+          expect(res.code).toBe("INVALID_STATE");
+        }
+      });
+
+      it("validates all 5 facility stages and assignedManagerId variations", () => {
+        const base = (): GameState => ({
+          currentDate: { day: 1, week: 1, year: 1 },
+          worldMetadata: { worldSeed: 2026, gameVersion: "0.1.0" },
+          settlements: { s1: buildSettlement("s1", "active") },
+          activeSettlementId: "s1",
+        });
+
+        const stages = ["planning", "site_prep", "construction", "operational", "damaged"] as const;
+        for (const stage of stages) {
+          const state = base();
+          state.settlements.s1.facilities = [
+            {
+              id: `fac_${stage}`,
+              name: `Facility ${stage}`,
+              type: "housing",
+              level: 1,
+              stage,
+              capacity: 10,
+              assignedWorkerCount: 0,
+            },
+          ];
+          expect(validateGameState(state).valid).toBe(true);
+        }
+
+        // Manager absent is valid
+        const stateNoMgr = base();
+        stateNoMgr.settlements.s1.facilities = [
+          {
+            id: "fac_no_mgr",
+            name: "No Manager",
+            type: "housing",
+            level: 1,
+            stage: "operational",
+            capacity: 10,
+            assignedWorkerCount: 0,
+          },
+        ];
+        expect(validateGameState(stateNoMgr).valid).toBe(true);
+
+        // Manager string is valid
+        const stateStrMgr = base();
+        stateStrMgr.settlements.s1.facilities = [
+          {
+            id: "fac_str_mgr",
+            name: "String Manager",
+            type: "housing",
+            level: 1,
+            stage: "operational",
+            capacity: 10,
+            assignedWorkerCount: 0,
+            assignedManagerId: "char_01",
+          },
+        ];
+        expect(validateGameState(stateStrMgr).valid).toBe(true);
+
+        // Manager wrong type is invalid
+        for (const badMgr of [123, null, true, {}, []]) {
+          const stateBadMgr = base();
+          stateBadMgr.settlements.s1.facilities = [
+            {
+              id: "fac_bad_mgr",
+              name: "Bad Manager",
+              type: "housing",
+              level: 1,
+              stage: "operational",
+              capacity: 10,
+              assignedWorkerCount: 0,
+              assignedManagerId: badMgr as unknown as string,
+            },
+          ];
+          const res = validateGameState(stateBadMgr);
+          expect(res.valid).toBe(false);
+          expect(res.code).toBe("INVALID_STATE");
+        }
+      });
+    });
   });
 
   describe("Clock & Time Progression (LAW-03)", () => {

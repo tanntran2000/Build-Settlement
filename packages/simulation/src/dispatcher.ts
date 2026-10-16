@@ -63,10 +63,9 @@ export function executeCommand(state: GameState, rawCommand: unknown): CommandRe
 
   // 4. Điều phối Handler & Thực thi nguyên tử trên Draft State (R1-F04)
   if (command.type === "ADVANCE_DAY") {
-    // Deep clone to draft state (structuredClone guarantees deep isolation)
-    const draftState: GameState = structuredClone(state);
-
     try {
+      // Deep clone to draft state (structuredClone guarantees deep isolation)
+      const draftState: GameState = structuredClone(state);
       const result = advanceDayModule.handleAdvanceDay(draftState);
 
       // Thẩm định lại state sau khi chạy handler (Post-execution invariant check)
