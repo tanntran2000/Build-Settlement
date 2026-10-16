@@ -156,6 +156,92 @@ describe("Domain Models, Invariants & Object Isolation (LAW-04 & LAW-05)", () =>
         })
       ).toThrow(/\[0, 100\]/);
     });
+
+    it("rejects missing, null, non-string, or invalid socialClass (R1-COHORT-SOCIALCLASS-GUARD-01)", () => {
+      const baseCohort = {
+        id: "cohort_01",
+        occupation: "worker" as const,
+        socialClass: "common" as const,
+        legalStatus: "citizen" as const,
+        count: 50,
+        averageHealth: 80,
+        morale: 70,
+        productivity: 75,
+        resentment: 5,
+        loyalty: 85,
+        livingStandard: "decent" as const,
+      };
+
+      // Missing / undefined
+      expect(() =>
+        createPopulationCohort({
+          ...baseCohort,
+          socialClass: undefined as unknown as "common",
+        })
+      ).toThrow(/socialClass/i);
+
+      // null
+      expect(() =>
+        createPopulationCohort({
+          ...baseCohort,
+          socialClass: null as unknown as "common",
+        })
+      ).toThrow(/socialClass/i);
+
+      // Number
+      expect(() =>
+        createPopulationCohort({
+          ...baseCohort,
+          socialClass: 123 as unknown as "common",
+        })
+      ).toThrow(/socialClass/i);
+
+      // Empty object
+      expect(() =>
+        createPopulationCohort({
+          ...baseCohort,
+          socialClass: {} as unknown as "common",
+        })
+      ).toThrow(/socialClass/i);
+
+      // Object without toString/valueOf
+      expect(() =>
+        createPopulationCohort({
+          ...baseCohort,
+          socialClass: { toString: null, valueOf: null } as unknown as "common",
+        })
+      ).toThrow(/socialClass/i);
+
+      // Invalid strings
+      for (const invalidClass of ["middle", "servile", "noble", "peasant", "", "INVALID"]) {
+        expect(() =>
+          createPopulationCohort({
+            ...baseCohort,
+            socialClass: invalidClass as unknown as "common",
+          })
+        ).toThrow(/socialClass/i);
+      }
+    });
+
+    it("accepts all five valid socialClass values including enslaved cohorts (R1-COHORT-SOCIALCLASS-GUARD-01)", () => {
+      const validClasses = ["lower", "common", "skilled", "administrative", "elite"] as const;
+      for (const sc of validClasses) {
+        const cohort = createPopulationCohort({
+          id: `cohort_${sc}`,
+          occupation: "worker",
+          socialClass: sc,
+          legalStatus: sc === "lower" ? "enslaved" : "citizen",
+          count: 20,
+          averageHealth: 80,
+          morale: 70,
+          productivity: 75,
+          resentment: 5,
+          loyalty: 85,
+          livingStandard: "decent",
+        });
+        expect(cohort.socialClass).toBe(sc);
+      }
+    });
   });
 
   describe("createSettlement & Object Isolation (R1-F02)", () => {
@@ -1018,6 +1104,104 @@ describe("Domain Models, Invariants & Object Isolation (LAW-04 & LAW-05)", () =>
           expect(res.valid).toBe(false);
           expect(res.code).toBe("INVALID_STATE");
         }
+      });
+    });
+
+    describe("Cohort socialClass Guard (R1-COHORT-SOCIALCLASS-GUARD-01)", () => {
+      const baseState = (): GameState => ({
+        currentDate: { day: 1, week: 1, year: 1 },
+        worldMetadata: { worldSeed: 1, gameVersion: "0.1.0" },
+        settlements: {
+          s1: {
+            ...buildSettlement("s1", "active"),
+            cohorts: [
+              {
+                id: "c1",
+                occupation: "worker",
+                socialClass: "common",
+                legalStatus: "citizen",
+                count: 50,
+                averageHealth: 80,
+                morale: 80,
+                productivity: 80,
+                resentment: 0,
+                loyalty: 80,
+                livingStandard: "decent",
+              },
+            ],
+          },
+        },
+        activeSettlementId: "s1",
+      });
+
+      it("rejects state when cohort has missing, null, number, or object socialClass", () => {
+        // Missing
+        const stateMissing = baseState();
+        delete (stateMissing.settlements.s1.cohorts[0] as unknown as Record<string, unknown>).socialClass;
+        let res = validateGameState(stateMissing);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("INVALID_POPULATION");
+
+        // null
+        const stateNull = baseState();
+        (stateNull.settlements.s1.cohorts[0] as unknown as Record<string, unknown>).socialClass = null;
+        res = validateGameState(stateNull);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("INVALID_POPULATION");
+
+        // number
+        const stateNum = baseState();
+        (stateNum.settlements.s1.cohorts[0] as unknown as Record<string, unknown>).socialClass = 42;
+        res = validateGameState(stateNum);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("INVALID_POPULATION");
+
+        // object
+        const stateObj = baseState();
+        (stateObj.settlements.s1.cohorts[0] as unknown as Record<string, unknown>).socialClass = {};
+        res = validateGameState(stateObj);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("INVALID_POPULATION");
+
+        // object with null toString/valueOf without throwing
+        const stateNullProto = baseState();
+        (stateNullProto.settlements.s1.cohorts[0] as unknown as Record<string, unknown>).socialClass = {
+          toString: null,
+          valueOf: null,
+        };
+        res = validateGameState(stateNullProto);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("INVALID_POPULATION");
+      });
+
+      it("rejects state when cohort has invalid string socialClass such as middle or servile", () => {
+        for (const badClass of ["middle", "servile", "noble", "peasant", "", "COMMON"]) {
+          const state = baseState();
+          (state.settlements.s1.cohorts[0] as unknown as Record<string, unknown>).socialClass = badClass;
+          const res = validateGameState(state);
+          expect(res.valid).toBe(false);
+          expect(res.code).toBe("INVALID_POPULATION");
+        }
+      });
+
+      it("accepts state with all five valid socialClass values including enslaved cohorts", () => {
+        const validClasses = ["lower", "common", "skilled", "administrative", "elite"] as const;
+        const state = baseState();
+        state.settlements.s1.cohorts = validClasses.map((sc, i) => ({
+          id: `c_${sc}`,
+          occupation: "worker",
+          socialClass: sc,
+          legalStatus: i === 0 ? "enslaved" : "citizen",
+          count: 10,
+          averageHealth: 80,
+          morale: 80,
+          productivity: 80,
+          resentment: 0,
+          loyalty: 80,
+          livingStandard: "decent",
+        }));
+        const res = validateGameState(state);
+        expect(res.valid).toBe(true);
       });
     });
   });
