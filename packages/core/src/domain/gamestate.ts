@@ -89,6 +89,14 @@ export const REQUIRED_COHORT_METRICS = [
   "loyalty",
 ] as const;
 
+const VALID_COHORT_SOCIAL_CLASSES: readonly string[] = [
+  "lower",
+  "common",
+  "skilled",
+  "administrative",
+  "elite",
+] as const;
+
 function validateMetricsDict(
   dict: unknown,
   requiredKeys: readonly string[],
@@ -351,6 +359,13 @@ export function validateGameState(state: GameState): StateValidationResult {
           valid: false,
           code: "INVALID_POPULATION",
           message: `Settlement '${settlement.id}' contains cohort with missing or empty ID`,
+        };
+      }
+      if (typeof cohort.socialClass !== "string" || !VALID_COHORT_SOCIAL_CLASSES.includes(cohort.socialClass)) {
+        return {
+          valid: false,
+          code: "INVALID_POPULATION",
+          message: `Cohort '${cohort.id}' in '${settlement.id}' has invalid socialClass. Must be one of: lower, common, skilled, administrative, elite`,
         };
       }
       if (!Number.isInteger(cohort.count) || cohort.count < 0) {

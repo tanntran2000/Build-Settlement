@@ -16,9 +16,20 @@ export interface PopulationCohort {
   livingStandard: "starvation" | "bare_survival" | "decent" | "comfortable" | "luxurious";
 }
 
+const VALID_SOCIAL_CLASSES: readonly string[] = [
+  "lower",
+  "common",
+  "skilled",
+  "administrative",
+  "elite",
+];
+
 export function createPopulationCohort(params: PopulationCohort): PopulationCohort {
   if (!params.id || typeof params.id !== "string" || params.id.trim() === "") {
     throw new Error("Cohort ID must be a non-empty string");
+  }
+  if (!params.socialClass || typeof params.socialClass !== "string" || !VALID_SOCIAL_CLASSES.includes(params.socialClass)) {
+    throw new Error("Cohort socialClass is invalid. Must be one of: lower, common, skilled, administrative, elite");
   }
   if (!Number.isInteger(params.count) || params.count < 0) {
     throw new Error(`Invalid cohort count: ${params.count}. Must be non-negative integer.`);

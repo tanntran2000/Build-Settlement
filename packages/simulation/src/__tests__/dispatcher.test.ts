@@ -146,6 +146,41 @@ describe("Command Dispatcher & Execution Pipeline (LAW-02, LAW-03, LAW-04, LAW-0
       }
     });
 
+    it("rejects ADVANCE_DAY when cohort socialClass is missing, null, number, object, or invalid string (R1-COHORT-SOCIALCLASS-GUARD-01)", () => {
+      const handlerSpy = vi.spyOn(advanceDayModule, "handleAdvanceDay");
+      try {
+        const badValues: unknown[] = [
+          undefined,
+          null,
+          123,
+          {},
+          { toString: null, valueOf: null },
+          "middle",
+          "servile",
+        ];
+
+        for (const badVal of badValues) {
+          const state = buildTestGameState(100, 100);
+          (state.settlements["haven_active"].cohorts[0] as unknown as Record<string, unknown>).socialClass = badVal;
+          const inputSnapshot = structuredClone(state);
+
+          const res = executeCommand(state, { type: "ADVANCE_DAY" });
+          expect(res.success).toBe(false);
+          if (!res.success) {
+            expect(res.error.code).toBe("INVALID_STATE");
+            expect(res.state).toBe(state); // Reference preserved
+            expect((res as unknown as Record<string, unknown>).effects).toBeUndefined();
+            expect((res as unknown as Record<string, unknown>).auditEntries).toBeUndefined();
+          }
+          expect(state).toEqual(inputSnapshot);
+          expect(handlerSpy).not.toHaveBeenCalled();
+          handlerSpy.mockClear();
+        }
+      } finally {
+        handlerSpy.mockRestore();
+      }
+    });
+
     it("rejects ADVANCE_DAY when state is null or non-object without uncaught exception", () => {
       // @ts-expect-error test null state
       const resNull = executeCommand(null, { type: "ADVANCE_DAY" });
@@ -1003,6 +1038,66 @@ describe("Command Dispatcher & Execution Pipeline (LAW-02, LAW-03, LAW-04, LAW-0
           expect(state).toEqual(originalState);
         } finally {
           spy.mockRestore();
+        }
+      });
+
+      it("returns INVARIANT_VIOLATION, preserves state, and does not leak effects/audit when draft violates cohort socialClass invariant (R1-COHORT-SOCIALCLASS-GUARD-01)", () => {
+        const state = buildTestGameState(100, 100);
+        const originalState = structuredClone(state);
+
+        const sampleEffects: import("@haven/core").Effect[] = [
+          { type: "RESOURCE_DELTA", resource: "food", delta: -10, reason: "mock delta" },
+        ];
+        const sampleAudit: import("@haven/core").AuditEntry[] = [
+          { day: 7, category: "economy", message: "mock audit entry" },
+        ];
+
+        const spy = vi.spyOn(advanceDayModule, "handleAdvanceDay").mockImplementation((draft) => {
+          (draft.settlements["haven_active"].cohorts[0] as unknown as Record<string, unknown>).socialClass = "middle";
+          return {
+            effects: sampleEffects,
+            auditEntries: sampleAudit,
+            data: { fromDay: 7, toDay: 8, report: null },
+          };
+        });
+
+        try {
+          const res = executeCommand(state, { type: "ADVANCE_DAY" });
+          expect(res.success).toBe(false);
+          if (!res.success) {
+            expect(res.error.code).toBe("INVARIANT_VIOLATION");
+            expect(res.state).toBe(state);
+            expect((res as unknown as Record<string, unknown>).effects).toBeUndefined();
+            expect((res as unknown as Record<string, unknown>).auditEntries).toBeUndefined();
+          }
+          expect(state).toEqual(originalState);
+        } finally {
+          spy.mockRestore();
+        }
+      });
+
+      it("executes successfully when cohorts have valid socialClass values including enslaved status (R1-COHORT-SOCIALCLASS-GUARD-01)", () => {
+        const state = buildTestGameState(100, 100);
+        const validClasses: import("@haven/core").SocialClass[] = ["lower", "common", "skilled", "administrative", "elite"];
+        state.settlements["haven_active"].cohorts = validClasses.map((sc, i) =>
+          createPopulationCohort({
+            id: `cohort_${sc}`,
+            occupation: "worker",
+            socialClass: sc,
+            legalStatus: i === 0 ? "enslaved" : "citizen",
+            count: 10,
+            averageHealth: 80,
+            morale: 80,
+            productivity: 80,
+            resentment: 0,
+            loyalty: 80,
+            livingStandard: "decent",
+          })
+        );
+        const res = executeCommand(state, { type: "ADVANCE_DAY" });
+        expect(res.success).toBe(true);
+        if (res.success) {
+          expect(res.nextState.currentDate.day).toBe(8);
         }
       });
     });
