@@ -167,6 +167,20 @@ export function validateGameState(state: GameState): StateValidationResult {
       message: "GameState is missing worldMetadata object",
     };
   }
+  if (typeof state.worldMetadata.worldSeed !== "number" || !Number.isFinite(state.worldMetadata.worldSeed)) {
+    return {
+      valid: false,
+      code: "INVALID_STATE",
+      message: "worldMetadata.worldSeed must be a finite number",
+    };
+  }
+  if (typeof state.worldMetadata.gameVersion !== "string") {
+    return {
+      valid: false,
+      code: "INVALID_STATE",
+      message: `worldMetadata.gameVersion must be a string, received: ${typeof state.worldMetadata.gameVersion}`,
+    };
+  }
 
   // 2. Key-ID Matching & Settlement Contents validation
   if (!state.settlements || typeof state.settlements !== "object" || Array.isArray(state.settlements)) {
@@ -178,6 +192,7 @@ export function validateGameState(state: GameState): StateValidationResult {
   }
 
   const entries = Object.entries(state.settlements);
+  const seenCharacterIds = new Set<string>();
   for (const [key, settlement] of entries) {
     if (!settlement || typeof settlement !== "object" || Array.isArray(settlement)) {
       return {
@@ -193,6 +208,95 @@ export function validateGameState(state: GameState): StateValidationResult {
         code: "KEY_ID_MISMATCH",
         message: `Dictionary key '${key}' does not match settlement ID '${settlement.id}'`,
       };
+    }
+
+    // Status validation
+    const VALID_SETTLEMENT_STATUSES: readonly string[] = [
+      "unexplored",
+      "discovered",
+      "active",
+      "handoff",
+      "legacy",
+    ];
+    if (typeof settlement.status !== "string" || !VALID_SETTLEMENT_STATUSES.includes(settlement.status)) {
+      return {
+        valid: false,
+        code: "INVALID_STATE",
+        message: `Settlement '${settlement.id}' has invalid status. Must be one of ${VALID_SETTLEMENT_STATUSES.join(", ")}`,
+      };
+    }
+
+    // Authority & reputation validation: must be finite numbers in [0, 100]
+    if (typeof settlement.authority !== "number" || !Number.isFinite(settlement.authority) || settlement.authority < 0 || settlement.authority > 100) {
+      return {
+        valid: false,
+        code: "INVALID_STATE",
+        message: `Settlement '${settlement.id}' authority must be a finite number in [0, 100]`,
+      };
+    }
+    if (typeof settlement.reputation !== "number" || !Number.isFinite(settlement.reputation) || settlement.reputation < 0 || settlement.reputation > 100) {
+      return {
+        valid: false,
+        code: "INVALID_STATE",
+        message: `Settlement '${settlement.id}' reputation must be a finite number in [0, 100]`,
+      };
+    }
+
+    // Facilities validation
+    if (!Array.isArray(settlement.facilities)) {
+      return {
+        valid: false,
+        code: "INVALID_STATE",
+        message: `Settlement '${settlement.id}' facilities must be an array`,
+      };
+    }
+    const VALID_FACILITY_STAGES: readonly string[] = [
+      "planning",
+      "site_prep",
+      "construction",
+      "operational",
+      "damaged",
+    ];
+    for (const facility of settlement.facilities) {
+      if (!facility || typeof facility !== "object" || Array.isArray(facility)) {
+        return {
+          valid: false,
+          code: "INVALID_STATE",
+          message: `Settlement '${settlement.id}' contains invalid facility entry`,
+        };
+      }
+      if (typeof facility.id !== "string" || typeof facility.name !== "string" || typeof facility.type !== "string") {
+        return {
+          valid: false,
+          code: "INVALID_STATE",
+          message: `Facility in '${settlement.id}' must have string id, name, and type`,
+        };
+      }
+      if (typeof facility.stage !== "string" || !VALID_FACILITY_STAGES.includes(facility.stage)) {
+        return {
+          valid: false,
+          code: "INVALID_STATE",
+          message: `Facility '${facility.id}' in '${settlement.id}' has invalid stage. Must be one of ${VALID_FACILITY_STAGES.join(", ")}`,
+        };
+      }
+      if (
+        typeof facility.level !== "number" || !Number.isFinite(facility.level) ||
+        typeof facility.capacity !== "number" || !Number.isFinite(facility.capacity) ||
+        typeof facility.assignedWorkerCount !== "number" || !Number.isFinite(facility.assignedWorkerCount)
+      ) {
+        return {
+          valid: false,
+          code: "INVALID_STATE",
+          message: `Facility '${facility.id}' in '${settlement.id}' must have finite numbers for level, capacity, and assignedWorkerCount`,
+        };
+      }
+      if (facility.assignedManagerId !== undefined && typeof facility.assignedManagerId !== "string") {
+        return {
+          valid: false,
+          code: "INVALID_STATE",
+          message: `Facility '${facility.id}' in '${settlement.id}' has invalid assignedManagerId (must be string if present)`,
+        };
+      }
     }
 
     // Inventory validation: must have all required resources as non-negative integers
@@ -292,6 +396,15 @@ export function validateGameState(state: GameState): StateValidationResult {
           message: `Settlement '${settlement.id}' contains character with missing or empty ID`,
         };
       }
+      const normalizedNpcId = npc.id.trim();
+      if (seenCharacterIds.has(normalizedNpcId)) {
+        return {
+          valid: false,
+          code: "INVALID_CHARACTER",
+          message: `Duplicate character ID '${normalizedNpcId}' found in settlement '${settlement.id}'`,
+        };
+      }
+      seenCharacterIds.add(normalizedNpcId);
       if (!Number.isInteger(npc.age) || npc.age < 0) {
         return {
           valid: false,

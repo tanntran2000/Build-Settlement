@@ -6,6 +6,7 @@ import {
   createDefaultInventory,
   createNamedCharacter,
   createPopulationCohort,
+  validateGameState,
 } from "@haven/core";
 import { executeCommand } from "../dispatcher.js";
 import * as advanceDayModule from "../handlers/advanceDay.js";
@@ -219,6 +220,336 @@ describe("Command Dispatcher & Execution Pipeline (LAW-02, LAW-03, LAW-04, LAW-0
       }
       expect(stateEmpty.currentDate.day).toBe(7);
     });
+
+    it("rejects ADVANCE_DAY with INVALID_STATE when GameState contains duplicate NPC IDs and leaves input/clock/inventory untouched", () => {
+      const state = buildTestGameState(10, 10);
+      state.currentDate = { day: 1, week: 1, year: 1 };
+      state.settlements["haven_active"].cohorts = [];
+      state.settlements["haven_active"].namedCharacters = [
+        createNamedCharacter({ id: "npc1", name: "NPC 1A" }),
+        createNamedCharacter({ id: "npc1", name: "NPC 1B" }),
+        createNamedCharacter({ id: "npc1", name: "NPC 1C" }),
+      ];
+
+      const res = executeCommand(state, { type: "ADVANCE_DAY" });
+      expect(res.success).toBe(false);
+      if (!res.success) {
+        expect(res.error.code).toBe("INVALID_STATE");
+        expect(res.state).toBe(state);
+      }
+      expect(state.currentDate).toEqual({ day: 1, week: 1, year: 1 });
+      expect(state.settlements["haven_active"].inventory.food).toBe(10);
+      expect(state.settlements["haven_active"].inventory.clean_water).toBe(10);
+    });
+
+    it("allows ADVANCE_DAY when multiple NPCs have distinct IDs and consumes resources properly", () => {
+      const state = buildTestGameState(10, 10);
+      state.currentDate = { day: 1, week: 1, year: 1 };
+      state.settlements["haven_active"].cohorts = [];
+      state.settlements["haven_active"].namedCharacters = [
+        createNamedCharacter({ id: "npc1", name: "NPC 1" }),
+        createNamedCharacter({ id: "npc2", name: "NPC 2" }),
+        createNamedCharacter({ id: "npc3", name: "NPC 3" }),
+      ];
+
+      const res = executeCommand(state, { type: "ADVANCE_DAY" });
+      expect(res.success).toBe(true);
+      if (res.success) {
+        expect(res.nextState.currentDate).toEqual({ day: 2, week: 1, year: 1 });
+        expect(res.nextState.settlements["haven_active"].inventory.food).toBe(8);
+        expect(res.nextState.settlements["haven_active"].inventory.clean_water).toBe(8);
+      }
+      expect(state.currentDate).toEqual({ day: 1, week: 1, year: 1 });
+      expect(state.settlements["haven_active"].inventory.food).toBe(10);
+      expect(state.settlements["haven_active"].inventory.clean_water).toBe(10);
+    });
+
+    describe("Pre-gate runtime-validation guards for domain contracts (WP-VALIDATION-GUARDS-01)", () => {
+      it("rejects invalid worldMetadata before command/handler execution without mutating input", () => {
+        const handlerSpy = vi.spyOn(advanceDayModule, "handleAdvanceDay");
+        try {
+          const testCases = [
+            (s: GameState) => { delete (s.worldMetadata as unknown as Record<string, unknown>).worldSeed; },
+            (s: GameState) => { (s.worldMetadata as unknown as Record<string, unknown>).worldSeed = NaN; },
+            (s: GameState) => { (s.worldMetadata as unknown as Record<string, unknown>).worldSeed = Infinity; },
+            (s: GameState) => { (s.worldMetadata as unknown as Record<string, unknown>).worldSeed = "99999"; },
+            (s: GameState) => { (s.worldMetadata as unknown as Record<string, unknown>).worldSeed = null; },
+            (s: GameState) => { delete (s.worldMetadata as unknown as Record<string, unknown>).gameVersion; },
+            (s: GameState) => { (s.worldMetadata as unknown as Record<string, unknown>).gameVersion = 100; },
+            (s: GameState) => { (s.worldMetadata as unknown as Record<string, unknown>).gameVersion = null; },
+          ];
+
+          for (const mutator of testCases) {
+            const state = buildTestGameState(100, 100);
+            mutator(state);
+            const snapshot = structuredClone(state);
+
+            const res = executeCommand(state, { type: "ADVANCE_DAY" });
+            expect(res.success).toBe(false);
+            if (!res.success) {
+              expect(res.error.code).toBe("INVALID_STATE");
+              expect(res.state).toBe(state); // Same reference
+            }
+            expect(state).toEqual(snapshot); // Deep unchanged
+            expect(handlerSpy).not.toHaveBeenCalled();
+            handlerSpy.mockClear();
+          }
+        } finally {
+          handlerSpy.mockRestore();
+        }
+      });
+
+      it("rejects invalid authority and reputation before command/handler execution without mutating input", () => {
+        const handlerSpy = vi.spyOn(advanceDayModule, "handleAdvanceDay");
+        try {
+          const testCases = [
+            (s: GameState) => { s.settlements["haven_active"].authority = -1; },
+            (s: GameState) => { s.settlements["haven_active"].authority = 101; },
+            (s: GameState) => { s.settlements["haven_active"].authority = NaN; },
+            (s: GameState) => { s.settlements["haven_active"].authority = Infinity; },
+            (s: GameState) => { (s.settlements["haven_active"] as unknown as Record<string, unknown>).authority = "65"; },
+            (s: GameState) => { (s.settlements["haven_active"] as unknown as Record<string, unknown>).authority = null; },
+            (s: GameState) => { s.settlements["haven_active"].reputation = -0.1; },
+            (s: GameState) => { s.settlements["haven_active"].reputation = 100.1; },
+            (s: GameState) => { s.settlements["haven_active"].reputation = NaN; },
+            (s: GameState) => { s.settlements["haven_active"].reputation = -Infinity; },
+            (s: GameState) => { (s.settlements["haven_active"] as unknown as Record<string, unknown>).reputation = "80"; },
+            (s: GameState) => { (s.settlements["haven_active"] as unknown as Record<string, unknown>).reputation = undefined; },
+          ];
+
+          for (const mutator of testCases) {
+            const state = buildTestGameState(100, 100);
+            mutator(state);
+            const snapshot = structuredClone(state);
+
+            const res = executeCommand(state, { type: "ADVANCE_DAY" });
+            expect(res.success).toBe(false);
+            if (!res.success) {
+              expect(res.error.code).toBe("INVALID_STATE");
+              expect(res.state).toBe(state);
+            }
+            expect(state).toEqual(snapshot);
+            expect(handlerSpy).not.toHaveBeenCalled();
+            handlerSpy.mockClear();
+          }
+        } finally {
+          handlerSpy.mockRestore();
+        }
+      });
+
+      it("rejects invalid settlement status before command/handler execution without mutating input", () => {
+        const handlerSpy = vi.spyOn(advanceDayModule, "handleAdvanceDay");
+        try {
+          const testCases = [
+            (s: GameState) => { (s.settlements["haven_active"] as unknown as Record<string, unknown>).status = "bogus"; },
+            (s: GameState) => { (s.settlements["haven_active"] as unknown as Record<string, unknown>).status = null; },
+            (s: GameState) => { (s.settlements["haven_active"] as unknown as Record<string, unknown>).status = 123; },
+            (s: GameState) => { delete (s.settlements["haven_active"] as unknown as Record<string, unknown>).status; },
+          ];
+
+          for (const mutator of testCases) {
+            const state = buildTestGameState(100, 100);
+            mutator(state);
+            const snapshot = structuredClone(state);
+
+            const res = executeCommand(state, { type: "ADVANCE_DAY" });
+            expect(res.success).toBe(false);
+            if (!res.success) {
+              expect(res.error.code).toBe("INVALID_STATE");
+              expect(res.state).toBe(state);
+            }
+            expect(state).toEqual(snapshot);
+            expect(handlerSpy).not.toHaveBeenCalled();
+            handlerSpy.mockClear();
+          }
+        } finally {
+          handlerSpy.mockRestore();
+        }
+      });
+
+      it("rejects invalid facilities before command/handler execution without mutating input", () => {
+        const handlerSpy = vi.spyOn(advanceDayModule, "handleAdvanceDay");
+        try {
+          const testCases = [
+            (s: GameState) => { (s.settlements["haven_active"] as unknown as Record<string, unknown>).facilities = null; },
+            (s: GameState) => { (s.settlements["haven_active"] as unknown as Record<string, unknown>).facilities = "not_an_array"; },
+            (s: GameState) => { (s.settlements["haven_active"].facilities as unknown as unknown[]).push(null); },
+            (s: GameState) => { (s.settlements["haven_active"].facilities as unknown as unknown[]).push(["array_member"]); },
+            (s: GameState) => { (s.settlements["haven_active"].facilities as unknown as unknown[]).push(42); },
+            (s: GameState) => {
+              (s.settlements["haven_active"].facilities as unknown as unknown[]).push({
+                name: "Missing ID",
+                type: "housing",
+                stage: "operational",
+                level: 1,
+                capacity: 10,
+                assignedWorkerCount: 0,
+              });
+            },
+            (s: GameState) => {
+              (s.settlements["haven_active"].facilities as unknown as unknown[]).push({
+                id: "f1",
+                name: "Bad Stage",
+                type: "housing",
+                stage: "non_existent_stage",
+                level: 1,
+                capacity: 10,
+                assignedWorkerCount: 0,
+              });
+            },
+            (s: GameState) => {
+              (s.settlements["haven_active"].facilities as unknown as unknown[]).push({
+                id: "f2",
+                name: "Bad Level",
+                type: "housing",
+                stage: "operational",
+                level: NaN,
+                capacity: 10,
+                assignedWorkerCount: 0,
+              });
+            },
+            (s: GameState) => {
+              (s.settlements["haven_active"].facilities as unknown as unknown[]).push({
+                id: "f3",
+                name: "Bad Manager",
+                type: "housing",
+                stage: "operational",
+                level: 1,
+                capacity: 10,
+                assignedWorkerCount: 0,
+                assignedManagerId: 12345,
+              });
+            },
+          ];
+
+          for (const mutator of testCases) {
+            const state = buildTestGameState(100, 100);
+            mutator(state);
+            const snapshot = structuredClone(state);
+
+            const res = executeCommand(state, { type: "ADVANCE_DAY" });
+            expect(res.success).toBe(false);
+            if (!res.success) {
+              expect(res.error.code).toBe("INVALID_STATE");
+              expect(res.state).toBe(state);
+            }
+            expect(state).toEqual(snapshot);
+            expect(handlerSpy).not.toHaveBeenCalled();
+            handlerSpy.mockClear();
+          }
+        } finally {
+          handlerSpy.mockRestore();
+        }
+      });
+
+      it("safely rejects unconvertible objects ({ toString: null, valueOf: null }) with INVALID_STATE without throwing (R1-VALIDATION-CORRECTION-01)", () => {
+        const handlerSpy = vi.spyOn(advanceDayModule, "handleAdvanceDay");
+        try {
+          const unconvertible = { toString: null, valueOf: null };
+          const testCases = [
+            (s: GameState) => { (s.worldMetadata as unknown as Record<string, unknown>).worldSeed = unconvertible; },
+            (s: GameState) => { (s.settlements["haven_active"] as unknown as Record<string, unknown>).authority = unconvertible; },
+            (s: GameState) => { (s.settlements["haven_active"] as unknown as Record<string, unknown>).reputation = unconvertible; },
+            (s: GameState) => { (s.settlements["haven_active"] as unknown as Record<string, unknown>).status = unconvertible; },
+            (s: GameState) => {
+              s.settlements["haven_active"].facilities = [
+                {
+                  id: "fac_bad",
+                  name: "Bad Facility",
+                  type: "housing",
+                  level: 1,
+                  stage: unconvertible as unknown as "operational",
+                  capacity: 10,
+                  assignedWorkerCount: 0,
+                },
+              ];
+            },
+          ];
+
+          for (const mutator of testCases) {
+            const state = buildTestGameState(100, 100);
+            mutator(state);
+            const snapshot = structuredClone(state);
+
+            expect(() => executeCommand(state, { type: "ADVANCE_DAY" })).not.toThrow();
+            const res = executeCommand(state, { type: "ADVANCE_DAY" });
+            expect(res.success).toBe(false);
+            if (!res.success) {
+              expect(res.error.code).toBe("INVALID_STATE");
+              expect(res.state).toBe(state);
+            }
+            expect(state).toEqual(snapshot);
+            expect(handlerSpy).not.toHaveBeenCalled();
+            handlerSpy.mockClear();
+          }
+
+          // Positive control: valid state passes execution
+          const validState = buildTestGameState(100, 100);
+          const validRes = executeCommand(validState, { type: "ADVANCE_DAY" });
+          expect(validRes.success).toBe(true);
+        } finally {
+          handlerSpy.mockRestore();
+        }
+      });
+
+      it("demonstrates state gate precedence: rejects all 4 invalid state groups with INVALID_STATE before command syntax check or legacy authority gate", () => {
+        const handlerSpy = vi.spyOn(advanceDayModule, "handleAdvanceDay");
+        try {
+          const stateMutators = [
+            // Group 1: metadata
+            (s: GameState) => { delete (s.worldMetadata as unknown as Record<string, unknown>).worldSeed; },
+            // Group 2: authority/reputation
+            (s: GameState) => { s.settlements["haven_active"].authority = 150; },
+            (s: GameState) => { s.settlements["haven_active"].reputation = -1; },
+            // Group 3: status
+            (s: GameState) => { (s.settlements["haven_active"] as unknown as Record<string, unknown>).status = "invalid_status"; },
+            // Group 4: facilities
+            (s: GameState) => { (s.settlements["haven_active"] as unknown as Record<string, unknown>).facilities = "not_an_array"; },
+          ];
+
+          const conflictingCommands: unknown[] = [
+            // Malformed syntax:
+            null,
+            undefined,
+            "NOT_A_COMMAND",
+            { type: "UNKNOWN_TYPE" },
+            { type: 999 },
+            // Commands targeting Legacy settlement (which would normally return FORBIDDEN):
+            {
+              type: "BUILD_FACILITY",
+              settlementId: "haven_legacy",
+              facilityType: "housing",
+              name: "Barracks",
+            },
+            {
+              type: "SET_RATION",
+              settlementId: "haven_legacy",
+              cohortId: "cohort_haven_legacy",
+              level: "normal",
+            },
+          ];
+
+          for (const mutator of stateMutators) {
+            for (const cmd of conflictingCommands) {
+              const state = buildTestGameState(100, 100);
+              mutator(state);
+              const snapshot = structuredClone(state);
+
+              const res = executeCommand(state, cmd);
+              expect(res.success).toBe(false);
+              if (!res.success) {
+                expect(res.error.code).toBe("INVALID_STATE");
+                expect(res.state).toBe(state);
+              }
+              expect(state).toEqual(snapshot);
+              expect(handlerSpy).not.toHaveBeenCalled();
+            }
+          }
+        } finally {
+          handlerSpy.mockRestore();
+        }
+      });
+    });
   });
 
   describe("Command Syntax Validation Gate (R1-F03)", () => {
@@ -374,6 +705,7 @@ describe("Command Dispatcher & Execution Pipeline (LAW-02, LAW-03, LAW-04, LAW-0
         const legacySettlement = res.nextState.settlements["haven_legacy"];
         expect(legacySettlement.inventory.food).toBe(50);
         expect(legacySettlement.inventory.clean_water).toBe(50);
+        expect(legacySettlement).toEqual(state.settlements["haven_legacy"]);
       }
     });
 
@@ -412,6 +744,9 @@ describe("Command Dispatcher & Execution Pipeline (LAW-02, LAW-03, LAW-04, LAW-0
         activeSettlementId: null,
       };
 
+      const initialInputSnapshot = structuredClone(state);
+      const initialLegacySnapshot = structuredClone(state.settlements["leg"]);
+
       const res = executeCommand(state, { type: "ADVANCE_DAY" });
       expect(res.success).toBe(true);
       if (res.success) {
@@ -420,7 +755,9 @@ describe("Command Dispatcher & Execution Pipeline (LAW-02, LAW-03, LAW-04, LAW-0
         expect(res.data?.toDay).toBe(2);
         expect(res.data?.report).toBeNull();
         expect(res.auditEntries[0].message).toContain("Không có lãnh địa trực trị hoạt động");
+        expect(res.nextState.settlements["leg"]).toEqual(initialLegacySnapshot);
       }
+      expect(state).toEqual(initialInputSnapshot);
     });
 
     it("guarantees immutability and atomicity: input state is never modified on success", () => {
@@ -489,6 +826,372 @@ describe("Command Dispatcher & Execution Pipeline (LAW-02, LAW-03, LAW-04, LAW-0
       } finally {
         spy.mockRestore();
       }
+    });
+
+    it("catches structuredClone failure when state contains a function field and returns EXECUTION_ERROR without throwing or mutating state", () => {
+      const state = buildTestGameState(100, 100);
+      const originalFood = state.settlements["haven_active"].inventory.food;
+      const originalWater = state.settlements["haven_active"].inventory.clean_water;
+      const originalDay = state.currentDate.day;
+
+      // Attach a function field that current validator accepts but structuredClone rejects
+      (state.worldMetadata as unknown as Record<string, unknown>).uncloneableHook = () => {};
+      expect(validateGameState(state).valid).toBe(true);
+
+      const res = executeCommand(state, { type: "ADVANCE_DAY" });
+      expect(res.success).toBe(false);
+      if (!res.success) {
+        expect(res.error.code).toBe("EXECUTION_ERROR");
+        expect(res.state).toBe(state);
+      }
+      expect(state.settlements["haven_active"].inventory.food).toBe(originalFood);
+      expect(state.settlements["haven_active"].inventory.clean_water).toBe(originalWater);
+      expect(state.currentDate.day).toBe(originalDay);
+    });
+
+    describe("Post-execution Invariant Validation Guards (R1-F04 & WP-VALIDATION-GUARDS-01)", () => {
+      it("returns INVARIANT_VIOLATION and preserves state when draft violates worldMetadata invariants", () => {
+        const state = buildTestGameState(100, 100);
+        const originalState = structuredClone(state);
+
+        const spy = vi.spyOn(advanceDayModule, "handleAdvanceDay").mockImplementation((draft) => {
+          draft.worldMetadata.worldSeed = NaN;
+          return {
+            effects: [],
+            auditEntries: [],
+            data: { fromDay: 7, toDay: 8, report: null },
+          };
+        });
+
+        try {
+          const res = executeCommand(state, { type: "ADVANCE_DAY" });
+          expect(res.success).toBe(false);
+          if (!res.success) {
+            expect(res.error.code).toBe("INVARIANT_VIOLATION");
+            expect(res.state).toBe(state);
+          }
+          expect(state).toEqual(originalState);
+        } finally {
+          spy.mockRestore();
+        }
+      });
+
+      it("returns INVARIANT_VIOLATION, preserves state, and does not leak effects/audit when draft violates authority invariant", () => {
+        const state = buildTestGameState(100, 100);
+        const originalState = structuredClone(state);
+
+        const sampleEffects: import("@haven/core").Effect[] = [
+          { type: "RESOURCE_DELTA", resource: "food", delta: -10, reason: "mock delta" },
+        ];
+        const sampleAudit: import("@haven/core").AuditEntry[] = [
+          { day: 7, category: "economy", message: "mock audit entry" },
+        ];
+
+        const spy = vi.spyOn(advanceDayModule, "handleAdvanceDay").mockImplementation((draft) => {
+          draft.settlements["haven_active"].authority = 150;
+          return {
+            effects: sampleEffects,
+            auditEntries: sampleAudit,
+            data: { fromDay: 7, toDay: 8, report: null },
+          };
+        });
+
+        try {
+          const res = executeCommand(state, { type: "ADVANCE_DAY" });
+          expect(res.success).toBe(false);
+          if (!res.success) {
+            expect(res.error.code).toBe("INVARIANT_VIOLATION");
+            expect(res.state).toBe(state);
+            expect((res as unknown as Record<string, unknown>).effects).toBeUndefined();
+            expect((res as unknown as Record<string, unknown>).auditEntries).toBeUndefined();
+          }
+          expect(state).toEqual(originalState);
+        } finally {
+          spy.mockRestore();
+        }
+      });
+
+      it("returns INVARIANT_VIOLATION, preserves state, and does not leak effects/audit when draft violates reputation invariant", () => {
+        const state = buildTestGameState(100, 100);
+        const originalState = structuredClone(state);
+
+        const sampleEffects: import("@haven/core").Effect[] = [
+          { type: "RESOURCE_DELTA", resource: "food", delta: -10, reason: "mock delta" },
+        ];
+        const sampleAudit: import("@haven/core").AuditEntry[] = [
+          { day: 7, category: "economy", message: "mock audit entry" },
+        ];
+
+        const spy = vi.spyOn(advanceDayModule, "handleAdvanceDay").mockImplementation((draft) => {
+          draft.settlements["haven_active"].reputation = -10;
+          return {
+            effects: sampleEffects,
+            auditEntries: sampleAudit,
+            data: { fromDay: 7, toDay: 8, report: null },
+          };
+        });
+
+        try {
+          const res = executeCommand(state, { type: "ADVANCE_DAY" });
+          expect(res.success).toBe(false);
+          if (!res.success) {
+            expect(res.error.code).toBe("INVARIANT_VIOLATION");
+            expect(res.state).toBe(state);
+            expect((res as unknown as Record<string, unknown>).effects).toBeUndefined();
+            expect((res as unknown as Record<string, unknown>).auditEntries).toBeUndefined();
+          }
+          expect(state).toEqual(originalState);
+        } finally {
+          spy.mockRestore();
+        }
+      });
+
+      it("returns INVARIANT_VIOLATION and preserves state when draft violates settlement status invariant", () => {
+        const state = buildTestGameState(100, 100);
+        const originalState = structuredClone(state);
+
+        const spy = vi.spyOn(advanceDayModule, "handleAdvanceDay").mockImplementation((draft) => {
+          (draft.settlements["haven_active"] as unknown as Record<string, unknown>).status = "destroyed";
+          return {
+            effects: [],
+            auditEntries: [],
+            data: { fromDay: 7, toDay: 8, report: null },
+          };
+        });
+
+        try {
+          const res = executeCommand(state, { type: "ADVANCE_DAY" });
+          expect(res.success).toBe(false);
+          if (!res.success) {
+            expect(res.error.code).toBe("INVARIANT_VIOLATION");
+            expect(res.state).toBe(state);
+          }
+          expect(state).toEqual(originalState);
+        } finally {
+          spy.mockRestore();
+        }
+      });
+
+      it("returns INVARIANT_VIOLATION and preserves state when draft violates facilities invariants", () => {
+        const state = buildTestGameState(100, 100);
+        const originalState = structuredClone(state);
+
+        const spy = vi.spyOn(advanceDayModule, "handleAdvanceDay").mockImplementation((draft) => {
+          (draft.settlements["haven_active"].facilities as unknown as unknown[]).push({
+            id: "corrupted_facility",
+            name: "Corrupted",
+            type: "industry",
+            stage: "unsupported_stage",
+            level: 1,
+            capacity: 10,
+            assignedWorkerCount: 0,
+          });
+          return {
+            effects: [],
+            auditEntries: [],
+            data: { fromDay: 7, toDay: 8, report: null },
+          };
+        });
+
+        try {
+          const res = executeCommand(state, { type: "ADVANCE_DAY" });
+          expect(res.success).toBe(false);
+          if (!res.success) {
+            expect(res.error.code).toBe("INVARIANT_VIOLATION");
+            expect(res.state).toBe(state);
+          }
+          expect(state).toEqual(originalState);
+        } finally {
+          spy.mockRestore();
+        }
+      });
+    });
+
+    describe("Deterministic Replay & Boundary Rollovers (R1 Acceptance Closure)", () => {
+      it("guarantees 3-day replay determinism across identical initial state clones", () => {
+        const stateA = buildTestGameState(100, 100);
+        const stateB = structuredClone(stateA);
+        const originalA = structuredClone(stateA);
+        const originalB = structuredClone(stateB);
+
+        let currA = stateA;
+        let currB = stateB;
+
+        for (let dayStep = 1; dayStep <= 3; dayStep++) {
+          const resA = executeCommand(currA, { type: "ADVANCE_DAY" });
+          const resB = executeCommand(currB, { type: "ADVANCE_DAY" });
+
+          expect(resA.success).toBe(true);
+          expect(resB.success).toBe(true);
+          if (resA.success && resB.success) {
+            expect(resA.nextState).toEqual(resB.nextState);
+            expect(resA.effects).toEqual(resB.effects);
+            expect(resA.auditEntries).toEqual(resB.auditEntries);
+            expect(resA.data).toEqual(resB.data);
+
+            expect(resA.data?.fromDay).toBe(6 + dayStep);
+            expect(resA.data?.toDay).toBe(7 + dayStep);
+            expect(resA.data?.report?.day).toBe(6 + dayStep);
+
+            currA = resA.nextState;
+            currB = resB.nextState;
+          }
+        }
+
+        // Final state has advanced 3 days: day 7 -> 10, week 2
+        expect(currA.currentDate).toEqual({ day: 10, week: 2, year: 1 });
+        // Original inputs remain completely untouched
+        expect(stateA).toEqual(originalA);
+        expect(stateB).toEqual(originalB);
+      });
+
+      it("handles year rollover deterministically: day 365/week 53/year 1 -> day 366/week 53/year 2", () => {
+        const state = buildTestGameState(100, 100);
+        state.currentDate = { day: 365, week: 53, year: 1 };
+        const originalLegacy = structuredClone(state.settlements["haven_legacy"]);
+        const originalState = structuredClone(state);
+
+        const res = executeCommand(state, { type: "ADVANCE_DAY" });
+        expect(res.success).toBe(true);
+        if (res.success) {
+          expect(res.nextState.currentDate).toEqual({ day: 366, week: 53, year: 2 });
+          expect(res.data?.fromDay).toBe(365);
+          expect(res.data?.toDay).toBe(366);
+          expect(res.data?.report?.day).toBe(365);
+
+          // Resource deltas and audit belong to day 365
+          expect(res.auditEntries[0].message).toContain("[Ngày 365]");
+          expect(res.nextState.settlements["haven_active"].inventory.food).toBe(100 - 23);
+          expect(res.nextState.settlements["haven_active"].inventory.clean_water).toBe(100 - 23);
+
+          // Legacy settlement untouched!
+          expect(res.nextState.settlements["haven_legacy"]).toEqual(originalLegacy);
+        }
+
+        // Original state untouched!
+        expect(state).toEqual(originalState);
+      });
+    });
+
+    describe("Economic boundary conditions (0-pop, stock combinations, Legacy isolation)", () => {
+      it("handles 0 population (0 cohorts, 0 named NPCs): 0 consumption, 0 deficit, clock advances", () => {
+        const state = buildTestGameState(100, 100);
+        state.settlements["haven_active"].cohorts = [];
+        state.settlements["haven_active"].namedCharacters = [];
+        const originalState = structuredClone(state);
+        const originalLegacy = structuredClone(state.settlements["haven_legacy"]);
+
+        const res = executeCommand(state, { type: "ADVANCE_DAY" });
+        expect(res.success).toBe(true);
+        if (res.success) {
+          expect(res.nextState.currentDate.day).toBe(8);
+          expect(res.data?.fromDay).toBe(7);
+          expect(res.data?.toDay).toBe(8);
+          expect(res.data?.report?.day).toBe(7);
+          expect(res.data?.report?.consumption).toEqual({ food: 0, clean_water: 0 });
+          expect(res.data?.report?.deficit).toEqual({ food: 0, clean_water: 0 });
+
+          // Stock remains exactly 100/100
+          expect(res.nextState.settlements["haven_active"].inventory.food).toBe(100);
+          expect(res.nextState.settlements["haven_active"].inventory.clean_water).toBe(100);
+
+          // Legacy untouched
+          expect(res.nextState.settlements["haven_legacy"]).toEqual(originalLegacy);
+        }
+        expect(state).toEqual(originalState);
+      });
+
+      it("handles stock (0, 0): allocated (0, 0), deficit (23, 23), closing stock (0, 0)", () => {
+        const state = buildTestGameState(0, 0);
+        const originalState = structuredClone(state);
+        const originalLegacy = structuredClone(state.settlements["haven_legacy"]);
+
+        const res = executeCommand(state, { type: "ADVANCE_DAY" });
+        expect(res.success).toBe(true);
+        if (res.success) {
+          expect(res.nextState.currentDate.day).toBe(8);
+          expect(res.data?.fromDay).toBe(7);
+          expect(res.data?.toDay).toBe(8);
+          expect(res.data?.report?.day).toBe(7);
+          expect(res.data?.report?.consumption).toEqual({ food: 0, clean_water: 0 });
+          expect(res.data?.report?.deficit).toEqual({ food: 23, clean_water: 23 });
+
+          expect(res.nextState.settlements["haven_active"].inventory.food).toBe(0);
+          expect(res.nextState.settlements["haven_active"].inventory.clean_water).toBe(0);
+
+          expect(res.nextState.settlements["haven_legacy"]).toEqual(originalLegacy);
+        }
+        expect(state).toEqual(originalState);
+      });
+
+      it("handles stock (23, 23): allocated (23, 23), deficit (0, 0), closing stock (0, 0)", () => {
+        const state = buildTestGameState(23, 23);
+        const originalState = structuredClone(state);
+        const originalLegacy = structuredClone(state.settlements["haven_legacy"]);
+
+        const res = executeCommand(state, { type: "ADVANCE_DAY" });
+        expect(res.success).toBe(true);
+        if (res.success) {
+          expect(res.nextState.currentDate.day).toBe(8);
+          expect(res.data?.fromDay).toBe(7);
+          expect(res.data?.toDay).toBe(8);
+          expect(res.data?.report?.day).toBe(7);
+          expect(res.data?.report?.consumption).toEqual({ food: 23, clean_water: 23 });
+          expect(res.data?.report?.deficit).toEqual({ food: 0, clean_water: 0 });
+
+          expect(res.nextState.settlements["haven_active"].inventory.food).toBe(0);
+          expect(res.nextState.settlements["haven_active"].inventory.clean_water).toBe(0);
+
+          expect(res.nextState.settlements["haven_legacy"]).toEqual(originalLegacy);
+        }
+        expect(state).toEqual(originalState);
+      });
+
+      it("handles stock (8, 100): food allocated 8 (deficit 15, closing 0), water allocated 23 (deficit 0, closing 77)", () => {
+        const state = buildTestGameState(8, 100);
+        const originalState = structuredClone(state);
+        const originalLegacy = structuredClone(state.settlements["haven_legacy"]);
+
+        const res = executeCommand(state, { type: "ADVANCE_DAY" });
+        expect(res.success).toBe(true);
+        if (res.success) {
+          expect(res.nextState.currentDate.day).toBe(8);
+          expect(res.data?.fromDay).toBe(7);
+          expect(res.data?.toDay).toBe(8);
+          expect(res.data?.report?.day).toBe(7);
+          expect(res.data?.report?.consumption).toEqual({ food: 8, clean_water: 23 });
+          expect(res.data?.report?.deficit).toEqual({ food: 15, clean_water: 0 });
+
+          expect(res.nextState.settlements["haven_active"].inventory.food).toBe(0);
+          expect(res.nextState.settlements["haven_active"].inventory.clean_water).toBe(77);
+
+          expect(res.nextState.settlements["haven_legacy"]).toEqual(originalLegacy);
+        }
+        expect(state).toEqual(originalState);
+      });
+
+      it("handles stock (100, 5): food allocated 23 (deficit 0, closing 77), water allocated 5 (deficit 18, closing 0)", () => {
+        const state = buildTestGameState(100, 5);
+        const originalState = structuredClone(state);
+        const originalLegacy = structuredClone(state.settlements["haven_legacy"]);
+
+        const res = executeCommand(state, { type: "ADVANCE_DAY" });
+        expect(res.success).toBe(true);
+        if (res.success) {
+          expect(res.nextState.currentDate.day).toBe(8);
+          expect(res.data?.fromDay).toBe(7);
+          expect(res.data?.toDay).toBe(8);
+          expect(res.data?.report?.day).toBe(7);
+          expect(res.data?.report?.consumption).toEqual({ food: 23, clean_water: 5 });
+          expect(res.data?.report?.deficit).toEqual({ food: 0, clean_water: 18 });
+
+          expect(res.nextState.settlements["haven_active"].inventory.food).toBe(77);
+          expect(res.nextState.settlements["haven_active"].inventory.clean_water).toBe(0);
+
+          expect(res.nextState.settlements["haven_legacy"]).toEqual(originalLegacy);
+        }
+        expect(state).toEqual(originalState);
+      });
     });
   });
 });

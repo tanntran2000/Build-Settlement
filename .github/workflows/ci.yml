@@ -21,15 +21,31 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Setup Node.js 20
+      - name: Log Git SHA and Evidence Identity
+        run: |
+          echo "Checked-out HEAD SHA: $(git rev-parse HEAD)"
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "PR Head SHA: ${{ github.event.pull_request.head.sha }}"
+            echo "PR Base SHA: ${{ github.event.pull_request.base.sha }}"
+          fi
+
+      - name: Setup Node.js 24
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: "npm"
 
       - name: Install dependencies from lockfile
         run: npm ci
+
+      - name: Verify dependencies (npm audit)
+        run: npm audit --audit-level=moderate
+
+      - name: Run ESLint gate
+        run: npm run lint
 
       - name: Strict workspace typecheck (Core, Simulation, Persistence, Content, UI)
         run: npm run typecheck
@@ -37,8 +53,8 @@ jobs:
       - name: Run automated unit & architecture tests (Vitest)
         run: npm test
 
-      - name: Build UI package (Vite)
-        run: npm run build --workspace=@haven/ui
+      - name: Build all packages (Core, Simulation, UI)
+        run: npm run build
 
       - name: Install Playwright Chromium
         run: npx playwright install --with-deps chromium
