@@ -24,19 +24,46 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Log Git SHA and Evidence Identity
-        run: |
-          echo "Checked-out HEAD SHA: $(git rev-parse HEAD)"
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            echo "PR Head SHA: ${{ github.event.pull_request.head.sha }}"
-            echo "PR Base SHA: ${{ github.event.pull_request.base.sha }}"
-          fi
-
       - name: Setup Node.js 24
         uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: "npm"
+
+      - name: Save Git evidence manifest
+        id: git-evidence
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import { execFileSync } from 'node:child_process';
+          import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+          const git = (...args) => execFileSync('git', args, { encoding: 'utf8' });
+          const event = process.env.GITHUB_EVENT_NAME;
+          assert.ok(event === 'pull_request' || event === 'push', 'Unsupported evidence event');
+          const payload = JSON.parse(readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8'));
+          const headSha = event === 'pull_request' ? payload.pull_request.head.sha : payload.after;
+          const before = event === 'pull_request' ? payload.pull_request.base.sha : payload.before;
+          const baseSha = event === 'push' && before === '0'.repeat(40) ? null : before;
+          for (const sha of [headSha, ...(baseSha === null ? [] : [baseSha])]) {
+            assert.match(sha, /^[0-9a-f]{40}$/, 'Invalid evidence SHA');
+          }
+          const checkoutSha = git('rev-parse', 'HEAD').trim();
+          assert.equal(checkoutSha, process.env.GITHUB_SHA, 'Unexpected checkout SHA');
+          if (event === 'push') assert.equal(checkoutSha, headSha, 'Push checkout must equal after SHA');
+          const diffBaseSha = event === 'pull_request' ? git('merge-base', baseSha, headSha).trim() : baseSha;
+          // PR uses merge-base..head; push uses before..after, or the initial tree for a zero before.
+          const files = diffBaseSha === null ? git('ls-tree', '-r', '--name-only', '-z', headSha) : git('diff', '--name-only', '-z', diffBaseSha, headSha);
+          const tree = sha => git('rev-parse', `${sha}^{tree}`).trim();
+          const manifest = {
+            event, headSha, headTree: tree(headSha), baseSha, baseTree: baseSha === null ? null : tree(baseSha),
+            checkoutSha, checkoutTree: tree(checkoutSha), diffBaseSha,
+            diffSemantics: event === 'pull_request' ? 'merge-base..head' : baseSha === null ? 'initial-tree' : 'before..after',
+            changedFiles: files.split('\0').filter(Boolean),
+          };
+          mkdirSync('ci-evidence', { recursive: true });
+          writeFileSync('ci-evidence/manifest.json', JSON.stringify(manifest, null, 2) + '\n');
+          console.log('Saved ci-evidence/manifest.json');
+          NODE
 
       - name: Install dependencies from lockfile
         run: npm ci
@@ -60,4 +87,23 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run browser smoke tests (Playwright)
+        id: browser-smoke
         run: npm run test:smoke
+
+      - name: Upload Git evidence manifest (3 days)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: git-evidence
+          path: ci-evidence/manifest.json
+          if-no-files-found: error
+          retention-days: 3
+
+      - name: Upload Playwright failure evidence (3 days)
+        if: failure() && steps.browser-smoke.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-failure
+          path: test-results/
+          if-no-files-found: error
+          retention-days: 3
