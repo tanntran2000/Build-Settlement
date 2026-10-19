@@ -1204,6 +1204,180 @@ describe("Domain Models, Invariants & Object Isolation (LAW-04 & LAW-05)", () =>
         expect(res.valid).toBe(true);
       });
     });
+
+    describe("JSON type safety & unconvertible object guards (R1-VALIDATION-NOTHROW-01)", () => {
+      const poison = JSON.parse('{"toString":null,"valueOf":null}');
+
+      const buildBaseState = (): GameState => ({
+        currentDate: { day: 1, week: 1, year: 1 },
+        worldMetadata: { worldSeed: 2026, gameVersion: "0.1.0" },
+        settlements: {
+          s1: {
+            ...buildSettlement("s1", "active"),
+            inventory: createDefaultInventory(),
+            cohorts: [
+              {
+                id: "c1",
+                occupation: "worker",
+                socialClass: "common",
+                legalStatus: "citizen",
+                count: 50,
+                averageHealth: 80,
+                morale: 80,
+                productivity: 80,
+                resentment: 0,
+                loyalty: 80,
+                livingStandard: "decent",
+              },
+            ],
+            namedCharacters: [
+              createNamedCharacter({
+                id: "char_01",
+                name: "Lan",
+                age: 30,
+                health: 100,
+                occupation: "technician",
+                socialClass: "skilled",
+                legalStatus: "citizen",
+              }),
+            ],
+          },
+        },
+        activeSettlementId: "s1",
+      });
+
+      it("safely rejects unconvertible currentDate.day without throwing, returning INVALID_CLOCK", () => {
+        const state = buildBaseState();
+        (state.currentDate as unknown as Record<string, unknown>).day = poison;
+        expect(() => validateGameState(state)).not.toThrow();
+        const res = validateGameState(state);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("INVALID_CLOCK");
+      });
+
+      it("safely rejects unconvertible currentDate.week without throwing, returning INVALID_CLOCK", () => {
+        const state = buildBaseState();
+        (state.currentDate as unknown as Record<string, unknown>).week = poison;
+        expect(() => validateGameState(state)).not.toThrow();
+        const res = validateGameState(state);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("INVALID_CLOCK");
+      });
+
+      it("safely rejects unconvertible currentDate.year without throwing, returning INVALID_CLOCK", () => {
+        const state = buildBaseState();
+        (state.currentDate as unknown as Record<string, unknown>).year = poison;
+        expect(() => validateGameState(state)).not.toThrow();
+        const res = validateGameState(state);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("INVALID_CLOCK");
+      });
+
+      it("safely rejects unconvertible inventory.food without throwing, returning NEGATIVE_INVENTORY", () => {
+        const state = buildBaseState();
+        (state.settlements.s1.inventory as unknown as Record<string, unknown>).food = poison;
+        expect(() => validateGameState(state)).not.toThrow();
+        const res = validateGameState(state);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("NEGATIVE_INVENTORY");
+      });
+
+      it("safely rejects unconvertible inventory.tools without throwing, returning NEGATIVE_INVENTORY", () => {
+        const state = buildBaseState();
+        (state.settlements.s1.inventory as unknown as Record<string, unknown>).tools = poison;
+        expect(() => validateGameState(state)).not.toThrow();
+        const res = validateGameState(state);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("NEGATIVE_INVENTORY");
+      });
+
+      it("safely rejects unconvertible cohorts[0].count without throwing, returning INVALID_POPULATION", () => {
+        const state = buildBaseState();
+        (state.settlements.s1.cohorts[0] as unknown as Record<string, unknown>).count = poison;
+        expect(() => validateGameState(state)).not.toThrow();
+        const res = validateGameState(state);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("INVALID_POPULATION");
+      });
+
+      it("safely rejects unconvertible cohorts[0].averageHealth without throwing, returning INVALID_POPULATION", () => {
+        const state = buildBaseState();
+        (state.settlements.s1.cohorts[0] as unknown as Record<string, unknown>).averageHealth = poison;
+        expect(() => validateGameState(state)).not.toThrow();
+        const res = validateGameState(state);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("INVALID_POPULATION");
+      });
+
+      it("safely rejects unconvertible namedCharacters[0].age without throwing, returning INVALID_CHARACTER", () => {
+        const state = buildBaseState();
+        (state.settlements.s1.namedCharacters[0] as unknown as Record<string, unknown>).age = poison;
+        expect(() => validateGameState(state)).not.toThrow();
+        const res = validateGameState(state);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("INVALID_CHARACTER");
+      });
+
+      it("safely rejects unconvertible namedCharacters[0].health without throwing, returning INVALID_CHARACTER", () => {
+        const state = buildBaseState();
+        (state.settlements.s1.namedCharacters[0] as unknown as Record<string, unknown>).health = poison;
+        expect(() => validateGameState(state)).not.toThrow();
+        const res = validateGameState(state);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("INVALID_CHARACTER");
+      });
+
+      it("safely rejects unconvertible namedCharacters[0].needs.nutrition without throwing, returning INVALID_CHARACTER", () => {
+        const state = buildBaseState();
+        (state.settlements.s1.namedCharacters[0].needs as unknown as Record<string, unknown>).nutrition = poison;
+        expect(() => validateGameState(state)).not.toThrow();
+        const res = validateGameState(state);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("INVALID_CHARACTER");
+      });
+
+      it("safely rejects unconvertible namedCharacters[0].emotions.joy without throwing, returning INVALID_CHARACTER", () => {
+        const state = buildBaseState();
+        (state.settlements.s1.namedCharacters[0].emotions as unknown as Record<string, unknown>).joy = poison;
+        expect(() => validateGameState(state)).not.toThrow();
+        const res = validateGameState(state);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("INVALID_CHARACTER");
+      });
+
+      it("safely rejects unconvertible namedCharacters[0].skills.management without throwing, returning INVALID_CHARACTER", () => {
+        const state = buildBaseState();
+        (state.settlements.s1.namedCharacters[0].skills as unknown as Record<string, unknown>).management = poison;
+        expect(() => validateGameState(state)).not.toThrow();
+        const res = validateGameState(state);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("INVALID_CHARACTER");
+      });
+
+      it("safely rejects unconvertible namedCharacters[0].relationshipToPlayer.trust without throwing, returning INVALID_CHARACTER", () => {
+        const state = buildBaseState();
+        (state.settlements.s1.namedCharacters[0].relationshipToPlayer as unknown as Record<string, unknown>).trust = poison;
+        expect(() => validateGameState(state)).not.toThrow();
+        const res = validateGameState(state);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("INVALID_CHARACTER");
+      });
+
+      it("safely rejects unconvertible settlement.id without throwing, returning KEY_ID_MISMATCH", () => {
+        const state = buildBaseState();
+        (state.settlements.s1 as unknown as Record<string, unknown>).id = poison;
+        expect(() => validateGameState(state)).not.toThrow();
+        const res = validateGameState(state);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("KEY_ID_MISMATCH");
+      });
+
+      it("positive control: accepts uncorrupted base state with valid = true", () => {
+        const state = buildBaseState();
+        const res = validateGameState(state);
+        expect(res.valid).toBe(true);
+      });
+    });
   });
 
   describe("Clock & Time Progression (LAW-03)", () => {
