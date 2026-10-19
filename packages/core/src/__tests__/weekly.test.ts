@@ -1,38 +1,45 @@
 import { describe, expect, it } from "vitest";
-import { createWeeklyState, weeklyWorkforceMilli, isWeeklyState } from "../weekly.js";
+import { createWeeklyState, weeklyWorkforceMilli } from "../weekly.js";
+import { isCanonicalGameState } from "../domain/canonical-state.js";
 
-const invalidNumbers = [-1, 0.1, NaN, Infinity, Number.MAX_SAFE_INTEGER + 1, "1000", null];
+const active = (state = createWeeklyState()) => state.settlements[state.activeSettlementId!];
 
-describe("weekly prototype state", () => {
-  it("starts Week 1 with exactly four milli stocks and derives 10 WF from 100 Middle", () => {
-    expect(createWeeklyState()).toEqual({ week: 1, resources: { gold: 10000, food: 4000, wood: 0, iron: 0 } });
-    expect(weeklyWorkforceMilli()).toBe(10000);
-  });
-  it("returns independent initial stock objects", () => {
+describe("weekly fixture uses the canonical world", () => {
+  it("starts only one root clock, with settlement-owned stocks/cohorts and metadata", () => {
     const state = createWeeklyState();
-    state.resources.food = 0;
-    expect(createWeeklyState().resources.food).toBe(4000);
+    expect(Object.keys(state).sort()).toEqual(["activeSettlementId", "settlements", "week", "worldMetadata"]);
+    expect(state.week).toBe(1);
+    expect(state.worldMetadata).toEqual({ worldSeed: 2026, gameVersion: "0.1.0" });
+    expect(active(state)).toMatchObject({ id: state.activeSettlementId, name: "Haven", status: "active", inventory: { gold: 10000, food: 4000, wood: 0, iron: 0 } });
+    expect(active(state).cohorts).toHaveLength(1);
+    expect(active(state).cohorts[0]).toMatchObject({ socialClass: "common", legalStatus: "citizen", count: 100 });
+    expect(weeklyWorkforceMilli(active(state).cohorts)).toBe(10000);
+    expect(isCanonicalGameState(state)).toBe(true);
   });
-  it.each([null, [], "state", 1, {}, { week: 1 }, { ...createWeeklyState(), extra: 0 }])("rejects malformed state %j", (value) => {
-    expect(isWeeklyState(value)).toBe(false);
+  it("new worlds share no mutable stocks/cohorts/metadata", () => {
+    const first = createWeeklyState(); const second = createWeeklyState();
+    active(first).inventory.food = 0; active(first).cohorts[0].count = 5; first.worldMetadata.worldSeed = 1;
+    expect(second).toEqual(createWeeklyState());
   });
-  it.each([null, [], {}, { gold: 0, food: 0, wood: 0 }, { ...createWeeklyState().resources, Water: 0 }, { ...createWeeklyState().resources, Goods: 0 }])("rejects malformed resources %j", (resources) => {
-    expect(isWeeklyState({ week: 1, resources })).toBe(false);
+  it.each([[50, "common", "citizen", 5000], [5, "common", "citizen", 500], [100, "lower", "citizen", 15000], [200, "common", "citizen", 20000], [100, "elite", "citizen", 0], [100, "elite", "enslaved", 20000], [0, "common", "citizen", 0]] as const)("derives %i %s/%s as %i milli-WF from actual cohorts", (count, socialClass, legalStatus, expected) => {
+    const cohort = { ...active().cohorts[0], count, socialClass, legalStatus };
+    expect(weeklyWorkforceMilli([cohort])).toBe(expected);
   });
-  it.each(invalidNumbers)("rejects invalid milli stock %j for every resource", (value) => {
-    for (const key of ["gold", "food", "wood", "iron"]) {
-      expect(isWeeklyState({ week: 1, resources: { ...createWeeklyState().resources, [key]: value } })).toBe(false);
-    }
+  it("combines real cohorts, handles empty population, and does not mutate frozen inputs", () => {
+    const cohort = active().cohorts[0];
+    const cohorts = [Object.freeze({ ...cohort, id: "a", count: 15, socialClass: "lower" as const }), Object.freeze({ ...cohort, id: "b", count: 20 })];
+    Object.freeze(cohorts);
+    expect(weeklyWorkforceMilli(cohorts)).toBe(4250);
+    expect(weeklyWorkforceMilli([])).toBe(0);
+    expect(cohorts[0].count).toBe(15);
   });
-  it.each([0, ...invalidNumbers])("rejects invalid week %j", (week) => {
-    expect(isWeeklyState({ ...createWeeklyState(), week })).toBe(false);
+  it.each([[9007199255, 900719925500], [10_000_000_000, 1_000_000_000_000], [90071992547409, 9007199254740900]])("accepts exact safe workforce for count %i", (count, expected) => {
+    expect(weeklyWorkforceMilli([{ ...active().cohorts[0], count }])).toBe(expected);
   });
-  it("accepts maximum safe stocks and week", () => {
-    expect(isWeeklyState({ week: Number.MAX_SAFE_INTEGER, resources: { gold: Number.MAX_SAFE_INTEGER, food: 0, wood: 0, iron: 0 } })).toBe(true);
+  it("accepts a large Upper cohort when its nonlabor metrics remain safe", () => {
+    expect(weeklyWorkforceMilli([{ ...active().cohorts[0], count: 450359962737049, socialClass: "elite" }])).toBe(0);
   });
-  it("rejects inherited, symbol and hidden extra keys", () => {
-    expect(isWeeklyState(Object.create(createWeeklyState()))).toBe(false);
-    expect(isWeeklyState({ ...createWeeklyState(), [Symbol("extra")]: 0 })).toBe(false);
-    expect(isWeeklyState(Object.defineProperty(createWeeklyState(), "hidden", { value: 0 }))).toBe(false);
+  it.each([Number.MAX_SAFE_INTEGER, 90071992547410])("rejects true social result overflow for count %i", count => {
+    expect(() => weeklyWorkforceMilli([{ ...active().cohorts[0], count }])).toThrow(RangeError);
   });
 });

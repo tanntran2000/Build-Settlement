@@ -1,9 +1,16 @@
 import { describe, expect, it } from "vitest";
-import { createWeeklyState, type WeeklyState } from "@haven/core";
+import { createWeeklyState, type CanonicalGameState } from "@haven/core";
 import { executeWeeklyCommand } from "../weekly.js";
 
 const command = (foodWorkforceMilli = 4000, expectedWeek = 1) => ({ type: "END_WEEK", expectedWeek, foodWorkforceMilli });
-const stateWith = (gold: number, food = 4000): WeeklyState => ({ week: 1, resources: { gold, food, wood: 0, iron: 0 } });
+const active = (state = createWeeklyState()) => state.settlements[state.activeSettlementId!];
+const stateWith = (gold: number, food = 4000): CanonicalGameState => {
+  const state = createWeeklyState(); active(state).inventory = { gold, food, wood: 0, iron: 0 }; return state;
+};
+function freeze(value: object) {
+  for (const child of Object.values(value)) if (child && typeof child === "object") freeze(child);
+  Object.freeze(value);
+}
 
 function success(state = createWeeklyState(), assigned = 4000) {
   const result = executeWeeklyCommand(state, command(assigned, state.week));
@@ -15,31 +22,32 @@ function success(state = createWeeklyState(), assigned = 4000) {
 describe("END_WEEK transaction", () => {
   it("funds 4 WF: Gold 10→6, Food 4→12 with a complete immutable ledger", () => {
     const { nextState, report } = success();
-    expect(nextState).toEqual({ week: 2, resources: { gold: 6000, food: 12000, wood: 0, iron: 0 } });
+    expect(nextState).toEqual({ ...stateWith(6000, 12000), week: 2 });
+    expect(report.settlementId).toBe(nextState.activeSettlementId);
     expect(report.week).toBe(1);
-    expect(report.before).toEqual(createWeeklyState().resources);
-    expect(report.after).toEqual(nextState.resources);
+    expect(report.before).toEqual(active().inventory);
+    expect(report.after).toEqual(active(nextState).inventory);
     expect(report.net).toEqual({ gold: -4000, food: 8000, wood: 0, iron: 0 });
     expect(report.flows.gold).toMatchObject({ requestedOutflow: 4000, actualOutflow: 4000, deficit: 0 });
     expect(report.flows.food.inflow).toBe(8000);
     expect(report.workforce).toEqual({ effectiveMilli: 10000, assignedMilli: 4000, availableMilli: 6000, fundedMilli: 4000, unfundedMilli: 0 });
     for (const value of [report, report.before, report.after, report.net, report.flows, ...Object.values(report.flows), report.workforce]) expect(Object.isFrozen(value)).toBe(true);
-    expect(report.after).not.toBe(nextState.resources);
+    expect(report.after).not.toBe(active(nextState).inventory);
     expect(report.why).toContain("1 Gold");
   });
   it("partially funds 4 assigned WF with Gold 2, leaving 2 unfunded and 6 unassigned", () => {
     const { nextState, report } = success(stateWith(2000));
-    expect(nextState.resources).toEqual({ gold: 0, food: 8000, wood: 0, iron: 0 });
+    expect(active(nextState).inventory).toEqual({ gold: 0, food: 8000, wood: 0, iron: 0 });
     expect(report.workforce).toMatchObject({ availableMilli: 6000, unfundedMilli: 2000, fundedMilli: 2000 });
     expect(report.flows.gold).toMatchObject({ requestedOutflow: 4000, actualOutflow: 2000, deficit: 2000 });
     expect(report.why).toContain("Gold shortage");
   });
   it.each([[0, 0, 0, 4000], [10000, 500, 9500, 5000], [0, 4000, 0, 4000], [10000, 10000, 0, 24000]])("Gold %i, assignment %i → Gold %i, Food %i", (gold, assigned, finalGold, finalFood) => {
-    expect(success(stateWith(gold), assigned).nextState.resources).toEqual({ gold: finalGold, food: finalFood, wood: 0, iron: 0 });
+    expect(active(success(stateWith(gold), assigned).nextState).inventory).toEqual({ gold: finalGold, food: finalFood, wood: 0, iron: 0 });
   });
   it("is pure on frozen inputs and deterministic on replay of old state", () => {
     const state = createWeeklyState();
-    Object.freeze(state.resources); Object.freeze(state);
+    freeze(state);
     const cmd = Object.freeze(command());
     const first = executeWeeklyCommand(state, cmd);
     expect(executeWeeklyCommand(state, cmd)).toEqual(first);
@@ -49,11 +57,11 @@ describe("END_WEEK transaction", () => {
     let state = createWeeklyState();
     for (let i = 0; i < 5; i++) {
       const { nextState, report } = success(state);
-      expect(report.before).toEqual(state.resources);
+      expect(report.before).toEqual(active(state).inventory);
       for (const key of ["gold", "food", "wood", "iron"] as const) expect(report.before[key] + report.net[key]).toBe(report.after[key]);
       state = nextState;
     }
-    expect(state).toEqual({ week: 6, resources: { gold: 0, food: 24000, wood: 0, iron: 0 } });
+    expect(state).toEqual({ ...stateWith(0, 24000), week: 6 });
   });
   it.each([null, [], {}, { ...command(), type: "ADVANCE_DAY" }, { ...command(), extra: 0 }, { type: "END_WEEK", expectedWeek: 1 }, ...[-1, 0.1, NaN, Infinity, 10001, Number.MAX_SAFE_INTEGER + 1, "4000"].map(foodWorkforceMilli => ({ ...command(), foodWorkforceMilli }))])("rejects invalid command %j without state mutation or report", (cmd) => {
     const state = createWeeklyState();
@@ -74,7 +82,7 @@ describe("END_WEEK transaction", () => {
     const state = success().nextState;
     expect(executeWeeklyCommand(state, command())).toMatchObject({ success: false, state, error: { code: "WEEK_MISMATCH" } });
   });
-  it.each([null, [], {}, { ...createWeeklyState(), extra: 0 }, { week: 1, resources: { ...createWeeklyState().resources, Water: 0 } }])("rejects invalid state %j", (state) => {
+  it.each([null, [], {}, { ...createWeeklyState(), extra: 0 }, { week: 1, resources: { ...active().inventory, Water: 0 } }])("rejects invalid state %j", (state) => {
     const result = executeWeeklyCommand(state, command());
     expect(result).toMatchObject({ success: false, state, error: { code: "INVALID_STATE" } });
     expect(result).not.toHaveProperty("report");
@@ -90,7 +98,112 @@ describe("END_WEEK transaction", () => {
   });
   it("allows the exact safe Food boundary and preserves Wood/Iron", () => {
     const state = stateWith(10000, Number.MAX_SAFE_INTEGER - 8000);
-    state.resources.wood = 1000; state.resources.iron = 2000;
-    expect(success(state).nextState.resources).toEqual({ gold: 6000, food: Number.MAX_SAFE_INTEGER, wood: 1000, iron: 2000 });
+    active(state).inventory.wood = 1000; active(state).inventory.iron = 2000;
+    expect(active(success(state).nextState).inventory).toEqual({ gold: 6000, food: Number.MAX_SAFE_INTEGER, wood: 1000, iron: 2000 });
+  });
+});
+
+describe("canonical ownership and authority", () => {
+  it("rejects END_WEEK with no active settlement, including a world with only legacy settlements", () => {
+    for (const empty of [true, false]) {
+      const state = createWeeklyState(); state.activeSettlementId = null;
+      if (empty) state.settlements = {};
+      else Object.values(state.settlements)[0].status = "legacy";
+      const before = structuredClone(state);
+      const result = executeWeeklyCommand(state, command(0));
+      expect(result).toMatchObject({ success: false, error: { code: "NO_ACTIVE_SETTLEMENT" } });
+      if (result.success) throw new Error("unexpected success");
+      expect(result.state).toBe(state); expect(state).toEqual(before); expect(result).not.toHaveProperty("report");
+    }
+  });
+  it("touches only the active inventory/root week, preserving every other field and settlement", () => {
+    const state = createWeeklyState();
+    state.settlements.legacy = { ...structuredClone(active(state)), id: "legacy", status: "legacy", inventory: { gold: 4321, food: 9876, wood: 33, iron: 44 }, cohorts: [{ ...active(state).cohorts[0], id: "legacy_people", count: 1000 }] };
+    const before = structuredClone(state); freeze(state);
+    const { nextState, report } = success(state);
+    const expected = structuredClone(before); expected.week = 2; active(expected).inventory = { gold: 6000, food: 12000, wood: 0, iron: 0 };
+    expect(nextState).toEqual(expected); expect(state).toEqual(before);
+    expect(report.settlementId).toBe(state.activeSettlementId);
+    expect(report.workforce.effectiveMilli).toBe(10000);
+    nextState.settlements.legacy.cohorts[0].count = 1;
+    nextState.worldMetadata.worldSeed = 1;
+    active(nextState).cohorts[0].count = 1;
+    expect(state).toEqual(before);
+    expect(report.after.food).toBe(12000);
+  });
+  it("follows the actual active pointer rather than a fixed fixture ID", () => {
+    const state = createWeeklyState(); const former = active(state); former.status = "legacy";
+    state.settlements.new_haven = { ...structuredClone(former), id: "new_haven", status: "active", cohorts: [{ ...former.cohorts[0], id: "new_people", count: 50 }] };
+    state.activeSettlementId = "new_haven";
+    const { nextState, report } = success(state);
+    expect(report.workforce.effectiveMilli).toBe(5000);
+    expect(report.workforce.availableMilli).toBe(1000);
+    expect(report.settlementId).toBe("new_haven");
+    expect(nextState.settlements[former.id]).toEqual(former);
+    expect(nextState.settlements.new_haven.inventory).toEqual({ gold: 6000, food: 12000, wood: 0, iron: 0 });
+  });
+  it.each([[50, "common", "citizen", 5000], [15, "lower", "citizen", 2250], [100, "elite", "citizen", 0], [100, "elite", "enslaved", 20000], [200, "common", "citizen", 20000]] as const)("uses real cohort count/class/legal status: %i %s/%s", (count, socialClass, legalStatus, pool) => {
+    const state = createWeeklyState(); Object.assign(active(state).cohorts[0], { count, socialClass, legalStatus });
+    const assigned = Math.min(pool, 10000);
+    const { report } = success(state, assigned);
+    expect(report.workforce.effectiveMilli).toBe(pool);
+    expect(report.workforce.availableMilli).toBe(pool - assigned);
+    const bad = executeWeeklyCommand(state, command(assigned + 1));
+    expect(bad).toMatchObject({ success: false, error: { code: "INVALID_COMMAND" } });
+  });
+  it("accepts zero workforce with zero cohorts, rejects positive assignment", () => {
+    const state = createWeeklyState(); active(state).cohorts = [];
+    expect(success(state, 0).report.workforce.effectiveMilli).toBe(0);
+    expect(executeWeeklyCommand(state, command(1))).toMatchObject({ success: false, error: { code: "INVALID_COMMAND" } });
+  });
+  it.each([Number.MAX_SAFE_INTEGER, 90071992547410])("returns atomic OVERFLOW for true social result overflow count %i", count => {
+    const state = createWeeklyState(); active(state).cohorts[0].count = count;
+    const before = structuredClone(state); freeze(state);
+    const result = executeWeeklyCommand(state, command(0));
+    expect(result).toMatchObject({ success: false, error: { code: "OVERFLOW" } });
+    if (result.success) throw new Error("unexpected success");
+    expect(result.state).toBe(state); expect(state).toEqual(before); expect(result).not.toHaveProperty("report");
+  });
+  it("preserves report snapshots after later state mutations", () => {
+    const { nextState, report } = success(); const snapshot = structuredClone(report);
+    active(nextState).inventory.gold = 0; active(nextState).inventory.food = 0;
+    expect(report).toEqual(snapshot);
+  });
+});
+
+
+describe("canonical correction regressions", () => {
+  it.each([[9007199255, 900719925500], [90071992547409, 9007199254740900]])("funds the same 4 WF with large safe canonical population %i", (count, pool) => {
+    const state = createWeeklyState(); active(state).cohorts[0].count = count;
+    const { nextState, report } = success(state);
+    expect(report.workforce).toMatchObject({ effectiveMilli: pool, availableMilli: pool - 4000, fundedMilli: 4000 });
+    expect(active(nextState).inventory).toEqual({ gold: 6000, food: 12000, wood: 0, iron: 0 });
+  });
+  it("returns structured failure for an otherwise-valid root Proxy that cannot be cloned", () => {
+    const state = createWeeklyState(); const before = structuredClone(state); freeze(state);
+    const proxy = new Proxy(state, {});
+    let threw = false; let result: ReturnType<typeof executeWeeklyCommand> | undefined;
+    try { result = executeWeeklyCommand(proxy, command()); } catch { threw = true; }
+    expect(threw).toBe(false);
+    expect(result).toMatchObject({ success: false, error: { code: "EXECUTION_ERROR" } });
+    if (!result || result.success) throw new Error("expected failure");
+    expect(result.state).toBe(proxy); expect(result).not.toHaveProperty("report"); expect(state).toEqual(before);
+  });
+  it("contains unexpected command errors without coercing thrown objects", () => {
+    const state = createWeeklyState(); const before = structuredClone(state); freeze(state);
+    const cmd = new Proxy(command(), { get() { throw Object.create(null); } });
+    let threw = false; let result: ReturnType<typeof executeWeeklyCommand> | undefined;
+    try { result = executeWeeklyCommand(state, cmd); } catch { threw = true; }
+    expect(threw).toBe(false);
+    expect(result).toMatchObject({ success: false, error: { code: "EXECUTION_ERROR" } });
+    if (!result || result.success) throw new Error("expected failure");
+    expect(result.state).toBe(state); expect(result).not.toHaveProperty("report"); expect(state).toEqual(before);
+  });
+  it("preserves the INVALID_STATE boundary for revoked Proxy input", () => {
+    const { proxy, revoke } = Proxy.revocable(createWeeklyState(), {}); revoke();
+    const result = executeWeeklyCommand(proxy, command());
+    expect(result).toMatchObject({ success: false, error: { code: "INVALID_STATE" } });
+    if (result.success) throw new Error("unexpected success");
+    expect(result.state).toBe(proxy); expect(result).not.toHaveProperty("report");
   });
 });

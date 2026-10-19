@@ -1,14 +1,20 @@
 <script lang="ts">
-  import { createWeeklyState, weeklyWorkforceMilli, WEEKLY_RESOURCE_KEYS, type WeeklyReport } from '@haven/core';
-  import { executeWeeklyCommand } from '@haven/simulation';
+  import { createWeeklyState, weeklyWorkforceMilli, WEEKLY_RESOURCE_KEYS, SOCIAL_RESOURCE_SCALE, type WeeklyReport } from '@haven/core';
+  import { executeWeeklyCommand, FARM_FIELD_CAPACITY_MILLI, FARM_GOLD_PER_WF, FARM_FOOD_PER_WF } from '@haven/simulation';
 
-  // shortcut: private reload-only state, replace only after a canonical weekly state WP is approved.
+  // shortcut: canonical new world in RAM, add persistence only under an approved save/load WP.
   let state = createWeeklyState();
-  const workforceMilli = weeklyWorkforceMilli();
+  $: settlement = state.activeSettlementId === null ? null : state.settlements[state.activeSettlementId];
+  $: workforceMilli = settlement ? weeklyWorkforceMilli(settlement.cohorts) : 0;
+  $: headcount = settlement ? settlement.cohorts.reduce((total, cohort) => total + cohort.count, 0) : 0;
   let draft = '0';
   let report: WeeklyReport | null = null;
   let error = '';
-  const display = (milli: number) => String(milli / 1000);
+  const display = (milli: number) => {
+    const digits = String(Math.abs(milli)).padStart(4, '0');
+    const fraction = digits.slice(-3).replace(/0+$/, '');
+    return `${milli < 0 ? '-' : ''}${digits.slice(0, -3)}${fraction ? '.' + fraction : ''}`;
+  };
   const label = (key: string) => key[0].toUpperCase() + key.slice(1);
 
   function endWeek(event: SubmitEvent) {
@@ -16,11 +22,11 @@
     if (report) return;
     const value = draft.trim();
     if (!/^(?:0|[1-9]\d*)(?:\.\d{1,3})?$/.test(value)) {
-      error = 'Enter 0–10 WF with at most three decimal places.';
+      error = `Enter 0–${display(FARM_FIELD_CAPACITY_MILLI)} WF with at most three decimal places.`;
       return;
     }
     const [whole, fraction = ''] = value.split('.');
-    const foodWorkforceMilli = Number(whole) * 1000 + Number(fraction.padEnd(3, '0'));
+    const foodWorkforceMilli = Number(whole) * SOCIAL_RESOURCE_SCALE + Number(fraction.padEnd(3, '0'));
     const result = executeWeeklyCommand(state, { type: 'END_WEEK', expectedWeek: state.week, foodWorkforceMilli });
     if (!result.success) {
       error = result.error.message;
@@ -42,26 +48,29 @@
   <header class="card">
     <h1>Weekly Management</h1>
     <p>Experimental Farm Field slice · Resets on reload · No save/load</p>
-    <p>100 Middle residents · {display(workforceMilli)} WF · Week <strong data-testid="weekly-week">{state.week}</strong> · {report ? 'Report' : 'Planning'}</p>
+    {#if settlement}<h2>{settlement.name}</h2>{/if}
+    <p><span data-testid="weekly-population">{headcount} residents</span> · <span data-testid="weekly-workforce">{display(workforceMilli)} WF</span> · Week <strong data-testid="weekly-week">{state.week}</strong> · {report ? 'Report' : 'Planning'}</p>
   </header>
 
   <section class="card" aria-label="Stocks">
     <h2>Stocks</h2>
+    {#if settlement}
     <dl class="stocks">
       {#each WEEKLY_RESOURCE_KEYS as key}
-        <div><dt>{label(key)}</dt><dd data-testid={`weekly-stock-${key}`}>{display(state.resources[key])}</dd></div>
+        <div><dt>{label(key)}</dt><dd data-testid={`weekly-stock-${key}`}>{display(settlement.inventory[key])}</dd></div>
       {/each}
     </dl>
+    {:else}<p>No active settlement. End Week is unavailable.</p>{/if}
   </section>
 
   <form class="card" onsubmit={endWeek} novalidate>
     <h2>Farm Field</h2>
-    <p id="farm-help">Capacity: 10 WF/week. Each funded WF costs 1 Gold and produces 2 Food. No Food consumption or Gold income.</p>
+    <p id="farm-help">Capacity: {display(FARM_FIELD_CAPACITY_MILLI)} WF/week. Each funded WF costs {FARM_GOLD_PER_WF} Gold and produces {FARM_FOOD_PER_WF} Food. No Food consumption or Gold income.</p>
     <label for="farm-workforce">Farm Field workforce (WF)</label>
     <input id="farm-workforce" type="text" inputmode="decimal" bind:value={draft}
-      disabled={report !== null} aria-invalid={error ? 'true' : 'false'}
+      disabled={report !== null || settlement === null} aria-invalid={error ? 'true' : 'false'}
       aria-describedby={error ? 'farm-help weekly-error' : 'farm-help'} />
-    <button type="submit" disabled={report !== null}>End Week</button>
+    <button type="submit" disabled={report !== null || settlement === null}>End Week</button>
     {#if error}<p id="weekly-error" role="alert">{error}</p>{/if}
   </form>
 

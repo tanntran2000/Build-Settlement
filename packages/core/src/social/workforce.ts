@@ -60,13 +60,11 @@ export function calculateEffectiveWorkforceMilli(
     );
   }
 
-  const result = Math.floor(
-    (baseWorkforceMilli * (10_000 + modifierBps)) / 10_000
-  );
+  const result = BigInt(baseWorkforceMilli) * (10000n + BigInt(modifierBps)) / 10000n;
 
-  if (!Number.isFinite(result) || !Number.isInteger(result) || result < 0) {
+  if (result > BigInt(Number.MAX_SAFE_INTEGER)) {
     throw new RangeError("effective workforce result is outside supported numeric range");
   }
 
-  return result;
+  return Number(result);
 }

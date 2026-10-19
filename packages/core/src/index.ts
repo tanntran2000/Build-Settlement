@@ -11,3 +11,5 @@ export * from "./command/effect.js";
 export * from "./time/clock.js";
 export * from "./weekly.js";
 export { resolveResourceFlow } from "./resource/allocation.js";
+export * from "./domain/canonical-state.js";
+export { SOCIAL_RESOURCE_SCALE } from "./social/profile.js";

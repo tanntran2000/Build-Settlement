@@ -99,11 +99,21 @@ flowchart TD
 * **Các Hạng Mục Rõ Ràng Chưa Triển Khai / Tạm Hoãn (Deferred / Unimplemented)**:
   * Phần còn lại của POP-01B Needs & Effective Capacity: tác động thiếu hụt, Support, Effective Capacity và tích hợp vòng chơi; Satisfaction pure function đã đạt L3 ở PR #14.
   * POP-01C Labor Allocation (DESIGN ONLY).
-  * Assigned Workforce & Available Workforce.
+  * Phân bổ WF tổng quát còn mở; PR #20 đã có Assigned/Available/Unfunded cho riêng Farm Field thử nghiệm.
   * Bộ giải mã Status $\rightarrow$ City Effect resolver (chưa khóa công thức Happiness + Food Fulfillment, Security, Corruption, QOL).
-  * Tích hợp nhịp tuần `END_WEEK` / weekly resolver.
-  * Tích hợp Foundation v2 vào UI Dashboard & Persistence / Save-Load.
+  * PR #20 đã có `END_WEEK` thử nghiệm; WP-CANONICAL-WEEKLY-STATE-01 chuyển sang root canonical, candidate chờ audit độc lập.
+  * UI Weekly thử nghiệm có wrapper workforce/resource; tích hợp đầy đủ và Persistence / Save-Load vẫn mở, chưa L4.
   * Di chuyển kho (inventory migration), hệ thống Gold/thuế/tư bản, di cư/nhập cư, dịch chuyển giai cấp (Social Mobility), khủng hoảng/nổi loạn (Crisis/Revolt), Luật pháp (Law), Mở rộng Quyền hạn (Authority), Sự kiện (Events), Công trình & Bản đồ (Buildings/Map).
+
+---
+
+### Weekly thử nghiệm và canonical state kế tiếp
+
+**PR #20 closeout — L3, không L4:** audited `93f899660177f3f3fed2ba489756c360cd74d025`, merge `dcc0a6ae6a042264e0a920d9a718ca5f2914aa5a`; [PR CI 39212072840](https://github.com/tanntran2000/Build-Settlement/actions/runs/39212072840) và [main CI 39212268531](https://github.com/tanntran2000/Build-Settlement/actions/runs/39212268531) mỗi run 438 unit + 7 smoke PASS. `resolveResourceFlow` đã export/dùng; social/workforce helpers được gọi qua wrapper. Không đánh dấu toàn bộ POP/RES hoặc persistence hoàn tất.
+
+**WP-CANONICAL-WEEKLY-STATE-01 — candidate chờ hai audit độc lập:** week/metadata/settlements/active pointer thuộc một root; kho 4 tài nguyên và cohort R1 thuộc settlement. Dùng cohort canonical thật để tính WF, giữ nguyên cap Farm Field 10 WF và 1 Gold/WF → 2 Food. Không active thì từ chối END_WEEK, không tự tiến thời gian. World mới theo fixture đã duyệt, không migration R1; cả `/` và `/?mode=weekly` giữ regression riêng. `WorldSaveData` R1 không đổi; save/load còn mở.
+
+Muốn chỉnh cơ chế: dữ liệu/validator ở `core/src/domain/canonical-state.ts`, fixture/WF ở `core/src/weekly.ts`, số học nguyên chính xác ở `core/src/social/calculator.ts` và `core/src/social/workforce.ts`, hệ số có tên và giao dịch/error boundary ở `simulation/src/weekly.ts`; UI chỉ hiển thị/dispatch và format milli chính xác từ chuỗi nguyên. Test tương ứng và hướng dẫn ngắn nằm ở [tracker Weekly](INTERNAL_PROGRESS_TRACKER.md#weekly--pr-20-closeout-và-vị-trí-sửa-cơ-chế). Không thêm config/plugin framework. Prototype reset khi reload, chưa tiêu thụ Food/thu nhập Gold/full balance, chưa demo/deploy; quyền phát hành/mã nguồn/giấy phép là việc riêng.
 
 ---
 
