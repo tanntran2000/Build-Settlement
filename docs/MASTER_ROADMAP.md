@@ -17,7 +17,7 @@ Mục tiêu giai đoạn hiện tại không phải là hoàn thiện toàn bộ
 
 ```mermaid
 flowchart TD
-    R0["R0: Sửa CI & Đối Chiếu Tiến Độ (XONG)"] --> R1["R1: Lõi Thực Thi & Luật Bất Biến (XONG)"]
+    R0["R0: Sửa CI & Đối Chiếu Tiến Độ (XONG)"] --> R1["R1: Lõi Thực Thi & Luật Bất Biến (CHƯA DUYỆT TỔNG THỂ)"]
     R1 --> F1["Foundation I: Dân Cư & Năng Lực Xã Hội (POP)"]
     F1 --> F2["Foundation II: Tài Nguyên & Sinh Tồn (RES)"]
     F2 --> F3["Foundation III: Lưu Trữ & Vòng Đời Ván Chơi"]
@@ -34,7 +34,7 @@ flowchart TD
 
 ---
 
-### Gói R1: Lõi Thực Thi & Luật Bất Biến (ĐÃ HOÀN THÀNH)
+### Gói R1: Lõi Thực Thi & Luật Bất Biến (PROTOTYPE ĐÃ MERGE; TỔNG THỂ CHƯA ĐƯỢC DUYỆT)
 * [x] Đồng bộ một Clock duy nhất trong `GameState` (loại bỏ biến `day` cục bộ trong UI).
 * [x] Xây dựng Command Dispatcher trung tâm (`executeCommand(state, command) -> { success, nextState, effects, auditEntries, data? }`).
 * [x] Hoàn thiện Invariant Validator:
@@ -43,6 +43,8 @@ flowchart TD
   * Validation Invariants hai chiều (0 hoặc 1 Active Settlement, Key-ID matching, tài nguyên không âm).
 * [x] Viết 51 Unit Tests tự động và 1 Playwright smoke test chứng minh: Lệnh sai bị từ chối; State không bị mutate dở dang; Invariant được bảo toàn.
 * [x] Merge PR #1 (`375b60e`) vào `main`, hậu kiểm CI `36527428842` pass 100%.
+* **Hai slice đã hậu kiểm**: [PR #16](https://github.com/tanntran2000/Build-Settlement/pull/16) validation no-throw, merge `06b6756d88e0f7584e02ed76e068c1d64ce36f66`, CI [PR `39186639918`](https://github.com/tanntran2000/Build-Settlement/actions/runs/39186639918)/[main `39186851738`](https://github.com/tanntran2000/Build-Settlement/actions/runs/39186851738) mỗi run 332 unit + 1 smoke PASS; [PR #17](https://github.com/tanntran2000/Build-Settlement/pull/17) numeric safety, merge `e50e5cc7f9ddc47f943230d53f70e97a2a73d7b1`, CI [PR `39192263953`](https://github.com/tanntran2000/Build-Settlement/actions/runs/39192263953)/[main `39192397391`](https://github.com/tanntran2000/Build-Settlement/actions/runs/39192397391) mỗi run 368 unit + 1 smoke PASS. Chi tiết phạm vi, nguồn và điều kiện đóng G6 tài liệu tại [tracker mục 3](INTERNAL_PROGRESS_TRACKER.md#3-trạng-thái-kiểm-thử-thật-sự-audit-verification).
+* **Giới hạn nghiệm thu**: R1 tổng thể/demo chưa được duyệt; production, save/load, AI và các tích hợp UI chưa hoàn tất. UI hiện là prototype chạy trong RAM; các module nền tảng chưa đạt L4. Các checkbox trên ghi nhận prototype lịch sử, không xác nhận hoàn tất sản phẩm.
 
 ---
 
@@ -58,8 +60,8 @@ flowchart TD
     * Quy đổi các khối dân số trung gian (Population Blocks).
     * Hàm tính toán snapshot tổng hợp `calculateSocialResources` (pure calculator, không mutate state, tính toán headcount, populationBlocks, laborCapacityMilli, purchaseDemandCapacityMilli, survivalFoodNeedMilli, lifestyleFoodDemandMilli; chưa bao gồm Military/Tax capacity).
     * Nghiệm thu tuyệt đối 2 Benchmark Fixtures A/B và Edge cases 1/99/101 dân. Chưa tích hợp trực tiếp vào vòng chơi/UI/lưu trữ (chưa đạt L4).
-  * [ ] **POP-01B: Needs & Effective Capacity**: **DESIGN ONLY**
-    * Cơ chế Satisfaction, Tác động thiếu hụt & Mức ủng hộ (Support) sang nhịp $T \rightarrow T+1$.
+  * [ ] **POP-01B: Needs & Effective Capacity**: **ĐÃ LÀM MỘT PHẦN — Satisfaction L3**
+    * Pure function `calculateSatisfaction` tại `packages/core/src/social/satisfaction.ts` đã merge [PR #14](https://github.com/tanntran2000/Build-Settlement/pull/14), có 27 unit tests; chưa export/tích hợp economy, nhịp ngày, UI hay persistence. Tác động thiếu hụt, Support và Effective Capacity sang nhịp $T \rightarrow T+1$ còn mở; toàn bộ POP-01B chưa hoàn tất.
   * [ ] **POP-01C: Labor Allocation**: **DESIGN ONLY**
     * Phân bổ năng lực lao động (Effective $\rightarrow$ Allocated Labor), không phân bổ từng đầu người.
   * [ ] **POP-02: Population Dynamics**: **DESIGN ONLY**
@@ -88,7 +90,7 @@ flowchart TD
     * **4 Nhóm Hiệu Ứng Đô Thị (City Effect Families)**: `economy`, `security`, `qol`, `corruption`.
     * *Chưa có công thức bộ giải mã Status $\rightarrow$ City Effect nào được phê duyệt hay triển khai.*
 * **Các Hạng Mục Rõ Ràng Chưa Triển Khai / Tạm Hoãn (Deferred / Unimplemented)**:
-  * POP-01B Needs & Effective Capacity (DESIGN ONLY).
+  * Phần còn lại của POP-01B Needs & Effective Capacity: tác động thiếu hụt, Support, Effective Capacity và tích hợp vòng chơi; Satisfaction pure function đã đạt L3 ở PR #14.
   * POP-01C Labor Allocation (DESIGN ONLY).
   * Assigned Workforce & Available Workforce.
   * Bộ giải mã Status $\rightarrow$ City Effect resolver (chưa khóa công thức Happiness + Food Fulfillment, Security, Corruption, QOL).
