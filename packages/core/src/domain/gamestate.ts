@@ -149,11 +149,11 @@ export function validateGameState(state: GameState): StateValidationResult {
     };
   }
   const { day, week, year } = state.currentDate;
-  if (!Number.isInteger(day) || day < 1 || !Number.isInteger(week) || week < 1 || !Number.isInteger(year) || year < 1) {
+  if (!Number.isSafeInteger(day) || day < 1 || !Number.isSafeInteger(week) || week < 1 || !Number.isSafeInteger(year) || year < 1) {
     return {
       valid: false,
       code: "INVALID_CLOCK",
-      message: "Invalid GameDate: day, week, and year must be positive integers.",
+      message: "Invalid GameDate: day, week, and year must be positive safe integers.",
     };
   }
 
@@ -318,7 +318,7 @@ export function validateGameState(state: GameState): StateValidationResult {
 
     for (const res of REQUIRED_RESOURCES) {
       const count = settlement.inventory[res];
-      if (!Number.isInteger(count) || count < 0) {
+      if (!Number.isSafeInteger(count) || count < 0) {
         return {
           valid: false,
           code: "NEGATIVE_INVENTORY",
@@ -328,7 +328,7 @@ export function validateGameState(state: GameState): StateValidationResult {
     }
 
     for (const [res, count] of Object.entries(settlement.inventory)) {
-      if (!Number.isInteger(count) || count < 0) {
+      if (!Number.isSafeInteger(count) || count < 0) {
         return {
           valid: false,
           code: "NEGATIVE_INVENTORY",
@@ -345,6 +345,8 @@ export function validateGameState(state: GameState): StateValidationResult {
         message: `Settlement '${settlement.id}' cohorts must be an array`,
       };
     }
+
+    let totalPopulation = 0;
 
     for (const cohort of settlement.cohorts) {
       if (!cohort || typeof cohort !== "object" || Array.isArray(cohort)) {
@@ -368,13 +370,22 @@ export function validateGameState(state: GameState): StateValidationResult {
           message: `Cohort '${cohort.id}' in '${settlement.id}' has invalid socialClass. Must be one of: lower, common, skilled, administrative, elite`,
         };
       }
-      if (!Number.isInteger(cohort.count) || cohort.count < 0) {
+      if (!Number.isSafeInteger(cohort.count) || cohort.count < 0) {
         return {
           valid: false,
           code: "INVALID_POPULATION",
           message: `Cohort '${cohort.id}' in '${settlement.id}' has invalid count. Must be non-negative integer.`,
         };
       }
+      if (Number.MAX_SAFE_INTEGER - totalPopulation < cohort.count) {
+        return {
+          valid: false,
+          code: "INVALID_POPULATION",
+          message: `Settlement '${settlement.id}' total population exceeds safe integer limit`,
+        };
+      }
+      totalPopulation += cohort.count;
+
       for (const metric of REQUIRED_COHORT_METRICS) {
         const val = cohort[metric];
         if (typeof val !== "number" || !Number.isFinite(val) || val < 0 || val > 100) {
@@ -456,6 +467,15 @@ export function validateGameState(state: GameState): StateValidationResult {
         return { valid: false, code: "INVALID_CHARACTER", message: relCheck.message };
       }
     }
+
+    if (Number.MAX_SAFE_INTEGER - totalPopulation < settlement.namedCharacters.length) {
+      return {
+        valid: false,
+        code: "INVALID_POPULATION",
+        message: `Settlement '${settlement.id}' total population exceeds safe integer limit`,
+      };
+    }
+    totalPopulation += settlement.namedCharacters.length;
   }
 
   // 3. Two-way Active Settlement Invariant (LAW-05)

@@ -9,6 +9,7 @@ import {
   validateGameState,
 } from "@haven/core";
 import { executeCommand } from "../dispatcher.js";
+import { simulateDailyEconomy } from "../economy.js";
 import * as advanceDayModule from "../handlers/advanceDay.js";
 
 function buildTestSettlement(
@@ -54,6 +55,22 @@ function buildTestSettlement(
     namedCharacters: [lan],
     cohorts: [workers],
     facilities: [],
+  };
+}
+
+function buildTestCohort(id: string, count: number) {
+  return {
+    id,
+    occupation: "worker" as const,
+    socialClass: "common" as const,
+    legalStatus: "citizen" as const,
+    count,
+    averageHealth: 85,
+    morale: 75,
+    productivity: 80,
+    resentment: 5,
+    loyalty: 80,
+    livingStandard: "decent" as const,
   };
 }
 
@@ -1448,6 +1465,395 @@ describe("Command Dispatcher & Execution Pipeline (LAW-02, LAW-03, LAW-04, LAW-0
           expect(res.nextState.settlements["haven_legacy"]).toEqual(originalLegacy);
         }
         expect(state).toEqual(originalState);
+      });
+    });
+
+    describe("Numeric Safety & MAX_SAFE_INTEGER Boundaries (R1-NUMERIC-SAFETY-01)", () => {
+      describe("simulateDailyEconomy pure helper numeric safety", () => {
+        it("throws RangeError when day is unsafe (2^53) or invalid", () => {
+          const s = buildTestSettlement("s1", "active");
+          expect(() => simulateDailyEconomy(s, 2 ** 53)).toThrow(RangeError);
+          expect(() => simulateDailyEconomy(s, 0)).toThrow(RangeError);
+          expect(() => simulateDailyEconomy(s, -1)).toThrow(RangeError);
+        });
+
+        it("throws RangeError when stock is unsafe (food = 2^54)", () => {
+          const s = buildTestSettlement("s1", "active");
+          s.inventory.food = 2 ** 54;
+          expect(() => simulateDailyEconomy(s, 1)).toThrow(RangeError);
+        });
+
+        it("throws RangeError when cohort count is unsafe (2^53)", () => {
+          const s = buildTestSettlement("s1", "active");
+          s.cohorts = [buildTestCohort("c1", 2 ** 53)];
+          expect(() => simulateDailyEconomy(s, 1)).toThrow(RangeError);
+        });
+
+        it("throws RangeError when multiple cohorts overflow MAX_SAFE_INTEGER", () => {
+          const s = buildTestSettlement("s1", "active");
+          s.cohorts = [
+            buildTestCohort("c1", Number.MAX_SAFE_INTEGER),
+            buildTestCohort("c2", 1),
+          ];
+          expect(() => simulateDailyEconomy(s, 1)).toThrow(RangeError);
+        });
+
+        it("throws RangeError when sum of cohorts is MAX_SAFE_INTEGER and adding NPC overflows", () => {
+          const s = buildTestSettlement("s1", "active");
+          s.cohorts = [
+            buildTestCohort("c1", Number.MAX_SAFE_INTEGER),
+          ];
+          s.namedCharacters = [createNamedCharacter({ id: "npc1", name: "NPC 1" })];
+          expect(() => simulateDailyEconomy(s, 1)).toThrow(RangeError);
+        });
+
+        it("calculates exact demand for MAX_SAFE_INTEGER population without throwing", () => {
+          const s = buildTestSettlement("s1", "active", 100, 100);
+          s.cohorts = [
+            buildTestCohort("c1", Number.MAX_SAFE_INTEGER),
+          ];
+          s.namedCharacters = [];
+          const report = simulateDailyEconomy(s, 1);
+          const expectedDemand = Math.ceil(Number.MAX_SAFE_INTEGER * 0.5); // 4503599627370496
+          const foodDelta = report.netDeltas.find((d) => d.type === "RESOURCE_DELTA" && d.resource === "food");
+          const waterDelta = report.netDeltas.find((d) => d.type === "RESOURCE_DELTA" && d.resource === "clean_water");
+          expect(foodDelta && foodDelta.type === "RESOURCE_DELTA" ? foodDelta.demand : undefined).toBe(expectedDemand);
+          expect(waterDelta && waterDelta.type === "RESOURCE_DELTA" ? waterDelta.demand : undefined).toBe(expectedDemand);
+        });
+      });
+
+      describe("Dispatcher pre-gate numeric safety", () => {
+        it("rejects state with day = 2^53 with INVALID_STATE, preserves state, handler not called", () => {
+          const handlerSpy = vi.spyOn(advanceDayModule, "handleAdvanceDay");
+          try {
+            const state = buildTestGameState(100, 100);
+            state.currentDate.day = 2 ** 53;
+            state.currentDate.week = Math.floor((state.currentDate.day - 1) / 7) + 1;
+            state.currentDate.year = Math.floor((state.currentDate.day - 1) / 365) + 1;
+            const inputSnapshot = structuredClone(state);
+
+            const res = executeCommand(state, { type: "ADVANCE_DAY" });
+            expect(res.success).toBe(false);
+            if (!res.success) {
+              expect(res.error.code).toBe("INVALID_STATE");
+              expect(res.state).toBe(state);
+            }
+            expect(state).toEqual(inputSnapshot);
+            expect(handlerSpy).not.toHaveBeenCalled();
+          } finally {
+            handlerSpy.mockRestore();
+          }
+        });
+
+        it("rejects state with inventory.food = 2^54 with INVALID_STATE, preserves state, handler not called", () => {
+          const handlerSpy = vi.spyOn(advanceDayModule, "handleAdvanceDay");
+          try {
+            const state = buildTestGameState(100, 100);
+            state.settlements["haven_active"].inventory.food = 2 ** 54;
+            const inputSnapshot = structuredClone(state);
+
+            const res = executeCommand(state, { type: "ADVANCE_DAY" });
+            expect(res.success).toBe(false);
+            if (!res.success) {
+              expect(res.error.code).toBe("INVALID_STATE");
+              expect(res.state).toBe(state);
+            }
+            expect(state).toEqual(inputSnapshot);
+            expect(handlerSpy).not.toHaveBeenCalled();
+          } finally {
+            handlerSpy.mockRestore();
+          }
+        });
+
+        it("rejects state with extension key iron = 2^54 with INVALID_STATE, preserves state, handler not called", () => {
+          const handlerSpy = vi.spyOn(advanceDayModule, "handleAdvanceDay");
+          try {
+            const state = buildTestGameState(100, 100);
+            (state.settlements["haven_active"].inventory as Record<string, unknown>).iron = 2 ** 54;
+            const inputSnapshot = structuredClone(state);
+
+            const res = executeCommand(state, { type: "ADVANCE_DAY" });
+            expect(res.success).toBe(false);
+            if (!res.success) {
+              expect(res.error.code).toBe("INVALID_STATE");
+              expect(res.state).toBe(state);
+            }
+            expect(state).toEqual(inputSnapshot);
+            expect(handlerSpy).not.toHaveBeenCalled();
+          } finally {
+            handlerSpy.mockRestore();
+          }
+        });
+
+        it("rejects state with cohort count = 2^53 with INVALID_STATE, preserves state, handler not called", () => {
+          const handlerSpy = vi.spyOn(advanceDayModule, "handleAdvanceDay");
+          try {
+            const state = buildTestGameState(100, 100);
+            state.settlements["haven_active"].cohorts[0].count = 2 ** 53;
+            const inputSnapshot = structuredClone(state);
+
+            const res = executeCommand(state, { type: "ADVANCE_DAY" });
+            expect(res.success).toBe(false);
+            if (!res.success) {
+              expect(res.error.code).toBe("INVALID_STATE");
+              expect(res.state).toBe(state);
+            }
+            expect(state).toEqual(inputSnapshot);
+            expect(handlerSpy).not.toHaveBeenCalled();
+          } finally {
+            handlerSpy.mockRestore();
+          }
+        });
+
+        it("rejects state with cohorts overflowing MAX_SAFE_INTEGER with INVALID_STATE, preserves state, handler not called", () => {
+          const handlerSpy = vi.spyOn(advanceDayModule, "handleAdvanceDay");
+          try {
+            const state = buildTestGameState(100, 100);
+            state.settlements["haven_active"].cohorts = [
+              buildTestCohort("c1", Number.MAX_SAFE_INTEGER),
+              buildTestCohort("c2", 1),
+            ];
+            const inputSnapshot = structuredClone(state);
+
+            const res = executeCommand(state, { type: "ADVANCE_DAY" });
+            expect(res.success).toBe(false);
+            if (!res.success) {
+              expect(res.error.code).toBe("INVALID_STATE");
+              expect(res.state).toBe(state);
+            }
+            expect(state).toEqual(inputSnapshot);
+            expect(handlerSpy).not.toHaveBeenCalled();
+          } finally {
+            handlerSpy.mockRestore();
+          }
+        });
+
+        it("rejects state with cohorts + NPC overflowing MAX_SAFE_INTEGER with INVALID_STATE, preserves state, handler not called", () => {
+          const handlerSpy = vi.spyOn(advanceDayModule, "handleAdvanceDay");
+          try {
+            const state = buildTestGameState(100, 100);
+            state.settlements["haven_active"].cohorts = [
+              buildTestCohort("c1", Number.MAX_SAFE_INTEGER),
+            ];
+            state.settlements["haven_active"].namedCharacters = [
+              createNamedCharacter({ id: "npc1", name: "NPC 1" }),
+            ];
+            const inputSnapshot = structuredClone(state);
+
+            const res = executeCommand(state, { type: "ADVANCE_DAY" });
+            expect(res.success).toBe(false);
+            if (!res.success) {
+              expect(res.error.code).toBe("INVALID_STATE");
+              expect(res.state).toBe(state);
+            }
+            expect(state).toEqual(inputSnapshot);
+            expect(handlerSpy).not.toHaveBeenCalled();
+          } finally {
+            handlerSpy.mockRestore();
+          }
+        });
+      });
+
+      describe("MAX_SAFE_INTEGER boundary progression & atomic rollback", () => {
+        it("advances from MAX - 1 to MAX, then fails atomically on next advance (with active settlement)", () => {
+          const state = buildTestGameState(100, 100);
+          state.currentDate = {
+            day: Number.MAX_SAFE_INTEGER - 1,
+            week: Math.floor((Number.MAX_SAFE_INTEGER - 2) / 7) + 1,
+            year: Math.floor((Number.MAX_SAFE_INTEGER - 2) / 365) + 1,
+          };
+
+          // Step 1: MAX_SAFE_INTEGER - 1 advances to MAX_SAFE_INTEGER
+          const res1 = executeCommand(state, { type: "ADVANCE_DAY" });
+          expect(res1.success).toBe(true);
+          if (!res1.success) return;
+          expect(res1.nextState.currentDate.day).toBe(Number.MAX_SAFE_INTEGER);
+
+          // Step 2: Next advance from MAX_SAFE_INTEGER must fail atomically with EXECUTION_ERROR
+          const stateAtMax = res1.nextState;
+          const snapshotAtMax = structuredClone(stateAtMax);
+
+          const res2 = executeCommand(stateAtMax, { type: "ADVANCE_DAY" });
+          expect(res2.success).toBe(false);
+          if (!res2.success) {
+            expect(res2.error.code).toBe("EXECUTION_ERROR");
+            expect(res2.state).toBe(stateAtMax);
+            expect((res2 as unknown as Record<string, unknown>).effects).toBeUndefined();
+            expect((res2 as unknown as Record<string, unknown>).auditEntries).toBeUndefined();
+            expect((res2 as unknown as Record<string, unknown>).data).toBeUndefined();
+          }
+          expect(stateAtMax).toEqual(snapshotAtMax);
+        });
+
+        it("advances from MAX - 1 to MAX, then fails atomically on next advance (WITHOUT active settlement)", () => {
+          const state: GameState = {
+            currentDate: {
+              day: Number.MAX_SAFE_INTEGER - 1,
+              week: Math.floor((Number.MAX_SAFE_INTEGER - 2) / 7) + 1,
+              year: Math.floor((Number.MAX_SAFE_INTEGER - 2) / 365) + 1,
+            },
+            worldMetadata: { worldSeed: 42, gameVersion: "0.1.0" },
+            settlements: {
+              leg: buildTestSettlement("leg", "legacy", 50, 50),
+            },
+            activeSettlementId: null,
+          };
+
+          // Step 1: MAX - 1 -> MAX
+          const res1 = executeCommand(state, { type: "ADVANCE_DAY" });
+          expect(res1.success).toBe(true);
+          if (!res1.success) return;
+          expect(res1.nextState.currentDate.day).toBe(Number.MAX_SAFE_INTEGER);
+
+          // Step 2: Next advance from MAX fails atomically
+          const stateAtMax = res1.nextState;
+          const snapshotAtMax = structuredClone(stateAtMax);
+
+          const res2 = executeCommand(stateAtMax, { type: "ADVANCE_DAY" });
+          expect(res2.success).toBe(false);
+          if (!res2.success) {
+            expect(res2.error.code).toBe("EXECUTION_ERROR");
+            expect(res2.state).toBe(stateAtMax);
+            expect((res2 as unknown as Record<string, unknown>).effects).toBeUndefined();
+            expect((res2 as unknown as Record<string, unknown>).auditEntries).toBeUndefined();
+            expect((res2 as unknown as Record<string, unknown>).data).toBeUndefined();
+          }
+          expect(stateAtMax).toEqual(snapshotAtMax);
+        });
+      });
+
+      describe("Population MAX and stock MAX minus 1 precision", () => {
+        it("decrements stock MAX by exactly 1 without float precision loss", () => {
+          const state = buildTestGameState(100, 100);
+          state.settlements["haven_active"].inventory.food = Number.MAX_SAFE_INTEGER;
+          // Set population = 2 (1 cohort of 2, 0 named NPCs) so food demand = Math.ceil(2 * 0.5) = 1
+          state.settlements["haven_active"].cohorts = [
+            buildTestCohort("c_tiny", 2),
+          ];
+          state.settlements["haven_active"].namedCharacters = [];
+
+          const res = executeCommand(state, { type: "ADVANCE_DAY" });
+          expect(res.success).toBe(true);
+          if (res.success) {
+            expect(res.nextState.settlements["haven_active"].inventory.food).toBe(Number.MAX_SAFE_INTEGER - 1);
+            expect(res.nextState.settlements["haven_active"].inventory.food).toBe(9007199254740990);
+          }
+        });
+      });
+
+      describe("Dispatcher post-gate draft unsafe numeric guards", () => {
+        it("post-gate catches draft with day = 2^53 and returns INVARIANT_VIOLATION", () => {
+          const state = buildTestGameState(100, 100);
+          const originalState = structuredClone(state);
+
+          const spy = vi.spyOn(advanceDayModule, "handleAdvanceDay").mockImplementation((draft) => {
+            draft.currentDate.day = 2 ** 53;
+            return {
+              effects: [{ type: "RESOURCE_DELTA", resource: "food", delta: -5, reason: "mock" }],
+              auditEntries: [{ day: 7, category: "economy", message: "mock" }],
+              data: { fromDay: 7, toDay: 8, report: null },
+            };
+          });
+
+          try {
+            const res = executeCommand(state, { type: "ADVANCE_DAY" });
+            expect(res.success).toBe(false);
+            if (!res.success) {
+              expect(res.error.code).toBe("INVARIANT_VIOLATION");
+              expect(res.state).toBe(state);
+              expect((res as unknown as Record<string, unknown>).effects).toBeUndefined();
+              expect((res as unknown as Record<string, unknown>).auditEntries).toBeUndefined();
+              expect((res as unknown as Record<string, unknown>).data).toBeUndefined();
+            }
+            expect(state).toEqual(originalState);
+          } finally {
+            spy.mockRestore();
+          }
+        });
+
+        it("post-gate catches draft with inventory.food = 2^54 and returns INVARIANT_VIOLATION", () => {
+          const state = buildTestGameState(100, 100);
+          const originalState = structuredClone(state);
+
+          const spy = vi.spyOn(advanceDayModule, "handleAdvanceDay").mockImplementation((draft) => {
+            draft.settlements["haven_active"].inventory.food = 2 ** 54;
+            return {
+              effects: [{ type: "RESOURCE_DELTA", resource: "food", delta: -5, reason: "mock" }],
+              auditEntries: [{ day: 7, category: "economy", message: "mock" }],
+              data: { fromDay: 7, toDay: 8, report: null },
+            };
+          });
+
+          try {
+            const res = executeCommand(state, { type: "ADVANCE_DAY" });
+            expect(res.success).toBe(false);
+            if (!res.success) {
+              expect(res.error.code).toBe("INVARIANT_VIOLATION");
+              expect(res.state).toBe(state);
+              expect((res as unknown as Record<string, unknown>).effects).toBeUndefined();
+            }
+            expect(state).toEqual(originalState);
+          } finally {
+            spy.mockRestore();
+          }
+        });
+
+        it("post-gate catches draft with cohort count = 2^53 and returns INVARIANT_VIOLATION", () => {
+          const state = buildTestGameState(100, 100);
+          const originalState = structuredClone(state);
+
+          const spy = vi.spyOn(advanceDayModule, "handleAdvanceDay").mockImplementation((draft) => {
+            draft.settlements["haven_active"].cohorts[0].count = 2 ** 53;
+            return {
+              effects: [{ type: "RESOURCE_DELTA", resource: "food", delta: -5, reason: "mock" }],
+              auditEntries: [{ day: 7, category: "economy", message: "mock" }],
+              data: { fromDay: 7, toDay: 8, report: null },
+            };
+          });
+
+          try {
+            const res = executeCommand(state, { type: "ADVANCE_DAY" });
+            expect(res.success).toBe(false);
+            if (!res.success) {
+              expect(res.error.code).toBe("INVARIANT_VIOLATION");
+              expect(res.state).toBe(state);
+              expect((res as unknown as Record<string, unknown>).effects).toBeUndefined();
+            }
+            expect(state).toEqual(originalState);
+          } finally {
+            spy.mockRestore();
+          }
+        });
+
+        it("post-gate catches draft with total population overflowing MAX_SAFE_INTEGER and returns INVARIANT_VIOLATION", () => {
+          const state = buildTestGameState(100, 100);
+          const originalState = structuredClone(state);
+
+          const spy = vi.spyOn(advanceDayModule, "handleAdvanceDay").mockImplementation((draft) => {
+            draft.settlements["haven_active"].cohorts = [
+              buildTestCohort("c1", Number.MAX_SAFE_INTEGER),
+              buildTestCohort("c2", 1),
+            ];
+            return {
+              effects: [{ type: "RESOURCE_DELTA", resource: "food", delta: -5, reason: "mock" }],
+              auditEntries: [{ day: 7, category: "economy", message: "mock" }],
+              data: { fromDay: 7, toDay: 8, report: null },
+            };
+          });
+
+          try {
+            const res = executeCommand(state, { type: "ADVANCE_DAY" });
+            expect(res.success).toBe(false);
+            if (!res.success) {
+              expect(res.error.code).toBe("INVARIANT_VIOLATION");
+              expect(res.state).toBe(state);
+              expect((res as unknown as Record<string, unknown>).effects).toBeUndefined();
+            }
+            expect(state).toEqual(originalState);
+          } finally {
+            spy.mockRestore();
+          }
+        });
       });
     });
   });
