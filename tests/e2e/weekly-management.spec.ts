@@ -95,3 +95,15 @@ test('reload resets the independent prototype and R1 remains at Day 1', async ({
   await expect(page.locator('#current-day')).toHaveText('1');
   await expect(page.locator('#resource-food')).toHaveText('100');
 });
+
+test('weekly English language scope covers planning errors and reports while R1 stays Vietnamese', async ({ page }) => {
+  await expect(page.getByRole('main')).toHaveAttribute('lang', 'en');
+  expect(await page.getByRole('heading', { name: 'Weekly Management' }).evaluate(element => element.matches(':lang(en)'))).toBe(true);
+  await end(page, '11');
+  expect(await page.getByRole('alert').evaluate(element => element.matches(':lang(en)'))).toBe(true);
+  await end(page, '4');
+  expect(await page.getByRole('region', { name: 'Week report' }).evaluate(element => element.matches(':lang(en)'))).toBe(true);
+  await page.goto('/');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'vi');
+  expect(await page.getByRole('main').evaluate(element => element.matches(':lang(vi)'))).toBe(true);
+});

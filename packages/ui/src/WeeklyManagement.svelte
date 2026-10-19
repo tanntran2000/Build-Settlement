@@ -38,7 +38,7 @@
   }
 </script>
 
-<main>
+<main lang="en">
   <header class="card">
     <h1>Weekly Management</h1>
     <p>Experimental Farm Field slice · Resets on reload · No save/load</p>
