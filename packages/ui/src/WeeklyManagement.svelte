@@ -1,9 +1,12 @@
 <script lang="ts">
   import { createWeeklyState, weeklyWorkforceMilli, WEEKLY_RESOURCE_KEYS, SOCIAL_RESOURCE_SCALE, type WeeklyReport } from '@haven/core';
   import { executeWeeklyCommand, FARM_FIELD_CAPACITY_MILLI, FARM_GOLD_PER_WF, FARM_FOOD_PER_WF } from '@haven/simulation';
+  import ErrorLog from './ErrorLog.svelte';
+  import { errorLog } from './error-log.js';
 
   // shortcut: canonical new world in RAM, add persistence only under an approved save/load WP.
   let state = createWeeklyState();
+  errorLog.setContext('weekly', { week: state.week });
   $: settlement = state.activeSettlementId === null ? null : state.settlements[state.activeSettlementId];
   $: workforceMilli = settlement ? weeklyWorkforceMilli(settlement.cohorts) : 0;
   $: headcount = settlement ? settlement.cohorts.reduce((total, cohort) => total + cohort.count, 0) : 0;
@@ -20,21 +23,28 @@
   function endWeek(event: SubmitEvent) {
     event.preventDefault();
     if (report) return;
+    errorLog.setContext('weekly', { week: state.week });
     const value = draft.trim();
     if (!/^(?:0|[1-9]\d*)(?:\.\d{1,3})?$/.test(value)) {
+      errorLog.record('END_WEEK', 'INVALID_WORKFORCE_INPUT');
       error = `Enter 0–${display(FARM_FIELD_CAPACITY_MILLI)} WF with at most three decimal places.`;
       return;
     }
     const [whole, fraction = ''] = value.split('.');
     const foodWorkforceMilli = Number(whole) * SOCIAL_RESOURCE_SCALE + Number(fraction.padEnd(3, '0'));
-    const result = executeWeeklyCommand(state, { type: 'END_WEEK', expectedWeek: state.week, foodWorkforceMilli });
-    if (!result.success) {
-      error = result.error.message;
-      return;
+    try {
+      const result = executeWeeklyCommand(state, { type: 'END_WEEK', expectedWeek: state.week, foodWorkforceMilli });
+      if (!result.success) {
+        error = errorLog.record('END_WEEK', result.error.code);
+        return;
+      }
+      state = result.nextState;
+      report = result.report;
+      errorLog.setContext('weekly', { week: state.week });
+      error = '';
+    } catch {
+      error = errorLog.record('END_WEEK', 'UNEXPECTED_ACTION_ERROR');
     }
-    state = result.nextState;
-    report = result.report;
-    error = '';
   }
 
   function planNextWeek() {
@@ -94,6 +104,7 @@
     </section>
     <button type="button" onclick={planNextWeek}>Plan next week</button>
   {/if}
+  <ErrorLog />
 </main>
 
 <style>

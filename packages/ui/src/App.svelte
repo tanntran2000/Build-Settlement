@@ -9,6 +9,8 @@
   } from '@haven/core';
   import { executeCommand } from '@haven/simulation';
   import { Content } from '@haven/content';
+  import ErrorLog from './ErrorLog.svelte';
+  import { errorLog } from './error-log.js';
 
   // State khởi tạo thử nghiệm lãnh địa đầu tiên
   const initialLan = createNamedCharacter({
@@ -75,6 +77,7 @@
       why: "Khởi tạo thế giới thành công."
     }
   ];
+  errorLog.setContext('r1', gameState.currentDate);
 
   // Helper truy cập lãnh địa trực trị hiện tại
   $: currentSettlement = gameState.activeSettlementId ? gameState.settlements[gameState.activeSettlementId] : null;
@@ -82,14 +85,19 @@
 
   function handleNextDay() {
     // LAW-02: UI tuyệt đối không tự sửa state, mà gửi Command qua Command Dispatcher của simulation
-    const result = executeCommand(gameState, { type: "ADVANCE_DAY" });
-
-    if (result.success) {
-      // Nhận state mới và audit entries từ dispatcher; KHÔNG áp dụng lại effect lần thứ hai
-      gameState = result.nextState;
-      auditLogs = [...result.auditEntries, ...auditLogs];
-    } else {
-      console.error("Lệnh ADVANCE_DAY thất bại:", result.error);
+    errorLog.setContext('r1', gameState.currentDate);
+    try {
+      const result = executeCommand(gameState, { type: "ADVANCE_DAY" });
+      if (result.success) {
+        // Nhận state mới và audit entries từ dispatcher; KHÔNG áp dụng lại effect lần thứ hai
+        gameState = result.nextState;
+        auditLogs = [...result.auditEntries, ...auditLogs];
+        errorLog.setContext('r1', gameState.currentDate);
+      } else {
+        console.error(errorLog.record('ADVANCE_DAY', result.error.code));
+      }
+    } catch {
+      console.error(errorLog.record('ADVANCE_DAY', 'UNEXPECTED_ACTION_ERROR'));
     }
   }
 </script>
@@ -262,4 +270,5 @@
       <p style="color: var(--text-muted); margin-top: 8px;">Người chơi hiện đang trong trạng thái thám hiểm hoặc chưa tiếp quản lãnh địa nào.</p>
     </div>
   {/if}
+  <ErrorLog />
 </main>
