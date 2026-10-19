@@ -33,7 +33,13 @@ describe("weekly fixture uses the canonical world", () => {
     expect(weeklyWorkforceMilli([])).toBe(0);
     expect(cohorts[0].count).toBe(15);
   });
-  it.each([Number.MAX_SAFE_INTEGER, 10_000_000_000, 90071992547409])("guards unsafe legacy helper arithmetic for count %i", count => {
+  it.each([[9007199255, 900719925500], [10_000_000_000, 1_000_000_000_000], [90071992547409, 9007199254740900]])("accepts exact safe workforce for count %i", (count, expected) => {
+    expect(weeklyWorkforceMilli([{ ...active().cohorts[0], count }])).toBe(expected);
+  });
+  it("accepts a large Upper cohort when its nonlabor metrics remain safe", () => {
+    expect(weeklyWorkforceMilli([{ ...active().cohorts[0], count: 450359962737049, socialClass: "elite" }])).toBe(0);
+  });
+  it.each([Number.MAX_SAFE_INTEGER, 90071992547410])("rejects true social result overflow for count %i", count => {
     expect(() => weeklyWorkforceMilli([{ ...active().cohorts[0], count }])).toThrow(RangeError);
   });
 });

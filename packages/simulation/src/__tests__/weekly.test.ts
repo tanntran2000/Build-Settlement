@@ -156,7 +156,7 @@ describe("canonical ownership and authority", () => {
     expect(success(state, 0).report.workforce.effectiveMilli).toBe(0);
     expect(executeWeeklyCommand(state, command(1))).toMatchObject({ success: false, error: { code: "INVALID_COMMAND" } });
   });
-  it.each([Number.MAX_SAFE_INTEGER, 10_000_000_000, 90071992547409])("returns atomic OVERFLOW for unsafe workforce arithmetic count %i", count => {
+  it.each([Number.MAX_SAFE_INTEGER, 90071992547410])("returns atomic OVERFLOW for true social result overflow count %i", count => {
     const state = createWeeklyState(); active(state).cohorts[0].count = count;
     const before = structuredClone(state); freeze(state);
     const result = executeWeeklyCommand(state, command(0));
@@ -168,5 +168,42 @@ describe("canonical ownership and authority", () => {
     const { nextState, report } = success(); const snapshot = structuredClone(report);
     active(nextState).inventory.gold = 0; active(nextState).inventory.food = 0;
     expect(report).toEqual(snapshot);
+  });
+});
+
+
+describe("canonical correction regressions", () => {
+  it.each([[9007199255, 900719925500], [90071992547409, 9007199254740900]])("funds the same 4 WF with large safe canonical population %i", (count, pool) => {
+    const state = createWeeklyState(); active(state).cohorts[0].count = count;
+    const { nextState, report } = success(state);
+    expect(report.workforce).toMatchObject({ effectiveMilli: pool, availableMilli: pool - 4000, fundedMilli: 4000 });
+    expect(active(nextState).inventory).toEqual({ gold: 6000, food: 12000, wood: 0, iron: 0 });
+  });
+  it("returns structured failure for an otherwise-valid root Proxy that cannot be cloned", () => {
+    const state = createWeeklyState(); const before = structuredClone(state); freeze(state);
+    const proxy = new Proxy(state, {});
+    let threw = false; let result: ReturnType<typeof executeWeeklyCommand> | undefined;
+    try { result = executeWeeklyCommand(proxy, command()); } catch { threw = true; }
+    expect(threw).toBe(false);
+    expect(result).toMatchObject({ success: false, error: { code: "EXECUTION_ERROR" } });
+    if (!result || result.success) throw new Error("expected failure");
+    expect(result.state).toBe(proxy); expect(result).not.toHaveProperty("report"); expect(state).toEqual(before);
+  });
+  it("contains unexpected command errors without coercing thrown objects", () => {
+    const state = createWeeklyState(); const before = structuredClone(state); freeze(state);
+    const cmd = new Proxy(command(), { get() { throw Object.create(null); } });
+    let threw = false; let result: ReturnType<typeof executeWeeklyCommand> | undefined;
+    try { result = executeWeeklyCommand(state, cmd); } catch { threw = true; }
+    expect(threw).toBe(false);
+    expect(result).toMatchObject({ success: false, error: { code: "EXECUTION_ERROR" } });
+    if (!result || result.success) throw new Error("expected failure");
+    expect(result.state).toBe(state); expect(result).not.toHaveProperty("report"); expect(state).toEqual(before);
+  });
+  it("preserves the INVALID_STATE boundary for revoked Proxy input", () => {
+    const { proxy, revoke } = Proxy.revocable(createWeeklyState(), {}); revoke();
+    const result = executeWeeklyCommand(proxy, command());
+    expect(result).toMatchObject({ success: false, error: { code: "INVALID_STATE" } });
+    if (result.success) throw new Error("unexpected success");
+    expect(result.state).toBe(proxy); expect(result).not.toHaveProperty("report");
   });
 });

@@ -1,7 +1,7 @@
 import { createPopulationCohort, type PopulationCohort } from "./domain/population.js";
 import type { CanonicalGameState } from "./domain/canonical-state.js";
 import { calculateSocialResourceBreakdown } from "./social/calculator.js";
-import { INITIAL_BALANCE_PROFILE, SOCIAL_RESOURCE_SCALE } from "./social/profile.js";
+import { INITIAL_BALANCE_PROFILE } from "./social/profile.js";
 import { calculateEffectiveWorkforceMilli } from "./social/workforce.js";
 import type { ResourceFlowResult } from "./resource/types.js";
 import type { WeeklyResource, WeeklyStocks } from "./domain/canonical-state.js";
@@ -36,20 +36,6 @@ export function createWeeklyState(): CanonicalGameState {
 }
 
 export function weeklyWorkforceMilli(cohorts: PopulationCohort[]): number {
-  const maxProfileMultiplier = Math.max(SOCIAL_RESOURCE_SCALE, ...Object.values(INITIAL_BALANCE_PROFILE).flatMap(Object.values));
-  const safeHeadcount = Math.floor(Number.MAX_SAFE_INTEGER / maxProfileMultiplier);
-  let headcount = 0;
-  for (const cohort of cohorts) {
-    // Guard every profile product and aggregate before calling the unchanged social calculator.
-    if (!Number.isSafeInteger(cohort.count) || cohort.count < 0 || cohort.count > safeHeadcount - headcount) {
-      throw new RangeError("Cohort totals exceed safe social calculator arithmetic.");
-    }
-    headcount += cohort.count;
-  }
   const base = calculateSocialResourceBreakdown(cohorts, INITIAL_BALANCE_PROFILE).total.laborCapacityMilli;
-  const neutralBasisPointFactor = 10000;
-  if (base > Math.floor(Number.MAX_SAFE_INTEGER / neutralBasisPointFactor)) {
-    throw new RangeError("Workforce exceeds safe effective-workforce arithmetic.");
-  }
   return calculateEffectiveWorkforceMilli(base, 0);
 }

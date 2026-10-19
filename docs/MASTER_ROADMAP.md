@@ -113,7 +113,7 @@ flowchart TD
 
 **WP-CANONICAL-WEEKLY-STATE-01 — candidate chờ hai audit độc lập:** week/metadata/settlements/active pointer thuộc một root; kho 4 tài nguyên và cohort R1 thuộc settlement. Dùng cohort canonical thật để tính WF, giữ nguyên cap Farm Field 10 WF và 1 Gold/WF → 2 Food. Không active thì từ chối END_WEEK, không tự tiến thời gian. World mới theo fixture đã duyệt, không migration R1; cả `/` và `/?mode=weekly` giữ regression riêng. `WorldSaveData` R1 không đổi; save/load còn mở.
 
-Muốn chỉnh cơ chế: dữ liệu/validator ở `core/src/domain/canonical-state.ts`, fixture/WF ở `core/src/weekly.ts`, hệ số có tên và giao dịch ở `simulation/src/weekly.ts`; UI chỉ hiển thị/dispatch. Test tương ứng và hướng dẫn ngắn nằm ở [tracker Weekly](INTERNAL_PROGRESS_TRACKER.md#weekly--pr-20-closeout-và-vị-trí-sửa-cơ-chế). Không thêm config/plugin framework. Prototype reset khi reload, chưa tiêu thụ Food/thu nhập Gold/full balance, chưa demo/deploy; quyền phát hành/mã nguồn/giấy phép là việc riêng.
+Muốn chỉnh cơ chế: dữ liệu/validator ở `core/src/domain/canonical-state.ts`, fixture/WF ở `core/src/weekly.ts`, số học nguyên chính xác ở `core/src/social/calculator.ts` và `core/src/social/workforce.ts`, hệ số có tên và giao dịch/error boundary ở `simulation/src/weekly.ts`; UI chỉ hiển thị/dispatch và format milli chính xác từ chuỗi nguyên. Test tương ứng và hướng dẫn ngắn nằm ở [tracker Weekly](INTERNAL_PROGRESS_TRACKER.md#weekly--pr-20-closeout-và-vị-trí-sửa-cơ-chế). Không thêm config/plugin framework. Prototype reset khi reload, chưa tiêu thụ Food/thu nhập Gold/full balance, chưa demo/deploy; quyền phát hành/mã nguồn/giấy phép là việc riêng.
 
 ---
 

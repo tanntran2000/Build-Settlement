@@ -130,3 +130,23 @@ test('canonical active settlement owns population workforce and a continuous mul
   await expect(page.getByTestId('weekly-week')).toHaveText('1');
   await expect(stock(page, 'gold')).toHaveText('10');
 });
+
+test('formats safe integer milli exactly at the stock boundary including signed net and zeros', async ({ page }) => {
+  // Inject only the approved world's Gold fixture in the served bundle; no production test hook.
+  await page.route('**/assets/*.js', async route => {
+    const response = await route.fetch();
+    const body = await response.text();
+    const fixture = /inventory:\{gold:(?:10000|1e4),food:(?:4000|4e3),wood:0,iron:0\}/g;
+    expect(body.match(fixture)).toHaveLength(1);
+    await route.fulfill({ response, body: body.replace(fixture, 'inventory:{gold:9007199254740991,food:4000,wood:0,iron:0}') });
+  });
+  await page.reload();
+  await expect(stock(page, 'gold')).toHaveText('9007199254740.991');
+  await expect(stock(page, 'wood')).toHaveText('0');
+  await end(page, '0.001');
+  const report = page.getByRole('region', { name: 'Week report' });
+  await expect(report.getByRole('row', { name: 'Gold 9007199254740.991 -0.001 9007199254740.99 0.001 0.001 0' })).toBeVisible();
+  await expect(report.getByRole('row', { name: 'Food 4 0.002 4.002 0 0 0' })).toBeVisible();
+  await expect(stock(page, 'gold')).toHaveText('9007199254740.99');
+  await expect(stock(page, 'food')).toHaveText('4.002');
+});

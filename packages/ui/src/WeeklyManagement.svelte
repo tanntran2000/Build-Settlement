@@ -10,7 +10,11 @@
   let draft = '0';
   let report: WeeklyReport | null = null;
   let error = '';
-  const display = (milli: number) => String(milli / SOCIAL_RESOURCE_SCALE);
+  const display = (milli: number) => {
+    const digits = String(Math.abs(milli)).padStart(4, '0');
+    const fraction = digits.slice(-3).replace(/0+$/, '');
+    return `${milli < 0 ? '-' : ''}${digits.slice(0, -3)}${fraction ? '.' + fraction : ''}`;
+  };
   const label = (key: string) => key[0].toUpperCase() + key.slice(1);
 
   function endWeek(event: SubmitEvent) {

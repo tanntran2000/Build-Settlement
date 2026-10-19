@@ -172,3 +172,52 @@ describe("Foundation v2 social/workforce", () => {
     expect(breakdown.upper.headcount).toBe(0);
   });
 });
+
+describe("exact social integer arithmetic", () => {
+  it("keeps the reported large Middle result exact without an unsafe intermediate product", () => {
+    const result = calculateSocialResources([cohort("common", "citizen", 90071992547409)], INITIAL_BALANCE_PROFILE);
+    expect(result.laborCapacityMilli).toBe(9007199254740900);
+    expect(result.purchaseDemandCapacityMilli).toBe(1351079888211135);
+  });
+  it("matches an independent BigInt oracle for default profiles and true overflow", () => {
+    const profiles = [
+      ["lower", "citizen", 1500n, 1000n, 1000n],
+      ["common", "citizen", 1000n, 1500n, 1000n],
+      ["elite", "citizen", 0n, 2000n, 2000n],
+      ["elite", "enslaved", 2000n, 1000n, 500n],
+    ] as const;
+    const counts = [0, 1, 5, 15, 99, 100, 200, 9007199255, 4503599627371, 90071992547409, 90071992547410, Number.MAX_SAFE_INTEGER];
+    for (const [socialClass, legalStatus, labor, purchase, lifestyle] of profiles) {
+      for (const count of counts) {
+        const n = BigInt(count);
+        const exact = { headcount: n, laborCapacityMilli: n * labor / 10n, purchaseDemandCapacityMilli: n * purchase / 100n, survivalFoodNeedMilli: n * 10n, lifestyleFoodDemandMilli: n * lifestyle / 100n };
+        const run = () => calculateSocialResources([cohort(socialClass, legalStatus, count)], INITIAL_BALANCE_PROFILE);
+        if (Object.values(exact).some(value => value > BigInt(Number.MAX_SAFE_INTEGER))) {
+          expect(run).toThrow(RangeError);
+        } else {
+          const result = run();
+          for (const key of Object.keys(exact) as (keyof typeof exact)[]) expect(result[key]).toBe(Number(exact[key]));
+          expect(result.populationBlocks).toBe(count / 100);
+        }
+      }
+    }
+  });
+  it("preserves floor per cohort before summing custom integer profiles", () => {
+    const profiles = { ...INITIAL_BALANCE_PROFILE, middle: { laborMultiplierMilli: 15, purchaseDemandMultiplierMilli: 55, lifestyleFoodMultiplierMilli: 55 } };
+    const result = calculateSocialResources([cohort("common", "citizen", 1), cohort("common", "citizen", 1)], profiles);
+    expect(result).toMatchObject({ headcount: 2, laborCapacityMilli: 2, purchaseDemandCapacityMilli: 0, lifestyleFoodDemandMilli: 0, survivalFoodNeedMilli: 20 });
+  });
+  it("rejects real aggregate overflow even if each cohort result is safe", () => {
+    expect(() => calculateSocialResources([cohort("common", "citizen", 45035996273705), cohort("common", "citizen", 45035996273705)], INITIAL_BALANCE_PROFILE)).toThrow(RangeError);
+  });
+});
+
+it.each([0.5, -1, NaN, Infinity, "1000", null])("rejects invalid integer-milli profile coefficient %j before conversion", value => {
+  for (const key of ["laborMultiplierMilli", "purchaseDemandMultiplierMilli", "lifestyleFoodMultiplierMilli"] as const) {
+    const profiles = { ...INITIAL_BALANCE_PROFILE, middle: { ...INITIAL_BALANCE_PROFILE.middle, [key]: value } };
+    expect(() => calculateSocialResources([cohort("common", "citizen", 100)], profiles as Record<EconomicProfileKey, ClassResourceProfile>)).toThrow(RangeError);
+  }
+});
+it.each([-1, 0.5, NaN, Infinity, "100", null])("rejects invalid headcount %j before integer conversion", count => {
+  expect(() => calculateSocialResources([{ ...cohort("common", "citizen", 100), count } as PopulationCohort], INITIAL_BALANCE_PROFILE)).toThrow(RangeError);
+});

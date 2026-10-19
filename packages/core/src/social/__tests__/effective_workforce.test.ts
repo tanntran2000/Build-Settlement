@@ -47,3 +47,22 @@ describe("calculateEffectiveWorkforceMilli", () => {
       .toThrow(RangeError);
   });
 });
+
+it("preserves MAX_SAFE_INTEGER exactly for a neutral modifier", () => {
+  expect(calculateEffectiveWorkforceMilli(Number.MAX_SAFE_INTEGER, 0)).toBe(Number.MAX_SAFE_INTEGER);
+});
+it("matches an independent integer oracle for signed modifiers and rejects true output overflow", () => {
+  const bases = [0, 1, 2250, 440000, 900719925474, 900719925475, Number.MAX_SAFE_INTEGER - 1, Number.MAX_SAFE_INTEGER, 2 ** 53];
+  for (const base of bases) {
+    for (const bps of [-500, -100, -50, 0, 50, 100, 500]) {
+      const exact = BigInt(base) * BigInt(10000 + bps) / 10000n;
+      const run = () => calculateEffectiveWorkforceMilli(base, bps);
+      if (exact > BigInt(Number.MAX_SAFE_INTEGER)) expect(run).toThrow(RangeError);
+      else expect(run()).toBe(Number(exact));
+    }
+  }
+});
+it("retains finite integer base acceptance when a negative modifier yields a safe result", () => {
+  const base = 2 ** 53;
+  expect(calculateEffectiveWorkforceMilli(base, -500)).toBe(Number(BigInt(base) * 9500n / 10000n));
+});

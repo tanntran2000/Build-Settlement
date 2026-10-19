@@ -52,13 +52,14 @@
 | Cần sửa | Module sở hữu | Test liên quan |
 | --- | --- | --- |
 | Root/ownership/active pointer, validation toàn world | `core/src/domain/canonical-state.ts`; settlement dùng cohort R1, không alias `GameState` R1 | `core/src/domain/__tests__/canonical-state.test.ts` |
-| Fixture world mới; WF từ cohort thật, guard trước phép tính helper | `core/src/weekly.ts`: `createWeeklyState`, `weeklyWorkforceMilli` | `core/src/__tests__/weekly.test.ts` |
+| Fixture world mới; WF từ cohort thật qua shared helpers chính xác | `core/src/weekly.ts`: `createWeeklyState`, `weeklyWorkforceMilli` | `core/src/__tests__/weekly.test.ts` |
+| Số học social/Effective WF: nhân/chia nguyên chính xác, tổng trong miền safe; multiplier integer milli không âm | `core/src/social/calculator.ts`, `core/src/social/workforce.ts`; BigInt chỉ nội bộ, API vẫn Number | `foundation_v2_social.test.ts`, `effective_workforce.test.ts` |
 | Luật Farm Field: cap/rates và giao dịch nguyên tử | `simulation/src/weekly.ts`: `FARM_FIELD_CAPACITY_MILLI`, `FARM_GOLD_PER_WF`, `FARM_FOOD_PER_WF`, `executeWeeklyCommand` | `simulation/src/__tests__/weekly.test.ts` |
-| Hiển thị root, draft/report và khóa submit | `ui/src/WeeklyManagement.svelte`; UI đọc hệ số của simulation, không tự tính kinh tế | `tests/e2e/weekly-management.spec.ts`; giữ `smoke.spec.ts` R1 |
+| Hiển thị root, draft/report và khóa submit | `ui/src/WeeklyManagement.svelte`; UI đọc hệ số của simulation, không tự tính kinh tế; formatter milli tách chuỗi nguyên để giữ chính xác cả biên safe | `tests/e2e/weekly-management.spec.ts`; giữ `smoke.spec.ts` R1 |
 
 Week là clock duy nhất của world Weekly. `END_WEEK` không active settlement bị từ chối, không tiến week; chỉ inventory của active hiện tại thay đổi. `expectedWeek` chống stale/replay trên state đã tiến tuần, **không phải idempotency token đa-client**; replay trên state cũ vẫn deterministic. Không thêm switching command. ID cohort nằm trong phạm vi từng settlement. Farm cap chỉ giới hạn assignment, không cap WF dẫn xuất (200 Middle → 20 WF, giao 10 còn 10).
 
-Helper social cũ có rủi ro precision ở đầu vào rất lớn; wrapper Weekly kiểm intermediate/aggregate trước khi gọi và trả `OVERFLOW`, không nhận kết quả làm tròn sai. Shared helpers không được sửa trong WP này. Canonical world mới vẫn chỉ RAM/reset khi reload; `WorldSaveData`/`Settlement`/`GameState` R1 giữ nguyên, không serializer/importer, migration hay schema version mới. Food consumption, Gold income, Support/Medal/CityEffects và persistence vẫn ngoài slice; thay cơ chế cần cập nhật test, không thêm config/plugin framework.
+Correction round 1 của candidate sửa nhân/chia và cộng tổng ở shared social/Effective WF bằng số nguyên chính xác: giữ API Number, floor từng cohort và kiểm overflow kết quả thật; bỏ guard Weekly bảo thủ theo tích trung gian. Multiplier được chốt là integer milli không âm; `populationBlocks` vẫn là giá trị hiển thị dẫn xuất có thể phân số. Error boundary bao toàn dispatcher, kể cả clone failure, trả structured failure giữ input/clock và không có success report. Các sửa này vẫn chờ audit độc lập, chưa đóng WP PASS. Canonical world mới vẫn chỉ RAM/reset khi reload; `WorldSaveData`/`Settlement`/`GameState` R1 giữ nguyên, không serializer/importer, migration hay schema version mới. Food consumption, Gold income, Support/Medal/CityEffects và persistence vẫn ngoài slice; thay cơ chế cần cập nhật test, không thêm config/plugin framework.
 
 ---
 
