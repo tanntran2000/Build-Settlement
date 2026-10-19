@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { createNamedCharacter } from "../character.js";
-import { createPopulationCohort } from "../population.js";
+import { createPopulationCohort, PopulationCohort } from "../population.js";
 import { createSettlement, Settlement } from "../settlement.js";
 import { createDefaultInventory } from "../resource.js";
 import { advanceTime } from "../../time/clock.js";
@@ -1397,6 +1397,238 @@ describe("Domain Models, Invariants & Object Isolation (LAW-04 & LAW-05)", () =>
       expect(date.day).toBe(366);
       expect(date.week).toBe(53);
       expect(date.year).toBe(2);
+    });
+  });
+
+  describe("Numeric Safety & MAX_SAFE_INTEGER Boundaries (R1-NUMERIC-SAFETY-01)", () => {
+    const buildSettlement = (id: string, status: Settlement["status"]): Settlement => ({
+      id,
+      name: `Settlement ${id}`,
+      status,
+      authority: 50,
+      reputation: 50,
+      dayCreated: 1,
+      inventory: createDefaultInventory(),
+      facilities: [],
+      namedCharacters: [],
+      cohorts: [],
+    });
+
+    const buildBaseState = (): GameState => ({
+      currentDate: { day: 1, week: 1, year: 1 },
+      worldMetadata: { worldSeed: 2026, gameVersion: "0.1.0" },
+      settlements: {
+        s1: {
+          ...buildSettlement("s1", "active"),
+          inventory: createDefaultInventory(),
+          cohorts: [
+            {
+              id: "c1",
+              occupation: "worker",
+              socialClass: "common",
+              legalStatus: "citizen",
+              count: 50,
+              averageHealth: 80,
+              morale: 80,
+              productivity: 80,
+              resentment: 0,
+              loyalty: 80,
+              livingStandard: "decent",
+            },
+          ],
+          namedCharacters: [
+            createNamedCharacter({
+              id: "char_01",
+              name: "Lan",
+              age: 30,
+              health: 100,
+              occupation: "technician",
+              socialClass: "skilled",
+              legalStatus: "citizen",
+            }),
+          ],
+        },
+      },
+      activeSettlementId: "s1",
+    });
+
+    describe("Clock validation numeric safety", () => {
+      it("rejects unsafe currentDate.day = 2^53 with INVALID_CLOCK", () => {
+        const state = buildBaseState();
+        state.currentDate.day = 2 ** 53;
+        state.currentDate.week = Math.floor((state.currentDate.day - 1) / 7) + 1;
+        state.currentDate.year = Math.floor((state.currentDate.day - 1) / 365) + 1;
+        const res = validateGameState(state);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("INVALID_CLOCK");
+      });
+
+      it("rejects unsafe currentDate.week = 2^53 with INVALID_CLOCK", () => {
+        const state = buildBaseState();
+        state.currentDate.week = 2 ** 53;
+        const res = validateGameState(state);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("INVALID_CLOCK");
+      });
+
+      it("rejects unsafe currentDate.year = 2^53 with INVALID_CLOCK", () => {
+        const state = buildBaseState();
+        state.currentDate.year = 2 ** 53;
+        const res = validateGameState(state);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("INVALID_CLOCK");
+      });
+
+      it("accepts valid MAX_SAFE_INTEGER day with consistent week and year", () => {
+        const state = buildBaseState();
+        state.currentDate.day = Number.MAX_SAFE_INTEGER;
+        state.currentDate.week = Math.floor((Number.MAX_SAFE_INTEGER - 1) / 7) + 1;
+        state.currentDate.year = Math.floor((Number.MAX_SAFE_INTEGER - 1) / 365) + 1;
+        const res = validateGameState(state);
+        expect(res.valid).toBe(true);
+      });
+    });
+
+    describe("Inventory numeric safety", () => {
+      it("rejects stock = 2^54 on required resource with NEGATIVE_INVENTORY", () => {
+        const state = buildBaseState();
+        state.settlements.s1.inventory.food = 2 ** 54;
+        const res = validateGameState(state);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("NEGATIVE_INVENTORY");
+      });
+
+      it("rejects stock = 2^54 on extension keys with NEGATIVE_INVENTORY", () => {
+        const state = buildBaseState();
+        (state.settlements.s1.inventory as Record<string, unknown>).iron = 2 ** 54;
+        const res = validateGameState(state);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("NEGATIVE_INVENTORY");
+      });
+
+      it("accepts stock = MAX_SAFE_INTEGER on inventory", () => {
+        const state = buildBaseState();
+        state.settlements.s1.inventory.food = Number.MAX_SAFE_INTEGER;
+        const res = validateGameState(state);
+        expect(res.valid).toBe(true);
+      });
+    });
+
+    const buildTestCohort = (id: string, count: number): PopulationCohort => ({
+      id,
+      occupation: "worker",
+      socialClass: "common",
+      legalStatus: "citizen",
+      count,
+      averageHealth: 80,
+      morale: 80,
+      productivity: 80,
+      resentment: 0,
+      loyalty: 80,
+      livingStandard: "decent",
+    });
+
+    describe("Cohort & Population numeric safety", () => {
+      it("rejects unsafe cohort count = 2^53 with INVALID_POPULATION", () => {
+        const state = buildBaseState();
+        state.settlements.s1.cohorts[0].count = 2 ** 53;
+        const res = validateGameState(state);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("INVALID_POPULATION");
+      });
+
+      it("rejects multiple cohorts whose sum overflows MAX_SAFE_INTEGER with INVALID_POPULATION", () => {
+        const state = buildBaseState();
+        state.settlements.s1.cohorts = [
+          buildTestCohort("c1", Number.MAX_SAFE_INTEGER),
+          buildTestCohort("c2", 1),
+        ];
+        const res = validateGameState(state);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("INVALID_POPULATION");
+      });
+
+      it("rejects when sum of cohorts is MAX_SAFE_INTEGER and adding NPC overflows with INVALID_POPULATION", () => {
+        const state = buildBaseState();
+        state.settlements.s1.cohorts = [
+          buildTestCohort("c1", Number.MAX_SAFE_INTEGER),
+        ];
+        state.settlements.s1.namedCharacters = [
+          createNamedCharacter({ id: "npc1", name: "NPC 1" }),
+        ];
+        const res = validateGameState(state);
+        expect(res.valid).toBe(false);
+        expect(res.code).toBe("INVALID_POPULATION");
+      });
+
+      it("accepts total population exactly MAX_SAFE_INTEGER (cohort count = MAX_SAFE_INTEGER - 1, 1 NPC)", () => {
+        const state = buildBaseState();
+        state.settlements.s1.cohorts = [
+          buildTestCohort("c1", Number.MAX_SAFE_INTEGER - 1),
+        ];
+        state.settlements.s1.namedCharacters = [
+          createNamedCharacter({ id: "npc1", name: "NPC 1" }),
+        ];
+        const res = validateGameState(state);
+        expect(res.valid).toBe(true);
+      });
+
+      it("accepts total population exactly MAX_SAFE_INTEGER (cohort count = MAX_SAFE_INTEGER, 0 NPCs)", () => {
+        const state = buildBaseState();
+        state.settlements.s1.cohorts = [
+          buildTestCohort("c1", Number.MAX_SAFE_INTEGER),
+        ];
+        state.settlements.s1.namedCharacters = [];
+        const res = validateGameState(state);
+        expect(res.valid).toBe(true);
+      });
+
+      it("compatibility regression: accepts npc.age outside safe integer range (2^53) as long as it satisfies Number.isInteger", () => {
+        const state = buildBaseState();
+        state.settlements.s1.namedCharacters[0].age = 2 ** 53;
+        const res = validateGameState(state);
+        expect(res.valid).toBe(true);
+      });
+
+      it("still rejects non-integer or negative npc.age with INVALID_CHARACTER", () => {
+        const state = buildBaseState();
+        state.settlements.s1.namedCharacters[0].age = -1;
+        const res1 = validateGameState(state);
+        expect(res1.valid).toBe(false);
+        expect(res1.code).toBe("INVALID_CHARACTER");
+
+        state.settlements.s1.namedCharacters[0].age = 1.5;
+        const res2 = validateGameState(state);
+        expect(res2.valid).toBe(false);
+        expect(res2.code).toBe("INVALID_CHARACTER");
+      });
+    });
+
+    describe("advanceTime pure helper numeric safety", () => {
+      it("throws RangeError when input day is not a safe positive integer", () => {
+        expect(() => advanceTime({ day: 2 ** 53, week: 1, year: 1 })).toThrow(RangeError);
+        expect(() => advanceTime({ day: 0, week: 1, year: 1 })).toThrow(RangeError);
+        expect(() => advanceTime({ day: -1, week: 1, year: 1 })).toThrow(RangeError);
+      });
+
+      it("advances from MAX_SAFE_INTEGER - 1 to MAX_SAFE_INTEGER successfully", () => {
+        const prev = {
+          day: Number.MAX_SAFE_INTEGER - 1,
+          week: Math.floor((Number.MAX_SAFE_INTEGER - 2) / 7) + 1,
+          year: Math.floor((Number.MAX_SAFE_INTEGER - 2) / 365) + 1,
+        };
+        const next = advanceTime(prev);
+        expect(next.day).toBe(Number.MAX_SAFE_INTEGER);
+      });
+
+      it("throws RangeError when day = MAX_SAFE_INTEGER because nextDay would exceed MAX_SAFE_INTEGER", () => {
+        const atMax = {
+          day: Number.MAX_SAFE_INTEGER,
+          week: Math.floor((Number.MAX_SAFE_INTEGER - 1) / 7) + 1,
+          year: Math.floor((Number.MAX_SAFE_INTEGER - 1) / 365) + 1,
+        };
+        expect(() => advanceTime(atMax)).toThrow(RangeError);
+      });
     });
   });
 });

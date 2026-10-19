@@ -1,10 +1,47 @@
 import { Settlement, Effect, ProductionReport } from "@haven/core";
 
 export function simulateDailyEconomy(settlement: Settlement, day: number): ProductionReport {
+  if (!Number.isSafeInteger(day) || day < 1) {
+    throw new RangeError("Day must be a positive safe integer");
+  }
+
+  if (!settlement || typeof settlement !== "object") {
+    throw new RangeError("Invalid settlement object");
+  }
+
+  if (!Array.isArray(settlement.cohorts) || !Array.isArray(settlement.namedCharacters)) {
+    throw new RangeError("Settlement population containers must be arrays");
+  }
+
+  let cohortSum = 0;
+  for (const c of settlement.cohorts) {
+    if (!c || typeof c !== "object" || !Number.isSafeInteger(c.count) || c.count < 0) {
+      throw new RangeError("Cohort count must be a non-negative safe integer");
+    }
+    if (Number.MAX_SAFE_INTEGER - cohortSum < c.count) {
+      throw new RangeError("Total population exceeds MAX_SAFE_INTEGER");
+    }
+    cohortSum += c.count;
+  }
+
+  if (Number.MAX_SAFE_INTEGER - cohortSum < settlement.namedCharacters.length) {
+    throw new RangeError("Total population exceeds MAX_SAFE_INTEGER");
+  }
+  const totalPopulation = cohortSum + settlement.namedCharacters.length;
+
+  if (!settlement.inventory || typeof settlement.inventory !== "object") {
+    throw new RangeError("Invalid inventory object");
+  }
+  if (!Number.isSafeInteger(settlement.inventory.food) || settlement.inventory.food < 0) {
+    throw new RangeError("Food inventory must be a non-negative safe integer");
+  }
+  if (!Number.isSafeInteger(settlement.inventory.clean_water) || settlement.inventory.clean_water < 0) {
+    throw new RangeError("Clean water inventory must be a non-negative safe integer");
+  }
+
   const effects: Effect[] = [];
 
   // 1. Tính toán nhu cầu tiêu thụ cơ bản theo dân số
-  const totalPopulation = settlement.cohorts.reduce((sum, c) => sum + c.count, 0) + settlement.namedCharacters.length;
   const foodDemand = Math.ceil(totalPopulation * 0.5);
   const waterDemand = Math.ceil(totalPopulation * 0.5);
 
