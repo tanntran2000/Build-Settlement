@@ -9,3 +9,5 @@ export * from "./domain/gamestate.js";
 export * from "./command/command.js";
 export * from "./command/effect.js";
 export * from "./time/clock.js";
+export * from "./weekly.js";
+export { resolveResourceFlow } from "./resource/allocation.js";
