@@ -107,3 +107,26 @@ test('weekly English language scope covers planning errors and reports while R1 
   await expect(page.locator('html')).toHaveAttribute('lang', 'vi');
   expect(await page.getByRole('main').evaluate(element => element.matches(':lang(vi)'))).toBe(true);
 });
+
+test('canonical active settlement owns population workforce and a continuous multiweek ledger', async ({ page }) => {
+  await expect(page.getByRole('heading', { name: 'Weekly Management' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Haven', exact: true })).toBeVisible();
+  await expect(page.getByTestId('weekly-population')).toHaveText('100 residents');
+  await expect(page.getByTestId('weekly-workforce')).toHaveText('10 WF');
+  await end(page, '4');
+  await expect(page.getByRole('region', { name: 'Week report' }).getByRole('row', { name: 'Gold 10 -4 6 4 4 0' })).toBeVisible();
+  await page.getByRole('button', { name: 'Plan next week' }).click();
+  await expect(page.getByLabel('Farm Field workforce (WF)')).toHaveValue('0');
+  await end(page, '4');
+  const report = page.getByRole('region', { name: 'Week report' });
+  await expect(report).toContainText('Week 2 report');
+  await expect(report.getByRole('row', { name: 'Gold 6 -4 2 4 4 0' })).toBeVisible();
+  await expect(report.getByRole('row', { name: 'Food 12 8 20 0 0 0' })).toBeVisible();
+  await expect(page.getByTestId('weekly-week')).toHaveText('3');
+  await expect(stock(page, 'gold')).toHaveText('2');
+  await expect(stock(page, 'food')).toHaveText('20');
+  await expect(page.getByTestId('weekly-population')).toHaveText('100 residents');
+  await page.reload();
+  await expect(page.getByTestId('weekly-week')).toHaveText('1');
+  await expect(stock(page, 'gold')).toHaveText('10');
+});
