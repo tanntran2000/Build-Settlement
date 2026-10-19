@@ -17,7 +17,7 @@ Mục tiêu giai đoạn hiện tại không phải là hoàn thiện toàn bộ
 
 ```mermaid
 flowchart TD
-    R0["R0: Sửa CI & Đối Chiếu Tiến Độ (XONG)"] --> R1["R1: Lõi Thực Thi & Luật Bất Biến (CHƯA DUYỆT TỔNG THỂ)"]
+    R0["R0: Sửa CI & Đối Chiếu Tiến Độ (XONG)"] --> R1["R1: Lõi Thực Thi & Luật Bất Biến (TECHNICAL PASS)"]
     R1 --> F1["Foundation I: Dân Cư & Năng Lực Xã Hội (POP)"]
     F1 --> F2["Foundation II: Tài Nguyên & Sinh Tồn (RES)"]
     F2 --> F3["Foundation III: Lưu Trữ & Vòng Đời Ván Chơi"]
@@ -34,7 +34,14 @@ flowchart TD
 
 ---
 
-### Gói R1: Lõi Thực Thi & Luật Bất Biến (PROTOTYPE ĐÃ MERGE; TỔNG THỂ CHƯA ĐƯỢC DUYỆT)
+### Gói R1: Lõi Thực Thi & Luật Bất Biến (SCOPED TECHNICAL PASS)
+
+**CURRENT acceptance:** tại `92882ba6a2389b93fa5813faf142d56146fad90b`, independent Tester và Reviewer xác nhận **scoped technical PASS** theo [R1-ACCEPTANCE-RECORD-01 — ma trận 37 dòng](INTERNAL_PROGRESS_TRACKER.md#r1-acceptance-record-01--current-technical-acceptance). Planner chấp nhận ma trận dựng lại từ WP-R1-r2 / WP-VALIDATION-GUARDS-01 làm cơ sở nghiệm thu kỹ thuật hiện tại: 01–35 được hỗ trợ trong phạm vi đã ghi; 36 **FAIL documentary reference** vì thiếu checklist gốc; 37 **UNVERIFIED** về historical completeness. Không coi đây là checklist gốc được phục hồi hoặc phê duyệt lịch sử; giữ HOLD cho tuyên bố đã kiểm từng dòng bản gốc. C/P CI và fresh external probes được phân biệt trong record; candidate tài liệu chờ audit độc lập, chưa merge/đóng G6.
+
+**Demo: NOT APPROVED.** Khoảng trống provenance không phải production regression; technical R1 PASS không đồng nghĩa L4 hoặc hoàn tất gameplay: UI còn RAM prototype, persistence L1; production/workforce integration, Support/health, save/load, Handoff và Legacy AI nằm ngoài R1. Không gameplay scope mới được cấp phép.
+
+**Các mốc và giới hạn ghi trước acceptance audit này (lịch sử giữ nguyên; 51 unit là số tại PR #1, không phải tổng hiện tại):**
+
 * [x] Đồng bộ một Clock duy nhất trong `GameState` (loại bỏ biến `day` cục bộ trong UI).
 * [x] Xây dựng Command Dispatcher trung tâm (`executeCommand(state, command) -> { success, nextState, effects, auditEntries, data? }`).
 * [x] Hoàn thiện Invariant Validator:
