@@ -1102,6 +1102,168 @@ describe("Command Dispatcher & Execution Pipeline (LAW-02, LAW-03, LAW-04, LAW-0
       });
     });
 
+    describe("JSON type safety & unconvertible object guards (R1-VALIDATION-NOTHROW-01)", () => {
+      const poison = JSON.parse('{"toString":null,"valueOf":null}');
+
+      const paths = [
+        {
+          field: "currentDate.day",
+          mutate: (s: GameState) => { (s.currentDate as unknown as Record<string, unknown>).day = poison; },
+        },
+        {
+          field: "currentDate.week",
+          mutate: (s: GameState) => { (s.currentDate as unknown as Record<string, unknown>).week = poison; },
+        },
+        {
+          field: "currentDate.year",
+          mutate: (s: GameState) => { (s.currentDate as unknown as Record<string, unknown>).year = poison; },
+        },
+        {
+          field: "inventory.food",
+          mutate: (s: GameState) => { (s.settlements["haven_active"].inventory as unknown as Record<string, unknown>).food = poison; },
+        },
+        {
+          field: "inventory.tools",
+          mutate: (s: GameState) => { (s.settlements["haven_active"].inventory as unknown as Record<string, unknown>).tools = poison; },
+        },
+        {
+          field: "cohorts[0].count",
+          mutate: (s: GameState) => { (s.settlements["haven_active"].cohorts[0] as unknown as Record<string, unknown>).count = poison; },
+        },
+        {
+          field: "cohorts[0].averageHealth",
+          mutate: (s: GameState) => { (s.settlements["haven_active"].cohorts[0] as unknown as Record<string, unknown>).averageHealth = poison; },
+        },
+        {
+          field: "namedCharacters[0].age",
+          mutate: (s: GameState) => { (s.settlements["haven_active"].namedCharacters[0] as unknown as Record<string, unknown>).age = poison; },
+        },
+        {
+          field: "namedCharacters[0].health",
+          mutate: (s: GameState) => { (s.settlements["haven_active"].namedCharacters[0] as unknown as Record<string, unknown>).health = poison; },
+        },
+        {
+          field: "namedCharacters[0].needs.nutrition",
+          mutate: (s: GameState) => { (s.settlements["haven_active"].namedCharacters[0].needs as unknown as Record<string, unknown>).nutrition = poison; },
+        },
+        {
+          field: "namedCharacters[0].emotions.joy",
+          mutate: (s: GameState) => { (s.settlements["haven_active"].namedCharacters[0].emotions as unknown as Record<string, unknown>).joy = poison; },
+        },
+        {
+          field: "namedCharacters[0].skills.management",
+          mutate: (s: GameState) => { (s.settlements["haven_active"].namedCharacters[0].skills as unknown as Record<string, unknown>).management = poison; },
+        },
+        {
+          field: "namedCharacters[0].relationshipToPlayer.trust",
+          mutate: (s: GameState) => { (s.settlements["haven_active"].namedCharacters[0].relationshipToPlayer as unknown as Record<string, unknown>).trust = poison; },
+        },
+        {
+          field: "settlements['haven_active'].id",
+          mutate: (s: GameState) => { (s.settlements["haven_active"] as unknown as Record<string, unknown>).id = poison; },
+        },
+      ];
+
+      for (const { field, mutate } of paths) {
+        it(`pre-gate rejects unconvertible ${field} with INVALID_STATE without throwing`, () => {
+          const handlerSpy = vi.spyOn(advanceDayModule, "handleAdvanceDay");
+          try {
+            const state = buildTestGameState(100, 100);
+            mutate(state);
+            const inputSnapshot = structuredClone(state);
+
+            expect(() => executeCommand(state, { type: "ADVANCE_DAY" })).not.toThrow();
+            const res = executeCommand(state, { type: "ADVANCE_DAY" });
+            expect(res.success).toBe(false);
+            if (!res.success) {
+              expect(res.error.code).toBe("INVALID_STATE");
+              expect(res.state).toBe(state);
+            }
+            expect(state).toEqual(inputSnapshot);
+            expect(handlerSpy).not.toHaveBeenCalled();
+          } finally {
+            handlerSpy.mockRestore();
+          }
+        });
+      }
+
+      it("pre-gate demonstrates state gate runs before command syntax or authority check for unconvertible paths", () => {
+        const handlerSpy = vi.spyOn(advanceDayModule, "handleAdvanceDay");
+        try {
+          const conflictingCommands = [
+            null,
+            { type: "MALFORMED_SYNTAX" },
+            { type: "BUILD_FACILITY", settlementId: "haven_legacy", facilityType: "housing", name: "Barracks" },
+          ];
+
+          for (const { mutate } of paths) {
+            for (const cmd of conflictingCommands) {
+              const state = buildTestGameState(100, 100);
+              mutate(state);
+              const inputSnapshot = structuredClone(state);
+
+              const res = executeCommand(state, cmd);
+              expect(res.success).toBe(false);
+              if (!res.success) {
+                expect(res.error.code).toBe("INVALID_STATE");
+                expect(res.state).toBe(state);
+              }
+              expect(state).toEqual(inputSnapshot);
+              expect(handlerSpy).not.toHaveBeenCalled();
+            }
+          }
+        } finally {
+          handlerSpy.mockRestore();
+        }
+      });
+
+      for (const { field, mutate } of paths) {
+        it(`post-gate returns INVARIANT_VIOLATION without throwing when draft has unconvertible ${field}`, () => {
+          const state = buildTestGameState(100, 100);
+          const originalState = structuredClone(state);
+
+          const sampleEffects: import("@haven/core").Effect[] = [
+            { type: "RESOURCE_DELTA", resource: "food", delta: -5, reason: "mock delta" },
+          ];
+          const sampleAudit: import("@haven/core").AuditEntry[] = [
+            { day: 7, category: "economy", message: "mock audit" },
+          ];
+          const sampleData = { fromDay: 7, toDay: 8, report: null };
+
+          const spy = vi.spyOn(advanceDayModule, "handleAdvanceDay").mockImplementation((draft) => {
+            mutate(draft);
+            return {
+              effects: sampleEffects,
+              auditEntries: sampleAudit,
+              data: sampleData,
+            };
+          });
+
+          try {
+            expect(() => executeCommand(state, { type: "ADVANCE_DAY" })).not.toThrow();
+            const res = executeCommand(state, { type: "ADVANCE_DAY" });
+            expect(res.success).toBe(false);
+            if (!res.success) {
+              expect(res.error.code).toBe("INVARIANT_VIOLATION");
+              expect(res.state).toBe(state);
+              expect((res as unknown as Record<string, unknown>).effects).toBeUndefined();
+              expect((res as unknown as Record<string, unknown>).auditEntries).toBeUndefined();
+              expect((res as unknown as Record<string, unknown>).data).toBeUndefined();
+            }
+            expect(state).toEqual(originalState);
+          } finally {
+            spy.mockRestore();
+          }
+        });
+      }
+
+      it("positive control: executes ADVANCE_DAY normally when all 14 paths are valid", () => {
+        const state = buildTestGameState(100, 100);
+        const res = executeCommand(state, { type: "ADVANCE_DAY" });
+        expect(res.success).toBe(true);
+      });
+    });
+
     describe("Deterministic Replay & Boundary Rollovers (R1 Acceptance Closure)", () => {
       it("guarantees 3-day replay determinism across identical initial state clones", () => {
         const stateA = buildTestGameState(100, 100);

@@ -115,7 +115,7 @@ function validateMetricsDict(
     if (typeof val !== "number" || !Number.isFinite(val) || val < 0 || val > 100) {
       return {
         valid: false,
-        message: `Character '${charId}' ${groupName} is missing or has invalid value for '${key}': ${val}. Must be in [0, 100].`,
+        message: `Character '${charId}' ${groupName} is missing or has invalid value for '${key}'. Must be in [0, 100].`,
       };
     }
   }
@@ -123,7 +123,7 @@ function validateMetricsDict(
     if (typeof v !== "number" || !Number.isFinite(v) || v < 0 || v > 100) {
       return {
         valid: false,
-        message: `Character '${charId}' ${groupName} has invalid value for '${k}': ${v}. Must be in [0, 100].`,
+        message: `Character '${charId}' ${groupName} has invalid value for '${k}'. Must be in [0, 100].`,
       };
     }
   }
@@ -153,7 +153,7 @@ export function validateGameState(state: GameState): StateValidationResult {
     return {
       valid: false,
       code: "INVALID_CLOCK",
-      message: `Invalid GameDate: day=${day}, week=${week}, year=${year}. Must be positive integers.`,
+      message: "Invalid GameDate: day, week, and year must be positive integers.",
     };
   }
 
@@ -214,7 +214,7 @@ export function validateGameState(state: GameState): StateValidationResult {
       return {
         valid: false,
         code: "KEY_ID_MISMATCH",
-        message: `Dictionary key '${key}' does not match settlement ID '${settlement.id}'`,
+        message: `Dictionary key '${key}' does not match settlement ID`,
       };
     }
 
@@ -322,7 +322,7 @@ export function validateGameState(state: GameState): StateValidationResult {
         return {
           valid: false,
           code: "NEGATIVE_INVENTORY",
-          message: `Settlement '${settlement.id}' is missing or has invalid inventory for '${res}': ${count}. Must be non-negative integer.`,
+          message: `Settlement '${settlement.id}' is missing or has invalid inventory for '${res}'. Must be non-negative integer.`,
         };
       }
     }
@@ -332,7 +332,7 @@ export function validateGameState(state: GameState): StateValidationResult {
         return {
           valid: false,
           code: "NEGATIVE_INVENTORY",
-          message: `Settlement '${settlement.id}' has invalid inventory for '${res}': ${count}. Must be non-negative integer.`,
+          message: `Settlement '${settlement.id}' has invalid inventory for '${res}'. Must be non-negative integer.`,
         };
       }
     }
@@ -372,7 +372,7 @@ export function validateGameState(state: GameState): StateValidationResult {
         return {
           valid: false,
           code: "INVALID_POPULATION",
-          message: `Cohort '${cohort.id}' in '${settlement.id}' has invalid count: ${cohort.count}. Must be non-negative integer.`,
+          message: `Cohort '${cohort.id}' in '${settlement.id}' has invalid count. Must be non-negative integer.`,
         };
       }
       for (const metric of REQUIRED_COHORT_METRICS) {
@@ -381,7 +381,7 @@ export function validateGameState(state: GameState): StateValidationResult {
           return {
             valid: false,
             code: "INVALID_POPULATION",
-            message: `Cohort '${cohort.id}' in '${settlement.id}' is missing or has invalid metric '${metric}': ${val}. Must be in [0, 100].`,
+            message: `Cohort '${cohort.id}' in '${settlement.id}' is missing or has invalid metric '${metric}'. Must be in [0, 100].`,
           };
         }
       }
@@ -424,14 +424,14 @@ export function validateGameState(state: GameState): StateValidationResult {
         return {
           valid: false,
           code: "INVALID_CHARACTER",
-          message: `Character '${npc.id}' has invalid age: ${npc.age}. Must be non-negative integer.`,
+          message: `Character '${npc.id}' has invalid age. Must be non-negative integer.`,
         };
       }
       if (typeof npc.health !== "number" || !Number.isFinite(npc.health) || npc.health < 0 || npc.health > 100) {
         return {
           valid: false,
           code: "INVALID_CHARACTER",
-          message: `Character '${npc.id}' has invalid health: ${npc.health}. Must be in [0, 100].`,
+          message: `Character '${npc.id}' has invalid health. Must be in [0, 100].`,
         };
       }
 
