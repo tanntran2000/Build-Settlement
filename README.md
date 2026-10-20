@@ -25,15 +25,22 @@ Văn bản là phần cốt lõi của trải nghiệm. Hình ảnh pixel art v�
 
 Bản dành cho người chơi mở **Weekly Management**: phân công Farm Field → End Week → báo cáo WHY → Plan next week. `/`, `?mode=weekly`, `?mode=r1` và query không nhận diện đều mở Weekly. Prototype R1 ngày được giữ riêng để kiểm hồi quy, không nằm trong artifact dành cho người chơi.
 
-Runtime Weekly hiện vẫn có đúng bốn stock Gold/Food/Wood/Iron, không đổi công thức, reset khi reload và chưa save/load. Hướng thiết kế kế tiếp đã xác định sáu stock Wheat/Gold/Wood/Iron/Food/Goods: Goods là hàng hóa vật lý dùng trao đổi, không phải status; Food chỉ được chế biến từ Wheat qua building trong cùng tuần thu hoạch. Recipes, rates, capacity và cost chưa được duyệt; triển khai sáu stock, UI/UX mới, nguồn Gold, tiêu thụ Food và hoạt động khác cần WP riêng. Entry này chưa triển khai các cơ chế đó hoặc hoàn tất demo.
+Runtime Weekly là thử nghiệm chuỗi **Farm → Wheat → Food Processor → Food**, có 5 kho live **Gold/Wheat/Food/Wood/Iron**. Một Farm và một Food Processor operational có sẵn; chưa có cơ chế xây dựng. World mới khởi tạo Gold10/Wheat0/Food4/Wood0/Iron0, cohort hiện có cho 10 WF dùng chung. Reload reset game; chưa save/load/migration. Goods vẫn là loại inventory đích thứ sáu, chưa có kho live/recipe/trade. Ba nhóm xã hội, Requirements Food/Goods, Status và Law chưa mô phỏng.
 
-### Công thức đang chạy — chưa đổi balance
+### Công thức trial đã duyệt — chưa phải balance chính thức
 
-Mọi stock và WF dùng fixed-point: **1 đơn vị hiển thị = 1000 milli**, **1 WF = 1000 milliWF**. Với 100 cư dân Middle, multiplier 1000: `baseWFmilli = floor(100 × 1000 / 10) = 10000`; modifier hiện tại bằng 0 nên effective WF vẫn là **10 WF**. Helper dùng số nguyên chính xác; multiplier là integer milli không âm.
+**1 stock hiển thị = 1000 milli; 1 WF = 1000 milli-WF.** Chỉ phân công WF nguyên, mỗi công trình 0–5 WF = 0–5 mẻ/tuần; tổng hai phân công không vượt WF thực từ cohort. WF đã giao nhưng thiếu đầu vào không tự chuyển sang công trình khác.
 
-Gọi `A` là milliWF phân công, `G` và `F` là Gold/Food milli trước tuần: `0 ≤ A ≤ min(effectiveWFmilli, 10000)`. Gold yêu cầu bằng `A`; milliWF được cấp kinh phí `B = min(G, A)`. Gold sau tuần `G − B`; Food sau tuần `F + 2 × B`; chưa phân công `effectiveWFmilli − A`; đã phân công nhưng thiếu kinh phí `A − B`. Wood/Iron không đổi. Đây là hệ số thử nghiệm **1 Gold/WF → 2 Food/WF**, không phải full balance.
+| Công trình | Một mẻ | Thứ tự |
+| --- | --- | --- |
+| Farm Field | 1 WF + 1 Gold → 2 Wheat | Thu hoạch trước, tối đa 5 mẻ/tuần |
+| Food Processor | 1 WF + 2 Wheat → 2 Food | Chế biến sau, được dùng Wheat vừa thu trong tuần, tối đa 5 mẻ/tuần |
 
-Ví dụ: Gold10/Food4, giao4WF → Gold6/Food12. Gold2/Food4, giao4WF → Gold0/Food8, thiếu kinh phí2WF và chưa phân công6WF. Giao0.5WF tại Gold10/Food4 → Gold9.5/Food5. Không tiêu thụ Food hoặc tạo Gold tự động. Báo cáo là kết quả của tuần vừa xử lý; header đã ở tuần kế tiếp.
+Gọi `a,b` là số WF nguyên giao Farm/Processor; `G,W,F` là tồn đầu tuần theo đơn vị hiển thị. `h=min(a,floor(G))`; Wheat có để chế biến=`W+2h`; `p=min(b,floor((W+2h)/2))`. Sau tuần: **Gold=`G−h`, Wheat=`W+2h−2p`, Food=`F+2p`**; Wood/Iron không đổi. WF chưa giao=`effective−a−b`, WF thực chạy=`h+p`, WF đã giao nhưng chờ=`a+b−h−p`. Mỗi mẻ chỉ trừ đầu vào một lần; dư lẻ giữ lại. Không có processor thì không được giao processing; lệnh quá WF, state lỗi hoặc overflow không đổi bất kỳ kho/tuần nào. Thành công tăng tuần đúng một lần; report là tuần vừa xử lý.
+
+Ví dụ từ Gold10/Wheat0/Food4: giao **4+4WF** → Gold6/Wheat0/Food12, còn2WF chưa giao. Gold2 với cùng phân công → Gold0/Wheat0/Food8,2WF chưa giao và4WF đã giao nhưng chờ. Gold1.5 → cònGold0.5/Food6, không mua nửa mẻ. Giao4+0 chỉ thu8Wheat, Food giữ4; tuần sau0+4 dùng8Wheat tồn kho để tăngFood lên12. Chưa có Food consumption/Gold income.
+
+**Lịch sử đã thay thế:** prototype trước dùng Farm4WF trực tiếp tạo8Food (Gold6/Food12,6WF chưa giao), cap10WF và cho giaoWF lẻ. Trial mới cần8WF cho cùng8Food; không relabel Food cũ thành Wheat, không chuyển dữ liệu prototype cũ. [WP, tham số và acceptance](docs/work_packages/WP-WHEAT-FOOD-CHAIN-01_v0.1.md).
 
 Những trải nghiệm mô tả trong phần định hướng không có nghĩa đã hiện diện đầy đủ trong prototype. Dữ liệu và cơ chế có thể thay đổi giữa các phiên bản thử nghiệm.
 

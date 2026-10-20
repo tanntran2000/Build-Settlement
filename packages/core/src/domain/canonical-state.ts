@@ -2,12 +2,12 @@ import type { Settlement } from "./settlement.js";
 import type { WorldMetadata } from "./gamestate.js";
 import { createPopulationCohort, type PopulationCohort } from "./population.js";
 
-export const WEEKLY_RESOURCE_KEYS = ["gold", "food", "wood", "iron"] as const;
+export const WEEKLY_RESOURCE_KEYS = ["gold", "wheat", "food", "wood", "iron"] as const;
 export type WeeklyResource = typeof WEEKLY_RESOURCE_KEYS[number];
 export type WeeklyStocks = Record<WeeklyResource, number>;
 
 // A distinct new-world contract; R1 Settlement/GameState and its save shape stay independent.
-export interface CanonicalSettlement extends Pick<Settlement, "id" | "name" | "status" | "cohorts"> { inventory: WeeklyStocks }
+export interface CanonicalSettlement extends Pick<Settlement, "id" | "name" | "status" | "cohorts"> { inventory: WeeklyStocks; foodProcessorOperational: boolean }
 export interface CanonicalGameState {
   week: number;
   worldMetadata: WorldMetadata;
@@ -43,7 +43,8 @@ export function isCanonicalGameState(value: unknown): value is CanonicalGameStat
         !(value.activeSettlementId === null || nonempty(value.activeSettlementId))) return false;
     let activeId: string | null = null;
     for (const [key, settlement] of Object.entries(value.settlements)) {
-      if (!hasWeeklyKeys(settlement, ["id", "name", "status", "inventory", "cohorts"]) ||
+      if (!hasWeeklyKeys(settlement, ["id", "name", "status", "inventory", "cohorts", "foodProcessorOperational"]) ||
+          typeof settlement.foodProcessorOperational !== "boolean" ||
           !nonempty(settlement.id) || key !== settlement.id || !nonempty(settlement.name) ||
           !oneOf(settlement.status, ["unexplored", "discovered", "active", "handoff", "legacy"]) ||
           !hasWeeklyKeys(settlement.inventory, WEEKLY_RESOURCE_KEYS) || !Array.isArray(settlement.cohorts)) return false;

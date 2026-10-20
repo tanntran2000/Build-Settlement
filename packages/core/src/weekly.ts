@@ -13,10 +13,14 @@ export interface WeeklyReport {
   readonly net: Readonly<WeeklyStocks>;
   readonly after: Readonly<WeeklyStocks>;
   readonly flows: Readonly<Record<WeeklyResource, Readonly<ResourceFlowResult>>>;
-  readonly workforce: Readonly<{ effectiveMilli: number; assignedMilli: number; availableMilli: number; fundedMilli: number; unfundedMilli: number }>;
+  readonly workforce: Readonly<{ effectiveMilli: number; assignedMilli: number; availableMilli: number; fulfilledMilli: number; idleAssignedMilli: number }>;
+  readonly production: Readonly<{
+    farm: Readonly<{ plannedBatches: number; completedBatches: number; blockedBatches: number }>;
+    processor: Readonly<{ plannedBatches: number; completedBatches: number; blockedBatches: number }>;
+  }>;
   readonly why: string;
 }
-export interface EndWeekCommand { type: "END_WEEK"; expectedWeek: number; foodWorkforceMilli: number }
+export interface EndWeekCommand { type: "END_WEEK"; expectedWeek: number; farmWorkforceMilli: number; processorWorkforceMilli: number }
 export type WeeklyCommandResult<S> =
   | { success: true; nextState: CanonicalGameState; report: WeeklyReport }
   | { success: false; state: S; error: { code: string; message: string } };
@@ -26,7 +30,7 @@ export function createWeeklyState(): CanonicalGameState {
   return {
     week: 1, worldMetadata: { worldSeed: 2026, gameVersion: "0.1.0" }, activeSettlementId: id,
     settlements: { [id]: {
-      id, name: "Haven", status: "active", inventory: { gold: 10000, food: 4000, wood: 0, iron: 0 },
+      id, name: "Haven", status: "active", foodProcessorOperational: true, inventory: { gold: 10000, wheat: 0, food: 4000, wood: 0, iron: 0 },
       cohorts: [createPopulationCohort({
         id: "weekly_middle", occupation: "worker", socialClass: "common", legalStatus: "citizen", count: 100,
         averageHealth: 80, morale: 80, productivity: 80, resentment: 0, loyalty: 80, livingStandard: "decent",

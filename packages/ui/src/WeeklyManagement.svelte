@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createWeeklyState, weeklyWorkforceMilli, WEEKLY_RESOURCE_KEYS, SOCIAL_RESOURCE_SCALE, type WeeklyReport } from '@haven/core';
-  import { executeWeeklyCommand, FARM_FIELD_CAPACITY_MILLI, FARM_GOLD_PER_WF, FARM_FOOD_PER_WF } from '@haven/simulation';
+  import { executeWeeklyCommand, PRODUCTION_BATCH_WORKFORCE_MILLI, FARM_MAX_BATCHES, PROCESSOR_MAX_BATCHES, FARM_GOLD_PER_BATCH_MILLI, FARM_WHEAT_PER_BATCH_MILLI, PROCESSOR_WHEAT_PER_BATCH_MILLI, PROCESSOR_FOOD_PER_BATCH_MILLI } from '@haven/simulation';
   import { CITY_DESIGN } from '@haven/content';
   import ErrorLog from './ErrorLog.svelte';
   import { errorLog } from './error-log.js';
@@ -11,7 +11,8 @@
   $: settlement = state.activeSettlementId === null ? null : state.settlements[state.activeSettlementId];
   $: workforceMilli = settlement ? weeklyWorkforceMilli(settlement.cohorts) : 0;
   $: headcount = settlement ? settlement.cohorts.reduce((total, cohort) => total + cohort.count, 0) : 0;
-  let draft = '0';
+  let farmDraft = '0';
+  let processorDraft = '0';
   let report: WeeklyReport | null = null;
   let error = '';
   const display = (milli: number) => {
@@ -25,16 +26,18 @@
     event.preventDefault();
     if (report) return;
     errorLog.setContext('weekly', { week: state.week });
-    const value = draft.trim();
-    if (!/^(?:0|[1-9]\d*)(?:\.\d{1,3})?$/.test(value)) {
+    const farm = farmDraft.trim();
+    const processor = processorDraft.trim();
+    const farmWF = Number(farm);
+    const processorWF = Number(processor);
+    if (!/^(?:0|[1-9]\d*)$/.test(farm) || !/^(?:0|[1-9]\d*)$/.test(processor) ||
+        !Number.isSafeInteger(farmWF) || !Number.isSafeInteger(processorWF)) {
       errorLog.record('END_WEEK', 'INVALID_WORKFORCE_INPUT');
-      error = `Enter 0–${display(FARM_FIELD_CAPACITY_MILLI)} WF with at most three decimal places.`;
+      error = `Enter whole WF: Farm 0–${FARM_MAX_BATCHES}, Processor 0–${PROCESSOR_MAX_BATCHES}; together use at most ${display(workforceMilli)} WF.`;
       return;
     }
-    const [whole, fraction = ''] = value.split('.');
-    const foodWorkforceMilli = Number(whole) * SOCIAL_RESOURCE_SCALE + Number(fraction.padEnd(3, '0'));
     try {
-      const result = executeWeeklyCommand(state, { type: 'END_WEEK', expectedWeek: state.week, foodWorkforceMilli });
+      const result = executeWeeklyCommand(state, { type: 'END_WEEK', expectedWeek: state.week, farmWorkforceMilli: farmWF * SOCIAL_RESOURCE_SCALE, processorWorkforceMilli: processorWF * SOCIAL_RESOURCE_SCALE });
       if (!result.success) {
         error = errorLog.record('END_WEEK', result.error.code);
         return;
@@ -50,7 +53,8 @@
 
   function planNextWeek() {
     report = null;
-    draft = '0';
+    farmDraft = '0';
+    processorDraft = '0';
     error = '';
   }
 </script>
@@ -58,7 +62,7 @@
 <main lang="en">
   <header class="card">
     <h1>Weekly Management</h1>
-    <p>Experimental Farm Field slice · Resets on reload · No save/load</p>
+    <p>Experimental Wheat → Food chain · Resets on reload · No save/load</p>
     {#if settlement}<h2>{settlement.name}</h2>{/if}
     <p><span data-testid="weekly-population">{headcount} residents</span> · <span data-testid="weekly-workforce">{display(workforceMilli)} WF</span> · Week <strong data-testid="weekly-week">{state.week}</strong> · {report ? 'Report' : 'Planning'}</p>
   </header>
@@ -75,12 +79,22 @@
   </section>
 
   <form class="card" onsubmit={endWeek} novalidate>
-    <h2>Farm Field</h2>
-    <p id="farm-help">Capacity: {display(FARM_FIELD_CAPACITY_MILLI)} WF/week. Each funded WF costs {FARM_GOLD_PER_WF} Gold and produces {FARM_FOOD_PER_WF} Food. No Food consumption or Gold income.</p>
+    <h2>Wheat → Food production</h2>
+    <p id="shared-help">Whole WF only. Both buildings share {display(workforceMilli)} WF; assigned but idle WF is not reassigned. Harvest runs before processing in the same week.</p>
+    <h3>Farm Field</h3>
+    <p id="farm-help">Available. {display(PRODUCTION_BATCH_WORKFORCE_MILLI)} WF + {display(FARM_GOLD_PER_BATCH_MILLI)} Gold → {display(FARM_WHEAT_PER_BATCH_MILLI)} Wheat per batch. Maximum {FARM_MAX_BATCHES} batches/week.</p>
     <label for="farm-workforce">Farm Field workforce (WF)</label>
-    <input id="farm-workforce" type="text" inputmode="decimal" bind:value={draft}
+    <input id="farm-workforce" type="text" inputmode="numeric" bind:value={farmDraft}
       disabled={report !== null || settlement === null} aria-invalid={error ? 'true' : 'false'}
-      aria-describedby={error ? 'farm-help weekly-error' : 'farm-help'} />
+      aria-describedby={error ? 'farm-help shared-help weekly-error' : 'farm-help shared-help'} />
+    <h3>Food Processor</h3>
+    <p id="processor-help">{settlement?.foodProcessorOperational ? 'Food Processor operational' : 'Food Processor unavailable'}</p>
+    <p>{display(PRODUCTION_BATCH_WORKFORCE_MILLI)} WF + {display(PROCESSOR_WHEAT_PER_BATCH_MILLI)} Wheat → {display(PROCESSOR_FOOD_PER_BATCH_MILLI)} Food per batch. Maximum {PROCESSOR_MAX_BATCHES} batches/week. Only complete batches run; unused inputs stay in stock.</p>
+    <label for="processor-workforce">Food Processor workforce (WF)</label>
+    <input id="processor-workforce" type="text" inputmode="numeric" bind:value={processorDraft}
+      disabled={report !== null || settlement === null || !settlement.foodProcessorOperational} aria-invalid={error ? 'true' : 'false'}
+      aria-describedby={error ? 'processor-help shared-help weekly-error' : 'processor-help shared-help'} />
+    <p>No Food consumption or Gold income.</p>
     <button type="submit" disabled={report !== null || settlement === null}>End Week</button>
     {#if error}<p id="weekly-error" role="alert">{error}</p>{/if}
   </form>
@@ -88,15 +102,17 @@
   {#if report}
     <section class="card" aria-label="Week report" aria-live="polite">
       <h2>Week {report.week} report</h2>
-      <p>Assigned: {display(report.workforce.assignedMilli)} WF · Funded: {display(report.workforce.fundedMilli)} WF</p>
-      <p>Unfunded assigned: {display(report.workforce.unfundedMilli)} WF · Unassigned: {display(report.workforce.availableMilli)} WF</p>
+      <p>Assigned: {display(report.workforce.assignedMilli)} WF · Fulfilled: {display(report.workforce.fulfilledMilli)} WF</p>
+      <p>Farm batches: {report.production.farm.plannedBatches} planned / {report.production.farm.completedBatches} completed / {report.production.farm.blockedBatches} blocked</p>
+      <p>Processor batches: {report.production.processor.plannedBatches} planned / {report.production.processor.completedBatches} completed / {report.production.processor.blockedBatches} blocked</p>
+      <p>Assigned but idle: {display(report.workforce.idleAssignedMilli)} WF · Unassigned: {display(report.workforce.availableMilli)} WF</p>
       <div class="ledger">
         <table>
           <caption>Resource ledger (units)</caption>
-          <thead><tr><th scope="col">Stock</th><th scope="col">Before</th><th scope="col">Net</th><th scope="col">After</th><th scope="col">Requested outflow</th><th scope="col">Actual outflow</th><th scope="col">Deficit</th></tr></thead>
+          <thead><tr><th scope="col">Stock</th><th scope="col">Before</th><th scope="col">In</th><th scope="col">Used</th><th scope="col">Net</th><th scope="col">After</th></tr></thead>
           <tbody>
             {#each WEEKLY_RESOURCE_KEYS as key}
-              <tr><th scope="row">{label(key)}</th><td>{display(report.before[key])}</td><td>{display(report.net[key])}</td><td>{display(report.after[key])}</td><td>{display(report.flows[key].requestedOutflow)}</td><td>{display(report.flows[key].actualOutflow)}</td><td>{display(report.flows[key].deficit)}</td></tr>
+              <tr><th scope="row">{label(key)}</th><td>{display(report.before[key])}</td><td>{display(report.flows[key].inflow)}</td><td>{display(report.flows[key].actualOutflow)}</td><td>{display(report.net[key])}</td><td>{display(report.after[key])}</td></tr>
             {/each}
           </tbody>
         </table>
@@ -107,7 +123,7 @@
   {/if}
   <section class="card planned" aria-labelledby="planned-city-title">
     <h2 id="planned-city-title">Planned city systems</h2>
-    <p>Design preview · Not simulated</p>
+    <p>Design preview · Groups, Goods, Requirements and Status are not simulated. Wheat/Food production is active above.</p>
     <h3>Social groups · Proposed names</h3>
     <div class="planned-groups">
       {#each CITY_DESIGN.groups as group}
@@ -122,6 +138,7 @@
 
     <section aria-labelledby="planned-inventory-title">
       <h3 id="planned-inventory-title">Physical inventory</h3>
+      <p>Target: six inventory types. Gold, Wheat, Food, Wood and Iron are live above; Goods inventory is not implemented.</p>
       <dl>
         <div><dt>Inputs</dt><dd>{CITY_DESIGN.inventory.inputs.join(', ')}</dd></div>
         <div><dt>Finished inventory</dt><dd>{CITY_DESIGN.inventory.finished.join(', ')}</dd></div>
@@ -152,7 +169,7 @@
   .planned h4 { margin: 0; }
   .planned-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
   p { margin: 8px 0; }
-  .stocks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .stocks { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; }
   dd { margin: 0; font-size: 1.5rem; }
   label { display: block; margin-top: 16px; }
   input, button { font: inherit; padding: 10px; border: 1px solid var(--border-color); border-radius: 6px; }
