@@ -2,7 +2,7 @@
 
 **Status: APPROVED TRIAL BALANCE — NOT IMPLEMENTED.**
 
-**Subsequent scoped decisions:** [Tension, Social Crisis and Gold — Decision Record 01](TENSION-CRISIS-GOLD-DECISIONS-01.md) adds Tension as the fourth Status, replaces this record's original direct rebellion trigger with serious demands and records approved 50/75/90, 2–2–4 trial boundaries. Food/Happiness/Faltering/Flourishing calculations below are unchanged. Tension contributions and final loss semantics remain pending.
+**Subsequent scoped decisions:** [Tension, Social Crisis and Gold — Decision Record 01](TENSION-CRISIS-GOLD-DECISIONS-01.md) adds Tension as the fourth Status, replaces this record's original direct rebellion trigger with serious demands and records approved 50/75/90, 2–2–4 trial boundaries. The subsequent formula approval records pressure `8s + 6u + 4x`, recovery `4 × min(1 − s, 1 − u) × (1 − x)` and Tension clamp 0–100 there. Food/Happiness/Faltering/Flourishing calculations below are unchanged. Tax normalization, Event relief values, Tension initialization/rounding and final loss semantics remain pending.
 
 **Date:** 2026-10-20. **Verified runtime base:** `02e58b1fe6b9ef42c048cd4fede8bb5bc5aadf4d` (PR26 merge).
 
@@ -17,7 +17,7 @@ Earlier design references are [the non-Law record](SOCIAL-REQUIREMENTS-STATUS-DR
 | Topic | Current decision and scope |
 | --- | --- |
 | Requirements | Food and Goods are city-wide Requirements, separate from finished physical inventory. Only the Food trial is specified here; no Goods recipe, production or trade is added. |
-| Status | Happiness, Security, Corruption and Tension. The first three retain design domain 0–100; Tension range/initialization/precision are pending. Goods remains a Requirement and physical stock, not a Status. |
+| Status | Happiness, Security, Corruption and Tension. All four have design domain 0–100, with Tension clamp approved for trial; Tension initialization/precision are pending. Goods remains a Requirement and physical stock, not a Status. |
 | Display names | **Flourishing** is the positive economy effect; **Faltering** the negative. These replace illustrative Happy/Hungry labels. Happiness remains the independent Status input. The `economy` family name is unchanged. |
 | Population | Exactly three planned groups remain Makers / Luminaries / Merchants, with the PR25 names/duties unchanged. No class conversion, membership assignment, migration or new population dynamics is approved. |
 | Law | **DEFERRED.** No Law, voting, privilege, Civic Charter or entitlement formula is added. |

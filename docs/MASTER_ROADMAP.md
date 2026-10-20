@@ -2,9 +2,11 @@
 
 ## Current design checkpoint — Tension/crisis/Gold, documentation candidate
 
-Base main đã xác minh: `d89a858c7eb5d29829538423eec8238797801875` (PR27). [Decision Record 01](design/TENSION-CRISIS-GOLD-DECISIONS-01.md) là nguồn đối chiếu quyết định mới: **4 Status chung thành phố Happiness / Security / Corruption / Tension**; Food/Goods vẫn là Requirements, khác kho vật lý. Tension không bằng `100 − Happiness`; miền/initial/precision của Tension chưa duyệt. Ba nhóm xã hội không đổi, không thêm class bars hoặc migration.
+Base main đã xác minh: `d89a858c7eb5d29829538423eec8238797801875` (PR27). [Decision Record 01](design/TENSION-CRISIS-GOLD-DECISIONS-01.md) là nguồn đối chiếu quyết định mới: **4 Status chung thành phố Happiness / Security / Corruption / Tension**; Food/Goods vẫn là Requirements, khác kho vật lý. Tension không bằng `100 − Happiness`; miền/clamp Tension 0–100 vừa duyệt cho trial, initial/precision chưa duyệt. Ba nhóm xã hội không đổi, không thêm class bars hoặc migration.
 
-Mốc thiếu Food và H < 30 trong 3 tuần liên tiếp nay mở **yêu sách nghiêm trọng**, không trực tiếp rebellion. Trial đã duyệt: cảnh báo T ≥ 50 hoặc thiếu Food và H < 30; protest T ≥ 75 sau 2 tuần demand chưa giải quyết; rebellion T ≥ 90 sau 2 tuần protest chưa giải quyết; cửa sổ cuối 4 tuần; tối đa một bậc leo thang mỗi End Week. Công thức Tension chỉ mới duyệt khái niệm áp lực − điều hành − relief Event hoàn thành một lần, không tính trùng. +10/−10, phục hồi hai tuần/bậc, cooldown, trigger tài chính và semantics xử thua chưa duyệt. Đề xuất cứu nguyên nhân tại hạn cuối phải được xét trước thua vẫn cần chốt.
+Mốc thiếu Food và H < 30 trong 3 tuần liên tiếp nay mở **yêu sách nghiêm trọng**, không trực tiếp rebellion. Trial đã duyệt: cảnh báo T ≥ 50 hoặc thiếu Food và H < 30; protest T ≥ 75 sau 2 tuần demand chưa giải quyết; rebellion T ≥ 90 sau 2 tuần protest chưa giải quyết; cửa sổ cuối 4 tuần; tối đa một bậc leo thang mỗi End Week. Công thức trial mới duyệt: `pressure = 8s + 6u + 4x`; `recovery = 4 × min(1 − s, 1 − u) × (1 − x)`; `T_next = clamp(T_prior + pressure − recovery − EventRelief, 0, 100)`. `s/u/x` là tỷ lệ thiếu Food/upkeep chưa trả/gánh nặng thuế dư, miền 0–1. Mapping thuế, zero-demand/due, Event relief cụ thể, phục hồi hai tuần/bậc, cooldown, trigger tài chính và semantics xử thua chưa duyệt. Đề xuất cứu nguyên nhân tại hạn cuối phải được xét trước thua vẫn cần chốt.
+
+Ví dụ điều kiện không Food, trả đủ upkeep, thuế trung tính, không Event relief và H 80 / T 0 minh họa: T tăng 8/tuần; demand tuần 7 → protest tuần 10 → rebellion tuần 12 → hết cửa sổ cuối tuần 16. Đây không phải initialization hoặc timeline chung.
 
 Gold: thuế; Goods trade dựa tổng dân + Market level; explore/combat. Chi: xây dựng một lần, upkeep riêng từng building tăng theo level của chính nó, quân đội và Market purchases. Khoản 1 Gold/mẻ Farm được credit vào upkeep **cùng Farm/cùng tuần**: `extra = max(0, upkeep − batch Gold paid)`, không hoàn chênh lệch hoặc thu trùng. Đây là thiết kế, chưa chạy; hệ số thuế/giá/phí/upkeep/quân đội và Gold âm/nợ vẫn pending.
 
@@ -36,7 +38,7 @@ Flourishing cần Happiness ≥ 80, đủ ăn và tồn Food sau tiêu thụ đ�
 
 [Thiết kế](design/SOCIAL-REQUIREMENTS-STATUS-DRAFT-01.md) ghi đúng 3 nhóm labor / intellectual-scientific / merchants; tên đề xuất The Makers’ Union / The Luminary Circle / The Mercantile League, nhãn UI Makers / Luminaries / Merchants. Vai trò lần lượt: sản xuất/xây dựng/bảo trì; nghiên cứu/giáo dục/quy hoạch/tiêu chuẩn kỹ thuật; thương mại/phân phối. Không ánh xạ một-một Slave/Low/Middle/High hoặc tự gán dân số.
 
-Food/Goods là Requirements **toàn thành phố**, tách biệt kho thành phẩm. Status là Happiness/Security/Corruption/Tension; ba Status cũ giữ miền 0–100, miền Tension chưa chốt. Cả ba nhóm cùng đóng góp qua điều kiện/công trình/hiệu ứng tương lai, không mỗi nhóm cho một Status, không tham nhũng bẩm sinh ở Merchants. **Law / Civic Charter DEFERRED**: chỉ ranh giới tích hợp chờ quyết định.
+Food/Goods là Requirements **toàn thành phố**, tách biệt kho thành phẩm. Status là Happiness/Security/Corruption/Tension; cả bốn miền thiết kế 0–100, Tension clamp vừa duyệt cho trial nhưng initial/rounding còn pending. Cả ba nhóm cùng đóng góp qua điều kiện/công trình/hiệu ứng tương lai, không mỗi nhóm cho một Status, không tham nhũng bẩm sinh ở Merchants. **Law / Civic Charter DEFERRED**: chỉ ranh giới tích hợp chờ quyết định.
 
 [WP-SOCIAL-CATALOG-PRESENTATION-01 v0.1](work_packages/WP-SOCIAL-CATALOG-PRESENTATION-01_v0.1.md) đã được duyệt và triển khai riêng ở PR25, chỉ catalog/nhãn tĩnh. PR26 bổ sung production 5 stock; Food Trial Rules 01 và Decision Record 01 ghi các numerical trial được duyệt sau đó, chưa triển khai. Goods stock/recipe, Requirements/Status runtime, membership và migration vẫn cần spec/WP riêng; không sao chép các số chưa duyệt từ proposal cũ.
 
@@ -137,7 +139,7 @@ flowchart TD
 * **City Effect Lifecycle (L3)**:
   * Quản lý vòng đời hiệu ứng đô thị có thời hạn (`packages/core/src/status/effects.ts`) với chu kỳ đếm lùi dùng chung 3 tuần (`shared 3-week countdown`), bậc cao thay thế bậc thấp mà không reset bộ đếm, chống làm mới chu kỳ (anti-refresh), trạng thái đối lập thay thế nhau không cộng dồn.
   * Phân biệt rõ hai tầng (không gộp lẫn):
-    * **4 Status toàn thành phố (thiết kế mới, chưa mô phỏng)**: Happiness, Security, Corruption, Tension; ba Status cũ miền 0–100, miền Tension pending. Food/Goods là Requirements riêng, không phải Status; tồn kho Food/Goods vẫn là lớp vật lý riêng. Danh mục 4 thanh cũ có Goods đã được thay thế về thiết kế, không sửa runtime.
+    * **4 Status toàn thành phố (thiết kế mới, chưa mô phỏng)**: Happiness, Security, Corruption, Tension; cả bốn miền thiết kế 0–100, Tension clamp đã duyệt cho trial, initial/rounding pending. Food/Goods là Requirements riêng, không phải Status; tồn kho Food/Goods vẫn là lớp vật lý riêng. Danh mục 4 thanh cũ có Goods đã được thay thế về thiết kế, không sửa runtime.
     * **4 Nhóm Hiệu Ứng Đô Thị (City Effect Families)**: `economy`, `security`, `qol`, `corruption`.
     * *Chưa có công thức bộ giải mã Status $\rightarrow$ City Effect nào được phê duyệt hay triển khai.*
 * **Các Hạng Mục Rõ Ràng Chưa Triển Khai / Tạm Hoãn (Deferred / Unimplemented)**:
