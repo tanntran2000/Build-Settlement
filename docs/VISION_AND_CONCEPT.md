@@ -1,5 +1,7 @@
 # Tầm Nhìn Dự Án & Bản Thiết Kế Ý Tưởng (VISION_AND_CONCEPT.md)
 
+> **Cập nhật thiết kế 2026-10-20 — chỉ working copy, chưa triển khai**: Quyết định mới về đúng 3 nhóm xã hội, Requirements Food/Goods và Status Happiness/Security/Corruption được ghi tại [thiết kế non-Law](design/SOCIAL-REQUIREMENTS-STATUS-DRAFT-01.md). Law / Civic Charter **DEFERRED**, chỉ giữ ranh giới tích hợp chờ quyết định; nội dung thể chế/đặc quyền bên dưới là bối cảnh lịch sử, không cấp phép triển khai. Không có balance mới hoặc migration được duyệt.
+
 > **Tên dự án**: Haven: Sovereign Frontier (Build-Settlement)  
 > **Thể loại**: Quản lý Lãnh địa & Mô phỏng Xã hội Hậu tận thế (Colony Sim / Society Simulator)  
 > **Định hướng nội dung**: Chiều sâu quản trị vĩ mô kết hợp hệ sinh thái cơ chế 18+ kế thừa từ *Free Cities* và *Pregmod*.
@@ -31,10 +33,15 @@ Khác biệt với các game quản lý thông thường người chơi phải g
   * Đóng vai trò là các chỉ huy, kỹ thuật viên trưởng, bác sĩ, quản lý nhà thổ, hoặc thiếp thất thân cận.
   * Tương tác qua **Hệ thống Quan hệ 8 Chiều** (*Trust, Respect, Affection, Fear, Debt, Lust, Obedience, Resentment*).
 * **Population Cohort (Quần thể dân cư số đông)**:
-  * Mô phỏng theo khối nhóm chức nghiệp: Công nhân thô sơ, Nông dân, Kỹ thuật viên, Lính bảo an, Thương nhân, Nô lệ lao dịch.
+  * Thiết kế kế tiếp có **đúng 3 nhóm xã hội**: labor, intellectual/scientific, merchants. Tên tiếng Anh đề xuất: **The Makers’ Union / The Luminary Circle / The Mercantile League**; nhãn UI: **Makers / Luminaries / Merchants**.
+  * Nhiệm vụ tương ứng: sản xuất/xây dựng/bảo trì; nghiên cứu/giáo dục/quy hoạch/tiêu chuẩn kỹ thuật; thương mại/phân phối. Nghề nghiệp cụ thể không tạo thêm nhóm xã hội.
+  * Cả ba cùng đóng góp vào Happiness/Security/Corruption toàn thành phố qua điều kiện, công trình và hiệu ứng tương lai; không chia mỗi nhóm cho một Status, không gán tham nhũng bẩm sinh cho Merchants. Chưa có quy tắc gán dân số hoặc chuyển đổi từ Slave/Low/Middle/High.
   * Quản lý qua các chỉ số bình quân: Sĩ khí (*Morale*), Năng suất (*Productivity*), Mức độ Bất mãn (*Resentment*), Tỷ lệ tiêu hao dinh dưỡng.
 
 ### 2.3. Ba Trục Thân Phận Độc Lập (3 Independent Axes)
+
+> Mô hình ba trục dưới đây là bối cảnh thiết kế/schema hiện có; không phải ánh xạ sang ba nhóm mới. Các enum, cohort và profile runtime giữ nguyên. Law tiếp tục DEFERRED.
+
 Phá vỡ sự đơn giản hóa thường thấy ở game thông thường, xã hội của Haven tách biệt 3 khái niệm:
 $$\text{Nghề nghiệp (Occupation)} \neq \text{Tầng lớp (Social Class)} \neq \text{Địa vị pháp lý (Legal Status)}$$
 

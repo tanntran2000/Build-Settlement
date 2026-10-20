@@ -1,5 +1,9 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+> **Đối chiếu cục bộ 2026-10-20 — documentation only, không đóng G6**: checkout branch `work`, HEAD và remote `main` cùng `7ca4c2348f11740babd3b4fa4272b4e1e047cd5b` (PR #24); xác minh bằng `git rev-parse HEAD` và `git ls-remote origin refs/heads/main`. Ref `origin/main` cục bộ vẫn cũ, không dùng làm current main. Các nhãn candidate/chưa merge bên dưới là checkpoint lịch sử, không phải trạng thái Git vừa xác minh.
+>
+> [Thiết kế non-Law mới](design/SOCIAL-REQUIREMENTS-STATUS-DRAFT-01.md): đúng 3 nhóm labor/intellectual-scientific/merchants; tên đề xuất The Makers’ Union / The Luminary Circle / The Mercantile League, UI Makers / Luminaries / Merchants. Food/Goods là Requirements toàn thành phố riêng với inventory; chỉ Happiness/Security/Corruption là Status, miền thiết kế 0–100. Cả ba nhóm cùng đóng góp qua điều kiện/công trình/hiệu ứng tương lai, không Merchants = Corruption. Weekly vẫn bốn stock; sáu loại inventory, Requirements và Status mới chưa mô phỏng. **Law / Civic Charter DEFERRED**, không migration hoặc balance mới. [WP đề xuất](work_packages/WP-SOCIAL-CATALOG-PRESENTATION-01_v0.1.md) chờ G1; chưa code, không nâng L1–L4 hoặc công bố bản phát hành.
+
 > **Mục đích**: Bảng đối chiếu tiến độ trung thực giữa Bạn và các AI Agent. Tuyệt đối không đánh giá "Hoàn thành" khi chỉ mới dừng ở mức khai báo Interface/Type.
 
 ---
@@ -280,8 +284,8 @@ Correction round 1 của candidate sửa nhân/chia và cộng tổng ở shared
   * Phân bổ năng lực lao động (Effective $\rightarrow$ Allocated Labor), không phân bổ từng đầu người.
 * [ ] **POP-02: Population Dynamics**: **DESIGN ONLY** *(Chưa mở triển khai)*
   * Di cư, xuất cư, dịch chuyển giai cấp, ngưỡng sức chứa bền vững, dòng người nộp đơn nhập cư (Immigration, Emigration, Class Mobility, Sustainable Capacity, Outside Applicants, Headcount flows - chưa bao gồm Sinh/Tử, Tháp tuổi hay mô phỏng thế hệ).
-* [ ] **POP-03: Law & Social Conflict**: **DESIGN ONLY** *(Chưa mở triển khai)*
-  * Chính sách giai cấp, xung đột quyền lợi, biến động trật tự xã hội.
+* [ ] **POP-03: Law & Social Conflict**: **DEFERRED** *(chờ quyết định Human)*
+  * Chỉ giữ ranh giới tích hợp tương lai; không triển khai Law, voting, privilege formulas hoặc Civic Charter.
 
 ---
 

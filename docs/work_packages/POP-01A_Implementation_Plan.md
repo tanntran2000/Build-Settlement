@@ -1,5 +1,7 @@
 # Kế Hoạch Triển Khai Kỹ Thuật (Implementation Plan): POP-01A
 
+> **Ranh giới thiết kế mới 2026-10-20 — giữ nguyên hồ sơ lịch sử**: Các nhóm/profile/công thức và trạng thái approved/freeze/ready trong hồ sơ này mô tả gói cũ, không duyệt triển khai ba nhóm mới. Xem [thiết kế non-Law](../design/SOCIAL-REQUIREMENTS-STATUS-DRAFT-01.md) và [WP đề xuất chờ G1](WP-SOCIAL-CATALOG-PRESENTATION-01_v0.1.md). Không ánh xạ một-một Slave/Low/Middle/High sang Makers/Luminaries/Merchants; không tái sử dụng multiplier cũ làm balance mới; không save/data migration. **Law / Civic Charter DEFERRED**; nội dung Law lịch sử chỉ giữ để đối chiếu, không cấp phép mechanics, voting hoặc privilege formulas.
+
 ## Gói: Class Resource Core (Foundation I — Population)
 
 > **Mã gói**: `POP-01A`  

@@ -1,5 +1,7 @@
 # Bách Khoa Toàn Thư Cơ Chế Trò Chơi (ENCYCLOPEDIA_MECHANICS.md)
 
+> **Quyết định non-Law 2026-10-20 — design only**: [Thiết kế hiện hành](design/SOCIAL-REQUIREMENTS-STATUS-DRAFT-01.md) ưu tiên khi đối chiếu ba nhóm xã hội, Requirements, Status và inventory kế tiếp. Law / Civic Charter **DEFERRED**, chỉ có ranh giới tích hợp chờ quyết định. Các ý tưởng/công thức lịch sử về quyền lực, luật và công trình bên dưới được bảo toàn, không phải cơ chế được duyệt cho đợt tiếp theo.
+
 > **Mục đích**: Tài liệu này là bách khoa toàn thư chi tiết, giải thích toàn bộ nguyên lý vận hành, thông số toán học và cơ chế gameplay của **Haven: Sovereign Frontier**, kế thừa và chuẩn hóa toàn bộ hệ sinh thái cơ chế 18+ từ *Free Cities* và *Pregmod*.
 >
 > > [!IMPORTANT]
@@ -9,6 +11,15 @@
 > > - Một số danh mục enum và thang đo sơ khởi ở Chương 1–2 đã được **thay thế bởi Canonical Domain Schema** trong `packages/core/src/domain/` (`character.ts`, `relationship.ts`, `gamestate.ts`). Các mục tương ứng bên dưới được gắn nhãn **[ĐÃ ĐƯỢC THAY THẾ TRONG CODE BỞI CANONICAL SCHEMA]** để tránh nhầm lẫn khi đối chiếu kỹ thuật, đồng thời giữ nguyên lịch sử thiết kế.
 
 ---
+
+## Thiết kế non-Law kế tiếp — chưa có trong runtime
+
+- **Đúng 3 nhóm**: labor — **The Makers’ Union / Makers** (tên đề xuất / nhãn UI), sản xuất/xây dựng/bảo trì; intellectual/scientific — **The Luminary Circle / Luminaries**, nghiên cứu/giáo dục/quy hoạch/tiêu chuẩn kỹ thuật; merchants — **The Mercantile League / Merchants**, thương mại/phân phối. Chưa có membership, headcount hoặc ánh xạ Slave/Low/Middle/High sang các nhóm mới.
+- **Inventory vật lý** dự kiến gồm Wheat/Gold/Wood/Iron (đầu vào) và Food/Goods (thành phẩm do building tạo ra). Wheat thu hoạch có thể chế biến thành Food ngay cùng tuần **chỉ qua building**. Không tự ăn Wheat, không đổi nhãn Food runtime thành Wheat, chưa chốt recipe/capacity/cost.
+- **Requirements toàn thành phố** chỉ Food/Goods, tách biệt tồn kho thành phẩm cùng tên. Chưa chốt consumption/allocation/fulfillment formula.
+- **Status toàn thành phố** chỉ Happiness/Security/Corruption, miền thiết kế **0–100**. Cả ba nhóm cùng ảnh hưởng thông qua điều kiện, công trình và hiệu ứng tương lai; không mỗi nhóm sở hữu một Status, không Merchants = Corruption. Chưa duyệt threshold/effect coefficient hoặc nối Status → City Effects.
+- **Runtime Weekly** vẫn chỉ Gold/Food/Wood/Iron; Farm Field thử nghiệm tạo trực tiếp Food và chưa mô phỏng Requirements/Status mới. Không nhập các con số thử nghiệm hay lịch sử bên dưới làm balance cho thiết kế mới. Không save/data migration hoặc cơ chế trade/economy mới.
+- **Law DEFERRED**: chỉ dành chỗ cho tích hợp tương lai; chưa quyết định mechanics, voting, privilege formula hoặc Civic Charter. Việc quyền hạn tương lai có thể ảnh hưởng Requirements chỉ là ranh giới chờ thiết kế, không phải multiplier hay API đã duyệt.
 
 ## Mục Lục
 
