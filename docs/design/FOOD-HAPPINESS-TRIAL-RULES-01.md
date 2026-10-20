@@ -2,6 +2,8 @@
 
 **Status: APPROVED TRIAL BALANCE — NOT IMPLEMENTED.**
 
+**Subsequent scoped decisions:** [Tension, Social Crisis and Gold — Decision Record 01](TENSION-CRISIS-GOLD-DECISIONS-01.md) adds Tension as the fourth Status, replaces this record's original direct rebellion trigger with serious demands and records approved 50/75/90, 2–2–4 trial boundaries. The subsequent formula approval records pressure `8s + 6u + 4x`, recovery `4 × min(1 − s, 1 − u) × (1 − x)` and Tension clamp 0–100 there. Food/Happiness/Faltering/Flourishing calculations below are unchanged. Tax normalization, Event relief values, Tension initialization/rounding and final loss semantics remain pending.
+
 **Date:** 2026-10-20. **Verified runtime base:** `02e58b1fe6b9ef42c048cd4fede8bb5bc5aadf4d` (PR26 merge).
 
 This document records approved trial calculations and unresolved interfaces. It is not an implementation WP, final economic balance, schema change, release of the proposed mechanics or permission to invent missing rules.
@@ -15,7 +17,7 @@ Earlier design references are [the non-Law record](SOCIAL-REQUIREMENTS-STATUS-DR
 | Topic | Current decision and scope |
 | --- | --- |
 | Requirements | Food and Goods are city-wide Requirements, separate from finished physical inventory. Only the Food trial is specified here; no Goods recipe, production or trade is added. |
-| Status | Happiness, Security and Corruption, design domain 0–100. No Goods Status or fourth bar is restored. |
+| Status | Happiness, Security, Corruption and Tension. All four have design domain 0–100, with Tension clamp approved for trial; Tension initialization/precision are pending. Goods remains a Requirement and physical stock, not a Status. |
 | Display names | **Flourishing** is the positive economy effect; **Faltering** the negative. These replace illustrative Happy/Hungry labels. Happiness remains the independent Status input. The `economy` family name is unchanged. |
 | Population | Exactly three planned groups remain Makers / Luminaries / Merchants, with the PR25 names/duties unchanged. No class conversion, membership assignment, migration or new population dynamics is approved. |
 | Law | **DEFERRED.** No Law, voting, privilege, Civic Charter or entitlement formula is added. |
@@ -60,7 +62,7 @@ Happiness decrease = 12 × r         score points
 H_raw_after = H_before − 12 × r     before resolving the lower-bound interface
 ```
 
-Shortage of 25% decreases Happiness by 3 points; 50% by 6; no Food by 12. The existing Status domain remains 0–100. The original proposal does not separately specify saturation versus other lower-bound handling; `max(0, H_before − 12 × r)` is a possible guard for a future spec, not an additional approved implementation rule.
+Shortage of 25% decreases Happiness by 3 points; 50% by 6; no Food by 12. The existing Happiness domain remains 0–100. The original proposal does not separately specify saturation versus other lower-bound handling; `max(0, H_before − 12 × r)` is a possible guard for a future spec, not an additional approved implementation rule.
 
 For full feeding, the approved recovery rule is:
 
@@ -135,11 +137,11 @@ These examples assume independent eligible rolls. They do not specify an RNG alg
 
 The existing power ladder remains 50 bps per tier: ordinary tiers I–VIII, through ±400 bps; IX/X at ±450/500 bps remain Event-only. Receiving Flourishing through an Event does not itself authorize IX/X or decide the adapter's `source` field.
 
-## 6. Approved rebellion trial and worked End Week examples
+## 6. Approved serious-demand trigger and worked End Week examples
 
-Rebellion is **deterministic**, not the Flourishing 20% roll and not a decaying-risk (`K`) variant. The approved condition is **still short of Food AND Happiness < 30 for 3 consecutive weeks**. Warn when the condition is present; create a rebellion Event after it persists for that duration. The first qualifying warning in the example below is week 5. Exact warning repetition, event emission/idempotency, response actions and deadline before defeat are not specified.
+**Supersession:** the original trial opened a rebellion Event after Food shortage AND Happiness < 30 for 3 consecutive weeks. The later user-approved combined crisis direction changes that result to a **serious demand**, with an opportunity to respond. The trigger remains deterministic; it is not the Flourishing 20% roll and must not be gated by a new Tension threshold.
 
-The intent remains **unresolved rebellion → player loses**, but deadline, resolution, terminal-state behavior and a runnable defeat mechanic are **TBD / NOT IMPLEMENTED**. Do not borrow a buff duration for that deadline. The proposal recommends resolving section 7's two blockers before implementing defeat.
+The [decision record](TENSION-CRISIS-GOLD-DECISIONS-01.md#3-approved-trial-crisis-stages-and-unresolved-recovery) records approved warning threshold 50 (or shortage with H < 30), protest at Tension ≥ 75 after 2 unresolved demand weeks, rebellion at Tension ≥ 90 after 2 further unresolved protest weeks, and a 4-week final response window. At most one escalation per End Week. Event identity, financial-cause triggers, recovery, final resolution and terminal-state semantics remain pending; the earlier direct rebellion result is historical, not a second trigger.
 
 ### Food and recovery arithmetic
 
@@ -152,9 +154,9 @@ All rows use 100 residents, so `D = 4 Food/week`. Starting Happiness 80 is illus
 | Full feeding after the half-shortage example | `A = 4`, `F = 4`, `r = 0` | Happiness 68 → 72; `C/B` reset; starvation Faltering removed at that End Week without waiting for Happiness 80. Recovery Event intent applies once on the hunger-resolution transition; event interfaces remain pending. Food reserve is 0, so Flourishing reserve condition is not met. |
 | Full feeding at Happiness 79 / 85 | `A ≥ 4`, `F = 4` | Happiness becomes 80 / remains 85, respectively. |
 
-### Warning and rebellion timing illustration
+### Warning and serious-demand timing illustration
 
-Assume illustrative starting Happiness 80, zero available Food every week, fixed population 100 and no other score changes. This is **not** the existing initial Food 4 fixture. It illustrates the approved warning/rebellion conditions, not an approved initial state or numerical representation policy.
+Assume illustrative starting Happiness 80, zero available Food every week, fixed population 100 and no other score changes. This is **not** the existing initial Food 4 fixture. It illustrates the approved warning/serious-demand conditions, not an approved initial state or numerical representation policy.
 
 | Week | Raw Happiness arithmetic | Consecutive shortage-and-Happiness-below-30 weeks | Milestone |
 | --- | ---: | ---: | --- |
@@ -164,9 +166,9 @@ Assume illustrative starting Happiness 80, zero available Food every week, fixed
 | 4 | 32 | 0 | Still not below 30 |
 | 5 | 20 | 1 | First qualifying warning |
 | 6 | 8 | 2 | Warning condition continues |
-| 7 | Raw result −4; valid 0–100 storage handling pending | 3 | Rebellion Event qualifies; no approved defeat deadline |
+| 7 | Raw result −4; valid 0–100 storage handling pending | 3 | Serious demand opens; no immediate rebellion or defeat |
 
-The lower-bound interface must be resolved before runtime implementation; this table does not authorize storing negative Happiness. Saturating at 0 would still yield week 7 rebellion, but that specific boundary policy must be written and approved rather than inferred from this illustration.
+The lower-bound interface must be resolved before runtime implementation; this table does not authorize storing negative Happiness. Saturating at 0 would still yield week 7 serious demand, but that specific boundary policy must be written and approved rather than inferred from this illustration.
 
 ## 7. Two critical blockers before runtime implementation
 
@@ -180,7 +182,7 @@ initial Food + maximum produced Food = 4 + 10 × 2 = 24 Food
 24 / 4 = at most 6 fully fed weeks
 ```
 
-This bound assumes all funded Wheat is processed and ignores any waste. There is no Gold income in PR26. It is not a prediction that starvation always begins in week 7 under every player allocation. **A source of Gold must be designed before treating this as a long-running survival loop with defeat.** No tax, income, trade, free resource refill or recipe/cost adjustment is approved as a workaround.
+This bound assumes all funded Wheat is processed and ignores any waste. There is no Gold income in PR26. It is not a prediction that starvation always begins in week 7 under every player allocation. **A source of Gold must be designed before treating this as a long-running survival loop with defeat.** Gold source/sink directions and the narrow Farm-upkeep credit are now approved design boundaries in the decision record, but income amounts, timing, costs and a runnable sustainable budget remain pending. No numerical workaround, free resource refill or recipe/cost adjustment is approved.
 
 ### B. Whole-WF assignment does not turn effect percentages into output percentages
 
@@ -198,19 +200,19 @@ Consequently a −0.5% WF modifier can cross a whole-batch boundary while +4% ma
 | Interface | Approved boundary and remaining question |
 | --- | --- |
 | Zero population | `D = 0` makes the stated deficit ratio undefined. Full-feeding, score recovery, qualification and event behavior for this case need explicit rules; no default event is approved. |
-| Score initialization and bounds | No initial Happiness was approved. The design domain is 0–100; saturation/rejection/other handling at the lower bound, score precision and rounding need a runtime spec. |
+| Score initialization and bounds | No initial Happiness was approved. Its design domain is 0–100; saturation/rejection/other handling at the lower bound, score precision and rounding need a runtime spec. |
 | Numerical representation | Existing milli-units/safe-integer guards remain. Exact handling of fractional `r`, accumulated `B`, tier boundaries and percentage draws beyond these foundations is not chosen. Never use an unapproved epsilon or silently round into another tier. |
 | Activation phase | End Week checks and post-production Food availability are decided. Production with the existing effect → consumption → Happiness → next effect for `T+1` is still a **DRAFT PROPOSAL**, not separately approved. Which score/effect snapshot is used, first effective week and countdown boundaries need approval. |
 | Persistent hunger versus family replacement | The old `reconcileCityEffect` can replace an opposite effect while preserving a timed family window. Starvation now lasts until recovery. Their representation/priority/removal contract needs a spec; no hidden no-Faltering eligibility gate, stacking exception or every-week timer refresh is approved. |
 | Expiry and requalification | Flourishing needs 3 fresh qualified weeks after its 3-week active duration. Exact expiry/check order and the first week counted afterward remain unresolved; do not lose an effective week or bank qualification while active. |
 | RNG and award identity | 20% per eligible End Week is approved. Draw idempotency, independent-stream implementation, seeding/persistence and repeat handling are not. A duplicate submit is not permission for extra chances. |
-| Recovery/warning/rebellion events | Recovery presentation once, warning condition and deterministic rebellion duration are decided. Episode boundaries, event IDs, repeated delivery, warning frequency, recovery predicate before a debuff triggers and event log/UI contracts need approval. |
-| Rebellion resolution and defeat | Deadline, response actions/costs, outcome/state shape and behavior after loss remain TBD. No empty placeholder action or unavoidable loss loop is approved. |
+| Recovery/warning/demand/crisis events | Recovery presentation once, the serious-demand trigger and scoped trial stages are decided in the decision record. Episode boundaries, event IDs, repeated delivery, warning frequency, recovery predicate before a debuff triggers and event log/UI contracts need approval. |
+| Rebellion resolution and defeat | A 4-week final response window is approved for trial; exact resolution/failure predicates, response actions/costs, outcome/state shape and behavior after loss remain TBD. No empty placeholder action or unavoidable loss loop is approved. |
 
 The two blockers in section 7 and these interfaces must be resolved in a reviewed spec and an exact implementation WP before runtime changes. Keep the hunger progression, effect qualification, active-effect lifetime and rebellion deadline conceptually separate while using the existing single weekly clock. No second clock, generic engine, new trade system, Law expansion, migration or unapproved balance workaround is authorized by this document.
 
 ## 9. Verification and future acceptance boundary
 
-Document verification may check arithmetic, units, source fidelity, links and unchanged runtime files. It is not a test implementation or acceptance of the future mechanics. An eventual approved WP needs exact fixtures for demand/consumption conservation, zero-demand policy, score bounds, `C/B` trigger/tier/recovery, qualification reset, failed/successful draws and duplicate commands, expiry/requalification, persistent hunger/opposed effects, warning/rebellion boundaries and recovery-event idempotency. Existing R1/Weekly/logger protections and player-only size measurement must remain.
+Document verification may check arithmetic, units, source fidelity, links and unchanged runtime files. It is not a test implementation or acceptance of the future mechanics. An eventual approved WP needs exact fixtures for demand/consumption conservation, zero-demand policy, score bounds, `C/B` trigger/tier/recovery, qualification reset, failed/successful draws and duplicate commands, expiry/requalification, persistent hunger/opposed effects, warning/demand/crisis boundaries and recovery-event idempotency. Existing R1/Weekly/logger protections and player-only size measurement must remain.
 
 No product code, schema, runtime tests, recipe constants or balance configuration are changed by this rules record. Its PR is a documentation candidate awaiting independent audit; merge is held for that audit.
