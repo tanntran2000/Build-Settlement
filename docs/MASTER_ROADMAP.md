@@ -1,5 +1,14 @@
 # Bản Đồ Lộ Trình Kỹ Thuật Tổng Thể (MASTER_ROADMAP.md)
 
+## Current runtime checkpoint — PR29 and bounded R3 candidate
+
+Main base `07dbdd97ae144c28cb13245c0c628dbddd8d4eba`, merge [PR29](https://github.com/tanntran2000/Build-Settlement/pull/29), has the playable `/?mode=tiles` slice: sample terrain tiles, build/upgrade/replace/pause, shared WF, Wheat/Food production, Logging/Mine, Goods Requirement service without Goods inventory, Market capacity, tax/upkeep/revenue and Food/Happiness. Main CI39397236232 passed665unit38browser; this is PR29 evidence, not an R3 acceptance claim. Classic Weekly/R1 remain separate. The older NOT IMPLEMENTED/construction/Gold-income/consumption descriptions below are historical checkpoints; they do not describe mode=tiles after PR29. No whole POP/RES module or full game completion is claimed.
+
+Recipes/Food coefficients retain their approved scope; the new PR29 economics, initialization, rounding and building policies are **implementation TRIAL**, not retrospectively approved balance. UI/UX polish and pixel art remain deferred until core foundations are ready. Law, Tension/crisis, full economy effects, live social groups and migration remain outside this runtime slice.
+
+Next bounded candidate is [R3-TILE-SAVE-01 spec](superpowers/specs/2026-10-20-tile-trial-save.md) / [plan](superpowers/plans/2026-10-20-tile-trial-save.md): manual planning-only JSON export/import for tile trial, separate version/ruleset, complete validation, atomic load and fresh revision/async-read guards. Candidate requires exact-SHA audits and required CI before acceptance. No autosave/cloud save, R1 migration, report/history persistence or UI overhaul. Existing R3 checklist below stays open for the full lifecycle; this candidate is only a subset. No new game coefficient is introduced by persistence.
+
+
 ## Current Goods decision — approved design flow, NOT IMPLEMENTED
 
 Base main đã xác minh: `beb963fcb592d22db5ae430373aca4c6fd70390d` (PR28). [Goods flow và authority](design/TENSION-CRISIS-GOLD-DECISIONS-01.md#goods-requirement-flow--later-approved-clarification): **Goods vẫn là Requirement, không có kho Goods**. Building dùng Wood/Iron một lần mỗi End Week; nhu cầu = tổng dân × định mức chưa chốt, phần phục vụ bị giới hạn bởi công suất Market; Goods % = phục vụ / nhu cầu × 100% khi nhu cầu > 0. Market cấp cao phục vụ nhiều dân hơn, không tăng định mức nhu cầu. Dùng cùng kết quả tuần cho Gold/Happiness, không trừ nguyên liệu lần hai hoặc tự nhân Market thêm vào doanh thu.

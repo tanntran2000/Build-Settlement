@@ -33,7 +33,13 @@ Mở **`/?mode=tiles`** hoặc chọn **Play tile building trial** từ Weekly. 
 
 Để thử chuỗi bền vững: xây Logging Camp tại forest-1 (2 WF), Mine tại ore-1 (1 WF), Workshop tại plain-2 (1 WF), Market tại plain-3; giữ Farm/Processor 2 WF mỗi nơi rồi End Week. Báo cáo có tax, upkeep, Goods, Food consumption và Happiness. Tax tối giản cùng pause giúp hồi phục khi thiếu Gold. Các chi phí, thuế, sản lượng khai thác, service, Market capacity, Goods revenue/Happiness và chính sách upgrade/replace đều là **lựa chọn triển khai TRIAL, chưa phải balance được user duyệt**; chỉnh tại `packages/core/src/trial/catalog.ts`.
 
-Mode này dùng cùng công thức Farm/Processor và Food/Happiness đã ghi nhận, nhưng **chỉ là lát cắt playable**: chưa tích hợp Flourishing/Faltering, Tension/crisis/game-over, Security/Corruption, membership ba nhóm, Law, trade engine, explore/combat, asset pixel hoặc save/load/migration. R1 và classic giữ dispatcher/fixture riêng; mỗi mode chỉ mount một world/một clock. Reload reset. [Spec và chính sách TRIAL](docs/superpowers/specs/2026-10-20-weekly-tile-buildings-trial.md).
+Mode này dùng cùng công thức Farm/Processor và Food/Happiness đã ghi nhận, nhưng **chỉ là lát cắt playable**: chưa tích hợp Flourishing/Faltering, Tension/crisis/game-over, Security/Corruption, membership ba nhóm, Law, trade engine, explore/combat, asset pixel hoặc persistence đầy đủ/migration. R1 và classic giữ dispatcher/fixture riêng; mỗi mode chỉ mount một world/một clock. Reload reset; tile trial có thể import checkpoint Planning đã xuất. [Spec và chính sách TRIAL](docs/superpowers/specs/2026-10-20-weekly-tile-buildings-trial.md).
+
+### Checkpoint JSON cho tile trial (R3 subset)
+
+Trong Planning, chọn **Export checkpoint** để tải JSON. Chọn **Import checkpoint** để thay ván đang chơi bằng checkpoint hợp lệ; chỉ hỗ trợ đúng version/ruleset và map hiện hành. Khi đang xem report, chọn Plan next week trước. Import không tiến tuần hoặc thu/chi lại; file lỗi hay import bị stale giữ nguyên ván hiện tại. Nếu chọn hai file, chỉ lần chọn mới nhất được áp dụng.
+
+Reload vẫn mở ván mới; muốn tiếp tục thì import file đã giữ. Không autosave, cloud save, chuyển save R1/classic, migration hay New Game+. Định dạng mới không làm các hệ số TRIAL trở thành balance chính thức. [Phạm vi và acceptance](docs/superpowers/specs/2026-10-20-tile-trial-save.md).
 
 ### Công thức Weekly classic đã duyệt — chưa phải balance chính thức
 

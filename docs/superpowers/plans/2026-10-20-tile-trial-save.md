@@ -1,0 +1,9 @@
+# R3-TILE-SAVE-01 implementation plan
+
+Execute inline under executing-plans/TDD; user directed implementation now. Spec: ../specs/2026-10-20-tile-trial-save.md. Base main07dbdd9. No balance edits, UI overhaul, autosave/cloud/migration or external dependencies.
+
+- [x] Task1 RED: codec and LOAD_TRIAL tests. GREEN: core shared planning validator; persistence codec+exports; atomic LOAD_TRIAL and fresh revision. Files core/src/trial/state.ts,index.ts; persistence/src/tile-trial-save.ts,index.ts,__tests__/tile-trial-save.test.ts; simulation/src/tile-trial.ts,__tests__/tile-trial-save.test.ts. Verify roundtrip, continued economics, malformed/version/ruleset/limit/layout rejection, report guards, stale/overflow rollback. No other core/simulation rules change.
+- [x] Task2 RED: actual browser download/reimport and invalid/stale concurrent/file read scenarios. GREEN: minimal Export/Import handlers/controls in TileManagement.svelte. Declare existing @haven/persistence workspace dependency in UI package.json/lockfile. Files UI component/package metadata, tests/e2e/tile-save.spec.ts. No error logger schema changes; reset warning remains honest.
+- [ ] Task3: README+MASTER_ROADMAP+INTERNAL_PROGRESS_TRACKER reflect PR29 and bounded R3. Full lint/typecheck/unit/build/browser/audit; package self-contained HTML offline locally, test download/import/file mode. Commit immutable candidate; independent Reviewer+Tester; required exact-SHA CI and normal gated merge/mainCI if permitted. No Library/new preview upload absent delivery authorization.
+
+Review focus: import at report phase/missing report; IO races versus gameplay/another selected file; stale commands after rollback to older week; safe revision overflow; unknown maps/catalog/version and oversized UTF8 input; preserving all current TRIAL coefficients and classic/R1 behavior. Every rejection keeps original state identity; no code calls production during load.

@@ -1,4 +1,4 @@
-import { hasWeeklyKeys, isTileTrialState, trialBuilding, type TileTrialState, type TileTrialResult } from "@haven/core";
+import { hasWeeklyKeys, isTileTrialState, isTileTrialPlanningState, trialBuilding, type TileTrialState, type TileTrialResult } from "@haven/core";
 import { runTileTrialWeek, trialSafe } from "./tile-trial-week.js";
 
 export function executeTileTrialCommand(state: unknown, raw: unknown): TileTrialResult {
@@ -11,13 +11,17 @@ export function executeTileTrialCommand(state: unknown, raw: unknown): TileTrial
     if (state.phase === "report" && c.type !== "NEXT_WEEK") return fail("FORBIDDEN", "Read the report, then choose Plan next week.");
     if (state.phase === "planning" && c.type === "NEXT_WEEK") return fail("FORBIDDEN", "Finish this week before planning the next one.");
     const keys: Record<string, string[]> = {
-      END_WEEK: ["expectedWeek"], NEXT_WEEK: [], BUILD: ["tileId", "typeId"], REPLACE: ["tileId", "typeId"],
+      END_WEEK: ["expectedWeek"], NEXT_WEEK: [], LOAD_TRIAL: ["snapshot"], BUILD: ["tileId", "typeId"], REPLACE: ["tileId", "typeId"],
       UPGRADE: ["tileId"], SET_WORKERS: ["tileId", "workers"], SET_ENABLED: ["tileId", "enabled"],
     };
     if (typeof c.type !== "string" || !Object.hasOwn(keys, c.type) || !hasWeeklyKeys(c, ["type", "expectedRevision", ...keys[c.type]])) return fail("INVALID_COMMAND", "Unknown command or fields.");
-    const next = structuredClone(state) as TileTrialState;
+    let next = structuredClone(state) as TileTrialState;
     let report;
-    if (c.type === "END_WEEK") {
+    if (c.type === "LOAD_TRIAL") {
+      if (!isTileTrialPlanningState(c.snapshot)) return fail("INVALID_SAVE_STATE", "Checkpoint must contain a valid tile Planning state and the supported map.");
+      next = structuredClone(c.snapshot);
+      next.revision = Math.max(state.revision, next.revision);
+    } else if (c.type === "END_WEEK") {
       if (c.expectedWeek !== state.world.week) return fail("WEEK_MISMATCH", "The week changed; this command was not applied.");
       report = runTileTrialWeek(next);
     } else if (c.type === "NEXT_WEEK") next.phase = "planning";
