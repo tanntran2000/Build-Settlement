@@ -23,7 +23,17 @@ Văn bản là phần cốt lõi của trải nghiệm. Hình ảnh pixel art v�
 
 **Early prototype — chưa phải bản game hoàn chỉnh.**
 
-Bản hiện tại có giao diện thử nghiệm hiển thị tài nguyên, nhân vật, quần thể dân cư, danh mục công trình và mô phỏng tiêu thụ theo ngày kèm nhật ký ban đầu. Vòng xây dựng–sản xuất, lưu/khôi phục tiến trình và các hệ thống dài hạn đang được hoàn thiện.
+Bản dành cho người chơi mở **Weekly Management**: phân công Farm Field → End Week → báo cáo WHY → Plan next week. `/`, `?mode=weekly`, `?mode=r1` và query không nhận diện đều mở Weekly. Prototype R1 ngày được giữ riêng để kiểm hồi quy, không nằm trong artifact dành cho người chơi.
+
+Weekly hiện có đúng bốn kho Gold/Food/Wood/Iron, reset khi reload, chưa save/load. Nguồn Gold, tiêu thụ Food, hoạt động khác, thiết kế năm nhóm tài nguyên và UI/UX mới còn ở kế hoạch WP riêng; không coi entry mới là hoàn tất các cơ chế đó hoặc demo hoàn chỉnh.
+
+### Công thức đang chạy — chưa đổi balance
+
+Mọi stock và WF dùng fixed-point: **1 đơn vị hiển thị = 1000 milli**, **1 WF = 1000 milliWF**. Với 100 cư dân Middle, multiplier 1000: `baseWFmilli = floor(100 × 1000 / 10) = 10000`; modifier hiện tại bằng 0 nên effective WF vẫn là **10 WF**. Helper dùng số nguyên chính xác; multiplier là integer milli không âm.
+
+Gọi `A` là milliWF phân công, `G` và `F` là Gold/Food milli trước tuần: `0 ≤ A ≤ min(effectiveWFmilli, 10000)`. Gold yêu cầu bằng `A`; milliWF được cấp kinh phí `B = min(G, A)`. Gold sau tuần `G − B`; Food sau tuần `F + 2 × B`; chưa phân công `effectiveWFmilli − A`; đã phân công nhưng thiếu kinh phí `A − B`. Wood/Iron không đổi. Đây là hệ số thử nghiệm **1 Gold/WF → 2 Food/WF**, không phải full balance.
+
+Ví dụ: Gold10/Food4, giao4WF → Gold6/Food12. Gold2/Food4, giao4WF → Gold0/Food8, thiếu kinh phí2WF và chưa phân công6WF. Giao0.5WF tại Gold10/Food4 → Gold9.5/Food5. Không tiêu thụ Food hoặc tạo Gold tự động. Báo cáo là kết quả của tuần vừa xử lý; header đã ở tuần kế tiếp.
 
 Những trải nghiệm mô tả trong phần định hướng không có nghĩa đã hiện diện đầy đủ trong prototype. Dữ liệu và cơ chế có thể thay đổi giữa các phiên bản thử nghiệm.
 
@@ -49,8 +59,17 @@ npm test
 
 Build giao diện web:
 ```bash
-npm run build --workspace=@haven/ui
+npm run build
 ```
+
+Chỉ `packages/ui/dist` là artifact dành cho người chơi. Để kiểm R1 riêng:
+
+```bash
+npm run build:regression --workspace=@haven/ui
+npm run preview:regression --workspace=@haven/ui -- --port 4174 --strictPort
+```
+
+R1 regression mở tại `http://localhost:4174`, dùng `packages/ui/regression/dist`; không đóng gói thư mục này vào ZIP preview. Chạy `npm run test:smoke` sau production build sẽ tự build regression, khởi động hai preview server 4173/4174 và kiểm cả hai. Error log dùng cùng tên key nhưng storage tách theo origin; không chuyển log giữa hai port. Production vẫn đọc được log R1 cũ đã lưu trên chính origin production. Các ZIP cũ không được cập nhật tự động bởi thay đổi source.
 
 ---
 

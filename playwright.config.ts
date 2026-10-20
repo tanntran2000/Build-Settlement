@@ -17,10 +17,15 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
   ],
-  webServer: {
+  webServer: [{
     command: 'npm run preview --workspace=@haven/ui -- --port 4173 --strictPort',
     port: 4173,
     reuseExistingServer: !process.env.CI,
     timeout: 30000,
-  },
+  }, {
+    command: 'npm run preview:regression --workspace=@haven/ui -- --port 4174 --strictPort',
+    port: 4174,
+    reuseExistingServer: !process.env.CI,
+    timeout: 30000,
+  }],
 });

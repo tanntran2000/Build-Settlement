@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
 
+test.use({ baseURL: 'http://localhost:4174' });
+
 test.describe('Prototype Browser Smoke Test (LAW-02, LAW-03, LAW-04)', () => {
   test('advances day via command dispatcher, updates inventory, floors at 0 on shortage, and logs WHY', async ({ page }) => {
     // 1. Mở prototype

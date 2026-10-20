@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:regression": "vite build regression --config vite.config.ts --outDir dist",
     "preview": "vite preview",
+    "preview:regression": "vite preview regression --config vite.config.ts --outDir dist",
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "dependencies": {

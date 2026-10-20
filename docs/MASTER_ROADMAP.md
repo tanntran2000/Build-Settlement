@@ -4,6 +4,14 @@
 
 ---
 
+## Player entry Weekly — WP-WEEKLY-PLAYER-ENTRY-01 v0.1
+
+Candidate triển khai entry: production luôn mở Weekly, R1 tách thành regression artifact không ship. Entry đã có implementation và regression coverage trong nhánh này; local lint/typecheck/unit/build/smoke/audit đạt, còn chờ CI và Reviewer/Tester độc lập trên exact SHA trước nghiệm thu/merge. Đây không phải hoàn tất demo, production economy hoặc UI/UX mới.
+
+Bốn kho Weekly và công thức không đổi: 100 Middle → 10 WF; 1 WF/stock hiển thị = 1000 milli; Farm cap10WF/tuần; Gold yêu cầu=milliWF giao, được tài trợ=min(Gold có, yêu cầu), Gold trừ phần tài trợ, Food cộng2×phần tài trợ. Chưa có Food consumption/Gold income. Chi tiết và ví dụ tại [WP entry](work_packages/WP-WEEKLY-PLAYER-ENTRY-01_v0.1.md).
+
+Thiết kế năm nhóm tài nguyên chính, UI/UX mới và vòng sản xuất đầy đủ là **PLANNED — cần WP riêng**, chưa được triển khai trong entry. Không đổi Goods/status, sáu tài nguyên hiển thị R1, save schema hay migration. Các checkpoint R1 bên dưới là lịch sử kỹ thuật, không phải player entry hiện tại.
+
 ## 1. Mục Tiêu Tối Thượng: Bản Cắt Dọc Tối Thiểu (Vertical Slice)
 
 Mục tiêu giai đoạn hiện tại không phải là hoàn thiện toàn bộ các hệ thống 18+ hay đồ họa phức tạp, mà là chứng minh **vòng chơi quản lý sinh tồn cốt lõi hoạt động ổn định và có thể kiểm chứng được**:

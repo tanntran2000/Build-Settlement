@@ -1,4 +1,9 @@
 import { test, expect, type Page } from '@playwright/test';
+import { readFile, readdir } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import { resolve } from 'node:path';
+import ts from 'typescript';
 
 const stock = (page: Page, key: string) => page.getByTestId(`weekly-stock-${key}`);
 async function assign(page: Page, amount: string) {
@@ -9,7 +14,61 @@ async function end(page: Page, amount: string) {
   await page.getByRole('button', { name: 'End Week', exact: true }).click();
 }
 
-test.beforeEach(async ({ page }) => { await page.goto('/?mode=weekly'); });
+test.beforeEach(async ({ page }) => { await page.goto('/'); });
+
+for (const path of ['/', '/?mode=weekly', '/?mode=r1', '/?mode=unknown']) {
+  test(`player entry ${path} always opens English Weekly without R1 controls`, async ({ page }) => {
+    await page.goto(path);
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+    await expect(page.getByRole('heading', { name: 'Weekly Management' })).toBeVisible();
+    await expect(page.locator('#btn-advance-day')).toHaveCount(0);
+    await expect(stock(page, 'gold')).toHaveText('10');
+    await end(page, '4');
+    await expect(stock(page, 'gold')).toHaveText('6');
+    await expect(stock(page, 'food')).toHaveText('12');
+  });
+}
+
+test('player entry import graph and shipped artifact exclude the R1 scene', async () => {
+  const seen = new Set<string>();
+  async function visit(path: string) {
+    if (seen.has(path) || !/\.(?:ts|svelte)$/.test(path)) return;
+    seen.add(path);
+    const text = await readFile(path, 'utf8');
+    const source = path.endsWith('.svelte') ? [...text.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)].map(match => match[1]).join('\n') : text;
+    const ast = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true);
+    for (const statement of ast.statements) {
+      if (ts.isImportDeclaration(statement) && ts.isStringLiteral(statement.moduleSpecifier) && statement.moduleSpecifier.text.startsWith('.')) {
+        const target = resolve(path, '..', statement.moduleSpecifier.text.replace(/\.js$/, '.ts'));
+        await visit(target);
+      }
+    }
+  }
+  await visit(resolve('packages/ui/src/main.ts'));
+  expect(seen.has(resolve('packages/ui/src/WeeklyManagement.svelte'))).toBe(true);
+  expect(seen.has(resolve('packages/ui/src/App.svelte'))).toBe(false);
+  const assets = await readdir('packages/ui/dist/assets');
+  for (const name of assets.filter(name => name.endsWith('.js'))) {
+    expect(await readFile(`packages/ui/dist/assets/${name}`, 'utf8')).not.toContain('btn-advance-day');
+  }
+});
+
+test('regression build cannot overwrite or enter the production artifact', async () => {
+  async function hashes(directory: string): Promise<Record<string, string>> {
+    const result: Record<string, string> = {};
+    for (const item of await readdir(directory, { withFileTypes: true })) {
+      const path = `${directory}/${item.name}`;
+      if (item.isDirectory()) Object.assign(result, await hashes(path));
+      else result[path] = createHash('sha256').update(await readFile(path)).digest('hex');
+    }
+    return result;
+  }
+  const before = await hashes('packages/ui/dist');
+  execFileSync('npm', ['run', 'build:regression', '--workspace=@haven/ui'], { stdio: 'pipe' });
+  expect(await hashes('packages/ui/dist')).toEqual(before);
+  expect(Object.keys(before).some(path => path.includes('/regression/'))).toBe(false);
+  expect(await readFile('packages/ui/regression/dist/index.html', 'utf8')).toContain('lang="vi"');
+});
 
 test('draft leaves stocks unchanged; 4 WF produces the before/net/after ledger once', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Weekly Management' })).toBeVisible();
@@ -91,7 +150,7 @@ test('reload resets the independent prototype and R1 remains at Day 1', async ({
   await page.reload();
   await expect(page.getByTestId('weekly-week')).toHaveText('1');
   await expect(stock(page, 'gold')).toHaveText('10');
-  await page.goto('/');
+  await page.goto('http://localhost:4174/');
   await expect(page.locator('#current-day')).toHaveText('1');
   await expect(page.locator('#resource-food')).toHaveText('100');
 });
@@ -103,7 +162,7 @@ test('weekly English language scope covers planning errors and reports while R1 
   expect(await page.getByRole('alert').evaluate(element => element.matches(':lang(en)'))).toBe(true);
   await end(page, '4');
   expect(await page.getByRole('region', { name: 'Week report' }).evaluate(element => element.matches(':lang(en)'))).toBe(true);
-  await page.goto('/');
+  await page.goto('http://localhost:4174/');
   await expect(page.locator('html')).toHaveAttribute('lang', 'vi');
   expect(await page.getByRole('main').evaluate(element => element.matches(':lang(vi)'))).toBe(true);
 });

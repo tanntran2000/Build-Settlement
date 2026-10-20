@@ -4,6 +4,14 @@
 
 ---
 
+## Candidate WP-WEEKLY-PLAYER-ENTRY-01 v0.1 — entry riêng, chưa merge
+
+Nền `d13b9f9536e0eaeec900099b07be164c3b993212`. Player entry implementation: production `/` và mọi query mở Weekly bằng `src/main.ts` (`lang=en`, logger weekly); R1 dùng `regression/main.ts` (`lang=vi`, logger r1). Hai preview origin4173/4174 tách storage; production giữ khả năng đọc record r1 cũ trên cùng origin. Production artifact chỉ `packages/ui/dist`; regression ở `packages/ui/regression/dist`, không ship/không đưa vào ZIP.
+
+Trạng thái: **candidate implementation, local gates đạt; chờ CI + hai audit độc lập trên exact SHA**. Local:617 unit/17file,29 browser; lint/typecheck/build đạt, audit0 vulnerability; RED entry5fail trước implementation. Không ghi hoàn tất G6, demo hoặc L4. Test entry/import graph/artifact isolation mới cộng với các assertion R1/Weekly/logger giữ lại. Xem [WP, công thức và nghiệm thu](work_packages/WP-WEEKLY-PLAYER-ENTRY-01_v0.1.md).
+
+Cơ chế không đổi: đúng4 kho Weekly Gold/Food/Wood/Iron; 100 Middle →10WF; cap10WF; chi1Gold/WF, tạo2Food/WF theo phần đủ Gold; Food consumption/Gold income chưa có. Thiết kế5 nhóm tài nguyên và UI/UX mới **PLANNED** dưới WP riêng; không triển khai Goods/status, sáu kho R1 vào player loop hoặc migration. Những dòng route `/` R1 / `?mode=weekly` ở checkpoint bên dưới là mô tả lịch sử trước gói entry này.
+
 ## 1. Thang Đo Trạng Thái (4 Cấp Độ Nghiêm Ngặt)
 
 | Cấp Độ | Tên Trạng Thái | Định Nghĩa Kỹ Thuật |
