@@ -1,5 +1,12 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## PR29 runtime closeout and R3 planning-checkpoint candidate
+
+PR29 merged at `07dbdd97ae144c28cb13245c0c628dbddd8d4eba`, audited head7d823b9/tree30e61f0. Independent Reviewer+Tester PASS and [main CI39397236232](https://github.com/tanntran2000/Build-Settlement/actions/runs/39397236232) PASS665unit38browser. Mode=tiles has construction/extraction/Goods service/minimal tax-upkeep/Food consumption-Happiness; old no-construction/no-income statements below retain pre-PR29 history. Existing numerical policies remain TRIAL where identified by its spec.
+
+[R3-TILE-SAVE-01](superpowers/specs/2026-10-20-tile-trial-save.md) is the new bounded candidate: planning JSON checkpoints only, codec/atomic load and stale-read protection. Full R3/POP/RES are not complete. Candidate acceptance still requires independent audits and CI of exact commit; no new balance, autosave/cloud save/migration, Law or UI polish. Preview delivery authorization is separate; this task only prepares a local offline test artifact.
+
+
 ## Current Goods decision — approved design flow, NOT IMPLEMENTED
 
 Base main đã xác minh: `beb963fcb592d22db5ae430373aca4c6fd70390d` (PR28). [Goods flow và authority](design/TENSION-CRISIS-GOLD-DECISIONS-01.md#goods-requirement-flow--later-approved-clarification): **Goods vẫn là Requirement, không có kho Goods**. Building dùng Wood/Iron một lần mỗi End Week; nhu cầu = tổng dân × định mức chưa chốt, phần phục vụ bị giới hạn bởi công suất Market; Goods % = phục vụ / nhu cầu × 100% khi nhu cầu > 0. Market cấp cao phục vụ nhiều dân hơn, không tăng định mức nhu cầu. Dùng cùng kết quả tuần cho Gold/Happiness, không trừ nguyên liệu lần hai hoặc tự nhân Market thêm vào doanh thu.

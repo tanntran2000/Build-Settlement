@@ -1,6 +1,7 @@
 <script lang="ts">
   import { createTileTrialState, weeklyWorkforceMilli, WEEKLY_RESOURCE_KEYS, TRIAL_BUILDINGS, TILE_TRIAL_BALANCE as B, type TileTrialReport } from '@haven/core';
   import { executeTileTrialCommand } from '@haven/simulation';
+  import { serializeTileTrialSave, deserializeTileTrialSave, TILE_SAVE_MAX_BYTES } from '@haven/persistence';
   import ErrorLog from './ErrorLog.svelte';
   import { errorLog } from './error-log.js';
 
@@ -9,6 +10,8 @@
   let typeId = 'logging';
   let workers = '0';
   let error = '';
+  let saveNotice = '';
+  let importRead = 0;
   let report: Readonly<TileTrialReport> | null = null;
   const units = (n: number) => new Intl.NumberFormat('en', { maximumFractionDigits: 3 }).format(n / 1000);
   $: settlement = state.world.settlements[state.world.activeSettlementId!];
@@ -24,19 +27,51 @@
     workers = String(state.tiles.find(t => t.id === id)!.building?.workers ?? 0);
     error = '';
   }
-  function command(type: string, fields: Record<string, unknown> = {}) {
-    const result = executeTileTrialCommand(state, { type, expectedRevision: state.revision, ...fields });
+  function command(type: string, fields: Record<string, unknown> = {}, expectedRevision = state.revision) {
+    saveNotice = '';
+    const result = executeTileTrialCommand(state, { type, expectedRevision, ...fields });
     if (!result.success) {
       error = result.error.message;
       errorLog.record(type === 'END_WEEK' ? 'END_WEEK' : 'RUNTIME', 'INVALID_COMMAND');
-      return;
+      return false;
     }
     state = result.nextState;
     if (result.report) report = result.report;
-    if (type === 'NEXT_WEEK') report = null;
+    if (type === 'NEXT_WEEK' || type === 'LOAD_TRIAL') report = null;
     workers = String(state.tiles.find(t => t.id === selectedId)!.building?.workers ?? 0);
     errorLog.setContext('weekly', { week: state.world.week });
     error = '';
+    return true;
+  }
+  function checkpointError(message: string) {
+    error = message; saveNotice = '';
+    errorLog.record('RUNTIME', 'INVALID_COMMAND');
+  }
+  function exportCheckpoint() {
+    const result = serializeTileTrialSave(state);
+    if (!result.success) { checkpointError(result.error.message); return; }
+    let url: string | undefined; let anchor: HTMLAnchorElement | undefined;
+    try {
+      url = URL.createObjectURL(new Blob([result.text], { type: 'application/json' }));
+      anchor = document.createElement('a'); anchor.href = url; anchor.download = `haven-tile-week-${state.world.week}.json`;
+      document.body.append(anchor); anchor.click(); error = ''; saveNotice = 'Checkpoint download requested.';
+    } catch { checkpointError('Could not download the checkpoint. Your game was preserved.'); }
+    finally { anchor?.remove(); if (url) URL.revokeObjectURL(url); }
+  }
+  async function importCheckpoint(event: Event) {
+    const input = event.currentTarget as HTMLInputElement; const file = input.files?.[0]; input.value = '';
+    if (!file) return;
+    const ticket = ++importRead, expectedRevision = state.revision;
+    error = ''; saveNotice = '';
+    if (state.phase !== 'planning') { checkpointError('Choose Plan next week before importing.'); return; }
+    if (file.size > TILE_SAVE_MAX_BYTES) { checkpointError('Checkpoint exceeds the 1 MiB limit.'); return; }
+    try {
+      const text = await file.text();
+      if (ticket !== importRead) return;
+      const result = deserializeTileTrialSave(text);
+      if (!result.success) { checkpointError(result.error.message); return; }
+      if (command('LOAD_TRIAL', { snapshot: result.state }, expectedRevision)) saveNotice = 'Checkpoint imported. Planning restored.';
+    } catch { if (ticket === importRead) checkpointError('Could not read the checkpoint file. Your game was preserved.'); }
   }
 </script>
 
@@ -44,10 +79,21 @@
   <header class="card">
     <p class="eyebrow">HAVEN · WEEKLY PROTOTYPE</p>
     <h1>Tile Building Trial</h1>
-    <p>Build a supply chain for your city. Balance and building policies are TRIAL. Resets on reload · No save/load.</p>
+    <p>Build a supply chain for your city. Balance and building policies are TRIAL. Reload starts fresh · Import a checkpoint to resume.</p>
     <p>Week <strong>{state.world.week}</strong> · {locked ? 'Report' : 'Planning'} · {settlement.cohorts.reduce((n, c) => n + c.count, 0)} residents · {assigned} / {units(weeklyWorkforceMilli(settlement.cohorts))} WF assigned</p>
     <a href="/">Classic Weekly</a>
   </header>
+
+  <section class="card" aria-label="Planning checkpoints">
+    <h2>Planning checkpoint</h2>
+    <p>Export a JSON file to keep this plan. Import replaces the current plan after validation. No autosave or cloud save.</p>
+    {#if locked}<p>Choose Plan next week before exporting or importing.</p>{/if}
+    <button disabled={locked} onclick={exportCheckpoint}>Export checkpoint</button>
+    <label for="tile-save-file">Import checkpoint</label>
+    <input id="tile-save-file" type="file" accept=".json,application/json" disabled={locked} onchange={importCheckpoint} />
+    {#if saveNotice}<p role="status">{saveNotice}</p>{/if}
+    {#if error}<p role="alert">{error}</p>{/if}
+  </section>
 
   <section class="card" aria-label="City stocks" data-testid="trial-stocks">
     <h2>City stocks</h2>
@@ -105,7 +151,6 @@
       </select>
       <p>Requires {chosen.terrain.join(' or ')} terrain. Cost: {units(chosen.cost.gold)} Gold, {units(chosen.cost.wood)} Wood, {units(chosen.cost.iron)} Iron. Upkeep: {units(chosen.upkeepMilli)} Gold/week at level 1.</p>
       <button disabled={locked} onclick={() => command(selected.building ? 'REPLACE' : 'BUILD', { tileId: selectedId, typeId })}>{selected.building ? 'Replace' : 'Build'}</button>
-      {#if error}<p role="alert">{error}</p>{/if}
     </section>
   </div>
 

@@ -37,3 +37,20 @@ export function isTileTrialState(raw: unknown): raw is TileTrialState {
     return workers * 1000 <= weeklyWorkforceMilli(s.world.settlements[s.world.activeSettlementId].cohorts);
   } catch { return false; }
 }
+
+// Checkpoint boundary pins this ruleset's map and excludes UI-local reports.
+export function isTileTrialPlanningState(raw: unknown): raw is TileTrialState {
+  try {
+    if (!hasWeeklyKeys(raw, ["world", "revision", "phase", "tiles", "happiness"]) || raw.phase !== "planning" || !Array.isArray(raw.tiles)) return false;
+    const tiles = raw.tiles;
+    if (Object.getPrototypeOf(tiles) !== Array.prototype || Reflect.ownKeys(tiles).length !== tiles.length + 1) return false;
+    const expected = createTileTrialState().tiles;
+    if (tiles.length !== expected.length) return false;
+    for (let i = 0; i < tiles.length; i++) {
+      const entry = Object.getOwnPropertyDescriptor(tiles, String(i));
+      if (!entry?.enumerable || !("value" in entry) || !hasWeeklyKeys(entry.value, ["id", "terrain", "building"]) ||
+          entry.value.id !== expected[i].id || entry.value.terrain !== expected[i].terrain) return false;
+    }
+    return isTileTrialState(raw);
+  } catch { return false; }
+}

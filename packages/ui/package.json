@@ -13,7 +13,8 @@
   "dependencies": {
     "@haven/core": "*",
     "@haven/simulation": "*",
-    "@haven/content": "*"
+    "@haven/content": "*",
+    "@haven/persistence": "*"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "5.1.1",
