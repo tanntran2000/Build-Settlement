@@ -209,3 +209,61 @@ test('formats safe integer milli exactly at the stock boundary including signed 
   await expect(stock(page, 'gold')).toHaveText('9007199254740.99');
   await expect(stock(page, 'food')).toHaveText('4.002');
 });
+
+test('planned city systems distinguish groups, inventory, Requirements and Status without live values', async ({ page }) => {
+  const planned = page.getByRole('region', { name: 'Planned city systems', exact: true });
+  await expect(planned).toBeVisible();
+  await expect(planned).toContainText('Design preview · Not simulated');
+  await expect(planned).toContainText('Proposed names');
+  await expect(planned.getByRole('article')).toHaveCount(3);
+  for (const [label, name, duties] of [
+    ['Makers', 'The Makers’ Union', 'Production, building and maintenance.'],
+    ['Luminaries', 'The Luminary Circle', 'Research, education, planning and technical standards.'],
+    ['Merchants', 'The Mercantile League', 'Trade and distribution.'],
+  ]) {
+    const group = planned.getByRole('article', { name: label, exact: true });
+    await expect(group.getByRole('heading', { name: label, exact: true })).toBeVisible();
+    await expect(group).toContainText(name);
+    await expect(group).toContainText(duties);
+  }
+  await expect(planned).toContainText('All three groups contribute to shared Happiness, Security and Corruption through conditions, buildings and future effects.');
+  await expect(planned).toContainText('No group owns a single Status; Merchants have no intrinsic corruption.');
+  const inventory = planned.getByRole('region', { name: 'Physical inventory', exact: true });
+  await expect(inventory.getByRole('definition')).toHaveText(['Wheat, Gold, Wood, Iron', 'Food, Goods']);
+  await expect(inventory).toContainText('Wheat harvested this week may be processed into Food in the same week, only through a building.');
+  await expect(inventory).toContainText('Buildings produce Food and Goods. Goods are physical exchange goods.');
+  const requirements = planned.getByRole('region', { name: 'City-wide Requirements', exact: true });
+  await expect(requirements).toContainText('Food, Goods');
+  await expect(requirements).toContainText('City-wide demand, separate from finished inventory.');
+  const status = planned.getByRole('region', { name: 'City Status', exact: true });
+  await expect(status.getByRole('listitem')).toHaveText(['Happiness', 'Security', 'Corruption']);
+  await expect(status).toContainText('Design range: 0–100. Values are not simulated.');
+  await expect(planned).toContainText('Law is deferred; its integration boundary is pending.');
+  await expect(planned.locator('button, input, select, textarea, progress, meter, [role="progressbar"], [role="slider"]')).toHaveCount(0);
+  await expect(planned).not.toContainText(/\b(?:residents|WF|Slave|Low|Middle|High)\b/);
+  const live = page.getByRole('region', { name: 'Stocks', exact: true });
+  await expect(live.locator('dt')).toHaveText(['Gold', 'Food', 'Wood', 'Iron']);
+  await expect(page.getByTestId('weekly-week')).toHaveText('1');
+  await expect(stock(page, 'gold')).toHaveText('10');
+  await expect(stock(page, 'food')).toHaveText('4');
+});
+
+test('planned city systems stay static while the existing Weekly command updates only live stock and week', async ({ page }) => {
+  const planned = page.getByRole('region', { name: 'Planned city systems', exact: true });
+  await expect(planned).toBeVisible();
+  const preview = await planned.innerText();
+  await end(page, '4');
+  await expect(stock(page, 'gold')).toHaveText('6');
+  await expect(stock(page, 'food')).toHaveText('12');
+  await expect(page.getByTestId('weekly-week')).toHaveText('2');
+  await expect(page.getByTestId('weekly-population')).toHaveText('100 residents');
+  await expect(page.getByTestId('weekly-workforce')).toHaveText('10 WF');
+  await expect(planned).toHaveText(preview, { useInnerText: true });
+  await page.getByRole('button', { name: 'Plan next week', exact: true }).click();
+  await expect(planned).toHaveText(preview, { useInnerText: true });
+  await page.reload();
+  await expect(page.getByTestId('weekly-week')).toHaveText('1');
+  await expect(stock(page, 'gold')).toHaveText('10');
+  await expect(stock(page, 'food')).toHaveText('4');
+  await expect(planned).toHaveText(preview, { useInnerText: true });
+});

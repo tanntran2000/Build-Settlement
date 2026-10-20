@@ -1,6 +1,7 @@
 <script lang="ts">
   import { createWeeklyState, weeklyWorkforceMilli, WEEKLY_RESOURCE_KEYS, SOCIAL_RESOURCE_SCALE, type WeeklyReport } from '@haven/core';
   import { executeWeeklyCommand, FARM_FIELD_CAPACITY_MILLI, FARM_GOLD_PER_WF, FARM_FOOD_PER_WF } from '@haven/simulation';
+  import { CITY_DESIGN } from '@haven/content';
   import ErrorLog from './ErrorLog.svelte';
   import { errorLog } from './error-log.js';
 
@@ -104,6 +105,42 @@
     </section>
     <button type="button" onclick={planNextWeek}>Plan next week</button>
   {/if}
+  <section class="card planned" aria-labelledby="planned-city-title">
+    <h2 id="planned-city-title">Planned city systems</h2>
+    <p>Design preview · Not simulated</p>
+    <h3>Social groups · Proposed names</h3>
+    <div class="planned-groups">
+      {#each CITY_DESIGN.groups as group}
+        <article aria-label={group.label}>
+          <h4>{group.label}</h4>
+          <p>{group.name}</p>
+          <p>{group.duties}</p>
+        </article>
+      {/each}
+    </div>
+    <p>{CITY_DESIGN.groupInfluence}</p>
+
+    <section aria-labelledby="planned-inventory-title">
+      <h3 id="planned-inventory-title">Physical inventory</h3>
+      <dl>
+        <div><dt>Inputs</dt><dd>{CITY_DESIGN.inventory.inputs.join(', ')}</dd></div>
+        <div><dt>Finished inventory</dt><dd>{CITY_DESIGN.inventory.finished.join(', ')}</dd></div>
+      </dl>
+      <p>Buildings produce Food and Goods. Goods are physical exchange goods.</p>
+      <p>Wheat harvested this week may be processed into Food in the same week, only through a building.</p>
+    </section>
+    <section aria-labelledby="planned-requirements-title">
+      <h3 id="planned-requirements-title">City-wide Requirements</h3>
+      <p>{CITY_DESIGN.requirements.join(', ')}</p>
+      <p>City-wide demand, separate from finished inventory.</p>
+    </section>
+    <section aria-labelledby="planned-status-title">
+      <h3 id="planned-status-title">City Status</h3>
+      <ul>{#each CITY_DESIGN.statuses as status}<li>{status}</li>{/each}</ul>
+      <p>Design range: 0–100. Values are not simulated.</p>
+    </section>
+    <p>Law is deferred; its integration boundary is pending.</p>
+  </section>
   <ErrorLog />
 </main>
 
@@ -111,6 +148,9 @@
   main { max-width: 960px; margin: 0 auto; padding: 24px; }
   .card { margin-bottom: 16px; }
   h1 { font-size: 1.6rem; } h2 { font-size: 1.2rem; margin-bottom: 8px; }
+  .planned h3 { margin: 16px 0 8px; }
+  .planned h4 { margin: 0; }
+  .planned-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
   p { margin: 8px 0; }
   .stocks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
   dd { margin: 0; font-size: 1.5rem; }

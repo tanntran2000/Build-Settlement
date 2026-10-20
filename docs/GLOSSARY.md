@@ -1,5 +1,7 @@
 # Từ Điển Thuật Ngữ Chuẩn Hóa Anh - Việt (GLOSSARY.md)
 
+> **Phạm vi 2026-10-20**: Các thuật ngữ thiết kế kế tiếp bên dưới không đổi enum, save hay runtime hiện có. [Thiết kế non-Law](design/SOCIAL-REQUIREMENTS-STATUS-DRAFT-01.md) phân biệt rõ runtime bốn stock với sáu loại inventory dự kiến. Law / Civic Charter **DEFERRED**; các thuật ngữ pháp lý lịch sử không phải đặc tả triển khai mới.
+
 > **Mục đích**: Chuẩn hóa toàn bộ thuật ngữ chuyên môn dùng trong mã nguồn (Interface, Enum, Biến) và văn bản hiển thị trong giao diện tiếng Việt của trò chơi, đảm bảo tính thống nhất tuyệt đối giữa bạn và các AI Agent.
 
 ---
@@ -26,7 +28,11 @@
 | `Named NPC` | **Nhân Vật Cốt Cán** | Cá nhân có tên riêng, số đo, tâm lý phức tạp và mối quan hệ cá nhân sâu sắc. |
 | `Population Cohort` | **Quần Thể Dân Cư** | Khối cư dân số đông được quản lý theo nhóm ngành nghề và chỉ số bình quân. |
 | `Occupation` | **Nghề Nghiệp** | Chức danh công việc thực tế (Công nhân, Kỹ sư, Bác sĩ, Đấu sĩ, Kỹ nữ...). |
-| `Social Class` | **Tầng Lớp Xã Hội** | Vị thế xã hội (Dưới đáy, Bình dân, Thợ lành nghề, Quản trị, Tinh hoa). |
+| `Social Class` | **Tầng Lớp Xã Hội** | Schema/runtime hiện có: Dưới đáy, Bình dân, Thợ lành nghề, Quản trị, Tinh hoa. Không ánh xạ một-một sang ba nhóm thiết kế mới. |
+| Social group (planned) | **Nhóm Xã Hội (dự kiến)** | Đúng 3 nhóm: labor; intellectual/scientific; merchants. Chưa gán membership hoặc số dân runtime. |
+| The Makers’ Union / Makers | **Nhóm Lao Động** | Tên đầy đủ đề xuất / nhãn UI; sản xuất, xây dựng, bảo trì. |
+| The Luminary Circle / Luminaries | **Nhóm Tri Thức / Khoa Học** | Tên đầy đủ đề xuất / nhãn UI; nghiên cứu, giáo dục, quy hoạch, tiêu chuẩn kỹ thuật. |
+| The Mercantile League / Merchants | **Nhóm Thương Nhân** | Tên đầy đủ đề xuất / nhãn UI; thương mại, phân phối. Không có tham nhũng bẩm sinh hoặc cơ chế giao thương mới trong gói này. |
 | `Legal Status` | **Địa Vị Pháp Lý** | Thân phận pháp lý (Công dân, Cư dân tự do, Lao động hợp đồng, Tù nhân, Nô lệ). |
 | `Enslaved` | **Nô Lệ Hóa / Nô Lệ Sở Hữu**| Địa vị pháp lý bị tước đoạt quyền tự do và coi là tài sản sở hữu. |
 | `Citizen` | **Công Dân Chính Thức** | Cư dân tự do có đầy đủ quyền lợi chính trị, hôn nhân và tư pháp. |
@@ -72,6 +78,18 @@
 ---
 
 ## 5. Kinh Tế & Cơ Sở Hạ Tầng (Economy & Facilities)
+
+Thiết kế kế tiếp (chưa mô phỏng):
+
+| Thuật Ngữ Thiết Kế | Tiếng Việt | Ranh Giới |
+| :--- | :--- | :--- |
+| Physical inventory | Kho vật lý | Sáu loại dự kiến: Wheat/Gold/Wood/Iron/Food/Goods; Weekly hiện chỉ có Gold/Food/Wood/Iron. Food runtime không đổi tên thành Wheat. |
+| Wheat / Gold / Wood / Iron | Lúa mì / Vàng / Gỗ / Sắt | Bốn đầu vào dự kiến cho xây dựng/sản xuất; recipe, cost và nguồn Gold chưa chốt. |
+| Food / Goods inventory | Kho thực phẩm / hàng hóa | Thành phẩm do building tạo ra. Wheat thu hoạch có thể được chế biến thành Food cùng tuần, chỉ qua building. Goods là hàng hóa vật lý dùng trao đổi; chưa có trade engine mới. |
+| City-wide Requirements: Food / Goods | Nhu cầu thực phẩm / hàng hóa toàn thành phố | Lượng cần đáp ứng, tách riêng tồn kho thành phẩm cùng tên; không phải Status, chưa có mức tiêu thụ/cấp phát được duyệt. |
+| City Status: Happiness / Security / Corruption | Hạnh phúc / An ninh / Tham nhũng | Chỉ đúng 3 Status, phạm vi thiết kế 0–100; chưa có giá trị khởi tạo, ngưỡng hoặc hệ số tác động. Cả ba nhóm cùng đóng góp qua điều kiện/công trình/hiệu ứng tương lai. |
+
+Các thuật ngữ kinh tế và công trình lịch sử:
 
 | Thuật Ngữ Kỹ Thuật (Code / English) | Thuật Ngữ Hiển Thị (Tiếng Việt) | Định Nghĩa & Ngữ Cảnh |
 | :--- | :--- | :--- |

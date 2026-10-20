@@ -4,6 +4,14 @@
 
 ---
 
+## Thiết kế non-Law kế tiếp — working-copy draft 2026-10-20
+
+[Thiết kế](design/SOCIAL-REQUIREMENTS-STATUS-DRAFT-01.md) ghi đúng 3 nhóm labor / intellectual-scientific / merchants; tên đề xuất The Makers’ Union / The Luminary Circle / The Mercantile League, nhãn UI Makers / Luminaries / Merchants. Vai trò lần lượt: sản xuất/xây dựng/bảo trì; nghiên cứu/giáo dục/quy hoạch/tiêu chuẩn kỹ thuật; thương mại/phân phối. Không ánh xạ một-một Slave/Low/Middle/High hoặc tự gán dân số.
+
+Food/Goods là Requirements **toàn thành phố**, tách biệt kho thành phẩm. Status chỉ Happiness/Security/Corruption, miền thiết kế 0–100. Cả ba nhóm cùng đóng góp qua điều kiện/công trình/hiệu ứng tương lai, không mỗi nhóm cho một Status, không tham nhũng bẩm sinh ở Merchants. **Law / Civic Charter DEFERRED**: chỉ ranh giới tích hợp chờ quyết định.
+
+[WP-SOCIAL-CATALOG-PRESENTATION-01 v0.1](work_packages/WP-SOCIAL-CATALOG-PRESENTATION-01_v0.1.md) là **đề xuất chờ G1**, không cấp quyền code. Lát cắt đầu chỉ catalog/nhãn tĩnh, không state/schema hoặc công thức mới. Production sáu stock, Requirements/Status có giá trị, membership và migration cần quyết định/WP riêng; recipes, capacities, consumption, thresholds, effect coefficients và thử nghiệm numerical trước đều chưa duyệt. Không triển khai WP trong lượt tài liệu này.
+
 ## Player entry Weekly — WP-WEEKLY-PLAYER-ENTRY-01 v0.1
 
 Candidate triển khai entry: production luôn mở Weekly, R1 tách thành regression artifact không ship. Entry đã có implementation và regression coverage trong nhánh này; local lint/typecheck/unit/build/smoke/audit đạt, còn chờ CI và Reviewer/Tester độc lập trên exact SHA trước nghiệm thu/merge. Đây không phải hoàn tất demo, production economy hoặc UI/UX mới.
@@ -81,8 +89,8 @@ flowchart TD
     * Phân bổ năng lực lao động (Effective $\rightarrow$ Allocated Labor), không phân bổ từng đầu người.
   * [ ] **POP-02: Population Dynamics**: **DESIGN ONLY**
     * Di cư, xuất cư, dịch chuyển giai cấp, ngưỡng sức chứa bền vững, dòng người nộp đơn nhập cư (Immigration, Emigration, Class Mobility, Sustainable Capacity, Outside Applicants, Headcount flows - chưa bao gồm Sinh/Tử, Tháp tuổi hay mô phỏng thế hệ).
-  * [ ] **POP-03: Law & Social Conflict**: **DESIGN ONLY**
-    * Chính sách giai cấp, xung đột quyền lợi, trật tự xã hội.
+  * [ ] **POP-03: Law & Social Conflict**: **DEFERRED — chờ quyết định Human**
+    * Chỉ giữ ranh giới tích hợp tương lai; không triển khai Law, voting, privilege formulas hoặc Civic Charter.
 
 ---
 
@@ -101,7 +109,7 @@ flowchart TD
 * **City Effect Lifecycle (L3)**:
   * Quản lý vòng đời hiệu ứng đô thị có thời hạn (`packages/core/src/status/effects.ts`) với chu kỳ đếm lùi dùng chung 3 tuần (`shared 3-week countdown`), bậc cao thay thế bậc thấp mà không reset bộ đếm, chống làm mới chu kỳ (anti-refresh), trạng thái đối lập thay thế nhau không cộng dồn.
   * Phân biệt rõ hai tầng (không gộp lẫn):
-    * **4 Thanh Trạng Thái Đô Thị Toàn Cục (Primary Global Status Bars)**: Happiness, Security, Goods, Corruption (kèm đầu vào bổ trợ: Food Fulfillment).
+    * **3 Status toàn thành phố (thiết kế mới, chưa mô phỏng)**: Happiness, Security, Corruption; miền 0–100. Food/Goods là Requirements riêng, không phải Status; tồn kho Food/Goods vẫn là lớp vật lý riêng. Danh mục 4 thanh cũ có Goods đã được thay thế về thiết kế, không sửa runtime.
     * **4 Nhóm Hiệu Ứng Đô Thị (City Effect Families)**: `economy`, `security`, `qol`, `corruption`.
     * *Chưa có công thức bộ giải mã Status $\rightarrow$ City Effect nào được phê duyệt hay triển khai.*
 * **Các Hạng Mục Rõ Ràng Chưa Triển Khai / Tạm Hoãn (Deferred / Unimplemented)**:
