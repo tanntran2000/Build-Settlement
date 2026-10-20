@@ -1,5 +1,7 @@
 # Social Groups, Requirements and City Status — Design Draft 01
 
+> **Subsequent option A approval — 2026-10-20:** [WP-WHEAT-FOOD-CHAIN-01 v0.1](../work_packages/WP-WHEAT-FOOD-CHAIN-01_v0.1.md) now approves only the bounded Wheat/Food trial: Farm1WF+1Gold→2Wheat, then operational Processor1WF+2Wheat→2Food; max5 whole batches each, shared existing WF, initial Gold10/Wheat0/Food4/Wood0/Iron0 and a pre-existing processor. Five live stocks now; Goods remains the sixth design target. This supersedes earlier “no approved recipes” statements below only for those trial activities. Other recipes, construction, group membership, Requirements/Status/consumption, trade, migration and Law remain deferred. The underlying design/history below is retained; this candidate still needs exact-SHA independent acceptance.
+
 **Date:** 2026-10-20. **State:** design record; only the linked WP v0.1 presentation/catalog slice subsequently received Human implementation approval.
 **Inspected base:** `7ca4c2348f11740babd3b4fa4272b4e1e047cd5b` (PR #24 merge).
 

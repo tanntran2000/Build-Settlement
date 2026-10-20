@@ -1,5 +1,11 @@
 # Bản Đồ Lộ Trình Kỹ Thuật Tổng Thể (MASTER_ROADMAP.md)
 
+## Candidate gameplay — WP-WHEAT-FOOD-CHAIN-01 v0.1, option A approved
+
+Base sau PR25: `6971a1bbc66bfc3691fe7b804ee6453a7cffc158`. [WP Food chain](work_packages/WP-WHEAT-FOOD-CHAIN-01_v0.1.md) triển khai candidate Farm1WF+1Gold→2Wheat, rồi Processor1WF+2Wheat→2Food trong cùng tuần; mỗi công trình tối đa5 mẻ nguyên, dùng chung10WF của fixture hiện có. Một processor operational cấp sẵn, không construction. Năm stock live Gold/Wheat/Food/Wood/Iron; Goods là loại đích thứ sáu chưa thực thi. Gold10/Wheat0/Food4/Wood0/Iron0; không migration, consumption/Status/nhóm xã hội/Law mới. Recipe là trial được duyệt, không balance chính thức. Chờ gates/CI và hai audit độc lập trên exact candidate SHA; chưa merge/G6 hoặc demo.
+
+Các checkpoint dưới đây giữ mô tả lịch sử tại thời điểm ghi, gồm PR25 từng chờ G1 và Farm trực tiếp tạo Food/bốn stock/fractional WF. Không dùng chúng làm contract runtime của candidate Food chain. README và WP ở trên ghi công thức hiện hành; không tự nâng trạng thái module lên L4.
+
 > **Mục đích**: Bản đồ lộ trình thống nhất và duy nhất của dự án. Khóa chặt mục tiêu xây dựng **Bản Cắt Dọc Tối Thiểu (Vertical Slice R0 $\rightarrow$ R5)** trước khi mở rộng sang bất kỳ nội dung chuyên sâu nào.
 
 ---

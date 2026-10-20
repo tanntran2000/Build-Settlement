@@ -5,7 +5,7 @@ import type { PopulationCohort } from "../population.js";
 
 function world(): CanonicalGameState {
   return { week: 1, worldMetadata: { worldSeed: 2026, gameVersion: "0.1.0" }, activeSettlementId: "haven", settlements: {
-    haven: { id: "haven", name: "Haven", status: "active", inventory: { gold: 10000, food: 4000, wood: 0, iron: 0 }, cohorts: [{
+    haven: { id: "haven", name: "Haven", status: "active", foodProcessorOperational: true, inventory: { gold: 10000, wheat: 0, food: 4000, wood: 0, iron: 0 }, cohorts: [{
       id: "middle", occupation: "worker", socialClass: "common", legalStatus: "citizen", count: 100,
       averageHealth: 80, morale: 80, productivity: 80, resentment: 0, loyalty: 80, livingStandard: "decent",
     }] },
@@ -34,7 +34,7 @@ describe("canonical weekly world boundary", () => {
   it.each([null, [], "settlements", { haven: null }])("rejects malformed settlements %j", settlements => {
     expect(isCanonicalGameState({ ...world(), settlements })).toBe(false);
   });
-  it.each(["id", "name", "status", "inventory", "cohorts"])("requires settlement field %s", key => {
+  it.each(["id", "name", "status", "inventory", "cohorts", "foodProcessorOperational"])("requires settlement field %s", key => {
     const state = world(); delete (state.settlements.haven as unknown as Record<string, unknown>)[key];
     expect(isCanonicalGameState(state)).toBe(false);
   });
@@ -42,12 +42,23 @@ describe("canonical weekly world boundary", () => {
     const state = world(); Object.assign(state.settlements.haven, defect);
     expect(isCanonicalGameState(state)).toBe(false);
   });
-  it.each([null, [], {}, { gold: 0, food: 0, wood: 0 }, { gold: 0, food: 0, wood: 0, iron: 0, Water: 0 }, { gold: 0, food: 0, wood: 0, iron: 0, Goods: 0 }])("rejects malformed inventory %j", inventory => {
+  it.each([null, [], {}, { gold: 0, food: 0, wood: 0 }, { gold: 0, food: 0, wood: 0, iron: 0, Water: 0 }, { gold: 0, food: 0, wood: 0, iron: 0, Goods: 0 }, { gold: 0, wheat: 0, food: 0, wood: 0, iron: 0, goods: 0 }])("rejects malformed inventory %j", inventory => {
     const state = world(); Object.assign(state.settlements.haven, { inventory });
     expect(isCanonicalGameState(state)).toBe(false);
   });
-  it.each(invalidNumbers)("rejects invalid stock %j for all four resources", value => {
-    for (const key of ["gold", "food", "wood", "iron"]) {
+  it.each([null, 0, 1, "true", {}, undefined])("rejects invalid processor availability %j", foodProcessorOperational => {
+    const state = world(); Object.assign(state.settlements.haven, { foodProcessorOperational });
+    expect(isCanonicalGameState(state)).toBe(false);
+  });
+  it("accepts absent operational processor but does not migrate the old four-stock state", () => {
+    const state = world(); state.settlements.haven.foodProcessorOperational = false;
+    expect(isCanonicalGameState(state)).toBe(true);
+    const old = world(); delete (old.settlements.haven.inventory as Partial<typeof old.settlements.haven.inventory>).wheat;
+    expect(isCanonicalGameState(old)).toBe(false);
+    expect(old.settlements.haven.inventory).not.toHaveProperty("wheat");
+  });
+  it.each(invalidNumbers)("rejects invalid stock %j for all five resources", value => {
+    for (const key of ["gold", "wheat", "food", "wood", "iron"]) {
       const state = world(); Object.assign(state.settlements.haven.inventory, { [key]: value });
       expect(isCanonicalGameState(state)).toBe(false);
     }

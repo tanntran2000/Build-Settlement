@@ -45,7 +45,7 @@ test('both entries expose an English panel; real JSON download persists on its o
   await invalid(page); await invalid(page);
   await expect(panel(page)).toContainText('INVALID_WORKFORCE_INPUT'); await expect(panel(page)).toContainText('Occurrences: 2');
   await page.reload(); await expect(panel(page)).toContainText('Occurrences: 2');
-  await page.getByLabel('Farm Field workforce (WF)').fill('4'); await page.getByRole('button', { name: 'End Week', exact: true }).click();
+  await page.getByLabel('Farm Field workforce (WF)').fill('4'); await page.getByLabel('Food Processor workforce (WF)').fill('4'); await page.getByRole('button', { name: 'End Week', exact: true }).click();
   await expect(page.getByTestId('weekly-week')).toHaveText('2');
   const data = await download(page);
   expect(data.schemaVersion).toBe(1); expect(data.entries).toHaveLength(1);
@@ -84,7 +84,7 @@ for (const mode of ['weekly', 'r1'] as const) {
     test(`${mode} ${fault} dispatcher failure never records or renders arbitrary error data`, async ({ page }) => {
       await injectDispatcher(page, mode, fault); await page.goto(mode === 'weekly' ? '/' : regression);
       const consoleMessages: string[] = []; page.on('console', message => consoleMessages.push(message.text()));
-      if (mode === 'weekly') { await page.getByLabel('Farm Field workforce (WF)').fill('4'); await page.getByRole('button', { name: 'End Week', exact: true }).click(); }
+      if (mode === 'weekly') { await page.getByLabel('Farm Field workforce (WF)').fill('4'); await page.getByLabel('Food Processor workforce (WF)').fill('4'); await page.getByRole('button', { name: 'End Week', exact: true }).click(); }
       else await page.locator('#btn-advance-day').click();
       const code = fault === 'throw' ? 'UNEXPECTED_ACTION_ERROR' : 'UNKNOWN_COMMAND_FAILURE';
       await expect(panel(page)).toContainText(code); expect(await page.locator('body').innerText()).not.toContain('TOKEN-SYNTHETIC');
@@ -151,7 +151,7 @@ test('production keeps old R1 log records on its origin and captures the new Wee
   await page.goto('/');
   await page.evaluate(({ key, legacy }) => localStorage.setItem(key, JSON.stringify({ schemaVersion: 1, entries: [legacy] })), { key, legacy });
   await page.reload(); await expect(panel(page)).toContainText('r1 · RUNTIME · Day 2');
-  await page.getByLabel('Farm Field workforce (WF)').fill('4');
+  await page.getByLabel('Farm Field workforce (WF)').fill('4'); await page.getByLabel('Food Processor workforce (WF)').fill('4');
   await page.getByRole('button', { name: 'End Week', exact: true }).click();
   await page.evaluate(() => {
     window.dispatchEvent(new ErrorEvent('error'));
@@ -178,7 +178,7 @@ for (const failure of ['getter', 'quota'] as const) {
     await page.goto('/?mode=weekly'); await invalid(page);
     await expect(panel(page)).toContainText('Not saved — this tab only. Download before closing.');
     const data = await download(page); expect(data.entries[0].code).toBe('INVALID_WORKFORCE_INPUT');
-    await page.getByLabel('Farm Field workforce (WF)').fill('4'); await page.getByRole('button', { name: 'End Week', exact: true }).click();
+    await page.getByLabel('Farm Field workforce (WF)').fill('4'); await page.getByLabel('Food Processor workforce (WF)').fill('4'); await page.getByRole('button', { name: 'End Week', exact: true }).click();
     await expect(page.getByTestId('weekly-week')).toHaveText('2'); await expect(page.getByTestId('weekly-stock-food')).toHaveText('12');
   });
 }
