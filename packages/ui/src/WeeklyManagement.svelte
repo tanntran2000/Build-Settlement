@@ -118,7 +118,7 @@
         </article>
       {/each}
     </div>
-    <p>All three groups contribute to shared Happiness, Security and Corruption through conditions, buildings and future effects. No group owns a single Status; Merchants have no intrinsic corruption.</p>
+    <p>{CITY_DESIGN.groupInfluence}</p>
 
     <section aria-labelledby="planned-inventory-title">
       <h3 id="planned-inventory-title">Physical inventory</h3>

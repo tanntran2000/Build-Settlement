@@ -77,7 +77,7 @@ Any future commit, push, PR or publication step requires authorization applicabl
 
 ## 6. Implementation candidate — local verification, not merge acceptance
 
-Implemented only the inert `CITY_DESIGN` descriptor export and the static Weekly panel, plus two browser acceptance tests. Reused the existing content dependency; no package metadata or lockfile changes. The original nine authorized design-document edits travel with this candidate as documentation-phase context. Their earlier G1-pending/no-code notices describe that phase; the subsequent approval above is the current authorization. Section 1 and P01–P08 are unchanged. No G6 closeout, full simulation, demo approval or release readiness is claimed.
+Implemented only the inert `CITY_DESIGN` descriptor export and the static Weekly panel, plus two browser acceptance tests and one focused content regression test. Reused the existing content dependency; no package metadata or lockfile changes. The original nine authorized design-document edits travel with this candidate as documentation-phase context. Their earlier G1-pending/no-code notices describe that phase; the subsequent approval above is the current authorization. Section 1 and P01–P08 are unchanged. No G6 closeout, full simulation, demo approval or release readiness is claimed.
 
 Local evidence is under `/tmp/social-catalog-presentation-01/` in the saved cloud environment. Setup initially failed to create npm's default cache; retry using `npm_config_cache=/tmp/social-catalog-presentation-01/npm-cache` installed 189 packages without changing dependency metadata. A premature baseline command before setup completed could not find Vitest; after setup the baseline passed 617 units and build. Two new browser tests then failed because the preview region was absent (RED exit 1); after implementation both passed (GREEN exit 0).
 
@@ -85,11 +85,14 @@ Local evidence is under `/tmp/social-catalog-presentation-01/` in the saved clou
 | --- | --- |
 | `npm run lint` | Exit 0 |
 | `npm run typecheck` | Exit 0; all five workspaces, Svelte 0 errors / 0 warnings |
-| `npm test` | Exit 0; 617 tests in 17 files |
+| `npm test` | Exit 0; 618 tests in 18 files |
 | `npm run build` | Exit 0; core, simulation and production UI |
 | `CI=1 npm run test:smoke -- --config=/tmp/social-catalog-presentation-01/playwright.config.ts` | Exit 0; 31 browser tests, including the two new acceptance tests and existing Weekly/R1/logger/artifact-isolation coverage |
 | `npm audit --audit-level=moderate` | Exit 0; 0 vulnerabilities, with external writable npm cache |
 | `npm ls --all` | Exit 0; dependency tree valid |
-| Scope / integrity / bounded secret-pattern scan / `git diff --check` | Exit 0; 13-file scope = nine carried documents + four implementation files; 99 other tracked files byte-identical to base; existing tests retained; Weekly script unchanged except content import; no panel handlers, bindings or business-state reads |
+| Scope / integrity / bounded secret-pattern scan / `git diff --check` | Exit 0; 14-file scope = nine carried documents + five implementation files; 99 other tracked files byte-identical to base; existing tests retained; Weekly script unchanged except content import; no panel handlers, bindings or business-state reads |
 
 The external Playwright config preserves the repository's tests, assertions, projects and both preview servers; it sets checkout/output paths and uses the installed `/usr/bin/chromium`, as documented in cloud onboarding. This is local system-Chromium evidence, not exact parity with CI's bundled browser. Final SHA, draft PR and exact-SHA CI/independent review status belong in the handoff. Merge/deployment/ZIP remain blocked until separately authorized; this record does not substitute for independent Reviewer/Tester acceptance.
+
+
+Pre-PR source review examined exact candidate `b5adbf8b74878af4fbde86e2bc9d0773178b0cb9` and found one P04 gap: shared-influence text was rendered but absent from the content catalog. A focused content test reproduced the missing descriptor (RED exit 1). The correction adds one inert `groupInfluence` description and renders it in the existing paragraph (GREEN exit 0); browser assertions are unchanged. All gates in the table were rerun after that code change, including 618 units and 31 browser tests. This supersedes the earlier 617-unit candidate; the final SHA is reported in the handoff. No other source-review finding or deferred minor was reported. Independent Reviewer/Tester acceptance of the final SHA and GitHub CI are still separate gates.
