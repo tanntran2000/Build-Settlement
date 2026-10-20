@@ -1,12 +1,24 @@
 # Bản Đồ Lộ Trình Kỹ Thuật Tổng Thể (MASTER_ROADMAP.md)
 
-## Candidate gameplay — WP-WHEAT-FOOD-CHAIN-01 v0.1, option A approved
+## Current runtime — PR #26 merged, post-merge CI passed
 
-Base sau PR25: `6971a1bbc66bfc3691fe7b804ee6453a7cffc158`. [WP Food chain](work_packages/WP-WHEAT-FOOD-CHAIN-01_v0.1.md) triển khai candidate Farm1WF+1Gold→2Wheat, rồi Processor1WF+2Wheat→2Food trong cùng tuần; mỗi công trình tối đa5 mẻ nguyên, dùng chung10WF của fixture hiện có. Một processor operational cấp sẵn, không construction. Năm stock live Gold/Wheat/Food/Wood/Iron; Goods là loại đích thứ sáu chưa thực thi. Gold10/Wheat0/Food4/Wood0/Iron0; không migration, consumption/Status/nhóm xã hội/Law mới. Recipe là trial được duyệt, không balance chính thức. Chờ gates/CI và hai audit độc lập trên exact candidate SHA; chưa merge/G6 hoặc demo.
+Main đã xác minh: `02e58b1fe6b9ef42c048cd4fede8bb5bc5aadf4d`, merge [PR #26](https://github.com/tanntran2000/Build-Settlement/pull/26) từ audited head `ef24fa2ca5505a8b5d59665fc7df5435989f6371`, base sau PR25 `6971a1bbc66bfc3691fe7b804ee6453a7cffc158`. Tree `ed93caee537d8df30d1bd23ac49a740d73bf0463` khớp candidate đã được Reviewer và Tester độc lập PASS. [Main CI 39364392563](https://github.com/tanntran2000/Build-Settlement/actions/runs/39364392563/job/118437735555) SUCCESS: 650 unit tests / 18 files và 35 browser tests; audit, lint, typecheck và build đều đạt. Đây là bằng chứng hậu kiểm PR26, không phải kết quả kiểm thử mới của lượt sửa tài liệu này.
 
-Các checkpoint dưới đây giữ mô tả lịch sử tại thời điểm ghi, gồm PR25 từng chờ G1 và Farm trực tiếp tạo Food/bốn stock/fractional WF. Không dùng chúng làm contract runtime của candidate Food chain. README và WP ở trên ghi công thức hiện hành; không tự nâng trạng thái module lên L4.
+[WP Food chain](work_packages/WP-WHEAT-FOOD-CHAIN-01_v0.1.md) đã triển khai Farm `1 WF + 1 Gold → 2 Wheat`, rồi Processor `1 WF + 2 Wheat → 2 Food` trong cùng tuần. Mỗi công trình tối đa 5 mẻ nguyên, dùng chung 10 WF của fixture hiện có; một processor operational cấp sẵn, chưa có construction. Năm stock live là Gold/Wheat/Food/Wood/Iron; Goods là loại đích thứ sáu chưa thực thi. World mới có Gold 10, Wheat 0, Food 4, Wood 0, Iron 0. Runtime chưa có Food consumption, city Requirements/Status, ba nhóm xã hội hoạt động, Law hoặc migration. Recipe hiện có là trial đã duyệt, chưa phải balance chính thức; gói tài liệu này không đổi recipe, code hoặc schema. Không nâng toàn bộ POP/RES lên L4, không tuyên bố demo/deploy hoặc save/load hoàn tất.
+
+Các checkpoint bên dưới giữ mô tả lịch sử tại thời điểm ghi, gồm PR25 từng chờ G1 và Farm trực tiếp tạo Food/bốn stock/fractional WF. Những nhãn candidate/chờ audit/chưa merge ở các checkpoint đó không đảo ngược trạng thái PR26 đã xác minh ở trên. README và WP Food chain ghi contract runtime hiện hành; không dùng các công thức cũ làm contract mới hoặc tự nâng trạng thái module lên L4. Phần đối chiếu tài liệu hậu kiểm này vẫn cần audit độc lập và merge riêng.
 
 > **Mục đích**: Bản đồ lộ trình thống nhất và duy nhất của dự án. Khóa chặt mục tiêu xây dựng **Bản Cắt Dọc Tối Thiểu (Vertical Slice R0 $\rightarrow$ R5)** trước khi mở rộng sang bất kỳ nội dung chuyên sâu nào.
+
+---
+
+## Approved trial design — Food/Happiness, chưa triển khai
+
+[Trial Rules 01](design/FOOD-HAPPINESS-TRIAL-RULES-01.md) ghi nguyên tắc và phép tính được user xác nhận từ proposal `Sentinel_ad60bce8e0e08191b7787a76b342a142`: **APPROVED TRIAL BALANCE — NOT IMPLEMENTED**. Nhu cầu `D = 0.04 × P Food/tuần`, với `P` là headcount; Food tiêu thụ theo phần khả dụng sau sản xuất; Happiness giảm `12 × tỷ lệ thiếu`, đủ ăn hồi 4 điểm tới 80 mà không kéo điểm trên 80 xuống. Starvation Faltering cần đồng thời ít nhất 2 tuần thiếu liên tiếp và thiếu tích lũy ít nhất 1; tier theo công thức trong rulebook, tối đa VIII, tồn tại tới khi đủ ăn xác nhận hồi phục. Không nhầm với lifecycle 3 tuần của các effect khác.
+
+Flourishing cần Happiness ≥ 80, đủ ăn và tồn Food sau tiêu thụ đủ thêm một tuần; duy trì 3 tuần rồi xét 20% mỗi End Week đủ chuẩn. Đang active không tích qualification hoặc refresh; hết buff sau 3 tuần phải qualify lại 3 tuần. Cảnh báo/nổi dậy dùng điều kiện còn thiếu Food và Happiness < 30, kéo dài 3 tuần liên tiếp để đủ trigger rebellion; deadline, cách xử lý và defeat vẫn TBD. End Week check được duyệt, còn effect bắt đầu từ `T+1` vẫn chỉ là draft. Rulebook phân biệt đầy đủ approved, ví dụ minh họa và interface chưa chốt; Happiness 80 minh họa không phải initial state đã duyệt.
+
+**Hai blocker trước runtime:** Gold 10 và Food 4 hiện tại chỉ cho tổng tối đa 24 Food, tương đương 6 tuần nhu cầu 4 nếu không có Gold inflow; WF nguyên khiến 10 WF × 1.04 = 10.4 vẫn chỉ giao tối đa 10, nhưng 10 WF × 0.995 = 9.95 chỉ giao được 9. Không tự thêm thu nhập/thuế hoặc đổi recipe, cap, WF lẻ/carry để né blocker. Gói hiện tại chỉ tài liệu; implementation cần spec/WP riêng sau khi chốt các interface và xử lý giới hạn. Law/Goods production/generic engine vẫn ngoài phạm vi; giữ nhẹ và mod-friendly.
 
 ---
 

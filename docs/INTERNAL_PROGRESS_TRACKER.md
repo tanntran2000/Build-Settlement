@@ -1,6 +1,24 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
-> **Đối chiếu cục bộ 2026-10-20 — documentation only, không đóng G6**: checkout branch `work`, HEAD và remote `main` cùng `7ca4c2348f11740babd3b4fa4272b4e1e047cd5b` (PR #24); xác minh bằng `git rev-parse HEAD` và `git ls-remote origin refs/heads/main`. Ref `origin/main` cục bộ vẫn cũ, không dùng làm current main. Các nhãn candidate/chưa merge bên dưới là checkpoint lịch sử, không phải trạng thái Git vừa xác minh.
+## Current runtime checkpoint — PR #26 merged and verified
+
+Main `02e58b1fe6b9ef42c048cd4fede8bb5bc5aadf4d` đã merge [PR #26](https://github.com/tanntran2000/Build-Settlement/pull/26) từ candidate `ef24fa2ca5505a8b5d59665fc7df5435989f6371`, base `6971a1bbc66bfc3691fe7b804ee6453a7cffc158`. Reviewer và Tester độc lập đã PASS đúng candidate; merge tree `ed93caee537d8df30d1bd23ac49a740d73bf0463` trùng tree đã audit. [Main CI 39364392563 / job 118437735555](https://github.com/tanntran2000/Build-Settlement/actions/runs/39364392563/job/118437735555) SUCCESS trên đúng merge SHA: 650 unit tests / 18 files và 35 browser tests, cùng audit, lint, typecheck và build. Đây là bằng chứng release vào main đã ghi nhận, không phải tuyên bố test vừa chạy trong lượt tài liệu này.
+
+Runtime Weekly hiện có 5 stock Gold/Wheat/Food/Wood/Iron và chuỗi Farm → Wheat → Food Processor → Food. Farm `1 WF + 1 Gold → 2 Wheat`; Processor `1 WF + 2 Wheat → 2 Food`; mỗi công trình tối đa 5 mẻ/tuần, WF nguyên, dùng chung pool từ cohort. World mới có 100 cư dân → 10 WF, Gold 10 / Wheat 0 / Food 4 / Wood 0 / Iron 0; Farm và Processor operational cấp sẵn. Giữ contract tại [WP-WHEAT-FOOD-CHAIN-01 v0.1](work_packages/WP-WHEAT-FOOD-CHAIN-01_v0.1.md). Các checkpoint bốn stock/direct Food bên dưới là lịch sử đã được thay thế trong player loop này.
+
+Chưa triển khai consumption/Requirements, Happiness/Security/Corruption, ba nhóm xã hội hoạt động, Goods production, Law, construction hoặc migration. Reload vẫn reset world trong RAM; chưa save/load bền vững, chưa L4 cho toàn bộ module, chưa demo/deploy/ZIP. Không đổi bất kỳ source/schema/runtime nào trong gói tài liệu này. Phần cập nhật tài liệu hậu kiểm PR26 này còn chờ audit độc lập và merge riêng; không xóa các checkpoint cũ.
+
+## Approved trial calculations — documentation only, NOT IMPLEMENTED
+
+[Trial Rules 01](design/FOOD-HAPPINESS-TRIAL-RULES-01.md) lưu công thức Food/Happiness/Faltering/Flourishing và warning/rebellion được user xác nhận sau PR26, với đơn vị, ví dụ, nguồn approval và supersession chính xác. Đây là **APPROVED TRIAL BALANCE**, không phải runtime hoặc balance cuối. Không nâng trạng thái module lên L2/L3/L4 từ việc ghi công thức; Weekly chưa gọi consumption, resolver, RNG, active-effect lifecycle hoặc event/defeat mới. Existing production và modifier-zero wrapper không đổi.
+
+Starvation Faltering được thiết kế tồn tại tới recovery, riêng nguyên nhân này thay thế negative timer 3 tuần cũ. Flourishing giữ lifecycle 3 tuần và qualification 3 tuần riêng, với chance 20% sau khi đủ chuẩn. Những dữ liệu này chưa có trong state/schema. Numeric precision, initial Happiness, phase `T+1`, opposition/expiry, random-draw và event idempotency, rebellion response/deadline/defeat còn cần spec/WP được duyệt. Không tự thêm điều kiện thứ tư “không có Faltering” vào eligibility đã xác nhận.
+
+**Implementation blockers:** tổng Food tối đa từ fixture Gold 10 / Food 4 hiện tại là 24, chỉ đủ tối đa 6 tuần cho 100 dân ở demand 4 nếu không có Gold inflow; WF nguyên và cap 5 + 5 làm 10.4 WF không thêm mẻ trong khi 9.95 WF không giao đủ 10. Chưa duyệt nguồn Gold, thay recipe/cap hoặc WF lẻ/carry; không triển khai workaround hay điều kiện thua. Giữ tiêu chí nhẹ/mod-friendly; không Law, Goods production hoặc engine mới.
+
+## Historical documentation checkpoint — preserved
+
+> **Đối chiếu cục bộ 2026-10-20 trước PR25/PR26 — documentation only, không đóng G6 tại thời điểm đó**: checkout branch `work`, HEAD và remote `main` cùng `7ca4c2348f11740babd3b4fa4272b4e1e047cd5b` (PR #24); xác minh bằng `git rev-parse HEAD` và `git ls-remote origin refs/heads/main`. Ref `origin/main` cục bộ vẫn cũ tại checkpoint đó, không dùng làm main hiện tại. Trạng thái hiện tại nằm ở mục PR26 phía trên.
 >
 > [Thiết kế non-Law mới](design/SOCIAL-REQUIREMENTS-STATUS-DRAFT-01.md): đúng 3 nhóm labor/intellectual-scientific/merchants; tên đề xuất The Makers’ Union / The Luminary Circle / The Mercantile League, UI Makers / Luminaries / Merchants. Food/Goods là Requirements toàn thành phố riêng với inventory; chỉ Happiness/Security/Corruption là Status, miền thiết kế 0–100. Cả ba nhóm cùng đóng góp qua điều kiện/công trình/hiệu ứng tương lai, không Merchants = Corruption. Weekly vẫn bốn stock; sáu loại inventory, Requirements và Status mới chưa mô phỏng. **Law / Civic Charter DEFERRED**, không migration hoặc balance mới. [WP đề xuất](work_packages/WP-SOCIAL-CATALOG-PRESENTATION-01_v0.1.md) chờ G1; chưa code, không nâng L1–L4 hoặc công bố bản phát hành.
 
@@ -8,7 +26,7 @@
 
 ---
 
-## Candidate WP-WEEKLY-PLAYER-ENTRY-01 v0.1 — entry riêng, chưa merge
+## Historical candidate WP-WEEKLY-PLAYER-ENTRY-01 v0.1 — checkpoint trước merge
 
 Nền `d13b9f9536e0eaeec900099b07be164c3b993212`. Player entry implementation: production `/` và mọi query mở Weekly bằng `src/main.ts` (`lang=en`, logger weekly); R1 dùng `regression/main.ts` (`lang=vi`, logger r1). Hai preview origin4173/4174 tách storage; production giữ khả năng đọc record r1 cũ trên cùng origin. Production artifact chỉ `packages/ui/dist`; regression ở `packages/ui/regression/dist`, không ship/không đưa vào ZIP.
 
