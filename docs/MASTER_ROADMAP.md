@@ -10,7 +10,7 @@ Candidate triển khai entry: production luôn mở Weekly, R1 tách thành regr
 
 Bốn kho Weekly và công thức không đổi: 100 Middle → 10 WF; 1 WF/stock hiển thị = 1000 milli; Farm cap10WF/tuần; Gold yêu cầu=milliWF giao, được tài trợ=min(Gold có, yêu cầu), Gold trừ phần tài trợ, Food cộng2×phần tài trợ. Chưa có Food consumption/Gold income. Chi tiết và ví dụ tại [WP entry](work_packages/WP-WEEKLY-PLAYER-ENTRY-01_v0.1.md).
 
-Thiết kế năm nhóm tài nguyên chính, UI/UX mới và vòng sản xuất đầy đủ là **PLANNED — cần WP riêng**, chưa được triển khai trong entry. Không đổi Goods/status, sáu tài nguyên hiển thị R1, save schema hay migration. Các checkpoint R1 bên dưới là lịch sử kỹ thuật, không phải player entry hiện tại.
+Runtime WP entry vẫn giữ bốn stock Gold/Food/Wood/Iron và công thức hiện hành. Hướng thiết kế kế tiếp đã xác định sáu stock Wheat/Gold/Wood/Iron/Food/Goods; Goods là hàng hóa vật lý dùng trao đổi, không phải status; Food chỉ được chế biến từ Wheat qua building trong cùng tuần thu hoạch. Recipes, rates, capacity và cost chưa được duyệt. Triển khai sáu stock, UI/UX mới và vòng sản xuất đầy đủ là **PLANNED — cần WP riêng**, chưa có trong entry; không đổi sáu tài nguyên hiển thị R1, save schema hay migration. Các checkpoint R1 bên dưới là lịch sử kỹ thuật, không phải player entry hiện tại.
 
 ## 1. Mục Tiêu Tối Thượng: Bản Cắt Dọc Tối Thiểu (Vertical Slice)
 

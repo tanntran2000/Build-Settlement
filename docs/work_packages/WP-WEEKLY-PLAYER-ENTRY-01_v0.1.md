@@ -24,7 +24,7 @@ R1 giữ nguyên App.svelte, fixtures và assertions; entry riêng tại `packag
 
 Stocks khởi tạo: Gold10/Food4/Wood0/Iron0. Ví dụ4WF →6Gold/12Food; nếu Gold2/Food4 thì4WF →0Gold/8Food,2WF unfunded và6WF unassigned. Giao0.5WF tại fixture đầu →9.5Gold/5Food. Giao0WF giữ stocks, kể cả Gold0. Số nguyên chính xác nội bộ, floor từng cohort; multiplier integer milli không âm. Report lấy kết quả dispatcher, không tái tính kinh tế khi render.
 
-Đây là hệ số thử nghiệm của một Farm Field, chưa full balance. Chưa có Food consumption, Gold income, activity khác, Support/CityEffects/Medal, NPC workforce, dynamics hoặc persistence. Production đầu vào vẫn đúng4 kho; sáu tài nguyên UI R1 chỉ còn ở regression. Thiết kế5 nhóm tài nguyên và UI/UX mới là kế hoạch WP kế tiếp, chưa chốt mapping/rates hoặc triển khai Goods/status.
+Đây là hệ số thử nghiệm của một Farm Field, chưa full balance. Runtime WP entry vẫn giữ đúng4 stock Gold/Food/Wood/Iron và công thức hiện hành; sáu tài nguyên UI R1 chỉ còn ở regression. Chưa có Food consumption, Gold income, activity khác, Support/CityEffects/Medal, NPC workforce, dynamics hoặc persistence. Hướng thiết kế kế tiếp đã xác định6 stock Wheat/Gold/Wood/Iron/Food/Goods: Goods là hàng hóa vật lý dùng trao đổi, không phải status; Food chỉ được chế biến từ Wheat qua building trong cùng tuần thu hoạch. Recipes, rates, capacity và cost chưa được duyệt; triển khai6 stock và UI/UX mới cần WP riêng, không thuộc implementation của gói entry này.
 
 ## Logging và dữ liệu
 

@@ -25,7 +25,7 @@ Văn bản là phần cốt lõi của trải nghiệm. Hình ảnh pixel art v�
 
 Bản dành cho người chơi mở **Weekly Management**: phân công Farm Field → End Week → báo cáo WHY → Plan next week. `/`, `?mode=weekly`, `?mode=r1` và query không nhận diện đều mở Weekly. Prototype R1 ngày được giữ riêng để kiểm hồi quy, không nằm trong artifact dành cho người chơi.
 
-Weekly hiện có đúng bốn kho Gold/Food/Wood/Iron, reset khi reload, chưa save/load. Nguồn Gold, tiêu thụ Food, hoạt động khác, thiết kế năm nhóm tài nguyên và UI/UX mới còn ở kế hoạch WP riêng; không coi entry mới là hoàn tất các cơ chế đó hoặc demo hoàn chỉnh.
+Runtime Weekly hiện vẫn có đúng bốn stock Gold/Food/Wood/Iron, không đổi công thức, reset khi reload và chưa save/load. Hướng thiết kế kế tiếp đã xác định sáu stock Wheat/Gold/Wood/Iron/Food/Goods: Goods là hàng hóa vật lý dùng trao đổi, không phải status; Food chỉ được chế biến từ Wheat qua building trong cùng tuần thu hoạch. Recipes, rates, capacity và cost chưa được duyệt; triển khai sáu stock, UI/UX mới, nguồn Gold, tiêu thụ Food và hoạt động khác cần WP riêng. Entry này chưa triển khai các cơ chế đó hoặc hoàn tất demo.
 
 ### Công thức đang chạy — chưa đổi balance
 

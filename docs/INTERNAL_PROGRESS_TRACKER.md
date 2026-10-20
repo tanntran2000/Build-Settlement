@@ -10,7 +10,7 @@ Nền `d13b9f9536e0eaeec900099b07be164c3b993212`. Player entry implementation: p
 
 Trạng thái: **candidate implementation, local gates đạt; chờ CI + hai audit độc lập trên exact SHA**. Local:617 unit/17file,29 browser; lint/typecheck/build đạt, audit0 vulnerability; RED entry5fail trước implementation. Không ghi hoàn tất G6, demo hoặc L4. Test entry/import graph/artifact isolation mới cộng với các assertion R1/Weekly/logger giữ lại. Xem [WP, công thức và nghiệm thu](work_packages/WP-WEEKLY-PLAYER-ENTRY-01_v0.1.md).
 
-Cơ chế không đổi: đúng4 kho Weekly Gold/Food/Wood/Iron; 100 Middle →10WF; cap10WF; chi1Gold/WF, tạo2Food/WF theo phần đủ Gold; Food consumption/Gold income chưa có. Thiết kế5 nhóm tài nguyên và UI/UX mới **PLANNED** dưới WP riêng; không triển khai Goods/status, sáu kho R1 vào player loop hoặc migration. Những dòng route `/` R1 / `?mode=weekly` ở checkpoint bên dưới là mô tả lịch sử trước gói entry này.
+Cơ chế runtime không đổi: đúng4 stock Weekly Gold/Food/Wood/Iron; 100 Middle →10WF; cap10WF; chi1Gold/WF, tạo2Food/WF theo phần đủ Gold; Food consumption/Gold income chưa có. Hướng thiết kế kế tiếp đã xác định6 stock Wheat/Gold/Wood/Iron/Food/Goods: Goods là hàng hóa vật lý dùng trao đổi, không phải status; Food chỉ được chế biến từ Wheat qua building trong cùng tuần thu hoạch. Recipes, rates, capacity và cost chưa được duyệt. Triển khai6 stock và UI/UX mới **PLANNED** dưới WP riêng; không đưa sáu kho R1 vào player loop hoặc thêm migration. Những dòng route `/` R1 / `?mode=weekly` ở checkpoint bên dưới là mô tả lịch sử trước gói entry này.
 
 ## 1. Thang Đo Trạng Thái (4 Cấp Độ Nghiêm Ngặt)
 
