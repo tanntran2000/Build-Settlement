@@ -13,3 +13,6 @@ export * from "./weekly.js";
 export { resolveResourceFlow } from "./resource/allocation.js";
 export * from "./domain/canonical-state.js";
 export { SOCIAL_RESOURCE_SCALE } from "./social/profile.js";
+export * from "./trial/catalog.js";
+export * from "./trial/types.js";
+export * from "./trial/state.js";

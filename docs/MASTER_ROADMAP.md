@@ -1,6 +1,13 @@
 # Bản Đồ Lộ Trình Kỹ Thuật Tổng Thể (MASTER_ROADMAP.md)
 
-## Current design checkpoint — Tension/crisis/Gold, documentation candidate
+## Current Goods decision — approved design flow, NOT IMPLEMENTED
+
+Base main đã xác minh: `beb963fcb592d22db5ae430373aca4c6fd70390d` (PR28). [Goods flow và authority](design/TENSION-CRISIS-GOLD-DECISIONS-01.md#goods-requirement-flow--later-approved-clarification): **Goods vẫn là Requirement, không có kho Goods**. Building dùng Wood/Iron một lần mỗi End Week; nhu cầu = tổng dân × định mức chưa chốt, phần phục vụ bị giới hạn bởi công suất Market; Goods % = phục vụ / nhu cầu × 100% khi nhu cầu > 0. Market cấp cao phục vụ nhiều dân hơn, không tăng định mức nhu cầu. Dùng cùng kết quả tuần cho Gold/Happiness, không trừ nguyên liệu lần hai hoặc tự nhân Market thêm vào doanh thu.
+
+Physical inventory hiện hành/đích là 5 loại Wheat/Gold/Wood/Iron/Food. Các target 6 kho có Goods bên dưới là lịch sử đã supersede; catalog tĩnh vẫn snapshot cũ, chưa sửa UI/source. Recipe, định mức, capacity theo LV, hệ số/phase Gold-Happiness, xử lý dư công suất, zero population/demand, rounding, giá và chia 25% chưa duyệt. Food/effect và Tension giữ nguyên; không Law/migration/runtime mới. Gói hiện tại chỉ đồng bộ 8 tài liệu rồi kiểm tra, audit và CI theo gate thường; các checkpoint trước giữ bối cảnh lịch sử.
+
+
+## PR28 design checkpoint — Tension/crisis/Gold, preserved
 
 Base main đã xác minh: `d89a858c7eb5d29829538423eec8238797801875` (PR27). [Decision Record 01](design/TENSION-CRISIS-GOLD-DECISIONS-01.md) là nguồn đối chiếu quyết định mới: **4 Status chung thành phố Happiness / Security / Corruption / Tension**; Food/Goods vẫn là Requirements, khác kho vật lý. Tension không bằng `100 − Happiness`; miền/clamp Tension 0–100 vừa duyệt cho trial, initial/precision chưa duyệt. Ba nhóm xã hội không đổi, không thêm class bars hoặc migration.
 
@@ -8,15 +15,15 @@ Mốc thiếu Food và H < 30 trong 3 tuần liên tiếp nay mở **yêu sách 
 
 Ví dụ điều kiện không Food, trả đủ upkeep, thuế trung tính, không Event relief và H 80 / T 0 minh họa: T tăng 8/tuần; demand tuần 7 → protest tuần 10 → rebellion tuần 12 → hết cửa sổ cuối tuần 16. Đây không phải initialization hoặc timeline chung.
 
-Gold: thuế; Goods trade dựa tổng dân + Market level; explore/combat. Chi: xây dựng một lần, upkeep riêng từng building tăng theo level của chính nó, quân đội và Market purchases. Khoản 1 Gold/mẻ Farm được credit vào upkeep **cùng Farm/cùng tuần**: `extra = max(0, upkeep − batch Gold paid)`, không hoàn chênh lệch hoặc thu trùng. Đây là thiết kế, chưa chạy; hệ số thuế/giá/phí/upkeep/quân đội và Gold âm/nợ vẫn pending.
+Gold: thuế; Goods contribution theo fulfillment từ demand tổng dân và capacity Market như clarification phía trên; explore/combat. Chi: xây dựng một lần, upkeep riêng từng building tăng theo level của chính nó, quân đội và Market purchases. Khoản 1 Gold/mẻ Farm được credit vào upkeep **cùng Farm/cùng tuần**: `extra = max(0, upkeep − batch Gold paid)`, không hoàn chênh lệch hoặc thu trùng. Đây là thiết kế, chưa chạy; hệ số thuế/giá/phí/upkeep/quân đội và Gold âm/nợ vẫn pending.
 
-**NOT IMPLEMENTED:** không đổi source, tests, schema, CI/dependencies hoặc công thức Food/Happiness/Faltering/Flourishing. Runtime vẫn 5 stock PR26, chưa consumption/Status/Gold income/upkeep/crisis. Catalog tĩnh PR25 còn snapshot 3 Status; cập nhật UI cần WP riêng. Gói docs này chỉ tạo draft PR rồi HOLD cho independent exact-SHA audits và required CI; không merge/deploy/ZIP. Law vẫn DEFERRED. Các checkpoint bên dưới giữ bối cảnh lịch sử và chỉ được supersede trong phạm vi nêu rõ.
+**NOT IMPLEMENTED:** không đổi source, tests, schema, CI/dependencies hoặc công thức Food/Happiness/Faltering/Flourishing. Runtime vẫn 5 stock PR26, chưa consumption/Status/Gold income/upkeep/crisis. Catalog tĩnh PR25 còn snapshot 3 Status; cập nhật UI cần WP riêng. Đây là checkpoint PR28 đã merge sau audit/CI; gói Goods mới và gates nằm ở mục đầu, không mở rộng runtime/deploy/ZIP. Law vẫn DEFERRED. Các checkpoint bên dưới giữ bối cảnh lịch sử và chỉ được supersede trong phạm vi nêu rõ.
 
 ## Runtime implementation evidence — PR #26 merge, contract unchanged
 
 Runtime base PR26 đã xác minh: `02e58b1fe6b9ef42c048cd4fede8bb5bc5aadf4d`, merge [PR #26](https://github.com/tanntran2000/Build-Settlement/pull/26) từ audited head `ef24fa2ca5505a8b5d59665fc7df5435989f6371`, base sau PR25 `6971a1bbc66bfc3691fe7b804ee6453a7cffc158`. Tree `ed93caee537d8df30d1bd23ac49a740d73bf0463` khớp candidate đã được Reviewer và Tester độc lập PASS. [Main CI 39364392563](https://github.com/tanntran2000/Build-Settlement/actions/runs/39364392563/job/118437735555) SUCCESS: 650 unit tests / 18 files và 35 browser tests; audit, lint, typecheck và build đều đạt. Đây là bằng chứng hậu kiểm PR26, không phải kết quả kiểm thử mới của lượt sửa tài liệu này.
 
-[WP Food chain](work_packages/WP-WHEAT-FOOD-CHAIN-01_v0.1.md) đã triển khai Farm `1 WF + 1 Gold → 2 Wheat`, rồi Processor `1 WF + 2 Wheat → 2 Food` trong cùng tuần. Mỗi công trình tối đa 5 mẻ nguyên, dùng chung 10 WF của fixture hiện có; một processor operational cấp sẵn, chưa có construction. Năm stock live là Gold/Wheat/Food/Wood/Iron; Goods là loại đích thứ sáu chưa thực thi. World mới có Gold 10, Wheat 0, Food 4, Wood 0, Iron 0. Runtime chưa có Food consumption, city Requirements/Status, ba nhóm xã hội hoạt động, Law hoặc migration. Recipe hiện có là trial đã duyệt, chưa phải balance chính thức; gói tài liệu này không đổi recipe, code hoặc schema. Không nâng toàn bộ POP/RES lên L4, không tuyên bố demo/deploy hoặc save/load hoàn tất.
+[WP Food chain](work_packages/WP-WHEAT-FOOD-CHAIN-01_v0.1.md) đã triển khai Farm `1 WF + 1 Gold → 2 Wheat`, rồi Processor `1 WF + 2 Wheat → 2 Food` trong cùng tuần. Mỗi công trình tối đa 5 mẻ nguyên, dùng chung 10 WF của fixture hiện có; một processor operational cấp sẵn, chưa có construction. Năm stock live là Gold/Wheat/Food/Wood/Iron; Goods khi đó là loại đích thứ sáu; clarification mới nay giữ Goods Requirement không tồn kho. World mới có Gold 10, Wheat 0, Food 4, Wood 0, Iron 0. Runtime chưa có Food consumption, city Requirements/Status, ba nhóm xã hội hoạt động, Law hoặc migration. Recipe hiện có là trial đã duyệt, chưa phải balance chính thức; gói tài liệu này không đổi recipe, code hoặc schema. Không nâng toàn bộ POP/RES lên L4, không tuyên bố demo/deploy hoặc save/load hoàn tất.
 
 Các checkpoint bên dưới giữ mô tả lịch sử tại thời điểm ghi, gồm PR25 từng chờ G1 và Farm trực tiếp tạo Food/bốn stock/fractional WF. Những nhãn candidate/chờ audit/chưa merge ở các checkpoint đó không đảo ngược trạng thái PR26 đã xác minh ở trên. README và WP Food chain ghi contract runtime hiện hành; không dùng các công thức cũ làm contract mới hoặc tự nâng trạng thái module lên L4. Phần đối chiếu hậu kiểm PR26 đã được ghi vào tài liệu PR27; candidate docs hiện tại và HOLD nằm ở checkpoint đầu.
 
@@ -40,7 +47,7 @@ Flourishing cần Happiness ≥ 80, đủ ăn và tồn Food sau tiêu thụ đ�
 
 Food/Goods là Requirements **toàn thành phố**, tách biệt kho thành phẩm. Status là Happiness/Security/Corruption/Tension; cả bốn miền thiết kế 0–100, Tension clamp vừa duyệt cho trial nhưng initial/rounding còn pending. Cả ba nhóm cùng đóng góp qua điều kiện/công trình/hiệu ứng tương lai, không mỗi nhóm cho một Status, không tham nhũng bẩm sinh ở Merchants. **Law / Civic Charter DEFERRED**: chỉ ranh giới tích hợp chờ quyết định.
 
-[WP-SOCIAL-CATALOG-PRESENTATION-01 v0.1](work_packages/WP-SOCIAL-CATALOG-PRESENTATION-01_v0.1.md) đã được duyệt và triển khai riêng ở PR25, chỉ catalog/nhãn tĩnh. PR26 bổ sung production 5 stock; Food Trial Rules 01 và Decision Record 01 ghi các numerical trial được duyệt sau đó, chưa triển khai. Goods stock/recipe, Requirements/Status runtime, membership và migration vẫn cần spec/WP riêng; không sao chép các số chưa duyệt từ proposal cũ.
+[WP-SOCIAL-CATALOG-PRESENTATION-01 v0.1](work_packages/WP-SOCIAL-CATALOG-PRESENTATION-01_v0.1.md) đã được duyệt và triển khai riêng ở PR25, chỉ catalog/nhãn tĩnh. PR26 bổ sung production 5 stock; Food Trial Rules 01 và Decision Record 01 ghi các numerical trial được duyệt sau đó, chưa triển khai. Goods building recipe/fulfillment, Requirements/Status runtime, membership và migration vẫn cần spec/WP riêng; không sao chép các số chưa duyệt từ proposal cũ.
 
 ## Player entry Weekly — WP-WEEKLY-PLAYER-ENTRY-01 v0.1
 
@@ -139,7 +146,7 @@ flowchart TD
 * **City Effect Lifecycle (L3)**:
   * Quản lý vòng đời hiệu ứng đô thị có thời hạn (`packages/core/src/status/effects.ts`) với chu kỳ đếm lùi dùng chung 3 tuần (`shared 3-week countdown`), bậc cao thay thế bậc thấp mà không reset bộ đếm, chống làm mới chu kỳ (anti-refresh), trạng thái đối lập thay thế nhau không cộng dồn.
   * Phân biệt rõ hai tầng (không gộp lẫn):
-    * **4 Status toàn thành phố (thiết kế mới, chưa mô phỏng)**: Happiness, Security, Corruption, Tension; cả bốn miền thiết kế 0–100, Tension clamp đã duyệt cho trial, initial/rounding pending. Food/Goods là Requirements riêng, không phải Status; tồn kho Food/Goods vẫn là lớp vật lý riêng. Danh mục 4 thanh cũ có Goods đã được thay thế về thiết kế, không sửa runtime.
+    * **4 Status toàn thành phố (thiết kế mới, chưa mô phỏng)**: Happiness, Security, Corruption, Tension; cả bốn miền thiết kế 0–100, Tension clamp đã duyệt cho trial, initial/rounding pending. Food/Goods là Requirements riêng, không phải Status; Food có kho vật lý riêng, Goods chỉ có kết quả phục vụ tuần như clarification mới. Danh mục 4 thanh cũ có Goods đã được thay thế về thiết kế, không sửa runtime.
     * **4 Nhóm Hiệu Ứng Đô Thị (City Effect Families)**: `economy`, `security`, `qol`, `corruption`.
     * *Chưa có công thức bộ giải mã Status $\rightarrow$ City Effect nào được phê duyệt hay triển khai.*
 * **Các Hạng Mục Rõ Ràng Chưa Triển Khai / Tạm Hoãn (Deferred / Unimplemented)**:

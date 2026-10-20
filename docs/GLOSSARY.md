@@ -1,6 +1,6 @@
 # Từ Điển Thuật Ngữ Chuẩn Hóa Anh - Việt (GLOSSARY.md)
 
-> **Phạm vi 2026-10-20**: Các thuật ngữ thiết kế kế tiếp bên dưới không đổi enum, save hay runtime hiện có. [Thiết kế non-Law](design/SOCIAL-REQUIREMENTS-STATUS-DRAFT-01.md) phân biệt rõ runtime bốn stock với sáu loại inventory dự kiến. Law / Civic Charter **DEFERRED**; các thuật ngữ pháp lý lịch sử không phải đặc tả triển khai mới.
+> **Phạm vi 2026-10-20**: Các thuật ngữ thiết kế kế tiếp bên dưới không đổi enum, save hay runtime hiện có. [Thiết kế non-Law](design/SOCIAL-REQUIREMENTS-STATUS-DRAFT-01.md) ghi năm stock hiện hành/đích Wheat/Gold/Wood/Iron/Food; Goods là Requirement phục vụ theo tuần, không có inventory. Target sáu kho cũ đã được thay thế. Law / Civic Charter **DEFERRED**; các thuật ngữ pháp lý lịch sử không phải đặc tả triển khai mới.
 
 > **Mục đích**: Chuẩn hóa toàn bộ thuật ngữ chuyên môn dùng trong mã nguồn (Interface, Enum, Biến) và văn bản hiển thị trong giao diện tiếng Việt của trò chơi, đảm bảo tính thống nhất tuyệt đối giữa bạn và các AI Agent.
 
@@ -79,15 +79,15 @@
 
 ## 5. Kinh Tế & Cơ Sở Hạ Tầng (Economy & Facilities)
 
-Thiết kế kế tiếp (chưa mô phỏng):
+Thiết kế hiện hành — [Goods flow đã duyệt, chưa mô phỏng](design/TENSION-CRISIS-GOLD-DECISIONS-01.md#goods-requirement-flow--later-approved-clarification). Food và Goods là Requirements; Goods không có inventory. Target sáu kho cũ đã được thay thế:
 
 | Thuật Ngữ Thiết Kế | Tiếng Việt | Ranh Giới |
 | :--- | :--- | :--- |
-| Physical inventory | Kho vật lý | Sáu loại dự kiến: Wheat/Gold/Wood/Iron/Food/Goods; Weekly hiện chỉ có Gold/Food/Wood/Iron. Food runtime không đổi tên thành Wheat. |
+| Physical inventory | Kho vật lý | Năm loại hiện hành/đích: Wheat/Gold/Wood/Iron/Food, khớp năm stock Weekly. Không có kho Goods; Food runtime không đổi tên thành Wheat. |
 | Wheat / Gold / Wood / Iron | Lúa mì / Vàng / Gỗ / Sắt | Bốn đầu vào dự kiến cho xây dựng/sản xuất; recipe, cost và nguồn Gold chưa chốt. |
-| Food / Goods inventory | Kho thực phẩm / hàng hóa | Thành phẩm do building tạo ra. Wheat thu hoạch có thể được chế biến thành Food cùng tuần, chỉ qua building. Goods là hàng hóa vật lý dùng trao đổi; chưa có trade engine mới. |
-| City-wide Requirements: Food / Goods | Nhu cầu thực phẩm / hàng hóa toàn thành phố | Lượng cần đáp ứng, tách riêng tồn kho thành phẩm cùng tên; không phải Status, chưa có mức tiêu thụ/cấp phát được duyệt. |
-| City Status: Happiness / Security / Corruption | Hạnh phúc / An ninh / Tham nhũng | Chỉ đúng 3 Status, phạm vi thiết kế 0–100; chưa có giá trị khởi tạo, ngưỡng hoặc hệ số tác động. Cả ba nhóm cùng đóng góp qua điều kiện/công trình/hiệu ứng tương lai. |
+| Food inventory / Goods service | Kho Food / Phục vụ Goods | Food là thành phẩm chế biến từ Wheat qua building, có thể cùng tuần thu hoạch. Goods là phần nhu cầu building đáp ứng từ Wood/Iron một lần mỗi tuần, giới hạn bởi capacity Market; không có thành phẩm Goods để cất kho/bán theo đơn vị. |
+| City-wide Requirements: Food / Goods | Nhu cầu thực phẩm / hàng hóa toàn thành phố | Food trial theo rulebook; Goods demand = tổng dân × định mức chưa chốt, fulfillment % = phần phục vụ / nhu cầu × 100% khi nhu cầu > 0. Market giới hạn phục vụ, không tăng demand. Gold/Happiness dùng cùng kết quả tuần; hệ số và edge rules còn pending. |
+| City Status: Happiness / Security / Corruption / Tension | Hạnh phúc / An ninh / Tham nhũng / Căng thẳng | Bốn Status chung thành phố, miền thiết kế 0–100; Food/Tension trial và các interface còn mở theo rulebook/decision record. Gói Goods không đổi công thức hoặc ngưỡng đã duyệt. |
 
 Các thuật ngữ kinh tế và công trình lịch sử:
 

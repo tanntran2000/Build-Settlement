@@ -1,6 +1,13 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
-## Current design checkpoint — Tension/crisis/Gold, documentation candidate
+## Current Goods decision — approved design flow, NOT IMPLEMENTED
+
+Base main đã xác minh: `beb963fcb592d22db5ae430373aca4c6fd70390d` (PR28). [Goods flow và authority](design/TENSION-CRISIS-GOLD-DECISIONS-01.md#goods-requirement-flow--later-approved-clarification): **Goods vẫn là Requirement, không có kho Goods**. Building dùng Wood/Iron một lần mỗi End Week; nhu cầu = tổng dân × định mức chưa chốt, phần phục vụ bị giới hạn bởi công suất Market; Goods % = phục vụ / nhu cầu × 100% khi nhu cầu > 0. Market cấp cao phục vụ nhiều dân hơn, không tăng định mức nhu cầu. Dùng cùng kết quả tuần cho Gold/Happiness, không trừ nguyên liệu lần hai hoặc tự nhân Market thêm vào doanh thu.
+
+Physical inventory hiện hành/đích là 5 loại Wheat/Gold/Wood/Iron/Food. Các target 6 kho có Goods bên dưới là lịch sử đã supersede; catalog tĩnh vẫn snapshot cũ, chưa sửa UI/source. Recipe, định mức, capacity theo LV, hệ số/phase Gold-Happiness, xử lý dư công suất, zero population/demand, rounding, giá và chia 25% chưa duyệt. Food/effect và Tension giữ nguyên; không Law/migration/runtime mới. Gói hiện tại chỉ đồng bộ 8 tài liệu rồi kiểm tra, audit và CI theo gate thường; các checkpoint trước giữ bối cảnh lịch sử.
+
+
+## PR28 design checkpoint — Tension/crisis/Gold, preserved
 
 Base main đã xác minh: `d89a858c7eb5d29829538423eec8238797801875` (PR27). [Decision Record 01](design/TENSION-CRISIS-GOLD-DECISIONS-01.md) là nguồn đối chiếu quyết định mới: **4 Status chung thành phố Happiness / Security / Corruption / Tension**; Food/Goods vẫn là Requirements, khác kho vật lý. Tension không bằng `100 − Happiness`; miền/clamp Tension 0–100 vừa duyệt cho trial, initial/precision chưa duyệt. Ba nhóm xã hội không đổi, không thêm class bars hoặc migration.
 
@@ -8,9 +15,9 @@ Mốc thiếu Food và H < 30 trong 3 tuần liên tiếp nay mở **yêu sách 
 
 Ví dụ điều kiện không Food, trả đủ upkeep, thuế trung tính, không Event relief và H 80 / T 0 minh họa: T tăng 8/tuần; demand tuần 7 → protest tuần 10 → rebellion tuần 12 → hết cửa sổ cuối tuần 16. Đây không phải initialization hoặc timeline chung.
 
-Gold: thuế; Goods trade dựa tổng dân + Market level; explore/combat. Chi: xây dựng một lần, upkeep riêng từng building tăng theo level của chính nó, quân đội và Market purchases. Khoản 1 Gold/mẻ Farm được credit vào upkeep **cùng Farm/cùng tuần**: `extra = max(0, upkeep − batch Gold paid)`, không hoàn chênh lệch hoặc thu trùng. Đây là thiết kế, chưa chạy; hệ số thuế/giá/phí/upkeep/quân đội và Gold âm/nợ vẫn pending.
+Gold: thuế; Goods contribution theo fulfillment từ demand tổng dân và capacity Market như clarification phía trên; explore/combat. Chi: xây dựng một lần, upkeep riêng từng building tăng theo level của chính nó, quân đội và Market purchases. Khoản 1 Gold/mẻ Farm được credit vào upkeep **cùng Farm/cùng tuần**: `extra = max(0, upkeep − batch Gold paid)`, không hoàn chênh lệch hoặc thu trùng. Đây là thiết kế, chưa chạy; hệ số thuế/giá/phí/upkeep/quân đội và Gold âm/nợ vẫn pending.
 
-**NOT IMPLEMENTED:** không đổi source, tests, schema, CI/dependencies hoặc công thức Food/Happiness/Faltering/Flourishing. Runtime vẫn 5 stock PR26, chưa consumption/Status/Gold income/upkeep/crisis. Catalog tĩnh PR25 còn snapshot 3 Status; cập nhật UI cần WP riêng. Gói docs này chỉ tạo draft PR rồi HOLD cho independent exact-SHA audits và required CI; không merge/deploy/ZIP. Law vẫn DEFERRED. Các checkpoint bên dưới giữ bối cảnh lịch sử và chỉ được supersede trong phạm vi nêu rõ.
+**NOT IMPLEMENTED:** không đổi source, tests, schema, CI/dependencies hoặc công thức Food/Happiness/Faltering/Flourishing. Runtime vẫn 5 stock PR26, chưa consumption/Status/Gold income/upkeep/crisis. Catalog tĩnh PR25 còn snapshot 3 Status; cập nhật UI cần WP riêng. Đây là checkpoint PR28 đã merge sau audit/CI; gói Goods mới và gates nằm ở mục đầu, không mở rộng runtime/deploy/ZIP. Law vẫn DEFERRED. Các checkpoint bên dưới giữ bối cảnh lịch sử và chỉ được supersede trong phạm vi nêu rõ.
 
 ## Runtime implementation evidence — PR #26 merge, contract unchanged
 

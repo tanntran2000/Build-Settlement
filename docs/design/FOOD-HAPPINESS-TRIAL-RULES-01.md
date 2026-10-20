@@ -1,5 +1,7 @@
 # Food, Happiness and Economy Effects — Trial Rules 01
 
+> **Playable tile trial — partial implementation:** `/?mode=tiles` now implements sample tiles, catalog-driven build/upgrade/replace/pause, extraction and the existing Wheat/Food recipes, Goods service without Goods inventory, Market capacity, minimal tax/upkeep/revenue and Food-driven Happiness. New coefficients/lifecycle policies are adjustable **implementation TRIAL**, not retrospectively user-approved balance. The [trial spec](../superpowers/specs/2026-10-20-weekly-tile-buildings-trial.md) bounds the slice. Classic Weekly remains separate. Full effect lifecycles, Tension/crisis, Security/Corruption, live social groups, Law, save/migration and trade systems remain unimplemented. Earlier pending/runtime statements below retain their pre-trial context; this notice supersedes them only for this isolated mode.
+
 **Status: APPROVED TRIAL BALANCE — NOT IMPLEMENTED.**
 
 **Subsequent scoped decisions:** [Tension, Social Crisis and Gold — Decision Record 01](TENSION-CRISIS-GOLD-DECISIONS-01.md) adds Tension as the fourth Status, replaces this record's original direct rebellion trigger with serious demands and records approved 50/75/90, 2–2–4 trial boundaries. The subsequent formula approval records pressure `8s + 6u + 4x`, recovery `4 × min(1 − s, 1 − u) × (1 − x)` and Tension clamp 0–100 there. Food/Happiness/Faltering/Flourishing calculations below are unchanged. Tax normalization, Event relief values, Tension initialization/rounding and final loss semantics remain pending.
@@ -16,8 +18,8 @@ Earlier design references are [the non-Law record](SOCIAL-REQUIREMENTS-STATUS-DR
 
 | Topic | Current decision and scope |
 | --- | --- |
-| Requirements | Food and Goods are city-wide Requirements, separate from finished physical inventory. Only the Food trial is specified here; no Goods recipe, production or trade is added. |
-| Status | Happiness, Security, Corruption and Tension. All four have design domain 0–100, with Tension clamp approved for trial; Tension initialization/precision are pending. Goods remains a Requirement and physical stock, not a Status. |
+| Requirements | Food and Goods remain city-wide Requirements. Food uses a separate physical Food stock; Goods has a weekly Wood/Iron building-service result limited by Market capacity, with no Goods inventory. The later Goods flow is in the decision record; this rulebook's Food calculations are unchanged. |
+| Status | Happiness, Security, Corruption and Tension. All four have design domain 0–100, with Tension clamp approved for trial; Tension initialization/precision are pending. Goods remains a Requirement with no physical Goods stock, not a Status. |
 | Display names | **Flourishing** is the positive economy effect; **Faltering** the negative. These replace illustrative Happy/Hungry labels. Happiness remains the independent Status input. The `economy` family name is unchanged. |
 | Population | Exactly three planned groups remain Makers / Luminaries / Merchants, with the PR25 names/duties unchanged. No class conversion, membership assignment, migration or new population dynamics is approved. |
 | Law | **DEFERRED.** No Law, voting, privilege, Civic Charter or entitlement formula is added. |
