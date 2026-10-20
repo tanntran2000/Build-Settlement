@@ -124,7 +124,7 @@
   {/if}
   <section class="card planned" aria-labelledby="planned-city-title">
     <h2 id="planned-city-title">Planned city systems</h2>
-    <p>Design preview · Groups, Goods, Requirements and Status are not simulated. Wheat/Food production is active above.</p>
+    <p>Classic preview · Groups, Requirements and Status are not simulated in classic. Wheat/Food production is active above; the separate tile trial simulates Food/Goods demand and Happiness.</p>
     <h3>Social groups · Proposed names</h3>
     <div class="planned-groups">
       {#each CITY_DESIGN.groups as group}
@@ -139,18 +139,18 @@
 
     <section aria-labelledby="planned-inventory-title">
       <h3 id="planned-inventory-title">Physical inventory</h3>
-      <p>Target: six inventory types. Gold, Wheat, Food, Wood and Iron are live above; Goods inventory is not implemented.</p>
+      <p>Five live physical stocks: Gold, Wheat, Food, Wood and Iron. Goods is a city-wide Requirement, with no stored Goods.</p>
       <dl>
         <div><dt>Inputs</dt><dd>{CITY_DESIGN.inventory.inputs.join(', ')}</dd></div>
         <div><dt>Finished inventory</dt><dd>{CITY_DESIGN.inventory.finished.join(', ')}</dd></div>
       </dl>
-      <p>Buildings produce Food and Goods. Goods are physical exchange goods.</p>
+      <p>Food is finished inventory. In the tile trial, Goods buildings provide weekly service without stored Goods.</p>
       <p>Wheat harvested this week may be processed into Food in the same week, only through a building.</p>
     </section>
     <section aria-labelledby="planned-requirements-title">
       <h3 id="planned-requirements-title">City-wide Requirements</h3>
       <p>{CITY_DESIGN.requirements.join(', ')}</p>
-      <p>City-wide demand, separate from finished inventory.</p>
+      <p>City-wide demand. Food demand is separate from Food inventory. Goods has no physical inventory.</p>
     </section>
     <section aria-labelledby="planned-status-title">
       <h3 id="planned-status-title">City Status</h3>

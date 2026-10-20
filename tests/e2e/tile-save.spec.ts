@@ -107,3 +107,28 @@ test('a file read failure is recoverable and never changes the game', async ({ p
   await expect(page.getByText('raw/private/error', { exact: false })).toHaveCount(0);
   await page.reload(); await importText(page, text); await expect(page.getByRole('status')).toContainText('Checkpoint imported');
 });
+
+test('the previous report is UI-only and survives cancel or invalid import until a valid load clears it', async ({ page }) => {
+  await page.goto('/?mode=tiles');
+  const initial = await checkpoint(page);
+  await next(page);
+  await expect(page.getByRole('heading', { name: 'Week 1 report', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Plan next week', exact: true })).toBeDisabled();
+  const stocks = await page.getByTestId('trial-stocks').textContent();
+  await page.getByLabel('Import checkpoint', { exact: true }).setInputFiles([]);
+  await importText(page, '{bad');
+  await expect(page.getByRole('alert').first()).toBeVisible();
+  await expect(page.getByTestId('trial-stocks')).toHaveText(stocks!);
+  await expect(page.getByRole('heading', { name: 'Week 1 report', exact: true })).toBeVisible();
+  const saved = JSON.parse(await checkpoint(page));
+  expect(saved.state.phase).toBe('planning');
+  expect(saved.state.world.week).toBe(2);
+  expect(saved.state).not.toHaveProperty('report');
+  await importText(page, initial);
+  await expect(page.getByRole('status')).toContainText('Checkpoint imported');
+  await expect(page.getByRole('region', { name: 'Trial week report', exact: true })).toHaveCount(0);
+  await expect(page.locator('header')).toContainText('Week 1 · Planning');
+  await page.getByRole('button', { name: 'End Week', exact: true }).click();
+  await expect(page.locator('header')).toContainText('Week 2 · Report');
+  await expect(page.getByTestId('trial-stock-gold')).toHaveText('30.5');
+});

@@ -1,10 +1,10 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
-## PR29 runtime closeout and R3 planning-checkpoint candidate
+## PR30 planning-checkpoint release — bounded R3 subset
 
 PR29 merged at `07dbdd97ae144c28cb13245c0c628dbddd8d4eba`, audited head7d823b9/tree30e61f0. Independent Reviewer+Tester PASS and [main CI39397236232](https://github.com/tanntran2000/Build-Settlement/actions/runs/39397236232) PASS665unit38browser. Mode=tiles has construction/extraction/Goods service/minimal tax-upkeep/Food consumption-Happiness; old no-construction/no-income statements below retain pre-PR29 history. Existing numerical policies remain TRIAL where identified by its spec.
 
-[R3-TILE-SAVE-01](superpowers/specs/2026-10-20-tile-trial-save.md) is the new bounded candidate: planning JSON checkpoints only, codec/atomic load and stale-read protection. Full R3/POP/RES are not complete. Candidate acceptance still requires independent audits and CI of exact commit; no new balance, autosave/cloud save/migration, Law or UI polish. Preview delivery authorization is separate; this task only prepares a local offline test artifact.
+[R3-TILE-SAVE-01](superpowers/specs/2026-10-20-tile-trial-save.md) was merged in [PR30](https://github.com/tanntran2000/Build-Settlement/pull/30) at `039fc82f80d16a5fb7e1bf784d279785b78fd1e4`, from audited head `757570c603bebb7f026413e610a4252b781212b1`; merge tree `e36845acebd7039ac00c738c0b1b9dfb39bba06e` matches the candidate. [Main CI39407997417](https://github.com/tanntran2000/Build-Settlement/actions/runs/39407997417) PASS:683unit/21files,43browser, lint/typecheck/build/audit0. Planning JSON checkpoints, validated codec/atomic load and stale-read protection are released. Full R3/POP/RES remain incomplete: no autosave/cloud save/migration, report-history save, NewGame+, Law or UI overhaul. The separately authorized private PR30 HTML delivery succeeded; this historical receipt is not authorization to upload another build. [QA corrections](superpowers/specs/2026-10-20-qa-report-transition-fixes.md) are a separate bounded follow-up; old candidate/pending notices below retain their checkpoint context.
 
 
 ## Current Goods decision — approved design flow, NOT IMPLEMENTED
