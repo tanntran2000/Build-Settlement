@@ -1,6 +1,6 @@
 # Wheat → Food Weekly Chain — WP-WHEAT-FOOD-CHAIN-01 v0.1 Implementation Proposal
 
-> **For future agentic workers, after approval only:** Use superpowers:executing-plans or the execution method selected by the Human. Future steps use checkbox (`- [ ]`) syntax; none authorizes implementation now.
+> **Execution method:** Use superpowers:executing-plans or the method selected by the Human. Option A authorization is recorded in sections 3 and 10. Completed local checklist items below do not imply independent review, CI or merge acceptance.
 
 **Status:** G1 APPROVED — option A trial; implementation/testing/draft PR authorized. **Date:** 2026-10-20. The earlier planning-only phase is complete; merge/deploy/ZIP remain outside this implementation task.
 **Verified main/base:** `6971a1bbc66bfc3691fe7b804ee6453a7cffc158` (PR25 merge).
@@ -142,24 +142,24 @@ No new product module is needed. Root exports already expose Weekly types and si
 
 ### Task 1 — state and command/report contract
 
-- [ ] Add failing tests for Wheat + processor flag, old four-key state/command rejection and independent new-world fixtures; derive E=10000 from unchanged 100-resident cohort.
-- [ ] Run targeted core/domain tests; expect assertion failures for missing contract fields.
-- [ ] Implement the agreed five-key/boolean fixture and exact new command/report fields in existing core files; no migration or additional exports.
-- [ ] Run core tests/typecheck; expect valid states accepted, hostile states rejected without getter access, and existing WF results unchanged. Keep the slice uncommitted for the complete transaction tests if dependent types temporarily break old callers; do not commit a red intermediate tree.
+- [x] Add failing tests for Wheat + processor flag, old four-key state/command rejection and independent new-world fixtures; derive E=10000 from unchanged 100-resident cohort.
+- [x] Run targeted core/domain tests; expect assertion failures for missing contract fields.
+- [x] Implement the agreed five-key/boolean fixture and exact new command/report fields in existing core files; no migration or additional exports.
+- [x] Run core tests/typecheck; expect valid states accepted, hostile states rejected without getter access, and existing WF results unchanged. Keep the slice uncommitted for the complete transaction tests if dependent types temporarily break old callers; do not commit a red intermediate tree.
 
 ### Task 2 — two-phase simulation and whole-batch ledger
 
-- [ ] Write failing transaction tests F01–F10 below using the exact proposed cases and signature; run the targeted simulation suite and confirm failure is missing Food-chain behavior.
-- [ ] Implement named approved constants and the ordered transaction in `simulation/src/weekly.ts`, with precise checked additions, existing helpers and original-state rollback.
-- [ ] Update old direct-Food/fractional/funding assertions to the explicitly changed contract; preserve and adapt immutability, ownership, hostile input, no-active, replay and overflow tests rather than removing them.
-- [ ] Run targeted simulation tests and the full unit suite; expect all conservation identities, batch boundaries and rollback cases to pass before UI integration.
+- [x] Write failing transaction tests F01–F10 below using the exact proposed cases and signature; run the targeted simulation suite and confirm failure is missing Food-chain behavior.
+- [x] Implement named approved constants and the ordered transaction in `simulation/src/weekly.ts`, with precise checked additions, existing helpers and original-state rollback.
+- [x] Update old direct-Food/fractional/funding assertions to the explicitly changed contract; preserve and adapt immutability, ownership, hostile input, no-active, replay and overflow tests rather than removing them.
+- [x] Run targeted simulation tests and the full unit suite; expect all conservation identities, batch boundaries and rollback cases to pass before UI integration.
 
 ### Task 3 — playable UI and complete verification
 
-- [ ] Add failing browser tests F11–F13; update logger-suite successful action fixtures to provide both fields while retaining error/privacy assertions.
-- [ ] Implement two inputs labeled Farm Field workforce (WF) / Food Processor workforce (WF), whole-WF guidance and shared availability; preserve one atomic submit, safe errors, report lock and reload reset. Show actual processor availability and recipe/capacity/phase formulas; do not add a construction button.
-- [ ] Render the five real stocks and dispatcher-produced phase/ledger numbers. Identify Goods as planned/no runtime key and city Requirements/Status as unsimulated; avoid “all systems not simulated” copy covering the now-live chain.
-- [ ] Update listed docs with approved values, run all existing gates and final scope/secret/diff review, then hand off the exact SHA for independent audit under the separately authorized execution/release workflow. After successful gates, the subsequent implementation authorization permits a feature-branch commit/push and draft PR only.
+- [x] Add failing browser tests F11–F13; update logger-suite successful action fixtures to provide both fields while retaining error/privacy assertions.
+- [x] Implement two inputs labeled Farm Field workforce (WF) / Food Processor workforce (WF), whole-WF guidance and shared availability; preserve one atomic submit, safe errors, report lock and reload reset. Show actual processor availability and recipe/capacity/phase formulas; do not add a construction button.
+- [x] Render the five real stocks and dispatcher-produced phase/ledger numbers. Identify Goods as planned/no runtime key and city Requirements/Status as unsimulated; avoid “all systems not simulated” copy covering the now-live chain.
+- [x] Update listed docs with approved values, run all existing gates and final scope/secret/diff review, then hand off the exact SHA for independent audit under the separately authorized execution/release workflow. After successful gates, the subsequent implementation authorization permits a feature-branch commit/push and draft PR only.
 
 ## 8. Acceptance tests and review focus
 
@@ -198,10 +198,10 @@ Option A was approved by the explicit exchange recorded in section 3. This super
 
 Implemented the approved five-stock fresh-world contract, processor availability flag, two-field whole-WF command, deterministic harvest → processing, executable whole-batch debits, complete frozen reports and candidate validation/rollback. UI has two actionable inputs sharing actual cohort WF; one submit/report lock/reset remains. It shows live five-stock inflow/usage/closing values and phase counts; Goods and other deferred systems remain planned. Core allocation/social/workforce, R1, persistence, logger schema/catalog, dependencies, assets and CI/settings are unchanged.
 
-RED→GREEN: core/domain tests failed 7 cases before the new fields and passed 125 cases afterward. Adapted/new simulation tests initially failed 37 cases for the missing command/chain, then passed all 77. Two new browser tests failed before the processor UI existed. The first full browser pass found 34/35 passing: redundant UI cap/shared-pool checks collapsed a real dispatcher error into the parser code, breaking the existing logger contract. The fix leaves UI syntax/safe-number validation and delegates cap/shared-WF checks to the existing dispatcher; logger assertions and protections remain intact. Final browser result is 35/35. No unsuccessful fix loop or deferred test failure remains.
+RED→GREEN: core/domain tests failed 7 cases before the new fields and passed 125 cases afterward. Adapted/new simulation tests initially failed 37 cases for the missing command/chain, then passed all 77. Two new browser tests failed before the processor UI existed. The first full browser pass found 34/35 passing: redundant UI cap/shared-pool checks collapsed a real dispatcher error into the parser code, breaking the existing logger contract. The fix leaves UI syntax/safe-number validation and delegates cap/shared-WF checks to the existing dispatcher; logger assertions and protections remain intact. Final browser result is 35/35. A fresh whole-candidate source review found one P2: repeated command Proxy field reads could bypass processor availability or invalidate reserved labor. A failing regression reproduced unavailable-processor Food production; the fix reads each command field once into a plain snapshot before all validation and execution. The regression now passes, including one read and unchanged stock assertions. Throwing/revoked Proxy coverage remains. No unsuccessful fix loop or deferred test failure remains.
 
-Local gates: lint exit 0; five-workspace typecheck exit 0 with Svelte 0 errors/warnings; full unit suite 649 tests / 18 files exit 0; core/simulation/UI build exit 0; `CI=1 npm run test:smoke -- --config=/tmp/wheat-food-chain-01/playwright.config.ts` exit 0 with 35 browser tests; npm audit exit 0 / 0 vulnerabilities; npm ls --all exit 0. The external browser config uses installed system Chromium and unchanged repository suites/servers; it is not bundled-browser CI parity. Final CI/exact SHA and independent Reviewer/Tester status are reported separately after commit/PR; no merge acceptance is implied here.
+Local gates: lint exit 0; five-workspace typecheck exit 0 with Svelte 0 errors/warnings; full unit suite 650 tests / 18 files exit 0; core/simulation/UI build exit 0; `npx playwright test --config=/tmp/wheat-food-chain-01/playwright.config.ts` exit 0 with 35 browser tests; npm audit exit 0 / 0 vulnerabilities; npm ls --all exit 0. The external browser config uses installed system Chromium and unchanged repository suites/servers; it is not bundled-browser CI parity. Final CI/exact SHA and independent Reviewer/Tester status are reported separately after commit/PR; no merge acceptance is implied here.
 
 Only the 13 listed implementation/document files changed; 101 other tracked files are byte-identical to base. Scope/link/diff checks and a bounded key/token/private-key pattern scan pass. No protection endpoint/credentials/settings changes or release actions were attempted. Logs, manifests and rulings live under `/tmp/wheat-food-chain-01/` in the saved environment, not a public archive.
 
-Player-only retained build: extracted **78,280 bytes**, sum of individual gzip streams **28,088 bytes** (level 6, mtime=0), versus PR25 baseline 74,785 / 27,243 bytes: **+3,495 extracted / +845 gzip bytes**. Same production-directory method, three files; not ZIP size or measured HTTP transfer, excludes repository/node_modules/R1 regression/test/browser tools. No dependencies, framework or assets were added; no hard cap is asserted. Startup/load and RAM remain unmeasured.
+Player-only retained build: extracted **78,518 bytes**, sum of individual gzip streams **28,133 bytes** (level 6, mtime=0), versus PR25 baseline 74,785 / 27,243 bytes: **+3,733 extracted / +890 gzip bytes**. Same production-directory method, three files; not ZIP size or measured HTTP transfer, excludes repository/node_modules/R1 regression/test/browser tools. No dependencies, framework or assets were added; no hard cap is asserted. Startup/load and RAM remain unmeasured.

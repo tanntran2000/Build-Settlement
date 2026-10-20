@@ -15,18 +15,25 @@ export function executeWeeklyCommand<S>(state: S, rawCommand: unknown): WeeklyCo
   const fail = (code: string, message: string): WeeklyCommandResult<S> => ({ success: false, state, error: { code, message } });
   try {
     if (!isCanonicalGameState(state)) return fail("INVALID_STATE", "Canonical world, settlements and cohorts must satisfy weekly invariants.");
-    if (!hasWeeklyKeys(rawCommand, ["type", "expectedWeek", "farmWorkforceMilli", "processorWorkforceMilli"]) ||
-        rawCommand.type !== "END_WEEK" || !Number.isSafeInteger(rawCommand.expectedWeek) ||
-        (rawCommand.expectedWeek as number) < 1 ||
-        !Number.isSafeInteger(rawCommand.farmWorkforceMilli) || (rawCommand.farmWorkforceMilli as number) < 0 ||
-        !Number.isSafeInteger(rawCommand.processorWorkforceMilli) || (rawCommand.processorWorkforceMilli as number) < 0 ||
-        (rawCommand.farmWorkforceMilli as number) % PRODUCTION_BATCH_WORKFORCE_MILLI !== 0 ||
-        (rawCommand.processorWorkforceMilli as number) % PRODUCTION_BATCH_WORKFORCE_MILLI !== 0 ||
-        (rawCommand.farmWorkforceMilli as number) > FARM_MAX_BATCHES * PRODUCTION_BATCH_WORKFORCE_MILLI ||
-        (rawCommand.processorWorkforceMilli as number) > PROCESSOR_MAX_BATCHES * PRODUCTION_BATCH_WORKFORCE_MILLI) {
+    if (!hasWeeklyKeys(rawCommand, ["type", "expectedWeek", "farmWorkforceMilli", "processorWorkforceMilli"])) {
       return fail("INVALID_COMMAND", "Reserve whole WF within each building's weekly batch capacity.");
     }
-    const command = rawCommand as unknown as EndWeekCommand;
+    // Read untrusted fields once: getters/Proxies must not change values between checks and execution.
+    const snapshot = {
+      type: rawCommand.type, expectedWeek: rawCommand.expectedWeek,
+      farmWorkforceMilli: rawCommand.farmWorkforceMilli, processorWorkforceMilli: rawCommand.processorWorkforceMilli,
+    };
+    if (snapshot.type !== "END_WEEK" || !Number.isSafeInteger(snapshot.expectedWeek) ||
+        (snapshot.expectedWeek as number) < 1 ||
+        !Number.isSafeInteger(snapshot.farmWorkforceMilli) || (snapshot.farmWorkforceMilli as number) < 0 ||
+        !Number.isSafeInteger(snapshot.processorWorkforceMilli) || (snapshot.processorWorkforceMilli as number) < 0 ||
+        (snapshot.farmWorkforceMilli as number) % PRODUCTION_BATCH_WORKFORCE_MILLI !== 0 ||
+        (snapshot.processorWorkforceMilli as number) % PRODUCTION_BATCH_WORKFORCE_MILLI !== 0 ||
+        (snapshot.farmWorkforceMilli as number) > FARM_MAX_BATCHES * PRODUCTION_BATCH_WORKFORCE_MILLI ||
+        (snapshot.processorWorkforceMilli as number) > PROCESSOR_MAX_BATCHES * PRODUCTION_BATCH_WORKFORCE_MILLI) {
+      return fail("INVALID_COMMAND", "Reserve whole WF within each building's weekly batch capacity.");
+    }
+    const command = snapshot as EndWeekCommand;
     if (command.expectedWeek !== state.week) return fail("WEEK_MISMATCH", "Expected week must match the current planning week.");
     const id = state.activeSettlementId;
     if (id === null) return fail("NO_ACTIVE_SETTLEMENT", "End Week requires an active settlement. The week was not advanced.");

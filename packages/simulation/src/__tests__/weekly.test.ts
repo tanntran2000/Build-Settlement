@@ -202,6 +202,23 @@ describe("canonical correction regressions", () => {
     if (!result || result.success) throw new Error("expected failure");
     expect(result.state).toBe(state); expect(result).not.toHaveProperty("report"); expect(state).toEqual(before);
   });
+  it("uses one command snapshot so changing Proxy values cannot bypass processor availability", () => {
+    const state = createWeeklyState(); active(state).foodProcessorOperational = false;
+    active(state).inventory.wheat = 2000;
+    const before = structuredClone(state);
+    let reads = 0;
+    const cmd = new Proxy(command(0, 0), { get(target, key, receiver) {
+      return key === "processorWorkforceMilli" ? (++reads <= 5 ? 0 : 1000) : Reflect.get(target, key, receiver);
+    } });
+    const result = executeWeeklyCommand(state, cmd);
+    expect(result.success).toBe(true);
+    if (!result.success) throw new Error(result.error.message);
+    expect(active(result.nextState).inventory).toEqual(before.settlements[before.activeSettlementId!].inventory);
+    expect(result.report.production.processor.plannedBatches).toBe(0);
+    expect(result.report.workforce.assignedMilli).toBe(0);
+    expect(reads).toBe(1);
+    expect(state).toEqual(before);
+  });
   it("preserves the INVALID_STATE boundary for revoked Proxy input", () => {
     const { proxy, revoke } = Proxy.revocable(createWeeklyState(), {}); revoke();
     const result = executeWeeklyCommand(proxy, command());
