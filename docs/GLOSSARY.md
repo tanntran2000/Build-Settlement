@@ -1,6 +1,6 @@
 # Từ Điển Thuật Ngữ Chuẩn Hóa Anh - Việt (GLOSSARY.md)
 
-> **Phạm vi 2026-10-20**: Các thuật ngữ thiết kế kế tiếp bên dưới không đổi enum, save hay runtime hiện có. [Thiết kế non-Law](design/SOCIAL-REQUIREMENTS-STATUS-DRAFT-01.md) phân biệt rõ runtime bốn stock với sáu loại inventory dự kiến. Law / Civic Charter **DEFERRED**; các thuật ngữ pháp lý lịch sử không phải đặc tả triển khai mới.
+> **Phạm vi 2026-10-20**: Các thuật ngữ thiết kế kế tiếp bên dưới không đổi enum, save hay runtime hiện có. [Thiết kế non-Law](design/SOCIAL-REQUIREMENTS-STATUS-DRAFT-01.md) ghi năm stock hiện hành/đích Wheat/Gold/Wood/Iron/Food; Goods là Requirement phục vụ theo tuần, không có inventory. Target sáu kho cũ đã được thay thế. Law / Civic Charter **DEFERRED**; các thuật ngữ pháp lý lịch sử không phải đặc tả triển khai mới.
 
 > **Mục đích**: Chuẩn hóa toàn bộ thuật ngữ chuyên môn dùng trong mã nguồn (Interface, Enum, Biến) và văn bản hiển thị trong giao diện tiếng Việt của trò chơi, đảm bảo tính thống nhất tuyệt đối giữa bạn và các AI Agent.
 
