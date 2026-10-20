@@ -62,6 +62,7 @@
 <main lang="en">
   <header class="card">
     <h1>Weekly Management</h1>
+    <p><a href="/?mode=tiles">Play tile building trial</a> · Build, upgrade and supply the city (TRIAL)</p>
     <p>Experimental Wheat → Food chain · Resets on reload · No save/load</p>
     {#if settlement}<h2>{settlement.name}</h2>{/if}
     <p><span data-testid="weekly-population">{headcount} residents</span> · <span data-testid="weekly-workforce">{display(workforceMilli)} WF</span> · Week <strong data-testid="weekly-week">{state.week}</strong> · {report ? 'Report' : 'Planning'}</p>
