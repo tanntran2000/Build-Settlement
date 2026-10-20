@@ -3,6 +3,7 @@ import { readFile, stat } from 'node:fs/promises';
 import ts from 'typescript';
 
 const key = 'haven.runtime-errors.v1';
+const regression = 'http://localhost:4174/';
 const secret = 'TOKEN-SYNTHETIC https://private.invalid/?token=SYNTHETIC#save <b>save-payload</b>';
 const panel = (page: Page) => page.getByRole('region', { name: 'Error log', exact: true });
 async function invalid(page: Page) {
@@ -33,7 +34,7 @@ async function injectDispatcher(page: Page, mode: 'weekly' | 'r1', fault: 'throw
   });
 }
 
-test('both modes expose an English panel; real JSON download persists across reload while game resets', async ({ page }) => {
+test('both entries expose an English panel; real JSON download persists on its origin while games reset', async ({ page }) => {
   await page.addInitScript(() => {
     const original = URL.createObjectURL;
     URL.createObjectURL = function(blob) { (window as unknown as { blobMime: string }).blobMime = (blob as Blob).type; return original.call(URL, blob); };
@@ -53,6 +54,9 @@ test('both modes expose an English panel; real JSON download persists across rel
   await expect(panel(page)).toContainText('Download requested');
   await page.reload(); await expect(page.getByTestId('weekly-week')).toHaveText('1'); await expect(panel(page)).toContainText('Occurrences: 2');
   await page.goto('/'); await expect(panel(page)).toHaveAttribute('lang', 'en'); await expect(panel(page)).toContainText('INVALID_WORKFORCE_INPUT');
+  await expect(page.getByTestId('weekly-week')).toHaveText('1');
+  await page.goto(regression); await expect(panel(page)).toHaveAttribute('lang', 'en');
+  await expect(panel(page)).toContainText('No errors recorded.');
   await expect(page.locator('#current-day')).toHaveText('1');
 });
 
@@ -78,7 +82,7 @@ test('real guard failures and alternating global errors retain only the last fiv
 for (const mode of ['weekly', 'r1'] as const) {
   for (const fault of ['throw', 'unknown'] as const) {
     test(`${mode} ${fault} dispatcher failure never records or renders arbitrary error data`, async ({ page }) => {
-      await injectDispatcher(page, mode, fault); await page.goto(mode === 'weekly' ? '/?mode=weekly' : '/');
+      await injectDispatcher(page, mode, fault); await page.goto(mode === 'weekly' ? '/' : regression);
       const consoleMessages: string[] = []; page.on('console', message => consoleMessages.push(message.text()));
       if (mode === 'weekly') { await page.getByLabel('Farm Field workforce (WF)').fill('4'); await page.getByRole('button', { name: 'End Week', exact: true }).click(); }
       else await page.locator('#btn-advance-day').click();
@@ -99,7 +103,7 @@ test('global capture ignores raw event objects and resources, bounds storms, and
     const set = Storage.prototype.setItem; (window as unknown as { logWrites: number[] }).logWrites = [];
     Storage.prototype.setItem = function(key, value) { if (key === 'haven.runtime-errors.v1') (window as unknown as { logWrites: number[] }).logWrites.push(Date.now()); return set.call(this, key, value); };
   });
-  await page.goto('/'); await page.locator('#btn-advance-day').click(); await expect(page.locator('#current-day')).toHaveText('2');
+  await page.goto(regression); await page.locator('#btn-advance-day').click(); await expect(page.locator('#current-day')).toHaveText('2');
   const requests: string[] = []; page.on('request', request => requests.push(request.url()));
   const prevented = await page.evaluate(secret => {
     window.dispatchEvent(new Event('error'));
@@ -112,6 +116,8 @@ test('global capture ignores raw event objects and resources, bounds storms, and
     return [event.defaultPrevented, rejection.defaultPrevented];
   }, secret);
   expect(prevented).toEqual([false, false]); await expect(panel(page)).toContainText('Occurrences: 10000');
+  await page.evaluate(() => window.dispatchEvent(new Event('pagehide')));
+  expect(await page.evaluate(key => JSON.parse(localStorage.getItem(key)!).entries.length, key)).toBe(2);
   const data = await download(page); expect(data.entries).toHaveLength(2);
   expect(data.entries[0]).toMatchObject({ code: 'UNCAUGHT_ERROR', occurrences: 10000, clock: { day: 2, week: 1, year: 1 } });
   expect(data.entries[1]).toMatchObject({ code: 'UNHANDLED_REJECTION', action: 'RUNTIME', kind: 'exception' });
@@ -119,11 +125,13 @@ test('global capture ignores raw event objects and resources, bounds storms, and
   expect(writes.length).toBeLessThanOrEqual(4); expect(requests).toEqual([]);
   expect(await page.locator('body').innerText()).not.toContain('TOKEN-SYNTHETIC');
   await page.goto('/?mode=weekly'); await invalid(page); const mixed = await download(page);
+  expect(mixed.entries).toHaveLength(1);
   expect(mixed.entries.at(-1)).toMatchObject({ mode: 'weekly', clock: { week: 1 } });
 });
 
-test('native uncaught errors and rejected promises are captured after initialization without exporting their contents', async ({ page }) => {
-  await page.goto('/?mode=weekly');
+for (const mode of ['weekly', 'r1'] as const) {
+test(`${mode} native uncaught errors and rejected promises are captured after initialization without exporting their contents`, async ({ page }) => {
+  await page.goto(mode === 'weekly' ? '/' : regression);
   await page.evaluate(secret => {
     setTimeout(() => { throw new Error(secret); }, 0);
     setTimeout(() => { void Promise.reject(secret); }, 10);
@@ -131,7 +139,34 @@ test('native uncaught errors and rejected promises are captured after initializa
   await expect(panel(page)).toContainText('UNCAUGHT_ERROR'); await expect(panel(page)).toContainText('UNHANDLED_REJECTION');
   const data = await download(page); expect(data.entries.map((entry: { code: string }) => entry.code)).toEqual(['UNCAUGHT_ERROR', 'UNHANDLED_REJECTION']);
   expect(data.entries.every((entry: { action: string }) => entry.action === 'RUNTIME')).toBe(true);
+  expect(data.entries.every((entry: { mode: string }) => entry.mode === mode)).toBe(true);
   expect(await page.locator('body').innerText()).not.toContain('TOKEN-SYNTHETIC');
+});
+}
+
+test('production keeps old R1 log records on its origin and captures the new Weekly clock without bridging regression storage', async ({ page }) => {
+  const legacy = { timestampUtc: '2026-10-19T00:00:00.000Z', lastSeenUtc: '2026-10-19T00:00:00.000Z', occurrences: 1,
+    appVersion: '0.1.0', buildId: null, mode: 'r1', clock: { day: 2, week: 1, year: 1 }, action: 'RUNTIME',
+    kind: 'exception', code: 'UNCAUGHT_ERROR', message: 'An unexpected runtime error occurred. Download this log for review.' };
+  await page.goto('/');
+  await page.evaluate(({ key, legacy }) => localStorage.setItem(key, JSON.stringify({ schemaVersion: 1, entries: [legacy] })), { key, legacy });
+  await page.reload(); await expect(panel(page)).toContainText('r1 · RUNTIME · Day 2');
+  await page.getByLabel('Farm Field workforce (WF)').fill('4');
+  await page.getByRole('button', { name: 'End Week', exact: true }).click();
+  await page.evaluate(() => {
+    window.dispatchEvent(new ErrorEvent('error'));
+    window.dispatchEvent(new Event('unhandledrejection'));
+    window.dispatchEvent(new Event('pagehide'));
+  });
+  const stored = await page.evaluate(key => JSON.parse(localStorage.getItem(key)!), key);
+  expect(stored.entries).toHaveLength(3); expect(stored.entries[0]).toEqual(legacy);
+  expect(stored.entries.slice(1)).toMatchObject([
+    { mode: 'weekly', clock: { week: 2 }, code: 'UNCAUGHT_ERROR', occurrences: 1 },
+    { mode: 'weekly', clock: { week: 2 }, code: 'UNHANDLED_REJECTION', occurrences: 1 },
+  ]);
+  await page.goto(regression); await expect(panel(page)).toContainText('No errors recorded.');
+  expect(await page.evaluate(key => localStorage.getItem(key), key)).toBeNull();
+  await page.goto('/'); await expect(panel(page).getByRole('listitem')).toHaveCount(3);
 });
 
 for (const failure of ['getter', 'quota'] as const) {
