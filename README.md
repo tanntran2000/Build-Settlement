@@ -25,7 +25,7 @@ Văn bản là phần cốt lõi của trải nghiệm. Hình ảnh pixel art v�
 
 Bản dành cho người chơi mở **Weekly Management**: phân công Farm Field → End Week → báo cáo WHY → Plan next week. `/`, `?mode=weekly`, `?mode=r1` và query không nhận diện đều mở Weekly. Prototype R1 ngày được giữ riêng để kiểm hồi quy, không nằm trong artifact dành cho người chơi.
 
-Runtime Weekly là thử nghiệm chuỗi **Farm → Wheat → Food Processor → Food**, có 5 kho live **Gold/Wheat/Food/Wood/Iron**. Một Farm và một Food Processor operational có sẵn; chưa có cơ chế xây dựng. World mới khởi tạo Gold10/Wheat0/Food4/Wood0/Iron0, cohort hiện có cho 10 WF dùng chung. Reload reset game; chưa save/load/migration. Goods vẫn là loại inventory đích thứ sáu, chưa có kho live/recipe/trade. Ba nhóm xã hội, Requirements Food/Goods, Status và Law chưa mô phỏng.
+Runtime Weekly là thử nghiệm chuỗi **Farm → Wheat → Food Processor → Food**, có 5 kho live **Gold/Wheat/Food/Wood/Iron**. Một Farm và một Food Processor operational có sẵn; chưa có cơ chế xây dựng. World mới khởi tạo Gold10/Wheat0/Food4/Wood0/Iron0, cohort hiện có cho 10 WF dùng chung. Reload reset game; chưa save/load/migration. Thiết kế Goods mới giữ Goods là Requirement theo % phục vụ mỗi tuần, không phải loại inventory thứ sáu: building dùng Wood/Iron một lần, giới hạn bởi capacity Market; nhu cầu theo tổng dân × định mức chưa chốt. Cùng kết quả phục vụ đóng góp Gold/Happiness, không trừ nguyên liệu lần hai. Recipe, định mức/capacity/hệ số và edge rules còn pending. Ba nhóm xã hội, Requirements Food/Goods, Status và Law chưa mô phỏng.
 
 ### Công thức trial đã duyệt — chưa phải balance chính thức
 

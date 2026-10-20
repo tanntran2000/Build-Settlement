@@ -1,6 +1,6 @@
 # Tầm Nhìn Dự Án & Bản Thiết Kế Ý Tưởng (VISION_AND_CONCEPT.md)
 
-> **Cập nhật thiết kế 2026-10-20 — chỉ working copy, chưa triển khai**: Quyết định mới về đúng 3 nhóm xã hội, Requirements Food/Goods và Status Happiness/Security/Corruption được ghi tại [thiết kế non-Law](design/SOCIAL-REQUIREMENTS-STATUS-DRAFT-01.md). Law / Civic Charter **DEFERRED**, chỉ giữ ranh giới tích hợp chờ quyết định; nội dung thể chế/đặc quyền bên dưới là bối cảnh lịch sử, không cấp phép triển khai. Không có balance mới hoặc migration được duyệt.
+> **Cập nhật thiết kế 2026-10-20 — chỉ working copy, chưa triển khai**: Quyết định mới về đúng 3 nhóm xã hội, Requirements Food/Goods (Goods phục vụ tuần từ Wood/Iron qua building, giới hạn bởi capacity Market, không tồn kho) và Status Happiness/Security/Corruption/Tension được ghi tại [thiết kế non-Law](design/SOCIAL-REQUIREMENTS-STATUS-DRAFT-01.md). Law / Civic Charter **DEFERRED**, chỉ giữ ranh giới tích hợp chờ quyết định; nội dung thể chế/đặc quyền bên dưới là bối cảnh lịch sử, không cấp phép triển khai. Goods demand theo tổng dân × định mức chưa chốt; fulfillment % dùng cho Gold/Happiness một lần, không trừ nguyên liệu hai lần. Recipe/capacity/hệ số/zero-demand/rounding còn pending. Giữ nguyên Food/Tension đã duyệt, không thêm balance hay migration trong gói Goods.
 
 > **Tên dự án**: Haven: Sovereign Frontier (Build-Settlement)  
 > **Thể loại**: Quản lý Lãnh địa & Mô phỏng Xã hội Hậu tận thế (Colony Sim / Society Simulator)  

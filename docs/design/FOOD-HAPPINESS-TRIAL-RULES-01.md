@@ -16,8 +16,8 @@ Earlier design references are [the non-Law record](SOCIAL-REQUIREMENTS-STATUS-DR
 
 | Topic | Current decision and scope |
 | --- | --- |
-| Requirements | Food and Goods are city-wide Requirements, separate from finished physical inventory. Only the Food trial is specified here; no Goods recipe, production or trade is added. |
-| Status | Happiness, Security, Corruption and Tension. All four have design domain 0–100, with Tension clamp approved for trial; Tension initialization/precision are pending. Goods remains a Requirement and physical stock, not a Status. |
+| Requirements | Food and Goods remain city-wide Requirements. Food uses a separate physical Food stock; Goods has a weekly Wood/Iron building-service result limited by Market capacity, with no Goods inventory. The later Goods flow is in the decision record; this rulebook's Food calculations are unchanged. |
+| Status | Happiness, Security, Corruption and Tension. All four have design domain 0–100, with Tension clamp approved for trial; Tension initialization/precision are pending. Goods remains a Requirement with no physical Goods stock, not a Status. |
 | Display names | **Flourishing** is the positive economy effect; **Faltering** the negative. These replace illustrative Happy/Hungry labels. Happiness remains the independent Status input. The `economy` family name is unchanged. |
 | Population | Exactly three planned groups remain Makers / Luminaries / Merchants, with the PR25 names/duties unchanged. No class conversion, membership assignment, migration or new population dynamics is approved. |
 | Law | **DEFERRED.** No Law, voting, privilege, Civic Charter or entitlement formula is added. |
