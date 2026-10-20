@@ -23,11 +23,19 @@ Văn bản là phần cốt lõi của trải nghiệm. Hình ảnh pixel art v�
 
 **Early prototype — chưa phải bản game hoàn chỉnh.**
 
-Bản dành cho người chơi mở **Weekly Management**: phân công Farm Field → End Week → báo cáo WHY → Plan next week. `/`, `?mode=weekly`, `?mode=r1` và query không nhận diện đều mở Weekly. Prototype R1 ngày được giữ riêng để kiểm hồi quy, không nằm trong artifact dành cho người chơi.
+Mặc định bản dành cho người chơi mở **Weekly Management (classic)**: phân công Farm Field → End Week → báo cáo WHY → Plan next week. `/`, `?mode=weekly`, `?mode=r1` và query không nhận diện đều mở Weekly. Prototype R1 ngày được giữ riêng để kiểm hồi quy, không nằm trong artifact dành cho người chơi.
 
-Runtime Weekly là thử nghiệm chuỗi **Farm → Wheat → Food Processor → Food**, có 5 kho live **Gold/Wheat/Food/Wood/Iron**. Một Farm và một Food Processor operational có sẵn; chưa có cơ chế xây dựng. World mới khởi tạo Gold10/Wheat0/Food4/Wood0/Iron0, cohort hiện có cho 10 WF dùng chung. Reload reset game; chưa save/load/migration. Thiết kế Goods mới giữ Goods là Requirement theo % phục vụ mỗi tuần, không phải loại inventory thứ sáu: building dùng Wood/Iron một lần, giới hạn bởi capacity Market; nhu cầu theo tổng dân × định mức chưa chốt. Cùng kết quả phục vụ đóng góp Gold/Happiness, không trừ nguyên liệu lần hai. Recipe, định mức/capacity/hệ số và edge rules còn pending. Ba nhóm xã hội, Requirements Food/Goods, Status và Law chưa mô phỏng.
+Runtime Weekly classic là thử nghiệm chuỗi **Farm → Wheat → Food Processor → Food**, có 5 kho live **Gold/Wheat/Food/Wood/Iron**. Một Farm và một Food Processor operational có sẵn; chưa có cơ chế xây dựng. World mới khởi tạo Gold10/Wheat0/Food4/Wood0/Iron0, cohort hiện có cho 10 WF dùng chung. Reload reset game; chưa save/load/migration. Thiết kế Goods mới giữ Goods là Requirement theo % phục vụ mỗi tuần, không phải loại inventory thứ sáu: building dùng Wood/Iron một lần, giới hạn bởi capacity Market; nhu cầu theo tổng dân × định mức chưa chốt. Cùng kết quả phục vụ đóng góp Gold/Happiness, không trừ nguyên liệu lần hai. Recipe, định mức/capacity/hệ số và edge rules còn pending. Ba nhóm xã hội, Requirements Food/Goods, Status và Law chưa mô phỏng.
 
-### Công thức trial đã duyệt — chưa phải balance chính thức
+### Playable tile/building trial — tham số mới là TRIAL
+
+Mở **`/?mode=tiles`** hoặc chọn **Play tile building trial** từ Weekly. Chọn tile để xây, nâng cấp, thay thế, giao WF và pause/resume; Farm/Processor có sẵn. Logging Camp khai thác Wood trên forest, Iron Mine khai thác Iron trên ore. Workshop dùng Wood/Iron phục vụ Goods Requirement qua capacity Market; **không có kho Goods**, không tăng nhu cầu khi nâng Market và không thu/trừ nguyên liệu hai lần. Mọi giao dịch lỗi giữ nguyên state; report khóa thao tác tới Plan next week.
+
+Để thử chuỗi bền vững: xây Logging Camp tại forest-1 (2 WF), Mine tại ore-1 (1 WF), Workshop tại plain-2 (1 WF), Market tại plain-3; giữ Farm/Processor 2 WF mỗi nơi rồi End Week. Báo cáo có tax, upkeep, Goods, Food consumption và Happiness. Tax tối giản cùng pause giúp hồi phục khi thiếu Gold. Các chi phí, thuế, sản lượng khai thác, service, Market capacity, Goods revenue/Happiness và chính sách upgrade/replace đều là **lựa chọn triển khai TRIAL, chưa phải balance được user duyệt**; chỉnh tại `packages/core/src/trial/catalog.ts`.
+
+Mode này dùng cùng công thức Farm/Processor và Food/Happiness đã ghi nhận, nhưng **chỉ là lát cắt playable**: chưa tích hợp Flourishing/Faltering, Tension/crisis/game-over, Security/Corruption, membership ba nhóm, Law, trade engine, explore/combat, asset pixel hoặc save/load/migration. R1 và classic giữ dispatcher/fixture riêng; mỗi mode chỉ mount một world/một clock. Reload reset. [Spec và chính sách TRIAL](docs/superpowers/specs/2026-10-20-weekly-tile-buildings-trial.md).
+
+### Công thức Weekly classic đã duyệt — chưa phải balance chính thức
 
 **1 stock hiển thị = 1000 milli; 1 WF = 1000 milli-WF.** Chỉ phân công WF nguyên, mỗi công trình 0–5 WF = 0–5 mẻ/tuần; tổng hai phân công không vượt WF thực từ cohort. WF đã giao nhưng thiếu đầu vào không tự chuyển sang công trình khác.
 
