@@ -1,6 +1,8 @@
 # Social Groups, Requirements and City Status — Design Draft 01
 
-> **Latest approved trial design — 2026-10-20: NOT IMPLEMENTED.** [Food, Happiness and Economy Effects — Trial Rules 01](FOOD-HAPPINESS-TRIAL-RULES-01.md) records the exact proposal subsequently confirmed by the user: population-based Food demand, Food-driven Happiness changes, deterministic persistent starvation Faltering, qualified/random Flourishing, and the warning/rebellion trial. These specific calculations supersede earlier pending-numbers notices below; they do not approve a runtime implementation. Display names are Flourishing / Faltering, with Happiness remaining a Status input. The starvation cause alone supersedes the old three-week negative lifecycle by lasting until full-feeding recovery. Other effect/lifecycle interfaces remain explicitly unresolved; no new general consumer or engine is approved.
+> **Latest approved directions — 2026-10-20: NOT IMPLEMENTED.** [Tension, Social Crisis and Gold — Decision Record 01](TENSION-CRISIS-GOLD-DECISIONS-01.md) records the fourth city-wide Status, Tension; serious demands replacing the direct rebellion trigger; the approved 50/75/90 and 2–2–4 trial package; conceptual pressure/mitigation/Event relief; Gold directions and the narrow Farm upkeep credit. Contribution coefficients, Tension range/initialization, recovery/cooldown and final loss semantics remain pending. It supersedes the earlier three-Status restriction and direct rebellion trigger only.
+
+> **Earlier approved trial design — 2026-10-20: NOT IMPLEMENTED.** [Food, Happiness and Economy Effects — Trial Rules 01](FOOD-HAPPINESS-TRIAL-RULES-01.md) records the exact proposal subsequently confirmed by the user: population-based Food demand, Food-driven Happiness changes, deterministic persistent starvation Faltering, qualified/random Flourishing, and the original warning/rebellion trial (the direct rebellion trigger is superseded by the decision record above). These specific calculations supersede earlier pending-numbers notices below; they do not approve a runtime implementation. Display names are Flourishing / Faltering, with Happiness remaining a Status input. The starvation cause alone supersedes the old three-week negative lifecycle by lasting until full-feeding recovery. Other effect/lifecycle interfaces remain explicitly unresolved; no new general consumer or engine is approved.
 
 > **Food-chain implementation closeout:** [WP-WHEAT-FOOD-CHAIN-01 v0.1](../work_packages/WP-WHEAT-FOOD-CHAIN-01_v0.1.md) option A was implemented and merged in PR26 at `02e58b1fe6b9ef42c048cd4fede8bb5bc5aadf4d`. Farm `1 WF + 1 Gold → 2 Wheat`, then operational Processor `1 WF + 2 Wheat → 2 Food`; maximum 5 whole batches each, shared existing WF, initial Gold 10 / Wheat 0 / Food 4 / Wood 0 / Iron 0 and a pre-existing processor. Five live stocks now; Goods remains the sixth design target. The newer demand/Status trial is documentation only and leaves these recipes and runtime unchanged. Construction, group membership, Goods production/trade, migration and Law remain deferred.
 
@@ -19,7 +21,7 @@ This record captures the user's non-Law decisions. It takes precedence over olde
 
 The three group categories and duties are user decisions; the full names are the assistant's proposed names, retained for review. Individual occupations do not create extra social groups. Group membership, assignment, headcounts and workforce calculations for these categories are undecided.
 
-All three groups contribute to shared city Happiness, Security and Corruption through conditions, buildings and eventual effects. There is no one-group-per-Status mapping. Merchants do not have intrinsic corruption; their role does not determine a corruption penalty. No numerical contribution, sign, modifier or formula is approved.
+All three groups contribute to shared city Happiness, Security, Corruption and Tension through conditions, buildings and eventual effects. There is no one-group-per-Status mapping. Merchants do not have intrinsic corruption; their role does not determine a corruption penalty. No numerical group contribution, sign or modifier is approved; the separate Tension/crisis decision record supplies only its explicitly scoped city-wide approvals.
 
 The runtime's Slave/Low/Middle/High presentation and `servile/lower/middle/upper` economic profiles are a different model. They cannot be renamed, merged or converted one-to-one into these groups. Canonical `SocialClass`, `LegalStatus`, occupation and cohort data remain unchanged. No save/data migration or automatic membership inference is authorized.
 
@@ -30,19 +32,19 @@ The runtime's Slave/Low/Middle/High presentation and `servile/lower/middle/upper
 | Physical inputs | Wheat, Gold, Wood, Iron | City inventory inputs for building/production; individual recipes, construction costs and inflows remain undecided |
 | Physical finished inventory | Food, Goods | Buildings create finished stock; Goods are physical exchange goods, without a new trade system in this scope |
 | City-wide Requirements | Food, Goods | City-wide demand to be met; separate from the physical finished stocks with the same names |
-| City Status | Happiness, Security, Corruption | Only these three are Status; design range 0–100 |
+| City Status | Happiness, Security, Corruption, Tension | Four city-wide Status. Happiness/Security/Corruption retain design range 0–100; Tension range, initial value and representation remain pending |
 
-Thus the planned physical inventory has **six types**: Wheat/Gold/Wood/Iron/Food/Goods. Requirements are neither extra inventory types nor Status bars. A Food stock quantity is not a Food Requirement, fulfillment value or Happiness score; the same distinction applies to Goods. No units, normalization, denominator, display fraction or fulfillment formula for Requirements is approved. The 0–100 design range applies to Status only; it does not set stock capacity or Requirement targets. Missing simulation values must not be presented as zero, full satisfaction or default Status values.
+Thus the planned physical inventory has **six types**: Wheat/Gold/Wood/Iron/Food/Goods. Requirements are neither extra inventory types nor Status bars. A Food stock quantity is not a Food Requirement, fulfillment value or Happiness score; the same distinction applies to Goods. Food demand/consumption and its fulfillment ratio are the narrow approved trial in Food Trial Rules 01; Goods demand and general display/normalization contracts remain pending. The prior 0–100 domain applies to Happiness/Security/Corruption; it does not approve a Tension domain, stock capacity or Requirement target. Missing simulation values must not be presented as zero, full satisfaction or default Status values.
 
 Wheat harvested during a week may be processed into Food during that same week **only through a building**. Harvest alone cannot satisfy Food Requirements by silently treating Wheat as Food. This permits same-week processing; it does not require processing all harvest or decide a recipe, throughput, storage limit, allocation priority or complete within-week phase ordering. Buildings also produce Goods from the planned input set; no specific Goods recipe has been chosen.
 
 **Historical numerical boundary at the inspected PR24 base:** there were no approved new recipes, capacities, consumption rates, construction costs, thresholds, initial Status values or effect coefficients; the earlier numerical proposal was unapproved. The Food-chain approval and the exact Food/Happiness trial above are subsequent, narrow exceptions. No other values may be copied from historical population profiles, sample building JSON, Medal examples or the old Farm Field experiment.
 
-## 3. Inspected implementation boundary
+## 3. Historical implementation inspection — PR24, superseded by PR26 closeout above
 
 Read-only source inspection at the base above found:
 
-| Source | Actual current behavior |
+| Source | Behavior at the historical PR24 base |
 | --- | --- |
 | `packages/core/src/domain/canonical-state.ts` | Weekly inventory accepts exactly `gold/food/wood/iron`; no Wheat or Goods field and no city Requirements/Status model |
 | `packages/core/src/weekly.ts` | New RAM world has the existing canonical cohort (`socialClass: common`, 100 residents) and Gold/Food/Wood/Iron stocks; it does not instantiate the three new groups |
@@ -52,7 +54,7 @@ Read-only source inspection at the base above found:
 | `packages/content/src/buildings.json` | Historical sample content with numbers and legacy resource names; not an approved recipe catalog for the new design |
 | `packages/core/src/domain/resource.ts`, `packages/persistence/src/schema.ts` | Separate R1 resource/save contracts; neither supplies the planned six-stock Weekly implementation or a migration |
 
-The current runtime stock named **Food remains Food**. Relabeling it Wheat would misrepresent what the current dispatcher produces. The four-stock experiment is a documented interim implementation, not the planned Wheat → building → Food production chain. R1 regression resources are also not the planned six-type inventory, regardless of how many rows its UI displays.
+At that historical inspection, the runtime stock named **Food remained Food**. Relabeling it Wheat would misrepresent what that dispatcher produced. The four-stock experiment was an interim implementation; PR26 subsequently implemented the five-stock Wheat → building → Food chain recorded above. R1 regression resources are also not the planned six-type inventory, regardless of how many rows its UI displays.
 
 Preserve deterministic clock behavior, all-or-nothing commands, nonnegative physical stock, workforce accounting and existing error handling. No Status-to-City-Effect resolver, Medal consumer or automatic group influence is connected by this record.
 
@@ -60,7 +62,9 @@ Preserve deterministic clock behavior, all-or-nothing commands, nonnegative phys
 
 **LAW DEFERRED.** The user's latest direction is to update the other parts first and decide Law later. A future Law decision may affect city-wide Requirements and social conditions; the integration contract remains pending. This record defines no Law mechanics, voting, privilege formulas, entitlement multipliers, Civic Charter implementation, placeholder commands or new Law state/API. Earlier governance chapters are retained as historical context only. The Frostpunk / Free Cities references do not approve specific mechanics.
 
-## 5. Decision and authorization boundaries
+## 5. Historical packet boundaries and subsequent scoped approvals
+
+The following bullets describe the original PR24 documentation packet, not current approval status; the scoped subsequent approvals above supersede only their named items.
 
 - Next proposed implementation: static labels and an inert presentation/catalog preview, visibly marked planned; no live quantities or new simulation state.
 - Six-stock production requires separate recipe, capacity, cost and within-week processing decisions and an approved implementation WP.
@@ -71,3 +75,5 @@ Preserve deterministic clock behavior, all-or-nothing commands, nonnegative phys
 **Historical documentation-phase boundary:** That phase authorized local documentation and read-only inspection only. It does not authorize code, commits, pushes, PR creation, merge, deployment or ZIP publication. The previously rejected draft PR action remains blocked and is not retried. Completion of this document does not change that restriction or approve its proposed WP.
 
 **Subsequent approval — 2026-10-20:** Human approved exactly WP-SOCIAL-CATALOG-PRESENTATION-01 v0.1 for presentation/catalog implementation, testing and a draft PR. This supersedes the preceding phase restriction only for that bounded slice. The new agreed plan addresses the previous PR block; no Law, numerical simulation, population conversion, migration, merge, deployment or ZIP publication is approved.
+
+**Current documentation packet:** DOC-TENSION-CRISIS-01 in the decision record authorizes the scoped five-document reconciliation, docs branch and draft PR for independent audit. Runtime remains HOLD; no merge, deployment or publication is part of that packet.
