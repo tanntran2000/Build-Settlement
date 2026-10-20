@@ -37,7 +37,8 @@
     }
     state = result.nextState;
     if (result.report) report = result.report;
-    if (type === 'NEXT_WEEK' || type === 'LOAD_TRIAL') report = null;
+    // Keep the last report mounted so a repeated pointer click cannot fall onto End Week.
+    if (type === 'LOAD_TRIAL') report = null;
     workers = String(state.tiles.find(t => t.id === selectedId)!.building?.workers ?? 0);
     errorLog.setContext('weekly', { week: state.world.week });
     error = '';
@@ -164,6 +165,7 @@
   {#if report}
     <section class="card" aria-label="Trial week report" aria-live="polite">
       <h2>Week {report.week} report</h2>
+      {#if !locked}<p>Previous report · Planning is active.</p>{/if}
       <p data-testid="trial-goods">Goods service: {units(report.goods.servedMilli)} / {units(report.goods.demandMilli)} · {report.goods.fulfillmentBps / 100}% {report.goods.demandMilli === 0 ? '(no demand)' : 'fulfilled'}. Materials used once: {units(report.goods.woodUsed)} Wood, {units(report.goods.ironUsed)} Iron. Revenue: {units(report.goods.revenueMilli)} Gold.</p>
       <p>Tax: {units(report.taxMilli)} Gold. Upkeep covered: {units(report.upkeepPaidMilli)} Gold; unfunded: {units(report.unpaidUpkeepMilli)} Gold (no debt). Farm batch payment: {units(report.farmBatchGoldMilli)} Gold; extra Farm upkeep: {units(report.farmExtraUpkeepMilli)} Gold.</p>
       <p>Food consumed: {units(report.foodConsumedMilli)} / {units(report.foodDemandMilli)}. Happiness: {report.happinessBefore} → {report.happinessAfter}.</p>
@@ -171,7 +173,7 @@
         {#each WEEKLY_RESOURCE_KEYS as key}<tr><th>{key}</th><td>{units(report.before[key])}</td><td>{units(report.after[key] - report.before[key])}</td><td>{units(report.after[key])}</td></tr>{/each}
       </tbody></table></div>
       <details><summary>Building activity</summary><ul>{#each report.activities as activity}<li>{activity}</li>{/each}</ul></details>
-      <button onclick={() => command('NEXT_WEEK')}>Plan next week</button>
+      <button disabled={!locked} onclick={() => command('NEXT_WEEK')}>Plan next week</button>
     </section>
   {/if}
   <ErrorLog />

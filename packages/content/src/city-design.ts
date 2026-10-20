@@ -8,7 +8,7 @@ export const CITY_DESIGN = {
   groupInfluence: "All three groups contribute to shared Happiness, Security and Corruption through conditions, buildings and future effects. No group owns a single Status; Merchants have no intrinsic corruption.",
   inventory: {
     inputs: ["Wheat", "Gold", "Wood", "Iron"],
-    finished: ["Food", "Goods"],
+    finished: ["Food"],
   },
   requirements: ["Food", "Goods"],
   statuses: ["Happiness", "Security", "Corruption"],

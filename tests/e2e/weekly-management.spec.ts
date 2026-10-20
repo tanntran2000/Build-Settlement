@@ -216,7 +216,7 @@ test('formats safe integer milli exactly at the stock boundary including signed 
 test('planned city systems distinguish groups, inventory, Requirements and Status without live values', async ({ page }) => {
   const planned = page.getByRole('region', { name: 'Planned city systems', exact: true });
   await expect(planned).toBeVisible();
-  await expect(planned).toContainText('Groups, Goods, Requirements and Status are not simulated.');
+  await expect(planned).toContainText('Requirements and Status are not simulated in classic.');
   await expect(planned).toContainText('Proposed names');
   await expect(planned.getByRole('article')).toHaveCount(3);
   for (const [label, name, duties] of [
@@ -232,12 +232,13 @@ test('planned city systems distinguish groups, inventory, Requirements and Statu
   await expect(planned).toContainText('All three groups contribute to shared Happiness, Security and Corruption through conditions, buildings and future effects.');
   await expect(planned).toContainText('No group owns a single Status; Merchants have no intrinsic corruption.');
   const inventory = planned.getByRole('region', { name: 'Physical inventory', exact: true });
-  await expect(inventory.getByRole('definition')).toHaveText(['Wheat, Gold, Wood, Iron', 'Food, Goods']);
+  await expect(inventory.getByRole('definition')).toHaveText(['Wheat, Gold, Wood, Iron', 'Food']);
   await expect(inventory).toContainText('Wheat harvested this week may be processed into Food in the same week, only through a building.');
-  await expect(inventory).toContainText('Buildings produce Food and Goods. Goods are physical exchange goods.');
+  await expect(inventory).toContainText('Goods is a city-wide Requirement, with no stored Goods.');
+  await expect(inventory).not.toContainText('six inventory types');
   const requirements = planned.getByRole('region', { name: 'City-wide Requirements', exact: true });
   await expect(requirements).toContainText('Food, Goods');
-  await expect(requirements).toContainText('City-wide demand, separate from finished inventory.');
+  await expect(requirements).toContainText('Food demand is separate from Food inventory. Goods has no physical inventory.');
   const status = planned.getByRole('region', { name: 'City Status', exact: true });
   await expect(status.getByRole('listitem')).toHaveText(['Happiness', 'Security', 'Corruption']);
   await expect(status).toContainText('Design range: 0–100. Values are not simulated.');

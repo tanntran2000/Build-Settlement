@@ -79,3 +79,57 @@ test('invalid worker and unaffordable replacement preserve plan', async ({ page 
   await expect(page.getByTestId('trial-tile-plain-2')).toContainText('Market');
   await expect(page.getByTestId('trial-stock-wood')).toHaveText('0');
 });
+
+for (const width of [1280, 390]) {
+  test(`double-click Plan next week preserves the new plan at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 800 });
+    await page.goto('/?mode=tiles');
+    await build(page, 'forest-1', 'logging', 2);
+    await page.getByRole('button', { name: 'End Week', exact: true }).click();
+    const stocks = await page.getByTestId('trial-stocks').textContent();
+    await page.getByRole('button', { name: 'Plan next week', exact: true }).dblclick();
+    await expect(page.locator('header')).toContainText('Week 2 · Planning');
+    await expect(page.getByTestId('trial-stocks')).toHaveText(stocks!);
+    await expect(page.getByRole('button', { name: 'Plan next week', exact: true })).toBeDisabled();
+    await expect(page.getByText('Previous report · Planning is active.', { exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'End Week', exact: true })).toBeEnabled();
+    // A separate intentional action is immediately available; no debounce timer.
+    await page.getByRole('button', { name: 'End Week', exact: true }).click();
+    await expect(page.locator('header')).toContainText('Week 3 · Report');
+    await expect(page.getByTestId('trial-stock-wood')).toHaveText('16');
+    await expect(page.getByRole('heading', { name: 'Week 1 report', exact: true })).toHaveCount(0);
+    await expect(page.getByRole('heading', { name: 'Week 2 report', exact: true })).toBeVisible();
+  });
+}
+
+test('repeated keyboard activation cannot turn planning into another End Week', async ({ page }) => {
+  await page.goto('/?mode=tiles');
+  await page.getByRole('button', { name: 'End Week', exact: true }).click();
+  await page.getByRole('button', { name: 'Plan next week', exact: true }).focus();
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('Space');
+  await expect(page.locator('header')).toContainText('Week 2 · Planning');
+  await page.getByRole('button', { name: 'End Week', exact: true }).focus();
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('Enter');
+  await expect(page.locator('header')).toContainText('Week 3 · Report');
+});
+
+test('repeated touch taps at Plan coordinates preserve planning until intentional End Week', async ({ browser, baseURL }) => {
+  const context = await browser.newContext({ baseURL, hasTouch: true, viewport: { width: 390, height: 844 } });
+  try {
+    const page = await context.newPage();
+    await page.goto('/?mode=tiles');
+    await page.getByRole('button', { name: 'End Week', exact: true }).tap();
+    const next = page.getByRole('button', { name: 'Plan next week', exact: true });
+    await next.scrollIntoViewIfNeeded();
+    const box = (await next.boundingBox())!;
+    await page.touchscreen.tap(box.x + box.width / 2, box.y + box.height / 2);
+    await page.touchscreen.tap(box.x + box.width / 2, box.y + box.height / 2);
+    await expect(page.locator('header')).toContainText('Week 2 · Planning');
+    await expect(next).toBeDisabled();
+    await page.getByRole('button', { name: 'End Week', exact: true }).tap();
+    await expect(page.locator('header')).toContainText('Week 3 · Report');
+  } finally { await context.close(); }
+});
