@@ -10,6 +10,7 @@
   let typeId = 'logging';
   let workers = '0';
   let error = '';
+  let workforceError = '';
   let saveNotice = '';
   let importRead = 0;
   let report: Readonly<TileTrialReport> | null = null;
@@ -26,12 +27,15 @@
     selectedId = id;
     workers = String(state.tiles.find(t => t.id === id)!.building?.workers ?? 0);
     error = '';
+    workforceError = '';
   }
   function command(type: string, fields: Record<string, unknown> = {}, expectedRevision = state.revision) {
     saveNotice = '';
+    workforceError = '';
     const result = executeTileTrialCommand(state, { type, expectedRevision, ...fields });
     if (!result.success) {
-      error = result.error.message;
+      error = type === 'SET_WORKERS' ? '' : result.error.message;
+      if (type === 'SET_WORKERS') workforceError = result.error.message;
       errorLog.record(type === 'END_WEEK' ? 'END_WEEK' : 'RUNTIME', 'INVALID_COMMAND');
       return false;
     }
@@ -45,7 +49,7 @@
     return true;
   }
   function checkpointError(message: string) {
-    error = message; saveNotice = '';
+    error = message; workforceError = ''; saveNotice = '';
     errorLog.record('RUNTIME', 'INVALID_COMMAND');
   }
   function exportCheckpoint() {
@@ -63,7 +67,7 @@
     const input = event.currentTarget as HTMLInputElement; const file = input.files?.[0]; input.value = '';
     if (!file) return;
     const ticket = ++importRead, expectedRevision = state.revision;
-    error = ''; saveNotice = '';
+    error = ''; workforceError = ''; saveNotice = '';
     if (state.phase !== 'planning') { checkpointError('Choose Plan next week before importing.'); return; }
     if (file.size > TILE_SAVE_MAX_BYTES) { checkpointError('Checkpoint exceeds the 1 MiB limit.'); return; }
     try {
@@ -135,8 +139,13 @@
       {#if selected.building && definition}
         <h3>{definition.name} · Level {selected.building.level}</h3>
         <p>Upkeep: {units(definition.upkeepMilli * selected.building.level)} Gold/week. Farm batch Gold credits this Farm's upkeep.</p>
+        <p id="trial-workers-confirmed">Assigned: <strong>{selected.building.workers} WF</strong>. Kept for future weeks until changed.</p>
         <label for="trial-workers">Assigned workers (WF)</label>
-        <input id="trial-workers" type="text" inputmode="numeric" bind:value={workers} disabled={locked || !selected.building.enabled} />
+        <input id="trial-workers" type="text" inputmode="numeric" bind:value={workers} disabled={locked || !selected.building.enabled}
+          aria-invalid={workforceError ? 'true' : 'false'}
+          aria-describedby={`trial-workers-confirmed${workers !== String(selected.building.workers) ? ' trial-workers-draft' : ''}${workforceError ? ' trial-workers-error' : ''}`} />
+        {#if workforceError}<p id="trial-workers-error" role="alert">{workforceError}</p>{/if}
+        {#if workers !== String(selected.building.workers)}<p id="trial-workers-draft">Unapplied draft. Assigned workforce remains {selected.building.workers} WF. Select Assign workers to apply.</p>{/if}
         <p>Capacity: {definition.maxWorkers * selected.building.level} WF.</p>
         <button disabled={locked || !selected.building.enabled} onclick={() => command('SET_WORKERS', { tileId: selectedId, workers: /^\d+$/.test(workers) ? Number(workers) : -1 })}>Assign workers</button>
         <button disabled={locked} onclick={() => command('SET_ENABLED', { tileId: selectedId, enabled: !selected.building!.enabled })}>{selected.building.enabled ? 'Pause' : 'Resume'}</button>
