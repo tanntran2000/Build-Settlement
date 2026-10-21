@@ -1,6 +1,24 @@
 # Bản Đồ Lộ Trình Kỹ Thuật Tổng Thể (MASTER_ROADMAP.md)
 
-## Current foundation packet — tile needs resolution, no new gameplay
+## Current release — PR33 bounded foundation closeout
+
+**DOC-PR33-FOUNDATION-CLOSEOUT-01** records completion of already approved work. It is a documentation closeout, not new gameplay progress or selection of another implementation packet.
+
+Released main is `5f6f317b0d7005661e31b7648a4f4996ae7b6bbe`, merge [PR33](https://github.com/tanntran2000/Build-Settlement/pull/33) from final head `81825c1ccb3182f2e2caff25c27c6187f478a82d`. The released tree is `d3f4abd6cb7213795ca76281ed87144d1809ab5c`. [Main CI39579990735](https://github.com/tanntran2000/Build-Settlement/actions/runs/39579990735) completed successfully for that exact merge SHA on the main push. This is release evidence; the documentation closeout does not claim a new unit/browser test run or independent gate verdict.
+
+Completed PR33 scope:
+
+- [Tile needs foundation](superpowers/plans/2026-10-21-tile-needs-foundation.md): the pure internal Food/Goods-to-Happiness helper is consumed by End Week, preserving existing behavior, coefficients, reports and checkpoint continuation. It is no longer the next implementation packet.
+- [Tile feedback and precision fixes](superpowers/plans/2026-10-21-tile-feedback-precision-fixes.md): contextual building rejection feedback and exact integer-milli formatting. Workforce draft edits also clear stale submission errors without assigning the draft or changing confirmed workforce.
+- [Player README packet](superpowers/plans/2026-10-21-player-readme-scope.md): concise player guidance and corrected runtime-contract references. Existing formulas remain in their design/spec sources.
+
+The playable tile slice already includes catalog-driven Build/Upgrade/Replace/Pause/Resume, persistent confirmed workforce, five physical stocks, production/input consumption, tax/upkeep, Goods service without Goods inventory, Food/Happiness and planning-only checkpoint Export/Import. The [tile runtime spec](superpowers/specs/2026-10-20-weekly-tile-buildings-trial.md) and [checkpoint spec](superpowers/specs/2026-10-20-tile-trial-save.md) bound these implementations; classic Weekly and R1 remain separate. Existing economic/lifecycle values keep their stated approved or implementation-TRIAL classification.
+
+Full POP/RES/R3 remain open. Historical user direction requests passive population growth and uses weeks as the time unit. This closeout records that direction; it does not select or approve an implementation contract. The rate/formula, cohort-policy contract and resolution phase/order within End Week remain unselected; population growth is not implemented. Law and Event/buff-debuff remain deferred; no effect integration or UI overhaul is included. Autosave/cloud save, report/history persistence, migration and New Game+ remain outside the released planning-checkpoint subset. This closeout changes no runtime, README, test, catalog, schema, dependency or design formula.
+
+**Historical checkpoint reading rule:** the dated snapshots below retain their original evidence and wording, including old "current", "next", "pending" and "NOT IMPLEMENTED" descriptions. Those descriptions apply to their stated snapshot, not to current PR33 tile runtime. Approved design decisions and deferred boundaries retain their stated scope; none of the historical module checklists is promoted wholesale to complete.
+
+## Historical PR32 selection checkpoint — needs foundation, now released in PR33
 
 Verified main base `a3606f7b9d7ed4fbeecda53dc2a19a96e3d818c8` includes [PR31](https://github.com/tanntran2000/Build-Settlement/pull/31) report-transition fixes and [PR32](https://github.com/tanntran2000/Build-Settlement/pull/32) truthful confirmed/draft workforce feedback; assignments already persist across weeks and checkpoints. [PR32 main CI39531399782](https://github.com/tanntran2000/Build-Settlement/actions/runs/39531399782) passed683unit/52browser. This is prior release evidence, not a new test claim.
 
@@ -25,14 +43,14 @@ Recipes/Food coefficients retain their approved scope; the new PR29 economics, i
 [R3-TILE-SAVE-01 spec](superpowers/specs/2026-10-20-tile-trial-save.md) / [plan](superpowers/plans/2026-10-20-tile-trial-save.md) is released in [PR30](https://github.com/tanntran2000/Build-Settlement/pull/30), merge `039fc82f80d16a5fb7e1bf784d279785b78fd1e4`, audited head `757570c603bebb7f026413e610a4252b781212b1`, identical tree `e36845acebd7039ac00c738c0b1b9dfb39bba06e`. [Main CI39407997417](https://github.com/tanntran2000/Build-Settlement/actions/runs/39407997417) passed683unit/21files and43browser, lint/typecheck/build/audit0. Manual planning-only JSON export/import has exact version/ruleset/map validation, atomic load, fresh revision and async-read guards. This evidence closes the bounded checkpoint slice, not full R3: autosave/cloud save, R1 migration, report/history persistence and NewGame+ remain open. Existing full-lifecycle checklists stay open; no new balance is introduced. The separate [QA corrections](superpowers/specs/2026-10-20-qa-report-transition-fixes.md) address reported UI/presentation findings and require their own exact-candidate checks.
 
 
-## Current Goods decision — approved design flow, NOT IMPLEMENTED
+## Historical PR28 Goods checkpoint — design before tile implementation
 
 Base main đã xác minh: `beb963fcb592d22db5ae430373aca4c6fd70390d` (PR28). [Goods flow và authority](design/TENSION-CRISIS-GOLD-DECISIONS-01.md#goods-requirement-flow--later-approved-clarification): **Goods vẫn là Requirement, không có kho Goods**. Building dùng Wood/Iron một lần mỗi End Week; nhu cầu = tổng dân × định mức chưa chốt, phần phục vụ bị giới hạn bởi công suất Market; Goods % = phục vụ / nhu cầu × 100% khi nhu cầu > 0. Market cấp cao phục vụ nhiều dân hơn, không tăng định mức nhu cầu. Dùng cùng kết quả tuần cho Gold/Happiness, không trừ nguyên liệu lần hai hoặc tự nhân Market thêm vào doanh thu.
 
 Physical inventory hiện hành/đích là 5 loại Wheat/Gold/Wood/Iron/Food. Các target 6 kho có Goods bên dưới là lịch sử đã supersede; catalog tĩnh vẫn snapshot cũ, chưa sửa UI/source. Recipe, định mức, capacity theo LV, hệ số/phase Gold-Happiness, xử lý dư công suất, zero population/demand, rounding, giá và chia 25% chưa duyệt. Food/effect và Tension giữ nguyên; không Law/migration/runtime mới. Gói hiện tại chỉ đồng bộ 8 tài liệu rồi kiểm tra, audit và CI theo gate thường; các checkpoint trước giữ bối cảnh lịch sử.
 
 
-## PR28 design checkpoint — Tension/crisis/Gold, preserved
+## Historical PR28 design checkpoint — Tension/crisis/Gold, preserved
 
 Base main đã xác minh: `d89a858c7eb5d29829538423eec8238797801875` (PR27). [Decision Record 01](design/TENSION-CRISIS-GOLD-DECISIONS-01.md) là nguồn đối chiếu quyết định mới: **4 Status chung thành phố Happiness / Security / Corruption / Tension**; Food/Goods vẫn là Requirements, khác kho vật lý. Tension không bằng `100 − Happiness`; miền/clamp Tension 0–100 vừa duyệt cho trial, initial/precision chưa duyệt. Ba nhóm xã hội không đổi, không thêm class bars hoặc migration.
 
@@ -44,7 +62,7 @@ Gold: thuế; Goods contribution theo fulfillment từ demand tổng dân và ca
 
 **NOT IMPLEMENTED:** không đổi source, tests, schema, CI/dependencies hoặc công thức Food/Happiness/Faltering/Flourishing. Runtime vẫn 5 stock PR26, chưa consumption/Status/Gold income/upkeep/crisis. Catalog tĩnh PR25 còn snapshot 3 Status; cập nhật UI cần WP riêng. Đây là checkpoint PR28 đã merge sau audit/CI; gói Goods mới và gates nằm ở mục đầu, không mở rộng runtime/deploy/ZIP. Law vẫn DEFERRED. Các checkpoint bên dưới giữ bối cảnh lịch sử và chỉ được supersede trong phạm vi nêu rõ.
 
-## Runtime implementation evidence — PR #26 merge, contract unchanged
+## Historical runtime implementation evidence — PR #26 merge, contract unchanged
 
 Runtime base PR26 đã xác minh: `02e58b1fe6b9ef42c048cd4fede8bb5bc5aadf4d`, merge [PR #26](https://github.com/tanntran2000/Build-Settlement/pull/26) từ audited head `ef24fa2ca5505a8b5d59665fc7df5435989f6371`, base sau PR25 `6971a1bbc66bfc3691fe7b804ee6453a7cffc158`. Tree `ed93caee537d8df30d1bd23ac49a740d73bf0463` khớp candidate đã được Reviewer và Tester độc lập PASS. [Main CI 39364392563](https://github.com/tanntran2000/Build-Settlement/actions/runs/39364392563/job/118437735555) SUCCESS: 650 unit tests / 18 files và 35 browser tests; audit, lint, typecheck và build đều đạt. Đây là bằng chứng hậu kiểm PR26, không phải kết quả kiểm thử mới của lượt sửa tài liệu này.
 
