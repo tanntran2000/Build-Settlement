@@ -1,6 +1,16 @@
 # Bản Đồ Lộ Trình Kỹ Thuật Tổng Thể (MASTER_ROADMAP.md)
 
-## Current runtime checkpoint — PR30 planning checkpoints released
+## Current foundation packet — tile needs resolution, no new gameplay
+
+Verified main base `a3606f7b9d7ed4fbeecda53dc2a19a96e3d818c8` includes [PR31](https://github.com/tanntran2000/Build-Settlement/pull/31) report-transition fixes and [PR32](https://github.com/tanntran2000/Build-Settlement/pull/32) truthful confirmed/draft workforce feedback; assignments already persist across weeks and checkpoints. [PR32 main CI39531399782](https://github.com/tanntran2000/Build-Settlement/actions/runs/39531399782) passed683unit/52browser. This is prior release evidence, not a new test claim.
+
+Selected next: [WP-RES02-TILE-NEEDS-FOUNDATION-01](superpowers/plans/2026-10-21-tile-needs-foundation.md), a pure internal Food/Goods → Happiness resolution function consumed by tile End Week, preserving existing behavior, data-driven coefficients, checkpoints and UI. Implementation/audit/CI are tracked in that bounded plan; no whole RES/POP completion is claimed. It establishes a tested input boundary for later survival effects without introducing unused speculative math or more interface text.
+
+Direct Food-effect integration remains on HOLD per [Food rulebook §8](design/FOOD-HAPPINESS-TRIAL-RULES-01.md): timing/snapshot/expiry, persistent versus timed effect, effective WF below reserved assignments, streak/RNG/recovery identity and new persisted state contracts need a concrete reviewed packet. Existing checkpoint incompatibility policy is already specified; no silent save migration/reset is permitted. Tension/crisis/Law and UI/UX polish remain deferred. Historical checkpoints below retain their original scope and are superseded only where explicitly stated.
+
+**Latest scope:** buff/debuff is deferred together with Event design by user `Sentinel_b2356cbbb32c8191af3b29ca63b31583`. Preserve approved effect formulas and unresolved boundaries as design history; no lifecycle/WF-reduction questions or implementation now. Complete the current needs packet only. The following foundation packet must be independent of buff/debuff and Event.
+
+## Previous runtime checkpoint — PR30 planning checkpoints released
 
 Main base `07dbdd97ae144c28cb13245c0c628dbddd8d4eba`, merge [PR29](https://github.com/tanntran2000/Build-Settlement/pull/29), has the playable `/?mode=tiles` slice: sample terrain tiles, build/upgrade/replace/pause, shared WF, Wheat/Food production, Logging/Mine, Goods Requirement service without Goods inventory, Market capacity, tax/upkeep/revenue and Food/Happiness. Main CI39397236232 passed665unit38browser; this is PR29 evidence, not an R3 acceptance claim. Classic Weekly/R1 remain separate. The older NOT IMPLEMENTED/construction/Gold-income/consumption descriptions below are historical checkpoints; they do not describe mode=tiles after PR29. No whole POP/RES module or full game completion is claimed.
 

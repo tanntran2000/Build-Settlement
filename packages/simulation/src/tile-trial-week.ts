@@ -1,5 +1,6 @@
 import { TILE_TRIAL_BALANCE as B, trialBuilding, type TileTrialState, type TileTrialReport, type WeeklyResource } from "@haven/core";
 import { FARM_MAX_BATCHES, PROCESSOR_MAX_BATCHES, FARM_GOLD_PER_BATCH_MILLI, FARM_WHEAT_PER_BATCH_MILLI, PROCESSOR_WHEAT_PER_BATCH_MILLI, PROCESSOR_FOOD_PER_BATCH_MILLI } from "./weekly.js";
+import { resolveTileTrialNeeds } from "./tile-trial-needs.js";
 
 export function trialSafe(n: number): number {
   if (!Number.isSafeInteger(n) || n < 0) throw Error("Trial arithmetic exceeds safe nonnegative integer bounds.");
@@ -60,15 +61,10 @@ export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
   }
   const fulfillmentBps = demandMilli === 0 ? 10000 : scaled(servedMilli, 10000, demandMilli);
   const revenueMilli = scaled(servedMilli, B.goldPerServiceMilli, 1000); add("gold", revenueMilli);
-  const foodDemandMilli = scaled(population, B.foodDemandPerResident);
-  const foodConsumedMilli = Math.min(stocks.food, foodDemandMilli); stocks.food -= foodConsumedMilli;
   const happinessBefore = s.happiness;
-  if (population > 0) {
-    const deficit = (foodDemandMilli - foodConsumedMilli) / foodDemandMilli;
-    if (deficit > 0) s.happiness -= B.shortageHappiness * deficit;
-    else if (s.happiness < B.foodRecoveryCap) s.happiness = Math.min(B.foodRecoveryCap, s.happiness + B.foodRecovery);
-    s.happiness = Math.round(Math.max(0, Math.min(100, s.happiness + B.goodsHappinessMax * fulfillmentBps / 10000)) * B.happinessPrecision) / B.happinessPrecision;
-  }
+  const needs = resolveTileTrialNeeds(population, stocks.food, happinessBefore, fulfillmentBps);
+  const { foodDemandMilli, foodConsumedMilli } = needs;
+  stocks.food = needs.foodRemainingMilli; s.happiness = needs.happinessAfter;
   s.world.week = trialSafe(s.world.week + 1); s.phase = "report";
   const goods = Object.freeze({ demandMilli, servedMilli, fulfillmentBps, woodUsed, ironUsed, revenueMilli });
   return Object.freeze({ week: s.world.week - 1, before: Object.freeze(before), after: Object.freeze({ ...stocks }), taxMilli, farmBatchGoldMilli, farmExtraUpkeepMilli, upkeepPaidMilli, unpaidUpkeepMilli, foodDemandMilli, foodConsumedMilli, happinessBefore, happinessAfter: s.happiness, goods, activities: Object.freeze(activities) });

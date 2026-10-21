@@ -4,6 +4,7 @@
   import { serializeTileTrialSave, deserializeTileTrialSave, TILE_SAVE_MAX_BYTES } from '@haven/persistence';
   import ErrorLog from './ErrorLog.svelte';
   import { errorLog } from './error-log.js';
+  import { formatMilli as units } from './milli-format.js';
 
   let state = createTileTrialState();
   let selectedId = 'forest-1';
@@ -11,10 +12,10 @@
   let workers = '0';
   let error = '';
   let workforceError = '';
+  let managementError: { action: string; message: string } | null = null;
   let saveNotice = '';
   let importRead = 0;
   let report: Readonly<TileTrialReport> | null = null;
-  const units = (n: number) => new Intl.NumberFormat('en', { maximumFractionDigits: 3 }).format(n / 1000);
   $: settlement = state.world.settlements[state.world.activeSettlementId!];
   $: selected = state.tiles.find(t => t.id === selectedId)!;
   $: definition = selected.building ? TRIAL_BUILDINGS[selected.building.typeId] : null;
@@ -28,14 +29,23 @@
     workers = String(state.tiles.find(t => t.id === id)!.building?.workers ?? 0);
     error = '';
     workforceError = '';
+    managementError = null;
+  }
+  function revealManagementError(node: HTMLParagraphElement, failure: typeof managementError) {
+    const reveal = (current: typeof failure) => { if (current) node.scrollIntoView({ block: 'nearest' }); };
+    reveal(failure);
+    return { update: reveal };
   }
   function command(type: string, fields: Record<string, unknown> = {}, expectedRevision = state.revision) {
     saveNotice = '';
     workforceError = '';
+    managementError = null;
     const result = executeTileTrialCommand(state, { type, expectedRevision, ...fields });
     if (!result.success) {
-      error = type === 'SET_WORKERS' ? '' : result.error.message;
+      error = '';
       if (type === 'SET_WORKERS') workforceError = result.error.message;
+      else if (['BUILD', 'REPLACE', 'UPGRADE', 'SET_ENABLED'].includes(type)) managementError = { action: type, message: result.error.message };
+      else error = result.error.message;
       errorLog.record(type === 'END_WEEK' ? 'END_WEEK' : 'RUNTIME', 'INVALID_COMMAND');
       return false;
     }
@@ -49,7 +59,7 @@
     return true;
   }
   function checkpointError(message: string) {
-    error = message; workforceError = ''; saveNotice = '';
+    error = message; workforceError = ''; managementError = null; saveNotice = '';
     errorLog.record('RUNTIME', 'INVALID_COMMAND');
   }
   function exportCheckpoint() {
@@ -67,7 +77,7 @@
     const input = event.currentTarget as HTMLInputElement; const file = input.files?.[0]; input.value = '';
     if (!file) return;
     const ticket = ++importRead, expectedRevision = state.revision;
-    error = ''; workforceError = ''; saveNotice = '';
+    error = ''; workforceError = ''; managementError = null; saveNotice = '';
     if (state.phase !== 'planning') { checkpointError('Choose Plan next week before importing.'); return; }
     if (file.size > TILE_SAVE_MAX_BYTES) { checkpointError('Checkpoint exceeds the 1 MiB limit.'); return; }
     try {
@@ -141,17 +151,21 @@
         <p>Upkeep: {units(definition.upkeepMilli * selected.building.level)} Gold/week. Farm batch Gold credits this Farm's upkeep.</p>
         <p id="trial-workers-confirmed">Assigned: <strong>{selected.building.workers} WF</strong>. Kept for future weeks until changed.</p>
         <label for="trial-workers">Assigned workers (WF)</label>
-        <input id="trial-workers" type="text" inputmode="numeric" bind:value={workers} disabled={locked || !selected.building.enabled}
+        <input id="trial-workers" type="text" inputmode="numeric" bind:value={workers} oninput={() => { workforceError = ''; }} disabled={locked || !selected.building.enabled}
           aria-invalid={workforceError ? 'true' : 'false'}
           aria-describedby={`trial-workers-confirmed${workers !== String(selected.building.workers) ? ' trial-workers-draft' : ''}${workforceError ? ' trial-workers-error' : ''}`} />
         {#if workforceError}<p id="trial-workers-error" role="alert">{workforceError}</p>{/if}
         {#if workers !== String(selected.building.workers)}<p id="trial-workers-draft">Unapplied draft. Assigned workforce remains {selected.building.workers} WF. Select Assign workers to apply.</p>{/if}
         <p>Capacity: {definition.maxWorkers * selected.building.level} WF.</p>
         <button disabled={locked || !selected.building.enabled} onclick={() => command('SET_WORKERS', { tileId: selectedId, workers: /^\d+$/.test(workers) ? Number(workers) : -1 })}>Assign workers</button>
-        <button disabled={locked} onclick={() => command('SET_ENABLED', { tileId: selectedId, enabled: !selected.building!.enabled })}>{selected.building.enabled ? 'Pause' : 'Resume'}</button>
+        <button disabled={locked} aria-describedby={managementError?.action === 'SET_ENABLED' ? 'trial-management-error' : undefined}
+          onclick={() => command('SET_ENABLED', { tileId: selectedId, enabled: !selected.building!.enabled })}>{selected.building.enabled ? 'Pause' : 'Resume'}</button>
+        {#if managementError?.action === 'SET_ENABLED'}<p id="trial-management-error" role="alert" use:revealManagementError={managementError}>{managementError.message}</p>{/if}
         {#if selected.building.level < definition.maxLevel}
           <p>Upgrade cost: {units(definition.cost.gold * (selected.building.level + 1))} Gold, {units(definition.cost.wood * (selected.building.level + 1))} Wood, {units(definition.cost.iron * (selected.building.level + 1))} Iron.</p>
-          <button disabled={locked} onclick={() => command('UPGRADE', { tileId: selectedId })}>Upgrade</button>
+          <button disabled={locked} aria-describedby={managementError?.action === 'UPGRADE' ? 'trial-management-error' : undefined}
+            onclick={() => command('UPGRADE', { tileId: selectedId })}>Upgrade</button>
+          {#if managementError?.action === 'UPGRADE'}<p id="trial-management-error" role="alert" use:revealManagementError={managementError}>{managementError.message}</p>{/if}
         {:else}<p>Maximum trial level.</p>{/if}
       {:else}<p>Empty tile. Choose a compatible building.</p>{/if}
 
@@ -160,7 +174,9 @@
         {#each Object.entries(TRIAL_BUILDINGS) as [id, d]}<option value={id}>{d.name}</option>{/each}
       </select>
       <p>Requires {chosen.terrain.join(' or ')} terrain. Cost: {units(chosen.cost.gold)} Gold, {units(chosen.cost.wood)} Wood, {units(chosen.cost.iron)} Iron. Upkeep: {units(chosen.upkeepMilli)} Gold/week at level 1.</p>
-      <button disabled={locked} onclick={() => command(selected.building ? 'REPLACE' : 'BUILD', { tileId: selectedId, typeId })}>{selected.building ? 'Replace' : 'Build'}</button>
+      <button disabled={locked} aria-describedby={managementError?.action === 'BUILD' || managementError?.action === 'REPLACE' ? 'trial-management-error' : undefined}
+        onclick={() => command(selected.building ? 'REPLACE' : 'BUILD', { tileId: selectedId, typeId })}>{selected.building ? 'Replace' : 'Build'}</button>
+      {#if managementError?.action === 'BUILD' || managementError?.action === 'REPLACE'}<p id="trial-management-error" role="alert" use:revealManagementError={managementError}>{managementError.message}</p>{/if}
     </section>
   </div>
 
@@ -201,6 +217,7 @@
   input, select { color: var(--text-main); background: var(--bg-tertiary); max-width: 100%; } input { width: 7rem; }
   button { background: var(--accent-green); color: #000; cursor: pointer; margin: 4px 4px 4px 0; } button:disabled { opacity: .5; cursor: default; }
   :focus-visible { outline: 3px solid var(--accent-blue); outline-offset: 3px; } [role='alert'] { padding: 12px; border-left: 3px solid var(--accent-red); }
+  #trial-management-error { scroll-margin-block: 1px; }
   .ledger { overflow-x: auto; } table { width: 100%; border-collapse: collapse; } th, td { padding: 8px; text-align: right; border-bottom: 1px solid var(--border-color); } th:first-child { text-align: left; }
   @media(max-width: 750px) { .layout { grid-template-columns: 1fr; } .stocks { grid-template-columns: repeat(3, 1fr); } main { padding: 12px; } }
 </style>

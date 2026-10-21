@@ -1,5 +1,15 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## Current bounded Resource/Survival foundation packet
+
+Verified current main is `a3606f7b9d7ed4fbeecda53dc2a19a96e3d818c8` ([PR32](https://github.com/tanntran2000/Build-Settlement/pull/32)), including [PR31](https://github.com/tanntran2000/Build-Settlement/pull/31) report-transition guards and persistent workforce feedback. Prior [main CI39531399782](https://github.com/tanntran2000/Build-Settlement/actions/runs/39531399782) passed683unit/52browser; these are existing release results.
+
+Next selected packet: [WP-RES02-TILE-NEEDS-FOUNDATION-01](superpowers/plans/2026-10-21-tile-needs-foundation.md), extract existing Food/Goods-Happiness arithmetic into a pure internal simulation module and consume it immediately in End Week. No new UI/gameplay/state/save fields, balance or dependencies. Focused arithmetic characterization and full continuation/checkpoint regressions are required; current gates/evidence belong to its plan, not the historical release counts above. Full Resource/Survival, POP and effect integration checklists stay open.
+
+Faltering/Flourishing runtime remains blocked by the Food rulebook's explicit pending activation/lifetime, reserved-versus-effective WF, exact history/RNG/recovery and effect-state contracts. Do not reopen already implemented TRIAL zero-population/rounding/Gold-loop policies or invent their final balance. Law, Tension/crisis, exploration/combat and UI/UX overhaul are outside this packet. The historical checkpoint sections below are preserved.
+
+**Later user scope:** buff/debuff and Event design are deferred together. No lifecycle/effective-WF question or implementation belongs to this packet; approved formulas remain recorded. After finishing this extraction, choose the next foundation independently of buff/debuff and Event.
+
 ## PR30 planning-checkpoint release — bounded R3 subset
 
 PR29 merged at `07dbdd97ae144c28cb13245c0c628dbddd8d4eba`, audited head7d823b9/tree30e61f0. Independent Reviewer+Tester PASS and [main CI39397236232](https://github.com/tanntran2000/Build-Settlement/actions/runs/39397236232) PASS665unit38browser. Mode=tiles has construction/extraction/Goods service/minimal tax-upkeep/Food consumption-Happiness; old no-construction/no-income statements below retain pre-PR29 history. Existing numerical policies remain TRIAL where identified by its spec.
