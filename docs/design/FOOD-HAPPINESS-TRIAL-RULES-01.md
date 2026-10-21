@@ -1,5 +1,7 @@
 # Food, Happiness and Economy Effects — Trial Rules 01
 
+> **Later scope decision — 2026-10-21:** user `Sentinel_b2356cbbb32c8191af3b29ca63b31583`: “phần buff và debuff còn đi kèm với thiết kế Event nữa nên để sau đi”. Buff/debuff runtime, including Faltering/Flourishing integration, is **DEFERRED together with Event design**. Preserve the approved formulas below as design history; do not implement or reopen their lifecycle/effective-WF decisions in the current needs-resolution packet. After that packet, select foundations independent of effects and Event.
+
 > **Playable tile trial — partial implementation:** `/?mode=tiles` now implements sample tiles, catalog-driven build/upgrade/replace/pause, extraction and the existing Wheat/Food recipes, Goods service without Goods inventory, Market capacity, minimal tax/upkeep/revenue and Food-driven Happiness. New coefficients/lifecycle policies are adjustable **implementation TRIAL**, not retrospectively user-approved balance. The [trial spec](../superpowers/specs/2026-10-20-weekly-tile-buildings-trial.md) bounds the slice. Classic Weekly remains separate. Full effect lifecycles, Tension/crisis, Security/Corruption, live social groups, Law, save/migration and trade systems remain unimplemented. Earlier pending/runtime statements below retain their pre-trial context; this notice supersedes them only for this isolated mode.
 
 **Status: APPROVED TRIAL BALANCE — NOT IMPLEMENTED.**
