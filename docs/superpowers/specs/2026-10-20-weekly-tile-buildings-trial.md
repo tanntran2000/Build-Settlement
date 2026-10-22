@@ -47,3 +47,66 @@ Editing the workforce draft clears the previous submission's error and invalid m
 Existing lifecycle rules remain: Pause releases workers, Resume does not restore them, Upgrade retains them, Replace creates a level1 building with0workers and no refund or worker transfer. No Demolish/Delete feature, new lifecycle choice, numerical balance change or classic-mode change is included. Acceptance adds three equal building assignments retained for at least three weeks, an edit affecting only one building, atomic shared-pool rejection, local draft/error feedback on desktop/mobile, and Save/Load retention. See [bounded implementation plan](../plans/2026-10-21-tile-workforce-feedback.md).
 
 Acceptance: invalid placement/funds/materials/worker assignments and upgrade cap reject atomically; build/replace/upgrade and pause work; same-week inputs flow correctly; no duplicate debit/revenue; Market upgrade does not change demand; Farm upkeep credited; zero population and overflow safe; repeated End Week cannot replay; 50-week sustainable baseline demonstrated. Browser tests cover placement error, management happy paths, report lock/recovery and no Goods stock. Existing R1/classic/logger coverage retained. Measure production gzip size against200KB JS/CSS guideline, no new dependencies. Independent Reviewer and Tester inspect exact final head; required CI then normal merge and main CI only if allowed, no bypass. Publication denial never blocks local implementation/testing.
+
+## POP-PASSIVE-ARRIVAL-TRIAL-01 — separate bounded population mode
+
+Base: released PR34 main `05dfbea306e5fd77e622757331e1c0242c00d289`. This later bounded packet selects a configurable **provisional implementation TRIAL**, not final demographic/economic balance. Earlier no-growth statements remain true for legacy `?mode=tiles`; the extension applies only to `?mode=population`, ruleset `tile-population-01`. No persistent field, schema change, dependency, new population framework, departure, mortality, Law, Event/buff, group membership, deposit depletion or UI overhaul is included.
+
+Source versus adaptation: passive immigration toward economic opportunities and sustainable support is the requested project direction. Free Cities, LastCiv and Frostpunk are inspiration references, not imported implementation contracts. The calculations/defaults here are this project's adaptation; no external 30%/40% rule is copied or claimed. Existing recipes, workforce profiles, funding order and Food/Goods/tax arithmetic come from the current tile runtime and retain their approved/TRIAL classifications.
+
+Only existing `weekly_middle` with `socialClass=common`, `legalStatus=citizen` receives positive arrivals by increasing integer `count`. Existing cohort averages are unchanged; missing/changed cohort means no arrivals, not implicit cohort creation, class conversion or mapping to Makers/Luminaries/Merchants. Those three groups remain metadata. Zero total population never revives; target reductions never remove residents.
+
+### Projection and useful opportunities
+
+All quantities are nonnegative safe integers, computed with BigInt before checked Number conversion. Resource/service quantities below are milli-units/week; slots are whole WF. Gather scalar facts during the existing transaction without replaying it or debiting resources again. `F` is the set of enabled, valid buildings whose upkeep was paid this week. Extraction slots may count funded capacity even when currently unassigned.
+
+For each operation, sum capacity over F. Farm/Processor capacity is `min(maxWorkers × level, existing recipe batch cap)`; Logging/Mine/Workshop capacity is `maxWorkers × level`. Market service M is the aggregate funded level × catalog service capacity. Then:
+
+```text
+usefulProcessor = min(processorSlots,
+  floor(farmSlots × farmWheatPerBatch / processorWheatPerBatch))
+usefulWorkshop = min(workshopSlots,
+  floor(loggingSlots × woodPerWorker / goodsWoodPerBatch),
+  floor(mineSlots × ironPerWorker / goodsIronPerBatch),
+  floor(M / goodsServicePerBatch))
+J = farmSlots + usefulProcessor + loggingSlots + mineSlots + usefulWorkshop
+```
+
+Caps are applied to city-wide totals, never separately reused for each downstream building. Market uses conservative full-batch opportunities; existing partial-final-batch service execution is unchanged. A second idle Processor cannot count Wheat capacity already covered by the first; duplicate idle Workshops cannot reuse the same Wood/Iron/Market capacity. Market itself contributes no WF slot.
+
+Renewable Food `Q = min(actualProcessorBatches, floor(actualFarmBatches × farmWheatPerBatch / processorWheatPerBatch)) × processorFoodPerBatch`. Only newly harvested Wheat and actual funded processing count; opening Food/Wheat stocks do not establish sustainable throughput. Renewable Goods capacity uses actual newly extracted Wood/Iron, funded assigned Workshop workers and aggregate funded Market capacity, never hypothetical extraction or opening material stocks.
+
+Default `foodSupportBps=11000`, `catchupBps=1000`, `weeklyCapBps=200` live in `IMMIGRATION_TRIAL_DEFAULTS`, separate from existing balance. These are provisional 110% Food support, nominal 10% gap catchup and nominal 2% weekly population cap, with a deliberate integer minimum of one. They are not validated balance. Let P be opening population, W its existing milli-WF pool, and w the existing common/citizen marginal milli-WF from one resident (currently100). Then:
+
+```text
+jobsTarget = P + floor(max(0, 1000×J − W) / w)
+foodTarget = floor(Q × 10000 / (foodDemandPerResident × foodSupportBps))
+target = min(jobsTarget, foodTarget)
+
+renewableGoodsBatches = min(fundedAssignedWorkshopWorkers,
+  floor(newWood / goodsWoodPerBatch), floor(newIron / goodsIronPerBatch))
+G = min(target × goodsDemandPerResident, M,
+  renewableGoodsBatches × goodsServicePerBatch)
+recurringIncome = target × taxGoldPerResident + floor(G × goldPerServiceMilli / 1000)
+```
+
+Require target>P, full Food consumption for opening P, no unpaid upkeep and recurringIncome≥D, where D is this week's actual total Gold operating debit (Farm batch/upkeep credit counted exactly once). Also require closing Gold + tax for opening P ≥D for conservative next-week liquidity. Recurring affordability is evaluated at target so a funded expansion need not already be at its future break-even population. These projections never credit forecast Gold or charge materials in state. No additional Happiness modifier/threshold is introduced.
+
+```text
+gap = target − P
+arrivals = min(gap,
+  max(1, floor(gap × catchupBps / 10000)),
+  max(1, floor(P × weeklyCapBps / 10000)))
+```
+
+If P=0, the receiving cohort is unavailable or any support check fails, arrivals=0. Minimum1 is an explicit low-population/rounding exception: do not promise a hard2% cap for P<50. No fractional carry is persisted. Overflow fails the entire cloned End Week atomically.
+
+### Phase, save compatibility and acceptance
+
+Settle all tax, upkeep, production, Goods, Food and Happiness against opening P first; project and apply arrivals once; then advance week and enter Report. New residents affect demand/tax/WF next week. Assignments are untouched. NEXT_WEEK, Import, rejected/stale commands and renders never add residents. The optional frozen report contains before/arrivals/after/target/reason; it is not saved. UI adds only discoverable mode navigation and a short population report.
+
+Save option A: legacy mode retains ruleset `tile-trial-01`, population mode uses `tile-population-01`. Both keep the existing schema1 state shape and strict planning/map validation. Codec/dispatcher use a fixed mode policy, defaulting legacy for existing callers. Cross-ruleset imports reject atomically; the old file remains playable in legacy mode. No auto-switch, migration, overwrite, reset or silent reinterpretation is allowed. See [checkpoint clarification](2026-10-20-tile-trial-save.md#separate-population-trial--non-destructive-option-a).
+
+Finite arithmetic examples, not simulation claims: starter100 with Farm2WF/Processor2WF has Q4000 and foodTarget90, so stays100 regardless of Food reserve. Farm3/Processor3/Logging1/Mine1/Workshop1/MarketLV1 uses9 assigned WF, J15, Q6000, target136; target recurring income6080milli against5500milli debit. Building that expansion from the fixture leaves18Gold. With unchanged assignments, the proposed trajectory reaches136 after27 weeks; target cashflow is+580milli/week. Adding Processor0WF behind the same single Farm leaves J10; adding Workshop0WF behind MarketLV1 leaves useful Workshop slots1 and does not increase target. These expectations require implementation simulations before judging balance.
+
+Required regressions: aggregate duplicate downstream caps; stock liquidation versus renewable throughput; zero/cohort/shortage/upkeep/liquidity/overflow/stale cases; minimum1 and gap bound; no workforce re-entry; old-policy continuation parity; new-policy save continuation and cross-ruleset rejection;60-week funded expansion and adverse/changed-assignment scenarios; desktop/mobile actual DOM and standalone artifact over permitted HTTP. Legacy report/state shape and existing R1/classic/browser/CI tests must remain intact. Parent directly assigns independent Reviewer/Tester after immutable freeze; Builder's checks are not those gates.

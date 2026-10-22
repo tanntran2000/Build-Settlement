@@ -1,5 +1,11 @@
 // Adjustable IMPLEMENTATION TRIAL values, not user-approved economic balance.
 export type TrialOperation = "farm" | "processor" | "logging" | "mine" | "goods" | "market";
+export const LEGACY_TILE_RULESET = "tile-trial-01";
+export const POPULATION_TILE_RULESET = "tile-population-01";
+export type TileTrialRuleset = typeof LEGACY_TILE_RULESET | typeof POPULATION_TILE_RULESET;
+// Provisional adaptation, not validated balance or imported reference-game rates.
+export interface ImmigrationTrialConfig { foodSupportBps: number; catchupBps: number; weeklyCapBps: number }
+export const IMMIGRATION_TRIAL_DEFAULTS: Readonly<ImmigrationTrialConfig> = Object.freeze({ foodSupportBps: 11000, catchupBps: 1000, weeklyCapBps: 200 });
 export interface TrialBuildingDefinition {
   name: string; operation: TrialOperation; terrain: readonly string[]; maxLevel: number;
   maxWorkers: number; cost: { gold: number; wood: number; iron: number }; upkeepMilli: number;

@@ -10,6 +10,7 @@ export interface TileTrialState {
   happiness: number;
 }
 export interface TileTrialReport {
+  immigration?: Readonly<TrialImmigrationReport>;
   week: number;
   before: WeeklyStocks;
   after: WeeklyStocks;
@@ -24,6 +25,11 @@ export interface TileTrialReport {
   happinessAfter: number;
   goods: { demandMilli: number; servedMilli: number; fulfillmentBps: number; woodUsed: number; ironUsed: number; revenueMilli: number };
   activities: readonly string[];
+}
+export interface TrialImmigrationReport {
+  populationBefore: number; arrivals: number; populationAfter: number;
+  target: number; usefulWorkerSlots: number; renewableFoodMilli: number;
+  reason: "arrivals" | "zero-population" | "cohort-unavailable" | "no-capacity" | "food-shortage" | "upkeep-unpaid" | "target-unfunded" | "liquidity";
 }
 export type TileTrialResult = { success: true; nextState: TileTrialState; report?: Readonly<TileTrialReport> }
   | { success: false; state: unknown; error: { code: string; message: string } };
