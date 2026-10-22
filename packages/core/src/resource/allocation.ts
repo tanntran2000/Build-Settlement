@@ -6,9 +6,9 @@ import type {
 } from "./types.js";
 
 function assertNonNegativeInteger(value: number, name: string): void {
-  if (!Number.isFinite(value) || !Number.isInteger(value) || value < 0) {
+  if (!Number.isSafeInteger(value) || value < 0) {
     throw new RangeError(
-      `${name} must be a finite non-negative integer, received: ${value}`
+      `${name} must be a non-negative safe integer, received: ${value}`
     );
   }
 }
@@ -40,6 +40,9 @@ export function resolveResourceFlow(
   assertNonNegativeInteger(input.inflow, "inflow");
   assertNonNegativeInteger(input.requestedOutflow, "requestedOutflow");
 
+  if (input.openingStock > Number.MAX_SAFE_INTEGER - input.inflow) {
+    throw new RangeError("openingStock + inflow exceeds the safe integer range");
+  }
   const available = input.openingStock + input.inflow;
   assertNonNegativeInteger(available, "available");
 

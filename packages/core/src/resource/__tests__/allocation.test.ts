@@ -62,7 +62,44 @@ describe("resource allocation foundation", () => {
     }).closingStock).toBe(0);
   });
 
-  const invalidValues = [-1, 0.5, Number.NaN, Number.POSITIVE_INFINITY];
+  it.each([1, 2])("rejects intermediate stock overflow before a later debit of %i can hide it", inflow => {
+    const input = Object.freeze({ openingStock: Number.MAX_SAFE_INTEGER, inflow, requestedOutflow: inflow });
+    const before = { ...input };
+    expect(() => resolveResourceFlow(input)).toThrow(RangeError);
+    expect(input).toEqual(before);
+  });
+
+  it.each([
+    [Number.MAX_SAFE_INTEGER - 2, 2, 2],
+    [Number.MAX_SAFE_INTEGER - 1, 1, 0],
+    [0, Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER],
+    [Number.MAX_SAFE_INTEGER, 0, 1],
+    [2, 3, Number.MAX_SAFE_INTEGER],
+  ])("conserves exact integer flow against a BigInt oracle: %i + %i - %i", (openingStock, inflow, requestedOutflow) => {
+    const input = Object.freeze({ openingStock, inflow, requestedOutflow });
+    const before = { ...input };
+    const available = BigInt(openingStock) + BigInt(inflow);
+    const demand = BigInt(requestedOutflow);
+    const allocated = demand < available ? demand : available;
+    const result = resolveResourceFlow(input);
+    expect(result).toEqual({
+      openingStock, inflow, available: Number(available), requestedOutflow,
+      actualOutflow: Number(allocated), deficit: Number(demand - allocated),
+      closingStock: Number(available - allocated),
+    });
+    expect(BigInt(result.actualOutflow) + BigInt(result.closingStock)).toBe(available);
+    expect(BigInt(result.actualOutflow) + BigInt(result.deficit)).toBe(demand);
+    expect(Object.values(result).every(Number.isSafeInteger)).toBe(true);
+    expect(input).toEqual(before);
+  });
+
+  it("does not mutate allocation inputs at the safe-integer boundary", () => {
+    const input = Object.freeze({ demand: 1, available: Number.MAX_SAFE_INTEGER });
+    expect(allocateResource(input)).toMatchObject({ allocated: 1, deficit: 0, closingStock: Number.MAX_SAFE_INTEGER - 1 });
+    expect(input).toEqual({ demand: 1, available: Number.MAX_SAFE_INTEGER });
+  });
+
+  const invalidValues = [-1, 0.5, Number.NaN, Number.POSITIVE_INFINITY, Number.MAX_SAFE_INTEGER + 1, Number.MAX_VALUE];
 
   for (const value of invalidValues) {
     it(`rejects invalid allocation demand: ${String(value)}`, () => {
