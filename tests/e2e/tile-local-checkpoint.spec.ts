@@ -132,6 +132,23 @@ test('blocked or full storage keeps the game, the previous checkpoint and file b
   await continueLocally(page); await expect(region(page).getByRole('status')).toContainText('Local checkpoint loaded');
 });
 
+test('population mode never shows, reads or writes the legacy local slot', async ({ page }) => {
+  await page.goto('/?mode=tiles'); await saveLocally(page); const legacy = (await slot(page))!;
+  await page.goto('/?mode=population');
+  await expect(page.getByRole('heading', { name: 'Population Trial', exact: true })).toBeVisible();
+  await expect(region(page).getByRole('button', { name: 'Save locally' })).toHaveCount(0);
+  await expect(region(page).getByRole('button', { name: 'Continue locally' })).toHaveCount(0);
+  await build(page, 'forest-1', 'logging'); await next(page);
+  const population = await checkpoint(page); expect(JSON.parse(population).rulesetId).toBe('tile-population-01');
+  await importText(page, population); await expect(region(page).getByRole('status')).toContainText('Checkpoint imported');
+  expect(await slot(page)).toBe(legacy);
+  await page.goto('/?mode=tiles'); await continueLocally(page);
+  await expect(region(page).getByRole('status')).toHaveText('Local checkpoint loaded. Planning restored.');
+  await expect(page.locator('header')).toContainText('Week 1 · Planning'); await expect(gold(page)).toHaveText('30');
+  await page.getByRole('button', { name: 'End Week', exact: true }).click();
+  await expect(page.getByTestId('trial-immigration')).toHaveCount(0);
+});
+
 test('a delayed file import cannot overwrite a successful Continue', async ({ page }) => {
   await page.goto('/?mode=tiles'); await saveLocally(page);
   const other = JSON.parse(await checkpoint(page)); other.state.world.settlements.settlement_haven_01.inventory.gold = 41000;

@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { createTileTrialState, type TileTrialState } from '@haven/core';
+import { createTileTrialState, LEGACY_TILE_RULESET, POPULATION_TILE_RULESET, type TileTrialState } from '@haven/core';
 import { executeTileTrialCommand } from '@haven/simulation';
 import { serializeTileTrialSave } from '@haven/persistence';
 import { ERROR_LOG_KEY } from '../error-log.js';
@@ -45,6 +45,7 @@ describe('explicit local save', () => {
     const plan = multiweekPlan();
     expect(saveLocalCheckpoint(plan)).toEqual({ success: true, replaced: false });
     expect(storage.setItem).toHaveBeenCalledOnce(); expect(storage.setItem).toHaveBeenCalledWith(TILE_CHECKPOINT_KEY, savedText(plan));
+    expect(JSON.parse(stored()!).rulesetId).toBe(LEGACY_TILE_RULESET);
     expect(saveLocalCheckpoint(createTileTrialState())).toEqual({ success: true, replaced: true });
     expect(stored()).toBe(savedText()); expect(values.get(ERROR_LOG_KEY)).toBe('logger-bytes');
     expect(storage.removeItem).not.toHaveBeenCalled(); expect(storage.clear).not.toHaveBeenCalled();
@@ -93,6 +94,7 @@ describe('explicit local continue', () => {
   it.each([
     ['malformed', '{'], ['empty object', '{}'],
     ['version', variant(s => { s.schemaVersion = 2; })], ['ruleset', variant(s => { s.rulesetId = 'future'; })],
+    ['population ruleset', variant(s => { s.rulesetId = POPULATION_TILE_RULESET; })],
     ['map', variant(s => { s.state.tiles[0].terrain = 'ore'; })],
     ['negative stock', variant(s => { s.state.world.settlements.settlement_haven_01.inventory.gold = -1; })],
     ['report state', variant(s => { s.state.phase = 'report'; })], ['oversize', ' '.repeat(1024 * 1024 + 1)],
