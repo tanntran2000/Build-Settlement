@@ -143,6 +143,102 @@ test('every dependency syntax is scanned in Svelte scripts', t => {
   }
 });
 
+for (const context of ['', 'module ', 'context="module" ']) {
+  for (const attribute of ['generics="T"', 'generics="T extends import(\'@haven/simulation\').Value"', 'generics=""', 'generics', 'generics="not valid TypeScript"']) {
+    test(`scope01: unsupported script ${context}${attribute} is explicitly INCOMPLETE`, t => {
+      const f = fixture(t);
+      const file = 'packages/content/src/Generic.svelte';
+      f.write(file, `<!-- leading line -->\n<script ${context}lang="ts"\n  ${attribute}>\n</script>`);
+      const r = f.scan();
+      assert.equal(r.status, 'INCOMPLETE');
+      assert.equal(r.errors.length, 1);
+      assert.equal(r.errors[0].code, 'UNSUPPORTED_SVELTE_GENERICS');
+      assert.equal(r.errors[0].file, file);
+      assert.equal(r.errors[0].line, 3);
+      assert.match(r.errors[0].message, /generics.*not supported.*cannot be verified/i);
+      assert.deepEqual(r.edges, []);
+      assert.deepEqual(r.violations, []);
+      assert.deepEqual(r, f.scan());
+    });
+  }
+}
+
+test('scope01: attribute-like comments, script strings, markup and CSS stay excluded', t => {
+  const f = fixture(t);
+  f.write('packages/content/src/Text.svelte', [
+    '<!-- <script lang="ts" generics="T"></script> -->',
+    '<script lang="ts" data-generics="T">',
+    ' // <script lang="ts" generics="T">',
+    ' /* generics="T extends import(\'@haven/simulation\').Value" */',
+    ' const text = `generics="T extends import(\'@haven/simulation\').Value"`;',
+    '</script>',
+    '<div generics="T">&lt;script generics="T"&gt;</div>',
+    '<style>div::before { content: \'generics="T"\'; }</style>',
+  ].join('\n'));
+  const r = f.scan();
+  assert.equal(r.status, 'PASS');
+  assert.deepEqual(r.errors, []);
+  assert.deepEqual(r.edges, []);
+});
+
+const bodyTypes = [
+  "interface Holder<T extends import('@haven/core').Value> { value: T }",
+  "type Alias<T = import('@haven/core').Value> = T;",
+  "declare function identity<T extends import('@haven/core').Value>(value: T): T;",
+  "type Imported = typeof import('@haven/core');",
+  "export type { Value } from '@haven/core';",
+].join('\n');
+
+for (const [name, extension, wrap] of [
+  ['TypeScript', 'ts', body => body],
+  ['declarations', 'd.ts', body => body],
+  ['Svelte instance body', 'svelte', body => `<script lang="ts">\n${body}\n</script>`],
+  ['Svelte module body', 'svelte', body => `<script context="module" lang="ts">\n${body}\n</script>`],
+]) {
+  for (const [owner, status] of [['ui', 'PASS'], ['content', 'VIOLATION']]) {
+    test(`scope01: ${name} generic/type body dependencies retain ${owner} -> core enforcement`, t => {
+      const f = fixture(t);
+      const file = `packages/${owner}/src/Body.${extension}`;
+      f.write(file, wrap(bodyTypes));
+      const r = f.scan();
+      assert.equal(r.status, status);
+      assert.deepEqual(r.errors, []);
+      assert.equal(r.edges.length, 5);
+      assert.equal(r.violations.length, status === 'PASS' ? 0 : 5);
+      assert.ok(r.edges.every(e => e.file === file && e.to === 'core' && e.line >= 1));
+    });
+  }
+}
+
+test('scope01: unsupported attributes preserve proven body edges in both script blocks', t => {
+  const f = fixture(t);
+  f.write('packages/content/src/Both.svelte', [
+    '<script module lang="ts"', '  generics="T">',
+    " type Module<T extends import('@haven/core').Value> = T;", '</script>',
+    '<script lang="ts"', '  generics="U">',
+    " type Instance<U extends import('@haven/core').Value> = U;", '</script>',
+  ].join('\n'));
+  const r = f.scan();
+  assert.equal(r.status, 'INCOMPLETE');
+  assert.deepEqual(r.errors.map(e => [e.code, e.line]), [['UNSUPPORTED_SVELTE_GENERICS', 2], ['UNSUPPORTED_SVELTE_GENERICS', 6]]);
+  assert.deepEqual(r.violations.map(e => e.line), [3, 7]);
+  assert.ok(r.edges.every(e => e.to === 'core'));
+});
+
+test('scope01: unsupported generics CLI exits 2 with a located error, not a violation', t => {
+  const f = fixture(t);
+  f.write('packages/content/src/Generic.svelte', '<script lang="ts"\n generics="T extends import(\'@haven/simulation\').Value">\n</script>');
+  const run = () => spawnSync(process.execPath, [cli, f.root], { encoding: 'utf8' });
+  const child = run();
+  assert.equal(child.status, 2, child.stderr);
+  const r = JSON.parse(child.stdout);
+  assert.equal(r.status, 'INCOMPLETE');
+  assert.equal(r.errors[0].code, 'UNSUPPORTED_SVELTE_GENERICS');
+  assert.equal(r.errors[0].line, 2);
+  assert.deepEqual(r.violations, []);
+  assert.equal(child.stdout, run().stdout);
+});
+
 test('scan includes exactly eligible production .ts/.svelte, recursively', t => {
   const f = fixture(t);
   const ignored = ['__tests__', 'node_modules', 'dist', 'build', 'coverage', '.git'];

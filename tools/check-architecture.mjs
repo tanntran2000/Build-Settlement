@@ -27,7 +27,7 @@ function literal(node) {
   return null;
 }
 
-function dependencies(source, file) {
+function dependencies(source, file, reportUnsupportedGenerics) {
   const options = { filePath: file, loc: true, range: true, sourceType: 'module', ecmaVersion: 'latest' };
   const parsed = file.endsWith('.svelte')
     ? parseSvelte(source, { ...options, parser: tsParser, svelteConfig: {} })
@@ -60,7 +60,13 @@ function dependencies(source, file) {
   }
   // Only script blocks are dependency-bearing source in a Svelte component.
   if (file.endsWith('.svelte')) {
-    for (const element of parsed.ast.body) if (element.type === 'SvelteScriptElement') for (const node of element.body) visit(node);
+    for (const element of parsed.ast.body) {
+      if (element.type !== 'SvelteScriptElement') continue;
+      for (const attribute of element.startTag.attributes) {
+        if (attribute.key?.name === 'generics') reportUnsupportedGenerics(attribute.loc.start);
+      }
+      for (const node of element.body) visit(node);
+    }
   } else visit(parsed.ast);
   return result;
 }
@@ -176,7 +182,13 @@ export function checkArchitecture(root) {
     try { source = fs.readFileSync(file, 'utf8'); }
     catch (cause) { readError(file, cause); continue; }
     let references;
-    try { references = dependencies(source, file); }
+    try {
+      references = dependencies(source, file, location => error(
+        'UNSUPPORTED_SVELTE_GENERICS', file,
+        'Svelte script-tag generics attributes are not supported by Scope Clarification 01; dependencies in the attribute cannot be verified',
+        { line: location.line, column: location.column + 1 },
+      ));
+    }
     catch (cause) {
       const line = cause.lineNumber ?? cause.loc?.line ?? cause.start?.line;
       error('PARSE_ERROR', file, cause.message, Number.isInteger(line) ? { line } : {});
