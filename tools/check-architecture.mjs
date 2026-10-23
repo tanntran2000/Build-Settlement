@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import tsParser from '@typescript-eslint/parser';
 import { parseForESLint as parseSvelte } from 'svelte-eslint-parser';
+import { parse as parseComponent } from 'svelte/compiler';
 
 const policy = {
   core: [],
@@ -29,9 +30,28 @@ function literal(node) {
 
 function dependencies(source, file, reportUnsupportedGenerics) {
   const options = { filePath: file, loc: true, range: true, sourceType: 'module', ecmaVersion: 'latest' };
-  const parsed = file.endsWith('.svelte')
-    ? parseSvelte(source, { ...options, parser: tsParser, svelteConfig: {} })
-    : tsParser.parseForESLint(source, options);
+  const svelteOptions = { ...options, parser: tsParser, svelteConfig: {} };
+  let parsed;
+  try {
+    parsed = file.endsWith('.svelte') ? parseSvelte(source, svelteOptions) : tsParser.parseForESLint(source, options);
+  } catch (cause) {
+    if (!file.endsWith('.svelte')) throw cause;
+    const component = parseComponent(source, { filename: file, modern: true });
+    // The compiler strips a leading BOM; map its ranges back to the original source.
+    const bomOffset = source.charCodeAt(0) === 0xfeff ? 1 : 0;
+    const attributes = [component.module, component.instance]
+      .flatMap(script => script?.attributes ?? []).filter(attribute => attribute.name === 'generics');
+    if (!attributes.length) throw cause;
+    for (const attribute of attributes) {
+      const location = attribute.name_loc.start;
+      reportUnsupportedGenerics({ line: location.line, column: location.column + (location.line === 1 ? bomOffset : 0) });
+      const start = attribute.start + bomOffset;
+      const end = attribute.end + bomOffset;
+      // Preserve body offsets while hiding only the unsupported attribute from this parser.
+      source = source.slice(0, start) + source.slice(start, end).replace(/[^\r\n]/g, ' ') + source.slice(end);
+    }
+    parsed = parseSvelte(source, svelteOptions);
+  }
   const result = [];
   function visit(node) {
     let target;

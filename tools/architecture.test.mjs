@@ -239,6 +239,121 @@ test('scope01: unsupported generics CLI exits 2 with a located error, not a viol
   assert.equal(child.stdout, run().stdout);
 });
 
+for (const context of ['', 'module ', 'context="module" ']) {
+  for (const attribute of ['generics={"T"}', "generics={'T'}", 'generics={`T`}', 'generics={typeName}']) {
+    test(`s1: expression-valued ${context}${attribute} gets its actual multiline location`, t => {
+      const f = fixture(t);
+      const file = 'packages/content/src/Expression.svelte';
+      f.write(file, `\uFEFF<p>x</p>\r\n<script ${context}\r\n lang="ts"\r\n  ${attribute}>\r\n</script>`);
+      const r = f.scan();
+      assert.equal(r.status, 'INCOMPLETE');
+      assert.equal(r.errors.length, 1);
+      assert.equal(r.errors[0].code, 'UNSUPPORTED_SVELTE_GENERICS');
+      assert.equal(r.errors[0].file, file);
+      assert.equal(r.errors[0].line, 4);
+      assert.equal(r.errors[0].column, 3);
+      assert.match(r.errors[0].message, /generics.*not supported.*cannot be verified/i);
+      assert.deepEqual(r.edges, []);
+      assert.deepEqual(r.violations, []);
+      assert.deepEqual(r, f.scan());
+    });
+  }
+}
+
+for (const context of ['', 'module ']) {
+  test(`s1: parser fallback retains every required dependency syntax in ${context || 'instance '}body`, t => {
+    const f = fixture(t);
+    for (const [name, source] of syntaxes) {
+      f.write('packages/content/src/Body.svelte', `<script ${context}lang="ts" generics={"T"}>\n${source('@haven/core')}\n</script>`);
+      const r = f.scan();
+      assert.equal(r.status, 'INCOMPLETE', name);
+      assert.deepEqual(r.errors.map(e => [e.code, e.line]), [['UNSUPPORTED_SVELTE_GENERICS', 1]], name);
+      assert.equal(r.violations.length, 1, name);
+      assert.equal(r.violations[0].to, 'core', name);
+      assert.equal(r.violations[0].line, 2, name);
+    }
+  });
+}
+
+test('s1: fallback keeps both body type violations and attribute locations across script blocks', t => {
+  const f = fixture(t);
+  f.write('packages/content/src/Both.svelte', [
+    '<script module lang="ts"', ' generics={"T"}>',
+    " type Module<T extends import('@haven/core').Value> = T;", '</script>',
+    '<script lang="ts"', ' generics={"U"}>',
+    " type Instance<U extends import('@haven/core').Value> = U;", '</script>',
+  ].join('\n'));
+  const r = f.scan();
+  assert.equal(r.status, 'INCOMPLETE');
+  assert.deepEqual(r.errors.map(e => [e.code, e.line]), [['UNSUPPORTED_SVELTE_GENERICS', 2], ['UNSUPPORTED_SVELTE_GENERICS', 6]]);
+  assert.deepEqual(r.violations.map(e => e.line), [3, 7]);
+});
+
+test('s1: BOM ranges preserve multiline attribute and body locations', t => {
+  const f = fixture(t);
+  f.write('packages/content/src/BOM.svelte', '\uFEFF' + [
+    '<script module lang="ts" generics={"T"}>',
+    "type Module = import('@haven/core').Value;", '</script>',
+    '<script lang="ts"', ' generics="U', ' extends string">',
+    "type Instance = import('@haven/core').Value;", '</script>',
+  ].join('\r\n'));
+  const r = f.scan();
+  assert.equal(r.status, 'INCOMPLETE');
+  assert.deepEqual(r.errors.map(e => [e.code, e.line, e.column]), [
+    ['UNSUPPORTED_SVELTE_GENERICS', 1, 27], ['UNSUPPORTED_SVELTE_GENERICS', 5, 2],
+  ]);
+  assert.deepEqual(r.violations.map(e => e.line), [2, 7]);
+});
+
+test('s1: fallback reports computed body imports alongside the unsupported attribute', t => {
+  const f = fixture(t);
+  f.write('packages/content/src/Computed.svelte', '<script lang="ts" generics={"T"}>\nimport(name);\n</script>');
+  const r = f.scan();
+  assert.equal(r.status, 'INCOMPLETE');
+  assert.deepEqual(r.errors.map(e => [e.code, e.line]), [['UNSUPPORTED_SVELTE_GENERICS', 1], ['COMPUTED_DEPENDENCY', 2]]);
+  assert.deepEqual(r.violations, []);
+});
+
+test('s1: fallback distinguishes actual script attributes from comment/string/markup/CSS lookalikes', t => {
+  const f = fixture(t);
+  const surround = body => [
+    '<!-- <script lang="ts" generics={"Fake"}></script> -->', body,
+    '<div generics={"Markup"}>&lt;script generics={"Text"}&gt;</div>',
+    '<style>div::before { content: \'generics={"CSS"}\'; }</style>',
+  ].join('\n');
+  const script = attribute => `<script lang="ts" ${attribute}>\n// generics={"Comment"}\nconst text = 'generics={"String"}';\n</script>`;
+  f.write('packages/content/src/Lookalikes.svelte', surround(script('data-generics="Lookalike"')));
+  assert.equal(f.scan().status, 'PASS');
+  f.write('packages/content/src/Lookalikes.svelte', surround(script('generics={"T"}')));
+  const r = f.scan();
+  assert.equal(r.status, 'INCOMPLETE');
+  assert.deepEqual(r.errors.map(e => [e.code, e.line]), [['UNSUPPORTED_SVELTE_GENERICS', 2]]);
+  assert.deepEqual(r.edges, []);
+});
+
+test('s1: a malformed body remains an INCOMPLETE parse failure', t => {
+  const f = fixture(t);
+  f.write('packages/content/src/Bad.svelte', '<script lang="ts" generics={"T"}>\nconst = ;\n</script>');
+  const r = f.scan();
+  assert.equal(r.status, 'INCOMPLETE');
+  assert.ok(r.errors.some(e => e.code === 'PARSE_ERROR'));
+  assert.deepEqual(r.violations, []);
+});
+
+test('s1: the reported expression-attribute CLI reproduction exits 2 with line and reason', t => {
+  const f = fixture(t);
+  f.write('packages/ui/src/A.svelte', '<p>x</p>\n<script lang="ts" generics={"T"}>\n</script>');
+  const child = spawnSync(process.execPath, [cli, f.root], { encoding: 'utf8' });
+  assert.equal(child.status, 2, child.stderr);
+  const r = JSON.parse(child.stdout);
+  assert.equal(r.status, 'INCOMPLETE');
+  assert.equal(r.errors[0].code, 'UNSUPPORTED_SVELTE_GENERICS');
+  assert.equal(r.errors[0].file, 'packages/ui/src/A.svelte');
+  assert.equal(r.errors[0].line, 2);
+  assert.match(r.errors[0].message, /generics.*not supported.*cannot be verified/i);
+  assert.deepEqual(r.violations, []);
+});
+
 test('scan includes exactly eligible production .ts/.svelte, recursively', t => {
   const f = fixture(t);
   const ignored = ['__tests__', 'node_modules', 'dist', 'build', 'coverage', '.git'];

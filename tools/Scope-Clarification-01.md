@@ -15,6 +15,10 @@ making verification `INCOMPLETE` (CLI exit 2). Attribute contents create no edge
 proven body violations remain visible. Comments/text resembling attributes are
 not attributes. Malformed source remains an `INCOMPLETE` parse failure.
 
+For S1, if the dependency parser fails before that guard, the existing Svelte
+compiler AST locates actual component-script attributes. Its BOM offsets are mapped
+back before blanking those ranges and retrying body analysis; no expression is evaluated.
+
 The checker still relies on the lockfile's **transitive** `svelte-eslint-parser`,
 not a managed direct dependency. Changes to that dependency graph/API can break
 setup or parsing; independent clean-install validation remains necessary. Missing
