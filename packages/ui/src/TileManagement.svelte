@@ -5,6 +5,7 @@
   import ErrorLog from './ErrorLog.svelte';
   import { errorLog } from './error-log.js';
   import { formatMilli as units } from './milli-format.js';
+  import { readLocalCheckpoint, saveLocalCheckpoint } from './tile-local-checkpoint.js';
 
   let state = createTileTrialState();
   let selectedId = 'forest-1';
@@ -88,21 +89,34 @@
       if (command('LOAD_TRIAL', { snapshot: result.state }, expectedRevision)) saveNotice = 'Checkpoint imported. Planning restored.';
     } catch { if (ticket === importRead) checkpointError('Could not read the checkpoint file. Your game was preserved.'); }
   }
+  function saveLocally() {
+    const result = saveLocalCheckpoint(state);
+    if (!result.success) { checkpointError(result.message); return; }
+    error = ''; saveNotice = result.replaced ? 'Saved in this browser. Replaced the previous local checkpoint.' : 'Saved in this browser.';
+  }
+  function continueLocally() {
+    const result = readLocalCheckpoint();
+    if (!result.success) { checkpointError(result.message); return; }
+    // A file read still pending must not overwrite the restored plan or this feedback.
+    if (command('LOAD_TRIAL', { snapshot: result.state })) { importRead++; saveNotice = 'Local checkpoint loaded. Planning restored.'; }
+  }
 </script>
 
 <main lang="en">
   <header class="card">
     <p class="eyebrow">HAVEN · WEEKLY PROTOTYPE</p>
     <h1>Tile Building Trial</h1>
-    <p>Build a supply chain for your city. Balance and building policies are TRIAL. Reload starts fresh · Import a checkpoint to resume.</p>
+    <p>Build a supply chain for your city. Balance and building policies are TRIAL. Reload starts fresh · Continue locally or import a checkpoint to resume.</p>
     <p>Week <strong>{state.world.week}</strong> · {locked ? 'Report' : 'Planning'} · {settlement.cohorts.reduce((n, c) => n + c.count, 0)} residents · {assigned} / {units(weeklyWorkforceMilli(settlement.cohorts))} WF assigned</p>
     <a href="/">Classic Weekly</a>
   </header>
 
   <section class="card" aria-label="Planning checkpoints">
     <h2>Planning checkpoint</h2>
-    <p>Export a JSON file to keep this plan. Import replaces the current plan after validation. No autosave or cloud save.</p>
-    {#if locked}<p>Choose Plan next week before exporting or importing.</p>{/if}
+    <p>Save locally keeps one checkpoint in this browser profile and site, replacing the previous one; clearing site data removes it. Continue locally restores it. Export a JSON file as a portable backup; Import replaces the current plan after validation. No autosave or cloud save.</p>
+    {#if locked}<p>Choose Plan next week before saving, continuing, exporting or importing.</p>{/if}
+    <button disabled={locked} onclick={saveLocally}>Save locally</button>
+    <button disabled={locked} onclick={continueLocally}>Continue locally</button>
     <button disabled={locked} onclick={exportCheckpoint}>Export checkpoint</button>
     <label for="tile-save-file">Import checkpoint</label>
     <input id="tile-save-file" type="file" accept=".json,application/json" disabled={locked} onchange={importCheckpoint} />
