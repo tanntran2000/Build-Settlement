@@ -1,6 +1,19 @@
 # Bản Đồ Lộ Trình Kỹ Thuật Tổng Thể (MASTER_ROADMAP.md)
 
-## Current release — PR33 bounded foundation closeout
+## Current release — bounded G6 snapshot through PR41 (2026-10-23)
+
+Verified GitHub `main` and clean documentation base: `4cc45b7d00e89fbcdc38d3971c7b766bb17f9a1d`, tree `2c1303ecf0e71e62475dcc8df9e712e760fec767`. This closeout records existing releases; it selects no next gameplay WP and approves no new work or policy. Exact heads, merge SHAs and prior independent evidence are recorded in the [current tracker snapshot](INTERNAL_PROGRESS_TRACKER.md#current-release--bounded-g6-snapshot-through-pr41-2026-10-23).
+
+- [PR36](https://github.com/tanntran2000/Build-Settlement/pull/36): optional `?mode=population` / `tile-population-01` with bounded passive arrivals under provisional TRIAL support/capacity rules. Opening-population economics settle before arrivals; legacy `?mode=tiles` remains unchanged. This is not full POP. [Main CI39928225602](https://github.com/tanntran2000/Build-Settlement/actions/runs/39928225602): PASS.
+- [PR38](https://github.com/tanntran2000/Build-Settlement/pull/38): Windows test-launch portability only; no gameplay change. [Main CI39915488549](https://github.com/tanntran2000/Build-Settlement/actions/runs/39915488549): PASS.
+- [PR40](https://github.com/tanntran2000/Build-Settlement/pull/40): one manual, legacy-only local Save/Continue slot in Planning. Reload starts fresh; invalid data/storage failures preserve state and stored bytes. Portable JSON Export/Import remains; population mode never accesses the local slot. [Main CI39959680630](https://github.com/tanntran2000/Build-Settlement/actions/runs/39959680630): PASS. Prior independent verification was Windows Chromium over HTTP, not file protocol.
+- [PR41](https://github.com/tanntran2000/Build-Settlement/pull/41): standalone `check:architecture` / `test:architecture`, **not wired into existing CI**. Its dependency matrix was newly approved for that WP, not historical LAW-02. [Main CI39972699531](https://github.com/tanntran2000/Build-Settlement/actions/runs/39972699531): PASS for the existing workflow, not evidence of running the standalone commands. Exact scan exclusions, repaired F01, transitive-parser risk and untested POSIX checker execution are recorded in the tracker.
+
+Full POP/RES/R3 remain incomplete. Law, Event/buffs and UI overhaul remain deferred; autosave/cloud save, history/report persistence, migration and New Game+ remain outside the released checkpoint subset. Current contracts are the [population amendment](superpowers/specs/2026-10-20-weekly-tile-buildings-trial.md#pop-passive-arrival-trial-01--separate-bounded-population-mode), [local-checkpoint amendment](superpowers/specs/2026-10-20-tile-trial-save.md#amendment-2026-10-23--wp-r3-tile-local-checkpoint-01-prospective) and [architecture scope clarification](../tools/Scope-Clarification-01.md). Existing formulas and approved/TRIAL design classifications are preserved.
+
+**History boundary:** all older release snapshots, maturity tables and current/next/candidate claims below describe their recorded scope and date, not this release or a newly selected WP. In particular, PR33's unselected/unimplemented growth claims are superseded only by PR36's optional trial, and older no-local-save claims only by PR40's bounded slot. Prior release evidence above is separate from new docs-only Builder checks in [HANDOFF](../HANDOFF.md); this documentation candidate still needs independent review/testing and has not been published.
+
+## Historical release — PR33 bounded foundation closeout
 
 **DOC-PR33-FOUNDATION-CLOSEOUT-01** records completion of already approved work. It is a documentation closeout, not new gameplay progress or selection of another implementation packet.
 
@@ -28,7 +41,7 @@ Direct Food-effect integration remains on HOLD per [Food rulebook §8](design/FO
 
 **Latest scope:** buff/debuff is deferred together with Event design by user `Sentinel_b2356cbbb32c8191af3b29ca63b31583`. Preserve approved effect formulas and unresolved boundaries as design history; no lifecycle/WF-reduction questions or implementation now. Complete the current needs packet only. The following foundation packet must be independent of buff/debuff and Event.
 
-## Later approved documentation packet — player README
+## Historical approved documentation packet — player README
 
 [DOC-PLAYER-README-01](superpowers/plans/2026-10-21-player-readme-scope.md) records the separately approved README simplification and its subsequent publication approval. README is a short player introduction with run/checkpoint instructions; it is no longer the detailed runtime-contract reference. This later documentation packet does not expand the needs or precision-fix packets' product scope.
 
@@ -74,7 +87,7 @@ Các checkpoint bên dưới giữ mô tả lịch sử tại thời điểm ghi
 
 ---
 
-## Approved trial design — Food/Happiness, chưa triển khai
+## Historical approved trial design — Food/Happiness, chưa triển khai tại checkpoint
 
 [Trial Rules 01](design/FOOD-HAPPINESS-TRIAL-RULES-01.md) ghi nguyên tắc và phép tính được user xác nhận từ proposal `Sentinel_ad60bce8e0e08191b7787a76b342a142`: **APPROVED TRIAL BALANCE — NOT IMPLEMENTED**. Nhu cầu `D = 0.04 × P Food/tuần`, với `P` là headcount; Food tiêu thụ theo phần khả dụng sau sản xuất; Happiness giảm `12 × tỷ lệ thiếu`, đủ ăn hồi 4 điểm tới 80 mà không kéo điểm trên 80 xuống. Starvation Faltering cần đồng thời ít nhất 2 tuần thiếu liên tiếp và thiếu tích lũy ít nhất 1; tier theo công thức trong rulebook, tối đa VIII, tồn tại tới khi đủ ăn xác nhận hồi phục. Không nhầm với lifecycle 3 tuần của các effect khác.
 
@@ -92,7 +105,7 @@ Food/Goods là Requirements **toàn thành phố**, tách biệt kho thành ph�
 
 [WP-SOCIAL-CATALOG-PRESENTATION-01 v0.1](work_packages/WP-SOCIAL-CATALOG-PRESENTATION-01_v0.1.md) đã được duyệt và triển khai riêng ở PR25, chỉ catalog/nhãn tĩnh. PR26 bổ sung production 5 stock; Food Trial Rules 01 và Decision Record 01 ghi các numerical trial được duyệt sau đó, chưa triển khai. Goods building recipe/fulfillment, Requirements/Status runtime, membership và migration vẫn cần spec/WP riêng; không sao chép các số chưa duyệt từ proposal cũ.
 
-## Player entry Weekly — WP-WEEKLY-PLAYER-ENTRY-01 v0.1
+## Historical player entry Weekly — WP-WEEKLY-PLAYER-ENTRY-01 v0.1
 
 Candidate triển khai entry: production luôn mở Weekly, R1 tách thành regression artifact không ship. Entry đã có implementation và regression coverage trong nhánh này; local lint/typecheck/unit/build/smoke/audit đạt, còn chờ CI và Reviewer/Tester độc lập trên exact SHA trước nghiệm thu/merge. Đây không phải hoàn tất demo, production economy hoặc UI/UX mới.
 
@@ -132,6 +145,8 @@ flowchart TD
 
 ### Gói R1: Lõi Thực Thi & Luật Bất Biến (SCOPED TECHNICAL PASS)
 
+The acceptance and candidate wording below is the historical R1 record at its named SHA; it does not describe the current tile/population release or reopen its old next steps.
+
 **CURRENT acceptance:** tại `92882ba6a2389b93fa5813faf142d56146fad90b`, independent Tester và Reviewer xác nhận **scoped technical PASS** theo [R1-ACCEPTANCE-RECORD-01 — ma trận 37 dòng](INTERNAL_PROGRESS_TRACKER.md#r1-acceptance-record-01--current-technical-acceptance). Planner chấp nhận ma trận dựng lại từ WP-R1-r2 / WP-VALIDATION-GUARDS-01 làm cơ sở nghiệm thu kỹ thuật hiện tại: 01–35 được hỗ trợ trong phạm vi đã ghi; 36 **FAIL documentary reference** vì thiếu checklist gốc; 37 **UNVERIFIED** về historical completeness. Không coi đây là checklist gốc được phục hồi hoặc phê duyệt lịch sử; giữ HOLD cho tuyên bố đã kiểm từng dòng bản gốc. C/P CI và fresh external probes được phân biệt trong record; candidate tài liệu chờ audit độc lập, chưa merge/đóng G6.
 
 **Demo: NOT APPROVED.** Khoảng trống provenance không phải production regression; technical R1 PASS không đồng nghĩa L4 hoặc hoàn tất gameplay: UI còn RAM prototype, persistence L1; production/workforce integration, Support/health, save/load, Handoff và Legacy AI nằm ngoài R1. Không gameplay scope mới được cấp phép.
@@ -151,7 +166,10 @@ flowchart TD
 
 ---
 
-### Foundation I: Dân Cư & Năng Lực Xã Hội (WP-HAVEN-02) (ƯU TIÊN HIỆN TẠI)
+### Foundation I: Dân Cư & Năng Lực Xã Hội (WP-HAVEN-02) (ƯU TIÊN LỊCH SỬ)
+
+The original checklist remains open at module scope. PR36 adds only the bounded optional arrivals trial above; no next gameplay WP is selected here.
+
 * **Triết lý**: Dân số thật tạo ra các năng lực xã hội. Nhu cầu và mức ủng hộ quyết định bao nhiêu năng lực đó thực sự sử dụng được. Player phân bổ năng lực, không phân bổ từng đầu người.
 * **Ranh giới phạm vi**:
   * **Named NPC $\rightarrow$ `NPC-01 Future`**: Decouple hoàn toàn khỏi Population Core.
@@ -203,7 +221,7 @@ flowchart TD
 
 ---
 
-### Weekly thử nghiệm và canonical state kế tiếp
+### Historical Weekly thử nghiệm và canonical state kế tiếp
 
 **PR #20 closeout — L3, không L4:** audited `93f899660177f3f3fed2ba489756c360cd74d025`, merge `dcc0a6ae6a042264e0a920d9a718ca5f2914aa5a`; [PR CI 39212072840](https://github.com/tanntran2000/Build-Settlement/actions/runs/39212072840) và [main CI 39212268531](https://github.com/tanntran2000/Build-Settlement/actions/runs/39212268531) mỗi run 438 unit + 7 smoke PASS. `resolveResourceFlow` đã export/dùng; social/workforce helpers được gọi qua wrapper. Không đánh dấu toàn bộ POP/RES hoặc persistence hoàn tất.
 

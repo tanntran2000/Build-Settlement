@@ -1,5 +1,21 @@
 # HANDOFF — Build-Settlement / Admin-PC
 
+## Current handoff — bounded G6 documentation closeout (2026-10-23)
+
+Verified clean starting HEAD and GitHub `main`: `4cc45b7d00e89fbcdc38d3971c7b766bb17f9a1d`, tree `2c1303ecf0e71e62475dcc8df9e712e760fec767`. Current allowlist: exactly `docs/MASTER_ROADMAP.md`, `docs/INTERNAL_PROGRESS_TRACKER.md`, `HANDOFF.md`. This is a truthful closeout of existing work, not approval of new work; no next gameplay WP is selected.
+
+**Prior release evidence:** [PR36](https://github.com/tanntran2000/Build-Settlement/pull/36) optional bounded population arrivals (legacy unchanged); [PR38](https://github.com/tanntran2000/Build-Settlement/pull/38) Windows test portability only; [PR40](https://github.com/tanntran2000/Build-Settlement/pull/40) one manual legacy-only local Save/Continue slot, fresh reload, atomic errors, portable JSON retained, no population-slot access; [PR41](https://github.com/tanntran2000/Build-Settlement/pull/41) standalone architecture commands, not wired to CI. All four exact-merge main CI runs are verified PASS; public Actions links, heads/merges and separately attributed independent counts are in the [current tracker snapshot](docs/INTERNAL_PROGRESS_TRACKER.md#current-release--bounded-g6-snapshot-through-pr41-2026-10-23).
+
+PR41's dependency matrix was newly approved for that WP, not historical LAW-02. Preserve the old `88ea7f7` F01 FAIL and repaired `4571cd7` result separately. Exact scan exclusions and Svelte-generics INCOMPLETE behavior follow [Scope Clarification 01](tools/Scope-Clarification-01.md) and the tracker. Transitive-parser risk and untested POSIX checker execution remain disclosed. PR40's independent browser evidence is Windows Chromium over HTTP, not file protocol. Full POP/RES/R3 remain incomplete; Law, Event/buffs and UI overhaul remain deferred.
+
+**New Builder verification — Windows, Node 24.19.0 / npm 11.17.0:** `npm ci --no-audit` exit 0; `npm run lint` exit 0; `npm run typecheck` exit 0 on the unchanged-command rerun outside the sandbox (initial exit 1: esbuild parent-directory access denied); `npm test -- --no-cache` exit 0, **792 tests / 27 files**; `npm run check:architecture` exit 0, **53 files / 22 edges**, no violations/cycles/errors; `npm run test:architecture` exit 0, **154 passed**, none skipped; `git diff --check` exit 0. Allowlist/history checks confirm exactly three modified documents and all original non-heading lines preserved in order; added text contains no local-machine paths or common secret patterns. The eight public PR/Actions links were verified via GitHub CLI, exit 0, after the initial sandbox network denial. Logs and the final SHA/tree manifest stay ignored and uncommitted; candidate identity is supplied in the Builder handoff, not self-embedded in its commit.
+
+Browser, file-protocol, POSIX checker, separate build and npm audit runs are omitted for this docs-only Builder; prior release counts are not new test results. Installation reported an uncovered esbuild install-script warning; no install policy/configuration was changed. No independent verdict or new CI is claimed.
+
+**Handoff boundary:** freeze the local candidate SHA/tree after checks; root assigns independent Claude review and Tester on that exact candidate. Maximum two repair rounds, then HOLD for an unresolved repeated failure. No push, PR or merge in this task; no subagents. All earlier allowlists, writer assignments, current/next actions and pending-release statements below are historical and do not grant authority for this closeout. Original evidence/formulas/design decisions remain preserved.
+
+## Historical handoff snapshot — 2026-10-16, superseded current/next claims
+
 Cập nhật: 2026-10-16; branch `fix/foundation-state-boundaries-01`, base/HEAD `0d1fa4eb1cbfb81fa66bae7482918bf9d0d09675`, chưa commit/push/merge. Builder hoàn tất `WP-FOUNDATION-STATE-BOUNDARIES-01`, `WP-FOUNDATION-PREPUBLICATION-01`, `WP-SUPPORTED-LINT-HISTORICAL-FORMAT-01` và `WP-VALIDATION-GUARDS-01` (R1 Closure Implementation Plan v1.1: 4 nhóm pure runtime-validation guards, 246 unit tests + 1 smoke test đạt 100%, LAW-06 external compile evidence đạt chuẩn exit 0). Bàn giao cho Reviewer và Tester kiểm chứng độc lập.
 
 ## Cập nhật các gói sửa đổi (2026-10-16)
@@ -151,7 +167,7 @@ Cập nhật khảo sát: 2026-10-16; bổ sung bằng chứng điều phối x�
 - Lịch sử khảo sát: CLI `gh pr view 9` và `gh run list --commit <merge/HEAD SHA>` tới `api.github.com:443` từng bị socket access forbidden, exit 1; không thử đường vòng/chạy lại mạng. Kết luận cũ “PR/CI chưa xác minh online” đã được thay thế bằng bằng chứng điều phối ở trên; không còn là blocker PR/CI.
 - Chưa xác nhận hai agent đã ngừng viết; working tree sạch không thay thế việc điều phối writer.
 
-## Next action và quyền sửa
+## Historical next action và quyền sửa (2026-10-16)
 
 1. Điều phối xác nhận một writer. Đề xuất giữ vai trò Plan: Antigravity Builder, Codex đọc/review; không gửi lệnh cho agent khác trong lượt khảo sát.
 2. Dùng PR/main/CI đã xác minh ở trên để đối chiếu log từng bước, SHA và M01–M25 theo Plan; không mặc định cần chạy lại toàn bộ test local khi CI đã đủ bằng chứng. Không chạy lại preflight G2 cũ đòi main bằng base `935ffdc`.

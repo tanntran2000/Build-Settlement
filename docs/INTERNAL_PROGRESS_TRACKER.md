@@ -1,6 +1,23 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
-## Current release — PR33 bounded foundation closeout
+## Current release — bounded G6 snapshot through PR41 (2026-10-23)
+
+Verified clean base and GitHub `main`: `4cc45b7d00e89fbcdc38d3971c7b766bb17f9a1d`, tree `2c1303ecf0e71e62475dcc8df9e712e760fec767`. Git ancestry confirms all four merges below are included. GitHub PR/Actions metadata confirms each merged PR and completed successful main-push run at its exact merge SHA. These are **prior release results**, not checks newly executed by this documentation Builder.
+
+- [PR36 — optional population trial](https://github.com/tanntran2000/Build-Settlement/pull/36): head `a2049db71ec2337593b08a7d244b02c477ec4ba3`, merge `1d001998c95f597fb23ab1410854bb149e207b44`; [main CI39928225602](https://github.com/tanntran2000/Build-Settlement/actions/runs/39928225602) PASS. `?mode=population` / `tile-population-01` adds bounded passive arrivals after opening-population economics; legacy tile behavior and assigned workforce are preserved. Provisional TRIAL balance, separate ruleset and atomic cross-mode checkpoint rejection do not complete POP.
+- [PR38 — Windows test portability](https://github.com/tanntran2000/Build-Settlement/pull/38): head `8abe3fe0d40d691e09d82914eb1a6035062a1607`, merge `260b08d7e16f25c016348fa7ae3aa5f26753802f`; [main CI39915488549](https://github.com/tanntran2000/Build-Settlement/actions/runs/39915488549) PASS. Only the constant regression-build test command's platform-shell launch changed; gameplay did not.
+- [PR40 — manual local checkpoint](https://github.com/tanntran2000/Build-Settlement/pull/40): head `48b4ed36d7ceff768d81d1061bf214d5cfea2b63`, merge `6b4d7721acd68a6c14f545f32ed4f5a7c6c3a404`; [main CI39959680630](https://github.com/tanntran2000/Build-Settlement/actions/runs/39959680630) PASS. One legacy-only Planning Save/Continue slot per browser profile/origin; reload starts fresh, errors preserve state/stored bytes atomically, and JSON Export/Import remains the portable backup. Population mode never reads/writes this slot. PR-recorded independent evidence: **792 unit, 92 browser, 14 adversarial checks** on that head, Windows Chromium over HTTP; **no file-protocol test**. Site-data clearing loses the local slot.
+- [PR41 — standalone architecture gate](https://github.com/tanntran2000/Build-Settlement/pull/41): head `4571cd799a7c0b329ef1bb3874f01ca85a700005`, merge `4cc45b7d00e89fbcdc38d3971c7b766bb17f9a1d`; [main CI39972699531](https://github.com/tanntran2000/Build-Settlement/actions/runs/39972699531) PASS. PR-recorded independent evidence: **154 architecture regressions, 792 unit, 92 browser**, plus **28 Tester URL probes / 29 Reviewer checks** on the repaired head. Old `88ea7f7` remains **FAIL F01** for omitted file-URL dependencies; repair `4571cd7` closes F01 without retroactively changing that verdict. The old 13 generic probes were not rerun for the repaired head.
+
+**Architecture contract and limits:** the PR41 WP newly approved this internal dependency matrix: core/content import no other internal package; simulation/persistence may import core; UI may import core/content/simulation/persistence. Type-only edges count; cross-package cycles fail, within-package cycles remain legal. This is not a historical LAW-02 matrix or a new DOM/state-mutation/external-library check. Scan recursively only `.ts` (including `.d.ts`) and `.svelte` under `packages/{core,content,simulation,persistence,ui}/src`; exclude directories `__tests__`, `node_modules`, `dist`, `build`, `coverage`, `.git`, and files ending `.test.ts` or `.spec.ts`. TS imports/re-exports/import types, generic/type declarations and both Svelte script bodies are analyzed; markup/CSS are excluded. Per [Scope Clarification 01](../tools/Scope-Clarification-01.md), actual Svelte script-tag `generics` attributes emit located `UNSUPPORTED_SVELTE_GENERICS` errors, yield `INCOMPLETE` / exit 2 and create no attribute edges; proven body violations remain visible. Malformed source is INCOMPLETE. The transitive `svelte-eslint-parser` dependency/API remains a maintenance risk; missing parsers fail setup nonzero. Windows/Node 24 was independently tested; **POSIX checker execution was not locally run**.
+
+`npm run check:architecture` and `npm run test:architecture` remain standalone: existing CI does **not** execute either command, even though its Vitest step name mentions architecture. Main CI PASS above must not be presented as standalone-gate execution evidence.
+
+**Remaining scope:** full POP/RES/R3 are incomplete; Law, Event/buffs and UI overhaul remain deferred. Autosave/cloud save, report/history persistence, migration and New Game+ remain outside this bounded release. No next gameplay WP is selected. Current behavior is bounded by the [population amendment](superpowers/specs/2026-10-20-weekly-tile-buildings-trial.md#pop-passive-arrival-trial-01--separate-bounded-population-mode) and [local-checkpoint amendment](superpowers/specs/2026-10-20-tile-trial-save.md#amendment-2026-10-23--wp-r3-tile-local-checkpoint-01-prospective); no formulas, design decisions or policy are expanded here.
+
+**History boundary:** all older current/next/candidate/NOT IMPLEMENTED statements and maturity/checklist entries below retain their snapshot scope. PR33's no-growth claims are superseded only for PR36's optional trial; old no-local-save claims only for PR40's legacy slot. The original evidence, design decisions and open whole-module checklists are preserved. New Builder checks and review handoff are separate in [HANDOFF](../HANDOFF.md). This docs-only candidate does not claim independent approval, new CI or publication; root assigns independent Claude review and Tester before any later publication decision.
+
+## Historical release — PR33 bounded foundation closeout
 
 **DOC-PR33-FOUNDATION-CLOSEOUT-01** records the released scope and remaining boundaries. It closes documentation for already approved work, not a new gameplay feature or the full POP/RES/R3 modules.
 
@@ -58,7 +75,7 @@ Runtime Weekly hiện có 5 stock Gold/Wheat/Food/Wood/Iron và chuỗi Farm →
 
 Chưa triển khai consumption/Requirements, Happiness/Security/Corruption/Tension, ba nhóm xã hội hoạt động, Goods production, Law, construction hoặc migration. Reload vẫn reset world trong RAM; chưa save/load bền vững, chưa L4 cho toàn bộ module, chưa demo/deploy/ZIP. Không đổi bất kỳ source/schema/runtime nào trong gói tài liệu này. Hậu kiểm PR26 đã được ghi vào tài liệu PR27; candidate docs hiện tại và HOLD nằm ở checkpoint đầu. Không xóa các checkpoint cũ.
 
-## Approved trial calculations — documentation only, NOT IMPLEMENTED
+## Historical approved trial calculations — documentation only, NOT IMPLEMENTED at that checkpoint
 
 [Trial Rules 01](design/FOOD-HAPPINESS-TRIAL-RULES-01.md) lưu công thức Food/Happiness/Faltering/Flourishing và warning/rebellion ban đầu được user xác nhận sau PR26; Decision Record 01 nay thay direct rebellion bằng serious demand, với đơn vị, ví dụ, nguồn approval và supersession chính xác. Đây là **APPROVED TRIAL BALANCE**, không phải runtime hoặc balance cuối. Không nâng trạng thái module lên L2/L3/L4 từ việc ghi công thức; Weekly chưa gọi consumption, resolver, RNG, active-effect lifecycle hoặc event/defeat mới. Existing production và modifier-zero wrapper không đổi.
 
@@ -96,6 +113,8 @@ Cơ chế runtime không đổi: đúng4 stock Weekly Gold/Food/Wood/Iron; 100 M
 ---
 
 ## 2. Ma Trận Trạng Thái Thực Tế Từng Module (Codebase Reality Matrix)
+
+Historical module snapshots below retain their evidence and maturity levels; use the current release section for the later bounded tile/population/checkpoint slices. Old candidate and no-save descriptions do not override those releases or imply full-module completion.
 
 | Package | Đường dẫn File | Chức Năng Cốt Lõi | Trạng Thái Thực Tế | Ghi Chú Kỹ Thuật Chi Tiết |
 | :--- | :--- | :--- | :---: | :--- |
@@ -146,6 +165,8 @@ Correction round 1 của candidate sửa nhân/chia và cộng tổng ở shared
 ## 3. Trạng Thái Kiểm Thử Thật Sự (Audit Verification)
 
 ### R1-ACCEPTANCE-RECORD-01 — CURRENT technical acceptance
+
+Historical R1 acceptance at the SHA below: “CURRENT” and pending-candidate wording refer to that record, not to current release identity or a newly selected WP. Its technical acceptance and provenance limitations remain preserved.
 
 **Kết luận hiện tại: scoped technical R1 PASS tại `92882ba6a2389b93fa5813faf142d56146fad90b` (S). Demo: NOT APPROVED.** Planner đã chấp nhận ma trận WP-derived dưới đây làm **CURRENT technical acceptance basis**, từ [WP-R1-r2 §§1–3](work_packages/WP-R1-r2.md) và [WP-VALIDATION-GUARDS-01 §§2–5](work_packages/WP-VALIDATION-GUARDS-01.md). Đây là bản dựng lại từ hợp đồng WP được duyệt, **không phải checklist gốc được phục hồi hoặc bằng chứng phê duyệt lịch sử**. Independent Tester và Reviewer xác nhận 01–35 trong phạm vi ghi rõ; 36 là documentary reference FAIL, 37 UNVERIFIED. Khoảng trống nguồn gốc tài liệu không phải lỗi production mới được tái hiện. Candidate tài liệu này chờ audit độc lập; không tuyên bố đã merge/đóng G6 hay được duyệt demo.
 
@@ -333,7 +354,9 @@ Correction round 1 của candidate sửa nhân/chia và cộng tổng ở shared
 
 ---
 
-### FOUNDATION I — POPULATION (Trọng Tâm Kỹ Thuật Hiện Tại)
+### FOUNDATION I — POPULATION (Trọng Tâm Kỹ Thuật Lịch Sử)
+
+Full POP stays incomplete. The original checklist below is historical; PR36 supplies only the optional arrivals trial in the current snapshot, not a selected next gameplay WP.
 
 > **Quy tắc phân tách ranh giới**:
 >
