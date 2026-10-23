@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { test } from 'node:test';
 import { checkArchitecture } from './check-architecture.mjs';
 
@@ -65,6 +65,121 @@ for (const [name, source] of syntaxes) {
     });
   }
 }
+
+for (const [name, source] of syntaxes) {
+  for (const [owner, status] of [['simulation', 'PASS'], ['content', 'VIOLATION']]) {
+    test(`file URL: ${name} retains ${owner} -> core ${status}`, t => {
+      const f = fixture(t);
+      const url = pathToFileURL(path.join(f.root, 'packages/core/src/index.ts')).href;
+      const file = `packages/${owner}/src/index.ts`;
+      f.write(file, '\n' + source('@haven/core'));
+      const control = f.scan().edges[0];
+      f.write(file, '\n' + source(url));
+      const r = f.scan();
+      assert.equal(r.status, status);
+      assert.deepEqual(r.errors, []);
+      assert.equal(r.edges.length, 1);
+      assert.deepEqual([r.edges[0].from, r.edges[0].to, r.edges[0].file, r.edges[0].line, r.edges[0].column, r.edges[0].specifier],
+        [owner, 'core', file, 2, control.column, url]);
+      assert.equal(r.violations.length, status === 'PASS' ? 0 : 1);
+    });
+  }
+}
+
+for (const context of ['', 'module ']) {
+  test(`file URL: all supported syntax in Svelte ${context || 'instance '}body`, t => {
+    const f = fixture(t);
+    const url = pathToFileURL(path.join(f.root, 'packages/simulation/src/index.ts')).href;
+    for (const [name, source] of syntaxes) {
+      f.write('packages/core/src/Probe.svelte', `<script ${context}lang="ts">\n${source(url)}\n</script>`);
+      const r = f.scan();
+      assert.equal(r.status, 'VIOLATION', name);
+      assert.deepEqual(r.errors, [], name);
+      assert.equal(r.violations.length, 1, name);
+      assert.equal(r.violations[0].line, 2, name);
+      assert.equal(r.violations[0].to, 'simulation', name);
+    }
+  });
+}
+
+test('file URL: declarations, encoded names, URL normalization and .js -> .ts never execute source', t => {
+  const f = fixture(t);
+  const name = 'packages/simulation/src/space # % café.ts';
+  f.write(name, 'export interface Value {}\nthrow new Error("inspected URL source executed");');
+  const url = pathToFileURL(path.join(f.root, name)).href;
+  const urls = [url, url.replace('file:', 'FILE:'), url.replace('file:///', 'file://localhost/'),
+    url.replace('/src/', '/src/nested/../'), url.replace('.ts', '.js') + '?variant=1#fragment'];
+  for (const specifier of urls) {
+    f.write('packages/core/src/probe.d.ts', `\nexport type { Value } from ${JSON.stringify(specifier)};`);
+    const r = f.scan();
+    assert.equal(r.status, 'VIOLATION', specifier);
+    assert.deepEqual(r.errors, []);
+    assert.equal(r.violations.length, 1);
+    assert.equal(r.violations[0].line, 2);
+    assert.equal(r.violations[0].specifier, specifier);
+  }
+});
+
+test('file URL: malformed and missing targets are located INCOMPLETE, with CLI exit 2', t => {
+  const f = fixture(t);
+  const url = pathToFileURL(path.join(f.root, 'packages/core/src/missing.ts')).href;
+  for (const specifier of [url, 'file://[bad', url.replace('missing.ts', '%ZZ.ts'), url.replace('missing.ts', 'bad%2Fname.ts')]) {
+    f.write('packages/content/src/index.ts', `\nimport ${JSON.stringify(specifier)};`);
+    const r = f.scan();
+    assert.equal(r.status, 'INCOMPLETE', specifier);
+    assert.equal(r.errors.length, 1);
+    assert.ok(['INVALID_FILE_URL', 'UNRESOLVED_DEPENDENCY'].includes(r.errors[0].code));
+    assert.deepEqual([r.errors[0].file, r.errors[0].line, r.errors[0].column], ['packages/content/src/index.ts', 2, 1]);
+    assert.deepEqual(r.violations, []);
+    assert.deepEqual(r, f.scan());
+  }
+  const child = spawnSync(process.execPath, [cli, f.root], { encoding: 'utf8' });
+  assert.equal(child.status, 2, child.stderr);
+  assert.equal(JSON.parse(child.stdout).status, 'INCOMPLETE');
+});
+
+test('file URL: platform paths and remote hosts cannot trigger filesystem lookup outside declared packages', t => {
+  const f = fixture(t);
+  const stat = fs.statSync;
+  t.mock.method(fs, 'statSync', function (name, ...args) {
+    assert.ok(packages.some(pkg => String(name).startsWith(path.join(f.root, 'packages', pkg) + path.sep)), `Unexpected filesystem lookup: ${name}`);
+    return stat.call(this, name, ...args);
+  });
+  for (const specifier of [pathToFileURL(path.join(f.root, 'outside.ts')).href, 'file://remote.invalid/share/value.ts', 'file:///etc/value.ts', 'file:///Z:/value.ts']) {
+    f.write('packages/content/src/index.ts', `\nrequire(${JSON.stringify(specifier)});`);
+    const r = f.scan();
+    assert.equal(r.status, 'INCOMPLETE', specifier);
+    assert.equal(r.errors.length, 1);
+    assert.ok(['INVALID_FILE_URL', 'SCOPE_ESCAPE'].includes(r.errors[0].code));
+    assert.equal(r.errors[0].line, 2);
+    assert.deepEqual(r.edges, []);
+  }
+});
+
+test('file URL: package cycles retain witness locations and CLI violation exit; local file cycles stay legal', t => {
+  const f = fixture(t);
+  const url = pkg => pathToFileURL(path.join(f.root, `packages/${pkg}/src/index.ts`)).href;
+  f.write('packages/core/src/index.ts', `\nimport type { Value } from '${url('simulation')}';`);
+  f.write('packages/simulation/src/index.ts', `\n\nexport type { Value } from '${url('core')}';`);
+  let r = f.scan();
+  assert.equal(r.status, 'VIOLATION');
+  assert.deepEqual(r.cycles[0].packages, ['core', 'simulation', 'core']);
+  assert.deepEqual(r.cycles[0].imports.map(e => e.line), [2, 3]);
+  f.write('packages/simulation/src/index.ts', `\nexport * from '${url('persistence')}';`);
+  f.write('packages/persistence/src/index.ts', `\nimport '${url('core')}';`);
+  r = f.scan();
+  assert.deepEqual(r.cycles[0].packages, ['core', 'simulation', 'persistence', 'core']);
+  assert.deepEqual(r.cycles[0].imports.map(e => [e.file, e.line]), [
+    ['packages/core/src/index.ts', 2], ['packages/simulation/src/index.ts', 2], ['packages/persistence/src/index.ts', 2],
+  ]);
+  assert.equal(spawnSync(process.execPath, [cli, f.root], { encoding: 'utf8' }).status, 1);
+  f.write('packages/core/src/index.ts', `export * from '${pathToFileURL(path.join(f.root, 'packages/core/src/other.ts')).href}';`);
+  f.write('packages/core/src/other.ts', `export * from '${url('core')}';`);
+  f.write('packages/simulation/src/index.ts', 'export {};');
+  r = f.scan();
+  assert.equal(r.status, 'PASS');
+  assert.deepEqual(r.cycles, []);
+});
 
 test('the complete approved matrix, including type-only edges', t => {
   const f = fixture(t);

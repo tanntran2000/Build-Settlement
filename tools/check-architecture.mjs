@@ -236,6 +236,20 @@ export function checkArchitecture(root) {
           if (target) break;
         }
         if (target && !within(internal.dir, target)) target = null;
+      } else if (/^file:/i.test(specifier)) {
+        let base;
+        try { base = fileURLToPath(specifier); }
+        catch (cause) {
+          error('INVALID_FILE_URL', file, `Cannot resolve file URL ${JSON.stringify(specifier)}: ${cause.message}`, { line, column });
+          continue;
+        }
+        // Reject out-of-scope paths (including remote UNC hosts) before filesystem lookup.
+        if (!ownerOf(base)) {
+          error('SCOPE_ESCAPE', file, `File URL points outside declared packages: ${JSON.stringify(specifier)}`, { line, column });
+          continue;
+        }
+        target = resolveFile(base);
+        to = target && ownerOf(target)?.name;
       } else if (/^\.{1,2}(?:[\\/]|$)/.test(specifier) || path.isAbsolute(specifier)) {
         target = resolveFile(path.resolve(path.dirname(file), specifier));
         to = target && ownerOf(target)?.name;
