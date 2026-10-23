@@ -20,7 +20,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "pretest:smoke": "npm run build:regression --workspace=@haven/ui",
-    "test:smoke": "playwright test"
+    "test:smoke": "playwright test",
+    "check:architecture": "node tools/check-architecture.mjs",
+    "test:architecture": "node --test tools/architecture.test.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",
