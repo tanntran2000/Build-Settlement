@@ -1,7 +1,7 @@
 import { test, expect, type Page } from '@playwright/test';
 import { readFile, readdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
-import { execFileSync } from 'node:child_process';
+import { execSync } from 'node:child_process';
 import { resolve } from 'node:path';
 import ts from 'typescript';
 
@@ -65,7 +65,8 @@ test('regression build cannot overwrite or enter the production artifact', async
     return result;
   }
   const before = await hashes('packages/ui/dist');
-  execFileSync('npm', ['run', 'build:regression', '--workspace=@haven/ui'], { stdio: 'pipe' });
+  // Constant command via shell: Windows npm is npm.cmd, which execFile cannot launch.
+  execSync('npm run build:regression --workspace=@haven/ui', { stdio: 'pipe' });
   expect(await hashes('packages/ui/dist')).toEqual(before);
   expect(Object.keys(before).some(path => path.includes('/regression/'))).toBe(false);
   expect(await readFile('packages/ui/regression/dist/index.html', 'utf8')).toContain('lang="vi"');
