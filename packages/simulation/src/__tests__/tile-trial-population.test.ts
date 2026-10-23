@@ -58,6 +58,36 @@ describe("population trial transaction", () => {
     s = act(s, { type: "BUILD", tileId: "plain-2", typeId: "processor" }).nextState;
     const r = week(s); expect(count(r.nextState)).toBe(100); expect(r.report?.immigration?.usefulWorkerSlots).toBe(10);
   });
+  it("one funded Farm shares its five supply slots across two funded Processors", () => {
+    const s = act(expanded(), { type: "BUILD", tileId: "plain-4", typeId: "processor" }).nextState;
+    const before = structuredClone(s), r = week(s);
+    expect(r.report?.unpaidUpkeepMilli).toBe(0);
+    expect(r.report?.immigration).toEqual({ populationBefore: 100, arrivals: 2, populationAfter: 102,
+      usefulWorkerSlots: 15, renewableFoodMilli: 6000, target: 136, reason: "arrivals" });
+    expect(count(r.nextState)).toBe(102); expect(r.nextState.tiles).toEqual(s.tiles); expect(s).toEqual(before);
+  });
+  it.each([
+    { processors: 1, usefulWorkerSlots: 20, target: 200, debit: 7500 },
+    { processors: 2, usefulWorkerSlots: 25, target: 227, debit: 8000 },
+  ])("two funded Farms retain independent recipe caps with $processors funded Processor(s)", ({ processors, usefulWorkerSlots, target, debit }) => {
+    let s = expanded();
+    for (let i = 0; i < 27; i++) s = plan(week(s).nextState);
+    expect(count(s)).toBe(136);
+    s = act(s, { type: "BUILD", tileId: "field-2", typeId: "farm" }).nextState;
+    for (const [tileId, workers] of [["field-1", 4], ["plain-1", 5], ["field-2", 1]]) {
+      s = act(s, { type: "SET_WORKERS", tileId, workers }).nextState;
+    }
+    if (processors === 2) s = act(s, { type: "BUILD", tileId: "plain-4", typeId: "processor" }).nextState;
+    const before = structuredClone(s), r = week(s), legacy = week(s, LEGACY);
+    expect(r.report?.immigration).toEqual({ populationBefore: 136, arrivals: 2, populationAfter: 138,
+      usefulWorkerSlots, renewableFoodMilli: 10000, target, reason: "arrivals" });
+    expect(r.report).toMatchObject({ taxMilli: 4080, foodDemandMilli: 5440, foodConsumedMilli: 5440, unpaidUpkeepMilli: 0 });
+    const report = r.report!;
+    expect(report.before.gold + report.taxMilli + report.goods.revenueMilli - report.after.gold).toBe(debit);
+    expect(r.report).toEqual({ ...legacy.report, immigration: report.immigration });
+    expect(count(legacy.nextState)).toBe(136); expect(count(r.nextState)).toBe(138);
+    expect(r.nextState.tiles).toEqual(s.tiles); expect(s).toEqual(before);
+  });
   it("duplicate idle Workshop cannot reuse Market service capacity", () => {
     const base = expanded(); const extra = act(base, { type: "BUILD", tileId: "plain-4", typeId: "workshop" }).nextState;
     const a = week(base), b = week(extra);

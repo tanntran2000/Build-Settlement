@@ -60,7 +60,7 @@ Only existing `weekly_middle` with `socialClass=common`, `legalStatus=citizen` r
 
 All quantities are nonnegative safe integers, computed with BigInt before checked Number conversion. Resource/service quantities below are milli-units/week; slots are whole WF. Gather scalar facts during the existing transaction without replaying it or debiting resources again. `F` is the set of enabled, valid buildings whose upkeep was paid this week. Extraction slots may count funded capacity even when currently unassigned.
 
-For each operation, sum capacity over F. Farm/Processor capacity is `min(maxWorkers × level, existing recipe batch cap)`; Logging/Mine/Workshop capacity is `maxWorkers × level`. Market service M is the aggregate funded level × catalog service capacity. Then:
+For each operation, calculate each building's capacity first, then sum those capacities over F. Each Farm/Processor contributes `min(maxWorkers × level, existing recipe batch cap)`; the recipe batch cap applies per building, not to the city-wide sum. Thus two funded level1 Farms contribute5+5=10 Farm slots, and two funded level1 Processors contribute5+5=10 Processor slots; neither city-wide total has a recipe cap of5. Each Logging/Mine/Workshop contributes `maxWorkers × level`. Market service M is the aggregate funded level × catalog service capacity. Then:
 
 ```text
 usefulProcessor = min(processorSlots,
@@ -72,7 +72,7 @@ usefulWorkshop = min(workshopSlots,
 J = farmSlots + usefulProcessor + loggingSlots + mineSlots + usefulWorkshop
 ```
 
-Caps are applied to city-wide totals, never separately reused for each downstream building. Market uses conservative full-batch opportunities; existing partial-final-batch service execution is unchanged. A second idle Processor cannot count Wheat capacity already covered by the first; duplicate idle Workshops cannot reuse the same Wood/Iron/Market capacity. Market itself contributes no WF slot.
+The shared-input/service bounds in `usefulProcessor` and `usefulWorkshop` apply once to city-wide totals, never separately reused for each downstream building. These bounds are distinct from the per-building recipe caps above: one funded Farm supplies at most5 useful Processor slots across any number of Processors, while two funded Farms can supply10 across two funded Processors. Market uses conservative full-batch opportunities; existing partial-final-batch service execution is unchanged. A second idle Processor cannot count Wheat capacity already covered by the first; duplicate idle Workshops cannot reuse the same Wood/Iron/Market capacity. Market itself contributes no WF slot.
 
 Renewable Food `Q = min(actualProcessorBatches, floor(actualFarmBatches × farmWheatPerBatch / processorWheatPerBatch)) × processorFoodPerBatch`. Only newly harvested Wheat and actual funded processing count; opening Food/Wheat stocks do not establish sustainable throughput. Renewable Goods capacity uses actual newly extracted Wood/Iron, funded assigned Workshop workers and aggregate funded Market capacity, never hypothetical extraction or opening material stocks.
 
