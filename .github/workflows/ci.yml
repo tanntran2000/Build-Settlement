@@ -66,10 +66,107 @@ jobs:
           NODE
 
       - name: Install dependencies from lockfile
-        run: npm ci
+        run: npm ci --no-audit
 
       - name: Verify dependencies (npm audit)
-        run: npm audit --audit-level=moderate
+        timeout-minutes: 4
+        run: |
+          node --input-type=module <<'NODE'
+          import { spawn } from 'node:child_process';
+          import { setTimeout as sleep } from 'node:timers/promises';
+          const args = ['audit', '--audit-level=moderate', '--fetch-timeout=20000', '--fetch-retries=0', '--json'];
+          const levels = ['info', 'low', 'moderate', 'high', 'critical'];
+          const endpoint = 'https://registry.npmjs.org/-/npm/v1/security/advisories/bulk';
+          const networkCodes = new Set(['ECONNRESET', 'ETIMEDOUT', 'ESOCKETTIMEDOUT', 'EAI_AGAIN']);
+          const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+          const integer = value => Number.isSafeInteger(value) && value >= 0;
+          const result = (kind, reason) => ({ kind, reason });
+          function classify(doc, code) {
+            if (!object(doc)) return result('fail', 'missing audit object');
+            if (['auditReportVersion', 'vulnerabilities', 'metadata'].some(key => Object.hasOwn(doc, key))) {
+              if (['error', 'message', 'code', 'statusCode'].some(key => Object.hasOwn(doc, key))) return result('fail', 'conflicting report/error');
+              const counts = doc.metadata?.vulnerabilities, dependencies = doc.metadata?.dependencies;
+              if (doc.auditReportVersion !== 2 || !object(doc.vulnerabilities) || !object(counts) || !object(dependencies)) return result('fail', 'invalid audit report');
+              if (Object.keys(counts).length !== 6 || ![...levels, 'total'].every(key => integer(counts[key]))) return result('fail', 'invalid severity counts');
+              if (!['prod', 'dev', 'optional', 'peer', 'peerOptional', 'total'].every(key => integer(dependencies[key]))) return result('fail', 'invalid dependency counts');
+              const actual = Object.fromEntries(levels.map(level => [level, 0]));
+              const entries = Object.entries(doc.vulnerabilities);
+              for (const [name, entry] of entries) {
+                if (!object(entry) || entry.name !== name || typeof entry.severity !== 'string' || !Object.hasOwn(actual, entry.severity)) return result('fail', 'invalid vulnerability map');
+                actual[entry.severity]++;
+              }
+              if (counts.total !== entries.length || !levels.every(level => counts[level] === actual[level])) return result('fail', 'inconsistent vulnerability totals');
+              console.log(JSON.stringify(doc));
+              if (counts.moderate || counts.high || counts.critical) return result('fail', 'vulnerabilities meet moderate threshold');
+              return result(code === 0 ? 'pass' : 'fail', code === 0 ? 'valid audit report' : 'nonzero audit exit');
+            }
+            if (code !== 1) return result('fail', 'unexpected error exit');
+            // npm 11.9/11.19 audit-error fields; only dedicated error data is classified.
+            const rootError = Object.hasOwn(doc, 'message');
+            const error = rootError ? doc : Object.keys(doc).length === 1 ? doc.error : null;
+            if (!object(error)) return result('fail', 'missing error envelope');
+            const allowed = rootError ? ['message', 'method', 'uri', 'headers', 'statusCode', 'body', 'error', 'code'] : ['code', 'summary', 'detail'];
+            if (!Object.keys(error).every(key => allowed.includes(key))) return result('fail', 'unknown error envelope');
+            if (!rootError && !['code', 'summary', 'detail'].every(key => typeof error[key] === 'string')) return result('fail', 'invalid dedicated error');
+            if (rootError && (typeof error.message !== 'string' || (Object.hasOwn(error, 'method') && error.method !== 'POST') || (Object.hasOwn(error, 'uri') && error.uri !== endpoint))) return result('fail', 'unexpected audit endpoint');
+            const companion = rootError && Object.hasOwn(doc, 'error') ? doc.error : null;
+            if (rootError && Object.hasOwn(doc, 'error') && (!object(companion) || !Object.keys(companion).every(key => ['code', 'summary', 'detail'].includes(key)) || !['summary', 'detail'].every(key => typeof companion[key] === 'string'))) return result('fail', 'invalid companion error');
+            if (companion && ['summary', 'detail'].some(key => Object.hasOwn(companion, key) && !['', 'audit endpoint returned an error', error.message].includes(companion[key]))) return result('fail', 'conflicting error details');
+            if ([error, companion].some(envelope => envelope && Object.hasOwn(envelope, 'code') && typeof envelope.code !== 'string')) return result('fail', 'invalid error code');
+            if (Object.hasOwn(error, 'code') && companion && Object.hasOwn(companion, 'code') && error.code !== companion.code) return result('fail', 'conflicting error codes');
+            const cause = error.code ?? companion?.code;
+            if (Object.hasOwn(error, 'statusCode')) {
+              const status = error.statusCode;
+              return result(Number.isInteger(status) && status >= 500 && status <= 599 && (cause === undefined || cause === `E${status}`) ? 'retry' : 'fail', 'structured HTTP status');
+            }
+            if (networkCodes.has(cause) || /^E5\d{2}$/.test(cause ?? '')) return result('retry', 'structured transient code');
+            // FETCH_ERROR (or audit-error with no code) needs an exact known bulk message.
+            const message = rootError ? error.message : error.summary;
+            const knownMessage = message === `network timeout at: ${endpoint}` || message === `request to ${endpoint} failed, reason: read ECONNRESET` || message === `request to ${endpoint} failed, reason: socket hang up`;
+            return result((cause === undefined || cause === 'FETCH_ERROR') && knownMessage ? 'retry' : 'fail', 'audit error envelope');
+          }
+          function auditOnce() {
+            return new Promise(resolve => {
+              let child;
+              try { child = spawn('npm', args, { shell: false, stdio: ['ignore', 'pipe', 'pipe'] }); }
+              catch { resolve(result('fail', 'npm launch failed')); return; }
+              let stdout = '', bytes = 0, launchError, stopping, killTimer;
+              const stop = reason => {
+                if (stopping) return;
+                stopping = reason;
+                child.kill('SIGTERM');
+                killTimer = setTimeout(() => child.kill('SIGKILL'), 5000);
+              };
+              const deadline = setTimeout(() => stop('deadline'), 45000);
+              child.stdout.setEncoding('utf8');
+              child.stdout.on('data', data => {
+                bytes += Buffer.byteLength(data);
+                if (bytes > 4 * 1024 * 1024) stop('oversized output');
+                else stdout += data;
+              });
+              child.stderr.on('data', () => {}); // Drain; stderr/advisory text never controls retries.
+              child.on('error', error => { launchError = error; });
+              child.on('close', (code, signal) => {
+                clearTimeout(deadline); clearTimeout(killTimer);
+                // Always wait for close, including TERM/KILL; late exit0 is never success.
+                if (launchError) { resolve(result('fail', 'npm launch failed')); return; }
+                if (stopping) { resolve(result('fail', stopping)); return; }
+                if (signal) { resolve(result('fail', 'unexpected process signal')); return; }
+                try { resolve(classify(JSON.parse(stdout), code)); }
+                catch { resolve(result('fail', 'malformed or missing audit JSON')); }
+              });
+            });
+          }
+          let passed = false;
+          for (let attempt = 1; attempt <= 3; attempt++) {
+            const outcome = await auditOnce();
+            console.log(`Audit attempt ${attempt}/3: ${outcome.kind} (${outcome.reason})`);
+            if (outcome.kind === 'pass') { passed = true; break; }
+            if (outcome.kind !== 'retry' || attempt === 3) break;
+            await sleep(attempt * 10000);
+          }
+          if (!passed) process.exitCode = 1;
+          NODE
 
       - name: Run ESLint gate
         run: npm run lint
