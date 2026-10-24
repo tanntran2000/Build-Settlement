@@ -93,7 +93,7 @@ Seed 0 trace anchors: first swaps (79,21) (78,0) (77,17) (76,11) (75,35); type w
 
 **Interfaces:** consumes `isWorldSessionState`, `outsideProvenance`, `WORLD_SESSION_CITY_RULESET`, `hasWeeklyKeys`, `WorldSessionState` from `@haven/core`, and `TILE_SAVE_MAX_BYTES` from `./tile-trial-save.js`. Produces `WORLD_SESSION_SAVE_FORMAT`, `serializeWorldSessionSave(session: unknown): { success: true; text: string } | WorldSaveFailure`, `deserializeWorldSessionSave(text: unknown): { success: true; state: WorldSessionState } | WorldSaveFailure`, with `WorldSaveFailure = { success: false; error: { code: "INVALID_SAVE" | "INCOMPATIBLE_SAVE" | "INVALID_SAVE_STATE" | "SAVE_TOO_LARGE" | "SAVE_FAILED"; message: string } }`. Never imports the generator at runtime.
 
-- [ ] **Step 1: failing tests.**
+- [x] **Step 1: failing tests.**
   - The round trip (with later-action fields) deep-equals the input; the input is deep-frozen and unchanged; loaded nested arrays are not shared with the input.
   - A hand-edited deposit type (`iron` to `wheat`) loads as saved.
   - Every precedence row in design section 6 gives its exact code, including:
@@ -106,10 +106,10 @@ Seed 0 trace anchors: first swaps (79,21) (78,0) (77,17) (76,11) (75,35); type w
     - `"é".repeat(TILE_SAVE_MAX_BYTES / 2 + 1)` → `SAVE_TOO_LARGE`.
     - A serializer over cap: a valid session whose city settlement `name` is `"x".repeat(1048576)` passes `isWorldSessionState`, and serialize returns `SAVE_TOO_LARGE`.
   - Cross-format: `deserializeTileTrialSave(worldText, r)` for both rulesets, and `deserializeWorldSessionSave` of legacy and population texts, each return `INCOMPATIBLE_SAVE`.
-- [ ] **Step 2:** `npm test -- packages/persistence/src/__tests__/world-session-save.test.ts` → FAIL.
-- [ ] **Step 3:** implement mirroring `tile-trial-save.ts:10-31`.
-- [ ] **Step 4:** PASS; `npm run typecheck:persistence` exit 0.
-- [ ] **Step 5:** commit `feat(persistence): world session save envelope`.
+- [x] **Step 2:** `npm test -- packages/persistence/src/__tests__/world-session-save.test.ts` → FAIL.
+- [x] **Step 3:** implement mirroring `tile-trial-save.ts:10-31`.
+- [x] **Step 4:** PASS; `npm run typecheck:persistence` exit 0.
+- [x] **Step 5:** commit `feat(persistence): world session save envelope`.
 
 ### Task 3: UI world mode
 
@@ -187,3 +187,5 @@ Seed 0 trace anchors: first swaps (79,21) (78,0) (77,17) (76,11) (75,35); type w
 - Browser ports: 4273 production, 4174 regression, both strict and no reuse. Existing protected regression tests hardcode 4174; it was unoccupied before starting. Temporary config under ignored evidence directory changes no repository config. Existing installed Chromium reused; retries 0.
 
 - Task 1: complete ? 61/61 targeted core tests, typecheck:core exit 0. Independent literal vectors/goldens retained. Initial RED: three absent modules (exit 1); first GREEN attempt caught incorrect ruleset-module import (2 failed), corrected once; type narrowing corrected once after typecheck diagnostics. No repeated unresolved failure. Core task commit follows this ledger update.
+
+- Task 2: complete ? codec RED missing module exit 1; 19 codec tests GREEN (33 combined codec/UI tests) exit 0; whole suite 938/938 exit 0; typecheck:persistence via full typecheck exit 0 after one literal fixture typing correction. Core commit `fff89c0c31975230f33fbaef286b5a800acba567`. No regeneration on load, capped envelope and cross-format isolation verified. Codec commit follows this ledger update.
