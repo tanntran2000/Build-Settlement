@@ -1,13 +1,15 @@
 <script lang="ts">
-  import { createTileTrialState, weeklyWorkforceMilli, WEEKLY_RESOURCE_KEYS, TRIAL_BUILDINGS, TILE_TRIAL_BALANCE as B, LEGACY_TILE_RULESET, POPULATION_TILE_RULESET, type TileTrialRuleset, type TileTrialReport } from '@haven/core';
+  import { createTileTrialState, createWorldSession, summarizeOutside, weeklyWorkforceMilli, WEEKLY_RESOURCE_KEYS, TRIAL_BUILDINGS, TILE_TRIAL_BALANCE as B, LEGACY_TILE_RULESET, POPULATION_TILE_RULESET, type OutsideWorldState, type WorldSessionState, type TileTrialRuleset, type TileTrialReport } from '@haven/core';
   import { executeTileTrialCommand } from '@haven/simulation';
-  import { serializeTileTrialSave, deserializeTileTrialSave, TILE_SAVE_MAX_BYTES } from '@haven/persistence';
+  import { serializeTileTrialSave, deserializeTileTrialSave, serializeWorldSessionSave, deserializeWorldSessionSave, TILE_SAVE_MAX_BYTES } from '@haven/persistence';
   import ErrorLog from './ErrorLog.svelte';
   import { errorLog } from './error-log.js';
   import { formatMilli as units } from './milli-format.js';
   import { readLocalCheckpoint, saveLocalCheckpoint } from './tile-local-checkpoint.js';
+  import { prepareWorldSessionLoad, readLocalWorldSession, saveLocalWorldSession } from './world-session.js';
 
   export let ruleset: TileTrialRuleset = LEGACY_TILE_RULESET;
+  export let world = false;
   $: populationMode = ruleset === POPULATION_TILE_RULESET;
   let state = createTileTrialState();
   let selectedId = 'forest-1';
@@ -19,6 +21,16 @@
   let saveNotice = '';
   let importRead = 0;
   let report: Readonly<TileTrialReport> | null = null;
+  let outside: OutsideWorldState | null = null;
+  if (world) {
+    try {
+      const created = createWorldSession(crypto.getRandomValues(new Uint32Array(1))[0]);
+      if (created.success) { state = created.value.city; outside = created.value.outside; }
+      else error = created.error.message;
+    } catch { error = 'Could not start a world session. Reload to try New Game again.'; }
+  }
+  $: outsideSummary = outside ? summarizeOutside(outside, 'player') : null;
+  $: checkpointLocked = locked || (world && !outside);
   $: settlement = state.world.settlements[state.world.activeSettlementId!];
   $: selected = state.tiles.find(t => t.id === selectedId)!;
   $: definition = selected.building ? TRIAL_BUILDINGS[selected.building.typeId] : null;
@@ -66,15 +78,31 @@
     errorLog.record('RUNTIME', 'INVALID_COMMAND');
   }
   function exportCheckpoint() {
-    const result = serializeTileTrialSave(state, ruleset);
+    const result = world ? serializeWorldSessionSave({ city: state, outside }) : serializeTileTrialSave(state, ruleset);
     if (!result.success) { checkpointError(result.error.message); return; }
     let url: string | undefined; let anchor: HTMLAnchorElement | undefined;
     try {
       url = URL.createObjectURL(new Blob([result.text], { type: 'application/json' }));
-      anchor = document.createElement('a'); anchor.href = url; anchor.download = `haven-${populationMode ? 'population' : 'tile'}-week-${state.world.week}.json`;
+      anchor = document.createElement('a'); anchor.href = url; anchor.download = `haven-${world ? 'world' : populationMode ? 'population' : 'tile'}-week-${state.world.week}.json`;
       document.body.append(anchor); anchor.click(); error = ''; saveNotice = 'Checkpoint download requested.';
     } catch { checkpointError('Could not download the checkpoint. Your game was preserved.'); }
     finally { anchor?.remove(); if (url) URL.revokeObjectURL(url); }
+  }
+  function loadWorldSession(loaded: WorldSessionState, expectedRevision: number, notice: string, invalidateReads = false) {
+    if (!outside) { checkpointError('A world session is not available. Reload to try New Game again.'); return false; }
+    const prepared = prepareWorldSessionLoad({ city: state, outside }, loaded, expectedRevision);
+    if (!prepared.success) { checkpointError(prepared.message); return false; }
+    let nextWorkers: string;
+    try { nextWorkers = String(prepared.next.city.tiles.find(t => t.id === selectedId)!.building?.workers ?? 0); }
+    catch { checkpointError('Could not prepare the checkpoint. Your game was preserved.'); return false; }
+    // Publish both prepared halves before UI effects, with no fallible work between.
+    state = prepared.next.city;
+    outside = prepared.next.outside;
+    if (invalidateReads) importRead++;
+    report = null; workers = nextWorkers;
+    errorLog.setContext('weekly', { week: state.world.week });
+    error = ''; workforceError = ''; managementError = null; saveNotice = notice;
+    return true;
   }
   async function importCheckpoint(event: Event) {
     const input = event.currentTarget as HTMLInputElement; const file = input.files?.[0]; input.value = '';
@@ -86,17 +114,30 @@
     try {
       const text = await file.text();
       if (ticket !== importRead) return;
+      if (world) {
+        const result = deserializeWorldSessionSave(text);
+        if (!result.success) { checkpointError(result.error.message); return; }
+        loadWorldSession(result.state, expectedRevision, 'Checkpoint imported. Planning restored.');
+        return;
+      }
       const result = deserializeTileTrialSave(text, ruleset);
       if (!result.success) { checkpointError(result.error.message); return; }
       if (command('LOAD_TRIAL', { snapshot: result.state }, expectedRevision)) saveNotice = 'Checkpoint imported. Planning restored.';
     } catch { if (ticket === importRead) checkpointError('Could not read the checkpoint file. Your game was preserved.'); }
   }
   function saveLocally() {
-    const result = saveLocalCheckpoint(state, ruleset);
+    const result = world ? saveLocalWorldSession({ city: state, outside }) : saveLocalCheckpoint(state, ruleset);
     if (!result.success) { checkpointError(result.message); return; }
     error = ''; saveNotice = result.replaced ? 'Saved in this browser. Replaced the previous local checkpoint.' : 'Saved in this browser.';
   }
   function continueLocally() {
+    if (world) {
+      const expectedRevision = state.revision;
+      const result = readLocalWorldSession();
+      if (!result.success) { checkpointError(result.message); return; }
+      loadWorldSession(result.state, expectedRevision, 'Local checkpoint loaded. Planning restored.', true);
+      return;
+    }
     const result = readLocalCheckpoint(ruleset);
     if (!result.success) { checkpointError(result.message); return; }
     // A file read still pending must not overwrite the restored plan or this feedback.
@@ -107,23 +148,31 @@
 <main lang="en">
   <header class="card">
     <p class="eyebrow">HAVEN · WEEKLY PROTOTYPE</p>
-    <h1>{populationMode ? 'Population Trial' : 'Tile Building Trial'}</h1>
+    <h1>{world ? 'World Session' : populationMode ? 'Population Trial' : 'Tile Building Trial'}</h1>
     <p>Build a supply chain for your city. Balance and building policies are TRIAL. Reload starts fresh · Continue locally or import a checkpoint to resume.</p>
     <p>Week <strong>{state.world.week}</strong> · {locked ? 'Report' : 'Planning'} · {settlement.cohorts.reduce((n, c) => n + c.count, 0)} residents · {assigned} / {units(weeklyWorkforceMilli(settlement.cohorts))} WF assigned</p>
     <a href="/">Classic Weekly</a> · <a href={populationMode ? '/?mode=tiles' : '/?mode=population'}>{populationMode ? 'Legacy tile trial' : 'Play population trial'}</a>
     {#if populationMode}<p>Immigration is TRIAL. Arrivals join next week. Old tile checkpoints continue in Legacy tile trial.</p>{/if}
   </header>
 
+  {#if world && outsideSummary}
+    <section class="card" aria-label="Outside world">
+      <h2>Outside world</h2>
+      <p>Outside tiles: {outsideSummary.total} · Yours: {outsideSummary.mine} · Held by other factions: {outsideSummary.others} · Neutral: {outsideSummary.neutral} · Explored by you: {outsideSummary.explored}</p>
+      <p>Exploration, claiming and extraction are not available yet.</p>
+    </section>
+  {/if}
+
   <section class="card" aria-label="Planning checkpoints">
     <h2>Planning checkpoint</h2>
     <p>Save locally keeps one checkpoint per mode in this browser profile and site, replacing that mode's previous one; clearing site data removes it. Continue locally restores this mode's checkpoint.</p>
     <p>Export a JSON file as a portable backup; Import replaces the current plan after validation. No autosave or cloud save.</p>
     {#if locked}<p>Choose Plan next week before saving, continuing, exporting or importing.</p>{/if}
-    <button disabled={locked} onclick={saveLocally}>Save locally</button>
-    <button disabled={locked} onclick={continueLocally}>Continue locally</button>
-    <button disabled={locked} onclick={exportCheckpoint}>Export checkpoint</button>
+    <button disabled={checkpointLocked} onclick={saveLocally}>Save locally</button>
+    <button disabled={checkpointLocked} onclick={continueLocally}>Continue locally</button>
+    <button disabled={checkpointLocked} onclick={exportCheckpoint}>Export checkpoint</button>
     <label for="tile-save-file">Import checkpoint</label>
-    <input id="tile-save-file" type="file" accept=".json,application/json" disabled={locked} onchange={importCheckpoint} />
+    <input id="tile-save-file" type="file" accept=".json,application/json" disabled={checkpointLocked} onchange={importCheckpoint} />
     {#if saveNotice}<p role="status">{saveNotice}</p>{/if}
     {#if error}<p role="alert">{error}</p>{/if}
   </section>
