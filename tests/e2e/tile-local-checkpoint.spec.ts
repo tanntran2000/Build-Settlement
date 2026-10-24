@@ -106,30 +106,31 @@ test(`explicit save replaces only its own slot and file import never writes it (
   expect(await slot(page, otherKey)).toBe('other-mode-bytes');
 });
 
-test(`missing, invalid and incompatible slots preserve full state and both slots (${mode})`, async ({ page }) => {
+// Fresh pages keep state-preservation checks below Chromium's burst-download limit.
+for (const kind of ['missing', 'malformed', 'empty object', 'opposite mode', 'version', 'ruleset', 'map', 'negative stock', 'report phase', 'oversize', 'revision overflow'] as const) {
+test(`rejects ${kind} while preserving full state and both slots (${mode})`, async ({ page }) => {
   await page.goto(`/?mode=${mode}`); await build(page, 'forest-1', 'logging');
   const valid = JSON.parse(await checkpoint(page)), other = JSON.stringify({ ...valid, rulesetId: otherRuleset });
   await setSlot(page, other, otherKey);
-  await continueLocally(page); await expect(region(page).getByRole('alert')).toContainText('No local checkpoint');
-  expect(JSON.parse(await checkpoint(page)).state).toEqual(valid.state); expect(await slot(page, key)).toBeNull();
   const variant = (change: (save: typeof valid) => void) => { const save = structuredClone(valid); change(save); return JSON.stringify(save); };
-  for (const text of [
-    '{', '{}', other, variant(s => { s.schemaVersion = 2; }), variant(s => { s.rulesetId = 'future'; }), variant(s => { s.state.tiles[0].terrain = 'ore'; }),
-    variant(s => { s.state.world.settlements.settlement_haven_01.inventory.gold = -1; }), variant(s => { s.state.phase = 'report'; }), ' '.repeat(1024 * 1024 + 1),
-  ]) {
-    await setSlot(page, text, key); await continueLocally(page);
-    await expect(region(page).getByRole('alert')).toContainText('left unchanged');
-    await expect(gold(page)).toHaveText('28'); await expect(page.getByTestId('trial-tile-forest-1')).toContainText('Logging Camp');
-    await expect(page.getByRole('button', { name: 'End Week', exact: true })).toBeEnabled();
-    expect(JSON.parse(await checkpoint(page)).state).toEqual(valid.state);
-    expect(await slot(page, key) === text).toBe(true); expect(await slot(page, otherKey)).toBe(other);
-  }
-  const overflow = variant(s => { s.state.revision = Number.MAX_SAFE_INTEGER; });
-  await setSlot(page, overflow, key); await continueLocally(page);
-  await expect(region(page).getByRole('alert')).toContainText('original state was preserved');
+  const text = {
+    missing: null, malformed: '{', 'empty object': '{}', 'opposite mode': other,
+    version: variant(s => { s.schemaVersion = 2; }), ruleset: variant(s => { s.rulesetId = 'future'; }),
+    map: variant(s => { s.state.tiles[0].terrain = 'ore'; }),
+    'negative stock': variant(s => { s.state.world.settlements.settlement_haven_01.inventory.gold = -1; }),
+    'report phase': variant(s => { s.state.phase = 'report'; }), oversize: ' '.repeat(1024 * 1024 + 1),
+    'revision overflow': variant(s => { s.state.revision = Number.MAX_SAFE_INTEGER; }),
+  }[kind];
+  if (text !== null) await setSlot(page, text, key);
+  await continueLocally(page);
+  const message = kind === 'missing' ? 'No local checkpoint' : kind === 'revision overflow' ? 'original state was preserved' : 'left unchanged';
+  await expect(region(page).getByRole('alert')).toContainText(message);
+  await expect(gold(page)).toHaveText('28'); await expect(page.getByTestId('trial-tile-forest-1')).toContainText('Logging Camp');
+  await expect(page.getByRole('button', { name: 'End Week', exact: true })).toBeEnabled();
   expect(JSON.parse(await checkpoint(page)).state).toEqual(valid.state);
-  expect(await slot(page, key)).toBe(overflow); expect(await slot(page, otherKey)).toBe(other);
+  expect(await slot(page, key)).toBe(text); expect(await slot(page, otherKey)).toBe(other);
 });
+}
 
 test(`blocked or full storage preserves full state, both slots and file backups (${mode})`, async ({ page }) => {
   await page.goto(`/?mode=${mode}`); await saveLocally(page); const prior = (await slot(page, key))!;
