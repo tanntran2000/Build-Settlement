@@ -6,7 +6,7 @@ Prototype game quản lý khu định cư hậu tận thế: xây dựng, tổ c
 
 - Bản thử nghiệm theo ô đất: xây, nâng cấp, thay thế và tạm dừng công trình.
 - Phân công workforce, quản lý tài nguyên và xem kết quả sau mỗi tuần.
-- Xuất/nhập checkpoint JSON và một checkpoint lưu thủ công trong trình duyệt, trong giai đoạn Planning của tile trial.
+- Xuất/nhập checkpoint JSON và checkpoint lưu thủ công riêng cho tile trial và population trial, trong giai đoạn Planning.
 
 Game đang ở giai đoạn **early prototype**. Nhiều hệ thống dự kiến chưa có; cơ chế và dữ liệu có thể thay đổi giữa các bản thử nghiệm.
 
@@ -25,9 +25,9 @@ Mở địa chỉ terminal hiển thị, mặc định `http://localhost:3000`. 
 
 ## Lưu và tiếp tục
 
-Trong tile trial, chọn **Export checkpoint** khi đang Planning để giữ file lưu. Dùng **Import checkpoint** để tiếp tục từ checkpoint tương thích; nếu đang xem báo cáo, chọn **Plan next week** trước.
+Trong tile trial hoặc population trial, chọn **Export checkpoint** khi đang Planning để giữ file lưu. Dùng **Import checkpoint** để tiếp tục từ checkpoint tương thích với chế độ đang chơi; nếu đang xem báo cáo, chọn **Plan next week** trước.
 
-**Save locally** giữ một checkpoint duy nhất trong trình duyệt và profile hiện tại (lưu lại sẽ thay bản trước); **Continue locally** khôi phục nó. Checkpoint này mất nếu xoá dữ liệu trang, không dùng được ở trình duyệt/profile/địa chỉ khác và có thể không khả dụng khi trình duyệt chặn lưu trữ, nên vẫn hãy Export file để sao lưu.
+**Save locally** giữ một checkpoint riêng cho mỗi chế độ trong trình duyệt, profile và địa chỉ hiện tại (lưu lại sẽ thay bản trước của chế độ đó); **Continue locally** khôi phục checkpoint của chế độ đang chơi. Hai nút chỉ dùng khi Planning. Checkpoint này mất nếu xoá dữ liệu trang, không dùng được ở trình duyệt/profile/địa chỉ khác và có thể không khả dụng khi trình duyệt chặn lưu trữ, nên vẫn hãy Export file để sao lưu.
 
 Reload mở ván mới. Hiện chưa có autosave hoặc cloud save; hãy giữ file checkpoint đã xuất. Classic Weekly chưa hỗ trợ lưu game.
 
