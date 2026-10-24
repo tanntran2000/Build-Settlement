@@ -1,6 +1,6 @@
 # WP-TILE-WORLD-FOUNDATION-01 — Connected world session (design spec v0.3, proposed for G1)
 
-Status: approved for execution (G1), user "ok" at 2026-10-24 07:40:18 UTC for WP v0.3; repair round 1 locally verified; new frozen candidate awaiting independent Tester/Reviewer and CI gates. Snapshots: `.v0.1.md`, `.v0.2.md`. Proposed repo path: `docs/superpowers/specs/2026-10-24-tile-world-foundation.md`. Baseline `main` `62d74521aa33c1c61d0da254623565960571f846`, tree `2918f406a312be2cef9dfc4f0614fc77ada3809e`. Reviews: v0.1 (HOLD), v0.2 delta (CONDITIONAL) in `C:/Users/Admin/.t3/scratch/2026-10-24-independent-plan-reviewer-and-builder-b5aee7ea/`.
+Status: approved for execution (G1), user "ok" at 2026-10-24 07:40:18 UTC for WP v0.3; repair round 2 locally verified; final allowed round complete, frozen candidate awaiting independent Tester/Reviewer and CI gates. Snapshots: `.v0.1.md`, `.v0.2.md`. Proposed repo path: `docs/superpowers/specs/2026-10-24-tile-world-foundation.md`. Baseline `main` `62d74521aa33c1c61d0da254623565960571f846`, tree `2918f406a312be2cef9dfc4f0614fc77ada3809e`. Reviews: v0.1 (HOLD), v0.2 delta (CONDITIONAL) in `C:/Users/Admin/.t3/scratch/2026-10-24-independent-plan-reviewer-and-builder-b5aee7ea/`.
 
 ## 1. Authority
 
@@ -36,7 +36,7 @@ interface WorldSessionState { city: TileTrialState; outside: OutsideWorldState }
 ## 5. Load as prepare then publish (T1)
 
 1. Decode and fully validate the envelope (codec).
-2. Prepare: call the pure dispatcher `executeTileTrialCommand(liveCity, { type: "LOAD_TRIAL", expectedRevision, snapshot: loaded.city }, "tile-population-01")`; it clones, rebases revision to `max(current, saved) + 1`, rejects overflow and invariants, and never mutates its input. Also prepare the detached outside (fresh from `JSON.parse`) and the derived worker text.
+2. Prepare: per coordinator T-4 ruling (repair round 2), first capture the loaded session into detached plain records/dense arrays using own data descriptors, then validate that whole capture. Use only the resulting detached validated `captured` afterwards. Call the pure dispatcher `executeTileTrialCommand(liveCity, { type: "LOAD_TRIAL", expectedRevision, snapshot: captured.city }, "tile-population-01")`; it clones, rebases revision to `max(current, saved) + 1`, rejects overflow and invariants, and never mutates its input. Prepare outside from `captured.outside` and the derived worker text; never re-read active loaded input. Capture is private to the UI helper and adds no encoding/size policy; codecs remain unchanged. Codec round-tripping is unsuitable here because valid compact JSON at the decode cap can grow on re-encoding.
 3. If any preparation fails, both live halves stay unchanged.
 4. Publish: assign city, then outside, consecutively with no await, callback, logging or fallible work between. Afterwards clear report, set worker text, logger context and notice.
 
