@@ -16,3 +16,5 @@ export { SOCIAL_RESOURCE_SCALE } from "./social/profile.js";
 export * from "./trial/catalog.js";
 export * from "./trial/types.js";
 export * from "./trial/state.js";
+export * from "./world/types.js";
+export * from "./world/session.js";
