@@ -1,6 +1,6 @@
 # WP-TILE-WORLD-FOUNDATION-01 Implementation Plan (v0.3, proposed for G1)
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax. Status: G1 approved by user "ok" at 2026-10-24 07:40:18 UTC for v0.3; execution in progress. Snapshots `.v0.1.md`, `.v0.2.md`.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax. Status: G1 approved by user "ok" at 2026-10-24 07:40:18 UTC for v0.3; local implementation verified; frozen candidate awaiting independent Tester/Reviewer and CI gates. Snapshots `.v0.1.md`, `.v0.2.md`.
 
 **Goal:** `?mode=world` starts a New Game with the existing 10-tile city (`tile-population-01`) plus the approved seeded outside world, shows a non-revealing summary, and saves/restores the whole session atomically; old modes, formats and slots unchanged.
 
@@ -131,7 +131,7 @@ Seed 0 trace anchors: first swaps (79,21) (78,0) (77,17) (76,11) (75,35); type w
   - **Tickets:** a successful Continue does `++importRead`. Late success and catch paths check the ticket. The size guard before reading is kept (`TileManagement.svelte:85`).
   - **Isolation:** in world mode the city-only codecs and slots are never called; in the other modes the world ones never are.
 
-- [ ] **Step 1: failing tests.**
+- [x] **Step 1: failing tests.**
   - **Unit (`world-session.test.ts`):**
     - U1: `prepareWorldSessionLoad` returns failure, with `live` deep-equal to its prior value and no mutation, for each of: stale revision, `live.city.revision = MAX_SAFE_INTEGER` (overflow), invalid city, invalid outside. On success the revision equals `max(live, saved) + 1`, also for an identical save.
     - U6: the helpers read and write only `WORLD_SESSION_CHECKPOINT_KEY`. A storage failure preserves bytes. A missing world slot with valid old slots present gives "No local checkpoint" and nothing changes.
@@ -145,10 +145,10 @@ Seed 0 trace anchors: first swaps (79,21) (78,0) (77,17) (76,11) (75,35); type w
     - U8: Report phase disables all four controls.
     - U9: Save locally, End Week twice, Continue locally → week, stocks, cohorts and summary restored, and next-week results equal uninterrupted play. Export, then reload, then Import → the same.
     - R2: the existing e2e suites pass unchanged.
-- [ ] **Step 2:** `npm test -- packages/ui/src/__tests__/world-session.test.ts` and `npm run test:smoke` → FAIL.
-- [ ] **Step 3:** implement the contract above.
-- [ ] **Step 4:** both PASS; `npm run typecheck:ui` exit 0.
-- [ ] **Step 5:** commit `feat(ui): opt-in world session mode`.
+- [x] **Step 2:** `npm test -- packages/ui/src/__tests__/world-session.test.ts` and `npm run test:smoke` → FAIL.
+- [x] **Step 3:** implement the contract above.
+- [x] **Step 4:** both PASS; `npm run typecheck:ui` exit 0.
+- [x] **Step 5:** commit `feat(ui): opt-in world session mode`.
 
 ## Final verification
 
@@ -189,3 +189,12 @@ Seed 0 trace anchors: first swaps (79,21) (78,0) (77,17) (76,11) (75,35); type w
 - Task 1: complete ? 61/61 targeted core tests, typecheck:core exit 0. Independent literal vectors/goldens retained. Initial RED: three absent modules (exit 1); first GREEN attempt caught incorrect ruleset-module import (2 failed), corrected once; type narrowing corrected once after typecheck diagnostics. No repeated unresolved failure. Core task commit follows this ledger update.
 
 - Task 2: complete ? codec RED missing module exit 1; 19 codec tests GREEN (33 combined codec/UI tests) exit 0; whole suite 938/938 exit 0; typecheck:persistence via full typecheck exit 0 after one literal fixture typing correction. Core commit `fff89c0c31975230f33fbaef286b5a800acba567`. No regeneration on load, capped envelope and cross-format isolation verified. Codec commit follows this ledger update.
+
+- Task 3: complete -- helper RED absent module exit 1; 14 helper tests GREEN exit 0. Browser RED U7 exit 1 (World heading absent on pristine build). Full npm smoke GREEN exit 0: 136/136 tests, including 126 existing cases unchanged and 10 world cases. No skips or retries. Task 2 commit: `5ec76d5aae3a27cb823aebcd573718199bc7310b`.
+- Execution adaptation: focused browser RED used the Playwright runner against the already-running pristine baseline server; full GREEN used the mandated npm smoke lifecycle with the temporary strict-port config. No repository config or protected test was edited.
+- Final local checks: lint, full typecheck (0 UI errors/warnings), unit 938/938, architecture checker (no violations/cycles/errors), standalone architecture regression 154/154, build, browser 136/136 and git diff --check all exit 0. UI JS gzip 42.08 kB; CSS gzip 1.42 kB. Exact commands, intermediate failures, exit codes and unabridged logs retained in `.temp/world-foundation-review/results.txt` and logs. Initial absent-module REDs are import-stage failures, not falsely counted as executed assertions.
+- Acceptance: V1-V3 literal PRNG/F12/edge/90-tile goldens; B1-B2 hostile descriptors/records/precedence; S1 allocation/references/provenance/later-action shapes; P1/U7 privacy; C1-C3 frozen round trip/caps/no regeneration/cross-format isolation; U1 full-session guard/revision/overflow; U2-U6b races/wrong slots; U8 Report lock; U9 populated session/next-week parity; R1/R2 existing suites unchanged.
+- Scope audit: exactly 16 new + 4 existing modified paths. Protected paths, formulas, simulation, dependencies, lockfiles, CI and AGENTS zero diff. Bounded high-confidence secret pattern scan: zero hits (not a credential-history audit). Approved independent oracle section unchanged. No design ruling or deferred minor introduced.
+- Supplementary visual check: 1280px/390px world screenshots preserved; zero page errors and no mobile horizontal overflow. T3 preview opened, but two snapshot calls returned `Preview automation snapshot timed out after 15000ms.` Switched to the authorized Playwright workflow for artifacts, then closed the owned T3 tab.
+- Builder inspected final diff for scope and atomic publication; this is not independent review. Independent Tester/Reviewer and remote CI not run by Builder; root owns those gates. No push, PR, merge, migration or other checkout. Evidence preserved, not deleted.
+- Freeze: all runtime/test source hashes equal bytes checked by final suite; only this ledger/approval status updated afterwards. Full candidate SHA/tree and clean tracked status recorded in external local review package after UI commit to avoid a self-referential hash.

@@ -1,6 +1,6 @@
 # WP-TILE-WORLD-FOUNDATION-01 — Connected world session (design spec v0.3, proposed for G1)
 
-Status: approved for execution (G1), user "ok" at 2026-10-24 07:40:18 UTC for WP v0.3; implementation in progress. Snapshots: `.v0.1.md`, `.v0.2.md`. Proposed repo path: `docs/superpowers/specs/2026-10-24-tile-world-foundation.md`. Baseline `main` `62d74521aa33c1c61d0da254623565960571f846`, tree `2918f406a312be2cef9dfc4f0614fc77ada3809e`. Reviews: v0.1 (HOLD), v0.2 delta (CONDITIONAL) in `C:/Users/Admin/.t3/scratch/2026-10-24-independent-plan-reviewer-and-builder-b5aee7ea/`.
+Status: approved for execution (G1), user "ok" at 2026-10-24 07:40:18 UTC for WP v0.3; local implementation verified; frozen candidate awaiting independent Tester/Reviewer and CI gates. Snapshots: `.v0.1.md`, `.v0.2.md`. Proposed repo path: `docs/superpowers/specs/2026-10-24-tile-world-foundation.md`. Baseline `main` `62d74521aa33c1c61d0da254623565960571f846`, tree `2918f406a312be2cef9dfc4f0614fc77ada3809e`. Reviews: v0.1 (HOLD), v0.2 delta (CONDITIONAL) in `C:/Users/Admin/.t3/scratch/2026-10-24-independent-plan-reviewer-and-builder-b5aee7ea/`.
 
 ## 1. Authority
 
