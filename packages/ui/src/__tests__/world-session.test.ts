@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { createWorldSession, type WorldSessionState } from '@haven/core';
-import { serializeWorldSessionSave } from '@haven/persistence';
+import { deserializeWorldSessionSave, serializeWorldSessionSave } from '@haven/persistence';
 import { prepareWorldSessionLoad, readLocalWorldSession, saveLocalWorldSession, WORLD_SESSION_CHECKPOINT_KEY } from '../world-session.js';
 
 const session = (seed = 0) => { const r = createWorldSession(seed); if (!r.success) throw Error(); return r.value; };
@@ -64,4 +64,28 @@ it.each(['window', 'getter', 'read', 'write'])('contains %s storage failure and 
 it('rejects invalid state before storage access', () => {
   const s: WorldSessionState = session(); s.city.phase = 'report';
   expect(saveLocalWorldSession(s).success).toBe(false); expect(storage.getItem).not.toHaveBeenCalled(); expect(storage.setItem).not.toHaveBeenCalled();
+});
+
+it('F1: replacing a valid checkpoint through an active Proxy leaves decodable descriptor data', () => {
+  const s = session(), old = serializeWorldSessionSave(s); if (!old.success) throw Error();
+  values.set(WORLD_SESSION_CHECKPOINT_KEY, old.text); let hooks = 0;
+  const active = new Proxy(s, { get(target, key, receiver) {
+    return key === 'toJSON' ? () => { hooks++; return {}; } : Reflect.get(target, key, receiver);
+  } });
+  const saved = saveLocalWorldSession(active);
+  expect(saved).toEqual({ success: true, replaced: true });
+  expect(deserializeWorldSessionSave(values.get(WORLD_SESSION_CHECKPOINT_KEY))).toEqual({ success: true, state: s });
+  expect(hooks).toBe(0); expect(storage.setItem).toHaveBeenCalledOnce();
+  oldKeys.forEach(k => expect(values.get(k)).toBe('protected-bytes'));
+});
+it.each(['accessor', 'own toJSON', 'revoked proxy'])('F1: rejected %s preserves prior valid bytes and never touches storage', kind => {
+  const s = session(), old = serializeWorldSessionSave(s); if (!old.success) throw Error();
+  values.set(WORLD_SESSION_CHECKPOINT_KEY, old.text); const before = new Map(values); let calls = 0;
+  if (kind === 'accessor') Object.defineProperty(s.city.world.settlements.settlement_haven_01.inventory, 'gold', { enumerable: true, get() { calls++; return 0; } });
+  if (kind === 'own toJSON') Object.assign(s, { toJSON() { calls++; return {}; } });
+  const proxy = Proxy.revocable(s, {}); if (kind === 'revoked proxy') proxy.revoke();
+  expect(saveLocalWorldSession(kind === 'revoked proxy' ? proxy.proxy : s).success).toBe(false);
+  expect(values).toEqual(before); expect(calls).toBe(0);
+  expect(storage.getItem).not.toHaveBeenCalled(); expect(storage.setItem).not.toHaveBeenCalled();
+  expect(deserializeWorldSessionSave(values.get(WORLD_SESSION_CHECKPOINT_KEY)).success).toBe(true);
 });

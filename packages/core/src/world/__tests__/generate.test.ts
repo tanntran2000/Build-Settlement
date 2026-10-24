@@ -1,7 +1,9 @@
 import { expect, it } from 'vitest';
 import { readFileSync, readdirSync } from 'node:fs';
-import { createOutsideWorld, validateOutsideWorldConfig } from '../generate.js';
+import { createOutsideWorld, validateOutsideWorldConfig, type OutsideWorldConfig } from '../generate.js';
 import { POPULATION_TILE_RULESET } from '../../trial/catalog.js';
+import { OUTSIDE_TRIAL_SCENARIO } from '../scenario.js';
+import { createWorldSession, isWorldSessionState } from '../session.js';
 
 // test-only fixture; not balance
 const fixture = () => ({
@@ -78,4 +80,38 @@ it('keeps ambient seed sources and platform dependencies out of core world runti
   for (const file of readdirSync(directory).filter(f => f.endsWith('.ts'))) {
     expect(readFileSync(new URL(file, directory), 'utf8')).not.toMatch(/Math\.random|Date\.now|performance\.now|\bcrypto\b|\bwindow\b|\bdocument\b|node:/);
   }
+});
+
+it('F2: generates from validated descriptors rather than active indexed array reads', () => {
+  const config: OutsideWorldConfig = structuredClone(OUTSIDE_TRIAL_SCENARIO);
+  let indexedReads = 0;
+  config.tiles = new Proxy(config.tiles, { get(target, key, receiver) {
+    if (key === '0') { indexedReads++; return { ...target[0], knownBy: ['ghost'] }; }
+    return Reflect.get(target, key, receiver);
+  } });
+  const generated = createOutsideWorld(config, 0), city = createWorldSession(0);
+  expect(generated.success).toBe(true); expect(city.success).toBe(true);
+  if (!generated.success || !city.success) return;
+  expect(isWorldSessionState({ city: city.value.city, outside: generated.value })).toBe(true);
+  expect(generated.value.tiles[0]).toEqual({ id: 'o01', owner: 'ai-1', knownBy: ['ai-1'], feature: null });
+  expect(indexedReads).toBe(0);
+});
+it.each(['root', 'tiles', 'tile', 'actors', 'knowledge', 'resources'])('F2: snapshots %s descriptors without virtual property reads', kind => {
+  const config: OutsideWorldConfig = structuredClone(OUTSIDE_TRIAL_SCENARIO); let reads = 0;
+  const active = <T extends object>(value: T): T => new Proxy(value, { get() { reads++; throw Error('unchecked read'); } });
+  if (kind === 'tiles') config.tiles = active(config.tiles);
+  if (kind === 'tile') config.tiles = config.tiles.map((t, i) => i === 0 ? active(t) : t);
+  if (kind === 'actors') config.actors = active(config.actors);
+  if (kind === 'knowledge') config.tiles = config.tiles.map((t, i) => i === 0 ? { ...t, knownBy: active(t.knownBy) } : t);
+  if (kind === 'resources') config.depositResources = active(config.depositResources);
+  const result = createOutsideWorld(kind === 'root' ? active(config) : config, 0);
+  expect(result.success).toBe(true); expect(reads).toBe(0);
+});
+it('F2: returns a detached config including tile records and knowledge arrays', () => {
+  const config = fixture(), validated = validateOutsideWorldConfig(config);
+  expect(validated.success).toBe(true); if (!validated.success) return;
+  config.actors[0] = 'ghost'; config.tiles[0].id = 'changed'; config.tiles[0].knownBy.push('ghost'); config.depositResources[0] = 'iron';
+  expect(validated.value.actors).toEqual(['player', 'ai']);
+  expect(validated.value.tiles[0]).toEqual({ id: 't0', owner: null, eligible: false, knownBy: [] });
+  expect(validated.value.depositResources).toEqual(['wheat', 'wood', 'iron']);
 });

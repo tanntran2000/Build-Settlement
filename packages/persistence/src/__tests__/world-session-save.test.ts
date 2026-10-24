@@ -67,3 +67,39 @@ it.each([LEGACY_TILE_RULESET, POPULATION_TILE_RULESET] as const)('keeps %s and w
   const old = serializeTileTrialSave(createTileTrialState(), ruleset); if (!old.success) throw Error();
   expect(code(deserializeWorldSessionSave(old.text))).toBe('INCOMPATIBLE_SAVE');
 });
+
+it.each(['session', 'city', 'inventory', 'outside', 'tiles', 'knowledge', 'feature'])('F1: serializes detached %s descriptors without virtual toJSON', level => {
+  const s = session(), before = structuredClone(s); let hooks = 0;
+  const active = <T extends object>(value: T): T => new Proxy(value, { get(target, key, receiver) {
+    return key === 'toJSON' ? () => { hooks++; return {}; } : Reflect.get(target, key, receiver);
+  } });
+  if (level === 'city') s.city = active(s.city);
+  if (level === 'inventory') s.city.world.settlements.settlement_haven_01.inventory = active(s.city.world.settlements.settlement_haven_01.inventory);
+  if (level === 'outside') s.outside = active(s.outside);
+  if (level === 'tiles') s.outside.tiles = active(s.outside.tiles);
+  if (level === 'knowledge') s.outside.tiles[0].knownBy = active(s.outside.tiles[0].knownBy);
+  if (level === 'feature') { const tile = s.outside.tiles.find(t => t.feature)!; tile.feature = active(tile.feature!); }
+  const result = serializeWorldSessionSave(level === 'session' ? active(s) : s);
+  expect(result.success).toBe(true); if (!result.success) return;
+  expect(deserializeWorldSessionSave(result.text)).toEqual({ success: true, state: before });
+  expect(hooks).toBe(0);
+});
+it('F1: validates captured data without any original get traps', () => {
+  const s = session(), before = structuredClone(s); let reads = 0;
+  const active = new Proxy(s, { get() { reads++; throw Error('unchecked read'); } });
+  const result = serializeWorldSessionSave(active);
+  expect(result.success).toBe(true); if (!result.success) return;
+  expect(deserializeWorldSessionSave(result.text)).toEqual({ success: true, state: before }); expect(reads).toBe(0);
+});
+it.each(['root accessor', 'nested accessor', 'array accessor', 'toJSON accessor', 'own toJSON', 'cycle'])('F1: rejects %s without getter/toJSON execution', kind => {
+  const s = session(); let calls = 0;
+  const getter = { enumerable: true, get() { calls++; throw Error('must not run'); } };
+  if (kind === 'root accessor') Object.defineProperty(s, 'city', getter);
+  if (kind === 'nested accessor') Object.defineProperty(s.city.world.settlements.settlement_haven_01.inventory, 'gold', getter);
+  if (kind === 'array accessor') Object.defineProperty(s.outside.tiles, '0', getter);
+  if (kind === 'toJSON accessor') Object.defineProperty(s.outside, 'toJSON', getter);
+  if (kind === 'own toJSON') Object.assign(s.outside, { toJSON() { calls++; return {}; } });
+  if (kind === 'cycle') Object.assign(s.outside, { cycle: s });
+  expect(serializeWorldSessionSave(s)).toMatchObject({ success: false, error: { code: 'INVALID_SAVE_STATE' } });
+  expect(calls).toBe(0);
+});

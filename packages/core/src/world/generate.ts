@@ -15,25 +15,42 @@ const id = (value: unknown): value is string => typeof value === 'string' && val
 const budget = (value: unknown): value is number => Number.isSafeInteger(value) && (value as number) >= 0;
 const invalid = (): WorldResult<never> => ({ success: false, error: { code: 'INVALID_WORLD_CONFIG', message: 'Outside world configuration is invalid.' } });
 
+// Capture fields once; validation and generation never read the active record again.
+function configRecord(raw: unknown, keys: readonly string[]): Record<string, unknown> | null {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
+  const prototype = Object.getPrototypeOf(raw);
+  if (prototype !== Object.prototype && prototype !== null) return null;
+  const captured = Object.create(null, Object.getOwnPropertyDescriptors(raw));
+  return hasWeeklyKeys(captured, keys) ? captured : null;
+}
+
 export function validateOutsideWorldConfig(raw: unknown): WorldResult<OutsideWorldConfig> {
   try {
-    if (!hasWeeklyKeys(raw, ['scenarioId', 'generator', 'cityRulesetId', 'actors', 'tiles', 'depositBudget', 'lootBudget', 'depositResources']) ||
-        !id(raw.scenarioId) || !id(raw.generator) || ![LEGACY_TILE_RULESET, POPULATION_TILE_RULESET].includes(raw.cityRulesetId as TileTrialRuleset)) return invalid();
-    const actors = readDenseArray(raw.actors), tiles = readDenseArray(raw.tiles), resources = readDenseArray(raw.depositResources);
+    const config = configRecord(raw, ['scenarioId', 'generator', 'cityRulesetId', 'actors', 'tiles', 'depositBudget', 'lootBudget', 'depositResources']);
+    if (!config || !id(config.scenarioId) || !id(config.generator) ||
+        ![LEGACY_TILE_RULESET, POPULATION_TILE_RULESET].includes(config.cityRulesetId as TileTrialRuleset)) return invalid();
+    const actors = readDenseArray(config.actors), tiles = readDenseArray(config.tiles), resources = readDenseArray(config.depositResources);
     if (!actors?.length || !actors.every(id) || new Set(actors).size !== actors.length || !tiles || !resources?.length ||
         !resources.every(r => r === 'wheat' || r === 'wood' || r === 'iron') || new Set(resources).size !== resources.length) return invalid();
     const ids = new Set<string>(); let eligible = 0;
-    for (const tile of tiles) {
-      if (!hasWeeklyKeys(tile, ['id', 'owner', 'eligible', 'knownBy']) || !id(tile.id) || ids.has(tile.id) ||
+    const capturedTiles: OutsideWorldConfig['tiles'][number][] = [];
+    for (const rawTile of tiles) {
+      const tile = configRecord(rawTile, ['id', 'owner', 'eligible', 'knownBy']);
+      if (!tile || !id(tile.id) || ids.has(tile.id) ||
           !(tile.owner === null || (id(tile.owner) && actors.includes(tile.owner))) || typeof tile.eligible !== 'boolean') return invalid();
       const known = readDenseArray(tile.knownBy);
       if (!known || !known.every(id) || !known.every(actor => actors.includes(actor)) ||
           !known.every((actor, i) => i === 0 || actors.indexOf(known[i - 1]) < actors.indexOf(actor)) ||
           (tile.owner !== null && !known.includes(tile.owner))) return invalid();
       ids.add(tile.id); if (tile.eligible) eligible++;
+      capturedTiles.push({ id: tile.id, owner: tile.owner as string | null, eligible: tile.eligible, knownBy: known });
     }
-    if (!budget(raw.depositBudget) || !budget(raw.lootBudget) || raw.depositBudget > eligible || raw.lootBudget > eligible - raw.depositBudget) return invalid();
-    return { success: true, value: raw as unknown as OutsideWorldConfig };
+    if (!budget(config.depositBudget) || !budget(config.lootBudget) || config.depositBudget > eligible || config.lootBudget > eligible - config.depositBudget) return invalid();
+    return { success: true, value: {
+      scenarioId: config.scenarioId, generator: config.generator, cityRulesetId: config.cityRulesetId as TileTrialRuleset,
+      actors, tiles: capturedTiles, depositBudget: config.depositBudget, lootBudget: config.lootBudget,
+      depositResources: resources as OutsideWorldConfig['depositResources'],
+    } };
   } catch { return invalid(); }
 }
 

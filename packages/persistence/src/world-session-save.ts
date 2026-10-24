@@ -6,10 +6,47 @@ export type WorldSaveFailure = { success: false; error: { code: 'INVALID_SAVE' |
 const fail = (code: WorldSaveFailure['error']['code'], message: string): WorldSaveFailure => ({ success: false, error: { code, message } });
 const tooLarge = (text: string) => text.length > TILE_SAVE_MAX_BYTES || new TextEncoder().encode(text).byteLength > TILE_SAVE_MAX_BYTES;
 
+// The save boundary accepts data, not active property reads or JSON callbacks.
+// Capture nested descriptors first, then validate and encode only this detached tree.
+function captureSaveData(raw: unknown): unknown {
+  const ancestors = new WeakSet<object>();
+  function copy(value: unknown): unknown {
+    if (value === null || ['string', 'boolean', 'number'].includes(typeof value)) return value;
+    if (typeof value !== 'object' || !value || ancestors.has(value)) throw Error('Invalid save data.');
+    const array = Array.isArray(value), prototype = Object.getPrototypeOf(value);
+    if (array ? prototype !== Array.prototype : prototype !== Object.prototype && prototype !== null) throw Error('Invalid save data.');
+    const descriptors = Object.getOwnPropertyDescriptors(value);
+    ancestors.add(value);
+    try {
+      if (array) {
+        const length = descriptors.length?.value;
+        if (!Number.isSafeInteger(length) || length < 0 || Reflect.ownKeys(descriptors).length !== length + 1) throw Error('Invalid save array.');
+        const result: unknown[] = [];
+        for (let i = 0; i < length; i++) {
+          const entry = descriptors[String(i)];
+          if (!entry?.enumerable || !('value' in entry)) throw Error('Invalid save array.');
+          result.push(copy(entry.value));
+        }
+        return result;
+      }
+      const result: Record<string, unknown> = Object.create(null);
+      for (const key of Reflect.ownKeys(descriptors)) {
+        if (typeof key !== 'string') throw Error('Invalid save field.');
+        const entry = descriptors[key];
+        if (!entry.enumerable || !('value' in entry)) throw Error('Invalid save field.');
+        result[key] = copy(entry.value);
+      }
+      return result;
+    } finally { ancestors.delete(value); }
+  }
+  try { return copy(raw); } catch { return undefined; }
+}
+
 export function serializeWorldSessionSave(session: unknown): { success: true; text: string } | WorldSaveFailure {
   try {
-    if (!isWorldSessionState(session)) return fail('INVALID_SAVE_STATE', 'Export requires a valid world session in Planning.');
-    const text = JSON.stringify({ format: WORLD_SESSION_SAVE_FORMAT, schemaVersion: 1, cityRulesetId: WORLD_SESSION_CITY_RULESET, state: session });
+    const snapshot = captureSaveData(session);
+    if (!isWorldSessionState(snapshot)) return fail('INVALID_SAVE_STATE', 'Export requires a valid world session in Planning.');
+    const text = JSON.stringify({ format: WORLD_SESSION_SAVE_FORMAT, schemaVersion: 1, cityRulesetId: WORLD_SESSION_CITY_RULESET, state: snapshot });
     if (tooLarge(text)) return fail('SAVE_TOO_LARGE', 'Checkpoint exceeds the 1 MiB limit.');
     return { success: true, text };
   } catch { return fail('SAVE_FAILED', 'Could not export this checkpoint. Your game was preserved.'); }
