@@ -185,7 +185,7 @@
   {/if}
 
   {#if lifeMode && player}
-    <section class="card" aria-label="Player">
+    <section class="card player" aria-label="Player">
       <p class="eyebrow">Player · leader of Haven</p>
       <h2>{player.character.name}</h2>
       <CharacterProfile view={{ character: player.character, profile: player.profile, role: 'player', postBuildingName: null }} />
@@ -319,6 +319,7 @@
   button { background: var(--accent-green); color: #000; cursor: pointer; margin: 4px 4px 4px 0; } button:disabled { opacity: .5; cursor: default; }
   :focus-visible { outline: 3px solid var(--accent-blue); outline-offset: 3px; } [role='alert'] { padding: 12px; border-left: 3px solid var(--accent-red); }
   #trial-management-error { scroll-margin-block: 1px; }
+  .player { overflow-wrap: anywhere; }
   .ledger { overflow-x: auto; } table { width: 100%; border-collapse: collapse; } th, td { padding: 8px; text-align: right; border-bottom: 1px solid var(--border-color); } th:first-child { text-align: left; }
   @media(max-width: 750px) { .layout { grid-template-columns: 1fr; } .stocks { grid-template-columns: repeat(3, 1fr); } main { padding: 12px; } }
 </style>

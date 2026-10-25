@@ -312,3 +312,57 @@ test('Import during Report shows "Choose Plan next week before importing."', asy
   await expect(page.getByRole('alert')).toHaveText('Choose Plan next week before importing.');
   await expect(playerRegion(page).getByRole('heading', { name: 'Ana', exact: true })).toBeVisible();
 });
+
+// ---- Long unbroken text stays readable (final fix wave, audit F1) ----
+const LONG_NAME = 'W'.repeat(64);
+const LONG_LABEL = 'M'.repeat(40);
+// Real text bounds (a Range over the content), not only the absence of a scrollbar: app.css hides horizontal overflow.
+async function expectTextInside(locator: ReturnType<Page['locator']>) {
+  const b = await locator.evaluate(el => {
+    const range = document.createRange(); range.selectNodeContents(el);
+    // Form controls scroll their own text; their box is what must fit.
+    const text = el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement ? el.getBoundingClientRect() : range.getBoundingClientRect(), card = el.closest('.card')!.getBoundingClientRect();
+    return { left: text.left, right: text.right, cardLeft: card.left, cardRight: card.right, viewport: document.documentElement.clientWidth, width: text.width };
+  });
+  expect(b.width).toBeGreaterThan(0);
+  expect(b.left).toBeGreaterThanOrEqual(b.cardLeft - 0.5);
+  expect(b.right).toBeLessThanOrEqual(Math.min(b.cardRight, b.viewport) + 0.5);
+}
+async function longNameGame(page: Page) {
+  await newGame(page);
+  await field(page, 'Name').fill(LONG_NAME);
+  await field(page, 'Birth name (optional)').fill('B'.repeat(64));
+  await field(page, 'Label').fill(LONG_LABEL);
+  await expectTextInside(field(page, 'Name'));
+  await button(page, 'Next').click();
+  await field(page, 'Biography').fill('Q'.repeat(1000));
+  await expectTextInside(field(page, 'Biography'));
+  await toReview(page);
+  const preview = creation(page).getByTestId('creation-preview');
+  await expect(preview).toContainText(LONG_NAME);
+  for (const p of await preview.locator('p').all()) await expectTextInside(p);
+  await button(page, 'Create character').click();
+  const player = playerRegion(page);
+  await expectTextInside(player.getByRole('heading', { name: LONG_NAME, exact: true }));
+  await expectTextInside(player.getByTestId('profile-player-short'));
+  await expectTextInside(player.getByTestId('profile-player-long'));
+  await player.getByRole('tab', { name: 'Profile' }).click();
+  for (const value of [LONG_NAME, 'B'.repeat(64), LONG_LABEL]) await expectTextInside(player.getByRole('definition').filter({ hasText: value }));
+}
+
+test('64-character unbroken name, birth name, label and biography stay inside their cards at 375px', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await longNameGame(page);
+});
+
+test('desktop profiles are unaffected: short values stay on one line and long text still fits at 1280px', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await startGame(page);
+  await playerRegion(page).getByRole('tab', { name: 'Profile' }).click();
+  const row = playerRegion(page).getByRole('definition').filter({ hasText: /^Ana$/ });
+  const [dt, dd] = await Promise.all([playerRegion(page).getByText('Name', { exact: true }).boundingBox(), row.boundingBox()]);
+  expect(Math.abs(dt!.y - dd!.y)).toBeLessThan(1);
+  const heading = await playerRegion(page).getByRole('heading', { name: 'Ana', exact: true }).boundingBox();
+  expect(heading!.height).toBeLessThan(40);
+  await longNameGame(page);
+});

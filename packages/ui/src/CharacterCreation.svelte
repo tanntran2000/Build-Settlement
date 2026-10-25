@@ -183,6 +183,8 @@
   fieldset { border: 1px solid var(--border-color); border-radius: 6px; margin: 12px 0 0; } details { margin: 16px 0; }
   button { background: var(--accent-green); color: #000; cursor: pointer; margin: 4px 4px 4px 0; } button:disabled { opacity: .5; cursor: default; }
   .field-error { color: var(--accent-red); margin: 4px 0; } .band { color: var(--text-muted); margin: 4px 0; }
+  /* Valid names may be 64 characters with no spaces; they must wrap, not overflow the card. */
+  [data-testid='creation-preview'] { overflow-wrap: anywhere; }
   .actions { margin-top: 16px; } :focus-visible { outline: 3px solid var(--accent-blue); outline-offset: 3px; }
   [role='alert'] { padding: 12px; border-left: 3px solid var(--accent-red); }
 </style>

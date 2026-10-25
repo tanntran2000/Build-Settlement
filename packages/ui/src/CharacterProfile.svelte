@@ -63,9 +63,10 @@
 </div>
 
 <style>
-  .profile { margin: 8px 0; } [role='tablist'] { display: flex; flex-wrap: wrap; gap: 4px; }
+  /* Long unbroken names and labels wrap inside the card instead of widening it. */
+  .profile { margin: 8px 0; min-width: 0; overflow-wrap: anywhere; } [role='tablist'] { display: flex; flex-wrap: wrap; gap: 4px; }
   button { font: inherit; border-radius: 6px; padding: 6px 8px; border: 1px solid var(--border-color); background: var(--bg-tertiary); color: var(--text-main); cursor: pointer; }
   [role='tab'][aria-selected='true'] { background: var(--accent-green); color: #000; }
-  dl { display: grid; gap: 4px; margin: 8px 0; } dl div { display: flex; gap: 8px; } dt { color: var(--text-muted); min-width: 9rem; } dd { margin: 0; }
+  dl { display: grid; gap: 4px; margin: 8px 0; } dl div { display: flex; gap: 8px; } dt { color: var(--text-muted); min-width: 9rem; } dd { margin: 0; min-width: 0; }
   p { margin: 8px 0; } :focus-visible { outline: 3px solid var(--accent-blue); outline-offset: 3px; }
 </style>

@@ -80,6 +80,15 @@ describe('validatePlayerDraft', () => {
       expect(errors[key]).toMatch(/^Choose a valid .+\.$/);
     }
   });
+  it('sparse face features get the faceFeatures field error, matching final creation', () => {
+    for (const features of [new Array(1), ['freckles', , 'scar'].slice(0, 2)] as string[][]) {
+      const d = draft({ appearance: { ...structuredClone(DEFAULT_PLAYER_DRAFT.appearance), face: { shape: 'oval', features } } });
+      expect(validatePlayerDraft(d)).toEqual({ faceFeatures: 'Choose a valid set of face features.' });
+      const created = createPlayerCharacter(d);
+      expect(created.success).toBe(false);
+      if (!created.success) expect(created.error.message).toBe('Choose a valid set of face features.');
+    }
+  });
 });
 
 describe('createPlayerCharacter', () => {

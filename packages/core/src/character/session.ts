@@ -1,4 +1,5 @@
 import { createNamedCharacter, type Occupation } from '../domain/character.js';
+import { readDenseArray } from '../world/arrays.js';
 import { createNpcWorldSession } from '../world/npc.js';
 import {
   BUILDS, CHARACTER_LIMITS as L, EYE_COLORS, FACE_FEATURES, FACE_SHAPES, HAIR_COLORS, HAIR_LENGTHS, HAIR_STYLES, HAIR_TEXTURES,
@@ -49,8 +50,9 @@ export function validatePlayerDraft(draft: PlayerDraft): DraftErrors {
   choose('hairTexture', oneOf(a.hair.texture, HAIR_TEXTURES), 'hair texture');
   choose('hairStyle', oneOf(a.hair.style, HAIR_STYLES), 'hair style');
   choose('faceShape', oneOf(a.face.shape, FACE_SHAPES), 'face shape');
-  const features = a.face.features;
-  choose('faceFeatures', Array.isArray(features) && features.length <= L.faceFeaturesMax && features.every(f => oneOf(f, FACE_FEATURES)) &&
+  // readDenseArray rejects holes, which every() would skip.
+  const features = readDenseArray(a.face.features);
+  choose('faceFeatures', features !== null && features.length <= L.faceFeaturesMax && features.every(f => oneOf(f, FACE_FEATURES)) &&
     new Set(features).size === features.length, 'set of face features');
   choose('build', oneOf(a.build, BUILDS), 'build');
   check('heightCm', int(a.heightCm, L.heightCm), `Height must be a whole number from ${L.heightCm[0]} to ${L.heightCm[1]} cm.`);
