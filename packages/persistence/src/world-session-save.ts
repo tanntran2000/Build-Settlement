@@ -8,7 +8,7 @@ const tooLarge = (text: string) => text.length > TILE_SAVE_MAX_BYTES || new Text
 
 // The save boundary accepts data, not active property reads or JSON callbacks.
 // Capture nested descriptors first, then validate and encode only this detached tree.
-function captureSaveData(raw: unknown): unknown {
+export function captureSaveData(raw: unknown): unknown {
   const ancestors = new WeakSet<object>();
   function copy(value: unknown): unknown {
     if (value === null || ['string', 'boolean', 'number'].includes(typeof value)) return value;
