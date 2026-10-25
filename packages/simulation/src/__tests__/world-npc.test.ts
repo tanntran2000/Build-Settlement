@@ -145,4 +145,28 @@ describe('executeWorldNpcCityCommand', () => {
     expect(executeWorldNpcCityCommand(bad, { type: 'NEXT_WEEK', expectedRevision: bad.city.revision }))
       .toMatchObject({ success: false, error: { code: 'INVALID_STATE' } });
   });
+  // Reviewer P2 regression: outside must be validated in both phases, without the Planning-only session validator.
+  const outsides: [string, (o: Record<string, unknown>) => unknown][] = [
+    ['null outside', () => null],
+    ['missing tiles', o => { delete o.tiles; return o; }],
+    ['extra key', o => ({ ...o, extra: 1 })],
+    ['bad seed', o => ({ ...o, seed: -1 })],
+    ['unknown owner', o => { (o.tiles as { owner: unknown }[])[0].owner = 'ghost'; return o; }],
+    ['unsupported generator', o => ({ ...o, generator: 'outside-gen-99' })],
+  ];
+  it.each(outsides)('rejects %s for END_WEEK in Planning and NEXT_WEEK in Report, with no mutation', (_, corrupt) => {
+    const planning = held(), report = city(held(), { type: 'END_WEEK', expectedWeek: 1 });
+    for (const [base, cmd] of [[planning, { type: 'END_WEEK', expectedWeek: 1 }], [report, { type: 'NEXT_WEEK' }]] as const) {
+      const bad = freeze({ ...base, outside: corrupt(structuredClone(base.outside) as unknown as Record<string, unknown>) }), before = structuredClone(bad);
+      expect(executeWorldNpcCityCommand(bad, { expectedRevision: base.city.revision, ...cmd }))
+        .toMatchObject({ success: false, error: { code: 'INVALID_STATE' } });
+      expect(bad).toEqual(before);
+    }
+  });
+  it('still runs valid END_WEEK then NEXT_WEEK with outside carried unchanged', () => {
+    const s = held(), r = city(s, { type: 'END_WEEK', expectedWeek: 1 });
+    expect(r.city.phase).toBe('report'); expect(r.city.revision).toBe(s.city.revision + 1); expect(r.outside).toEqual(s.outside);
+    const n = city(r, { type: 'NEXT_WEEK' });
+    expect(n.city.phase).toBe('planning'); expect(n.outside).toEqual(s.outside); expect(isNpcWorldSessionState(n)).toBe(true);
+  });
 });

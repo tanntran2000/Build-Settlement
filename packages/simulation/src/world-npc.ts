@@ -1,4 +1,4 @@
-import { hasWeeklyKeys, isNpcWorldSessionState, isTileTrialState, isWorldNpcList, managerSlotTileIds, WORLD_SESSION_CITY_RULESET, type NpcWorldSessionState, type TileTrialReport, type TileTrialState } from "@haven/core";
+import { createTileTrialState, hasWeeklyKeys, isNpcWorldSessionState, isTileTrialState, isWorldNpcList, isWorldSessionState, managerSlotTileIds, WORLD_SESSION_CITY_RULESET, type NpcWorldSessionState, type TileTrialReport, type TileTrialState } from "@haven/core";
 import { executeTileTrialCommand } from "./tile-trial.js";
 import { trialSafe } from "./tile-trial-week.js";
 
@@ -40,6 +40,9 @@ export function executeWorldNpcCityCommand(session: unknown, raw: unknown): Worl
   const fail = (code: string, message: string): WorldNpcCityResult => ({ success: false, error: { code, message } });
   try {
     if (!hasWeeklyKeys(session, ["city", "outside", "npcs"]) || !isTileTrialState(session.city) || !isWorldNpcList(session.npcs, session.city)) return fail("INVALID_STATE", "World session is invalid; nothing was changed.");
+    // Outside rules live in the Planning-only session validator; pair outside with a fresh Planning
+    // city so only outside is judged, while the live city (Planning or Report) is checked above.
+    if (!isWorldSessionState({ city: createTileTrialState(), outside: session.outside })) return fail("INVALID_STATE", "World session is invalid; nothing was changed.");
     const type = raw && typeof raw === "object" ? Object.getOwnPropertyDescriptor(raw, "type")?.value : undefined;
     if (type === "LOAD_TRIAL") return fail("INVALID_COMMAND", "Load an NPC world checkpoint through Continue or Import.");
     const result = executeTileTrialCommand(session.city, raw, WORLD_SESSION_CITY_RULESET);
