@@ -25,10 +25,11 @@ const AXIS_BANDS: Record<Axis, { edges: [number, number, number, number]; bands:
 };
 export function axisBand(axis: Axis, value: number): Band | null {
   const { edges: [a, b, c, d], bands } = AXIS_BANDS[axis];
-  if (value < a) return bands[0];
-  if (value < b) return bands[1];
+  // Return a copy so a caller's edit cannot change the shared table.
+  if (value < a) return { ...bands[0] };
+  if (value < b) return { ...bands[1] };
   if (value <= c) return null;
-  return value <= d ? bands[2] : bands[3];
+  return { ...(value <= d ? bands[2] : bands[3]) };
 }
 export function heightBand(cm: number): Band {
   if (cm < 155) return { short: 'short', long: 'short' };

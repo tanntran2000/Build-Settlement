@@ -121,6 +121,23 @@ describe('bands', () => {
     expect(axisBand('warmth', 60.5)?.short).toBe('friendly');
     expect(axisBand('warmth', 100)?.long).toBe('very warm toward everyone');
   });
+  it('editing a returned band cannot change later bands or descriptions for the same input', () => {
+    const view = clara();
+    const before = [describeShort(view), describeLong(view), JSON.stringify(profileRows(view))];
+    for (const axis of ['attractiveness', 'learningAptitude', 'warmth'] as Axis[])
+      for (const v of [0, 30, 70, 100]) {
+        const band = axisBand(axis, v)!; const expected = { ...band };
+        band.short = 'corrupt'; band.long = 'corrupt';
+        expect(axisBand(axis, v)).toEqual(expected);
+      }
+    for (const cm of [140, 160, 175, 200]) {
+      const band = heightBand(cm); const expected = { ...band };
+      band.short = 'corrupt'; band.long = 'corrupt';
+      expect(heightBand(cm)).toEqual(expected);
+    }
+    profileRows(view).forEach(r => { r.label = 'corrupt'; r.value = 'corrupt'; });
+    expect([describeShort(view), describeLong(view), JSON.stringify(profileRows(view))]).toEqual(before);
+  });
   it('height bands use fixed edges', () => {
     expect(heightBand(154).short).toBe('short');
     expect(heightBand(155).long).toBe('of average height');
