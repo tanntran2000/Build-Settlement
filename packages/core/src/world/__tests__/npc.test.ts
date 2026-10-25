@@ -1,17 +1,19 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { createTileTrialState } from '../../trial/state.js';
-import { isWorldSessionState } from '../session.js';
-import { NPC_MANAGER_BUILDING_TYPES, WORLD_STARTER_NPCS, WORLD_TRAITS } from '../npc-content.js';
+import { createWorldSession, isWorldSessionState } from '../session.js';
+import { NPC_MANAGER_BUILDING_TYPES, WORLD_NPC_GIVEN_NAMES, WORLD_STARTER_NPCS, WORLD_TRAITS } from '../npc-content.js';
 import { createNpcWorldSession, isNpcWorldSessionState, isWorldNpcList, managerSlotTileIds } from '../npc.js';
 
-const session = () => { const r = createNpcWorldSession(0); if (!r.success) throw Error(r.error.message); return r.value; };
+const session = (seed = 0) => { const r = createNpcWorldSession(seed); if (!r.success) throw Error(r.error.message); return r.value; };
 type Mutable = Record<string, any>;
+const names = (seed: number) => session(seed).npcs.map(n => n.character.name);
+const unnamed = (npcs: readonly { character: { name: string } }[]) => npcs.map(n => ({ ...n, character: { ...n.character, name: '' } }));
 const mutated = (mutate: (npcs: Mutable[]) => void) => { const s = session(); mutate(s.npcs as unknown as Mutable[]); return s; };
 
 describe('starter content', () => {
   it('has exactly 3 frozen, valid, unassigned female starters with known traits', () => {
     expect(WORLD_STARTER_NPCS).toHaveLength(3);
-    expect(WORLD_STARTER_NPCS.map(n => n.character.id)).toEqual(['npc_mai', 'npc_vy', 'npc_trang']);
+    expect(WORLD_STARTER_NPCS.map(n => n.character.id)).toEqual(['npc_starter_1', 'npc_starter_2', 'npc_starter_3']);
     const traitIds = WORLD_TRAITS.map(t => t.id);
     for (const npc of WORLD_STARTER_NPCS) {
       expect(npc.character.gender).toBe('female');
@@ -33,10 +35,39 @@ describe('createNpcWorldSession', () => {
   it('creates a valid session whose npcs do not alias starter content', () => {
     const s = session();
     expect(isNpcWorldSessionState(s)).toBe(true);
-    expect(s.npcs).toEqual(WORLD_STARTER_NPCS);
+    expect(unnamed(s.npcs)).toEqual(unnamed(WORLD_STARTER_NPCS));
     s.npcs[0].character.skills.technical = 0; s.npcs[0].traits.push('blunt');
     expect(WORLD_STARTER_NPCS[0].character.skills.technical).toBe(65);
     expect(WORLD_STARTER_NPCS[0].traits).toEqual(['frugal', 'restless']);
+  });
+  it('resolves three distinct English pool names from the seed, reproducibly', () => {
+    for (let seed = 0; seed < 200; seed++) {
+      const n = names(seed);
+      expect(new Set(n).size).toBe(3); n.forEach(name => expect(WORLD_NPC_GIVEN_NAMES).toContain(name));
+    }
+    expect(names(42)).toEqual(names(42)); expect(names(4294967295)).toEqual(names(4294967295));
+    expect(new Set(Array.from({ length: 50 }, (_, seed) => names(seed).join())).size).toBeGreaterThan(1);
+  });
+  it('uses no ambient randomness and leaves the outside world of the seed unchanged', () => {
+    const spy = vi.spyOn(Math, 'random').mockImplementation(() => { throw Error('ambient random'); });
+    try {
+      const s = session(9), base = createWorldSession(9);
+      expect(base.success && base.value.outside).toEqual(s.outside);
+    } finally { spy.mockRestore(); }
+  });
+  it('keeps identity, stats and traits independent of the resolved names', () => {
+    const a = session(1), b = session(2);
+    expect(names(1)).not.toEqual(names(2));
+    expect(a.npcs.map(n => n.character.id)).toEqual(['npc_starter_1', 'npc_starter_2', 'npc_starter_3']);
+    expect(unnamed(a.npcs)).toEqual(unnamed(b.npcs));
+    expect(isNpcWorldSessionState(mutated(n => { n[0].character.name = 'Any Hand Edited Name'; }))).toBe(true);
+  });
+  it('has a small original English name pool and no fixed provisional names', () => {
+    expect(WORLD_NPC_GIVEN_NAMES.length).toBeGreaterThanOrEqual(3);
+    expect(new Set(WORLD_NPC_GIVEN_NAMES).size).toBe(WORLD_NPC_GIVEN_NAMES.length);
+    WORLD_NPC_GIVEN_NAMES.forEach(name => expect(name).toMatch(/^[A-Z][a-z]+$/));
+    expect(Object.isFrozen(WORLD_NPC_GIVEN_NAMES)).toBe(true);
+    for (const old of ['Mai', 'Vy', 'Trang']) expect(JSON.stringify([WORLD_STARTER_NPCS, WORLD_NPC_GIVEN_NAMES])).not.toContain(old);
   });
   it('rejects a bad seed like the world session', () => {
     expect(createNpcWorldSession(-1)).toMatchObject({ success: false, error: { code: 'INVALID_WORLD_SEED' } });

@@ -18,6 +18,11 @@ it('round trips assigned npcs as detached data in its own format', () => {
   expect(loaded).toEqual({ success: true, state: before });
   if (loaded.success) { loaded.state.npcs[0].postTileId = null; expect(s).toEqual(before); }
 });
+it('loads resolved and hand-edited names verbatim, never regenerating them', () => {
+  const e = envelope(); e.state.npcs[1].character.name = 'Margaret';
+  const loaded = deserializeNpcWorldSessionSave(JSON.stringify(e));
+  expect(loaded.success && loaded.state.npcs.map(n => n.character.name)).toEqual(e.state.npcs.map((n: { character: { name: string } }) => n.character.name));
+});
 it('keeps world v1 and npc formats mutually incompatible, inserting nothing', () => {
   const world = createWorldSession(0); if (!world.success) throw Error();
   const v1 = serializeWorldSessionSave(world.value); if (!v1.success) throw Error();

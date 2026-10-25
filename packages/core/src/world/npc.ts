@@ -3,7 +3,8 @@ import { hasWeeklyKeys } from '../domain/canonical-state.js';
 import { REQUIRED_EMOTIONS, REQUIRED_NEEDS, REQUIRED_RELATIONSHIP, REQUIRED_SKILLS } from '../domain/gamestate.js';
 import type { TileTrialState } from '../trial/types.js';
 import { readDenseArray } from './arrays.js';
-import { NPC_MANAGER_BUILDING_TYPES, WORLD_STARTER_NPCS, WORLD_TRAITS } from './npc-content.js';
+import { NPC_MANAGER_BUILDING_TYPES, WORLD_NPC_GIVEN_NAMES, WORLD_STARTER_NPCS, WORLD_TRAITS } from './npc-content.js';
+import { createSeededRandom } from './random.js';
 import { createWorldSession, isWorldSessionState } from './session.js';
 import type { WorldResult, WorldSessionState } from './types.js';
 
@@ -58,7 +59,13 @@ export function isNpcWorldSessionState(raw: unknown): raw is NpcWorldSessionStat
   } catch { return false; }
 }
 
+// Names are drawn once here from the validated session seed (salted so the outside stream is
+// independent) and then persisted; nothing else rerolls them. Same seed, same names.
 export function createNpcWorldSession(seed: unknown): WorldResult<NpcWorldSessionState> {
   const base = createWorldSession(seed);
-  return base.success ? { success: true, value: { ...base.value, npcs: structuredClone(WORLD_STARTER_NPCS) as WorldNpc[] } } : base;
+  if (!base.success) return base;
+  const random = createSeededRandom((base.value.outside.seed ^ 0x4e504331) >>> 0), pool = [...WORLD_NPC_GIVEN_NAMES];
+  const npcs = structuredClone(WORLD_STARTER_NPCS) as WorldNpc[];
+  for (const npc of npcs) npc.character.name = pool.splice(Math.floor(random() * pool.length), 1)[0];
+  return { success: true, value: { ...base.value, npcs } };
 }
