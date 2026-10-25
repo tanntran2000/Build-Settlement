@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { createNamedCharacter, type NamedCharacter } from '../../domain/character.js';
 import { createNpcWorldSession, isNamedCharacterRecord, isWorldNpcList } from '../../world/npc.js';
-import { CHARACTER_LIMITS, PLAYER_CHARACTER_ID, PLAYER_PROFESSIONS, PLACES } from '../catalog.js';
+import * as catalog from '../catalog.js';
+import { CHARACTER_LIMITS, PLAYER_CHARACTER_ID, PLAYER_PROFESSIONS, PLACES, SKIN_TONES } from '../catalog.js';
 import type { CharacterProfile } from '../types.js';
 import { isCharacterLifeSessionState, isCharacterProfile, isPlayerCharacter } from '../validate.js';
 
@@ -200,5 +201,58 @@ describe('isNamedCharacterRecord', () => {
     expect(isWorldNpcList(dup, s.city)).toBe(false);
     const bad = structuredClone(s.npcs); (bad[2].character as Mutable).name = ' Ana';
     expect(isWorldNpcList(bad, s.city)).toBe(false);
+  });
+});
+
+describe('catalogue immutability', () => {
+  const deepFrozen = (v: unknown): boolean => typeof v !== 'object' || v === null || (Object.isFrozen(v) && Object.values(v).every(deepFrozen));
+  const exported = Object.entries(catalog).filter(([, v]) => typeof v === 'object');
+  it('freezes every exported catalogue, its entries, tuples and lookup records', () => {
+    expect(exported.map(([k]) => k).sort()).toEqual(['BUILDS', 'CHARACTER_LIMITS', 'EYE_COLORS', 'FACE_FEATURES', 'FACE_SHAPES', 'HAIR_COLORS', 'HAIR_LENGTHS',
+      'HAIR_STYLES', 'HAIR_TEXTURES', 'OUTFITS', 'PLACES', 'PLAYER_PROFESSIONS', 'PROFESSION_LABELS', 'PROFESSION_OUTFITS', 'REGIONS', 'ROLE_OUTFITS',
+      'SKIN_TONES', 'UPBRINGINGS']);
+    for (const [name, value] of exported) expect(deepFrozen(value), name).toBe(true);
+  });
+  it('mutation attempts throw and leave validation unchanged', () => {
+    const adultPlayer = (over: Partial<NamedCharacter>) => ({ ...player(), character: playerCharacter(over) });
+    const before = [valid(p => { p.appearance.skinTone = 'green'; }), valid(p => { p.identity.birthplaceId = 'haven'; }), valid(() => {}),
+      isPlayerCharacter(adultPlayer({ occupation: 'governor' })), isCharacterProfile(base('npc_starter_1'), character(17))];
+    const attempts: (() => void)[] = [
+      () => { (SKIN_TONES[0] as Mutable).id = 'green'; },
+      () => { (PLACES.find(p => p.id === 'haven') as Mutable).regionId = 'northreach'; },
+      () => { (PLAYER_PROFESSIONS as Mutable).push('governor'); },
+      () => { (CHARACTER_LIMITS as Mutable).ageMin = 17; },
+      () => { (CHARACTER_LIMITS.heightCm as Mutable)[0] = 100; },
+      () => { (catalog.ROLE_OUTFITS as Mutable).farm = 'armor'; },
+      () => { (catalog.PROFESSION_LABELS as Mutable).security = 'guard'; },
+      () => { (catalog.BUILDS[0] as Mutable).long = 'x'; },
+      () => { (catalog.OUTFITS as Mutable).push({ id: 'armor', phrase: 'armor' }); },
+    ];
+    attempts.forEach(a => expect(a).toThrow(TypeError));
+    expect([valid(p => { p.appearance.skinTone = 'green'; }), valid(p => { p.identity.birthplaceId = 'haven'; }), valid(() => {}),
+      isPlayerCharacter(adultPlayer({ occupation: 'governor' })), isCharacterProfile(base('npc_starter_1'), character(17))]).toEqual(before);
+    expect(before).toEqual([false, false, true, false, true]);
+    expect(isPlayerCharacter({ ...player(), character: playerCharacter({ age: 17 }) })).toBe(false);
+    expect(SKIN_TONES[0].id).toBe('porcelain');
+    expect(CHARACTER_LIMITS.heightCm).toEqual([140, 210]);
+  });
+  it('exposes readonly entry properties to TypeScript', () => {
+    const typeOnly = () => {
+      // @ts-expect-error entry properties are readonly
+      SKIN_TONES[0].id = 'green';
+      // @ts-expect-error entry properties are readonly
+      PLACES[4].regionId = 'northreach';
+      // @ts-expect-error entry properties are readonly
+      catalog.BUILDS[0].short = 'x';
+      // @ts-expect-error entry properties are readonly
+      catalog.REGIONS[0].name = 'x';
+      // @ts-expect-error entry properties are readonly
+      catalog.OUTFITS[0].phrase = 'x';
+      // @ts-expect-error limit tuples are readonly
+      CHARACTER_LIMITS.heightCm[0] = 100;
+      // @ts-expect-error lookup records are readonly
+      catalog.ROLE_OUTFITS.farm = 'x';
+    };
+    expect(typeof typeOnly).toBe('function');
   });
 });
