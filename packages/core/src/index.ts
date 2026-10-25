@@ -18,3 +18,5 @@ export * from "./trial/types.js";
 export * from "./trial/state.js";
 export * from "./world/types.js";
 export * from "./world/session.js";
+export * from "./world/npc.js";
+export * from "./world/npc-content.js";

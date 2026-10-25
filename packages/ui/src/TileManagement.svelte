@@ -1,15 +1,18 @@
 <script lang="ts">
-  import { createTileTrialState, createWorldSession, summarizeOutside, weeklyWorkforceMilli, WEEKLY_RESOURCE_KEYS, TRIAL_BUILDINGS, TILE_TRIAL_BALANCE as B, LEGACY_TILE_RULESET, POPULATION_TILE_RULESET, type OutsideWorldState, type WorldSessionState, type TileTrialRuleset, type TileTrialReport } from '@haven/core';
-  import { executeTileTrialCommand } from '@haven/simulation';
-  import { serializeTileTrialSave, deserializeTileTrialSave, serializeWorldSessionSave, deserializeWorldSessionSave, TILE_SAVE_MAX_BYTES } from '@haven/persistence';
+  import { createNpcWorldSession, createTileTrialState, createWorldSession, summarizeOutside, weeklyWorkforceMilli, WEEKLY_RESOURCE_KEYS, TRIAL_BUILDINGS, TILE_TRIAL_BALANCE as B, LEGACY_TILE_RULESET, POPULATION_TILE_RULESET, type OutsideWorldState, type NpcWorldSessionState, type WorldNpc, type TileTrialRuleset, type TileTrialReport } from '@haven/core';
+  import { executeTileTrialCommand, executeWorldNpcCityCommand } from '@haven/simulation';
+  import { serializeTileTrialSave, deserializeTileTrialSave, serializeWorldSessionSave, deserializeWorldSessionSave, serializeNpcWorldSessionSave, deserializeNpcWorldSessionSave, TILE_SAVE_MAX_BYTES } from '@haven/persistence';
   import ErrorLog from './ErrorLog.svelte';
   import { errorLog } from './error-log.js';
   import { formatMilli as units } from './milli-format.js';
   import { readLocalCheckpoint, saveLocalCheckpoint } from './tile-local-checkpoint.js';
   import { prepareWorldSessionLoad, readLocalWorldSession, saveLocalWorldSession } from './world-session.js';
+  import { prepareNpcWorldSessionLoad, readLocalNpcWorldSession, saveLocalNpcWorldSession } from './world-npc-session.js';
+  import WorldNpcPanel from './WorldNpcPanel.svelte';
 
   export let ruleset: TileTrialRuleset = LEGACY_TILE_RULESET;
   export let world = false;
+  export let npcMode = false;
   $: populationMode = ruleset === POPULATION_TILE_RULESET;
   let state = createTileTrialState();
   let selectedId = 'forest-1';
@@ -22,15 +25,17 @@
   let importRead = 0;
   let report: Readonly<TileTrialReport> | null = null;
   let outside: OutsideWorldState | null = null;
+  let npcs: WorldNpc[] | null = null;
   if (world) {
     try {
-      const created = createWorldSession(crypto.getRandomValues(new Uint32Array(1))[0]);
-      if (created.success) { state = created.value.city; outside = created.value.outside; }
+      const seed = crypto.getRandomValues(new Uint32Array(1))[0];
+      const created = npcMode ? createNpcWorldSession(seed) : createWorldSession(seed);
+      if (created.success) { state = created.value.city; outside = created.value.outside; if (npcMode) npcs = (created.value as NpcWorldSessionState).npcs; }
       else error = created.error.message;
     } catch { error = 'Could not start a world session. Reload to try New Game again.'; }
   }
   $: outsideSummary = outside ? summarizeOutside(outside, 'player') : null;
-  $: checkpointLocked = locked || (world && !outside);
+  $: checkpointLocked = locked || (world && !outside) || (npcMode && !npcs);
   $: settlement = state.world.settlements[state.world.activeSettlementId!];
   $: selected = state.tiles.find(t => t.id === selectedId)!;
   $: definition = selected.building ? TRIAL_BUILDINGS[selected.building.typeId] : null;
@@ -55,7 +60,9 @@
     saveNotice = '';
     workforceError = '';
     managementError = null;
-    const result = executeTileTrialCommand(state, { type, expectedRevision, ...fields }, ruleset);
+    const action = { type, expectedRevision, ...fields };
+    // NPC mode routes city commands through the post reconciler; other modes are unchanged.
+    const result = npcs && outside ? executeWorldNpcCityCommand({ city: state, outside, npcs }, action) : executeTileTrialCommand(state, action, ruleset);
     if (!result.success) {
       error = '';
       if (type === 'SET_WORKERS') workforceError = result.error.message;
@@ -64,7 +71,7 @@
       errorLog.record(type === 'END_WEEK' ? 'END_WEEK' : 'RUNTIME', 'INVALID_COMMAND');
       return false;
     }
-    state = result.nextState;
+    if ('next' in result) { state = result.next.city; npcs = result.next.npcs; } else state = result.nextState;
     if (result.report) report = result.report;
     // Keep the last report mounted so a repeated pointer click cannot fall onto End Week.
     if (type === 'LOAD_TRIAL') report = null;
@@ -78,26 +85,27 @@
     errorLog.record('RUNTIME', 'INVALID_COMMAND');
   }
   function exportCheckpoint() {
-    const result = world ? serializeWorldSessionSave({ city: state, outside }) : serializeTileTrialSave(state, ruleset);
+    const result = npcMode ? serializeNpcWorldSessionSave({ city: state, outside, npcs }) : world ? serializeWorldSessionSave({ city: state, outside }) : serializeTileTrialSave(state, ruleset);
     if (!result.success) { checkpointError(result.error.message); return; }
     let url: string | undefined; let anchor: HTMLAnchorElement | undefined;
     try {
       url = URL.createObjectURL(new Blob([result.text], { type: 'application/json' }));
-      anchor = document.createElement('a'); anchor.href = url; anchor.download = `haven-${world ? 'world' : populationMode ? 'population' : 'tile'}-week-${state.world.week}.json`;
+      anchor = document.createElement('a'); anchor.href = url; anchor.download = `haven-${npcMode ? 'world-npc' : world ? 'world' : populationMode ? 'population' : 'tile'}-week-${state.world.week}.json`;
       document.body.append(anchor); anchor.click(); error = ''; saveNotice = 'Checkpoint download requested.';
     } catch { checkpointError('Could not download the checkpoint. Your game was preserved.'); }
     finally { anchor?.remove(); if (url) URL.revokeObjectURL(url); }
   }
-  function loadWorldSession(loaded: WorldSessionState, expectedRevision: number, notice: string, invalidateReads = false) {
-    if (!outside) { checkpointError('A world session is not available. Reload to try New Game again.'); return false; }
-    const prepared = prepareWorldSessionLoad({ city: state, outside }, loaded, expectedRevision);
+  function loadWorldSession(loaded: unknown, expectedRevision: number, notice: string, invalidateReads = false) {
+    if (!outside || (npcMode && !npcs)) { checkpointError('A world session is not available. Reload to try New Game again.'); return false; }
+    const prepared = npcs ? prepareNpcWorldSessionLoad({ city: state, outside, npcs }, loaded, expectedRevision) : prepareWorldSessionLoad({ city: state, outside }, loaded, expectedRevision);
     if (!prepared.success) { checkpointError(prepared.message); return false; }
     let nextWorkers: string;
     try { nextWorkers = String(prepared.next.city.tiles.find(t => t.id === selectedId)!.building?.workers ?? 0); }
     catch { checkpointError('Could not prepare the checkpoint. Your game was preserved.'); return false; }
-    // Publish both prepared halves before UI effects, with no fallible work between.
+    // Publish all prepared parts before UI effects, with no fallible work between.
     state = prepared.next.city;
     outside = prepared.next.outside;
+    if (npcs) npcs = (prepared.next as NpcWorldSessionState).npcs;
     if (invalidateReads) importRead++;
     report = null; workers = nextWorkers;
     errorLog.setContext('weekly', { week: state.world.week });
@@ -115,7 +123,7 @@
       const text = await file.text();
       if (ticket !== importRead) return;
       if (world) {
-        const result = deserializeWorldSessionSave(text);
+        const result = npcMode ? deserializeNpcWorldSessionSave(text) : deserializeWorldSessionSave(text);
         if (!result.success) { checkpointError(result.error.message); return; }
         loadWorldSession(result.state, expectedRevision, 'Checkpoint imported. Planning restored.');
         return;
@@ -126,14 +134,14 @@
     } catch { if (ticket === importRead) checkpointError('Could not read the checkpoint file. Your game was preserved.'); }
   }
   function saveLocally() {
-    const result = world ? saveLocalWorldSession({ city: state, outside }) : saveLocalCheckpoint(state, ruleset);
+    const result = npcMode ? saveLocalNpcWorldSession({ city: state, outside, npcs }) : world ? saveLocalWorldSession({ city: state, outside }) : saveLocalCheckpoint(state, ruleset);
     if (!result.success) { checkpointError(result.message); return; }
     error = ''; saveNotice = result.replaced ? 'Saved in this browser. Replaced the previous local checkpoint.' : 'Saved in this browser.';
   }
   function continueLocally() {
     if (world) {
       const expectedRevision = state.revision;
-      const result = readLocalWorldSession();
+      const result = npcMode ? readLocalNpcWorldSession() : readLocalWorldSession();
       if (!result.success) { checkpointError(result.message); return; }
       loadWorldSession(result.state, expectedRevision, 'Local checkpoint loaded. Planning restored.', true);
       return;
@@ -161,6 +169,10 @@
       <p>Outside tiles: {outsideSummary.total} · Yours: {outsideSummary.mine} · Held by other factions: {outsideSummary.others} · Neutral: {outsideSummary.neutral} · Explored by you: {outsideSummary.explored}</p>
       <p>Exploration, claiming and extraction are not available yet.</p>
     </section>
+  {/if}
+
+  {#if npcs && outside}
+    <WorldNpcPanel session={{ city: state, outside, npcs }} {locked} onapply={next => { state = next.city; npcs = next.npcs; saveNotice = ''; error = ''; }} />
   {/if}
 
   <section class="card" aria-label="Planning checkpoints">

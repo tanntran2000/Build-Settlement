@@ -13,8 +13,9 @@ window.addEventListener('unhandledrejection', () => errorLog.record('RUNTIME', '
 window.addEventListener('pagehide', () => errorLog.flush());
 
 const mode = new URLSearchParams(window.location.search).get('mode');
-const app = mode === 'tiles' || mode === 'population' || mode === 'world'
-  ? mount(TileManagement, { target: document.getElementById('app')!, props: { ruleset: mode === 'population' || mode === 'world' ? POPULATION_TILE_RULESET : LEGACY_TILE_RULESET, world: mode === 'world' } })
+const world = mode === 'world' || mode === 'world-npc';
+const app = mode === 'tiles' || mode === 'population' || world
+  ? mount(TileManagement, { target: document.getElementById('app')!, props: { ruleset: mode === 'population' || world ? POPULATION_TILE_RULESET : LEGACY_TILE_RULESET, world, npcMode: mode === 'world-npc' } })
   : mount(WeeklyManagement, { target: document.getElementById('app')! });
 
 export default app;
