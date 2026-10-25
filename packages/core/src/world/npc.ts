@@ -27,6 +27,19 @@ export function managerSlotTileIds(city: TileTrialState): string[] {
   return city.tiles.filter(t => t.building && NPC_MANAGER_BUILDING_TYPES.includes(t.building.typeId)).map(t => t.id);
 }
 
+// Validates one untrusted character record; list rules (unique ids, traits, posts) stay with the caller.
+export function isNamedCharacterRecord(c: unknown): c is NamedCharacter {
+  try {
+    if (!hasWeeklyKeys(c, CHARACTER_KEYS) || !text(c.id) || !text(c.name) || !oneOf(c.gender, GENDERS) ||
+        !Number.isSafeInteger(c.age) || (c.age as number) < 0 || !oneOf(c.occupation, OCCUPATIONS) ||
+        !oneOf(c.socialClass, SOCIAL_CLASSES) || !oneOf(c.legalStatus, LEGAL_STATUSES) || !stat(c.health) ||
+        !stats(c.needs, REQUIRED_NEEDS) || !stats(c.emotions, REQUIRED_EMOTIONS) || !stats(c.skills, REQUIRED_SKILLS) ||
+        !stats(c.relationshipToPlayer, REQUIRED_RELATIONSHIP)) return false;
+    // shortcut: memories must be empty until a WP writes them; then validate Memory keys.
+    return readDenseArray(c.memories)?.length === 0;
+  } catch { return false; }
+}
+
 // Validates untrusted data; `city` must already be a valid tile state.
 export function isWorldNpcList(raw: unknown, city: TileTrialState): raw is WorldNpc[] {
   try {
@@ -36,13 +49,7 @@ export function isWorldNpcList(raw: unknown, city: TileTrialState): raw is World
     for (const npc of list) {
       if (!hasWeeklyKeys(npc, ['character', 'traits', 'postTileId'])) return false;
       const c = npc.character, traits = readDenseArray(npc.traits);
-      if (!hasWeeklyKeys(c, CHARACTER_KEYS) || !text(c.id) || ids.has(c.id) || !text(c.name) || !oneOf(c.gender, GENDERS) ||
-          !Number.isSafeInteger(c.age) || (c.age as number) < 0 || !oneOf(c.occupation, OCCUPATIONS) ||
-          !oneOf(c.socialClass, SOCIAL_CLASSES) || !oneOf(c.legalStatus, LEGAL_STATUSES) || !stat(c.health) ||
-          !stats(c.needs, REQUIRED_NEEDS) || !stats(c.emotions, REQUIRED_EMOTIONS) || !stats(c.skills, REQUIRED_SKILLS) ||
-          !stats(c.relationshipToPlayer, REQUIRED_RELATIONSHIP)) return false;
-      // shortcut: memories must be empty until a WP writes them; then validate Memory keys.
-      if (readDenseArray(c.memories)?.length !== 0) return false;
+      if (!isNamedCharacterRecord(c) || ids.has(c.id)) return false;
       if (!traits || !traits.every(t => oneOf(t, traitIds)) || new Set(traits).size !== traits.length) return false;
       const post = npc.postTileId;
       if (post !== null && (typeof post !== 'string' || !slots.includes(post) || posts.has(post))) return false;

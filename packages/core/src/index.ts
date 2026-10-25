@@ -20,3 +20,6 @@ export * from "./world/types.js";
 export * from "./world/session.js";
 export * from "./world/npc.js";
 export * from "./world/npc-content.js";
+export * from "./character/types.js";
+export * from "./character/catalog.js";
+export * from "./character/validate.js";
