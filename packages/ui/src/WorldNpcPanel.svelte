@@ -1,9 +1,12 @@
 <script lang="ts">
-  import { managerSlotTileIds, REQUIRED_RELATIONSHIP, REQUIRED_SKILLS, TRIAL_BUILDINGS, WORLD_TRAITS, type NpcWorldSessionState } from '@haven/core';
+  import { managerSlotTileIds, REQUIRED_RELATIONSHIP, REQUIRED_SKILLS, TRIAL_BUILDINGS, WORLD_TRAITS, type CharacterProfile as Profile, type NpcWorldSessionState } from '@haven/core';
   import { executeWorldNpcCommand } from '@haven/simulation';
+  import CharacterProfile from './CharacterProfile.svelte';
 
   export let session: NpcWorldSessionState;
   export let locked = false;
+  // Character Life only; the NPC-world mode renders the cards exactly as before.
+  export let profiles: Profile[] | null = null;
   export let onapply: (next: NpcWorldSessionState) => void;
   let drafts: Record<string, string> = {};
   let error = '';
@@ -30,8 +33,13 @@
   <div class="npcs">
     {#each session.npcs as npc (npc.character.id)}
       {@const c = npc.character}
+      {@const profile = profiles?.find(p => p.id === c.id)}
+      {@const typeId = npc.postTileId ? session.city.tiles.find(t => t.id === npc.postTileId)?.building?.typeId : undefined}
       <article data-testid={`npc-${c.id}`} aria-label={c.name}>
         <h3>{c.name}</h3>
+        {#if profile}
+          <CharacterProfile view={{ character: c, profile, role: 'npc', postBuildingName: typeId ? TRIAL_BUILDINGS[typeId]?.name ?? null : null }} traitIds={npc.traits} relationship={c.relationshipToPlayer} />
+        {/if}
         <p>Age {c.age} · Background: {c.occupation} · {c.socialClass} · {c.legalStatus.replace('_', ' ')}</p>
         <p>{#each REQUIRED_SKILLS as key}{title(key)} {c.skills[key]} · {/each}Health {c.health}</p>
         <details><summary>Relationship to you</summary>

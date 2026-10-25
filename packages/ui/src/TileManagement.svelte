@@ -1,18 +1,23 @@
 <script lang="ts">
-  import { createNpcWorldSession, createTileTrialState, createWorldSession, summarizeOutside, weeklyWorkforceMilli, WEEKLY_RESOURCE_KEYS, TRIAL_BUILDINGS, TILE_TRIAL_BALANCE as B, LEGACY_TILE_RULESET, POPULATION_TILE_RULESET, type OutsideWorldState, type NpcWorldSessionState, type WorldNpc, type TileTrialRuleset, type TileTrialReport } from '@haven/core';
+  import { createNpcWorldSession, createTileTrialState, createWorldSession, summarizeOutside, weeklyWorkforceMilli, WEEKLY_RESOURCE_KEYS, TRIAL_BUILDINGS, TILE_TRIAL_BALANCE as B, LEGACY_TILE_RULESET, POPULATION_TILE_RULESET, type OutsideWorldState, type NpcWorldSessionState, type WorldNpc, type TileTrialRuleset, type TileTrialReport, type CharacterLifeSessionState, type CharacterProfile as Profile, type PlayerCharacter } from '@haven/core';
   import { executeTileTrialCommand, executeWorldNpcCityCommand } from '@haven/simulation';
-  import { serializeTileTrialSave, deserializeTileTrialSave, serializeWorldSessionSave, deserializeWorldSessionSave, serializeNpcWorldSessionSave, deserializeNpcWorldSessionSave, TILE_SAVE_MAX_BYTES } from '@haven/persistence';
+  import { serializeTileTrialSave, deserializeTileTrialSave, serializeWorldSessionSave, deserializeWorldSessionSave, serializeNpcWorldSessionSave, deserializeNpcWorldSessionSave, serializeCharacterLifeSave, deserializeCharacterLifeSave, TILE_SAVE_MAX_BYTES } from '@haven/persistence';
   import ErrorLog from './ErrorLog.svelte';
   import { errorLog } from './error-log.js';
   import { formatMilli as units } from './milli-format.js';
   import { readLocalCheckpoint, saveLocalCheckpoint } from './tile-local-checkpoint.js';
   import { prepareWorldSessionLoad, readLocalWorldSession, saveLocalWorldSession } from './world-session.js';
   import { prepareNpcWorldSessionLoad, readLocalNpcWorldSession, saveLocalNpcWorldSession } from './world-npc-session.js';
+  import { prepareCharacterLifeLoad, readLocalCharacterLife, saveLocalCharacterLife } from './character-life-session.js';
   import WorldNpcPanel from './WorldNpcPanel.svelte';
+  import CharacterProfile from './CharacterProfile.svelte';
 
   export let ruleset: TileTrialRuleset = LEGACY_TILE_RULESET;
   export let world = false;
   export let npcMode = false;
+  // Character Life passes a created or loaded session; it composes the NPC world session (world and npcMode stay true).
+  export let lifeMode = false;
+  export let initialLife: CharacterLifeSessionState | null = null;
   $: populationMode = ruleset === POPULATION_TILE_RULESET;
   let state = createTileTrialState();
   let selectedId = 'forest-1';
@@ -26,16 +31,22 @@
   let report: Readonly<TileTrialReport> | null = null;
   let outside: OutsideWorldState | null = null;
   let npcs: WorldNpc[] | null = null;
+  let player: PlayerCharacter | null = null;
+  let profiles: Profile[] | null = null;
   if (world) {
     try {
       const seed = crypto.getRandomValues(new Uint32Array(1))[0];
-      const created = npcMode ? createNpcWorldSession(seed) : createWorldSession(seed);
-      if (created.success) { state = created.value.city; outside = created.value.outside; if (npcMode) npcs = (created.value as NpcWorldSessionState).npcs; }
-      else error = created.error.message;
+      const created = lifeMode ? (initialLife ? { success: true as const, value: initialLife } : { success: false as const, error: { message: 'A Character Life session is not available. Reload to try New Game again.' } })
+        : npcMode ? createNpcWorldSession(seed) : createWorldSession(seed);
+      if (created.success) {
+        state = created.value.city; outside = created.value.outside;
+        if (npcMode) npcs = (created.value as NpcWorldSessionState).npcs;
+        if (lifeMode) ({ player, profiles } = created.value as CharacterLifeSessionState);
+      } else error = created.error.message;
     } catch { error = 'Could not start a world session. Reload to try New Game again.'; }
   }
   $: outsideSummary = outside ? summarizeOutside(outside, 'player') : null;
-  $: checkpointLocked = locked || (world && !outside) || (npcMode && !npcs);
+  $: checkpointLocked = locked || (world && !outside) || (npcMode && !npcs) || (lifeMode && !(player && profiles));
   $: settlement = state.world.settlements[state.world.activeSettlementId!];
   $: selected = state.tiles.find(t => t.id === selectedId)!;
   $: definition = selected.building ? TRIAL_BUILDINGS[selected.building.typeId] : null;
@@ -85,19 +96,20 @@
     errorLog.record('RUNTIME', 'INVALID_COMMAND');
   }
   function exportCheckpoint() {
-    const result = npcMode ? serializeNpcWorldSessionSave({ city: state, outside, npcs }) : world ? serializeWorldSessionSave({ city: state, outside }) : serializeTileTrialSave(state, ruleset);
+    const result = lifeMode ? serializeCharacterLifeSave({ city: state, outside, npcs, player, profiles }) : npcMode ? serializeNpcWorldSessionSave({ city: state, outside, npcs }) : world ? serializeWorldSessionSave({ city: state, outside }) : serializeTileTrialSave(state, ruleset);
     if (!result.success) { checkpointError(result.error.message); return; }
     let url: string | undefined; let anchor: HTMLAnchorElement | undefined;
     try {
       url = URL.createObjectURL(new Blob([result.text], { type: 'application/json' }));
-      anchor = document.createElement('a'); anchor.href = url; anchor.download = `haven-${npcMode ? 'world-npc' : world ? 'world' : populationMode ? 'population' : 'tile'}-week-${state.world.week}.json`;
+      anchor = document.createElement('a'); anchor.href = url; anchor.download = `haven-${lifeMode ? 'world-life' : npcMode ? 'world-npc' : world ? 'world' : populationMode ? 'population' : 'tile'}-week-${state.world.week}.json`;
       document.body.append(anchor); anchor.click(); error = ''; saveNotice = 'Checkpoint download requested.';
     } catch { checkpointError('Could not download the checkpoint. Your game was preserved.'); }
     finally { anchor?.remove(); if (url) URL.revokeObjectURL(url); }
   }
   function loadWorldSession(loaded: unknown, expectedRevision: number, notice: string, invalidateReads = false) {
-    if (!outside || (npcMode && !npcs)) { checkpointError('A world session is not available. Reload to try New Game again.'); return false; }
-    const prepared = npcs ? prepareNpcWorldSessionLoad({ city: state, outside, npcs }, loaded, expectedRevision) : prepareWorldSessionLoad({ city: state, outside }, loaded, expectedRevision);
+    if (!outside || (npcMode && !npcs) || (lifeMode && !(player && profiles))) { checkpointError('A world session is not available. Reload to try New Game again.'); return false; }
+    const prepared = lifeMode ? prepareCharacterLifeLoad({ city: state, outside, npcs: npcs!, player: player!, profiles: profiles! }, loaded, expectedRevision)
+      : npcs ? prepareNpcWorldSessionLoad({ city: state, outside, npcs }, loaded, expectedRevision) : prepareWorldSessionLoad({ city: state, outside }, loaded, expectedRevision);
     if (!prepared.success) { checkpointError(prepared.message); return false; }
     let nextWorkers: string;
     try { nextWorkers = String(prepared.next.city.tiles.find(t => t.id === selectedId)!.building?.workers ?? 0); }
@@ -106,6 +118,7 @@
     state = prepared.next.city;
     outside = prepared.next.outside;
     if (npcs) npcs = (prepared.next as NpcWorldSessionState).npcs;
+    if (lifeMode) ({ player, profiles } = prepared.next as CharacterLifeSessionState);
     if (invalidateReads) importRead++;
     report = null; workers = nextWorkers;
     errorLog.setContext('weekly', { week: state.world.week });
@@ -123,7 +136,7 @@
       const text = await file.text();
       if (ticket !== importRead) return;
       if (world) {
-        const result = npcMode ? deserializeNpcWorldSessionSave(text) : deserializeWorldSessionSave(text);
+        const result = lifeMode ? deserializeCharacterLifeSave(text) : npcMode ? deserializeNpcWorldSessionSave(text) : deserializeWorldSessionSave(text);
         if (!result.success) { checkpointError(result.error.message); return; }
         loadWorldSession(result.state, expectedRevision, 'Checkpoint imported. Planning restored.');
         return;
@@ -134,14 +147,14 @@
     } catch { if (ticket === importRead) checkpointError('Could not read the checkpoint file. Your game was preserved.'); }
   }
   function saveLocally() {
-    const result = npcMode ? saveLocalNpcWorldSession({ city: state, outside, npcs }) : world ? saveLocalWorldSession({ city: state, outside }) : saveLocalCheckpoint(state, ruleset);
+    const result = lifeMode ? saveLocalCharacterLife({ city: state, outside, npcs, player, profiles }) : npcMode ? saveLocalNpcWorldSession({ city: state, outside, npcs }) : world ? saveLocalWorldSession({ city: state, outside }) : saveLocalCheckpoint(state, ruleset);
     if (!result.success) { checkpointError(result.message); return; }
     error = ''; saveNotice = result.replaced ? 'Saved in this browser. Replaced the previous local checkpoint.' : 'Saved in this browser.';
   }
   function continueLocally() {
     if (world) {
       const expectedRevision = state.revision;
-      const result = npcMode ? readLocalNpcWorldSession() : readLocalWorldSession();
+      const result = lifeMode ? readLocalCharacterLife() : npcMode ? readLocalNpcWorldSession() : readLocalWorldSession();
       if (!result.success) { checkpointError(result.message); return; }
       loadWorldSession(result.state, expectedRevision, 'Local checkpoint loaded. Planning restored.', true);
       return;
@@ -156,7 +169,7 @@
 <main lang="en">
   <header class="card">
     <p class="eyebrow">HAVEN · WEEKLY PROTOTYPE</p>
-    <h1>{world ? 'World Session' : populationMode ? 'Population Trial' : 'Tile Building Trial'}</h1>
+    <h1>{lifeMode ? 'Character Life' : world ? 'World Session' : populationMode ? 'Population Trial' : 'Tile Building Trial'}</h1>
     <p>Build a supply chain for your city. Balance and building policies are TRIAL. Reload starts fresh · Continue locally or import a checkpoint to resume.</p>
     <p>Week <strong>{state.world.week}</strong> · {locked ? 'Report' : 'Planning'} · {settlement.cohorts.reduce((n, c) => n + c.count, 0)} residents · {assigned} / {units(weeklyWorkforceMilli(settlement.cohorts))} WF assigned</p>
     <a href="/">Classic Weekly</a> · <a href={populationMode ? '/?mode=tiles' : '/?mode=population'}>{populationMode ? 'Legacy tile trial' : 'Play population trial'}</a>
@@ -171,8 +184,16 @@
     </section>
   {/if}
 
+  {#if lifeMode && player}
+    <section class="card" aria-label="Player">
+      <p class="eyebrow">Player · leader of Haven</p>
+      <h2>{player.character.name}</h2>
+      <CharacterProfile view={{ character: player.character, profile: player.profile, role: 'player', postBuildingName: null }} />
+    </section>
+  {/if}
+
   {#if npcs && outside}
-    <WorldNpcPanel session={{ city: state, outside, npcs }} {locked} onapply={next => { state = next.city; npcs = next.npcs; saveNotice = ''; error = ''; }} />
+    <WorldNpcPanel session={{ city: state, outside, npcs }} {profiles} {locked} onapply={next => { state = next.city; npcs = next.npcs; saveNotice = ''; error = ''; }} />
   {/if}
 
   <section class="card" aria-label="Planning checkpoints">
