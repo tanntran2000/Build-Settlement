@@ -1,9 +1,10 @@
-# PLAYER-NAV-01 — Player-first navigation for Character Life (design proposal v0.1)
+# PLAYER-NAV-01 — Player-first navigation for Character Life (design proposal v0.2)
 
 Status: **DESIGN PROPOSAL for independent review, then user approval. Not a Work Package and not approved for implementation.** No product code, test, asset, config or dependency change is authorised by this document.
 Baseline: `main` `facadbb` (merge of PR #48, MCP Stage0 G6 snapshot). Unmerged reference: QOL `feat/solo-city-overview` at `8c8505f` (merge-base with main `e277633`, PR #47).
 Language: English for this document and every game-facing label.
 Scope: a started `?mode=world-life` session only. The Character Life start/creation screens and all other modes keep their current markup and behaviour.
+Revision: v0.2 applies the independent design check of v0.1 (`f1da175`). It defines draft preservation as navigation-only and adds the unapplied-changes indicator (§5.3–5.4). It also defines a successful Continue/Import as a UI-session boundary (§5.5), and updates F1, F4 and the risks to match.
 
 Legend:
 - **[APPROVED]** — decided by the user (source in §1).
@@ -53,6 +54,7 @@ The user's FC reference informed grouping, clear selected state, label-left/cont
 │ Gold 120  Wheat 4  …     ││  active destination only            │
 │ Happiness 62 / 100       ││                                     │
 │ Workforce 8 / 10         ││                                     │
+│ Unapplied changes (2)    ││                                     │
 │ [ End Week ]             ││                                     │
 │ status line (live)       ││                                     │
 │ global alert (if any)    ││                                     │
@@ -65,6 +67,7 @@ The user's FC reference informed grouping, clear selected state, label-left/cont
 ```
 
 - **Status block:** week and phase, the five stocks (Gold, Wheat, Food, Wood, Iron) as totals via `formatMilli`, Happiness, residents, workforce assigned/available, End Week. **[PROPOSED]** When the last report has nonzero Food unmet, Goods unmet or unfunded upkeep, show one short line each (for example `Last week: Food unmet 12`). These come straight from the authoritative report; there is no new threshold, forecast or severity model.
+- **Unapplied changes [PROPOSED]:** a compact persistent line above End Week while any workforce or post draft differs from committed state (§5.4).
 - **Destinations [PROPOSED]:** primary `City`, `Characters`, `Reports`; secondary `Session`, `Help`. Five entries in total. No Map, Settings or future destination appears as active.
 - The page `h1` stays `Character Life`.
 
@@ -105,27 +108,55 @@ Pixel-art portraits and prompt-driven images, a Map/exploration destination, a P
 
 1. **Ownership.** `TileManagement` remains the single owner of session state, the last report, the tile selection, building type, workforce draft, errors and command dispatch. Character Life renders a shell whose views receive state and callbacks. Views never call executors directly, except that the NPC assign/unassign path keeps its current shared-executor route.
 2. **Mount policy.**
-   - The five destination views stay mounted and inactive ones use the `hidden` attribute, so drafts, `<details>` state and the retained report survive navigation.
+   - The five destination views stay mounted and inactive ones use the `hidden` attribute, so drafts, `<details>` state and the retained report survive **navigation**.
    - The Characters view mounts **exactly one** `CharacterProfile`, for the selected person, keyed by character id (`{#key}`).
    - Each person's selected profile tab is stored **by tab name** in a UI-local map owned by the Characters view and passed in. This avoids the 4-vs-5 tab index mismatch and keeps each person's sub-tab when switching people or destinations.
    - Post drafts live in the Characters view, not inside the keyed subtree.
-3. **UI-local only.** The active destination, the selected person, sub-tabs and disclosure state are not saved. Reload starts on `City` with the Player selected in Characters. Load keeps the current destination, clears the report, and keeps the selected tile if it still exists.
-4. **Global status and errors.**
+3. **Draft preservation is navigation-only.** Switching between City, Characters, Reports, Session and Help preserves unapplied input and never applies it. Navigation dispatches no command and does not change `revision`. This is not a new game-command contract: commands still use committed state only, and each draft type keeps its existing lifecycle (read from `facadbb`, unchanged by this design):
+
+   | Draft | Set by | Reset or cleared by (existing) | Survives navigation |
+   |---|---|---|---|
+   | Workforce input (`workers`, selected tile only) | typing in Manage | selecting a tile (`selectTile`); **every successful city command through `command()`**, including END_WEEK, NEXT_WEEK, BUILD, REPLACE, UPGRADE, SET_ENABLED and SET_WORKERS (`TileManagement.svelte:93`), which resets it to the committed value; successful load. A failed command keeps it. A successful NPC assign/unassign does not reset it. | yes |
+   | Building type (`typeId`) | Manage select | never reset by commands or load | yes |
+   | Post choice (per NPC) | post select change | that NPC's own Assign attempt, success or failure (`WorldNpcPanel.svelte:23–24`). Other commands, including END_WEEK, do not clear it. | yes |
+   | Workforce/management errors | failed command | next city command, tile selection, successful load | yes |
+   | Assign error (one per panel) | failed assign | next assign attempt | yes |
+
+   So a successful End Week **does** reset an unapplied workforce input to the committed value, as today, and an unapplied post choice survives it. This design does not promise that any draft survives a command. The post control displays the drafted value, so what is shown is what Assign would send.
+4. **Unapplied-changes indicator [PROPOSED].**
+   - While the workforce input differs from the selected building's committed workers, or any NPC has a post choice, the sidebar shows a compact persistent line `Unapplied changes ({n})`. Each entry is a navigation button (for example `Workforce · forest-1`, `Post · Mira`) that opens the control. It dispatches nothing.
+   - Directly beside End Week, while the indicator is shown: `End Week uses applied settings only. Unapplied changes are not applied, and workforce input resets after the week.`
+   - No auto-apply, no automatic assignment, no confirmation dialog and no new blocking phase. End Week stays available and dispatches END_WEEK with committed state only.
+5. **Successful Continue/Import is a UI-session boundary [PROPOSED].**
+   - After a successful local Continue or file Import publishes the loaded session (the existing prepare-then-publish step in `loadWorldSession`), the UI resets, even when character ids are identical:
+     - destination → `City`;
+     - selected person → `You` (Player);
+     - remembered profile tabs → cleared, so every profile opens on `Overview`;
+     - every private (adult) disclosure → closed;
+     - post choices and the assign error → cleared;
+     - workforce input → the loaded committed value, with workforce/management errors cleared (existing);
+     - report → cleared (existing save contract; reports are not saved).
+   - The tile selection and building type keep their existing behaviour: kept, and valid because planning snapshots have fixed tile ids.
+   - Mechanism (builder detail, not a save field): a UI epoch counter incremented in the same synchronous block after publication; the Characters view and its profile subtree are keyed by it.
+   - A failed, rejected or stale load (validation failure, oversize file, Report phase, superseded file read) changes **nothing**: session, report, destination, selections, drafts, errors and disclosures all stay as they were. Only the existing checkpoint error/notice updates.
+   - Ordinary navigation, End Week, Plan next week and assign never trigger this reset.
+6. **UI-local only.** The active destination, the selected person, sub-tabs, disclosure state and drafts are not saved. Reload starts on `City` with the Player selected in Characters.
+7. **Global status and errors.**
    - The polite, atomic live status line lives in the sidebar, never inside a hidden view. It announces `Week {n} report ready.` and `Planning week {n}. Previous report retained.` once per transition.
    - The general `error` alert moves to the sidebar, so End Week/Next Week/checkpoint failures are visible from every view.
    - Targeted errors stay beside their control: workforce and management errors in Manage, assign errors in the Characters detail.
    - Each `disabledReasons` entry is shown where its action is. The Report-phase lock also appears in the status block.
-5. **End Week and Plan next week.**
+8. **End Week and Plan next week.**
    - End Week is in the status block; Plan next week is in the Reports main area. They are never at the same position, which keeps the existing double-click protection.
    - When a button's action is unavailable for the phase, it uses `aria-disabled="true"` and stays focusable. Its click handler returns without dispatching, so a repeated click neither runs a command nor produces an executor error.
    - Plan next week stays mounted after use, as today.
-6. **Auto-open Reports [PROPOSED, DECISION U1].**
+9. **Auto-open Reports [PROPOSED, DECISION U1].**
    - After a successful End Week the main area switches to `Reports`, in line with the user's weekly-review intent.
    - **Focus does not move.** It stays on the End Week control, now `aria-disabled` with visible text `Report open — Plan next week in Reports`, and the live status announces the report.
    - After Plan next week, the view stays on Reports and focus stays on that button. There is no automatic return to City.
    - Changing the view and moving focus are separate decisions. This design changes the view only.
-7. **City navigation from elsewhere.** Any "manage this building" link switches to City before focusing the Manage heading (QOL `selectSoloTile` pattern with the view switch added). Focusing an element inside a hidden view is forbidden.
-8. **Global nav semantics.** The sidebar is a `<nav aria-label="Main">` with buttons using `aria-current="page"` for the active destination. Each entry switches a whole screen with its own heading, which is navigation rather than a single tab widget. ARIA tabs are used only for peer panels (profile tabs). Test locators are scoped by region and nav.
+10. **City navigation from elsewhere.** Any "manage this building" link switches to City before focusing the Manage heading (QOL `selectSoloTile` pattern with the view switch added). Focusing an element inside a hidden view is forbidden.
+11. **Global nav semantics.** The sidebar is a `<nav aria-label="Main">` with buttons using `aria-current="page"` for the active destination. Each entry switches a whole screen with its own heading, which is navigation rather than a single tab widget. ARIA tabs are used only for peer panels (profile tabs). Test locators are scoped by region and nav.
 
 ## 6. Presentation rules [PROPOSED]
 
@@ -166,10 +197,26 @@ The QOL spec, plan and evidence stay unchanged on their branch.
 
 Each flow runs in Playwright Chromium at 1280px and 375px, plus a reflow pass at 320px, with keyboard-only operation for F1 and F2.
 
-- **F1 Weekly turn.** Read stocks in the sidebar → City → select a building → apply a workforce change → End Week → Reports opens, focus remains on End Week, status announces once → read Food/Goods unmet and the ledger → Plan next week → status announces once → return to City with the tile selection and the other drafts intact. A double-click on End Week and on Plan next week dispatches exactly one command each and shows no error.
+- **F1 Weekly turn.**
+  1. Read stocks in the sidebar → City → select a building → apply a workforce change (committed).
+  2. Type a second, unapplied workforce value and choose an unapplied post for an NPC.
+  3. Navigate City → Characters → Reports → City. Both drafts are still shown, `revision` is unchanged, no command was dispatched, and `Unapplied changes (2)` plus the End Week note are visible.
+  4. End Week. Exactly one END_WEEK is dispatched. The report and the resulting state reflect the **committed** workforce, not the draft, and no assign command ran.
+  5. Reports opens, focus remains on End Week, and the status announces once.
+  6. The workforce input now shows the committed value (existing reset). The post choice is still shown and is not applied. The indicator count drops to 1.
+  7. Read Food/Goods unmet and the ledger → Plan next week → the status announces once → the tile selection is unchanged.
+  8. A double-click on End Week and on Plan next week dispatches exactly one command each and shows no error.
 - **F2 Manager assignment.** Characters → select an NPC → assign a post from the detail header → the City tile list shows the manager. A stale or invalid choice shows its error beside the control. The "No free manager post" reason is visible at the action.
 - **F3 Read people.** The Player detail opens in one action from Characters. Switching Player ↔ NPC keeps each person's sub-tab by name, and exactly one profile tabpanel exists in the DOM. Adult disclosure stays collapsed, and unknown values never appear in the DOM.
-- **F4 Session.** Session → Save locally → reload → Continue locally restores the session, posts and profiles. Export/Import round-trip. In Report phase the controls are disabled with the reason visible. An Import or END_WEEK failure is visible from City, Characters and Reports. Other modes' slots are unchanged.
+- **F4 Session.**
+  1. Session → Save locally → reload → Continue locally restores the session, posts and profiles. Export/Import round-trip.
+  2. **UI-session boundary:** before a successful Continue or Import, select an NPC, open its Stats tab and its private disclosure, choose a post draft, trigger an assign error, type a workforce draft and keep a report. After loading a checkpoint whose character ids are identical:
+     - the destination is City and the selected person is You;
+     - every profile opens on Overview with private disclosures closed;
+     - no post draft, assign error or workforce draft remains, and the workforce input equals the loaded value;
+     - the report is cleared.
+  3. **Atomic failure:** with that same UI state set up, a rejected import (invalid file, oversize, or during Report phase) and a superseded file read leave every item above unchanged, and only the checkpoint error/notice changes.
+  4. In Report phase the controls are disabled with the reason visible. An Import or END_WEEK failure is visible from City, Characters and Reports. Other modes' slots are unchanged.
 
 **Automated gates:** `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, `npm run test:smoke`, plus `npm run check:architecture` and `npm run test:architecture`, run locally because CI does not run them. Existing old-mode e2e tests pass unchanged. The Character Life and Stage0 parity tests are migrated to navigate views; no assertion is removed or weakened, and every observation field is still compared.
 
@@ -210,8 +257,13 @@ This is not a WCAG conformance claim. Manual user pixel checks are **not** a man
 3. Hidden views remain in the DOM. Tests and the visible-text count must use visibility-aware locators.
 4. A sticky sidebar at large text sizes needs its own scroll and must not clip.
 5. Unverified computed font/Narrator behaviour, carried forward from QOL.
+6. With End Week reachable from every view, a hidden workforce draft is reset by a successful End Week. Mitigation: the persistent unapplied-changes indicator and the End Week note (§5.4), asserted in F1. The command behaviour itself is unchanged.
+7. Load reset scope: resetting too little carries old assignment intent or an open private section into different character data. Resetting on a failed load, or during navigation, loses player work. Mitigation: reset only after successful publication, keyed by a UI epoch rather than by character id, asserted in F4 for both success and failure.
+8. The post-choice lifecycle differs from the workforce one (it survives End Week). An implementation that "unifies" them would silently change behaviour. Mitigation: the per-type table in §5.3 is normative.
 
 ## 14. User decisions
+
+U1–U4, together with the unapplied-changes indicator (§5.4) and the load boundary (§5.5), form one coherent layout proposal and may be presented to the user as a single design choice. They are listed separately only so each can be changed independently.
 
 - **U1** Auto-open Reports after End Week, with focus staying on End Week (designer call: yes).
 - **U2** Destination labels and order: `City`, `Characters`, `Reports`; `Session`, `Help` (designer call).
