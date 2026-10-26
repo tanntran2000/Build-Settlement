@@ -1,5 +1,12 @@
 # Solo MCP playtest adapter — design options
 
+> **SUPERSEDED** by the formal design [`docs/superpowers/specs/2026-10-26-solo-mcp-playtesting-design.md`](../../superpowers/specs/2026-10-26-solo-mcp-playtesting-design.md) (v0.2). Kept as research history. Where this note differs, the design wins, in particular:
+> - **Stage map:** Stage 0 = live validation seam + shared command function + observation (core/simulation, pure); Stage 1 = harness package with lease, receipts, journal, stop (no MCP); Stage R = compatibility checkpoint (R1 read-only, R2 separately approved probe); Stage 2 = thin stdio MCP. This note's §3 "Stage 0 includes receipt/lease logic" and "Stage 1 = adapter" are obsolete.
+> - The Planning-only validator `isCharacterLifeSessionState` cannot validate live Report state; the design adds a phase-aware live seam.
+> - Player tools are only `observe`, `act`, `receipt`. The `harness_*` tools below are **not** on the player surface: sessions, seeds and fixtures are fixed by operator launch configuration, and stop is an operator action.
+> - `receipt` returns `not_found` / `recovery_required`, not `unknown`; future event actions are `CHOOSE{occurrenceId, optionId}` and `SKIP{occurrenceId}`; seed is optional at launch.
+> - The journal stores the full canonical command, not only a hash; the hash covers `{expectedRevision, action}`.
+
 Status: research/design only. No server, dependency, configuration or product code is authorized here. Builds on the earlier single-player AI playtest proposal (`docs/research/playtest/2026-10-26-single-player-ai-playtest-proposal.md` in the `research-npc-efficiency-01` worktree, not on this branch) and does not repeat it. Source evidence: base `f4aafa24` (Character Foundation S1), read in this worktree; local `main` freshness not re-verified. Nothing was run; no test results are claimed.
 
 Goal: let **one** controller (the human, Claude, or the Codex assistant, never two at once) occupy the single Player role in Solo Character Life, through the same validated command path as the UI, on an isolated test save, with a reproducible action log and only player-visible observations.
