@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 import { serializeCharacterLifeSave } from '../../packages/persistence/src/character-life-save.ts';
 import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
-import { characterWindow, charactersView, expectOneCharacterWindow, expectReport, exportLife, go, importLife, lifeUiSnapshot, makeLife, reportFixture, reportRegion, reportUnits, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
+import { characterWindow, charactersView, expectOneCharacterWindow, expectReport, exportLife, go, importLife, lifeUiSnapshot, makeLife, reportFixture, reportRegion, reportUnits, reportMilli, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
 
 test('one character window remembers areas and closes new-person disclosures', async ({ page }) => {
   await page.goto('/?mode=world-life');
@@ -304,6 +304,50 @@ function encodedLife(session = makeLife()) {
   if (!encoded.success) throw Error(encoded.error.message);
   return encoded.text;
 }
+
+async function seedDiagnosticHistory(page: Page) {
+  await page.addInitScript(() => localStorage.setItem('haven.runtime-errors.v1', JSON.stringify({ schemaVersion: 1, entries: [{
+    timestampUtc: '2026-10-19T10:00:00.000Z', lastSeenUtc: '2026-10-19T10:01:00.000Z', occurrences: 7,
+    appVersion: '0.1.0', buildId: null, mode: 'weekly', clock: { week: 1 }, action: 'END_WEEK',
+    kind: 'exception', code: 'EXECUTION_ERROR', message: 'The simulation could not complete the action. Download this log for review.',
+  }] })));
+}
+
+test('report oracle formatter preserves grouped exact milli values', () => {
+  for (const [value, text] of [[0, '0'], [1, '0.001'], [100001, '100.001'], [1000001, '1,000.001'], [-1000001, '-1,000.001'], [Number.MAX_SAFE_INTEGER, '9,007,199,254,740.991']] as const) {
+    expect(reportUnits(value)).toBe(text);
+  }
+});
+
+test('report oracle parser preserves grouped exact milli integers', () => {
+  for (const [text, value] of [['0', 0], ['0.001', 1], ['100.001', 100001], ['1,000.001', 1000001], ['-1,000.001', -1000001], ['9,007,199,254,740.991', Number.MAX_SAFE_INTEGER]] as const) {
+    expect(reportMilli(text)).toBe(value);
+  }
+});
+
+test('report oracle parser rejects malformed grouping and sub-milli precision', () => {
+  for (const value of ['1,00.001', '1,000.0001', '1e3', 'NaN', '1,000.', '9,007,199,254,740.992']) expect(() => reportMilli(value)).toThrow();
+});
+
+test('UI snapshots retain ErrorLog history, counts and diagnostic feedback', async ({ page }) => {
+  await seedDiagnosticHistory(page);
+  await page.goto('/?mode=world-life'); await importLife(page, makeLife()); await go(page, 'session');
+  const log = page.getByRole('region', { name: 'Error log', exact: true });
+  await expect(log.getByRole('listitem')).toHaveCount(1);
+  const download = page.waitForEvent('download');
+  await log.getByRole('button', { name: 'Download error log', exact: true }).click(); await download;
+  await expect(log.getByRole('status')).toHaveText('Download requested.');
+  const before = await lifeUiSnapshot(page);
+  for (const target of [log.locator('li strong'), log.locator('li p').last(), log.getByRole('status'), log.getByText('Saved locally in this browser.', { exact: true })]) {
+    const text = (await target.textContent())!;
+    await target.evaluate(node => { node.textContent += ' unexpected mutation'; });
+    expect(await lifeUiSnapshot(page)).not.toEqual(before);
+    await target.evaluate((node, text) => { node.textContent = text; }, text);
+  }
+  const button = log.getByRole('button', { name: 'Download error log', exact: true });
+  await button.evaluate(node => { (node as HTMLButtonElement).disabled = true; });
+  expect(await lifeUiSnapshot(page)).not.toEqual(before);
+});
 async function putFile(page: Page, text: string, name = 'life.json') {
   await page.getByLabel('Import checkpoint', { exact: true }).setInputFiles({ name, mimeType: 'application/json', buffer: Buffer.from(text) });
 }
@@ -345,6 +389,14 @@ test('unapplied drafts survive navigation with committed-only resolution', async
   await expect(workersInput(page)).toHaveValue(String(committedWorkers));
   await expect(postSelect(page)).toHaveValue(draftedPost);
   await expect(shell.getByText('Unapplied changes (1)', { exact: true })).toBeVisible();
+  await shell.getByRole('button', { name: `Post · ${before.npcs[0].character.name}`, exact: true }).click();
+  await expect(postSelect(page)).toBeDisabled();
+  await expect(person.getByRole('tab', { name: 'Work', exact: true })).toBeFocused();
+  await expect(person.getByRole('tab', { name: 'Work', exact: true })).toHaveAttribute('aria-selected', 'true');
+  await expect(postSelect(page)).toHaveValue(draftedPost);
+  await expect(shell).toHaveAttribute('data-revision', String(beforeWeekRevision + 1));
+  await expect(person.getByRole('button', { name: 'Assign', exact: true })).toBeDisabled();
+  await go(page, 'reports');
   await page.getByRole('button', { name: 'Plan next week', exact: true }).click();
   const next = executeCharacterLifeCommand(expected.next, { type: 'NEXT_WEEK', expectedRevision: expected.next.city.revision });
   if (!next.success) throw Error(next.error.message);
@@ -488,6 +540,7 @@ async function restoreReads(page: Page) {
 
 for (const kind of ['invalid JSON', 'incompatible schema', 'oversize', 'invalid local Continue', 'read rejection', 'Report phase', 'stale revision', 'superseded reads', 'newer Import', 'later Continue'] as const) {
   test(`rejected and superseded loads preserve UI intent: ${kind}`, async ({ page }) => {
+    await seedDiagnosticHistory(page);
     const saved = await prepareLoadIntent(page);
     const text = encodedLife(saved);
     if (kind === 'Report phase') {
@@ -593,6 +646,8 @@ for (const kind of ['shortage', 'zero', 'precision', 'service', 'empty'] as cons
       expect(report.before.wheat).toBe(100001); expect(report.before.food).toBe(1);
       await expect(panel.getByRole('table')).toContainText('100.001');
       await expect(panel.getByRole('table')).toContainText('0.001');
+      expect(report.before.wood).toBe(1000001);
+      await expect(panel.getByRole('table')).toContainText('1,000.001');
       expect(report.after.wheat - report.before.wheat).toBeLessThan(0);
     }
     if (kind === 'zero') {

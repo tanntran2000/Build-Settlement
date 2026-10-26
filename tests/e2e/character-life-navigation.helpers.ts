@@ -72,6 +72,8 @@ export function reportUnits(value: number): string {
   return `${value < 0 ? '-' : ''}${digits.slice(0, -3)}${fraction ? `.${fraction}` : ''}`;
 }
 
+export const reportMilli = (text: string) => Math.round(Number(text) * 1000);
+
 // Selectively adapted from QOL 8c8505f: fixture data only, no historical verdicts.
 export function reportFixture(kind: 'shortage' | 'zero' | 'precision' | 'service' | 'empty'): CharacterLifeSessionState {
   const s = makeLife(), settlement = s.city.world.settlements[s.city.world.activeSettlementId!];
@@ -85,6 +87,7 @@ export function reportFixture(kind: 'shortage' | 'zero' | 'precision' | 'service
   } else if (kind === 'precision') {
     settlement.inventory.gold = 100001; settlement.inventory.wheat = 100001;
     settlement.inventory.food = 1;
+    settlement.inventory.wood = 1000001;
     s.city.tiles.find(t => t.id === 'field-1')!.building!.workers = 0;
     s.city.tiles.find(t => t.id === 'plain-1')!.building!.workers = 1;
   } else if (kind === 'service') {
@@ -120,7 +123,7 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
   await expect(table.getByRole('columnheader')).toHaveText(['Stock', 'Before', 'Stock change', 'After']);
   for (const th of await table.getByRole('columnheader').all()) await expect(th).toHaveAttribute('scope', 'col');
   const before = {} as TileTrialReport['before'], after = {} as TileTrialReport['after'];
-  const milli = (text: string) => Math.round(Number(text) * 1000);
+  const milli = reportMilli;
   for (const key of WEEKLY_RESOURCE_KEYS) {
     const row = table.getByRole('row').filter({ has: page.getByRole('rowheader', { name: key, exact: true }) });
     await expect(row.getByRole('rowheader')).toHaveAttribute('scope', 'row');
