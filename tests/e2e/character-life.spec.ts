@@ -1,6 +1,6 @@
 import { test, expect, type Page } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
-import { characterWindow, charactersView, expectOneCharacterWindow, go, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
+import { characterWindow, charactersView, expectOneCharacterWindow, exportLife, go, importLife, lifeUiSnapshot, makeLife, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
 
 const KEY = 'haven.character-life-session.checkpoint.v1';
 const creation = (page: Page) => page.getByRole('region', { name: 'Character Creation', exact: true });
@@ -279,7 +279,7 @@ test('Export then Import in a new game restores the session; file name matches t
   await page.reload();
   await startGame(page, 'Other');
   await importFile(page, text);
-  await expect(page.getByRole('region', { name: 'Planning checkpoints', exact: true }).getByRole('status')).toHaveText('Checkpoint imported. Planning restored.');
+  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Checkpoint imported. Planning restored.');
   await go(page, 'characters');
   await expect(playerRegion(page).getByRole('heading', { name: 'Mira', exact: true })).toBeVisible();
   await selectPerson(page, 'npc_starter_1'); await selectArea(page, 'Work');
@@ -330,6 +330,23 @@ test('life Save locally leaves the NPC-world and world slots unchanged', async (
   expect(await page.evaluate(k => localStorage.getItem(k)?.startsWith('{"format":"haven.character-life-session.save"'), KEY)).toBe(true);
 });
 
+test('Life report and checkpoint operations preserve every other-mode slot byte-for-byte', async ({ page }) => {
+  await page.goto('/?mode=world-life');
+  const keys = [NPC_KEY, WORLD_KEY, 'haven.tile-trial.checkpoint.v1', 'haven.tile-population.checkpoint.v1'];
+  const bytes = keys.map((key, i) => `${i}: protected ${key} \n {not a save}`);
+  await page.evaluate(({ keys, bytes }) => keys.forEach((key, i) => localStorage.setItem(key, bytes[i])), { keys, bytes });
+  await importLife(page, makeLife());
+  await go(page, 'session'); await button(page, 'Save locally').click();
+  const saved = await exportLife(page);
+  await page.getByTestId('life-end-week').click();
+  await button(page, 'Plan next week').click();
+  await importLife(page, saved);
+  await go(page, 'session'); await button(page, 'Continue locally').click();
+  const restored = await exportLife(page);
+  expect({ ...restored, city: { ...restored.city, revision: saved.city.revision } }).toEqual(saved);
+  expect(await page.evaluate(keys => keys.map(key => localStorage.getItem(key)), keys)).toEqual(bytes);
+});
+
 test('Import during Report shows "Choose Plan next week before importing."', async ({ page }) => {
   await startGame(page);
   const text = await exportText(page, /^haven-world-life-week-\d+\.json$/);
@@ -338,8 +355,10 @@ test('Import during Report shows "Choose Plan next week before importing."', asy
   await go(page, 'session');
   // The input is disabled in Report, so enable it to prove the guard behind it.
   await page.getByLabel('Import checkpoint', { exact: true }).evaluate(input => { (input as HTMLInputElement).disabled = false; });
+  const before = await lifeUiSnapshot(page);
   await importFile(page, text);
   await expect(page.getByRole('alert')).toHaveText('Choose Plan next week before importing.');
+  expect(await lifeUiSnapshot(page)).toEqual(before);
   await go(page, 'characters');
   await expect(playerRegion(page).getByRole('heading', { name: 'Ana', exact: true })).toBeVisible();
 });

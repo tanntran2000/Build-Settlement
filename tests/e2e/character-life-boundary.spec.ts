@@ -9,7 +9,7 @@ import {
   observeCharacterLife, type Observation, type VisibleCharacter,
 } from '../../packages/simulation/src/character-life-observation.ts';
 import { formatMilli } from '../../packages/ui/src/milli-format.ts';
-import { characterWindow, charactersView, expectOneCharacterWindow, go, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
+import { characterWindow, charactersView, expectOneCharacterWindow, expectReport, go, reportRegion, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
 
 const button = (scope: Page | Locator, name: string) => scope.getByRole('button', { name, exact: true });
 const region = (page: Page, name: string) => page.getByRole('region', { name, exact: true });
@@ -103,23 +103,24 @@ async function profileParity(page: Page, scope: Locator, c: VisibleCharacter) {
 async function reportParity(page: Page, o: Observation) {
   await go(page, 'reports');
   await expect(button(page, 'Plan next week')).toHaveAttribute('aria-disabled', String(!o.actionTypes.includes('NEXT_WEEK')));
-  const panel = region(page, 'Trial week report'), r = o.lastReport;
-  if (!r) { await expect(panel).toHaveCount(0); return; }
-  await expect(panel.getByRole('heading')).toHaveText(`Week ${r.week} report`);
+  const panel = reportRegion(page), r = o.lastReport;
+  if (!r) { await expect(panel.getByText('No report yet. End Week to resolve the plan.', { exact: true })).toBeVisible(); await expect(panel.getByRole('table')).toHaveCount(0); return; }
+  await expectReport(page, r);
   expect(r.immigration).toBeDefined();
   const immigration = r.immigration!;
   await expect(panel.getByTestId('trial-immigration')).toHaveText(`Population: ${immigration.populationBefore} → ${immigration.populationAfter} · ${immigration.arrivals} arrivals · Available next week.`);
   const g = r.goods;
-  await expect(panel.getByTestId('trial-goods')).toHaveText(`Goods service: ${formatMilli(g.servedMilli)} / ${formatMilli(g.demandMilli)} · ${g.fulfillmentBps / 100}% ${g.demandMilli === 0 ? '(no demand)' : 'fulfilled'}. Materials used once: ${formatMilli(g.woodUsed)} Wood, ${formatMilli(g.ironUsed)} Iron. Revenue: ${formatMilli(g.revenueMilli)} Gold.`);
+  await expect(panel.getByTestId('trial-goods')).toHaveText(`Goods service: ${formatMilli(g.servedMilli)} / ${formatMilli(g.demandMilli)} · ${g.fulfillmentBps / 100}% ${g.demandMilli === 0 ? '· No demand' : 'fulfilled'}. Materials used once: ${formatMilli(g.woodUsed)} Wood, ${formatMilli(g.ironUsed)} Iron. Revenue: ${formatMilli(g.revenueMilli)} Gold.`);
   await expect(panel.getByText(/^Tax:/)).toHaveText(`Tax: ${formatMilli(r.taxMilli)} Gold. Upkeep covered: ${formatMilli(r.upkeepPaidMilli)} Gold; unfunded: ${formatMilli(r.unpaidUpkeepMilli)} Gold (no debt). Farm batch payment: ${formatMilli(r.farmBatchGoldMilli)} Gold; extra Farm upkeep: ${formatMilli(r.farmExtraUpkeepMilli)} Gold.`);
-  await expect(panel.getByText(/^Food consumed:/)).toHaveText(`Food consumed: ${formatMilli(r.foodConsumedMilli)} / ${formatMilli(r.foodDemandMilli)}. Happiness: ${r.happinessBefore} → ${r.happinessAfter}.`);
+  await expect(panel.getByText(/^Food consumed:/)).toHaveText(`Food consumed: ${formatMilli(r.foodConsumedMilli)} / ${formatMilli(r.foodDemandMilli)}.`);
+  await expect(panel.getByText(/^Happiness:/)).toHaveText(`Happiness: ${r.happinessBefore} → ${r.happinessAfter}.`);
   const rows = panel.getByRole('table', { name: 'Weekly stock ledger' }).locator('tbody tr');
   await expect(rows).toHaveCount(WEEKLY_RESOURCE_KEYS.length);
   for (const [i, key] of WEEKLY_RESOURCE_KEYS.entries()) {
     await expect(rows.nth(i).getByRole('rowheader')).toHaveText(key);
     await expect(rows.nth(i).getByRole('cell')).toHaveText([r.before[key], r.after[key] - r.before[key], r.after[key]].map(formatMilli));
   }
-  const activity = panel.locator('details');
+  const activity = panel.locator('details').filter({ has: page.getByText('Building activity', { exact: true }) });
   if (await activity.getAttribute('open') === null) await activity.getByText('Building activity', { exact: true }).click();
   await expect(activity.locator('li')).toHaveText(r.activities);
   for (const item of await activity.locator('li').all()) await expect(item).toBeVisible();
@@ -269,7 +270,7 @@ test('same-session UI projection through assignment and full week', async ({ pag
     await compare();
   }
   await importInitial();
-  await expect(region(page, 'Planning checkpoints').getByRole('status')).toHaveText('Checkpoint imported. Planning restored.');
+  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Checkpoint imported. Planning restored.');
   const restoredRevision = expectedSession.city.revision + 1;
   expectedSession = structuredClone(initial); expectedSession.city.revision = restoredRevision; expectedReport = null;
   await compare();
