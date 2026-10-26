@@ -220,7 +220,7 @@
 
     {/snippet}
     {#snippet reports()}
-  <button aria-disabled={!locked} onclick={nextLifeWeek}>Plan next week</button>
+  <button class="life-next-week" aria-disabled={!locked} onclick={nextLifeWeek}>Plan next week</button>
   {#if report}
     <section class="card" aria-label="Trial week report">
       <h2>Week {report.week} report</h2>
@@ -433,6 +433,7 @@
   label { display: block; margin: 16px 0 8px; } input, select, button { font: inherit; border-radius: 6px; padding: 10px; border: 1px solid var(--border-color); }
   input, select { color: var(--text-main); background: var(--bg-tertiary); max-width: 100%; } input { width: 7rem; }
   button { background: var(--accent-green); color: #000; cursor: pointer; margin: 4px 4px 4px 0; } button:disabled { opacity: .5; cursor: default; }
+  .life-next-week[aria-disabled='true'] { opacity: .5; cursor: default; }
   :focus-visible { outline: 3px solid var(--accent-blue); outline-offset: 3px; } [role='alert'] { padding: 12px; border-left: 3px solid var(--accent-red); }
   #trial-management-error { scroll-margin-block: 1px; }
   .player { overflow-wrap: anywhere; }

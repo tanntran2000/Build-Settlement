@@ -203,7 +203,7 @@ async function uiParity(page: Page, o: Observation) {
   await reportParity(page, o);
   await go(page, 'characters');
   expect(await page.content()).not.toContain('63 / 47 / 169');
-  await expect(page.getByRole('alert')).toHaveCount(0);
+  await expect(page.getByRole('alert', { includeHidden: true })).toHaveCount(0);
 }
 
 test('same-session UI projection through assignment and full week', async ({ page }) => {

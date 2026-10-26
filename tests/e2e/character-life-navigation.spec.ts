@@ -84,7 +84,9 @@ test('turn repeat is guarded without stealing focus', async ({ page }) => {
   await importLife(page, makeLife());
   const shell = page.getByTestId('life-shell'), endWeek = shell.getByTestId('life-end-week');
   const reportsNav = page.getByRole('navigation', { name: 'Main' }).getByRole('button', { name: 'Reports', exact: true });
+  const reportLock = shell.locator('aside').getByText('Week 1 report open. Choose Plan next week in Reports before changing the plan.', { exact: true });
   const beforeRevision = Number(await shell.getAttribute('data-revision'));
+  await expect(reportLock).toHaveCount(0);
   await go(page, 'reports');
   const nextWeek = page.getByRole('button', { name: 'Plan next week', exact: true });
   await expect(nextWeek).toHaveAttribute('aria-disabled', 'true');
@@ -100,6 +102,7 @@ test('turn repeat is guarded without stealing focus', async ({ page }) => {
   await expect(endWeek).toBeFocused();
   await expect(endWeek).toHaveAttribute('aria-disabled', 'true');
   await expect(endWeek).toHaveText('Report open — Plan next week in Reports');
+  await expect(reportLock).toBeVisible();
   await expect(reportsNav).toHaveAttribute('aria-current', 'page');
   await expect(shell.locator('aside > [role="status"]')).toHaveText('Week 1 report ready.');
   await expect(shell).toHaveAttribute('data-revision', String(beforeRevision + 1));
@@ -115,14 +118,31 @@ test('turn repeat is guarded without stealing focus', async ({ page }) => {
   await expect(nextWeek).toBeFocused();
   await expect(nextWeek).toHaveAttribute('aria-disabled', 'true');
   await expect(endWeek).toHaveText('End Week');
+  await expect(reportLock).toHaveCount(0);
   await expect(reportsNav).toHaveAttribute('aria-current', 'page');
   await expect(shell.locator('aside > [role="status"]')).toHaveText('Planning week 2. Previous report retained.');
   await nextWeek.click({ force: true }); await nextWeek.press('Enter'); await nextWeek.press('Enter');
   await expect(nextWeek).toBeFocused();
   await expect(shell).toHaveAttribute('data-revision', String(beforeRevision + 2));
   expect(await page.evaluate(() => (window as Window & { turnStatuses?: string[] }).turnStatuses)).toEqual(['Week 1 report ready.', 'Planning week 2. Previous report retained.']);
-  await expect(page.getByRole('alert')).toHaveCount(0);
+  await expect(page.getByRole('alert', { includeHidden: true })).toHaveCount(0);
   await go(page, 'session');
   await expect(page.getByRole('region', { name: 'Error log', exact: true }).getByText('No errors recorded.', { exact: true })).toBeVisible();
   await expect(page.getByRole('region', { name: 'Error log', exact: true }).locator('ol li')).toHaveCount(0);
+});
+
+test('unavailable Life Plan next week is visibly inactive', async ({ page }) => {
+  await page.goto('/?mode=world-life');
+  await importLife(page, makeLife());
+  await go(page, 'reports');
+  const nextWeek = page.getByRole('button', { name: 'Plan next week', exact: true });
+  await expect(nextWeek).toHaveCSS('opacity', '0.5');
+  await expect(nextWeek).toHaveCSS('cursor', 'default');
+  await page.getByTestId('life-end-week').click();
+  await expect(nextWeek).toHaveCSS('opacity', '1');
+  await expect(nextWeek).toHaveCSS('cursor', 'pointer');
+  await nextWeek.click();
+  await expect(nextWeek).toBeFocused();
+  await expect(nextWeek).toHaveCSS('opacity', '0.5');
+  await expect(nextWeek).toHaveCSS('cursor', 'default');
 });

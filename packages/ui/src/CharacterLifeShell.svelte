@@ -48,7 +48,7 @@
       <p>End Week uses applied settings only. Unapplied changes are not applied, and workforce input resets after the week.</p>
     {/if}
     <button data-testid="life-end-week" aria-disabled={locked} onclick={onendweek}>{locked ? 'Report open — Plan next week in Reports' : 'End Week'}</button>
-    {#if locked}<p>{#if report}Week {report.week} report open. {/if}Choose Plan next week in Reports before changing the plan.</p>{/if}
+    {#if locked}<p>{report ? `Week ${report.week} report open. ` : ''}Choose Plan next week in Reports before changing the plan.</p>{/if}
     <p role="status" aria-live="polite" aria-atomic="true">{status}</p>
     {#if error}<p role="alert">{error}</p>{/if}
     <nav aria-label="Main">

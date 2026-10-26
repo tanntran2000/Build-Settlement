@@ -114,7 +114,7 @@ test('double click on Create character opens exactly one game', async ({ page })
   await expect(player).toHaveCount(1);
   await expect(player.getByRole('heading', { name: 'Ana', exact: true })).toBeVisible();
   await expect(player).toContainText('Ana · 25 · Worker from Northreach');
-  await expect(page.getByRole('alert')).toHaveCount(0);
+  await expect(page.getByRole('alert', { includeHidden: true })).toHaveCount(0);
   await expect(creation(page)).toHaveCount(0);
   await expect(button(page, 'New Game')).toHaveCount(0);
 });
