@@ -1,6 +1,18 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
-## Current release — bounded G6 snapshot through PR41 (2026-10-23)
+## Current release — MCP Stage0 bounded G6 snapshot (2026-10-26)
+
+[PR47](https://github.com/tanntran2000/Build-Settlement/pull/47) merged reviewed head `c80e22416e36be7f73da85dcf901ec6b34e928b4` into `main` at `e27763380b9235c4efc92db0e1be6620f4d3f425`. GitHub main and the clean starting HEAD were verified at that merge; its tree `4d33344c16623e5c0027f1a2444d5db38b10c86a` is identical to the reviewed candidate.
+
+**Released scope:** the [Stage0 plan](superpowers/plans/2026-10-26-solo-mcp-stage0.md) supplies phase-aware live Planning/Report validation, a shared nine-action full-session executor, detached observations containing explicitly selected Player-visible fields, and Character Life UI dispatch with DOM parity coverage. Strict Planning-only persistence, existing saves and old modes are preserved. Production code grew by net 199 lines; no gameplay, bonus or dependency was added. This is a shared library foundation: no actual MCP server, SDK or client connection is released, and no unmeasured performance improvement is claimed.
+
+**Release evidence:** [premerge CI40302479196](https://github.com/tanntran2000/Build-Settlement/actions/runs/40302479196) and [main CI40303804848 / job121507847080](https://github.com/tanntran2000/Build-Settlement/actions/runs/40303804848/job/121507847080) succeeded; the main job log confirms `e27763380b9235c4efc92db0e1be6620f4d3f425`, 1,303 unit tests and 164 Chromium browser tests. PR47 and the retained Stage0 ledger record independent per-task reviews/tests and Claude whole-branch audit `mcp:9dfdd427-fa8b-4fc4-a1ff-2bd71b701639` (2026-10-26 09:41:14 UTC): SpecCompliance PASS / Quality PASS. The independent Task 4 Tester report and raw logs at `qa-solo-mcp-task4-test/logs/task4-independent-20261026/` record the architecture scan and **154 architecture tests, exit 0, run locally at the reviewed head**. These are prior release results, not fresh product tests or approval of this documentation change. CI does not execute `check:architecture` or `test:architecture`; its PASS must not be credited with those local checks. Local evidence remains retained, not uploaded.
+
+**Pending, outside this closeout:** QOL `feat/solo-city-overview` at `9503bbaca59d7f4adc947cee45d09d9ea117fd18` is unmerged. It needs reconciliation with Stage0's shared UI and observation/DOM parity tests, followed by review/tests/CI on the resulting candidate. Its manual 200% text, 400% zoom and Narrator gates remain OPEN; Stage0 automation does not satisfy or waive them. Stage1 locking and Stage R runtime/client compatibility remain pending under the [staged design](superpowers/specs/2026-10-26-solo-mcp-playtesting-design.md).
+
+**History boundary:** earlier snapshots and their evidence remain unchanged apart from relabeling the previous current snapshot historical. This bounded entry does not reconstruct missing intermediate releases or complete the older whole-module checklists. Separate Claude Reviewer and Tester gates remain required for this tracker-only candidate.
+
+## Historical release — bounded G6 snapshot through PR41 (2026-10-23)
 
 Verified clean base and GitHub `main`: `4cc45b7d00e89fbcdc38d3971c7b766bb17f9a1d`, tree `2c1303ecf0e71e62475dcc8df9e712e760fec767`. Git ancestry confirms all four merges below are included. GitHub PR/Actions metadata confirms each merged PR and completed successful main-push run at its exact merge SHA. These are **prior release results**, not checks newly executed by this documentation Builder.
 
