@@ -1,10 +1,11 @@
-# PLAYER-NAV-01 — Player-first navigation for Character Life (design proposal v0.2)
+# PLAYER-NAV-01 — Player-first navigation for Character Life (design proposal v0.3)
 
 Status: **DESIGN PROPOSAL for independent review, then user approval. Not a Work Package and not approved for implementation.** No product code, test, asset, config or dependency change is authorised by this document.
 Baseline: `main` `facadbb` (merge of PR #48, MCP Stage0 G6 snapshot). Unmerged reference: QOL reconciled with Stage0, `feat/solo-qol-mcp-reconciled` at `8c8505f` (merge-base with main `e277633`, PR #47). It contains the original QOL branch `feat/solo-city-overview` at `9503bba`.
 Language: English for this document and every game-facing label.
 Scope: a started `?mode=world-life` session only. The Character Life start/creation screens and all other modes keep their current markup and behaviour.
 Revision: v0.2 applies the independent design check of v0.1 (`f1da175`). It defines draft preservation as navigation-only and adds the unapplied-changes indicator (§5.3–5.4). It also defines a successful Continue/Import as a UI-session boundary (§5.5), and updates F1, F4 and the risks to match.
+Revision: v0.3 replaces the five existing profile tabs with the user's four-area character window: Description, Modify, Work, Relations (§1, §4.3). NPC assignment moves from the detail header into Work. The load reset now defaults to Description. F2, F3 and F4 are updated to match.
 
 Legend:
 - **[APPROVED]** — decided by the user (source in §1).
@@ -16,7 +17,9 @@ Legend:
 
 **[APPROVED]** (user, 2026-10-26): prioritise in-game tab/navigation QOL as the real player experience; the current text and layout are not acceptable and need a redesign. The user accepted the proposed architecture: **a persistent sidebar for main navigation, and horizontal tabs only inside a screen or a character profile.** This is a basic, clean UI; prompt-driven pixel art comes later.
 
-Not approved by that answer: the specific sidebar entries, labels, defaults, and every **[PROPOSED]** item below.
+**[APPROVED]** (user, 2026-10-26, after v0.2): each character opens in **one window/panel with tabs**: a Description tab, a Modify tab (equipping items such as clothes and trousers), a Work or Interact tab, and a Relations tab. For Modify, the user chose **a basic layout only now**; equipment design will be a separate later effort.
+
+Not approved by those answers: the specific sidebar entries, labels, defaults, the exact role-sensitive tab labels and empty-state wording, and every **[PROPOSED]** item below.
 
 **Outcome:** a player can run a week, manage buildings and managers, read a person, read the week's result and save, without scrolling past unrelated cards or reading repeated disclaimers. Totals are visible first; details are one disclosure away; costs, warnings and errors are never hidden.
 
@@ -81,8 +84,25 @@ The user's FC reference informed grouping, clear selected state, label-left/cont
 ### 4.3 Characters
 
 - **Compact roster:** a pinned first row `You` (Player, labelled `Leader of Haven`), then each NPC as name · post. One row is selected at a time. **[PROPOSED]** The Player is selected by default when the destination first opens, so the Player detail never requires scanning NPCs.
-- **Selected detail:** name heading, `Previous`/`Next`, and a background line (age, background, class, legal status: data the NPC card shows today and the observation exposes). For an NPC, the post and its Assign/Unassign control sit in the detail header so management needs no tab switch, with the single relevant caveat `NPC effects on output are not active yet.` Below that are the existing `CharacterProfile` context tabs (ARIA tabs: arrow keys, Home/End). Trait summaries move into the Profile tab next to trait names. The duplicate skills line, relationship meters and trait list are removed. Each datum appears once.
-- Adult/private disclosure semantics are unchanged: collapsed by default, and unknown values never rendered.
+- **Character window [APPROVED structure; labels and wording PROPOSED].** The selected person opens in one panel:
+  - **Header:** name heading, a role line (`You · Leader of Haven`, or `{post name}` / `Unassigned` for an NPC), and `Previous`/`Next`.
+  - **One horizontal ARIA tab strip** (arrow keys, Home/End) with four top-level areas in the same order for everyone: `Description`, `Modify`, `Work`, `Relations`.
+  - **One content panel.**
+
+  These four areas replace the five existing profile tabs (Overview, Profile, Stats, Relationship, History). There are no nested tab strips.
+
+  | Area | Player | NPC | Existing source |
+  |---|---|---|---|
+  | **Description** | Short line and long description (which already names current clothing). `Identity and appearance` rows. Collapsed disclosures: `Attributes` (health, needs, emotions), `Skills`, `History` (`No memories yet.`), and `Private (adult)` when the person is adult. | Same, plus a background line (age · background · class · legal status) and traits with their summaries in the identity rows. | `shortDescription`, `longDescription`, `profileRows`, `traits`, `stats`, `adult`; NPC `age`/`occupation`/`socialClass`/`legalStatus` |
+  | **Modify** | `Equipment is not implemented yet.` and `Current clothing is described in Description.` | Same | none (structural placeholder, §4.7) |
+  | **Work** | `Leader of Haven.` and `Player work and interactions are not available yet.` | Current post; Assign (post select) or Unassign; the targeted assign error; `No free manager post…` when it applies; the caveat `NPC effects on output are not active yet.` | `postTileId`/`postLabel`, `freeManagerSlots`, ASSIGN_NPC/UNASSIGN_NPC, `disabledReasons` |
+  | **Relations** | `Your own relationships are not tracked yet. Open a person to see how they regard you.` | `Toward you`: the eight axes with their current values. | `relationship` (NPC → Player only) |
+
+- **Every observation field stays reachable** inside its area, at most one disclosure deep. The duplicate skills line, relationship meters and trait list from today's NPC card are removed, so each datum appears once.
+- **Private disclosure** keeps its existing semantics: collapsed by default, and unknown values are never rendered or placed in the DOM. It closes whenever the selected person changes (§5.2).
+- **Modify shows no** slots, items, inventory, equip buttons, stat bonuses or save fields. The outfit is not shown as a separate field, because the observation exposes it only inside `longDescription`.
+- **Relations shows no** NPC-to-NPC rows and no shared score. A future relationship between other characters would be a separate, labelled section and is not part of this slice.
+- **The tab label is `Work` for both roles [PROPOSED].** `Interact` is not used while interactions do not exist; the label changes when that mechanic is approved. The five-interactions-per-week rule is not implemented and no counter is shown.
 
 ### 4.4 Reports
 
@@ -104,13 +124,16 @@ There are no preference toggles in this slice. Collapsed/expanded defaults are f
 
 Pixel-art portraits and prompt-driven images, a Map/exploration destination, a Player personal-affairs screen with its own actions, favourites, settings, and extra profile tabs (records, family and similar) are future work. The layout must not show placeholders or disabled entries for them. A portrait slot is not required.
 
+**Single exception [APPROVED]:** the character window's `Modify` area exists now as an honest empty equipment area, because the user explicitly requested it as structure. This exception does not permit any other empty destination, tab or section.
+
 ## 5. Interaction, state and mount policy [ENGINEERING]
 
 1. **Ownership.** `TileManagement` remains the single owner of session state, the last report, the tile selection, building type, workforce draft, errors and command dispatch. Character Life renders a shell whose views receive state and callbacks. Views never call executors directly, except that the NPC assign/unassign path keeps its current shared-executor route.
 2. **Mount policy.**
    - The five destination views stay mounted and inactive ones use the `hidden` attribute, so drafts, `<details>` state and the retained report survive **navigation**.
    - The Characters view mounts **exactly one** `CharacterProfile`, for the selected person, keyed by character id (`{#key}`).
-   - Each person's selected profile tab is stored **by tab name** in a UI-local map owned by the Characters view and passed in. This avoids the 4-vs-5 tab index mismatch and keeps each person's sub-tab when switching people or destinations.
+   - Each person's selected area is stored by a **stable area id** (`description`, `modify`, `work`, `relations`), never by index or visible label, in a UI-local map owned by the Characters view and passed in. Each person keeps their area when switching people or destinations, and a later role-sensitive label cannot break the memory. The default is `description`.
+   - Disclosure state inside the character window survives destination navigation, because the window stays mounted. It resets when the selected person changes, because the subtree is re-keyed. `Private (adult)` is therefore always closed for a newly selected person.
    - Post drafts live in the Characters view, not inside the keyed subtree.
 3. **Draft preservation is navigation-only.** Switching between City, Characters, Reports, Session and Help preserves unapplied input and never applies it. Navigation dispatches no command and does not change `revision`. This is not a new game-command contract: commands still use committed state only, and each draft type keeps its existing lifecycle (read from `facadbb`, unchanged by this design):
 
@@ -124,14 +147,14 @@ Pixel-art portraits and prompt-driven images, a Map/exploration destination, a P
 
    So a successful End Week **does** reset an unapplied workforce input to the committed value, as today, and an unapplied post choice survives it. This design does not promise that any draft survives a command. The post control displays the drafted value, so what is shown is what Assign would send.
 4. **Unapplied-changes indicator [PROPOSED].**
-   - While the workforce input differs from the selected building's committed workers, or any NPC has a post choice, the sidebar shows a compact persistent line `Unapplied changes ({n})`. Each entry is a navigation button (for example `Workforce · forest-1`, `Post · Mira`) that opens the control. It dispatches nothing.
+   - While the workforce input differs from the selected building's committed workers, or any NPC has a post choice, the sidebar shows a compact persistent line `Unapplied changes ({n})`. Each entry is a navigation button (for example `Workforce · forest-1`, `Post · Mira`) that opens the control. A post entry opens Characters → that NPC → `Work`. It dispatches nothing.
    - Directly beside End Week, while the indicator is shown: `End Week uses applied settings only. Unapplied changes are not applied, and workforce input resets after the week.`
    - No auto-apply, no automatic assignment, no confirmation dialog and no new blocking phase. End Week stays available and dispatches END_WEEK with committed state only.
 5. **Successful Continue/Import is a UI-session boundary [PROPOSED].**
    - After a successful local Continue or file Import publishes the loaded session (the existing prepare-then-publish step in `loadWorldSession`), the UI resets, even when character ids are identical:
      - destination → `City`;
      - selected person → `You` (Player);
-     - remembered profile tabs → cleared, so every profile opens on `Overview`;
+     - remembered character areas → cleared, so every character window opens on `Description`;
      - every private (adult) disclosure → closed;
      - post choices and the assign error → cleared;
      - workforce input → the loaded committed value, with workforce/management errors cleared (existing);
@@ -156,7 +179,7 @@ Pixel-art portraits and prompt-driven images, a Map/exploration destination, a P
    - After Plan next week, the view stays on Reports and focus stays on that button. There is no automatic return to City.
    - Changing the view and moving focus are separate decisions. This design changes the view only.
 10. **City navigation from elsewhere.** Any "manage this building" link switches to City before focusing the Manage heading (QOL `selectSoloTile` pattern with the view switch added). Focusing an element inside a hidden view is forbidden.
-11. **Global nav semantics.** The sidebar is a `<nav aria-label="Main">` with buttons using `aria-current="page"` for the active destination. Each entry switches a whole screen with its own heading, which is navigation rather than a single tab widget. ARIA tabs are used only for peer panels (profile tabs). Test locators are scoped by region and nav.
+11. **Global nav semantics.** The sidebar is a `<nav aria-label="Main">` with buttons using `aria-current="page"` for the active destination. Each entry switches a whole screen with its own heading, which is navigation rather than a single tab widget. ARIA tabs are used only for peer panels (the character window areas). Test locators are scoped by region and nav.
 
 ## 6. Presentation rules [PROPOSED]
 
@@ -206,13 +229,20 @@ Each flow runs in Playwright Chromium at 1280px and 375px, plus a reflow pass at
   6. The workforce input now shows the committed value (existing reset). The post choice is still shown and is not applied. The indicator count drops to 1.
   7. Read Food/Goods unmet and the ledger → Plan next week → the status announces once → the tile selection is unchanged.
   8. A double-click on End Week and on Plan next week dispatches exactly one command each and shows no error.
-- **F2 Manager assignment.** Characters → select an NPC → assign a post from the detail header → the City tile list shows the manager. A stale or invalid choice shows its error beside the control. The "No free manager post" reason is visible at the action.
-- **F3 Read people.** The Player detail opens in one action from Characters. Switching Player ↔ NPC keeps each person's sub-tab by name, and exactly one profile tabpanel exists in the DOM. Adult disclosure stays collapsed, and unknown values never appear in the DOM.
+- **F2 Manager assignment.** Characters → select an NPC → `Work` tab → choose a post → Assign. The roster row, the window header and the City tile list show the manager. Unassign from the same tab reverses it. A stale or invalid choice shows its error beside the control in `Work`. The "No free manager post" reason is visible in `Work` when it applies. The Player's `Work` tab shows the not-available statement and no controls.
+- **F3 Read people.**
+  1. The Player window opens in one action from Characters.
+  2. Every person has exactly one tab strip with `Description`, `Modify`, `Work`, `Relations`, and exactly one tabpanel exists in the DOM.
+  3. `Description` reaches every observation field for that person (descriptions, identity rows, traits, attributes, skills, history, adult values, NPC background), each at most one disclosure deep.
+  4. `Modify` shows only the not-implemented statement: no buttons, inputs or slot lists.
+  5. NPC `Relations` shows the eight axes. Player `Relations` shows its empty state.
+  6. Switching Player ↔ NPC keeps each person's area by id. A newly selected person's disclosures are closed, `Private (adult)` included.
+  7. Unknown private values never appear in the DOM.
 - **F4 Session.**
   1. Session → Save locally → reload → Continue locally restores the session, posts and profiles. Export/Import round-trip.
-  2. **UI-session boundary:** in Planning, with a retained report from the previous week, select an NPC, open its Stats tab, then switch to its Profile tab and open the private disclosure there, trigger an assign error, **then** choose a post draft (an Assign attempt clears that NPC's draft), and type a workforce draft. Then run a successful Continue or Import. After loading a checkpoint whose character ids are identical:
+  2. **UI-session boundary:** in Planning, with a retained report from the previous week, select an NPC, open its `Description` tab and the `Private (adult)` disclosure there, switch to its `Work` tab, trigger an assign error, **then** choose a post draft (an Assign attempt clears that NPC's draft), and type a workforce draft. Then run a successful Continue or Import. After loading a checkpoint whose character ids are identical:
      - the destination is City and the selected person is You;
-     - every profile opens on Overview with private disclosures closed;
+     - every character window opens on `Description` with private disclosures closed;
      - no post draft, assign error or workforce draft remains, and the workforce input equals the loaded value;
      - the report is cleared.
   3. **Atomic failure:** with that same UI state set up, a rejected import (invalid file, oversize, or during Report phase) and a superseded file read leave every item above unchanged, and only the checkpoint error/notice changes.
@@ -223,7 +253,7 @@ Each flow runs in Playwright Chromium at 1280px and 375px, plus a reflow pass at
 **Accessibility baseline (automated, scoped to the shell and flows):**
 - One `h1`.
 - The nav has a name and `aria-current`.
-- Profile tabs keep arrow/Home/End behaviour.
+- The character window tab strip supports arrow/Home/End keys.
 - Every new control is reachable by Tab, and no element is focused inside a hidden view.
 - Text and control bounds show no clipping at 320/375/1280px.
 - Computed contrast is at least 4.5:1 for text and 3:1 for focus, controls and inactive text.
@@ -245,7 +275,7 @@ This is not a WCAG conformance claim. Manual user pixel checks are **not** a man
 - Expected touch points:
   - `TileManagement.svelte`: gate the life shell, relocate the error/status display, add view state.
   - New presentational view components under `packages/ui/src/`.
-  - `CharacterProfile.svelte`: optional tab-by-name prop and trait summaries in the Profile tab, existing callers unchanged.
+  - `CharacterProfile.svelte`: replace the five tabs with the four areas, select the area by id, and add the Description disclosures, the Modify statement and the Relations empty state. It is rendered only in Character Life (the NPC-world mode passes no profiles), so no other mode is affected.
   - `WorldNpcPanel.svelte`: Character Life presentation only, NPC-world mode unchanged.
   - Life-mode e2e specs.
 - The exact allowlist belongs to the plan. `TileManagement` is already over the 200-line review signal, so the views should be split out rather than grown inline.
@@ -260,12 +290,15 @@ This is not a WCAG conformance claim. Manual user pixel checks are **not** a man
 6. With End Week reachable from every view, a hidden workforce draft is reset by a successful End Week. Mitigation: the persistent unapplied-changes indicator and the End Week note (§5.4), asserted in F1. The command behaviour itself is unchanged.
 7. Load reset scope: resetting too little carries old assignment intent or an open private section into different character data. Resetting on a failed load, or during navigation, loses player work. Mitigation: reset only after successful publication, keyed by a UI epoch rather than by character id, asserted in F4 for both success and failure.
 8. The post-choice lifecycle differs from the workforce one (it survives End Week). An implementation that "unifies" them would silently change behaviour. Mitigation: the per-type table in §5.3 is normative.
+9. The empty `Modify` area could be read as a broken feature, or invite fixed slots being added early. Mitigation: plain not-implemented wording, and F3 asserts that it has no controls or slot lists. Equipment needs its own design.
+10. Replacing five profile tabs with four areas rewrites the Stage0 `profileParity` helper (it selects tabs by their old names). Mitigation: every field it compares today is still compared, now located by area and disclosure (risk 1).
 
 ## 14. User decisions
 
-U1–U4, together with the unapplied-changes indicator (§5.4) and the load boundary (§5.5), form one coherent layout proposal and may be presented to the user as a single design choice. They are listed separately only so each can be changed independently.
+U1–U5, together with the unapplied-changes indicator (§5.4) and the load boundary (§5.5), form one coherent layout proposal and may be presented to the user as a single design choice. They are listed separately only so each can be changed independently.
 
 - **U1** Auto-open Reports after End Week, with focus staying on End Week (designer call: yes).
 - **U2** Destination labels and order: `City`, `Characters`, `Reports`; `Session`, `Help` (designer call).
 - **U3** Narrow layout: non-sticky top status block and wrapped destination row, no drawer (designer call).
 - **U4** Last-week shortage lines in the status block when nonzero (designer call: yes).
+- **U5** Character window wording: the tab label `Work` for both roles until interactions exist, and the Player `Work`/`Relations` and `Modify` empty-state sentences in §4.3 (designer call). The four-area structure itself is the user's requirement (§1).
