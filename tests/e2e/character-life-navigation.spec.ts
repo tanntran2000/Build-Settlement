@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 import { serializeCharacterLifeSave } from '../../packages/persistence/src/character-life-save.ts';
 import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
-import { characterWindow, charactersView, expectOneCharacterWindow, expectReport, exportLife, go, importLife, lifeUiSnapshot, makeLife, reportFixture, reportRegion, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
+import { characterWindow, charactersView, expectOneCharacterWindow, expectReport, exportLife, go, importLife, lifeUiSnapshot, makeLife, reportFixture, reportRegion, reportUnits, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
 
 test('one character window remembers areas and closes new-person disclosures', async ({ page }) => {
   await page.goto('/?mode=world-life');
@@ -486,7 +486,7 @@ async function restoreReads(page: Page) {
   });
 }
 
-for (const kind of ['invalid JSON', 'incompatible schema', 'oversize', 'read rejection', 'Report phase', 'stale revision', 'superseded reads', 'newer Import', 'later Continue'] as const) {
+for (const kind of ['invalid JSON', 'incompatible schema', 'oversize', 'invalid local Continue', 'read rejection', 'Report phase', 'stale revision', 'superseded reads', 'newer Import', 'later Continue'] as const) {
   test(`rejected and superseded loads preserve UI intent: ${kind}`, async ({ page }) => {
     const saved = await prepareLoadIntent(page);
     const text = encodedLife(saved);
@@ -516,6 +516,10 @@ for (const kind of ['invalid JSON', 'incompatible schema', 'oversize', 'read rej
         const feedback = { checkpoint: await checkpoints(page).textContent(), error: await page.getByTestId('life-shell').locator('aside > [role="alert"]').allTextContents() };
         await releaseRead(page, 0, kind === 'read rejection' ? null : text);
         if (kind === 'superseded reads' || kind === 'newer Import' || kind === 'later Continue') expect({ checkpoint: await checkpoints(page).textContent(), error: await page.getByTestId('life-shell').locator('aside > [role="alert"]').allTextContents() }).toEqual(feedback);
+      } else if (kind === 'invalid local Continue') {
+        await page.evaluate(key => localStorage.setItem(key, '{'), lifeKey);
+        await page.getByRole('button', { name: 'Continue locally', exact: true }).click();
+        expect(await page.evaluate(key => localStorage.getItem(key), lifeKey)).toBe('{');
       } else {
         await putFile(page, kind === 'invalid JSON' ? '{' : kind === 'incompatible schema' ? JSON.stringify({ format: 'haven.character-life-session.save', schemaVersion: 999, state: saved }) : kind === 'oversize' ? 'x'.repeat(1024 * 1024 + 1) : text);
       }
@@ -523,6 +527,12 @@ for (const kind of ['invalid JSON', 'incompatible schema', 'oversize', 'read rej
       expect(await lifeUiSnapshot(page)).toEqual(before);
       // Check all live control values/areas/errors AND the open disclosure of a still-mounted Player.
       if (kind !== 'later Continue' && kind !== 'newer Import') {
+        const message = await page.getByTestId('life-shell').locator('aside > [role="alert"]').textContent();
+        for (const destination of ['city', 'characters', 'reports'] as const) {
+          await go(page, destination);
+          await expect(page.getByTestId('life-shell').locator('aside > [role="alert"]')).toBeVisible();
+          await expect(page.getByTestId('life-shell').locator('aside > [role="alert"]')).toHaveText(message!);
+        }
         await go(page, 'characters');
         await expect(characterWindow(page)).toHaveAttribute('data-character-id', 'npc_starter_1');
         await expect(characterWindow(page).getByRole('tab', { name: 'Work', exact: true })).toHaveAttribute('aria-selected', 'true');
@@ -546,6 +556,19 @@ test('rejected and superseded loads preserve UI intent: open Player disclosure',
   expect(await handle.evaluate(el => el.isConnected && el.hasAttribute('open'))).toBe(true);
 });
 
+test('rejected and superseded loads preserve UI intent: targeted workforce error', async ({ page }) => {
+  await page.goto('/?mode=world-life'); await importLife(page, makeLife());
+  await page.getByTestId('trial-tile-field-1').click();
+  await workersInput(page).fill('999'); await page.getByRole('button', { name: 'Assign workers', exact: true }).click();
+  await expect(page.locator('#trial-workers-error')).toBeVisible();
+  await go(page, 'session'); const before = await lifeUiSnapshot(page);
+  await putFile(page, '{');
+  await expect(page.getByTestId('life-shell').locator('aside > [role="alert"]')).toBeVisible();
+  expect(await lifeUiSnapshot(page)).toEqual(before);
+  await go(page, 'city'); await expect(page.locator('#trial-workers-error')).toBeVisible();
+  await expect(workersInput(page)).toHaveValue('999');
+});
+
 for (const kind of ['shortage', 'zero', 'precision', 'service', 'empty'] as const) {
   test(`report matches complete executor projection: ${kind}`, async ({ page }) => {
     await page.goto('/?mode=world-life'); await importLife(page, reportFixture(kind));
@@ -562,7 +585,9 @@ for (const kind of ['shortage', 'zero', 'precision', 'service', 'empty'] as cons
     })).toBe(false);
     const aside = page.getByTestId('life-shell').locator('aside');
     for (const [label, amount] of [['Food unmet', report.foodDemandMilli - report.foodConsumedMilli], ['Goods unmet', report.goods.demandMilli - report.goods.servedMilli], ['Unfunded upkeep', report.unpaidUpkeepMilli]] as const) {
-      await expect(aside.getByText(new RegExp(`^Last week: ${label} `))).toHaveCount(amount ? 1 : 0);
+      const line = aside.getByText(new RegExp(`^Last week: ${label} `));
+      await expect(line).toHaveCount(amount ? 1 : 0);
+      if (amount) await expect(line).toHaveText(`Last week: ${label} ${reportUnits(amount)}`);
     }
     if (kind === 'precision') {
       expect(report.before.wheat).toBe(100001); expect(report.before.food).toBe(1);

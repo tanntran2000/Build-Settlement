@@ -100,12 +100,14 @@ async function profileParity(page: Page, scope: Locator, c: VisibleCharacter) {
   await expectOneCharacterWindow(page);
 }
 
-async function reportParity(page: Page, o: Observation) {
+async function reportParity(page: Page, o: Observation, fullReport: Readonly<TileTrialReport> | null) {
   await go(page, 'reports');
   await expect(button(page, 'Plan next week')).toHaveAttribute('aria-disabled', String(!o.actionTypes.includes('NEXT_WEEK')));
   const panel = reportRegion(page), r = o.lastReport;
   if (!r) { await expect(panel.getByText('No report yet. End Week to resolve the plan.', { exact: true })).toBeVisible(); await expect(panel.getByRole('table')).toHaveCount(0); return; }
-  await expectReport(page, r);
+  expect(fullReport).not.toBeNull();
+  if (!fullReport) throw new Error('Missing complete executor report for parity');
+  await expectReport(page, fullReport);
   expect(r.immigration).toBeDefined();
   const immigration = r.immigration!;
   await expect(panel.getByTestId('trial-immigration')).toHaveText(`Population: ${immigration.populationBefore} → ${immigration.populationAfter} · ${immigration.arrivals} arrivals · Available next week.`);
@@ -127,7 +129,7 @@ async function reportParity(page: Page, o: Observation) {
   await expect(panel.getByText('Previous report · Planning is active.', { exact: true })).toHaveCount(o.phase === 'planning' ? 1 : 0);
 }
 
-async function uiParity(page: Page, o: Observation) {
+async function uiParity(page: Page, o: Observation, fullReport: Readonly<TileTrialReport> | null) {
   await go(page, 'city');
   const s = o.settlement;
   const shell = page.getByTestId('life-shell');
@@ -215,7 +217,7 @@ async function uiParity(page: Page, o: Observation) {
       for (const reason of o.disabledReasons.filter(r => !r.startsWith('Choose Plan'))) await expect(card.getByText(reason, { exact: true })).toBeVisible();
     }
   }
-  await reportParity(page, o);
+  await reportParity(page, o, fullReport);
   await go(page, 'characters');
   expect(await page.content()).not.toContain('63 / 47 / 169');
   await expect(page.getByRole('alert', { includeHidden: true })).toHaveCount(0);
@@ -234,7 +236,7 @@ test('same-session UI projection through assignment and full week', async ({ pag
     expectedSession = result.next;
     if (result.report) expectedReport = result.report;
   };
-  const compare = () => uiParity(page, observeCharacterLife(expectedSession, expectedReport));
+  const compare = () => uiParity(page, observeCharacterLife(expectedSession, expectedReport), expectedReport);
   const importInitial = async () => {
     if (await page.getByTestId('life-shell').count()) await go(page, 'session');
     await page.getByLabel('Import checkpoint', { exact: true }).setInputFiles({

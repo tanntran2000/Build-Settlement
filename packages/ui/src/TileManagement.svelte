@@ -3,7 +3,8 @@
   import CharacterLifeShell from './CharacterLifeShell.svelte';
   import CharacterLifeCity from './CharacterLifeCity.svelte';
   import CharacterLifeCharacters from './CharacterLifeCharacters.svelte';
-  import type { LifeDestination } from './character-life-navigation.js';
+  import SoloWeekReport from './SoloWeekReport.svelte';
+  import type { LifeDestination, PostDraftEntry } from './character-life-navigation.js';
   import { createNpcWorldSession, createTileTrialState, createWorldSession, isLiveCharacterLifeSessionState, summarizeOutside, weeklyWorkforceMilli, WEEKLY_RESOURCE_KEYS, TRIAL_BUILDINGS, TILE_TRIAL_BALANCE as B, LEGACY_TILE_RULESET, POPULATION_TILE_RULESET, type OutsideWorldState, type NpcWorldSessionState, type WorldNpc, type TileTrialRuleset, type TileTrialReport, type CharacterLifeSessionState, type CharacterProfile as Profile, type PlayerCharacter } from '@haven/core';
   import { executeCharacterLifeCommand, executeTileTrialCommand, executeWorldNpcCityCommand } from '@haven/simulation';
   import { serializeTileTrialSave, deserializeTileTrialSave, serializeWorldSessionSave, deserializeWorldSessionSave, serializeNpcWorldSessionSave, deserializeNpcWorldSessionSave, serializeCharacterLifeSave, deserializeCharacterLifeSave, TILE_SAVE_MAX_BYTES } from '@haven/persistence';
@@ -34,6 +35,9 @@
   let destination: LifeDestination = 'city';
   let lifeStatus = '';
   let lifeCity: CharacterLifeCity;
+  let lifeCharacters: CharacterLifeCharacters;
+  let uiEpoch = 0;
+  let postDrafts: PostDraftEntry[] = [];
   let saveNotice = '';
   let importRead = 0;
   let report: Readonly<TileTrialReport> | null = null;
@@ -61,6 +65,11 @@
   $: assigned = state.tiles.reduce((sum, t) => sum + (t.building?.workers ?? 0), 0);
   $: locked = state.phase === 'report';
   $: chosen = TRIAL_BUILDINGS[typeId];
+  $: unapplied = [
+    ...(selected.building && workers !== String(selected.building.workers)
+      ? [{ id: 'workforce', label: `Workforce · ${selectedId}`, onopen: () => { void openLifeCity(); } }] : []),
+    ...postDrafts.map(entry => ({ id: entry.npcId, label: `Post · ${entry.name}`, onopen: () => { void openLifePost(entry.npcId); } })),
+  ];
   errorLog.setContext('weekly', { week: state.world.week });
 
   function selectTile(id: string) {
@@ -119,8 +128,20 @@
     await tick();
     lifeCity.focusManage();
   }
+  async function openLifePost(npcId: string): Promise<void> {
+    destination = 'characters';
+    await tick();
+    lifeCharacters.openWork(npcId);
+    await tick();
+    document.getElementById(`npc-slot-${npcId}`)?.focus();
+  }
+  async function focusLifeCityNavigation(): Promise<void> {
+    await tick();
+    document.getElementById('life-nav-city')?.focus();
+  }
   function checkpointError(message: string) {
-    error = message; workforceError = ''; managementError = null; saveNotice = '';
+    error = message; saveNotice = '';
+    if (!lifeMode) { workforceError = ''; managementError = null; }
     errorLog.record('RUNTIME', 'INVALID_COMMAND');
   }
   function exportCheckpoint() {
@@ -149,6 +170,10 @@
     if (lifeMode) ({ player, profiles } = prepared.next as CharacterLifeSessionState);
     if (invalidateReads) importRead++;
     report = null; workers = nextWorkers;
+    if (lifeMode) {
+      uiEpoch++; postDrafts = []; destination = 'city'; lifeStatus = '';
+      void focusLifeCityNavigation();
+    }
     errorLog.setContext('weekly', { week: state.world.week });
     error = ''; workforceError = ''; managementError = null; saveNotice = notice;
     return true;
@@ -157,7 +182,8 @@
     const input = event.currentTarget as HTMLInputElement; const file = input.files?.[0]; input.value = '';
     if (!file) return;
     const ticket = ++importRead, expectedRevision = state.revision;
-    error = ''; workforceError = ''; managementError = null; saveNotice = '';
+    error = ''; saveNotice = '';
+    if (!lifeMode) { workforceError = ''; managementError = null; }
     if (state.phase !== 'planning') { checkpointError('Choose Plan next week before importing.'); return; }
     if (file.size > TILE_SAVE_MAX_BYTES) { checkpointError('Checkpoint exceeds the 1 MiB limit.'); return; }
     try {
@@ -195,7 +221,7 @@
 </script>
 
 {#if lifeMode && outside && npcs && player && profiles}
-  <CharacterLifeShell {state} {report} bind:destination {error} status={lifeStatus} unapplied={[]} onendweek={endLifeWeek}>
+  <CharacterLifeShell {state} {report} bind:destination {error} status={lifeStatus} {unapplied} onendweek={endLifeWeek}>
     {#snippet city()}
       {#if npcs && outside}
       <CharacterLifeCity bind:this={lifeCity} {state} {npcs} {selectedId} bind:typeId bind:workers {workforceError} {managementError} {outside}
@@ -204,27 +230,14 @@
     {/snippet}
     {#snippet characters()}
       {#if outside && npcs && player && profiles}
-        <CharacterLifeCharacters session={{ city: state, outside, npcs, player, profiles }} {locked} onpostdrafts={() => {}}
+        {#key uiEpoch}
+        <CharacterLifeCharacters bind:this={lifeCharacters} session={{ city: state, outside, npcs, player, profiles }} {locked} onpostdrafts={entries => { postDrafts = entries; }}
           onapply={next => { ({ city: state, outside, npcs, player, profiles } = next); saveNotice = ''; error = ''; }} />
+        {/key}
       {/if}
     {/snippet}
     {#snippet reports()}
-  <button class="life-next-week" aria-disabled={!locked} onclick={nextLifeWeek}>Plan next week</button>
-  {#if report}
-    <section class="card" aria-label="Trial week report">
-      <h2>Week {report.week} report</h2>
-      {#if report.immigration}<p data-testid="trial-immigration">Population: {report.immigration.populationBefore} → {report.immigration.populationAfter} · {report.immigration.arrivals} arrivals · Available next week.</p>{/if}
-      {#if !locked}<p>Previous report · Planning is active.</p>{/if}
-      <p data-testid="trial-goods">Goods service: {units(report.goods.servedMilli)} / {units(report.goods.demandMilli)} · {report.goods.fulfillmentBps / 100}% {report.goods.demandMilli === 0 ? '(no demand)' : 'fulfilled'}. Materials used once: {units(report.goods.woodUsed)} Wood, {units(report.goods.ironUsed)} Iron. Revenue: {units(report.goods.revenueMilli)} Gold.</p>
-      <p>Tax: {units(report.taxMilli)} Gold. Upkeep covered: {units(report.upkeepPaidMilli)} Gold; unfunded: {units(report.unpaidUpkeepMilli)} Gold (no debt). Farm batch payment: {units(report.farmBatchGoldMilli)} Gold; extra Farm upkeep: {units(report.farmExtraUpkeepMilli)} Gold.</p>
-      <p>Food consumed: {units(report.foodConsumedMilli)} / {units(report.foodDemandMilli)}. Happiness: {report.happinessBefore} → {report.happinessAfter}.</p>
-      <div class="ledger"><table><caption>Weekly stock ledger</caption><thead><tr><th>Stock</th><th>Before</th><th>Net</th><th>After</th></tr></thead><tbody>
-        {#each WEEKLY_RESOURCE_KEYS as key}<tr><th>{key}</th><td>{units(report.before[key])}</td><td>{units(report.after[key] - report.before[key])}</td><td>{units(report.after[key])}</td></tr>{/each}
-      </tbody></table></div>
-      <details><summary>Building activity</summary><ul>{#each report.activities as activity}<li>{activity}</li>{/each}</ul></details>
-    </section>
-  {/if}
-  {#if !report}<p>No report yet. End Week to resolve the plan.</p>{/if}
+      <SoloWeekReport {report} planningWeek={state.world.week} {locked} onnextweek={nextLifeWeek} />
     {/snippet}
     {#snippet session()}
   <section class="card" aria-label="Planning checkpoints">
@@ -422,7 +435,6 @@
   label { display: block; margin: 16px 0 8px; } input, select, button { font: inherit; border-radius: 6px; padding: 10px; border: 1px solid var(--border-color); }
   input, select { color: var(--text-main); background: var(--bg-tertiary); max-width: 100%; } input { width: 7rem; }
   button { background: var(--accent-green); color: #000; cursor: pointer; margin: 4px 4px 4px 0; } button:disabled { opacity: .5; cursor: default; }
-  .life-next-week[aria-disabled='true'] { opacity: .5; cursor: default; }
   :focus-visible { outline: 3px solid var(--accent-blue); outline-offset: 3px; } [role='alert'] { padding: 12px; border-left: 3px solid var(--accent-red); }
   #trial-management-error { scroll-margin-block: 1px; }
   .player { overflow-wrap: anywhere; }

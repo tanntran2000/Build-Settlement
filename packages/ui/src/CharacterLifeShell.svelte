@@ -42,18 +42,23 @@
       <p>Happiness: <strong>{state.happiness}</strong> / 100</p>
     </section>
     <p>{settlement.cohorts.reduce((sum, cohort) => sum + cohort.count, 0)} residents · Workforce {assigned} / {formatMilli(weeklyWorkforceMilli(settlement.cohorts))} assigned / available</p>
+    <button data-testid="life-end-week" aria-disabled={locked} onclick={onendweek}>{locked ? 'Report open — Plan next week in Reports' : 'End Week'}</button>
+    {#if report}
+      {#if report.foodDemandMilli > report.foodConsumedMilli}<p>Last week: Food unmet {formatMilli(report.foodDemandMilli - report.foodConsumedMilli)}</p>{/if}
+      {#if report.goods.demandMilli > report.goods.servedMilli}<p>Last week: Goods unmet {formatMilli(report.goods.demandMilli - report.goods.servedMilli)}</p>{/if}
+      {#if report.unpaidUpkeepMilli}<p>Last week: Unfunded upkeep {formatMilli(report.unpaidUpkeepMilli)}</p>{/if}
+    {/if}
     {#if unapplied.length}
       <p>Unapplied changes ({unapplied.length})</p>
       {#each unapplied as entry (entry.id)}<button onclick={entry.onopen}>{entry.label}</button>{/each}
       <p>End Week uses applied settings only. Unapplied changes are not applied, and workforce input resets after the week.</p>
     {/if}
-    <button data-testid="life-end-week" aria-disabled={locked} onclick={onendweek}>{locked ? 'Report open — Plan next week in Reports' : 'End Week'}</button>
     {#if locked}<p>{report ? `Week ${report.week} report open. ` : ''}Choose Plan next week in Reports before changing the plan.</p>{/if}
     <p role="status" aria-live="polite" aria-atomic="true">{status}</p>
     {#if error}<p role="alert">{error}</p>{/if}
     <nav aria-label="Main">
       {#each views as view}
-        <button aria-current={destination === view.id ? 'page' : undefined} onclick={() => { destination = view.id; }}>{view.label}</button>
+        <button id={`life-nav-${view.id}`} aria-current={destination === view.id ? 'page' : undefined} onclick={() => { destination = view.id; }}>{view.label}</button>
       {/each}
     </nav>
   </aside>
