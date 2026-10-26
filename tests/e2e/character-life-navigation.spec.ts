@@ -1,5 +1,150 @@
 import { expect, test } from '@playwright/test';
-import { exportLife, go, importLife, makeLife } from './character-life-navigation.helpers.ts';
+import { characterWindow, charactersView, expectOneCharacterWindow, exportLife, go, importLife, makeLife, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
+
+test('one character window remembers areas and closes new-person disclosures', async ({ page }) => {
+  await page.goto('/?mode=world-life');
+  const session = makeLife();
+  await importLife(page, session);
+  const before = await exportLife(page);
+  await go(page, 'characters');
+  await expectOneCharacterWindow(page);
+  const characters = charactersView(page), window = characterWindow(page);
+  const roster = characters.getByRole('navigation', { name: 'Character roster', exact: true });
+  await expect(roster.getByRole('button').first()).toHaveText('You · Leader of Haven');
+  await expect(window).toHaveAttribute('data-character-id', 'player');
+  await expect(window.getByRole('heading', { name: 'Ana', exact: true })).toBeVisible();
+  await expect(window.getByRole('button', { name: 'Previous', exact: true })).toBeDisabled();
+  await expectOneCharacterWindow(page);
+  await window.getByRole('button', { name: 'Next', exact: true }).click();
+  await expect(window).toHaveAttribute('data-character-id', 'npc_starter_1');
+  await selectArea(page, 'Work');
+  await expectOneCharacterWindow(page);
+  await selectPerson(page, 'player');
+  await selectArea(page, 'Inventory');
+  await selectPerson(page, 'npc_starter_1');
+  await expect(window.getByRole('tab', { name: 'Work', exact: true })).toHaveAttribute('aria-selected', 'true');
+  await selectPerson(page, 'player');
+  await expect(window.getByRole('tab', { name: 'Inventory', exact: true })).toHaveAttribute('aria-selected', 'true');
+  for (const id of ['player', ...session.npcs.map(n => n.character.id)]) {
+    await selectPerson(page, id);
+    await expectOneCharacterWindow(page);
+    await selectArea(page, 'Description');
+    const details = window.locator('details');
+    await expect(details.locator('summary')).toHaveText(['Attributes', 'Skills', 'History', 'Private (adult)']);
+    for (const disclosure of await details.all()) await expect(disclosure).not.toHaveAttribute('open', /.*/);
+    await window.getByText('Private (adult)', { exact: true }).click();
+    for (const destination of ['city', 'reports', 'session', 'help', 'characters'] as const) await go(page, destination);
+    await expect(details.filter({ hasText: 'Private (adult)' })).toHaveAttribute('open', '');
+    await selectArea(page, 'Work'); await selectArea(page, 'Description');
+    for (const disclosure of await details.all()) {
+      await expect(disclosure).not.toHaveAttribute('open', /.*/);
+      await disclosure.locator('summary').click();
+    }
+    await selectPerson(page, id === 'player' ? 'npc_starter_1' : 'player');
+    await selectPerson(page, id);
+    for (const disclosure of await details.all()) await expect(disclosure).not.toHaveAttribute('open', /.*/);
+  }
+  await expect(window.getByRole('button', { name: 'Next', exact: true })).toBeDisabled();
+  await window.getByRole('button', { name: 'Previous', exact: true }).click();
+  await expect(window).toHaveAttribute('data-character-id', 'npc_starter_2');
+  const description = window.getByRole('tab', { name: 'Description', exact: true });
+  await description.focus(); await page.keyboard.press('ArrowLeft');
+  await expect(window.getByRole('tab', { name: 'Relations', exact: true })).toBeFocused();
+  await page.keyboard.press('ArrowRight'); await expect(description).toBeFocused();
+  await page.keyboard.press('End');
+  await expect(window.getByRole('tab', { name: 'Relations', exact: true })).toHaveAttribute('tabindex', '0');
+  await expect(description).toHaveAttribute('tabindex', '-1');
+  await page.keyboard.press('Home'); await expect(description).toBeFocused();
+  await expect(window.locator('[role="tab"][tabindex="0"]')).toHaveCount(1);
+  expect(await exportLife(page)).toEqual(before);
+});
+
+test('inventory and player unavailable areas are honest', async ({ page }) => {
+  await page.goto('/?mode=world-life');
+  const session = makeLife();
+  await importLife(page, session);
+  for (const id of ['player', ...session.npcs.map(n => n.character.id)]) {
+    await selectPerson(page, id);
+    await expectOneCharacterWindow(page);
+    const panel = await selectArea(page, 'Inventory');
+    await expect(panel.locator('p')).toHaveText(['Inventory and equipment are not implemented yet.', 'Current clothing is described in Description.']);
+    await expect(panel.locator('button,input,select,ul,ol,[data-slot]')).toHaveCount(0);
+  }
+  await selectPerson(page, 'player');
+  const work = await selectArea(page, 'Work');
+  await expect(work.locator('p')).toHaveText(['Leader of Haven.', 'Player work and interactions are not available yet.']);
+  await expect(work.locator('button,input,select')).toHaveCount(0);
+  const relations = await selectArea(page, 'Relations');
+  await expect(relations).toHaveText('Your own relationships are not tracked yet. Open a person to see how they regard you.');
+  await expect(relations.locator('button,input,select,meter')).toHaveCount(0);
+});
+
+test('NPC Work uses the displayed post and reports stale choices locally', async ({ page }) => {
+  await page.goto('/?mode=world-life');
+  const session = makeLife();
+  await importLife(page, session);
+  await page.getByRole('button', { name: 'Select field-1', exact: true }).click();
+  await page.getByLabel('Assigned workers (WF)', { exact: true }).fill('999');
+  await page.getByRole('button', { name: 'Assign workers', exact: true }).click();
+  await expect(page.locator('#trial-workers-error')).toBeVisible();
+  const window = await selectPerson(page, 'npc_starter_1');
+  await selectArea(page, 'Work');
+  const slots = window.getByRole('combobox');
+  await slots.selectOption('plain-1');
+  await selectPerson(page, 'npc_starter_2'); await selectArea(page, 'Work');
+  await slots.selectOption('plain-1');
+  await window.getByRole('button', { name: 'Assign', exact: true }).click();
+  await expect(window.getByTestId('npc-post-npc_starter_2')).toHaveText('Post: Manager — Food Processor (plain-1)');
+  await selectPerson(page, 'npc_starter_1');
+  await expect(slots).toHaveValue('plain-1');
+  await expect(slots.locator('option:checked')).toContainText('Unavailable');
+  const revision = await page.getByTestId('life-shell').getAttribute('data-revision');
+  await window.getByRole('button', { name: 'Assign', exact: true }).click();
+  await expect(window.getByRole('alert')).toContainText('already');
+  await expect(page.getByTestId('life-shell')).toHaveAttribute('data-revision', revision!);
+  await expect(slots).toHaveValue('field-1');
+  await expect(slots.locator('option')).toHaveText(['Manager — Farm (field-1)']);
+  await go(page, 'help'); await go(page, 'characters');
+  await expect(window.getByRole('alert')).toContainText('already');
+  await selectPerson(page, 'npc_starter_2');
+  await expect(window.getByRole('alert')).toHaveCount(0);
+  await window.getByRole('button', { name: 'Unassign', exact: true }).click();
+  await expect(slots).toHaveValue('field-1');
+  await slots.selectOption('plain-1');
+  await window.getByRole('button', { name: 'Assign', exact: true }).click();
+  await selectPerson(page, 'npc_starter_1');
+  await window.getByRole('button', { name: 'Assign', exact: true }).click();
+  await expect(window.getByRole('alert')).toHaveCount(0);
+  await expect(charactersView(page).getByTestId('character-npc_starter_1')).toContainText('Manager — Farm (field-1)');
+  await expect(window.locator('header')).toContainText('Manager — Farm (field-1)');
+  await selectArea(page, 'Description');
+  await expect(window.getByTestId('profile-npc_starter_1-long')).toContainText('currently manages the Farm.');
+  await go(page, 'city');
+  await expect(page.getByTestId('trial-tile-field-1')).toContainText(session.npcs[0].character.name);
+  await expect(page.getByLabel('Assigned workers (WF)', { exact: true })).toHaveValue('999');
+  await expect(page.locator('#trial-workers-error')).toBeVisible();
+  await selectPerson(page, 'npc_starter_3'); await selectArea(page, 'Work');
+  await expect(window.getByText('No free manager post. Build a Farm, Processor, Logging Camp, Mine, Workshop or Market.', { exact: true })).toBeVisible();
+  await expect(window.getByRole('combobox')).toHaveCount(0);
+  await selectPerson(page, 'npc_starter_1'); await selectArea(page, 'Work');
+  await page.getByTestId('life-end-week').click(); await go(page, 'characters');
+  await expect(window.getByRole('button', { name: 'Unassign', exact: true })).toBeDisabled();
+  await selectPerson(page, 'npc_starter_2');
+  await expect(window.getByRole('button', { name: 'Unassign', exact: true })).toBeDisabled();
+  await go(page, 'reports'); await page.getByRole('button', { name: 'Plan next week', exact: true }).click();
+  await selectPerson(page, 'npc_starter_1');
+  await window.getByRole('button', { name: 'Unassign', exact: true }).click();
+  await expect(slots).toHaveValue('field-1');
+  await expect(window.locator('header')).toContainText('Unassigned');
+  await expect(charactersView(page).getByTestId('character-npc_starter_1')).toContainText('Unassigned');
+  await selectArea(page, 'Description');
+  await expect(window.getByTestId('profile-npc_starter_1-long')).toContainText('currently holds no post.');
+  await go(page, 'city'); await expect(page.getByTestId('trial-tile-field-1')).toContainText('Unassigned');
+  await page.getByTestId('life-end-week').click();
+  await selectPerson(page, 'npc_starter_1'); await selectArea(page, 'Work');
+  await expect(slots).toBeDisabled();
+  await expect(window.getByRole('button', { name: 'Assign', exact: true })).toBeDisabled();
+});
 
 test('life shell navigation is read-only', async ({ page }) => {
   await page.goto('/?mode=world-life');
@@ -68,7 +213,8 @@ test('city actions retain costs and targeted errors', async ({ page }) => {
   await manage.getByRole('button', { name: 'Pause', exact: true }).click();
   await expect(page.getByTestId('trial-tile-forest-1')).toContainText('Level 1 · 0 WF · Paused');
   await go(page, 'characters');
-  const npc = page.getByTestId('npc-npc_starter_1'), name = await npc.getByRole('heading').innerText();
+  const npc = await selectPerson(page, 'npc_starter_1'), name = await npc.getByRole('heading').first().innerText();
+  await selectArea(page, 'Work');
   await npc.getByLabel('Manager post', { exact: false }).selectOption('forest-1');
   await npc.getByRole('button', { name: 'Assign', exact: true }).click();
   await go(page, 'city');

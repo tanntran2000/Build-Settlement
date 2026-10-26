@@ -2,6 +2,7 @@
   import { tick } from 'svelte';
   import CharacterLifeShell from './CharacterLifeShell.svelte';
   import CharacterLifeCity from './CharacterLifeCity.svelte';
+  import CharacterLifeCharacters from './CharacterLifeCharacters.svelte';
   import type { LifeDestination } from './character-life-navigation.js';
   import { createNpcWorldSession, createTileTrialState, createWorldSession, isLiveCharacterLifeSessionState, summarizeOutside, weeklyWorkforceMilli, WEEKLY_RESOURCE_KEYS, TRIAL_BUILDINGS, TILE_TRIAL_BALANCE as B, LEGACY_TILE_RULESET, POPULATION_TILE_RULESET, type OutsideWorldState, type NpcWorldSessionState, type WorldNpc, type TileTrialRuleset, type TileTrialReport, type CharacterLifeSessionState, type CharacterProfile as Profile, type PlayerCharacter } from '@haven/core';
   import { executeCharacterLifeCommand, executeTileTrialCommand, executeWorldNpcCityCommand } from '@haven/simulation';
@@ -202,22 +203,10 @@
       {/if}
     {/snippet}
     {#snippet characters()}
-  {#if lifeMode && player}
-    <section class="card player" aria-label="Player">
-      <p class="eyebrow">Player · leader of Haven</p>
-      <h2>{player.character.name}</h2>
-      <CharacterProfile view={{ character: player.character, profile: player.profile, role: 'player', postBuildingName: null }} />
-    </section>
-  {/if}
-
-  {#if npcs && outside}
-    <WorldNpcPanel session={{ city: state, outside, npcs }} player={lifeMode ? player : null} {profiles} {locked} onapply={next => {
-      if (isLiveCharacterLifeSessionState(next)) ({ city: state, outside, npcs, player, profiles } = next);
-      else ({ city: state, outside, npcs } = next);
-      saveNotice = ''; error = '';
-    }} />
-  {/if}
-
+      {#if outside && npcs && player && profiles}
+        <CharacterLifeCharacters session={{ city: state, outside, npcs, player, profiles }} {locked} onpostdrafts={() => {}}
+          onapply={next => { ({ city: state, outside, npcs, player, profiles } = next); saveNotice = ''; error = ''; }} />
+      {/if}
     {/snippet}
     {#snippet reports()}
   <button class="life-next-week" aria-disabled={!locked} onclick={nextLifeWeek}>Plan next week</button>

@@ -12,6 +12,30 @@ export function makeLife(seed = 12345): CharacterLifeSessionState {
   return result.value;
 }
 
+export const charactersView = (page: Page) => page.locator('[data-life-view="characters"]');
+export const characterWindow = (page: Page) => charactersView(page).getByRole('region', { name: 'Character window', exact: true });
+export async function selectPerson(page: Page, id: string) {
+  await go(page, 'characters');
+  await charactersView(page).getByTestId(`character-${id}`).click();
+  await expect(characterWindow(page)).toHaveAttribute('data-character-id', id);
+  return characterWindow(page);
+}
+
+export async function selectArea(page: Page, name: string) {
+  const tab = characterWindow(page).getByRole('tab', { name, exact: true });
+  await tab.click();
+  await expect(tab).toHaveAttribute('aria-selected', 'true');
+  return characterWindow(page).getByRole('tabpanel');
+}
+
+export async function expectOneCharacterWindow(page: Page) {
+  const characters = charactersView(page);
+  await expect(characters.getByRole('tablist')).toHaveCount(1);
+  await expect(characters.getByRole('tab')).toHaveText(['Description', 'Inventory', 'Work', 'Relations']);
+  await expect(characters.getByRole('tabpanel')).toHaveCount(1);
+  expect(await page.locator('[role=tabpanel]').count()).toBe(1);
+}
+
 export async function go(page: Page, destination: LifeDestination): Promise<void> {
   const name = destination[0].toUpperCase() + destination.slice(1);
   await page.getByRole('navigation', { name: 'Main', exact: true }).getByRole('button', { name, exact: true }).click();

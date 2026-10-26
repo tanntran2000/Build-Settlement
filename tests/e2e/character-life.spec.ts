@@ -1,6 +1,6 @@
 import { test, expect, type Page } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
-import { go } from './character-life-navigation.helpers.ts';
+import { characterWindow, charactersView, expectOneCharacterWindow, go, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
 
 const KEY = 'haven.character-life-session.checkpoint.v1';
 const creation = (page: Page) => page.getByRole('region', { name: 'Character Creation', exact: true });
@@ -110,7 +110,7 @@ test('double click on Create character opens exactly one game', async ({ page })
   await toReview(page);
   await button(page, 'Create character').dblclick();
   await go(page, 'characters');
-  const player = page.getByRole('region', { name: 'Player', exact: true });
+  const player = characterWindow(page);
   await expect(player).toHaveCount(1);
   await expect(player.getByRole('heading', { name: 'Ana', exact: true })).toBeVisible();
   await expect(player).toContainText('Ana · 25 · Worker from Northreach');
@@ -180,8 +180,7 @@ test('importing a foreign file shows the Character Life message and stays on sta
 const NPC_IDS = ['npc_starter_1', 'npc_starter_2', 'npc_starter_3'];
 const NPC_KEY = 'haven.world-npc-session.checkpoint.v1';
 const WORLD_KEY = 'haven.world-session.checkpoint.v1';
-const playerRegion = (page: Page) => page.getByRole('region', { name: 'Player', exact: true });
-const card = (page: Page, id: string) => page.getByTestId(`npc-${id}`);
+const playerRegion = characterWindow;
 async function importFile(page: Page, text: string) {
   if (await page.getByTestId('life-shell').count()) await go(page, 'session');
   await page.getByLabel('Import checkpoint', { exact: true }).setInputFiles({ name: 'save.json', mimeType: 'application/json', buffer: Buffer.from(text) });
@@ -202,39 +201,50 @@ async function exportText(page: Page, pattern: RegExp) {
   return readFile((await file.path())!, 'utf8');
 }
 async function assignFarm(page: Page, id: string) {
-  await card(page, id).getByLabel('Manager post', { exact: false }).selectOption('field-1');
-  await card(page, id).getByRole('button', { name: 'Assign', exact: true }).click();
+  const person = await selectPerson(page, id);
+  await selectArea(page, 'Work');
+  await person.getByLabel('Manager post', { exact: false }).selectOption('field-1');
+  await person.getByRole('button', { name: 'Assign', exact: true }).click();
 }
 
-test('after creation the Player region shows the entered name and short line; 3 NPC cards show profile tabs', async ({ page }) => {
+test('after creation the Player window shows the entered name and short line; 3 NPC roster rows open one profile', async ({ page }) => {
   await startGame(page);
   await expect(page.getByRole('heading', { level: 1, name: 'Character Life', exact: true })).toBeVisible();
   await expect(playerRegion(page)).toContainText('Ana · 25 · Worker from Northreach');
   await expect(playerRegion(page)).toContainText('trained as a worker and now lead Haven.');
-  await expect(playerRegion(page).getByRole('tab', { name: 'Relationship' })).toHaveCount(0);
+  await selectArea(page, 'Relations');
+  await expect(playerRegion(page).getByRole('tabpanel')).toHaveText('Your own relationships are not tracked yet. Open a person to see how they regard you.');
+  await expect(charactersView(page).getByRole('navigation', { name: 'Character roster', exact: true }).getByRole('button')).toHaveCount(4);
   for (const id of NPC_IDS) {
-    await expect(card(page, id).getByRole('tab')).toHaveText(['Overview', 'Profile', 'Stats', 'Relationship', 'History']);
+    await selectPerson(page, id);
+    await expectOneCharacterWindow(page);
+    await expect(characterWindow(page).getByTestId(`profile-${id}-short`)).toBeVisible();
   }
-  await expect(card(page, 'npc_starter_1').getByTestId('profile-npc_starter_1-short')).toContainText('Technician from Northreach');
-  await card(page, 'npc_starter_2').getByRole('tab', { name: 'Relationship' }).click();
-  await expect(card(page, 'npc_starter_2').getByRole('tabpanel')).toContainText('Trust');
-  await card(page, 'npc_starter_2').getByRole('tab', { name: 'History' }).click();
-  await expect(card(page, 'npc_starter_2').getByRole('tabpanel')).toHaveText('No memories yet.');
+  await selectPerson(page, 'npc_starter_1');
+  await expect(characterWindow(page).getByTestId('profile-npc_starter_1-short')).toContainText('Technician from Northreach');
+  await selectPerson(page, 'npc_starter_2');
+  await selectArea(page, 'Relations');
+  await expect(characterWindow(page).getByRole('tabpanel')).toContainText('Trust');
+  await selectArea(page, 'Description');
+  const history = characterWindow(page).locator('details').filter({ has: page.getByText('History', { exact: true }) });
+  await history.locator('summary').click();
+  await expect(history.locator('p')).toHaveText('No memories yet.');
 });
 
 test('assigning starter 1 to field-1 changes its long text to "currently manages the Farm."', async ({ page }) => {
   await startGame(page);
-  const long = card(page, 'npc_starter_1').getByTestId('profile-npc_starter_1-long');
+  await selectPerson(page, 'npc_starter_1');
+  const long = characterWindow(page).getByTestId('profile-npc_starter_1-long');
   await expect(long).toContainText('currently holds no post.');
   await assignFarm(page, 'npc_starter_1');
+  await selectArea(page, 'Description');
   await expect(long).toContainText('currently manages the Farm.');
   await expect(long).toContainText('wide-brimmed hat and work clothes');
 });
 
 test('Private section is collapsed by default', async ({ page }) => {
   await startGame(page);
-  await playerRegion(page).getByRole('tab', { name: 'Profile' }).click();
-  const details = playerRegion(page).locator('details');
+  const details = playerRegion(page).locator('details').filter({ hasText: 'Private (adult)' });
   await expect(details).not.toHaveAttribute('open', /.*/);
   await expect(details.locator('summary')).toHaveText('Private (adult)');
   await expect(playerRegion(page).getByText('Intimacy Knowledge: Not recorded')).toBeHidden();
@@ -247,7 +257,7 @@ test('Private section is collapsed by default', async ({ page }) => {
 test('Save locally, reload, Continue locally restores player name, profiles and posts', async ({ page }) => {
   await startGame(page, 'Mira');
   await assignFarm(page, 'npc_starter_1');
-  const npcName = await card(page, 'npc_starter_1').getByRole('heading').first().innerText();
+  const npcName = await characterWindow(page).getByRole('heading').first().innerText();
   await go(page, 'session');
   await button(page, 'Save locally').click();
   await expect(page.getByRole('region', { name: 'Planning checkpoints', exact: true }).getByRole('status')).toHaveText('Saved in this browser.');
@@ -255,9 +265,11 @@ test('Save locally, reload, Continue locally restores player name, profiles and 
   await button(page, 'Continue locally').click();
   await go(page, 'characters');
   await expect(playerRegion(page).getByRole('heading', { name: 'Mira', exact: true })).toBeVisible();
-  await expect(card(page, 'npc_starter_1').getByRole('heading').first()).toHaveText(npcName);
+  await selectPerson(page, 'npc_starter_1'); await selectArea(page, 'Work');
+  await expect(characterWindow(page).getByRole('heading').first()).toHaveText(npcName);
   await expect(page.getByTestId('npc-post-npc_starter_1')).toHaveText('Post: Manager — Farm (field-1)');
-  await expect(card(page, 'npc_starter_1').getByTestId('profile-npc_starter_1-long')).toContainText('currently manages the Farm.');
+  await selectArea(page, 'Description');
+  await expect(characterWindow(page).getByTestId('profile-npc_starter_1-long')).toContainText('currently manages the Farm.');
 });
 
 test('Export then Import in a new game restores the session; file name matches the life pattern', async ({ page }) => {
@@ -270,6 +282,7 @@ test('Export then Import in a new game restores the session; file name matches t
   await expect(page.getByRole('region', { name: 'Planning checkpoints', exact: true }).getByRole('status')).toHaveText('Checkpoint imported. Planning restored.');
   await go(page, 'characters');
   await expect(playerRegion(page).getByRole('heading', { name: 'Mira', exact: true })).toBeVisible();
+  await selectPerson(page, 'npc_starter_1'); await selectArea(page, 'Work');
   await expect(page.getByTestId('npc-post-npc_starter_1')).toHaveText('Post: Manager — Farm (field-1)');
   await page.reload();
   await importFile(page, text);
@@ -285,7 +298,10 @@ test('importing an NPC-world export into world-life is rejected with the Charact
   await expect(page.getByRole('alert')).toHaveText('Not a Character Life checkpoint of a supported version. No migration was performed.');
   await go(page, 'characters');
   await expect(playerRegion(page).getByRole('heading', { name: 'Mira', exact: true })).toBeVisible();
-  for (const id of NPC_IDS) await expect(page.getByTestId(`npc-post-${id}`)).toHaveText('Post: Unassigned');
+  for (const id of NPC_IDS) {
+    await selectPerson(page, id); await selectArea(page, 'Work');
+    await expect(page.getByTestId(`npc-post-${id}`)).toHaveText('Post: Unassigned');
+  }
 });
 
 test('a world-life export imported in ?mode=world-npc is rejected; world-npc page shows no Player region', async ({ page }) => {
@@ -362,7 +378,7 @@ async function longNameGame(page: Page) {
   await expectTextInside(player.getByRole('heading', { name: LONG_NAME, exact: true }));
   await expectTextInside(player.getByTestId('profile-player-short'));
   await expectTextInside(player.getByTestId('profile-player-long'));
-  await player.getByRole('tab', { name: 'Profile' }).click();
+  await selectArea(page, 'Description');
   for (const value of [LONG_NAME, 'B'.repeat(64), LONG_LABEL]) await expectTextInside(player.getByRole('definition').filter({ hasText: value }));
 }
 
@@ -374,7 +390,7 @@ test('64-character unbroken name, birth name, label and biography stay inside th
 test('desktop profiles are unaffected: short values stay on one line and long text still fits at 1280px', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await startGame(page);
-  await playerRegion(page).getByRole('tab', { name: 'Profile' }).click();
+  await selectArea(page, 'Description');
   const row = playerRegion(page).getByRole('definition').filter({ hasText: /^Ana$/ });
   const [dt, dd] = await Promise.all([playerRegion(page).getByText('Name', { exact: true }).boundingBox(), row.boundingBox()]);
   expect(Math.abs(dt!.y - dd!.y)).toBeLessThan(1);

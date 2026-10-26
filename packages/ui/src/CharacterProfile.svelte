@@ -1,4 +1,6 @@
 <script lang="ts">
+  import type { Snippet } from 'svelte';
+  import type { CharacterArea } from './character-life-navigation.js';
   import {
     describeLong, describeShort, profileRows, REQUIRED_EMOTIONS, REQUIRED_NEEDS, REQUIRED_RELATIONSHIP, REQUIRED_SKILLS, WORLD_TRAITS,
     type CharacterView, type Relationship8D,
@@ -7,40 +9,57 @@
   export let view: CharacterView;
   export let traitIds: string[] = [];
   export let relationship: Relationship8D | null = null;
+  export let area: CharacterArea = 'description';
+  export let onarea: (area: CharacterArea) => void = () => {};
+  export let work: Snippet | undefined = undefined;
   const title = (key: string) => key[0].toUpperCase() + key.slice(1);
-  let tab = 0;
+  const tabs: { id: CharacterArea; label: string }[] = [
+    { id: 'description', label: 'Description' }, { id: 'inventory', label: 'Inventory' },
+    { id: 'work', label: 'Work' }, { id: 'relations', label: 'Relations' },
+  ];
   const buttons: HTMLButtonElement[] = [];
   $: c = view.character;
   $: id = `profile-${c.id}`;
-  $: tabs = ['Overview', 'Profile', 'Stats', ...(view.role === 'npc' && relationship ? ['Relationship'] : []), 'History'];
   $: history = view.profile.private?.intimateHistory;
-  $: traitNames = traitIds.map(t => WORLD_TRAITS.find(w => w.id === t)?.name ?? t);
+  $: traits = traitIds.map(id => WORLD_TRAITS.find(trait => trait.id === id));
+
+  function selectArea(next: CharacterArea) { area = next; onarea(next); }
 
   function onTabKey(event: KeyboardEvent) {
+    const tab = tabs.findIndex(t => t.id === area);
     const next = ({ ArrowRight: tab + 1, ArrowLeft: tab - 1, Home: 0, End: tabs.length - 1 } as Record<string, number>)[event.key];
     if (next === undefined) return;
     event.preventDefault();
-    tab = (next + tabs.length) % tabs.length;
-    buttons[tab].focus();
+    const index = (next + tabs.length) % tabs.length;
+    selectArea(tabs[index].id);
+    buttons[index].focus();
   }
 </script>
 
 <div class="profile">
   <div role="tablist" aria-label={`${c.name} profile`}>
-    {#each tabs as name, i}
-      <button bind:this={buttons[i]} id={`${id}-tab-${i}`} role="tab" aria-selected={tab === i} aria-controls={`${id}-panel`} tabindex={tab === i ? 0 : -1}
-        onclick={() => { tab = i; }} onkeydown={onTabKey}>{name}</button>
+    {#each tabs as tab, i}
+      <button bind:this={buttons[i]} id={`${id}-tab-${tab.id}`} role="tab" aria-selected={area === tab.id} aria-controls={`${id}-panel`} tabindex={area === tab.id ? 0 : -1}
+        onclick={() => selectArea(tab.id)} onkeydown={onTabKey}>{tab.label}</button>
     {/each}
   </div>
-  <div id={`${id}-panel`} role="tabpanel" aria-labelledby={`${id}-tab-${tab}`}>
-    {#if tabs[tab] === 'Overview'}
+  <div id={`${id}-panel`} role="tabpanel" aria-labelledby={`${id}-tab-${area}`}>
+    {#if area === 'description'}
       <p data-testid={`${id}-short`}><strong>{describeShort(view)}</strong></p>
       <p data-testid={`${id}-long`}>{describeLong(view)}</p>
-    {:else if tabs[tab] === 'Profile'}
+      <h4>Identity and appearance</h4>
+      {#if view.role === 'npc'}<p>Age {c.age} · Background: {c.occupation} · {c.socialClass} · {c.legalStatus.replace('_', ' ')}</p>{/if}
       <dl>
         {#each profileRows(view) as row}<div><dt>{row.label}</dt><dd>{row.value}</dd></div>{/each}
-        {#if traitNames.length}<div><dt>Traits</dt><dd>{traitNames.join(', ')}</dd></div>{/if}
+        {#each traits as trait, i}<div><dt>{trait?.name ?? traitIds[i]}</dt><dd>{trait?.summary ?? ''}</dd></div>{/each}
       </dl>
+      <details><summary>Attributes</summary>
+        <p>Health {c.health}</p>
+        <p>Needs: {REQUIRED_NEEDS.map(k => `${title(k)} ${c.needs[k]}`).join(' · ')}</p>
+        <p>Emotions: {REQUIRED_EMOTIONS.map(k => `${title(k)} ${c.emotions[k]}`).join(' · ')}</p>
+      </details>
+      <details><summary>Skills</summary><p>Skills: {REQUIRED_SKILLS.map(k => `${title(k)} ${c.skills[k]}`).join(' · ')}</p></details>
+      <details><summary>History</summary><p>No memories yet.</p></details>
       {#if c.age >= 18}
         <details>
           <summary>Private (adult)</summary>
@@ -48,16 +67,19 @@
           <p>Intimate history: {!history ? 'Not recorded' : history.disclosure === 'unknown' ? 'Unknown' : title(history.value)}</p>
         </details>
       {/if}
-    {:else if tabs[tab] === 'Stats'}
-      <p>Skills: {REQUIRED_SKILLS.map(k => `${title(k)} ${c.skills[k]}`).join(' · ')}</p>
-      <p>Health {c.health}</p>
-      <p>Needs: {REQUIRED_NEEDS.map(k => `${title(k)} ${c.needs[k]}`).join(' · ')}</p>
-      <p>Emotions: {REQUIRED_EMOTIONS.map(k => `${title(k)} ${c.emotions[k]}`).join(' · ')}</p>
-    {:else if tabs[tab] === 'Relationship' && relationship}
+    {:else if area === 'inventory'}
+      <p>Inventory and equipment are not implemented yet.</p>
+      <p>Current clothing is described in Description.</p>
+    {:else if area === 'work'}
+      {#if view.role === 'player'}
+        <p>Leader of Haven.</p>
+        <p>Player work and interactions are not available yet.</p>
+      {:else if work}{@render work()}{/if}
+    {:else if view.role === 'npc' && relationship}
       <p>Toward you:</p>
       <dl>{#each REQUIRED_RELATIONSHIP as k}<div><dt>{title(k)}</dt><dd>{relationship[k]}</dd></div>{/each}</dl>
     {:else}
-      <p>No memories yet.</p>
+      <p>Your own relationships are not tracked yet. Open a person to see how they regard you.</p>
     {/if}
   </div>
 </div>
