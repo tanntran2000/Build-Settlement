@@ -133,7 +133,8 @@
     await tick();
     lifeCharacters.openWork(npcId);
     await tick();
-    document.getElementById(`npc-slot-${npcId}`)?.focus();
+    const post = document.getElementById(`npc-slot-${npcId}`) as HTMLSelectElement | null;
+    (post && !post.disabled ? post : document.getElementById(`profile-${npcId}-tab-work`))?.focus();
   }
   async function focusLifeCityNavigation(): Promise<void> {
     await tick();

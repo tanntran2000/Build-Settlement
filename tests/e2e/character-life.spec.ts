@@ -1,6 +1,6 @@
 import { test, expect, type Page } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
-import { characterWindow, charactersView, expectOneCharacterWindow, exportLife, go, importLife, lifeUiSnapshot, makeLife, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
+import { characterWindow, charactersView, expectCheckpointRejectionPreservesUi, expectOneCharacterWindow, exportLife, go, importLife, lifeUiSnapshot, makeLife, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
 
 const KEY = 'haven.character-life-session.checkpoint.v1';
 const creation = (page: Page) => page.getByRole('region', { name: 'Character Creation', exact: true });
@@ -358,7 +358,7 @@ test('Import during Report shows "Choose Plan next week before importing."', asy
   const before = await lifeUiSnapshot(page);
   await importFile(page, text);
   await expect(page.getByRole('alert')).toHaveText('Choose Plan next week before importing.');
-  expect(await lifeUiSnapshot(page)).toEqual(before);
+  await expectCheckpointRejectionPreservesUi(page, before);
   await go(page, 'characters');
   await expect(playerRegion(page).getByRole('heading', { name: 'Ana', exact: true })).toBeVisible();
 });

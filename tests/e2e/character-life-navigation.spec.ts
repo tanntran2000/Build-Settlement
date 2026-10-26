@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 import { serializeCharacterLifeSave } from '../../packages/persistence/src/character-life-save.ts';
 import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
-import { characterWindow, charactersView, expectOneCharacterWindow, expectReport, exportLife, go, importLife, lifeUiSnapshot, makeLife, reportFixture, reportRegion, reportUnits, reportMilli, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
+import { characterWindow, charactersView, expectCheckpointRejectionPreservesUi, expectOneCharacterWindow, expectReport, exportLife, go, importLife, lifeUiSnapshot, makeLife, reportFixture, reportRegion, reportUnits, reportMilli, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
 
 test('one character window remembers areas and closes new-person disclosures', async ({ page }) => {
   await page.goto('/?mode=world-life');
@@ -339,14 +339,37 @@ test('UI snapshots retain ErrorLog history, counts and diagnostic feedback', asy
   await expect(log.getByRole('status')).toHaveText('Download requested.');
   const before = await lifeUiSnapshot(page);
   for (const target of [log.locator('li strong'), log.locator('li p').last(), log.getByRole('status'), log.getByText('Saved locally in this browser.', { exact: true })]) {
-    const text = (await target.textContent())!;
-    await target.evaluate(node => { node.textContent += ' unexpected mutation'; });
+    const handle = (await target.elementHandle())!, text = (await handle.textContent())!;
+    await handle.evaluate(node => { node.textContent += ' unexpected mutation'; });
     expect(await lifeUiSnapshot(page)).not.toEqual(before);
-    await target.evaluate((node, text) => { node.textContent = text; }, text);
+    await handle.evaluate((node, text) => { node.textContent = text; }, text);
   }
   const button = log.getByRole('button', { name: 'Download error log', exact: true });
   await button.evaluate(node => { (node as HTMLButtonElement).disabled = true; });
   expect(await lifeUiSnapshot(page)).not.toEqual(before);
+});
+
+test('checkpoint feedback normalization rejects unrelated diagnostic changes', async ({ page }) => {
+  await seedDiagnosticHistory(page);
+  await page.goto('/?mode=world-life'); await importLife(page, makeLife()); await go(page, 'session');
+  const log = page.getByRole('region', { name: 'Error log', exact: true });
+  const download = page.waitForEvent('download');
+  await log.getByRole('button', { name: 'Download error log', exact: true }).click(); await download;
+  const before = await lifeUiSnapshot(page);
+  await putFile(page, '{'); await expect(page.getByTestId('life-shell').locator('aside > [role="alert"]')).toBeVisible();
+  await expectCheckpointRejectionPreservesUi(page, before);
+  for (const target of [log.locator('li').first().locator('p').last(), log.locator('li').last().locator('p').last(), log.getByText('Saved locally in this browser.', { exact: true })]) {
+    const handle = (await target.elementHandle())!, text = (await handle.textContent())!;
+    await handle.evaluate(node => { node.textContent += ' unexpected mutation'; });
+    await expect(expectCheckpointRejectionPreservesUi(page, before)).rejects.toThrow('Unexpected diagnostic delta');
+    await handle.evaluate((node, text) => { node.textContent = text; }, text);
+  }
+  const button = log.getByRole('button', { name: 'Download error log', exact: true });
+  await button.evaluate(node => { (node as HTMLButtonElement).disabled = true; });
+  await expect(expectCheckpointRejectionPreservesUi(page, before)).rejects.toThrow('Unexpected diagnostic delta');
+  await button.evaluate(node => { (node as HTMLButtonElement).disabled = false; });
+  await log.locator('ol').evaluate(node => { node.append(node.lastElementChild!.cloneNode(true)); });
+  await expect(expectCheckpointRejectionPreservesUi(page, before)).rejects.toThrow('Unexpected diagnostic delta');
 });
 async function putFile(page: Page, text: string, name = 'life.json') {
   await page.getByLabel('Import checkpoint', { exact: true }).setInputFiles({ name, mimeType: 'application/json', buffer: Buffer.from(text) });
@@ -561,6 +584,10 @@ for (const kind of ['invalid JSON', 'incompatible schema', 'oversize', 'invalid 
           await releaseRead(page, 1, kind === 'newer Import' ? text : '{');
           if (kind === 'newer Import') await expect(page.locator('[data-life-view="city"]')).toBeVisible();
           else await expect(page.getByTestId('life-shell').locator('aside > [role="alert"]')).toBeVisible();
+          if (kind === 'superseded reads') {
+            const download = page.waitForEvent('download');
+            await page.getByRole('region', { name: 'Error log', exact: true }).getByRole('button', { name: 'Download error log', exact: true }).click(); await download;
+          }
         } else if (kind === 'later Continue') {
           await page.getByRole('button', { name: 'Continue locally', exact: true }).click();
           await expect(page.locator('[data-life-view="city"]')).toBeVisible();
@@ -577,7 +604,8 @@ for (const kind of ['invalid JSON', 'incompatible schema', 'oversize', 'invalid 
         await putFile(page, kind === 'invalid JSON' ? '{' : kind === 'incompatible schema' ? JSON.stringify({ format: 'haven.character-life-session.save', schemaVersion: 999, state: saved }) : kind === 'oversize' ? 'x'.repeat(1024 * 1024 + 1) : text);
       }
       if (kind !== 'later Continue' && kind !== 'newer Import') await expect(page.getByTestId('life-shell').locator('aside > [role="alert"]')).toBeVisible();
-      expect(await lifeUiSnapshot(page)).toEqual(before);
+      if (kind === 'superseded reads' || kind === 'newer Import' || kind === 'later Continue') expect(await lifeUiSnapshot(page)).toEqual(before);
+      else await expectCheckpointRejectionPreservesUi(page, before);
       // Check all live control values/areas/errors AND the open disclosure of a still-mounted Player.
       if (kind !== 'later Continue' && kind !== 'newer Import') {
         const message = await page.getByTestId('life-shell').locator('aside > [role="alert"]').textContent();
@@ -605,7 +633,7 @@ test('rejected and superseded loads preserve UI intent: open Player disclosure',
   await go(page, 'session'); const before = await lifeUiSnapshot(page);
   await putFile(page, '{');
   await expect(page.getByTestId('life-shell').locator('aside > [role="alert"]')).toBeVisible();
-  expect(await lifeUiSnapshot(page)).toEqual(before);
+  await expectCheckpointRejectionPreservesUi(page, before);
   expect(await handle.evaluate(el => el.isConnected && el.hasAttribute('open'))).toBe(true);
 });
 
@@ -617,7 +645,7 @@ test('rejected and superseded loads preserve UI intent: targeted workforce error
   await go(page, 'session'); const before = await lifeUiSnapshot(page);
   await putFile(page, '{');
   await expect(page.getByTestId('life-shell').locator('aside > [role="alert"]')).toBeVisible();
-  expect(await lifeUiSnapshot(page)).toEqual(before);
+  await expectCheckpointRejectionPreservesUi(page, before);
   await go(page, 'city'); await expect(page.locator('#trial-workers-error')).toBeVisible();
   await expect(workersInput(page)).toHaveValue('999');
 });
