@@ -210,7 +210,7 @@ Each flow runs in Playwright Chromium at 1280px and 375px, plus a reflow pass at
 - **F3 Read people.** The Player detail opens in one action from Characters. Switching Player ↔ NPC keeps each person's sub-tab by name, and exactly one profile tabpanel exists in the DOM. Adult disclosure stays collapsed, and unknown values never appear in the DOM.
 - **F4 Session.**
   1. Session → Save locally → reload → Continue locally restores the session, posts and profiles. Export/Import round-trip.
-  2. **UI-session boundary:** before a successful Continue or Import, select an NPC, open its Stats tab and its private disclosure, choose a post draft, trigger an assign error, type a workforce draft and keep a report. After loading a checkpoint whose character ids are identical:
+  2. **UI-session boundary:** in Planning, with a retained report from the previous week, select an NPC, open its Stats tab and its private disclosure, trigger an assign error, **then** choose a post draft (an Assign attempt clears that NPC's draft), and type a workforce draft. Then run a successful Continue or Import. After loading a checkpoint whose character ids are identical:
      - the destination is City and the selected person is You;
      - every profile opens on Overview with private disclosures closed;
      - no post draft, assign error or workforce draft remains, and the workforce input equals the loaded value;
