@@ -1,5 +1,6 @@
 import { test, expect, type Page } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
+import { go } from './character-life-navigation.helpers.ts';
 
 const KEY = 'haven.character-life-session.checkpoint.v1';
 const creation = (page: Page) => page.getByRole('region', { name: 'Character Creation', exact: true });
@@ -108,6 +109,7 @@ test('double click on Create character opens exactly one game', async ({ page })
   await field(page, 'Name').fill('Ana');
   await toReview(page);
   await button(page, 'Create character').dblclick();
+  await go(page, 'characters');
   const player = page.getByRole('region', { name: 'Player', exact: true });
   await expect(player).toHaveCount(1);
   await expect(player.getByRole('heading', { name: 'Ana', exact: true })).toBeVisible();
@@ -180,15 +182,20 @@ const NPC_KEY = 'haven.world-npc-session.checkpoint.v1';
 const WORLD_KEY = 'haven.world-session.checkpoint.v1';
 const playerRegion = (page: Page) => page.getByRole('region', { name: 'Player', exact: true });
 const card = (page: Page, id: string) => page.getByTestId(`npc-${id}`);
-const importFile = (page: Page, text: string) => page.getByLabel('Import checkpoint', { exact: true }).setInputFiles({ name: 'save.json', mimeType: 'application/json', buffer: Buffer.from(text) });
+async function importFile(page: Page, text: string) {
+  if (await page.getByTestId('life-shell').count()) await go(page, 'session');
+  await page.getByLabel('Import checkpoint', { exact: true }).setInputFiles({ name: 'save.json', mimeType: 'application/json', buffer: Buffer.from(text) });
+}
 async function startGame(page: Page, name = 'Ana') {
   await newGame(page);
   await field(page, 'Name').fill(name);
   await toReview(page);
   await button(page, 'Create character').click();
+  await go(page, 'characters');
   await expect(playerRegion(page).getByRole('heading', { name, exact: true })).toBeVisible();
 }
 async function exportText(page: Page, pattern: RegExp) {
+  if (await page.getByTestId('life-shell').count()) await go(page, 'session');
   const download = page.waitForEvent('download');
   await button(page, 'Export checkpoint').click();
   const file = await download; expect(file.suggestedFilename()).toMatch(pattern);
@@ -241,10 +248,12 @@ test('Save locally, reload, Continue locally restores player name, profiles and 
   await startGame(page, 'Mira');
   await assignFarm(page, 'npc_starter_1');
   const npcName = await card(page, 'npc_starter_1').getByRole('heading').first().innerText();
+  await go(page, 'session');
   await button(page, 'Save locally').click();
-  await expect(page.getByRole('status')).toHaveText('Saved in this browser.');
+  await expect(page.getByRole('region', { name: 'Planning checkpoints', exact: true }).getByRole('status')).toHaveText('Saved in this browser.');
   await page.reload();
   await button(page, 'Continue locally').click();
+  await go(page, 'characters');
   await expect(playerRegion(page).getByRole('heading', { name: 'Mira', exact: true })).toBeVisible();
   await expect(card(page, 'npc_starter_1').getByRole('heading').first()).toHaveText(npcName);
   await expect(page.getByTestId('npc-post-npc_starter_1')).toHaveText('Post: Manager — Farm (field-1)');
@@ -258,11 +267,13 @@ test('Export then Import in a new game restores the session; file name matches t
   await page.reload();
   await startGame(page, 'Other');
   await importFile(page, text);
-  await expect(page.getByRole('status')).toHaveText('Checkpoint imported. Planning restored.');
+  await expect(page.getByRole('region', { name: 'Planning checkpoints', exact: true }).getByRole('status')).toHaveText('Checkpoint imported. Planning restored.');
+  await go(page, 'characters');
   await expect(playerRegion(page).getByRole('heading', { name: 'Mira', exact: true })).toBeVisible();
   await expect(page.getByTestId('npc-post-npc_starter_1')).toHaveText('Post: Manager — Farm (field-1)');
   await page.reload();
   await importFile(page, text);
+  await go(page, 'characters');
   await expect(playerRegion(page).getByRole('heading', { name: 'Mira', exact: true })).toBeVisible();
 });
 
@@ -272,6 +283,7 @@ test('importing an NPC-world export into world-life is rejected with the Charact
   await startGame(page, 'Mira');
   await importFile(page, npcText);
   await expect(page.getByRole('alert')).toHaveText('Not a Character Life checkpoint of a supported version. No migration was performed.');
+  await go(page, 'characters');
   await expect(playerRegion(page).getByRole('heading', { name: 'Mira', exact: true })).toBeVisible();
   for (const id of NPC_IDS) await expect(page.getByTestId(`npc-post-${id}`)).toHaveText('Post: Unassigned');
 });
@@ -295,8 +307,9 @@ test('life Save locally leaves the NPC-world and world slots unchanged', async (
   await field(page, 'Name').fill('Ana');
   await toReview(page);
   await button(page, 'Create character').click();
+  await go(page, 'session');
   await button(page, 'Save locally').click();
-  await expect(page.getByRole('status')).toHaveText('Saved in this browser.');
+  await expect(page.getByRole('region', { name: 'Planning checkpoints', exact: true }).getByRole('status')).toHaveText('Saved in this browser.');
   expect(await page.evaluate(keys => keys.map(k => localStorage.getItem(k)), [NPC_KEY, WORLD_KEY])).toEqual(['protected-bytes', 'protected-bytes']);
   expect(await page.evaluate(k => localStorage.getItem(k)?.startsWith('{"format":"haven.character-life-session.save"'), KEY)).toBe(true);
 });
@@ -304,12 +317,14 @@ test('life Save locally leaves the NPC-world and world slots unchanged', async (
 test('Import during Report shows "Choose Plan next week before importing."', async ({ page }) => {
   await startGame(page);
   const text = await exportText(page, /^haven-world-life-week-\d+\.json$/);
-  await button(page, 'End Week').click();
-  await expect(button(page, 'Plan next week')).toBeEnabled();
+  await page.getByTestId('life-end-week').click();
+  await expect(button(page, 'Plan next week')).toHaveAttribute('aria-disabled', 'false');
+  await go(page, 'session');
   // The input is disabled in Report, so enable it to prove the guard behind it.
   await page.getByLabel('Import checkpoint', { exact: true }).evaluate(input => { (input as HTMLInputElement).disabled = false; });
   await importFile(page, text);
   await expect(page.getByRole('alert')).toHaveText('Choose Plan next week before importing.');
+  await go(page, 'characters');
   await expect(playerRegion(page).getByRole('heading', { name: 'Ana', exact: true })).toBeVisible();
 });
 
@@ -342,6 +357,7 @@ async function longNameGame(page: Page) {
   await expect(preview).toContainText(LONG_NAME);
   for (const p of await preview.locator('p').all()) await expectTextInside(p);
   await button(page, 'Create character').click();
+  await go(page, 'characters');
   const player = playerRegion(page);
   await expectTextInside(player.getByRole('heading', { name: LONG_NAME, exact: true }));
   await expectTextInside(player.getByTestId('profile-player-short'));

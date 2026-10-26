@@ -1,4 +1,8 @@
 <script lang="ts">
+  import { tick } from 'svelte';
+  import CharacterLifeShell from './CharacterLifeShell.svelte';
+  import CharacterLifeCity from './CharacterLifeCity.svelte';
+  import type { LifeDestination } from './character-life-navigation.js';
   import { createNpcWorldSession, createTileTrialState, createWorldSession, isLiveCharacterLifeSessionState, summarizeOutside, weeklyWorkforceMilli, WEEKLY_RESOURCE_KEYS, TRIAL_BUILDINGS, TILE_TRIAL_BALANCE as B, LEGACY_TILE_RULESET, POPULATION_TILE_RULESET, type OutsideWorldState, type NpcWorldSessionState, type WorldNpc, type TileTrialRuleset, type TileTrialReport, type CharacterLifeSessionState, type CharacterProfile as Profile, type PlayerCharacter } from '@haven/core';
   import { executeCharacterLifeCommand, executeTileTrialCommand, executeWorldNpcCityCommand } from '@haven/simulation';
   import { serializeTileTrialSave, deserializeTileTrialSave, serializeWorldSessionSave, deserializeWorldSessionSave, serializeNpcWorldSessionSave, deserializeNpcWorldSessionSave, serializeCharacterLifeSave, deserializeCharacterLifeSave, TILE_SAVE_MAX_BYTES } from '@haven/persistence';
@@ -26,6 +30,9 @@
   let error = '';
   let workforceError = '';
   let managementError: { action: string; message: string } | null = null;
+  let destination: LifeDestination = 'city';
+  let lifeStatus = '';
+  let lifeCity: CharacterLifeCity;
   let saveNotice = '';
   let importRead = 0;
   let report: Readonly<TileTrialReport> | null = null;
@@ -94,6 +101,22 @@
     errorLog.setContext('weekly', { week: state.world.week });
     error = '';
     return true;
+  }
+  function endLifeWeek(): void {
+    if (state.phase !== 'planning') return;
+    if (command('END_WEEK', { expectedWeek: state.world.week })) {
+      destination = 'reports';
+      lifeStatus = `Week ${report!.week} report ready.`;
+    }
+  }
+  function nextLifeWeek(): void {
+    if (state.phase !== 'report') return;
+    if (command('NEXT_WEEK')) lifeStatus = `Planning week ${state.world.week}. Previous report retained.`;
+  }
+  async function openLifeCity(): Promise<void> {
+    destination = 'city';
+    await tick();
+    lifeCity.focusManage();
   }
   function checkpointError(message: string) {
     error = message; workforceError = ''; managementError = null; saveNotice = '';
@@ -170,6 +193,90 @@
   }
 </script>
 
+{#if lifeMode && outside && npcs && player && profiles}
+  <CharacterLifeShell {state} {report} bind:destination {error} status={lifeStatus} unapplied={[]} onendweek={endLifeWeek}>
+    {#snippet city()}
+      {#if npcs && outside}
+      <CharacterLifeCity bind:this={lifeCity} {state} {npcs} {selectedId} bind:typeId bind:workers {workforceError} {managementError} {outside}
+        onselect={id => { selectTile(id); void openLifeCity(); }} onworkersinput={() => { workforceError = ''; }} oncommand={command} />
+      {/if}
+    {/snippet}
+    {#snippet characters()}
+  {#if lifeMode && player}
+    <section class="card player" aria-label="Player">
+      <p class="eyebrow">Player · leader of Haven</p>
+      <h2>{player.character.name}</h2>
+      <CharacterProfile view={{ character: player.character, profile: player.profile, role: 'player', postBuildingName: null }} />
+    </section>
+  {/if}
+
+  {#if npcs && outside}
+    <WorldNpcPanel session={{ city: state, outside, npcs }} player={lifeMode ? player : null} {profiles} {locked} onapply={next => {
+      if (isLiveCharacterLifeSessionState(next)) ({ city: state, outside, npcs, player, profiles } = next);
+      else ({ city: state, outside, npcs } = next);
+      saveNotice = ''; error = '';
+    }} />
+  {/if}
+
+    {/snippet}
+    {#snippet reports()}
+  <button aria-disabled={!locked} onclick={nextLifeWeek}>Plan next week</button>
+  {#if report}
+    <section class="card" aria-label="Trial week report">
+      <h2>Week {report.week} report</h2>
+      {#if report.immigration}<p data-testid="trial-immigration">Population: {report.immigration.populationBefore} → {report.immigration.populationAfter} · {report.immigration.arrivals} arrivals · Available next week.</p>{/if}
+      {#if !locked}<p>Previous report · Planning is active.</p>{/if}
+      <p data-testid="trial-goods">Goods service: {units(report.goods.servedMilli)} / {units(report.goods.demandMilli)} · {report.goods.fulfillmentBps / 100}% {report.goods.demandMilli === 0 ? '(no demand)' : 'fulfilled'}. Materials used once: {units(report.goods.woodUsed)} Wood, {units(report.goods.ironUsed)} Iron. Revenue: {units(report.goods.revenueMilli)} Gold.</p>
+      <p>Tax: {units(report.taxMilli)} Gold. Upkeep covered: {units(report.upkeepPaidMilli)} Gold; unfunded: {units(report.unpaidUpkeepMilli)} Gold (no debt). Farm batch payment: {units(report.farmBatchGoldMilli)} Gold; extra Farm upkeep: {units(report.farmExtraUpkeepMilli)} Gold.</p>
+      <p>Food consumed: {units(report.foodConsumedMilli)} / {units(report.foodDemandMilli)}. Happiness: {report.happinessBefore} → {report.happinessAfter}.</p>
+      <div class="ledger"><table><caption>Weekly stock ledger</caption><thead><tr><th>Stock</th><th>Before</th><th>Net</th><th>After</th></tr></thead><tbody>
+        {#each WEEKLY_RESOURCE_KEYS as key}<tr><th>{key}</th><td>{units(report.before[key])}</td><td>{units(report.after[key] - report.before[key])}</td><td>{units(report.after[key])}</td></tr>{/each}
+      </tbody></table></div>
+      <details><summary>Building activity</summary><ul>{#each report.activities as activity}<li>{activity}</li>{/each}</ul></details>
+    </section>
+  {/if}
+  {#if !report}<p>No report yet. End Week to resolve the plan.</p>{/if}
+    {/snippet}
+    {#snippet session()}
+  <section class="card" aria-label="Planning checkpoints">
+    <h3>Planning checkpoint</h3>
+    <p>Save or restore a Planning checkpoint in this browser or a JSON file.</p>
+    <details><summary>About checkpoints</summary>
+    <p>Save locally keeps one checkpoint per mode in this browser profile and site, replacing that mode's previous one; clearing site data removes it. Continue locally restores this mode's checkpoint.</p>
+    <p>Export a JSON file as a portable backup; Import replaces the current plan after validation. No autosave or cloud save.</p>
+    </details>
+    {#if locked}<p>Choose Plan next week before saving, continuing, exporting or importing.</p>{/if}
+    <button disabled={checkpointLocked} onclick={saveLocally}>Save locally</button>
+    <button disabled={checkpointLocked} onclick={continueLocally}>Continue locally</button>
+    <button disabled={checkpointLocked} onclick={exportCheckpoint}>Export checkpoint</button>
+    <label for="tile-save-file">Import checkpoint</label>
+    <input id="tile-save-file" type="file" accept=".json,application/json" disabled={checkpointLocked} onchange={importCheckpoint} />
+    {#if saveNotice}<p role="status">{saveNotice}</p>{/if}
+  </section>
+
+      <ErrorLog />
+    {/snippet}
+    {#snippet help()}
+  <details class="card">
+    <summary>Getting started</summary>
+    <p>Farm and Food Processor start with 2 WF each, feeding 100 residents. Build Logging Camp on forest-1 (2 WF), Iron Mine on ore-1 (1 WF), Goods Workshop on plain-2 (1 WF), and Market on plain-3. Then End Week.{#if populationMode} For immigration, also raise Farm and Food Processor to 3 WF each; stored Food alone does not attract arrivals.{/if}</p>
+    <p>Extract first, process second: Farm → Wheat → Food Processor → Food. Logging Camp → Wood and Iron Mine → Iron supply the Workshop; a Market enables Goods service. Assign whole WF from the shared pool.</p>
+    <p>Build and replace pay full cost; replacement resets level and workers, with no refund. Upgrades cost base cost × next level. Pause releases workers and avoids upkeep; unfunded buildings idle without debt. Pause buildings to save tax income when Gold is low.</p>
+  </details>
+
+<details class="card"><summary>Weekly rules</summary>
+    <p>TRIAL: tax {units(B.taxGoldPerResident)} Gold/resident/week; Goods demand {units(B.goodsDemandPerResident)} service/resident/week. Workshop: 1 WF + {units(B.goodsWoodPerBatch)} Wood + {units(B.goodsIronPerBatch)} Iron → {units(B.goodsServicePerBatch)} service. Market: {units(B.marketServicePerLevel)} service/level; raises capacity, not demand. Whole Workshop batches may have unused service; nothing carries over.</p>
+    <p>Goods earns {units(B.goldPerServiceMilli)} Gold/service and up to {B.goodsHappinessMax} Happiness at full fulfillment. Food need: {units(B.foodDemandPerResident)} per resident/week. Maintenance is funded in tile order; tax arrives first.</p>
+</details>
+<details class="card"><summary>About this build</summary>
+  <p>Balance and building policies are TRIAL. Character profiles are TRIAL content. Weekly life events and Player interactions are not available yet.</p>
+  <p>Immigration is TRIAL. Arrivals join next week. Old tile checkpoints continue in Legacy tile trial.</p>
+  <p>Goods is a city Requirement, with no stored Goods. Security, Corruption and Tension are not simulated here.</p>
+  <a href="/">Classic Weekly</a> · <a href="/?mode=tiles">Legacy tile trial</a> · <a href="/?mode=population">Play population trial</a> · <a href="/?mode=world">World Session without NPCs</a> · <a href="/?mode=world-npc">World Session with NPCs</a>
+</details>
+    {/snippet}
+  </CharacterLifeShell>
+{:else}
 <main lang="en">
   <header class="card">
     <p class="eyebrow">HAVEN · WEEKLY PROTOTYPE</p>
@@ -312,6 +419,7 @@
   {/if}
   <ErrorLog />
 </main>
+{/if}
 
 <style>
   main { max-width: 1180px; margin: auto; padding: 24px; }

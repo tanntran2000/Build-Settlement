@@ -9,6 +9,7 @@ import {
   observeCharacterLife, type Observation, type VisibleCharacter,
 } from '../../packages/simulation/src/character-life-observation.ts';
 import { formatMilli } from '../../packages/ui/src/milli-format.ts';
+import { go } from './character-life-navigation.helpers.ts';
 
 const button = (scope: Page | Locator, name: string) => scope.getByRole('button', { name, exact: true });
 const region = (page: Page, name: string) => page.getByRole('region', { name, exact: true });
@@ -89,6 +90,8 @@ async function profileParity(page: Page, scope: Locator, c: VisibleCharacter) {
 }
 
 async function reportParity(page: Page, o: Observation) {
+  await go(page, 'reports');
+  await expect(button(page, 'Plan next week')).toHaveAttribute('aria-disabled', String(!o.actionTypes.includes('NEXT_WEEK')));
   const panel = region(page, 'Trial week report'), r = o.lastReport;
   if (!r) { await expect(panel).toHaveCount(0); return; }
   await expect(panel.getByRole('heading')).toHaveText(`Week ${r.week} report`);
@@ -110,38 +113,66 @@ async function reportParity(page: Page, o: Observation) {
   await expect(activity.locator('li')).toHaveText(r.activities);
   for (const item of await activity.locator('li').all()) await expect(item).toBeVisible();
   await expect(panel.getByText('Previous report · Planning is active.', { exact: true })).toHaveCount(o.phase === 'planning' ? 1 : 0);
-  await expect(button(panel, 'Plan next week')).toBeEnabled({ enabled: o.actionTypes.includes('NEXT_WEEK') });
 }
 
 async function uiParity(page: Page, o: Observation) {
+  await go(page, 'city');
   const s = o.settlement;
-  await expect(page.locator('main > header').getByText(/^Week /)).toHaveText(`Week ${o.week} · ${title(o.phase)} · ${s.residents} residents · ${s.assignedWorkers} / ${formatMilli(s.workforceMilli)} WF assigned`);
+  const shell = page.getByTestId('life-shell');
+  await expect(shell).toHaveAttribute('data-revision', String(o.revision));
+  await expect(shell.locator('aside').getByText(/^Week \d+ ·/)).toHaveText(`Week ${o.week} · ${title(o.phase)}`);
+  await expect(shell.locator('aside').getByText(/^\d+ residents/)).toHaveText(`${s.residents} residents · Workforce ${s.assignedWorkers} / ${formatMilli(s.workforceMilli)} assigned / available`);
   for (const key of WEEKLY_RESOURCE_KEYS) await expect(page.getByTestId(`trial-stock-${key}`)).toHaveText(formatMilli(s.stocks[key]));
   await expect(region(page, 'City stocks').locator('p strong')).toHaveText(String(s.happiness));
   const outside = o.outside;
+  const disclosure = region(page, 'Outside world').locator('details');
+  if (await disclosure.getAttribute('open') === null) await disclosure.locator('summary').click();
   await expect(region(page, 'Outside world').getByText(/^Outside tiles:/)).toHaveText(`Outside tiles: ${outside.total} · Yours: ${outside.mine} · Held by other factions: ${outside.others} · Neutral: ${outside.neutral} · Explored by you: ${outside.explored}`);
   await expect(region(page, 'City tiles').getByRole('button')).toHaveCount(o.tiles.length);
+  expect(await region(page, 'City tiles').getByRole('button').evaluateAll(buttons => buttons.map(b => b.getAttribute('aria-label')))).toEqual(o.tiles.map(t => `Select ${t.id}`));
   for (const tile of o.tiles) {
     const element = page.getByTestId(`trial-tile-${tile.id}`), b = tile.building;
     await expect(element).toHaveAttribute('aria-label', `Select ${tile.id}`);
     await expect(element.locator('strong')).toHaveText(tile.id);
+    const manager = b ? o.npcs.find(n => n.postTileId === tile.id)?.name ?? 'Unassigned' : 'No manager post';
     await expect(element.locator('span')).toHaveText(b ? [tile.terrain, o.buildings.find(d => d.typeId === b.typeId)!.name,
-      `Level ${b.level} · ${b.workers} WF · ${b.enabled ? 'Active' : 'Paused'}`] : [tile.terrain, 'Empty']);
+      `Level ${b.level} · ${b.workers} WF · ${b.enabled ? 'Enabled' : 'Paused'}`, manager] : [tile.terrain, 'Empty', manager]);
+    await element.click();
+    const manage = region(page, 'Manage tile');
+    await expect(manage.getByRole('heading').first()).toHaveText(`${tile.id} · ${tile.terrain}`);
+    if (b) {
+      const definition = o.buildings.find(d => d.typeId === b.typeId)!;
+      await expect(manage.getByRole('heading').nth(1)).toHaveText(`${definition.name} · Level ${b.level}`);
+      await expect(manage.getByText(/^Upkeep:/)).toHaveText(`Upkeep: ${formatMilli(definition.upkeepMilli * b.level)} Gold/week. Farm batch Gold credits this Farm's upkeep.`);
+      await expect(manage.getByText(/^Capacity:/)).toHaveText(`Capacity: ${definition.maxWorkers * b.level} WF.`);
+      await expect(manage.getByText(/^Maximum level:/)).toHaveText(`Maximum level: ${definition.maxLevel}.`);
+      if (b.level < definition.maxLevel) await expect(manage.getByText(/^Upgrade cost:/)).toHaveText(`Upgrade cost: ${formatMilli(definition.cost.gold * (b.level + 1))} Gold, ${formatMilli(definition.cost.wood * (b.level + 1))} Wood, ${formatMilli(definition.cost.iron * (b.level + 1))} Iron.`);
+      else await expect(manage.getByText('Maximum trial level.', { exact: true })).toBeVisible();
+    }
   }
   const catalogue = page.getByLabel('Building type', { exact: true });
   expect(await catalogue.locator('option').evaluateAll(options => options.map(o => (o as HTMLOptionElement).value))).toEqual(o.buildings.map(b => b.typeId));
   await expect(catalogue.locator('option')).toHaveText(o.buildings.map(b => b.name));
   const locked = o.phase === 'report';
   await expect(catalogue).toBeEnabled({ enabled: !locked });
-  await expect(button(page, 'End Week')).toBeEnabled({ enabled: o.actionTypes.includes('END_WEEK') });
-  const checkpoints = region(page, 'Planning checkpoints');
-  for (const name of ['Save locally', 'Continue locally', 'Export checkpoint']) await expect(button(checkpoints, name)).toBeEnabled({ enabled: !locked });
-  await expect(checkpoints.getByLabel('Import checkpoint', { exact: true })).toBeEnabled({ enabled: !locked });
-  for (const reason of o.disabledReasons) await expect(page.getByText(reason, { exact: true }).first()).toBeVisible();
+  if (!locked) {
+    for (const definition of o.buildings) {
+      await catalogue.selectOption(definition.typeId);
+      await expect(region(page, 'Manage tile').getByText(/^Requires /)).toHaveText(`Requires ${definition.terrain.join(' or ')} terrain. Cost: ${formatMilli(definition.cost.gold)} Gold, ${formatMilli(definition.cost.wood)} Wood, ${formatMilli(definition.cost.iron)} Iron. Upkeep: ${formatMilli(definition.upkeepMilli)} Gold/week at level 1.`);
+    }
+  }
+  await expect(page.getByTestId('life-end-week')).toHaveAttribute('aria-disabled', String(!o.actionTypes.includes('END_WEEK')));
   const manage = region(page, 'Manage tile');
   for (const control of await manage.getByRole('button').all()) await expect(control).toBeEnabled({ enabled: !locked });
   const workers = manage.getByLabel('Assigned workers (WF)', { exact: true });
   if (await workers.count()) await expect(workers).toBeEnabled({ enabled: !locked });
+  await go(page, 'session');
+  const checkpoints = region(page, 'Planning checkpoints');
+  for (const name of ['Save locally', 'Continue locally', 'Export checkpoint']) await expect(button(checkpoints, name)).toBeEnabled({ enabled: !locked });
+  await expect(checkpoints.getByLabel('Import checkpoint', { exact: true })).toBeEnabled({ enabled: !locked });
+  for (const reason of o.disabledReasons.filter(r => r.startsWith('Choose Plan'))) await expect(checkpoints.getByText(reason, { exact: true })).toBeVisible();
+  await go(page, 'characters');
+  for (const reason of o.disabledReasons.filter(r => !r.startsWith('Choose Plan'))) await expect(region(page, 'NPCs').getByText(reason, { exact: true }).first()).toBeVisible();
   await expect(region(page, 'Player').getByRole('heading')).toHaveText(o.player.name);
   await profileParity(page, region(page, 'Player'), o.player);
   await expect(region(page, 'NPCs').getByRole('article')).toHaveCount(o.npcs.length);
@@ -170,6 +201,7 @@ async function uiParity(page: Page, o: Observation) {
     await profileParity(page, card, npc);
   }
   await reportParity(page, o);
+  await go(page, 'characters');
   expect(await page.content()).not.toContain('63 / 47 / 169');
   await expect(page.getByRole('alert')).toHaveCount(0);
 }
@@ -188,9 +220,12 @@ test('same-session UI projection through assignment and full week', async ({ pag
     if (result.report) expectedReport = result.report;
   };
   const compare = () => uiParity(page, observeCharacterLife(expectedSession, expectedReport));
-  const importInitial = () => page.getByLabel('Import checkpoint', { exact: true }).setInputFiles({
+  const importInitial = async () => {
+    if (await page.getByTestId('life-shell').count()) await go(page, 'session');
+    await page.getByLabel('Import checkpoint', { exact: true }).setInputFiles({
     name: 'adult-life-fixture.json', mimeType: 'application/json', buffer: Buffer.from(saved.text),
-  });
+    });
+  };
   await page.goto('/?mode=world-life');
   await importInitial();
   await compare();
@@ -202,21 +237,24 @@ test('same-session UI projection through assignment and full week', async ({ pag
   await button(npc, 'Unassign').click();
   act('UNASSIGN_NPC', { npcId: 'npc_starter_1' });
   await compare();
+  await go(page, 'city');
   await page.getByTestId('trial-tile-forest-1').click();
   await page.getByLabel('Building type', { exact: true }).selectOption('logging');
   await button(page, 'Build').click();
   act('BUILD', { tileId: 'forest-1', typeId: 'logging' });
   await compare();
   for (let week = 1; week <= 2; week++) {
-    await button(page, 'End Week').click();
+    await page.getByTestId('life-end-week').click();
     act('END_WEEK', { expectedWeek: expectedSession.city.world.week });
     await compare();
+    await go(page, 'reports');
     await button(page, 'Plan next week').click();
     act('NEXT_WEEK');
     await compare();
   }
   await importInitial();
   await expect(region(page, 'Planning checkpoints').getByRole('status')).toHaveText('Checkpoint imported. Planning restored.');
-  expectedSession = structuredClone(initial); expectedReport = null;
+  const restoredRevision = expectedSession.city.revision + 1;
+  expectedSession = structuredClone(initial); expectedSession.city.revision = restoredRevision; expectedReport = null;
   await compare();
 });
