@@ -1,4 +1,4 @@
-﻿import { expect, test, type Locator, type Page } from '@playwright/test';
+import { expect, test, type Locator, type Page } from '@playwright/test';
 import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
 import { writeFile } from 'node:fs/promises';
 import { characterWindow, charactersView, expectReport, go, importLife, keyActivate, keyGo, makeLife, reportFixture, reportRegion, selectArea, selectPerson, tabTo, turnStatuses, watchTurnStatus } from './character-life-navigation.helpers.ts';
@@ -114,9 +114,108 @@ async function auditTabOrder(page: Page, failures: string[], samples: unknown[])
   return targets.length;
 }
 
+// Native control text (value, placeholder, select display, file button/status) with every ancestor opacity group composited.
+async function measureNativeControls(page: Page, state: string) {
+  return page.getByTestId('life-shell').evaluate((shell, state) => {
+    const rgb = (s: string) => { const m = s.match(/[\d.]+/g)!.map(Number); return m.length === 3 ? [...m, 1] : m; };
+    const over = (fg: number[], bg: number[]) => bg.map((v, i) => fg[i] * fg[3] + v * (1 - fg[3]));
+    const lerp = (under: number[], c: number[], o: number) => c.map((v, i) => v * o + under[i] * (1 - o));
+    const visible = (el: Element) => !!el.getClientRects().length && !el.closest('[hidden]') && getComputedStyle(el).visibility !== 'hidden';
+    const opacityElements = [...document.querySelectorAll('*')].filter(el => visible(el) && Number(getComputedStyle(el).opacity) < 1)
+      .map(el => ({ tag: el.tagName, id: el.id, text: el.textContent?.trim().slice(0, 40), opacity: getComputedStyle(el).opacity, hasDescendants: el.children.length > 0 }));
+    // local(bgUnder) returns a colour in the element's own group space; resolve groups innermost-out.
+    const render = (el: Element, local: (bg: number[]) => number[], includeSelfBg: boolean) => {
+      const path: Element[] = []; for (let p: Element | null = el; p; p = p.parentElement) path.unshift(p);
+      let bg = [255, 255, 255]; const groups: { o: number; under: number[] }[] = [];
+      for (const n of path) {
+        const css = getComputedStyle(n), o = Number(css.opacity);
+        if (o < 1) groups.push({ o, under: bg });
+        if (n !== el || includeSelfBg) bg = over(rgb(css.backgroundColor), bg);
+      }
+      let c = local(bg), b = bg;
+      for (const g of groups.reverse()) { c = lerp(g.under, c, g.o); b = lerp(g.under, b, g.o); }
+      return { color: c, backdrop: b, opacityGroups: groups.length };
+    };
+    const rows: Record<string, unknown>[] = [];
+    for (const el of shell.querySelectorAll<HTMLElement>('input,select,textarea')) {
+      if (!visible(el)) continue;
+      const css = getComputedStyle(el), inactive = el.matches(':disabled');
+      const label = `${el.tagName.toLowerCase()}${el.id ? '#' + el.id : ''}[${(el as HTMLInputElement).type}]`;
+      const text = (part: string, value: string, fgCss: string, ownBgCss?: string) => {
+        const base = (bg: number[]) => ownBgCss ? over(rgb(ownBgCss), bg) : bg;
+        const r = render(el, bg => over(rgb(fgCss), base(bg)), true);
+        rows.push({ state, label, part, text: value.slice(0, 40), inactive, fg: r.color, bg: render(el, base, true).color, opacityGroups: r.opacityGroups, fontSize: parseFloat(css.fontSize) });
+      };
+      if (el instanceof HTMLSelectElement) text('select displayed option', el.selectedOptions[0]?.textContent ?? '', css.color);
+      else if (el instanceof HTMLInputElement && el.type === 'file') {
+        const btn = getComputedStyle(el, '::file-selector-button');
+        text('::file-selector-button text', 'Choose File', btn.color, btn.backgroundColor);
+        text('file status text', el.files?.length ? el.files[0].name : 'No file chosen', css.color);
+        rows.push({ state, label, part: '::file-selector-button boundary', inactive, borderWidth: btn.borderTopWidth,
+          border: render(el, bg => over(rgb(btn.borderTopColor), over(rgb(btn.backgroundColor), bg)), true).color,
+          ownBg: render(el, bg => over(rgb(btn.backgroundColor), bg), true).color, adjacent: render(el, bg => bg, true).color });
+      } else {
+        const input = el as HTMLInputElement;
+        if (input.value) text('value text', input.value, css.color);
+        if (input.placeholder) text('::placeholder', input.placeholder, getComputedStyle(el, '::placeholder').color);
+      }
+      rows.push({ state, label, part: 'control boundary', inactive, borderWidth: css.borderTopWidth,
+        border: render(el, bg => over(rgb(css.borderTopColor), bg), false).color, ownBg: render(el, bg => bg, true).color, adjacent: render(el, bg => bg, false).color });
+    }
+    // Independent nested-opacity vector: inner white/black at .5, then outer black/white at .5.
+    const fixture = document.createElement('div');
+    fixture.style.backgroundColor = '#fff';
+    fixture.innerHTML = '<div style="opacity:.5;background:#000"><span style="opacity:.5;background:#fff;color:#000">Contrast check</span></div>';
+    document.body.append(fixture);
+    const nested = fixture.querySelector('span')!;
+    const opacityCheck = render(nested, bg => over(rgb(getComputedStyle(nested).color), bg), true);
+    fixture.remove();
+    return { state, width: innerWidth, opacityElements, rows, opacityCheck };
+  }, state);
+}
+
+
 for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 812 }, { width: 320, height: 812 }]) {
   test.describe(`accessibility at ${viewport.width}px`, () => {
     test.use({ viewport });
+    test('native control text preserves active and inactive contrast', async ({ page }, info) => {
+      expect(contrast([0, 0, 0], [255, 255, 255])).toBe(21);
+      await page.goto('/?mode=world-life'); await importLife(page, makeLife());
+      const samples: Awaited<ReturnType<typeof measureNativeControls>>[] = [];
+      const visit = async (phase: string) => {
+        await go(page, 'city'); await page.getByTestId('trial-tile-field-1').click();
+        samples.push(await measureNativeControls(page, phase + '/city'));
+        await selectPerson(page, 'npc_starter_1'); await selectArea(page, 'Work');
+        samples.push(await measureNativeControls(page, phase + '/work'));
+        await go(page, 'session'); samples.push(await measureNativeControls(page, phase + '/session'));
+      };
+      await visit('planning');
+      await expect(page.getByLabel('Import checkpoint', { exact: true })).toBeEnabled();
+      await page.getByTestId('life-end-week').click(); await visit('report');
+      await expect(page.getByLabel('Import checkpoint', { exact: true })).toBeDisabled();
+      const failures: string[] = [];
+      let fileLabels = 0;
+      for (const sample of samples) {
+        expect(sample.opacityCheck).toEqual({ color: [127.5, 127.5, 127.5], backdrop: [191.25, 191.25, 191.25], opacityGroups: 2 });
+        for (const row of sample.rows as { part: string; label: string; inactive: boolean; text?: string; fg?: number[]; bg?: number[]; border?: number[]; adjacent?: number[]; ownBg?: number[] }[]) {
+          if (row.fg) {
+            const ratio = contrast(row.fg, row.bg!); Object.assign(row, { ratio });
+            if (row.part === '::file-selector-button text') { expect(row.text).toBe('Choose File'); fileLabels++; }
+            if (ratio < (row.inactive ? 3 : 4.5)) failures.push(sample.state + ' ' + row.label + ' ' + row.part + ' ' + ratio.toFixed(3));
+          }
+          if (row.border) {
+            const ratio = Math.max(contrast(row.border, row.adjacent!), contrast(row.ownBg!, row.adjacent!)); Object.assign(row, { boundaryRatio: ratio });
+            if (ratio < 3) failures.push(sample.state + ' ' + row.label + ' ' + row.part + ' boundary ' + ratio.toFixed(3));
+          }
+        }
+      }
+      expect(fileLabels).toBe(2);
+      const path = info.outputPath('native-controls.json');
+      await writeFile(path, JSON.stringify({ viewport, method: 'Native text/pseudo styles; ancestor opacity groups composited innermost-out; CSS widths only', samples, failures }, null, 2));
+      await info.attach('native-controls', { path, contentType: 'application/json' });
+      expect(failures).toEqual([]);
+    });
+
     test('life shell accessibility baseline', async ({ page }, info) => {
       test.setTimeout(180000);
       expect(contrast([0, 0, 0], [255, 255, 255])).toBe(21);
@@ -140,9 +239,30 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 812 
         if (dest === 'city') {
           await keyActivate(page, page.getByTestId('trial-tile-field-1'));
           await keyActivate(page, page.getByRole('region', { name: 'Outside world', exact: true }).locator('summary'));
+          await expect(page.getByRole('region', { name: 'Outside world', exact: true }).getByText('Exploration is not available yet.', { exact: true })).toBeVisible();
         }
         if (dest === 'session') await keyActivate(page, page.getByText('About checkpoints', { exact: true }));
-        if (dest === 'help') for (const summary of await page.locator('[data-life-view="help"] summary').all()) await keyActivate(page, summary);
+        if (dest === 'help') {
+          const help = page.locator('[data-life-view="help"]');
+          await expect(help.locator('summary')).toHaveText(['Getting started', 'Weekly rules', 'About this build']);
+          for (const summary of await help.locator('summary').all()) await keyActivate(page, summary);
+          await expect(help.locator('details').nth(0).locator('p')).toHaveText([
+            'Farm and Food Processor start with 2 WF each, feeding 100 residents. Build Logging Camp on forest-1 (2 WF), Iron Mine on ore-1 (1 WF), Goods Workshop on plain-2 (1 WF), and Market on plain-3. Then End Week.For immigration, also raise Farm and Food Processor to 3 WF each; stored Food alone does not attract arrivals.',
+            'Extract first, process second: Farm → Wheat → Food Processor → Food. Logging Camp → Wood and Iron Mine → Iron supply the Workshop; a Market enables Goods service. Assign whole WF from the shared pool.',
+            'Build and replace pay full cost; replacement resets level and workers, with no refund. Upgrades cost base cost × next level. Pause releases workers and avoids upkeep; unfunded buildings idle without debt. Pause buildings to save tax income when Gold is low.',
+          ]);
+          await expect(help.locator('details').nth(1).locator('p')).toHaveText([
+            'TRIAL: tax 0.03 Gold/resident/week; Goods demand 0.02 service/resident/week. Workshop: 1 WF + 2 Wood + 1 Iron → 2 service. Market: 2 service/level; raises capacity, not demand. Whole Workshop batches may have unused service; nothing carries over.',
+            'Goods earns 1 Gold/service and up to 2 Happiness at full fulfillment. Food need: 0.04 per resident/week. Maintenance is funded in tile order; tax arrives first.',
+          ]);
+          await expect(help.locator('details').nth(2).locator('p')).toHaveText([
+            'Balance and building policies are TRIAL. Character profiles are TRIAL content. Weekly life events and Player interactions are not available yet.',
+            'Immigration is TRIAL. Arrivals join next week. Old tile checkpoints continue in Legacy tile trial.',
+            'Goods is a city Requirement, with no stored Goods. Security, Corruption and Tension are not simulated here.',
+          ]);
+          await expect(help.getByRole('link')).toHaveText(['Classic Weekly', 'Legacy tile trial', 'Play population trial', 'World Session without NPCs', 'World Session with NPCs']);
+          expect(await help.getByRole('link').evaluateAll(links => links.map(link => link.getAttribute('href')))).toEqual(['/', '/?mode=tiles', '/?mode=population', '/?mode=world', '/?mode=world-npc']);
+        }
         await capture();
         if (dest === 'characters') {
           for (const id of ['player', 'npc_starter_1']) {

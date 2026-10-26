@@ -92,6 +92,8 @@
   main :global(button) { white-space: normal; overflow-wrap: anywhere; }
   main :global(button:disabled), main :global(button[aria-disabled='true']) { color: #fff; background: var(--bg-tertiary); border-color: #fff; }
   main :global(input[type='file']) { width: 100%; }
+  main :global(input[type='file']::file-selector-button) { font: inherit; color: #000; background: var(--accent-green); border: 1px solid var(--border-color); border-radius: 4px; padding: 4px 8px; }
+  main :global(input[type='file']:disabled::file-selector-button) { color: #fff; background: var(--bg-tertiary); border-color: #fff; }
   main :global(summary) { cursor: pointer; min-height: 24px; padding-block: 4px; }
   main :global(a) { display: inline-block; min-height: 24px; color: var(--accent-blue); }
   main :global(p) { margin-block: 8px; }
