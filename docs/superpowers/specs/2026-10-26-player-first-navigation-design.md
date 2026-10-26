@@ -1,7 +1,7 @@
 # PLAYER-NAV-01 — Player-first navigation for Character Life (design proposal v0.2)
 
 Status: **DESIGN PROPOSAL for independent review, then user approval. Not a Work Package and not approved for implementation.** No product code, test, asset, config or dependency change is authorised by this document.
-Baseline: `main` `facadbb` (merge of PR #48, MCP Stage0 G6 snapshot). Unmerged reference: QOL `feat/solo-city-overview` at `8c8505f` (merge-base with main `e277633`, PR #47).
+Baseline: `main` `facadbb` (merge of PR #48, MCP Stage0 G6 snapshot). Unmerged reference: QOL reconciled with Stage0, `feat/solo-qol-mcp-reconciled` at `8c8505f` (merge-base with main `e277633`, PR #47). It contains the original QOL branch `feat/solo-city-overview` at `9503bba`.
 Language: English for this document and every game-facing label.
 Scope: a started `?mode=world-life` session only. The Character Life start/creation screens and all other modes keep their current markup and behaviour.
 Revision: v0.2 applies the independent design check of v0.1 (`f1da175`). It defines draft preservation as navigation-only and adds the unapplied-changes indicator (§5.3–5.4). It also defines a successful Continue/Import as a UI-session boundary (§5.5), and updates F1, F4 and the risks to match.
@@ -237,7 +237,7 @@ This is not a WCAG conformance claim. Manual user pixel checks are **not** a man
 - **Closed on main:** Stage0 shared executor, observation and DOM parity (PR #47), and the G6 record (PR #48).
 - **QOL SOLO-CITY-QOL-01 (`8c8505f`), not merged, no waiver:** parent-reported independent automated PASS (1,303 unit, 154 architecture, 177 browser tests). The user reported the Manage flow, the text-32 check and calibrated 400% zoom (1280→320) with keyboard as passing. Computed text-resize, Narrator and setup records remain **unverified** and are carried forward here as a risk, not as a blocker.
 - **Superseded in priority, if this design is approved:** QOL's long-page placement of the city overview and report. Its acceptance does not become a retroactive PASS for this design, and this design's acceptance applies only after user approval.
-- **Remaining, separate:** disposition of the QOL branch, and the immigration-reason translation candidate.
+- **Remaining, separate:** disposition of the QOL branches.
 
 ## 12. Implementation boundaries for a later plan
 
