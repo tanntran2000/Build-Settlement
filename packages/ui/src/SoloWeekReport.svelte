@@ -61,13 +61,13 @@
   section { min-width: 0; overflow-wrap: anywhere; }
   .card { margin-bottom: 16px; }
   h2 { font-size: 1.2rem; margin-bottom: 12px; } h3 { font-size: 1.1rem; margin-top: 16px; }
-  p { margin: 12px 0; line-height: 1.55; }
-  .ledger { overflow-x: auto; padding: 6px; }
+  p { margin: 8px 0; line-height: 1.4; }
+  .ledger { overflow-x: auto; padding: 8px; }
   table { width: 100%; border-collapse: collapse; }
   caption { text-align: left; font-weight: bold; margin-bottom: 12px; }
   th, td { padding: 8px; text-align: right; border-bottom: 1px solid var(--border-color); min-width: 6rem; max-width: 10rem; }
   th:first-child { text-align: left; }
-  details { margin: 12px 0; } summary { cursor: pointer; min-height: 24px; }
+  details { margin: 8px 0; } summary { cursor: pointer; min-height: 24px; }
   ul { padding-left: 1.5rem; }
   button { font: inherit; padding: 10px; min-height: 44px; min-width: 44px; max-width: 100%; white-space: normal; border-radius: 6px; border: 1px solid var(--accent-green); background: var(--accent-green); color: #000; cursor: pointer; }
   button[aria-disabled='true'] { opacity: .5; cursor: default; }

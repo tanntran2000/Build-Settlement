@@ -1,6 +1,9 @@
 import { expect, test, type Page } from '@playwright/test';
 import { serializeCharacterLifeSave } from '../../packages/persistence/src/character-life-save.ts';
 import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
+import { writeFile } from 'node:fs/promises';
+import { observeCharacterLife } from '../../packages/simulation/src/character-life-observation.ts';
+import { keyActivate, keyGo, keyPost, keyText, tabTo, turnStatuses, watchTurnStatus } from './character-life-navigation.helpers.ts';
 import { characterWindow, charactersView, expectCheckpointRejectionPreservesUi, expectOneCharacterWindow, expectReport, exportLife, go, importLife, lifeUiSnapshot, makeLife, reportFixture, reportRegion, reportUnits, reportMilli, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
 
 test('one character window remembers areas and closes new-person disclosures', async ({ page }) => {
@@ -694,5 +697,257 @@ for (const kind of ['shortage', 'zero', 'precision', 'service', 'empty'] as cons
     const next = executeCharacterLifeCommand(expected.next, { type: 'NEXT_WEEK', expectedRevision: expected.next.city.revision });
     if (!next.success) throw Error(next.error.message);
     expect(await exportLife(page)).toEqual(next.next);
+  });
+}
+
+for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 812 }]) {
+  test.describe(`player flows at ${viewport.width}px`, () => {
+    test.use({ viewport });
+    test('F1 weekly turn — keyboard', async ({ page }) => {
+      test.setTimeout(120000);
+      const initial = makeLife();
+      await page.goto('/?mode=world-life'); await importLife(page, initial);
+      const shell = page.getByTestId('life-shell');
+      for (const [key, value] of Object.entries(initial.city.world.settlements[initial.city.world.activeSettlementId!].inventory)) {
+        const stock = page.getByTestId(`trial-stock-${key}`);
+        if (await stock.count()) await expect(stock).toHaveText(reportUnits(value));
+      }
+      await keyGo(page, 'city'); await keyActivate(page, page.getByTestId('trial-tile-field-1'));
+      await keyText(page, workersInput(page), '1');
+      await keyActivate(page, page.getByRole('button', { name: 'Assign workers', exact: true }));
+      const committed = executeCharacterLifeCommand(initial, { type: 'SET_WORKERS', expectedRevision: initial.city.revision, tileId: 'field-1', workers: 1 });
+      if (!committed.success) throw Error(committed.error.message);
+      await keyText(page, workersInput(page), '2');
+      await keyGo(page, 'characters');
+      await keyActivate(page, charactersView(page).getByTestId('character-npc_starter_1'));
+      await tabTo(page, characterWindow(page).getByRole('tab', { name: 'Description', exact: true }));
+      await page.keyboard.press('ArrowRight'); await page.keyboard.press('ArrowRight');
+      await keyPost(page, postSelect(page), 'plain-1');
+      const revision = committed.next.city.revision;
+      for (const dest of ['city', 'characters', 'reports', 'city'] as const) {
+        await keyGo(page, dest); await expect(shell).toHaveAttribute('data-revision', String(revision));
+      }
+      await expect(workersInput(page)).toHaveValue('2');
+      await keyGo(page, 'characters'); await expect(postSelect(page)).toHaveValue('plain-1');
+      await keyGo(page, 'city');
+      await expect(shell.getByText('Unapplied changes (2)', { exact: true })).toBeVisible();
+      await expect(shell.getByText('End Week uses applied settings only. Unapplied changes are not applied, and workforce input resets after the week.', { exact: true })).toBeVisible();
+      await watchTurnStatus(page);
+      const end = page.getByTestId('life-end-week');
+      await keyActivate(page, end); await page.keyboard.press('Enter');
+      await expect(end).toBeFocused();
+      await expect(page.locator('[data-life-view="reports"]')).toBeVisible();
+      const result = executeCharacterLifeCommand(committed.next, { type: 'END_WEEK', expectedRevision: revision, expectedWeek: 1 });
+      if (!result.success || !result.report) throw Error('F1 report oracle failed');
+      // Open disclosures using keyboard before the read-only full report oracle.
+      for (const name of ['Building activity', 'How this is calculated']) await keyActivate(page, reportRegion(page).getByText(name, { exact: true }));
+      await expect(reportRegion(page).locator('details[open]')).toHaveCount(2);
+      await expectReport(page, result.report);
+      await expect(shell).toHaveAttribute('data-revision', String(revision + 1));
+      expect(await turnStatuses(page)).toEqual(['Week 1 report ready.']);
+      await keyActivate(page, shell.getByRole('button', { name: 'Post · ' + initial.npcs[0].character.name, exact: true }));
+      await expect(characterWindow(page).getByRole('tab', { name: 'Work', exact: true })).toBeFocused();
+      await expect(postSelect(page)).toHaveValue('plain-1'); await expect(postSelect(page)).toBeDisabled();
+      await keyGo(page, 'city'); await expect(workersInput(page)).toHaveValue('1');
+      await expect(shell.getByText('Unapplied changes (1)', { exact: true })).toBeVisible();
+      await keyGo(page, 'reports');
+      const next = page.getByRole('button', { name: 'Plan next week', exact: true });
+      await keyActivate(page, next); await page.keyboard.press('Space');
+      await expect(next).toBeFocused();
+      await expect(shell).toHaveAttribute('data-revision', String(revision + 2));
+      expect(await turnStatuses(page)).toEqual(['Week 1 report ready.', 'Planning week 2. Previous report retained.']);
+      await expect(page.getByRole('alert', { includeHidden: true })).toHaveCount(0);
+      await keyGo(page, 'city'); await expect(page.getByTestId('trial-tile-field-1')).toHaveAttribute('aria-pressed', 'true');
+      // Export via keyboard to compare every resulting state field and verify no post assignment ran.
+      await keyGo(page, 'session');
+      const pending = page.waitForEvent('download');
+      await keyActivate(page, page.getByRole('button', { name: 'Export checkpoint', exact: true }));
+      const download = await pending;
+      const { readFile } = await import('node:fs/promises');
+      const actual = JSON.parse(await readFile((await download.path())!, 'utf8')).state;
+      const planned = executeCharacterLifeCommand(result.next, { type: 'NEXT_WEEK', expectedRevision: result.next.city.revision });
+      if (!planned.success) throw Error(planned.error.message);
+      expect(actual).toEqual(planned.next);
+      expect(actual.npcs.map((n: { postTileId: string | null }) => n.postTileId)).toEqual([null, null, null]);
+    });
+
+    test('turn pointer repeats remain guarded', async ({ page }, info) => {
+      await page.goto('/?mode=world-life'); await importLife(page, makeLife());
+      const shell = page.getByTestId('life-shell'), revision = Number(await shell.getAttribute('data-revision'));
+      await watchTurnStatus(page);
+      const end = page.getByTestId('life-end-week');
+      await end.dblclick(); await expect(end).toBeFocused();
+      await expect(shell).toHaveAttribute('data-revision', String(revision + 1));
+      const next = page.getByRole('button', { name: 'Plan next week', exact: true });
+      await next.scrollIntoViewIfNeeded();
+      const before = await next.boundingBox();
+      await page.evaluate(() => {
+        const clicks: unknown[] = [];
+        (window as Window & { pointerClicks: unknown[] }).pointerClicks = clicks;
+        document.addEventListener('click', event => {
+          const el = event.target as HTMLElement, box = el.getBoundingClientRect();
+          clicks.push({ tag: el.tagName, text: el.textContent?.slice(0, 50), top: box.top, bottom: box.bottom, scrollY });
+        });
+      });
+      await next.dblclick();
+      const after = await next.boundingBox();
+      const clicks = await page.evaluate(() => (window as Window & { pointerClicks: unknown[] }).pointerClicks);
+      const path = info.outputPath('pointer-repeat-geometry.json');
+      await writeFile(path, JSON.stringify({ before, after, clicks }, null, 2));
+      await info.attach('pointer-repeat-geometry', { path, contentType: 'application/json' });
+      await expect(next).toBeFocused();
+      await expect(shell).toHaveAttribute('data-revision', String(revision + 2));
+      expect(await turnStatuses(page)).toEqual(['Week 1 report ready.', 'Planning week 2. Previous report retained.']);
+      await expect(page.getByRole('alert', { includeHidden: true })).toHaveCount(0);
+    });
+
+    test('F2 manager assignment — keyboard', async ({ page }) => {
+      test.setTimeout(120000);
+      const session = makeLife();
+      await page.goto('/?mode=world-life'); await importLife(page, session);
+      const win = characterWindow(page), chars = charactersView(page);
+      const person = async (id: string) => { await keyGo(page, 'characters'); await keyActivate(page, chars.getByTestId(`character-${id}`)); };
+      const work = async () => {
+        await tabTo(page, win.locator('[role="tab"][tabindex="0"]'));
+        await page.keyboard.press('Home'); await page.keyboard.press('ArrowRight'); await page.keyboard.press('ArrowRight');
+        await expect(win.getByRole('tab', { name: 'Work', exact: true })).toBeFocused();
+      };
+      await person('npc_starter_1'); await work(); await keyPost(page, postSelect(page), 'plain-1');
+      await keyActivate(page, win.getByRole('button', { name: 'Assign', exact: true }));
+      await expect(chars.getByTestId('character-npc_starter_1')).toHaveText(session.npcs[0].character.name + ' · Manager — Food Processor (plain-1)');
+      await expect(win.locator('header > p')).toHaveText('Manager — Food Processor (plain-1)');
+      await keyGo(page, 'city'); await expect(page.getByTestId('trial-tile-plain-1')).toContainText(session.npcs[0].character.name);
+      await person('npc_starter_1'); await keyActivate(page, win.getByRole('button', { name: 'Unassign', exact: true }));
+      await expect(win.locator('header > p')).toHaveText('Unassigned');
+      await expect(chars.getByTestId('character-npc_starter_1')).toHaveText(session.npcs[0].character.name + ' · Unassigned');
+      await keyGo(page, 'city'); await expect(page.getByTestId('trial-tile-plain-1')).toContainText('Unassigned');
+      await person('npc_starter_1'); await keyPost(page, postSelect(page), 'plain-1');
+      await person('npc_starter_2'); await work(); await keyPost(page, win.getByRole('combobox'), 'plain-1');
+      await keyActivate(page, win.getByRole('button', { name: 'Assign', exact: true }));
+      await person('npc_starter_1');
+      const revision = await page.getByTestId('life-shell').getAttribute('data-revision');
+      await expect(postSelect(page)).toHaveValue('plain-1');
+      await keyActivate(page, win.getByRole('button', { name: 'Assign', exact: true }));
+      await expect(win.getByRole('alert')).toContainText('already');
+      await expect(win.getByRole('button', { name: 'Assign', exact: true })).toHaveAttribute('aria-describedby', 'life-assign-error');
+      await expect(page.getByTestId('life-shell')).toHaveAttribute('data-revision', revision!);
+      await keyActivate(page, win.getByRole('button', { name: 'Assign', exact: true }));
+      await person('npc_starter_3'); await work();
+      await expect(win.getByText('No free manager post. Build a Farm, Processor, Logging Camp, Mine, Workshop or Market.', { exact: true })).toBeVisible();
+      await expect(win.getByRole('combobox')).toHaveCount(0);
+      await person('player'); await work();
+      await expect(win.getByRole('tabpanel').locator('p')).toHaveText(['Leader of Haven.', 'Player work and interactions are not available yet.']);
+      await expect(win.getByRole('tabpanel').locator('button,input,select')).toHaveCount(0);
+    });
+
+    test('F3 read people', async ({ page }) => {
+      const session = makeLife();
+      for (const npc of session.npcs) npc.character.age = 30;
+      session.profiles[1].appearance.measurements = { chestCm: 63, waistCm: 47, hipsCm: 169, disclosure: 'unknown' };
+      session.profiles[1].private = { intimateHistory: { value: 'some', disclosure: 'unknown' } };
+      await page.goto('/?mode=world-life'); await importLife(page, session); await go(page, 'characters');
+      const win = characterWindow(page), o = observeCharacterLife(session, null);
+      await expect(win).toHaveAttribute('data-character-id', 'player');
+      const title = (key: string) => key[0].toUpperCase() + key.slice(1);
+      const numbers = (values: Record<string, number>) => Object.entries(values).map(([k, v]) => `${title(k)} ${v}`).join(' · ');
+      for (const c of [o.player, ...o.npcs]) {
+        await selectPerson(page, c.id); await expectOneCharacterWindow(page); await selectArea(page, 'Description');
+        const panel = win.getByRole('tabpanel');
+        await expect(win.getByTestId(`profile-${c.id}-short`)).toHaveText(c.shortDescription);
+        await expect(win.getByTestId(`profile-${c.id}-long`)).toHaveText(c.longDescription);
+        await expect(panel.locator('dt')).toHaveText([...c.profileRows.map(r => r.label), ...c.traits.map(t => t.name)]);
+        await expect(panel.locator('dd')).toHaveText([...c.profileRows.map(r => r.value), ...c.traits.map(t => t.summary)]);
+        await expect(panel.locator('details details')).toHaveCount(0);
+        await expect(panel.locator('details[open]')).toHaveCount(0);
+        for (const disclosure of await panel.locator('details').all()) await disclosure.locator('summary').click();
+        await expect(panel.getByText(`Health ${c.stats.health}`, { exact: true })).toBeVisible();
+        for (const [label, values] of [['Needs', c.stats.needs], ['Emotions', c.stats.emotions], ['Skills', c.stats.skills]] as const) await expect(panel.getByText(`${label}: ${numbers(values)}`, { exact: true })).toBeVisible();
+        await expect(panel.getByText('No memories yet.', { exact: true })).toBeVisible();
+        if (c.adult) {
+          await expect(panel.getByText(`Intimacy Knowledge: ${c.adult.intimacyKnowledge ?? 'Not recorded'}`, { exact: true })).toBeVisible();
+          await expect(panel.getByText(`Intimate history: ${c.adult.intimateHistory}`, { exact: true })).toBeVisible();
+        }
+        if ('occupation' in c) await expect(panel.getByText(/^Age /)).toHaveText(`Age ${c.age} · Background: ${c.occupation} · ${c.socialClass} · ${c.legalStatus.replace('_', ' ')}`);
+        expect(await page.content()).not.toContain('63 / 47 / 169');
+        if (c.id === 'npc_starter_2') {
+          expect(await panel.evaluate(el => el.outerHTML)).not.toMatch(/\b(?:63|47|169)\b/);
+          await expect(panel.getByText(/Intimate history: (Some|None)/)).toHaveCount(0);
+        }
+        await selectArea(page, 'Relations');
+        if (c.relationship) {
+          await expect(panel.locator('dt')).toHaveText(Object.keys(c.relationship).map(title));
+          await expect(panel.locator('dd')).toHaveText(Object.values(c.relationship).map(String));
+        } else await expect(panel).toHaveText('Your own relationships are not tracked yet. Open a person to see how they regard you.');
+        await selectArea(page, 'Inventory');
+        await expect(panel.locator('p')).toHaveText(['Inventory and equipment are not implemented yet.', 'Current clothing is described in Description.']);
+        await expect(panel.locator('button,input,select,ul,ol,[data-slot]')).toHaveCount(0);
+        await selectPerson(page, c.id === 'player' ? 'npc_starter_1' : 'player');
+        await selectPerson(page, c.id); await expect(win.getByRole('tab', { name: 'Inventory', exact: true })).toHaveAttribute('aria-selected', 'true');
+        await selectArea(page, 'Description'); await expect(panel.locator('details[open]')).toHaveCount(0);
+      }
+    });
+
+    test('F4 session reset and atomic failures', async ({ page }) => {
+      test.setTimeout(120000);
+      await seedDiagnosticHistory(page);
+      const foreign = { 'haven.tile-trial.checkpoint.v1': 'tile sentinel', 'haven.tile-population.checkpoint.v1': 'population sentinel', 'haven.world-session.checkpoint.v1': 'world sentinel', 'haven.world-npc-session.checkpoint.v1': 'npc sentinel' };
+      await page.addInitScript(values => { for (const [k, v] of Object.entries(values)) localStorage.setItem(k, v); }, foreign);
+      const saved = await prepareLoadIntent(page), text = encodedLife(saved);
+      const slot = await page.evaluate(key => localStorage.getItem(key), lifeKey);
+      for (const payload of ['{', 'x'.repeat(1024 * 1024 + 1)]) {
+        const before = await lifeUiSnapshot(page); await putFile(page, payload);
+        await expect(page.getByTestId('life-shell').locator('aside > [role="alert"]')).toBeVisible();
+        await expectCheckpointRejectionPreservesUi(page, before);
+        expect(await page.evaluate(key => localStorage.getItem(key), lifeKey)).toBe(slot);
+      }
+      await delayReads(page);
+      try {
+        await putFile(page, text); await putFile(page, text, 'newer.json'); await releaseRead(page, 1, '{');
+        const before = await lifeUiSnapshot(page); await releaseRead(page, 0, text);
+        expect(await lifeUiSnapshot(page)).toEqual(before);
+      } finally { await restoreReads(page); }
+      const failure = await page.getByTestId('life-shell').locator('aside > [role="alert"]').textContent();
+      for (const dest of ['city', 'characters', 'reports'] as const) {
+        await go(page, dest); await expect(page.getByTestId('life-shell').locator('aside > [role="alert"]')).toHaveText(failure!);
+      }
+      await go(page, 'session'); await page.getByRole('button', { name: 'Continue locally', exact: true }).click();
+      await expect(page.locator('[data-life-view="city"]')).toBeVisible();
+      await expect(workersInput(page)).toHaveValue('2');
+      await expect(page.locator('#life-assign-error,#trial-management-error,#trial-workers-error')).toHaveCount(0);
+      await expect(page.getByText(/^Unapplied changes/)).toHaveCount(0);
+      await go(page, 'reports'); await expect(reportRegion(page).getByText('No report yet. End Week to resolve the plan.', { exact: true })).toBeVisible();
+      await go(page, 'characters'); await expect(characterWindow(page)).toHaveAttribute('data-character-id', 'player');
+      for (const id of ['player', ...saved.npcs.map(n => n.character.id)]) {
+        await selectPerson(page, id); await expect(characterWindow(page).getByRole('tab', { name: 'Description', exact: true })).toHaveAttribute('aria-selected', 'true');
+        await expect(characterWindow(page).locator('details[open]')).toHaveCount(0);
+      }
+      const exported = await exportLife(page);
+      expect(exported).toEqual({ ...saved, city: { ...saved.city, revision: exported.city.revision } });
+      await importLife(page, exported);
+      const roundtrip = await exportLife(page);
+      expect(roundtrip).toEqual({ ...exported, city: { ...exported.city, revision: roundtrip.city.revision } });
+      await page.getByRole('button', { name: 'Save locally', exact: true }).click(); await page.reload();
+      await page.getByRole('button', { name: 'Continue locally', exact: true }).click();
+      const reloaded = await exportLife(page);
+      expect(reloaded).toEqual(roundtrip);
+      // Same-ID Player variant: a successful Import replaces the keyed window and closes Private.
+      await selectPerson(page, 'player'); await characterWindow(page).getByText('Private (adult)', { exact: true }).click();
+      const privateNode = (await characterWindow(page).locator('details[open]').elementHandle())!;
+      await importLife(page, reloaded);
+      expect(await privateNode.evaluate(el => el.isConnected)).toBe(false);
+      await go(page, 'characters'); await expect(characterWindow(page)).toHaveAttribute('data-character-id', 'player');
+      await expect(characterWindow(page).locator('details[open]')).toHaveCount(0);
+      await page.getByTestId('life-end-week').click(); await go(page, 'session');
+      for (const name of ['Save locally', 'Continue locally', 'Export checkpoint']) await expect(page.getByRole('button', { name, exact: true })).toBeDisabled();
+      await expect(page.getByLabel('Import checkpoint', { exact: true })).toBeDisabled();
+      await expect(page.getByText('Choose Plan next week before saving, continuing, exporting or importing.', { exact: true })).toBeVisible();
+      // Handler guard probe, retaining the existing Report-phase trust-boundary test technique.
+      await page.getByLabel('Import checkpoint', { exact: true }).evaluate(input => { (input as HTMLInputElement).disabled = false; });
+      const before = await lifeUiSnapshot(page); await putFile(page, text); await expectCheckpointRejectionPreservesUi(page, before);
+      for (const dest of ['city', 'characters', 'reports'] as const) {
+        await go(page, dest); await expect(page.getByTestId('life-shell').locator('aside > [role="alert"]')).toBeVisible();
+      }
+      expect(await page.evaluate(values => Object.fromEntries(Object.keys(values).map(k => [k, localStorage.getItem(k)])), foreign)).toEqual(foreign);
+    });
   });
 }

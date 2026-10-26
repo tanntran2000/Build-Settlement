@@ -99,9 +99,9 @@
   p { margin: 8px 0; line-height: 1.5; }
   .terrain { color: var(--text-muted); font-size: .875rem; text-transform: uppercase; }
   .layout { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 16px; }
-  .tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-  .tile { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; text-align: left; background: var(--bg-tertiary); color: var(--text-main); min-height: 125px; min-width: 0; overflow-wrap: anywhere; }
-  .tile.selected { border-color: var(--accent-green); box-shadow: inset 0 0 0 1px var(--accent-green); }
+  .tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .tile { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; text-align: left; background: var(--bg-tertiary); color: var(--text-main); min-height: 125px; min-width: 0; overflow-wrap: anywhere; }
+  .tile.selected { border: 3px solid var(--accent-green); }
   label { display: block; margin: 16px 0 8px; } input, select, button { font: inherit; border-radius: 6px; padding: 10px; border: 1px solid var(--border-color); }
   input, select { color: var(--text-main); background: var(--bg-tertiary); max-width: 100%; } input { width: 7rem; }
   button { background: var(--accent-green); color: #000; cursor: pointer; margin: 4px 4px 4px 0; } button:disabled { opacity: .5; cursor: default; }

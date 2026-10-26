@@ -91,4 +91,7 @@
   [role='tab'][aria-selected='true'] { background: var(--accent-green); color: #000; }
   dl { display: grid; gap: 4px; margin: 8px 0; } dl div { display: flex; gap: 8px; } dt { color: var(--text-muted); min-width: 9rem; } dd { margin: 0; min-width: 0; }
   p { margin: 8px 0; } :focus-visible { outline: 3px solid var(--accent-blue); outline-offset: 3px; }
+  :global([data-testid='life-shell']) [role='tab'][aria-selected='true'] { font-weight: bold; }
+  :global([data-testid='life-shell']) dl div { flex-wrap: wrap; min-width: 0; }
+  :global([data-testid='life-shell']) dt { min-width: min(9rem, 100%); }
 </style>

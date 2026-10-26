@@ -1,4 +1,4 @@
-import { expect, type Page } from '@playwright/test';
+import { expect, type Locator, type Page } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
 import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, isCharacterLifeSessionState, TRIAL_BUILDINGS, WEEKLY_RESOURCE_KEYS, type CharacterLifeSessionState, type TileTrialReport } from '../../packages/core/src/index.ts';
 import { serializeCharacterLifeSave } from '../../packages/persistence/src/character-life-save.ts';
@@ -14,6 +14,52 @@ export function makeLife(seed = 12345): CharacterLifeSessionState {
 
 export const charactersView = (page: Page) => page.locator('[data-life-view="characters"]');
 export const characterWindow = (page: Page) => charactersView(page).getByRole('region', { name: 'Character window', exact: true });
+
+// Traverse the real tab order; never manufacture focus or skip hidden-view checks.
+export async function tabTo(page: Page, target: Locator) {
+  await expect(target).toBeVisible();
+  for (let step = 0; step < 160; step++) {
+    if (await target.evaluate(node => node === document.activeElement)) return;
+    await page.keyboard.press('Tab');
+    expect(await page.evaluate(() => !!document.activeElement?.closest('[hidden], [aria-hidden="true"]'))).toBe(false);
+  }
+  throw Error(`Control unreachable after 160 Tabs: ${await target.getAttribute('id') ?? await target.textContent()}`);
+}
+
+export async function keyActivate(page: Page, target: Locator) {
+  await tabTo(page, target); await page.keyboard.press('Enter');
+}
+
+export async function keyGo(page: Page, destination: LifeDestination) {
+  await keyActivate(page, page.locator(`#life-nav-${destination}`));
+  await expect(page.locator(`[data-life-view="${destination}"]`)).toBeVisible();
+}
+
+export async function keyText(page: Page, target: Locator, value: string) {
+  await tabTo(page, target); await page.keyboard.press('ControlOrMeta+A'); await page.keyboard.type(value);
+}
+
+export async function keyPost(page: Page, target: Locator, value: string) {
+  await tabTo(page, target);
+  const values = await target.locator('option').evaluateAll(nodes => nodes.map(n => (n as HTMLOptionElement).value));
+  expect(values).toContain(value);
+  await page.keyboard.press('Home');
+  for (let i = 0; i < values.indexOf(value); i++) await page.keyboard.press('ArrowDown');
+  await page.keyboard.press('Tab');
+  await expect(target).toHaveValue(value);
+}
+
+export async function watchTurnStatus(page: Page) {
+  await page.getByTestId('life-shell').locator('aside > [role="status"]').evaluate(node => {
+    const texts: string[] = [];
+    (node as HTMLElement & { mutations: string[] }).mutations = texts;
+    new MutationObserver(() => texts.push(node.textContent ?? '')).observe(node, { childList: true, characterData: true, subtree: true });
+  });
+}
+
+export async function turnStatuses(page: Page) {
+  return page.getByTestId('life-shell').locator('aside > [role="status"]').evaluate(node => (node as HTMLElement & { mutations: string[] }).mutations);
+}
 export async function selectPerson(page: Page, id: string) {
   await go(page, 'characters');
   await charactersView(page).getByTestId(`character-${id}`).click();

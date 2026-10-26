@@ -73,11 +73,12 @@
 </main>
 
 <style>
-  main { max-width: 1440px; margin: auto; padding: 24px; display: grid; grid-template-columns: 18rem minmax(0, 1fr); gap: 16px; }
-  aside { position: sticky; top: 16px; max-height: calc(100vh - 32px); overflow-y: auto; align-self: start; }
+  main { --border-color: var(--text-muted); max-width: 1440px; margin: auto; padding: 24px; display: grid; grid-template-columns: 18rem minmax(0, 1fr); gap: 16px; font-size: 1rem; line-height: 1.4; }
+  aside { position: sticky; top: 24px; max-height: calc(100dvh - 48px); overflow-y: auto; align-self: start; scroll-padding: 8px; }
+  .content { max-height: calc(100dvh - 48px); overflow-y: auto; padding: 8px; scroll-padding: 8px; }
   aside, .content, section { min-width: 0; overflow-wrap: anywhere; }
   [hidden] { display: none !important; }
-  h1 { font-size: 1.5rem; } h2 { font-size: 1.2rem; margin-bottom: 12px; }
+  h1 { font-size: 1.25rem; } h2 { font-size: 1.2rem; margin-bottom: 12px; }
   p { margin: 8px 0; line-height: 1.5; }
   .stocks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; } dd { margin: 4px 0; font-size: 1.2rem; }
   nav { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
@@ -86,5 +87,17 @@
   [aria-disabled='true'] { background: var(--bg-tertiary); color: var(--text-main); cursor: default; }
   :focus-visible { outline: 3px solid var(--accent-blue); outline-offset: 3px; }
   [role='alert'] { padding: 12px; border-left: 3px solid var(--accent-red); }
-  @media(max-width: 750px) { main { padding: 12px; grid-template-columns: minmax(0, 1fr); } aside { position: static; max-height: none; overflow: visible; } nav { flex-direction: row; flex-wrap: wrap; } }
+  /* Snippets include the unchanged checkpoint/Error log components; scope their presentation to Life. */
+  main :global(button), main :global(input), main :global(select) { font: inherit; min-height: 24px; min-width: 24px; max-width: 100%; border: 1px solid var(--border-color); }
+  main :global(button) { white-space: normal; overflow-wrap: anywhere; }
+  main :global(button:disabled), main :global(button[aria-disabled='true']) { color: #fff; background: var(--bg-tertiary); border-color: #fff; }
+  main :global(input[type='file']) { width: 100%; }
+  main :global(summary) { cursor: pointer; min-height: 24px; padding-block: 4px; }
+  main :global(a) { display: inline-block; min-height: 24px; color: var(--accent-blue); }
+  main :global(p) { margin-block: 8px; }
+  main :global(h3), main :global(h4) { font-size: 1.125rem; }
+  main :global(:focus-visible) { outline: 3px solid var(--accent-blue); outline-offset: 3px; scroll-margin: 8px; }
+  main :global(button[aria-disabled='true']:focus-visible) { outline-color: #fff; }
+  /* Anchor narrow-page scrolling in the main view when the status block changes height. */
+  @media(max-width: 750px) { main { padding: 12px; grid-template-columns: minmax(0, 1fr); } aside { position: static; max-height: none; overflow: visible; overflow-anchor: none; } .content { max-height: none; overflow: visible; padding: 0; } nav { flex-direction: row; flex-wrap: wrap; } }
 </style>
