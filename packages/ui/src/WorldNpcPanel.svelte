@@ -1,13 +1,14 @@
 <script lang="ts">
-  import { managerSlotTileIds, REQUIRED_RELATIONSHIP, REQUIRED_SKILLS, TRIAL_BUILDINGS, WORLD_TRAITS, type CharacterProfile as Profile, type NpcWorldSessionState } from '@haven/core';
-  import { executeWorldNpcCommand } from '@haven/simulation';
+  import { managerSlotTileIds, REQUIRED_RELATIONSHIP, REQUIRED_SKILLS, TRIAL_BUILDINGS, WORLD_TRAITS, type CharacterProfile as Profile, type CharacterLifeSessionState, type NpcWorldSessionState, type PlayerCharacter } from '@haven/core';
+  import { executeCharacterLifeCommand, executeWorldNpcCommand } from '@haven/simulation';
   import CharacterProfile from './CharacterProfile.svelte';
 
   export let session: NpcWorldSessionState;
   export let locked = false;
   // Character Life only; the NPC-world mode renders the cards exactly as before.
   export let profiles: Profile[] | null = null;
-  export let onapply: (next: NpcWorldSessionState) => void;
+  export let player: PlayerCharacter | null = null;
+  export let onapply: (next: NpcWorldSessionState | CharacterLifeSessionState) => void;
   let drafts: Record<string, string> = {};
   let error = '';
   const title = (key: string) => key[0].toUpperCase() + key.slice(1);
@@ -17,7 +18,9 @@
 
   function run(type: 'ASSIGN_NPC' | 'UNASSIGN_NPC', npcId: string) {
     const fields = type === 'ASSIGN_NPC' ? { tileId: drafts[npcId] ?? slots.find(id => !held.has(id)) ?? '' } : {};
-    const result = executeWorldNpcCommand(session, { type, expectedRevision: session.city.revision, npcId, ...fields });
+    const action = { type, expectedRevision: session.city.revision, npcId, ...fields };
+    const result = player !== null ? executeCharacterLifeCommand({ ...session, player, profiles }, action)
+      : executeWorldNpcCommand(session, action);
     // A stale choice (post gone or taken) fails visibly instead of moving silently; the next click uses the shown option.
     if (!result.success) { error = result.error.message; delete drafts[npcId]; return; }
     error = ''; delete drafts[npcId];

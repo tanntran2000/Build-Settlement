@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { createNpcWorldSession, createTileTrialState, createWorldSession, summarizeOutside, weeklyWorkforceMilli, WEEKLY_RESOURCE_KEYS, TRIAL_BUILDINGS, TILE_TRIAL_BALANCE as B, LEGACY_TILE_RULESET, POPULATION_TILE_RULESET, type OutsideWorldState, type NpcWorldSessionState, type WorldNpc, type TileTrialRuleset, type TileTrialReport, type CharacterLifeSessionState, type CharacterProfile as Profile, type PlayerCharacter } from '@haven/core';
-  import { executeTileTrialCommand, executeWorldNpcCityCommand } from '@haven/simulation';
+  import { createNpcWorldSession, createTileTrialState, createWorldSession, isLiveCharacterLifeSessionState, summarizeOutside, weeklyWorkforceMilli, WEEKLY_RESOURCE_KEYS, TRIAL_BUILDINGS, TILE_TRIAL_BALANCE as B, LEGACY_TILE_RULESET, POPULATION_TILE_RULESET, type OutsideWorldState, type NpcWorldSessionState, type WorldNpc, type TileTrialRuleset, type TileTrialReport, type CharacterLifeSessionState, type CharacterProfile as Profile, type PlayerCharacter } from '@haven/core';
+  import { executeCharacterLifeCommand, executeTileTrialCommand, executeWorldNpcCityCommand } from '@haven/simulation';
   import { serializeTileTrialSave, deserializeTileTrialSave, serializeWorldSessionSave, deserializeWorldSessionSave, serializeNpcWorldSessionSave, deserializeNpcWorldSessionSave, serializeCharacterLifeSave, deserializeCharacterLifeSave, TILE_SAVE_MAX_BYTES } from '@haven/persistence';
   import ErrorLog from './ErrorLog.svelte';
   import { errorLog } from './error-log.js';
@@ -72,8 +72,8 @@
     workforceError = '';
     managementError = null;
     const action = { type, expectedRevision, ...fields };
-    // NPC mode routes city commands through the post reconciler; other modes are unchanged.
-    const result = npcs && outside ? executeWorldNpcCityCommand({ city: state, outside, npcs }, action) : executeTileTrialCommand(state, action, ruleset);
+    const result = lifeMode ? executeCharacterLifeCommand({ city: state, outside, npcs, player, profiles }, action)
+      : npcs && outside ? executeWorldNpcCityCommand({ city: state, outside, npcs }, action) : executeTileTrialCommand(state, action, ruleset);
     if (!result.success) {
       error = '';
       if (type === 'SET_WORKERS') workforceError = result.error.message;
@@ -82,7 +82,11 @@
       errorLog.record(type === 'END_WEEK' ? 'END_WEEK' : 'RUNTIME', 'INVALID_COMMAND');
       return false;
     }
-    if ('next' in result) { state = result.next.city; npcs = result.next.npcs; } else state = result.nextState;
+    if ('next' in result) {
+      const next = result.next;
+      if (isLiveCharacterLifeSessionState(next)) ({ city: state, outside, npcs, player, profiles } = next);
+      else ({ city: state, outside, npcs } = next);
+    } else state = result.nextState;
     if (result.report) report = result.report;
     // Keep the last report mounted so a repeated pointer click cannot fall onto End Week.
     if (type === 'LOAD_TRIAL') report = null;
@@ -193,7 +197,11 @@
   {/if}
 
   {#if npcs && outside}
-    <WorldNpcPanel session={{ city: state, outside, npcs }} {profiles} {locked} onapply={next => { state = next.city; npcs = next.npcs; saveNotice = ''; error = ''; }} />
+    <WorldNpcPanel session={{ city: state, outside, npcs }} player={lifeMode ? player : null} {profiles} {locked} onapply={next => {
+      if (isLiveCharacterLifeSessionState(next)) ({ city: state, outside, npcs, player, profiles } = next);
+      else ({ city: state, outside, npcs } = next);
+      saveNotice = ''; error = '';
+    }} />
   {/if}
 
   <section class="card" aria-label="Planning checkpoints">
