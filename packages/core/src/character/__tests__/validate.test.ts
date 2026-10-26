@@ -1,10 +1,10 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { createNamedCharacter, type NamedCharacter } from '../../domain/character.js';
 import { createNpcWorldSession, isNamedCharacterRecord, isWorldNpcList } from '../../world/npc.js';
 import * as catalog from '../catalog.js';
 import { CHARACTER_LIMITS, PLAYER_CHARACTER_ID, PLAYER_PROFESSIONS, PLACES, SKIN_TONES } from '../catalog.js';
 import type { CharacterProfile } from '../types.js';
-import { isCharacterLifeSessionState, isCharacterProfile, isPlayerCharacter } from '../validate.js';
+import { isCharacterLifeSessionState, isCharacterProfile, isLiveCharacterLifeSessionState, isPlayerCharacter } from '../validate.js';
 
 type Mutable = Record<string, any>;
 const npcSession = () => { const r = createNpcWorldSession(0); if (!r.success) throw Error(r.error.message); return r.value; };
@@ -180,6 +180,117 @@ describe('isCharacterLifeSessionState', () => {
     expect(isCharacterLifeSessionState({ ...lifeSession(), player: { ...player(), extra: 1 } })).toBe(false);
     const t = lifeSession(); (t.city as Mutable).phase = 'resolving';
     expect(isCharacterLifeSessionState(t)).toBe(false);
+  });
+});
+
+describe('live Character Life validation', () => {
+  it('live phases preserve strict saves', () => {
+    const planning = lifeSession(), report = structuredClone(planning);
+    report.city.phase = 'report';
+    expect(isLiveCharacterLifeSessionState(planning)).toBe(true);
+    expect(isLiveCharacterLifeSessionState(report)).toBe(true);
+    expect(isCharacterLifeSessionState(planning)).toBe(true);
+    expect(isCharacterLifeSessionState(report)).toBe(false);
+  });
+
+  describe.each(['planning', 'report'] as const)('%s', phase => {
+    const session = () => { const s = lifeSession(); s.city.phase = phase; return s; };
+    const corruptions: [string, (s: Mutable) => void][] = [
+      ['missing session key', s => { delete s.player; }],
+      ['extra session key', s => { s.extra = 1; }],
+      ['null city', s => { s.city = null; }],
+      ['invalid city phase', s => { s.city.phase = 'resolving'; }],
+      ['negative outside seed', s => { s.outside.seed = -1; }],
+      ['unknown outside owner', s => { s.outside.tiles[0].owner = 'unknown'; }],
+      ['unsupported generator', s => { s.outside.generator = 'unsupported'; }],
+      ['missing outside tiles', s => { delete s.outside.tiles; }],
+      ['duplicate posts', s => { s.npcs[0].postTileId = s.npcs[1].postTileId = 'field-1'; }],
+      ['locked post', s => { s.npcs[0].postTileId = 'field-2'; }],
+      ['invalid Player', s => { s.player.character.health = 101; }],
+      ['NPC age 17', s => { s.npcs[0].character.age = 17; }],
+      ['NPC age 91', s => { s.npcs[0].character.age = 91; }],
+      ['Player id on NPC', s => { s.npcs[0].character.id = s.profiles[0].id = PLAYER_CHARACTER_ID; }],
+      ['mismatched profile', s => { s.profiles[0].id = 'unknown'; }],
+      ['reordered profiles', s => { [s.profiles[0], s.profiles[1]] = [s.profiles[1], s.profiles[0]]; }],
+      ['missing profile', s => { s.profiles.pop(); }],
+      ['extra profile', s => { s.profiles.push(base('npc_extra')); }],
+      ['sparse profiles', s => { delete s.profiles[0]; }],
+      ['invalid profile axis', s => { s.profiles[0].traits.warmth = NaN; }],
+      ['sparse city tiles', s => { delete s.city.tiles[0]; }],
+    ];
+    it.each(corruptions)('rejects %s in both guards', (_name, corrupt) => {
+      const s = session(); corrupt(s);
+      expect(isLiveCharacterLifeSessionState(s)).toBe(false);
+      expect(isCharacterLifeSessionState(s)).toBe(false);
+    });
+
+    const accessorTargets: [string, (s: Mutable) => [Mutable, string]][] = [
+      ...['city', 'outside', 'npcs', 'player', 'profiles'].map(key =>
+        [key, (s: Mutable): [Mutable, string] => [s, key]] as [string, (s: Mutable) => [Mutable, string]]),
+      ['city tiles', s => [s.city, 'tiles']],
+      ['NPC array entry', s => [s.npcs, '0']],
+      ['profile array entry', s => [s.profiles, '0']],
+      ['outside tile entry', s => [s.outside.tiles, '0']],
+    ];
+    it.each(accessorTargets)('rejects %s accessor without invoking it', (_name, target) => {
+      const s = session(), [record, key] = target(s), value = record[key];
+      const getter = vi.fn(() => value);
+      Object.defineProperty(record, key, { enumerable: true, get: getter });
+      expect(isLiveCharacterLifeSessionState(s)).toBe(false);
+      expect(isCharacterLifeSessionState(s)).toBe(false);
+      expect(getter).not.toHaveBeenCalled();
+    });
+
+    const recordTargets: [string, (s: Mutable) => Mutable, string][] = [
+      ['session', s => s, 'player'], ['city', s => s.city, 'tiles'],
+      ['Player', s => s.player, 'profile'], ['NPC profile', s => s.profiles[0], 'identity'],
+    ];
+    it.each(recordTargets)('rejects inherited fields, symbols, hidden keys and class instances on %s', (_name, target, key) => {
+      for (const shape of ['inherited', 'symbol', 'hidden', 'class']) {
+        const s = session(), record = target(s);
+        if (shape === 'inherited') {
+          Object.setPrototypeOf(record, { [key]: record[key] }); delete record[key];
+        } else if (shape === 'symbol') Object.defineProperty(record, Symbol('extra'), { value: 1 });
+        else if (shape === 'hidden') Object.defineProperty(record, 'extra', { value: 1 });
+        else { class Data {} Object.setPrototypeOf(record, Data.prototype); }
+        expect(isLiveCharacterLifeSessionState(s), shape).toBe(false);
+        expect(isCharacterLifeSessionState(s), shape).toBe(false);
+      }
+    });
+
+    it('accepts null-prototype data and adult age endpoints', () => {
+      const s = session();
+      for (const record of [s, s.city, s.player, s.profiles[0]]) Object.setPrototypeOf(record, null);
+      s.npcs[0].character.age = 18; s.npcs[1].character.age = 90;
+      expect(isLiveCharacterLifeSessionState(s)).toBe(true);
+      expect(isCharacterLifeSessionState(s)).toBe(phase === 'planning');
+    });
+
+    it('live tile index accessors never run', () => {
+      const s = session(), tile = s.city.tiles[0];
+      const world = structuredClone(s.city.world), revision = s.city.revision;
+      const getter = vi.fn(() => {
+        s.city.revision++;
+        s.city.world.settlements.settlement_haven_01.inventory.gold++;
+        return tile;
+      });
+      Object.defineProperty(s.city.tiles, '0', { enumerable: true, get: getter });
+      const descriptors = Object.getOwnPropertyDescriptors(s.city.tiles);
+      expect(isLiveCharacterLifeSessionState(s)).toBe(false);
+      expect(getter).not.toHaveBeenCalled();
+      expect(Object.getOwnPropertyDescriptors(s.city.tiles)).toEqual(descriptors);
+      expect(s.city.world).toEqual(world);
+      expect(s.city.revision).toBe(revision);
+    });
+
+    it.each(['id', 'terrain', 'length'])('live map permits changed %s while saves stay pinned', change => {
+      const s = session(), tile = s.city.tiles.find(t => t.id === 'field-2')!;
+      if (change === 'id') tile.id = 'field-live';
+      else if (change === 'terrain') tile.terrain = 'plain';
+      else s.city.tiles.splice(s.city.tiles.indexOf(tile), 1);
+      expect(isLiveCharacterLifeSessionState(s)).toBe(true);
+      expect(isCharacterLifeSessionState(s)).toBe(false);
+    });
   });
 });
 

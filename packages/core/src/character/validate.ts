@@ -1,7 +1,9 @@
 import type { NamedCharacter } from '../domain/character.js';
 import { hasWeeklyKeys } from '../domain/canonical-state.js';
+import { createTileTrialState, isTileTrialState } from '../trial/state.js';
 import { readDenseArray } from '../world/arrays.js';
-import { isNamedCharacterRecord, isNpcWorldSessionState, type WorldNpc } from '../world/npc.js';
+import { isNamedCharacterRecord, isNpcWorldSessionState, isWorldNpcList, type WorldNpc } from '../world/npc.js';
+import { isWorldSessionState } from '../world/session.js';
 import {
   BUILDS, CHARACTER_LIMITS as L, EYE_COLORS, FACE_FEATURES, FACE_SHAPES, HAIR_COLORS, HAIR_LENGTHS, HAIR_STYLES, HAIR_TEXTURES,
   OUTFITS, PLACES, PLAYER_CHARACTER_ID, PLAYER_PROFESSIONS, REGIONS, SKIN_TONES, UPBRINGINGS,
@@ -74,9 +76,27 @@ export function isPlayerCharacter(raw: unknown): raw is PlayerCharacter {
 export function isCharacterLifeSessionState(raw: unknown): raw is CharacterLifeSessionState {
   try {
     if (!keysOf(raw, ['city', 'outside', 'npcs', 'player', 'profiles']) ||
-        !isNpcWorldSessionState({ city: raw.city, outside: raw.outside, npcs: raw.npcs }) || !isPlayerCharacter(raw.player)) return false;
-    const npcs = raw.npcs as WorldNpc[], profiles = readDenseArray(raw.profiles);
-    return !!profiles && profiles.length === npcs.length &&
-      npcs.every((n, i) => inAgeRange(n.character) && n.character.id !== PLAYER_CHARACTER_ID && isCharacterProfile(profiles[i], n.character));
+        !isNpcWorldSessionState({ city: raw.city, outside: raw.outside, npcs: raw.npcs })) return false;
+    return hasCharacterLifeProfiles(raw, raw.npcs as WorldNpc[]);
   } catch { return false; }
+}
+
+export function isLiveCharacterLifeSessionState(raw: unknown): raw is CharacterLifeSessionState {
+  try {
+    if (!keysOf(raw, ['city', 'outside', 'npcs', 'player', 'profiles'])) return false;
+    const city = raw.city;
+    // Preflight descriptors before the legacy tile guard iterates potentially hostile indices.
+    if (!keysOf(city, ['world', 'revision', 'phase', 'tiles', 'happiness']) || readDenseArray(city.tiles) === null ||
+        !isTileTrialState(city) || !isWorldSessionState({ city: createTileTrialState(), outside: raw.outside }) ||
+        !isWorldNpcList(raw.npcs, city)) return false;
+    return hasCharacterLifeProfiles(raw, raw.npcs);
+  } catch { return false; }
+}
+
+// NPC structure and density must be validated before checking aligned character profiles.
+function hasCharacterLifeProfiles(raw: Record<string, unknown>, npcs: WorldNpc[]): boolean {
+  if (!isPlayerCharacter(raw.player)) return false;
+  const profiles = readDenseArray(raw.profiles);
+  return !!profiles && profiles.length === npcs.length &&
+    npcs.every((n, i) => inAgeRange(n.character) && n.character.id !== PLAYER_CHARACTER_ID && isCharacterProfile(profiles[i], n.character));
 }
