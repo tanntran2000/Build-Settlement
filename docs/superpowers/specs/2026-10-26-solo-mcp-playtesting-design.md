@@ -3,7 +3,7 @@
 Status: **APPROACH APPROVED · DESIGN DRAFT FOR REVIEW.** The user approved the staged combination route (option C) and prioritizing minimal current-feature MCP before new events (§1). This document itself is **not** user-approved and not a Work Package. It authorizes no product code, dependency, configuration, credential, network, server, probe, push, PR or merge. Review, design, plan and merge gates (AGENTS.md G0–G6) still apply.
 Baseline: `main` `f4aafa24e448aa10eec729c06767b9741adde9f9` (merge of PR #46, Character Foundation S1). Local `main` was stale; this baseline was not re-fetched. **Before any implementation, re-verify baseline freshness and re-narrow allowed paths (§13).**
 Excluded and protected: the unmerged QOL branch at `9503bba` (blocked on real 200% text / 400% zoom / Narrator checks). This design reads nothing from it and changes nothing in it.
-Revision: v0.2 applies the independent Claude design review and Codex builder-readiness check of v0.1 (`2582081`); disposition in §17.
+Revision: v0.3. v0.2 (`761b751`) applied the independent Claude design review and Codex builder-readiness check of v0.1 (`2582081`). v0.3 applies their re-reviews of v0.2 (Stage 0 PASS, preserved; Stage 1 blockers) and the parent's engineering decisions. Disposition in §17.
 Language: English.
 
 Legend:
@@ -32,7 +32,7 @@ Goals:
 1. One pure, phase-aware session command function used by both the Character Life UI and the harness.
 2. A player-visible observation projection with parity to the UI and no hidden state, and a public response boundary that leaks nothing through any other response.
 3. Exactly one controller per run; clean stop and handover that never performs game actions on its own.
-4. Stale-revision rejection, durable request-id deduplication and a journal that recovers or refuses after a crash.
+4. Stale-revision rejection, durable request-id deduplication and a journal that, after a crash, is verified and exported by terminal recovery or refused.
 5. Test sessions isolated from the user's real save; reproducible from initial checkpoint + journal.
 6. A thin local MCP transport, added only after a separately approved runtime compatibility checkpoint passes.
 
@@ -114,7 +114,7 @@ Ownership [PROPOSED]:
 3. outside valid via `isWorldSessionState({ city: createTileTrialState(), outside })` — same pattern as `world-npc.ts` L45;
 4. `isWorldNpcList(npcs, city)`;
 5. `isPlayerCharacter(player)`;
-6. profiles: dense, same length as NPCs, each NPC in adult age range, not the Player id, `isCharacterProfile(profiles[i], npcs[i].character)`.
+6. profiles: dense, same length as NPCs, each NPC within the character age range (`inAgeRange`: `CHARACTER_LIMITS` age min–max, as `validate.ts` L80), not the Player id, `isCharacterProfile(profiles[i], npcs[i].character)`.
 
 Steps 5–6 move into one private helper shared with `isCharacterLifeSessionState`, whose behaviour stays exactly as today (strict, Planning-only; still used by the save codec and load path). No validation becomes passthrough.
 
@@ -128,8 +128,8 @@ Precedence (first match wins):
 | 1 | `raw` not a plain object, or `type` (read with `Object.getOwnPropertyDescriptor(raw, 'type')?.value`) not a string | `INVALID_COMMAND` |
 | 2 | `type === 'LOAD_TRIAL'` | `INVALID_COMMAND` (matches `world-npc.ts` L47) |
 | 3 | `type` not one of the 9 supported actions (includes `CHOOSE`, `SKIP`, any unknown string) | `UNSUPPORTED_ACTION` |
-| 4 | `!isLiveCharacterLifeSessionState(session)` | `INVALID_STATE` |
-| 5 | Delegate: `ASSIGN_NPC`/`UNASSIGN_NPC` → `executeWorldNpcCommand`; the other 7 → `executeWorldNpcCityCommand` | existing codes unchanged (`STALE_COMMAND`, `FORBIDDEN`, `WEEK_MISMATCH`, `INVALID_TILE`, `INVALID_BUILDING`, `INVALID_PLACEMENT`, `OCCUPIED`, `EMPTY_TILE`, `MAX_LEVEL`, `INSUFFICIENT_RESOURCES`, `INVALID_WORKFORCE`, `INVALID_PLAN`, NPC codes, `INVALID_COMMAND` for bad fields, `EXECUTION_ERROR`) |
+| 4 | `!isLiveCharacterLifeSessionState(session)` | `INVALID_STATE`, message exactly "World session is invalid; nothing was changed." (same text as `world-npc.ts` L13) |
+| 5 | Delegate exactly `{ city, outside, npcs }` (the wrappers require that exact 3-key shape; player/profiles are not passed and were already validated in step 4): `ASSIGN_NPC`/`UNASSIGN_NPC` → `executeWorldNpcCommand`; the other 7 → `executeWorldNpcCityCommand` | existing codes unchanged (`STALE_COMMAND`, `FORBIDDEN`, `WEEK_MISMATCH`, `INVALID_TILE`, `INVALID_BUILDING`, `INVALID_PLACEMENT`, `OCCUPIED`, `EMPTY_TILE`, `MAX_LEVEL`, `INSUFFICIENT_RESOURCES`, `INVALID_WORKFORCE`, `INVALID_PLAN`, NPC codes, `INVALID_COMMAND` for bad fields, `EXECUTION_ERROR`) |
 | 6 | Assemble `{ ...next, player, profiles }` (fresh clones) and require `isLiveCharacterLifeSessionState` | `EXECUTION_ERROR`; input preserved |
 
 Supported actions: `BUILD`, `REPLACE`, `UPGRADE`, `SET_WORKERS`, `SET_ENABLED`, `END_WEEK{expectedWeek}`, `NEXT_WEEK`, `ASSIGN_NPC`, `UNASSIGN_NPC`, each with `expectedRevision`. For these, semantics, codes and messages are exactly those of the delegated function. For unsupported types the wrapper intentionally differs from the legacy order (legacy returns `STALE_COMMAND`/`FORBIDDEN` first); parity is claimed only for supported types.
@@ -154,13 +154,14 @@ Library code, UI rewiring and tests. No harness, journal, MCP or runnable server
 ## 7. Stage 1 — harness: run host, public boundary, journal, stop
 
 ### 7.0 Pre-implementation verification (before the Stage 1 WP is approved) [PROPOSED]
-Read-only inventory, no installs: (a) a `packages/playtest` tsconfig can typecheck against the three TS-source packages; (b) Vitest already discovers `packages/**/*.test.ts`; (c) whether a standalone Node 24 process can load `core`/`simulation`/`persistence` as published (TS sources with `.js` specifiers). If (c) fails, Stage 1 remains fully testable under Vitest and a runtime loading path becomes a named Stage 2 prerequisite, chosen without new dependencies where possible. (d) Which OS-released lock primitive is available from Node built-ins on the target Windows host (§7.5).
+Read-only inventory, no installs: (a) a `packages/playtest` tsconfig can typecheck against the three TS-source packages; (b) Vitest already discovers `packages/**/*.test.ts`; (c) whether a standalone Node 24 process can load `core`/`simulation`/`persistence` as published (TS sources with `.js` specifiers). If (c) fails, Stage 1 remains fully testable under Vitest and a runtime loading path becomes a named Stage 2 prerequisite, chosen without new dependencies where possible. (d) **Blocking:** the Stage 1 verification work must demonstrate an exclusive single-writer primitive meeting all four lifecycle properties of §7.5 on the target Windows host, with evidence per property. Until then Stage 1 cannot be accepted or run. (a)–(c) are read-only; (d) may need a small throwaway demonstration, which requires its own explicit approval and is not performed by this document.
 
 ### 7.1 Operator surface vs player surface [PROPOSED]
-- **Operator launch configuration** (process arguments or a config file chosen by the human/parent): run root, run id, mode `new{seed?, presetId}` | `fixture{fixtureId}` | `recover`, controller label, budget. The seed, fixture and mode are fixed at launch. The AI cannot choose seeds, reset, load fixtures, re-claim or recover.
+- **Operator launch configuration** (process arguments or a config file chosen by the human/parent): run root, run id, mode `new{seed?, presetId}` | `fixture{fixtureId}` | `fromCheckpoint{sourceRunId}` (Planning checkpoint exported by a stopped run) | `recover{runId}` (terminal, §7.4), controller label, budget. The seed, fixture and mode are fixed at launch. The AI cannot choose seeds, reset, load fixtures or checkpoints, take over a run or recover.
 - **Player tools (Stage 2):** `observe`, `act`, `receipt` only.
 - **Operator stop:** outside the player surface — ending the client session/stdin, process interrupt, or terminating the process (§7.6). No separate network admin channel.
-- **Lease = ownership, not authentication.** The launching process owns the run; a second process on the same run is refused by the lock. Leases are not persisted; a restart voids them. No credentials are configured; no secrets are written to logs (controller label only).
+- **Process ownership, not authentication.** The launching process owns the run for its lifetime; a second process on the same run is refused by the single-writer lock (§7.5). Ownership is not persisted: when the process ends, the run ends (§7.6). No credentials are configured; no secrets are written to logs (controller label only).
+- **Operating cost [ENGINEERING, conservative by choice]:** a client disconnect or restart stops the run, and a restart never resumes it. Any client crash or reconnect ends the run; play continues only as a new run from an eligible Planning checkpoint.
 
 ### 7.2 Public response boundary [PROPOSED]
 Internal types (never returned to the controller): command result with full `next` session and report; journal records; state hashes; header (seed, initial checkpoint); operator artifacts.
@@ -179,54 +180,72 @@ type PublicReceipt = {
   week: number; phase: "planning" | "report";
 };
 type ReceiptLookup = PublicReceipt
-  | { requestId: string; status: "not_found" }          // no verified record; safe to resubmit with the same requestId
-  | { requestId: string; status: "recovery_required" };  // torn tail present; operator must recover first
+  | { requestId: string; status: "not_found" }          // this run processed no request with that id
+  | { requestId: string; status: "recovery_required" };  // outcome unknown to this process (fsync fault); only operator recovery can classify it
 type ActError = { code: "REQUEST_ID_REUSED" | "SESSION_STOPPED" | "RECOVERY_REQUIRED" | "OUTCOME_UNCERTAIN" | "INVALID_REQUEST"; message: string };
 ```
-`act` returns `PublicReceipt` or `ActError`; the report is read via `observe`. `receipt` needs no active lease and works after stop.
+`act` returns `PublicReceipt` or `ActError`; the report is read via `observe`. `receipt` needs no ownership token and keeps working after stop for as long as the process is alive.
+
+Run states of a live process: `active` (accepts `act`), `stopped` (terminal), `faulted` (terminal, after an `fsync` error). **Resubmitting a `not_found` request is allowed only while the same run is `active`**; in `stopped`/`faulted` every `act` is refused. `not_found` never means "resubmit into a stopped or recovered run".
 
 ### 7.3 Revision and durable idempotency [ENGINEERING]
 - Every `act{requestId, expectedRevision, action}`; End Week also carries `expectedWeek` inside `action`. Existing checks reject stale commands.
-- `payloadHash` = SHA-256 of canonical JSON (sorted keys) of `{ expectedRevision, action }`. The lease/controller label is excluded, so a retry after a restart still matches.
+- `payloadHash` = SHA-256 (lowercase hex) of canonical JSON (§7.4) of `{ expectedRevision, action }`. The controller label is excluded.
 - Same `requestId` + same hash → stored receipt, no re-execution. Same `requestId` + different hash → `REQUEST_ID_REUSED`; not journaled, state unchanged.
 - Rejected commands are journaled and flushed like accepted ones, so a retried rejection returns the same receipt.
 - MCP transport/request ids never replace this.
 
 ### 7.4 Journal and atomic commit [PROPOSED]
 File `journal.jsonl` in the run directory; one JSON record per line; each line carries `crc` = SHA-256 of its own body. Records:
-- `header`: format version, run id, build SHA, ruleset id, initial checkpoint (Character Life save text, Planning), its hash, seed, budget, launch mode.
+- `header`: journal format version, run id, build SHA, ruleset id, initial checkpoint (Character Life save text, Planning), its hash, seed, budget, launch mode, and source run id + checkpoint hash when launched from another run's checkpoint.
 - `command`: `seq`, `requestId`, `expectedRevision`, canonical `action`, `payloadHash`, `outcome`, `code`, `revisionBefore`, `revisionAfter`, `week`, `phase`, `stateHashAfter`, counters (`actionsAttempted`, `weeksCompleted`).
 - `stop`: `seq`, reason (`operator`, `disconnect`, `budget`, `fault`), revision, phase.
 - `recovered`: `seq`, bytes truncated, reason.
 
+Definitions [ENGINEERING]:
+- **Canonical JSON:** UTF-8; object keys sorted ascending by UTF-16 code units (default JS string sort); arrays in order; no whitespace; strings and numbers as `JSON.stringify` writes them. Inputs must be plain JSON data: `undefined`, functions, non-finite numbers or non-plain objects throw instead of being dropped. A small local helper with unit tests; no library.
+- **`lastReport`:** the report returned by the most recent accepted `END_WEEK` in this run, or `null` before the first one; `NEXT_WEEK` does not clear it.
+- **`stateHashAfter`:** SHA-256 (lowercase hex) of canonical JSON of `{ session, lastReport }` after the command, so a divergence only in the report is detected.
+
 Linearization: the host processes one request at a time. For `act`: execute on a clone → append the record → `fsync` → swap in-memory state → reply. The reply is sent only after `fsync` returns.
 
-Crash classification on the next operator launch (`recover` mode):
-- **Complete record** (ends with newline, valid `crc`, replays to its recorded outcome, revisions and `stateHashAfter`) → **committed**, whether or not its `fsync` had returned. The controller never received a reply for it, so this is consistent: `receipt` returns it.
-- **Incomplete or crc-invalid final line** → torn tail; that command is not committed. The run is `recovery_required`: `act` refused, `receipt` answers `recovery_required`, until the operator's `recover` truncates the tail and appends a `recovered` record. Afterwards that `requestId` is `not_found` and may be resubmitted.
+**Recovery is terminal inspection and export, never continuation.** An existing run directory can only be opened by the operator in `recover` mode, which holds the same single-writer lock, exposes no player tools, and ends with the run stopped. It:
+- **Refuses** if the header's journal format version, build SHA or ruleset id differs from the running build.
+- Classifies a **complete record** (ends with newline, valid `crc`, replays to its recorded outcome, revisions and `stateHashAfter`) as **committed**, whether or not its `fsync` had returned. The controller never received a reply for it, so this is consistent.
+- Classifies an **incomplete or crc-invalid final line** as a torn tail: that command is not committed. `recover` truncates it and appends a `recovered` record.
+- Appends a `stop` record if none exists (reason `fault` or `disconnect`), preserving counters.
+- Outputs to the operator: the receipts of all committed requests, `not_found` for any other id (meaning "no committed command was recovered", **not** permission to resubmit), and the artifacts of §7.6.
+
+After recovery the operator may start a **separate** run from an eligible Planning checkpoint (new run id; header records the source run and checkpoint hash). Report-phase continuation is unsupported until a separate approved design.
 - **Any complete record that fails to replay identically, or a bad line before the tail** → refuse to continue; report; no silent repair.
 - Replay re-executes accepted **and rejected** records through `executeCharacterLifeCommand`; a rejected record must reproduce the same code with `revisionAfter = revisionBefore` and unchanged state hash.
-- If `fsync` returns an error in a live process, the host stops accepting `act`, answers that request `OUTCOME_UNCERTAIN`, and requires `recover`.
+- If `fsync` returns an error in a live process, the run becomes `faulted`: that request is answered `OUTCOME_UNCERTAIN`, its `receipt` answers `recovery_required`, every later `act` is refused, and only operator `recover` (terminal) classifies it.
 
 Durability claims are limited to one process, one local disk and successful `fsync`; networked or cross-machine storage is out of scope.
 
 ### 7.5 Single writer and lock recovery [PROPOSED]
-- One writer per run directory. The lock must be **released by the OS when the holder dies** (verified in §7.0(d)). A PID file alone is not acceptable: PIDs are reused.
-- The lock content also holds a random writer nonce; the writer re-checks it before each append and halts on mismatch (self-fencing).
-- If no OS-released primitive is available from Node built-ins: automatic takeover is refused. `recover` then requires the operator to confirm no process carrying that run's nonce in its command line exists; the residual risk is recorded in the run header. No new dependency is added to solve this without a separate dependency decision.
+- One writer per run directory, for live runs and `recover` alike, enforced by an **exclusive single-writer primitive with verified lifecycle semantics**:
+  1. while a holder lives, every other acquisition fails, including simultaneous attempts;
+  2. when the holder dies by any means (exit, crash, kill), the OS releases it;
+  3. no other process can release or steal it while the holder lives;
+  4. the holder cannot lose it silently.
+- **Stage 1 cannot be accepted or run until such a primitive is demonstrated** in its approved verification work (§7.0(d)). This document does not assert that Node built-ins provide one.
+- Not acceptable: PID files (PIDs are reused), exclusive-create files alone (not released on death), operator confirmation, nonces or any other procedural fallback. There is no degraded mode.
+- A local named pipe per run id is only a **candidate** to evaluate. It would be a local listener, so it would need explicit approval against the "no listeners" non-goal and must refuse every connection; listing it authorizes nothing.
+- If no primitive is verified, Stage 1 stays blocked. Stage 0 is not affected. No new dependency is added for this without a separate dependency decision.
 
 ### 7.6 Stop, budgets and handover [PROPOSED]
 - `stop` enters the same serial queue: an in-flight `act` finishes (commit or reject) first; then a `stop` record is appended and flushed; later `act` → `SESSION_STOPPED`. Idempotent.
 - Stop never runs `NEXT_WEEK`, `END_WEEK` or a choice to reach an exportable phase.
 - Triggers: operator stop, client disconnect/stdin end, budget reached, fault.
-- Budgets are derived from journal counters, so they survive recovery. A run with a `stop` record stays stopped after recovery. There is no implicit resume: `recover` restores and verifies state, then stops. Continuing play means a new run launched from an exported Planning checkpoint.
+- Budget counters (`actionsAttempted`, `weeksCompleted`) are durable in every command record and the `stop` record, so they survive recovery. A stopped run stays stopped; recovery is terminal (§7.4). There is no implicit resume. Continuing play means a separate run launched from an eligible Planning checkpoint.
 - Default budget [PROPOSED operator default, not user-approved]: stop at the first of 60 attempted actions (rejections count) or 3 completed weeks; also stop on two identical consecutive failures.
 - **Planning:** operator artifact = standard Character Life checkpoint via `serializeCharacterLifeSave` + journal.
 - **Report (and future `resolving`):** the codec exports Planning only. Operator artifact = harness checkpoint (journal with header), from which replay restores exact phase, report and pending context. The UI cannot import it. The stop result says "standard export unavailable in this phase". Continuing from Report is not supported in this design.
 - **No automatic import into a real save.** The harness never touches browser storage. The current product does not enforce isolated import; the operator imports a Planning checkpoint into a fresh isolated browser context, and the real default slot changes only if the user explicitly chooses Save locally there.
 
 ### 7.7 Fixtures and save isolation [PROPOSED]
-- Sessions come only from launch mode `new` (`createCharacterLifeSession`) or `fixture` (allowlisted, committed fixtures read through `deserializeCharacterLifeSave`).
+- Sessions come only from launch mode `new` (`createCharacterLifeSession`), `fixture` (allowlisted, committed fixtures) or `fromCheckpoint` (a stopped run's exported Planning checkpoint); the latter two are read through `deserializeCharacterLifeSave`. Each launch creates a new run id and journal.
 - Fixture files are read-only inputs; run files are written only under the run root (resolved paths must stay inside it).
 - Seed: operator-supplied or drawn by the harness; stored in the header; never in any public response.
 
@@ -281,13 +300,13 @@ Specified per stage; none has been written or run.
 | T8 | Stale revision | 1 | Mismatched `expectedRevision`/`expectedWeek` → rejected receipt, journaled, revision unchanged |
 | T9 | Payload mismatch | 1 | Reused `requestId` with different `{expectedRevision, action}` → `REQUEST_ID_REUSED`, not journaled, no change; different controller label alone → same receipt |
 | T10 | Duplicate request | 1 | Same `requestId`+hash → stored receipt; End Week executed once |
-| T11 | Uncertain timeout | 1 | Lost reply after commit → `receipt` committed; injected `fsync` error → `OUTCOME_UNCERTAIN`, further `act` refused until recover |
-| T12 | Restart / replay / torn tail | 1 | Clean journal (accepted + rejected records) replays to identical hashes; complete record without returned `fsync` → committed; torn tail → `recovery_required`, then `not_found` after recover and safe resubmit; mid-journal mismatch → refusal |
-| T13 | Stop in Planning | 1 | In-flight act completes first; stop record durable; later `act` → `SESSION_STOPPED`; `receipt` still works; standard checkpoint deserializes |
-| T14 | Stop in Report | 1 | No phase change; "standard export unavailable"; harness replay restores Report and report content; recovery keeps stopped state and counters |
-| T15 | Two controllers / lock | 1 | Second process on the same run refused while the first lives; after the first dies, lock released by the OS; nonce mismatch halts a stale writer; leases absent after restart |
+| T11 | Uncertain timeout | 1 | Lost reply after commit → `receipt` committed; request never received → `not_found` and resubmission accepted once while the run is `active`; injected `fsync` error → `OUTCOME_UNCERTAIN`, run `faulted`, that `receipt` → `recovery_required`, every later `act` refused |
+| T12 | Recovery (terminal) | 1 | Clean journal (accepted + rejected records) replays to identical `stateHashAfter` including `lastReport`; complete record without returned `fsync` → committed; torn tail → truncated, `recovered` + `stop` records appended, its id reported `not_found`; no player tools and no `act` after recovery; mismatched journal format, build SHA or ruleset → refusal; mid-journal mismatch → refusal; canonical JSON helper unit tests (key order, throws on non-JSON input) |
+| T13 | Stop in Planning | 1 | In-flight act completes first; stop record durable with counters; later `act` → `SESSION_STOPPED`; `receipt` still works while the process lives; standard checkpoint deserializes; `fromCheckpoint` launch creates a new run id |
+| T14 | Stop in Report | 1 | No phase change; "standard export unavailable"; harness replay restores Report and report content; recovery keeps stopped state and counters; `fromCheckpoint` refuses a run without a Planning checkpoint |
+| T15 | Single writer | 1 | Evidence for each §7.5 property on the target host: concurrent acquisitions → exactly one holder; holder killed → OS releases; no release/steal by another live process; holder loss detected; a second live process and a concurrent `recover` on the same run are refused; disconnect → `stop` record, restart does not resume |
 | T16 | Protected bytes | 1 | Fixture file hashes unchanged after a run; run-root resolver rejects escaping paths |
-| T17 | Boundaries (three distinct checks) | 1 | Architecture policy: nothing imports `playtest`, `playtest` imports only its allowed packages; `core`/`simulation`/`persistence` have no `node:` built-in imports (separate test, since bare specifiers are skipped by the architecture check); `playtest` sources reference no `localStorage`/`sessionStorage`/`indexedDB`/`window` |
+| T17 | Boundaries (distinct checks) | 1 | (a) Architecture policy: nothing imports `playtest`; `playtest` imports only `core`/`simulation`/`persistence`, never `ui`. (b) No `node:` built-in imports in **production** sources of `core`/`simulation`/`persistence`, excluding tests the same way `check-architecture.mjs` does (`__tests__` dirs, `*.test.ts`/`*.spec.ts`); today only test files import `node:`. (c) No browser-storage dependency: `playtest` and `persistence` production sources reference no `localStorage`/`sessionStorage`/`indexedDB`/`window`; the browser slot helpers stay in `ui` (`character-life-session.ts`), unreachable by (a) |
 | T18 | Handover import | 1 | e2e: an exported Planning checkpoint imports in a fresh isolated browser context; the default context's slot bytes are unchanged without an explicit Save locally |
 | T19 | Transport surface | 2 | Only `observe`/`act`/`receipt` exist; schemas reject unknown fields; responses equal the Stage 1 public types |
 
@@ -316,9 +335,10 @@ Each stage is its own Work Package (G1), branch, PR and human merge; the two-ite
 | UI and harness disagree | T1, T2, T6 block merge |
 | Hidden data leaks via any response | Public types only (§7.2); T7 |
 | AI resets or fishes seeds | Operator-only launch config (§7.1); T19 |
-| Two AIs race End Week | One process per run, OS lock, serial queue, revision, receipts (T10, T15) |
-| Lost reply / crash before or after `fsync` | Receipt lookup and recovery classification (T11, T12) |
-| Stale writer after crash | OS-released lock + nonce self-fencing, no PID takeover (T15) |
+| Two AIs race End Week | One process per run, verified single-writer primitive, serial queue, revision, receipts (T10, T15) |
+| Lost reply / crash before or after `fsync` | Receipt lookup while `active`; terminal recovery classification (T11, T12) |
+| Stale writer after crash | Verified OS-released exclusive primitive; no PID, nonce or operator fallback; otherwise Stage 1 stays blocked (T15) |
+| Client restart mid-run | Run stops; no resume; new run from a Planning checkpoint (T13–T15) |
 | Stop outside Planning | Harness checkpoint, no game action (T14) |
 | Real save overwritten | No storage access; isolated import procedure (T17, T18) |
 | MCP client unsupported | Stage 2 stops at R |
@@ -346,7 +366,7 @@ Merge order and other technical choices are engineering decisions open to review
 | Actionable ids missing from observation | Fixed: §6.3; T5 |
 | Receipt/stop responses could leak state | Fixed: §7.2 public types; T7 |
 | Journal lacked payload; hash scope; pre-`fsync` classification; rejected receipts; torn tail vs resubmit | Fixed: §7.3–7.4; T9, T11, T12 |
-| Stale lock recovery without liveness; leases on restart; receipt after stop; stop vs in-flight; stopped state and budgets durable | Fixed: §7.5–7.6; T13–T15 |
+| Stale lock recovery without liveness; leases on restart; receipt after stop; stop vs in-flight; stopped state and budgets durable | Fixed in v0.2; lock and recovery wording superseded in v0.3 (below) |
 | Node consumption deferred; vague root paths; distinct boundary checks | Fixed: §7.0, §13, T17 |
 | Operator tools on the player surface | Fixed: §7.1, §8.2; T19 |
 | Stage R "no code" yet proves interoperability | Fixed: §8.1 R1/R2, R2 separately approved, not performed |
@@ -355,3 +375,14 @@ Merge order and other technical choices are engineering decisions open to review
 | Merge order asked of user | Fixed: §13 parent engineering decision |
 | Attribution of staging order and relationship ranges | Fixed: §1 quotes; relationship ranges approved, future integration only; marriage explicit approval overrides Skip in that future event (§9) |
 | Disposable-run alternative (readiness check) | Not adopted; would need an explicit revised proposal (§2) |
+
+v0.2 → v0.3 (re-reviews of `761b751`; Stage 0 verdict PASS, semantics unchanged):
+
+| Finding | Disposition |
+|---|---|
+| Lock fallback contradictory and not a mechanism (both re-reviews) | Fixed by parent decision: fallback removed; four verified lifecycle properties required; Stage 1 blocked until demonstrated; named pipe is a candidate only (§7.0(d), §7.5, T15) |
+| `not_found` resubmit conflicts with terminal recovery | Fixed: recovery is terminal inspection/export; resubmit only while the same run is `active`; separate run from a Planning checkpoint (§7.2, §7.4, §7.6, T11, T12) |
+| `stateHashAfter` undefined; build mismatch | Fixed: hash of canonical `{session, lastReport}`; canonical JSON defined; format/build/ruleset mismatch refuses recovery (§7.4, T12) |
+| `node:` scan would hit test files | Fixed: production sources only, same exclusions as architecture tooling; browser-storage check split (T17) |
+| Stage 0 minor notes | Clarified wording only: delegate exactly `{city, outside, npcs}`; fixed `INVALID_STATE` message; `inAgeRange` wording (§6.1–6.2); no behaviour change |
+| Leftover "lease" wording; disconnect cost | Fixed: process ownership; conservative operating cost stated (§7.1) |
