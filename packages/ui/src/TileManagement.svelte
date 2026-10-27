@@ -10,7 +10,8 @@
   import { serializeTileTrialSave, deserializeTileTrialSave, serializeWorldSessionSave, deserializeWorldSessionSave, serializeNpcWorldSessionSave, deserializeNpcWorldSessionSave, serializeCharacterLifeSave, deserializeCharacterLifeSave, TILE_SAVE_MAX_BYTES } from '@haven/persistence';
   import ErrorLog from './ErrorLog.svelte';
   import { errorLog } from './error-log.js';
-  import { formatMilli as units } from './milli-format.js';
+  import { formatFulfillment, formatMilli as units } from './milli-format.js';
+  import { formatLifeWeek } from './life-calendar.js';
   import { readLocalCheckpoint, saveLocalCheckpoint } from './tile-local-checkpoint.js';
   import { prepareWorldSessionLoad, readLocalWorldSession, saveLocalWorldSession } from './world-session.js';
   import { prepareNpcWorldSessionLoad, readLocalNpcWorldSession, saveLocalNpcWorldSession } from './world-npc-session.js';
@@ -121,13 +122,13 @@
       const resolvedRevision = state.revision, resolvedReport = report;
       await lifeShell.openWindow('report', opener);
       if (state.revision === resolvedRevision && report === resolvedReport && activeWindow === 'report') {
-        lifeStatus = `Week ${resolvedReport!.week} report ready.`;
+        lifeStatus = `${formatLifeWeek(resolvedReport!.week)} report ready.`;
       }
     }
   }
   function nextLifeWeek(): void {
     if (state.phase !== 'report') return;
-    if (command('NEXT_WEEK')) lifeStatus = `Planning week ${state.world.week}. Previous report retained.`;
+    if (command('NEXT_WEEK')) lifeStatus = `Planning ${formatLifeWeek(state.world.week)}. Previous report retained.`;
   }
   async function openLifeCity(): Promise<void> {
     destination = 'city';
@@ -234,10 +235,25 @@
       <p>{player!.character.name}</p><p>Leader of Haven</p>
     {/snippet}
     {#snippet city()}
-      <details class="card"><summary>Food requirements</summary>
-        <h3>Current inventory</h3>
-        <dl><div><dt>Food stock</dt><dd data-testid="trial-stock-food">{units(settlement.inventory.food)}</dd></div></dl>
-      </details>
+      <section class="card" aria-label="City Requirements">
+        <h3>City Requirements</h3>
+        {#if report}<p>Last resolved week: {formatLifeWeek(report.week)}</p>
+        {:else}<p>No resolved week yet</p>{/if}
+        <div class="requirements-strip">
+          <div>
+            <h4>Food</h4>
+            {#if report}<p data-testid="life-requirement-food">{units(report.foodConsumedMilli)} / {units(report.foodDemandMilli)} · {formatFulfillment(report.foodConsumedMilli, report.foodDemandMilli)}</p>{/if}
+            <details><summary>Food requirements</summary>
+              <h3>Current inventory</h3>
+              <dl><div><dt>Food stock</dt><dd data-testid="trial-stock-food">{units(settlement.inventory.food)}</dd></div></dl>
+            </details>
+          </div>
+          <div>
+            <h4>Goods</h4>
+            {#if report}<p data-testid="life-requirement-goods">{units(report.goods.servedMilli)} / {units(report.goods.demandMilli)} · {formatFulfillment(report.goods.servedMilli, report.goods.demandMilli)}</p>{/if}
+          </div>
+        </div>
+      </section>
       {#if npcs && outside}
       <CharacterLifeCity bind:this={lifeCity} {state} {npcs} {selectedId} bind:typeId bind:workers {workforceError} {managementError} {outside}
         onselect={id => { selectTile(id); void openLifeCity(); }} onworkersinput={() => { workforceError = ''; }} oncommand={command} />
@@ -453,6 +469,8 @@
   :focus-visible { outline: 3px solid var(--accent-blue); outline-offset: 3px; } [role='alert'] { padding: 12px; border-left: 3px solid var(--accent-red); }
   #trial-management-error { scroll-margin-block: 1px; }
   .player { overflow-wrap: anywhere; }
+  .requirements-strip { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .requirements-strip > div { min-width: 0; overflow-wrap: anywhere; }
   .ledger { overflow-x: auto; } table { width: 100%; border-collapse: collapse; } th, td { padding: 8px; text-align: right; border-bottom: 1px solid var(--border-color); } th:first-child { text-align: left; }
   @media(max-width: 750px) { .layout { grid-template-columns: 1fr; } .stocks { grid-template-columns: repeat(3, 1fr); } main { padding: 12px; } }
 </style>

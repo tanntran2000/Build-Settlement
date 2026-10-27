@@ -250,6 +250,9 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 812 
         else await expect(nav.locator('[aria-current="page"]')).toHaveText(dest[0].toUpperCase() + dest.slice(1));
         for (const hidden of await shell.locator('[data-life-view][hidden]').all()) await expect(hidden).toHaveCSS('display', 'none');
         if (dest === 'city') {
+          await keyActivate(page, page.getByText('Food requirements', { exact: true }));
+          await expect(page.getByRole('region', { name: 'City Requirements', exact: true }).getByRole('heading', { name: 'Current inventory', exact: true })).toBeVisible();
+          await capture();
           await keyActivate(page, page.getByTestId('trial-tile-field-1'));
           await keyActivate(page, page.getByRole('region', { name: 'Outside world', exact: true }).locator('summary'));
           await expect(page.getByRole('region', { name: 'Outside world', exact: true }).getByText('Exploration is not available yet.', { exact: true })).toBeVisible();
@@ -303,7 +306,7 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 812 
       await keyGo(page, 'city'); await capture(); await keyGo(page, 'characters'); await capture();
       await keyGo(page, 'session'); await capture(); await keyGo(page, 'reports');
       await keyActivate(page, page.getByRole('button', { name: 'Plan next week', exact: true })); await capture();
-      expect(await turnStatuses(page)).toEqual(['Week 1 report ready.', 'Planning week 2. Previous report retained.']);
+      expect(await turnStatuses(page)).toEqual(['Week 1 · Year 1 report ready.', 'Planning Week 2 · Year 1. Previous report retained.']);
       const path = info.outputPath('measurements.json');
       await writeFile(path, JSON.stringify({ method: 'CSS viewport widths; no calibrated zoom or screen-reader claim', measurements, tabCounts, focus, failures }, null, 2));
       await info.attach('measurements', { path, contentType: 'application/json' });
@@ -366,6 +369,12 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 812 
         }
         expect(columns.length, `ledger column ${column} reachable unclipped`).toBe(column + 1);
       }
+      await go(page, 'city');
+      const requirements = page.getByRole('region', { name: 'City Requirements', exact: true });
+      await expect(requirements).toBeVisible();
+      await expect(requirements.getByText(/^Last resolved week:/)).toBeVisible();
+      await expect(requirements.getByTestId('trial-stock-food')).toBeVisible();
+      await capture();
       const path = info.outputPath('reflow.json');
       await writeFile(path, JSON.stringify({ measurements, sizes, columns, failures }, null, 2));
       await info.attach('reflow', { path, contentType: 'application/json' });

@@ -3,6 +3,7 @@
   import { weeklyWorkforceMilli, type TileTrialState, type TileTrialReport } from '@haven/core';
   import { CITY_DESIGN } from '@haven/content';
   import { formatMilli } from './milli-format.js';
+  import { formatLifeWeek } from './life-calendar.js';
   import type { LifeDestination, LifeWindow } from './character-life-navigation.js';
 
   export let state: TileTrialState;
@@ -57,14 +58,14 @@
 <main lang="en" data-testid="life-shell" data-revision={state.revision}>
   <aside class="card" aria-label="Life status and navigation">
     <h1>Character Life</h1>
-    <p>Week {state.world.week} · {locked ? 'Report' : 'Planning'}</p>
+    <p>{formatLifeWeek(state.world.week)} · {locked ? 'Report' : 'Planning'}</p>
     <button data-testid="life-end-week" aria-disabled={locked} onclick={event => onendweek(event.currentTarget)}>{locked ? 'Report open — Plan next week in Report' : 'End Week'}</button>
     {#if unapplied.length}
       <p>Unapplied changes ({unapplied.length})</p>
       {#each unapplied as entry (entry.id)}<button onclick={entry.onopen}>{entry.label}</button>{/each}
       <p>End Week uses applied settings only. Unapplied changes are not applied, and workforce input resets after the week.</p>
     {/if}
-    {#if locked}<p>{report ? `Week ${report.week} report open. ` : ''}Choose Plan next week in Report before changing the plan.</p>{/if}
+    {#if locked}<p>{report ? `${formatLifeWeek(report.week)} report open. ` : ''}Choose Plan next week in Report before changing the plan.</p>{/if}
     <p role={activeWindow ? undefined : 'status'} aria-live={activeWindow ? undefined : 'polite'} aria-atomic="true">{status}</p>
     {#if error}<p data-life-error role={activeWindow ? undefined : 'alert'} aria-hidden={activeWindow ? true : undefined}>{error}</p>{/if}
     <nav aria-label="Main">
