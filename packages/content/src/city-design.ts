@@ -4,6 +4,7 @@ export const CITY_DESIGN = {
     { label: "Makers", name: "The Makers’ Union", duties: "Production, building and maintenance." },
     { label: "Luminaries", name: "The Luminary Circle", duties: "Research, education, planning and technical standards." },
     { label: "Merchants", name: "The Mercantile League", duties: "Trade and distribution." },
+    { label: "The Bound", name: "", duties: "Lower resident stratum." },
   ],
   groupInfluence: "All three groups contribute to shared Happiness, Security and Corruption through conditions, buildings and future effects. No group owns a single Status; Merchants have no intrinsic corruption.",
   inventory: {
