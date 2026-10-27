@@ -37,6 +37,9 @@
 </script>
 
 <div class="profile">
+  <div class="full-body" role="group" aria-label="Full-body character display">
+    <p>Character artwork unavailable.</p>
+  </div>
   <div role="tablist" aria-label={`${c.name} profile`}>
     {#each tabs as tab, i}
       <button bind:this={buttons[i]} id={`${id}-tab-${tab.id}`} role="tab" aria-selected={area === tab.id} aria-controls={`${id}-panel`} tabindex={area === tab.id ? 0 : -1}
@@ -87,6 +90,7 @@
 <style>
   /* Long unbroken names and labels wrap inside the card instead of widening it. */
   .profile { margin: 8px 0; min-width: 0; overflow-wrap: anywhere; } [role='tablist'] { display: flex; flex-wrap: wrap; gap: 4px; }
+  .full-body { box-sizing: border-box; display: grid; place-items: center; width: min(100%, 15rem); min-height: 22.5rem; margin: 0 auto 12px; padding: 16px; border: 1px dashed var(--border-color); border-radius: 6px; background: var(--bg-tertiary); text-align: center; }
   button { font: inherit; border-radius: 6px; padding: 6px 8px; border: 1px solid var(--border-color); background: var(--bg-tertiary); color: var(--text-main); cursor: pointer; }
   [role='tab'][aria-selected='true'] { background: var(--accent-green); color: #000; }
   dl { display: grid; gap: 4px; margin: 8px 0; } dl div { display: flex; gap: 8px; } dt { color: var(--text-muted); min-width: 9rem; } dd { margin: 0; min-width: 0; }

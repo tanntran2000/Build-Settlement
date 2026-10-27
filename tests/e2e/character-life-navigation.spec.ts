@@ -248,6 +248,91 @@ for (const name of cityWindowNames) {
   });
 }
 
+for (const width of [375, 1280]) {
+  test(`full-body placeholder preserves profile disclosure at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 812 });
+    const session = makeLife();
+    session.player.profile.private = { intimateHistory: { value: 'some', disclosure: 'known' } };
+    session.profiles[1].appearance.measurements = { chestCm: 63, waistCm: 47, hipsCm: 169, disclosure: 'unknown' };
+    session.profiles[1].private = { intimateHistory: { value: 'some', disclosure: 'unknown' } };
+    await page.goto('/?mode=world-life'); await importLife(page, session);
+    let staticMarkup: string | undefined;
+    for (const id of ['player', ...session.npcs.map(n => n.character.id)]) {
+      const win = await selectPerson(page, id);
+      await selectArea(page, 'Description'); await expectOneCharacterWindow(page);
+      await expect(charactersView(page).getByRole('navigation', { name: 'Character roster', exact: true }).getByRole('button')).toHaveCount(4);
+      const placeholder = win.getByRole('group', { name: 'Full-body character display', exact: true });
+      await expect(placeholder).toBeVisible();
+      await expect(placeholder).toHaveText('Character artwork unavailable.');
+      await expect(page.getByText('Character artwork unavailable.', { exact: true })).toHaveCount(1);
+      expect(await placeholder.evaluate(el => !!el.closest('[role="tabpanel"]'))).toBe(false);
+      await expect(win.getByRole('tabpanel').getByText('Character artwork unavailable.', { exact: true })).toHaveCount(0);
+      await expect(win.locator('img,svg,canvas,[role="img"],[data-slot]')).toHaveCount(0);
+      await expect(placeholder.locator('button,input,select,a,[tabindex]')).toHaveCount(0);
+      const markup = await placeholder.evaluate(el => el.outerHTML);
+      if (staticMarkup === undefined) staticMarkup = markup;
+      expect(markup).toBe(staticMarkup);
+      const details = win.locator('details').filter({ hasText: 'Private (adult)' });
+      await expect(details).not.toHaveAttribute('open', /.*/);
+      await details.locator('summary').click();
+      await expect(details.getByText(`Intimate history: ${id === 'player' ? 'Some' : id === 'npc_starter_2' ? 'Unknown' : 'Not recorded'}`, { exact: true })).toBeVisible();
+      if (id === 'npc_starter_2') {
+        await expect(win.getByRole('definition').filter({ hasText: /^Unknown$/ })).not.toHaveCount(0);
+        expect(await win.locator('.profile').evaluate(el => el.outerHTML)).not.toMatch(/\b(?:63|47|169)\b/);
+        await expect(details.getByText('Intimate history: Some', { exact: true })).toHaveCount(0);
+      }
+      for (const area of ['Description', 'Inventory', 'Work', 'Relations']) {
+        await selectArea(page, area);
+        await expect(placeholder).toBeVisible();
+        expect(await placeholder.evaluate(el => el.outerHTML)).toBe(staticMarkup);
+      }
+      const bounds = await placeholder.evaluate(el => {
+        const box = el.getBoundingClientRect(), card = el.closest('.card')!.getBoundingClientRect();
+        const range = document.createRange(); range.selectNodeContents(el);
+        const text = range.getBoundingClientRect();
+        return { left: box.left, right: box.right, width: box.width, height: box.height, cardLeft: card.left, cardRight: card.right,
+          viewport: innerWidth, textLeft: text.left, textRight: text.right, clientWidth: el.clientWidth, scrollWidth: el.scrollWidth };
+      });
+      expect(bounds.height).toBeGreaterThanOrEqual(300);
+      expect(bounds.height).toBeGreaterThan(bounds.width);
+      expect(bounds.left).toBeGreaterThanOrEqual(bounds.cardLeft);
+      expect(bounds.right).toBeLessThanOrEqual(Math.min(bounds.cardRight, bounds.viewport));
+      expect(bounds.textLeft).toBeGreaterThanOrEqual(bounds.left);
+      expect(bounds.textRight).toBeLessThanOrEqual(bounds.right);
+      expect(bounds.scrollWidth).toBeLessThanOrEqual(bounds.clientWidth);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    }
+    expect(await exportLife(page)).toEqual(session);
+  });
+}
+
+test('age-17 checkpoint rejection preserves the valid profile and open adult disclosure', async ({ page }) => {
+  const initial = makeLife();
+  initial.player.profile.private = { intimateHistory: { value: 'some', disclosure: 'known' } };
+  await page.goto('/?mode=world-life'); await importLife(page, initial);
+  await selectPerson(page, 'player');
+  const disclosure = characterWindow(page).locator('details').filter({ hasText: 'Private (adult)' });
+  await disclosure.locator('summary').click();
+  const handle = (await disclosure.elementHandle())!;
+  for (const role of ['player', 'npc']) {
+    const invalid = JSON.parse(encodedLife(initial));
+    const character = role === 'player' ? invalid.state.player.character : invalid.state.npcs[0].character;
+    const profile = role === 'player' ? invalid.state.player.profile : invalid.state.profiles[0];
+    character.age = 17; character.name = 'RejectedMinor';
+    delete profile.private; delete profile.traits.intimacyKnowledge;
+    await go(page, 'session'); const before = await lifeUiSnapshot(page);
+    await putFile(page, JSON.stringify(invalid));
+    await expect(page.getByTestId('life-shell').locator('[data-life-error][role="alert"]')).toHaveText('Checkpoint must contain a valid complete Character Life session in Planning.');
+    await expectCheckpointRejectionPreservesUi(page, before, initial.city.world.week);
+    expect(await handle.evaluate(el => el.isConnected && el.hasAttribute('open'))).toBe(true);
+    await expect(page.getByText('RejectedMinor', { exact: false })).toHaveCount(0);
+    await go(page, 'characters'); await expectOneCharacterWindow(page);
+    await expect(characterWindow(page)).toHaveAttribute('data-character-id', 'player');
+    await expect(disclosure.getByText('Intimate history: Some', { exact: true })).toBeVisible();
+  }
+  expect(await exportLife(page)).toEqual(initial);
+});
+
 test('one character window remembers areas and closes new-person disclosures', async ({ page }) => {
   await page.goto('/?mode=world-life');
   const session = makeLife();
