@@ -31,8 +31,9 @@ export async function keyActivate(page: Page, target: Locator) {
 }
 
 export async function keyGo(page: Page, destination: LifeDestination) {
-  await keyActivate(page, page.locator(`#life-nav-${destination}`));
-  await expect(page.locator(`[data-life-view="${destination}"]`)).toBeVisible();
+  if (await page.locator('dialog:modal').count()) await keyActivate(page, page.getByRole('dialog').getByRole('button', { name: 'Close', exact: true }));
+  await keyActivate(page, page.locator(`#life-nav-${destination === 'reports' ? 'report' : destination}`));
+  await expect(destination === 'reports' ? page.getByRole('dialog', { name: 'Report', exact: true }) : page.locator(`[data-life-view="${destination}"]`)).toBeVisible();
 }
 
 export async function keyText(page: Page, target: Locator, value: string) {
@@ -50,15 +51,17 @@ export async function keyPost(page: Page, target: Locator, value: string) {
 }
 
 export async function watchTurnStatus(page: Page) {
-  await page.getByTestId('life-shell').locator('aside > [role="status"]').evaluate(node => {
+  await page.locator('#life-modal-status').evaluate(node => {
     const texts: string[] = [];
-    (node as HTMLElement & { mutations: string[] }).mutations = texts;
-    new MutationObserver(() => texts.push(node.textContent ?? '')).observe(node, { childList: true, characterData: true, subtree: true });
+    const modal: boolean[] = [];
+    const watched = node as HTMLElement & { mutations: string[]; modalAtMutation: boolean[] };
+    watched.mutations = texts; watched.modalAtMutation = modal;
+    new MutationObserver(() => { texts.push(node.textContent ?? ''); modal.push(!!node.closest('dialog:modal')); }).observe(node, { childList: true, characterData: true, subtree: true });
   });
 }
 
 export async function turnStatuses(page: Page) {
-  return page.getByTestId('life-shell').locator('aside > [role="status"]').evaluate(node => (node as HTMLElement & { mutations: string[] }).mutations);
+  return page.locator('#life-modal-status').evaluate(node => (node as HTMLElement & { mutations: string[] }).mutations);
 }
 export async function selectPerson(page: Page, id: string) {
   await go(page, 'characters');
@@ -83,9 +86,10 @@ export async function expectOneCharacterWindow(page: Page) {
 }
 
 export async function go(page: Page, destination: LifeDestination): Promise<void> {
-  const name = destination[0].toUpperCase() + destination.slice(1);
+  if (await page.locator('dialog:modal').count()) await page.getByRole('dialog').getByRole('button', { name: 'Close', exact: true }).click();
+  const name = destination === 'reports' ? 'Report' : destination[0].toUpperCase() + destination.slice(1);
   await page.getByRole('navigation', { name: 'Main', exact: true }).getByRole('button', { name, exact: true }).click();
-  await expect(page.locator(`[data-life-view="${destination}"]`)).toBeVisible();
+  await expect(destination === 'reports' ? page.getByRole('dialog', { name: 'Report', exact: true }) : page.locator(`[data-life-view="${destination}"]`)).toBeVisible();
 }
 
 export async function importLife(page: Page, session: CharacterLifeSessionState): Promise<void> {
@@ -155,7 +159,7 @@ export function reportFixture(kind: 'shortage' | 'zero' | 'precision' | 'service
   return s;
 }
 
-export const reportRegion = (page: Page) => page.locator('[data-life-view="reports"] [aria-label="Weekly city report"]');
+export const reportRegion = (page: Page) => page.locator('[data-life-window="report"] [aria-label="Weekly city report"]');
 
 // Read the complete report from rendered text, including the calculation disclosure.
 export async function expectReport(page: Page, expected: Readonly<TileTrialReport>): Promise<TileTrialReport> {
@@ -225,7 +229,7 @@ export async function lifeUiSnapshot(page: Page) {
   await expect(page.locator('[aria-label="Error log"] [role="status"]').filter({ hasText: /^Saving recent errors/ })).toHaveCount(0);
   return page.getByTestId('life-shell').evaluate(shell => {
     const copy = shell.cloneNode(true) as HTMLElement;
-    copy.querySelectorAll(':scope > aside > [role="alert"], [aria-label="Planning checkpoints"] [role="status"]').forEach(node => node.remove());
+    copy.querySelectorAll('[data-life-error], [aria-label="Planning checkpoints"] [role="status"]').forEach(node => node.remove());
     return {
       markup: copy.outerHTML,
       controls: [...shell.querySelectorAll('input:not([type="file"]),select')].map(node => ({ id: node.id, value: (node as HTMLInputElement).value, disabled: (node as HTMLInputElement).disabled })),
@@ -234,10 +238,10 @@ export async function lifeUiSnapshot(page: Page) {
 }
 
 // A current rejection may log exactly one RUNTIME/INVALID_COMMAND; superseded reads get no exception.
-export async function expectCheckpointRejectionPreservesUi(page: Page, before: Awaited<ReturnType<typeof lifeUiSnapshot>>) {
+export async function expectCheckpointRejectionPreservesUi(page: Page, before: Awaited<ReturnType<typeof lifeUiSnapshot>>, expectedAbsoluteWeek: number) {
   const after = await lifeUiSnapshot(page);
   const { version } = JSON.parse(await readFile(new URL('../../packages/ui/package.json', import.meta.url), 'utf8'));
-  const normalized = await page.evaluate(({ before, after, version }) => {
+  const normalized = await page.evaluate(({ before, after, version, expectedAbsoluteWeek }) => {
     const prior = document.createElement('div'), current = document.createElement('div');
     prior.innerHTML = before; current.innerHTML = after;
     const oldLog = prior.querySelector('[aria-label="Error log"]')!, newLog = current.querySelector('[aria-label="Error log"]')!;
@@ -254,8 +258,7 @@ export async function expectCheckpointRejectionPreservesUi(page: Page, before: A
     check(!!last, 'missing checkpoint entry');
     const paragraphs = [...last.children];
     check(paragraphs.length === 5 && paragraphs.every(node => node.tagName === 'P'), 'entry structure');
-    const week = current.querySelector('aside > p')!.textContent!.match(/^Week (\d+)/)![1];
-    const heading = 'validation · INVALID_COMMAND', message = 'The action input was rejected. Check the form and try again.', context = `weekly · RUNTIME · Week ${week}`;
+    const heading = 'validation · INVALID_COMMAND', message = 'The action input was rejected. Check the form and try again.', context = `weekly · RUNTIME · Week ${expectedAbsoluteWeek}`;
     check(paragraphs[0].textContent === heading && paragraphs[1].textContent === message && paragraphs[2].textContent === context, 'checkpoint code/message/context');
     const times = [...last.querySelectorAll('time')];
     check(times.length === 2 && times.every(node => node.textContent === node.getAttribute('datetime')), 'UTC representation');
@@ -303,6 +306,6 @@ export async function expectCheckpointRejectionPreservesUi(page: Page, before: A
     // Replace only after independently verifying every permitted log change and all unrelated history/UI.
     newLog.replaceWith(oldLog.cloneNode(true));
     return current.firstElementChild!.outerHTML;
-  }, { before: before.markup, after: after.markup, version });
+  }, { before: before.markup, after: after.markup, version, expectedAbsoluteWeek });
   expect({ ...after, markup: normalized }).toEqual(before);
 }

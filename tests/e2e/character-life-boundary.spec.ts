@@ -135,9 +135,16 @@ async function uiParity(page: Page, o: Observation, fullReport: Readonly<TileTri
   const shell = page.getByTestId('life-shell');
   await expect(shell).toHaveAttribute('data-revision', String(o.revision));
   await expect(shell.locator('aside').getByText(/^Week \d+ ·/)).toHaveText(`Week ${o.week} · ${title(o.phase)}`);
-  await expect(shell.locator('aside').getByText(/^\d+ residents/)).toHaveText(`${s.residents} residents · Workforce ${s.assignedWorkers} / ${formatMilli(s.workforceMilli)} assigned / available`);
-  for (const key of WEEKLY_RESOURCE_KEYS) await expect(page.getByTestId(`trial-stock-${key}`)).toHaveText(formatMilli(s.stocks[key]));
+  await page.locator('#life-nav-information').click();
+  for (const key of WEEKLY_RESOURCE_KEYS.filter(key => key !== 'food')) await expect(page.getByTestId(`trial-stock-${key}`)).toHaveText(formatMilli(s.stocks[key]));
   await expect(region(page, 'City stocks').locator('p strong')).toHaveText(String(s.happiness));
+  await go(page, 'city');
+  await page.locator('#life-nav-population').click();
+  await expect(page.getByRole('dialog', { name: 'Population', exact: true }).getByText(/^\d+ residents/)).toHaveText(`${s.residents} residents · Workforce ${s.assignedWorkers} / ${formatMilli(s.workforceMilli)} assigned / available`);
+  await go(page, 'city');
+  const food = page.locator('[data-life-view="city"] details').filter({ has: page.getByText('Food requirements', { exact: true }) });
+  if (await food.getAttribute('open') === null) await food.locator('summary').click();
+  await expect(food.getByTestId('trial-stock-food')).toHaveText(formatMilli(s.stocks.food));
   const outside = o.outside;
   const disclosure = region(page, 'Outside world').locator('details');
   if (await disclosure.getAttribute('open') === null) await disclosure.locator('summary').click();

@@ -1,5 +1,6 @@
 import { test, expect, type Page } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
+import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
 import { characterWindow, charactersView, expectCheckpointRejectionPreservesUi, expectOneCharacterWindow, exportLife, go, importLife, lifeUiSnapshot, makeLife, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
 
 const KEY = 'haven.character-life-session.checkpoint.v1';
@@ -350,6 +351,9 @@ test('Life report and checkpoint operations preserve every other-mode slot byte-
 test('Import during Report shows "Choose Plan next week before importing."', async ({ page }) => {
   await startGame(page);
   const text = await exportText(page, /^haven-world-life-week-\d+\.json$/);
+  const saved = JSON.parse(text).state;
+  const resolved = executeCharacterLifeCommand(saved, { type: 'END_WEEK', expectedRevision: saved.city.revision, expectedWeek: saved.city.world.week });
+  if (!resolved.success) throw Error(resolved.error.message);
   await page.getByTestId('life-end-week').click();
   await expect(button(page, 'Plan next week')).toHaveAttribute('aria-disabled', 'false');
   await go(page, 'session');
@@ -358,7 +362,7 @@ test('Import during Report shows "Choose Plan next week before importing."', asy
   const before = await lifeUiSnapshot(page);
   await importFile(page, text);
   await expect(page.getByRole('alert')).toHaveText('Choose Plan next week before importing.');
-  await expectCheckpointRejectionPreservesUi(page, before);
+  await expectCheckpointRejectionPreservesUi(page, before, resolved.next.city.world.week);
   await go(page, 'characters');
   await expect(playerRegion(page).getByRole('heading', { name: 'Ana', exact: true })).toBeVisible();
 });

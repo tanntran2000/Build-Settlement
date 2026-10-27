@@ -4,7 +4,7 @@
   import CharacterLifeCity from './CharacterLifeCity.svelte';
   import CharacterLifeCharacters from './CharacterLifeCharacters.svelte';
   import SoloWeekReport from './SoloWeekReport.svelte';
-  import type { LifeDestination, PostDraftEntry } from './character-life-navigation.js';
+  import type { LifeDestination, LifeWindow, PostDraftEntry } from './character-life-navigation.js';
   import { createNpcWorldSession, createTileTrialState, createWorldSession, isLiveCharacterLifeSessionState, summarizeOutside, weeklyWorkforceMilli, WEEKLY_RESOURCE_KEYS, TRIAL_BUILDINGS, TILE_TRIAL_BALANCE as B, LEGACY_TILE_RULESET, POPULATION_TILE_RULESET, type OutsideWorldState, type NpcWorldSessionState, type WorldNpc, type TileTrialRuleset, type TileTrialReport, type CharacterLifeSessionState, type CharacterProfile as Profile, type PlayerCharacter } from '@haven/core';
   import { executeCharacterLifeCommand, executeTileTrialCommand, executeWorldNpcCityCommand } from '@haven/simulation';
   import { serializeTileTrialSave, deserializeTileTrialSave, serializeWorldSessionSave, deserializeWorldSessionSave, serializeNpcWorldSessionSave, deserializeNpcWorldSessionSave, serializeCharacterLifeSave, deserializeCharacterLifeSave, TILE_SAVE_MAX_BYTES } from '@haven/persistence';
@@ -33,6 +33,8 @@
   let workforceError = '';
   let managementError: { action: string; message: string } | null = null;
   let destination: LifeDestination = 'city';
+  let activeWindow: LifeWindow = null;
+  let lifeShell: CharacterLifeShell;
   let lifeStatus = '';
   let lifeCity: CharacterLifeCity;
   let lifeCharacters: CharacterLifeCharacters;
@@ -112,11 +114,15 @@
     error = '';
     return true;
   }
-  function endLifeWeek(): void {
+  async function endLifeWeek(opener: HTMLButtonElement): Promise<void> {
     if (state.phase !== 'planning') return;
     if (command('END_WEEK', { expectedWeek: state.world.week })) {
-      destination = 'reports';
-      lifeStatus = `Week ${report!.week} report ready.`;
+      lifeStatus = '';
+      const resolvedRevision = state.revision, resolvedReport = report;
+      await lifeShell.openWindow('report', opener);
+      if (state.revision === resolvedRevision && report === resolvedReport && activeWindow === 'report') {
+        lifeStatus = `Week ${resolvedReport!.week} report ready.`;
+      }
     }
   }
   function nextLifeWeek(): void {
@@ -173,6 +179,7 @@
     report = null; workers = nextWorkers;
     if (lifeMode) {
       uiEpoch++; postDrafts = []; destination = 'city'; lifeStatus = '';
+      lifeShell.closeWindow();
       void focusLifeCityNavigation();
     }
     errorLog.setContext('weekly', { week: state.world.week });
@@ -222,8 +229,15 @@
 </script>
 
 {#if lifeMode && outside && npcs && player && profiles}
-  <CharacterLifeShell {state} {report} bind:destination {error} status={lifeStatus} {unapplied} onendweek={endLifeWeek}>
+  <CharacterLifeShell bind:this={lifeShell} {state} {report} bind:destination bind:activeWindow {error} status={lifeStatus} {unapplied} onendweek={endLifeWeek}>
+    {#snippet playerInfo()}
+      <p>{player!.character.name}</p><p>Leader of Haven</p>
+    {/snippet}
     {#snippet city()}
+      <details class="card"><summary>Food requirements</summary>
+        <h3>Current inventory</h3>
+        <dl><div><dt>Food stock</dt><dd data-testid="trial-stock-food">{units(settlement.inventory.food)}</dd></div></dl>
+      </details>
       {#if npcs && outside}
       <CharacterLifeCity bind:this={lifeCity} {state} {npcs} {selectedId} bind:typeId bind:workers {workforceError} {managementError} {outside}
         onselect={id => { selectTile(id); void openLifeCity(); }} onworkersinput={() => { workforceError = ''; }} oncommand={command} />
