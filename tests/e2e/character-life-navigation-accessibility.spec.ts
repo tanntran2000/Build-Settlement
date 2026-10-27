@@ -322,6 +322,13 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 812 
       await page.goto('/?mode=world-life'); await importLife(page, session);
       const failures: string[] = [], measurements: Measurement[] = [];
       const capture = async () => { const m = await measure(page.getByTestId('life-shell')); measurements.push(m); audit(m, failures); };
+      for (const name of ['Information', 'Player', 'Population']) {
+        await keyActivate(page, page.getByRole('navigation', { name: 'Main', exact: true }).getByRole('button', { name, exact: true }));
+        const dialog = page.getByRole('dialog', { name, exact: true });
+        await expect(dialog).toBeVisible();
+        await capture();
+        await keyActivate(page, dialog.getByRole('button', { name: 'Close', exact: true }));
+      }
       for (const dest of ['city', 'characters', 'reports', 'session', 'help'] as const) {
         await go(page, dest);
         if (dest !== 'characters' && dest !== 'reports') for (const summary of await page.locator(`[data-life-view="${dest}"] summary`).all()) await summary.click();
