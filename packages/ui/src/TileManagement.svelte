@@ -235,22 +235,29 @@
       <p>{player!.character.name}</p><p>Leader of Haven</p>
     {/snippet}
     {#snippet city()}
-      <section class="card" aria-label="City Requirements">
-        <h3>City Requirements</h3>
+      <section class="card life-requirements" aria-label="City Requirements">
+        <header><h3>City Requirements</h3>
         {#if report}<p>Last resolved week: {formatLifeWeek(report.week)}</p>
         {:else}<p>No resolved week yet</p>{/if}
+        </header>
         <div class="requirements-strip">
           <div>
-            <h4>Food</h4>
-            {#if report}<p data-testid="life-requirement-food">{units(report.foodConsumedMilli)} / {units(report.foodDemandMilli)} · {formatFulfillment(report.foodConsumedMilli, report.foodDemandMilli)}</p>{/if}
+            {#if report}
+              {@const fulfillment = formatFulfillment(report.foodConsumedMilli, report.foodDemandMilli)}
+              <div class="requirement-heading"><h4>Food</h4><p data-testid="life-requirement-food">{units(report.foodConsumedMilli)} / {units(report.foodDemandMilli)} · {fulfillment}</p></div>
+              {#if fulfillment.endsWith('%')}<div class="fulfillment-track" data-fulfillment-track="food" aria-hidden="true"><span style:width={fulfillment}></span></div>{/if}
+            {:else}<h4>Food</h4>{/if}
             <details><summary>Food requirements</summary>
               <h3>Current inventory</h3>
               <dl><div><dt>Food stock</dt><dd data-testid="trial-stock-food">{units(settlement.inventory.food)}</dd></div></dl>
             </details>
           </div>
           <div>
-            <h4>Goods</h4>
-            {#if report}<p data-testid="life-requirement-goods">{units(report.goods.servedMilli)} / {units(report.goods.demandMilli)} · {formatFulfillment(report.goods.servedMilli, report.goods.demandMilli)}</p>{/if}
+            {#if report}
+              {@const fulfillment = formatFulfillment(report.goods.servedMilli, report.goods.demandMilli)}
+              <div class="requirement-heading"><h4>Goods</h4><p data-testid="life-requirement-goods">{units(report.goods.servedMilli)} / {units(report.goods.demandMilli)} · {fulfillment}</p></div>
+              {#if fulfillment.endsWith('%')}<div class="fulfillment-track" data-fulfillment-track="goods" aria-hidden="true"><span style:width={fulfillment}></span></div>{/if}
+            {:else}<h4>Goods</h4>{/if}
           </div>
         </div>
       </section>
@@ -471,6 +478,18 @@
   .player { overflow-wrap: anywhere; }
   .requirements-strip { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
   .requirements-strip > div { min-width: 0; overflow-wrap: anywhere; }
+  .life-requirements { background: var(--bg-tertiary); padding: 20px; margin-bottom: 22px; }
+  .life-requirements header { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px 24px; margin-bottom: 8px; }
+  .life-requirements header p { margin: 0; color: var(--text-muted); }
+  .life-requirements h4 { color: var(--accent-green); }
+  .requirement-heading { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 4px 12px; }
+  .life-requirements p { margin: 4px 0; }
+  .life-requirements details { margin-top: 8px; }
+  .life-requirements dd { font-size: inherit; }
+  .fulfillment-track { height: 8px; background: var(--bg-primary); border-radius: 4px; overflow: hidden; margin-top: 8px; }
+  .fulfillment-track span { display: block; height: 100%; background: var(--accent-green); }
+  @media(min-width: 1440px) { .life-requirements { min-height: 172px; padding: 16px 28px; } .requirements-strip { gap: 40px; } }
+  @media(max-width: 500px) { .requirements-strip { grid-template-columns: minmax(0, 1fr); } .life-requirements { padding: 16px; } }
   .ledger { overflow-x: auto; } table { width: 100%; border-collapse: collapse; } th, td { padding: 8px; text-align: right; border-bottom: 1px solid var(--border-color); } th:first-child { text-align: left; }
   @media(max-width: 750px) { .layout { grid-template-columns: 1fr; } .stocks { grid-template-columns: repeat(3, 1fr); } main { padding: 12px; } }
 </style>

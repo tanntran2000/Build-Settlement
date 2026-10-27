@@ -87,8 +87,7 @@ export async function expectOneCharacterWindow(page: Page) {
 
 export async function go(page: Page, destination: LifeDestination): Promise<void> {
   if (await page.locator('dialog:modal').count()) await page.getByRole('dialog').getByRole('button', { name: 'Close', exact: true }).click();
-  const name = destination === 'reports' ? 'Report' : destination[0].toUpperCase() + destination.slice(1);
-  await page.getByRole('navigation', { name: 'Main', exact: true }).getByRole('button', { name, exact: true }).click();
+  await page.locator(`#life-nav-${destination === 'reports' ? 'report' : destination}`).click();
   await expect(destination === 'reports' ? page.getByRole('dialog', { name: 'Report', exact: true }) : page.locator(`[data-life-view="${destination}"]`)).toBeVisible();
 }
 
@@ -157,6 +156,7 @@ export async function expectRequirements(page: Page, report: Readonly<TileTrialR
   if (!report) {
     await expect(strip.getByText('No resolved week yet', { exact: true })).toBeVisible();
     expect(await strip.textContent()).not.toContain('%');
+    await expect(strip.locator('[data-fulfillment-track]')).toHaveCount(0);
     return;
   }
   const label = strip.getByText(/^Last resolved week:/);
@@ -164,7 +164,15 @@ export async function expectRequirements(page: Page, report: Readonly<TileTrialR
   for (const [key, supplied, demand] of [['food', report.foodConsumedMilli, report.foodDemandMilli], ['goods', report.goods.servedMilli, report.goods.demandMilli]] as const) {
     const row = strip.getByTestId(`life-requirement-${key}`);
     await expect(row).toHaveText(`${reportUnits(supplied)} / ${reportUnits(demand)} · ${reportFulfillment(supplied, demand)}`);
-    if (demand === 0) expect(await row.textContent()).not.toContain('%');
+    const track = strip.locator(`[data-fulfillment-track="${key}"]`);
+    if (demand === 0) {
+      expect(await row.textContent()).not.toContain('%');
+      await expect(track).toHaveCount(0);
+    } else {
+      await expect(track).toHaveAttribute('aria-hidden', 'true');
+      await expect(track).toHaveCSS('height', '8px');
+      expect(await track.locator('span').evaluate(node => node.style.width)).toBe(reportFulfillment(supplied, demand));
+    }
   }
 }
 
