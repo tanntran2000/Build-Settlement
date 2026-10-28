@@ -1,0 +1,369 @@
+import { describe, expect, it, vi } from 'vitest';
+import { createNamedCharacter, type NamedCharacter } from '../../domain/character.js';
+import { createNpcWorldSession, isNamedCharacterRecord, isWorldNpcList } from '../../world/npc.js';
+import * as catalog from '../catalog.js';
+import { CHARACTER_LIMITS, PLAYER_CHARACTER_ID, PLAYER_PROFESSIONS, PLACES, SKIN_TONES } from '../catalog.js';
+import type { CharacterProfile } from '../types.js';
+import { isCharacterLifeSessionState, isCharacterProfile, isLiveCharacterLifeSessionState, isPlayerCharacter } from '../validate.js';
+
+type Mutable = Record<string, any>;
+const npcSession = () => { const r = createNpcWorldSession(0); if (!r.success) throw Error(r.error.message); return r.value; };
+const base = (id: string): CharacterProfile => ({
+  id,
+  identity: { birthName: null, label: null, pronouns: 'she', birthplaceId: 'kestrel_ford', origin: { regionId: 'northreach', upbringing: 'frontier' }, currentLocationId: 'haven', biography: null },
+  traits: { attractiveness: 66, learningAptitude: 72, warmth: 34 },
+  appearance: { presentation: 'feminine', skinTone: 'light_olive', eyeColor: 'grey', hair: { color: 'brown', length: 'shoulder_length', texture: 'straight', style: 'tied_back' },
+    face: { shape: 'oval', features: ['freckles'] }, build: 'slim', heightCm: 168, weightKg: 58, outfit: 'role_default' },
+});
+const starterProfiles = (): CharacterProfile[] => {
+  const ruth = base('npc_starter_2');
+  ruth.identity = { ...ruth.identity, birthplaceId: 'tidewall', origin: { regionId: 'saltmere', upbringing: 'port_town' } };
+  ruth.appearance = { ...ruth.appearance, skinTone: 'deep_brown', eyeColor: 'brown', hair: { color: 'black', length: 'short', texture: 'straight', style: 'loose' },
+    face: { shape: 'heart_shaped', features: ['glasses'] }, build: 'average', heightCm: 174, weightKg: 70 };
+  ruth.traits = { attractiveness: 50, learningAptitude: 55, warmth: 78 };
+  const third = base('npc_starter_3');
+  third.identity = { ...third.identity, birthplaceId: 'cinder_hollow', origin: { regionId: 'ashfield', upbringing: 'city' } };
+  third.appearance = { ...third.appearance, skinTone: 'fair', eyeColor: 'green', hair: { color: 'red', length: 'long', texture: 'wavy', style: 'braided' },
+    face: { shape: 'round', features: ['high_cheekbones'] }, heightCm: 162, weightKg: 55 };
+  third.traits = { attractiveness: 72, learningAptitude: 48, warmth: 45 };
+  return [base('npc_starter_1'), ruth, third];
+};
+const playerCharacter = (over: Partial<NamedCharacter> = {}) => createNamedCharacter({ id: PLAYER_CHARACTER_ID, name: 'Ana', gender: 'other', age: 25, occupation: 'advisor', socialClass: 'common', legalStatus: 'citizen', ...over });
+const player = () => {
+  const profile = base(PLAYER_CHARACTER_ID);
+  profile.identity = { ...profile.identity, pronouns: 'they', birthName: 'Anabel', label: 'The Mechanic', biography: 'Came west after the floods.' };
+  profile.traits = { ...profile.traits, intimacyKnowledge: 40 };
+  profile.appearance = { ...profile.appearance, presentation: 'androgynous', measurements: { chestCm: 86, waistCm: 68, hipsCm: 92, disclosure: 'known' } };
+  profile.private = { intimateHistory: { value: 'some', disclosure: 'known' } };
+  return { character: playerCharacter(), profile };
+};
+const lifeSession = () => ({ ...npcSession(), player: player(), profiles: starterProfiles() });
+const character = (age = 27) => ({ ...npcSession().npcs[0].character, age });
+const profileWith = (mutate: (p: Mutable) => void, id = 'npc_starter_1') => { const p = structuredClone(base(id)) as Mutable; mutate(p); return p; };
+const valid = (mutate: (p: Mutable) => void) => isCharacterProfile(profileWith(mutate), character());
+
+describe('isCharacterProfile', () => {
+  it('accepts a valid profile for each starter', () => {
+    const npcs = npcSession().npcs, profiles = starterProfiles();
+    npcs.forEach((npc, i) => expect(isCharacterProfile(profiles[i], npc.character)).toBe(true));
+  });
+  it('accepts optional adult fields, measurements and texts on an adult', () => {
+    expect(isCharacterProfile(player().profile, playerCharacter())).toBe(true);
+    expect(valid(p => { p.appearance.measurements = { chestCm: 86, waistCm: 68, hipsCm: 92, disclosure: 'unknown' }; })).toBe(true);
+  });
+  it('rejects profile id mismatch', () => {
+    expect(isCharacterProfile(base('npc_starter_2'), character())).toBe(false);
+  });
+  it('rejects axis -0.1, 100.1, NaN, Infinity', () => {
+    for (const v of [-0.1, 100.1, NaN, Infinity, -Infinity, '50', null])
+      for (const axis of ['attractiveness', 'learningAptitude', 'warmth', 'intimacyKnowledge'])
+        expect(valid(p => { p.traits[axis] = v; })).toBe(false);
+  });
+  it('accepts axis 0, 37.5, 100', () => {
+    for (const v of [0, 37.5, 100]) expect(valid(p => { p.traits.attractiveness = v; p.traits.warmth = v; p.traits.intimacyKnowledge = v; })).toBe(true);
+  });
+  it('rejects name "  ", " Ana", 65-char label, 1001-char biography', () => {
+    for (const v of ['  ', ' Ana', 'Ana ', '', 'a'.repeat(CHARACTER_LIMITS.nameMax + 1)]) expect(valid(p => { p.identity.birthName = v; })).toBe(false);
+    expect(valid(p => { p.identity.birthName = 'a'.repeat(CHARACTER_LIMITS.nameMax); })).toBe(true);
+    expect(valid(p => { p.identity.label = 'a'.repeat(65); })).toBe(false);
+    expect(valid(p => { p.identity.label = 'a'.repeat(CHARACTER_LIMITS.labelMax + 1); })).toBe(false);
+    expect(valid(p => { p.identity.label = 'a'.repeat(CHARACTER_LIMITS.labelMax); })).toBe(true);
+    expect(valid(p => { p.identity.biography = 'a'.repeat(CHARACTER_LIMITS.biographyMax + 1); })).toBe(false);
+    expect(valid(p => { p.identity.biography = 'a'.repeat(CHARACTER_LIMITS.biographyMax); })).toBe(true);
+    // createNamedCharacter trims names, so set the raw value after creation.
+    expect(isPlayerCharacter({ ...player(), character: { ...playerCharacter(), name: ' Ana' } })).toBe(false);
+    expect(isPlayerCharacter({ ...player(), character: { ...playerCharacter(), name: '  ' } })).toBe(false);
+  });
+  it('rejects unknown skinTone, three features, duplicate features', () => {
+    expect(valid(p => { p.appearance.skinTone = 'green'; })).toBe(false);
+    expect(valid(p => { p.appearance.face.features = ['freckles', 'glasses', 'scar']; })).toBe(false);
+    expect(valid(p => { p.appearance.face.features = ['freckles', 'freckles']; })).toBe(false);
+    expect(valid(p => { p.appearance.face.features = ['freckles', 'glasses']; })).toBe(true);
+    expect(valid(p => { p.appearance.face.features = []; })).toBe(true);
+  });
+  it('rejects unknown ids in every list', () => {
+    const cases: ((p: Mutable) => void)[] = [
+      p => { p.identity.pronouns = 'it'; }, p => { p.identity.origin.regionId = 'atlantis'; }, p => { p.identity.origin.upbringing = 'castle'; },
+      p => { p.identity.currentLocationId = 'nowhere'; }, p => { p.appearance.presentation = 'other'; }, p => { p.appearance.eyeColor = 'red'; },
+      p => { p.appearance.hair.color = 'blue'; }, p => { p.appearance.hair.length = 'medium'; }, p => { p.appearance.hair.texture = 'frizzy'; },
+      p => { p.appearance.hair.style = 'mohawk'; }, p => { p.appearance.face.shape = 'triangle'; }, p => { p.appearance.face.features = ['tattoo']; },
+      p => { p.appearance.build = 'huge'; }, p => { p.appearance.outfit = 'armor'; }, p => { p.appearance.measurements = { chestCm: 86, waistCm: 68, hipsCm: 92, disclosure: 'maybe' }; },
+    ];
+    cases.forEach(c => expect(valid(c)).toBe(false));
+    expect(valid(p => { p.appearance.outfit = 'canvas_jacket'; p.identity.currentLocationId = 'tidewall'; })).toBe(true);
+  });
+  it('rejects heightCm 139, 211, 170.5', () => {
+    for (const v of [139, 211, 170.5, NaN, '170']) expect(valid(p => { p.appearance.heightCm = v; })).toBe(false);
+    for (const v of [140, 210]) expect(valid(p => { p.appearance.heightCm = v; })).toBe(true);
+    for (const v of [34, 181, 58.5]) expect(valid(p => { p.appearance.weightKg = v; })).toBe(false);
+    for (const [k, lo, hi] of [['chestCm', 60, 160], ['waistCm', 45, 150], ['hipsCm', 60, 170]] as const) {
+      for (const v of [lo - 1, hi + 1, lo + 0.5]) expect(valid(p => { p.appearance.measurements = { chestCm: 86, waistCm: 68, hipsCm: 92, disclosure: 'known', [k]: v }; })).toBe(false);
+      for (const v of [lo, hi]) expect(valid(p => { p.appearance.measurements = { chestCm: 86, waistCm: 68, hipsCm: 92, disclosure: 'known', [k]: v }; })).toBe(true);
+    }
+  });
+  it('rejects birthplace "haven"', () => {
+    expect(PLACES.find(p => p.id === 'haven')?.regionId).toBeNull();
+    expect(valid(p => { p.identity.birthplaceId = 'haven'; })).toBe(false);
+    expect(valid(p => { p.identity.birthplaceId = 'atlantis'; })).toBe(false);
+  });
+  it('rejects intimacyKnowledge or private when character.age is 17', () => {
+    const minor = character(17);
+    expect(isCharacterProfile(base('npc_starter_1'), minor)).toBe(true);
+    expect(isCharacterProfile(profileWith(p => { p.traits.intimacyKnowledge = 0; }), minor)).toBe(false);
+    expect(isCharacterProfile(profileWith(p => { p.private = { intimateHistory: { value: 'none', disclosure: 'unknown' } }; }), minor)).toBe(false);
+    expect(isCharacterProfile(profileWith(p => { p.traits.intimacyKnowledge = 0; p.private = { intimateHistory: { value: 'none', disclosure: 'unknown' } }; }), character(18))).toBe(true);
+  });
+  it('rejects wrong key sets and malformed private metadata', () => {
+    const cases: ((p: Mutable) => void)[] = [
+      p => { p.extra = 1; }, p => { delete p.appearance; }, p => { p.identity.currentName = 'Ana'; }, p => { delete p.identity.biography; },
+      p => { p.identity.origin.extra = 1; }, p => { p.traits.charm = 50; }, p => { p.appearance.hair.extra = 'x'; }, p => { p.appearance.face.extra = 'x'; },
+      p => { p.appearance.measurements = { chestCm: 86, waistCm: 68, hipsCm: 92 }; }, p => { p.private = {}; },
+      p => { p.private = { intimateHistory: { value: 'unknown', disclosure: 'known' } }; }, p => { p.private = { intimateHistory: { value: 'none', disclosure: 'known' }, note: 'x' }; },
+      p => { p.appearance.face.features = 'freckles'; },
+    ];
+    cases.forEach(c => expect(valid(c)).toBe(false));
+    expect(isCharacterProfile(null, character())).toBe(false);
+    expect(isCharacterProfile([], character())).toBe(false);
+  });
+});
+
+describe('isPlayerCharacter', () => {
+  it('accepts a valid player', () => { expect(isPlayerCharacter(player())).toBe(true); });
+  it('rejects player occupation "governor" and age 17', () => {
+    expect(PLAYER_PROFESSIONS).not.toContain('governor');
+    expect(PLAYER_PROFESSIONS).not.toContain('unassigned');
+    expect(isPlayerCharacter({ ...player(), character: playerCharacter({ occupation: 'governor' }) })).toBe(false);
+    expect(isPlayerCharacter({ ...player(), character: playerCharacter({ occupation: 'unassigned' }) })).toBe(false);
+    const young = player(); young.character = playerCharacter({ age: 17 }); delete young.profile.private; delete young.profile.traits.intimacyKnowledge;
+    expect(isPlayerCharacter(young)).toBe(false);
+    expect(isPlayerCharacter({ ...player(), character: playerCharacter({ age: 91 }) })).toBe(false);
+    expect(isPlayerCharacter({ ...player(), character: playerCharacter({ age: 18 }) })).toBe(true);
+    expect(isPlayerCharacter({ ...player(), character: playerCharacter({ age: 90 }) })).toBe(true);
+  });
+  it('rejects player measurements with disclosure "unknown"', () => {
+    const p = player(); p.profile.appearance.measurements!.disclosure = 'unknown';
+    expect(isPlayerCharacter(p)).toBe(false);
+    const q = player(); q.profile.private!.intimateHistory.disclosure = 'unknown';
+    expect(isPlayerCharacter(q)).toBe(false);
+  });
+  it('rejects wrong id, extra keys and a mismatched profile', () => {
+    expect(isPlayerCharacter({ ...player(), character: playerCharacter({ id: 'npc_starter_1' }) })).toBe(false);
+    expect(isPlayerCharacter({ ...player(), extra: 1 })).toBe(false);
+    expect(isPlayerCharacter({ ...player(), profile: base('npc_starter_1') })).toBe(false);
+    expect(isPlayerCharacter({ character: { ...playerCharacter(), memories: [{ id: 'm' }] }, profile: player().profile })).toBe(false);
+  });
+});
+
+describe('isCharacterLifeSessionState', () => {
+  it('accepts a valid life session', () => { expect(isCharacterLifeSessionState(lifeSession())).toBe(true); });
+  it('rejects session with profiles reordered, missing, extra, or extra top-level key', () => {
+    const s = lifeSession();
+    expect(isCharacterLifeSessionState({ ...s, profiles: [s.profiles[1], s.profiles[0], s.profiles[2]] })).toBe(false);
+    expect(isCharacterLifeSessionState({ ...s, profiles: s.profiles.slice(0, 2) })).toBe(false);
+    expect(isCharacterLifeSessionState({ ...s, profiles: [...s.profiles, base('npc_starter_4')] })).toBe(false);
+    expect(isCharacterLifeSessionState({ ...s, extra: 1 })).toBe(false);
+    const { player: _p, ...noPlayer } = s;
+    expect(isCharacterLifeSessionState(noPlayer)).toBe(false);
+    const sparse = [...s.profiles]; delete (sparse as unknown[])[1];
+    expect(isCharacterLifeSessionState({ ...s, profiles: sparse })).toBe(false);
+    expect(isCharacterLifeSessionState(npcSession())).toBe(false);
+  });
+  it('rejects session with an NPC aged 17', () => {
+    const s = lifeSession(); (s.npcs[1].character as Mutable).age = 17;
+    expect(isCharacterLifeSessionState(s)).toBe(false);
+    const t = lifeSession(); (t.npcs[1].character as Mutable).age = 91;
+    expect(isCharacterLifeSessionState(t)).toBe(false);
+  });
+  it('rejects an NPC with the player id and an invalid player or base', () => {
+    const s = lifeSession(); (s.npcs[0].character as Mutable).id = PLAYER_CHARACTER_ID; s.profiles[0].id = PLAYER_CHARACTER_ID;
+    expect(isCharacterLifeSessionState(s)).toBe(false);
+    expect(isCharacterLifeSessionState({ ...lifeSession(), player: { ...player(), extra: 1 } })).toBe(false);
+    const t = lifeSession(); (t.city as Mutable).phase = 'resolving';
+    expect(isCharacterLifeSessionState(t)).toBe(false);
+  });
+});
+
+describe('live Character Life validation', () => {
+  it('live phases preserve strict saves', () => {
+    const planning = lifeSession(), report = structuredClone(planning);
+    report.city.phase = 'report';
+    expect(isLiveCharacterLifeSessionState(planning)).toBe(true);
+    expect(isLiveCharacterLifeSessionState(report)).toBe(true);
+    expect(isCharacterLifeSessionState(planning)).toBe(true);
+    expect(isCharacterLifeSessionState(report)).toBe(false);
+  });
+
+  describe.each(['planning', 'report'] as const)('%s', phase => {
+    const session = () => { const s = lifeSession(); s.city.phase = phase; return s; };
+    const corruptions: [string, (s: Mutable) => void][] = [
+      ['missing session key', s => { delete s.player; }],
+      ['extra session key', s => { s.extra = 1; }],
+      ['null city', s => { s.city = null; }],
+      ['invalid city phase', s => { s.city.phase = 'resolving'; }],
+      ['negative outside seed', s => { s.outside.seed = -1; }],
+      ['unknown outside owner', s => { s.outside.tiles[0].owner = 'unknown'; }],
+      ['unsupported generator', s => { s.outside.generator = 'unsupported'; }],
+      ['missing outside tiles', s => { delete s.outside.tiles; }],
+      ['duplicate posts', s => { s.npcs[0].postTileId = s.npcs[1].postTileId = 'field-1'; }],
+      ['locked post', s => { s.npcs[0].postTileId = 'field-2'; }],
+      ['invalid Player', s => { s.player.character.health = 101; }],
+      ['NPC age 17', s => { s.npcs[0].character.age = 17; }],
+      ['NPC age 91', s => { s.npcs[0].character.age = 91; }],
+      ['Player id on NPC', s => { s.npcs[0].character.id = s.profiles[0].id = PLAYER_CHARACTER_ID; }],
+      ['mismatched profile', s => { s.profiles[0].id = 'unknown'; }],
+      ['reordered profiles', s => { [s.profiles[0], s.profiles[1]] = [s.profiles[1], s.profiles[0]]; }],
+      ['missing profile', s => { s.profiles.pop(); }],
+      ['extra profile', s => { s.profiles.push(base('npc_extra')); }],
+      ['sparse profiles', s => { delete s.profiles[0]; }],
+      ['invalid profile axis', s => { s.profiles[0].traits.warmth = NaN; }],
+      ['sparse city tiles', s => { delete s.city.tiles[0]; }],
+    ];
+    it.each(corruptions)('rejects %s in both guards', (_name, corrupt) => {
+      const s = session(); corrupt(s);
+      expect(isLiveCharacterLifeSessionState(s)).toBe(false);
+      expect(isCharacterLifeSessionState(s)).toBe(false);
+    });
+
+    const accessorTargets: [string, (s: Mutable) => [Mutable, string]][] = [
+      ...['city', 'outside', 'npcs', 'player', 'profiles'].map(key =>
+        [key, (s: Mutable): [Mutable, string] => [s, key]] as [string, (s: Mutable) => [Mutable, string]]),
+      ['city tiles', s => [s.city, 'tiles']],
+      ['NPC array entry', s => [s.npcs, '0']],
+      ['profile array entry', s => [s.profiles, '0']],
+      ['outside tile entry', s => [s.outside.tiles, '0']],
+    ];
+    it.each(accessorTargets)('rejects %s accessor without invoking it', (_name, target) => {
+      const s = session(), [record, key] = target(s), value = record[key];
+      const getter = vi.fn(() => value);
+      Object.defineProperty(record, key, { enumerable: true, get: getter });
+      expect(isLiveCharacterLifeSessionState(s)).toBe(false);
+      expect(isCharacterLifeSessionState(s)).toBe(false);
+      expect(getter).not.toHaveBeenCalled();
+    });
+
+    const recordTargets: [string, (s: Mutable) => Mutable, string][] = [
+      ['session', s => s, 'player'], ['city', s => s.city, 'tiles'],
+      ['Player', s => s.player, 'profile'], ['NPC profile', s => s.profiles[0], 'identity'],
+    ];
+    it.each(recordTargets)('rejects inherited fields, symbols, hidden keys and class instances on %s', (_name, target, key) => {
+      for (const shape of ['inherited', 'symbol', 'hidden', 'class']) {
+        const s = session(), record = target(s);
+        if (shape === 'inherited') {
+          Object.setPrototypeOf(record, { [key]: record[key] }); delete record[key];
+        } else if (shape === 'symbol') Object.defineProperty(record, Symbol('extra'), { value: 1 });
+        else if (shape === 'hidden') Object.defineProperty(record, 'extra', { value: 1 });
+        else { class Data {} Object.setPrototypeOf(record, Data.prototype); }
+        expect(isLiveCharacterLifeSessionState(s), shape).toBe(false);
+        expect(isCharacterLifeSessionState(s), shape).toBe(false);
+      }
+    });
+
+    it('accepts null-prototype data and adult age endpoints', () => {
+      const s = session();
+      for (const record of [s, s.city, s.player, s.profiles[0]]) Object.setPrototypeOf(record, null);
+      s.npcs[0].character.age = 18; s.npcs[1].character.age = 90;
+      expect(isLiveCharacterLifeSessionState(s)).toBe(true);
+      expect(isCharacterLifeSessionState(s)).toBe(phase === 'planning');
+    });
+
+    it('live tile index accessors never run', () => {
+      const s = session(), tile = s.city.tiles[0];
+      const world = structuredClone(s.city.world), revision = s.city.revision;
+      const getter = vi.fn(() => {
+        s.city.revision++;
+        s.city.world.settlements.settlement_haven_01.inventory.gold++;
+        return tile;
+      });
+      Object.defineProperty(s.city.tiles, '0', { enumerable: true, get: getter });
+      const descriptors = Object.getOwnPropertyDescriptors(s.city.tiles);
+      expect(isLiveCharacterLifeSessionState(s)).toBe(false);
+      expect(getter).not.toHaveBeenCalled();
+      expect(Object.getOwnPropertyDescriptors(s.city.tiles)).toEqual(descriptors);
+      expect(s.city.world).toEqual(world);
+      expect(s.city.revision).toBe(revision);
+    });
+
+    it.each(['id', 'terrain', 'length'])('live map permits changed %s while saves stay pinned', change => {
+      const s = session(), tile = s.city.tiles.find(t => t.id === 'field-2')!;
+      if (change === 'id') tile.id = 'field-live';
+      else if (change === 'terrain') tile.terrain = 'plain';
+      else s.city.tiles.splice(s.city.tiles.indexOf(tile), 1);
+      expect(isLiveCharacterLifeSessionState(s)).toBe(true);
+      expect(isCharacterLifeSessionState(s)).toBe(false);
+    });
+  });
+});
+
+describe('isNamedCharacterRecord', () => {
+  it('accepts every starter character and the player character', () => {
+    npcSession().npcs.forEach(n => expect(isNamedCharacterRecord(n.character)).toBe(true));
+    expect(isNamedCharacterRecord(playerCharacter())).toBe(true);
+  });
+  it('rejects bad names, stats, keys and non-empty memories', () => {
+    const c = (over: Mutable) => ({ ...playerCharacter(), ...over });
+    for (const over of [{ name: ' Ana' }, { name: '' }, { age: -1 }, { age: 2.5 }, { health: 101 }, { occupation: 'king' }, { memories: [{}] }, { extra: 1 }, { needs: { ...playerCharacter().needs, safety: NaN } }])
+      expect(isNamedCharacterRecord(c(over))).toBe(false);
+    expect(isNamedCharacterRecord(null)).toBe(false);
+  });
+  it('isWorldNpcList unchanged on existing npc.test fixtures', () => {
+    const s = npcSession();
+    expect(isWorldNpcList(s.npcs, s.city)).toBe(true);
+    const dup = structuredClone(s.npcs); dup[1].character.id = dup[0].character.id;
+    expect(isWorldNpcList(dup, s.city)).toBe(false);
+    const bad = structuredClone(s.npcs); (bad[2].character as Mutable).name = ' Ana';
+    expect(isWorldNpcList(bad, s.city)).toBe(false);
+  });
+});
+
+describe('catalogue immutability', () => {
+  const deepFrozen = (v: unknown): boolean => typeof v !== 'object' || v === null || (Object.isFrozen(v) && Object.values(v).every(deepFrozen));
+  const exported = Object.entries(catalog).filter(([, v]) => typeof v === 'object');
+  it('freezes every exported catalogue, its entries, tuples and lookup records', () => {
+    expect(exported.map(([k]) => k).sort()).toEqual(['BUILDS', 'CHARACTER_LIMITS', 'EYE_COLORS', 'FACE_FEATURES', 'FACE_SHAPES', 'HAIR_COLORS', 'HAIR_LENGTHS',
+      'HAIR_STYLES', 'HAIR_TEXTURES', 'OUTFITS', 'PLACES', 'PLAYER_PROFESSIONS', 'PROFESSION_LABELS', 'PROFESSION_OUTFITS', 'REGIONS', 'ROLE_OUTFITS',
+      'SKIN_TONES', 'UPBRINGINGS']);
+    for (const [name, value] of exported) expect(deepFrozen(value), name).toBe(true);
+  });
+  it('mutation attempts throw and leave validation unchanged', () => {
+    const adultPlayer = (over: Partial<NamedCharacter>) => ({ ...player(), character: playerCharacter(over) });
+    const before = [valid(p => { p.appearance.skinTone = 'green'; }), valid(p => { p.identity.birthplaceId = 'haven'; }), valid(() => {}),
+      isPlayerCharacter(adultPlayer({ occupation: 'governor' })), isCharacterProfile(base('npc_starter_1'), character(17))];
+    const attempts: (() => void)[] = [
+      () => { (SKIN_TONES[0] as Mutable).id = 'green'; },
+      () => { (PLACES.find(p => p.id === 'haven') as Mutable).regionId = 'northreach'; },
+      () => { (PLAYER_PROFESSIONS as Mutable).push('governor'); },
+      () => { (CHARACTER_LIMITS as Mutable).ageMin = 17; },
+      () => { (CHARACTER_LIMITS.heightCm as Mutable)[0] = 100; },
+      () => { (catalog.ROLE_OUTFITS as Mutable).farm = 'armor'; },
+      () => { (catalog.PROFESSION_LABELS as Mutable).security = 'guard'; },
+      () => { (catalog.BUILDS[0] as Mutable).long = 'x'; },
+      () => { (catalog.OUTFITS as Mutable).push({ id: 'armor', phrase: 'armor' }); },
+    ];
+    attempts.forEach(a => expect(a).toThrow(TypeError));
+    expect([valid(p => { p.appearance.skinTone = 'green'; }), valid(p => { p.identity.birthplaceId = 'haven'; }), valid(() => {}),
+      isPlayerCharacter(adultPlayer({ occupation: 'governor' })), isCharacterProfile(base('npc_starter_1'), character(17))]).toEqual(before);
+    expect(before).toEqual([false, false, true, false, true]);
+    expect(isPlayerCharacter({ ...player(), character: playerCharacter({ age: 17 }) })).toBe(false);
+    expect(SKIN_TONES[0].id).toBe('porcelain');
+    expect(CHARACTER_LIMITS.heightCm).toEqual([140, 210]);
+  });
+  it('exposes readonly entry properties to TypeScript', () => {
+    const typeOnly = () => {
+      // @ts-expect-error entry properties are readonly
+      SKIN_TONES[0].id = 'green';
+      // @ts-expect-error entry properties are readonly
+      PLACES[4].regionId = 'northreach';
+      // @ts-expect-error entry properties are readonly
+      catalog.BUILDS[0].short = 'x';
+      // @ts-expect-error entry properties are readonly
+      catalog.REGIONS[0].name = 'x';
+      // @ts-expect-error entry properties are readonly
+      catalog.OUTFITS[0].phrase = 'x';
+      // @ts-expect-error limit tuples are readonly
+      CHARACTER_LIMITS.heightCm[0] = 100;
+      // @ts-expect-error lookup records are readonly
+      catalog.ROLE_OUTFITS.farm = 'x';
+    };
+    expect(typeof typeOnly).toBe('function');
+  });
+});
