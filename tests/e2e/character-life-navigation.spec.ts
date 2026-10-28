@@ -140,6 +140,15 @@ for (const width of [375, 1280]) {
 
 test('report close does not acknowledge week', async ({ page }) => {
   await page.goto('/?mode=world-life'); await importLife(page, makeLife());
+  const sidebarStatus = page.locator('aside [role="status"]');
+  await expect(sidebarStatus).toHaveText('');
+  await expect(sidebarStatus).not.toHaveCSS('display', 'none');
+  await expect(sidebarStatus).toHaveCSS('visibility', 'visible');
+  // Check accessibility visibility without requiring nonzero empty-node dimensions.
+  await expect(page.locator('aside').getByRole('status')).toHaveCount(1);
+  await expect(sidebarStatus).toHaveAttribute('aria-live', 'polite');
+  const sidebarStatusNode = (await sidebarStatus.elementHandle())!;
+  expect(await sidebarStatusNode.evaluate(node => node.isConnected && !node.closest('[hidden], [inert], [aria-hidden="true"]'))).toBe(true);
   await expect(page.locator('#life-modal-status')).toHaveText('');
   const statusNode = (await page.locator('#life-modal-status').elementHandle())!;
   await watchTurnStatus(page);
@@ -156,6 +165,8 @@ test('report close does not acknowledge week', async ({ page }) => {
   await expect(page.getByRole('status')).toHaveCount(1);
   await expect(page.locator('aside [aria-live]')).toHaveCount(0);
   await dialog.getByRole('button', { name: 'Close', exact: true }).click();
+  expect(await sidebarStatusNode.evaluate(node => node.isConnected && node === document.querySelector('aside [role="status"]'))).toBe(true);
+  await expect(page.locator('aside').getByRole('status')).toHaveCount(1);
   await expect(page.getByTestId('life-end-week')).toBeFocused();
   await openCityWindow(page, 'Report'); await page.keyboard.press('Escape');
   await expect(page.getByTestId('life-shell')).toHaveAttribute('data-revision', revision!);
@@ -902,6 +913,7 @@ for (const route of ['Continue', 'Import'] as const) {
     await expect(page.getByRole('navigation', { name: 'Views' }).getByRole('button', { name: 'City', exact: true })).toBeFocused();
     await expect(shell.getByText(/^Unapplied changes/)).toHaveCount(0);
     await expect(shell.locator('aside [role="status"]')).toHaveText('');
+    await expect(shell.locator('aside').getByRole('status')).toHaveCount(1);
     await expect(page.locator('#trial-management-error, #trial-workers-error, #life-assign-error')).toHaveCount(0);
     await expect(workersInput(page)).toHaveValue('2');
     await expect(page.getByLabel('Building type', { exact: true })).toHaveValue('logging');

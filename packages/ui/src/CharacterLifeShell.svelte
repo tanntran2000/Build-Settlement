@@ -166,7 +166,7 @@
   nav[aria-label='Main'] { display: flex; flex-direction: column; gap: 20px; min-height: calc(100dvh - 36px); }
   [data-life-nav-zone] { display: flex; flex-direction: column; gap: 10px; padding: 16px; }
   [data-life-nav-zone='bottom'] { margin-top: auto; }
-  [data-life-nav-zone] p:empty { display: none; }
+  [data-life-nav-zone] p:empty:not([aria-live]) { display: none; }
   [data-life-nav-zone] button { text-align: left; }
   [data-life-nav-zone] p { font-size: var(--life-body-size); }
   dialog { --life-dialog-top: 12px; position: fixed; inset: var(--life-dialog-top) 0 auto; margin: 0 auto; width: min(1020px, calc(100% - 24px)); max-height: calc(100dvh - var(--life-dialog-top) - 12px); overflow: auto; color: var(--text-main); background: var(--bg-tertiary); border-radius: 14px; padding: 24px; scroll-padding: 12px; font-size: var(--life-body-size); }
