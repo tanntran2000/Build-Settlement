@@ -320,6 +320,7 @@
     {#if goodsMode}
     <p>IMPLEMENTATION TRIAL: 1 Workshop WF + 2 Wood → 2 stored Goods per funded batch; no Iron. Production can continue without a Market. A funded Market distributes up to 2 Goods per level weekly, limited by stock and demand of 0.02 per resident. Unused stock carries over. Only distributed Goods earns 1 Gold per Goods, once.</p>
     <p>New Game grants 20 Food, 10 Goods and 45 Gold once: 15 Gold for five baseline operating weeks plus 30 Gold, 8 Wood and 4 Iron for construction. This reserve assumes 100 residents and the starter Farm, Processor and Market. It does not rely on production, taxes or sales. Spending, growth or changing operations can shorten coverage; funds are not protected. Stored Goods is not recurring income; actual sale Gold remains available cash.</p>
+    <p>Existing saved games keep their original rules and are not converted automatically.</p>
     {:else}
     <p>TRIAL: tax {units(B.taxGoldPerResident)} Gold/resident/week; Goods demand {units(B.goodsDemandPerResident)} service/resident/week. Workshop: 1 WF + {units(B.goodsWoodPerBatch)} Wood + {units(B.goodsIronPerBatch)} Iron → {units(B.goodsServicePerBatch)} service. Market: {units(B.marketServicePerLevel)} service/level; raises capacity, not demand. Whole Workshop batches may have unused service; nothing carries over.</p>
     {/if}
@@ -465,6 +466,7 @@
     {#if goodsMode}
     <p>IMPLEMENTATION TRIAL: 1 Workshop WF + 2 Wood → 2 stored Goods per funded batch; no Iron. Production can continue without a Market. A funded Market distributes up to 2 Goods per level weekly, limited by stock and demand of 0.02 per resident. Unused stock carries over. Only distributed Goods earns 1 Gold per Goods, once.</p>
     <p>New Game grants 20 Food, 10 Goods and 45 Gold once: 15 Gold for five baseline operating weeks plus 30 Gold, 8 Wood and 4 Iron for construction. This reserve assumes 100 residents and the starter Farm, Processor and Market. It does not rely on production, taxes or sales. Spending, growth or changing operations can shorten coverage; funds are not protected. Stored Goods is not recurring income; actual sale Gold remains available cash.</p>
+    <p>Existing saved games keep their original rules and are not converted automatically.</p>
     {:else}
     <p>TRIAL: tax {units(B.taxGoldPerResident)} Gold/resident/week; Goods demand {units(B.goodsDemandPerResident)} service/resident/week. Workshop: 1 WF + {units(B.goodsWoodPerBatch)} Wood + {units(B.goodsIronPerBatch)} Iron → {units(B.goodsServicePerBatch)} service. Market: {units(B.marketServicePerLevel)} service/level; raises capacity, not demand. Whole Workshop batches may have unused service; nothing carries over.</p>
     {/if}
