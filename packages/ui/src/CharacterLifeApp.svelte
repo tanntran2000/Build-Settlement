@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { createCharacterLifeSession, POPULATION_TILE_RULESET, type CharacterLifeSessionState, type PlayerDraft } from '@haven/core';
+  import { createCharacterLifeSession, GOODS_STOCK_RULESET, POPULATION_TILE_RULESET, type CharacterLifeSessionState, type PlayerDraft } from '@haven/core';
   import { deserializeCharacterLifeSave, TILE_SAVE_MAX_BYTES } from '@haven/persistence';
   import CharacterCreation from './CharacterCreation.svelte';
   import TileManagement from './TileManagement.svelte';
-  import { readLocalCharacterLife } from './character-life-session.js';
+  import { readOldLocalCharacterLife, readLocalCharacterLife } from './character-life-session.js';
 
   let screen: 'start' | 'create' = 'start';
   let session: CharacterLifeSessionState | null = null;
@@ -16,15 +16,15 @@
     // A repeated Create (or one after Cancel) must not start a second session.
     if (session || screen !== 'create') return;
     try {
-      const result = createCharacterLifeSession(crypto.getRandomValues(new Uint32Array(1))[0], draft);
+      const result = createCharacterLifeSession(crypto.getRandomValues(new Uint32Array(1))[0], draft, GOODS_STOCK_RULESET);
       if (result.success) { session = result.value; return; }
       error = result.error.message;
     } catch { error = 'Could not start a Character Life session. Choose New Game to try again.'; }
     screen = 'start';
   }
-  function continueLocally() {
+  function continueLocally(oldOnly = false) {
     importRead++;
-    const result = readLocalCharacterLife();
+    const result = oldOnly ? readOldLocalCharacterLife() : readLocalCharacterLife();
     if (result.success) session = result.state; else error = result.message;
   }
   async function importCheckpoint(event: Event) {
@@ -57,7 +57,8 @@
       <section class="card" aria-label="Start">
         <p>Create an adult Player who leads Haven, or resume a Character Life checkpoint.</p>
         <button onclick={newGame}>New Game</button>
-        <button onclick={continueLocally}>Continue locally</button>
+        <button onclick={() => continueLocally()}>Continue locally</button>
+        <button onclick={() => continueLocally(true)}>Continue old-rules checkpoint</button>
         <label for="life-save-file">Import checkpoint</label>
         <input id="life-save-file" type="file" accept=".json,application/json" onchange={importCheckpoint} />
         {#if error}<p role="alert">{error}</p>{/if}

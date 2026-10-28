@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { createWorldSession, isWorldSessionState, type WorldSessionState } from '@haven/core';
 import { deserializeWorldSessionSave, serializeWorldSessionSave, TILE_SAVE_MAX_BYTES } from '@haven/persistence';
-import { prepareWorldSessionLoad, readLocalWorldSession, saveLocalWorldSession, WORLD_SESSION_CHECKPOINT_KEY } from '../world-session.js';
+import { prepareWorldSessionLoad, readOldLocalWorldSession, saveLocalWorldSession, WORLD_SESSION_CHECKPOINT_KEY } from '../world-session.js';
 
 const session = (seed = 0) => { const r = createWorldSession(seed); if (!r.success) throw Error(); return r.value; };
 const oldKeys = ['haven.tile-trial.checkpoint.v1', 'haven.tile-population.checkpoint.v1'];
@@ -37,17 +37,17 @@ it('accesses only the world slot and writes the codec envelope exactly once', ()
   expect(storage.getItem.mock.calls).toEqual([[WORLD_SESSION_CHECKPOINT_KEY]]);
   expect(storage.setItem.mock.calls).toEqual([[WORLD_SESSION_CHECKPOINT_KEY, encoded.text]]);
   storage.getItem.mockClear(); storage.setItem.mockClear();
-  expect(readLocalWorldSession()).toEqual({ success: true, state: s });
+  expect(readOldLocalWorldSession()).toEqual({ success: true, state: s });
   expect(storage.getItem.mock.calls).toEqual([[WORLD_SESSION_CHECKPOINT_KEY]]); expect(storage.setItem).not.toHaveBeenCalled();
   expect(saveLocalWorldSession(s)).toEqual({ success: true, replaced: true });
   oldKeys.forEach(k => expect(values.get(k)).toBe('protected-bytes')); expect(s).toEqual(before);
 });
 it('does not fall back to old slots or repair malformed world bytes', () => {
   const before = new Map(values);
-  expect(readLocalWorldSession()).toMatchObject({ success: false, message: expect.stringContaining('No local checkpoint') });
+  expect(readOldLocalWorldSession()).toMatchObject({ success: false, message: expect.stringContaining('No local checkpoint') });
   expect(values).toEqual(before);
   values.set(WORLD_SESSION_CHECKPOINT_KEY, '{'); const corrupt = new Map(values);
-  expect(readLocalWorldSession()).toMatchObject({ success: false, message: expect.stringContaining('left unchanged') });
+  expect(readOldLocalWorldSession()).toMatchObject({ success: false, message: expect.stringContaining('left unchanged') });
   expect(values).toEqual(corrupt); expect(storage.setItem).not.toHaveBeenCalled();
 });
 it.each(['window', 'getter', 'read', 'write'])('contains %s storage failure and preserves all bytes', kind => {
@@ -59,7 +59,7 @@ it.each(['window', 'getter', 'read', 'write'])('contains %s storage failure and 
   const result = saveLocalWorldSession(s);
   expect(result).toMatchObject({ success: false, message: expect.stringContaining('Export checkpoint') });
   expect(JSON.stringify(result)).not.toContain('private'); expect(values).toEqual(before); expect(s).toEqual(snapshot);
-  if (kind !== 'write') expect(readLocalWorldSession()).toMatchObject({ success: false, message: expect.stringContaining('Import checkpoint') });
+  if (kind !== 'write') expect(readOldLocalWorldSession()).toMatchObject({ success: false, message: expect.stringContaining('Import checkpoint') });
 });
 it('rejects invalid state before storage access', () => {
   const s: WorldSessionState = session(); s.city.phase = 'report';

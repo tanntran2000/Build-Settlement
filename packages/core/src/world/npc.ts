@@ -68,8 +68,8 @@ export function isNpcWorldSessionState(raw: unknown): raw is NpcWorldSessionStat
 
 // Names are drawn once here from the validated session seed (salted so the outside stream is
 // independent) and then persisted; nothing else rerolls them. Same seed, same names.
-export function createNpcWorldSession(seed: unknown): WorldResult<NpcWorldSessionState> {
-  const base = createWorldSession(seed);
+export function createNpcWorldSession(seed: unknown, economy?: Parameters<typeof createWorldSession>[1]): WorldResult<NpcWorldSessionState> {
+  const base = createWorldSession(seed, economy);
   if (!base.success) return base;
   const random = createSeededRandom((base.value.outside.seed ^ 0x4e504331) >>> 0), pool = [...WORLD_NPC_GIVEN_NAMES];
   const npcs = structuredClone(WORLD_STARTER_NPCS) as WorldNpc[];

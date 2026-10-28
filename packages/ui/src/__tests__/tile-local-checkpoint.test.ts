@@ -3,7 +3,48 @@ import { createTileTrialState, LEGACY_TILE_RULESET, POPULATION_TILE_RULESET, typ
 import { executeTileTrialCommand } from '@haven/simulation';
 import { serializeTileTrialSave } from '@haven/persistence';
 import { ERROR_LOG_KEY } from '../error-log.js';
-import { TILE_CHECKPOINT_KEY, readLocalCheckpoint, saveLocalCheckpoint } from '../tile-local-checkpoint.js';
+import { TILE_CHECKPOINT_KEY, readOldLocalCheckpoint, saveLocalCheckpoint } from '../tile-local-checkpoint.js';
+import { createGoodsStockState, createWorldSession, createNpcWorldSession, createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, GOODS_STOCK_RULESET } from '@haven/core';
+import { readLocalCheckpoint, GOODS_TILE_CHECKPOINT_KEY, POPULATION_TILE_CHECKPOINT_KEY } from '../tile-local-checkpoint.js';
+import { readLocalWorldSession, readOldLocalWorldSession, saveLocalWorldSession, WORLD_SESSION_CHECKPOINT_KEY, WORLD_SESSION_CHECKPOINT_GOODS_KEY } from '../world-session.js';
+import { readLocalNpcWorldSession, readOldLocalNpcWorldSession, saveLocalNpcWorldSession, WORLD_NPC_CHECKPOINT_KEY, WORLD_NPC_CHECKPOINT_GOODS_KEY } from '../world-npc-session.js';
+import { readLocalCharacterLife, readOldLocalCharacterLife, saveLocalCharacterLife, CHARACTER_LIFE_CHECKPOINT_KEY, CHARACTER_LIFE_CHECKPOINT_GOODS_KEY } from '../character-life-session.js';
+
+const unwrap = <T>(result: { success: true; value: T } | { success: false }) => { if (!result.success) throw Error('Factory failed'); return result.value; };
+describe.each([
+  { name: 'population', oldKey: POPULATION_TILE_CHECKPOINT_KEY, newKey: GOODS_TILE_CHECKPOINT_KEY, old: () => createTileTrialState(), fresh: () => createGoodsStockState(), save: (s: unknown) => saveLocalCheckpoint(s, POPULATION_TILE_RULESET), read: () => readLocalCheckpoint(POPULATION_TILE_RULESET), readOld: () => readOldLocalCheckpoint(POPULATION_TILE_RULESET) },
+  { name: 'world', oldKey: WORLD_SESSION_CHECKPOINT_KEY, newKey: WORLD_SESSION_CHECKPOINT_GOODS_KEY, old: () => unwrap(createWorldSession(42)), fresh: () => unwrap(createWorldSession(42, GOODS_STOCK_RULESET)), save: saveLocalWorldSession, read: readLocalWorldSession, readOld: readOldLocalWorldSession },
+  { name: 'npc', oldKey: WORLD_NPC_CHECKPOINT_KEY, newKey: WORLD_NPC_CHECKPOINT_GOODS_KEY, old: () => unwrap(createNpcWorldSession(42)), fresh: () => unwrap(createNpcWorldSession(42, GOODS_STOCK_RULESET)), save: saveLocalNpcWorldSession, read: readLocalNpcWorldSession, readOld: readOldLocalNpcWorldSession },
+  { name: 'life', oldKey: CHARACTER_LIFE_CHECKPOINT_KEY, newKey: CHARACTER_LIFE_CHECKPOINT_GOODS_KEY, old: () => unwrap(createCharacterLifeSession(42, { ...DEFAULT_PLAYER_DRAFT, currentName: 'Synthetic Keeper' })), fresh: () => unwrap(createCharacterLifeSession(42, { ...DEFAULT_PLAYER_DRAFT, currentName: 'Synthetic Keeper' }, GOODS_STOCK_RULESET)), save: saveLocalCharacterLife, read: readLocalCharacterLife, readOld: readOldLocalCharacterLife },
+])('$name checkpoint generations', c => {
+  it('keeps both slots, selects saves by generation and reads only on explicit calls', () => {
+    const old = c.old(), fresh = c.fresh();
+    expect(storage.getItem).not.toHaveBeenCalled();
+    expect(c.save(old)).toEqual({ success: true, replaced: false });
+    const oldBytes = values.get(c.oldKey);
+    expect(c.save(fresh)).toEqual({ success: true, replaced: false });
+    expect(storage.getItem.mock.calls).toEqual([[c.oldKey], [c.newKey]]);
+    expect(storage.setItem.mock.calls.map(([key]) => key)).toEqual([c.oldKey, c.newKey]);
+    expect(values.get(c.oldKey)).toBe(oldBytes);
+    storage.getItem.mockClear(); storage.setItem.mockClear();
+    expect(c.read()).toEqual({ success: true, state: fresh });
+    expect(c.readOld()).toEqual({ success: true, state: old });
+    expect(storage.getItem.mock.calls).toEqual([[c.newKey], [c.oldKey]]); expectUntouched();
+    values.delete(c.newKey); storage.getItem.mockClear();
+    expect(c.read()).toEqual({ success: true, state: old });
+    expect(storage.getItem.mock.calls).toEqual([[c.newKey], [c.oldKey]]);
+  });
+  it.each(['corrupt', 'blocked', 'write'])('does not fall back or mutate old bytes on %s new-slot failure', kind => {
+    expect(c.save(c.old()).success).toBe(true);
+    if (kind === 'corrupt') values.set(c.newKey, '{broken');
+    const before = new Map(values); storage.getItem.mockClear(); storage.setItem.mockClear();
+    if (kind === 'blocked') storage.getItem.mockImplementation(() => { throw Error('Blocked'); });
+    if (kind === 'write') storage.setItem.mockImplementation(() => { throw Error('Quota'); });
+    expect((kind === 'write' ? c.save(c.fresh()) : c.read()).success).toBe(false);
+    expect(storage.getItem.mock.calls).toEqual([[c.newKey]]);
+    expect(values).toEqual(before);
+  });
+});
 
 const secret = 'TOKEN-secret raw/private/error';
 let values: Map<string, string>;
@@ -59,7 +100,7 @@ describe.each([
     expect(storage.setItem.mock.calls).toEqual([[key, savedText(state, ruleset)]]);
     expect(JSON.parse(values.get(key)!)).toMatchObject({ schemaVersion: 1, rulesetId: ruleset, state });
     storage.getItem.mockClear(); storage.setItem.mockClear();
-    const loaded = readLocalCheckpoint(ruleset);
+    const loaded = readOldLocalCheckpoint(ruleset);
     expect(loaded).toEqual({ success: true, state });
     if (loaded.success) expect(loaded.state).not.toBe(state);
     expect(storage.getItem.mock.calls).toEqual([[key]]); expectUntouched();
@@ -68,7 +109,7 @@ describe.each([
   });
   it('does not fall back when its own slot is missing', () => {
     const before = new Map(values);
-    expect(readLocalCheckpoint(ruleset)).toMatchObject({ success: false, message: expect.stringContaining('No local checkpoint') });
+    expect(readOldLocalCheckpoint(ruleset)).toMatchObject({ success: false, message: expect.stringContaining('No local checkpoint') });
     expect(storage.getItem.mock.calls).toEqual([[key]]); expect(values).toEqual(before); expectUntouched();
   });
   it('allows an explicit valid save to replace corrupt own bytes only', () => {
@@ -89,7 +130,7 @@ describe.each([
     if (kind === 'workforce') payload.state.tiles[0].building.workers = 100;
     const text = kind === 'malformed' ? '{' : kind === 'empty' ? '{}' : kind === 'oversize' ? ' '.repeat(1024 * 1024 + 1) : kind === 'UTF-8 oversize' ? 'é'.repeat(524289) : JSON.stringify(payload);
     values.set(key, text); const before = new Map(values);
-    const result = readLocalCheckpoint(ruleset);
+    const result = readOldLocalCheckpoint(ruleset);
     expect(result).toMatchObject({ success: false, message: expect.stringContaining('left unchanged') });
     if (!result.success && kind.includes('oversize')) expect(result.message).toContain('1 MiB');
     expect(storage.getItem.mock.calls).toEqual([[key]]); expect(values).toEqual(before); expectUntouched();
@@ -116,7 +157,7 @@ describe.each([
     if (failure === 'window') vi.stubGlobal('window', undefined);
     else if (failure === 'getter') vi.stubGlobal('window', { get localStorage() { throw new DOMException(secret, 'SecurityError'); } });
     else storage.getItem.mockImplementation(() => { throw new Error(secret); });
-    const result = readLocalCheckpoint(ruleset); expect(result.success).toBe(false);
+    const result = readOldLocalCheckpoint(ruleset); expect(result.success).toBe(false);
     if (!result.success) { expect(result.message).toContain('Import checkpoint'); expect(result.message).not.toContain(secret); }
     expect(values).toEqual(before); expectUntouched();
   });
@@ -124,7 +165,7 @@ describe.each([
     const saved = ruleset === POPULATION_TILE_RULESET ? populationPlan() : multiweekPlan(), snapshot = structuredClone(saved);
     if (ruleset === POPULATION_TILE_RULESET) expect(saved.world.settlements.settlement_haven_01.cohorts[0].count).toBe(102);
     saveLocalCheckpoint(saved, ruleset); storage.setItem.mockClear(); const bytes = new Map(values);
-    const decoded = readLocalCheckpoint(ruleset); expect(decoded.success).toBe(true); if (!decoded.success) return;
+    const decoded = readOldLocalCheckpoint(ruleset); expect(decoded.success).toBe(true); if (!decoded.success) return;
     const current = createTileTrialState(); current.revision = saved.revision + 10;
     const loaded = run(current, 'LOAD_TRIAL', { snapshot: decoded.state }, ruleset);
     expect(loaded.revision).toBe(Math.max(current.revision, saved.revision) + 1);
@@ -182,7 +223,7 @@ describe('explicit local save', () => {
 describe('explicit local continue', () => {
   it('restores the exact saved gameplay, which then resolves like uninterrupted play', () => {
     const plan = multiweekPlan(); saveLocalCheckpoint(plan); storage.setItem.mockClear();
-    const result = readLocalCheckpoint(); expect(result.success).toBe(true); if (!result.success) return;
+    const result = readOldLocalCheckpoint(); expect(result.success).toBe(true); if (!result.success) return;
     expect(result.state).toEqual(plan); expect(result.state).not.toBe(plan);
     const loaded = run(createTileTrialState(), 'LOAD_TRIAL', { snapshot: result.state });
     expect(loaded.revision).toBeGreaterThan(plan.revision);
@@ -191,7 +232,7 @@ describe('explicit local continue', () => {
     expectUntouched();
   });
   it('explains a missing slot without writing', () => {
-    const result = readLocalCheckpoint(); expect(result).toMatchObject({ success: false }); if (result.success) return;
+    const result = readOldLocalCheckpoint(); expect(result).toMatchObject({ success: false }); if (result.success) return;
     expect(result.message).toContain('No local checkpoint'); expectUntouched();
   });
   const valid = () => JSON.parse(savedText());
@@ -205,7 +246,7 @@ describe('explicit local continue', () => {
     ['report state', variant(s => { s.state.phase = 'report'; })], ['oversize', ' '.repeat(1024 * 1024 + 1)],
   ])('rejects a %s slot and leaves its bytes in place', (_, text) => {
     values.set(TILE_CHECKPOINT_KEY, text);
-    const result = readLocalCheckpoint(); expect(result).toMatchObject({ success: false }); if (result.success) return;
+    const result = readOldLocalCheckpoint(); expect(result).toMatchObject({ success: false }); if (result.success) return;
     expect(result.message).toContain('left unchanged'); expect(stored()).toBe(text); expectUntouched();
   });
   it.each(['window', 'getter', 'getItem'])('contains %s read failure', failure => {
@@ -213,7 +254,7 @@ describe('explicit local continue', () => {
     if (failure === 'window') vi.stubGlobal('window', undefined);
     else if (failure === 'getter') vi.stubGlobal('window', { get localStorage() { throw new DOMException(secret, 'SecurityError'); } });
     else storage.getItem.mockImplementation(() => { throw new Error(secret); });
-    const result = readLocalCheckpoint(); expect(result).toMatchObject({ success: false }); if (result.success) return;
+    const result = readOldLocalCheckpoint(); expect(result).toMatchObject({ success: false }); if (result.success) return;
     expect(result.message).toContain('Import checkpoint'); expect(result.message).not.toContain('TOKEN');
     expect(stored()).toBe(savedText()); expectUntouched();
   });

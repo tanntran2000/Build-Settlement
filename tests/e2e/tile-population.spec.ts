@@ -1,4 +1,5 @@
 import { test, expect, type Page } from '@playwright/test';
+import { readFile } from 'node:fs/promises';
 
 async function select(page: Page, id: string) { await page.getByRole('button', { name: `Select ${id}`, exact: true }).click(); }
 async function assign(page: Page, id: string, workers: number) {
@@ -20,6 +21,8 @@ for (const width of [1280, 390]) test(`population mode grows once, preserves wor
   await page.setViewportSize({ width, height: 900 }); const errors: string[] = []; page.on('pageerror', e => errors.push(e.message));
   await page.goto('/'); await page.getByRole('link', { name: 'Play population trial', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Population Trial', exact: true })).toBeVisible();
+  // Retain the original economy assertions against captured BASE bytes.
+  await page.getByLabel('Import checkpoint', { exact: true }).setInputFiles({ name: 'legacy.json', mimeType: 'application/json', buffer: Buffer.from(await readFile('packages/persistence/src/__tests__/fixtures/legacy-v1/population.json', 'utf8')) });
   await expand(page); const before = JSON.parse(await exported(page)); expect(before.rulesetId).toBe('tile-population-01');
   await page.getByRole('button', { name: 'End Week', exact: true }).click();
   await expect(page.getByTestId('trial-immigration')).toContainText('100 → 102');

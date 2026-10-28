@@ -328,7 +328,7 @@ test('life Save locally leaves the NPC-world and world slots unchanged', async (
   await button(page, 'Save locally').click();
   await expect(page.getByRole('region', { name: 'Planning checkpoints', exact: true }).getByRole('status')).toHaveText('Saved in this browser.');
   expect(await page.evaluate(keys => keys.map(k => localStorage.getItem(k)), [NPC_KEY, WORLD_KEY])).toEqual(['protected-bytes', 'protected-bytes']);
-  expect(await page.evaluate(k => localStorage.getItem(k)?.startsWith('{"format":"haven.character-life-session.save"'), KEY)).toBe(true);
+  expect(await page.evaluate(k => localStorage.getItem(k)?.startsWith('{"format":"haven.character-life-session.save"'), 'haven.character-life-session-goods.checkpoint.v1')).toBe(true);
 });
 
 test('Life report and checkpoint operations preserve every other-mode slot byte-for-byte', async ({ page }) => {

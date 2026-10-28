@@ -1,8 +1,10 @@
+import { GOODS_STOCK_RULESET } from '@haven/core';
 import { isWorldSessionState, WORLD_SESSION_CITY_RULESET, type WorldSessionState } from '@haven/core';
 import { deserializeWorldSessionSave, serializeWorldSessionSave } from '@haven/persistence';
 import { executeTileTrialCommand } from '@haven/simulation';
 
 export const WORLD_SESSION_CHECKPOINT_KEY = 'haven.world-session.checkpoint.v1';
+export const WORLD_SESSION_CHECKPOINT_GOODS_KEY = 'haven.world-session-goods.checkpoint.v1';
 type Failure = { success: false; message: string };
 const fail = (message: string): Failure => ({ success: false, message });
 
@@ -55,18 +57,24 @@ export function saveLocalWorldSession(session: unknown): { success: true; replac
   const result = serializeWorldSessionSave(session);
   if (!result.success) return fail(result.error.message);
   try {
+    const key = JSON.parse(result.text).cityRulesetId === GOODS_STOCK_RULESET ? WORLD_SESSION_CHECKPOINT_GOODS_KEY : WORLD_SESSION_CHECKPOINT_KEY;
     const storage = window.localStorage;
-    const replaced = storage.getItem(WORLD_SESSION_CHECKPOINT_KEY) !== null;
-    storage.setItem(WORLD_SESSION_CHECKPOINT_KEY, result.text);
+    const replaced = storage.getItem(key) !== null;
+    storage.setItem(key, result.text);
     return { success: true, replaced };
   } catch {
     return fail('Could not save in this browser (storage blocked or full). Your game and any earlier local checkpoint were preserved. Use Export checkpoint instead.');
   }
 }
 
-export function readLocalWorldSession(): { success: true; state: WorldSessionState } | Failure {
+export function readLocalWorldSession() { return readCheckpoint(false); }
+export function readOldLocalWorldSession() { return readCheckpoint(true); }
+function readCheckpoint(oldOnly: boolean): { success: true; state: WorldSessionState } | Failure {
   let text: string | null;
-  try { text = window.localStorage.getItem(WORLD_SESSION_CHECKPOINT_KEY); } catch {
+  try {
+    const storage = window.localStorage;
+    text = oldOnly ? storage.getItem(WORLD_SESSION_CHECKPOINT_KEY) : storage.getItem(WORLD_SESSION_CHECKPOINT_GOODS_KEY) ?? storage.getItem(WORLD_SESSION_CHECKPOINT_KEY);
+  } catch {
     return fail('Could not read browser storage. Your game was preserved. Use Import checkpoint instead.');
   }
   if (text === null) return fail('No local checkpoint in this browser yet. Choose Save locally first.');

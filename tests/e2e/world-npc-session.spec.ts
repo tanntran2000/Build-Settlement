@@ -60,6 +60,7 @@ test('same pinned seed reproduces names; clicks never reroll them', async ({ pag
 
 test('only built manager tiles are offered; a low-stat starter can take the Farm slot', async ({ page }) => {
   await page.goto('/?mode=world-npc');
+  await importText(page, await readFile('packages/persistence/src/__tests__/fixtures/legacy-v1/npc.json', 'utf8'));
   const options = await card(page, 'npc_starter_3').getByLabel('Manager post', { exact: false }).locator('option').allInnerTexts();
   expect(options).toEqual(['Manager — Farm (field-1)', 'Manager — Food Processor (plain-1)']);
   await assign(page, 'npc_starter_3', 'field-1');

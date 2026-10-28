@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { createGoodsStockState, GOODS_STOCK_RULESET, cityEconomyRuleset } from '@haven/core';
   import { tick } from 'svelte';
   import CharacterLifeShell from './CharacterLifeShell.svelte';
   import CharacterLifeCity from './CharacterLifeCity.svelte';
@@ -12,10 +13,10 @@
   import { errorLog } from './error-log.js';
   import { formatFulfillment, formatMilli as units } from './milli-format.js';
   import { formatLifeWeek } from './life-calendar.js';
-  import { readLocalCheckpoint, saveLocalCheckpoint } from './tile-local-checkpoint.js';
-  import { prepareWorldSessionLoad, readLocalWorldSession, saveLocalWorldSession } from './world-session.js';
-  import { prepareNpcWorldSessionLoad, readLocalNpcWorldSession, saveLocalNpcWorldSession } from './world-npc-session.js';
-  import { prepareCharacterLifeLoad, readLocalCharacterLife, saveLocalCharacterLife } from './character-life-session.js';
+  import { readOldLocalCheckpoint, readLocalCheckpoint, saveLocalCheckpoint } from './tile-local-checkpoint.js';
+  import { prepareWorldSessionLoad, readOldLocalWorldSession, readLocalWorldSession, saveLocalWorldSession } from './world-session.js';
+  import { prepareNpcWorldSessionLoad, readOldLocalNpcWorldSession, readLocalNpcWorldSession, saveLocalNpcWorldSession } from './world-npc-session.js';
+  import { prepareCharacterLifeLoad, readOldLocalCharacterLife, readLocalCharacterLife, saveLocalCharacterLife } from './character-life-session.js';
   import WorldNpcPanel from './WorldNpcPanel.svelte';
   import CharacterProfile from './CharacterProfile.svelte';
 
@@ -26,7 +27,8 @@
   export let lifeMode = false;
   export let initialLife: CharacterLifeSessionState | null = null;
   $: populationMode = ruleset === POPULATION_TILE_RULESET;
-  let state = createTileTrialState();
+  let state = ruleset === POPULATION_TILE_RULESET ? createGoodsStockState() : createTileTrialState();
+  $: goodsMode = cityEconomyRuleset(state, ruleset) === GOODS_STOCK_RULESET;
   let selectedId = 'forest-1';
   let typeId = 'logging';
   let workers = '0';
@@ -52,7 +54,7 @@
     try {
       const seed = crypto.getRandomValues(new Uint32Array(1))[0];
       const created = lifeMode ? (initialLife ? { success: true as const, value: initialLife } : { success: false as const, error: { message: 'A Character Life session is not available. Reload to try New Game again.' } })
-        : npcMode ? createNpcWorldSession(seed) : createWorldSession(seed);
+        : npcMode ? createNpcWorldSession(seed, GOODS_STOCK_RULESET) : createWorldSession(seed, GOODS_STOCK_RULESET);
       if (created.success) {
         state = created.value.city; outside = created.value.outside;
         if (npcMode) npcs = (created.value as NpcWorldSessionState).npcs;
@@ -214,15 +216,15 @@
     if (!result.success) { checkpointError(result.message); return; }
     error = ''; saveNotice = result.replaced ? 'Saved in this browser. Replaced the previous local checkpoint.' : 'Saved in this browser.';
   }
-  function continueLocally() {
+  function continueLocally(oldOnly = false) {
     if (world) {
       const expectedRevision = state.revision;
-      const result = lifeMode ? readLocalCharacterLife() : npcMode ? readLocalNpcWorldSession() : readLocalWorldSession();
+      const result = lifeMode ? (oldOnly ? readOldLocalCharacterLife() : readLocalCharacterLife()) : npcMode ? (oldOnly ? readOldLocalNpcWorldSession() : readLocalNpcWorldSession()) : (oldOnly ? readOldLocalWorldSession() : readLocalWorldSession());
       if (!result.success) { checkpointError(result.message); return; }
       loadWorldSession(result.state, expectedRevision, 'Local checkpoint loaded. Planning restored.', true);
       return;
     }
-    const result = readLocalCheckpoint(ruleset);
+    const result = oldOnly ? readOldLocalCheckpoint(ruleset) : readLocalCheckpoint(ruleset);
     if (!result.success) { checkpointError(result.message); return; }
     // A file read still pending must not overwrite the restored plan or this feedback.
     if (command('LOAD_TRIAL', { snapshot: result.state })) { importRead++; saveNotice = 'Local checkpoint loaded. Planning restored.'; }
@@ -258,6 +260,9 @@
               <div class="requirement-heading"><h4>Goods</h4><p data-testid="life-requirement-goods">{units(report.goods.servedMilli)} / {units(report.goods.demandMilli)} · {fulfillment}</p></div>
               {#if fulfillment.endsWith('%')}<div class="fulfillment-track" data-fulfillment-track="goods" aria-hidden="true"><span style:width={fulfillment}></span></div>{/if}
             {:else}<h4>Goods</h4>{/if}
+            {#if state.goodsStock}<details><summary>Goods requirements</summary>
+              <h3>Current inventory</h3><dl><div><dt>Goods stock</dt><dd data-testid="trial-stock-goods">{units(state.goodsStock.amountMilli)}</dd></div></dl>
+            </details>{/if}
           </div>
         </div>
       </section>
@@ -282,12 +287,14 @@
     <h3>Planning checkpoint</h3>
     <p>Save or restore a Planning checkpoint in this browser or a JSON file.</p>
     <details><summary>About checkpoints</summary>
-    <p>Save locally keeps one checkpoint per mode in this browser profile and site, replacing that mode's previous one; clearing site data removes it. Continue locally restores this mode's checkpoint.</p>
+    {#if populationMode}<p>Save locally keeps one checkpoint per mode and economy generation in this browser profile and site. It replaces only that generation's checkpoint; clearing site data removes it. Continue locally tries Goods first, then old rules only if the Goods slot is absent. Continue old-rules checkpoint reads the old slot only.</p>
+    {:else}<p>Save locally keeps one checkpoint per mode in this browser profile and site, replacing that mode's previous one; clearing site data removes it. Continue locally restores this mode's checkpoint.</p>{/if}
     <p>Export a JSON file as a portable backup; Import replaces the current plan after validation. No autosave or cloud save.</p>
     </details>
     {#if locked}<p>Choose Plan next week before saving, continuing, exporting or importing.</p>{/if}
     <button disabled={checkpointLocked} onclick={saveLocally}>Save locally</button>
-    <button disabled={checkpointLocked} onclick={continueLocally}>Continue locally</button>
+    <button disabled={checkpointLocked} onclick={() => continueLocally()}>Continue locally</button>
+    <button disabled={checkpointLocked} onclick={() => continueLocally(true)}>Continue old-rules checkpoint</button>
     <button disabled={checkpointLocked} onclick={exportCheckpoint}>Export checkpoint</button>
     <label for="tile-save-file">Import checkpoint</label>
     <input id="tile-save-file" type="file" accept=".json,application/json" disabled={checkpointLocked} onchange={importCheckpoint} />
@@ -299,19 +306,29 @@
     {#snippet help()}
   <details class="card">
     <summary>Getting started</summary>
+    {#if goodsMode}
+    <p>Farm and Food Processor start with 2 WF each, feeding 100 residents. A normal Market already occupies plain-2. Build Logging Camp on forest-1 (2 WF) and Goods Workshop on plain-3 (1 WF), then End Week. For immigration, raise Farm and Food Processor to 3 WF each; stored reserves alone do not raise the sustainable target.</p>
+    <p>Extract first, process second: Farm → Wheat → Food Processor → Food. Logging Camp supplies Wood to the Workshop. The Market distributes stored Goods. Assign whole WF from the shared pool.</p>
+    {:else}
     <p>Farm and Food Processor start with 2 WF each, feeding 100 residents. Build Logging Camp on forest-1 (2 WF), Iron Mine on ore-1 (1 WF), Goods Workshop on plain-2 (1 WF), and Market on plain-3. Then End Week.{#if populationMode} For immigration, also raise Farm and Food Processor to 3 WF each; stored Food alone does not attract arrivals.{/if}</p>
     <p>Extract first, process second: Farm → Wheat → Food Processor → Food. Logging Camp → Wood and Iron Mine → Iron supply the Workshop; a Market enables Goods service. Assign whole WF from the shared pool.</p>
+    {/if}
     <p>Build and replace pay full cost; replacement resets level and workers, with no refund. Upgrades cost base cost × next level. Pause releases workers and avoids upkeep; unfunded buildings idle without debt. Pause buildings to save tax income when Gold is low.</p>
   </details>
 
 <details class="card"><summary>Weekly rules</summary>
+    {#if goodsMode}
+    <p>IMPLEMENTATION TRIAL: 1 Workshop WF + 2 Wood → 2 stored Goods per funded batch; no Iron. Production can continue without a Market. A funded Market distributes up to 2 Goods per level weekly, limited by stock and demand of 0.02 per resident. Unused stock carries over. Only distributed Goods earns 1 Gold per Goods, once.</p>
+    <p>New Game grants 20 Food, 10 Goods and 45 Gold once: 15 Gold for five baseline operating weeks plus 30 Gold, 8 Wood and 4 Iron for construction. This reserve assumes 100 residents and the starter Farm, Processor and Market. It does not rely on production, taxes or sales. Spending, growth or changing operations can shorten coverage; funds are not protected. Stored Goods is not recurring income; actual sale Gold remains available cash.</p>
+    {:else}
     <p>TRIAL: tax {units(B.taxGoldPerResident)} Gold/resident/week; Goods demand {units(B.goodsDemandPerResident)} service/resident/week. Workshop: 1 WF + {units(B.goodsWoodPerBatch)} Wood + {units(B.goodsIronPerBatch)} Iron → {units(B.goodsServicePerBatch)} service. Market: {units(B.marketServicePerLevel)} service/level; raises capacity, not demand. Whole Workshop batches may have unused service; nothing carries over.</p>
+    {/if}
     <p>Goods earns {units(B.goldPerServiceMilli)} Gold/service and up to {B.goodsHappinessMax} Happiness at full fulfillment. Food need: {units(B.foodDemandPerResident)} per resident/week. Maintenance is funded in tile order; tax arrives first.</p>
 </details>
 <details class="card"><summary>About this build</summary>
   <p>Balance and building policies are TRIAL. Character profiles are TRIAL content. Weekly life events and Player interactions are not available yet.</p>
   <p>Immigration is TRIAL. Arrivals join next week. Old tile checkpoints continue in Legacy tile trial.</p>
-  <p>Goods is a city Requirement, with no stored Goods. Security, Corruption and Tension are not simulated here.</p>
+  <p>{#if goodsMode}Goods is stored and distributed by Markets.{:else}Goods is a city Requirement, with no stored Goods.{/if} Security, Corruption and Tension are not simulated here.</p>
   <a href="/">Classic Weekly</a> · <a href="/?mode=tiles">Legacy tile trial</a> · <a href="/?mode=population">Play population trial</a> · <a href="/?mode=world">World Session without NPCs</a> · <a href="/?mode=world-npc">World Session with NPCs</a>
 </details>
     {/snippet}
@@ -353,11 +370,13 @@
 
   <section class="card" aria-label="Planning checkpoints">
     <h2>Planning checkpoint</h2>
-    <p>Save locally keeps one checkpoint per mode in this browser profile and site, replacing that mode's previous one; clearing site data removes it. Continue locally restores this mode's checkpoint.</p>
+    {#if populationMode}<p>Save locally keeps one checkpoint per mode and economy generation in this browser profile and site. It replaces only that generation's checkpoint; clearing site data removes it. Continue locally tries Goods first, then old rules only if the Goods slot is absent. Continue old-rules checkpoint reads the old slot only.</p>
+    {:else}<p>Save locally keeps one checkpoint per mode in this browser profile and site, replacing that mode's previous one; clearing site data removes it. Continue locally restores this mode's checkpoint.</p>{/if}
     <p>Export a JSON file as a portable backup; Import replaces the current plan after validation. No autosave or cloud save.</p>
     {#if locked}<p>Choose Plan next week before saving, continuing, exporting or importing.</p>{/if}
     <button disabled={checkpointLocked} onclick={saveLocally}>Save locally</button>
-    <button disabled={checkpointLocked} onclick={continueLocally}>Continue locally</button>
+    <button disabled={checkpointLocked} onclick={() => continueLocally()}>Continue locally</button>
+    <button disabled={checkpointLocked} onclick={() => continueLocally(true)}>Continue old-rules checkpoint</button>
     <button disabled={checkpointLocked} onclick={exportCheckpoint}>Export checkpoint</button>
     <label for="tile-save-file">Import checkpoint</label>
     <input id="tile-save-file" type="file" accept=".json,application/json" disabled={checkpointLocked} onchange={importCheckpoint} />
@@ -372,13 +391,19 @@
         <div><dt>{key[0].toUpperCase() + key.slice(1)}</dt><dd data-testid={`trial-stock-${key}`}>{units(settlement.inventory[key])}</dd></div>
       {/each}
     </dl>
-    <p>Goods is a city Requirement, with no stored Goods. Happiness: <strong>{state.happiness}</strong> / 100. Security, Corruption and Tension are not simulated here.</p>
+    {#if state.goodsStock}<p>Goods stock: <strong data-testid="trial-stock-goods">{units(state.goodsStock.amountMilli)}</strong></p>{/if}
+    <p>{#if goodsMode}Goods is stored and distributed by Markets.{:else}Goods is a city Requirement, with no stored Goods.{/if} Happiness: <strong>{state.happiness}</strong> / 100. Security, Corruption and Tension are not simulated here.</p>
   </section>
 
   <details class="card" open>
     <summary>First supply chain</summary>
+    {#if goodsMode}
+    <p>Farm and Food Processor start with 2 WF each, feeding 100 residents. A normal Market already occupies plain-2. Build Logging Camp on forest-1 (2 WF) and Goods Workshop on plain-3 (1 WF), then End Week. For immigration, raise Farm and Food Processor to 3 WF each; stored reserves alone do not raise the sustainable target.</p>
+    <p>Extract first, process second: Farm → Wheat → Food Processor → Food. Logging Camp supplies Wood to the Workshop. The Market distributes stored Goods. Assign whole WF from the shared pool.</p>
+    {:else}
     <p>Farm and Food Processor start with 2 WF each, feeding 100 residents. Build Logging Camp on forest-1 (2 WF), Iron Mine on ore-1 (1 WF), Goods Workshop on plain-2 (1 WF), and Market on plain-3. Then End Week.{#if populationMode} For immigration, also raise Farm and Food Processor to 3 WF each; stored Food alone does not attract arrivals.{/if}</p>
     <p>Extract first, process second: Farm → Wheat → Food Processor → Food. Logging Camp → Wood and Iron Mine → Iron supply the Workshop; a Market enables Goods service. Assign whole WF from the shared pool.</p>
+    {/if}
     <p>Build and replace pay full cost; replacement resets level and workers, with no refund. Upgrades cost base cost × next level. Pause releases workers and avoids upkeep; unfunded buildings idle without debt. Pause buildings to save tax income when Gold is low.</p>
   </details>
 
@@ -437,7 +462,12 @@
 
   <section class="card">
     <h2>Resolve the week</h2>
+    {#if goodsMode}
+    <p>IMPLEMENTATION TRIAL: 1 Workshop WF + 2 Wood → 2 stored Goods per funded batch; no Iron. Production can continue without a Market. A funded Market distributes up to 2 Goods per level weekly, limited by stock and demand of 0.02 per resident. Unused stock carries over. Only distributed Goods earns 1 Gold per Goods, once.</p>
+    <p>New Game grants 20 Food, 10 Goods and 45 Gold once: 15 Gold for five baseline operating weeks plus 30 Gold, 8 Wood and 4 Iron for construction. This reserve assumes 100 residents and the starter Farm, Processor and Market. It does not rely on production, taxes or sales. Spending, growth or changing operations can shorten coverage; funds are not protected. Stored Goods is not recurring income; actual sale Gold remains available cash.</p>
+    {:else}
     <p>TRIAL: tax {units(B.taxGoldPerResident)} Gold/resident/week; Goods demand {units(B.goodsDemandPerResident)} service/resident/week. Workshop: 1 WF + {units(B.goodsWoodPerBatch)} Wood + {units(B.goodsIronPerBatch)} Iron → {units(B.goodsServicePerBatch)} service. Market: {units(B.marketServicePerLevel)} service/level; raises capacity, not demand. Whole Workshop batches may have unused service; nothing carries over.</p>
+    {/if}
     <p>Goods earns {units(B.goldPerServiceMilli)} Gold/service and up to {B.goodsHappinessMax} Happiness at full fulfillment. Food need: {units(B.foodDemandPerResident)} per resident/week. Maintenance is funded in tile order; tax arrives first.</p>
     <button disabled={locked} onclick={() => command('END_WEEK', { expectedWeek: state.world.week })}>End Week</button>
   </section>
@@ -447,6 +477,7 @@
       <h2>Week {report.week} report</h2>
       {#if report.immigration}<p data-testid="trial-immigration">Population: {report.immigration.populationBefore} → {report.immigration.populationAfter} · {report.immigration.arrivals} arrivals · Available next week.</p>{/if}
       {#if !locked}<p>Previous report · Planning is active.</p>{/if}
+      {#if report.goodsStock}<p data-testid="goods-stock-flow">Goods stock: opening {units(report.goodsStock.openingMilli)} · produced {units(report.goodsStock.producedMilli)} · distributed {units(report.goodsStock.distributedMilli)} · closing {units(report.goodsStock.closingMilli)}. Demand {units(report.goodsStock.demandMilli)}; unmet {units(report.goodsStock.unmetMilli)}; capacity {units(report.goodsStock.capacityMilli)}; limited by {report.goodsStock.limitedBy}.</p>{/if}
       <p data-testid="trial-goods">Goods service: {units(report.goods.servedMilli)} / {units(report.goods.demandMilli)} · {report.goods.fulfillmentBps / 100}% {report.goods.demandMilli === 0 ? '(no demand)' : 'fulfilled'}. Materials used once: {units(report.goods.woodUsed)} Wood, {units(report.goods.ironUsed)} Iron. Revenue: {units(report.goods.revenueMilli)} Gold.</p>
       <p>Tax: {units(report.taxMilli)} Gold. Upkeep covered: {units(report.upkeepPaidMilli)} Gold; unfunded: {units(report.unpaidUpkeepMilli)} Gold (no debt). Farm batch payment: {units(report.farmBatchGoldMilli)} Gold; extra Farm upkeep: {units(report.farmExtraUpkeepMilli)} Gold.</p>
       <p>Food consumed: {units(report.foodConsumedMilli)} / {units(report.foodDemandMilli)}. Happiness: {report.happinessBefore} → {report.happinessAfter}.</p>

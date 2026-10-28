@@ -1,7 +1,32 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
 import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
 import { writeFile } from 'node:fs/promises';
+import { GOODS_STOCK_RULESET } from '../../packages/core/src/index.ts';
 import { characterWindow, charactersView, expectReport, go, importLife, keyActivate, keyGo, makeLife, reportFixture, reportRegion, selectArea, selectPerson, tabTo, turnStatuses, watchTurnStatus } from './character-life-navigation.helpers.ts';
+
+for (const viewport of [{ width: 375, height: 812 }, { width: 1280, height: 900 }]) {
+  test(`Goods stock accessibility at ${viewport.width}px`, async ({ page }, info) => {
+    test.setTimeout(120000);
+    await page.setViewportSize(viewport); await page.goto('/?mode=world-life');
+    await importLife(page, makeLife(20261028, GOODS_STOCK_RULESET));
+    const failures: string[] = [], measurements: Measurement[] = [], focus: unknown[] = [];
+    const capture = async () => { const m = await measure(page.getByTestId('life-shell')); measurements.push(m); audit(m, failures); await auditTabOrder(page, failures, focus); };
+    await keyActivate(page, page.getByText('Food requirements', { exact: true }));
+    await keyActivate(page, page.getByText('Goods requirements', { exact: true }));
+    await capture();
+    await keyGo(page, 'help');
+    for (const summary of await page.locator('[data-life-view="help"] summary').all()) await keyActivate(page, summary);
+    await capture();
+    await keyGo(page, 'session'); await capture();
+    await keyActivate(page, page.getByTestId('life-end-week'));
+    for (const summary of await reportRegion(page).locator('summary').all()) await keyActivate(page, summary);
+    await capture();
+    const path = info.outputPath('goods-accessibility.json');
+    await writeFile(path, JSON.stringify({ viewport, measurements, focus, failures }, null, 2));
+    await info.attach('goods-accessibility', { path, contentType: 'application/json' });
+    expect([...new Set(failures)]).toEqual([]);
+  });
+}
 
 function contrast(a: number[], b: number[]) {
   const luminance = (rgb: number[]) => rgb.reduce((sum, c, i) => {

@@ -4,8 +4,8 @@ import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, isCharacterLifeSessio
 import { serializeCharacterLifeSave } from '../../packages/persistence/src/character-life-save.ts';
 import type { LifeDestination } from '../../packages/ui/src/character-life-navigation.ts';
 
-export function makeLife(seed = 12345): CharacterLifeSessionState {
-  const result = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' });
+export function makeLife(seed = 12345, economy?: Parameters<typeof createCharacterLifeSession>[2]): CharacterLifeSessionState {
+  const result = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' }, economy);
   expect(result.success).toBe(true);
   if (!result.success) throw new Error(result.error.message);
   expect(isCharacterLifeSessionState(result.value)).toBe(true);
@@ -245,7 +245,7 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
   if (!expected.activities.length) await expect(activity.getByText('No building activity recorded.', { exact: true })).toBeVisible();
   if (!calculationOpen) await calculation.locator('summary').click();
   await expect(calculation.getByText('Stock change is closing stock minus opening stock for this resolved week. It is not gross production or a forecast.', { exact: true })).toBeVisible();
-  await expect(calculation.getByText(/^TRIAL: tax /)).toBeVisible();
+  await expect(calculation.getByText(expected.goodsStock ? /^IMPLEMENTATION TRIAL:/ : /^TRIAL: tax /)).toBeVisible();
   await expect(calculation.getByText(/^Goods earns /)).toBeVisible();
   const g = (await goods.textContent())!.match(/Goods service: ([\d,]+(?:\.\d+)?) \/ ([\d,]+(?:\.\d+)?) · (No demand|[\d.]+%). Materials used once: ([\d,]+(?:\.\d+)?) Wood, ([\d,]+(?:\.\d+)?) Iron. Revenue: ([\d,]+(?:\.\d+)?) Gold\./)!;
   const t = (await tax.textContent())!.match(/[\d,]+(?:\.\d+)?(?= Gold)/g)!, h = (await happiness.textContent())!.match(/\d+/g)!;
@@ -269,6 +269,12 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
     goods: { servedMilli: milli(g[1]), demandMilli: milli(g[2]), fulfillmentBps: expected.goods.demandMilli === 0 ? expected.goods.fulfillmentBps : milli(g[3].slice(0, -1)) / 10, woodUsed: milli(g[4]), ironUsed: milli(g[5]), revenueMilli: milli(g[6]) },
     activities: await activity.locator('li').allTextContents(),
   };
+  if (expected.goodsStock) {
+    const flow = panel.getByTestId('goods-stock-flow'), f = expected.goodsStock;
+    await expect(flow).toHaveText(`Goods stock: opening ${u(f.openingMilli)} · produced ${u(f.producedMilli)} · distributed ${u(f.distributedMilli)} · closing ${u(f.closingMilli)}. Demand ${u(f.demandMilli)}; unmet ${u(f.unmetMilli)}; capacity ${u(f.capacityMilli)}; limited by ${f.limitedBy}.`);
+    const text = (await flow.textContent())!, amounts = text.match(/[\d,]+(?:\.\d+)?/g)!.map(milli);
+    actual.goodsStock = { openingMilli: amounts[0], producedMilli: amounts[1], distributedMilli: amounts[2], closingMilli: amounts[3], demandMilli: amounts[4], unmetMilli: amounts[5], capacityMilli: amounts[6], limitedBy: text.match(/limited by (none|stock|capacity)/)![1] as typeof f.limitedBy };
+  } else await expect(panel.getByTestId('goods-stock-flow')).toHaveCount(0);
   if (expected.immigration) {
     const i = expected.immigration;
     const population = panel.getByTestId('trial-immigration');

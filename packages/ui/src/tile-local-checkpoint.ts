@@ -1,16 +1,19 @@
+import { GOODS_STOCK_RULESET } from '@haven/core';
 import { LEGACY_TILE_RULESET, POPULATION_TILE_RULESET, type TileTrialRuleset, type TileTrialState } from '@haven/core';
 import { deserializeTileTrialSave, serializeTileTrialSave } from '@haven/persistence';
 
 // One explicit manual slot per ruleset in this browser profile/origin; same envelope as Export checkpoint.
 export const TILE_CHECKPOINT_KEY = 'haven.tile-trial.checkpoint.v1';
 export const POPULATION_TILE_CHECKPOINT_KEY = 'haven.tile-population.checkpoint.v1';
+export const GOODS_TILE_CHECKPOINT_KEY = 'haven.tile-population-goods.checkpoint.v1';
 type Failure = { success: false; message: string };
 const fail = (message: string): Failure => ({ success: false, message });
 
 export function saveLocalCheckpoint(state: unknown, ruleset: TileTrialRuleset = LEGACY_TILE_RULESET): { success: true; replaced: boolean } | Failure {
   const result = serializeTileTrialSave(state, ruleset);
   if (!result.success) return fail(result.error.message);
-  const key = ruleset === POPULATION_TILE_RULESET ? POPULATION_TILE_CHECKPOINT_KEY : TILE_CHECKPOINT_KEY;
+  const key = JSON.parse(result.text).rulesetId === GOODS_STOCK_RULESET ? GOODS_TILE_CHECKPOINT_KEY : ruleset === POPULATION_TILE_RULESET ? POPULATION_TILE_CHECKPOINT_KEY : TILE_CHECKPOINT_KEY;
+
   try {
     const storage = window.localStorage;
     const replaced = storage.getItem(key) !== null;
@@ -21,10 +24,15 @@ export function saveLocalCheckpoint(state: unknown, ruleset: TileTrialRuleset = 
   }
 }
 
-export function readLocalCheckpoint(ruleset: TileTrialRuleset = LEGACY_TILE_RULESET): { success: true; state: TileTrialState } | Failure {
+export function readLocalCheckpoint(ruleset: TileTrialRuleset = LEGACY_TILE_RULESET) { return readCheckpoint(ruleset, false); }
+export function readOldLocalCheckpoint(ruleset: TileTrialRuleset = LEGACY_TILE_RULESET) { return readCheckpoint(ruleset, true); }
+function readCheckpoint(ruleset: TileTrialRuleset, oldOnly: boolean): { success: true; state: TileTrialState } | Failure {
   const key = ruleset === POPULATION_TILE_RULESET ? POPULATION_TILE_CHECKPOINT_KEY : TILE_CHECKPOINT_KEY;
   let text: string | null;
-  try { text = window.localStorage.getItem(key); } catch {
+  try {
+    const storage = window.localStorage;
+    text = !oldOnly && ruleset === POPULATION_TILE_RULESET ? storage.getItem(GOODS_TILE_CHECKPOINT_KEY) ?? storage.getItem(key) : storage.getItem(key);
+  } catch {
     return fail('Could not read browser storage. Your game was preserved. Use Import checkpoint instead.');
   }
   if (text === null) return fail('No local checkpoint in this browser yet. Choose Save locally first.');

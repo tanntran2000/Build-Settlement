@@ -86,7 +86,7 @@ export function isLiveCharacterLifeSessionState(raw: unknown): raw is CharacterL
     if (!keysOf(raw, ['city', 'outside', 'npcs', 'player', 'profiles'])) return false;
     const city = raw.city;
     // Preflight descriptors before the legacy tile guard iterates potentially hostile indices.
-    if (!keysOf(city, ['world', 'revision', 'phase', 'tiles', 'happiness']) || readDenseArray(city.tiles) === null ||
+    if (!keysOf(city, ['world', 'revision', 'phase', 'tiles', 'happiness'], ['goodsStock']) || readDenseArray(city.tiles) === null ||
         !isTileTrialState(city) || !isWorldSessionState({ city: createTileTrialState(), outside: raw.outside }) ||
         !isWorldNpcList(raw.npcs, city)) return false;
     return hasCharacterLifeProfiles(raw, raw.npcs);
