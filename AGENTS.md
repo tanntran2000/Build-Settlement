@@ -67,3 +67,18 @@ flowchart LR
 
 * Nếu một lỗi hoặc test case không thể giải quyết sau **2 lượt sửa (2 iterations)**, Agent phải lập tức chuyển trạng thái sang **HOLD**, dừng code và báo cáo Human để đánh giá lại nguyên nhân gốc rễ hoặc phạm vi bài toán.
 * Tuyệt đối không tự động mở rộng cuộc tái cấu trúc (refactor loop) kéo theo các subsystem khác ngoài phạm vi được giao.
+
+---
+
+## 5. Worktree and Storage Discipline
+
+1. Before creating a worktree, list the current worktrees and the task's assigned execution environment. Do not create nested worktrees or an additional repository clone solely for a task.
+2. Default to one main checkout and at most one active auxiliary worktree. Reuse a suitable existing environment.
+3. Agents doing read-only inspection, planning, or review must not create worktrees, install dependencies, or run builds unnecessarily.
+4. Install dependencies only in environments where tooling must run. Preserve the project's standard package manager and lockfile; do not migrate package managers for cleanup.
+5. When the project uses pnpm, prefer a shared package store on the same filesystem where supported. Do not symlink an entire node_modules directory across worktrees whose dependencies may change.
+6. Never edit packages inside node_modules directly. Before cleanup, preserve any existing custom package changes as recoverable patches.
+7. Before removing a worktree, check its commits, staged and unstaged changes, untracked and ignored files, nested repositories, and running processes. Preserve unmerged work and detached HEAD commits.
+8. Delete only outputs and caches verified to be reproducible. A .gitignore entry is not deletion authorization. Do not use git clean -fdx or force-remove operations to bypass cleanup failures.
+9. At task completion, preserve the results before removing unused auxiliary worktrees. Report the environments retained and the reason for retaining each one.
+10. Report the storage actually reclaimed. Moving folders outside the project does not count as space saved.
