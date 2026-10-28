@@ -31,8 +31,9 @@ export async function keyActivate(page: Page, target: Locator) {
 }
 
 export async function keyGo(page: Page, destination: LifeDestination) {
-  await keyActivate(page, page.locator(`#life-nav-${destination}`));
-  await expect(page.locator(`[data-life-view="${destination}"]`)).toBeVisible();
+  if (await page.locator('dialog:modal').count()) await keyActivate(page, page.getByRole('dialog').getByRole('button', { name: 'Close', exact: true }));
+  await keyActivate(page, page.locator(`#life-nav-${destination === 'reports' ? 'report' : destination}`));
+  await expect(destination === 'reports' ? page.getByRole('dialog', { name: 'Report', exact: true }) : page.locator(`[data-life-view="${destination}"]`)).toBeVisible();
 }
 
 export async function keyText(page: Page, target: Locator, value: string) {
@@ -50,15 +51,17 @@ export async function keyPost(page: Page, target: Locator, value: string) {
 }
 
 export async function watchTurnStatus(page: Page) {
-  await page.getByTestId('life-shell').locator('aside > [role="status"]').evaluate(node => {
+  await page.locator('#life-modal-status').evaluate(node => {
     const texts: string[] = [];
-    (node as HTMLElement & { mutations: string[] }).mutations = texts;
-    new MutationObserver(() => texts.push(node.textContent ?? '')).observe(node, { childList: true, characterData: true, subtree: true });
+    const modal: boolean[] = [];
+    const watched = node as HTMLElement & { mutations: string[]; modalAtMutation: boolean[] };
+    watched.mutations = texts; watched.modalAtMutation = modal;
+    new MutationObserver(() => { texts.push(node.textContent ?? ''); modal.push(!!node.closest('dialog:modal')); }).observe(node, { childList: true, characterData: true, subtree: true });
   });
 }
 
 export async function turnStatuses(page: Page) {
-  return page.getByTestId('life-shell').locator('aside > [role="status"]').evaluate(node => (node as HTMLElement & { mutations: string[] }).mutations);
+  return page.locator('#life-modal-status').evaluate(node => (node as HTMLElement & { mutations: string[] }).mutations);
 }
 export async function selectPerson(page: Page, id: string) {
   await go(page, 'characters');
@@ -83,9 +86,9 @@ export async function expectOneCharacterWindow(page: Page) {
 }
 
 export async function go(page: Page, destination: LifeDestination): Promise<void> {
-  const name = destination[0].toUpperCase() + destination.slice(1);
-  await page.getByRole('navigation', { name: 'Main', exact: true }).getByRole('button', { name, exact: true }).click();
-  await expect(page.locator(`[data-life-view="${destination}"]`)).toBeVisible();
+  if (await page.locator('dialog:modal').count()) await page.getByRole('dialog').getByRole('button', { name: 'Close', exact: true }).click();
+  await page.locator(`#life-nav-${destination === 'reports' ? 'report' : destination}`).click();
+  await expect(destination === 'reports' ? page.getByRole('dialog', { name: 'Report', exact: true }) : page.locator(`[data-life-view="${destination}"]`)).toBeVisible();
 }
 
 export async function importLife(page: Page, session: CharacterLifeSessionState): Promise<void> {
@@ -108,6 +111,7 @@ export async function exportLife(page: Page): Promise<CharacterLifeSessionState>
   expect(download.suggestedFilename()).toMatch(/^haven-world-life-week-\d+\.json$/);
   const state = JSON.parse(await readFile((await download.path())!, 'utf8')).state;
   expect(isCharacterLifeSessionState(state)).toBe(true);
+  expect(download.suggestedFilename()).toBe(`haven-world-life-week-${state.city.world.week}.json`);
   return state;
 }
 
@@ -125,6 +129,51 @@ export function reportMilli(text: string): number {
   const milli = BigInt(whole) * 1000n + BigInt(fraction.padEnd(3, '0'));
   expect(milli <= BigInt(Number.MAX_SAFE_INTEGER)).toBe(true);
   return (text.startsWith('-') ? -1 : 1) * Number(milli);
+}
+
+// Independent UI oracles; never import the production calendar or fulfillment projection.
+export function reportWeek(text: string): number {
+  const match = text.match(/^Week (\d+) · Year (\d+) report$/);
+  expect(match).not.toBeNull();
+  const weekOfYear = Number(match![1]), year = Number(match![2]);
+  expect(Number.isSafeInteger(year) && year >= 1).toBe(true);
+  expect(Number.isInteger(weekOfYear) && weekOfYear >= 1 && weekOfYear <= 40).toBe(true);
+  const absolute = (year - 1) * 40 + weekOfYear;
+  expect(Number.isSafeInteger(absolute)).toBe(true);
+  return absolute;
+}
+
+export function reportFulfillment(supplied: number, demand: number): string {
+  if (demand === 0) return 'No demand';
+  return `${Number(BigInt(supplied) * 10000n / BigInt(demand)) / 100}%`;
+}
+
+export const requirementsRegion = (page: Page) => page.getByRole('region', { name: 'City Requirements', exact: true });
+
+export async function expectRequirements(page: Page, report: Readonly<TileTrialReport> | null) {
+  const strip = requirementsRegion(page);
+  await expect(strip).toBeVisible();
+  if (!report) {
+    await expect(strip.getByText('No resolved week yet', { exact: true })).toBeVisible();
+    expect(await strip.textContent()).not.toContain('%');
+    await expect(strip.locator('[data-fulfillment-track]')).toHaveCount(0);
+    return;
+  }
+  const label = strip.getByText(/^Last resolved week:/);
+  expect(reportWeek((await label.textContent())!.replace('Last resolved week: ', '') + ' report')).toBe(report.week);
+  for (const [key, supplied, demand] of [['food', report.foodConsumedMilli, report.foodDemandMilli], ['goods', report.goods.servedMilli, report.goods.demandMilli]] as const) {
+    const row = strip.getByTestId(`life-requirement-${key}`);
+    await expect(row).toHaveText(`${reportUnits(supplied)} / ${reportUnits(demand)} · ${reportFulfillment(supplied, demand)}`);
+    const track = strip.locator(`[data-fulfillment-track="${key}"]`);
+    if (demand === 0) {
+      expect(await row.textContent()).not.toContain('%');
+      await expect(track).toHaveCount(0);
+    } else {
+      await expect(track).toHaveAttribute('aria-hidden', 'true');
+      await expect(track).toHaveCSS('height', '8px');
+      expect(await track.locator('span').evaluate(node => node.style.width)).toBe(reportFulfillment(supplied, demand));
+    }
+  }
 }
 
 // Selectively adapted from QOL 8c8505f: fixture data only, no historical verdicts.
@@ -155,18 +204,21 @@ export function reportFixture(kind: 'shortage' | 'zero' | 'precision' | 'service
   return s;
 }
 
-export const reportRegion = (page: Page) => page.locator('[data-life-view="reports"] [aria-label="Weekly city report"]');
+export const reportRegion = (page: Page) => page.locator('[data-life-window="report"] [aria-label="Weekly city report"]');
 
 // Read the complete report from rendered text, including the calculation disclosure.
 export async function expectReport(page: Page, expected: Readonly<TileTrialReport>): Promise<TileTrialReport> {
   const panel = reportRegion(page), u = reportUnits;
-  await expect(panel.getByRole('heading', { name: `Week ${expected.week} report`, exact: true })).toBeVisible();
+  const heading = panel.getByRole('heading', { name: /^Week .* report$/ });
+  await expect(heading).toBeVisible();
+  const absoluteWeek = reportWeek((await heading.textContent())!);
+  expect(absoluteWeek).toBe(expected.week);
   for (const name of ['Needs and services', 'Gold and upkeep', 'Population and happiness']) await expect(panel.getByRole('heading', { name, exact: true })).toBeVisible();
-  await expect(panel.getByText(`Food consumed: ${u(expected.foodConsumedMilli)} / ${u(expected.foodDemandMilli)}.`, { exact: true })).toBeVisible();
+  await expect(panel.getByText(`Food consumed: ${u(expected.foodConsumedMilli)} / ${u(expected.foodDemandMilli)} · ${reportFulfillment(expected.foodConsumedMilli, expected.foodDemandMilli)}.`, { exact: true })).toBeVisible();
   await expect(panel.getByText(`Food unmet: ${u(expected.foodDemandMilli - expected.foodConsumedMilli)}.`, { exact: true })).toBeVisible();
   await expect(panel.getByText(`Goods unmet: ${u(expected.goods.demandMilli - expected.goods.servedMilli)}.`, { exact: true })).toBeVisible();
   const goods = panel.getByTestId('trial-goods');
-  await expect(goods).toHaveText(`Goods service: ${u(expected.goods.servedMilli)} / ${u(expected.goods.demandMilli)} · ${expected.goods.fulfillmentBps / 100}% ${expected.goods.demandMilli === 0 ? '· No demand' : 'fulfilled'}. Materials used once: ${u(expected.goods.woodUsed)} Wood, ${u(expected.goods.ironUsed)} Iron. Revenue: ${u(expected.goods.revenueMilli)} Gold.`);
+  await expect(goods).toHaveText(`Goods service: ${u(expected.goods.servedMilli)} / ${u(expected.goods.demandMilli)} · ${expected.goods.demandMilli === 0 ? 'No demand' : `${expected.goods.fulfillmentBps / 100}%`}. Materials used once: ${u(expected.goods.woodUsed)} Wood, ${u(expected.goods.ironUsed)} Iron. Revenue: ${u(expected.goods.revenueMilli)} Gold.`);
   const tax = panel.getByText(/^Tax:/);
   await expect(tax).toHaveText(`Tax: ${u(expected.taxMilli)} Gold. Upkeep covered: ${u(expected.upkeepPaidMilli)} Gold; unfunded: ${u(expected.unpaidUpkeepMilli)} Gold (no debt). Farm batch payment: ${u(expected.farmBatchGoldMilli)} Gold; extra Farm upkeep: ${u(expected.farmExtraUpkeepMilli)} Gold.`);
   await expect(tax).toBeVisible();
@@ -195,14 +247,26 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
   await expect(calculation.getByText('Stock change is closing stock minus opening stock for this resolved week. It is not gross production or a forecast.', { exact: true })).toBeVisible();
   await expect(calculation.getByText(/^TRIAL: tax /)).toBeVisible();
   await expect(calculation.getByText(/^Goods earns /)).toBeVisible();
-  const g = (await goods.textContent())!.match(/Goods service: ([\d,]+(?:\.\d+)?) \/ ([\d,]+(?:\.\d+)?) · ([\d.]+)% .*Materials used once: ([\d,]+(?:\.\d+)?) Wood, ([\d,]+(?:\.\d+)?) Iron. Revenue: ([\d,]+(?:\.\d+)?) Gold\./)!;
+  const g = (await goods.textContent())!.match(/Goods service: ([\d,]+(?:\.\d+)?) \/ ([\d,]+(?:\.\d+)?) · (No demand|[\d.]+%). Materials used once: ([\d,]+(?:\.\d+)?) Wood, ([\d,]+(?:\.\d+)?) Iron. Revenue: ([\d,]+(?:\.\d+)?) Gold\./)!;
   const t = (await tax.textContent())!.match(/[\d,]+(?:\.\d+)?(?= Gold)/g)!, h = (await happiness.textContent())!.match(/\d+/g)!;
   const food = (await panel.getByText(/^Food consumed:/).textContent())!.match(/[\d,]+(?:\.\d+)?/g)!;
+  if (expected.goods.demandMilli === 0) {
+    expect(g[3]).toBe('No demand');
+    expect(milli(g[1])).toBe(0); expect(milli(g[2])).toBe(0);
+    expect(await goods.textContent()).not.toContain('%');
+  }
+  if (expected.foodDemandMilli === 0) {
+    const foodRow = panel.getByText(/^Food consumed:/);
+    await expect(foodRow).toContainText('No demand');
+    expect(await foodRow.textContent()).not.toContain('%');
+    expect(food.slice(0, 2).map(milli)).toEqual([0, 0]);
+  }
+  // Zero-demand BPS comes only from the executor, not an invented UI percentage.
   const actual: TileTrialReport = {
-    week: Number((await panel.getByRole('heading', { name: /^Week \d+ report$/ }).textContent())!.match(/\d+/)![0]), before, after,
+    week: absoluteWeek, before, after,
     taxMilli: milli(t[0]), upkeepPaidMilli: milli(t[1]), unpaidUpkeepMilli: milli(t[2]), farmBatchGoldMilli: milli(t[3]), farmExtraUpkeepMilli: milli(t[4]),
     foodConsumedMilli: milli(food[0]), foodDemandMilli: milli(food[1]), happinessBefore: Number(h[0]), happinessAfter: Number(h[1]),
-    goods: { servedMilli: milli(g[1]), demandMilli: milli(g[2]), fulfillmentBps: milli(g[3]) / 10, woodUsed: milli(g[4]), ironUsed: milli(g[5]), revenueMilli: milli(g[6]) },
+    goods: { servedMilli: milli(g[1]), demandMilli: milli(g[2]), fulfillmentBps: expected.goods.demandMilli === 0 ? expected.goods.fulfillmentBps : milli(g[3].slice(0, -1)) / 10, woodUsed: milli(g[4]), ironUsed: milli(g[5]), revenueMilli: milli(g[6]) },
     activities: await activity.locator('li').allTextContents(),
   };
   if (expected.immigration) {
@@ -225,7 +289,7 @@ export async function lifeUiSnapshot(page: Page) {
   await expect(page.locator('[aria-label="Error log"] [role="status"]').filter({ hasText: /^Saving recent errors/ })).toHaveCount(0);
   return page.getByTestId('life-shell').evaluate(shell => {
     const copy = shell.cloneNode(true) as HTMLElement;
-    copy.querySelectorAll(':scope > aside > [role="alert"], [aria-label="Planning checkpoints"] [role="status"]').forEach(node => node.remove());
+    copy.querySelectorAll('[data-life-error], [aria-label="Planning checkpoints"] [role="status"]').forEach(node => node.remove());
     return {
       markup: copy.outerHTML,
       controls: [...shell.querySelectorAll('input:not([type="file"]),select')].map(node => ({ id: node.id, value: (node as HTMLInputElement).value, disabled: (node as HTMLInputElement).disabled })),
@@ -234,10 +298,10 @@ export async function lifeUiSnapshot(page: Page) {
 }
 
 // A current rejection may log exactly one RUNTIME/INVALID_COMMAND; superseded reads get no exception.
-export async function expectCheckpointRejectionPreservesUi(page: Page, before: Awaited<ReturnType<typeof lifeUiSnapshot>>) {
+export async function expectCheckpointRejectionPreservesUi(page: Page, before: Awaited<ReturnType<typeof lifeUiSnapshot>>, expectedAbsoluteWeek: number) {
   const after = await lifeUiSnapshot(page);
   const { version } = JSON.parse(await readFile(new URL('../../packages/ui/package.json', import.meta.url), 'utf8'));
-  const normalized = await page.evaluate(({ before, after, version }) => {
+  const normalized = await page.evaluate(({ before, after, version, expectedAbsoluteWeek }) => {
     const prior = document.createElement('div'), current = document.createElement('div');
     prior.innerHTML = before; current.innerHTML = after;
     const oldLog = prior.querySelector('[aria-label="Error log"]')!, newLog = current.querySelector('[aria-label="Error log"]')!;
@@ -254,8 +318,7 @@ export async function expectCheckpointRejectionPreservesUi(page: Page, before: A
     check(!!last, 'missing checkpoint entry');
     const paragraphs = [...last.children];
     check(paragraphs.length === 5 && paragraphs.every(node => node.tagName === 'P'), 'entry structure');
-    const week = current.querySelector('aside > p')!.textContent!.match(/^Week (\d+)/)![1];
-    const heading = 'validation · INVALID_COMMAND', message = 'The action input was rejected. Check the form and try again.', context = `weekly · RUNTIME · Week ${week}`;
+    const heading = 'validation · INVALID_COMMAND', message = 'The action input was rejected. Check the form and try again.', context = `weekly · RUNTIME · Week ${expectedAbsoluteWeek}`;
     check(paragraphs[0].textContent === heading && paragraphs[1].textContent === message && paragraphs[2].textContent === context, 'checkpoint code/message/context');
     const times = [...last.querySelectorAll('time')];
     check(times.length === 2 && times.every(node => node.textContent === node.getAttribute('datetime')), 'UTC representation');
@@ -303,6 +366,6 @@ export async function expectCheckpointRejectionPreservesUi(page: Page, before: A
     // Replace only after independently verifying every permitted log change and all unrelated history/UI.
     newLog.replaceWith(oldLog.cloneNode(true));
     return current.firstElementChild!.outerHTML;
-  }, { before: before.markup, after: after.markup, version });
+  }, { before: before.markup, after: after.markup, version, expectedAbsoluteWeek });
   expect({ ...after, markup: normalized }).toEqual(before);
 }

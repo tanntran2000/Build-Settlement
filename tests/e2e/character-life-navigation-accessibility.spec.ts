@@ -27,7 +27,8 @@ async function measure(root: Locator) {
       return { fg: composite(css.color, adjacent), bg: over([...bg, opacity], adjacent), adjacent,
         border: composite(css.borderTopColor, adjacent), outline: over([...over(rgb(css.outlineColor), adjacent), opacity], adjacent) };
     };
-    const visible = (el: Element) => !!el.getClientRects().length && !el.closest('[hidden]') && getComputedStyle(el).visibility !== 'hidden';
+    const modal = document.querySelector('dialog:modal');
+    const visible = (el: Element) => (!modal || modal.contains(el)) && !!el.getClientRects().length && !el.closest('[hidden]') && getComputedStyle(el).visibility !== 'hidden';
     const clipping: string[] = [], texts = [];
     const viewport = document.documentElement.clientWidth;
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
@@ -50,6 +51,7 @@ async function measure(root: Locator) {
           const c = getComputedStyle(p), b = p.getBoundingClientRect();
           if (!ledger && /hidden|clip|auto|scroll/.test(c.overflowX) && (r.left < b.left - 1 || r.right > b.right + 1)) clipping.push(`text clipped x: ${node.textContent.trim().slice(0, 45)}`);
           if (/hidden|clip/.test(c.overflowY) && (r.top < b.top - 1 || r.bottom > b.bottom + 1)) clipping.push('text clipped y');
+          if (p.matches(':modal')) break;
         }
       }
     }
@@ -88,6 +90,7 @@ async function auditTabOrder(page: Page, failures: string[], samples: unknown[])
   const targets = await controls.all();
   for (const target of targets) {
     if (!await target.isVisible() || await target.getAttribute('tabindex') === '-1') continue;
+    if (!await target.evaluate(node => { const modal = document.querySelector('dialog:modal'); return !modal || modal.contains(node); })) continue;
     await tabTo(page, target);
     const focus = await target.evaluate(el => {
       const r = el.getBoundingClientRect(), css = getComputedStyle(el);
@@ -96,8 +99,10 @@ async function auditTabOrder(page: Page, failures: string[], samples: unknown[])
       const margin = parseFloat(css.outlineWidth) + parseFloat(css.outlineOffset);
       for (let p = el.parentElement; p; p = p.parentElement) {
         const c = getComputedStyle(p), b = p.getBoundingClientRect();
-        if (/auto|scroll|hidden|clip/.test(c.overflowY) && (r.top - margin < b.top - 1 || r.bottom + margin > b.bottom + 1)) clips.push('focus clipped vertically');
-        if (/auto|scroll|hidden|clip/.test(c.overflowX) && (r.left - margin < b.left - 1 || r.right + margin > b.right + 1)) clips.push('focus clipped horizontally');
+        if (/auto|scroll|hidden|clip/.test(c.overflowY) && (r.top - margin < b.top - 1 || r.bottom + margin > b.bottom + 1)) clips.push(`focus clipped vertically by ${p.tagName}: ${b.top}..${b.bottom}`);
+        if (/auto|scroll|hidden|clip/.test(c.overflowX) && (r.left - margin < b.left - 1 || r.right + margin > b.right + 1)) clips.push(`focus clipped horizontally by ${p.tagName}: ${b.left}..${b.right}`);
+        // Native top-layer content escapes ancestor clipping; the dialog itself still clips.
+        if (p.matches(':modal')) break;
       }
       const color = (s: string) => s.match(/[\d.]+/g)!.map(Number);
       let p: Element | null = el.parentElement;
@@ -120,7 +125,8 @@ async function measureNativeControls(page: Page, state: string) {
     const rgb = (s: string) => { const m = s.match(/[\d.]+/g)!.map(Number); return m.length === 3 ? [...m, 1] : m; };
     const over = (fg: number[], bg: number[]) => bg.map((v, i) => fg[i] * fg[3] + v * (1 - fg[3]));
     const lerp = (under: number[], c: number[], o: number) => c.map((v, i) => v * o + under[i] * (1 - o));
-    const visible = (el: Element) => !!el.getClientRects().length && !el.closest('[hidden]') && getComputedStyle(el).visibility !== 'hidden';
+    const modal = document.querySelector('dialog:modal');
+    const visible = (el: Element) => (!modal || modal.contains(el)) && !!el.getClientRects().length && !el.closest('[hidden]') && getComputedStyle(el).visibility !== 'hidden';
     const opacityElements = [...document.querySelectorAll('*')].filter(el => visible(el) && Number(getComputedStyle(el).opacity) < 1)
       .map(el => ({ tag: el.tagName, id: el.id, text: el.textContent?.trim().slice(0, 40), opacity: getComputedStyle(el).opacity, hasDescendants: el.children.length > 0 }));
     // local(bgUnder) returns a colour in the element's own group space; resolve groups innermost-out.
@@ -175,7 +181,7 @@ async function measureNativeControls(page: Page, state: string) {
 }
 
 
-for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 812 }, { width: 320, height: 812 }]) {
+for (const viewport of [{ width: 1600, height: 1000 }, { width: 1280, height: 900 }, { width: 375, height: 812 }, { width: 320, height: 812 }]) {
   test.describe(`accessibility at ${viewport.width}px`, () => {
     test.use({ viewport });
     test('native control text preserves active and inactive contrast', async ({ page }, info) => {
@@ -232,11 +238,21 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 812 
       await expect(shell.locator('.content')).toHaveCSS('overflow-y', viewport.width > 750 ? 'auto' : 'visible');
       await expect(nav).toHaveCSS('flex-direction', viewport.width > 750 ? 'column' : 'row');
       if (viewport.width <= 750) await expect(nav).toHaveCSS('flex-wrap', 'wrap');
-      await expect(nav.getByRole('button')).toHaveText(['City', 'Characters', 'Reports', 'Session', 'Help']);
+      await expect(nav.locator('[id^="life-nav-"]')).toHaveText(['Information', 'Report', 'Player', 'Population', 'Session', 'Help']);
+      for (const name of ['Information', 'Player', 'Population']) {
+        await keyActivate(page, nav.getByRole('button', { name, exact: true }));
+        await capture();
+        await keyActivate(page, page.getByRole('dialog', { name, exact: true }).getByRole('button', { name: 'Close', exact: true }));
+      }
       for (const dest of ['city', 'characters', 'reports', 'session', 'help'] as const) {
-        await keyGo(page, dest); await expect(nav.locator('[aria-current="page"]')).toHaveText(dest[0].toUpperCase() + dest.slice(1));
+        await keyGo(page, dest);
+        if (dest === 'reports') await expect(page.getByRole('dialog', { name: 'Report', exact: true })).toBeVisible();
+        else await expect(shell.locator('nav[aria-label="Main"] [aria-current="page"], nav[aria-label="Views"] [aria-current="page"]')).toHaveText(dest[0].toUpperCase() + dest.slice(1));
         for (const hidden of await shell.locator('[data-life-view][hidden]').all()) await expect(hidden).toHaveCSS('display', 'none');
         if (dest === 'city') {
+          await keyActivate(page, page.getByText('Food requirements', { exact: true }));
+          await expect(page.getByRole('region', { name: 'City Requirements', exact: true }).getByRole('heading', { name: 'Current inventory', exact: true })).toBeVisible();
+          await capture();
           await keyActivate(page, page.getByTestId('trial-tile-field-1'));
           await keyActivate(page, page.getByRole('region', { name: 'Outside world', exact: true }).locator('summary'));
           await expect(page.getByRole('region', { name: 'Outside world', exact: true }).getByText('Exploration is not available yet.', { exact: true })).toBeVisible();
@@ -290,7 +306,7 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 812 
       await keyGo(page, 'city'); await capture(); await keyGo(page, 'characters'); await capture();
       await keyGo(page, 'session'); await capture(); await keyGo(page, 'reports');
       await keyActivate(page, page.getByRole('button', { name: 'Plan next week', exact: true })); await capture();
-      expect(await turnStatuses(page)).toEqual(['Week 1 report ready.', 'Planning week 2. Previous report retained.']);
+      expect(await turnStatuses(page)).toEqual(['Week 1 · Year 1 report ready.', 'Planning Week 2 · Year 1. Previous report retained.']);
       const path = info.outputPath('measurements.json');
       await writeFile(path, JSON.stringify({ method: 'CSS viewport widths; no calibrated zoom or screen-reader claim', measurements, tabCounts, focus, failures }, null, 2));
       await info.attach('measurements', { path, contentType: 'application/json' });
@@ -309,6 +325,13 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 812 
       await page.goto('/?mode=world-life'); await importLife(page, session);
       const failures: string[] = [], measurements: Measurement[] = [];
       const capture = async () => { const m = await measure(page.getByTestId('life-shell')); measurements.push(m); audit(m, failures); };
+      for (const name of ['Information', 'Player', 'Population']) {
+        await keyActivate(page, page.getByRole('navigation', { name: 'Main', exact: true }).getByRole('button', { name, exact: true }));
+        const dialog = page.getByRole('dialog', { name, exact: true });
+        await expect(dialog).toBeVisible();
+        await capture();
+        await keyActivate(page, dialog.getByRole('button', { name: 'Close', exact: true }));
+      }
       for (const dest of ['city', 'characters', 'reports', 'session', 'help'] as const) {
         await go(page, dest);
         if (dest !== 'characters' && dest !== 'reports') for (const summary of await page.locator(`[data-life-view="${dest}"] summary`).all()) await summary.click();
@@ -346,6 +369,12 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 812 
         }
         expect(columns.length, `ledger column ${column} reachable unclipped`).toBe(column + 1);
       }
+      await go(page, 'city');
+      const requirements = page.getByRole('region', { name: 'City Requirements', exact: true });
+      await expect(requirements).toBeVisible();
+      await expect(requirements.getByText(/^Last resolved week:/)).toBeVisible();
+      await expect(requirements.getByTestId('trial-stock-food')).toBeVisible();
+      await capture();
       const path = info.outputPath('reflow.json');
       await writeFile(path, JSON.stringify({ measurements, sizes, columns, failures }, null, 2));
       await info.attach('reflow', { path, contentType: 'application/json' });

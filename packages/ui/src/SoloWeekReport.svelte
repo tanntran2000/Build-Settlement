@@ -1,6 +1,7 @@
 <script lang="ts">
   import { WEEKLY_RESOURCE_KEYS, TILE_TRIAL_BALANCE as B, type TileTrialReport } from '@haven/core';
-  import { formatMilli } from './milli-format.js';
+  import { formatFulfillment, formatMilli } from './milli-format.js';
+  import { formatLifeWeek } from './life-calendar.js';
 
   export let report: Readonly<TileTrialReport> | null;
   export let planningWeek: number;
@@ -12,13 +13,13 @@
 <section class="card" aria-label="Weekly city report">
   <button aria-disabled={!locked} onclick={onnextweek}>Plan next week</button>
   {#if report}
-    <h2>Week {report.week} report</h2>
-    {#if !locked}<p>Previous report · Planning is active.</p><p>Planning week {planningWeek}.</p>{/if}
+    <h2>{formatLifeWeek(report.week)} report</h2>
+    {#if !locked}<p>Previous report · Planning is active.</p><p>Planning {formatLifeWeek(planningWeek)}.</p>{/if}
     <section>
       <h3>Needs and services</h3>
-      <p>Food consumed: {formatMilli(report.foodConsumedMilli)} / {formatMilli(report.foodDemandMilli)}.</p>
+      <p>Food consumed: {formatMilli(report.foodConsumedMilli)} / {formatMilli(report.foodDemandMilli)} · {formatFulfillment(report.foodConsumedMilli, report.foodDemandMilli)}.</p>
       <p>Food unmet: {formatMilli(report.foodDemandMilli - report.foodConsumedMilli)}.</p>
-      <p data-testid="trial-goods">Goods service: {formatMilli(report.goods.servedMilli)} / {formatMilli(report.goods.demandMilli)} · {report.goods.fulfillmentBps / 100}% {report.goods.demandMilli === 0 ? '· No demand' : 'fulfilled'}. Materials used once: {formatMilli(report.goods.woodUsed)} Wood, {formatMilli(report.goods.ironUsed)} Iron. Revenue: {formatMilli(report.goods.revenueMilli)} Gold.</p>
+      <p data-testid="trial-goods">Goods service: {formatMilli(report.goods.servedMilli)} / {formatMilli(report.goods.demandMilli)} · {formatFulfillment(report.goods.servedMilli, report.goods.demandMilli)}. Materials used once: {formatMilli(report.goods.woodUsed)} Wood, {formatMilli(report.goods.ironUsed)} Iron. Revenue: {formatMilli(report.goods.revenueMilli)} Gold.</p>
       <p>Goods unmet: {formatMilli(report.goods.demandMilli - report.goods.servedMilli)}.</p>
     </section>
     <section>
@@ -53,7 +54,7 @@
       {#if report.immigration}<p>Immigration target: {report.immigration.target}. Useful worker slots: {report.immigration.usefulWorkerSlots}. Renewable Food: {formatMilli(report.immigration.renewableFoodMilli)}. Reason: {report.immigration.reason}.</p>{/if}
     </details>
   {:else}
-    <p>No report yet. End Week to resolve the plan.</p>
+    <p>No resolved week yet</p>
   {/if}
 </section>
 

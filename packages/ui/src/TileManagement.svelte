@@ -4,13 +4,14 @@
   import CharacterLifeCity from './CharacterLifeCity.svelte';
   import CharacterLifeCharacters from './CharacterLifeCharacters.svelte';
   import SoloWeekReport from './SoloWeekReport.svelte';
-  import type { LifeDestination, PostDraftEntry } from './character-life-navigation.js';
+  import type { LifeDestination, LifeWindow, PostDraftEntry } from './character-life-navigation.js';
   import { createNpcWorldSession, createTileTrialState, createWorldSession, isLiveCharacterLifeSessionState, summarizeOutside, weeklyWorkforceMilli, WEEKLY_RESOURCE_KEYS, TRIAL_BUILDINGS, TILE_TRIAL_BALANCE as B, LEGACY_TILE_RULESET, POPULATION_TILE_RULESET, type OutsideWorldState, type NpcWorldSessionState, type WorldNpc, type TileTrialRuleset, type TileTrialReport, type CharacterLifeSessionState, type CharacterProfile as Profile, type PlayerCharacter } from '@haven/core';
   import { executeCharacterLifeCommand, executeTileTrialCommand, executeWorldNpcCityCommand } from '@haven/simulation';
   import { serializeTileTrialSave, deserializeTileTrialSave, serializeWorldSessionSave, deserializeWorldSessionSave, serializeNpcWorldSessionSave, deserializeNpcWorldSessionSave, serializeCharacterLifeSave, deserializeCharacterLifeSave, TILE_SAVE_MAX_BYTES } from '@haven/persistence';
   import ErrorLog from './ErrorLog.svelte';
   import { errorLog } from './error-log.js';
-  import { formatMilli as units } from './milli-format.js';
+  import { formatFulfillment, formatMilli as units } from './milli-format.js';
+  import { formatLifeWeek } from './life-calendar.js';
   import { readLocalCheckpoint, saveLocalCheckpoint } from './tile-local-checkpoint.js';
   import { prepareWorldSessionLoad, readLocalWorldSession, saveLocalWorldSession } from './world-session.js';
   import { prepareNpcWorldSessionLoad, readLocalNpcWorldSession, saveLocalNpcWorldSession } from './world-npc-session.js';
@@ -33,6 +34,8 @@
   let workforceError = '';
   let managementError: { action: string; message: string } | null = null;
   let destination: LifeDestination = 'city';
+  let activeWindow: LifeWindow = null;
+  let lifeShell: CharacterLifeShell;
   let lifeStatus = '';
   let lifeCity: CharacterLifeCity;
   let lifeCharacters: CharacterLifeCharacters;
@@ -112,16 +115,20 @@
     error = '';
     return true;
   }
-  function endLifeWeek(): void {
+  async function endLifeWeek(opener: HTMLButtonElement): Promise<void> {
     if (state.phase !== 'planning') return;
     if (command('END_WEEK', { expectedWeek: state.world.week })) {
-      destination = 'reports';
-      lifeStatus = `Week ${report!.week} report ready.`;
+      lifeStatus = '';
+      const resolvedRevision = state.revision, resolvedReport = report;
+      await lifeShell.openWindow('report', opener);
+      if (state.revision === resolvedRevision && report === resolvedReport && activeWindow === 'report') {
+        lifeStatus = `${formatLifeWeek(resolvedReport!.week)} report ready.`;
+      }
     }
   }
   function nextLifeWeek(): void {
     if (state.phase !== 'report') return;
-    if (command('NEXT_WEEK')) lifeStatus = `Planning week ${state.world.week}. Previous report retained.`;
+    if (command('NEXT_WEEK')) lifeStatus = `Planning ${formatLifeWeek(state.world.week)}. Previous report retained.`;
   }
   async function openLifeCity(): Promise<void> {
     destination = 'city';
@@ -173,6 +180,7 @@
     report = null; workers = nextWorkers;
     if (lifeMode) {
       uiEpoch++; postDrafts = []; destination = 'city'; lifeStatus = '';
+      lifeShell.closeWindow();
       void focusLifeCityNavigation();
     }
     errorLog.setContext('weekly', { week: state.world.week });
@@ -222,8 +230,37 @@
 </script>
 
 {#if lifeMode && outside && npcs && player && profiles}
-  <CharacterLifeShell {state} {report} bind:destination {error} status={lifeStatus} {unapplied} onendweek={endLifeWeek}>
+  <CharacterLifeShell bind:this={lifeShell} {state} {report} bind:destination bind:activeWindow {error} status={lifeStatus} {unapplied} onendweek={endLifeWeek}>
+    {#snippet playerInfo()}
+      <p>{player!.character.name}</p><p>Leader of Haven</p>
+    {/snippet}
     {#snippet city()}
+      <section class="card life-requirements" aria-label="City Requirements">
+        <header><h3>City Requirements</h3>
+        {#if report}<p>Last resolved week: {formatLifeWeek(report.week)}</p>
+        {:else}<p>No resolved week yet</p>{/if}
+        </header>
+        <div class="requirements-strip">
+          <div>
+            {#if report}
+              {@const fulfillment = formatFulfillment(report.foodConsumedMilli, report.foodDemandMilli)}
+              <div class="requirement-heading"><h4>Food</h4><p data-testid="life-requirement-food">{units(report.foodConsumedMilli)} / {units(report.foodDemandMilli)} · {fulfillment}</p></div>
+              {#if fulfillment.endsWith('%')}<div class="fulfillment-track" data-fulfillment-track="food" aria-hidden="true"><span style:width={fulfillment}></span></div>{/if}
+            {:else}<h4>Food</h4>{/if}
+            <details><summary>Food requirements</summary>
+              <h3>Current inventory</h3>
+              <dl><div><dt>Food stock</dt><dd data-testid="trial-stock-food">{units(settlement.inventory.food)}</dd></div></dl>
+            </details>
+          </div>
+          <div>
+            {#if report}
+              {@const fulfillment = formatFulfillment(report.goods.servedMilli, report.goods.demandMilli)}
+              <div class="requirement-heading"><h4>Goods</h4><p data-testid="life-requirement-goods">{units(report.goods.servedMilli)} / {units(report.goods.demandMilli)} · {fulfillment}</p></div>
+              {#if fulfillment.endsWith('%')}<div class="fulfillment-track" data-fulfillment-track="goods" aria-hidden="true"><span style:width={fulfillment}></span></div>{/if}
+            {:else}<h4>Goods</h4>{/if}
+          </div>
+        </div>
+      </section>
       {#if npcs && outside}
       <CharacterLifeCity bind:this={lifeCity} {state} {npcs} {selectedId} bind:typeId bind:workers {workforceError} {managementError} {outside}
         onselect={id => { selectTile(id); void openLifeCity(); }} onworkersinput={() => { workforceError = ''; }} oncommand={command} />
@@ -439,6 +476,20 @@
   :focus-visible { outline: 3px solid var(--accent-blue); outline-offset: 3px; } [role='alert'] { padding: 12px; border-left: 3px solid var(--accent-red); }
   #trial-management-error { scroll-margin-block: 1px; }
   .player { overflow-wrap: anywhere; }
+  .requirements-strip { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .requirements-strip > div { min-width: 0; overflow-wrap: anywhere; }
+  .life-requirements { background: var(--bg-tertiary); padding: 20px; margin-bottom: 22px; }
+  .life-requirements header { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px 24px; margin-bottom: 8px; }
+  .life-requirements header p { margin: 0; color: var(--text-muted); }
+  .life-requirements h4 { color: var(--accent-green); }
+  .requirement-heading { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 4px 12px; }
+  .life-requirements p { margin: 4px 0; }
+  .life-requirements details { margin-top: 8px; }
+  .life-requirements dd { font-size: inherit; }
+  .fulfillment-track { height: 8px; background: var(--bg-primary); border-radius: 4px; overflow: hidden; margin-top: 8px; }
+  .fulfillment-track span { display: block; height: 100%; background: var(--accent-green); }
+  @media(min-width: 1440px) { .life-requirements { min-height: 172px; padding: 16px 28px; } .requirements-strip { gap: 40px; } }
+  @media(max-width: 500px) { .requirements-strip { grid-template-columns: minmax(0, 1fr); } .life-requirements { padding: 16px; } }
   .ledger { overflow-x: auto; } table { width: 100%; border-collapse: collapse; } th, td { padding: 8px; text-align: right; border-bottom: 1px solid var(--border-color); } th:first-child { text-align: left; }
   @media(max-width: 750px) { .layout { grid-template-columns: 1fr; } .stocks { grid-template-columns: repeat(3, 1fr); } main { padding: 12px; } }
 </style>

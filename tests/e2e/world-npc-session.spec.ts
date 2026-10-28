@@ -34,6 +34,10 @@ test('New Game lists 3 named starters, all unassigned, with stats, traits and di
   expect(text).toContain('PROVISIONAL');
   const n = await names(page);
   expect(new Set(n).size).toBe(3); n.forEach(name => expect(name).toMatch(/^[A-Z][a-z]+$/));
+  await expect(panel(page).locator('article')).toHaveCount(3);
+  await expect(page.locator('.profile,[role="tablist"],[role="tabpanel"]')).toHaveCount(0);
+  await expect(page.getByRole('group', { name: 'Full-body character display', exact: true })).toHaveCount(0);
+  await expect(page.getByText('Character artwork unavailable.', { exact: true })).toHaveCount(0);
   for (const id of IDS) await expect(post(page, id)).toHaveText('Post: Unassigned');
   await expect(card(page, 'npc_starter_1')).toContainText('Technical 65');
   await expect(card(page, 'npc_starter_1')).toContainText('Frugal');

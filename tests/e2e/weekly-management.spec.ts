@@ -219,7 +219,7 @@ test('planned city systems distinguish groups, inventory, Requirements and Statu
   await expect(planned).toBeVisible();
   await expect(planned).toContainText('Requirements and Status are not simulated in classic.');
   await expect(planned).toContainText('Proposed names');
-  await expect(planned.getByRole('article')).toHaveCount(3);
+  await expect(planned.getByRole('article')).toHaveCount(4);
   for (const [label, name, duties] of [
     ['Makers', 'The Makers’ Union', 'Production, building and maintenance.'],
     ['Luminaries', 'The Luminary Circle', 'Research, education, planning and technical standards.'],
@@ -230,6 +230,9 @@ test('planned city systems distinguish groups, inventory, Requirements and Statu
     await expect(group).toContainText(name);
     await expect(group).toContainText(duties);
   }
+  const bound = planned.getByRole('article', { name: 'The Bound', exact: true });
+  await expect(bound.getByRole('heading', { name: 'The Bound', exact: true })).toBeVisible();
+  await expect(bound.locator('p')).toHaveText(['Lower resident stratum.']);
   await expect(planned).toContainText('All three groups contribute to shared Happiness, Security and Corruption through conditions, buildings and future effects.');
   await expect(planned).toContainText('No group owns a single Status; Merchants have no intrinsic corruption.');
   const inventory = planned.getByRole('region', { name: 'Physical inventory', exact: true });
@@ -256,6 +259,8 @@ test('planned city systems distinguish groups, inventory, Requirements and Statu
 test('planned city systems stay static while the existing Weekly command updates only live stock and week', async ({ page }) => {
   const planned = page.getByRole('region', { name: 'Planned city systems', exact: true });
   await expect(planned).toBeVisible();
+  await expect(planned.getByRole('article')).toHaveCount(4);
+  await expect(planned.getByRole('article', { name: 'The Bound', exact: true }).locator('p')).toHaveText(['Lower resident stratum.']);
   const preview = await planned.innerText();
   await end(page, '4');
   await expect(stock(page, 'gold')).toHaveText('6');

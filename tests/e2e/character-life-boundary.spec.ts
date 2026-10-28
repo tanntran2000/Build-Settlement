@@ -9,7 +9,7 @@ import {
   observeCharacterLife, type Observation, type VisibleCharacter,
 } from '../../packages/simulation/src/character-life-observation.ts';
 import { formatMilli } from '../../packages/ui/src/milli-format.ts';
-import { characterWindow, charactersView, expectOneCharacterWindow, expectReport, go, reportRegion, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
+import { characterWindow, charactersView, expectOneCharacterWindow, expectReport, reportFulfillment, go, reportRegion, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
 
 const button = (scope: Page | Locator, name: string) => scope.getByRole('button', { name, exact: true });
 const region = (page: Page, name: string) => page.getByRole('region', { name, exact: true });
@@ -104,7 +104,7 @@ async function reportParity(page: Page, o: Observation, fullReport: Readonly<Til
   await go(page, 'reports');
   await expect(button(page, 'Plan next week')).toHaveAttribute('aria-disabled', String(!o.actionTypes.includes('NEXT_WEEK')));
   const panel = reportRegion(page), r = o.lastReport;
-  if (!r) { await expect(panel.getByText('No report yet. End Week to resolve the plan.', { exact: true })).toBeVisible(); await expect(panel.getByRole('table')).toHaveCount(0); return; }
+  if (!r) { await expect(panel.getByText('No resolved week yet', { exact: true })).toBeVisible(); await expect(panel.getByRole('table')).toHaveCount(0); return; }
   expect(fullReport).not.toBeNull();
   if (!fullReport) throw new Error('Missing complete executor report for parity');
   await expectReport(page, fullReport);
@@ -112,9 +112,9 @@ async function reportParity(page: Page, o: Observation, fullReport: Readonly<Til
   const immigration = r.immigration!;
   await expect(panel.getByTestId('trial-immigration')).toHaveText(`Population: ${immigration.populationBefore} → ${immigration.populationAfter} · ${immigration.arrivals} arrivals · Available next week.`);
   const g = r.goods;
-  await expect(panel.getByTestId('trial-goods')).toHaveText(`Goods service: ${formatMilli(g.servedMilli)} / ${formatMilli(g.demandMilli)} · ${g.fulfillmentBps / 100}% ${g.demandMilli === 0 ? '· No demand' : 'fulfilled'}. Materials used once: ${formatMilli(g.woodUsed)} Wood, ${formatMilli(g.ironUsed)} Iron. Revenue: ${formatMilli(g.revenueMilli)} Gold.`);
+  await expect(panel.getByTestId('trial-goods')).toHaveText(`Goods service: ${formatMilli(g.servedMilli)} / ${formatMilli(g.demandMilli)} · ${g.demandMilli === 0 ? 'No demand' : `${g.fulfillmentBps / 100}%`}. Materials used once: ${formatMilli(g.woodUsed)} Wood, ${formatMilli(g.ironUsed)} Iron. Revenue: ${formatMilli(g.revenueMilli)} Gold.`);
   await expect(panel.getByText(/^Tax:/)).toHaveText(`Tax: ${formatMilli(r.taxMilli)} Gold. Upkeep covered: ${formatMilli(r.upkeepPaidMilli)} Gold; unfunded: ${formatMilli(r.unpaidUpkeepMilli)} Gold (no debt). Farm batch payment: ${formatMilli(r.farmBatchGoldMilli)} Gold; extra Farm upkeep: ${formatMilli(r.farmExtraUpkeepMilli)} Gold.`);
-  await expect(panel.getByText(/^Food consumed:/)).toHaveText(`Food consumed: ${formatMilli(r.foodConsumedMilli)} / ${formatMilli(r.foodDemandMilli)}.`);
+  await expect(panel.getByText(/^Food consumed:/)).toHaveText(`Food consumed: ${formatMilli(r.foodConsumedMilli)} / ${formatMilli(r.foodDemandMilli)} · ${reportFulfillment(r.foodConsumedMilli, r.foodDemandMilli)}.`);
   await expect(panel.getByText(/^Happiness:/)).toHaveText(`Happiness: ${r.happinessBefore} → ${r.happinessAfter}.`);
   const rows = panel.getByRole('table', { name: 'Weekly stock ledger' }).locator('tbody tr');
   await expect(rows).toHaveCount(WEEKLY_RESOURCE_KEYS.length);
@@ -134,10 +134,17 @@ async function uiParity(page: Page, o: Observation, fullReport: Readonly<TileTri
   const s = o.settlement;
   const shell = page.getByTestId('life-shell');
   await expect(shell).toHaveAttribute('data-revision', String(o.revision));
-  await expect(shell.locator('aside').getByText(/^Week \d+ ·/)).toHaveText(`Week ${o.week} · ${title(o.phase)}`);
-  await expect(shell.locator('aside').getByText(/^\d+ residents/)).toHaveText(`${s.residents} residents · Workforce ${s.assignedWorkers} / ${formatMilli(s.workforceMilli)} assigned / available`);
-  for (const key of WEEKLY_RESOURCE_KEYS) await expect(page.getByTestId(`trial-stock-${key}`)).toHaveText(formatMilli(s.stocks[key]));
+  await expect(shell.locator('aside').getByText(/^Week \d+ · Year \d+ · (Planning|Report)$/)).toHaveText(`Week ${((o.week - 1) % 40) + 1} · Year ${Math.floor((o.week - 1) / 40) + 1} · ${title(o.phase)}`);
+  await page.locator('#life-nav-information').click();
+  for (const key of WEEKLY_RESOURCE_KEYS.filter(key => key !== 'food')) await expect(page.getByTestId(`trial-stock-${key}`)).toHaveText(formatMilli(s.stocks[key]));
   await expect(region(page, 'City stocks').locator('p strong')).toHaveText(String(s.happiness));
+  await go(page, 'city');
+  await page.locator('#life-nav-population').click();
+  await expect(page.getByRole('dialog', { name: 'Population', exact: true }).getByText(/^\d+ residents/)).toHaveText(`${s.residents} residents · Workforce ${s.assignedWorkers} / ${formatMilli(s.workforceMilli)} assigned / available`);
+  await go(page, 'city');
+  const food = page.locator('[data-life-view="city"] details').filter({ has: page.getByText('Food requirements', { exact: true }) });
+  if (await food.getAttribute('open') === null) await food.locator('summary').click();
+  await expect(food.getByTestId('trial-stock-food')).toHaveText(formatMilli(s.stocks.food));
   const outside = o.outside;
   const disclosure = region(page, 'Outside world').locator('details');
   if (await disclosure.getAttribute('open') === null) await disclosure.locator('summary').click();

@@ -130,7 +130,7 @@
       {#each CITY_DESIGN.groups as group}
         <article aria-label={group.label}>
           <h4>{group.label}</h4>
-          <p>{group.name}</p>
+          {#if group.name}<p>{group.name}</p>{/if}
           <p>{group.duties}</p>
         </article>
       {/each}
