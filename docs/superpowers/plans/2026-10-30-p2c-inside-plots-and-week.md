@@ -16,7 +16,7 @@
 2. **"Operating"** (for an effect or a prerequisite) means: enabled, upkeep paid that week, and **fully staffed** (`workers === maxWorkers × level`) when the building has worker slots. Housing (no slots) only needs enabled and upkeep paid. For planning-time prerequisites (`EXTEND_WALL`), "operating" means enabled and fully staffed.
 3. **Builders' Yard discount** uses the highest operating Yard level (L1 −10%, L2 −20%, floor in milli). It applies to `BUILD`/`UPGRADE`/`REPLACE`, not to `EXTEND_WALL`.
 4. **Counting House:** +10% tax per operating level, summed over all Counting Houses. The same sum feeds the debt "high tax" cause.
-5. **Town Hall** joins the NPC manager-post building list, so it hosts one post per building (existing mechanism).
+5. **Town Hall** and **`town-market`** join the NPC manager-post building list (`NPC_MANAGER_BUILDING_TYPES` in `world/npc-content.ts`), so the Town Hall hosts one post and the inside Market keeps the post the plain Market gives in Goods games. *(Corrected 2026-10-30: the constant lives in `npc-content.ts`; `town-market` added for post parity.)*
 6. **Market:** in a society city, Goods distribution comes only from the inside **`town-market`** (operation `market`, terrain `town`, same numbers as Market). Building the plain `market` in a society city is rejected. Old rulesets are unchanged.
 7. **`LOAD_TRIAL`** in the tile family loads a snapshot only when its economy equals the current city's economy.
 
@@ -72,7 +72,7 @@
 
 ### C1 Task 1: Society map and catalog data (core)
 
-**Files:** Create `packages/core/src/trial/society-map.ts`; modify `packages/core/src/trial/catalog.ts` (add the `town` terrain buildings and `TrialOperation` value `society`), `trial/society.ts` (`createSocietyState` builds the new-game map), `trial/state.ts` (`isTileTrialPlanningState` pins the society map for society cities), `world/npc.ts` (`NPC_MANAGER_BUILDING_TYPES` += `town-hall`), `index.ts`; tests `packages/core/src/trial/__tests__/society-map.test.ts` and updates to `society.test.ts`.
+**Files:** Create `packages/core/src/trial/society-map.ts`; modify `packages/core/src/trial/catalog.ts` (add the `town` terrain buildings and `TrialOperation` value `society`), `trial/society.ts` (`createSocietyState` builds the new-game map), `trial/state.ts` (`isTileTrialPlanningState` pins the society map for society cities), `world/npc-content.ts` (`NPC_MANAGER_BUILDING_TYPES` += `town-hall`, `town-market`), `index.ts`; tests `packages/core/src/trial/__tests__/society-map.test.ts` and updates to `society.test.ts`.
 
 **Interfaces (produced):**
 ```ts
