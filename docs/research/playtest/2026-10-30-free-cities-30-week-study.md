@@ -10,7 +10,7 @@ Retained in [`2026-10-30-free-cities-evidence/`](2026-10-30-free-cities-evidence
 |---|---|
 | `fc-run.js` | The exact driver used, run with Node 24.19.0 and the repo's Playwright: `node fc-run.js run2-light 30 light` and `node fc-run.js run2-dark 30 dark`, in parallel, 2026-10-30 ~15:20–15:45 (UTC+7) |
 | `metrics-light.json`, `metrics-dark.json` | Per-week state read from the game (cash, reputation, prosperity, ownership, society values, class counts, menials, NPC slaves, SecExp security/authority/crime/tension). Every number in "Results" comes from these files |
-| `passages-light.log`, `passages-dark.log` | Every passage visited, in order, with the driver's actions (choice labels removed) |
+| `passages-light.txt`, `passages-dark.txt` | Every passage visited, in order, with the driver's actions (choice labels removed) |
 | `SHA256SUMS` | Hashes of the game file and of the 88 retained raw files (run logs and per-week report text) |
 
 - **Game revision:** Free Cities pregmod `4.0.0-alpha.40`, build `1300`, commit `54f34c5c` (as printed on its start screen), file `FC_pregmod.html` SHA-256 `3750376ab317e1e29c2122634d84bec5c8b4f6b3463cd710e33591bac9665319`. The local folder is not a git checkout.
