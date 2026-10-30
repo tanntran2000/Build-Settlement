@@ -3,9 +3,10 @@ import { readFile } from 'node:fs/promises';
 
 const KEY = 'haven.tile-trial.checkpoint.v1';
 const POPULATION_KEY = 'haven.tile-population.checkpoint.v1';
+const GOODS_KEY = 'haven.tile-population-goods.checkpoint.v1';
 const MODES = [
   { mode: 'tiles', key: KEY, otherKey: POPULATION_KEY, ruleset: 'tile-trial-01', otherRuleset: 'tile-population-01' },
-  { mode: 'population', key: POPULATION_KEY, otherKey: KEY, ruleset: 'tile-population-01', otherRuleset: 'tile-trial-01' },
+  { mode: 'population', key: GOODS_KEY, otherKey: KEY, ruleset: 'tile-population-goods-01', otherRuleset: 'tile-trial-01' },
 ] as const;
 type StorageProbe = { readStored?: (key: string) => string | null; writeStored?: (key: string, text: string) => void; checkpointCalls?: string[][] };
 const region = (page: Page) => page.getByRole('region', { name: 'Planning checkpoints', exact: true });
@@ -57,6 +58,23 @@ async function delayReads(page: Page, reject = false) {
 }
 const pending = (page: Page, n: number) => page.waitForFunction(n => (window as unknown as { releaseReads: unknown[] }).releaseReads.length === n, n);
 const release = (page: Page, n: number) => page.evaluate(n => (window as unknown as { releaseReads: (() => void)[] }).releaseReads[n](), n);
+
+test('captured legacy population keeps the old opening, build debit and rejected-load balances', async ({ page }) => {
+  await page.goto('/?mode=population');
+  await importText(page, await readFile('packages/persistence/src/__tests__/fixtures/legacy-v1/population.json', 'utf8'));
+  await expect(gold(page)).toHaveText('30');
+  await expect(page.getByTestId('trial-stock-food')).toHaveText('4');
+  await build(page, 'forest-1', 'logging');
+  const before = JSON.parse(await checkpoint(page)).state;
+  await expect(gold(page)).toHaveText('28');
+  await setSlot(page, '{broken', POPULATION_KEY);
+  await page.getByRole('button', { name: 'Continue old-rules checkpoint', exact: true }).click();
+  await expect(region(page).getByRole('alert')).toContainText('left unchanged');
+  await expect(gold(page)).toHaveText('28');
+  expect(JSON.parse(await checkpoint(page)).state).toEqual(before);
+  expect(await slot(page, POPULATION_KEY)).toBe('{broken');
+  expect(await slot(page, GOODS_KEY)).toBeNull();
+});
 
 test('saves a multiweek plan locally, continues after reload and resumes the same economics', async ({ page }) => {
   await page.goto('/?mode=tiles'); expect(await slot(page)).toBeNull();
@@ -125,7 +143,7 @@ test(`rejects ${kind} while preserving full state and both slots (${mode})`, asy
   await continueLocally(page);
   const message = kind === 'missing' ? 'No local checkpoint' : kind === 'revision overflow' ? 'original state was preserved' : 'left unchanged';
   await expect(region(page).getByRole('alert')).toContainText(message);
-  await expect(gold(page)).toHaveText('28'); await expect(page.getByTestId('trial-tile-forest-1')).toContainText('Logging Camp');
+  await expect(gold(page)).toHaveText(mode === 'tiles' ? '28' : '43'); await expect(page.getByTestId('trial-tile-forest-1')).toContainText('Logging Camp');
   await expect(page.getByRole('button', { name: 'End Week', exact: true })).toBeEnabled();
   expect(JSON.parse(await checkpoint(page)).state).toEqual(valid.state);
   expect(await slot(page, key)).toBe(text); expect(await slot(page, otherKey)).toBe(other);
@@ -150,11 +168,11 @@ test(`blocked or full storage preserves full state, both slots and file backups 
   await page.evaluate(() => Object.defineProperty(window, 'localStorage', { get() { throw new DOMException('raw/private/error', 'SecurityError'); } }));
   await saveLocally(page); await expect(region(page).getByRole('alert')).toContainText('Use Export checkpoint');
   await continueLocally(page); await expect(region(page).getByRole('alert')).toContainText('Use Import checkpoint');
-  await expect(gold(page)).toHaveText('28'); await expect(page.getByText('raw/private/error', { exact: false })).toHaveCount(0);
+  await expect(gold(page)).toHaveText(mode === 'tiles' ? '28' : '43'); await expect(page.getByText('raw/private/error', { exact: false })).toHaveCount(0);
   expect(JSON.parse(await checkpoint(page)).state).toEqual(before); expect(await slot(page, key)).toBe(prior); expect(await slot(page, otherKey)).toBe('other-mode-bytes');
   const backup = await checkpoint(page); await next(page);
   await importText(page, backup); await expect(region(page).getByRole('status')).toContainText('Checkpoint imported');
-  await expect(gold(page)).toHaveText('28');
+  await expect(gold(page)).toHaveText(mode === 'tiles' ? '28' : '43');
 
   expect(JSON.parse(await checkpoint(page)).state).toEqual({ ...before, revision: before.revision + 3 });
   await page.reload(); expect(await slot(page, key)).toBe(prior); expect(await slot(page, otherKey)).toBe('other-mode-bytes');
@@ -167,6 +185,7 @@ test(`blocked or full storage preserves full state, both slots and file backups 
 test('both modes keep separate local saves and legacy still continues without growth', async ({ page }) => {
   await page.goto('/?mode=tiles'); await saveLocally(page); const legacy = (await slot(page))!;
   await page.goto('/?mode=population');
+  await importText(page, await readFile('packages/persistence/src/__tests__/fixtures/legacy-v1/population.json', 'utf8'));
   await expect(page.getByRole('heading', { name: 'Population Trial', exact: true })).toBeVisible();
   await expect(region(page).getByRole('button', { name: 'Save locally' })).toBeEnabled();
   await expect(region(page).getByRole('button', { name: 'Continue locally' })).toBeEnabled();
@@ -189,9 +208,9 @@ test(`a delayed file import cannot overwrite a successful Continue (${mode})`, a
   const saved = JSON.parse(await checkpoint(page)), other = structuredClone(saved); other.state.world.settlements.settlement_haven_01.inventory.gold = 41000;
   await build(page, 'forest-1', 'logging'); await delayReads(page);
   await importText(page, JSON.stringify(other)); await pending(page, 1);
-  await continueLocally(page); await expect(gold(page)).toHaveText('30');
+  await continueLocally(page); await expect(gold(page)).toHaveText(mode === 'tiles' ? '30' : '45');
   await release(page, 0); await settle(page);
-  await expect(gold(page)).toHaveText('30'); await expect(region(page).getByRole('alert')).toHaveCount(0);
+  await expect(gold(page)).toHaveText(mode === 'tiles' ? '30' : '45'); await expect(region(page).getByRole('alert')).toHaveCount(0);
   await expect(region(page).getByRole('status')).toHaveText('Local checkpoint loaded. Planning restored.');
   expect(JSON.parse(await checkpoint(page)).state).toEqual({ ...saved.state, revision: 2 });
   await importText(page, '{bad'); await pending(page, 2);
@@ -239,9 +258,9 @@ test(`checkpoint IO stays manual, Planning-only and isolated (${mode})`, async (
     Storage.prototype.setItem = function (key, text) { if (keys.includes(key)) probe.checkpointCalls!.push(['set', key]); set.call(this, key, text); };
     Storage.prototype.removeItem = function (key) { if (keys.includes(key)) probe.checkpointCalls!.push(['remove', key]); remove.call(this, key); };
     Storage.prototype.clear = function () { probe.checkpointCalls!.push(['clear', '*']); clear.call(this); };
-  }, { keys: [KEY, POPULATION_KEY] });
+  }, { keys: [KEY, POPULATION_KEY, GOODS_KEY] });
   const calls = () => page.evaluate(() => (window as unknown as StorageProbe).checkpointCalls);
-  await page.reload(); await expect(gold(page)).toHaveText('30'); expect(await calls()).toEqual([]);
+  await page.reload(); await expect(gold(page)).toHaveText(mode === 'tiles' ? '30' : '45'); expect(await calls()).toEqual([]);
   await build(page, 'forest-1', 'logging'); await page.getByRole('button', { name: 'End Week', exact: true }).click();
   for (const name of ['Save locally', 'Continue locally', 'Export checkpoint']) await expect(page.getByRole('button', { name, exact: true })).toBeDisabled();
   await expect(page.getByLabel('Import checkpoint', { exact: true })).toBeDisabled();
@@ -258,7 +277,7 @@ test(`checkpoint IO stays manual, Planning-only and isolated (${mode})`, async (
   const restored = JSON.parse(await checkpoint(page)).state;
   expect({ ...restored, revision: 0 }).toEqual({ ...saved.state, revision: 0 });
   expect(await calls()).toEqual([['get', key], ['get', key]]);
-  await page.reload(); await expect(gold(page)).toHaveText('30'); expect(await calls()).toEqual([]);
+  await page.reload(); await expect(gold(page)).toHaveText(mode === 'tiles' ? '30' : '45'); expect(await calls()).toEqual([]);
   await build(page, 'forest-1', 'logging'); await saveLocally(page);
   const replacement = (await slot(page, key))!;
   expect(await calls()).toEqual([['get', key], ['set', key]]);
@@ -282,6 +301,7 @@ test(`the last explicit same-mode tab save wins without automatically loading ($
 
 for (const width of [1280, 390]) test(`population local checkpoint restores grown cohorts and next-week parity at ${width}px`, async ({ page }) => {
   await page.setViewportSize({ width, height: 900 }); await page.goto('/?mode=population');
+  await importText(page, await readFile('packages/persistence/src/__tests__/fixtures/legacy-v1/population.json', 'utf8'));
   await build(page, 'forest-1', 'logging', 1); await build(page, 'ore-1', 'mine', 1);
   await build(page, 'plain-2', 'workshop', 1); await build(page, 'plain-3', 'market');
   for (const id of ['field-1', 'plain-1']) {

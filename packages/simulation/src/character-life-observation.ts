@@ -18,6 +18,7 @@ export interface VisibleCharacter {
     intimateHistory: 'Not recorded' | 'Unknown' | 'None' | 'Some' };
 }
 export interface VisibleReport {
+  goodsStock?: TileTrialReport['goodsStock'];
   week: number; before: WeeklyStocks; after: WeeklyStocks;
   taxMilli: number; farmBatchGoldMilli: number; farmExtraUpkeepMilli: number;
   upkeepPaidMilli: number; unpaidUpkeepMilli: number;
@@ -31,7 +32,7 @@ export interface VisibleReport {
 export interface Observation {
   week: number; phase: TileTrialState['phase']; revision: number;
   actionTypes: CharacterLifeActionType[]; disabledReasons: string[];
-  settlement: { stocks: WeeklyStocks; residents: number;
+  settlement: { stocks: WeeklyStocks; goodsStock?: TileTrialState['goodsStock']; residents: number;
     workforceMilli: number; assignedWorkers: number; happiness: number };
   tiles: { id: string; terrain: string; building: {
     typeId: string; level: number; workers: number; enabled: boolean;
@@ -81,6 +82,7 @@ function visibleReport(r: Readonly<TileTrialReport>): VisibleReport {
       woodUsed: r.goods.woodUsed, ironUsed: r.goods.ironUsed, revenueMilli: r.goods.revenueMilli },
     activities: [...r.activities],
   };
+  if (r.goodsStock) report.goodsStock = { ...r.goodsStock };
   if (r.immigration) report.immigration = { populationBefore: r.immigration.populationBefore,
     arrivals: r.immigration.arrivals, populationAfter: r.immigration.populationAfter };
   return report;
@@ -104,6 +106,7 @@ export function observeCharacterLife(session: CharacterLifeSessionState, lastRep
       : ['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED', 'END_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC'],
     disabledReasons,
     settlement: { stocks: numbers(settlement.inventory, WEEKLY_RESOURCE_KEYS),
+      ...(city.goodsStock ? { goodsStock: { ...city.goodsStock } } : {}),
       residents: settlement.cohorts.reduce((sum, c) => sum + c.count, 0), workforceMilli: weeklyWorkforceMilli(settlement.cohorts),
       assignedWorkers: city.tiles.reduce((sum, t) => sum + (t.building?.workers ?? 0), 0), happiness: city.happiness },
     tiles: city.tiles.map(t => ({ id: t.id, terrain: t.terrain, building: t.building ? {

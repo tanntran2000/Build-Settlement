@@ -1,11 +1,27 @@
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { createCharacterLifeSession, createNpcWorldSession, DEFAULT_PLAYER_DRAFT } from '@haven/core';
+import { GOODS_STOCK_RULESET } from '@haven/core';
 import { serializeCharacterLifeSave, serializeNpcWorldSessionSave } from '@haven/persistence';
-import { CHARACTER_LIFE_CHECKPOINT_KEY, prepareCharacterLifeLoad, readLocalCharacterLife, saveLocalCharacterLife } from '../character-life-session.js';
+import { CHARACTER_LIFE_CHECKPOINT_KEY, prepareCharacterLifeLoad, readOldLocalCharacterLife, saveLocalCharacterLife } from '../character-life-session.js';
 import { WORLD_NPC_CHECKPOINT_KEY } from '../world-npc-session.js';
 import { WORLD_SESSION_CHECKPOINT_KEY } from '../world-session.js';
 
 const session = (seed = 0, currentName = 'Ana') => { const r = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName }); if (!r.success) throw Error(r.error.message); return r.value; };
+
+it('loads either city generation into a detached complete Life session without conversion or grants', () => {
+  const fresh = createCharacterLifeSession(7, { ...DEFAULT_PLAYER_DRAFT, currentName: 'Synthetic Keeper' }, GOODS_STOCK_RULESET);
+  if (!fresh.success) throw Error(fresh.error.message);
+  fresh.value.city.goodsStock!.amountMilli = 321;
+  for (const [live, loaded] of [[session(), fresh.value], [fresh.value, session()]] as const) {
+    const liveBefore = structuredClone(live), loadedBefore = structuredClone(loaded);
+    const result = prepareCharacterLifeLoad(live, loaded, live.city.revision);
+    expect(result.success).toBe(true); if (!result.success) throw Error(result.message);
+    expect({ ...result.next, city: { ...result.next.city, revision: loaded.city.revision } }).toEqual(loaded);
+    result.next.city.world.settlements.settlement_haven_01.inventory.gold = 0;
+    if (result.next.city.goodsStock) result.next.city.goodsStock.amountMilli = 0;
+    expect(live).toEqual(liveBefore); expect(loaded).toEqual(loadedBefore);
+  }
+});
 const otherKeys = [WORLD_NPC_CHECKPOINT_KEY, WORLD_SESSION_CHECKPOINT_KEY, 'haven.tile-trial.checkpoint.v1', 'haven.tile-population.checkpoint.v1'];
 let values: Map<string, string>;
 let storage: { getItem: ReturnType<typeof vi.fn>; setItem: ReturnType<typeof vi.fn> };
@@ -25,18 +41,18 @@ it('save writes only its key and reads back the same session; other keys keep "p
   const encoded = serializeCharacterLifeSave(s); if (!encoded.success) throw Error();
   expect(saveLocalCharacterLife(s)).toEqual({ success: true, replaced: false });
   expect(storage.setItem.mock.calls).toEqual([[CHARACTER_LIFE_CHECKPOINT_KEY, encoded.text]]);
-  expect(readLocalCharacterLife()).toEqual({ success: true, state: s });
+  expect(readOldLocalCharacterLife()).toEqual({ success: true, state: s });
   expect(saveLocalCharacterLife(s)).toEqual({ success: true, replaced: true });
   otherKeys.forEach(k => expect(values.get(k)).toBe('protected-bytes'));
 });
 it('read with empty slot returns the "No local checkpoint" message', () => {
-  expect(readLocalCharacterLife()).toEqual({ success: false, message: 'No local checkpoint in this browser yet. Choose Save locally first.' });
+  expect(readOldLocalCharacterLife()).toEqual({ success: false, message: 'No local checkpoint in this browser yet. Choose Save locally first.' });
 });
 it('rejects an NPC-world checkpoint in the life slot and leaves every byte untouched', () => {
   const npc = createNpcWorldSession(0); if (!npc.success) throw Error();
   const text = serializeNpcWorldSessionSave(npc.value); if (!text.success) throw Error();
   values.set(CHARACTER_LIFE_CHECKPOINT_KEY, text.text); const before = new Map(values);
-  expect(readLocalCharacterLife()).toMatchObject({ success: false, message: expect.stringContaining('left unchanged') });
+  expect(readOldLocalCharacterLife()).toMatchObject({ success: false, message: expect.stringContaining('left unchanged') });
   expect(values).toEqual(before); expect(storage.setItem).not.toHaveBeenCalled();
 });
 it('contains storage failures and never saves an invalid session', () => {
@@ -45,7 +61,7 @@ it('contains storage failures and never saves an invalid session', () => {
   expect(result).toMatchObject({ success: false, message: expect.stringContaining('Export checkpoint') });
   expect(JSON.stringify(result)).not.toContain('private'); expect(values).toEqual(before);
   storage.getItem.mockImplementation(() => { throw Error('private'); });
-  expect(readLocalCharacterLife()).toMatchObject({ success: false, message: expect.stringContaining('Import checkpoint') });
+  expect(readOldLocalCharacterLife()).toMatchObject({ success: false, message: expect.stringContaining('Import checkpoint') });
   const invalid = session(); invalid.city.phase = 'report'; storage.getItem.mockClear(); storage.setItem.mockClear();
   expect(saveLocalCharacterLife(invalid).success).toBe(false);
   expect(storage.getItem).not.toHaveBeenCalled(); expect(storage.setItem).not.toHaveBeenCalled();

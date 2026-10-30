@@ -1,7 +1,7 @@
 import { test, expect, type Page } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
 
-const KEY = 'haven.world-session.checkpoint.v1';
+const KEY = 'haven.world-session-goods.checkpoint.v1';
 const OLD_KEYS = ['haven.tile-trial.checkpoint.v1', 'haven.tile-population.checkpoint.v1'];
 const controls = (page: Page) => page.getByRole('region', { name: 'Planning checkpoints', exact: true });
 const outside = (page: Page) => page.getByRole('region', { name: 'Outside world', exact: true });
@@ -53,7 +53,8 @@ test('U7: fresh seeds differ but summary and rendered metadata reveal no hidden 
   const summary = await outside(page).innerText(), a = JSON.parse(await checkpoint(page));
   expect(summary).toContain('90'); expect(summary).toContain('80');
   expect(summary).toContain('Exploration, claiming and extraction are not available yet.');
-  expect(a.cityRulesetId).toBe('tile-population-01');
+  expect(a.cityRulesetId).toBe('tile-population-goods-01');
+  expect(a.state.city.goodsStock.amountMilli).toBe(10000);
   expect(a.state.outside.tiles.filter((t: { owner: string | null }) => t.owner !== null)).toHaveLength(10);
   const metadata = await outside(page).evaluate(root => [root, ...root.querySelectorAll('*')].flatMap(el => [...el.attributes].filter(a => a.name.startsWith('data-') || a.name.startsWith('aria-') || a.name === 'title').map(a => a.value)));
   expect(metadata.join(' ')).not.toMatch(/o\d{2}|seed|loot|deposit|wheat|wood|iron/i);
@@ -126,7 +127,7 @@ test('U5/U6b: wrong-slot bytes never overwrite or fall back in any of the three 
     await writeSlot(page, world, OLD_KEYS[i]); const bytes = await slots(page);
     await resume(page); await expect(controls(page).getByRole('alert')).toContainText('Unsupported');
     await importText(page, world); await expect(controls(page).getByRole('alert')).toContainText('Unsupported');
-    await expect(page.getByTestId('trial-stock-gold')).toHaveText('30'); expect(await slots(page)).toEqual(bytes);
+    await expect(page.getByTestId('trial-stock-gold')).toHaveText(mode === 'tiles' ? '30' : '45'); expect(await slots(page)).toEqual(bytes);
     expect(JSON.parse(await checkpoint(page)).state).toEqual(before.state);
   }
 });
@@ -137,6 +138,8 @@ test('U8: Report locks all four checkpoint controls', async ({ page }) => {
 });
 test('U9: local and portable saves restore the whole populated session and uninterrupted next week', async ({ page }) => {
   await page.goto('/?mode=world'); await seedOldSlots(page);
+  await importText(page, await readFile('packages/persistence/src/__tests__/fixtures/legacy-v1/world.json', 'utf8'));
+  expect(JSON.parse(await checkpoint(page)).cityRulesetId).toBe('tile-population-01');
   // Existing population rules: a complete chain plus 3 WF on farm/processor attracts passive arrivals.
   for (const [id, type] of [['forest-1', 'logging'], ['ore-1', 'mine'], ['plain-2', 'workshop'], ['plain-3', 'market']]) {
     await page.getByRole('button', { name: `Select ${id}`, exact: true }).click(); await page.getByLabel('Building type').selectOption(type); await page.getByRole('button', { name: 'Build', exact: true }).click();

@@ -1,8 +1,10 @@
 import type { CanonicalGameState, WeeklyStocks } from "../domain/canonical-state.js";
+import type { GoodsStock } from './goods-stock.js';
 
 export interface TrialBuilding { typeId: string; level: number; workers: number; enabled: boolean }
 export interface TrialTile { id: string; terrain: string; building: TrialBuilding | null }
 export interface TileTrialState {
+  goodsStock?: GoodsStock;
   world: CanonicalGameState;
   revision: number;
   phase: "planning" | "report";
@@ -10,6 +12,8 @@ export interface TileTrialState {
   happiness: number;
 }
 export interface TileTrialReport {
+  goodsStock?: Readonly<{ openingMilli: number; producedMilli: number; distributedMilli: number; closingMilli: number;
+    demandMilli: number; unmetMilli: number; capacityMilli: number; limitedBy: 'none' | 'stock' | 'capacity' }>;
   immigration?: Readonly<TrialImmigrationReport>;
   week: number;
   before: WeeklyStocks;

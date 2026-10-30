@@ -92,8 +92,8 @@ export function createPlayerCharacter(draft: PlayerDraft): { success: true; valu
 }
 
 // The life session composes the NPC world session unchanged (seeded names, stats, posts) and adds the Player and starter profiles.
-export function createCharacterLifeSession(seed: unknown, draft: PlayerDraft): { success: true; value: CharacterLifeSessionState } | { success: false; error: { code: string; message: string } } {
-  const world = createNpcWorldSession(seed);
+export function createCharacterLifeSession(seed: unknown, draft: PlayerDraft, economy?: Parameters<typeof createNpcWorldSession>[1]): { success: true; value: CharacterLifeSessionState } | { success: false; error: { code: string; message: string } } {
+  const world = createNpcWorldSession(seed, economy);
   if (!world.success) return world;
   const player = createPlayerCharacter(draft);
   if (!player.success) return player;

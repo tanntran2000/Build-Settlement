@@ -20,6 +20,7 @@
       <p>Food consumed: {formatMilli(report.foodConsumedMilli)} / {formatMilli(report.foodDemandMilli)} · {formatFulfillment(report.foodConsumedMilli, report.foodDemandMilli)}.</p>
       <p>Food unmet: {formatMilli(report.foodDemandMilli - report.foodConsumedMilli)}.</p>
       <p data-testid="trial-goods">Goods service: {formatMilli(report.goods.servedMilli)} / {formatMilli(report.goods.demandMilli)} · {formatFulfillment(report.goods.servedMilli, report.goods.demandMilli)}. Materials used once: {formatMilli(report.goods.woodUsed)} Wood, {formatMilli(report.goods.ironUsed)} Iron. Revenue: {formatMilli(report.goods.revenueMilli)} Gold.</p>
+      {#if report.goodsStock}<p data-testid="goods-stock-flow">Goods stock: opening {formatMilli(report.goodsStock.openingMilli)} · produced {formatMilli(report.goodsStock.producedMilli)} · distributed {formatMilli(report.goodsStock.distributedMilli)} · closing {formatMilli(report.goodsStock.closingMilli)}. Demand {formatMilli(report.goodsStock.demandMilli)}; unmet {formatMilli(report.goodsStock.unmetMilli)}; capacity {formatMilli(report.goodsStock.capacityMilli)}; limited by {report.goodsStock.limitedBy}.</p>{/if}
       <p>Goods unmet: {formatMilli(report.goods.demandMilli - report.goods.servedMilli)}.</p>
     </section>
     <section>
@@ -49,7 +50,8 @@
     <details>
       <summary>How this is calculated</summary>
       <p>Stock change is closing stock minus opening stock for this resolved week. It is not gross production or a forecast.</p>
-      <p>TRIAL: tax {formatMilli(B.taxGoldPerResident)} Gold/resident/week; Goods demand {formatMilli(B.goodsDemandPerResident)} service/resident/week. Workshop: 1 WF + {formatMilli(B.goodsWoodPerBatch)} Wood + {formatMilli(B.goodsIronPerBatch)} Iron → {formatMilli(B.goodsServicePerBatch)} service. Market: {formatMilli(B.marketServicePerLevel)} service/level; raises capacity, not demand. Whole Workshop batches may have unused service; nothing carries over.</p>
+      {#if report.goodsStock}<p>IMPLEMENTATION TRIAL: 1 Workshop WF + 2 Wood → 2 stored Goods per funded batch; no Iron. Funded Markets distribute up to 2 Goods per level weekly, limited by stock and demand of 0.02 per resident. Unused stock carries over. Only distribution earns 1 Gold per Goods, once. Stored Goods is not recurring income; actual sale Gold remains cash.</p>
+      {:else}<p>TRIAL: tax {formatMilli(B.taxGoldPerResident)} Gold/resident/week; Goods demand {formatMilli(B.goodsDemandPerResident)} service/resident/week. Workshop: 1 WF + {formatMilli(B.goodsWoodPerBatch)} Wood + {formatMilli(B.goodsIronPerBatch)} Iron → {formatMilli(B.goodsServicePerBatch)} service. Market: {formatMilli(B.marketServicePerLevel)} service/level; raises capacity, not demand. Whole Workshop batches may have unused service; nothing carries over.</p>{/if}
       <p>Goods earns {formatMilli(B.goldPerServiceMilli)} Gold/service and up to {B.goodsHappinessMax} Happiness at full fulfillment. Food need: {formatMilli(B.foodDemandPerResident)} per resident/week. Maintenance is funded in tile order; tax arrives first.</p>
       {#if report.immigration}<p>Immigration target: {report.immigration.target}. Useful worker slots: {report.immigration.usefulWorkerSlots}. Renewable Food: {formatMilli(report.immigration.renewableFoodMilli)}. Reason: {report.immigration.reason}.</p>{/if}
     </details>

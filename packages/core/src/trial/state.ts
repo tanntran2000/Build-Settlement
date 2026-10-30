@@ -2,6 +2,7 @@ import { hasWeeklyKeys, isCanonicalGameState } from "../domain/canonical-state.j
 import { createWeeklyState, weeklyWorkforceMilli } from "../weekly.js";
 import { TILE_TRIAL_BALANCE, trialBuilding } from "./catalog.js";
 import type { TileTrialState } from "./types.js";
+import { GOODS_STOCK_RULESET } from './goods-stock.js';
 
 export function createTileTrialState(): TileTrialState {
   const world = createWeeklyState();
@@ -18,7 +19,9 @@ export function createTileTrialState(): TileTrialState {
 const integer = (n: unknown): n is number => Number.isSafeInteger(n) && (n as number) >= 0;
 export function isTileTrialState(raw: unknown): raw is TileTrialState {
   try {
-    if (!hasWeeklyKeys(raw, ["world", "revision", "phase", "tiles", "happiness"])) return false;
+    if (!hasWeeklyKeys(raw, ["world", "revision", "phase", "tiles", "happiness"]) &&
+        !(hasWeeklyKeys(raw, ["world", "revision", "phase", "tiles", "happiness", "goodsStock"]) &&
+          hasWeeklyKeys(raw.goodsStock, ['rulesetId', 'amountMilli']) && raw.goodsStock.rulesetId === GOODS_STOCK_RULESET && integer(raw.goodsStock.amountMilli))) return false;
     const s = raw as unknown as TileTrialState;
     if (!isCanonicalGameState(s.world) || !s.world.activeSettlementId || !integer(s.revision) ||
       !["planning", "report"].includes(s.phase) || !Number.isFinite(s.happiness) || s.happiness < 0 || s.happiness > 100 || !Array.isArray(s.tiles)) return false;
@@ -41,7 +44,8 @@ export function isTileTrialState(raw: unknown): raw is TileTrialState {
 // Checkpoint boundary pins this ruleset's map and excludes UI-local reports.
 export function isTileTrialPlanningState(raw: unknown): raw is TileTrialState {
   try {
-    if (!hasWeeklyKeys(raw, ["world", "revision", "phase", "tiles", "happiness"]) || raw.phase !== "planning" || !Array.isArray(raw.tiles)) return false;
+    if (!(hasWeeklyKeys(raw, ["world", "revision", "phase", "tiles", "happiness"]) ||
+        hasWeeklyKeys(raw, ["world", "revision", "phase", "tiles", "happiness", "goodsStock"])) || raw.phase !== "planning" || !Array.isArray(raw.tiles)) return false;
     const tiles = raw.tiles;
     if (Object.getPrototypeOf(tiles) !== Array.prototype || Reflect.ownKeys(tiles).length !== tiles.length + 1) return false;
     const expected = createTileTrialState().tiles;
