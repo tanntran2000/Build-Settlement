@@ -157,7 +157,7 @@ Old rulesets keep their exact code path.
 
 - [ ] **Step 1: Failing tests** (new game, End Week called through `runTileTrialWeek` directly, since the guard stays until Task 3):
   - Every class gets Food 10000 bps; Goods consumed 1450 milli (capacity 2000 ≥ demand 1450); Goods revenue +1450 Gold milli.
-  - Every class satisfaction 80 → 82; city Happiness 82.
+  - Populated classes (Free, Makers, Luminaries, Merchants) satisfaction 80 → 82; empty Bound stays 80 (P2-B `resolveSatisfaction` keeps empty classes unchanged); city Happiness 82.
   - Cohort total = `societyPopulation(society)` = 100 + reported arrivals; arrivals per class ≤ free housing (15 / 5 / 6 / 2).
   - A Trading Post L1 fully staffed with Gold ≥ 3000 adds 2000 Luxury; with Gold < 3000 adds 0 and spends 0.
   - The same input twice gives deep-equal results; the input state is not mutated.
