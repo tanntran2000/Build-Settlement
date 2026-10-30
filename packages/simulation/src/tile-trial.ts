@@ -1,14 +1,16 @@
 import { hasWeeklyKeys, isTileTrialState, isTileTrialPlanningState, trialBuilding, LEGACY_TILE_RULESET, POPULATION_TILE_RULESET, type TileTrialRuleset, type TileTrialState, type TileTrialResult } from "@haven/core";
 import { runTileTrialWeek, trialSafe } from "./tile-trial-week.js";
-import { cityEconomyRuleset } from '@haven/core';
+import { cityEconomyRuleset, SOCIETY_RULESET } from '@haven/core';
 
 export function executeTileTrialCommand(state: unknown, raw: unknown, ruleset: TileTrialRuleset = LEGACY_TILE_RULESET): TileTrialResult {
   const fail = (code: string, message: string): TileTrialResult => ({ success: false, state, error: { code, message } });
   try {
     if (ruleset !== LEGACY_TILE_RULESET && ruleset !== POPULATION_TILE_RULESET) return fail("INVALID_RULESET", "Unsupported trial ruleset; nothing was changed.");
     if (!isTileTrialState(state) || cityEconomyRuleset(state, ruleset) === null) return fail("INVALID_STATE", "Trial state is invalid; nothing was changed.");
+    if (cityEconomyRuleset(state, ruleset) === SOCIETY_RULESET) return fail('UNSUPPORTED_RULESET', 'This city economy is not playable yet; nothing was changed.');
     if (!raw || typeof raw !== "object" || !hasWeeklyKeys(raw, Object.keys(raw))) return fail("INVALID_COMMAND", "Command must contain plain data fields.");
     const c = { ...raw } as Record<string, unknown>;
+    if (c.type === 'LOAD_TRIAL' && c.snapshot && typeof c.snapshot === 'object' && Object.hasOwn(c.snapshot, 'society')) return fail('UNSUPPORTED_RULESET', 'This city economy is not playable yet; nothing was changed.');
     if (c.expectedRevision !== state.revision) return fail("STALE_COMMAND", "The plan changed. Refresh the action before retrying.");
     if (state.phase === "report" && c.type !== "NEXT_WEEK") return fail("FORBIDDEN", "Read the report, then choose Plan next week.");
     if (state.phase === "planning" && c.type === "NEXT_WEEK") return fail("FORBIDDEN", "Finish this week before planning the next one.");
