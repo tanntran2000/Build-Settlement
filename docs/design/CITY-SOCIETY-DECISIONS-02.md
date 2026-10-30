@@ -31,7 +31,7 @@ The Outside City / Inside City / Map UI is redone only after P2–P4, because pl
 | **Makers** (The Makers' Union) | Common + **Elite** | Skilled production, construction, maintenance | Makers' housing; Elite needs luxury housing |
 | **Luminaries** (The Luminary Circle) | Common + **Elite** | Research, education, health, planning | Scholars' housing; Elite needs luxury housing |
 | **Merchants** (The Mercantile League) | Common + **Elite** | Trade, distribution, finance | Merchants' housing; Elite needs luxury housing |
-| **Slaves** | — | Basic labour like Free residents | Slave quarters in the Slum; very low facility needs |
+| **Slaves** (UI label **The Bound**, already on `main` in `packages/content/src/city-design.ts`) | — | Basic labour like Free residents | Slave quarters in the Slum; very low facility needs |
 
 - **Building ↔ group link = both (owner choice C):** each group has buildings it **works in** (staffing, Frostpunk-style) and buildings that **serve/house it** (attraction, Free-Cities apartments style).
 - **Where residents come from = both (owner choice C):** immigration by group, pulled by that group's housing and services; plus slow, costly **training** of Free residents into a group (Academy).
@@ -79,7 +79,7 @@ Corruption is not a Town Hall penalty any more (§4); Town Hall's corruption rol
 
 **Hospital vs Drug Store (owner, 2026-10-30):** the Hospital (the Infirmary above) sits in the upper Services tier. The Slum has its own "hospital", the **Drug Store**: opium; drugs that raise stats but with side effects (lower other stats or health); lust pills, aphrodisiac potions and similar. Drugs are consumable items (→ P6).
 
-### 5.1 Plot counts and expansion — design section 3 (Claude draft, pending owner approval)
+### 5.1 Plot counts and expansion — design section 3 (approved by the owner 2026-10-30)
 
 Plots per tier = building types + duplicates of key buildings.
 
@@ -120,7 +120,24 @@ Equipment, outfits and accessories, bought at the **Market** or the **Black Mark
 
 The owner likes Free Cities' law mechanics, their accompanying elements, and how the city is **described through its Future Societies**, and wants that in the settlement in a **more grimdark** direction. This lifts the earlier "Law DEFERRED" status for design purposes only; it becomes sub-project **P8**, not yet scheduled or designed. The Corruption axis (§4) is the first such axis.
 
-## 10. Open questions (next in P2 brainstorming)
+## 10. Class colours and exclusive items (owner, 2026-10-30)
+
+| Class | Colour |
+|---|---|
+| Makers | **Brown** |
+| Luminaries | **Blue** |
+| Merchants | **Yellow** |
+| Free residents (common) | **Green** |
+| Slaves (The Bound) | **Grey** |
+| No class affinity | **White** |
+| Player-only items | **Red** |
+
+- Every building or item **specific to a class** takes that class's colour. Buildings and items with no class affinity are **white**.
+- **Exclusive items:** a base item is white (e.g. a plain Wool Shirt). A variant with an "Exclusive <Class>" line, e.g. **Exclusive Merchant**, gives its **bonus only when worn by an NPC whose origin is that class**. Any NPC may wear it, without the bonus.
+- **Player items are red:** large stat bonuses for the Player, but **very rare**.
+- Applies to P2 (buildings), P6 (items) and the city/map UI. Exact hex values are still to be chosen and must stay readable on the "Lord's ledger" UI (wood/parchment).
+
+## 11. Open questions (next in P2 brainstorming)
 
 1. Exact tiers, starting plots per tier and expansion steps (design section 3).
 2. Does an Elite need its own group housing, or one shared luxury housing type?
