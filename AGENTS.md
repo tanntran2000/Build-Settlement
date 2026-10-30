@@ -49,7 +49,7 @@ flowchart LR
     G1 --> G2["G2: Triển Khai (Branch)"]
     G2 --> G3["G3: Chuẩn Bị PR"]
     G3 --> G4["G4: CI & Review"]
-    G4 --> G5["G5: Human Merge"]
+    G4 --> G5["G5: Merge (Human / Ủy Quyền)"]
     G5 --> G6["G6: Hậu Kiểm (Main)"]
 ```
 
