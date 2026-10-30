@@ -17,13 +17,27 @@ export function executeTileTrialCommand(state: unknown, raw: unknown, ruleset: T
     if (state.phase === "report" && c.type !== "NEXT_WEEK") return fail("FORBIDDEN", "Read the report, then choose Plan next week.");
     if (state.phase === "planning" && c.type === "NEXT_WEEK") return fail("FORBIDDEN", "Finish this week before planning the next one.");
     const keys: Record<string, string[]> = {
-      END_WEEK: ["expectedWeek"], NEXT_WEEK: [], LOAD_TRIAL: ["snapshot"], BUILD: ["tileId", "typeId"], REPLACE: ["tileId", "typeId"],
+      EXTEND_WALL: [], SET_TRAINING: ["target"], END_WEEK: ["expectedWeek"], NEXT_WEEK: [], LOAD_TRIAL: ["snapshot"], BUILD: ["tileId", "typeId"], REPLACE: ["tileId", "typeId"],
       UPGRADE: ["tileId"], SET_WORKERS: ["tileId", "workers"], SET_ENABLED: ["tileId", "enabled"],
     };
     if (typeof c.type !== "string" || !Object.hasOwn(keys, c.type) || !hasWeeklyKeys(c, ["type", "expectedRevision", ...keys[c.type]])) return fail("INVALID_COMMAND", "Unknown command or fields.");
+    if (['EXTEND_WALL','SET_TRAINING'].includes(c.type) && !state.society) return fail('UNSUPPORTED_RULESET','This command requires a society city.');
     let next = structuredClone(state) as TileTrialState;
     let report;
-    if (c.type === "LOAD_TRIAL") {
+    if (c.type === 'SET_TRAINING') {
+      if (c.target !== null && !['makers','luminaries','merchants'].includes(c.target as string)) return fail('INVALID_COMMAND','Choose a training group.');
+      next.society!.training.target = c.target as 'makers' | 'luminaries' | 'merchants' | null;
+    } else if (c.type === 'EXTEND_WALL') {
+      const ring = next.society!.wallRing;
+      if (ring === 3) return fail('WALL_COMPLETE','All wall rings are open.');
+      const prerequisite = ring === 1 ? 'builders-yard' : 'town-hall';
+      if (!next.tiles.some(t=>t.building?.typeId === prerequisite && t.building.enabled && t.building.workers === trialBuilding(prerequisite)!.maxWorkers*t.building.level)) return fail('PREREQUISITE_MISSING','An operating prerequisite building is required.');
+      const inventory = next.world.settlements[next.world.activeSettlementId!].inventory;
+      const costs = ring === 1 ? {gold:30000,wood:20000,iron:10000} : {gold:60000,wood:40000,iron:20000};
+      for (const key of ['gold','wood','iron'] as const) if (inventory[key]<costs[key]) return fail('INSUFFICIENT_RESOURCES','Not enough resources to extend the wall.');
+      for (const key of ['gold','wood','iron'] as const) inventory[key]-=costs[key];
+      next.society!.wallRing = ring === 1 ? 2 : 3;
+    } else if (c.type === "LOAD_TRIAL") {
       if (c.snapshot && typeof c.snapshot === 'object' && Object.hasOwn(c.snapshot, 'goodsStock') &&
           cityEconomyRuleset(c.snapshot as TileTrialState, ruleset) === null) return fail('INVALID_STATE', 'Checkpoint economy is incompatible with this trial family.');
       if (!isTileTrialPlanningState(c.snapshot)) return fail("INVALID_SAVE_STATE", "Checkpoint must contain a valid tile Planning state and the supported map.");
