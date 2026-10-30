@@ -2,7 +2,7 @@
 
 ## Current handoff — city-navigation G6 documentation (2026-10-28)
 
-The [current City UI release snapshot](docs/INTERNAL_PROGRESS_TRACKER.md#current-city-ui--bounded-g6-release-snapshot-2026-10-28-utc) records PR51's reviewed candidate, normal merge, successful exact-merge main CI, independent command/UI/code/pixel evidence and bounded limitations. The original-image comparison blocker is closed; Q1 is fixed and optional minors remain deferred. Product evidence is historical to this documentation task, not freshly rerun tests or approval of these documents.
+The [City UI release snapshot](docs/INTERNAL_PROGRESS_TRACKER.md#historical-city-ui--bounded-g6-release-snapshot-2026-10-28-utc) records PR51's reviewed candidate, normal merge, successful exact-merge main CI, independent command/UI/code/pixel evidence and bounded limitations. The original-image comparison blocker is closed; Q1 is fixed and optional minors remain deferred. Product evidence is historical to this documentation task, not freshly rerun tests or approval of these documents.
 
 Documentation branch: `docs/city-navigation-g6`, based on upstream `068cc5e321be1ef69014d3528e811a191bb5b9a4` (PR51 plus PR52 policy). Scope is exactly this file and `docs/INTERNAL_PROGRESS_TRACKER.md`; previous snapshot bodies/checklists and frozen plan/spec/addendum remain preserved. Builder identity, final commit/tree, checks and retained source references belong in the local Builder report, avoiding a circular self-hash. No publication is performed by this Builder.
 
