@@ -73,9 +73,33 @@ Draft catalogue (names and members open to change; numbers in P2 spec):
 | **Housing** | Common Housing (Free; tent → row → brick upgrades), Makers' Rowhouses, Scholars' Quarters, Merchant Townhouses, **luxury housing for Elites** |
 | **Services** | Tavern (Free staff; Happiness, Food distribution), Infirmary (Luminaries; health), Watch House (Free staff; Security, lowers Tension), **Town Hall** (Merchants + NPC managers; **NPC manager posts → Handoff**) |
 | **Specialist** | Makers: Builders' Yard, Warehouse, Smithy (items → P6). Luminaries: Academy (**trains Free residents**), Library (research/unlocks). Merchants: **Market (moves inside)**, Trading Post (trade with outside and Legacy cities), Counting House (tax, Gold) |
-| **Slum** | Brothel, **Black Market**, slave quarters and other 18+ buildings (details P7/P8) |
+| **Slum** | Brothel, **Black Market**, slave quarters, **Drug Store** and other 18+ buildings (details P7/P8) |
 
 Corruption is not a Town Hall penalty any more (§4); Town Hall's corruption role must be redefined in P2.
+
+**Hospital vs Drug Store (owner, 2026-10-30):** the Hospital (the Infirmary above) sits in the upper Services tier. The Slum has its own "hospital", the **Drug Store**: opium; drugs that raise stats but with side effects (lower other stats or health); lust pills, aphrodisiac potions and similar. Drugs are consumable items (→ P6).
+
+### 5.1 Plot counts and expansion — design section 3 (Claude draft, pending owner approval)
+
+Plots per tier = building types + duplicates of key buildings.
+
+| Tier | Types | Duplicates | Plots |
+|---|---|---|---|
+| Housing | Common Housing, Makers' Rowhouses, Scholars' Quarters, Merchant Townhouses, **Elite Manor (one shared type for Elites of all three groups; the Light/Dark side decides which Elites come)** | Common ×3, each group ×2, Manor ×2 | 11 |
+| Services | Tavern, Hospital, Watch House, Town Hall | Tavern ×2, Watch House ×2 | 6 |
+| Specialist | Builders' Yard, Warehouse, Smithy, Academy, Library, Market, Trading Post, Counting House | Market ×2, Warehouse ×2 | 10 |
+| Slum | Slave Quarters, Brothel, Black Market, Arena, Drug Store | Slave Quarters ×2 | 6 |
+| | | **Total at full expansion** | **33** |
+
+Expansion by wall rings (the city map physically grows: new wall, new streets; the Slum hugs the wall outside the gate and is pushed outward on each expansion):
+
+| Stage | Opens | Open plots |
+|---|---|---|
+| Ring 1 (New Game) | Housing 4, Services 2, Specialist 3, Slum 1 | 10 |
+| Ring 2 — "Wall extension" (needs Builders' Yard; Wood, Iron, Gold) | +4, +2, +4, +2 | 22 |
+| Ring 3 — "Outer city" (needs Ring 2 and Town Hall) | +3, +2, +3, +3 | 33 |
+
+Spatial layout: core (Town Hall, Market square) → inner ring (housing, services) → outer ring along the wall (specialist) → Slum outside the gate.
 
 ## 6. Handoff readiness (decided direction, for R4)
 
