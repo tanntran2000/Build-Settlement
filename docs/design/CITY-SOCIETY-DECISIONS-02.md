@@ -60,7 +60,7 @@ This replaces the negative reading of Corruption in [Social Draft 01](SOCIAL-REQ
 | Items | Dark 18+ items | 18+ items of the opposite kind |
 
 Intent: grimdark, yet the city keeps stability alongside its built-in chaos.
-Reference studied: Free Cities Future Societies — paired opposite axes (e.g. Paternalist ↔ Degradationist), progress 0–100 with four acceptance levels, side-specific laws/decorations/shops/items, class-migration effects, limited number of active axes unlocked by reputation.
+Reference studied ([30-week study](../research/playtest/2026-10-30-free-cities-30-week-study.md)): Free Cities Future Societies — paired opposite axes (e.g. Paternalist ↔ Degradationist), progress 0–100 with four acceptance levels, side-specific laws/decorations/shops/items, class-migration effects, limited number of active axes unlocked by reputation.
 
 ## 5. Inside-city tiers — "Approach 1 + tier expansion" (decided)
 
