@@ -1,4 +1,4 @@
-﻿import { hasWeeklyKeys } from '../domain/canonical-state.js';
+import { hasWeeklyKeys } from '../domain/canonical-state.js';
 import { createGoodsStockState } from './goods-stock.js';
 import type { TileTrialState } from './types.js';
 
@@ -46,7 +46,7 @@ export function isSocietyState(raw: unknown): raw is SocietyState {
       hasWeeklyKeys(raw.debtPressure, classes) && Object.values(raw.debtPressure).every(score) &&
       score(raw.desperation) && score(raw.tension) && score(raw.corruption) && count(raw.luxuryStockMilli) &&
       hasWeeklyKeys(raw.training, ['target', 'progressMilli']) &&
-      (raw.training.target === null || groups.some(group => group === raw.training.target)) && count(raw.training.progressMilli) &&
+      (raw.training.target === null || (groups as readonly unknown[]).includes(raw.training.target)) && count(raw.training.progressMilli) &&
       (raw.wallRing === 1 || raw.wallRing === 2 || raw.wallRing === 3);
   } catch { return false; }
 }
