@@ -75,3 +75,31 @@ export function allocateRequirements(input:RequirementsInput) {
     foodConsumedMilli:input.foodAvailableMilli-foodLeft,goodsConsumedMilli:input.goodsServableMilli-goodsLeft,
     luxuryConsumedMilli:luxuryBefore-luxuryLeft,luxuryAfterMilli:luxuryLeft};
 }
+type Allocation = ReturnType<typeof allocateRequirements>['perClass'];
+const clamp = (n:number) => Math.max(0,Math.min(100,Math.round(n)));
+const levelBonus = (levels:readonly number[],one:number,two:number) => sum(levels.map(level=>{ if(level!==1 && level!==2) throw Error('Invalid society facility level.'); return level===1?one:two; }));
+export function resolveSatisfaction(before:SocietyState['satisfaction'],alloc:Allocation,facilities:SocietyFacilities,classes:SocietyState['classes']):Record<SocietyClassId,number> {
+  const counts=societyCounts({classes} as SocietyState);
+  const tavern=levelBonus(facilities.tavernLevels,T.tavernL1,T.tavernL2), hospital=levelBonus(facilities.hospitalLevels,T.hospitalL1,T.hospitalL2);
+  return record(id=>{
+    if(counts[id]===0) return before[id];
+    const a=alloc[id]; let score=before[id];
+    if(a.foodBps<10000) score-=12*(10000-a.foodBps)/10000;
+    else if(score<80) score=Math.min(80,score+4);
+    // Retain the existing needs formula's two-decimal precision before integer rounding.
+    score=Math.round(Math.max(0,Math.min(100,score+2*a.goodsBps/10000))*100)/100;
+    if(id!=='free' && id!=='bound' && a.luxuryBps!==null) {
+      score-=safe(integer(T.luxuryShortage)*integer(10000-a.luxuryBps)*integer(classes[id].elite)/(10000n*integer(counts[id])));
+    }
+    if(id!=='bound') { if(a.foodBps===10000) score+=tavern; score+=hospital; }
+    const housed=id==='free'||id==='bound'?counts[id]:classes[id].common;
+    if(housed>facilities.housing[id]) score-=T.overcrowding;
+    return clamp(score);
+  });
+}
+export function cityHappiness(values:Record<SocietyClassId,number>,counts:Record<SocietyClassId,number>,previous:number):number {
+  const population=citizens.reduce((n,id)=>n+integer(counts[id]),0n);
+  if(population===0n) return previous;
+  const weighted=citizens.reduce((n,id)=>n+integer(counts[id])*integer(values[id]),0n);
+  return Number((weighted*200n+population)/(population*2n))/100;
+}

@@ -20,3 +20,32 @@ describe('requirements', () => {
     expect(a.perClass.makers.luxuryBps).toBe(5000); expect(a.luxuryAfterMilli).toBe(0); expect(a.luxuryConsumedMilli).toBe(50);
   });
 });
+
+import { resolveSatisfaction, cityHappiness, societyCounts, type SocietyFacilities } from '../society-week.js';
+const facilities = ():SocietyFacilities => ({housing:{free:70,makers:25,luminaries:15,merchants:15,elite:5,bound:10},tavernLevels:[],hospitalLevels:[],academyLevels:0,countingHouseLevels:0,operatingSlumBuildings:0});
+const allocation = (s= society()) => allocateRequirements({society:s,foodAvailableMilli:10000,goodsServableMilli:10000,luxuryImportedMilli:1000}).perClass;
+describe('satisfaction',()=>{
+  it.each([[70,0,60],[76,10000,82],[90,10000,92]])('applies food and goods at %s',(before,foodBps,expected)=>{
+    const s=society(), a=allocation(); s.satisfaction.free=before; a.free.foodBps=foodBps;
+    expect(resolveSatisfaction(s.satisfaction,a,facilities(),s.classes).free).toBe(expected);
+  });
+  it('weights luxury by elite share',()=>{
+    const s=society(); s.classes.makers.elite=1; const a=allocation(s); a.makers.luxuryBps=5000;
+    expect(resolveSatisfaction(s.satisfaction,a,facilities(),s.classes).makers).toBe(82);
+    s.classes.makers.common=1;
+    expect(resolveSatisfaction(s.satisfaction,a,facilities(),s.classes).makers).toBe(81);
+  });
+  it('applies tavern only when fed, hospital except bound, overcrowding last',()=>{
+    const s=society(),a=allocation(),f=facilities(); f.tavernLevels=[2];
+    expect(resolveSatisfaction(s.satisfaction,a,f,s.classes).free).toBe(85);
+    a.free.foodBps=0; expect(resolveSatisfaction(s.satisfaction,a,f,s.classes).free).toBe(70);
+    f.tavernLevels=[]; f.hospitalLevels=[1]; f.housing.merchants=12;
+    const r=resolveSatisfaction(s.satisfaction,allocation(),f,s.classes);
+    expect(r.free).toBe(83); expect(r.bound).toBe(80); expect(r.merchants).toBe(78);
+  });
+  it('weights citizens only and preserves previous at zero',()=>{
+    const s=society(); const values={free:80,makers:70,luminaries:60,merchants:50,bound:0};
+    expect(cityHappiness(values,societyCounts(s),80)).toBe(71.7);
+    expect(cityHappiness(values,{free:0,makers:0,luminaries:0,merchants:0,bound:100},77)).toBe(77);
+  });
+});
