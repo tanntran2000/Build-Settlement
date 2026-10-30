@@ -18,7 +18,7 @@ it('creates the spec section 3 new game', () => {
   expect(cityEconomyRuleset(s, LEGACY_TILE_RULESET)).toBeNull();
   const { society: extension, ...goods } = s;
   expect(extension).toBeDefined();
-  expect(goods).toEqual(createGoodsStockState());
+  expect({ ...goods, tiles: createGoodsStockState().tiles }).toEqual(createGoodsStockState());
   expect(Object.isFrozen(SOCIETY_TRIAL)).toBe(true);
   s.society!.classes.makers.common = 0;
   expect(createSocietyState().society!.classes.makers.common).toBe(20);

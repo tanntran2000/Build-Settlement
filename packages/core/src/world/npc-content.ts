@@ -4,7 +4,7 @@ import type { TraitDefinition, WorldNpc } from './npc.js';
 // TRIAL starter content approved 2026-10-25T00:00Z as a shape only; values, traits and the
 // post mapping are PROVISIONAL, pending user review, and not validated balance.
 // Provisional trial mapping onto the six existing building types, not a permanent job catalog.
-export const NPC_MANAGER_BUILDING_TYPES: readonly string[] = Object.freeze(['farm', 'processor', 'logging', 'mine', 'workshop', 'market']);
+export const NPC_MANAGER_BUILDING_TYPES: readonly string[] = Object.freeze(['farm', 'processor', 'logging', 'mine', 'workshop', 'market', 'town-hall', 'town-market']);
 
 // Display text only: no trait effect is active yet.
 export const WORLD_TRAITS: readonly TraitDefinition[] = deepFreeze([

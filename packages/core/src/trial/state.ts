@@ -1,4 +1,4 @@
-import { isSocietyState, societyPopulation } from './society.js';
+import { createSocietyState, isSocietyState, societyPopulation } from './society.js';
 import { hasWeeklyKeys, isCanonicalGameState } from "../domain/canonical-state.js";
 import { createWeeklyState, weeklyWorkforceMilli } from "../weekly.js";
 import { TILE_TRIAL_BALANCE, trialBuilding } from "./catalog.js";
@@ -57,7 +57,7 @@ export function isTileTrialPlanningState(raw: unknown): raw is TileTrialState {
     if (!hasTileKeys(raw) || raw.phase !== "planning" || !Array.isArray(raw.tiles)) return false;
     const tiles = raw.tiles;
     if (Object.getPrototypeOf(tiles) !== Array.prototype || Reflect.ownKeys(tiles).length !== tiles.length + 1) return false;
-    const expected = createTileTrialState().tiles;
+    const expected = (Object.hasOwn(raw, 'society') ? createSocietyState() : createTileTrialState()).tiles;
     if (tiles.length !== expected.length) return false;
     for (let i = 0; i < tiles.length; i++) {
       const entry = Object.getOwnPropertyDescriptor(tiles, String(i));
