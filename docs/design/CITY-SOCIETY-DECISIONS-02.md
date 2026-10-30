@@ -120,6 +120,10 @@ Equipment, outfits and accessories, bought at the **Market** or the **Black Mark
 
 The owner likes Free Cities' law mechanics, their accompanying elements, and how the city is **described through its Future Societies**, and wants that in the settlement in a **more grimdark** direction. This lifts the earlier "Law DEFERRED" status for design purposes only; it becomes sub-project **P8**, not yet scheduled or designed. The Corruption axis (§4) is the first such axis.
 
+Owner decisions 2026-10-30:
+- **The Light/Dark side is shown and driven on the City Overview tab**, not set at the Town Hall.
+- **Town Hall = where FS-style Laws are enacted.** Building it unlocks Laws. Each Law is **voted on in proportion to the four citizen groups** (Free residents, Makers, Luminaries, Merchants); the Player must resolve the vote to get it passed, **like the Frostpunk council**. (Slaves do not vote — Claude's assumption, to confirm in P8.)
+
 ## 10. Class colours and exclusive items (owner, 2026-10-30)
 
 | Class | Colour |
@@ -139,7 +143,8 @@ The owner likes Free Cities' law mechanics, their accompanying elements, and how
 
 ## 11. Open questions (next in P2 brainstorming)
 
-1. Exact tiers, starting plots per tier and expansion steps (design section 3).
-2. Does an Elite need its own group housing, or one shared luxury housing type?
+1. ~~Tiers, plots, expansion~~ — approved (§5.1).
+2. ~~Elite housing~~ — one shared Elite Manor (§5.1).
 3. How Desperation and slave pressure map onto the existing Tension formula (`pressure = 8s + 6u + 4x`).
-4. Town Hall's role now that Corruption is not a penalty.
+4. ~~Town Hall's role~~ — Law enactment and council votes (§9).
+5. Whether Requirements and the Food/Goods stock mechanics change for the class model (raised by the owner 2026-10-30).
