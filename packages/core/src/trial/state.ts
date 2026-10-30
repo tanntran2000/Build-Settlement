@@ -1,4 +1,5 @@
-import { isSocietyState, societyPopulation } from './society.js';
+import { SOCIETY_BUILDINGS, societyPlot, societyStaff, type StaffClass } from './society-map.js';
+import { createSocietyState, isSocietyState, societyPopulation } from './society.js';
 import { hasWeeklyKeys, isCanonicalGameState } from "../domain/canonical-state.js";
 import { createWeeklyState, weeklyWorkforceMilli } from "../weekly.js";
 import { TILE_TRIAL_BALANCE, trialBuilding } from "./catalog.js";
@@ -36,6 +37,7 @@ export function isTileTrialState(raw: unknown): raw is TileTrialState {
       if (societyPopulation(s.society) !== population) return false;
     }
     const ids = new Set<string>(); let workers = 0;
+    const assigned: Record<StaffClass, number> = {basic:0,makers:0,luminaries:0,merchants:0};
     for (const t of s.tiles) {
       if (!hasWeeklyKeys(t, ["id", "terrain", "building"]) || typeof t.id !== "string" || !t.id.trim() || ids.has(t.id) || typeof t.terrain !== "string" || !t.terrain.trim()) return false;
       ids.add(t.id);
@@ -45,7 +47,18 @@ export function isTileTrialState(raw: unknown): raw is TileTrialState {
       const d = trialBuilding(b.typeId);
       if (!d || !d.terrain.includes(t.terrain) || !integer(b.level) || b.level < 1 || b.level > d.maxLevel ||
         !integer(b.workers) || b.workers > d.maxWorkers * b.level || typeof b.enabled !== "boolean" || (!b.enabled && b.workers !== 0)) return false;
+      if (s.society) {
+        const plot = societyPlot(t.id), info = Object.hasOwn(SOCIETY_BUILDINGS,b.typeId) ? SOCIETY_BUILDINGS[b.typeId] : undefined;
+        if (b.typeId === 'market' || (plot && (t.terrain !== 'town' || plot.ring > s.society.wallRing || !info || info.tier !== plot.tier)) || (!plot && info)) return false;
+        const staff = societyStaff(b.typeId);
+        if (staff) { assigned[staff] += b.workers; if (!Number.isSafeInteger(assigned[staff])) return false; }
+      } else if (d.terrain.includes('town')) return false;
       workers += b.workers; if (!Number.isSafeInteger(workers)) return false;
+    }
+    if (s.society) {
+      const c = s.society.classes;
+      const bound = Object.values(c.bound).reduce((a,b)=>a+b,0);
+      return assigned.basic <= Math.floor(c.free/10)+Math.floor(bound/10) && (['makers','luminaries','merchants'] as const).every(k=>assigned[k]<=Math.floor(c[k].common/10));
     }
     return workers * 1000 <= weeklyWorkforceMilli(s.world.settlements[s.world.activeSettlementId].cohorts);
   } catch { return false; }
@@ -57,7 +70,7 @@ export function isTileTrialPlanningState(raw: unknown): raw is TileTrialState {
     if (!hasTileKeys(raw) || raw.phase !== "planning" || !Array.isArray(raw.tiles)) return false;
     const tiles = raw.tiles;
     if (Object.getPrototypeOf(tiles) !== Array.prototype || Reflect.ownKeys(tiles).length !== tiles.length + 1) return false;
-    const expected = createTileTrialState().tiles;
+    const expected = (Object.hasOwn(raw, 'society') ? createSocietyState() : createTileTrialState()).tiles;
     if (tiles.length !== expected.length) return false;
     for (let i = 0; i < tiles.length; i++) {
       const entry = Object.getOwnPropertyDescriptor(tiles, String(i));

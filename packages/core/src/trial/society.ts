@@ -1,3 +1,4 @@
+import { SOCIETY_PLOT_IDS } from './society-map.js';
 import { hasWeeklyKeys } from '../domain/canonical-state.js';
 import { createGoodsStockState } from './goods-stock.js';
 import type { TileTrialState } from './types.js';
@@ -31,7 +32,11 @@ const count = (n: unknown): n is number => Number.isSafeInteger(n) && (n as numb
 const score = (n: unknown): n is number => count(n) && n <= 100;
 
 export function createSocietyState(): TileTrialState {
-  return { ...createGoodsStockState(), society: structuredClone(SOCIETY_TRIAL) };
+  const state = createGoodsStockState();
+  state.tiles.find(t => t.id === 'plain-2')!.building = null;
+  state.tiles.push(...SOCIETY_PLOT_IDS.map(id => ({id, terrain:'town', building:null})));
+  for (const [id,typeId,level] of [['house-1','common-housing',3],['house-2','makers-rowhouses',2],['house-3','scholars-quarters',2],['house-4','merchant-townhouses',1],['spec-1','town-market',1]] as const) state.tiles.find(t=>t.id===id)!.building={typeId,level,workers:0,enabled:true};
+  return { ...state, society: structuredClone(SOCIETY_TRIAL) };
 }
 export function isSocietyState(raw: unknown): raw is SocietyState {
   try {

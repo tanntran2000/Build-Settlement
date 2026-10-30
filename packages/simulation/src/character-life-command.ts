@@ -3,7 +3,7 @@ import { executeWorldNpcCityCommand, executeWorldNpcCommand } from './world-npc.
 
 export type CharacterLifeActionType = 'BUILD' | 'REPLACE' | 'UPGRADE'
   | 'SET_WORKERS' | 'SET_ENABLED' | 'END_WEEK' | 'NEXT_WEEK'
-  | 'ASSIGN_NPC' | 'UNASSIGN_NPC';
+  | 'ASSIGN_NPC' | 'UNASSIGN_NPC' | 'EXTEND_WALL' | 'SET_TRAINING';
 export type CharacterLifeCommandResult =
   | { success: true; next: CharacterLifeSessionState; report?: Readonly<TileTrialReport> }
   | { success: false; error: { code: string; message: string } };
@@ -20,7 +20,9 @@ export function executeCharacterLifeCommand(session: unknown, raw: unknown): Cha
   } catch { return fail('INVALID_COMMAND', 'Command must contain plain data fields.'); }
   if (typeof type !== 'string') return fail('INVALID_COMMAND', 'Command must contain plain data fields.');
   if (type === 'LOAD_TRIAL') return fail('INVALID_COMMAND', 'Load an NPC world checkpoint through Continue or Import.');
-  if (!['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED', 'END_WEEK', 'NEXT_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC'].includes(type)) {
+  const societyAction = (type === 'EXTEND_WALL' || type === 'SET_TRAINING') &&
+    isLiveCharacterLifeSessionState(session) && !!session.city.society;
+  if (!['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED', 'END_WEEK', 'NEXT_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC'].includes(type) && !societyAction) {
     return fail('UNSUPPORTED_ACTION', 'This action is not supported in Character Life.');
   }
   if (!isLiveCharacterLifeSessionState(session)) return fail('INVALID_STATE', 'World session is invalid; nothing was changed.');

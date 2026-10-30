@@ -103,7 +103,8 @@ export function observeCharacterLife(session: CharacterLifeSessionState, lastRep
   return {
     week: city.world.week, phase: city.phase, revision: city.revision,
     actionTypes: city.phase === 'report' ? ['NEXT_WEEK']
-      : ['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED', 'END_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC'],
+      : ['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED', 'END_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC',
+        ...(city.society ? ['EXTEND_WALL', 'SET_TRAINING'] as const : [])],
     disabledReasons,
     settlement: { stocks: numbers(settlement.inventory, WEEKLY_RESOURCE_KEYS),
       ...(city.goodsStock ? { goodsStock: { ...city.goodsStock } } : {}),

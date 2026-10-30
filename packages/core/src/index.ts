@@ -28,3 +28,5 @@ export * from "./character/starter-profiles.js";
 export * from "./character/session.js";
 export * from './trial/goods-stock.js';
 export * from './trial/society.js';
+
+export * from './trial/society-map.js';

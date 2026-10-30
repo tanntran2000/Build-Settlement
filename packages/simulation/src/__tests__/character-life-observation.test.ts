@@ -219,7 +219,7 @@ describe('actionable catalogues and phase controls', () => {
     expect([o.week, o.phase, o.revision]).toEqual([city.world.week, city.phase, city.revision]);
     expect(o.tiles).toEqual(city.tiles.map(t => ({ id: t.id, terrain: t.terrain, building: t.building && {
       typeId: t.building.typeId, level: t.building.level, workers: t.building.workers, enabled: t.building.enabled } })));
-    expect(o.buildings.map(b => b.typeId)).toEqual(['farm', 'processor', 'logging', 'mine', 'workshop', 'market']);
+    expect(o.buildings.map(b => b.typeId)).toEqual(['farm', 'processor', 'logging', 'mine', 'workshop', 'market', 'common-housing', 'makers-rowhouses', 'scholars-quarters', 'merchant-townhouses', 'elite-manor', 'tavern', 'hospital', 'town-hall', 'builders-yard', 'academy', 'town-market', 'trading-post', 'counting-house', 'slave-quarters']);
     expect(o.buildings.map(b => b.typeId)).toEqual(Object.keys(TRIAL_BUILDINGS));
     o.buildings.forEach(b => {
       const d = TRIAL_BUILDINGS[b.typeId];
