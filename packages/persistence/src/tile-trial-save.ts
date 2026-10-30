@@ -1,4 +1,4 @@
-import { cityEconomyRuleset, GOODS_STOCK_RULESET } from '@haven/core';
+import { cityEconomyRuleset, GOODS_STOCK_RULESET, SOCIETY_RULESET } from '@haven/core';
 import { captureSaveData } from './world-session-save.js';
 import { hasWeeklyKeys, isTileTrialPlanningState, LEGACY_TILE_RULESET, POPULATION_TILE_RULESET, type TileTrialRuleset, type TileTrialState } from "@haven/core";
 
@@ -13,7 +13,7 @@ export function serializeTileTrialSave(state: unknown, ruleset: TileTrialRuleset
   try {
     if (ruleset !== LEGACY_TILE_RULESET && ruleset !== POPULATION_TILE_RULESET) return fail("INCOMPATIBLE_SAVE", "Unsupported checkpoint ruleset.");
     const snapshot = captureSaveData(state);
-    if (snapshot && typeof snapshot === 'object' && Object.hasOwn(snapshot, 'goodsStock') && cityEconomyRuleset(snapshot as TileTrialState, ruleset) === null) return fail("INCOMPATIBLE_SAVE", "Unsupported city economy.");
+    if (snapshot && typeof snapshot === 'object' && (Object.hasOwn(snapshot, 'goodsStock') || Object.hasOwn(snapshot, 'society')) && cityEconomyRuleset(snapshot as TileTrialState, ruleset) === null) return fail("INCOMPATIBLE_SAVE", "Unsupported city economy.");
     if (!isTileTrialPlanningState(snapshot)) return fail("INVALID_SAVE_STATE", "Export requires a valid tile Planning state.");
     const text = JSON.stringify({ format: FORMAT, schemaVersion: 1, rulesetId: cityEconomyRuleset(snapshot, ruleset), state: snapshot });
     if (tooLarge(text)) return fail("SAVE_TOO_LARGE", "Checkpoint exceeds the 1 MiB limit.");
@@ -27,10 +27,10 @@ export function deserializeTileTrialSave(text: unknown, ruleset: TileTrialRulese
     if (typeof text !== "string") return fail("INVALID_SAVE", "Choose a tile checkpoint JSON file.");
     if (tooLarge(text)) return fail("SAVE_TOO_LARGE", "Checkpoint exceeds the 1 MiB limit.");
     const value: unknown = JSON.parse(text);
-    if (!hasWeeklyKeys(value, ["format", "schemaVersion", "rulesetId", "state"]) || value.format !== FORMAT || value.schemaVersion !== 1 || (value.rulesetId !== ruleset && !(ruleset === POPULATION_TILE_RULESET && value.rulesetId === GOODS_STOCK_RULESET))) {
+    if (!hasWeeklyKeys(value, ["format", "schemaVersion", "rulesetId", "state"]) || value.format !== FORMAT || value.schemaVersion !== 1 || (value.rulesetId !== ruleset && !(ruleset === POPULATION_TILE_RULESET && (value.rulesetId === GOODS_STOCK_RULESET || value.rulesetId === SOCIETY_RULESET)))) {
       return fail("INCOMPATIBLE_SAVE", "Unsupported tile checkpoint format, version or ruleset. No migration was performed.");
     }
-    if (value.state && typeof value.state === 'object' && Object.hasOwn(value.state, 'goodsStock') && cityEconomyRuleset(value.state as TileTrialState, ruleset) === null) return fail("INCOMPATIBLE_SAVE", "Unsupported city economy.");
+    if (value.state && typeof value.state === 'object' && (Object.hasOwn(value.state, 'goodsStock') || Object.hasOwn(value.state, 'society')) && cityEconomyRuleset(value.state as TileTrialState, ruleset) === null) return fail("INCOMPATIBLE_SAVE", "Unsupported city economy.");
     if (!isTileTrialPlanningState(value.state)) return fail("INVALID_SAVE_STATE", "Checkpoint must contain a valid tile Planning state and the supported map.");
     const economy = cityEconomyRuleset(value.state, ruleset);
     if (economy === null || value.rulesetId !== economy) return fail("INCOMPATIBLE_SAVE", "Checkpoint ruleset does not match its city.");
