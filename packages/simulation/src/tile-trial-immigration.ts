@@ -1,6 +1,6 @@
 import { IMMIGRATION_TRIAL_DEFAULTS, TILE_TRIAL_BALANCE as B, trialBuilding, weeklyWorkforceMilli, type TileTrialState, type TrialImmigrationReport } from "@haven/core";
 import { FARM_MAX_BATCHES, PROCESSOR_MAX_BATCHES, FARM_WHEAT_PER_BATCH_MILLI, PROCESSOR_WHEAT_PER_BATCH_MILLI, PROCESSOR_FOOD_PER_BATCH_MILLI } from "./weekly.js";
-import { cityEconomyRuleset, POPULATION_TILE_RULESET, GOODS_STOCK_RULESET, GOODS_STOCK_TRIAL as G } from '@haven/core';
+import { cityEconomyRuleset, POPULATION_TILE_RULESET, SOCIETY_RULESET, GOODS_STOCK_RULESET, GOODS_STOCK_TRIAL as G } from '@haven/core';
 
 export interface ImmigrationFacts {
   fundedTileIds: readonly string[];
@@ -22,7 +22,7 @@ const positive = (n: bigint) => n > 0n ? n : 0n;
 export function resolveTrialImmigration(state: TileTrialState, facts: ImmigrationFacts, config: Readonly<typeof IMMIGRATION_TRIAL_DEFAULTS> = IMMIGRATION_TRIAL_DEFAULTS): Readonly<TrialImmigrationReport> {
   const economy = cityEconomyRuleset(state, POPULATION_TILE_RULESET);
   if (economy === null) throw Error('Invalid city economy.');
-  const storedGoods = economy === GOODS_STOCK_RULESET;
+  const storedGoods = economy === GOODS_STOCK_RULESET || economy === SOCIETY_RULESET;
   const woodPerBatch = integer(storedGoods ? G.woodPerBatchMilli : B.goodsWoodPerBatch);
   const goodsPerBatch = integer(storedGoods ? G.goodsPerBatchMilli : B.goodsServicePerBatch);
   const support = integer(config.foodSupportBps), catchup = integer(config.catchupBps), cap = integer(config.weeklyCapBps);
