@@ -14,3 +14,14 @@ it('requires full staffing for tavern effects', () => {
  tile.building.workers=1;
  expect(societyFacilities(city,new Set([tile.id])).tavernLevels).toEqual([]);
 });
+it('assigns basic workers to Free first, spilling remaining slots into Bound', () => {
+ const city=createSocietyState();
+ city.society!.classes.free=10;
+ city.society!.classes.bound.free=20;
+ const result=societyEmployment(city);
+ expect(result.workforce.free).toBe(1);
+ expect(result.workforce.bound).toBe(2);
+ expect(result.assigned.free).toBe(1);
+ expect(result.assigned.bound).toBe(1);
+ expect(result.assigned.makers).toBe(2);
+});

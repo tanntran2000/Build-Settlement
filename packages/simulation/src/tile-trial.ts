@@ -1,7 +1,7 @@
 import { SOCIETY_BUILDINGS, societyPlot } from '@haven/core';
 import { hasWeeklyKeys, isTileTrialState, isTileTrialPlanningState, trialBuilding, LEGACY_TILE_RULESET, POPULATION_TILE_RULESET, type TileTrialRuleset, type TileTrialState, type TileTrialResult } from "@haven/core";
 import { runTileTrialWeek, trialSafe } from "./tile-trial-week.js";
-import { cityEconomyRuleset } from '@haven/core';
+import { cityEconomyRuleset, SOCIETY_RULESET } from '@haven/core';
 
 export function executeTileTrialCommand(state: unknown, raw: unknown, ruleset: TileTrialRuleset = LEGACY_TILE_RULESET): TileTrialResult {
   const fail = (code: string, message: string): TileTrialResult => ({ success: false, state, error: { code, message } });
@@ -39,7 +39,8 @@ export function executeTileTrialCommand(state: unknown, raw: unknown, ruleset: T
       if (c.snapshot && typeof c.snapshot === 'object' && Object.hasOwn(c.snapshot, 'goodsStock') &&
           cityEconomyRuleset(c.snapshot as TileTrialState, ruleset) === null) return fail('INVALID_STATE', 'Checkpoint economy is incompatible with this trial family.');
       if (!isTileTrialPlanningState(c.snapshot)) return fail("INVALID_SAVE_STATE", "Checkpoint must contain a valid tile Planning state and the supported map.");
-      if (cityEconomyRuleset(c.snapshot, ruleset) !== cityEconomyRuleset(state, ruleset)) return fail('INVALID_STATE', 'Checkpoint economy is incompatible with this trial family.');
+      const a = cityEconomyRuleset(c.snapshot, ruleset), b = cityEconomyRuleset(state, ruleset);
+      if (a === null || (a === SOCIETY_RULESET) !== (b === SOCIETY_RULESET)) return fail('INVALID_STATE', 'Checkpoint economy is incompatible with this trial family.');
       next = structuredClone(c.snapshot);
       next.revision = Math.max(state.revision, next.revision);
     } else if (c.type === "END_WEEK") {
