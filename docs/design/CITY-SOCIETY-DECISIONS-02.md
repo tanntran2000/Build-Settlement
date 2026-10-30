@@ -163,3 +163,9 @@ Keep the **stock side** unchanged: Food stock, Goods stock (`goodsStock`, PR #54
 - A shortfall hits **the class that is short**: lower immigration of that class, more votes against Laws (§9). Slaves short of Food raise **Desperation** (§3).
 - Luxury is brought in by Merchants and the Trading Post; it gives Merchants their own economic loop and keeps Elites in the city.
 - All rates are TRIAL values, tuned after playtesting (P1).
+
+## 13. P2 spec review answers (owner, 2026-10-30)
+
+- **Headroom rule:** starting capacities and stocks never sit at their maximum; keep about 15–20% spare for incidents and rounding.
+- **The Bound eat last.** When Food is short they go hungry and **Tension rises**.
+- **Debt enslavement is 1 in 50 for every cause.** Debt is a per-class pressure caused by unemployment, scarcity, high tax, overcrowding, predatory lending (Dark, Black Market) and addiction (Drug Store); at ≥ 50, 1 in 50 of that class becomes Bound, keeping their origin group. Details: [P2 spec §7.5](../superpowers/specs/2026-10-30-p2-inside-city-society-design.md).

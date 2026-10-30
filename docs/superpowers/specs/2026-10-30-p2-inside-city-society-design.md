@@ -1,4 +1,6 @@
-# P2 — Inside city: social classes, buildings and tiers (design spec v0.1)
+# P2 — Inside city: social classes, buildings and tiers (design spec v0.2)
+
+Revision v0.2 (owner review 2026-10-30): starting capacities keep headroom (§3, design rule); the Bound eat last and their hunger raises Tension (§7.6); debt is defined with its causes, enslavement stays at 1 in 50 (§7.5).
 
 Status: **written for owner review (G1 pending).** No code is authorized by this document. Decisions come from [CITY-SOCIETY-DECISIONS-02](../../design/CITY-SOCIETY-DECISIONS-02.md) (owner, 2026-10-30). Mechanics research: [Free Cities 30-week study](../../research/playtest/2026-10-30-free-cities-30-week-study.md). All numbers marked TRIAL are adjustable defaults, not approved balance.
 Base: `main` `05e35d1`. Replaces CITY-MAP-01 v0.4's plot allocation (that spec was never committed and is not implemented).
@@ -44,6 +46,7 @@ interface SocietyState {
   };
   satisfaction: Record<'free' | 'makers' | 'luminaries' | 'merchants' | 'bound', number>; // 0–100 each
   desperation: number;     // Bound only, 0–100
+  debtPressure: Record<'free' | 'makers' | 'luminaries' | 'merchants', number>; // common tier only, 0–100 (§7.5)
   corruption: number;      // 0–100, drives the Elite pull side (§7.3); P8 builds the full Light/Dark identity on it
   luxuryStockMilli: number;
   training: { target: 'makers' | 'luminaries' | 'merchants' | null; progressMilli: number };
@@ -53,7 +56,9 @@ interface SocietyState {
 
 Invariants: all counts are safe nonnegative integers. The class total equals the settlement's population; the old cohort count is derived from it, never edited separately (LAW-04: no double counting). Satisfaction and desperation are clamped to [0, 100]. All characters are adults.
 
-**New game (TRIAL):** 100 residents = free 50, makers 25, luminaries 10, merchants 15, no Elites, bound 0. Satisfaction 80 for every class, desperation 0, corruption 50, wallRing 1, Luxury 0. Existing starting stocks (Food 20, Goods 10, Gold 45, Wood 8, Iron 4) are kept. Starting inside buildings fill Ring 1 housing exactly, so growth needs upgrades or the wall: `house-1` Common Housing L2 (50), `house-2` Makers' Rowhouses L2 (25), `house-3` Scholars' Quarters L1 (10), `house-4` Merchant Townhouses L1 (15); `spec-1` Market L1 (moved inside). Outside: Farm and Food Processor as today (Processor staffed by Makers).
+**Design rule — headroom (owner, 2026-10-30):** starting capacities and stocks are never set at their maximum. Keep about **15–20% spare** so an incident or a rounding error does not break the first weeks.
+
+**New game (TRIAL):** 100 residents = free 55, makers 20, luminaries 12, merchants 13, no Elites, bound 0. Satisfaction 80 for every class, desperation 0, debt pressure 0, corruption 50, wallRing 1, Luxury 0. Existing starting stocks (Food 20, Goods 10, Gold 45, Wood 8, Iron 4) are kept. Starting inside buildings, with occupancy: `house-1` Common Housing L3 (55/70, 79%), `house-2` Makers' Rowhouses L2 (20/25, 80%), `house-3` Scholars' Quarters L2 (12/18, 67%), `house-4` Merchant Townhouses L1 (13/15, 87%); `spec-1` Market L1 (moved inside). Outside: Farm and Food Processor as today (Processor staffed by Makers).
 
 ## 4. Inside city: tiers, plots, expansion
 
@@ -147,14 +152,31 @@ Food 40 per resident is the approved city rate, kept for the common classes. Sup
 - The player sets a training target (Makers, Luminaries or Merchants) with the command `SET_TRAINING`; Planning phase only.
 - Each operating Academy level converts TRIAL **2 Free residents per week** into common members of the target, costing 1 Gold each, only if the target class has free housing.
 
-### 7.5 Debt enslavement
+### 7.5 Debt and debt enslavement
 
-- When Free residents' Food or Goods fulfilment is below 100%, TRIAL **1 in 50 Free residents (rounded down) becomes Bound** that week, if Slave Quarters have room. Without room, it does not happen and the report says so.
-- The Bound record their origin group in P7. In P2 only the count moves.
+**What debt is.** Each class that can fall into debt — Free residents and the **common** tier of Makers, Luminaries and Merchants — has a **debt pressure** (0–100). It stands for the share of households that cannot pay rent, tax and the cost of living. Elites and the Bound carry no debt. There is no per-person ledger.
 
-### 7.6 Desperation (Bound)
+**Why people fall into debt.** Weekly changes to a class's debt pressure (TRIAL):
 
-Weekly, clamped to [0, 100]: +12 × Bound Food shortage ratio; +5 if the Bound exceed Slave Quarters capacity; +3 if corruption > 60; −2 if corruption < 40; −3 when fully fed and housed; then Hospital. P2 reports Desperation and the Bound share of the population. Revolt and Tension use them later; P2 triggers nothing.
+| Cause | Meaning | Change |
+|---|---|---|
+| Unemployment | that class's workforce exceeds the worker slots assigned to it | + 20 × unemployment ratio |
+| Scarcity | Food or Goods short for that class, prices rise | + 10 × the larger shortage ratio |
+| High tax | each operating Counting House level | + 2 per level |
+| Overcrowding | class above its housing limit, rents rise | + 5 |
+| Predatory lending | Black Market operating under Dark corruption (P7/P8; inactive in P2) | + 3 |
+| Addiction | Drug Store (P6; inactive in P2) | defined in P6 |
+| Recovery | fully employed, needs met, not overcrowded | − 5 |
+
+**Enslavement (owner: 1 in 50 for every cause).** When a class's debt pressure is **≥ 50**, `floor(class common count / 50)` of that class become Bound that week, if Slave Quarters have room, and the class's pressure drops by 20. Without room, nobody is enslaved and the report says so. The Bound keep their **origin group** (stored count per origin; bonuses are P7). The report names the causes, e.g. "12 Free residents were sold into bondage for debt: 30% unemployed, Goods short."
+
+### 7.6 Desperation and Tension (Bound)
+
+The Bound are fed last (§7.1). **When Food runs short, the Bound go hungry** first.
+
+Desperation, weekly, clamped to [0, 100]: +12 × Bound Food shortage ratio; +5 if the Bound exceed Slave Quarters capacity; +3 if corruption > 60; −2 if corruption < 40; −3 when fully fed and housed; then Hospital.
+
+**Tension (owner, 2026-10-30): Bound hunger raises Tension.** Tension is designed ([Decision Record 01](../../design/TENSION-CRISIS-GOLD-DECISIONS-01.md)) but not implemented. P2 stores a city `tension` value (0–100, clamped, starts 0) and applies only the Bound term weekly: `+ 6 × Bound Food shortage ratio + desperation / 20 (integer)`, decaying by 2 per week when the Bound are fed. The full pressure formula, thresholds, demands, protests and revolts are the Tension package; P2 triggers no event.
 
 ## 8. Luxury
 
@@ -196,7 +218,7 @@ Unit (core/simulation):
 2. Requirement priority order and per-class shortage; Food rule per class equals the approved rule.
 3. Housing limit, overcrowding penalty, and arrivals capped by class housing.
 4. Elite pull conditions and corruption bands.
-5. Desperation formula and clamp.
+5. Desperation, debt pressure and the Bound Tension term: formulas, clamps, enslavement at ≥ 50 with the 1-in-50 count and origin kept.
 6. `EXTEND_WALL` and `SET_TRAINING` all-or-nothing, phase and prerequisite checks.
 7. Staff-class assignment rules; Market inside only for the new ruleset.
 8. Determinism: the same seed and commands give identical state.
@@ -228,12 +250,14 @@ Each WP goes Builder (Codex Sol 6.1) → Tester (Claude) → Reviewer (Codex Ast
 - **Scope:** the biggest change since the tile trial. Mitigated by the four WPs and by keeping reserved buildings out of the rules.
 - **Balance:** every number is TRIAL. P1 (AI playtesting) is needed before tuning; expect revisions.
 - **Old saves:** a third versioned shape adds validator complexity. Mitigated by pinned fixtures and exact-shape validation.
-- **Grimdark priority order** (the Bound eat last) is a design statement. The owner may prefer another order.
+- **Grimdark priority order** (the Bound eat last) is confirmed by the owner; starvation of the Bound feeds Tension.
 - **Market moves inside** only in the new ruleset; the outside `plain-2` Market of Goods games stays in old saves.
 - **Corruption without Slum buildings** stays flat until P7/P8; the Elite side is then mostly Light. Accepted for P2.
 
-## 15. Questions for the owner
+## 15. Owner answers (2026-10-30)
 
-1. Are the TRIAL starting split (free 50 / makers 25 / luminaries 10 / merchants 15, no Elites) and the requirement table acceptable as a starting point?
-2. Is the supply priority **Elites → common → Free → Bound** right, or should the Bound be fed before the Free?
-3. Debt enslavement at 1 in 50 Free residents per short week — keep, lower, or only under Dark corruption?
+1. Starting numbers must keep headroom, not sit at the maximum → §3 design rule and new split.
+2. The Bound eat last; when Food is short they go hungry and Tension rises → §7.1, §7.6.
+3. Debt enslavement stays 1 in 50 for every cause; debt is designed with its causes → §7.5.
+
+Open for the owner: the TRIAL debt weights in §7.5 and the Tension term in §7.6.
