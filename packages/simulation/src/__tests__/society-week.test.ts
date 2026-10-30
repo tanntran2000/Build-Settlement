@@ -1,4 +1,4 @@
-﻿import { describe, it, expect } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { createSocietyState } from '@haven/core';
 import { allocateRequirements, societyWorkforce } from '../society-week.js';
 const society = () => createSocietyState().society!;
@@ -85,5 +85,49 @@ describe('transfers',()=>{
     const r=resolveDebt(s,a,f,employment()); expect(r.society.classes.free).toBe(54); expect(r.society.classes.bound.free).toBe(1); expect(r.society.debtPressure.free).toBe(33); expect(r.notes.free).toContain('debt-enslavement');
     f.housing.bound=0; const full=resolveDebt(s,a,f,employment()); expect(full.society.debtPressure.free).toBe(53); expect(full.society.classes.bound.free).toBe(0); expect(full.notes.free).toContain('no-slave-room');
     expect(full.society.classes.makers.elite).toBe(s.classes.makers.elite);
+  });
+});
+
+import { isSocietyState, societyPopulation } from '@haven/core';
+import { resolveDesperation, resolveTension, resolveCorruption, resolveSocietyWeek, type SocietyWeekInput } from '../society-week.js';
+const input=():SocietyWeekInput=>({society:society(),facilities:facilities(),employment:employment(),foodAvailableMilli:4000,goodsServableMilli:1450,luxuryImportedMilli:0,arrivalsBudget:0,goldAvailableMilli:10000});
+describe('weekly resolution',()=>{
+  it('resolves desperation, clamps, and applies hospital',()=>{
+    expect(resolveDesperation(10,5000,true,70,[1])).toBe(23); expect(resolveDesperation(10,10000,false,30,[])).toBe(5);
+    expect(resolveDesperation(100,0,true,70,[])).toBe(100); expect(resolveDesperation(0,10000,false,30,[])).toBe(0);
+  });
+  it('resolves tension and corruption without overshoot',()=>{
+    expect(resolveTension(0,0,40)).toBe(8); expect(resolveTension(0,10000,0)).toBe(0);
+    expect(resolveCorruption(50,0)).toBe(48); expect(resolveCorruption(31,0)).toBe(30); expect(resolveCorruption(49,2)).toBe(50);
+  });
+  it('conserves the starting population and reports null Bound debt',()=>{
+    const i=input(); i.facilities.housing.elite=0; const r=resolveSocietyWeek(i); expect(isSocietyState(r.society)).toBe(true); expect(societyPopulation(r.society)).toBe(100);
+    expect(r.report.classes.bound.debtBefore).toBeNull(); expect(r.report.classes.bound.debtAfter).toBeNull(); expect(r.cityHappiness).toBe(82);
+  });
+  const cases=[
+    [0,0,0,0],[1000,0,0,0],[4000,1450,10,0],[5000,2000,5,50],[4000,0,0,70],
+    [2000,1000,3,30],[1,1,1,40],[8000,4000,100,60],[0,1450,0,50],[4000,1450,0,100],
+    [3000,1000,5,0],[10000,10000,100,30],[999,999,2,70],[4001,1451,1,41],[3999,1449,9,61],
+    [0,0,100,100],[7000,0,5,20],[6000,4000,0,80],[10000,10000,3,49],[5000,2000,7,51],
+  ];
+  it.each(cases)('is deterministic and conservative with Food %s Goods %s budget %s corruption %s',(food,goods,budget,corruption)=>{
+    const i=input(); i.foodAvailableMilli=food; i.goodsServableMilli=goods; i.arrivalsBudget=budget; i.society.corruption=corruption;
+    i.society.classes.free=44; i.society.classes.bound.free=10; i.society.classes.makers.elite=1;
+    i.society.training.target='makers'; i.facilities.academyLevels=1; i.society.debtPressure.free=48;
+    i.luxuryImportedMilli=50;
+    const before=structuredClone(i),r=resolveSocietyWeek(i);
+    expect(r).toEqual(resolveSocietyWeek(i)); expect(i).toEqual(before); expect(isSocietyState(r.society)).toBe(true);
+    const arrivals=Object.values(r.report.classes).reduce((n,c)=>n+c.arrivals,0);
+    expect(societyPopulation(r.society)).toBe(societyPopulation(i.society)+arrivals+(r.report.eliteArrived?1:0));
+    expect(Object.values(societyCounts(r.society)).every(n=>n>=0)).toBe(true);
+  });
+  it('accepts maximum safe supply and rejects overflow atomically',()=>{
+    const i=input(); i.foodAvailableMilli=Number.MAX_SAFE_INTEGER; expect(isSocietyState(resolveSocietyWeek(i).society)).toBe(true);
+    i.society.classes.free=Number.MAX_SAFE_INTEGER; const before=structuredClone(i); expect(()=>resolveSocietyWeek(i)).toThrow(); expect(i).toEqual(before);
+  });
+  it('reports full housing and training limits and retains luxury stock',()=>{
+    const i=input(); i.facilities.housing={free:55,makers:20,luminaries:12,merchants:13,elite:0,bound:0};
+    i.society.training.target='makers'; i.facilities.academyLevels=1; i.arrivalsBudget=10; i.luxuryImportedMilli=100;
+    const r=resolveSocietyWeek(i); expect(r.report.classes.free.notes).toContain('housing-full'); expect(r.report.classes.makers.notes).toContain('training-no-housing'); expect(r.society.luxuryStockMilli).toBe(100);
   });
 });

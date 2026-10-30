@@ -156,3 +156,61 @@ export function resolveDebt(before:SocietyState,alloc:Allocation,f:SocietyFacili
   }
   return {society,notes,enslaved};
 }
+export function resolveDesperation(before:number,foodBps:number,overcrowded:boolean,corruption:number,hospitalLevels:readonly number[]):number {
+  return clamp(before+T.desperationShortage*(10000-foodBps)/10000+(overcrowded?T.desperationOvercrowding:0)
+    +(corruption>T.dark?T.desperationDark:corruption<T.light?-T.desperationLight:0)
+    -(foodBps===10000&&!overcrowded?T.desperationRecovery:0)-levelBonus(hospitalLevels,T.hospitalL1,T.hospitalL2));
+}
+export function resolveTension(before:number,foodBps:number,desperation:number):number {
+  return clamp(before+T.tensionShortage*(10000-foodBps)/10000+Math.floor(desperation/T.tensionDesperationDivisor)-(foodBps===10000?T.tensionDecay:0));
+}
+export function resolveCorruption(before:number,slums:number):number {
+  const target=Math.min(100,add(T.corruptionBase,product(T.corruptionSlum,slums)));
+  return before+Math.sign(target-before)*Math.min(T.corruptionStep,Math.abs(target-before));
+}
+function validateInput(i:SocietyWeekInput):void {
+  if(!isSocietyState(i.society)) throw Error('Invalid society state.');
+  societyPopulation(i.society);
+  for(const n of [i.foodAvailableMilli,i.goodsServableMilli,i.luxuryImportedMilli,i.arrivalsBudget,i.goldAvailableMilli,
+    ...Object.values(i.facilities.housing),i.facilities.academyLevels,i.facilities.countingHouseLevels,i.facilities.operatingSlumBuildings,
+    ...Object.values(i.employment.workforce),...Object.values(i.employment.assigned)]) integer(n);
+}
+export function resolveSocietyWeek(i:SocietyWeekInput):SocietyWeekResult {
+  validateInput(i);
+  const before=i.society, f=i.facilities, counts=societyCounts(before), allocation=allocateRequirements(i), a=allocation.perClass;
+  let society=structuredClone(before);
+  society.satisfaction=resolveSatisfaction(before.satisfaction,a,f,before.classes);
+  // Common housing and Elite Manor are independent pools.
+  const commonCounts={...counts,...Object.fromEntries(groups.map(id=>[id,before.classes[id].common]))};
+  const arrivals=distributeArrivals(i.arrivalsBudget,commonCounts,f.housing,record(id=>a[id].foodBps));
+  for(const id of citizens) { if(id==='free') society.classes.free=add(society.classes.free,arrivals[id]); else society.classes[id].common=add(society.classes[id].common,arrivals[id]); }
+  const eliteDemand=sum(groups.map(id=>product(before.classes[id].elite,T.luxuryElite)));
+  const eliteBps=ratio(allocation.luxuryConsumedMilli,eliteDemand);
+  const elite=eliteArrival(before,f.housing,eliteBps);
+  if(elite!==null) society.classes[elite].elite=add(society.classes[elite].elite,T.eliteArrivalsMax);
+  const training=resolveTraining(society,f,i.goldAvailableMilli);
+  const debt=resolveDebt(training.society,a,f,i.employment); society=debt.society;
+  society.desperation=resolveDesperation(before.desperation,a.bound.foodBps,societyCounts(society).bound>f.housing.bound,before.corruption,f.hospitalLevels);
+  society.tension=resolveTension(before.tension,a.bound.foodBps,society.desperation);
+  society.corruption=resolveCorruption(before.corruption,f.operatingSlumBuildings);
+  society.luxuryStockMilli=allocation.luxuryAfterMilli;
+  const reports=record(id=>{
+    const notes:SocietyNote[]=[...debt.notes[id]];
+    if(counts[id]>0) {
+      if(a[id].foodBps<10000) notes.push('food-short'); if(a[id].goodsBps<10000) notes.push('goods-short');
+      if(a[id].luxuryBps!==null && a[id].luxuryBps!<10000) notes.push('luxury-short');
+      if(commonCounts[id]>f.housing[id]) notes.push('overcrowded');
+      if(id!=='bound' && a[id].foodBps===10000 && commonCounts[id]>=f.housing[id]) notes.push('housing-full');
+    }
+    if(before.training.target===id) notes.push(...training.notes);
+    return {...a[id],satisfactionBefore:before.satisfaction[id],satisfactionAfter:society.satisfaction[id],arrivals:id==='bound'?0:arrivals[id],
+      trained:before.training.target===id?training.trained:0,enslaved:debt.enslaved[id],debtBefore:id==='bound'?null:before.debtPressure[id],
+      debtAfter:id==='bound'?null:society.debtPressure[id],notes};
+  });
+  const expected=add(add(societyPopulation(before),sum(Object.values(arrivals))),elite===null?0:T.eliteArrivalsMax);
+  if(!isSocietyState(society) || societyPopulation(society)!==expected) throw Error('Society invariant failed.');
+  const happiness=cityHappiness(society.satisfaction,societyCounts(society),cityHappiness(before.satisfaction,counts,0));
+  return {society,foodConsumedMilli:allocation.foodConsumedMilli,goodsConsumedMilli:allocation.goodsConsumedMilli,luxuryConsumedMilli:allocation.luxuryConsumedMilli,
+    goldSpentMilli:training.goldSpentMilli,cityHappiness:happiness,report:{classes:reports,eliteArrived:elite,desperationBefore:before.desperation,
+      desperationAfter:society.desperation,tensionBefore:before.tension,tensionAfter:society.tension,corruptionAfter:society.corruption}};
+}
