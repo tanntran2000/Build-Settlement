@@ -6,9 +6,9 @@ import { executeCharacterLifeCommand } from '../character-life-command.js';
 
 const failure = { success: false, error: { code: 'UNSUPPORTED_RULESET', message: 'This city economy is not playable yet; nothing was changed.' } };
 const commands = [
-  { type: 'BUILD', tileId: 'forest-1', typeId: 'logging', expectedRevision: 0 },
+  { type: 'NEXT_WEEK', expectedRevision: 0 },
   { type: 'END_WEEK', expectedWeek: 1, expectedRevision: 0 },
-  { type: 'SET_WORKERS', tileId: 'field-1', workers: 1, expectedRevision: 0 },
+  { type: 'LOAD_TRIAL', snapshot: createSocietyState(), expectedRevision: 0 },
 ];
 it.each(commands)('rejects society city command $type without mutation', command => {
   const state = createSocietyState(), before = structuredClone(state);
@@ -26,7 +26,7 @@ const sessions = [
   { name: 'life', create: () => unwrap(createCharacterLifeSession(20261028, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Synthetic Keeper' }, SOCIETY_RULESET)), execute: executeCharacterLifeCommand, assign: executeCharacterLifeCommand },
 ];
 describe.each(sessions)('$name society session', c => {
-  it.each(commands)('rejects $type without mutation', command => {
+  it.each(commands.filter(c => c.type !== 'LOAD_TRIAL'))('rejects $type without mutation', command => {
     const state = c.create(), before = structuredClone(state);
     expect(c.execute(state, command)).toMatchObject(failure);
     expect(state).toEqual(before);

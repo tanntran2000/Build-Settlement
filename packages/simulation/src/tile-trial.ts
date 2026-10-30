@@ -1,3 +1,4 @@
+import { SOCIETY_BUILDINGS, societyPlot } from '@haven/core';
 import { hasWeeklyKeys, isTileTrialState, isTileTrialPlanningState, trialBuilding, LEGACY_TILE_RULESET, POPULATION_TILE_RULESET, type TileTrialRuleset, type TileTrialState, type TileTrialResult } from "@haven/core";
 import { runTileTrialWeek, trialSafe } from "./tile-trial-week.js";
 import { cityEconomyRuleset, SOCIETY_RULESET } from '@haven/core';
@@ -7,9 +8,10 @@ export function executeTileTrialCommand(state: unknown, raw: unknown, ruleset: T
   try {
     if (ruleset !== LEGACY_TILE_RULESET && ruleset !== POPULATION_TILE_RULESET) return fail("INVALID_RULESET", "Unsupported trial ruleset; nothing was changed.");
     if (!isTileTrialState(state) || cityEconomyRuleset(state, ruleset) === null) return fail("INVALID_STATE", "Trial state is invalid; nothing was changed.");
-    if (cityEconomyRuleset(state, ruleset) === SOCIETY_RULESET) return fail('UNSUPPORTED_RULESET', 'This city economy is not playable yet; nothing was changed.');
+    
     if (!raw || typeof raw !== "object" || !hasWeeklyKeys(raw, Object.keys(raw))) return fail("INVALID_COMMAND", "Command must contain plain data fields.");
     const c = { ...raw } as Record<string, unknown>;
+    if (state.society && ['END_WEEK','NEXT_WEEK','LOAD_TRIAL'].includes(c.type as string)) return fail('UNSUPPORTED_RULESET', 'This city economy is not playable yet; nothing was changed.');
     if (c.type === 'LOAD_TRIAL' && c.snapshot && typeof c.snapshot === 'object' && Object.hasOwn(c.snapshot, 'society')) return fail('UNSUPPORTED_RULESET', 'This city economy is not playable yet; nothing was changed.');
     if (c.expectedRevision !== state.revision) return fail("STALE_COMMAND", "The plan changed. Refresh the action before retrying.");
     if (state.phase === "report" && c.type !== "NEXT_WEEK") return fail("FORBIDDEN", "Read the report, then choose Plan next week.");
@@ -37,6 +39,13 @@ export function executeTileTrialCommand(state: unknown, raw: unknown, ruleset: T
       if (!tile) return fail("INVALID_TILE", "Select a valid tile.");
       if (["BUILD", "REPLACE", "UPGRADE"].includes(c.type)) {
         const typeId = c.type === "UPGRADE" ? tile.building?.typeId : c.typeId;
+        if (state.society) {
+          const plot = societyPlot(tile.id), info = typeof typeId === 'string' && Object.hasOwn(SOCIETY_BUILDINGS,typeId) ? SOCIETY_BUILDINGS[typeId] : undefined;
+          if (plot && plot.ring > state.society.wallRing) return fail('LOCKED_PLOT','Extend the wall first.');
+          if (info?.reserved) return fail('NOT_AVAILABLE','This building is reserved.');
+          if (plot && info && plot.tier !== info.tier) return fail('WRONG_TIER','Choose the matching plot tier.');
+          if (typeId === 'market' || (info && !plot) || (plot && !info)) return fail('INVALID_PLACEMENT','Choose a supported plot.');
+        }
         const d = typeof typeId === "string" ? trialBuilding(typeId) : undefined;
         if (!d || typeof typeId !== "string") return fail("INVALID_BUILDING", "Select a known building type.");
         if (!d.terrain.includes(tile.terrain)) return fail("INVALID_PLACEMENT", `${d.name} requires ${d.terrain.join(" or ")} terrain.`);
@@ -45,7 +54,13 @@ export function executeTileTrialCommand(state: unknown, raw: unknown, ruleset: T
         const level = c.type === "UPGRADE" ? tile.building!.level + 1 : 1;
         if (level > d.maxLevel) return fail("MAX_LEVEL", "This building is at its trial maximum level.");
         const inventory = next.world.settlements[next.world.activeSettlementId!].inventory;
+        let discount = 0;
+        if (state.society) for (const t of state.tiles) {
+          const b = t.building;
+          if (b?.typeId === 'builders-yard' && b.enabled && b.workers === trialBuilding(b.typeId)!.maxWorkers*b.level) discount=Math.max(discount,b.level*10);
+        }
         const costs = { gold: trialSafe(d.cost.gold * level), wood: trialSafe(d.cost.wood * level), iron: trialSafe(d.cost.iron * level) };
+        for (const key of ['gold','wood','iron'] as const) costs[key] = trialSafe(Number(BigInt(costs[key])*BigInt(100-discount)/100n));
         for (const key of ["gold", "wood", "iron"] as const) if (inventory[key] < costs[key]) return fail("INSUFFICIENT_RESOURCES", `Not enough ${key} for this action.`);
         for (const key of ["gold", "wood", "iron"] as const) inventory[key] -= costs[key];
         tile.building = { typeId, level, workers: c.type === "UPGRADE" ? tile.building!.workers : 0, enabled: c.type === "UPGRADE" ? tile.building!.enabled : true };
