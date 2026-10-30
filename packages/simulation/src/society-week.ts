@@ -48,7 +48,7 @@ export function societyCounts(s:SocietyState):Record<SocietyClassId,number> {
   return {free:s.classes.free, makers:add(s.classes.makers.common,s.classes.makers.elite), luminaries:add(s.classes.luminaries.common,s.classes.luminaries.elite), merchants:add(s.classes.merchants.common,s.classes.merchants.elite),bound:sum(Object.values(s.classes.bound))};
 }
 export function societyWorkforce(s:SocietyState):Record<SocietyClassId,number> {
-  const counts=societyCounts(s); return record(id=>Math.floor(counts[id]/10));
+  const counts=societyCounts(s); return record(id=>Math.floor((id==='free' || id==='bound'?counts[id]:s.classes[id].common)/10));
 }
 type RequirementsInput = Pick<SocietyWeekInput,'society'|'foodAvailableMilli'|'goodsServableMilli'|'luxuryImportedMilli'>;
 export function allocateRequirements(input:RequirementsInput) {

@@ -3,6 +3,12 @@ import { createSocietyState } from '@haven/core';
 import { allocateRequirements, societyWorkforce } from '../society-week.js';
 const society = () => createSocietyState().society!;
 describe('requirements', () => {
+  it.each([[9,1,0],[10,5,1]])('excludes Elites from workforce with %s common and %s Elite Makers',(common,elite,expected)=>{
+    const s=society();
+    s.classes.free+=s.classes.makers.common+s.classes.makers.elite-common-elite;
+    s.classes.makers={common,elite};
+    expect(societyWorkforce(s).makers).toBe(expected);
+  });
   it('projects workforce', () => expect(societyWorkforce(society())).toEqual({free:5,makers:2,luminaries:1,merchants:1,bound:0}));
   it('fills starting demand and zero demand', () => {
     const a = allocateRequirements({society:society(),foodAvailableMilli:4000,goodsServableMilli:1450,luxuryImportedMilli:0});
