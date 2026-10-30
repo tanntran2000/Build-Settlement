@@ -1,6 +1,26 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
-## Current City UI — bounded G6 release snapshot (2026-10-28 UTC)
+## Current release — Goods stock and five-week buffer bounded G6 snapshot (2026-10-30 UTC)
+
+[PR54](https://github.com/tanntran2000/Build-Settlement/pull/54) merged accepted head `167d602fe8275f401f2d00bf08d1e05216f88863` normally into `main` at `51df2f5996a4704b986ac48f45c8ef598fb70a24` on `2026-10-30T04:43:37Z`. Its parents are `c45920f4088ed654e13d681a1948d82c4c4e121a` (PR55 merge) and that head; both head and merge have tree `a82c1dd45b0507b99bfbd4d98c691e19dc6ae8e6`. The accepted head is Goods implementation `0558a3b17d0e356990093b3d279aa795656b9804` plus a merge of `main` that adds only the PR55 Vite change.
+
+**Released scope:** the approved [Goods stock spec](superpowers/specs/2026-10-28-goods-stock-buffer.md) and [plan](superpowers/plans/2026-10-28-goods-stock-buffer.md) add ruleset `tile-population-goods-01` for new population-family games. Workshop turns Wood into stored Goods; funded Markets distribute stored Goods up to demand and capacity, earning Gold only for Goods distributed. New games open with 20 Food, 10 Goods, 45 Gold (15 operating, 30 construction) and one level-1 Market. Old rulesets, old saves and their local checkpoint slots are unchanged; new-rule checkpoints use separate keys. Numeric defaults remain reversible TRIAL choices.
+
+**Dependency fix:** [PR55](https://github.com/tanntran2000/Build-Settlement/pull/55) (`c0f149bb9b540959bea4ea98fd34a9274ce18eb4`, merged at `c45920f`) bumps `vite` 6.4.4 → 6.4.5 for moderate advisory GHSA-8g5g-mxqh-grgj, which had failed the PR54 `npm audit` gate. It changes 2 files / 5 lines, owner-approved as a separate PR outside the Goods scope. Three low findings (deepmerge via `@sveltejs/vite-plugin-svelte`) have no fix, sit below the gate threshold and remain open.
+
+**Release CI:** [premerge Quality Gate CI41000799458](https://github.com/tanntran2000/Build-Settlement/actions/runs/41000799458) completed SUCCESS at `167d602`; its job log records **1,386 unit tests / 47 files and 251 Chromium browser tests**. [Main-push Quality Gate CI41004487395](https://github.com/tanntran2000/Build-Settlement/actions/runs/41004487395) completed SUCCESS at the exact merge `51df2f5` with the same counts in its job log. PR55's own [CI40998988844](https://github.com/tanntran2000/Build-Settlement/actions/runs/40998988844) completed SUCCESS at `c0f149b`. CI does not execute `check:architecture` or `test:architecture`.
+
+**Independent local evidence (Admin-PC, retained, not uploaded):**
+- Codex `evidence/goods-167d602-codex-20261030-113401/` at `167d602`: architecture scan exit 0, **154/154 architecture regressions**, and a production build with Vite 6.4.5. The build's `index.html`, JS and CSS are byte-identical to the TUF build (SHA256 `1e43e24f…`, `f405e581…`, `07673090…`), and the loopback preview served the same bytes.
+- Claude `evidence/goods-0558a3b-ui-parity/` at `0558a3b` (historical): UI save parity on the original TUF BEFORE, 11,880 bytes, SHA256 `eca8045f6f99276be03d0f09e17ad507df7922fe5e43d820dfa654c3686a0c92`. A start-screen import, a 17-step pass over City, Characters (player + 2 NPCs × 4 tabs), Report, Help and Session without End Week, and an export gave a byte- and JSON-identical AFTER with the same hash.
+- **No new browser parity run was made at `167d602`.** Because the complete built artifacts are unchanged, the historical parity applies to the accepted head; the link is artifact identity, not a re-run.
+- Importing over an already open session increments `city.revision` by design (stale-command guard); parity must import into a fresh session.
+
+**Independent acceptance (as reported by dot; the Astra threads were not readable by Claude):** Astra `pr54-goods-astra-independent-review-167d602-r1` and `pr54-goods-astra-evidence-review-167d602-r2` under command `cf8abbdf-05e7-4f94-8edf-51498db283a9`. r2 records PASS and closes blocker B1 and the architecture-evidence gap. Eight prior Minor findings remain nonblocking and were not silently fixed.
+
+**Limits and G6 boundary:** the historical parity pass did not open City sub-windows (Information/Population/Player) or use keyboard-only navigation. The full suite was not re-run locally at `167d602`; the counts above are CI counts. This entry supplies the AGENTS G6 tracker record for PR54/PR55 and preserves all earlier snapshot bodies. Independent review of this documentation commit and its required CI remain pending; product acceptance does not approve this documentation candidate.
+
+## Historical City UI — bounded G6 release snapshot (2026-10-28 UTC)
 
 [PR51](https://github.com/tanntran2000/Build-Settlement/pull/51) merged reviewed candidate `0cd823317917d61f6ed205af30a6f83f60108823` normally into `main` at `8645f8859d8c3752eb9ecdbf12d72d4a86472e2a` on `2026-10-28T01:53:58Z`. Its parents are baseline `cb98dafc77a1f92f9df02494c1a5b476bfebf08d` and that candidate; both candidate and merge have tree `01c053b4e290367bc452b84234bcce3249359b3f`. Verified upstream/documentation base `068cc5e321be1ef69014d3528e811a191bb5b9a4` includes PR51 and PR52's worktree/storage policy.
 
