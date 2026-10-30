@@ -58,7 +58,7 @@ flowchart LR
 * **G2 — Triển Khai (Implementation)**: Agent tạo nhánh làm việc riêng (ví dụ: `feat/r1-execution-core`), viết test hồi quy trước khi sửa code, đảm bảo thay đổi gói gọn trong phạm vi đã duyệt.
 * **G3 — Chuẩn Bị PR (Pre-PR Review)**: Rà soát toàn bộ Git diff, kiểm tra lint, typecheck toàn bộ workspace, chạy unit test local và quét bí mật trước khi push.
 * **G4 — CI & Review PR (Quality Gate)**: Mở PR trên GitHub. Chạy workflow CI bắt buộc (`quality-gate`). Reviewer độc lập (hoặc Human) đối chiếu diff cuối cùng với tiêu chí nghiệm thu.
-* **G5 — Merge Quyết Định (Human Authority)**: **Chỉ duy nhất Human có quyền duyệt merge PR vào `main`**. Agent không được tự approve PR của chính mình.
+* **G5 — Merge Quyết Định (Human Authority)**: **Quyền merge PR vào `main` thuộc Human.** Human có thể ủy quyền bằng văn bản cho một agent được chỉ định (hiện tại: **dot**) merge thay, chỉ khi đồng thời đạt: (1) thay đổi thuộc Plan/WP đã được Human duyệt; (2) review độc lập đạt và không còn lỗi chặn; (3) mọi kiểm thử/CI bắt buộc tại đúng commit head đều pass. Agent được ủy quyền không được mở rộng phạm vi, bỏ qua branch protection hoặc merge PR do chính mình viết. Orchestrator và Builder không merge: khi PR sẵn sàng, Orchestrator gửi link PR và bằng chứng cho agent được ủy quyền. Agent không được tự approve PR của chính mình.
 * **G6 — Hậu Kiểm & Đóng Việc (Post-Merge Verification)**: Kiểm tra trạng thái commit trên `main`, cập nhật [INTERNAL_PROGRESS_TRACKER.md](docs/INTERNAL_PROGRESS_TRACKER.md) tương ứng và liên kết bằng chứng hoàn thành.
 
 ---
