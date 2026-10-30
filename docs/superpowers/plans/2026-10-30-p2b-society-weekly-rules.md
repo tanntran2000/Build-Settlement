@@ -103,7 +103,7 @@ export function societyWorkforce(society: SocietyState): Record<SocietyClassId, 
 - [ ] **Step 1: Write failing tests.**
   - `societyWorkforce(createSocietyState().society!)` equals `{ free: 5, makers: 2, luminaries: 1, merchants: 1, bound: 0 }`.
   - New-game demand: Food 55×40 + 20×40 + 12×40 + 13×40 = **4000** milli, Goods 55×10 + 45×20 = **1450** milli. With `foodAvailableMilli: 4000` and `goodsServableMilli: 1450`, every class has 10000 bps.
-  - With Food 1000 milli and one Makers Elite added (Free reduced by 1 to keep the total): the Elite gets 60, then Makers commons, Luminaries and Merchants in that order until Food runs out. The Free ratio and the Bound ratio are 0 bps.
+  - With Food 1000 milli, one Makers Elite added and 10 Free moved to `bound.free` (Free 55 → 44, total still 100): the Elite gets 60, Makers commons 800, Luminaries the remaining 140 (140/480 → 2916 bps), Merchants 0. Free and the Bound get **0 bps** (Bound demand 10 × 20 = 200 > 0). *(Fixture corrected 2026-10-30 after the Builder found the original had zero Bound, which the zero-population rule maps to 10000 bps.)*
   - Luxury: 2 Elites, stock 0 and import 50 give 5000 bps; stock after = 0.
   - A class with 0 people reports 10000 bps.
 - [ ] **Step 2: Run** `npx vitest run packages/simulation/src/__tests__/society-week.test.ts`. Expected: FAIL (module missing).
