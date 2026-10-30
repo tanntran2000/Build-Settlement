@@ -1,5 +1,5 @@
-﻿import { describe, expect, it } from 'vitest';
-import { cityEconomyRuleset, createGoodsStockState, createWorldSession, isTileTrialPlanningState, isTileTrialState, LEGACY_TILE_RULESET, POPULATION_TILE_RULESET } from '../../index.js';
+import { describe, expect, it } from 'vitest';
+import { cityEconomyRuleset, createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, isLiveCharacterLifeSessionState, createGoodsStockState, createWorldSession, isTileTrialPlanningState, isTileTrialState, LEGACY_TILE_RULESET, POPULATION_TILE_RULESET } from '../../index.js';
 import { createSocietyState, isSocietyState, societyPopulation, SOCIETY_RULESET, SOCIETY_TRIAL } from '../society.js';
 
 it('creates the spec section 3 new game', () => {
@@ -64,4 +64,14 @@ it('rejects unsafe population sums', () => {
   const s = createSocietyState().society!;
   s.classes.free = Number.MAX_SAFE_INTEGER;
   expect(() => societyPopulation(s)).toThrow();
+});
+
+it('accepts live society Character Life sessions and rejects society without Goods', () => {
+  const result = createCharacterLifeSession(20261028, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Synthetic Keeper' }, SOCIETY_RULESET);
+  expect(result.success).toBe(true);
+  if (!result.success) throw Error('Factory failed');
+  expect(isLiveCharacterLifeSessionState(result.value)).toBe(true);
+  const malformed = structuredClone(result.value);
+  delete malformed.city.goodsStock;
+  expect(isLiveCharacterLifeSessionState(malformed)).toBe(false);
 });
