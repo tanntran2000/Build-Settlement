@@ -36,4 +36,11 @@ describe.each(sessions)('$name society session', c => {
     expect(c.assign(state, { type, npcId: state.npcs[0].character.id, ...(type === 'ASSIGN_NPC' ? { tileId: 'plain-2' } : {}), expectedRevision: 0 })).toMatchObject(failure);
     expect(state).toEqual(before);
   });
+  // These dispatchers never accept LOAD_TRIAL for any ruleset (load goes through Continue/Import), so that error wins.
+  it('keeps the existing LOAD_TRIAL rejection without mutation', () => {
+    const state = c.create(), before = structuredClone(state);
+    expect(c.execute(state, { type: 'LOAD_TRIAL', expectedRevision: 0, snapshot: createSocietyState() }))
+      .toMatchObject({ success: false, error: { code: 'INVALID_COMMAND' } });
+    expect(state).toEqual(before);
+  });
 });
