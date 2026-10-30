@@ -18,7 +18,7 @@
 4. **Counting House:** +10% tax per operating level, summed over all Counting Houses. The same sum feeds the debt "high tax" cause.
 5. **Town Hall** and **`town-market`** join the NPC manager-post building list (`NPC_MANAGER_BUILDING_TYPES` in `world/npc-content.ts`), so the Town Hall hosts one post and the inside Market keeps the post the plain Market gives in Goods games. *(Corrected 2026-10-30: the constant lives in `npc-content.ts`; `town-market` added for post parity.)*
 6. **Market:** in a society city, Goods distribution comes only from the inside **`town-market`** (operation `market`, terrain `town`, same numbers as Market). Building the plain `market` in a society city is rejected. Old rulesets are unchanged.
-7. **`LOAD_TRIAL`** in the tile family loads a snapshot only when its economy equals the current city's economy.
+7. **`LOAD_TRIAL`** in the tile family rejects (`INVALID_STATE`) a snapshot when exactly one of the snapshot and the current city uses the society economy. Loads between the existing population and Goods economies keep their current behaviour (C2 correction).
 
 ## Global Constraints
 
