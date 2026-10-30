@@ -139,6 +139,7 @@ git commit -m "feat(core): add versioned society city extension and validation"
 
 **Files:**
 - Modify: `packages/simulation/src/tile-trial.ts` (`executeTileTrialCommand`)
+- Modify: `packages/simulation/src/world-npc.ts` (`executeWorldNpcCommand` city entry: `ASSIGN_NPC` / `UNASSIGN_NPC` reach it directly from `character-life-command.ts`, bypassing `executeTileTrialCommand`) — added 2026-10-30 after the Builder's scope report
 - Test: `packages/simulation/src/__tests__/society-guard.test.ts`
 
 **Interfaces:**
