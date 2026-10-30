@@ -116,3 +116,43 @@ export function eliteArrival(s:SocietyState,housing:SocietyFacilities['housing']
   if(sum(groups.map(id=>s.classes[id].elite))>=housing.elite || luxuryBps<T.eliteLuxuryMinimumBps) return null;
   return s.corruption<T.light?'luminaries':s.corruption>T.dark?'makers':'merchants';
 }
+export function resolveTraining(before:SocietyState,f:SocietyFacilities,gold:number) {
+  const society=structuredClone(before), target=society.training.target, notes:SocietyNote[]=[];
+  if(target===null) return {society,trained:0,goldSpentMilli:0,notes};
+  const capacity=Math.min(society.classes.free,product(f.academyLevels,T.trainingPerLevel));
+  const room=Math.max(0,f.housing[target]-society.classes[target].common);
+  const affordable=safe(integer(gold)/integer(T.trainingGoldMilli));
+  const trained=Math.min(capacity,room,affordable);
+  if(room<capacity) notes.push('training-no-housing');
+  if(affordable<Math.min(capacity,room)) notes.push('training-no-gold');
+  society.classes.free-=trained; society.classes[target].common=add(society.classes[target].common,trained);
+  return {society,trained,goldSpentMilli:product(trained,T.trainingGoldMilli),notes};
+}
+export function resolveDebt(before:SocietyState,alloc:Allocation,f:SocietyFacilities,e:SocietyEmployment) {
+  const society=structuredClone(before), notes=record(()=>[] as SocietyNote[]), enslaved=record(()=>0);
+  let room=Math.max(0,f.housing.bound-sum(Object.values(society.classes.bound)));
+  for(const id of citizens) {
+    const common=id==='free'?society.classes.free:society.classes[id].common;
+    if(common===0) continue;
+    const workforce=integer(e.workforce[id]), assigned=integer(e.assigned[id]);
+    const unemployed=workforce>assigned?workforce-assigned:0n;
+    const scarcity=Math.max(10000-alloc[id].foodBps,10000-alloc[id].goodsBps);
+    const crowded=common>f.housing[id];
+    let delta=Number(workforce===0n?0n:integer(T.debtUnemployment)*unemployed/workforce)
+      + safe(integer(T.debtScarcity)*integer(scarcity)/10000n)+product(T.debtTax,f.countingHouseLevels)+(crowded?T.debtOvercrowding:0);
+    if(unemployed>0n) notes[id].push('unemployed');
+    if(unemployed===0n && scarcity===0 && !crowded) delta-=T.debtRecovery;
+    let pressure=clamp(society.debtPressure[id]+delta);
+    if(pressure>=T.debtThreshold) {
+      const wanted=Math.floor(common/T.debtDivisor), moved=Math.min(wanted,room);
+      if(wanted>room) notes[id].push('no-slave-room');
+      if(moved>0) {
+        if(id==='free') society.classes.free-=moved; else society.classes[id].common-=moved;
+        society.classes.bound[id]=add(society.classes.bound[id],moved); room-=moved; enslaved[id]=moved;
+        pressure=Math.max(0,pressure-T.debtRelief); notes[id].push('debt-enslavement');
+      }
+    }
+    society.debtPressure[id]=pressure;
+  }
+  return {society,notes,enslaved};
+}

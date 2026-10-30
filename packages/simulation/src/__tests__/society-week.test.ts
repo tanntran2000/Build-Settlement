@@ -64,3 +64,26 @@ describe('arrivals',()=>{
     expect(eliteArrival(s,{...housing,elite:0},10000)).toBeNull();
   });
 });
+
+import { resolveTraining, resolveDebt } from '../society-week.js';
+const employment=()=>({workforce:societyWorkforce(society()),assigned:societyWorkforce(society())});
+describe('transfers',()=>{
+  it('trains within housing and gold limits without mutating the source',()=>{
+    const s=society(),f=facilities(); s.training.target='makers'; f.academyLevels=1;
+    const r=resolveTraining(s,f,10000); expect(r.trained).toBe(2); expect(r.goldSpentMilli).toBe(2000); expect(r.society.classes.free).toBe(53); expect(s.classes.free).toBe(55);
+    const poor=resolveTraining(s,f,1000); expect(poor.trained).toBe(1); expect(poor.notes).toContain('training-no-gold');
+    f.housing.makers=20; expect(resolveTraining(s,f,10000).notes).toContain('training-no-housing'); expect(resolveTraining(s,f,10000).trained).toBe(0);
+    s.training.target=null; expect(resolveTraining(s,f,10000).goldSpentMilli).toBe(0);
+  });
+  it('computes unemployment, scarcity, tax and crowding pressure',()=>{
+    const s=society(),f=facilities(),e=employment(),a=allocation(); e.assigned.free=3; a.free.foodBps=5000; f.countingHouseLevels=1; f.housing.free=54;
+    expect(resolveDebt(s,a,f,e).society.debtPressure.free).toBe(20);
+    s.debtPressure.free=3; expect(resolveDebt(s,allocation(),facilities(),employment()).society.debtPressure.free).toBe(0);
+  });
+  it('enslaves one in fifty and preserves origin or reports full quarters',()=>{
+    const s=society(),f=facilities(),a=allocation(); s.debtPressure.free=48; a.free.foodBps=5000;
+    const r=resolveDebt(s,a,f,employment()); expect(r.society.classes.free).toBe(54); expect(r.society.classes.bound.free).toBe(1); expect(r.society.debtPressure.free).toBe(33); expect(r.notes.free).toContain('debt-enslavement');
+    f.housing.bound=0; const full=resolveDebt(s,a,f,employment()); expect(full.society.debtPressure.free).toBe(53); expect(full.society.classes.bound.free).toBe(0); expect(full.notes.free).toContain('no-slave-room');
+    expect(full.society.classes.makers.elite).toBe(s.classes.makers.elite);
+  });
+});
