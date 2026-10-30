@@ -22,3 +22,26 @@ it('preserves Market manager posts in both economies and adds Town Hall', () => 
  expect(managerSlotTileIds(city)).toContain('service-1');
  expect(managerSlotTileIds(createGoodsStockState())).toEqual(['field-1','plain-1','plain-2']);
 });
+
+import { TRIAL_BUILDINGS } from '../../index.js';
+it('pins all fourteen active town building names to the approved catalog', () => {
+  const names = {
+    'common-housing': 'Common Housing',
+    'makers-rowhouses': "Makers' Rowhouses",
+    'scholars-quarters': "Scholars' Quarters",
+    'merchant-townhouses': 'Merchant Townhouses',
+    'elite-manor': 'Elite Manor',
+    tavern: 'Tavern',
+    hospital: 'Hospital',
+    'town-hall': 'Town Hall',
+    'builders-yard': "Builders' Yard",
+    academy: 'Academy',
+    'town-market': 'Market',
+    'trading-post': 'Trading Post',
+    'counting-house': 'Counting House',
+    'slave-quarters': 'Slave Quarters',
+  };
+  expect(Object.fromEntries(Object.entries(TRIAL_BUILDINGS)
+    .filter(([, definition]) => definition.terrain.includes('town'))
+    .map(([id, definition]) => [id, definition.name]))).toEqual(names);
+});

@@ -8,7 +8,7 @@ export function executeTileTrialCommand(state: unknown, raw: unknown, ruleset: T
   try {
     if (ruleset !== LEGACY_TILE_RULESET && ruleset !== POPULATION_TILE_RULESET) return fail("INVALID_RULESET", "Unsupported trial ruleset; nothing was changed.");
     if (!isTileTrialState(state) || cityEconomyRuleset(state, ruleset) === null) return fail("INVALID_STATE", "Trial state is invalid; nothing was changed.");
-    
+
     if (!raw || typeof raw !== "object" || !hasWeeklyKeys(raw, Object.keys(raw))) return fail("INVALID_COMMAND", "Command must contain plain data fields.");
     const c = { ...raw } as Record<string, unknown>;
     if (state.society && ['END_WEEK','NEXT_WEEK','LOAD_TRIAL'].includes(c.type as string)) return fail('UNSUPPORTED_RULESET', 'This city economy is not playable yet; nothing was changed.');
