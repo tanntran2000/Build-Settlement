@@ -127,22 +127,22 @@ export const SOCIETY_BUILDINGS: Readonly<Record<string,SocietyBuildingInfo>> = {
   },
   "watch-house": {
     "tier": "service",
-    "staff": null,
+    "staff": "basic",
     "reserved": true
   },
   "warehouse": {
     "tier": "specialist",
-    "staff": null,
+    "staff": "makers",
     "reserved": true
   },
   "smithy": {
     "tier": "specialist",
-    "staff": null,
+    "staff": "makers",
     "reserved": true
   },
   "library": {
     "tier": "specialist",
-    "staff": null,
+    "staff": "luminaries",
     "reserved": true
   },
   "brothel": {
