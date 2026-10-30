@@ -72,6 +72,7 @@ git commit -m "test: pin Goods-economy saves before the society ruleset"
 - Modify: `packages/core/src/trial/state.ts` (`isTileTrialState`, `isTileTrialPlanningState` key sets)
 - Modify: `packages/core/src/trial/goods-stock.ts` (`cityEconomyRuleset`, `CityEconomyRuleset`)
 - Modify: `packages/core/src/world/session.ts` (`createWorldSession` economy union)
+- Modify: `packages/core/src/character/validate.ts` (live Character Life city-key preflight at line ~89: accept optional `society` alongside `goodsStock`; shape and Goods/Society relation stay checked by `isTileTrialState`) — added 2026-10-30 after the Builder's second scope report
 - Modify: `packages/core/src/index.ts` (export `./trial/society.js`)
 - Test: `packages/core/src/trial/__tests__/society.test.ts`
 
@@ -139,6 +140,7 @@ git commit -m "feat(core): add versioned society city extension and validation"
 
 **Files:**
 - Modify: `packages/simulation/src/tile-trial.ts` (`executeTileTrialCommand`)
+- Modify: `packages/simulation/src/world-npc.ts` (`executeWorldNpcCommand` city entry: `ASSIGN_NPC` / `UNASSIGN_NPC` reach it directly from `character-life-command.ts`, bypassing `executeTileTrialCommand`) — added 2026-10-30 after the Builder's scope report
 - Test: `packages/simulation/src/__tests__/society-guard.test.ts`
 
 **Interfaces:**

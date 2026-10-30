@@ -1,8 +1,9 @@
+import { cityEconomyRuleset, SOCIETY_RULESET } from '@haven/core';
 import { createTileTrialState, hasWeeklyKeys, isNpcWorldSessionState, isTileTrialState, isWorldNpcList, isWorldSessionState, managerSlotTileIds, WORLD_SESSION_CITY_RULESET, type NpcWorldSessionState, type TileTrialReport, type TileTrialState } from "@haven/core";
 import { executeTileTrialCommand } from "./tile-trial.js";
 import { trialSafe } from "./tile-trial-week.js";
 
-export type WorldNpcErrorCode = "INVALID_STATE" | "INVALID_COMMAND" | "STALE_COMMAND" | "FORBIDDEN" | "UNKNOWN_NPC" | "LOCKED_POST" | "POST_OCCUPIED" | "ALREADY_ASSIGNED";
+export type WorldNpcErrorCode = "INVALID_STATE" | "INVALID_COMMAND" | "STALE_COMMAND" | "FORBIDDEN" | "UNKNOWN_NPC" | "LOCKED_POST" | "POST_OCCUPIED" | "ALREADY_ASSIGNED" | "UNSUPPORTED_RULESET";
 export type WorldNpcResult = { success: true; next: NpcWorldSessionState } | { success: false; error: { code: WorldNpcErrorCode; message: string } };
 export type WorldNpcCityResult = { success: true; next: NpcWorldSessionState; report?: Readonly<TileTrialReport> } | { success: false; error: { code: string; message: string } };
 
@@ -11,6 +12,7 @@ export function executeWorldNpcCommand(session: unknown, raw: unknown): WorldNpc
   const fail = (code: WorldNpcErrorCode, message: string): WorldNpcResult => ({ success: false, error: { code, message } });
   try {
     if (!hasWeeklyKeys(session, ["city", "outside", "npcs"]) || !isTileTrialState(session.city)) return fail("INVALID_STATE", "World session is invalid; nothing was changed.");
+    if (cityEconomyRuleset(session.city, WORLD_SESSION_CITY_RULESET) === SOCIETY_RULESET) return fail('UNSUPPORTED_RULESET', 'This city economy is not playable yet; nothing was changed.');
     const keys: Record<string, string[]> = { ASSIGN_NPC: ["npcId", "tileId"], UNASSIGN_NPC: ["npcId"] };
     if (!raw || typeof raw !== "object" || !hasWeeklyKeys(raw, Object.keys(raw)) || typeof raw.type !== "string" || !Object.hasOwn(keys, raw.type) ||
         !hasWeeklyKeys(raw, ["type", "expectedRevision", ...keys[raw.type]]) || typeof raw.npcId !== "string" ||
