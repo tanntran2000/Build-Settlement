@@ -2,7 +2,7 @@
 
 Revision v0.2 (owner review 2026-10-30): starting capacities keep headroom (§3, design rule); the Bound eat last and their hunger raises Tension (§7.6); debt is defined with its causes, enslavement stays at 1 in 50 (§7.5).
 
-Status: **written for owner review (G1 pending).** No code is authorized by this document. Decisions come from [CITY-SOCIETY-DECISIONS-02](../../design/CITY-SOCIETY-DECISIONS-02.md) (owner, 2026-10-30). Mechanics research: [Free Cities 30-week study](../../research/playtest/2026-10-30-free-cities-30-week-study.md). All numbers marked TRIAL are adjustable defaults, not approved balance.
+Status: **APPROVED at G1 by the owner on 2026-10-30 ("Duyệt G1", Claude session), version v0.2.** Code starts only through the approved WP plans of §13. Decisions come from [CITY-SOCIETY-DECISIONS-02](../../design/CITY-SOCIETY-DECISIONS-02.md) (owner, 2026-10-30). Mechanics research: [Free Cities 30-week study](../../research/playtest/2026-10-30-free-cities-30-week-study.md). All numbers marked TRIAL are adjustable defaults, not approved balance.
 Base: `main` `05e35d1`. Replaces CITY-MAP-01 v0.4's plot allocation (that spec was never committed and is not implemented).
 
 ## 1. Player outcome

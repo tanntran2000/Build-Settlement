@@ -169,3 +169,7 @@ Keep the **stock side** unchanged: Food stock, Goods stock (`goodsStock`, PR #54
 - **Headroom rule:** starting capacities and stocks never sit at their maximum; keep about 15–20% spare for incidents and rounding.
 - **The Bound eat last.** When Food is short they go hungry and **Tension rises**.
 - **Debt enslavement is 1 in 50 for every cause.** Debt is a per-class pressure caused by unemployment, scarcity, high tax, overcrowding, predatory lending (Dark, Black Market) and addiction (Drug Store); at ≥ 50, 1 in 50 of that class becomes Bound, keeping their origin group. Details: [P2 spec §7.5](../superpowers/specs/2026-10-30-p2-inside-city-society-design.md).
+
+## 14. P2 approved (owner, 2026-10-30)
+
+[P2 spec v0.2](../superpowers/specs/2026-10-30-p2-inside-city-society-design.md) approved at G1 ("Duyệt G1"). Next: implementation plans for WP P2-A → P2-D, one PR each.
