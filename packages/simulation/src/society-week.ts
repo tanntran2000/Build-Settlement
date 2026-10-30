@@ -138,11 +138,12 @@ export function resolveDebt(before:SocietyState,alloc:Allocation,f:SocietyFacili
     const unemployed=workforce>assigned?workforce-assigned:0n;
     const scarcity=Math.max(10000-alloc[id].foodBps,10000-alloc[id].goodsBps);
     const crowded=common>f.housing[id];
-    let delta=Number(workforce===0n?0n:integer(T.debtUnemployment)*unemployed/workforce)
-      + safe(integer(T.debtScarcity)*integer(scarcity)/10000n)+product(T.debtTax,f.countingHouseLevels)+(crowded?T.debtOvercrowding:0);
+    const delta=(workforce===0n?0n:integer(T.debtUnemployment)*unemployed/workforce)
+      + integer(T.debtScarcity)*integer(scarcity)/10000n+integer(T.debtTax)*integer(f.countingHouseLevels)+(crowded?integer(T.debtOvercrowding):0n);
     if(unemployed>0n) notes[id].push('unemployed');
-    if(unemployed===0n && scarcity===0 && !crowded) delta-=T.debtRecovery;
-    let pressure=clamp(society.debtPressure[id]+delta);
+    const increasedPressure=safe(integer(society.debtPressure[id])+delta);
+    const recovery=unemployed===0n && scarcity===0 && !crowded?T.debtRecovery:0;
+    let pressure=clamp(increasedPressure-recovery);
     if(pressure>=T.debtThreshold) {
       const wanted=Math.floor(common/T.debtDivisor), moved=Math.min(wanted,room);
       if(wanted>room) notes[id].push('no-slave-room');

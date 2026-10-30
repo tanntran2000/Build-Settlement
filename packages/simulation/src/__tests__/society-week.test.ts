@@ -111,6 +111,28 @@ import { isSocietyState, societyPopulation } from '@haven/core';
 import { resolveDesperation, resolveTension, resolveCorruption, resolveSocietyWeek, type SocietyWeekInput } from '../society-week.js';
 const input=():SocietyWeekInput=>({society:society(),facilities:facilities(),employment:employment(),foodAvailableMilli:4000,goodsServableMilli:1450,luxuryImportedMilli:0,arrivalsBudget:0,goldAvailableMilli:10000});
 describe('weekly resolution',()=>{
+  it('rejects debt arithmetic overflow before clamping',()=>{
+    const i=input();
+    i.society.debtPressure.free=100;
+    i.employment.assigned.free=0;
+    i.foodAvailableMilli=0; i.goodsServableMilli=0;
+    i.facilities.housing.free=55; i.facilities.housing.bound=0;
+    i.facilities.countingHouseLevels=4503599627370495;
+    const a=allocation(); a.free.foodBps=0; a.free.goodsBps=0;
+    const before=structuredClone(i);
+    expect(()=>resolveDebt(i.society,a,i.facilities,i.employment)).toThrow('Society arithmetic overflow.');
+    expect(()=>resolveSocietyWeek(i)).toThrow('Society arithmetic overflow.');
+    expect(i).toEqual(before);
+  });
+  it('reports training blocked by zero Gold without spending or transferring',()=>{
+    const i=input(); i.society.training.target='makers'; i.facilities.academyLevels=1;
+    i.goldAvailableMilli=0;
+    const r=resolveSocietyWeek(i);
+    expect(r.report.classes.makers.trained).toBe(0);
+    expect(r.goldSpentMilli).toBe(0);
+    expect(r.report.classes.makers.notes).toContain('training-no-gold');
+    expect(r.society.classes.makers.common).toBe(i.society.classes.makers.common);
+  });
   it('resolves desperation, clamps, and applies hospital',()=>{
     expect(resolveDesperation(10,5000,true,70,[1])).toBe(23); expect(resolveDesperation(10,10000,false,30,[])).toBe(5);
     expect(resolveDesperation(100,0,true,70,[])).toBe(100); expect(resolveDesperation(0,10000,false,30,[])).toBe(0);
