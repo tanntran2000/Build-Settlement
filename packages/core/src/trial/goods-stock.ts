@@ -1,3 +1,4 @@
+import { SOCIETY_RULESET } from './society.js';
 import { LEGACY_TILE_RULESET, POPULATION_TILE_RULESET, type TileTrialRuleset } from './catalog.js';
 import { createTileTrialState, isTileTrialState } from './state.js';
 import type { TileTrialState } from './types.js';
@@ -10,12 +11,12 @@ export const GOODS_STOCK_TRIAL = Object.freeze({
   demandPerResidentMilli: 20, capacityPerLevelMilli: 2000, goldPerGoodsMilli: 1000,
 });
 export interface GoodsStock { rulesetId: typeof GOODS_STOCK_RULESET; amountMilli: number }
-export type CityEconomyRuleset = TileTrialRuleset | typeof GOODS_STOCK_RULESET;
+export type CityEconomyRuleset = TileTrialRuleset | typeof GOODS_STOCK_RULESET | typeof SOCIETY_RULESET;
 
 export function cityEconomyRuleset(state: TileTrialState, family: TileTrialRuleset): CityEconomyRuleset | null {
   if (!isTileTrialState(state)) return null;
   if (family === LEGACY_TILE_RULESET) return state.goodsStock ? null : LEGACY_TILE_RULESET;
-  if (family === POPULATION_TILE_RULESET) return state.goodsStock ? GOODS_STOCK_RULESET : POPULATION_TILE_RULESET;
+  if (family === POPULATION_TILE_RULESET) return state.society ? SOCIETY_RULESET : state.goodsStock ? GOODS_STOCK_RULESET : POPULATION_TILE_RULESET;
   return null;
 }
 

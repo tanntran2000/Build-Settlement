@@ -1,3 +1,4 @@
+import type { SocietyState } from './society.js';
 import type { CanonicalGameState, WeeklyStocks } from "../domain/canonical-state.js";
 import type { GoodsStock } from './goods-stock.js';
 
@@ -5,6 +6,7 @@ export interface TrialBuilding { typeId: string; level: number; workers: number;
 export interface TrialTile { id: string; terrain: string; building: TrialBuilding | null }
 export interface TileTrialState {
   goodsStock?: GoodsStock;
+  society?: SocietyState;
   world: CanonicalGameState;
   revision: number;
   phase: "planning" | "report";

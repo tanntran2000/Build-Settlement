@@ -1,3 +1,4 @@
+import { createSocietyState, SOCIETY_RULESET } from '../trial/society.js';
 import { hasWeeklyKeys } from '../domain/canonical-state.js';
 import { createTileTrialState, isTileTrialPlanningState } from '../trial/state.js';
 import { POPULATION_TILE_RULESET } from '../trial/catalog.js';
@@ -10,11 +11,11 @@ import type { OutsideWorldState, WorldResult, WorldSessionState } from './types.
 export const WORLD_SESSION_CITY_RULESET = POPULATION_TILE_RULESET;
 const id = (value: unknown): value is string => typeof value === 'string' && value.length > 0 && value.length <= 64 && value.trim() === value;
 
-export function createWorldSession(seed: unknown, economy: typeof POPULATION_TILE_RULESET | typeof GOODS_STOCK_RULESET = POPULATION_TILE_RULESET): WorldResult<WorldSessionState> {
+export function createWorldSession(seed: unknown, economy: typeof POPULATION_TILE_RULESET | typeof GOODS_STOCK_RULESET | typeof SOCIETY_RULESET = POPULATION_TILE_RULESET): WorldResult<WorldSessionState> {
   try {
-    if (economy !== POPULATION_TILE_RULESET && economy !== GOODS_STOCK_RULESET) return { success: false, error: { code: 'WORLD_GENERATION_FAILED', message: 'Unsupported city economy.' } };
+    if (economy !== POPULATION_TILE_RULESET && economy !== GOODS_STOCK_RULESET && economy !== SOCIETY_RULESET) return { success: false, error: { code: 'WORLD_GENERATION_FAILED', message: 'Unsupported city economy.' } };
     const outside = createOutsideWorld(OUTSIDE_TRIAL_SCENARIO, seed);
-    return outside.success ? { success: true, value: { city: economy === GOODS_STOCK_RULESET ? createGoodsStockState() : createTileTrialState(), outside: outside.value } } : outside;
+    return outside.success ? { success: true, value: { city: economy === SOCIETY_RULESET ? createSocietyState() : economy === GOODS_STOCK_RULESET ? createGoodsStockState() : createTileTrialState(), outside: outside.value } } : outside;
   } catch { return { success: false, error: { code: 'WORLD_GENERATION_FAILED', message: 'Could not create the world session.' } }; }
 }
 

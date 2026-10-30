@@ -1,3 +1,4 @@
+import { isSocietyState, societyPopulation } from './society.js';
 import { hasWeeklyKeys, isCanonicalGameState } from "../domain/canonical-state.js";
 import { createWeeklyState, weeklyWorkforceMilli } from "../weekly.js";
 import { TILE_TRIAL_BALANCE, trialBuilding } from "./catalog.js";
@@ -19,12 +20,21 @@ export function createTileTrialState(): TileTrialState {
 const integer = (n: unknown): n is number => Number.isSafeInteger(n) && (n as number) >= 0;
 export function isTileTrialState(raw: unknown): raw is TileTrialState {
   try {
-    if (!hasWeeklyKeys(raw, ["world", "revision", "phase", "tiles", "happiness"]) &&
-        !(hasWeeklyKeys(raw, ["world", "revision", "phase", "tiles", "happiness", "goodsStock"]) &&
-          hasWeeklyKeys(raw.goodsStock, ['rulesetId', 'amountMilli']) && raw.goodsStock.rulesetId === GOODS_STOCK_RULESET && integer(raw.goodsStock.amountMilli))) return false;
+    if (!hasTileKeys(raw)) return false;
+    if (Object.hasOwn(raw, 'goodsStock') &&
+        !(hasWeeklyKeys(raw.goodsStock, ['rulesetId', 'amountMilli']) && raw.goodsStock.rulesetId === GOODS_STOCK_RULESET && integer(raw.goodsStock.amountMilli))) return false;
+    if (Object.hasOwn(raw, 'society') && !isSocietyState(raw.society)) return false;
     const s = raw as unknown as TileTrialState;
     if (!isCanonicalGameState(s.world) || !s.world.activeSettlementId || !integer(s.revision) ||
       !["planning", "report"].includes(s.phase) || !Number.isFinite(s.happiness) || s.happiness < 0 || s.happiness > 100 || !Array.isArray(s.tiles)) return false;
+    if (s.society) {
+      let population = 0;
+      for (const cohort of s.world.settlements[s.world.activeSettlementId].cohorts) {
+        population += cohort.count;
+        if (!Number.isSafeInteger(population)) return false;
+      }
+      if (societyPopulation(s.society) !== population) return false;
+    }
     const ids = new Set<string>(); let workers = 0;
     for (const t of s.tiles) {
       if (!hasWeeklyKeys(t, ["id", "terrain", "building"]) || typeof t.id !== "string" || !t.id.trim() || ids.has(t.id) || typeof t.terrain !== "string" || !t.terrain.trim()) return false;
@@ -44,8 +54,7 @@ export function isTileTrialState(raw: unknown): raw is TileTrialState {
 // Checkpoint boundary pins this ruleset's map and excludes UI-local reports.
 export function isTileTrialPlanningState(raw: unknown): raw is TileTrialState {
   try {
-    if (!(hasWeeklyKeys(raw, ["world", "revision", "phase", "tiles", "happiness"]) ||
-        hasWeeklyKeys(raw, ["world", "revision", "phase", "tiles", "happiness", "goodsStock"])) || raw.phase !== "planning" || !Array.isArray(raw.tiles)) return false;
+    if (!hasTileKeys(raw) || raw.phase !== "planning" || !Array.isArray(raw.tiles)) return false;
     const tiles = raw.tiles;
     if (Object.getPrototypeOf(tiles) !== Array.prototype || Reflect.ownKeys(tiles).length !== tiles.length + 1) return false;
     const expected = createTileTrialState().tiles;
@@ -57,4 +66,9 @@ export function isTileTrialPlanningState(raw: unknown): raw is TileTrialState {
     }
     return isTileTrialState(raw);
   } catch { return false; }
+}
+
+const TILE_KEYS = ['world', 'revision', 'phase', 'tiles', 'happiness'];
+function hasTileKeys(raw: unknown): raw is Record<string, unknown> {
+  return [TILE_KEYS, [...TILE_KEYS, 'goodsStock'], [...TILE_KEYS, 'goodsStock', 'society']].some(keys => hasWeeklyKeys(raw, keys));
 }
