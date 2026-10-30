@@ -103,3 +103,16 @@ export function cityHappiness(values:Record<SocietyClassId,number>,counts:Record
   const weighted=citizens.reduce((n,id)=>n+integer(counts[id])*integer(values[id]),0n);
   return Number((weighted*200n+population)/(population*2n))/100;
 }
+export function distributeArrivals(budget:number,counts:Record<SocietyClassId,number>,housing:SocietyFacilities['housing'],foodBps:Record<SocietyClassId,number>):Record<Citizen,number> {
+  const room=Object.fromEntries(citizens.map(id=>[id,foodBps[id]===10000?Math.max(0,housing[id]-counts[id]):0])) as Record<Citizen,number>;
+  const total=citizens.reduce((n,id)=>n+integer(room[id]),0n);
+  const amount=integer(budget)<total?integer(budget):total;
+  const result=Object.fromEntries(citizens.map(id=>[id,total===0n?0:safe(amount*integer(room[id])/total)])) as Record<Citizen,number>;
+  let remainder=safe(amount)-sum(Object.values(result));
+  for(const id of citizens) { if(remainder>0 && result[id]<room[id]) {result[id]++; remainder--; } }
+  return result;
+}
+export function eliteArrival(s:SocietyState,housing:SocietyFacilities['housing'],luxuryBps:number):Group|null {
+  if(sum(groups.map(id=>s.classes[id].elite))>=housing.elite || luxuryBps<T.eliteLuxuryMinimumBps) return null;
+  return s.corruption<T.light?'luminaries':s.corruption>T.dark?'makers':'merchants';
+}

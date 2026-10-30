@@ -49,3 +49,18 @@ describe('satisfaction',()=>{
     expect(cityHappiness(values,{free:0,makers:0,luminaries:0,merchants:0,bound:100},77)).toBe(77);
   });
 });
+
+import { distributeArrivals, eliteArrival } from '../society-week.js';
+describe('arrivals',()=>{
+  const counts={free:55,makers:20,luminaries:12,merchants:13,bound:0};
+  const housing={free:70,makers:25,luminaries:12,merchants:13,elite:1,bound:0};
+  const fed={free:10000,makers:10000,luminaries:10000,merchants:10000,bound:10000};
+  it('splits proportionally with fixed remainder order',()=>expect(distributeArrivals(10,counts,housing,fed)).toEqual({free:8,makers:2,luminaries:0,merchants:0}));
+  it('redistributes away from hungry classes and caps to room',()=>expect(distributeArrivals(10,counts,housing,{...fed,free:0})).toEqual({free:0,makers:5,luminaries:0,merchants:0}));
+  it('has no arrivals without housing',()=>expect(distributeArrivals(10,counts,{...counts,elite:0},fed)).toEqual({free:0,makers:0,luminaries:0,merchants:0}));
+  it.each([[30,'luminaries'],[50,'merchants'],[70,'makers']])('selects corruption band %s',(corruption,target)=>{
+    const s=society(); s.corruption=corruption as number;
+    expect(eliteArrival(s,housing,5000)).toBe(target); expect(eliteArrival(s,housing,4999)).toBeNull();
+    expect(eliteArrival(s,{...housing,elite:0},10000)).toBeNull();
+  });
+});
