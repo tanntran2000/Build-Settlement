@@ -4,21 +4,14 @@ import { executeTileTrialCommand } from '../tile-trial.js';
 import { executeWorldNpcCityCommand, executeWorldNpcCommand } from '../world-npc.js';
 import { executeCharacterLifeCommand } from '../character-life-command.js';
 
-const failure = { success: false, error: { code: 'UNSUPPORTED_RULESET', message: 'This city economy is not playable yet; nothing was changed.' } };
-const commands = [
-  { type: 'NEXT_WEEK', expectedRevision: 0 },
-  { type: 'END_WEEK', expectedWeek: 1, expectedRevision: 0 },
-  { type: 'LOAD_TRIAL', snapshot: createSocietyState(), expectedRevision: 0 },
-];
-it.each(commands)('rejects society city command $type without mutation', command => {
-  const state = createSocietyState(), before = structuredClone(state);
-  expect(executeTileTrialCommand(state, command, POPULATION_TILE_RULESET)).toMatchObject(failure);
-  expect(state).toEqual(before);
-});
-it('rejects loading a society snapshot into Goods', () => {
-  const state = createGoodsStockState(), before = structuredClone(state);
-  expect(executeTileTrialCommand(state, { type: 'LOAD_TRIAL', expectedRevision: 0, snapshot: createSocietyState() }, POPULATION_TILE_RULESET)).toMatchObject(failure);
-  expect(state).toEqual(before);
+it('advances society tile weeks and accepts only matching snapshot economies', () => {
+ const state=createSocietyState();
+ const end=executeTileTrialCommand(state,{type:'END_WEEK',expectedWeek:1,expectedRevision:0},POPULATION_TILE_RULESET);
+ expect(end.success).toBe(true); if(!end.success) throw Error('End failed');
+ expect(executeTileTrialCommand(end.nextState,{type:'NEXT_WEEK',expectedRevision:1},POPULATION_TILE_RULESET).success).toBe(true);
+ for(const [current,snapshot] of [[state,createGoodsStockState()],[createGoodsStockState(),state]])
+ expect(executeTileTrialCommand(current,{type:'LOAD_TRIAL',snapshot,expectedRevision:0},POPULATION_TILE_RULESET)).toMatchObject({success:false,error:{code:'INVALID_STATE'}});
+ expect(executeTileTrialCommand(state,{type:'LOAD_TRIAL',snapshot:state,expectedRevision:0},POPULATION_TILE_RULESET).success).toBe(true);
 });
 const unwrap = <T>(r: { success: true; value: T } | { success: false }) => { if (!r.success) throw Error('Factory failed'); return r.value; };
 const sessions = [
@@ -26,14 +19,12 @@ const sessions = [
   { name: 'life', create: () => unwrap(createCharacterLifeSession(20261028, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Synthetic Keeper' }, SOCIETY_RULESET)), execute: executeCharacterLifeCommand, assign: executeCharacterLifeCommand },
 ];
 describe.each(sessions)('$name society session', c => {
-  it.each(commands.filter(c => c.type !== 'LOAD_TRIAL'))('rejects $type without mutation', command => {
-    const state = c.create(), before = structuredClone(state);
-    expect(c.execute(state, command)).toMatchObject(failure);
-    expect(state).toEqual(before);
-  });
-  it.each(['ASSIGN_NPC', 'UNASSIGN_NPC'])('rejects %s without mutation', type => {
-    const state = c.create(), before = structuredClone(state);
-    expect(c.assign(state, { type, npcId: state.npcs[0].character.id, ...(type === 'ASSIGN_NPC' ? { tileId: 'plain-2' } : {}), expectedRevision: 0 })).toMatchObject(failure);
+  it('advances End Week and Next Week without mutating the source', () => {
+    const state=c.create(), before=structuredClone(state);
+    const end=c.execute(state,{type:'END_WEEK',expectedWeek:1,expectedRevision:0});
+    expect(end.success).toBe(true); if(!end.success) throw Error('End failed');
+    expect(end.next.city.world.week).toBe(2);
+    expect(c.execute(end.next,{type:'NEXT_WEEK',expectedRevision:1}).success).toBe(true);
     expect(state).toEqual(before);
   });
   // These dispatchers never accept LOAD_TRIAL for any ruleset (load goes through Continue/Import), so that error wins.
