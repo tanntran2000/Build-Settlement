@@ -42,10 +42,11 @@ interface SocietyState {
     makers: { common: number; elite: number };
     luminaries: { common: number; elite: number };
     merchants: { common: number; elite: number };
-    bound: number;
+    bound: Record<'free' | 'makers' | 'luminaries' | 'merchants', number>; // Bound by origin group (§7.5)
   };
   satisfaction: Record<'free' | 'makers' | 'luminaries' | 'merchants' | 'bound', number>; // 0–100 each
   desperation: number;     // Bound only, 0–100
+  tension: number;         // 0–100; P2 applies only the Bound term (§7.6)
   debtPressure: Record<'free' | 'makers' | 'luminaries' | 'merchants', number>; // common tier only, 0–100 (§7.5)
   corruption: number;      // 0–100, drives the Elite pull side (§7.3); P8 builds the full Light/Dark identity on it
   luxuryStockMilli: number;
@@ -54,7 +55,7 @@ interface SocietyState {
 }
 ```
 
-Invariants: all counts are safe nonnegative integers. The class total equals the settlement's population; the old cohort count is derived from it, never edited separately (LAW-04: no double counting). Satisfaction and desperation are clamped to [0, 100]. All characters are adults.
+Invariants: all counts are safe nonnegative integers. The class total (including every Bound origin) equals the settlement's population; the old cohort count is derived from it, never edited separately (LAW-04: no double counting). Satisfaction, desperation, debt pressure, corruption and tension are integers in [0, 100]. The society extension requires the Goods stock extension (the stock side is kept, §12 of the decision log). All characters are adults.
 
 **Design rule — headroom (owner, 2026-10-30):** starting capacities and stocks are never set at their maximum. Keep about **15–20% spare** so an incident or a rounding error does not break the first weeks.
 
