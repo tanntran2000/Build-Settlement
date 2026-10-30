@@ -147,4 +147,19 @@ Owner decisions 2026-10-30:
 2. ~~Elite housing~~ — one shared Elite Manor (§5.1).
 3. How Desperation and slave pressure map onto the existing Tension formula (`pressure = 8s + 6u + 4x`).
 4. ~~Town Hall's role~~ — Law enactment and council votes (§9).
-5. Whether Requirements and the Food/Goods stock mechanics change for the class model (raised by the owner 2026-10-30).
+5. ~~Requirements vs class model~~ — decided A (§12).
+
+## 12. Requirements per class (owner chose A, 2026-10-30)
+
+Keep the **stock side** unchanged: Food stock, Goods stock (`goodsStock`, PR #54) with its five-week buffer, Farm → Processor → Food and Workshop → Goods → Market. Change the **demand side** to be **per class**, and add a **Luxury** requirement for Elites:
+
+| Class | Food | Goods | Luxury (new) |
+|---|---|---|---|
+| Slaves (The Bound) | low ration | none | none |
+| Free residents | normal | low | none |
+| Makers / Luminaries / Merchants (common) | normal | normal | none |
+| Elites (all three groups) | higher | higher | **yes** |
+
+- A shortfall hits **the class that is short**: lower immigration of that class, more votes against Laws (§9). Slaves short of Food raise **Desperation** (§3).
+- Luxury is brought in by Merchants and the Trading Post; it gives Merchants their own economic loop and keeps Elites in the city.
+- All rates are TRIAL values, tuned after playtesting (P1).
