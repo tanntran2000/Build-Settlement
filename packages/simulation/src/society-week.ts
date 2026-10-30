@@ -91,7 +91,7 @@ export function resolveSatisfaction(before:SocietyState['satisfaction'],alloc:Al
     if(id!=='free' && id!=='bound' && a.luxuryBps!==null) {
       score-=safe(integer(T.luxuryShortage)*integer(10000-a.luxuryBps)*integer(classes[id].elite)/(10000n*integer(counts[id])));
     }
-    if(id!=='bound') { if(a.foodBps===10000) score+=tavern; score+=hospital; }
+    if(id!=='bound') { if((id==='free' || id==='makers') && a.foodBps===10000) score+=tavern; score+=hospital; }
     const housed=id==='free'||id==='bound'?counts[id]:classes[id].common;
     if(housed>facilities.housing[id]) score-=T.overcrowding;
     return clamp(score);

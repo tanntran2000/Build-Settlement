@@ -25,6 +25,19 @@ import { resolveSatisfaction, cityHappiness, societyCounts, type SocietyFaciliti
 const facilities = ():SocietyFacilities => ({housing:{free:70,makers:25,luminaries:15,merchants:15,elite:5,bound:10},tavernLevels:[],hospitalLevels:[],academyLevels:0,countingHouseLevels:0,operatingSlumBuildings:0});
 const allocation = (s= society()) => allocateRequirements({society:s,foodAvailableMilli:10000,goodsServableMilli:10000,luxuryImportedMilli:1000}).perClass;
 describe('satisfaction',()=>{
+  it('limits the Tavern L2 bonus to fully fed Free and Makers',()=>{
+    const s=society(),a=allocation(s),f=facilities();
+    const baseline=resolveSatisfaction(s.satisfaction,a,f,s.classes);
+    f.tavernLevels=[2];
+    const withTavern=resolveSatisfaction(s.satisfaction,a,f,s.classes);
+    expect({
+      free:withTavern.free-baseline.free,
+      makers:withTavern.makers-baseline.makers,
+      luminaries:withTavern.luminaries-baseline.luminaries,
+      merchants:withTavern.merchants-baseline.merchants,
+      bound:withTavern.bound-baseline.bound,
+    }).toEqual({free:3,makers:3,luminaries:0,merchants:0,bound:0});
+  });
   it.each([[70,0,60],[76,10000,82],[90,10000,92]])('applies food and goods at %s',(before,foodBps,expected)=>{
     const s=society(), a=allocation(); s.satisfaction.free=before; a.free.foodBps=foodBps;
     expect(resolveSatisfaction(s.satisfaction,a,facilities(),s.classes).free).toBe(expected);
