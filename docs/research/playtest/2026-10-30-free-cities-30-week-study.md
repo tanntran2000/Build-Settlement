@@ -2,9 +2,25 @@
 
 > Research for [CITY-SOCIETY-DECISIONS-02](../../design/CITY-SOCIETY-DECISIONS-02.md), requested by the owner on 2026-10-30. **Mechanics only**; no game text or adult content is reproduced. Not a spec; nothing here is approved for Haven unless the decision log says so.
 
+## Evidence (LAW-07)
+
+Retained in [`2026-10-30-free-cities-evidence/`](2026-10-30-free-cities-evidence/):
+
+| File | Content |
+|---|---|
+| `fc-run.js` | The exact driver used, run with Node 24.19.0 and the repo's Playwright: `node fc-run.js run2-light 30 light` and `node fc-run.js run2-dark 30 dark`, in parallel, 2026-10-30 ~15:20–15:45 (UTC+7) |
+| `metrics-light.json`, `metrics-dark.json` | Per-week state read from the game (cash, reputation, prosperity, ownership, society values, class counts, menials, NPC slaves, SecExp security/authority/crime/tension). Every number in "Results" comes from these files |
+| `passages-light.log`, `passages-dark.log` | Every passage visited, in order, with the driver's actions (choice labels removed) |
+| `SHA256SUMS` | Hashes of the game file and of the 88 retained raw files (run logs and per-week report text) |
+
+- **Game revision:** Free Cities pregmod `4.0.0-alpha.40`, build `1300`, commit `54f34c5c` (as printed on its start screen), file `FC_pregmod.html` SHA-256 `3750376ab317e1e29c2122634d84bec5c8b4f6b3463cd710e33591bac9665319`. The local folder is not a git checkout.
+- **Exit status:** both runs reached game week 31 (30 ended weeks) with no `stuck` or `fatal` line in their logs. The wrapping shell returned 1 only because a final `grep -c` counted zero error lines.
+- **Not published:** the raw per-week report text, because it contains adult game prose (LAW-08). It stays on Admin-PC under the Claude session scratchpad. Its hashes are in `SHA256SUMS` so a later reviewer can confirm the files were not changed. Statements below that quote that text (event types, rebellion and attack descriptions, report sentences) are **verified by Claude on Admin-PC only**; everything numeric is reproducible from the committed metrics.
+- **Reproduce:** use the same game file (check the hash), place `fc-run.js` anywhere, adjust the two absolute paths at its top, and run the commands above. Event outcomes use the game's own randomness, so counts can differ between runs; the mechanics should not.
+
 ## Method
 
-- Local build `D:\NghienCuuTiemNang\fc-pregmod-pregmod-master\bin\FC_pregmod.html`, driven headless by a Playwright script (Claude scratchpad, not in the repo).
+- Local build `D:\NghienCuuTiemNang\fc-pregmod-pregmod-master\bin\FC_pregmod.html`, driven headless by a Playwright script (committed above).
 - Intro: all characters 18+, no extreme content, "Engineering" background, "Clever social engineering" (one Future Society credit at start), new urban arcology, **Security Expansion (SecExp) enabled**.
 - Two runs of **30 ended weeks** each: **Light** adopts Paternalism, **Dark** adopts Degradationism, and each re-adopts when the project fails. On odd weeks the first event option was taken; otherwise events were declined. Forced battles were played as deploy → orders → bribe → surrender.
 - Limits: the driver never bought slaves, built facilities, decorated sectors, passed Policies/Edicts or invested in security. Results show a **passive** owner.

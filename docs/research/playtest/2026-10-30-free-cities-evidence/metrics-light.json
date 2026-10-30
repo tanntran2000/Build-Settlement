@@ -1,0 +1,1025 @@
+[
+ {
+  "loopWeek": 0,
+  "week": 1,
+  "cash": 10000,
+  "rep": 1000,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 50,
+   "ownership": 50,
+   "minority": 20,
+   "FSPaternalist": null,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 3120,
+   "middle": 890,
+   "upper": 200,
+   "top": 40,
+   "menials": 0,
+   "NPCSlaves": 900
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 30,
+    "authority": 0,
+    "security": 100,
+    "crimeLow": 30,
+    "totalKills": 0
+   },
+   "tension": 0
+  }
+ },
+ {
+  "loopWeek": 1,
+  "week": 2,
+  "cash": 17244,
+  "rep": 1060,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 52,
+   "ownership": 57,
+   "minority": 21,
+   "FSPaternalist": 0.5,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 3536,
+   "middle": 976,
+   "upper": 221,
+   "top": 39,
+   "menials": 3,
+   "NPCSlaves": 1067
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 32,
+    "authority": 235,
+    "security": 82,
+    "crimeLow": 26,
+    "totalKills": 0
+   },
+   "tension": 0
+  }
+ },
+ {
+  "loopWeek": 2,
+  "week": 3,
+  "cash": 25100,
+  "rep": 1113,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 54,
+   "ownership": 57,
+   "minority": 23,
+   "FSPaternalist": null,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 3820,
+   "middle": 1049,
+   "upper": 239,
+   "top": 40,
+   "menials": 6,
+   "NPCSlaves": 1146
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 34,
+    "authority": 380,
+    "security": 68,
+    "crimeLow": 24,
+    "totalKills": 0
+   },
+   "tension": 5
+  }
+ },
+ {
+  "loopWeek": 3,
+  "week": 4,
+  "cash": 35032,
+  "rep": 1055,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 56,
+   "ownership": 57,
+   "minority": 24,
+   "FSPaternalist": 0.5,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 4048,
+   "middle": 1112,
+   "upper": 254,
+   "top": 41,
+   "menials": 9,
+   "NPCSlaves": 1217
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 36,
+    "authority": 475,
+    "security": 57,
+    "crimeLow": 22,
+    "totalKills": 0
+   },
+   "tension": 4
+  }
+ },
+ {
+  "loopWeek": 4,
+  "week": 5,
+  "cash": 43853,
+  "rep": 1062,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 58,
+   "ownership": 57,
+   "minority": 24,
+   "FSPaternalist": null,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 4228,
+   "middle": 1166,
+   "upper": 267,
+   "top": 42,
+   "menials": 13,
+   "NPCSlaves": 1278
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 38,
+    "authority": 590,
+    "security": 48,
+    "crimeLow": 22,
+    "totalKills": 0
+   },
+   "tension": 3
+  }
+ },
+ {
+  "loopWeek": 5,
+  "week": 6,
+  "cash": 47819,
+  "rep": 1282,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 60,
+   "ownership": 57,
+   "minority": 25,
+   "FSPaternalist": 0.5,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 4377,
+   "middle": 1213,
+   "upper": 278,
+   "top": 43,
+   "menials": 17,
+   "NPCSlaves": 1332
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 40,
+    "authority": 665,
+    "security": 41,
+    "crimeLow": 22,
+    "totalKills": 0
+   },
+   "tension": 2
+  }
+ },
+ {
+  "loopWeek": 6,
+  "week": 7,
+  "cash": 57360,
+  "rep": 1277,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 62,
+   "ownership": 57,
+   "minority": 27,
+   "FSPaternalist": null,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 4493,
+   "middle": 1253,
+   "upper": 287,
+   "top": 44,
+   "menials": 21,
+   "NPCSlaves": 1380
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 41,
+    "authority": 765,
+    "security": 35,
+    "crimeLow": 22,
+    "totalKills": 0
+   },
+   "tension": 3
+  }
+ },
+ {
+  "loopWeek": 7,
+  "week": 8,
+  "cash": 21567,
+  "rep": 1272,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 65,
+   "ownership": 57,
+   "minority": 29,
+   "FSPaternalist": 1,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 4591,
+   "middle": 1287,
+   "upper": 295,
+   "top": 45,
+   "menials": 25,
+   "NPCSlaves": 1422
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 42,
+    "authority": 868,
+    "security": 30,
+    "crimeLow": 22,
+    "totalKills": 0
+   },
+   "tension": 2
+  }
+ },
+ {
+  "loopWeek": 8,
+  "week": 9,
+  "cash": 29534,
+  "rep": 1440,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 67,
+   "ownership": 57,
+   "minority": 29,
+   "FSPaternalist": null,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 4670,
+   "middle": 1316,
+   "upper": 302,
+   "top": 46,
+   "menials": 29,
+   "NPCSlaves": 1460
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 43.5,
+    "authority": 893,
+    "security": 26,
+    "crimeLow": 22,
+    "totalKills": 0
+   },
+   "tension": 1
+  }
+ },
+ {
+  "loopWeek": 9,
+  "week": 10,
+  "cash": 39479,
+  "rep": 1581,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 69,
+   "ownership": 57,
+   "minority": 29,
+   "FSPaternalist": 1,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 4738,
+   "middle": 1342,
+   "upper": 308,
+   "top": 47,
+   "menials": 33,
+   "NPCSlaves": 1495
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 45,
+    "authority": 918,
+    "security": 23,
+    "crimeLow": 22,
+    "totalKills": 0
+   },
+   "tension": 0
+  }
+ },
+ {
+  "loopWeek": 10,
+  "week": 11,
+  "cash": 51220,
+  "rep": 1604,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 71,
+   "ownership": 57,
+   "minority": 29,
+   "FSPaternalist": null,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 4792,
+   "middle": 1364,
+   "upper": 313,
+   "top": 47,
+   "menials": 37,
+   "NPCSlaves": 1527
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 47,
+    "authority": 943,
+    "security": 21,
+    "crimeLow": 22,
+    "totalKills": 0
+   },
+   "tension": 2
+  }
+ },
+ {
+  "loopWeek": 11,
+  "week": 12,
+  "cash": 60521,
+  "rep": 1724,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 73,
+   "ownership": 57,
+   "minority": 31,
+   "FSPaternalist": 1,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 4833,
+   "middle": 1382,
+   "upper": 317,
+   "top": 48,
+   "menials": 41,
+   "NPCSlaves": 1547
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 49,
+    "authority": 968,
+    "security": 20,
+    "crimeLow": 23,
+    "totalKills": 0
+   },
+   "tension": 6
+  }
+ },
+ {
+  "loopWeek": 12,
+  "week": 13,
+  "cash": 72231,
+  "rep": 1728,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 75,
+   "ownership": 57,
+   "minority": 31,
+   "FSPaternalist": null,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 4866,
+   "middle": 1398,
+   "upper": 320,
+   "top": 48,
+   "menials": 45,
+   "NPCSlaves": 1571
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 51,
+    "authority": 993,
+    "security": 19,
+    "crimeLow": 24,
+    "totalKills": 0
+   },
+   "tension": 11
+  }
+ },
+ {
+  "loopWeek": 13,
+  "week": 14,
+  "cash": 82528,
+  "rep": 1964,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 77,
+   "ownership": 57,
+   "minority": 31,
+   "FSPaternalist": 1.5,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 4890,
+   "middle": 1411,
+   "upper": 323,
+   "top": 48,
+   "menials": 49,
+   "NPCSlaves": 1583
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 53,
+    "authority": 1018,
+    "security": 19,
+    "crimeLow": 25,
+    "totalKills": 0
+   },
+   "tension": 10
+  }
+ },
+ {
+  "loopWeek": 14,
+  "week": 15,
+  "cash": 72911,
+  "rep": 2041,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 79,
+   "ownership": 57,
+   "minority": 33,
+   "FSPaternalist": 0,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 4905,
+   "middle": 1421,
+   "upper": 325,
+   "top": 48,
+   "menials": 53,
+   "NPCSlaves": 1593
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 55,
+    "authority": 1043,
+    "security": 19,
+    "crimeLow": 26,
+    "totalKills": 0
+   },
+   "tension": 9
+  }
+ },
+ {
+  "loopWeek": 15,
+  "week": 16,
+  "cash": 67000,
+  "rep": 2282,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 81,
+   "ownership": 57,
+   "minority": 33,
+   "FSPaternalist": null,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 4914,
+   "middle": 1429,
+   "upper": 327,
+   "top": 49,
+   "menials": 57,
+   "NPCSlaves": 1601
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 57,
+    "authority": 1068,
+    "security": 19,
+    "crimeLow": 27,
+    "totalKills": 0
+   },
+   "tension": 13
+  }
+ },
+ {
+  "loopWeek": 16,
+  "week": 17,
+  "cash": 27171,
+  "rep": 3604,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 83,
+   "ownership": 57,
+   "minority": 35,
+   "FSPaternalist": 3.5,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 4929,
+   "middle": 1437,
+   "upper": 329,
+   "top": 49,
+   "menials": 61,
+   "NPCSlaves": 1616
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 58,
+    "authority": 1093,
+    "security": 18,
+    "crimeLow": 28,
+    "totalKills": 0
+   },
+   "tension": 17
+  }
+ },
+ {
+  "loopWeek": 17,
+  "week": 18,
+  "cash": 32520,
+  "rep": 3585,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 85,
+   "ownership": 57,
+   "minority": 35,
+   "FSPaternalist": 3,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 5043,
+   "middle": 1447,
+   "upper": 331,
+   "top": 49,
+   "menials": 65,
+   "NPCSlaves": 1624
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 59,
+    "authority": 1118,
+    "security": 17,
+    "crimeLow": 29,
+    "totalKills": 0
+   },
+   "tension": 16
+  }
+ },
+ {
+  "loopWeek": 18,
+  "week": 19,
+  "cash": 43020,
+  "rep": 3500,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 88,
+   "ownership": 57,
+   "minority": 35,
+   "FSPaternalist": 3,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 5115,
+   "middle": 1457,
+   "upper": 333,
+   "top": 49,
+   "menials": 70,
+   "NPCSlaves": 1631
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 60.5,
+    "authority": 1143,
+    "security": 16,
+    "crimeLow": 30,
+    "totalKills": 0
+   },
+   "tension": 15
+  }
+ },
+ {
+  "loopWeek": 19,
+  "week": 20,
+  "cash": 53483,
+  "rep": 3422,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 91,
+   "ownership": 57,
+   "minority": 35,
+   "FSPaternalist": 5,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 5166,
+   "middle": 1467,
+   "upper": 335,
+   "top": 49,
+   "menials": 75,
+   "NPCSlaves": 1638
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 62,
+    "authority": 1168,
+    "security": 16,
+    "crimeLow": 31,
+    "totalKills": 0
+   },
+   "tension": 14
+  }
+ },
+ {
+  "loopWeek": 20,
+  "week": 21,
+  "cash": 64772,
+  "rep": 2182,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 90,
+   "ownership": 57,
+   "minority": 35,
+   "FSPaternalist": 7.5,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 5146,
+   "middle": 1476,
+   "upper": 337,
+   "top": 50,
+   "menials": 67,
+   "NPCSlaves": 1355
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 64,
+    "authority": 1,
+    "security": 16,
+    "crimeLow": 32,
+    "totalKills": 0
+   },
+   "tension": 0
+  }
+ },
+ {
+  "loopWeek": 21,
+  "week": 22,
+  "cash": 75383,
+  "rep": 2275,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 93,
+   "ownership": 57,
+   "minority": 35,
+   "FSPaternalist": 10.5,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 5293,
+   "middle": 1483,
+   "upper": 339,
+   "top": 49,
+   "menials": 72,
+   "NPCSlaves": 1587
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 65,
+    "authority": 26,
+    "security": 16,
+    "crimeLow": 33,
+    "totalKills": 0
+   },
+   "tension": 0
+  }
+ },
+ {
+  "loopWeek": 22,
+  "week": 23,
+  "cash": 85215,
+  "rep": 2363,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 96,
+   "ownership": 57,
+   "minority": 35,
+   "FSPaternalist": 14.5,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 5322,
+   "middle": 1525,
+   "upper": 342,
+   "top": 50,
+   "menials": 77,
+   "NPCSlaves": 1640
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 66,
+    "authority": 51,
+    "security": 16,
+    "crimeLow": 34,
+    "totalKills": 0
+   },
+   "tension": 0
+  }
+ },
+ {
+  "loopWeek": 23,
+  "week": 24,
+  "cash": 66487,
+  "rep": 3495,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 99,
+   "ownership": 57,
+   "minority": 35,
+   "FSPaternalist": 18,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 5393,
+   "middle": 1565,
+   "upper": 351,
+   "top": 51,
+   "menials": 81,
+   "NPCSlaves": 1657
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 67.5,
+    "authority": 76,
+    "security": 16,
+    "crimeLow": 35,
+    "totalKills": 0
+   },
+   "tension": 0
+  }
+ },
+ {
+  "loopWeek": 24,
+  "week": 25,
+  "cash": 36942,
+  "rep": 3997,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 101,
+   "ownership": 57,
+   "minority": 35,
+   "FSPaternalist": 20,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 5482,
+   "middle": 1600,
+   "upper": 359,
+   "top": 52,
+   "menials": 85,
+   "NPCSlaves": 1691
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 69,
+    "authority": 101,
+    "security": 16,
+    "crimeLow": 36,
+    "totalKills": 0
+   },
+   "tension": 0
+  }
+ },
+ {
+  "loopWeek": 25,
+  "week": 26,
+  "cash": 49642,
+  "rep": 3874,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 103,
+   "ownership": 57,
+   "minority": 35,
+   "FSPaternalist": 20,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 5570,
+   "middle": 1631,
+   "upper": 366,
+   "top": 53,
+   "menials": 89,
+   "NPCSlaves": 1727
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 71,
+    "authority": 126,
+    "security": 16,
+    "crimeLow": 37,
+    "totalKills": 0
+   },
+   "tension": 1
+  }
+ },
+ {
+  "loopWeek": 26,
+  "week": 27,
+  "cash": 19477,
+  "rep": 3813,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 105,
+   "ownership": 57,
+   "minority": 35,
+   "FSPaternalist": 20,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 5652,
+   "middle": 1659,
+   "upper": 372,
+   "top": 53,
+   "menials": 93,
+   "NPCSlaves": 1761
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 73,
+    "authority": 151,
+    "security": 16,
+    "crimeLow": 38,
+    "totalKills": 0
+   },
+   "tension": 2
+  }
+ },
+ {
+  "loopWeek": 27,
+  "week": 28,
+  "cash": 20823,
+  "rep": 3709,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 107,
+   "ownership": 57,
+   "minority": 35,
+   "FSPaternalist": 20,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 5616,
+   "middle": 1656,
+   "upper": 372,
+   "top": 53,
+   "menials": 98,
+   "NPCSlaves": 1769
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 75,
+    "authority": 176,
+    "security": 16,
+    "crimeLow": 39,
+    "totalKills": 0
+   },
+   "tension": 1
+  }
+ },
+ {
+  "loopWeek": 28,
+  "week": 29,
+  "cash": 18251,
+  "rep": 3708,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 109,
+   "ownership": 57,
+   "minority": 35,
+   "FSPaternalist": 20,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 5580,
+   "middle": 1653,
+   "upper": 372,
+   "top": 53,
+   "menials": 103,
+   "NPCSlaves": 1777
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 77,
+    "authority": 201,
+    "security": 16,
+    "crimeLow": 40,
+    "totalKills": 0
+   },
+   "tension": 5
+  }
+ },
+ {
+  "loopWeek": 29,
+  "week": 30,
+  "cash": 23855,
+  "rep": 3742,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 112,
+   "ownership": 57,
+   "minority": 35,
+   "FSPaternalist": 20,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 5544,
+   "middle": 1650,
+   "upper": 372,
+   "top": 53,
+   "menials": 108,
+   "NPCSlaves": 1785
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 78,
+    "authority": 226,
+    "security": 16,
+    "crimeLow": 41,
+    "totalKills": 0
+   },
+   "tension": 6
+  }
+ },
+ {
+  "loopWeek": 30,
+  "week": 31,
+  "cash": 26492,
+  "rep": 3636,
+  "passage": "Main",
+  "arc": {
+   "prosperity": 114,
+   "ownership": 57,
+   "minority": 35,
+   "FSPaternalist": 20,
+   "FSDegradationist": null
+  },
+  "classes": {
+   "lower": 5509,
+   "middle": 1647,
+   "upper": 372,
+   "top": 53,
+   "menials": 112,
+   "NPCSlaves": 1793
+  },
+  "secExp": 1,
+  "sec": {
+   "core": {
+    "trade": 78.5,
+    "authority": 251,
+    "security": 16,
+    "crimeLow": 42,
+    "totalKills": 0
+   },
+   "tension": 9
+  }
+ }
+]

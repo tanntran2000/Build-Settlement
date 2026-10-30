@@ -61,6 +61,8 @@ Invariants: all counts are safe nonnegative integers. The class total (including
 
 **New game (TRIAL):** 100 residents = free 55, makers 20, luminaries 12, merchants 13, no Elites, bound 0. Satisfaction 80 for every class, desperation 0, debt pressure 0, corruption 50, wallRing 1, Luxury 0. Existing starting stocks (Food 20, Goods 10, Gold 45, Wood 8, Iron 4) are kept. Starting inside buildings, with occupancy: `house-1` Common Housing L3 (55/70, 79%), `house-2` Makers' Rowhouses L2 (20/25, 80%), `house-3` Scholars' Quarters L2 (12/18, 67%), `house-4` Merchant Townhouses L1 (13/15, 87%); `spec-1` Market L1 (moved inside). Outside: Farm and Food Processor as today (Processor staffed by Makers).
 
+**Budget check (keeps the PR #54 five-week reserve):** the four group housing types have **no upkeep**; their residents' rent is already part of tax. Weekly baseline spending is therefore unchanged from the Goods ruleset: Farm batch Gold 2 + Food Processor 0.5 + Market 0.5 = **3 Gold**, so five baseline weeks cost **15 Gold** and the separate **30 construction Gold** stays intact (45 total). Every other building keeps its upkeep. Reviewed after Codex finding on PR #58 (2026-10-30).
+
 ## 4. Inside city: tiers, plots, expansion
 
 33 inside plots, fixed ids, all `terrain: 'town'`. A plot is usable only when its ring is open.
@@ -96,10 +98,10 @@ Each building has a tier, a staff class, a colour (its class, or white), and is 
 
 | Building | Tier | Staff | Colour | Max lvl | Cost (Gold/Wood/Iron) | Upkeep | P2 effect |
 |---|---|---|---|---|---|---|---|
-| Common Housing | Housing | — | green | 3 | 4/4/0 | 0.5 | houses 30/50/70 Free |
-| Makers' Rowhouses | Housing | — | brown | 3 | 5/5/1 | 0.5 | houses 15/25/35 Makers |
-| Scholars' Quarters | Housing | — | blue | 3 | 6/4/1 | 0.5 | houses 10/18/25 Luminaries |
-| Merchant Townhouses | Housing | — | yellow | 3 | 6/5/0 | 0.5 | houses 15/25/35 Merchants |
+| Common Housing | Housing | — | green | 3 | 4/4/0 | 0 (rent-funded) | houses 30/50/70 Free |
+| Makers' Rowhouses | Housing | — | brown | 3 | 5/5/1 | 0 (rent-funded) | houses 15/25/35 Makers |
+| Scholars' Quarters | Housing | — | blue | 3 | 6/4/1 | 0 (rent-funded) | houses 10/18/25 Luminaries |
+| Merchant Townhouses | Housing | — | yellow | 3 | 6/5/0 | 0 (rent-funded) | houses 15/25/35 Merchants |
 | Elite Manor | Housing | — | white | 2 | 15/10/4 | 2 | houses 6/12 Elites of any group |
 | Tavern | Services | basic | white | 2 | 4/3/0 | 0.5 | +2/+3 satisfaction per week to Free and Makers while their Food is met |
 | Hospital | Services | luminaries | blue | 2 | 8/4/2 | 1 | +1/+2 satisfaction to every class except the Bound; −1/−2 desperation |
