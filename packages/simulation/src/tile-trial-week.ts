@@ -1,5 +1,5 @@
 import { SOCIETY_RULESET, societyPopulation } from '@haven/core';
-import { societyFacilities, societyEmployment } from './society-facilities.js';
+import { societyFacilities, societyEmployment, releaseSocietyWorkers } from './society-facilities.js';
 import { allocateRequirements, resolveSocietyWeek } from './society-week.js';
 import { TILE_TRIAL_BALANCE as B, trialBuilding, LEGACY_TILE_RULESET, POPULATION_TILE_RULESET, type TileTrialRuleset, type TileTrialState, type TileTrialReport, type WeeklyResource } from "@haven/core";
 import { FARM_MAX_BATCHES, PROCESSOR_MAX_BATCHES, FARM_GOLD_PER_BATCH_MILLI, FARM_WHEAT_PER_BATCH_MILLI, PROCESSOR_WHEAT_PER_BATCH_MILLI, PROCESSOR_FOOD_PER_BATCH_MILLI } from "./weekly.js";
@@ -124,6 +124,9 @@ export function runTileTrialWeek(s: TileTrialState, ruleset: TileTrialRuleset = 
     trainingGoldMilli = resolved.goldSpentMilli; s.society = resolved.society;
     s.happiness = resolved.cityHappiness; societyReport = resolved.report;
     settlement.cohorts.find(c=>c.id==='weekly_middle')!.count = societyPopulation(resolved.society);
+    activities.push(...releaseSocietyWorkers(s));
+    const arrivals = Object.values(resolved.report.classes).reduce((total,c)=>trialSafe(total+c.arrivals),0);
+    immigration = Object.freeze({...immigration, arrivals:trialSafe(arrivals+(resolved.report.eliteArrived===null?0:1)), populationAfter:societyPopulation(resolved.society)});
   } else {
   const needs = resolveTileTrialNeeds(population, stocks.food, happinessBefore, fulfillmentBps);
   ({ foodDemandMilli, foodConsumedMilli } = needs);

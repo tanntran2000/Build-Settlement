@@ -1,5 +1,6 @@
 import { expect, it } from 'vitest';
-import { createSocietyState, societyPopulation, TILE_TRIAL_BALANCE, POPULATION_TILE_RULESET } from '@haven/core';
+import { createSocietyState, societyPopulation, isTileTrialState, TILE_TRIAL_BALANCE, POPULATION_TILE_RULESET } from '@haven/core';
+import { executeTileTrialCommand } from '../tile-trial.js';
 import { societyFacilities } from '../society-facilities.js';
 import { runTileTrialWeek } from '../tile-trial-week.js';
 it('resolves society needs, housing and happiness deterministically', () => {
@@ -59,4 +60,57 @@ it('credits the Counting House bonus after upkeep, leaving Slave Quarters unfund
  expect(city.society!.luxuryStockMilli).toBe(0);
  expect(report.trainingGoldMilli).toBe(0);
  expect(settlement.inventory.gold).toBe(300);
+});
+
+function endSociety(city: ReturnType<typeof createSocietyState>) {
+ expect(isTileTrialState(city)).toBe(true);
+ const result=executeTileTrialCommand(city,{type:'END_WEEK',expectedWeek:city.world.week,expectedRevision:city.revision},POPULATION_TILE_RULESET);
+ expect(result.success).toBe(true); if(!result.success) throw Error(JSON.stringify(result.error));
+ expect(isTileTrialState(result.nextState)).toBe(true);
+ return result;
+}
+it('releases the last basic assignment after Academy training shrinks the Free pool', () => {
+ const city=createSocietyState(); city.society!.classes.free=50;
+ city.tiles.find(t=>t.building?.typeId==='farm')!.building!.workers=4;
+ city.tiles.find(t=>t.id==='service-1')!.building={typeId:'tavern',level:1,workers:1,enabled:true};
+ city.society!.classes.luminaries.common=20;
+ city.world.settlements[city.world.activeSettlementId!].cohorts[0].count=103;
+ city.tiles.find(t=>t.id==='spec-2')!.building={typeId:'academy',level:1,workers:2,enabled:true};
+ city.society!.training.target='makers';
+ const result=endSociety(city);
+ expect(result.nextState.society!.classes.free).toBe(48);
+ expect(result.nextState.tiles.find(t=>t.id==='service-1')!.building).toMatchObject({workers:0,enabled:true});
+ expect(result.nextState.tiles.find(t=>t.building?.typeId==='farm')!.building!.workers).toBe(4);
+ expect(result.report!.activities).toContain('service-1: released 1 basic worker(s) after society population changes.');
+});
+it('releases basic staff when enslavement reduces the sum of rounded pools', () => {
+ const city=createSocietyState();
+ city.society!.classes.free=50; city.society!.classes.bound.free=8;
+ city.society!.debtPressure.free=100;
+ city.world.settlements[city.world.activeSettlementId!].cohorts[0].count=103;
+ city.tiles.find(t=>t.building?.typeId==='farm')!.building!.workers=5;
+ city.tiles.find(t=>t.id==='slum-1')!.building={typeId:'slave-quarters',level:1,workers:0,enabled:true};
+ const result=endSociety(city);
+ expect(result.report!.society!.classes.free.enslaved).toBe(1);
+ expect(result.nextState.society!.classes.free).toBe(49);
+ expect(result.nextState.society!.classes.bound.free).toBe(9);
+ expect(result.nextState.tiles.find(t=>t.building?.typeId==='farm')!.building).toMatchObject({workers:4,enabled:true});
+});
+it.each([false,true])('reports resolved immigration with Elite Manor=%s', elite => {
+ const city=createSocietyState();
+ if(elite) city.tiles.find(t=>t.id==='house-4')!.building={typeId:'elite-manor',level:1,workers:0,enabled:true};
+ else {
+  for(const tile of city.tiles) if(tile.id.startsWith('house-')) tile.building=null;
+  city.society!.classes.free=40; city.society!.classes.makers.common=40;
+  city.society!.classes.luminaries.common=10; city.society!.classes.merchants.common=10;
+  city.tiles.find(t=>t.building?.typeId==='farm')!.building!.workers=3;
+  city.tiles.find(t=>t.id==='plain-3')!.building={typeId:'workshop',level:1,workers:1,enabled:true};
+  city.tiles.find(t=>t.building?.typeId==='processor')!.building!.workers=3;
+  city.tiles.find(t=>t.terrain==='forest')!.building={typeId:'logging',level:1,workers:1,enabled:true};
+ }
+ const result=endSociety(city), immigration=result.report!.immigration!;
+ if(!elite) { expect(immigration.target).toBeGreaterThan(100); expect(immigration.reason).toBe('arrivals'); }
+ expect(immigration.arrivals).toBe(elite?1:0);
+ expect(immigration.populationAfter).toBe(elite?101:100);
+ expect(immigration.arrivals).toBe(immigration.populationAfter-immigration.populationBefore);
 });

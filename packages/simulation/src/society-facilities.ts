@@ -40,3 +40,20 @@ export function societyEmployment(city: TileTrialState): SocietyEmployment {
  assigned.free=Math.min(basic,workforce.free); assigned.bound=basic-assigned.free;
  return {workforce,assigned};
 }
+export function releaseSocietyWorkers(city: TileTrialState): string[] {
+ const employment=societyEmployment(city), activities:string[]=[];
+ const excess={basic:Math.max(0,employment.assigned.free+employment.assigned.bound-employment.workforce.free-employment.workforce.bound),
+  makers:Math.max(0,employment.assigned.makers-employment.workforce.makers),
+  luminaries:Math.max(0,employment.assigned.luminaries-employment.workforce.luminaries),
+  merchants:Math.max(0,employment.assigned.merchants-employment.workforce.merchants)};
+ for(let i=city.tiles.length-1;i>=0;i--) {
+  const tile=city.tiles[i], b=tile.building;
+  if(!b?.enabled) continue;
+  const pool=societyStaff(b.typeId); if(!pool) continue;
+  const released=Math.min(b.workers,excess[pool]);
+  if(released===0) continue;
+  b.workers-=released; excess[pool]-=released;
+  activities.push(`${tile.id}: released ${released} ${pool} worker(s) after society population changes.`);
+ }
+ return activities;
+}
