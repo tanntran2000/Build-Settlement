@@ -44,3 +44,9 @@ body {
 
 .badge-active { background: rgba(63, 185, 80, 0.2); color: var(--accent-green); border: 1px solid var(--accent-green); }
 .badge-legacy { background: rgba(227, 179, 65, 0.2); color: var(--accent-gold); border: 1px solid var(--accent-gold); }
+:root {
+ --class-free:#7ccf7c; --class-makers:#c9a27e; --class-luminaries:#7fb2ff;
+ --class-merchants:#f2cf5b; --class-bound:#a8adb3; --class-none:#f4f4f4;
+}
+.class-mark { border-left:6px solid var(--class-colour) !important; }
+.class-swatch { display:inline-block; width:12px; height:12px; margin-right:8px; background:var(--class-colour); }
