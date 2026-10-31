@@ -1,9 +1,9 @@
-import { afterEach, beforeEach, expect, it, vi } from 'vitest';
-import { SOCIETY_RULESET, createWorldSession, isWorldSessionState, type WorldSessionState } from '@haven/core';
-import { deserializeWorldSessionSave, serializeWorldSessionSave, TILE_SAVE_MAX_BYTES } from '@haven/persistence';
+import { createWorldSession,isWorldSessionState } from '@haven/core';
+import { deserializeWorldSessionSave,serializeWorldSessionSave,TILE_SAVE_MAX_BYTES } from '@haven/persistence';
+import { afterEach,beforeEach,expect,it,vi } from 'vitest';
 import { prepareWorldSessionLoad } from '../world-session.js';
 
-const session = (seed = 0) => { const r = createWorldSession(seed, SOCIETY_RULESET); if (!r.success) throw Error(); return r.value; };
+const session = (seed = 0) => { const r = createWorldSession(seed); if (!r.success) throw Error(); return r.value; };
 const oldKeys = ['haven.tile-trial.checkpoint.v1', 'haven.tile-population.checkpoint.v1'];
 let values: Map<string, string>;
 let storage: { getItem: ReturnType<typeof vi.fn>; setItem: ReturnType<typeof vi.fn> };

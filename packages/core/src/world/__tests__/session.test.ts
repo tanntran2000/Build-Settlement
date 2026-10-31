@@ -1,6 +1,6 @@
-import { expect, it } from 'vitest';
-import { createTileTrialState } from '../../trial/state.js';
-import { createWorldSession, isWorldSessionState, outsideProvenance, summarizeOutside, WORLD_SESSION_CITY_RULESET } from '../session.js';
+import { expect,it } from 'vitest';
+import { createSocietyState } from '../../trial/society.js';
+import { createWorldSession,isWorldSessionState,outsideProvenance,summarizeOutside,WORLD_SESSION_CITY_RULESET } from '../session.js';
 import type { WorldSessionState } from '../types.js';
 
 const session = (seed = 0) => {
@@ -11,7 +11,7 @@ it.each([
   [0, [['o61', 'iron'], ['o49', 'wood'], ['o19', 'iron'], ['o67', 'wheat'], ['o37', 'wood'], ['o33', 'iron']], 'o13 o30 o31 o34 o39 o41 o54 o64 o73 o76 o81 o85'],
   [4294967295, [['o30', 'iron'], ['o41', 'iron'], ['o52', 'wood'], ['o68', 'wood'], ['o48', 'wood'], ['o86', 'wood']], 'o11 o13 o15 o18 o27 o29 o36 o54 o57 o62 o63 o67'],
 ] as const)('matches all 90 scenario tiles for seed %s', (seed, deposits, loot) => {
-  const s = session(seed); expect(s.city).toEqual(createTileTrialState()); expect(WORLD_SESSION_CITY_RULESET).toBe('tile-population-01');
+  const s = session(seed); expect(s.city).toEqual(createSocietyState()); expect(WORLD_SESSION_CITY_RULESET).toBe('tile-society-01');
   expect(s.outside.actors).toEqual(['player', 'ai-1', 'ai-2']);
   const lootIds = loot.split(' ');
   expect(s.outside.tiles).toHaveLength(90);

@@ -1,12 +1,12 @@
-import { afterEach, beforeEach, expect, it, vi } from 'vitest';
-import { createCharacterLifeSession, createNpcWorldSession, DEFAULT_PLAYER_DRAFT, SOCIETY_RULESET } from '@haven/core';
+import { createCharacterLifeSession,createNpcWorldSession,DEFAULT_PLAYER_DRAFT } from '@haven/core';
+import { deserializeCharacterLifeSave,serializeCharacterLifeSave } from '@haven/persistence';
 import { readFileSync } from 'node:fs';
-import { deserializeCharacterLifeSave, serializeCharacterLifeSave } from '@haven/persistence';
-import { CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY, prepareCharacterLifeLoad, readLocalCharacterLife, saveLocalCharacterLife, isPlayableCheckpoint } from '../character-life-session.js';
+import { afterEach,beforeEach,expect,it,vi } from 'vitest';
+import { CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,isPlayableCheckpoint,prepareCharacterLifeLoad,readLocalCharacterLife,saveLocalCharacterLife } from '../character-life-session.js';
 const WORLD_NPC_CHECKPOINT_KEY = 'haven.world-npc-session.checkpoint.v1';
 const WORLD_SESSION_CHECKPOINT_KEY = 'haven.world-session.checkpoint.v1';
 
-const session = (seed = 0, currentName = 'Ana') => { const r = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName }, SOCIETY_RULESET); if (!r.success) throw Error(r.error.message); return r.value; };
+const session = (seed = 0, currentName = 'Ana') => { const r = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName }); if (!r.success) throw Error(r.error.message); return r.value; };
 
 it('loads either city generation into a detached complete Life session without conversion or grants', () => {
   const oldSession = () => session();

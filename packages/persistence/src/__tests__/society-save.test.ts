@@ -1,13 +1,13 @@
-﻿import { describe, expect, it } from 'vitest';
-import { createSocietyState, createWorldSession, createNpcWorldSession, createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, SOCIETY_RULESET, GOODS_STOCK_RULESET, POPULATION_TILE_RULESET, LEGACY_TILE_RULESET } from '@haven/core';
-import { serializeTileTrialSave, deserializeTileTrialSave, serializeWorldSessionSave, deserializeWorldSessionSave, serializeCharacterLifeSave, deserializeCharacterLifeSave } from '../index.js';
+﻿import { createCharacterLifeSession,createSocietyState,createWorldSession,DEFAULT_PLAYER_DRAFT,GOODS_STOCK_RULESET,SOCIETY_RULESET } from '@haven/core';
+import { describe,expect,it } from 'vitest';
+import { deserializeCharacterLifeSave,deserializeTileTrialSave,deserializeWorldSessionSave,serializeCharacterLifeSave,serializeTileTrialSave,serializeWorldSessionSave } from '../index.js';
 
 const draft = { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Synthetic Keeper' };
 const unwrap = <T>(r: { success: true; value: T } | { success: false }) => { if (!r.success) throw Error('Factory failed'); return r.value; };
 const cases = [
   { name: 'population', create: () => createSocietyState(), encode: (s: unknown) => serializeTileTrialSave(s), decode: (s: string) => deserializeTileTrialSave(s) },
-  { name: 'world', create: () => unwrap(createWorldSession(20261028, SOCIETY_RULESET)), encode: serializeWorldSessionSave, decode: deserializeWorldSessionSave },
-  { name: 'life', create: () => unwrap(createCharacterLifeSession(20261028, draft, SOCIETY_RULESET)), encode: serializeCharacterLifeSave, decode: deserializeCharacterLifeSave },
+  { name: 'world', create: () => unwrap(createWorldSession(20261028)), encode: serializeWorldSessionSave, decode: deserializeWorldSessionSave },
+  { name: 'life', create: () => unwrap(createCharacterLifeSession(20261028, draft)), encode: serializeCharacterLifeSave, decode: deserializeCharacterLifeSave },
 ];
 describe.each(cases)('$name society codec', c => {
   it('round-trips with its own marker and refuses mismatched markers and malformed extensions', () => {
@@ -16,7 +16,7 @@ describe.each(cases)('$name society codec', c => {
     expect(c.decode(saved.text)).toEqual({ success: true, state });
     const value = JSON.parse(saved.text), field = c.name === 'population' ? 'rulesetId' : 'cityRulesetId';
     expect(value[field]).toBe(SOCIETY_RULESET);
-    for (const marker of [GOODS_STOCK_RULESET, POPULATION_TILE_RULESET, LEGACY_TILE_RULESET, 'future']) {
+    for (const marker of [GOODS_STOCK_RULESET, 'tile-population-01', 'tile-trial-01', 'future']) {
       expect(c.decode(JSON.stringify({ ...value, [field]: marker }))).toMatchObject({ success: false, error: { code: 'INCOMPATIBLE_SAVE' } });
     }
     for (const mutation of ['delete society', 'delete goods', 'negative population']) {

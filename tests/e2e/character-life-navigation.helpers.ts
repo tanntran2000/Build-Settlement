@@ -1,11 +1,11 @@
-import { expect, type Locator, type Page } from '@playwright/test';
+import { expect,type Locator,type Page } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
-import { createCharacterLifeSession, SOCIETY_RULESET, DEFAULT_PLAYER_DRAFT, isCharacterLifeSessionState, TRIAL_BUILDINGS, WEEKLY_RESOURCE_KEYS, type CharacterLifeSessionState, type TileTrialReport } from '../../packages/core/src/index.ts';
+import { createCharacterLifeSession,DEFAULT_PLAYER_DRAFT,isCharacterLifeSessionState,TRIAL_BUILDINGS,WEEKLY_RESOURCE_KEYS,type CharacterLifeSessionState,type TileTrialReport } from '../../packages/core/src/index.ts';
 import { serializeCharacterLifeSave } from '../../packages/persistence/src/character-life-save.ts';
 import type { LifeDestination } from '../../packages/ui/src/character-life-navigation.ts';
 
-export function makeLife(seed = 12345, economy: Parameters<typeof createCharacterLifeSession>[2] = SOCIETY_RULESET): CharacterLifeSessionState {
-  const result = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' }, economy);
+export function makeLife(seed = 12345): CharacterLifeSessionState {
+  const result = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' });
   expect(result.success).toBe(true);
   if (!result.success) throw new Error(result.error.message);
   expect(isCharacterLifeSessionState(result.value)).toBe(true);

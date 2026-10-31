@@ -1,5 +1,5 @@
-﻿import { expect, it } from 'vitest';
-import { createSocietyState, createGoodsStockState, POPULATION_TILE_RULESET, type TileTrialState } from '@haven/core';
+﻿import { createSocietyState,type TileTrialState } from '@haven/core';
+import { expect,it } from 'vitest';
 import { executeTileTrialCommand } from '../tile-trial.js';
 const run = (s:TileTrialState,c:Record<string,unknown>) => executeTileTrialCommand(s,{...c,expectedRevision:s.revision});
 const build=(tileId:string,typeId:string)=>({type:'BUILD',tileId,typeId});

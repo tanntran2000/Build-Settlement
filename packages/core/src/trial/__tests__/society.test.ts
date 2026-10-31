@@ -1,6 +1,6 @@
-import { describe, expect, it } from 'vitest';
-import { cityEconomyRuleset, createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, isLiveCharacterLifeSessionState, createGoodsStockState, createWorldSession, isTileTrialPlanningState, isTileTrialState, LEGACY_TILE_RULESET, POPULATION_TILE_RULESET } from '../../index.js';
-import { createSocietyState, isSocietyState, societyPopulation, SOCIETY_RULESET, SOCIETY_TRIAL } from '../society.js';
+import { describe,expect,it } from 'vitest';
+import { createCharacterLifeSession,createWorldSession,DEFAULT_PLAYER_DRAFT,isLiveCharacterLifeSessionState,isTileTrialPlanningState,isTileTrialState } from '../../index.js';
+import { createSocietyState,isSocietyState,SOCIETY_TRIAL,societyPopulation } from '../society.js';
 
 it('creates the spec section 3 new game', () => {
   const s = createSocietyState();
@@ -14,11 +14,8 @@ it('creates the spec section 3 new game', () => {
   expect(societyPopulation(s.society!)).toBe(100);
   expect(isTileTrialState(s)).toBe(true);
   expect(isTileTrialPlanningState(s)).toBe(true);
-  expect(cityEconomyRuleset(s, POPULATION_TILE_RULESET)).toBe(SOCIETY_RULESET);
-  expect(cityEconomyRuleset(s, LEGACY_TILE_RULESET)).toBeNull();
   const { society: extension, ...goods } = s;
   expect(extension).toBeDefined();
-  expect({ ...goods, tiles: createGoodsStockState().tiles }).toEqual(createGoodsStockState());
   expect(Object.isFrozen(SOCIETY_TRIAL)).toBe(true);
   s.society!.classes.makers.common = 0;
   expect(createSocietyState().society!.classes.makers.common).toBe(20);
@@ -44,11 +41,10 @@ describe.each(malformed)('rejects malformed society: %s', (_name, mutate) => {
     const s = createSocietyState(); mutate(s);
     expect(isTileTrialState(s)).toBe(false);
     expect(isTileTrialPlanningState(s)).toBe(false);
-    expect(cityEconomyRuleset(s, POPULATION_TILE_RULESET)).toBeNull();
   });
 });
 it('creates a society world session', () => {
-  const result = createWorldSession(20261028, SOCIETY_RULESET);
+  const result = createWorldSession(20261028);
   expect(result.success).toBe(true);
   if (!result.success) throw Error('Factory failed');
   expect(result.value.city.society).toEqual(createSocietyState().society);
@@ -67,7 +63,7 @@ it('rejects unsafe population sums', () => {
 });
 
 it('accepts live society Character Life sessions and rejects society without Goods', () => {
-  const result = createCharacterLifeSession(20261028, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Synthetic Keeper' }, SOCIETY_RULESET);
+  const result = createCharacterLifeSession(20261028, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Synthetic Keeper' });
   expect(result.success).toBe(true);
   if (!result.success) throw Error('Factory failed');
   expect(isLiveCharacterLifeSessionState(result.value)).toBe(true);

@@ -1,13 +1,13 @@
-import { expect, it } from 'vitest';
-import { readFileSync, readdirSync } from 'node:fs';
-import { createOutsideWorld, validateOutsideWorldConfig, type OutsideWorldConfig } from '../generate.js';
-import { POPULATION_TILE_RULESET } from '../../trial/catalog.js';
+import { readFileSync,readdirSync } from 'node:fs';
+import { expect,it } from 'vitest';
+import { SOCIETY_RULESET } from '../../trial/society.js';
+import { createOutsideWorld,validateOutsideWorldConfig,type OutsideWorldConfig } from '../generate.js';
 import { OUTSIDE_TRIAL_SCENARIO } from '../scenario.js';
-import { createWorldSession, isWorldSessionState } from '../session.js';
+import { createWorldSession,isWorldSessionState } from '../session.js';
 
 // test-only fixture; not balance
 const fixture = () => ({
-  scenarioId: 'f12', generator: 'outside-gen-01', cityRulesetId: POPULATION_TILE_RULESET,
+  scenarioId: 'f12', generator: 'outside-gen-01', cityRulesetId: SOCIETY_RULESET,
   actors: ['player', 'ai'],
   tiles: Array.from({ length: 12 }, (_, i) => ({ id: `t${i}`, owner: null, eligible: ![0, 5, 11].includes(i), knownBy: [] as string[] })),
   depositBudget: 2, lootBudget: 3, depositResources: ['wheat', 'wood', 'iron'],

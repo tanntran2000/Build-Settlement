@@ -1,17 +1,16 @@
-import { SOCIETY_RULESET } from '@haven/core';
-import { describe, expect, it } from 'vitest';
 import {
-  createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, describeLong, describeShort,
-  isLiveCharacterLifeSessionState, managerSlotTileIds, profileRows, summarizeOutside,
-  TRIAL_BUILDINGS, weeklyWorkforceMilli, WORLD_TRAITS,
-  type CharacterLifeSessionState, type CharacterView, type TileTrialReport,
+createCharacterLifeSession,DEFAULT_PLAYER_DRAFT,describeLong,describeShort,
+isLiveCharacterLifeSessionState,managerSlotTileIds,profileRows,summarizeOutside,
+TRIAL_BUILDINGS,weeklyWorkforceMilli,WORLD_TRAITS,
+type CharacterLifeSessionState,type CharacterView,type TileTrialReport,
 } from '@haven/core';
+import { describe,expect,it } from 'vitest';
 import { executeCharacterLifeCommand } from '../character-life-command.js';
-import { observeCharacterLife, type Observation, type VisibleCharacter, type VisibleReport } from '../character-life-observation.js';
+import { observeCharacterLife,type Observation,type VisibleCharacter,type VisibleReport } from '../character-life-observation.js';
 import * as simulation from '../index.js';
 
 function life(): CharacterLifeSessionState {
-  const r = createCharacterLifeSession(0, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' }, SOCIETY_RULESET);
+  const r = createCharacterLifeSession(0, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' });
   if (!r.success) throw Error(r.error.message);
   const s = r.value;
   s.city.tiles.find(t => t.id === 'spec-1')!.building = null;
@@ -221,7 +220,7 @@ describe('actionable catalogues and phase controls', () => {
     expect([o.week, o.phase, o.revision]).toEqual([city.world.week, city.phase, city.revision]);
     expect(o.tiles).toEqual(city.tiles.map(t => ({ id: t.id, terrain: t.terrain, building: t.building && {
       typeId: t.building.typeId, level: t.building.level, workers: t.building.workers, enabled: t.building.enabled } })));
-    expect(o.buildings.map(b => b.typeId)).toEqual(['farm', 'processor', 'logging', 'mine', 'workshop', 'market', 'common-housing', 'makers-rowhouses', 'scholars-quarters', 'merchant-townhouses', 'elite-manor', 'tavern', 'hospital', 'town-hall', 'builders-yard', 'academy', 'town-market', 'trading-post', 'counting-house', 'slave-quarters']);
+    expect(o.buildings.map(b => b.typeId)).toEqual(['farm', 'processor', 'logging', 'mine', 'workshop', 'common-housing', 'makers-rowhouses', 'scholars-quarters', 'merchant-townhouses', 'elite-manor', 'tavern', 'hospital', 'town-hall', 'builders-yard', 'academy', 'town-market', 'trading-post', 'counting-house', 'slave-quarters']);
     expect(o.buildings.map(b => b.typeId)).toEqual(Object.keys(TRIAL_BUILDINGS));
     o.buildings.forEach(b => {
       const d = TRIAL_BUILDINGS[b.typeId];

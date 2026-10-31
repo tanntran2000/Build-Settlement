@@ -1,8 +1,8 @@
-import { expect, it } from 'vitest';
-import { createSocietyState, societyPopulation, isTileTrialState, TILE_TRIAL_BALANCE, POPULATION_TILE_RULESET } from '@haven/core';
-import { executeTileTrialCommand } from '../tile-trial.js';
+import { createSocietyState,isTileTrialState,societyPopulation,TILE_TRIAL_BALANCE } from '@haven/core';
+import { expect,it } from 'vitest';
 import { societyFacilities } from '../society-facilities.js';
 import { runTileTrialWeek } from '../tile-trial-week.js';
+import { executeTileTrialCommand } from '../tile-trial.js';
 it('resolves society needs, housing and happiness deterministically', () => {
  const before=createSocietyState(), a=structuredClone(before), b=structuredClone(before);
  const report=runTileTrialWeek(a);

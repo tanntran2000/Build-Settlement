@@ -1,10 +1,10 @@
 import { SOCIETY_RULESET } from '@haven/core';
-import { expect, it } from 'vitest';
-import { createWorldSession, isWorldSessionState, createTileTrialState, LEGACY_TILE_RULESET, POPULATION_TILE_RULESET } from '@haven/core';
-import { deserializeWorldSessionSave, serializeWorldSessionSave } from '../world-session-save.js';
-import { deserializeTileTrialSave, serializeTileTrialSave, TILE_SAVE_MAX_BYTES } from '../tile-trial-save.js';
+import { createWorldSession,isWorldSessionState } from '@haven/core';
+import { expect,it } from 'vitest';
+import { TILE_SAVE_MAX_BYTES } from '../tile-trial-save.js';
+import { deserializeWorldSessionSave,serializeWorldSessionSave } from '../world-session-save.js';
 
-const session = () => { const r = createWorldSession(0, SOCIETY_RULESET); if (!r.success) throw Error(r.error.message); return r.value; };
+const session = () => { const r = createWorldSession(0); if (!r.success) throw Error(r.error.message); return r.value; };
 const encode = (s: unknown = session()) => { const r = serializeWorldSessionSave(s); if (!r.success) throw Error(r.error.message); return r.text; };
 const envelope = () => JSON.parse(encode());
 const code = (r: ReturnType<typeof deserializeWorldSessionSave>) => r.success ? 'SUCCESS' : r.error.code;
@@ -44,7 +44,7 @@ it.each([
 it('honors decode precedence when several faults coincide', () => {
   const e = envelope(); e.cityRulesetId = 'bad'; delete e.state.outside.generator;
   expect(code(deserializeWorldSessionSave(JSON.stringify(e)))).toBe('INCOMPATIBLE_SAVE');
-  e.cityRulesetId = POPULATION_TILE_RULESET; e.state.city = null; e.state.outside.generator = 'outside-gen-99';
+  e.cityRulesetId = SOCIETY_RULESET; e.state.city = null; e.state.outside.generator = 'outside-gen-99';
   expect(code(deserializeWorldSessionSave(JSON.stringify(e)))).toBe('INCOMPATIBLE_SAVE');
   expect(code(deserializeWorldSessionSave(null))).toBe('INVALID_SAVE');
   expect(code(deserializeWorldSessionSave('{'))).toBe('INVALID_SAVE');

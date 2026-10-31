@@ -1,10 +1,10 @@
 import { readFileSync } from 'node:fs';
 import { expect, it } from 'vitest';
-import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, SOCIETY_RULESET, societyPopulation } from '@haven/core';
+import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, societyPopulation } from '@haven/core';
 import { executeCharacterLifeCommand } from '@haven/simulation';
 import { serializeCharacterLifeSave, deserializeCharacterLifeSave } from '../index.js';
 it('pins five society weeks and conserves cohort counts', () => {
- const created=createCharacterLifeSession(20261028,{...structuredClone(DEFAULT_PLAYER_DRAFT),currentName:'Synthetic Keeper'},SOCIETY_RULESET);
+ const created=createCharacterLifeSession(20261028,{...structuredClone(DEFAULT_PLAYER_DRAFT),currentName:'Synthetic Keeper'});
  if(!created.success) throw Error('Factory failed');
  let state=created.value;
  for(let i=0;i<5;i++) for(const type of ['END_WEEK','NEXT_WEEK']) {

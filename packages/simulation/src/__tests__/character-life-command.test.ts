@@ -1,14 +1,14 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
-  SOCIETY_RULESET, createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, isCharacterLifeSessionState,
-  isLiveCharacterLifeSessionState, type CharacterLifeSessionState,
+createCharacterLifeSession,DEFAULT_PLAYER_DRAFT,isCharacterLifeSessionState,
+isLiveCharacterLifeSessionState,type CharacterLifeSessionState
 } from '@haven/core';
-import { deserializeCharacterLifeSave, serializeCharacterLifeSave } from '@haven/persistence';
+import { deserializeCharacterLifeSave,serializeCharacterLifeSave } from '@haven/persistence';
+import { afterEach,describe,expect,it,vi } from 'vitest';
+import { executeCharacterLifeCommand,type CharacterLifeActionType,type CharacterLifeCommandResult } from '../character-life-command.js';
 import * as delegates from '../world-npc.js';
-import { executeCharacterLifeCommand, type CharacterLifeActionType, type CharacterLifeCommandResult } from '../character-life-command.js';
 
 function life(seed = 0): CharacterLifeSessionState {
-  const r = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' }, SOCIETY_RULESET);
+  const r = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' });
   if (!r.success) throw Error(r.error.message);
   return r.value;
 }
@@ -327,7 +327,7 @@ describe('success detaches all five parts', () => {
 });
 
 it('live Report never becomes a save', () => {
-  const created = createCharacterLifeSession(0, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' }, SOCIETY_RULESET);
+  const created = createCharacterLifeSession(0, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' });
   if (!created.success) throw Error();
   const s = freeze(created.value), before = structuredClone(s), planningSave = serializeCharacterLifeSave(s);
   expect(planningSave.success).toBe(true);

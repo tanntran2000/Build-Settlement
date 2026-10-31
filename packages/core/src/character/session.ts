@@ -1,13 +1,15 @@
-import { createNamedCharacter, type Occupation } from '../domain/character.js';
+import { createNamedCharacter,type Occupation } from '../domain/character.js';
 import { readDenseArray } from '../world/arrays.js';
 import { createNpcWorldSession } from '../world/npc.js';
 import {
-  BUILDS, CHARACTER_LIMITS as L, EYE_COLORS, FACE_FEATURES, FACE_SHAPES, HAIR_COLORS, HAIR_LENGTHS, HAIR_STYLES, HAIR_TEXTURES,
-  OUTFITS, PLACES, PLAYER_CHARACTER_ID, PLAYER_PROFESSIONS, REGIONS, SKIN_TONES, UPBRINGINGS,
+BUILDS,
+EYE_COLORS,FACE_FEATURES,FACE_SHAPES,HAIR_COLORS,HAIR_LENGTHS,HAIR_STYLES,HAIR_TEXTURES,
+CHARACTER_LIMITS as L,
+OUTFITS,PLACES,PLAYER_CHARACTER_ID,PLAYER_PROFESSIONS,REGIONS,SKIN_TONES,UPBRINGINGS,
 } from './catalog.js';
-import { STARTER_PROFILES, type PlayerDraft } from './starter-profiles.js';
-import type { CharacterLifeSessionState, PlayerCharacter } from './types.js';
-import { isCharacterLifeSessionState, isPlayerCharacter } from './validate.js';
+import { STARTER_PROFILES,type PlayerDraft } from './starter-profiles.js';
+import type { CharacterLifeSessionState,PlayerCharacter } from './types.js';
+import { isCharacterLifeSessionState,isPlayerCharacter } from './validate.js';
 
 export type DraftErrors = Partial<Record<string, string>>;
 
@@ -92,8 +94,8 @@ export function createPlayerCharacter(draft: PlayerDraft): { success: true; valu
 }
 
 // The life session composes the NPC world session unchanged (seeded names, stats, posts) and adds the Player and starter profiles.
-export function createCharacterLifeSession(seed: unknown, draft: PlayerDraft, economy?: Parameters<typeof createNpcWorldSession>[1]): { success: true; value: CharacterLifeSessionState } | { success: false; error: { code: string; message: string } } {
-  const world = createNpcWorldSession(seed, economy);
+export function createCharacterLifeSession(seed: unknown, draft: PlayerDraft): { success: true; value: CharacterLifeSessionState } | { success: false; error: { code: string; message: string } } {
+  const world = createNpcWorldSession(seed);
   if (!world.success) return world;
   const player = createPlayerCharacter(draft);
   if (!player.success) return player;

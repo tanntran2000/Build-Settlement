@@ -1,10 +1,9 @@
-import { afterEach, beforeEach, expect, it, vi } from 'vitest';
-import { SOCIETY_RULESET, createNpcWorldSession, createWorldSession } from '@haven/core';
-import { serializeWorldSessionSave } from '@haven/persistence';
+import { createNpcWorldSession } from '@haven/core';
+import { afterEach,beforeEach,expect,it,vi } from 'vitest';
 import { prepareNpcWorldSessionLoad } from '../world-npc-session.js';
 const WORLD_SESSION_CHECKPOINT_KEY = 'haven.world-session.checkpoint.v1';
 
-const session = (seed = 0) => { const r = createNpcWorldSession(seed, SOCIETY_RULESET); if (!r.success) throw Error(); return r.value; };
+const session = (seed = 0) => { const r = createNpcWorldSession(seed); if (!r.success) throw Error(); return r.value; };
 const otherKeys = [WORLD_SESSION_CHECKPOINT_KEY, 'haven.tile-trial.checkpoint.v1', 'haven.tile-population.checkpoint.v1'];
 let values: Map<string, string>;
 let storage: { getItem: ReturnType<typeof vi.fn>; setItem: ReturnType<typeof vi.fn> };

@@ -1,15 +1,20 @@
-import { test, expect, type Locator, type Page } from '@playwright/test';
+import { expect,test,type Locator,type Page } from '@playwright/test';
 import {
-  createCharacterLifeSession, SOCIETY_RULESET, SOCIETY_PLOT_IDS, societyPlot, societyStaff, DEFAULT_PLAYER_DRAFT, type CharacterLifeSessionState, isCharacterLifeSessionState,
-  WEEKLY_RESOURCE_KEYS, type TileTrialReport,
+createCharacterLifeSession,
+DEFAULT_PLAYER_DRAFT,
+isCharacterLifeSessionState,
+SOCIETY_PLOT_IDS,societyPlot,societyStaff,
+WEEKLY_RESOURCE_KEYS,
+type CharacterLifeSessionState,
+type TileTrialReport
 } from '../../packages/core/src/index.ts';
 import { serializeCharacterLifeSave } from '../../packages/persistence/src/character-life-save.ts';
 import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
 import {
-  observeCharacterLife, type Observation, type VisibleCharacter,
+observeCharacterLife,type Observation,type VisibleCharacter,
 } from '../../packages/simulation/src/character-life-observation.ts';
 import { formatMilli } from '../../packages/ui/src/milli-format.ts';
-import { characterWindow, charactersView, expectOneCharacterWindow, expectReport, reportFulfillment, go, reportRegion, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
+import { charactersView,characterWindow,expectOneCharacterWindow,expectReport,go,reportFulfillment,reportRegion,selectArea,selectPerson } from './character-life-navigation.helpers.ts';
 
 const button = (scope: Page | Locator, name: string) => scope.getByRole('button', { name, exact: true });
 const region = (page: Page, name: string) => page.getByRole('region', { name, exact: true });
@@ -17,7 +22,7 @@ const title = (key: string) => key[0].toUpperCase() + key.slice(1);
 const numbers = (values: VisibleCharacter['stats']['skills' | 'needs' | 'emotions']) => Object.entries(values).map(([key, n]) => `${title(key)} ${n}`).join(' · ');
 
 function fixture() {
-  const created = createCharacterLifeSession(12345, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' }, SOCIETY_RULESET);
+  const created = createCharacterLifeSession(12345, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' });
   expect(created.success).toBe(true);
   if (!created.success) throw new Error(created.error.message);
   const session = created.value;

@@ -1,6 +1,6 @@
 ﻿import { readFileSync } from 'node:fs';
 import { expect, it } from 'vitest';
-import { createSocietyState, createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, SOCIETY_RULESET, POPULATION_TILE_RULESET } from '@haven/core';
+import { createSocietyState, createCharacterLifeSession, DEFAULT_PLAYER_DRAFT } from '@haven/core';
 import { serializeTileTrialSave, serializeCharacterLifeSave } from '../index.js';
 
 it('pins the society new-game tile save bytes', () => {
@@ -15,7 +15,7 @@ it('pins the society new-game tile save bytes', () => {
 });
 
 it('pins the society new-game Character Life save bytes', () => {
- const created = createCharacterLifeSession(20261028, { ...DEFAULT_PLAYER_DRAFT, currentName: 'Synthetic Keeper' }, SOCIETY_RULESET);
+ const created = createCharacterLifeSession(20261028, { ...DEFAULT_PLAYER_DRAFT, currentName: 'Synthetic Keeper' });
  expect(created.success).toBe(true);
  if (!created.success) throw Error('Factory failed');
  const encoded = serializeCharacterLifeSave(created.value);

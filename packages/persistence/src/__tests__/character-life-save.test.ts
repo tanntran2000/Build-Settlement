@@ -1,11 +1,10 @@
-import { SOCIETY_RULESET } from '@haven/core';
-import { expect, it } from 'vitest';
-import { createCharacterLifeSession, createNpcWorldSession, createSocietyState, createWorldSession, DEFAULT_PLAYER_DRAFT } from '@haven/core';
-import { CHARACTER_LIFE_SAVE_FORMAT, deserializeCharacterLifeSave, serializeCharacterLifeSave } from '../character-life-save.js';
+import { createCharacterLifeSession,createNpcWorldSession,createSocietyState,createWorldSession,DEFAULT_PLAYER_DRAFT } from '@haven/core';
+import { expect,it } from 'vitest';
+import { CHARACTER_LIFE_SAVE_FORMAT,deserializeCharacterLifeSave,serializeCharacterLifeSave } from '../character-life-save.js';
+import { serializeTileTrialSave,TILE_SAVE_MAX_BYTES } from '../tile-trial-save.js';
 import { serializeWorldSessionSave } from '../world-session-save.js';
-import { serializeTileTrialSave, TILE_SAVE_MAX_BYTES } from '../tile-trial-save.js';
 
-const session = (seed = 0) => { const r = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' }, SOCIETY_RULESET); if (!r.success) throw Error(r.error.message); return r.value; };
+const session = (seed = 0) => { const r = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' }); if (!r.success) throw Error(r.error.message); return r.value; };
 const encode = (s: unknown = session()) => { const r = serializeCharacterLifeSave(s); if (!r.success) throw Error(r.error.message); return r.text; };
 const envelope = () => JSON.parse(encode());
 const code = (r: ReturnType<typeof deserializeCharacterLifeSave>) => r.success ? 'SUCCESS' : r.error.code;
@@ -23,7 +22,7 @@ it('round-trips a valid session as detached data in its own format', () => {
   if (loaded.success) { loaded.state.player.profile.traits.warmth = 0; loaded.state.profiles[0].appearance.heightCm = 140; expect(s).toEqual(before); }
 });
 it('rejects NPC-world, world and tile save texts with INCOMPATIBLE_SAVE', () => {
-  const npcSession = createNpcWorldSession(0, SOCIETY_RULESET), world = createWorldSession(0, SOCIETY_RULESET); if (!npcSession.success || !world.success) throw Error();
+  const npcSession = createNpcWorldSession(0), world = createWorldSession(0); if (!npcSession.success || !world.success) throw Error();
   const npc: { success: true; text: string } | { success: false; error: { message: string } } = { success: true, text: JSON.stringify({ format: 'haven.world-npc-session.save', schemaVersion: 1, cityRulesetId: 'tile-population-01', state: npcSession.value }) }, v1 = serializeWorldSessionSave(world.value), tile = serializeTileTrialSave(createSocietyState());
   for (const r of [npc, v1, tile]) {
     if (!r.success) throw Error(r.error.message);
@@ -31,7 +30,7 @@ it('rejects NPC-world, world and tile save texts with INCOMPATIBLE_SAVE', () => 
   }
 });
 it('keeps life saves out of the NPC-world format both ways', () => {
-  const npc = createNpcWorldSession(0, SOCIETY_RULESET); if (!npc.success) throw Error();
+  const npc = createNpcWorldSession(0); if (!npc.success) throw Error();
   expect(serializeCharacterLifeSave(npc.value)).toEqual({ success: false, error: { code: 'INVALID_SAVE_STATE', message: INVALID_STATE } });
 });
 it.each([

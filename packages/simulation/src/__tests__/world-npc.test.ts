@@ -1,9 +1,8 @@
-import { SOCIETY_RULESET } from '@haven/core';
-import { describe, expect, it } from 'vitest';
-import { createNpcWorldSession, isNpcWorldSessionState, type NpcWorldSessionState } from '@haven/core';
-import { executeWorldNpcCityCommand, executeWorldNpcCommand } from '../world-npc.js';
+import { createNpcWorldSession,isNpcWorldSessionState,type NpcWorldSessionState } from '@haven/core';
+import { describe,expect,it } from 'vitest';
+import { executeWorldNpcCityCommand,executeWorldNpcCommand } from '../world-npc.js';
 
-const session = () => { const r = createNpcWorldSession(0, SOCIETY_RULESET); if (!r.success) throw Error(r.error.message); return r.value; };
+const session = () => { const r = createNpcWorldSession(0); if (!r.success) throw Error(r.error.message); return r.value; };
 function freeze<T>(value: T): T {
   if (value && typeof value === 'object') { Object.values(value).forEach(freeze); Object.freeze(value); }
   return value;
