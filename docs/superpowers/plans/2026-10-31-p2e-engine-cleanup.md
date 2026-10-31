@@ -56,6 +56,7 @@ Then write an audit of what remains (content, gaps, defects) as the starting poi
 7. **Tests.**
    - A test whose subject is removed code is deleted along with that code, under the owner direction above.
    - If a society test used an older ruleset only as a contrast, remove the contrast and keep the society assertions.
+- A kept-feature test (any package, including `packages/ui` unit tests) whose **setup** uses an older generation: port the setup to society and keep every assertion that still applies. If the test's subject is the removed cross-generation behaviour itself, delete it; keep and port any isolation or atomicity assertion it also carries. Record each case in the ledger as `ported: setup old → society` or `deleted (removed behaviour)` (correction after Builder HOLD, 2026-10-31).
    - Never loosen a society assertion.
    - Write a ledger at `docs/verification/P2E-TEST-LEDGER.md`, one line per test: `file › test — deleted (removed code) | changed: old → new`.
    - Do not edit the e2e suite (237 tests). It must pass unchanged.
