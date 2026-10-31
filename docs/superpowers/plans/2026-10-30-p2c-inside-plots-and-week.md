@@ -145,7 +145,7 @@ The P2-A guard is narrowed for C1: society cities accept `BUILD`, `REPLACE`, `UP
 **Files:** Modify `packages/simulation/src/tile-trial-week.ts`, `packages/core/src/trial/types.ts` (`TileTrialReport.society?: SocietyWeekResult['report']`, plus `luxuryImportedMilli?`, `trainingGoldMilli?`); test `packages/simulation/src/__tests__/society-end-week.test.ts`.
 
 For a society city, the existing order is kept, with these changes:
-- **Tax:** multiplied by the Counting House factor.
+- **Tax:** multiplied by the Counting House factor. Base tax is credited before upkeep; the Counting House bonus is credited **after** the upkeep loop, because "operating" needs funded upkeep (spec §121). The bonus can pay the Trading Post import and training that week, never that week's upkeep (owner decision B, 2026-10-31).
 - **Upkeep loop:** unchanged; it yields `fundedTileIds`.
 - **Trading Post import** runs after upkeep.
 - **Goods:** produced into the stock as in the Goods ruleset; servable = min(stock, town-market capacity).
