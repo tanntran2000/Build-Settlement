@@ -268,70 +268,70 @@ Seven unit cases were added (two pins, four refusal cases, one determinism case)
 - packages/simulation/src/__tests__/tile-trial-immigration.test.ts ? caps opportunities globally and excludes disabled or unpaid extraction ? ported: setup old → society
 - packages/simulation/src/__tests__/tile-trial-immigration.test.ts ? rejects invalid fact integers atomically: %s ? ported: setup old → society
 - packages/simulation/src/__tests__/tile-trial-immigration.test.ts ? rejects unsafe aggregate population and invalid configuration ? ported: setup old → society
-- packages/simulation/src/__tests__/tile-trial-needs.test.ts ? $name ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/tile-trial-needs.test.ts ? retains milli-unit precision at the last safe population-demand boundary ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/tile-trial-needs.test.ts ? rejects overflowing Food demand using the existing safe-integer arithmetic boundary ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/tile-trial-needs.test.ts ? is deterministic and leaves caller-owned values unchanged ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/tile-trial-population.test.ts ? settles the old population then admits arrivals without changing assignments ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/tile-trial-population.test.ts ? keeps legacy default and explicit policy identical with no population report ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/tile-trial-population.test.ts ? starter and stock liquidation do not create immigration ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/tile-trial-population.test.ts ? duplicate idle Processor cannot reuse the same Wheat capacity ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/tile-trial-population.test.ts ? one funded Farm shares its five supply slots across two funded Processors ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/tile-trial-population.test.ts ? two funded Farms retain independent recipe caps with $processors funded Processor(s) ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/tile-trial-population.test.ts ? duplicate idle Workshop cannot reuse Market service capacity ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/tile-trial-population.test.ts ? never revives zero city, fills unsupported cohorts or adds departures ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/tile-trial-population.test.ts ? does not admit during shortage, unpaid upkeep or a liquidity failure ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/tile-trial-population.test.ts ? rejects stale/repeated commands and overflow atomically ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/tile-trial-population.test.ts ? reaches136 after27 arrivals and remains solvent through60 weeks with checkpoint parity ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/tile-trial-population.test.ts ? stops and resumes immigration over45 weeks when renewable support changes ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/tile-trial-population.test.ts ? does not mistake30 weeks of stored Wheat liquidation for renewable Food ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/tile-trial-population.test.ts ? rejects an unknown mode policy without changing gameplay ? deleted (removed code/behaviour)
+- packages/simulation/src/__tests__/tile-trial-needs.test.ts ? $name ? ported: setup old → society
+- packages/simulation/src/__tests__/tile-trial-needs.test.ts ? retains milli-unit precision at the last safe population-demand boundary ? ported: setup old → society
+- packages/simulation/src/__tests__/tile-trial-needs.test.ts ? rejects overflowing Food demand using the existing safe-integer arithmetic boundary ? ported: setup old → society
+- packages/simulation/src/__tests__/tile-trial-needs.test.ts ? is deterministic and leaves caller-owned values unchanged ? ported: setup old → society
+- packages/simulation/src/__tests__/tile-trial-population.test.ts ? settles the old population then admits arrivals without changing assignments ? ported: setup old → society
+- packages/simulation/src/__tests__/tile-trial-population.test.ts ? keeps legacy default and explicit policy identical with no population report ? deleted (removed behaviour): Removed default/explicit economy-policy dispatch and legacy report contrast; society always reports immigration.
+- packages/simulation/src/__tests__/tile-trial-population.test.ts ? starter and stock liquidation do not create immigration ? ported: setup old → society
+- packages/simulation/src/__tests__/tile-trial-population.test.ts ? duplicate idle Processor cannot reuse the same Wheat capacity ? ported: setup old → society
+- packages/simulation/src/__tests__/tile-trial-population.test.ts ? one funded Farm shares its five supply slots across two funded Processors ? ported: setup old → society
+- packages/simulation/src/__tests__/tile-trial-population.test.ts ? two funded Farms retain independent recipe caps with $processors funded Processor(s) ? ported: setup old → society
+- packages/simulation/src/__tests__/tile-trial-population.test.ts ? duplicate idle Workshop cannot reuse Market service capacity ? ported: setup old → society
+- packages/simulation/src/__tests__/tile-trial-population.test.ts ? never revives zero city, fills unsupported cohorts or adds departures ? ported: setup old → society
+- packages/simulation/src/__tests__/tile-trial-population.test.ts ? does not admit during shortage, unpaid upkeep or a liquidity failure ? ported: setup old → society
+- packages/simulation/src/__tests__/tile-trial-population.test.ts ? rejects stale/repeated commands and overflow atomically ? ported: setup old → society
+- packages/simulation/src/__tests__/tile-trial-population.test.ts ? reaches136 after27 arrivals and remains solvent through60 weeks with checkpoint parity ? ported: setup old → society
+- packages/simulation/src/__tests__/tile-trial-population.test.ts ? stops and resumes immigration over45 weeks when renewable support changes ? ported: setup old → society
+- packages/simulation/src/__tests__/tile-trial-population.test.ts ? does not mistake30 weeks of stored Wheat liquidation for renewable Food ? ported: setup old → society
+- packages/simulation/src/__tests__/tile-trial-population.test.ts ? rejects an unknown mode policy without changing gameplay ? deleted (removed behaviour): Removed economy-policy argument and INVALID_RULESET branch; no compatibility signature.
 - packages/simulation/src/__tests__/tile-trial-save.test.ts ? restores multiweek buildings and resumes identical gameplay with a fresh revision ? ported: setup old → society
 - packages/simulation/src/__tests__/tile-trial-save.test.ts ? rebases above saved revision too, then rejects a repeated load ? ported: setup old → society
 - packages/simulation/src/__tests__/tile-trial-save.test.ts ? rejects report states, malformed snapshots, changed layouts and revision overflow atomically ? ported: setup old → society
-- packages/simulation/src/__tests__/tile-trial.test.ts ? starts a separate valid RAM world with the five physical stocks and equipped Food chain ? deleted (removed code/behaviour)
+- packages/simulation/src/__tests__/tile-trial.test.ts ? starts a separate valid RAM world with the five physical stocks and equipped Food chain ? ported: setup old → society
 - packages/simulation/src/__tests__/tile-trial.test.ts ? rejects invalid terrain, occupied tiles, unknown types, funds and materials atomically ? ported: setup old ? society; kept applicable assertions; removed old-generation contrasts where present
 - packages/simulation/src/__tests__/tile-trial.test.ts ? upgrades capacity and replaces at full cost without refund, preserving placement rules ? ported: setup old → society
 - packages/simulation/src/__tests__/tile-trial.test.ts ? reserves one shared whole-WF pool and pausing releases workers ? ported: setup old → society
 - packages/simulation/src/__tests__/tile-trial.test.ts ? extracts before processing, services Goods exactly once and credits Farm batch upkeep ? ported: setup old → society
 - packages/simulation/src/__tests__/tile-trial.test.ts ? Market upgrades do not change demand or double multiply revenue ? ported: setup old → society
-- packages/simulation/src/__tests__/tile-trial.test.ts ? zero population uses no Goods materials and mints no tax/revenue or Happiness ? deleted (removed code/behaviour)
+- packages/simulation/src/__tests__/tile-trial.test.ts ? zero population uses no Goods materials and mints no tax/revenue or Happiness ? ported: setup old → society
 - packages/simulation/src/__tests__/tile-trial.test.ts ? reports unfunded buildings without negative stocks and can recover by pausing ? ported: setup old → society
 - packages/simulation/src/__tests__/tile-trial.test.ts ? rolls back overflow and rejects malformed state, stale revisions and getter commands ? ported: setup old ? society; kept applicable assertions; removed old-generation contrasts where present
-- packages/simulation/src/__tests__/tile-trial.test.ts ? charges no Goods inputs without Market capacity or a complete input batch ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/tile-trial.test.ts ? caps partial service to population demand and never carries Goods stock ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/tile-trial.test.ts ? preserves approved Food shortage and recovery behavior without Goods service ? deleted (removed code/behaviour)
+- packages/simulation/src/__tests__/tile-trial.test.ts ? charges no Goods inputs without Market capacity or a complete input batch ? ported: setup old → society
+- packages/simulation/src/__tests__/tile-trial.test.ts ? caps partial service to population demand and never carries Goods stock ? ported: setup old → society
+- packages/simulation/src/__tests__/tile-trial.test.ts ? preserves approved Food shortage and recovery behavior without Goods service ? ported: setup old → society
 - packages/simulation/src/__tests__/tile-trial.test.ts ? rejects unsafe clock/revision and repeated building commands without charging twice ? ported: setup old ? society; kept applicable assertions; removed old-generation contrasts where present
-- packages/simulation/src/__tests__/tile-trial.test.ts ? sustains a 50-week baseline without negative resources, duplicate food or free Goods stock ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? harvests then processes with 4+4 WF: Gold 10→6, Wheat 0→8→0, Food 4→12 with a complete immutable ledger ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? runs only complete batches with Gold 2, leaving 4 reserved idle and 2 unassigned WF ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? Gold %i, assignment %i → Gold %i, Food %i ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? is pure on frozen inputs and deterministic on replay of old state ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? keeps a continuous ledger over multiple weeks without extra income or consumption ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? rejects invalid command %j without state mutation or report ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? rejects stale/future/invalid expectedWeek %j ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? rejects replay against the next state ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? rejects invalid state %j ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? rolls back Gold too when Food/week overflows %j ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? allows the exact safe Food boundary and preserves Wood/Iron ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? rejects END_WEEK with no active settlement, including a world with only legacy settlements ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? touches only the active inventory/root week, preserving every other field and settlement ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? follows the actual active pointer rather than a fixed fixture ID ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? uses real cohort count/class/legal status: %i %s/%s ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? accepts zero workforce with zero cohorts, rejects positive assignment ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? returns atomic OVERFLOW for true social result overflow count %i ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? preserves report snapshots after later state mutations ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? runs the same 4+4 WF chain with large safe canonical population %i ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? returns structured failure for an otherwise-valid root Proxy that cannot be cloned ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? contains unexpected command errors without coercing thrown objects ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? uses one command snapshot so changing Proxy values cannot bypass processor availability ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? preserves the INVALID_STATE boundary for revoked Proxy input ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? G%i W%i reservations %i+%i preserve complete inputs and the shared pool ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? rejects shared 8 WF reservation against 6 WF before either activity runs ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? requires the processor for any processing reservation, but permits harvest-only without it ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? rejects intermediate Wheat overflow even when processing would restore the closing stock ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? permits the exact intermediate Wheat limit without double consumption ? deleted (removed code/behaviour)
-- packages/simulation/src/__tests__/weekly.test.ts ? rolls back the whole transaction when candidate validation fails ? deleted (removed code/behaviour)
+- packages/simulation/src/__tests__/tile-trial.test.ts ? sustains a 50-week baseline without negative resources, duplicate food or free Goods stock ? ported: setup old → society
+- packages/simulation/src/__tests__/weekly.test.ts ? harvests then processes with 4+4 WF: Gold 10→6, Wheat 0→8→0, Food 4→12 with a complete immutable ledger ? ported: setup old → society
+- packages/simulation/src/__tests__/weekly.test.ts ? runs only complete batches with Gold 2, leaving 4 reserved idle and 2 unassigned WF ? ported: setup old → society
+- packages/simulation/src/__tests__/weekly.test.ts ? Gold %i, assignment %i → Gold %i, Food %i ? ported: setup old → society
+- packages/simulation/src/__tests__/weekly.test.ts ? is pure on frozen inputs and deterministic on replay of old state ? ported: setup old → society
+- packages/simulation/src/__tests__/weekly.test.ts ? keeps a continuous ledger over multiple weeks without extra income or consumption ? ported: setup old → society
+- packages/simulation/src/__tests__/weekly.test.ts ? rejects invalid command %j without state mutation or report ? ported: setup old → society
+- packages/simulation/src/__tests__/weekly.test.ts ? rejects stale/future/invalid expectedWeek %j ? ported: setup old → society
+- packages/simulation/src/__tests__/weekly.test.ts ? rejects replay against the next state ? ported: setup old → society
+- packages/simulation/src/__tests__/weekly.test.ts ? rejects invalid state %j ? ported: setup old → society
+- packages/simulation/src/__tests__/weekly.test.ts ? rolls back Gold too when Food/week overflows %j ? ported: setup old → society
+- packages/simulation/src/__tests__/weekly.test.ts ? allows the exact safe Food boundary and preserves Wood/Iron ? ported: setup old → society
+- packages/simulation/src/__tests__/weekly.test.ts ? rejects END_WEEK with no active settlement, including a world with only legacy settlements ? ported: setup old → society
+- packages/simulation/src/__tests__/weekly.test.ts ? touches only the active inventory/root week, preserving every other field and settlement ? ported: setup old → society
+- packages/simulation/src/__tests__/weekly.test.ts ? follows the actual active pointer rather than a fixed fixture ID ? ported: setup old → society
+- packages/simulation/src/__tests__/weekly.test.ts ? uses real cohort count/class/legal status: %i %s/%s ? deleted (removed behaviour): Removed weekly command workforce fields and old class/legal workforce policy; society workforce is class-specific and validated by the retained society workforce suites.
+- packages/simulation/src/__tests__/weekly.test.ts ? accepts zero workforce with zero cohorts, rejects positive assignment ? deleted (removed behaviour): Removed weekly reservation command fields; zero society population is ported in society-renewable-support and society-stock-policy-ports; tile assignment class limits remain in society tests.
+- packages/simulation/src/__tests__/weekly.test.ts ? returns atomic OVERFLOW for true social result overflow count %i ? ported: setup old → society
+- packages/simulation/src/__tests__/weekly.test.ts ? preserves report snapshots after later state mutations ? ported: setup old → society
+- packages/simulation/src/__tests__/weekly.test.ts ? runs the same 4+4 WF chain with large safe canonical population %i ? deleted (removed behaviour): Removed canonical weekly command and shared workforce formula; society arithmetic boundaries and transaction overflow are ported, not the obsolete large-population workforce policy.
+- packages/simulation/src/__tests__/weekly.test.ts ? returns structured failure for an otherwise-valid root Proxy that cannot be cloned ? ported: setup old → society
+- packages/simulation/src/__tests__/weekly.test.ts ? contains unexpected command errors without coercing thrown objects ? ported: setup old → society
+- packages/simulation/src/__tests__/weekly.test.ts ? uses one command snapshot so changing Proxy values cannot bypass processor availability ? ported: setup old → society
+- packages/simulation/src/__tests__/weekly.test.ts ? preserves the INVALID_STATE boundary for revoked Proxy input ? ported: setup old → society
+- packages/simulation/src/__tests__/weekly.test.ts ? G%i W%i reservations %i+%i preserve complete inputs and the shared pool ? ported: setup old → society
+- packages/simulation/src/__tests__/weekly.test.ts ? rejects shared 8 WF reservation against 6 WF before either activity runs ? deleted (removed behaviour): Removed shared workforce reservation command and single shared pool; society uses separate class pools.
+- packages/simulation/src/__tests__/weekly.test.ts ? requires the processor for any processing reservation, but permits harvest-only without it ? ported: setup old → society
+- packages/simulation/src/__tests__/weekly.test.ts ? rejects intermediate Wheat overflow even when processing would restore the closing stock ? ported: setup old → society
+- packages/simulation/src/__tests__/weekly.test.ts ? permits the exact intermediate Wheat limit without double consumption ? ported: setup old → society
+- packages/simulation/src/__tests__/weekly.test.ts ? rolls back the whole transaction when candidate validation fails ? ported: setup old → society
 - packages/simulation/src/__tests__/world-npc.test.ts ? UNKNOWN_NPC, STALE_COMMAND, FORBIDDEN in Report, INVALID_COMMAND, INVALID_STATE ? ported: setup old ? society; kept applicable assertions; removed old-generation contrasts where present
 - packages/simulation/src/__tests__/world-npc.test.ts ? REPLACE clears that post in the same result and the slot can be reassigned ? ported: setup old ? society; kept applicable assertions; removed old-generation contrasts where present
 - packages/simulation/src/__tests__/world-npc.test.ts ? a failed city command leaves the session untouched ? ported: setup old ? society; kept applicable assertions; removed old-generation contrasts where present
@@ -552,7 +552,7 @@ The earlier Task 1?8 counts describe the original cleanup checkpoint, before thi
 
 ### Remaining deletion scan
 
-Every remaining deleted title was reviewed against its original subject. Classic GameState/daily economy, removed resource helpers/clock, legacy save schemas/codecs and family/cross-generation behaviour remain removed. Retained stock/week/cohort validity is also covered by domain/__tests__/canonical-state.test.ts; retained NPC/Player shape, descriptor capture, save detachment and invalid payload/storage atomicity remain covered by the current world/npc, character/validate, Life persistence and UI session suites. Old service-Goods recipes, plain Market placement, single Happiness formulas and old-mode goldens are removed behaviour, rather than the society stored-Goods contract. No production API or assertion was weakened to satisfy the review.
+This first scan was incomplete for retained weekly and immigration branches; the second correction below supersedes its disposition for those paths. Classic GameState/daily economy, removed resource helpers/clock, legacy save schemas/codecs and family/cross-generation behaviour remain removed. Retained stock/week/cohort validity is also covered by domain/__tests__/canonical-state.test.ts; retained NPC/Player shape, descriptor capture, save detachment and invalid payload/storage atomicity remain covered by the current world/npc, character/validate, Life persistence and UI session suites. Old service-Goods recipes, plain Market placement, single Happiness formulas and old-mode goldens are removed behaviour, rather than the society stored-Goods contract. No production API or assertion was weakened to satisfy the review.
 
 ### Restored test titles
 
@@ -591,3 +591,69 @@ Every remaining deleted title was reviewed against its original subject. Classic
 Focused command: npx vitest run packages/core/src/trial/__tests__/society-stock-integrity.test.ts packages/core/src/__tests__/society-world-integrity.test.ts packages/simulation/src/__tests__/society-stock-integrity.test.ts packages/simulation/src/__tests__/society-immigration-integrity.test.ts packages/simulation/src/__tests__/society-restore-integrity.test.ts ? exit 0, 44 cases across five files.
 
 Full unit command: npm test ? exit 0, 1050 cases across 50 files (44 restored cases above the original cleanup checkpoint of 1006). The complete eight-gate results and correction commit are reported in the handoff.
+
+
+## Second review correction: live weekly and immigration branches
+
+Only tests and this ledger changed. All society fixtures and production code remain untouched. The scan covered every deleted entry from tile-trial-population.test.ts, tile-trial-needs.test.ts, tile-trial.test.ts and weekly.test.ts against tile-trial-immigration.ts, tile-trial-week.ts and tile-trial.ts. The original entries above now record the ports.
+
+### Port destinations and explicit adaptations
+
+- society-renewable-support.test.ts: stored Wheat liquidation for 30 weeks with the Farm disabled, Wheat/Food/Gold stocks present, zero renewable Food and zero arrivals each week; exact Wheat debit and Food conservation; inputs/assignments unchanged and transactional reports validated. Two funded Farms retain exact independent caps with one/two Processors: useful slots 20/25, renewable Food 10000, targets 200/227, cash debits 7500/8000, arrivals 2. Opening population tax/needs, idle capacity, zero/unsupported cohorts, no departures, shortage/unpaid/liquidity/target refusal, stale/overflow rollback, 60-week snapshot parity and 45-week pause/resume are also ported. Old exact population trajectories, old economy comparisons and deleted codecs are omitted. The unsupported-cohort end-week path currently rejects atomically after projection; the test records that existing society behavior without a production fix.
+- society-command-transaction.test.ts: whole-batch funding and Gold/Wheat/Food conservation, frozen/replay purity, disabled Processor harvest, intermediate Wheat/Food/Wood/Iron overflow and exact safe limits, week/revision/population overflow, malformed/stale/phase commands, hostile proxies, command capture, post-validation rollback, report detachment, actual active-pointer ownership/legacy isolation and invalid-state atomicity. Old weekly command reservation fields, processor-availability parameter and report.flows schema are removed. Society tax, consumption and upkeep are included explicitly in conservation instead of the removed no-income/no-consumption assumptions.
+- society-stock-policy-ports.test.ts: equipped starting stocks, zero population, incomplete Wood batches, demand/capacity and material accounting, eleven integer Food/Happiness rows, original Food recovery values 74/80/85 without Goods service, safe milli demand boundary, overflow purity, replay determinism and 50-week stock conservation. Stored Goods production no longer requires Market service or Iron and intentionally carries stock; those old service-only expectations are removed. Two fractional single-Happiness rows and preservation of a fractional aggregate at zero population are removed: society class scores are integers and the empty weighted aggregate is zero. Zero class-score preservation remains asserted.
+
+### Remaining deleted subjects in the three live paths
+
+- `tile-trial-population.test.ts`: keeps legacy default and explicit policy identical with no population report ? Removed default/explicit economy-policy dispatch and legacy report contrast; society always reports immigration.
+- `tile-trial-population.test.ts`: rejects an unknown mode policy without changing gameplay ? Removed economy-policy argument and INVALID_RULESET branch; no compatibility signature.
+- `weekly.test.ts`: uses real cohort count/class/legal status: %i %s/%s ? Removed weekly command workforce fields and old class/legal workforce policy; society workforce is class-specific and validated by the retained society workforce suites.
+- `weekly.test.ts`: accepts zero workforce with zero cohorts, rejects positive assignment ? Removed weekly reservation command fields; zero society population is ported in society-renewable-support and society-stock-policy-ports; tile assignment class limits remain in society tests.
+- `weekly.test.ts`: runs the same 4+4 WF chain with large safe canonical population %i ? Removed canonical weekly command and shared workforce formula; society arithmetic boundaries and transaction overflow are ported, not the obsolete large-population workforce policy.
+- `weekly.test.ts`: rejects shared 8 WF reservation against 6 WF before either activity runs ? Removed shared workforce reservation command and single shared pool; society uses separate class pools.
+
+Classic daily dispatcher/resource/clock tests do not execute these three tile modules: their GameState, daily commands and error/report schemas were deleted. Legacy codec tests exercise deleted serializers, not retained LOAD_TRIAL; retained snapshot atomicity/parity is covered by society-restore-integrity.test.ts. Deleted Goods-family Life/plot cases exercise removed family contrasts; society Life/plot command branches remain in their kept suites. No remaining generic deletion in the four weekly/tile files is treated as removed merely because its setup used an old generation.
+
+### New ported titles
+
+- society-renewable-support.test.ts: two funded Farms retain independent recipe caps with $processors funded Processor(s) ? ported: setup old → society.
+- society-renewable-support.test.ts: does not mistake 30 weeks of stored Wheat liquidation for renewable Food ? ported: setup old → society.
+- society-renewable-support.test.ts: settles the opening population before applying society arrivals without changing assignments ? ported: setup old → society.
+- society-renewable-support.test.ts: starter reserves and stored Wheat liquidation do not create renewable support ? ported: setup old → society.
+- society-renewable-support.test.ts: duplicate idle Processor cannot reuse the same Wheat capacity ? ported: setup old → society.
+- society-renewable-support.test.ts: one funded Farm shares its five supply slots across two funded Processors ? ported: setup old → society.
+- society-renewable-support.test.ts: duplicate idle Workshop cannot reuse Market distribution capacity ? ported: setup old → society.
+- society-renewable-support.test.ts: never revives a zero city or introduces departures when support is below population ? ported: setup old → society.
+- society-renewable-support.test.ts: does not admit during shortage, unpaid upkeep or tight liquidity ? ported: setup old → society.
+- society-renewable-support.test.ts: rejects stale or repeated End Week and overflow atomically ? ported: setup old → society.
+- society-renewable-support.test.ts: preserves complete gameplay and assignments through sixty weeks of snapshot restores ? ported: setup old → society.
+- society-renewable-support.test.ts: stops and resumes immigration over forty-five weeks when renewable support changes ? ported: setup old → society.
+- society-renewable-support.test.ts: retains the live immigration refusal branch: %s ? ported: setup old → society.
+- society-command-transaction.test.ts: whole batches conserve Gold/Wheat/Food for G%s W%s and %s/%s workers ? ported: setup old → society.
+- society-command-transaction.test.ts: harvests without processing when the Processor is paused ? ported: setup old → society.
+- society-command-transaction.test.ts: rejects intermediate Wheat overflow before a later processing debit ? ported: setup old → society.
+- society-command-transaction.test.ts: permits the exact intermediate Wheat limit and charges processing once ? ported: setup old → society.
+- society-command-transaction.test.ts: rejects intermediate %s overflow atomically ? ported: setup old → society.
+- society-command-transaction.test.ts: permits exact Food/Gold boundaries and preserves unrelated physical stocks ? ported: setup old → society.
+- society-command-transaction.test.ts: rolls back the complete transaction on %s arithmetic overflow ? ported: setup old → society.
+- society-command-transaction.test.ts: rejects malformed command data %j without mutation ? ported: setup old → society.
+- society-command-transaction.test.ts: rejects unknown command fields and stale or repeated week/revision commands ? ported: setup old → society.
+- society-command-transaction.test.ts: contains clone failures and thrown command objects without leaking a report ? ported: setup old → society.
+- society-command-transaction.test.ts: uses one captured live command snapshot instead of rereading Proxy fields ? ported: setup old → society.
+- society-command-transaction.test.ts: preserves the invalid-state boundary for revoked Proxy inputs ? ported: setup old → society.
+- society-command-transaction.test.ts: rolls back and publishes no report if the candidate state fails final validation ? ported: setup old → society.
+- society-command-transaction.test.ts: preserves immutable report snapshots after next-state mutation ? ported: setup old → society.
+- society-command-transaction.test.ts: follows the active pointer and leaves the legacy settlement byte-for-byte unchanged ? ported: setup old → society.
+- society-command-transaction.test.ts: rejects invalid society state atomically: %s ? ported: setup old → society.
+- society-stock-policy-ports.test.ts: starts a valid independent world with five physical stocks and equipped Food chain ? ported: setup old → society.
+- society-stock-policy-ports.test.ts: zero population consumes no materials or Food and mints no tax, revenue or class satisfaction ? ported: setup old → society.
+- society-stock-policy-ports.test.ts: never charges an incomplete Wood batch even while stored Goods can be distributed ? ported: setup old → society.
+- society-stock-policy-ports.test.ts: caps distribution at demand, charges complete production batches once and carries the remainder ? ported: setup old → society.
+- society-stock-policy-ports.test.ts: ports the retained Food rule per class: $name ? ported: setup old → society.
+- society-stock-policy-ports.test.ts: preserves Food shortage and recovery without Goods service ? ported: setup old → society.
+- society-stock-policy-ports.test.ts: retains exact milli Food allocation at the last safe demand boundary ? ported: setup old → society.
+- society-stock-policy-ports.test.ts: rejects overflowing per-class Food demand ? ported: setup old → society.
+- society-stock-policy-ports.test.ts: keeps Food/Goods resolution deterministic and preserves caller-owned state ? ported: setup old → society.
+- society-stock-policy-ports.test.ts: sustains fifty weeks with exact stock conservation and no duplicate Food or free Goods ? ported: setup old → society.
+
+Focused validation: the three new files contain 68 passing cases (17 renewable-support, 31 command-transaction, 20 stock-policy). Full unit validation: npm test exited 0 with 1118 cases across 53 files, up from 1050 across 50 files. All eight gates are reported with the final commit in the handoff.
