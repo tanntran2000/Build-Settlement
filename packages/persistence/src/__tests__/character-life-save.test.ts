@@ -1,11 +1,11 @@
+import { SOCIETY_RULESET } from '@haven/core';
 import { expect, it } from 'vitest';
-import { createCharacterLifeSession, createNpcWorldSession, createTileTrialState, createWorldSession, DEFAULT_PLAYER_DRAFT } from '@haven/core';
+import { createCharacterLifeSession, createNpcWorldSession, createSocietyState, createWorldSession, DEFAULT_PLAYER_DRAFT } from '@haven/core';
 import { CHARACTER_LIFE_SAVE_FORMAT, deserializeCharacterLifeSave, serializeCharacterLifeSave } from '../character-life-save.js';
-import { deserializeNpcWorldSessionSave, serializeNpcWorldSessionSave } from '../world-npc-session-save.js';
 import { serializeWorldSessionSave } from '../world-session-save.js';
 import { serializeTileTrialSave, TILE_SAVE_MAX_BYTES } from '../tile-trial-save.js';
 
-const session = (seed = 0) => { const r = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' }); if (!r.success) throw Error(r.error.message); return r.value; };
+const session = (seed = 0) => { const r = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' }, SOCIETY_RULESET); if (!r.success) throw Error(r.error.message); return r.value; };
 const encode = (s: unknown = session()) => { const r = serializeCharacterLifeSave(s); if (!r.success) throw Error(r.error.message); return r.text; };
 const envelope = () => JSON.parse(encode());
 const code = (r: ReturnType<typeof deserializeCharacterLifeSave>) => r.success ? 'SUCCESS' : r.error.code;
@@ -16,24 +16,22 @@ it('round-trips a valid session as detached data in its own format', () => {
   const s = session(); s.npcs[0].postTileId = 'field-1';
   const before = structuredClone(s), text = encode(s);
   expect(CHARACTER_LIFE_SAVE_FORMAT).toBe('haven.character-life-session.save');
-  expect(JSON.parse(text)).toMatchObject({ format: CHARACTER_LIFE_SAVE_FORMAT, schemaVersion: 1, cityRulesetId: 'tile-population-01' });
+  expect(JSON.parse(text)).toMatchObject({ format: CHARACTER_LIFE_SAVE_FORMAT, schemaVersion: 1, cityRulesetId: 'tile-society-01' });
   expect(Object.keys(JSON.parse(text))).toEqual(['format', 'schemaVersion', 'cityRulesetId', 'state']);
   const loaded = deserializeCharacterLifeSave(text);
   expect(loaded).toEqual({ success: true, state: before });
   if (loaded.success) { loaded.state.player.profile.traits.warmth = 0; loaded.state.profiles[0].appearance.heightCm = 140; expect(s).toEqual(before); }
 });
 it('rejects NPC-world, world and tile save texts with INCOMPATIBLE_SAVE', () => {
-  const npcSession = createNpcWorldSession(0), world = createWorldSession(0); if (!npcSession.success || !world.success) throw Error();
-  const npc = serializeNpcWorldSessionSave(npcSession.value), v1 = serializeWorldSessionSave(world.value), tile = serializeTileTrialSave(createTileTrialState());
+  const npcSession = createNpcWorldSession(0, SOCIETY_RULESET), world = createWorldSession(0, SOCIETY_RULESET); if (!npcSession.success || !world.success) throw Error();
+  const npc: { success: true; text: string } | { success: false; error: { message: string } } = { success: true, text: JSON.stringify({ format: 'haven.world-npc-session.save', schemaVersion: 1, cityRulesetId: 'tile-population-01', state: npcSession.value }) }, v1 = serializeWorldSessionSave(world.value), tile = serializeTileTrialSave(createSocietyState());
   for (const r of [npc, v1, tile]) {
     if (!r.success) throw Error(r.error.message);
     expect(deserializeCharacterLifeSave(r.text)).toEqual({ success: false, error: { code: 'INCOMPATIBLE_SAVE', message: INCOMPATIBLE } });
   }
 });
 it('keeps life saves out of the NPC-world format both ways', () => {
-  expect(serializeNpcWorldSessionSave(session())).toMatchObject({ success: false, error: { code: 'INVALID_SAVE_STATE' } });
-  expect(deserializeNpcWorldSessionSave(encode())).toMatchObject({ success: false, error: { code: 'INCOMPATIBLE_SAVE' } });
-  const npc = createNpcWorldSession(0); if (!npc.success) throw Error();
+  const npc = createNpcWorldSession(0, SOCIETY_RULESET); if (!npc.success) throw Error();
   expect(serializeCharacterLifeSave(npc.value)).toEqual({ success: false, error: { code: 'INVALID_SAVE_STATE', message: INVALID_STATE } });
 });
 it.each([

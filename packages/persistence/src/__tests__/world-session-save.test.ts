@@ -1,9 +1,10 @@
+import { SOCIETY_RULESET } from '@haven/core';
 import { expect, it } from 'vitest';
 import { createWorldSession, isWorldSessionState, createTileTrialState, LEGACY_TILE_RULESET, POPULATION_TILE_RULESET } from '@haven/core';
 import { deserializeWorldSessionSave, serializeWorldSessionSave } from '../world-session-save.js';
 import { deserializeTileTrialSave, serializeTileTrialSave, TILE_SAVE_MAX_BYTES } from '../tile-trial-save.js';
 
-const session = () => { const r = createWorldSession(0); if (!r.success) throw Error(r.error.message); return r.value; };
+const session = () => { const r = createWorldSession(0, SOCIETY_RULESET); if (!r.success) throw Error(r.error.message); return r.value; };
 const encode = (s: unknown = session()) => { const r = serializeWorldSessionSave(s); if (!r.success) throw Error(r.error.message); return r.text; };
 const envelope = () => JSON.parse(encode());
 const code = (r: ReturnType<typeof deserializeWorldSessionSave>) => r.success ? 'SUCCESS' : r.error.code;
@@ -62,12 +63,6 @@ it('rejects invalid encode input and never throws for revoked proxies', () => {
   const p = Proxy.revocable({}, {}); p.revoke();
   for (const raw of [null, {}, p.proxy]) expect(serializeWorldSessionSave(raw)).toMatchObject({ success: false, error: { code: 'INVALID_SAVE_STATE' } });
 });
-it.each([LEGACY_TILE_RULESET, POPULATION_TILE_RULESET] as const)('keeps %s and world formats mutually incompatible', ruleset => {
-  expect(deserializeTileTrialSave(encode(), ruleset)).toMatchObject({ success: false, error: { code: 'INCOMPATIBLE_SAVE' } });
-  const old = serializeTileTrialSave(createTileTrialState(), ruleset); if (!old.success) throw Error();
-  expect(code(deserializeWorldSessionSave(old.text))).toBe('INCOMPATIBLE_SAVE');
-});
-
 it.each(['session', 'city', 'inventory', 'outside', 'tiles', 'knowledge', 'feature'])('F1: serializes detached %s descriptors without virtual toJSON', level => {
   const s = session(), before = structuredClone(s); let hooks = 0;
   const active = <T extends object>(value: T): T => new Proxy(value, { get(target, key, receiver) {

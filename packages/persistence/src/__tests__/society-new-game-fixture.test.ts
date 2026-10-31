@@ -8,7 +8,7 @@ it('pins the society new-game tile save bytes', () => {
  const bytes = readFileSync(new URL('./fixtures/society-v1/new-game.json', import.meta.url), 'utf8');
  const expected = JSON.parse(bytes) as { state: unknown };
  expect(state).toEqual(expected.state);
- const encoded = serializeTileTrialSave(state, POPULATION_TILE_RULESET);
+ const encoded = serializeTileTrialSave(state);
  expect(encoded.success).toBe(true);
  if (!encoded.success) throw Error('Export failed');
  expect(encoded.text).toBe(bytes);

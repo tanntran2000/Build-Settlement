@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
-  createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, isCharacterLifeSessionState,
+  SOCIETY_RULESET, createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, isCharacterLifeSessionState,
   isLiveCharacterLifeSessionState, type CharacterLifeSessionState,
 } from '@haven/core';
 import { deserializeCharacterLifeSave, serializeCharacterLifeSave } from '@haven/persistence';
@@ -327,7 +327,9 @@ describe('success detaches all five parts', () => {
 });
 
 it('live Report never becomes a save', () => {
-  const s = freeze(life()), before = structuredClone(s), planningSave = serializeCharacterLifeSave(s);
+  const created = createCharacterLifeSession(0, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' }, SOCIETY_RULESET);
+  if (!created.success) throw Error();
+  const s = freeze(created.value), before = structuredClone(s), planningSave = serializeCharacterLifeSave(s);
   expect(planningSave.success).toBe(true);
   if (!planningSave.success) throw Error(planningSave.error.message);
   const r = success(executeCharacterLifeCommand(s, { type: 'END_WEEK', expectedRevision: s.city.revision, expectedWeek: s.city.world.week }));

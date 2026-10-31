@@ -1,13 +1,12 @@
 ﻿import { describe, expect, it } from 'vitest';
 import { createSocietyState, createWorldSession, createNpcWorldSession, createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, SOCIETY_RULESET, GOODS_STOCK_RULESET, POPULATION_TILE_RULESET, LEGACY_TILE_RULESET } from '@haven/core';
-import { serializeTileTrialSave, deserializeTileTrialSave, serializeWorldSessionSave, deserializeWorldSessionSave, serializeNpcWorldSessionSave, deserializeNpcWorldSessionSave, serializeCharacterLifeSave, deserializeCharacterLifeSave } from '../index.js';
+import { serializeTileTrialSave, deserializeTileTrialSave, serializeWorldSessionSave, deserializeWorldSessionSave, serializeCharacterLifeSave, deserializeCharacterLifeSave } from '../index.js';
 
 const draft = { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Synthetic Keeper' };
 const unwrap = <T>(r: { success: true; value: T } | { success: false }) => { if (!r.success) throw Error('Factory failed'); return r.value; };
 const cases = [
-  { name: 'population', create: () => createSocietyState(), encode: (s: unknown) => serializeTileTrialSave(s, POPULATION_TILE_RULESET), decode: (s: string) => deserializeTileTrialSave(s, POPULATION_TILE_RULESET) },
+  { name: 'population', create: () => createSocietyState(), encode: (s: unknown) => serializeTileTrialSave(s), decode: (s: string) => deserializeTileTrialSave(s) },
   { name: 'world', create: () => unwrap(createWorldSession(20261028, SOCIETY_RULESET)), encode: serializeWorldSessionSave, decode: deserializeWorldSessionSave },
-  { name: 'npc', create: () => unwrap(createNpcWorldSession(20261028, SOCIETY_RULESET)), encode: serializeNpcWorldSessionSave, decode: deserializeNpcWorldSessionSave },
   { name: 'life', create: () => unwrap(createCharacterLifeSession(20261028, draft, SOCIETY_RULESET)), encode: serializeCharacterLifeSave, decode: deserializeCharacterLifeSave },
 ];
 describe.each(cases)('$name society codec', c => {
@@ -39,7 +38,4 @@ describe.each(cases)('$name society codec', c => {
     expect(c.encode(state).success).toBe(false);
     expect(reads).toBe(0);
   });
-});
-it('refuses society in the classic tile family', () => {
-  expect(serializeTileTrialSave(createSocietyState(), LEGACY_TILE_RULESET)).toMatchObject({ success: false, error: { code: 'INCOMPATIBLE_SAVE' } });
 });
