@@ -123,13 +123,13 @@ Removed Classic daily/weekly commands, old playable generations and factory chai
 
 ### Package diff totals
 
-Generated from git diff --numstat c90104a...46764de31add311e711b3eaef69b078465d6d23f. Plan/docs changes are separate.
+Generated from git diff --numstat c90104a...46764de31add311e711b3eaef69b078465d6d23f. Plan/docs changes are separate. Totals include the two EOF blank lines removed by the final whitespace gate.
 
 | Package | Added | Removed |
 |---|---:|---:|
-| core | 110 | 2981 |
+| core | 110 | 2982 |
 | persistence | 3802 | 2887 |
-| simulation | 124 | 3237 |
+| simulation | 124 | 3238 |
 | ui | 21 | 20 |
 
 ## Kept and why

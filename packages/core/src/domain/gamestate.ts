@@ -43,4 +43,3 @@ export const REQUIRED_RELATIONSHIP = [
   "dependency",
   "familiarity",
 ] as const;
-
