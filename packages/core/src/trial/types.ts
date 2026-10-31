@@ -14,6 +14,12 @@ export interface TileTrialState {
   happiness: number;
 }
 export interface TileTrialReport {
+  society?: { classes: Record<'free' | 'makers' | 'luminaries' | 'merchants' | 'bound', {
+    foodBps:number; goodsBps:number; luxuryBps:number|null; satisfactionBefore:number; satisfactionAfter:number;
+    arrivals:number; trained:number; enslaved:number; debtBefore:number|null; debtAfter:number|null; notes:readonly string[];
+  }>; eliteArrived:'makers'|'luminaries'|'merchants'|null; desperationBefore:number; desperationAfter:number; tensionBefore:number; tensionAfter:number; corruptionAfter:number };
+  luxuryImportedMilli?: number;
+  trainingGoldMilli?: number;
   goodsStock?: Readonly<{ openingMilli: number; producedMilli: number; distributedMilli: number; closingMilli: number;
     demandMilli: number; unmetMilli: number; capacityMilli: number; limitedBy: 'none' | 'stock' | 'capacity' }>;
   immigration?: Readonly<TrialImmigrationReport>;

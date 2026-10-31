@@ -18,7 +18,7 @@
 4. **Counting House:** +10% tax per operating level, summed over all Counting Houses. The same sum feeds the debt "high tax" cause.
 5. **Town Hall** and **`town-market`** join the NPC manager-post building list (`NPC_MANAGER_BUILDING_TYPES` in `world/npc-content.ts`), so the Town Hall hosts one post and the inside Market keeps the post the plain Market gives in Goods games. *(Corrected 2026-10-30: the constant lives in `npc-content.ts`; `town-market` added for post parity.)*
 6. **Market:** in a society city, Goods distribution comes only from the inside **`town-market`** (operation `market`, terrain `town`, same numbers as Market). Building the plain `market` in a society city is rejected. Old rulesets are unchanged.
-7. **`LOAD_TRIAL`** in the tile family loads a snapshot only when its economy equals the current city's economy.
+7. **`LOAD_TRIAL`** in the tile family rejects (`INVALID_STATE`) a snapshot when exactly one of the snapshot and the current city uses the society economy. Loads between the existing population and Goods economies keep their current behaviour (C2 correction).
 
 ## Global Constraints
 
@@ -145,19 +145,21 @@ The P2-A guard is narrowed for C1: society cities accept `BUILD`, `REPLACE`, `UP
 **Files:** Modify `packages/simulation/src/tile-trial-week.ts`, `packages/core/src/trial/types.ts` (`TileTrialReport.society?: SocietyWeekResult['report']`, plus `luxuryImportedMilli?`, `trainingGoldMilli?`); test `packages/simulation/src/__tests__/society-end-week.test.ts`.
 
 For a society city, the existing order is kept, with these changes:
-- **Tax:** multiplied by the Counting House factor.
+- **Tax:** multiplied by the Counting House factor. Base tax is credited before upkeep; the Counting House bonus is credited **after** the upkeep loop, because "operating" needs funded upkeep (spec §121). The bonus can pay the Trading Post import and training that week, never that week's upkeep (owner decision B, 2026-10-31).
 - **Upkeep loop:** unchanged; it yields `fundedTileIds`.
 - **Trading Post import** runs after upkeep.
 - **Goods:** produced into the stock as in the Goods ruleset; servable = min(stock, town-market capacity).
 - **Food:** replace the city `resolveTileTrialNeeds` call with `allocateRequirements` (for the immigration facts) and then `resolveSocietyWeek` with `arrivalsBudget` from the existing `resolveTrialImmigration`.
 - **Debits:** Food and Goods consumed, Goods revenue (1 Gold per Goods distributed), training Gold.
 - **Write-back:** set `society`, set `happiness = cityHappiness`, and set the cohort count to `societyPopulation`.
+- **Staff release (PR #62 review):** after write-back, if a staff pool (basic = Free/10 + Bound/10; makers/luminaries/merchants = common/10) is now below the workers assigned to it (training, enslavement rounding), release workers from that pool's buildings in reverse map order until it fits. Buildings stay enabled; each release adds an activity line. The week never fails for this reason.
+- **Immigration report (PR #62 review):** for a society city, `report.immigration.arrivals` and `populationAfter` show the actual result (class arrivals plus any Elite arrival; population = `societyPopulation`), not the pre-housing budget.
 
 Old rulesets keep their exact code path.
 
 - [ ] **Step 1: Failing tests** (new game, End Week called through `runTileTrialWeek` directly, since the guard stays until Task 3):
   - Every class gets Food 10000 bps; Goods consumed 1450 milli (capacity 2000 ≥ demand 1450); Goods revenue +1450 Gold milli.
-  - Every class satisfaction 80 → 82; city Happiness 82.
+  - Populated classes (Free, Makers, Luminaries, Merchants) satisfaction 80 → 82; empty Bound stays 80 (P2-B `resolveSatisfaction` keeps empty classes unchanged); city Happiness 82.
   - Cohort total = `societyPopulation(society)` = 100 + reported arrivals; arrivals per class ≤ free housing (15 / 5 / 6 / 2).
   - A Trading Post L1 fully staffed with Gold ≥ 3000 adds 2000 Luxury; with Gold < 3000 adds 0 and spends 0.
   - The same input twice gives deep-equal results; the input state is not mutated.

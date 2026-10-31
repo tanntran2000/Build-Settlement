@@ -1,3 +1,6 @@
+import { SOCIETY_RULESET, societyPopulation } from '@haven/core';
+import { societyFacilities, societyEmployment, releaseSocietyWorkers } from './society-facilities.js';
+import { allocateRequirements, resolveSocietyWeek } from './society-week.js';
 import { TILE_TRIAL_BALANCE as B, trialBuilding, LEGACY_TILE_RULESET, POPULATION_TILE_RULESET, type TileTrialRuleset, type TileTrialState, type TileTrialReport, type WeeklyResource } from "@haven/core";
 import { FARM_MAX_BATCHES, PROCESSOR_MAX_BATCHES, FARM_GOLD_PER_BATCH_MILLI, FARM_WHEAT_PER_BATCH_MILLI, PROCESSOR_WHEAT_PER_BATCH_MILLI, PROCESSOR_FOOD_PER_BATCH_MILLI } from "./weekly.js";
 import { resolveTileTrialNeeds } from "./tile-trial-needs.js";
@@ -16,12 +19,13 @@ function scaled(a: number, b: number, divisor = 1): number {
 export function runTileTrialWeek(s: TileTrialState, ruleset: TileTrialRuleset = LEGACY_TILE_RULESET): Readonly<TileTrialReport> {
   const economy = cityEconomyRuleset(s, ruleset);
   if (economy === null) throw Error('Invalid city economy.');
-  const storedGoods = economy === GOODS_STOCK_RULESET;
+  const society = economy === SOCIETY_RULESET;
+  const storedGoods = economy === GOODS_STOCK_RULESET || society;
   const settlement = s.world.settlements[s.world.activeSettlementId!]; const stocks = settlement.inventory;
   const before = { ...stocks }; const activities: string[] = [];
   const add = (key: WeeklyResource, amount: number) => { stocks[key] = trialSafe(stocks[key] + amount); };
   const population = settlement.cohorts.reduce((n, c) => trialSafe(n + c.count), 0);
-  const taxMilli = scaled(population, B.taxGoldPerResident); add("gold", taxMilli);
+  let taxMilli = scaled(population, B.taxGoldPerResident); add("gold", taxMilli);
   let farmBatchGoldMilli = 0, farmExtraUpkeepMilli = 0, upkeepPaidMilli = 0, unpaidUpkeepMilli = 0, marketCapacity = 0;
   const funded: typeof s.tiles = [];
   const fundedTileIds: string[] = [];
@@ -45,12 +49,25 @@ export function runTileTrialWeek(s: TileTrialState, ruleset: TileTrialRuleset = 
       activities.push(`${tile.id}: Farm ${batches} batches; batch Gold credited against this Farm upkeep.`);
     } else funded.push(tile);
   }
+  const facilities = society ? societyFacilities(s, new Set(fundedTileIds)) : undefined;
+  if (facilities) {
+    const adjusted = scaled(taxMilli, 100 + 10 * facilities.countingHouseLevels, 100);
+    add('gold', adjusted - taxMilli); taxMilli = adjusted;
+  }
+  let luxuryImportedMilli = 0;
+  if (society) for (const tile of funded) {
+    const b = tile.building!;
+    if (b.typeId !== 'trading-post' || b.workers !== trialBuilding(b.typeId)!.maxWorkers * b.level) continue;
+    const cost = scaled(3000, b.level);
+    if (stocks.gold < cost) continue;
+    stocks.gold -= cost; luxuryImportedMilli = trialSafe(luxuryImportedMilli + scaled(2000, b.level));
+  }
   // Every extraction completes before any processing, independent of placement order.
   for (const tile of funded) {
     const b = tile.building!; const d = trialBuilding(b.typeId)!;
     if (d.operation === "logging") { const output = scaled(b.workers, B.loggingWoodPerWorker); add("wood", output); woodProducedMilli = trialSafe(woodProducedMilli + output); activities.push(`${tile.id}: extracted Wood.`); }
     if (d.operation === "mine") { const output = scaled(b.workers, B.mineIronPerWorker); add("iron", output); ironProducedMilli = trialSafe(ironProducedMilli + output); activities.push(`${tile.id}: extracted Iron.`); }
-    if (d.operation === "market") marketCapacity = trialSafe(marketCapacity + scaled(b.level, storedGoods ? G.capacityPerLevelMilli : B.marketServicePerLevel));
+    if (d.operation === "market" && (!society || (b.typeId === 'town-market' && b.workers === d.maxWorkers * b.level))) marketCapacity = trialSafe(marketCapacity + scaled(b.level, storedGoods ? G.capacityPerLevelMilli : B.marketServicePerLevel));
   }
   for (const tile of funded) {
     const b = tile.building!; if (trialBuilding(b.typeId)!.operation !== "processor") continue;
@@ -59,7 +76,8 @@ export function runTileTrialWeek(s: TileTrialState, ruleset: TileTrialRuleset = 
     stocks.wheat -= batches * PROCESSOR_WHEAT_PER_BATCH_MILLI; add("food", batches * PROCESSOR_FOOD_PER_BATCH_MILLI);
     activities.push(`${tile.id}: Food Processor ${batches} batches.`);
   }
-  const demandMilli = scaled(population, storedGoods ? G.demandPerResidentMilli : B.goodsDemandPerResident); let servedMilli = 0, woodUsed = 0, ironUsed = 0;
+  const societyDemand = society ? allocateRequirements({society:s.society!,foodAvailableMilli:0,goodsServableMilli:Number.MAX_SAFE_INTEGER,luxuryImportedMilli:0}).goodsConsumedMilli : 0;
+  const demandMilli = society ? societyDemand : scaled(population, storedGoods ? G.demandPerResidentMilli : B.goodsDemandPerResident); let servedMilli = 0, woodUsed = 0, ironUsed = 0;
   let goodsStock: TileTrialReport['goodsStock'];
   if (storedGoods) {
     const openingMilli = s.goodsStock!.amountMilli;
@@ -92,12 +110,31 @@ export function runTileTrialWeek(s: TileTrialState, ruleset: TileTrialRuleset = 
   const fulfillmentBps = demandMilli === 0 ? 10000 : scaled(servedMilli, 10000, demandMilli);
   const revenueMilli = scaled(servedMilli, storedGoods ? G.goldPerGoodsMilli : B.goldPerServiceMilli, 1000); add("gold", revenueMilli);
   const happinessBefore = s.happiness;
+  let foodDemandMilli: number, foodConsumedMilli: number;
+  let immigration: ReturnType<typeof resolveTrialImmigration> | undefined;
+  let societyReport: TileTrialReport['society'];
+  let trainingGoldMilli = 0;
+  if (society) {
+    const allocated = allocateRequirements({society:s.society!,foodAvailableMilli:stocks.food,goodsServableMilli:servedMilli,luxuryImportedMilli});
+    foodDemandMilli = allocateRequirements({society:s.society!,foodAvailableMilli:Number.MAX_SAFE_INTEGER,goodsServableMilli:0,luxuryImportedMilli:0}).foodConsumedMilli;
+    foodConsumedMilli = allocated.foodConsumedMilli;
+    immigration = resolveTrialImmigration(s, {fundedTileIds,farmBatches,processorBatches,woodProducedMilli,ironProducedMilli,operatingDebitMilli,foodDemandMilli,foodConsumedMilli,unpaidUpkeepMilli});
+    const resolved = resolveSocietyWeek({society:s.society!,foodAvailableMilli:stocks.food,goodsServableMilli:servedMilli,luxuryImportedMilli,facilities:facilities!,employment:societyEmployment(s),arrivalsBudget:immigration.arrivals,goldAvailableMilli:stocks.gold});
+    stocks.food -= resolved.foodConsumedMilli; stocks.gold -= resolved.goldSpentMilli;
+    trainingGoldMilli = resolved.goldSpentMilli; s.society = resolved.society;
+    s.happiness = resolved.cityHappiness; societyReport = resolved.report;
+    settlement.cohorts.find(c=>c.id==='weekly_middle')!.count = societyPopulation(resolved.society);
+    activities.push(...releaseSocietyWorkers(s));
+    const arrivals = Object.values(resolved.report.classes).reduce((total,c)=>trialSafe(total+c.arrivals),0);
+    immigration = Object.freeze({...immigration, arrivals:trialSafe(arrivals+(resolved.report.eliteArrived===null?0:1)), populationAfter:societyPopulation(resolved.society)});
+  } else {
   const needs = resolveTileTrialNeeds(population, stocks.food, happinessBefore, fulfillmentBps);
-  const { foodDemandMilli, foodConsumedMilli } = needs;
+  ({ foodDemandMilli, foodConsumedMilli } = needs);
   stocks.food = needs.foodRemainingMilli; s.happiness = needs.happinessAfter;
-  const immigration = economy === POPULATION_TILE_RULESET || storedGoods ? resolveTrialImmigration(s, { fundedTileIds, farmBatches, processorBatches, woodProducedMilli, ironProducedMilli, operatingDebitMilli, foodDemandMilli, foodConsumedMilli, unpaidUpkeepMilli }) : undefined;
+  immigration = economy === POPULATION_TILE_RULESET || storedGoods ? resolveTrialImmigration(s, { fundedTileIds, farmBatches, processorBatches, woodProducedMilli, ironProducedMilli, operatingDebitMilli, foodDemandMilli, foodConsumedMilli, unpaidUpkeepMilli }) : undefined;
   if (immigration?.arrivals) settlement.cohorts.find(c => c.id === "weekly_middle")!.count += immigration.arrivals;
+  }
   s.world.week = trialSafe(s.world.week + 1); s.phase = "report";
   const goods = Object.freeze({ demandMilli, servedMilli, fulfillmentBps, woodUsed, ironUsed, revenueMilli });
-  return Object.freeze({ week: s.world.week - 1, before: Object.freeze(before), after: Object.freeze({ ...stocks }), taxMilli, farmBatchGoldMilli, farmExtraUpkeepMilli, upkeepPaidMilli, unpaidUpkeepMilli, foodDemandMilli, foodConsumedMilli, happinessBefore, happinessAfter: s.happiness, goods, ...(goodsStock ? { goodsStock } : {}), activities: Object.freeze(activities), ...(immigration ? { immigration } : {}) });
+  return Object.freeze({ week: s.world.week - 1, before: Object.freeze(before), after: Object.freeze({ ...stocks }), taxMilli, farmBatchGoldMilli, farmExtraUpkeepMilli, upkeepPaidMilli, unpaidUpkeepMilli, foodDemandMilli, foodConsumedMilli, happinessBefore, happinessAfter: s.happiness, goods, ...(goodsStock ? { goodsStock } : {}), ...(societyReport ? { society:societyReport,luxuryImportedMilli,trainingGoldMilli } : {}), activities: Object.freeze(activities), ...(immigration ? { immigration } : {}) });
 }

@@ -11,8 +11,6 @@ export function executeTileTrialCommand(state: unknown, raw: unknown, ruleset: T
 
     if (!raw || typeof raw !== "object" || !hasWeeklyKeys(raw, Object.keys(raw))) return fail("INVALID_COMMAND", "Command must contain plain data fields.");
     const c = { ...raw } as Record<string, unknown>;
-    if (state.society && ['END_WEEK','NEXT_WEEK','LOAD_TRIAL'].includes(c.type as string)) return fail('UNSUPPORTED_RULESET', 'This city economy is not playable yet; nothing was changed.');
-    if (c.type === 'LOAD_TRIAL' && c.snapshot && typeof c.snapshot === 'object' && Object.hasOwn(c.snapshot, 'society')) return fail('UNSUPPORTED_RULESET', 'This city economy is not playable yet; nothing was changed.');
     if (c.expectedRevision !== state.revision) return fail("STALE_COMMAND", "The plan changed. Refresh the action before retrying.");
     if (state.phase === "report" && c.type !== "NEXT_WEEK") return fail("FORBIDDEN", "Read the report, then choose Plan next week.");
     if (state.phase === "planning" && c.type === "NEXT_WEEK") return fail("FORBIDDEN", "Finish this week before planning the next one.");
@@ -41,7 +39,8 @@ export function executeTileTrialCommand(state: unknown, raw: unknown, ruleset: T
       if (c.snapshot && typeof c.snapshot === 'object' && Object.hasOwn(c.snapshot, 'goodsStock') &&
           cityEconomyRuleset(c.snapshot as TileTrialState, ruleset) === null) return fail('INVALID_STATE', 'Checkpoint economy is incompatible with this trial family.');
       if (!isTileTrialPlanningState(c.snapshot)) return fail("INVALID_SAVE_STATE", "Checkpoint must contain a valid tile Planning state and the supported map.");
-      if (cityEconomyRuleset(c.snapshot, ruleset) === null) return fail('INVALID_STATE', 'Checkpoint economy is incompatible with this trial family.');
+      const a = cityEconomyRuleset(c.snapshot, ruleset), b = cityEconomyRuleset(state, ruleset);
+      if (a === null || (a === SOCIETY_RULESET) !== (b === SOCIETY_RULESET)) return fail('INVALID_STATE', 'Checkpoint economy is incompatible with this trial family.');
       next = structuredClone(c.snapshot);
       next.revision = Math.max(state.revision, next.revision);
     } else if (c.type === "END_WEEK") {
