@@ -1,9 +1,11 @@
+import {createNpcWorldSession} from '../../packages/core/src/index.ts';
+import {serializeNpcWorldSessionSave} from '../../packages/persistence/src/world-npc-session-save.ts';
 import { test, expect, type Page } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
 import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
 import { characterWindow, charactersView, expectCheckpointRejectionPreservesUi, expectOneCharacterWindow, exportLife, go, importLife, lifeUiSnapshot, makeLife, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
 
-const KEY = 'haven.character-life-session.checkpoint.v1';
+const KEY = 'haven.character-life-session-society.checkpoint.v1';
 const creation = (page: Page) => page.getByRole('region', { name: 'Character Creation', exact: true });
 const tab = (page: Page, name: string) => creation(page).getByRole('tab', { name, exact: true });
 const button = (page: Page, name: string) => page.getByRole('button', { name, exact: true });
@@ -172,7 +174,7 @@ test('importing a foreign file shows the Character Life message and stays on sta
   await page.goto('/?mode=world-life');
   const text = JSON.stringify({ format: 'haven.world-npc-session.save', schemaVersion: 1, state: {} });
   await page.getByLabel('Import checkpoint', { exact: true }).setInputFiles({ name: 'npc.json', mimeType: 'application/json', buffer: Buffer.from(text) });
-  await expect(page.getByRole('alert')).toHaveText('Not a Character Life checkpoint of a supported version. No migration was performed.');
+  await expect(page.getByRole('alert')).toHaveText('This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.');
   await expect(button(page, 'New Game')).toBeVisible();
   await expect(page.getByRole('region', { name: 'Player', exact: true })).toHaveCount(0);
 });
@@ -292,29 +294,16 @@ test('Export then Import in a new game restores the session; file name matches t
 });
 
 test('importing an NPC-world export into world-life is rejected with the Character Life incompatible message and nothing changes', async ({ page }) => {
-  await page.goto('/?mode=world-npc');
-  const npcText = await exportText(page, /^haven-world-npc-week-\d+\.json$/);
+  const npc=createNpcWorldSession(1);if(!npc.success)throw Error();const encoded=serializeNpcWorldSessionSave(npc.value);if(!encoded.success)throw Error();const npcText=encoded.text;
   await startGame(page, 'Mira');
   await importFile(page, npcText);
-  await expect(page.getByRole('alert')).toHaveText('Not a Character Life checkpoint of a supported version. No migration was performed.');
+  await expect(page.getByRole('alert')).toHaveText('This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.');
   await go(page, 'characters');
   await expect(playerRegion(page).getByRole('heading', { name: 'Mira', exact: true })).toBeVisible();
   for (const id of NPC_IDS) {
     await selectPerson(page, id); await selectArea(page, 'Work');
     await expect(page.getByTestId(`npc-post-${id}`)).toHaveText('Post: Unassigned');
   }
-});
-
-test('a world-life export imported in ?mode=world-npc is rejected; world-npc page shows no Player region', async ({ page }) => {
-  await startGame(page);
-  const text = await exportText(page, /^haven-world-life-week-\d+\.json$/);
-  await page.goto('/?mode=world-npc');
-  await expect(page.getByRole('heading', { level: 1, name: 'World Session', exact: true })).toBeVisible();
-  await expect(playerRegion(page)).toHaveCount(0);
-  await expect(page.getByRole('tab')).toHaveCount(0);
-  await importFile(page, text);
-  await expect(page.getByRole('alert')).toBeVisible();
-  await expect(playerRegion(page)).toHaveCount(0);
 });
 
 test('life Save locally leaves the NPC-world and world slots unchanged', async ({ page }) => {
@@ -328,7 +317,7 @@ test('life Save locally leaves the NPC-world and world slots unchanged', async (
   await button(page, 'Save locally').click();
   await expect(page.getByRole('region', { name: 'Planning checkpoints', exact: true }).getByRole('status')).toHaveText('Saved in this browser.');
   expect(await page.evaluate(keys => keys.map(k => localStorage.getItem(k)), [NPC_KEY, WORLD_KEY])).toEqual(['protected-bytes', 'protected-bytes']);
-  expect(await page.evaluate(k => localStorage.getItem(k)?.startsWith('{"format":"haven.character-life-session.save"'), 'haven.character-life-session-goods.checkpoint.v1')).toBe(true);
+  expect(await page.evaluate(k => localStorage.getItem(k)?.startsWith('{"format":"haven.character-life-session.save"'), 'haven.character-life-session-society.checkpoint.v1')).toBe(true);
 });
 
 test('Life report and checkpoint operations preserve every other-mode slot byte-for-byte', async ({ page }) => {

@@ -1,14 +1,14 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
 import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
 import { writeFile } from 'node:fs/promises';
-import { GOODS_STOCK_RULESET } from '../../packages/core/src/index.ts';
+import { SOCIETY_RULESET } from '../../packages/core/src/index.ts';
 import { characterWindow, charactersView, expectReport, go, importLife, keyActivate, keyGo, makeLife, reportFixture, reportRegion, selectArea, selectPerson, tabTo, turnStatuses, watchTurnStatus } from './character-life-navigation.helpers.ts';
 
 for (const viewport of [{ width: 375, height: 812 }, { width: 1280, height: 900 }]) {
   test(`Goods stock accessibility at ${viewport.width}px`, async ({ page }, info) => {
     test.setTimeout(120000);
     await page.setViewportSize(viewport); await page.goto('/?mode=world-life');
-    await importLife(page, makeLife(20261028, GOODS_STOCK_RULESET));
+    await importLife(page, makeLife(20261028, SOCIETY_RULESET));
     const failures: string[] = [], measurements: Measurement[] = [], focus: unknown[] = [];
     const capture = async () => { const m = await measure(page.getByTestId('life-shell')); measurements.push(m); audit(m, failures); await auditTabOrder(page, failures, focus); };
     await keyActivate(page, page.getByText('Food requirements', { exact: true }));
@@ -64,7 +64,7 @@ async function measure(root: Locator) {
       const range = document.createRange(); range.selectNodeContents(node);
       const rects = [...range.getClientRects()].filter(r => r.width && r.height);
       if (!rects.length) continue;
-      const ledger = el.closest('.ledger');
+      const ledger = el.closest('.ledger, .table-scroll');
       const panel = el.closest('.card') ?? root;
       const panelBox = panel.getBoundingClientRect();
       texts.push({ label: node.textContent.trim().slice(0, 50), ...colors(el), inactive: !!el.closest(':disabled,[aria-disabled="true"]'), size: parseFloat(getComputedStyle(el).fontSize),
@@ -111,7 +111,7 @@ function audit(m: Measurement, failures: string[]) {
 }
 
 async function auditTabOrder(page: Page, failures: string[], samples: unknown[]) {
-  const controls = page.getByTestId('life-shell').locator('button:not(:disabled),input:not(:disabled),select:not(:disabled),summary,a[href],[tabindex="0"]');
+  const controls = page.getByTestId('life-shell').locator(':is(button:not(:disabled),input:not(:disabled),select:not(:disabled),summary,a[href],[tabindex="0"]):visible');
   const targets = await controls.all();
   for (const target of targets) {
     if (!await target.isVisible() || await target.getAttribute('tabindex') === '-1') continue;
@@ -276,7 +276,7 @@ for (const viewport of [{ width: 1600, height: 1000 }, { width: 1280, height: 90
         for (const hidden of await shell.locator('[data-life-view][hidden]').all()) await expect(hidden).toHaveCSS('display', 'none');
         if (dest === 'city') {
           await keyActivate(page, page.getByText('Food requirements', { exact: true }));
-          await expect(page.getByRole('region', { name: 'City Requirements', exact: true }).getByRole('heading', { name: 'Current inventory', exact: true })).toBeVisible();
+          await expect(page.getByRole('region', { name: 'City Requirements', exact: true }).getByRole('heading', { name: 'Current inventory', exact: true }).first()).toBeVisible();
           await capture();
           await keyActivate(page, page.getByTestId('trial-tile-field-1'));
           await keyActivate(page, page.getByRole('region', { name: 'Outside world', exact: true }).locator('summary'));
@@ -287,22 +287,10 @@ for (const viewport of [{ width: 1600, height: 1000 }, { width: 1280, height: 90
           const help = page.locator('[data-life-view="help"]');
           await expect(help.locator('summary')).toHaveText(['Getting started', 'Weekly rules', 'About this build']);
           for (const summary of await help.locator('summary').all()) await keyActivate(page, summary);
-          await expect(help.locator('details').nth(0).locator('p')).toHaveText([
-            'Farm and Food Processor start with 2 WF each, feeding 100 residents. Build Logging Camp on forest-1 (2 WF), Iron Mine on ore-1 (1 WF), Goods Workshop on plain-2 (1 WF), and Market on plain-3. Then End Week.For immigration, also raise Farm and Food Processor to 3 WF each; stored Food alone does not attract arrivals.',
-            'Extract first, process second: Farm → Wheat → Food Processor → Food. Logging Camp → Wood and Iron Mine → Iron supply the Workshop; a Market enables Goods service. Assign whole WF from the shared pool.',
-            'Build and replace pay full cost; replacement resets level and workers, with no refund. Upgrades cost base cost × next level. Pause releases workers and avoids upkeep; unfunded buildings idle without debt. Pause buildings to save tax income when Gold is low.',
-          ]);
-          await expect(help.locator('details').nth(1).locator('p')).toHaveText([
-            'TRIAL: tax 0.03 Gold/resident/week; Goods demand 0.02 service/resident/week. Workshop: 1 WF + 2 Wood + 1 Iron → 2 service. Market: 2 service/level; raises capacity, not demand. Whole Workshop batches may have unused service; nothing carries over.',
-            'Goods earns 1 Gold/service and up to 2 Happiness at full fulfillment. Food need: 0.04 per resident/week. Maintenance is funded in tile order; tax arrives first.',
-          ]);
-          await expect(help.locator('details').nth(2).locator('p')).toHaveText([
-            'Balance and building policies are TRIAL. Character profiles are TRIAL content. Weekly life events and Player interactions are not available yet.',
-            'Immigration is TRIAL. Arrivals join next week. Old tile checkpoints continue in Legacy tile trial.',
-            'Goods is a city Requirement, with no stored Goods. Security, Corruption and Tension are not simulated here.',
-          ]);
-          await expect(help.getByRole('link')).toHaveText(['Classic Weekly', 'Legacy tile trial', 'Play population trial', 'World Session without NPCs', 'World Session with NPCs']);
-          expect(await help.getByRole('link').evaluateAll(links => links.map(link => link.getAttribute('href')))).toEqual(['/', '/?mode=tiles', '/?mode=population', '/?mode=world', '/?mode=world-npc']);
+          await expect(help.locator('details').nth(0).locator('p')).toHaveText("Your 100 residents are Free residents, Makers, Luminaries and Merchants, each with their own housing. Farm and Food Processor start with 2 WF each; the Market on spec-1 distributes stored Goods. Build inside the walls on plots of the matching tier, and extend the wall to open more plots.");
+          await expect(help.locator('details').nth(1).locator('p')).toHaveText("TRIAL: each class eats and uses Goods separately; the Bound eat last. Missing Food, Goods or housing lowers that class's satisfaction and stops its arrivals. Each class supplies 1 WF per 10 residents; Elites do not work.");
+          await expect(help.locator('details').nth(2).locator('p')).toHaveText('Balance and building policies are TRIAL. Character profiles are TRIAL content. Weekly life events and Player interactions are not available yet.');
+          await expect(help.getByRole('link')).toHaveCount(0);
         }
         await capture();
         if (dest === 'characters') {

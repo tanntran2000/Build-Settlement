@@ -1,6 +1,6 @@
 import { test, expect, type Locator, type Page } from '@playwright/test';
 import {
-  createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, isCharacterLifeSessionState,
+  createCharacterLifeSession, SOCIETY_RULESET, SOCIETY_PLOT_IDS, societyPlot, societyStaff, DEFAULT_PLAYER_DRAFT, type CharacterLifeSessionState, isCharacterLifeSessionState,
   WEEKLY_RESOURCE_KEYS, type TileTrialReport,
 } from '../../packages/core/src/index.ts';
 import { serializeCharacterLifeSave } from '../../packages/persistence/src/character-life-save.ts';
@@ -17,7 +17,7 @@ const title = (key: string) => key[0].toUpperCase() + key.slice(1);
 const numbers = (values: VisibleCharacter['stats']['skills' | 'needs' | 'emotions']) => Object.entries(values).map(([key, n]) => `${title(key)} ${n}`).join(' · ');
 
 function fixture() {
-  const created = createCharacterLifeSession(12345, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' });
+  const created = createCharacterLifeSession(12345, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' }, SOCIETY_RULESET);
   expect(created.success).toBe(true);
   if (!created.success) throw new Error(created.error.message);
   const session = created.value;
@@ -100,11 +100,11 @@ async function profileParity(page: Page, scope: Locator, c: VisibleCharacter) {
   await expectOneCharacterWindow(page);
 }
 
-async function reportParity(page: Page, o: Observation, fullReport: Readonly<TileTrialReport> | null) {
+async function reportParity(page: Page, o: Observation, fullReport: Readonly<TileTrialReport> | null, expected: CharacterLifeSessionState) {
   await go(page, 'reports');
   await expect(button(page, 'Plan next week')).toHaveAttribute('aria-disabled', String(!o.actionTypes.includes('NEXT_WEEK')));
   const panel = reportRegion(page), r = o.lastReport;
-  if (!r) { await expect(panel.getByText('No resolved week yet', { exact: true })).toBeVisible(); await expect(panel.getByRole('table')).toHaveCount(0); return; }
+  if (!r) { await expect(panel.getByText('No resolved week yet', { exact: true })).toBeVisible(); await expect(panel.getByRole('table',{name:'Weekly stock ledger',exact:true})).toHaveCount(0); return; }
   expect(fullReport).not.toBeNull();
   if (!fullReport) throw new Error('Missing complete executor report for parity');
   await expectReport(page, fullReport);
@@ -129,7 +129,7 @@ async function reportParity(page: Page, o: Observation, fullReport: Readonly<Til
   await expect(panel.getByText('Previous report · Planning is active.', { exact: true })).toHaveCount(o.phase === 'planning' ? 1 : 0);
 }
 
-async function uiParity(page: Page, o: Observation, fullReport: Readonly<TileTrialReport> | null) {
+async function uiParity(page: Page, o: Observation, fullReport: Readonly<TileTrialReport> | null, expected: CharacterLifeSessionState) {
   await go(page, 'city');
   const s = o.settlement;
   const shell = page.getByTestId('life-shell');
@@ -139,8 +139,11 @@ async function uiParity(page: Page, o: Observation, fullReport: Readonly<TileTri
   for (const key of WEEKLY_RESOURCE_KEYS.filter(key => key !== 'food')) await expect(page.getByTestId(`trial-stock-${key}`)).toHaveText(formatMilli(s.stocks[key]));
   await expect(region(page, 'City stocks').locator('p strong')).toHaveText(String(s.happiness));
   await go(page, 'city');
+  const c=expected.city.society!.classes;
+  const available={basic:Math.floor(c.free/10)+Math.floor(Object.values(c.bound).reduce((a,b)=>a+b,0)/10),makers:Math.floor(c.makers.common/10),luminaries:Math.floor(c.luminaries.common/10),merchants:Math.floor(c.merchants.common/10)};
+  const poolText=Object.entries(available).map(([id,n])=>`${title(id)} ${expected.city.tiles.reduce((sum,t)=>sum+(t.building?.enabled&&societyStaff(t.building.typeId)===id?t.building.workers:0),0)}/${n}`).join(' '+String.fromCharCode(183)+' ')+' WF assigned';
   await page.locator('#life-nav-population').click();
-  await expect(page.getByRole('dialog', { name: 'Population', exact: true }).getByText(/^\d+ residents/)).toHaveText(`${s.residents} residents · Workforce ${s.assignedWorkers} / ${formatMilli(s.workforceMilli)} assigned / available`);
+  await expect(page.getByRole('dialog', { name: 'Population', exact: true }).getByText(/^\d+ residents/)).toHaveText(`${s.residents} residents · ${poolText}`);
   await go(page, 'city');
   const food = page.locator('[data-life-view="city"] details').filter({ has: page.getByText('Food requirements', { exact: true }) });
   if (await food.getAttribute('open') === null) await food.locator('summary').click();
@@ -149,9 +152,9 @@ async function uiParity(page: Page, o: Observation, fullReport: Readonly<TileTri
   const disclosure = region(page, 'Outside world').locator('details');
   if (await disclosure.getAttribute('open') === null) await disclosure.locator('summary').click();
   await expect(region(page, 'Outside world').getByText(/^Outside tiles:/)).toHaveText(`Outside tiles: ${outside.total} · Yours: ${outside.mine} · Held by other factions: ${outside.others} · Neutral: ${outside.neutral} · Explored by you: ${outside.explored}`);
-  await expect(region(page, 'City tiles').getByRole('button')).toHaveCount(o.tiles.length);
-  expect(await region(page, 'City tiles').getByRole('button').evaluateAll(buttons => buttons.map(b => b.getAttribute('aria-label')))).toEqual(o.tiles.map(t => `Select ${t.id}`));
-  for (const tile of o.tiles) {
+  await expect(region(page, 'Outside tiles').getByRole('button')).toHaveCount(o.tiles.filter(t=>t.terrain!=='town').length);
+  expect(await region(page, 'Outside tiles').getByRole('button').evaluateAll(buttons => buttons.map(b => b.getAttribute('aria-label')))).toEqual(o.tiles.filter(t=>t.terrain!=='town').map(t => `Select ${t.id}`));
+  for (const tile of o.tiles.filter(t=>t.terrain!=='town')) {
     const element = page.getByTestId(`trial-tile-${tile.id}`), b = tile.building;
     await expect(element).toHaveAttribute('aria-label', `Select ${tile.id}`);
     await expect(element.locator('strong')).toHaveText(tile.id);
@@ -171,13 +174,19 @@ async function uiParity(page: Page, o: Observation, fullReport: Readonly<TileTri
       else await expect(manage.getByText('Maximum trial level.', { exact: true })).toBeVisible();
     }
   }
+  for(const id of SOCIETY_PLOT_IDS){
+    const plot=societyPlot(id)!;
+    if(plot.ring>expected.city.society!.wallRing){await expect(page.getByTestId(`trial-tile-${id}`)).toHaveCount(0);continue;}
+    const card=page.getByTestId(`trial-tile-${id}`);await expect(card).toHaveAttribute('aria-label',`Select ${id}`);await expect(card.locator('strong')).toHaveText(id);
+  }
+  const outsideBuildings=o.buildings.filter(b=>!b.terrain.includes('town')&&b.typeId!=='market');
   const catalogue = page.getByLabel('Building type', { exact: true });
-  expect(await catalogue.locator('option').evaluateAll(options => options.map(o => (o as HTMLOptionElement).value))).toEqual(o.buildings.map(b => b.typeId));
-  await expect(catalogue.locator('option')).toHaveText(o.buildings.map(b => b.name));
+  expect(await catalogue.locator('option').evaluateAll(options => options.map(o => (o as HTMLOptionElement).value))).toEqual(outsideBuildings.map(b => b.typeId));
+  await expect(catalogue.locator('option')).toHaveText(outsideBuildings.map(b => b.name));
   const locked = o.phase === 'report';
   await expect(catalogue).toBeEnabled({ enabled: !locked });
   if (!locked) {
-    for (const definition of o.buildings) {
+    for (const definition of outsideBuildings) {
       await catalogue.selectOption(definition.typeId);
       await expect(region(page, 'Manage tile').getByText(/^Requires /)).toHaveText(`Requires ${definition.terrain.join(' or ')} terrain. Cost: ${formatMilli(definition.cost.gold)} Gold, ${formatMilli(definition.cost.wood)} Wood, ${formatMilli(definition.cost.iron)} Iron. Upkeep: ${formatMilli(definition.upkeepMilli)} Gold/week at level 1.`);
     }
@@ -243,7 +252,7 @@ test('same-session UI projection through assignment and full week', async ({ pag
     expectedSession = result.next;
     if (result.report) expectedReport = result.report;
   };
-  const compare = () => uiParity(page, observeCharacterLife(expectedSession, expectedReport), expectedReport);
+  const compare = () => uiParity(page, observeCharacterLife(expectedSession, expectedReport), expectedReport, expectedSession);
   const importInitial = async () => {
     if (await page.getByTestId('life-shell').count()) await go(page, 'session');
     await page.getByLabel('Import checkpoint', { exact: true }).setInputFiles({

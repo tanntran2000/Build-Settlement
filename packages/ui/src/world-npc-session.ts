@@ -16,4 +16,3 @@ export function prepareNpcWorldSessionLoad(live: NpcWorldSessionState, loaded: u
     return isWorldNpcList(npcs, prepared.next.city) ? { success: true, next: { ...prepared.next, npcs } } : fail('Checkpoint NPC posts do not match its city.');
   } catch { return fail('Could not prepare the NPC world checkpoint. Your game was preserved.'); }
 }
-

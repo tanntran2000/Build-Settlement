@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { createCharacterLifeSession, createNpcWorldSession, DEFAULT_PLAYER_DRAFT, SOCIETY_RULESET } from '@haven/core';
-import { GOODS_STOCK_RULESET } from '@haven/core';
-import { serializeCharacterLifeSave, serializeNpcWorldSessionSave } from '@haven/persistence';
+import { readFileSync } from 'node:fs';
+import { deserializeCharacterLifeSave, serializeCharacterLifeSave, serializeNpcWorldSessionSave } from '@haven/persistence';
 import { CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY, prepareCharacterLifeLoad, readLocalCharacterLife, saveLocalCharacterLife, isPlayableCheckpoint } from '../character-life-session.js';
 const WORLD_NPC_CHECKPOINT_KEY = 'haven.world-npc-session.checkpoint.v1';
 const WORLD_SESSION_CHECKPOINT_KEY = 'haven.world-session.checkpoint.v1';
@@ -10,8 +10,9 @@ const session = (seed = 0, currentName = 'Ana') => { const r = createCharacterLi
 
 it('loads either city generation into a detached complete Life session without conversion or grants', () => {
   const oldSession = () => {const r=createCharacterLifeSession(0,{...DEFAULT_PLAYER_DRAFT,currentName:'Ana'});if(!r.success) throw Error();return r.value;};
-  const fresh = createCharacterLifeSession(7, { ...DEFAULT_PLAYER_DRAFT, currentName: 'Synthetic Keeper' }, GOODS_STOCK_RULESET);
-  if (!fresh.success) throw Error(fresh.error.message);
+  const decoded=deserializeCharacterLifeSave(readFileSync('packages/persistence/src/__tests__/fixtures/goods-v1/life.json','utf8'));
+  if(!decoded.success)throw Error(decoded.error.message);
+  const fresh={success:true,value:decoded.state};
   fresh.value.city.goodsStock!.amountMilli = 321;
   for (const [live, loaded] of [[oldSession(), fresh.value], [fresh.value, oldSession()]] as const) {
     const liveBefore = structuredClone(live), loadedBefore = structuredClone(loaded);
@@ -111,4 +112,49 @@ it('accepts society and refuses pinned Goods and legacy Life fixtures',async()=>
   const raw=JSON.parse(readFileSync(`packages/persistence/src/__tests__/fixtures/${generation}/life.json`,'utf8'));
   expect(isPlayableCheckpoint(raw.state)).toBe(false);
  }
+});
+
+it('ported F1: active Proxy saves detached descriptor data without get callbacks',()=>{
+ const s=session();const encoded=serializeCharacterLifeSave(s);if(!encoded.success)throw Error();values.set(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,encoded.text);let calls=0;
+ const proxy=new Proxy(s,{get(){calls++;throw Error('private');}});
+ expect(saveLocalCharacterLife(proxy)).toEqual({success:true,replaced:true});expect(calls).toBe(0);expect(values.get(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY)).toBe(encoded.text);expect(storage.setItem).toHaveBeenCalledOnce();
+});
+it.each(['accessor','own toJSON','revoked proxy'])('ported F1: invalid %s preserves prior valid bytes before storage access',kind=>{
+ const s=session(),encoded=serializeCharacterLifeSave(s);if(!encoded.success)throw Error();values.set(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,encoded.text);const before=new Map(values);let calls=0;
+ if(kind==='accessor')Object.defineProperty(s.city.world.settlements.settlement_haven_01.inventory,'gold',{enumerable:true,get(){calls++;return 0;}});
+ if(kind==='own toJSON')Object.assign(s,{toJSON(){calls++;return {};}});
+ const proxy=Proxy.revocable(s,{});if(kind==='revoked proxy')proxy.revoke();
+ expect(saveLocalCharacterLife(kind==='revoked proxy'?proxy.proxy:s).success).toBe(false);expect(calls).toBe(0);expect(storage.getItem).not.toHaveBeenCalled();expect(storage.setItem).not.toHaveBeenCalled();expect(values).toEqual(before);
+});
+it.each(['window','getter','read','write'])('ported slot guard: %s failure preserves browser bytes and session',kind=>{
+ const s=session(),snapshot=structuredClone(s),before=new Map(values);
+ if(kind==='window')vi.stubGlobal('window',undefined);
+ if(kind==='getter')vi.stubGlobal('window',{get localStorage(){throw Error('private');}});
+ if(kind==='read')storage.getItem.mockImplementation(()=>{throw Error('private');});
+ if(kind==='write')storage.setItem.mockImplementation(()=>{throw Error('private');});
+ const result=saveLocalCharacterLife(s);expect(result).toMatchObject({success:false,message:expect.stringContaining('Export checkpoint')});expect(JSON.stringify(result)).not.toContain('private');expect(values).toEqual(before);expect(s).toEqual(snapshot);
+ if(kind!=='write')expect(readLocalCharacterLife()).toMatchObject({success:false,message:expect.stringContaining('Import checkpoint')});
+});
+it.each(['goods-v1','legacy-v1'])('saving a %s Life fixture never touches any slot',generation=>{
+ const data=JSON.parse(readFileSync(`packages/persistence/src/__tests__/fixtures/${generation}/life.json`,'utf8'));const before=new Map(values);
+ expect(saveLocalCharacterLife(data.state)).toMatchObject({success:false,message:'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.'});expect(storage.getItem).not.toHaveBeenCalled();expect(storage.setItem).not.toHaveBeenCalled();expect(values).toEqual(before);
+});
+it.each(['malformed','empty','version','ruleset','opposite mode','map','negative stock','report','extra field','workforce','oversize','UTF-8 oversize'])('ported checkpoint boundary: %s bytes stay untouched',kind=>{
+ const s=session(),encoded=serializeCharacterLifeSave(s);if(!encoded.success)throw Error();const data=JSON.parse(encoded.text);
+ if(kind==='version')data.schemaVersion=2;
+ if(kind==='ruleset')data.cityRulesetId='future';
+ if(kind==='opposite mode')data.format='haven.world-session.save';
+ if(kind==='map')data.state.city.tiles[0].terrain='ore';
+ if(kind==='negative stock')data.state.city.world.settlements.settlement_haven_01.inventory.gold=-1;
+ if(kind==='report')data.state.city.phase='report';
+ if(kind==='extra field')data.state.unexpected=true;
+ if(kind==='workforce')data.state.city.tiles[0].building.workers=6;
+ if(kind==='UTF-8 oversize')data.state.city.world.settlements.settlement_haven_01.name=String.fromCharCode(233).repeat(600000);
+ const text=kind==='malformed'?'{':kind==='empty'?'{}':kind==='oversize'?' '.repeat(1024*1024+1):JSON.stringify(data);
+ if(kind==='UTF-8 oversize'){expect(text.length).toBeLessThan(1024*1024);expect(new TextEncoder().encode(text).length).toBeGreaterThan(1024*1024);}
+ values.set(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,text);const before=new Map(values);expect(readLocalCharacterLife().success).toBe(false);expect(storage.getItem.mock.calls).toEqual([[CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY]]);expect(storage.setItem).not.toHaveBeenCalled();expect(values).toEqual(before);
+});
+it.each(['ASCII','UTF-8'])('ported checkpoint byte cap: oversized %s save never touches storage',encoding=>{
+ const s=session();s.city.world.settlements.settlement_haven_01.name=(encoding==='ASCII'?'x':String.fromCharCode(233)).repeat(encoding==='ASCII'?1024*1024:600000);const before=new Map(values);
+ expect(saveLocalCharacterLife(s)).toMatchObject({success:false,message:expect.stringContaining('1 MiB')});expect(storage.getItem).not.toHaveBeenCalled();expect(storage.setItem).not.toHaveBeenCalled();expect(values).toEqual(before);
 });

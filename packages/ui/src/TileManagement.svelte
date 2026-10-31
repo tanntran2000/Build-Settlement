@@ -62,13 +62,26 @@
     workforceError = '';
     managementError = null;
     const action = { type, expectedRevision, ...fields };
-    const result = executeCharacterLifeCommand({ city: state, outside, npcs, player, profiles }, action);
+    let result: ReturnType<typeof executeCharacterLifeCommand>;
+    try {
+      result = executeCharacterLifeCommand({ city: state, outside, npcs, player, profiles }, action);
+    } catch {
+      error = 'The action failed. Download the error log for review.';
+      errorLog.record(type === 'END_WEEK' ? 'END_WEEK' : 'RUNTIME', 'UNEXPECTED_ACTION_ERROR');
+      return false;
+    }
     if (!result.success) {
+      const known = ['INVALID_COMMAND', 'STALE_COMMAND', 'FORBIDDEN', 'UNSUPPORTED_RULESET', 'INVALID_STATE', 'INVALID_WORKFORCE', 'INVALID_PLAN', 'EXECUTION_ERROR', 'WEEK_MISMATCH', 'INVALID_TILE', 'INVALID_BUILDING', 'INVALID_PLACEMENT', 'OCCUPIED', 'EMPTY_TILE', 'MAX_LEVEL', 'INSUFFICIENT_RESOURCES', 'LOCKED_PLOT', 'NOT_AVAILABLE', 'WRONG_TIER', 'WALL_COMPLETE', 'PREREQUISITE_MISSING', 'UNSUPPORTED_ACTION'];
+      if (!known.includes(result.error.code)) {
+        error = 'The action failed. Download the error log for review.';
+        errorLog.record(type === 'END_WEEK' ? 'END_WEEK' : 'RUNTIME', 'UNKNOWN_COMMAND_FAILURE');
+        return false;
+      }
       error = '';
       if (type === 'SET_WORKERS') workforceError = result.error.message;
       else if (['BUILD', 'REPLACE', 'UPGRADE', 'SET_ENABLED', 'EXTEND_WALL', 'SET_TRAINING'].includes(type)) managementError = { action: type, message: result.error.message };
       else error = result.error.message;
-      errorLog.record(type === 'END_WEEK' ? 'END_WEEK' : 'RUNTIME', 'INVALID_COMMAND');
+      errorLog.record(type === 'END_WEEK' ? 'END_WEEK' : 'RUNTIME', result.error.code === 'INVALID_WORKFORCE' ? 'INVALID_WORKFORCE_INPUT' : 'INVALID_COMMAND');
       return false;
     }
     ({ city: state, outside, npcs, player, profiles } = result.next);

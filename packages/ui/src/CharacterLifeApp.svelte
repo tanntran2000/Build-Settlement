@@ -2,6 +2,7 @@
   import { createCharacterLifeSession, SOCIETY_RULESET, type CharacterLifeSessionState, type PlayerDraft } from '@haven/core';
   import { deserializeCharacterLifeSave, TILE_SAVE_MAX_BYTES } from '@haven/persistence';
   import CharacterCreation from './CharacterCreation.svelte';
+  import ErrorLog from './ErrorLog.svelte';
   import TileManagement from './TileManagement.svelte';
   import { readLocalCharacterLife, isPlayableCheckpoint, OLD_CHECKPOINT_MESSAGE } from './character-life-session.js';
 
@@ -62,6 +63,7 @@
         {#if error}<p role="alert">{error}</p>{/if}
       </section>
     {/if}
+    <ErrorLog />
   </main>
 {/if}
 

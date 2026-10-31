@@ -31,6 +31,7 @@
     if (activeWindow !== next) return;
     if (!dialog.open) dialog.showModal();
     await tick();
+    if (dialog.open && activeWindow === next) dialog.querySelector<HTMLElement>('#life-window-heading')?.focus();
   }
   export function closeWindow(): void {
     if (dialog.open) dialog.close();
@@ -104,7 +105,7 @@
   </div>
   <dialog class="card" bind:this={dialog} aria-labelledby="life-window-heading"
     oncancel={event => { event.preventDefault(); closeWindow(); }} onclose={() => { if (!dialog.open) closeWindow(); }}>
-    <header><h2 id="life-window-heading">{activeWindow ? windowNames[activeWindow] : ''}</h2><button onclick={closeWindow}>Close</button></header>
+    <header><h2 id="life-window-heading" tabindex="-1">{activeWindow ? windowNames[activeWindow] : ''}</h2><button onclick={closeWindow}>Close</button></header>
     {#if error && activeWindow}<p data-life-error role="alert">{error}</p>{/if}
     <section hidden={activeWindow !== 'information'} aria-label="City stocks" data-testid="trial-stocks">
       <div class="information-columns">

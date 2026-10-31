@@ -12,7 +12,7 @@
 </script>
 
 <section class="card" aria-label="Weekly city report">
-  <button aria-disabled={!locked} onclick={onnextweek}>Plan next week</button>
+  <button aria-disabled={!locked} onclick={event => { if (event.detail < 2) onnextweek(); }}>Plan next week</button>
   {#if report}
     <h2>{formatLifeWeek(report.week)} report</h2>
     {#if !locked}<p>Previous report · Planning is active.</p><p>Planning {formatLifeWeek(planningWeek)}.</p>{/if}

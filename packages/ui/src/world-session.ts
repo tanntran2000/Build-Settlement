@@ -48,4 +48,3 @@ export function prepareWorldSessionLoad(live: WorldSessionState, loaded: unknown
     return result.success ? { success: true, next: { city: result.nextState, outside: captured.outside } } : fail(result.error.message);
   } catch { return fail('Could not prepare the world checkpoint. Your game was preserved.'); }
 }
-
