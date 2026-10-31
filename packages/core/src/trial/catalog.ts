@@ -32,13 +32,12 @@ for (const definition of Object.values(TRIAL_BUILDINGS)) {
   Object.freeze(definition.cost); Object.freeze(definition.terrain); Object.freeze(definition);
 }
 export const TILE_TRIAL_BALANCE = Object.freeze({
-  initialGoldMilli: 30000, initialWoodMilli: 8000, initialIronMilli: 4000, initialHappiness: 80,
+  initialWoodMilli: 8000, initialIronMilli: 4000, initialHappiness: 80,
   loggingWoodPerWorker: 2000, mineIronPerWorker: 1000,
-  goodsDemandPerResident: 20, goodsServicePerBatch: 2000,
-  goodsWoodPerBatch: 2000, goodsIronPerBatch: 1000, marketServicePerLevel: 2000,
-  taxGoldPerResident: 30, goldPerServiceMilli: 1000, goodsHappinessMax: 2, happinessPrecision: 100,
+  goodsDemandPerResident: 20,
+  taxGoldPerResident: 30, goldPerServiceMilli: 1000,
   // Approved Food coefficients; the trial does not change these.
-  foodDemandPerResident: 40, shortageHappiness: 12, foodRecovery: 4, foodRecoveryCap: 80,
+  foodDemandPerResident: 40,
 });
 export function trialBuilding(typeId: string): TrialBuildingDefinition | undefined {
   return Object.hasOwn(TRIAL_BUILDINGS, typeId) ? TRIAL_BUILDINGS[typeId] : undefined;

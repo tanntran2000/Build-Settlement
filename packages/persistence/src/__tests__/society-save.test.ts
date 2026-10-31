@@ -1,11 +1,10 @@
 ﻿import { createCharacterLifeSession,createSocietyState,createWorldSession,DEFAULT_PLAYER_DRAFT,GOODS_STOCK_RULESET,SOCIETY_RULESET } from '@haven/core';
 import { describe,expect,it } from 'vitest';
-import { deserializeCharacterLifeSave,deserializeTileTrialSave,deserializeWorldSessionSave,serializeCharacterLifeSave,serializeTileTrialSave,serializeWorldSessionSave } from '../index.js';
+import { deserializeCharacterLifeSave,deserializeWorldSessionSave,serializeCharacterLifeSave,serializeWorldSessionSave } from '../index.js';
 
 const draft = { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Synthetic Keeper' };
 const unwrap = <T>(r: { success: true; value: T } | { success: false }) => { if (!r.success) throw Error('Factory failed'); return r.value; };
 const cases = [
-  { name: 'population', create: () => createSocietyState(), encode: (s: unknown) => serializeTileTrialSave(s), decode: (s: string) => deserializeTileTrialSave(s) },
   { name: 'world', create: () => unwrap(createWorldSession(20261028)), encode: serializeWorldSessionSave, decode: deserializeWorldSessionSave },
   { name: 'life', create: () => unwrap(createCharacterLifeSession(20261028, draft)), encode: serializeCharacterLifeSave, decode: deserializeCharacterLifeSave },
 ];

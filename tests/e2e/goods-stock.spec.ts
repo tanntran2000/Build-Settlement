@@ -4,7 +4,7 @@ import {executeCharacterLifeCommand} from '../../packages/simulation/src/charact
 import {expectReport,exportLife,go,importLife,keyActivate,makeLife,selectArea,selectPerson} from './character-life-navigation.helpers.ts';
 for (const viewport of [{ width: 375, height: 812 }, { width: 1280, height: 900 }]) test(`Society five-week report and navigation parity at ${viewport.width}px`, async ({ page }, info) => {
   await page.setViewportSize(viewport); await page.goto('/?mode=world-life');
-  let session = makeLife(20261028, SOCIETY_RULESET);
+  let session = makeLife(20261028);
   await importLife(page, session);
   await page.getByText('Goods requirements', { exact: true }).click();
   await expect(page.getByTestId('trial-stock-goods')).toHaveText('10');

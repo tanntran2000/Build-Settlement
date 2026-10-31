@@ -1,7 +1,7 @@
 import { createCharacterLifeSession,createNpcWorldSession,createSocietyState,createWorldSession,DEFAULT_PLAYER_DRAFT } from '@haven/core';
 import { expect,it } from 'vitest';
 import { CHARACTER_LIFE_SAVE_FORMAT,deserializeCharacterLifeSave,serializeCharacterLifeSave } from '../character-life-save.js';
-import { serializeTileTrialSave,TILE_SAVE_MAX_BYTES } from '../tile-trial-save.js';
+import { TILE_SAVE_MAX_BYTES } from '../tile-trial-save.js';
 import { serializeWorldSessionSave } from '../world-session-save.js';
 
 const session = (seed = 0) => { const r = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' }); if (!r.success) throw Error(r.error.message); return r.value; };
@@ -23,7 +23,7 @@ it('round-trips a valid session as detached data in its own format', () => {
 });
 it('rejects NPC-world, world and tile save texts with INCOMPATIBLE_SAVE', () => {
   const npcSession = createNpcWorldSession(0), world = createWorldSession(0); if (!npcSession.success || !world.success) throw Error();
-  const npc: { success: true; text: string } | { success: false; error: { message: string } } = { success: true, text: JSON.stringify({ format: 'haven.world-npc-session.save', schemaVersion: 1, cityRulesetId: 'tile-population-01', state: npcSession.value }) }, v1 = serializeWorldSessionSave(world.value), tile = serializeTileTrialSave(createSocietyState());
+  const npc: { success: true; text: string } | { success: false; error: { message: string } } = { success: true, text: JSON.stringify({ format: 'haven.world-npc-session.save', schemaVersion: 1, cityRulesetId: 'tile-population-01', state: npcSession.value }) }, v1 = serializeWorldSessionSave(world.value), tile = ({ success: true, text: JSON.stringify({ format: 'haven.tile-trial.save', schemaVersion: 1, rulesetId: 'tile-society-01', state: createSocietyState() }) } as {success:true;text:string}|{success:false;error:{message:string}});
   for (const r of [npc, v1, tile]) {
     if (!r.success) throw Error(r.error.message);
     expect(deserializeCharacterLifeSave(r.text)).toEqual({ success: false, error: { code: 'INCOMPATIBLE_SAVE', message: INCOMPATIBLE } });

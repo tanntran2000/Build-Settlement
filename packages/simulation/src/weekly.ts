@@ -1,4 +1,3 @@
-export const PRODUCTION_BATCH_WORKFORCE_MILLI = 1000;
 export const FARM_MAX_BATCHES = 5;
 export const PROCESSOR_MAX_BATCHES = 5;
 export const FARM_GOLD_PER_BATCH_MILLI = 1000;
