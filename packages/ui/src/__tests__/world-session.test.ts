@@ -1,6 +1,6 @@
-import { afterEach, beforeEach, expect, it, vi } from 'vitest';
-import { createWorldSession, isWorldSessionState, type WorldSessionState } from '@haven/core';
-import { deserializeWorldSessionSave, serializeWorldSessionSave, TILE_SAVE_MAX_BYTES } from '@haven/persistence';
+import { createWorldSession,isWorldSessionState } from '@haven/core';
+import { deserializeWorldSessionSave,serializeWorldSessionSave,TILE_SAVE_MAX_BYTES } from '@haven/persistence';
+import { afterEach,beforeEach,expect,it,vi } from 'vitest';
 import { prepareWorldSessionLoad } from '../world-session.js';
 
 const session = (seed = 0) => { const r = createWorldSession(seed); if (!r.success) throw Error(); return r.value; };
@@ -92,7 +92,7 @@ it.each(['city getter', 'outside getter', 'toJSON', 'cycle', 'revoked', 'invalid
 it('T-4: keeps preparing a valid decoded checkpoint at the byte cap even when canonical encoding expands', () => {
   const loaded = session(), settlement = loaded.city.world.settlements.settlement_haven_01;
   settlement.inventory.gold = 1000; settlement.name = 'x';
-  const text = () => JSON.stringify({ format: 'haven.world-session.save', schemaVersion: 1, cityRulesetId: 'tile-population-01', state: loaded });
+  const text = () => JSON.stringify({ format: 'haven.world-session.save', schemaVersion: 1, cityRulesetId: 'tile-society-01', state: loaded });
   settlement.name = 'x'.repeat(TILE_SAVE_MAX_BYTES - new TextEncoder().encode(text()).length + 2);
   const compact = text().replace('"gold":1000', '"gold":1e3');
   expect(new TextEncoder().encode(compact).length).toBe(TILE_SAVE_MAX_BYTES);

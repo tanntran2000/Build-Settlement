@@ -17,7 +17,7 @@
     // A repeated Create (or one after Cancel) must not start a second session.
     if (session || screen !== 'create') return;
     try {
-      const result = createCharacterLifeSession(crypto.getRandomValues(new Uint32Array(1))[0], draft, SOCIETY_RULESET);
+      const result = createCharacterLifeSession(crypto.getRandomValues(new Uint32Array(1))[0], draft);
       if (result.success) { session = result.value; return; }
       error = result.error.message;
     } catch { error = 'Could not start a Character Life session. Choose New Game to try again.'; }

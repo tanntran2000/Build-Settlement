@@ -1,18 +1,19 @@
-import { describe, expect, it } from 'vitest';
 import {
-  createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, describeLong, describeShort,
-  isLiveCharacterLifeSessionState, managerSlotTileIds, profileRows, summarizeOutside,
-  TRIAL_BUILDINGS, weeklyWorkforceMilli, WORLD_TRAITS,
-  type CharacterLifeSessionState, type CharacterView, type TileTrialReport,
+createCharacterLifeSession,DEFAULT_PLAYER_DRAFT,describeLong,describeShort,
+isLiveCharacterLifeSessionState,managerSlotTileIds,profileRows,summarizeOutside,
+TRIAL_BUILDINGS,weeklyWorkforceMilli,WORLD_TRAITS,
+type CharacterLifeSessionState,type CharacterView,type TileTrialReport,
 } from '@haven/core';
+import { describe,expect,it } from 'vitest';
 import { executeCharacterLifeCommand } from '../character-life-command.js';
-import { observeCharacterLife, type Observation, type VisibleCharacter, type VisibleReport } from '../character-life-observation.js';
+import { observeCharacterLife,type Observation,type VisibleCharacter,type VisibleReport } from '../character-life-observation.js';
 import * as simulation from '../index.js';
 
 function life(): CharacterLifeSessionState {
   const r = createCharacterLifeSession(0, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' });
   if (!r.success) throw Error(r.error.message);
   const s = r.value;
+  s.city.tiles.find(t => t.id === 'spec-1')!.building = null;
   s.profiles[0].appearance.measurements = { chestCm: 63, waistCm: 47, hipsCm: 169, disclosure: 'unknown' };
   s.profiles[0].private = { intimateHistory: { value: 'some', disclosure: 'unknown' } };
   expect(isLiveCharacterLifeSessionState(s)).toBe(true);
@@ -53,7 +54,7 @@ function characterContract(c: VisibleCharacter) {
 }
 
 function reportContract(r: VisibleReport) {
-  keys(r, r.immigration ? [...reportKeys, 'immigration'] : reportKeys);
+  keys(r, [...reportKeys, ...(r.goodsStock ? ['goodsStock'] : []), ...(r.immigration ? ['immigration'] : [])]);
   keys(r.before, stockKeys); keys(r.after, stockKeys);
   keys(r.goods, ['demandMilli', 'servedMilli', 'fulfillmentBps', 'woodUsed', 'ironUsed', 'revenueMilli']);
   if (r.immigration) keys(r.immigration, ['populationBefore', 'arrivals', 'populationAfter']);
@@ -63,7 +64,7 @@ function reportContract(r: VisibleReport) {
 function contract(o: Observation) {
   keys(o, ['actionTypes', 'buildings', 'disabledReasons', 'freeManagerSlots', 'lastReport', 'npcs', 'outside',
     'phase', 'player', 'revision', 'settlement', 'tiles', 'week']);
-  keys(o.settlement, ['stocks', 'residents', 'workforceMilli', 'assignedWorkers', 'happiness']);
+  keys(o.settlement, ['stocks', 'residents', 'workforceMilli', 'assignedWorkers', 'happiness', 'goodsStock']);
   keys(o.settlement.stocks, stockKeys);
   keys(o.outside, ['total', 'mine', 'others', 'neutral', 'explored']);
   o.tiles.forEach(t => {
@@ -106,7 +107,7 @@ function rendered(c: VisibleCharacter, view: CharacterView) {
 
 const noPost = 'No free manager post. Build a Farm, Processor, Logging Camp, Mine, Workshop or Market.';
 const checkpointLock = 'Choose Plan next week before saving, continuing, exporting or importing.';
-const planningActions = ['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED', 'END_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC'];
+const planningActions = ['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED', 'END_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC', 'EXTEND_WALL', 'SET_TRAINING'];
 
 describe('explicit nested allowlist and disclosure', () => {
   it('exports the projector and exposes only rendered character fields and exact nested keys', () => {
@@ -219,7 +220,7 @@ describe('actionable catalogues and phase controls', () => {
     expect([o.week, o.phase, o.revision]).toEqual([city.world.week, city.phase, city.revision]);
     expect(o.tiles).toEqual(city.tiles.map(t => ({ id: t.id, terrain: t.terrain, building: t.building && {
       typeId: t.building.typeId, level: t.building.level, workers: t.building.workers, enabled: t.building.enabled } })));
-    expect(o.buildings.map(b => b.typeId)).toEqual(['farm', 'processor', 'logging', 'mine', 'workshop', 'market', 'common-housing', 'makers-rowhouses', 'scholars-quarters', 'merchant-townhouses', 'elite-manor', 'tavern', 'hospital', 'town-hall', 'builders-yard', 'academy', 'town-market', 'trading-post', 'counting-house', 'slave-quarters']);
+    expect(o.buildings.map(b => b.typeId)).toEqual(['farm', 'processor', 'logging', 'mine', 'workshop', 'common-housing', 'makers-rowhouses', 'scholars-quarters', 'merchant-townhouses', 'elite-manor', 'tavern', 'hospital', 'town-hall', 'builders-yard', 'academy', 'town-market', 'trading-post', 'counting-house', 'slave-quarters']);
     expect(o.buildings.map(b => b.typeId)).toEqual(Object.keys(TRIAL_BUILDINGS));
     o.buildings.forEach(b => {
       const d = TRIAL_BUILDINGS[b.typeId];
@@ -227,7 +228,7 @@ describe('actionable catalogues and phase controls', () => {
         terrain: d.terrain, maxLevel: d.maxLevel, maxWorkers: d.maxWorkers, upkeepMilli: d.upkeepMilli });
     });
     expect(o.settlement).toEqual({ stocks: { gold: 30001, wheat: 2026, food: 4003, wood: 8004, iron: 4005 },
-      residents: 100, workforceMilli: weeklyWorkforceMilli(settlement.cohorts), assignedWorkers: 4, happiness: city.happiness });
+      residents: 100, workforceMilli: weeklyWorkforceMilli(settlement.cohorts), assignedWorkers: 4, happiness: city.happiness, goodsStock: { ...city.goodsStock! } });
     expect(o.settlement.residents).toBe(settlement.cohorts.reduce((sum, c) => sum + c.count, 0));
     expect(o.settlement.assignedWorkers).toBe(city.tiles.reduce((sum, t) => sum + (t.building?.workers ?? 0), 0));
     expect(o.settlement.stocks.gold / 1000).toBe(30.001);
@@ -248,12 +249,12 @@ describe('actionable catalogues and phase controls', () => {
     expect(assigned.npcs[0].postTileId).toBe('plain-1');
     rendered(assigned.npcs[0], { character: s.npcs[0].character, profile: s.profiles[0], role: 'npc', postBuildingName: 'Food Processor' });
     expect(assigned.freeManagerSlots.map(p => p.tileId)).toEqual(managerSlotTileIds(s.city).filter(id => !s.npcs.some(n => n.postTileId === id)));
-    s = act(s, { type: 'REPLACE', tileId: 'plain-1', typeId: 'market' }).next;
+    s = act(s, { type: 'REPLACE', tileId: 'plain-1', typeId: 'processor' }).next;
     const replaced = observeCharacterLife(s, null);
     expect(replaced.npcs.map(n => n.postTileId)).toEqual([null, null, null]);
     expect(replaced.npcs[0].postLabel).toBe('Unassigned');
     expect(replaced.freeManagerSlots).toEqual([
-      { tileId: 'field-1', label: 'Manager — Farm (field-1)' }, { tileId: 'plain-1', label: 'Manager — Market (plain-1)' },
+      { tileId: 'field-1', label: 'Manager — Farm (field-1)' }, { tileId: 'plain-1', label: 'Manager — Food Processor (plain-1)' },
     ]);
     expect(replaced.freeManagerSlots.map(p => p.tileId)).toEqual(managerSlotTileIds(s.city).filter(id => !s.npcs.some(n => n.postTileId === id)));
     rendered(replaced.npcs[0], { character: s.npcs[0].character, profile: s.profiles[0], role: 'npc', postBuildingName: null });
@@ -328,7 +329,7 @@ describe('detached complete visible report', () => {
       taxMilli: r.taxMilli, farmBatchGoldMilli: r.farmBatchGoldMilli, farmExtraUpkeepMilli: r.farmExtraUpkeepMilli,
       upkeepPaidMilli: r.upkeepPaidMilli, unpaidUpkeepMilli: r.unpaidUpkeepMilli,
       foodDemandMilli: r.foodDemandMilli, foodConsumedMilli: r.foodConsumedMilli,
-      happinessBefore: r.happinessBefore, happinessAfter: r.happinessAfter, goods: r.goods, activities: r.activities,
+      happinessBefore: r.happinessBefore, happinessAfter: r.happinessAfter, goods: r.goods, goodsStock: r.goodsStock, activities: r.activities,
       immigration: { populationBefore: r.immigration!.populationBefore, arrivals: r.immigration!.arrivals, populationAfter: r.immigration!.populationAfter },
     });
     const next = act(result.next, { type: 'NEXT_WEEK' }).next, retained = observeCharacterLife(next, r);

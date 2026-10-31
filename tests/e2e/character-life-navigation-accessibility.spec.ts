@@ -8,7 +8,7 @@ for (const viewport of [{ width: 375, height: 812 }, { width: 1280, height: 900 
   test(`Goods stock accessibility at ${viewport.width}px`, async ({ page }, info) => {
     test.setTimeout(120000);
     await page.setViewportSize(viewport); await page.goto('/?mode=world-life');
-    await importLife(page, makeLife(20261028, SOCIETY_RULESET));
+    await importLife(page, makeLife(20261028));
     const failures: string[] = [], measurements: Measurement[] = [], focus: unknown[] = [];
     const capture = async () => { const m = await measure(page.getByTestId('life-shell')); measurements.push(m); audit(m, failures); await auditTabOrder(page, failures, focus); };
     await keyActivate(page, page.getByText('Food requirements', { exact: true }));

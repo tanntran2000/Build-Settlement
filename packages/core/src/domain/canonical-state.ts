@@ -1,4 +1,4 @@
-import type { Settlement } from "./settlement.js";
+
 import type { WorldMetadata } from "./gamestate.js";
 import { createPopulationCohort, type PopulationCohort } from "./population.js";
 
@@ -6,8 +6,11 @@ export const WEEKLY_RESOURCE_KEYS = ["gold", "wheat", "food", "wood", "iron"] as
 export type WeeklyResource = typeof WEEKLY_RESOURCE_KEYS[number];
 export type WeeklyStocks = Record<WeeklyResource, number>;
 
-// A distinct new-world contract; R1 Settlement/GameState and its save shape stay independent.
-export interface CanonicalSettlement extends Pick<Settlement, "id" | "name" | "status" | "cohorts"> { inventory: WeeklyStocks; foodProcessorOperational: boolean }
+// Society keeps stocks and cohorts on the settlement and one clock on the world.
+export interface CanonicalSettlement {
+  id: string; name: string; status: 'unexplored' | 'discovered' | 'active' | 'handoff' | 'legacy';
+  cohorts: PopulationCohort[]; inventory: WeeklyStocks; foodProcessorOperational: boolean;
+}
 export interface CanonicalGameState {
   week: number;
   worldMetadata: WorldMetadata;

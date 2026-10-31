@@ -1,14 +1,17 @@
-import type { NamedCharacter } from '../domain/character.js';
 import { hasWeeklyKeys } from '../domain/canonical-state.js';
-import { createTileTrialState, isTileTrialState } from '../trial/state.js';
+import type { NamedCharacter } from '../domain/character.js';
+import { createSocietyState } from '../trial/society.js';
+import { isTileTrialState } from '../trial/state.js';
 import { readDenseArray } from '../world/arrays.js';
-import { isNamedCharacterRecord, isNpcWorldSessionState, isWorldNpcList, type WorldNpc } from '../world/npc.js';
+import { isNamedCharacterRecord,isNpcWorldSessionState,isWorldNpcList,type WorldNpc } from '../world/npc.js';
 import { isWorldSessionState } from '../world/session.js';
 import {
-  BUILDS, CHARACTER_LIMITS as L, EYE_COLORS, FACE_FEATURES, FACE_SHAPES, HAIR_COLORS, HAIR_LENGTHS, HAIR_STYLES, HAIR_TEXTURES,
-  OUTFITS, PLACES, PLAYER_CHARACTER_ID, PLAYER_PROFESSIONS, REGIONS, SKIN_TONES, UPBRINGINGS,
+BUILDS,
+EYE_COLORS,FACE_FEATURES,FACE_SHAPES,HAIR_COLORS,HAIR_LENGTHS,HAIR_STYLES,HAIR_TEXTURES,
+CHARACTER_LIMITS as L,
+OUTFITS,PLACES,PLAYER_CHARACTER_ID,PLAYER_PROFESSIONS,REGIONS,SKIN_TONES,UPBRINGINGS,
 } from './catalog.js';
-import type { CharacterLifeSessionState, CharacterProfile, PlayerCharacter } from './types.js';
+import type { CharacterLifeSessionState,CharacterProfile,PlayerCharacter } from './types.js';
 
 const ids = (list: readonly { id: string }[]) => list.map(w => w.id);
 const oneOf = (v: unknown, values: readonly string[]) => typeof v === 'string' && values.includes(v);
@@ -87,7 +90,7 @@ export function isLiveCharacterLifeSessionState(raw: unknown): raw is CharacterL
     const city = raw.city;
     // Preflight descriptors before the legacy tile guard iterates potentially hostile indices.
     if (!keysOf(city, ['world', 'revision', 'phase', 'tiles', 'happiness'], ['goodsStock', 'society']) || readDenseArray(city.tiles) === null ||
-        !isTileTrialState(city) || !isWorldSessionState({ city: createTileTrialState(), outside: raw.outside }) ||
+        !isTileTrialState(city) || !isWorldSessionState({ city: createSocietyState(), outside: raw.outside }) ||
         !isWorldNpcList(raw.npcs, city)) return false;
     return hasCharacterLifeProfiles(raw, raw.npcs);
   } catch { return false; }

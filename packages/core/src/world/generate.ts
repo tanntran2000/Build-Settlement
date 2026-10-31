@@ -1,11 +1,11 @@
 import { hasWeeklyKeys } from '../domain/canonical-state.js';
-import { LEGACY_TILE_RULESET, POPULATION_TILE_RULESET, type TileTrialRuleset } from '../trial/catalog.js';
+import { SOCIETY_RULESET } from '../trial/society.js';
 import { readDenseArray } from './arrays.js';
 import { createSeededRandom } from './random.js';
-import type { OutsideFeature, OutsideWorldState, WorldResult } from './types.js';
+import type { OutsideFeature,OutsideWorldState,WorldResult } from './types.js';
 
 export interface OutsideWorldConfig {
-  scenarioId: string; generator: string; cityRulesetId: TileTrialRuleset;
+  scenarioId: string; generator: string; cityRulesetId: typeof SOCIETY_RULESET;
   actors: readonly string[];
   tiles: readonly { id: string; owner: string | null; eligible: boolean; knownBy: readonly string[] }[];
   depositBudget: number; lootBudget: number;
@@ -28,7 +28,7 @@ export function validateOutsideWorldConfig(raw: unknown): WorldResult<OutsideWor
   try {
     const config = configRecord(raw, ['scenarioId', 'generator', 'cityRulesetId', 'actors', 'tiles', 'depositBudget', 'lootBudget', 'depositResources']);
     if (!config || !id(config.scenarioId) || !id(config.generator) ||
-        ![LEGACY_TILE_RULESET, POPULATION_TILE_RULESET].includes(config.cityRulesetId as TileTrialRuleset)) return invalid();
+        config.cityRulesetId !== SOCIETY_RULESET) return invalid();
     const actors = readDenseArray(config.actors), tiles = readDenseArray(config.tiles), resources = readDenseArray(config.depositResources);
     if (!actors?.length || !actors.every(id) || new Set(actors).size !== actors.length || !tiles || !resources?.length ||
         !resources.every(r => r === 'wheat' || r === 'wood' || r === 'iron') || new Set(resources).size !== resources.length) return invalid();
@@ -47,7 +47,7 @@ export function validateOutsideWorldConfig(raw: unknown): WorldResult<OutsideWor
     }
     if (!budget(config.depositBudget) || !budget(config.lootBudget) || config.depositBudget > eligible || config.lootBudget > eligible - config.depositBudget) return invalid();
     return { success: true, value: {
-      scenarioId: config.scenarioId, generator: config.generator, cityRulesetId: config.cityRulesetId as TileTrialRuleset,
+      scenarioId: config.scenarioId, generator: config.generator, cityRulesetId: config.cityRulesetId as typeof SOCIETY_RULESET,
       actors, tiles: capturedTiles, depositBudget: config.depositBudget, lootBudget: config.lootBudget,
       depositResources: resources as OutsideWorldConfig['depositResources'],
     } };

@@ -1,6 +1,6 @@
-import { SOCIETY_PLOT_IDS } from './society-map.js';
+import { TILE_TRIAL_BALANCE as B } from './catalog.js';
 import { hasWeeklyKeys } from '../domain/canonical-state.js';
-import { createGoodsStockState } from './goods-stock.js';
+import { GOODS_STOCK_RULESET,GOODS_STOCK_TRIAL } from './goods-stock.js';
 import type { TileTrialState } from './types.js';
 
 export const SOCIETY_RULESET = 'tile-society-01';
@@ -32,11 +32,14 @@ const count = (n: unknown): n is number => Number.isSafeInteger(n) && (n as numb
 const score = (n: unknown): n is number => count(n) && n <= 100;
 
 export function createSocietyState(): TileTrialState {
-  const state = createGoodsStockState();
-  state.tiles.find(t => t.id === 'plain-2')!.building = null;
-  state.tiles.push(...SOCIETY_PLOT_IDS.map(id => ({id, terrain:'town', building:null})));
-  for (const [id,typeId,level] of [['house-1','common-housing',3],['house-2','makers-rowhouses',2],['house-3','scholars-quarters',2],['house-4','merchant-townhouses',1],['spec-1','town-market',1]] as const) state.tiles.find(t=>t.id===id)!.building={typeId,level,workers:0,enabled:true};
-  return { ...state, society: structuredClone(SOCIETY_TRIAL) };
+  return {
+    world: {"week":1,"worldMetadata":{"worldSeed":2026,"gameVersion":"0.1.0"},"activeSettlementId":"settlement_haven_01","settlements":{"settlement_haven_01":{"id":"settlement_haven_01","name":"Haven","status":"active","foodProcessorOperational":true,"inventory":{"gold":GOODS_STOCK_TRIAL.initialGoldMilli,"wheat":0,"food":GOODS_STOCK_TRIAL.initialFoodMilli,"wood":B.initialWoodMilli,"iron":B.initialIronMilli},"cohorts":[{"id":"weekly_middle","occupation":"worker","socialClass":"common","legalStatus":"citizen","count":100,"averageHealth":80,"morale":80,"productivity":80,"resentment":0,"loyalty":80,"livingStandard":"decent"}]}}},
+    revision: 0, phase: 'planning',
+    tiles: [{"id":"field-1","terrain":"fertile","building":{"typeId":"farm","level":1,"workers":2,"enabled":true}},{"id":"plain-1","terrain":"plain","building":{"typeId":"processor","level":1,"workers":2,"enabled":true}},{"id":"forest-1","terrain":"forest","building":null},{"id":"ore-1","terrain":"ore","building":null},{"id":"plain-2","terrain":"plain","building":null},{"id":"plain-3","terrain":"plain","building":null},{"id":"forest-2","terrain":"forest","building":null},{"id":"ore-2","terrain":"ore","building":null},{"id":"field-2","terrain":"fertile","building":null},{"id":"plain-4","terrain":"plain","building":null},{"id":"house-1","terrain":"town","building":{"typeId":"common-housing","level":3,"workers":0,"enabled":true}},{"id":"house-2","terrain":"town","building":{"typeId":"makers-rowhouses","level":2,"workers":0,"enabled":true}},{"id":"house-3","terrain":"town","building":{"typeId":"scholars-quarters","level":2,"workers":0,"enabled":true}},{"id":"house-4","terrain":"town","building":{"typeId":"merchant-townhouses","level":1,"workers":0,"enabled":true}},{"id":"house-5","terrain":"town","building":null},{"id":"house-6","terrain":"town","building":null},{"id":"house-7","terrain":"town","building":null},{"id":"house-8","terrain":"town","building":null},{"id":"house-9","terrain":"town","building":null},{"id":"house-10","terrain":"town","building":null},{"id":"house-11","terrain":"town","building":null},{"id":"service-1","terrain":"town","building":null},{"id":"service-2","terrain":"town","building":null},{"id":"service-3","terrain":"town","building":null},{"id":"service-4","terrain":"town","building":null},{"id":"service-5","terrain":"town","building":null},{"id":"service-6","terrain":"town","building":null},{"id":"spec-1","terrain":"town","building":{"typeId":"town-market","level":1,"workers":0,"enabled":true}},{"id":"spec-2","terrain":"town","building":null},{"id":"spec-3","terrain":"town","building":null},{"id":"spec-4","terrain":"town","building":null},{"id":"spec-5","terrain":"town","building":null},{"id":"spec-6","terrain":"town","building":null},{"id":"spec-7","terrain":"town","building":null},{"id":"spec-8","terrain":"town","building":null},{"id":"spec-9","terrain":"town","building":null},{"id":"spec-10","terrain":"town","building":null},{"id":"slum-1","terrain":"town","building":null},{"id":"slum-2","terrain":"town","building":null},{"id":"slum-3","terrain":"town","building":null},{"id":"slum-4","terrain":"town","building":null},{"id":"slum-5","terrain":"town","building":null},{"id":"slum-6","terrain":"town","building":null}],
+    happiness: B.initialHappiness,
+    goodsStock: { rulesetId: GOODS_STOCK_RULESET, amountMilli: GOODS_STOCK_TRIAL.initialGoodsMilli },
+    society: structuredClone(SOCIETY_TRIAL),
+  };
 }
 export function isSocietyState(raw: unknown): raw is SocietyState {
   try {

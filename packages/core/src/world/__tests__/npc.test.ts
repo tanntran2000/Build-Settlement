@@ -1,8 +1,8 @@
-import { describe, expect, it, vi } from 'vitest';
-import { createTileTrialState } from '../../trial/state.js';
-import { createWorldSession, isWorldSessionState } from '../session.js';
-import { NPC_MANAGER_BUILDING_TYPES, WORLD_NPC_GIVEN_NAMES, WORLD_STARTER_NPCS, WORLD_TRAITS } from '../npc-content.js';
-import { createNpcWorldSession, isNpcWorldSessionState, isWorldNpcList, managerSlotTileIds } from '../npc.js';
+import { describe,expect,it,vi } from 'vitest';
+import { createSocietyState } from '../../trial/society.js';
+import { NPC_MANAGER_BUILDING_TYPES,WORLD_NPC_GIVEN_NAMES,WORLD_STARTER_NPCS,WORLD_TRAITS } from '../npc-content.js';
+import { createNpcWorldSession,isNpcWorldSessionState,isWorldNpcList,managerSlotTileIds } from '../npc.js';
+import { createWorldSession,isWorldSessionState } from '../session.js';
 
 const session = (seed = 0) => { const r = createNpcWorldSession(seed); if (!r.success) throw Error(r.error.message); return r.value; };
 type Mutable = Record<string, any>;
@@ -24,10 +24,10 @@ describe('starter content', () => {
       expect(Object.isFrozen(npc) && Object.isFrozen(npc.character) && Object.isFrozen(npc.character.skills) && Object.isFrozen(npc.traits)).toBe(true);
     }
     expect(Object.isFrozen(WORLD_STARTER_NPCS) && Object.isFrozen(WORLD_TRAITS) && Object.isFrozen(NPC_MANAGER_BUILDING_TYPES)).toBe(true);
-    expect(isWorldNpcList(WORLD_STARTER_NPCS, createTileTrialState())).toBe(true);
+    expect(isWorldNpcList(WORLD_STARTER_NPCS, createSocietyState())).toBe(true);
   });
   it('maps manager posts to the six existing building types', () => {
-    expect([...NPC_MANAGER_BUILDING_TYPES]).toEqual(['farm', 'processor', 'logging', 'mine', 'workshop', 'market', 'town-hall', 'town-market']);
+    expect([...NPC_MANAGER_BUILDING_TYPES]).toEqual(['farm', 'processor', 'logging', 'mine', 'workshop', 'town-hall', 'town-market']);
   });
 });
 
@@ -76,7 +76,8 @@ describe('createNpcWorldSession', () => {
 
 describe('managerSlotTileIds', () => {
   it('lists only built tiles of mapped types, including paused ones', () => {
-    const city = createTileTrialState();
+    const city = createSocietyState();
+    city.tiles.find(t => t.id === 'spec-1')!.building = null;
     expect(managerSlotTileIds(city)).toEqual(['field-1', 'plain-1']);
     city.tiles[1].building = { typeId: 'processor', level: 1, workers: 0, enabled: false };
     city.tiles[2].building = { typeId: 'logging', level: 1, workers: 0, enabled: true };

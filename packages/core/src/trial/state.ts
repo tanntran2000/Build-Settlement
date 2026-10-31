@@ -1,30 +1,17 @@
-import { SOCIETY_BUILDINGS, societyPlot, societyStaff, type StaffClass } from './society-map.js';
-import { createSocietyState, isSocietyState, societyPopulation } from './society.js';
-import { hasWeeklyKeys, isCanonicalGameState } from "../domain/canonical-state.js";
-import { createWeeklyState, weeklyWorkforceMilli } from "../weekly.js";
-import { TILE_TRIAL_BALANCE, trialBuilding } from "./catalog.js";
-import type { TileTrialState } from "./types.js";
+import { hasWeeklyKeys,isCanonicalGameState } from "../domain/canonical-state.js";
+import { trialBuilding } from "./catalog.js";
 import { GOODS_STOCK_RULESET } from './goods-stock.js';
+import { SOCIETY_BUILDINGS,societyPlot,societyStaff,type StaffClass } from './society-map.js';
+import { createSocietyState,isSocietyState,societyPopulation } from './society.js';
+import type { TileTrialState } from "./types.js";
 
-export function createTileTrialState(): TileTrialState {
-  const world = createWeeklyState();
-  Object.assign(world.settlements.settlement_haven_01.inventory, {
-    gold: TILE_TRIAL_BALANCE.initialGoldMilli, wood: TILE_TRIAL_BALANCE.initialWoodMilli, iron: TILE_TRIAL_BALANCE.initialIronMilli,
-  });
-  const tiles = [
-    ["field-1", "fertile", "farm"], ["plain-1", "plain", "processor"], ["forest-1", "forest", ""],
-    ["ore-1", "ore", ""], ["plain-2", "plain", ""], ["plain-3", "plain", ""],
-    ["forest-2", "forest", ""], ["ore-2", "ore", ""], ["field-2", "fertile", ""], ["plain-4", "plain", ""],
-  ].map(([id, terrain, typeId]) => ({ id, terrain, building: typeId ? { typeId, level: 1, workers: 2, enabled: true } : null }));
-  return { world, revision: 0, phase: "planning", tiles, happiness: TILE_TRIAL_BALANCE.initialHappiness };
-}
 const integer = (n: unknown): n is number => Number.isSafeInteger(n) && (n as number) >= 0;
 export function isTileTrialState(raw: unknown): raw is TileTrialState {
   try {
     if (!hasTileKeys(raw)) return false;
     if (Object.hasOwn(raw, 'goodsStock') &&
         !(hasWeeklyKeys(raw.goodsStock, ['rulesetId', 'amountMilli']) && raw.goodsStock.rulesetId === GOODS_STOCK_RULESET && integer(raw.goodsStock.amountMilli))) return false;
-    if (Object.hasOwn(raw, 'society') && !isSocietyState(raw.society)) return false;
+    if (!isSocietyState(raw.society)) return false;
     const s = raw as unknown as TileTrialState;
     if (!isCanonicalGameState(s.world) || !s.world.activeSettlementId || !integer(s.revision) ||
       !["planning", "report"].includes(s.phase) || !Number.isFinite(s.happiness) || s.happiness < 0 || s.happiness > 100 || !Array.isArray(s.tiles)) return false;
@@ -52,7 +39,7 @@ export function isTileTrialState(raw: unknown): raw is TileTrialState {
         if (b.typeId === 'market' || (plot && (t.terrain !== 'town' || plot.ring > s.society.wallRing || !info || info.tier !== plot.tier)) || (!plot && info)) return false;
         const staff = societyStaff(b.typeId);
         if (staff) { assigned[staff] += b.workers; if (!Number.isSafeInteger(assigned[staff])) return false; }
-      } else if (d.terrain.includes('town')) return false;
+      }
       workers += b.workers; if (!Number.isSafeInteger(workers)) return false;
     }
     if (s.society) {
@@ -60,7 +47,7 @@ export function isTileTrialState(raw: unknown): raw is TileTrialState {
       const bound = Object.values(c.bound).reduce((a,b)=>a+b,0);
       return assigned.basic <= Math.floor(c.free/10)+Math.floor(bound/10) && (['makers','luminaries','merchants'] as const).every(k=>assigned[k]<=Math.floor(c[k].common/10));
     }
-    return workers * 1000 <= weeklyWorkforceMilli(s.world.settlements[s.world.activeSettlementId].cohorts);
+    return false;
   } catch { return false; }
 }
 
@@ -70,7 +57,7 @@ export function isTileTrialPlanningState(raw: unknown): raw is TileTrialState {
     if (!hasTileKeys(raw) || raw.phase !== "planning" || !Array.isArray(raw.tiles)) return false;
     const tiles = raw.tiles;
     if (Object.getPrototypeOf(tiles) !== Array.prototype || Reflect.ownKeys(tiles).length !== tiles.length + 1) return false;
-    const expected = (Object.hasOwn(raw, 'society') ? createSocietyState() : createTileTrialState()).tiles;
+    const expected = createSocietyState().tiles;
     if (tiles.length !== expected.length) return false;
     for (let i = 0; i < tiles.length; i++) {
       const entry = Object.getOwnPropertyDescriptor(tiles, String(i));
@@ -83,5 +70,5 @@ export function isTileTrialPlanningState(raw: unknown): raw is TileTrialState {
 
 const TILE_KEYS = ['world', 'revision', 'phase', 'tiles', 'happiness'];
 function hasTileKeys(raw: unknown): raw is Record<string, unknown> {
-  return [TILE_KEYS, [...TILE_KEYS, 'goodsStock'], [...TILE_KEYS, 'goodsStock', 'society']].some(keys => hasWeeklyKeys(raw, keys));
+  return hasWeeklyKeys(raw, [...TILE_KEYS, 'goodsStock', 'society']);
 }

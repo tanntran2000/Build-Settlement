@@ -1,6 +1,6 @@
-import { describe, expect, it } from 'vitest';
-import { createNpcWorldSession, isNpcWorldSessionState, type NpcWorldSessionState } from '@haven/core';
-import { executeWorldNpcCityCommand, executeWorldNpcCommand } from '../world-npc.js';
+import { createNpcWorldSession,isNpcWorldSessionState,type NpcWorldSessionState } from '@haven/core';
+import { describe,expect,it } from 'vitest';
+import { executeWorldNpcCityCommand,executeWorldNpcCommand } from '../world-npc.js';
 
 const session = () => { const r = createNpcWorldSession(0); if (!r.success) throw Error(r.error.message); return r.value; };
 function freeze<T>(value: T): T {
@@ -81,7 +81,7 @@ describe('executeWorldNpcCommand', () => {
     rejects(session(), { type: 'ASSIGN_NPC', npcId: 'npc_starter_1' }, 'INVALID_COMMAND');
     rejects(session(), { type: 'ASSIGN_NPC', npcId: 'npc_starter_1', tileId: 'field-1', extra: 1 }, 'INVALID_COMMAND');
     rejects(session(), { type: 'ASSIGN_NPC', npcId: 7, tileId: 'field-1' }, 'INVALID_COMMAND');
-    rejects(session(), { type: 'BUILD', tileId: 'plain-2', typeId: 'market' }, 'INVALID_COMMAND');
+    rejects(session(), { type: 'BUILD', tileId: 'plain-2', typeId: 'processor' }, 'INVALID_COMMAND');
     const getter = { type: 'UNASSIGN_NPC', expectedRevision: 0 }; Object.defineProperty(getter, 'npcId', { enumerable: true, get: () => 'npc_starter_1' });
     expect(executeWorldNpcCommand(session(), getter)).toMatchObject({ success: false, error: { code: 'INVALID_COMMAND' } });
     const bad = session(); bad.npcs[0].postTileId = 'plain-2';
@@ -106,8 +106,8 @@ describe('executeWorldNpcCommand', () => {
 describe('executeWorldNpcCityCommand', () => {
   const held = () => assign(assign(session(), 'npc_starter_1', 'field-1'), 'npc_starter_2', 'plain-1');
   it('REPLACE clears that post in the same result and the slot can be reassigned', () => {
-    const s = city(held(), { type: 'REPLACE', tileId: 'plain-1', typeId: 'market' });
-    expect(s.city.tiles[1].building?.typeId).toBe('market');
+    const s = city(held(), { type: 'REPLACE', tileId: 'plain-1', typeId: 'processor' });
+    expect(s.city.tiles[1].building?.typeId).toBe('processor');
     expect(s.npcs.map(n => n.postTileId)).toEqual(['field-1', null, null]);
     expect(post(assign(s, 'npc_starter_3', 'plain-1'), 'npc_starter_3')).toBe('plain-1');
   });
@@ -133,7 +133,7 @@ describe('executeWorldNpcCityCommand', () => {
     const s = freeze(held()), before = structuredClone(s);
     expect(executeWorldNpcCityCommand(s, { type: 'REPLACE', expectedRevision: s.city.revision, tileId: 'plain-1', typeId: 'farm' }))
       .toMatchObject({ success: false, error: { code: 'INVALID_PLACEMENT' } });
-    expect(executeWorldNpcCityCommand(s, { type: 'BUILD', expectedRevision: s.city.revision - 1, tileId: 'plain-2', typeId: 'market' }))
+    expect(executeWorldNpcCityCommand(s, { type: 'BUILD', expectedRevision: s.city.revision - 1, tileId: 'plain-2', typeId: 'processor' }))
       .toMatchObject({ success: false, error: { code: 'STALE_COMMAND' } });
     expect(s).toEqual(before);
   });
