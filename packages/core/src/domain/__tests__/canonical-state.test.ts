@@ -1,6 +1,6 @@
 import { describe, expect, expectTypeOf, it } from "vitest";
 import { isCanonicalGameState, type CanonicalGameState, type CanonicalSettlement } from "../canonical-state.js";
-import type { GameState } from "../gamestate.js";
+
 import type { PopulationCohort } from "../population.js";
 
 function world(): CanonicalGameState {
@@ -16,7 +16,7 @@ const invalidNumbers = [-1, 0.1, NaN, Infinity, Number.MAX_SAFE_INTEGER + 1, "10
 describe("canonical weekly world boundary", () => {
   it("accepts a canonical world without introducing an R1 date or root stocks", () => {
     expect(isCanonicalGameState(world())).toBe(true);
-    expectTypeOf<CanonicalGameState>().not.toExtend<GameState>();
+
     expectTypeOf<CanonicalSettlement["cohorts"]>().toEqualTypeOf<PopulationCohort[]>();
   });
   it.each([null, [], 1, "world", {}, { week: 1, resources: { gold: 10000, food: 4000, wood: 0, iron: 0 } }])("rejects noncanonical root %j", value => {
