@@ -1,10 +1,12 @@
-import { GOODS_STOCK_RULESET } from '@haven/core';
+import { SOCIETY_RULESET } from '@haven/core';
 import { isCharacterLifeSessionState, type CharacterLifeSessionState } from '@haven/core';
 import { captureSaveData, deserializeCharacterLifeSave, serializeCharacterLifeSave } from '@haven/persistence';
 import { prepareNpcWorldSessionLoad } from './world-npc-session.js';
 
-export const CHARACTER_LIFE_CHECKPOINT_KEY = 'haven.character-life-session.checkpoint.v1';
-export const CHARACTER_LIFE_CHECKPOINT_GOODS_KEY = 'haven.character-life-session-goods.checkpoint.v1';
+export const CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY = 'haven.character-life-session-society.checkpoint.v1';
+export const OLD_CHECKPOINT_MESSAGE = 'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.';
+export function isPlayableCheckpoint(state: CharacterLifeSessionState): boolean { return state.city.society?.rulesetId === SOCIETY_RULESET; }
+
 type Failure = { success: false; message: string };
 const fail = (message: string): Failure => ({ success: false, message });
 
@@ -24,7 +26,8 @@ export function saveLocalCharacterLife(session: unknown): { success: true; repla
   const result = serializeCharacterLifeSave(session);
   if (!result.success) return fail(result.error.message);
   try {
-    const key = JSON.parse(result.text).cityRulesetId === GOODS_STOCK_RULESET ? CHARACTER_LIFE_CHECKPOINT_GOODS_KEY : CHARACTER_LIFE_CHECKPOINT_KEY;
+    if (JSON.parse(result.text).cityRulesetId !== SOCIETY_RULESET) return fail(OLD_CHECKPOINT_MESSAGE);
+    const key = CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY;
     const storage = window.localStorage;
     const replaced = storage.getItem(key) !== null;
     storage.setItem(key, result.text);
@@ -34,17 +37,15 @@ export function saveLocalCharacterLife(session: unknown): { success: true; repla
   }
 }
 
-export function readLocalCharacterLife() { return readCheckpoint(false); }
-export function readOldLocalCharacterLife() { return readCheckpoint(true); }
-function readCheckpoint(oldOnly: boolean): { success: true; state: CharacterLifeSessionState } | Failure {
+export function readLocalCharacterLife(): { success: true; state: CharacterLifeSessionState } | Failure {
   let text: string | null;
   try {
     const storage = window.localStorage;
-    text = oldOnly ? storage.getItem(CHARACTER_LIFE_CHECKPOINT_KEY) : storage.getItem(CHARACTER_LIFE_CHECKPOINT_GOODS_KEY) ?? storage.getItem(CHARACTER_LIFE_CHECKPOINT_KEY);
+    text = storage.getItem(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY);
   } catch {
     return fail('Could not read browser storage. Your game was preserved. Use Import checkpoint instead.');
   }
   if (text === null) return fail('No local checkpoint in this browser yet. Choose Save locally first.');
   const result = deserializeCharacterLifeSave(text);
-  return result.success ? result : fail(`Local checkpoint not loaded; it was left unchanged. ${result.error.message}`);
+  return result.success && isPlayableCheckpoint(result.state) ? result : fail(`Local checkpoint not loaded; it was left unchanged. ${OLD_CHECKPOINT_MESSAGE}`);
 }

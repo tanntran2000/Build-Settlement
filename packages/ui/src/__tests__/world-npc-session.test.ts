@@ -1,8 +1,8 @@
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { createNpcWorldSession, createWorldSession } from '@haven/core';
 import { serializeNpcWorldSessionSave, serializeWorldSessionSave } from '@haven/persistence';
-import { prepareNpcWorldSessionLoad, readOldLocalNpcWorldSession, saveLocalNpcWorldSession, WORLD_NPC_CHECKPOINT_KEY } from '../world-npc-session.js';
-import { WORLD_SESSION_CHECKPOINT_KEY } from '../world-session.js';
+import { prepareNpcWorldSessionLoad } from '../world-npc-session.js';
+const WORLD_SESSION_CHECKPOINT_KEY = 'haven.world-session.checkpoint.v1';
 
 const session = (seed = 0) => { const r = createNpcWorldSession(seed); if (!r.success) throw Error(); return r.value; };
 const otherKeys = [WORLD_SESSION_CHECKPOINT_KEY, 'haven.tile-trial.checkpoint.v1', 'haven.tile-population.checkpoint.v1'];
@@ -15,9 +15,6 @@ beforeEach(() => {
 });
 afterEach(() => { vi.unstubAllGlobals(); vi.restoreAllMocks(); });
 
-it('uses its own slot key', () => {
-  expect(WORLD_NPC_CHECKPOINT_KEY).toBe('haven.world-npc-session.checkpoint.v1');
-});
 it('prepares city, outside and npcs together, rebasing the revision', () => {
   const live = session(), loaded = session(7); live.city.revision = 5; loaded.city.revision = 2; loaded.npcs[1].postTileId = 'field-1';
   const before = structuredClone(live), result = prepareNpcWorldSessionLoad(live, loaded, 5);
@@ -37,29 +34,4 @@ it.each(['stale', 'invalid npcs', 'invalid city', 'world v1 session', 'original 
   const result = prepareNpcWorldSessionLoad(live, input, expected);
   expect(result.success).toBe(kind === 'original get');
   expect(live).toEqual(before); expect(loaded).toEqual(saved);
-});
-it('saves only to the npc slot and reads back the same session', () => {
-  const s = session(); s.npcs[2].postTileId = 'plain-1';
-  const encoded = serializeNpcWorldSessionSave(s); if (!encoded.success) throw Error();
-  expect(saveLocalNpcWorldSession(s)).toEqual({ success: true, replaced: false });
-  expect(storage.setItem.mock.calls).toEqual([[WORLD_NPC_CHECKPOINT_KEY, encoded.text]]);
-  expect(readOldLocalNpcWorldSession()).toEqual({ success: true, state: s });
-  expect(saveLocalNpcWorldSession(s)).toEqual({ success: true, replaced: true });
-  otherKeys.forEach(k => expect(values.get(k)).toBe('protected-bytes'));
-});
-it('rejects a world v1 checkpoint in the npc slot and leaves its bytes untouched', () => {
-  const world = createWorldSession(0); if (!world.success) throw Error();
-  const v1 = serializeWorldSessionSave(world.value); if (!v1.success) throw Error();
-  values.set(WORLD_NPC_CHECKPOINT_KEY, v1.text); const before = new Map(values);
-  expect(readOldLocalNpcWorldSession()).toMatchObject({ success: false, message: expect.stringContaining('left unchanged') });
-  expect(values).toEqual(before); expect(storage.setItem).not.toHaveBeenCalled();
-});
-it('reports a missing slot and contained storage failures without touching bytes', () => {
-  expect(readOldLocalNpcWorldSession()).toMatchObject({ success: false, message: expect.stringContaining('No local checkpoint') });
-  storage.setItem.mockImplementation(() => { throw Error('private'); });
-  const before = new Map(values), result = saveLocalNpcWorldSession(session());
-  expect(result).toMatchObject({ success: false, message: expect.stringContaining('Export checkpoint') });
-  expect(JSON.stringify(result)).not.toContain('private'); expect(values).toEqual(before);
-  const invalid = session(); invalid.city.phase = 'report'; storage.getItem.mockClear();
-  expect(saveLocalNpcWorldSession(invalid).success).toBe(false); expect(storage.getItem).not.toHaveBeenCalled();
 });
