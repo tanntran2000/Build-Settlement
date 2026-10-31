@@ -1,4 +1,4 @@
-﻿import { SOCIETY_BUILDINGS, SOCIETY_PLOT_IDS, societyPlot, societyStaff, TRIAL_BUILDINGS, GOODS_STOCK_TRIAL, type TileTrialState, type SocietyTier } from '@haven/core';
+import { SOCIETY_BUILDINGS, SOCIETY_PLOT_IDS, societyPlot, societyStaff, TRIAL_BUILDINGS, GOODS_STOCK_TRIAL, type TileTrialState, type SocietyTier } from '@haven/core';
 import { societyWorkforce, SOCIETY_WEEK_TRIAL as T, type SocietyNote } from '@haven/simulation';
 export type ClassId = 'free' | 'makers' | 'luminaries' | 'merchants' | 'bound';
 export type ColourKey = ClassId | 'none';

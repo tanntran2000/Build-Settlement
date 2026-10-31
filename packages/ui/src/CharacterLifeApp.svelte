@@ -67,7 +67,7 @@
 
 <style>
   main { max-width: 1180px; margin: auto; padding: 24px; }
-  .card { margin-bottom: 16px; } h1 { font-size: 1.9rem; } p { margin: 12px 0; line-height: 1.55; } a { color: var(--accent-green); }
+  .card { margin-bottom: 16px; } h1 { font-size: 1.9rem; } p { margin: 12px 0; line-height: 1.55; }
   .eyebrow { color: var(--text-muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; }
   label { display: block; margin: 16px 0 8px; } input, button { font: inherit; border-radius: 6px; padding: 10px; border: 1px solid var(--border-color); }
   input { color: var(--text-main); background: var(--bg-tertiary); max-width: 100%; }

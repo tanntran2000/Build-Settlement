@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { WEEKLY_RESOURCE_KEYS, TILE_TRIAL_BALANCE as B, type TileTrialReport } from '@haven/core';
+  import { WEEKLY_RESOURCE_KEYS, type TileTrialReport } from '@haven/core';
+  import SocietyReport from './SocietyReport.svelte';
   import { formatFulfillment, formatMilli } from './milli-format.js';
   import { formatLifeWeek } from './life-calendar.js';
 
@@ -32,6 +33,7 @@
       {#if report.immigration}<p data-testid="trial-immigration">Population: {report.immigration.populationBefore} → {report.immigration.populationAfter} · {report.immigration.arrivals} arrivals · Available next week.</p>{/if}
       <p>Happiness: {report.happinessBefore} → {report.happinessAfter}.</p>
     </section>
+    {#if report.society}<SocietyReport {report} />{/if}
     <!-- svelte-ignore a11y_no_noninteractive_tabindex (Keyboard users must be able to scroll the table.) -->
     <div class="ledger" role="region" aria-label="Weekly stock ledger scroll area" tabindex="0">
       <table>
@@ -50,9 +52,7 @@
     <details>
       <summary>How this is calculated</summary>
       <p>Stock change is closing stock minus opening stock for this resolved week. It is not gross production or a forecast.</p>
-      {#if report.goodsStock}<p>IMPLEMENTATION TRIAL: 1 Workshop WF + 2 Wood → 2 stored Goods per funded batch; no Iron. Funded Markets distribute up to 2 Goods per level weekly, limited by stock and demand of 0.02 per resident. Unused stock carries over. Only distribution earns 1 Gold per Goods, once. Stored Goods is not recurring income; actual sale Gold remains cash.</p>
-      {:else}<p>TRIAL: tax {formatMilli(B.taxGoldPerResident)} Gold/resident/week; Goods demand {formatMilli(B.goodsDemandPerResident)} service/resident/week. Workshop: 1 WF + {formatMilli(B.goodsWoodPerBatch)} Wood + {formatMilli(B.goodsIronPerBatch)} Iron → {formatMilli(B.goodsServicePerBatch)} service. Market: {formatMilli(B.marketServicePerLevel)} service/level; raises capacity, not demand. Whole Workshop batches may have unused service; nothing carries over.</p>{/if}
-      <p>Goods earns {formatMilli(B.goldPerServiceMilli)} Gold/service and up to {B.goodsHappinessMax} Happiness at full fulfillment. Food need: {formatMilli(B.foodDemandPerResident)} per resident/week. Maintenance is funded in tile order; tax arrives first.</p>
+      <p>TRIAL: each class eats and uses Goods separately; the Bound eat last. Missing Food, Goods or housing lowers that class's satisfaction and stops its arrivals. Each class supplies 1 WF per 10 residents; Elites do not work.</p>
       {#if report.immigration}<p>Immigration target: {report.immigration.target}. Useful worker slots: {report.immigration.usefulWorkerSlots}. Renewable Food: {formatMilli(report.immigration.renewableFoodMilli)}. Reason: {report.immigration.reason}.</p>{/if}
     </details>
   {:else}

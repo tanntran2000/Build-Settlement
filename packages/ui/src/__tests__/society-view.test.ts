@@ -1,4 +1,4 @@
-﻿import { expect, it } from 'vitest';
+import { expect, it } from 'vitest';
 import { createSocietyState } from '@haven/core';
 import { insideTiers, buildOptions, staffPools, plannedHousing, wallStatus, effectLine, noteSentence, buildingColour, workforceSummary } from '../society-view.js';
 it('groups all plots by tier and locks later rings', () => {
