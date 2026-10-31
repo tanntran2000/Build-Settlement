@@ -1,135 +1,25 @@
-import { test, expect, type Page } from '@playwright/test';
-
-async function tile(page: Page, id: string) {
-  await page.getByRole('button', { name: `Select ${id}`, exact: true }).click();
-}
-async function build(page: Page, id: string, type: string, workers?: number) {
-  await tile(page, id);
-  await page.getByLabel('Building type').selectOption(type);
-  await page.getByRole('button', { name: 'Build', exact: true }).click();
-  if (workers !== undefined) {
-    await page.getByLabel('Assigned workers (WF)').fill(String(workers));
-    await page.getByRole('button', { name: 'Assign workers', exact: true }).click();
-  }
-}
-
-test('tile mode is discoverable and rejects unsuitable placement without spending', async ({ page }) => {
-  await page.goto('/');
-  await page.getByRole('link', { name: 'Play tile building trial' }).click();
-  await expect(page.getByRole('heading', { name: 'Tile Building Trial', exact: true })).toBeVisible();
-  await expect(page.getByTestId('trial-stock-gold')).toHaveText('30');
-  await tile(page, 'plain-2');
-  await page.getByLabel('Building type').selectOption('logging');
-  await page.getByRole('button', { name: 'Build', exact: true }).click();
-  await expect(page.getByRole('alert').first()).toContainText('requires forest');
-  await expect(page.getByTestId('trial-stock-gold')).toHaveText('30');
-  await expect(page.getByTestId('trial-tile-plain-2')).toContainText('Empty');
+﻿import {test,expect} from '@playwright/test';
+import {act,boot,fundedLife,week} from './society-command.helpers.ts';
+import {expectReport,exportLife,go,makeLife} from './character-life-navigation.helpers.ts';
+import {executeCharacterLifeCommand} from '../../packages/simulation/src/character-life-command.ts';
+test('one game entry rejects unsuitable placement without spending',async({page})=>{
+ const s=await boot(page);const before=await exportLife(page);await act(page,s,'BUILD',{tileId:'plain-2',typeId:'logging'});expect(await exportLife(page)).toEqual(before);await go(page,'city');await expect(page.getByTestId('trial-tile-plain-2')).toContainText('Empty');
 });
-
-test('builds production and Market, serves Goods once, then upgrades and replaces', async ({ page }) => {
-  await page.goto('/?mode=tiles');
-  await build(page, 'forest-1', 'logging', 2);
-  await build(page, 'ore-1', 'mine', 1);
-  await build(page, 'plain-2', 'workshop', 1);
-  await build(page, 'plain-3', 'market');
-  await expect(page.getByTestId('trial-stock-gold')).toHaveText('18');
-  await page.getByRole('button', { name: 'End Week', exact: true }).click();
-  await expect(page.getByRole('heading', { name: 'Week 1 report', exact: true })).toBeVisible();
-  await expect(page.getByTestId('trial-goods')).toContainText('2 / 2');
-  await expect(page.getByTestId('trial-goods')).toContainText('100%');
-  await expect(page.getByTestId('trial-stock-gold')).toHaveText('18.5');
-  await expect(page.getByTestId('trial-stock-food')).toHaveText('4');
-  await expect(page.getByTestId('trial-stocks').getByText('Goods', { exact: true })).toHaveCount(0);
-  await expect(page.getByRole('button', { name: 'End Week', exact: true })).toBeDisabled();
-  await expect(page.getByRole('button', { name: 'Upgrade', exact: true })).toBeDisabled();
-  await page.getByRole('button', { name: 'Plan next week', exact: true }).click();
-  await page.getByRole('button', { name: 'Upgrade', exact: true }).click();
-  await expect(page.getByTestId('trial-tile-plain-3')).toContainText('Level 2');
-  await expect(page.getByTestId('trial-stock-gold')).toHaveText('12.5');
-  await page.getByRole('button', { name: 'End Week', exact: true }).click();
-  await expect(page.getByTestId('trial-goods')).toContainText('2 / 2');
-  await expect(page.getByTestId('trial-stock-gold')).toHaveText('12.5');
-  await page.getByRole('button', { name: 'Plan next week', exact: true }).click();
-  await page.getByLabel('Building type').selectOption('processor');
-  await page.getByRole('button', { name: 'Replace', exact: true }).click();
-  await expect(page.getByTestId('trial-tile-plain-3')).toContainText('Food Processor');
-  await expect(page.getByTestId('trial-tile-plain-3')).toContainText('Level 1');
-  await expect(page.getByTestId('trial-stock-gold')).toHaveText('9.5');
-  await page.getByRole('button', { name: 'Pause', exact: true }).click();
-  await expect(page.getByTestId('trial-tile-plain-3')).toContainText('Paused');
-  await page.reload();
-  await expect(page.getByTestId('trial-stock-gold')).toHaveText('30');
+test('builds production and inside Market, serves Goods once, then upgrades and replaces',async({page})=>{
+ let s=await boot(page,fundedLife());
+ for(const [tileId,typeId,workers] of [['forest-1','logging',2],['ore-1','mine',1],['plain-2','workshop',1],['spec-2','town-market',0]] as const){s=await act(page,s,'BUILD',{tileId,typeId});if(workers)s=await act(page,s,'SET_WORKERS',{tileId,workers});}
+ s=await act(page,s,'END_WEEK',{expectedWeek:1});await expect(page.getByTestId('trial-goods')).toContainText('100%');await go(page,'city');await expect(page.getByRole('button',{name:'Upgrade',exact:true})).toBeDisabled();await expect(page.getByTestId('life-end-week')).toHaveAttribute('aria-disabled','true');
+ s=await act(page,s,'NEXT_WEEK');s=await act(page,s,'UPGRADE',{tileId:'spec-2'});await expect(page.getByTestId('trial-tile-spec-2')).toContainText('Level 2');s=await week(page,s);s=await act(page,s,'REPLACE',{tileId:'spec-2',typeId:'counting-house'});await expect(page.getByTestId('trial-tile-spec-2')).toContainText('Counting House');await expect(page.getByTestId('trial-tile-spec-2')).toContainText('Level 1');s=await act(page,s,'SET_ENABLED',{tileId:'spec-2',enabled:false});await expect(page.getByTestId('trial-tile-spec-2')).toContainText('Paused');expect(await exportLife(page)).toEqual(s);await page.reload();await expect(page.getByRole('button',{name:'New Game',exact:true})).toBeVisible();await expect(page.getByTestId('life-shell')).toHaveCount(0);
 });
-
-test('invalid worker and unaffordable replacement preserve plan', async ({ page }) => {
-  await page.goto('/?mode=tiles');
-  await tile(page, 'field-1');
-  await page.getByLabel('Assigned workers (WF)').fill('0.5');
-  await page.getByRole('button', { name: 'Assign workers', exact: true }).click();
-  await expect(page.getByRole('alert').first()).toContainText('whole');
-  await expect(page.getByTestId('trial-tile-field-1')).toContainText('2 WF');
-  await build(page, 'plain-2', 'market');
-  await page.getByRole('button', { name: 'Upgrade', exact: true }).click();
-  await page.getByLabel('Building type').selectOption('market');
-  await page.getByRole('button', { name: 'Replace', exact: true }).click();
-  await page.getByRole('button', { name: 'Replace', exact: true }).click();
-  await page.getByRole('button', { name: 'Replace', exact: true }).click();
-  // Replacement spends Wood once each time; it never refunds the old building.
-  await expect(page.getByRole('alert').first()).toContainText('Not enough wood');
-  await expect(page.getByTestId('trial-tile-plain-2')).toContainText('Market');
-  await expect(page.getByTestId('trial-stock-wood')).toHaveText('0');
+test('invalid worker and unaffordable replacement preserve plan',async({page})=>{
+ let s=await boot(page);s=await act(page,s,'SET_WORKERS',{tileId:'field-1',workers:0.5});s=await act(page,s,'BUILD',{tileId:'spec-2',typeId:'town-market'});s=await act(page,s,'UPGRADE',{tileId:'spec-2'});for(let i=0;i<3;i++)s=await act(page,s,'REPLACE',{tileId:'spec-2',typeId:'town-market'});await expect(page.getByRole('region',{name:'Manage tile',exact:true}).getByRole('alert')).toContainText('Not enough wood');expect(s.city.world.settlements[s.city.world.activeSettlementId!].inventory.wood).toBe(0);await expect(page.getByTestId('trial-tile-spec-2')).toContainText('Market');
 });
-
-for (const width of [1280, 390]) {
-  test(`double-click Plan next week preserves the new plan at ${width}px`, async ({ page }) => {
-    await page.setViewportSize({ width, height: 800 });
-    await page.goto('/?mode=tiles');
-    await build(page, 'forest-1', 'logging', 2);
-    await page.getByRole('button', { name: 'End Week', exact: true }).click();
-    const stocks = await page.getByTestId('trial-stocks').textContent();
-    await page.getByRole('button', { name: 'Plan next week', exact: true }).dblclick();
-    await expect(page.locator('header')).toContainText('Week 2 · Planning');
-    await expect(page.getByTestId('trial-stocks')).toHaveText(stocks!);
-    await expect(page.getByRole('button', { name: 'Plan next week', exact: true })).toBeDisabled();
-    await expect(page.getByText('Previous report · Planning is active.', { exact: true })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'End Week', exact: true })).toBeEnabled();
-    // A separate intentional action is immediately available; no debounce timer.
-    await page.getByRole('button', { name: 'End Week', exact: true }).click();
-    await expect(page.locator('header')).toContainText('Week 3 · Report');
-    await expect(page.getByTestId('trial-stock-wood')).toHaveText('16');
-    await expect(page.getByRole('heading', { name: 'Week 1 report', exact: true })).toHaveCount(0);
-    await expect(page.getByRole('heading', { name: 'Week 2 report', exact: true })).toBeVisible();
-  });
-}
-
-test('repeated keyboard activation cannot turn planning into another End Week', async ({ page }) => {
-  await page.goto('/?mode=tiles');
-  await page.getByRole('button', { name: 'End Week', exact: true }).click();
-  await page.getByRole('button', { name: 'Plan next week', exact: true }).focus();
-  await page.keyboard.press('Enter');
-  await page.keyboard.press('Enter');
-  await page.keyboard.press('Space');
-  await expect(page.locator('header')).toContainText('Week 2 · Planning');
-  await page.getByRole('button', { name: 'End Week', exact: true }).focus();
-  await page.keyboard.press('Enter');
-  await page.keyboard.press('Enter');
-  await expect(page.locator('header')).toContainText('Week 3 · Report');
+for(const width of [1280,390])test(`double-click Plan next week preserves the new plan at ${width}px`,async({page})=>{
+ await page.setViewportSize({width,height:800});let s=await boot(page);s=await act(page,s,'BUILD',{tileId:'forest-1',typeId:'logging'});s=await act(page,s,'SET_WORKERS',{tileId:'forest-1',workers:2});s=await act(page,s,'END_WEEK',{expectedWeek:1});const next=executeCharacterLifeCommand(s,{type:'NEXT_WEEK',expectedRevision:s.city.revision});if(!next.success)throw Error();await page.getByRole('button',{name:'Plan next week',exact:true}).dblclick();await expect(page.locator('aside')).toContainText('Week 2 · Year 1 · Planning');await expect(page.getByRole('button',{name:'Plan next week',exact:true})).toHaveAttribute('aria-disabled','true');await expect(page.getByText('Previous report · Planning is active.',{exact:true})).toBeVisible();expect(await exportLife(page)).toEqual(next.next);await go(page,'city');await act(page,next.next,'END_WEEK',{expectedWeek:2});await expect(page.getByRole('heading',{name:'Week 1 · Year 1 report',exact:true})).toHaveCount(0);await expect(page.getByRole('heading',{name:'Week 2 · Year 1 report',exact:true})).toBeVisible();
 });
-
-test('repeated touch taps at Plan coordinates preserve planning until intentional End Week', async ({ browser, baseURL }) => {
-  const context = await browser.newContext({ baseURL, hasTouch: true, viewport: { width: 390, height: 844 } });
-  try {
-    const page = await context.newPage();
-    await page.goto('/?mode=tiles');
-    await page.getByRole('button', { name: 'End Week', exact: true }).tap();
-    const next = page.getByRole('button', { name: 'Plan next week', exact: true });
-    await next.scrollIntoViewIfNeeded();
-    const box = (await next.boundingBox())!;
-    await page.touchscreen.tap(box.x + box.width / 2, box.y + box.height / 2);
-    await page.touchscreen.tap(box.x + box.width / 2, box.y + box.height / 2);
-    await expect(page.locator('header')).toContainText('Week 2 · Planning');
-    await expect(next).toBeDisabled();
-    await page.getByRole('button', { name: 'End Week', exact: true }).tap();
-    await expect(page.locator('header')).toContainText('Week 3 · Report');
-  } finally { await context.close(); }
+test('repeated keyboard activation cannot turn planning into another End Week',async({page})=>{
+ let s=await boot(page);s=await act(page,s,'END_WEEK',{expectedWeek:1});await page.getByRole('button',{name:'Plan next week',exact:true}).focus();for(const key of ['Enter','Enter','Space'])await page.keyboard.press(key);const next=executeCharacterLifeCommand(s,{type:'NEXT_WEEK',expectedRevision:s.city.revision});if(!next.success)throw Error();expect(await exportLife(page)).toEqual(next.next);await go(page,'city');await page.getByTestId('life-end-week').focus();await page.keyboard.press('Enter');await page.keyboard.press('Enter');const resolved=executeCharacterLifeCommand(next.next,{type:'END_WEEK',expectedRevision:next.next.city.revision,expectedWeek:2});if(!resolved.success||!resolved.report)throw Error();await expectReport(page,resolved.report);await expect(page.getByTestId('life-shell')).toHaveAttribute('data-revision',String(resolved.next.city.revision));
+});
+test('repeated touch taps at Plan coordinates preserve planning until intentional End Week',async({browser,baseURL})=>{
+ const context=await browser.newContext({baseURL,hasTouch:true,viewport:{width:390,height:844}});try{const page=await context.newPage();const s=await boot(page,makeLife());await page.getByTestId('life-end-week').tap();const resolved=executeCharacterLifeCommand(s,{type:'END_WEEK',expectedRevision:s.city.revision,expectedWeek:1});if(!resolved.success)throw Error();const nextButton=page.getByRole('button',{name:'Plan next week',exact:true});await nextButton.scrollIntoViewIfNeeded();const box=(await nextButton.boundingBox())!;for(let i=0;i<2;i++)await page.touchscreen.tap(box.x+box.width/2,box.y+box.height/2);await expect(nextButton).toHaveAttribute('aria-disabled','true');const next=executeCharacterLifeCommand(resolved.next,{type:'NEXT_WEEK',expectedRevision:resolved.next.city.revision});if(!next.success)throw Error();expect(await exportLife(page)).toEqual(next.next);await go(page,'city');await page.getByTestId('life-end-week').tap();await expect(page.locator('aside')).toContainText('Week 3 · Year 1 · Report');await expect(page.getByTestId('life-shell')).toHaveAttribute('data-revision',String(next.next.city.revision+1));}finally{await context.close();}
 });

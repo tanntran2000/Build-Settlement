@@ -1,5 +1,7 @@
 <script lang="ts">
   import { managerSlotTileIds, summarizeOutside, TRIAL_BUILDINGS, type TileTrialState, type WorldNpc, type OutsideWorldState } from '@haven/core';
+  import InsideCity from './InsideCity.svelte';
+  import { buildOptions } from './society-view.js';
   import { formatMilli as units } from './milli-format.js';
 
   export let state: TileTrialState;
@@ -16,6 +18,8 @@
   let managementHeading: HTMLHeadingElement | undefined;
   $: selected = state.tiles.find(tile => tile.id === selectedId)!;
   $: definition = selected.building ? TRIAL_BUILDINGS[selected.building.typeId] : null;
+  $: options = buildOptions(state,selectedId);
+  $: if (!options.some(o=>o.typeId===typeId&&o.available)) typeId=options.find(o=>o.available)?.typeId??'';
   $: chosen = TRIAL_BUILDINGS[typeId];
   $: locked = state.phase === 'report';
   $: slots = managerSlotTileIds(state);
@@ -29,10 +33,11 @@
   }
 </script>
 
+  <InsideCity {state} {selectedId} {locked} {managementError} {onselect} {oncommand} />
   <div class="layout">
-    <section aria-label="City tiles">
+    <section aria-label="Outside tiles"><h3>Outside tiles</h3>
       <div class="tiles">
-        {#each state.tiles as tile}
+        {#each state.tiles.filter(t=>t.terrain!=='town') as tile}
           <button class:selected={selectedId === tile.id} class="tile" aria-label={`Select ${tile.id}`} aria-pressed={selectedId === tile.id}
             data-testid={`trial-tile-${tile.id}`} onclick={() => onselect(tile.id)}>
             <span class="terrain">{tile.terrain}</span><strong>{tile.id}</strong>
@@ -75,10 +80,10 @@
       <p>Replace pays full cost and resets level and workers; no refund</p>
       <label for="trial-type">Building type</label>
       <select id="trial-type" bind:value={typeId} disabled={locked}>
-        {#each Object.entries(TRIAL_BUILDINGS) as [id, d]}<option value={id}>{d.name}</option>{/each}
+        {#each options as option}<option value={option.typeId} disabled={!option.available}>{option.label}</option>{/each}
       </select>
-      <p>Requires {chosen.terrain.join(' or ')} terrain. Cost: {units(chosen.cost.gold)} Gold, {units(chosen.cost.wood)} Wood, {units(chosen.cost.iron)} Iron. Upkeep: {units(chosen.upkeepMilli)} Gold/week at level 1.</p>
-      <button disabled={locked} aria-describedby={managementError?.action === 'BUILD' || managementError?.action === 'REPLACE' ? 'trial-management-error' : undefined}
+      {#if chosen}<p>Requires {chosen.terrain.join(' or ')} terrain. Cost: {units(chosen.cost.gold)} Gold, {units(chosen.cost.wood)} Wood, {units(chosen.cost.iron)} Iron. Upkeep: {units(chosen.upkeepMilli)} Gold/week at level 1.</p>{/if}
+      <button disabled={locked || !chosen || !options.some(o=>o.typeId===typeId&&o.available)} aria-describedby={managementError?.action === 'BUILD' || managementError?.action === 'REPLACE' ? 'trial-management-error' : undefined}
         onclick={() => oncommand(selected.building ? 'REPLACE' : 'BUILD', { tileId: selectedId, typeId })}>{selected.building ? 'Replace' : 'Build'}</button>
       {#if managementError?.action === 'BUILD' || managementError?.action === 'REPLACE'}<p id="trial-management-error" role="alert" use:revealManagementError={managementError}>{managementError.message}</p>{/if}
     </section>

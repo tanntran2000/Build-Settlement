@@ -1,7 +1,7 @@
 <script lang="ts">
   import { tick, type Snippet } from 'svelte';
-  import { weeklyWorkforceMilli, type TileTrialState, type TileTrialReport } from '@haven/core';
-  import { CITY_DESIGN } from '@haven/content';
+  import { type TileTrialState, type TileTrialReport } from '@haven/core';
+  import SocietyPopulation from './SocietyPopulation.svelte';
   import { formatMilli } from './milli-format.js';
   import { formatLifeWeek } from './life-calendar.js';
   import type { LifeDestination, LifeWindow } from './character-life-navigation.js';
@@ -31,6 +31,7 @@
     if (activeWindow !== next) return;
     if (!dialog.open) dialog.showModal();
     await tick();
+    if (dialog.open && activeWindow === next) dialog.querySelector<HTMLElement>('#life-window-heading')?.focus();
   }
   export function closeWindow(): void {
     if (dialog.open) dialog.close();
@@ -45,7 +46,6 @@
     void openWindow('report', document.getElementById('life-nav-report')!);
   } else contentDestination = destination;
   $: settlement = state.world.settlements[state.world.activeSettlementId!];
-  $: assigned = state.tiles.reduce((sum, tile) => sum + (tile.building?.workers ?? 0), 0);
   $: locked = state.phase === 'report';
   $: views = [
     { id: 'city' as const, label: 'City', content: city },
@@ -105,7 +105,7 @@
   </div>
   <dialog class="card" bind:this={dialog} aria-labelledby="life-window-heading"
     oncancel={event => { event.preventDefault(); closeWindow(); }} onclose={() => { if (!dialog.open) closeWindow(); }}>
-    <header><h2 id="life-window-heading">{activeWindow ? windowNames[activeWindow] : ''}</h2><button onclick={closeWindow}>Close</button></header>
+    <header><h2 id="life-window-heading" tabindex="-1">{activeWindow ? windowNames[activeWindow] : ''}</h2><button onclick={closeWindow}>Close</button></header>
     {#if error && activeWindow}<p data-life-error role="alert">{error}</p>{/if}
     <section hidden={activeWindow !== 'information'} aria-label="City stocks" data-testid="trial-stocks">
       <div class="information-columns">
@@ -113,10 +113,10 @@
         {#each ['gold', 'wheat', 'wood', 'iron'] as key}
           <div><dt>{key[0].toUpperCase() + key.slice(1)}</dt><dd data-testid={`trial-stock-${key}`}>{formatMilli(settlement.inventory[key as 'gold' | 'wheat' | 'wood' | 'iron'])}</dd></div>
         {/each}
-      </dl></div>
+      <div><dt>Luxury</dt><dd data-testid="trial-stock-luxury">{formatMilli(state.society!.luxuryStockMilli)}</dd></div></dl></div>
       <div class="city-status"><h3>City status</h3>
       <p>Happiness: <strong>{state.happiness}</strong> / 100</p>
-      <p>Security: Not simulated</p><p>Corruption: Not simulated</p>
+      <p>Security: Not simulated</p><p>Corruption: {state.society!.corruption} / 100 (TRIAL)</p>
       </div>
       </div>
     </section>
@@ -130,13 +130,7 @@
     </section>
     <section hidden={activeWindow !== 'player'}>{@render playerInfo()}</section>
     <section hidden={activeWindow !== 'population'}>
-      <p>{settlement.cohorts.reduce((sum, cohort) => sum + cohort.count, 0)} residents · Workforce {assigned} / {formatMilli(weeklyWorkforceMilli(settlement.cohorts))} assigned / available</p>
-      <p>Named NPCs are separate from resident cohorts and this workforce pool.</p>
-      {#each CITY_DESIGN.groups as group}
-        <section data-life-group>
-          <h3>{group.label}</h3>{#if group.name}<p>{group.name}</p>{/if}<p>{group.duties}</p><p data-group-count>Unavailable</p>
-        </section>
-      {/each}
+      <SocietyPopulation {state} />
     </section>
     <!-- Announcements follow actions so changing text cannot move a repeated-click target. -->
     <p id="life-modal-status" role={activeWindow ? 'status' : undefined} aria-live={activeWindow ? 'polite' : undefined} aria-atomic="true">{status}</p>
@@ -180,7 +174,6 @@
   .stocks > div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 16px; min-height: 52px; border-bottom: 1px solid var(--border-color); }
   dt { color: var(--text-muted); } dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
   .city-status p { padding-block: 10px; border-bottom: 1px solid var(--border-color); }
-  [data-life-group] { margin-top: 16px; }
   [aria-current='page'] { font-weight: 700; text-decoration: underline; text-underline-offset: 5px; }
   [role='alert'] { padding: 12px; border-left: 3px solid var(--accent-red); }
   /* Inherited tokens and scoped controls keep other game modes unchanged. */

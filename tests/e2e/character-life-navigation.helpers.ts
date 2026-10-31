@@ -1,10 +1,10 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
-import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, isCharacterLifeSessionState, TRIAL_BUILDINGS, WEEKLY_RESOURCE_KEYS, type CharacterLifeSessionState, type TileTrialReport } from '../../packages/core/src/index.ts';
+import { createCharacterLifeSession, SOCIETY_RULESET, DEFAULT_PLAYER_DRAFT, isCharacterLifeSessionState, TRIAL_BUILDINGS, WEEKLY_RESOURCE_KEYS, type CharacterLifeSessionState, type TileTrialReport } from '../../packages/core/src/index.ts';
 import { serializeCharacterLifeSave } from '../../packages/persistence/src/character-life-save.ts';
 import type { LifeDestination } from '../../packages/ui/src/character-life-navigation.ts';
 
-export function makeLife(seed = 12345, economy?: Parameters<typeof createCharacterLifeSession>[2]): CharacterLifeSessionState {
+export function makeLife(seed = 12345, economy: Parameters<typeof createCharacterLifeSession>[2] = SOCIETY_RULESET): CharacterLifeSessionState {
   const result = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' }, economy);
   expect(result.success).toBe(true);
   if (!result.success) throw new Error(result.error.message);
@@ -185,6 +185,7 @@ export function reportFixture(kind: 'shortage' | 'zero' | 'precision' | 'service
   } else if (kind === 'zero') {
     for (const cohort of settlement.cohorts) cohort.count = 0;
     for (const tile of s.city.tiles) if (tile.building) tile.building.workers = 0;
+    Object.assign(s.city.society!.classes,{free:0,makers:{common:0,elite:0},luminaries:{common:0,elite:0},merchants:{common:0,elite:0},bound:{free:0,makers:0,luminaries:0,merchants:0}});
     settlement.inventory.gold = 0;
   } else if (kind === 'precision') {
     settlement.inventory.gold = 100001; settlement.inventory.wheat = 100001;
@@ -193,7 +194,8 @@ export function reportFixture(kind: 'shortage' | 'zero' | 'precision' | 'service
     s.city.tiles.find(t => t.id === 'field-1')!.building!.workers = 0;
     s.city.tiles.find(t => t.id === 'plain-1')!.building!.workers = 1;
   } else if (kind === 'service') {
-    for (const [id, operation, workers] of [['forest-1', 'logging', 2], ['ore-1', 'mine', 1], ['plain-2', 'goods', 1], ['plain-3', 'market', 0]] as const) {
+    s.city.tiles.find(t=>t.id==='plain-1')!.building!.workers=1;
+    for (const [id, operation, workers] of [['forest-1', 'logging', 2], ['ore-1', 'mine', 1], ['plain-2', 'goods', 1]] as const) {
       const typeId = Object.entries(TRIAL_BUILDINGS).find(([, d]) => d.operation === operation)![0];
       s.city.tiles.find(t => t.id === id)!.building = { typeId, level: 1, workers, enabled: true };
     }
@@ -245,10 +247,9 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
   if (!expected.activities.length) await expect(activity.getByText('No building activity recorded.', { exact: true })).toBeVisible();
   if (!calculationOpen) await calculation.locator('summary').click();
   await expect(calculation.getByText('Stock change is closing stock minus opening stock for this resolved week. It is not gross production or a forecast.', { exact: true })).toBeVisible();
-  await expect(calculation.getByText(expected.goodsStock ? /^IMPLEMENTATION TRIAL:/ : /^TRIAL: tax /)).toBeVisible();
-  await expect(calculation.getByText(/^Goods earns /)).toBeVisible();
+  await expect(calculation.getByText(/^TRIAL: each class eats/)).toBeVisible();
   const g = (await goods.textContent())!.match(/Goods service: ([\d,]+(?:\.\d+)?) \/ ([\d,]+(?:\.\d+)?) · (No demand|[\d.]+%). Materials used once: ([\d,]+(?:\.\d+)?) Wood, ([\d,]+(?:\.\d+)?) Iron. Revenue: ([\d,]+(?:\.\d+)?) Gold\./)!;
-  const t = (await tax.textContent())!.match(/[\d,]+(?:\.\d+)?(?= Gold)/g)!, h = (await happiness.textContent())!.match(/\d+/g)!;
+  const t = (await tax.textContent())!.match(/[\d,]+(?:\.\d+)?(?= Gold)/g)!, h = (await happiness.textContent())!.match(/\d+(?:\.\d+)?/g)!;
   const food = (await panel.getByText(/^Food consumed:/).textContent())!.match(/[\d,]+(?:\.\d+)?/g)!;
   if (expected.goods.demandMilli === 0) {
     expect(g[3]).toBe('No demand');
@@ -286,7 +287,22 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
   } else await expect(panel.getByTestId('trial-immigration')).toHaveCount(0);
   if (!activityOpen) await activity.locator('summary').click();
   if (!calculationOpen) await calculation.locator('summary').click();
-  expect(actual).toEqual(expected);
+  const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
+  expect(actual).toEqual(baseReport);
+  if (society) {
+    const labels = { free: 'Free residents', makers: 'Makers', luminaries: 'Luminaries', merchants: 'Merchants', bound: 'The Bound' };
+    const classes = panel.getByRole('table', { name: 'Classes this week', exact: true });
+    await expect(classes.getByRole('columnheader')).toHaveText(['Class', 'Food', 'Goods', 'Luxury', 'Satisfaction', 'Arrivals', 'Trained', 'Enslaved']);
+    for (const id of Object.keys(labels) as (keyof typeof labels)[]) {
+      const row = society.classes[id];
+      await expect(classes.getByTestId(`society-report-${id}`).locator('th,td')).toHaveText([
+        labels[id], `${row.foodBps / 100}%`, `${row.goodsBps / 100}%`, row.luxuryBps === null ? '—' : `${row.luxuryBps / 100}%`,
+        `${row.satisfactionBefore} → ${row.satisfactionAfter}`, String(row.arrivals), String(row.trained), String(row.enslaved),
+      ]);
+    }
+    await expect(panel.getByText(`Bound Desperation: ${society.desperationBefore} → ${society.desperationAfter}`, { exact: true })).toBeVisible();
+    await expect(panel.getByText(`Luxury imported: ${(luxuryImportedMilli ?? 0) / 1000}. Training cost: ${(trainingGoldMilli ?? 0) / 1000} Gold.`, { exact: true })).toBeVisible();
+  }
   return actual;
 }
 

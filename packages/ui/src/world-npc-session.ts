@@ -1,10 +1,7 @@
-import { GOODS_STOCK_RULESET } from '@haven/core';
 import { isNpcWorldSessionState, isWorldNpcList, type NpcWorldSessionState } from '@haven/core';
-import { captureSaveData, deserializeNpcWorldSessionSave, serializeNpcWorldSessionSave } from '@haven/persistence';
+import { captureSaveData } from '@haven/persistence';
 import { prepareWorldSessionLoad } from './world-session.js';
 
-export const WORLD_NPC_CHECKPOINT_KEY = 'haven.world-npc-session.checkpoint.v1';
-export const WORLD_NPC_CHECKPOINT_GOODS_KEY = 'haven.world-npc-session-goods.checkpoint.v1';
 type Failure = { success: false; message: string };
 const fail = (message: string): Failure => ({ success: false, message });
 
@@ -18,33 +15,4 @@ export function prepareNpcWorldSessionLoad(live: NpcWorldSessionState, loaded: u
     const npcs = structuredClone(captured.npcs);
     return isWorldNpcList(npcs, prepared.next.city) ? { success: true, next: { ...prepared.next, npcs } } : fail('Checkpoint NPC posts do not match its city.');
   } catch { return fail('Could not prepare the NPC world checkpoint. Your game was preserved.'); }
-}
-
-export function saveLocalNpcWorldSession(session: unknown): { success: true; replaced: boolean } | Failure {
-  const result = serializeNpcWorldSessionSave(session);
-  if (!result.success) return fail(result.error.message);
-  try {
-    const key = JSON.parse(result.text).cityRulesetId === GOODS_STOCK_RULESET ? WORLD_NPC_CHECKPOINT_GOODS_KEY : WORLD_NPC_CHECKPOINT_KEY;
-    const storage = window.localStorage;
-    const replaced = storage.getItem(key) !== null;
-    storage.setItem(key, result.text);
-    return { success: true, replaced };
-  } catch {
-    return fail('Could not save in this browser (storage blocked or full). Your game and any earlier local checkpoint were preserved. Use Export checkpoint instead.');
-  }
-}
-
-export function readLocalNpcWorldSession() { return readCheckpoint(false); }
-export function readOldLocalNpcWorldSession() { return readCheckpoint(true); }
-function readCheckpoint(oldOnly: boolean): { success: true; state: NpcWorldSessionState } | Failure {
-  let text: string | null;
-  try {
-    const storage = window.localStorage;
-    text = oldOnly ? storage.getItem(WORLD_NPC_CHECKPOINT_KEY) : storage.getItem(WORLD_NPC_CHECKPOINT_GOODS_KEY) ?? storage.getItem(WORLD_NPC_CHECKPOINT_KEY);
-  } catch {
-    return fail('Could not read browser storage. Your game was preserved. Use Import checkpoint instead.');
-  }
-  if (text === null) return fail('No local checkpoint in this browser yet. Choose Save locally first.');
-  const result = deserializeNpcWorldSessionSave(text);
-  return result.success ? result : fail(`Local checkpoint not loaded; it was left unchanged. ${result.error.message}`);
 }

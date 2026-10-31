@@ -52,7 +52,7 @@ for (const width of [320, 375, 1280, 1600]) {
       expect(geometry.columns[0]).toBe(geometry.columns[1]);
     }
     const dialog = await openCityWindow(page, 'Information');
-    await expect(dialog.locator('.stocks > div')).toHaveCount(4);
+    await expect(dialog.locator('.stocks > div')).toHaveCount(5);
     for (const value of await dialog.locator('.stocks dd').all()) await expect(value).toHaveCSS('text-align', 'right');
     const columns = await dialog.evaluate(el => {
       const stocks = el.querySelector('.stocks')!.getBoundingClientRect(), status = el.querySelector('.city-status')!.getBoundingClientRect(), r = el.getBoundingClientRect();
@@ -123,8 +123,8 @@ for (const width of [375, 1280]) {
       if (name === 'Population') {
         await expect(dialog.getByText(/^100 residents/)).toBeVisible();
         await expect(dialog.getByText(/Named NPC/)).toContainText('separate');
-        await expect(dialog.locator('[data-life-group] h3')).toHaveText(['Makers', 'Luminaries', 'Merchants', 'The Bound']);
-        await expect(dialog.locator('[data-life-group] [data-group-count]')).toHaveText(['Unavailable', 'Unavailable', 'Unavailable', 'Unavailable']);
+        await expect(dialog.locator('[data-testid^="society-class-"] h3')).toHaveText(['Free residents','Makers', 'Luminaries', 'Merchants', 'The Bound']);
+        await expect(dialog.getByTestId('society-class-free')).toContainText('Housing (planned): 55 / 70');
         expect(await dialog.locator('[data-life-group] p').evaluateAll(nodes => nodes.every(node => !!node.textContent?.trim()))).toBe(true);
       }
       await dialog.getByRole('button', { name: 'Close', exact: true }).click(); await expect(opener).toBeFocused();
@@ -191,21 +191,21 @@ test('food stock remains reachable when sidebar collapses', async ({ page }) => 
   await page.goto('/?mode=world-life'); await importLife(page, makeLife());
   for (let load = 0; load < 2; load++) {
     const info = await openCityWindow(page, 'Information');
-    await expect(info.locator('dt')).toHaveText(['Gold', 'Wheat', 'Wood', 'Iron']);
+    await expect(info.locator('dt')).toHaveText(['Gold', 'Wheat', 'Wood', 'Iron', 'Luxury']);
     await expect(info.getByText(/^Happiness:/)).toBeVisible();
     await expect(info.getByText('Security: Not simulated', { exact: true })).toBeVisible();
-    await expect(info.getByText('Corruption: Not simulated', { exact: true })).toBeVisible();
+    await expect(info.getByText('Corruption: 50 / 100 (TRIAL)', { exact: true })).toBeVisible();
     await expect(info.getByText(/Tension|Status:/)).toHaveCount(0);
     await info.getByRole('button', { name: 'Close', exact: true }).click();
     const population = await openCityWindow(page, 'Population');
-    await expect(population.getByText(/^100 residents/)).toHaveText('100 residents · Workforce 4 / 10 assigned / available');
+    await expect(population.getByText(/^100 residents/)).toHaveText('100 residents · Basic 2/5 · Makers 2/2 · Luminaries 0/1 · Merchants 0/1 WF assigned');
     await population.getByRole('button', { name: 'Close', exact: true }).click();
     await go(page, 'city');
     const food = page.locator('[data-life-view="city"] details').filter({ has: page.getByText('Food requirements', { exact: true }) });
     if (await food.getAttribute('open') === null) await food.locator('summary').click();
     await expect(food.getByRole('heading', { name: 'Current inventory', exact: true })).toBeVisible();
     await expect(food.locator('dt')).toHaveText('Food stock');
-    await expect(food.getByTestId('trial-stock-food')).toHaveText('4');
+    await expect(food.getByTestId('trial-stock-food')).toHaveText('20');
     await openCityWindow(page, 'Report');
     await expect(reportRegion(page).getByText('No resolved week yet', { exact: true })).toBeVisible();
     await importLife(page, makeLife());
@@ -237,7 +237,7 @@ test('fulfillment states match strip and report', async ({ page }) => {
     if (!next.success) throw Error(next.error.message);
     expect(await exportLife(page)).toEqual(next.next);
     await go(page, 'city'); await expectRequirements(page, resolved.report);
-    const food = requirementsRegion(page).locator('details');
+    const food = requirementsRegion(page).locator('details').filter({has:page.getByText('Food requirements',{exact:true})});
     if (await food.getAttribute('open') === null) await food.locator('summary').click();
     await expect(food.getByTestId('trial-stock-food')).toHaveText(reportUnits(next.next.city.world.settlements[next.next.city.world.activeSettlementId!].inventory.food));
   }
@@ -246,6 +246,7 @@ test('fulfillment states match strip and report', async ({ page }) => {
 test('near-full requirement track retains 99.99 percent exactly', async ({ page }) => {
   const session = makeLife(), settlement = session.city.world.settlements[session.city.world.activeSettlementId!];
   settlement.cohorts.forEach((cohort, index) => { cohort.count = index === 0 ? 250 : 0; });
+  Object.assign(session.city.society!.classes,{free:250,makers:{common:0,elite:0},luminaries:{common:0,elite:0},merchants:{common:0,elite:0}});
   settlement.inventory.food = 9999;
   for (const tile of session.city.tiles) if (tile.building) Object.assign(tile.building, { enabled: false, workers: 0 });
   await page.goto('/?mode=world-life'); await importLife(page, session);
@@ -410,7 +411,7 @@ test('age-17 checkpoint rejection preserves the valid profile and open adult dis
     delete profile.private; delete profile.traits.intimacyKnowledge;
     await go(page, 'session'); const before = await lifeUiSnapshot(page);
     await putFile(page, JSON.stringify(invalid));
-    await expect(page.getByTestId('life-shell').locator('[data-life-error][role="alert"]')).toHaveText('Checkpoint must contain a valid complete Character Life session in Planning.');
+    await expect(page.getByTestId('life-shell').locator('[data-life-error][role="alert"]')).toHaveText('This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.');
     await expectCheckpointRejectionPreservesUi(page, before, initial.city.world.week);
     expect(await handle.evaluate(el => el.isConnected && el.hasAttribute('open'))).toBe(true);
     await expect(page.getByText('RejectedMinor', { exact: false })).toHaveCount(0);
@@ -502,6 +503,7 @@ test('inventory and player unavailable areas are honest', async ({ page }) => {
 test('NPC Work uses the displayed post and reports stale choices locally', async ({ page }) => {
   await page.goto('/?mode=world-life');
   const session = makeLife();
+  session.city.tiles.find(t=>t.id==='spec-1')!.building=null;
   await importLife(page, session);
   await page.getByRole('button', { name: 'Select field-1', exact: true }).click();
   await page.getByLabel('Assigned workers (WF)', { exact: true }).fill('999');
@@ -578,7 +580,7 @@ test('life shell navigation is read-only', async ({ page }) => {
   await go(page, 'city');
   await page.getByRole('button', { name: 'Select field-1', exact: true }).click();
   await page.getByLabel('Assigned workers (WF)', { exact: true }).fill('3');
-  await page.getByLabel('Building type', { exact: true }).selectOption('market');
+  await page.getByLabel('Building type', { exact: true }).selectOption('workshop');
   const outside = page.getByRole('region', { name: 'Outside world', exact: true }).locator('details');
   await expect(outside).not.toHaveAttribute('open', /.*/);
   await outside.locator('summary').click();
@@ -589,7 +591,7 @@ test('life shell navigation is read-only', async ({ page }) => {
     await expect(destination === 'reports' ? page.getByRole('dialog', { name: 'Report', exact: true }) : page.locator(`#life-${destination}-heading`)).toBeVisible();
   }
   await expect(page.getByLabel('Assigned workers (WF)', { exact: true })).toHaveValue('3');
-  await expect(page.getByLabel('Building type', { exact: true })).toHaveValue('market');
+  await expect(page.getByLabel('Building type', { exact: true })).toHaveValue('workshop');
   await expect(outside).toHaveAttribute('open', '');
   await expect(page.locator('#trial-workers-draft')).toHaveText('Unapplied draft. Assigned workforce remains 2 WF. Select Assign workers to apply.');
   const afterSession = await exportLife(page), afterRevision = await shell.getAttribute('data-revision');
@@ -711,7 +713,7 @@ test('unavailable Life Plan next week is visibly inactive', async ({ page }) => 
   await expect(nextWeek).toHaveCSS('cursor', 'default');
 });
 
-const lifeKey = 'haven.character-life-session.checkpoint.v1';
+const lifeKey = 'haven.character-life-session-society.checkpoint.v1';
 const workersInput = (page: Page) => page.locator('#trial-workers');
 const postSelect = (page: Page) => page.locator('#npc-slot-npc_starter_1');
 const checkpoints = (page: Page) => page.locator('[aria-label="Planning checkpoints"]');
@@ -823,7 +825,8 @@ test('unapplied drafts survive navigation with committed-only resolution', async
   const endWeek = shell.getByTestId('life-end-week'); await endWeek.focus(); await page.keyboard.press('Enter');
   expect(await page.getByRole('dialog', { name: 'Report', exact: true }).evaluate(node => node.contains(document.activeElement))).toBe(true);
   const actualReport = await expectReport(page, expected.report);
-  expect(actualReport).toEqual(expected.report);
+  const {society: _society,luxuryImportedMilli: _luxury,trainingGoldMilli: _training,...expectedBase}=expected.report;
+  expect(actualReport).toEqual(expectedBase);
   expect(Number(await shell.getAttribute('data-revision'))).toBe(beforeWeekRevision + 1);
   await expect(workersInput(page)).toHaveValue(String(committedWorkers));
   await expect(postSelect(page)).toHaveValue(draftedPost);
@@ -1082,7 +1085,7 @@ for (const kind of ['shortage', 'zero', 'precision', 'service', 'empty'] as cons
     const report = expected.report, panel = reportRegion(page);
     await expectReport(page, report);
     for (const details of await panel.locator('details').all()) await expect(details).not.toHaveAttribute('open', /.*/);
-    for (const target of [panel, panel.getByRole('table')]) expect(await target.evaluate(el => {
+    for (const target of [panel, panel.getByRole('table',{name:'Weekly stock ledger',exact:true})]) expect(await target.evaluate(el => {
       for (let node: Element | null = el; node; node = node.parentElement) if (node.hasAttribute('aria-live') || ['status', 'alert', 'log'].includes(node.getAttribute('role') ?? '')) return true;
       return false;
     })).toBe(false);
@@ -1094,10 +1097,10 @@ for (const kind of ['shortage', 'zero', 'precision', 'service', 'empty'] as cons
     }
     if (kind === 'precision') {
       expect(report.before.wheat).toBe(100001); expect(report.before.food).toBe(1);
-      await expect(panel.getByRole('table')).toContainText('100.001');
-      await expect(panel.getByRole('table')).toContainText('0.001');
+      await expect(panel.getByRole('table',{name:'Weekly stock ledger',exact:true})).toContainText('100.001');
+      await expect(panel.getByRole('table',{name:'Weekly stock ledger',exact:true})).toContainText('0.001');
       expect(report.before.wood).toBe(1000001);
-      await expect(panel.getByRole('table')).toContainText('1,000.001');
+      await expect(panel.getByRole('table',{name:'Weekly stock ledger',exact:true})).toContainText('1,000.001');
       expect(report.after.wheat - report.before.wheat).toBeLessThan(0);
     }
     if (kind === 'zero') {
@@ -1107,7 +1110,8 @@ for (const kind of ['shortage', 'zero', 'precision', 'service', 'empty'] as cons
       expect(report.activities.some(a => a.includes('upkeep unfunded'))).toBe(true);
     }
     if (kind === 'service') {
-      for (const value of [report.goods.servedMilli, report.goods.woodUsed, report.goods.ironUsed, report.goods.revenueMilli, report.farmBatchGoldMilli]) expect(value).toBeGreaterThan(0);
+      expect(report.goods.ironUsed).toBe(0);
+      for (const value of [report.goods.servedMilli, report.goods.woodUsed, report.goods.revenueMilli, report.farmBatchGoldMilli]) expect(value).toBeGreaterThan(0);
     }
     if (kind === 'shortage') expect(report.foodDemandMilli - report.foodConsumedMilli).toBeGreaterThan(0);
     if (kind === 'empty') expect(report.activities).toEqual([]);
@@ -1226,6 +1230,7 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 812 
     test('F2 manager assignment — keyboard', async ({ page }) => {
       test.setTimeout(120000);
       const session = makeLife();
+      session.city.tiles.find(t=>t.id==='spec-1')!.building=null;
       await page.goto('/?mode=world-life'); await importLife(page, session);
       const win = characterWindow(page), chars = charactersView(page);
       const person = async (id: string) => { await keyGo(page, 'characters'); await keyActivate(page, chars.getByTestId(`character-${id}`)); };

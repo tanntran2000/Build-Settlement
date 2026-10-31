@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { createWorldSession, isWorldSessionState, type WorldSessionState } from '@haven/core';
 import { deserializeWorldSessionSave, serializeWorldSessionSave, TILE_SAVE_MAX_BYTES } from '@haven/persistence';
-import { prepareWorldSessionLoad, readOldLocalWorldSession, saveLocalWorldSession, WORLD_SESSION_CHECKPOINT_KEY } from '../world-session.js';
+import { prepareWorldSessionLoad } from '../world-session.js';
 
 const session = (seed = 0) => { const r = createWorldSession(seed); if (!r.success) throw Error(); return r.value; };
 const oldKeys = ['haven.tile-trial.checkpoint.v1', 'haven.tile-population.checkpoint.v1'];
@@ -31,65 +31,6 @@ it.each([0, 12])('rebases revision for saved revision %s, including identical da
   expect(result.next.city.revision).toBe(Math.max(5, revision) + 1);
   expect({ ...result.next.city, revision }).toEqual(loaded.city); expect(result.next.outside).toEqual(loaded.outside); expect(live).toEqual(before);
 });
-it('accesses only the world slot and writes the codec envelope exactly once', () => {
-  const s = session(), before = structuredClone(s), encoded = serializeWorldSessionSave(s); if (!encoded.success) throw Error();
-  expect(saveLocalWorldSession(s)).toEqual({ success: true, replaced: false });
-  expect(storage.getItem.mock.calls).toEqual([[WORLD_SESSION_CHECKPOINT_KEY]]);
-  expect(storage.setItem.mock.calls).toEqual([[WORLD_SESSION_CHECKPOINT_KEY, encoded.text]]);
-  storage.getItem.mockClear(); storage.setItem.mockClear();
-  expect(readOldLocalWorldSession()).toEqual({ success: true, state: s });
-  expect(storage.getItem.mock.calls).toEqual([[WORLD_SESSION_CHECKPOINT_KEY]]); expect(storage.setItem).not.toHaveBeenCalled();
-  expect(saveLocalWorldSession(s)).toEqual({ success: true, replaced: true });
-  oldKeys.forEach(k => expect(values.get(k)).toBe('protected-bytes')); expect(s).toEqual(before);
-});
-it('does not fall back to old slots or repair malformed world bytes', () => {
-  const before = new Map(values);
-  expect(readOldLocalWorldSession()).toMatchObject({ success: false, message: expect.stringContaining('No local checkpoint') });
-  expect(values).toEqual(before);
-  values.set(WORLD_SESSION_CHECKPOINT_KEY, '{'); const corrupt = new Map(values);
-  expect(readOldLocalWorldSession()).toMatchObject({ success: false, message: expect.stringContaining('left unchanged') });
-  expect(values).toEqual(corrupt); expect(storage.setItem).not.toHaveBeenCalled();
-});
-it.each(['window', 'getter', 'read', 'write'])('contains %s storage failure and preserves all bytes', kind => {
-  values.set(WORLD_SESSION_CHECKPOINT_KEY, 'prior'); const before = new Map(values), s = session(), snapshot = structuredClone(s);
-  if (kind === 'window') vi.stubGlobal('window', undefined);
-  if (kind === 'getter') vi.stubGlobal('window', { get localStorage() { throw Error('private'); } });
-  if (kind === 'read') storage.getItem.mockImplementation(() => { throw Error('private'); });
-  if (kind === 'write') storage.setItem.mockImplementation(() => { throw Error('private'); });
-  const result = saveLocalWorldSession(s);
-  expect(result).toMatchObject({ success: false, message: expect.stringContaining('Export checkpoint') });
-  expect(JSON.stringify(result)).not.toContain('private'); expect(values).toEqual(before); expect(s).toEqual(snapshot);
-  if (kind !== 'write') expect(readOldLocalWorldSession()).toMatchObject({ success: false, message: expect.stringContaining('Import checkpoint') });
-});
-it('rejects invalid state before storage access', () => {
-  const s: WorldSessionState = session(); s.city.phase = 'report';
-  expect(saveLocalWorldSession(s).success).toBe(false); expect(storage.getItem).not.toHaveBeenCalled(); expect(storage.setItem).not.toHaveBeenCalled();
-});
-
-it('F1: replacing a valid checkpoint through an active Proxy leaves decodable descriptor data', () => {
-  const s = session(), old = serializeWorldSessionSave(s); if (!old.success) throw Error();
-  values.set(WORLD_SESSION_CHECKPOINT_KEY, old.text); let hooks = 0;
-  const active = new Proxy(s, { get(target, key, receiver) {
-    return key === 'toJSON' ? () => { hooks++; return {}; } : Reflect.get(target, key, receiver);
-  } });
-  const saved = saveLocalWorldSession(active);
-  expect(saved).toEqual({ success: true, replaced: true });
-  expect(deserializeWorldSessionSave(values.get(WORLD_SESSION_CHECKPOINT_KEY))).toEqual({ success: true, state: s });
-  expect(hooks).toBe(0); expect(storage.setItem).toHaveBeenCalledOnce();
-  oldKeys.forEach(k => expect(values.get(k)).toBe('protected-bytes'));
-});
-it.each(['accessor', 'own toJSON', 'revoked proxy'])('F1: rejected %s preserves prior valid bytes and never touches storage', kind => {
-  const s = session(), old = serializeWorldSessionSave(s); if (!old.success) throw Error();
-  values.set(WORLD_SESSION_CHECKPOINT_KEY, old.text); const before = new Map(values); let calls = 0;
-  if (kind === 'accessor') Object.defineProperty(s.city.world.settlements.settlement_haven_01.inventory, 'gold', { enumerable: true, get() { calls++; return 0; } });
-  if (kind === 'own toJSON') Object.assign(s, { toJSON() { calls++; return {}; } });
-  const proxy = Proxy.revocable(s, {}); if (kind === 'revoked proxy') proxy.revoke();
-  expect(saveLocalWorldSession(kind === 'revoked proxy' ? proxy.proxy : s).success).toBe(false);
-  expect(values).toEqual(before); expect(calls).toBe(0);
-  expect(storage.getItem).not.toHaveBeenCalled(); expect(storage.setItem).not.toHaveBeenCalled();
-  expect(deserializeWorldSessionSave(values.get(WORLD_SESSION_CHECKPOINT_KEY)).success).toBe(true);
-});
-
 it('T-4: stateful outside reads cannot publish values different from the captured validated session', () => {
   const live = session(), loaded = session(1), ghost = session(2), before = structuredClone(live);
   ghost.outside.tiles[0].owner = 'ghost';

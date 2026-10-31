@@ -1,57 +1,16 @@
-import { test, expect, type Page } from '@playwright/test';
-import { readFile } from 'node:fs/promises';
-
-async function select(page: Page, id: string) { await page.getByRole('button', { name: `Select ${id}`, exact: true }).click(); }
-async function assign(page: Page, id: string, workers: number) {
-  await select(page, id); await page.getByLabel('Assigned workers (WF)', { exact: true }).fill(String(workers));
-  await page.getByRole('button', { name: 'Assign workers', exact: true }).click();
-}
-async function expand(page: Page) {
-  for (const [id, type] of [['forest-1', 'logging'], ['ore-1', 'mine'], ['plain-2', 'workshop'], ['plain-3', 'market']]) {
-    await select(page, id); await page.getByLabel('Building type').selectOption(type); await page.getByRole('button', { name: 'Build', exact: true }).click();
-  }
-  for (const [id, workers] of [['field-1', 3], ['plain-1', 3], ['forest-1', 1], ['ore-1', 1], ['plain-2', 1]] as const) await assign(page, id, workers);
-}
-async function exported(page: Page) {
-  const download = page.waitForEvent('download'); await page.getByRole('button', { name: 'Export checkpoint', exact: true }).click();
-  const file = await download; const stream = await file.createReadStream(); const chunks = []; for await (const c of stream!) chunks.push(c);
-  return Buffer.concat(chunks).toString('utf8');
-}
-for (const width of [1280, 390]) test(`population mode grows once, preserves workforce and roundtrips at ${width}px`, async ({ page }) => {
-  await page.setViewportSize({ width, height: 900 }); const errors: string[] = []; page.on('pageerror', e => errors.push(e.message));
-  await page.goto('/'); await page.getByRole('link', { name: 'Play population trial', exact: true }).click();
-  await expect(page.getByRole('heading', { name: 'Population Trial', exact: true })).toBeVisible();
-  // Retain the original economy assertions against captured BASE bytes.
-  await page.getByLabel('Import checkpoint', { exact: true }).setInputFiles({ name: 'legacy.json', mimeType: 'application/json', buffer: Buffer.from(await readFile('packages/persistence/src/__tests__/fixtures/legacy-v1/population.json', 'utf8')) });
-  await expand(page); const before = JSON.parse(await exported(page)); expect(before.rulesetId).toBe('tile-population-01');
-  await page.getByRole('button', { name: 'End Week', exact: true }).click();
-  await expect(page.getByTestId('trial-immigration')).toContainText('100 → 102');
-  await expect(page.getByTestId('trial-immigration')).toContainText('2 arrivals');
-  await page.getByRole('button', { name: 'Plan next week', exact: true }).dblclick();
-  const saved = await exported(page); const snapshot = JSON.parse(saved); expect(snapshot.state.world.week).toBe(2);
-  expect(snapshot.state.world.settlements.settlement_haven_01.cohorts[0].count).toBe(102);
-  expect(snapshot.state.tiles).toEqual(before.state.tiles);
-  await page.getByLabel('Import checkpoint', { exact: true }).setInputFiles({ name: 'new.json', mimeType: 'application/json', buffer: Buffer.from(saved) });
-  await expect(page.getByRole('status')).toContainText('imported');
-  await page.getByRole('button', { name: 'End Week', exact: true }).click();
-  await expect(page.getByTestId('trial-immigration')).toContainText('102 → 104');
-  await page.getByRole('button', { name: 'Plan next week', exact: true }).click();
-  await select(page, 'field-1'); await expect(page.getByLabel('Assigned workers (WF)', { exact: true })).toHaveValue('3');
-  expect(errors).toEqual([]);
+﻿import {test,expect} from '@playwright/test';
+import {readFile} from 'node:fs/promises';
+import {societyPopulation} from '../../packages/core/src/index.ts';
+import {executeCharacterLifeCommand} from '../../packages/simulation/src/character-life-command.ts';
+import {act,boot,encoded,fundedLife,notice,put} from './society-command.helpers.ts';
+import {expectReport,exportLife,go} from './character-life-navigation.helpers.ts';
+for(const width of [1280,390])test(`society population grows once, preserves workforce and roundtrips at ${width}px`,async({page})=>{
+ await page.setViewportSize({width,height:900});const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));let s=fundedLife();s.city.society!.classes.makers.common=40;s.city.society!.wallRing=2;s.city.tiles.find(t=>t.id==='house-5')!.building={typeId:'makers-rowhouses',level:1,workers:0,enabled:true};s.city.world.settlements[s.city.world.activeSettlementId!].cohorts[0].count=societyPopulation(s.city.society!);s=await boot(page,s);
+ for(const [tileId,typeId,workers] of [['forest-1','logging',1],['ore-1','mine',1],['plain-2','workshop',1]] as const){s=await act(page,s,'BUILD',{tileId,typeId});s=await act(page,s,'SET_WORKERS',{tileId,workers});}
+ s=await act(page,s,'SET_WORKERS',{tileId:'field-1',workers:3});s=await act(page,s,'SET_WORKERS',{tileId:'plain-1',workers:3});const before=structuredClone(s);
+ for(let i=0;i<2;i++){const resolved=executeCharacterLifeCommand(s,{type:'END_WEEK',expectedRevision:s.city.revision,expectedWeek:s.city.world.week});if(!resolved.success||!resolved.report)throw Error();expect(resolved.report.immigration!.arrivals).toBeGreaterThan(0);await page.getByTestId('life-end-week').click();await expectReport(page,resolved.report);await page.getByRole('button',{name:'Plan next week',exact:true}).dblclick();const next=executeCharacterLifeCommand(resolved.next,{type:'NEXT_WEEK',expectedRevision:resolved.next.city.revision});if(!next.success)throw Error();s=next.next;expect(await exportLife(page)).toEqual(s);expect(s.city.tiles).toEqual(before.city.tiles);const text=await encoded(page);await put(page,text);await expect(notice(page)).toContainText('Checkpoint imported');const restored=await exportLife(page);expect({...restored,city:{...restored.city,revision:s.city.revision}}).toEqual(s);s=restored;await go(page,'city');}
+ await page.getByTestId('trial-tile-field-1').click();await expect(page.getByLabel('Assigned workers (WF)',{exact:true})).toHaveValue('3');expect(errors).toEqual([]);
 });
-test('cross-ruleset imports preserve each mode and old saves continue without growth', async ({ page }) => {
-  await page.goto('/?mode=tiles'); await expand(page); const old = await exported(page);
-  await page.getByRole('button', { name: 'End Week', exact: true }).click();
-  await expect(page.getByTestId('trial-immigration')).toHaveCount(0);
-  await page.getByRole('button', { name: 'Plan next week', exact: true }).click();
-  const legacyAfter = JSON.parse(await exported(page)); expect(legacyAfter.state.world.settlements.settlement_haven_01.cohorts[0].count).toBe(100);
-  await page.goto('/?mode=population'); const initial = JSON.parse(await exported(page));
-  await page.getByLabel('Import checkpoint', { exact: true }).setInputFiles({ name: 'legacy.json', mimeType: 'application/json', buffer: Buffer.from(old) });
-  await expect(page.getByRole('alert').last()).toContainText('ruleset');
-  expect(JSON.parse(await exported(page)).state).toEqual(initial.state);
-  const fresh = await exported(page);
-  await page.goto('/?mode=tiles'); const before = JSON.parse(await exported(page));
-  await page.getByLabel('Import checkpoint', { exact: true }).setInputFiles({ name: 'population.json', mimeType: 'application/json', buffer: Buffer.from(fresh) });
-  await expect(page.getByRole('alert').last()).toContainText('ruleset');
-  expect(JSON.parse(await exported(page)).state).toEqual(before.state);
+test('older ruleset files cannot replace the society game',async({page})=>{
+ const s=await boot(page);for(const path of ['legacy-v1/population.json','goods-v1/life.json']){await put(page,await readFile(`packages/persistence/src/__tests__/fixtures/${path}`,'utf8'));await expect(page.getByRole('alert')).toHaveText('This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.');expect(await exportLife(page)).toEqual(s);}
 });
