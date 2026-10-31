@@ -152,6 +152,8 @@ For a society city, the existing order is kept, with these changes:
 - **Food:** replace the city `resolveTileTrialNeeds` call with `allocateRequirements` (for the immigration facts) and then `resolveSocietyWeek` with `arrivalsBudget` from the existing `resolveTrialImmigration`.
 - **Debits:** Food and Goods consumed, Goods revenue (1 Gold per Goods distributed), training Gold.
 - **Write-back:** set `society`, set `happiness = cityHappiness`, and set the cohort count to `societyPopulation`.
+- **Staff release (PR #62 review):** after write-back, if a staff pool (basic = Free/10 + Bound/10; makers/luminaries/merchants = common/10) is now below the workers assigned to it (training, enslavement rounding), release workers from that pool's buildings in reverse map order until it fits. Buildings stay enabled; each release adds an activity line. The week never fails for this reason.
+- **Immigration report (PR #62 review):** for a society city, `report.immigration.arrivals` and `populationAfter` show the actual result (class arrivals plus any Elite arrival; population = `societyPopulation`), not the pre-housing budget.
 
 Old rulesets keep their exact code path.
 
