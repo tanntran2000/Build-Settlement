@@ -81,7 +81,7 @@ Then write an audit of what remains (content, gaps, defects) as the starting poi
 - LAW-03: same seed and commands give the same state.
 - LAW-04: all-or-nothing commands, nonnegative stocks, safe integers.
 - LAW-06: a refused save changes nothing.
-- No `packages/ui` change beyond import fixes forced by removed exports; list each one. No `tests/e2e` change.
+- `packages/ui` and `tests/e2e`: only mechanical edits forced by removed parameters or exports (imports, call shapes, type helpers such as `Parameters<…>[2]`). An e2e test that imported a removed codec only to build a foreign payload may inline that payload as a JSON literal. No assertion, selector or expected value changes; list every such edit in the ledger (correction after Builder HOLD, 2026-10-31).
 - No dependency, config, CI, audit or threshold change.
 - One commit per task. Each task ends with `npm run typecheck` and `npm test` green, and the tree builds at every commit.
 
