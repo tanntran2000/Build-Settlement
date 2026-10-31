@@ -44,7 +44,7 @@ export function prepareWorldSessionLoad(live: WorldSessionState, loaded: unknown
   try {
     const captured = captureLoadedSession(loaded);
     if (!captured) return fail('Checkpoint must contain a valid complete world session in Planning.');
-    const result = executeTileTrialCommand(live.city, { type: 'LOAD_TRIAL', expectedRevision, snapshot: captured.city }, WORLD_SESSION_CITY_RULESET);
+    const result = executeTileTrialCommand(live.city, { type: 'LOAD_TRIAL', expectedRevision, snapshot: captured.city });
     return result.success ? { success: true, next: { city: result.nextState, outside: captured.outside } } : fail(result.error.message);
   } catch { return fail('Could not prepare the world checkpoint. Your game was preserved.'); }
 }

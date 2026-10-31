@@ -1,6 +1,6 @@
-import { createTileTrialState, hasWeeklyKeys, isNpcWorldSessionState, isTileTrialState, isWorldNpcList, isWorldSessionState, managerSlotTileIds, WORLD_SESSION_CITY_RULESET, type NpcWorldSessionState, type TileTrialReport, type TileTrialState } from "@haven/core";
-import { executeTileTrialCommand } from "./tile-trial.js";
+import { createSocietyState,hasWeeklyKeys,isNpcWorldSessionState,isTileTrialState,isWorldNpcList,isWorldSessionState,managerSlotTileIds,type NpcWorldSessionState,type TileTrialReport,type TileTrialState } from "@haven/core";
 import { trialSafe } from "./tile-trial-week.js";
+import { executeTileTrialCommand } from "./tile-trial.js";
 
 export type WorldNpcErrorCode = "INVALID_STATE" | "INVALID_COMMAND" | "STALE_COMMAND" | "FORBIDDEN" | "UNKNOWN_NPC" | "LOCKED_POST" | "POST_OCCUPIED" | "ALREADY_ASSIGNED" | "UNSUPPORTED_RULESET";
 export type WorldNpcResult = { success: true; next: NpcWorldSessionState } | { success: false; error: { code: WorldNpcErrorCode; message: string } };
@@ -42,10 +42,10 @@ export function executeWorldNpcCityCommand(session: unknown, raw: unknown): Worl
     if (!hasWeeklyKeys(session, ["city", "outside", "npcs"]) || !isTileTrialState(session.city) || !isWorldNpcList(session.npcs, session.city)) return fail("INVALID_STATE", "World session is invalid; nothing was changed.");
     // Outside rules live in the Planning-only session validator; pair outside with a fresh Planning
     // city so only outside is judged, while the live city (Planning or Report) is checked above.
-    if (!isWorldSessionState({ city: createTileTrialState(), outside: session.outside })) return fail("INVALID_STATE", "World session is invalid; nothing was changed.");
+    if (!isWorldSessionState({ city: createSocietyState(), outside: session.outside })) return fail("INVALID_STATE", "World session is invalid; nothing was changed.");
     const type = raw && typeof raw === "object" ? Object.getOwnPropertyDescriptor(raw, "type")?.value : undefined;
     if (type === "LOAD_TRIAL") return fail("INVALID_COMMAND", "Load an NPC world checkpoint through Continue or Import.");
-    const result = executeTileTrialCommand(session.city, raw, WORLD_SESSION_CITY_RULESET);
+    const result = executeTileTrialCommand(session.city, raw);
     if (!result.success) return fail(result.error.code, result.error.message);
     const city: TileTrialState = result.nextState, slots = managerSlotTileIds(city);
     const replaced = type === "REPLACE" ? Object.getOwnPropertyDescriptor(raw, "tileId")?.value : undefined;

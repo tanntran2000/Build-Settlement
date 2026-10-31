@@ -5,7 +5,7 @@ import { societyFacilities } from '../society-facilities.js';
 import { runTileTrialWeek } from '../tile-trial-week.js';
 it('resolves society needs, housing and happiness deterministically', () => {
  const before=createSocietyState(), a=structuredClone(before), b=structuredClone(before);
- const report=runTileTrialWeek(a, POPULATION_TILE_RULESET);
+ const report=runTileTrialWeek(a);
  expect(report.goods.servedMilli).toBe(1450);
  expect(report.goods.revenueMilli).toBe(1450);
  expect(report.goodsStock?.capacityMilli).toBe(2000);
@@ -19,7 +19,7 @@ it('resolves society needs, housing and happiness deterministically', () => {
  const arrivals=Object.values(report.society!.classes).reduce((total,c)=>total+c.arrivals,0);
  expect(a.world.settlements[a.world.activeSettlementId!].cohorts.reduce((n,c)=>n+c.count,0)).toBe(100+arrivals);
  expect(report.society!.eliteArrived).toBeNull();
- expect(runTileTrialWeek(b, POPULATION_TILE_RULESET)).toEqual(report); expect(a).toEqual(b); expect(before).toEqual(createSocietyState());
+ expect(runTileTrialWeek(b)).toEqual(report); expect(a).toEqual(b); expect(before).toEqual(createSocietyState());
 });
 it.each([{gold:3999,imported:0,closing:2999},{gold:4000,imported:2000,closing:0}])('imports Luxury only with the full 3000 Gold milli after upkeep ($gold)', ({gold,imported,closing}) => {
  const city=createSocietyState();
@@ -30,7 +30,7 @@ it.each([{gold:3999,imported:0,closing:2999},{gold:4000,imported:2000,closing:0}
  settlement.cohorts.find(c=>c.id==='weekly_middle')!.count=20;
  // Offset the existing base tax so opening Gold plus tax equals the table's pre-upkeep budget.
  settlement.inventory.gold=gold-20*TILE_TRIAL_BALANCE.taxGoldPerResident;
- const report=runTileTrialWeek(city,POPULATION_TILE_RULESET);
+ const report=runTileTrialWeek(city);
  expect(report.taxMilli).toBe(20*TILE_TRIAL_BALANCE.taxGoldPerResident);
  expect(report.upkeepPaidMilli).toBe(1000);
  expect(report.luxuryImportedMilli).toBe(imported);
@@ -47,7 +47,7 @@ it('credits the Counting House bonus after upkeep, leaving Slave Quarters unfund
  settlement.inventory.gold=0;
  for(const [id,typeId,workers] of [['spec-1','academy',2],['spec-2','counting-house',2],['spec-3','trading-post',2],['slum-1','slave-quarters',0]] as const)
   city.tiles.find(t=>t.id===id)!.building={typeId,level:1,workers,enabled:true};
- const report=runTileTrialWeek(city,POPULATION_TILE_RULESET);
+ const report=runTileTrialWeek(city);
  // 100 residents ? 30 base tax; three 1000 upkeep bills exhaust it.
  // The funded L1 Counting House then adds 10% (300), too late for 200 upkeep.
  expect(report.taxMilli).toBe(3300);
@@ -64,7 +64,7 @@ it('credits the Counting House bonus after upkeep, leaving Slave Quarters unfund
 
 function endSociety(city: ReturnType<typeof createSocietyState>) {
  expect(isTileTrialState(city)).toBe(true);
- const result=executeTileTrialCommand(city,{type:'END_WEEK',expectedWeek:city.world.week,expectedRevision:city.revision},POPULATION_TILE_RULESET);
+ const result=executeTileTrialCommand(city,{type:'END_WEEK',expectedWeek:city.world.week,expectedRevision:city.revision});
  expect(result.success).toBe(true); if(!result.success) throw Error(JSON.stringify(result.error));
  expect(isTileTrialState(result.nextState)).toBe(true);
  return result;

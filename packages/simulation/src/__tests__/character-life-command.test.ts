@@ -8,7 +8,7 @@ import * as delegates from '../world-npc.js';
 import { executeCharacterLifeCommand, type CharacterLifeActionType, type CharacterLifeCommandResult } from '../character-life-command.js';
 
 function life(seed = 0): CharacterLifeSessionState {
-  const r = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' });
+  const r = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' }, SOCIETY_RULESET);
   if (!r.success) throw Error(r.error.message);
   return r.value;
 }
@@ -139,7 +139,7 @@ describe('supported rejection parity and first-match taxonomy', () => {
     const max = oldAction(oldAction(built, { type: 'UPGRADE', tileId: 'forest-1' }), { type: 'UPGRADE', tileId: 'forest-1' });
     const assigned = oldAction(life(), { type: 'ASSIGN_NPC', npcId: 'npc_starter_1', tileId: 'field-1' });
     const zeroStock = life(); zeroStock.city.world.settlements.settlement_haven_01.inventory.gold = 0;
-    const noCapacity = life(); noCapacity.city.world.settlements.settlement_haven_01.cohorts = [];
+    const noCapacity = life(); noCapacity.city.society!.classes.free = 0; noCapacity.city.world.settlements.settlement_haven_01.cohorts[0].count -= 55;
     for (const tile of noCapacity.city.tiles) if (tile.building) tile.building.workers = 0;
     const cases: [CharacterLifeSessionState, Record<string, unknown>, string][] = [
       [life(), { type: 'END_WEEK', expectedWeek: 0 }, 'WEEK_MISMATCH'],
