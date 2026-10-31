@@ -1,7 +1,8 @@
 import { test, expect, type Page } from '@playwright/test';
 import { readFile, stat } from 'node:fs/promises';
 import ts from 'typescript';
-import {makeLife,importLife,go} from './character-life-navigation.helpers.ts';
+import {makeLife,importLife,exportLife,go} from './character-life-navigation.helpers.ts';
+import {executeCharacterLifeCommand} from '../../packages/simulation/src/character-life-command.ts';
 async function start(page:Page,url='/'){await page.goto(url);await importLife(page,makeLife());await go(page,'session');}
 async function advance(page:Page){await page.getByTestId('life-end-week').click();await page.getByRole('button',{name:'Plan next week',exact:true}).click();await go(page,'session');}
 
@@ -178,8 +179,14 @@ for (const failure of ['getter', 'quota'] as const) {
     await start(page); await invalid(page);
     await expect(panel(page)).toContainText('Not saved — this tab only. Download before closing.');
     const data = await download(page); expect(data.entries[0].code).toBe('INVALID_WORKFORCE_INPUT');
+    const initial = await exportLife(page);
+    const resolved = executeCharacterLifeCommand(initial, { type: 'END_WEEK', expectedRevision: initial.city.revision, expectedWeek: initial.city.world.week });
+    if (!resolved.success) throw Error(resolved.error.message);
+    const planned = executeCharacterLifeCommand(resolved.next, { type: 'NEXT_WEEK', expectedRevision: resolved.next.city.revision });
+    if (!planned.success) throw Error(planned.error.message);
     await advance(page);
-    await expect(page.locator('aside')).toContainText('Week 2'); await expect(page.getByTestId('life-shell')).toBeVisible();
+    await expect(page.locator('aside')).toContainText('Week 2');
+    expect(await exportLife(page)).toEqual(planned.next);
   });
 }
 
