@@ -42,7 +42,7 @@ This changes spec §10 for the UI: old saves no longer need to stay playable.
 2. **One save slot**: `haven.character-life-session-society.checkpoint.v1`.
    - Save locally, Continue locally and Import use only this slot and format.
    - Accepted: a valid `deserializeCharacterLifeSave` result whose city economy is `SOCIETY_RULESET`.
-   - Anything else is refused, changes nothing, and shows `This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.`. This covers older Life slots, Goods or legacy files, and other modes' files.
+   - An Import of anything else is refused, changes nothing, and shows `This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.`. This covers Goods or legacy files and other modes' files. Continue reads only the society slot; when it is absent, Continue shows the existing "No local checkpoint" message (correction after Builder HOLD, 2026-10-31).
    - Old browser keys are never read, written or deleted. The player's old data stays in the browser (LAW-06).
 3. **In-game load.** A society checkpoint loads over a live society session through the existing `prepareCharacterLifeLoad` → `LOAD_TRIAL` path, unchanged.
 4. **`TileManagement.svelte`** becomes the Life game host only:
@@ -342,7 +342,7 @@ This changes spec §10 for the UI: old saves no longer need to stay playable.
      - Expected numbers come from `executeCharacterLifeCommand` on the same seeded save.
   6. **Checkpoints.**
      - Save, Continue, Export and Import round-trip a society game.
-     - Seed the old Life and Goods Life browser keys with the `legacy-v1` and `goods-v1` fixtures. Continue, and Import of those files and of a `world` export, are each refused with the exact message. The society game and the old keys stay byte-identical.
+     - Seed the old Life and Goods Life browser keys with the `legacy-v1` and `goods-v1` fixtures. Continue shows the existing "No local checkpoint" message. Import of those files and of a `world` export is refused with the exact older-version message. The society game and the old keys stay byte-identical.
      - Loading over a resolved week shows no society report.
   7. **Navigation.** Opening Inside City, Population, Information and Report without End Week leaves the export byte-identical.
   8. **Layout.** At 375×812 and 1280×900, `document.documentElement.scrollWidth <= innerWidth` on City, Population and Report.
