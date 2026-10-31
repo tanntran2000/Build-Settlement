@@ -25,7 +25,7 @@ Then write an audit of what remains (content, gaps, defects) as the starting poi
 
 ## Decisions
 
-1. **Society saves keep their exact shape.** The city keeps every field it has today, including the nested `goodsStock: { rulesetId: 'tile-population-goods-01', amountMilli }`. That string is now just part of the society save format, not a playable economy. Internal constant names may change; serialized bytes may not. The `society-v1` fixtures and their tests are never edited.
+1. **Society saves keep their exact shape.** The city keeps every field it has today, including the nested `goodsStock: { rulesetId: 'tile-population-goods-01', amountMilli }`. That string is now just part of the society save format, not a playable economy. Internal constant names may change; serialized bytes may not. The `society-v1` fixtures are never edited. Their tests keep every assertion; only factory call shapes may change when a removed parameter forces it (correction after Builder HOLD, 2026-10-31).
 2. **What goes.** Anything only the older games or Classic Weekly use:
    - **Old ruleset constants and branches:**
      - The `LEGACY_TILE_RULESET` and `POPULATION_TILE_RULESET` constants and every branch on them. `GOODS_STOCK_RULESET` stays only as the data string from decision 1.
