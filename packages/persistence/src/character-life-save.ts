@@ -26,9 +26,10 @@ export function deserializeCharacterLifeSave(text: unknown): { success: true; st
     if (typeof text !== 'string') return fail('INVALID_SAVE', 'Choose a Character Life checkpoint JSON file.');
     if (tooLarge(text)) return fail('SAVE_TOO_LARGE', 'Checkpoint exceeds the 1 MiB limit.');
     const value: unknown = JSON.parse(text);
-    if (!hasWeeklyKeys(value, ['format', 'schemaVersion', 'cityRulesetId', 'state']) || value.format !== CHARACTER_LIFE_SAVE_FORMAT || value.schemaVersion !== 1 || value.cityRulesetId !== SOCIETY_RULESET) {
+    if (!hasWeeklyKeys(value, ['format', 'schemaVersion', 'cityRulesetId', 'state']) || value.format !== CHARACTER_LIFE_SAVE_FORMAT || value.schemaVersion !== 1) {
       return fail('INCOMPATIBLE_SAVE', INCOMPATIBLE);
     }
+    if (value.cityRulesetId !== SOCIETY_RULESET) return fail('INCOMPATIBLE_SAVE', 'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.');
     const state = value.state;
     const city = state && typeof state === 'object' ? Object.getOwnPropertyDescriptor(state, 'city')?.value : undefined;
     if (city && typeof city === 'object' && (!Object.hasOwn(city, 'society') || Object.getOwnPropertyDescriptor(city, 'society')?.value?.rulesetId !== SOCIETY_RULESET)) return fail('INCOMPATIBLE_SAVE', 'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.');
@@ -36,7 +37,6 @@ export function deserializeCharacterLifeSave(text: unknown): { success: true; st
     if (provenance === 'malformed') return fail('INVALID_SAVE_STATE', 'Checkpoint has malformed outside world provenance.');
     if (provenance === 'unsupported') return fail('INCOMPATIBLE_SAVE', 'Unsupported outside world generator or scenario. No migration was performed.');
     if (!isCharacterLifeSessionState(state)) return fail('INVALID_SAVE_STATE', INVALID_STATE);
-    if (value.cityRulesetId !== SOCIETY_RULESET) return fail('INCOMPATIBLE_SAVE', 'Checkpoint ruleset does not match its city.');
     return { success: true, state };
   } catch { return fail('INVALID_SAVE', 'Could not read a valid checkpoint JSON. Your game was preserved.'); }
 }
