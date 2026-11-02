@@ -1,5 +1,5 @@
 // Adjustable IMPLEMENTATION TRIAL values, not user-approved economic balance.
-export type TrialOperation = "farm" | "processor" | "logging" | "mine" | "goods" | "market" | "society";
+export type TrialOperation = "farm" | "processor" | "logging" | "mine" | "goods" | "market" | "society" | "wool" | "herbs" | "stone" | "cloth";
 // Provisional adaptation, not validated balance or imported reference-game rates.
 export interface ImmigrationTrialConfig { foodSupportBps: number; catchupBps: number; weeklyCapBps: number }
 export const IMMIGRATION_TRIAL_DEFAULTS: Readonly<ImmigrationTrialConfig> = Object.freeze({ foodSupportBps: 11000, catchupBps: 1000, weeklyCapBps: 200 });
@@ -8,6 +8,12 @@ export interface TrialBuildingDefinition {
   maxWorkers: number; cost: { gold: number; wood: number; iron: number }; upkeepMilli: number;
 }
 export const TRIAL_BUILDINGS: Readonly<Record<string, TrialBuildingDefinition>> = Object.freeze({
+  "sheep-pasture": {"name":"Sheep Pasture","operation":"wool","terrain":["pasture"],"maxLevel":2,"maxWorkers":2,"cost":{"gold":3000,"wood":2000,"iron":0},"upkeepMilli":500},
+  "herb-garden": {"name":"Herb Garden","operation":"herbs","terrain":["meadow"],"maxLevel":2,"maxWorkers":2,"cost":{"gold":2000,"wood":1000,"iron":0},"upkeepMilli":500},
+  "quarry": {"name":"Quarry","operation":"stone","terrain":["rock"],"maxLevel":3,"maxWorkers":2,"cost":{"gold":3000,"wood":1000,"iron":1000},"upkeepMilli":500},
+  "weaver": {"name":"Weaver","operation":"cloth","terrain":["plain"],"maxLevel":2,"maxWorkers":1,"cost":{"gold":3000,"wood":2000,"iron":0},"upkeepMilli":500},
+  "library": {"name":"Library","operation":"society","terrain":["town"],"maxLevel":2,"maxWorkers":1,"cost":{"gold":8000,"wood":6000,"iron":2000},"upkeepMilli":1000},
+  "warehouse": {"name":"Warehouse","operation":"society","terrain":["town"],"maxLevel":3,"maxWorkers":1,"cost":{"gold":6000,"wood":8000,"iron":0},"upkeepMilli":500},
   farm: { name: "Farm", operation: "farm", terrain: ["fertile"], maxLevel: 1, maxWorkers: 5, cost: { gold: 3000, wood: 1000, iron: 0 }, upkeepMilli: 1000 },
   processor: { name: "Food Processor", operation: "processor", terrain: ["plain"], maxLevel: 1, maxWorkers: 5, cost: { gold: 3000, wood: 2000, iron: 1000 }, upkeepMilli: 500 },
   logging: { name: "Logging Camp", operation: "logging", terrain: ["forest"], maxLevel: 3, maxWorkers: 2, cost: { gold: 2000, wood: 0, iron: 0 }, upkeepMilli: 500 },

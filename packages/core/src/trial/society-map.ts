@@ -133,7 +133,7 @@ export const SOCIETY_BUILDINGS: Readonly<Record<string,SocietyBuildingInfo>> = {
   "warehouse": {
     "tier": "specialist",
     "staff": "makers",
-    "reserved": true
+    "reserved": false
   },
   "smithy": {
     "tier": "specialist",
@@ -143,7 +143,7 @@ export const SOCIETY_BUILDINGS: Readonly<Record<string,SocietyBuildingInfo>> = {
   "library": {
     "tier": "specialist",
     "staff": "luminaries",
-    "reserved": true
+    "reserved": false
   },
   "brothel": {
     "tier": "slum",
@@ -166,5 +166,5 @@ export const SOCIETY_BUILDINGS: Readonly<Record<string,SocietyBuildingInfo>> = {
     "reserved": true
   }
 };
-const outside: Record<string, StaffClass> = {farm:'basic',logging:'basic',mine:'basic',processor:'makers',workshop:'makers'};
+const outside: Record<string, StaffClass> = {'sheep-pasture':'basic','herb-garden':'basic',quarry:'basic',weaver:'makers',farm:'basic',logging:'basic',mine:'basic',processor:'makers',workshop:'makers'};
 export function societyStaff(typeId:string): StaffClass | null { return Object.hasOwn(outside,typeId)?outside[typeId]:Object.hasOwn(SOCIETY_BUILDINGS,typeId)?SOCIETY_BUILDINGS[typeId].staff:null; }

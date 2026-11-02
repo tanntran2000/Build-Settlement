@@ -1,3 +1,4 @@
+import { OUTSIDE_PLOTS, outsidePlot } from './outside.js';
 import { hasWeeklyKeys,isCanonicalGameState } from "../domain/canonical-state.js";
 import { trialBuilding } from "./catalog.js";
 import { GOODS_STOCK_RULESET } from './goods-stock.js';
@@ -25,9 +26,23 @@ export function isTileTrialState(raw: unknown): raw is TileTrialState {
     }
     const ids = new Set<string>(); let workers = 0;
     const assigned: Record<StaffClass, number> = {basic:0,makers:0,luminaries:0,merchants:0};
+    if (s.society) {
+      for (const p of OUTSIDE_PLOTS) {
+        const o=s.society.outside[p.id];
+        if(o.clearWorkers>0&&(!o.wild||p.ring>s.society.wallRing)) return false;
+        assigned.basic+=o.clearWorkers;if(!Number.isSafeInteger(assigned.basic))return false;
+      }
+    }
     for (const t of s.tiles) {
       if (!hasWeeklyKeys(t, ["id", "terrain", "building"]) || typeof t.id !== "string" || !t.id.trim() || ids.has(t.id) || typeof t.terrain !== "string" || !t.terrain.trim()) return false;
       ids.add(t.id);
+      const outside=outsidePlot(t.id), o=s.society?.outside[t.id];
+      if(outside&&o) {
+        if(o.wild&&t.building!==null)return false;
+        if(outside.terrain==='ore'||outside.terrain==='rock') {
+          if(t.terrain!==(o.depositMilli===0?'plain':outside.terrain))return false;
+        }
+      }
       if (t.building === null) continue;
       const b = t.building;
       if (!hasWeeklyKeys(b, ["typeId", "level", "workers", "enabled"]) || typeof b.typeId !== "string") return false;
@@ -35,6 +50,8 @@ export function isTileTrialState(raw: unknown): raw is TileTrialState {
       if (!d || !d.terrain.includes(t.terrain) || !integer(b.level) || b.level < 1 || b.level > d.maxLevel ||
         !integer(b.workers) || b.workers > d.maxWorkers * b.level || typeof b.enabled !== "boolean" || (!b.enabled && b.workers !== 0)) return false;
       if (s.society) {
+        const outside = outsidePlot(t.id);
+        if(outside && outside.ring>s.society.wallRing)return false;
         const plot = societyPlot(t.id), info = Object.hasOwn(SOCIETY_BUILDINGS,b.typeId) ? SOCIETY_BUILDINGS[b.typeId] : undefined;
         if (b.typeId === 'market' || (plot && (t.terrain !== 'town' || plot.ring > s.society.wallRing || !info || info.tier !== plot.tier)) || (!plot && info)) return false;
         const staff = societyStaff(b.typeId);
@@ -62,7 +79,12 @@ export function isTileTrialPlanningState(raw: unknown): raw is TileTrialState {
     for (let i = 0; i < tiles.length; i++) {
       const entry = Object.getOwnPropertyDescriptor(tiles, String(i));
       if (!entry?.enumerable || !("value" in entry) || !hasWeeklyKeys(entry.value, ["id", "terrain", "building"]) ||
-          entry.value.id !== expected[i].id || entry.value.terrain !== expected[i].terrain) return false;
+          entry.value.id !== expected[i].id) return false;
+    }
+    for(let i=0;i<tiles.length;i++){
+      const p=outsidePlot(expected[i].id), society=(raw as unknown as TileTrialState).society;
+      const exhausted=p&&(p.terrain==='ore'||p.terrain==='rock')&&society?.outside?.[expected[i].id]?.depositMilli===0;
+      if(tiles[i].terrain!==(exhausted?'plain':expected[i].terrain))return false;
     }
     return isTileTrialState(raw);
   } catch { return false; }

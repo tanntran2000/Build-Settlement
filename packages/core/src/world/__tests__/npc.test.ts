@@ -26,8 +26,8 @@ describe('starter content', () => {
     expect(Object.isFrozen(WORLD_STARTER_NPCS) && Object.isFrozen(WORLD_TRAITS) && Object.isFrozen(NPC_MANAGER_BUILDING_TYPES)).toBe(true);
     expect(isWorldNpcList(WORLD_STARTER_NPCS, createSocietyState())).toBe(true);
   });
-  it('maps manager posts to the six existing building types', () => {
-    expect([...NPC_MANAGER_BUILDING_TYPES]).toEqual(['farm', 'processor', 'logging', 'mine', 'workshop', 'town-hall', 'town-market']);
+  it('maps manager posts to the existing and outside building types', () => {
+    expect([...NPC_MANAGER_BUILDING_TYPES]).toEqual(['farm', 'processor', 'logging', 'mine', 'workshop', 'town-hall', 'town-market', 'quarry', 'sheep-pasture', 'herb-garden', 'weaver']);
   });
 });
 

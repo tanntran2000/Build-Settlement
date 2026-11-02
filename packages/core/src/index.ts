@@ -23,3 +23,5 @@ export * from './trial/goods-stock.js';
 export * from './trial/society.js';
 
 export * from './trial/society-map.js';
+
+export * from './trial/outside.js';
