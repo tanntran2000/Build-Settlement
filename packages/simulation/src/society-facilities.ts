@@ -1,4 +1,4 @@
-﻿import { SOCIETY_BUILDINGS, societyStaff, trialBuilding, type TileTrialState } from '@haven/core';
+import { OUTSIDE_PLOTS, SOCIETY_BUILDINGS, societyStaff, trialBuilding, type TileTrialState } from '@haven/core';
 import { societyWorkforce, type SocietyFacilities, type SocietyEmployment } from './society-week.js';
 
 const add = (a: number, b: number): number => {
@@ -37,6 +37,7 @@ export function societyEmployment(city: TileTrialState): SocietyEmployment {
   if(staff==='basic') basic=add(basic,b.workers);
   else if(staff) assigned[staff]=add(assigned[staff],b.workers);
  }
+ for(const plot of OUTSIDE_PLOTS)basic=add(basic,city.society.outside[plot.id].clearWorkers);
  assigned.free=Math.min(basic,workforce.free); assigned.bound=basic-assigned.free;
  return {workforce,assigned};
 }
@@ -54,6 +55,13 @@ export function releaseSocietyWorkers(city: TileTrialState): string[] {
   if(released===0) continue;
   b.workers-=released; excess[pool]-=released;
   activities.push(`${tile.id}: released ${released} ${pool} worker(s) after society population changes.`);
+ }
+ for(let i=OUTSIDE_PLOTS.length-1;i>=0&&excess.basic>0;i--){
+  const id=OUTSIDE_PLOTS[i].id, plot=city.society!.outside[id];
+  const released=Math.min(plot.clearWorkers,excess.basic);
+  if(released===0)continue;
+  plot.clearWorkers-=released;excess.basic-=released;
+  activities.push(`${id}: released ${released} clearing worker(s) after society population changes.`);
  }
  return activities;
 }
