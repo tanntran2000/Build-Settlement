@@ -15,7 +15,7 @@ it('round-trips a valid session as detached data in its own format', () => {
   const s = session(); s.npcs[0].postTileId = 'field-1';
   const before = structuredClone(s), text = encode(s);
   expect(CHARACTER_LIFE_SAVE_FORMAT).toBe('haven.character-life-session.save');
-  expect(JSON.parse(text)).toMatchObject({ format: CHARACTER_LIFE_SAVE_FORMAT, schemaVersion: 1, cityRulesetId: 'tile-society-02' });
+  expect(JSON.parse(text)).toMatchObject({ format: CHARACTER_LIFE_SAVE_FORMAT, schemaVersion: 1, cityRulesetId: 'tile-society-03' });
   expect(Object.keys(JSON.parse(text))).toEqual(['format', 'schemaVersion', 'cityRulesetId', 'state']);
   const loaded = deserializeCharacterLifeSave(text);
   expect(loaded).toEqual({ success: true, state: before });
@@ -86,8 +86,8 @@ it('gives identical results on repeated operations', () => {
   expect(deserializeCharacterLifeSave(text)).toEqual(deserializeCharacterLifeSave(text));
 });
 
-it('keeps the generic incompatible message for a v2 envelope with the wrong format', () => {
+it('keeps the generic incompatible message for a v3 envelope with the wrong format', () => {
  const value=envelope();value.format='wrong.format';
- expect(value.cityRulesetId).toBe('tile-society-02');
+ expect(value.cityRulesetId).toBe('tile-society-03');
  expect(deserializeCharacterLifeSave(JSON.stringify(value))).toEqual({success:false,error:{code:'INCOMPATIBLE_SAVE',message:INCOMPATIBLE}});
 });
