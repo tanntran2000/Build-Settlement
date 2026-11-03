@@ -21,7 +21,7 @@ for(const url of ['/','/?mode=weekly','/?mode=tiles','/?mode=population','/?mode
 test('tier lists and locked plots enforce the engine rules',async({page})=>{
  await start(page);await go(page,'city');
  for(const id of ['house-1','house-2','house-3','house-4']){await page.getByTestId(`trial-tile-${id}`).click();await expect(page.getByLabel('Building type').locator('option[value="makers-rowhouses"]')).toHaveCount(1);}
- await page.getByTestId('trial-tile-service-1').click();await expect(page.getByLabel('Building type').locator('option[value="makers-rowhouses"]')).toHaveCount(0);await expect(page.getByLabel('Building type').locator('option[value="watch-house"]')).toBeDisabled();await expect(page.getByTestId('trial-tile-house-5')).toHaveCount(0);await expect(page.getByText('Locked · opens with Ring 2',{exact:true}).first()).toBeVisible();
+ await page.getByTestId('trial-tile-service-1').click();await expect(page.getByLabel('Building type').locator('option[value="makers-rowhouses"]')).toHaveCount(0);await expect(page.getByLabel('Building type').locator('option[value="watch-house"]')).toBeEnabled();await expect(page.getByTestId('trial-tile-house-5')).toHaveCount(0);await expect(page.getByText('Locked · opens with Ring 2',{exact:true}).first()).toBeVisible();
  const s=makeLife(),before=structuredClone(s);expect(executeCharacterLifeCommand(s,{type:'BUILD',tileId:'service-1',typeId:'makers-rowhouses',expectedRevision:0}).success).toBe(false);expect(s).toEqual(before);
 });
 test('Builders Yard opens Ring 2 and its plots',async({page})=>{

@@ -58,7 +58,7 @@ export function isTileTrialState(raw: unknown): raw is TileTrialState {
         const outside = outsidePlot(t.id);
         if(outside && outside.ring>s.society.wallRing)return false;
         const plot = societyPlot(t.id), info = Object.hasOwn(SOCIETY_BUILDINGS,b.typeId) ? SOCIETY_BUILDINGS[b.typeId] : undefined;
-        if (b.typeId === 'market' || (plot && (t.terrain !== 'town' || plot.ring > s.society.wallRing || !info || info.tier !== plot.tier)) || (!plot && info)) return false;
+        if (b.typeId === 'market' || (plot && (t.terrain !== 'town' || plot.ring > s.society.wallRing || !info || (info.tier !== plot.tier && info.alsoTier !== plot.tier))) || (!plot && info)) return false;
         const staff = societyStaff(b.typeId);
         if (staff) { assigned[staff] += b.workers; if (!Number.isSafeInteger(assigned[staff])) return false; }
       }
