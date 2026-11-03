@@ -7,7 +7,7 @@ for (const viewport of [{ width: 375, height: 812 }, { width: 1280, height: 900 
   let session = makeLife(20261028);
   await importLife(page, session);
   await page.getByText('Goods requirements', { exact: true }).click();
-  await expect(page.getByRole('region',{name:'City Requirements',exact:true}).getByTestId('trial-stock-goods')).toHaveText('10');
+  await expect(page.getByTestId('trial-stock-goods')).toHaveText('10');
   const before = await exportLife(page);
   for (const destination of ['city', 'characters', 'help', 'session'] as const) await go(page, destination);
   expect(await exportLife(page)).toEqual(before);
@@ -34,7 +34,7 @@ for (const viewport of [{ width: 375, height: 812 }, { width: 1280, height: 900 
     expect(await exportLife(page)).toEqual(session);
   }
   expect(debit).toBe(15000);
-  await go(page, 'city'); await expect(page.getByRole('region',{name:'City Requirements',exact:true}).getByTestId('trial-stock-goods')).toHaveText('2.75');
+  await go(page, 'city'); await expect(page.getByTestId('trial-stock-goods')).toHaveText('2.75');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.screenshot({ path: info.outputPath('goods-week5-city.png'), fullPage: true });
 });

@@ -1133,7 +1133,7 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 812 
       const shell = page.getByTestId('life-shell');
       await keyActivate(page, page.locator('#life-nav-information'));
       const inventory = initial.city.world.settlements[initial.city.world.activeSettlementId!].inventory;
-      for (const key of ['gold', 'wheat', 'wood', 'iron'] as const) await expect(page.getByTestId(`trial-stock-${key}`)).toHaveText(reportUnits(inventory[key]));
+      for (const key of ['gold', 'wheat', 'wood', 'iron'] as const) await expect(page.getByTestId(key==='gold'?'trial-stock-gold':`trial-storage-${key}`)).toHaveText(reportUnits(inventory[key]));
       await keyGo(page, 'city'); await keyActivate(page, page.getByText('Food requirements', { exact: true }));
       await expect(page.getByTestId('trial-stock-food')).toHaveText(reportUnits(inventory.food));
       await keyGo(page, 'city'); await keyActivate(page, page.getByTestId('trial-tile-field-1'));

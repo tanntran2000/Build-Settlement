@@ -112,7 +112,7 @@
       <div class="information-columns">
       <div><h3>Resources</h3><dl class="stocks">
         <div><dt>Gold</dt><dd data-testid="trial-stock-gold">{formatMilli(settlement.inventory.gold)}</dd></div>
-        {#each storageView(state) as row}<div><dt>{row.good}</dt><dd><span data-testid={row.good==='Food'?'trial-storage-food':`trial-stock-${row.good.toLowerCase()}`}>{formatMilli(Math.round(row.amount*1000))}</span> / {formatMilli(Math.round(row.capacity*1000))}</dd></div>{/each}
+        {#each storageView(state) as row}<div><dt>{row.good}</dt><dd><span data-testid={`trial-storage-${row.good.toLowerCase()}`}>{formatMilli(Math.round(row.amount*1000))}</span> / {formatMilli(Math.round(row.capacity*1000))}</dd></div>{/each}
       </dl></div>
       <div class="city-status"><h3>City status</h3>
       <p>Happiness: <strong>{state.happiness}</strong> / 100</p>

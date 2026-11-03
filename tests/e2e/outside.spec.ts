@@ -52,3 +52,11 @@ for(const kind of ['clearing','building'] as const)test(`${kind} workers filter 
  await input.fill('0');await apply.click();const expected=structuredClone(before);expected.city.revision++;if(kind==='clearing')expected.city.society!.outside['pasture-1'].clearWorkers=0;else expected.city.tiles.find(t=>t.id==='field-1')!.building!.workers=0;
  expect(serializeCharacterLifeSave(await exportLife(page))).toEqual(serializeCharacterLifeSave(expected));
 });
+test('city and Information test IDs are unique for all ten stored goods',async({page})=>{
+ const s=seed();s.city.society!.wallRing=3;await start(page,s);await page.locator('#life-nav-information').click();
+ const ids=await page.locator('[data-life-view="city"], [data-testid="trial-stocks"]').evaluateAll(roots=>roots.flatMap(root=>[root,...root.querySelectorAll('[data-testid]')]).map(node=>node.getAttribute('data-testid')).filter((id):id is string=>id!==null));
+ expect(ids.filter((id,index)=>ids.indexOf(id)!==index)).toEqual([]);
+ await expect(page.getByTestId('trial-stocks').locator('[data-testid^="trial-storage-"]')).toHaveCount(10);
+ for(const good of ['food','wheat','wood','iron','stone','wool','cloth','herbs','goods','luxury'])await expect(page.getByTestId(`trial-storage-${good}`)).toHaveCount(1);
+ await expect(page.getByTestId('trial-stock-food')).toHaveCount(1);await expect(page.getByTestId('trial-stock-goods')).toHaveCount(1);
+});

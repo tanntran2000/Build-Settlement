@@ -141,7 +141,7 @@ async function uiParity(page: Page, o: Observation, fullReport: Readonly<TileTri
   await expect(shell).toHaveAttribute('data-revision', String(o.revision));
   await expect(shell.locator('aside').getByText(/^Week \d+ · Year \d+ · (Planning|Report)$/)).toHaveText(`Week ${((o.week - 1) % 40) + 1} · Year ${Math.floor((o.week - 1) / 40) + 1} · ${title(o.phase)}`);
   await page.locator('#life-nav-information').click();
-  for (const key of WEEKLY_RESOURCE_KEYS.filter(key => key !== 'food')) await expect(page.getByTestId(`trial-stock-${key}`)).toHaveText(formatMilli(s.stocks[key]));
+  for (const key of WEEKLY_RESOURCE_KEYS.filter(key => key !== 'food')) await expect(page.getByTestId(key==='gold'?'trial-stock-gold':`trial-storage-${key}`)).toHaveText(formatMilli(s.stocks[key]));
   await expect(region(page, 'City stocks').locator('p strong')).toHaveText(String(s.happiness));
   await go(page, 'city');
   const c=expected.city.society!.classes;
