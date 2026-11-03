@@ -70,7 +70,8 @@ describe('retained society command and production branches', () => {
     const s = city(); s.tiles[0].building!.workers = 4; s.tiles[1].building!.workers = 4;
     stocks(s).wheat = Number.MAX_SAFE_INTEGER - 8000;
     const r = success(s);
-    expect(stocks(r.nextState).wheat).toBe(Number.MAX_SAFE_INTEGER - 8000);
+    expect(stocks(r.nextState).wheat).toBe(40000);
+    expect(r.report!.outside!.spoiledMilli.wheat).toBe(Number.MAX_SAFE_INTEGER - 48000);
     expect(stocks(r.nextState).food).toBe(8000);
   });
   it.each(['food', 'wood', 'iron'] as const)('rejects intermediate %s overflow atomically', key => {
@@ -91,7 +92,8 @@ describe('retained society command and production branches', () => {
     const s = city(); stocks(s).gold = Number.MAX_SAFE_INTEGER - 3000;
     stocks(s).food = Number.MAX_SAFE_INTEGER - 4000;
     const r = success(s);
-    expect(stocks(r.nextState).food).toBe(Number.MAX_SAFE_INTEGER - 4000);
+    expect(stocks(r.nextState).food).toBe(40000);
+    expect(r.report!.outside!.spoiledMilli.food).toBe(Number.MAX_SAFE_INTEGER - 44000);
     expect(stocks(r.nextState)).toMatchObject({ wood: 8000, iron: 4000 });
     const overflow = city(); stocks(overflow).gold = Number.MAX_SAFE_INTEGER - 2999;
     rejected(overflow, raw(overflow), 'EXECUTION_ERROR');

@@ -38,6 +38,7 @@ export function resolveTrialImmigration(state: TileTrialState, facts: Immigratio
       case "processor": processor += min(slots, integer(PROCESSOR_MAX_BATCHES)); break;
       case "logging": logging += slots; break;
       case "mine": mine += slots; break;
+      case "stone": case "wool": case "herbs": case "cloth": mine += slots; break;
       case "goods": workshop += slots; workshopWorkers += integer(b.workers); break;
       case "market": market += integer(b.level) * integer(G.capacityPerLevelMilli); break;
     }
