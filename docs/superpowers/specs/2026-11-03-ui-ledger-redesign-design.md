@@ -3,7 +3,7 @@
 Status: **Draft for G1.** Design choices approved in chat by the user (Tân), 2026-10-30 → 2026-11-03, Claude session. The written spec is not yet approved. No code, commit of product files, push or PR is authorised by this document.
 Baseline: `origin/main` `9f3f165` (merge of PR #65). Branch: `docs/ui-ledger-redesign` (docs only).
 Scope: the Character Life shell of a started game session. Presentation only.
-Implementation starts only after P3-A (`feat/p3a-outside-state`) is closed (§9).
+Implementation starts only after all of P3 (PR A, B and C) is merged (§9).
 
 ## 1. Authority
 
@@ -17,6 +17,7 @@ User decisions, in order (Claude session unless stated):
 6. 2026-11-03: after End Week the game **switches to the Report tab automatically** ("Tự chuyển").
 7. 2026-11-03: the frontend approach was discussed with Codex in the shared T3 thread before this spec. Codex's six recommendations (font, texture, Report view, navigation, order, risks) were accepted by Claude and are folded into §4–§9.
 8. 2026-11-03: "Kiểm tra song song với việc Builder đang xây P3 cẩn thận xây chồng lên đó". This spec is written read-only next to the running P3-A Builder, and implementation waits for P3-A (§9).
+9. 2026-11-03: UI-LEDGER-01 starts **after all of P3** ("After all of P3"), not alongside P3-B. P3-C builds its outside-city UI on the current style; this redesign then restyles it with the rest of the shell.
 
 This spec supersedes, for the Report only, the "Report is a dialog" rule in the [city navigation spec](2026-10-27-city-navigation-design.md) §4 item 1, including "Automatic Report opening after End Week returns focus to End Week on close". Information, Player and Population stay dialogs.
 
@@ -165,13 +166,14 @@ Tests that change because Report is no longer a dialog (from Codex's list at `9f
 
 Required gates on the exact commit: `git diff --check`, `npm run lint`, `npm run typecheck`, `npm run check:architecture`, `npm run test:architecture`, `npm test`, `npm run build`, `npm run test:smoke`.
 
-## 9. Order and collision with P3-A
+## 9. Order and collision with P3
 
 1. **P3-A first.** It is in worktree `qa-g6-closeout-01`, `feat/p3a-outside-state` @ `b419f93`, HOLD on one smoke failure. Its UI/test diff against `9f3f165` touches three UI unit tests and `society`, `tile-save`, `world-session` e2e specs. It touches none of the files in §10. `society.spec.ts:11` opens the Population dialog, which stays.
-2. **Then this redesign**, on a fresh branch from the `main` that contains P3-A. Before dispatch, re-run the collision check against P3-A's final head.
-3. **Then CITY-MAP-01**, after its spec is revised for the P2/P3 city (main already renders `InsideCity`).
+2. **Then P3-B and P3-C** (user decision 9). P3-C adds outside-city UI that this redesign must also cover.
+3. **Then this redesign**, on a fresh branch from the `main` that contains P3-C. Before dispatch, re-run the collision check against that `main` and add P3-C's new UI files to §10.
+4. **Then CITY-MAP-01**, after its spec is revised for the P2/P3 city (main already renders `InsideCity`).
 
-No writer or Playwright run for this work while the P3-A Builder is running.
+No writer or Playwright run for this work while a P3 Builder is running.
 
 ## 10. File allowlist
 
@@ -200,7 +202,7 @@ Any other file needs a reviewed revision. No dependency, lockfile or config chan
 - **Contrast on textured areas.** Bounded by the 8% overlay cap and the contrast test.
 - **Moving Plan next week to the bottom** makes it further from the heading on long reports. Accepted: focus starts at the heading and the player reads down to the seal.
 - **Test churn** in the navigation specs. Limited to Report-dialog assertions listed in §8.
-- **P3-A head changes** after this spec. §9 item 2 re-checks before dispatch.
+- **P3 changes the UI** after this spec (P3-C). §9 item 3 re-checks and extends §10 before dispatch.
 
 ## 12. Open questions for the user
 
