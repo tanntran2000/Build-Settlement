@@ -1,3 +1,4 @@
+import { readDenseArray } from '../world/arrays.js';
 import { OUTSIDE_PLOTS, outsidePlot } from './outside.js';
 import { hasWeeklyKeys,isCanonicalGameState } from "../domain/canonical-state.js";
 import { trialBuilding } from "./catalog.js";
@@ -17,8 +18,11 @@ export function isTileTrialState(raw: unknown): raw is TileTrialState {
     if (!isCanonicalGameState(s.world) || !s.world.activeSettlementId || !integer(s.revision) ||
       !["planning", "report"].includes(s.phase) || !Number.isFinite(s.happiness) || s.happiness < 0 || s.happiness > 100 || !Array.isArray(s.tiles)) return false;
     if (s.society) {
+      const settlement=s.world.settlements[s.world.activeSettlementId];
+      const cohorts=readDenseArray(settlement.cohorts) as typeof settlement.cohorts|null;
+      if(!cohorts)return false;
       let population = 0;
-      for (const cohort of s.world.settlements[s.world.activeSettlementId].cohorts) {
+      for (const cohort of cohorts) {
         population += cohort.count;
         if (!Number.isSafeInteger(population)) return false;
       }
@@ -33,7 +37,9 @@ export function isTileTrialState(raw: unknown): raw is TileTrialState {
         assigned.basic+=o.clearWorkers;if(!Number.isSafeInteger(assigned.basic))return false;
       }
     }
-    for (const t of s.tiles) {
+    const tiles=readDenseArray(s.tiles);
+    if(!tiles)return false;
+    for (const t of tiles) {
       if (!hasWeeklyKeys(t, ["id", "terrain", "building"]) || typeof t.id !== "string" || !t.id.trim() || ids.has(t.id) || typeof t.terrain !== "string" || !t.terrain.trim()) return false;
       ids.add(t.id);
       const outside=outsidePlot(t.id), o=s.society?.outside[t.id];
@@ -71,7 +77,7 @@ export function isTileTrialState(raw: unknown): raw is TileTrialState {
 // Checkpoint boundary pins this ruleset's map and excludes UI-local reports.
 export function isTileTrialPlanningState(raw: unknown): raw is TileTrialState {
   try {
-    if (!hasTileKeys(raw) || raw.phase !== "planning" || !Array.isArray(raw.tiles)) return false;
+    if (!hasTileKeys(raw) || raw.phase !== "planning" || !Array.isArray(raw.tiles) || !isSocietyState(raw.society)) return false;
     const tiles = raw.tiles;
     if (Object.getPrototypeOf(tiles) !== Array.prototype || Reflect.ownKeys(tiles).length !== tiles.length + 1) return false;
     const expected = createSocietyState().tiles;

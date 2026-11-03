@@ -70,3 +70,53 @@ it('pins activated catalog costs and workforce classes',()=>{
  }
  for(const id of ['quarry','sheep-pasture','herb-garden','weaver']) expect(NPC_MANAGER_BUILDING_TYPES).toContain(id);
 });
+
+it.each(['paid','completed'] as const)('rejects research %s accessors without reading or mutating state', key=>{
+ const s=createSocietyState();s.society!.research[key]=['deep-mining'];
+ const before=structuredClone(s), values=s.society!.research[key], original=Object.getOwnPropertyDescriptor(values,'0')!;
+ let reads=0;
+ const getter=()=>{reads++;s.society!.stocksMilli.stone=123;return 'deep-mining';};
+ Object.defineProperty(values,'0',{enumerable:true,configurable:true,get:getter});
+ expect.soft(isSocietyState(s.society)).toBe(false);
+ expect.soft(reads).toBe(0);
+ expect.soft(Object.getOwnPropertyDescriptor(values,'0')!.get).toBe(getter);
+ Object.defineProperty(values,'0',original);
+ expect(s).toEqual(before);
+});
+it.each(['outside','plot','deposit'] as const)('rejects planning %s accessors before reading outside terrain state', key=>{
+ const s=createSocietyState(), before=structuredClone(s);
+ const object=key==='outside'?s.society!:key==='plot'?s.society!.outside:s.society!.outside['ore-1'];
+ const property=key==='outside'?'outside':key==='plot'?'ore-1':'depositMilli';
+ const original=Object.getOwnPropertyDescriptor(object,property)!;
+ let reads=0;
+ const getter=()=>{reads++;s.society!.stocksMilli.stone=123;return original.value;};
+ Object.defineProperty(object,property,{enumerable:true,configurable:true,get:getter});
+ expect.soft(isTileTrialPlanningState(s)).toBe(false);
+ expect.soft(reads).toBe(0);
+ expect.soft(Object.getOwnPropertyDescriptor(object,property)!.get).toBe(getter);
+ Object.defineProperty(object,property,original);
+ expect(s).toEqual(before);
+});
+it.each(['index','iterator'] as const)('rejects live tile %s accessors without reading or mutating state', key=>{
+ const s=createSocietyState(), before=structuredClone(s), property=key==='index'?'0':Symbol.iterator;
+ const original=Object.getOwnPropertyDescriptor(s.tiles,property);
+ let reads=0;
+ const getter=()=>{reads++;s.society!.stocksMilli.stone=123;return key==='index'?before.tiles[0]:Array.prototype[Symbol.iterator];};
+ Object.defineProperty(s.tiles,property,{enumerable:true,configurable:true,get:getter});
+ expect.soft(isTileTrialState(s)).toBe(false);
+ expect.soft(reads).toBe(0);
+ expect.soft(Object.getOwnPropertyDescriptor(s.tiles,property)!.get).toBe(getter);
+ if(original)Object.defineProperty(s.tiles,property,original);else Reflect.deleteProperty(s.tiles,property);
+ expect(s).toEqual(before);
+});
+it('rejects inherited cohort iterators without reading or mutating state',()=>{
+ const s=createSocietyState(), before=structuredClone(s), cohorts=s.world.settlements[s.world.activeSettlementId!].cohorts;
+ const original=Object.getPrototypeOf(cohorts), prototype=Object.create(original);
+ let reads=0;
+ Object.defineProperty(prototype,Symbol.iterator,{get(){reads++;s.society!.stocksMilli.stone=123;return Array.prototype[Symbol.iterator];}});
+ Object.setPrototypeOf(cohorts,prototype);
+ expect.soft(isTileTrialState(s)).toBe(false);expect.soft(reads).toBe(0);
+ expect.soft(Object.getPrototypeOf(cohorts)).toBe(prototype);
+ Object.setPrototypeOf(cohorts,original);
+ expect(s).toEqual(before);
+});

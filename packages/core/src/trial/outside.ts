@@ -56,7 +56,18 @@ export interface OutsideResearch {
 export function isOutsideResearch(raw:unknown): raw is OutsideResearch {
  if(!hasWeeklyKeys(raw,['topic','progressMilli','paid','completed']) ||
   !hasWeeklyKeys(raw.progressMilli,['deep-mining']) || !count(raw.progressMilli['deep-mining']))return false;
- const topics=(v:unknown):v is ResearchTopic[]=>Array.isArray(v)&&Object.getPrototypeOf(v)===Array.prototype&&
-  Reflect.ownKeys(v).length===v.length+1&&v.every((_,i)=>{const d=Object.getOwnPropertyDescriptor(v,String(i));return !!d?.enumerable&&'value' in d&&d.value==='deep-mining';})&&new Set(v).size===v.length;
- return topics(raw.paid)&&topics(raw.completed)&&(raw.topic===null||raw.topic==='deep-mining'&&!raw.completed.includes(raw.topic));
+ const topics=(v:unknown):ResearchTopic[]|null=>{
+  if(!Array.isArray(v)||Object.getPrototypeOf(v)!==Array.prototype)return null;
+  const length=Object.getOwnPropertyDescriptor(v,'length')?.value;
+  if(!Number.isSafeInteger(length)||length<0||Reflect.ownKeys(v).length!==length+1)return null;
+  const values:ResearchTopic[]=[];
+  for(let i=0;i<length;i++){
+   const d=Object.getOwnPropertyDescriptor(v,String(i));
+   if(!d?.enumerable||!('value' in d)||d.value!=='deep-mining')return null;
+   values.push(d.value);
+  }
+  return new Set(values).size===values.length?values:null;
+ };
+ const paid=topics(raw.paid), completed=topics(raw.completed);
+ return paid!==null&&completed!==null&&(raw.topic===null||raw.topic==='deep-mining'&&!completed.includes(raw.topic));
 }
