@@ -1,6 +1,6 @@
 # UI-LEDGER-01 — "Lord's ledger" restyle and Report view (design spec v0.1)
 
-Status: **Draft for G1.** Design choices approved in chat by the user (Tân), 2026-10-30 → 2026-11-03, Claude session. The written spec is not yet approved. No code, commit of product files, push or PR is authorised by this document.
+Status: **G1 approved** by the user (Tân), 2026-11-03, Claude session: "Duyệt G1". The implementation plan is written after all of P3 is merged, against that `main`. No code, push or PR is authorised by this document.
 Baseline: `origin/main` `9f3f165` (merge of PR #65). Branch: `docs/ui-ledger-redesign` (docs only).
 Scope: the Character Life shell of a started game session. Presentation only.
 Implementation starts only after all of P3 (PR A, B and C) is merged (§9).
@@ -18,6 +18,7 @@ User decisions, in order (Claude session unless stated):
 7. 2026-11-03: the frontend approach was discussed with Codex in the shared T3 thread before this spec. Codex's six recommendations (font, texture, Report view, navigation, order, risks) were accepted by Claude and are folded into §4–§9.
 8. 2026-11-03: "Kiểm tra song song với việc Builder đang xây P3 cẩn thận xây chồng lên đó". This spec is written read-only next to the running P3-A Builder, and implementation waits for P3-A (§9).
 9. 2026-11-03: UI-LEDGER-01 starts **after all of P3** ("After all of P3"), not alongside P3-B. P3-C builds its outside-city UI on the current style; this redesign then restyles it with the rest of the shell.
+10. 2026-11-03: written spec v0.1 approved: "Duyệt G1". The approval did not answer §12, so the spec's defaults stand.
 
 This spec supersedes, for the Report only, the "Report is a dialog" rule in the [city navigation spec](2026-10-27-city-navigation-design.md) §4 item 1, including "Automatic Report opening after End Week returns focus to End Week on close". Information, Player and Population stay dialogs.
 
@@ -205,7 +206,9 @@ Any other file needs a reviewed revision. No dependency, lockfile or config chan
 - **Test churn** in the navigation specs. Limited to Report-dialog assertions listed in §8.
 - **P3 changes the UI** after this spec (P3-C). §9 item 3 re-checks and extends §10 before dispatch.
 
-## 12. Open questions for the user
+## 12. Questions closed by G1 defaults
 
-1. Font budget: is the 150 KB ceiling acceptable, or should the shell use Georgia only (zero font bytes)?
-2. Mockup said "Haven" on the sidebar name plate; this spec keeps "Character Life" to avoid wording churn. Rename later?
+The user approved the spec without answering these, so the defaults stand. The user can still change either before the plan is written.
+
+1. Font budget: the 150 KB ceiling stands, with the Georgia fallback (§4).
+2. Name plate: keeps "Character Life". A rename to "Haven" is a later wording change.
