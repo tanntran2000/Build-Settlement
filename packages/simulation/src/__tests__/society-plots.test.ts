@@ -1,4 +1,4 @@
-﻿import { createSocietyState,type TileTrialState } from '@haven/core';
+import { createSocietyState,type TileTrialState } from '@haven/core';
 import { expect,it } from 'vitest';
 import { executeTileTrialCommand } from '../tile-trial.js';
 const run = (s:TileTrialState,c:Record<string,unknown>) => executeTileTrialCommand(s,{...c,expectedRevision:s.revision});
@@ -63,6 +63,7 @@ it('excludes Makers elites and floors common workforce', () => {
 it.each([0, 1])('requires a fully staffed Town Hall for ring three: %s workers', workers => {
   const s = createSocietyState();
   s.society!.wallRing = 2;
+  s.society!.stocksMilli.stone = 30000;
   Object.assign(s.world.settlements[s.world.activeSettlementId!].inventory, { gold: 100000, wood: 100000, iron: 100000 });
   s.tiles.find(t => t.id === 'service-1')!.building = { typeId: 'town-hall', level: 1, workers, enabled: true };
   const before = structuredClone(s), r = run(s, { type: 'EXTEND_WALL' });
@@ -71,6 +72,7 @@ it.each([0, 1])('requires a fully staffed Town Hall for ring three: %s workers',
     expect(r.success).toBe(true);
     if (!r.success) throw Error(r.error.code);
     expect(r.nextState.society!.wallRing).toBe(3);
+    expect(r.nextState.society!.stocksMilli.stone).toBe(0);
     expect(r.nextState.revision).toBe(s.revision + 1);
     expect(r.nextState.world.settlements[r.nextState.world.activeSettlementId!].inventory)
       .toMatchObject({ gold: 40000, wood: 60000, iron: 80000 });

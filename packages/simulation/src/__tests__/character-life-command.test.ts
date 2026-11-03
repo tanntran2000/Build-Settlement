@@ -136,6 +136,7 @@ describe('supported rejection parity and first-match taxonomy', () => {
 
   it('pins gameplay rejection codes on valid affordable or isolated fixtures', () => {
     const built = oldAction(life(), { type: 'BUILD', tileId: 'forest-1', typeId: 'logging' });
+    built.city.society!.stocksMilli.stone=5000;
     const max = oldAction(oldAction(built, { type: 'UPGRADE', tileId: 'forest-1' }), { type: 'UPGRADE', tileId: 'forest-1' });
     const assigned = oldAction(life(), { type: 'ASSIGN_NPC', npcId: 'npc_starter_1', tileId: 'field-1' });
     const zeroStock = life(); zeroStock.city.world.settlements.settlement_haven_01.inventory.gold = 0;

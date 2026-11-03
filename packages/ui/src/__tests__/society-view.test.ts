@@ -12,7 +12,7 @@ it('offers tier-matching active buildings then disabled reserved entries',()=>{
  expect(buildOptions(city,'service-1')).toEqual([{typeId:'tavern',label:'Tavern',available:true},{typeId:'hospital',label:'Hospital',available:true},{typeId:'town-hall',label:'Town Hall',available:true},{typeId:'watch-house',label:'Watch House — Not available yet',available:false}]);
  expect(buildOptions(city,'house-1').map(x=>x.typeId)).not.toContain('market');
  expect(buildOptions(city,'house-1').map(x=>x.typeId)).not.toContain('tavern');
- expect(buildOptions(city,'plain-2').map(x=>x.typeId)).toEqual(['farm','processor','logging','mine','workshop']);
+ expect(buildOptions(city,'plain-2').map(x=>x.typeId)).toEqual(['sheep-pasture','herb-garden','quarry','weaver','farm','processor','logging','mine','workshop']);
  expect(buildOptions(city,'house-5')).toEqual([]);
 });
 it('reports the four starting staff pools',()=>{

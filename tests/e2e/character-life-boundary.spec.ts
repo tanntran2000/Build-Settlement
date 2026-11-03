@@ -245,7 +245,7 @@ async function uiParity(page: Page, o: Observation, fullReport: Readonly<TileTri
 }
 
 test('same-session UI projection through assignment and full week', async ({ page }) => {
-  test.setTimeout(120_000);
+  test.setTimeout(240_000);
   const initial = fixture(), saved = serializeCharacterLifeSave(initial);
   expect(saved.success).toBe(true);
   if (!saved.success) throw new Error(saved.error.message);

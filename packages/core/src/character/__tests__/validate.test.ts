@@ -283,12 +283,12 @@ describe('live Character Life validation', () => {
       expect(s.city.revision).toBe(revision);
     });
 
-    it.each(['id', 'terrain', 'length'])('live map permits changed %s while saves stay pinned', change => {
+    it.each(['id', 'terrain', 'length'])('live map validates changed %s while saves stay pinned', change => {
       const s = session(), tile = s.city.tiles.find(t => t.id === 'field-2')!;
       if (change === 'id') tile.id = 'field-live';
       else if (change === 'terrain') tile.terrain = 'plain';
       else s.city.tiles.splice(s.city.tiles.indexOf(tile), 1);
-      expect(isLiveCharacterLifeSessionState(s)).toBe(true);
+      expect(isLiveCharacterLifeSessionState(s)).toBe(change !== 'terrain');
       expect(isCharacterLifeSessionState(s)).toBe(false);
     });
   });

@@ -1,4 +1,4 @@
-import { hasWeeklyKeys,isTileTrialPlanningState,isTileTrialState,SOCIETY_BUILDINGS,societyPlot,trialBuilding,type TileTrialResult,type TileTrialState } from '@haven/core';
+import { OUTSIDE_TRIAL,outsidePlot,hasWeeklyKeys,isTileTrialPlanningState,isTileTrialState,SOCIETY_BUILDINGS,societyPlot,trialBuilding,type TileTrialResult,type TileTrialState } from '@haven/core';
 import { runTileTrialWeek,trialSafe } from "./tile-trial-week.js";
 
 export function executeTileTrialCommand(state: unknown, raw: unknown): TileTrialResult {
@@ -12,6 +12,7 @@ export function executeTileTrialCommand(state: unknown, raw: unknown): TileTrial
     if (state.phase === "report" && c.type !== "NEXT_WEEK") return fail("FORBIDDEN", "Read the report, then choose Plan next week.");
     if (state.phase === "planning" && c.type === "NEXT_WEEK") return fail("FORBIDDEN", "Finish this week before planning the next one.");
     const keys: Record<string, string[]> = {
+      CLEAR: ['tileId','workers'], SET_RESEARCH: ['topic'], BUILD_DEEP_SHAFT: ['tileId'],
       EXTEND_WALL: [], SET_TRAINING: ["target"], END_WEEK: ["expectedWeek"], NEXT_WEEK: [], LOAD_TRIAL: ["snapshot"], BUILD: ["tileId", "typeId"], REPLACE: ["tileId", "typeId"],
       UPGRADE: ["tileId"], SET_WORKERS: ["tileId", "workers"], SET_ENABLED: ["tileId", "enabled"],
     };
@@ -19,7 +20,20 @@ export function executeTileTrialCommand(state: unknown, raw: unknown): TileTrial
     if (['EXTEND_WALL','SET_TRAINING'].includes(c.type) && !state.society) return fail('UNSUPPORTED_RULESET','This command requires a society city.');
     let next = structuredClone(state) as TileTrialState;
     let report;
-    if (c.type === 'SET_TRAINING') {
+    if (c.type === 'SET_RESEARCH') {
+      const research=next.society!.research, topic=c.topic;
+      if(topic!==null && topic!=='deep-mining')return fail('UNKNOWN_TOPIC','Choose a supported research topic.');
+      if(topic!==null){
+        if(research.completed.includes(topic))return fail('ALREADY_RESEARCHED','This topic is already completed.');
+        if(!research.paid.includes(topic)){
+          const inventory=next.world.settlements[next.world.activeSettlementId!].inventory;
+          const cost=OUTSIDE_TRIAL.research[topic].goldMilli;
+          if(inventory.gold<cost)return fail('INSUFFICIENT_RESOURCES','Not enough Gold for research.');
+          inventory.gold-=cost;research.paid.push(topic);
+        }
+      }
+      research.topic=topic;
+    } else if (c.type === 'SET_TRAINING') {
       if (c.target !== null && !['makers','luminaries','merchants'].includes(c.target as string)) return fail('INVALID_COMMAND','Choose a training group.');
       next.society!.training.target = c.target as 'makers' | 'luminaries' | 'merchants' | null;
     } else if (c.type === 'EXTEND_WALL') {
@@ -30,7 +44,10 @@ export function executeTileTrialCommand(state: unknown, raw: unknown): TileTrial
       const inventory = next.world.settlements[next.world.activeSettlementId!].inventory;
       const costs = ring === 1 ? {gold:30000,wood:20000,iron:10000} : {gold:60000,wood:40000,iron:20000};
       for (const key of ['gold','wood','iron'] as const) if (inventory[key]<costs[key]) return fail('INSUFFICIENT_RESOURCES','Not enough resources to extend the wall.');
+      const stone=ring===2?OUTSIDE_TRIAL.wallRing3StoneMilli:0;
+      if(next.society!.stocksMilli.stone<stone)return fail('INSUFFICIENT_RESOURCES','Not enough Stone to extend the wall.');
       for (const key of ['gold','wood','iron'] as const) inventory[key]-=costs[key];
+      next.society!.stocksMilli.stone-=stone;
       next.society!.wallRing = ring === 1 ? 2 : 3;
     } else if (c.type === "LOAD_TRIAL") {
       if (c.snapshot && typeof c.snapshot === 'object' && !Object.hasOwn(c.snapshot, 'society')) return fail('INVALID_STATE', 'Checkpoint economy is incompatible with this society city.');
@@ -44,7 +61,35 @@ export function executeTileTrialCommand(state: unknown, raw: unknown): TileTrial
     else {
       const tile = next.tiles.find(t => t.id === c.tileId);
       if (!tile) return fail("INVALID_TILE", "Select a valid tile.");
-      if (["BUILD", "REPLACE", "UPGRADE"].includes(c.type)) {
+      const outside=outsidePlot(tile.id), plotState=next.society!.outside[tile.id];
+      if(['CLEAR','BUILD','REPLACE','UPGRADE','BUILD_DEEP_SHAFT'].includes(c.type) && outside){
+        if(outside.ring>next.society!.wallRing)return fail('LOCKED_PLOT','Extend the wall first.');
+        if(c.type!=='CLEAR'&&plotState.wild)return fail('WILD_PLOT','Clear this plot before building.');
+      }
+      if(c.type==='CLEAR'){
+        if(!outside)return fail('NOT_OUTSIDE','Choose an outside plot.');
+        if(!plotState.wild)return fail('NOT_WILD','This plot is already cleared.');
+        if(!Number.isSafeInteger(c.workers)||(c.workers as number)<0)return fail('INVALID_WORKFORCE','Use whole nonnegative clearing workers.');
+        const inventory=next.world.settlements[next.world.activeSettlementId!].inventory;
+        if((c.workers as number)>0&&!plotState.clearPaid){
+          if(inventory.gold<OUTSIDE_TRIAL.clearFeeGoldMilli)return fail('INSUFFICIENT_RESOURCES','Not enough Gold to start clearing.');
+          inventory.gold-=OUTSIDE_TRIAL.clearFeeGoldMilli;plotState.clearPaid=true;
+        }
+        plotState.clearWorkers=c.workers as number;
+      } else if(c.type==='BUILD_DEEP_SHAFT'){
+        if(!next.society!.research.completed.includes('deep-mining'))return fail('RESEARCH_REQUIRED','Complete Deep Mining first.');
+        if(!outside || (outside.terrain!=='ore'&&outside.terrain!=='rock'))return fail('NOT_A_MINE','Choose an Iron Mine or Quarry.');
+        if(plotState.depositMilli===0)return fail('DEPOSIT_EXHAUSTED','This deposit is exhausted.');
+        if(tile.building?.typeId!=='mine'&&tile.building?.typeId!=='quarry')return fail('NOT_A_MINE','Choose an Iron Mine or Quarry.');
+        if(plotState.deepShaft)return fail('ALREADY_DEEP','This plot already has a Deep Shaft.');
+        const inventory=next.world.settlements[next.world.activeSettlementId!].inventory, discount=constructionDiscount(state);
+        const cost=OUTSIDE_TRIAL.deepShaft;
+        const gold=discounted(cost.goldMilli,discount), wood=discounted(cost.woodMilli,discount), stone=discounted(cost.stoneMilli,discount);
+        if(inventory.gold<gold||inventory.wood<wood||next.society!.stocksMilli.stone<stone)return fail('INSUFFICIENT_RESOURCES','Not enough resources for a Deep Shaft.');
+        const cap=trialSafe(plotState.capMilli!+cost.depositBonusMilli), deposit=trialSafe(plotState.depositMilli!+cost.depositBonusMilli);
+        inventory.gold-=gold;inventory.wood-=wood;next.society!.stocksMilli.stone-=stone;
+        plotState.capMilli=cap;plotState.depositMilli=deposit;plotState.deepShaft=true;
+      } else if (["BUILD", "REPLACE", "UPGRADE"].includes(c.type)) {
         const typeId = c.type === "UPGRADE" ? tile.building?.typeId : c.typeId;
         if (state.society) {
           const plot = societyPlot(tile.id), info = typeof typeId === 'string' && Object.hasOwn(SOCIETY_BUILDINGS,typeId) ? SOCIETY_BUILDINGS[typeId] : undefined;
@@ -61,15 +106,14 @@ export function executeTileTrialCommand(state: unknown, raw: unknown): TileTrial
         const level = c.type === "UPGRADE" ? tile.building!.level + 1 : 1;
         if (level > d.maxLevel) return fail("MAX_LEVEL", "This building is at its trial maximum level.");
         const inventory = next.world.settlements[next.world.activeSettlementId!].inventory;
-        let discount = 0;
-        if (state.society) for (const t of state.tiles) {
-          const b = t.building;
-          if (b?.typeId === 'builders-yard' && b.enabled && b.workers === trialBuilding(b.typeId)!.maxWorkers*b.level) discount=Math.max(discount,b.level*10);
-        }
+        const discount=constructionDiscount(state);
         const costs = { gold: trialSafe(d.cost.gold * level), wood: trialSafe(d.cost.wood * level), iron: trialSafe(d.cost.iron * level) };
-        for (const key of ['gold','wood','iron'] as const) costs[key] = trialSafe(Number(BigInt(costs[key])*BigInt(100-discount)/100n));
+        for (const key of ['gold','wood','iron'] as const) costs[key] = discounted(costs[key],discount);
         for (const key of ["gold", "wood", "iron"] as const) if (inventory[key] < costs[key]) return fail("INSUFFICIENT_RESOURCES", `Not enough ${key} for this action.`);
         for (const key of ["gold", "wood", "iron"] as const) inventory[key] -= costs[key];
+        const stone=level===3?discounted(OUTSIDE_TRIAL.level3StoneMilli,discount):0;
+        if(next.society!.stocksMilli.stone<stone)return fail('INSUFFICIENT_RESOURCES','Not enough Stone for level three.');
+        next.society!.stocksMilli.stone-=stone;
         tile.building = { typeId, level, workers: c.type === "UPGRADE" ? tile.building!.workers : 0, enabled: c.type === "UPGRADE" ? tile.building!.enabled : true };
       } else {
         if (!tile.building) return fail("EMPTY_TILE", "Build a building on this tile first.");
@@ -88,3 +132,10 @@ export function executeTileTrialCommand(state: unknown, raw: unknown): TileTrial
     return { success: true, nextState: next, ...(report ? { report } : {}) };
   } catch { return fail("EXECUTION_ERROR", "The action failed validation or safe arithmetic; the original state was preserved."); }
 }
+
+function constructionDiscount(state:TileTrialState):number {
+ let discount=0;
+ for(const {building:b} of state.tiles)if(b?.typeId==='builders-yard'&&b.enabled&&b.workers===trialBuilding(b.typeId)!.maxWorkers*b.level)discount=Math.max(discount,b.level*10);
+ return discount;
+}
+const discounted=(cost:number,discount:number):number=>trialSafe(Number(BigInt(cost)*BigInt(100-discount)/100n));

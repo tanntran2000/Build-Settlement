@@ -1,4 +1,3 @@
-﻿
 import { expect,it } from 'vitest';
 import { createSocietyState,isTileTrialPlanningState,managerSlotTileIds } from '../../index.js';
 import { SOCIETY_PLOT_IDS,societyPlot } from '../society-map.js';
@@ -10,7 +9,7 @@ it('pins the society map and ring boundaries', () => {
  expect(societyPlot('slum-4')).toEqual({tier:'slum',ring:3});
  expect(societyPlot('field-1')).toBeNull();
  const city = createSocietyState();
- expect(city.tiles).toHaveLength(43);
+ expect(city.tiles).toHaveLength(63);
  expect(isTileTrialPlanningState(city)).toBe(true);
 });
 
@@ -22,13 +21,15 @@ it('preserves Market manager posts in both economies and adds Town Hall', () => 
 });
 
 import { TRIAL_BUILDINGS } from '../../index.js';
-it('pins all fourteen active town building names to the approved catalog', () => {
+it('pins all sixteen active town building names to the approved catalog', () => {
   const names = {
     'common-housing': 'Common Housing',
     'makers-rowhouses': "Makers' Rowhouses",
     'scholars-quarters': "Scholars' Quarters",
     'merchant-townhouses': 'Merchant Townhouses',
     'elite-manor': 'Elite Manor',
+    library: 'Library',
+    warehouse: 'Warehouse',
     tavern: 'Tavern',
     hospital: 'Hospital',
     'town-hall': 'Town Hall',
@@ -50,9 +51,7 @@ it('pins reserved staff metadata without enabling reserved buildings', () => {
     .filter(([, info]) => info.reserved)
     .map(([id, info]) => [id, { staff: info.staff, reserved: info.reserved }]))).toEqual({
     'watch-house': { staff: 'basic', reserved: true },
-    warehouse: { staff: 'makers', reserved: true },
     smithy: { staff: 'makers', reserved: true },
-    library: { staff: 'luminaries', reserved: true },
     brothel: { staff: null, reserved: true },
     'black-market': { staff: null, reserved: true },
     arena: { staff: null, reserved: true },
