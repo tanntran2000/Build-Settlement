@@ -1,6 +1,7 @@
 import { TILE_TRIAL_BALANCE as B,GOODS_STOCK_TRIAL as G,OUTSIDE_TRIAL as O,societyPopulation,trialBuilding,type TileTrialReport,type TileTrialState,type WeeklyResource } from '@haven/core';
 import { releaseSocietyWorkers,societyEmployment,societyFacilities } from './society-facilities.js';
 import { allocateRequirements,resolveSocietyWeek } from './society-week.js';
+import { finishOutsideLand } from './outside-week.js';
 import { resolveTrialImmigration } from "./tile-trial-immigration.js";
 import { FARM_GOLD_PER_BATCH_MILLI,FARM_MAX_BATCHES,FARM_WHEAT_PER_BATCH_MILLI,PROCESSOR_FOOD_PER_BATCH_MILLI,PROCESSOR_MAX_BATCHES,PROCESSOR_WHEAT_PER_BATCH_MILLI } from "./weekly.js";
 
@@ -144,6 +145,7 @@ export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
     trainingGoldMilli = resolved.goldSpentMilli; s.society = resolved.society;
     s.happiness = resolved.cityHappiness; societyReport = resolved.report;
     settlement.cohorts.find(c=>c.id==='weekly_middle')!.count = societyPopulation(resolved.society);
+    finishOutsideLand(s,operatingIds,outside);
     activities.push(...releaseSocietyWorkers(s));
     const arrivals = Object.values(resolved.report.classes).reduce((total,c)=>trialSafe(total+c.arrivals),0);
     immigration = Object.freeze({...immigration, arrivals:trialSafe(arrivals+(resolved.report.eliteArrived===null?0:1)), populationAfter:societyPopulation(resolved.society)});
