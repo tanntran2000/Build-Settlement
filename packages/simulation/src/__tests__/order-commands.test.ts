@@ -137,15 +137,23 @@ it.each(['watch-patrols','barracks-drill'])('Character Life dispatches SET_RESEA
  expect(s).toEqual(before); expect(r.success).toBe(true);
  if (r.success) expect(r.next.city.society!.research.topic).toBe(topic);
 });
-it('keeps order inert and the P3 report identical regardless of order values', () => {
+it('activates weekly order and isolates its effects from the existing week', () => {
  const s = city(), other = structuredClone(s);
  other.society!.order = {security:99,crime:100,authority:0};
  const a = executeTileTrialCommand(s,{type:'END_WEEK',expectedWeek:1,expectedRevision:0});
  const b = executeTileTrialCommand(other,{type:'END_WEEK',expectedWeek:1,expectedRevision:0});
- if (!a.success || !b.success) throw Error('End Week failed');
- expect(a.report).toEqual(b.report);
- expect(a.nextState.society!.order).toEqual(s.society!.order);
- expect(b.nextState.society!.order).toEqual(other.society!.order);
+ if (!a.success || !b.success || !a.report || !b.report) throw Error('End Week failed');
+ // 100 residents, ring 1: Security target 10+5-100/20=10.
+ // Drift gives 25 / 94; Crime target clamps 10-floor(Security/2) to 0.
+ // Crime drifts to 5 / 95. Satisfaction resolves to 82 and Tension to 0.
+ // Authority targets: 40+trunc((25-50)/5)-floor(5/4)+trunc(32/5)=40;
+ // 40+trunc((94-50)/5)-floor(95/4)+trunc(32/5)=31. Drift: 47 / 3.
+ expect(a.nextState.society!.order).toEqual({security:25,crime:5,authority:47});
+ expect(b.nextState.society!.order).toEqual({security:94,crime:95,authority:3});
+ expect(a.report.order).toMatchObject({before:{security:30,crime:10,authority:50},targets:{security:10,crime:0,authority:40},after:{security:25,crime:5,authority:47}});
+ expect(b.report.order).toMatchObject({before:{security:99,crime:100,authority:0},targets:{security:10,crime:0,authority:31},after:{security:94,crime:95,authority:3}});
+ const {order: _ao,...ar}=a.report, {order: _bo,...br}=b.report;
+ expect(ar).toEqual(br);
  b.nextState.society!.order = a.nextState.society!.order;
  expect(b.nextState).toEqual(a.nextState);
 });

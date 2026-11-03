@@ -304,7 +304,7 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
     }
     actual.outside=outside;
   }
-  const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
+  const { order: _order, society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
   expect(actual).toEqual(baseReport);
   if (society) {
     const labels = { free: 'Free residents', makers: 'Makers', luminaries: 'Luminaries', merchants: 'Merchants', bound: 'The Bound' };

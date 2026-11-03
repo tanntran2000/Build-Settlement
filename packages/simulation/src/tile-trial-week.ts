@@ -1,3 +1,4 @@
+import { resolveOrderWeek } from './order-week.js';
 import { TILE_TRIAL_BALANCE as B,GOODS_STOCK_TRIAL as G,OUTSIDE_TRIAL as O,societyPopulation,trialBuilding,type TileTrialReport,type TileTrialState,type WeeklyResource } from '@haven/core';
 import { releaseSocietyWorkers,societyEmployment,societyFacilities } from './society-facilities.js';
 import { allocateRequirements,resolveSocietyWeek } from './society-week.js';
@@ -17,6 +18,7 @@ function scaled(a: number, b: number, divisor = 1): number {
 export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
   if (!s.society || !s.goodsStock) throw Error('Invalid society city.');
   const settlement = s.world.settlements[s.world.activeSettlementId!]; const stocks = settlement.inventory;
+  const orderBefore = {...s.society.order};
   const before = { ...stocks }; const activities: string[] = [];
   const outside: NonNullable<TileTrialReport['outside']> = {producedMilli:{wood:0,iron:0,stone:0,wool:0,herbs:0,cloth:0},stocksBefore:{...s.society.stocksMilli},stocksAfter:{...s.society.stocksMilli},hospitalsIdle:[],cleared:[],researchCompleted:[],exhausted:[],spoiledMilli:{}};
   const newStocks=s.society.stocksMilli;
@@ -151,9 +153,10 @@ export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
     immigration = Object.freeze({...immigration, arrivals:trialSafe(arrivals+(resolved.report.eliteArrived===null?0:1)), populationAfter:societyPopulation(resolved.society)});
   }
   s.world.week = trialSafe(s.world.week + 1); s.phase = "report";
+  const order = resolveOrderWeek(s,operatingIds,{before:orderBefore,taxModifierBps:0,taxDeltaMilli:0,arrivalsBudgetBefore:immigration!.arrivals,arrivalsBudgetAfter:immigration!.arrivals});
   spoilOutsideStocks(s,operatingIds,outside);
   if(goodsStock)goodsStock=Object.freeze({...goodsStock,closingMilli:s.goodsStock.amountMilli});
   outside.stocksAfter={...s.society.stocksMilli};
   const goods = Object.freeze({ demandMilli, servedMilli, fulfillmentBps, woodUsed, ironUsed, revenueMilli });
-  return Object.freeze({ outside, week: s.world.week - 1, before: Object.freeze(before), after: Object.freeze({ ...stocks }), taxMilli, farmBatchGoldMilli, farmExtraUpkeepMilli, upkeepPaidMilli, unpaidUpkeepMilli, foodDemandMilli, foodConsumedMilli, happinessBefore, happinessAfter: s.happiness, goods, ...(goodsStock ? { goodsStock } : {}), ...(societyReport ? { society:societyReport,luxuryImportedMilli,trainingGoldMilli } : {}), activities: Object.freeze(activities), ...(immigration ? { immigration } : {}) });
+  return Object.freeze({ order, outside, week: s.world.week - 1, before: Object.freeze(before), after: Object.freeze({ ...stocks }), taxMilli, farmBatchGoldMilli, farmExtraUpkeepMilli, upkeepPaidMilli, unpaidUpkeepMilli, foodDemandMilli, foodConsumedMilli, happinessBefore, happinessAfter: s.happiness, goods, ...(goodsStock ? { goodsStock } : {}), ...(societyReport ? { society:societyReport,luxuryImportedMilli,trainingGoldMilli } : {}), activities: Object.freeze(activities), ...(immigration ? { immigration } : {}) });
 }
