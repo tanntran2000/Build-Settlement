@@ -84,3 +84,13 @@ it('End Week releases clearing workers when Academy training shrinks the basic p
  expect(n.society!.classes.free).toBe(18);
  expect(n.society!.outside['pasture-1'].clearWorkers).toBe(1);expect(n.society!.outside['pasture-2'].clearWorkers).toBe(0);
 });
+
+it('rejects Farm BUILD on a tampered pasture without changing the original state',()=>{
+ const s=createSocietyState();s.society!.wallRing=2;s.society!.outside['pasture-1'].wild=false;
+ expect(isTileTrialState(s)).toBe(true);
+ tile(s,'pasture-1').terrain='fertile';
+ const before=structuredClone(s), result=send(s,{type:'BUILD',tileId:'pasture-1',typeId:'farm'});
+ expect(result).toMatchObject({success:false,state:s,error:{code:'INVALID_STATE'}});
+ if(result.success)throw Error('Tampered pasture accepted');
+ expect(result.state).toBe(s);expect(s).toEqual(before);
+});

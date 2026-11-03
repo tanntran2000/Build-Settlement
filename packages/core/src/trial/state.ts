@@ -45,9 +45,8 @@ export function isTileTrialState(raw: unknown): raw is TileTrialState {
       const outside=outsidePlot(t.id), o=s.society?.outside[t.id];
       if(outside&&o) {
         if(o.wild&&t.building!==null)return false;
-        if(outside.terrain==='ore'||outside.terrain==='rock') {
-          if(t.terrain!==(o.depositMilli===0?'plain':outside.terrain))return false;
-        }
+        const exhausted=(outside.terrain==='ore'||outside.terrain==='rock')&&o.depositMilli===0;
+        if(t.terrain!==(exhausted?'plain':outside.terrain))return false;
       }
       if (t.building === null) continue;
       const b = t.building;

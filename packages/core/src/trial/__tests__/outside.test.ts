@@ -53,9 +53,9 @@ it('accepts only the exhausted ore and rock terrain exception',()=>{
  for(const id of ['ore-1','rock-1']) {
   const s=createSocietyState(), tile=s.tiles.find(t=>t.id===id)!;
   s.society!.outside[id].depositMilli=0;
-  expect(isTileTrialPlanningState(s)).toBe(false);
-  tile.terrain='plain';expect(isTileTrialPlanningState(s)).toBe(true);
-  s.society!.outside[id].depositMilli=1;expect(isTileTrialPlanningState(s)).toBe(false);
+  expect(isTileTrialPlanningState(s)).toBe(false);expect(isTileTrialState(s)).toBe(false);
+  tile.terrain='plain';expect(isTileTrialPlanningState(s)).toBe(true);expect(isTileTrialState(s)).toBe(true);
+  s.society!.outside[id].depositMilli=1;expect(isTileTrialPlanningState(s)).toBe(false);expect(isTileTrialState(s)).toBe(false);
  }
 });
 it('rejects hostile outside fields without invoking getters',()=>{
@@ -119,4 +119,13 @@ it('rejects inherited cohort iterators without reading or mutating state',()=>{
  expect.soft(Object.getPrototypeOf(cohorts)).toBe(prototype);
  Object.setPrototypeOf(cohorts,original);
  expect(s).toEqual(before);
+});
+
+it.each([
+ ['field-2','plain'],['pasture-1','fertile'],['meadow-1','plain'],['forest-1','plain'],['plain-2','forest'],
+])('rejects non-catalog live terrain on %s changed to %s',(id,terrain)=>{
+ const s=createSocietyState();s.society!.wallRing=2;s.society!.outside[id].wild=false;
+ expect(isTileTrialState(s)).toBe(true);expect(isTileTrialPlanningState(s)).toBe(true);
+ s.tiles.find(t=>t.id===id)!.terrain=terrain;
+ expect(isTileTrialState(s)).toBe(false);expect(isTileTrialPlanningState(s)).toBe(false);
 });
