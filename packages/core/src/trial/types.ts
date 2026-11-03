@@ -1,3 +1,4 @@
+import type { ResearchTopic } from './outside.js';
 import type { SocietyState } from './society.js';
 import type { CanonicalGameState, WeeklyStocks } from "../domain/canonical-state.js";
 import type { GoodsStock } from './goods-stock.js';
@@ -14,6 +15,13 @@ export interface TileTrialState {
   happiness: number;
 }
 export interface TileTrialReport {
+  outside?: {
+    producedMilli: {wood:number;iron:number;stone:number;wool:number;herbs:number;cloth:number};
+    stocksBefore:{stone:number;wool:number;cloth:number;herbs:number};
+    stocksAfter:{stone:number;wool:number;cloth:number;herbs:number};
+    hospitalsIdle:string[];cleared:string[];researchCompleted:ResearchTopic[];exhausted:string[];
+    spoiledMilli:Partial<Record<'food'|'wheat'|'wood'|'iron'|'goods'|'luxury'|'stone'|'wool'|'cloth'|'herbs',number>>;
+  };
   society?: { classes: Record<'free' | 'makers' | 'luminaries' | 'merchants' | 'bound', {
     foodBps:number; goodsBps:number; luxuryBps:number|null; satisfactionBefore:number; satisfactionAfter:number;
     arrivals:number; trained:number; enslaved:number; debtBefore:number|null; debtAfter:number|null; notes:readonly string[];
