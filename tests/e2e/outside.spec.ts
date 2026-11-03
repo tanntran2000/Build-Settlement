@@ -28,3 +28,13 @@ test('above-pool clearing shows the engine error without changing the session',a
  await go(page,'city');const plot=page.locator('[data-outside-plot="pasture-1"]');await plot.getByLabel('Clearing workers (WF)').fill('999');await plot.getByRole('button',{name:'Clear',exact:true}).click();
  await expect(page.getByRole('region',{name:'Outside tiles',exact:true}).getByRole('alert')).toHaveText(result.error.message);expect(serializeCharacterLifeSave(await exportLife(page))).toEqual(serializeCharacterLifeSave(before));
 });
+for(const draft of ['empty','partial','zero'] as const)test(`assigned clearing workers handle ${draft} input`,async({page})=>{
+ const s=seed();s.city.society!.wallRing=2;Object.assign(s.city.society!.outside['pasture-1'],{clearWorkers:2,clearPaid:true});await start(page,s);const before=await exportLife(page);await go(page,'city');
+ const plot=page.locator('[data-outside-plot="pasture-1"]'),input=plot.getByLabel('Clearing workers (WF)');await expect(input).toHaveValue('2');await input.fill('');
+ if(draft==='partial'){await input.pressSequentially('1e');expect(await input.evaluate(node=>(node as HTMLInputElement).validity.badInput)).toBe(true);await expect(input).toHaveValue('');}
+ if(draft==='zero')await input.fill('0');
+ await plot.getByRole('button',{name:'Clear',exact:true}).click();
+ if(draft!=='zero')await expect(plot.getByRole('alert')).toHaveText('Use whole nonnegative workers.');
+ const after=await exportLife(page),expected=structuredClone(before);if(draft==='zero'){expected.city.revision++;expected.city.society!.outside['pasture-1'].clearWorkers=0;}
+ expect(serializeCharacterLifeSave(after)).toEqual(serializeCharacterLifeSave(expected));expect(after.city.society!.outside['pasture-1'].clearWorkers).toBe(draft==='zero'?0:2);
+});
