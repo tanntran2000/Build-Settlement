@@ -142,19 +142,24 @@ it.each([[0,2908,-606],[100,4363,606]])('credits Authority %i before upkeep then
  expect(r.order!.taxModifierBps).toBe((authority-50)*40);
 });
 
-it('recomputes stored and reported happiness from final satisfaction after Crime 75 drifts to 70',()=>{
+it('reports final class satisfaction and happiness after Crime 75 drifts to 70',()=>{
  const s=createSocietyState();s.society!.order.crime=75;
  const previous=s.happiness,r=runTileTrialWeek(s);
  expect(r.order!.after.crime).toBe(70);expect(r.order!.satisfactionLost).toBe(2);
- for(const key of ['free','makers','luminaries','merchants'] as const)expect(s.society!.satisfaction[key]).toBe(80);
+ for(const key of ['free','makers','luminaries','merchants'] as const){
+  expect(s.society!.satisfaction[key]).toBe(80);
+  expect(r.society!.classes[key].satisfactionAfter).toBe(s.society!.satisfaction[key]);
+ }
+ expect(r.society!.classes.bound.satisfactionAfter).toBe(s.society!.satisfaction.bound);
  const expected=cityHappiness(s.society!.satisfaction,societyCounts(s.society!),previous);
  expect(expected).toBe(80);expect(s.happiness).toBe(expected);expect(r.happinessAfter).toBe(expected);
  expect(r.happinessBefore).toBe(previous);
 });
-it('preserves existing stored and reported happiness when Crime starts at 39',()=>{
+it('preserves the society report and happiness when Crime starts at 39',()=>{
  const control=createSocietyState(),s=structuredClone(control);s.society!.order.crime=39;
  const baseline=runTileTrialWeek(control),r=runTileTrialWeek(s);
  expect(r.order!.after.crime).toBe(34);expect(r.order!.satisfactionLost).toBe(0);
  expect(s.happiness).toBe(82);expect(s.happiness).toBe(control.happiness);
  expect(r.happinessAfter).toBe(baseline.happinessAfter);expect(r.happinessAfter).toBe(s.happiness);
+ expect(r.society).toEqual(baseline.society);
 });
