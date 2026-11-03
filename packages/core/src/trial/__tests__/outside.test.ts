@@ -14,13 +14,13 @@ it('pins thirty ordered outside plots and terrain totals', () => {
  expect(outsidePlot('toString')).toBeNull();
  expect(Object.isFrozen(OUTSIDE_TRIAL.deposit)).toBe(true);
 });
-it('creates isolated society v2 outside state, full deposits and zero stocks', () => {
+it('creates isolated society v3 outside state, full deposits and zero stocks', () => {
  const city=createSocietyState(), s=city.society!;
  expect(city.tiles).toHaveLength(63);
  expect(city.tiles.slice(0,30).map(t=>t.id)).toEqual(OUTSIDE_PLOTS.map(p=>p.id));
- expect(s.rulesetId).toBe('tile-society-02');
+ expect(s.rulesetId).toBe('tile-society-03');
  expect(s.stocksMilli).toEqual({stone:0,wool:0,cloth:0,herbs:0});
- expect(s.research).toEqual({topic:null,progressMilli:{'deep-mining':0},paid:[],completed:[]});
+ expect(s.research).toEqual({topic:null,progressMilli:{'deep-mining':0,'watch-patrols':0,'barracks-drill':0},paid:[],completed:[]});
  for(const p of OUTSIDE_PLOTS) {
   const o=s.outside[p.id], deposit=p.terrain==='forest'?60000:p.terrain==='ore'?80000:p.terrain==='rock'?100000:null;
   expect(o).toEqual({wild:p.ring>1,clearMilli:0,clearWorkers:0,clearPaid:false,depositMilli:deposit,capMilli:deposit,deepShaft:false});

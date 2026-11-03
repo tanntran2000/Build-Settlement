@@ -1,6 +1,6 @@
 export type SocietyTier = 'housing' | 'service' | 'specialist' | 'slum';
 export type StaffClass = 'basic' | 'makers' | 'luminaries' | 'merchants';
-export interface SocietyBuildingInfo { tier: SocietyTier; staff: StaffClass | null; reserved: boolean; housing?: { class: 'free' | 'makers' | 'luminaries' | 'merchants' | 'elite' | 'bound'; byLevel: readonly number[] } }
+export interface SocietyBuildingInfo { tier: SocietyTier; alsoTier?: SocietyTier; staff: StaffClass | null; reserved: boolean; housing?: { class: 'free' | 'makers' | 'luminaries' | 'merchants' | 'elite' | 'bound'; byLevel: readonly number[] } }
 const plots: Record<string, {tier: SocietyTier; ring: 1 | 2 | 3}> = {};
 for (const [prefix,tier,ends] of [['house','housing',[4,8,11]],['service','service',[2,4,6]],['spec','specialist',[3,7,10]],['slum','slum',[1,3,6]]] as const) {
  for(let i=1;i<=ends[2];i++) plots[prefix+'-'+i] = Object.freeze({tier,ring:i<=ends[0]?1:i<=ends[1]?2:3});
@@ -125,10 +125,12 @@ export const SOCIETY_BUILDINGS: Readonly<Record<string,SocietyBuildingInfo>> = {
       ]
     }
   },
+  "military-barracks": { "tier": "service", "staff": "basic", "reserved": false },
   "watch-house": {
     "tier": "service",
+    "alsoTier": "slum",
     "staff": "basic",
-    "reserved": true
+    "reserved": false
   },
   "warehouse": {
     "tier": "specialist",

@@ -5,10 +5,11 @@ import { createSocietyState,isSocietyState,SOCIETY_TRIAL,societyPopulation } fro
 it('creates the spec section 3 new game', () => {
   const s = createSocietyState();
   expect(s.society).toEqual({
-    rulesetId: 'tile-society-02',
+    rulesetId: 'tile-society-03',
+    order: {security:30,crime:10,authority:50},
     stocksMilli: {stone:0,wool:0,cloth:0,herbs:0},
     outside: s.society!.outside,
-    research: {topic:null,progressMilli:{'deep-mining':0},paid:[],completed:[]},
+    research: {topic:null,progressMilli:{'deep-mining':0,'watch-patrols':0,'barracks-drill':0},paid:[],completed:[]},
     classes: { free: 55, makers: { common: 20, elite: 0 }, luminaries: { common: 12, elite: 0 }, merchants: { common: 13, elite: 0 }, bound: { free: 0, makers: 0, luminaries: 0, merchants: 0 } },
     satisfaction: { free: 80, makers: 80, luminaries: 80, merchants: 80, bound: 80 },
     desperation: 0, tension: 0, debtPressure: { free: 0, makers: 0, luminaries: 0, merchants: 0 },

@@ -7,7 +7,7 @@ for(const type of ['CLEAR','SET_RESEARCH','BUILD_DEEP_SHAFT']){
  const s=session();s.city.society!.wallRing=2;
  const inv=s.city.world.settlements[s.city.world.activeSettlementId!].inventory;inv.gold=100000;inv.wood=20000;
  s.city.society!.stocksMilli.stone=20000;
- s.city.society!.research={topic:null,paid:['deep-mining'],completed:['deep-mining'],progressMilli:{'deep-mining':8000}};
+ s.city.society!.research={topic:null,paid:['deep-mining'],completed:['deep-mining'],progressMilli:{'deep-mining':8000,'watch-patrols':0,'barracks-drill':0}};
  s.city.tiles.find(t=>t.id==='ore-1')!.building={typeId:'mine',level:1,workers:0,enabled:true};
  const fields=type==='CLEAR'?{tileId:'pasture-1',workers:1}:type==='SET_RESEARCH'?{topic:null}:{tileId:'ore-1'};
  expect(isLiveCharacterLifeSessionState(s)).toBe(true);const before=structuredClone(s);
