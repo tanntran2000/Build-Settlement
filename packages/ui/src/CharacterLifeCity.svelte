@@ -1,5 +1,6 @@
 <script lang="ts">
   import { managerSlotTileIds, summarizeOutside, TRIAL_BUILDINGS, type TileTrialState, type WorldNpc, type OutsideWorldState } from '@haven/core';
+  import {workerDigits,assignBuildingWorkers} from './clearing-workers.js';
   import OutsideCity from './OutsideCity.svelte';
   import LibraryPanel from './LibraryPanel.svelte';
   import InsideCity from './InsideCity.svelte';
@@ -16,6 +17,7 @@
   export let outside: OutsideWorldState;
   export let onselect: (id: string) => void;
   export let onworkersinput: () => void;
+  export let onworkersinvalid: () => void = () => {};
   export let oncommand: (type: string, fields?: Record<string, unknown>) => boolean;
   let managementHeading: HTMLHeadingElement | undefined;
   $: selected = state.tiles.find(tile => tile.id === selectedId)!;
@@ -27,6 +29,10 @@
   $: slots = managerSlotTileIds(state);
   $: outsideSummary = summarizeOutside(outside, 'player');
 
+  function assignWorkers():void {
+    const message=assignBuildingWorkers(workers,selectedId,oncommand);
+    if(message){workforceError=message;onworkersinvalid();}
+  }
   export function focusManage(): void { managementHeading?.focus(); }
   function revealManagementError(node: HTMLParagraphElement, failure: typeof managementError) {
     const reveal = (current: typeof failure) => { if (current) node.scrollIntoView({ block: 'nearest' }); };
@@ -47,14 +53,14 @@
         <p>Upkeep: {units(definition.upkeepMilli * selected.building.level)} Gold/week. Farm batch Gold credits this Farm's upkeep.</p>
         <p id="trial-workers-confirmed">Assigned: <strong>{selected.building.workers} WF</strong>. Kept for future weeks until changed.</p>
         <label for="trial-workers">Assigned workers (WF)</label>
-        <input id="trial-workers" type="text" inputmode="numeric" bind:value={workers} oninput={onworkersinput} disabled={locked || !selected.building.enabled}
+        <input id="trial-workers" type="text" inputmode="numeric" pattern="[0-9]*" bind:value={workers} oninput={event=>{workers=workerDigits(event.currentTarget.value);event.currentTarget.value=workers;workforceError='';onworkersinput();}} disabled={locked || !selected.building.enabled}
           aria-invalid={workforceError ? 'true' : 'false'}
           aria-describedby={`trial-workers-confirmed${workers !== String(selected.building.workers) ? ' trial-workers-draft' : ''}${workforceError ? ' trial-workers-error' : ''}`} />
         {#if workforceError}<p id="trial-workers-error" role="alert">{workforceError}</p>{/if}
         {#if workers !== String(selected.building.workers)}<p id="trial-workers-draft">Unapplied draft. Assigned workforce remains {selected.building.workers} WF. Select Assign workers to apply.</p>{/if}
         <p>Capacity: {definition.maxWorkers * selected.building.level} WF.</p>
         <details><summary>Building limits</summary><p>Maximum level: {definition.maxLevel}.</p></details>
-        <button disabled={locked || !selected.building.enabled} onclick={() => oncommand('SET_WORKERS', { tileId: selectedId, workers: /^\d+$/.test(workers) ? Number(workers) : -1 })}>Assign workers</button>
+        <button disabled={locked || !selected.building.enabled} onclick={assignWorkers}>Assign workers</button>
         <button disabled={locked} aria-describedby={managementError?.action === 'SET_ENABLED' ? 'trial-management-error' : undefined}
           onclick={() => oncommand('SET_ENABLED', { tileId: selectedId, enabled: !selected.building!.enabled })}>{selected.building.enabled ? 'Pause' : 'Resume'}</button>
         {#if managementError?.action === 'SET_ENABLED'}<p id="trial-management-error" role="alert" use:revealManagementError={managementError}>{managementError.message}</p>{/if}
