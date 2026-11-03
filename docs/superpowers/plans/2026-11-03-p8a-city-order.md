@@ -20,6 +20,8 @@ New state is `society.order`. All new TRIAL numbers and the pure target formulas
 
 **Spec:** `docs/superpowers/specs/2026-11-03-p8a-city-order-design.md` (v0.1, G1 "Duyệt G1", 2026-11-03).
 
+**Plan approval:** owner Tân, 2026-11-03, verbatim: "Duyệt, giao Builder A".
+
 ## Decisions
 
 1. **Ruleset id.** `SOCIETY_RULESET` becomes `'tile-society-03'`. `isSocietyState` accepts only `03`, so the codecs refuse `02` saves with the existing older-version message (spec §9).
