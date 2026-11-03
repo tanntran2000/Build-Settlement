@@ -152,8 +152,23 @@ it('activates weekly order and isolates its effects from the existing week', () 
  expect(b.nextState.society!.order).toEqual({security:94,crime:95,authority:3});
  expect(a.report.order).toMatchObject({before:{security:30,crime:10,authority:50},targets:{security:10,crime:0,authority:40},after:{security:25,crime:5,authority:47}});
  expect(b.report.order).toMatchObject({before:{security:99,crime:100,authority:0},targets:{security:10,crime:0,authority:31},after:{security:94,crime:95,authority:3}});
- const {order: _ao,...ar}=a.report, {order: _bo,...br}=b.report;
+ const ao=a.report.order!,bo=b.report.order!;
+ expect(ao.taxDeltaMilli).toBe(0);expect(bo.taxDeltaMilli).toBe(-600);
+ expect(ao.theftMilli).toEqual({});expect(bo.tensionAdded).toBe(3);expect(bo.satisfactionLost).toBe(2);
+ expect(bo.arrivalsBudgetBefore).toBe(0);expect(bo.arrivalsBudgetAfter).toBe(0);
+ const as=a.nextState,bs=structuredClone(b.nextState);
+ const ai=as.world.settlements[as.world.activeSettlementId!].inventory,bi=bs.world.settlements[bs.world.activeSettlementId!].inventory;
+ expect(bi.gold).toBe(ai.gold-600-bo.theftMilli.gold!);
+ expect(bi.food).toBe(ai.food-bo.theftMilli.food!);
+ bi.gold+=600+bo.theftMilli.gold!;bi.food+=bo.theftMilli.food!;
+ expect(bs.goodsStock!.amountMilli).toBe(as.goodsStock!.amountMilli-bo.theftMilli.goods!);bs.goodsStock!.amountMilli+=bo.theftMilli.goods!;
+ expect(bs.society!.tension).toBe(as.society!.tension+3);bs.society!.tension-=3;
+ for(const key of ['free','makers','luminaries','merchants'] as const){expect(bs.society!.satisfaction[key]).toBe(as.society!.satisfaction[key]-2);bs.society!.satisfaction[key]+=2;}
+ bs.society!.order=as.society!.order;expect(bs).toEqual(as);
+ const {order: _ao,...ar}=a.report, {order: _bo,...br}=structuredClone(b.report);
+ for(const key of ['gold','food'] as const){expect(br.after[key]).toBe(b.report.after[key]);br.after[key]=ar.after[key];}
+ expect(br.taxMilli).toBe(ar.taxMilli-600);br.taxMilli+=600;
+ br.goodsStock={...br.goodsStock!,closingMilli:br.goodsStock!.closingMilli+bo.theftMilli.goods!};
+ for(const key of ['wood','iron'] as const)br.outside!.spoiledMilli[key]=br.outside!.spoiledMilli[key]!+bo.theftMilli[key]!;
  expect(ar).toEqual(br);
- b.nextState.society!.order = a.nextState.society!.order;
- expect(b.nextState).toEqual(a.nextState);
 });

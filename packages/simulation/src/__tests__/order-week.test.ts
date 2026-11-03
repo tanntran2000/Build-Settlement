@@ -1,6 +1,6 @@
 import { createSocietyState, type TileTrialState } from '@haven/core';
 import { expect, it } from 'vitest';
-import { orderFacts, resolveOrderWeek } from '../order-week.js';
+import { authorityTaxBps, authorityArrivals, orderFacts, resolveOrderWeek } from '../order-week.js';
 import { runTileTrialWeek } from '../tile-trial-week.js';
 
 const tile = (s: TileTrialState, id: string) => s.tiles.find(t => t.id === id)!;
@@ -49,4 +49,68 @@ it('uses research completed by finishOutsideLand in this week targets',()=>{
  const r=runTileTrialWeek(s);
  expect(r.outside!.researchCompleted).toContain('watch-patrols');
  expect(r.order!.targets.security).toBe(22);
+});
+
+function crimeCity(crime:number, amount=100000) {
+ const s=createSocietyState();s.society!.classes.free=3000;
+ s.society!.corruption=61;s.society!.desperation=100;
+ s.society!.order={security:0,crime:Math.max(0,crime-5),authority:50};
+ s.tiles=Array.from({length:20},(_,i)=>({id:`crime-${i}`,terrain:'town',building:{typeId:'slave-quarters',level:1,workers:0,enabled:true}}));
+ const stocks=s.world.settlements[s.world.activeSettlementId!].inventory;
+ for(const key of ['gold','food','wheat','wood','iron'] as const)stocks[key]=amount;
+ for(const key of ['stone','wool','cloth','herbs'] as const)s.society!.stocksMilli[key]=amount;
+ s.goodsStock!.amountMilli=amount;s.society!.luxuryStockMilli=amount;
+ return s;
+}
+function crimeWeek(s:TileTrialState){return resolveOrderWeek(s,new Set(s.tiles.map(t=>t.id)),partial(s));}
+it.each([[19,0],[20,0],[60,4000],[100,8000]])('steals exactly at drifted Crime %i',(crime,loss)=>{
+ const s=crimeCity(crime),r=crimeWeek(s);expect(r.after.crime).toBe(crime);
+ const keys=['gold','food','wheat','wood','iron','stone','wool','cloth','herbs','goods','luxury'];
+ expect(r.theftMilli).toEqual(loss?Object.fromEntries(keys.map(k=>[k,loss])):{});
+ const stocks=s.world.settlements[s.world.activeSettlementId!].inventory;
+ expect(Object.values(stocks)).toEqual(Array(5).fill(100000-loss));
+ expect(Object.values(s.society!.stocksMilli)).toEqual(Array(4).fill(100000-loss));
+ expect(s.goodsStock!.amountMilli).toBe(100000-loss);expect(s.society!.luxuryStockMilli).toBe(100000-loss);
+});
+it.each([0,1])('omits zero theft for %i milli even at Crime 100',amount=>{
+ const s=crimeCity(100,amount),r=crimeWeek(s);expect(r.theftMilli).toEqual({});
+ expect(s.goodsStock!.amountMilli).toBe(amount);
+});
+it.each([[49,1],[50,2],[100,4]])('adds Tension at Crime %i',(crime,added)=>{
+ const s=crimeCity(crime);s.society!.tension=10;expect(crimeWeek(s).tensionAdded).toBe(added);expect(s.society!.tension).toBe(10+added);
+ const capped=crimeCity(crime);capped.society!.tension=99;expect(crimeWeek(capped).tensionAdded).toBe(1);expect(capped.society!.tension).toBe(100);
+});
+it.each([[39,0],[40,1],[70,2]])('lowers only citizen satisfaction at Crime %i',(crime,loss)=>{
+ const s=crimeCity(crime),r=crimeWeek(s);expect(r.satisfactionLost).toBe(loss);
+ for(const key of ['free','makers','luminaries','merchants'] as const)expect(s.society!.satisfaction[key]).toBe(80-loss);
+ expect(s.society!.satisfaction.bound).toBe(80);
+ const low=crimeCity(crime);low.society!.satisfaction.free=0;crimeWeek(low);expect(low.society!.satisfaction.free).toBe(0);
+});
+it.each([[0,-2000],[50,0],[100,2000]])('tax modifier at Authority %i',(authority,bps)=>expect(authorityTaxBps(authority)).toBe(bps));
+it.each([[29,1,true,0],[29,5,true,2],[70,0,true,1],[70,3,false,3],[69,3,true,3]])('arrivals Authority %i budget %i room %s',(authority,budget,room,expected)=>expect(authorityArrivals(authority,budget,room)).toBe(expected));
+it('steals before storage spoilage in End Week',()=>{
+ const s=createSocietyState();s.society!.order.crime=65;s.society!.stocksMilli.stone=100000;
+ const r=runTileTrialWeek(s);expect(r.order!.after.crime).toBe(60);expect(r.order!.theftMilli.stone).toBe(4000);
+ expect(r.outside!.spoiledMilli.stone).toBe(56000);expect(s.society!.stocksMilli.stone).toBe(40000);
+});
+it.each([0,50,100])('applies Authority %i after the Counting House with floor rounding',authority=>{
+ const s=createSocietyState();s.society!.order.authority=authority;
+ tile(s,'spec-2').building={typeId:'counting-house',level:1,workers:2,enabled:true};
+ s.society!.classes.free=56;s.world.settlements[s.world.activeSettlementId!].cohorts[0].count=101;
+ const r=runTileTrialWeek(s),base=3333,expected=Math.floor(base*(10000+(authority-50)*40)/10000);
+ expect(r.taxMilli).toBe(expected);expect(r.order!.taxDeltaMilli).toBe(expected-base);expect(r.order!.taxModifierBps).toBe((authority-50)*40);
+});
+it.each([[29,0],[50,1],[70,2]])('passes Authority %i adjusted budget through society arrivals', (authority,arrivals)=>{
+ const s=createSocietyState();s.society!.classes.free=49;
+ for(const key of ['makers','luminaries','merchants'] as const)s.society!.classes[key].common=0;
+ s.world.settlements[s.world.activeSettlementId!].cohorts[0].count=49;
+ s.society!.order.authority=authority;
+ tile(s,'spec-1').building!.enabled=false;
+ const r=runTileTrialWeek(s);
+ expect(r.order!.arrivalsBudgetBefore).toBe(1);expect(r.order!.arrivalsBudgetAfter).toBe(arrivals);
+ expect(r.immigration!.arrivals).toBe(arrivals);expect(r.immigration!.populationAfter).toBe(49+arrivals);
+});
+it('uses exact BigInt theft arithmetic on safe-integer stocks',()=>{
+ const s=crimeCity(100,Number.MAX_SAFE_INTEGER),r=crimeWeek(s);
+ expect(r.theftMilli.gold).toBe(Number(BigInt(Number.MAX_SAFE_INTEGER)*800n/10000n));
 });

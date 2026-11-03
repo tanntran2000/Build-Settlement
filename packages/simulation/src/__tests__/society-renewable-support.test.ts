@@ -85,7 +85,7 @@ describe('society renewable support and transaction ports', () => {
     expect(r.report!.taxMilli).toBe(3000); expect(r.report!.foodDemandMilli).toBe(4000);
     expect(r.report!.goods.demandMilli).toBe(1450); expect(r.nextState.tiles).toEqual(s.tiles); expect(s).toEqual(before);
     const next = plan(r.nextState), opening = next.society!.classes, second = week(next);
-    expect(second.report!.taxMilli).toBe(3060); expect(second.report!.foodDemandMilli).toBe(4080);
+    expect(second.report!.taxMilli).toBe(3023); expect(second.report!.foodDemandMilli).toBe(4080);
     expect(second.report!.goods.demandMilli).toBe(opening.free * 10 + (opening.makers.common + opening.luminaries.common + opening.merchants.common) * 20);
     expect(count(second.nextState)).toBe(104);
   });

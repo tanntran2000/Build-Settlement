@@ -1,4 +1,4 @@
-import { resolveOrderWeek } from './order-week.js';
+import { authorityTaxBps, authorityArrivals, resolveOrderWeek } from './order-week.js';
 import { TILE_TRIAL_BALANCE as B,GOODS_STOCK_TRIAL as G,OUTSIDE_TRIAL as O,societyPopulation,trialBuilding,type TileTrialReport,type TileTrialState,type WeeklyResource } from '@haven/core';
 import { releaseSocietyWorkers,societyEmployment,societyFacilities } from './society-facilities.js';
 import { allocateRequirements,resolveSocietyWeek } from './society-week.js';
@@ -79,6 +79,10 @@ export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
     const adjusted = scaled(taxMilli, 100 + 10 * facilities.countingHouseLevels, 100);
     add('gold', adjusted - taxMilli); taxMilli = adjusted;
   }
+  const taxModifierBps=authorityTaxBps(orderBefore.authority);
+  const authorityTax=scaled(taxMilli,10000+taxModifierBps,10000),taxDeltaMilli=authorityTax-taxMilli;
+  add('gold',taxDeltaMilli);taxMilli=authorityTax;
+  let arrivalsBudgetBefore=0,arrivalsBudgetAfter=0;
   let luxuryImportedMilli = 0;
   for (const tile of funded) {
     const b = tile.building!;
@@ -142,7 +146,9 @@ export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
     foodDemandMilli = allocateRequirements({society:s.society!,foodAvailableMilli:Number.MAX_SAFE_INTEGER,goodsServableMilli:0,luxuryImportedMilli:0}).foodConsumedMilli;
     foodConsumedMilli = allocated.foodConsumedMilli;
     immigration = resolveTrialImmigration(s, {fundedTileIds,farmBatches,processorBatches,woodProducedMilli,ironProducedMilli,operatingDebitMilli,foodDemandMilli,foodConsumedMilli,unpaidUpkeepMilli});
-    const resolved = resolveSocietyWeek({society:s.society!,foodAvailableMilli:stocks.food,goodsServableMilli:servedMilli,luxuryImportedMilli,facilities:facilities!,employment:societyEmployment(s),arrivalsBudget:immigration.arrivals,goldAvailableMilli:stocks.gold});
+    arrivalsBudgetBefore=immigration.arrivals;
+    arrivalsBudgetAfter=authorityArrivals(orderBefore.authority,arrivalsBudgetBefore,immigration.target>immigration.populationAfter);
+    const resolved = resolveSocietyWeek({society:s.society!,foodAvailableMilli:stocks.food,goodsServableMilli:servedMilli,luxuryImportedMilli,facilities:facilities!,employment:societyEmployment(s),arrivalsBudget:arrivalsBudgetAfter,goldAvailableMilli:stocks.gold});
     stocks.food -= resolved.foodConsumedMilli; stocks.gold -= resolved.goldSpentMilli;
     trainingGoldMilli = resolved.goldSpentMilli; s.society = resolved.society;
     s.happiness = resolved.cityHappiness; societyReport = resolved.report;
@@ -153,7 +159,7 @@ export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
     immigration = Object.freeze({...immigration, arrivals:trialSafe(arrivals+(resolved.report.eliteArrived===null?0:1)), populationAfter:societyPopulation(resolved.society)});
   }
   s.world.week = trialSafe(s.world.week + 1); s.phase = "report";
-  const order = resolveOrderWeek(s,operatingIds,{before:orderBefore,taxModifierBps:0,taxDeltaMilli:0,arrivalsBudgetBefore:immigration!.arrivals,arrivalsBudgetAfter:immigration!.arrivals});
+  const order = resolveOrderWeek(s,operatingIds,{before:orderBefore,taxModifierBps,taxDeltaMilli,arrivalsBudgetBefore,arrivalsBudgetAfter});
   spoilOutsideStocks(s,operatingIds,outside);
   if(goodsStock)goodsStock=Object.freeze({...goodsStock,closingMilli:s.goodsStock.amountMilli});
   outside.stocksAfter={...s.society.stocksMilli};
