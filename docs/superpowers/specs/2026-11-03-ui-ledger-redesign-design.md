@@ -171,7 +171,8 @@ Required gates on the exact commit: `git diff --check`, `npm run lint`, `npm run
 1. **P3-A first.** It is in worktree `qa-g6-closeout-01`, `feat/p3a-outside-state` @ `b419f93`, HOLD on one smoke failure. Its UI/test diff against `9f3f165` touches three UI unit tests and `society`, `tile-save`, `world-session` e2e specs. It touches none of the files in §10. `society.spec.ts:11` opens the Population dialog, which stays.
 2. **Then P3-B and P3-C** (user decision 9). P3-C adds outside-city UI that this redesign must also cover.
 3. **Then this redesign**, on a fresh branch from the `main` that contains P3-C. Before dispatch, re-run the collision check against that `main` and add P3-C's new UI files to §10.
-4. **Then CITY-MAP-01**, after its spec is revised for the P2/P3 city (main already renders `InsideCity`).
+4. **Then UI-TITLE-01** (title screen, Options, Main menu): [spec](2026-11-03-ui-title-screen-design.md), built on this redesign's tokens.
+5. **Then CITY-MAP-01**, after its spec is revised for the P2/P3 city (main already renders `InsideCity`).
 
 No writer or Playwright run for this work while a P3 Builder is running.
 
