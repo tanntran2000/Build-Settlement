@@ -53,6 +53,32 @@ describe('outside extraction and chains',()=>{
  });
 });
 
+describe('soft storage limits after the complete week',()=>{
+ it.each([40000,40001])('caps Wheat %s with exact spoilage',amount=>{
+  const s=city();inv(s).wheat=amount;const r=runTileTrialWeek(s);expect(inv(s).wheat).toBe(40000);expect(r.outside?.spoiledMilli.wheat).toBe(amount===40000?undefined:1);
+ });
+ it.each(['operating','disabled','understaffed','unfunded'] as const)('Warehouse L2 adds capacity only when %s',mode=>{
+  const s=city();build(s,'spec-2','warehouse',mode==='understaffed'?1:2,2);
+  if(mode==='disabled'){tile(s,'spec-2').building!.enabled=false;tile(s,'spec-2').building!.workers=0;}
+  if(mode==='unfunded'){inv(s).gold=0;s.society!.classes.free=0;s.society!.classes.makers.common=0;s.society!.classes.luminaries.common=0;s.society!.classes.merchants.common=0;sync(s);}
+  inv(s).wheat=120001;const r=runTileTrialWeek(s);const cap=mode==='operating'?120000:40000;
+  expect(inv(s).wheat).toBe(cap);expect(r.outside?.spoiledMilli.wheat).toBe(120001-cap);
+ });
+ it('caps all ten stored goods after consumption and excludes Gold',()=>{
+  const s=city();for(const key of ['food','wheat','wood','iron'] as const)inv(s)[key]=100000;
+  s.goodsStock!.amountMilli=100000;s.society!.luxuryStockMilli=100000;
+  Object.assign(s.society!.stocksMilli,{stone:100000,wool:100000,cloth:100000,herbs:100000});
+  const r=runTileTrialWeek(s);expect(r.outside?.spoiledMilli).toEqual({food:56000,wheat:60000,wood:60000,iron:60000,goods:58550,luxury:60000,stone:60000,wool:60000,cloth:60000,herbs:60000});
+  expect(inv(s)).toMatchObject({food:40000,wheat:40000,wood:40000,iron:40000});expect(inv(s).gold).toBeGreaterThan(200000);
+  expect(s.goodsStock!.amountMilli).toBe(40000);expect(s.society!.luxuryStockMilli).toBe(40000);expect(r.outside?.stocksAfter).toEqual({stone:40000,wool:40000,cloth:40000,herbs:40000});
+  expect(r.goodsStock?.closingMilli).toBe(40000);
+ });
+ it('spoilage follows clearing rewards and current-week production',()=>{
+  const s=city();inv(s).wood=39000;Object.assign(s.society!.outside['forest-3'],{clearMilli:5000,clearWorkers:1,clearPaid:true});
+  const r=runTileTrialWeek(s);expect(inv(s).wood).toBe(40000);expect(r.outside?.spoiledMilli.wood).toBe(4000);
+ });
+});
+
 describe('outside weekly land and research',()=>{
  it('clears a pasture in two weeks and releases its workers',()=>{
   const s=city(),p=s.society!.outside['pasture-1'];p.clearWorkers=2;p.clearPaid=true;

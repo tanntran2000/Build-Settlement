@@ -125,9 +125,16 @@ describe('retained stock and needs branches in society', () => {
     for (let i = 0; i < 50; i++) {
       const r = end(s), report = r.report!, goods = report.goodsStock!;
       expect(report.goods.fulfillmentBps).toBe(10000);
-      expect(report.after.food).toBe(report.before.food + 6000 - report.foodConsumedMilli);
-      expect(goods.producedMilli).toBe(4000); expect(goods.closingMilli).toBe(goods.openingMilli + 4000 - goods.distributedMilli);
-      expect(report.after.wood).toBe(report.before.wood + 2000 - report.goods.woodUsed);
+      const spoil=report.outside!.spoiledMilli;
+      const produced=Math.min(2,Math.floor((report.before.wood+2000)/2000))*2000;
+      expect(report.goods.woodUsed).toBe(produced);
+      expect(goods.producedMilli).toBe(produced);
+      expect(spoil.food??0).toBe(Math.max(0,report.before.food+6000-report.foodConsumedMilli-40000));
+      expect(spoil.goods??0).toBe(Math.max(0,goods.openingMilli+produced-goods.distributedMilli-40000));
+      expect(spoil.wood??0).toBe(Math.max(0,report.before.wood+2000-report.goods.woodUsed-40000));
+      expect(report.after.food).toBe(report.before.food+6000-report.foodConsumedMilli-(spoil.food??0));
+      expect(goods.closingMilli).toBe(goods.openingMilli+produced-goods.distributedMilli-(spoil.goods??0));
+      expect(report.after.wood).toBe(report.before.wood+2000-report.goods.woodUsed-(spoil.wood??0));
       expect(Object.values(report.after).every(v => Number.isSafeInteger(v) && v >= 0)).toBe(true);
       s = plan(r.nextState);
     }

@@ -33,3 +33,21 @@ export function finishOutsideLand(s:TileTrialState,operatingIds:ReadonlySet<stri
   }
  }
 }
+
+export function spoilOutsideStocks(s:TileTrialState,operatingIds:ReadonlySet<string>,report:OutsideReport):void {
+ let capacity:number=O.storage.baseMilli;
+ for(const t of s.tiles){
+  const b=t.building;
+  if(b?.enabled&&b.typeId==='warehouse'&&operatingIds.has(t.id)&&b.workers===trialBuilding(b.typeId)!.maxWorkers*b.level)
+   capacity=safe(capacity+safe(b.level*O.storage.warehousePerLevelMilli));
+ }
+ const society=s.society!,stocks=s.world.settlements[s.world.activeSettlementId!].inventory;
+ const cap=(good:keyof OutsideReport['spoiledMilli'],amount:number):number=>{
+  if(amount<=capacity)return amount;
+  report.spoiledMilli[good]=amount-capacity;return capacity;
+ };
+ for(const good of ['food','wheat','wood','iron'] as const)stocks[good]=cap(good,stocks[good]);
+ for(const good of ['stone','wool','cloth','herbs'] as const)society.stocksMilli[good]=cap(good,society.stocksMilli[good]);
+ s.goodsStock!.amountMilli=cap('goods',s.goodsStock!.amountMilli);
+ society.luxuryStockMilli=cap('luxury',society.luxuryStockMilli);
+}

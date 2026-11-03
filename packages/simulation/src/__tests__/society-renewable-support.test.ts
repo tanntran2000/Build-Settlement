@@ -56,21 +56,27 @@ describe('society renewable support and transaction ports', () => {
     expect(r.nextState.world.week).toBe(s.world.week + 1); expect(r.nextState.phase).toBe('report');
     expect(week(s)).toEqual(r);
   });
-  it('does not mistake 30 weeks of stored Wheat liquidation for renewable Food', () => {
+  it('does not mistake capped stored Wheat liquidation for renewable Food over thirty weeks', () => {
     let s = expanded(); Object.assign(settlement(s).inventory, { gold: 100000, wheat: 1000000, food: 100000 });
     s = act(s, { type: 'SET_ENABLED', tileId: 'field-1', enabled: false }).nextState;
     for (let i = 0; i < 30; i++) {
       const before = structuredClone(s), r = week(s), report = r.report!;
-      expect(report.foodConsumedMilli).toBe(4000);
+      const processed=Math.min(3,Math.floor(report.before.wheat/2000))*2000;
+      const consumed=Math.min(4000,report.before.food+processed);
+      expect(report.foodConsumedMilli).toBe(consumed);
       expect(report.immigration).toMatchObject({ renewableFoodMilli: 0, arrivals: 0, target: 0, reason: 'no-capacity' });
-      expect(report.after.wheat).toBe(report.before.wheat - 6000);
-      expect(report.after.food).toBe(report.before.food + 6000 - 4000);
+      const wheatSpilled=Math.max(0,report.before.wheat-processed-40000);
+      const foodSpilled=Math.max(0,report.before.food+processed-consumed-40000);
+      expect(report.outside!.spoiledMilli.wheat??0).toBe(wheatSpilled);
+      expect(report.outside!.spoiledMilli.food??0).toBe(foodSpilled);
+      expect(report.after.wheat).toBe(report.before.wheat-processed-wheatSpilled);
+      expect(report.after.food).toBe(report.before.food+processed-consumed-foodSpilled);
       expect(r.nextState.tiles).toEqual(s.tiles); expect(s).toEqual(before);
       expect(r.nextState.phase).toBe('report'); expect(r.nextState.world.week).toBe(s.world.week + 1);
       s = plan(r.nextState); expect(count(s)).toBe(100);
     }
-    expect(settlement(s).inventory.wheat).toBe(820000);
-    expect(settlement(s).inventory.food).toBe(160000);
+    expect(settlement(s).inventory.wheat).toBe(0);
+    expect(settlement(s).inventory.food).toBe(0);
   });
   it('settles the opening population before applying society arrivals without changing assignments', () => {
     const s = expanded(), before = structuredClone(s), r = week(s);

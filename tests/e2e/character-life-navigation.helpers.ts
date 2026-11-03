@@ -287,7 +287,8 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
   } else await expect(panel.getByTestId('trial-immigration')).toHaveCount(0);
   if (!activityOpen) await activity.locator('summary').click();
   if (!calculationOpen) await calculation.locator('summary').click();
-  const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
+  // Outside rendering belongs to PR C; compare exactly the fields rendered here.
+  const { society, luxuryImportedMilli, trainingGoldMilli, outside: _outside, ...baseReport } = expected;
   expect(actual).toEqual(baseReport);
   if (society) {
     const labels = { free: 'Free residents', makers: 'Makers', luminaries: 'Luminaries', merchants: 'Merchants', bound: 'The Bound' };
