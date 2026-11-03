@@ -1,5 +1,7 @@
 <script lang="ts">
   import { managerSlotTileIds, summarizeOutside, TRIAL_BUILDINGS, type TileTrialState, type WorldNpc, type OutsideWorldState } from '@haven/core';
+  import OutsideCity from './OutsideCity.svelte';
+  import LibraryPanel from './LibraryPanel.svelte';
   import InsideCity from './InsideCity.svelte';
   import { buildOptions } from './society-view.js';
   import { formatMilli as units } from './milli-format.js';
@@ -34,22 +36,9 @@
 </script>
 
   <InsideCity {state} {selectedId} {locked} {managementError} {onselect} {oncommand} />
+  <LibraryPanel {state} {locked} {managementError} {oncommand} />
   <div class="layout">
-    <section aria-label="Outside tiles"><h3>Outside tiles</h3>
-      <div class="tiles">
-        {#each state.tiles.filter(t=>t.terrain!=='town') as tile}
-          <button class:selected={selectedId === tile.id} class="tile" aria-label={`Select ${tile.id}`} aria-pressed={selectedId === tile.id}
-            data-testid={`trial-tile-${tile.id}`} onclick={() => onselect(tile.id)}>
-            <span class="terrain">{tile.terrain}</span><strong>{tile.id}</strong>
-            {#if tile.building}
-              <span class="building-name">{TRIAL_BUILDINGS[tile.building.typeId].name}</span>
-              <span>Level {tile.building.level} · {tile.building.workers} WF · {tile.building.enabled ? 'Enabled' : 'Paused'}</span>
-            {:else}<span>Empty</span>{/if}
-            <span>{slots.includes(tile.id) ? npcs.find(npc => npc.postTileId === tile.id)?.character.name ?? 'Unassigned' : 'No manager post'}</span>
-          </button>
-        {/each}
-      </div>
-    </section>
+    <OutsideCity {state} {npcs} {selectedId} {locked} {managementError} {onselect} {oncommand} />
 
     <section class="card" aria-label="Manage tile">
       <h3 bind:this={managementHeading} tabindex="-1">{selected.id} · {selected.terrain}</h3>
@@ -103,19 +92,14 @@
   section { min-width: 0; overflow-wrap: anywhere; }
   .card { margin-bottom: 16px; background: var(--bg-tertiary); padding: 20px; } h3 { font-size: var(--life-card-heading); margin-bottom: 12px; }
   p { margin: 8px 0; line-height: 1.5; }
-  .terrain { color: var(--text-muted); font-size: max(14px, calc(var(--life-body-size) - 1px)); text-transform: uppercase; }
-  .building-name { font-size: var(--life-card-heading); font-weight: 600; line-height: 1.25; }
   .layout { display: grid; grid-template-columns: minmax(0, 1.66fr) minmax(0, 1fr); gap: 22px; align-items: start; }
-  .tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 22px; padding: 6px; margin: -6px; }
-  .tile { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; text-align: left; background: var(--bg-secondary); color: var(--text-main); min-height: 180px; min-width: 0; padding: 20px; border-radius: 12px; overflow-wrap: anywhere; margin: 0; }
-  .tile.selected { border-color: var(--accent-green); font-weight: 600; box-shadow: inset 0 0 0 2px var(--accent-green); }
   label { display: block; margin: 12px 0 8px; } input, select, button { font: inherit; border-radius: 8px; padding: 10px; border: 1px solid var(--life-control-border); }
   input, select { color: var(--text-main); background: transparent; max-width: 100%; } input { width: 7rem; }
   button { background: transparent; color: var(--text-main); cursor: pointer; margin: 4px 4px 4px 0; } button:disabled { cursor: default; }
   .planning-notes { margin: 4px 0 16px; }
   :focus-visible { outline: 3px solid var(--accent-blue); outline-offset: 3px; } [role='alert'] { padding: 12px; border-left: 3px solid var(--accent-red); }
   #trial-management-error { scroll-margin-block: 1px; }
-  @media(min-width: 1440px) { .tile { min-height: 240px; padding: 24px; } .card { padding: 24px; } }
+  @media(min-width: 1440px) { .card { padding: 24px; } }
   @media(max-width: 1100px) { .layout { grid-template-columns: minmax(0, 1fr); } }
-  @media(max-width: 500px) { .tiles { gap: 12px; } .tile { padding: 12px; } .card { padding: 16px; } }
+  @media(max-width: 500px) { .card { padding: 16px; } }
 </style>

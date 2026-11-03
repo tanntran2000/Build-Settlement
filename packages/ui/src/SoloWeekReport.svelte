@@ -1,5 +1,6 @@
 <script lang="ts">
   import { WEEKLY_RESOURCE_KEYS, type TileTrialReport } from '@haven/core';
+  import { outsideReportLines } from './society-view.js';
   import SocietyReport from './SocietyReport.svelte';
   import { formatFulfillment, formatMilli } from './milli-format.js';
   import { formatLifeWeek } from './life-calendar.js';
@@ -34,6 +35,11 @@
       <p>Happiness: {report.happinessBefore} → {report.happinessAfter}.</p>
     </section>
     {#if report.society}<SocietyReport {report} />{/if}
+    {#if report.outside}<section aria-label="Outside report"><h3>Outside</h3>
+      {#each outsideReportLines(report) as line}<p>{line}</p>{/each}
+      <dl>{#each Object.entries(report.outside.producedMilli) as [good,amount]}<div><dt>{good} produced</dt><dd data-outside-produced={good}>{formatMilli(amount)}</dd></div>{/each}
+      {#each Object.entries(report.outside.stocksBefore) as [good,amount]}<div><dt>{good} stock before / after</dt><dd data-outside-stock={good}>{formatMilli(amount)} / {formatMilli(report.outside.stocksAfter[good as keyof typeof report.outside.stocksAfter])}</dd></div>{/each}</dl>
+    </section>{/if}
     <!-- svelte-ignore a11y_no_noninteractive_tabindex (Keyboard users must be able to scroll the table.) -->
     <div class="ledger" role="region" aria-label="Weekly stock ledger scroll area" tabindex="0">
       <table>

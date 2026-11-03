@@ -1,0 +1,33 @@
+<script lang="ts">
+ import {TRIAL_BUILDINGS,type TileTrialState,type WorldNpc} from '@haven/core';
+ import {outsideRings,buildingColour} from './society-view.js';
+ export let state:TileTrialState;export let npcs:WorldNpc[];export let selectedId:string;export let locked:boolean;
+ export let onselect:(id:string)=>void;export let oncommand:(type:string,fields?:Record<string,unknown>)=>boolean;
+ export let managementError:{action:string;message:string}|null;
+ let drafts:Record<string,string>={};
+</script>
+<section aria-label="Outside tiles"><h3>Outside tiles</h3>
+ {#each outsideRings(state) as ring}
+ <section aria-label={`Outside Ring ${ring.ring}`}><h4>Ring {ring.ring}</h4><div class="tiles">
+ {#each ring.plots as plot}
+ {@const b=state.tiles.find(t=>t.id===plot.tileId)!.building}
+ <div class="plot" data-outside-plot={plot.tileId}>
+ {#if ring.locked}<strong>{plot.tileId}</strong><p>{plot.terrain}</p><p>Locked · opens with Ring {ring.ring}</p>
+ {:else}
+ <button class:selected={selectedId===plot.tileId} class="class-mark" style={`--class-colour:var(--class-${b?buildingColour(b.typeId):'none'})`} data-testid={`trial-tile-${plot.tileId}`} aria-label={`Select ${plot.tileId}`} aria-pressed={selectedId===plot.tileId} onclick={()=>onselect(plot.tileId)}>
+ <span>{plot.terrain}</span><strong>{plot.tileId}</strong>
+ {#if b}<span class="building-name">{TRIAL_BUILDINGS[b.typeId].name}</span><span>Level {b.level} · {b.workers} WF · {b.enabled?'Enabled':'Paused'}</span>{:else}<span>Empty</span>{/if}
+ <span>{b?npcs.find(n=>n.postTileId===plot.tileId)?.character.name??'Unassigned':'No manager post'}</span>
+ </button>
+ {#if plot.clear}<p>Clearing {plot.clear.progress} / {plot.clear.work}</p><label for={`clear-${plot.tileId}`}>Clearing workers (WF)</label><input id={`clear-${plot.tileId}`} type="number" min="0" step="1" value={drafts[plot.tileId]??String(state.society!.outside[plot.tileId].clearWorkers)} disabled={locked} oninput={e=>drafts={...drafts,[plot.tileId]:e.currentTarget.value}} /><button disabled={locked} onclick={()=>oncommand('CLEAR',{tileId:plot.tileId,workers:Number(drafts[plot.tileId]??state.society!.outside[plot.tileId].clearWorkers)})}>Clear</button>{/if}
+ {#if plot.deposit}<p>{plot.deposit.good} {plot.deposit.remaining} / {plot.deposit.cap}</p>{/if}
+ {#if plot.deepShaftAllowed}<button disabled={locked} onclick={()=>oncommand('BUILD_DEEP_SHAFT',{tileId:plot.tileId})}>Build Deep Shaft</button>{/if}
+ {/if}
+ </div>
+ {/each}</div></section>
+ {/each}
+ {#if managementError&&['CLEAR','BUILD_DEEP_SHAFT'].includes(managementError.action)}<p role="alert">{managementError.message}</p>{/if}
+</section>
+<style>
+ section,.plot{min-width:0;overflow-wrap:anywhere}.building-name{font-size:var(--life-card-heading);font-weight:600}.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.plot{background:var(--bg-secondary);padding:12px;border-radius:12px}button.class-mark{display:flex;flex-direction:column;gap:10px;align-items:flex-start;text-align:left;width:100%;min-height:180px;padding:12px}.selected{outline:2px solid var(--accent-green)}input{width:6rem}label{display:block}p{margin:8px 0}h4{margin:12px 0}
+</style>
