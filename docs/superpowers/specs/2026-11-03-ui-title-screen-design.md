@@ -1,6 +1,6 @@
 # UI-TITLE-01 — Title screen, Options and Main menu (design spec v0.1)
 
-Status: **Draft for G1.** Design choices approved in chat by the user (Tân), 2026-11-03, Claude session. The written spec is not yet approved. No code, push or PR is authorised by this document.
+Status: **G1 approved** by the user (Tân), 2026-11-03, Claude session: "Duyệt G1". The implementation plan is written after UI-LEDGER-01 is merged, against that `main`. No code, push or PR is authorised by this document.
 
 Implementation starts only after UI-LEDGER-01 is merged, which itself waits for all of P3 (§9).
 
@@ -18,6 +18,7 @@ User decisions, in order (2026-11-03, Claude session):
 8. Layout and menu approved, plus an in-game Main menu: "Ổn + có Main menu".
 9. Options approved with one change: "Autosave mặc định On".
 10. Remaining design approved: "Ổn, viết spec".
+11. Written spec v0.1 approved: "Duyệt G1".
 
 All UI text is English (memory rule: Vietnamese breaks the fonts).
 
