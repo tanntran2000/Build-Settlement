@@ -89,7 +89,8 @@ it.each([[39,0],[40,1],[70,2]])('lowers only citizen satisfaction at Crime %i',(
  const low=crimeCity(crime);low.society!.satisfaction.free=0;crimeWeek(low);expect(low.society!.satisfaction.free).toBe(0);
 });
 it.each([[0,-2000],[50,0],[100,2000]])('tax modifier at Authority %i',(authority,bps)=>expect(authorityTaxBps(authority)).toBe(bps));
-it.each([[29,1,true,0],[29,5,true,2],[70,0,true,1],[70,3,false,3],[69,3,true,3]])('arrivals Authority %i budget %i room %s',(authority,budget,room,expected)=>expect(authorityArrivals(authority,budget,room)).toBe(expected));
+// An admitted resolver result has at least one arrival; zero budget with room is always a refusal.
+it.each([[29,1,true,0],[29,5,true,2],[70,1,true,2],[70,3,false,3],[69,3,true,3]])('arrivals Authority %i budget %i room %s',(authority,budget,room,expected)=>expect(authorityArrivals(authority,budget,room)).toBe(expected));
 it('steals before storage spoilage in End Week',()=>{
  const s=createSocietyState();s.society!.order.crime=65;s.society!.stocksMilli.stone=100000;
  const r=runTileTrialWeek(s);expect(r.order!.after.crime).toBe(60);expect(r.order!.theftMilli.stone).toBe(4000);

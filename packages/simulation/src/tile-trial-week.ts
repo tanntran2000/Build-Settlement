@@ -148,7 +148,7 @@ export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
     foodConsumedMilli = allocated.foodConsumedMilli;
     immigration = resolveTrialImmigration(s, {fundedTileIds,farmBatches,processorBatches,woodProducedMilli,ironProducedMilli,operatingDebitMilli,foodDemandMilli,foodConsumedMilli,unpaidUpkeepMilli});
     arrivalsBudgetBefore=immigration.arrivals;
-    arrivalsBudgetAfter=authorityArrivals(orderBefore.authority,arrivalsBudgetBefore,immigration.target>immigration.populationAfter);
+    arrivalsBudgetAfter=authorityArrivals(orderBefore.authority,arrivalsBudgetBefore,immigration.reason==='arrivals'&&immigration.target>immigration.populationAfter);
     const resolved = resolveSocietyWeek({society:s.society!,foodAvailableMilli:stocks.food,goodsServableMilli:servedMilli,luxuryImportedMilli,facilities:facilities!,employment:societyEmployment(s),arrivalsBudget:arrivalsBudgetAfter,goldAvailableMilli:stocks.gold});
     stocks.food -= resolved.foodConsumedMilli; stocks.gold -= resolved.goldSpentMilli;
     trainingGoldMilli = resolved.goldSpentMilli; s.society = resolved.society;
