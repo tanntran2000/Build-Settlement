@@ -8,9 +8,9 @@ const WORLD_SESSION_CHECKPOINT_KEY = 'haven.world-session.checkpoint.v1';
 
 const session = (seed = 0, currentName = 'Ana') => { const r = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName }); if (!r.success) throw Error(r.error.message); return r.value; };
 
-it('loads live and pinned v2 cities into a detached complete Life session without conversion or grants', () => {
+it('loads live and pinned v3 cities into a detached complete Life session without conversion or grants', () => {
   const oldSession = () => session();
-  const decoded=deserializeCharacterLifeSave(readFileSync('packages/persistence/src/__tests__/fixtures/society-v2/life-new-game.json','utf8'));
+  const decoded=deserializeCharacterLifeSave(readFileSync('packages/persistence/src/__tests__/fixtures/society-v3/life-new-game.json','utf8'));
   if(!decoded.success)throw Error(decoded.error.message);
   const fresh={success:true,value:decoded.state};
   fresh.value.city.goodsStock!.amountMilli = 321;

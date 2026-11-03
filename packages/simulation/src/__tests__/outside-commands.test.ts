@@ -69,7 +69,7 @@ it('releases building workers first, then clearing workers in reverse plot order
  expect(s.society!.outside['pasture-1'].clearWorkers).toBe(1);expect(s.society!.outside['pasture-2'].clearWorkers).toBe(0);expect(isTileTrialState(s)).toBe(true);
 });
 it('End Week advances assigned clearing and leaves unstaffed research paused',()=>{
- const s=city();s.society!.wallRing=2;s.society!.outside['pasture-1'].clearWorkers=1;s.society!.outside['pasture-1'].clearPaid=true;s.society!.research={topic:'deep-mining',progressMilli:{'deep-mining':1000},paid:['deep-mining'],completed:[]};s.society!.stocksMilli={stone:50000,wool:50000,cloth:50000,herbs:50000};
+ const s=city();s.society!.wallRing=2;s.society!.outside['pasture-1'].clearWorkers=1;s.society!.outside['pasture-1'].clearPaid=true;s.society!.research={topic:'deep-mining',progressMilli:{'deep-mining':1000,'watch-patrols':0,'barracks-drill':0},paid:['deep-mining'],completed:[]};s.society!.stocksMilli={stone:50000,wool:50000,cloth:50000,herbs:50000};
  const before=structuredClone(s.society!);const n=next(s,{type:'END_WEEK',expectedWeek:1});
  before.outside['pasture-1'].clearMilli=1000;expect(n.society!.outside).toEqual(before.outside);expect(n.society!.research).toEqual(before.research);expect(n.society!.stocksMilli).toEqual({stone:40000,wool:40000,cloth:40000,herbs:40000});
 });

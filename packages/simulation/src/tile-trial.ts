@@ -1,4 +1,4 @@
-import { OUTSIDE_TRIAL,outsidePlot,hasWeeklyKeys,isTileTrialPlanningState,isTileTrialState,SOCIETY_BUILDINGS,societyPlot,trialBuilding,type TileTrialResult,type TileTrialState } from '@haven/core';
+import { RESEARCH_TOPICS,type ResearchTopic,OUTSIDE_TRIAL,outsidePlot,hasWeeklyKeys,isTileTrialPlanningState,isTileTrialState,SOCIETY_BUILDINGS,societyPlot,trialBuilding,type TileTrialResult,type TileTrialState } from '@haven/core';
 import { runTileTrialWeek,trialSafe } from "./tile-trial-week.js";
 
 export function executeTileTrialCommand(state: unknown, raw: unknown): TileTrialResult {
@@ -21,8 +21,8 @@ export function executeTileTrialCommand(state: unknown, raw: unknown): TileTrial
     let next = structuredClone(state) as TileTrialState;
     let report;
     if (c.type === 'SET_RESEARCH') {
-      const research=next.society!.research, topic=c.topic;
-      if(topic!==null && topic!=='deep-mining')return fail('UNKNOWN_TOPIC','Choose a supported research topic.');
+      const research=next.society!.research, topic=c.topic as ResearchTopic|null;
+      if(topic!==null && !RESEARCH_TOPICS.includes(topic))return fail('UNKNOWN_TOPIC','Choose a supported research topic.');
       if(topic!==null){
         if(research.completed.includes(topic))return fail('ALREADY_RESEARCHED','This topic is already completed.');
         if(!research.paid.includes(topic)){
@@ -95,7 +95,7 @@ export function executeTileTrialCommand(state: unknown, raw: unknown): TileTrial
           const plot = societyPlot(tile.id), info = typeof typeId === 'string' && Object.hasOwn(SOCIETY_BUILDINGS,typeId) ? SOCIETY_BUILDINGS[typeId] : undefined;
           if (plot && plot.ring > state.society.wallRing) return fail('LOCKED_PLOT','Extend the wall first.');
           if (info?.reserved) return fail('NOT_AVAILABLE','This building is reserved.');
-          if (plot && info && plot.tier !== info.tier) return fail('WRONG_TIER','Choose the matching plot tier.');
+          if (plot && info && plot.tier !== info.tier && plot.tier !== info.alsoTier) return fail('WRONG_TIER','Choose the matching plot tier.');
           if (typeId === 'market' || (info && !plot) || (plot && !info)) return fail('INVALID_PLACEMENT','Choose a supported plot.');
         }
         const d = typeof typeId === "string" ? trialBuilding(typeId) : undefined;

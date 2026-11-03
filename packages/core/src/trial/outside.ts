@@ -1,7 +1,8 @@
 import { hasWeeklyKeys } from '../domain/canonical-state.js';
 
 export type OutsideTerrain = 'fertile' | 'pasture' | 'meadow' | 'forest' | 'ore' | 'rock' | 'plain';
-export type ResearchTopic = 'deep-mining';
+export const RESEARCH_TOPICS = Object.freeze(['deep-mining', 'watch-patrols', 'barracks-drill'] as const);
+export type ResearchTopic = typeof RESEARCH_TOPICS[number];
 export interface OutsidePlotState {
  wild: boolean; clearMilli: number; clearWorkers: number; clearPaid: boolean;
  depositMilli: number | null; capMilli: number | null; deepShaft: boolean;
@@ -26,7 +27,7 @@ export const OUTSIDE_TRIAL = Object.freeze({
  weaver:Object.freeze({woolPerBatchMilli:2000,clothPerBatchMilli:1000}),
  workshopClothRecipe:Object.freeze({woodMilli:1000,clothMilli:1000}), hospitalHerbsPerLevelMilli:1000,
  storage:Object.freeze({baseMilli:40000,warehousePerLevelMilli:40000}),
- research:Object.freeze({'deep-mining':Object.freeze({workMilli:8000,goldMilli:10000})}),
+ research:Object.freeze({'deep-mining':Object.freeze({workMilli:8000,goldMilli:10000}),'watch-patrols':Object.freeze({workMilli:6000,goldMilli:6000}),'barracks-drill':Object.freeze({workMilli:8000,goldMilli:8000})}),
  deepShaft:Object.freeze({stoneMilli:10000,woodMilli:5000,goldMilli:10000,depositBonusMilli:60000,outputBps:15000}),
  wallRing3StoneMilli:30000, level3StoneMilli:5000,
 });
@@ -55,7 +56,9 @@ export interface OutsideResearch {
 }
 export function isOutsideResearch(raw:unknown): raw is OutsideResearch {
  if(!hasWeeklyKeys(raw,['topic','progressMilli','paid','completed']) ||
-  !hasWeeklyKeys(raw.progressMilli,['deep-mining']) || !count(raw.progressMilli['deep-mining']))return false;
+  !hasWeeklyKeys(raw.progressMilli,RESEARCH_TOPICS))return false;
+ const progress = raw.progressMilli;
+ if (!RESEARCH_TOPICS.every(topic=>count(progress[topic]))) return false;
  const topics=(v:unknown):ResearchTopic[]|null=>{
   if(!Array.isArray(v)||Object.getPrototypeOf(v)!==Array.prototype)return null;
   const length=Object.getOwnPropertyDescriptor(v,'length')?.value;
@@ -63,11 +66,11 @@ export function isOutsideResearch(raw:unknown): raw is OutsideResearch {
   const values:ResearchTopic[]=[];
   for(let i=0;i<length;i++){
    const d=Object.getOwnPropertyDescriptor(v,String(i));
-   if(!d?.enumerable||!('value' in d)||d.value!=='deep-mining')return null;
+   if(!d?.enumerable||!('value' in d)||!RESEARCH_TOPICS.includes(d.value))return null;
    values.push(d.value);
   }
   return new Set(values).size===values.length?values:null;
  };
  const paid=topics(raw.paid), completed=topics(raw.completed);
- return paid!==null&&completed!==null&&(raw.topic===null||raw.topic==='deep-mining'&&!completed.includes(raw.topic));
+ return paid!==null&&completed!==null&&(raw.topic===null||RESEARCH_TOPICS.includes(raw.topic as ResearchTopic)&&!completed.includes(raw.topic as ResearchTopic));
 }

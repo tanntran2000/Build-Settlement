@@ -12,6 +12,8 @@ export const TRIAL_BUILDINGS: Readonly<Record<string, TrialBuildingDefinition>> 
   "herb-garden": {"name":"Herb Garden","operation":"herbs","terrain":["meadow"],"maxLevel":2,"maxWorkers":2,"cost":{"gold":2000,"wood":1000,"iron":0},"upkeepMilli":500},
   "quarry": {"name":"Quarry","operation":"stone","terrain":["rock"],"maxLevel":3,"maxWorkers":2,"cost":{"gold":3000,"wood":1000,"iron":1000},"upkeepMilli":500},
   "weaver": {"name":"Weaver","operation":"cloth","terrain":["plain"],"maxLevel":2,"maxWorkers":1,"cost":{"gold":3000,"wood":2000,"iron":0},"upkeepMilli":500},
+  "watch-house": {"name":"Watch House","operation":"society","terrain":["town"],"maxLevel":2,"maxWorkers":2,"cost":{"gold":5000,"wood":4000,"iron":1000},"upkeepMilli":500},
+  "military-barracks": {"name":"Military Barracks","operation":"society","terrain":["town"],"maxLevel":2,"maxWorkers":4,"cost":{"gold":8000,"wood":6000,"iron":4000},"upkeepMilli":1000},
   "library": {"name":"Library","operation":"society","terrain":["town"],"maxLevel":2,"maxWorkers":1,"cost":{"gold":8000,"wood":6000,"iron":2000},"upkeepMilli":1000},
   "warehouse": {"name":"Warehouse","operation":"society","terrain":["town"],"maxLevel":3,"maxWorkers":1,"cost":{"gold":6000,"wood":8000,"iron":0},"upkeepMilli":500},
   farm: { name: "Farm", operation: "farm", terrain: ["fertile"], maxLevel: 1, maxWorkers: 5, cost: { gold: 3000, wood: 1000, iron: 0 }, upkeepMilli: 1000 },
