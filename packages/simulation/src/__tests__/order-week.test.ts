@@ -1,6 +1,7 @@
 import { createSocietyState, isTileTrialState, type TileTrialState } from '@haven/core';
 import { expect, it } from 'vitest';
 import { authorityTaxBps, authorityArrivals, orderFacts, resolveOrderWeek } from '../order-week.js';
+import { cityHappiness, societyCounts } from '../society-week.js';
 import { executeTileTrialCommand } from '../tile-trial.js';
 import { runTileTrialWeek } from '../tile-trial-week.js';
 
@@ -138,4 +139,21 @@ it.each([[0,2908,-606],[100,4363,606]])('credits Authority %i before upkeep then
  // Base 101*30=3030; Authority 0/100 gives 2424/3636, then floor(*120/100).
  expect(r.taxMilli).toBe(tax);expect(r.order!.taxDeltaMilli).toBe(delta);
  expect(r.order!.taxModifierBps).toBe((authority-50)*40);
+});
+
+it('recomputes stored and reported happiness from final satisfaction after Crime 75 drifts to 70',()=>{
+ const s=createSocietyState();s.society!.order.crime=75;
+ const previous=s.happiness,r=runTileTrialWeek(s);
+ expect(r.order!.after.crime).toBe(70);expect(r.order!.satisfactionLost).toBe(2);
+ for(const key of ['free','makers','luminaries','merchants'] as const)expect(s.society!.satisfaction[key]).toBe(80);
+ const expected=cityHappiness(s.society!.satisfaction,societyCounts(s.society!),previous);
+ expect(expected).toBe(80);expect(s.happiness).toBe(expected);expect(r.happinessAfter).toBe(expected);
+ expect(r.happinessBefore).toBe(previous);
+});
+it('preserves existing stored and reported happiness when Crime starts at 39',()=>{
+ const control=createSocietyState(),s=structuredClone(control);s.society!.order.crime=39;
+ const baseline=runTileTrialWeek(control),r=runTileTrialWeek(s);
+ expect(r.order!.after.crime).toBe(34);expect(r.order!.satisfactionLost).toBe(0);
+ expect(s.happiness).toBe(82);expect(s.happiness).toBe(control.happiness);
+ expect(r.happinessAfter).toBe(baseline.happinessAfter);expect(r.happinessAfter).toBe(s.happiness);
 });

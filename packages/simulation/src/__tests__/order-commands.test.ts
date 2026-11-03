@@ -164,11 +164,13 @@ it('activates weekly order and isolates its effects from the existing week', () 
  expect(bs.goodsStock!.amountMilli).toBe(as.goodsStock!.amountMilli-bo.theftMilli.goods!);bs.goodsStock!.amountMilli+=bo.theftMilli.goods!;
  expect(bs.society!.tension).toBe(as.society!.tension+3);bs.society!.tension-=3;
  for(const key of ['free','makers','luminaries','merchants'] as const){expect(bs.society!.satisfaction[key]).toBe(as.society!.satisfaction[key]-2);bs.society!.satisfaction[key]+=2;}
+ expect(bs.happiness).toBe(as.happiness-2);bs.happiness+=2;
  bs.society!.order=as.society!.order;expect(bs).toEqual(as);
  const {order: _ao,...ar}=a.report, {order: _bo,...br}=structuredClone(b.report);
  for(const key of ['gold','food'] as const){expect(br.after[key]).toBe(b.report.after[key]);br.after[key]=ar.after[key];}
  expect(br.taxMilli).toBe(ar.taxMilli-600);br.taxMilli+=600;
  br.goodsStock={...br.goodsStock!,closingMilli:br.goodsStock!.closingMilli+bo.theftMilli.goods!};
  for(const key of ['wood','iron'] as const)br.outside!.spoiledMilli[key]=br.outside!.spoiledMilli[key]!+bo.theftMilli[key]!;
+ expect(br.happinessAfter).toBe(ar.happinessAfter-2);br.happinessAfter+=2;
  expect(ar).toEqual(br);
 });

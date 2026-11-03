@@ -1,7 +1,7 @@
 import { authorityTaxBps, authorityArrivals, resolveOrderWeek } from './order-week.js';
 import { TILE_TRIAL_BALANCE as B,GOODS_STOCK_TRIAL as G,OUTSIDE_TRIAL as O,societyPopulation,trialBuilding,type TileTrialReport,type TileTrialState,type WeeklyResource } from '@haven/core';
 import { releaseSocietyWorkers,societyEmployment,societyFacilities } from './society-facilities.js';
-import { allocateRequirements,resolveSocietyWeek } from './society-week.js';
+import { allocateRequirements,resolveSocietyWeek,cityHappiness,societyCounts } from './society-week.js';
 import { finishOutsideLand,spoilOutsideStocks } from './outside-week.js';
 import { resolveTrialImmigration } from "./tile-trial-immigration.js";
 import { FARM_GOLD_PER_BATCH_MILLI,FARM_MAX_BATCHES,FARM_WHEAT_PER_BATCH_MILLI,PROCESSOR_FOOD_PER_BATCH_MILLI,PROCESSOR_MAX_BATCHES,PROCESSOR_WHEAT_PER_BATCH_MILLI } from "./weekly.js";
@@ -161,6 +161,7 @@ export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
   }
   s.world.week = trialSafe(s.world.week + 1); s.phase = "report";
   const order = resolveOrderWeek(s,operatingIds,{before:orderBefore,taxModifierBps,taxDeltaMilli,arrivalsBudgetBefore,arrivalsBudgetAfter});
+  if(order.satisfactionLost>0)s.happiness=cityHappiness(s.society.satisfaction,societyCounts(s.society),happinessBefore);
   spoilOutsideStocks(s,operatingIds,outside);
   if(goodsStock)goodsStock=Object.freeze({...goodsStock,closingMilli:s.goodsStock.amountMilli});
   outside.stocksAfter={...s.society.stocksMilli};
