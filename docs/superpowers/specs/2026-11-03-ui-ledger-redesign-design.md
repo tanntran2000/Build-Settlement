@@ -1,9 +1,9 @@
 # UI-LEDGER-01 — "Lord's ledger" restyle and Report view (design spec v0.1)
 
-Status: **G1 approved** by the user (Tân), 2026-11-03, Claude session: "Duyệt G1". The implementation plan is written after all of P3 is merged, against that `main`. No code, push or PR is authorised by this document.
+Status: **G1 approved** by the user (Tân), 2026-11-03, Claude session: "Duyệt G1". The implementation plan is written after all of P3 and P8 (with the city event mechanics) are merged, against that `main`. No code, push or PR is authorised by this document.
 Baseline: `origin/main` `9f3f165` (merge of PR #65). Branch: `docs/ui-ledger-redesign` (docs only).
 Scope: the Character Life shell of a started game session. Presentation only.
-Implementation starts only after all of P3 (PR A, B and C) is merged (§9).
+Implementation starts only after all of P3 (PR A, B and C) and P8 with the city event mechanics are merged (§9).
 
 ## 1. Authority
 
@@ -19,6 +19,7 @@ User decisions, in order (Claude session unless stated):
 8. 2026-11-03: "Kiểm tra song song với việc Builder đang xây P3 cẩn thận xây chồng lên đó". This spec is written read-only next to the running P3-A Builder, and implementation waits for P3-A (§9).
 9. 2026-11-03: UI-LEDGER-01 starts **after all of P3** ("After all of P3"), not alongside P3-B. P3-C builds its outside-city UI on the current style; this redesign then restyles it with the rest of the shell.
 10. 2026-11-03: written spec v0.1 approved: "Duyệt G1". The approval did not answer §12, so the spec's defaults stand.
+11. 2026-11-03: P8 (law, city identity, Security/Authority) and the city event mechanics move **before** the frontend work ("P8 before frontend"), after the owner said "nên để P8 lên trước sau khi hoàn thành các tính năng và cơ chế event cho thành phố thì mới tính tới việc thiết kế". P6 items follow the frontend.
 
 This spec supersedes, for the Report only, the "Report is a dialog" rule in the [city navigation spec](2026-10-27-city-navigation-design.md) §4 item 1, including "Automatic Report opening after End Week returns focus to End Week on close". Information, Player and Population stay dialogs.
 
@@ -167,15 +168,16 @@ Tests that change because Report is no longer a dialog (from Codex's list at `9f
 
 Required gates on the exact commit: `git diff --check`, `npm run lint`, `npm run typecheck`, `npm run check:architecture`, `npm run test:architecture`, `npm test`, `npm run build`, `npm run test:smoke`.
 
-## 9. Order and collision with P3
+## 9. Order and collision with P3 and P8
 
 1. **P3-A first.** It is in worktree `qa-g6-closeout-01`, `feat/p3a-outside-state` @ `b419f93`, HOLD on one smoke failure. Its UI/test diff against `9f3f165` touches three UI unit tests and `society`, `tile-save`, `world-session` e2e specs. It touches none of the files in §10. `society.spec.ts:11` opens the Population dialog, which stays.
 2. **Then P3-B and P3-C** (user decision 9). P3-C adds outside-city UI that this redesign must also cover.
-3. **Then this redesign**, on a fresh branch from the `main` that contains P3-C. Before dispatch, re-run the collision check against that `main` and add P3-C's new UI files to §10.
-4. **Then UI-TITLE-01** (title screen, Options, Main menu): [spec](2026-11-03-ui-title-screen-design.md), built on this redesign's tokens.
-5. **Then CITY-MAP-01**, after its spec is revised for the P2/P3 city (main already renders `InsideCity`).
+3. **Then P8 and the city event mechanics** (user decision 11). They may add UI (laws, events, Security/Authority) that this redesign must also cover.
+4. **Then this redesign**, on a fresh branch from the `main` that contains P3-C and P8. Before dispatch, re-run the collision check against that `main` and add the new P3-C and P8 UI files to §10.
+5. **Then UI-TITLE-01** (title screen, Options, Main menu): [spec](2026-11-03-ui-title-screen-design.md), built on this redesign's tokens.
+6. **Then CITY-MAP-01**, after its spec is revised for the P2/P3 city (main already renders `InsideCity`).
 
-No writer or Playwright run for this work while a P3 Builder is running.
+No writer or Playwright run for this work while a P3 or P8 Builder is running.
 
 ## 10. File allowlist
 

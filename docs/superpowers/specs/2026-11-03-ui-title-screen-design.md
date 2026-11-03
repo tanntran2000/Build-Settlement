@@ -2,7 +2,7 @@
 
 Status: **G1 approved** by the user (Tân), 2026-11-03, Claude session: "Duyệt G1". The implementation plan is written after UI-LEDGER-01 is merged, against that `main`. No code, push or PR is authorised by this document.
 
-Implementation starts only after UI-LEDGER-01 is merged, which itself waits for all of P3 (§9).
+Implementation starts only after UI-LEDGER-01 is merged, which itself waits for all of P3 and for P8 with the city event mechanics (§9).
 
 ## 1. Authority
 
@@ -19,6 +19,7 @@ User decisions, in order (2026-11-03, Claude session):
 9. Options approved with one change: "Autosave mặc định On".
 10. Remaining design approved: "Ổn, viết spec".
 11. Written spec v0.1 approved: "Duyệt G1".
+12. P8 and the city event mechanics move before the frontend work: "P8 before frontend".
 
 All UI text is English (memory rule: Vietnamese breaks the fonts).
 
@@ -151,8 +152,9 @@ The version number comes from `packages/ui/package.json` and the stage from a `R
 ## 9. Order
 
 1. All of P3 (A, B, C) merged.
-2. UI-LEDGER-01 merged (it provides the tokens, fonts and textures used here).
-3. This spec: plan → one PR. Before dispatch, re-check collisions against the `main` that contains UI-LEDGER-01.
+2. P8 (law, city identity, Security/Authority) and the city event mechanics merged.
+3. UI-LEDGER-01 merged (it provides the tokens, fonts and textures used here).
+4. This spec: plan → one PR. Before dispatch, re-check collisions against the `main` that contains UI-LEDGER-01.
 
 ## 10. Verification
 
