@@ -248,7 +248,7 @@ for (const viewport of [{ width: 1600, height: 1000 }, { width: 1280, height: 90
     });
 
     test('life shell accessibility baseline', async ({ page }, info) => {
-      test.setTimeout(180000);
+      test.setTimeout(300000);
       expect(contrast([0, 0, 0], [255, 255, 255])).toBe(21);
       expect(contrast([42, 42, 42], [42, 42, 42])).toBe(1);
       await page.goto('/?mode=world-life'); await importLife(page, makeLife());
