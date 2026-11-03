@@ -1,6 +1,6 @@
 # P8-A — City order: Security, Crime and Authority (design spec v0.1)
 
-Status: **Draft for owner review (G0 → G1).** No code is authorized until the owner approves this spec and then the implementation plan.
+Status: **G1 approved by the owner** (Tân, 2026-11-03, verbatim: "Duyệt G1"). No code is authorized until the owner also approves the implementation plan.
 - **Decisions:** from the owner's answers in the Claude session on 2026-11-03 (§11).
 - **Numbers:** all numbers are TRIAL defaults, not approved balance; P1 (AI playtest) tunes them.
 - **Base:** `main` `abf50e5` (P3 A–C merged; the engine plays only `tile-society-02`).
