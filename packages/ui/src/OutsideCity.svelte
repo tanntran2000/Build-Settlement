@@ -1,10 +1,15 @@
 <script lang="ts">
  import {TRIAL_BUILDINGS,type TileTrialState,type WorldNpc} from '@haven/core';
+ import {clearOutsideWorkers} from './clearing-workers.js';
  import {outsideRings,buildingColour} from './society-view.js';
  export let state:TileTrialState;export let npcs:WorldNpc[];export let selectedId:string;export let locked:boolean;
  export let onselect:(id:string)=>void;export let oncommand:(type:string,fields?:Record<string,unknown>)=>boolean;
  export let managementError:{action:string;message:string}|null;
  let drafts:Record<string,string>={};
+ let clearingErrors:Record<string,string>={};
+ function clear(tileId:string):void {
+  clearingErrors={...clearingErrors,[tileId]:clearOutsideWorkers(drafts[tileId]??String(state.society!.outside[tileId].clearWorkers),tileId,oncommand)};
+ }
 </script>
 <section aria-label="Outside tiles"><h3>Outside tiles</h3>
  {#each outsideRings(state) as ring}
@@ -19,7 +24,7 @@
  {#if b}<span class="building-name">{TRIAL_BUILDINGS[b.typeId].name}</span><span>Level {b.level} · {b.workers} WF · {b.enabled?'Enabled':'Paused'}</span>{:else}<span>Empty</span>{/if}
  <span>{b?npcs.find(n=>n.postTileId===plot.tileId)?.character.name??'Unassigned':'No manager post'}</span>
  </button>
- {#if plot.clear}<p>Clearing {plot.clear.progress} / {plot.clear.work}</p><label for={`clear-${plot.tileId}`}>Clearing workers (WF)</label><input id={`clear-${plot.tileId}`} type="number" min="0" step="1" value={drafts[plot.tileId]??String(state.society!.outside[plot.tileId].clearWorkers)} disabled={locked} oninput={e=>drafts={...drafts,[plot.tileId]:e.currentTarget.value}} /><button disabled={locked} onclick={()=>oncommand('CLEAR',{tileId:plot.tileId,workers:Number(drafts[plot.tileId]??state.society!.outside[plot.tileId].clearWorkers)})}>Clear</button>{/if}
+ {#if plot.clear}<p>Clearing {plot.clear.progress} / {plot.clear.work}</p><label for={`clear-${plot.tileId}`}>Clearing workers (WF)</label><input id={`clear-${plot.tileId}`} type="number" min="0" step="1" value={drafts[plot.tileId]??String(state.society!.outside[plot.tileId].clearWorkers)} disabled={locked} aria-invalid={clearingErrors[plot.tileId]?'true':undefined} aria-describedby={clearingErrors[plot.tileId]?`clear-error-${plot.tileId}`:undefined} oninput={e=>{drafts={...drafts,[plot.tileId]:e.currentTarget.value};clearingErrors={...clearingErrors,[plot.tileId]:''};}} /><button disabled={locked} onclick={()=>clear(plot.tileId)}>Clear</button>{#if clearingErrors[plot.tileId]}<p id={`clear-error-${plot.tileId}`} role="alert">{clearingErrors[plot.tileId]}</p>{/if}{/if}
  {#if plot.deposit}<p>{plot.deposit.good} {plot.deposit.remaining} / {plot.deposit.cap}</p>{/if}
  {#if plot.deepShaftAllowed}<button disabled={locked} onclick={()=>oncommand('BUILD_DEEP_SHAFT',{tileId:plot.tileId})}>Build Deep Shaft</button>{/if}
  {/if}

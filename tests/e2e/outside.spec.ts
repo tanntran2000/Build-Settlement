@@ -1,3 +1,4 @@
+import {executeCharacterLifeCommand} from '../../packages/simulation/src/character-life-command.ts';
 import {test,expect,type Page} from '@playwright/test';
 import {societyPopulation,type CharacterLifeSessionState} from '../../packages/core/src/index.ts';
 import {serializeCharacterLifeSave} from '../../packages/persistence/src/index.ts';
@@ -17,3 +18,13 @@ test('full Wheat store spoils with exact report reason',async({page})=>{const s=
 test('Save Continue Export Import preserves checkpoint bytes',async({page})=>{await start(page);const before=await exportLife(page);await button(page,'Save locally').click();await page.reload();await button(page,'Continue locally').click();expect(serializeCharacterLifeSave(await exportLife(page))).toEqual(serializeCharacterLifeSave(before));await importLife(page,before);const imported=await exportLife(page),expected=structuredClone(before);expected.city.revision=before.city.revision+1;expect(serializeCharacterLifeSave(imported)).toEqual(serializeCharacterLifeSave(expected));});
 test('navigation without End Week keeps export byte identical',async({page})=>{await start(page);const before=serializeCharacterLifeSave(await exportLife(page));for(const destination of ['city','characters','help','session'] as const)await go(page,destination);expect(serializeCharacterLifeSave(await exportLife(page))).toEqual(before);});
 test('outside has no horizontal overflow at mobile and desktop widths',async({page})=>{const s=seed();s.city.society!.wallRing=3;await start(page,s);for(const viewport of [{width:375,height:812},{width:1280,height:900}]){await page.setViewportSize(viewport);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await page.locator('#life-nav-information').click();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await button(page,'Close').click();}});
+for(const raw of ['1.5','-1','','9007199254740992'])test(`invalid clearing draft ${JSON.stringify(raw)} stays local`,async({page})=>{
+ const s=seed();s.city.society!.wallRing=2;await start(page,s);const before=serializeCharacterLifeSave(await exportLife(page));await go(page,'city');
+ const plot=page.locator('[data-outside-plot="pasture-1"]');await plot.getByLabel('Clearing workers (WF)').fill(raw);await plot.getByRole('button',{name:'Clear',exact:true}).click();
+ await expect(plot.getByRole('alert')).toHaveText('Use whole nonnegative workers.');expect(serializeCharacterLifeSave(await exportLife(page))).toEqual(before);
+});
+test('above-pool clearing shows the engine error without changing the session',async({page})=>{
+ const s=seed();s.city.society!.wallRing=2;await start(page,s);const before=await exportLife(page);const result=executeCharacterLifeCommand(before,{type:'CLEAR',tileId:'pasture-1',workers:999,expectedRevision:before.city.revision});if(result.success)throw Error('Expected above-pool rejection');
+ await go(page,'city');const plot=page.locator('[data-outside-plot="pasture-1"]');await plot.getByLabel('Clearing workers (WF)').fill('999');await plot.getByRole('button',{name:'Clear',exact:true}).click();
+ await expect(page.getByRole('region',{name:'Outside tiles',exact:true}).getByRole('alert')).toHaveText(result.error.message);expect(serializeCharacterLifeSave(await exportLife(page))).toEqual(serializeCharacterLifeSave(before));
+});

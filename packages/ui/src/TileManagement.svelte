@@ -79,7 +79,7 @@
       }
       error = '';
       if (type === 'SET_WORKERS') workforceError = result.error.message;
-      else if (['BUILD', 'REPLACE', 'UPGRADE', 'SET_ENABLED', 'EXTEND_WALL', 'SET_TRAINING'].includes(type)) managementError = { action: type, message: result.error.message };
+      else if (['BUILD', 'REPLACE', 'UPGRADE', 'SET_ENABLED', 'EXTEND_WALL', 'SET_TRAINING', 'CLEAR'].includes(type)) managementError = { action: type, message: result.error.message };
       else error = result.error.message;
       errorLog.record(type === 'END_WEEK' ? 'END_WEEK' : 'RUNTIME', result.error.code === 'INVALID_WORKFORCE' ? 'INVALID_WORKFORCE_INPUT' : 'INVALID_COMMAND');
       return false;
