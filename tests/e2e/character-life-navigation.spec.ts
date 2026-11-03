@@ -52,7 +52,7 @@ for (const width of [320, 375, 1280, 1600]) {
       expect(geometry.columns[0]).toBe(geometry.columns[1]);
     }
     const dialog = await openCityWindow(page, 'Information');
-    await expect(dialog.locator('.stocks > div')).toHaveCount(5);
+    await expect(dialog.locator('.stocks > div')).toHaveCount(11);
     for (const value of await dialog.locator('.stocks dd').all()) await expect(value).toHaveCSS('text-align', 'right');
     const columns = await dialog.evaluate(el => {
       const stocks = el.querySelector('.stocks')!.getBoundingClientRect(), status = el.querySelector('.city-status')!.getBoundingClientRect(), r = el.getBoundingClientRect();
@@ -191,7 +191,7 @@ test('food stock remains reachable when sidebar collapses', async ({ page }) => 
   await page.goto('/?mode=world-life'); await importLife(page, makeLife());
   for (let load = 0; load < 2; load++) {
     const info = await openCityWindow(page, 'Information');
-    await expect(info.locator('dt')).toHaveText(['Gold', 'Wheat', 'Wood', 'Iron', 'Luxury']);
+    await expect(info.locator('dt')).toHaveText(['Gold', 'Food', 'Wheat', 'Wood', 'Iron', 'Stone', 'Wool', 'Cloth', 'Herbs', 'Goods', 'Luxury']);
     await expect(info.getByText(/^Happiness:/)).toBeVisible();
     await expect(info.getByText('Security: Not simulated', { exact: true })).toBeVisible();
     await expect(info.getByText('Corruption: 50 / 100 (TRIAL)', { exact: true })).toBeVisible();
@@ -825,7 +825,7 @@ test('unapplied drafts survive navigation with committed-only resolution', async
   const endWeek = shell.getByTestId('life-end-week'); await endWeek.focus(); await page.keyboard.press('Enter');
   expect(await page.getByRole('dialog', { name: 'Report', exact: true }).evaluate(node => node.contains(document.activeElement))).toBe(true);
   const actualReport = await expectReport(page, expected.report);
-  const {society: _society,luxuryImportedMilli: _luxury,trainingGoldMilli: _training,outside: _outside,...expectedBase}=expected.report;
+  const {society: _society,luxuryImportedMilli: _luxury,trainingGoldMilli: _training,...expectedBase}=expected.report;
   expect(actualReport).toEqual(expectedBase);
   expect(Number(await shell.getAttribute('data-revision'))).toBe(beforeWeekRevision + 1);
   await expect(workersInput(page)).toHaveValue(String(committedWorkers));
@@ -1133,7 +1133,7 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 812 
       const shell = page.getByTestId('life-shell');
       await keyActivate(page, page.locator('#life-nav-information'));
       const inventory = initial.city.world.settlements[initial.city.world.activeSettlementId!].inventory;
-      for (const key of ['gold', 'wheat', 'wood', 'iron'] as const) await expect(page.getByTestId(`trial-stock-${key}`)).toHaveText(reportUnits(inventory[key]));
+      for (const key of ['gold', 'wheat', 'wood', 'iron'] as const) await expect(page.getByTestId(key==='gold'?'trial-stock-gold':`trial-storage-${key}`)).toHaveText(reportUnits(inventory[key]));
       await keyGo(page, 'city'); await keyActivate(page, page.getByText('Food requirements', { exact: true }));
       await expect(page.getByTestId('trial-stock-food')).toHaveText(reportUnits(inventory.food));
       await keyGo(page, 'city'); await keyActivate(page, page.getByTestId('trial-tile-field-1'));

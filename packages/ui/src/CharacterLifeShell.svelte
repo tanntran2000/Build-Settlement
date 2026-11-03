@@ -1,6 +1,7 @@
 <script lang="ts">
   import { tick, type Snippet } from 'svelte';
   import { type TileTrialState, type TileTrialReport } from '@haven/core';
+  import { storageView } from './society-view.js';
   import SocietyPopulation from './SocietyPopulation.svelte';
   import { formatMilli } from './milli-format.js';
   import { formatLifeWeek } from './life-calendar.js';
@@ -110,10 +111,9 @@
     <section hidden={activeWindow !== 'information'} aria-label="City stocks" data-testid="trial-stocks">
       <div class="information-columns">
       <div><h3>Resources</h3><dl class="stocks">
-        {#each ['gold', 'wheat', 'wood', 'iron'] as key}
-          <div><dt>{key[0].toUpperCase() + key.slice(1)}</dt><dd data-testid={`trial-stock-${key}`}>{formatMilli(settlement.inventory[key as 'gold' | 'wheat' | 'wood' | 'iron'])}</dd></div>
-        {/each}
-      <div><dt>Luxury</dt><dd data-testid="trial-stock-luxury">{formatMilli(state.society!.luxuryStockMilli)}</dd></div></dl></div>
+        <div><dt>Gold</dt><dd data-testid="trial-stock-gold">{formatMilli(settlement.inventory.gold)}</dd></div>
+        {#each storageView(state) as row}<div><dt>{row.good}</dt><dd><span data-testid={`trial-storage-${row.good.toLowerCase()}`}>{formatMilli(Math.round(row.amount*1000))}</span> / {formatMilli(Math.round(row.capacity*1000))}</dd></div>{/each}
+      </dl></div>
       <div class="city-status"><h3>City status</h3>
       <p>Happiness: <strong>{state.happiness}</strong> / 100</p>
       <p>Security: Not simulated</p><p>Corruption: {state.society!.corruption} / 100 (TRIAL)</p>

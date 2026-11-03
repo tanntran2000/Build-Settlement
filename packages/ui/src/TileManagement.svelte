@@ -79,7 +79,7 @@
       }
       error = '';
       if (type === 'SET_WORKERS') workforceError = result.error.message;
-      else if (['BUILD', 'REPLACE', 'UPGRADE', 'SET_ENABLED', 'EXTEND_WALL', 'SET_TRAINING'].includes(type)) managementError = { action: type, message: result.error.message };
+      else if (['BUILD', 'REPLACE', 'UPGRADE', 'SET_ENABLED', 'EXTEND_WALL', 'SET_TRAINING', 'CLEAR'].includes(type)) managementError = { action: type, message: result.error.message };
       else error = result.error.message;
       errorLog.record(type === 'END_WEEK' ? 'END_WEEK' : 'RUNTIME', result.error.code === 'INVALID_WORKFORCE' ? 'INVALID_WORKFORCE_INPUT' : 'INVALID_COMMAND');
       return false;
@@ -226,8 +226,8 @@
         </div>
       </section>
       {#if npcs && outside}
-      <CharacterLifeCity bind:this={lifeCity} {state} {npcs} {selectedId} bind:typeId bind:workers {workforceError} {managementError} {outside}
-        onselect={id => { selectTile(id); void openLifeCity(); }} onworkersinput={() => { workforceError = ''; }} oncommand={command} />
+      <CharacterLifeCity bind:this={lifeCity} {state} {npcs} {selectedId} bind:typeId bind:workers bind:workforceError {managementError} {outside}
+        onselect={id => { selectTile(id); void openLifeCity(); }} onworkersinput={() => { workforceError = ''; }} onworkersinvalid={() => errorLog.record('RUNTIME','INVALID_WORKFORCE_INPUT')} oncommand={command} />
       {/if}
     {/snippet}
     {#snippet characters()}
