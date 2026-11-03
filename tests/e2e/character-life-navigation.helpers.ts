@@ -287,8 +287,24 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
   } else await expect(panel.getByTestId('trial-immigration')).toHaveCount(0);
   if (!activityOpen) await activity.locator('summary').click();
   if (!calculationOpen) await calculation.locator('summary').click();
-  // Outside rendering belongs to PR C; compare exactly the fields rendered here.
-  const { society, luxuryImportedMilli, trainingGoldMilli, outside: _outside, ...baseReport } = expected;
+  if(expected.outside){
+    const region=panel.getByRole('region',{name:'Outside report',exact:true});
+    const outside:NonNullable<TileTrialReport['outside']>={producedMilli:{wood:0,iron:0,stone:0,wool:0,herbs:0,cloth:0},stocksBefore:{stone:0,wool:0,cloth:0,herbs:0},stocksAfter:{stone:0,wool:0,cloth:0,herbs:0},hospitalsIdle:[],cleared:[],researchCompleted:[],exhausted:[],spoiledMilli:{}};
+    for(const good of Object.keys(outside.producedMilli) as (keyof typeof outside.producedMilli)[])outside.producedMilli[good]=reportMilli((await region.locator(`[data-outside-produced="${good}"]`).textContent())!);
+    for(const good of Object.keys(outside.stocksBefore) as (keyof typeof outside.stocksBefore)[]){const [before,after]=(await region.locator(`[data-outside-stock="${good}"]`).textContent())!.split(' / ');outside.stocksBefore[good]=reportMilli(before);outside.stocksAfter[good]=reportMilli(after);}
+    for(const line of await region.locator('p').allTextContents()){
+      let match=line.match(/^([\d,.]+) (\w+) spoiled: storage full\.$/);
+      if(match){outside.spoiledMilli[match[2].toLowerCase() as keyof typeof outside.spoiledMilli]=reportMilli(match[1]);continue;}
+      match=line.match(/^(.+): deposit exhausted; the (.+) closed and the plot is now plain\.$/);
+      if(match){expect(match[2]).toBe(match[1].startsWith('ore-')?'Iron Mine':'Quarry');outside.exhausted.push(match[1]);continue;}
+      match=line.match(/^(.+) cleared\.$/);if(match){outside.cleared.push(match[1]);continue;}
+      if(line==='Research completed: Deep Mining.'){outside.researchCompleted.push('deep-mining');continue;}
+      match=line.match(/^(.+): Hospital idle, no Herbs\.$/);if(match){outside.hospitalsIdle.push(match[1]);continue;}
+      throw Error(`Unknown Outside report line: ${line}`);
+    }
+    actual.outside=outside;
+  }
+  const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
   expect(actual).toEqual(baseReport);
   if (society) {
     const labels = { free: 'Free residents', makers: 'Makers', luminaries: 'Luminaries', merchants: 'Merchants', bound: 'The Bound' };

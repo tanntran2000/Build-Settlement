@@ -3,7 +3,7 @@ import {
 createCharacterLifeSession,
 DEFAULT_PLAYER_DRAFT,
 isCharacterLifeSessionState,
-SOCIETY_PLOT_IDS,societyPlot,societyStaff,
+SOCIETY_PLOT_IDS,societyPlot,societyStaff,outsidePlot,
 WEEKLY_RESOURCE_KEYS,
 type CharacterLifeSessionState,
 type TileTrialReport
@@ -157,9 +157,15 @@ async function uiParity(page: Page, o: Observation, fullReport: Readonly<TileTri
   const disclosure = region(page, 'Outside world').locator('details');
   if (await disclosure.getAttribute('open') === null) await disclosure.locator('summary').click();
   await expect(region(page, 'Outside world').getByText(/^Outside tiles:/)).toHaveText(`Outside tiles: ${outside.total} · Yours: ${outside.mine} · Held by other factions: ${outside.others} · Neutral: ${outside.neutral} · Explored by you: ${outside.explored}`);
-  await expect(region(page, 'Outside tiles').getByRole('button')).toHaveCount(o.tiles.filter(t=>t.terrain!=='town').length);
-  expect(await region(page, 'Outside tiles').getByRole('button').evaluateAll(buttons => buttons.map(b => b.getAttribute('aria-label')))).toEqual(o.tiles.filter(t=>t.terrain!=='town').map(t => `Select ${t.id}`));
-  for (const tile of o.tiles.filter(t=>t.terrain!=='town')) {
+  const openOutside=o.tiles.filter(t=>t.terrain!=='town').filter(t=>outsidePlot(t.id)!.ring<=expected.city.society!.wallRing);
+  await expect(region(page, 'Outside tiles').getByRole('button',{name:/^Select /})).toHaveCount(openOutside.length);
+  expect(await region(page, 'Outside tiles').getByRole('button',{name:/^Select /}).evaluateAll(buttons => buttons.map(b => b.getAttribute('aria-label')))).toEqual(openOutside.map(t => `Select ${t.id}`));
+  for(const tile of o.tiles.filter(t=>t.terrain!=='town'&&!openOutside.includes(t))){
+    const card=page.locator(`[data-outside-plot="${tile.id}"]`);
+    await expect(card).toContainText(`Locked ${String.fromCharCode(183)} opens with Ring ${outsidePlot(tile.id)!.ring}`);
+    await expect(page.getByTestId(`trial-tile-${tile.id}`)).toHaveCount(0);
+  }
+  for (const tile of openOutside) {
     const element = page.getByTestId(`trial-tile-${tile.id}`), b = tile.building;
     await expect(element).toHaveAttribute('aria-label', `Select ${tile.id}`);
     await expect(element.locator('strong')).toHaveText(tile.id);

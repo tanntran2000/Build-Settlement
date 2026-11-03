@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
  import {OUTSIDE_TRIAL,type TileTrialState,type ResearchTopic} from '@haven/core';
  export let state:TileTrialState;export let locked:boolean;export let oncommand:(type:string,fields?:Record<string,unknown>)=>boolean;
  export let managementError:{action:string;message:string}|null;

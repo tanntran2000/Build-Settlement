@@ -15,7 +15,7 @@
  {#if ring.locked}<strong>{plot.tileId}</strong><p>{plot.terrain}</p><p>Locked · opens with Ring {ring.ring}</p>
  {:else}
  <button class:selected={selectedId===plot.tileId} class="class-mark" style={`--class-colour:var(--class-${b?buildingColour(b.typeId):'none'})`} data-testid={`trial-tile-${plot.tileId}`} aria-label={`Select ${plot.tileId}`} aria-pressed={selectedId===plot.tileId} onclick={()=>onselect(plot.tileId)}>
- <span>{plot.terrain}</span><strong>{plot.tileId}</strong>
+ <span class="terrain">{plot.terrain}</span><strong>{plot.tileId}</strong>
  {#if b}<span class="building-name">{TRIAL_BUILDINGS[b.typeId].name}</span><span>Level {b.level} · {b.workers} WF · {b.enabled?'Enabled':'Paused'}</span>{:else}<span>Empty</span>{/if}
  <span>{b?npcs.find(n=>n.postTileId===plot.tileId)?.character.name??'Unassigned':'No manager post'}</span>
  </button>
@@ -29,5 +29,5 @@
  {#if managementError&&['CLEAR','BUILD_DEEP_SHAFT'].includes(managementError.action)}<p role="alert">{managementError.message}</p>{/if}
 </section>
 <style>
- section,.plot{min-width:0;overflow-wrap:anywhere}.building-name{font-size:var(--life-card-heading);font-weight:600}.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.plot{background:var(--bg-secondary);padding:12px;border-radius:12px}button.class-mark{display:flex;flex-direction:column;gap:10px;align-items:flex-start;text-align:left;width:100%;min-height:180px;padding:12px}.selected{outline:2px solid var(--accent-green)}input{width:6rem}label{display:block}p{margin:8px 0}h4{margin:12px 0}
+ section,.plot{min-width:0;overflow-wrap:anywhere}.terrain{color:var(--text-muted);font-size:max(14px,calc(var(--life-body-size) - 1px));text-transform:uppercase}.building-name{font-size:var(--life-card-heading);font-weight:600}.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.plot{background:var(--bg-secondary);padding:12px;border-radius:12px}button.class-mark{display:flex;flex-direction:column;gap:10px;align-items:flex-start;text-align:left;width:100%;min-height:180px;padding:12px}.selected{outline:2px solid var(--accent-green);font-weight:600}input{width:6rem}label{display:block}p{margin:8px 0}h4{margin:12px 0}
 </style>
