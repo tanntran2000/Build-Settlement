@@ -24,7 +24,11 @@ export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
   const newStocks=s.society.stocksMilli;
   const add = (key: WeeklyResource, amount: number) => { stocks[key] = trialSafe(stocks[key] + amount); };
   const population = settlement.cohorts.reduce((n, c) => trialSafe(n + c.count), 0);
-  let taxMilli = scaled(population, B.taxGoldPerResident); add("gold", taxMilli);
+  const baseTaxMilli=scaled(population,B.taxGoldPerResident);
+  const taxModifierBps=authorityTaxBps(orderBefore.authority);
+  let taxMilli=scaled(baseTaxMilli,10000+taxModifierBps,10000);
+  const taxDeltaMilli=taxMilli-baseTaxMilli;
+  add('gold',taxMilli);
   let farmBatchGoldMilli = 0, farmExtraUpkeepMilli = 0, upkeepPaidMilli = 0, unpaidUpkeepMilli = 0, marketCapacity = 0;
   const funded: typeof s.tiles = [];
   const fundedTileIds: string[] = [];
@@ -79,9 +83,6 @@ export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
     const adjusted = scaled(taxMilli, 100 + 10 * facilities.countingHouseLevels, 100);
     add('gold', adjusted - taxMilli); taxMilli = adjusted;
   }
-  const taxModifierBps=authorityTaxBps(orderBefore.authority);
-  const authorityTax=scaled(taxMilli,10000+taxModifierBps,10000),taxDeltaMilli=authorityTax-taxMilli;
-  add('gold',taxDeltaMilli);taxMilli=authorityTax;
   let arrivalsBudgetBefore=0,arrivalsBudgetAfter=0;
   let luxuryImportedMilli = 0;
   for (const tile of funded) {

@@ -1,6 +1,7 @@
-import { createSocietyState, type TileTrialState } from '@haven/core';
+import { createSocietyState, isTileTrialState, type TileTrialState } from '@haven/core';
 import { expect, it } from 'vitest';
 import { authorityTaxBps, authorityArrivals, orderFacts, resolveOrderWeek } from '../order-week.js';
+import { executeTileTrialCommand } from '../tile-trial.js';
 import { runTileTrialWeek } from '../tile-trial-week.js';
 
 const tile = (s: TileTrialState, id: string) => s.tiles.find(t => t.id === id)!;
@@ -93,12 +94,12 @@ it('steals before storage spoilage in End Week',()=>{
  const r=runTileTrialWeek(s);expect(r.order!.after.crime).toBe(60);expect(r.order!.theftMilli.stone).toBe(4000);
  expect(r.outside!.spoiledMilli.stone).toBe(56000);expect(s.society!.stocksMilli.stone).toBe(40000);
 });
-it.each([0,50,100])('applies Authority %i after the Counting House with floor rounding',authority=>{
+it.each([0,50,100])('applies Authority %i before the Counting House with floor rounding',authority=>{
  const s=createSocietyState();s.society!.order.authority=authority;
  tile(s,'spec-2').building={typeId:'counting-house',level:1,workers:2,enabled:true};
  s.society!.classes.free=56;s.world.settlements[s.world.activeSettlementId!].cohorts[0].count=101;
- const r=runTileTrialWeek(s),base=3333,expected=Math.floor(base*(10000+(authority-50)*40)/10000);
- expect(r.taxMilli).toBe(expected);expect(r.order!.taxDeltaMilli).toBe(expected-base);expect(r.order!.taxModifierBps).toBe((authority-50)*40);
+ const r=runTileTrialWeek(s),base=3030,authorityTax=Math.floor(base*(10000+(authority-50)*40)/10000),expected=Math.floor(authorityTax*110/100);
+ expect(r.taxMilli).toBe(expected);expect(r.order!.taxDeltaMilli).toBe(authorityTax-base);expect(r.order!.taxModifierBps).toBe((authority-50)*40);
 });
 it.each([[29,0],[50,1],[70,2]])('passes Authority %i adjusted budget through society arrivals', (authority,arrivals)=>{
  const s=createSocietyState();s.society!.classes.free=49;
@@ -113,4 +114,28 @@ it.each([[29,0],[50,1],[70,2]])('passes Authority %i adjusted budget through soc
 it('uses exact BigInt theft arithmetic on safe-integer stocks',()=>{
  const s=crimeCity(100,Number.MAX_SAFE_INTEGER),r=crimeWeek(s);
  expect(r.theftMilli.gold).toBe(Number(BigInt(Number.MAX_SAFE_INTEGER)*800n/10000n));
+});
+
+it('advances a valid New Game with Authority 0 and zero Gold without negative stocks',()=>{
+ const s=createSocietyState();s.society!.order.authority=0;
+ const stocks=s.world.settlements[s.world.activeSettlementId!].inventory;stocks.gold=0;
+ expect(isTileTrialState(s)).toBe(true);const before=structuredClone(s);
+ const result=executeTileTrialCommand(s,{type:'END_WEEK',expectedRevision:s.revision,expectedWeek:s.world.week});
+ expect(s).toEqual(before);expect(result.success).toBe(true);
+ if(!result.success)throw Error(result.error.message);
+ expect(isTileTrialState(result.nextState)).toBe(true);expect(result.nextState.world.week).toBe(2);
+ expect(result.report!.taxMilli).toBe(2400);
+ expect(result.report!.order).toMatchObject({taxModifierBps:-2000,taxDeltaMilli:-600});
+ expect(result.report!.upkeepPaidMilli).toBe(1000);expect(result.report!.unpaidUpkeepMilli).toBe(1000);
+ expect(result.report!.after.gold).toBe(400);
+ expect(Object.values(result.nextState.world.settlements[s.world.activeSettlementId!].inventory).every(n=>n>=0)).toBe(true);
+});
+it.each([[0,2908,-606],[100,4363,606]])('credits Authority %i before upkeep then adds the level-2 Counting House bonus',(authority,tax,delta)=>{
+ const s=createSocietyState();s.society!.order.authority=authority;
+ s.society!.classes.free=56;s.world.settlements[s.world.activeSettlementId!].cohorts[0].count=101;
+ tile(s,'spec-2').building={typeId:'counting-house',level:2,workers:4,enabled:true};
+ const r=runTileTrialWeek(s);
+ // Base 101*30=3030; Authority 0/100 gives 2424/3636, then floor(*120/100).
+ expect(r.taxMilli).toBe(tax);expect(r.order!.taxDeltaMilli).toBe(delta);
+ expect(r.order!.taxModifierBps).toBe((authority-50)*40);
 });
