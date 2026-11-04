@@ -4,3 +4,4 @@ export * from "./world-npc.js";
 export * from "./character-life-command.js";
 export * from "./character-life-observation.js";
 export * from "./society-week.js";
+export * from "./order-week.js";

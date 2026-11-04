@@ -40,3 +40,18 @@ it('uses exact effect, note and colour copy',()=>{
  expect(noteSentence('free','debt-enslavement',2)).toBe('2 Free residents fell into debt slavery.');
  expect(buildingColour('hospital')).toBe('luminaries');expect(buildingColour('tavern')).toBe('none');expect(buildingColour('processor')).toBe('makers');
 });
+import {orderRows,orderReportLines,RESEARCH_LABELS} from '../society-view.js';
+it('offers Slum Watch House and previews new city order',()=>{
+ const city=createSocietyState();
+ expect(buildOptions(city,'slum-1')).toContainEqual({typeId:'watch-house',label:'Watch House · +5 Security in the Slum',available:true});
+ expect(orderRows(city).map(r=>[r.label,r.value,r.band])).toEqual([['Security',30,'Low'],['Crime',10,'Low'],['Authority',50,'Fair']]);
+ expect(RESEARCH_LABELS).toEqual({'deep-mining':'Deep Mining','watch-patrols':'Watch Patrols','barracks-drill':'Barracks Drill'});
+});
+it('renders exact order report copy and omits zero effects',()=>{
+ const order={before:{security:25,crime:60,authority:25},after:{security:30,crime:55,authority:28},targets:{security:40,crime:10,authority:50},theftMilli:{wood:500,gold:1200,food:300},tensionAdded:2,satisfactionLost:1,taxModifierBps:-1000,taxDeltaMilli:-100,arrivalsBudgetBefore:3,arrivalsBudgetAfter:1};
+ const report={order} as import('@haven/core').TileTrialReport;
+ expect(orderReportLines(report)).toEqual(['Security 25 → 30 (target 40)','Crime 60 → 55 (target 10)','Authority 25 → 28 (target 50)','Theft: −1.2 Gold, −0.3 Food, −0.5 Wood','Crime raised Tension by 2.','Crime lowered satisfaction by 1.','Authority 25: taxes −10%.','Authority 25: half of the newcomers turned away.']);
+ Object.assign(order,{theftMilli:{},tensionAdded:0,satisfactionLost:0,taxModifierBps:0,arrivalsBudgetAfter:3});expect(orderReportLines(report)).toHaveLength(3);
+ Object.assign(order,{taxModifierBps:2000,arrivalsBudgetAfter:4});order.before.authority=100;
+ expect(orderReportLines(report).slice(3)).toEqual(['Authority 100: taxes +20%.','Authority 100: one more newcomer stayed.']);
+});

@@ -193,7 +193,7 @@ test('food stock remains reachable when sidebar collapses', async ({ page }) => 
     const info = await openCityWindow(page, 'Information');
     await expect(info.locator('dt')).toHaveText(['Gold', 'Food', 'Wheat', 'Wood', 'Iron', 'Stone', 'Wool', 'Cloth', 'Herbs', 'Goods', 'Luxury']);
     await expect(info.getByText(/^Happiness:/)).toBeVisible();
-    await expect(info.getByText('Security: Not simulated', { exact: true })).toBeVisible();
+    await expect(info.getByTestId('trial-order-security')).toContainText('Security 30 →');
     await expect(info.getByText('Corruption: 50 / 100 (TRIAL)', { exact: true })).toBeVisible();
     await expect(info.getByText(/Tension|Status:/)).toHaveCount(0);
     await info.getByRole('button', { name: 'Close', exact: true }).click();
@@ -825,7 +825,7 @@ test('unapplied drafts survive navigation with committed-only resolution', async
   const endWeek = shell.getByTestId('life-end-week'); await endWeek.focus(); await page.keyboard.press('Enter');
   expect(await page.getByRole('dialog', { name: 'Report', exact: true }).evaluate(node => node.contains(document.activeElement))).toBe(true);
   const actualReport = await expectReport(page, expected.report);
-  const {order: _order,society: _society,luxuryImportedMilli: _luxury,trainingGoldMilli: _training,...expectedBase}=expected.report;
+  const {society: _society,luxuryImportedMilli: _luxury,trainingGoldMilli: _training,...expectedBase}=expected.report;
   expect(actualReport).toEqual(expectedBase);
   expect(Number(await shell.getAttribute('data-revision'))).toBe(beforeWeekRevision + 1);
   await expect(workersInput(page)).toHaveValue(String(committedWorkers));
