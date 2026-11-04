@@ -1,6 +1,6 @@
 # P8-B1 — Tension crisis chain (design spec v0.1)
 
-Status: **draft for owner G1 review.** No code is authorized until the owner approves this spec and then the implementation plan.
+Status: **G1 approved by the owner** (Tân, 2026-11-04, verbatim: "Approve G1"). No code is authorized until the owner also approves the implementation plan.
 - **Decisions:** from the owner's answers in the Claude session on 2026-11-04 (§11).
 - **Numbers:** the stage thresholds and timings come from Decision Record 01. Every other number is a TRIAL default, not approved balance; P1 (AI playtest) tunes them.
 - **Base:** `main` `03c758d` (P8-A A–C merged; the engine plays only `tile-society-03`).
