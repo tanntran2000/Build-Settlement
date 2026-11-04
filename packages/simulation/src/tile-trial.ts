@@ -1,3 +1,5 @@
+import { CARD_OPTIONS, CRISIS_TRIAL, crisisOptions, societyPopulation, type CardOption } from '@haven/core';
+import { cityHappiness, societyCounts } from './society-week.js';
 import { RESEARCH_TOPICS,type ResearchTopic,OUTSIDE_TRIAL,outsidePlot,hasWeeklyKeys,isTileTrialPlanningState,isTileTrialState,SOCIETY_BUILDINGS,societyPlot,trialBuilding,type TileTrialResult,type TileTrialState } from '@haven/core';
 import { runTileTrialWeek,trialSafe } from "./tile-trial-week.js";
 
@@ -6,13 +8,15 @@ export function executeTileTrialCommand(state: unknown, raw: unknown): TileTrial
   try {
     if (!isTileTrialState(state) || !state.society || !state.goodsStock) return fail("INVALID_STATE", "Trial state is invalid; nothing was changed.");
 
+    if (state.society.crisis.stage === 'fallen') return fail('CITY_FALLEN','The city has fallen. Start a New Game.');
     if (!raw || typeof raw !== "object" || !hasWeeklyKeys(raw, Object.keys(raw))) return fail("INVALID_COMMAND", "Command must contain plain data fields.");
     const c = { ...raw } as Record<string, unknown>;
     if (c.expectedRevision !== state.revision) return fail("STALE_COMMAND", "The plan changed. Refresh the action before retrying.");
-    if (state.phase === "report" && c.type !== "NEXT_WEEK") return fail("FORBIDDEN", "Read the report, then choose Plan next week.");
+    if (c.type === 'END_WEEK' && state.society.pendingCard) return fail('CARD_PENDING','Answer the crisis first.');
+    if (state.phase === "report" && c.type !== "NEXT_WEEK" && c.type !== 'CHOOSE_CARD_OPTION') return fail("FORBIDDEN", "Read the report, then choose Plan next week.");
     if (state.phase === "planning" && c.type === "NEXT_WEEK") return fail("FORBIDDEN", "Finish this week before planning the next one.");
     const keys: Record<string, string[]> = {
-      CLEAR: ['tileId','workers'], SET_RESEARCH: ['topic'], BUILD_DEEP_SHAFT: ['tileId'],
+      CHOOSE_CARD_OPTION: ['cardId','option'], CLEAR: ['tileId','workers'], SET_RESEARCH: ['topic'], BUILD_DEEP_SHAFT: ['tileId'],
       EXTEND_WALL: [], SET_TRAINING: ["target"], END_WEEK: ["expectedWeek"], NEXT_WEEK: [], LOAD_TRIAL: ["snapshot"], BUILD: ["tileId", "typeId"], REPLACE: ["tileId", "typeId"],
       UPGRADE: ["tileId"], SET_WORKERS: ["tileId", "workers"], SET_ENABLED: ["tileId", "enabled"],
     };
@@ -20,7 +24,28 @@ export function executeTileTrialCommand(state: unknown, raw: unknown): TileTrial
     if (['EXTEND_WALL','SET_TRAINING'].includes(c.type) && !state.society) return fail('UNSUPPORTED_RULESET','This command requires a society city.');
     let next = structuredClone(state) as TileTrialState;
     let report;
-    if (c.type === 'SET_RESEARCH') {
+    if (c.type === 'CHOOSE_CARD_OPTION') {
+      const society=next.society!, card=society.pendingCard;
+      if (!card || c.cardId!==card.id) return fail('UNKNOWN_CARD','This card is no longer waiting for an answer.');
+      if (!CARD_OPTIONS.includes(c.option as CardOption)) return fail('UNKNOWN_OPTION','Choose Pay, Promise, Force or Refuse.');
+      const inventory=next.world.settlements[next.world.activeSettlementId!].inventory;
+      const population=societyPopulation(society);
+      trialSafe(population*CRISIS_TRIAL.pay[card.kind].milliPerResident);
+      const view=crisisOptions(card.kind,{population,goldMilli:inventory.gold,security:society.order.security,promisePending:society.crisis.promise!==null}).find(v=>v.option===c.option)!;
+      if (!view.available) return fail('OPTION_UNAVAILABLE',view.reason!);
+      const clamp=(n:number)=>Math.max(0,Math.min(100,n));
+      inventory.gold-=view.goldMilli;
+      society.tension=clamp(society.tension+view.tensionDelta);
+      if (view.option==='promise') society.crisis.promise={stage:card.kind,weeksLeft:CRISIS_TRIAL.promise.weeks};
+      if (view.option==='force') {
+        society.order.authority=clamp(society.order.authority+CRISIS_TRIAL.force.authority);
+        society.order.crime=clamp(society.order.crime+CRISIS_TRIAL.force.crime);
+        for (const key of ['free','makers','luminaries','merchants','bound'] as const) society.satisfaction[key]=clamp(society.satisfaction[key]+CRISIS_TRIAL.force.satisfaction);
+        next.happiness=cityHappiness(society.satisfaction,societyCounts(society),next.happiness);
+      }
+      society.crisis.lastChoice={stage:card.kind,option:view.option,goldMilli:view.goldMilli};
+      society.pendingCard=null;
+    } else if (c.type === 'SET_RESEARCH') {
       const research=next.society!.research, topic=c.topic as ResearchTopic|null;
       if(topic!==null && !RESEARCH_TOPICS.includes(topic))return fail('UNKNOWN_TOPIC','Choose a supported research topic.');
       if(topic!==null){

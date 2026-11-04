@@ -10,6 +10,8 @@ function step(s:ReturnType<typeof session>,type:'END_WEEK'|'NEXT_WEEK'){
  if(!r.success)throw Error(r.error.message);return r.next;
 }
 it('refuses the pinned v3 five-week checkpoint without throwing',()=>{
+ const oldBytes=readFileSync(new URL('../../../persistence/src/__tests__/fixtures/society-v2/life-5-weeks.json',import.meta.url),'utf8');
+ expect(deserializeCharacterLifeSave(oldBytes)).toEqual({success:false,error:{code:'INCOMPATIBLE_SAVE',message:'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.'}});
  const bytes=readFileSync(new URL('../../../persistence/src/__tests__/fixtures/society-v3/life-5-weeks.json',import.meta.url),'utf8');
  const before=JSON.parse(bytes), snapshot=structuredClone(before);
  expect(()=>deserializeCharacterLifeSave(bytes)).not.toThrow();

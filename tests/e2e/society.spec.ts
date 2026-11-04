@@ -13,7 +13,7 @@ function rich(){const s=makeLife(20261028);Object.assign(s.city.world.settlement
 for(const url of ['/','/?mode=weekly','/?mode=tiles','/?mode=population','/?mode=world','/?mode=world-npc','/?mode=world-life']){
  test(`one society New Game at ${url}`,async({page})=>{
   await page.goto(url);await expect(button(page,'New Game')).toBeVisible();await button(page,'New Game').click();await page.getByLabel('Name',{exact:true}).fill('Synthetic Keeper');await page.getByRole('tab',{name:'Review',exact:true}).click();await button(page,'Create character').click();
-  const saved=await exportLife(page);expect(saved.city.society!.rulesetId).toBe('tile-society-03');
+  const saved=await exportLife(page);expect(saved.city.society!.rulesetId).toBe('tile-society-04');
   const dialog=await population(page);
   for(const [id,count,limit] of [['free',55,70],['makers',20,25],['luminaries',12,18],['merchants',13,15],['bound',0,0]] as const){const row=dialog.getByTestId(`society-class-${id}`);await expect(row).toContainText(`Count: ${count}`);await expect(row).toContainText('Satisfaction: 80 / 100');await expect(row).toContainText(`Housing (planned): ${count} / ${limit}`);}
  });
