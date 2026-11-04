@@ -9,6 +9,33 @@ Owner request (Tân, 2026-11-03), verbatim: "các lỗi có khả năng xay ra h
 - `Status`: `open` → `confirmed` (seen in playtest) → `fixed` (link PR) or `closed` (not a problem, say why).
 - Keep one row per risk; update it instead of adding duplicates.
 
+## Before the owner plays v0.1: Claude's simulation test pass
+
+Owner request (Tân, 2026-11-04), verbatim: "lưu cách test game phía trên vô chỗ nào bạn thấy hợp lý đi sau khi phát hành V0.1 tôi sẽ cần bạn test trước rồi tôi mới chơi thử". **When v0.1 is built, Claude runs this pass and reports before Tân's first playtest.**
+
+Idea (from advice the owner shared, 2026-11-04): treat the game as a simulation. Run it with no human player — give bot players objectives, constraints and capabilities, record what they do, and read rules, balance and difficulty from the results. Haven's engine is pure, deterministic TypeScript (LAW-02, LAW-03), so thousands of weeks run in minutes without the UI.
+
+1. **Bots** (same commands as the UI, through the Character Life dispatcher, so results match the real game):
+   - *Balanced*: keeps Food and upkeep covered, builds order buildings, answers cards with Pay when affordable, else Promise.
+   - *Food-first*: farms and stores before anything else.
+   - *Greedy*: maximises Gold and tax; ignores satisfaction.
+   - *Iron fist*: always Force when allowed, else Refuse.
+   - *Pushover*: always Pay or Promise; never Force.
+   - *Idle*: never acts except End Week, Plan next week and Refuse (the "untouched start" baseline, see R-013).
+2. **Runs:** each bot × 200 seeds × 52 weeks, or until the city falls.
+3. **Record every week:** stocks, population, class satisfaction, Happiness, Tension, Desperation, Corruption, Security/Crime/Authority, crisis stage, cards opened and answers, every refused command and its code.
+4. **Invariant checks (any failure is a blocker):** no negative stock; every score in 0–100; no `EXECUTION_ERROR` or thrown error; Save → Continue and Export → Import every 10 weeks gives the same state; the same seed and commands re-run byte-identical.
+5. **Balance checks (reported as numbers, not pass/fail):**
+   - week of the first hungry week and of the first crisis card, per bot (median and range);
+   - share of runs that fall, and the median week of the fall, per bot;
+   - Authority, Security and Crime after 5, 20 and 52 weeks;
+   - how often each card option is the best one for the best-scoring bot (an option chosen almost always, or never, is a balance smell);
+   - a measured answer for every open row in the table below.
+6. **Short browser pass:** Claude plays one run in the browser preview — New Game, 10 weeks, a crisis card, Save/Continue, Report — with screenshots, to catch UI problems the engine runs cannot see.
+7. **Report:** `docs/verification/V0.1-SIM-REPORT.md` with the tables, each risk row's status updated here, and a short list of blockers. Tân plays after blockers are fixed or accepted.
+
+The bot runner is a dev-only tool under `tools/` or `tests/`: no new dependency, never shipped in the game build. It needs its own small WP before v0.1 (queued with P1 AI playtest). The same action-scoring idea may later drive NPC choices (utility AI) in P7.
+
 | ID | Area | Risk | What to check in playtest | Source | Status |
 |---|---|---|---|---|---|
 | R-001 | Corruption (P2) | `societyFacilities` never increments `operatingSlumBuildings`, so the Corruption target is always 30, even with Slum buildings. The Light/Dark side may never move. | Build Slave Quarters, play 10 weeks: does Corruption leave 30? | P8-A spec §12 | open — needs owner decision (balance change) |
@@ -16,11 +43,14 @@ Owner request (Tân, 2026-11-03), verbatim: "các lỗi có khả năng xay ra h
 | R-003 | Order balance (P8-A) | Death spiral: high Crime → theft up to 8 %/week + lower Authority → less tax and halved immigration → more Desperation → more Crime. | Start a Dark, Slum-heavy city: can the player recover, or does it collapse? | P8-A spec §6 | open |
 | R-004 | Order UI (P8-A) | The Information "target" is a preview that assumes all upkeep is paid; when Gold runs short the week's real target differs from the shown one. | Run with low Gold: do the Information target and the Report target disagree, and is that confusing? | P8-A plan, Task C1 | open |
 | R-005 | Barracks (P8-A) | Barracks staff is the "basic" pool (Free first, then the Bound), so slaves can end up as soldiers when Free workers run short. | Staff a Barracks with few Free workers: who fills it? Is that the intended fiction? | P8-A plan, Decision 5 | open |
-| R-006 | Tension (P2/P8) | Tension rises (food shortage, Desperation, and from P8-A also Crime) but has no consequence until the P8-B crisis chain. Players may see a rising number that does nothing. | Watch Tension over 20 weeks; does the player understand it? | P8-A design | open — planned in P8-B |
+| R-006 | Tension (P2/P8) | Tension rises (food shortage, Desperation, and from P8-A also Crime) but has no consequence until the P8-B crisis chain. Players may see a rising number that does nothing. | Watch Tension over 20 weeks; does the player understand it? | P8-A design | open — P8-B1 adds the crisis chain (#72 merged; week rules in PR B) |
 | R-007 | Workforce input (P3) | The UI blocks malformed numbers, but whether a number fits the workforce pool is checked only by the engine ("Engine check is enough"). The player types, presses, then sees an engine error. | Assign more workers than exist: is the error message clear? | PR #68 owner decision | open |
 | R-008 | Deep Shaft (P3) | Deep Mining must finish and the Deep Shaft be built **before** a deposit runs out; after exhaustion the Mine/Quarry closes for good. Players may miss the window. | Does the Report warn early enough before exhaustion? | P3 spec | open |
 | R-009 | Storage (P3) | Storage cap 40 per good (+40 per Warehouse level) and spoilage as the last step may feel punishing early. | How many weeks until the first spoilage in a normal start? | P3 spec | open |
-| R-010 | Saves | Every ruleset bump refuses older saves (02 → 03 in P8-A). Playtesters lose progress between builds. | Tell playtesters; consider migration before a public build. | P2-D, P3, P8-A §9 | open |
+| R-010 | Saves | Every ruleset bump refuses older saves (02 → 03 in P8-A, 03 → 04 in P8-B1). Playtesters lose progress between builds. | Tell playtesters; consider migration before a public build. | P2-D, P3, P8-A §9, P8-B1 §9 | open |
 | R-011 | Content copy | `packages/content/src/city-design.ts` display descriptors still list Security and omit Luxury/Tension (P2-E audit). | Do the Population/Society texts match the real systems? | P2-E audit | open — P8-A PR C may align |
 | R-012 | Test duration | Map-walking e2e tests run close to their limits (boundary 153.6 s of 240 s, accessibility 161.6 s of 300 s at P3-C). More controls per tile slow them further. | Not a play risk; watch CI duration each PR. | PR #68 evidence | open |
 | R-013 | Order balance (P8-A) | A New Game city with no Watch House or Barracks has a Security target of 10 (base 10 + wall 5 − 100 residents ÷ 20), so Authority drifts to 39 within 5 weeks and taxes fall about 4 % from week 2, before the player has done anything wrong. Seen in the pinned `society-v3/life-5-weeks.json` (Security 10, Crime 5, Authority 39; Gold −0.36 over 5 weeks). | Does an untouched start feel punished? Should New Game start nearer its own targets, or should the Authority base be higher? | P8-A PR B five-week pin (Builder diff, 2026-11-03) | open |
+| R-014 | Crisis (P8-B1) | An early Food shortage with Happiness below 30 can walk Warning → Demand → Protest → Rebellion → fall in about 3 + 2 + 2 + 4 = 11 weeks. New players may lose their first city before they understand Food. | Idle and Food-first bots: how often and how early does the city fall? Is the Rebellion "Weeks left" warning seen in time? | P8-B1 spec §12 | open |
+| R-015 | Crisis (P8-B1) | Refuse costs only Tension +5, so players may always Refuse and ignore the cards. | Iron fist and Pushover bots vs Balanced: is Refuse ever the best answer? | P8-B1 spec §12 | open |
+| R-016 | Crisis UI (P8-B1) | The Pay reason rounds Gold to one decimal (`Needs 2.0 Gold.` when 2.02 is needed); the check and debit are exact. | PR C shows the exact amount (`Needs 2.02 Gold.`); confirm in the browser pass. | PR #72 Astra P3 | open — fix planned in P8-B1 PR C |
