@@ -4,7 +4,7 @@ import {serializeCharacterLifeSave,deserializeCharacterLifeSave} from '../index.
 function session(){const r=createCharacterLifeSession(20261028,{...DEFAULT_PLAYER_DRAFT,currentName:'Synthetic Keeper'});if(!r.success)throw Error(r.error.message);return r.value;}
 it('round-trips a pending card, promise and last choice without losing data',()=>{
  const s=session(),soc=s.city.society!;
- soc.crisis={stage:'demand',weeksInStage:1,hungerStreak:3,calmStreak:0,promise:{stage:'demand',weeksLeft:2},lastChoice:{stage:'demand',option:'pay',goldMilli:2000}};
+ soc.crisis={fallCause:null,stage:'demand',weeksInStage:1,hungerStreak:3,calmStreak:0,promise:{stage:'demand',weeksLeft:2},lastChoice:{stage:'demand',option:'pay',goldMilli:2000}};
  soc.pendingCard={id:'crisis-demand-w1',source:'crisis',kind:'demand',week:1};
  const encoded=serializeCharacterLifeSave(s);if(!encoded.success)throw Error(encoded.error.message);
  expect(deserializeCharacterLifeSave(encoded.text)).toEqual({success:true,state:s});

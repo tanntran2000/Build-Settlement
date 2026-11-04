@@ -1,7 +1,7 @@
 import { expect, it } from 'vitest';
 import { authorityTarget, crimeTarget, createSocietyState, driftToward, isOrderState, isSocietyState, isTileTrialPlanningState, orderBand, ORDER_TRIAL, RESEARCH_TOPICS, securityTarget, SOCIETY_BUILDINGS, trialBuilding, type OrderFacts } from '../../index.js';
 
-const facts = (patch: Partial<OrderFacts> = {}): OrderFacts => ({ wallRing: 1, watchHouses: [], barracksWorkers: 0, population: 0, slumOther: 0, corruption: 50, desperation: 0, tension: 0, meanSatisfaction: 50, townHallStaffed: false, patrols: false, drill: false, ...patch });
+const facts = (patch: Partial<OrderFacts> = {}): OrderFacts => ({ standing: 50, wallRing: 1, watchHouses: [], barracksWorkers: 0, population: 0, slumOther: 0, corruption: 50, desperation: 0, tension: 0, meanSatisfaction: 50, townHallStaffed: false, patrols: false, drill: false, ...patch });
 it.each([false, true])('matches the worked example with Slum placement %s', slum => {
  const f = facts({ population: 100, watchHouses: [{ level: 1, slum }], barracksWorkers: 4, slumOther: 1, desperation: 10, meanSatisfaction: 80 });
  const security = securityTarget(f), crime = crimeTarget(f, security);
@@ -30,7 +30,7 @@ it.each([[30, 50, 5, 35], [30, 27, 5, 27], [50, 0, 3, 47], [30, 30, 5, 30]])('dr
 it.each([[0,'Low'],[33,'Low'],[34,'Fair'],[66,'Fair'],[67,'High'],[100,'High']])('bands %s as %s', (v,e) => expect(orderBand(Number(v))).toBe(e));
 it('creates isolated v3 order and three research topics', () => {
  const s = createSocietyState();
- expect(s.society!.rulesetId).toBe('tile-society-04');
+ expect(s.society!.rulesetId).toBe('tile-society-05');
  expect(s.society!.order).toEqual({ security: 30, crime: 10, authority: 50 });
  expect(RESEARCH_TOPICS).toEqual(['deep-mining','watch-patrols','barracks-drill']);
  expect(s.society!.research.progressMilli).toEqual({'deep-mining':0,'watch-patrols':0,'barracks-drill':0});
@@ -63,3 +63,5 @@ it.each(['watch-house','military-barracks'])('pins catalog and staff for %s', id
  expect(trialBuilding(id)).toEqual({name:watch?'Watch House':'Military Barracks',operation:'society',terrain:['town'],maxLevel:2,maxWorkers:watch?2:4,cost:watch?{gold:5000,wood:4000,iron:1000}:{gold:8000,wood:6000,iron:4000},upkeepMilli:watch?500:1000});
  expect(SOCIETY_BUILDINGS[id]).toEqual(watch?{tier:'service',alsoTier:'slum',staff:'basic',reserved:false}:{tier:'service',staff:'basic',reserved:false});
 });
+
+it.each([[0,30],[50,40],[54,40],[55,41],[100,50]])('applies Standing %s to Authority target',(standing,target)=>expect(authorityTarget(facts({standing}),50,0)).toBe(target));

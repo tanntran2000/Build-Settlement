@@ -1,4 +1,4 @@
-﻿import { expect, it } from 'vitest';
+import { expect, it } from 'vitest';
 import { createSocietyState, type CrisisStage } from '@haven/core';
 import { resolveCrisisWeek } from '../crisis-week.js';
 const hungry = { foodDemandMilli: 100, foodConsumedMilli: 0 };
@@ -35,7 +35,7 @@ it('warning stays at tension 50 and hunger starts warning at zero',()=>{
 });
 it.each([[true,'fallen'],[false,'protest']] as const)('last rebellion week hungry=%s',(h,after)=>{
  const s=city('rebellion');s.society!.crisis.weeksInStage=3;
- expect(resolveCrisisWeek(s,h?hungry:calm).stageAfter).toBe(after);expect(s.society!.pendingCard).toBeNull();
+ expect(resolveCrisisWeek(s,h?hungry:calm).stageAfter).toBe(after);expect(s.society!.pendingCard).toBeNull();expect(s.society!.crisis.fallCause).toBe(h?'rebellion':null);
 });
 it.each(['demand','protest','rebellion'] as const)('keeps the %s promise after two calm weeks',stage=>{
  const s=city(stage,80);s.society!.crisis.promise={stage,weeksLeft:2};

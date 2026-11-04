@@ -1,7 +1,9 @@
+import { standingAuthorityTerm } from './crime.js';
 import { hasWeeklyKeys } from '../domain/canonical-state.js';
 
 export interface OrderState { security: number; crime: number; authority: number }
 export interface OrderFacts {
+ standing: number;
  wallRing: 1|2|3; watchHouses: { level: 1|2; slum: boolean }[]; barracksWorkers: number;
  population: number; slumOther: number; corruption: number; desperation: number; tension: number;
  meanSatisfaction: number; townHallStaffed: boolean; patrols: boolean; drill: boolean;
@@ -38,7 +40,7 @@ export function crimeTarget(f: OrderFacts, security: number): number {
 }
 export function authorityTarget(f: OrderFacts, security: number, crime: number): number {
  const b = ORDER_TRIAL.authority;
- return clamp(BigInt(b.base) + (BigInt(security)-50n)/BigInt(b.securityDivisor) - BigInt(crime)/BigInt(b.crimeDivisor) + BigInt(f.townHallStaffed ? b.townHall : 0) + (BigInt(f.meanSatisfaction)-50n)/BigInt(b.satisfactionDivisor) - BigInt(f.tension)/BigInt(b.tensionDivisor));
+ return clamp(BigInt(b.base) + BigInt(standingAuthorityTerm(f.standing)) + (BigInt(security)-50n)/BigInt(b.securityDivisor) - BigInt(crime)/BigInt(b.crimeDivisor) + BigInt(f.townHallStaffed ? b.townHall : 0) + (BigInt(f.meanSatisfaction)-50n)/BigInt(b.satisfactionDivisor) - BigInt(f.tension)/BigInt(b.tensionDivisor));
 }
 export function driftToward(value: number, target: number, step: number): number {
  return value + Math.max(-step, Math.min(step, target-value));

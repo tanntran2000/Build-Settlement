@@ -4,6 +4,7 @@ import { CARD_OPTIONS, isPendingCard, type CardOption } from './event-card.js';
 export type CrisisCardKind = 'demand' | 'protest' | 'rebellion';
 export type CrisisStage = 'none' | 'warning' | CrisisCardKind | 'fallen';
 export interface CrisisState {
+ fallCause: 'rebellion' | 'assassination' | null;
  stage: CrisisStage; weeksInStage: number; hungerStreak: number; calmStreak: number;
  promise: { stage: CrisisCardKind; weeksLeft: 1 | 2 } | null;
  lastChoice: { stage: CrisisCardKind; option: CardOption; goldMilli: number } | null;
@@ -29,9 +30,10 @@ export function crisisOptions(kind: CrisisCardKind, f: {population:number;goldMi
 const count=(n:unknown):boolean=>Number.isSafeInteger(n)&&(n as number)>=0;
 const kind=(v:unknown):boolean=>['demand','protest','rebellion'].includes(v as string);
 export function isCrisisState(raw: unknown, pendingCard: unknown): boolean {
- if(!hasWeeklyKeys(raw,['stage','weeksInStage','hungerStreak','calmStreak','promise','lastChoice']) ||
+ if(!hasWeeklyKeys(raw,['fallCause','stage','weeksInStage','hungerStreak','calmStreak','promise','lastChoice']) ||
   !['none','warning','demand','protest','rebellion','fallen'].includes(raw.stage as string) ||
   ![raw.weeksInStage,raw.hungerStreak,raw.calmStreak].every(count))return false;
+ if(raw.stage==='fallen' ? !['rebellion','assassination'].includes(raw.fallCause as string) : raw.fallCause!==null)return false;
  if(raw.promise!==null && (!hasWeeklyKeys(raw.promise,['stage','weeksLeft'])||!kind(raw.promise.stage)||![1,2].includes(raw.promise.weeksLeft as number)))return false;
  if(raw.lastChoice!==null && (!hasWeeklyKeys(raw.lastChoice,['stage','option','goldMilli'])||!kind(raw.lastChoice.stage)||!CARD_OPTIONS.includes(raw.lastChoice.option as CardOption)||!count(raw.lastChoice.goldMilli)||(raw.lastChoice.option!=='pay'&&raw.lastChoice.goldMilli!==0)))return false;
  return pendingCard===null || (isPendingCard(pendingCard)&&pendingCard.kind===raw.stage);

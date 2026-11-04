@@ -3,7 +3,7 @@ import { ORDER_TRIAL as O, SOCIETY_BUILDINGS, societyPlot, societyPopulation, tr
 const classes=['free','makers','luminaries','merchants'] as const;
 export function orderFacts(s:TileTrialState,fundedTileIds:ReadonlySet<string>):OrderFacts {
  const society=s.society!;
- const facts:OrderFacts={wallRing:society.wallRing,watchHouses:[],barracksWorkers:0,population:societyPopulation(society),slumOther:0,corruption:society.corruption,desperation:society.desperation,tension:society.tension,
+ const facts:OrderFacts={standing:society.standing,wallRing:society.wallRing,watchHouses:[],barracksWorkers:0,population:societyPopulation(society),slumOther:0,corruption:society.corruption,desperation:society.desperation,tension:society.tension,
   meanSatisfaction:Math.trunc(classes.reduce((sum,key)=>sum+society.satisfaction[key],0)/classes.length),townHallStaffed:false,patrols:society.research.completed.includes('watch-patrols'),drill:society.research.completed.includes('barracks-drill')};
  for(const tile of s.tiles){
   const b=tile.building;

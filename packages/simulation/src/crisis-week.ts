@@ -32,7 +32,7 @@ export function resolveCrisisWeek(s: TileTrialState, f: { foodDemandMilli: numbe
  let cardOpened:CrisisReport['cardOpened']=null;
  if(next!==c.stage){
   if(!up && stageBefore!=='none' && next!=='fallen')c.calmStreak=0;
-  c.stage=next;c.weeksInStage=0;society.pendingCard=null;
+  c.stage=next;if(next==='fallen')c.fallCause='rebellion';c.weeksInStage=0;society.pendingCard=null;
   if(up && (next==='demand'||next==='protest'||next==='rebellion')){
    cardOpened=next;society.pendingCard={id:cardId('crisis',next,s.world.week),source:'crisis',kind:next,week:s.world.week};
   }

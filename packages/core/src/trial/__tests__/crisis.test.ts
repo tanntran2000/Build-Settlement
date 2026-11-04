@@ -3,8 +3,8 @@ import { cardId, isPendingCard, crisisOptions, createSocietyState, isSocietyStat
 
 it('starts v4 calm with no card', () => {
  const s=createSocietyState().society!;
- expect(s.rulesetId).toBe('tile-society-04');
- expect(s.crisis).toEqual({stage:'none',weeksInStage:0,hungerStreak:0,calmStreak:0,promise:null,lastChoice:null});
+ expect(s.rulesetId).toBe('tile-society-05');
+ expect(s.crisis).toEqual({fallCause:null,stage:'none',weeksInStage:0,hungerStreak:0,calmStreak:0,promise:null,lastChoice:null});
  expect(s.pendingCard).toBeNull();
 });
 it.each([['demand',2000,40,-10],['protest',4000,55,-15],['rebellion',6000,70,-20]] as const)('derives %s options', (kind,cost,security,tension) => {
