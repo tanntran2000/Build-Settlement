@@ -26,3 +26,6 @@ export * from './trial/society-map.js';
 
 export * from './trial/outside.js';
 export * from './trial/order.js';
+
+export * from './trial/crisis.js';
+export * from './trial/event-card.js';

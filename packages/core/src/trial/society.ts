@@ -1,3 +1,5 @@
+import { isCrisisState, type CrisisState } from './crisis.js';
+import type { PendingCard } from './event-card.js';
 import { ORDER_TRIAL, isOrderState, type OrderState } from './order.js';
 import { createOutsideState, isOutsideState, isOutsideResearch, OUTSIDE_PLOTS, type OutsidePlotState, type OutsideResearch } from './outside.js';
 import { TILE_TRIAL_BALANCE as B } from './catalog.js';
@@ -5,12 +7,14 @@ import { hasWeeklyKeys } from '../domain/canonical-state.js';
 import { GOODS_STOCK_RULESET,GOODS_STOCK_TRIAL } from './goods-stock.js';
 import type { TileTrialState } from './types.js';
 
-export const SOCIETY_RULESET = 'tile-society-03';
+export const SOCIETY_RULESET = 'tile-society-04';
 export type SocietyGroupKey = 'makers' | 'luminaries' | 'merchants';
 export type SocietyClassKey = 'free' | SocietyGroupKey;
 export interface SocietyState {
   rulesetId: typeof SOCIETY_RULESET;
   order: OrderState;
+  crisis: CrisisState;
+  pendingCard: PendingCard | null;
   classes: { free: number; makers: { common: number; elite: number }; luminaries: { common: number; elite: number }; merchants: { common: number; elite: number }; bound: Record<SocietyClassKey, number> };
   satisfaction: Record<SocietyClassKey | 'bound', number>;
   desperation: number;
@@ -28,6 +32,8 @@ export interface SocietyState {
 export const SOCIETY_TRIAL = Object.freeze({
   rulesetId: SOCIETY_RULESET,
   order: ORDER_TRIAL.newGame,
+  crisis: Object.freeze({stage:'none',weeksInStage:0,hungerStreak:0,calmStreak:0,promise:null,lastChoice:null}),
+  pendingCard: null,
   stocksMilli: Object.freeze({stone:0,wool:0,cloth:0,herbs:0}),
   outside: Object.freeze(createOutsideState()),
   research: Object.freeze({topic:null,progressMilli:Object.freeze({'deep-mining':0,'watch-patrols':0,'barracks-drill':0}),paid:[],completed:[]}),
@@ -55,7 +61,7 @@ export function createSocietyState(): TileTrialState {
 }
 export function isSocietyState(raw: unknown): raw is SocietyState {
   try {
-    if (!hasWeeklyKeys(raw, ['rulesetId', 'order', 'classes', 'satisfaction', 'desperation', 'tension', 'debtPressure', 'corruption', 'luxuryStockMilli', 'training', 'wallRing', 'stocksMilli', 'outside', 'research']) || raw.rulesetId !== SOCIETY_RULESET ||
+    if (!hasWeeklyKeys(raw, ['rulesetId', 'crisis', 'pendingCard', 'order', 'classes', 'satisfaction', 'desperation', 'tension', 'debtPressure', 'corruption', 'luxuryStockMilli', 'training', 'wallRing', 'stocksMilli', 'outside', 'research']) || raw.rulesetId !== SOCIETY_RULESET ||
         !hasWeeklyKeys(raw.classes, [...classes, 'bound']) || !count(raw.classes.free) ||
         !hasWeeklyKeys(raw.classes.bound, classes) || !Object.values(raw.classes.bound).every(count)) return false;
     for (const group of groups) {
@@ -63,7 +69,7 @@ export function isSocietyState(raw: unknown): raw is SocietyState {
       if (!hasWeeklyKeys(tier, ['common', 'elite']) || !count(tier.common) || !count(tier.elite)) return false;
     }
     return hasWeeklyKeys(raw.stocksMilli,['stone','wool','cloth','herbs']) && Object.values(raw.stocksMilli).every(count) &&
-      isOrderState(raw.order) && isOutsideState(raw.outside) && isOutsideResearch(raw.research) &&
+      isCrisisState(raw.crisis, raw.pendingCard) && isOrderState(raw.order) && isOutsideState(raw.outside) && isOutsideResearch(raw.research) &&
       hasWeeklyKeys(raw.satisfaction, [...classes, 'bound']) && Object.values(raw.satisfaction).every(score) &&
       hasWeeklyKeys(raw.debtPressure, classes) && Object.values(raw.debtPressure).every(score) &&
       score(raw.desperation) && score(raw.tension) && score(raw.corruption) && count(raw.luxuryStockMilli) &&
