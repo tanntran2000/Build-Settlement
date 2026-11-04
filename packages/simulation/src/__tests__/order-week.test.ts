@@ -96,12 +96,13 @@ it('steals before storage spoilage in End Week',()=>{
  const r=runTileTrialWeek(s);expect(r.order!.after.crime).toBe(60);expect(r.order!.theftMilli.stone).toBe(4000);
  expect(r.outside!.spoiledMilli.stone).toBe(56000);expect(s.society!.stocksMilli.stone).toBe(40000);
 });
-it.each([0,50,100])('applies Authority %i before the Counting House with floor rounding',authority=>{
+it.each([0,50,100])('applies Authority %i after the Counting House with floor rounding',authority=>{
  const s=createSocietyState();s.society!.order.authority=authority;
  tile(s,'spec-2').building={typeId:'counting-house',level:1,workers:2,enabled:true};
- s.society!.classes.free=56;s.world.settlements[s.world.activeSettlementId!].cohorts[0].count=101;
- const r=runTileTrialWeek(s),base=3030,authorityTax=Math.floor(base*(10000+(authority-50)*40)/10000),expected=Math.floor(authorityTax*110/100);
- expect(r.taxMilli).toBe(expected);expect(r.order!.taxDeltaMilli).toBe(authorityTax-base);expect(r.order!.taxModifierBps).toBe((authority-50)*40);
+ s.society!.classes.free=49;s.society!.classes.merchants.common=20;s.world.settlements[s.world.activeSettlementId!].cohorts[0].count=101;
+ expect(isTileTrialState(s)).toBe(true);
+ const r=runTileTrialWeek(s),withCH=3333,expected=Math.floor(withCH*(10000+(authority-50)*40)/10000);
+ expect(r.taxMilli).toBe(expected);expect(r.order!.taxDeltaMilli).toBe(expected-withCH);expect(r.order!.taxModifierBps).toBe((authority-50)*40);
 });
 it.each([[29,0],[50,1],[70,2]])('passes Authority %i adjusted budget through society arrivals', (authority,arrivals)=>{
  const s=createSocietyState();s.society!.classes.free=49;
@@ -132,12 +133,13 @@ it('advances a valid New Game with Authority 0 and zero Gold without negative st
  expect(result.report!.after.gold).toBe(400);
  expect(Object.values(result.nextState.world.settlements[s.world.activeSettlementId!].inventory).every(n=>n>=0)).toBe(true);
 });
-it.each([[0,2908,-606],[100,4363,606]])('credits Authority %i before upkeep then adds the level-2 Counting House bonus',(authority,tax,delta)=>{
+it.each([[0,2908,-728],[50,3636,0],[100,4363,727]])('applies Authority %i after the level-2 Counting House bonus',(authority,tax,delta)=>{
  const s=createSocietyState();s.society!.order.authority=authority;
- s.society!.classes.free=56;s.world.settlements[s.world.activeSettlementId!].cohorts[0].count=101;
+ s.society!.classes.free=29;s.society!.classes.merchants.common=40;s.world.settlements[s.world.activeSettlementId!].cohorts[0].count=101;
  tile(s,'spec-2').building={typeId:'counting-house',level:2,workers:4,enabled:true};
+ expect(isTileTrialState(s)).toBe(true);
  const r=runTileTrialWeek(s);
- // Base 101*30=3030; Authority 0/100 gives 2424/3636, then floor(*120/100).
+ // Base 101*30=3030; Counting House gives 3636, then floor(*Authority factor).
  expect(r.taxMilli).toBe(tax);expect(r.order!.taxDeltaMilli).toBe(delta);
  expect(r.order!.taxModifierBps).toBe((authority-50)*40);
 });

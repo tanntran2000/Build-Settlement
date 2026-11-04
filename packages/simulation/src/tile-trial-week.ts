@@ -26,9 +26,8 @@ export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
   const population = settlement.cohorts.reduce((n, c) => trialSafe(n + c.count), 0);
   const baseTaxMilli=scaled(population,B.taxGoldPerResident);
   const taxModifierBps=authorityTaxBps(orderBefore.authority);
-  let taxMilli=scaled(baseTaxMilli,10000+taxModifierBps,10000);
-  const taxDeltaMilli=taxMilli-baseTaxMilli;
-  add('gold',taxMilli);
+  const creditedTaxMilli=orderBefore.authority<50?scaled(baseTaxMilli,10000+taxModifierBps,10000):baseTaxMilli;
+  add('gold',creditedTaxMilli);
   let farmBatchGoldMilli = 0, farmExtraUpkeepMilli = 0, upkeepPaidMilli = 0, unpaidUpkeepMilli = 0, marketCapacity = 0;
   const funded: typeof s.tiles = [];
   const fundedTileIds: string[] = [];
@@ -79,10 +78,11 @@ export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
     if(newStocks.herbs<due){operatingIds.delete(tile.id);outside.hospitalsIdle.push(tile.id);}else newStocks.herbs-=due;
   }
   const facilities = societyFacilities(s, operatingIds);
-  if (facilities) {
-    const adjusted = scaled(taxMilli, 100 + 10 * facilities.countingHouseLevels, 100);
-    add('gold', adjusted - taxMilli); taxMilli = adjusted;
-  }
+  const withCHTaxMilli=scaled(baseTaxMilli,100+10*facilities.countingHouseLevels,100);
+  const taxMilli=scaled(withCHTaxMilli,10000+taxModifierBps,10000);
+  const taxDeltaMilli=taxMilli-withCHTaxMilli;
+  // The final spec tax must cover the guaranteed credit; reject a negative top-up.
+  add('gold',trialSafe(taxMilli-creditedTaxMilli));
   let arrivalsBudgetBefore=0,arrivalsBudgetAfter=0;
   let luxuryImportedMilli = 0;
   for (const tile of funded) {
