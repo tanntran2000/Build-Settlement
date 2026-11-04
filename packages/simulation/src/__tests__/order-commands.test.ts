@@ -174,5 +174,7 @@ it('activates weekly order and isolates its effects from the existing week', () 
  expect(br.happinessAfter).toBe(ar.happinessAfter-2);br.happinessAfter+=2;
  for(const key of ['free','makers','luminaries','merchants'] as const){expect(br.society!.classes[key].satisfactionAfter).toBe(ar.society!.classes[key].satisfactionAfter-2);br.society!.classes[key].satisfactionAfter+=2;}
  expect(br.society!.tensionAfter).toBe(ar.society!.tensionAfter+3);br.society!.tensionAfter-=3;
+ expect(br.crisis!.tensionBefore).toBe(ar.crisis!.tensionBefore+3);br.crisis!.tensionBefore-=3;
+ expect(br.crisis!.tensionAfter).toBe(ar.crisis!.tensionAfter+3);br.crisis!.tensionAfter-=3;
  expect(ar).toEqual(br);
 });
