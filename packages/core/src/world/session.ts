@@ -13,7 +13,10 @@ const id = (value: unknown): value is string => typeof value === 'string' && val
 export function createWorldSession(seed: unknown): WorldResult<WorldSessionState> {
   try {
     const outside = createOutsideWorld(OUTSIDE_TRIAL_SCENARIO, seed);
-    return outside.success ? { success: true, value: { city: createSocietyState(), outside: outside.value } } : outside;
+    if (!outside.success) return outside;
+    const city = createSocietyState();
+    city.world.worldMetadata.worldSeed = outside.value.seed;
+    return { success: true, value: { city, outside: outside.value } };
   } catch { return { success: false, error: { code: 'WORLD_GENERATION_FAILED', message: 'Could not create the world session.' } }; }
 }
 

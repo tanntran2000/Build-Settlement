@@ -53,7 +53,7 @@ it('refuses a choice when no card waits',()=>{
 it('routes Life choices and refuses all commands in a fallen session',()=>{
  const made=createCharacterLifeSession(20261028,{...DEFAULT_PLAYER_DRAFT,currentName:'Synthetic Keeper'});if(!made.success)throw Error(made.error.message);const s=made.value;s.city=city();
  expect(executeCharacterLifeCommand(s,{type:'CHOOSE_CARD_OPTION',expectedRevision:0,cardId:'crisis-demand-w1',option:'refuse'}).success).toBe(true);
- s.city.society!.crisis.stage='fallen';s.city.society!.pendingCard=null;
+ s.city.society!.crisis.stage='fallen';s.city.society!.crisis.fallCause='rebellion';s.city.society!.pendingCard=null;
  for(const command of [null,{type:'ASSIGN_NPC'},{type:'NEXT_WEEK'},{type:'END_WEEK'},{type:'CHOOSE_CARD_OPTION'}]){
   const before=structuredClone(s);expect(executeCharacterLifeCommand(s,command)).toMatchObject({success:false,error:{code:'CITY_FALLEN',message:'The city has fallen. Start a New Game.'}});expect(s).toEqual(before);
   reject(s.city,command,'CITY_FALLEN');

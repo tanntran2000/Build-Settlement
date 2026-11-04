@@ -29,3 +29,5 @@ export * from './trial/order.js';
 
 export * from './trial/crisis.js';
 export * from './trial/event-card.js';
+
+export * from './trial/crime.js';
