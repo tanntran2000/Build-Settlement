@@ -1,6 +1,6 @@
 # P8-B2 — City crime events (design spec v0.1)
 
-Status: **draft for owner G1 review.** No code is authorized until the owner approves this spec and then the implementation plan.
+Status: **G1 approved by the owner** (Tân, 2026-11-04, verbatim: "Approve G1"). No code is authorized until the owner also approves the implementation plan.
 - **Decisions:** from the owner's answers in the Claude session on 2026-11-04 (§11).
 - **Numbers:** every number is a TRIAL default, not approved balance; the v0.1 simulation pass and P1 tune them.
 - **Base:** `main` `d6c3366` (P8-B1 A–C merged; the engine plays only `tile-society-04`).
