@@ -298,13 +298,27 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
       match=line.match(/^(.+): deposit exhausted; the (.+) closed and the plot is now plain\.$/);
       if(match){expect(match[2]).toBe(match[1].startsWith('ore-')?'Iron Mine':'Quarry');outside.exhausted.push(match[1]);continue;}
       match=line.match(/^(.+) cleared\.$/);if(match){outside.cleared.push(match[1]);continue;}
-      if(line==='Research completed: Deep Mining.'){outside.researchCompleted.push('deep-mining');continue;}
+      const researchLabels={'deep-mining':'Deep Mining','watch-patrols':'Watch Patrols','barracks-drill':'Barracks Drill'} as const;
+      const topic=(Object.keys(researchLabels) as (keyof typeof researchLabels)[]).find(key=>line===`Research completed: ${researchLabels[key]}.`);
+      if(topic){outside.researchCompleted.push(topic);continue;}
       match=line.match(/^(.+): Hospital idle, no Herbs\.$/);if(match){outside.hospitalsIdle.push(match[1]);continue;}
       throw Error(`Unknown Outside report line: ${line}`);
     }
     actual.outside=outside;
   }
-  const { order: _order, society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
+  if(expected.order){
+    const region=panel.getByRole('region',{name:'Order',exact:true});
+    const order:NonNullable<TileTrialReport['order']>={before:{security:0,crime:0,authority:0},after:{security:0,crime:0,authority:0},targets:{security:0,crime:0,authority:0},theftMilli:{},tensionAdded:0,satisfactionLost:0,taxModifierBps:0,taxDeltaMilli:0,arrivalsBudgetBefore:0,arrivalsBudgetAfter:0};
+    for(const key of ['security','crime','authority'] as const){
+      const text=(await region.locator(`[data-order-value="${key}"]`).textContent())!;
+      const values=text.match(/\d+/g)!.map(Number);
+      [order.before[key],order.after[key],order.targets[key]]=values;
+    }
+    for(const entry of await region.locator('[data-order-theft]').evaluateAll(nodes=>nodes.map(n=>({key:n.getAttribute('data-order-theft')!,text:n.textContent!}))))order.theftMilli[entry.key as keyof typeof order.theftMilli]=reportMilli(entry.text);
+    for(const key of ['taxModifierBps','taxDeltaMilli','arrivalsBudgetBefore','arrivalsBudgetAfter','tensionAdded','satisfactionLost'] as const)order[key]=Number(await region.locator(`[data-order-detail="${key}"]`).textContent());
+    actual.order=order;
+  }
+  const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
   expect(actual).toEqual(baseReport);
   if (society) {
     const labels = { free: 'Free residents', makers: 'Makers', luminaries: 'Luminaries', merchants: 'Merchants', bound: 'The Bound' };
