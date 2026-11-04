@@ -825,7 +825,7 @@ test('unapplied drafts survive navigation with committed-only resolution', async
   const endWeek = shell.getByTestId('life-end-week'); await endWeek.focus(); await page.keyboard.press('Enter');
   expect(await page.getByRole('dialog', { name: 'Report', exact: true }).evaluate(node => node.contains(document.activeElement))).toBe(true);
   const actualReport = await expectReport(page, expected.report);
-  const {society: _society,luxuryImportedMilli: _luxury,trainingGoldMilli: _training,crisis: _crisis,...expectedBase}=expected.report;
+  const {society: _society,luxuryImportedMilli: _luxury,trainingGoldMilli: _training,...expectedBase}=expected.report;
   expect(actualReport).toEqual(expectedBase);
   expect(Number(await shell.getAttribute('data-revision'))).toBe(beforeWeekRevision + 1);
   await expect(workersInput(page)).toHaveValue(String(committedWorkers));

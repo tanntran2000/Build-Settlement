@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
  import { crisisOptions, societyPopulation, CRISIS_TRIAL, type TileTrialState, type CardOption } from '@haven/core';
  import { CRISIS_CARD_COPY } from './society-view.js';
  import { formatMilli } from './milli-format.js';

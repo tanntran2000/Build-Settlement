@@ -318,8 +318,17 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
     for(const key of ['taxModifierBps','taxDeltaMilli','arrivalsBudgetBefore','arrivalsBudgetAfter','tensionAdded','satisfactionLost'] as const)order[key]=Number(await region.locator(`[data-order-detail="${key}"]`).textContent());
     actual.order=order;
   }
-  const { society, luxuryImportedMilli, trainingGoldMilli, crisis, ...baseReport } = expected;
-  void crisis; // PR B: Crisis DOM parity lands in PR C.
+  if(expected.crisis){
+    const region=panel.getByRole('region',{name:'Crisis',exact:true});
+    const fields=await region.evaluate(node=>Object.fromEntries([...node.attributes].filter(a=>a.name.startsWith('data-crisis-')).map(a=>[a.name.slice(12),a.value])));
+    const c:NonNullable<TileTrialReport['crisis']>={stageBefore:fields['stage-before'] as NonNullable<TileTrialReport['crisis']>['stageBefore'],stageAfter:fields['stage-after'] as NonNullable<TileTrialReport['crisis']>['stageAfter'],hungry:fields.hungry==='true',hungerStreak:Number(fields['hunger-streak']),calmStreak:Number(fields['calm-streak']),weeksInStage:Number(fields['weeks-in-stage']),cardOpened:(fields['card-opened']||null) as NonNullable<TileTrialReport['crisis']>['cardOpened'],tensionBefore:Number(fields['tension-before']),tensionAfter:Number(fields['tension-after']),promise:null,lastChoice:null};
+    const promise=region.locator('[data-crisis-promise]');
+    if(await promise.count()){const p=await promise.evaluate(n=>({stage:n.getAttribute('data-crisis-stage'),result:n.getAttribute('data-crisis-result'),tensionDelta:Number(n.getAttribute('data-crisis-tension')),authorityDelta:Number(n.getAttribute('data-crisis-authority'))}));c.promise=p as NonNullable<typeof c.promise>;}
+    const choice=region.locator('[data-crisis-choice]');
+    if(await choice.count()){const a=await choice.evaluate(n=>({stage:n.getAttribute('data-crisis-stage'),option:n.getAttribute('data-crisis-option'),goldMilli:Number(n.getAttribute('data-crisis-gold'))}));c.lastChoice=a as NonNullable<typeof c.lastChoice>;}
+    actual.crisis=c;
+  }
+  const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
   expect(actual).toEqual(baseReport);
   if (society) {
     const labels = { free: 'Free residents', makers: 'Makers', luminaries: 'Luminaries', merchants: 'Merchants', bound: 'The Bound' };

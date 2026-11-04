@@ -13,7 +13,7 @@
   import { errorLog } from './error-log.js';
   import { formatFulfillment, formatMilli as units } from './milli-format.js';
   import { formatLifeWeek } from './life-calendar.js';
-  import { prepareCharacterLifeLoad, readLocalCharacterLife, saveLocalCharacterLife, isPlayableCheckpoint, OLD_CHECKPOINT_MESSAGE } from './character-life-session.js';
+  import { clearFallenCharacterLifeCheckpoint, prepareCharacterLifeLoad, readLocalCharacterLife, saveLocalCharacterLife, isPlayableCheckpoint, OLD_CHECKPOINT_MESSAGE } from './character-life-session.js';
 
   export let onnewgame:()=>void;
   export let lifeMode = true;
@@ -100,7 +100,11 @@
     if (command('END_WEEK', { expectedWeek: state.world.week })) {
       lifeStatus = '';
       const resolvedRevision = state.revision, resolvedReport = report;
-      if(state.society?.crisis.stage === 'fallen') return;
+      if(state.society?.crisis.stage === 'fallen') {
+        const cleared = clearFallenCharacterLifeCheckpoint(true, state.society.crisis.stage);
+        if (!cleared.success) errorLog.record('RUNTIME', 'INVALID_COMMAND');
+        return;
+      }
       await lifeShell.openWindow('report', opener);
       if (state.revision === resolvedRevision && report === resolvedReport && activeWindow === 'report') {
         lifeStatus = `${formatLifeWeek(resolvedReport!.week)} report ready.`;

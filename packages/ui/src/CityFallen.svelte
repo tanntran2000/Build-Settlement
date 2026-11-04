@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+<script lang="ts">
  export let weeks:number;
  export let onnewgame:()=>void;
 </script>

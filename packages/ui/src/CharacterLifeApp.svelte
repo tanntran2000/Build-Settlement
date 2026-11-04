@@ -4,8 +4,9 @@
   import CharacterCreation from './CharacterCreation.svelte';
   import ErrorLog from './ErrorLog.svelte';
   import TileManagement from './TileManagement.svelte';
-  import { readLocalCharacterLife, isPlayableCheckpoint, OLD_CHECKPOINT_MESSAGE } from './character-life-session.js';
+  import { hasLocalCharacterLifeCheckpoint, readLocalCharacterLife, isPlayableCheckpoint, OLD_CHECKPOINT_MESSAGE } from './character-life-session.js';
 
+  let hasCheckpoint = hasLocalCharacterLifeCheckpoint();
   let screen: 'start' | 'create' = 'start';
   let session: CharacterLifeSessionState | null = null;
   let error = '';
@@ -43,7 +44,7 @@
 </script>
 
 {#if session}
-  <TileManagement lifeMode initialLife={session} onnewgame={() => { session = null; newGame(); }} />
+  <TileManagement lifeMode initialLife={session} onnewgame={() => { session = null; hasCheckpoint = hasLocalCharacterLifeCheckpoint(); newGame(); }} />
 {:else}
   <main lang="en">
     <header class="card">
@@ -57,7 +58,7 @@
       <section class="card" aria-label="Start">
         <p>Create an adult Player who leads Haven, or resume a Character Life checkpoint.</p>
         <button onclick={newGame}>New Game</button>
-        <button onclick={() => continueLocally()}>Continue locally</button>
+        {#if hasCheckpoint}<button onclick={() => continueLocally()}>Continue locally</button>{/if}
         <label for="life-save-file">Import checkpoint</label>
         <input id="life-save-file" type="file" accept=".json,application/json" onchange={importCheckpoint} />
         {#if error}<p role="alert">{error}</p>{/if}
