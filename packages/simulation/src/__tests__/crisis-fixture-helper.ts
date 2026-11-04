@@ -14,6 +14,15 @@ export function crisisFixture(name:'life-5-weeks'|'life-demand-card'|'life-rebel
  if(name==='life-5-weeks'){
   for(let i=0;i<5;i++){s=fixtureStep(s,'END_WEEK');s=fixtureStep(s,'NEXT_WEEK');}
  }else{
+  if(name==='life-rebellion-last-week'){
+   for(const tile of s.city.tiles){
+    if(!tile.building)continue;
+    for(const command of [{type:'SET_WORKERS',tileId:tile.id,workers:0},{type:'SET_ENABLED',tileId:tile.id,enabled:false}]){
+     const r=executeCharacterLifeCommand(s,{...command,expectedRevision:s.city.revision});
+     if(!r.success)throw Error(r.error.message);s=r.next;
+    }
+   }
+  }
   const city=s.city,society=city.society!;
   if(name==='life-demand-card'){
    society.crisis.stage='demand';society.crisis.hungerStreak=3;society.tension=60;
@@ -23,7 +32,6 @@ export function crisisFixture(name:'life-5-weeks'|'life-demand-card'|'life-rebel
    city.world.settlements[city.world.activeSettlementId!].inventory.food=0;
    for(const key of ['free','makers','luminaries','merchants','bound'] as const)society.satisfaction[key]=10;
    city.happiness=10;
-   for(const tile of city.tiles)if(tile.building){tile.building.enabled=false;tile.building.workers=0;}
   }
  }
  return s;
