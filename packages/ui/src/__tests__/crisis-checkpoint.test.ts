@@ -1,4 +1,4 @@
-﻿import {expect,it,vi,afterEach} from 'vitest';
+import {expect,it,vi,afterEach} from 'vitest';
 import {clearFallenCharacterLifeCheckpoint,hasLocalCharacterLifeCheckpoint,CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY as KEY} from '../character-life-session.js';
 afterEach(()=>vi.unstubAllGlobals());
 it('clears only the life slot after a confirmed fallen End Week',()=>{const values=new Map([[KEY,'saved'],['other','protected']]);const removeItem=vi.fn((key:string)=>values.delete(key));vi.stubGlobal('window',{localStorage:{getItem:(key:string)=>values.get(key)??null,removeItem}});expect(hasLocalCharacterLifeCheckpoint()).toBe(true);for(const [success,stage] of [[false,'fallen'],[true,'none'],[true,'rebellion']] as const){expect(clearFallenCharacterLifeCheckpoint(success,stage)).toEqual({success:true});expect(values.get(KEY)).toBe('saved');}expect(removeItem).not.toHaveBeenCalled();expect(clearFallenCharacterLifeCheckpoint(true,'fallen')).toEqual({success:true});expect(removeItem.mock.calls).toEqual([[KEY]]);expect(values.get('other')).toBe('protected');expect(hasLocalCharacterLifeCheckpoint()).toBe(false);});

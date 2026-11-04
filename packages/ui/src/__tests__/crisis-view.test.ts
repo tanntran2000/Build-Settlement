@@ -1,4 +1,4 @@
-﻿import { expect, it } from 'vitest';
+import { expect, it } from 'vitest';
 import { createSocietyState, type CrisisReport, type TileTrialReport } from '@haven/core';
 import { CRISIS_CARD_COPY, crisisRow, crisisReportLines } from '../society-view.js';
 it('pins exact crisis card copy',()=>expect(CRISIS_CARD_COPY).toEqual({demand:{title:'The Hungry Demand Bread',text:'Three weeks of hunger. Crowds gather at the granary and demand food.'},protest:{title:'Protest in the Streets',text:'The demand went unanswered. Crowds fill the streets and shout at your gate.'},rebellion:{title:'Open Rebellion',text:'The city rises against you. Feed your people within four weeks or lose Haven.'}}));

@@ -1,4 +1,4 @@
-﻿import {test,expect,type Page} from '@playwright/test';
+import {test,expect,type Page} from '@playwright/test';
 import {readFile} from 'node:fs/promises';
 import {deserializeCharacterLifeSave,serializeCharacterLifeSave} from '../../packages/persistence/src/index.ts';
 import {executeCharacterLifeCommand} from '../../packages/simulation/src/character-life-command.ts';
@@ -22,6 +22,9 @@ const slot='haven.character-life-session-society.checkpoint.v1';
 test('last hungry Rebellion week clears save; reload offers New Game at Calm',async({page})=>{
  const s=await fixture('life-rebellion-last-week');await page.goto('/?mode=world-life');await importLife(page,s);await go(page,'session');await button(page,'Save locally').click();expect(await page.evaluate(key=>localStorage.getItem(key),slot)).not.toBeNull();await go(page,'city');await page.getByTestId('life-end-week').click();await expect(page.getByRole('heading',{name:'The City Has Fallen',exact:true})).toBeVisible();await expect(page.getByText(`Hunger turned Haven against you. You ruled for ${s.city.world.week} weeks.`,{exact:true})).toBeVisible();await expect(page.getByRole('button')).toHaveText(['New Game']);expect(await page.evaluate(key=>localStorage.getItem(key),slot)).toBeNull();await fit(page);
  await page.reload();await expect(button(page,'Continue locally')).toHaveCount(0);await button(page,'New Game').click();await expect(page.getByRole('heading',{name:'Character Creation',exact:true})).toBeVisible();await page.getByLabel('Name',{exact:true}).fill('New Keeper');await page.getByRole('tab',{name:'Review',exact:true}).click();await button(page,'Create character').click();await expect(page.getByTestId('life-shell')).toBeVisible();await page.locator('#life-nav-information').click();await expect(page.getByTestId('trial-crisis')).toHaveText('Crisis: Calm · 0 weeks');
+});
+test('Fallen screen New Game opens Character Creation directly',async({page})=>{
+ const s=await fixture('life-rebellion-last-week');await page.goto('/?mode=world-life');await importLife(page,s);await go(page,'city');await page.getByTestId('life-end-week').click();await expect(page.getByRole('heading',{name:'The City Has Fallen',exact:true})).toBeVisible();await button(page,'New Game').click();await expect(page.getByRole('heading',{name:'Character Creation',exact:true})).toBeVisible();await expect(page.getByRole('heading',{name:'The City Has Fallen',exact:true})).toHaveCount(0);
 });
 test('normal End Week preserves a manual checkpoint byte-for-byte',async({page})=>{
  await page.goto('/?mode=world-life');await importLife(page,await fixture('life-new-game'));await go(page,'session');await button(page,'Save locally').click();const before=await page.evaluate(key=>localStorage.getItem(key),slot);expect(before).not.toBeNull();await go(page,'city');await page.getByTestId('life-end-week').click();await expect(page.getByRole('dialog',{name:'Report',exact:true})).toBeVisible();expect(await page.evaluate(key=>localStorage.getItem(key),slot)).toBe(before);
