@@ -1,4 +1,5 @@
 import type { ResearchTopic } from './outside.js';
+import type { OrderState } from './order.js';
 import type { SocietyState } from './society.js';
 import type { CanonicalGameState, WeeklyStocks } from "../domain/canonical-state.js";
 import type { GoodsStock } from './goods-stock.js';
@@ -15,6 +16,7 @@ export interface TileTrialState {
   happiness: number;
 }
 export interface TileTrialReport {
+  order?: OrderReport;
   outside?: {
     producedMilli: {wood:number;iron:number;stone:number;wool:number;herbs:number;cloth:number};
     stocksBefore:{stone:number;wool:number;cloth:number;herbs:number};
@@ -45,6 +47,12 @@ export interface TileTrialReport {
   happinessAfter: number;
   goods: { demandMilli: number; servedMilli: number; fulfillmentBps: number; woodUsed: number; ironUsed: number; revenueMilli: number };
   activities: readonly string[];
+}
+export interface OrderReport {
+ before: OrderState; targets: OrderState; after: OrderState;
+ theftMilli: Partial<Record<'gold'|'food'|'wheat'|'wood'|'iron'|'stone'|'wool'|'cloth'|'herbs'|'goods'|'luxury',number>>;
+ tensionAdded: number; satisfactionLost: number; taxModifierBps: number; taxDeltaMilli: number;
+ arrivalsBudgetBefore: number; arrivalsBudgetAfter: number;
 }
 export interface TrialImmigrationReport {
   populationBefore: number; arrivals: number; populationAfter: number;

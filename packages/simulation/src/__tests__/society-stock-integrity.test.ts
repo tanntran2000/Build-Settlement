@@ -32,8 +32,8 @@ describe('retained society Goods stock flow', () => {
       const before = structuredClone(s), r = end(s), report = r.report!;
       expect(s).toEqual(before); expect(end(s)).toEqual(r);
       expect(report.goodsStock).toEqual({ openingMilli: 10000 - 1450 * (week - 1), producedMilli: 0, distributedMilli: 1450, closingMilli: 10000 - 1450 * week, demandMilli: 1450, unmetMilli: 0, capacityMilli: 2000, limitedBy: 'none' });
-      expect(report).toMatchObject({ unpaidUpkeepMilli: 0, farmBatchGoldMilli: 2000, farmExtraUpkeepMilli: 0, taxMilli: 3000, foodDemandMilli: 4000, foodConsumedMilli: 4000, goods: { servedMilli: 1450, revenueMilli: 1450, ironUsed: 0 }, immigration: { populationBefore: 100, populationAfter: 100, target: 90, reason: 'no-capacity' } });
-      expect(stocks(r.nextState)).toMatchObject({ food: 20000, gold: 45000 + 1450 * week });
+      expect(report).toMatchObject({ unpaidUpkeepMilli: 0, farmBatchGoldMilli: 2000, farmExtraUpkeepMilli: 0, taxMilli: 3000 - 36 * (week - 1), foodDemandMilli: 4000, foodConsumedMilli: 4000, goods: { servedMilli: 1450, revenueMilli: 1450, ironUsed: 0 }, immigration: { populationBefore: 100, populationAfter: 100, target: 90, reason: 'no-capacity' } });
+      expect(stocks(r.nextState)).toMatchObject({ food: 20000, gold: 45000 + 1450 * week - 18 * week * (week - 1) });
       debit += report.before.gold + report.taxMilli + report.goods.revenueMilli - report.after.gold;
       s = command(r.nextState, 'NEXT_WEEK').nextState;
     }

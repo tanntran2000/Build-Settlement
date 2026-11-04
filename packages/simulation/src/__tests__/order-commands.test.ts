@@ -137,15 +137,42 @@ it.each(['watch-patrols','barracks-drill'])('Character Life dispatches SET_RESEA
  expect(s).toEqual(before); expect(r.success).toBe(true);
  if (r.success) expect(r.next.city.society!.research.topic).toBe(topic);
 });
-it('keeps order inert and the P3 report identical regardless of order values', () => {
+it('activates weekly order and isolates its effects from the existing week', () => {
  const s = city(), other = structuredClone(s);
  other.society!.order = {security:99,crime:100,authority:0};
  const a = executeTileTrialCommand(s,{type:'END_WEEK',expectedWeek:1,expectedRevision:0});
  const b = executeTileTrialCommand(other,{type:'END_WEEK',expectedWeek:1,expectedRevision:0});
- if (!a.success || !b.success) throw Error('End Week failed');
- expect(a.report).toEqual(b.report);
- expect(a.nextState.society!.order).toEqual(s.society!.order);
- expect(b.nextState.society!.order).toEqual(other.society!.order);
- b.nextState.society!.order = a.nextState.society!.order;
- expect(b.nextState).toEqual(a.nextState);
+ if (!a.success || !b.success || !a.report || !b.report) throw Error('End Week failed');
+ // 100 residents, ring 1: Security target 10+5-100/20=10.
+ // Drift gives 25 / 94; Crime target clamps 10-floor(Security/2) to 0.
+ // Crime drifts to 5 / 95. Satisfaction resolves to 82 and Tension to 0.
+ // Authority targets: 40+trunc((25-50)/5)-floor(5/4)+trunc(32/5)=40;
+ // 40+trunc((94-50)/5)-floor(95/4)+trunc(32/5)=31. Drift: 47 / 3.
+ expect(a.nextState.society!.order).toEqual({security:25,crime:5,authority:47});
+ expect(b.nextState.society!.order).toEqual({security:94,crime:95,authority:3});
+ expect(a.report.order).toMatchObject({before:{security:30,crime:10,authority:50},targets:{security:10,crime:0,authority:40},after:{security:25,crime:5,authority:47}});
+ expect(b.report.order).toMatchObject({before:{security:99,crime:100,authority:0},targets:{security:10,crime:0,authority:31},after:{security:94,crime:95,authority:3}});
+ const ao=a.report.order!,bo=b.report.order!;
+ expect(ao.taxDeltaMilli).toBe(0);expect(bo.taxDeltaMilli).toBe(-600);
+ expect(ao.theftMilli).toEqual({});expect(bo.tensionAdded).toBe(3);expect(bo.satisfactionLost).toBe(2);
+ expect(bo.arrivalsBudgetBefore).toBe(0);expect(bo.arrivalsBudgetAfter).toBe(0);
+ const as=a.nextState,bs=structuredClone(b.nextState);
+ const ai=as.world.settlements[as.world.activeSettlementId!].inventory,bi=bs.world.settlements[bs.world.activeSettlementId!].inventory;
+ expect(bi.gold).toBe(ai.gold-600-bo.theftMilli.gold!);
+ expect(bi.food).toBe(ai.food-bo.theftMilli.food!);
+ bi.gold+=600+bo.theftMilli.gold!;bi.food+=bo.theftMilli.food!;
+ expect(bs.goodsStock!.amountMilli).toBe(as.goodsStock!.amountMilli-bo.theftMilli.goods!);bs.goodsStock!.amountMilli+=bo.theftMilli.goods!;
+ expect(bs.society!.tension).toBe(as.society!.tension+3);bs.society!.tension-=3;
+ for(const key of ['free','makers','luminaries','merchants'] as const){expect(bs.society!.satisfaction[key]).toBe(as.society!.satisfaction[key]-2);bs.society!.satisfaction[key]+=2;}
+ expect(bs.happiness).toBe(as.happiness-2);bs.happiness+=2;
+ bs.society!.order=as.society!.order;expect(bs).toEqual(as);
+ const {order: _ao,...ar}=a.report, {order: _bo,...br}=structuredClone(b.report);
+ for(const key of ['gold','food'] as const){expect(br.after[key]).toBe(b.report.after[key]);br.after[key]=ar.after[key];}
+ expect(br.taxMilli).toBe(ar.taxMilli-600);br.taxMilli+=600;
+ br.goodsStock={...br.goodsStock!,closingMilli:br.goodsStock!.closingMilli+bo.theftMilli.goods!};
+ for(const key of ['wood','iron'] as const)br.outside!.spoiledMilli[key]=br.outside!.spoiledMilli[key]!+bo.theftMilli[key]!;
+ expect(br.happinessAfter).toBe(ar.happinessAfter-2);br.happinessAfter+=2;
+ for(const key of ['free','makers','luminaries','merchants'] as const){expect(br.society!.classes[key].satisfactionAfter).toBe(ar.society!.classes[key].satisfactionAfter-2);br.society!.classes[key].satisfactionAfter+=2;}
+ expect(br.society!.tensionAfter).toBe(ar.society!.tensionAfter+3);br.society!.tensionAfter-=3;
+ expect(ar).toEqual(br);
 });
