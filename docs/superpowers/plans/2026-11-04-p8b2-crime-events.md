@@ -15,6 +15,8 @@ All TRIAL numbers, the roll and the pure helpers live once in `core/src/trial/cr
 
 **Spec:** `docs/superpowers/specs/2026-11-04-p8b2-crime-events-design.md` (v0.1, G1 "Approve G1", 2026-11-04).
 
+**Plan approval:** owner Tân, 2026-11-04, verbatim: "Approve, Builder A".
+
 ## Decisions
 
 1. **Ruleset.** `SOCIETY_RULESET` becomes `'tile-society-05'`; `isSocietyState` accepts only `05`, so codecs refuse `04` saves with the existing older-version message.
