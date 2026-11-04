@@ -176,5 +176,8 @@ it('activates weekly order and isolates its effects from the existing week', () 
  expect(br.society!.tensionAfter).toBe(ar.society!.tensionAfter+3);br.society!.tensionAfter-=3;
  expect(br.crisis!.tensionBefore).toBe(ar.crisis!.tensionBefore+3);br.crisis!.tensionBefore-=3;
  expect(br.crisis!.tensionAfter).toBe(ar.crisis!.tensionAfter+3);br.crisis!.tensionAfter-=3;
+ expect(ar.crimeEvent).toEqual({standingBefore:50,standingAfter:50,chancePercent:7,event:null,lordHealthLoss:0});
+ expect(br.crimeEvent).toEqual({...ar.crimeEvent,chancePercent:52});
+ br.crimeEvent={...br.crimeEvent!,chancePercent:7};
  expect(ar).toEqual(br);
 });

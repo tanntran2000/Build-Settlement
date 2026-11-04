@@ -22,7 +22,13 @@ export interface CrisisReport {
  promise: { stage: CrisisCardKind; result: 'kept' | 'broken' | 'pending'; tensionDelta: number; authorityDelta: number } | null;
  cardOpened: CrisisCardKind | null; lastChoice: CrisisState['lastChoice']; tensionBefore: number; tensionAfter: number;
 }
+export interface CrimeEventReport {
+ standingBefore:number; standingAfter:number; chancePercent:number;
+ event:null | {kind:'robbery'|'smear'|'raid'|'assassination';severity:'minor'|'serious'|'severe';target?:keyof OrderReport['theftMilli'];lossMilli?:number;soldiersKilled?:number;outcome?:'foiled'|'wounded'|'killed';standingLoss?:number;authorityLoss?:number};
+ lordHealthLoss:number;
+}
 export interface TileTrialReport {
+  crimeEvent?: CrimeEventReport;
   crisis?: CrisisReport;
   order?: OrderReport;
   outside?: {
