@@ -1,7 +1,8 @@
 <script lang="ts">
   import { tick, type Snippet } from 'svelte';
   import { type TileTrialState, type TileTrialReport } from '@haven/core';
-  import { storageView, orderRows } from './society-view.js';
+  import { storageView, orderRows, crisisRow } from './society-view.js';
+  import CrisisCard from './CrisisCard.svelte';
   import SocietyPopulation from './SocietyPopulation.svelte';
   import { formatMilli } from './milli-format.js';
   import { formatLifeWeek } from './life-calendar.js';
@@ -14,6 +15,7 @@
   export let error: string;
   export let status: string;
   export let unapplied: { id: string; label: string; onopen: () => void }[];
+  export let onchoose: (cardId:string,option:import('@haven/core').CardOption)=>void;
   export let onendweek: (opener: HTMLButtonElement) => void;
   export let playerInfo: Snippet;
   export let city: Snippet;
@@ -62,7 +64,7 @@
       <div class="card" data-life-nav-zone="top">
     <h1>Character Life</h1>
     <p>{formatLifeWeek(state.world.week)} · {locked ? 'Report' : 'Planning'}</p>
-    <button data-testid="life-end-week" aria-disabled={locked} onclick={event => onendweek(event.currentTarget)}>{locked ? 'Report open — Plan next week in Report' : 'End Week'}</button>
+    <button data-testid="life-end-week" disabled={!!state.society?.pendingCard} aria-disabled={locked || !!state.society?.pendingCard} onclick={event => onendweek(event.currentTarget)}>{state.society?.pendingCard ? 'Answer the crisis first.' : locked ? 'Report open — Plan next week in Report' : 'End Week'}</button>
     {#if unapplied.length}
       <p>Unapplied changes ({unapplied.length})</p>
       {#each unapplied as entry (entry.id)}<button onclick={entry.onopen}>{entry.label}</button>{/each}
@@ -115,11 +117,13 @@
         {#each storageView(state) as row}<div><dt>{row.good}</dt><dd><span data-testid={`trial-storage-${row.good.toLowerCase()}`}>{formatMilli(Math.round(row.amount*1000))}</span> / {formatMilli(Math.round(row.capacity*1000))}</dd></div>{/each}
       </dl></div>
       <div class="city-status"><h3>City status</h3>
+      <p data-testid="trial-crisis">Crisis: {crisisRow(state)}</p>
       <p>Happiness: <strong>{state.happiness}</strong> / 100</p>
       {#each orderRows(state) as row}<p data-testid={`trial-order-${row.label.toLowerCase()}`}>{row.label} {row.value} → {row.target} · {row.band}</p>{/each}<p>Corruption: {state.society!.corruption} / 100 (TRIAL)</p>
       </div>
       </div>
     </section>
+    {#if activeWindow === 'information' || activeWindow === 'report'}<CrisisCard {state} {onchoose} />{/if}
     <section hidden={activeWindow !== 'report'} data-life-window="report">
       {#if report}
         {#if report.foodDemandMilli > report.foodConsumedMilli}<p>Last week: Food unmet {formatMilli(report.foodDemandMilli - report.foodConsumedMilli)}</p>{/if}

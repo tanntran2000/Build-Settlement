@@ -117,3 +117,25 @@ export function orderReportLines(report:Readonly<TileTrialReport>):string[]{
  if(o.arrivalsBudgetAfter===o.arrivalsBudgetBefore+1)lines.push(`Authority ${o.before.authority}: one more newcomer stayed.`);
  return lines;
 }
+import { CRISIS_TRIAL, type CrisisCardKind, type CrisisStage } from '@haven/core';
+export const CRISIS_CARD_COPY:Record<CrisisCardKind,{title:string;text:string}>={
+ demand:{title:'The Hungry Demand Bread',text:'Three weeks of hunger. Crowds gather at the granary and demand food.'},
+ protest:{title:'Protest in the Streets',text:'The demand went unanswered. Crowds fill the streets and shout at your gate.'},
+ rebellion:{title:'Open Rebellion',text:'The city rises against you. Feed your people within four weeks or lose Haven.'},
+};
+const stageNames:Record<CrisisStage,string>={none:'Calm',warning:'Warning',demand:'Demand',protest:'Protest',rebellion:'Rebellion',fallen:'Fallen'};
+export function crisisRow(city:TileTrialState):string {
+ const c=city.society!.crisis;
+ return [`${stageNames[c.stage]} · ${c.weeksInStage} weeks`,...(c.hungerStreak?[`Hungry weeks in a row: ${c.hungerStreak}`]:[]),...(c.promise?[`Promise: ${c.promise.weeksLeft} weeks left`]:[]),...(c.stage==='rebellion'?[`Weeks left: ${CRISIS_TRIAL.finalWeeks-c.weeksInStage}`]:[])].join(' · ');
+}
+const signed=(n:number)=>`${n<0?'−':'+'}${Math.abs(n)}`;
+export function crisisReportLines(report:Readonly<TileTrialReport>):string[]{
+ const c=report.crisis;if(!c)return [];
+ const stages:CrisisStage[]=['none','warning','demand','protest','rebellion','fallen'];
+ const lines:string[]=[];
+ if(c.stageBefore!==c.stageAfter)lines.push(`Unrest ${stages.indexOf(c.stageAfter)>stages.indexOf(c.stageBefore)?'rose':'eased'}: ${stageNames[c.stageBefore]} → ${stageNames[c.stageAfter]}.`);
+ if(c.hungerStreak)lines.push(`Hungry weeks in a row: ${c.hungerStreak}.`);
+ if(c.promise&&c.promise.result!=='pending')lines.push(`Promise ${c.promise.result}: Tension ${signed(c.promise.tensionDelta)}, Authority ${signed(c.promise.authorityDelta)}.`);
+ if(c.lastChoice){const a=c.lastChoice;lines.push(`Your answer last week: ${a.option[0].toUpperCase()+a.option.slice(1)}${a.option==='pay'?` (−${formatMilli(a.goldMilli)} Gold, Tension ${signed(CRISIS_TRIAL.pay[a.stage].tension)})`:''}.`);}
+ return lines;
+}

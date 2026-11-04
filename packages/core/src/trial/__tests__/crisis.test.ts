@@ -35,3 +35,4 @@ it.each(['mismatch','warning','fallen','promise','negative','fractional','option
  if(kind==='extra')Object.assign(s.crisis,{extra:0});
  expect(isSocietyState(s)).toBe(false);
 });
+it.each([[100,'2'],[101,'2.02'],[125,'2.5']] as const)('formats exact Pay reason for %s residents',(population,gold)=>{expect(crisisOptions('demand',{population,goldMilli:0,security:0,promisePending:false})[0].reason).toBe(`Needs ${gold} Gold.`);});

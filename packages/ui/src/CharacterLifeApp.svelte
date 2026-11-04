@@ -43,7 +43,7 @@
 </script>
 
 {#if session}
-  <TileManagement lifeMode initialLife={session} />
+  <TileManagement lifeMode initialLife={session} onnewgame={() => { session = null; newGame(); }} />
 {:else}
   <main lang="en">
     <header class="card">

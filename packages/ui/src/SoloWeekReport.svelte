@@ -1,6 +1,6 @@
 <script lang="ts">
   import { WEEKLY_RESOURCE_KEYS, type TileTrialReport } from '@haven/core';
-  import { outsideReportLines, orderReportLines, ORDER_GOODS } from './society-view.js';
+  import { crisisReportLines, outsideReportLines, orderReportLines, ORDER_GOODS } from './society-view.js';
   import SocietyReport from './SocietyReport.svelte';
   import { formatFulfillment, formatMilli } from './milli-format.js';
   import { formatLifeWeek } from './life-calendar.js';
@@ -34,6 +34,11 @@
       {#if report.immigration}<p data-testid="trial-immigration">Population: {report.immigration.populationBefore} → {report.immigration.populationAfter} · {report.immigration.arrivals} arrivals · Available next week.</p>{/if}
       <p>Happiness: {report.happinessBefore} → {report.happinessAfter}.</p>
     </section>
+    {#if report.crisis}<section aria-label="Crisis" data-crisis-stage-before={report.crisis.stageBefore} data-crisis-stage-after={report.crisis.stageAfter} data-crisis-hungry={report.crisis.hungry} data-crisis-hunger-streak={report.crisis.hungerStreak} data-crisis-calm-streak={report.crisis.calmStreak} data-crisis-weeks-in-stage={report.crisis.weeksInStage} data-crisis-card-opened={report.crisis.cardOpened ?? ''} data-crisis-tension-before={report.crisis.tensionBefore} data-crisis-tension-after={report.crisis.tensionAfter}>
+      <h3>Crisis</h3>{#each crisisReportLines(report) as line}<p>{line}</p>{/each}
+      {#if report.crisis.promise}<p data-crisis-promise data-crisis-stage={report.crisis.promise.stage} data-crisis-result={report.crisis.promise.result} data-crisis-tension={report.crisis.promise.tensionDelta} data-crisis-authority={report.crisis.promise.authorityDelta}>Promise: {report.crisis.promise.result}</p>{/if}
+      {#if report.crisis.lastChoice}<p data-crisis-choice data-crisis-stage={report.crisis.lastChoice.stage} data-crisis-option={report.crisis.lastChoice.option} data-crisis-gold={report.crisis.lastChoice.goldMilli}>Answer: {report.crisis.lastChoice.option}</p>{/if}
+    </section>{/if}
     {#if report.order}<section aria-label="Order"><h3>Order</h3>
       {#each orderReportLines(report) as line,i}<p data-order-value={i<3?['security','crime','authority'][i]:undefined}>{line}</p>{/each}
       <details><summary>Order calculation</summary><dl>
