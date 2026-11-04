@@ -155,11 +155,23 @@ it('reports final class satisfaction and happiness after Crime 75 drifts to 70',
  expect(expected).toBe(80);expect(s.happiness).toBe(expected);expect(r.happinessAfter).toBe(expected);
  expect(r.happinessBefore).toBe(previous);
 });
-it('preserves the society report and happiness when Crime starts at 39',()=>{
+it('preserves class satisfaction and happiness while reporting Tension when Crime starts at 39',()=>{
  const control=createSocietyState(),s=structuredClone(control);s.society!.order.crime=39;
  const baseline=runTileTrialWeek(control),r=runTileTrialWeek(s);
  expect(r.order!.after.crime).toBe(34);expect(r.order!.satisfactionLost).toBe(0);
  expect(s.happiness).toBe(82);expect(s.happiness).toBe(control.happiness);
  expect(r.happinessAfter).toBe(baseline.happinessAfter);expect(r.happinessAfter).toBe(s.happiness);
- expect(r.society).toEqual(baseline.society);
+ expect(r.order!.tensionAdded).toBe(1);expect(s.society!.tension).toBe(1);
+ expect(r.society).toEqual({...baseline.society,tensionAfter:1});
+});
+
+it.each([[75,70,2],[24,19,0]])('reports final Tension after starting Crime %i drifts to %i', (crime,afterCrime,tension)=>{
+ const s=createSocietyState();s.society!.order.crime=crime;const before=structuredClone(s);
+ expect(isTileTrialState(s)).toBe(true);
+ const result=executeTileTrialCommand(s,{type:'END_WEEK',expectedRevision:s.revision,expectedWeek:s.world.week});
+ expect(s).toEqual(before);expect(result.success).toBe(true);if(!result.success)throw Error(result.error.message);
+ expect(isTileTrialState(result.nextState)).toBe(true);
+ expect(result.report!.order!.after.crime).toBe(afterCrime);expect(result.report!.order!.tensionAdded).toBe(tension);
+ expect(result.nextState.society!.tension).toBe(tension);expect(result.report!.society!.tensionAfter).toBe(tension);
+ if(crime===24){const control=runTileTrialWeek(createSocietyState());expect(result.report!.society).toEqual(control.society);}
 });

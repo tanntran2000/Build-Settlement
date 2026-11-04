@@ -173,5 +173,6 @@ it('activates weekly order and isolates its effects from the existing week', () 
  for(const key of ['wood','iron'] as const)br.outside!.spoiledMilli[key]=br.outside!.spoiledMilli[key]!+bo.theftMilli[key]!;
  expect(br.happinessAfter).toBe(ar.happinessAfter-2);br.happinessAfter+=2;
  for(const key of ['free','makers','luminaries','merchants'] as const){expect(br.society!.classes[key].satisfactionAfter).toBe(ar.society!.classes[key].satisfactionAfter-2);br.society!.classes[key].satisfactionAfter+=2;}
+ expect(br.society!.tensionAfter).toBe(ar.society!.tensionAfter+3);br.society!.tensionAfter-=3;
  expect(ar).toEqual(br);
 });

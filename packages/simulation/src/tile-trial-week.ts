@@ -161,6 +161,7 @@ export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
   }
   s.world.week = trialSafe(s.world.week + 1); s.phase = "report";
   const order = resolveOrderWeek(s,operatingIds,{before:orderBefore,taxModifierBps,taxDeltaMilli,arrivalsBudgetBefore,arrivalsBudgetAfter});
+  if(order.tensionAdded>0)societyReport.tensionAfter=s.society.tension;
   if(order.satisfactionLost>0){
     s.happiness=cityHappiness(s.society.satisfaction,societyCounts(s.society),happinessBefore);
     for(const key of ['free','makers','luminaries','merchants'] as const)societyReport.classes[key].satisfactionAfter=s.society.satisfaction[key];
