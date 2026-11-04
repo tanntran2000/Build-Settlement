@@ -1,6 +1,6 @@
 <script lang="ts">
   import { WEEKLY_RESOURCE_KEYS, type TileTrialReport } from '@haven/core';
-  import { outsideReportLines } from './society-view.js';
+  import { outsideReportLines, orderReportLines, ORDER_GOODS } from './society-view.js';
   import SocietyReport from './SocietyReport.svelte';
   import { formatFulfillment, formatMilli } from './milli-format.js';
   import { formatLifeWeek } from './life-calendar.js';
@@ -34,6 +34,12 @@
       {#if report.immigration}<p data-testid="trial-immigration">Population: {report.immigration.populationBefore} → {report.immigration.populationAfter} · {report.immigration.arrivals} arrivals · Available next week.</p>{/if}
       <p>Happiness: {report.happinessBefore} → {report.happinessAfter}.</p>
     </section>
+    {#if report.order}<section aria-label="Order"><h3>Order</h3>
+      {#each orderReportLines(report) as line,i}<p data-order-value={i<3?['security','crime','authority'][i]:undefined}>{line}</p>{/each}
+      <details><summary>Order calculation</summary><dl>
+      {#each ORDER_GOODS as good}{#if report.order.theftMilli[good]}<div><dt>{good} stolen</dt><dd data-order-theft={good}>{formatMilli(report.order.theftMilli[good]!)}</dd></div>{/if}{/each}
+      {#each ['taxModifierBps','taxDeltaMilli','arrivalsBudgetBefore','arrivalsBudgetAfter','tensionAdded','satisfactionLost'] as key}<div><dt>{key}</dt><dd data-order-detail={key}>{report.order[key as 'taxModifierBps']}</dd></div>{/each}
+      </dl></details></section>{/if}
     {#if report.society}<SocietyReport {report} />{/if}
     {#if report.outside}<section aria-label="Outside report"><h3>Outside</h3>
       {#each outsideReportLines(report) as line}<p>{line}</p>{/each}

@@ -32,7 +32,7 @@ export function buildOptions(city:TileTrialState,tileId:string):{typeId:string;l
  const plot=societyPlot(tileId);
  if(plot) {
   if(plot.ring>(city.society?.wallRing??1)) return [];
-  return Object.entries(SOCIETY_BUILDINGS).filter(([,v])=>v.tier===plot.tier).sort((a,b)=>Number(a[1].reserved)-Number(b[1].reserved)).map(([typeId,v])=>({typeId,label:v.reserved?`${reservedNames[typeId]} — Not available yet`:TRIAL_BUILDINGS[typeId].name,available:!v.reserved}));
+  return Object.entries(SOCIETY_BUILDINGS).filter(([,v])=>(v.tier===plot.tier||v.alsoTier===plot.tier)).sort((a,b)=>Number(a[1].reserved)-Number(b[1].reserved)).map(([typeId,v])=>({typeId,label:typeId==='watch-house'&&plot.tier==='slum'?'Watch House · +5 Security in the Slum':v.reserved?`${reservedNames[typeId]} — Not available yet`:TRIAL_BUILDINGS[typeId].name,available:!v.reserved}));
  }
  const outside=outsidePlot(tileId);
  if(outside&&(outside.ring>city.society!.wallRing||city.society!.outside[tileId].wild))return [];
@@ -93,5 +93,27 @@ export function outsideReportLines(report:Readonly<TileTrialReport>):string[] {
  const o=report.outside;if(!o)return [];
  return [...Object.entries(o.spoiledMilli).map(([good,n])=>`${formatMilli(n)} ${good[0].toUpperCase()+good.slice(1)} spoiled: storage full.`),
  ...o.exhausted.map(id=>`${id}: deposit exhausted; the ${TRIAL_BUILDINGS[outsidePlot(id)!.terrain==='ore'?'mine':'quarry'].name} closed and the plot is now plain.`),
- ...o.cleared.map(id=>`${id} cleared.`),...o.researchCompleted.map(()=>'Research completed: Deep Mining.'),...o.hospitalsIdle.map(id=>`${id}: Hospital idle, no Herbs.`)];
+ ...o.cleared.map(id=>`${id} cleared.`),...o.researchCompleted.map(topic=>`Research completed: ${RESEARCH_LABELS[topic]}.`),...o.hospitalsIdle.map(id=>`${id}: Hospital idle, no Herbs.`)];
+}
+
+import {securityTarget,crimeTarget,authorityTarget,orderBand,type ResearchTopic} from '@haven/core';
+import {orderFacts} from '@haven/simulation';
+export const RESEARCH_LABELS:Record<ResearchTopic,string>={'deep-mining':'Deep Mining','watch-patrols':'Watch Patrols','barracks-drill':'Barracks Drill'};
+export function orderRows(city:TileTrialState):{label:'Security'|'Crime'|'Authority';value:number;target:number;band:'Low'|'Fair'|'High'}[]{
+ const facts=orderFacts(city,new Set(city.tiles.filter(t=>t.building?.enabled).map(t=>t.id))),order=city.society!.order;
+ const targets={security:securityTarget(facts),crime:crimeTarget(facts,order.security),authority:authorityTarget(facts,order.security,order.crime)};
+ return (['security','crime','authority'] as const).map(key=>({label:({security:'Security',crime:'Crime',authority:'Authority'} as const)[key],value:order[key],target:targets[key],band:orderBand(order[key])}));
+}
+export const ORDER_GOODS=['gold','food','wheat','wood','iron','stone','wool','cloth','herbs','goods','luxury'] as const;
+export function orderReportLines(report:Readonly<TileTrialReport>):string[]{
+ const o=report.order;if(!o)return [];
+ const lines=(['security','crime','authority'] as const).map(key=>`${key[0].toUpperCase()+key.slice(1)} ${o.before[key]} → ${o.after[key]} (target ${o.targets[key]})`);
+ const theft=ORDER_GOODS.filter(key=>(o.theftMilli[key]??0)>0).map(key=>`−${formatMilli(o.theftMilli[key]!)} ${key[0].toUpperCase()+key.slice(1)}`);
+ if(theft.length)lines.push(`Theft: ${theft.join(', ')}`);
+ if(o.tensionAdded>0)lines.push(`Crime raised Tension by ${o.tensionAdded}.`);
+ if(o.satisfactionLost>0)lines.push(`Crime lowered satisfaction by ${o.satisfactionLost}.`);
+ if(o.taxModifierBps!==0)lines.push(`Authority ${o.before.authority}: taxes ${o.taxModifierBps>0?'+':'−'}${Math.abs(o.taxModifierBps)/100}%.`);
+ if(o.arrivalsBudgetBefore>0&&o.arrivalsBudgetAfter<o.arrivalsBudgetBefore)lines.push(`Authority ${o.before.authority}: half of the newcomers turned away.`);
+ if(o.arrivalsBudgetAfter===o.arrivalsBudgetBefore+1)lines.push(`Authority ${o.before.authority}: one more newcomer stayed.`);
+ return lines;
 }

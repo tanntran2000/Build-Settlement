@@ -1,7 +1,7 @@
 <script lang="ts">
   import { tick, type Snippet } from 'svelte';
   import { type TileTrialState, type TileTrialReport } from '@haven/core';
-  import { storageView } from './society-view.js';
+  import { storageView, orderRows } from './society-view.js';
   import SocietyPopulation from './SocietyPopulation.svelte';
   import { formatMilli } from './milli-format.js';
   import { formatLifeWeek } from './life-calendar.js';
@@ -116,7 +116,7 @@
       </dl></div>
       <div class="city-status"><h3>City status</h3>
       <p>Happiness: <strong>{state.happiness}</strong> / 100</p>
-      <p>Security: Not simulated</p><p>Corruption: {state.society!.corruption} / 100 (TRIAL)</p>
+      {#each orderRows(state) as row}<p data-testid={`trial-order-${row.label.toLowerCase()}`}>{row.label} {row.value} → {row.target} · {row.band}</p>{/each}<p>Corruption: {state.society!.corruption} / 100 (TRIAL)</p>
       </div>
       </div>
     </section>
