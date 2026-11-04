@@ -1,6 +1,6 @@
-# UI-LEDGER-01 — "Lord's ledger" restyle and Report view (design spec v0.2)
+# UI-LEDGER-01 — "Lord's ledger" restyle and Report view (design spec v0.3)
 
-Status: v0.1 **G1 approved** by the user (Tân), 2026-11-03, Claude session: "Duyệt G1". **v0.2 revision** (2026-11-04) replaces the single Report letter with letter cards (§1 item 12, §6); the owner agreed to the direction ("ok tôi đồng ý"), and the written v0.2 text needs the owner's review before the plan. The implementation plan is written after all of P3 and P8 (with the city event mechanics) are merged, against that `main`. No code, push or PR is authorised by this document.
+Status: v0.1 **G1 approved** by the user (Tân), 2026-11-03, Claude session: "Duyệt G1". **v0.2 revision** (2026-11-04) replaces the single Report letter with letter cards (§1 item 12, §6); the owner agreed to the direction ("ok tôi đồng ý"). **v0.3 revision** (2026-11-04) redraws the whole shell as pixel art (§1 item 13, §4.3, §4.4) on the owner's instruction "sửa lại UI/UX trong game cũng là pixel". The written v0.2/v0.3 text needs the owner's review before the plan. The implementation plan is written after all of P3 and P8 (with the city event mechanics) are merged, against that `main`. No code, push or PR is authorised by this document.
 Baseline: `origin/main` `9f3f165` (merge of PR #65). Branch: `docs/ui-ledger-redesign` (docs only).
 Scope: the Character Life shell of a started game session. Presentation only.
 Implementation starts only after all of P3 (PR A, B and C) and P8 with the city event mechanics are merged (§9).
@@ -21,6 +21,7 @@ User decisions, in order (Claude session unless stated):
 10. 2026-11-03: written spec v0.1 approved: "Duyệt G1". The approval did not answer §12, so the spec's defaults stand.
 11. 2026-11-03: P8 (law, city identity, Security/Authority) and the city event mechanics move **before** the frontend work ("P8 before frontend"), after the owner said "nên để P8 lên trước sau khi hoàn thành các tính năng và cơ chế event cho thành phố thì mới tính tới việc thiết kế". P6 items follow the frontend.
 12. 2026-11-04: the Report becomes **letter cards**, after the owner asked "bạn có thể học các báo cáo giống của Free cities nhưng làm đơn giản hơn nhưng vẫn chỉ rõ nội dung cần báo cáo đc ko? Chia thành các card giống như bức thư để gửi cho Player". Claude studied the Free Cities end-week report (`src/endWeek/economics/economics.js`: one tab per area, a tab only when it has content, gains and losses coloured inline) and proposed a simpler version: one letter per area from a named sender, a one-line headline, a tone seal, 3–4 key rows and a Details disclosure. The owner supplied the concept image [report-letters.webp](../../design/reference/report-letters.webp) and agreed to save it as the visual reference and revise this spec: "ok tôi đồng ý". §6 is rewritten for this.
+13. 2026-11-04: the in-game UI/UX becomes **pixel art** too, verbatim: "sửa lại UI/UX trong game cũng là pixel", with a pixel version of the report concept [report-letters-pixel.webp](../../design/reference/report-letters-pixel.webp). This answers Claude's open question (painted UI with pixel game art, or pixel everywhere) in favour of pixel everywhere. The ledger materials stay (wood, parchment, wax, brass); §4.3 and §4.4 now draw them as pixel art. The painted image `report-letters.webp` is kept only as history.
 
 This spec supersedes, for the Report only, the "Report is a dialog" rule in the [city navigation spec](2026-10-27-city-navigation-design.md) §4 item 1, including "Automatic Report opening after End Week returns focus to End Week on close". Information, Player and Population stay dialogs.
 
@@ -28,7 +29,7 @@ This spec supersedes, for the Report only, the "Report is a dialog" rule in the 
 
 The shell looks like a lord's desk instead of a web dashboard. The sidebar is a board of dark walnut planks held by brass nails. Navigation buttons are pale oak plaques. End Week is a red wax seal with a gold rim. Content cards are parchment. Header views are **City | Characters | Report**.
 
-After End Week the Report view opens by itself. The weekly report reads as **letters on the Lord's desk**: a heading with three summary stamps, an urgent letter when an event card waits for an answer, then short parchment letters from the steward, the quartermaster, the census clerk, the captain of the watch and the streets. Each letter says its news in one headline and a few rows; Details holds the full numbers. "Plan next week" is a wax-seal button below the letters. Visual reference: [report-letters.webp](../../design/reference/report-letters.webp) (concept art, not shipped).
+After End Week the Report view opens by itself. The weekly report reads as **letters on the Lord's desk**: a heading with three summary stamps, an urgent letter when an event card waits for an answer, then short parchment letters from the steward, the quartermaster, the census clerk, the captain of the watch and the streets. Each letter says its news in one headline and a few rows; Details holds the full numbers. "Plan next week" is a wax-seal button below the letters. Everything is drawn as crisp pixel art on one pixel grid. Visual reference: [report-letters-pixel.webp](../../design/reference/report-letters-pixel.webp) (concept art, not shipped).
 
 ## 3. Non-goals
 
@@ -71,27 +72,28 @@ The shell's `main` element (`CharacterLifeShell.svelte`, style block) keeps its 
 
 Gains and losses use colour **and** a `+` / `−` sign, never colour alone. Colour follows what the change means **for the city**, not the sign: anything the city loses (spoiled, stolen, unpaid, satisfaction down, Crime or Tension up) is `--ink-loss`; anything it gains is `--ink-gain`; unchanged values use `--ink-muted`. (The concept image colours "Spoiled −0.4" green; that is wrong and the rule above wins.)
 
-### 4.3 Typography
+### 4.3 Typography (v0.3: pixel)
 
-- Headings, nav labels and wax buttons: **IM Fell English SC**.
-- Body and letter text: **EB Garamond**, regular and italic.
-- Fallback stack for both: `Georgia, 'Times New Roman', serif`.
-- Body text stays at least 16px (`--life-body-size`). Numbers in tables use `font-variant-numeric: tabular-nums`.
+- Headings, nav labels, wax buttons, body and letter text: **Pixelify Sans** (SIL OFL 1.1), regular and bold. One family keeps the font budget small and the look consistent with the pixel art.
+- Fallback stack: `'Courier New', monospace`.
+- Body text stays at least 16px (`--life-body-size`) and is rendered at an integer multiple of the font's design size, so glyphs stay crisp. Numbers in tables use `font-variant-numeric: tabular-nums` where the font supports it.
 - Fonts apply inside the shell only. `app.css` global font stays (Codex item 1).
 
-Font files are self-hosted WOFF2 with each font's OFL 1.1 licence file beside them, loaded with `@font-face` and `font-display: swap`. They live in `packages/ui/src/assets/fonts/` and are referenced by relative `url()` from the ledger stylesheet. This differs from Codex's `public/fonts/` suggestion on purpose: Vite then hashes the files and applies the deploy base itself. No npm font package and no CDN at runtime. Total font size is **measured** and reported in the PR. Ceiling 150 KB; above that, ship EB Garamond regular only and use Georgia for italic.
+Font files are self-hosted WOFF2 with the OFL 1.1 licence file beside them, loaded with `@font-face` and `font-display: swap`. They live in `packages/ui/src/assets/fonts/` and are referenced by relative `url()` from the ledger stylesheet. This differs from Codex's `public/fonts/` suggestion on purpose: Vite then hashes the files and applies the deploy base itself. No npm font package and no CDN at runtime. Total font size is **measured** and reported in the PR. Ceiling 150 KB. The plan confirms the font against the reference image at 375 and 1280 px before the Builder starts; a swap to another OFL pixel font of the same weight is a plan decision, not a spec change.
 
-### 4.4 Textures
+### 4.4 Pixel art (v0.3, replaces CSS-drawn textures)
 
-- Wood grain: layered CSS `repeating-linear-gradient` plus one small static SVG data-URI noise tile.
-- Parchment grain: the same noise tile at low opacity over `--parchment`. Grain overlay opacity is at most **8%**.
-- Curved edges, folds and corner curls: `::before` / `::after` pseudo-elements with `pointer-events: none`, never over text, never changing layout size.
-- No SVG `filter` on large live elements, no animated seeds, no `background-attachment: fixed` (Codex item 2).
-- No texture image files. WebP tiles are a fallback only if §8 scroll measurement fails, and need a spec revision.
-- **Desk props** (v0.2, from the concept image): candle, coins, quill and inkwell, folded map, loose wax seals. Optional static WebP files in `packages/ui/src/assets/desk/`, **≤ 150 KB in total**, measured and reported in the PR. They sit in the Report view's margins, `aria-hidden`, `pointer-events: none`, never under text, and are not rendered below 1100px content width. If a file is missing or fails to load, the desk shows plain wood grain and nothing else changes. Art must be original or licensed for the project; the concept image itself is never shipped.
-- "Drawn by code" in CITY-MAP-01 is that map's own rule, not a rule for this theme.
+The whole shell is pixel art, matching the owner's reference [report-letters-pixel.webp](../../design/reference/report-letters-pixel.webp). Materials keep their jobs (§4.1); only how they are drawn changes.
 
-All texture CSS lives in one new stylesheet `packages/ui/src/ledger-theme.css`, imported by `CharacterLifeShell.svelte`.
+- **Pixel grid.** One art pixel is `--px` CSS pixels (default **2**; 3 when the Options text size is Large, from UI-TITLE-01). Every UI sprite is drawn on that grid and scaled by whole numbers only, with `image-rendering: pixelated`. No smooth scaling, blur, gradients or anti-aliased curves on UI art.
+- **UI sprites** in `packages/ui/src/assets/ui-pixel/` (lossless WebP or PNG): a wood plank tile; 9-slice frames used through CSS `border-image` for the parchment card, the urgent letter, oak plaques, the dark card panel and the wax-seal button; 16×16 icons for letter senders and stamps; the wax seal; tone-seal badges. **≤ 200 KB in total**, measured and reported in the PR.
+- **Desk props** (candle, inkwell and quill, coins, stamp and wax seal, folded map): optional pixel sprites in `packages/ui/src/assets/desk/`, **≤ 100 KB in total**. They sit in the Report view's margins, `aria-hidden`, `pointer-events: none`, never under text, and are not rendered below 1100px content width.
+- **Fallback.** If a sprite is missing or fails to load, the element keeps a flat token colour and a 2-`--px` solid border, so the page stays readable; nothing else changes.
+- Frames, edges and corner ornaments never change layout size and never sit over text. No SVG `filter`, no animation, no `background-attachment: fixed` (Codex item 2).
+- Art must be original or licensed for the project. The concept images are references only and are never shipped.
+- CITY-MAP-01's pixel rules stay that map's own; this shell must use the same `--px` grid so map and shell look like one game.
+
+All shell styling lives in one new stylesheet `packages/ui/src/ledger-theme.css`, imported by `CharacterLifeShell.svelte`.
 
 ## 5. Shell changes
 
@@ -133,7 +135,7 @@ Only these:
 
 ## 6. Report letters (v0.2)
 
-Visual reference: [report-letters.webp](../../design/reference/report-letters.webp). All existing report content is kept; it is regrouped into letters, and nothing is dropped.
+Visual reference: [report-letters-pixel.webp](../../design/reference/report-letters-pixel.webp). All existing report content is kept; it is regrouped into letters, and nothing is dropped.
 
 ### 6.1 Order in the Report view
 
@@ -143,7 +145,7 @@ Visual reference: [report-letters.webp](../../design/reference/report-letters.we
 4. **Letters**, in this fixed order (a fixed order keeps each letter in the same place every week): Steward, Quartermaster, Census clerk, Captain of the watch, Word from the streets. A letter whose fields are absent from the report is not shown (as Free Cities hides empty tabs).
 5. Signature line "Your steward" (`aria-hidden`) and **Plan next week** as the wax seal button.
 
-Layout: letters in a grid `repeat(auto-fit, minmax(16rem, 1fr))`, one column below 750px. Each letter: sender line with a decorative icon, tone seal, headline in IM Fell English SC, 2–4 rows (label left, `before → after` or signed amount right, tabular numerals), then a `Details` disclosure (`<details>/<summary>`). Torn edges and corner ornaments are CSS-only (§4.4).
+Layout: letters in a grid `repeat(auto-fit, minmax(16rem, 1fr))`, one column below 750px. Each letter: sender line with a decorative icon, tone seal, headline in the heading weight of the pixel font, 2–4 rows (label left, `before → after` or signed amount right, tabular numerals), then a `Details` disclosure (`<details>/<summary>`). Letter frames, torn edges and corner ornaments are 9-slice pixel sprites (§4.4). The urgent letter uses the dark panel frame with a red border, and its option buttons are pixel plaques, as in the reference.
 
 ### 6.2 What each letter holds
 
@@ -181,7 +183,7 @@ Letter width is fluid with no fixed page width (Codex risk 6). Desk props (§4.4
 
 ## 8. Verification
 
-New unit test `packages/ui/src/__tests__/ledger-contrast.test.ts`: for every text/background token pair in §4.2 and §7, compute WCAG contrast against the base colour and against the base darkened by the 8% grain overlay; assert the §7 thresholds.
+New unit test `packages/ui/src/__tests__/ledger-contrast.test.ts`: for every text/background token pair in §4.2 and §7, compute WCAG contrast against the base colour and against the darkest colour of the pixel sprite drawn under that text (§4.4); assert the §7 thresholds.
 
 Browser checks, extending existing specs (no new test infrastructure):
 
@@ -191,8 +193,8 @@ Browser checks, extending existing specs (no new test infrastructure):
 4. Information, Player and Population keep dialog behaviour: modal, inert background, Escape, focus return.
 5. Navigating City → Report → City changes neither session export nor save.
 6. 375×812 and 1280×900: no horizontal page overflow; every control ≥ 44×44.
-7. Scroll smoothness: a Playwright trace of scrolling the Report view at 375px shows no long frame over 50 ms caused by paint. Failing this triggers the WebP fallback revision (§4.4).
-8. Fonts load from hashed asset URLs in `npm run build` output; with fonts blocked, the page renders in Georgia with no layout break.
+7. Scroll smoothness: a Playwright trace of scrolling the Report view at 375px shows no long frame over 50 ms caused by paint. Failing this needs a spec revision before merge.
+8. Fonts load from hashed asset URLs in `npm run build` output; with fonts blocked, the page renders in the monospace fallback with no layout break. With UI sprites blocked, every frame falls back to a flat colour and solid border (§4.4) and all text stays readable. Every sprite is drawn at a whole-number scale of `--px` (no fractional scaling) at 375 and 1280 px.
 9. Letters (v0.2): after End Week the five letters appear in the §6.1 order with their sender names; each `Details` opens and shows the content listed in §6.2; with a pending event card the urgent letter is first; with desk prop files blocked the Report renders with no layout break.
 
 New unit test `packages/ui/src/__tests__/report-letters.test.ts`: every headline rule in §6.3 at its boundary (first match wins; Crime 66/67; Tension 49/50; zero values omit their optional rows), and every loss row carries the loss tone regardless of sign (§4.2).
@@ -220,14 +222,16 @@ packages/ui/src/CharacterLifeShell.svelte
 packages/ui/src/TileManagement.svelte            (endLifeWeek and the reports snippet only)
 packages/ui/src/SoloWeekReport.svelte
 packages/ui/src/ledger-theme.css                 (new)
-packages/ui/src/assets/fonts/*.woff2             (new, EB Garamond, IM Fell English SC)
+packages/ui/src/assets/fonts/*.woff2             (new, Pixelify Sans, v0.3)
 packages/ui/src/assets/fonts/OFL-*.txt           (new, licences)
 packages/ui/src/__tests__/ledger-contrast.test.ts (new)
 packages/ui/src/report-letters.ts                (new, v0.2)
 packages/ui/src/ReportLetter.svelte              (new, v0.2)
 packages/ui/src/__tests__/report-letters.test.ts (new, v0.2)
-packages/ui/src/assets/desk/*.webp               (new, v0.2, optional, ≤ 150 KB total)
-docs/design/reference/report-letters.webp        (owner's concept image, docs only)
+packages/ui/src/assets/ui-pixel/*                (new, v0.3, ≤ 200 KB total)
+packages/ui/src/assets/desk/*                    (new, v0.3, optional pixel sprites, ≤ 100 KB total)
+docs/design/reference/report-letters-pixel.webp  (owner's pixel concept image, docs only)
+docs/design/reference/report-letters.webp        (owner's painted concept, history only)
 tests/e2e/character-life-navigation.helpers.ts
 tests/e2e/character-life-navigation.spec.ts
 tests/e2e/character-life-navigation-accessibility.spec.ts
@@ -235,11 +239,11 @@ tests/e2e/goods-stock.spec.ts
 docs/superpowers/specs/2026-11-03-ui-ledger-redesign-design.md
 ```
 
-Any other file needs a reviewed revision. No dependency, lockfile or config change. Fonts and the optional desk WebP files (v0.2) are the only new shipped binary assets and are approved only through this spec's G1.
+Any other file needs a reviewed revision. No dependency, lockfile or config change. Fonts, the pixel UI sprites and the optional desk sprites (v0.3) are the only new shipped binary assets and are approved only through this spec's G1.
 
 ## 11. Risks
 
-- **Serif text in dense numbers** may read worse than the current sans. The tables keep tabular numerals; if review finds them hard to read, tables may use the fallback serif at a larger size.
+- **Pixel text is harder to read** in long or dense passages, and for some players. Body text stays ≥ 16px at whole-number scale; UI-TITLE-01's Large text size moves the grid to 3 `--px`. If review still finds tables hard to read, a readable-font option belongs to UI-TITLE-01 Options, not this spec.
 - **Texture cost on low-end phones.** Static backgrounds, no filters, and §8 item 7 bound it.
 - **Contrast on textured areas.** Bounded by the 8% overlay cap and the contrast test.
 - **Moving Plan next week to the bottom** makes it further from the heading on long reports. Accepted: focus starts at the heading and the player reads down to the seal.
@@ -247,11 +251,12 @@ Any other file needs a reviewed revision. No dependency, lockfile or config chan
 - **P3 changes the UI** after this spec (P3-C). §9 item 3 re-checks and extends §10 before dispatch.
 - **Five letters make a long page on phones** (v0.2). Rows are capped at four per letter and full numbers sit in Details.
 - **Headline rules may disagree with what players feel matters most.** They are one table in one module (§6.3), so P1 playtests can tune them without touching components; log disagreements in the playtest risk register.
-- **Desk prop art** must be original or licensed; until such art exists the desk is plain wood (§4.4).
+- **Pixel UI art must be produced** (frames, plaques, icons, props) as original or licensed art on one palette and grid; until it exists the flat-colour fallback (§4.4) ships, so the restyle never blocks on art.
+- **Fractional browser zoom** (e.g. 110 %) can blur pixel art. Accepted: whole-number scaling is checked at 100 % zoom only.
 
 ## 12. Questions closed by G1 defaults
 
 The user approved the spec without answering these, so the defaults stand. The user can still change either before the plan is written.
 
-1. Font budget: the 150 KB ceiling stands, with the Georgia fallback (§4).
+1. Font budget: the 150 KB ceiling stands (§4.3; v0.3 uses one pixel family with a monospace fallback).
 2. Name plate: keeps "Character Life". A rename to "Haven" is a later wording change.
