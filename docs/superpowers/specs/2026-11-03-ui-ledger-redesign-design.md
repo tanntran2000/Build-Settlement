@@ -1,6 +1,6 @@
-# UI-LEDGER-01 — "Lord's ledger" restyle and Report view (design spec v0.1)
+# UI-LEDGER-01 — "Lord's ledger" restyle and Report view (design spec v0.2)
 
-Status: **G1 approved** by the user (Tân), 2026-11-03, Claude session: "Duyệt G1". The implementation plan is written after all of P3 and P8 (with the city event mechanics) are merged, against that `main`. No code, push or PR is authorised by this document.
+Status: v0.1 **G1 approved** by the user (Tân), 2026-11-03, Claude session: "Duyệt G1". **v0.2 revision** (2026-11-04) replaces the single Report letter with letter cards (§1 item 12, §6); the owner agreed to the direction ("ok tôi đồng ý"), and the written v0.2 text needs the owner's review before the plan. The implementation plan is written after all of P3 and P8 (with the city event mechanics) are merged, against that `main`. No code, push or PR is authorised by this document.
 Baseline: `origin/main` `9f3f165` (merge of PR #65). Branch: `docs/ui-ledger-redesign` (docs only).
 Scope: the Character Life shell of a started game session. Presentation only.
 Implementation starts only after all of P3 (PR A, B and C) and P8 with the city event mechanics are merged (§9).
@@ -20,6 +20,7 @@ User decisions, in order (Claude session unless stated):
 9. 2026-11-03: UI-LEDGER-01 starts **after all of P3** ("After all of P3"), not alongside P3-B. P3-C builds its outside-city UI on the current style; this redesign then restyles it with the rest of the shell.
 10. 2026-11-03: written spec v0.1 approved: "Duyệt G1". The approval did not answer §12, so the spec's defaults stand.
 11. 2026-11-03: P8 (law, city identity, Security/Authority) and the city event mechanics move **before** the frontend work ("P8 before frontend"), after the owner said "nên để P8 lên trước sau khi hoàn thành các tính năng và cơ chế event cho thành phố thì mới tính tới việc thiết kế". P6 items follow the frontend.
+12. 2026-11-04: the Report becomes **letter cards**, after the owner asked "bạn có thể học các báo cáo giống của Free cities nhưng làm đơn giản hơn nhưng vẫn chỉ rõ nội dung cần báo cáo đc ko? Chia thành các card giống như bức thư để gửi cho Player". Claude studied the Free Cities end-week report (`src/endWeek/economics/economics.js`: one tab per area, a tab only when it has content, gains and losses coloured inline) and proposed a simpler version: one letter per area from a named sender, a one-line headline, a tone seal, 3–4 key rows and a Details disclosure. The owner supplied the concept image [report-letters.webp](../../design/reference/report-letters.webp) and agreed to save it as the visual reference and revise this spec: "ok tôi đồng ý". §6 is rewritten for this.
 
 This spec supersedes, for the Report only, the "Report is a dialog" rule in the [city navigation spec](2026-10-27-city-navigation-design.md) §4 item 1, including "Automatic Report opening after End Week returns focus to End Week on close". Information, Player and Population stay dialogs.
 
@@ -27,13 +28,13 @@ This spec supersedes, for the Report only, the "Report is a dialog" rule in the 
 
 The shell looks like a lord's desk instead of a web dashboard. The sidebar is a board of dark walnut planks held by brass nails. Navigation buttons are pale oak plaques. End Week is a red wax seal with a gold rim. Content cards are parchment. Header views are **City | Characters | Report**.
 
-After End Week the Report view opens by itself. The weekly report reads as a parchment letter: a heading, three summary stamps, then the existing sections. Arrivals appear as a white paper notice pinned with a brass tack. "Plan next week" is a wax-seal button at the bottom of the letter.
+After End Week the Report view opens by itself. The weekly report reads as **letters on the Lord's desk**: a heading with three summary stamps, an urgent letter when an event card waits for an answer, then short parchment letters from the steward, the quartermaster, the census clerk, the captain of the watch and the streets. Each letter says its news in one headline and a few rows; Details holds the full numbers. "Plan next week" is a wax-seal button below the letters. Visual reference: [report-letters.webp](../../design/reference/report-letters.webp) (concept art, not shipped).
 
 ## 3. Non-goals
 
 - Any change to core, simulation, content, persistence, save formats or commands (LAW-02).
-- A new event system. The only "event" shown is the existing `report.immigration` data.
-- New report data, forecasts or computed quantities beyond formatting of existing fields.
+- A new event system. Event cards (P8-B1 crisis, later P8-B2 crime) come from their own WPs; this redesign only restyles the card those WPs render as the urgent letter (§6).
+- New report data, forecasts or computed quantities beyond formatting of existing fields. Letter headlines and tone seals (§6) are formatting: each is chosen by a fixed rule from fields the report already has.
 - Changing visible wording of existing text, except the items listed in §5.4.
 - The pixel city map (CITY-MAP-01). That spec must first be revised for the P2/P3 state (§9).
 - Restyling inside `CharacterLifeCity`, `InsideCity`, `CharacterLifeCharacters`, `CharacterProfile`, `SocietyPopulation`, `SocietyReport` beyond what they inherit from shell tokens and `.card`. A file edit there needs a spec revision.
@@ -51,7 +52,7 @@ Each material has one job:
 | Dark walnut wood | Sidebar board, view bar, page background | Never carries body text directly |
 | Pale oak plaque | Navigation buttons (sidebar and view bar) | Always lighter than the wood under it |
 | Parchment | Cards, dialogs, the Report letter | All reading content sits on parchment |
-| White paper | The arrivals notice in Report | Only for event-like notices |
+| White paper | Not used in v0.2 (arrivals moved into the census letter) | Reserved for later event notices |
 | Brass | Nails, tacks, the selected-view marker | Never wood-coloured |
 | Red wax | End Week, Plan next week | At most one wax button visible per area |
 
@@ -68,7 +69,7 @@ The shell's `main` element (`CharacterLifeShell.svelte`, style block) keeps its 
 --ink-gain: #2f5d2a;  --ink-loss: #8c2a1f;  --focus: #1f4fa0;
 ```
 
-Gains and losses use colour **and** a `+` / `−` sign, never colour alone.
+Gains and losses use colour **and** a `+` / `−` sign, never colour alone. Colour follows what the change means **for the city**, not the sign: anything the city loses (spoiled, stolen, unpaid, satisfaction down, Crime or Tension up) is `--ink-loss`; anything it gains is `--ink-gain`; unchanged values use `--ink-muted`. (The concept image colours "Spoiled −0.4" green; that is wrong and the rule above wins.)
 
 ### 4.3 Typography
 
@@ -86,7 +87,8 @@ Font files are self-hosted WOFF2 with each font's OFL 1.1 licence file beside th
 - Parchment grain: the same noise tile at low opacity over `--parchment`. Grain overlay opacity is at most **8%**.
 - Curved edges, folds and corner curls: `::before` / `::after` pseudo-elements with `pointer-events: none`, never over text, never changing layout size.
 - No SVG `filter` on large live elements, no animated seeds, no `background-attachment: fixed` (Codex item 2).
-- No image files. WebP tiles are a fallback only if §8 scroll measurement fails, and need a spec revision.
+- No texture image files. WebP tiles are a fallback only if §8 scroll measurement fails, and need a spec revision.
+- **Desk props** (v0.2, from the concept image): candle, coins, quill and inkwell, folded map, loose wax seals. Optional static WebP files in `packages/ui/src/assets/desk/`, **≤ 150 KB in total**, measured and reported in the PR. They sit in the Report view's margins, `aria-hidden`, `pointer-events: none`, never under text, and are not rendered below 1100px content width. If a file is missing or fails to load, the desk shows plain wood grain and nothing else changes. Art must be original or licensed for the project; the concept image itself is never shipped.
 - "Drawn by code" in CITY-MAP-01 is that map's own rule, not a rule for this theme.
 
 All texture CSS lives in one new stylesheet `packages/ui/src/ledger-theme.css`, imported by `CharacterLifeShell.svelte`.
@@ -126,20 +128,48 @@ Only these:
 
 1. The Report view's letter heading stays "{Week N · Year N} report"; a decorative line "To the Lord of Haven" under it (`aria-hidden`).
 2. Three summary stamps at the top of the letter: **Food** `formatFulfillment(foodConsumed, foodDemand)`, **Goods** `formatFulfillment(served, demand)`, **Happiness** `happinessAfter − happinessBefore` with sign. Same formatters as today; "No demand" and "Unavailable" rules carry over. No stamp when there is no report.
-3. The immigration line renders inside the white paper notice with heading "Notice". Its text is unchanged.
+3. The immigration line renders inside the census letter (§6). Its text is unchanged.
+4. Letter sender names, headlines and tone seal labels listed in §6.
 
-## 6. Report letter layout
+## 6. Report letters (v0.2)
 
-Order inside `SoloWeekReport.svelte`, all existing content kept:
+Visual reference: [report-letters.webp](../../design/reference/report-letters.webp). All existing report content is kept; it is regrouped into letters, and nothing is dropped.
 
-1. Letter heading, decorative line, three stamps.
+### 6.1 Order in the Report view
+
+1. Heading "{Week N · Year N} report" with the three stamps (§5.4) on the same line at ≥ 750px and below it otherwise; the decorative line "To the Lord of Haven".
 2. Previous-report and planning lines (unchanged, when not locked).
-3. Needs and services; Gold and upkeep; Population and happiness without the immigration line; `SocietyReport` when present.
-4. Weekly stock ledger table (unchanged, still keyboard-scrollable).
-5. Building activity and How this is calculated disclosures (unchanged).
-6. Signature line "Your steward" (`aria-hidden`) and **Plan next week** as the wax seal button.
+3. **Urgent letter**, only while an event card is pending: full width, red wax-coloured border, sender line and the seal `Answer before End Week`. Its title, text and option buttons are the card rendered by the event WP (P8-B1 crisis); this redesign styles it and does not change its content or commands.
+4. **Letters**, in this fixed order (a fixed order keeps each letter in the same place every week): Steward, Quartermaster, Census clerk, Captain of the watch, Word from the streets. A letter whose fields are absent from the report is not shown (as Free Cities hides empty tabs).
+5. Signature line "Your steward" (`aria-hidden`) and **Plan next week** as the wax seal button.
 
-Plan next week moves from the top of the letter to the bottom. The arrivals notice sits beside the letter at ≥ 1100px content width and below it otherwise. Letter width is fluid (`max-width: 72ch`) with no fixed page width (Codex risk 6).
+Layout: letters in a grid `repeat(auto-fit, minmax(16rem, 1fr))`, one column below 750px. Each letter: sender line with a decorative icon, tone seal, headline in IM Fell English SC, 2–4 rows (label left, `before → after` or signed amount right, tabular numerals), then a `Details` disclosure (`<details>/<summary>`). Torn edges and corner ornaments are CSS-only (§4.4).
+
+### 6.2 What each letter holds
+
+| Letter (sender) | Rows | Details holds |
+| --- | --- | --- |
+| **Your steward** | Gold before → after; tax; upkeep paid; unpaid upkeep (only if > 0); Gold stolen (only if > 0) | Gold and upkeep section; How this is calculated |
+| **Quartermaster** | Food eaten of demand; Goods served; materials produced; spoiled (only if > 0) | Needs and services; weekly stock ledger table (still keyboard-scrollable); Building activity; outside land |
+| **Census clerk** | Population before → after; immigration line (§5.4 item 3); satisfaction of each class before → after | Population and happiness; `SocietyReport` |
+| **Captain of the watch** | Security, Crime, Authority before → after; Authority tax effect (only if ≠ 0) | Order section and Order calculation (P8-A) |
+| **Word from the streets** | Tension, Desperation before → after; crisis stage and hungry weeks (only when P8-B1 data is present) | Crisis section (P8-B1) |
+
+### 6.3 Headlines and tone seals
+
+Each letter takes the **first** headline whose rule holds. Seals: `Bad` (wax red), `Watch` (amber), `News` (brass). Rules read only existing report fields.
+
+| Letter | Rule → headline (seal) |
+| --- | --- |
+| Steward | unpaid upkeep > 0 → `Upkeep went unpaid` (Bad); Gold fell → `The treasury shrank` (Bad); Gold rose → `The treasury grew` (News); else `The treasury held` (News) |
+| Quartermaster | Food eaten < Food demand → `Food ran short` (Bad); Goods served < demand → `Goods ran short` (Watch); spoiled > 0 → `Some stores spoiled` (Watch); else `The stores are full` (News) |
+| Census clerk | population fell → `People left the city` (Bad); newcomers > 0 → `{N} newcomers stayed` (News; `One newcomer stayed` for 1); newcomers turned away → `Newcomers were turned away` (Watch); else `The census is unchanged` (News) |
+| Captain of the watch | Crime ≥ 67 → `Crime rules the streets` (Bad); Crime rose → `Crime is creeping up` (Watch); theft > 0 → `Thieves took from the stores` (Watch); else `The streets are quiet` (News) |
+| Word from the streets | crisis stage rose → `Unrest rose to {Stage}` (Bad); crisis stage fell → `Unrest eased to {Stage}` (News); Tension ≥ 50 → `Anger is growing` (Watch); else `The streets are calm` (News) |
+
+The rules live in one pure, unit-tested module `packages/ui/src/report-letters.ts` (input: the report object; output: letters with sender, seal, headline and rows). Svelte components only render its output.
+
+Letter width is fluid with no fixed page width (Codex risk 6). Desk props (§4.4) sit outside the letter grid.
 
 ## 7. Accessibility and layout
 
@@ -163,6 +193,9 @@ Browser checks, extending existing specs (no new test infrastructure):
 6. 375×812 and 1280×900: no horizontal page overflow; every control ≥ 44×44.
 7. Scroll smoothness: a Playwright trace of scrolling the Report view at 375px shows no long frame over 50 ms caused by paint. Failing this triggers the WebP fallback revision (§4.4).
 8. Fonts load from hashed asset URLs in `npm run build` output; with fonts blocked, the page renders in Georgia with no layout break.
+9. Letters (v0.2): after End Week the five letters appear in the §6.1 order with their sender names; each `Details` opens and shows the content listed in §6.2; with a pending event card the urgent letter is first; with desk prop files blocked the Report renders with no layout break.
+
+New unit test `packages/ui/src/__tests__/report-letters.test.ts`: every headline rule in §6.3 at its boundary (first match wins; Crime 66/67; Tension 49/50; zero values omit their optional rows), and every loss row carries the loss tone regardless of sign (§4.2).
 
 Tests that change because Report is no longer a dialog (from Codex's list at `9f3f165`): `tests/e2e/character-life-navigation.helpers.ts:36,91`; `tests/e2e/character-life-navigation.spec.ts:156–186, 591, 654–667, 826, 1092, 1162–1163, 1204`; `tests/e2e/character-life-navigation-accessibility.spec.ts:225, 274`; `tests/e2e/goods-stock.spec.ts:28`. Each change drops a Report-only dialog expectation (modal, inert, Escape, focus return to End Week) and keeps it for the other dialogs. Line numbers are re-checked on the implementation base.
 
@@ -190,6 +223,11 @@ packages/ui/src/ledger-theme.css                 (new)
 packages/ui/src/assets/fonts/*.woff2             (new, EB Garamond, IM Fell English SC)
 packages/ui/src/assets/fonts/OFL-*.txt           (new, licences)
 packages/ui/src/__tests__/ledger-contrast.test.ts (new)
+packages/ui/src/report-letters.ts                (new, v0.2)
+packages/ui/src/ReportLetter.svelte              (new, v0.2)
+packages/ui/src/__tests__/report-letters.test.ts (new, v0.2)
+packages/ui/src/assets/desk/*.webp               (new, v0.2, optional, ≤ 150 KB total)
+docs/design/reference/report-letters.webp        (owner's concept image, docs only)
 tests/e2e/character-life-navigation.helpers.ts
 tests/e2e/character-life-navigation.spec.ts
 tests/e2e/character-life-navigation-accessibility.spec.ts
@@ -197,7 +235,7 @@ tests/e2e/goods-stock.spec.ts
 docs/superpowers/specs/2026-11-03-ui-ledger-redesign-design.md
 ```
 
-Any other file needs a reviewed revision. No dependency, lockfile or config change. Fonts are the only new binary assets and are approved only through this spec's G1.
+Any other file needs a reviewed revision. No dependency, lockfile or config change. Fonts and the optional desk WebP files (v0.2) are the only new shipped binary assets and are approved only through this spec's G1.
 
 ## 11. Risks
 
@@ -207,6 +245,9 @@ Any other file needs a reviewed revision. No dependency, lockfile or config chan
 - **Moving Plan next week to the bottom** makes it further from the heading on long reports. Accepted: focus starts at the heading and the player reads down to the seal.
 - **Test churn** in the navigation specs. Limited to Report-dialog assertions listed in §8.
 - **P3 changes the UI** after this spec (P3-C). §9 item 3 re-checks and extends §10 before dispatch.
+- **Five letters make a long page on phones** (v0.2). Rows are capped at four per letter and full numbers sit in Details.
+- **Headline rules may disagree with what players feel matters most.** They are one table in one module (§6.3), so P1 playtests can tune them without touching components; log disagreements in the playtest risk register.
+- **Desk prop art** must be original or licensed; until such art exists the desk is plain wood (§4.4).
 
 ## 12. Questions closed by G1 defaults
 
