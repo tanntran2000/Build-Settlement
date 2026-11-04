@@ -1,4 +1,5 @@
 <script lang="ts">
+  import CityFallen from './CityFallen.svelte';
   import { tick } from 'svelte';
   import CharacterLifeShell from './CharacterLifeShell.svelte';
   import CharacterLifeCity from './CharacterLifeCity.svelte';
@@ -14,6 +15,7 @@
   import { formatLifeWeek } from './life-calendar.js';
   import { prepareCharacterLifeLoad, readLocalCharacterLife, saveLocalCharacterLife, isPlayableCheckpoint, OLD_CHECKPOINT_MESSAGE } from './character-life-session.js';
 
+  export let onnewgame:()=>void;
   export let lifeMode = true;
   export let initialLife: CharacterLifeSessionState;
   let state = initialLife.city;
@@ -71,7 +73,7 @@
       return false;
     }
     if (!result.success) {
-      const known = ['INVALID_COMMAND', 'STALE_COMMAND', 'FORBIDDEN', 'UNSUPPORTED_RULESET', 'INVALID_STATE', 'INVALID_WORKFORCE', 'INVALID_PLAN', 'EXECUTION_ERROR', 'WEEK_MISMATCH', 'INVALID_TILE', 'INVALID_BUILDING', 'INVALID_PLACEMENT', 'OCCUPIED', 'EMPTY_TILE', 'MAX_LEVEL', 'INSUFFICIENT_RESOURCES', 'LOCKED_PLOT', 'NOT_AVAILABLE', 'WRONG_TIER', 'WALL_COMPLETE', 'PREREQUISITE_MISSING', 'UNSUPPORTED_ACTION'];
+      const known = ['INVALID_COMMAND', 'STALE_COMMAND', 'FORBIDDEN', 'UNSUPPORTED_RULESET', 'INVALID_STATE', 'INVALID_WORKFORCE', 'INVALID_PLAN', 'EXECUTION_ERROR', 'WEEK_MISMATCH', 'INVALID_TILE', 'INVALID_BUILDING', 'INVALID_PLACEMENT', 'OCCUPIED', 'EMPTY_TILE', 'MAX_LEVEL', 'INSUFFICIENT_RESOURCES', 'LOCKED_PLOT', 'NOT_AVAILABLE', 'WRONG_TIER', 'WALL_COMPLETE', 'PREREQUISITE_MISSING', 'UNSUPPORTED_ACTION', 'CARD_PENDING', 'CITY_FALLEN', 'UNKNOWN_CARD', 'UNKNOWN_OPTION', 'OPTION_UNAVAILABLE'];
       if (!known.includes(result.error.code)) {
         error = 'The action failed. Download the error log for review.';
         errorLog.record(type === 'END_WEEK' ? 'END_WEEK' : 'RUNTIME', 'UNKNOWN_COMMAND_FAILURE');
@@ -94,10 +96,11 @@
     return true;
   }
   async function endLifeWeek(opener: HTMLButtonElement): Promise<void> {
-    if (state.phase !== 'planning') return;
+    if (state.phase !== 'planning' || state.society?.pendingCard) return;
     if (command('END_WEEK', { expectedWeek: state.world.week })) {
       lifeStatus = '';
       const resolvedRevision = state.revision, resolvedReport = report;
+      if(state.society?.crisis.stage === 'fallen') return;
       await lifeShell.openWindow('report', opener);
       if (state.revision === resolvedRevision && report === resolvedReport && activeWindow === 'report') {
         lifeStatus = `${formatLifeWeek(resolvedReport!.week)} report ready.`;
@@ -156,7 +159,7 @@
     report = null; workers = nextWorkers;
     if (lifeMode) {
       uiEpoch++; postDrafts = []; destination = 'city'; lifeStatus = '';
-      lifeShell.closeWindow();
+      lifeShell?.closeWindow();
       void focusLifeCityNavigation();
     }
     errorLog.setContext('weekly', { week: state.world.week });
@@ -190,8 +193,10 @@
   }
 </script>
 
-{#if lifeMode && outside && npcs && player && profiles}
-  <CharacterLifeShell bind:this={lifeShell} {state} {report} bind:destination bind:activeWindow {error} status={lifeStatus} {unapplied} onendweek={endLifeWeek}>
+{#if state.society?.crisis.stage === 'fallen'}
+  <CityFallen weeks={state.world.week-1} {onnewgame} />
+{:else if lifeMode && outside && npcs && player && profiles}
+  <CharacterLifeShell bind:this={lifeShell} {state} {report} bind:destination bind:activeWindow {error} status={lifeStatus} {unapplied} onchoose={(cardId,option)=>command('CHOOSE_CARD_OPTION',{cardId,option})} onendweek={endLifeWeek}>
     {#snippet playerInfo()}
       <p>{player!.character.name}</p><p>Leader of Haven</p>
     {/snippet}

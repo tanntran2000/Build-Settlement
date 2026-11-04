@@ -20,7 +20,7 @@ export interface CrisisOptionView { option: CardOption; available: boolean; reas
 export function crisisOptions(kind: CrisisCardKind, f: {population:number;goldMilli:number;security:number;promisePending:boolean}): CrisisOptionView[] {
  const cost=f.population*CRISIS_TRIAL.pay[kind].milliPerResident;
  if(!Number.isSafeInteger(cost)||cost<0)throw Error('Unsafe crisis cost.');
- const gold=cost%1000===0?String(cost/1000):(cost/1000).toFixed(1);
+ const gold=`${Math.floor(cost/1000)}${cost%1000?'.'+String(cost%1000).padStart(3,'0').replace(/0+$/, ''):''}`;
  return CARD_OPTIONS.map(option=>{
   const reason=option==='pay' && f.goldMilli<cost?`Needs ${gold} Gold.`:option==='promise' && f.promisePending?'A promise is already pending.':option==='force' && f.security<CRISIS_TRIAL.force.security[kind]?`Needs Security ${CRISIS_TRIAL.force.security[kind]}.`:null;
   return {option,available:reason===null,reason,goldMilli:option==='pay'?cost:0,tensionDelta:option==='pay'?CRISIS_TRIAL.pay[kind].tension:option==='force'?CRISIS_TRIAL.force.tension[kind]:option==='refuse'?CRISIS_TRIAL.refuse.tension:0};
