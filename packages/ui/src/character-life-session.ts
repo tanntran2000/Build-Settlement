@@ -49,10 +49,6 @@ export function readLocalCharacterLife(): { success: true; state: CharacterLifeS
   const result = deserializeCharacterLifeSave(text);
   return result.success && isPlayableCheckpoint(result.state) ? result : fail(`Local checkpoint not loaded; it was left unchanged. ${OLD_CHECKPOINT_MESSAGE}`);
 }
-export function hasLocalCharacterLifeCheckpoint(): boolean {
-  try { return window.localStorage.getItem(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY) !== null; }
-  catch { return false; }
-}
 export function clearFallenCharacterLifeCheckpoint(confirmed: boolean, stage: import('@haven/core').CrisisStage): { success: true } | Failure {
   if (!confirmed || stage !== 'fallen') return { success: true };
   try { window.localStorage.removeItem(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY); return { success: true }; }
