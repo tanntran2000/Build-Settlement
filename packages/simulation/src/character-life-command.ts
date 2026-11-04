@@ -36,6 +36,7 @@ export function executeCharacterLifeCommand(session: unknown, raw: unknown): Cha
   try {
     const next = { city: result.next.city, outside: result.next.outside, npcs: result.next.npcs,
       player: structuredClone(session.player), profiles: structuredClone(session.profiles) };
+    next.player.character.health=Math.max(1,next.player.character.health-((result as {report?:Readonly<TileTrialReport>}).report?.crimeEvent?.lordHealthLoss??0));
     if (isLiveCharacterLifeSessionState(next)) return { ...result, next };
   } catch { return fail('EXECUTION_ERROR', 'The action failed validation; the original session was preserved.'); }
   return fail('EXECUTION_ERROR', 'The action failed validation; the original session was preserved.');
