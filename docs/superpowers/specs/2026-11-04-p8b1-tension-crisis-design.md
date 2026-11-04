@@ -75,7 +75,7 @@ Checked once per End Week, after the promise check (§6). Each End Week first ad
 
 Any stage change sets `weeksInStage = 0`. Entering Demand, Protest or Rebellion opens the matching card. Stepping down never opens a card.
 
-**Game over (`fallen`):** terminal. Every command except New Game is refused with `The city has fallen. Start a New Game.` **Saving (v0.2 (owner, 2026-11-04, verbatim: "Clear the save")):** a fallen city is never saved. When End Week returns a fallen city, the game clears the single save slot, so Continue is no longer offered and the lost run cannot be reopened; the Fallen screen stays until the Player starts a New Game or reloads. The save format still accepts only Planning sessions; nothing in it changes. Exported files made earlier are untouched.
+**Game over (`fallen`):** terminal. Every command except New Game is refused with `The city has fallen. Start a New Game.` **Saving (v0.2 (owner, 2026-11-04, verbatim: "Clear the save")):** a fallen city is never saved. When End Week returns a fallen city, the game clears the single save slot, so the lost run cannot be reopened: Continue stays visible and, with the slot empty, shows the existing message `No local checkpoint in this browser yet. Choose Save locally first.` (owner, 2026-11-04, verbatim: "Yes, keep Continue"; hiding it would read storage on the start screen and break the manual-checkpoint rule); the Fallen screen stays until the Player starts a New Game or reloads. The save format still accepts only Planning sessions; nothing in it changes. Exported files made earlier are untouched.
 
 ## 6. Choices
 
@@ -147,7 +147,7 @@ Acceptance tests:
 - each option's numbers at all three stages; unaffordable Pay, too-low Security and a second Promise are refused with state unchanged (on a clone);
 - promise kept, broken, and its Tension/Authority changes;
 - Force recomputes Happiness;
-- fallen refuses every command except New Game; after a fall the save slot is empty and Continue is not offered (v0.2);
+- fallen refuses every command except New Game; after a fall the save slot is empty and Continue shows the existing no-checkpoint message (v0.2);
 - determinism: same seed and commands give the same state;
 - Save/Load and Export/Import keep `crisis` and `pendingCard`; a `tile-society-03` save is refused;
 - UI: card buttons and disabled reasons, End Week lock, Information row, Report section, Fallen screen, no horizontal overflow at 375 and 1280 px.
@@ -161,6 +161,7 @@ Acceptance tests:
 - Choices: "Pay / Promise / Force (Recommended)". Refuse was added in design section 2 so a choice is always available.
 - Crime events for P8-B2 (verbatim in §2).
 - Saving a fallen city, after PR C found the save format accepts only Planning: "Clear the save" (2026-11-04), chosen over saving the fallen state.
+- Continue after a fall: "Yes, keep Continue" (2026-11-04), after CI showed that hiding it breaks the manual-checkpoint tests.
 - Design sections approved in chat: "OK, go to Section 2", "OK, Section 3", "OK, write spec".
 
 ## 12. Found while designing (not fixed here)

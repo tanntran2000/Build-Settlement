@@ -58,7 +58,7 @@ All TRIAL numbers and pure option rules live once in `core/src/trial/crisis.ts`;
 2. **Double click on a choice.** A second identical `CHOOSE_CARD_OPTION` (same or new revision) is refused (`STALE_COMMAND` or `UNKNOWN_CARD`) and never charges Gold twice. → Task A3.
 3. **Exact affordability.** Gold equal to the Pay cost succeeds and leaves 0; one milli less → `OPTION_UNAVAILABLE` `Needs {x} Gold.`; Security exactly 40 / 55 / 70 allows Force. → Task A3.
 4. **An edited save.** `pendingCard.kind` ≠ `stage`; a card while `stage` is `warning`; `promise.weeksLeft` 3; a negative or fractional streak; an unknown `lastChoice.option`; stage `fallen` with a card → refused by validators and codecs. → Task A1.
-5. **A fallen city after Continue or Import.** Every command, including `ASSIGN_NPC` and `NEXT_WEEK`, returns `CITY_FALLEN` with the state unchanged; after a fall the save slot is cleared and Continue is not offered (owner, 2026-11-04, verbatim: "Clear the save"). → Tasks A3, C2.
+5. **A fallen city after Continue or Import.** Every command, including `ASSIGN_NPC` and `NEXT_WEEK`, returns `CITY_FALLEN` with the state unchanged; after a fall the save slot is cleared (owner, 2026-11-04, verbatim: "Clear the save"); Continue stays visible and, with the slot empty, shows the existing message `No local checkpoint in this browser yet. Choose Save locally first.` (owner, 2026-11-04, verbatim: "Yes, keep Continue"; hiding it would read storage on the start screen and break the manual-checkpoint rule). → Tasks A3, C2.
 
 ---
 
@@ -208,5 +208,5 @@ Branch `feat/p8b1-crisis-ui` from `main` after PR B merges.
 
 **Files:** Create `tests/e2e/crisis.spec.ts`; modify `character-life-navigation.helpers.ts` (rebuild `crisis` from the DOM and remove the PR B strip).
 
-- [ ] Browser tests: Import `life-demand-card.json` → the card shows four options with costs; End Week is disabled with `Answer the crisis first.`; choose Pay → Gold and Tension change, the card closes, End Week works, and the next Report shows `Your answer last week: Pay (…)`. Import `life-rebellion-last-week.json`, End Week → the Fallen screen; the save slot is empty and, after a reload, Continue is not offered; New Game starts a city at stage Calm. A normal End Week keeps the save as before. Information shows the Crisis row. Report parity includes `crisis`. No horizontal overflow at 375 and 1280 px.
+- [ ] Browser tests: Import `life-demand-card.json` → the card shows four options with costs; End Week is disabled with `Answer the crisis first.`; choose Pay → Gold and Tension change, the card closes, End Week works, and the next Report shows `Your answer last week: Pay (…)`. Import `life-rebellion-last-week.json`, End Week → the Fallen screen; the save slot is empty and, after a reload, Continue shows `No local checkpoint in this browser yet. Choose Save locally first.`; New Game starts a city at stage Calm. A normal End Week keeps the save as before. Information shows the Crisis row. Report parity includes `crisis`. No horizontal overflow at 375 and 1280 px.
 - [ ] Run the 8 gates; push and reply. Claude opens the PR.
