@@ -20,6 +20,8 @@ All TRIAL numbers and pure option rules live once in `core/src/trial/crisis.ts`;
 
 **Spec:** `docs/superpowers/specs/2026-11-04-p8b1-tension-crisis-design.md` (v0.1, G1 "Approve G1", 2026-11-04).
 
+**Plan approval:** owner Tân, 2026-11-04, verbatim: "Approve, Builder A". This includes Decisions 3 and 4.
+
 ## Decisions
 
 1. **Ruleset.** `SOCIETY_RULESET` becomes `'tile-society-04'`. `isSocietyState` accepts only `04`, so codecs refuse `03` saves with the existing older-version message (spec §9).
