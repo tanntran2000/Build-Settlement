@@ -318,7 +318,8 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
     for(const key of ['taxModifierBps','taxDeltaMilli','arrivalsBudgetBefore','arrivalsBudgetAfter','tensionAdded','satisfactionLost'] as const)order[key]=Number(await region.locator(`[data-order-detail="${key}"]`).textContent());
     actual.order=order;
   }
-  const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
+  const { society, luxuryImportedMilli, trainingGoldMilli, crisis, ...baseReport } = expected;
+  void crisis; // PR B: Crisis DOM parity lands in PR C.
   expect(actual).toEqual(baseReport);
   if (society) {
     const labels = { free: 'Free residents', makers: 'Makers', luminaries: 'Luminaries', merchants: 'Merchants', bound: 'The Bound' };

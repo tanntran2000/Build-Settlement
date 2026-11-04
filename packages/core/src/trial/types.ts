@@ -1,3 +1,4 @@
+import type { CrisisCardKind, CrisisStage, CrisisState } from './crisis.js';
 import type { ResearchTopic } from './outside.js';
 import type { OrderState } from './order.js';
 import type { SocietyState } from './society.js';
@@ -15,7 +16,14 @@ export interface TileTrialState {
   tiles: TrialTile[];
   happiness: number;
 }
+export interface CrisisReport {
+ stageBefore: CrisisStage; stageAfter: CrisisStage; hungry: boolean;
+ hungerStreak: number; calmStreak: number; weeksInStage: number;
+ promise: { stage: CrisisCardKind; result: 'kept' | 'broken' | 'pending'; tensionDelta: number; authorityDelta: number } | null;
+ cardOpened: CrisisCardKind | null; lastChoice: CrisisState['lastChoice']; tensionBefore: number; tensionAfter: number;
+}
 export interface TileTrialReport {
+  crisis?: CrisisReport;
   order?: OrderReport;
   outside?: {
     producedMilli: {wood:number;iron:number;stone:number;wool:number;herbs:number;cloth:number};

@@ -59,6 +59,7 @@ describe('society renewable support and transaction ports', () => {
   it('does not mistake capped stored Wheat liquidation for renewable Food over thirty weeks', () => {
     let s = expanded(); Object.assign(settlement(s).inventory, { gold: 100000, wheat: 1000000, food: 100000 });
     s = act(s, { type: 'SET_ENABLED', tileId: 'field-1', enabled: false }).nextState;
+    const answeredWeeks: number[] = [];
     for (let i = 0; i < 30; i++) {
       const before = structuredClone(s), r = week(s), report = r.report!;
       const processed=Math.min(3,Math.floor(report.before.wheat/2000))*2000;
@@ -73,8 +74,14 @@ describe('society renewable support and transaction ports', () => {
       expect(report.after.food).toBe(report.before.food+processed-consumed-foodSpilled);
       expect(r.nextState.tiles).toEqual(s.tiles); expect(s).toEqual(before);
       expect(r.nextState.phase).toBe('report'); expect(r.nextState.world.week).toBe(s.world.week + 1);
-      s = plan(r.nextState); expect(count(s)).toBe(100);
+      let next = r.nextState;
+      if(next.society!.pendingCard){
+        answeredWeeks.push(report.week);
+        next=act(next,{type:'CHOOSE_CARD_OPTION',cardId:next.society!.pendingCard!.id,option:'refuse'}).nextState;
+      }
+      s = plan(next); expect(count(s)).toBe(100);
     }
+    expect(answeredWeeks.length).toBeGreaterThan(0);
     expect(settlement(s).inventory.wheat).toBe(0);
     expect(settlement(s).inventory.food).toBe(0);
   });
