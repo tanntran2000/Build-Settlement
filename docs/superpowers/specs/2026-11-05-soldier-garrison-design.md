@@ -1,6 +1,6 @@
 # SOLDIER-01 — Garrison and Watch House staffing (design spec v0.1)
 
-Status: **draft for G1.** No code is authorized until the owner approves this spec and then the implementation plan.
+Status: **G1 approved by the owner** (Tân, 2026-11-05, verbatim: "Approve G1"). No code is authorized until the owner also approves the implementation plan.
 - **Decisions:** from the owner's answers in the Claude session on 2026-11-05 (§10).
 - **Numbers:** every number is a TRIAL default, not approved balance.
 - **Base:** `main` `d34762a` (P8-A, P8-B and P8-C merged; the engine plays only `tile-society-06`).
