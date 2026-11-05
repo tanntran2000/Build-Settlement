@@ -1,3 +1,4 @@
+import { lawTerms } from '@haven/core';
 import { describe, it, expect } from 'vitest';
 import { createSocietyState } from '@haven/core';
 import { allocateRequirements, societyWorkforce } from '../society-week.js';
@@ -109,7 +110,7 @@ describe('transfers',()=>{
 
 import { isSocietyState, societyPopulation } from '@haven/core';
 import { resolveDesperation, resolveTension, resolveCorruption, resolveSocietyWeek, type SocietyWeekInput } from '../society-week.js';
-const input=():SocietyWeekInput=>({society:society(),facilities:facilities(),employment:employment(),foodAvailableMilli:4000,goodsServableMilli:1450,luxuryImportedMilli:0,arrivalsBudget:0,goldAvailableMilli:10000});
+const input=():SocietyWeekInput=>({lawTerms:lawTerms([]),society:society(),facilities:facilities(),employment:employment(),foodAvailableMilli:4000,goodsServableMilli:1450,luxuryImportedMilli:0,arrivalsBudget:0,goldAvailableMilli:10000});
 describe('weekly resolution',()=>{
   it('rejects debt arithmetic overflow before clamping',()=>{
     const i=input();

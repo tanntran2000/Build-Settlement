@@ -1,9 +1,9 @@
-import { ORDER_TRIAL as O, SOCIETY_BUILDINGS, societyPlot, societyPopulation, trialBuilding, securityTarget, crimeTarget, authorityTarget, driftToward, type OrderFacts, type OrderReport, type TileTrialState } from '@haven/core';
+import { lawTerms, type LawTerms, ORDER_TRIAL as O, SOCIETY_BUILDINGS, societyPlot, societyPopulation, trialBuilding, securityTarget, crimeTarget, authorityTarget, driftToward, type OrderFacts, type OrderReport, type TileTrialState } from '@haven/core';
 
 const classes=['free','makers','luminaries','merchants'] as const;
-export function orderFacts(s:TileTrialState,fundedTileIds:ReadonlySet<string>):OrderFacts {
+export function orderFacts(s:TileTrialState,fundedTileIds:ReadonlySet<string>,terms:LawTerms=lawTerms([])):OrderFacts {
  const society=s.society!;
- const facts:OrderFacts={standing:society.standing,wallRing:society.wallRing,watchHouses:[],barracksWorkers:0,population:societyPopulation(society),slumOther:0,corruption:society.corruption,desperation:society.desperation,tension:society.tension,
+ const facts:OrderFacts={lawSecurity:terms.securityTarget,lawCrime:terms.crimeTarget,lawAuthority:terms.authorityTarget,standing:society.standing,wallRing:society.wallRing,watchHouses:[],barracksWorkers:0,population:societyPopulation(society),slumOther:0,corruption:society.corruption,desperation:society.desperation,tension:society.tension,
   meanSatisfaction:Math.trunc(classes.reduce((sum,key)=>sum+society.satisfaction[key],0)/classes.length),townHallStaffed:false,patrols:society.research.completed.includes('watch-patrols'),drill:society.research.completed.includes('barracks-drill')};
  for(const tile of s.tiles){
   const b=tile.building;
@@ -22,8 +22,8 @@ export function authorityArrivals(authority:number,budget:number,hasRoom:boolean
  if(authority>=O.immigration.bonusAtOrAbove&&hasRoom){if(!Number.isSafeInteger(budget+1))throw Error('Order arrivals overflow.');return budget+1;}
  return budget;
 }
-export function resolveOrderWeek(s:TileTrialState,fundedTileIds:ReadonlySet<string>,partial:Pick<OrderReport,'before'|'taxModifierBps'|'taxDeltaMilli'|'arrivalsBudgetBefore'|'arrivalsBudgetAfter'>):OrderReport {
- const facts=orderFacts(s,fundedTileIds), order=s.society!.order;
+export function resolveOrderWeek(s:TileTrialState,fundedTileIds:ReadonlySet<string>,partial:Pick<OrderReport,'before'|'taxModifierBps'|'taxDeltaMilli'|'arrivalsBudgetBefore'|'arrivalsBudgetAfter'>,terms:LawTerms=lawTerms([])):OrderReport {
+ const facts=orderFacts(s,fundedTileIds,terms), order=s.society!.order;
  const security=securityTarget(facts); order.security=driftToward(order.security,security,O.drift.security);
  const crime=crimeTarget(facts,order.security); order.crime=driftToward(order.crime,crime,O.drift.crime);
  const authority=authorityTarget(facts,order.security,order.crime); order.authority=driftToward(order.authority,authority,O.drift.authority);

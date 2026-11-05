@@ -3,6 +3,7 @@ import { hasWeeklyKeys } from '../domain/canonical-state.js';
 
 export interface OrderState { security: number; crime: number; authority: number }
 export interface OrderFacts {
+ lawSecurity: number; lawCrime: number; lawAuthority: number;
  standing: number;
  wallRing: 1|2|3; watchHouses: { level: 1|2; slum: boolean }[]; barracksWorkers: number;
  population: number; slumOther: number; corruption: number; desperation: number; tension: number;
@@ -32,15 +33,15 @@ export function securityTarget(f: OrderFacts): number {
  target += BigInt(f.barracksWorkers)*BigInt(f.drill ? b.drilledPerWorker : b.barracksPerWorker);
  target -= BigInt(f.population)/BigInt(b.residentsPerPoint) + BigInt(f.slumOther)*BigInt(b.slumPenalty);
  if (f.corruption > 60) target -= BigInt(b.darkPenalty);
- return clamp(target);
+ return clamp(target+BigInt(f.lawSecurity));
 }
 export function crimeTarget(f: OrderFacts, security: number): number {
  const b = ORDER_TRIAL.crime;
- return clamp(BigInt(b.base) + BigInt(f.slumOther)*BigInt(b.perSlum) + BigInt(f.desperation)/BigInt(b.desperationDivisor) + BigInt(f.corruption > 60 ? b.dark : f.corruption < 40 ? b.light : 0) - BigInt(security)/BigInt(b.securityDivisor));
+ return clamp(BigInt(b.base) + BigInt(f.slumOther)*BigInt(b.perSlum) + BigInt(f.desperation)/BigInt(b.desperationDivisor) + BigInt(f.corruption > 60 ? b.dark : f.corruption < 40 ? b.light : 0) - BigInt(security)/BigInt(b.securityDivisor)+BigInt(f.lawCrime));
 }
 export function authorityTarget(f: OrderFacts, security: number, crime: number): number {
  const b = ORDER_TRIAL.authority;
- return clamp(BigInt(b.base) + BigInt(standingAuthorityTerm(f.standing)) + (BigInt(security)-50n)/BigInt(b.securityDivisor) - BigInt(crime)/BigInt(b.crimeDivisor) + BigInt(f.townHallStaffed ? b.townHall : 0) + (BigInt(f.meanSatisfaction)-50n)/BigInt(b.satisfactionDivisor) - BigInt(f.tension)/BigInt(b.tensionDivisor));
+ return clamp(BigInt(b.base) + BigInt(standingAuthorityTerm(f.standing)) + (BigInt(security)-50n)/BigInt(b.securityDivisor) - BigInt(crime)/BigInt(b.crimeDivisor) + BigInt(f.townHallStaffed ? b.townHall : 0) + (BigInt(f.meanSatisfaction)-50n)/BigInt(b.satisfactionDivisor) - BigInt(f.tension)/BigInt(b.tensionDivisor)+BigInt(f.lawAuthority));
 }
 export function driftToward(value: number, target: number, step: number): number {
  return value + Math.max(-step, Math.min(step, target-value));

@@ -4,6 +4,16 @@ import type { OrderState } from './order.js';
 import type { SocietyState } from './society.js';
 import type { CanonicalGameState, WeeklyStocks } from "../domain/canonical-state.js";
 import type { GoodsStock } from './goods-stock.js';
+import type { LawId } from './law.js';
+import type { SocietyClassKey } from './society.js';
+
+export interface LawWeekReport {
+ inForce: LawId[];
+ costs: {lawId:LawId;goldMilli:number}[];
+ unfunded: LawId[];
+ incomeMilli:number;
+ promise:{group:SocietyClassKey;lawId:LawId;outcome:'kept'|'broken'}|null;
+}
 
 export interface TrialBuilding { typeId: string; level: number; workers: number; enabled: boolean }
 export interface TrialTile { id: string; terrain: string; building: TrialBuilding | null }
@@ -28,6 +38,7 @@ export interface CrimeEventReport {
  lordHealthLoss:number;
 }
 export interface TileTrialReport {
+  laws?: LawWeekReport;
   crimeEvent?: CrimeEventReport;
   crisis?: CrisisReport;
   order?: OrderReport;
