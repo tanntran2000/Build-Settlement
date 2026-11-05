@@ -5,7 +5,8 @@ import { createSocietyState,isSocietyState,SOCIETY_TRIAL,societyPopulation } fro
 it('creates the spec section 3 new game', () => {
   const s = createSocietyState();
   expect(s.society).toEqual({
-    rulesetId: 'tile-society-05', standing:50,
+    rulesetId: 'tile-society-06', standing:50,
+    laws: {active:[],votedWeek:null,repealedUntil:{},promise:null},
     crisis: {fallCause:null,stage:'none',weeksInStage:0,hungerStreak:0,calmStreak:0,promise:null,lastChoice:null},
     pendingCard: null,
     order: {security:30,crime:10,authority:50},

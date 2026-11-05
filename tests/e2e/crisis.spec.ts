@@ -5,7 +5,7 @@ import {executeCharacterLifeCommand} from '../../packages/simulation/src/charact
 import {crisisOptions,societyPopulation,type CardOption} from '../../packages/core/src/index.ts';
 import {importLife,go,exportLife,expectReport} from './character-life-navigation.helpers.ts';
 const button=(page:Page,name:string)=>page.getByRole('button',{name,exact:true});
-async function fixture(name:string){const r=deserializeCharacterLifeSave(await readFile(new URL(`../../packages/persistence/src/__tests__/fixtures/society-v5/${name}.json`,import.meta.url),'utf8'));if(!r.success)throw Error(r.error.message);return r.state;}
+async function fixture(name:string){const r=deserializeCharacterLifeSave(await readFile(new URL(`../../packages/persistence/src/__tests__/fixtures/society-v6/${name}.json`,import.meta.url),'utf8'));if(!r.success)throw Error(r.error.message);return r.state;}
 async function fit(page:Page){for(const width of [375,1280]){await page.setViewportSize({width,height:900});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);}const ids=await page.locator('[data-testid]').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('data-testid')));expect(ids.filter((id,i)=>ids.indexOf(id)!==i)).toEqual([]);}
 test('Demand card locks End Week; Pay applies once and appears in the next report',async({page})=>{
  const s=await fixture('life-demand-card');await page.goto('/?mode=world-life');await importLife(page,s);await go(page,'city');await expect(page.getByTestId('life-end-week')).toBeDisabled();await expect(page.getByTestId('life-end-week')).toHaveText('Answer the crisis first.');await page.locator('#life-nav-information').click();
