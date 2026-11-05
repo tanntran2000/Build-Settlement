@@ -50,3 +50,8 @@ export const TILE_TRIAL_BALANCE = Object.freeze({
 export function trialBuilding(typeId: string): TrialBuildingDefinition | undefined {
   return Object.hasOwn(TRIAL_BUILDINGS, typeId) ? TRIAL_BUILDINGS[typeId] : undefined;
 }
+
+export const WATCH_HOUSE_MAX_WORKERS = 2;
+export function buildingWorkerCap(typeId: string, level: number): number {
+ return typeId === "watch-house" ? WATCH_HOUSE_MAX_WORKERS : trialBuilding(typeId)!.maxWorkers * level;
+}

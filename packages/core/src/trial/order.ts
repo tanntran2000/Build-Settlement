@@ -1,11 +1,12 @@
+import type { TileTrialState } from './types.js';
 import { standingAuthorityTerm } from './crime.js';
 import { hasWeeklyKeys } from '../domain/canonical-state.js';
 
 export interface OrderState { security: number; crime: number; authority: number }
 export interface OrderFacts {
  lawSecurity: number; lawCrime: number; lawAuthority: number;
- standing: number;
- wallRing: 1|2|3; watchHouses: { level: 1|2; slum: boolean }[]; barracksWorkers: number;
+ standing: number; soldiers: number;
+ wallRing: 1|2|3; watchHouses: { level: 1|2; slum: boolean; workers: number }[]; barracksWorkers: number;
  population: number; slumOther: number; corruption: number; desperation: number; tension: number;
  meanSatisfaction: number; townHallStaffed: boolean; patrols: boolean; drill: boolean;
 }
@@ -27,13 +28,13 @@ export function securityTarget(f: OrderFacts): number {
  let target = BigInt(b.base) + BigInt(b.perWallRing)*BigInt(f.wallRing);
  for (const house of f.watchHouses) {
   const level = BigInt(b.watchHouseByLevel[house.level-1]);
-  target += f.patrols ? level*BigInt(b.patrolsNumerator)/BigInt(b.patrolsDenominator) : level;
-  if (house.slum) target += BigInt(b.slumWatchHouseBonus);
+  const patrolled = f.patrols ? level*BigInt(b.patrolsNumerator)/BigInt(b.patrolsDenominator) : level;
+  target += (patrolled + BigInt(house.slum ? b.slumWatchHouseBonus : 0))*BigInt(house.workers)/2n;
  }
  target += BigInt(f.barracksWorkers)*BigInt(f.drill ? b.drilledPerWorker : b.barracksPerWorker);
  target -= BigInt(f.population)/BigInt(b.residentsPerPoint) + BigInt(f.slumOther)*BigInt(b.slumPenalty);
  if (f.corruption > 60) target -= BigInt(b.darkPenalty);
- return clamp(target+BigInt(f.lawSecurity));
+ return clamp(target+BigInt(f.lawSecurity)+BigInt(garrisonSecurity(f.soldiers)));
 }
 export function crimeTarget(f: OrderFacts, security: number): number {
  const b = ORDER_TRIAL.crime;
@@ -51,4 +52,15 @@ export function orderBand(value: number): 'Low'|'Fair'|'High' {
 }
 export function isOrderState(raw: unknown): raw is OrderState {
  return hasWeeklyKeys(raw,['security','crime','authority']) && Object.values(raw).every(n => Number.isSafeInteger(n) && (n as number) >= 0 && (n as number) <= 100);
+}
+
+export const GARRISON_TRIAL = Object.freeze({ securityPerStep: 3, soldiersPerStep: 4, cap: 12 });
+export function garrisonSecurity(soldiers: number): number {
+ return Math.min(GARRISON_TRIAL.cap, GARRISON_TRIAL.securityPerStep*Math.floor(soldiers/GARRISON_TRIAL.soldiersPerStep));
+}
+export function soldierTiles(state: TileTrialState) {
+ return ['watch-house','military-barracks'].flatMap(typeId => state.tiles.filter(t => t.building?.enabled && t.building.typeId === typeId));
+}
+export function societySoldiers(state: TileTrialState, operatingIds?: ReadonlySet<string>): number {
+ return soldierTiles(state).reduce((n,t) => n + (!operatingIds || operatingIds.has(t.id) ? t.building!.workers : 0),0);
 }

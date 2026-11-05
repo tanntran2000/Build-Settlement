@@ -1,4 +1,4 @@
-import { OUTSIDE_PLOTS, OUTSIDE_TRIAL as O, trialBuilding, type TileTrialReport, type TileTrialState } from '@haven/core';
+import { OUTSIDE_PLOTS, OUTSIDE_TRIAL as O, buildingWorkerCap,trialBuilding, type TileTrialReport, type TileTrialState } from '@haven/core';
 
 type OutsideReport=NonNullable<TileTrialReport['outside']>;
 const safe=(n:number):number=>{if(!Number.isSafeInteger(n)||n<0)throw Error('Outside arithmetic overflow.');return n;};
@@ -18,7 +18,7 @@ export function finishOutsideLand(s:TileTrialState,operatingIds:ReadonlySet<stri
   const needed=O.research[topic].workMilli;
   for(const t of s.tiles){
    const b=t.building;
-   if(!b?.enabled||b.typeId!=='library'||!operatingIds.has(t.id)||b.workers!==trialBuilding(b.typeId)!.maxWorkers*b.level)continue;
+   if(!b?.enabled||b.typeId!=='library'||!operatingIds.has(t.id)||b.workers!==buildingWorkerCap(b.typeId,b.level))continue;
    research.progressMilli[topic]=safe(research.progressMilli[topic]+Math.min(Math.max(0,needed-research.progressMilli[topic]),safe(b.workers*1000)));
   }
   if(research.progressMilli[topic]>=needed){research.completed.push(topic);research.topic=null;report.researchCompleted.push(topic);}
@@ -38,7 +38,7 @@ export function spoilOutsideStocks(s:TileTrialState,operatingIds:ReadonlySet<str
  let capacity:number=O.storage.baseMilli;
  for(const t of s.tiles){
   const b=t.building;
-  if(b?.enabled&&b.typeId==='warehouse'&&operatingIds.has(t.id)&&b.workers===trialBuilding(b.typeId)!.maxWorkers*b.level)
+  if(b?.enabled&&b.typeId==='warehouse'&&operatingIds.has(t.id)&&b.workers===buildingWorkerCap(b.typeId,b.level))
    capacity=safe(capacity+safe(b.level*O.storage.warehousePerLevelMilli));
  }
  const society=s.society!,stocks=s.world.settlements[s.world.activeSettlementId!].inventory;

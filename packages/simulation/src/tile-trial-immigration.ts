@@ -1,4 +1,4 @@
-import { TILE_TRIAL_BALANCE as B,GOODS_STOCK_TRIAL as G,IMMIGRATION_TRIAL_DEFAULTS,trialBuilding,weeklyWorkforceMilli,type TileTrialState,type TrialImmigrationReport } from "@haven/core";
+import { TILE_TRIAL_BALANCE as B,GOODS_STOCK_TRIAL as G,IMMIGRATION_TRIAL_DEFAULTS,buildingWorkerCap,trialBuilding,weeklyWorkforceMilli,type TileTrialState,type TrialImmigrationReport } from "@haven/core";
 import { FARM_MAX_BATCHES,FARM_WHEAT_PER_BATCH_MILLI,PROCESSOR_FOOD_PER_BATCH_MILLI,PROCESSOR_MAX_BATCHES,PROCESSOR_WHEAT_PER_BATCH_MILLI } from "./weekly.js";
 
 export interface ImmigrationFacts {
@@ -32,7 +32,7 @@ export function resolveTrialImmigration(state: TileTrialState, facts: Immigratio
   for (const t of state.tiles) {
     const b = t.building;
     if (!b?.enabled || !funded.has(t.id)) continue;
-    const d = trialBuilding(b.typeId)!; const slots = integer(d.maxWorkers) * integer(b.level);
+    const d = trialBuilding(b.typeId)!; const slots = integer(buildingWorkerCap(b.typeId,b.level));
     switch (d.operation) {
       case "farm": farm += min(slots, integer(FARM_MAX_BATCHES)); break;
       case "processor": processor += min(slots, integer(PROCESSOR_MAX_BATCHES)); break;

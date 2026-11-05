@@ -1,4 +1,4 @@
-import { OUTSIDE_PLOTS, SOCIETY_BUILDINGS, societyStaff, trialBuilding, type TileTrialState } from '@haven/core';
+import { OUTSIDE_PLOTS, SOCIETY_BUILDINGS, societyStaff, buildingWorkerCap,trialBuilding, type TileTrialState } from '@haven/core';
 import { societyWorkforce, type SocietyFacilities, type SocietyEmployment } from './society-week.js';
 
 const add = (a: number, b: number): number => {
@@ -13,7 +13,7 @@ export function societyFacilities(city: TileTrialState, fundedTileIds: ReadonlyS
   const b=tile.building;
   if (!b?.enabled || !fundedTileIds.has(tile.id)) continue;
   const d=trialBuilding(b.typeId);
-  if (!d || b.workers!==d.maxWorkers*b.level) continue;
+  if (!d || b.workers!==buildingWorkerCap(b.typeId,b.level)) continue;
   const info=Object.hasOwn(SOCIETY_BUILDINGS,b.typeId)?SOCIETY_BUILDINGS[b.typeId]:undefined;
   if (info?.housing) {
    const h=info.housing;
