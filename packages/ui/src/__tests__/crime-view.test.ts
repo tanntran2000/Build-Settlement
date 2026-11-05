@@ -4,7 +4,7 @@ import { crimeReportLine, standingRow, crimeChanceRow, END_SCREEN_COPY } from '.
 const line=(event:CrimeEventReport['event'],lordHealthLoss=0)=>crimeReportLine({crimeEvent:{standingBefore:50,standingAfter:50,chancePercent:5,event,lordHealthLoss}} as TileTrialReport);
 it('renders a quiet week',()=>expect(line(null)).toBe('A quiet week on the streets.'));
 it.each(['gold','food','wheat','wood','iron','stone','wool','cloth','herbs','goods','luxury'] as const)('renders %s robbery with the Order display name',target=>expect(line({kind:'robbery',severity:'minor',target,lossMilli:target==='gold'?1200:800})).toBe(`A gang robbed the ${target==='gold'?'treasury':'stores'}: −${target==='gold'?'1.2':'0.8'} ${target[0].toUpperCase()+target.slice(1)}.`));
-it('renders a robbery with no loss',()=>expect(line({kind:'robbery',severity:'minor',target:'gold',lossMilli:0})).toBe('A gang robbed the treasury: −0 Gold.'));
+it.each(['gold','food','wheat','wood','iron','stone','wool','cloth','herbs','goods','luxury'] as const)('renders %s robbery with no loss',target=>expect(line({kind:'robbery',severity:'minor',target,lossMilli:0})).toBe(`A gang tried to rob the ${target==='gold'?'treasury':'stores'} but took nothing.`));
 it('renders smear',()=>expect(line({kind:'smear',severity:'serious',standingLoss:6})).toBe('Rumours spread about the Lord: Standing −6.'));
 it.each([1,2,3])('renders %i raid deaths',soldiersKilled=>expect(line({kind:'raid',severity:'minor',soldiersKilled})).toBe(`A gang raided the Barracks: ${soldiersKilled} soldier${soldiersKilled===1?'':'s'} died.`));
 it('renders foiled assassination',()=>expect(line({kind:'assassination',severity:'severe',outcome:'foiled'})).toBe('Guards stopped an assassin.'));

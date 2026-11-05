@@ -155,7 +155,9 @@ export function crimeReportLine(report:Readonly<TileTrialReport>):string {
  const c=report.crimeEvent,e=c?.event;
  if(!e)return 'A quiet week on the streets.';
  switch(e.kind){
- case 'robbery':return `A gang robbed the ${e.target==='gold'?'treasury':'stores'}: −${formatMilli(e.lossMilli!)} ${e.target![0].toUpperCase()+e.target!.slice(1)}.`;
+ case 'robbery':
+  if(e.lossMilli===0)return `A gang tried to rob the ${e.target==='gold'?'treasury':'stores'} but took nothing.`;
+  return `A gang robbed the ${e.target==='gold'?'treasury':'stores'}: −${formatMilli(e.lossMilli!)} ${e.target![0].toUpperCase()+e.target!.slice(1)}.`;
  case 'smear':return `Rumours spread about the Lord: Standing −${e.standingLoss}.`;
  case 'raid':return `A gang raided the Barracks: ${e.soldiersKilled} soldier${e.soldiersKilled===1?'':'s'} died.`;
  case 'assassination':return e.outcome==='foiled'?'Guards stopped an assassin.':e.outcome==='wounded'?`An assassin wounded you: health −${c!.lordHealthLoss}, Standing −${e.standingLoss}, Authority −${e.authorityLoss}.`:END_SCREEN_COPY.assassination.text;
