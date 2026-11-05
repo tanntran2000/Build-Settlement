@@ -308,7 +308,7 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
   }
   if(expected.order){
     const region=panel.getByRole('region',{name:'Order',exact:true});
-    const order:NonNullable<TileTrialReport['order']>={before:{security:0,crime:0,authority:0},after:{security:0,crime:0,authority:0},targets:{security:0,crime:0,authority:0},theftMilli:{},tensionAdded:0,satisfactionLost:0,taxModifierBps:0,taxDeltaMilli:0,arrivalsBudgetBefore:0,arrivalsBudgetAfter:0};
+    const order:Omit<NonNullable<TileTrialReport['order']>,'soldiers'|'garrisonSecurity'>={before:{security:0,crime:0,authority:0},after:{security:0,crime:0,authority:0},targets:{security:0,crime:0,authority:0},theftMilli:{},tensionAdded:0,satisfactionLost:0,taxModifierBps:0,taxDeltaMilli:0,arrivalsBudgetBefore:0,arrivalsBudgetAfter:0};
     for(const key of ['security','crime','authority'] as const){
       const text=(await region.locator(`[data-order-value="${key}"]`).textContent())!;
       const values=text.match(/\d+/g)!.map(Number);
@@ -316,7 +316,7 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
     }
     for(const entry of await region.locator('[data-order-theft]').evaluateAll(nodes=>nodes.map(n=>({key:n.getAttribute('data-order-theft')!,text:n.textContent!}))))order.theftMilli[entry.key as keyof typeof order.theftMilli]=reportMilli(entry.text);
     for(const key of ['taxModifierBps','taxDeltaMilli','arrivalsBudgetBefore','arrivalsBudgetAfter','tensionAdded','satisfactionLost'] as const)order[key]=Number(await region.locator(`[data-order-detail="${key}"]`).textContent());
-    actual.order=order;
+    actual.order=order as NonNullable<TileTrialReport['order']>;
   }
   if(expected.crisis){
     const region=panel.getByRole('region',{name:'Crisis',exact:true});
@@ -344,7 +344,8 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
   const laws=panel.getByRole('region',{name:'Laws',exact:true});
   if(await laws.count()) actual.laws=await laws.evaluate(node=>({inForce:JSON.parse(node.getAttribute('data-laws-in-force')!),costs:JSON.parse(node.getAttribute('data-laws-costs')!),unfunded:JSON.parse(node.getAttribute('data-laws-unfunded')!),incomeMilli:Number(node.getAttribute('data-laws-income-milli')),promise:JSON.parse(node.getAttribute('data-laws-promise')!)}));
   const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
-  expect(actual).toEqual(baseReport);
+  const stripGarrison = ({soldiers, garrisonSecurity, ...rest}: NonNullable<TileTrialReport['order']>) => rest;
+  expect({...actual,...(actual.order ? {order:stripGarrison(actual.order)} : {})}).toEqual({...baseReport,...(baseReport.order ? {order:stripGarrison(baseReport.order)} : {})});
   if (society) {
     const labels = { free: 'Free residents', makers: 'Makers', luminaries: 'Luminaries', merchants: 'Merchants', bound: 'The Bound' };
     const classes = panel.getByRole('table', { name: 'Classes this week', exact: true });

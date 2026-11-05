@@ -9,7 +9,7 @@ const staffed = () => {
 };
 it('initializes v6 laws and refuses v5', () => {
   const society = createSocietyState().society!;
-  expect(society.rulesetId).toBe('tile-society-06');
+  expect(society.rulesetId).toBe('tile-society-07');
   expect(society.laws).toEqual({ active: [], votedWeek: null, repealedUntil: {}, promise: null });
   expect(isSocietyState({ ...society, rulesetId: 'tile-society-05' })).toBe(false);
 });

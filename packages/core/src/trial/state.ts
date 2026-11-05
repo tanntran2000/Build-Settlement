@@ -1,3 +1,4 @@
+import { buildingWorkerCap } from "./catalog.js";
 import { readDenseArray } from '../world/arrays.js';
 import { OUTSIDE_PLOTS, outsidePlot } from './outside.js';
 import { hasWeeklyKeys,isCanonicalGameState } from "../domain/canonical-state.js";
@@ -53,7 +54,7 @@ export function isTileTrialState(raw: unknown): raw is TileTrialState {
       if (!hasWeeklyKeys(b, ["typeId", "level", "workers", "enabled"]) || typeof b.typeId !== "string") return false;
       const d = trialBuilding(b.typeId);
       if (!d || !d.terrain.includes(t.terrain) || !integer(b.level) || b.level < 1 || b.level > d.maxLevel ||
-        !integer(b.workers) || b.workers > d.maxWorkers * b.level || typeof b.enabled !== "boolean" || (!b.enabled && b.workers !== 0)) return false;
+        !integer(b.workers) || b.workers > buildingWorkerCap(b.typeId,b.level) || typeof b.enabled !== "boolean" || (!b.enabled && b.workers !== 0)) return false;
       if (s.society) {
         const outside = outsidePlot(t.id);
         if(outside && outside.ring>s.society.wallRing)return false;

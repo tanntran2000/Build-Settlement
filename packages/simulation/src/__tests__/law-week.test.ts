@@ -77,7 +77,7 @@ it('decrements a pending promise once each week',()=>{
  expect(resolveLawPromiseWeek(s)).toBeNull();expect(s.society!.laws.promise!.weeksLeft).toBe(3);
 });
 it('preserves the law-free five-week gameplay pin and determinism',()=>{
- const bytes=readFileSync(new URL('../../../persistence/src/__tests__/fixtures/society-v6/life-new-game.json',import.meta.url),'utf8');
+ const bytes=readFileSync(new URL('../../../persistence/src/__tests__/fixtures/society-v7/life-new-game.json',import.meta.url),'utf8');
  const decoded=deserializeCharacterLifeSave(bytes);if(!decoded.success)throw Error(decoded.error.message);
  let s=decoded.state,other=structuredClone(s);
  for(let i=0;i<5;i++){

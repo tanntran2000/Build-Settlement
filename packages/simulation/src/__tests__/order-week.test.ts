@@ -17,23 +17,23 @@ function built() {
 }
 it('projects the worked example and drifts sequentially toward its targets',()=>{
  const s=built(), funded=new Set(['service-1','service-2','slum-1']);
- expect(orderFacts(s,funded)).toEqual({lawSecurity:0,lawCrime:0,lawAuthority:0,standing:50,wallRing:1,watchHouses:[{level:1,slum:false}],barracksWorkers:4,population:100,slumOther:1,corruption:50,desperation:10,tension:0,meanSatisfaction:80,townHallStaffed:false,patrols:false,drill:false});
+ expect(orderFacts(s,funded)).toEqual({lawSecurity:0,lawCrime:0,lawAuthority:0,standing:50,soldiers:6,wallRing:1,watchHouses:[{level:1,slum:false,workers:2}],barracksWorkers:4,population:100,slumOther:1,corruption:50,desperation:10,tension:0,meanSatisfaction:80,townHallStaffed:false,patrols:false,drill:false});
  const r=resolveOrderWeek(s,funded,partial(s));
  expect(r.before).toEqual({security:30,crime:10,authority:50});
- expect(r.targets).toEqual({security:25,crime:5,authority:40});
- expect(r.after).toEqual({security:25,crime:5,authority:47});
+ expect(r.targets).toEqual({security:28,crime:3,authority:41});
+ expect(r.after).toEqual({security:28,crime:5,authority:47});
  expect(s.society!.order).toEqual(r.after);
 });
 it('excludes a Slum Watch House from other Slum buildings',()=>{
  const s=createSocietyState();
  tile(s,'slum-1').building={typeId:'watch-house',level:1,workers:2,enabled:true};
- expect(orderFacts(s,new Set(['slum-1']))).toMatchObject({watchHouses:[{level:1,slum:true}],slumOther:0});
+ expect(orderFacts(s,new Set(['slum-1']))).toMatchObject({watchHouses:[{level:1,slum:true,workers:2}],slumOther:0});
 });
 it('counts only enabled funded and fully staffed facilities except Barracks workers',()=>{
  const s=built(); tile(s,'service-1').building!.workers=1; tile(s,'service-2').building!.workers=3;
  tile(s,'spec-2').building={typeId:'town-hall',level:1,workers:0,enabled:true};
  const ids=new Set(['service-1','service-2','spec-2']);
- expect(orderFacts(s,ids)).toMatchObject({watchHouses:[],barracksWorkers:3,townHallStaffed:false});
+ expect(orderFacts(s,ids)).toMatchObject({watchHouses:[{level:1,slum:false,workers:1}],barracksWorkers:3,townHallStaffed:false});
  expect(orderFacts(s,new Set())).toMatchObject({watchHouses:[],barracksWorkers:0});
  tile(s,'service-2').building!.enabled=false;
  expect(orderFacts(s,ids).barracksWorkers).toBe(0);

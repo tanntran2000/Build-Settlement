@@ -1,6 +1,6 @@
 import { LAW_IDS, LAW_MESSAGES, LAW_TRIAL, previewLawVote, type LawId, CARD_OPTIONS, CRISIS_TRIAL, crisisOptions, societyPopulation, type CardOption } from '@haven/core';
 import { cityHappiness, societyCounts } from './society-week.js';
-import { RESEARCH_TOPICS,type ResearchTopic,OUTSIDE_TRIAL,outsidePlot,hasWeeklyKeys,isTileTrialPlanningState,isTileTrialState,SOCIETY_BUILDINGS,societyPlot,trialBuilding,type TileTrialResult,type TileTrialState } from '@haven/core';
+import { RESEARCH_TOPICS,type ResearchTopic,OUTSIDE_TRIAL,outsidePlot,hasWeeklyKeys,isTileTrialPlanningState,isTileTrialState,SOCIETY_BUILDINGS,societyPlot,buildingWorkerCap,trialBuilding,type TileTrialResult,type TileTrialState } from '@haven/core';
 import { runTileTrialWeek,trialSafe } from "./tile-trial-week.js";
 
 export function executeTileTrialCommand(state: unknown, raw: unknown): TileTrialResult {
@@ -87,7 +87,7 @@ export function executeTileTrialCommand(state: unknown, raw: unknown): TileTrial
       const ring = next.society!.wallRing;
       if (ring === 3) return fail('WALL_COMPLETE','All wall rings are open.');
       const prerequisite = ring === 1 ? 'builders-yard' : 'town-hall';
-      if (!next.tiles.some(t=>t.building?.typeId === prerequisite && t.building.enabled && t.building.workers === trialBuilding(prerequisite)!.maxWorkers*t.building.level)) return fail('PREREQUISITE_MISSING','An operating prerequisite building is required.');
+      if (!next.tiles.some(t=>t.building?.typeId === prerequisite && t.building.enabled && t.building.workers === buildingWorkerCap(prerequisite,t.building.level))) return fail('PREREQUISITE_MISSING','An operating prerequisite building is required.');
       const inventory = next.world.settlements[next.world.activeSettlementId!].inventory;
       const costs = ring === 1 ? {gold:30000,wood:20000,iron:10000} : {gold:60000,wood:40000,iron:20000};
       for (const key of ['gold','wood','iron'] as const) if (inventory[key]<costs[key]) return fail('INSUFFICIENT_RESOURCES','Not enough resources to extend the wall.');
@@ -182,7 +182,7 @@ export function executeTileTrialCommand(state: unknown, raw: unknown): TileTrial
 
 function constructionDiscount(state:TileTrialState):number {
  let discount=0;
- for(const {building:b} of state.tiles)if(b?.typeId==='builders-yard'&&b.enabled&&b.workers===trialBuilding(b.typeId)!.maxWorkers*b.level)discount=Math.max(discount,b.level*10);
+ for(const {building:b} of state.tiles)if(b?.typeId==='builders-yard'&&b.enabled&&b.workers===buildingWorkerCap(b.typeId,b.level))discount=Math.max(discount,b.level*10);
  return discount;
 }
 const discounted=(cost:number,discount:number):number=>trialSafe(Number(BigInt(cost)*BigInt(100-discount)/100n));

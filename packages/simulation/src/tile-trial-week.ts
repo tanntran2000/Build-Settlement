@@ -3,7 +3,7 @@ import { resolveLawGold, resolveLawPromiseWeek } from './law-week.js';
 import { resolveCrimeWeek } from './crime-week.js';
 import { resolveCrisisWeek } from './crisis-week.js';
 import { authorityTaxBps, authorityArrivals, resolveOrderWeek } from './order-week.js';
-import { crimeRandom,TILE_TRIAL_BALANCE as B,GOODS_STOCK_TRIAL as G,OUTSIDE_TRIAL as O,societyPopulation,trialBuilding,type TileTrialReport,type TileTrialState,type WeeklyResource } from '@haven/core';
+import { crimeRandom,TILE_TRIAL_BALANCE as B,GOODS_STOCK_TRIAL as G,OUTSIDE_TRIAL as O,societyPopulation,buildingWorkerCap,trialBuilding,type TileTrialReport,type TileTrialState,type WeeklyResource } from '@haven/core';
 import { releaseSocietyWorkers,societyEmployment,societyFacilities } from './society-facilities.js';
 import { allocateRequirements,resolveSocietyWeek,cityHappiness,societyCounts } from './society-week.js';
 import { finishOutsideLand,spoilOutsideStocks } from './outside-week.js';
@@ -60,7 +60,7 @@ export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
   for(const tile of funded){
     const b=tile.building!,d=trialBuilding(b.typeId)!,plot=s.society.outside[tile.id];
     if(d.operation==='logging'||d.operation==='mine'||d.operation==='stone'){
-      if(d.operation==='stone'&&b.workers!==d.maxWorkers*b.level)continue;
+      if(d.operation==='stone'&&b.workers!==buildingWorkerCap(b.typeId,b.level))continue;
       const good=d.operation==='logging'?'wood':d.operation==='mine'?'iron':'stone';
       const rate=good==='wood'?B.loggingWoodPerWorker:good==='iron'?B.mineIronPerWorker:O.perWorker.stone;
       const wanted=scaled(scaled(b.workers,rate),plot.deepShaft?O.deepShaft.outputBps:10000,10000);
@@ -71,14 +71,14 @@ export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
       if(good==='iron')ironProducedMilli=trialSafe(ironProducedMilli+output);
       activities.push(`${tile.id}: extracted ${good==='wood'?'Wood':good==='iron'?'Iron':'Stone'}.`);
     }
-    if((d.operation==='wool'||d.operation==='herbs')&&b.workers===d.maxWorkers*b.level){
+    if((d.operation==='wool'||d.operation==='herbs')&&b.workers===buildingWorkerCap(b.typeId,b.level)){
       const good=d.operation,output=scaled(b.workers,O.perWorker[good]);
       newStocks[good]=trialSafe(newStocks[good]+output);outside.producedMilli[good]=trialSafe(outside.producedMilli[good]+output);
     }
   }
   const operatingIds=new Set(fundedTileIds);
   for(const tile of funded){
-    const b=tile.building!;if(b.typeId!=='hospital'||b.workers!==trialBuilding(b.typeId)!.maxWorkers*b.level)continue;
+    const b=tile.building!;if(b.typeId!=='hospital'||b.workers!==buildingWorkerCap(b.typeId,b.level))continue;
     const due=scaled(b.level,O.hospitalHerbsPerLevelMilli);
     if(newStocks.herbs<due){operatingIds.delete(tile.id);outside.hospitalsIdle.push(tile.id);}else newStocks.herbs-=due;
   }
@@ -93,7 +93,7 @@ export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
   let luxuryImportedMilli = 0;
   for (const tile of funded) {
     const b = tile.building!;
-    if (b.typeId !== 'trading-post' || b.workers !== trialBuilding(b.typeId)!.maxWorkers * b.level) continue;
+    if (b.typeId !== 'trading-post' || b.workers !== buildingWorkerCap(b.typeId,b.level)) continue;
     const cost = scaled(3000, b.level);
     if (stocks.gold < cost) continue;
     stocks.gold -= cost; luxuryImportedMilli = trialSafe(luxuryImportedMilli + scaled(2000, b.level));
@@ -101,7 +101,7 @@ export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
   // Every extraction completes before any processing, independent of placement order.
   for (const tile of funded) {
     const b = tile.building!; const d = trialBuilding(b.typeId)!;
-    if (d.operation === "market" && (b.typeId === 'town-market' && b.workers === d.maxWorkers * b.level)) marketCapacity = trialSafe(marketCapacity + scaled(b.level, G.capacityPerLevelMilli));
+    if (d.operation === "market" && (b.typeId === 'town-market' && b.workers === buildingWorkerCap(b.typeId,b.level))) marketCapacity = trialSafe(marketCapacity + scaled(b.level, G.capacityPerLevelMilli));
   }
   for (const tile of funded) {
     const b = tile.building!; if (trialBuilding(b.typeId)!.operation !== "processor") continue;
@@ -111,7 +111,7 @@ export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
     activities.push(`${tile.id}: Food Processor ${batches} batches.`);
   }
   for(const tile of funded){
-    const b=tile.building!,d=trialBuilding(b.typeId)!;if(d.operation!=='cloth'||b.workers!==d.maxWorkers*b.level)continue;
+    const b=tile.building!,d=trialBuilding(b.typeId)!;if(d.operation!=='cloth'||b.workers!==buildingWorkerCap(b.typeId,b.level))continue;
     const batches=Math.min(b.workers,Math.floor(newStocks.wool/O.weaver.woolPerBatchMilli));
     newStocks.wool-=scaled(batches,O.weaver.woolPerBatchMilli);
     const output=scaled(batches,O.weaver.clothPerBatchMilli);newStocks.cloth=trialSafe(newStocks.cloth+output);outside.producedMilli.cloth=trialSafe(outside.producedMilli.cloth+output);

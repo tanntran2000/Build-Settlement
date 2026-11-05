@@ -1,17 +1,17 @@
 import { expect, it } from 'vitest';
 import { authorityTarget, crimeTarget, createSocietyState, driftToward, isOrderState, isSocietyState, isTileTrialPlanningState, orderBand, ORDER_TRIAL, RESEARCH_TOPICS, securityTarget, SOCIETY_BUILDINGS, trialBuilding, type OrderFacts } from '../../index.js';
 
-const facts = (patch: Partial<OrderFacts> = {}): OrderFacts => ({ lawSecurity: 0, lawCrime: 0, lawAuthority: 0, standing: 50, wallRing: 1, watchHouses: [], barracksWorkers: 0, population: 0, slumOther: 0, corruption: 50, desperation: 0, tension: 0, meanSatisfaction: 50, townHallStaffed: false, patrols: false, drill: false, ...patch });
+const facts = (patch: Partial<OrderFacts> = {}): OrderFacts => ({ lawSecurity: 0, lawCrime: 0, lawAuthority: 0, standing: 50, soldiers: 0, wallRing: 1, watchHouses: [], barracksWorkers: 0, population: 0, slumOther: 0, corruption: 50, desperation: 0, tension: 0, meanSatisfaction: 50, townHallStaffed: false, patrols: false, drill: false, ...patch });
 it.each([false, true])('matches the worked example with Slum placement %s', slum => {
- const f = facts({ population: 100, watchHouses: [{ level: 1, slum }], barracksWorkers: 4, slumOther: 1, desperation: 10, meanSatisfaction: 80 });
+ const f = facts({ population: 100, watchHouses: [{ level: 1, slum, workers: 2 }], barracksWorkers: 4, slumOther: 1, desperation: 10, meanSatisfaction: 80 });
  const security = securityTarget(f), crime = crimeTarget(f, security);
  expect([security, crime, authorityTarget(f, security, crime)]).toEqual(slum ? [30, 2, 42] : [25, 5, 40]);
 });
 it.each([
- [{}, 15], [{ wallRing: 3 }, 25], [{ watchHouses: [{ level: 1, slum: false }] }, 25],
- [{ watchHouses: [{ level: 2, slum: false }] }, 30],
- [{ watchHouses: [{ level: 2, slum: true }], patrols: true }, 42],
- [{ watchHouses: [{ level: 1, slum: false }], patrols: true }, 30],
+ [{}, 15], [{ wallRing: 3 }, 25], [{ watchHouses: [{ level: 1, slum: false, workers: 2 }] }, 25],
+ [{ watchHouses: [{ level: 2, slum: false, workers: 2 }] }, 30],
+ [{ watchHouses: [{ level: 2, slum: true, workers: 2 }], patrols: true }, 42],
+ [{ watchHouses: [{ level: 1, slum: false, workers: 2 }], patrols: true }, 30],
  [{ barracksWorkers: 4 }, 23], [{ barracksWorkers: 4, drill: true }, 27],
  [{ population: 39 }, 14], [{ slumOther: 2 }, 9], [{ corruption: 60 }, 15], [{ corruption: 61 }, 10],
  [{ population: 3000 }, 0], [{ barracksWorkers: Number.MAX_SAFE_INTEGER }, 100],
@@ -30,7 +30,7 @@ it.each([[30, 50, 5, 35], [30, 27, 5, 27], [50, 0, 3, 47], [30, 30, 5, 30]])('dr
 it.each([[0,'Low'],[33,'Low'],[34,'Fair'],[66,'Fair'],[67,'High'],[100,'High']])('bands %s as %s', (v,e) => expect(orderBand(Number(v))).toBe(e));
 it('creates isolated v3 order and three research topics', () => {
  const s = createSocietyState();
- expect(s.society!.rulesetId).toBe('tile-society-06');
+ expect(s.society!.rulesetId).toBe('tile-society-07');
  expect(s.society!.order).toEqual({ security: 30, crime: 10, authority: 50 });
  expect(RESEARCH_TOPICS).toEqual(['deep-mining','watch-patrols','barracks-drill']);
  expect(s.society!.research.progressMilli).toEqual({'deep-mining':0,'watch-patrols':0,'barracks-drill':0});

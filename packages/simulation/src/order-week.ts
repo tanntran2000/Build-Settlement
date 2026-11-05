@@ -1,16 +1,16 @@
-import { lawTerms, type LawTerms, ORDER_TRIAL as O, SOCIETY_BUILDINGS, societyPlot, societyPopulation, trialBuilding, securityTarget, crimeTarget, authorityTarget, driftToward, type OrderFacts, type OrderReport, type TileTrialState } from '@haven/core';
+import { societySoldiers, garrisonSecurity, lawTerms, type LawTerms, ORDER_TRIAL as O, SOCIETY_BUILDINGS, societyPlot, societyPopulation, buildingWorkerCap,trialBuilding, securityTarget, crimeTarget, authorityTarget, driftToward, type OrderFacts, type OrderReport, type TileTrialState } from '@haven/core';
 
 const classes=['free','makers','luminaries','merchants'] as const;
 export function orderFacts(s:TileTrialState,fundedTileIds:ReadonlySet<string>,terms:LawTerms=lawTerms([])):OrderFacts {
  const society=s.society!;
- const facts:OrderFacts={lawSecurity:terms.securityTarget,lawCrime:terms.crimeTarget,lawAuthority:terms.authorityTarget,standing:society.standing,wallRing:society.wallRing,watchHouses:[],barracksWorkers:0,population:societyPopulation(society),slumOther:0,corruption:society.corruption,desperation:society.desperation,tension:society.tension,
+ const facts:OrderFacts={lawSecurity:terms.securityTarget,lawCrime:terms.crimeTarget,lawAuthority:terms.authorityTarget,standing:society.standing,wallRing:society.wallRing,watchHouses:[],barracksWorkers:0,soldiers:societySoldiers(s,fundedTileIds),population:societyPopulation(society),slumOther:0,corruption:society.corruption,desperation:society.desperation,tension:society.tension,
   meanSatisfaction:Math.trunc(classes.reduce((sum,key)=>sum+society.satisfaction[key],0)/classes.length),townHallStaffed:false,patrols:society.research.completed.includes('watch-patrols'),drill:society.research.completed.includes('barracks-drill')};
  for(const tile of s.tiles){
   const b=tile.building;
   if(!b?.enabled||!fundedTileIds.has(tile.id))continue;
   if(b.typeId==='military-barracks')facts.barracksWorkers+=b.workers;
-  if(b.workers!==trialBuilding(b.typeId)!.maxWorkers*b.level)continue;
-  if(b.typeId==='watch-house')facts.watchHouses.push({level:b.level as 1|2,slum:societyPlot(tile.id)?.tier==='slum'});
+  if(b.typeId==='watch-house'){facts.watchHouses.push({level:b.level as 1|2,slum:societyPlot(tile.id)?.tier==='slum',workers:b.workers});continue;}
+  if(b.workers!==buildingWorkerCap(b.typeId,b.level))continue;
   else if(SOCIETY_BUILDINGS[b.typeId]?.tier==='slum')facts.slumOther++;
   if(b.typeId==='town-hall')facts.townHallStaffed=true;
  }
@@ -42,5 +42,5 @@ export function resolveOrderWeek(s:TileTrialState,fundedTileIds:ReadonlySet<stri
  const tensionAdded=Math.min(100-society.tension,Math.trunc(order.crime/O.tensionDivisor));society.tension+=tensionAdded;
  const satisfactionLost=O.satisfactionLoss.find(entry=>order.crime>=entry.crime)?.loss??0;
  for(const key of classes)society.satisfaction[key]=Math.max(0,society.satisfaction[key]-satisfactionLost);
- return {...partial,before:{...partial.before},targets:{security,crime,authority},after:{...order},theftMilli,tensionAdded,satisfactionLost};
+ return {...partial,soldiers:facts.soldiers,garrisonSecurity:garrisonSecurity(facts.soldiers),before:{...partial.before},targets:{security,crime,authority},after:{...order},theftMilli,tensionAdded,satisfactionLost};
 }

@@ -74,6 +74,7 @@ export interface TileTrialReport {
   activities: readonly string[];
 }
 export interface OrderReport {
+ soldiers: number; garrisonSecurity: number;
  before: OrderState; targets: OrderState; after: OrderState;
  theftMilli: Partial<Record<'gold'|'food'|'wheat'|'wood'|'iron'|'stone'|'wool'|'cloth'|'herbs'|'goods'|'luxury',number>>;
  tensionAdded: number; satisfactionLost: number; taxModifierBps: number; taxDeltaMilli: number;

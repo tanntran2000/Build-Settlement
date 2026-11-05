@@ -1,15 +1,14 @@
-import { CRIME_TRIAL as C, crimeChancePercent, crimeSeverity, crimeRandom, societyPopulation, type CrimeEventReport, type TileTrialState } from '@haven/core';
+import { societySoldiers, soldierTiles, idleWatchHouse, CRIME_TRIAL as C, crimeChancePercent, crimeSeverity, crimeRandom, societyPopulation, type CrimeEventReport, type TileTrialState } from '@haven/core';
 import { releaseSocietyWorkers } from './society-facilities.js';
 
 export function resolveCrimeWeek(s:TileTrialState, fundedTileIds:ReadonlySet<string>, rng=crimeRandom(s.world.worldMetadata.worldSeed,s.world.week-1)):CrimeEventReport {
- void fundedTileIds;
  const society=s.society!,order=society.order,standingBefore=society.standing;
  const clamp=(n:number)=>Math.max(0,Math.min(100,n));
  society.standing=clamp(standingBefore+Math.sign(C.standing.newGame-standingBefore)*C.standing.drift);
- const report:CrimeEventReport={standingBefore,standingAfter:society.standing,chancePercent:crimeChancePercent(order.crime),event:null,lordHealthLoss:0};
+ const report:CrimeEventReport={standingBefore,standingAfter:society.standing,chancePercent:crimeChancePercent(order.crime,idleWatchHouse(s,fundedTileIds)),event:null,lordHealthLoss:0};
  if(rng()*100>=report.chancePercent)return report;
- const barracks=s.tiles.filter(t=>t.building?.enabled&&t.building.typeId==='military-barracks');
- const soldiers=barracks.reduce((sum,t)=>sum+t.building!.workers,0);
+ const barracks=soldierTiles(s);
+ const soldiers=societySoldiers(s);
  const available=(['robbery','smear','raid','assassination'] as const).filter(kind=>kind==='raid'?soldiers>0:kind==='assassination'?order.crime>=C.assassinationMinCrime:true);
  let pick=rng()*available.reduce((sum,kind)=>sum+C.weights[kind],0);
  const kind=available.find(kind=>{pick-=C.weights[kind];return pick<0;})!;
