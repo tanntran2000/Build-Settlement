@@ -110,7 +110,8 @@ The catalogue, the TRIAL numbers, the tally and the term sums live once, in `cor
    - The P8-A order is unchanged: the lower bound is credited before upkeep and the remainder after.
 10. **Law Gold.** `resolveLawGold(s, stocks)` in `law-week.ts` returns `{ applied: LawId[]; unfunded: LawId[]; costs: { lawId: LawId; goldMilli: number }[]; incomeMilli: number }`.
     - It runs right after the tax top-up, which comes after building upkeep.
-    - It first credits Licensed Vice income, then debits each costed law in `active` order.
+    - It debits each costed law in `active` order. `incomeMilli` reports the Licensed Vice income credited earlier with the tax (see the amendment below).
+    - **Amendment (owner Tân, 2026-11-05, verbatim: "Theo spec: trước upkeep (Recommended)"):** Licensed Vice income follows spec §6.4 and §6.7: it is credited **with the guaranteed tax lower bound, before building upkeep** (Decision 9), so it can pay building upkeep. It is not part of the tax remainder and is not scaled by the tax modifier. Only the law costs are debited after building upkeep. This replaces the earlier wording "It first credits Licensed Vice income", which put the income after upkeep.
     - A law that Gold does not cover is skipped: nothing is debited, the law goes into `unfunded`, and it is left out of `applied`.
     - Every sum uses `trialSafe`.
 11. **Society terms.** `SocietyWeekInput` gains `lawTerms: LawTerms`, computed from `lawTerms(applied)`. In `resolveSocietyWeek`:
