@@ -37,6 +37,12 @@ it('floors wounded health at one and preserves a refused session',()=>{
  expect(r.report!.crimeEvent!.lordHealthLoss).toBe(20);expect(r.next.player.character.health).toBe(1);expect(s).toEqual(before);
  const refused=executeCharacterLifeCommand(s,{type:'END_WEEK',expectedRevision:-1,expectedWeek:s.city.world.week});expect(refused.success).toBe(false);expect(s).toEqual(before);
 });
+it('reports the population left after raid casualties',()=>{
+ const s=load('raid'),r=end(s);expect(r.success).toBe(true);if(!r.success)throw Error(r.error.message);
+ const killed=r.report!.crimeEvent!.event!.soldiersKilled!;expect(killed).toBeGreaterThan(0);
+ const cohort=r.next.city.world.settlements[r.next.city.world.activeSettlementId!].cohorts.find(c=>c.id==='weekly_middle')!.count;
+ expect(r.report!.immigration!.populationAfter).toBe(cohort);
+});
 it('skips crisis on assassination death and refuses subsequent commands',()=>{
  const s=load('death');s.city.society!.crisis.stage='warning';s.city.society!.tension=95;s.city.society!.crisis.hungerStreak=2;
  const r=end(s);expect(r.success).toBe(true);if(!r.success)throw Error(r.error.message);

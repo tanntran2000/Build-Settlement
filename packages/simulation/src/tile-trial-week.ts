@@ -169,6 +169,7 @@ export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
     for(const key of ['free','makers','luminaries','merchants'] as const)societyReport.classes[key].satisfactionAfter=s.society.satisfaction[key];
   }
   const crimeEvent=resolveCrimeWeek(s,operatingIds,crimeRandom(s.world.worldMetadata.worldSeed,s.world.week-1));
+  if(immigration&&crimeEvent.event?.soldiersKilled)immigration=Object.freeze({...immigration,populationAfter:societyPopulation(s.society)});
   const crisis=s.society.crisis.fallCause==='assassination'?undefined:resolveCrisisWeek(s,{foodDemandMilli,foodConsumedMilli});
   societyReport.tensionAfter=s.society.tension;
   order.after.authority=s.society.order.authority;
