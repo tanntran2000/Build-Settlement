@@ -1,4 +1,5 @@
 import { CRIME_TRIAL } from './crime.js';
+import { isLawsState, type LawsState } from './law.js';
 import { isCrisisState, type CrisisState } from './crisis.js';
 import type { PendingCard } from './event-card.js';
 import { ORDER_TRIAL, isOrderState, type OrderState } from './order.js';
@@ -8,12 +9,13 @@ import { hasWeeklyKeys } from '../domain/canonical-state.js';
 import { GOODS_STOCK_RULESET,GOODS_STOCK_TRIAL } from './goods-stock.js';
 import type { TileTrialState } from './types.js';
 
-export const SOCIETY_RULESET = 'tile-society-05';
+export const SOCIETY_RULESET = 'tile-society-06';
 export type SocietyGroupKey = 'makers' | 'luminaries' | 'merchants';
 export type SocietyClassKey = 'free' | SocietyGroupKey;
 export interface SocietyState {
   rulesetId: typeof SOCIETY_RULESET;
   standing: number;
+  laws: LawsState;
   order: OrderState;
   crisis: CrisisState;
   pendingCard: PendingCard | null;
@@ -34,6 +36,7 @@ export interface SocietyState {
 export const SOCIETY_TRIAL = Object.freeze({
   rulesetId: SOCIETY_RULESET,
   standing: CRIME_TRIAL.standing.newGame,
+  laws: Object.freeze({active:[],votedWeek:null,repealedUntil:{},promise:null}),
   order: ORDER_TRIAL.newGame,
   crisis: Object.freeze({fallCause:null,stage:'none',weeksInStage:0,hungerStreak:0,calmStreak:0,promise:null,lastChoice:null}),
   pendingCard: null,
@@ -64,7 +67,7 @@ export function createSocietyState(): TileTrialState {
 }
 export function isSocietyState(raw: unknown): raw is SocietyState {
   try {
-    if (!hasWeeklyKeys(raw, ['rulesetId', 'standing', 'crisis', 'pendingCard', 'order', 'classes', 'satisfaction', 'desperation', 'tension', 'debtPressure', 'corruption', 'luxuryStockMilli', 'training', 'wallRing', 'stocksMilli', 'outside', 'research']) || raw.rulesetId !== SOCIETY_RULESET ||
+    if (!hasWeeklyKeys(raw, ['rulesetId', 'standing', 'laws', 'crisis', 'pendingCard', 'order', 'classes', 'satisfaction', 'desperation', 'tension', 'debtPressure', 'corruption', 'luxuryStockMilli', 'training', 'wallRing', 'stocksMilli', 'outside', 'research']) || raw.rulesetId !== SOCIETY_RULESET || !isLawsState(raw.laws) ||
         !hasWeeklyKeys(raw.classes, [...classes, 'bound']) || !count(raw.classes.free) ||
         !hasWeeklyKeys(raw.classes.bound, classes) || !Object.values(raw.classes.bound).every(count)) return false;
     for (const group of groups) {
