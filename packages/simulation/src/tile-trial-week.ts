@@ -1,3 +1,5 @@
+import { LAW_CATALOG, lawTerms } from '@haven/core';
+import { resolveLawGold, resolveLawPromiseWeek } from './law-week.js';
 import { resolveCrimeWeek } from './crime-week.js';
 import { resolveCrisisWeek } from './crisis-week.js';
 import { authorityTaxBps, authorityArrivals, resolveOrderWeek } from './order-week.js';
@@ -27,9 +29,10 @@ export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
   const add = (key: WeeklyResource, amount: number) => { stocks[key] = trialSafe(stocks[key] + amount); };
   const population = settlement.cohorts.reduce((n, c) => trialSafe(n + c.count), 0);
   const baseTaxMilli=scaled(population,B.taxGoldPerResident);
-  const taxModifierBps=authorityTaxBps(orderBefore.authority);
-  const creditedTaxMilli=orderBefore.authority<50?scaled(baseTaxMilli,10000+taxModifierBps,10000):baseTaxMilli;
+  const taxModifierBps=authorityTaxBps(orderBefore.authority)+lawTerms(s.society.laws.active).taxBps;
+  const creditedTaxMilli=taxModifierBps<0?scaled(baseTaxMilli,10000+taxModifierBps,10000):baseTaxMilli;
   add('gold',creditedTaxMilli);
+  for(const id of s.society.laws.active)add('gold',LAW_CATALOG[id].effect.incomeMilli??0);
   let farmBatchGoldMilli = 0, farmExtraUpkeepMilli = 0, upkeepPaidMilli = 0, unpaidUpkeepMilli = 0, marketCapacity = 0;
   const funded: typeof s.tiles = [];
   const fundedTileIds: string[] = [];
@@ -85,6 +88,7 @@ export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
   const taxDeltaMilli=taxMilli-withCHTaxMilli;
   // The final spec tax must cover the guaranteed credit; reject a negative top-up.
   add('gold',trialSafe(taxMilli-creditedTaxMilli));
+  const lawGold=resolveLawGold(s,stocks),terms=lawTerms(lawGold.applied);
   let arrivalsBudgetBefore=0,arrivalsBudgetAfter=0;
   let luxuryImportedMilli = 0;
   for (const tile of funded) {
@@ -151,7 +155,7 @@ export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
     immigration = resolveTrialImmigration(s, {fundedTileIds,farmBatches,processorBatches,woodProducedMilli,ironProducedMilli,operatingDebitMilli,foodDemandMilli,foodConsumedMilli,unpaidUpkeepMilli});
     arrivalsBudgetBefore=immigration.arrivals;
     arrivalsBudgetAfter=authorityArrivals(orderBefore.authority,arrivalsBudgetBefore,immigration.reason==='arrivals'&&immigration.target>immigration.populationAfter);
-    const resolved = resolveSocietyWeek({society:s.society!,foodAvailableMilli:stocks.food,goodsServableMilli:servedMilli,luxuryImportedMilli,facilities:facilities!,employment:societyEmployment(s),arrivalsBudget:arrivalsBudgetAfter,goldAvailableMilli:stocks.gold});
+    const resolved = resolveSocietyWeek({lawTerms:terms,society:s.society!,foodAvailableMilli:stocks.food,goodsServableMilli:servedMilli,luxuryImportedMilli,facilities:facilities!,employment:societyEmployment(s),arrivalsBudget:arrivalsBudgetAfter,goldAvailableMilli:stocks.gold});
     stocks.food -= resolved.foodConsumedMilli; stocks.gold -= resolved.goldSpentMilli;
     trainingGoldMilli = resolved.goldSpentMilli; s.society = resolved.society;
     s.happiness = resolved.cityHappiness; societyReport = resolved.report;
@@ -162,12 +166,15 @@ export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
     immigration = Object.freeze({...immigration, arrivals:trialSafe(arrivals+(resolved.report.eliteArrived===null?0:1)), populationAfter:societyPopulation(resolved.society)});
   }
   s.world.week = trialSafe(s.world.week + 1); s.phase = "report";
-  const order = resolveOrderWeek(s,operatingIds,{before:orderBefore,taxModifierBps,taxDeltaMilli,arrivalsBudgetBefore,arrivalsBudgetAfter});
+  const order = resolveOrderWeek(s,operatingIds,{before:orderBefore,taxModifierBps,taxDeltaMilli,arrivalsBudgetBefore,arrivalsBudgetAfter},terms);
   if(order.tensionAdded>0)societyReport.tensionAfter=s.society.tension;
   if(order.satisfactionLost>0){
     s.happiness=cityHappiness(s.society.satisfaction,societyCounts(s.society),happinessBefore);
     for(const key of ['free','makers','luminaries','merchants'] as const)societyReport.classes[key].satisfactionAfter=s.society.satisfaction[key];
   }
+  const lawPromise=resolveLawPromiseWeek(s);
+  if(lawPromise?.outcome==='broken')societyReport.classes[lawPromise.group].satisfactionAfter=s.society.satisfaction[lawPromise.group];
+  const laws={inForce:[...s.society.laws.active],costs:lawGold.costs,unfunded:lawGold.unfunded,incomeMilli:lawGold.incomeMilli,promise:lawPromise};
   const crimeEvent=resolveCrimeWeek(s,operatingIds,crimeRandom(s.world.worldMetadata.worldSeed,s.world.week-1));
   if(immigration&&crimeEvent.event?.soldiersKilled)immigration=Object.freeze({...immigration,populationAfter:societyPopulation(s.society)});
   const crisis=s.society.crisis.fallCause==='assassination'?undefined:resolveCrisisWeek(s,{foodDemandMilli,foodConsumedMilli});
@@ -177,5 +184,5 @@ export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
   if(goodsStock)goodsStock=Object.freeze({...goodsStock,closingMilli:s.goodsStock.amountMilli});
   outside.stocksAfter={...s.society.stocksMilli};
   const goods = Object.freeze({ demandMilli, servedMilli, fulfillmentBps, woodUsed, ironUsed, revenueMilli });
-  return Object.freeze({ crimeEvent, ...(crisis ? {crisis} : {}), order, outside, week: s.world.week - 1, before: Object.freeze(before), after: Object.freeze({ ...stocks }), taxMilli, farmBatchGoldMilli, farmExtraUpkeepMilli, upkeepPaidMilli, unpaidUpkeepMilli, foodDemandMilli, foodConsumedMilli, happinessBefore, happinessAfter: s.happiness, goods, ...(goodsStock ? { goodsStock } : {}), ...(societyReport ? { society:societyReport,luxuryImportedMilli,trainingGoldMilli } : {}), activities: Object.freeze(activities), ...(immigration ? { immigration } : {}) });
+  return Object.freeze({ laws, crimeEvent, ...(crisis ? {crisis} : {}), order, outside, week: s.world.week - 1, before: Object.freeze(before), after: Object.freeze({ ...stocks }), taxMilli, farmBatchGoldMilli, farmExtraUpkeepMilli, upkeepPaidMilli, unpaidUpkeepMilli, foodDemandMilli, foodConsumedMilli, happinessBefore, happinessAfter: s.happiness, goods, ...(goodsStock ? { goodsStock } : {}), ...(societyReport ? { society:societyReport,luxuryImportedMilli,trainingGoldMilli } : {}), activities: Object.freeze(activities), ...(immigration ? { immigration } : {}) });
 }

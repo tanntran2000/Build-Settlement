@@ -341,7 +341,7 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
     }
     actual.crimeEvent=c;
   }
-  const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
+  const { laws: _laws, society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
   expect(actual).toEqual(baseReport);
   if (society) {
     const labels = { free: 'Free residents', makers: 'Makers', luminaries: 'Luminaries', merchants: 'Merchants', bound: 'The Bound' };

@@ -26,10 +26,10 @@ it('funds Counting House upkeep from the guaranteed credit before adding the non
  expect(Object.values(r.nextState.world.settlements[s.world.activeSettlementId!].inventory).every(n=>n>=0)).toBe(true);
 });
 it.each(Array.from({length:101},(_,authority)=>authority))('matches the spec and has a nonnegative tax top-up at Authority %i',authority=>{
- // Exercise production End Week on valid cities: 101 * 5 * 4 = 2020 cases.
- for(let levels=0;levels<=4;levels++)for(const population of [80,101,333,1000]){
+ // Exercise production End Week on valid cities: 101 * 5 * 4 * 2 = 4040 cases, including War Tithe.
+ for(const taxBps of [0,1000])for(let levels=0;levels<=4;levels++)for(const population of [80,101,333,1000]){
   const s=createSocietyState(),society=s.society!,settlement=s.world.settlements[s.world.activeSettlementId!];
-  society.order.authority=authority;society.classes.free=population-80;
+  society.order.authority=authority;society.laws.active=taxBps?['war-tithe']:[];society.classes.free=population-80;
   society.classes.makers={common:0,elite:0};society.classes.luminaries={common:0,elite:0};society.classes.merchants={common:80,elite:0};
   settlement.cohorts[0].count=population;settlement.inventory.gold=1000000;
   for(const tile of s.tiles)if(tile.building)tile.building.workers=0;
@@ -39,8 +39,8 @@ it.each(Array.from({length:101},(_,authority)=>authority))('matches the spec and
    if(level>0)s.tiles.find(t=>t.id===id)!.building={typeId:'counting-house',level,workers:2*level,enabled:true};
   }
   expect(isTileTrialState(s)).toBe(true);
-  const base=BigInt(population)*30n,factor=10000n+BigInt(authority-50)*40n;
-  const credited=authority<50?base*factor/10000n:base;
+  const base=BigInt(population)*30n,factor=10000n+BigInt(authority-50)*40n+BigInt(taxBps);
+  const credited=factor<10000n?base*factor/10000n:base;
   const withCH=base*BigInt(100+10*levels)/100n,final=withCH*factor/10000n;
   const report=runTileTrialWeek(s);
   expect(final-credited>=0n).toBe(true);

@@ -1,7 +1,7 @@
 import { expect, it } from 'vitest';
 import { authorityTarget, crimeTarget, createSocietyState, driftToward, isOrderState, isSocietyState, isTileTrialPlanningState, orderBand, ORDER_TRIAL, RESEARCH_TOPICS, securityTarget, SOCIETY_BUILDINGS, trialBuilding, type OrderFacts } from '../../index.js';
 
-const facts = (patch: Partial<OrderFacts> = {}): OrderFacts => ({ standing: 50, wallRing: 1, watchHouses: [], barracksWorkers: 0, population: 0, slumOther: 0, corruption: 50, desperation: 0, tension: 0, meanSatisfaction: 50, townHallStaffed: false, patrols: false, drill: false, ...patch });
+const facts = (patch: Partial<OrderFacts> = {}): OrderFacts => ({ lawSecurity: 0, lawCrime: 0, lawAuthority: 0, standing: 50, wallRing: 1, watchHouses: [], barracksWorkers: 0, population: 0, slumOther: 0, corruption: 50, desperation: 0, tension: 0, meanSatisfaction: 50, townHallStaffed: false, patrols: false, drill: false, ...patch });
 it.each([false, true])('matches the worked example with Slum placement %s', slum => {
  const f = facts({ population: 100, watchHouses: [{ level: 1, slum }], barracksWorkers: 4, slumOther: 1, desperation: 10, meanSatisfaction: 80 });
  const security = securityTarget(f), crime = crimeTarget(f, security);

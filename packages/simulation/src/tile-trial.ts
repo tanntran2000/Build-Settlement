@@ -1,4 +1,4 @@
-import { CARD_OPTIONS, CRISIS_TRIAL, crisisOptions, societyPopulation, type CardOption } from '@haven/core';
+import { LAW_IDS, LAW_MESSAGES, LAW_TRIAL, previewLawVote, type LawId, CARD_OPTIONS, CRISIS_TRIAL, crisisOptions, societyPopulation, type CardOption } from '@haven/core';
 import { cityHappiness, societyCounts } from './society-week.js';
 import { RESEARCH_TOPICS,type ResearchTopic,OUTSIDE_TRIAL,outsidePlot,hasWeeklyKeys,isTileTrialPlanningState,isTileTrialState,SOCIETY_BUILDINGS,societyPlot,trialBuilding,type TileTrialResult,type TileTrialState } from '@haven/core';
 import { runTileTrialWeek,trialSafe } from "./tile-trial-week.js";
@@ -16,6 +16,7 @@ export function executeTileTrialCommand(state: unknown, raw: unknown): TileTrial
     if (state.phase === "report" && c.type !== "NEXT_WEEK" && c.type !== 'CHOOSE_CARD_OPTION') return fail("FORBIDDEN", "Read the report, then choose Plan next week.");
     if (state.phase === "planning" && c.type === "NEXT_WEEK") return fail("FORBIDDEN", "Finish this week before planning the next one.");
     const keys: Record<string, string[]> = {
+      ENACT_LAW: ['lawId','lobby'], REPEAL_LAW: ['lawId'],
       CHOOSE_CARD_OPTION: ['cardId','option'], CLEAR: ['tileId','workers'], SET_RESEARCH: ['topic'], BUILD_DEEP_SHAFT: ['tileId'],
       EXTEND_WALL: [], SET_TRAINING: ["target"], END_WEEK: ["expectedWeek"], NEXT_WEEK: [], LOAD_TRIAL: ["snapshot"], BUILD: ["tileId", "typeId"], REPLACE: ["tileId", "typeId"],
       UPGRADE: ["tileId"], SET_WORKERS: ["tileId", "workers"], SET_ENABLED: ["tileId", "enabled"],
@@ -24,7 +25,28 @@ export function executeTileTrialCommand(state: unknown, raw: unknown): TileTrial
     if (['EXTEND_WALL','SET_TRAINING'].includes(c.type) && !state.society) return fail('UNSUPPORTED_RULESET','This command requires a society city.');
     let next = structuredClone(state) as TileTrialState;
     let report;
-    if (c.type === 'CHOOSE_CARD_OPTION') {
+    if (c.type === 'ENACT_LAW') {
+      const view=previewLawVote(next,c.lawId,c.lobby);
+      if(view.refusal)return fail(view.refusal.code,view.refusal.message);
+      const society=next.society!, laws=society.laws, lawId=c.lawId as LawId;
+      const clamp=(n:number)=>Math.max(0,Math.min(100,n));
+      next.world.settlements[next.world.activeSettlementId!].inventory.gold-=view.goldMilli;
+      for(const group of view.groups)if(group.lobby==='force'){
+        society.satisfaction[group.group]=clamp(society.satisfaction[group.group]+LAW_TRIAL.force.satisfaction);
+        society.tension=clamp(society.tension+LAW_TRIAL.force.tension);
+        society.standing=clamp(society.standing+LAW_TRIAL.force.standing);
+      }
+      if(view.groups.some(group=>group.lobby==='force'))next.happiness=cityHappiness(society.satisfaction,societyCounts(society),next.happiness);
+      for(const group of view.groups)if(group.lobby==='promise')laws.promise={group:group.group,lawId,satisfactionAtVote:society.satisfaction[group.group],weeksLeft:LAW_TRIAL.promise.weeks};
+      laws.active.push(lawId);laws.votedWeek=next.world.week;delete laws.repealedUntil[lawId];
+    } else if(c.type==='REPEAL_LAW'){
+      if(!LAW_IDS.includes(c.lawId as LawId))return fail('UNKNOWN_LAW',LAW_MESSAGES.UNKNOWN_LAW);
+      const society=next.society!,lawId=c.lawId as LawId;
+      if(!society.laws.active.includes(lawId))return fail('LAW_INACTIVE',LAW_MESSAGES.LAW_INACTIVE);
+      society.laws.active=society.laws.active.filter(id=>id!==lawId);
+      society.order.authority=Math.max(0,society.order.authority+LAW_TRIAL.repeal.authority);
+      society.laws.repealedUntil[lawId]=trialSafe(next.world.week+LAW_TRIAL.repeal.cooldownWeeks);
+    } else if (c.type === 'CHOOSE_CARD_OPTION') {
       const society=next.society!, card=society.pendingCard;
       if (!card || c.cardId!==card.id) return fail('UNKNOWN_CARD','This card is no longer waiting for an answer.');
       if (!CARD_OPTIONS.includes(c.option as CardOption)) return fail('UNKNOWN_OPTION','Choose Pay, Promise, Force or Refuse.');

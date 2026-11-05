@@ -17,7 +17,7 @@ function built() {
 }
 it('projects the worked example and drifts sequentially toward its targets',()=>{
  const s=built(), funded=new Set(['service-1','service-2','slum-1']);
- expect(orderFacts(s,funded)).toEqual({standing:50,wallRing:1,watchHouses:[{level:1,slum:false}],barracksWorkers:4,population:100,slumOther:1,corruption:50,desperation:10,tension:0,meanSatisfaction:80,townHallStaffed:false,patrols:false,drill:false});
+ expect(orderFacts(s,funded)).toEqual({lawSecurity:0,lawCrime:0,lawAuthority:0,standing:50,wallRing:1,watchHouses:[{level:1,slum:false}],barracksWorkers:4,population:100,slumOther:1,corruption:50,desperation:10,tension:0,meanSatisfaction:80,townHallStaffed:false,patrols:false,drill:false});
  const r=resolveOrderWeek(s,funded,partial(s));
  expect(r.before).toEqual({security:30,crime:10,authority:50});
  expect(r.targets).toEqual({security:25,crime:5,authority:40});

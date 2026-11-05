@@ -1,4 +1,4 @@
-﻿import { isSocietyState, societyPopulation, type SocietyState } from '@haven/core';
+import { type LawTerms, isSocietyState, societyPopulation, type SocietyState } from '@haven/core';
 export type SocietyClassId = 'free' | 'makers' | 'luminaries' | 'merchants' | 'bound';
 type Group = 'makers' | 'luminaries' | 'merchants';
 type Citizen = 'free' | Group;
@@ -12,6 +12,7 @@ export interface SocietyFacilities {
 }
 export interface SocietyEmployment { workforce: Record<SocietyClassId, number>; assigned: Record<SocietyClassId, number> }
 export interface SocietyWeekInput {
+  lawTerms: LawTerms;
   society: SocietyState; foodAvailableMilli: number; goodsServableMilli: number; luxuryImportedMilli: number;
   facilities: SocietyFacilities; employment: SocietyEmployment; arrivalsBudget: number; goldAvailableMilli: number;
 }
@@ -165,8 +166,8 @@ export function resolveDesperation(before:number,foodBps:number,overcrowded:bool
 export function resolveTension(before:number,foodBps:number,desperation:number):number {
   return clamp(before+T.tensionShortage*(10000-foodBps)/10000+Math.floor(desperation/T.tensionDesperationDivisor)-(foodBps===10000?T.tensionDecay:0));
 }
-export function resolveCorruption(before:number,slums:number):number {
-  const target=Math.min(100,add(T.corruptionBase,product(T.corruptionSlum,slums)));
+export function resolveCorruption(before:number,slums:number,lawTarget=0):number {
+  const target=Math.max(0,Math.min(100,add(T.corruptionBase,product(T.corruptionSlum,slums))+lawTarget));
   return before+Math.sign(target-before)*Math.min(T.corruptionStep,Math.abs(target-before));
 }
 function validateInput(i:SocietyWeekInput):void {
@@ -178,9 +179,10 @@ function validateInput(i:SocietyWeekInput):void {
 }
 export function resolveSocietyWeek(i:SocietyWeekInput):SocietyWeekResult {
   validateInput(i);
-  const before=i.society, f=i.facilities, counts=societyCounts(before), allocation=allocateRequirements(i), a=allocation.perClass;
+  const before=i.society, f=i.facilities, counts=societyCounts(before), allocation=allocateRequirements(i), a=allocation.perClass,terms=i.lawTerms;
   let society=structuredClone(before);
   society.satisfaction=resolveSatisfaction(before.satisfaction,a,f,before.classes);
+  for(const id of citizens)society.satisfaction[id]=clamp(society.satisfaction[id]+terms.satisfaction[id]);
   // Common housing and Elite Manor are independent pools.
   const commonCounts={...counts,...Object.fromEntries(groups.map(id=>[id,before.classes[id].common]))};
   const arrivals=distributeArrivals(i.arrivalsBudget,commonCounts,f.housing,record(id=>a[id].foodBps));
@@ -191,9 +193,9 @@ export function resolveSocietyWeek(i:SocietyWeekInput):SocietyWeekResult {
   if(elite!==null) society.classes[elite].elite=add(society.classes[elite].elite,T.eliteArrivalsMax);
   const training=resolveTraining(society,f,i.goldAvailableMilli);
   const debt=resolveDebt(training.society,a,f,i.employment); society=debt.society;
-  society.desperation=resolveDesperation(before.desperation,a.bound.foodBps,societyCounts(society).bound>f.housing.bound,before.corruption,f.hospitalLevels);
-  society.tension=resolveTension(before.tension,a.bound.foodBps,society.desperation);
-  society.corruption=resolveCorruption(before.corruption,f.operatingSlumBuildings);
+  society.desperation=clamp(resolveDesperation(before.desperation,a.bound.foodBps,societyCounts(society).bound>f.housing.bound,before.corruption,f.hospitalLevels)+terms.desperation);
+  society.tension=clamp(resolveTension(before.tension,a.bound.foodBps,society.desperation)+terms.tension);
+  society.corruption=resolveCorruption(before.corruption,f.operatingSlumBuildings,terms.corruptionTarget);
   society.luxuryStockMilli=allocation.luxuryAfterMilli;
   const reports=record(id=>{
     const notes:SocietyNote[]=[...debt.notes[id]];
