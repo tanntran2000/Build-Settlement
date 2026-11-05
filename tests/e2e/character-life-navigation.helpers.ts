@@ -328,7 +328,20 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
     if(await choice.count()){const a=await choice.evaluate(n=>({stage:n.getAttribute('data-crisis-stage'),option:n.getAttribute('data-crisis-option'),goldMilli:Number(n.getAttribute('data-crisis-gold'))}));c.lastChoice=a as NonNullable<typeof c.lastChoice>;}
     actual.crisis=c;
   }
-  const { crimeEvent, society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
+  const crime=panel.getByRole('region',{name:'Crime',exact:true});
+  if(await crime.count()){
+    const f=await crime.evaluate(node=>Object.fromEntries([...node.attributes].filter(a=>a.name.startsWith('data-crime-')).map(a=>[a.name.slice(11),a.value])));
+    const c:NonNullable<TileTrialReport['crimeEvent']>={standingBefore:Number(f['standing-before']),standingAfter:Number(f['standing-after']),chancePercent:Number(f['chance-percent']),lordHealthLoss:Number(f['lord-health-loss']),event:null};
+    if(f.kind){
+      const e:NonNullable<typeof c.event>={kind:f.kind as NonNullable<typeof c.event>['kind'],severity:f.severity as NonNullable<typeof c.event>['severity']};
+      if(f.target)e.target=f.target as typeof e.target;
+      if(f.outcome)e.outcome=f.outcome as typeof e.outcome;
+      for(const [attr,key] of [['loss-milli','lossMilli'],['soldiers-killed','soldiersKilled'],['standing-loss','standingLoss'],['authority-loss','authorityLoss']] as const)if(f[attr]!=='')e[key]=Number(f[attr]);
+      c.event=e;
+    }
+    actual.crimeEvent=c;
+  }
+  const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
   expect(actual).toEqual(baseReport);
   if (society) {
     const labels = { free: 'Free residents', makers: 'Makers', luminaries: 'Luminaries', merchants: 'Merchants', bound: 'The Bound' };
