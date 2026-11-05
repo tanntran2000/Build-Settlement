@@ -150,6 +150,7 @@ The catalogue, the TRIAL numbers, the tally and the term sums live once, in `cor
       4. Week 4: repeal Free Assembly, then enact Guild Charters with Free lobbied by Promise.
       5. Save in Week 4 Planning. The save then has 3 laws in force, Free Assembly on cooldown until week 8, and an open promise with `weeksLeft` 4.
     - Later PRs keep earlier pins byte-identical.
+    - **Amendment (owner Tân, 2026-11-05, verbatim: "Accept, send to dot"):** PR A (#78) already pinned `society-v6/life-5-weeks.json` and regenerated the six crafted saves as v6, because refusing v5 breaks every test that loads a v5 fixture; each equals its v5 original apart from `rulesetId` and the empty `laws`. PR B keeps these pins and only adds `life-laws.json` (and re-pins `life-5-weeks.json` only if a law-free week result changes, which must be reported).
 16. **Report parity in e2e.** PR B strips `laws` in `expectReport` **and** in the matching destructuring in `character-life-navigation.spec.ts`; both are mechanical edits and must be listed. PR C rebuilds `laws` from the DOM.
 
 ## Global Constraints
