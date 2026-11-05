@@ -341,7 +341,9 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
     }
     actual.crimeEvent=c;
   }
-  const { laws: _laws, society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
+  const laws=panel.getByRole('region',{name:'Laws',exact:true});
+  if(await laws.count()) actual.laws=await laws.evaluate(node=>({inForce:JSON.parse(node.getAttribute('data-laws-in-force')!),costs:JSON.parse(node.getAttribute('data-laws-costs')!),unfunded:JSON.parse(node.getAttribute('data-laws-unfunded')!),incomeMilli:Number(node.getAttribute('data-laws-income-milli')),promise:JSON.parse(node.getAttribute('data-laws-promise')!)}));
+  const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
   expect(actual).toEqual(baseReport);
   if (society) {
     const labels = { free: 'Free residents', makers: 'Makers', luminaries: 'Luminaries', merchants: 'Merchants', bound: 'The Bound' };
