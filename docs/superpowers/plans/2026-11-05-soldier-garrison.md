@@ -19,7 +19,7 @@ TRIAL numbers and pure helpers live in core: `catalog.ts` (worker cap), `order.t
 
 **Spec:** `docs/superpowers/specs/2026-11-05-soldier-garrison-design.md` (v0.1, G1 "Approve G1", 2026-11-05, commit 356511a).
 
-**Plan approval:** pending.
+**Plan approval:** owner Tân, 2026-11-05, verbatim: "Approve, Builder A".
 
 ## Decisions
 
