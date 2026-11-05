@@ -328,7 +328,7 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
     if(await choice.count()){const a=await choice.evaluate(n=>({stage:n.getAttribute('data-crisis-stage'),option:n.getAttribute('data-crisis-option'),goldMilli:Number(n.getAttribute('data-crisis-gold'))}));c.lastChoice=a as NonNullable<typeof c.lastChoice>;}
     actual.crisis=c;
   }
-  const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
+  const { crimeEvent, society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
   expect(actual).toEqual(baseReport);
   if (society) {
     const labels = { free: 'Free residents', makers: 'Makers', luminaries: 'Luminaries', merchants: 'Merchants', bound: 'The Bound' };
