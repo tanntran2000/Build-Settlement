@@ -1,6 +1,6 @@
 <script lang="ts">
   import { WEEKLY_RESOURCE_KEYS, type TileTrialReport } from '@haven/core';
-  import { lawReportLines, crimeReportLine, crisisReportLines, outsideReportLines, orderReportLines, ORDER_GOODS } from './society-view.js';
+  import { garrisonReportLine, lawReportLines, crimeReportLine, crisisReportLines, outsideReportLines, orderReportLines, ORDER_GOODS } from './society-view.js';
   import SocietyReport from './SocietyReport.svelte';
   import { formatFulfillment, formatMilli } from './milli-format.js';
   import { formatLifeWeek } from './life-calendar.js';
@@ -41,7 +41,8 @@
       {#if report.crisis.promise}<p data-crisis-promise data-crisis-stage={report.crisis.promise.stage} data-crisis-result={report.crisis.promise.result} data-crisis-tension={report.crisis.promise.tensionDelta} data-crisis-authority={report.crisis.promise.authorityDelta}>Promise: {report.crisis.promise.result}</p>{/if}
       {#if report.crisis.lastChoice}<p data-crisis-choice data-crisis-stage={report.crisis.lastChoice.stage} data-crisis-option={report.crisis.lastChoice.option} data-crisis-gold={report.crisis.lastChoice.goldMilli}>Answer: {report.crisis.lastChoice.option}</p>{/if}
     </section>{/if}
-    {#if report.order}<section aria-label="Order"><h3>Order</h3>
+    {#if report.order}<section aria-label="Order" data-order-soldiers={report.order.soldiers} data-order-garrison-security={report.order.garrisonSecurity}><h3>Order</h3>
+      <p>{garrisonReportLine(report)}</p>
       {#each orderReportLines(report) as line,i}<p data-order-value={i<3?['security','crime','authority'][i]:undefined}>{line}</p>{/each}
       <details><summary>Order calculation</summary><dl>
       {#each ORDER_GOODS as good}{#if report.order.theftMilli[good]}<div><dt>{good} stolen</dt><dd data-order-theft={good}>{formatMilli(report.order.theftMilli[good]!)}</dd></div>{/if}{/each}

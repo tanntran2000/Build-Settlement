@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { managerSlotTileIds, summarizeOutside, TRIAL_BUILDINGS, type TileTrialState, type WorldNpc, type OutsideWorldState } from '@haven/core';
+  import { buildingWorkerCap, managerSlotTileIds, summarizeOutside, TRIAL_BUILDINGS, type TileTrialState, type WorldNpc, type OutsideWorldState } from '@haven/core';
   import {workerDigits,assignBuildingWorkers} from './clearing-workers.js';
   import OutsideCity from './OutsideCity.svelte';
   import CouncilPanel from './CouncilPanel.svelte';
@@ -59,7 +59,7 @@
           aria-describedby={`trial-workers-confirmed${workers !== String(selected.building.workers) ? ' trial-workers-draft' : ''}${workforceError ? ' trial-workers-error' : ''}`} />
         {#if workforceError}<p id="trial-workers-error" role="alert">{workforceError}</p>{/if}
         {#if workers !== String(selected.building.workers)}<p id="trial-workers-draft">Unapplied draft. Assigned workforce remains {selected.building.workers} WF. Select Assign workers to apply.</p>{/if}
-        <p>Capacity: {definition.maxWorkers * selected.building.level} WF.</p>
+        <p>Capacity: {buildingWorkerCap(selected.building.typeId, selected.building.level)} WF.</p>
         <details><summary>Building limits</summary><p>Maximum level: {definition.maxLevel}.</p></details>
         <button disabled={locked || !selected.building.enabled} onclick={assignWorkers}>Assign workers</button>
         <button disabled={locked} aria-describedby={managementError?.action === 'SET_ENABLED' ? 'trial-management-error' : undefined}
