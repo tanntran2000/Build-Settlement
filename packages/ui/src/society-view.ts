@@ -139,3 +139,25 @@ export function crisisReportLines(report:Readonly<TileTrialReport>):string[]{
  if(c.lastChoice){const a=c.lastChoice;lines.push(`Your answer last week: ${a.option[0].toUpperCase()+a.option.slice(1)}${a.option==='pay'?` (−${formatMilli(a.goldMilli)} Gold, Tension ${signed(CRISIS_TRIAL.pay[a.stage].tension)})`:''}.`);}
  return lines;
 }
+
+import { crimeChancePercent } from '@haven/core';
+export function standingRow(city:TileTrialState):string {
+ const n=city.society!.standing;return `Standing ${n} · ${orderBand(n)}`;
+}
+export function crimeChanceRow(city:TileTrialState):string {
+ return `Crime events: ${crimeChancePercent(city.society!.order.crime)}% a week`;
+}
+export const END_SCREEN_COPY:Record<'rebellion'|'assassination',{title:string;text:string}>={
+ rebellion:{title:'The City Has Fallen',text:'Hunger turned Haven against you.'},
+ assassination:{title:'The Lord Is Dead',text:"An assassin's blade ended your rule."},
+};
+export function crimeReportLine(report:Readonly<TileTrialReport>):string {
+ const c=report.crimeEvent,e=c?.event;
+ if(!e)return 'A quiet week on the streets.';
+ switch(e.kind){
+ case 'robbery':return `A gang robbed the ${e.target==='gold'?'treasury':'stores'}: −${formatMilli(e.lossMilli!)} ${e.target![0].toUpperCase()+e.target!.slice(1)}.`;
+ case 'smear':return `Rumours spread about the Lord: Standing −${e.standingLoss}.`;
+ case 'raid':return `A gang raided the Barracks: ${e.soldiersKilled} soldier${e.soldiersKilled===1?'':'s'} died.`;
+ case 'assassination':return e.outcome==='foiled'?'Guards stopped an assassin.':e.outcome==='wounded'?`An assassin wounded you: health −${c!.lordHealthLoss}, Standing −${e.standingLoss}, Authority −${e.authorityLoss}.`:END_SCREEN_COPY.assassination.text;
+ }
+}

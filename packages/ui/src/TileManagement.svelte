@@ -198,7 +198,7 @@
 </script>
 
 {#if state.society?.crisis.stage === 'fallen'}
-  <CityFallen weeks={state.world.week-1} {onnewgame} />
+  <CityFallen fallCause={state.society.crisis.fallCause!} weeks={state.world.week-1} {onnewgame} />
 {:else if lifeMode && outside && npcs && player && profiles}
   <CharacterLifeShell bind:this={lifeShell} {state} {report} bind:destination bind:activeWindow {error} status={lifeStatus} {unapplied} onchoose={(cardId,option)=>command('CHOOSE_CARD_OPTION',{cardId,option})} onendweek={endLifeWeek}>
     {#snippet playerInfo()}
