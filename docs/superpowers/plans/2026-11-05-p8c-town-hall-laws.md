@@ -20,7 +20,7 @@ The catalogue, the TRIAL numbers, the tally and the term sums live once, in `cor
 
 **Spec:** `docs/superpowers/specs/2026-11-05-p8c-town-hall-laws-design.md` (v0.1, G1 "Approve G1", 2026-11-05, commit 1d118e4).
 
-**Plan approval:** pending.
+**Plan approval:** owner Tân, 2026-11-05, verbatim: "Approve, Builder A". Builder: Codex Terra 6.1, reasoning Max, Fast (owner: "Đổi thành Terra 6.1 max high fast làm builder đi"; effort "Max").
 
 ## Decisions
 
