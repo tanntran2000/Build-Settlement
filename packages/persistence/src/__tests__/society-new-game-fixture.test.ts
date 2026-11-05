@@ -5,11 +5,11 @@ import { deserializeCharacterLifeSave, serializeCharacterLifeSave } from '../ind
 
 it('pins the society new-game tile save bytes', () => {
  const state = createSocietyState();
- if(process.env.GENERATE_SOCIETY_FIXTURES==='1')writeFileSync(new URL('./fixtures/society-v6/new-game.json',import.meta.url),JSON.stringify({format:'haven.tile-trial.save',schemaVersion:1,rulesetId:'tile-society-06',state}),'utf8');
- const bytes = readFileSync(new URL('./fixtures/society-v6/new-game.json', import.meta.url), 'utf8');
+ if(process.env.GENERATE_SOCIETY_FIXTURES==='1')writeFileSync(new URL('./fixtures/society-v7/new-game.json',import.meta.url),JSON.stringify({format:'haven.tile-trial.save',schemaVersion:1,rulesetId:'tile-society-07',state}),'utf8');
+ const bytes = readFileSync(new URL('./fixtures/society-v7/new-game.json', import.meta.url), 'utf8');
  const expected = JSON.parse(bytes) as { state: unknown };
  expect(state).toEqual(expected.state);
- const encoded = ({ success: true, text: JSON.stringify({ format: 'haven.tile-trial.save', schemaVersion: 1, rulesetId: 'tile-society-06', state }) });
+ const encoded = ({ success: true, text: JSON.stringify({ format: 'haven.tile-trial.save', schemaVersion: 1, rulesetId: 'tile-society-07', state }) });
  expect(encoded.success).toBe(true);
  if (!encoded.success) throw Error('Export failed');
  expect(encoded.text).toBe(bytes);
@@ -22,20 +22,20 @@ it('pins the society new-game Character Life save bytes', () => {
  const encoded = serializeCharacterLifeSave(created.value);
  expect(encoded.success).toBe(true);
  if (!encoded.success) throw Error('Export failed');
- if(process.env.GENERATE_SOCIETY_FIXTURES==='1')writeFileSync(new URL('./fixtures/society-v6/life-new-game.json',import.meta.url),encoded.text,'utf8');
- const bytes = readFileSync(new URL('./fixtures/society-v6/life-new-game.json', import.meta.url), 'utf8');
+ if(process.env.GENERATE_SOCIETY_FIXTURES==='1')writeFileSync(new URL('./fixtures/society-v7/life-new-game.json',import.meta.url),encoded.text,'utf8');
+ const bytes = readFileSync(new URL('./fixtures/society-v7/life-new-game.json', import.meta.url), 'utf8');
  expect(encoded.text).toBe(bytes);
 });
 
 it('round-trips the pinned v6 Character Life checkpoint',()=>{
- const bytes=readFileSync(new URL('./fixtures/society-v6/life-new-game.json',import.meta.url),'utf8');
+ const bytes=readFileSync(new URL('./fixtures/society-v7/life-new-game.json',import.meta.url),'utf8');
  const decoded=deserializeCharacterLifeSave(bytes);expect(decoded.success).toBe(true);
  if(!decoded.success)throw Error(decoded.error.message);
  expect(serializeCharacterLifeSave(decoded.state)).toEqual({success:true,text:bytes});
 });
 
 it.each(['high','negative','fractional','missing score','extra score','missing research','unknown completed'])('refuses edited v6 %s without changing the checkpoint', kind => {
- const bytes = readFileSync(new URL('./fixtures/society-v6/life-new-game.json',import.meta.url),'utf8');
+ const bytes = readFileSync(new URL('./fixtures/society-v7/life-new-game.json',import.meta.url),'utf8');
  const envelope = JSON.parse(bytes), society = envelope.state.city.society;
  if (kind === 'high') society.order.security = 101;
  if (kind === 'negative') society.order.security = -1;
