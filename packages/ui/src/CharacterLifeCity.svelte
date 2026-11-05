@@ -2,6 +2,7 @@
   import { managerSlotTileIds, summarizeOutside, TRIAL_BUILDINGS, type TileTrialState, type WorldNpc, type OutsideWorldState } from '@haven/core';
   import {workerDigits,assignBuildingWorkers} from './clearing-workers.js';
   import OutsideCity from './OutsideCity.svelte';
+  import CouncilPanel from './CouncilPanel.svelte';
   import LibraryPanel from './LibraryPanel.svelte';
   import InsideCity from './InsideCity.svelte';
   import { buildOptions } from './society-view.js';
@@ -72,6 +73,7 @@
         {:else}<p>Maximum trial level.</p>{/if}
       {:else}<p>Empty tile. Choose a compatible building.</p>{/if}
 
+      {#if selected.building?.typeId === 'town-hall'}<CouncilPanel {state} {locked} {oncommand} {managementError} />{/if}
       <p>Replace pays full cost and resets level and workers; no refund</p>
       <label for="trial-type">Building type</label>
       <select id="trial-type" bind:value={typeId} disabled={locked}>

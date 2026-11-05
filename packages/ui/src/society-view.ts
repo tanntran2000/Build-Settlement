@@ -163,3 +163,20 @@ export function crimeReportLine(report:Readonly<TileTrialReport>):string {
  case 'assassination':return e.outcome==='foiled'?'Guards stopped an assassin.':e.outcome==='wounded'?`An assassin wounded you: health −${c!.lordHealthLoss}, Standing −${e.standingLoss}, Authority −${e.authorityLoss}.`:END_SCREEN_COPY.assassination.text;
  }
 }
+
+import { LAW_CATALOG, type LawId, type SocietyClassKey } from '@haven/core';
+export const GROUP_LABELS: Record<SocietyClassKey,string> = {free:'Free residents',makers:'Makers',luminaries:'Luminaries',merchants:'Merchants'};
+export function lawsRow(state:TileTrialState):string { return `Laws ${state.society!.laws.active.length}/3`; }
+export function lawEffectLine(id:LawId):string {
+ const copy:Record<LawId,string>={curfew:'Security target +10; Free satisfaction −2','watch-levy':'Costs 1 Gold; Crime target −5','guild-charters':'Makers satisfaction +2; Merchants satisfaction −2','war-tithe':"Tax +10 %; every group's satisfaction −1",'poor-relief':'Costs 1.5 Gold; Desperation −3; Free satisfaction +2','free-assembly':'Tension −3; Authority target −5','public-punishments':'Crime target −10; Tension +2','licensed-vice':'Earns 1.5 Gold; Luminaries satisfaction −2'};
+ return copy[id];
+}
+export function lawReportLines(report:Readonly<TileTrialReport>):string[] {
+ const l=report.laws;if(!l)return [];
+ const lines=[l.inForce.length?`Laws in force: ${l.inForce.map(id=>LAW_CATALOG[id].name).join(', ')}.`:'No laws in force.',
+ ...l.costs.map(c=>`${LAW_CATALOG[c.lawId].name} cost ${formatMilli(c.goldMilli)} Gold.`),
+ ...l.unfunded.map(id=>`${LAW_CATALOG[id].name} was unfunded: no effect this week.`)];
+ if(l.incomeMilli)lines.push(`Licensed Vice earned ${formatMilli(l.incomeMilli)} Gold.`);
+ if(l.promise){const p=l.promise;lines.push(p.outcome==='kept'?`You kept your promise to the ${GROUP_LABELS[p.group]}: Authority +3.`:`You broke your promise to the ${GROUP_LABELS[p.group]}: satisfaction −10, Tension +10.`);}
+ return lines;
+}

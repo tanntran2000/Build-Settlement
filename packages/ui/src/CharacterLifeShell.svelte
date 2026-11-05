@@ -1,7 +1,7 @@
 <script lang="ts">
   import { tick, type Snippet } from 'svelte';
   import { type TileTrialState, type TileTrialReport } from '@haven/core';
-  import { storageView, orderRows, crisisRow, standingRow, crimeChanceRow } from './society-view.js';
+  import { lawsRow, storageView, orderRows, crisisRow, standingRow, crimeChanceRow } from './society-view.js';
   import CrisisCard from './CrisisCard.svelte';
   import SocietyPopulation from './SocietyPopulation.svelte';
   import { formatMilli } from './milli-format.js';
@@ -117,6 +117,7 @@
         {#each storageView(state) as row}<div><dt>{row.good}</dt><dd><span data-testid={`trial-storage-${row.good.toLowerCase()}`}>{formatMilli(Math.round(row.amount*1000))}</span> / {formatMilli(Math.round(row.capacity*1000))}</dd></div>{/each}
       </dl></div>
       <div class="city-status"><h3>City status</h3>
+      <p data-testid="trial-laws">{lawsRow(state)}</p>
       <p data-testid="trial-standing">{standingRow(state)}</p>
       <p data-testid="trial-crime-chance">{crimeChanceRow(state)}</p>
       <p data-testid="trial-crisis">Crisis: {crisisRow(state)}</p>
