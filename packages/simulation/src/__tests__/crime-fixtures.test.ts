@@ -43,3 +43,12 @@ it('skips crisis on assassination death and refuses subsequent commands',()=>{
  expect(r.report!.crisis).toBeUndefined();expect(r.next.city.society!.crisis.fallCause).toBe('assassination');
  expect(executeCharacterLifeCommand(r.next,{type:'NEXT_WEEK',expectedRevision:r.next.city.revision})).toMatchObject({success:false,error:{code:'CITY_FALLEN'}});
 });
+it('preserves zero health through a non-week command and an unwounded End Week',()=>{
+ const s=crisisFixtureSession();s.player.character.health=0;
+ const assigned=executeCharacterLifeCommand(s,{type:'SET_WORKERS',tileId:'field-1',workers:1,expectedRevision:s.city.revision});
+ expect(assigned.success).toBe(true);if(!assigned.success)throw Error(assigned.error.message);
+ expect(assigned.next.player.character.health).toBe(0);
+ const resolved=end(assigned.next);expect(resolved.success).toBe(true);if(!resolved.success)throw Error(resolved.error.message);
+ expect(resolved.report!.crimeEvent!.lordHealthLoss).toBe(0);
+ expect(resolved.next.player.character.health).toBe(0);expect(s.player.character.health).toBe(0);
+});

@@ -1,7 +1,7 @@
 import { CRIME_TRIAL as C, crimeChancePercent, crimeSeverity, crimeRandom, societyPopulation, type CrimeEventReport, type TileTrialState } from '@haven/core';
 import { releaseSocietyWorkers } from './society-facilities.js';
 
-export function resolveCrimeWeek(s:TileTrialState, fundedTileIds:ReadonlySet<string>, rng=crimeRandom(s.world.worldMetadata.worldSeed,s.world.week)):CrimeEventReport {
+export function resolveCrimeWeek(s:TileTrialState, fundedTileIds:ReadonlySet<string>, rng=crimeRandom(s.world.worldMetadata.worldSeed,s.world.week-1)):CrimeEventReport {
  void fundedTileIds;
  const society=s.society!,order=society.order,standingBefore=society.standing;
  const clamp=(n:number)=>Math.max(0,Math.min(100,n));
