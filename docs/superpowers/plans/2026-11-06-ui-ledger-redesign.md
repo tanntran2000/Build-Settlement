@@ -30,13 +30,12 @@ This is presentation only: no core, simulation, persistence or command change (L
    - every ledger rule.
 
    `CharacterLifeShell.svelte` imports it. The existing token names (`--bg-primary`, `--text-main`, …) take ledger values in the same file. All text, muted, error, input and focus tokens change together. `app.css` is not edited.
-2. **Font.**
-   - Pixelify Sans Regular 400 and Bold 700, from `github.com/google/fonts` `ofl/pixelifysans` (owner: "Cho phép tải (Recommended)").
-   - Convert to WOFF2, and subset to Latin plus `−`, `·`, `→` if the total is over 150 KB, **only with a converter already on this machine**: `python -m fontTools`, `pyftsubset` or `woff2_compress`. Install nothing. If no converter exists, **HOLD and report**.
-   - Ship `packages/ui/src/assets/fonts/PixelifySans-Regular.woff2`, `PixelifySans-Bold.woff2` and `OFL-PixelifySans.txt`.
-   - Load them with `@font-face` (`font-display: swap`) through relative `url()`.
+2. **Font** (amended 2026-11-06, owner: "Dùng thẳng file TTF (Recommended)").
+   - Download `ofl/pixelifysans/PixelifySans[wght].ttf` (79,160 bytes, weights 400–700) and `OFL.txt` from `github.com/google/fonts` at upstream commit `8b0a1d0f5983c89bc2b93f1b5fb55f9e252744b5` or the current one (record which). Owner permission: "Cho phép tải (Recommended)".
+   - Ship them **unchanged** as `packages/ui/src/assets/fonts/PixelifySans-Variable.ttf` and `OFL-PixelifySans.txt`. No conversion, no subsetting, no tool install.
+   - One `@font-face` with `font-family: 'Pixelify Sans'`, `src: url('./assets/fonts/PixelifySans-Variable.ttf') format('truetype')`, `font-weight: 400 700` and `font-display: swap`.
    - Family stack: `'Pixelify Sans', 'Courier New', monospace`, applied to the shell `main` and `CityFallen` only.
-   - The PR records the source URL, the upstream commit, and each file's SHA-256 and size.
+   - The PR records the source URL, the upstream commit, and the file's SHA-256 and size.
 3. **Flat fallback.** No sprites in PR A or PR B. Each material is drawn with flat colours:
 
    | Material | Fill | Border |
@@ -190,7 +189,7 @@ Branch `feat/ui-ledger-shell` from `main` (`7ff1451` or later).
 **Files:**
 - Create:
   - `packages/ui/src/ledger-theme.css`;
-  - `packages/ui/src/assets/fonts/{PixelifySans-Regular.woff2,PixelifySans-Bold.woff2,OFL-PixelifySans.txt}`;
+  - `packages/ui/src/assets/fonts/{PixelifySans-Variable.ttf,OFL-PixelifySans.txt}`;
   - `packages/ui/src/__tests__/ledger-contrast.test.ts`.
 - Modify `CharacterLifeShell.svelte`: the import and class hooks only; visible text and structure are unchanged in PR A.
 - Extend `tests/e2e/character-life-navigation-accessibility.spec.ts` with the fonts-blocked check.
@@ -199,11 +198,11 @@ Branch `feat/ui-ledger-shell` from `main` (`7ff1451` or later).
 
 - [ ] **Step 1: Write the failing tests.**
   - `ledger-contrast.test.ts` covers every Decision 4 pair.
-  - In e2e (the accessibility spec), with `page.route('**/*.woff2', r => r.abort())`: the New Game shell at 375 px has no horizontal overflow, and every button is ≥ 44×44 (Review Focus 5).
+  - In e2e (the accessibility spec), with `page.route('**/*.ttf', r => r.abort())`: the New Game shell at 375 px has no horizontal overflow, and every button is ≥ 44×44 (Review Focus 5).
   - At 1280 px, the computed `font-family` of `#life-nav-information` starts with `"Pixelify Sans"`.
 - [ ] **Step 2:** Run the tests and see them FAIL.
 - [ ] **Step 3:** Implement.
-  - Download and convert the font (Decision 2).
+  - Download the font unchanged (Decision 2).
   - Write `ledger-theme.css` (Decisions 1, 3).
   - Apply the classes: sidebar zones → board, nav buttons → plaques, End Week → wax, name plate and cards → parchment.
 - [ ] **Step 4:** All tests PASS. The existing accessibility contrast tests stay green; if one fails, fix the token, not the test.

@@ -99,6 +99,8 @@ Gains and losses use colour **and** a `+` / `−` sign, never colour alone. Colo
 
 **Source (v0.4):** the Builder downloads Pixelify Sans from the official `google/fonts` repository on GitHub (`ofl/pixelifysans`), with the owner's permission (§1 item 17), and converts it to WOFF2 only if needed. The PR records the source URL, the upstream commit and the SHA-256 of each shipped file.
 
+**Amendment (owner Tân, 2026-11-06, verbatim: "Dùng thẳng file TTF (Recommended)"):** no WOFF2 converter exists on the build machine and none is installed. The game ships the upstream variable font `PixelifySans[wght].ttf` (79,160 bytes; weights 400–700) unchanged, as one `@font-face` with `format("truetype")` and `font-weight: 400 700`. Wherever this section says WOFF2, read the upstream TTF.
+
 Font files are self-hosted WOFF2 with the OFL 1.1 licence file beside them, loaded with `@font-face` and `font-display: swap`. They live in `packages/ui/src/assets/fonts/` and are referenced by relative `url()` from the ledger stylesheet. This differs from Codex's `public/fonts/` suggestion on purpose: Vite then hashes the files and applies the deploy base itself. No npm font package and no CDN at runtime. Total font size is **measured** and reported in the PR. Ceiling 150 KB. The plan confirms the font against the reference image at 375 and 1280 px before the Builder starts; a swap to another OFL pixel font of the same weight is a plan decision, not a spec change.
 
 ### 4.4 Pixel art (v0.3, replaces CSS-drawn textures)
@@ -295,7 +297,7 @@ packages/ui/src/SoloWeekReport.svelte
 packages/ui/src/CityFallen.svelte                (v0.4, sealed-letter end screen)
 packages/ui/src/CrisisCard.svelte                (v0.4, urgent-letter styling only)
 packages/ui/src/ledger-theme.css                 (new)
-packages/ui/src/assets/fonts/*.woff2             (new, Pixelify Sans, v0.3)
+packages/ui/src/assets/fonts/PixelifySans-Variable.ttf (new, Pixelify Sans upstream TTF, v0.4 amendment)
 packages/ui/src/assets/fonts/OFL-*.txt           (new, licences)
 packages/ui/src/__tests__/ledger-contrast.test.ts (new)
 packages/ui/src/report-letters.ts                (new, v0.2)
