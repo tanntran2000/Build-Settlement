@@ -81,3 +81,7 @@ main.ledger-shell.ledger-shell.ledger-shell .card:not(.ledger-board),
 main.ledger-shell.ledger-shell.ledger-shell [data-life-view] {
   --bg-primary: var(--parchment);
 }
+
+@media (min-width: 1440px) {
+  main.ledger-shell.ledger-shell.ledger-shell .content-header { margin-bottom: 16px; }
+}
