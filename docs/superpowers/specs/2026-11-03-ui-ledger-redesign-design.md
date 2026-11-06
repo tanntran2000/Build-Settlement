@@ -6,7 +6,7 @@ Status:
 - **v0.3** (2026-11-04) redraws the whole shell as pixel art (§1 item 13, §4.3, §4.4), on the owner's instruction "sửa lại UI/UX trong game cũng là pixel".
 - **v0.4** (2026-11-06) re-bases the spec on `main` after P3, P8 and SOLDIER-01 (§1 items 14–17). It adds the Crime rows, a sixth letter for laws, the end screens, the font source and a two-PR delivery with pixel art in a later PR.
 
-The written v0.2–v0.4 text needs the owner's G1 before the plan. No code, push to `main` or PR is authorised by this document.
+**G1 for v0.4 (covering v0.2–v0.4): approved by the owner (Tân), 2026-11-06, verbatim: "Approve G1".** No code is authorised until the owner also approves the implementation plan.
 
 Baseline: `origin/main` `7ff1451` (merge of PR #82; P3, P8-A, P8-B1, P8-B2, P8-C and SOLDIER-01 merged). Branch: `docs/ui-ledger-redesign` (docs only).
 
