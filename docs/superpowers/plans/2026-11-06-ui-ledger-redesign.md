@@ -36,6 +36,7 @@ This is presentation only: no core, simulation, persistence or command change (L
    - One `@font-face` with `font-family: 'Pixelify Sans'`, `src: url('./assets/fonts/PixelifySans-Variable.ttf') format('truetype')`, `font-weight: 400 700` and `font-display: swap`.
    - Family stack: `'Pixelify Sans', 'Courier New', monospace`, applied to the shell `main` and `CityFallen` only.
    - The PR records the source URL, the upstream commit, and the file's SHA-256 and size.
+   - **Licence whitespace (owner Tân, 2026-11-06, verbatim: "Xóa dấu cách thừa (Recommended)"):** the upstream `OFL.txt` has one trailing space at the end of line 21, which fails `git diff --check`. Remove exactly that space; no other byte changes. The TTF stays byte-identical. The PR records the SHA-256 of both the upstream and the shipped licence file.
 3. **Flat fallback.** No sprites in PR A or PR B. Each material is drawn with flat colours:
 
    | Material | Fill | Border |
