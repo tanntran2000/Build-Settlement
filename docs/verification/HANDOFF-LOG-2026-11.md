@@ -67,3 +67,17 @@ Hãy kiểm tra lại kỹ trên git và làm mọi việc ở trên đó giốn
 - Owner words (verbatim): "ok tôi đồng ý hãy đưa lên và merg với main đi".
 - Evidence: [saved owner authorization 009](handoff-2026-11/009-20261106-owner-approval-handoff-docs-merge.md); the eight prepared archives 001-008 and the proposed log were checked locally for UTF-8 validity and resolved archive links before publication. The branch is four commits ahead of main with only the two handoff documents and this log; no product changes are included.
 - Merge authority: the owner's current direct instruction authorizes the Orchestrator to merge this documentation PR, subject to normal branch protection, required CI and independent review. This is a scoped exception to the earlier Orchestrator no-merge instruction and does not authorize merging PR #83.
+
+## 2026-11-06 G6 — documentation PR #84
+- Pull request: https://github.com/tanntran2000/Build-Settlement/pull/84.
+- GitHub state: merged=true; merged_by tanntran2000 at 2026-11-06T09:15:22Z.
+- Approved PR head: 126c3d367d6aeb9333b02375ab11c8d7968b2c63.
+- Merge/main commit: 4b31736b53547ec1e3587297862254f9e6c03449.
+- Merge commit tree: 9027badf918ad7e41cc415cf0575ca241a304691.
+- Reviewed and tested PR-head tree: 9027badf918ad7e41cc415cf0575ca241a304691. The trees are identical.
+- Premerge Quality Gate CI: https://github.com/tanntran2000/Build-Settlement/actions/runs/42188725918 — completed/success at the approved head; job 127795193970 log reports 92 unit test files, 1,921 unit tests and 273 smoke tests (13.1 min).
+- Premerge Claude Code Review: https://github.com/tanntran2000/Build-Settlement/actions/runs/42188725919 — completed/success.
+- Post-merge Quality Gate CI: https://github.com/tanntran2000/Build-Settlement/actions/runs/42193657497 — push event at exact merge commit 4b31736b53547ec1e3587297862254f9e6c03449, completed/success at 2026-11-06T09:29:33Z.
+- Post-merge job 127811456375 log reports 92 unit test files, 1,921 unit tests and 273 smoke tests (12.8 min).
+- The main ref was read back as 4b31736b53547ec1e3587297862254f9e6c03449 after CI completed.
+- Documentation scope: twelve added Markdown files. PR #84 is closed with G6 verified.
