@@ -79,7 +79,7 @@ The Information row `Crime events: N% a week` uses the same rule in Planning. Th
 All UI copy is in English. "−" is U+2212.
 
 - **City status row:** `Soldiers 6 · Garrison +3 Security`.
-- **Report, Order section:** one line `Garrison: 6 soldiers, Security +3.`
+- **Report, Order section:** one line `Garrison: 6 soldiers, Security +3.`, or `Garrison: 1 soldier, Security +0.` for exactly one soldier (amendment, owner Tân, 2026-11-06, verbatim: "Sửa trong PR B (Recommended)", after Astra's P3 on "1 soldiers").
 - **Raid Report line** (replaces the P8-B2 copy):
   - `A gang attacked the garrison: 2 soldiers died.`
   - `A gang attacked the garrison: 1 soldier died.`
