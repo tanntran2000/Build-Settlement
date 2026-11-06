@@ -75,7 +75,7 @@ Each material has one job:
 | Brass | Nails, tacks, the selected-view marker | Never wood-coloured |
 | Red wax | End Week, Plan next week | At most one wax button visible per area |
 
-Rule: anything clickable is lighter than the surface under it or is wax. Disabled controls keep their current dashed border and `aria-disabled` behaviour.
+Rule: anything clickable is lighter than the surface under it or is wax. Disabled controls keep their current dashed border and `aria-disabled` behaviour. **Amendment (owner Tân, 2026-11-06, verbatim: "Kiểu mới, sửa test opacity (Recommended)"):** disabled controls are not faded. They use muted ink text on their surface, a dashed border and `aria-disabled`, so they still meet the 3:1 inactive-control contrast. The old 50 % white fade reads at 1.19:1 on parchment. The e2e check for the unavailable Plan next week asserts the dashed border and `aria-disabled` instead of `opacity: 0.5`.
 
 ### 4.2 Tokens
 
