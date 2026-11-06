@@ -395,3 +395,22 @@ for (const viewport of [{ width: 1600, height: 1000 }, { width: 1280, height: 90
     });
   });
 }
+
+
+test('ledger font family at 1280px', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/?mode=world-life'); await importLife(page, makeLife());
+  await expect(page.locator('#life-nav-information')).toHaveCSS('font-family', /^"Pixelify Sans"/);
+});
+
+test('ledger fonts blocked reflows at 375px with 44px buttons', async ({ page }) => {
+  await page.route('**/*.ttf', route => route.abort());
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto('/?mode=world-life'); await importLife(page, makeLife());
+  const shell = page.getByTestId('life-shell');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  for (const button of await shell.locator('button:visible').all()) {
+    const box = await button.boundingBox();
+    expect(box!.width).toBeGreaterThanOrEqual(44); expect(box!.height).toBeGreaterThanOrEqual(44);
+  }
+});

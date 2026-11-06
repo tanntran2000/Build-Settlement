@@ -1,4 +1,5 @@
 <script lang="ts">
+  import './ledger-theme.css';
   import { tick, type Snippet } from 'svelte';
   import { type TileTrialState, type TileTrialReport } from '@haven/core';
   import { soldiersRow, lawsRow, storageView, orderRows, crisisRow, standingRow, crimeChanceRow } from './society-view.js';
@@ -58,13 +59,13 @@
   ];
 </script>
 
-<main lang="en" data-testid="life-shell" data-revision={state.revision}>
+<main class="ledger-shell" lang="en" data-testid="life-shell" data-revision={state.revision}>
   <aside aria-label="Life status and navigation">
     <nav aria-label="Main">
-      <div class="card" data-life-nav-zone="top">
-    <h1>Character Life</h1>
+      <div class="card ledger-board" data-life-nav-zone="top">
+    <h1 class="ledger-parchment">Character Life</h1>
     <p>{formatLifeWeek(state.world.week)} · {locked ? 'Report' : 'Planning'}</p>
-    <button data-testid="life-end-week" disabled={!!state.society?.pendingCard} aria-disabled={locked || !!state.society?.pendingCard} onclick={event => onendweek(event.currentTarget)}>{state.society?.pendingCard ? 'Answer the crisis first.' : locked ? 'Report open — Plan next week in Report' : 'End Week'}</button>
+    <button class="ledger-wax" data-testid="life-end-week" disabled={!!state.society?.pendingCard} aria-disabled={locked || !!state.society?.pendingCard} onclick={event => onendweek(event.currentTarget)}>{state.society?.pendingCard ? 'Answer the crisis first.' : locked ? 'Report open — Plan next week in Report' : 'End Week'}</button>
     {#if unapplied.length}
       <p>Unapplied changes ({unapplied.length})</p>
       {#each unapplied as entry (entry.id)}<button onclick={entry.onopen}>{entry.label}</button>{/each}
@@ -74,17 +75,17 @@
     <p role={activeWindow ? undefined : 'status'} aria-live={activeWindow ? undefined : 'polite'} aria-atomic="true">{status}</p>
     {#if error}<p data-life-error role={activeWindow ? undefined : 'alert'} aria-hidden={activeWindow ? true : undefined}>{error}</p>{/if}
         {#each ['information', 'report'] as id}
-          <button id={`life-nav-${id}`} aria-haspopup="dialog" onclick={event => { void openWindow(id as 'information' | 'report', event.currentTarget); }}>{windowNames[id as 'information' | 'report']}</button>
+          <button class="ledger-plaque" id={`life-nav-${id}`} aria-haspopup="dialog" onclick={event => { void openWindow(id as 'information' | 'report', event.currentTarget); }}>{windowNames[id as 'information' | 'report']}</button>
         {/each}
       </div>
-      <div class="card" data-life-nav-zone="middle">
+      <div class="card ledger-board" data-life-nav-zone="middle">
         {#each ['player', 'population'] as id}
-          <button id={`life-nav-${id}`} aria-haspopup="dialog" onclick={event => { void openWindow(id as 'player' | 'population', event.currentTarget); }}>{windowNames[id as 'player' | 'population']}</button>
+          <button class="ledger-plaque" id={`life-nav-${id}`} aria-haspopup="dialog" onclick={event => { void openWindow(id as 'player' | 'population', event.currentTarget); }}>{windowNames[id as 'player' | 'population']}</button>
         {/each}
       </div>
-      <div class="card" data-life-nav-zone="bottom">
+      <div class="card ledger-board" data-life-nav-zone="bottom">
         {#each views.slice(2) as view}
-          <button id={`life-nav-${view.id}`} aria-current={destination === view.id ? 'page' : undefined} onclick={() => { destination = view.id; }}>{view.label}</button>
+          <button class="ledger-plaque" id={`life-nav-${view.id}`} aria-current={destination === view.id ? 'page' : undefined} onclick={() => { destination = view.id; }}>{view.label}</button>
         {/each}
       </div>
     </nav>
@@ -96,7 +97,7 @@
       {/each}
       <nav aria-label="Views">
         {#each views.slice(0, 2) as view}
-          <button id={`life-nav-${view.id}`} aria-current={destination === view.id ? 'page' : undefined} onclick={() => { destination = view.id; }}>{view.label}</button>
+          <button class="ledger-plaque" id={`life-nav-${view.id}`} aria-current={destination === view.id ? 'page' : undefined} onclick={() => { destination = view.id; }}>{view.label}</button>
         {/each}
       </nav>
     </header>
@@ -106,7 +107,7 @@
       </section>
     {/each}
   </div>
-  <dialog class="card" bind:this={dialog} aria-labelledby="life-window-heading"
+  <dialog class="card ledger-parchment" bind:this={dialog} aria-labelledby="life-window-heading"
     oncancel={event => { event.preventDefault(); closeWindow(); }} onclose={() => { if (!dialog.open) closeWindow(); }}>
     <header><h2 id="life-window-heading" tabindex="-1">{activeWindow ? windowNames[activeWindow] : ''}</h2><button onclick={closeWindow}>Close</button></header>
     {#if error && activeWindow}<p data-life-error role="alert">{error}</p>{/if}

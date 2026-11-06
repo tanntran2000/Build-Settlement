@@ -1,0 +1,87 @@
+@font-face {
+  font-family: 'Pixelify Sans';
+  src: url('./assets/fonts/PixelifySans-Variable.ttf') format('truetype');
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+main.ledger-shell.ledger-shell.ledger-shell {
+  --px: 2px;
+  --wood-dark: #3a2414; --wood-seam: #120a03; --oak: #c9a36b; --oak-text: #2b1a0b;
+  --parchment: #ead8ae; --ink: #3b2a17; --ink-muted: #6b4f2e; --paper: #f5f0e3;
+  --brass: #d9b24e; --brass-edge: #3a2a08; --wax: #8e2a1e; --wax-text: #fbecd0;
+  --ink-gain: #2f5d2a; --ink-loss: #8c2a1f; --focus: #79719f;
+  --bg-primary: var(--wood-dark); --bg-secondary: var(--parchment); --bg-tertiary: var(--paper);
+  --text-main: var(--ink); --text-muted: var(--ink-muted); --border-color: var(--ink-muted);
+  --accent-green: var(--ink-gain); --accent-blue: var(--ink); --accent-gold: var(--ink-muted); --accent-red: var(--ink-loss);
+  --life-control-border: var(--ink-muted);
+  font-family: 'Pixelify Sans', 'Courier New', monospace;
+}
+main.ledger-shell.ledger-shell.ledger-shell aside { background: var(--wood-dark); }
+main.ledger-shell.ledger-shell.ledger-shell .ledger-board {
+  position: relative; background: var(--wood-dark); color: var(--wax-text);
+  --text-main: var(--wax-text); --text-muted: var(--wax-text);
+  border: calc(2 * var(--px)) solid var(--wood-seam); border-radius: 0;
+}
+main.ledger-shell.ledger-shell.ledger-shell .ledger-board::before, main.ledger-shell.ledger-shell.ledger-shell .ledger-board::after {
+  content: ''; position: absolute; left: var(--px); right: var(--px);
+  height: calc(3 * var(--px)); border-inline: calc(3 * var(--px)) solid var(--brass); pointer-events: none;
+}
+main.ledger-shell.ledger-shell.ledger-shell .ledger-board::before { top: var(--px); }
+main.ledger-shell.ledger-shell.ledger-shell .ledger-board::after { bottom: var(--px); }
+main.ledger-shell.ledger-shell.ledger-shell .ledger-plaque, main.ledger-shell.ledger-shell.ledger-shell .ledger-plaque:hover:not(:disabled):not([aria-disabled='true']) {
+  background: var(--oak); color: var(--oak-text); border: calc(2 * var(--px)) solid var(--brass-edge); border-radius: 0;
+}
+main.ledger-shell.ledger-shell.ledger-shell .ledger-parchment, main.ledger-shell.ledger-shell.ledger-shell .card:not(.ledger-board) {
+  background: var(--parchment); color: var(--ink); --text-main: var(--ink); --text-muted: var(--ink-muted);
+  border: calc(2 * var(--px)) solid var(--ink-muted); border-radius: 0; box-shadow: none;
+}
+main.ledger-shell.ledger-shell.ledger-shell .ledger-wax, main.ledger-shell.ledger-shell.ledger-shell .ledger-wax:hover:not(:disabled):not([aria-disabled='true']), main.ledger-shell.ledger-shell.ledger-shell .ledger-seal {
+  background: var(--wax); color: var(--wax-text); border: calc(2 * var(--px)) solid var(--brass); border-radius: 0;
+}
+main.ledger-shell.ledger-shell.ledger-shell button { min-width: 44px; }
+main.ledger-shell.ledger-shell.ledger-shell button:disabled, main.ledger-shell.ledger-shell.ledger-shell button[aria-disabled='true'] {
+  opacity: 1; background: var(--parchment); color: var(--ink-muted); border-color: var(--ink-muted); border-style: dashed;
+}
+main.ledger-shell.ledger-shell.ledger-shell :focus-visible, main.ledger-shell.ledger-shell.ledger-shell button[aria-disabled='true']:focus-visible {
+  outline: 3px solid var(--focus); outline-offset: 3px; box-shadow: 0 0 0 3px var(--parchment);
+}
+
+/* Keep native controls and focus colours above Svelte's scoped shell rules. */
+main.ledger-shell.ledger-shell.ledger-shell input,
+main.ledger-shell.ledger-shell.ledger-shell select,
+main.ledger-shell.ledger-shell.ledger-shell textarea {
+  color: var(--ink); background: var(--paper); border-color: var(--ink-muted);
+}
+main.ledger-shell.ledger-shell.ledger-shell input::placeholder { color: var(--ink-muted); opacity: 1; }
+main.ledger-shell.ledger-shell.ledger-shell input[type='file']::file-selector-button {
+  color: var(--ink); background: var(--paper); border-color: var(--ink-muted);
+}
+
+/* Selected profile tabs use the plaque material rather than gain-coloured fill. */
+main.ledger-shell.ledger-shell.ledger-shell [role='tab'][aria-selected='true'] {
+  background: var(--oak); color: var(--oak-text); border-color: var(--brass-edge);
+}
+main.ledger-shell.ledger-shell.ledger-shell dialog::backdrop { background: rgb(58 36 20 / .8); }
+
+/* Wood carries the page chrome; reading surfaces retain parchment. */
+main.ledger-shell.ledger-shell.ledger-shell {
+  background: var(--wood-dark); color: var(--parchment);
+}
+main.ledger-shell.ledger-shell.ledger-shell .content,
+main.ledger-shell.ledger-shell.ledger-shell .content-header {
+  background: var(--wood-dark); color: var(--parchment);
+}
+main.ledger-shell.ledger-shell.ledger-shell [data-life-view],
+main.ledger-shell.ledger-shell.ledger-shell .ledger-board > p {
+  background: var(--parchment); color: var(--ink);
+  --text-main: var(--ink); --text-muted: var(--ink-muted);
+}
+main.ledger-shell.ledger-shell.ledger-shell .card:not(.ledger-board),
+main.ledger-shell.ledger-shell.ledger-shell [data-life-view] {
+  --bg-primary: var(--parchment);
+}
+
+@media (min-width: 1440px) {
+  main.ledger-shell.ledger-shell.ledger-shell .content-header { margin-bottom: 16px; }
+}
