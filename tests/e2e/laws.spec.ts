@@ -9,7 +9,7 @@ async function hall(page:Page){await go(page,'city');await page.getByTestId('tri
 test('New Game builds and staffs the Council, votes and reports Poor Relief',async({page})=>{
  await page.goto('/?mode=world-life');await button(page,'New Game').click();await page.getByLabel('Name',{exact:true}).fill('Law Keeper');await page.getByRole('tab',{name:'Review',exact:true}).click();await button(page,'Create character').click();
  await go(page,'city');await page.getByTestId('trial-tile-field-1').click();await button(page,'Pause').click();
- for(const [tile,type,workers] of [['forest-1','logging','2'],['ore-1','mine','1']]){await page.getByTestId(`trial-tile-${tile}`).click();await page.locator('#trial-type').selectOption(type);await button(page,'Build').click();await page.locator('#trial-workers').fill(workers);await button(page,'Assign workers').click();}
+ for(const [tile,type,workers] of [['forest-1','logging','2'],['ore-1','mine','2']]){await page.getByTestId(`trial-tile-${tile}`).click();await page.locator('#trial-type').selectOption(type);await button(page,'Build').click();await page.locator('#trial-workers').fill(workers);await button(page,'Assign workers').click();}
  await page.getByTestId('life-end-week').click();await button(page,'Plan next week').click();
  await hall(page);await page.locator('#trial-type').selectOption('town-hall');await button(page,'Build').click();
  await expect(page.getByText('Staff the Town Hall to call a vote.',{exact:true})).toBeVisible();await expect(page.getByTestId('council-call-vote')).toBeDisabled();
