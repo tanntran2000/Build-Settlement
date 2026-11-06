@@ -11,7 +11,7 @@ main.ledger-shell.ledger-shell.ledger-shell {
   --parchment: #ead8ae; --ink: #3b2a17; --ink-muted: #6b4f2e; --paper: #f5f0e3;
   --brass: #d9b24e; --brass-edge: #3a2a08; --wax: #8e2a1e; --wax-text: #fbecd0;
   --ink-gain: #2f5d2a; --ink-loss: #8c2a1f; --focus: #79719f;
-  --bg-primary: var(--parchment); --bg-secondary: var(--parchment); --bg-tertiary: var(--paper);
+  --bg-primary: var(--wood-dark); --bg-secondary: var(--parchment); --bg-tertiary: var(--paper);
   --text-main: var(--ink); --text-muted: var(--ink-muted); --border-color: var(--ink-muted);
   --accent-green: var(--ink-gain); --accent-blue: var(--ink); --accent-gold: var(--ink-muted); --accent-red: var(--ink-loss);
   --life-control-border: var(--ink-muted);
@@ -63,3 +63,21 @@ main.ledger-shell.ledger-shell.ledger-shell [role='tab'][aria-selected='true'] {
   background: var(--oak); color: var(--oak-text); border-color: var(--brass-edge);
 }
 main.ledger-shell.ledger-shell.ledger-shell dialog::backdrop { background: rgb(58 36 20 / .8); }
+
+/* Wood carries the page chrome; reading surfaces retain parchment. */
+main.ledger-shell.ledger-shell.ledger-shell {
+  background: var(--wood-dark); color: var(--parchment);
+}
+main.ledger-shell.ledger-shell.ledger-shell .content,
+main.ledger-shell.ledger-shell.ledger-shell .content-header {
+  background: var(--wood-dark); color: var(--parchment);
+}
+main.ledger-shell.ledger-shell.ledger-shell [data-life-view],
+main.ledger-shell.ledger-shell.ledger-shell .ledger-board > p {
+  background: var(--parchment); color: var(--ink);
+  --text-main: var(--ink); --text-muted: var(--ink-muted);
+}
+main.ledger-shell.ledger-shell.ledger-shell .card:not(.ledger-board),
+main.ledger-shell.ledger-shell.ledger-shell [data-life-view] {
+  --bg-primary: var(--parchment);
+}
