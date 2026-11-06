@@ -20,7 +20,7 @@ This is presentation only: no core, simulation, persistence or command change (L
 
 **Spec:** `docs/superpowers/specs/2026-11-03-ui-ledger-redesign-design.md` (v0.4, G1 "Approve G1", 2026-11-06, commit 50b60ab, branch `docs/ui-ledger-redesign`).
 
-**Plan approval:** pending.
+**Plan approval:** owner Tân, 2026-11-06, verbatim: "Approve, Builder A".
 
 ## Decisions
 
