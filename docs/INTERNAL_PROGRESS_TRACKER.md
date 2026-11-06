@@ -1,5 +1,14 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## HANDOFF-01 ? documentation PR #84 G6 (2026-11-06 UTC)
+
+[PR #84](https://github.com/tanntran2000/Build-Settlement/pull/84) merged the twelve approved Markdown audit/handoff files at `4b31736b53547ec1e3587297862254f9e6c03449`, by GitHub account `tanntran2000` at `2026-11-06T09:15:22Z`. Its reviewed head `126c3d367d6aeb9333b02375ab11c8d7968b2c63` and actual merge share tree `9027badf918ad7e41cc415cf0575ca241a304691`. The current main ref was independently confirmed at that actual merge SHA.
+
+[Premerge Quality Gate 42188725918](https://github.com/tanntran2000/Build-Settlement/actions/runs/42188725918) and [postmerge main Quality Gate 42193657497](https://github.com/tanntran2000/Build-Settlement/actions/runs/42193657497) completed SUCCESS at the approved head and actual main respectively. Both full logs contain **92 files / 1,921 unit tests and 273 smoke tests**, smoke durations **13.1m** and **12.8m**. Successful command exits are 0 from runner step conclusions under `bash -e`; no local product test execution is claimed. Claude bot review succeeded; the imported native Astra review is PASS with no actionable P0-P3. The same independent T3 Tester (`mcp:96c4e0cb-da55-4078-b4f0-bb00eee2a269`) returned G6 PASS, and the Orchestrator confirmed the Git/GitHub evidence directly.
+
+See the [handoff log](verification/HANDOFF-LOG-2026-11.md) and numbered archives 010-022 for the operational brief, Tester follow-ups/results, review provenance, final PR body and direct evidence. The pre-existing public G6 log commit `5b4df3fba6635eafd22064c32b856b0ae2d0b41a` remains intact. This tracker/archive update remains on `docs/codex-orchestrator-handoff` for the next documentation batch; it is not additional content merged by PR #84. PR #83 stays separate and OPEN; UI-LEDGER PR B was not started. No unresolved PR #84/G6 blocker remains.
+
+
 ## Current release — Goods stock and five-week buffer bounded G6 snapshot (2026-10-30 UTC)
 
 [PR54](https://github.com/tanntran2000/Build-Settlement/pull/54) merged accepted head `167d602fe8275f401f2d00bf08d1e05216f88863` normally into `main` at `51df2f5996a4704b986ac48f45c8ef598fb70a24` on `2026-10-30T04:43:37Z`. Its parents are `c45920f4088ed654e13d681a1948d82c4c4e121a` (PR55 merge) and that head; both head and merge have tree `a82c1dd45b0507b99bfbd4d98c691e19dc6ae8e6`. The accepted head is Goods implementation `0558a3b17d0e356990093b3d279aa795656b9804` plus a merge of `main` that adds only the PR55 Vite change.

@@ -81,3 +81,91 @@ Hãy kiểm tra lại kỹ trên git và làm mọi việc ở trên đó giốn
 - Post-merge job 127811456375 log reports 92 unit test files, 1,921 unit tests and 273 smoke tests (12.8 min).
 - The main ref was read back as 4b31736b53547ec1e3587297862254f9e6c03449 after CI completed.
 - Documentation scope: twelve added Markdown files. PR #84 is closed with G6 verified.
+
+## 2026-11-06 10:10:09 UTC archive backfill ? operational-brief
+- WP / PR / branch / approved head: HANDOFF-01 / #84 / docs/codex-orchestrator-handoff / 126c3d367d6aeb9333b02375ab11c8d7968b2c63.
+- What happened: preserved the source record in numbered archive 010; historical timestamps and provenance remain in the source metadata.
+- Thread: mcp:ad744961-ac09-4d3d-b26e-07d1f491f81b; source: Orchestrator T3 thread mcp:ad744961-ac09-4d3d-b26e-07d1f491f81b, position 0, 2026-11-06T08:55:41.150Z; verbatim original brief.
+- Evidence: [010-20261106-operational-brief-handoff-01-pr84.md](handoff-2026-11/010-20261106-operational-brief-handoff-01-pr84.md).
+
+## 2026-11-06 10:10:09 UTC archive backfill ? tester-brief
+- WP / PR / branch / approved head: HANDOFF-01 / #84 / docs/codex-orchestrator-handoff / 126c3d367d6aeb9333b02375ab11c8d7968b2c63.
+- What happened: preserved the source record in numbered archive 011; historical timestamps and provenance remain in the source metadata.
+- Thread: mcp:ad744961-ac09-4d3d-b26e-07d1f491f81b; source: Tester T3 thread mcp:96c4e0cb-da55-4078-b4f0-bb00eee2a269, position 0, 2026-11-06T08:45:05.926Z; backfilled verbatim.
+- Evidence: [011-20261106-tester-brief-handoff-01-pr84.md](handoff-2026-11/011-20261106-tester-brief-handoff-01-pr84.md).
+
+## 2026-11-06 10:10:09 UTC archive backfill ? tester-install-diagnosis
+- WP / PR / branch / approved head: HANDOFF-01 / #84 / docs/codex-orchestrator-handoff / 126c3d367d6aeb9333b02375ab11c8d7968b2c63.
+- What happened: preserved the source record in numbered archive 012; historical timestamps and provenance remain in the source metadata.
+- Thread: mcp:ad744961-ac09-4d3d-b26e-07d1f491f81b; source: Tester T3 thread mcp:96c4e0cb-da55-4078-b4f0-bb00eee2a269, position 47, 2026-11-06T08:47:59.116Z; backfilled verbatim.
+- Evidence: [012-20261106-tester-install-diagnosis-handoff-01-pr84.md](handoff-2026-11/012-20261106-tester-install-diagnosis-handoff-01-pr84.md).
+
+## 2026-11-06 10:10:09 UTC archive backfill ? tester-bounded-diagnosis
+- WP / PR / branch / approved head: HANDOFF-01 / #84 / docs/codex-orchestrator-handoff / 126c3d367d6aeb9333b02375ab11c8d7968b2c63.
+- What happened: preserved the source record in numbered archive 013; historical timestamps and provenance remain in the source metadata.
+- Thread: mcp:ad744961-ac09-4d3d-b26e-07d1f491f81b; source: Tester T3 thread mcp:96c4e0cb-da55-4078-b4f0-bb00eee2a269, position 90, 2026-11-06T08:51:10.637Z; backfilled verbatim.
+- Evidence: [013-20261106-tester-bounded-diagnosis-handoff-01-pr84.md](handoff-2026-11/013-20261106-tester-bounded-diagnosis-handoff-01-pr84.md).
+
+## 2026-11-06 10:10:09 UTC archive backfill ? tester-watch-only
+- WP / PR / branch / approved head: HANDOFF-01 / #84 / docs/codex-orchestrator-handoff / 126c3d367d6aeb9333b02375ab11c8d7968b2c63.
+- What happened: preserved the source record in numbered archive 014; historical timestamps and provenance remain in the source metadata.
+- Thread: mcp:ad744961-ac09-4d3d-b26e-07d1f491f81b; source: Tester T3 thread mcp:96c4e0cb-da55-4078-b4f0-bb00eee2a269, position 99, 2026-11-06T08:51:56.209Z; backfilled verbatim.
+- Evidence: [014-20261106-tester-watch-only-handoff-01-pr84.md](handoff-2026-11/014-20261106-tester-watch-only-handoff-01-pr84.md).
+
+## 2026-11-06 10:10:09 UTC archive backfill ? tester-executor-routing
+- WP / PR / branch / approved head: HANDOFF-01 / #84 / docs/codex-orchestrator-handoff / 126c3d367d6aeb9333b02375ab11c8d7968b2c63.
+- What happened: preserved the source record in numbered archive 015; historical timestamps and provenance remain in the source metadata.
+- Thread: mcp:ad744961-ac09-4d3d-b26e-07d1f491f81b; source: Tester T3 thread mcp:96c4e0cb-da55-4078-b4f0-bb00eee2a269, position 105, 2026-11-06T08:56:11.264Z; backfilled verbatim.
+- Evidence: [015-20261106-tester-executor-routing-handoff-01-pr84.md](handoff-2026-11/015-20261106-tester-executor-routing-handoff-01-pr84.md).
+
+## 2026-11-06 10:10:09 UTC archive backfill ? review-provenance
+- WP / PR / branch / approved head: HANDOFF-01 / #84 / docs/codex-orchestrator-handoff / 126c3d367d6aeb9333b02375ab11c8d7968b2c63.
+- What happened: preserved the source record in numbered archive 016; historical timestamps and provenance remain in the source metadata.
+- Thread: mcp:ad744961-ac09-4d3d-b26e-07d1f491f81b; source: Shared Claude T3 thread mcp:f972da44-2380-4966-a4f2-b4f969c703e6, position 852, 2026-11-06T08:46:17.174Z; imported completed native review.
+- Evidence: [016-20261106-review-provenance-handoff-01-pr84.md](handoff-2026-11/016-20261106-review-provenance-handoff-01-pr84.md).
+
+## 2026-11-06 10:10:09 UTC archive backfill ? tester-executor-ack
+- WP / PR / branch / approved head: HANDOFF-01 / #84 / docs/codex-orchestrator-handoff / 126c3d367d6aeb9333b02375ab11c8d7968b2c63.
+- What happened: preserved the source record in numbered archive 017; historical timestamps and provenance remain in the source metadata.
+- Thread: mcp:ad744961-ac09-4d3d-b26e-07d1f491f81b; source: Orchestrator outgoing T3 message; receipt message:mcp:682923c0-e28c-4d2d-93dc-fd1955d1fa82:thread-send:codex-pr84-t3-executor-ack-20261106-r1.
+- Evidence: [017-20261106-tester-executor-ack-handoff-01-pr84.md](handoff-2026-11/017-20261106-tester-executor-ack-handoff-01-pr84.md).
+
+## 2026-11-06 10:10:09 UTC archive backfill ? tester-ci-result
+- WP / PR / branch / approved head: HANDOFF-01 / #84 / docs/codex-orchestrator-handoff / 126c3d367d6aeb9333b02375ab11c8d7968b2c63.
+- What happened: preserved the source record in numbered archive 018; historical timestamps and provenance remain in the source metadata.
+- Thread: mcp:ad744961-ac09-4d3d-b26e-07d1f491f81b; source: Incoming Tester message to Orchestrator T3 thread mcp:ad744961-ac09-4d3d-b26e-07d1f491f81b, position 76, 2026-11-06T10:01:32.390Z; verbatim.
+- Evidence: [018-20261106-tester-ci-result-handoff-01-pr84.md](handoff-2026-11/018-20261106-tester-ci-result-handoff-01-pr84.md).
+
+## 2026-11-06 10:10:09 UTC archive backfill ? tester-g6-brief
+- WP / PR / branch / approved head: HANDOFF-01 / #84 / docs/codex-orchestrator-handoff / 126c3d367d6aeb9333b02375ab11c8d7968b2c63.
+- What happened: preserved the source record in numbered archive 019; historical timestamps and provenance remain in the source metadata.
+- Thread: mcp:ad744961-ac09-4d3d-b26e-07d1f491f81b; source: Orchestrator outgoing message to same Tester; receipt message:mcp:682923c0-e28c-4d2d-93dc-fd1955d1fa82:thread-send:codex-pr84-actual-4b31736-g6-20261106-r1.
+- Evidence: [019-20261106-tester-g6-brief-handoff-01-pr84.md](handoff-2026-11/019-20261106-tester-g6-brief-handoff-01-pr84.md).
+
+## 2026-11-06 10:10:09 UTC archive backfill ? tester-g6-result
+- WP / PR / branch / approved head: HANDOFF-01 / #84 / docs/codex-orchestrator-handoff / 126c3d367d6aeb9333b02375ab11c8d7968b2c63.
+- What happened: preserved the source record in numbered archive 020; historical timestamps and provenance remain in the source metadata.
+- Thread: mcp:ad744961-ac09-4d3d-b26e-07d1f491f81b; source: Incoming Tester message in Orchestrator T3 thread mcp:ad744961-ac09-4d3d-b26e-07d1f491f81b, position 123, 2026-11-06T10:06:29.074Z; verbatim.
+- Evidence: [020-20261106-tester-g6-result-handoff-01-pr84.md](handoff-2026-11/020-20261106-tester-g6-result-handoff-01-pr84.md).
+
+## 2026-11-06 10:10:09 UTC archive backfill ? pr-body
+- WP / PR / branch / approved head: HANDOFF-01 / #84 / docs/codex-orchestrator-handoff / 126c3d367d6aeb9333b02375ab11c8d7968b2c63.
+- What happened: preserved the source record in numbered archive 021; historical timestamps and provenance remain in the source metadata.
+- Thread: mcp:ad744961-ac09-4d3d-b26e-07d1f491f81b; source: Final PR #84 body read back from GitHub after gh pr edit --body-file; GitHub normalized terminal line ending.
+- Evidence: [021-20261106-pr-body-handoff-01-pr84.md](handoff-2026-11/021-20261106-pr-body-handoff-01-pr84.md).
+
+## 2026-11-06 10:10:09 UTC archive backfill ? orchestrator-evidence
+- WP / PR / branch / approved head: HANDOFF-01 / #84 / docs/codex-orchestrator-handoff / 126c3d367d6aeb9333b02375ab11c8d7968b2c63.
+- What happened: preserved the source record in numbered archive 022; historical timestamps and provenance remain in the source metadata.
+- Thread: mcp:ad744961-ac09-4d3d-b26e-07d1f491f81b; source: Direct Git/gh verification by Orchestrator T3 thread mcp:ad744961-ac09-4d3d-b26e-07d1f491f81b at 2026-11-06 10:09:13 UTC.
+- Evidence: [022-20261106-orchestrator-evidence-handoff-01-pr84.md](handoff-2026-11/022-20261106-orchestrator-evidence-handoff-01-pr84.md).
+
+## 2026-11-06 10:10:09 UTC G6 ? T3 Tester and Orchestrator closeout for documentation PR #84
+- WP / PR / branch / approved head: HANDOFF-01 / #84 / docs/codex-orchestrator-handoff / 126c3d367d6aeb9333b02375ab11c8d7968b2c63.
+- Actual GitHub merge: tanntran2000 at 2026-11-06T09:15:22Z; main/merge SHA 4b31736b53547ec1e3587297862254f9e6c03449. This T3 execution session observed the completed merge before issuing a merge command; it does not claim merge execution.
+- Both tree hashes: actual merge 9027badf918ad7e41cc415cf0575ca241a304691; reviewed/tested head 9027badf918ad7e41cc415cf0575ca241a304691; identical, git diff exit 0.
+- Exact-head premerge Quality Gate 42188725918 / job 127795193970: SUCCESS; 92 files, 1,921 unit tests, 273 smoke tests (13.1m). Claude Code Review 42188725919: SUCCESS; imported native Astra PASS, no actionable P0-P3.
+- Exact-main postmerge Quality Gate 42193657497 / job 127811456375: SUCCESS at 4b31736b53547ec1e3587297862254f9e6c03449; 92 files, 1,921 unit tests, 273 smoke tests (12.8m). gh run view --exit-status exits 0. Successful CI command exits are 0 via bash -e step conclusions; no local product test execution is claimed.
+- Independent G6: same Tester mcp:96c4e0cb-da55-4078-b4f0-bb00eee2a269 PASS, no unresolved blocker; Orchestrator mcp:ad744961-ac09-4d3d-b26e-07d1f491f81b independently confirmed Git/gh identities and complete-log counts. Archives 018-022 preserve both reports, the actual-SHA G6 brief, final PR body and direct evidence.
+- Preserved prior public G6 evidence commit 5b4df3fba6635eafd22064c32b856b0ae2d0b41a and all approved audit files. Tracker updated in this documentation batch. Operational records remain on this branch for the next docs batch; no new logging-only PR, no rewrite of the approved audit.
+- Root and all six existing worktree branch/HEAD inventories match the session-start snapshot; four known untracked entries remain, tracked/index diffs are empty. No worktree created/deleted, no cleanup, storage reclaimed 0 bytes. PR #83 remains OPEN at ebb0d2a252624abfadbd25bf0579742ceb7d7a47; PR B was not started. Final correspondence goes only to Claude in mcp:f972da44-2380-4966-a4f2-b4f969c703e6.
