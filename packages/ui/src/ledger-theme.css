@@ -40,9 +40,8 @@ main.ledger-shell.ledger-shell.ledger-shell .ledger-wax, main.ledger-shell.ledge
   background: var(--wax); color: var(--wax-text); border: calc(2 * var(--px)) solid var(--brass); border-radius: 0;
 }
 main.ledger-shell.ledger-shell.ledger-shell button { min-width: 44px; }
-main.ledger-shell.ledger-shell.ledger-shell :is(button, input, select, textarea):disabled,
-main.ledger-shell.ledger-shell.ledger-shell [aria-disabled='true'] {
-  opacity: .5; background: transparent; color: #fff; border-color: #fff; border-style: dashed;
+main.ledger-shell.ledger-shell.ledger-shell button:disabled, main.ledger-shell.ledger-shell.ledger-shell button[aria-disabled='true'] {
+  opacity: 1; background: var(--parchment); color: var(--ink-muted); border-color: var(--ink-muted); border-style: dashed;
 }
 main.ledger-shell.ledger-shell.ledger-shell :focus-visible, main.ledger-shell.ledger-shell.ledger-shell button[aria-disabled='true']:focus-visible {
   outline: 3px solid var(--focus); outline-offset: 3px; box-shadow: 0 0 0 3px var(--parchment);

@@ -707,7 +707,8 @@ test('unavailable Life Plan next week is visibly inactive', async ({ page }) => 
   await importLife(page, makeLife());
   await go(page, 'reports');
   const nextWeek = page.getByRole('button', { name: 'Plan next week', exact: true });
-  await expect(nextWeek).toHaveCSS('opacity', '0.5');
+  await expect(nextWeek).toHaveAttribute('aria-disabled', 'true');
+  await expect(nextWeek).toHaveCSS('border-style', 'dashed');
   await expect(nextWeek).toHaveCSS('cursor', 'default');
   await page.getByRole('dialog').getByRole('button', { name: 'Close', exact: true }).click();
   await page.getByTestId('life-end-week').click();
