@@ -20,7 +20,13 @@ for (const width of [320, 375, 1280, 1600]) {
     await expect(views.getByRole('button')).toHaveText(['City', 'Characters']);
     await expect(views.locator('[id^="life-nav-"]')).toHaveCount(2);
     for (const control of await shell.locator('nav button[id^="life-nav-"]').all()) {
-      await expect(control).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+      await expect(control).toHaveCSS('background-color', await shell.evaluate(el => {
+        const sample = document.createElement('span');
+        sample.style.color = getComputedStyle(el).getPropertyValue('--oak');
+        el.append(sample);
+        const colour = getComputedStyle(sample).color; sample.remove();
+        return colour;
+      }));
       expect((await control.boundingBox())!.height).toBeGreaterThanOrEqual(44);
     }
     await expect(shell.getByTestId('life-end-week')).toHaveCSS('background-color', 'rgb(168, 205, 165)');
