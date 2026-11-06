@@ -185,5 +185,5 @@ export function soldiersRow(state:TileTrialState):string {
  const n=societySoldiers(state);return `Soldiers ${n} · Garrison +${garrisonSecurity(n)} Security`;
 }
 export function garrisonReportLine(report:Readonly<TileTrialReport>):string {
- const o=report.order;return o?`Garrison: ${o.soldiers} soldiers, Security +${o.garrisonSecurity}.`:'';
+ const o=report.order;return o?`Garrison: ${o.soldiers} soldier${o.soldiers===1?'':'s'}, Security +${o.garrisonSecurity}.`:'';
 }

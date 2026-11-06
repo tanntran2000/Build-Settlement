@@ -5,7 +5,7 @@ it.each([[0,0],[1,0],[6,3]])('renders %i soldiers and report bonus', (n,g)=>{
  const city=createSocietyState();
  city.tiles[0].building={typeId:'military-barracks',level:2,workers:n,enabled:true};
  expect(soldiersRow(city)).toBe(`Soldiers ${n} · Garrison +${g} Security`);
- expect(garrisonReportLine({order:{soldiers:n,garrisonSecurity:g}} as TileTrialReport)).toBe(`Garrison: ${n} soldiers, Security +${g}.`);
+ expect(garrisonReportLine({order:{soldiers:n,garrisonSecurity:g}} as TileTrialReport)).toBe(n===1?'Garrison: 1 soldier, Security +0.':`Garrison: ${n} soldiers, Security +${g}.`);
 });
 it('renders no garrison line without an order report',()=>expect(garrisonReportLine({} as TileTrialReport)).toBe(''));
 it.each([0,1,2])('adds idle chance once with %i idle Watch Houses',n=>{
