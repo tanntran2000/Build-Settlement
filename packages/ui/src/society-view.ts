@@ -1,4 +1,4 @@
-import { SOCIETY_BUILDINGS, SOCIETY_PLOT_IDS, societyPlot, societyStaff, TRIAL_BUILDINGS, GOODS_STOCK_TRIAL, type TileTrialState, type SocietyTier } from '@haven/core';
+import { buildingWorkerCap, societySoldiers, garrisonSecurity, idleWatchHouse, SOCIETY_BUILDINGS, SOCIETY_PLOT_IDS, societyPlot, societyStaff, TRIAL_BUILDINGS, GOODS_STOCK_TRIAL, type TileTrialState, type SocietyTier } from '@haven/core';
 import { societyWorkforce, SOCIETY_WEEK_TRIAL as T, type SocietyNote } from '@haven/simulation';
 export type ClassId = 'free' | 'makers' | 'luminaries' | 'merchants' | 'bound';
 export type ColourKey = ClassId | 'none';
@@ -84,7 +84,7 @@ export function storageView(city:TileTrialState) {
  for(const tile of city.tiles){const b=tile.building;if(!b?.enabled)continue;const d=TRIAL_BUILDINGS[b.typeId];
  const batches=d.operation==='farm'?Math.min(b.workers,FARM_MAX_BATCHES,Math.floor(gold/FARM_GOLD_PER_BATCH_MILLI)):0;
  const debit=Math.max(d.upkeepMilli*b.level,batches*FARM_GOLD_PER_BATCH_MILLI);if(gold<debit)continue;gold-=debit;
- if(b.typeId==='warehouse'&&b.workers===d.maxWorkers*b.level)capacity+=O.storage.warehousePerLevelMilli*b.level;
+ if(b.typeId==='warehouse'&&b.workers===buildingWorkerCap(b.typeId,b.level))capacity+=O.storage.warehousePerLevelMilli*b.level;
  }
  const amounts={Food:stocks.food,Wheat:stocks.wheat,Wood:stocks.wood,Iron:stocks.iron,Stone:society.stocksMilli.stone,Wool:society.stocksMilli.wool,Cloth:society.stocksMilli.cloth,Herbs:society.stocksMilli.herbs,Goods:city.goodsStock!.amountMilli,Luxury:society.luxuryStockMilli};
  return Object.entries(amounts).map(([good,amount])=>({good,amount:amount/1000,capacity:capacity/1000}));
@@ -145,7 +145,7 @@ export function standingRow(city:TileTrialState):string {
  const n=city.society!.standing;return `Standing ${n} · ${orderBand(n)}`;
 }
 export function crimeChanceRow(city:TileTrialState):string {
- return `Crime events: ${crimeChancePercent(city.society!.order.crime)}% a week`;
+ return `Crime events: ${crimeChancePercent(city.society!.order.crime,idleWatchHouse(city))}% a week`;
 }
 export const END_SCREEN_COPY:Record<'rebellion'|'assassination',{title:string;text:string}>={
  rebellion:{title:'The City Has Fallen',text:'Hunger turned Haven against you.'},
@@ -159,7 +159,7 @@ export function crimeReportLine(report:Readonly<TileTrialReport>):string {
   if(e.lossMilli===0)return `A gang tried to rob the ${e.target==='gold'?'treasury':'stores'} but took nothing.`;
   return `A gang robbed the ${e.target==='gold'?'treasury':'stores'}: −${formatMilli(e.lossMilli!)} ${e.target![0].toUpperCase()+e.target!.slice(1)}.`;
  case 'smear':return `Rumours spread about the Lord: Standing −${e.standingLoss}.`;
- case 'raid':return `A gang raided the Barracks: ${e.soldiersKilled} soldier${e.soldiersKilled===1?'':'s'} died.`;
+ case 'raid':return `A gang attacked the garrison: ${e.soldiersKilled} soldier${e.soldiersKilled===1?'':'s'} died.`;
  case 'assassination':return e.outcome==='foiled'?'Guards stopped an assassin.':e.outcome==='wounded'?`An assassin wounded you: health −${c!.lordHealthLoss}, Standing −${e.standingLoss}, Authority −${e.authorityLoss}.`:END_SCREEN_COPY.assassination.text;
  }
 }
@@ -179,4 +179,11 @@ export function lawReportLines(report:Readonly<TileTrialReport>):string[] {
  if(l.incomeMilli)lines.push(`Licensed Vice earned ${formatMilli(l.incomeMilli)} Gold.`);
  if(l.promise){const p=l.promise;lines.push(p.outcome==='kept'?`You kept your promise to the ${GROUP_LABELS[p.group]}: Authority +3.`:`You broke your promise to the ${GROUP_LABELS[p.group]}: satisfaction −10, Tension +10.`);}
  return lines;
+}
+
+export function soldiersRow(state:TileTrialState):string {
+ const n=societySoldiers(state);return `Soldiers ${n} · Garrison +${garrisonSecurity(n)} Security`;
+}
+export function garrisonReportLine(report:Readonly<TileTrialReport>):string {
+ const o=report.order;return o?`Garrison: ${o.soldiers} soldier${o.soldiers===1?'':'s'}, Security +${o.garrisonSecurity}.`:'';
 }

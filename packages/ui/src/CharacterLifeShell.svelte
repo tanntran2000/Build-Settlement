@@ -1,7 +1,7 @@
 <script lang="ts">
   import { tick, type Snippet } from 'svelte';
   import { type TileTrialState, type TileTrialReport } from '@haven/core';
-  import { lawsRow, storageView, orderRows, crisisRow, standingRow, crimeChanceRow } from './society-view.js';
+  import { soldiersRow, lawsRow, storageView, orderRows, crisisRow, standingRow, crimeChanceRow } from './society-view.js';
   import CrisisCard from './CrisisCard.svelte';
   import SocietyPopulation from './SocietyPopulation.svelte';
   import { formatMilli } from './milli-format.js';
@@ -118,6 +118,7 @@
       </dl></div>
       <div class="city-status"><h3>City status</h3>
       <p data-testid="trial-laws">{lawsRow(state)}</p>
+      <p data-testid="trial-soldiers">{soldiersRow(state)}</p>
       <p data-testid="trial-standing">{standingRow(state)}</p>
       <p data-testid="trial-crime-chance">{crimeChanceRow(state)}</p>
       <p data-testid="trial-crisis">Crisis: {crisisRow(state)}</p>
