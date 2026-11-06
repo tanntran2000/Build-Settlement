@@ -1,10 +1,20 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Page, type Locator } from '@playwright/test';
 import { serializeCharacterLifeSave } from '../../packages/persistence/src/character-life-save.ts';
 import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
 import { writeFile } from 'node:fs/promises';
 import { observeCharacterLife } from '../../packages/simulation/src/character-life-observation.ts';
 import { keyActivate, keyGo, keyPost, keyText, tabTo, turnStatuses, watchTurnStatus } from './character-life-navigation.helpers.ts';
 import { characterWindow, charactersView, expectCheckpointRejectionPreservesUi, expectOneCharacterWindow, expectReport, expectRequirements, exportLife, go, importLife, lifeUiSnapshot, makeLife, reportFixture, reportRegion, reportUnits, reportMilli, reportWeek, requirementsRegion, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
+
+async function tokenColour(shell: Locator, token: string): Promise<string> {
+  return shell.evaluate((el, token) => {
+    const sample = document.createElement('span');
+    sample.style.color = getComputedStyle(el).getPropertyValue(token);
+    el.append(sample);
+    const colour = getComputedStyle(sample).color; sample.remove();
+    return colour;
+  }, token);
+}
 
 const cityWindowNames = ['Information', 'Report', 'Player', 'Population'] as const;
 
@@ -20,16 +30,10 @@ for (const width of [320, 375, 1280, 1600]) {
     await expect(views.getByRole('button')).toHaveText(['City', 'Characters']);
     await expect(views.locator('[id^="life-nav-"]')).toHaveCount(2);
     for (const control of await shell.locator('nav button[id^="life-nav-"]').all()) {
-      await expect(control).toHaveCSS('background-color', await shell.evaluate(el => {
-        const sample = document.createElement('span');
-        sample.style.color = getComputedStyle(el).getPropertyValue('--oak');
-        el.append(sample);
-        const colour = getComputedStyle(sample).color; sample.remove();
-        return colour;
-      }));
+      await expect(control).toHaveCSS('background-color', await tokenColour(shell, '--oak'));
       expect((await control.boundingBox())!.height).toBeGreaterThanOrEqual(44);
     }
-    await expect(shell.getByTestId('life-end-week')).toHaveCSS('background-color', 'rgb(168, 205, 165)');
+    await expect(shell.getByTestId('life-end-week')).toHaveCSS('background-color', await tokenColour(shell, '--wax'));
     for (const dest of ['city', 'characters', 'session', 'help'] as const) {
       await go(page, dest);
       await expect(views).toBeVisible();
@@ -40,7 +44,7 @@ for (const width of [320, 375, 1280, 1600]) {
     await page.keyboard.press('Tab'); await expect(page.locator('#life-nav-city')).toBeFocused();
     await page.keyboard.press('Tab'); await expect(page.locator('#life-nav-characters')).toBeFocused();
     await go(page, 'city');
-    await expect(shell).toHaveCSS('background-color', 'rgb(17, 27, 33)');
+    await expect(shell).toHaveCSS('background-color', await tokenColour(shell, '--wood-dark'));
     await expect(shell).toHaveCSS('font-size', '16px');
     const geometry = await shell.evaluate(el => {
       const box = (selector: string) => { const r = el.querySelector(selector)!.getBoundingClientRect(); return { x: r.x, y: r.y, width: r.width, bottom: r.bottom }; };
@@ -716,7 +720,8 @@ test('unavailable Life Plan next week is visibly inactive', async ({ page }) => 
   await expect(nextWeek).toHaveCSS('cursor', 'pointer');
   await nextWeek.click();
   await expect(nextWeek).toBeFocused();
-  await expect(nextWeek).toHaveCSS('opacity', '0.5');
+  await expect(nextWeek).toHaveAttribute('aria-disabled', 'true');
+  await expect(nextWeek).toHaveCSS('border-style', 'dashed');
   await expect(nextWeek).toHaveCSS('cursor', 'default');
 });
 
