@@ -1,5 +1,14 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## UI-LEDGER-01 — PR A #83 G6 (2026-11-09 UTC)
+
+[PR #83](https://github.com/tanntran2000/Build-Settlement/pull/83) merged after Tân's specific authorization at actual main `c20ec5e6de96a4dcb8e5ff00a461bdcbb4e83f28`, by `tanntran2000` at `2026-11-09T08:11:26Z`. Ordered parents: previous main `4b31736b53547ec1e3587297862254f9e6c03449` and reviewed/tested head `a0d91d4d3fa665e8df2d51192290ed309bb00206`. Reviewed/tested and actual merge/main trees both equal **`c6a2d3bab33f442383843afa79d8ee58bd20ae35`**; full file comparisons exited 0. Protected expected-head merge exited 0; no admin bypass or pending auto-merge.
+
+[Premerge Quality Gate 42580378568 / job 129037398460](https://github.com/tanntran2000/Build-Settlement/actions/runs/42580378568/job/129037398460) and [exact-main Quality Gate 42584148401 / job 129049821503](https://github.com/tanntran2000/Build-Settlement/actions/runs/42584148401/job/129049821503) completed SUCCESS, attempt 1, each with **93 files / 1,930 unit tests and 275 smoke tests**; smoke 10.7 min premerge / 9.8 min postmerge. The same separate Tester returned G6 PASS; the Orchestrator independently checked actual refs, complete-log rows/counts and downloaded manifest. Successful relevant CI shell steps imply exit 0 under `bash -e`; no new local G6 suite was run. Prior local 154 architecture cases and exact-tree Astra/browser evidence remain separately attributed.
+
+**Technical G6 PASS, no next implementation started.** The [public receipt](verification/UI-LEDGER-01-PR-A-G5-G6-2026-11-09.md) records authorization, actual versus synthetic identities, artifact and retained focus/favicon/audit limits. Approved PR A only; Report remains a dialog, with no behavior/copy/engine/save/dependency/configuration/CI/threshold change. Receipt/tracker publication stays on ongoing `docs/codex-orchestrator-handoff` for the next docs batch, not an additional main merge or logging-only PR. All earlier tracker bodies and historical OPEN/pending statements remain unchanged. Private operational evidence stays T3/local. Existing environments/untracked work preserved; no cleanup, 0 bytes reclaimed. PR B requires a separate start instruction.
+
+
 ## HANDOFF-01 ? documentation PR #84 G6 (2026-11-06 UTC)
 
 [PR #84](https://github.com/tanntran2000/Build-Settlement/pull/84) merged the twelve approved Markdown audit/handoff files at `4b31736b53547ec1e3587297862254f9e6c03449`, by GitHub account `tanntran2000` at `2026-11-06T09:15:22Z`. Its reviewed head `126c3d367d6aeb9333b02375ab11c8d7968b2c63` and actual merge share tree `9027badf918ad7e41cc415cf0575ca241a304691`. The current main ref was independently confirmed at that actual merge SHA.
