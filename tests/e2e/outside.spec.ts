@@ -2,12 +2,12 @@ import {executeCharacterLifeCommand} from '../../packages/simulation/src/charact
 import {test,expect,type Page} from '@playwright/test';
 import {societyPopulation,type CharacterLifeSessionState} from '../../packages/core/src/index.ts';
 import {serializeCharacterLifeSave} from '../../packages/persistence/src/index.ts';
-import {makeLife,importLife,exportLife,go} from './character-life-navigation.helpers.ts';
+import {openReportDetails,makeLife,importLife,exportLife,go} from './character-life-navigation.helpers.ts';
 const button=(page:Page,name:string)=>page.getByRole('button',{name,exact:true});
 function seed(){const s=makeLife(20261028);Object.assign(s.city.world.settlements[s.city.world.activeSettlementId!].inventory,{gold:200000,wood:100000,iron:50000,food:40000});return s;}
 function cohort(s:CharacterLifeSessionState){s.city.world.settlements[s.city.world.activeSettlementId!].cohorts[0].count=societyPopulation(s.city.society!);}
 async function start(page:Page,s=makeLife(20261028)){cohort(s);await page.goto('/?mode=world-life');await importLife(page,s);await go(page,'city');}
-async function week(page:Page){await button(page,'End Week').click();await expect(page.getByRole('dialog',{name:'Report',exact:true})).toBeVisible();}
+async function week(page:Page){await button(page,'End Week').click();await expect(page.locator('[data-life-view="reports"]')).toBeVisible();await openReportDetails(page,'quartermaster');}
 async function next(page:Page){await button(page,'Plan next week').click();await go(page,'city');}
 async function build(page:Page,id:string,type:string,workers:number){await page.getByTestId(`trial-tile-${id}`).click();await page.locator('#trial-type').selectOption(type);await button(page,'Build').click();await page.locator('#trial-workers').fill(String(workers));await button(page,'Assign workers').click();}
 test('outside starts with 30 plots, 10 open and 20 locked',async({page})=>{await page.goto('/?mode=world-life');await button(page,'New Game').click();await page.getByLabel('Name',{exact:true}).fill('Synthetic Keeper');await page.getByRole('tab',{name:'Review',exact:true}).click();await button(page,'Create character').click();await go(page,'city');const outside=page.getByRole('region',{name:'Outside tiles',exact:true});await expect(outside.locator('[data-outside-plot]')).toHaveCount(30);await expect(outside.getByRole('button',{name:/^Select /})).toHaveCount(10);await expect(outside.getByText(/^Locked/)).toHaveCount(20);});
