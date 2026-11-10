@@ -50,3 +50,10 @@ No separate re-run was needed.
   - published trace and gate evidence;
   - a whole-PR Astra PASS.
 - From now on, Claude reads the whole spec, including the Risks section, before making a ruling, and publishes exact-head evidence in git.
+
+## Owner resolutions (2026-11-10, verbatim)
+
+- **A2:** "tôi đồng ý việc Dot hoặc tôi sẽ là người merg". Only dot or the owner executes merges. This is written into AGENTS.md G5 by PR #86.
+- **A4:** "tôi đồng ý cách lưu của bạn lên git. Hãy đưa nó lên làm mục bắt buộc để từ sau các agent sẽ làm theo cách này". Exact-head evidence in git is now mandatory, as the new AGENTS.md §6 in PR #86.
+- **A7:** "Keep high". Codex `model_reasoning_effort` stays `high`.
+- **Still open:** A1, the "?" characters in archives 010–023.
