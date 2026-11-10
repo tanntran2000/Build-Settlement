@@ -316,8 +316,15 @@ tests/e2e/crime.spec.ts                          (v0.4, Report-dialog expectatio
 tests/e2e/laws.spec.ts                           (v0.4, Report-dialog expectations only)
 tests/e2e/garrison.spec.ts                       (v0.4, Report-dialog expectations only)
 tests/e2e/ledger.spec.ts                         (new, v0.4: letters and end screens)
+tests/e2e/outside.spec.ts                        (amendment 2026-11-10, Report-dialog and Details expectations only)
+tests/e2e/society.spec.ts                        (amendment 2026-11-10, Report-dialog and Details expectations only)
+tests/e2e/order.spec.ts                          (amendment 2026-11-10, Report-dialog and Details expectations only)
+tests/e2e/character-life-boundary.spec.ts        (amendment 2026-11-10, Report-dialog and Details expectations only)
+tests/e2e/tile-feedback-precision.spec.ts        (amendment 2026-11-10, Report-dialog and Details expectations only)
 docs/superpowers/specs/2026-11-03-ui-ledger-redesign-design.md
 ```
+
+**Amendment (owner Tân, 2026-11-10, verbatim: "Approve, fix in B3"):** the PR B full smoke at `f6fd23d` failed 10 tests in five e2e specs that this allowlist missed. They still waited for the Report dialog or its Close button, or asserted text that PR B moves into a closed letter `Details`. These five files may receive only the same mechanical edits as Decision 12: Report-dialog expectations become Report-view expectations, and a letter's `Details` is opened before asserting text inside it. No asserted value, threshold, timeout or test is removed or weakened.
 
 Any other file needs a reviewed revision. No dependency, lockfile or config change. Fonts, the pixel UI sprites and the optional desk sprites (v0.3) are the only new shipped binary assets and are approved only through this spec's G1.
 
