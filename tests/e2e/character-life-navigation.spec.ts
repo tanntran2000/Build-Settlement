@@ -150,13 +150,32 @@ for (const width of [375, 1280]) {
 
 test('leaving Report does not acknowledge the week', async ({ page }) => {
   await page.goto('/?mode=world-life'); await importLife(page, makeLife());
+  const sidebarStatus = page.locator('aside [role="status"]');
+  await expect(sidebarStatus).toHaveText('');
+  const sidebarStatusNode = (await sidebarStatus.elementHandle())!;
+  const expectExposedSidebarStatus = async () => {
+    // Empty live regions need CSS/accessibility checks rather than nonzero dimensions.
+    await expect(sidebarStatus).not.toHaveCSS('display', 'none');
+    await expect(sidebarStatus).toHaveCSS('visibility', 'visible');
+    await expect(page.locator('aside').getByRole('status')).toHaveCount(1);
+    await expect(sidebarStatus).toHaveAttribute('aria-live', 'polite');
+    expect(await sidebarStatusNode.evaluate(node => node.isConnected
+      && node === document.querySelector('aside [role="status"]')
+      && !node.closest('[hidden], [inert], [aria-hidden="true"]'))).toBe(true);
+  };
+  await expectExposedSidebarStatus();
   await watchTurnStatus(page);
   await page.getByTestId('life-end-week').click();
   await expect(page.locator('#life-reports-heading')).toBeFocused();
   await expect(page.locator('dialog:modal')).toHaveCount(0);
   const revision = await page.getByTestId('life-shell').getAttribute('data-revision');
   await expect(page.locator('aside [role="status"]')).toHaveText('Week 1 · Year 1 report ready.');
-  await go(page, 'city'); await go(page, 'reports');
+  await expect(sidebarStatus).toBeVisible();
+  await expectExposedSidebarStatus();
+  await go(page, 'city');
+  await expectExposedSidebarStatus();
+  await go(page, 'reports');
+  await expectExposedSidebarStatus();
   await expect(page.getByTestId('life-shell')).toHaveAttribute('data-revision', revision!);
   expect(await turnStatuses(page)).toEqual(['Week 1 · Year 1 report ready.']);
   await expect(page.getByTestId('life-end-week')).toHaveAttribute('aria-disabled', 'true');
@@ -166,6 +185,7 @@ test('leaving Report does not acknowledge the week', async ({ page }) => {
   await expect(page.locator('[data-life-view="reports"]')).toBeVisible();
   expect(await turnStatuses(page)).toEqual(['Week 1 · Year 1 report ready.', 'Planning Week 2 · Year 1. Previous report retained.']);
   await expect(page.getByRole('status')).toHaveCount(1);
+  await expectExposedSidebarStatus();
 });
 
 test('food stock remains reachable when sidebar collapses', async ({ page }) => {

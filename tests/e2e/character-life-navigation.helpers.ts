@@ -322,16 +322,34 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
     actual.outside=outside;
   }
   if(expected.order){
-    const region=panel.getByRole('region',{name:'Order',exact:true,includeHidden:true});
+    const captainDetails=panel.locator('[data-letter="captain"] > details');
+    const captainWasOpen=await captainDetails.getAttribute('open')!==null;
+    await openReportDetails(page,'captain');
+    try {
+    const region=panel.getByRole('region',{name:'Order',exact:true});
+    await expect(region).toBeVisible();
     const order:NonNullable<TileTrialReport['order']>={soldiers:Number(await region.getAttribute('data-order-soldiers')),garrisonSecurity:Number(await region.getAttribute('data-order-garrison-security')),before:{security:0,crime:0,authority:0},after:{security:0,crime:0,authority:0},targets:{security:0,crime:0,authority:0},theftMilli:{},tensionAdded:0,satisfactionLost:0,taxModifierBps:0,taxDeltaMilli:0,arrivalsBudgetBefore:0,arrivalsBudgetAfter:0};
     for(const key of ['security','crime','authority'] as const){
-      const text=(await region.locator(`[data-order-value="${key}"]`).textContent())!;
+      const value=region.locator(`[data-order-value="${key}"]`);
+      await expect(value).toBeVisible();
+      const text=(await value.textContent())!;
       const values=text.match(/\d+/g)!.map(Number);
       [order.before[key],order.after[key],order.targets[key]]=values;
     }
+    const calculation=region.locator('details:has(> summary:text-is("Order calculation"))');
+    const calculationWasOpen=await calculation.getAttribute('open')!==null;
+    if(!calculationWasOpen)await calculation.locator(':scope > summary').click();
+    try {
+    for(const value of await region.locator('[data-order-theft], [data-order-detail]').all())await expect(value).toBeVisible();
     for(const entry of await region.locator('[data-order-theft]').evaluateAll(nodes=>nodes.map(n=>({key:n.getAttribute('data-order-theft')!,text:n.textContent!}))))order.theftMilli[entry.key as keyof typeof order.theftMilli]=reportMilli(entry.text);
     for(const key of ['taxModifierBps','taxDeltaMilli','arrivalsBudgetBefore','arrivalsBudgetAfter','tensionAdded','satisfactionLost'] as const)order[key]=Number(await region.locator(`[data-order-detail="${key}"]`).textContent());
     actual.order=order;
+    } finally {
+      if(!calculationWasOpen)await calculation.locator(':scope > summary').click();
+    }
+    } finally {
+      if(!captainWasOpen)await captainDetails.locator(':scope > summary').click();
+    }
   }
   if(expected.crisis){
     const region=panel.getByRole('region',{name:'Crisis',exact:true,includeHidden:true});
