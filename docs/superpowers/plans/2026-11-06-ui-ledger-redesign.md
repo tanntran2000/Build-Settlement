@@ -96,6 +96,7 @@ This is presentation only: no core, simulation, persistence or command change (L
 
    - **Senders:** `Your steward`, `Quartermaster`, `Census clerk`, `Captain of the watch`, `Clerk of the Council`, `Word from the streets`.
    - **Rows and headlines** follow spec §6.2 and §6.3 exactly; the first matching rule wins.
+   - **Row cap (amendment, owner Tân, 2026-11-10, verbatim: "Approve the rule"):** at most four rows per letter, selected by the spec §6.1 four-row amendment (Captain crime-event slot, then `loss` → `gain` → `muted`, ties in §6.2 order, shown in §6.2 order).
    - **Row text** reuses the existing helpers (`formatMilli`, `formatFulfillment`, `crimeReportLine`, `garrisonReportLine`, `lawReportLines`). No copy is duplicated.
    - **Tone** follows spec §4.2: a loss **for the city** is `loss` whatever the sign; a gain is `gain`; an unchanged value is `muted`.
    - **Clerk letter:** only when `report.laws` has a law in force, an unfunded law or a promise.

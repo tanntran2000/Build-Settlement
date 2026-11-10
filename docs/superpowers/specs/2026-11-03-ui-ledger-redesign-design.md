@@ -171,6 +171,13 @@ Visual reference: [report-letters-pixel.webp](../../design/reference/report-lett
 
 Layout: letters in a grid `repeat(auto-fit, minmax(16rem, 1fr))`, one column below 750px. Each letter: sender line with a decorative icon, tone seal, headline in the heading weight of the pixel font, 2–4 rows (label left, `before → after` or signed amount right, tabular numerals), then a `Details` disclosure (`<details>/<summary>`). Letter frames, torn edges and corner ornaments are 9-slice pixel sprites (§4.4). The urgent letter uses the dark panel frame with a red border, and its option buttons are pixel plaques, as in the reference.
 
+**Amendment (owner Tân, 2026-11-10, verbatim: "Approve the rule"): four-row letter summaries.** Clarifies §6.1, §6.2, §11 and plan Decision 8, after dot's G5 review of PR #85 found rows rendered beyond the §11 cap. Designed with Codex (T3 thread `mcp:21efce8d`).
+- The rows listed in §6.2 are summary candidates. Apply their existing presence conditions; omit zero values only where §6.2 makes the row optional. Each letter displays **at most four** candidate rows. A sparse or legacy report is not padded to two rows.
+- In the Captain letter, when a crime event occurred, one slot is reserved for the existing `crimeReportLine` sentence. A report with no event reserves no slot.
+- The remaining slots are filled by city-relative tone (§4.2): `loss`, then `gain`, then `muted`. Ties break by §6.2 candidate order, including the existing class order and law-helper line order. The selected rows are displayed in their original §6.2 order.
+- Wording, number formats, headline rules and seals are unchanged. Every report item stays in its letter's Details whether or not it is selected. Four rows means four label/value or sentence entries; long text wraps without clipping.
+- Accepted limit: with more than four loss candidates, the later ones appear only in Details (for example, law costs can outrank a broken-promise line, whose headline still reads `A promise was broken`).
+
 ### 6.2 What each letter holds
 
 | Letter (sender) | Rows | Details holds |
