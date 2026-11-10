@@ -188,7 +188,18 @@ export function reportLetters(report: Readonly<TileTrialReport>): ReportLetterVi
     letters.push(letter('council', 'Clerk of the Council', councilHeadline(laws)));
   }
   if (report.society || report.crisis) letters.push(letter('streets', 'Word from the streets', streetsHeadline(report)));
-  return letters.map(item => ({ ...item, rows: letterRows(report, item.id) }));
+  return letters.map(item => {
+    const candidates = letterRows(report, item.id);
+    // Spec §6.1 four-row amendment: reserve actual crime events, then prioritise city-relative tone.
+    const selected = new Set<number>();
+    if (item.id === 'captain' && report.crimeEvent?.event) selected.add(report.order ? 4 : 0);
+    for (const tone of ['loss', 'gain', 'muted'] as const) {
+      candidates.forEach((row, index) => {
+        if (selected.size < 4 && row.tone === tone) selected.add(index);
+      });
+    }
+    return { ...item, rows: candidates.filter((_, index) => selected.has(index)) };
+  });
 }
 
 export function reportStamps(report: Readonly<TileTrialReport>): { label: 'Food' | 'Goods' | 'Happiness'; value: string }[] {

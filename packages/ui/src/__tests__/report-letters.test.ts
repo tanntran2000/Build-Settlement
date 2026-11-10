@@ -333,8 +333,11 @@ describe('Steward rows', () => {
     const input = report({ order: amount === undefined ? undefined : order({ theftMilli: { gold: amount, food: 1000 } }), crimeEvent: crime({ kind: 'robbery', severity: 'minor', target: 'gold', lossMilli: 9000 }) });
     expect(rows(input, 'steward').filter(row => row.label === 'Gold stolen')).toEqual(amount ? [{ label: 'Gold stolen', value: '−0.001', tone: 'loss' }] : []);
   });
-  it('keeps all five items without grouping or truncation', () => {
-    expect(rows(report({ unpaidUpkeepMilli: 1, order: order({ theftMilli: { gold: 1 } }) }), 'steward').map(row => row.label)).toEqual(['Gold', 'Tax', 'Upkeep paid', 'Unpaid upkeep', 'Gold stolen']);
+  it('keeps the four losses in a worst week and drops Tax', () => {
+    const input = report({ unpaidUpkeepMilli: 1, order: order({ theftMilli: { gold: 1 } }) });
+    input.after.gold = 0;
+    expect(rows(input, 'steward').map(row => row.label)).toEqual(['Gold', 'Upkeep paid', 'Unpaid upkeep', 'Gold stolen']);
+    expect(rows(input, 'steward').every(row => row.tone === 'loss')).toBe(true);
   });
 });
 
@@ -375,15 +378,23 @@ describe('Census rows', () => {
   it.each(Object.keys(CLASS_LABELS) as ClassId[])('retains every %s satisfaction pair including zero', id => {
     const s = society(); s.classes[id].satisfactionBefore = 0; s.classes[id].satisfactionAfter = 1;
     const result = rows(report({ society: s }), 'census');
-    expect(result.map(row => row.label)).toEqual(['Free residents', 'Makers', 'Luminaries', 'Merchants', 'The Bound']);
+    const selected = (Object.keys(CLASS_LABELS) as ClassId[]).filter(candidate => candidate === id || candidate !== 'bound' && (id !== 'bound' || candidate !== 'merchants'));
+    expect(result.map(row => row.label)).toEqual(selected.map(candidate => CLASS_LABELS[candidate]));
     expect(result.find(row => row.label === CLASS_LABELS[id])).toEqual({ label: CLASS_LABELS[id], value: '0 → 1', tone: 'gain' });
   });
   it.each([[49, 'loss'], [50, 'muted'], [51, 'gain']] as const)('satisfaction after %i', (after, tone) => {
     const s = society(); s.classes.free.satisfactionAfter = after;
     expect(rows(report({ society: s }), 'census')[0]).toEqual({ label: 'Free residents', value: `50 → ${after}`, tone });
   });
-  it('puts population before all five classes without a row cap', () => {
-    expect(rows(report({ society: society(), immigration: immigration() }), 'census').map(row => row.label)).toEqual(['Population', 'Free residents', 'Makers', 'Luminaries', 'Merchants', 'The Bound']);
+  it('breaks muted ties by candidate order and displays Population first', () => {
+    expect(rows(report({ society: society(), immigration: immigration() }), 'census').map(row => row.label)).toEqual(['Population', 'Free residents', 'Makers', 'Luminaries']);
+  });
+  it('keeps a falling Bound pair over gains and muted classes in class order', () => {
+    const s = society(); s.classes.bound.satisfactionAfter = 49;
+    s.classes.makers.satisfactionAfter = 51; s.classes.merchants.satisfactionAfter = 51;
+    expect(rows(report({ society: s }), 'census').map(row => [row.label, row.tone])).toEqual([
+      ['Free residents', 'muted'], ['Makers', 'gain'], ['Merchants', 'gain'], ['The Bound', 'loss'],
+    ]);
   });
 });
 
@@ -420,16 +431,35 @@ describe('Captain rows', () => {
     const input = report({ order: order({ taxModifierBps, theftMilli: { gold: 1 }, tensionAdded: 1, satisfactionLost: 1, arrivalsBudgetAfter: 1 }), crimeEvent: crime(null) });
     const result = rows(input, 'captain');
     expect(result.slice(0, 3).map(row => row.label)).toEqual(['Security', 'Crime', 'Authority']);
-    expect(result[3]).toEqual({ label: garrisonReportLine(input), value: '', tone: 'muted' });
-    expect(result[4]).toEqual({ label: crimeReportLine(input), value: '', tone: 'muted' });
-    expect(result.slice(5)).toEqual(taxModifierBps === 0 ? [] : [{ label: orderReportLines(input)[6], value: '', tone: taxModifierBps > 0 ? 'gain' : 'loss' }]);
+    expect(result.slice(3)).toEqual(taxModifierBps === 0
+      ? [{ label: garrisonReportLine(input), value: '', tone: 'muted' }]
+      : [{ label: orderReportLines(input)[6], value: '', tone: taxModifierBps > 0 ? 'gain' : 'loss' }]);
+    expect(result.some(row => row.label === crimeReportLine(input))).toBe(false);
+  });
+  it.each([
+    { kind: 'raid', severity: 'serious', soldiersKilled: 1 },
+    { kind: 'assassination', severity: 'severe', outcome: 'wounded', standingLoss: 1, authorityLoss: 1 },
+    { kind: 'assassination', severity: 'minor', outcome: 'foiled' },
+  ] as const)('reserves the event sentence even against four losses: %j', event => {
+    const input = report({ order: order({ after: { security: 49, crime: 21, authority: 49 }, taxModifierBps: -1 }), crimeEvent: crime(event) });
+    expect(rows(input, 'captain')).toEqual([
+      { label: 'Security', value: '50 → 49', tone: 'loss' },
+      { label: 'Crime', value: '20 → 21', tone: 'loss' },
+      { label: 'Authority', value: '50 → 49', tone: 'loss' },
+      { label: crimeReportLine(input), value: '', tone: event.kind === 'assassination' && event.outcome === 'foiled' ? 'gain' : 'loss' },
+    ]);
   });
 });
 
 describe('Council rows', () => {
-  it('retains helper order with individually toned costs, unfunded laws, income and promise', () => {
+  it('keeps the first four losses in helper order ahead of income and promise', () => {
     const input = report({ laws: laws({ inForce: ['curfew', 'licensed-vice'], costs: [{ lawId: 'watch-levy', goldMilli: 1 }, { lawId: 'poor-relief', goldMilli: 1500 }], unfunded: ['watch-levy', 'poor-relief'], incomeMilli: 1, promise: { group: 'free', lawId: 'curfew', outcome: 'kept' } }) });
-    expect(rows(input, 'council')).toEqual(lawReportLines(input).map((label, index) => ({ label, value: '', tone: (['muted', 'loss', 'loss', 'loss', 'loss', 'gain', 'gain'] as const)[index] })));
+    expect(rows(input, 'council')).toEqual(lawReportLines(input).slice(1, 5).map(label => ({ label, value: '', tone: 'loss' })));
+  });
+  it('leaves a later broken promise in Details when four earlier losses fill the summary', () => {
+    const input = report({ laws: laws({ inForce: ['curfew'], costs: [{ lawId: 'watch-levy', goldMilli: 1 }, { lawId: 'poor-relief', goldMilli: 1 }], unfunded: ['watch-levy', 'poor-relief'], promise: { group: 'free', lawId: 'curfew', outcome: 'broken' } }) });
+    expect(rows(input, 'council')).toEqual(lawReportLines(input).slice(1, 5).map(label => ({ label, value: '', tone: 'loss' })));
+    expectHeadline(input, 'council', 'A promise was broken', 'Bad');
   });
   it.each(['kept', 'broken'] as const)('promise-only %s keeps No laws sentence', outcome => {
     const input = report({ laws: laws({ promise: { group: 'free', lawId: 'curfew', outcome } }) });
@@ -469,6 +499,21 @@ describe('Streets rows', () => {
     const input = report({ crisis: crisis({ stageAfter: 'warning', hungerStreak: 1 }) });
     expect(rows(input, 'streets').slice(1)).toEqual(crisisReportLines(input).map(label => ({ label, value: '', tone: 'loss' })));
   });
+});
+
+it('caps every letter at four rows for a worst-case report without mutating its Details data', () => {
+  const o = outside({ wood: 1 }); o.producedMilli.iron = 1;
+  const input = report({ unpaidUpkeepMilli: 1, outside: o, immigration: immigration(), society: society(1),
+    order: order({ theftMilli: { gold: 1 }, taxModifierBps: -1 }),
+    crimeEvent: crime({ kind: 'raid', severity: 'serious', soldiersKilled: 1 }),
+    laws: laws({ inForce: ['curfew'], costs: [{ lawId: 'watch-levy', goldMilli: 1 }, { lawId: 'poor-relief', goldMilli: 1 }], unfunded: ['watch-levy', 'poor-relief'], incomeMilli: 1, promise: { group: 'free', lawId: 'curfew', outcome: 'broken' } }),
+    crisis: crisis({ stageAfter: 'warning', hungerStreak: 1 }),
+  });
+  const original = structuredClone(input);
+  const letters = reportLetters(input);
+  expect(letters).toHaveLength(6);
+  for (const letter of letters) expect(letter.rows.length, letter.id).toBeLessThanOrEqual(4);
+  expect(input).toEqual(original);
 });
 
 it('B2 keeps Report as a destination and excludes it from modal windows', () => {

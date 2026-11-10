@@ -88,6 +88,7 @@ for (const kind of ['new-game', 'crime-raid', 'crime-wound', 'laws'] as const) {
       await expect(region.getByRole('heading', { level: 3 })).toHaveText(letter.headline);
       const details = region.locator(':scope > details');
       await expect(details).not.toHaveAttribute('open');
+      expect(await region.locator('dl.letter-rows > div').count()).toBeLessThanOrEqual(4);
       expect(await region.locator('dl.letter-rows > div').evaluateAll(nodes => nodes.map(node => ({ label: node.querySelector('dt')!.textContent, value: node.querySelector('dd')?.textContent ?? '', tone: node.getAttribute('data-tone') })))).toEqual(letter.rows);
       const colours = { gain: 'rgb(47, 93, 42)', loss: 'rgb(140, 42, 31)', muted: 'rgb(107, 79, 46)' };
       for (const row of await region.locator('dl.letter-rows > div').all()) {
