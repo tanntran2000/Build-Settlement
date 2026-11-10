@@ -1,5 +1,15 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## UI-LEDGER-01 — PR B #85 G6 (2026-11-10 UTC)
+
+**G6 PASS (Claude, Orchestrator/Tester).** PR #85 `feat(ui): UI-LEDGER-01 report view and report letters (PR B)` merged by dot under G5 at 2026-11-10T12:17:24Z (merged_by tanntran2000), merge/main `e040476c808b2afa480ca3f3f80588788586582a`, parents `c20ec5e6de96a4dcb8e5ff00a461bdcbb4e83f28` and reviewed head `9905cf56be0f7369d63ab4caeb2884e1766ad344`.
+
+- Trees: merge/main `e0efd06289eb1a4445eb3e21cf1bf02a18b625f7` = tested head tree; `git diff 9905cf5 origin/main` empty.
+- Main CI: Quality Gate run 42814479202 / job 129823939420 (push, head e040476) SUCCESS — 94 files / 2,086 unit, 286/286 smoke (11.9 min), no failed or flaky tests.
+- Pre-merge: CI run 42804037267 SUCCESS at 9905cf5; Astra (mcp:365bb9e6) whole-PR PASS; Claude gates 1–7 and local smoke 286/286; 375 px scroll trace 0 frames > 50 ms. Evidence: `docs/verification/ui-ledger-01-pr85/` on `docs/ui-ledger-redesign` (10bd061).
+- Owner decisions (verbatim): "Yes, Builder B1/B2/B3", "Approve, fix in B3" (spec §10, e6e7006), "Approve the rule" (four-row cap, 8e1cc51), "Push and open PR", "Yes, send to dot".
+- UI-LEDGER-01 code is complete except the later art PR (pixel sprites). Next queue item needs the owner's start instruction.
+
 ## UI-LEDGER-01 — PR A #83 G6 (2026-11-09 UTC)
 
 [PR #83](https://github.com/tanntran2000/Build-Settlement/pull/83) merged after Tân's specific authorization at actual main `c20ec5e6de96a4dcb8e5ff00a461bdcbb4e83f28`, by `tanntran2000` at `2026-11-09T08:11:26Z`. Ordered parents: previous main `4b31736b53547ec1e3587297862254f9e6c03449` and reviewed/tested head `a0d91d4d3fa665e8df2d51192290ed309bb00206`. Reviewed/tested and actual merge/main trees both equal **`c6a2d3bab33f442383843afa79d8ee58bd20ae35`**; full file comparisons exited 0. Protected expected-head merge exited 0; no admin bypass or pending auto-merge.
