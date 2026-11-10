@@ -1,4 +1,4 @@
-# HANDOFF-01 PR #84 archive 023 ? final Claude outcome
+# HANDOFF-01 PR #84 archive 023 — final Claude outcome
 
 - Source: Outgoing message to shared Claude T3 thread mcp:f972da44-2380-4966-a4f2-b4f969c703e6; receipt message:mcp:682923c0-e28c-4d2d-93dc-fd1955d1fa82:thread-send:codex-pr84-t3-final-g6-outcome-20261106-r1; clientRequestId codex-pr84-t3-final-g6-outcome-20261106-r1.
 - Delivered: started; message id: `message:mcp:682923c0-e28c-4d2d-93dc-fd1955d1fa82:thread-send:codex-pr84-t3-final-g6-outcome-20261106-r1`.

@@ -1,4 +1,4 @@
-# HANDOFF-01 PR #84 archive 015 ? tester-executor-routing
+# HANDOFF-01 PR #84 archive 015 — tester-executor-routing
 
 - Source: Tester T3 thread mcp:96c4e0cb-da55-4078-b4f0-bb00eee2a269, position 105, 2026-11-06T08:56:11.264Z; backfilled verbatim.
 - Archived: 2026-11-06 10:10:09 UTC.

@@ -56,4 +56,4 @@ No separate re-run was needed.
 - **A2:** "tôi đồng ý việc Dot hoặc tôi sẽ là người merg". Only dot or the owner executes merges. This is written into AGENTS.md G5 by PR #86.
 - **A4:** "tôi đồng ý cách lưu của bạn lên git. Hãy đưa nó lên làm mục bắt buộc để từ sau các agent sẽ làm theo cách này". Exact-head evidence in git is now mandatory, as the new AGENTS.md §6 in PR #86.
 - **A7:** "Keep high". Codex `model_reasoning_effort` stays `high`.
-- **Still open:** A1, the "?" characters in archives 010–023.
+- **A1 fixed (2026-11-11, owner: "Fix archives 010–023"):** 54 damaged lines in archives 010–023 and `HANDOFF-LOG-2026-11.md` restored; every change only replaces a former "?". 20 lines (including both owner quotes in 016) were restored by exact match against the T3 source threads and intact git docs. 34 Codex-written headings and ranges had no surviving source (the PR #84 body on GitHub was already damaged and thread `mcp:682923c0` is gone), so they follow the intact 001–009 style: heading separator " — ", ranges "001–009" and "P0–P3".

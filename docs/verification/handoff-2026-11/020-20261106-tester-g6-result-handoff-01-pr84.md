@@ -1,4 +1,4 @@
-# HANDOFF-01 PR #84 archive 020 ? tester-g6-result
+# HANDOFF-01 PR #84 archive 020 — tester-g6-result
 
 - Source: Incoming Tester message in Orchestrator T3 thread mcp:ad744961-ac09-4d3d-b26e-07d1f491f81b, position 123, 2026-11-06T10:06:29.074Z; verbatim.
 - Archived: 2026-11-06 10:10:09 UTC.
@@ -6,11 +6,11 @@
 
 ## Preserved content
 
-[Codex (Tester) -> Orchestrator] HANDOFF-01 PR #84 ? independent G6 verification PASS
+[Codex (Tester) -> Orchestrator] HANDOFF-01 PR #84 — independent G6 verification PASS
 
 G6 verification is PASS at the actual completed merge 4b31736b53547ec1e3587297862254f9e6c03449. No unresolved blocker was found in this read-only post-merge verification. This is the authorized G6 follow-up, not a new independent code review.
 
-1. Actual merge and current main ? independently confirmed
+1. Actual merge and current main — independently confirmed
 - PR https://github.com/tanntran2000/Build-Settlement/pull/84 is closed, merged=true.
 - GitHub records merged_by=tanntran2000, merged_at=2026-11-06T09:15:22Z. I attribute only this actor and timestamp to GitHub; I do not attribute the merge to your execution session.
 - Actual merge_commit_sha: 4b31736b53547ec1e3587297862254f9e6c03449.
@@ -25,14 +25,14 @@ G6 verification is PASS at the actual completed merge 4b31736b53547ec1e358729786
 - Base-to-actual-merge diff remains exactly twelve ADDED Markdown files. No product/config/dependency/workflow change was introduced by this merge.
 - The premerge synthetic test-merge SHA was not used for G6.
 
-3. Full post-merge CI verification ? exact actual main SHA
+3. Full post-merge CI verification — exact actual main SHA
 - Quality Gate run 42193657497, job 127811456375, event=push, headBranch=main, headSha=4b31736b53547ec1e3587297862254f9e6c03449.
-- Run and job completed SUCCESS. Job 09:15:27Z?09:29:32Z, 14m05s.
+- Run and job completed SUCCESS. Job 09:15:27Z–09:29:32Z, 14m05s.
 - Run: https://github.com/tanntran2000/Build-Settlement/actions/runs/42193657497
 - Job: https://github.com/tanntran2000/Build-Settlement/actions/runs/42193657497/job/127811456375
 - Retrieved/read the complete 1,091-line / 183,019-character log across all 16 step groups. Checkout log confirms the actual merge SHA above.
 - npm test: 92/92 test files passed; 1,921/1,921 tests passed; Vitest duration 23.06s. Independently recomputed 92 successful per-file rows totaling 1,921 tests.
-- npm run test:smoke: 273 passed (12.8m), using one worker. Independently counted 273 successful case rows, 273 unique IDs, all IDs 1?273 present. Smoke step 09:16:40Z?09:29:29Z (12m49s wall time).
+- npm run test:smoke: 273 passed (12.8m), using one worker. Independently counted 273 successful case rows, 273 unique IDs, all IDs 1–273 present. Smoke step 09:16:40Z–09:29:29Z (12m49s wall time).
 - npm run lint and npm run typecheck succeeded; svelte-check reports 0 errors and 0 warnings.
 - npm run build succeeded; UI gzip JS 94.66 kB, CSS 4.21 kB.
 - npm ci --no-audit, the configured audit wrapper (attempt 1/3 pass), and npx playwright install --with-deps chromium succeeded.

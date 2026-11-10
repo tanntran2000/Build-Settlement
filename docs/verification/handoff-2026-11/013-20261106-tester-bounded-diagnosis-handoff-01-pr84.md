@@ -1,4 +1,4 @@
-# HANDOFF-01 PR #84 archive 013 ? tester-bounded-diagnosis
+# HANDOFF-01 PR #84 archive 013 — tester-bounded-diagnosis
 
 - Source: Tester T3 thread mcp:96c4e0cb-da55-4078-b4f0-bb00eee2a269, position 90, 2026-11-06T08:51:10.637Z; backfilled verbatim.
 - Archived: 2026-11-06 10:10:09 UTC.

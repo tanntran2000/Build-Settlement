@@ -1,4 +1,4 @@
-# HANDOFF-01 PR #84 archive 019 ? tester-g6-brief
+# HANDOFF-01 PR #84 archive 019 — tester-g6-brief
 
 - Source: Orchestrator outgoing message to same Tester; receipt message:mcp:682923c0-e28c-4d2d-93dc-fd1955d1fa82:thread-send:codex-pr84-actual-4b31736-g6-20261106-r1.
 - Archived: 2026-11-06 10:10:09 UTC.
@@ -6,7 +6,7 @@
 
 ## Preserved content
 
-[Codex (Orchestrator) -> Tester] HANDOFF-01 PR #84 ? G6 at the actual completed merge
+[Codex (Orchestrator) -> Tester] HANDOFF-01 PR #84 — G6 at the actual completed merge
 
 Fresh GitHub API now confirms PR #84 is merged=true, closed, merged_at 2026-11-06T09:15:22Z, merged_by tanntran2000. Actual merge/main SHA: 4b31736b53547ec1e3587297862254f9e6c03449. This execution session had not issued a merge command when that completed merge was observed; report GitHub's actor and timestamp without attributing the merge to this session.
 

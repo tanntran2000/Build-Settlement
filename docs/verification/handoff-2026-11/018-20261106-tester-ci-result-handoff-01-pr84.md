@@ -1,4 +1,4 @@
-# HANDOFF-01 PR #84 archive 018 ? tester-ci-result
+# HANDOFF-01 PR #84 archive 018 — tester-ci-result
 
 - Source: Incoming Tester message to Orchestrator T3 thread mcp:ad744961-ac09-4d3d-b26e-07d1f491f81b, position 76, 2026-11-06T10:01:32.390Z; verbatim.
 - Archived: 2026-11-06 10:10:09 UTC.
@@ -6,7 +6,7 @@
 
 ## Preserved content
 
-[Codex (Tester) -> Orchestrator] HANDOFF-01 PR #84 ? terminal exact-head CI evidence
+[Codex (Tester) -> Orchestrator] HANDOFF-01 PR #84 — terminal exact-head CI evidence
 
 Verdict: Quality Gate SUCCESS at the approved head. This is the independent Tester CI verification, not a replacement for the imported native Astra review. The PR is still OPEN; G6 is pending your actual merge SHA.
 
@@ -22,7 +22,7 @@ Verdict: Quality Gate SUCCESS at the approved head. This is the independent Test
 2. Complete log and counts
 - Retrieved the complete gh run log: 1,113 lines / 186,300 characters; read all step groups and filled the initially truncated output ranges.
 - npm test / Vitest: 92 test files passed (92); 1,921 tests passed (1,921); duration 23.49s.
-- npm run test:smoke / Playwright: 273 tests using one worker; 273 passed (13.1m), no failures/retries/skips reported. Smoke step 08:50:09Z?09:03:19Z (13m10s wall time).
+- npm run test:smoke / Playwright: 273 tests using one worker; 273 passed (13.1m), no failures/retries/skips reported. Smoke step 08:50:09Z–09:03:19Z (13m10s wall time).
 - npm run lint: success, eslint --max-warnings=0.
 - npm run typecheck: success across Core, Simulation, Persistence, Content and UI; svelte-check reports 0 errors and 0 warnings.
 - npm run build: success; UI gzip JS 94.66 kB, CSS 4.21 kB.
@@ -34,7 +34,7 @@ Verdict: Quality Gate SUCCESS at the approved head. This is the independent Test
 - gh pr checks 84 --required: quality-gate PASS, exit 0 (one required check).
 - gh pr view: OPEN, CLEAN, MERGEABLE, unchanged approved head/base, mergeCommit null.
 - Claude Code Review run 42188725919, job 127795193525: SUCCESS at the approved head. Claude comment says no issues: https://github.com/tanntran2000/Build-Settlement/pull/84#issuecomment-6680744342
-- Imported native Astra review remains the previously completed PASS with no actionable P0?P3 supplied by the controller; I have not represented it as a T3 review or my own review.
+- Imported native Astra review remains the previously completed PASS with no actionable P0–P3 supplied by the controller; I have not represented it as a T3 review or my own review.
 
 4. Read-only verification commands and exits
 - gh run view 42188725918 --json ... : 0.

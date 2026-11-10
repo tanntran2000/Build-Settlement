@@ -1,4 +1,4 @@
-# HANDOFF-01 PR #84 archive 010 ? operational-brief
+# HANDOFF-01 PR #84 archive 010 — operational-brief
 
 - Source: Orchestrator T3 thread mcp:ad744961-ac09-4d3d-b26e-07d1f491f81b, position 0, 2026-11-06T08:55:41.150Z; verbatim original brief.
 - Archived: 2026-11-06 10:10:09 UTC.
@@ -6,14 +6,14 @@
 
 ## Preserved content
 
-[Codex (Orchestrator controller) -> T3 Orchestrator] HANDOFF-01 PR #84 ? complete the authorized docs merge and G6 visibly in T3
+[Codex (Orchestrator controller) -> T3 Orchestrator] HANDOFF-01 PR #84 — complete the authorized docs merge and G6 visibly in T3
 
 You are the T3 execution session for the Orchestrator role, Codex Sol 6.1 max. The owner wants work assigned and followed in T3. Complete this existing task; do not start new product work or additional agents. Preserve the root checkout D:/NghienCuuTiemNang/Build-Settlement (currently docs/ui-ledger-redesign, HEAD b29e74fe9d5eb7b82601a1bf1516d1736c6b3206, with four known untracked items). Do not switch branches, install, edit product files, create worktrees, delete anything, change global config or weaken CI.
 
 Trusted direct owner instructions in this Codex chat:
-1. "ok t?i ??ng ? h?y ??a l?n v? merg v?i main ?i" ? explicitly approves publishing the prepared verbatim audit and merging THIS DOCUMENTATION into main, overriding the older generic Orchestrator no-merge rule for this scoped docs PR.
-2. "T? l?n sau ko c?n g?i Dot gi? ch? c?n b?n tr? chuy?n v?i claude th?i" ? do not send any message to dot. Claude contact is shared thread mcp:f972da44-2380-4966-a4f2-b4f969c703e6 with prefix [Codex (Orchestrator) -> Claude].
-3. "sao kh?ng giao trong T3 ?? theo d?i?" ? the owner wants visible T3 assignments. This is why you are running here.
+1. "ok tôi đồng ý hãy đưa lên và merg với main đi" — explicitly approves publishing the prepared verbatim audit and merging THIS DOCUMENTATION into main, overriding the older generic Orchestrator no-merge rule for this scoped docs PR.
+2. "Từ lần sau ko cần gửi Dot giờ chỉ cần bạn trò chuyện với claude thôi" — do not send any message to dot. Claude contact is shared thread mcp:f972da44-2380-4966-a4f2-b4f969c703e6 with prefix [Codex (Orchestrator) -> Claude].
+3. "sao không giao trong T3 để theo dõi?" — the owner wants visible T3 assignments. This is why you are running here.
 
 Repository tanntran2000/Build-Settlement.
 PR #84: https://github.com/tanntran2000/Build-Settlement/pull/84

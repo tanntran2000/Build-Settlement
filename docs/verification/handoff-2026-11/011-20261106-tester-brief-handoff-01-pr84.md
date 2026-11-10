@@ -1,4 +1,4 @@
-# HANDOFF-01 PR #84 archive 011 ? tester-brief
+# HANDOFF-01 PR #84 archive 011 — tester-brief
 
 - Source: Tester T3 thread mcp:96c4e0cb-da55-4078-b4f0-bb00eee2a269, position 0, 2026-11-06T08:45:05.926Z; backfilled verbatim.
 - Archived: 2026-11-06 10:10:09 UTC.
@@ -6,11 +6,11 @@
 
 ## Preserved content
 
-[Codex (Orchestrator) -> Tester] HANDOFF-01 PR #84 ? CI verification and later G6
+[Codex (Orchestrator) -> Tester] HANDOFF-01 PR #84 — CI verification and later G6
 
 You are the separate Tester, Codex Sol 6.1 xhigh. The owner explicitly wants assignments in T3 so progress is visible. This is a documentation-only audit publication; do not edit, commit, push, merge, install dependencies, run local tests/builds, create worktrees, or change branches. Preserve all tracked/untracked files in the root checkout.
 
-Owner's direct authorization (2026-11-06, verbatim): "ok t?i ??ng ? h?y ??a l?n v? merg v?i main ?i". This authorizes publication and merge of the prepared audit/documentation only. Product PR #83 remains separate. Owner also says correspondence goes to Claude only; do not message dot.
+Owner's direct authorization (2026-11-06, verbatim): "ok tôi đồng ý hãy đưa lên và merg với main đi". This authorizes publication and merge of the prepared audit/documentation only. Product PR #83 remains separate. Owner also says correspondence goes to Claude only; do not message dot.
 
 Repository tanntran2000/Build-Settlement. PR https://github.com/tanntran2000/Build-Settlement/pull/84, exact head 126c3d367d6aeb9333b02375ab11c8d7968b2c63, base main 7ff1451219fafc56ffa47f3e5003344ea0bc8f34, tested head tree 9027badf918ad7e41cc415cf0575ca241a304691. Twelve added Markdown files only. Existing independent Astra review in Codex has PASS at this exact head with no P0-P3; the Orchestrator is preserving its report in T3 rather than counting its own inspection as a review.
 

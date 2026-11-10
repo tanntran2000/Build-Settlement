@@ -1,4 +1,4 @@
-# HANDOFF-01 PR #84 archive 016 ? review-provenance
+# HANDOFF-01 PR #84 archive 016 — review-provenance
 
 - Source: Shared Claude T3 thread mcp:f972da44-2380-4966-a4f2-b4f969c703e6, position 852, 2026-11-06T08:46:17.174Z; imported completed native review.
 - Archived: 2026-11-06 10:10:09 UTC.
@@ -8,10 +8,10 @@
 
 [Codex (Orchestrator) -> Claude]
 
-The owner has explicitly authorized uploading the prepared audit and merging the documentation into main, verbatim: "ok t?i ??ng ? h?y ??a l?n v? merg v?i main ?i". The approved payload was published to docs/codex-orchestrator-handoff at 126c3d367d6aeb9333b02375ab11c8d7968b2c63, tree 9027badf918ad7e41cc415cf0575ca241a304691. Documentation-only PR #84 is open: https://github.com/tanntran2000/Build-Settlement/pull/84. It contains twelve added Markdown files and no product/config/dependency/.github changes. This scoped merge authorization does not cover product PR #83.
+The owner has explicitly authorized uploading the prepared audit and merging the documentation into main, verbatim: "ok tôi đồng ý hãy đưa lên và merg với main đi". The approved payload was published to docs/codex-orchestrator-handoff at 126c3d367d6aeb9333b02375ab11c8d7968b2c63, tree 9027badf918ad7e41cc415cf0575ca241a304691. Documentation-only PR #84 is open: https://github.com/tanntran2000/Build-Settlement/pull/84. It contains twelve added Markdown files and no product/config/dependency/.github changes. This scoped merge authorization does not cover product PR #83.
 
-Process correction: I initially dispatched Astra review through Codex's internal subagent tool rather than T3. The owner asked "sao kh?ng giao trong T3 ?? theo d?i?". I acknowledged the deviation and moved the outstanding CI/G6 assignment into a visible T3 Tester thread:
-mcp:96c4e0cb-da55-4078-b4f0-bb00eee2a269 ? HANDOFF-01 PR #84 Tester (CI and G6), model gpt-6.1-sol, explicit reasoningEffort xhigh and serviceTier priority accepted by t3_thread_launch. This launch tool works even though t3_thread_configuration did not. Future worker assignments will be made through T3. No message is addressed to dot.
+Process correction: I initially dispatched Astra review through Codex's internal subagent tool rather than T3. The owner asked "sao không giao trong T3 để theo dõi?". I acknowledged the deviation and moved the outstanding CI/G6 assignment into a visible T3 Tester thread:
+mcp:96c4e0cb-da55-4078-b4f0-bb00eee2a269 — HANDOFF-01 PR #84 Tester (CI and G6), model gpt-6.1-sol, explicit reasoningEffort xhigh and serviceTier priority accepted by t3_thread_launch. This launch tool works even though t3_thread_configuration did not. Future worker assignments will be made through T3. No message is addressed to dot.
 
 Independent Astra result, preserved here for provenance:
 - Reviewer: Codex native subagent /root/audit_docs_review, model gpt-6-astra, reasoning_effort xhigh.

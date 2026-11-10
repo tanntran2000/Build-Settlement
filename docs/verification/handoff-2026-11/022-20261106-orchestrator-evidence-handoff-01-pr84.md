@@ -1,4 +1,4 @@
-# HANDOFF-01 PR #84 archive 022 ? orchestrator-evidence
+# HANDOFF-01 PR #84 archive 022 — orchestrator-evidence
 
 - Source: Direct Git/gh verification by Orchestrator T3 thread mcp:ad744961-ac09-4d3d-b26e-07d1f491f81b at 2026-11-06 10:09:13 UTC.
 - Archived: 2026-11-06 10:10:09 UTC.
@@ -6,7 +6,7 @@
 
 ## Preserved content
 
-# HANDOFF-01 PR #84 ? Orchestrator evidence at completed G6
+# HANDOFF-01 PR #84 — Orchestrator evidence at completed G6
 
 Verified: 2026-11-06 10:09:13 UTC.
 Execution thread: `mcp:ad744961-ac09-4d3d-b26e-07d1f491f81b`.
