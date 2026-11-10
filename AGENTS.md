@@ -101,7 +101,7 @@ Owner Tân, 2026-11-10, verbatim: "tôi đồng ý cách lưu của bạn lên g
      6. `npm test`
      7. `npm run build`
 
-     plus the full smoke `CI=1 npm run test:smoke`. A gate may be recorded as `N/A` only with its reason written in the log; the only accepted reason today is a docs-only PR (no file outside `docs/` and `*.md` changed), where gates 2–7 and the smoke are covered by the required CI run at the same head, which the README must cite. Any other skipped gate fails §6;
+     plus the full smoke `CI=1 npm run test:smoke`. Gates 1–7 always run locally, because the required CI does not run gates 4 and 5. Only the local full smoke may be recorded as `N/A`, and only for a docs-only PR (no file outside `docs/` and `*.md` changed) whose required CI run at the same head ran the smoke; the log states the reason and the README cites that CI run and its smoke total. Any other skipped gate fails §6;
    - test-run summaries (unit and smoke totals, any re-run and why);
    - for any measurement the spec or plan asks for (performance trace, contrast, overflow): the script, the raw per-run results and at least one raw artifact; hash the rest in `SHA256SUMS.txt` when they are too large to commit;
    - the independent review verdicts with their T3 thread ids.
