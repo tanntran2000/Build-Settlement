@@ -8,7 +8,7 @@
 
 ## Gates 1–7
 
-File: [`gates-1-7-9905cf5.log`](gates-1-7-9905cf5.log). It holds the full output of each command, with the tested HEAD and tree, the Node and npm versions, and the UTC end time and exit code of each gate. This run, 11:50–11:54Z, was repeated for inspectability; the earlier run at the same head gave the same results.
+File: [`gates-1-7-9905cf5.txt`](gates-1-7-9905cf5.txt). It holds the full output of each command, with the tested HEAD and tree, the Node and npm versions, and the UTC end time and exit code of each gate. This run, 11:50–11:54Z, was repeated for inspectability; the earlier run at the same head gave the same results.
 
 | Gate | Command | Exit |
 |---|---|---|
