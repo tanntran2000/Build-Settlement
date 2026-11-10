@@ -28,12 +28,13 @@
   .letter-seal.watch { background: var(--oak); color: var(--oak-text); }
   h3 { margin-block: 12px; font-weight: bold; }
   .letter-rows { font-variant-numeric: tabular-nums; margin-block: 12px; }
-  .letter-rows > div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; padding-block: 8px; border-bottom: var(--px) solid var(--brass-edge); }
+  .letter-rows > div { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 8px; padding-block: 8px; border-bottom: var(--px) solid var(--brass-edge); }
   .letter-rows > div[data-sentence] { display: block; }
   [data-tone='gain'] { color: var(--ink-gain); }
   [data-tone='loss'] { color: var(--ink-loss); }
   [data-tone='muted'] { color: var(--ink-muted); }
-  dd { margin: 0; text-align: right; }
+  dt { align-self: start; overflow-wrap: normal; word-break: normal; }
+  dd { min-width: 0; margin: 0; text-align: right; }
   details { min-width: 0; }
   .report-letter > details > summary { cursor: pointer; min-width: 44px; min-height: 44px; padding-block: 10px; }
 </style>

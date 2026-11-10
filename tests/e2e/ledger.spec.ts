@@ -12,6 +12,7 @@ async function fixture(name: string) {
   return result.state;
 }
 async function fit(page: Page) {
+  await page.evaluate(() => document.fonts.ready.then(() => undefined));
   for (const width of [375, 1280]) {
     await page.setViewportSize({ width, height: 900 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
@@ -19,6 +20,34 @@ async function fit(page: Page) {
     if (await grid.count()) {
       const columns = (await grid.evaluate(node => getComputedStyle(node).gridTemplateColumns)).split(' ').length;
       if (width < 750) expect(columns).toBe(1); else expect(columns).toBeGreaterThanOrEqual(2);
+    }
+    const labels = await reportRegion(page).locator('.letter-rows > div:not([data-sentence]) > dt').evaluateAll(nodes => nodes.map(node => {
+      const label = node as HTMLElement, style = getComputedStyle(label);
+      const probe = document.createElement('span');
+      probe.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;width:max-content;';
+      for (const property of ['font-family', 'font-size', 'font-weight', 'font-style', 'font-stretch', 'line-height', 'font-variant-numeric', 'font-feature-settings', 'font-variation-settings', 'letter-spacing']) {
+        probe.style.setProperty(property, style.getPropertyValue(property));
+      }
+      document.body.append(probe);
+      const words = (label.textContent ?? '').trim().split(/\s+/);
+      const longestWord = Math.max(...words.map(word => { probe.textContent = word; return probe.getBoundingClientRect().width; }));
+      const probeFontFamily = getComputedStyle(probe).fontFamily;
+      probe.remove();
+      const range = document.createRange(); range.selectNodeContents(label);
+      return { fontFamily: style.fontFamily, probeFontFamily, text: label.textContent, width: label.getBoundingClientRect().width, longestWord,
+        scrollWidth: label.scrollWidth, clientWidth: label.clientWidth,
+        height: label.getBoundingClientRect().height, lineHeight: parseFloat(style.lineHeight), singleWord: words.length === 1,
+        lineCount: range.getClientRects().length, rowScrollWidth: label.parentElement!.scrollWidth, rowClientWidth: label.parentElement!.clientWidth };
+    }));
+    for (const label of labels) {
+      expect(label.probeFontFamily).toBe(label.fontFamily);
+      expect(label.width, `${width}px ${JSON.stringify(label)}`).toBeGreaterThanOrEqual(label.longestWord);
+      expect(label.scrollWidth, `${width}px ${label.text}`).toBeLessThanOrEqual(label.clientWidth);
+      expect(label.rowScrollWidth, `${width}px ${label.text} row overflow`).toBeLessThanOrEqual(label.rowClientWidth);
+      if (label.singleWord) {
+        expect(label.height, `${width}px ${label.text}`).toBeLessThanOrEqual(label.lineHeight);
+        expect(label.lineCount, `${width}px ${label.text}`).toBe(1);
+      }
     }
     for (const button of await page.locator('button:visible, summary:visible').all()) {
       const box = await button.boundingBox();
