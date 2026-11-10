@@ -26,8 +26,7 @@
   export let help: Snippet;
   let dialog: HTMLDialogElement;
   let opener: HTMLElement | null = null;
-  let contentDestination: LifeDestination = destination === 'reports' ? 'city' : destination;
-  const windowNames = { information: 'Information', report: 'Report', player: 'Player', population: 'Population' } as const;
+  const windowNames = { information: 'Information', player: 'Player', population: 'Population' } as const;
   export async function openWindow(next: Exclude<LifeWindow, null>, source: HTMLElement): Promise<void> {
     opener = source;
     activeWindow = next;
@@ -44,16 +43,12 @@
     opener = null;
     source?.focus();
   }
-  // Legacy destinations still open the same Report host without replacing the content view.
-  $: if (destination === 'reports') {
-    destination = contentDestination;
-    void openWindow('report', document.getElementById('life-nav-report')!);
-  } else contentDestination = destination;
   $: settlement = state.world.settlements[state.world.activeSettlementId!];
   $: locked = state.phase === 'report';
   $: views = [
     { id: 'city' as const, label: 'City', content: city },
     { id: 'characters' as const, label: 'Characters', content: characters },
+    { id: 'reports' as const, label: 'Report', content: reports },
     { id: 'session' as const, label: 'Session', content: session },
     { id: 'help' as const, label: 'Help', content: help },
   ];
@@ -65,7 +60,7 @@
       <div class="card ledger-board" data-life-nav-zone="top">
     <h1 class="ledger-parchment">Character Life</h1>
     <p>{formatLifeWeek(state.world.week)} · {locked ? 'Report' : 'Planning'}</p>
-    <button class="ledger-wax" data-testid="life-end-week" disabled={!!state.society?.pendingCard} aria-disabled={locked || !!state.society?.pendingCard} onclick={event => onendweek(event.currentTarget)}>{state.society?.pendingCard ? 'Answer the crisis first.' : locked ? 'Report open — Plan next week in Report' : 'End Week'}</button>
+    <button class="ledger-wax" data-testid="life-end-week" disabled={!!state.society?.pendingCard} aria-disabled={locked || !!state.society?.pendingCard} onmousedown={event => { if (locked) event.preventDefault(); }} onclick={event => onendweek(event.currentTarget)}>{state.society?.pendingCard ? 'Answer the crisis first.' : locked ? 'Report open — Plan next week in Report' : 'End Week'}</button>
     {#if unapplied.length}
       <p>Unapplied changes ({unapplied.length})</p>
       {#each unapplied as entry (entry.id)}<button onclick={entry.onopen}>{entry.label}</button>{/each}
@@ -74,9 +69,7 @@
     {#if locked}<p>{report ? `${formatLifeWeek(report.week)} report open. ` : ''}Choose Plan next week in Report before changing the plan.</p>{/if}
     <p role={activeWindow ? undefined : 'status'} aria-live={activeWindow ? undefined : 'polite'} aria-atomic="true">{status}</p>
     {#if error}<p data-life-error role={activeWindow ? undefined : 'alert'} aria-hidden={activeWindow ? true : undefined}>{error}</p>{/if}
-        {#each ['information', 'report'] as id}
-          <button class="ledger-plaque" id={`life-nav-${id}`} aria-haspopup="dialog" onclick={event => { void openWindow(id as 'information' | 'report', event.currentTarget); }}>{windowNames[id as 'information' | 'report']}</button>
-        {/each}
+        <button class="ledger-plaque" id="life-nav-information" aria-haspopup="dialog" onclick={event => { void openWindow('information', event.currentTarget); }}>Information</button>
       </div>
       <div class="card ledger-board" data-life-nav-zone="middle">
         {#each ['player', 'population'] as id}
@@ -84,7 +77,7 @@
         {/each}
       </div>
       <div class="card ledger-board" data-life-nav-zone="bottom">
-        {#each views.slice(2) as view}
+        {#each views.slice(3) as view}
           <button class="ledger-plaque" id={`life-nav-${view.id}`} aria-current={destination === view.id ? 'page' : undefined} onclick={() => { destination = view.id; }}>{view.label}</button>
         {/each}
       </div>
@@ -93,16 +86,24 @@
   <div class="content">
     <header class="content-header">
       {#each views as view (view.id)}
-        <h2 id={`life-${view.id}-heading`} hidden={destination !== view.id}>{view.label}</h2>
+        <h2 id={`life-${view.id}-heading`} tabindex="-1" hidden={destination !== view.id}>{view.label}</h2>
       {/each}
       <nav aria-label="Views">
-        {#each views.slice(0, 2) as view}
-          <button class="ledger-plaque" id={`life-nav-${view.id}`} aria-current={destination === view.id ? 'page' : undefined} onclick={() => { destination = view.id; }}>{view.label}</button>
+        {#each views.slice(0, 3) as view}
+          <button class="ledger-plaque" id={`life-nav-${view.id === 'reports' ? 'report' : view.id}`} aria-current={destination === view.id ? 'page' : undefined} onclick={() => { destination = view.id; }}>{view.label}{#if view.id === 'reports' && locked}<span aria-hidden="true" class="new-marker">New</span>{/if}</button>
         {/each}
       </nav>
     </header>
     {#each views as view (view.id)}
-      <section data-life-view={view.id} hidden={destination !== view.id} aria-labelledby={`life-${view.id}-heading`}>
+      <section data-life-view={view.id} data-life-window={view.id === 'reports' ? 'report' : undefined} hidden={destination !== view.id} aria-labelledby={`life-${view.id}-heading`}>
+        {#if view.id === 'reports'}
+          {#if report}
+            {#if report.foodDemandMilli > report.foodConsumedMilli}<p>Last week: Food unmet {formatMilli(report.foodDemandMilli - report.foodConsumedMilli)}</p>{/if}
+            {#if report.goods.demandMilli > report.goods.servedMilli}<p>Last week: Goods unmet {formatMilli(report.goods.demandMilli - report.goods.servedMilli)}</p>{/if}
+            {#if report.unpaidUpkeepMilli}<p>Last week: Unfunded upkeep {formatMilli(report.unpaidUpkeepMilli)}</p>{/if}
+          {/if}
+          {#if destination === 'reports' && activeWindow !== 'information'}<CrisisCard {state} {onchoose} />{/if}
+        {/if}
         {@render view.content()}
       </section>
     {/each}
@@ -128,15 +129,7 @@
       </div>
       </div>
     </section>
-    {#if activeWindow === 'information' || activeWindow === 'report'}<CrisisCard {state} {onchoose} />{/if}
-    <section hidden={activeWindow !== 'report'} data-life-window="report">
-      {#if report}
-        {#if report.foodDemandMilli > report.foodConsumedMilli}<p>Last week: Food unmet {formatMilli(report.foodDemandMilli - report.foodConsumedMilli)}</p>{/if}
-        {#if report.goods.demandMilli > report.goods.servedMilli}<p>Last week: Goods unmet {formatMilli(report.goods.demandMilli - report.goods.servedMilli)}</p>{/if}
-        {#if report.unpaidUpkeepMilli}<p>Last week: Unfunded upkeep {formatMilli(report.unpaidUpkeepMilli)}</p>{/if}
-      {/if}
-      {@render reports()}
-    </section>
+    {#if activeWindow === 'information'}<CrisisCard {state} {onchoose} />{/if}
     <section hidden={activeWindow !== 'player'}>{@render playerInfo()}</section>
     <section hidden={activeWindow !== 'population'}>
       <SocietyPopulation {state} />
@@ -184,6 +177,7 @@
   dt { color: var(--text-muted); } dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
   .city-status p { padding-block: 10px; border-bottom: 1px solid var(--border-color); }
   [aria-current='page'] { font-weight: 700; text-decoration: underline; text-underline-offset: 5px; }
+  .new-marker { display: inline-block; margin-left: 8px; padding: 0 4px; color: var(--wax-text); background: var(--wax); }
   [role='alert'] { padding: 12px; border-left: 3px solid var(--accent-red); }
   /* Inherited tokens and scoped controls keep other game modes unchanged. */
   main :global(.card) { border-color: var(--border-color); border-radius: 12px; box-shadow: none; }

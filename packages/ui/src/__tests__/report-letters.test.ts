@@ -1,5 +1,6 @@
 import { describe, expect, expectTypeOf, it } from 'vitest';
 import type { CrisisStage, TileTrialReport } from '@haven/core';
+import type { LifeDestination, LifeWindow } from '../character-life-navigation.js';
 import { CLASS_LABELS, crimeReportLine, crisisReportLines, garrisonReportLine, lawReportLines, orderReportLines, type ClassId } from '../society-view.js';
 import { reportLetters, reportStamps, type LetterId, type LetterRow, type ReportLetterView, type Seal } from '../report-letters.js';
 
@@ -468,4 +469,9 @@ describe('Streets rows', () => {
     const input = report({ crisis: crisis({ stageAfter: 'warning', hungerStreak: 1 }) });
     expect(rows(input, 'streets').slice(1)).toEqual(crisisReportLines(input).map(label => ({ label, value: '', tone: 'loss' })));
   });
+});
+
+it('B2 keeps Report as a destination and excludes it from modal windows', () => {
+  expectTypeOf<LifeWindow>().toEqualTypeOf<'information' | 'player' | 'population' | null>();
+  expectTypeOf<Extract<LifeDestination, 'reports'>>().toEqualTypeOf<'reports'>();
 });

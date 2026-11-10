@@ -263,7 +263,7 @@ for (const viewport of [{ width: 1600, height: 1000 }, { width: 1280, height: 90
       await expect(shell.locator('.content')).toHaveCSS('overflow-y', viewport.width > 750 ? 'auto' : 'visible');
       await expect(nav).toHaveCSS('flex-direction', viewport.width > 750 ? 'column' : 'row');
       if (viewport.width <= 750) await expect(nav).toHaveCSS('flex-wrap', 'wrap');
-      await expect(nav.locator('[id^="life-nav-"]')).toHaveText(['Information', 'Report', 'Player', 'Population', 'Session', 'Help']);
+      await expect(nav.locator('[id^="life-nav-"]')).toHaveText(['Information', 'Player', 'Population', 'Session', 'Help']);
       for (const name of ['Information', 'Player', 'Population']) {
         await keyActivate(page, nav.getByRole('button', { name, exact: true }));
         await capture();
@@ -271,8 +271,8 @@ for (const viewport of [{ width: 1600, height: 1000 }, { width: 1280, height: 90
       }
       for (const dest of ['city', 'characters', 'reports', 'session', 'help'] as const) {
         await keyGo(page, dest);
-        if (dest === 'reports') await expect(page.getByRole('dialog', { name: 'Report', exact: true })).toBeVisible();
-        else await expect(shell.locator('nav[aria-label="Main"] [aria-current="page"], nav[aria-label="Views"] [aria-current="page"]')).toHaveText(dest[0].toUpperCase() + dest.slice(1));
+        await expect(page.locator(`[data-life-view="${dest}"]`)).toBeVisible();
+        await expect(shell.locator('nav[aria-label="Main"] [aria-current="page"], nav[aria-label="Views"] [aria-current="page"]')).toHaveText(dest === 'reports' ? 'Report' : dest[0].toUpperCase() + dest.slice(1));
         for (const hidden of await shell.locator('[data-life-view][hidden]').all()) await expect(hidden).toHaveCSS('display', 'none');
         if (dest === 'city') {
           await keyActivate(page, page.getByText('Food requirements', { exact: true }));

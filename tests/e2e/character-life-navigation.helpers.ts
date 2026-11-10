@@ -33,7 +33,7 @@ export async function keyActivate(page: Page, target: Locator) {
 export async function keyGo(page: Page, destination: LifeDestination) {
   if (await page.locator('dialog:modal').count()) await keyActivate(page, page.getByRole('dialog').getByRole('button', { name: 'Close', exact: true }));
   await keyActivate(page, page.locator(`#life-nav-${destination === 'reports' ? 'report' : destination}`));
-  await expect(destination === 'reports' ? page.getByRole('dialog', { name: 'Report', exact: true }) : page.locator(`[data-life-view="${destination}"]`)).toBeVisible();
+  await expect(page.locator(`[data-life-view="${destination}"]`)).toBeVisible();
 }
 
 export async function keyText(page: Page, target: Locator, value: string) {
@@ -51,7 +51,7 @@ export async function keyPost(page: Page, target: Locator, value: string) {
 }
 
 export async function watchTurnStatus(page: Page) {
-  await page.locator('#life-modal-status').evaluate(node => {
+  await page.locator('aside p[aria-atomic="true"]').evaluate(node => {
     const texts: string[] = [];
     const modal: boolean[] = [];
     const watched = node as HTMLElement & { mutations: string[]; modalAtMutation: boolean[] };
@@ -61,7 +61,7 @@ export async function watchTurnStatus(page: Page) {
 }
 
 export async function turnStatuses(page: Page) {
-  return page.locator('#life-modal-status').evaluate(node => (node as HTMLElement & { mutations: string[] }).mutations);
+  return page.locator('aside p[aria-atomic="true"]').evaluate(node => (node as HTMLElement & { mutations: string[] }).mutations);
 }
 export async function selectPerson(page: Page, id: string) {
   await go(page, 'characters');
@@ -88,7 +88,7 @@ export async function expectOneCharacterWindow(page: Page) {
 export async function go(page: Page, destination: LifeDestination): Promise<void> {
   if (await page.locator('dialog:modal').count()) await page.getByRole('dialog').getByRole('button', { name: 'Close', exact: true }).click();
   await page.locator(`#life-nav-${destination === 'reports' ? 'report' : destination}`).click();
-  await expect(destination === 'reports' ? page.getByRole('dialog', { name: 'Report', exact: true }) : page.locator(`[data-life-view="${destination}"]`)).toBeVisible();
+  await expect(page.locator(`[data-life-view="${destination}"]`)).toBeVisible();
 }
 
 export async function importLife(page: Page, session: CharacterLifeSessionState): Promise<void> {
@@ -206,7 +206,7 @@ export function reportFixture(kind: 'shortage' | 'zero' | 'precision' | 'service
   return s;
 }
 
-export const reportRegion = (page: Page) => page.locator('[data-life-window="report"] [aria-label="Weekly city report"]');
+export const reportRegion = (page: Page) => page.locator('[data-life-view="reports"][data-life-window="report"] [aria-label="Weekly city report"]');
 
 // Read the complete report from rendered text, including the calculation disclosure.
 export async function expectReport(page: Page, expected: Readonly<TileTrialReport>): Promise<TileTrialReport> {
