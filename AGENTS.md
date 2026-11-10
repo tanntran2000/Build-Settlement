@@ -58,7 +58,7 @@ flowchart LR
 * **G2 — Triển Khai (Implementation)**: Agent tạo nhánh làm việc riêng (ví dụ: `feat/r1-execution-core`), viết test hồi quy trước khi sửa code, đảm bảo thay đổi gói gọn trong phạm vi đã duyệt.
 * **G3 — Chuẩn Bị PR (Pre-PR Review)**: Rà soát toàn bộ Git diff, kiểm tra lint, typecheck toàn bộ workspace, chạy unit test local và quét bí mật trước khi push.
 * **G4 — CI & Review PR (Quality Gate)**: Mở PR trên GitHub. Chạy workflow CI bắt buộc (`quality-gate`). Reviewer độc lập (hoặc Human) đối chiếu diff cuối cùng với tiêu chí nghiệm thu.
-* **G5 — Merge Quyết Định (Human Authority)**: **Quyền merge PR vào `main` thuộc Human.** Human có thể ủy quyền bằng văn bản cho một agent được chỉ định (hiện tại: **dot**) merge thay, chỉ khi đồng thời đạt: (1) thay đổi thuộc Plan/WP đã được Human duyệt; (2) review độc lập đạt và không còn lỗi chặn; (3) mọi kiểm thử/CI bắt buộc tại đúng commit head đều pass. Agent được ủy quyền không được mở rộng phạm vi, bỏ qua branch protection hoặc merge PR do chính mình viết. Orchestrator và Builder không merge: khi PR sẵn sàng, Orchestrator gửi link PR và bằng chứng cho agent được ủy quyền. Agent không được tự approve PR của chính mình.
+* **G5 — Merge Quyết Định (Human Authority)**: **Quyền merge PR vào `main` thuộc Human.** Human có thể ủy quyền bằng văn bản cho một agent được chỉ định (hiện tại: **dot**) merge thay, chỉ khi đồng thời đạt: (1) thay đổi thuộc Plan/WP đã được Human duyệt; (2) review độc lập đạt và không còn lỗi chặn; (3) mọi kiểm thử/CI bắt buộc tại đúng commit head đều pass. Agent được ủy quyền không được mở rộng phạm vi, bỏ qua branch protection hoặc merge PR do chính mình viết. Orchestrator và Builder không merge: khi PR sẵn sàng, Orchestrator gửi link PR và bằng chứng cho agent được ủy quyền. Agent không được tự approve PR của chính mình. **Người thực hiện lệnh merge chỉ có thể là dot hoặc Human** (Tân, 2026-11-10, nguyên văn: "tôi đồng ý việc Dot hoặc tôi sẽ là người merg"): Orchestrator, Builder, Tester và Reviewer không bao giờ tự chạy lệnh merge, kể cả khi đang chuyển lời duyệt của Human.
 * **G6 — Hậu Kiểm & Đóng Việc (Post-Merge Verification)**: Kiểm tra trạng thái commit trên `main`, cập nhật [INTERNAL_PROGRESS_TRACKER.md](docs/INTERNAL_PROGRESS_TRACKER.md) tương ứng và liên kết bằng chứng hoàn thành.
 
 ---
@@ -82,3 +82,21 @@ flowchart LR
 8. Delete only outputs and caches verified to be reproducible. A .gitignore entry is not deletion authorization. Do not use git clean -fdx or force-remove operations to bypass cleanup failures.
 9. At task completion, preserve the results before removing unused auxiliary worktrees. Report the environments retained and the reason for retaining each one.
 10. Report the storage actually reclaimed. Moving folders outside the project does not count as space saved.
+
+---
+
+## 6. Evidence in Git (mandatory)
+
+Owner Tân, 2026-11-10, verbatim: "tôi đồng ý cách lưu của bạn lên git. Hãy đưa nó lên làm mục bắt buộc để từ sau các agent sẽ làm theo cách này". This applies to every agent and every PR.
+
+1. Before a PR is sent for G5, its exact-head evidence is committed to git under `docs/verification/<wp-id>-pr<N>/` (for example `docs/verification/ui-ledger-01-pr85/`), on the WP's docs branch. Evidence kept only in local folders, T3 threads or chat does not count for G5.
+2. The folder contains at least:
+   - a `README.md` naming the PR, tested head SHA, tested tree, base, tester and date, with a short results table;
+   - the gate 1–7 log: each command, its full output, exit code and UTC time, with the tested HEAD and tree at the top (save it as `.txt`, because `*.log` is git-ignored);
+   - test-run summaries (unit and smoke totals, any re-run and why);
+   - for any measurement the spec or plan asks for (performance trace, contrast, overflow): the script, the raw per-run results and at least one raw artifact; hash the rest in `SHA256SUMS.txt` when they are too large to commit;
+   - the independent review verdicts with their T3 thread ids.
+3. The PR body links this folder and quotes every owner decision verbatim. When the head changes, refresh both before asking for G5 again.
+4. G6 adds the merge SHA, both tree hashes and the main CI run to `docs/INTERNAL_PROGRESS_TRACKER.md`.
+5. All text evidence is UTF-8. Check that non-ASCII text (Vietnamese owner quotes, "—", "→") survives the write before committing; a "?" in place of a character is a defect.
+6. Evidence never contains secrets, tokens, credentials or personal data beyond the owner's quoted decisions.
