@@ -1,6 +1,6 @@
 import { test, expect, type Locator, type Page } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
-import {makeLife,importLife,go,exportLife,reportUnits} from './character-life-navigation.helpers.ts';
+import {openReportDetails,makeLife,importLife,go,exportLife,reportUnits} from './character-life-navigation.helpers.ts';
 import {executeCharacterLifeCommand} from '../../packages/simulation/src/character-life-command.ts';
 import {societyPopulation} from '../../packages/core/src/index.ts';
 async function start(page:Page){await page.goto('/');await importLife(page,makeLife());}
@@ -142,6 +142,7 @@ test('stock ledger preserves grouped integer milli digits and a negative net',as
  await page.goto('/');await importLife(page,session);
  const before=await exportLife(page);const result=executeCharacterLifeCommand(before,{type:'END_WEEK',expectedRevision:before.city.revision,expectedWeek:before.city.world.week});if(!result.success||!result.report)throw Error('ledger oracle failed');
  await page.getByTestId('life-end-week').click();const r=result.report;expect(r.after.gold-r.before.gold).toBeLessThan(0);
+ await openReportDetails(page,'quartermaster');
  const row=page.getByRole('table',{name:'Weekly stock ledger',exact:true}).getByRole('row').filter({has:page.getByRole('rowheader',{name:'gold',exact:true})});
  await expect(row.getByRole('cell')).toHaveText([r.before.gold,r.after.gold-r.before.gold,r.after.gold].map(reportUnits));
 });

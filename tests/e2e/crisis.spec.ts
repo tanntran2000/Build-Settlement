@@ -3,7 +3,7 @@ import {readFile} from 'node:fs/promises';
 import {deserializeCharacterLifeSave,serializeCharacterLifeSave} from '../../packages/persistence/src/index.ts';
 import {executeCharacterLifeCommand} from '../../packages/simulation/src/character-life-command.ts';
 import {crisisOptions,societyPopulation,type CardOption} from '../../packages/core/src/index.ts';
-import {importLife,go,exportLife,expectReport} from './character-life-navigation.helpers.ts';
+import {importLife,go,exportLife,openReportDetails,expectReport} from './character-life-navigation.helpers.ts';
 const button=(page:Page,name:string)=>page.getByRole('button',{name,exact:true});
 async function fixture(name:string){const r=deserializeCharacterLifeSave(await readFile(new URL(`../../packages/persistence/src/__tests__/fixtures/society-v7/${name}.json`,import.meta.url),'utf8'));if(!r.success)throw Error(r.error.message);return r.state;}
 async function fit(page:Page){for(const width of [375,1280]){await page.setViewportSize({width,height:900});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);}const ids=await page.locator('[data-testid]').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('data-testid')));expect(ids.filter((id,i)=>ids.indexOf(id)!==i)).toEqual([]);}
@@ -12,7 +12,7 @@ test('Demand card locks End Week; Pay applies once and appears in the next repor
  await expect(page.getByTestId('trial-crisis')).toContainText('Demand');const card=page.getByTestId('crisis-card');await expect(card.getByRole('button')).toHaveText(['Pay','Promise','Force','Refuse']);await expect(card).toContainText('−2 Gold, Tension −10.');await expect(card.locator('[data-card-option="force"]')).toBeDisabled();await expect(card).toContainText('Needs Security 40.');await fit(page);
  const result=executeCharacterLifeCommand(s,{type:'CHOOSE_CARD_OPTION',expectedRevision:s.city.revision,cardId:s.city.society!.pendingCard!.id,option:'pay'});if(!result.success)throw Error(result.error.message);
  await card.locator('[data-card-option="pay"]').click();await expect(card).toHaveCount(0);await button(page,'Close').click();expect(serializeCharacterLifeSave(await exportLife(page))).toEqual(serializeCharacterLifeSave(result.next));
- const week=executeCharacterLifeCommand(result.next,{type:'END_WEEK',expectedRevision:result.next.city.revision,expectedWeek:result.next.city.world.week});if(!week.success||!week.report)throw Error('Week failed');await go(page,'city');await page.getByTestId('life-end-week').click();await expectReport(page,week.report);await expect(page.getByRole('region',{name:'Crisis',exact:true})).toContainText('Your answer last week: Pay (−2 Gold, Tension −10).');await fit(page);
+ const week=executeCharacterLifeCommand(result.next,{type:'END_WEEK',expectedRevision:result.next.city.revision,expectedWeek:result.next.city.world.week});if(!week.success||!week.report)throw Error('Week failed');await go(page,'city');await page.getByTestId('life-end-week').click();await expectReport(page,week.report);await openReportDetails(page,'streets');await expect(page.getByRole('region',{name:'Crisis',exact:true})).toContainText('Your answer last week: Pay (−2 Gold, Tension −10).');await fit(page);
 });
 test('all choices show availability reasons and dispatch through Information',async({page})=>{
  for(const option of ['promise','force','refuse'] as CardOption[]){const s=await fixture('life-demand-card');s.city.society!.order.security=40;await page.goto('/?mode=world-life');await importLife(page,s);await page.locator('#life-nav-information').click();const result=executeCharacterLifeCommand(s,{type:'CHOOSE_CARD_OPTION',expectedRevision:s.city.revision,cardId:s.city.society!.pendingCard!.id,option});if(!result.success)throw Error(result.error.message);await page.locator(`[data-card-option="${option}"]`).click();await button(page,'Close').click();expect(serializeCharacterLifeSave(await exportLife(page))).toEqual(serializeCharacterLifeSave(result.next));}
@@ -27,5 +27,29 @@ test('Fallen screen New Game opens Character Creation directly',async({page})=>{
  const s=await fixture('life-rebellion-last-week');await page.goto('/?mode=world-life');await importLife(page,s);await go(page,'city');await page.getByTestId('life-end-week').click();await expect(page.getByRole('heading',{name:'The City Has Fallen',exact:true})).toBeVisible();await button(page,'New Game').click();await expect(page.getByRole('heading',{name:'Character Creation',exact:true})).toBeVisible();await expect(page.getByRole('heading',{name:'The City Has Fallen',exact:true})).toHaveCount(0);
 });
 test('normal End Week preserves a manual checkpoint byte-for-byte',async({page})=>{
- await page.goto('/?mode=world-life');await importLife(page,await fixture('life-new-game'));await go(page,'session');await button(page,'Save locally').click();const before=await page.evaluate(key=>localStorage.getItem(key),slot);expect(before).not.toBeNull();await go(page,'city');await page.getByTestId('life-end-week').click();await expect(page.getByRole('dialog',{name:'Report',exact:true})).toBeVisible();expect(await page.evaluate(key=>localStorage.getItem(key),slot)).toBe(before);
+ await page.goto('/?mode=world-life');await importLife(page,await fixture('life-new-game'));await go(page,'session');await button(page,'Save locally').click();const before=await page.evaluate(key=>localStorage.getItem(key),slot);expect(before).not.toBeNull();await go(page,'city');await page.getByTestId('life-end-week').click();await expect(page.locator('[data-life-view="reports"]')).toBeVisible();expect(await page.evaluate(key=>localStorage.getItem(key),slot)).toBe(before);
+});
+
+test('B2 pending crisis dispatches from Report and leaves the view selected', async ({page}) => {
+ const s = await fixture('life-demand-card');
+ await page.goto('/?mode=world-life'); await importLife(page,s);
+ await page.locator('#life-nav-report').click();
+ const view = page.locator('[data-life-view="reports"]');
+ await expect(view).toBeVisible();
+ await expect(page.locator('dialog:modal')).toHaveCount(0);
+ const card = view.getByTestId('crisis-card');
+ await expect(card).toBeVisible();
+ await expect(page.getByTestId('life-end-week')).toBeDisabled();
+ expect(await view.evaluate(node => {
+   const card = node.querySelector('[data-testid="crisis-card"]')!;
+   const report = node.querySelector('[aria-label="Weekly city report"]')!;
+   return !!(card.compareDocumentPosition(report) & Node.DOCUMENT_POSITION_FOLLOWING);
+ })).toBe(true);
+ const result = executeCharacterLifeCommand(s,{type:'CHOOSE_CARD_OPTION',expectedRevision:s.city.revision,cardId:s.city.society!.pendingCard!.id,option:'pay'});
+ if(!result.success) throw Error(result.error.message);
+ await card.locator('[data-card-option="pay"]').click();
+ await expect(view.getByTestId('crisis-card')).toHaveCount(0);
+ await expect(view).toBeVisible();
+ await expect(page.locator('#life-nav-report')).toHaveAttribute('aria-current','page');
+ expect(serializeCharacterLifeSave(await exportLife(page))).toEqual(serializeCharacterLifeSave(result.next));
 });

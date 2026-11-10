@@ -8,11 +8,12 @@
  $: options=card?crisisOptions(card.kind,{population:societyPopulation(state.society!),goldMilli:state.world.settlements[state.world.activeSettlementId!].inventory.gold,security:state.society!.order.security,promisePending:state.society!.crisis.promise!==null}):[];
 </script>
 {#if card}
-<section class="card" data-testid="crisis-card" aria-label={CRISIS_CARD_COPY[card.kind].title}>
+<section class="card urgent-letter" style="background: var(--wood-dark); color: var(--wax-text); border-color: var(--wax); --text-main: var(--wax-text); --text-muted: var(--wax-text);" data-testid="crisis-card" aria-label={CRISIS_CARD_COPY[card.kind].title}>
+ <p aria-hidden="true">Urgent letter</p><p class="ledger-seal urgent-seal">Answer before End Week</p>
  <div class="image-slot" aria-hidden="true"></div>
  <h3>{CRISIS_CARD_COPY[card.kind].title}</h3><p>{CRISIS_CARD_COPY[card.kind].text}</p>
  {#each options as option}
- <div><button data-card-option={option.option} disabled={!option.available} onclick={()=>onchoose(card!.id,option.option)}>{option.option[0].toUpperCase()+option.option.slice(1)}</button>
+ <div><button class="ledger-plaque" data-card-option={option.option} disabled={!option.available} onclick={()=>onchoose(card!.id,option.option)}>{option.option[0].toUpperCase()+option.option.slice(1)}</button>
  <p>{#if option.option==='pay'}−{formatMilli(option.goldMilli)} Gold, Tension −{Math.abs(option.tensionDelta)}.
  {:else if option.option==='promise'}Keep the city fed for {CRISIS_TRIAL.promise.weeks} weeks: Tension −{Math.abs(CRISIS_TRIAL.promise.kept[card.kind])}, Authority +{CRISIS_TRIAL.promise.keptAuthority}. Hunger breaks the promise: Tension +{CRISIS_TRIAL.promise.brokenTension}, Authority −{Math.abs(CRISIS_TRIAL.promise.brokenAuthority)}.
  {:else if option.option==='force'}Tension −{Math.abs(option.tensionDelta)}, Authority +{CRISIS_TRIAL.force.authority}, Crime +{CRISIS_TRIAL.force.crime}, every class's satisfaction −{Math.abs(CRISIS_TRIAL.force.satisfaction)}.
@@ -21,4 +22,4 @@
  {/each}
 </section>
 {/if}
-<style>.image-slot{min-height:120px}section{min-width:0;overflow-wrap:anywhere}button{font:inherit;min-height:44px;padding:10px;cursor:pointer}p{margin:8px 0}section>div{margin-bottom:12px}</style>
+<style>.urgent-letter{padding:16px;border:calc(2 * var(--px)) solid var(--wax)}.urgent-seal{display:inline-block;padding:8px}.image-slot{min-height:120px}section{min-width:0;overflow-wrap:anywhere}button{font:inherit;min-height:44px;padding:10px;cursor:pointer}p{margin:8px 0}section>div{margin-bottom:12px}</style>

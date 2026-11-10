@@ -1,7 +1,7 @@
 import {test,expect,type Page} from '@playwright/test';
 import {executeCharacterLifeCommand} from '../../packages/simulation/src/character-life-command.ts';
 import {serializeCharacterLifeSave} from '../../packages/persistence/src/index.ts';
-import {makeLife,importLife,exportLife,go,expectReport} from './character-life-navigation.helpers.ts';
+import {openReportDetails,makeLife,importLife,exportLife,go,expectReport} from './character-life-navigation.helpers.ts';
 const button=(page:Page,name:string)=>page.getByRole('button',{name,exact:true});
 async function start(page:Page,security=30){const s=makeLife(20261028);s.city.society!.order.security=security;Object.assign(s.city.world.settlements[s.city.world.activeSettlementId!].inventory,{gold:200000,wood:100000,iron:50000});await page.goto('/?mode=world-life');await importLife(page,s);await go(page,'city');}
 test('Information order rows are unique and fit mobile and desktop',async({page})=>{
@@ -15,6 +15,7 @@ test('Slum Watch House is staffed and Order report matches engine',async({page})
  const before=await exportLife(page);const result=executeCharacterLifeCommand(before,{type:'END_WEEK',expectedRevision:before.city.revision,expectedWeek:before.city.world.week});if(!result.success||!result.report)throw Error('Engine week failed');
  expect(result.report.order!.after.security).toBeGreaterThan(before.city.society!.order.security);
  await go(page,'city');await button(page,'End Week').click();await expectReport(page,result.report);
+ await openReportDetails(page,'captain');
  await expect(page.getByRole('region',{name:'Order',exact:true})).toBeVisible();
 });
 test('Barracks worker digits reject empty and unsafe drafts without dispatch',async({page})=>{

@@ -3,13 +3,14 @@ import {readFile} from 'node:fs/promises';
 import {deserializeCharacterLifeSave} from '../../packages/persistence/src/index.ts';
 import {executeCharacterLifeCommand} from '../../packages/simulation/src/character-life-command.ts';
 import {societyPopulation} from '../../packages/core/src/index.ts';
-import {importLife,go,exportLife,expectReport,reportUnits} from './character-life-navigation.helpers.ts';
+import {importLife,go,exportLife,openReportDetails,expectReport,reportUnits} from './character-life-navigation.helpers.ts';
 const button=(page:Page,name:string)=>page.getByRole('button',{name,exact:true});
 async function fixture(name:string){const r=deserializeCharacterLifeSave(await readFile(new URL(`../../packages/persistence/src/__tests__/fixtures/society-v7/life-${name}.json`,import.meta.url),'utf8'));if(!r.success)throw Error(r.error.message);return r.state;}
 async function fit(page:Page){for(const width of [375,1280]){await page.setViewportSize({width,height:900});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);}const ids=await page.locator('[data-testid]').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('data-testid')));expect(ids.filter((id,i)=>ids.indexOf(id)!==i)).toEqual([]);}
 for(const kind of ['robbery','raid','wound'] as const)test(`${kind} report and resulting state match the crafted save`,async({page})=>{
  const s=await fixture(`crime-${kind}`);const result=executeCharacterLifeCommand(s,{type:'END_WEEK',expectedRevision:s.city.revision,expectedWeek:s.city.world.week});if(!result.success||!result.report)throw Error('Week failed');const c=result.report.crimeEvent!,e=c.event!;
  await page.goto('/?mode=world-life');await importLife(page,s);await go(page,'city');await page.getByTestId('life-end-week').click();const actualReport=await expectReport(page,result.report);expect(actualReport.crimeEvent).toEqual(c);
+ await openReportDetails(page,'captain');
  const region=page.getByRole('region',{name:'Crime',exact:true});
  if(kind==='robbery'){expect(e.kind).toBe('robbery');expect(e.lossMilli).toBeGreaterThan(0);await expect(region.locator('p')).toHaveText(`A gang robbed the ${e.target==='gold'?'treasury':'stores'}: −${reportUnits(e.lossMilli!)} ${e.target![0].toUpperCase()+e.target!.slice(1)}.`);}
  if(kind==='raid'){expect(e.kind).toBe('raid');expect(e.soldiersKilled).toBeGreaterThan(0);await expect(region.locator('p')).toHaveText(`A gang attacked the garrison: ${e.soldiersKilled} soldier${e.soldiersKilled===1?'':'s'} died.`);expect(societyPopulation(result.next.city.society!)).toBe(result.report.immigration!.populationAfter);}

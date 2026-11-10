@@ -33,7 +33,7 @@ export async function keyActivate(page: Page, target: Locator) {
 export async function keyGo(page: Page, destination: LifeDestination) {
   if (await page.locator('dialog:modal').count()) await keyActivate(page, page.getByRole('dialog').getByRole('button', { name: 'Close', exact: true }));
   await keyActivate(page, page.locator(`#life-nav-${destination === 'reports' ? 'report' : destination}`));
-  await expect(destination === 'reports' ? page.getByRole('dialog', { name: 'Report', exact: true }) : page.locator(`[data-life-view="${destination}"]`)).toBeVisible();
+  await expect(page.locator(`[data-life-view="${destination}"]`)).toBeVisible();
 }
 
 export async function keyText(page: Page, target: Locator, value: string) {
@@ -51,7 +51,7 @@ export async function keyPost(page: Page, target: Locator, value: string) {
 }
 
 export async function watchTurnStatus(page: Page) {
-  await page.locator('#life-modal-status').evaluate(node => {
+  await page.locator('aside p[aria-atomic="true"]').evaluate(node => {
     const texts: string[] = [];
     const modal: boolean[] = [];
     const watched = node as HTMLElement & { mutations: string[]; modalAtMutation: boolean[] };
@@ -61,7 +61,7 @@ export async function watchTurnStatus(page: Page) {
 }
 
 export async function turnStatuses(page: Page) {
-  return page.locator('#life-modal-status').evaluate(node => (node as HTMLElement & { mutations: string[] }).mutations);
+  return page.locator('aside p[aria-atomic="true"]').evaluate(node => (node as HTMLElement & { mutations: string[] }).mutations);
 }
 export async function selectPerson(page: Page, id: string) {
   await go(page, 'characters');
@@ -88,7 +88,7 @@ export async function expectOneCharacterWindow(page: Page) {
 export async function go(page: Page, destination: LifeDestination): Promise<void> {
   if (await page.locator('dialog:modal').count()) await page.getByRole('dialog').getByRole('button', { name: 'Close', exact: true }).click();
   await page.locator(`#life-nav-${destination === 'reports' ? 'report' : destination}`).click();
-  await expect(destination === 'reports' ? page.getByRole('dialog', { name: 'Report', exact: true }) : page.locator(`[data-life-view="${destination}"]`)).toBeVisible();
+  await expect(page.locator(`[data-life-view="${destination}"]`)).toBeVisible();
 }
 
 export async function importLife(page: Page, session: CharacterLifeSessionState): Promise<void> {
@@ -206,11 +206,26 @@ export function reportFixture(kind: 'shortage' | 'zero' | 'precision' | 'service
   return s;
 }
 
-export const reportRegion = (page: Page) => page.locator('[data-life-window="report"] [aria-label="Weekly city report"]');
+export const reportRegion = (page: Page) => page.locator('[data-life-view="reports"][data-life-window="report"] [aria-label="Weekly city report"]');
+
+export async function openReportDetails(page: Page, ...ids: string[]): Promise<void> {
+  for (const id of ids) {
+    const details = reportRegion(page).locator(`[data-letter="${id}"] > details`);
+    if (await details.getAttribute('open') === null) await details.locator(':scope > summary').click();
+  }
+}
 
 // Read the complete report from rendered text, including the calculation disclosure.
 export async function expectReport(page: Page, expected: Readonly<TileTrialReport>): Promise<TileTrialReport> {
   const panel = reportRegion(page), u = reportUnits;
+  // Open base letters for visible text/table assertions; read other parity attributes while closed.
+  const closedLetters = [];
+  for (const details of await panel.locator('[data-letter="steward"] > details, [data-letter="quartermaster"] > details, [data-letter="census"] > details').all()) {
+    if (await details.getAttribute('open') === null) {
+      closedLetters.push(details);
+      await details.locator(':scope > summary').click();
+    }
+  }
   const heading = panel.getByRole('heading', { name: /^Week .* report$/ });
   await expect(heading).toBeVisible();
   const absoluteWeek = reportWeek((await heading.textContent())!);
@@ -239,8 +254,8 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
     before[key] = milli(cells[0]); after[key] = milli(cells[2]);
     expect(milli(cells[1])).toBe(after[key] - before[key]);
   }
-  const activity = panel.locator('details').filter({ has: page.getByText('Building activity', { exact: true }) });
-  const calculation = panel.locator('details').filter({ has: page.getByText('How this is calculated', { exact: true }) });
+  const activity = panel.locator('details:has(> summary:text-is("Building activity"))');
+  const calculation = panel.locator('details:has(> summary:text-is("How this is calculated"))');
   const activityOpen = await activity.getAttribute('open') !== null, calculationOpen = await calculation.getAttribute('open') !== null;
   if (!activityOpen) await activity.locator('summary').click();
   await expect(activity.locator('li')).toHaveText([...expected.activities]);
@@ -307,19 +322,37 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
     actual.outside=outside;
   }
   if(expected.order){
+    const captainDetails=panel.locator('[data-letter="captain"] > details');
+    const captainWasOpen=await captainDetails.getAttribute('open')!==null;
+    await openReportDetails(page,'captain');
+    try {
     const region=panel.getByRole('region',{name:'Order',exact:true});
+    await expect(region).toBeVisible();
     const order:NonNullable<TileTrialReport['order']>={soldiers:Number(await region.getAttribute('data-order-soldiers')),garrisonSecurity:Number(await region.getAttribute('data-order-garrison-security')),before:{security:0,crime:0,authority:0},after:{security:0,crime:0,authority:0},targets:{security:0,crime:0,authority:0},theftMilli:{},tensionAdded:0,satisfactionLost:0,taxModifierBps:0,taxDeltaMilli:0,arrivalsBudgetBefore:0,arrivalsBudgetAfter:0};
     for(const key of ['security','crime','authority'] as const){
-      const text=(await region.locator(`[data-order-value="${key}"]`).textContent())!;
+      const value=region.locator(`[data-order-value="${key}"]`);
+      await expect(value).toBeVisible();
+      const text=(await value.textContent())!;
       const values=text.match(/\d+/g)!.map(Number);
       [order.before[key],order.after[key],order.targets[key]]=values;
     }
+    const calculation=region.locator('details:has(> summary:text-is("Order calculation"))');
+    const calculationWasOpen=await calculation.getAttribute('open')!==null;
+    if(!calculationWasOpen)await calculation.locator(':scope > summary').click();
+    try {
+    for(const value of await region.locator('[data-order-theft], [data-order-detail]').all())await expect(value).toBeVisible();
     for(const entry of await region.locator('[data-order-theft]').evaluateAll(nodes=>nodes.map(n=>({key:n.getAttribute('data-order-theft')!,text:n.textContent!}))))order.theftMilli[entry.key as keyof typeof order.theftMilli]=reportMilli(entry.text);
     for(const key of ['taxModifierBps','taxDeltaMilli','arrivalsBudgetBefore','arrivalsBudgetAfter','tensionAdded','satisfactionLost'] as const)order[key]=Number(await region.locator(`[data-order-detail="${key}"]`).textContent());
     actual.order=order;
+    } finally {
+      if(!calculationWasOpen)await calculation.locator(':scope > summary').click();
+    }
+    } finally {
+      if(!captainWasOpen)await captainDetails.locator(':scope > summary').click();
+    }
   }
   if(expected.crisis){
-    const region=panel.getByRole('region',{name:'Crisis',exact:true});
+    const region=panel.getByRole('region',{name:'Crisis',exact:true,includeHidden:true});
     const fields=await region.evaluate(node=>Object.fromEntries([...node.attributes].filter(a=>a.name.startsWith('data-crisis-')).map(a=>[a.name.slice(12),a.value])));
     const c:NonNullable<TileTrialReport['crisis']>={stageBefore:fields['stage-before'] as NonNullable<TileTrialReport['crisis']>['stageBefore'],stageAfter:fields['stage-after'] as NonNullable<TileTrialReport['crisis']>['stageAfter'],hungry:fields.hungry==='true',hungerStreak:Number(fields['hunger-streak']),calmStreak:Number(fields['calm-streak']),weeksInStage:Number(fields['weeks-in-stage']),cardOpened:(fields['card-opened']||null) as NonNullable<TileTrialReport['crisis']>['cardOpened'],tensionBefore:Number(fields['tension-before']),tensionAfter:Number(fields['tension-after']),promise:null,lastChoice:null};
     const promise=region.locator('[data-crisis-promise]');
@@ -328,7 +361,7 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
     if(await choice.count()){const a=await choice.evaluate(n=>({stage:n.getAttribute('data-crisis-stage'),option:n.getAttribute('data-crisis-option'),goldMilli:Number(n.getAttribute('data-crisis-gold'))}));c.lastChoice=a as NonNullable<typeof c.lastChoice>;}
     actual.crisis=c;
   }
-  const crime=panel.getByRole('region',{name:'Crime',exact:true});
+  const crime=panel.getByRole('region',{name:'Crime',exact:true,includeHidden:true});
   if(await crime.count()){
     const f=await crime.evaluate(node=>Object.fromEntries([...node.attributes].filter(a=>a.name.startsWith('data-crime-')).map(a=>[a.name.slice(11),a.value])));
     const c:NonNullable<TileTrialReport['crimeEvent']>={standingBefore:Number(f['standing-before']),standingAfter:Number(f['standing-after']),chancePercent:Number(f['chance-percent']),lordHealthLoss:Number(f['lord-health-loss']),event:null};
@@ -341,7 +374,7 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
     }
     actual.crimeEvent=c;
   }
-  const laws=panel.getByRole('region',{name:'Laws',exact:true});
+  const laws=panel.getByRole('region',{name:'Laws',exact:true,includeHidden:true});
   if(await laws.count()) actual.laws=await laws.evaluate(node=>({inForce:JSON.parse(node.getAttribute('data-laws-in-force')!),costs:JSON.parse(node.getAttribute('data-laws-costs')!),unfunded:JSON.parse(node.getAttribute('data-laws-unfunded')!),incomeMilli:Number(node.getAttribute('data-laws-income-milli')),promise:JSON.parse(node.getAttribute('data-laws-promise')!)}));
   const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
   expect(actual).toEqual(baseReport);
@@ -359,6 +392,7 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
     await expect(panel.getByText(`Bound Desperation: ${society.desperationBefore} → ${society.desperationAfter}`, { exact: true })).toBeVisible();
     await expect(panel.getByText(`Luxury imported: ${(luxuryImportedMilli ?? 0) / 1000}. Training cost: ${(trainingGoldMilli ?? 0) / 1000} Gold.`, { exact: true })).toBeVisible();
   }
+  for (const details of closedLetters.reverse()) await details.locator(':scope > summary').click();
   return actual;
 }
 

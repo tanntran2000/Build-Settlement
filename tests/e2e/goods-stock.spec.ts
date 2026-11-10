@@ -25,7 +25,7 @@ for (const viewport of [{ width: 375, height: 812 }, { width: 1280, height: 900 
     debit += report.before.gold + report.taxMilli + report.goods.revenueMilli - report.after.gold;
     expect(report.unpaidUpkeepMilli).toBe(0); expect(report.goodsStock!.closingMilli).toBe(10000 - week * 1450);
     if (week === 5) {
-      await page.getByRole('dialog', { name: 'Report', exact: true }).evaluate(node => { node.scrollTop = 0; });
+      await page.locator('[data-life-view="reports"]').evaluate(node => { node.closest('.content')!.scrollTop = 0; window.scrollTo(0, 0); });
       await page.screenshot({ path: info.outputPath('goods-week5-report.png') });
     }
     await keyActivate(page, page.getByRole('button', { name: 'Plan next week', exact: true }));

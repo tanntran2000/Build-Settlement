@@ -105,8 +105,10 @@
         if (!cleared.success) errorLog.record('RUNTIME', 'INVALID_COMMAND');
         return;
       }
-      await lifeShell.openWindow('report', opener);
-      if (state.revision === resolvedRevision && report === resolvedReport && activeWindow === 'report') {
+      destination = 'reports';
+      await tick();
+      document.getElementById('life-reports-heading')?.focus();
+      if (state.revision === resolvedRevision && report === resolvedReport && destination === 'reports') {
         lifeStatus = `${formatLifeWeek(resolvedReport!.week)} report ready.`;
       }
     }

@@ -14,7 +14,7 @@ import {
 observeCharacterLife,type Observation,type VisibleCharacter,
 } from '../../packages/simulation/src/character-life-observation.ts';
 import { formatMilli } from '../../packages/ui/src/milli-format.ts';
-import { charactersView,characterWindow,expectOneCharacterWindow,expectReport,go,reportFulfillment,reportRegion,selectArea,selectPerson } from './character-life-navigation.helpers.ts';
+import {openReportDetails, charactersView,characterWindow,expectOneCharacterWindow,expectReport,go,reportFulfillment,reportRegion,selectArea,selectPerson } from './character-life-navigation.helpers.ts';
 
 const button = (scope: Page | Locator, name: string) => scope.getByRole('button', { name, exact: true });
 const region = (page: Page, name: string) => page.getByRole('region', { name, exact: true });
@@ -121,14 +121,15 @@ async function reportParity(page: Page, o: Observation, fullReport: Readonly<Til
   await expect(panel.getByText(/^Tax:/)).toHaveText(`Tax: ${formatMilli(r.taxMilli)} Gold. Upkeep covered: ${formatMilli(r.upkeepPaidMilli)} Gold; unfunded: ${formatMilli(r.unpaidUpkeepMilli)} Gold (no debt). Farm batch payment: ${formatMilli(r.farmBatchGoldMilli)} Gold; extra Farm upkeep: ${formatMilli(r.farmExtraUpkeepMilli)} Gold.`);
   await expect(panel.getByText(/^Food consumed:/)).toHaveText(`Food consumed: ${formatMilli(r.foodConsumedMilli)} / ${formatMilli(r.foodDemandMilli)} · ${reportFulfillment(r.foodConsumedMilli, r.foodDemandMilli)}.`);
   await expect(panel.getByText(/^Happiness:/)).toHaveText(`Happiness: ${r.happinessBefore} → ${r.happinessAfter}.`);
+  await openReportDetails(page, 'quartermaster');
   const rows = panel.getByRole('table', { name: 'Weekly stock ledger' }).locator('tbody tr');
   await expect(rows).toHaveCount(WEEKLY_RESOURCE_KEYS.length);
   for (const [i, key] of WEEKLY_RESOURCE_KEYS.entries()) {
     await expect(rows.nth(i).getByRole('rowheader')).toHaveText(key);
     await expect(rows.nth(i).getByRole('cell')).toHaveText([r.before[key], r.after[key] - r.before[key], r.after[key]].map(formatMilli));
   }
-  const activity = panel.locator('details').filter({ has: page.getByText('Building activity', { exact: true }) });
-  if (await activity.getAttribute('open') === null) await activity.getByText('Building activity', { exact: true }).click();
+  const activity = panel.locator('details:has(> summary:text-is("Building activity"))');
+  if (await activity.getAttribute('open') === null) await activity.locator(':scope > summary').click();
   await expect(activity.locator('li')).toHaveText(r.activities);
   for (const item of await activity.locator('li').all()) await expect(item).toBeVisible();
   await expect(panel.getByText('Previous report · Planning is active.', { exact: true })).toHaveCount(o.phase === 'planning' ? 1 : 0);
