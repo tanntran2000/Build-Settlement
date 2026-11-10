@@ -92,7 +92,16 @@ Owner Tân, 2026-11-10, verbatim: "tôi đồng ý cách lưu của bạn lên g
 1. Before a PR is sent for G5, its exact-head evidence is committed to git under `docs/verification/<wp-id>-pr<N>/` (for example `docs/verification/ui-ledger-01-pr85/`), on the WP's docs branch. Evidence kept only in local folders, T3 threads or chat does not count for G5.
 2. The folder contains at least:
    - a `README.md` naming the PR, tested head SHA, tested tree, base, tester and date, with a short results table;
-   - the gate 1–7 log: each command, its full output, exit code and UTC time, with the tested HEAD and tree at the top (save it as `.txt`, because `*.log` is git-ignored);
+   - the gate 1–7 log: each command, its full output, exit code and UTC time, with the tested HEAD and tree at the top (save it as `.txt`, because `*.log` is git-ignored). The gates, run in this order at the exact head:
+     1. `git diff --check origin/main...HEAD`
+     2. `npm run lint`
+     3. `npm run typecheck`
+     4. `npm run check:architecture`
+     5. `npm run test:architecture`
+     6. `npm test`
+     7. `npm run build`
+
+     plus the full smoke `CI=1 npm run test:smoke`. A gate may be recorded as `N/A` only with its reason written in the log; the only accepted reason today is a docs-only PR (no file outside `docs/` and `*.md` changed), where gates 2–7 and the smoke are covered by the required CI run at the same head, which the README must cite. Any other skipped gate fails §6;
    - test-run summaries (unit and smoke totals, any re-run and why);
    - for any measurement the spec or plan asks for (performance trace, contrast, overflow): the script, the raw per-run results and at least one raw artifact; hash the rest in `SHA256SUMS.txt` when they are too large to commit;
    - the independent review verdicts with their T3 thread ids.
