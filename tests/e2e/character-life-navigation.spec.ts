@@ -4,7 +4,7 @@ import { executeCharacterLifeCommand } from '../../packages/simulation/src/chara
 import { writeFile } from 'node:fs/promises';
 import { observeCharacterLife } from '../../packages/simulation/src/character-life-observation.ts';
 import { keyActivate, keyGo, keyPost, keyText, tabTo, turnStatuses, watchTurnStatus } from './character-life-navigation.helpers.ts';
-import { characterWindow, charactersView, expectCheckpointRejectionPreservesUi, expectOneCharacterWindow, expectReport, expectRequirements, exportLife, go, importLife, lifeUiSnapshot, makeLife, reportFixture, reportRegion, reportUnits, reportMilli, reportWeek, requirementsRegion, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
+import { characterWindow, charactersView, expectCheckpointRejectionPreservesUi, expectOneCharacterWindow, openReportDetails,expectReport, expectRequirements, exportLife, go, importLife, lifeUiSnapshot, makeLife, reportFixture, reportRegion, reportUnits, reportMilli, reportWeek, requirementsRegion, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
 
 async function tokenColour(shell: Locator, token: string): Promise<string> {
   return shell.evaluate((el, token) => {
@@ -1070,6 +1070,7 @@ for (const kind of ['shortage', 'zero', 'precision', 'service', 'empty'] as cons
     const report = expected.report, panel = reportRegion(page);
     await expectReport(page, report);
     for (const details of await panel.locator('details').all()) await expect(details).not.toHaveAttribute('open', /.*/);
+    await openReportDetails(page, 'quartermaster');
     for (const target of [panel, panel.getByRole('table',{name:'Weekly stock ledger',exact:true})]) expect(await target.evaluate(el => {
       for (let node: Element | null = el; node; node = node.parentElement) if (node.hasAttribute('aria-live') || ['status', 'alert', 'log'].includes(node.getAttribute('role') ?? '')) return true;
       return false;
@@ -1149,8 +1150,9 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 812 
       const result = executeCharacterLifeCommand(committed.next, { type: 'END_WEEK', expectedRevision: revision, expectedWeek: 1 });
       if (!result.success || !result.report) throw Error('F1 report oracle failed');
       // Open disclosures using keyboard before the read-only full report oracle.
+      await openReportDetails(page, 'quartermaster', 'steward');
       for (const name of ['Building activity', 'How this is calculated']) await keyActivate(page, reportRegion(page).getByText(name, { exact: true }));
-      await expect(reportRegion(page).locator('details[open]')).toHaveCount(2);
+      await expect(reportRegion(page).locator('details[open]:has(> summary:text-is("Building activity")), details[open]:has(> summary:text-is("How this is calculated"))')).toHaveCount(2);
       await expectReport(page, result.report);
       await expect(shell).toHaveAttribute('data-revision', String(revision + 1));
       expect(await turnStatuses(page)).toEqual(['Week 1 · Year 1 report ready.']);
