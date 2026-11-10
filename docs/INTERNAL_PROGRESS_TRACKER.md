@@ -1,5 +1,21 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## AGENTS.md — PR #86 G6 (2026-11-10 UTC)
+
+**G6 PASS (Claude, Orchestrator/Tester).**
+
+- **Merge.** PR #86 (`docs: require evidence in git and restrict merges to dot or the owner`) merged under G5 at 2026-11-10T14:13:40Z.
+  - Merge/main commit: `5290120868935e902bb02287bc3519ec1f654924`.
+  - Parents: `e040476` and the reviewed head `cef1fc554e7093e939774c824b882c4a1fea25aa`.
+- **Trees.** The merge tree is `fe466a14a4cd35dde302fb4e7de5310840642602`, equal to the tested head tree.
+- **Main CI.** Quality Gate run 42831946469, job 129883999033 (push), SUCCESS: 2,086 unit tests and 286/286 smoke (15.2 min).
+- **Evidence.** [`docs/verification/agents-pr86/`](verification/agents-pr86/README.md) on this branch (`636b798`):
+  - local gates 1–7 at `cef1fc5`, all exit 0;
+  - Astra PASS (thread `mcp:8b69066f`).
+- **In force now** (owner, verbatim: "tôi đồng ý việc Dot hoặc tôi sẽ là người merg" / "… Hãy đưa nó lên làm mục bắt buộc để từ sau các agent sẽ làm theo cách này"):
+  - AGENTS.md G5: only dot or the owner executes a merge.
+  - AGENTS.md §6: exact-head evidence must be committed in git before G5.
+
 ## UI-LEDGER-01 — PR B #85 G6 (2026-11-10 UTC)
 
 **G6 PASS (Claude, Orchestrator/Tester).** PR #85 `feat(ui): UI-LEDGER-01 report view and report letters (PR B)` merged by dot under G5 at 2026-11-10T12:17:24Z (merged_by tanntran2000), merge/main `e040476c808b2afa480ca3f3f80588788586582a`, parents `c20ec5e6de96a4dcb8e5ff00a461bdcbb4e83f28` and reviewed head `9905cf56be0f7369d63ab4caeb2884e1766ad344`.
