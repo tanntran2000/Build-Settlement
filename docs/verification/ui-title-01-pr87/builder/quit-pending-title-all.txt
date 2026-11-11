@@ -1,0 +1,52 @@
+HEAD 6e5bffe6e58f3c44a25b0cef861b1892a360e93f
+TREE 97aabb26c8ed2687c1810222eb82e23622263248
+WORKTREE STATUS
+M packages/ui/src/CharacterLifeApp.svelte
+ M packages/ui/src/TitleScreen.svelte
+ M tests/e2e/title.spec.ts
+UTC START 2026-11-11T04:11:51.077Z
+ENV CI=1
+COMMAND npx playwright test tests/e2e/title.spec.ts
+[WebServer] (node:40124) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:39736) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 29 tests using 1 worker
+
+(node:30184) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [chromium] › tests\e2e\title.spec.ts:4:1 › fallback and version position (681ms)
+  ok  2 [chromium] › tests\e2e\title.spec.ts:11:1 › keyboard wraps, Home End, focus ring and Enter (708ms)
+  ok  3 [chromium] › tests\e2e\title.spec.ts:20:1 › Options persist and Large uses 3px (906ms)
+  ok  4 [chromium] › tests\e2e\title.spec.ts:32:1 › fullscreen refusal (565ms)
+  ok  5 [chromium] › tests\e2e\title.spec.ts:38:1 › About and error log (548ms)
+  ok  6 [chromium] › tests\e2e\title.spec.ts:44:1 › Quit and return (524ms)
+  ok  7 [chromium] › tests\e2e\title.spec.ts:48:38 › art integer scale and reduce motion false (592ms)
+  ok  8 [chromium] › tests\e2e\title.spec.ts:48:38 › art integer scale and reduce motion true (519ms)
+  ok  9 [chromium] › tests\e2e\title.spec.ts:56:89 › layout 320 normal (801ms)
+  ok 10 [chromium] › tests\e2e\title.spec.ts:56:89 › layout 320 large (780ms)
+  ok 11 [chromium] › tests\e2e\title.spec.ts:56:89 › layout 375 normal (732ms)
+  ok 12 [chromium] › tests\e2e\title.spec.ts:56:89 › layout 375 large (735ms)
+  ok 13 [chromium] › tests\e2e\title.spec.ts:56:89 › layout 1280 normal (776ms)
+  ok 14 [chromium] › tests\e2e\title.spec.ts:56:89 › layout 1280 large (797ms)
+  ok 15 [chromium] › tests\e2e\title.spec.ts:56:89 › layout 1600 normal (867ms)
+  ok 16 [chromium] › tests\e2e\title.spec.ts:56:89 › layout 1600 large (849ms)
+  ok 17 [chromium] › tests\e2e\title.spec.ts:74:1 › empty slot disables Continue and focuses New Game (449ms)
+  ok 18 [chromium] › tests\e2e\title.spec.ts:77:1 › manual save enables cached Continue with exactly one mount read (1.7s)
+  ok 19 [chromium] › tests\e2e\title.spec.ts:84:1 › old checkpoint disables Continue with reason (447ms)
+  ok 20 [chromium] › tests\e2e\title.spec.ts:88:1 › valid Load checkpoint replaces stale mount cache (908ms)
+  ok 21 [chromium] › tests\e2e\title.spec.ts:94:50 › Load refuses oversize and keeps title (673ms)
+  ok 22 [chromium] › tests\e2e\title.spec.ts:94:50 › Load refuses old and keeps title (446ms)
+  ok 23 [chromium] › tests\e2e\title.spec.ts:98:1 › double New Game and Create produce one session (1.0s)
+  ok 24 [chromium] › tests\e2e\title.spec.ts:104:49 › options storage junk still renders title (512ms)
+  ok 25 [chromium] › tests\e2e\title.spec.ts:104:49 › options storage throws still renders title (435ms)
+  ok 26 [chromium] › tests\e2e\title.spec.ts:113:1 › Large report at 320px keeps all six letters and stock ledger inside the page (1.2s)
+  ok 27 [chromium] › tests\e2e\title.spec.ts:139:1 › Fullscreen reflects live document changes while Options stays open (501ms)
+  ok 28 [chromium] › tests\e2e\title.spec.ts:149:1 › fallen city clears cached Continue after New Game and creation Cancel (1.2s)
+  ok 29 [chromium] › tests\e2e\title.spec.ts:161:1 › Quit invalidates a pending checkpoint file read (548ms)
+
+  29 passed (32.6s)
+
+EXIT 0
+UTC END 2026-11-11T04:12:27.353Z

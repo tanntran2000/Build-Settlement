@@ -1,0 +1,59 @@
+HEAD 1beae1ee8070a16c61cf47d7bd01c5914056da24
+TREE c78bcba4fffadfd65e69fbd187c8900ab20e7d7e
+WORKTREE STATUS
+M tests/e2e/title.spec.ts
+UTC START 2026-11-11T02:36:56.672Z
+ENV CI=1
+COMMAND npx playwright test tests/e2e/title.spec.ts --grep Fullscreen.reflects
+[WebServer] (node:38660) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:50048) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:49972) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\title.spec.ts:139:1 › Fullscreen reflects live document changes while Options stays open (6.1s)
+
+
+  1) [chromium] › tests\e2e\title.spec.ts:139:1 › Fullscreen reflects live document changes while Options stays open 
+
+    Error: expect(locator).toBeChecked() failed
+
+    Locator:  getByRole('checkbox', { name: 'Fullscreen', exact: true })
+    Expected: checked
+    Received: unchecked
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeChecked" getByRole('checkbox', { name: 'Fullscreen', exact: true }) with timeout 5000ms
+      - waiting for getByRole('checkbox', { name: 'Fullscreen', exact: true })
+        14 × locator resolved to <input type="checkbox"/>
+           - unexpected value "unchecked"
+
+
+      141 |   const control = page.getByRole('checkbox', { name: 'Fullscreen', exact: true }); await expect(control).not.toBeChecked();
+      142 |   await page.evaluate(() => { Object.defineProperty(document, 'fullscreenElement', { configurable: true, value: document.documentElement }); document.dispatchEvent(new Event('fullscreenchange')); });
+    > 143 |   await expect(control).toBeChecked(); await expect(page.getByRole('dialog')).toBeVisible();
+          |                         ^
+      144 |   await page.evaluate(() => { Object.defineProperty(document, 'fullscreenElement', { configurable: true, value: null }); document.dispatchEvent(new Event('fullscreenchange')); });
+      145 |   await expect(control).not.toBeChecked();
+      146 |   expect(await page.evaluate(() => Object.keys(JSON.parse(localStorage.getItem('haven.options.v1')!)).sort())).toEqual(['autosave', 'reduceMotion', 'textSize']);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:143:25
+
+    Error Context: test-results\title-Fullscreen-reflects--ad426-es-while-Options-stays-open-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-Fullscreen-reflects--ad426-es-while-Options-stays-open-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-Fullscreen-reflects--ad426-es-while-Options-stays-open-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\title.spec.ts:139:1 › Fullscreen reflects live document changes while Options stays open 
+
+EXIT 1
+UTC END 2026-11-11T02:37:17.938Z

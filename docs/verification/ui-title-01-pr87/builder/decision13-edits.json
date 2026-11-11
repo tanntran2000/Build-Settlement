@@ -1,0 +1,140 @@
+[
+  {
+    "file": "tests/e2e/character-life.spec.ts",
+    "line": 24,
+    "before": "name: 'Character Life'",
+    "after": "name: 'HAVEN'"
+  },
+  {
+    "file": "tests/e2e/character-life.spec.ts",
+    "line": 26,
+    "before": "button(page, 'Continue locally')",
+    "after": "button(page, 'Continue')"
+  },
+  {
+    "file": "tests/e2e/character-life.spec.ts",
+    "line": 28,
+    "before": ".toBeVisible();",
+    "after": ".toHaveCount(0);"
+  },
+  {
+    "file": "tests/e2e/character-life.spec.ts",
+    "line": 100,
+    "before": "name: 'Character Life'",
+    "after": "name: 'HAVEN'"
+  },
+  {
+    "file": "tests/e2e/character-life.spec.ts",
+    "line": 166,
+    "before": "await button(page, 'Continue locally').click();",
+    "after": "await expect(button(page, 'Continue')).toBeDisabled();"
+  },
+  {
+    "file": "tests/e2e/character-life.spec.ts",
+    "line": 167,
+    "before": "page.getByRole('alert')",
+    "after": "page.getByText('No local checkpoint', { exact: true })"
+  },
+  {
+    "file": "tests/e2e/character-life.spec.ts",
+    "line": 167,
+    "before": "'No local checkpoint in this browser yet. Choose Save locally first.'",
+    "after": "'No local checkpoint'"
+  },
+  {
+    "file": "tests/e2e/character-life.spec.ts",
+    "line": 267,
+    "before": "button(page, 'Continue locally')",
+    "after": "button(page, 'Continue')"
+  },
+  {
+    "file": "tests/e2e/crime.spec.ts",
+    "line": 25,
+    "before": "await button(page,'Continue locally').click();",
+    "after": "await expect(button(page,'Continue')).toBeDisabled();"
+  },
+  {
+    "file": "tests/e2e/crime.spec.ts",
+    "line": 25,
+    "before": "page.getByRole('alert')).toHaveText('No local checkpoint in this browser yet. Choose Save locally first.')",
+    "after": "page.getByText('No local checkpoint',{exact:true})).toHaveText('No local checkpoint')"
+  },
+  {
+    "file": "tests/e2e/crisis.spec.ts",
+    "line": 24,
+    "before": "await button(page,'Continue locally').click();",
+    "after": "await expect(button(page,'Continue')).toBeDisabled();"
+  },
+  {
+    "file": "tests/e2e/crisis.spec.ts",
+    "line": 24,
+    "before": "page.getByRole('alert')).toHaveText('No local checkpoint in this browser yet. Choose Save locally first.')",
+    "after": "page.getByText('No local checkpoint',{exact:true})).toHaveText('No local checkpoint')"
+  },
+  {
+    "file": "tests/e2e/society.spec.ts",
+    "line": 38,
+    "before": "await button(page,'Continue locally').click();",
+    "after": "await expect(button(page,'Continue')).toBeDisabled();"
+  },
+  {
+    "file": "tests/e2e/society.spec.ts",
+    "line": 38,
+    "before": "page.getByRole('alert')).toContainText('No local checkpoint')",
+    "after": "page.getByText('No local checkpoint',{exact:true})).toContainText('No local checkpoint')"
+  },
+  {
+    "file": "tests/e2e/society.spec.ts",
+    "line": 38,
+    "before": "await button(page,'Continue locally').click();",
+    "after": "await button(page,'Continue').click();"
+  },
+  {
+    "file": "tests/e2e/order.spec.ts",
+    "line": 27,
+    "before": "button(page,'Continue locally')",
+    "after": "button(page,'Continue')"
+  },
+  {
+    "file": "tests/e2e/outside.spec.ts",
+    "line": 18,
+    "before": "button(page,'Continue locally')",
+    "after": "button(page,'Continue')"
+  },
+  {
+    "file": "tests/e2e/world-npc-session.spec.ts",
+    "line": 29,
+    "before": "name:'Continue locally'",
+    "after": "name:'Continue'"
+  },
+  {
+    "file": "tests/e2e/character-life-navigation.spec.ts",
+    "line": 1364,
+    "before": "name: 'Continue locally'",
+    "after": "name: 'Continue'"
+  },
+  {
+    "file": "tests/e2e/tile-local-checkpoint.spec.ts",
+    "line": 9,
+    "before": "name:'Continue locally'",
+    "after": "name:await page.getByTestId('life-shell').count()?'Continue locally':'Continue'"
+  },
+  {
+    "file": "tests/e2e/tile-local-checkpoint.spec.ts",
+    "line": 45,
+    "before": ".toEqual([]);",
+    "after": ".toEqual([['get',KEY]]);"
+  },
+  {
+    "file": "tests/e2e/tile-local-checkpoint.spec.ts",
+    "line": 45,
+    "before": ".toEqual([['get',KEY],['set',KEY]]);",
+    "after": ".toEqual([['get',KEY],['get',KEY],['set',KEY]]);"
+  },
+  {
+    "file": "tests/e2e/error-log.spec.ts",
+    "line": 208,
+    "before": "await expect(panel(page))",
+    "after": "await page.getByRole('button',{name:'Options',exact:true}).click();await expect(panel(page))"
+  }
+]

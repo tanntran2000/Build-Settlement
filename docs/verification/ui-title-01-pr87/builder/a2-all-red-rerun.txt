@@ -1,0 +1,588 @@
+node.exe : [WebServer] (node:54268) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:8660) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 16 tests using 1 worker
+
+(node:19240) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   1 [chromium] › tests\e2e\title.spec.ts:4:1 › fallback and version position (5.8s)
+(node:46024) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   2 [chromium] › tests\e2e\title.spec.ts:11:1 › keyboard wraps, Home End, focus ring and Enter (5.7s)
+(node:31992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   3 [chromium] › tests\e2e\title.spec.ts:20:1 › Options persist and Large uses 3px (1.0m)
+(node:51784) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   4 [chromium] › tests\e2e\title.spec.ts:32:1 › fullscreen refusal (1.0m)
+(node:9852) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   5 [chromium] › tests\e2e\title.spec.ts:38:1 › About and error log (1.0m)
+(node:32240) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   6 [chromium] › tests\e2e\title.spec.ts:44:1 › Quit and return (1.0m)
+(node:47796) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   7 [chromium] › tests\e2e\title.spec.ts:48:38 › art integer scale and reduce motion false (6.0s)
+(node:48240) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   8 [chromium] › tests\e2e\title.spec.ts:48:38 › art integer scale and reduce motion true (6.0s)
+(node:31500) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   9 [chromium] › tests\e2e\title.spec.ts:56:89 › layout 320 normal (6.0s)
+(node:26544) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  10 [chromium] › tests\e2e\title.spec.ts:56:89 › layout 320 large (5.8s)
+(node:57812) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  11 [chromium] › tests\e2e\title.spec.ts:56:89 › layout 375 normal (5.9s)
+(node:12868) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  12 [chromium] › tests\e2e\title.spec.ts:56:89 › layout 375 large (5.7s)
+(node:37312) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  13 [chromium] › tests\e2e\title.spec.ts:56:89 › layout 1280 normal (5.7s)
+(node:17124) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  14 [chromium] › tests\e2e\title.spec.ts:56:89 › layout 1280 large (5.8s)
+(node:45328) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  15 [chromium] › tests\e2e\title.spec.ts:56:89 › layout 1600 normal (5.7s)
+(node:44160) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  16 [chromium] › tests\e2e\title.spec.ts:56:89 › layout 1600 large (5.8s)
+
+
+  1) [chromium] › tests\e2e\title.spec.ts:4:1 › fallback and version position ──────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'HAVEN', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'HAVEN', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'HAVEN', exact: true })
+
+
+      3 | const title = (page: import('@playwright/test').Page) => page.getByRole('heading', { name: 'HAVEN', exact: true });
+      4 | test('fallback and version position', async ({ page }) => {
+    > 5 |   await page.goto('/'); await expect(title(page)).toBeVisible(); await expect(page.locator('img')).toHaveCount(0);
+        |                                                   ^
+      6 |   await expect(page.getByText('Sovereign Frontier', { exact: true })).toBeVisible();
+      7 |   await expect(page.locator('main')).toHaveCSS('background-color', 'rgb(58, 36, 20)');
+      8 |   const version = page.getByText('v0.1.0 Alpha', { exact: true }); await expect(version).toBeVisible();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:5:51
+
+    Error Context: test-results\title-fallback-and-version-position-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-fallback-and-version-position-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-fallback-and-version-position-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\title.spec.ts:11:1 › keyboard wraps, Home End, focus ring and Enter ────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'HAVEN', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'HAVEN', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'HAVEN', exact: true })
+
+
+      10 | });
+      11 | test('keyboard wraps, Home End, focus ring and Enter', async ({ page }) => {
+    > 12 |   await page.goto('/'); await expect(title(page)).toBeVisible(); await expect(button(page, 'New Game')).toBeFocused();
+         |                                                   ^
+      13 |   await page.keyboard.press('ArrowUp'); await expect(button(page, 'Quit')).toBeFocused();
+      14 |   await page.keyboard.press('ArrowDown'); await expect(button(page, 'New Game')).toBeFocused();
+      15 |   await page.keyboard.press('End'); await expect(button(page, 'Quit')).toBeFocused();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:12:51
+
+    Error Context: test-results\title-keyboard-wraps-Home-End-focus-ring-and-Enter-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-keyboard-wraps-Home-End-focus-ring-and-Enter-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-keyboard-wraps-Home-End-focus-ring-and-Enter-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests\e2e\title.spec.ts:20:1 › Options persist and Large uses 3px ────────────────
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Options', exact: true })
+
+
+      19 | });
+      20 | test('Options persist and Large uses 3px', async ({ page }) => {
+    > 21 |   await page.goto('/'); await button(page, 'Options').click();
+         |                                                       ^
+      22 |   await page.getByRole('radio', { name: 'Large', exact: true }).check();
+      23 |   expect(await page.locator('main').evaluate(el => getComputedStyle(el).getPropertyValue('--px').trim())).toBe('3px');
+      24 |   await page.getByRole('checkbox', { name: 'Reduce motion', exact: true }).check();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:21:55
+
+    Error Context: test-results\title-Options-persist-and-Large-uses-3px-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-Options-persist-and-Large-uses-3px-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-Options-persist-and-Large-uses-3px-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests\e2e\title.spec.ts:32:1 › fullscreen refusal ────────────────────────────────
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Options', exact: true })
+
+
+      32 | test('fullscreen refusal', async ({ page }) => {
+      33 |   await page.addInitScript(() => { Element.prototype.requestFullscreen = () => Promise.reject(Error('refused')); });
+    > 34 |   await page.goto('/'); await button(page, 'Options').click(); await page.getByRole('checkbox', { name: 'Fullscreen', exact: true }).check();
+         |                                                       ^
+      35 |   await expect(page.getByText('Fullscreen is not available here.', { exact: true })).toBeVisible();
+      36 |   await expect(page.getByRole('checkbox', { name: 'Fullscreen', exact: true })).not.toBeChecked();
+      37 | });
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:34:55
+
+    Error Context: test-results\title-fullscreen-refusal-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-fullscreen-refusal-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-fullscreen-refusal-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium] › tests\e2e\title.spec.ts:38:1 › About and error log ───────────────────────────────
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Options', exact: true })
+
+
+      37 | });
+      38 | test('About and error log', async ({ page }) => {
+    > 39 |   await page.goto('/'); await button(page, 'Options').click(); const dialog = page.getByRole('dialog');
+         |                                                       ^
+      40 |   await expect(dialog.getByText('v0.1.0 Alpha', { exact: true })).toBeVisible(); await expect(dialog.getByText(/^Build /)).toBeVisible();
+      41 |   await expect(dialog.getByText('Pixelify Sans — SIL Open Font License 1.1', { exact: true })).toBeVisible();
+      42 |   await expect(button(page, 'Download error log')).toBeVisible();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:39:55
+
+    Error Context: test-results\title-About-and-error-log-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-About-and-error-log-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-About-and-error-log-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [chromium] › tests\e2e\title.spec.ts:44:1 › Quit and return ───────────────────────────────────
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Quit', exact: true })
+
+
+      43 | });
+      44 | test('Quit and return', async ({ page }) => {
+    > 45 |   await page.goto('/'); await button(page, 'Quit').click(); await expect(page.getByText('You can close this tab now.', { exact: true })).toBeVisible();
+         |                                                    ^
+      46 |   await button(page, 'Back to title').click(); await expect(title(page)).toBeVisible();
+      47 | });
+      48 | for (const reduced of [false, true]) test(`art integer scale and reduce motion ${reduced}`, async ({ page }) => {
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:45:52
+
+    Error Context: test-results\title-Quit-and-return-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-Quit-and-return-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-Quit-and-return-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [chromium] › tests\e2e\title.spec.ts:48:38 › art integer scale and reduce motion false ────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'HAVEN', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'HAVEN', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'HAVEN', exact: true })
+
+
+      49 |   await page.addInitScript(reduceMotion => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize: 'normal', reduceMotion, autosave: true })), reduced);
+      50 |   await page.route('**/title-art.webp', route => route.fulfill({ contentType: 'image/svg+xml', body: '<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540"><rect width="960" height="540" fill="brown"/></svg>' }));
+    > 51 |   await page.goto('/'); await expect(title(page)).toBeVisible(); const art = page.locator('img'); await expect(art).toBeVisible();
+         |                                                   ^
+      52 |   const style = await art.evaluate(el => { const s = getComputedStyle(el); return { animation: s.animationName, duration: parseFloat(s.animationDuration), transition: parseFloat(s.transitionDuration), width: parseFloat(s.width), height: parseFloat(s.height), rendering: s.imageRendering }; });
+      53 |   expect(style.rendering).toBe('pixelated'); const n = Math.max(Math.ceil(page.viewportSize()!.width / 960), Math.ceil(page.viewportSize()!.height / 540)); expect(style.width).toBe(960*n); expect(style.height).toBe(540*n);
+      54 |   if (reduced) { expect(style.animation).toBe('none'); expect(style.transition).toBe(0); } else expect(style.duration).toBeLessThanOrEqual(.6);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:51:51
+
+    Error Context: test-results\title-art-integer-scale-and-reduce-motion-false-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-art-integer-scale-and-reduce-motion-false-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-art-integer-scale-and-reduce-motion-false-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [chromium] › tests\e2e\title.spec.ts:48:38 › art integer scale and reduce motion true ─────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'HAVEN', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'HAVEN', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'HAVEN', exact: true })
+
+
+      49 |   await page.addInitScript(reduceMotion => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize: 'normal', reduceMotion, autosave: true })), reduced);
+      50 |   await page.route('**/title-art.webp', route => route.fulfill({ contentType: 'image/svg+xml', body: '<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540"><rect width="960" height="540" fill="brown"/></svg>' }));
+    > 51 |   await page.goto('/'); await expect(title(page)).toBeVisible(); const art = page.locator('img'); await expect(art).toBeVisible();
+         |                                                   ^
+      52 |   const style = await art.evaluate(el => { const s = getComputedStyle(el); return { animation: s.animationName, duration: parseFloat(s.animationDuration), transition: parseFloat(s.transitionDuration), width: parseFloat(s.width), height: parseFloat(s.height), rendering: s.imageRendering }; });
+      53 |   expect(style.rendering).toBe('pixelated'); const n = Math.max(Math.ceil(page.viewportSize()!.width / 960), Math.ceil(page.viewportSize()!.height / 540)); expect(style.width).toBe(960*n); expect(style.height).toBe(540*n);
+      54 |   if (reduced) { expect(style.animation).toBe('none'); expect(style.transition).toBe(0); } else expect(style.duration).toBeLessThanOrEqual(.6);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:51:51
+
+    Error Context: test-results\title-art-integer-scale-and-reduce-motion-true-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-art-integer-scale-and-reduce-motion-true-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-art-integer-scale-and-reduce-motion-true-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9) [chromium] › tests\e2e\title.spec.ts:56:89 › layout 320 normal ────────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'HAVEN', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'HAVEN', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'HAVEN', exact: true })
+
+
+      57 |   await page.setViewportSize({ width, height: 900 });
+      58 |   await page.addInitScript(textSize => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize, reduceMotion: false, autosave: true })), textSize);
+    > 59 |   await page.goto('/'); await expect(title(page)).toBeVisible();
+         |                                                   ^
+      60 |   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      61 |   for (const target of await page.locator('main button').all()) { const b = await target.boundingBox(); if (b) { expect(b.width).toBeGreaterThanOrEqual(44); expect(b.height).toBeGreaterThanOrEqual(44); } }
+      62 |   await button(page, 'Options').click(); expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:59:51
+
+    Error Context: test-results\title-layout-320-normal-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-layout-320-normal-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-layout-320-normal-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  10) [chromium] › tests\e2e\title.spec.ts:56:89 › layout 320 large ────────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'HAVEN', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'HAVEN', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'HAVEN', exact: true })
+
+
+      57 |   await page.setViewportSize({ width, height: 900 });
+      58 |   await page.addInitScript(textSize => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize, reduceMotion: false, autosave: true })), textSize);
+    > 59 |   await page.goto('/'); await expect(title(page)).toBeVisible();
+         |                                                   ^
+      60 |   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      61 |   for (const target of await page.locator('main button').all()) { const b = await target.boundingBox(); if (b) { expect(b.width).toBeGreaterThanOrEqual(44); expect(b.height).toBeGreaterThanOrEqual(44); } }
+      62 |   await button(page, 'Options').click(); expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:59:51
+
+    Error Context: test-results\title-layout-320-large-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-layout-320-large-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-layout-320-large-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  11) [chromium] › tests\e2e\title.spec.ts:56:89 › layout 375 normal ───────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'HAVEN', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'HAVEN', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'HAVEN', exact: true })
+
+
+      57 |   await page.setViewportSize({ width, height: 900 });
+      58 |   await page.addInitScript(textSize => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize, reduceMotion: false, autosave: true })), textSize);
+    > 59 |   await page.goto('/'); await expect(title(page)).toBeVisible();
+         |                                                   ^
+      60 |   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      61 |   for (const target of await page.locator('main button').all()) { const b = await target.boundingBox(); if (b) { expect(b.width).toBeGreaterThanOrEqual(44); expect(b.height).toBeGreaterThanOrEqual(44); } }
+      62 |   await button(page, 'Options').click(); expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:59:51
+
+    Error Context: test-results\title-layout-375-normal-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-layout-375-normal-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-layout-375-normal-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  12) [chromium] › tests\e2e\title.spec.ts:56:89 › layout 375 large ────────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'HAVEN', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'HAVEN', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'HAVEN', exact: true })
+
+
+      57 |   await page.setViewportSize({ width, height: 900 });
+      58 |   await page.addInitScript(textSize => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize, reduceMotion: false, autosave: true })), textSize);
+    > 59 |   await page.goto('/'); await expect(title(page)).toBeVisible();
+         |                                                   ^
+      60 |   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      61 |   for (const target of await page.locator('main button').all()) { const b = await target.boundingBox(); if (b) { expect(b.width).toBeGreaterThanOrEqual(44); expect(b.height).toBeGreaterThanOrEqual(44); } }
+      62 |   await button(page, 'Options').click(); expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:59:51
+
+    Error Context: test-results\title-layout-375-large-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-layout-375-large-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-layout-375-large-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  13) [chromium] › tests\e2e\title.spec.ts:56:89 › layout 1280 normal ──────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'HAVEN', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'HAVEN', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'HAVEN', exact: true })
+
+
+      57 |   await page.setViewportSize({ width, height: 900 });
+      58 |   await page.addInitScript(textSize => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize, reduceMotion: false, autosave: true })), textSize);
+    > 59 |   await page.goto('/'); await expect(title(page)).toBeVisible();
+         |                                                   ^
+      60 |   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      61 |   for (const target of await page.locator('main button').all()) { const b = await target.boundingBox(); if (b) { expect(b.width).toBeGreaterThanOrEqual(44); expect(b.height).toBeGreaterThanOrEqual(44); } }
+      62 |   await button(page, 'Options').click(); expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:59:51
+
+    Error Context: test-results\title-layout-1280-normal-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-layout-1280-normal-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-layout-1280-normal-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  14) [chromium] › tests\e2e\title.spec.ts:56:89 › layout 1280 large ───────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'HAVEN', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'HAVEN', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'HAVEN', exact: true })
+
+
+      57 |   await page.setViewportSize({ width, height: 900 });
+      58 |   await page.addInitScript(textSize => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize, reduceMotion: false, autosave: true })), textSize);
+    > 59 |   await page.goto('/'); await expect(title(page)).toBeVisible();
+         |                                                   ^
+      60 |   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      61 |   for (const target of await page.locator('main button').all()) { const b = await target.boundingBox(); if (b) { expect(b.width).toBeGreaterThanOrEqual(44); expect(b.height).toBeGreaterThanOrEqual(44); } }
+      62 |   await button(page, 'Options').click(); expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:59:51
+
+    Error Context: test-results\title-layout-1280-large-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-layout-1280-large-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-layout-1280-large-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  15) [chromium] › tests\e2e\title.spec.ts:56:89 › layout 1600 normal ──────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'HAVEN', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'HAVEN', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'HAVEN', exact: true })
+
+
+      57 |   await page.setViewportSize({ width, height: 900 });
+      58 |   await page.addInitScript(textSize => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize, reduceMotion: false, autosave: true })), textSize);
+    > 59 |   await page.goto('/'); await expect(title(page)).toBeVisible();
+         |                                                   ^
+      60 |   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      61 |   for (const target of await page.locator('main button').all()) { const b = await target.boundingBox(); if (b) { expect(b.width).toBeGreaterThanOrEqual(44); expect(b.height).toBeGreaterThanOrEqual(44); } }
+      62 |   await button(page, 'Options').click(); expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:59:51
+
+    Error Context: test-results\title-layout-1600-normal-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-layout-1600-normal-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-layout-1600-normal-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  16) [chromium] › tests\e2e\title.spec.ts:56:89 › layout 1600 large ───────────────────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'HAVEN', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'HAVEN', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'HAVEN', exact: true })
+
+
+      57 |   await page.setViewportSize({ width, height: 900 });
+      58 |   await page.addInitScript(textSize => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize, reduceMotion: false, autosave: true })), textSize);
+    > 59 |   await page.goto('/'); await expect(title(page)).toBeVisible();
+         |                                                   ^
+      60 |   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      61 |   for (const target of await page.locator('main button').all()) { const b = await target.boundingBox(); if (b) { expect(b.width).toBeGreaterThanOrEqual(44); expect(b.height).toBeGreaterThanOrEqual(44); } }
+      62 |   await button(page, 'Options').click(); expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:59:51
+
+    Error Context: test-results\title-layout-1600-large-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-layout-1600-large-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-layout-1600-large-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  16 failed
+    [chromium] › tests\e2e\title.spec.ts:4:1 › fallback and version position ───────────────────────
+    [chromium] › tests\e2e\title.spec.ts:11:1 › keyboard wraps, Home End, focus ring and Enter ─────
+    [chromium] › tests\e2e\title.spec.ts:20:1 › Options persist and Large uses 3px ─────────────────
+    [chromium] › tests\e2e\title.spec.ts:32:1 › fullscreen refusal ─────────────────────────────────
+    [chromium] › tests\e2e\title.spec.ts:38:1 › About and error log ────────────────────────────────
+    [chromium] › tests\e2e\title.spec.ts:44:1 › Quit and return ────────────────────────────────────
+    [chromium] › tests\e2e\title.spec.ts:48:38 › art integer scale and reduce motion false ─────────
+    [chromium] › tests\e2e\title.spec.ts:48:38 › art integer scale and reduce motion true ──────────
+    [chromium] › tests\e2e\title.spec.ts:56:89 › layout 320 normal ─────────────────────────────────
+    [chromium] › tests\e2e\title.spec.ts:56:89 › layout 320 large ──────────────────────────────────
+    [chromium] › tests\e2e\title.spec.ts:56:89 › layout 375 normal ─────────────────────────────────
+    [chromium] › tests\e2e\title.spec.ts:56:89 › layout 375 large ──────────────────────────────────
+    [chromium] › tests\e2e\title.spec.ts:56:89 › layout 1280 normal ────────────────────────────────
+    [chromium] › tests\e2e\title.spec.ts:56:89 › layout 1280 large ─────────────────────────────────
+    [chromium] › tests\e2e\title.spec.ts:56:89 › layout 1600 normal ────────────────────────────────
+    [chromium] › tests\e2e\title.spec.ts:56:89 › layout 1600 large ─────────────────────────────────

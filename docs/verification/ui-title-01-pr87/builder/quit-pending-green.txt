@@ -1,0 +1,24 @@
+HEAD 6e5bffe6e58f3c44a25b0cef861b1892a360e93f
+TREE 97aabb26c8ed2687c1810222eb82e23622263248
+WORKTREE STATUS
+M packages/ui/src/CharacterLifeApp.svelte
+ M packages/ui/src/TitleScreen.svelte
+ M tests/e2e/title.spec.ts
+UTC START 2026-11-11T04:11:33.924Z
+ENV CI=1
+COMMAND npx playwright test tests/e2e/title.spec.ts --grep Quit.invalidates
+[WebServer] (node:56724) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:35552) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:4916) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\title.spec.ts:161:1 › Quit invalidates a pending checkpoint file read (1.1s)
+
+  1 passed (13.5s)
+
+EXIT 0
+UTC END 2026-11-11T04:11:51.075Z

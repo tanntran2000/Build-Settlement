@@ -1,0 +1,125 @@
+{
+  "head": "3bed77422e349f1226f6444b15d83ad27883a1bc",
+  "tree": "a870abb05ee16e4949fef8c3da1ffe7cc4e16c27",
+  "base": "5290120868935e902bb02287bc3519ec1f654924",
+  "branch": "feat/ui-title-screen",
+  "status": "",
+  "commits": [
+    "3bed77422e349f1226f6444b15d83ad27883a1bc fix(ui): quit cancels a pending checkpoint read",
+    "6e5bffe6e58f3c44a25b0cef861b1892a360e93f fix(ui): re-read the local slot when a session returns to the title",
+    "0fba8082cbd90347790a3cd8ae605fb50ec016d9 feat(ui): title screen replaces the start card",
+    "17327aecabb1d824924b2c7e35fe4bfceb9c5fc1 feat(ui): pixel ledger title screen and options dialog",
+    "493bb96542bd774909fcbe92a510692c6a15cdfd feat(ui): options, version and platform modules"
+  ],
+  "gates": [
+    {
+      "name": "gate-1-diff",
+      "command": "git diff --check origin/main...HEAD",
+      "head": "3bed77422e349f1226f6444b15d83ad27883a1bc",
+      "tree": "a870abb05ee16e4949fef8c3da1ffe7cc4e16c27",
+      "start": "2026-11-11T04:14:51.388Z",
+      "end": "2026-11-11T04:14:51.963Z",
+      "exit": 0
+    },
+    {
+      "name": "gate-2-lint",
+      "command": "npm run lint",
+      "head": "3bed77422e349f1226f6444b15d83ad27883a1bc",
+      "tree": "a870abb05ee16e4949fef8c3da1ffe7cc4e16c27",
+      "start": "2026-11-11T04:14:51.971Z",
+      "end": "2026-11-11T04:15:06.250Z",
+      "exit": 0
+    },
+    {
+      "name": "gate-3-typecheck",
+      "command": "npm run typecheck",
+      "head": "3bed77422e349f1226f6444b15d83ad27883a1bc",
+      "tree": "a870abb05ee16e4949fef8c3da1ffe7cc4e16c27",
+      "start": "2026-11-11T04:15:06.253Z",
+      "end": "2026-11-11T04:15:42.975Z",
+      "exit": 0
+    },
+    {
+      "name": "gate-4-architecture",
+      "command": "npm run check:architecture",
+      "head": "3bed77422e349f1226f6444b15d83ad27883a1bc",
+      "tree": "a870abb05ee16e4949fef8c3da1ffe7cc4e16c27",
+      "start": "2026-11-11T04:15:42.978Z",
+      "end": "2026-11-11T04:15:49.766Z",
+      "exit": 0
+    },
+    {
+      "name": "gate-5-architecture-tests",
+      "command": "npm run test:architecture",
+      "head": "3bed77422e349f1226f6444b15d83ad27883a1bc",
+      "tree": "a870abb05ee16e4949fef8c3da1ffe7cc4e16c27",
+      "start": "2026-11-11T04:15:49.768Z",
+      "end": "2026-11-11T04:16:41.923Z",
+      "exit": 0
+    },
+    {
+      "name": "gate-6-unit",
+      "command": "npm test",
+      "head": "3bed77422e349f1226f6444b15d83ad27883a1bc",
+      "tree": "a870abb05ee16e4949fef8c3da1ffe7cc4e16c27",
+      "start": "2026-11-11T04:16:41.926Z",
+      "end": "2026-11-11T04:17:43.065Z",
+      "exit": 0
+    },
+    {
+      "name": "gate-7-build",
+      "command": "npm run build",
+      "head": "3bed77422e349f1226f6444b15d83ad27883a1bc",
+      "tree": "a870abb05ee16e4949fef8c3da1ffe7cc4e16c27",
+      "start": "2026-11-11T04:17:43.067Z",
+      "end": "2026-11-11T04:18:06.308Z",
+      "exit": 0
+    },
+    {
+      "name": "gate-8-full-smoke",
+      "command": "npm run test:smoke",
+      "head": "3bed77422e349f1226f6444b15d83ad27883a1bc",
+      "tree": "a870abb05ee16e4949fef8c3da1ffe7cc4e16c27",
+      "start": "2026-11-11T04:18:06.310Z",
+      "end": "2026-11-11T04:51:21.179Z",
+      "exit": 0
+    }
+  ],
+  "unit": {
+    "files": 97,
+    "tests": 2099
+  },
+  "architecture": {
+    "counts": {
+      "core": 45,
+      "content": 2,
+      "simulation": 15,
+      "persistence": 4,
+      "ui": 35
+    },
+    "violations": 0,
+    "cycles": 0,
+    "errors": 0,
+    "tests": 154
+  },
+  "smoke": {
+    "total": 315,
+    "passed": 315,
+    "suiteDuration": "33.1m",
+    "commandWallSeconds": 1994.869
+  },
+  "bundle": {
+    "jsGzipKB": 101.41,
+    "cssGzipKB": 5.79,
+    "jsGrowthKB": 3.01,
+    "cssGrowthKB": 0.27
+  },
+  "quitRegression": {
+    "redRuns": 2,
+    "redExit": 1,
+    "greenTests": 1,
+    "greenExit": 0,
+    "titleTests": 29,
+    "reviewedHead": "6e5bffe6e58f3c44a25b0cef861b1892a360e93f"
+  }
+}

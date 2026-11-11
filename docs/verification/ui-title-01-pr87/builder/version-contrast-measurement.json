@@ -1,0 +1,20 @@
+{
+  "recordedUtc": "2026-11-11T04:18:35.421Z",
+  "method": "WCAG relative luminance from delivered CSS tokens. TitleScreen declares color var(--wax-text) and version background var(--wood-dark).",
+  "foreground": "#fbecd0",
+  "background": "#3a2414",
+  "foregroundLuminance": 0.8505420147435322,
+  "backgroundLuminance": 0.02211800036359699,
+  "ratio": 12.487063010666873,
+  "minimum": 4.5,
+  "pass": true,
+  "sourceSha256": {
+    "ledger-theme.css": "209b13477bf19ae107c899e1bf5e72a9fe62364740e545cf841795ed8a3c85e1",
+    "TitleScreen.svelte": "e0f7c131caf6a69ebaeedf4bb16e6116f2230316148298caa53fb3019822d70c"
+  },
+  "rules": [
+    "  .title-screen { box-sizing: border-box; position: relative; isolation: isolate; min-height: 100dvh; display: flex; flex-direction: column; padding: 32px; background: var(--wood-dark); color: var(--wax-text); overflow: clip; }",
+    "  p { overflow-wrap: anywhere; } .version { position: relative; text-align: right; margin-top: auto; padding-top: 32px; margin-bottom: 0; background: var(--wood-dark); }",
+    "  @media (max-width: 767px) { .title-screen { padding: 12px; } .title-content { width: 100%; } }"
+  ]
+}

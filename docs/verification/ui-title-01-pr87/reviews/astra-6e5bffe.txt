@@ -1,0 +1,8 @@
+﻿Astra independent static review
+Reviewed HEAD: 6e5bffe6e58f3c44a25b0cef861b1892a360e93f
+Verdict: CHANGES REQUESTED
+Thread: mcp:c5b18236-719d-4928-8ba8-5cd625aae76b
+Link: [UI-TITLE-01 PR A review (Astra)](t3-thread://v2/82f1d24c-48b3-45c2-816a-f3148433510a/mcp:c5b18236-719d-4928-8ba8-5cd625aae76b)
+P2: TitleScreen Quit changes the child quit flag without invalidating CharacterLifeApp importRead. A pending valid file can publish a session after Quit. Requested fix: notify parent before platform.quit, increment ticket, regression with deferred File.text.
+Other findings: no nits. Mechanical migrations, checkpoint mapping/fallen-city fix, strict Options parsing, architecture boundaries and static accessibility shape accepted in this review. Reviewer ran no tests, builds, servers, or browser, made no edits. This is not a runtime PASS.
+Builder follow-up addresses this P2 with parent onquit callback and RED/GREEN regression. The old verdict remains CHANGES REQUESTED for its reviewed head; review of the new head belongs to Claude/Reviewer.

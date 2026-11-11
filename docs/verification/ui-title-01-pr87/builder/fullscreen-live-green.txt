@@ -1,0 +1,23 @@
+HEAD 1beae1ee8070a16c61cf47d7bd01c5914056da24
+TREE c78bcba4fffadfd65e69fbd187c8900ab20e7d7e
+WORKTREE STATUS
+M packages/ui/src/OptionsDialog.svelte
+ M tests/e2e/title.spec.ts
+UTC START 2026-11-11T02:39:07.612Z
+ENV CI=1
+COMMAND npx playwright test tests/e2e/title.spec.ts --grep Fullscreen.reflects
+[WebServer] (node:45240) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:45732) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:22360) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\title.spec.ts:139:1 › Fullscreen reflects live document changes while Options stays open (1.0s)
+
+  1 passed (10.8s)
+
+EXIT 0
+UTC END 2026-11-11T02:39:22.234Z

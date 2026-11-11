@@ -1,0 +1,60 @@
+HEAD 0fba8082cbd90347790a3cd8ae605fb50ec016d9
+TREE 1416baa82b30c6b460a3648022421fde0d8582a6
+WORKTREE STATUS
+M packages/ui/src/CharacterLifeApp.svelte
+ M tests/e2e/title.spec.ts
+UTC START 2026-11-11T03:25:24.896Z
+ENV CI=1
+COMMAND npx playwright test tests/e2e/title.spec.ts --grep fallen.city.clears.cached
+[WebServer] (node:32872) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:52312) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:45196) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\title.spec.ts:149:1 › fallen city clears cached Continue after New Game and creation Cancel (6.6s)
+
+
+  1) [chromium] › tests\e2e\title.spec.ts:149:1 › fallen city clears cached Continue after New Game and creation Cancel 
+
+    Error: expect(locator).toBeDisabled() failed
+
+    Locator:  getByRole('button', { name: 'Continue', exact: true })
+    Expected: disabled
+    Received: enabled
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeDisabled" getByRole('button', { name: 'Continue', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Continue', exact: true })
+        14 × locator resolved to <button tabindex="0" class="ledger-plaque svelte-17c114l">Continue</button>
+           - unexpected value "enabled"
+
+
+      155 |   expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBeNull();
+      156 |   await button(page, 'New Game').click(); await expect(page.getByRole('heading', { name: 'Character Creation', exact: true })).toBeVisible(); await button(page, 'Cancel').click();
+    > 157 |   await expect(title(page)).toBeVisible(); await expect(button(page, 'Continue')).toBeDisabled();
+          |                                                                                   ^
+      158 |   await expect(page.getByText('No local checkpoint', { exact: true })).toBeVisible();
+      159 | });
+      160 |
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:157:83
+
+    Error Context: test-results\title-fallen-city-clears-c-51feb-ew-Game-and-creation-Cancel-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-fallen-city-clears-c-51feb-ew-Game-and-creation-Cancel-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-fallen-city-clears-c-51feb-ew-Game-and-creation-Cancel-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\title.spec.ts:149:1 › fallen city clears cached Continue after New Game and creation Cancel 
+
+EXIT 1
+UTC END 2026-11-11T03:25:43.826Z

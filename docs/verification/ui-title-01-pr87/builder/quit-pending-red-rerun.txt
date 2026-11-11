@@ -1,0 +1,57 @@
+HEAD 6e5bffe6e58f3c44a25b0cef861b1892a360e93f
+TREE 97aabb26c8ed2687c1810222eb82e23622263248
+WORKTREE STATUS
+M tests/e2e/title.spec.ts
+UTC START 2026-11-11T04:10:16.753Z
+ENV CI=1
+COMMAND npx playwright test tests/e2e/title.spec.ts --grep Quit.invalidates
+[WebServer] (node:57412) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:48688) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:58872) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\title.spec.ts:161:1 › Quit invalidates a pending checkpoint file read (6.2s)
+
+
+  1) [chromium] › tests\e2e\title.spec.ts:161:1 › Quit invalidates a pending checkpoint file read ──
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('You can close this tab now.', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('You can close this tab now.', { exact: true }) with timeout 5000ms
+      - waiting for getByText('You can close this tab now.', { exact: true })
+
+
+      177 |     await new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+      178 |   });
+    > 179 |   await expect(page.getByText('You can close this tab now.', { exact: true })).toBeVisible();
+          |                                                                                ^
+      180 |   await expect(page.getByTestId('life-shell')).toHaveCount(0);
+      181 | });
+      182 |
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:179:80
+
+    Error Context: test-results\title-Quit-invalidates-a-pending-checkpoint-file-read-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-Quit-invalidates-a-pending-checkpoint-file-read-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-Quit-invalidates-a-pending-checkpoint-file-read-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\title.spec.ts:161:1 › Quit invalidates a pending checkpoint file read ───
+
+EXIT 1
+UTC END 2026-11-11T04:10:36.183Z

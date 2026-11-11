@@ -1,0 +1,349 @@
+node.exe : [WebServer] (node:57208) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([WebServer] (no... env being set.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:10028) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 9 tests using 1 worker
+
+(node:23176) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\title.spec.ts:71:1 › empty slot disables Continue and focuses New Game (5.8s)
+(node:55588) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [chromium] › tests\e2e\title.spec.ts:74:1 › manual save enables cached Continue with exactly one mount read (5.7s)
+(node:57064) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 [chromium] › tests\e2e\title.spec.ts:81:1 › old checkpoint disables Continue with reason (5.9s)
+(node:45988) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  4 [chromium] › tests\e2e\title.spec.ts:85:1 › valid Load checkpoint replaces stale mount cache (5.8s)
+(node:55328) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  5 [chromium] › tests\e2e\title.spec.ts:91:50 › Load refuses oversize and keeps title (5.8s)
+(node:32232) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  6 [chromium] › tests\e2e\title.spec.ts:91:50 › Load refuses old and keeps title (5.8s)
+(node:36324) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  7 [chromium] › tests\e2e\title.spec.ts:95:1 › double New Game and Create produce one session (5.7s)
+(node:26576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  8 [chromium] › tests\e2e\title.spec.ts:101:49 › options storage junk still renders title (5.9s)
+(node:31048) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  9 [chromium] › tests\e2e\title.spec.ts:101:49 › options storage throws still renders title (5.8s)
+
+
+  1) [chromium] › tests\e2e\title.spec.ts:71:1 › empty slot disables Continue and focuses New Game ─
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'HAVEN', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'HAVEN', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'HAVEN', exact: true })
+
+
+      70 | function bytes(state = makeLife()) { const result = serializeCharacterLifeSave(state); if (!result.success) throw Error(result.error.message); return result.text; }
+      71 | test('empty slot disables Continue and focuses New Game', async ({ page }) => {
+    > 72 |   await page.goto('/'); await expect(title(page)).toBeVisible(); await expect(button(page, 'Continue')).toBeDisabled(); await expect(page.getByText('No local checkpoint', { exact: true })).toBeVisible(); await expect(button(page, 'New Game')).toBeFocused();
+         |                                                   ^
+      73 | });
+      74 | test('manual save enables cached Continue with exactly one mount read', async ({ page }) => {
+      75 |   await page.goto('/'); await expect(title(page)).toBeVisible(); await importLife(page, makeLife()); await go(page, 'session'); await button(page, 'Save locally').click(); const saved = await exportLife(page);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:72:51
+
+    Error Context: test-results\title-empty-slot-disables-Continue-and-focuses-New-Game-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-empty-slot-disables-Continue-and-focuses-New-Game-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-empty-slot-disables-Continue-and-focuses-New-Game-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\title.spec.ts:74:1 › manual save enables cached Continue with exactly one mount read 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'HAVEN', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'HAVEN', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'HAVEN', exact: true })
+
+
+      73 | });
+      74 | test('manual save enables cached Continue with exactly one mount read', async ({ page }) => {
+    > 75 |   await page.goto('/'); await expect(title(page)).toBeVisible(); await importLife(page, makeLife()); await go(page, 'session'); await button(page, 'Save locally').click(); const saved = await exportLife(page);
+         |                                                   ^
+      76 |   await page.addInitScript(key => { const original = Storage.prototype.getItem; Object.assign(window, { titleReads: 0 }); Storage.prototype.getItem = function(k) { if (k === key) (window as unknown as { titleReads: number }).titleReads++; return original.call(this, k); }; }, KEY);
+      77 |   await page.reload(); await expect(button(page, 'Continue')).toBeEnabled(); await expect(button(page, 'Continue')).toBeFocused();
+      78 |   await page.keyboard.press('Enter'); await page.keyboard.press('Enter'); await expect(page.getByTestId('life-shell')).toHaveCount(1);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:75:51
+
+    Error Context: test-results\title-manual-save-enables--8cbe2-with-exactly-one-mount-read-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-manual-save-enables--8cbe2-with-exactly-one-mount-read-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-manual-save-enables--8cbe2-with-exactly-one-mount-read-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests\e2e\title.spec.ts:81:1 › old checkpoint disables Continue with reason ──────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'HAVEN', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'HAVEN', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'HAVEN', exact: true })
+
+
+      80 | });
+      81 | test('old checkpoint disables Continue with reason', async ({ page }) => {
+    > 82 |   await page.addInitScript(key => localStorage.setItem(key, '{}'), KEY); await page.goto('/'); await expect(title(page)).toBeVisible();
+         |                                                                                                                          ^
+      83 |   await expect(button(page, 'Continue')).toBeDisabled(); await expect(page.getByText(OLD_CHECKPOINT_MESSAGE, { exact: true })).toBeVisible();
+      84 | });
+      85 | test('valid Load checkpoint replaces stale mount cache', async ({ page }) => {
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:82:122
+
+    Error Context: test-results\title-old-checkpoint-disables-Continue-with-reason-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-old-checkpoint-disables-Continue-with-reason-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-old-checkpoint-disables-Continue-with-reason-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests\e2e\title.spec.ts:85:1 › valid Load checkpoint replaces stale mount cache ──
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'HAVEN', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'HAVEN', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'HAVEN', exact: true })
+
+
+      85 | test('valid Load checkpoint replaces stale mount cache', async ({ page }) => {
+      86 |   const cached = makeLife(), imported = makeLife(54321); imported.player.character.name = 'Imported Keeper';
+    > 87 |   await page.addInitScript(({ key, text }) => localStorage.setItem(key, text), { key: KEY, text: bytes(cached) }); await page.goto('/'); await expect(title(page)).toBeVisible(); await expect(button(page, 'Continue')).toBeEnabled();
+         |                                                                                                                                                                    ^
+      88 |   const chooser = page.waitForEvent('filechooser'); await button(page, 'Load checkpoint').click(); await (await chooser).setFiles({ name: 'life.json', mimeType: 'application/json', buffer: Buffer.from(bytes(imported)) });
+      89 |   await expect(page.getByTestId('life-shell')).toBeVisible(); expect(await exportLife(page)).toEqual(imported);
+      90 | });
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:87:164
+
+    Error Context: test-results\title-valid-Load-checkpoint-replaces-stale-mount-cache-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-valid-Load-checkpoint-replaces-stale-mount-cache-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-valid-Load-checkpoint-replaces-stale-mount-cache-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium] › tests\e2e\title.spec.ts:91:50 › Load refuses oversize and keeps title ────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'HAVEN', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'HAVEN', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'HAVEN', exact: true })
+
+
+      90 | });
+      91 | for (const kind of ['oversize', 'old'] as const) test(`Load refuses ${kind} and keeps title`, async ({ page }) => {
+    > 92 |   await page.goto('/'); await expect(title(page)).toBeVisible(); await page.getByLabel('Import checkpoint', { exact: true }).setInputFiles({ name: 'bad.json', mimeType: 'application/json', buffer: Buffer.from(kind === 'oversize' ? ' '.repeat(1024*1024+1) : '{}') });
+         |                                                   ^
+      93 |   await expect(page.getByRole('alert')).toHaveText(kind === 'oversize' ? 'Checkpoint exceeds the 1 MiB limit.' : OLD_CHECKPOINT_MESSAGE); await expect(title(page)).toBeVisible(); await expect(page.getByTestId('life-shell')).toHaveCount(0);
+      94 | });
+      95 | test('double New Game and Create produce one session', async ({ page }) => {
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:92:51
+
+    Error Context: test-results\title-Load-refuses-oversize-and-keeps-title-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-Load-refuses-oversize-and-keeps-title-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-Load-refuses-oversize-and-keeps-title-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [chromium] › tests\e2e\title.spec.ts:91:50 › Load refuses old and keeps title ─────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'HAVEN', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'HAVEN', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'HAVEN', exact: true })
+
+
+      90 | });
+      91 | for (const kind of ['oversize', 'old'] as const) test(`Load refuses ${kind} and keeps title`, async ({ page }) => {
+    > 92 |   await page.goto('/'); await expect(title(page)).toBeVisible(); await page.getByLabel('Import checkpoint', { exact: true }).setInputFiles({ name: 'bad.json', mimeType: 'application/json', buffer: Buffer.from(kind === 'oversize' ? ' '.repeat(1024*1024+1) : '{}') });
+         |                                                   ^
+      93 |   await expect(page.getByRole('alert')).toHaveText(kind === 'oversize' ? 'Checkpoint exceeds the 1 MiB limit.' : OLD_CHECKPOINT_MESSAGE); await expect(title(page)).toBeVisible(); await expect(page.getByTestId('life-shell')).toHaveCount(0);
+      94 | });
+      95 | test('double New Game and Create produce one session', async ({ page }) => {
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:92:51
+
+    Error Context: test-results\title-Load-refuses-old-and-keeps-title-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-Load-refuses-old-and-keeps-title-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-Load-refuses-old-and-keeps-title-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [chromium] › tests\e2e\title.spec.ts:95:1 › double New Game and Create produce one session ────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'HAVEN', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'HAVEN', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'HAVEN', exact: true })
+
+
+      94 | });
+      95 | test('double New Game and Create produce one session', async ({ page }) => {
+    > 96 |   await page.goto('/'); await expect(title(page)).toBeVisible(); await expect(button(page, 'New Game')).toBeFocused(); await page.keyboard.press('Enter'); await page.keyboard.press('Enter');
+         |                                                   ^
+      97 |   await page.getByLabel('Name', { exact: true }).fill('New Keeper'); await page.getByRole('tab', { name: 'Review', exact: true }).click();
+      98 |   await button(page, 'Create character').focus(); await page.keyboard.press('Enter'); await page.keyboard.press('Enter'); await expect(page.getByTestId('life-shell')).toHaveCount(1);
+      99 |   expect((await exportLife(page)).player.character.name).toBe('New Keeper');
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:96:51
+
+    Error Context: test-results\title-double-New-Game-and-Create-produce-one-session-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-double-New-Game-and-Create-produce-one-session-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-double-New-Game-and-Create-produce-one-session-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [chromium] › tests\e2e\title.spec.ts:101:49 › options storage junk still renders title ────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'HAVEN', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'HAVEN', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'HAVEN', exact: true })
+
+
+      101 | for (const kind of ['junk', 'throws'] as const) test(`options storage ${kind} still renders title`, async ({ page }) => {
+      102 |   await page.addInitScript(kind => { if (kind === 'junk') localStorage.setItem('haven.options.v1', '{'); else { const get = Storage.prototype.getItem; Storage.prototype.getItem = function(k) { if (k === 'haven.options.v1') throw Error('blocked'); return get.call(this, k); }; } }, kind);
+    > 103 |   await page.goto('/'); await expect(title(page)).toBeVisible(); await expect(title(page)).toBeVisible(); await button(page, 'Options').click(); await expect(page.getByRole('radio', { name: 'Normal', exact: true })).toBeChecked();
+          |                                                   ^
+      104 | });
+      105 |
+      106 |
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:103:51
+
+    Error Context: test-results\title-options-storage-junk-still-renders-title-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-options-storage-junk-still-renders-title-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-options-storage-junk-still-renders-title-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9) [chromium] › tests\e2e\title.spec.ts:101:49 › options storage throws still renders title ──────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'HAVEN', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'HAVEN', exact: true }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'HAVEN', exact: true })
+
+
+      101 | for (const kind of ['junk', 'throws'] as const) test(`options storage ${kind} still renders title`, async ({ page }) => {
+      102 |   await page.addInitScript(kind => { if (kind === 'junk') localStorage.setItem('haven.options.v1', '{'); else { const get = Storage.prototype.getItem; Storage.prototype.getItem = function(k) { if (k === 'haven.options.v1') throw Error('blocked'); return get.call(this, k); }; } }, kind);
+    > 103 |   await page.goto('/'); await expect(title(page)).toBeVisible(); await expect(title(page)).toBeVisible(); await button(page, 'Options').click(); await expect(page.getByRole('radio', { name: 'Normal', exact: true })).toBeChecked();
+          |                                                   ^
+      104 | });
+      105 |
+      106 |
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:103:51
+
+    Error Context: test-results\title-options-storage-throws-still-renders-title-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-options-storage-throws-still-renders-title-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-options-storage-throws-still-renders-title-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9 failed
+    [chromium] › tests\e2e\title.spec.ts:71:1 › empty slot disables Continue and focuses New Game ──
+    [chromium] › tests\e2e\title.spec.ts:74:1 › manual save enables cached Continue with exactly one mount read 
+    [chromium] › tests\e2e\title.spec.ts:81:1 › old checkpoint disables Continue with reason ───────
+    [chromium] › tests\e2e\title.spec.ts:85:1 › valid Load checkpoint replaces stale mount cache ───
+    [chromium] › tests\e2e\title.spec.ts:91:50 › Load refuses oversize and keeps title ─────────────
+    [chromium] › tests\e2e\title.spec.ts:91:50 › Load refuses old and keeps title ──────────────────
+    [chromium] › tests\e2e\title.spec.ts:95:1 › double New Game and Create produce one session ─────
+    [chromium] › tests\e2e\title.spec.ts:101:49 › options storage junk still renders title ─────────
+    [chromium] › tests\e2e\title.spec.ts:101:49 › options storage throws still renders title ───────

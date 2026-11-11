@@ -1,0 +1,11 @@
+[assistant]
+**PASS — static re-review at `3bed77422e349f1226f6444b15d83ad27883a1bc`.** The previous P2 is resolved. No new P1, P2, or P3 findings in `6e5bffe..3bed774`.
+
+1. **Quit now invalidates the pending import before changing screens.** `TitleScreen` synchronously calls `onquit()` before `platform.quit()`. The parent increments `importRead` and clears the error. A pending read subsequently fails the existing ticket check; a rejected stale read also cannot set an error.
+
+2. **The regression exercises the reported race.** It pauses a valid file read, waits until that read is pending, selects Quit, releases the read, and verifies that the Quit screen remains visible with no session mounted. It adds no loosened assertions or timeout changes.
+
+3. **The diff contains only the intended fix and test.** Three files changed: `CharacterLifeApp.svelte`, `TitleScreen.svelte`, and `tests/e2e/title.spec.ts`—25 insertions and 2 deletions. No unrelated changes were found.
+
+**Verification limit:** I inspected the Git diff only and ran no tests, builds, or servers; no files were changed. The reported title **29/29** and smoke **315/315** results are Builder-reported, not independently verified here. This PASS closes the static-review finding; Claude’s exact-head gate evidence remains required for G5.
+

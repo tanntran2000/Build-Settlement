@@ -1,0 +1,23 @@
+{
+  "head": "3bed77422e349f1226f6444b15d83ad27883a1bc",
+  "recordedUtc": "2026-11-11T04:18:35.265Z",
+  "method": "Node gzipSync default compression; Vite display rounds to two decimal kB.",
+  "assets": [
+    {
+      "file": "packages/ui/dist/assets/index-CX3BCmV4.js",
+      "bytes": 311055,
+      "gzipBytes": 101408,
+      "sha256": "b5e52c8547ca2e767255246bfd025a939e52d503a6c3ce8bb908be6942c3ee1a",
+      "containsBuildSha": true
+    },
+    {
+      "file": "packages/ui/dist/assets/index-Dt3mz1CC.css",
+      "bytes": 28024,
+      "gzipBytes": 5792,
+      "sha256": "bbbbd75ed4fef4f058bee314d90a7a913d450fad054e4aa6dcadb73acc7d91df",
+      "containsBuildSha": null
+    }
+  ],
+  "totalGzipBytes": 107200,
+  "budgetBytes": 200000
+}
