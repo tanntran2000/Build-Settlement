@@ -1361,7 +1361,7 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 812 
       const roundtrip = await exportLife(page);
       expect(roundtrip).toEqual({ ...exported, city: { ...exported.city, revision: roundtrip.city.revision } });
       await page.getByRole('button', { name: 'Save locally', exact: true }).click(); await page.reload();
-      await page.getByRole('button', { name: 'Continue locally', exact: true }).click();
+      await page.getByRole('button', { name: 'Continue', exact: true }).click();
       const reloaded = await exportLife(page);
       expect(reloaded).toEqual(roundtrip);
       // Same-ID Player variant: a successful Import replaces the keyed window and closes Private.

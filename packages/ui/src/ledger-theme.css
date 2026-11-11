@@ -85,3 +85,6 @@ main.ledger-shell.ledger-shell.ledger-shell [data-life-view] {
 @media (min-width: 1440px) {
   main.ledger-shell.ledger-shell.ledger-shell .content-header { margin-bottom: 16px; }
 }
+
+:root[data-text-size='large'] main.ledger-shell.ledger-shell.ledger-shell { --px: 3px; font-size: 150%; }
+:root[data-reduce-motion='true'] * { animation: none !important; transition: none !important; }

@@ -205,7 +205,7 @@ test('corrupt storage discards only the logger key; export failure keeps the in-
 });
 
 test('panel remains usable with no active settlement and keyboard-triggered download',async({page})=>{
- await page.goto('/');await expect(page.getByTestId('life-shell')).toHaveCount(0);await expect(panel(page)).toContainText('No errors recorded.');
+ await page.goto('/');await expect(page.getByTestId('life-shell')).toHaveCount(0);await page.getByRole('button',{name:'Options',exact:true}).click();await expect(panel(page)).toContainText('No errors recorded.');
  await page.evaluate(()=>window.dispatchEvent(new ErrorEvent('error',{message:'SYNTHETIC'})));
  const button=panel(page).getByRole('button',{name:'Download error log'});await button.focus();const waiting=page.waitForEvent('download');await page.keyboard.press('Enter');expect((await waiting).suggestedFilename()).toBe('haven-error-log.json');
 });
