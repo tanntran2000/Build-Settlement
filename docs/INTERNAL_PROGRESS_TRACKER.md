@@ -1,5 +1,28 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## UI-TITLE-01 — PR B #89 G6 (2026-11-11 UTC)
+
+**G6 PASS (Claude, Orchestrator/Tester).**
+
+- **Merge.** PR #89 (`feat(ui): in-game Options, Main menu and autosave (UI-TITLE-01 PR B)`) merged under G5 at 2026-11-11T12:01:00Z.
+  - Merge/main commit: `d2bb71f987e2dfa894ca2304373fe0741ae6cdca`.
+  - Parents: `e9b73b5` and the accepted head `270ad3f1a2269101d340996d0116dad926912949`.
+- **Trees.** The merge tree `811aad739b0cb2cc4731b3378b156f535584a6d5` is identical to the accepted head tree.
+- **Main CI.** Quality Gate run 43016700356, job 130509452170 (push, exact merge SHA), SUCCESS: 97 files, 2,099 unit tests, and 326/326 smoke (13.1 min).
+- **Pre-merge evidence.** CI run 43012217171 was SUCCESS at `270ad3f`. The evidence folder is `docs/verification/ui-title-01-pr89/` on `docs/ui-ledger-redesign`, at `b3a1c06`. It holds:
+  - Claude's gates 1–7 and the smoke (326/326);
+  - the PC browser pass (create, End Week, autosave, Main menu);
+  - the Builder's RED-first logs per task;
+  - the Astra PASS (thread `mcp:34b12e6b`);
+  - `owner-approval-record.md`.
+- **Owner-approved fix outside the plan** (`c38642b`). The End Week double-click guard blocks repeated presses (`detail > 1`) within 500 ms on mousedown and click.
+  - Measured cause: the taller bottom zone pushed the Report heading below the fold at 375 px, focus scrolled the page, and the second press hit Help.
+  - Two attempts failed, which triggered the AGENTS.md §4 anti-loop HOLD, so the decision went to the owner.
+  - The owner decided, verbatim: "trước mắt làm chuẩn bản cho PC hoặc laptop đi còn về việc chơi trên đt tính sau", then "Use the guard", then "Yes, extend the guard".
+- **Owner decisions** (verbatim): "Approve G1", "Approve, Builder A", "ok hợp lý rồi … làm tiếp", the three guard decisions above, and "Push and open PR".
+- **UI-TITLE-01 is complete** (PR A #87 and PR B #89), apart from the real key art (`title-art.webp`, a later art PR).
+- **Direction now in force:** PC and laptop first; phone layouts are deferred by the owner.
+
 ## UI-TITLE-01 — PR A #87 G6 (2026-11-11 UTC)
 
 **G6 PASS (Claude, Orchestrator/Tester).**
