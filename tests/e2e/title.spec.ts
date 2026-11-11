@@ -157,3 +157,25 @@ test('fallen city clears cached Continue after New Game and creation Cancel', as
   await expect(title(page)).toBeVisible(); await expect(button(page, 'Continue')).toBeDisabled();
   await expect(page.getByText('No local checkpoint', { exact: true })).toBeVisible();
 });
+
+test('Quit invalidates a pending checkpoint file read', async ({ page }) => {
+  await page.goto('/');
+  await page.evaluate(() => {
+    const original = File.prototype.text;
+    (window as unknown as { releaseTitleReads: (() => void)[] }).releaseTitleReads = [];
+    File.prototype.text = async function () {
+      const text = await original.call(this);
+      await new Promise<void>(resolve => (window as unknown as { releaseTitleReads: (() => void)[] }).releaseTitleReads.push(resolve));
+      return text;
+    };
+  });
+  await page.getByLabel('Import checkpoint', { exact: true }).setInputFiles({ name: 'pending.json', mimeType: 'application/json', buffer: Buffer.from(bytes()) });
+  await page.waitForFunction(() => (window as unknown as { releaseTitleReads: unknown[] }).releaseTitleReads.length === 1);
+  await button(page, 'Quit').click(); await expect(page.getByText('You can close this tab now.', { exact: true })).toBeVisible();
+  await page.evaluate(async () => {
+    (window as unknown as { releaseTitleReads: (() => void)[] }).releaseTitleReads[0]();
+    await new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+  });
+  await expect(page.getByText('You can close this tab now.', { exact: true })).toBeVisible();
+  await expect(page.getByTestId('life-shell')).toHaveCount(0);
+});

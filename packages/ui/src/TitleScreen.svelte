@@ -8,6 +8,7 @@
   export let error: string;
   export let oncontinue: () => void;
   export let onnewgame: () => void;
+  export let onquit: () => void;
   export let onload: (file: File) => void;
   let menu: HTMLElement;
   let input: HTMLInputElement;
@@ -40,7 +41,7 @@
         <button class="ledger-plaque" tabindex={active === 1 ? 0 : -1} onfocus={() => active = 1} onclick={onnewgame}>New Game</button>
         <button class="ledger-plaque" tabindex={active === 2 ? 0 : -1} onfocus={() => active = 2} onclick={() => input.click()}>Load checkpoint</button>
         <button class="ledger-plaque" tabindex={active === 3 ? 0 : -1} onfocus={() => active = 3} onclick={() => open = true}>Options</button>
-        <button class="ledger-plaque" tabindex={active === 4 ? 0 : -1} onfocus={() => active = 4} onclick={() => platform.quit()}>Quit</button>
+        <button class="ledger-plaque" tabindex={active === 4 ? 0 : -1} onfocus={() => active = 4} onclick={() => { onquit(); platform.quit(); }}>Quit</button>
         <input hidden bind:this={input} id="life-save-file" aria-label="Import checkpoint" type="file" accept=".json,application/json" onchange={() => { const file = input.files?.[0]; input.value = ''; if (file) onload(file); }}>
         {#if error}<p role="alert">{error}</p>{/if}
       </section>

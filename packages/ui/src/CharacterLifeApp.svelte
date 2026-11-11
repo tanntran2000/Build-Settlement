@@ -59,7 +59,7 @@
     <CharacterCreation oncreate={create} oncancel={() => { screen = 'start'; }} />
   </main>
 {:else}
-  <TitleScreen {checkpoint} {error} oncontinue={continueLocally} onnewgame={newGame} onload={importCheckpoint} />
+  <TitleScreen {checkpoint} {error} oncontinue={continueLocally} onnewgame={newGame} onquit={() => { importRead++; error = ''; }} onload={importCheckpoint} />
 {/if}
 
 <style>
