@@ -1,5 +1,31 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## README rewrite — PR #88 G6 (2026-11-11 UTC)
+
+**G6 PASS (Claude, Orchestrator/Tester).**
+
+- **Merge.** PR #88 (`docs: rewrite the README around the game's vision`, docs-only) merged under G5 at 2026-11-11T12:26:14Z.
+  - Merge/main commit: `ca46d18d32cfc5a65adb5395127a80d7faddf195`.
+  - Parents: `d2bb71f` and the accepted head `352a5c9623450b17cc75cb35a6633aceb5a4fddd`.
+- **Trees.** The merge tree `1486b1ed5dc0caedc63f6e88d01b23dd733d2e04` is identical to the accepted head tree. `main:README.md` is the owner-approved blob `ddf164b2a663c99f5667f98f30ce699be427fc2b`.
+- **Main CI.** Quality Gate run 43020319259, job 130521597917 (push, exact merge SHA), SUCCESS: 97 files, 2,099 unit tests, and 326/326 smoke (11.3 min).
+- **Pre-merge.**
+  - The first head `e8a1fec` had CI 42974959122 green, but dot held G5 twice: once for an independent review and a smoke-N/A note, then because the branch was behind main after #89.
+  - The branch was refreshed by a normal merge to `352a5c9`, with no force push and no README edit.
+  - At `352a5c9`: gates 1–7 exit 0, CI 43017556046 success (326 smoke), and Astra PASS (thread `mcp:bbd4e530`).
+- **Evidence.** `docs/verification/readme-vision-pr88/` on this branch (`533ea8b`). It holds:
+  - the gate logs for both heads, each with a timestamped smoke-N/A note;
+  - the owner approval record, with original timestamps and message ids;
+  - the approved-draft blob match;
+  - the Astra verdicts.
+- **Owner instructions** (verbatim):
+  - "bỏ các yếu từ hoặc yếu tố cảm hứng từ game nào tránh tình trạng bản quyền";
+  - "phần \"What you can play today\" nên ghi ngắn gọn về nêu các tính năng lớn";
+  - "bản hiện tại tôi đánh giá chưa play được. Phải thiết kế và hoàn thiện xong phần art và UI/UX thì mới gọi là tạm để play";
+  - "Phần for development chỉ tôi và bạn được biết ko tiết lộ outsource ra ngoài. Ngoài ra các thông tin về cá nhân thì bỏ hoặc thay thế lại hết ko để lộ trên readme";
+  - approval: "ok hợp lý rồi".
+- **Public README now:** vision, design pillars, a short "Built so far", the roadmap, and the status "in development, not yet playable". There are no build steps, no personal details and no names of other games.
+
 ## UI-TITLE-01 — PR B #89 G6 (2026-11-11 UTC)
 
 **G6 PASS (Claude, Orchestrator/Tester).**
