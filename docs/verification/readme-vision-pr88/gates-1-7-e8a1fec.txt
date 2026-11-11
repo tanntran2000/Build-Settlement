@@ -1,0 +1,843 @@
+UTC start: 2026-11-11T06:44:06Z
+HEAD: e8a1fec95a9b3d538886740929443bdebdd226bc  tree: 7d28e1fd69bddd6488a980bfde1fc08d36266831
+status:
+(end status)
+
+===== git diff --check origin/main...HEAD =====
+===== exit=0  seconds=0 : git diff --check origin/main...HEAD =====
+
+===== npm run lint =====
+
+> build-settlement@0.1.0 lint
+> eslint . --max-warnings=0
+
+===== exit=0  seconds=24 : npm run lint =====
+
+===== npm run typecheck =====
+
+> build-settlement@0.1.0 typecheck
+> npm run typecheck:core && npm run typecheck:simulation && npm run typecheck:persistence && npm run typecheck:content && npm run typecheck:ui
+
+
+> build-settlement@0.1.0 typecheck:core
+> tsc -p packages/core/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:simulation
+> tsc -p packages/simulation/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:persistence
+> tsc -p packages/persistence/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:content
+> tsc -p packages/content/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:ui
+> npm run check --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 check
+> svelte-check --tsconfig ./tsconfig.json
+
+1794379513194 START "c:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\packages\\ui"
+1794379513199 COMPLETED 400 FILES 0 ERRORS 0 WARNINGS 0 FILES_WITH_PROBLEMS
+===== exit=0  seconds=42 : npm run typecheck =====
+
+===== npm run check:architecture =====
+
+> build-settlement@0.1.0 check:architecture
+> node tools/check-architecture.mjs
+
+{
+  "status": "PASS",
+  "files": [
+    "packages/content/src/city-design.ts",
+    "packages/content/src/index.ts",
+    "packages/core/src/character/catalog.ts",
+    "packages/core/src/character/describe.ts",
+    "packages/core/src/character/session.ts",
+    "packages/core/src/character/starter-profiles.ts",
+    "packages/core/src/character/types.ts",
+    "packages/core/src/character/validate.ts",
+    "packages/core/src/domain/canonical-state.ts",
+    "packages/core/src/domain/character.ts",
+    "packages/core/src/domain/gamestate.ts",
+    "packages/core/src/domain/memory.ts",
+    "packages/core/src/domain/population.ts",
+    "packages/core/src/domain/relationship.ts",
+    "packages/core/src/index.ts",
+    "packages/core/src/medal/index.ts",
+    "packages/core/src/medal/loadout.ts",
+    "packages/core/src/medal/projection.ts",
+    "packages/core/src/medal/types.ts",
+    "packages/core/src/medal/validation.ts",
+    "packages/core/src/social/calculator.ts",
+    "packages/core/src/social/profile.ts",
+    "packages/core/src/social/types.ts",
+    "packages/core/src/social/workforce.ts",
+    "packages/core/src/status/effects.ts",
+    "packages/core/src/status/types.ts",
+    "packages/core/src/trial/catalog.ts",
+    "packages/core/src/trial/crime.ts",
+    "packages/core/src/trial/crisis.ts",
+    "packages/core/src/trial/event-card.ts",
+    "packages/core/src/trial/goods-stock.ts",
+    "packages/core/src/trial/law.ts",
+    "packages/core/src/trial/order.ts",
+    "packages/core/src/trial/outside.ts",
+    "packages/core/src/trial/society-map.ts",
+    "packages/core/src/trial/society.ts",
+    "packages/core/src/trial/state.ts",
+    "packages/core/src/trial/types.ts",
+    "packages/core/src/weekly.ts",
+    "packages/core/src/world/arrays.ts",
+    "packages/core/src/world/generate.ts",
+    "packages/core/src/world/npc-content.ts",
+    "packages/core/src/world/npc.ts",
+    "packages/core/src/world/random.ts",
+    "packages/core/src/world/scenario.ts",
+    "packages/core/src/world/session.ts",
+    "packages/core/src/world/types.ts",
+    "packages/persistence/src/character-life-save.ts",
+    "packages/persistence/src/index.ts",
+    "packages/persistence/src/tile-trial-save.ts",
+    "packages/persistence/src/world-session-save.ts",
+    "packages/simulation/src/character-life-command.ts",
+    "packages/simulation/src/character-life-observation.ts",
+    "packages/simulation/src/crime-week.ts",
+    "packages/simulation/src/crisis-week.ts",
+    "packages/simulation/src/index.ts",
+    "packages/simulation/src/law-week.ts",
+    "packages/simulation/src/order-week.ts",
+    "packages/simulation/src/outside-week.ts",
+    "packages/simulation/src/society-facilities.ts",
+    "packages/simulation/src/society-week.ts",
+    "packages/simulation/src/tile-trial-immigration.ts",
+    "packages/simulation/src/tile-trial-week.ts",
+    "packages/simulation/src/tile-trial.ts",
+    "packages/simulation/src/weekly.ts",
+    "packages/simulation/src/world-npc.ts",
+    "packages/ui/src/CharacterCreation.svelte",
+    "packages/ui/src/CharacterLifeApp.svelte",
+    "packages/ui/src/CharacterLifeCharacters.svelte",
+    "packages/ui/src/CharacterLifeCity.svelte",
+    "packages/ui/src/CharacterLifeShell.svelte",
+    "packages/ui/src/CharacterProfile.svelte",
+    "packages/ui/src/CityFallen.svelte",
+    "packages/ui/src/CouncilPanel.svelte",
+    "packages/ui/src/CrisisCard.svelte",
+    "packages/ui/src/ErrorLog.svelte",
+    "packages/ui/src/InsideCity.svelte",
+    "packages/ui/src/LibraryPanel.svelte",
+    "packages/ui/src/OptionsDialog.svelte",
+    "packages/ui/src/OutsideCity.svelte",
+    "packages/ui/src/ReportLetter.svelte",
+    "packages/ui/src/SocietyPopulation.svelte",
+    "packages/ui/src/SocietyReport.svelte",
+    "packages/ui/src/SoloWeekReport.svelte",
+    "packages/ui/src/TileManagement.svelte",
+    "packages/ui/src/TitleScreen.svelte",
+    "packages/ui/src/build-env.d.ts",
+    "packages/ui/src/character-life-navigation.ts",
+    "packages/ui/src/character-life-session.ts",
+    "packages/ui/src/clearing-workers.ts",
+    "packages/ui/src/error-log.ts",
+    "packages/ui/src/life-calendar.ts",
+    "packages/ui/src/main.ts",
+    "packages/ui/src/milli-format.ts",
+    "packages/ui/src/options.ts",
+    "packages/ui/src/platform.ts",
+    "packages/ui/src/report-letters.ts",
+    "packages/ui/src/society-view.ts",
+    "packages/ui/src/version.ts",
+    "packages/ui/src/world-npc-session.ts",
+    "packages/ui/src/world-session.ts"
+  ],
+  "counts": {
+    "core": 45,
+    "content": 2,
+    "simulation": 15,
+    "persistence": 4,
+    "ui": 35
+  },
+  "edges": [
+    {
+      "from": "persistence",
+      "to": "core",
+      "file": "packages/persistence/src/character-life-save.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "persistence",
+      "to": "core",
+      "file": "packages/persistence/src/world-session-save.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/character-life-command.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/character-life-observation.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/crime-week.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/crisis-week.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/law-week.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/order-week.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/outside-week.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/society-facilities.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/society-week.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/tile-trial-immigration.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/tile-trial-week.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/tile-trial-week.ts",
+      "line": 6,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/tile-trial.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/tile-trial.ts",
+      "line": 3,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/world-npc.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CharacterCreation.svelte",
+      "line": 2,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CharacterLifeApp.svelte",
+      "line": 3,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/CharacterLifeApp.svelte",
+      "line": 4,
+      "column": 3,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CharacterLifeCharacters.svelte",
+      "line": 2,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/CharacterLifeCharacters.svelte",
+      "line": 3,
+      "column": 3,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CharacterLifeCity.svelte",
+      "line": 2,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CharacterLifeShell.svelte",
+      "line": 4,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CharacterLifeShell.svelte",
+      "line": 19,
+      "column": 46,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CharacterProfile.svelte",
+      "line": 4,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CouncilPanel.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CrisisCard.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/InsideCity.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/LibraryPanel.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/OutsideCity.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/SocietyPopulation.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "content",
+      "file": "packages/ui/src/SocietyPopulation.svelte",
+      "line": 3,
+      "column": 2,
+      "specifier": "@haven/content"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/SocietyReport.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/SocietyReport.svelte",
+      "line": 3,
+      "column": 2,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/SoloWeekReport.svelte",
+      "line": 2,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/TileManagement.svelte",
+      "line": 9,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/TileManagement.svelte",
+      "line": 10,
+      "column": 3,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/TileManagement.svelte",
+      "line": 11,
+      "column": 3,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/character-life-session.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/character-life-session.ts",
+      "line": 2,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/character-life-session.ts",
+      "line": 3,
+      "column": 1,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/character-life-session.ts",
+      "line": 52,
+      "column": 79,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/report-letters.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 2,
+      "column": 1,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 68,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 69,
+      "column": 1,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 99,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 100,
+      "column": 1,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 120,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 143,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 167,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/world-npc-session.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/world-npc-session.ts",
+      "line": 2,
+      "column": 1,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/world-session.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/world-session.ts",
+      "line": 2,
+      "column": 1,
+      "specifier": "@haven/simulation"
+    }
+  ],
+  "violations": [],
+  "cycles": [],
+  "errors": []
+}
+===== exit=0  seconds=7 : npm run check:architecture =====
+
+===== npm run test:architecture =====
+
+> build-settlement@0.1.0 test:architecture
+> node --test tools/architecture.test.mjs
+
+✔ static multiline: simulation -> core is PASS (84.1029ms)
+✔ static multiline: content -> core is VIOLATION (49.6472ms)
+✔ side effect: simulation -> core is PASS (49.4147ms)
+✔ side effect: content -> core is VIOLATION (54.3429ms)
+✔ default import: simulation -> core is PASS (54.0009ms)
+✔ default import: content -> core is VIOLATION (52.815ms)
+✔ namespace import: simulation -> core is PASS (47.7227ms)
+✔ namespace import: content -> core is VIOLATION (45.0352ms)
+✔ type import: simulation -> core is PASS (45.0097ms)
+✔ type import: content -> core is VIOLATION (45.5785ms)
+✔ inline type import: simulation -> core is PASS (45.0735ms)
+✔ inline type import: content -> core is VIOLATION (45.4072ms)
+✔ named re-export: simulation -> core is PASS (47.8291ms)
+✔ named re-export: content -> core is VIOLATION (44.8758ms)
+✔ star re-export: simulation -> core is PASS (46.4821ms)
+✔ star re-export: content -> core is VIOLATION (46.3173ms)
+✔ namespace re-export: simulation -> core is PASS (45.8613ms)
+✔ namespace re-export: content -> core is VIOLATION (45.3464ms)
+✔ type re-export: simulation -> core is PASS (44.7361ms)
+✔ type re-export: content -> core is VIOLATION (44.9875ms)
+✔ type star re-export: simulation -> core is PASS (44.5772ms)
+✔ type star re-export: content -> core is VIOLATION (45.074ms)
+✔ dynamic import: simulation -> core is PASS (49.4972ms)
+✔ dynamic import: content -> core is VIOLATION (55.5765ms)
+✔ template dynamic import: simulation -> core is PASS (70.6933ms)
+✔ template dynamic import: content -> core is VIOLATION (59.398ms)
+✔ import type expression: simulation -> core is PASS (52.7579ms)
+✔ import type expression: content -> core is VIOLATION (55.0008ms)
+✔ typeof import expression: simulation -> core is PASS (55.6223ms)
+✔ typeof import expression: content -> core is VIOLATION (54.4587ms)
+✔ import equals require: simulation -> core is PASS (52.4744ms)
+✔ import equals require: content -> core is VIOLATION (60.4661ms)
+✔ literal require: simulation -> core is PASS (52.1015ms)
+✔ literal require: content -> core is VIOLATION (52.2456ms)
+✔ template require: simulation -> core is PASS (96.7968ms)
+✔ template require: content -> core is VIOLATION (47.5983ms)
+✔ file URL: static multiline retains simulation -> core PASS (75.9682ms)
+✔ file URL: static multiline retains content -> core VIOLATION (77.8701ms)
+✔ file URL: side effect retains simulation -> core PASS (81.8479ms)
+✔ file URL: side effect retains content -> core VIOLATION (83.1114ms)
+✔ file URL: default import retains simulation -> core PASS (85.1425ms)
+✔ file URL: default import retains content -> core VIOLATION (90.0303ms)
+✔ file URL: namespace import retains simulation -> core PASS (78.6649ms)
+✔ file URL: namespace import retains content -> core VIOLATION (79.8527ms)
+✔ file URL: type import retains simulation -> core PASS (74.9491ms)
+✔ file URL: type import retains content -> core VIOLATION (72.6088ms)
+✔ file URL: inline type import retains simulation -> core PASS (76.0855ms)
+✔ file URL: inline type import retains content -> core VIOLATION (71.4265ms)
+✔ file URL: named re-export retains simulation -> core PASS (69.7486ms)
+✔ file URL: named re-export retains content -> core VIOLATION (70.2033ms)
+✔ file URL: star re-export retains simulation -> core PASS (67.6963ms)
+✔ file URL: star re-export retains content -> core VIOLATION (65.8403ms)
+✔ file URL: namespace re-export retains simulation -> core PASS (66.8536ms)
+✔ file URL: namespace re-export retains content -> core VIOLATION (68.5502ms)
+✔ file URL: type re-export retains simulation -> core PASS (67.7839ms)
+✔ file URL: type re-export retains content -> core VIOLATION (79.8562ms)
+✔ file URL: type star re-export retains simulation -> core PASS (72.6812ms)
+✔ file URL: type star re-export retains content -> core VIOLATION (71.2171ms)
+✔ file URL: dynamic import retains simulation -> core PASS (69.5271ms)
+✔ file URL: dynamic import retains content -> core VIOLATION (76.4087ms)
+✔ file URL: template dynamic import retains simulation -> core PASS (75.4925ms)
+✔ file URL: template dynamic import retains content -> core VIOLATION (68.8276ms)
+✔ file URL: import type expression retains simulation -> core PASS (68.0264ms)
+✔ file URL: import type expression retains content -> core VIOLATION (67.5919ms)
+✔ file URL: typeof import expression retains simulation -> core PASS (68.4808ms)
+✔ file URL: typeof import expression retains content -> core VIOLATION (74.3693ms)
+✔ file URL: import equals require retains simulation -> core PASS (71.2446ms)
+✔ file URL: import equals require retains content -> core VIOLATION (66.5839ms)
+✔ file URL: literal require retains simulation -> core PASS (71.6525ms)
+✔ file URL: literal require retains content -> core VIOLATION (77.4799ms)
+✔ file URL: template require retains simulation -> core PASS (73.9168ms)
+✔ file URL: template require retains content -> core VIOLATION (69.6724ms)
+✔ file URL: all supported syntax in Svelte instance body (602.2338ms)
+✔ file URL: all supported syntax in Svelte module body (547.7722ms)
+✔ file URL: declarations, encoded names, URL normalization and .js -> .ts never execute source (183.0661ms)
+✔ file URL: malformed and missing targets are located INCOMPLETE, with CLI exit 2 (2971.3943ms)
+✔ file URL: platform paths and remote hosts cannot trigger filesystem lookup outside declared packages (108.8981ms)
+✔ file URL: package cycles retain witness locations and CLI violation exit; local file cycles stay legal (2727.0411ms)
+✔ the complete approved matrix, including type-only edges (482.8628ms)
+✔ normalized relative paths, index resolution, declarations and .js -> .ts (52.3868ms)
+✔ exact package identities, subpaths, escapes and external lookalikes (74.7518ms)
+✔ comments, regex, plain strings, template text and Svelte markup create no edges (55.1464ms)
+✔ Svelte module and instance scripts retain actual source lines (51.142ms)
+✔ every dependency syntax is scanned in Svelte scripts (523.1589ms)
+✔ scope01: unsupported script generics="T" is explicitly INCOMPLETE (78.4657ms)
+✔ scope01: unsupported script generics="T extends import('@haven/simulation').Value" is explicitly INCOMPLETE (72.0973ms)
+✔ scope01: unsupported script generics="" is explicitly INCOMPLETE (71.2267ms)
+✔ scope01: unsupported script generics is explicitly INCOMPLETE (70.9105ms)
+✔ scope01: unsupported script generics="not valid TypeScript" is explicitly INCOMPLETE (78.885ms)
+✔ scope01: unsupported script module generics="T" is explicitly INCOMPLETE (78.0073ms)
+✔ scope01: unsupported script module generics="T extends import('@haven/simulation').Value" is explicitly INCOMPLETE (76.0832ms)
+✔ scope01: unsupported script module generics="" is explicitly INCOMPLETE (70.7338ms)
+✔ scope01: unsupported script module generics is explicitly INCOMPLETE (74.6444ms)
+✔ scope01: unsupported script module generics="not valid TypeScript" is explicitly INCOMPLETE (75.6873ms)
+✔ scope01: unsupported script context="module" generics="T" is explicitly INCOMPLETE (71.2712ms)
+✔ scope01: unsupported script context="module" generics="T extends import('@haven/simulation').Value" is explicitly INCOMPLETE (70.4319ms)
+✔ scope01: unsupported script context="module" generics="" is explicitly INCOMPLETE (72.166ms)
+✔ scope01: unsupported script context="module" generics is explicitly INCOMPLETE (78.4177ms)
+✔ scope01: unsupported script context="module" generics="not valid TypeScript" is explicitly INCOMPLETE (71.6794ms)
+✔ scope01: attribute-like comments, script strings, markup and CSS stay excluded (52.6621ms)
+✔ scope01: TypeScript generic/type body dependencies retain ui -> core enforcement (53.8346ms)
+✔ scope01: TypeScript generic/type body dependencies retain content -> core enforcement (50.8563ms)
+✔ scope01: declarations generic/type body dependencies retain ui -> core enforcement (51.5494ms)
+✔ scope01: declarations generic/type body dependencies retain content -> core enforcement (56.1936ms)
+✔ scope01: Svelte instance body generic/type body dependencies retain ui -> core enforcement (55.3208ms)
+✔ scope01: Svelte instance body generic/type body dependencies retain content -> core enforcement (57.8443ms)
+✔ scope01: Svelte module body generic/type body dependencies retain ui -> core enforcement (52.7684ms)
+✔ scope01: Svelte module body generic/type body dependencies retain content -> core enforcement (52.9868ms)
+✔ scope01: unsupported attributes preserve proven body edges in both script blocks (48.9302ms)
+✔ scope01: unsupported generics CLI exits 2 with a located error, not a violation (5395.6112ms)
+✔ s1: expression-valued generics={"T"} gets its actual multiline location (100.7667ms)
+✔ s1: expression-valued generics={'T'} gets its actual multiline location (71.7986ms)
+✔ s1: expression-valued generics={`T`} gets its actual multiline location (73.5136ms)
+✔ s1: expression-valued generics={typeName} gets its actual multiline location (74.4922ms)
+✔ s1: expression-valued module generics={"T"} gets its actual multiline location (73.6368ms)
+✔ s1: expression-valued module generics={'T'} gets its actual multiline location (80.5065ms)
+✔ s1: expression-valued module generics={`T`} gets its actual multiline location (79.5168ms)
+✔ s1: expression-valued module generics={typeName} gets its actual multiline location (81.9278ms)
+✔ s1: expression-valued context="module" generics={"T"} gets its actual multiline location (84.1007ms)
+✔ s1: expression-valued context="module" generics={'T'} gets its actual multiline location (82.5945ms)
+✔ s1: expression-valued context="module" generics={`T`} gets its actual multiline location (74.784ms)
+✔ s1: expression-valued context="module" generics={typeName} gets its actual multiline location (79.6356ms)
+✔ s1: parser fallback retains every required dependency syntax in instance body (553.9401ms)
+✔ s1: parser fallback retains every required dependency syntax in module body (532.4366ms)
+✔ s1: fallback keeps both body type violations and attribute locations across script blocks (53.6099ms)
+✔ s1: BOM ranges preserve multiline attribute and body locations (49.7002ms)
+✔ s1: fallback reports computed body imports alongside the unsupported attribute (45.7984ms)
+✔ s1: fallback distinguishes actual script attributes from comment/string/markup/CSS lookalikes (79.853ms)
+✔ s1: a malformed body remains an INCOMPLETE parse failure (49.1582ms)
+✔ s1: the reported expression-attribute CLI reproduction exits 2 with line and reason (2850.5851ms)
+✔ scan includes exactly eligible production .ts/.svelte, recursively (116.0604ms)
+✔ computed dependency cannot pass: import(name); (41.1206ms)
+✔ computed dependency cannot pass: import(`@haven/${name}`); (44.3823ms)
+✔ computed dependency cannot pass: import('@haven/' + name); (47.0805ms)
+✔ computed dependency cannot pass: require(name); (43.5309ms)
+✔ computed dependency cannot pass: require(); (47.274ms)
+✔ unresolved internal/relative dependency: import './missing'; (51.8673ms)
+✔ unresolved internal/relative dependency: import '@haven/core/no-such-file'; (50.4902ms)
+✔ unresolved internal/relative dependency: import '@haven/core/../../missing'; (49.2727ms)
+✔ relative asset imports resolve without expanding the production scan (82.4238ms)
+✔ parse error is incomplete verification: packages/core/src/index.ts const = ; (52.5678ms)
+✔ parse error is incomplete verification: packages/ui/src/Bad.svelte <script lang="ts">const = ;</script> (48.3512ms)
+✔ parse error is incomplete verification: packages/ui/src/Bad.svelte <script>import "@haven/core";</script><div> (48.6902ms)
+✔ missing and empty scope fail without fabricated line numbers (36.5679ms)
+✔ a scope containing only excluded files is empty (43.4855ms)
+✔ unreadable root and source preserve path/cause without a line (43.2742ms)
+✔ manifest failure cannot make internal imports appear external (53.0726ms)
+✔ two/three package cycles include a witness and every import location (83.5016ms)
+✔ within-package file cycles are legal, package DAG has no cycles (70.7545ms)
+✔ diagnostics and graph output are stable across scans and creation order (130.2243ms)
+✔ symlink escape is verification failure, never scanned or followed (87.0407ms)
+✔ a source root symlink cannot escape and an internal symlink can be scanned (201.0906ms)
+✔ inspected TypeScript, Svelte and local config code is never executed (73.185ms)
+✔ CLI exit 0/1/2 means PASS/VIOLATION/INCOMPLETE; output is stable JSON (16371.2249ms)
+ℹ tests 154
+ℹ suites 0
+ℹ pass 154
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 46014.9001
+===== exit=0  seconds=47 : npm run test:architecture =====
+
+===== npm test =====
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  97 passed (97)
+      Tests  2099 passed (2099)
+   Start at  13:46:10
+   Duration  54.62s (transform 10.13s, setup 0ms, import 40.81s, tests 133.81s, environment 54ms)
+
+===== exit=0  seconds=58 : npm test =====
+
+===== npm run build =====
+
+> build-settlement@0.1.0 build
+> npm run build --workspace=@haven/core && npm run build --workspace=@haven/simulation && npm run build --workspace=@haven/ui
+
+
+> @haven/core@0.1.0 build
+> tsc
+
+
+> @haven/simulation@0.1.0 build
+> tsc
+
+
+> @haven/ui@0.1.0 build
+> vite build
+
+[36mvite v6.4.5 [32mbuilding for production...[36m[39m
+transforming...
+[32m✓[39m 224 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mdist/[22m[32mindex.html                                 [39m[1m[2m  0.71 kB[22m[1m[22m[2m │ gzip:   0.41 kB[22m
+[2mdist/[22m[32massets/PixelifySans-Variable-lrcDQVzA.ttf  [39m[1m[2m 79.16 kB[22m[1m[22m
+[2mdist/[22m[35massets/index-Dt3mz1CC.css                  [39m[1m[2m 28.02 kB[22m[1m[22m[2m │ gzip:   5.79 kB[22m
+[2mdist/[22m[36massets/index-HL-_dc9a.js                   [39m[1m[2m311.06 kB[22m[1m[22m[2m │ gzip: 101.41 kB[22m
+[32m✓ built in 4.48s[39m
+===== exit=0  seconds=30 : npm run build =====
+UTC end: 2026-11-11T06:47:35Z
