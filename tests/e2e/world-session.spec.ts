@@ -4,6 +4,7 @@ import {executeCharacterLifeCommand} from '../../packages/simulation/src/charact
 import {boot,encoded,fundedLife,notice,put,week} from './society-command.helpers.ts';
 import {expectReport,exportLife,go,importLife,makeLife,reportRegion} from './character-life-navigation.helpers.ts';
 import {readFile} from 'node:fs/promises';
+test.beforeEach(async ({ page }) => { await page.addInitScript(() => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize: 'normal', reduceMotion: null, autosave: false }))); });
 const KEY='haven.character-life-session-society.checkpoint.v1',OLD=['haven.tile-trial.checkpoint.v1','haven.tile-population.checkpoint.v1'];
 const save=async(page:Page)=>{await go(page,'session');await page.getByRole('button',{name:'Save locally',exact:true}).click();};
 const resume=async(page:Page)=>{await go(page,'session');await page.getByRole('button',{name:'Continue locally',exact:true}).click();};

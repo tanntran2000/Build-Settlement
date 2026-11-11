@@ -320,6 +320,7 @@ test('life Save locally leaves the NPC-world and world slots unchanged', async (
 });
 
 test('Life report and checkpoint operations preserve every other-mode slot byte-for-byte', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize: 'normal', reduceMotion: null, autosave: false })));
   await page.goto('/?mode=world-life');
   const keys = [NPC_KEY, WORLD_KEY, 'haven.tile-trial.checkpoint.v1', 'haven.tile-population.checkpoint.v1'];
   const bytes = keys.map((key, i) => `${i}: protected ${key} \n {not a save}`);

@@ -5,6 +5,7 @@
   import { soldiersRow, lawsRow, storageView, orderRows, crisisRow, standingRow, crimeChanceRow } from './society-view.js';
   import CrisisCard from './CrisisCard.svelte';
   import SocietyPopulation from './SocietyPopulation.svelte';
+  import OptionsDialog from './OptionsDialog.svelte';
   import { formatMilli } from './milli-format.js';
   import { formatLifeWeek } from './life-calendar.js';
   import type { LifeDestination, LifeWindow } from './character-life-navigation.js';
@@ -18,6 +19,7 @@
   export let unapplied: { id: string; label: string; onopen: () => void }[];
   export let onchoose: (cardId:string,option:import('@haven/core').CardOption)=>void;
   export let onendweek: (opener: HTMLButtonElement) => void;
+  export let onmainmenu: () => void;
   export let playerInfo: Snippet;
   export let city: Snippet;
   export let characters: Snippet;
@@ -25,7 +27,21 @@
   export let session: Snippet;
   export let help: Snippet;
   let dialog: HTMLDialogElement;
+  let optionsOpen = false;
+  let endWeekClickTime = Number.NEGATIVE_INFINITY;
   let opener: HTMLElement | null = null;
+  // Report focus can scroll another control under repeated End Week presses; block focus and activation.
+  function guardEndWeekRepeat(event: MouseEvent): void {
+    const elapsed = event.timeStamp - endWeekClickTime;
+    if (event.detail > 1 && elapsed >= 0 && elapsed <= 500) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  }
+  function guardEndWeekMouseDown(event: MouseEvent): void {
+    const elapsed = event.timeStamp - endWeekClickTime;
+    if (event.detail > 1 && elapsed >= 0 && elapsed <= 500) event.preventDefault();
+  }
   const windowNames = { information: 'Information', player: 'Player', population: 'Population' } as const;
   export async function openWindow(next: Exclude<LifeWindow, null>, source: HTMLElement): Promise<void> {
     opener = source;
@@ -54,13 +70,13 @@
   ];
 </script>
 
-<main class="ledger-shell" lang="en" data-testid="life-shell" data-revision={state.revision}>
+<main class="ledger-shell" lang="en" data-testid="life-shell" data-revision={state.revision} onclickcapture={guardEndWeekRepeat} onmousedowncapture={guardEndWeekMouseDown}>
   <aside aria-label="Life status and navigation">
     <nav aria-label="Main">
       <div class="card ledger-board" data-life-nav-zone="top">
     <h1 class="ledger-parchment">Character Life</h1>
     <p>{formatLifeWeek(state.world.week)} · {locked ? 'Report' : 'Planning'}</p>
-    <button class="ledger-wax" data-testid="life-end-week" disabled={!!state.society?.pendingCard} aria-disabled={locked || !!state.society?.pendingCard} onmousedown={event => { if (locked) event.preventDefault(); }} onclick={event => onendweek(event.currentTarget)}>{state.society?.pendingCard ? 'Answer the crisis first.' : locked ? 'Report open — Plan next week in Report' : 'End Week'}</button>
+    <button class="ledger-wax" data-testid="life-end-week" disabled={!!state.society?.pendingCard} aria-disabled={locked || !!state.society?.pendingCard} onmousedown={event => { if (locked) event.preventDefault(); }} onclick={event => { endWeekClickTime = event.timeStamp; onendweek(event.currentTarget); }}>{state.society?.pendingCard ? 'Answer the crisis first.' : locked ? 'Report open — Plan next week in Report' : 'End Week'}</button>
     {#if unapplied.length}
       <p>Unapplied changes ({unapplied.length})</p>
       {#each unapplied as entry (entry.id)}<button onclick={entry.onopen}>{entry.label}</button>{/each}
@@ -80,6 +96,9 @@
         {#each views.slice(3) as view}
           <button class="ledger-plaque" id={`life-nav-${view.id}`} aria-current={destination === view.id ? 'page' : undefined} onclick={() => { destination = view.id; }}>{view.label}</button>
         {/each}
+        <button class="ledger-plaque" id="life-nav-options" aria-haspopup="dialog" onclick={() => { optionsOpen = true; }}>Options</button>
+        <button class="ledger-plaque" id="life-nav-main-menu" aria-disabled={locked} aria-describedby={locked ? 'life-main-menu-reason' : undefined} onclick={() => { if (!locked) onmainmenu(); }}>Main menu</button>
+        {#if locked}<p id="life-main-menu-reason">Plan next week first.</p>{/if}
       </div>
     </nav>
   </aside>
@@ -137,6 +156,7 @@
     <!-- Announcements follow actions so changing text cannot move a repeated-click target. -->
     <p id="life-modal-status" role={activeWindow ? 'status' : undefined} aria-live={activeWindow ? 'polite' : undefined} aria-atomic="true">{status}</p>
   </dialog>
+  <OptionsDialog open={optionsOpen} onclose={() => { optionsOpen = false; }} />
 </main>
 
 <style>

@@ -1,6 +1,8 @@
 <script lang="ts">
   import CityFallen from './CityFallen.svelte';
   import { tick } from 'svelte';
+  import { get } from 'svelte/store';
+  import { options } from './options.js';
   import CharacterLifeShell from './CharacterLifeShell.svelte';
   import CharacterLifeCity from './CharacterLifeCity.svelte';
   import CharacterLifeCharacters from './CharacterLifeCharacters.svelte';
@@ -9,13 +11,13 @@
   import { type OutsideWorldState, type NpcWorldSessionState, type WorldNpc, type TileTrialReport, type CharacterLifeSessionState, type CharacterProfile as Profile, type PlayerCharacter } from '@haven/core';
   import { executeCharacterLifeCommand } from '@haven/simulation';
   import { serializeCharacterLifeSave, deserializeCharacterLifeSave, TILE_SAVE_MAX_BYTES } from '@haven/persistence';
-  import ErrorLog from './ErrorLog.svelte';
   import { errorLog } from './error-log.js';
   import { formatFulfillment, formatMilli as units } from './milli-format.js';
   import { formatLifeWeek } from './life-calendar.js';
   import { clearFallenCharacterLifeCheckpoint, prepareCharacterLifeLoad, readLocalCharacterLife, saveLocalCharacterLife, isPlayableCheckpoint, OLD_CHECKPOINT_MESSAGE } from './character-life-session.js';
 
   export let onnewgame:()=>void;
+  export let onexit:()=>void;
   export let lifeMode = true;
   export let initialLife: CharacterLifeSessionState;
   let state = initialLife.city;
@@ -113,9 +115,15 @@
       }
     }
   }
-  function nextLifeWeek(): void {
+  async function nextLifeWeek(): Promise<void> {
     if (state.phase !== 'report') return;
-    if (command('NEXT_WEEK')) lifeStatus = `Planning ${formatLifeWeek(state.world.week)}. Previous report retained.`;
+    if (!command('NEXT_WEEK')) return;
+    lifeStatus = `Planning ${formatLifeWeek(state.world.week)}. Previous report retained.`;
+    await tick();
+    if (get(options).autosave && !checkpointLocked && outside && npcs && player && profiles) {
+      const result = saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+      if (!result.success) lifeStatus = 'Autosave failed. Your last save is kept.';
+    }
   }
   async function openLifeCity(): Promise<void> {
     destination = 'city';
@@ -197,12 +205,18 @@
     if (!result.success) { checkpointError(result.message); return; }
     loadWorldSession(result.state, state.revision, 'Local checkpoint loaded. Planning restored.', true);
   }
+  function mainMenu() {
+    if (checkpointLocked) return;
+    const result = saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+    if (!result.success) { checkpointError(result.message); return; }
+    onexit();
+  }
 </script>
 
 {#if state.society?.crisis.stage === 'fallen'}
   <CityFallen fallCause={state.society.crisis.fallCause!} weeks={state.world.week-1} {onnewgame} />
 {:else if lifeMode && outside && npcs && player && profiles}
-  <CharacterLifeShell bind:this={lifeShell} {state} {report} bind:destination bind:activeWindow {error} status={lifeStatus} {unapplied} onchoose={(cardId,option)=>command('CHOOSE_CARD_OPTION',{cardId,option})} onendweek={endLifeWeek}>
+  <CharacterLifeShell bind:this={lifeShell} {state} {report} bind:destination bind:activeWindow {error} status={lifeStatus} {unapplied} onchoose={(cardId,option)=>command('CHOOSE_CARD_OPTION',{cardId,option})} onendweek={endLifeWeek} onmainmenu={mainMenu}>
     {#snippet playerInfo()}
       <p>{player!.character.name}</p><p>Leader of Haven</p>
     {/snippet}
@@ -268,7 +282,6 @@
     {#if saveNotice}<p role="status">{saveNotice}</p>{/if}
   </section>
 
-      <ErrorLog />
     {/snippet}
     {#snippet help()}
 <details class="card"><summary>Getting started</summary><p>Your 100 residents are Free residents, Makers, Luminaries and Merchants, each with their own housing. Farm and Food Processor start with 2 WF each; the Market on spec-1 distributes stored Goods. Build inside the walls on plots of the matching tier, and extend the wall to open more plots.</p></details>
