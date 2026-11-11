@@ -16,6 +16,8 @@ It changes no core, simulation, persistence, save format or command (LAW-02, LAW
 
 **Base:** `main` `5290120`.
 
+**Plan approval:** owner Tân, 2026-11-11, verbatim: "Approve, Builder A".
+
 ## Decisions
 
 1. **Options module.** `packages/ui/src/options.ts` is pure, except for the guarded storage calls. It exports:
