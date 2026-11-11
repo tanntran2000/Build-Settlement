@@ -38,9 +38,10 @@ File: `gates-1-7-e8a1fec.txt`. It is the full raw output with UTC times, HEAD/tr
 - Playwright smoke **315 passed (14.5m)**.
 
 ## Review
-- There is no product code, so no Astra code review was requested.
-- The owner reviewed the text directly through three drafts.
+- **Independent review:** Astra (gpt-6-astra) at `e8a1fec` returned **PASS** with no findings (`astra-e8a1fec.txt`, thread `mcp:bbd4e530-43b1-44ff-817d-068c5055a8f4`). This was added after dot's G5 note that docs-only does not waive independent review.
+- **Owner review:** the owner reviewed the text directly through three drafts. `owner-approval-record.md` gives the original messages, timestamps and message ids, and shows that the approved draft blob `ddf164b` equals `e8a1fec:README.md`.
 - `claude-review` on the PR: pass.
+- **Gate log:** a timestamped note at the end of `gates-1-7-e8a1fec.txt` records that the local smoke was not run, why, and the same-head CI run used instead. The output above the note is unchanged.
 
 ## Integrity
 `SHA256SUMS.txt` lists the other files, hashed from the committed git blobs.

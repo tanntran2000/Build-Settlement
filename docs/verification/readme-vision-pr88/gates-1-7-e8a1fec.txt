@@ -841,3 +841,8 @@ computing gzip size...
 [32m✓ built in 4.48s[39m
 ===== exit=0  seconds=30 : npm run build =====
 UTC end: 2026-11-11T06:47:35Z
+
+===== NOTE appended by Claude (Tester) at 2026-11-11T11:47:42Z; the output above is unchanged =====
+Local smoke (`CI=1 npm run test:smoke`) was NOT run for this head.
+Reason: PR #88 is docs-only (README.md only), and AGENTS.md §6 lets the local smoke be N/A for a docs-only PR when CI ran the smoke at the same head.
+Same-head CI used instead: Quality Gate run 42974959122, job 130371779572, head e8a1fec95a9b3d538886740929443bdebdd226bc, conclusion success, Playwright "315 passed (14.5m)", Vitest 97 files passed.
