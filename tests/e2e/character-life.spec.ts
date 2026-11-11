@@ -21,11 +21,11 @@ async function toReview(page: Page) {
 
 test('start screen shows Character Life with New Game, Continue locally, Import', async ({ page }) => {
   await page.goto('/?mode=world-life');
-  await expect(page.getByRole('heading', { level: 1, name: 'Character Life', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'HAVEN', exact: true })).toBeVisible();
   await expect(button(page, 'New Game')).toBeVisible();
-  await expect(button(page, 'Continue locally')).toBeVisible();
+  await expect(button(page, 'Continue')).toBeVisible();
   await expect(page.getByLabel('Import checkpoint', { exact: true })).toHaveAttribute('type', 'file');
-  await expect(page.getByText('Character profiles are TRIAL content. Weekly life events and Player interactions are not available yet.', { exact: true })).toBeVisible();
+  await expect(page.getByText('Character profiles are TRIAL content. Weekly life events and Player interactions are not available yet.', { exact: true })).toHaveCount(0);
   await expect(creation(page)).toHaveCount(0);
 });
 
@@ -97,7 +97,7 @@ test('Cancel returns to start and a new draft is empty', async ({ page }) => {
   await field(page, 'Appearance preset').selectOption('rugged');
   await button(page, 'Cancel').click();
   await expect(creation(page)).toHaveCount(0);
-  await expect(page.getByRole('heading', { level: 1, name: 'Character Life', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'HAVEN', exact: true })).toBeVisible();
   await button(page, 'New Game').click();
   await expect(field(page, 'Name')).toHaveValue('');
   await expect(field(page, 'Age')).toHaveValue('25');
@@ -163,8 +163,8 @@ test('private adult section is collapsed by default and records optional values'
 test('Continue locally with empty slot shows the message and stays on start', async ({ page }) => {
   await page.goto('/?mode=world-life');
   await page.evaluate(key => localStorage.removeItem(key), KEY);
-  await button(page, 'Continue locally').click();
-  await expect(page.getByRole('alert')).toHaveText('No local checkpoint in this browser yet. Choose Save locally first.');
+  await expect(button(page, 'Continue')).toBeDisabled();
+  await expect(page.getByText('No local checkpoint', { exact: true })).toHaveText('No local checkpoint');
   await expect(button(page, 'New Game')).toBeVisible();
   await expect(page.getByRole('region', { name: 'Player', exact: true })).toHaveCount(0);
 });
@@ -264,7 +264,7 @@ test('Save locally, reload, Continue locally restores player name, profiles and 
   await button(page, 'Save locally').click();
   await expect(page.getByRole('region', { name: 'Planning checkpoints', exact: true }).getByRole('status')).toHaveText('Saved in this browser.');
   await page.reload();
-  await button(page, 'Continue locally').click();
+  await button(page, 'Continue').click();
   await go(page, 'characters');
   await expect(playerRegion(page).getByRole('heading', { name: 'Mira', exact: true })).toBeVisible();
   await selectPerson(page, 'npc_starter_1'); await selectArea(page, 'Work');

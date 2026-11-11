@@ -18,6 +18,7 @@
     fullscreen = platform.isFullscreen(); control.checked = fullscreen; refusal = accepted ? '' : 'Fullscreen is not available here.';
   }
 </script>
+<svelte:document onfullscreenchange={() => { fullscreen = platform.isFullscreen(); }} />
 <dialog bind:this={dialog} onclose={onclose} aria-label="Options">
   <h2>Options</h2>
   <fieldset><legend>Text size</legend>

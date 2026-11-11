@@ -31,7 +31,7 @@ test('Options persist and Large uses 3px', async ({ page }) => {
 });
 test('fullscreen refusal', async ({ page }) => {
   await page.addInitScript(() => { Element.prototype.requestFullscreen = () => Promise.reject(Error('refused')); });
-  await page.goto('/'); await button(page, 'Options').click(); await page.getByRole('checkbox', { name: 'Fullscreen', exact: true }).check();
+  await page.goto('/'); await button(page, 'Options').click(); await page.getByRole('checkbox', { name: 'Fullscreen', exact: true }).click();
   await expect(page.getByText('Fullscreen is not available here.', { exact: true })).toBeVisible();
   await expect(page.getByRole('checkbox', { name: 'Fullscreen', exact: true })).not.toBeChecked();
 });
@@ -59,5 +59,89 @@ for (const width of [320, 375, 1280, 1600]) for (const textSize of ['normal', 'l
   await page.goto('/'); await expect(title(page)).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   for (const target of await page.locator('main button').all()) { const b = await target.boundingBox(); if (b) { expect(b.width).toBeGreaterThanOrEqual(44); expect(b.height).toBeGreaterThanOrEqual(44); } }
+  await test.info().attach('title-layout', { path: await persistScreenshot(page, 'title-layout'), contentType: 'image/png' });
   await button(page, 'Options').click(); expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await test.info().attach('layout-metrics', { path: await persistJson(JSON.stringify(await page.evaluate(() => ({ viewport: innerWidth, document: document.documentElement.scrollWidth, size: document.documentElement.dataset.textSize })))), contentType: 'application/json' });
+  await test.info().attach('options-layout', { path: await persistScreenshot(page, 'options-layout'), contentType: 'image/png' });
+});
+
+// A3 integration cases.
+import { makeLife, importLife, exportLife, go } from './character-life-navigation.helpers.ts';
+import { serializeCharacterLifeSave } from '../../packages/persistence/src/character-life-save.ts';
+import { OLD_CHECKPOINT_MESSAGE } from '../../packages/ui/src/character-life-session.ts';
+const KEY = 'haven.character-life-session-society.checkpoint.v1';
+function bytes(state = makeLife()) { const result = serializeCharacterLifeSave(state); if (!result.success) throw Error(result.error.message); return result.text; }
+test('empty slot disables Continue and focuses New Game', async ({ page }) => {
+  await page.goto('/'); await expect(title(page)).toBeVisible(); await expect(button(page, 'Continue')).toBeDisabled(); await expect(page.getByText('No local checkpoint', { exact: true })).toBeVisible(); await expect(button(page, 'New Game')).toBeFocused();
+});
+test('manual save enables cached Continue with exactly one mount read', async ({ page }) => {
+  await page.goto('/'); await expect(title(page)).toBeVisible(); await importLife(page, makeLife()); await go(page, 'session'); await button(page, 'Save locally').click(); const saved = await exportLife(page);
+  await page.addInitScript(key => { const original = Storage.prototype.getItem; Object.assign(window, { titleReads: 0 }); Storage.prototype.getItem = function(k) { if (k === key) (window as unknown as { titleReads: number }).titleReads++; return original.call(this, k); }; }, KEY);
+  await page.reload(); await expect(button(page, 'Continue')).toBeEnabled(); await expect(button(page, 'Continue')).toBeFocused();
+  await page.keyboard.press('Enter'); await page.keyboard.press('Enter'); await expect(page.getByTestId('life-shell')).toHaveCount(1);
+  expect(await page.evaluate(() => (window as unknown as { titleReads: number }).titleReads)).toBe(1); expect(await exportLife(page)).toEqual(saved);
+});
+test('old checkpoint disables Continue with reason', async ({ page }) => {
+  await page.addInitScript(key => localStorage.setItem(key, '{}'), KEY); await page.goto('/'); await expect(title(page)).toBeVisible();
+  await expect(button(page, 'Continue')).toBeDisabled(); await expect(page.getByText(OLD_CHECKPOINT_MESSAGE, { exact: true })).toBeVisible();
+});
+test('valid Load checkpoint replaces stale mount cache', async ({ page }) => {
+  const cached = makeLife(), imported = makeLife(54321); imported.player.character.name = 'Imported Keeper';
+  await page.addInitScript(({ key, text }) => localStorage.setItem(key, text), { key: KEY, text: bytes(cached) }); await page.goto('/'); await expect(title(page)).toBeVisible(); await expect(button(page, 'Continue')).toBeEnabled();
+  const chooser = page.waitForEvent('filechooser'); await button(page, 'Load checkpoint').click(); await (await chooser).setFiles({ name: 'life.json', mimeType: 'application/json', buffer: Buffer.from(bytes(imported)) });
+  await expect(page.getByTestId('life-shell')).toBeVisible(); expect(await exportLife(page)).toEqual(imported);
+});
+for (const kind of ['oversize', 'old'] as const) test(`Load refuses ${kind} and keeps title`, async ({ page }) => {
+  await page.goto('/'); await expect(title(page)).toBeVisible(); await page.getByLabel('Import checkpoint', { exact: true }).setInputFiles({ name: 'bad.json', mimeType: 'application/json', buffer: Buffer.from(kind === 'oversize' ? ' '.repeat(1024*1024+1) : '{}') });
+  await expect(page.getByRole('alert')).toHaveText(kind === 'oversize' ? 'Checkpoint exceeds the 1 MiB limit.' : OLD_CHECKPOINT_MESSAGE); await expect(title(page)).toBeVisible(); await expect(page.getByTestId('life-shell')).toHaveCount(0);
+});
+test('double New Game and Create produce one session', async ({ page }) => {
+  await page.goto('/'); await expect(title(page)).toBeVisible(); await expect(button(page, 'New Game')).toBeFocused(); await page.keyboard.press('Enter'); await page.keyboard.press('Enter');
+  await page.getByLabel('Name', { exact: true }).fill('New Keeper'); await page.getByRole('tab', { name: 'Review', exact: true }).click();
+  await button(page, 'Create character').focus(); await page.keyboard.press('Enter'); await page.keyboard.press('Enter'); await expect(page.getByTestId('life-shell')).toHaveCount(1);
+  expect((await exportLife(page)).player.character.name).toBe('New Keeper');
+});
+for (const kind of ['junk', 'throws'] as const) test(`options storage ${kind} still renders title`, async ({ page }) => {
+  await page.addInitScript(kind => { if (kind === 'junk') localStorage.setItem('haven.options.v1', '{'); else { const get = Storage.prototype.getItem; Storage.prototype.getItem = function(k) { if (k === 'haven.options.v1') throw Error('blocked'); return get.call(this, k); }; } }, kind);
+  await page.goto('/'); await expect(title(page)).toBeVisible(); await expect(title(page)).toBeVisible(); await button(page, 'Options').click(); await expect(page.getByRole('radio', { name: 'Normal', exact: true })).toBeChecked();
+});
+
+
+// Review Focus 4 is included before the A3 commit so A4 tests its final HEAD.
+import { readFile, writeFile } from 'node:fs/promises';
+import { deserializeCharacterLifeSave } from '../../packages/persistence/src/character-life-save.ts';
+test('Large report at 320px keeps all six letters and stock ledger inside the page', async ({ page }) => {
+  const parsed = deserializeCharacterLifeSave(await readFile(new URL('../../packages/persistence/src/__tests__/fixtures/society-v7/life-laws.json', import.meta.url), 'utf8'));
+  if (!parsed.success) throw Error(parsed.error.message);
+  await page.setViewportSize({ width: 320, height: 900 });
+  await page.addInitScript(() => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize: 'large', reduceMotion: true, autosave: true })));
+  await page.goto('/'); await importLife(page, parsed.state); await page.getByTestId('life-end-week').click();
+  const report = page.getByRole('region', { name: 'Weekly city report', exact: true });
+  await expect(report.locator('[data-letter]')).toHaveCount(6);
+  for (const letter of await report.locator('[data-letter]').all()) await expect(letter).toBeVisible();
+  await report.locator('[data-letter="quartermaster"] > details > summary').click();
+  const ledger = report.getByRole('region', { name: 'Weekly stock ledger scroll area', exact: true }); await expect(ledger).toBeVisible();
+  await page.evaluate(() => document.fonts.ready.then(() => undefined));
+  const metrics = await page.evaluate(() => ({ viewport: innerWidth, document: document.documentElement.scrollWidth, px: getComputedStyle(document.querySelector('main')!).getPropertyValue('--px').trim(), letters: [...document.querySelectorAll<HTMLElement>('[data-letter]')].map(el => ({ id: el.dataset.letter, left: el.getBoundingClientRect().left, right: el.getBoundingClientRect().right, scroll: el.scrollWidth, client: el.clientWidth })), ledger: (() => { const el = document.querySelector<HTMLElement>('.ledger')!; return { scroll: el.scrollWidth, client: el.clientWidth }; })() }));
+  await test.info().attach('report-layout-metrics', { path: await persistJson(JSON.stringify(metrics, null, 2)), contentType: 'application/json' });
+  await test.info().attach('report-large-320', { path: await persistScreenshot(page, 'report-large-320'), contentType: 'image/png' });
+  expect(metrics.px).toBe('3px'); expect(metrics.document).toBeLessThanOrEqual(metrics.viewport);
+  for (const letter of metrics.letters) { expect(letter.left).toBeGreaterThanOrEqual(0); expect(letter.right).toBeLessThanOrEqual(metrics.viewport); expect(letter.scroll).toBeLessThanOrEqual(letter.client); }
+});
+
+async function persistScreenshot(page: import('@playwright/test').Page, name: string) {
+  const path = test.info().outputPath(name + '.png'); await page.screenshot({ path, fullPage: true }); return path;
+}
+async function persistJson(text: string) {
+  const path = test.info().outputPath('metrics.json'); await writeFile(path, text, 'utf8'); return path;
+}
+
+test('Fullscreen reflects live document changes while Options stays open', async ({ page }) => {
+  await page.goto('/'); await button(page, 'Options').click();
+  const control = page.getByRole('checkbox', { name: 'Fullscreen', exact: true }); await expect(control).not.toBeChecked();
+  await page.evaluate(() => { Object.defineProperty(document, 'fullscreenElement', { configurable: true, value: document.documentElement }); document.dispatchEvent(new Event('fullscreenchange')); });
+  await expect(control).toBeChecked(); await expect(page.getByRole('dialog')).toBeVisible();
+  await page.evaluate(() => { Object.defineProperty(document, 'fullscreenElement', { configurable: true, value: null }); document.dispatchEvent(new Event('fullscreenchange')); });
+  await expect(control).not.toBeChecked();
+  expect(await page.evaluate(() => Object.keys(JSON.parse(localStorage.getItem('haven.options.v1')!)).sort())).toEqual(['autosave', 'reduceMotion', 'textSize']);
 });
