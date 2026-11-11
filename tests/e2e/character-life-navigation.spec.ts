@@ -5,6 +5,7 @@ import { writeFile } from 'node:fs/promises';
 import { observeCharacterLife } from '../../packages/simulation/src/character-life-observation.ts';
 import { keyActivate, keyGo, keyPost, keyText, tabTo, turnStatuses, watchTurnStatus } from './character-life-navigation.helpers.ts';
 import { characterWindow, charactersView, expectCheckpointRejectionPreservesUi, expectOneCharacterWindow, openReportDetails,expectReport, expectRequirements, exportLife, go, importLife, lifeUiSnapshot, makeLife, reportFixture, reportRegion, reportUnits, reportMilli, reportWeek, requirementsRegion, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
+test.beforeEach(async ({ page }) => { await page.addInitScript(() => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize: 'normal', reduceMotion: null, autosave: false }))); });
 
 async function tokenColour(shell: Locator, token: string): Promise<string> {
   return shell.evaluate((el, token) => {

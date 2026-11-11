@@ -1,6 +1,8 @@
 <script lang="ts">
   import CityFallen from './CityFallen.svelte';
   import { tick } from 'svelte';
+  import { get } from 'svelte/store';
+  import { options } from './options.js';
   import CharacterLifeShell from './CharacterLifeShell.svelte';
   import CharacterLifeCity from './CharacterLifeCity.svelte';
   import CharacterLifeCharacters from './CharacterLifeCharacters.svelte';
@@ -113,9 +115,15 @@
       }
     }
   }
-  function nextLifeWeek(): void {
+  async function nextLifeWeek(): Promise<void> {
     if (state.phase !== 'report') return;
-    if (command('NEXT_WEEK')) lifeStatus = `Planning ${formatLifeWeek(state.world.week)}. Previous report retained.`;
+    if (!command('NEXT_WEEK')) return;
+    lifeStatus = `Planning ${formatLifeWeek(state.world.week)}. Previous report retained.`;
+    await tick();
+    if (get(options).autosave && !checkpointLocked && outside && npcs && player && profiles) {
+      const result = saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+      if (!result.success) lifeStatus = 'Autosave failed. Your last save is kept.';
+    }
   }
   async function openLifeCity(): Promise<void> {
     destination = 'city';
