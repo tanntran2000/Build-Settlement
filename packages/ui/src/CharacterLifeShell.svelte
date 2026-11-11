@@ -28,7 +28,20 @@
   export let help: Snippet;
   let dialog: HTMLDialogElement;
   let optionsOpen = false;
+  let endWeekClickTime = Number.NEGATIVE_INFINITY;
   let opener: HTMLElement | null = null;
+  // Report focus can scroll another control under repeated End Week presses; block focus and activation.
+  function guardEndWeekRepeat(event: MouseEvent): void {
+    const elapsed = event.timeStamp - endWeekClickTime;
+    if (event.detail > 1 && elapsed >= 0 && elapsed <= 500) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  }
+  function guardEndWeekMouseDown(event: MouseEvent): void {
+    const elapsed = event.timeStamp - endWeekClickTime;
+    if (event.detail > 1 && elapsed >= 0 && elapsed <= 500) event.preventDefault();
+  }
   const windowNames = { information: 'Information', player: 'Player', population: 'Population' } as const;
   export async function openWindow(next: Exclude<LifeWindow, null>, source: HTMLElement): Promise<void> {
     opener = source;
@@ -57,13 +70,13 @@
   ];
 </script>
 
-<main class="ledger-shell" lang="en" data-testid="life-shell" data-revision={state.revision}>
+<main class="ledger-shell" lang="en" data-testid="life-shell" data-revision={state.revision} onclickcapture={guardEndWeekRepeat} onmousedowncapture={guardEndWeekMouseDown}>
   <aside aria-label="Life status and navigation">
     <nav aria-label="Main">
       <div class="card ledger-board" data-life-nav-zone="top">
     <h1 class="ledger-parchment">Character Life</h1>
     <p>{formatLifeWeek(state.world.week)} · {locked ? 'Report' : 'Planning'}</p>
-    <button class="ledger-wax" data-testid="life-end-week" disabled={!!state.society?.pendingCard} aria-disabled={locked || !!state.society?.pendingCard} onmousedown={event => { if (locked) event.preventDefault(); }} onclick={event => onendweek(event.currentTarget)}>{state.society?.pendingCard ? 'Answer the crisis first.' : locked ? 'Report open — Plan next week in Report' : 'End Week'}</button>
+    <button class="ledger-wax" data-testid="life-end-week" disabled={!!state.society?.pendingCard} aria-disabled={locked || !!state.society?.pendingCard} onmousedown={event => { if (locked) event.preventDefault(); }} onclick={event => { endWeekClickTime = event.timeStamp; onendweek(event.currentTarget); }}>{state.society?.pendingCard ? 'Answer the crisis first.' : locked ? 'Report open — Plan next week in Report' : 'End Week'}</button>
     {#if unapplied.length}
       <p>Unapplied changes ({unapplied.length})</p>
       {#each unapplied as entry (entry.id)}<button onclick={entry.onopen}>{entry.label}</button>{/each}
