@@ -66,6 +66,21 @@ Bundle growth against main (JS 98.40 kB, CSS 5.52 kB): JS +3.01 kB and CSS +0.27
 
 Some Builder files are not copied here: the drafts for earlier heads (`-before-*`), `.capture.bin` files and helper scripts. They stay in the Builder's local drafts folder because they describe superseded heads.
 
+## A2 TDD order deviation (dot G5 hold, owner decision)
+
+**The plan.** The approved plan, lines 175–184, orders Task A2 as follows: write the complete A2 test list, run it and see it fail, then implement the components.
+
+**What happened** (Builder thread `mcp:0a5a608e-3fe4-4126-bf89-7d45757eddf5`):
+- The Builder implemented `TitleScreen.svelte` and `OptionsDialog.svelte` after only one aggregate RED test, before the complete A2 case list existed.
+- Claude (Orchestrator) told the Builder to keep that code, add the remaining tests, and record a process note in the A2 commit.
+- Claude did this without asking the owner, contrary to plan line 134.
+
+**What the evidence proves.** The 16-case A2 RED runs (`builder/a2-all-red*.txt`) prove only that the tests failed before A3 wired the title in. They do **not** prove that the full list ran RED before the A2 components were written. Compliance with the plan's A2 order **cannot be established**, and these later RED runs are not presented as pre-implementation RED.
+
+**The two later fixes** (`6e5bffe`, `3bed774`) followed the plan order: the regression test went RED first, then the fix.
+
+**Owner decision.** dot placed a G5 hold on this point. The owner (Tân) then chose, verbatim: "Accept the deviation" (2026-11-11). The deviation is accepted as recorded above. No test or plan text was rewritten.
+
 ## Reviews
 - `reviews/astra-6e5bffe.txt`: Astra (gpt-6-astra), thread `mcp:c5b18236-719d-4928-8ba8-5cd625aae76b`. Verdict CHANGES REQUESTED, one P2: Quit did not cancel a pending import. Fixed in `3bed774`.
 - `reviews/astra-3bed774.txt`: same thread. Verdict **PASS**, no new findings.
