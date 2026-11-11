@@ -1,40 +1,57 @@
 # Haven: Sovereign Frontier
 
-Prototype game quản lý khu định cư hậu tận thế: xây dựng, tổ chức công việc và chăm lo cho cộng đồng.
+**Rule a frontier city that would rather see you fall.**
 
-## Hiện có
+Haven is a grimdark city-management game for adults (18+). You play the lord of a frontier settlement. Every week you choose where the city's people work, which laws to enforce, and what to sacrifice. The weekly report then arrives as letters from your staff, and you live with the consequences. A city that starves, rebels or rots from crime can fall, and a fallen city stays fallen.
 
-- Bản thử nghiệm theo ô đất: xây, nâng cấp, thay thế và tạm dừng công trình.
-- Phân công workforce, quản lý tài nguyên và xem kết quả sau mỗi tuần.
-- Xuất/nhập checkpoint JSON và checkpoint lưu thủ công riêng cho tile trial và population trial, trong giai đoạn Planning.
+> **Status: in development, not yet playable.** The core systems are being built and tested. The game will be ready for a first play once its art and its interface are finished. Until then, mechanics, balance and save formats may change at any time.
 
-Game đang ở giai đoạn **early prototype**. Nhiều hệ thống dự kiến chưa có; cơ chế và dữ liệu có thể thay đổi giữa các bản thử nghiệm.
+## Vision
 
-## Chạy từ mã nguồn
+- **A harsh world.** The tone is bleak and unforgiving. Wrong decisions are punished, and survival has a moral cost.
+- **Mature themes (18+).** The setting deals with dark, adult subject matter, including power, cruelty and exploitation. These themes are handled through systems and consequences, not graphic depiction. Every character is an adult.
+- **A society, not a spreadsheet.** The city is made of social classes with their own needs. What you declare, what you enforce and what you let slide slowly turns into the city's culture.
+- **People with inner lives.** Characters have their own feelings and relationships: affection, jealousy, anger. They are companions who can also betray you.
+- **Replayable.** Each new game is a different city with different pressures.
+- **Light and portable.** It runs in a web browser, with a Windows desktop build planned. No installer, account or online connection is needed.
 
-Cần Git, Node.js và npm.
+## Design pillars
 
-```bash
-git clone https://github.com/tanntran2000/Build-Settlement.git
-cd Build-Settlement
-npm ci
-npm run dev
-```
+1. **The lord's ledger.** The interface looks like the desk of a ruler: wooden frames, parchment, and reports that arrive as letters. All art is high-detail pixel art.
+2. **Every week is a decision.** You plan, end the week, read the letters, and plan again. There is no real-time pressure, only consequences.
+3. **Fair and deterministic.** The same choices with the same seed always give the same result. Animations and display settings never change the outcome.
+4. **Your progress is safe.** Saving and loading never corrupt an existing save.
 
-Mở địa chỉ terminal hiển thị, mặc định `http://localhost:3000`. Từ Weekly, chọn **Play tile building trial**, hoặc mở `http://localhost:3000/?mode=tiles`.
+## Built so far
 
-## Lưu và tiếp tục
+- **City and society.** Social classes, buildings, workforce and population.
+- **Lands beyond the walls.** Clearing, deposits, production chains, research and storage.
+- **Order, crime and laws.** Security, Crime and Authority, crime events, and a Council that votes on laws.
+- **Crisis and fall.** Hunger and unrest can lead to rebellion and the fall of the city.
+- **Weekly letters and the title screen.** Reports from your staff, plus the title screen and options.
 
-Trong tile trial hoặc population trial, chọn **Export checkpoint** khi đang Planning để giữ file lưu. Dùng **Import checkpoint** để tiếp tục từ checkpoint tương thích với chế độ đang chơi; nếu đang xem báo cáo, chọn **Plan next week** trước.
+## Roadmap
 
-**Save locally** giữ một checkpoint riêng cho mỗi chế độ trong trình duyệt, profile và địa chỉ hiện tại (lưu lại sẽ thay bản trước của chế độ đó); **Continue locally** khôi phục checkpoint của chế độ đang chơi. Hai nút chỉ dùng khi Planning. Checkpoint này mất nếu xoá dữ liệu trang, không dùng được ở trình duyệt/profile/địa chỉ khác và có thể không khả dụng khi trình duyệt chặn lưu trữ, nên vẫn hãy Export file để sao lưu.
+These are planned in this order, and the order may change.
 
-Reload mở ván mới. Hiện chưa có autosave hoặc cloud save; hãy giữ file checkpoint đã xuất. Classic Weekly chưa hỗ trợ lưu game.
+1. **Items.** Equipment, outfits and accessories for your lord and other characters.
+2. **Expeditions.** Send soldiers out onto the map beyond the walls.
+3. **Characters.** Characters with inner lives, plus the places where they are found and traded.
+4. **AI playtesting.** Automated play that finds bugs and balance problems.
+5. **The map.** How resources beyond the walls are placed and discovered.
+6. **Art and interface.** Finished pixel art and a full ledger-style interface for the city and the map. This is the milestone for a first playable version.
 
-## Góp ý và chỉnh sửa
+## Feedback
 
-Khi báo lỗi, hãy kèm phiên bản, trình duyệt, các bước tái hiện và kết quả mong đợi/thực tế. Không gửi dữ liệu cá nhân hoặc thông tin bảo mật.
+When you report a bug, include:
 
-Chưa có trình nạp mod. Chỉnh mã nguồn hiện cần build lại bằng `npm run build`; thay đổi gameplay nên được thống nhất phạm vi trước.
+- the version (bottom-right of the title screen);
+- your browser;
+- the steps to reproduce it;
+- what you expected and what happened.
 
-Giấy phép: xem [LICENSE](LICENSE).
+Options › About can download an error log to attach. It contains no save data. Please do not send personal data.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
