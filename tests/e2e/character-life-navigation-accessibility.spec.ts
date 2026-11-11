@@ -263,7 +263,7 @@ for (const viewport of [{ width: 1600, height: 1000 }, { width: 1280, height: 90
       await expect(shell.locator('.content')).toHaveCSS('overflow-y', viewport.width > 750 ? 'auto' : 'visible');
       await expect(nav).toHaveCSS('flex-direction', viewport.width > 750 ? 'column' : 'row');
       if (viewport.width <= 750) await expect(nav).toHaveCSS('flex-wrap', 'wrap');
-      await expect(nav.locator('[id^="life-nav-"]')).toHaveText(['Information', 'Player', 'Population', 'Session', 'Help']);
+      await expect(nav.locator('[id^="life-nav-"]')).toHaveText(['Information', 'Player', 'Population', 'Session', 'Help', 'Options']);
       for (const name of ['Information', 'Player', 'Population']) {
         await keyActivate(page, nav.getByRole('button', { name, exact: true }));
         await capture();

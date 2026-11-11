@@ -5,6 +5,7 @@
   import { soldiersRow, lawsRow, storageView, orderRows, crisisRow, standingRow, crimeChanceRow } from './society-view.js';
   import CrisisCard from './CrisisCard.svelte';
   import SocietyPopulation from './SocietyPopulation.svelte';
+  import OptionsDialog from './OptionsDialog.svelte';
   import { formatMilli } from './milli-format.js';
   import { formatLifeWeek } from './life-calendar.js';
   import type { LifeDestination, LifeWindow } from './character-life-navigation.js';
@@ -25,6 +26,7 @@
   export let session: Snippet;
   export let help: Snippet;
   let dialog: HTMLDialogElement;
+  let optionsOpen = false;
   let opener: HTMLElement | null = null;
   const windowNames = { information: 'Information', player: 'Player', population: 'Population' } as const;
   export async function openWindow(next: Exclude<LifeWindow, null>, source: HTMLElement): Promise<void> {
@@ -80,6 +82,7 @@
         {#each views.slice(3) as view}
           <button class="ledger-plaque" id={`life-nav-${view.id}`} aria-current={destination === view.id ? 'page' : undefined} onclick={() => { destination = view.id; }}>{view.label}</button>
         {/each}
+        <button class="ledger-plaque" id="life-nav-options" aria-haspopup="dialog" onclick={() => { optionsOpen = true; }}>Options</button>
       </div>
     </nav>
   </aside>
@@ -137,6 +140,7 @@
     <!-- Announcements follow actions so changing text cannot move a repeated-click target. -->
     <p id="life-modal-status" role={activeWindow ? 'status' : undefined} aria-live={activeWindow ? 'polite' : undefined} aria-atomic="true">{status}</p>
   </dialog>
+  <OptionsDialog open={optionsOpen} onclose={() => { optionsOpen = false; }} />
 </main>
 
 <style>

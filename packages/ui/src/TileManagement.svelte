@@ -9,7 +9,6 @@
   import { type OutsideWorldState, type NpcWorldSessionState, type WorldNpc, type TileTrialReport, type CharacterLifeSessionState, type CharacterProfile as Profile, type PlayerCharacter } from '@haven/core';
   import { executeCharacterLifeCommand } from '@haven/simulation';
   import { serializeCharacterLifeSave, deserializeCharacterLifeSave, TILE_SAVE_MAX_BYTES } from '@haven/persistence';
-  import ErrorLog from './ErrorLog.svelte';
   import { errorLog } from './error-log.js';
   import { formatFulfillment, formatMilli as units } from './milli-format.js';
   import { formatLifeWeek } from './life-calendar.js';
@@ -268,7 +267,6 @@
     {#if saveNotice}<p role="status">{saveNotice}</p>{/if}
   </section>
 
-      <ErrorLog />
     {/snippet}
     {#snippet help()}
 <details class="card"><summary>Getting started</summary><p>Your 100 residents are Free residents, Makers, Luminaries and Merchants, each with their own housing. Farm and Food Processor start with 2 WF each; the Market on spec-1 distributes stored Goods. Build inside the walls on plots of the matching tier, and extend the wall to open more plots.</p></details>

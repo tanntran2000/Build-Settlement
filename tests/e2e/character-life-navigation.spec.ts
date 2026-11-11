@@ -41,6 +41,7 @@ for (const width of [320, 375, 1280, 1600]) {
       await expect(page.locator(`#life-nav-${dest}`)).toHaveAttribute('aria-current', 'page');
     }
     await tabTo(page, page.locator('#life-nav-help'));
+    await page.keyboard.press('Tab'); await expect(page.locator('#life-nav-options')).toBeFocused();
     await page.keyboard.press('Tab'); await expect(page.locator('#life-nav-city')).toBeFocused();
     await page.keyboard.press('Tab'); await expect(page.locator('#life-nav-characters')).toBeFocused();
     await go(page, 'city');
@@ -103,7 +104,7 @@ for (const width of [375, 1280]) {
     await expect(nav.locator('[data-life-nav-zone]')).toHaveCount(3);
     await expect(nav.locator('[data-life-nav-zone="top"] button[id^="life-nav-"]')).toHaveText(['Information']);
     await expect(nav.locator('[data-life-nav-zone="middle"] button')).toHaveText(['Player', 'Population']);
-    await expect(nav.locator('[data-life-nav-zone="bottom"] button')).toHaveText(['Session', 'Help']);
+    await expect(nav.locator('[data-life-nav-zone="bottom"] button')).toHaveText(['Session', 'Help', 'Options']);
     await expect(nav.locator('summary,details,svg')).toHaveCount(0);
     await expect(page.locator('aside [data-testid^="trial-stock-"]')).toHaveCount(0);
     for (const name of cityWindowNames) {
@@ -302,6 +303,7 @@ test('rejected load keeps absolute week 41 diagnostic beside Year 2 presentation
   await putFile(page, '{');
   await expect(page.getByTestId('life-shell').locator('[data-life-error][role="alert"]')).toBeVisible();
   await expectCheckpointRejectionPreservesUi(page, before, saved.city.world.week);
+  await page.getByRole('button', { name: 'Options', exact: true }).click();
   await expect(page.getByRole('region', { name: 'Error log', exact: true }).getByText('weekly · RUNTIME · Week 41', { exact: true })).toBeVisible();
   expect(await exportLife(page)).toEqual(saved);
 });
@@ -575,7 +577,7 @@ test('life shell navigation is read-only', async ({ page }) => {
   await importLife(page, initial);
   const shell = page.getByTestId('life-shell');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Character Life');
-  await expect(page.getByRole('navigation', { name: 'Main' }).locator('[id^="life-nav-"]')).toHaveText(['Information', 'Player', 'Population', 'Session', 'Help']);
+  await expect(page.getByRole('navigation', { name: 'Main' }).locator('[id^="life-nav-"]')).toHaveText(['Information', 'Player', 'Population', 'Session', 'Help', 'Options']);
   await expect(page.locator('[data-life-view]')).toHaveCount(5);
   const beforeSession = await exportLife(page), beforeRevision = await shell.getAttribute('data-revision');
   await go(page, 'city');
@@ -695,6 +697,7 @@ test('turn repeat is guarded without stealing focus', async ({ page }) => {
   expect(await turnStatuses(page)).toEqual(['Week 1 · Year 1 report ready.', 'Planning Week 2 · Year 1. Previous report retained.']);
   await expect(page.getByRole('alert', { includeHidden: true })).toHaveCount(0);
   await go(page, 'session');
+  await page.getByRole('button', { name: 'Options', exact: true }).click();
   await expect(page.getByRole('region', { name: 'Error log', exact: true }).getByText('No errors recorded.', { exact: true })).toBeVisible();
   await expect(page.getByRole('region', { name: 'Error log', exact: true }).locator('ol li')).toHaveCount(0);
 });
@@ -755,6 +758,7 @@ test('report oracle parser rejects malformed grouping and sub-milli precision', 
 test('UI snapshots retain ErrorLog history, counts and diagnostic feedback', async ({ page }) => {
   await seedDiagnosticHistory(page);
   await page.goto('/?mode=world-life'); await importLife(page, makeLife()); await go(page, 'session');
+  await page.getByRole('button', { name: 'Options', exact: true }).click();
   const log = page.getByRole('region', { name: 'Error log', exact: true });
   await expect(log.getByRole('listitem')).toHaveCount(1);
   const download = page.waitForEvent('download');
@@ -775,6 +779,7 @@ test('UI snapshots retain ErrorLog history, counts and diagnostic feedback', asy
 test('checkpoint feedback normalization rejects unrelated diagnostic changes', async ({ page }) => {
   await seedDiagnosticHistory(page);
   await page.goto('/?mode=world-life'); const initial = makeLife(); await importLife(page, initial); await go(page, 'session');
+  await page.getByRole('button', { name: 'Options', exact: true }).click();
   const log = page.getByRole('region', { name: 'Error log', exact: true });
   const download = page.waitForEvent('download');
   await log.getByRole('button', { name: 'Download error log', exact: true }).click(); await download;
@@ -795,7 +800,10 @@ test('checkpoint feedback normalization rejects unrelated diagnostic changes', a
   await expect(expectCheckpointRejectionPreservesUi(page, before, initial.city.world.week)).rejects.toThrow('Unexpected diagnostic delta');
 });
 async function putFile(page: Page, text: string, name = 'life.json') {
+  const optionsOpen = await page.getByRole('dialog', { name: 'Options', exact: true }).isVisible();
+  if (optionsOpen) await page.getByRole('dialog', { name: 'Options', exact: true }).getByRole('button', { name: 'Close', exact: true }).click();
   await page.getByLabel('Import checkpoint', { exact: true }).setInputFiles({ name, mimeType: 'application/json', buffer: Buffer.from(text) });
+  if (optionsOpen) await page.getByRole('button', { name: 'Options', exact: true }).click();
 }
 
 test('unapplied drafts survive navigation with committed-only resolution', async ({ page }) => {
@@ -1016,7 +1024,9 @@ for (const kind of ['invalid JSON', 'incompatible schema', 'oversize', 'invalid 
           else await expect(page.getByTestId('life-shell').locator('[data-life-error][role="alert"]')).toBeVisible();
           if (kind === 'superseded reads') {
             const download = page.waitForEvent('download');
+            await page.getByRole('button', { name: 'Options', exact: true }).click();
             await page.getByRole('region', { name: 'Error log', exact: true }).getByRole('button', { name: 'Download error log', exact: true }).click(); await download;
+            await page.getByRole('dialog', { name: 'Options', exact: true }).getByRole('button', { name: 'Close', exact: true }).click();
           }
         } else if (kind === 'later Continue') {
           await page.getByRole('button', { name: 'Continue locally', exact: true }).click();

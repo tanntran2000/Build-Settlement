@@ -1,4 +1,36 @@
 import { test, expect } from '@playwright/test';
+
+test.describe('B1 in-game Options', () => {
+  test.beforeEach(async ({ page }) => { await page.goto('/'); await importLife(page, makeLife()); });
+  test('Options plaque opens the shared dialog', async ({ page }) => {
+    await page.locator('[data-life-nav-zone="bottom"]').getByRole('button', { name: 'Options', exact: true }).click();
+    await expect(page.getByRole('dialog', { name: 'Options', exact: true })).toBeVisible();
+    await page.keyboard.press('Escape'); await expect(button(page, 'Options')).toBeFocused();
+  });
+  test('Options changes apply immediately in game', async ({ page }) => {
+    await button(page, 'Options').click();
+    await page.getByRole('radio', { name: 'Large', exact: true }).check();
+    expect(await page.getByTestId('life-shell').evaluate(el => getComputedStyle(el).getPropertyValue('--px').trim())).toBe('3px');
+    await page.getByRole('checkbox', { name: 'Reduce motion', exact: true }).check();
+    await expect(page.locator('html')).toHaveAttribute('data-reduce-motion', 'true');
+  });
+  test('About downloads the real error log in game', async ({ page }) => {
+    await page.evaluate(() => window.dispatchEvent(new ErrorEvent('error')));
+    await button(page, 'Options').click();
+    const about = page.getByRole('region', { name: 'About', exact: true });
+    await expect(about.getByText('v0.1.0 Alpha', { exact: true })).toBeVisible();
+    const waiting = page.waitForEvent('download'); await about.getByRole('button', { name: 'Download error log', exact: true }).click();
+    const download = await waiting; expect(download.suggestedFilename()).toBe('haven-error-log.json');
+    const data = JSON.parse(await readFile((await download.path())!, 'utf8'));
+    expect(data.entries).toHaveLength(1); expect(data.entries[0].code).toBe('UNCAUGHT_ERROR');
+  });
+  test('Session no longer renders ErrorLog', async ({ page }) => {
+    await go(page, 'session');
+    await expect(page.locator('[data-life-view="session"] [aria-label="Error log"]')).toHaveCount(0);
+    await button(page, 'Options').click();
+    await expect(page.locator('[aria-label="Error log"]')).toHaveCount(1);
+  });
+});
 const button = (page: import('@playwright/test').Page, name: string) => page.getByRole('button', { name, exact: true });
 const title = (page: import('@playwright/test').Page) => page.getByRole('heading', { name: 'HAVEN', exact: true });
 test('fallback and version position', async ({ page }) => {
