@@ -3,15 +3,15 @@ import { readFile, stat } from 'node:fs/promises';
 import ts from 'typescript';
 import {makeLife,importLife,exportLife,go} from './character-life-navigation.helpers.ts';
 import {executeCharacterLifeCommand} from '../../packages/simulation/src/character-life-command.ts';
-async function start(page:Page,url='/'){await page.goto(url);await importLife(page,makeLife());await go(page,'session');}
-async function advance(page:Page){await page.getByTestId('life-end-week').click();await page.getByRole('button',{name:'Plan next week',exact:true}).click();await go(page,'session');}
+async function start(page:Page,url='/'){await page.goto(url);await importLife(page,makeLife());await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click();}
+async function advance(page:Page){await go(page,'reports');await page.getByTestId('life-end-week').click();await page.getByRole('button',{name:'Plan next week',exact:true}).click();await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click();}
 
 const key = 'haven.runtime-errors.v1';
 const regression = 'http://localhost:4174/';
 const secret = 'TOKEN-SYNTHETIC https://private.invalid/?token=SYNTHETIC#save <b>save-payload</b>';
 const panel = (page: Page) => page.getByRole('region', { name: 'Error log', exact: true });
 async function invalid(page: Page) {
-  await go(page,'city');await page.getByTestId('trial-tile-field-1').click();await page.getByLabel('Assigned workers (WF)',{exact:true}).fill('invalid');await page.getByRole('button',{name:'Assign workers',exact:true}).click();await go(page,'session');
+  await go(page,'city');await page.getByTestId('trial-tile-field-1').click();await page.getByLabel('Assigned workers (WF)',{exact:true}).fill('invalid');await page.getByRole('button',{name:'Assign workers',exact:true}).click();await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click();
 }
 async function download(page: Page) {
   const waiting = page.waitForEvent('download');
@@ -47,7 +47,7 @@ test('both entries expose an English panel; real JSON download persists on its o
   await expect(panel(page).getByRole('button', { name: 'Download error log' })).toBeDisabled();
   await invalid(page); await invalid(page);
   await expect(panel(page)).toContainText('INVALID_WORKFORCE_INPUT'); await expect(panel(page)).toContainText('Occurrences: 2');
-  await page.reload();await importLife(page,makeLife());await go(page,'session'); await expect(panel(page)).toContainText('Occurrences: 2');
+  await page.reload();await importLife(page,makeLife());await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click(); await expect(panel(page)).toContainText('Occurrences: 2');
   await advance(page);
   await expect(page.locator('aside')).toContainText('Week 2');
   const data = await download(page);
@@ -55,7 +55,7 @@ test('both entries expose an English panel; real JSON download persists on its o
   expect(data.entries[0]).toMatchObject({ mode: 'weekly', clock: { week: 1 }, action: 'RUNTIME', code: 'INVALID_WORKFORCE_INPUT', kind: 'validation', occurrences: 2, appVersion: '0.1.0', buildId: null });
   expect(await page.evaluate(() => (window as unknown as { blobMime: string }).blobMime)).toBe('application/json');
   await expect(panel(page)).toContainText('Download requested');
-  await page.reload();await importLife(page,makeLife());await go(page,'session'); await expect(page.locator('aside')).toContainText('Week 1'); await expect(panel(page)).toContainText('Occurrences: 2');
+  await page.reload();await importLife(page,makeLife());await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click(); await expect(page.locator('aside')).toContainText('Week 1'); await expect(panel(page)).toContainText('Occurrences: 2');
   await start(page); await expect(panel(page)).toHaveAttribute('lang', 'en'); await expect(panel(page)).toContainText('INVALID_WORKFORCE_INPUT');
   await expect(page.locator('aside')).toContainText('Week 1');
   await start(page,regression); await expect(panel(page)).toHaveAttribute('lang', 'en');
@@ -66,7 +66,7 @@ test('both entries expose an English panel; real JSON download persists on its o
 test('real guard failures and alternating global errors retain only the last five groups', async ({ page }) => {
   await start(page); await invalid(page);
   const overassign = async () => {
-    await go(page,'city');await page.getByTestId('trial-tile-field-1').click();await page.getByLabel('Assigned workers (WF)',{exact:true}).fill('999');await page.getByRole('button',{name:'Assign workers',exact:true}).click();await go(page,'session');
+    await go(page,'city');await page.getByTestId('trial-tile-field-1').click();await page.getByLabel('Assigned workers (WF)',{exact:true}).fill('999');await page.getByRole('button',{name:'Assign workers',exact:true}).click();await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click();
   };
   await overassign();
   await page.evaluate(() => {
@@ -78,7 +78,7 @@ test('real guard failures and alternating global errors retain only the last fiv
   const data = await download(page);
   expect(data.entries.map((entry: { code: string }) => entry.code)).toEqual(['INVALID_COMMAND','UNCAUGHT_ERROR','UNHANDLED_REJECTION','INVALID_WORKFORCE_INPUT','INVALID_COMMAND']);
   expect(data.entries[0]).toMatchObject({ kind: 'validation', action: 'RUNTIME', clock: { week: 1 }, occurrences: 1 });
-  await expect(page.locator('aside')).toContainText('Week 1'); await page.locator('#life-nav-information').click();await expect(page.getByTestId('trial-stock-gold')).toHaveText('45');await go(page,'session');
+  await expect(page.locator('aside')).toContainText('Week 1'); await go(page,'city');await page.locator('#life-nav-information').click();await expect(page.getByTestId('trial-stock-gold')).toHaveText('45');await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click();
 });
 
 for (const mode of ['weekly'] as const) {
@@ -86,7 +86,7 @@ for (const mode of ['weekly'] as const) {
     test(`${mode} ${fault} dispatcher failure never records or renders arbitrary error data`, async ({ page }) => {
       await injectDispatcher(page, mode, fault); await start(page,mode === 'weekly' ? '/' : regression);
       const consoleMessages: string[] = []; page.on('console', message => consoleMessages.push(message.text()));
-      if (mode === 'weekly') { await page.getByTestId('life-end-week').click(); }
+      if (mode === 'weekly') { await go(page,'reports');await page.getByTestId('life-end-week').click();await page.getByRole('button',{name:'Options',exact:true}).click(); }
       else await page.locator('#btn-advance-day').click();
       const code = fault === 'throw' ? 'UNEXPECTED_ACTION_ERROR' : 'UNKNOWN_COMMAND_FAILURE';
       await expect(panel(page)).toContainText(code); expect(await page.locator('body').innerText()).not.toContain('TOKEN-SYNTHETIC');
@@ -94,7 +94,7 @@ for (const mode of ['weekly'] as const) {
       expect(consoleMessages.join('\n')).not.toContain('TOKEN-SYNTHETIC');
       const data = await download(page);
       expect(data.entries[0]).toMatchObject({ mode, code, clock: mode === 'weekly' ? { week: 1 } : { day: 1, week: 1, year: 1 } });
-      if (mode === 'weekly') { await expect(page.locator('aside')).toContainText('Week 1'); await page.locator('#life-nav-information').click();await expect(page.getByTestId('trial-stock-gold')).toHaveText('45');await go(page,'session'); }
+      if (mode === 'weekly') { await expect(page.locator('aside')).toContainText('Week 1'); await go(page,'city');await page.locator('#life-nav-information').click();await expect(page.getByTestId('trial-stock-gold')).toHaveText('45');await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click(); }
       else { await expect(page.locator('aside')).toContainText('Week 1'); await expect(page.locator('#resource-food')).toHaveText('100'); }
     });
   }
@@ -152,7 +152,7 @@ test('production keeps old R1 log records on its origin and captures the new Wee
     kind: 'exception', code: 'UNCAUGHT_ERROR', message: 'An unexpected runtime error occurred. Download this log for review.' };
   await start(page);
   await page.evaluate(({ key, legacy }) => localStorage.setItem(key, JSON.stringify({ schemaVersion: 1, entries: [legacy] })), { key, legacy });
-  await page.reload();await importLife(page,makeLife());await go(page,'session'); await expect(panel(page)).toContainText('r1 · RUNTIME · Day 2');
+  await page.reload();await importLife(page,makeLife());await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click(); await expect(panel(page)).toContainText('r1 · RUNTIME · Day 2');
   await advance(page);
   await page.evaluate(() => {
     window.dispatchEvent(new ErrorEvent('error'));
