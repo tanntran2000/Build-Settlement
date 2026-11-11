@@ -72,6 +72,6 @@ Some Builder files are not copied here: the drafts for earlier heads (`-before-*
 - **Tester code review (Claude) at `0fba808`:** one P2. After a fallen city, New Game → Cancel kept Continue enabled on the deleted save. Fixed in `6e5bffe`.
 
 ## Integrity
-- `SHA256SUMS.txt` covers every other file in this folder.
+- `SHA256SUMS.txt` lists every other file in this folder, hashed from the **committed git blobs** with `git cat-file blob`. Git stores text with LF line endings, so a Windows checkout that uses `core.autocrlf` will show different hashes for text files on disk. To check them, run `git ls-tree -r <commit> -- docs/verification/ui-title-01-pr87` and hash each blob.
 - Text files were checked as valid UTF-8.
 - A secret-pattern scan (GitHub tokens, API keys, private keys) found nothing.
