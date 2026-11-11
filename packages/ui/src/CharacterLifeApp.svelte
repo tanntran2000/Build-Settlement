@@ -15,12 +15,14 @@
   // Any later choice invalidates a file read still pending.
   let importRead = 0;
 
-  onMount(() => {
+  function readSlot() {
+    cachedCheckpoint = null;
     const result = readLocalCharacterLife();
     if (result.success && isPlayableCheckpoint(result.state)) {
       cachedCheckpoint = result.state; checkpoint = 'playable';
     } else checkpoint = result.success || result.message.includes(OLD_CHECKPOINT_MESSAGE) ? 'old' : 'none';
-  });
+  }
+  onMount(readSlot);
   function newGame() { importRead++; error = ''; screen = 'create'; }
   function create(draft: PlayerDraft) {
     // A repeated Create (or one after Cancel) must not start a second session.
@@ -50,7 +52,7 @@
 </script>
 
 {#if session}
-  <TileManagement lifeMode initialLife={session} onnewgame={() => { session = null; newGame(); }} />
+  <TileManagement lifeMode initialLife={session} onnewgame={() => { session = null; readSlot(); newGame(); }} />
 {:else if screen === 'create'}
   <main lang="en">
     <header class="card"><h1>Character Life</h1></header>

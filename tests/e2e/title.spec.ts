@@ -145,3 +145,15 @@ test('Fullscreen reflects live document changes while Options stays open', async
   await expect(control).not.toBeChecked();
   expect(await page.evaluate(() => Object.keys(JSON.parse(localStorage.getItem('haven.options.v1')!)).sort())).toEqual(['autosave', 'reduceMotion', 'textSize']);
 });
+
+test('fallen city clears cached Continue after New Game and creation Cancel', async ({ page }) => {
+  const parsed = deserializeCharacterLifeSave(await readFile(new URL('../../packages/persistence/src/__tests__/fixtures/society-v7/life-rebellion-last-week.json', import.meta.url), 'utf8'));
+  if (!parsed.success) throw Error(parsed.error.message);
+  await page.goto('/'); await importLife(page, parsed.state); await go(page, 'session'); await button(page, 'Save locally').click();
+  await page.reload(); await expect(button(page, 'Continue')).toBeEnabled(); await button(page, 'Continue').click();
+  await page.getByTestId('life-end-week').click(); await expect(page.getByRole('heading', { name: 'The City Has Fallen', exact: true })).toBeVisible();
+  expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBeNull();
+  await button(page, 'New Game').click(); await expect(page.getByRole('heading', { name: 'Character Creation', exact: true })).toBeVisible(); await button(page, 'Cancel').click();
+  await expect(title(page)).toBeVisible(); await expect(button(page, 'Continue')).toBeDisabled();
+  await expect(page.getByText('No local checkpoint', { exact: true })).toBeVisible();
+});
