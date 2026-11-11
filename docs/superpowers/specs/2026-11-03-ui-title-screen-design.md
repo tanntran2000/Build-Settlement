@@ -1,8 +1,8 @@
 # UI-TITLE-01 — Title screen, Options and Main menu (design spec v0.2)
 
 Status:
-- **v0.2:** re-based on `main` `5290120` (UI-LEDGER-01 PR A #83 and PR B #85 merged). It is **waiting for G1 again**. v0.1 had G1 on 2026-11-03 ("Duyệt G1"), but the ledger work, the pixel font and the Report view changed what it builds on.
-- No code, push or PR is authorised by this document. An implementation plan follows only after the owner approves this revision.
+- **v0.2:** re-based on `main` `5290120` (UI-LEDGER-01 PR A #83 and PR B #85 merged). **G1 approved by the owner (Tân), 2026-11-11, verbatim: "Approve G1".** v0.1 had G1 on 2026-11-03 ("Duyệt G1"), but the ledger work, the pixel font and the Report view changed what it builds on.
+- No code, push or PR is authorised until the owner also approves the implementation plan.
 
 ## 1. Authority
 
