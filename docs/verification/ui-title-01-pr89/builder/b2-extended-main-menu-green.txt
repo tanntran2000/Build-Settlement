@@ -1,0 +1,27 @@
+HEAD: 8fc6b4bb2c0f33fe19a6eaa12bec7cca6e4d07ed
+Tree: 09616b0302e43dd0332275faede8a320268bcedd
+Working tree status:  M packages/ui/src/CharacterLifeShell.svelte
+ M packages/ui/src/TileManagement.svelte
+ M tests/e2e/character-life-navigation.spec.ts
+ M tests/e2e/character-life.spec.ts
+ M tests/e2e/tile-local-checkpoint.spec.ts
+ M tests/e2e/world-session.spec.ts
+?? tests/e2e/autosave.spec.ts
+
+UTC: 2026-11-11T09:00:17.822908+00:00
+Environment: CI=1
+Command: npx playwright test tests/e2e/title.spec.ts -g "B2 Main menu"
+Port 4173: free
+Port 4174: free
+
+Running 3 tests using 1 worker
+
+  ok 1 [chromium] › tests\e2e\title.spec.ts:217:3 › B2 Main menu › Main menu saves and refreshes focused Continue on the title (2.3s)
+  ok 2 [chromium] › tests\e2e\title.spec.ts:225:3 › B2 Main menu › Main menu is locked with its reason throughout Report (853ms)
+  ok 3 [chromium] › tests\e2e\title.spec.ts:234:3 › B2 Main menu › Main menu write failure keeps Planning, the session and the previous save (1.6s)
+
+  3 passed (16.3s)
+
+Exit code: 0
+Duration seconds: 23.43
+End UTC: 2026-11-11T09:00:41.394145+00:00

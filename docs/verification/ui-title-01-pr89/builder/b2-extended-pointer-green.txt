@@ -1,0 +1,25 @@
+HEAD: 8fc6b4bb2c0f33fe19a6eaa12bec7cca6e4d07ed
+Tree: 09616b0302e43dd0332275faede8a320268bcedd
+Working tree status:  M packages/ui/src/CharacterLifeShell.svelte
+ M packages/ui/src/TileManagement.svelte
+ M tests/e2e/character-life-navigation.spec.ts
+ M tests/e2e/character-life.spec.ts
+ M tests/e2e/tile-local-checkpoint.spec.ts
+ M tests/e2e/world-session.spec.ts
+?? tests/e2e/autosave.spec.ts
+
+UTC: 2026-11-11T08:59:55.037087+00:00
+Environment: CI=1
+Command: npx playwright test tests/e2e/character-life-navigation.spec.ts -g "player flows at 375px.*turn pointer repeats remain guarded"
+Port 4173: free
+Port 4174: free
+
+Running 1 test using 1 worker
+
+  ok 1 [chromium] › tests\e2e\character-life-navigation.spec.ts:1218:5 › player flows at 375px › turn pointer repeats remain guarded (5.5s)
+
+  1 passed (15.9s)
+
+Exit code: 0
+Duration seconds: 22.49
+End UTC: 2026-11-11T09:00:17.649314+00:00

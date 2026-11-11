@@ -1,0 +1,121 @@
+HEAD: 3037566983fb26d1b2494fcabe195cb49a801f8d
+Tree: 701d3cec052e753c7a7efe17deb107e4818fc6ba
+UTC: 2026-11-11T07:33:38.344813+00:00
+Command: npx playwright test tests/e2e/title.spec.ts -g B2
+Port 4173: free
+Port 4174: free
+
+Running 3 tests using 1 worker
+
+  x  1 [chromium] › tests\e2e\title.spec.ts:217:3 › B2 Main menu › Main menu saves and refreshes focused Continue on the title (6.8s)
+  x  2 [chromium] › tests\e2e\title.spec.ts:225:3 › B2 Main menu › Main menu is locked with its reason throughout Report (7.2s)
+  x  3 [chromium] › tests\e2e\title.spec.ts:234:3 › B2 Main menu › Main menu write failure keeps Planning, the session and the previous save (6.9s)
+
+
+  1) [chromium] › tests\e2e\title.spec.ts:217:3 › B2 Main menu › Main menu saves and refreshes focused Continue on the title 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('button', { name: 'Main menu', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('button', { name: 'Main menu', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Main menu', exact: true })
+
+
+      216 |   test.beforeEach(async ({ page }) => { await page.goto('/'); await importLife(page, makeLife()); });
+      217 |   test('Main menu saves and refreshes focused Continue on the title', async ({ page }) => {
+    > 218 |     const menu = button(page, 'Main menu'); await expect(menu).toBeVisible();
+          |                                                                ^
+      219 |     expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBeNull();
+      220 |     const before = await exportLife(page); await menu.click();
+      221 |     await expect(title(page)).toBeVisible(); await expect(button(page, 'Continue')).toBeEnabled(); await expect(button(page, 'Continue')).toBeFocused();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:218:64
+
+    Error Context: test-results\title-B2-Main-menu-Main-me-b30b1-cused-Continue-on-the-title-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-B2-Main-menu-Main-me-b30b1-cused-Continue-on-the-title-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-B2-Main-menu-Main-me-b30b1-cused-Continue-on-the-title-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\title.spec.ts:225:3 › B2 Main menu › Main menu is locked with its reason throughout Report 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('button', { name: 'Main menu', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('button', { name: 'Main menu', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Main menu', exact: true })
+
+
+      224 |   });
+      225 |   test('Main menu is locked with its reason throughout Report', async ({ page }) => {
+    > 226 |     const menu = button(page, 'Main menu'); await expect(menu).toBeVisible();
+          |                                                                ^
+      227 |     await page.getByTestId('life-end-week').click();
+      228 |     await expect(menu).toHaveAttribute('aria-disabled', 'true');
+      229 |     await expect(page.getByText('Plan next week first.', { exact: true })).toBeVisible();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:226:64
+
+    Error Context: test-results\title-B2-Main-menu-Main-me-b90c8-ts-reason-throughout-Report-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-B2-Main-menu-Main-me-b90c8-ts-reason-throughout-Report-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-B2-Main-menu-Main-me-b90c8-ts-reason-throughout-Report-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests\e2e\title.spec.ts:234:3 › B2 Main menu › Main menu write failure keeps Planning, the session and the previous save 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('button', { name: 'Main menu', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('button', { name: 'Main menu', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Main menu', exact: true })
+
+
+      233 |   });
+      234 |   test('Main menu write failure keeps Planning, the session and the previous save', async ({ page }) => {
+    > 235 |     const menu = button(page, 'Main menu'); await expect(menu).toBeVisible();
+          |                                                                ^
+      236 |     const before = await exportLife(page), prior = bytes(makeLife(54321));
+      237 |     await page.evaluate(({ key, prior }) => {
+      238 |       localStorage.setItem(key, prior); const set = Storage.prototype.setItem;
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:235:64
+
+    Error Context: test-results\title-B2-Main-menu-Main-me-0f68d-ssion-and-the-previous-save-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-B2-Main-menu-Main-me-0f68d-ssion-and-the-previous-save-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-B2-Main-menu-Main-me-0f68d-ssion-and-the-previous-save-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    [chromium] › tests\e2e\title.spec.ts:217:3 › B2 Main menu › Main menu saves and refreshes focused Continue on the title 
+    [chromium] › tests\e2e\title.spec.ts:225:3 › B2 Main menu › Main menu is locked with its reason throughout Report 
+    [chromium] › tests\e2e\title.spec.ts:234:3 › B2 Main menu › Main menu write failure keeps Planning, the session and the previous save 
+
+Exit code: 1
+Duration seconds: 65.76
+End UTC: 2026-11-11T07:34:44.270275+00:00

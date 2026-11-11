@@ -1,0 +1,205 @@
+[
+  {
+    "file": "tests/e2e/error-log.spec.ts",
+    "baseLine": 6,
+    "finalLine": 6,
+    "before": "async function start(page:Page,url='/'){await page.goto(url);await importLife(page,makeLife());await go(page,'session');}",
+    "after": "async function start(page:Page,url='/'){await page.goto(url);await importLife(page,makeLife());await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click();}"
+  },
+  {
+    "file": "tests/e2e/error-log.spec.ts",
+    "baseLine": 7,
+    "finalLine": 7,
+    "before": "async function advance(page:Page){await page.getByTestId('life-end-week').click();await page.getByRole('button',{name:'Plan next week',exact:true}).click();await go(page,'session');}",
+    "after": "async function advance(page:Page){await go(page,'reports');await page.getByTestId('life-end-week').click();await page.getByRole('button',{name:'Plan next week',exact:true}).click();await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click();}"
+  },
+  {
+    "file": "tests/e2e/error-log.spec.ts",
+    "baseLine": 14,
+    "finalLine": 14,
+    "before": "  await go(page,'city');await page.getByTestId('trial-tile-field-1').click();await page.getByLabel('Assigned workers (WF)',{exact:true}).fill('invalid');await page.getByRole('button',{name:'Assign workers',exact:true}).click();await go(page,'session');",
+    "after": "  await go(page,'city');await page.getByTestId('trial-tile-field-1').click();await page.getByLabel('Assigned workers (WF)',{exact:true}).fill('invalid');await page.getByRole('button',{name:'Assign workers',exact:true}).click();await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click();"
+  },
+  {
+    "file": "tests/e2e/error-log.spec.ts",
+    "baseLine": 50,
+    "finalLine": 50,
+    "before": "  await page.reload();await importLife(page,makeLife());await go(page,'session'); await expect(panel(page)).toContainText('Occurrences: 2');",
+    "after": "  await page.reload();await importLife(page,makeLife());await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click(); await expect(panel(page)).toContainText('Occurrences: 2');"
+  },
+  {
+    "file": "tests/e2e/error-log.spec.ts",
+    "baseLine": 58,
+    "finalLine": 58,
+    "before": "  await page.reload();await importLife(page,makeLife());await go(page,'session'); await expect(page.locator('aside')).toContainText('Week 1'); await expect(panel(page)).toContainText('Occurrences: 2');",
+    "after": "  await page.reload();await importLife(page,makeLife());await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click(); await expect(page.locator('aside')).toContainText('Week 1'); await expect(panel(page)).toContainText('Occurrences: 2');"
+  },
+  {
+    "file": "tests/e2e/error-log.spec.ts",
+    "baseLine": 69,
+    "finalLine": 69,
+    "before": "    await go(page,'city');await page.getByTestId('trial-tile-field-1').click();await page.getByLabel('Assigned workers (WF)',{exact:true}).fill('999');await page.getByRole('button',{name:'Assign workers',exact:true}).click();await go(page,'session');",
+    "after": "    await go(page,'city');await page.getByTestId('trial-tile-field-1').click();await page.getByLabel('Assigned workers (WF)',{exact:true}).fill('999');await page.getByRole('button',{name:'Assign workers',exact:true}).click();await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click();"
+  },
+  {
+    "file": "tests/e2e/error-log.spec.ts",
+    "baseLine": 81,
+    "finalLine": 81,
+    "before": "  await expect(page.locator('aside')).toContainText('Week 1'); await page.locator('#life-nav-information').click();await expect(page.getByTestId('trial-stock-gold')).toHaveText('45');await go(page,'session');",
+    "after": "  await expect(page.locator('aside')).toContainText('Week 1'); await go(page,'city');await page.locator('#life-nav-information').click();await expect(page.getByTestId('trial-stock-gold')).toHaveText('45');await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click();"
+  },
+  {
+    "file": "tests/e2e/error-log.spec.ts",
+    "baseLine": 89,
+    "finalLine": 89,
+    "before": "      if (mode === 'weekly') { await page.getByTestId('life-end-week').click(); }",
+    "after": "      if (mode === 'weekly') { await go(page,'reports');await page.getByTestId('life-end-week').click();await page.getByRole('button',{name:'Options',exact:true}).click(); }"
+  },
+  {
+    "file": "tests/e2e/error-log.spec.ts",
+    "baseLine": 97,
+    "finalLine": 97,
+    "before": "      if (mode === 'weekly') { await expect(page.locator('aside')).toContainText('Week 1'); await page.locator('#life-nav-information').click();await expect(page.getByTestId('trial-stock-gold')).toHaveText('45');await go(page,'session'); }",
+    "after": "      if (mode === 'weekly') { await expect(page.locator('aside')).toContainText('Week 1'); await go(page,'city');await page.locator('#life-nav-information').click();await expect(page.getByTestId('trial-stock-gold')).toHaveText('45');await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click(); }"
+  },
+  {
+    "file": "tests/e2e/error-log.spec.ts",
+    "baseLine": 155,
+    "finalLine": 155,
+    "before": "  await page.reload();await importLife(page,makeLife());await go(page,'session'); await expect(panel(page)).toContainText('r1 · RUNTIME · Day 2');",
+    "after": "  await page.reload();await importLife(page,makeLife());await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click(); await expect(panel(page)).toContainText('r1 · RUNTIME · Day 2');"
+  },
+  {
+    "file": "tests/e2e/character-life-navigation.spec.ts",
+    "baseLine": null,
+    "finalLine": 8,
+    "before": "∅",
+    "after": "test.beforeEach(async ({ page }) => { await page.addInitScript(() => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize: 'normal', reduceMotion: null, autosave: false }))); });"
+  },
+  {
+    "file": "tests/e2e/character-life-navigation.spec.ts",
+    "baseLine": null,
+    "finalLine": 45,
+    "before": "∅",
+    "after": "    await page.keyboard.press('Tab'); await expect(page.locator('#life-nav-options')).toBeFocused();"
+  },
+  {
+    "file": "tests/e2e/character-life-navigation.spec.ts",
+    "baseLine": null,
+    "finalLine": 46,
+    "before": "∅",
+    "after": "    await page.keyboard.press('Tab'); await expect(page.locator('#life-nav-main-menu')).toBeFocused();"
+  },
+  {
+    "file": "tests/e2e/character-life-navigation.spec.ts",
+    "baseLine": 106,
+    "finalLine": 109,
+    "before": "    await expect(nav.locator('[data-life-nav-zone=\"bottom\"] button')).toHaveText(['Session', 'Help']);",
+    "after": "    await expect(nav.locator('[data-life-nav-zone=\"bottom\"] button')).toHaveText(['Session', 'Help', 'Options', 'Main menu']);"
+  },
+  {
+    "file": "tests/e2e/character-life-navigation.spec.ts",
+    "baseLine": null,
+    "finalLine": 308,
+    "before": "∅",
+    "after": "  await page.getByRole('button', { name: 'Options', exact: true }).click();"
+  },
+  {
+    "file": "tests/e2e/character-life-navigation.spec.ts",
+    "baseLine": 578,
+    "finalLine": 582,
+    "before": "  await expect(page.getByRole('navigation', { name: 'Main' }).locator('[id^=\"life-nav-\"]')).toHaveText(['Information', 'Player', 'Population', 'Session', 'Help']);",
+    "after": "  await expect(page.getByRole('navigation', { name: 'Main' }).locator('[id^=\"life-nav-\"]')).toHaveText(['Information', 'Player', 'Population', 'Session', 'Help', 'Options', 'Main menu']);"
+  },
+  {
+    "file": "tests/e2e/character-life-navigation.spec.ts",
+    "baseLine": null,
+    "finalLine": 702,
+    "before": "∅",
+    "after": "  await page.getByRole('button', { name: 'Options', exact: true }).click();"
+  },
+  {
+    "file": "tests/e2e/character-life-navigation.spec.ts",
+    "baseLine": null,
+    "finalLine": 763,
+    "before": "∅",
+    "after": "  await page.getByRole('button', { name: 'Options', exact: true }).click();"
+  },
+  {
+    "file": "tests/e2e/character-life-navigation.spec.ts",
+    "baseLine": null,
+    "finalLine": 784,
+    "before": "∅",
+    "after": "  await page.getByRole('button', { name: 'Options', exact: true }).click();"
+  },
+  {
+    "file": "tests/e2e/character-life-navigation.spec.ts",
+    "baseLine": null,
+    "finalLine": 805,
+    "before": "∅",
+    "after": "  const optionsOpen = await page.getByRole('dialog', { name: 'Options', exact: true }).isVisible();"
+  },
+  {
+    "file": "tests/e2e/character-life-navigation.spec.ts",
+    "baseLine": null,
+    "finalLine": 806,
+    "before": "∅",
+    "after": "  if (optionsOpen) await page.getByRole('dialog', { name: 'Options', exact: true }).getByRole('button', { name: 'Close', exact: true }).click();"
+  },
+  {
+    "file": "tests/e2e/character-life-navigation.spec.ts",
+    "baseLine": null,
+    "finalLine": 808,
+    "before": "∅",
+    "after": "  if (optionsOpen) await page.getByRole('button', { name: 'Options', exact: true }).click();"
+  },
+  {
+    "file": "tests/e2e/character-life-navigation.spec.ts",
+    "baseLine": null,
+    "finalLine": 1029,
+    "before": "∅",
+    "after": "            await page.getByRole('button', { name: 'Options', exact: true }).click();"
+  },
+  {
+    "file": "tests/e2e/character-life-navigation.spec.ts",
+    "baseLine": null,
+    "finalLine": 1031,
+    "before": "∅",
+    "after": "            await page.getByRole('dialog', { name: 'Options', exact: true }).getByRole('button', { name: 'Close', exact: true }).click();"
+  },
+  {
+    "file": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+    "baseLine": 266,
+    "finalLine": 266,
+    "before": "      await expect(nav.locator('[id^=\"life-nav-\"]')).toHaveText(['Information', 'Player', 'Population', 'Session', 'Help']);",
+    "after": "      await expect(nav.locator('[id^=\"life-nav-\"]')).toHaveText(['Information', 'Player', 'Population', 'Session', 'Help', 'Options', 'Main menu']);"
+  },
+  {
+    "file": "tests/e2e/tile-local-checkpoint.spec.ts",
+    "baseLine": null,
+    "finalLine": 6,
+    "before": "∅",
+    "after": "test.beforeEach(async ({ page }) => { await page.addInitScript(() => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize: 'normal', reduceMotion: null, autosave: false }))); });"
+  },
+  {
+    "file": "tests/e2e/tile-local-checkpoint.spec.ts",
+    "baseLine": 45,
+    "finalLine": 46,
+    "before": "  await start(page);const s=await act(page,makeLife(),'BUILD',{tileId:'forest-1',typeId:'logging'});await encoded(page);for(const dest of ['city','characters','session','help'] as const)await go(page,dest);expect(await page.evaluate(()=>(window as unknown as {checkpointCalls:string[][]}).checkpointCalls)).toEqual([['get',KEY]]);await save(page);expect(await page.evaluate(()=>(window as unknown as {checkpointCalls:string[][]}).checkpointCalls)).toEqual([['get',KEY],['get',KEY],['set',KEY]]);await page.getByTestId('life-end-week').click();await go(page,'session');for(const name of ['Save locally','Continue locally','Export checkpoint'])await expect(page.getByRole('button',{name,exact:true})).toBeDisabled();await expect(page.getByLabel('Import checkpoint',{exact:true})).toBeDisabled();await go(page,'reports');await page.getByRole('button',{name:'Plan next week',exact:true}).click();await resume(page);const restored=await exportLife(page);expect({...restored,city:{...restored.city,revision:s.city.revision}}).toEqual(s);expect(await page.evaluate(old=>old.map(k=>(window as unknown as {rawRead:(k:string)=>string}).rawRead(k)),OLD)).toEqual(OLD.map(()=> 'protected'));",
+    "after": "  await start(page);const s=await act(page,makeLife(),'BUILD',{tileId:'forest-1',typeId:'logging'});await encoded(page);for(const dest of ['city','characters','session','help'] as const)await go(page,dest);expect(await page.evaluate(()=>(window as unknown as {checkpointCalls:string[][]}).checkpointCalls)).toEqual([['get',KEY]]);await save(page);expect(await page.evaluate(()=>(window as unknown as {checkpointCalls:string[][]}).checkpointCalls)).toEqual([['get',KEY],['get',KEY],['set',KEY]]);await page.getByTestId('life-end-week').click();expect(await page.evaluate(()=>(window as unknown as {checkpointCalls:string[][]}).checkpointCalls)).toEqual([['get',KEY],['get',KEY],['set',KEY]]);await go(page,'session');for(const name of ['Save locally','Continue locally','Export checkpoint'])await expect(page.getByRole('button',{name,exact:true})).toBeDisabled();await expect(page.getByLabel('Import checkpoint',{exact:true})).toBeDisabled();await go(page,'reports');await page.getByRole('button',{name:'Plan next week',exact:true}).click();expect(await page.evaluate(()=>(window as unknown as {checkpointCalls:string[][]}).checkpointCalls)).toEqual([['get',KEY],['get',KEY],['set',KEY]]);await resume(page);const restored=await exportLife(page);expect({...restored,city:{...restored.city,revision:s.city.revision}}).toEqual(s);expect(await page.evaluate(old=>old.map(k=>(window as unknown as {rawRead:(k:string)=>string}).rawRead(k)),OLD)).toEqual(OLD.map(()=> 'protected'));"
+  },
+  {
+    "file": "tests/e2e/world-session.spec.ts",
+    "baseLine": null,
+    "finalLine": 7,
+    "before": "∅",
+    "after": "test.beforeEach(async ({ page }) => { await page.addInitScript(() => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize: 'normal', reduceMotion: null, autosave: false }))); });"
+  },
+  {
+    "file": "tests/e2e/character-life.spec.ts",
+    "baseLine": null,
+    "finalLine": 323,
+    "before": "∅",
+    "after": "  await page.addInitScript(() => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize: 'normal', reduceMotion: null, autosave: false })));"
+  }
+]

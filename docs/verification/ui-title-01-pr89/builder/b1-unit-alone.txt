@@ -1,0 +1,17 @@
+HEAD: e9b73b5ae945ccedf2af3a94addd565023825017
+Tree: a870abb05ee16e4949fef8c3da1ffe7cc4e16c27
+UTC: 2026-11-11T07:30:56.020251+00:00
+Command: npx vitest run packages/simulation/src/__tests__/society-renewable-support.test.ts -t "preserves complete gameplay and assignments through sixty weeks of snapshot restores"
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 16 skipped (17)
+   Start at  14:31:01
+   Duration  5.86s (transform 1.17s, setup 0ms, import 1.49s, tests 3.33s, environment 0ms)
+
+
+Exit code: 0
+Duration seconds: 11.64
+End UTC: 2026-11-11T07:31:07.923554+00:00

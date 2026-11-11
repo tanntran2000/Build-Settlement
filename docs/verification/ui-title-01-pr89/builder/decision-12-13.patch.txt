@@ -1,0 +1,236 @@
+diff --git a/tests/e2e/character-life-navigation-accessibility.spec.ts b/tests/e2e/character-life-navigation-accessibility.spec.ts
+index 709468d..bd8f3a6 100644
+--- a/tests/e2e/character-life-navigation-accessibility.spec.ts
++++ b/tests/e2e/character-life-navigation-accessibility.spec.ts
+@@ -263,7 +263,7 @@ for (const viewport of [{ width: 1600, height: 1000 }, { width: 1280, height: 90
+       await expect(shell.locator('.content')).toHaveCSS('overflow-y', viewport.width > 750 ? 'auto' : 'visible');
+       await expect(nav).toHaveCSS('flex-direction', viewport.width > 750 ? 'column' : 'row');
+       if (viewport.width <= 750) await expect(nav).toHaveCSS('flex-wrap', 'wrap');
+-      await expect(nav.locator('[id^="life-nav-"]')).toHaveText(['Information', 'Player', 'Population', 'Session', 'Help']);
++      await expect(nav.locator('[id^="life-nav-"]')).toHaveText(['Information', 'Player', 'Population', 'Session', 'Help', 'Options', 'Main menu']);
+       for (const name of ['Information', 'Player', 'Population']) {
+         await keyActivate(page, nav.getByRole('button', { name, exact: true }));
+         await capture();
+diff --git a/tests/e2e/character-life-navigation.spec.ts b/tests/e2e/character-life-navigation.spec.ts
+index 6053877..080f259 100644
+--- a/tests/e2e/character-life-navigation.spec.ts
++++ b/tests/e2e/character-life-navigation.spec.ts
+@@ -5,6 +5,7 @@ import { writeFile } from 'node:fs/promises';
+ import { observeCharacterLife } from '../../packages/simulation/src/character-life-observation.ts';
+ import { keyActivate, keyGo, keyPost, keyText, tabTo, turnStatuses, watchTurnStatus } from './character-life-navigation.helpers.ts';
+ import { characterWindow, charactersView, expectCheckpointRejectionPreservesUi, expectOneCharacterWindow, openReportDetails,expectReport, expectRequirements, exportLife, go, importLife, lifeUiSnapshot, makeLife, reportFixture, reportRegion, reportUnits, reportMilli, reportWeek, requirementsRegion, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
++test.beforeEach(async ({ page }) => { await page.addInitScript(() => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize: 'normal', reduceMotion: null, autosave: false }))); });
+ 
+ async function tokenColour(shell: Locator, token: string): Promise<string> {
+   return shell.evaluate((el, token) => {
+@@ -41,6 +42,8 @@ for (const width of [320, 375, 1280, 1600]) {
+       await expect(page.locator(`#life-nav-${dest}`)).toHaveAttribute('aria-current', 'page');
+     }
+     await tabTo(page, page.locator('#life-nav-help'));
++    await page.keyboard.press('Tab'); await expect(page.locator('#life-nav-options')).toBeFocused();
++    await page.keyboard.press('Tab'); await expect(page.locator('#life-nav-main-menu')).toBeFocused();
+     await page.keyboard.press('Tab'); await expect(page.locator('#life-nav-city')).toBeFocused();
+     await page.keyboard.press('Tab'); await expect(page.locator('#life-nav-characters')).toBeFocused();
+     await go(page, 'city');
+@@ -103,7 +106,7 @@ for (const width of [375, 1280]) {
+     await expect(nav.locator('[data-life-nav-zone]')).toHaveCount(3);
+     await expect(nav.locator('[data-life-nav-zone="top"] button[id^="life-nav-"]')).toHaveText(['Information']);
+     await expect(nav.locator('[data-life-nav-zone="middle"] button')).toHaveText(['Player', 'Population']);
+-    await expect(nav.locator('[data-life-nav-zone="bottom"] button')).toHaveText(['Session', 'Help']);
++    await expect(nav.locator('[data-life-nav-zone="bottom"] button')).toHaveText(['Session', 'Help', 'Options', 'Main menu']);
+     await expect(nav.locator('summary,details,svg')).toHaveCount(0);
+     await expect(page.locator('aside [data-testid^="trial-stock-"]')).toHaveCount(0);
+     for (const name of cityWindowNames) {
+@@ -302,6 +305,7 @@ test('rejected load keeps absolute week 41 diagnostic beside Year 2 presentation
+   await putFile(page, '{');
+   await expect(page.getByTestId('life-shell').locator('[data-life-error][role="alert"]')).toBeVisible();
+   await expectCheckpointRejectionPreservesUi(page, before, saved.city.world.week);
++  await page.getByRole('button', { name: 'Options', exact: true }).click();
+   await expect(page.getByRole('region', { name: 'Error log', exact: true }).getByText('weekly · RUNTIME · Week 41', { exact: true })).toBeVisible();
+   expect(await exportLife(page)).toEqual(saved);
+ });
+@@ -575,7 +579,7 @@ test('life shell navigation is read-only', async ({ page }) => {
+   await importLife(page, initial);
+   const shell = page.getByTestId('life-shell');
+   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Character Life');
+-  await expect(page.getByRole('navigation', { name: 'Main' }).locator('[id^="life-nav-"]')).toHaveText(['Information', 'Player', 'Population', 'Session', 'Help']);
++  await expect(page.getByRole('navigation', { name: 'Main' }).locator('[id^="life-nav-"]')).toHaveText(['Information', 'Player', 'Population', 'Session', 'Help', 'Options', 'Main menu']);
+   await expect(page.locator('[data-life-view]')).toHaveCount(5);
+   const beforeSession = await exportLife(page), beforeRevision = await shell.getAttribute('data-revision');
+   await go(page, 'city');
+@@ -695,6 +699,7 @@ test('turn repeat is guarded without stealing focus', async ({ page }) => {
+   expect(await turnStatuses(page)).toEqual(['Week 1 · Year 1 report ready.', 'Planning Week 2 · Year 1. Previous report retained.']);
+   await expect(page.getByRole('alert', { includeHidden: true })).toHaveCount(0);
+   await go(page, 'session');
++  await page.getByRole('button', { name: 'Options', exact: true }).click();
+   await expect(page.getByRole('region', { name: 'Error log', exact: true }).getByText('No errors recorded.', { exact: true })).toBeVisible();
+   await expect(page.getByRole('region', { name: 'Error log', exact: true }).locator('ol li')).toHaveCount(0);
+ });
+@@ -755,6 +760,7 @@ test('report oracle parser rejects malformed grouping and sub-milli precision',
+ test('UI snapshots retain ErrorLog history, counts and diagnostic feedback', async ({ page }) => {
+   await seedDiagnosticHistory(page);
+   await page.goto('/?mode=world-life'); await importLife(page, makeLife()); await go(page, 'session');
++  await page.getByRole('button', { name: 'Options', exact: true }).click();
+   const log = page.getByRole('region', { name: 'Error log', exact: true });
+   await expect(log.getByRole('listitem')).toHaveCount(1);
+   const download = page.waitForEvent('download');
+@@ -775,6 +781,7 @@ test('UI snapshots retain ErrorLog history, counts and diagnostic feedback', asy
+ test('checkpoint feedback normalization rejects unrelated diagnostic changes', async ({ page }) => {
+   await seedDiagnosticHistory(page);
+   await page.goto('/?mode=world-life'); const initial = makeLife(); await importLife(page, initial); await go(page, 'session');
++  await page.getByRole('button', { name: 'Options', exact: true }).click();
+   const log = page.getByRole('region', { name: 'Error log', exact: true });
+   const download = page.waitForEvent('download');
+   await log.getByRole('button', { name: 'Download error log', exact: true }).click(); await download;
+@@ -795,7 +802,10 @@ test('checkpoint feedback normalization rejects unrelated diagnostic changes', a
+   await expect(expectCheckpointRejectionPreservesUi(page, before, initial.city.world.week)).rejects.toThrow('Unexpected diagnostic delta');
+ });
+ async function putFile(page: Page, text: string, name = 'life.json') {
++  const optionsOpen = await page.getByRole('dialog', { name: 'Options', exact: true }).isVisible();
++  if (optionsOpen) await page.getByRole('dialog', { name: 'Options', exact: true }).getByRole('button', { name: 'Close', exact: true }).click();
+   await page.getByLabel('Import checkpoint', { exact: true }).setInputFiles({ name, mimeType: 'application/json', buffer: Buffer.from(text) });
++  if (optionsOpen) await page.getByRole('button', { name: 'Options', exact: true }).click();
+ }
+ 
+ test('unapplied drafts survive navigation with committed-only resolution', async ({ page }) => {
+@@ -1016,7 +1026,9 @@ for (const kind of ['invalid JSON', 'incompatible schema', 'oversize', 'invalid
+           else await expect(page.getByTestId('life-shell').locator('[data-life-error][role="alert"]')).toBeVisible();
+           if (kind === 'superseded reads') {
+             const download = page.waitForEvent('download');
++            await page.getByRole('button', { name: 'Options', exact: true }).click();
+             await page.getByRole('region', { name: 'Error log', exact: true }).getByRole('button', { name: 'Download error log', exact: true }).click(); await download;
++            await page.getByRole('dialog', { name: 'Options', exact: true }).getByRole('button', { name: 'Close', exact: true }).click();
+           }
+         } else if (kind === 'later Continue') {
+           await page.getByRole('button', { name: 'Continue locally', exact: true }).click();
+diff --git a/tests/e2e/character-life.spec.ts b/tests/e2e/character-life.spec.ts
+index ae6b82d..30de21b 100644
+--- a/tests/e2e/character-life.spec.ts
++++ b/tests/e2e/character-life.spec.ts
+@@ -320,6 +320,7 @@ test('life Save locally leaves the NPC-world and world slots unchanged', async (
+ });
+ 
+ test('Life report and checkpoint operations preserve every other-mode slot byte-for-byte', async ({ page }) => {
++  await page.addInitScript(() => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize: 'normal', reduceMotion: null, autosave: false })));
+   await page.goto('/?mode=world-life');
+   const keys = [NPC_KEY, WORLD_KEY, 'haven.tile-trial.checkpoint.v1', 'haven.tile-population.checkpoint.v1'];
+   const bytes = keys.map((key, i) => `${i}: protected ${key} \n {not a save}`);
+diff --git a/tests/e2e/error-log.spec.ts b/tests/e2e/error-log.spec.ts
+index a2e0cce..36d6c7d 100644
+--- a/tests/e2e/error-log.spec.ts
++++ b/tests/e2e/error-log.spec.ts
+@@ -3,15 +3,15 @@ import { readFile, stat } from 'node:fs/promises';
+ import ts from 'typescript';
+ import {makeLife,importLife,exportLife,go} from './character-life-navigation.helpers.ts';
+ import {executeCharacterLifeCommand} from '../../packages/simulation/src/character-life-command.ts';
+-async function start(page:Page,url='/'){await page.goto(url);await importLife(page,makeLife());await go(page,'session');}
+-async function advance(page:Page){await page.getByTestId('life-end-week').click();await page.getByRole('button',{name:'Plan next week',exact:true}).click();await go(page,'session');}
++async function start(page:Page,url='/'){await page.goto(url);await importLife(page,makeLife());await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click();}
++async function advance(page:Page){await go(page,'reports');await page.getByTestId('life-end-week').click();await page.getByRole('button',{name:'Plan next week',exact:true}).click();await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click();}
+ 
+ const key = 'haven.runtime-errors.v1';
+ const regression = 'http://localhost:4174/';
+ const secret = 'TOKEN-SYNTHETIC https://private.invalid/?token=SYNTHETIC#save <b>save-payload</b>';
+ const panel = (page: Page) => page.getByRole('region', { name: 'Error log', exact: true });
+ async function invalid(page: Page) {
+-  await go(page,'city');await page.getByTestId('trial-tile-field-1').click();await page.getByLabel('Assigned workers (WF)',{exact:true}).fill('invalid');await page.getByRole('button',{name:'Assign workers',exact:true}).click();await go(page,'session');
++  await go(page,'city');await page.getByTestId('trial-tile-field-1').click();await page.getByLabel('Assigned workers (WF)',{exact:true}).fill('invalid');await page.getByRole('button',{name:'Assign workers',exact:true}).click();await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click();
+ }
+ async function download(page: Page) {
+   const waiting = page.waitForEvent('download');
+@@ -47,7 +47,7 @@ test('both entries expose an English panel; real JSON download persists on its o
+   await expect(panel(page).getByRole('button', { name: 'Download error log' })).toBeDisabled();
+   await invalid(page); await invalid(page);
+   await expect(panel(page)).toContainText('INVALID_WORKFORCE_INPUT'); await expect(panel(page)).toContainText('Occurrences: 2');
+-  await page.reload();await importLife(page,makeLife());await go(page,'session'); await expect(panel(page)).toContainText('Occurrences: 2');
++  await page.reload();await importLife(page,makeLife());await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click(); await expect(panel(page)).toContainText('Occurrences: 2');
+   await advance(page);
+   await expect(page.locator('aside')).toContainText('Week 2');
+   const data = await download(page);
+@@ -55,7 +55,7 @@ test('both entries expose an English panel; real JSON download persists on its o
+   expect(data.entries[0]).toMatchObject({ mode: 'weekly', clock: { week: 1 }, action: 'RUNTIME', code: 'INVALID_WORKFORCE_INPUT', kind: 'validation', occurrences: 2, appVersion: '0.1.0', buildId: null });
+   expect(await page.evaluate(() => (window as unknown as { blobMime: string }).blobMime)).toBe('application/json');
+   await expect(panel(page)).toContainText('Download requested');
+-  await page.reload();await importLife(page,makeLife());await go(page,'session'); await expect(page.locator('aside')).toContainText('Week 1'); await expect(panel(page)).toContainText('Occurrences: 2');
++  await page.reload();await importLife(page,makeLife());await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click(); await expect(page.locator('aside')).toContainText('Week 1'); await expect(panel(page)).toContainText('Occurrences: 2');
+   await start(page); await expect(panel(page)).toHaveAttribute('lang', 'en'); await expect(panel(page)).toContainText('INVALID_WORKFORCE_INPUT');
+   await expect(page.locator('aside')).toContainText('Week 1');
+   await start(page,regression); await expect(panel(page)).toHaveAttribute('lang', 'en');
+@@ -66,7 +66,7 @@ test('both entries expose an English panel; real JSON download persists on its o
+ test('real guard failures and alternating global errors retain only the last five groups', async ({ page }) => {
+   await start(page); await invalid(page);
+   const overassign = async () => {
+-    await go(page,'city');await page.getByTestId('trial-tile-field-1').click();await page.getByLabel('Assigned workers (WF)',{exact:true}).fill('999');await page.getByRole('button',{name:'Assign workers',exact:true}).click();await go(page,'session');
++    await go(page,'city');await page.getByTestId('trial-tile-field-1').click();await page.getByLabel('Assigned workers (WF)',{exact:true}).fill('999');await page.getByRole('button',{name:'Assign workers',exact:true}).click();await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click();
+   };
+   await overassign();
+   await page.evaluate(() => {
+@@ -78,7 +78,7 @@ test('real guard failures and alternating global errors retain only the last fiv
+   const data = await download(page);
+   expect(data.entries.map((entry: { code: string }) => entry.code)).toEqual(['INVALID_COMMAND','UNCAUGHT_ERROR','UNHANDLED_REJECTION','INVALID_WORKFORCE_INPUT','INVALID_COMMAND']);
+   expect(data.entries[0]).toMatchObject({ kind: 'validation', action: 'RUNTIME', clock: { week: 1 }, occurrences: 1 });
+-  await expect(page.locator('aside')).toContainText('Week 1'); await page.locator('#life-nav-information').click();await expect(page.getByTestId('trial-stock-gold')).toHaveText('45');await go(page,'session');
++  await expect(page.locator('aside')).toContainText('Week 1'); await go(page,'city');await page.locator('#life-nav-information').click();await expect(page.getByTestId('trial-stock-gold')).toHaveText('45');await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click();
+ });
+ 
+ for (const mode of ['weekly'] as const) {
+@@ -86,7 +86,7 @@ for (const mode of ['weekly'] as const) {
+     test(`${mode} ${fault} dispatcher failure never records or renders arbitrary error data`, async ({ page }) => {
+       await injectDispatcher(page, mode, fault); await start(page,mode === 'weekly' ? '/' : regression);
+       const consoleMessages: string[] = []; page.on('console', message => consoleMessages.push(message.text()));
+-      if (mode === 'weekly') { await page.getByTestId('life-end-week').click(); }
++      if (mode === 'weekly') { await go(page,'reports');await page.getByTestId('life-end-week').click();await page.getByRole('button',{name:'Options',exact:true}).click(); }
+       else await page.locator('#btn-advance-day').click();
+       const code = fault === 'throw' ? 'UNEXPECTED_ACTION_ERROR' : 'UNKNOWN_COMMAND_FAILURE';
+       await expect(panel(page)).toContainText(code); expect(await page.locator('body').innerText()).not.toContain('TOKEN-SYNTHETIC');
+@@ -94,7 +94,7 @@ for (const mode of ['weekly'] as const) {
+       expect(consoleMessages.join('\n')).not.toContain('TOKEN-SYNTHETIC');
+       const data = await download(page);
+       expect(data.entries[0]).toMatchObject({ mode, code, clock: mode === 'weekly' ? { week: 1 } : { day: 1, week: 1, year: 1 } });
+-      if (mode === 'weekly') { await expect(page.locator('aside')).toContainText('Week 1'); await page.locator('#life-nav-information').click();await expect(page.getByTestId('trial-stock-gold')).toHaveText('45');await go(page,'session'); }
++      if (mode === 'weekly') { await expect(page.locator('aside')).toContainText('Week 1'); await go(page,'city');await page.locator('#life-nav-information').click();await expect(page.getByTestId('trial-stock-gold')).toHaveText('45');await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click(); }
+       else { await expect(page.locator('aside')).toContainText('Week 1'); await expect(page.locator('#resource-food')).toHaveText('100'); }
+     });
+   }
+@@ -152,7 +152,7 @@ test('production keeps old R1 log records on its origin and captures the new Wee
+     kind: 'exception', code: 'UNCAUGHT_ERROR', message: 'An unexpected runtime error occurred. Download this log for review.' };
+   await start(page);
+   await page.evaluate(({ key, legacy }) => localStorage.setItem(key, JSON.stringify({ schemaVersion: 1, entries: [legacy] })), { key, legacy });
+-  await page.reload();await importLife(page,makeLife());await go(page,'session'); await expect(panel(page)).toContainText('r1 · RUNTIME · Day 2');
++  await page.reload();await importLife(page,makeLife());await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click(); await expect(panel(page)).toContainText('r1 · RUNTIME · Day 2');
+   await advance(page);
+   await page.evaluate(() => {
+     window.dispatchEvent(new ErrorEvent('error'));
+diff --git a/tests/e2e/tile-local-checkpoint.spec.ts b/tests/e2e/tile-local-checkpoint.spec.ts
+index d0473fe..d2fd552 100644
+--- a/tests/e2e/tile-local-checkpoint.spec.ts
++++ b/tests/e2e/tile-local-checkpoint.spec.ts
+@@ -3,6 +3,7 @@ import {societyPopulation} from '../../packages/core/src/index.ts';
+ import {executeCharacterLifeCommand} from '../../packages/simulation/src/character-life-command.ts';
+ import {act,boot,encoded,fundedLife,notice,put,week} from './society-command.helpers.ts';
+ import {expectReport,exportLife,go,importLife,makeLife} from './character-life-navigation.helpers.ts';
++test.beforeEach(async ({ page }) => { await page.addInitScript(() => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize: 'normal', reduceMotion: null, autosave: false }))); });
+ const KEY='haven.character-life-session-society.checkpoint.v1';
+ const OLD=['haven.tile-trial.checkpoint.v1','haven.tile-population.checkpoint.v1','haven.tile-population-goods.checkpoint.v1'];
+ const save=async(page:Page)=>{await go(page,'session');await page.getByRole('button',{name:'Save locally',exact:true}).click();};
+@@ -42,7 +43,7 @@ for(const mode of ['tiles','population']){
+  });
+  test(`checkpoint IO stays manual, Planning-only and isolated (${mode})`,async({page})=>{
+   await page.addInitScript(({key,old})=>{const get=Storage.prototype.getItem,set=Storage.prototype.setItem,calls:string[][]=[];Object.assign(window,{checkpointCalls:calls,rawRead:(k:string)=>get.call(localStorage,k)});for(const k of old)set.call(localStorage,k,'protected');Storage.prototype.getItem=function(k){if(k===key||old.includes(k))calls.push(['get',k]);return get.call(this,k);};Storage.prototype.setItem=function(k,v){if(k===key||old.includes(k))calls.push(['set',k]);return set.call(this,k,v);};},{key:KEY,old:OLD});
+-  await start(page);const s=await act(page,makeLife(),'BUILD',{tileId:'forest-1',typeId:'logging'});await encoded(page);for(const dest of ['city','characters','session','help'] as const)await go(page,dest);expect(await page.evaluate(()=>(window as unknown as {checkpointCalls:string[][]}).checkpointCalls)).toEqual([['get',KEY]]);await save(page);expect(await page.evaluate(()=>(window as unknown as {checkpointCalls:string[][]}).checkpointCalls)).toEqual([['get',KEY],['get',KEY],['set',KEY]]);await page.getByTestId('life-end-week').click();await go(page,'session');for(const name of ['Save locally','Continue locally','Export checkpoint'])await expect(page.getByRole('button',{name,exact:true})).toBeDisabled();await expect(page.getByLabel('Import checkpoint',{exact:true})).toBeDisabled();await go(page,'reports');await page.getByRole('button',{name:'Plan next week',exact:true}).click();await resume(page);const restored=await exportLife(page);expect({...restored,city:{...restored.city,revision:s.city.revision}}).toEqual(s);expect(await page.evaluate(old=>old.map(k=>(window as unknown as {rawRead:(k:string)=>string}).rawRead(k)),OLD)).toEqual(OLD.map(()=> 'protected'));
++  await start(page);const s=await act(page,makeLife(),'BUILD',{tileId:'forest-1',typeId:'logging'});await encoded(page);for(const dest of ['city','characters','session','help'] as const)await go(page,dest);expect(await page.evaluate(()=>(window as unknown as {checkpointCalls:string[][]}).checkpointCalls)).toEqual([['get',KEY]]);await save(page);expect(await page.evaluate(()=>(window as unknown as {checkpointCalls:string[][]}).checkpointCalls)).toEqual([['get',KEY],['get',KEY],['set',KEY]]);await page.getByTestId('life-end-week').click();expect(await page.evaluate(()=>(window as unknown as {checkpointCalls:string[][]}).checkpointCalls)).toEqual([['get',KEY],['get',KEY],['set',KEY]]);await go(page,'session');for(const name of ['Save locally','Continue locally','Export checkpoint'])await expect(page.getByRole('button',{name,exact:true})).toBeDisabled();await expect(page.getByLabel('Import checkpoint',{exact:true})).toBeDisabled();await go(page,'reports');await page.getByRole('button',{name:'Plan next week',exact:true}).click();expect(await page.evaluate(()=>(window as unknown as {checkpointCalls:string[][]}).checkpointCalls)).toEqual([['get',KEY],['get',KEY],['set',KEY]]);await resume(page);const restored=await exportLife(page);expect({...restored,city:{...restored.city,revision:s.city.revision}}).toEqual(s);expect(await page.evaluate(old=>old.map(k=>(window as unknown as {rawRead:(k:string)=>string}).rawRead(k)),OLD)).toEqual(OLD.map(()=> 'protected'));
+  });
+  test(`the last explicit same-mode tab save wins without automatically loading (${mode})`,async({page,context})=>{
+   await start(page);const first=await exportLife(page);await save(page);const second=await context.newPage();try{await second.goto(`/?mode=${mode}`);const s=makeLife();s.player.character.name='Second Keeper';s.city.world.settlements[s.city.world.activeSettlementId!].inventory.gold=55000;await importLife(second,s);await save(second);expect(await exportLife(page)).toEqual(first);await resume(page);const restored=await exportLife(page);expect({...restored,city:{...restored.city,revision:s.city.revision}}).toEqual(s);}finally{await second.close();}
+diff --git a/tests/e2e/world-session.spec.ts b/tests/e2e/world-session.spec.ts
+index fd3e3a6..782d123 100644
+--- a/tests/e2e/world-session.spec.ts
++++ b/tests/e2e/world-session.spec.ts
+@@ -4,6 +4,7 @@ import {executeCharacterLifeCommand} from '../../packages/simulation/src/charact
+ import {boot,encoded,fundedLife,notice,put,week} from './society-command.helpers.ts';
+ import {expectReport,exportLife,go,importLife,makeLife,reportRegion} from './character-life-navigation.helpers.ts';
+ import {readFile} from 'node:fs/promises';
++test.beforeEach(async ({ page }) => { await page.addInitScript(() => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize: 'normal', reduceMotion: null, autosave: false }))); });
+ const KEY='haven.character-life-session-society.checkpoint.v1',OLD=['haven.tile-trial.checkpoint.v1','haven.tile-population.checkpoint.v1'];
+ const save=async(page:Page)=>{await go(page,'session');await page.getByRole('button',{name:'Save locally',exact:true}).click();};
+ const resume=async(page:Page)=>{await go(page,'session');await page.getByRole('button',{name:'Continue locally',exact:true}).click();};

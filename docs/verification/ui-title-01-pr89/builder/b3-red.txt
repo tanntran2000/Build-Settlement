@@ -1,0 +1,92 @@
+HEAD: 8fc6b4bb2c0f33fe19a6eaa12bec7cca6e4d07ed
+Tree: 09616b0302e43dd0332275faede8a320268bcedd
+UTC: 2026-11-11T07:43:05.725834+00:00
+Command: npx playwright test tests/e2e/autosave.spec.ts
+Port 4173: free
+Port 4174: free
+
+Running 4 tests using 1 worker
+
+  x  1 [chromium] › tests\e2e\autosave.spec.ts:31:1 › On by default: Plan next week writes one checkpoint equal to the real export (1.9s)
+  ok 2 [chromium] › tests\e2e\autosave.spec.ts:40:1 › Off: End Week and Plan next week leave the slot and checkpoint IO unchanged (1.9s)
+  x  3 [chromium] › tests\e2e\autosave.spec.ts:47:1 › Write failure: the exact autosave status appears and previous bytes survive (6.1s)
+  ok 4 [chromium] › tests\e2e\autosave.spec.ts:58:1 › Never: creating a New Game and importing a checkpoint do not autosave (1.6s)
+
+
+  1) [chromium] › tests\e2e\autosave.spec.ts:31:1 › On by default: Plan next week writes one checkpoint equal to the real export 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 6
+    + Received  + 1
+
+    - Array [
+    -   Array [
+    -     "set",
+    -     "haven.character-life-session-society.checkpoint.v1",
+    -   ],
+    - ]
+    + Array []
+
+      34 |   await page.getByRole('button', { name: 'Plan next week', exact: true }).click();
+      35 |   const after = await exportLife(page);
+    > 36 |   expect((await calls(page)).filter(([kind]) => kind === 'set')).toEqual([['set', KEY]]);
+         |                                                                  ^
+      37 |   expect(await slot(page)).toBe(bytes(after));
+      38 |   expect(JSON.parse((await slot(page))!).state).toEqual(after);
+      39 | });
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\autosave.spec.ts:36:66
+
+    Error Context: test-results\autosave-On-by-default-Pla-908cb-nt-equal-to-the-real-export-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\autosave-On-by-default-Pla-908cb-nt-equal-to-the-real-export-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\autosave-On-by-default-Pla-908cb-nt-equal-to-the-real-export-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\autosave.spec.ts:47:1 › Write failure: the exact autosave status appears and previous bytes survive 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('aside p[aria-atomic="true"]')
+    Expected: "Autosave failed. Your last save is kept."
+    Received: "Planning Week 2 · Year 1. Previous report retained."
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('aside p[aria-atomic="true"]') with timeout 5000ms
+      - waiting for locator('aside p[aria-atomic="true"]')
+        14 × locator resolved to <p role="status" aria-atomic="true" aria-live="polite" class="svelte-w9sbey">Planning Week 2 · Year 1. Previous report retaine…</p>
+           - unexpected value "Planning Week 2 · Year 1. Previous report retained."
+
+
+      53 |   }, KEY);
+      54 |   await nextWeek(page);
+    > 55 |   await expect(page.locator('aside p[aria-atomic="true"]')).toHaveText('Autosave failed. Your last save is kept.');
+         |                                                             ^
+      56 |   expect(await slot(page)).toBe(prior); expect((await exportLife(page)).city.world.week).toBe(2);
+      57 | });
+      58 | test('Never: creating a New Game and importing a checkpoint do not autosave', async ({ page }) => {
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\autosave.spec.ts:55:61
+
+    Error Context: test-results\autosave-Write-failure-the-6ab59--and-previous-bytes-survive-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\autosave-Write-failure-the-6ab59--and-previous-bytes-survive-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\autosave-Write-failure-the-6ab59--and-previous-bytes-survive-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests\e2e\autosave.spec.ts:31:1 › On by default: Plan next week writes one checkpoint equal to the real export 
+    [chromium] › tests\e2e\autosave.spec.ts:47:1 › Write failure: the exact autosave status appears and previous bytes survive 
+  2 passed (25.5s)
+
+Exit code: 1
+Duration seconds: 32.05
+End UTC: 2026-11-11T07:43:37.871369+00:00

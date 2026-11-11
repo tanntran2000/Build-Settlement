@@ -1,0 +1,29 @@
+HEAD: 3037566983fb26d1b2494fcabe195cb49a801f8d
+Tree: 701d3cec052e753c7a7efe17deb107e4818fc6ba
+UTC: 2026-11-11T07:37:57.031141+00:00
+Command: npx playwright test tests/e2e/title.spec.ts tests/e2e/character-life-navigation.spec.ts -g "B2 Main menu|B1 in-game Options|reference layout|city windows preserve state and return focus|life shell navigation is read-only"
+Port 4173: free
+Port 4174: free
+
+Running 14 tests using 1 worker
+
+  ok  1 [chromium] › tests\e2e\character-life-navigation.spec.ts:22:3 › reference layout keeps navigation persistent at 320px (4.1s)
+  ok  2 [chromium] › tests\e2e\character-life-navigation.spec.ts:22:3 › reference layout keeps navigation persistent at 375px (5.2s)
+  ok  3 [chromium] › tests\e2e\character-life-navigation.spec.ts:22:3 › reference layout keeps navigation persistent at 1280px (9.0s)
+  ok  4 [chromium] › tests\e2e\character-life-navigation.spec.ts:22:3 › reference layout keeps navigation persistent at 1600px (3.8s)
+  ok  5 [chromium] › tests\e2e\character-life-navigation.spec.ts:95:3 › city windows preserve state and return focus at 375px (7.8s)
+  ok  6 [chromium] › tests\e2e\character-life-navigation.spec.ts:95:3 › city windows preserve state and return focus at 1280px (10.6s)
+  ok  7 [chromium] › tests\e2e\character-life-navigation.spec.ts:575:1 › life shell navigation is read-only (3.8s)
+  ok  8 [chromium] › tests\e2e\title.spec.ts:5:3 › B1 in-game Options › Options plaque opens the shared dialog (1.2s)
+  ok  9 [chromium] › tests\e2e\title.spec.ts:10:3 › B1 in-game Options › Options changes apply immediately in game (1.5s)
+  ok 10 [chromium] › tests\e2e\title.spec.ts:17:3 › B1 in-game Options › About downloads the real error log in game (1.5s)
+  ok 11 [chromium] › tests\e2e\title.spec.ts:27:3 › B1 in-game Options › Session no longer renders ErrorLog (1.2s)
+  ok 12 [chromium] › tests\e2e\title.spec.ts:217:3 › B2 Main menu › Main menu saves and refreshes focused Continue on the title (1.8s)
+  ok 13 [chromium] › tests\e2e\title.spec.ts:225:3 › B2 Main menu › Main menu is locked with its reason throughout Report (1.5s)
+  ok 14 [chromium] › tests\e2e\title.spec.ts:234:3 › B2 Main menu › Main menu write failure keeps Planning, the session and the previous save (2.2s)
+
+  14 passed (1.2m)
+
+Exit code: 0
+Duration seconds: 87.80
+End UTC: 2026-11-11T07:39:25.539472+00:00

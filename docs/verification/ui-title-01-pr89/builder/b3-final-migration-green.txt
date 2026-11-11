@@ -1,0 +1,131 @@
+HEAD: c38642bd7135f423d6391a07a3efd15433dc865f
+Tree: 6fb8e7ca0d8486ebdd3797c05ff6b9c3d0b69d4b
+Working tree status:  M packages/ui/src/TileManagement.svelte
+ M tests/e2e/character-life-navigation.spec.ts
+ M tests/e2e/character-life.spec.ts
+ M tests/e2e/tile-local-checkpoint.spec.ts
+ M tests/e2e/world-session.spec.ts
+?? tests/e2e/autosave.spec.ts
+
+UTC: 2026-11-11T09:09:16.522298+00:00
+Environment: CI=1
+Command: npx playwright test tests/e2e/tile-local-checkpoint.spec.ts tests/e2e/world-session.spec.ts tests/e2e/character-life.spec.ts tests/e2e/autosave.spec.ts
+Port 4173: free
+Port 4174: free
+
+Running 73 tests using 1 worker
+
+  ok  1 [chromium] › tests\e2e\autosave.spec.ts:31:1 › On by default: Plan next week writes one checkpoint equal to the real export (3.8s)
+  ok  2 [chromium] › tests\e2e\autosave.spec.ts:40:1 › Off: End Week and Plan next week leave the slot and checkpoint IO unchanged (1.9s)
+  ok  3 [chromium] › tests\e2e\autosave.spec.ts:47:1 › Write failure: the exact autosave status appears and previous bytes survive (1.7s)
+  ok  4 [chromium] › tests\e2e\autosave.spec.ts:58:1 › Never: creating a New Game and importing a checkpoint do not autosave (2.8s)
+  ok  5 [chromium] › tests\e2e\character-life.spec.ts:22:1 › start screen shows Character Life with New Game, Continue locally, Import (823ms)
+  ok  6 [chromium] › tests\e2e\character-life.spec.ts:32:1 › Create character is disabled until a name is entered; age 17 shows the age message (1.3s)
+  ok  7 [chromium] › tests\e2e\character-life.spec.ts:54:1 › Next/Back keep entered values across tabs; arrow keys move between tabs (2.5s)
+  ok  8 [chromium] › tests\e2e\character-life.spec.ts:92:1 › Cancel returns to start and a new draft is empty (1.3s)
+  ok  9 [chromium] › tests\e2e\character-life.spec.ts:109:1 › double click on Create character opens exactly one game (1.5s)
+  ok 10 [chromium] › tests\e2e\character-life.spec.ts:124:1 › preset changes appearance fields; Review shows the short line (1.4s)
+  ok 11 [chromium] › tests\e2e\character-life.spec.ts:144:1 › private adult section is collapsed by default and records optional values (1.2s)
+  ok 12 [chromium] › tests\e2e\character-life.spec.ts:163:1 › Continue locally with empty slot shows the message and stays on start (581ms)
+  ok 13 [chromium] › tests\e2e\character-life.spec.ts:172:1 › importing a foreign file shows the Character Life message and stays on start (592ms)
+  ok 14 [chromium] › tests\e2e\character-life.spec.ts:212:1 › after creation the Player window shows the entered name and short line; 3 NPC roster rows open one profile (3.3s)
+  ok 15 [chromium] › tests\e2e\character-life.spec.ts:236:1 › assigning starter 1 to field-1 changes its long text to "currently manages the Farm." (2.5s)
+  ok 16 [chromium] › tests\e2e\character-life.spec.ts:247:1 › Private section is collapsed by default (2.1s)
+  ok 17 [chromium] › tests\e2e\character-life.spec.ts:259:1 › Save locally, reload, Continue locally restores player name, profiles and posts (4.9s)
+  ok 18 [chromium] › tests\e2e\character-life.spec.ts:277:1 › Export then Import in a new game restores the session; file name matches the life pattern (7.3s)
+  ok 19 [chromium] › tests\e2e\character-life.spec.ts:295:1 › importing an NPC-world export into world-life is rejected with the Character Life incompatible message and nothing changes (4.7s)
+  ok 20 [chromium] › tests\e2e\character-life.spec.ts:308:1 › life Save locally leaves the NPC-world and world slots unchanged (2.1s)
+  ok 21 [chromium] › tests\e2e\character-life.spec.ts:322:1 › Life report and checkpoint operations preserve every other-mode slot byte-for-byte (4.5s)
+  ok 22 [chromium] › tests\e2e\character-life.spec.ts:340:1 › Import during Report shows "Choose Plan next week before importing." (6.9s)
+  ok 23 [chromium] › tests\e2e\character-life.spec.ts:397:1 › 64-character unbroken name, birth name, label and biography stay inside their cards at 375px (5.5s)
+  ok 24 [chromium] › tests\e2e\character-life.spec.ts:402:1 › desktop profiles are unaffected: short values stay on one line and long text still fits at 1280px (6.2s)
+  ok 25 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:17:1 › saves a multiweek plan locally, continues after reload and resumes the same economics (57.4s)
+  x  26 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:23:2 › explicit save replaces only its own slot and file import never writes it (tiles) (47.6m)
+  ok 27 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects missing while preserving full state and both slots (tiles) (10.1s)
+  ok 28 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects malformed while preserving full state and both slots (tiles) (4.3s)
+  ok 29 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects empty object while preserving full state and both slots (tiles) (4.2s)
+  ok 30 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects opposite mode while preserving full state and both slots (tiles) (4.4s)
+  ok 31 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects version while preserving full state and both slots (tiles) (3.7s)
+  ok 32 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects ruleset while preserving full state and both slots (tiles) (3.2s)
+  ok 33 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects map while preserving full state and both slots (tiles) (2.8s)
+  ok 34 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects negative stock while preserving full state and both slots (tiles) (2.0s)
+  ok 35 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects report phase while preserving full state and both slots (tiles) (1.9s)
+  ok 36 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects oversize while preserving full state and both slots (tiles) (2.0s)
+  ok 37 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects revision overflow while preserving full state and both slots (tiles) (1.9s)
+  ok 38 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:30:2 › blocked or full storage preserves full state, both slots and file backups (tiles) (5.9s)
+  ok 39 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:38:49 › a delayed file import cannot overwrite a successful Continue (tiles) (3.2s)
+  ok 40 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:38:49 › a late file read rejection cannot replace Continue feedback (tiles) (3.4s)
+  ok 41 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:41:2 › failed Continue leaves a pending valid import usable (tiles) (2.4s)
+  ok 42 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:44:2 › checkpoint IO stays manual, Planning-only and isolated (tiles) (3.8s)
+  ok 43 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:48:2 › the last explicit same-mode tab save wins without automatically loading (tiles) (3.5s)
+  ok 44 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:23:2 › explicit save replaces only its own slot and file import never writes it (population) (4.4s)
+  ok 45 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects missing while preserving full state and both slots (population) (2.5s)
+  ok 46 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects malformed while preserving full state and both slots (population) (2.0s)
+  ok 47 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects empty object while preserving full state and both slots (population) (2.1s)
+  ok 48 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects opposite mode while preserving full state and both slots (population) (2.2s)
+  ok 49 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects version while preserving full state and both slots (population) (2.7s)
+  ok 50 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects ruleset while preserving full state and both slots (population) (2.3s)
+  ok 51 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects map while preserving full state and both slots (population) (2.2s)
+  ok 52 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects negative stock while preserving full state and both slots (population) (1.9s)
+  ok 53 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects report phase while preserving full state and both slots (population) (2.7s)
+  ok 54 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects oversize while preserving full state and both slots (population) (3.1s)
+  ok 55 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects revision overflow while preserving full state and both slots (population) (3.0s)
+  ok 56 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:30:2 › blocked or full storage preserves full state, both slots and file backups (population) (4.3s)
+  ok 57 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:38:49 › a delayed file import cannot overwrite a successful Continue (population) (1.7s)
+  ok 58 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:38:49 › a late file read rejection cannot replace Continue feedback (population) (1.8s)
+  ok 59 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:41:2 › failed Continue leaves a pending valid import usable (population) (1.5s)
+  ok 60 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:44:2 › checkpoint IO stays manual, Planning-only and isolated (population) (2.8s)
+  ok 61 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:48:2 › the last explicit same-mode tab save wins without automatically loading (population) (2.3s)
+  ok 62 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:52:31 › population local checkpoint restores grown cohorts and next-week parity at 1280px (12.2s)
+  ok 63 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:52:31 › population local checkpoint restores grown cohorts and next-week parity at 390px (11.8s)
+  ok 64 [chromium] › tests\e2e\world-session.spec.ts:19:1 › U7: fresh seeds differ but summary and rendered metadata reveal no hidden world data (1.9s)
+  ok 65 [chromium] › tests\e2e\world-session.spec.ts:22:1 › U2: End Week while import is pending rejects both halves and preserves all three slots (1.9s)
+  ok 66 [chromium] › tests\e2e\world-session.spec.ts:25:63 › U3: successful Continue invalidates pending success and its feedback (5.7s)
+  ok 67 [chromium] › tests\e2e\world-session.spec.ts:25:63 › U3: successful Continue invalidates pending invalid JSON and its feedback (5.4s)
+  ok 68 [chromium] › tests\e2e\world-session.spec.ts:25:63 › U3: successful Continue invalidates pending read rejection and its feedback (5.4s)
+  ok 69 [chromium] › tests\e2e\world-session.spec.ts:28:1 › U3: failed Continue leaves a pending valid import eligible (1.4s)
+  ok 70 [chromium] › tests\e2e\world-session.spec.ts:31:1 › U4: only newest reversed import publishes city and outside; older failures cannot replace feedback (2.6s)
+  ok 71 [chromium] › tests\e2e\world-session.spec.ts:34:1 › U5/U6b: wrong-slot bytes never overwrite or fall back at any old bookmark (9.4s)
+  ok 72 [chromium] › tests\e2e\world-session.spec.ts:37:1 › U8: Report locks all four checkpoint controls (909ms)
+  ok 73 [chromium] › tests\e2e\world-session.spec.ts:40:1 › U9: local and portable saves restore the whole populated session and uninterrupted next week (19.5s)
+
+
+  1) [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:23:2 › explicit save replaces only its own slot and file import never writes it (tiles) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.setInputFiles: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Import checkpoint', { exact: true })
+
+
+       at character-life-navigation.helpers.ts:100
+
+       98 |   const inGame = await page.getByTestId('life-shell').count() > 0;
+       99 |   if (inGame) await go(page, 'session');
+    > 100 |   await page.getByLabel('Import checkpoint', { exact: true }).setInputFiles({ name: 'life.json', mimeType: 'application/json', buffer: Buffer.from(encoded.text) });
+          |   ^
+      101 |   await expect(page.getByTestId('life-shell')).toBeVisible();
+      102 |   if (inGame) await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Checkpoint imported. Planning restored.');
+      103 | }
+        at importLife (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:100:3)
+        at start (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\tile-local-checkpoint.spec.ts:22:68)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\tile-local-checkpoint.spec.ts:24:3
+
+    Error Context: test-results\tile-local-checkpoint-expl-0bc32-port-never-writes-it-tiles--chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\tile-local-checkpoint-expl-0bc32-port-never-writes-it-tiles--chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\tile-local-checkpoint-expl-0bc32-port-never-writes-it-tiles--chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:23:2 › explicit save replaces only its own slot and file import never writes it (tiles) 
+  72 passed (54.2m)
+
+Exit code: 1
+Duration seconds: 3286.22
+End UTC: 2026-11-11T10:04:04.738937+00:00

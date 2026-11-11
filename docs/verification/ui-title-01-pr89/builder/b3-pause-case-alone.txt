@@ -1,0 +1,24 @@
+HEAD: c38642bd7135f423d6391a07a3efd15433dc865f
+Tree: 6fb8e7ca0d8486ebdd3797c05ff6b9c3d0b69d4b
+Working tree status:  M packages/ui/src/TileManagement.svelte
+ M tests/e2e/character-life-navigation.spec.ts
+ M tests/e2e/character-life.spec.ts
+ M tests/e2e/tile-local-checkpoint.spec.ts
+ M tests/e2e/world-session.spec.ts
+?? tests/e2e/autosave.spec.ts
+
+UTC: 2026-11-11T10:04:16.123229+00:00
+Environment: CI=1
+Command: npx playwright test tests/e2e/tile-local-checkpoint.spec.ts -g "explicit save replaces.*tiles"
+Port 4173: free
+Port 4174: free
+
+Running 1 test using 1 worker
+
+  ok 1 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:23:2 › explicit save replaces only its own slot and file import never writes it (tiles) (3.8s)
+
+  1 passed (13.0s)
+
+Exit code: 0
+Duration seconds: 20.02
+End UTC: 2026-11-11T10:04:36.248510+00:00

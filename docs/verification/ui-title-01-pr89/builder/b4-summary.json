@@ -1,0 +1,79 @@
+{
+  "head": "270ad3f1a2269101d340996d0116dad926912949",
+  "tree": "811aad739b0cb2cc4731b3378b156f535584a6d5",
+  "base": "e9b73b5ae945ccedf2af3a94addd565023825017",
+  "gates": [
+    {
+      "label": "b4-01-diff",
+      "command": "git diff --check origin/main...HEAD",
+      "exitCode": 0,
+      "seconds": 0.12,
+      "startUtc": "2026-11-11T10:09:28.925057+00:00",
+      "endUtc": "2026-11-11T10:09:29.136282+00:00"
+    },
+    {
+      "label": "b4-02-lint",
+      "command": "npm run lint",
+      "exitCode": 0,
+      "seconds": 13.74,
+      "startUtc": "2026-11-11T10:09:29.325526+00:00",
+      "endUtc": "2026-11-11T10:09:43.160957+00:00"
+    },
+    {
+      "label": "b4-03-typecheck",
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "seconds": 33.63,
+      "startUtc": "2026-11-11T10:09:43.410243+00:00",
+      "endUtc": "2026-11-11T10:10:17.163830+00:00"
+    },
+    {
+      "label": "b4-04-architecture",
+      "command": "npm run check:architecture",
+      "exitCode": 0,
+      "seconds": 7.39,
+      "startUtc": "2026-11-11T10:10:17.438719+00:00",
+      "endUtc": "2026-11-11T10:10:24.962768+00:00"
+    },
+    {
+      "label": "b4-05-architecture-tests",
+      "command": "npm run test:architecture",
+      "exitCode": 0,
+      "seconds": 60.7,
+      "startUtc": "2026-11-11T10:10:25.242830+00:00",
+      "endUtc": "2026-11-11T10:11:26.082999+00:00"
+    },
+    {
+      "label": "b4-06-unit",
+      "command": "npm test",
+      "exitCode": 0,
+      "seconds": 46.41,
+      "startUtc": "2026-11-11T10:11:26.340388+00:00",
+      "endUtc": "2026-11-11T10:12:12.870345+00:00"
+    },
+    {
+      "label": "b4-07-build",
+      "command": "npm run build",
+      "exitCode": 0,
+      "seconds": 20.31,
+      "startUtc": "2026-11-11T10:12:13.093969+00:00",
+      "endUtc": "2026-11-11T10:12:33.516244+00:00"
+    },
+    {
+      "label": "b4-08-smoke",
+      "command": "npm run test:smoke",
+      "exitCode": 0,
+      "seconds": 2019.7,
+      "startUtc": "2026-11-11T10:12:33.758000+00:00",
+      "endUtc": "2026-11-11T10:46:13.572868+00:00"
+    }
+  ],
+  "architectureFiles": 101,
+  "architectureTests": 154,
+  "unitFiles": 97,
+  "unitTests": 2099,
+  "smokePassed": 326,
+  "smokeFailed": 0,
+  "smokeSkipped": 0,
+  "smokePlaywrightDuration": "33.4m"
+}

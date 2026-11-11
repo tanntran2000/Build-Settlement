@@ -1,0 +1,28 @@
+{
+  "head": "270ad3f1a2269101d340996d0116dad926912949",
+  "workingTreeStatus": "",
+  "status": "Measured production build artifacts; source is clean at the recorded committed HEAD",
+  "method": "Node node:zlib gzipSync default compression, matching Vite build output; decimal kB; rounded main baselines supplied in Builder brief",
+  "assets": [
+    {
+      "file": "packages\\ui\\dist\\assets\\index-CBdm3dfb.js",
+      "bytes": 312461,
+      "gzipBytes": 101761,
+      "gzipKB": 101.761,
+      "baselineKB": 101.41,
+      "growthKB": 0.3509999999999991,
+      "growthPercent": 0.34611971205995573,
+      "sha256": "07665580b238512e665d51fd7d375a4a9d214c0844e06fd8bf86c2d5b2e31f65"
+    },
+    {
+      "file": "packages\\ui\\dist\\assets\\index-Dt3mz1CC.css",
+      "bytes": 28024,
+      "gzipBytes": 5792,
+      "gzipKB": 5.792,
+      "baselineKB": 5.79,
+      "growthKB": 0.0019999999999997797,
+      "growthPercent": 0.03454231433506205,
+      "sha256": "bbbbd75ed4fef4f058bee314d90a7a913d450fad054e4aa6dcadb73acc7d91df"
+    }
+  ]
+}

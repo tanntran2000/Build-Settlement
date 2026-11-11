@@ -1,0 +1,62 @@
+HEAD: c38642bd7135f423d6391a07a3efd15433dc865f
+Tree: 6fb8e7ca0d8486ebdd3797c05ff6b9c3d0b69d4b
+Working tree status:  M packages/ui/src/TileManagement.svelte
+ M tests/e2e/character-life-navigation.spec.ts
+ M tests/e2e/character-life.spec.ts
+ M tests/e2e/tile-local-checkpoint.spec.ts
+ M tests/e2e/world-session.spec.ts
+?? tests/e2e/autosave.spec.ts
+
+UTC: 2026-11-11T10:04:36.383429+00:00
+Environment: CI=1
+Command: npx playwright test tests/e2e/tile-local-checkpoint.spec.ts
+Port 4173: free
+Port 4174: free
+
+Running 39 tests using 1 worker
+
+  ok  1 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:17:1 › saves a multiweek plan locally, continues after reload and resumes the same economics (24.9s)
+  ok  2 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:23:2 › explicit save replaces only its own slot and file import never writes it (tiles) (4.8s)
+  ok  3 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects missing while preserving full state and both slots (tiles) (2.0s)
+  ok  4 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects malformed while preserving full state and both slots (tiles) (1.9s)
+  ok  5 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects empty object while preserving full state and both slots (tiles) (2.1s)
+  ok  6 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects opposite mode while preserving full state and both slots (tiles) (2.9s)
+  ok  7 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects version while preserving full state and both slots (tiles) (2.1s)
+  ok  8 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects ruleset while preserving full state and both slots (tiles) (1.9s)
+  ok  9 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects map while preserving full state and both slots (tiles) (1.8s)
+  ok 10 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects negative stock while preserving full state and both slots (tiles) (3.3s)
+  ok 11 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects report phase while preserving full state and both slots (tiles) (2.6s)
+  ok 12 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects oversize while preserving full state and both slots (tiles) (2.0s)
+  ok 13 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects revision overflow while preserving full state and both slots (tiles) (2.0s)
+  ok 14 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:30:2 › blocked or full storage preserves full state, both slots and file backups (tiles) (3.5s)
+  ok 15 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:38:49 › a delayed file import cannot overwrite a successful Continue (tiles) (1.8s)
+  ok 16 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:38:49 › a late file read rejection cannot replace Continue feedback (tiles) (1.9s)
+  ok 17 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:41:2 › failed Continue leaves a pending valid import usable (tiles) (1.5s)
+  ok 18 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:44:2 › checkpoint IO stays manual, Planning-only and isolated (tiles) (2.9s)
+  ok 19 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:48:2 › the last explicit same-mode tab save wins without automatically loading (tiles) (2.1s)
+  ok 20 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:23:2 › explicit save replaces only its own slot and file import never writes it (population) (3.0s)
+  ok 21 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects missing while preserving full state and both slots (population) (1.8s)
+  ok 22 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects malformed while preserving full state and both slots (population) (1.9s)
+  ok 23 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects empty object while preserving full state and both slots (population) (1.9s)
+  ok 24 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects opposite mode while preserving full state and both slots (population) (1.9s)
+  ok 25 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects version while preserving full state and both slots (population) (1.9s)
+  ok 26 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects ruleset while preserving full state and both slots (population) (1.9s)
+  ok 27 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects map while preserving full state and both slots (population) (2.2s)
+  ok 28 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects negative stock while preserving full state and both slots (population) (2.2s)
+  ok 29 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects report phase while preserving full state and both slots (population) (2.0s)
+  ok 30 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects oversize while preserving full state and both slots (population) (2.3s)
+  ok 31 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:26:164 › rejects revision overflow while preserving full state and both slots (population) (1.9s)
+  ok 32 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:30:2 › blocked or full storage preserves full state, both slots and file backups (population) (3.4s)
+  ok 33 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:38:49 › a delayed file import cannot overwrite a successful Continue (population) (1.7s)
+  ok 34 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:38:49 › a late file read rejection cannot replace Continue feedback (population) (1.6s)
+  ok 35 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:41:2 › failed Continue leaves a pending valid import usable (population) (1.7s)
+  ok 36 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:44:2 › checkpoint IO stays manual, Planning-only and isolated (population) (2.7s)
+  ok 37 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:48:2 › the last explicit same-mode tab save wins without automatically loading (population) (2.2s)
+  ok 38 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:52:31 › population local checkpoint restores grown cohorts and next-week parity at 1280px (15.1s)
+  ok 39 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:52:31 › population local checkpoint restores grown cohorts and next-week parity at 390px (15.1s)
+
+  39 passed (2.5m)
+
+Exit code: 0
+Duration seconds: 154.16
+End UTC: 2026-11-11T10:07:10.660178+00:00

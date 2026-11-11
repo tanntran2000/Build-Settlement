@@ -1,0 +1,149 @@
+HEAD: e9b73b5ae945ccedf2af3a94addd565023825017
+Tree: a870abb05ee16e4949fef8c3da1ffe7cc4e16c27
+UTC: 2026-11-11T06:53:05.134086+00:00
+Command: npx playwright test tests/e2e/title.spec.ts -g B1
+
+Running 4 tests using 1 worker
+
+(node:30452) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\title.spec.ts:5:3 › B1 in-game Options › Options plaque opens the shared dialog (1.0m)
+(node:56512) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [chromium] › tests\e2e\title.spec.ts:10:3 › B1 in-game Options › Options changes apply immediately in game (1.0m)
+(node:49028) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 [chromium] › tests\e2e\title.spec.ts:17:3 › B1 in-game Options › About downloads the real error log in game (1.0m)
+(node:56168) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  4 [chromium] › tests\e2e\title.spec.ts:27:3 › B1 in-game Options › Session no longer renders ErrorLog (6.5s)
+
+
+  1) [chromium] › tests\e2e\title.spec.ts:5:3 › B1 in-game Options › Options plaque opens the shared dialog 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('[data-life-nav-zone="bottom"]').getByRole('button', { name: 'Options', exact: true })
+
+
+      4 |   test.beforeEach(async ({ page }) => { await page.goto('/'); await importLife(page, makeLife()); });
+      5 |   test('Options plaque opens the shared dialog', async ({ page }) => {
+    > 6 |     await page.locator('[data-life-nav-zone="bottom"]').getByRole('button', { name: 'Options', exact: true }).click();
+        |                                                                                                               ^
+      7 |     await expect(page.getByRole('dialog', { name: 'Options', exact: true })).toBeVisible();
+      8 |     await page.keyboard.press('Escape'); await expect(button(page, 'Options')).toBeFocused();
+      9 |   });
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:6:111
+
+    Error Context: test-results\title-B1-in-game-Options-O-50afc-que-opens-the-shared-dialog-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-B1-in-game-Options-O-50afc-que-opens-the-shared-dialog-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-B1-in-game-Options-O-50afc-que-opens-the-shared-dialog-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\title.spec.ts:10:3 › B1 in-game Options › Options changes apply immediately in game 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Options', exact: true })
+
+
+       9 |   });
+      10 |   test('Options changes apply immediately in game', async ({ page }) => {
+    > 11 |     await button(page, 'Options').click();
+         |                                   ^
+      12 |     await page.getByRole('radio', { name: 'Large', exact: true }).check();
+      13 |     expect(await page.getByTestId('life-shell').evaluate(el => getComputedStyle(el).getPropertyValue('--px').trim())).toBe('3px');
+      14 |     await page.getByRole('checkbox', { name: 'Reduce motion', exact: true }).check();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:11:35
+
+    Error Context: test-results\title-B1-in-game-Options-O-b5c95-s-apply-immediately-in-game-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-B1-in-game-Options-O-b5c95-s-apply-immediately-in-game-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-B1-in-game-Options-O-b5c95-s-apply-immediately-in-game-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests\e2e\title.spec.ts:17:3 › B1 in-game Options › About downloads the real error log in game 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Options', exact: true })
+
+
+      17 |   test('About downloads the real error log in game', async ({ page }) => {
+      18 |     await page.evaluate(() => window.dispatchEvent(new ErrorEvent('error')));
+    > 19 |     await button(page, 'Options').click();
+         |                                   ^
+      20 |     const about = page.getByRole('region', { name: 'About', exact: true });
+      21 |     await expect(about.getByText('v0.1.0 Alpha', { exact: true })).toBeVisible();
+      22 |     const waiting = page.waitForEvent('download'); await about.getByRole('button', { name: 'Download error log', exact: true }).click();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:19:35
+
+    Error Context: test-results\title-B1-in-game-Options-A-6c276--the-real-error-log-in-game-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-B1-in-game-Options-A-6c276--the-real-error-log-in-game-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-B1-in-game-Options-A-6c276--the-real-error-log-in-game-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests\e2e\title.spec.ts:27:3 › B1 in-game Options › Session no longer renders ErrorLog 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('[data-life-view="session"] [aria-label="Error log"]')
+    Expected: 0
+    Received: 1
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" locator('[data-life-view="session"] [aria-label="Error log"]') with timeout 5000ms
+      - waiting for locator('[data-life-view="session"] [aria-label="Error log"]')
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      27 |   test('Session no longer renders ErrorLog', async ({ page }) => {
+      28 |     await go(page, 'session');
+    > 29 |     await expect(page.locator('[data-life-view="session"] [aria-label="Error log"]')).toHaveCount(0);
+         |                                                                                       ^
+      30 |     await button(page, 'Options').click();
+      31 |     await expect(page.locator('[aria-label="Error log"]')).toHaveCount(1);
+      32 |   });
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:29:87
+
+    Error Context: test-results\title-B1-in-game-Options-Session-no-longer-renders-ErrorLog-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\title-B1-in-game-Options-Session-no-longer-renders-ErrorLog-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\title-B1-in-game-Options-Session-no-longer-renders-ErrorLog-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [chromium] › tests\e2e\title.spec.ts:5:3 › B1 in-game Options › Options plaque opens the shared dialog 
+    [chromium] › tests\e2e\title.spec.ts:10:3 › B1 in-game Options › Options changes apply immediately in game 
+    [chromium] › tests\e2e\title.spec.ts:17:3 › B1 in-game Options › About downloads the real error log in game 
+    [chromium] › tests\e2e\title.spec.ts:27:3 › B1 in-game Options › Session no longer renders ErrorLog 
+
+Exit code: 1
+Duration seconds: 215.35
+End UTC: 2026-11-11T06:56:40.662243+00:00

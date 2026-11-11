@@ -1,0 +1,62 @@
+HEAD: 8fc6b4bb2c0f33fe19a6eaa12bec7cca6e4d07ed
+Tree: 09616b0302e43dd0332275faede8a320268bcedd
+Working tree status:  M packages/ui/src/CharacterLifeShell.svelte
+ M packages/ui/src/TileManagement.svelte
+ M tests/e2e/character-life-navigation.spec.ts
+ M tests/e2e/character-life.spec.ts
+ M tests/e2e/tile-local-checkpoint.spec.ts
+ M tests/e2e/world-session.spec.ts
+?? tests/e2e/autosave.spec.ts
+
+UTC: 2026-11-11T08:21:15.560958+00:00
+Environment: CI=1
+Command: npx playwright test tests/e2e/character-life-navigation.spec.ts -g "player flows at 375px.*turn pointer repeats remain guarded"
+Port 4173: free
+Port 4174: free
+
+Running 1 test using 1 worker
+
+  x  1 [chromium] › tests\e2e\character-life-navigation.spec.ts:1218:5 › player flows at 375px › turn pointer repeats remain guarded (7.7s)
+
+
+  1) [chromium] › tests\e2e\character-life-navigation.spec.ts:1218:5 › player flows at 375px › turn pointer repeats remain guarded 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  locator('#life-reports-heading')
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" locator('#life-reports-heading') with timeout 5000ms
+      - waiting for locator('#life-reports-heading')
+        14 × locator resolved to <h2 tabindex="-1" class="svelte-w9sbey" id="life-reports-heading">Report</h2>
+           - unexpected value "inactive"
+
+
+      1221 |       await watchTurnStatus(page);
+      1222 |       const end = page.getByTestId('life-end-week');
+    > 1223 |       await end.dblclick(); await expect(page.locator('#life-reports-heading')).toBeFocused();
+           |                                                                                 ^
+      1224 |       await expect(shell).toHaveAttribute('data-revision', String(revision + 1));
+      1225 |       const next = page.getByRole('button', { name: 'Plan next week', exact: true });
+      1226 |       await next.scrollIntoViewIfNeeded();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.spec.ts:1223:81
+
+    Error Context: test-results\character-life-navigation--111d9-nter-repeats-remain-guarded-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\character-life-navigation--111d9-nter-repeats-remain-guarded-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\character-life-navigation--111d9-nter-repeats-remain-guarded-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\character-life-navigation.spec.ts:1218:5 › player flows at 375px › turn pointer repeats remain guarded 
+
+Exit code: 1
+Duration seconds: 39.20
+End UTC: 2026-11-11T08:21:54.955044+00:00
