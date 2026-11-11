@@ -45,3 +45,21 @@ File: `gates-1-7-e8a1fec.txt`. It is the full raw output with UTC times, HEAD/tr
 
 ## Integrity
 `SHA256SUMS.txt` lists the other files, hashed from the committed git blobs.
+
+## Refresh onto the new main (head `352a5c9`)
+
+dot held G5 because PR #88 was behind main after #89 merged. dot asked for the branch to be updated in place, with no new PR, no force push and no README edit.
+
+- **New head:** `352a5c9623450b17cc75cb35a6633aceb5a4fddd`, a normal merge of main `d2bb71f` into `docs/readme-vision`.
+  - Tree: `1486b1ed5dc0caedc63f6e88d01b23dd733d2e04`.
+  - Parents: `e8a1fec` and `d2bb71f`.
+- **README unchanged.**
+  - `git diff --stat origin/main 352a5c9` shows `README.md` only.
+  - `352a5c9:README.md` is blob `ddf164b2a663c99f5667f98f30ce699be427fc2b`, the same blob the owner approved.
+- **Local gates 1–7 at `352a5c9`:** `gates-1-7-352a5c9.txt`, every gate exit 0 (154 architecture tests, 2,099 unit tests). A timestamped note at the end records that the local smoke was N/A and names the same-head CI run used instead.
+- **CI at `352a5c9`:** Quality Gate run 43017556046, job 130512302994: **success**, Vitest 97 files, Playwright smoke **326 passed (15.6m)**.
+- **Review at `352a5c9`:** Astra **PASS** (`astra-352a5c9.txt`, same thread `mcp:bbd4e530-43b1-44ff-817d-068c5055a8f4`). Astra confirmed:
+  - the README is unchanged, with an empty README diff from `e8a1fec`;
+  - the merge brings in only main's changes;
+  - `git show --remerge-diff` is empty, so there are no conflict-resolution edits;
+  - the #89 features do not make "Built so far" inaccurate.
