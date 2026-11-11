@@ -52,7 +52,7 @@
 </script>
 
 {#if session}
-  <TileManagement lifeMode initialLife={session} onnewgame={() => { session = null; readSlot(); newGame(); }} />
+  <TileManagement lifeMode initialLife={session} onnewgame={() => { session = null; readSlot(); newGame(); }} onexit={() => { importRead++; session = null; screen = 'start'; error = ''; readSlot(); }} />
 {:else if screen === 'create'}
   <main lang="en">
     <header class="card"><h1>Character Life</h1></header>

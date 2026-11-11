@@ -211,3 +211,37 @@ test('Quit invalidates a pending checkpoint file read', async ({ page }) => {
   await expect(page.getByText('You can close this tab now.', { exact: true })).toBeVisible();
   await expect(page.getByTestId('life-shell')).toHaveCount(0);
 });
+
+test.describe('B2 Main menu', () => {
+  test.beforeEach(async ({ page }) => { await page.goto('/'); await importLife(page, makeLife()); });
+  test('Main menu saves and refreshes focused Continue on the title', async ({ page }) => {
+    const menu = button(page, 'Main menu'); await expect(menu).toBeVisible();
+    expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBeNull();
+    const before = await exportLife(page); await menu.click();
+    await expect(title(page)).toBeVisible(); await expect(button(page, 'Continue')).toBeEnabled(); await expect(button(page, 'Continue')).toBeFocused();
+    expect(JSON.parse((await page.evaluate(key => localStorage.getItem(key), KEY))!).state).toEqual(before);
+    await button(page, 'Continue').click(); expect(await exportLife(page)).toEqual(before);
+  });
+  test('Main menu is locked with its reason throughout Report', async ({ page }) => {
+    const menu = button(page, 'Main menu'); await expect(menu).toBeVisible();
+    await page.getByTestId('life-end-week').click();
+    await expect(menu).toHaveAttribute('aria-disabled', 'true');
+    await expect(page.getByText('Plan next week first.', { exact: true })).toBeVisible();
+    await menu.click({ force: true }); await expect(page.getByTestId('life-shell')).toBeVisible();
+    await expect(page.locator('[data-life-view="reports"]')).toBeVisible();
+    expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBeNull();
+  });
+  test('Main menu write failure keeps Planning, the session and the previous save', async ({ page }) => {
+    const menu = button(page, 'Main menu'); await expect(menu).toBeVisible();
+    const before = await exportLife(page), prior = bytes(makeLife(54321));
+    await page.evaluate(({ key, prior }) => {
+      localStorage.setItem(key, prior); const set = Storage.prototype.setItem;
+      Storage.prototype.setItem = function(k, value) { if (k === key) throw Error('quota'); return set.call(this, k, value); };
+    }, { key: KEY, prior });
+    await menu.click();
+    await expect(page.getByRole('alert')).toContainText('Could not save in this browser');
+    await expect(page.getByTestId('life-shell')).toBeVisible(); await expect(page.locator('aside')).toContainText('Planning');
+    expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBe(prior);
+    expect(await exportLife(page)).toEqual(before);
+  });
+});

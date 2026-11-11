@@ -42,6 +42,7 @@ for (const width of [320, 375, 1280, 1600]) {
     }
     await tabTo(page, page.locator('#life-nav-help'));
     await page.keyboard.press('Tab'); await expect(page.locator('#life-nav-options')).toBeFocused();
+    await page.keyboard.press('Tab'); await expect(page.locator('#life-nav-main-menu')).toBeFocused();
     await page.keyboard.press('Tab'); await expect(page.locator('#life-nav-city')).toBeFocused();
     await page.keyboard.press('Tab'); await expect(page.locator('#life-nav-characters')).toBeFocused();
     await go(page, 'city');
@@ -104,7 +105,7 @@ for (const width of [375, 1280]) {
     await expect(nav.locator('[data-life-nav-zone]')).toHaveCount(3);
     await expect(nav.locator('[data-life-nav-zone="top"] button[id^="life-nav-"]')).toHaveText(['Information']);
     await expect(nav.locator('[data-life-nav-zone="middle"] button')).toHaveText(['Player', 'Population']);
-    await expect(nav.locator('[data-life-nav-zone="bottom"] button')).toHaveText(['Session', 'Help', 'Options']);
+    await expect(nav.locator('[data-life-nav-zone="bottom"] button')).toHaveText(['Session', 'Help', 'Options', 'Main menu']);
     await expect(nav.locator('summary,details,svg')).toHaveCount(0);
     await expect(page.locator('aside [data-testid^="trial-stock-"]')).toHaveCount(0);
     for (const name of cityWindowNames) {
@@ -577,7 +578,7 @@ test('life shell navigation is read-only', async ({ page }) => {
   await importLife(page, initial);
   const shell = page.getByTestId('life-shell');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Character Life');
-  await expect(page.getByRole('navigation', { name: 'Main' }).locator('[id^="life-nav-"]')).toHaveText(['Information', 'Player', 'Population', 'Session', 'Help', 'Options']);
+  await expect(page.getByRole('navigation', { name: 'Main' }).locator('[id^="life-nav-"]')).toHaveText(['Information', 'Player', 'Population', 'Session', 'Help', 'Options', 'Main menu']);
   await expect(page.locator('[data-life-view]')).toHaveCount(5);
   const beforeSession = await exportLife(page), beforeRevision = await shell.getAttribute('data-revision');
   await go(page, 'city');

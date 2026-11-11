@@ -19,6 +19,7 @@
   export let unapplied: { id: string; label: string; onopen: () => void }[];
   export let onchoose: (cardId:string,option:import('@haven/core').CardOption)=>void;
   export let onendweek: (opener: HTMLButtonElement) => void;
+  export let onmainmenu: () => void;
   export let playerInfo: Snippet;
   export let city: Snippet;
   export let characters: Snippet;
@@ -83,6 +84,8 @@
           <button class="ledger-plaque" id={`life-nav-${view.id}`} aria-current={destination === view.id ? 'page' : undefined} onclick={() => { destination = view.id; }}>{view.label}</button>
         {/each}
         <button class="ledger-plaque" id="life-nav-options" aria-haspopup="dialog" onclick={() => { optionsOpen = true; }}>Options</button>
+        <button class="ledger-plaque" id="life-nav-main-menu" aria-disabled={locked} aria-describedby={locked ? 'life-main-menu-reason' : undefined} onclick={() => { if (!locked) onmainmenu(); }}>Main menu</button>
+        {#if locked}<p id="life-main-menu-reason">Plan next week first.</p>{/if}
       </div>
     </nav>
   </aside>

@@ -15,6 +15,7 @@
   import { clearFallenCharacterLifeCheckpoint, prepareCharacterLifeLoad, readLocalCharacterLife, saveLocalCharacterLife, isPlayableCheckpoint, OLD_CHECKPOINT_MESSAGE } from './character-life-session.js';
 
   export let onnewgame:()=>void;
+  export let onexit:()=>void;
   export let lifeMode = true;
   export let initialLife: CharacterLifeSessionState;
   let state = initialLife.city;
@@ -196,12 +197,18 @@
     if (!result.success) { checkpointError(result.message); return; }
     loadWorldSession(result.state, state.revision, 'Local checkpoint loaded. Planning restored.', true);
   }
+  function mainMenu() {
+    if (checkpointLocked) return;
+    const result = saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+    if (!result.success) { checkpointError(result.message); return; }
+    onexit();
+  }
 </script>
 
 {#if state.society?.crisis.stage === 'fallen'}
   <CityFallen fallCause={state.society.crisis.fallCause!} weeks={state.world.week-1} {onnewgame} />
 {:else if lifeMode && outside && npcs && player && profiles}
-  <CharacterLifeShell bind:this={lifeShell} {state} {report} bind:destination bind:activeWindow {error} status={lifeStatus} {unapplied} onchoose={(cardId,option)=>command('CHOOSE_CARD_OPTION',{cardId,option})} onendweek={endLifeWeek}>
+  <CharacterLifeShell bind:this={lifeShell} {state} {report} bind:destination bind:activeWindow {error} status={lifeStatus} {unapplied} onchoose={(cardId,option)=>command('CHOOSE_CARD_OPTION',{cardId,option})} onendweek={endLifeWeek} onmainmenu={mainMenu}>
     {#snippet playerInfo()}
       <p>{player!.character.name}</p><p>Leader of Haven</p>
     {/snippet}
