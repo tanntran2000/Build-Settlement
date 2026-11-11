@@ -1,5 +1,26 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## UI-TITLE-01 — PR A #87 G6 (2026-11-11 UTC)
+
+**G6 PASS (Claude, Orchestrator/Tester).**
+
+- **Merge.** PR #87 (`feat(ui): title screen and Options (UI-TITLE-01 PR A)`) was merged by dot under G5 at 2026-11-11T06:24:05Z.
+  - Merge/main commit: `e9b73b5ae945ccedf2af3a94addd565023825017`.
+  - Parents: `5290120` and the accepted head `3bed77422e349f1226f6444b15d83ad27883a1bc`.
+- **Trees.** The merge tree `a870abb05ee16e4949fef8c3da1ffe7cc4e16c27` is identical to the accepted head tree.
+- **Main CI.** Quality Gate run 42972159720, job 130362892898 (push, exact merge SHA), SUCCESS: 97 files, 2,099/2,099 unit tests, and 315/315 smoke (10.6 min).
+- **Pre-merge evidence.** CI run 42966965142 was SUCCESS at `3bed774`. The evidence folder is `docs/verification/ui-title-01-pr87/` on `docs/ui-ledger-redesign`, at `2e07abe`. It holds:
+  - Claude's gates 1–7 and the `CI=1` smoke (315/315) at `3bed774`;
+  - the browser pass;
+  - the Builder's RED/GREEN logs;
+  - both Astra verdicts (thread `mcp:c5b18236`): CHANGES REQUESTED at `6e5bffe`, then PASS at `3bed774`.
+- **Fixes before the PR**, each with its regression test RED first, then the fix:
+  - `6e5bffe`: re-read the slot after a fallen city;
+  - `3bed774`: Quit cancels a pending checkpoint read.
+- **Owner-accepted deviation.** Task A2 did not run the complete test list RED before the components were implemented. Compliance with plan lines 175–184 cannot be established, and the later RED runs are not pre-implementation RED. dot held G5 on this point, and the owner (Tân) decided, verbatim: "Accept the deviation". The record is in the evidence README (`dccb32a`).
+- **Owner decisions** (verbatim): "Approve G1" (spec v0.2), "Approve, Builder A", "Push and open PR", "Accept the deviation".
+- **Still open in UI-TITLE-01:** PR B, covering the in-game Options plaque, Main menu and autosave after Plan next week.
+
 ## AGENTS.md — PR #86 G6 (2026-11-10 UTC)
 
 **G6 PASS (Claude, Orchestrator/Tester).**
