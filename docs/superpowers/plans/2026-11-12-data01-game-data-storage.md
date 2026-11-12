@@ -15,6 +15,13 @@
 
 **Plan approval:** the owner (Tân) approved this plan on 2026-11-12, including Decisions 1, 4 and 8, verbatim: "Approve, Builder A".
 
+**Plan correction 3:** three gaps, found by the Builder:
+  - add `crisis-checkpoint.test.ts`, with mechanical await edits;
+  - treat `character-life-session.test.ts` as an existing file and merge the new cases in;
+  - migrate the malformed-checkpoint e2e case to its record-level equivalent (A3 Step 3).
+
+  Owner (Tân), 2026-11-12, verbatim: "Approve, restart xhigh".
+
 **Plan correction 2:** the call-site `await`s move from A3 Step 2 into A2 (new Step 3b), so that A2 can pass typecheck and build at its own commit. A3 keeps its full RED e2e list, the title gating and the e2e migration. The Builder held on this ordering. Owner (Tân), 2026-11-12, verbatim: "Yes, move to A2".
 
 **Plan correction:** the A1 Step 1 count changes from 5 to 4 character records, to match Decision 2. The Builder held on this mismatch. Owner (Tân), 2026-11-12, verbatim: "Fix to 4, continue".
@@ -140,7 +147,8 @@ PR A  packages/persistence/src/game-store.ts            (new: port types, names,
       packages/persistence/src/__tests__/game-store-suite.ts, game-store.test.ts, session-records.test.ts (new)
       packages/ui/src/indexeddb-store.ts                (new: createIndexedDbGameStore)
       packages/ui/src/character-life-session.ts         (async API, migration)
-      packages/ui/src/__tests__/character-life-session.test.ts (new)
+      packages/ui/src/__tests__/character-life-session.test.ts (EXISTING: merge the new cases in; existing cases get mechanical await edits only)
+      packages/ui/src/__tests__/crisis-checkpoint.test.ts (mechanical await edits only)
       packages/ui/src/CharacterLifeApp.svelte, TileManagement.svelte (await the async API only)
       tests/e2e/storage.helpers.ts (new); tests/e2e/*.spec.ts and *.helpers.ts (mechanical edits, listed)
 PR B  packages/core/src/data/*.json, packages/core/src/data/validate.ts (new)
@@ -218,7 +226,7 @@ export function runGameStoreSuite(name: string, make: () => GameStore): void; //
 
 ### Task A2: IndexedDB adapter and async checkpoint service
 
-**Files:** `packages/ui/src/indexeddb-store.ts`, `character-life-session.ts`, `__tests__/character-life-session.test.ts`, and the **call sites only** in `CharacterLifeApp.svelte` and `TileManagement.svelte` (moved here from A3; see the plan correction).
+**Files:** `packages/ui/src/indexeddb-store.ts`, `character-life-session.ts`, the **existing** `__tests__/character-life-session.test.ts` (new cases merged in) and `__tests__/crisis-checkpoint.test.ts` (await edits only), and the **call sites only** in `CharacterLifeApp.svelte` and `TileManagement.svelte` (moved here from A3; see the plan correction).
 
 **Interfaces:**
 - **Consumes** A1.
@@ -266,6 +274,11 @@ export function runGameStoreSuite(name: string, make: () => GameStore): void; //
   Run them and record RED.
 - [ ] **Step 2:** apply the title gating from Decision 7. The call-site `await`s already landed in A2 Step 3b.
 - [ ] **Step 3:** migrate every existing e2e storage access with the helpers or marks. Make mechanical edits only, list every edited line, and run each edited spec by name.
+  - **Exception, owner-approved:** the malformed-checkpoint case at `character-life-navigation.spec.ts:1042-1044` used to write `'{'` into the legacy key after load and assert that exact text survived. It now has an equivalent form:
+    - corrupt one stored record with a new helper `writeRawRecord(page, table, id, value)`, for example the `city` record value set to `'{'`;
+    - assert that the load is refused with the same message;
+    - assert that the raw record is byte-identical afterwards (`readStoredRecords`).
+  - List that edit as before → after, with the reason.
 - [ ] **Step 4:** GREEN for `storage.spec.ts` plus every edited spec. Then typecheck, `npm test` and build.
 - [ ] **Step 5:** commit `feat(ui): saves go to the IndexedDB game store`.
 
