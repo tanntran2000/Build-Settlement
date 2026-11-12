@@ -15,6 +15,8 @@
 
 **Plan approval:** the owner (Tân) approved this plan on 2026-11-12, including Decisions 1, 4 and 8, verbatim: "Approve, Builder A".
 
+**Plan correction:** the A1 Step 1 count changes from 5 to 4 character records, to match Decision 2. The Builder held on this mismatch. Owner (Tân), 2026-11-12, verbatim: "Fix to 4, continue".
+
 ## Global Constraints
 
 - **LAW-02:** `core` and `simulation` stay pure. IndexedDB code lives only in `packages/ui`. `persistence` imports only `core`, and the package graph in `tools/check-architecture.mjs` is unchanged.
@@ -197,7 +199,7 @@ export function runGameStoreSuite(name: string, make: () => GameStore): void; //
 - [ ] **Step 1: write the RED tests.**
   - `session-records.test.ts`:
     - for each existing character-life fixture, the round trip `serializeCharacterLifeSave(recordsToSession(sessionToRecords('main', s))).text === serializeCharacterLifeSave(s).text`;
-    - the Player and 3 NPCs give 5 character records;
+    - the Player and 3 NPCs give 4 character records (one per character, Decision 2);
     - `recordsToSession` with a corrupted `characters` record throws `StoreRecordError` whose `ref === 'characters:npc_starter_1'`.
   - `game-store.test.ts` calls `runGameStoreSuite('memory', createMemoryGameStore)`. The suite checks:
     - write then read;
