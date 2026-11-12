@@ -1,0 +1,146 @@
+{
+  "head": "773e0c6cc381bb946f366585da7ef5e9c2da813f",
+  "tree": "36fab3ab2fd4717eaf433a7b55b922083cdfcfa7",
+  "base": "50df817adf38dc320b4ade634bfa8b01f6283a59",
+  "utc": "2026-11-12T13:02:47.332Z",
+  "clean": true,
+  "baseline": {
+    "passed": 9,
+    "failed": 0,
+    "exit": 0,
+    "wallMs": 66007,
+    "reproduced": false
+  },
+  "green": {
+    "passed": 9,
+    "failed": 0,
+    "exit": 0,
+    "wallMs": 68591
+  },
+  "gates": [
+    {
+      "label": "gate1",
+      "exit": 0,
+      "wallMs": 204
+    },
+    {
+      "label": "gate2",
+      "exit": 0,
+      "wallMs": 11763
+    },
+    {
+      "label": "gate3",
+      "exit": 0,
+      "wallMs": 29582
+    },
+    {
+      "label": "gate4",
+      "exit": 0,
+      "wallMs": 6947
+    },
+    {
+      "label": "gate5",
+      "exit": 0,
+      "wallMs": 47060
+    },
+    {
+      "label": "gate6",
+      "exit": 0,
+      "wallMs": 48100
+    },
+    {
+      "label": "gate7",
+      "exit": 0,
+      "wallMs": 20550
+    },
+    {
+      "label": "smoke",
+      "exit": 0,
+      "wallMs": 1952771
+    }
+  ],
+  "unit": {
+    "passed": 2192,
+    "files": 99
+  },
+  "architecture": 154,
+  "smoke": {
+    "passed": 350,
+    "reportedDuration": "32.4m",
+    "wallMs": 1952771
+  },
+  "cases": [
+    {
+      "name": "B3 rebellion is one sealed letter with unchanged fall behavior",
+      "baseline": "PASS",
+      "baselineDuration": "4.8s",
+      "green": "PASS",
+      "greenDuration": "3.7s"
+    },
+    {
+      "name": "B3 assassination is one sealed letter with unchanged fall behavior",
+      "baseline": "PASS",
+      "baselineDuration": "1.8s",
+      "green": "PASS",
+      "greenDuration": "2.5s"
+    },
+    {
+      "name": "one slot round-trips and rejects older or other-mode imports atomically",
+      "baseline": "PASS",
+      "baselineDuration": "3.4s",
+      "green": "PASS",
+      "greenDuration": "4.2s"
+    },
+    {
+      "name": "save, continue, export and import preserve posts and resolved names; slots stay separate",
+      "baseline": "PASS",
+      "baselineDuration": "5.0s",
+      "green": "PASS",
+      "greenDuration": "4.1s"
+    },
+    {
+      "name": "U2: End Week while import is pending rejects both halves and preserves all three slots",
+      "baseline": "PASS",
+      "baselineDuration": "2.3s",
+      "green": "PASS",
+      "greenDuration": "2.4s"
+    },
+    {
+      "name": "U3: successful Continue invalidates pending success and its feedback",
+      "baseline": "PASS",
+      "baselineDuration": "6.0s",
+      "green": "PASS",
+      "greenDuration": "5.6s"
+    },
+    {
+      "name": "U3: successful Continue invalidates pending invalid JSON and its feedback",
+      "baseline": "PASS",
+      "baselineDuration": "6.1s",
+      "green": "PASS",
+      "greenDuration": "7.1s"
+    },
+    {
+      "name": "U3: successful Continue invalidates pending read rejection and its feedback",
+      "baseline": "PASS",
+      "baselineDuration": "5.3s",
+      "green": "PASS",
+      "greenDuration": "6.1s"
+    },
+    {
+      "name": "U9: local and portable saves restore the whole populated session and uninterrupted next week",
+      "baseline": "PASS",
+      "baselineDuration": "19.1s",
+      "green": "PASS",
+      "greenDuration": "21.2s"
+    }
+  ],
+  "delaySourceSha256": "6d4b06b76fc2c0da79842d046ff50070e8f4e14d5e6864b44b589419451e9c65",
+  "addedStatements": 5,
+  "changedFiles": [
+    "tests/e2e/ledger.spec.ts",
+    "tests/e2e/society.spec.ts",
+    "tests/e2e/world-npc-session.spec.ts",
+    "tests/e2e/world-session.spec.ts"
+  ],
+  "productSettingsAndCharacterLifeUnchanged": true
+}

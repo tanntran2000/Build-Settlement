@@ -1,0 +1,1 @@
+Round4 RED before sync fixes. Exact 16 CI failures selected by unchanged test titles: F4 x2; assassination x1; crisis x2; order x1; outside x1; blocked/full x2; late read rejection x2; manual IO x2; population grown save x2; title fallen x1. Temporary 300ms empty readwrite barrier on each Save click; no product changes or existing test assertions/settings edited.

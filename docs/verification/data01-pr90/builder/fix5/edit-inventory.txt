@@ -1,0 +1,17 @@
+Five added statements only: four success waits and one final clear poll. Existing assertion bytes, values and runner settings unchanged. Removing recorded insertion strings reconstructs original files byte-for-byte.
+
+tests/e2e/world-npc-session.spec.ts:30 (base 29; save)
+ADDED: await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+
+tests/e2e/society.spec.ts:40 (base 39; save)
+ADDED: await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+
+tests/e2e/world-session.spec.ts:11 (base 10; save)
+ADDED: await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+
+tests/e2e/ledger.spec.ts:149 (base 148; save)
+ADDED: await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+
+tests/e2e/ledger.spec.ts:158 (base 157; clear)
+ADDED: await expect.poll(() => storedSaveText(page)).toBeNull();
+

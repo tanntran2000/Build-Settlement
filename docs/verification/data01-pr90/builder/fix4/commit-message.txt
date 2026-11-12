@@ -1,0 +1,7 @@
+test(e2e): wait for the async save before reading or reloading
+
+Save locally now completes after asynchronous IndexedDB work. Tests that read records or reload immediately after the click can observe the previous checkpoint or interrupt the pending save on a faster CI runner. Wait for the visible success result before those actions, retaining every existing assertion and the existing failure-path alert waits.
+
+Reproduced all 16 CI failures with a temporary 300 ms readwrite barrier and verified the same 16 pass after adding the waits. Remove all delay hooks before committing; product code and runner settings are unchanged.
+
+Co-authored-by: Codex <noreply@openai.com>

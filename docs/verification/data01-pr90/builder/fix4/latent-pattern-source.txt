@@ -1,0 +1,129 @@
+READ-ONLY audit: other specs remain unchanged. Lines show Save clicks/helpers and their adjacent actions; long fixture literals excluded.
+
+tests/e2e/character-life-boundary.spec.ts
+
+tests/e2e/world-npc-session.spec.ts
+28: test('save, continue, export and import preserve posts and resolved names; slots stay separate',async({page})=>{
+29:  await boot(page);const keys=['haven.world-session.checkpoint.v1','haven.world-npc-session.checkpoint.v1'];await page.evaluate(keys=>keys.forEach(k=>localStorage.setItem(k,'protected-bytes')),keys);await assign(page,IDS[0],'field-1');const n=await names(page);await go(page,'session');await page.getByRole('button',{name:'Save locally',exact:true}).click();const text=await encoded(page),saved=JSON.parse(text).state;await page.reload();await page.getByRole('button',{name:'Continue',exact:true}).click();expect(await exportLife(page)).toEqual(saved);expect(await names(page)).toEqual(n);await expect(await post(page,IDS[0])).toHaveText('Post: Manager — Farm (field-1)');await page.reload();await put(page,text);expect(await exportLife(page)).toEqual(saved);expect(await names(page)).toEqual(n);await expect(await post(page,IDS[0])).toHaveText('Post: Manager — Farm (field-1)');expect(await page.evaluate(keys=>keys.map(k=>localStorage.getItem(k)),keys)).toEqual(['protected-bytes','protected-bytes']);
+30: });
+31: test('non-Life world files are refused without changing the game or either older slot',async({page})=>{
+
+tests/e2e/ledger.spec.ts
+147:     await page.goto('/?mode=world-life'); await importLife(page, initial); await go(page, 'session');
+148:     await page.getByRole('button', { name: 'Save locally', exact: true }).click();
+149:     await go(page, 'city'); await page.getByTestId('life-end-week').click();
+150:     const letter = page.locator('[data-fallen-letter]');
+
+tests/e2e/society.spec.ts
+38: test('one slot round-trips and rejects older or other-mode imports atomically',async({page})=>{
+39:  await page.goto('/');const oldKeys=['haven.character-life-session.checkpoint.v1','haven.character-life-session-goods.checkpoint.v1'];const oldFiles=await Promise.all(['legacy-v1','goods-v1'].map(v=>OLD_CHECKPOINT_BYTES[`${v}/life.json` as keyof typeof OLD_CHECKPOINT_BYTES]));await page.evaluate(({keys,files})=>keys.forEach((k,i)=>localStorage.setItem(k,files[i])),{keys:oldKeys,files:oldFiles});await expect(button(page,'Continue')).toBeDisabled();await expect(page.getByText('No local checkpoint',{exact:true})).toContainText('No local checkpoint');await importLife(page,makeLife());await go(page,'session');await button(page,'Save locally').click();const saved=await exportLife(page);expect(await storedSaveText(page)).not.toBeNull();await page.reload();await button(page,'Continue').click();expect(await exportLife(page)).toEqual(saved);
+40:  const world=createWorldSession(1);if(!world.success)throw Error();const foreign=serializeWorldSessionSave(world.value);if(!foreign.success)throw Error();
+41:  for(const text of [...oldFiles,foreign.text]){await go(page,'session');await page.getByLabel('Import checkpoint',{exact:true}).setInputFiles({name:'old.json',mimeType:'application/json',buffer:Buffer.from(text)});await expect(page.getByRole('alert')).toHaveText(OLD);expect(await exportLife(page)).toEqual(saved);}
+
+tests/e2e/character-life.spec.ts
+264:   await go(page, 'session');
+265:   await button(page, 'Save locally').click();
+266:   await expect(page.getByRole('region', { name: 'Planning checkpoints', exact: true }).getByRole('status')).toHaveText('Saved in this browser.');
+267:   await page.reload();
+316:   await go(page, 'session');
+317:   await button(page, 'Save locally').click();
+318:   await expect(page.getByRole('region', { name: 'Planning checkpoints', exact: true }).getByRole('status')).toHaveText('Saved in this browser.');
+319:   expect(await page.evaluate(keys => keys.map(k => localStorage.getItem(k)), [NPC_KEY, WORLD_KEY])).toEqual(['protected-bytes', 'protected-bytes']);
+329:   await importLife(page, makeLife());
+330:   await go(page, 'session'); await button(page, 'Save locally').click();
+331:   const saved = await exportLife(page);
+332:   await page.getByTestId('life-end-week').click();
+
+tests/e2e/world-session.spec.ts
+9: const KEY='haven.character-life-session-society.checkpoint.v1',OLD=['haven.tile-trial.checkpoint.v1','haven.tile-population.checkpoint.v1'];
+10: const save=async(page:Page)=>{await go(page,'session');await page.getByRole('button',{name:'Save locally',exact:true}).click();};
+11: const resume=async(page:Page)=>{await go(page,'session');await page.getByRole('button',{name:'Continue locally',exact:true}).click();};
+12: const slots=async(page:Page)=>[JSON.stringify(await readStoredRecords(page)),...await page.evaluate(keys=>keys.map(k=>localStorage.getItem(k)),OLD)];
+23: test('U2: End Week while import is pending rejects both halves and preserves all three slots',async({page})=>{
+24:  const s=await boot(page);await seedOld(page);await save(page);const data=JSON.parse(await encoded(page));data.state.outside.tiles[10].owner='player';data.state.outside.tiles[10].knownBy=['player'];await delayReads(page);await put(page,JSON.stringify(data));await pending(page,1);await page.getByTestId('life-end-week').click();const before=await observed(page),bytes=await slots(page);await release(page,0);await expect(page.getByRole('alert')).toBeVisible();expect(await observed(page)).toEqual(before);expect(await slots(page)).toEqual(bytes);await go(page,'reports');await page.getByRole('button',{name:'Plan next week',exact:true}).click();const resolved=executeCharacterLifeCommand(s,{type:'END_WEEK',expectedRevision:s.city.revision,expectedWeek:1});if(!resolved.success)throw Error();const next=executeCharacterLifeCommand(resolved.next,{type:'NEXT_WEEK',expectedRevision:resolved.next.city.revision});if(!next.success)throw Error();expect(await exportLife(page)).toEqual(next.next);
+25: });
+26: for(const late of ['success','invalid JSON','read rejection'])test(`U3: successful Continue invalidates pending ${late} and its feedback`,async({page})=>{
+26: for(const late of ['success','invalid JSON','read rejection'])test(`U3: successful Continue invalidates pending ${late} and its feedback`,async({page})=>{
+27:  let s=await boot(page);await seedOld(page);await save(page);const a=JSON.parse(await encoded(page));a.state.city.world.settlements.settlement_haven_01.inventory.gold=99000;a.state.outside.tiles[10].owner='player';a.state.outside.tiles[10].knownBy=['player'];s=await week(page,s);await delayReads(page,late==='read rejection');await put(page,late==='invalid JSON'?'{':JSON.stringify(a));await pending(page,1);await resume(page);await expect(notice(page)).toContainText('Local checkpoint loaded');const restored=await exportLife(page),before=await observed(page),bytes=await slots(page),feedback=await notice(page).textContent();await release(page,0);await settle(page);expect(await observed(page)).toEqual(before);expect(await slots(page)).toEqual(bytes);expect(await notice(page).textContent()).toBe(feedback);expect(await exportLife(page)).toEqual(restored);expect({...restored,city:{...restored.city,revision:0}}).toEqual(makeLife());
+28: });
+29: test('U3: failed Continue leaves a pending valid import eligible',async({page})=>{
+38: test('U8: Report locks all four checkpoint controls',async({page})=>{
+39:  await boot(page);await page.getByTestId('life-end-week').click();await go(page,'session');for(const name of ['Save locally','Continue locally','Export checkpoint'])await expect(page.getByRole('button',{name,exact:true})).toBeDisabled();await expect(page.getByLabel('Import checkpoint',{exact:true})).toBeDisabled();
+40: });
+41: test('U9: local and portable saves restore the whole populated session and uninterrupted next week',async({page})=>{
+41: test('U9: local and portable saves restore the whole populated session and uninterrupted next week',async({page})=>{
+42:  let s=fundedLife();s.city.society!.classes.makers.common=40;s.city.society!.wallRing=2;s.city.tiles.find(t=>t.id==='house-5')!.building={typeId:'makers-rowhouses',level:1,workers:0,enabled:true};for(const [id,typeId,workers] of [['forest-1','logging',1],['ore-1','mine',1],['plain-2','workshop',1]] as const)s.city.tiles.find(t=>t.id===id)!.building={typeId,level:1,workers,enabled:true};s.city.tiles.find(t=>t.id==='field-1')!.building!.workers=3;s.city.tiles.find(t=>t.id==='plain-1')!.building!.workers=3;s.city.world.settlements[s.city.world.activeSettlementId!].cohorts[0].count=societyPopulation(s.city.society!);await boot(page,s);await seedOld(page);const population=societyPopulation(s.city.society!);s=await week(page,s);expect(societyPopulation(s.city.society!)).toBeGreaterThan(population);s.outside.tiles[10].owner='player';s.outside.tiles[10].knownBy=['player'];await importLife(page,s);s=await exportLife(page);await save(page);const text=await encoded(page),bytes=await slots(page);const result=executeCharacterLifeCommand(s,{type:'END_WEEK',expectedRevision:s.city.revision,expectedWeek:s.city.world.week});if(!result.success||!result.report)throw Error();let changed=await week(page,s);changed=await week(page,changed);await resume(page);let restored=await exportLife(page);expect({...restored,city:{...restored.city,revision:s.city.revision}}).toEqual(s);await page.getByTestId('life-end-week').click();await expectReport(page,result.report);await page.reload();await put(page,text);restored=await exportLife(page);expect(restored).toEqual(s);await page.getByTestId('life-end-week').click();await expectReport(page,result.report);expect(await slots(page)).toEqual(bytes);
+43: });
+44: 
+
+tests/e2e/storage.spec.ts
+11: function bytes(session=makeLife()){const r=serializeCharacterLifeSave(session);if(!r.success)throw Error(r.error.message);return r.text;}
+12: async function save(page:Page){await go(page,'session');await button(page,'Save locally').click();await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');}
+13: async function start(page:Page){await page.goto('/');await expect(page.getByRole('heading',{name:'HAVEN',exact:true})).toBeVisible();await importLife(page,makeLife());}
+14: async function fallenFixture(){const r=deserializeCharacterLifeSave(await readFile(new URL('../../packages/persistence/src/__tests__/fixtures/society-v7/life-rebellion-last-week.json',import.meta.url),'utf8'));if(!r.success)throw Error(r.error.message);return r.state;}
+20: test('Save locally reload and Continue preserve the identical exportLife',async({page})=>{
+21:  await start(page);const before=await exportLife(page);await save(page);await page.reload();await button(page,'Continue').click();expect(await exportLife(page)).toEqual(before);expect(await storedSaveText(page)).toBe(bytes(before));
+22: });
+23: test('autosave stores exactly the exported live session',async({page})=>{
+36: test('an injected write abort keeps the last save and exact failure message',async({page})=>{
+37:  await start(page);await save(page);const prior=await readStoredRecords(page);await importLife(page,makeLife(54321));await injectWriteAbort(page);await go(page,'session');await button(page,'Save locally').click();await expect(page.getByRole('alert')).toHaveText(BLOCKED);expect(await readStoredRecords(page)).toEqual(prior);expect(await exportLife(page)).toEqual({...makeLife(54321),city:{...makeLife(54321).city,revision:1}});
+38: });
+39: test('two tabs saving A B A leave exactly the last A session',async({page,context})=>{
+39: test('two tabs saving A B A leave exactly the last A session',async({page,context})=>{
+40:  await start(page);await save(page);const second=await context.newPage();try{await second.goto('/');await importLife(second,makeLife(22));await save(second);const a=await exportLife(page);await save(page);expect(await storedSaveText(second)).toBe(bytes(a));expect(await exportLife(second)).toEqual(makeLife(22));}finally{await second.close();}
+41: });
+42: test('blocked IndexedDB stays playable warns once and exports',async({page})=>{
+53:   await button(page,'New Game').click();await page.getByLabel('Name',{exact:true}).fill('Keeper '+i);await page.getByRole('tab',{name:'Review',exact:true}).click();await button(page,'Create character').click();const started=await exportLife(page);seeds.push(started.outside.seed);
+54:   const fallen=await fallenFixture();fallen.outside=started.outside;await importLife(page,fallen);await save(page);expect((await readStoredRecords(page)).length).toBeGreaterThan(1);const savedRows=(await readStoredRecords(page)).filter(r=>r.table!=='system');await writeRecords(page,[...savedRows,...(['reports','history','items'] as const).map(table=>({slotId:'main',id:'seed-'+started.outside.seed,table,schemaVersion:1 as const,value:{seed:started.outside.seed}}))]);for(const table of GAME_DB.stores.filter(t=>t!=='system'))expect((await readStoredRecords(page)).filter(r=>r.table===table).length).toBeGreaterThan(0);
+55:   await go(page,'city');await page.getByTestId('life-end-week').click();await expect(page.getByRole('heading',{name:'The City Has Fallen',exact:true})).toBeVisible();await expectCleared(page);const rows=await readStoredRecords(page);totals.push(rows.length);runs.push({seed:started.outside.seed,total:rows.length,tables:Object.fromEntries(GAME_DB.stores.map(table=>[table,rows.filter(r=>r.table===table).length]))});await page.reload();await expect(button(page,'Continue')).toBeDisabled();
+56:  }expect(totals).toEqual([1,1,1]);expect(new Set(seeds).size).toBe(3);const countsPath=test.info().outputPath('three-game-record-counts.json');await writeFile(countsPath,JSON.stringify(runs,null,2),'utf8');await test.info().attach('three-game-record-counts',{path:countsPath,contentType:'application/json'});
+59: test('fix1 F2: pending Continue cannot overwrite a newer Planning command',async({page})=>{
+60:  await start(page);const initial=await exportLife(page);await save(page);
+61:  await holdStoreCompletion(page,'readonly',1);await button(page,'Continue locally').click();await waitStoreCompletion(page);
+62:  const newer=await act(page,initial,'SET_ENABLED',{tileId:'field-1',enabled:false});
+73: test('fix1 F2: a newer rejected Import keeps its feedback over pending Continue',async({page})=>{
+74:  await start(page);const initial=await exportLife(page);await save(page);
+75:  await holdStoreCompletion(page,'readonly',1);await button(page,'Continue locally').click();await waitStoreCompletion(page);
+76:  await page.getByLabel('Import checkpoint',{exact:true}).setInputFiles({name:'invalid.json',mimeType:'application/json',buffer:Buffer.from('{')});
+81: test('fix1 F2: the latest Continue supersedes an earlier held result',async({page})=>{
+82:  await start(page);await save(page);await holdStoreCompletion(page,'readonly',1);
+83:  await button(page,'Continue locally').click();await waitStoreCompletion(page);
+84:  const latest=makeLife(54321);await writeStoredSaveText(page,bytes(latest));await button(page,'Continue locally').click();
+112:  expect((await readStoredRecords(page)).filter(r=>r.table==='system')).toEqual([]);
+113:  await importLife(page,b);await save(page);const before=(await readStoredRecords(page)).filter(r=>r.table!=='system');expect(before).toHaveLength(7);
+114:  await page.evaluate(()=>(window as unknown as {restoreLegacyStorage:()=>void}).restoreLegacyStorage());
+115:  await button(page,'Continue locally').click();await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
+123:  await holdStoreCompletion(page,outcome==='success'?'readwrite':'readonly');if(outcome==='failure')await injectWriteAbort(page,'throw');
+124:  await button(page,'Save locally').click();await waitStoreCompletion(page);
+125:  await page.getByLabel('Import checkpoint',{exact:true}).setInputFiles({name:'invalid.json',mimeType:'application/json',buffer:Buffer.from('{')});
+126:  const message='This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.';
+131: test('fix2 F3: Save supersedes a pending Continue without changing the live session',async({page})=>{
+132:  await start(page);await save(page);await importLife(page,makeLife(54321));const newer=await exportLife(page);
+133:  await holdStoreCompletion(page,'readonly',1);await button(page,'Continue locally').click();await waitStoreCompletion(page);
+134:  await button(page,'Save locally').click();await releaseStoreCompletion(page);
+133:  await holdStoreCompletion(page,'readonly',1);await button(page,'Continue locally').click();await waitStoreCompletion(page);
+134:  await button(page,'Save locally').click();await releaseStoreCompletion(page);
+135:  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+136:  expect(await exportLife(page)).toEqual(newer);expect(await storedSaveText(page)).toBe(bytes(newer));
+139:  await start(page);const initial=await exportLife(page);await holdStoreCompletion(page,'readwrite');
+140:  await button(page,'Main menu').click();await waitStoreCompletion(page);await button(page,'Save locally').click();await releaseStoreCompletion(page);
+141:  await expect(page.getByTestId('life-shell')).toBeVisible();await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+142:  expect(await exportLife(page)).toEqual(initial);
+145:  await start(page);const initial=await exportLife(page);await holdStoreCompletion(page,'readwrite');
+146:  await button(page,'Save locally').click();await waitStoreCompletion(page);const newer=await act(page,initial,'SET_ENABLED',{tileId:'field-1',enabled:false});
+147:  await go(page,'session');const notice=page.locator('[aria-label="Planning checkpoints"] [role="status"]');await expect(notice).toHaveText('Checkpoint download requested.');
+148:  await releaseStoreCompletion(page);await expect(notice).toHaveText('Checkpoint download requested.');expect(await exportLife(page)).toEqual(newer);
+150: test('fix2 F3: a delayed autosave failure cannot replace a later week status',async({page})=>{
+151:  await start(page);const initial=await exportLife(page);await save(page);
+152:  await holdStoreCompletion(page,'readonly');await injectWriteAbort(page,'throw');
+153:  const advance=async()=>{await go(page,'city');await page.getByTestId('life-end-week').click();await button(page,'Plan next week').click();};
+170:   await writer.addInitScript(block,{key:KEY,seed:null});await writer.goto('/');await expect(writer.getByRole('heading',{name:'HAVEN',exact:true})).toBeVisible();
+171:   if(scenario==='existing B'){await importLife(writer,b);await save(writer);expect(await storedSaveText(writer)).toBe(bytes(b));}
+172:   expect((await readStoredRecords(writer)).filter(r=>r.table==='system')).toEqual([]);
+173:   await importLife(page,makeLife(44));await go(page,'session');await page.evaluate(()=>(window as unknown as {restoreLegacyStorage:()=>void}).restoreLegacyStorage());
+175:   await holdStoreCompletion(page,'readonly',1);await button(page,'Continue locally').click();await waitStoreCompletion(page);
+176:   await importLife(writer,c);const savedC=await exportLife(writer);await save(writer);
+177:   const before=await readStoredRecords(writer);expect(before.filter(r=>r.table==='system')).toEqual([]);expect(await storedSaveText(writer)).toBe(bytes(savedC));
+178:   if(scenario==='marker winner'){
+
+tests/e2e/autosave.spec.ts

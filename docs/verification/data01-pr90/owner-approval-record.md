@@ -12,6 +12,8 @@ Owner: Tân. Every quote is verbatim from the owner's own chat message with Clau
 | 11-12 | Old-fixture rule for review finding F4 (owner's choice in the T3 UI, on Claude's advice) | "Current success; old exact round-trip + refusal (Recommended)" |
 | 11-12 | Third fix round after the AGENTS.md §4 anti-loop HOLD, including the new `GameStore.migrateSlot` port method | "Sửa vòng 3" |
 | 11-12 | Push and open the PR | "Ok hãy triển khai đi" |
+| 11-12 | Fix round 4 after CI run 43191497608: tests only, waits for the async save, allowlist extended to `order.spec.ts` and `outside.spec.ts` | "Đồng ý" |
+| 11-12 | Fix round 5 inside #90: the three latent timing risks from Astra round 5, in four specs only | "Sửa trong #90" |
 
 Claude's own rulings inside the approved plan (not owner decisions) are in `review/brief-data01-*.md`:
 - the fix-round rulings;

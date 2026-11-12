@@ -1,0 +1,57 @@
+[
+  {
+    "file": "tests/e2e/world-npc-session.spec.ts",
+    "operations": [
+      {
+        "offset": 6492,
+        "addition": "\r\n await expect(page.locator('[aria-label=\"Planning checkpoints\"] [role=\"status\"]')).toContainText('Saved in this browser.');\r\n ",
+        "statement": "await expect(page.locator('[aria-label=\"Planning checkpoints\"] [role=\"status\"]')).toContainText('Saved in this browser.');",
+        "baseLine": 29,
+        "kind": "save"
+      }
+    ]
+  },
+  {
+    "file": "tests/e2e/society.spec.ts",
+    "operations": [
+      {
+        "offset": 6889,
+        "addition": "\n await expect(page.locator('[aria-label=\"Planning checkpoints\"] [role=\"status\"]')).toContainText('Saved in this browser.');\n ",
+        "statement": "await expect(page.locator('[aria-label=\"Planning checkpoints\"] [role=\"status\"]')).toContainText('Saved in this browser.');",
+        "baseLine": 39,
+        "kind": "save"
+      }
+    ]
+  },
+  {
+    "file": "tests/e2e/world-session.spec.ts",
+    "operations": [
+      {
+        "offset": 1101,
+        "addition": "\r\nawait expect(page.locator('[aria-label=\"Planning checkpoints\"] [role=\"status\"]')).toContainText('Saved in this browser.');\r\n",
+        "statement": "await expect(page.locator('[aria-label=\"Planning checkpoints\"] [role=\"status\"]')).toContainText('Saved in this browser.');",
+        "baseLine": 10,
+        "kind": "save"
+      }
+    ]
+  },
+  {
+    "file": "tests/e2e/ledger.spec.ts",
+    "operations": [
+      {
+        "offset": 11905,
+        "addition": "    await expect.poll(() => storedSaveText(page)).toBeNull();\n",
+        "statement": "await expect.poll(() => storedSaveText(page)).toBeNull();",
+        "baseLine": 157,
+        "kind": "clear"
+      },
+      {
+        "offset": 11259,
+        "addition": "\n    await expect(page.locator('[aria-label=\"Planning checkpoints\"] [role=\"status\"]')).toContainText('Saved in this browser.');",
+        "statement": "await expect(page.locator('[aria-label=\"Planning checkpoints\"] [role=\"status\"]')).toContainText('Saved in this browser.');",
+        "baseLine": 148,
+        "kind": "save"
+      }
+    ]
+  }
+]

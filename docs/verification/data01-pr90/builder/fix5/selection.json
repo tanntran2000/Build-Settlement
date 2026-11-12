@@ -1,0 +1,13 @@
+{
+  "base": "50df817adf38dc320b4ade634bfa8b01f6283a59",
+  "files": [
+    "tests/e2e/world-npc-session.spec.ts",
+    "tests/e2e/society.spec.ts",
+    "tests/e2e/world-session.spec.ts",
+    "tests/e2e/ledger.spec.ts"
+  ],
+  "grep": "save, continue, export and import preserve posts and resolved names; slots stay separate|one slot round-trips and rejects older or other-mode imports atomically|U2: End Week while import is pending|U3: successful Continue invalidates pending|U9: local and portable saves restore the whole populated session|B3 rebellion is one sealed letter|B3 assassination is one sealed letter",
+  "command": "npx playwright test tests/e2e/world-npc-session.spec.ts tests/e2e/society.spec.ts tests/e2e/world-session.spec.ts tests/e2e/ledger.spec.ts -g \"save, continue, export and import preserve posts and resolved names; slots stay separate|one slot round-trips and rejects older or other-mode imports atomically|U2: End Week while import is pending|U3: successful Continue invalidates pending|U9: local and portable saves restore the whole populated session|B3 rebellion is one sealed letter|B3 assassination is one sealed letter\"",
+  "expected": 9,
+  "delaySourceSha256": "6d4b06b76fc2c0da79842d046ff50070e8f4e14d5e6864b44b589419451e9c65"
+}

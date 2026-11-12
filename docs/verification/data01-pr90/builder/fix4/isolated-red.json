@@ -1,0 +1,1 @@
+[["delayed-red-alone-crime","npx playwright test tests/e2e/crime.spec.ts -g \"assassination clears checkpoint, Continue refuses and New Game works\""]]

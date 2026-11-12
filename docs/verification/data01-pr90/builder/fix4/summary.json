@@ -1,0 +1,77 @@
+{
+  "head": "50df817adf38dc320b4ade634bfa8b01f6283a59",
+  "tree": "401f4c636401a10900059c310d90de6af03896ae",
+  "base": "c1faf87c10f790f68964f92fedecde86b2700d8d",
+  "utc": "2026-11-12T11:49:36.741Z",
+  "clean": true,
+  "red": {
+    "exit": 1,
+    "failed": 16,
+    "wallMs": 247432
+  },
+  "isolatedRed": {
+    "exit": 1,
+    "failed": 1,
+    "wallMs": 17870
+  },
+  "green": {
+    "exit": 0,
+    "passed": 16,
+    "wallMs": 98227
+  },
+  "gates": [
+    {
+      "label": "gate1",
+      "exit": 0,
+      "wallMs": 201
+    },
+    {
+      "label": "gate2",
+      "exit": 0,
+      "wallMs": 11131
+    },
+    {
+      "label": "gate3",
+      "exit": 0,
+      "wallMs": 32546
+    },
+    {
+      "label": "gate4",
+      "exit": 0,
+      "wallMs": 6793
+    },
+    {
+      "label": "gate5",
+      "exit": 0,
+      "wallMs": 47481
+    },
+    {
+      "label": "gate6",
+      "exit": 0,
+      "wallMs": 47103
+    },
+    {
+      "label": "gate7",
+      "exit": 0,
+      "wallMs": 20807
+    },
+    {
+      "label": "smoke",
+      "exit": 0,
+      "wallMs": 1949961
+    }
+  ],
+  "unit": {
+    "passed": 2192,
+    "files": 99
+  },
+  "architecture": 154,
+  "smoke": {
+    "passed": 350,
+    "duration": "32.3m",
+    "wallMs": 1949961
+  },
+  "addedWaits": 12,
+  "productAndSettingsChanged": false,
+  "readOnlyAuditUnchanged": true
+}

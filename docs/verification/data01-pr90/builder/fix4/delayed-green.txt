@@ -1,0 +1,18 @@
+UTC=2026-11-12T11:10:57.140Z HEAD=c1faf87c10f790f68964f92fedecde86b2700d8d TREE=ab89dbb7c719499233c6a0565aafe3a44a749882
+STATUS="M tests/e2e/character-life-navigation.spec.ts\n M tests/e2e/crime.spec.ts\n M tests/e2e/crisis.spec.ts\n M tests/e2e/order.spec.ts\n M tests/e2e/outside.spec.ts\n M tests/e2e/tile-local-checkpoint.spec.ts\n M tests/e2e/title.spec.ts"
+ENV CI=1
+COMMAND=npx playwright test tests/e2e/character-life-navigation.spec.ts tests/e2e/crime.spec.ts tests/e2e/crisis.spec.ts tests/e2e/order.spec.ts tests/e2e/outside.spec.ts tests/e2e/tile-local-checkpoint.spec.ts tests/e2e/title.spec.ts -g "F4 session reset and atomic failures|assassination clears checkpoint, Continue refuses and New Game works|last hungry Rebellion week clears save; reload offers New Game at Calm|normal End Week preserves a manual checkpoint byte-for-byte|Library offers all topics and order survives Save Continue Export Import|Save Continue Export Import preserves checkpoint bytes|blocked or full storage preserves full state, both slots and file backups|a late file read rejection cannot replace Continue feedback|checkpoint IO stays manual, Planning-only and isolated|population local checkpoint restores grown cohorts and next-week parity|fallen city clears cached Continue after New Game and creation Cancel"
+[WebServer] (node:58508) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:36064) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 16 tests using 1 worker
+
+(node:6688) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   1 [chromium] › tests\e2e\character-life-navigation.spec.ts:1337:5 › player flows at 1280px › F4 session reset and atomic failures (9.8s)
+(node:13228) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+ABORTED: insertion script failed before changing any spec (mixed line-ending parsing); PowerShell continued to launch the unchanged tests. Owned runner tree terminated. This is not a GREEN result. No assertion or product fix attempted in this aborted run.

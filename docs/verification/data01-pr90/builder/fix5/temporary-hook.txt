@@ -1,0 +1,4 @@
+
+// FIX5 TEMPORARY BASELINE/GREEN INSTRUMENTATION — removed before commit.
+test.beforeEach(async({page})=>{await page.addInitScript({path:"C:/Users/Admin/.t3/local-drafts/data01-prA/fix5/delay-init.js"});});
+test.afterEach(async({page})=>{await test.info().attach('fix5-delay-observations',{body:JSON.stringify(await page.evaluate(()=>JSON.parse(sessionStorage.getItem('__fix4_delayed_save_barriers')||'[]'))),contentType:'application/json'});});

@@ -1,0 +1,6 @@
+UTC=2026-11-12T13:02:48.937Z
+HEAD=773e0c6cc381bb946f366585da7ef5e9c2da813f
+TREE=36fab3ab2fd4717eaf433a7b55b922083cdfcfa7
+STATUS=clean
+UTF8: 48 text files strictly decoded; no replacement characters; owner quote preserved.
+All final gate/smoke logs identify the same clean head/tree. Five byte-preserving insertions in four approved specs; product/settings/character-life.spec.ts unchanged. No RED was reproduced: baseline and GREEN both9pass. Same delay source hash as round4; all hooks removed before commit.

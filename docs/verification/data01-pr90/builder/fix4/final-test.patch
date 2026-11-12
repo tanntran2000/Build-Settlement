@@ -1,0 +1,146 @@
+diff --git a/tests/e2e/character-life-navigation.spec.ts b/tests/e2e/character-life-navigation.spec.ts
+index 1997f73..3215e4c 100644
+--- a/tests/e2e/character-life-navigation.spec.ts
++++ b/tests/e2e/character-life-navigation.spec.ts
+@@ -904,6 +904,7 @@ async function prepareLoadIntent(page: Page) {
+   await page.getByLabel('Building type', { exact: true }).selectOption('logging');
+   const saved = await exportLife(page);
+   await page.getByRole('button', { name: 'Save locally', exact: true }).click();
++  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+   await selectPerson(page, 'npc_starter_1'); await selectArea(page, 'Work'); await postSelect(page).selectOption('plain-1');
+   await selectPerson(page, 'npc_starter_2'); await selectArea(page, 'Work');
+   await characterWindow(page).getByRole('combobox').selectOption('plain-1');
+@@ -1373,7 +1374,9 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 812
+       await importLife(page, exported);
+       const roundtrip = await exportLife(page);
+       expect(roundtrip).toEqual({ ...exported, city: { ...exported.city, revision: roundtrip.city.revision } });
+-      await page.getByRole('button', { name: 'Save locally', exact: true }).click(); await page.reload();
++      await page.getByRole('button', { name: 'Save locally', exact: true }).click();
++      await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
++       await page.reload();
+       await page.getByRole('button', { name: 'Continue', exact: true }).click();
+       const reloaded = await exportLife(page);
+       expect(reloaded).toEqual(roundtrip);
+diff --git a/tests/e2e/crime.spec.ts b/tests/e2e/crime.spec.ts
+index 6c64322..a4df7cb 100644
+--- a/tests/e2e/crime.spec.ts
++++ b/tests/e2e/crime.spec.ts
+@@ -22,6 +22,8 @@ for(const kind of ['robbery','raid','wound'] as const)test(`${kind} report and r
+ });
+ const slot='haven.character-life-session-society.checkpoint.v1';
+ test('assassination clears checkpoint, Continue refuses and New Game works',async({page})=>{
+- const s=await fixture('crime-death');await page.goto('/?mode=world-life');await importLife(page,s);await go(page,'session');await button(page,'Save locally').click();expect(await storedSaveText(page)).not.toBeNull();await go(page,'city');await page.getByTestId('life-end-week').click();await expect(page.getByRole('heading',{name:'The Lord Is Dead',exact:true})).toBeVisible();await expect(page.getByText(`An assassin's blade ended your rule. You ruled for ${s.city.world.week} weeks.`,{exact:true})).toBeVisible();await expect(page.getByRole('button')).toHaveText(['New Game']);expect(await storedSaveText(page)).toBeNull();await fit(page);
++ const s=await fixture('crime-death');await page.goto('/?mode=world-life');await importLife(page,s);await go(page,'session');await button(page,'Save locally').click();
++ await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
++ expect(await storedSaveText(page)).not.toBeNull();await go(page,'city');await page.getByTestId('life-end-week').click();await expect(page.getByRole('heading',{name:'The Lord Is Dead',exact:true})).toBeVisible();await expect(page.getByText(`An assassin's blade ended your rule. You ruled for ${s.city.world.week} weeks.`,{exact:true})).toBeVisible();await expect(page.getByRole('button')).toHaveText(['New Game']);expect(await storedSaveText(page)).toBeNull();await fit(page);
+  await button(page,'New Game').click();await expect(page.getByRole('heading',{name:'Character Creation',exact:true})).toBeVisible();await page.reload();await expect(button(page,'Continue')).toBeDisabled();await expect(page.getByText('No local checkpoint',{exact:true})).toHaveText('No local checkpoint');await button(page,'New Game').click();await page.getByLabel('Name',{exact:true}).fill('New Keeper');await page.getByRole('tab',{name:'Review',exact:true}).click();await button(page,'Create character').click();await expect(page.getByTestId('life-shell')).toBeVisible();await page.locator('#life-nav-information').click();await expect(page.getByTestId('trial-standing')).toHaveText('Standing 50 · Fair');await expect(page.getByTestId('trial-crime-chance')).toHaveText('Crime events: 10% a week');await fit(page);
+ });
+diff --git a/tests/e2e/crisis.spec.ts b/tests/e2e/crisis.spec.ts
+index 4b607c1..27d7b44 100644
+--- a/tests/e2e/crisis.spec.ts
++++ b/tests/e2e/crisis.spec.ts
+@@ -21,14 +21,18 @@ test('all choices show availability reasons and dispatch through Information',as
+ });
+ const slot='haven.character-life-session-society.checkpoint.v1';
+ test('last hungry Rebellion week clears save; reload offers New Game at Calm',async({page})=>{
+- const s=await fixture('life-rebellion-last-week');await page.goto('/?mode=world-life');await importLife(page,s);await go(page,'session');await button(page,'Save locally').click();expect(await storedSaveText(page)).not.toBeNull();await go(page,'city');await page.getByTestId('life-end-week').click();await expect(page.getByRole('heading',{name:'The City Has Fallen',exact:true})).toBeVisible();await expect(page.getByText(`Hunger turned Haven against you. You ruled for ${s.city.world.week} weeks.`,{exact:true})).toBeVisible();await expect(page.getByRole('button')).toHaveText(['New Game']);expect(await storedSaveText(page)).toBeNull();await fit(page);
++ const s=await fixture('life-rebellion-last-week');await page.goto('/?mode=world-life');await importLife(page,s);await go(page,'session');await button(page,'Save locally').click();
++ await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
++ expect(await storedSaveText(page)).not.toBeNull();await go(page,'city');await page.getByTestId('life-end-week').click();await expect(page.getByRole('heading',{name:'The City Has Fallen',exact:true})).toBeVisible();await expect(page.getByText(`Hunger turned Haven against you. You ruled for ${s.city.world.week} weeks.`,{exact:true})).toBeVisible();await expect(page.getByRole('button')).toHaveText(['New Game']);expect(await storedSaveText(page)).toBeNull();await fit(page);
+  await page.reload();await expect(button(page,'Continue')).toBeDisabled();await expect(page.getByText('No local checkpoint',{exact:true})).toHaveText('No local checkpoint');await expect(page.getByRole('region',{name:'Start',exact:true})).toBeVisible();await expect(page.getByTestId('life-shell')).toHaveCount(0);await button(page,'New Game').click();await expect(page.getByRole('heading',{name:'Character Creation',exact:true})).toBeVisible();await page.getByLabel('Name',{exact:true}).fill('New Keeper');await page.getByRole('tab',{name:'Review',exact:true}).click();await button(page,'Create character').click();await expect(page.getByTestId('life-shell')).toBeVisible();await page.locator('#life-nav-information').click();await expect(page.getByTestId('trial-crisis')).toHaveText('Crisis: Calm · 0 weeks');
+ });
+ test('Fallen screen New Game opens Character Creation directly',async({page})=>{
+  const s=await fixture('life-rebellion-last-week');await page.goto('/?mode=world-life');await importLife(page,s);await go(page,'city');await page.getByTestId('life-end-week').click();await expect(page.getByRole('heading',{name:'The City Has Fallen',exact:true})).toBeVisible();await button(page,'New Game').click();await expect(page.getByRole('heading',{name:'Character Creation',exact:true})).toBeVisible();await expect(page.getByRole('heading',{name:'The City Has Fallen',exact:true})).toHaveCount(0);
+ });
+ test('normal End Week preserves a manual checkpoint byte-for-byte',async({page})=>{
+- await page.goto('/?mode=world-life');await importLife(page,await fixture('life-new-game'));await go(page,'session');await button(page,'Save locally').click();const before=await storedSaveText(page);expect(before).not.toBeNull();await go(page,'city');await page.getByTestId('life-end-week').click();await expect(page.locator('[data-life-view="reports"]')).toBeVisible();expect(await storedSaveText(page)).toBe(before);
++ await page.goto('/?mode=world-life');await importLife(page,await fixture('life-new-game'));await go(page,'session');await button(page,'Save locally').click();
++ await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
++ const before=await storedSaveText(page);expect(before).not.toBeNull();await go(page,'city');await page.getByTestId('life-end-week').click();await expect(page.locator('[data-life-view="reports"]')).toBeVisible();expect(await storedSaveText(page)).toBe(before);
+ });
+ 
+ test('B2 pending crisis dispatches from Report and leaves the view selected', async ({page}) => {
+diff --git a/tests/e2e/order.spec.ts b/tests/e2e/order.spec.ts
+index f29273d..1d57bba 100644
+--- a/tests/e2e/order.spec.ts
++++ b/tests/e2e/order.spec.ts
+@@ -24,5 +24,7 @@ test('Barracks worker digits reject empty and unsafe drafts without dispatch',as
+  for(const raw of ['','9007199254740992']){await input.fill(raw);await button(page,'Assign workers').click();await expect(page.getByRole('alert')).toHaveText('Use whole nonnegative workers.');expect(serializeCharacterLifeSave(await exportLife(page))).toEqual(before);await go(page,'city');}
+ });
+ test('Library offers all topics and order survives Save Continue Export Import',async({page})=>{
+- await start(page);await expect(page.locator('#research-topic option')).toHaveText(['None','Deep Mining','Watch Patrols','Barracks Drill']);const before=await exportLife(page);await button(page,'Save locally').click();await page.reload();await button(page,'Continue').click();expect((await exportLife(page)).city.society!.order).toEqual(before.city.society!.order);await importLife(page,before);expect((await exportLife(page)).city.society!.order).toEqual(before.city.society!.order);
++ await start(page);await expect(page.locator('#research-topic option')).toHaveText(['None','Deep Mining','Watch Patrols','Barracks Drill']);const before=await exportLife(page);await button(page,'Save locally').click();
++ await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
++ await page.reload();await button(page,'Continue').click();expect((await exportLife(page)).city.society!.order).toEqual(before.city.society!.order);await importLife(page,before);expect((await exportLife(page)).city.society!.order).toEqual(before.city.society!.order);
+ });
+diff --git a/tests/e2e/outside.spec.ts b/tests/e2e/outside.spec.ts
+index c4ea072..985e15d 100644
+--- a/tests/e2e/outside.spec.ts
++++ b/tests/e2e/outside.spec.ts
+@@ -15,7 +15,9 @@ test('wall extension opens ring 2 and clearing progress',async({page})=>{const s
+ test('clears pasture and produces Cloth through Sheep Pasture and Weaver',async({page})=>{const s=seed();s.city.society!.wallRing=2;s.city.society!.classes.free=100;s.city.society!.classes.makers.common=100;await start(page,s);const plot=page.locator('[data-outside-plot="pasture-1"]');await plot.getByLabel('Clearing workers (WF)').fill('4');await plot.getByRole('button',{name:'Clear',exact:true}).click();await week(page);await expect(page.getByText('pasture-1 cleared.',{exact:true})).toBeVisible();await next(page);await build(page,'pasture-1','sheep-pasture',2);await build(page,'plain-2','weaver',1);await week(page);await expect(page.locator('[data-outside-produced="cloth"]')).toHaveText('1');});
+ test('research completes and Deep Shaft adds 60 deposit',async({page})=>{const s=seed();s.city.society!.stocksMilli.stone=20000;s.city.society!.research={topic:'deep-mining',paid:['deep-mining'],completed:[],progressMilli:{'deep-mining':7000,'watch-patrols':0,'barracks-drill':0}};s.city.tiles.find(t=>t.id==='spec-1')!.building={typeId:'library',level:1,workers:1,enabled:true};s.city.tiles.find(t=>t.id==='ore-1')!.building={typeId:'mine',level:1,workers:0,enabled:true};await start(page,s);await page.locator('#research-topic').selectOption('');await button(page,'Set research').click();await page.locator('#research-topic').selectOption('deep-mining');await button(page,'Set research').click();await week(page);await expect(page.getByText('Research completed: Deep Mining.',{exact:true})).toBeVisible();await next(page);const plot=page.locator('[data-outside-plot="ore-1"]');await expect(plot).toContainText('Iron 80 / 80');await plot.getByRole('button',{name:'Build Deep Shaft',exact:true}).click();await expect(plot).toContainText('Iron 140 / 140');});
+ test('full Wheat store spoils with exact report reason',async({page})=>{const s=seed();s.city.world.settlements[s.city.world.activeSettlementId!].inventory.wheat=50000;s.city.tiles.find(t=>t.id==='field-1')!.building!.enabled=false;s.city.tiles.find(t=>t.id==='field-1')!.building!.workers=0;s.city.tiles.find(t=>t.id==='plain-1')!.building!.enabled=false;s.city.tiles.find(t=>t.id==='plain-1')!.building!.workers=0;await start(page,s);await week(page);await expect(page.getByText('10 Wheat spoiled: storage full.',{exact:true})).toBeVisible();});
+-test('Save Continue Export Import preserves checkpoint bytes',async({page})=>{await start(page);const before=await exportLife(page);await button(page,'Save locally').click();await page.reload();await button(page,'Continue').click();expect(serializeCharacterLifeSave(await exportLife(page))).toEqual(serializeCharacterLifeSave(before));await importLife(page,before);const imported=await exportLife(page),expected=structuredClone(before);expected.city.revision=before.city.revision+1;expect(serializeCharacterLifeSave(imported)).toEqual(serializeCharacterLifeSave(expected));});
++test('Save Continue Export Import preserves checkpoint bytes',async({page})=>{await start(page);const before=await exportLife(page);await button(page,'Save locally').click();
++await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
++await page.reload();await button(page,'Continue').click();expect(serializeCharacterLifeSave(await exportLife(page))).toEqual(serializeCharacterLifeSave(before));await importLife(page,before);const imported=await exportLife(page),expected=structuredClone(before);expected.city.revision=before.city.revision+1;expect(serializeCharacterLifeSave(imported)).toEqual(serializeCharacterLifeSave(expected));});
+ test('navigation without End Week keeps export byte identical',async({page})=>{await start(page);const before=serializeCharacterLifeSave(await exportLife(page));for(const destination of ['city','characters','help','session'] as const)await go(page,destination);expect(serializeCharacterLifeSave(await exportLife(page))).toEqual(before);});
+ test('outside has no horizontal overflow at mobile and desktop widths',async({page})=>{const s=seed();s.city.society!.wallRing=3;await start(page,s);for(const viewport of [{width:375,height:812},{width:1280,height:900}]){await page.setViewportSize(viewport);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await page.locator('#life-nav-information').click();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await button(page,'Close').click();}});
+ for(const raw of ['abc','','9007199254740992'])test(`invalid clearing draft ${JSON.stringify(raw)} stays local`,async({page})=>{
+diff --git a/tests/e2e/tile-local-checkpoint.spec.ts b/tests/e2e/tile-local-checkpoint.spec.ts
+index a2962f2..bf1f57e 100644
+--- a/tests/e2e/tile-local-checkpoint.spec.ts
++++ b/tests/e2e/tile-local-checkpoint.spec.ts
+@@ -34,7 +34,9 @@ for(const mode of ['tiles','population']){
+   const text:Record<string,string|null>={missing:null,malformed:'{','empty object':'{}','opposite mode':foreign,version:variant(s=>{s.schemaVersion=2;}),ruleset:variant(s=>{s.cityRulesetId='future';}),map:variant(s=>{s.state.city.tiles[0].terrain='ore';}),'negative stock':variant(s=>{s.state.city.world.settlements.settlement_haven_01.inventory.gold=-1;}),'report phase':variant(s=>{s.state.city.phase='report';}),oversize:' '.repeat(1024*1024+1),'revision overflow':variant(s=>{s.state.city.revision=Number.MAX_SAFE_INTEGER;})};if(text[kind]!==null)await setSlot(page,text[kind]!);const seededRecords=await readStoredRecords(page);await resume(page);await expect(page.getByRole('alert')).toContainText(kind==='missing'?'No local checkpoint':kind==='revision overflow'?'original state was preserved':'left unchanged');expect(await exportLife(page)).toEqual(valid.state);expect(await readStoredRecords(page)).toEqual(seededRecords);expect(await slot(page,other)).toBe(foreign);await expect(page.getByTestId('life-end-week')).toHaveAttribute('aria-disabled','false');
+  });
+  test(`blocked or full storage preserves full state, both slots and file backups (${mode})`,async({page})=>{
+-  await start(page);await save(page);const prior=(await slot(page))!;await setSlot(page,'other-mode-bytes',other);await act(page,makeLife(),'BUILD',{tileId:'forest-1',typeId:'logging'});
++  await start(page);await save(page);
++  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
++  const prior=(await slot(page))!;await setSlot(page,'other-mode-bytes',other);await act(page,makeLife(),'BUILD',{tileId:'forest-1',typeId:'logging'});
+   for(const fault of ['quota','getter']){
+    const before=await exportLife(page);
+    await injectWriteAbort(page,fault==='getter'?'throw':'abort');
+@@ -42,19 +44,25 @@ for(const mode of ['tiles','population']){
+   }
+  });
+  for(const late of ['success','read rejection'])test(`${late==='success'?'a delayed file import cannot overwrite a successful Continue':'a late file read rejection cannot replace Continue feedback'} (${mode})`,async({page})=>{
+-  await start(page);await save(page);const saved=JSON.parse((await slot(page))!);const changed=structuredClone(saved);changed.state.city.world.settlements.settlement_haven_01.inventory.gold=99000;await delayReads(page,late==='read rejection');await put(page,JSON.stringify(changed));await pending(page,1);await resume(page);await expect(notice(page)).toContainText('Local checkpoint loaded');const restored=await exportLife(page),feedback=await notice(page).textContent();await release(page,0);await settle(page);expect(await notice(page).textContent()).toBe(feedback);expect(await exportLife(page)).toEqual(restored);expect(await slot(page)).toBe(JSON.stringify(saved));await expect(page.getByText('raw/private/error',{exact:false})).toHaveCount(0);
++  await start(page);await save(page);
++  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
++  const saved=JSON.parse((await slot(page))!);const changed=structuredClone(saved);changed.state.city.world.settlements.settlement_haven_01.inventory.gold=99000;await delayReads(page,late==='read rejection');await put(page,JSON.stringify(changed));await pending(page,1);await resume(page);await expect(notice(page)).toContainText('Local checkpoint loaded');const restored=await exportLife(page),feedback=await notice(page).textContent();await release(page,0);await settle(page);expect(await notice(page).textContent()).toBe(feedback);expect(await exportLife(page)).toEqual(restored);expect(await slot(page)).toBe(JSON.stringify(saved));await expect(page.getByText('raw/private/error',{exact:false})).toHaveCount(0);
+  });
+  test(`failed Continue leaves a pending valid import usable (${mode})`,async({page})=>{
+   await start(page);const data=JSON.parse(await encoded(page));data.state.city.world.settlements.settlement_haven_01.inventory.gold=41000;await delayReads(page);await put(page,JSON.stringify(data));await pending(page,1);await resume(page);await expect(page.getByRole('alert')).toContainText('No local checkpoint');await release(page,0);await expect(notice(page)).toContainText('Checkpoint imported');const restored=await exportLife(page);expect({...restored,city:{...restored.city,revision:data.state.city.revision}}).toEqual(data.state);expect(await slot(page)).toBeNull();
+  });
+  test(`checkpoint IO stays manual, Planning-only and isolated (${mode})`,async({page})=>{
+   await page.addInitScript(({key,old})=>{const get=Storage.prototype.getItem,set=Storage.prototype.setItem,calls:string[][]=[];Object.assign(window,{checkpointCalls:calls,rawRead:(k:string)=>get.call(localStorage,k)});for(const k of old)set.call(localStorage,k,'protected');Storage.prototype.getItem=function(k){if(k===key||old.includes(k))calls.push(['get',k]);return get.call(this,k);};Storage.prototype.setItem=function(k,v){if(k===key||old.includes(k))calls.push(['set',k]);return set.call(this,k,v);};},{key:KEY,old:OLD});
+-  await start(page);const s=await act(page,makeLife(),'BUILD',{tileId:'forest-1',typeId:'logging'});await encoded(page);for(const dest of ['city','characters','session','help'] as const)await go(page,dest);expect(await checkpointCalls(page)).toEqual([['get',KEY],['set',KEY]]);await save(page);expect(await checkpointCalls(page)).toEqual([['get',KEY],['set',KEY],['get',KEY],['set',KEY]]);await page.getByTestId('life-end-week').click();expect(await checkpointCalls(page)).toEqual([['get',KEY],['set',KEY],['get',KEY],['set',KEY]]);await go(page,'session');for(const name of ['Save locally','Continue locally','Export checkpoint'])await expect(page.getByRole('button',{name,exact:true})).toBeDisabled();await expect(page.getByLabel('Import checkpoint',{exact:true})).toBeDisabled();await go(page,'reports');await page.getByRole('button',{name:'Plan next week',exact:true}).click();expect(await checkpointCalls(page)).toEqual([['get',KEY],['set',KEY],['get',KEY],['set',KEY]]);await resume(page);const restored=await exportLife(page);expect({...restored,city:{...restored.city,revision:s.city.revision}}).toEqual(s);expect(await page.evaluate(old=>old.map(k=>(window as unknown as {rawRead:(k:string)=>string}).rawRead(k)),OLD)).toEqual(OLD.map(()=> 'protected'));
++  await start(page);const s=await act(page,makeLife(),'BUILD',{tileId:'forest-1',typeId:'logging'});await encoded(page);for(const dest of ['city','characters','session','help'] as const)await go(page,dest);expect(await checkpointCalls(page)).toEqual([['get',KEY],['set',KEY]]);await save(page);
++  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
++  expect(await checkpointCalls(page)).toEqual([['get',KEY],['set',KEY],['get',KEY],['set',KEY]]);await page.getByTestId('life-end-week').click();expect(await checkpointCalls(page)).toEqual([['get',KEY],['set',KEY],['get',KEY],['set',KEY]]);await go(page,'session');for(const name of ['Save locally','Continue locally','Export checkpoint'])await expect(page.getByRole('button',{name,exact:true})).toBeDisabled();await expect(page.getByLabel('Import checkpoint',{exact:true})).toBeDisabled();await go(page,'reports');await page.getByRole('button',{name:'Plan next week',exact:true}).click();expect(await checkpointCalls(page)).toEqual([['get',KEY],['set',KEY],['get',KEY],['set',KEY]]);await resume(page);const restored=await exportLife(page);expect({...restored,city:{...restored.city,revision:s.city.revision}}).toEqual(s);expect(await page.evaluate(old=>old.map(k=>(window as unknown as {rawRead:(k:string)=>string}).rawRead(k)),OLD)).toEqual(OLD.map(()=> 'protected'));
+  });
+  test(`the last explicit same-mode tab save wins without automatically loading (${mode})`,async({page,context})=>{
+   await start(page);const first=await exportLife(page);await save(page);const second=await context.newPage();try{await second.goto(`/?mode=${mode}`);const s=makeLife();s.player.character.name='Second Keeper';s.city.world.settlements[s.city.world.activeSettlementId!].inventory.gold=55000;await importLife(second,s);await save(second);expect(await exportLife(page)).toEqual(first);await resume(page);const restored=await exportLife(page);expect({...restored,city:{...restored.city,revision:s.city.revision}}).toEqual(s);}finally{await second.close();}
+  });
+ }
+ for(const width of [1280,390])test(`population local checkpoint restores grown cohorts and next-week parity at ${width}px`,async({page})=>{
+- await page.setViewportSize({width,height:900});const s=fundedLife();s.city.society!.classes.makers.common=40;s.city.society!.wallRing=2;s.city.tiles.find(t=>t.id==='house-5')!.building={typeId:'makers-rowhouses',level:1,workers:0,enabled:true};for(const [id,typeId,workers] of [['forest-1','logging',1],['ore-1','mine',1],['plain-2','workshop',1]] as const)s.city.tiles.find(t=>t.id===id)!.building={typeId,level:1,workers,enabled:true};s.city.tiles.find(t=>t.id==='field-1')!.building!.workers=3;s.city.tiles.find(t=>t.id==='plain-1')!.building!.workers=3;s.city.world.settlements[s.city.world.activeSettlementId!].cohorts[0].count=societyPopulation(s.city.society!);await boot(page,s);const grown=await week(page,s);expect(societyPopulation(grown.city.society!)).toBeGreaterThan(societyPopulation(s.city.society!));await save(page);const text=(await slot(page))!;const next=await week(page,grown);await page.reload();await resume(page);expect(await exportLife(page)).toEqual(grown);const resumed=await week(page,grown);expect(resumed).toEqual(next);expect(await slot(page)).toBe(text);
++ await page.setViewportSize({width,height:900});const s=fundedLife();s.city.society!.classes.makers.common=40;s.city.society!.wallRing=2;s.city.tiles.find(t=>t.id==='house-5')!.building={typeId:'makers-rowhouses',level:1,workers:0,enabled:true};for(const [id,typeId,workers] of [['forest-1','logging',1],['ore-1','mine',1],['plain-2','workshop',1]] as const)s.city.tiles.find(t=>t.id===id)!.building={typeId,level:1,workers,enabled:true};s.city.tiles.find(t=>t.id==='field-1')!.building!.workers=3;s.city.tiles.find(t=>t.id==='plain-1')!.building!.workers=3;s.city.world.settlements[s.city.world.activeSettlementId!].cohorts[0].count=societyPopulation(s.city.society!);await boot(page,s);const grown=await week(page,s);expect(societyPopulation(grown.city.society!)).toBeGreaterThan(societyPopulation(s.city.society!));await save(page);
++ await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
++ const text=(await slot(page))!;const next=await week(page,grown);await page.reload();await resume(page);expect(await exportLife(page)).toEqual(grown);const resumed=await week(page,grown);expect(resumed).toEqual(next);expect(await slot(page)).toBe(text);
+ });
+diff --git a/tests/e2e/title.spec.ts b/tests/e2e/title.spec.ts
+index c7df29c..62fb314 100644
+--- a/tests/e2e/title.spec.ts
++++ b/tests/e2e/title.spec.ts
+@@ -183,6 +183,7 @@ test('fallen city clears cached Continue after New Game and creation Cancel', as
+   const parsed = deserializeCharacterLifeSave(await readFile(new URL('../../packages/persistence/src/__tests__/fixtures/society-v7/life-rebellion-last-week.json', import.meta.url), 'utf8'));
+   if (!parsed.success) throw Error(parsed.error.message);
+   await page.goto('/'); await importLife(page, parsed.state); await go(page, 'session'); await button(page, 'Save locally').click();
++  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+   await page.reload(); await expect(button(page, 'Continue')).toBeEnabled(); await button(page, 'Continue').click();
+   await page.getByTestId('life-end-week').click(); await expect(page.getByRole('heading', { name: 'The City Has Fallen', exact: true })).toBeVisible();
+   expect(await storedSaveText(page)).toBeNull();

@@ -1,0 +1,26 @@
+UTC=2026-11-12T12:20:59.743Z HEAD=50df817adf38dc320b4ade634bfa8b01f6283a59 TREE=401f4c636401a10900059c310d90de6af03896ae
+STATUS="M tests/e2e/ledger.spec.ts\n M tests/e2e/society.spec.ts\n M tests/e2e/world-npc-session.spec.ts\n M tests/e2e/world-session.spec.ts"
+ENV CI=1
+COMMAND=npx playwright test tests/e2e/world-npc-session.spec.ts tests/e2e/society.spec.ts tests/e2e/world-session.spec.ts tests/e2e/ledger.spec.ts -g "save, continue, export and import preserve posts and resolved names; slots stay separate|one slot round-trips and rejects older or other-mode imports atomically|U2: End Week while import is pending|U3: successful Continue invalidates pending|U9: local and portable saves restore the whole populated session|B3 rebellion is one sealed letter|B3 assassination is one sealed letter"
+[WebServer] (node:14704) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:57896) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 9 tests using 1 worker
+
+(node:56696) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\ledger.spec.ts:145:3 › B3 rebellion is one sealed letter with unchanged fall behavior (3.7s)
+  ok 2 [chromium] › tests\e2e\ledger.spec.ts:145:3 › B3 assassination is one sealed letter with unchanged fall behavior (2.5s)
+  ok 3 [chromium] › tests\e2e\society.spec.ts:38:1 › one slot round-trips and rejects older or other-mode imports atomically (4.2s)
+  ok 4 [chromium] › tests\e2e\world-npc-session.spec.ts:28:1 › save, continue, export and import preserve posts and resolved names; slots stay separate (4.1s)
+  ok 5 [chromium] › tests\e2e\world-session.spec.ts:25:1 › U2: End Week while import is pending rejects both halves and preserves all three slots (2.4s)
+  ok 6 [chromium] › tests\e2e\world-session.spec.ts:28:63 › U3: successful Continue invalidates pending success and its feedback (5.6s)
+  ok 7 [chromium] › tests\e2e\world-session.spec.ts:28:63 › U3: successful Continue invalidates pending invalid JSON and its feedback (7.1s)
+  ok 8 [chromium] › tests\e2e\world-session.spec.ts:28:63 › U3: successful Continue invalidates pending read rejection and its feedback (6.1s)
+  ok 9 [chromium] › tests\e2e\world-session.spec.ts:43:1 › U9: local and portable saves restore the whole populated session and uninterrupted next week (21.2s)
+
+  9 passed (1.1m)
+
+EXIT=0 DURATION_MS=68591 END_UTC=2026-11-12T12:22:08.334Z

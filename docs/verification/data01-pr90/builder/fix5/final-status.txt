@@ -1,0 +1,25 @@
+UTC=2026-11-12T13:02:47.479Z
+COMMAND=git rev-parse HEAD
+773e0c6cc381bb946f366585da7ef5e9c2da813f
+EXIT=0
+COMMAND=git rev-parse HEAD^{tree}
+36fab3ab2fd4717eaf433a7b55b922083cdfcfa7
+EXIT=0
+COMMAND=git status --short
+EXIT=0
+COMMAND=git show --no-patch --format=%H%n%s%n%b HEAD
+773e0c6cc381bb946f366585da7ef5e9c2da813f
+test(e2e): wait for the async save in the remaining storage specs
+The remaining setup saves could race storage snapshots or reloads, and the fallen ledger screen could render before its queued clear completed. Wait for each first setup save to report success, then poll the ledger store for the cleared state before retaining the original direct assertion. Every shared-helper caller expects a successful first save, so the result wait cannot match an earlier Saved notice.
+
+The unchanged round-4 300 ms delay did not reproduce failures in any of the nine baseline cases; all nine also passed with the added waits. Product code, existing assertions and runner settings are unchanged, and all temporary hooks are removed.
+
+Co-authored-by: Codex <noreply@openai.com>
+
+EXIT=0
+COMMAND=git diff --shortstat 50df817adf38dc320b4ade634bfa8b01f6283a59 773e0c6cc381bb946f366585da7ef5e9c2da813f
+ 4 files changed, 11 insertions(+), 3 deletions(-)
+EXIT=0
+COMMAND=powershell -NoProfile -Command $p = @(Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue | Where-Object { $_.LocalPort -in 4173,4174 }); if ($p.Count -ne 0) { $p | Format-Table LocalAddress,LocalPort,OwningProcess; exit 1 }; Write-Output 'Ports 4173/4174: no listeners'
+Ports 4173/4174: no listeners
+EXIT=0

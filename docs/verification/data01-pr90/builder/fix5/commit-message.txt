@@ -1,0 +1,7 @@
+test(e2e): wait for the async save in the remaining storage specs
+
+The remaining setup saves could race storage snapshots or reloads, and the fallen ledger screen could render before its queued clear completed. Wait for each first setup save to report success, then poll the ledger store for the cleared state before retaining the original direct assertion. Every shared-helper caller expects a successful first save, so the result wait cannot match an earlier Saved notice.
+
+The unchanged round-4 300 ms delay did not reproduce failures in any of the nine baseline cases; all nine also passed with the added waits. Product code, existing assertions and runner settings are unchanged, and all temporary hooks are removed.
+
+Co-authored-by: Codex <noreply@openai.com>

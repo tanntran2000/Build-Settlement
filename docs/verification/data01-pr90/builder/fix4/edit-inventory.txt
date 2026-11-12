@@ -1,0 +1,40 @@
+Round4: added success waits only. Original mixed line endings preserved. Removing the exact recorded insertions reconstructs every original spec byte-for-byte. No original assertion, value, timeout, retry, worker or threshold changed. Existing failure-alert waits remain unchanged. Long lines are split only to insert the awaits.
+
+tests/e2e/character-life-navigation.spec.ts:907
+ADDED: await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+tests/e2e/character-life-navigation.spec.ts:1378
+ADDED: await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+Base insertion lines: 906, 1376
+
+tests/e2e/crime.spec.ts:26
+ADDED: await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+Base insertion lines: 25
+
+tests/e2e/crisis.spec.ts:25
+ADDED: await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+tests/e2e/crisis.spec.ts:34
+ADDED: await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+Base insertion lines: 24, 31
+
+tests/e2e/order.spec.ts:28
+ADDED: await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+Base insertion lines: 27
+
+tests/e2e/outside.spec.ts:19
+ADDED: await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+Base insertion lines: 18
+
+tests/e2e/tile-local-checkpoint.spec.ts:38
+ADDED: await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+tests/e2e/tile-local-checkpoint.spec.ts:48
+ADDED: await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+tests/e2e/tile-local-checkpoint.spec.ts:57
+ADDED: await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+tests/e2e/tile-local-checkpoint.spec.ts:66
+ADDED: await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+Base insertion lines: 37, 45, 52, 59
+
+tests/e2e/title.spec.ts:186
+ADDED: await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+Base insertion lines: 185
+

@@ -1,0 +1,45 @@
+UTC=2026-11-12T11:10:30.712Z HEAD=c1faf87c10f790f68964f92fedecde86b2700d8d TREE=ab89dbb7c719499233c6a0565aafe3a44a749882
+STATUS="M tests/e2e/character-life-navigation.spec.ts\n M tests/e2e/crime.spec.ts\n M tests/e2e/crisis.spec.ts\n M tests/e2e/order.spec.ts\n M tests/e2e/outside.spec.ts\n M tests/e2e/tile-local-checkpoint.spec.ts\n M tests/e2e/title.spec.ts"
+ENV CI=1
+COMMAND=npx playwright test tests/e2e/crime.spec.ts -g "assassination clears checkpoint, Continue refuses and New Game works"
+[WebServer] (node:2324) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:43548) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:10364) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\crime.spec.ts:24:1 › assassination clears checkpoint, Continue refuses and New Game works (1.5s)
+
+
+  1) [chromium] › tests\e2e\crime.spec.ts:24:1 › assassination clears checkpoint, Continue refuses and New Game works 
+
+    Error: expect(received).not.toBeNull()
+
+    Received: null
+
+      23 | const slot='haven.character-life-session-society.checkpoint.v1';
+      24 | test('assassination clears checkpoint, Continue refuses and New Game works',async({page})=>{
+    > 25 |  const s=await fixture('crime-death');await page.goto('/?mode=world-life');await importLife(page,s);await go(page,'session');await button(page,'Save locally').click();expect(await storedSaveText(page)).not.toBeNull();await go(page,'city');await page.getByTestId('life-end-week').click();await expect(page.getByRole('heading',{name:'The Lord Is Dead',exact:true})).toBeVisible();await expect(page.getByText(`An assassin's blade ended your rule. You ruled for ${s.city.world.week} weeks.`,{exact:true})).toBeVisible();await expect(page.getByRole('button')).toHaveText(['New Game']);expect(await storedSaveText(page)).toBeNull();await fit(page);
+         |                                                                                                                                                                                                               ^
+      26 |  await button(page,'New Game').click();await expect(page.getByRole('heading',{name:'Character Creation',exact:true})).toBeVisible();await page.reload();await expect(button(page,'Continue')).toBeDisabled();await expect(page.getByText('No local checkpoint',{exact:true})).toHaveText('No local checkpoint');await button(page,'New Game').click();await page.getByLabel('Name',{exact:true}).fill('New Keeper');await page.getByRole('tab',{name:'Review',exact:true}).click();await button(page,'Create character').click();await expect(page.getByTestId('life-shell')).toBeVisible();await page.locator('#life-nav-information').click();await expect(page.getByTestId('trial-standing')).toHaveText('Standing 50 · Fair');await expect(page.getByTestId('trial-crime-chance')).toHaveText('Crime events: 10% a week');await fit(page);
+      27 | });
+      28 |
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\crime.spec.ts:25:207
+
+    Error Context: test-results\crime-assassination-clears-e10bc--refuses-and-New-Game-works-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\crime-assassination-clears-e10bc--refuses-and-New-Game-works-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\crime-assassination-clears-e10bc--refuses-and-New-Game-works-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\crime.spec.ts:24:1 › assassination clears checkpoint, Continue refuses and New Game works 
+
+EXIT=1 DURATION_MS=17870 END_UTC=2026-11-12T11:10:48.582Z

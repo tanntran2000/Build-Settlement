@@ -1,0 +1,1 @@
+Before wait edits: nine affected cases. Ledger rebellion/assassination (2); world-npc posts/names/slots (1); society single-slot round-trip (1); world-session successful-save helper callers U2 (1), U3 success/invalid JSON/read rejection (3), U9 (1). Same exact delay-init.js bytes as round4. Record any cases that pass honestly as not reproduced.

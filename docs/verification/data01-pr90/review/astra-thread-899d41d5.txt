@@ -328,3 +328,121 @@ My own `git diff --check ca137a8..HEAD` completed with **exit code 0**. No tests
 - This verdict closes the reviewed findings and round-3 diff. It does not claim completion of the previously disclosed exhaustive audit of every original-PR test-migration line, or verify that G5 evidence has been committed to its required Git location.
 
 **Next: record this PASS against `c1faf87` in the Git evidence folder, with the final inventory metadata refreshed.**
+
+[user]
+[Claude (Orchestrator/Tester) -> Reviewer] DATA-01 Astra: review fix round 4 (CI test sync) — head 50df817adf38dc320b4ade634bfa8b01f6283a59
+
+READ-ONLY (git and file reads only; Claude is running gates in this worktree). Confirm HEAD == 50df817adf38dc320b4ade634bfa8b01f6283a59.
+
+After your PASS at c1faf87, GitHub CI (Linux) failed 16/350 smoke tests that pass locally: tests read IndexedDB or reloaded right after clicking Save locally, before the async save committed. Owner approval (Tân, verbatim): "Đồng ý" — for fix round 4, tests only: after each Save locally followed by a storage read or reload, wait for "Saved in this browser."; no assertion removed or loosened, no timeout change, no product change; allowlist extended to tests/e2e/order.spec.ts and outside.spec.ts.
+
+Diff: `git diff c1faf87..HEAD` (one commit, 7 spec files, 12 added `await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');`). Claude verified that removing those 12 statements and whitespace gives back the c1faf87 files exactly. Builder evidence: C:/Users/Admin/.t3/local-drafts/data01-prA/fix4/ (README.md, delayed-red.txt 16 failed, delayed-green-after-waits.txt 16 passed, smoke.txt 350/350, latent-patterns.md). CI failure log: C:/Users/Admin/.t3/local-drafts/data01-prA/ci-43191497608-failed.txt.
+
+Check:
+1. Each wait sits after a successful Save and before the read/reload/navigation that raced, in each of the 16 failing tests; none is placed where the test expects a save failure (e.g. tile-local-checkpoint blocked/full storage paths) and none can pass on a stale earlier "Saved" status from a previous save in the same test (toContainText on a status that may already show the text).
+2. No assertion, value, timeout or threshold changed; no product file changed.
+3. Whether the latent patterns listed in latent-patterns.md (world-npc-session:29, ledger:148, society:39, character-life:330, world-session:10/24/27/42) are real risks for CI.
+
+Reply: verdict PASS or FAIL; findings P0–P3 with file:line and a concrete scenario; what you could not verify.
+
+[assistant]
+Reviewing the 12 save-completion waits and the remaining timing risks at `50df817`. This stays read-only; Claude remains the sole gate runner.
+
+
+[assistant]
+**PASS for the authorized round-4 diff at `50df817`.** The 12 added waits correctly synchronize the targeted save operations. The latent-pattern audit identifies remaining timing risks outside this patch; those are listed separately below.
+
+Confirmed HEAD: `50df817adf38dc320b4ade634bfa8b01f6283a59`  
+Confirmed tree: `401f4c636401a10900059c310d90de6af03896ae`
+
+**No P0–P3 findings in the changed waits**
+
+- Each wait follows a Save locally operation expected to succeed and precedes the dependent storage read, reload, or further interaction.
+- The blocked/full-storage cases wait only for their **initial successful setup save**, before fault injection. Their later failure saves retain the existing error assertions.
+- I found no stale-success shortcut in these 12 insertion sites. They either perform the first manual save in that page/session, or a preceding import/export/command has replaced the earlier save notice. In particular, the later navigation round-trip save follows import and export, so it cannot reuse the setup save’s success message.
+- Only the seven approved spec files changed. The diff contains the 12 waits and line wrapping; no existing assertion, value, timeout, threshold, product code, dependency, or configuration changed. `git diff --check c1faf87..HEAD` exited **0**.
+
+**Remaining findings from the requested latent-pattern audit**
+
+1. **P2 — Save → export → reload/read still lacks a commit barrier in two unedited tests.**  
+   [world-npc-session.spec.ts:29](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/world-npc-session.spec.ts:29) and [society.spec.ts:39](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/society.spec.ts:39).
+
+   Export serializes the live session; it does not await the queued save. With delayed IndexedDB completion, the former can reload before persistence finishes, while the latter can observe an empty slot or reload too early. These are real scheduling risks, even though the inspected full smoke passed.
+
+2. **P2 — Raw slot snapshots can be taken before the setup save completes.**  
+   [world-session.spec.ts:24](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/world-session.spec.ts:24) and [world-session.spec.ts:42](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/world-session.spec.ts:42).
+
+   The shared save helper returns after the click. Under sufficiently delayed storage, `slots(page)` can capture the pre-save records, and a later comparison sees the completed save instead. That produces a false preservation failure. Other intervening UI operations add elapsed time but do not establish save completion.
+
+3. **P2 — The fallen-screen assertion does not establish completion of queued clearing.**  
+   [ledger.spec.ts:148](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/ledger.spec.ts:148).
+
+   The live state can render the fallen screen while save/clear operations remain queued. The subsequent direct `storedSaveText()` read can run after the save commits but before the queued clear starts, returning a non-null checkpoint. Conversely, an early null read can pass before either operation finishes. Waiting for the setup save reduces one source of overlap; a retrying assertion of final cleared storage would establish the cleanup result itself.
+
+The other listed cases need a narrower assessment:
+
+| Pattern | Assessment |
+|---|---|
+| `world-session.spec.ts:27`, three U3 variants | **No save-before-Continue race established.** Continue enters the same module queue after the save; these cases await the loaded notice before inspecting storage. |
+| `character-life.spec.ts:330` | **The queued Continue protects save ordering**, but the test exports immediately after clicking Continue without awaiting its loaded result. That is a separate read-completion risk and can also mask a failed restore because the live session was just imported from the expected save. |
+| `world-session.spec.ts:10` helper | Missing synchronization matters by caller; it is not sufficient by itself to classify every caller as faulty. |
+
+**Evidence and limits**
+
+The inspected Builder logs record [16 delayed failures before the fix](C:/Users/Admin/.t3/local-drafts/data01-prA/fix4/delayed-red.txt), [16 passes after the waits](C:/Users/Admin/.t3/local-drafts/data01-prA/fix4/delayed-green-after-waits.txt), and [350 full-smoke passes](C:/Users/Admin/.t3/local-drafts/data01-prA/fix4/smoke.txt), with exits **1**, **0**, and **0**, respectively.
+
+I did not run tests, builds, or the delay harness. The latent findings are source-derived scheduling risks, not independently reproduced failures. I did not establish a successful Linux CI rerun at this head. This PASS applies to the authorized 12-wait patch, not to a claim that every storage-related test is now free of timing races.
+
+**Next: record the round-4 PASS and send the three latent P2 findings to the owner for scope disposition.**
+
+[user]
+Astra, read-only re-review of DATA-01 PR A (#90), fix round 5.
+
+Worktree: C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+Range: `git diff 50df817..773e0c6` (one commit, 773e0c6, tree 36fab3a).
+
+Context: your round-5 review raised three latent P2 timing risks. Owner Tân approved fixing them inside #90, verbatim: "Sửa trong #90".
+
+Approved scope (tests only):
+- world-npc-session.spec.ts, society.spec.ts, world-session.spec.ts (shared `save` helper): add the round-4 wait `await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');` after Save locally, before export/read/reload.
+- ledger.spec.ts: setup-save wait, plus `await expect.poll(() => storedSaveText(page)).toBeNull();` before the unchanged direct assertion.
+- Additions only. No product change. character-life.spec.ts:330 not touched (not approved).
+
+My Tester check: stripping the two added statements and whitespace reproduces 50df817 byte-for-byte for all 4 files. Each world-session caller saves once per test.
+
+Builder evidence: C:/Users/Admin/.t3/local-drafts/data01-prA/fix5/ (delayed 300 ms baseline did not reproduce the race; all 9 pass before and after; gates 1–7 exit 0, unit 2,192, smoke 350/350).
+
+Please check:
+1. Diff stays inside the approved files and is purely additive; nothing weakened (assertions, timeouts, retries, workers).
+2. Each wait matches a status that only appears after this test's own save completes (no stale earlier "Saved" match).
+3. Ledger poll cannot pass vacuously before the save exists.
+4. Any remaining read/reload-before-save race in these 4 files.
+
+Do not edit files, run installs, push or merge. Reply PASS or FAIL with findings (P0–P3, file:line).
+
+[assistant]
+Reviewing the four approved test files at `773e0c6`, including stale-status checks and ledger’s save-before-clear ordering. This is a read-only review.
+
+
+[assistant]
+**PASS — fix round 5 closes the three approved save/clear timing risks. No P0–P3 findings in `50df817..773e0c6`.**
+
+Confirmed HEAD: `773e0c6cc381bb946f366585da7ef5e9c2da813f`  
+Confirmed tree: `36fab3ab2fd4717eaf433a7b55b922083cdfcfa7`
+
+1. **Scope and assertion integrity pass.** Only the four approved specs changed. The semantic additions are four save-success waits and one ledger null poll; other diff changes are line wrapping. Existing assertions, values, timeouts, retries, workers, and thresholds remain unchanged. No product files changed, and `character-life.spec.ts` is untouched.
+
+2. **The success waits cannot match an earlier save notice in their current callers.**  
+   [world-npc-session.spec.ts:30](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/world-npc-session.spec.ts:30), [society.spec.ts:40](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/society.spec.ts:40), and [ledger.spec.ts:149](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/ledger.spec.ts:149) follow the first manual save on a fresh page. The [world-session save helper](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/world-session.spec.ts:10) is called once per affected test; those tests boot a fresh document and disable autosave. Each wait therefore observes completion of that test’s own save.
+
+3. **Ledger’s poll cannot pass on the empty pre-save slot.**  
+   The setup-save success wait completes **before End Week**. The [null poll at line 158](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/ledger.spec.ts:158) then waits for clearing of the committed checkpoint. The original direct null assertion remains immediately afterward. This fixes the ordering without removing the existing check.
+
+4. **No remaining read/reload-before-manual-save race was identified in these four files.**  
+   The direct Save paths now wait before their dependent export/read/reload operations. The shared helper establishes the same ordering for all its current callers, including U2, the three U3 variants, and U9. This conclusion is limited to save completion; it is not a claim that every asynchronous test interaction has been exhaustively audited.
+
+`git diff --check 50df817..773e0c6` exited **0**, and the worktree was clean.
+
+The [Builder evidence](C:/Users/Admin/.t3/local-drafts/data01-prA/fix5/README.md) accurately distinguishes **non-reproduction** from a RED/GREEN proof: the 300 ms delayed baseline and modified tests both passed all nine cases. It reports gates 1–7 exiting 0, **2,192 unit tests**, and **350 smoke tests** passing. I did not run tests/builds or independently reproduce the timing risks, and I did not verify Linux CI at this head.
+
+**Next: record this PASS against `773e0c6` in #90’s committed review evidence.**

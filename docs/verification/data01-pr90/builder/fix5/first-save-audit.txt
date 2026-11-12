@@ -1,0 +1,6 @@
+Stale-notice check for the approved waits:
+- world-session save helper has only the three source call sites at base lines24,27,42: U2, three U3 parameter variants, U9. Every caller expects success, starts with boot(page), and invokes save once. boot navigates to a fresh document and imports a session; the spec disables autosave in beforeEach. U9 also imports/exports its grown session immediately before save, giving a non-Saved notice. No caller expects a save failure.
+- world-npc-session affected test boots a fresh page and performs its first manual save after assignment. No earlier manual save in that document.
+- society affected test navigates to a fresh page, imports makeLife, and performs its first manual save. No earlier manual save in that document.
+- ledger's two affected parameter variants each navigate fresh, import their fixture and perform their first manual save. The added setup-result wait completes before End Week, so the final null poll cannot pass on an empty pre-save slot. The existing final direct null assertion is retained after the poll.
+Thus the new success waits cannot match a stale Saved notice from an earlier Save in these current callers. No product change, notice clearing or additional negative assertion is required.

@@ -1,0 +1,29 @@
+Same nine cases and same exact round4 delay source. NO local RED reproduced. Each baseline case passed; none was forced to fail.
+Logs: delayed-baseline.txt (exit0) / delayed-green.txt (exit0).
+
+B3 rebellion is one sealed letter with unchanged fall behavior
+Baseline PASS (4.8s); after waits PASS (3.7s); race not reproduced locally.
+
+B3 assassination is one sealed letter with unchanged fall behavior
+Baseline PASS (1.8s); after waits PASS (2.5s); race not reproduced locally.
+
+one slot round-trips and rejects older or other-mode imports atomically
+Baseline PASS (3.4s); after waits PASS (4.2s); race not reproduced locally.
+
+save, continue, export and import preserve posts and resolved names; slots stay separate
+Baseline PASS (5.0s); after waits PASS (4.1s); race not reproduced locally.
+
+U2: End Week while import is pending rejects both halves and preserves all three slots
+Baseline PASS (2.3s); after waits PASS (2.4s); race not reproduced locally.
+
+U3: successful Continue invalidates pending success and its feedback
+Baseline PASS (6.0s); after waits PASS (5.6s); race not reproduced locally.
+
+U3: successful Continue invalidates pending invalid JSON and its feedback
+Baseline PASS (6.1s); after waits PASS (7.1s); race not reproduced locally.
+
+U3: successful Continue invalidates pending read rejection and its feedback
+Baseline PASS (5.3s); after waits PASS (6.1s); race not reproduced locally.
+
+U9: local and portable saves restore the whole populated session and uninterrupted next week
+Baseline PASS (19.1s); after waits PASS (21.2s); race not reproduced locally.
