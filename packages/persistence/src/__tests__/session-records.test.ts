@@ -52,3 +52,13 @@ it.each(['object shape','invalid actors'] as const)('fix1 F4: malformed world %s
   if(kind==='object shape')world.value={};else (world.value as ReturnType<typeof session>['outside']).actors=['unknown'];
   expectRecordRef(rows,'world:outside');
 });
+
+it.each(['npc','player','npc profile','player record profile','player embedded profile'] as const)('fix2 F2: malformed %s identifies its character record',kind=>{
+ const rows=sessionToRecords('main',session()),npc=kind==='npc'||kind==='npc profile',id=npc?'npc_starter_1':'player';
+ const value=rows.find(r=>r.table==='characters'&&r.id===id)!.value as Record<string,unknown>;
+ if(kind==='npc')value.npc={character:{id}};
+ else if(kind==='player')value.player={character:{id}};
+ else if(kind==='player embedded profile')(value.player as {profile:unknown}).profile={id};
+ else value.profile={id};
+ expectRecordRef(rows,npc?'characters:npc_starter_1':'characters:player');
+});

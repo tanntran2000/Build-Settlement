@@ -1,6 +1,6 @@
 ﻿import type { CharacterLifeSessionState, CharacterProfile, WorldNpc, PlayerCharacter } from '@haven/core';
 import { CHARACTER_LIFE_SAVE_FORMAT } from './character-life-save.js';
-import { createSocietyState, GOODS_STOCK_RULESET, hasWeeklyKeys, isCanonicalGameState, isSocietyState, isTileTrialState, isWorldSessionState, SOCIETY_RULESET } from '@haven/core';
+import { createSocietyState, GOODS_STOCK_RULESET, hasWeeklyKeys, isCanonicalGameState, isCharacterProfile, isPlayerCharacter, isSocietyState, isTileTrialState, isWorldNpcList, isWorldSessionState, SOCIETY_RULESET } from '@haven/core';
 import type { StoredRecord, TableName } from './game-store.js';
 export class StoreRecordError extends Error {
   constructor(public readonly ref: string) { super(`Invalid store record: ${ref}`); this.name = 'StoreRecordError'; }
@@ -83,8 +83,8 @@ export function recordsToSession(records: StoredRecord[]): CharacterLifeSessionS
   for (const r of records.filter(r => r.table === 'characters')) {
     const v = r.value as { kind: string; player: PlayerCharacter; npc: WorldNpc; order: number; profile: CharacterProfile; profileOrder: number };
     if (!v || !v.profile || v.profile.id !== r.id) bad(r);
-    if (v.kind === 'player') { if (player || v.player?.character?.id !== r.id) bad(r); player = v.player; }
-    else if (v.kind === 'npc') { if (v.npc?.character?.id !== r.id || !Number.isInteger(v.order) || v.order < 0 || !Number.isInteger(v.profileOrder) || v.profileOrder < 0) bad(r); npcs.push({ npc: v.npc,order: v.order }); }
+    if (v.kind === 'player') { if (player || !isPlayerCharacter(v.player) || v.player.character.id !== r.id || !isCharacterProfile(v.profile,v.player.character)) bad(r); player = v.player; }
+    else if (v.kind === 'npc') { if (!isWorldNpcList([...npcs.map(n => n.npc),v.npc],city) || v.npc.character.id !== r.id || !isCharacterProfile(v.profile,v.npc.character) || !Number.isInteger(v.order) || v.order < 0 || !Number.isInteger(v.profileOrder) || v.profileOrder < 0) bad(r); npcs.push({ npc: v.npc,order: v.order }); }
     else bad(r);
     if (v.kind === 'npc') profiles.push({ profile: v.profile,order: v.profileOrder });
   }
