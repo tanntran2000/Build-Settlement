@@ -1,6 +1,6 @@
 # P6-A — Items core, sources and Player health (design spec v0.1)
 
-**Status:** draft for G1. It needs owner (Tân) review.
+**Status:** **G1 approved** by the owner (Tân), 2026-11-12, verbatim: "Approve both" (DATA-01 and P6-A, v0.1).
 
 - **Base:** `main` `ca46d18`.
 - **Not authorised by this document:** no code, push or PR.
