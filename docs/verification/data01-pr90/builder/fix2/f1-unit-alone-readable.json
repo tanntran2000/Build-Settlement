@@ -1,0 +1,1 @@
+[["f1-unit-red-alone-readable","npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t \"legacy A is readable\""]]

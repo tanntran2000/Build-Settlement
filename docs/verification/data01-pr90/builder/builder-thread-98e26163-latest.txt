@@ -1,0 +1,120 @@
+DATA-01 PR A Builder 2 (xhigh, from A2)
+mcp:98e26163-7df9-4d3a-8069-98fa1b81a8e2  completed  codex/gpt-6.1-sol
+
+[assistant]
+Smoke has passed **132/350 tests** with no failures. Character-life and crisis checks progressed successfully; the garrison raid-parity case also passed.
+
+[assistant]
+Smoke has passed **139/350 tests** with no failures. The ledger crime-raid case passed its row, Details and complete-report parity checks.
+
+[assistant]
+Smoke has passed **166/350 tests** with no failures. The city and Information views passed the uniqueness check for all ten stored goods’ test IDs.
+
+[assistant]
+Smoke has passed **206/350 tests** with no failures. The new existing-B and empty-slot migration races passed at the final HEAD; the marker-winner case is next.
+
+[assistant]
+Smoke has passed **226/350 tests** with no failures. All three new migration races passed at the final HEAD, and contextual-feedback checks are now progressing.
+
+[assistant]
+Smoke has passed **252/350 tests** with no failures. Checkpoint regression cases are passing for slot isolation and imports that leave local storage unchanged.
+
+[assistant]
+Smoke has passed **272/350 tests** with no failures. The population round-trip case passed at 1280px, including workforce preservation.
+
+[assistant]
+Smoke has passed **283/350 tests** with no failures. Invalid worker assignments and unaffordable replacements preserved the plan as expected.
+
+[assistant]
+Smoke has passed **333/350 tests** with no failures. Seventeen tests remain; the latest workforce-error case passed at 390px.
+
+[assistant]
+Smoke has passed **347/350 tests** with no failures. Three world-session tests remain.
+
+[assistant]
+Full smoke passed **350/350 tests**, exit `0`, at the final commit. Playwright reported **29.9 minutes**; the command took **29m 59.295s**, including the pretest build. I’m checking the final status and completing the evidence manifest.
+
+[assistant]
+**Review `c1faf87`: round 3 is complete, with all seven gates and the full 350-test smoke passing at the clean final HEAD.**
+
+```text
+Branch: feat/data01-storage
+HEAD:   c1faf87c10f790f68964f92fedecde86b2700d8d
+Tree:   ab89dbb7c719499233c6a0565aafe3a44a749882
+git status --short: empty
+```
+
+One round-3 commit: **`fix(persistence): migrate legacy checkpoints atomically`**. Its why body explains the cross-tab overwrite and atomic migration behavior; its last attribution line is `Co-authored-by: Codex <noreply@openai.com>`. See the [commit and final-status evidence](/C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/completion-final-status.txt).
+
+Migration now checks the marker and current slot inside one IndexedDB readwrite transaction, or one synchronous memory-store step. A newer C save survives both the preliminary-B and preliminary-empty races. The service loads the records returned by `migrateSlot`, and legacy bytes remain untouched.
+
+No push, PR or merge. Ports **4173/4174 are free**. The assigned worktree is retained for independent review; no storage was reclaimed.
+
+**Final gates ran sequentially at the HEAD and tree above.**
+
+| Gate | Exit | Result | Log |
+|---|---:|---|---|
+| 1 — `git diff --check origin/main...HEAD` | 0 | No whitespace errors | [gate-1-diff-check.txt](/C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/gate-1-diff-check.txt) |
+| 2 — `npm run lint` | 0 | Passed with `--max-warnings=0` | [gate-2-lint.txt](/C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/gate-2-lint.txt) |
+| 3 — `npm run typecheck` | 0 | Zero errors and warnings | [gate-3-typecheck.txt](/C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/gate-3-typecheck.txt) |
+| 4 — `npm run check:architecture` | 0 | Zero violations, cycles or errors | [gate-4-check-architecture.txt](/C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/gate-4-check-architecture.txt) |
+| 5 — `npm run test:architecture` | 0 | **154 passed**, zero failed | [gate-5-test-architecture.txt](/C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/gate-5-test-architecture.txt) |
+| 6 — `npm test` | 0 | **2,192 passed across 99 files** | [gate-6-unit.txt](/C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/gate-6-unit.txt) |
+| 7 — `npm run build` | 0 | Passed; UI transformed 228 modules | [gate-7-build.txt](/C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/gate-7-build.txt) |
+| `CI=1 npm run test:smoke` | 0 | **350 passed**, one worker | [final-smoke.txt](/C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/final-smoke.txt) |
+
+Smoke duration: **29.9 minutes reported by Playwright**; **29m 59.295s command duration**, including the pretest build. All three new migration races passed in this final-head run. The [combined gate and smoke log](/C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/gates-1-7-and-smoke.txt) preserves full output, commands, UTC times, exit codes, HEAD, tree and clean status.
+
+**RED/GREEN and reruns**
+
+| Run | Exit | Counts | Evidence |
+|---|---:|---|---|
+| Full pre-product unit RED | 1 | **30 failed, 55 passed**: 11 new memory cases, 4 new service cases and 15 migrated existing observations | [unit-red.txt](/C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/unit-red.txt) |
+| Full pre-product browser RED | 1 | **3 failed**: existing B, empty slot and marker winner | [browser-red.txt](/C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/browser-red.txt) |
+| First implementation unit GREEN | 0 | **85/85 focused**, then **292/292 regression** | [unit-green.txt](/C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/unit-green.txt), [regression-green.txt](/C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/regression-green.txt) |
+| Browser GREEN after the ruling | 0 | **28/28** across storage and autosave specs | [browser-post-ruling-green.txt](/C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/browser-post-ruling-green.txt) |
+
+All **33 pre-product failures reran alone once**, before product edits: `unit-red-alone-01.txt` through `-30.txt`, and `browser-red-alone-1.txt` through `-3.txt`. Every isolated run returned exit `1` with one failed test. The [per-case mapping](/C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/completion-per-case-evidence.txt) lists each exact command and its RED/GREEN logs.
+
+The first browser GREEN attempt returned **27 passed, 1 failed** because my new assertion hard-coded revision `1`; the required isolated rerun failed identically with actual revision `2`. Both logs remain: [first run](/C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/browser-green.txt), [isolated rerun](/C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/browser-green-failure-alone.txt).
+
+Under your ruling, I captured the live revision before release and changed only that new expectation to `Math.max(liveRevision, savedC.city.revision) + 1`. Every other browser assertion stayed identical, and product hashes remained unchanged. The existing-B case then reached and passed its exact stored-record, marker, legacy-preservation, write-count and mark assertions. See the [diff review](/C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/resumed-diff-review.txt).
+
+**The complete round-3 inventory is eight files: 160 insertions and eight deletions.**
+
+| Product file | Change |
+|---|---|
+| [game-store.ts:9](/C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/game-store.ts:9) | Added the owner-approved `migrateSlot` port method. |
+| [memory-store.ts:18](/C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/memory-store.ts:18) | Added synchronous atomic migration, input validation and detached returned records. |
+| [indexeddb-store.ts:35](/C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/indexeddb-store.ts:35) | Added one-transaction migration and one `haven.store.write` mark per call. |
+| [character-life-session.ts:80](/C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/character-life-session.ts:80) | Migration uses `migrateSlot` and its returned records; invalid legacy produces OLD only when returned records are null. |
+
+| Test file | Change |
+|---|---|
+| [game-store.test.ts](/C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/__tests__/game-store.test.ts) | Added 11 memory-store cases; no old lines removed. |
+| [character-life-session.test.ts](/C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/character-life-session.test.ts) | Four permitted old-line migrations; added migration fixtures/spies, same-test write counter and four service interleavings. |
+| [storage.helpers.ts](/C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/storage.helpers.ts) | Added the real IndexedDB transaction/write observer; no old lines removed. |
+| [storage.spec.ts:161](/C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/storage.spec.ts:161) | Added three two-page races, including the permitted revision-contract correction; no old lines removed. |
+
+These are **all four edited existing test lines**, relative to base `ca137a8`. The table abbreviates the unchanged marker object; the [complete inventory](/C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/completion-edit-inventory.txt) contains each full exact before/after line.
+
+| File: base line → final line | Before → after | Invariant retained |
+|---|---|---|
+| `character-life-session.test.ts:63 → 65` | `replaceSlot` calls with `['main', [], [marker]]` → `migrateSlot` calls with `['main', null, marker]` | Reject foreign NPC-world data; preserve legacy bytes; keep main empty; write the marker. |
+| `character-life-session.test.ts:160 → 162` | Same replacement-call observation → atomic-migration-call observation | All invalid/foreign legacy variants remain rejected, with unchanged bytes and an empty main slot. |
+| `character-life-session.test.ts:296 → 308` | `replace` called once with `before` and marker → `migrate` called once with null candidate and marker | Existing B wins pending migration without ordinary replacement. |
+| `character-life-session.test.ts:297 → 309` | Returned `{put:0, deleted:0, unchanged:7}` → returned records equal `before` | Exact surviving records and zero slot-data writes remain required. |
+
+For old line `297`, the **same existing test** retains exact stored-record equality and adds **zero data puts, zero data deletes, exactly one marker put, and no `replaceSlot` call**. Both parameter variants passed.
+
+All other test changes are additions. No existing test, assertion, timeout, retry, worker or threshold was deleted or loosened. No Svelte call sites changed this round. Full patches: [product](/C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/completion-product.patch), [tests](/C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/completion-test.patch).
+
+The spy/mark mapping is: migration `replaceSlot` spy → `migrateSlot` spy; backing-Map operations → zero data writes and one marker put; IndexedDB transaction/write observer → one atomic transaction with marker-only writes, or no writes when the marker already exists; `storeMarks` → one `haven.store.write` per adapter migration call.
+
+The [bundle measurements](/C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/bundle-measurements.json) retain exact gzip byte counts, the supplied main baseline, asset hashes and tested HEAD/tree. Both raw built assets are preserved.
+
+No additional plan interpretation changed. The port addition uses owner approval **“Sửa vòng 3”**; the four old-line migrations follow correction 4(a), and the new revision expectation follows your explicit HOLD ruling.
+
+The [completion report](/C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/COMPLETION-REPORT.md) and [163-file manifest](/C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/COMPLETION-SHA256SUMS.txt) are ready. All **117 historical HOLD evidence files remain unchanged**; UTF-8 verification passed for 155 text files.
+
+**Next: Claude, run independent review on `c1faf87c10f790f68964f92fedecde86b2700d8d`.**

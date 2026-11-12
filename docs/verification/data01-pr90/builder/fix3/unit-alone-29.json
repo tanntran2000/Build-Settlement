@@ -1,0 +1,1 @@
+[["unit-red-alone-29","npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t \"^fix3 service: concurrent C wins after invalid legacy preliminary read$\""]]

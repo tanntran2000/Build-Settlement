@@ -1,0 +1,5 @@
+fix(ui): serialize checkpoint operations in invocation order
+
+Keep a pending save ahead of the fallen clear that follows it so a late write cannot resurrect that checkpoint. Queue reads, saves and clears through one module-level chain, recover the chain after rejection, and capture each save before it waits.
+
+Co-authored-by: Codex <noreply@openai.com>

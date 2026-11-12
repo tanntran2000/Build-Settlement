@@ -1,0 +1,56 @@
+UTC=2026-11-12T02:19:13.745Z HEAD=e51de7161d3b5164c201ffe83a1bef74702e0d12 TREE=ec6f5efd5bad969d01e08aebebef0cbb72f287e8
+COMMAND=npm test
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/crisis-checkpoint.test.ts (2 tests | 2 failed) 53ms
+   × clears only the life slot after a confirmed fallen End Week 40ms
+   × contains storage failures 7ms
+
+ Test Files  1 failed | 98 passed (99)
+      Tests  2 failed | 2112 passed (2114)
+   Start at  09:19:16
+   Duration  65.21s (transform 13.95s, setup 0ms, import 43.20s, tests 156.98s, environment 47ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/crisis-checkpoint.test.ts > clears only the life slot after a confirmed fallen End Week
+AssertionError: expected Promise{…} to deeply equal { success: true }
+
+- Expected
++ Received
+
+- {
+-   "success": true,
+- }
++ Promise {}
+
+ ❯ packages/ui/src/__tests__/crisis-checkpoint.test.ts:4:433
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  packages/ui/src/__tests__/crisis-checkpoint.test.ts > contains storage failures
+AssertionError: expected Promise{…} to deeply equal { success: false, …(1) }
+
+- Expected
++ Received
+
+- {
+-   "message": "Could not clear the local checkpoint. Browser storage is unavailable.",
+-   "success": false,
+- }
++ Promise {}
+
+ ❯ packages/ui/src/__tests__/crisis-checkpoint.test.ts:5:164
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+EXIT=1 DURATION_MS=68228

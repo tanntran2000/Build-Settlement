@@ -1,0 +1,41 @@
+UTC=2026-11-12T03:16:11.373Z HEAD=bd21b19de309cd5725d303d3ca87b98b0978ade5 TREE=062c584af2687046612a697b1b845b470fa9e20c
+STATUS="M packages/ui/src/CharacterLifeApp.svelte\n M packages/ui/src/__tests__/character-life-session.test.ts\n M tests/e2e/autosave.spec.ts\n M tests/e2e/character-life-navigation.spec.ts\n M tests/e2e/character-life.spec.ts\n M tests/e2e/crime.spec.ts\n M tests/e2e/crisis.spec.ts\n M tests/e2e/ledger.spec.ts\n M tests/e2e/society.spec.ts\n M tests/e2e/tile-local-checkpoint.spec.ts\n M tests/e2e/title.spec.ts\n M tests/e2e/world-session.spec.ts\n?? tests/e2e/storage.helpers.ts\n?? tests/e2e/storage.spec.ts"
+ENV CI=
+COMMAND=npx vitest run packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/crisis-checkpoint.test.ts
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/character-life-session.test.ts (51 tests | 1 failed) 654ms
+   × migrates legacy once and never touches legacy on second read 25ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > migrates legacy once and never touches legacy on second read
+AssertionError: expected "read" to be called once with arguments: [ 'main' ]
+
+Received:
+
+  1st read call:
+
+Compared values have no visual difference.
+
+  2nd read call:
+
+Compared values have no visual difference.
+
+
+Number of calls: 2
+
+ ❯ packages/ui/src/__tests__/character-life-session.test.ts:181:242
+
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 52 passed (53)
+   Start at  10:16:14
+   Duration  2.23s (transform 1.77s, setup 0ms, import 2.35s, tests 697ms, environment 0ms)
+
+
+EXIT=1 DURATION_MS=5436 END_UTC=2026-11-12T03:16:16.809Z

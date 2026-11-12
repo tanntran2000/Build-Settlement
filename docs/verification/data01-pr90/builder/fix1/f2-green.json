@@ -1,0 +1,1 @@
+﻿[["f2-build-green","npm run build"],["f2-green","npm run test:smoke -- tests/e2e/storage.spec.ts"]]

@@ -1,0 +1,26 @@
+{
+  "head": "14768381cec2aeed06a71b6bae73d0a9502265e4",
+  "tree": "5c5cf260bf643bf9835d5109b89270dbf2c63dde",
+  "utc": "2026-11-12T05:01:53.348Z",
+  "method": "Node zlib.gzipSync with default options; final gate7 production assets. kB = 1000 bytes.",
+  "baselineKB": {
+    "js": 101.76,
+    "css": 5.79
+  },
+  "measurements": [
+    {
+      "file": "index-DdNtS9j1.css",
+      "rawBytes": 28127,
+      "gzipBytes": 5814,
+      "gzipKB": 5.814,
+      "sha256": "957e3db03aef271e79b33fd544374adbc99e7d2664fc35744b96835f0d072c0d"
+    },
+    {
+      "file": "index-DlOQxvo5.js",
+      "rawBytes": 321697,
+      "gzipBytes": 104931,
+      "gzipKB": 104.931,
+      "sha256": "1e8853aebeaa50041f80f56ff38536bdfc7d23ac276479cbd6e0e41b4c62c0a6"
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+[
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/__tests__/game-store.test.ts",
+    "name": "fix3 memory: existing marker writes nothing with meta=true",
+    "reason": "AssertionError: expected 'undefined' to be 'function' // Object.is equality"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/__tests__/game-store.test.ts",
+    "name": "fix3 memory: existing marker writes nothing with meta=false",
+    "reason": "AssertionError: expected 'undefined' to be 'function' // Object.is equality"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/__tests__/game-store.test.ts",
+    "name": "fix3 memory: existing slot wins and only receives the marker",
+    "reason": "AssertionError: expected 'undefined' to be 'function' // Object.is equality"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/__tests__/game-store.test.ts",
+    "name": "fix3 memory: empty slot stores candidate and marker with detached return",
+    "reason": "AssertionError: expected 'undefined' to be 'function' // Object.is equality"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/__tests__/game-store.test.ts",
+    "name": "fix3 memory: null candidate writes only marker and preserves other slots",
+    "reason": "AssertionError: expected 'undefined' to be 'function' // Object.is equality"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/__tests__/game-store.test.ts",
+    "name": "fix3 memory: migration takes one synchronous state step",
+    "reason": "AssertionError: expected 'undefined' to be 'function' // Object.is equality"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/__tests__/game-store.test.ts",
+    "name": "fix3 memory: invalid candidate slot cannot mutate records",
+    "reason": "AssertionError: expected 'undefined' to be 'function' // Object.is equality"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/__tests__/game-store.test.ts",
+    "name": "fix3 memory: invalid candidate system cannot mutate records",
+    "reason": "AssertionError: expected 'undefined' to be 'function' // Object.is equality"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/__tests__/game-store.test.ts",
+    "name": "fix3 memory: invalid marker table cannot mutate records",
+    "reason": "AssertionError: expected 'undefined' to be 'function' // Object.is equality"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/__tests__/game-store.test.ts",
+    "name": "fix3 memory: failed migration preserves records with meta=true",
+    "reason": "AssertionError: expected 'undefined' to be 'function' // Object.is equality"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/__tests__/game-store.test.ts",
+    "name": "fix3 memory: failed migration preserves records with meta=false",
+    "reason": "AssertionError: expected 'undefined' to be 'function' // Object.is equality"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/character-life-session.test.ts",
+    "name": "rejects an NPC-world checkpoint in the life slot and leaves every byte untouched",
+    "reason": "AssertionError: expected [] to deeply equal [ [ 'main', null, …(1) ] ]"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/character-life-session.test.ts",
+    "name": "ported checkpoint boundary: malformed bytes stay untouched",
+    "reason": "AssertionError: expected [] to deeply equal [ [ 'main', null, …(1) ] ]"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/character-life-session.test.ts",
+    "name": "ported checkpoint boundary: empty bytes stay untouched",
+    "reason": "AssertionError: expected [] to deeply equal [ [ 'main', null, …(1) ] ]"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/character-life-session.test.ts",
+    "name": "ported checkpoint boundary: version bytes stay untouched",
+    "reason": "AssertionError: expected [] to deeply equal [ [ 'main', null, …(1) ] ]"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/character-life-session.test.ts",
+    "name": "ported checkpoint boundary: ruleset bytes stay untouched",
+    "reason": "AssertionError: expected [] to deeply equal [ [ 'main', null, …(1) ] ]"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/character-life-session.test.ts",
+    "name": "ported checkpoint boundary: opposite mode bytes stay untouched",
+    "reason": "AssertionError: expected [] to deeply equal [ [ 'main', null, …(1) ] ]"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/character-life-session.test.ts",
+    "name": "ported checkpoint boundary: map bytes stay untouched",
+    "reason": "AssertionError: expected [] to deeply equal [ [ 'main', null, …(1) ] ]"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/character-life-session.test.ts",
+    "name": "ported checkpoint boundary: negative stock bytes stay untouched",
+    "reason": "AssertionError: expected [] to deeply equal [ [ 'main', null, …(1) ] ]"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/character-life-session.test.ts",
+    "name": "ported checkpoint boundary: report bytes stay untouched",
+    "reason": "AssertionError: expected [] to deeply equal [ [ 'main', null, …(1) ] ]"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/character-life-session.test.ts",
+    "name": "ported checkpoint boundary: extra field bytes stay untouched",
+    "reason": "AssertionError: expected [] to deeply equal [ [ 'main', null, …(1) ] ]"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/character-life-session.test.ts",
+    "name": "ported checkpoint boundary: workforce bytes stay untouched",
+    "reason": "AssertionError: expected [] to deeply equal [ [ 'main', null, …(1) ] ]"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/character-life-session.test.ts",
+    "name": "ported checkpoint boundary: oversize bytes stay untouched",
+    "reason": "AssertionError: expected [] to deeply equal [ [ 'main', null, …(1) ] ]"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/character-life-session.test.ts",
+    "name": "ported checkpoint boundary: UTF-8 oversize bytes stay untouched",
+    "reason": "AssertionError: expected [] to deeply equal [ [ 'main', null, …(1) ] ]"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/character-life-session.test.ts",
+    "name": "fix2 F1: pending migration keeps saved B when legacy A is readable",
+    "reason": "AssertionError: expected \"vi.fn()\" to be called once with arguments: [ 'main', null, { slotId: '_', …(4) } ]"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/character-life-session.test.ts",
+    "name": "fix2 F1: pending migration keeps saved B when legacy A is still blocked",
+    "reason": "AssertionError: expected \"vi.fn()\" to be called once with arguments: [ 'main', null, { slotId: '_', …(4) } ]"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/character-life-session.test.ts",
+    "name": "fix3 service: concurrent C wins after existing B preliminary read",
+    "reason": "AssertionError: expected { success: true, state: { …(5) } } to deeply equal { success: true, state: { …(5) } }"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/character-life-session.test.ts",
+    "name": "fix3 service: concurrent C wins after empty preliminary read",
+    "reason": "AssertionError: expected { success: true, state: { …(5) } } to deeply equal { success: true, state: { …(5) } }"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/character-life-session.test.ts",
+    "name": "fix3 service: concurrent C wins after invalid legacy preliminary read",
+    "reason": "AssertionError: expected { success: false, …(1) } to deeply equal { success: true, state: { …(5) } }"
+  },
+  {
+    "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/character-life-session.test.ts",
+    "name": "fix3 service: concurrent C wins after other migration preliminary read",
+    "reason": "AssertionError: expected { success: true, state: { …(5) } } to deeply equal { success: true, state: { …(5) } }"
+  }
+]

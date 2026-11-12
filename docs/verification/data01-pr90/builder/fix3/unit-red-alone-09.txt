@@ -1,0 +1,36 @@
+UTC=2026-11-12T07:25:19.337Z HEAD=ca137a888e92aeba4794239cc5f5cef48d0181d6 TREE=721d2937e9f7dddb74d03c002ca0f260816162c7
+STATUS="M packages/persistence/src/__tests__/game-store.test.ts\n M packages/ui/src/__tests__/character-life-session.test.ts\n M tests/e2e/storage.helpers.ts\n M tests/e2e/storage.spec.ts"
+ENV CI=
+COMMAND=npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t "^fix3 memory: invalid marker table cannot mutate records$"
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/persistence/src/__tests__/game-store.test.ts (20 tests | 1 failed | 19 skipped) 15ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/persistence/src/__tests__/game-store.test.ts > fix3 memory: invalid marker table cannot mutate records
+AssertionError: expected 'undefined' to be 'function' // Object.is equality
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ packages/persistence/src/__tests__/game-store.test.ts:34:31
+   × fix3 memory: invalid marker table cannot mutate records 12ms
+     32|  const s=createMemoryGameStore(),b=records('B'),candidate=records('A')…
+     33|  if(kind==='candidate slot')candidate[0].slotId='other';if(kind==='can…
+     34|  expect(typeof s.migrateSlot).toBe('function');await expect(s.migrateS…
+       |                               ^
+     35|  expect(await s.read('main')).toEqual(b);expect(await s.getSystem(mark…
+     36| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 19 skipped (20)
+   Start at  14:25:21
+   Duration  511ms (transform 71ms, setup 0ms, import 115ms, tests 15ms, environment 0ms)
+
+
+EXIT=1 DURATION_MS=3219 END_UTC=2026-11-12T07:25:22.556Z

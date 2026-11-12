@@ -1,0 +1,69 @@
+UTC=2026-11-12T04:50:48.520Z HEAD=2c958573f0b0f97bb370627db49aaebfe546ca8c TREE=8d242e407374f38f8758c0ae78a21d65b5de5f97
+STATUS="M packages/persistence/src/__tests__/session-records.test.ts"
+ENV CI=
+COMMAND=npx vitest run packages/persistence/src/__tests__/session-records.test.ts
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/persistence/src/__tests__/session-records.test.ts (45 tests | 7 failed) 307ms
+   × fix1 F4: inconsistent meta rulesetId identifies meta:session 7ms
+   × fix1 F4: inconsistent meta revision identifies meta:session 3ms
+   × fix1 F4: inconsistent meta phase identifies meta:session 3ms
+   × fix1 F4: malformed city object shape identifies city:city 3ms
+   × fix1 F4: malformed city invalid inventory identifies city:city 4ms
+   × fix1 F4: malformed world object shape identifies world:outside 3ms
+   × fix1 F4: malformed world invalid actors identifies world:outside 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > fix1 F4: inconsistent meta rulesetId identifies meta:session
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > fix1 F4: inconsistent meta revision identifies meta:session
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > fix1 F4: inconsistent meta phase identifies meta:session
+AssertionError: expected undefined to be an instance of StoreRecordError
+ ❯ expectRecordRef packages/persistence/src/__tests__/session-records.test.ts:36:17
+     34|   let error: unknown;
+     35|   try { recordsToSession(rows); } catch (caught) { error = caught; }
+     36|   expect(error).toBeInstanceOf(StoreRecordError);
+       |                 ^
+     37|   expect((error as StoreRecordError).ref).toBe(ref);
+     38| }
+ ❯ packages/persistence/src/__tests__/session-records.test.ts:42:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯
+
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > fix1 F4: malformed city object shape identifies city:city
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > fix1 F4: malformed city invalid inventory identifies city:city
+AssertionError: expected undefined to be an instance of StoreRecordError
+ ❯ expectRecordRef packages/persistence/src/__tests__/session-records.test.ts:36:17
+     34|   let error: unknown;
+     35|   try { recordsToSession(rows); } catch (caught) { error = caught; }
+     36|   expect(error).toBeInstanceOf(StoreRecordError);
+       |                 ^
+     37|   expect((error as StoreRecordError).ref).toBe(ref);
+     38| }
+ ❯ packages/persistence/src/__tests__/session-records.test.ts:48:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯
+
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > fix1 F4: malformed world object shape identifies world:outside
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > fix1 F4: malformed world invalid actors identifies world:outside
+AssertionError: expected undefined to be an instance of StoreRecordError
+ ❯ expectRecordRef packages/persistence/src/__tests__/session-records.test.ts:36:17
+     34|   let error: unknown;
+     35|   try { recordsToSession(rows); } catch (caught) { error = caught; }
+     36|   expect(error).toBeInstanceOf(StoreRecordError);
+       |                 ^
+     37|   expect((error as StoreRecordError).ref).toBe(ref);
+     38| }
+ ❯ packages/persistence/src/__tests__/session-records.test.ts:53:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  7 failed | 38 passed (45)
+   Start at  11:50:50
+   Duration  1.17s (transform 397ms, setup 0ms, import 510ms, tests 307ms, environment 0ms)
+
+
+EXIT=1 DURATION_MS=3678 END_UTC=2026-11-12T04:50:52.198Z

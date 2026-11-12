@@ -1,0 +1,1 @@
+[["a2-record-red","npx vitest run packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/crisis-checkpoint.test.ts"]]

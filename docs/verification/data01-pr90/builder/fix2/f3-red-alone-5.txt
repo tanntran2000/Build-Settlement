@@ -1,0 +1,55 @@
+UTC=2026-11-12T05:52:07.489Z HEAD=5154ab7dcd186e20df52ba324176437e0e8b99e0 TREE=dacc43c9877d0dd89600f26360cdb9631d52bbd0
+STATUS="M tests/e2e/storage.spec.ts"
+ENV CI=1
+COMMAND=npx playwright test tests/e2e/storage.spec.ts -g "fix2 F3: a Planning command"
+[WebServer] (node:28488) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:38176) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:36572) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\storage.spec.ts:144:1 › fix2 F3: a Planning command supersedes pending Save feedback (7.9s)
+
+
+  1) [chromium] › tests\e2e\storage.spec.ts:144:1 › fix2 F3: a Planning command supersedes pending Save feedback 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[aria-label="Planning checkpoints"] [role="status"]')
+    Expected: "Checkpoint download requested."
+    Received: "Saved in this browser."
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[aria-label="Planning checkpoints"] [role="status"]') with timeout 5000ms
+      - waiting for locator('[aria-label="Planning checkpoints"] [role="status"]')
+        14 × locator resolved to <p role="status" class="svelte-68buw">Saved in this browser.</p>
+           - unexpected value "Saved in this browser."
+
+
+      146 |  await button(page,'Save locally').click();await waitStoreCompletion(page);const newer=await act(page,initial,'SET_ENABLED',{tileId:'field-1',enabled:false});
+      147 |  await go(page,'session');const notice=page.locator('[aria-label="Planning checkpoints"] [role="status"]');await expect(notice).toHaveText('Checkpoint download requested.');
+    > 148 |  await releaseStoreCompletion(page);await expect(notice).toHaveText('Checkpoint download requested.');expect(await exportLife(page)).toEqual(newer);
+          |                                                          ^
+      149 | });
+      150 | test('fix2 F3: a delayed autosave failure cannot replace a later week status',async({page})=>{
+      151 |  await start(page);const initial=await exportLife(page);await save(page);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\storage.spec.ts:148:58
+
+    Error Context: test-results\storage-fix2-F3-a-Planning-5444a-sedes-pending-Save-feedback-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\storage-fix2-F3-a-Planning-5444a-sedes-pending-Save-feedback-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\storage-fix2-F3-a-Planning-5444a-sedes-pending-Save-feedback-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\storage.spec.ts:144:1 › fix2 F3: a Planning command supersedes pending Save feedback 
+
+EXIT=1 DURATION_MS=20702 END_UTC=2026-11-12T05:52:28.191Z

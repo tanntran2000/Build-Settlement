@@ -1,0 +1,41 @@
+﻿A1 full RED inventory before product edits:
+36 fixture round trips: society-v1/v2/v3 (2 each), v4 (4), v5 (8), v6/v7 (9 each).
+Player and 3 NPCs give 4 character records.
+corrupt character identifies the offending record.
+Memory suite: write then read; unchanged records are not rewritten; a removed NPC record is deleted; failWrites leaves the previous records; clear keeps system records; two slots are isolated.
+Diff cases: empty inputs; insert/update/delete/unchanged; table is part of identity.
+Total new cases: 47. Initial RED: 2 module collection failures; 157 existing tests passed.
+A1 fix attempt 1: Player record takes player.profile; reconstructed profiles contains NPC profiles only. Generated draft currentName fixed without changing assertions.
+Fixture edit packages/persistence/src/__tests__/session-records.test.ts:16:
+BEFORE: createCharacterLifeSession(0, structuredClone(DEFAULT_PLAYER_DRAFT))
+AFTER: createCharacterLifeSession(0, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' })
+A1 GREEN: 204 tests passed, including 47 new cases; exit 0.
+Read-only extra typecheck was permitted by Claude clarification. Required checks rerun after GREEN.
+
+2026-11-12 resumed Builder: A2 merged 40 existing + 8 new cases, mechanical awaits in both test files. Honest RED via product-only stash: 41 pass / 7 fail. Restored-product GREEN attempt: 26 pass / 24 fail. HOLD: existing localStorage assertions and fixture isolation cannot migrate with await-only permission. Details: a2-resume-HOLD.md. No product fixes, new commits, A3/A4, push, PR or merge.
+
+A2 correction4 complete: 53 focused / 2157 full unit, typecheck/build exit0. New helper createCheckpointDeps enables isolated factory-failure testing. Corrupt record message regression RED+alone then GREEN. A3 begins with all nine storage e2e cases before title edits.
+A2 commit: bd21b19de309cd5725d303d3ca87b98b0978ade5 (message BOM corrected locally before A3).
+A2 final: 53 focused tests; typecheck 0; npm test 2157/2157 in 99 files, 53.39s; build 0, JS 103.95/CSS5.79 kB gzip.
+A3 full RED at A2 product: 7 passed/2 failed of 9, 40.4s, a3-red.txt. Blocked/title each reproduced alone; initial grep ^blocked returned no tests, corrected grep executed the case. Three-game raw cleanup strengthened to populate all 7 tables and preserves started seed; alone passed 28.8s.
+A3 title/product edited only after RED. Ten existing specs migrated (equivalent storage rule). Selected GREEN run currently active exec session 42282: a3-green-commands.json, run.cjs; first build then named 11 specs including storage.spec.ts. No other runner active.
+Next: read run result, isolate actual failures once before fixes, max2 unsuccessful fixes per failure. Required A3 typecheck/full unit/build after e2e GREEN; then commit plan message; A4 gates1-7+fullsmoke at finalhead. No push/PR/merge.
+Draft scripts/helper files and all logs in this directory. run-stream.cjs for future runs streams full output live into unique log filenames. Existing run.cjs buffers each command until exit.
+
+A3 initial named-spec GREEN: 218/218 in 13.4m, a3-green-e2e.txt. Raw artifacts copied to a3-green-1-artifacts. First-migration double read found during mark review: added exact-once assertion; focused RED53 cases (52 pass/1 fail), alone reproduced. Reuse migration snapshot fix now running focused GREEN + build + four affected spec files (storage/autosave/tile/title). Remaining named specs already GREEN, final A4 full smoke will cover all at final HEAD.
+
+A3 affected rerun: 88/88 passed in 3.7m after first-read snapshot reuse; all nine new storage tests pass. Added persistent raw-count JSON artifact (same assertions): isolated 3-game check passed, 16.7s, a3-count-artifact-check.txt; raw a3-three-game-record-counts.json. Required A3 checks now exec session17785, logs a3-required-*.txt via streaming runner.
+
+A3 commit48127254bb285121a36d42526f0574f9466ea4eb. A4 first gate1 failed exit2: two inherited A1 EOF blank lines in session-records.ts and its test. Whitespace-only fix; all gates restart at new final head, logs a4-final-gate*.txt. No behavior/assertion changes.
+
+Final HEAD6ecb887650d7d165dcc07f02666b4ac4dba3f955 tree52927b934bcad68bc4dabb52f60d27a4db4ff47c. A4 gates1-7 all exit0: architecture154; unit2157/99files; buildJS104.03/CSS5.81kB. Full CI=1 smoke active exec session24491, live a4-full-smoke.txt. No source changes remain; git status clean. After smoke: preserve artifacts/count JSON, regenerate inventory, final report and all-log summary, mark plan complete only if exit0. No push/PR/merge.
+
+A4 first full smoke deliberately stopped after 72 passed cases (no assertion failures) at 6ecb887, log a4-full-smoke.txt exit1 interruption, 1158802ms. Review found two test-oracle coverage gaps: manual IO helper ignored legacy foreign-key spy calls; Proxy save asserted legacy bytes but lacked actual stored-record bytes. Restore both invariants and exact one main-slot write. Product code unchanged. Verified own Playwright process7776 subtree stopped; ports4173/4174 free. Strengthened checks now run; then commit tests and restart all gates/full smoke at new HEAD. Preserve prior logs; do not claim interrupted smoke PASS.
+
+Final test-only invariant commit9fbf27e: 53 focused unit, 2 manual IO e2e, 4 autosave e2e all pass. No product changes. All gates restarting exact new head via exec session41701, a4-verified-gates.json. After gates, run preserve-final-build-gates.cjs and CI=1 run-stream.cjs a4-smoke-final.json. Final report now reads a4-full-smoke-final.txt and verified gates; original interrupted log retained. Need final smoke full335 before completion.
+
+Verified gates all pass at 9fbf27efd46fe0d6f77c7c60b43d09fc0dada943; final CI smoke log a4-full-smoke-final.txt.
+
+FINAL active run: exec session86028, unfiltered CI=1 full335 smoke, live a4-full-smoke-final.txt. Final HEAD 9fbf27efd46fe0d6f77c7c60b43d09fc0dada943 tree f1c9cc07837efd76deb27e934cc1b744b61ebdac. Verified gates1-7 all exit0 at this head (a4-verified-gate*.txt); exact combined log a4-verified-gates-1-7.txt. Product bundle104032/5814 gzip bytes; no further source edits planned. After smoke exit0 copy test-results to a4-smoke-artifacts, capture final git status, run finalize-report.cjs, verify hashes/UTF8, mark plan complete and reply. Preserve interrupted a4-full-smoke.txt as incomplete72-pass run, not acceptance.
+
+A2–A4 complete at 9fbf27efd46fe0d6f77c7c60b43d09fc0dada943 tree f1c9cc07837efd76deb27e934cc1b744b61ebdac; full CI=1 smoke 335 passed (28.8m). Final report FINAL-BUILDER-REPORT.md. All required local gates exit0; no push/PR/merge.

@@ -1,0 +1,72 @@
+diff --git a/packages/persistence/src/session-records.ts b/packages/persistence/src/session-records.ts
+index bbfd731..d1c83c2 100644
+--- a/packages/persistence/src/session-records.ts
++++ b/packages/persistence/src/session-records.ts
+@@ -1,6 +1,6 @@
+ ﻿import type { CharacterLifeSessionState, CharacterProfile, WorldNpc, PlayerCharacter } from '@haven/core';
+ import { CHARACTER_LIFE_SAVE_FORMAT } from './character-life-save.js';
+-import { createSocietyState, GOODS_STOCK_RULESET, hasWeeklyKeys, isCanonicalGameState, isSocietyState, isTileTrialState, isWorldSessionState, SOCIETY_RULESET } from '@haven/core';
++import { createSocietyState, GOODS_STOCK_RULESET, hasWeeklyKeys, isCanonicalGameState, isCharacterProfile, isPlayerCharacter, isSocietyState, isTileTrialState, isWorldNpcList, isWorldSessionState, SOCIETY_RULESET } from '@haven/core';
+ import type { StoredRecord, TableName } from './game-store.js';
+ export class StoreRecordError extends Error {
+   constructor(public readonly ref: string) { super(`Invalid store record: ${ref}`); this.name = 'StoreRecordError'; }
+@@ -83,8 +83,8 @@ export function recordsToSession(records: StoredRecord[]): CharacterLifeSessionS
+   for (const r of records.filter(r => r.table === 'characters')) {
+     const v = r.value as { kind: string; player: PlayerCharacter; npc: WorldNpc; order: number; profile: CharacterProfile; profileOrder: number };
+     if (!v || !v.profile || v.profile.id !== r.id) bad(r);
+-    if (v.kind === 'player') { if (player || v.player?.character?.id !== r.id) bad(r); player = v.player; }
+-    else if (v.kind === 'npc') { if (v.npc?.character?.id !== r.id || !Number.isInteger(v.order) || v.order < 0 || !Number.isInteger(v.profileOrder) || v.profileOrder < 0) bad(r); npcs.push({ npc: v.npc,order: v.order }); }
++    if (v.kind === 'player') { if (player || !isPlayerCharacter(v.player) || v.player.character.id !== r.id || !isCharacterProfile(v.profile,v.player.character)) bad(r); player = v.player; }
++    else if (v.kind === 'npc') { if (!isWorldNpcList([...npcs.map(n => n.npc),v.npc],city) || v.npc.character.id !== r.id || !isCharacterProfile(v.profile,v.npc.character) || !Number.isInteger(v.order) || v.order < 0 || !Number.isInteger(v.profileOrder) || v.profileOrder < 0) bad(r); npcs.push({ npc: v.npc,order: v.order }); }
+     else bad(r);
+     if (v.kind === 'npc') profiles.push({ profile: v.profile,order: v.profileOrder });
+   }
+diff --git a/packages/ui/src/TileManagement.svelte b/packages/ui/src/TileManagement.svelte
+index db0a552..a017fdc 100644
+--- a/packages/ui/src/TileManagement.svelte
++++ b/packages/ui/src/TileManagement.svelte
+@@ -119,11 +119,12 @@
+   async function nextLifeWeek(): Promise<void> {
+     if (state.phase !== 'report') return;
+     if (!command('NEXT_WEEK')) return;
++    const savedRevision = state.revision, savedWeek = state.world.week;
+     lifeStatus = `Planning ${formatLifeWeek(state.world.week)}. Previous report retained.`;
+     await tick();
+     if (get(options).autosave && !checkpointLocked && outside && npcs && player && profiles) {
+       const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+-      if (!result.success) lifeStatus = 'Autosave failed. Your last save is kept.';
++      if (!result.success && state.revision === savedRevision && state.world.week === savedWeek) lifeStatus = 'Autosave failed. Your last save is kept.';
+     }
+   }
+   async function openLifeCity(): Promise<void> {
+@@ -197,7 +198,9 @@
+     } catch { if (ticket === importRead) checkpointError('Could not read the checkpoint file. Your game was preserved.'); }
+   }
+   async function saveLocally() {
++    const ticket = ++checkpointAction, fileTicket = importRead, expectedRevision = state.revision;
+     const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
++    if (ticket !== checkpointAction || fileTicket !== importRead || state.revision !== expectedRevision) return;
+     if (!result.success) { checkpointError(result.message); return; }
+     error = ''; saveNotice = result.replaced ? 'Saved in this browser. Replaced the previous local checkpoint.' : 'Saved in this browser.';
+   }
+diff --git a/packages/ui/src/character-life-session.ts b/packages/ui/src/character-life-session.ts
+index 654346f..243a919 100644
+--- a/packages/ui/src/character-life-session.ts
++++ b/packages/ui/src/character-life-session.ts
+@@ -63,6 +63,8 @@ export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success
+     let records = await d.store.read('main');
+     let invalid = false;
+     if (!marker) {
++      // A save made while migration was blocked is newer than the legacy backup.
++      if (!records) {
+         if (!d.legacy) return fail('Could not read browser storage. Your game was preserved. Use Import checkpoint instead.');
+         const text = d.legacy.getItem(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY);
+       if (text !== null) {
+@@ -73,6 +75,7 @@ export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success
+           try { const raw = JSON.parse(text); if (raw.format === 'haven.character-life-session.save' && raw.schemaVersion === 1 && raw.cityRulesetId !== SOCIETY_RULESET && raw.state?.city?.society?.rulesetId === raw.cityRulesetId) records = sessionToRecords('main',raw.state); else invalid = true; } catch { invalid = true; }
+         }
+       }
++      }
+       await d.store.replaceSlot('main',records ?? [],[{ slotId: '_',id: MARKER,table: 'system',schemaVersion: 1,value: true }]);
+     }
+     if (warnings.has(d)) { warnings.delete(d); return fail(BLOCKED); }

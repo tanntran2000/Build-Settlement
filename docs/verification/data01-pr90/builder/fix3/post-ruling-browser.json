@@ -1,0 +1,1 @@
+[["browser-post-ruling-green","npx playwright test tests/e2e/storage.spec.ts tests/e2e/autosave.spec.ts"]]

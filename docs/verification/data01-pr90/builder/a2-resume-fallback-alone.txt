@@ -1,0 +1,13 @@
+UTC=2026-11-12T02:34:33.291Z HEAD=e51de7161d3b5164c201ffe83a1bef74702e0d12 TREE=ec6f5efd5bad969d01e08aebebef0cbb72f287e8
+COMMAND=npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^factory failure falls back"
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 47 skipped (48)
+   Start at  09:34:35
+   Duration  1.10s (transform 627ms, setup 0ms, import 787ms, tests 29ms, environment 0ms)
+
+
+EXIT=0 DURATION_MS=3334

@@ -1,0 +1,32 @@
+UTC=2026-11-12T05:45:39.133Z HEAD=14768381cec2aeed06a71b6bae73d0a9502265e4 TREE=5c5cf260bf643bf9835d5109b89270dbf2c63dde
+STATUS="M packages/ui/src/__tests__/character-life-session.test.ts\n M packages/ui/src/character-life-session.ts\n M tests/e2e/storage.spec.ts"
+ENV CI=1
+COMMAND=npx playwright test tests/e2e/storage.spec.ts
+[WebServer] (node:20176) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:36836) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 15 tests using 1 worker
+
+(node:41668) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [chromium] › tests\e2e\storage.spec.ts:20:1 › Save locally reload and Continue preserve the identical exportLife (2.2s)
+  ok  2 [chromium] › tests\e2e\storage.spec.ts:23:1 › autosave stores exactly the exported live session (1.1s)
+  ok  3 [chromium] › tests\e2e\storage.spec.ts:26:1 › legacy addInitScript seed migrates once and keeps the legacy bytes (1.3s)
+  ok  4 [chromium] › tests\e2e\storage.spec.ts:31:1 › fallen migrated city clears every table and legacy and cannot resurrect after reload (872ms)
+  ok  5 [chromium] › tests\e2e\storage.spec.ts:36:1 › an injected write abort keeps the last save and exact failure message (1.4s)
+  ok  6 [chromium] › tests\e2e\storage.spec.ts:39:1 › two tabs saving A B A leave exactly the last A session (1.9s)
+  ok  7 [chromium] › tests\e2e\storage.spec.ts:42:1 › blocked IndexedDB stays playable warns once and exports (1.2s)
+  ok  8 [chromium] › tests\e2e\storage.spec.ts:45:1 › title menu waits for the initial async storage read (414ms)
+  ok  9 [chromium] › tests\e2e\storage.spec.ts:50:1 › three started saved and fallen games retain only one marker without record growth (4.6s)
+  ok 10 [chromium] › tests\e2e\storage.spec.ts:59:1 › fix1 F2: pending Continue cannot overwrite a newer Planning command (2.2s)
+  ok 11 [chromium] › tests\e2e\storage.spec.ts:65:1 › fix1 F2: pending Main menu cannot exit after a newer Planning command (1.7s)
+  ok 12 [chromium] › tests\e2e\storage.spec.ts:73:1 › fix1 F2: a newer rejected Import keeps its feedback over pending Continue (2.2s)
+  ok 13 [chromium] › tests\e2e\storage.spec.ts:81:1 › fix1 F2: the latest Continue supersedes an earlier held result (1.7s)
+  ok 14 [chromium] › tests\e2e\storage.spec.ts:89:1 › fix1 F3: temporarily blocked localStorage retries legacy migration without a marker (1.1s)
+  ok 15 [chromium] › tests\e2e\storage.spec.ts:105:1 › fix2 F1: recovered legacy A cannot replace B saved while migration was blocked (1.2s)
+
+  15 passed (34.0s)
+
+EXIT=0 DURATION_MS=38021 END_UTC=2026-11-12T05:46:17.153Z

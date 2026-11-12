@@ -1,0 +1,23 @@
+UTC=2026-11-12T08:14:09.490Z
+COMMAND=git rev-parse HEAD HEAD^{tree}
+c1faf87c10f790f68964f92fedecde86b2700d8d
+ab89dbb7c719499233c6a0565aafe3a44a749882
+EXIT=0
+COMMAND=git status --short
+EXIT=0
+COMMAND=git log --format=%H%n%s%n%b ca137a888e92aeba4794239cc5f5cef48d0181d6..HEAD
+c1faf87c10f790f68964f92fedecde86b2700d8d
+fix(persistence): migrate legacy checkpoints atomically
+A pending legacy migration could overwrite a newer save from another tab after its preliminary read. Add an atomic migrateSlot operation that checks the marker and current slot inside one transaction, preserves existing records, and returns the committed slot for the checkpoint service to load. Keep legacy bytes intact and retain blocked-storage recovery.
+
+Cover memory-store semantics, interleaved service reads and real two-page IndexedDB races, including marker-only writes and the existing load revision contract.
+
+Co-authored-by: Codex <noreply@openai.com>
+
+EXIT=0
+COMMAND=powershell -NoProfile -Command $p = @(Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue | Where-Object { $_.LocalPort -in 4173,4174 }); if ($p.Count -ne 0) { $p | Format-Table LocalAddress,LocalPort,OwningProcess; exit 1 }; Write-Output 'Ports 4173/4174: no listeners'
+Ports 4173/4174: no listeners
+EXIT=0
+Product hashes still equal the held first implementation. No product changes for the revision assertion correction.
+Full smoke last-run status passed, failedTests empty.
+Worktree retained for independent review; 0 bytes reclaimed.

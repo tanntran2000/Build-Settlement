@@ -1,0 +1,53 @@
+UTC=2026-11-12T05:50:49.484Z HEAD=5154ab7dcd186e20df52ba324176437e0e8b99e0 TREE=dacc43c9877d0dd89600f26360cdb9631d52bbd0
+STATUS="M tests/e2e/storage.spec.ts"
+ENV CI=1
+COMMAND=npx playwright test tests/e2e/storage.spec.ts -g "fix2 F3: stale success Save"
+[WebServer] (node:17060) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:38932) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:10056) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\storage.spec.ts:121:53 › fix2 F3: stale success Save feedback cannot replace a rejected Import (6.9s)
+
+
+  1) [chromium] › tests\e2e\storage.spec.ts:121:53 › fix2 F3: stale success Save feedback cannot replace a rejected Import 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByRole('alert')
+    Expected: "This checkpoint is from an older version of Haven and can no longer be played. Start a New Game."
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveText" getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('alert')
+
+
+      126 |  const message='This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.';
+      127 |  await expect(page.getByRole('alert')).toHaveText(message);await releaseStoreCompletion(page);
+    > 128 |  await expect(page.getByRole('alert')).toHaveText(message);await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveCount(0);
+          |                                        ^
+      129 |  expect(await exportLife(page)).toEqual(initial);
+      130 | });
+      131 | test('fix2 F3: Save supersedes a pending Continue without changing the live session',async({page})=>{
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\storage.spec.ts:128:40
+
+    Error Context: test-results\storage-fix2-F3-stale-succ-921cf-t-replace-a-rejected-Import-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\storage-fix2-F3-stale-succ-921cf-t-replace-a-rejected-Import-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\storage-fix2-F3-stale-succ-921cf-t-replace-a-rejected-Import-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\storage.spec.ts:121:53 › fix2 F3: stale success Save feedback cannot replace a rejected Import 
+
+EXIT=1 DURATION_MS=21903 END_UTC=2026-11-12T05:51:11.387Z

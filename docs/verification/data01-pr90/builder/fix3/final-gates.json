@@ -1,0 +1,1 @@
+[["gate-1-diff-check","git diff --check origin/main...HEAD"],["gate-2-lint","npm run lint"],["gate-3-typecheck","npm run typecheck"],["gate-4-check-architecture","npm run check:architecture"],["gate-5-test-architecture","npm run test:architecture"],["gate-6-unit","npm test"],["gate-7-build","npm run build"]]

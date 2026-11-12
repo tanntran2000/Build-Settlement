@@ -1,0 +1,460 @@
+[
+  {
+    "file": "f1-build-green.txt",
+    "exit": 0,
+    "durationMs": 21155,
+    "endUtc": "2026-11-12T05:45:39.132Z",
+    "head": "14768381cec2aeed06a71b6bae73d0a9502265e4",
+    "tree": "5c5cf260bf643bf9835d5109b89270dbf2c63dde",
+    "command": "npm run build",
+    "summary": []
+  },
+  {
+    "file": "f1-e2e-green.txt",
+    "exit": 0,
+    "durationMs": 38021,
+    "endUtc": "2026-11-12T05:46:17.153Z",
+    "head": "14768381cec2aeed06a71b6bae73d0a9502265e4",
+    "tree": "5c5cf260bf643bf9835d5109b89270dbf2c63dde",
+    "command": "npx playwright test tests/e2e/storage.spec.ts",
+    "summary": [
+      "  15 passed (34.0s)"
+    ]
+  },
+  {
+    "file": "f1-e2e-red-alone.txt",
+    "exit": 1,
+    "durationMs": 11998,
+    "endUtc": "2026-11-12T05:44:01.462Z",
+    "head": "14768381cec2aeed06a71b6bae73d0a9502265e4",
+    "tree": "5c5cf260bf643bf9835d5109b89270dbf2c63dde",
+    "command": "npx playwright test tests/e2e/storage.spec.ts -g \"fix2 F1\"",
+    "summary": [
+      "  1 failed"
+    ]
+  },
+  {
+    "file": "f1-e2e-red.txt",
+    "exit": 1,
+    "durationMs": 19070,
+    "endUtc": "2026-11-12T05:43:30.826Z",
+    "head": "14768381cec2aeed06a71b6bae73d0a9502265e4",
+    "tree": "5c5cf260bf643bf9835d5109b89270dbf2c63dde",
+    "command": "npx playwright test tests/e2e/storage.spec.ts -g \"fix2 F1\"",
+    "summary": [
+      "  1 failed"
+    ]
+  },
+  {
+    "file": "f1-unit-green.txt",
+    "exit": 0,
+    "durationMs": 4269,
+    "endUtc": "2026-11-12T05:45:17.976Z",
+    "head": "14768381cec2aeed06a71b6bae73d0a9502265e4",
+    "tree": "5c5cf260bf643bf9835d5109b89270dbf2c63dde",
+    "command": "npx vitest run packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/crisis-checkpoint.test.ts",
+    "summary": [
+      " Test Files  2 passed (2)",
+      "      Tests  61 passed (61)"
+    ]
+  },
+  {
+    "file": "f1-unit-red-alone-blocked.txt",
+    "exit": 1,
+    "durationMs": 3743,
+    "endUtc": "2026-11-12T05:43:10.622Z",
+    "head": "14768381cec2aeed06a71b6bae73d0a9502265e4",
+    "tree": "5c5cf260bf643bf9835d5109b89270dbf2c63dde",
+    "command": "npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t \"legacy A is still blocked\"",
+    "summary": [
+      " Test Files  1 failed (1)",
+      "      Tests  1 failed | 58 skipped (59)"
+    ]
+  },
+  {
+    "file": "f1-unit-red-alone-readable.txt",
+    "exit": 1,
+    "durationMs": 3980,
+    "endUtc": "2026-11-12T05:43:06.816Z",
+    "head": "14768381cec2aeed06a71b6bae73d0a9502265e4",
+    "tree": "5c5cf260bf643bf9835d5109b89270dbf2c63dde",
+    "command": "npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t \"legacy A is readable\"",
+    "summary": [
+      " Test Files  1 failed (1)",
+      "      Tests  1 failed | 58 skipped (59)"
+    ]
+  },
+  {
+    "file": "f1-unit-red.txt",
+    "exit": 1,
+    "durationMs": 4651,
+    "endUtc": "2026-11-12T05:42:45.277Z",
+    "head": "14768381cec2aeed06a71b6bae73d0a9502265e4",
+    "tree": "5c5cf260bf643bf9835d5109b89270dbf2c63dde",
+    "command": "npx vitest run packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/crisis-checkpoint.test.ts",
+    "summary": [
+      " Test Files  1 failed | 1 passed (2)",
+      "      Tests  2 failed | 59 passed (61)"
+    ]
+  },
+  {
+    "file": "f2-green.txt",
+    "exit": 0,
+    "durationMs": 3878,
+    "endUtc": "2026-11-12T05:47:53.601Z",
+    "head": "48cfae3cbe53d933588afa2b38f3223b0691a5c9",
+    "tree": "d893aa0b0cf3d7d2244a2c47347a65edd3340634",
+    "command": "npx vitest run packages/persistence/src/__tests__/session-records.test.ts",
+    "summary": [
+      " Test Files  1 passed (1)",
+      "      Tests  50 passed (50)"
+    ]
+  },
+  {
+    "file": "f2-red-alone-1.txt",
+    "exit": 1,
+    "durationMs": 5377,
+    "endUtc": "2026-11-12T05:46:53.417Z",
+    "head": "48cfae3cbe53d933588afa2b38f3223b0691a5c9",
+    "tree": "d893aa0b0cf3d7d2244a2c47347a65edd3340634",
+    "command": "npx vitest run packages/persistence/src/__tests__/session-records.test.ts -t \"fix2 F2: malformed npc identifies\"",
+    "summary": [
+      " Test Files  1 failed (1)",
+      "      Tests  1 failed | 49 skipped (50)"
+    ]
+  },
+  {
+    "file": "f2-red-alone-2.txt",
+    "exit": 1,
+    "durationMs": 3790,
+    "endUtc": "2026-11-12T05:46:57.308Z",
+    "head": "48cfae3cbe53d933588afa2b38f3223b0691a5c9",
+    "tree": "d893aa0b0cf3d7d2244a2c47347a65edd3340634",
+    "command": "npx vitest run packages/persistence/src/__tests__/session-records.test.ts -t \"fix2 F2: malformed player identifies\"",
+    "summary": [
+      " Test Files  1 failed (1)",
+      "      Tests  1 failed | 49 skipped (50)"
+    ]
+  },
+  {
+    "file": "f2-red-alone-3.txt",
+    "exit": 1,
+    "durationMs": 3833,
+    "endUtc": "2026-11-12T05:47:01.230Z",
+    "head": "48cfae3cbe53d933588afa2b38f3223b0691a5c9",
+    "tree": "d893aa0b0cf3d7d2244a2c47347a65edd3340634",
+    "command": "npx vitest run packages/persistence/src/__tests__/session-records.test.ts -t \"fix2 F2: malformed npc profile identifies\"",
+    "summary": [
+      " Test Files  1 failed (1)",
+      "      Tests  1 failed | 49 skipped (50)"
+    ]
+  },
+  {
+    "file": "f2-red-alone-4.txt",
+    "exit": 1,
+    "durationMs": 3853,
+    "endUtc": "2026-11-12T05:47:05.173Z",
+    "head": "48cfae3cbe53d933588afa2b38f3223b0691a5c9",
+    "tree": "d893aa0b0cf3d7d2244a2c47347a65edd3340634",
+    "command": "npx vitest run packages/persistence/src/__tests__/session-records.test.ts -t \"fix2 F2: malformed player record profile identifies\"",
+    "summary": [
+      " Test Files  1 failed (1)",
+      "      Tests  1 failed | 49 skipped (50)"
+    ]
+  },
+  {
+    "file": "f2-red-alone-5.txt",
+    "exit": 1,
+    "durationMs": 4991,
+    "endUtc": "2026-11-12T05:47:10.317Z",
+    "head": "48cfae3cbe53d933588afa2b38f3223b0691a5c9",
+    "tree": "d893aa0b0cf3d7d2244a2c47347a65edd3340634",
+    "command": "npx vitest run packages/persistence/src/__tests__/session-records.test.ts -t \"fix2 F2: malformed player embedded profile identifies\"",
+    "summary": [
+      " Test Files  1 failed (1)",
+      "      Tests  1 failed | 49 skipped (50)"
+    ]
+  },
+  {
+    "file": "f2-red.txt",
+    "exit": 1,
+    "durationMs": 6916,
+    "endUtc": "2026-11-12T05:46:36.099Z",
+    "head": "48cfae3cbe53d933588afa2b38f3223b0691a5c9",
+    "tree": "d893aa0b0cf3d7d2244a2c47347a65edd3340634",
+    "command": "npx vitest run packages/persistence/src/__tests__/session-records.test.ts",
+    "summary": [
+      " Test Files  1 failed (1)",
+      "      Tests  5 failed | 45 passed (50)"
+    ]
+  },
+  {
+    "file": "f2-regression.txt",
+    "exit": 0,
+    "durationMs": 9647,
+    "endUtc": "2026-11-12T05:48:03.249Z",
+    "head": "48cfae3cbe53d933588afa2b38f3223b0691a5c9",
+    "tree": "d893aa0b0cf3d7d2244a2c47347a65edd3340634",
+    "command": "npx vitest run packages/persistence packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/crisis-checkpoint.test.ts",
+    "summary": [
+      " Test Files  18 passed (18)",
+      "      Tests  277 passed (277)"
+    ]
+  },
+  {
+    "file": "f2-typecheck.txt",
+    "exit": 0,
+    "durationMs": 30466,
+    "endUtc": "2026-11-12T05:48:33.716Z",
+    "head": "48cfae3cbe53d933588afa2b38f3223b0691a5c9",
+    "tree": "d893aa0b0cf3d7d2244a2c47347a65edd3340634",
+    "command": "npm run typecheck",
+    "summary": []
+  },
+  {
+    "file": "f3-build-green.txt",
+    "exit": 0,
+    "durationMs": 21212,
+    "endUtc": "2026-11-12T05:53:32.669Z",
+    "head": "5154ab7dcd186e20df52ba324176437e0e8b99e0",
+    "tree": "dacc43c9877d0dd89600f26360cdb9631d52bbd0",
+    "command": "npm run build",
+    "summary": []
+  },
+  {
+    "file": "f3-build-red.txt",
+    "exit": 0,
+    "durationMs": 20139,
+    "endUtc": "2026-11-12T05:49:23.049Z",
+    "head": "5154ab7dcd186e20df52ba324176437e0e8b99e0",
+    "tree": "dacc43c9877d0dd89600f26360cdb9631d52bbd0",
+    "command": "npm run build",
+    "summary": []
+  },
+  {
+    "file": "f3-green.txt",
+    "exit": 0,
+    "durationMs": 59862,
+    "endUtc": "2026-11-12T05:54:32.533Z",
+    "head": "5154ab7dcd186e20df52ba324176437e0e8b99e0",
+    "tree": "dacc43c9877d0dd89600f26360cdb9631d52bbd0",
+    "command": "npx playwright test tests/e2e/storage.spec.ts tests/e2e/autosave.spec.ts",
+    "summary": [
+      "  25 passed (56.8s)"
+    ]
+  },
+  {
+    "file": "f3-red-alone-1.txt",
+    "exit": 1,
+    "durationMs": 21903,
+    "endUtc": "2026-11-12T05:51:11.387Z",
+    "head": "5154ab7dcd186e20df52ba324176437e0e8b99e0",
+    "tree": "dacc43c9877d0dd89600f26360cdb9631d52bbd0",
+    "command": "npx playwright test tests/e2e/storage.spec.ts -g \"fix2 F3: stale success Save\"",
+    "summary": [
+      "  1 failed"
+    ]
+  },
+  {
+    "file": "f3-red-alone-2.txt",
+    "exit": 1,
+    "durationMs": 19186,
+    "endUtc": "2026-11-12T05:51:30.789Z",
+    "head": "5154ab7dcd186e20df52ba324176437e0e8b99e0",
+    "tree": "dacc43c9877d0dd89600f26360cdb9631d52bbd0",
+    "command": "npx playwright test tests/e2e/storage.spec.ts -g \"fix2 F3: stale failure Save\"",
+    "summary": [
+      "  1 failed"
+    ]
+  },
+  {
+    "file": "f3-red-alone-3.txt",
+    "exit": 1,
+    "durationMs": 16101,
+    "endUtc": "2026-11-12T05:51:47.150Z",
+    "head": "5154ab7dcd186e20df52ba324176437e0e8b99e0",
+    "tree": "dacc43c9877d0dd89600f26360cdb9631d52bbd0",
+    "command": "npx playwright test tests/e2e/storage.spec.ts -g \"fix2 F3: Save supersedes a pending Continue\"",
+    "summary": [
+      "  1 failed"
+    ]
+  },
+  {
+    "file": "f3-red-alone-4.txt",
+    "exit": 1,
+    "durationMs": 19833,
+    "endUtc": "2026-11-12T05:52:07.284Z",
+    "head": "5154ab7dcd186e20df52ba324176437e0e8b99e0",
+    "tree": "dacc43c9877d0dd89600f26360cdb9631d52bbd0",
+    "command": "npx playwright test tests/e2e/storage.spec.ts -g \"fix2 F3: Save supersedes a pending Main menu\"",
+    "summary": [
+      "  1 failed"
+    ]
+  },
+  {
+    "file": "f3-red-alone-5.txt",
+    "exit": 1,
+    "durationMs": 20702,
+    "endUtc": "2026-11-12T05:52:28.191Z",
+    "head": "5154ab7dcd186e20df52ba324176437e0e8b99e0",
+    "tree": "dacc43c9877d0dd89600f26360cdb9631d52bbd0",
+    "command": "npx playwright test tests/e2e/storage.spec.ts -g \"fix2 F3: a Planning command\"",
+    "summary": [
+      "  1 failed"
+    ]
+  },
+  {
+    "file": "f3-red-alone-6.txt",
+    "exit": 1,
+    "durationMs": 20936,
+    "endUtc": "2026-11-12T05:52:49.420Z",
+    "head": "5154ab7dcd186e20df52ba324176437e0e8b99e0",
+    "tree": "dacc43c9877d0dd89600f26360cdb9631d52bbd0",
+    "command": "npx playwright test tests/e2e/storage.spec.ts -g \"fix2 F3: a delayed autosave\"",
+    "summary": [
+      "  1 failed"
+    ]
+  },
+  {
+    "file": "f3-red.txt",
+    "exit": 1,
+    "durationMs": 59021,
+    "endUtc": "2026-11-12T05:50:22.072Z",
+    "head": "5154ab7dcd186e20df52ba324176437e0e8b99e0",
+    "tree": "dacc43c9877d0dd89600f26360cdb9631d52bbd0",
+    "command": "npx playwright test tests/e2e/storage.spec.ts -g \"fix2 F3\"",
+    "summary": [
+      "  6 failed"
+    ]
+  },
+  {
+    "file": "final-smoke.txt",
+    "exit": 0,
+    "durationMs": 2024860,
+    "endUtc": "2026-11-12T06:36:36.270Z",
+    "head": "ca137a888e92aeba4794239cc5f5cef48d0181d6",
+    "tree": "721d2937e9f7dddb74d03c002ca0f260816162c7",
+    "command": "npm run test:smoke",
+    "summary": [
+      "  347 passed (33.6m)"
+    ]
+  },
+  {
+    "file": "gate1-diff.txt",
+    "exit": 0,
+    "durationMs": 194,
+    "endUtc": "2026-11-12T05:59:01.371Z",
+    "head": "ca137a888e92aeba4794239cc5f5cef48d0181d6",
+    "tree": "721d2937e9f7dddb74d03c002ca0f260816162c7",
+    "command": "git diff --check origin/main...HEAD",
+    "summary": []
+  },
+  {
+    "file": "gate2-lint.txt",
+    "exit": 0,
+    "durationMs": 10317,
+    "endUtc": "2026-11-12T05:59:11.689Z",
+    "head": "ca137a888e92aeba4794239cc5f5cef48d0181d6",
+    "tree": "721d2937e9f7dddb74d03c002ca0f260816162c7",
+    "command": "npm run lint",
+    "summary": []
+  },
+  {
+    "file": "gate3-typecheck.txt",
+    "exit": 0,
+    "durationMs": 31858,
+    "endUtc": "2026-11-12T05:59:43.548Z",
+    "head": "ca137a888e92aeba4794239cc5f5cef48d0181d6",
+    "tree": "721d2937e9f7dddb74d03c002ca0f260816162c7",
+    "command": "npm run typecheck",
+    "summary": []
+  },
+  {
+    "file": "gate4-architecture.txt",
+    "exit": 0,
+    "durationMs": 7245,
+    "endUtc": "2026-11-12T05:59:50.794Z",
+    "head": "ca137a888e92aeba4794239cc5f5cef48d0181d6",
+    "tree": "721d2937e9f7dddb74d03c002ca0f260816162c7",
+    "command": "npm run check:architecture",
+    "summary": []
+  },
+  {
+    "file": "gate5-architecture-tests.txt",
+    "exit": 0,
+    "durationMs": 76880,
+    "endUtc": "2026-11-12T06:01:07.674Z",
+    "head": "ca137a888e92aeba4794239cc5f5cef48d0181d6",
+    "tree": "721d2937e9f7dddb74d03c002ca0f260816162c7",
+    "command": "npm run test:architecture",
+    "summary": []
+  },
+  {
+    "file": "gate6-unit.txt",
+    "exit": 0,
+    "durationMs": 52556,
+    "endUtc": "2026-11-12T06:02:00.231Z",
+    "head": "ca137a888e92aeba4794239cc5f5cef48d0181d6",
+    "tree": "721d2937e9f7dddb74d03c002ca0f260816162c7",
+    "command": "npm test",
+    "summary": [
+      " Test Files  99 passed (99)",
+      "      Tests  2177 passed (2177)"
+    ]
+  },
+  {
+    "file": "gate7-build.txt",
+    "exit": 0,
+    "durationMs": 24975,
+    "endUtc": "2026-11-12T06:02:25.207Z",
+    "head": "ca137a888e92aeba4794239cc5f5cef48d0181d6",
+    "tree": "721d2937e9f7dddb74d03c002ca0f260816162c7",
+    "command": "npm run build",
+    "summary": []
+  },
+  {
+    "file": "required-build.txt",
+    "exit": 0,
+    "durationMs": 21683,
+    "endUtc": "2026-11-12T05:56:55.021Z",
+    "head": "ca137a888e92aeba4794239cc5f5cef48d0181d6",
+    "tree": "721d2937e9f7dddb74d03c002ca0f260816162c7",
+    "command": "npm run build",
+    "summary": []
+  },
+  {
+    "file": "required-storage-e2e.txt",
+    "exit": 0,
+    "durationMs": 58123,
+    "endUtc": "2026-11-12T05:58:30.307Z",
+    "head": "ca137a888e92aeba4794239cc5f5cef48d0181d6",
+    "tree": "721d2937e9f7dddb74d03c002ca0f260816162c7",
+    "command": "npm run test:smoke -- tests/e2e/storage.spec.ts tests/e2e/autosave.spec.ts",
+    "summary": [
+      "  25 passed (50.6s)"
+    ]
+  },
+  {
+    "file": "required-typecheck.txt",
+    "exit": 0,
+    "durationMs": 31569,
+    "endUtc": "2026-11-12T05:55:44.570Z",
+    "head": "ca137a888e92aeba4794239cc5f5cef48d0181d6",
+    "tree": "721d2937e9f7dddb74d03c002ca0f260816162c7",
+    "command": "npm run typecheck",
+    "summary": []
+  },
+  {
+    "file": "required-unit.txt",
+    "exit": 0,
+    "durationMs": 48767,
+    "endUtc": "2026-11-12T05:56:33.338Z",
+    "head": "ca137a888e92aeba4794239cc5f5cef48d0181d6",
+    "tree": "721d2937e9f7dddb74d03c002ca0f260816162c7",
+    "command": "npm test",
+    "summary": [
+      " Test Files  99 passed (99)",
+      "      Tests  2177 passed (2177)"
+    ]
+  }
+]

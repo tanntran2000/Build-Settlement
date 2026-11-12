@@ -1,0 +1,15 @@
+UTC=2026-11-12T05:47:49.723Z HEAD=48cfae3cbe53d933588afa2b38f3223b0691a5c9 TREE=d893aa0b0cf3d7d2244a2c47347a65edd3340634
+STATUS="M packages/persistence/src/__tests__/session-records.test.ts\n M packages/persistence/src/session-records.ts"
+ENV CI=
+COMMAND=npx vitest run packages/persistence/src/__tests__/session-records.test.ts
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  1 passed (1)
+      Tests  50 passed (50)
+   Start at  12:47:52
+   Duration  1.42s (transform 410ms, setup 0ms, import 542ms, tests 490ms, environment 0ms)
+
+
+EXIT=0 DURATION_MS=3878 END_UTC=2026-11-12T05:47:53.601Z

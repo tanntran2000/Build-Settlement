@@ -1,0 +1,3 @@
+Round3 HOLD resolved; only4 approved existing lines changed. Full RED before all product edits: unit30fail55pass/85 (11 new memory,4 new service cases plus migrated old assertions), browser3fail real two-page races. Product files unchanged. All33 failures being rerun alone, one runner. Existing HOLD artifacts/SHA manifest preserved; use new final-* filenames and FINAL-SHA256SUMS.txt later.
+
+2026-11-12T07:35:51.372Z HOLD after first implementation: focused85/85; regression292/292; typecheck/build pass; browser27pass/1fail revision1vs2; isolated rerun1fail same. No second fix, no commit/final gates/smoke. See FINAL-HOLD-REPORT.md.

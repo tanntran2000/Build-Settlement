@@ -1,0 +1,548 @@
+UTC=2026-11-12T04:36:16.929Z HEAD=9fbf27efd46fe0d6f77c7c60b43d09fc0dada943 TREE=f1c9cc07837efd76deb27e934cc1b744b61ebdac
+STATUS="M packages/ui/src/__tests__/character-life-session.test.ts"
+ENV CI=
+COMMAND=npx vitest run packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/crisis-checkpoint.test.ts
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/character-life-session.test.ts (55 tests | 3 failed) 1296ms
+   × fix1 F1: pending save cannot restore records after fallen clear 48ms
+   × fix1 F1: read save and clear finish in invocation order 61ms
+   × fix1 F1: checkpoint queue is module-wide across dependencies 15ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > fix1 F1: pending save cannot restore records after fallen clear
+AssertionError: expected { success: true, replaced: false } to deeply equal { success: true, replaced: true }
+
+- Expected
++ Received
+
+  {
+-   "replaced": true,
++   "replaced": false,
+    "success": true,
+  }
+
+ ❯ packages/ui/src/__tests__/character-life-session.test.ts:244:23
+    242|  const saving=saveLocalCharacterLife(session(22),d);await held.entered;
+    243|  const clearing=clearFallenCharacterLifeCheckpoint(true,'fallen',d);aw…
+    244|  expect(await saving).toEqual({success:true,replaced:true});expect(awa…
+       |                       ^
+    245|  expect(await d.store.read('main')).toBeNull();
+    246|  expect(d.rows()).toEqual([{slotId:'_',id:MARKER,table:'system',schema…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > fix1 F1: read save and clear finish in invocation order
+AssertionError: expected { success: true, state: { …(5) } } to deeply equal { success: true, state: { …(5) } }
+
+- Expected
++ Received
+
+@@ -749,11 +749,11 @@
+            },
+          },
+          "week": 1,
+          "worldMetadata": {
+            "gameVersion": "0.1.0",
+-           "worldSeed": 11,
++           "worldSeed": 22,
+          },
+        },
+      },
+      "npcs": [
+        {
+@@ -772,11 +772,11 @@
+            "gender": "female",
+            "health": 100,
+            "id": "npc_starter_1",
+            "legalStatus": "citizen",
+            "memories": [],
+-           "name": "June",
++           "name": "Edith",
+            "needs": {
+              "autonomy": 60,
+              "intimacy": 40,
+              "nutrition": 80,
+              "purpose": 50,
+@@ -825,11 +825,11 @@
+            "gender": "female",
+            "health": 85,
+            "id": "npc_starter_2",
+            "legalStatus": "free_resident",
+            "memories": [],
+-           "name": "Hazel",
++           "name": "Iris",
+            "needs": {
+              "autonomy": 60,
+              "intimacy": 40,
+              "nutrition": 80,
+              "purpose": 50,
+@@ -877,11 +877,11 @@
+            "gender": "female",
+            "health": 100,
+            "id": "npc_starter_3",
+            "legalStatus": "contract_bound",
+            "memories": [],
+-           "name": "Wendy",
++           "name": "Alice",
+            "needs": {
+              "autonomy": 60,
+              "intimacy": 40,
+              "nutrition": 80,
+              "purpose": 50,
+@@ -920,11 +920,11 @@
+          "ai-1",
+          "ai-2",
+        ],
+        "generator": "outside-gen-01",
+        "scenarioId": "outside-trial-01",
+-       "seed": 11,
++       "seed": 22,
+        "tiles": [
+          {
+            "feature": null,
+            "id": "o01",
+            "knownBy": [
+@@ -1022,22 +1022,19 @@
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+            "feature": {
+-             "kind": "deposit",
+-             "resource": "wood",
++             "claimedBy": null,
++             "kind": "loot",
+            },
+            "id": "o14",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+-           "feature": {
+-             "claimedBy": null,
+-             "kind": "loot",
+-           },
++           "feature": null,
+            "id": "o15",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+@@ -1117,35 +1114,38 @@
+            "id": "o28",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+-           "feature": {
+-             "claimedBy": null,
+-             "kind": "loot",
+-           },
++           "feature": null,
+            "id": "o29",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+            "feature": {
+-             "claimedBy": null,
+-             "kind": "loot",
++             "kind": "deposit",
++             "resource": "wood",
+            },
+            "id": "o30",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+-           "feature": null,
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
+            "id": "o31",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+-           "feature": null,
++           "feature": {
++             "kind": "deposit",
++             "resource": "wheat",
++           },
+            "id": "o32",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+@@ -1165,22 +1165,19 @@
+            "id": "o35",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+-           "feature": {
+-             "kind": "deposit",
+-             "resource": "wood",
+-           },
++           "feature": null,
+            "id": "o36",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+            "feature": {
+-             "kind": "deposit",
+-             "resource": "iron",
++             "claimedBy": null,
++             "kind": "loot",
+            },
+            "id": "o37",
+            "knownBy": [],
+            "owner": null,
+          },
+@@ -1201,17 +1198,23 @@
+            "id": "o40",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+-           "feature": null,
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
+            "id": "o41",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+-           "feature": null,
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
+            "id": "o42",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+@@ -1225,11 +1228,14 @@
+            "id": "o44",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+-           "feature": null,
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
+            "id": "o45",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+@@ -1237,19 +1243,22 @@
+            "id": "o46",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+-           "feature": null,
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
+            "id": "o47",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+            "feature": {
+-             "kind": "deposit",
+-             "resource": "wood",
++             "claimedBy": null,
++             "kind": "loot",
+            },
+            "id": "o48",
+            "knownBy": [],
+            "owner": null,
+          },
+@@ -1258,11 +1267,14 @@
+            "id": "o49",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+-           "feature": null,
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
+            "id": "o50",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+@@ -1276,11 +1288,14 @@
+            "id": "o52",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+-           "feature": null,
++           "feature": {
++             "kind": "deposit",
++             "resource": "iron",
++           },
+            "id": "o53",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+@@ -1306,11 +1321,14 @@
+            "id": "o57",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+-           "feature": null,
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
+            "id": "o58",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+@@ -1318,23 +1336,17 @@
+            "id": "o59",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+-           "feature": {
+-             "claimedBy": null,
+-             "kind": "loot",
+-           },
++           "feature": null,
+            "id": "o60",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+-           "feature": {
+-             "kind": "deposit",
+-             "resource": "wood",
+-           },
++           "feature": null,
+            "id": "o61",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+@@ -1342,14 +1354,11 @@
+            "id": "o62",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+-           "feature": {
+-             "claimedBy": null,
+-             "kind": "loot",
+-           },
++           "feature": null,
+            "id": "o63",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+@@ -1376,12 +1385,12 @@
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+            "feature": {
+-             "claimedBy": null,
+-             "kind": "loot",
++             "kind": "deposit",
++             "resource": "wheat",
+            },
+            "id": "o68",
+            "knownBy": [],
+            "owner": null,
+          },
+@@ -1396,23 +1405,17 @@
+            "id": "o70",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+-           "feature": {
+-             "claimedBy": null,
+-             "kind": "loot",
+-           },
++           "feature": null,
+            "id": "o71",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+-           "feature": {
+-             "claimedBy": null,
+-             "kind": "loot",
+-           },
++           "feature": null,
+            "id": "o72",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+@@ -1423,14 +1426,11 @@
+            "id": "o73",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+-           "feature": {
+-             "claimedBy": null,
+-             "kind": "loot",
+-           },
++           "feature": null,
+            "id": "o74",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+@@ -1456,20 +1456,20 @@
+            "id": "o78",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+-           "feature": {
+-             "claimedBy": null,
+-             "kind": "loot",
+-           },
++           "feature": null,
+            "id": "o79",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+-           "feature": null,
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
+            "id": "o80",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+@@ -1483,20 +1483,20 @@
+            "id": "o82",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+-           "feature": {
+-             "claimedBy": null,
+-             "kind": "loot",
+-           },
++           "feature": null,
+            "id": "o83",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+-           "feature": null,
++           "feature": {
++             "kind": "deposit",
++             "resource": "wheat",
++           },
+            "id": "o84",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+@@ -1504,11 +1504,14 @@
+            "id": "o85",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+-           "feature": null,
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
+            "id": "o86",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+@@ -1516,14 +1519,11 @@
+            "id": "o87",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+-           "feature": {
+-             "claimedBy": null,
+-             "kind": "loot",
+-           },
++           "feature": null,
+            "id": "o88",
+            "knownBy": [],
+            "owner": null,
+          },
+          {
+
+ ❯ packages/ui/src/__tests__/character-life-session.test.ts:253:24
+    251|  const saving=saveLocalCharacterLife(session(22),d),clearing=clearFall…
+    252|  await Promise.resolve();held.release();
+    253|  expect(await reading).toEqual({success:true,state:session(11)});expec…
+       |                        ^
+    254|  expect(d.rows()).toEqual([{slotId:'_',id:MARKER,table:'system',schema…
+    255| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > fix1 F1: checkpoint queue is module-wide across dependencies
+AssertionError: expected "clear" to not be called at all, but actually been called 1 times
+
+Received:
+
+  1st clear call:
+
+    Array [
+      "main",
+    ]
+
+
+Number of calls: 1
+
+ ❯ packages/ui/src/__tests__/character-life-session.test.ts:265:49
+    263|  const first=deps(),second=deps();await readLocalCharacterLife(first);…
+    264|  const saving=saveLocalCharacterLife(session(),first);await held.enter…
+    265|  try {await Promise.resolve();expect(clear).not.toHaveBeenCalled();}
+       |                                                 ^
+    266|  finally {held.release();await Promise.all([saving,clearing]);}
+    267|  expect(clear).toHaveBeenCalledExactlyOnceWith('main');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  3 failed | 54 passed (57)
+   Start at  11:36:21
+   Duration  3.57s (transform 2.65s, setup 0ms, import 3.52s, tests 1.43s, environment 0ms)
+
+
+EXIT=1 DURATION_MS=8248 END_UTC=2026-11-12T04:36:25.177Z

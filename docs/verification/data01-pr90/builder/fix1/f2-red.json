@@ -1,0 +1,1 @@
+﻿[["f2-build-red","npm run build"],["f2-red","npm run test:smoke -- tests/e2e/storage.spec.ts -g \"fix1 F2\""]]

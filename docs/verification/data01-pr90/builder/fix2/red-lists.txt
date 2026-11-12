@@ -1,0 +1,3 @@
+F1 full RED: unit readable legacy recovery keeps stored B, unit still-blocked legacy keeps stored B, real browser blocked boot -> save B -> readable legacy A keeps B; existing empty-slot recovery tests retained in the unit and final full storage runs. F1 RED before product edit.
+F2 full RED: malformed NPC partial character; malformed Player partial character; malformed NPC profile; malformed Player outer record profile; malformed Player embedded profile. Existing 36 fixture round trips retained unchanged. Before product edit.
+F3 full RED: Save success/failure feedback vs rejected Import (2); Save supersedes Continue; Save supersedes Main menu; Planning command supersedes Save feedback; delayed autosave failure vs later week. Six new cases, all before product edits.

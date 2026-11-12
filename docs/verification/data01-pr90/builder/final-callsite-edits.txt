@@ -1,0 +1,34 @@
+Call-site edits (final working-file line numbers)
+packages/ui/src/CharacterLifeApp.svelte:19
+BEFORE:   function readSlot() {
+AFTER:   async function readSlot() {
+packages/ui/src/CharacterLifeApp.svelte:22
+BEFORE:     const result = readLocalCharacterLife();
+AFTER:     const result = await readLocalCharacterLife();
+packages/ui/src/CharacterLifeApp.svelte:29
+BEFORE:   onMount(readSlot);
+AFTER:   onMount(() => { void readSlot(); });
+packages/ui/src/TileManagement.svelte:106
+BEFORE:         const cleared = clearFallenCharacterLifeCheckpoint(true, state.society.crisis.stage);
+AFTER:         const cleared = await clearFallenCharacterLifeCheckpoint(true, state.society.crisis.stage);
+packages/ui/src/TileManagement.svelte:124
+BEFORE:       const result = saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+AFTER:       const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+packages/ui/src/TileManagement.svelte:198
+BEFORE:   function saveLocally() {
+AFTER:   async function saveLocally() {
+packages/ui/src/TileManagement.svelte:199
+BEFORE:     const result = saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+AFTER:     const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+packages/ui/src/TileManagement.svelte:203
+BEFORE:   function continueLocally() {
+AFTER:   async function continueLocally() {
+packages/ui/src/TileManagement.svelte:204
+BEFORE:     const result = readLocalCharacterLife();
+AFTER:     const result = await readLocalCharacterLife();
+packages/ui/src/TileManagement.svelte:208
+BEFORE:   function mainMenu() {
+AFTER:   async function mainMenu() {
+packages/ui/src/TileManagement.svelte:199
+BEFORE:     const result = saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+AFTER:     const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });

@@ -1,0 +1,28 @@
+﻿UTC=2026-11-12T02:15:37.1870365Z HEAD=ca46d18d32cfc5a65adb5395127a80d7faddf195 COMMAND=npm run build
+
+> build-settlement@0.1.0 build
+> npm run build --workspace=@haven/core && npm run build --workspace=@haven/simulation && npm run build --workspace=@haven/ui
+
+
+> @haven/core@0.1.0 build
+> tsc
+
+
+> @haven/simulation@0.1.0 build
+> tsc
+
+
+> @haven/ui@0.1.0 build
+> vite build
+
+vite v6.4.5 building for production...
+transforming...
+✓ 227 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.71 kB │ gzip:   0.41 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-Dt3mz1CC.css                   28.02 kB │ gzip:   5.79 kB
+dist/assets/index-CgdQqCQU.js                   312.46 kB │ gzip: 101.76 kB
+✓ built in 4.76s
+EXIT=0

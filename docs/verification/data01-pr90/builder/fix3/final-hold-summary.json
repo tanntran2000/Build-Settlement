@@ -1,0 +1,70 @@
+{
+  "utc": "2026-11-12T07:35:51.369Z",
+  "status": "HOLD",
+  "head": "ca137a888e92aeba4794239cc5f5cef48d0181d6",
+  "committedTree": "721d2937e9f7dddb74d03c002ca0f260816162c7",
+  "changedFiles": [
+    "packages/persistence/src/__tests__/game-store.test.ts",
+    "packages/persistence/src/game-store.ts",
+    "packages/persistence/src/memory-store.ts",
+    "packages/ui/src/__tests__/character-life-session.test.ts",
+    "packages/ui/src/character-life-session.ts",
+    "packages/ui/src/indexeddb-store.ts",
+    "tests/e2e/storage.helpers.ts",
+    "tests/e2e/storage.spec.ts"
+  ],
+  "newCommits": [],
+  "red": {
+    "unit": {
+      "exit": 1,
+      "failed": 30,
+      "passed": 55,
+      "newMemory": 11,
+      "newService": 4,
+      "existingObservationFailures": 15
+    },
+    "browser": {
+      "exit": 1,
+      "failed": 3
+    },
+    "isolatedReruns": 33
+  },
+  "checks": {
+    "focused": {
+      "exit": 0,
+      "passed": 85,
+      "files": 3
+    },
+    "regression": {
+      "exit": 0,
+      "passed": 292,
+      "files": 18
+    },
+    "typecheck": {
+      "exit": 0,
+      "errors": 0,
+      "warnings": 0
+    },
+    "build": {
+      "exit": 0,
+      "jsGzipKbRounded": 105.21,
+      "cssGzipKbRounded": 5.81
+    },
+    "browser": {
+      "exit": 1,
+      "passed": 27,
+      "failed": 1,
+      "wallMs": 64184
+    },
+    "isolatedBrowser": {
+      "exit": 1,
+      "passed": 0,
+      "failed": 1,
+      "wallMs": 14028
+    }
+  },
+  "finalGates": "NOT RUN: HOLD before final commit",
+  "smoke": "NOT RUN: HOLD",
+  "portsFree": true,
+  "workingCopyDiffCheckExit": 0
+}

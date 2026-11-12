@@ -1,0 +1,5 @@
+feat(ui): saves go to the IndexedDB game store
+
+Wait for the initial checkpoint read before showing the title, surface the one-time storage warning, and reuse the migration snapshot so each read uses one slot read. Migrate existing storage assertions to equivalent records and marks while preserving their invariants, and prove complete fallen-game cleanup across three seeded games.
+
+Co-authored-by: Codex <noreply@openai.com>

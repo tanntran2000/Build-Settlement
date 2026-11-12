@@ -1,0 +1,33 @@
+UTC=2026-11-12T04:51:09.728Z HEAD=2c958573f0b0f97bb370627db49aaebfe546ca8c TREE=8d242e407374f38f8758c0ae78a21d65b5de5f97
+STATUS="M packages/persistence/src/__tests__/session-records.test.ts"
+ENV CI=
+COMMAND=npx vitest run packages/persistence/src/__tests__/session-records.test.ts -t "inconsistent meta rulesetId"
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/persistence/src/__tests__/session-records.test.ts (45 tests | 1 failed | 44 skipped) 21ms
+   × fix1 F4: inconsistent meta rulesetId identifies meta:session 19ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > fix1 F4: inconsistent meta rulesetId identifies meta:session
+AssertionError: expected undefined to be an instance of StoreRecordError
+ ❯ expectRecordRef packages/persistence/src/__tests__/session-records.test.ts:36:17
+     34|   let error: unknown;
+     35|   try { recordsToSession(rows); } catch (caught) { error = caught; }
+     36|   expect(error).toBeInstanceOf(StoreRecordError);
+       |                 ^
+     37|   expect((error as StoreRecordError).ref).toBe(ref);
+     38| }
+ ❯ packages/persistence/src/__tests__/session-records.test.ts:42:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 44 skipped (45)
+   Start at  11:51:12
+   Duration  830ms (transform 385ms, setup 0ms, import 500ms, tests 21ms, environment 0ms)
+
+
+EXIT=1 DURATION_MS=3271 END_UTC=2026-11-12T04:51:12.998Z

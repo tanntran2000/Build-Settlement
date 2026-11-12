@@ -1,0 +1,9 @@
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  16 passed (16)
+      Tests  204 passed (204)
+   Start at  09:13:47
+   Duration  8.13s (transform 7.12s, setup 0ms, import 13.51s, tests 10.50s, environment 8ms)
+

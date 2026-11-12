@@ -1,0 +1,1 @@
+﻿[["f4-green-2","npx vitest run packages/persistence/src/__tests__/session-records.test.ts"],["f4-regression","npx vitest run packages/persistence packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/crisis-checkpoint.test.ts"],["f4-typecheck","npm run typecheck"]]

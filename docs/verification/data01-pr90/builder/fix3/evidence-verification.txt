@@ -1,0 +1,6 @@
+UTC=2026-11-12T07:36:14.137Z
+Original SHA256SUMS.txt: all 4 original HOLD artifacts verified unchanged.
+UTF-8: 111 text files decoded strictly, no replacement characters.
+Owner quote preserved: Sửa vòng 3.
+Exactly four old test lines changed verified by finalize-hold.cjs; all match the approved migration list.
+No second product fix or test change after first GREEN failure.

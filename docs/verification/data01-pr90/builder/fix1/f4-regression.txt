@@ -1,0 +1,15 @@
+UTC=2026-11-12T04:55:55.077Z HEAD=2c958573f0b0f97bb370627db49aaebfe546ca8c TREE=8d242e407374f38f8758c0ae78a21d65b5de5f97
+STATUS="M packages/persistence/src/__tests__/session-records.test.ts\n M packages/persistence/src/session-records.ts"
+ENV CI=
+COMMAND=npx vitest run packages/persistence packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/crisis-checkpoint.test.ts
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  18 passed (18)
+      Tests  270 passed (270)
+   Start at  11:55:57
+   Duration  5.11s (transform 4.50s, setup 0ms, import 9.43s, tests 8.24s, environment 7ms)
+
+
+EXIT=0 DURATION_MS=7592 END_UTC=2026-11-12T04:56:02.669Z

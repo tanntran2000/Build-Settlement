@@ -1,0 +1,4 @@
+﻿[
+    "a2-resume-diagnostic-current",
+    "npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t \"save writes only its key\""
+]

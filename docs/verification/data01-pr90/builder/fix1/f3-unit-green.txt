@@ -1,0 +1,15 @@
+UTC=2026-11-12T04:49:14.992Z HEAD=447e74cacb60bebaeece15d77baa9ffba24321cb TREE=d4ac0ae62261f5d6712fdb08d58564a8d569b57a
+STATUS="M packages/ui/src/__tests__/character-life-session.test.ts\n M packages/ui/src/character-life-session.ts\n M tests/e2e/storage.spec.ts"
+ENV CI=1
+COMMAND=npx vitest run packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/crisis-checkpoint.test.ts
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  2 passed (2)
+      Tests  59 passed (59)
+   Start at  11:49:17
+   Duration  1.60s (transform 1.05s, setup 0ms, import 1.42s, tests 611ms, environment 0ms)
+
+
+EXIT=0 DURATION_MS=4027 END_UTC=2026-11-12T04:49:19.019Z

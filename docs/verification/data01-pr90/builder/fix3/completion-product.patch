@@ -1,0 +1,93 @@
+diff --git a/packages/persistence/src/game-store.ts b/packages/persistence/src/game-store.ts
+index dcde41d..0f6c9a6 100644
+--- a/packages/persistence/src/game-store.ts
++++ b/packages/persistence/src/game-store.ts
+@@ -5,6 +5,7 @@ export interface WriteStats { put: number; deleted: number; unchanged: number }
+ export interface GameStore {
+   read(slotId: string): Promise<StoredRecord[] | null>;
+   replaceSlot(slotId: string, next: StoredRecord[], extra?: StoredRecord[]): Promise<WriteStats>;
++  migrateSlot(slotId: string, candidate: StoredRecord[] | null, marker: StoredRecord): Promise<StoredRecord[] | null>;
+   clear(slotId: string): Promise<void>;
+   getSystem(id: string): Promise<StoredRecord | null>;
+ }
+diff --git a/packages/persistence/src/memory-store.ts b/packages/persistence/src/memory-store.ts
+index 1519961..a8b2225 100644
+--- a/packages/persistence/src/memory-store.ts
++++ b/packages/persistence/src/memory-store.ts
+@@ -15,6 +15,19 @@ export function createMemoryGameStore(opts: { failWrites?: boolean } = {}): Game
+       data.clear(); for (const [k,v] of copy) data.set(k,v);
+       return { put: diff.put.length, deleted: diff.remove.length, unchanged: diff.unchanged };
+     },
++    async migrateSlot(slotId,candidate,marker) {
++      if ((candidate !== null && candidate.some(r => r.slotId !== slotId || r.table === 'system')) || marker.table !== 'system') throw Error('Invalid slot records');
++      const current = rows().filter(r => r.slotId === slotId && r.table !== 'system');
++      if (data.has(key(marker))) return current.some(r => r.table === 'meta') ? current : null;
++      if (opts.failWrites) throw Error('Write aborted');
++      // Prepare all serialization before publishing; the complete operation is synchronous.
++      const pending = current.some(r => r.table === 'meta') ? [] : (candidate ?? []).map(r => [key(r),JSON.stringify(r)] as const);
++      const encodedMarker = JSON.stringify(marker);
++      for (const [id,value] of pending) data.set(id,value);
++      data.set(key(marker),encodedMarker);
++      const result = rows().filter(r => r.slotId === slotId && r.table !== 'system');
++      return result.some(r => r.table === 'meta') ? result : null;
++    },
+     async clear(slotId) { if (opts.failWrites) throw Error('Write aborted'); for (const r of rows()) if (r.slotId === slotId && r.table !== 'system') data.delete(key(r)); },
+     async getSystem(id) { return rows().find(r => r.table === 'system' && r.slotId === '_' && r.id === id) ?? null; }
+   };
+diff --git a/packages/ui/src/character-life-session.ts b/packages/ui/src/character-life-session.ts
+index 243a919..1004ff6 100644
+--- a/packages/ui/src/character-life-session.ts
++++ b/packages/ui/src/character-life-session.ts
+@@ -63,23 +63,24 @@ export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success
+     let records = await d.store.read('main');
+     let invalid = false;
+     if (!marker) {
++      let candidate: StoredRecord[] | null = null;
+       // A save made while migration was blocked is newer than the legacy backup.
+       if (!records) {
+         if (!d.legacy) return fail('Could not read browser storage. Your game was preserved. Use Import checkpoint instead.');
+         const text = d.legacy.getItem(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY);
+       if (text !== null) {
+         const loaded = deserializeCharacterLifeSave(text);
+-        if (loaded.success) records = sessionToRecords('main',loaded.state);
++        if (loaded.success) candidate = sessionToRecords('main',loaded.state);
+         else {
+           // Preserve valid old-ruleset data without making it playable or rewriting its ruleset.
+-          try { const raw = JSON.parse(text); if (raw.format === 'haven.character-life-session.save' && raw.schemaVersion === 1 && raw.cityRulesetId !== SOCIETY_RULESET && raw.state?.city?.society?.rulesetId === raw.cityRulesetId) records = sessionToRecords('main',raw.state); else invalid = true; } catch { invalid = true; }
++          try { const raw = JSON.parse(text); if (raw.format === 'haven.character-life-session.save' && raw.schemaVersion === 1 && raw.cityRulesetId !== SOCIETY_RULESET && raw.state?.city?.society?.rulesetId === raw.cityRulesetId) candidate = sessionToRecords('main',raw.state); else invalid = true; } catch { invalid = true; }
+         }
+       }
+       }
+-      await d.store.replaceSlot('main',records ?? [],[{ slotId: '_',id: MARKER,table: 'system',schemaVersion: 1,value: true }]);
++      records = await d.store.migrateSlot('main',candidate,{ slotId: '_',id: MARKER,table: 'system',schemaVersion: 1,value: true });
+     }
+     if (warnings.has(d)) { warnings.delete(d); return fail(BLOCKED); }
+-    if (invalid) return fail(OLD);
++    if (invalid && records === null) return fail(OLD);
+     if (!records) return fail(NONE);
+     let state: CharacterLifeSessionState;
+     try { state = recordsToSession(records); } catch { return fail(OLD); }
+diff --git a/packages/ui/src/indexeddb-store.ts b/packages/ui/src/indexeddb-store.ts
+index 4424412..b037e56 100644
+--- a/packages/ui/src/indexeddb-store.ts
++++ b/packages/ui/src/indexeddb-store.ts
+@@ -32,6 +32,19 @@ export function createIndexedDbGameStore(factory: IDBFactory = indexedDB): GameS
+         return { put: diff.put.length,deleted: diff.remove.length,unchanged: diff.unchanged };
+       });
+     },
++    async migrateSlot(slotId,candidate,marker) {
++      performance.mark('haven.store.write');
++      if ((candidate !== null && candidate.some(r => r.slotId !== slotId || r.table === 'system')) || marker.table !== 'system') throw Error('Invalid slot records');
++      return transaction('readwrite',async tx => {
++        const [existingMarker,current] = await Promise.all([request(tx.objectStore('system').get([marker.slotId,marker.id])),slotRows(tx,slotId)]);
++        if (!existingMarker) {
++          if (!current.some(r => r.table === 'meta') && candidate !== null) for (const r of candidate) tx.objectStore(r.table).put(r);
++          tx.objectStore('system').put(marker);
++        }
++        const result = await slotRows(tx,slotId);
++        return result.some(r => r.table === 'meta') ? result : null;
++      });
++    },
+     async clear(slotId) { performance.mark('haven.store.clear'); return transaction('readwrite',async tx => { for (const r of await slotRows(tx,slotId)) tx.objectStore(r.table).delete([slotId,r.id]); }); },
+     async getSystem(id) { return transaction('readonly',async tx => (await request(tx.objectStore('system').get(['_',id]))) ?? null); }
+   };

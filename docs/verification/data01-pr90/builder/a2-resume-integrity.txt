@@ -1,0 +1,6 @@
+packages/ui/src/__tests__/character-life-session.test.ts: every original non-import statement matches AST after stripping only async/await/parentheses. Existing assertions, literals, fixtures and cases preserved.
+packages/ui/src/__tests__/crisis-checkpoint.test.ts: every original non-import statement matches AST after stripping only async/await/parentheses. Existing assertions, literals, fixtures and cases preserved.
+packages/ui/src/CharacterLifeApp.svelte: product preserved; git blob 82a8d4fb6a4ff5c492a8bac9217859f8a47b9a11
+packages/ui/src/TileManagement.svelte: product preserved; git blob e2d7069d2ad9a15467b23d3a8fa087aeee701621
+packages/ui/src/character-life-session.ts: product preserved; git blob a7e7af698fffe14df5861e9b7c46b9d49475be63
+packages/ui/src/indexeddb-store.ts: product preserved; git blob 442441240a714284b4835806b80f7d615a91203a

@@ -1,0 +1,5 @@
+fix(ui): discard stale checkpoint action completions
+
+Capture the live revision and checkpoint/import tickets before Continue or Main menu waits on storage. Drop superseded results without replacing newer state or feedback, and keep Main menu in the session when a Planning command happened during its save.
+
+Co-authored-by: Codex <noreply@openai.com>

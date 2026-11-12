@@ -1,0 +1,45 @@
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/persistence/src/__tests__/session-records.test.ts (0 test)
+ ❯ packages/persistence/src/__tests__/game-store.test.ts (0 test)
+node.exe : 
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯ Failed Suites 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/persistence/src/__tests__/game-store.test.ts [ packages/persistence/src/__tests__/game-store.test.ts ]
+Error: Cannot find module '../memory-store.js' imported from 
+C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/__tests__/game-store.test.ts
+ ❯ packages/persistence/src/__tests__/game-store.test.ts:1:2
+      1| ﻿import { createMemoryGameStore } from '../memory-store.js';
+       |  ^
+      2| import { runGameStoreSuite } from './game-store-suite.js';
+      3| runGameStoreSuite('memory', createMemoryGameStore);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts [ 
+packages/persistence/src/__tests__/session-records.test.ts ]
+Error: Cannot find module '../session-records.js' imported from C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-clo
+seout-01/packages/persistence/src/__tests__/session-records.test.ts
+ ❯ packages/persistence/src/__tests__/session-records.test.ts:5:1
+      3| import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT } from '@hav…
+      4| import { serializeCharacterLifeSave } from '../character-life-save.js';
+      5| import { sessionToRecords, recordsToSession, StoreRecordError } from '…
+       | ^
+      6| const root = new URL('./fixtures/', import.meta.url);
+      7| for (const version of readdirSync(root)) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 14 passed (16)
+      Tests  157 passed (157)
+   Start at  09:10:09
+   Duration  5.91s (transform 5.35s, setup 0ms, import 10.12s, tests 4.64s, environment 7ms)
+

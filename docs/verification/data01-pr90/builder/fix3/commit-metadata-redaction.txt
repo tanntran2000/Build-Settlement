@@ -1,0 +1,1 @@
+Commit metadata evidence omits the author and committer identity fields under AGENTS.md section 6.6. Commit SHA, timestamps, subject, why body, Co-authored-by attribution, commands, exits and all gate/test output are unchanged. Original commit metadata remains in Git. No historical HOLD artifact was changed.

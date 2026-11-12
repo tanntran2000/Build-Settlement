@@ -1,0 +1,326 @@
+UTC 2026-11-12T04:24:05.016Z
+Final HEAD 9fbf27efd46fe0d6f77c7c60b43d09fc0dada943
+Final tree f1c9cc07837efd76deb27e934cc1b744b61ebdac
+Each command below has its complete output in the named UTF-8 log. Pre-commit runs identify their base HEAD; final A4 gates and full smoke identify the clean tested final HEAD/tree.
+
+a2-c4-build.txt
+COMMAND npm run build
+EXIT 0; process duration 54065 ms
+
+a2-c4-green-2.txt
+COMMAND npx vitest run packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/crisis-checkpoint.test.ts
+EXIT 0; process duration 12320 ms
+ Test Files  2 passed (2)
+      Tests  52 passed (52)
+
+a2-c4-green.txt
+COMMAND npx vitest run packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/crisis-checkpoint.test.ts
+EXIT 0; process duration 18108 ms
+ Test Files  2 passed (2)
+      Tests  52 passed (52)
+
+a2-c4-red-fallback-alone.txt
+COMMAND npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^factory failure falls back"
+EXIT 1; process duration 4211 ms
+ Test Files  1 failed (1)
+      Tests  1 failed | 49 skipped (50)
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+a2-c4-red-final.txt
+COMMAND npx vitest run packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/crisis-checkpoint.test.ts
+EXIT 1; process duration 6905 ms
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 51 passed (52)
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+a2-c4-red.txt
+COMMAND npx vitest run packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/crisis-checkpoint.test.ts
+EXIT 1; process duration 6358 ms
+ Test Files  1 failed | 1 passed (2)
+      Tests  14 failed | 38 passed (52)
+⎯⎯⎯⎯⎯⎯ Failed Tests 14 ⎯⎯⎯⎯⎯⎯⎯
+
+a2-c4-typecheck-2.txt
+COMMAND npm run typecheck
+EXIT 0; process duration 79918 ms
+
+a2-c4-typecheck.txt
+COMMAND npm run typecheck
+EXIT 1; process duration 54851 ms
+
+a2-c4-unit.txt
+COMMAND npm test
+EXIT 0; process duration 75367 ms
+ Test Files  99 passed (99)
+      Tests  2156 passed (2156)
+
+a2-final-build.txt
+COMMAND npm run build
+EXIT 0; process duration 29211 ms
+
+a2-final-green.txt
+COMMAND npx vitest run packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/crisis-checkpoint.test.ts
+EXIT 0; process duration 8056 ms
+ Test Files  2 passed (2)
+      Tests  53 passed (53)
+
+a2-final-typecheck.txt
+COMMAND npm run typecheck
+EXIT 0; process duration 35381 ms
+
+a2-final-unit.txt
+COMMAND npm test
+EXIT 0; process duration 55240 ms
+ Test Files  99 passed (99)
+      Tests  2157 passed (2157)
+
+a2-record-red-alone.txt
+COMMAND npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^corrupt stored city"
+EXIT 1; process duration 5495 ms
+ Test Files  1 failed (1)
+      Tests  1 failed | 50 skipped (51)
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+a2-record-red.txt
+COMMAND npx vitest run packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/crisis-checkpoint.test.ts
+EXIT 1; process duration 7283 ms
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 52 passed (53)
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+a2-resume-crisis-failure-alone.txt
+COMMAND npx vitest run packages/ui/src/__tests__/crisis-checkpoint.test.ts -t "^contains storage failures$"
+EXIT 1; process duration 3624 ms
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+a2-resume-diagnostic-current-actual.txt
+COMMAND npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "save writes only its key"
+EXIT 1; process duration 4977 ms
+ Test Files  1 failed (1)
+      Tests  1 failed | 39 skipped (40)
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+a2-resume-failure-alone.txt
+COMMAND npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "save writes only its key"
+EXIT 1; process duration 4130 ms
+ Test Files  1 failed (1)
+      Tests  1 failed | 47 skipped (48)
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+a2-resume-fallback-alone.txt
+COMMAND npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^factory failure falls back"
+EXIT 0; process duration 3334 ms
+ Test Files  1 passed (1)
+      Tests  1 passed | 47 skipped (48)
+
+a2-resume-merged-green-attempt.txt
+COMMAND npx vitest run packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/crisis-checkpoint.test.ts
+EXIT 1; process duration 4454 ms
+ Test Files  2 failed (2)
+      Tests  24 failed | 26 passed (50)
+⎯⎯⎯⎯⎯⎯ Failed Tests 24 ⎯⎯⎯⎯⎯⎯⎯
+
+a2-resume-merged-red.txt
+COMMAND npx vitest run packages/ui/src/__tests__/character-life-session.test.ts
+EXIT 1; process duration 3847 ms
+ Test Files  1 failed (1)
+      Tests  7 failed | 41 passed (48)
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+a3-count-artifact-check.txt
+COMMAND npx playwright test tests/e2e/storage.spec.ts -g "three started saved"
+EXIT 0; process duration 19631 ms
+  1 passed (16.7s)
+
+a3-final-build-preview.txt
+COMMAND npm run build
+EXIT 0; process duration 22668 ms
+
+a3-final-e2e.txt
+COMMAND npm run test:smoke -- tests/e2e/storage.spec.ts tests/e2e/autosave.spec.ts tests/e2e/tile-local-checkpoint.spec.ts tests/e2e/title.spec.ts
+EXIT 0; process duration 234779 ms
+  88 passed (3.7m)
+
+a3-green-e2e.txt
+COMMAND npm run test:smoke -- tests/e2e/storage.spec.ts tests/e2e/autosave.spec.ts tests/e2e/tile-local-checkpoint.spec.ts tests/e2e/title.spec.ts tests/e2e/character-life-navigation.spec.ts tests/e2e/character-life.spec.ts tests/e2e/crisis.spec.ts tests/e2e/crime.spec.ts tests/e2e/ledger.spec.ts tests/e2e/society.spec.ts tests/e2e/world-session.spec.ts
+EXIT 0; process duration 817288 ms
+  218 passed (13.4m)
+
+a3-green-storage.txt
+COMMAND npm run build
+EXIT 0; process duration 45322 ms
+
+a3-read-once-green.txt
+COMMAND npx vitest run packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/crisis-checkpoint.test.ts
+EXIT 0; process duration 4662 ms
+ Test Files  2 passed (2)
+      Tests  53 passed (53)
+
+a3-read-once-red-alone.txt
+COMMAND npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "migrates legacy once"
+EXIT 1; process duration 3671 ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ Test Files  1 failed (1)
+      Tests  1 failed | 50 skipped (51)
+
+a3-read-once-red.txt
+COMMAND npx vitest run packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/crisis-checkpoint.test.ts
+EXIT 1; process duration 5436 ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 52 passed (53)
+
+a3-red-blocked-alone-2.txt
+COMMAND npx playwright test tests/e2e/storage.spec.ts -g "blocked IndexedDB"
+EXIT 1; process duration 18164 ms
+
+a3-red-blocked-alone.txt
+COMMAND npx playwright test tests/e2e/storage.spec.ts -g "^blocked IndexedDB"
+EXIT 1; process duration 8997 ms
+
+a3-red-cleanup-alone.txt
+COMMAND npx playwright test tests/e2e/storage.spec.ts -g "three started saved"
+EXIT 0; process duration 33331 ms
+  1 passed (28.8s)
+
+a3-red-title-alone.txt
+COMMAND npx playwright test tests/e2e/storage.spec.ts -g "title menu waits"
+EXIT 1; process duration 17974 ms
+
+a3-red.txt
+COMMAND npm run test:smoke -- tests/e2e/storage.spec.ts
+EXIT 1; process duration 48718 ms
+  7 passed (40.4s)
+
+a3-required-build.txt
+COMMAND npm run build
+EXIT 0; process duration 24281 ms
+
+a3-required-typecheck.txt
+COMMAND npm run typecheck
+EXIT 0; process duration 29452 ms
+
+a3-required-unit.txt
+COMMAND npm test
+EXIT 0; process duration 65799 ms
+ Test Files  99 passed (99)
+      Tests  2157 passed (2157)
+
+a4-autosave-invariant.txt
+COMMAND npx playwright test tests/e2e/autosave.spec.ts
+EXIT 0; process duration 14838 ms
+  4 passed (12.3s)
+
+a4-final-gate1-diff.txt
+COMMAND git diff --check origin/main...HEAD
+EXIT 0; process duration 191 ms
+
+a4-final-gate2-lint.txt
+COMMAND npm run lint
+EXIT 0; process duration 18636 ms
+
+a4-final-gate3-typecheck.txt
+COMMAND npm run typecheck
+EXIT 0; process duration 45949 ms
+
+a4-final-gate4-architecture.txt
+COMMAND npm run check:architecture
+EXIT 0; process duration 6899 ms
+
+a4-final-gate5-architecture-tests.txt
+COMMAND npm run test:architecture
+EXIT 0; process duration 62348 ms
+ℹ tests 154
+ℹ pass 154
+ℹ fail 0
+ℹ skipped 0
+
+a4-final-gate6-unit.txt
+COMMAND npm test
+EXIT 0; process duration 61818 ms
+ Test Files  99 passed (99)
+      Tests  2157 passed (2157)
+
+a4-final-gate7-build.txt
+COMMAND npm run build
+EXIT 0; process duration 21993 ms
+
+a4-full-smoke-final.txt
+COMMAND npm run test:smoke
+EXIT 0; process duration 1733084 ms
+  335 passed (28.8m)
+
+a4-full-smoke.txt
+COMMAND npm run test:smoke
+EXIT 1; process duration 1158802 ms
+
+a4-gate1-diff.txt
+COMMAND git diff --check origin/main...HEAD
+EXIT 2; process duration 246 ms
+
+a4-gates-1-7.txt
+COMMAND git diff --check origin/main...HEAD
+EXIT 0; process duration 21993 ms
+ℹ tests 154
+ℹ pass 154
+ℹ fail 0
+ℹ skipped 0
+ Test Files  99 passed (99)
+      Tests  2157 passed (2157)
+
+a4-invariant-e2e.txt
+COMMAND npx playwright test tests/e2e/tile-local-checkpoint.spec.ts -g "checkpoint IO stays manual"
+EXIT 0; process duration 22025 ms
+  2 passed (19.4s)
+
+a4-invariant-unit.txt
+COMMAND npx vitest run packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/crisis-checkpoint.test.ts
+EXIT 0; process duration 4833 ms
+ Test Files  2 passed (2)
+      Tests  53 passed (53)
+
+a4-verified-gate1-diff.txt
+COMMAND git diff --check origin/main...HEAD
+EXIT 0; process duration 205 ms
+
+a4-verified-gate2-lint.txt
+COMMAND npm run lint
+EXIT 0; process duration 9285 ms
+
+a4-verified-gate3-typecheck.txt
+COMMAND npm run typecheck
+EXIT 0; process duration 29197 ms
+
+a4-verified-gate4-architecture.txt
+COMMAND npm run check:architecture
+EXIT 0; process duration 6006 ms
+
+a4-verified-gate5-architecture-tests.txt
+COMMAND npm run test:architecture
+EXIT 0; process duration 43727 ms
+ℹ tests 154
+ℹ pass 154
+ℹ fail 0
+ℹ skipped 0
+
+a4-verified-gate6-unit.txt
+COMMAND npm test
+EXIT 0; process duration 42272 ms
+ Test Files  99 passed (99)
+      Tests  2157 passed (2157)
+
+a4-verified-gate7-build.txt
+COMMAND npm run build
+EXIT 0; process duration 18612 ms
+
+a4-verified-gates-1-7.txt
+COMMAND git diff --check origin/main...HEAD
+EXIT 0; process duration 18612 ms
+ℹ tests 154
+ℹ pass 154
+ℹ fail 0
+ℹ skipped 0
+ Test Files  99 passed (99)
+      Tests  2157 passed (2157)

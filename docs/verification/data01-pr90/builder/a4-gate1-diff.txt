@@ -1,0 +1,8 @@
+UTC=2026-11-12T03:24:06.730Z HEAD=48127254bb285121a36d42526f0574f9466ea4eb TREE=baab0e33d77a846a50caae9637e1e91c1ead3b18
+STATUS=""
+ENV CI=
+COMMAND=git diff --check origin/main...HEAD
+packages/persistence/src/__tests__/session-records.test.ts:22: new blank line at EOF.
+packages/persistence/src/session-records.ts:37: new blank line at EOF.
+
+EXIT=2 DURATION_MS=246 END_UTC=2026-11-12T03:24:06.976Z

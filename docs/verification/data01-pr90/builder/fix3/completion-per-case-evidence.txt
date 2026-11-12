@@ -1,0 +1,138 @@
+FINAL PER-CASE RED/GREEN MAPPING
+All full RED and 33 isolated RED reruns occurred before product edits.
+
+npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t "^fix3 memory: existing marker writes nothing with meta=true$"
+RED: unit-red.txt; unit-red-alone-01.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t "^fix3 memory: existing marker writes nothing with meta=false$"
+RED: unit-red.txt; unit-red-alone-02.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t "^fix3 memory: existing slot wins and only receives the marker$"
+RED: unit-red.txt; unit-red-alone-03.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t "^fix3 memory: empty slot stores candidate and marker with detached return$"
+RED: unit-red.txt; unit-red-alone-04.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t "^fix3 memory: null candidate writes only marker and preserves other slots$"
+RED: unit-red.txt; unit-red-alone-05.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t "^fix3 memory: migration takes one synchronous state step$"
+RED: unit-red.txt; unit-red-alone-06.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t "^fix3 memory: invalid candidate slot cannot mutate records$"
+RED: unit-red.txt; unit-red-alone-07.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t "^fix3 memory: invalid candidate system cannot mutate records$"
+RED: unit-red.txt; unit-red-alone-08.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t "^fix3 memory: invalid marker table cannot mutate records$"
+RED: unit-red.txt; unit-red-alone-09.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t "^fix3 memory: failed migration preserves records with meta=true$"
+RED: unit-red.txt; unit-red-alone-10.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t "^fix3 memory: failed migration preserves records with meta=false$"
+RED: unit-red.txt; unit-red-alone-11.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^rejects an NPC-world checkpoint in the life slot and leaves every byte untouched$"
+RED: unit-red.txt; unit-red-alone-12.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^ported checkpoint boundary: malformed bytes stay untouched$"
+RED: unit-red.txt; unit-red-alone-13.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^ported checkpoint boundary: empty bytes stay untouched$"
+RED: unit-red.txt; unit-red-alone-14.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^ported checkpoint boundary: version bytes stay untouched$"
+RED: unit-red.txt; unit-red-alone-15.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^ported checkpoint boundary: ruleset bytes stay untouched$"
+RED: unit-red.txt; unit-red-alone-16.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^ported checkpoint boundary: opposite mode bytes stay untouched$"
+RED: unit-red.txt; unit-red-alone-17.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^ported checkpoint boundary: map bytes stay untouched$"
+RED: unit-red.txt; unit-red-alone-18.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^ported checkpoint boundary: negative stock bytes stay untouched$"
+RED: unit-red.txt; unit-red-alone-19.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^ported checkpoint boundary: report bytes stay untouched$"
+RED: unit-red.txt; unit-red-alone-20.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^ported checkpoint boundary: extra field bytes stay untouched$"
+RED: unit-red.txt; unit-red-alone-21.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^ported checkpoint boundary: workforce bytes stay untouched$"
+RED: unit-red.txt; unit-red-alone-22.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^ported checkpoint boundary: oversize bytes stay untouched$"
+RED: unit-red.txt; unit-red-alone-23.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^ported checkpoint boundary: UTF-8 oversize bytes stay untouched$"
+RED: unit-red.txt; unit-red-alone-24.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^fix2 F1: pending migration keeps saved B when legacy A is readable$"
+RED: unit-red.txt; unit-red-alone-25.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^fix2 F1: pending migration keeps saved B when legacy A is still blocked$"
+RED: unit-red.txt; unit-red-alone-26.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^fix3 service: concurrent C wins after existing B preliminary read$"
+RED: unit-red.txt; unit-red-alone-27.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^fix3 service: concurrent C wins after empty preliminary read$"
+RED: unit-red.txt; unit-red-alone-28.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^fix3 service: concurrent C wins after invalid legacy preliminary read$"
+RED: unit-red.txt; unit-red-alone-29.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^fix3 service: concurrent C wins after other migration preliminary read$"
+RED: unit-red.txt; unit-red-alone-30.txt (each isolated run exit1/1failed).
+GREEN: unit-green.txt 85/85, regression-green.txt 292/292, gate-6-unit.txt 2192/2192; exit0.
+
+npx playwright test tests/e2e/storage.spec.ts -g "fix3 browser: atomic migration preserves C after existing B"
+RED: browser-red.txt 3failed; browser-red-alone-1.txt exit1/1failed.
+FIRST GREEN: browser-green.txt and browser-green-failure-alone.txt failed solely at wrong new revision expectation; HOLD then Claude ruling.
+FINAL GREEN: browser-post-ruling-green.txt 28/28, final-smoke.txt 350/350; exit0. All record/marker/legacy/write-count/mark assertions reached.
+
+npx playwright test tests/e2e/storage.spec.ts -g "fix3 browser: atomic migration preserves C after empty"
+RED: browser-red.txt 3failed; browser-red-alone-2.txt exit1/1failed.
+FIRST GREEN: browser-green.txt passed this case.
+FINAL GREEN: browser-post-ruling-green.txt 28/28, final-smoke.txt 350/350; exit0. All record/marker/legacy/write-count/mark assertions reached.
+
+npx playwright test tests/e2e/storage.spec.ts -g "fix3 browser: atomic migration preserves C after marker winner"
+RED: browser-red.txt 3failed; browser-red-alone-3.txt exit1/1failed.
+FIRST GREEN: browser-green.txt passed this case.
+FINAL GREEN: browser-post-ruling-green.txt 28/28, final-smoke.txt 350/350; exit0. All record/marker/legacy/write-count/mark assertions reached.
+

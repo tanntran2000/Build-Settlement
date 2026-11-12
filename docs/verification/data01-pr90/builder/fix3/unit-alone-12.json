@@ -1,0 +1,1 @@
+[["unit-red-alone-12","npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t \"^rejects an NPC-world checkpoint in the life slot and leaves every byte untouched$\""]]

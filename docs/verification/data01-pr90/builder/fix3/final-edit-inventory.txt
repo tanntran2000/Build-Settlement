@@ -1,0 +1,69 @@
+ROUND 3 HOLD: exact working-copy edit inventory
+UTC=2026-11-12T07:35:49.384Z
+HEAD=ca137a888e92aeba4794239cc5f5cef48d0181d6
+COMMITTED_TREE=721d2937e9f7dddb74d03c002ca0f260816162c7
+No new commits. 8 files modified, unstaged.
+
+packages/persistence/src/game-store.ts
+@@ -7,0 +8 @@ export interface GameStore {
+
+packages/persistence/src/memory-store.ts
+@@ -17,0 +18,13 @@ export function createMemoryGameStore(opts: { failWrites?: boolean } = {}): Game
+
+packages/ui/src/character-life-session.ts
+@@ -65,0 +66 @@ export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success
+@@ -72 +73 @@ export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success
+@@ -75 +76 @@ export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success
+@@ -79 +80 @@ export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success
+@@ -82 +83 @@ export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success
+
+packages/ui/src/indexeddb-store.ts
+@@ -34,0 +35,13 @@ export function createIndexedDbGameStore(factory: IDBFactory = indexedDB): GameS
+
+packages/persistence/src/__tests__/game-store.test.ts
+@@ -3,0 +4,38 @@ runGameStoreSuite('memory', createMemoryGameStore);
+
+packages/ui/src/__tests__/character-life-session.test.ts
+@@ -36,0 +37,2 @@ beforeEach(() => {
+@@ -63 +65 @@ it('rejects an NPC-world checkpoint in the life slot and leaves every byte untou
+@@ -160 +162 @@ it.each(['malformed','empty','version','ruleset','opposite mode','map','negative
+@@ -196,0 +199,8 @@ function inspectableDeps() {
+@@ -287,0 +298 @@ it.each(['readable','still blocked'] as const)('fix2 F1: pending migration keeps
+@@ -292,0 +304 @@ it.each(['readable','still blocked'] as const)('fix2 F1: pending migration keeps
+@@ -296,2 +308,3 @@ it.each(['readable','still blocked'] as const)('fix2 F1: pending migration keeps
+@@ -299,0 +313,29 @@ it.each(['readable','still blocked'] as const)('fix2 F1: pending migration keeps
+
+tests/e2e/storage.helpers.ts
+@@ -89,0 +90,12 @@ export async function releaseStoreCompletion(page: Page) {
+
+tests/e2e/storage.spec.ts
+@@ -159,0 +160,31 @@ test('fix2 F3: a delayed autosave failure cannot replace a later week status',as
+
+APPROVED EXISTING TEST MIGRATIONS (all and only four old lines)
+packages/ui/src/__tests__/character-life-session.test.ts: old 63 -> current 65
+BEFORE:   expect(values).toEqual(before); expect(await store.read('main')).toBeNull();expect(vi.mocked(store.replaceSlot).mock.calls).toEqual([['main',[],[{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]]]);
+AFTER:   expect(values).toEqual(before); expect(await store.read('main')).toBeNull();expect(vi.mocked(store.migrateSlot).mock.calls).toEqual([['main',null,{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]]);
+INVARIANT: Reject invalid/foreign legacy data, leave legacy bytes unchanged, leave the main slot empty, and write exactly the marker through the atomic migration port.
+
+packages/ui/src/__tests__/character-life-session.test.ts: old 160 -> current 162
+BEFORE:  values.set(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,text);const before=new Map(values);expect((await readLocalCharacterLife(checkpointDeps)).success).toBe(false);expect(storage.getItem.mock.calls).toEqual([[CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY]]);expect(await store.read('main')).toBeNull();expect(vi.mocked(store.replaceSlot).mock.calls).toEqual([['main',[],[{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]]]);expect(values).toEqual(before);
+AFTER:  values.set(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,text);const before=new Map(values);expect((await readLocalCharacterLife(checkpointDeps)).success).toBe(false);expect(storage.getItem.mock.calls).toEqual([[CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY]]);expect(await store.read('main')).toBeNull();expect(vi.mocked(store.migrateSlot).mock.calls).toEqual([['main',null,{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]]);expect(values).toEqual(before);
+INVARIANT: Reject invalid/foreign legacy data, leave legacy bytes unchanged, leave the main slot empty, and write exactly the marker through the atomic migration port.
+
+packages/ui/src/__tests__/character-life-session.test.ts: old 296 -> current 308
+BEFORE:  expect(replace).toHaveBeenCalledExactlyOnceWith('main',before,[{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]);
+AFTER:  expect(migrate).toHaveBeenCalledExactlyOnceWith('main',null,{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true});
+INVARIANT: Existing B wins pending migration; the marker is written without using ordinary replacement.
+
+packages/ui/src/__tests__/character-life-session.test.ts: old 297 -> current 309
+BEFORE:  expect(await replace.mock.results[0].value).toEqual({put:0,deleted:0,unchanged:7});
+AFTER:  expect(await migrate.mock.results[0].value).toEqual(before);
+INVARIANT: The atomic migration returns the exact surviving records; retain existing stored-record equality and add adapter-level marker-only write checks instead of obsolete WriteStats observation.
+
+Line 297 extra condition is retained in the SAME fix2 F1 it.each test: current line 307 asserts exact stored records and marker; line 309 asserts exact returned records; line 310 counts backing-Map operations as dataPuts=0, dataDeletes=0, markerPuts=1 and asserts replaceSlot was not called. Both readable/still-blocked variants pass.
+
+ADDITIVE PROOF: exactly four removed old test lines, byte-for-byte matching proposed-test-migrations.json; all other test changes are additions. game-store.test.ts, storage.helpers.ts and storage.spec.ts have zero removed lines. No existing e2e assertion/value/timeout/retry/worker/threshold changed.
+
+Added tests: 11 memory cases; 4 service interleavings; 3 two-page browser cases. Added fixtures/spies: migrateSlot spy in existing setup, migrateSlot method on inspectableDeps, same-test backing-Map counter, watchMigrationActivity in storage.helpers.ts. Existing checkpoint save and Svelte call sites were not edited.
+
+SPY / MARK MAPPING: old migration replaceSlot spy -> migrateSlot spy (four permitted observation migrations); backing-Map set/delete/clear -> zero data writes and exactly one marker put; IndexedDB transaction/put/delete/clear observer -> one readwrite migration transaction and marker-only put (or no put if another migration won); storeMarks -> exactly one haven.store.write per adapter migrateSlot call. Existing-B browser case stops before the latter write-count/marker/marks assertions; they are not claimed as passed.

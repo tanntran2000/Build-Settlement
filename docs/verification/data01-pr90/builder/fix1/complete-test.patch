@@ -1,0 +1,212 @@
+diff --git a/packages/persistence/src/__tests__/session-records.test.ts b/packages/persistence/src/__tests__/session-records.test.ts
+index c33ee50..3c1831d 100644
+--- a/packages/persistence/src/__tests__/session-records.test.ts
++++ b/packages/persistence/src/__tests__/session-records.test.ts
+@@ -9,7 +9,17 @@ for (const version of readdirSync(root)) {
+     it(`round trips fixture ${version}/${file}`, () => {
+       const s = JSON.parse(readFileSync(new URL(`${version}/${file}`, root), 'utf8')).state;
+       const before = serializeCharacterLifeSave(s);
+-      expect(serializeCharacterLifeSave(recordsToSession(sessionToRecords('main', s)))).toEqual(before);
++      const decoded = recordsToSession(sessionToRecords('main', s));
++      const after = serializeCharacterLifeSave(decoded);
++      if (version === 'society-v7') {
++        expect(before.success).toBe(true); expect(after.success).toBe(true);
++        if (!before.success || !after.success) throw Error('Current fixture must serialize successfully');
++        expect(after.text).toBe(before.text);
++      } else {
++        expect(decoded).toEqual(s);
++        expect(before).toEqual({ success: false, error: { code: 'INCOMPATIBLE_SAVE', message: 'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.' } });
++      }
++      expect(after).toEqual(before);
+     });
+   }
+ }
+@@ -19,3 +29,26 @@ it('corrupt character identifies the offending record', () => {
+   const rows = sessionToRecords('main', session()); const npc = rows.find(r => r.id === 'npc_starter_1')!; npc.value = null;
+   try { recordsToSession(rows); throw Error('Expected invalid record rejection'); } catch (e) { expect(e).toBeInstanceOf(StoreRecordError); expect((e as StoreRecordError).ref).toBe('characters:npc_starter_1'); }
+ });
++
++function expectRecordRef(rows: ReturnType<typeof sessionToRecords>,ref: string) {
++  let error: unknown;
++  try { recordsToSession(rows); } catch (caught) { error = caught; }
++  expect(error).toBeInstanceOf(StoreRecordError);
++  expect((error as StoreRecordError).ref).toBe(ref);
++}
++it.each(['rulesetId','revision','phase'] as const)('fix1 F4: inconsistent meta %s identifies meta:session',field=>{
++  const rows=sessionToRecords('main',session()),meta=rows.find(r=>r.table==='meta')!.value as Record<string,unknown>;
++  meta[field]=field==='rulesetId'?'tile-society-06':field==='revision'?1:'report';
++  expectRecordRef(rows,'meta:session');
++});
++it.each(['object shape','invalid inventory'] as const)('fix1 F4: malformed city %s identifies city:city',kind=>{
++  const rows=sessionToRecords('main',session()),city=rows.find(r=>r.table==='city')!;
++  if(kind==='object shape')city.value={};
++  else {const value=city.value as ReturnType<typeof session>['city'];value.world.settlements[value.world.activeSettlementId!].inventory.gold=-1;}
++  expectRecordRef(rows,'city:city');
++});
++it.each(['object shape','invalid actors'] as const)('fix1 F4: malformed world %s identifies world:outside',kind=>{
++  const rows=sessionToRecords('main',session()),world=rows.find(r=>r.table==='world')!;
++  if(kind==='object shape')world.value={};else (world.value as ReturnType<typeof session>['outside']).actors=['unknown'];
++  expectRecordRef(rows,'world:outside');
++});
+diff --git a/packages/ui/src/__tests__/character-life-session.test.ts b/packages/ui/src/__tests__/character-life-session.test.ts
+index 14c2313..d93546b 100644
+--- a/packages/ui/src/__tests__/character-life-session.test.ts
++++ b/packages/ui/src/__tests__/character-life-session.test.ts
+@@ -227,3 +227,58 @@ it('corrupt stored city is refused with the existing message and exact records p
+  const d=deps();const rows=sessionToRecords('main',a2Session());rows.find(r=>r.table==='city')!.value='{';await d.store.replaceSlot('main',rows,[{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]);const before=await d.store.read('main');
+  expect(await readLocalCharacterLife(d)).toEqual({success:false,message:OLD});expect(await d.store.read('main')).toEqual(before);
+ });
++
++function deferred() {
++ let resolve!: () => void; const promise = new Promise<void>(done => { resolve = done; });
++ return { promise,resolve };
++}
++function holdNextRead(store: GameStore) {
++ const entered=deferred(),release=deferred(),read=store.read.bind(store);
++ vi.spyOn(store,'read').mockImplementationOnce(async slot=>{entered.resolve();await release.promise;return read(slot);});
++ return {entered:entered.promise,release:release.resolve};
++}
++it('fix1 F1: pending save cannot restore records after fallen clear',async()=>{
++ const d=inspectableDeps();await savedGame(d,11);const held=holdNextRead(d.store);
++ const saving=saveLocalCharacterLife(session(22),d);await held.entered;
++ const clearing=clearFallenCharacterLifeCheckpoint(true,'fallen',d);await Promise.resolve();held.release();
++ const [saved,cleared]=await Promise.all([saving,clearing]);
++ expect(await d.store.read('main')).toBeNull();
++ expect(saved).toEqual({success:true,replaced:true});expect(cleared).toEqual({success:true});
++ expect(d.rows()).toEqual([{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]);
++});
++it('fix1 F1: read save and clear finish in invocation order',async()=>{
++ const d=inspectableDeps();await readLocalCharacterLife(d);await saveLocalCharacterLife(session(11),d);
++ const held=holdNextRead(d.store),reading=readLocalCharacterLife(d);await held.entered;
++ const saving=saveLocalCharacterLife(session(22),d),clearing=clearFallenCharacterLifeCheckpoint(true,'fallen',d);
++ await Promise.resolve();held.release();
++ expect(await reading).toEqual({success:true,state:session(11)});expect(await saving).toEqual({success:true,replaced:true});expect(await clearing).toEqual({success:true});
++ expect(d.rows()).toEqual([{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]);
++});
++it('fix1 F1: failed checkpoint does not poison later operations',async()=>{
++ const opts={failWrites:false},d=deps(null,opts);await readLocalCharacterLife(d);await saveLocalCharacterLife(session(11),d);
++ opts.failWrites=true;const failed=saveLocalCharacterLife(session(22),d),reading=readLocalCharacterLife(d);
++ expect(await failed).toEqual({success:false,message:BLOCKED});expect(await reading).toEqual({success:true,state:session(11)});
++ opts.failWrites=false;expect(await saveLocalCharacterLife(session(33),d)).toEqual({success:true,replaced:true});expect(await readLocalCharacterLife(d)).toEqual({success:true,state:session(33)});
++});
++it('fix1 F1: checkpoint queue is module-wide across dependencies',async()=>{
++ const first=deps(),second=deps();await readLocalCharacterLife(first);const held=holdNextRead(first.store),clear=vi.spyOn(second.store,'clear');
++ const saving=saveLocalCharacterLife(session(),first);await held.entered;const clearing=clearFallenCharacterLifeCheckpoint(true,'fallen',second);
++ try {await Promise.resolve();expect(clear).not.toHaveBeenCalled();}
++ finally {held.release();await Promise.all([saving,clearing]);}
++ expect(clear).toHaveBeenCalledExactlyOnceWith('main');
++});
++
++it('fix1 F3: throwing legacy read leaves no marker and retries when readable',async()=>{
++ const d=deps(a2Text());d.legacy.getItem.mockImplementationOnce(()=>{throw Error('blocked');});
++ expect(await readLocalCharacterLife(d)).toEqual({success:false,message:'Could not read browser storage. Your game was preserved. Use Import checkpoint instead.'});
++ expect(await d.store.getSystem(MARKER)).toBeNull();expect(await d.store.read('main')).toBeNull();
++ expect(await readLocalCharacterLife(d)).toEqual({success:true,state:a2Session()});
++ expect(await d.store.getSystem(MARKER)).not.toBeNull();expect(d.legacy.getItem).toHaveBeenCalledTimes(2);expect(d.legacy.removeItem).not.toHaveBeenCalled();
++});
++it('fix1 F3: unavailable legacy is distinct from an absent key and can recover',async()=>{
++ const d: import('../character-life-session.js').CheckpointDeps={store:createMemoryGameStore(),legacy:null};
++ expect(await readLocalCharacterLife(d)).toEqual({success:false,message:'Could not read browser storage. Your game was preserved. Use Import checkpoint instead.'});
++ expect(await d.store.getSystem(MARKER)).toBeNull();expect(await d.store.read('main')).toBeNull();
++ d.legacy=deps(a2Text()).legacy;expect(await readLocalCharacterLife(d)).toEqual({success:true,state:a2Session()});
++ expect(await d.store.getSystem(MARKER)).not.toBeNull();
++});
+diff --git a/tests/e2e/storage.helpers.ts b/tests/e2e/storage.helpers.ts
+index 5d8735a..7b1bb42 100644
+--- a/tests/e2e/storage.helpers.ts
++++ b/tests/e2e/storage.helpers.ts
+@@ -60,3 +60,30 @@ export async function injectWriteAbort(page: Page,kind='abort') {
+     };
+   },kind);
+ }
++
++// Hold only delivery of a completed transaction, so user commands need no live IDB transaction.
++export async function holdStoreCompletion(page: Page,mode: IDBTransactionMode,skip=0) {
++  await page.evaluate(({mode,skip})=>{
++    const original=IDBDatabase.prototype.transaction;let held=false,remaining=skip;
++    IDBDatabase.prototype.transaction=function(...args: Parameters<typeof original>){
++      const tx=original.apply(this,args);
++      if(this.name==='haven'&&args[1]===mode&&!held){
++        if(remaining>0)remaining--;
++        else {held=true;Object.defineProperty(tx,'oncomplete',{set(handler){tx.addEventListener('complete',event=>{
++          Object.assign(window,{releaseStoreCompletion:()=>handler.call(tx,event)});
++        });}});}
++      }
++      return tx;
++    };
++  },{mode,skip});
++}
++export async function waitStoreCompletion(page: Page) {
++  await page.waitForFunction(()=>typeof (window as unknown as {releaseStoreCompletion?:unknown}).releaseStoreCompletion==='function');
++}
++export async function releaseStoreCompletion(page: Page) {
++  await page.evaluate(async()=>{
++    (window as unknown as {releaseStoreCompletion:()=>void}).releaseStoreCompletion();
++    // The held transaction is complete: drain its Promise/UI continuations before assertions.
++    await new Promise(resolve=>setTimeout(resolve,0));
++  });
++}
+diff --git a/tests/e2e/storage.spec.ts b/tests/e2e/storage.spec.ts
+index 849f244..6279a3c 100644
+--- a/tests/e2e/storage.spec.ts
++++ b/tests/e2e/storage.spec.ts
+@@ -2,7 +2,8 @@ import { test,expect,type Page } from '@playwright/test';
+ import { readFile,writeFile } from 'node:fs/promises';
+ import { deserializeCharacterLifeSave,serializeCharacterLifeSave,GAME_DB } from '../../packages/persistence/src/index.ts';
+ import { makeLife,importLife,exportLife,go } from './character-life-navigation.helpers.ts';
+-import { readStoredRecords,storedSaveText,storeMarks,injectWriteAbort,writeRecords } from './storage.helpers.ts';
++import { readStoredRecords,storedSaveText,storeMarks,injectWriteAbort,writeRecords,holdStoreCompletion,waitStoreCompletion,releaseStoreCompletion,writeStoredSaveText } from './storage.helpers.ts';
++import { act } from './society-command.helpers.ts';
+ const KEY='haven.character-life-session-society.checkpoint.v1';
+ const BLOCKED='Could not save in this browser (storage blocked or full). Your game and any earlier local checkpoint were preserved. Use Export checkpoint instead.';
+ const marker={slotId:'_',id:'migration:legacy-local-checkpoint',table:'system',schemaVersion:1,value:true};
+@@ -54,3 +55,49 @@ test('three started saved and fallen games retain only one marker without record
+   await go(page,'city');await page.getByTestId('life-end-week').click();await expect(page.getByRole('heading',{name:'The City Has Fallen',exact:true})).toBeVisible();await expectCleared(page);const rows=await readStoredRecords(page);totals.push(rows.length);runs.push({seed:started.outside.seed,total:rows.length,tables:Object.fromEntries(GAME_DB.stores.map(table=>[table,rows.filter(r=>r.table===table).length]))});await page.reload();await expect(button(page,'Continue')).toBeDisabled();
+  }expect(totals).toEqual([1,1,1]);expect(new Set(seeds).size).toBe(3);const countsPath=test.info().outputPath('three-game-record-counts.json');await writeFile(countsPath,JSON.stringify(runs,null,2),'utf8');await test.info().attach('three-game-record-counts',{path:countsPath,contentType:'application/json'});
+ });
++
++test('fix1 F2: pending Continue cannot overwrite a newer Planning command',async({page})=>{
++ await start(page);const initial=await exportLife(page);await save(page);
++ await holdStoreCompletion(page,'readonly',1);await button(page,'Continue locally').click();await waitStoreCompletion(page);
++ const newer=await act(page,initial,'SET_ENABLED',{tileId:'field-1',enabled:false});
++ await releaseStoreCompletion(page);expect(await exportLife(page)).toEqual(newer);
++});
++test('fix1 F2: pending Main menu cannot exit after a newer Planning command',async({page})=>{
++ await start(page);const initial=await exportLife(page);await holdStoreCompletion(page,'readwrite');
++ await button(page,'Main menu').click();await waitStoreCompletion(page);
++ const newer=await act(page,initial,'SET_ENABLED',{tileId:'field-1',enabled:false});
++ const status=page.locator('[aria-label="Planning checkpoints"] [role="status"]'),before=await status.textContent();
++ await releaseStoreCompletion(page);await expect(page.getByTestId('life-shell')).toBeVisible();await expect(status).toHaveText(before!);
++ expect(await exportLife(page)).toEqual(newer);
++});
++test('fix1 F2: a newer rejected Import keeps its feedback over pending Continue',async({page})=>{
++ await start(page);const initial=await exportLife(page);await save(page);
++ await holdStoreCompletion(page,'readonly',1);await button(page,'Continue locally').click();await waitStoreCompletion(page);
++ await page.getByLabel('Import checkpoint',{exact:true}).setInputFiles({name:'invalid.json',mimeType:'application/json',buffer:Buffer.from('{')});
++ const message='This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.';
++ await expect(page.getByRole('alert')).toHaveText(message);await releaseStoreCompletion(page);
++ await expect(page.getByRole('alert')).toHaveText(message);expect(await exportLife(page)).toEqual(initial);
++});
++test('fix1 F2: the latest Continue supersedes an earlier held result',async({page})=>{
++ await start(page);await save(page);await holdStoreCompletion(page,'readonly',1);
++ await button(page,'Continue locally').click();await waitStoreCompletion(page);
++ const latest=makeLife(54321);await writeStoredSaveText(page,bytes(latest));await button(page,'Continue locally').click();
++ await releaseStoreCompletion(page);await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
++ expect(await exportLife(page)).toEqual({...latest,city:{...latest.city,revision:1}});
++});
++
++test('fix1 F3: temporarily blocked localStorage retries legacy migration without a marker',async({page})=>{
++ const seed=bytes();await page.addInitScript(({key,seed})=>{
++  const storage=localStorage;storage.setItem(key,seed);
++  Object.defineProperty(window,'localStorage',{configurable:true,get(){throw Error('temporarily blocked');}});
++  Object.assign(window,{restoreLegacyStorage:()=>Object.defineProperty(window,'localStorage',{configurable:true,get:()=>storage})});
++ },{key:KEY,seed});
++ await page.goto('/');await expect(page.getByRole('heading',{name:'HAVEN',exact:true})).toBeVisible();
++ expect((await readStoredRecords(page)).filter(r=>r.table==='system')).toEqual([]);
++ await page.evaluate(()=>(window as unknown as {restoreLegacyStorage:()=>void}).restoreLegacyStorage());
++ await importLife(page,makeLife(54321));await go(page,'session');await button(page,'Continue locally').click();
++ await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
++ expect(await exportLife(page)).toEqual({...makeLife(),city:{...makeLife().city,revision:1}});
++ expect(await storedSaveText(page)).toBe(seed);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(seed);
++ expect((await readStoredRecords(page)).filter(r=>r.table==='system')).toEqual([marker]);
++});

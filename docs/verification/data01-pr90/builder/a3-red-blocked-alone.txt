@@ -1,0 +1,12 @@
+UTC=2026-11-12T02:58:58.738Z HEAD=bd21b19de309cd5725d303d3ca87b98b0978ade5 TREE=062c584af2687046612a697b1b845b470fa9e20c
+COMMAND=npx playwright test tests/e2e/storage.spec.ts -g "^blocked IndexedDB"
+Error: No tests found.
+Make sure that arguments are regular expressions matching test files.
+You may need to escape symbols like "$" or "*" and quote the arguments.
+
+[WebServer] (node:1680) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:47124) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+EXIT=1 DURATION_MS=8997

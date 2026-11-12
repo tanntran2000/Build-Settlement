@@ -1,0 +1,1 @@
+﻿[["a3-red-blocked-alone","npx playwright test tests/e2e/storage.spec.ts -g \"^blocked IndexedDB\""]]

@@ -1,0 +1,1 @@
+[["f4-red-alone-world","npx vitest run packages/persistence/src/__tests__/session-records.test.ts -t \"malformed world object shape\""]]

@@ -1,0 +1,16 @@
+UTC=2026-11-12T07:39:34.458Z
+PASS: all four product hashes and product diff unchanged after revision ruling.
+PASS: exactly four existing test lines replaced, matching approved migration list.
+PASS: new browser case differs from held version only by liveRevision capture and expected max(liveRevision,savedC.city.revision)+1. Every other browser assertion is identical.
+PASS: no timeout/retry/worker/threshold edits.
+
+ .../persistence/src/__tests__/game-store.test.ts   | 38 ++++++++++++++++
+ packages/persistence/src/game-store.ts             |  1 +
+ packages/persistence/src/memory-store.ts           | 13 ++++++
+ .../src/__tests__/character-life-session.test.ts   | 50 ++++++++++++++++++++--
+ packages/ui/src/character-life-session.ts          |  9 ++--
+ packages/ui/src/indexeddb-store.ts                 | 13 ++++++
+ tests/e2e/storage.helpers.ts                       | 12 ++++++
+ tests/e2e/storage.spec.ts                          | 32 ++++++++++++++
+ 8 files changed, 160 insertions(+), 8 deletions(-)
+

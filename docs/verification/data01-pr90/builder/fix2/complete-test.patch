@@ -1,0 +1,105 @@
+diff --git a/packages/persistence/src/__tests__/session-records.test.ts b/packages/persistence/src/__tests__/session-records.test.ts
+index 3c1831d..2d13668 100644
+--- a/packages/persistence/src/__tests__/session-records.test.ts
++++ b/packages/persistence/src/__tests__/session-records.test.ts
+@@ -52,3 +52,13 @@ it.each(['object shape','invalid actors'] as const)('fix1 F4: malformed world %s
+   if(kind==='object shape')world.value={};else (world.value as ReturnType<typeof session>['outside']).actors=['unknown'];
+   expectRecordRef(rows,'world:outside');
+ });
++
++it.each(['npc','player','npc profile','player record profile','player embedded profile'] as const)('fix2 F2: malformed %s identifies its character record',kind=>{
++ const rows=sessionToRecords('main',session()),npc=kind==='npc'||kind==='npc profile',id=npc?'npc_starter_1':'player';
++ const value=rows.find(r=>r.table==='characters'&&r.id===id)!.value as Record<string,unknown>;
++ if(kind==='npc')value.npc={character:{id}};
++ else if(kind==='player')value.player={character:{id}};
++ else if(kind==='player embedded profile')(value.player as {profile:unknown}).profile={id};
++ else value.profile={id};
++ expectRecordRef(rows,npc?'characters:npc_starter_1':'characters:player');
++});
+diff --git a/packages/ui/src/__tests__/character-life-session.test.ts b/packages/ui/src/__tests__/character-life-session.test.ts
+index d93546b..6394845 100644
+--- a/packages/ui/src/__tests__/character-life-session.test.ts
++++ b/packages/ui/src/__tests__/character-life-session.test.ts
+@@ -282,3 +282,18 @@ it('fix1 F3: unavailable legacy is distinct from an absent key and can recover',
+  d.legacy=deps(a2Text()).legacy;expect(await readLocalCharacterLife(d)).toEqual({success:true,state:a2Session()});
+  expect(await d.store.getSystem(MARKER)).not.toBeNull();
+ });
++
++it.each(['readable','still blocked'] as const)('fix2 F1: pending migration keeps saved B when legacy A is %s',async availability=>{
++ const a=session(11),b=session(22),encoded=serializeCharacterLifeSave(a);if(!encoded.success)throw Error(encoded.error.message);
++ const d=deps(encoded.text),original=d.legacy.getItem.getMockImplementation()!;let blocked=true;
++ d.legacy.getItem.mockImplementation(()=>{if(blocked)throw Error('temporarily blocked');return original();});
++ expect(await readLocalCharacterLife(d)).toEqual({success:false,message:'Could not read browser storage. Your game was preserved. Use Import checkpoint instead.'});
++ expect(await d.store.getSystem(MARKER)).toBeNull();expect(await saveLocalCharacterLife(b,d)).toEqual({success:true,replaced:false});
++ const before=await d.store.read('main');expect(before).toHaveLength(7);const replace=vi.spyOn(d.store,'replaceSlot');
++ blocked=availability==='still blocked';
++ expect(await readLocalCharacterLife(d)).toEqual({success:true,state:b});
++ expect(await d.store.read('main')).toEqual(before);expect(await d.store.getSystem(MARKER)).toEqual({slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true});
++ expect(replace).toHaveBeenCalledExactlyOnceWith('main',before,[{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]);
++ expect(await replace.mock.results[0].value).toEqual({put:0,deleted:0,unchanged:7});
++ expect(d.legacy.getItem).toHaveBeenCalledTimes(1);expect(d.legacy.removeItem).not.toHaveBeenCalled();expect(original()).toBe(encoded.text);
++});
+diff --git a/tests/e2e/storage.spec.ts b/tests/e2e/storage.spec.ts
+index 6279a3c..58da335 100644
+--- a/tests/e2e/storage.spec.ts
++++ b/tests/e2e/storage.spec.ts
+@@ -101,3 +101,59 @@ test('fix1 F3: temporarily blocked localStorage retries legacy migration without
+  expect(await storedSaveText(page)).toBe(seed);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(seed);
+  expect((await readStoredRecords(page)).filter(r=>r.table==='system')).toEqual([marker]);
+ });
++
++test('fix2 F1: recovered legacy A cannot replace B saved while migration was blocked',async({page})=>{
++ const legacy=bytes(),b=makeLife(54321);await page.addInitScript(({key,legacy})=>{
++  const storage=localStorage;storage.setItem(key,legacy);
++  Object.defineProperty(window,'localStorage',{configurable:true,get(){throw Error('temporarily blocked');}});
++  Object.assign(window,{restoreLegacyStorage:()=>Object.defineProperty(window,'localStorage',{configurable:true,get:()=>storage})});
++ },{key:KEY,legacy});
++ await page.goto('/');await expect(page.getByRole('heading',{name:'HAVEN',exact:true})).toBeVisible();
++ expect((await readStoredRecords(page)).filter(r=>r.table==='system')).toEqual([]);
++ await importLife(page,b);await save(page);const before=(await readStoredRecords(page)).filter(r=>r.table!=='system');expect(before).toHaveLength(7);
++ await page.evaluate(()=>(window as unknown as {restoreLegacyStorage:()=>void}).restoreLegacyStorage());
++ await button(page,'Continue locally').click();await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
++ expect(await exportLife(page)).toEqual({...b,city:{...b.city,revision:1}});
++ expect((await readStoredRecords(page)).filter(r=>r.table!=='system')).toEqual(before);expect(await storedSaveText(page)).toBe(bytes(b));
++ expect((await readStoredRecords(page)).filter(r=>r.table==='system')).toEqual([marker]);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(legacy);
++});
++
++for(const outcome of ['success','failure'] as const)test('fix2 F3: stale '+outcome+' Save feedback cannot replace a rejected Import',async({page})=>{
++ await start(page);const initial=await exportLife(page);
++ await holdStoreCompletion(page,outcome==='success'?'readwrite':'readonly');if(outcome==='failure')await injectWriteAbort(page,'throw');
++ await button(page,'Save locally').click();await waitStoreCompletion(page);
++ await page.getByLabel('Import checkpoint',{exact:true}).setInputFiles({name:'invalid.json',mimeType:'application/json',buffer:Buffer.from('{')});
++ const message='This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.';
++ await expect(page.getByRole('alert')).toHaveText(message);await releaseStoreCompletion(page);
++ await expect(page.getByRole('alert')).toHaveText(message);await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveCount(0);
++ expect(await exportLife(page)).toEqual(initial);
++});
++test('fix2 F3: Save supersedes a pending Continue without changing the live session',async({page})=>{
++ await start(page);await save(page);await importLife(page,makeLife(54321));const newer=await exportLife(page);
++ await holdStoreCompletion(page,'readonly',1);await button(page,'Continue locally').click();await waitStoreCompletion(page);
++ await button(page,'Save locally').click();await releaseStoreCompletion(page);
++ await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
++ expect(await exportLife(page)).toEqual(newer);expect(await storedSaveText(page)).toBe(bytes(newer));
++});
++test('fix2 F3: Save supersedes a pending Main menu and keeps the session open',async({page})=>{
++ await start(page);const initial=await exportLife(page);await holdStoreCompletion(page,'readwrite');
++ await button(page,'Main menu').click();await waitStoreCompletion(page);await button(page,'Save locally').click();await releaseStoreCompletion(page);
++ await expect(page.getByTestId('life-shell')).toBeVisible();await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
++ expect(await exportLife(page)).toEqual(initial);
++});
++test('fix2 F3: a Planning command supersedes pending Save feedback',async({page})=>{
++ await start(page);const initial=await exportLife(page);await holdStoreCompletion(page,'readwrite');
++ await button(page,'Save locally').click();await waitStoreCompletion(page);const newer=await act(page,initial,'SET_ENABLED',{tileId:'field-1',enabled:false});
++ await go(page,'session');const notice=page.locator('[aria-label="Planning checkpoints"] [role="status"]');await expect(notice).toHaveText('Checkpoint download requested.');
++ await releaseStoreCompletion(page);await expect(notice).toHaveText('Checkpoint download requested.');expect(await exportLife(page)).toEqual(newer);
++});
++test('fix2 F3: a delayed autosave failure cannot replace a later week status',async({page})=>{
++ await start(page);const initial=await exportLife(page);await save(page);
++ await holdStoreCompletion(page,'readonly');await injectWriteAbort(page,'throw');
++ const advance=async()=>{await go(page,'city');await page.getByTestId('life-end-week').click();await button(page,'Plan next week').click();};
++ await advance();await waitStoreCompletion(page);
++ await button(page,'Options').click();const options=page.getByRole('dialog',{name:'Options',exact:true});await options.getByLabel('Autosave',{exact:true}).uncheck();await options.getByRole('button',{name:'Close',exact:true}).click();await expect(options).not.toBeVisible();
++ await advance();const status=page.locator('aside p[aria-atomic="true"]');await expect(status).toHaveText('Planning Week 3 \u00b7 Year 1. Previous report retained.');
++ await releaseStoreCompletion(page);await expect(status).toHaveText('Planning Week 3 \u00b7 Year 1. Previous report retained.');
++ expect((await exportLife(page)).city.world.week).toBe(3);expect(await storedSaveText(page)).toBe(bytes(initial));
++});

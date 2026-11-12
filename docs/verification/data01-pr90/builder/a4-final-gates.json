@@ -1,0 +1,1 @@
+[["a4-final-gate1-diff","git diff --check origin/main...HEAD"],["a4-final-gate2-lint","npm run lint"],["a4-final-gate3-typecheck","npm run typecheck"],["a4-final-gate4-architecture","npm run check:architecture"],["a4-final-gate5-architecture-tests","npm run test:architecture"],["a4-final-gate6-unit","npm test"],["a4-final-gate7-build","npm run build"]]

@@ -1,0 +1,5 @@
+fix(persistence): validate complete stored character records
+
+Reuse the core Player, NPC-list and profile validators before reconstructing character records, so malformed character data identifies its exact record instead of escaping as a partial session. Validate each accumulated NPC prefix to retain list uniqueness checks and record attribution. Preserve all historical fixture data and compatibility results.
+
+Co-authored-by: Codex <noreply@openai.com>

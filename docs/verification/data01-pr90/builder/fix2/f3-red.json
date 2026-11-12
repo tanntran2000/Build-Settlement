@@ -1,0 +1,1 @@
+[["f3-build-red","npm run build"],["f3-red","npx playwright test tests/e2e/storage.spec.ts -g \"fix2 F3\""]]

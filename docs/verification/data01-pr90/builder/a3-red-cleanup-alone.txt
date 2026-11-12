@@ -1,0 +1,16 @@
+UTC=2026-11-12T03:00:12.164Z HEAD=bd21b19de309cd5725d303d3ca87b98b0978ade5 TREE=062c584af2687046612a697b1b845b470fa9e20c
+COMMAND=npx playwright test tests/e2e/storage.spec.ts -g "three started saved"
+
+Running 1 test using 1 worker
+
+  ok 1 [chromium] › tests\e2e\storage.spec.ts:49:1 › three started saved and fallen games retain only one marker without record growth (9.2s)
+
+  1 passed (28.8s)
+[WebServer] (node:44692) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:55808) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+(node:54064) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+EXIT=0 DURATION_MS=33331

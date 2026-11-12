@@ -1,0 +1,51 @@
+UTC=2026-11-12T02:59:14.818Z HEAD=bd21b19de309cd5725d303d3ca87b98b0978ade5 TREE=062c584af2687046612a697b1b845b470fa9e20c
+COMMAND=npx playwright test tests/e2e/storage.spec.ts -g "blocked IndexedDB"
+
+Running 1 test using 1 worker
+
+  x  1 [chromium] › tests\e2e\storage.spec.ts:41:1 › blocked IndexedDB stays playable warns once and exports (5.6s)
+
+
+  1) [chromium] › tests\e2e\storage.spec.ts:41:1 › blocked IndexedDB stays playable warns once and exports 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByRole('alert')
+    Expected: "Could not save in this browser (storage blocked or full). Your game and any earlier local checkpoint were preserved. Use Export checkpoint instead."
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveText" getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('alert')
+
+
+      40 | });
+      41 | test('blocked IndexedDB stays playable warns once and exports',async({page})=>{
+    > 42 |  await page.addInitScript(()=>{indexedDB.open=()=>{throw Error('blocked');};});await page.goto('/');await expect(page.getByRole('alert')).toHaveText(BLOCKED);await importLife(page,makeLife());expect(await exportLife(page)).toEqual(makeLife());await button(page,'Main menu').click();await expect(page.getByRole('heading',{name:'HAVEN',exact:true})).toBeVisible();await expect(page.getByRole('alert')).toHaveCount(0);await button(page,'Continue').click();expect(await exportLife(page)).toEqual(makeLife());
+         |                                                                                                                                           ^
+      43 | });
+      44 | test('title menu waits for the initial async storage read',async({page})=>{
+      45 |  await page.addInitScript(()=>{const open=IDBFactory.prototype.open;IDBFactory.prototype.open=function(...args:Parameters<typeof open>){const r=open.apply(this,args);if(args[0]==='haven'){Object.defineProperty(r,'onsuccess',{set(handler){r.addEventListener('success',event=>{Object.assign(window,{releaseStoreRead:()=>handler.call(r,event)});});}});}return r;};});
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\storage.spec.ts:42:139
+
+    Error Context: test-results\storage-blocked-IndexedDB--cf79a-able-warns-once-and-exports-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\storage-blocked-IndexedDB--cf79a-able-warns-once-and-exports-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\storage-blocked-IndexedDB--cf79a-able-warns-once-and-exports-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\storage.spec.ts:41:1 › blocked IndexedDB stays playable warns once and exports 
+[WebServer] (node:22636) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:19240) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+(node:12728) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+EXIT=1 DURATION_MS=18164

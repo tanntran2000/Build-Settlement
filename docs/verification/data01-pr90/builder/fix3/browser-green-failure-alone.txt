@@ -1,0 +1,60 @@
+UTC=2026-11-12T07:32:23.432Z HEAD=ca137a888e92aeba4794239cc5f5cef48d0181d6 TREE=721d2937e9f7dddb74d03c002ca0f260816162c7
+STATUS="M packages/persistence/src/__tests__/game-store.test.ts\n M packages/persistence/src/game-store.ts\n M packages/persistence/src/memory-store.ts\n M packages/ui/src/__tests__/character-life-session.test.ts\n M packages/ui/src/character-life-session.ts\n M packages/ui/src/indexeddb-store.ts\n M tests/e2e/storage.helpers.ts\n M tests/e2e/storage.spec.ts"
+ENV CI=1
+COMMAND=npx playwright test tests/e2e/storage.spec.ts -g "fix3 browser: atomic migration preserves C after existing B"
+[WebServer] (node:30592) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:18576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:33788) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\storage.spec.ts:161:71 › fix3 browser: atomic migration preserves C after existing B (3.5s)
+
+
+  1) [chromium] › tests\e2e\storage.spec.ts:161:71 › fix3 browser: atomic migration preserves C after existing B 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+    @@ -4,11 +4,11 @@
+            "amountMilli": 10000,
+            "rulesetId": "tile-population-goods-01",
+          },
+          "happiness": 80,
+          "phase": "planning",
+    -     "revision": 1,
+    +     "revision": 2,
+          "society": Object {
+            "classes": Object {
+              "bound": Object {
+                "free": 0,
+                "luminaries": 0,
+
+      182 |   const {watchMigrationActivity}=await import('./storage.helpers.ts');const activity=await watchMigrationActivity(page);await releaseStoreCompletion(page);
+      183 |   await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
+    > 184 |   expect(await exportLife(page)).toEqual({...savedC,city:{...savedC.city,revision:1}});
+          |                                  ^
+      185 |   expect((await readStoredRecords(writer)).filter(r=>r.table!=='system')).toEqual(before.filter(r=>r.table!=='system'));expect(await storedSaveText(writer)).toBe(bytes(savedC));
+      186 |   expect((await readStoredRecords(writer)).filter(r=>r.table==='system')).toEqual([marker]);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(legacy);
+      187 |   expect(await activity()).toEqual({readwrite:1,writes:scenario==='marker winner'?[]:[{operation:'put',table:'system',key:['_','migration:legacy-local-checkpoint']}]});
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\storage.spec.ts:184:34
+
+    Error Context: test-results\storage-fix3-browser-atomi-a196d-reserves-C-after-existing-B-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\storage-fix3-browser-atomi-a196d-reserves-C-after-existing-B-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\storage-fix3-browser-atomi-a196d-reserves-C-after-existing-B-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\storage.spec.ts:161:71 › fix3 browser: atomic migration preserves C after existing B 
+
+EXIT=1 DURATION_MS=14028 END_UTC=2026-11-12T07:32:37.460Z

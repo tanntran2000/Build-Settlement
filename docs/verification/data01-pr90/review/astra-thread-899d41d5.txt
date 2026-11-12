@@ -1,0 +1,330 @@
+DATA-01 PR A Astra review
+mcp:899d41d5-e824-4238-8c9b-b4af97588e02  completed  codex/gpt-6-astra
+
+[user]
+[Claude (Orchestrator/Tester) -> Reviewer] DATA-01 Astra: review PR A (IndexedDB game store, async checkpoint service, fall clears all) — head 9fbf27efd46fe0d6f77c7c60b43d09fc0dada943
+
+You are the independent Reviewer (Codex gpt-6-astra). READ-ONLY: do not edit, commit, push, install, or run tests/builds (Claude is running the full gates and smoke in this worktree right now; a second runner causes false timeouts). Use git and file reads only.
+
+Worktree: C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01, branch feat/data01-storage. Confirm HEAD == 9fbf27efd46fe0d6f77c7c60b43d09fc0dada943. Diff: `git diff origin/main...HEAD` (5 commits: e51de71 A1 port/records/memory store, bd21b19 A2 IndexedDB + async service, 4812725 A3 UI + e2e, 6ecb887 whitespace, 9fbf27e test invariants).
+
+Contract (read in small pieces, e.g. `| sed -n a,bp`):
+- Spec: `git show origin/docs/p6a-items-design:docs/superpowers/specs/2026-11-12-data01-game-data-storage-design.md`
+- Plan: `git show origin/docs/p6a-items-design:docs/superpowers/plans/2026-11-12-data01-game-data-storage.md` — the four owner-approved corrections at the top, Global Constraints, Decisions 1–10, File allowlist (PR A), Review Focus, Tasks A1–A4.
+- Builder edit inventory (file:line before → after, invariant kept): C:/Users/Admin/.t3/local-drafts/data01-prA/complete-edit-inventory.txt
+
+Check especially:
+- Round trip: sessionToRecords/recordsToSession byte-identical; corrupt records refused with a ref; replaceSlot diff runs inside one readwrite transaction (safe across tabs); IndexedDB transaction stays active across the awaited requests in `transaction()`/`slotRows` (auto-commit risk) in Chromium/Firefox/WebKit.
+- Migration (Decision 6): runs once behind the marker; old-ruleset legacy migrated as-is and refused on read with today's message; malformed legacy → OLD message; the marker write when there is no legacy save (does it ever wipe existing slot records?); blocked localStorage then later available.
+- Fallback: IndexedDB open failure / blocked → memory store + the existing blocked-storage text; `defaults` mutation in readLocalCharacterLife; saving with an old-ruleset session still refused with OLD_CHECKPOINT_MESSAGE and touches nothing.
+- Fall clears all (correction 4b): after a fall, 0 records in all 7 data tables, legacy key removed, only the marker remains; no growth over 3 games; clear failure path.
+- UI: title waits for the first read (checkpointReady); exactly one read on boot; autosave / Save locally / Main menu / Continue now awaited — any race (double click, End Week during an in-flight save, unmount mid-await)?
+- Tests (correction 4a): no assertion, value, timeout or threshold removed or weakened vs origin/main; each storage-call assertion replaced by an equivalent GameStore/mark assertion with the same invariant. Note tile-local-checkpoint navigation now expects [['get',KEY],['set',KEY]] instead of [['get',KEY]] — is the extra 'set' only the one-time migration marker write, and is the "navigation never writes" invariant still pinned?
+- LAW-01/02/08: only allowlisted files (`git diff --name-only origin/main...HEAD`); persistence imports nothing from DOM (IndexedDB code lives in ui); no dependency/config/CI change; UTF-8 BOM at the start of the two new/rewritten ui .ts files (harmless or not?).
+
+Reply: verdict PASS or FAIL; findings ranked P0–P3 with file:line and a concrete failure scenario; explicitly list anything you could not verify.
+
+
+[assistant]
+Review head `9fbf27e` against the approved DATA-01 contract. This review stays read-only; Claude remains the sole test runner.
+
+
+[assistant]
+HEAD matches the requested commit. The async UI handlers have no visible guard against a session changing while storage is pending; I’m checking the load guard and migration paths before ranking findings.
+
+
+[assistant]
+**FAIL — address the async UI races and migration recovery before G5.** This is a static review verdict, not a test result.
+
+Reviewed HEAD: `9fbf27efd46fe0d6f77c7c60b43d09fc0dada943`  
+Tree: `f1c9cc07837efd76deb27e934cc1b744b61ebdac`  
+Base: `ca46d18d32cfc5a65adb5395127a80d7faddf195`
+
+1. **P1 — A pending save can recreate a checkpoint after the city falls.**  
+   [character-life-session.ts:40](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/character-life-session.ts:40), [TileManagement.svelte:198](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/TileManagement.svelte:198)
+
+   Saving first awaits a readonly transaction, then starts a separate replacement transaction. The UI remains interactive during that await. A valid ordering is: Save starts its read → End Week causes a fall and queues `clear` → the save’s read completes and queues `replaceSlot` behind that clear. The final operation restores the captured, pre-fall session.
+
+   This violates correction 4b and “a fallen city cannot come back.” Serialize checkpoint operations in invocation order, or invalidate pending saves when falling, with a regression covering this interleaving.
+
+2. **P1 — Continue accepts a stale result against the revision at completion.**  
+   [TileManagement.svelte:203](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/TileManagement.svelte:203)
+
+   `continueLocally()` awaits storage, then passes the **current** `state.revision` to `loadWorldSession`. If the player makes a successful Planning command while the read is pending, the eventual load passes the revision check and overwrites that newer action. Unlike file import, Continue captures neither a revision nor a request ticket before awaiting.
+
+   Capture both at invocation and reject superseded results. Main menu needs equivalent protection: its pending save currently allows subsequent gameplay, then calls `onexit()` unconditionally, discarding changes made after the saved snapshot.
+
+3. **P2 — Temporarily unavailable legacy storage is permanently marked migrated.**  
+   [character-life-session.ts:21](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/character-life-session.ts:21), [character-life-session.ts:52](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/character-life-session.ts:52)
+
+   If accessing `window.localStorage` throws while IndexedDB remains usable, `defaultDeps()` caches `legacy: null`. The read treats this as an absent save and commits the migration marker. When localStorage later becomes available—even after reload—the marker prevents discovery of the existing legacy checkpoint.
+
+   Distinguish “storage unavailable” from “key absent.” Preserve the opportunity to retry migration after availability returns.
+
+4. **P2 — Record decoding does not enforce the promised corruption contract.**  
+   [session-records.ts:20](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/session-records.ts:20), [session-records.ts:35](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/session-records.ts:35)
+
+   `recordsToSession` checks selected envelope fields and character identities, but casts the reconstructed object without validating its complete shape or metadata consistency. For example, changing only `meta.value.rulesetId`, `revision`, or `phase` is silently ignored; a malformed object-valued city is returned instead of throwing `StoreRecordError('city:city')`. The service catches some malformed sessions later, but that does not satisfy the decoder’s “throws … on bad shape” contract or provide the offending record reference.
+
+   Validate the relevant record shapes and cross-record metadata before returning, while retaining the approved handling of old-ruleset records.
+
+**Checks supported by inspection**
+
+- The changed paths fit the PR A allowlist. No dependency, configuration, CI, core, or simulation file changes appear in the diff.
+- `replaceSlot` computes its diff inside the same readwrite transaction that performs the writes. The transaction wrapper resolves on completion and rejects on abort.
+- In a sequential read with existing records and no legacy save, marker creation preserves the records returned by `read`; it does not unconditionally replace them with `[]`. This does **not** establish concurrency safety for the separate migration read and replacement.
+- Old-ruleset saves are rejected by serialization before obtaining dependencies or accessing storage. Title rendering is gated by `checkpointReady`, with one mount invocation of `readSlot`.
+- The extra navigation-test `set` corresponds to the initial migration `replaceSlot`. The exact mark list still prohibits additional navigation writes in that scenario. A UTF-8 BOM is valid TypeScript whitespace and is not itself a blocker.
+
+**Not verified**
+
+- No tests, builds, installs, edits, commits, or pushes were performed. `git diff --check origin/main...HEAD` completed with exit code **0**; this is the only gate checked.
+- Chromium/Firefox/WebKit transaction lifetime behavior was not exercised. The code awaits promises resolved by IndexedDB requests, but cross-engine runtime success remains unverified.
+- Full gate/smoke results, byte-identical round trips, fallback behavior under actual blocked/open failures, and three-game cleanup totals remain dependent on Claude’s execution evidence.
+- I cannot certify that **every** migrated assertion preserves its previous invariant: the combined contract/inventory read was truncated, and the complete test diff was not audited. The round-trip fixture test also compares serializer results without asserting success, so equal old-ruleset refusal results do not prove byte identity.
+
+**Next: send finding 1’s save → fall → clear → late replacement ordering to the Builder as the first blocking regression.**
+
+[user]
+[Claude (Orchestrator/Tester) -> Reviewer] DATA-01 Astra: re-review PR A after fix round 1 — head 14768381cec2aeed06a71b6bae73d0a9502265e4
+
+Same rules as your first review: READ-ONLY (git and file reads only; Claude is running gates and smoke in this worktree now). Confirm HEAD == 14768381cec2aeed06a71b6bae73d0a9502265e4.
+
+Your first review (9fbf27e) found: F1 pending save resurrects a fallen checkpoint; F2 Continue/Main menu accept stale results; F3 temporarily blocked localStorage marked migrated forever; F4 recordsToSession does not enforce StoreRecordError(ref) on bad shape. Fix commits: 1f60d01 (F1 queue), 447e74c (F2 tickets), 2c95857 (F3 lazy legacy), 1476838 (F4 validation). Fix diff: `git diff 9fbf27e..HEAD`.
+
+Claude's ruling on F4 (Builder clarification, within the approved plan): the serializer intentionally refuses old rulesets, so the 9 current fixtures assert serializer success + identical text, and the 27 old fixtures assert exact record round-trip + the existing refusal. F4 validates historical shapes (v2 one research topic, v4 no fallCause) through a temporary validation view and returns the original data unchanged.
+
+Builder evidence: C:/Users/Admin/.t3/local-drafts/data01-prA/fix1/FINAL-BUILDER-REPORT.md and complete-edit-inventory.txt (baseline 9fbf27e).
+
+Check:
+1. Each finding is actually closed: F1 queue covers read/save/clear incl. the migration write inside read, a rejected op does not poison the chain, no deadlock (no queued op awaits another queued op); F2 every awaited checkpoint action in TileManagement/CharacterLifeApp captures tickets/revision at invocation (also autosave in nextLifeWeek and the fallen clear); F3 no marker when legacy unavailable, later recovery works, no repeated migration once marked; F4 refs and the temporary validation view never mutate or upgrade returned data, and do not accept anything the old code refused.
+2. New regressions: no existing assertion, value, timeout or threshold weakened (compare against 9fbf27e and origin/main); new e2e helpers that hold IndexedDB completion cannot leak into other tests.
+3. Anything new the fixes introduced (races, lost errors, UI stuck waiting).
+4. Also re-confirm your earlier "not verified" items you can now check by reading (complete test diff vs origin/main).
+
+Reply: verdict PASS or FAIL; findings ranked P0–P3 with file:line and a concrete failure scenario; list what you could not verify.
+
+[assistant]
+Re-reviewing the four fixes and the complete test diff at `1476838`. This remains read-only; Claude is the sole test runner.
+
+
+[assistant]
+The queue closes the original same-tab save/fall ordering, and Continue/Main menu now reject changed revisions. Two gaps remain: legacy recovery can overwrite a save made while migration was blocked, and character records still lack full validation. Save/autosave completions also remain unguarded.
+
+
+[assistant]
+**FAIL — preserve newer saves during legacy recovery, complete character validation, and guard remaining async feedback before G5.**
+
+Confirmed HEAD: `14768381cec2aeed06a71b6bae73d0a9502265e4`  
+Confirmed tree: `5c5cf260bf643bf9835d5109b89270dbf2c63dde`  
+Read-only review: no edits, installs, tests, builds, commits, or pushes.
+
+1. **P1 — Recovery of legacy storage can overwrite a newer successful save.**  
+   [character-life-session.ts:64](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/character-life-session.ts:64)
+
+   Concrete sequence: a valid legacy checkpoint A exists → localStorage is temporarily blocked at boot → migration correctly leaves no marker → the player starts/imports B and successfully saves it to IndexedDB → localStorage becomes available → Continue or a title refresh runs migration.
+
+   Although the read already obtained B’s records, the legacy branch replaces them with A and commits A plus the marker. The newer successful save is lost. The new F3 regressions cover recovery into an empty store, not recovery after a successful save.
+
+   **Required correction:** define and enforce preservation of a newer explicit save when migration is still pending. Add the blocked → save B → recover A → read regression.
+
+2. **P2 — F4 remains incomplete for malformed character records.**  
+   [session-records.ts:83](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/session-records.ts:83)
+
+   The character loop still checks identity and ordering fields without validating the full NPC, player, or profile shape. For example, replace an NPC’s `npc` value with `{ character: { id: 'npc_starter_1' } }`, retaining its valid profile and order fields. It passes the decoder’s checks and returns an invalid session instead of throwing `StoreRecordError('characters:npc_starter_1')`.
+
+   The checkpoint service subsequently rejects the session through `isCharacterLifeSessionState`, so this is a decoder-contract/reference defect, not a demonstrated playable-state bypass. Full character validation and record-specific failure references are still required.
+
+3. **P2 — F2 guards only Continue and Main menu; Save/autosave can still publish obsolete feedback.**  
+   [TileManagement.svelte:199](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/TileManagement.svelte:199), [TileManagement.svelte:122](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/TileManagement.svelte:122)
+
+   Concrete sequence: hold a Save locally completion → attempt an invalid file import and receive its error → release the earlier save. `saveLocally()` unconditionally clears `error` and announces success, replacing the newer operation’s feedback. Similarly, a delayed autosave failure can overwrite the status of a later week.
+
+   Neither handler captures a revision/action ticket. `saveLocally()` also does not invalidate a pending Continue/Main menu ticket. Extend the stale-completion policy to these paths and cover a newer rejected import, not only successful commands.
+
+**Disposition of the original findings**
+
+| Finding | Static-review result |
+|---|---|
+| F1: pending save after fall | **Closed for the original same-module interleaving.** Read, save, clear, and migration writes execute within the queue. Both fulfillment and rejection release the chain. No queued operation calls and awaits another queued checkpoint operation. |
+| F2: stale Continue/Main menu | **Original revision races closed; broader completion handling incomplete.** Both capture revision, checkpoint ticket, and import ticket before awaiting. Save/autosave remain as described above. |
+| F3: blocked legacy cached forever | **Original defect closed; recovery introduces the overwrite scenario above.** Lazy access retries, and unavailable legacy storage leaves no marker. A present marker bypasses legacy access. |
+| F4: record validation | **Meta/city/world examples addressed; character validation incomplete.** The historical validation view uses new objects and does not replace the returned original city data. |
+
+The fallen-clear completion only logs a failure and returns; it does not publish a loaded session or exit the screen. `CharacterLifeApp.readSlot()` still has no request/lifetime ticket. I did not establish a separate user-visible failure for that path, so I am not ranking ticket absence alone as another finding.
+
+**Test and scope assessment**
+
+- The fix-round tests are additive apart from the approved round-trip strengthening. Current fixtures explicitly require successful serialization and identical text; historical fixtures require exact reconstructed state and the existing refusal. That clarification is implemented without weakening the original serializer-result equality.
+- The inspected baseline migrations retain state/record preservation assertions and exact IO counts. The extra initial navigation `set` remains the migration-marker write; additional navigation writes would fail the exact expected list.
+- Completion-hold helpers patch the supplied page’s JavaScript realm, hold one matching transaction, and are used with Playwright’s per-test `page`. They do not install a process-wide hook or shared browser context. They do not restore the prototype within that page, but after the one hold the wrapper forwards subsequent transactions.
+- Changed paths remain within the PR A allowlist. No dependency, config, CI, core, or simulation changes appear. The worktree was clean at inspection.
+
+**What remains unverified**
+
+- I did not execute any regression or gate. The [Builder report](C:/Users/Admin/.t3/local-drafts/data01-prA/fix1/FINAL-BUILDER-REPORT.md) reports 2,170 unit tests and 340 smoke tests passing; those are **Builder-reported results**, not independent execution evidence from this review.
+- Chromium/Firefox/WebKit transaction-lifetime behavior, actual blocked-open behavior, and runtime cleanup totals were not independently exercised.
+- I inspected the changed test hunks in smaller follow-up reads, but some combined output was still truncated. I cannot certify a complete line-by-line audit of every inventory entry and baseline assertion.
+- The historical validator’s full equivalence to every historical acceptance boundary is not established by inspection of the fixture-based cases alone. No mutation of returned historical data was identified.
+
+**Next: add the blocked legacy → successful save B → recovery regression before changing the migration branch.**
+
+[user]
+[Claude (Orchestrator/Tester) -> Reviewer] DATA-01 Astra: re-review PR A after fix round 2 — head ca137a888e92aeba4794239cc5f5cef48d0181d6
+
+Same rules: READ-ONLY (git and file reads only; Claude is running gates and smoke in this worktree now). Confirm HEAD == ca137a888e92aeba4794239cc5f5cef48d0181d6.
+
+Your second review (1476838) closed F1 and found:
+- P1 legacy recovery overwrites a newer IndexedDB save (character-life-session.ts:64);
+- P2 NPC/Player/profile shapes not validated in recordsToSession (session-records.ts:83);
+- P2 saveLocally and autosave failure status publish stale feedback (TileManagement.svelte:199, :122).
+
+Claude's rulings (within the approved plan): when migration is pending and the slot already has records, IndexedDB records win — write only the marker, leave the legacy key untouched; empty slot still migrates legacy. Reuse the core validators and throw StoreRecordError('characters:<id>'). saveLocally captures tickets and bumps the checkpoint-action ticket; autosave failure status shows only when week and revision are unchanged.
+
+Fix commits: 48cfae3 (P1), 5154ab7 (P2 validation), ca137a8 (P2 feedback). Fix diff: `git diff 1476838..HEAD`. Builder evidence: C:/Users/Admin/.t3/local-drafts/data01-prA/fix2/FINAL-BUILDER-REPORT.md and complete-edit-inventory.txt.
+
+Check:
+1. Each of the three is closed, including: marker-only path never deletes or rewrites legacy bytes and never re-migrates later; empty-slot recovery still works; validators reject exactly what they should and the historical-shape view still returns original data; Save locally cannot overwrite newer Continue/Main menu/import/planning feedback and still shows its own result when nothing superseded it.
+2. No regression in earlier fixes (queue, tickets, lazy legacy, fallen clear) and no weakened test (test diff since 1476838 should be additions only).
+3. Anything new the fixes introduced.
+This is the last review round before the owner decides; be complete.
+
+Reply: verdict PASS or FAIL; findings ranked P0–P3 with file:line and a concrete failure scenario; list what you could not verify.
+
+[assistant]
+Reviewing the three fixes at `ca137a8`, including their interaction with migration, queued operations, and UI tickets. No tests or builds will run in this review.
+
+
+[assistant]
+The three reported scenarios are addressed in the code. One remaining data-loss race is in the “marker-only” path: it passes a previously read slot snapshot to `replaceSlot`, so another tab’s intervening save can be overwritten. The module queue cannot serialize operations across tabs.
+
+
+[assistant]
+**FAIL — the migration-marker write can still overwrite another tab’s newer save.** The three specific scenarios from the previous review are fixed, but migration is not yet safe across tabs.
+
+Confirmed HEAD: `ca137a888e92aeba4794239cc5f5cef48d0181d6`  
+Confirmed tree: `721d2937e9f7dddb74d03c002ca0f260816162c7`  
+Review base: `14768381cec2aeed06a71b6bae73d0a9502265e4`
+
+1. **P1 — The “marker-only” path replaces the slot using a stale snapshot.**  
+   [character-life-session.ts:79](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/character-life-session.ts:79), with the replacement performed at [indexeddb-store.ts:29](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/indexeddb-store.ts:29).
+
+   Concrete failure sequence:
+
+   - Migration is pending, and IndexedDB contains session B.
+   - Tab A reads the absent marker and B’s records.
+   - Tab B successfully saves newer session C before Tab A’s migration replacement transaction runs.
+   - Tab A calls `replaceSlot('main', B, [marker])`. The adapter reads C inside its transaction, diffs C against B, and writes B back.
+
+   Tab A’s nominal read/marker operation therefore destroys C. The queue prevents this interleaving within one module instance, but each tab has its own queue. The new assertion `put: 0, deleted: 0` establishes marker-only behavior only when no other tab changes the slot between the read and replacement.
+
+   The same separation also leaves the empty-slot migration decision vulnerable to an intervening save. **The migration decision and marker update must use the current slot and marker within one readwrite transaction.** When records already exist, that operation must leave those records untouched. Add a two-tab regression with a save between the preliminary read and migration completion.
+
+No additional P0–P3 findings were identified in this fix diff.
+
+**Previous findings: disposition**
+
+| Previous finding | Result at this head |
+|---|---|
+| Legacy A overwrites B saved during blocked migration | **Closed for the sequential scenario.** Existing records bypass legacy access, and the legacy bytes remain untouched. The cross-tab case above remains open. |
+| Malformed NPC/Player/profile records escape validation | **The reported malformed-shape cases are closed.** The decoder now invokes `isWorldNpcList`, `isPlayerCharacter`, and `isCharacterProfile`, routing failures through the character record’s reference. |
+| Save locally publishes stale feedback | **Closed for the requested supersession paths.** Save advances the checkpoint-action ticket and checks action/import tickets and revision after awaiting. A later Continue, Main menu, import, or successful Planning command prevents obsolete feedback. |
+| Autosave failure overwrites a later week’s status | **Closed under the stated ruling.** Failure feedback requires the captured week and revision to remain unchanged. |
+
+The historical city validation view is unchanged in this round. The added character validators inspect data without replacing it; reconstruction still returns clones of the original stored values. The historical fixture expectations remain intact.
+
+**Regression and evidence checks**
+
+- The complete test diff since `1476838` is additive: **10 lines** in record tests, **15 lines** in checkpoint-service tests, and **56 lines** in the storage e2e spec. No existing test lines, assertions, values, thresholds, timeouts, fixtures, or helpers changed.
+- The existing queue, rejection recovery, lazy legacy access, and fallen-clear implementation are unchanged. No new nested queued-operation wait or deadlock was introduced.
+- Empty-slot recovery still follows the legacy migration branch. Once the marker is present, subsequent reads bypass migration and legacy access.
+- `git diff --check 1476838..HEAD` completed with **exit code 0**. HEAD and tree match the Builder report; the worktree was clean when inspected.
+
+**What I could not verify**
+
+- No tests or builds were executed, as requested. The [Builder report](C:/Users/Admin/.t3/local-drafts/data01-prA/fix2/FINAL-BUILDER-REPORT.md) reports **2,177 unit tests and 347 smoke tests passing**, with exit code 0. Those are Builder-reported results; I did not independently validate the complete raw logs or Claude’s current run.
+- The cross-tab failure above is a static transaction-ordering finding, not a runtime reproduction from this review.
+- Chromium/Firefox/WebKit transaction-lifetime behavior and the full historical acceptance boundary were not independently exercised.
+- This round fully covers the fix diff. It does not convert the previously disclosed incomplete line-by-line audit of the entire original PR’s test migration into a completed audit.
+
+**Next: present the P1 cross-tab migration ordering to the owner with this FAIL verdict before authorizing further implementation.**
+
+[user]
+[Claude (Orchestrator/Tester) -> Reviewer] DATA-01 Astra: re-review PR A after fix round 3 — head c1faf87c10f790f68964f92fedecde86b2700d8d
+
+Same rules: READ-ONLY (git and file reads only; Claude is running gates and smoke in this worktree now). Confirm HEAD == c1faf87c10f790f68964f92fedecde86b2700d8d.
+
+Your review 3 (ca137a8) found one P1: the marker-only/empty-slot migration decision used a stale snapshot, so another tab's newer save C could be overwritten.
+
+Owner decision (Tân, verbatim): "Sửa vòng 3" — approved after being told the fix adds one method to the GameStore port fixed by the plan. That port addition is the only approved deviation.
+
+Claude's ruling: `migrateSlot(slotId, candidate | null, marker): Promise<StoredRecord[] | null>` in ONE readwrite transaction (IndexedDB) / one synchronous step (memory): marker exists → write nothing; slot has records → marker only, records untouched; else write candidate (if any) + marker. Return the slot records at the end of that transaction. readLocalCharacterLife uses the returned records; OLD only when they are null.
+Test rulings: four existing unit lines (character-life-session.test.ts old 63, 160, 296, 297) migrated from replaceSlot/WriteStats observations to migrateSlot under owner-approved Plan correction 4(a); the old-297 zero-data-write invariant must remain in the same test. One new browser assertion was corrected from a hard-coded revision 1 to the existing load contract max(live, saved)+1.
+
+Fix commit: c1faf87. Diff: `git diff ca137a8..HEAD`. Builder evidence: C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/ (gates-1-7-and-smoke.txt, final-edit-inventory.txt, resumed-diff-review.txt).
+
+Check:
+1. The P1 is closed for both branches (preliminary B and preliminary empty), including in the IndexedDB adapter: the decision really happens inside the same transaction as the writes, with no non-IDB await inside it that could auto-commit it early; memory store equivalent; marker-exists is a no-op.
+2. The four migrated test lines keep their invariants (no loosening; zero-data-write still proven in the same test); no other existing test line changed; new browser tests really exercise two pages and the race.
+3. No regression in earlier fixes (queue, tickets, lazy legacy, F3 no-marker-when-legacy-unavailable, fallen clear, validation).
+4. Anything new the fix introduced.
+
+Reply: verdict PASS or FAIL; findings ranked P0–P3 with file:line and a concrete failure scenario; list what you could not verify.
+
+[assistant]
+Reviewing the atomic migration method and the two-tab regressions at `c1faf87`. The review remains read-only while Claude runs the gates.
+
+
+[assistant]
+The migration decision now occurs inside the write transaction, and the service uses its returned records. The new browser cases hold Tab A’s preliminary read while Tab B saves C, then verify C survives and Tab A writes only the marker—or nothing if the marker already exists.
+
+
+[assistant]
+**PASS — the cross-tab migration P1 is closed at `c1faf87`.** No P0–P3 code findings remain from this review round.
+
+Confirmed HEAD: `c1faf87c10f790f68964f92fedecde86b2700d8d`  
+Confirmed tree: `ab89dbb7c719499233c6a0565aafe3a44a749882`  
+Reviewed diff: `ca137a8..c1faf87`. Worktree was clean.
+
+1. **Migration now makes its decision atomically.**  
+   [indexeddb-store.ts:35](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/indexeddb-store.ts:35) reads the marker and current slot inside the same readwrite transaction that performs migration writes. An existing marker produces no writes; an existing slot receives only the marker; an empty slot receives the candidate, if supplied, plus the marker.
+
+   All awaits inside that transaction depend on IndexedDB requests. There is no timer, network call, UI yield, or unrelated asynchronous operation between its reads and writes. The final slot read occurs in that transaction, and the wrapper resolves on transaction completion.
+
+2. **The service uses the transaction’s result, and memory behavior matches.**  
+   [character-life-session.ts:80](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/character-life-session.ts:80) replaces the preliminary snapshot with `migrateSlot`’s returned records. Invalid legacy input no longer masks a valid concurrent save: its `OLD` response applies only when the returned records are null.
+
+   [memory-store.ts:18](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/memory-store.ts:18) performs the decision and publication synchronously, with no internal await. It serializes pending writes before publishing them and returns detached records. The existing-marker branch leaves storage untouched.
+
+3. **The tests preserve the required invariants and exercise the actual race.**  
+   The four approved assertion replacements retain invalid-save refusal, unchanged legacy bytes, and the expected migration call. The existing B-preservation test now directly observes the memory adapter’s backing map and asserts **zero data puts, zero data deletes, and one marker put in that same test**.
+
+   The new [two-page browser cases](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/storage.spec.ts:161) hold Tab A’s preliminary read completion while Tab B saves C. They cover preliminary B, preliminary empty, and another migration winning the marker. They check C’s stored records, the returned live session, unchanged legacy bytes, one readwrite transaction, and precisely marker-only or zero writes. The revision assertion follows `max(live, saved) + 1`.
+
+   Beyond the four approved replacements, the test/helper diff is additive. No existing timeout, threshold, fixture value, or test configuration changed.
+
+4. **Earlier fixes remain intact.**  
+   The module queue still covers read—including migration—save, and clear, without a queued operation awaiting another queued operation. Rejection recovery, UI tickets, lazy legacy access, fallen clearing, and record validation are unchanged. An empty preliminary slot with unavailable legacy storage still returns before creating a marker. A present marker bypasses migration on subsequent reads.
+
+**Evidence inspected**
+
+The [combined Builder execution log](C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/gates-1-7-and-smoke.txt) identifies the confirmed HEAD/tree and records:
+
+| Check | Recorded result |
+|---|---|
+| Ordered gates 1–7 | Exit **0** for every gate |
+| Architecture tests | **154** tests |
+| Unit tests | **2,192 passed**, 99 files |
+| Full Chromium smoke | **350 passed**, exit **0** |
+| Three new cross-tab cases | Each explicitly recorded passing |
+
+My own `git diff --check ca137a8..HEAD` completed with **exit code 0**. No tests, builds, installs, edits, commits, or pushes were performed by this reviewer.
+
+**Limits and evidence housekeeping**
+
+- This is an independent code review supported by inspected Builder logs, not an independent test execution. Claude’s currently running checks were not observed.
+- The supplied smoke evidence is Chromium. Firefox/WebKit transaction behavior was not independently exercised.
+- The [final-edit-inventory.txt](C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/final-edit-inventory.txt) header still describes the earlier HOLD working copy at `ca137a8`. The [resumed diff review](C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/resumed-diff-review.txt), actual committed diff, and final gate log establish the later state; refresh that inventory header before packaging final evidence.
+- This verdict closes the reviewed findings and round-3 diff. It does not claim completion of the previously disclosed exhaustive audit of every original-PR test-migration line, or verify that G5 evidence has been committed to its required Git location.
+
+**Next: record this PASS against `c1faf87` in the Git evidence folder, with the final inventory metadata refreshed.**

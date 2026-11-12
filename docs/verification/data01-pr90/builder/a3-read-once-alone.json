@@ -1,0 +1,1 @@
+﻿[["a3-read-once-red-alone","npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t \"migrates legacy once\""]]

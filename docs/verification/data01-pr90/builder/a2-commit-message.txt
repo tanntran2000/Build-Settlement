@@ -1,0 +1,5 @@
+feat(ui): IndexedDB game store and async checkpoint service
+
+Move manual and automatic checkpoints behind the atomic GameStore so legacy saves migrate once, failed writes keep prior records, and fallen games clear their slot without resurrecting old data. Inject isolated dependencies in unit tests and preserve equivalent storage invariants under owner-approved plan correction 4.
+
+Co-authored-by: Codex <noreply@openai.com>

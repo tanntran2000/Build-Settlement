@@ -1,0 +1,5 @@
+fix(ui): preserve newer saves during pending legacy migration
+
+Prefer existing IndexedDB records when a temporarily blocked legacy migration resumes, so a newer explicit save cannot be replaced by the older backup. Mark migration complete without changing slot data, and retain the legacy bytes. Empty-slot recovery still migrates normally.
+
+Co-authored-by: Codex <noreply@openai.com>

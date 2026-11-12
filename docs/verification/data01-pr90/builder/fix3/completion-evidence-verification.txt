@@ -1,0 +1,8 @@
+UTC=2026-11-12T08:14:12.243Z
+HEAD=c1faf87c10f790f68964f92fedecde86b2700d8d
+TREE=ab89dbb7c719499233c6a0565aafe3a44a749882
+STATUS=clean
+Historical HOLD manifest: all 117 files unchanged.
+UTF-8: 155 text files strictly decoded, no replacement characters. Owner quote preserved: Sửa vòng 3.
+All final gate and smoke logs identify the same clean HEAD/tree and exit0.
+Complete inventory verifies exactly four permitted old-line migrations; all other old test lines remain.

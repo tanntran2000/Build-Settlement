@@ -1,0 +1,32 @@
+UTC=2026-11-12T04:43:37.149Z HEAD=1f60d0117a09203100252d061e67057c3c4fb2be TREE=19e4e1cc2c1371cca367efa40dcfe01da6ecc629
+STATUS="M packages/ui/src/TileManagement.svelte\n M tests/e2e/storage.helpers.ts\n M tests/e2e/storage.spec.ts"
+ENV CI=1
+COMMAND=npm run build
+
+> build-settlement@0.1.0 build
+> npm run build --workspace=@haven/core && npm run build --workspace=@haven/simulation && npm run build --workspace=@haven/ui
+
+
+> @haven/core@0.1.0 build
+> tsc
+
+
+> @haven/simulation@0.1.0 build
+> tsc
+
+
+> @haven/ui@0.1.0 build
+> vite build
+
+vite v6.4.5 building for production...
+transforming...
+✓ 228 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.71 kB │ gzip:   0.41 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-DdNtS9j1.css                   28.13 kB │ gzip:   5.81 kB
+dist/assets/index-DR464pQR.js                   319.00 kB │ gzip: 104.10 kB
+✓ built in 4.33s
+
+EXIT=0 DURATION_MS=22929 END_UTC=2026-11-12T04:44:00.078Z

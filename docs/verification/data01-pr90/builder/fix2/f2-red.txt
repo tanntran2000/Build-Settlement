@@ -1,0 +1,41 @@
+UTC=2026-11-12T05:46:29.183Z HEAD=48cfae3cbe53d933588afa2b38f3223b0691a5c9 TREE=d893aa0b0cf3d7d2244a2c47347a65edd3340634
+STATUS="M packages/persistence/src/__tests__/session-records.test.ts"
+ENV CI=
+COMMAND=npx vitest run packages/persistence/src/__tests__/session-records.test.ts
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/persistence/src/__tests__/session-records.test.ts (50 tests | 5 failed) 635ms
+   × fix2 F2: malformed npc identifies its character record 17ms
+   × fix2 F2: malformed player identifies its character record 12ms
+   × fix2 F2: malformed npc profile identifies its character record 10ms
+   × fix2 F2: malformed player record profile identifies its character record 13ms
+   × fix2 F2: malformed player embedded profile identifies its character record 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > fix2 F2: malformed npc identifies its character record
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > fix2 F2: malformed player identifies its character record
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > fix2 F2: malformed npc profile identifies its character record
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > fix2 F2: malformed player record profile identifies its character record
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > fix2 F2: malformed player embedded profile identifies its character record
+AssertionError: expected undefined to be an instance of StoreRecordError
+ ❯ expectRecordRef packages/persistence/src/__tests__/session-records.test.ts:36:17
+     34|   let error: unknown;
+     35|   try { recordsToSession(rows); } catch (caught) { error = caught; }
+     36|   expect(error).toBeInstanceOf(StoreRecordError);
+       |                 ^
+     37|   expect((error as StoreRecordError).ref).toBe(ref);
+     38| }
+ ❯ packages/persistence/src/__tests__/session-records.test.ts:63:2
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed | 45 passed (50)
+   Start at  12:46:33
+   Duration  2.24s (transform 741ms, setup 0ms, import 961ms, tests 635ms, environment 0ms)
+
+
+EXIT=1 DURATION_MS=6916 END_UTC=2026-11-12T05:46:36.099Z

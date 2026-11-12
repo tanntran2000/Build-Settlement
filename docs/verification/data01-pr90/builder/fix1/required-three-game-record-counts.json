@@ -1,0 +1,44 @@
+[
+  {
+    "seed": 1204634712,
+    "total": 1,
+    "tables": {
+      "meta": 0,
+      "city": 0,
+      "world": 0,
+      "characters": 0,
+      "reports": 0,
+      "history": 0,
+      "items": 0,
+      "system": 1
+    }
+  },
+  {
+    "seed": 1305142198,
+    "total": 1,
+    "tables": {
+      "meta": 0,
+      "city": 0,
+      "world": 0,
+      "characters": 0,
+      "reports": 0,
+      "history": 0,
+      "items": 0,
+      "system": 1
+    }
+  },
+  {
+    "seed": 3558903502,
+    "total": 1,
+    "tables": {
+      "meta": 0,
+      "city": 0,
+      "world": 0,
+      "characters": 0,
+      "reports": 0,
+      "history": 0,
+      "items": 0,
+      "system": 1
+    }
+  }
+]

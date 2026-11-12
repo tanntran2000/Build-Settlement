@@ -1,0 +1,1 @@
+[["unit-red-alone-06","npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t \"^fix3 memory: migration takes one synchronous state step$\""]]

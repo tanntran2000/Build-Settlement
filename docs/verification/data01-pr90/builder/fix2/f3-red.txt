@@ -1,0 +1,748 @@
+UTC=2026-11-12T05:49:23.051Z HEAD=5154ab7dcd186e20df52ba324176437e0e8b99e0 TREE=dacc43c9877d0dd89600f26360cdb9631d52bbd0
+STATUS="M tests/e2e/storage.spec.ts"
+ENV CI=1
+COMMAND=npx playwright test tests/e2e/storage.spec.ts -g "fix2 F3"
+[WebServer] (node:10892) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:16156) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:32032) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\storage.spec.ts:121:53 › fix2 F3: stale success Save feedback cannot replace a rejected Import (6.6s)
+(node:55576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [chromium] › tests\e2e\storage.spec.ts:121:53 › fix2 F3: stale failure Save feedback cannot replace a rejected Import (6.1s)
+(node:7776) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 [chromium] › tests\e2e\storage.spec.ts:131:1 › fix2 F3: Save supersedes a pending Continue without changing the live session (2.4s)
+(node:53272) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  4 [chromium] › tests\e2e\storage.spec.ts:138:1 › fix2 F3: Save supersedes a pending Main menu and keeps the session open (6.7s)
+(node:56280) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  5 [chromium] › tests\e2e\storage.spec.ts:144:1 › fix2 F3: a Planning command supersedes pending Save feedback (6.7s)
+(node:36792) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  6 [chromium] › tests\e2e\storage.spec.ts:150:1 › fix2 F3: a delayed autosave failure cannot replace a later week status (7.5s)
+
+
+  1) [chromium] › tests\e2e\storage.spec.ts:121:53 › fix2 F3: stale success Save feedback cannot replace a rejected Import 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByRole('alert')
+    Expected: "This checkpoint is from an older version of Haven and can no longer be played. Start a New Game."
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveText" getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('alert')
+
+
+      126 |  const message='This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.';
+      127 |  await expect(page.getByRole('alert')).toHaveText(message);await releaseStoreCompletion(page);
+    > 128 |  await expect(page.getByRole('alert')).toHaveText(message);await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveCount(0);
+          |                                        ^
+      129 |  expect(await exportLife(page)).toEqual(initial);
+      130 | });
+      131 | test('fix2 F3: Save supersedes a pending Continue without changing the live session',async({page})=>{
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\storage.spec.ts:128:40
+
+    Error Context: test-results\storage-fix2-F3-stale-succ-921cf-t-replace-a-rejected-Import-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\storage-fix2-F3-stale-succ-921cf-t-replace-a-rejected-Import-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\storage-fix2-F3-stale-succ-921cf-t-replace-a-rejected-Import-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\storage.spec.ts:121:53 › fix2 F3: stale failure Save feedback cannot replace a rejected Import 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByRole('alert')
+    Expected: "This checkpoint is from an older version of Haven and can no longer be played. Start a New Game."
+    Received: "Could not save in this browser (storage blocked or full). Your game and any earlier local checkpoint were preserved. Use Export checkpoint instead."
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('alert')
+        14 × locator resolved to <p role="alert" data-life-error="" class="svelte-w9sbey">Could not save in this browser (storage blocked o…</p>
+           - unexpected value "Could not save in this browser (storage blocked or full). Your game and any earlier local checkpoint were preserved. Use Export checkpoint instead."
+
+
+      126 |  const message='This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.';
+      127 |  await expect(page.getByRole('alert')).toHaveText(message);await releaseStoreCompletion(page);
+    > 128 |  await expect(page.getByRole('alert')).toHaveText(message);await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveCount(0);
+          |                                        ^
+      129 |  expect(await exportLife(page)).toEqual(initial);
+      130 | });
+      131 | test('fix2 F3: Save supersedes a pending Continue without changing the live session',async({page})=>{
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\storage.spec.ts:128:40
+
+    Error Context: test-results\storage-fix2-F3-stale-fail-89e03-t-replace-a-rejected-Import-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\storage-fix2-F3-stale-fail-89e03-t-replace-a-rejected-Import-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\storage-fix2-F3-stale-fail-89e03-t-replace-a-rejected-Import-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests\e2e\storage.spec.ts:131:1 › fix2 F3: Save supersedes a pending Continue without changing the live session 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 88
+    + Received  + 88
+
+    @@ -4,11 +4,11 @@
+            "amountMilli": 10000,
+            "rulesetId": "tile-population-goods-01",
+          },
+          "happiness": 80,
+          "phase": "planning",
+    -     "revision": 1,
+    +     "revision": 2,
+          "society": Object {
+            "classes": Object {
+              "bound": Object {
+                "free": 0,
+                "luminaries": 0,
+    @@ -748,11 +748,11 @@
+              },
+            },
+            "week": 1,
+            "worldMetadata": Object {
+              "gameVersion": "0.1.0",
+    -         "worldSeed": 54321,
+    +         "worldSeed": 12345,
+            },
+          },
+        },
+        "npcs": Array [
+          Object {
+    @@ -771,11 +771,11 @@
+              "gender": "female",
+              "health": 100,
+              "id": "npc_starter_1",
+              "legalStatus": "citizen",
+              "memories": Array [],
+    -         "name": "Iris",
+    +         "name": "Alice",
+              "needs": Object {
+                "autonomy": 60,
+                "intimacy": 40,
+                "nutrition": 80,
+                "purpose": 50,
+    @@ -824,11 +824,11 @@
+              "gender": "female",
+              "health": 85,
+              "id": "npc_starter_2",
+              "legalStatus": "free_resident",
+              "memories": Array [],
+    -         "name": "Edith",
+    +         "name": "Clara",
+              "needs": Object {
+                "autonomy": 60,
+                "intimacy": 40,
+                "nutrition": 80,
+                "purpose": 50,
+    @@ -876,11 +876,11 @@
+              "gender": "female",
+              "health": 100,
+              "id": "npc_starter_3",
+              "legalStatus": "contract_bound",
+              "memories": Array [],
+    -         "name": "Alice",
+    +         "name": "Edith",
+              "needs": Object {
+                "autonomy": 60,
+                "intimacy": 40,
+                "nutrition": 80,
+                "purpose": 50,
+    @@ -919,11 +919,11 @@
+            "ai-1",
+            "ai-2",
+          ],
+          "generator": "outside-gen-01",
+          "scenarioId": "outside-trial-01",
+    -     "seed": 54321,
+    +     "seed": 12345,
+          "tiles": Array [
+            Object {
+              "feature": null,
+              "id": "o01",
+              "knownBy": Array [
+    @@ -1008,14 +1008,11 @@
+              "id": "o11",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o12",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1041,38 +1038,32 @@
+              "id": "o16",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o17",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o18",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o19",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o20",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1080,17 +1071,23 @@
+              "id": "o21",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o22",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o23",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1104,14 +1101,11 @@
+              "id": "o25",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o26",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1125,11 +1119,14 @@
+              "id": "o28",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o29",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1188,11 +1185,14 @@
+              "id": "o38",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "kind": "deposit",
+    +           "resource": "iron",
+    +         },
+              "id": "o39",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1206,23 +1206,17 @@
+              "id": "o41",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "kind": "deposit",
+    -           "resource": "iron",
+    -         },
+    +         "feature": null,
+              "id": "o42",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o43",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1236,38 +1230,32 @@
+              "id": "o45",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "kind": "deposit",
+    -           "resource": "iron",
+    -         },
+    +         "feature": null,
+              "id": "o46",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o47",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o48",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o49",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1281,22 +1269,19 @@
+              "id": "o51",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "kind": "deposit",
+    -           "resource": "wood",
+    -         },
+    +         "feature": null,
+              "id": "o52",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+              "feature": Object {
+    -           "kind": "deposit",
+    -           "resource": "iron",
+    +           "claimedBy": null,
+    +           "kind": "loot",
+              },
+              "id": "o53",
+              "knownBy": Array [],
+              "owner": null,
+            },
+    @@ -1305,11 +1290,14 @@
+              "id": "o54",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "kind": "deposit",
+    +           "resource": "iron",
+    +         },
+              "id": "o55",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1335,23 +1323,32 @@
+              "id": "o59",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "kind": "deposit",
+    +           "resource": "iron",
+    +         },
+              "id": "o60",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o61",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "kind": "deposit",
+    +           "resource": "wheat",
+    +         },
+              "id": "o62",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1359,17 +1356,23 @@
+              "id": "o63",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "kind": "deposit",
+    +           "resource": "wheat",
+    +         },
+              "id": "o64",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o65",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1389,14 +1392,11 @@
+              "id": "o68",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "kind": "deposit",
+    -           "resource": "wheat",
+    -         },
+    +         "feature": null,
+              "id": "o69",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1416,14 +1416,11 @@
+              "id": "o72",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o73",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1437,35 +1434,35 @@
+              "id": "o75",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o76",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o77",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o78",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "kind": "deposit",
+    +           "resource": "iron",
+    +         },
+              "id": "o79",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1479,20 +1476,20 @@
+              "id": "o81",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "kind": "deposit",
+    -           "resource": "wood",
+    -         },
+    +         "feature": null,
+              "id": "o82",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o83",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1500,11 +1497,14 @@
+              "id": "o84",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o85",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+
+      134 |  await button(page,'Save locally').click();await releaseStoreCompletion(page);
+      135 |  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+    > 136 |  expect(await exportLife(page)).toEqual(newer);expect(await storedSaveText(page)).toBe(bytes(newer));
+          |                                 ^
+      137 | });
+      138 | test('fix2 F3: Save supersedes a pending Main menu and keeps the session open',async({page})=>{
+      139 |  await start(page);const initial=await exportLife(page);await holdStoreCompletion(page,'readwrite');
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\storage.spec.ts:136:33
+
+    Error Context: test-results\storage-fix2-F3-Save-super-8b346-t-changing-the-live-session-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\storage-fix2-F3-Save-super-8b346-t-changing-the-live-session-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\storage-fix2-F3-Save-super-8b346-t-changing-the-live-session-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests\e2e\storage.spec.ts:138:1 › fix2 F3: Save supersedes a pending Main menu and keeps the session open 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('life-shell')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByTestId('life-shell') with timeout 5000ms
+      - waiting for getByTestId('life-shell')
+
+
+      139 |  await start(page);const initial=await exportLife(page);await holdStoreCompletion(page,'readwrite');
+      140 |  await button(page,'Main menu').click();await waitStoreCompletion(page);await button(page,'Save locally').click();await releaseStoreCompletion(page);
+    > 141 |  await expect(page.getByTestId('life-shell')).toBeVisible();await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+          |                                               ^
+      142 |  expect(await exportLife(page)).toEqual(initial);
+      143 | });
+      144 | test('fix2 F3: a Planning command supersedes pending Save feedback',async({page})=>{
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\storage.spec.ts:141:47
+
+    Error Context: test-results\storage-fix2-F3-Save-super-44a67--and-keeps-the-session-open-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\storage-fix2-F3-Save-super-44a67--and-keeps-the-session-open-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\storage-fix2-F3-Save-super-44a67--and-keeps-the-session-open-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium] › tests\e2e\storage.spec.ts:144:1 › fix2 F3: a Planning command supersedes pending Save feedback 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('[aria-label="Planning checkpoints"] [role="status"]')
+    Expected: "Checkpoint download requested."
+    Received: "Saved in this browser."
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('[aria-label="Planning checkpoints"] [role="status"]') with timeout 5000ms
+      - waiting for locator('[aria-label="Planning checkpoints"] [role="status"]')
+        14 × locator resolved to <p role="status" class="svelte-68buw">Saved in this browser.</p>
+           - unexpected value "Saved in this browser."
+
+
+      146 |  await button(page,'Save locally').click();await waitStoreCompletion(page);const newer=await act(page,initial,'SET_ENABLED',{tileId:'field-1',enabled:false});
+      147 |  await go(page,'session');const notice=page.locator('[aria-label="Planning checkpoints"] [role="status"]');await expect(notice).toHaveText('Checkpoint download requested.');
+    > 148 |  await releaseStoreCompletion(page);await expect(notice).toHaveText('Checkpoint download requested.');expect(await exportLife(page)).toEqual(newer);
+          |                                                          ^
+      149 | });
+      150 | test('fix2 F3: a delayed autosave failure cannot replace a later week status',async({page})=>{
+      151 |  await start(page);const initial=await exportLife(page);await save(page);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\storage.spec.ts:148:58
+
+    Error Context: test-results\storage-fix2-F3-a-Planning-5444a-sedes-pending-Save-feedback-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\storage-fix2-F3-a-Planning-5444a-sedes-pending-Save-feedback-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\storage-fix2-F3-a-Planning-5444a-sedes-pending-Save-feedback-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [chromium] › tests\e2e\storage.spec.ts:150:1 › fix2 F3: a delayed autosave failure cannot replace a later week status 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('aside p[aria-atomic="true"]')
+    Expected: "Planning Week 3 · Year 1. Previous report retained."
+    Received: "Autosave failed. Your last save is kept."
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('aside p[aria-atomic="true"]') with timeout 5000ms
+      - waiting for locator('aside p[aria-atomic="true"]')
+        14 × locator resolved to <p role="status" aria-atomic="true" aria-live="polite" class="svelte-w9sbey">Autosave failed. Your last save is kept.</p>
+           - unexpected value "Autosave failed. Your last save is kept."
+
+
+      155 |  await button(page,'Options').click();const options=page.getByRole('dialog',{name:'Options',exact:true});await options.getByLabel('Autosave',{exact:true}).uncheck();await options.getByRole('button',{name:'Close',exact:true}).click();await expect(options).not.toBeVisible();
+      156 |  await advance();const status=page.locator('aside p[aria-atomic="true"]');await expect(status).toHaveText('Planning Week 3 \u00b7 Year 1. Previous report retained.');
+    > 157 |  await releaseStoreCompletion(page);await expect(status).toHaveText('Planning Week 3 \u00b7 Year 1. Previous report retained.');
+          |                                                          ^
+      158 |  expect((await exportLife(page)).city.world.week).toBe(3);expect(await storedSaveText(page)).toBe(bytes(initial));
+      159 | });
+      160 |
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\storage.spec.ts:157:58
+
+    Error Context: test-results\storage-fix2-F3-a-delayed--92d0e-replace-a-later-week-status-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\storage-fix2-F3-a-delayed--92d0e-replace-a-later-week-status-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\storage-fix2-F3-a-delayed--92d0e-replace-a-later-week-status-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6 failed
+    [chromium] › tests\e2e\storage.spec.ts:121:53 › fix2 F3: stale success Save feedback cannot replace a rejected Import 
+    [chromium] › tests\e2e\storage.spec.ts:121:53 › fix2 F3: stale failure Save feedback cannot replace a rejected Import 
+    [chromium] › tests\e2e\storage.spec.ts:131:1 › fix2 F3: Save supersedes a pending Continue without changing the live session 
+    [chromium] › tests\e2e\storage.spec.ts:138:1 › fix2 F3: Save supersedes a pending Main menu and keeps the session open 
+    [chromium] › tests\e2e\storage.spec.ts:144:1 › fix2 F3: a Planning command supersedes pending Save feedback 
+    [chromium] › tests\e2e\storage.spec.ts:150:1 › fix2 F3: a delayed autosave failure cannot replace a later week status 
+
+EXIT=1 DURATION_MS=59021 END_UTC=2026-11-12T05:50:22.072Z

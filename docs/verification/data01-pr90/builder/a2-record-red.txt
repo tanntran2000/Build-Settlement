@@ -1,0 +1,35 @@
+UTC=2026-11-12T02:54:45.976Z HEAD=e51de7161d3b5164c201ffe83a1bef74702e0d12 TREE=ec6f5efd5bad969d01e08aebebef0cbb72f287e8
+COMMAND=npx vitest run packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/crisis-checkpoint.test.ts
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/character-life-session.test.ts (51 tests | 1 failed) 832ms
+   × corrupt stored city is refused with the existing message and exact records preserved 22ms
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 52 passed (53)
+   Start at  09:54:50
+   Duration  2.96s (transform 2.07s, setup 0ms, import 2.74s, tests 880ms, environment 1ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > corrupt stored city is refused with the existing message and exact records preserved
+AssertionError: expected { success: false, …(1) } to deeply equal { success: false, …(1) }
+
+- Expected
++ Received
+
+  {
+-   "message": "Local checkpoint not loaded; it was left unchanged. This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.",
++   "message": "Could not read browser storage. Your game was preserved. Use Import checkpoint instead.",
+    "success": false,
+  }
+
+ ❯ packages/ui/src/__tests__/character-life-session.test.ts:227:42
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+EXIT=1 DURATION_MS=7283

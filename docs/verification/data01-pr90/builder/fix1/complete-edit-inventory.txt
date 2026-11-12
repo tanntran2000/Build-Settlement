@@ -1,0 +1,200 @@
+DATA-01 fix round 1: complete test edit inventory
+Base=9fbf27efd46fe0d6f77c7c60b43d09fc0dada943
+HEAD=14768381cec2aeed06a71b6bae73d0a9502265e4
+TREE=5c5cf260bf643bf9835d5109b89270dbf2c63dde
+UTF-8. All exact BEFORE/AFTER changed lines follow. No timeout, retry, worker, threshold or existing fixture value changed.
+
+packages/persistence/src/__tests__/session-records.test.ts: retained all 3 existing test declarations; 3 new declarations. Parameterized F4 declarations expand to 7 new cases.
+Invariant kept: All 36 fixtures reconstruct the same session and retain exactly the previous serializer result. Nine current fixtures additionally require both successes and identical text. Twenty-seven old fixtures additionally require exact reconstructed state and the existing INCOMPATIBLE_SAVE refusal.
+
+packages/persistence/src/__tests__/session-records.test.ts:12 (old 12) BEFORE → AFTER
+BEFORE packages/persistence/src/__tests__/session-records.test.ts:12:       expect(serializeCharacterLifeSave(recordsToSession(sessionToRecords('main', s)))).toEqual(before);
+AFTER packages/persistence/src/__tests__/session-records.test.ts:12:       const decoded = recordsToSession(sessionToRecords('main', s));
+AFTER packages/persistence/src/__tests__/session-records.test.ts:13:       const after = serializeCharacterLifeSave(decoded);
+AFTER packages/persistence/src/__tests__/session-records.test.ts:14:       if (version === 'society-v7') {
+AFTER packages/persistence/src/__tests__/session-records.test.ts:15:         expect(before.success).toBe(true); expect(after.success).toBe(true);
+AFTER packages/persistence/src/__tests__/session-records.test.ts:16:         if (!before.success || !after.success) throw Error('Current fixture must serialize successfully');
+AFTER packages/persistence/src/__tests__/session-records.test.ts:17:         expect(after.text).toBe(before.text);
+AFTER packages/persistence/src/__tests__/session-records.test.ts:18:       } else {
+AFTER packages/persistence/src/__tests__/session-records.test.ts:19:         expect(decoded).toEqual(s);
+AFTER packages/persistence/src/__tests__/session-records.test.ts:20:         expect(before).toEqual({ success: false, error: { code: 'INCOMPATIBLE_SAVE', message: 'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.' } });
+AFTER packages/persistence/src/__tests__/session-records.test.ts:21:       }
+AFTER packages/persistence/src/__tests__/session-records.test.ts:22:       expect(after).toEqual(before);
+
+packages/persistence/src/__tests__/session-records.test.ts:32 (old 21) BEFORE → AFTER
+AFTER packages/persistence/src/__tests__/session-records.test.ts:32: 
+AFTER packages/persistence/src/__tests__/session-records.test.ts:33: function expectRecordRef(rows: ReturnType<typeof sessionToRecords>,ref: string) {
+AFTER packages/persistence/src/__tests__/session-records.test.ts:34:   let error: unknown;
+AFTER packages/persistence/src/__tests__/session-records.test.ts:35:   try { recordsToSession(rows); } catch (caught) { error = caught; }
+AFTER packages/persistence/src/__tests__/session-records.test.ts:36:   expect(error).toBeInstanceOf(StoreRecordError);
+AFTER packages/persistence/src/__tests__/session-records.test.ts:37:   expect((error as StoreRecordError).ref).toBe(ref);
+AFTER packages/persistence/src/__tests__/session-records.test.ts:38: }
+AFTER packages/persistence/src/__tests__/session-records.test.ts:39: it.each(['rulesetId','revision','phase'] as const)('fix1 F4: inconsistent meta %s identifies meta:session',field=>{
+AFTER packages/persistence/src/__tests__/session-records.test.ts:40:   const rows=sessionToRecords('main',session()),meta=rows.find(r=>r.table==='meta')!.value as Record<string,unknown>;
+AFTER packages/persistence/src/__tests__/session-records.test.ts:41:   meta[field]=field==='rulesetId'?'tile-society-06':field==='revision'?1:'report';
+AFTER packages/persistence/src/__tests__/session-records.test.ts:42:   expectRecordRef(rows,'meta:session');
+AFTER packages/persistence/src/__tests__/session-records.test.ts:43: });
+AFTER packages/persistence/src/__tests__/session-records.test.ts:44: it.each(['object shape','invalid inventory'] as const)('fix1 F4: malformed city %s identifies city:city',kind=>{
+AFTER packages/persistence/src/__tests__/session-records.test.ts:45:   const rows=sessionToRecords('main',session()),city=rows.find(r=>r.table==='city')!;
+AFTER packages/persistence/src/__tests__/session-records.test.ts:46:   if(kind==='object shape')city.value={};
+AFTER packages/persistence/src/__tests__/session-records.test.ts:47:   else {const value=city.value as ReturnType<typeof session>['city'];value.world.settlements[value.world.activeSettlementId!].inventory.gold=-1;}
+AFTER packages/persistence/src/__tests__/session-records.test.ts:48:   expectRecordRef(rows,'city:city');
+AFTER packages/persistence/src/__tests__/session-records.test.ts:49: });
+AFTER packages/persistence/src/__tests__/session-records.test.ts:50: it.each(['object shape','invalid actors'] as const)('fix1 F4: malformed world %s identifies world:outside',kind=>{
+AFTER packages/persistence/src/__tests__/session-records.test.ts:51:   const rows=sessionToRecords('main',session()),world=rows.find(r=>r.table==='world')!;
+AFTER packages/persistence/src/__tests__/session-records.test.ts:52:   if(kind==='object shape')world.value={};else (world.value as ReturnType<typeof session>['outside']).actors=['unknown'];
+AFTER packages/persistence/src/__tests__/session-records.test.ts:53:   expectRecordRef(rows,'world:outside');
+AFTER packages/persistence/src/__tests__/session-records.test.ts:54: });
+
+packages/ui/src/__tests__/character-life-session.test.ts: retained all 28 existing test declarations; 6 new declarations. 
+Invariant kept: Existing cases and assertions are byte-identical; appended cases test operation order, stale action rejection and migration retry. Imports/helpers enable controlled async completion without changing runtime timeout settings.
+
+packages/ui/src/__tests__/character-life-session.test.ts:230 (old 229) BEFORE → AFTER
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:230: 
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:231: function deferred() {
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:232:  let resolve!: () => void; const promise = new Promise<void>(done => { resolve = done; });
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:233:  return { promise,resolve };
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:234: }
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:235: function holdNextRead(store: GameStore) {
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:236:  const entered=deferred(),release=deferred(),read=store.read.bind(store);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:237:  vi.spyOn(store,'read').mockImplementationOnce(async slot=>{entered.resolve();await release.promise;return read(slot);});
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:238:  return {entered:entered.promise,release:release.resolve};
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:239: }
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:240: it('fix1 F1: pending save cannot restore records after fallen clear',async()=>{
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:241:  const d=inspectableDeps();await savedGame(d,11);const held=holdNextRead(d.store);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:242:  const saving=saveLocalCharacterLife(session(22),d);await held.entered;
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:243:  const clearing=clearFallenCharacterLifeCheckpoint(true,'fallen',d);await Promise.resolve();held.release();
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:244:  const [saved,cleared]=await Promise.all([saving,clearing]);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:245:  expect(await d.store.read('main')).toBeNull();
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:246:  expect(saved).toEqual({success:true,replaced:true});expect(cleared).toEqual({success:true});
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:247:  expect(d.rows()).toEqual([{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:248: });
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:249: it('fix1 F1: read save and clear finish in invocation order',async()=>{
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:250:  const d=inspectableDeps();await readLocalCharacterLife(d);await saveLocalCharacterLife(session(11),d);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:251:  const held=holdNextRead(d.store),reading=readLocalCharacterLife(d);await held.entered;
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:252:  const saving=saveLocalCharacterLife(session(22),d),clearing=clearFallenCharacterLifeCheckpoint(true,'fallen',d);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:253:  await Promise.resolve();held.release();
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:254:  expect(await reading).toEqual({success:true,state:session(11)});expect(await saving).toEqual({success:true,replaced:true});expect(await clearing).toEqual({success:true});
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:255:  expect(d.rows()).toEqual([{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:256: });
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:257: it('fix1 F1: failed checkpoint does not poison later operations',async()=>{
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:258:  const opts={failWrites:false},d=deps(null,opts);await readLocalCharacterLife(d);await saveLocalCharacterLife(session(11),d);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:259:  opts.failWrites=true;const failed=saveLocalCharacterLife(session(22),d),reading=readLocalCharacterLife(d);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:260:  expect(await failed).toEqual({success:false,message:BLOCKED});expect(await reading).toEqual({success:true,state:session(11)});
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:261:  opts.failWrites=false;expect(await saveLocalCharacterLife(session(33),d)).toEqual({success:true,replaced:true});expect(await readLocalCharacterLife(d)).toEqual({success:true,state:session(33)});
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:262: });
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:263: it('fix1 F1: checkpoint queue is module-wide across dependencies',async()=>{
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:264:  const first=deps(),second=deps();await readLocalCharacterLife(first);const held=holdNextRead(first.store),clear=vi.spyOn(second.store,'clear');
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:265:  const saving=saveLocalCharacterLife(session(),first);await held.entered;const clearing=clearFallenCharacterLifeCheckpoint(true,'fallen',second);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:266:  try {await Promise.resolve();expect(clear).not.toHaveBeenCalled();}
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:267:  finally {held.release();await Promise.all([saving,clearing]);}
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:268:  expect(clear).toHaveBeenCalledExactlyOnceWith('main');
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:269: });
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:270: 
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:271: it('fix1 F3: throwing legacy read leaves no marker and retries when readable',async()=>{
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:272:  const d=deps(a2Text());d.legacy.getItem.mockImplementationOnce(()=>{throw Error('blocked');});
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:273:  expect(await readLocalCharacterLife(d)).toEqual({success:false,message:'Could not read browser storage. Your game was preserved. Use Import checkpoint instead.'});
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:274:  expect(await d.store.getSystem(MARKER)).toBeNull();expect(await d.store.read('main')).toBeNull();
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:275:  expect(await readLocalCharacterLife(d)).toEqual({success:true,state:a2Session()});
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:276:  expect(await d.store.getSystem(MARKER)).not.toBeNull();expect(d.legacy.getItem).toHaveBeenCalledTimes(2);expect(d.legacy.removeItem).not.toHaveBeenCalled();
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:277: });
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:278: it('fix1 F3: unavailable legacy is distinct from an absent key and can recover',async()=>{
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:279:  const d: import('../character-life-session.js').CheckpointDeps={store:createMemoryGameStore(),legacy:null};
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:280:  expect(await readLocalCharacterLife(d)).toEqual({success:false,message:'Could not read browser storage. Your game was preserved. Use Import checkpoint instead.'});
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:281:  expect(await d.store.getSystem(MARKER)).toBeNull();expect(await d.store.read('main')).toBeNull();
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:282:  d.legacy=deps(a2Text()).legacy;expect(await readLocalCharacterLife(d)).toEqual({success:true,state:a2Session()});
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:283:  expect(await d.store.getSystem(MARKER)).not.toBeNull();
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:284: });
+
+tests/e2e/storage.helpers.ts: retained all 0 existing test declarations; 0 new declarations. 
+Invariant kept: Existing cases and assertions are byte-identical; appended cases test operation order, stale action rejection and migration retry. Imports/helpers enable controlled async completion without changing runtime timeout settings.
+
+tests/e2e/storage.helpers.ts:63 (old 62) BEFORE → AFTER
+AFTER tests/e2e/storage.helpers.ts:63: 
+AFTER tests/e2e/storage.helpers.ts:64: // Hold only delivery of a completed transaction, so user commands need no live IDB transaction.
+AFTER tests/e2e/storage.helpers.ts:65: export async function holdStoreCompletion(page: Page,mode: IDBTransactionMode,skip=0) {
+AFTER tests/e2e/storage.helpers.ts:66:   await page.evaluate(({mode,skip})=>{
+AFTER tests/e2e/storage.helpers.ts:67:     const original=IDBDatabase.prototype.transaction;let held=false,remaining=skip;
+AFTER tests/e2e/storage.helpers.ts:68:     IDBDatabase.prototype.transaction=function(...args: Parameters<typeof original>){
+AFTER tests/e2e/storage.helpers.ts:69:       const tx=original.apply(this,args);
+AFTER tests/e2e/storage.helpers.ts:70:       if(this.name==='haven'&&args[1]===mode&&!held){
+AFTER tests/e2e/storage.helpers.ts:71:         if(remaining>0)remaining--;
+AFTER tests/e2e/storage.helpers.ts:72:         else {held=true;Object.defineProperty(tx,'oncomplete',{set(handler){tx.addEventListener('complete',event=>{
+AFTER tests/e2e/storage.helpers.ts:73:           Object.assign(window,{releaseStoreCompletion:()=>handler.call(tx,event)});
+AFTER tests/e2e/storage.helpers.ts:74:         });}});}
+AFTER tests/e2e/storage.helpers.ts:75:       }
+AFTER tests/e2e/storage.helpers.ts:76:       return tx;
+AFTER tests/e2e/storage.helpers.ts:77:     };
+AFTER tests/e2e/storage.helpers.ts:78:   },{mode,skip});
+AFTER tests/e2e/storage.helpers.ts:79: }
+AFTER tests/e2e/storage.helpers.ts:80: export async function waitStoreCompletion(page: Page) {
+AFTER tests/e2e/storage.helpers.ts:81:   await page.waitForFunction(()=>typeof (window as unknown as {releaseStoreCompletion?:unknown}).releaseStoreCompletion==='function');
+AFTER tests/e2e/storage.helpers.ts:82: }
+AFTER tests/e2e/storage.helpers.ts:83: export async function releaseStoreCompletion(page: Page) {
+AFTER tests/e2e/storage.helpers.ts:84:   await page.evaluate(async()=>{
+AFTER tests/e2e/storage.helpers.ts:85:     (window as unknown as {releaseStoreCompletion:()=>void}).releaseStoreCompletion();
+AFTER tests/e2e/storage.helpers.ts:86:     // The held transaction is complete: drain its Promise/UI continuations before assertions.
+AFTER tests/e2e/storage.helpers.ts:87:     await new Promise(resolve=>setTimeout(resolve,0));
+AFTER tests/e2e/storage.helpers.ts:88:   });
+AFTER tests/e2e/storage.helpers.ts:89: }
+
+tests/e2e/storage.spec.ts: retained all 9 existing test declarations; 5 new declarations. 
+Invariant kept: Existing cases and assertions are byte-identical; appended cases test operation order, stale action rejection and migration retry. Imports/helpers enable controlled async completion without changing runtime timeout settings.
+
+tests/e2e/storage.spec.ts:5 (old 5) BEFORE → AFTER
+BEFORE tests/e2e/storage.spec.ts:5: import { readStoredRecords,storedSaveText,storeMarks,injectWriteAbort,writeRecords } from './storage.helpers.ts';
+AFTER tests/e2e/storage.spec.ts:5: import { readStoredRecords,storedSaveText,storeMarks,injectWriteAbort,writeRecords,holdStoreCompletion,waitStoreCompletion,releaseStoreCompletion,writeStoredSaveText } from './storage.helpers.ts';
+AFTER tests/e2e/storage.spec.ts:6: import { act } from './society-command.helpers.ts';
+
+tests/e2e/storage.spec.ts:58 (old 56) BEFORE → AFTER
+AFTER tests/e2e/storage.spec.ts:58: 
+AFTER tests/e2e/storage.spec.ts:59: test('fix1 F2: pending Continue cannot overwrite a newer Planning command',async({page})=>{
+AFTER tests/e2e/storage.spec.ts:60:  await start(page);const initial=await exportLife(page);await save(page);
+AFTER tests/e2e/storage.spec.ts:61:  await holdStoreCompletion(page,'readonly',1);await button(page,'Continue locally').click();await waitStoreCompletion(page);
+AFTER tests/e2e/storage.spec.ts:62:  const newer=await act(page,initial,'SET_ENABLED',{tileId:'field-1',enabled:false});
+AFTER tests/e2e/storage.spec.ts:63:  await releaseStoreCompletion(page);expect(await exportLife(page)).toEqual(newer);
+AFTER tests/e2e/storage.spec.ts:64: });
+AFTER tests/e2e/storage.spec.ts:65: test('fix1 F2: pending Main menu cannot exit after a newer Planning command',async({page})=>{
+AFTER tests/e2e/storage.spec.ts:66:  await start(page);const initial=await exportLife(page);await holdStoreCompletion(page,'readwrite');
+AFTER tests/e2e/storage.spec.ts:67:  await button(page,'Main menu').click();await waitStoreCompletion(page);
+AFTER tests/e2e/storage.spec.ts:68:  const newer=await act(page,initial,'SET_ENABLED',{tileId:'field-1',enabled:false});
+AFTER tests/e2e/storage.spec.ts:69:  const status=page.locator('[aria-label="Planning checkpoints"] [role="status"]'),before=await status.textContent();
+AFTER tests/e2e/storage.spec.ts:70:  await releaseStoreCompletion(page);await expect(page.getByTestId('life-shell')).toBeVisible();await expect(status).toHaveText(before!);
+AFTER tests/e2e/storage.spec.ts:71:  expect(await exportLife(page)).toEqual(newer);
+AFTER tests/e2e/storage.spec.ts:72: });
+AFTER tests/e2e/storage.spec.ts:73: test('fix1 F2: a newer rejected Import keeps its feedback over pending Continue',async({page})=>{
+AFTER tests/e2e/storage.spec.ts:74:  await start(page);const initial=await exportLife(page);await save(page);
+AFTER tests/e2e/storage.spec.ts:75:  await holdStoreCompletion(page,'readonly',1);await button(page,'Continue locally').click();await waitStoreCompletion(page);
+AFTER tests/e2e/storage.spec.ts:76:  await page.getByLabel('Import checkpoint',{exact:true}).setInputFiles({name:'invalid.json',mimeType:'application/json',buffer:Buffer.from('{')});
+AFTER tests/e2e/storage.spec.ts:77:  const message='This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.';
+AFTER tests/e2e/storage.spec.ts:78:  await expect(page.getByRole('alert')).toHaveText(message);await releaseStoreCompletion(page);
+AFTER tests/e2e/storage.spec.ts:79:  await expect(page.getByRole('alert')).toHaveText(message);expect(await exportLife(page)).toEqual(initial);
+AFTER tests/e2e/storage.spec.ts:80: });
+AFTER tests/e2e/storage.spec.ts:81: test('fix1 F2: the latest Continue supersedes an earlier held result',async({page})=>{
+AFTER tests/e2e/storage.spec.ts:82:  await start(page);await save(page);await holdStoreCompletion(page,'readonly',1);
+AFTER tests/e2e/storage.spec.ts:83:  await button(page,'Continue locally').click();await waitStoreCompletion(page);
+AFTER tests/e2e/storage.spec.ts:84:  const latest=makeLife(54321);await writeStoredSaveText(page,bytes(latest));await button(page,'Continue locally').click();
+AFTER tests/e2e/storage.spec.ts:85:  await releaseStoreCompletion(page);await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
+AFTER tests/e2e/storage.spec.ts:86:  expect(await exportLife(page)).toEqual({...latest,city:{...latest.city,revision:1}});
+AFTER tests/e2e/storage.spec.ts:87: });
+AFTER tests/e2e/storage.spec.ts:88: 
+AFTER tests/e2e/storage.spec.ts:89: test('fix1 F3: temporarily blocked localStorage retries legacy migration without a marker',async({page})=>{
+AFTER tests/e2e/storage.spec.ts:90:  const seed=bytes();await page.addInitScript(({key,seed})=>{
+AFTER tests/e2e/storage.spec.ts:91:   const storage=localStorage;storage.setItem(key,seed);
+AFTER tests/e2e/storage.spec.ts:92:   Object.defineProperty(window,'localStorage',{configurable:true,get(){throw Error('temporarily blocked');}});
+AFTER tests/e2e/storage.spec.ts:93:   Object.assign(window,{restoreLegacyStorage:()=>Object.defineProperty(window,'localStorage',{configurable:true,get:()=>storage})});
+AFTER tests/e2e/storage.spec.ts:94:  },{key:KEY,seed});
+AFTER tests/e2e/storage.spec.ts:95:  await page.goto('/');await expect(page.getByRole('heading',{name:'HAVEN',exact:true})).toBeVisible();
+AFTER tests/e2e/storage.spec.ts:96:  expect((await readStoredRecords(page)).filter(r=>r.table==='system')).toEqual([]);
+AFTER tests/e2e/storage.spec.ts:97:  await page.evaluate(()=>(window as unknown as {restoreLegacyStorage:()=>void}).restoreLegacyStorage());
+AFTER tests/e2e/storage.spec.ts:98:  await importLife(page,makeLife(54321));await go(page,'session');await button(page,'Continue locally').click();
+AFTER tests/e2e/storage.spec.ts:99:  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
+AFTER tests/e2e/storage.spec.ts:100:  expect(await exportLife(page)).toEqual({...makeLife(),city:{...makeLife().city,revision:1}});
+AFTER tests/e2e/storage.spec.ts:101:  expect(await storedSaveText(page)).toBe(seed);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(seed);
+AFTER tests/e2e/storage.spec.ts:102:  expect((await readStoredRecords(page)).filter(r=>r.table==='system')).toEqual([marker]);
+AFTER tests/e2e/storage.spec.ts:103: });
+
+Spy → mark mapping retained from 9fbf27e (no mapping edits in this round):
+checkpoint get → haven.store.read; set → haven.store.write; remove → haven.store.clear.
+New tests hold GameStore.read or IDB completion delivery; they do not alter mark counts in existing cases.
+Call-site/product changes are captured in complete-product.patch.

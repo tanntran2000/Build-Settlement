@@ -1,0 +1,53 @@
+UTC=2026-11-12T05:51:47.451Z HEAD=5154ab7dcd186e20df52ba324176437e0e8b99e0 TREE=dacc43c9877d0dd89600f26360cdb9631d52bbd0
+STATUS="M tests/e2e/storage.spec.ts"
+ENV CI=1
+COMMAND=npx playwright test tests/e2e/storage.spec.ts -g "fix2 F3: Save supersedes a pending Main menu"
+[WebServer] (node:19892) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:55840) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:16516) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\storage.spec.ts:138:1 › fix2 F3: Save supersedes a pending Main menu and keeps the session open (6.7s)
+
+
+  1) [chromium] › tests\e2e\storage.spec.ts:138:1 › fix2 F3: Save supersedes a pending Main menu and keeps the session open 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('life-shell')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByTestId('life-shell') with timeout 5000ms
+      - waiting for getByTestId('life-shell')
+
+
+      139 |  await start(page);const initial=await exportLife(page);await holdStoreCompletion(page,'readwrite');
+      140 |  await button(page,'Main menu').click();await waitStoreCompletion(page);await button(page,'Save locally').click();await releaseStoreCompletion(page);
+    > 141 |  await expect(page.getByTestId('life-shell')).toBeVisible();await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+          |                                               ^
+      142 |  expect(await exportLife(page)).toEqual(initial);
+      143 | });
+      144 | test('fix2 F3: a Planning command supersedes pending Save feedback',async({page})=>{
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\storage.spec.ts:141:47
+
+    Error Context: test-results\storage-fix2-F3-Save-super-44a67--and-keeps-the-session-open-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\storage-fix2-F3-Save-super-44a67--and-keeps-the-session-open-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\storage-fix2-F3-Save-super-44a67--and-keeps-the-session-open-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\storage.spec.ts:138:1 › fix2 F3: Save supersedes a pending Main menu and keeps the session open 
+
+EXIT=1 DURATION_MS=19833 END_UTC=2026-11-12T05:52:07.284Z

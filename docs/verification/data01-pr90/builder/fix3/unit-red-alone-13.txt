@@ -1,0 +1,46 @@
+UTC=2026-11-12T07:25:33.591Z HEAD=ca137a888e92aeba4794239cc5f5cef48d0181d6 TREE=721d2937e9f7dddb74d03c002ca0f260816162c7
+STATUS="M packages/persistence/src/__tests__/game-store.test.ts\n M packages/ui/src/__tests__/character-life-session.test.ts\n M tests/e2e/storage.helpers.ts\n M tests/e2e/storage.spec.ts"
+ENV CI=
+COMMAND=npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^ported checkpoint boundary: malformed bytes stay untouched$"
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/character-life-session.test.ts (63 tests | 1 failed | 62 skipped) 38ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > ported checkpoint boundary: malformed bytes stay untouched
+AssertionError: expected [] to deeply equal [ [ 'main', null, …(1) ] ]
+
+- Expected
++ Received
+
+- [
+-   [
+-     "main",
+-     null,
+-     {
+-       "id": "migration:legacy-local-checkpoint",
+-       "schemaVersion": 1,
+-       "slotId": "_",
+-       "table": "system",
+-       "value": true,
+-     },
+-   ],
+- ]
++ []
+
+ ❯ packages/ui/src/__tests__/character-life-session.test.ts:162:339
+   × ported checkpoint boundary: malformed bytes stay untouched 36ms
+
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 62 skipped (63)
+   Start at  14:25:36
+   Duration  1.32s (transform 740ms, setup 0ms, import 928ms, tests 38ms, environment 0ms)
+
+
+EXIT=1 DURATION_MS=4389 END_UTC=2026-11-12T07:25:37.980Z

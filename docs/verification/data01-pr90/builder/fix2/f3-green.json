@@ -1,0 +1,1 @@
+[["f3-build-green","npm run build"],["f3-green","npx playwright test tests/e2e/storage.spec.ts tests/e2e/autosave.spec.ts"]]

@@ -1,0 +1,5 @@
+test(ui): retain checkpoint storage invariants
+
+Keep observing legacy and foreign-key IO alongside GameStore marks so the migrated manual/autosave checks retain every original access restriction. Assert the exact main-slot write and stored Proxy-save bytes as well as successful detached capture.
+
+Co-authored-by: Codex <noreply@openai.com>

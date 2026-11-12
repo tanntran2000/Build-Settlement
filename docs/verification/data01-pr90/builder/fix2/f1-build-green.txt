@@ -1,0 +1,32 @@
+UTC=2026-11-12T05:45:17.977Z HEAD=14768381cec2aeed06a71b6bae73d0a9502265e4 TREE=5c5cf260bf643bf9835d5109b89270dbf2c63dde
+STATUS="M packages/ui/src/__tests__/character-life-session.test.ts\n M packages/ui/src/character-life-session.ts\n M tests/e2e/storage.spec.ts"
+ENV CI=1
+COMMAND=npm run build
+
+> build-settlement@0.1.0 build
+> npm run build --workspace=@haven/core && npm run build --workspace=@haven/simulation && npm run build --workspace=@haven/ui
+
+
+> @haven/core@0.1.0 build
+> tsc
+
+
+> @haven/simulation@0.1.0 build
+> tsc
+
+
+> @haven/ui@0.1.0 build
+> vite build
+
+vite v6.4.5 building for production...
+transforming...
+✓ 228 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.71 kB │ gzip:   0.41 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-DdNtS9j1.css                   28.13 kB │ gzip:   5.81 kB
+dist/assets/index-8ajop0RI.js                   321.71 kB │ gzip: 104.93 kB
+✓ built in 4.96s
+
+EXIT=0 DURATION_MS=21155 END_UTC=2026-11-12T05:45:39.132Z

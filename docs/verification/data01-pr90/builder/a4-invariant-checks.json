@@ -1,0 +1,1 @@
+[["a4-invariant-unit","npx vitest run packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/crisis-checkpoint.test.ts"],["a4-invariant-e2e","npx playwright test tests/e2e/tile-local-checkpoint.spec.ts -g \"checkpoint IO stays manual\""]]

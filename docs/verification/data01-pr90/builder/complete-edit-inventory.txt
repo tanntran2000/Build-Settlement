@@ -1,0 +1,809 @@
+# DATA-01 PR A — complete unit and e2e edit inventory
+Base: e51de7161d3b5164c201ffe83a1bef74702e0d12
+Current HEAD: 9fbf27efd46fe0d6f77c7c60b43d09fc0dada943
+Generated UTC: 2026-11-12T04:24:03.214Z
+Owner correction 4: "ok tôi đồng ý". Existing storage mechanisms migrate to equivalent GameStore/records assertions.
+
+packages/persistence/src/__tests__/session-records.test.ts: all 3 original test declarations retained (parameterized cases retain their datasets).
+packages/ui/src/__tests__/character-life-session.test.ts: all 17 original test declarations retained (parameterized cases retain their datasets).
+packages/ui/src/__tests__/crisis-checkpoint.test.ts: all 2 original test declarations retained (parameterized cases retain their datasets).
+tests/e2e/autosave.spec.ts: all 4 original test declarations retained (parameterized cases retain their datasets).
+tests/e2e/character-life-navigation.spec.ts: all 41 original test declarations retained (parameterized cases retain their datasets).
+tests/e2e/character-life.spec.ts: all 20 original test declarations retained (parameterized cases retain their datasets).
+tests/e2e/crime.spec.ts: all 2 original test declarations retained (parameterized cases retain their datasets).
+tests/e2e/crisis.spec.ts: all 6 original test declarations retained (parameterized cases retain their datasets).
+tests/e2e/ledger.spec.ts: all 4 original test declarations retained (parameterized cases retain their datasets).
+tests/e2e/society.spec.ts: all 8 original test declarations retained (parameterized cases retain their datasets).
+tests/e2e/storage.helpers.ts: all 0 original test declarations retained (parameterized cases retain their datasets).
+tests/e2e/storage.spec.ts: all 0 original test declarations retained (parameterized cases retain their datasets).
+tests/e2e/tile-local-checkpoint.spec.ts: all 9 original test declarations retained (parameterized cases retain their datasets).
+tests/e2e/title.spec.ts: all 28 original test declarations retained (parameterized cases retain their datasets).
+tests/e2e/world-session.spec.ts: all 8 original test declarations retained (parameterized cases retain their datasets).
+
+packages/persistence/src/__tests__/session-records.test.ts:21 (old line 22)
+Invariant kept: Retain the behavior named by 'corrupt character identifies the offending record'; all non-storage assertions, expected values and thresholds remain unchanged.
+Test: 'corrupt character identifies the offending record'
+BEFORE → AFTER
+BEFORE packages/persistence/src/__tests__/session-records.test.ts:22: 
+AFTER: (no lines)
+
+packages/ui/src/__tests__/character-life-session.test.ts:2 (old line 2)
+Invariant kept: Dependency injection, raw storage observation and asynchronous test setup preserve isolated fixtures; no product behavior is bypassed.
+Fixture/import/helper edit
+BEFORE → AFTER
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:2: import { deserializeCharacterLifeSave,serializeCharacterLifeSave } from '@haven/persistence';
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:2: import { createMemoryGameStore,recordsToSession,sessionToRecords,GAME_DB,type GameStore,type StoredRecord,deserializeCharacterLifeSave,serializeCharacterLifeSave } from '@haven/persistence';
+
+packages/ui/src/__tests__/character-life-session.test.ts:5 (old line 5)
+Invariant kept: Dependency injection, raw storage observation and asynchronous test setup preserve isolated fixtures; no product behavior is bypassed.
+Fixture/import/helper edit
+BEFORE → AFTER
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:5: import { CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,isPlayableCheckpoint,prepareCharacterLifeLoad,readLocalCharacterLife,saveLocalCharacterLife } from '../character-life-session.js';
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:5: import { createCheckpointDeps,clearFallenCharacterLifeCheckpoint,OLD_CHECKPOINT_MESSAGE,CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,isPlayableCheckpoint,prepareCharacterLifeLoad,readLocalCharacterLife,saveLocalCharacterLife } from '../character-life-session.js';
+
+packages/ui/src/__tests__/character-life-session.test.ts:29 (old line 29)
+Invariant kept: Dependency injection, raw storage observation and asynchronous test setup preserve isolated fixtures; no product behavior is bypassed.
+Fixture/import/helper edit
+BEFORE → AFTER
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:29: let storage: { getItem: ReturnType<typeof vi.fn>; setItem: ReturnType<typeof vi.fn> };
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:29: let store: GameStore;
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:30: let checkpointDeps: import('../character-life-session.js').CheckpointDeps;
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:31: let storage: { getItem: ReturnType<typeof vi.fn<(key: string) => string | null>>; setItem: ReturnType<typeof vi.fn<(key: string, value: string) => void>> };
+
+packages/ui/src/__tests__/character-life-session.test.ts:35 (old line 33)
+Invariant kept: Dependency injection, raw storage observation and asynchronous test setup preserve isolated fixtures; no product behavior is bypassed.
+Fixture/import/helper edit
+BEFORE → AFTER
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:33:   vi.stubGlobal('window', { localStorage: storage });
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:35:   store = createMemoryGameStore();
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:36:   for (const key of ['read','replaceSlot','clear','getSystem'] as const) vi.spyOn(store,key);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:37:   checkpointDeps = { store,legacy: { getItem: storage.getItem,removeItem: vi.fn((key: string) => { values.delete(key); }) } };
+
+packages/ui/src/__tests__/character-life-session.test.ts:45 (old line 41)
+Invariant kept: The exact saved session/record bytes, explicit save boundaries and foreign-slot isolation remain unchanged.
+Test: 'save writes only its key and reads back the same session; other keys keep "protected-bytes"'
+BEFORE → AFTER
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:41: it('save writes only its key and reads back the same session; other keys keep "protected-bytes"', () => {
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:45: it('save writes only its key and reads back the same session; other keys keep "protected-bytes"', async () => {
+
+packages/ui/src/__tests__/character-life-session.test.ts:48 (old line 44)
+Invariant kept: The exact saved session/record bytes, explicit save boundaries and foreign-slot isolation remain unchanged.
+Test: 'save writes only its key and reads back the same session; other keys keep "protected-bytes"'
+BEFORE → AFTER
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:44:   expect(saveLocalCharacterLife(s)).toEqual({ success: true, replaced: false });
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:45:   expect(storage.setItem.mock.calls).toEqual([[CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY, encoded.text]]);
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:46:   expect(readLocalCharacterLife()).toEqual({ success: true, state: s });
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:47:   expect(saveLocalCharacterLife(s)).toEqual({ success: true, replaced: true });
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:48:   expect((await saveLocalCharacterLife(s,checkpointDeps))).toEqual({ success: true, replaced: false });
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:49:   expect(serializeCharacterLifeSave(recordsToSession((await store.read('main'))!))).toEqual(encoded);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:50:   expect(store.replaceSlot).toHaveBeenCalledExactlyOnceWith('main',sessionToRecords('main',s));
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:51:   expect((await readLocalCharacterLife(checkpointDeps))).toEqual({ success: true, state: s });
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:52:   expect((await saveLocalCharacterLife(s,checkpointDeps))).toEqual({ success: true, replaced: true });
+
+packages/ui/src/__tests__/character-life-session.test.ts:55 (old line 50)
+Invariant kept: The exact saved session/record bytes, explicit save boundaries and foreign-slot isolation remain unchanged.
+Test: 'read with empty slot returns the "No local checkpoint" message'
+BEFORE → AFTER
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:50: it('read with empty slot returns the "No local checkpoint" message', () => {
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:51:   expect(readLocalCharacterLife()).toEqual({ success: false, message: 'No local checkpoint in this browser yet. Choose Save locally first.' });
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:55: it('read with empty slot returns the "No local checkpoint" message', async () => {
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:56:   expect((await readLocalCharacterLife(checkpointDeps))).toEqual({ success: false, message: 'No local checkpoint in this browser yet. Choose Save locally first.' });
+
+packages/ui/src/__tests__/character-life-session.test.ts:58 (old line 53)
+Invariant kept: Reject incompatible/corrupt checkpoints without partial live-state or record changes; preserve foreign slots and exact expected failure messages.
+Test: 'rejects an NPC-world checkpoint in the life slot and leaves every byte untouched'
+BEFORE → AFTER
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:53: it('rejects an NPC-world checkpoint in the life slot and leaves every byte untouched', () => {
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:58: it('rejects an NPC-world checkpoint in the life slot and leaves every byte untouched', async () => {
+
+packages/ui/src/__tests__/character-life-session.test.ts:62 (old line 57)
+Invariant kept: Reject incompatible/corrupt checkpoints without partial live-state or record changes; preserve foreign slots and exact expected failure messages.
+Test: 'rejects an NPC-world checkpoint in the life slot and leaves every byte untouched'
+BEFORE → AFTER
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:57:   expect(readLocalCharacterLife()).toMatchObject({ success: false, message: expect.stringContaining('left unchanged') });
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:58:   expect(values).toEqual(before); expect(storage.setItem).not.toHaveBeenCalled();
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:62:   expect((await readLocalCharacterLife(checkpointDeps))).toMatchObject({ success: false, message: expect.stringContaining('left unchanged') });
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:63:   expect(values).toEqual(before); expect(await store.read('main')).toBeNull();expect(vi.mocked(store.replaceSlot).mock.calls).toEqual([['main',[],[{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]]]);
+
+packages/ui/src/__tests__/character-life-session.test.ts:65 (old line 60)
+Invariant kept: Failed storage operations preserve the live session, previous records and backups; retain exact failure text and no private error disclosure.
+Test: 'contains storage failures and never saves an invalid session'
+BEFORE → AFTER
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:60: it('contains storage failures and never saves an invalid session', () => {
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:61:   storage.setItem.mockImplementation(() => { throw Error('private'); });
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:62:   const before = new Map(values), result = saveLocalCharacterLife(session());
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:65: it('contains storage failures and never saves an invalid session', async () => {
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:66:   vi.mocked(store.replaceSlot).mockRejectedValue(Error('private'));
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:67:   const before = new Map(values), result = (await saveLocalCharacterLife(session(),checkpointDeps));
+
+packages/ui/src/__tests__/character-life-session.test.ts:70 (old line 65)
+Invariant kept: Failed storage operations preserve the live session, previous records and backups; retain exact failure text and no private error disclosure.
+Test: 'contains storage failures and never saves an invalid session'
+BEFORE → AFTER
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:65:   storage.getItem.mockImplementation(() => { throw Error('private'); });
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:66:   expect(readLocalCharacterLife()).toMatchObject({ success: false, message: expect.stringContaining('Import checkpoint') });
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:67:   const invalid = session(); invalid.city.phase = 'report'; storage.getItem.mockClear(); storage.setItem.mockClear();
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:68:   expect(saveLocalCharacterLife(invalid).success).toBe(false);
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:69:   expect(storage.getItem).not.toHaveBeenCalled(); expect(storage.setItem).not.toHaveBeenCalled();
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:70:   vi.mocked(store.getSystem).mockRejectedValue(Error('private'));
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:71:   expect((await readLocalCharacterLife(checkpointDeps))).toMatchObject({ success: false, message: expect.stringContaining('Import checkpoint') });
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:72:   const invalid = session(); invalid.city.phase = 'report'; vi.mocked(store.read).mockClear(); vi.mocked(store.replaceSlot).mockClear(); storage.getItem.mockClear();
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:73:   expect((await saveLocalCharacterLife(invalid,checkpointDeps)).success).toBe(false);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:74:   expect(storage.getItem).not.toHaveBeenCalled();expect(store.read).not.toHaveBeenCalled(); expect(store.replaceSlot).not.toHaveBeenCalled();
+
+packages/ui/src/__tests__/character-life-session.test.ts:105 (old line 100)
+Invariant kept: Retain the behavior named by 'Continue never reads older Life slots'; all non-storage assertions, expected values and thresholds remain unchanged.
+Test: 'Continue never reads older Life slots'
+BEFORE → AFTER
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:100: it('Continue never reads older Life slots',()=>{
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:105: it('Continue never reads older Life slots',async ()=>{
+
+packages/ui/src/__tests__/character-life-session.test.ts:109 (old line 104)
+Invariant kept: Retain the behavior named by 'Continue never reads older Life slots'; all non-storage assertions, expected values and thresholds remain unchanged.
+Test: 'Continue never reads older Life slots'
+BEFORE → AFTER
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:104:  expect(readLocalCharacterLife()).toMatchObject({success:false,message:expect.stringContaining('No local checkpoint')});
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:109:  expect((await readLocalCharacterLife(checkpointDeps))).toMatchObject({success:false,message:expect.stringContaining('No local checkpoint')});
+
+packages/ui/src/__tests__/character-life-session.test.ts:122 (old line 117)
+Invariant kept: Descriptor capture never invokes getters/toJSON/proxy callbacks; invalid data performs no storage access and prior bytes remain unchanged.
+Test: 'ported F1: active Proxy saves detached descriptor data without get callbacks'
+BEFORE → AFTER
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:117: it('ported F1: active Proxy saves detached descriptor data without get callbacks',()=>{
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:118:  const s=session();const encoded=serializeCharacterLifeSave(s);if(!encoded.success)throw Error();values.set(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,encoded.text);let calls=0;
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:122: it('ported F1: active Proxy saves detached descriptor data without get callbacks',async ()=>{
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:123:  const s=session();const encoded=serializeCharacterLifeSave(s);if(!encoded.success)throw Error();values.set(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,encoded.text);await store.replaceSlot('main',sessionToRecords('main',s));vi.mocked(store.replaceSlot).mockClear();let calls=0;
+
+packages/ui/src/__tests__/character-life-session.test.ts:125 (old line 120)
+Invariant kept: Descriptor capture never invokes getters/toJSON/proxy callbacks; invalid data performs no storage access and prior bytes remain unchanged.
+Test: 'ported F1: active Proxy saves detached descriptor data without get callbacks'
+BEFORE → AFTER
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:120:  expect(saveLocalCharacterLife(proxy)).toEqual({success:true,replaced:true});expect(calls).toBe(0);expect(values.get(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY)).toBe(encoded.text);expect(storage.setItem).toHaveBeenCalledOnce();
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:125:  expect((await saveLocalCharacterLife(proxy,checkpointDeps))).toEqual({success:true,replaced:true});expect(calls).toBe(0);expect(values.get(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY)).toBe(encoded.text);expect(store.replaceSlot).toHaveBeenCalledOnce();expect(serializeCharacterLifeSave(recordsToSession((await store.read('main'))!))).toEqual(encoded);
+
+packages/ui/src/__tests__/character-life-session.test.ts:127 (old line 122)
+Invariant kept: Descriptor capture never invokes getters/toJSON/proxy callbacks; invalid data performs no storage access and prior bytes remain unchanged.
+Test: 'ported F1: invalid %s preserves prior valid bytes before storage access'
+BEFORE → AFTER
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:122: it.each(['accessor','own toJSON','revoked proxy'])('ported F1: invalid %s preserves prior valid bytes before storage access',kind=>{
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:127: it.each(['accessor','own toJSON','revoked proxy'])('ported F1: invalid %s preserves prior valid bytes before storage access',async kind=>{
+
+packages/ui/src/__tests__/character-life-session.test.ts:132 (old line 127)
+Invariant kept: Descriptor capture never invokes getters/toJSON/proxy callbacks; invalid data performs no storage access and prior bytes remain unchanged.
+Test: 'ported F1: invalid %s preserves prior valid bytes before storage access'
+BEFORE → AFTER
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:127:  expect(saveLocalCharacterLife(kind==='revoked proxy'?proxy.proxy:s).success).toBe(false);expect(calls).toBe(0);expect(storage.getItem).not.toHaveBeenCalled();expect(storage.setItem).not.toHaveBeenCalled();expect(values).toEqual(before);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:132:  expect((await saveLocalCharacterLife(kind==='revoked proxy'?proxy.proxy:s,checkpointDeps)).success).toBe(false);expect(calls).toBe(0);expect(storage.getItem).not.toHaveBeenCalled();expect(store.read).not.toHaveBeenCalled();expect(store.replaceSlot).not.toHaveBeenCalled();expect(values).toEqual(before);
+
+packages/ui/src/__tests__/character-life-session.test.ts:134 (old line 129)
+Invariant kept: Failed storage operations preserve the live session, previous records and backups; retain exact failure text and no private error disclosure.
+Test: 'ported slot guard: %s failure preserves browser bytes and session'
+BEFORE → AFTER
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:129: it.each(['window','getter','read','write'])('ported slot guard: %s failure preserves browser bytes and session',kind=>{
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:134: it.each(['window','getter','read','write'])('ported slot guard: %s failure preserves browser bytes and session',async kind=>{
+
+packages/ui/src/__tests__/character-life-session.test.ts:136 (old line 131)
+Invariant kept: Failed storage operations preserve the live session, previous records and backups; retain exact failure text and no private error disclosure.
+Test: 'ported slot guard: %s failure preserves browser bytes and session'
+BEFORE → AFTER
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:131:  if(kind==='window')vi.stubGlobal('window',undefined);
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:132:  if(kind==='getter')vi.stubGlobal('window',{get localStorage(){throw Error('private');}});
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:133:  if(kind==='read')storage.getItem.mockImplementation(()=>{throw Error('private');});
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:134:  if(kind==='write')storage.setItem.mockImplementation(()=>{throw Error('private');});
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:135:  const result=saveLocalCharacterLife(s);expect(result).toMatchObject({success:false,message:expect.stringContaining('Export checkpoint')});expect(JSON.stringify(result)).not.toContain('private');expect(values).toEqual(before);expect(s).toEqual(snapshot);
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:136:  if(kind!=='write')expect(readLocalCharacterLife()).toMatchObject({success:false,message:expect.stringContaining('Import checkpoint')});
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:137: });
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:138: it.each(['goods-v1','legacy-v1'])('saving a %s Life fixture never touches any slot',generation=>{
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:136:  if(kind==='window')vi.mocked(store.read).mockRejectedValue(Error('private'));
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:137:  if(kind==='getter')vi.mocked(store.read).mockRejectedValue(Error('private'));
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:138:  if(kind==='read')vi.mocked(store.read).mockRejectedValue(Error('private'));
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:139:  if(kind==='write')vi.mocked(store.replaceSlot).mockRejectedValue(Error('private'));
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:140:  const result=(await saveLocalCharacterLife(s,checkpointDeps));expect(result).toMatchObject({success:false,message:expect.stringContaining('Export checkpoint')});expect(JSON.stringify(result)).not.toContain('private');expect(values).toEqual(before);expect(s).toEqual(snapshot);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:141:  if(kind!=='write')expect((await readLocalCharacterLife(checkpointDeps))).toMatchObject({success:false,message:expect.stringContaining('Import checkpoint')});
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:142: });
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:143: it.each(['goods-v1','legacy-v1'])('saving a %s Life fixture never touches any slot',async generation=>{
+
+packages/ui/src/__tests__/character-life-session.test.ts:145 (old line 140)
+Invariant kept: The exact saved session/record bytes, explicit save boundaries and foreign-slot isolation remain unchanged.
+Test: 'saving a %s Life fixture never touches any slot'
+BEFORE → AFTER
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:140:  expect(saveLocalCharacterLife(data.state)).toMatchObject({success:false,message:'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.'});expect(storage.getItem).not.toHaveBeenCalled();expect(storage.setItem).not.toHaveBeenCalled();expect(values).toEqual(before);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:145:  expect((await saveLocalCharacterLife(data.state,checkpointDeps))).toMatchObject({success:false,message:'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.'});expect(storage.getItem).not.toHaveBeenCalled();expect(store.read).not.toHaveBeenCalled();expect(store.replaceSlot).not.toHaveBeenCalled();expect(values).toEqual(before);
+
+packages/ui/src/__tests__/character-life-session.test.ts:147 (old line 142)
+Invariant kept: Reject incompatible/corrupt checkpoints without partial live-state or record changes; preserve foreign slots and exact expected failure messages.
+Test: 'ported checkpoint boundary: %s bytes stay untouched'
+BEFORE → AFTER
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:142: it.each(['malformed','empty','version','ruleset','opposite mode','map','negative stock','report','extra field','workforce','oversize','UTF-8 oversize'])('ported checkpoint boundary: %s bytes stay untouched',kind=>{
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:147: it.each(['malformed','empty','version','ruleset','opposite mode','map','negative stock','report','extra field','workforce','oversize','UTF-8 oversize'])('ported checkpoint boundary: %s bytes stay untouched',async kind=>{
+
+packages/ui/src/__tests__/character-life-session.test.ts:160 (old line 155)
+Invariant kept: Reject incompatible/corrupt checkpoints without partial live-state or record changes; preserve foreign slots and exact expected failure messages.
+Test: 'ported checkpoint boundary: %s bytes stay untouched'
+BEFORE → AFTER
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:155:  values.set(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,text);const before=new Map(values);expect(readLocalCharacterLife().success).toBe(false);expect(storage.getItem.mock.calls).toEqual([[CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY]]);expect(storage.setItem).not.toHaveBeenCalled();expect(values).toEqual(before);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:160:  values.set(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,text);const before=new Map(values);expect((await readLocalCharacterLife(checkpointDeps)).success).toBe(false);expect(storage.getItem.mock.calls).toEqual([[CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY]]);expect(await store.read('main')).toBeNull();expect(vi.mocked(store.replaceSlot).mock.calls).toEqual([['main',[],[{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]]]);expect(values).toEqual(before);
+
+packages/ui/src/__tests__/character-life-session.test.ts:162 (old line 157)
+Invariant kept: The exact saved session/record bytes, explicit save boundaries and foreign-slot isolation remain unchanged.
+Test: 'ported checkpoint byte cap: oversized %s save never touches storage'
+BEFORE → AFTER
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:157: it.each(['ASCII','UTF-8'])('ported checkpoint byte cap: oversized %s save never touches storage',encoding=>{
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:162: it.each(['ASCII','UTF-8'])('ported checkpoint byte cap: oversized %s save never touches storage',async encoding=>{
+
+packages/ui/src/__tests__/character-life-session.test.ts:164 (old line 159)
+Invariant kept: The exact saved session/record bytes, explicit save boundaries and foreign-slot isolation remain unchanged.
+Test: 'ported checkpoint byte cap: oversized %s save never touches storage'
+BEFORE → AFTER
+BEFORE packages/ui/src/__tests__/character-life-session.test.ts:159:  expect(saveLocalCharacterLife(s)).toMatchObject({success:false,message:expect.stringContaining('1 MiB')});expect(storage.getItem).not.toHaveBeenCalled();expect(storage.setItem).not.toHaveBeenCalled();expect(values).toEqual(before);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:164:  expect((await saveLocalCharacterLife(s,checkpointDeps))).toMatchObject({success:false,message:expect.stringContaining('1 MiB')});expect(storage.getItem).not.toHaveBeenCalled();expect(store.read).not.toHaveBeenCalled();expect(store.replaceSlot).not.toHaveBeenCalled();expect(values).toEqual(before);
+
+packages/ui/src/__tests__/character-life-session.test.ts:168 (old line 162)
+Invariant kept: Dependency injection, raw storage observation and asynchronous test setup preserve isolated fixtures; no product behavior is bypassed.
+Fixture/import/helper edit
+BEFORE → AFTER
+BEFORE: (no lines)
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:168: 
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:169: // DATA-01 A2: merged cases; existing assertions above are unchanged.
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:170: const KEY = CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY;
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:171: const MARKER = 'migration:legacy-local-checkpoint';
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:172: const NONE = 'No local checkpoint in this browser yet. Choose Save locally first.';
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:173: const BLOCKED = 'Could not save in this browser (storage blocked or full). Your game and any earlier local checkpoint were preserved. Use Export checkpoint instead.';
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:174: const OLD = `Local checkpoint not loaded; it was left unchanged. ${OLD_CHECKPOINT_MESSAGE}`;
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:175: const a2Session = () => { const r = createCharacterLifeSession(0, { ...structuredClone(DEFAULT_PLAYER_DRAFT),currentName: 'Ana' }); if (!r.success) throw Error(r.error.message); return r.value; };
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:176: const a2Text = () => { const r = serializeCharacterLifeSave(a2Session()); if (!r.success) throw Error(r.error.message); return r.text; };
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:177: function deps(initial: string | null = null, opts = { failWrites: false }) {
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:178:   let value = initial;
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:179:   return { store: createMemoryGameStore(opts), legacy: { getItem: vi.fn(() => value),removeItem: vi.fn(() => { value = null; }) } };
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:180: }
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:181: 
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:182: it('migrates legacy once and never touches legacy on second read', async () => { const d = deps(a2Text()); vi.spyOn(d.store,'read'); expect(await readLocalCharacterLife(d)).toEqual({ success: true,state: a2Session() }); expect(d.store.read).toHaveBeenCalledExactlyOnceWith('main'); expect(await d.store.getSystem(MARKER)).not.toBeNull(); expect(await readLocalCharacterLife(d)).toEqual({ success: true,state: a2Session() }); expect(d.legacy.getItem).toHaveBeenCalledTimes(1); expect(d.legacy.removeItem).not.toHaveBeenCalled(); });
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:183: it('empty legacy writes marker', async () => { const d = deps(); expect(await readLocalCharacterLife(d)).toEqual({ success: false,message: NONE }); expect(await d.store.getSystem(MARKER)).not.toBeNull(); });
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:184: it('invalid legacy stays unchanged with existing message', async () => { const d = deps('{}'); expect(await readLocalCharacterLife(d)).toEqual({ success: false,message: OLD }); expect(d.legacy.getItem()).toBe('{}'); expect(d.legacy.removeItem).not.toHaveBeenCalled(); expect(await d.store.getSystem(MARKER)).not.toBeNull(); });
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:185: it('old ruleset legacy migrates and retains refusal message', async () => { const raw = readFileSync(new URL('../../../persistence/src/__tests__/fixtures/society-v6/life-new-game.json',import.meta.url),'utf8'); const d = deps(raw); expect(await readLocalCharacterLife(d)).toEqual({ success: false,message: OLD }); expect(await d.store.read('main')).toEqual(sessionToRecords('main',JSON.parse(raw).state)); expect(d.legacy.getItem()).toBe(raw); });
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:186: it('save and read are identical and replaced changes from false to true', async () => { const d = deps(); expect(await saveLocalCharacterLife(a2Session(),d)).toEqual({ success: true,replaced: false }); expect(await readLocalCharacterLife(d)).toEqual({ success: true,state: a2Session() }); expect(await saveLocalCharacterLife(a2Session(),d)).toEqual({ success: true,replaced: true }); });
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:187: it('failed write returns existing message and preserves records', async () => { const opts = { failWrites: false },d = deps(null,opts); await saveLocalCharacterLife(a2Session(),d); const prior = await d.store.read('main'); opts.failWrites = true; expect(await saveLocalCharacterLife(a2Session(),d)).toEqual({ success: false,message: BLOCKED }); expect(await d.store.read('main')).toEqual(prior); });
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:188: it('fallen clear keeps marker and cannot resurrect legacy', async () => { const d = deps(a2Text()); await readLocalCharacterLife(d); expect(await clearFallenCharacterLifeCheckpoint(true,'fallen',d)).toEqual({ success: true }); expect(await d.store.read('main')).toBeNull(); expect(d.legacy.removeItem).toHaveBeenCalledWith(KEY); expect(await d.store.getSystem(MARKER)).not.toBeNull(); expect(await readLocalCharacterLife(d)).toEqual({ success: false,message: NONE }); expect(d.legacy.getItem).toHaveBeenCalledTimes(1); });
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:189: it('factory failure falls back to memory with a one-time warning', async () => { const checkpointDeps = createCheckpointDeps(() => { throw Error('blocked'); },deps().legacy); expect(await readLocalCharacterLife(checkpointDeps)).toEqual({ success: false,message: BLOCKED }); expect(await readLocalCharacterLife(checkpointDeps)).toEqual({ success: false,message: NONE }); expect(await saveLocalCharacterLife(a2Session(),checkpointDeps)).toEqual({ success: true,replaced: false }); expect(await readLocalCharacterLife(checkpointDeps)).toEqual({ success: true,state: a2Session() }); });
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:190: 
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:191: // Raw-observable GameStore double: verifies service clears the entire slot; A3 checks real IndexedDB tables.
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:192: function inspectableDeps() {
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:193:  let rows: StoredRecord[] = [];
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:194:  const store: GameStore = {
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:195:   read: vi.fn(async (slotId: string) => {const found=rows.filter(r=>r.slotId===slotId&&r.table!=='system');return found.some(r=>r.table==='meta')?structuredClone(found):null;}),
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:196:   replaceSlot: vi.fn(async (slotId: string,next: StoredRecord[],extra: StoredRecord[] = []) => {rows=rows.filter(r=>r.slotId!==slotId&& !extra.some(e=>e.slotId===r.slotId&&e.table===r.table&&e.id===r.id));rows.push(...structuredClone([...next,...extra]));return {put:next.length,deleted:0,unchanged:0};}),
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:197:   clear: vi.fn(async (slotId: string) => {rows=rows.filter(r=>r.slotId!==slotId||r.table==='system');}),
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:198:   getSystem: vi.fn(async (id: string) => rows.find(r=>r.table==='system'&&r.id===id)??null)
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:199:  };
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:200:  const values=new Map<string,string>();const legacy={getItem:vi.fn((key:string)=>values.get(key)??null),removeItem:vi.fn((key:string)=>{values.delete(key);})};
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:201:  return {store,legacy,values,rows:()=>structuredClone(rows)};
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:202: }
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:203: async function savedGame(d: ReturnType<typeof inspectableDeps>,seed: number) {
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:204:  const s=session(seed);expect(await readLocalCharacterLife(d)).toEqual({success:false,message:NONE});
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:205:  expect(await saveLocalCharacterLife(s,d)).toEqual({success:true,replaced:false});
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:206:  const rows=(await d.store.read('main'))!;
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:207:  await d.store.replaceSlot('main',[...rows,...(['reports','history','items'] as const).map(table=>({slotId:'main',id:'seed-'+seed,table,schemaVersion:1 as const,value:{seed}}))]);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:208:  for(const table of GAME_DB.stores.filter(t=>t!=='system'))expect(d.rows().filter(r=>r.table===table)).not.toHaveLength(0);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:209:  d.values.set(KEY,a2Text());
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:210: }
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:211: it('fallen clears all seven data tables and legacy; only the migration marker remains',async()=>{
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:212:  const d=inspectableDeps();await savedGame(d,11);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:213:  expect(await clearFallenCharacterLifeCheckpoint(true,'fallen',d)).toEqual({success:true});
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:214:  for(const table of GAME_DB.stores.filter(t=>t!=='system'))expect(d.rows().filter(r=>r.slotId==='main'&&r.table===table)).toHaveLength(0);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:215:  expect(d.legacy.removeItem).toHaveBeenCalledWith(KEY);expect(d.values.has(KEY)).toBe(false);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:216:  expect(d.rows()).toEqual([{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:217: });
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:218: it('three consecutive started saved and fallen games never accumulate records',async()=>{
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:219:  const d=inspectableDeps();const totals:number[]=[];
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:220:  for(const seed of [11,22,33]){await savedGame(d,seed);expect(await clearFallenCharacterLifeCheckpoint(true,'fallen',d)).toEqual({success:true});
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:221:   for(const table of GAME_DB.stores.filter(t=>t!=='system'))expect(d.rows().filter(r=>r.slotId==='main'&&r.table===table)).toHaveLength(0);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:222:   expect(d.legacy.removeItem).toHaveBeenCalledTimes(totals.length+1);expect(d.values.has(KEY)).toBe(false);expect(d.rows()).toEqual([{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]);totals.push(d.rows().length);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:223:  }expect(totals).toEqual([1,1,1]);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:224: });
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:225: 
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:226: it('corrupt stored city is refused with the existing message and exact records preserved',async()=>{
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:227:  const d=deps();const rows=sessionToRecords('main',a2Session());rows.find(r=>r.table==='city')!.value='{';await d.store.replaceSlot('main',rows,[{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]);const before=await d.store.read('main');
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:228:  expect(await readLocalCharacterLife(d)).toEqual({success:false,message:OLD});expect(await d.store.read('main')).toEqual(before);
+AFTER packages/ui/src/__tests__/character-life-session.test.ts:229: });
+
+packages/ui/src/__tests__/crisis-checkpoint.test.ts:1 (old line 1)
+Invariant kept: Dependency injection, raw storage observation and asynchronous test setup preserve isolated fixtures; no product behavior is bypassed.
+Fixture/import/helper edit
+BEFORE → AFTER
+BEFORE packages/ui/src/__tests__/crisis-checkpoint.test.ts:1: import {expect,it,vi,afterEach} from 'vitest';
+AFTER packages/ui/src/__tests__/crisis-checkpoint.test.ts:1: import {expect,it,vi} from 'vitest';
+AFTER packages/ui/src/__tests__/crisis-checkpoint.test.ts:2: import {createMemoryGameStore,sessionToRecords} from '@haven/persistence';
+AFTER packages/ui/src/__tests__/crisis-checkpoint.test.ts:3: import {createCharacterLifeSession,DEFAULT_PLAYER_DRAFT} from '@haven/core';
+
+packages/ui/src/__tests__/crisis-checkpoint.test.ts:5 (old line 3)
+Invariant kept: Dependency injection, raw storage observation and asynchronous test setup preserve isolated fixtures; no product behavior is bypassed.
+Fixture/import/helper edit
+BEFORE → AFTER
+BEFORE packages/ui/src/__tests__/crisis-checkpoint.test.ts:3: afterEach(()=>vi.unstubAllGlobals());
+BEFORE packages/ui/src/__tests__/crisis-checkpoint.test.ts:4: it('clears only the life slot after a confirmed fallen End Week',()=>{const values=new Map([[KEY,'saved'],['other','protected']]);const removeItem=vi.fn((key:string)=>values.delete(key));vi.stubGlobal('window',{localStorage:{getItem:(key:string)=>values.get(key)??null,removeItem}});for(const [success,stage] of [[false,'fallen'],[true,'none'],[true,'rebellion']] as const){expect(clearFallenCharacterLifeCheckpoint(success,stage)).toEqual({success:true});expect(values.get(KEY)).toBe('saved');}expect(removeItem).not.toHaveBeenCalled();expect(clearFallenCharacterLifeCheckpoint(true,'fallen')).toEqual({success:true});expect(removeItem.mock.calls).toEqual([[KEY]]);expect(values.get('other')).toBe('protected');expect(values.has(KEY)).toBe(false);});
+BEFORE packages/ui/src/__tests__/crisis-checkpoint.test.ts:5: it('contains storage failures',()=>{vi.stubGlobal('window',{get localStorage(){throw Error('private')}});expect(clearFallenCharacterLifeCheckpoint(true,'fallen')).toEqual({success:false,message:'Could not clear the local checkpoint. Browser storage is unavailable.'});});
+AFTER packages/ui/src/__tests__/crisis-checkpoint.test.ts:5: async function fixture(){
+AFTER packages/ui/src/__tests__/crisis-checkpoint.test.ts:6:  const created=createCharacterLifeSession(0,{...structuredClone(DEFAULT_PLAYER_DRAFT),currentName:'Ana'});if(!created.success)throw Error(created.error.message);
+AFTER packages/ui/src/__tests__/crisis-checkpoint.test.ts:7:  const store=createMemoryGameStore();await store.replaceSlot('main',sessionToRecords('main',created.value));
+AFTER packages/ui/src/__tests__/crisis-checkpoint.test.ts:8:  const values=new Map([[KEY,'saved'],['other','protected']]);const removeItem=vi.fn((key:string)=>{values.delete(key);});
+AFTER packages/ui/src/__tests__/crisis-checkpoint.test.ts:9:  return {store,legacy:{getItem:(key:string)=>values.get(key)??null,removeItem},values};
+AFTER packages/ui/src/__tests__/crisis-checkpoint.test.ts:10: }
+AFTER packages/ui/src/__tests__/crisis-checkpoint.test.ts:11: it('clears only the life slot after a confirmed fallen End Week',async()=>{const d=await fixture();const before=await d.store.read('main');for(const [success,stage] of [[false,'fallen'],[true,'none'],[true,'rebellion']] as const){expect(await clearFallenCharacterLifeCheckpoint(success,stage,d)).toEqual({success:true});expect(d.values.get(KEY)).toBe('saved');expect(await d.store.read('main')).toEqual(before);}expect(d.legacy.removeItem).not.toHaveBeenCalled();expect(await clearFallenCharacterLifeCheckpoint(true,'fallen',d)).toEqual({success:true});expect(d.legacy.removeItem.mock.calls).toEqual([[KEY]]);expect(d.values.get('other')).toBe('protected');expect(d.values.has(KEY)).toBe(false);expect(await d.store.read('main')).toBeNull();});
+AFTER packages/ui/src/__tests__/crisis-checkpoint.test.ts:12: it('contains storage failures',async()=>{const d=await fixture();const before=await d.store.read('main');vi.spyOn(d.store,'clear').mockRejectedValue(Error('private'));expect(await clearFallenCharacterLifeCheckpoint(true,'fallen',d)).toEqual({success:false,message:'Could not clear the local checkpoint. Browser storage is unavailable.'});expect(await d.store.read('main')).toEqual(before);expect(d.values.get(KEY)).toBe('saved');});
+
+tests/e2e/autosave.spec.ts:1 (old line 0)
+Invariant kept: Dependency injection, raw storage observation and asynchronous test setup preserve isolated fixtures; no product behavior is bypassed.
+Fixture/import/helper edit
+BEFORE → AFTER
+BEFORE: (no lines)
+AFTER tests/e2e/autosave.spec.ts:1: import {storedSaveText,readStoredRecords,writeStoredSaveText,writeRawRecord,clearStored,storeMarks,resetStoreMarks,injectWriteAbort} from './storage.helpers.ts';
+
+tests/e2e/autosave.spec.ts:18 (old line 17)
+Invariant kept: Dependency injection, raw storage observation and asynchronous test setup preserve isolated fixtures; no product behavior is bypassed.
+Fixture/import/helper edit
+BEFORE → AFTER
+BEFORE tests/e2e/autosave.spec.ts:17:   await page.evaluate(key => {
+BEFORE tests/e2e/autosave.spec.ts:18:     const get = Storage.prototype.getItem, set = Storage.prototype.setItem, calls: string[][] = [];
+BEFORE tests/e2e/autosave.spec.ts:19:     Object.assign(window, { autosaveCalls: calls, rawSlot: () => get.call(localStorage, key) });
+BEFORE tests/e2e/autosave.spec.ts:20:     Storage.prototype.getItem = function(k) { if (k === key) calls.push(['get', k]); return get.call(this, k); };
+BEFORE tests/e2e/autosave.spec.ts:21:     Storage.prototype.setItem = function(k, value) { if (k === key) calls.push(['set', k]); return set.call(this, k, value); };
+BEFORE tests/e2e/autosave.spec.ts:22:   }, KEY);
+AFTER tests/e2e/autosave.spec.ts:18:  await resetStoreMarks(page);
+AFTER tests/e2e/autosave.spec.ts:19:  await page.evaluate(key=>{const get=Storage.prototype.getItem,set=Storage.prototype.setItem,calls:string[][]=[];Object.assign(window,{autosaveCalls:calls});Storage.prototype.getItem=function(k){if(k===key)calls.push(['get',k]);return get.call(this,k);};Storage.prototype.setItem=function(k,value){if(k===key)calls.push(['set',k]);return set.call(this,k,value);};},KEY);
+
+tests/e2e/autosave.spec.ts:21 (old line 24)
+Invariant kept: Dependency injection, raw storage observation and asynchronous test setup preserve isolated fixtures; no product behavior is bypassed.
+Fixture/import/helper edit
+BEFORE → AFTER
+BEFORE tests/e2e/autosave.spec.ts:24: const calls = (page: Page) => page.evaluate(() => (window as unknown as WatchedWindow).autosaveCalls);
+BEFORE tests/e2e/autosave.spec.ts:25: const slot = (page: Page) => page.evaluate(() => (window as unknown as WatchedWindow).rawSlot());
+AFTER tests/e2e/autosave.spec.ts:21: const calls = async(page: Page) => [...(await storeMarks(page)).map(name=>[name==='haven.store.write'?'set':name==='haven.store.read'?'get':'remove',KEY]),...await page.evaluate(()=>(window as unknown as WatchedWindow).autosaveCalls)];
+AFTER tests/e2e/autosave.spec.ts:22: const slot = (page: Page) => storedSaveText(page);
+
+tests/e2e/autosave.spec.ts:39 (old line 42)
+Invariant kept: The exact saved session/record bytes, explicit save boundaries and foreign-slot isolation remain unchanged.
+Test: 'Off: End Week and Plan next week leave the slot and checkpoint IO unchanged'
+BEFORE → AFTER
+BEFORE tests/e2e/autosave.spec.ts:42:   await page.evaluate(({ key, prior }) => localStorage.setItem(key, prior), { key: KEY, prior }); await watch(page);
+AFTER tests/e2e/autosave.spec.ts:39:   await writeStoredSaveText(page,prior); await watch(page);
+
+tests/e2e/autosave.spec.ts:46 (old line 49)
+Invariant kept: Failed storage operations preserve the live session, previous records and backups; retain exact failure text and no private error disclosure.
+Test: 'Write failure: the exact autosave status appears and previous bytes survive'
+BEFORE → AFTER
+BEFORE tests/e2e/autosave.spec.ts:49:   await page.evaluate(({ key, prior }) => localStorage.setItem(key, prior), { key: KEY, prior }); await watch(page);
+BEFORE tests/e2e/autosave.spec.ts:50:   await page.evaluate(key => {
+BEFORE tests/e2e/autosave.spec.ts:51:     const set = Storage.prototype.setItem;
+BEFORE tests/e2e/autosave.spec.ts:52:     Storage.prototype.setItem = function(k, value) { if (k === key) throw new DOMException('quota', 'QuotaExceededError'); return set.call(this, k, value); };
+BEFORE tests/e2e/autosave.spec.ts:53:   }, KEY);
+AFTER tests/e2e/autosave.spec.ts:46:   await writeStoredSaveText(page,prior); await watch(page);
+AFTER tests/e2e/autosave.spec.ts:47:   await injectWriteAbort(page);
+
+tests/e2e/character-life-navigation.spec.ts:1 (old line 0)
+Invariant kept: Dependency injection, raw storage observation and asynchronous test setup preserve isolated fixtures; no product behavior is bypassed.
+Fixture/import/helper edit
+BEFORE → AFTER
+BEFORE: (no lines)
+AFTER tests/e2e/character-life-navigation.spec.ts:1: import {storedSaveText,readStoredRecords,writeStoredSaveText,writeRawRecord,clearStored,storeMarks,resetStoreMarks,injectWriteAbort} from './storage.helpers.ts';
+
+tests/e2e/character-life-navigation.spec.ts:1043 (old line 1042)
+Invariant kept: Retain the behavior named by `rejected and superseded loads preserve UI intent: ${kind}`; all non-storage assertions, expected values and thresholds remain unchanged.
+Test: `rejected and superseded loads preserve UI intent: ${kind}`
+BEFORE → AFTER
+BEFORE tests/e2e/character-life-navigation.spec.ts:1042:         await page.evaluate(key => localStorage.setItem(key, '{'), lifeKey);
+AFTER tests/e2e/character-life-navigation.spec.ts:1043:         await writeRawRecord(page,'city','city','{'); const corruptRecords = await readStoredRecords(page);
+
+tests/e2e/character-life-navigation.spec.ts:1045 (old line 1044)
+Invariant kept: Retain the behavior named by `rejected and superseded loads preserve UI intent: ${kind}`; all non-storage assertions, expected values and thresholds remain unchanged.
+Test: `rejected and superseded loads preserve UI intent: ${kind}`
+BEFORE → AFTER
+BEFORE tests/e2e/character-life-navigation.spec.ts:1044:         expect(await page.evaluate(key => localStorage.getItem(key), lifeKey)).toBe('{');
+AFTER tests/e2e/character-life-navigation.spec.ts:1045:         expect(await readStoredRecords(page)).toEqual(corruptRecords);
+
+tests/e2e/character-life-navigation.spec.ts:1343 (old line 1342)
+Invariant kept: Failed storage operations preserve the live session, previous records and backups; retain exact failure text and no private error disclosure.
+Test: 'F4 session reset and atomic failures'
+BEFORE → AFTER
+BEFORE tests/e2e/character-life-navigation.spec.ts:1342:       const slot = await page.evaluate(key => localStorage.getItem(key), lifeKey);
+AFTER tests/e2e/character-life-navigation.spec.ts:1343:       const slot = await storedSaveText(page);
+
+tests/e2e/character-life-navigation.spec.ts:1348 (old line 1347)
+Invariant kept: Failed storage operations preserve the live session, previous records and backups; retain exact failure text and no private error disclosure.
+Test: 'F4 session reset and atomic failures'
+BEFORE → AFTER
+BEFORE tests/e2e/character-life-navigation.spec.ts:1347:         expect(await page.evaluate(key => localStorage.getItem(key), lifeKey)).toBe(slot);
+AFTER tests/e2e/character-life-navigation.spec.ts:1348:         expect(await storedSaveText(page)).toBe(slot);
+
+tests/e2e/character-life-navigation.spec.ts:1431 (old line 1430)
+Invariant kept: The exact saved session/record bytes, explicit save boundaries and foreign-slot isolation remain unchanged.
+Test: 'B2 City Report City preserves export and saved checkpoint'
+BEFORE → AFTER
+BEFORE tests/e2e/character-life-navigation.spec.ts:1430:   const saved = await page.evaluate(() => JSON.stringify(localStorage));
+AFTER tests/e2e/character-life-navigation.spec.ts:1431:   const saved = { legacy: await page.evaluate(() => JSON.stringify(localStorage)), records: await readStoredRecords(page) };
+
+tests/e2e/character-life-navigation.spec.ts:1433 (old line 1432)
+Invariant kept: The exact saved session/record bytes, explicit save boundaries and foreign-slot isolation remain unchanged.
+Test: 'B2 City Report City preserves export and saved checkpoint'
+BEFORE → AFTER
+BEFORE tests/e2e/character-life-navigation.spec.ts:1432:   expect(await page.evaluate(() => JSON.stringify(localStorage))).toBe(saved);
+AFTER tests/e2e/character-life-navigation.spec.ts:1433:   expect({ legacy: await page.evaluate(() => JSON.stringify(localStorage)), records: await readStoredRecords(page) }).toEqual(saved);
+
+tests/e2e/character-life.spec.ts:1 (old line 0)
+Invariant kept: Dependency injection, raw storage observation and asynchronous test setup preserve isolated fixtures; no product behavior is bypassed.
+Fixture/import/helper edit
+BEFORE → AFTER
+BEFORE: (no lines)
+AFTER tests/e2e/character-life.spec.ts:1: import {storedSaveText,readStoredRecords,writeStoredSaveText,writeRawRecord,clearStored,storeMarks,resetStoreMarks,injectWriteAbort} from './storage.helpers.ts';
+
+tests/e2e/character-life.spec.ts:166 (old line 165)
+Invariant kept: Retain the behavior named by 'Continue locally with empty slot shows the message and stays on start'; all non-storage assertions, expected values and thresholds remain unchanged.
+Test: 'Continue locally with empty slot shows the message and stays on start'
+BEFORE → AFTER
+BEFORE tests/e2e/character-life.spec.ts:165:   await page.evaluate(key => localStorage.removeItem(key), KEY);
+AFTER tests/e2e/character-life.spec.ts:166:   await clearStored(page);
+
+tests/e2e/character-life.spec.ts:320 (old line 319)
+Invariant kept: The exact saved session/record bytes, explicit save boundaries and foreign-slot isolation remain unchanged.
+Test: 'life Save locally leaves the NPC-world and world slots unchanged'
+BEFORE → AFTER
+BEFORE tests/e2e/character-life.spec.ts:319:   expect(await page.evaluate(k => localStorage.getItem(k)?.startsWith('{"format":"haven.character-life-session.save"'), 'haven.character-life-session-society.checkpoint.v1')).toBe(true);
+AFTER tests/e2e/character-life.spec.ts:320:   expect((await storedSaveText(page))?.startsWith('{"format":"haven.character-life-session.save"')).toBe(true);
+
+tests/e2e/crime.spec.ts:1 (old line 0)
+Invariant kept: Dependency injection, raw storage observation and asynchronous test setup preserve isolated fixtures; no product behavior is bypassed.
+Fixture/import/helper edit
+BEFORE → AFTER
+BEFORE: (no lines)
+AFTER tests/e2e/crime.spec.ts:1: import {storedSaveText,readStoredRecords,writeStoredSaveText,writeRawRecord,clearStored,storeMarks,resetStoreMarks,injectWriteAbort} from './storage.helpers.ts';
+
+tests/e2e/crime.spec.ts:25 (old line 24)
+Invariant kept: The exact saved session/record bytes, explicit save boundaries and foreign-slot isolation remain unchanged.
+Test: 'assassination clears checkpoint, Continue refuses and New Game works'
+BEFORE → AFTER
+BEFORE tests/e2e/crime.spec.ts:24:  const s=await fixture('crime-death');await page.goto('/?mode=world-life');await importLife(page,s);await go(page,'session');await button(page,'Save locally').click();expect(await page.evaluate(key=>localStorage.getItem(key),slot)).not.toBeNull();await go(page,'city');await page.getByTestId('life-end-week').click();await expect(page.getByRole('heading',{name:'The Lord Is Dead',exact:true})).toBeVisible();await expect(page.getByText(`An assassin's blade ended your rule. You ruled for ${s.city.world.week} weeks.`,{exact:true})).toBeVisible();await expect(page.getByRole('button')).toHaveText(['New Game']);expect(await page.evaluate(key=>localStorage.getItem(key),slot)).toBeNull();await fit(page);
+AFTER tests/e2e/crime.spec.ts:25:  const s=await fixture('crime-death');await page.goto('/?mode=world-life');await importLife(page,s);await go(page,'session');await button(page,'Save locally').click();expect(await storedSaveText(page)).not.toBeNull();await go(page,'city');await page.getByTestId('life-end-week').click();await expect(page.getByRole('heading',{name:'The Lord Is Dead',exact:true})).toBeVisible();await expect(page.getByText(`An assassin's blade ended your rule. You ruled for ${s.city.world.week} weeks.`,{exact:true})).toBeVisible();await expect(page.getByRole('button')).toHaveText(['New Game']);expect(await storedSaveText(page)).toBeNull();await fit(page);
+
+tests/e2e/crisis.spec.ts:1 (old line 0)
+Invariant kept: Dependency injection, raw storage observation and asynchronous test setup preserve isolated fixtures; no product behavior is bypassed.
+Fixture/import/helper edit
+BEFORE → AFTER
+BEFORE: (no lines)
+AFTER tests/e2e/crisis.spec.ts:1: import {storedSaveText,readStoredRecords,writeStoredSaveText,writeRawRecord,clearStored,storeMarks,resetStoreMarks,injectWriteAbort} from './storage.helpers.ts';
+
+tests/e2e/crisis.spec.ts:24 (old line 23)
+Invariant kept: Retain the behavior named by 'last hungry Rebellion week clears save; reload offers New Game at Calm'; all non-storage assertions, expected values and thresholds remain unchanged.
+Test: 'last hungry Rebellion week clears save; reload offers New Game at Calm'
+BEFORE → AFTER
+BEFORE tests/e2e/crisis.spec.ts:23:  const s=await fixture('life-rebellion-last-week');await page.goto('/?mode=world-life');await importLife(page,s);await go(page,'session');await button(page,'Save locally').click();expect(await page.evaluate(key=>localStorage.getItem(key),slot)).not.toBeNull();await go(page,'city');await page.getByTestId('life-end-week').click();await expect(page.getByRole('heading',{name:'The City Has Fallen',exact:true})).toBeVisible();await expect(page.getByText(`Hunger turned Haven against you. You ruled for ${s.city.world.week} weeks.`,{exact:true})).toBeVisible();await expect(page.getByRole('button')).toHaveText(['New Game']);expect(await page.evaluate(key=>localStorage.getItem(key),slot)).toBeNull();await fit(page);
+AFTER tests/e2e/crisis.spec.ts:24:  const s=await fixture('life-rebellion-last-week');await page.goto('/?mode=world-life');await importLife(page,s);await go(page,'session');await button(page,'Save locally').click();expect(await storedSaveText(page)).not.toBeNull();await go(page,'city');await page.getByTestId('life-end-week').click();await expect(page.getByRole('heading',{name:'The City Has Fallen',exact:true})).toBeVisible();await expect(page.getByText(`Hunger turned Haven against you. You ruled for ${s.city.world.week} weeks.`,{exact:true})).toBeVisible();await expect(page.getByRole('button')).toHaveText(['New Game']);expect(await storedSaveText(page)).toBeNull();await fit(page);
+
+tests/e2e/crisis.spec.ts:31 (old line 30)
+Invariant kept: The exact saved session/record bytes, explicit save boundaries and foreign-slot isolation remain unchanged.
+Test: 'normal End Week preserves a manual checkpoint byte-for-byte'
+BEFORE → AFTER
+BEFORE tests/e2e/crisis.spec.ts:30:  await page.goto('/?mode=world-life');await importLife(page,await fixture('life-new-game'));await go(page,'session');await button(page,'Save locally').click();const before=await page.evaluate(key=>localStorage.getItem(key),slot);expect(before).not.toBeNull();await go(page,'city');await page.getByTestId('life-end-week').click();await expect(page.locator('[data-life-view="reports"]')).toBeVisible();expect(await page.evaluate(key=>localStorage.getItem(key),slot)).toBe(before);
+AFTER tests/e2e/crisis.spec.ts:31:  await page.goto('/?mode=world-life');await importLife(page,await fixture('life-new-game'));await go(page,'session');await button(page,'Save locally').click();const before=await storedSaveText(page);expect(before).not.toBeNull();await go(page,'city');await page.getByTestId('life-end-week').click();await expect(page.locator('[data-life-view="reports"]')).toBeVisible();expect(await storedSaveText(page)).toBe(before);
+
+tests/e2e/ledger.spec.ts:1 (old line 0)
+Invariant kept: Dependency injection, raw storage observation and asynchronous test setup preserve isolated fixtures; no product behavior is bypassed.
+Fixture/import/helper edit
+BEFORE → AFTER
+BEFORE: (no lines)
+AFTER tests/e2e/ledger.spec.ts:1: import {storedSaveText,readStoredRecords,writeStoredSaveText,writeRawRecord,clearStored,storeMarks,resetStoreMarks,injectWriteAbort} from './storage.helpers.ts';
+
+tests/e2e/ledger.spec.ts:157 (old line 156)
+Invariant kept: Retain the behavior named by `B3 ${cause} is one sealed letter with unchanged fall behavior`; all non-storage assertions, expected values and thresholds remain unchanged.
+Test: `B3 ${cause} is one sealed letter with unchanged fall behavior`
+BEFORE → AFTER
+BEFORE tests/e2e/ledger.spec.ts:156:     expect(await page.evaluate(key => localStorage.getItem(key), slot)).toBeNull();
+AFTER tests/e2e/ledger.spec.ts:157:     expect(await storedSaveText(page)).toBeNull();
+
+tests/e2e/society.spec.ts:1 (old line 0)
+Invariant kept: Dependency injection, raw storage observation and asynchronous test setup preserve isolated fixtures; no product behavior is bypassed.
+Fixture/import/helper edit
+BEFORE → AFTER
+BEFORE: (no lines)
+AFTER tests/e2e/society.spec.ts:1: import {storedSaveText,readStoredRecords,writeStoredSaveText,writeRawRecord,clearStored,storeMarks,resetStoreMarks,injectWriteAbort} from './storage.helpers.ts';
+
+tests/e2e/society.spec.ts:39 (old line 38)
+Invariant kept: Reject incompatible/corrupt checkpoints without partial live-state or record changes; preserve foreign slots and exact expected failure messages.
+Test: 'one slot round-trips and rejects older or other-mode imports atomically'
+BEFORE → AFTER
+BEFORE tests/e2e/society.spec.ts:38:  await page.goto('/');const oldKeys=['haven.character-life-session.checkpoint.v1','haven.character-life-session-goods.checkpoint.v1'];const oldFiles=await Promise.all(['legacy-v1','goods-v1'].map(v=>OLD_CHECKPOINT_BYTES[`${v}/life.json` as keyof typeof OLD_CHECKPOINT_BYTES]));await page.evaluate(({keys,files})=>keys.forEach((k,i)=>localStorage.setItem(k,files[i])),{keys:oldKeys,files:oldFiles});await expect(button(page,'Continue')).toBeDisabled();await expect(page.getByText('No local checkpoint',{exact:true})).toContainText('No local checkpoint');await importLife(page,makeLife());await go(page,'session');await button(page,'Save locally').click();const saved=await exportLife(page);expect(await page.evaluate(k=>localStorage.getItem(k),key)).not.toBeNull();await page.reload();await button(page,'Continue').click();expect(await exportLife(page)).toEqual(saved);
+AFTER tests/e2e/society.spec.ts:39:  await page.goto('/');const oldKeys=['haven.character-life-session.checkpoint.v1','haven.character-life-session-goods.checkpoint.v1'];const oldFiles=await Promise.all(['legacy-v1','goods-v1'].map(v=>OLD_CHECKPOINT_BYTES[`${v}/life.json` as keyof typeof OLD_CHECKPOINT_BYTES]));await page.evaluate(({keys,files})=>keys.forEach((k,i)=>localStorage.setItem(k,files[i])),{keys:oldKeys,files:oldFiles});await expect(button(page,'Continue')).toBeDisabled();await expect(page.getByText('No local checkpoint',{exact:true})).toContainText('No local checkpoint');await importLife(page,makeLife());await go(page,'session');await button(page,'Save locally').click();const saved=await exportLife(page);expect(await storedSaveText(page)).not.toBeNull();await page.reload();await button(page,'Continue').click();expect(await exportLife(page)).toEqual(saved);
+
+tests/e2e/storage.helpers.ts:1 (old line 0)
+Invariant kept: Dependency injection, raw storage observation and asynchronous test setup preserve isolated fixtures; no product behavior is bypassed.
+Fixture/import/helper edit
+BEFORE → AFTER
+BEFORE: (no lines)
+AFTER tests/e2e/storage.helpers.ts:1: import { type Page } from '@playwright/test';
+AFTER tests/e2e/storage.helpers.ts:2: import { GAME_DB, recordsToSession, sessionToRecords, serializeCharacterLifeSave, type StoredRecord, type TableName } from '../../packages/persistence/src/index.ts';
+AFTER tests/e2e/storage.helpers.ts:3: 
+AFTER tests/e2e/storage.helpers.ts:4: export async function readStoredRecords(page: Page): Promise<StoredRecord[]> {
+AFTER tests/e2e/storage.helpers.ts:5:   return page.evaluate(config => new Promise<StoredRecord[]>((resolve,reject) => {
+AFTER tests/e2e/storage.helpers.ts:6:     const request=indexedDB.open(config.name,config.version);
+AFTER tests/e2e/storage.helpers.ts:7:     request.onerror=()=>reject(request.error);
+AFTER tests/e2e/storage.helpers.ts:8:     request.onsuccess=()=>{
+AFTER tests/e2e/storage.helpers.ts:9:       const db=request.result,tx=db.transaction([...config.stores],'readonly'),rows:StoredRecord[]=[];
+AFTER tests/e2e/storage.helpers.ts:10:       for(const name of config.stores){const read=tx.objectStore(name).getAll();read.onsuccess=()=>rows.push(...read.result);}
+AFTER tests/e2e/storage.helpers.ts:11:       tx.oncomplete=()=>{db.close();resolve(rows.sort((a,b)=>`${a.table}:${a.id}`.localeCompare(`${b.table}:${b.id}`)));};
+AFTER tests/e2e/storage.helpers.ts:12:       tx.onabort=()=>{db.close();reject(tx.error);};
+AFTER tests/e2e/storage.helpers.ts:13:     };
+AFTER tests/e2e/storage.helpers.ts:14:   }),GAME_DB);
+AFTER tests/e2e/storage.helpers.ts:15: }
+AFTER tests/e2e/storage.helpers.ts:16: export async function storedSaveText(page: Page): Promise<string|null> {
+AFTER tests/e2e/storage.helpers.ts:17:   const rows=(await readStoredRecords(page)).filter(r=>r.slotId==='main'&&r.table!=='system');
+AFTER tests/e2e/storage.helpers.ts:18:   if(!rows.some(r=>r.table==='meta'))return null;
+AFTER tests/e2e/storage.helpers.ts:19:   const result=serializeCharacterLifeSave(recordsToSession(rows));
+AFTER tests/e2e/storage.helpers.ts:20:   if(!result.success)throw Error(result.error.message);
+AFTER tests/e2e/storage.helpers.ts:21:   return result.text;
+AFTER tests/e2e/storage.helpers.ts:22: }
+AFTER tests/e2e/storage.helpers.ts:23: export async function writeRecords(page: Page,rows: StoredRecord[]) {
+AFTER tests/e2e/storage.helpers.ts:24:   await page.evaluate(({config,rows})=>new Promise<void>((resolve,reject)=>{
+AFTER tests/e2e/storage.helpers.ts:25:     const request=indexedDB.open(config.name,config.version);request.onerror=()=>reject(request.error);
+AFTER tests/e2e/storage.helpers.ts:26:     request.onsuccess=()=>{const db=request.result,tx=db.transaction([...config.stores],'readwrite');
+AFTER tests/e2e/storage.helpers.ts:27:       for(const name of config.stores.filter(t=>t!=='system'))tx.objectStore(name).clear();
+AFTER tests/e2e/storage.helpers.ts:28:       for(const row of rows)tx.objectStore(row.table).put(row);
+AFTER tests/e2e/storage.helpers.ts:29:       tx.oncomplete=()=>{db.close();resolve();};tx.onabort=()=>{db.close();reject(tx.error);};
+AFTER tests/e2e/storage.helpers.ts:30:     };
+AFTER tests/e2e/storage.helpers.ts:31:   }),{config:GAME_DB,rows});
+AFTER tests/e2e/storage.helpers.ts:32: }
+AFTER tests/e2e/storage.helpers.ts:33: export async function writeStoredSaveText(page: Page,text: string) {
+AFTER tests/e2e/storage.helpers.ts:34:   let rows:StoredRecord[];
+AFTER tests/e2e/storage.helpers.ts:35:   try {
+AFTER tests/e2e/storage.helpers.ts:36:     const data=JSON.parse(text);rows=sessionToRecords('main',data.state);
+AFTER tests/e2e/storage.helpers.ts:37:     for(const r of rows)r.schemaVersion=data.schemaVersion;
+AFTER tests/e2e/storage.helpers.ts:38:     const meta=rows.find(r=>r.table==='meta')!;Object.assign(meta.value as object,{saveFormat:data.format});
+AFTER tests/e2e/storage.helpers.ts:39:     const city=rows.find(r=>r.table==='city')!.value as {society?:{rulesetId:string}};
+AFTER tests/e2e/storage.helpers.ts:40:     if(city.society)city.society.rulesetId=data.cityRulesetId;
+AFTER tests/e2e/storage.helpers.ts:41:   } catch {
+AFTER tests/e2e/storage.helpers.ts:42:     rows=[{slotId:'main',id:'session',table:'meta',schemaVersion:1,value:{saveFormat:'invalid'}},{slotId:'main',id:'city',table:'city',schemaVersion:1,value:text}];
+AFTER tests/e2e/storage.helpers.ts:43:   }
+AFTER tests/e2e/storage.helpers.ts:44:   await writeRecords(page,rows);return readStoredRecords(page);
+AFTER tests/e2e/storage.helpers.ts:45: }
+AFTER tests/e2e/storage.helpers.ts:46: export async function clearStored(page: Page){await writeRecords(page,[]);}
+AFTER tests/e2e/storage.helpers.ts:47: export async function writeRawRecord(page: Page,table: TableName,id: string,value: unknown) {
+AFTER tests/e2e/storage.helpers.ts:48:   const rows=(await readStoredRecords(page)).filter(r=>r.table!=='system');
+AFTER tests/e2e/storage.helpers.ts:49:   const record=rows.find(r=>r.table===table&&r.id===id);if(!record)throw Error('Missing record '+table+':'+id);
+AFTER tests/e2e/storage.helpers.ts:50:   record.value=value;await writeRecords(page,rows);
+AFTER tests/e2e/storage.helpers.ts:51: }
+AFTER tests/e2e/storage.helpers.ts:52: export async function storeMarks(page: Page){return page.evaluate(()=>performance.getEntriesByType('mark').map(m=>m.name).filter(n=>/^haven\.store\.(read|write|clear)$/.test(n)));}
+AFTER tests/e2e/storage.helpers.ts:53: export async function resetStoreMarks(page: Page){await page.evaluate(()=>{for(const name of ['read','write','clear'])performance.clearMarks('haven.store.'+name);});}
+AFTER tests/e2e/storage.helpers.ts:54: export async function injectWriteAbort(page: Page,kind='abort') {
+AFTER tests/e2e/storage.helpers.ts:55:   await page.evaluate(kind=>{
+AFTER tests/e2e/storage.helpers.ts:56:     const original=IDBDatabase.prototype.transaction;
+AFTER tests/e2e/storage.helpers.ts:57:     IDBDatabase.prototype.transaction=function(...args: Parameters<typeof original>){
+AFTER tests/e2e/storage.helpers.ts:58:       if(args[1]==='readwrite'&&kind==='throw')throw Error('raw/private/storage');
+AFTER tests/e2e/storage.helpers.ts:59:       const tx=original.apply(this,args);if(args[1]==='readwrite')queueMicrotask(()=>tx.abort());return tx;
+AFTER tests/e2e/storage.helpers.ts:60:     };
+AFTER tests/e2e/storage.helpers.ts:61:   },kind);
+AFTER tests/e2e/storage.helpers.ts:62: }
+
+tests/e2e/storage.spec.ts:1 (old line 0)
+Invariant kept: Dependency injection, raw storage observation and asynchronous test setup preserve isolated fixtures; no product behavior is bypassed.
+Fixture/import/helper edit
+BEFORE → AFTER
+BEFORE: (no lines)
+AFTER tests/e2e/storage.spec.ts:1: import { test,expect,type Page } from '@playwright/test';
+AFTER tests/e2e/storage.spec.ts:2: import { readFile,writeFile } from 'node:fs/promises';
+AFTER tests/e2e/storage.spec.ts:3: import { deserializeCharacterLifeSave,serializeCharacterLifeSave,GAME_DB } from '../../packages/persistence/src/index.ts';
+AFTER tests/e2e/storage.spec.ts:4: import { makeLife,importLife,exportLife,go } from './character-life-navigation.helpers.ts';
+AFTER tests/e2e/storage.spec.ts:5: import { readStoredRecords,storedSaveText,storeMarks,injectWriteAbort,writeRecords } from './storage.helpers.ts';
+AFTER tests/e2e/storage.spec.ts:6: const KEY='haven.character-life-session-society.checkpoint.v1';
+AFTER tests/e2e/storage.spec.ts:7: const BLOCKED='Could not save in this browser (storage blocked or full). Your game and any earlier local checkpoint were preserved. Use Export checkpoint instead.';
+AFTER tests/e2e/storage.spec.ts:8: const marker={slotId:'_',id:'migration:legacy-local-checkpoint',table:'system',schemaVersion:1,value:true};
+AFTER tests/e2e/storage.spec.ts:9: const button=(page:Page,name:string)=>page.getByRole('button',{name,exact:true});
+AFTER tests/e2e/storage.spec.ts:10: function bytes(session=makeLife()){const r=serializeCharacterLifeSave(session);if(!r.success)throw Error(r.error.message);return r.text;}
+AFTER tests/e2e/storage.spec.ts:11: async function save(page:Page){await go(page,'session');await button(page,'Save locally').click();await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');}
+AFTER tests/e2e/storage.spec.ts:12: async function start(page:Page){await page.goto('/');await expect(page.getByRole('heading',{name:'HAVEN',exact:true})).toBeVisible();await importLife(page,makeLife());}
+AFTER tests/e2e/storage.spec.ts:13: async function fallenFixture(){const r=deserializeCharacterLifeSave(await readFile(new URL('../../packages/persistence/src/__tests__/fixtures/society-v7/life-rebellion-last-week.json',import.meta.url),'utf8'));if(!r.success)throw Error(r.error.message);return r.state;}
+AFTER tests/e2e/storage.spec.ts:14: async function expectCleared(page:Page){
+AFTER tests/e2e/storage.spec.ts:15:  await expect.poll(()=>readStoredRecords(page)).toEqual([marker]);
+AFTER tests/e2e/storage.spec.ts:16:  const rows=await readStoredRecords(page);for(const table of GAME_DB.stores.filter(t=>t!=='system'))expect(rows.filter(r=>r.slotId==='main'&&r.table===table)).toHaveLength(0);
+AFTER tests/e2e/storage.spec.ts:17:  expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBeNull();
+AFTER tests/e2e/storage.spec.ts:18: }
+AFTER tests/e2e/storage.spec.ts:19: test('Save locally reload and Continue preserve the identical exportLife',async({page})=>{
+AFTER tests/e2e/storage.spec.ts:20:  await start(page);const before=await exportLife(page);await save(page);await page.reload();await button(page,'Continue').click();expect(await exportLife(page)).toEqual(before);expect(await storedSaveText(page)).toBe(bytes(before));
+AFTER tests/e2e/storage.spec.ts:21: });
+AFTER tests/e2e/storage.spec.ts:22: test('autosave stores exactly the exported live session',async({page})=>{
+AFTER tests/e2e/storage.spec.ts:23:  await start(page);await page.getByTestId('life-end-week').click();await button(page,'Plan next week').click();const after=await exportLife(page);await expect.poll(()=>storedSaveText(page)).toBe(bytes(after));
+AFTER tests/e2e/storage.spec.ts:24: });
+AFTER tests/e2e/storage.spec.ts:25: test('legacy addInitScript seed migrates once and keeps the legacy bytes',async({page})=>{
+AFTER tests/e2e/storage.spec.ts:26:  const seed=bytes();await page.addInitScript(({key,seed})=>{if(!sessionStorage.getItem('seeded')){localStorage.setItem(key,seed);sessionStorage.setItem('seeded','yes');}},{key:KEY,seed});
+AFTER tests/e2e/storage.spec.ts:27:  await page.goto('/');await button(page,'Continue').click();expect(await exportLife(page)).toEqual(makeLife());expect(await storedSaveText(page)).toBe(seed);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(seed);
+AFTER tests/e2e/storage.spec.ts:28:  await page.reload();await button(page,'Continue').click();expect(await exportLife(page)).toEqual(makeLife());expect((await storeMarks(page)).filter(n=>n==='haven.store.write')).toEqual([]);
+AFTER tests/e2e/storage.spec.ts:29: });
+AFTER tests/e2e/storage.spec.ts:30: test('fallen migrated city clears every table and legacy and cannot resurrect after reload',async({page})=>{
+AFTER tests/e2e/storage.spec.ts:31:  const seed=bytes(await fallenFixture());await page.addInitScript(({key,seed})=>{if(!sessionStorage.getItem('seeded')){localStorage.setItem(key,seed);sessionStorage.setItem('seeded','yes');}},{key:KEY,seed});
+AFTER tests/e2e/storage.spec.ts:32:  await page.goto('/');await button(page,'Continue').click();await page.getByTestId('life-end-week').click();await expect(page.getByRole('heading',{name:'The City Has Fallen',exact:true})).toBeVisible();await expectCleared(page);
+AFTER tests/e2e/storage.spec.ts:33:  await page.reload();await expect(button(page,'Continue')).toBeDisabled();await expect(page.getByText('No local checkpoint',{exact:true})).toBeVisible();await expectCleared(page);
+AFTER tests/e2e/storage.spec.ts:34: });
+AFTER tests/e2e/storage.spec.ts:35: test('an injected write abort keeps the last save and exact failure message',async({page})=>{
+AFTER tests/e2e/storage.spec.ts:36:  await start(page);await save(page);const prior=await readStoredRecords(page);await importLife(page,makeLife(54321));await injectWriteAbort(page);await go(page,'session');await button(page,'Save locally').click();await expect(page.getByRole('alert')).toHaveText(BLOCKED);expect(await readStoredRecords(page)).toEqual(prior);expect(await exportLife(page)).toEqual({...makeLife(54321),city:{...makeLife(54321).city,revision:1}});
+AFTER tests/e2e/storage.spec.ts:37: });
+AFTER tests/e2e/storage.spec.ts:38: test('two tabs saving A B A leave exactly the last A session',async({page,context})=>{
+AFTER tests/e2e/storage.spec.ts:39:  await start(page);await save(page);const second=await context.newPage();try{await second.goto('/');await importLife(second,makeLife(22));await save(second);const a=await exportLife(page);await save(page);expect(await storedSaveText(second)).toBe(bytes(a));expect(await exportLife(second)).toEqual(makeLife(22));}finally{await second.close();}
+AFTER tests/e2e/storage.spec.ts:40: });
+AFTER tests/e2e/storage.spec.ts:41: test('blocked IndexedDB stays playable warns once and exports',async({page})=>{
+AFTER tests/e2e/storage.spec.ts:42:  await page.addInitScript(()=>{indexedDB.open=()=>{throw Error('blocked');};});await page.goto('/');await expect(page.getByRole('alert')).toHaveText(BLOCKED);await importLife(page,makeLife());expect(await exportLife(page)).toEqual(makeLife());await button(page,'Main menu').click();await expect(page.getByRole('heading',{name:'HAVEN',exact:true})).toBeVisible();await expect(page.getByRole('alert')).toHaveCount(0);await button(page,'Continue').click();expect(await exportLife(page)).toEqual(makeLife());
+AFTER tests/e2e/storage.spec.ts:43: });
+AFTER tests/e2e/storage.spec.ts:44: test('title menu waits for the initial async storage read',async({page})=>{
+AFTER tests/e2e/storage.spec.ts:45:  await page.addInitScript(()=>{const open=IDBFactory.prototype.open;IDBFactory.prototype.open=function(...args:Parameters<typeof open>){const r=open.apply(this,args);if(args[0]==='haven'){Object.defineProperty(r,'onsuccess',{set(handler){r.addEventListener('success',event=>{Object.assign(window,{releaseStoreRead:()=>handler.call(r,event)});});}});}return r;};});
+AFTER tests/e2e/storage.spec.ts:46:  await page.goto('/');await page.waitForFunction(()=>typeof (window as unknown as {releaseStoreRead?:unknown}).releaseStoreRead==='function');await expect(page.getByRole('region',{name:'Start',exact:true})).toHaveCount(0);await expect(page.getByRole('heading',{name:'HAVEN',exact:true})).toHaveCount(0);
+AFTER tests/e2e/storage.spec.ts:47:  await page.evaluate(()=>(window as unknown as {releaseStoreRead:()=>void}).releaseStoreRead());await expect(button(page,'New Game')).toBeFocused();
+AFTER tests/e2e/storage.spec.ts:48: });
+AFTER tests/e2e/storage.spec.ts:49: test('three started saved and fallen games retain only one marker without record growth',async({page})=>{
+AFTER tests/e2e/storage.spec.ts:50:  await page.goto('/');const totals:number[]=[],seeds:number[]=[],runs:unknown[]=[];
+AFTER tests/e2e/storage.spec.ts:51:  for(let i=0;i<3;i++){
+AFTER tests/e2e/storage.spec.ts:52:   await button(page,'New Game').click();await page.getByLabel('Name',{exact:true}).fill('Keeper '+i);await page.getByRole('tab',{name:'Review',exact:true}).click();await button(page,'Create character').click();const started=await exportLife(page);seeds.push(started.outside.seed);
+AFTER tests/e2e/storage.spec.ts:53:   const fallen=await fallenFixture();fallen.outside=started.outside;await importLife(page,fallen);await save(page);expect((await readStoredRecords(page)).length).toBeGreaterThan(1);const savedRows=(await readStoredRecords(page)).filter(r=>r.table!=='system');await writeRecords(page,[...savedRows,...(['reports','history','items'] as const).map(table=>({slotId:'main',id:'seed-'+started.outside.seed,table,schemaVersion:1 as const,value:{seed:started.outside.seed}}))]);for(const table of GAME_DB.stores.filter(t=>t!=='system'))expect((await readStoredRecords(page)).filter(r=>r.table===table).length).toBeGreaterThan(0);
+AFTER tests/e2e/storage.spec.ts:54:   await go(page,'city');await page.getByTestId('life-end-week').click();await expect(page.getByRole('heading',{name:'The City Has Fallen',exact:true})).toBeVisible();await expectCleared(page);const rows=await readStoredRecords(page);totals.push(rows.length);runs.push({seed:started.outside.seed,total:rows.length,tables:Object.fromEntries(GAME_DB.stores.map(table=>[table,rows.filter(r=>r.table===table).length]))});await page.reload();await expect(button(page,'Continue')).toBeDisabled();
+AFTER tests/e2e/storage.spec.ts:55:  }expect(totals).toEqual([1,1,1]);expect(new Set(seeds).size).toBe(3);const countsPath=test.info().outputPath('three-game-record-counts.json');await writeFile(countsPath,JSON.stringify(runs,null,2),'utf8');await test.info().attach('three-game-record-counts',{path:countsPath,contentType:'application/json'});
+AFTER tests/e2e/storage.spec.ts:56: });
+
+tests/e2e/tile-local-checkpoint.spec.ts:1 (old line 0)
+Invariant kept: Dependency injection, raw storage observation and asynchronous test setup preserve isolated fixtures; no product behavior is bypassed.
+Fixture/import/helper edit
+BEFORE → AFTER
+BEFORE: (no lines)
+AFTER tests/e2e/tile-local-checkpoint.spec.ts:1: import {storedSaveText,readStoredRecords,writeStoredSaveText,writeRawRecord,clearStored,storeMarks,resetStoreMarks,injectWriteAbort} from './storage.helpers.ts';
+
+tests/e2e/tile-local-checkpoint.spec.ts:12 (old line 11)
+Invariant kept: Dependency injection, raw storage observation and asynchronous test setup preserve isolated fixtures; no product behavior is bypassed.
+Fixture/import/helper edit
+BEFORE → AFTER
+BEFORE tests/e2e/tile-local-checkpoint.spec.ts:11: const slot=(page:Page,key=KEY)=>page.evaluate(key=>localStorage.getItem(key),key);
+BEFORE tests/e2e/tile-local-checkpoint.spec.ts:12: const setSlot=(page:Page,text:string,key=KEY)=>page.evaluate(({key,text})=>localStorage.setItem(key,text),{key,text});
+AFTER tests/e2e/tile-local-checkpoint.spec.ts:12: const slot=(page:Page,key=KEY)=>key===KEY?storedSaveText(page):page.evaluate(key=>localStorage.getItem(key),key);
+AFTER tests/e2e/tile-local-checkpoint.spec.ts:13: const setSlot=(page:Page,text:string,key=KEY)=>key===KEY?writeStoredSaveText(page,text):page.evaluate(({key,text})=>localStorage.setItem(key,text),{key,text});
+AFTER tests/e2e/tile-local-checkpoint.spec.ts:14: const checkpointCalls=async(page:Page)=>{
+AFTER tests/e2e/tile-local-checkpoint.spec.ts:15:  const legacy=await page.evaluate(()=>(window as unknown as {checkpointCalls:string[][]}).checkpointCalls);
+AFTER tests/e2e/tile-local-checkpoint.spec.ts:16:  expect(legacy.filter(([,key])=>key===KEY)).toEqual([['get',KEY]]);
+AFTER tests/e2e/tile-local-checkpoint.spec.ts:17:  return [...(await storeMarks(page)).map(n=>[n==='haven.store.read'?'get':n==='haven.store.write'?'set':'remove',KEY]),...legacy.filter(([,key])=>key!==KEY)];
+AFTER tests/e2e/tile-local-checkpoint.spec.ts:18: };
+
+tests/e2e/tile-local-checkpoint.spec.ts:34 (old line 28)
+Invariant kept: Reject incompatible/corrupt checkpoints without partial live-state or record changes; preserve foreign slots and exact expected failure messages.
+Test: `rejects ${kind} while preserving full state and both slots (${mode})`
+BEFORE → AFTER
+BEFORE tests/e2e/tile-local-checkpoint.spec.ts:28:   const text:Record<string,string|null>={missing:null,malformed:'{','empty object':'{}','opposite mode':foreign,version:variant(s=>{s.schemaVersion=2;}),ruleset:variant(s=>{s.cityRulesetId='future';}),map:variant(s=>{s.state.city.tiles[0].terrain='ore';}),'negative stock':variant(s=>{s.state.city.world.settlements.settlement_haven_01.inventory.gold=-1;}),'report phase':variant(s=>{s.state.city.phase='report';}),oversize:' '.repeat(1024*1024+1),'revision overflow':variant(s=>{s.state.city.revision=Number.MAX_SAFE_INTEGER;})};if(text[kind]!==null)await setSlot(page,text[kind]!);await resume(page);await expect(page.getByRole('alert')).toContainText(kind==='missing'?'No local checkpoint':kind==='revision overflow'?'original state was preserved':'left unchanged');expect(await exportLife(page)).toEqual(valid.state);expect(await slot(page)).toBe(text[kind]);expect(await slot(page,other)).toBe(foreign);await expect(page.getByTestId('life-end-week')).toHaveAttribute('aria-disabled','false');
+AFTER tests/e2e/tile-local-checkpoint.spec.ts:34:   const text:Record<string,string|null>={missing:null,malformed:'{','empty object':'{}','opposite mode':foreign,version:variant(s=>{s.schemaVersion=2;}),ruleset:variant(s=>{s.cityRulesetId='future';}),map:variant(s=>{s.state.city.tiles[0].terrain='ore';}),'negative stock':variant(s=>{s.state.city.world.settlements.settlement_haven_01.inventory.gold=-1;}),'report phase':variant(s=>{s.state.city.phase='report';}),oversize:' '.repeat(1024*1024+1),'revision overflow':variant(s=>{s.state.city.revision=Number.MAX_SAFE_INTEGER;})};if(text[kind]!==null)await setSlot(page,text[kind]!);const seededRecords=await readStoredRecords(page);await resume(page);await expect(page.getByRole('alert')).toContainText(kind==='missing'?'No local checkpoint':kind==='revision overflow'?'original state was preserved':'left unchanged');expect(await exportLife(page)).toEqual(valid.state);expect(await readStoredRecords(page)).toEqual(seededRecords);expect(await slot(page,other)).toBe(foreign);await expect(page.getByTestId('life-end-week')).toHaveAttribute('aria-disabled','false');
+
+tests/e2e/tile-local-checkpoint.spec.ts:40 (old line 34)
+Invariant kept: Failed storage operations preserve the live session, previous records and backups; retain exact failure text and no private error disclosure.
+Test: `blocked or full storage preserves full state, both slots and file backups (${mode})`
+BEFORE → AFTER
+BEFORE tests/e2e/tile-local-checkpoint.spec.ts:34:    await page.evaluate(({fault,key})=>{const w=window as unknown as {testStorage:Storage;testSet:typeof Storage.prototype.setItem};if(!w.testStorage){w.testStorage=localStorage;w.testSet=Storage.prototype.setItem;}Object.defineProperty(window,'localStorage',{configurable:true,get:()=>{if(fault==='getter')throw Error('raw/private/storage');return w.testStorage;}});Storage.prototype.setItem=function(k,v){if(k===key)throw Error('raw/private/quota');return w.testSet.call(this,k,v);};},{fault,key:KEY});
+BEFORE tests/e2e/tile-local-checkpoint.spec.ts:35:    await save(page);await expect(page.getByRole('alert')).toContainText('Export checkpoint');expect(await exportLife(page)).toEqual(before);expect(await page.evaluate(({key,other})=>{const storage=(window as unknown as {testStorage:Storage}).testStorage;return [storage.getItem(key),storage.getItem(other)];},{key:KEY,other})).toEqual([prior,'other-mode-bytes']);await put(page,await encoded(page));await expect(notice(page)).toContainText('Checkpoint imported');
+AFTER tests/e2e/tile-local-checkpoint.spec.ts:40:    await injectWriteAbort(page,fault==='getter'?'throw':'abort');
+AFTER tests/e2e/tile-local-checkpoint.spec.ts:41:    await save(page);await expect(page.getByRole('alert')).toContainText('Export checkpoint');expect(await exportLife(page)).toEqual(before);expect([await slot(page),await slot(page,other)]).toEqual([prior,'other-mode-bytes']);await put(page,await encoded(page));await expect(notice(page)).toContainText('Checkpoint imported');
+
+tests/e2e/tile-local-checkpoint.spec.ts:52 (old line 46)
+Invariant kept: Checkpoint IO remains manual and Planning-only. Count adapter marks exactly, including the one-time marker transaction; preserve all foreign keys.
+Test: `checkpoint IO stays manual, Planning-only and isolated (${mode})`
+BEFORE → AFTER
+BEFORE tests/e2e/tile-local-checkpoint.spec.ts:46:   await start(page);const s=await act(page,makeLife(),'BUILD',{tileId:'forest-1',typeId:'logging'});await encoded(page);for(const dest of ['city','characters','session','help'] as const)await go(page,dest);expect(await page.evaluate(()=>(window as unknown as {checkpointCalls:string[][]}).checkpointCalls)).toEqual([['get',KEY]]);await save(page);expect(await page.evaluate(()=>(window as unknown as {checkpointCalls:string[][]}).checkpointCalls)).toEqual([['get',KEY],['get',KEY],['set',KEY]]);await page.getByTestId('life-end-week').click();expect(await page.evaluate(()=>(window as unknown as {checkpointCalls:string[][]}).checkpointCalls)).toEqual([['get',KEY],['get',KEY],['set',KEY]]);await go(page,'session');for(const name of ['Save locally','Continue locally','Export checkpoint'])await expect(page.getByRole('button',{name,exact:true})).toBeDisabled();await expect(page.getByLabel('Import checkpoint',{exact:true})).toBeDisabled();await go(page,'reports');await page.getByRole('button',{name:'Plan next week',exact:true}).click();expect(await page.evaluate(()=>(window as unknown as {checkpointCalls:string[][]}).checkpointCalls)).toEqual([['get',KEY],['get',KEY],['set',KEY]]);await resume(page);const restored=await exportLife(page);expect({...restored,city:{...restored.city,revision:s.city.revision}}).toEqual(s);expect(await page.evaluate(old=>old.map(k=>(window as unknown as {rawRead:(k:string)=>string}).rawRead(k)),OLD)).toEqual(OLD.map(()=> 'protected'));
+AFTER tests/e2e/tile-local-checkpoint.spec.ts:52:   await start(page);const s=await act(page,makeLife(),'BUILD',{tileId:'forest-1',typeId:'logging'});await encoded(page);for(const dest of ['city','characters','session','help'] as const)await go(page,dest);expect(await checkpointCalls(page)).toEqual([['get',KEY],['set',KEY]]);await save(page);expect(await checkpointCalls(page)).toEqual([['get',KEY],['set',KEY],['get',KEY],['set',KEY]]);await page.getByTestId('life-end-week').click();expect(await checkpointCalls(page)).toEqual([['get',KEY],['set',KEY],['get',KEY],['set',KEY]]);await go(page,'session');for(const name of ['Save locally','Continue locally','Export checkpoint'])await expect(page.getByRole('button',{name,exact:true})).toBeDisabled();await expect(page.getByLabel('Import checkpoint',{exact:true})).toBeDisabled();await go(page,'reports');await page.getByRole('button',{name:'Plan next week',exact:true}).click();expect(await checkpointCalls(page)).toEqual([['get',KEY],['set',KEY],['get',KEY],['set',KEY]]);await resume(page);const restored=await exportLife(page);expect({...restored,city:{...restored.city,revision:s.city.revision}}).toEqual(s);expect(await page.evaluate(old=>old.map(k=>(window as unknown as {rawRead:(k:string)=>string}).rawRead(k)),OLD)).toEqual(OLD.map(()=> 'protected'));
+
+tests/e2e/title.spec.ts:1 (old line 0)
+Invariant kept: Dependency injection, raw storage observation and asynchronous test setup preserve isolated fixtures; no product behavior is bypassed.
+Fixture/import/helper edit
+BEFORE → AFTER
+BEFORE: (no lines)
+AFTER tests/e2e/title.spec.ts:1: import {storedSaveText,readStoredRecords,writeStoredSaveText,writeRawRecord,clearStored,storeMarks,resetStoreMarks,injectWriteAbort} from './storage.helpers.ts';
+
+tests/e2e/title.spec.ts:115 (old line 114)
+Invariant kept: Exactly one stored-slot read after reload with an existing marker; cached Continue restores the identical saved session.
+Test: 'manual save enables cached Continue with exactly one mount read'
+BEFORE → AFTER
+BEFORE tests/e2e/title.spec.ts:114:   expect(await page.evaluate(() => (window as unknown as { titleReads: number }).titleReads)).toBe(1); expect(await exportLife(page)).toEqual(saved);
+AFTER tests/e2e/title.spec.ts:115:   expect((await storeMarks(page)).filter(n=>n==='haven.store.read').length).toBe(1); expect(await exportLife(page)).toEqual(saved);
+
+tests/e2e/title.spec.ts:188 (old line 187)
+Invariant kept: Retain the behavior named by 'fallen city clears cached Continue after New Game and creation Cancel'; all non-storage assertions, expected values and thresholds remain unchanged.
+Test: 'fallen city clears cached Continue after New Game and creation Cancel'
+BEFORE → AFTER
+BEFORE tests/e2e/title.spec.ts:187:   expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBeNull();
+AFTER tests/e2e/title.spec.ts:188:   expect(await storedSaveText(page)).toBeNull();
+
+tests/e2e/title.spec.ts:220 (old line 219)
+Invariant kept: Retain the behavior named by 'Main menu saves and refreshes focused Continue on the title'; all non-storage assertions, expected values and thresholds remain unchanged.
+Test: 'Main menu saves and refreshes focused Continue on the title'
+BEFORE → AFTER
+BEFORE tests/e2e/title.spec.ts:219:     expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBeNull();
+AFTER tests/e2e/title.spec.ts:220:     expect(await storedSaveText(page)).toBeNull();
+
+tests/e2e/title.spec.ts:223 (old line 222)
+Invariant kept: Retain the behavior named by 'Main menu saves and refreshes focused Continue on the title'; all non-storage assertions, expected values and thresholds remain unchanged.
+Test: 'Main menu saves and refreshes focused Continue on the title'
+BEFORE → AFTER
+BEFORE tests/e2e/title.spec.ts:222:     expect(JSON.parse((await page.evaluate(key => localStorage.getItem(key), KEY))!).state).toEqual(before);
+AFTER tests/e2e/title.spec.ts:223:     expect(JSON.parse((await storedSaveText(page))!).state).toEqual(before);
+
+tests/e2e/title.spec.ts:233 (old line 232)
+Invariant kept: Retain the behavior named by 'Main menu is locked with its reason throughout Report'; all non-storage assertions, expected values and thresholds remain unchanged.
+Test: 'Main menu is locked with its reason throughout Report'
+BEFORE → AFTER
+BEFORE tests/e2e/title.spec.ts:232:     expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBeNull();
+AFTER tests/e2e/title.spec.ts:233:     expect(await storedSaveText(page)).toBeNull();
+
+tests/e2e/title.spec.ts:238 (old line 237)
+Invariant kept: Failed storage operations preserve the live session, previous records and backups; retain exact failure text and no private error disclosure.
+Test: 'Main menu write failure keeps Planning, the session and the previous save'
+BEFORE → AFTER
+BEFORE tests/e2e/title.spec.ts:237:     await page.evaluate(({ key, prior }) => {
+BEFORE tests/e2e/title.spec.ts:238:       localStorage.setItem(key, prior); const set = Storage.prototype.setItem;
+BEFORE tests/e2e/title.spec.ts:239:       Storage.prototype.setItem = function(k, value) { if (k === key) throw Error('quota'); return set.call(this, k, value); };
+BEFORE tests/e2e/title.spec.ts:240:     }, { key: KEY, prior });
+AFTER tests/e2e/title.spec.ts:238:     await writeStoredSaveText(page,prior); await injectWriteAbort(page);
+
+tests/e2e/title.spec.ts:242 (old line 244)
+Invariant kept: Failed storage operations preserve the live session, previous records and backups; retain exact failure text and no private error disclosure.
+Test: 'Main menu write failure keeps Planning, the session and the previous save'
+BEFORE → AFTER
+BEFORE tests/e2e/title.spec.ts:244:     expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBe(prior);
+AFTER tests/e2e/title.spec.ts:242:     expect(await storedSaveText(page)).toBe(prior);
+
+tests/e2e/world-session.spec.ts:1 (old line 0)
+Invariant kept: Dependency injection, raw storage observation and asynchronous test setup preserve isolated fixtures; no product behavior is bypassed.
+Fixture/import/helper edit
+BEFORE → AFTER
+BEFORE: (no lines)
+AFTER tests/e2e/world-session.spec.ts:1: import {storedSaveText,readStoredRecords,writeStoredSaveText,writeRawRecord,clearStored,storeMarks,resetStoreMarks,injectWriteAbort} from './storage.helpers.ts';
+
+tests/e2e/world-session.spec.ts:12 (old line 11)
+Invariant kept: Dependency injection, raw storage observation and asynchronous test setup preserve isolated fixtures; no product behavior is bypassed.
+Fixture/import/helper edit
+BEFORE → AFTER
+BEFORE tests/e2e/world-session.spec.ts:11: const slots=(page:Page)=>page.evaluate(keys=>keys.map(k=>localStorage.getItem(k)),[KEY,...OLD]);
+AFTER tests/e2e/world-session.spec.ts:12: const slots=async(page:Page)=>[JSON.stringify(await readStoredRecords(page)),...await page.evaluate(keys=>keys.map(k=>localStorage.getItem(k)),OLD)];
+
+tests/e2e/world-session.spec.ts:36 (old line 35)
+Invariant kept: Reject incompatible/corrupt checkpoints without partial live-state or record changes; preserve foreign slots and exact expected failure messages.
+Test: 'U5/U6b: wrong-slot bytes never overwrite or fall back at any old bookmark'
+BEFORE → AFTER
+BEFORE tests/e2e/world-session.spec.ts:35:  const old=await Promise.all(['legacy-v1/life.json','goods-v1/life.json'].map(file=>OLD_CHECKPOINT_BYTES[file as keyof typeof OLD_CHECKPOINT_BYTES]));for(const mode of ['world','tiles','population']){await page.goto(`/?mode=${mode}`);await importLife(page,makeLife());await seedOld(page);const s=await exportLife(page);const wrong=JSON.parse(await encoded(page));wrong.cityRulesetId='tile-trial-01';for(const text of [...old,JSON.stringify(wrong)]){await page.evaluate(({key,text})=>localStorage.setItem(key,text),{key:KEY,text});const bytes=await slots(page);await resume(page);await expect(page.getByRole('alert')).toContainText('left unchanged');expect(await exportLife(page)).toEqual(s);expect(await slots(page)).toEqual(bytes);await put(page,text);await expect(page.getByRole('alert')).toHaveText('This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.');expect(await exportLife(page)).toEqual(s);expect(await slots(page)).toEqual(bytes);}}
+AFTER tests/e2e/world-session.spec.ts:36:  const old=await Promise.all(['legacy-v1/life.json','goods-v1/life.json'].map(file=>OLD_CHECKPOINT_BYTES[file as keyof typeof OLD_CHECKPOINT_BYTES]));for(const mode of ['world','tiles','population']){await page.goto(`/?mode=${mode}`);await importLife(page,makeLife());await seedOld(page);const s=await exportLife(page);const wrong=JSON.parse(await encoded(page));wrong.cityRulesetId='tile-trial-01';for(const text of [...old,JSON.stringify(wrong)]){await writeStoredSaveText(page,text);const bytes=await slots(page);await resume(page);await expect(page.getByRole('alert')).toContainText('left unchanged');expect(await exportLife(page)).toEqual(s);expect(await slots(page)).toEqual(bytes);await put(page,text);await expect(page.getByRole('alert')).toHaveText('This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.');expect(await exportLife(page)).toEqual(s);expect(await slots(page)).toEqual(bytes);}}
+
+## Call sites
+Call-site edits (final working-file line numbers)
+packages/ui/src/CharacterLifeApp.svelte:19
+BEFORE:   function readSlot() {
+AFTER:   async function readSlot() {
+packages/ui/src/CharacterLifeApp.svelte:22
+BEFORE:     const result = readLocalCharacterLife();
+AFTER:     const result = await readLocalCharacterLife();
+packages/ui/src/CharacterLifeApp.svelte:29
+BEFORE:   onMount(readSlot);
+AFTER:   onMount(() => { void readSlot(); });
+packages/ui/src/TileManagement.svelte:106
+BEFORE:         const cleared = clearFallenCharacterLifeCheckpoint(true, state.society.crisis.stage);
+AFTER:         const cleared = await clearFallenCharacterLifeCheckpoint(true, state.society.crisis.stage);
+packages/ui/src/TileManagement.svelte:124
+BEFORE:       const result = saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+AFTER:       const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+packages/ui/src/TileManagement.svelte:198
+BEFORE:   function saveLocally() {
+AFTER:   async function saveLocally() {
+packages/ui/src/TileManagement.svelte:199
+BEFORE:     const result = saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+AFTER:     const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+packages/ui/src/TileManagement.svelte:203
+BEFORE:   function continueLocally() {
+AFTER:   async function continueLocally() {
+packages/ui/src/TileManagement.svelte:204
+BEFORE:     const result = readLocalCharacterLife();
+AFTER:     const result = await readLocalCharacterLife();
+packages/ui/src/TileManagement.svelte:208
+BEFORE:   function mainMenu() {
+AFTER:   async function mainMenu() {
+packages/ui/src/TileManagement.svelte:199
+BEFORE:     const result = saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+AFTER:     const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+
+## Spy → mark mapping
+checkpoint get → haven.store.read; set → haven.store.write; remove → haven.store.clear. Legacy migration get remains observable.
+First empty-slot mount emits read → write(marker only); explicit save emits read → write. With the marker present a title mount emits one read. E2E asserts these exact sequences.
+Original foreign-key get/set spies remain active and any foreign call fails the exact IO sequence. Legacy migration get is asserted exactly once; legacy writes are forbidden. Autosave watches include legacy accesses after mount. Options/error-log preference keys retain their localStorage behavior.
+Invalid after-load bytes → deliberately malformed stored records; raw records must remain byte-identical after refusal. The malformed city record case is the owner-approved correction-3 exception.

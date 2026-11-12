@@ -1,0 +1,42 @@
+UTC=2026-11-12T04:46:14.189Z HEAD=447e74cacb60bebaeece15d77baa9ffba24321cb TREE=d4ac0ae62261f5d6712fdb08d58564a8d569b57a
+STATUS="M packages/ui/src/__tests__/character-life-session.test.ts\n M tests/e2e/storage.spec.ts"
+ENV CI=
+COMMAND=npx vitest run packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/crisis-checkpoint.test.ts
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/character-life-session.test.ts (57 tests | 1 failed) 798ms
+   × fix1 F3: unavailable legacy is distinct from an absent key and can recover 13ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > fix1 F3: unavailable legacy is distinct from an absent key and can recover
+AssertionError: expected { success: false, …(1) } to deeply equal { success: false, …(1) }
+
+- Expected
++ Received
+
+  {
+-   "message": "Could not read browser storage. Your game was preserved. Use Import checkpoint instead.",
++   "message": "No local checkpoint in this browser yet. Choose Save locally first.",
+    "success": false,
+  }
+
+ ❯ packages/ui/src/__tests__/character-life-session.test.ts:280:42
+    278| it('fix1 F3: unavailable legacy is distinct from an absent key and can…
+    279|  const d: import('../character-life-session.js').CheckpointDeps={store…
+    280|  expect(await readLocalCharacterLife(d)).toEqual({success:false,messag…
+       |                                          ^
+    281|  expect(await d.store.getSystem(MARKER)).toBeNull();expect(await d.sto…
+    282|  d.legacy=deps(a2Text()).legacy;expect(await readLocalCharacterLife(d)…
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 58 passed (59)
+   Start at  11:46:18
+   Duration  2.25s (transform 1.51s, setup 0ms, import 1.97s, tests 855ms, environment 0ms)
+
+
+EXIT=1 DURATION_MS=6838 END_UTC=2026-11-12T04:46:21.027Z

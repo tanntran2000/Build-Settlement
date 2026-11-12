@@ -1,0 +1,1 @@
+[["required-typecheck","npm run typecheck"],["required-unit","npm test"],["required-build","npm run build"]]

@@ -1,0 +1,1 @@
+﻿[["f3-unit-green","npx vitest run packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/crisis-checkpoint.test.ts"],["f3-build-green","npm run build"],["f3-e2e-green","npm run test:smoke -- tests/e2e/storage.spec.ts"]]

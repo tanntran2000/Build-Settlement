@@ -1,0 +1,151 @@
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/persistence/src/__tests__/session-records.test.ts (38 tests | 38 failed) 2072ms
+   × round trips fixture society-v1/life-5-weeks.json 17ms
+   × round trips fixture society-v1/life-new-game.json 7ms
+   × round trips fixture society-v2/life-5-weeks.json 8ms
+   × round trips fixture society-v2/life-new-game.json 11ms
+   × round trips fixture society-v3/life-5-weeks.json 8ms
+   × round trips fixture society-v3/life-new-game.json 15ms
+   × round trips fixture society-v4/life-5-weeks.json 28ms
+   × round trips fixture society-v4/life-demand-card.json 79ms
+   × round trips fixture society-v4/life-new-game.json 77ms
+   × round trips fixture society-v4/life-rebellion-last-week.json 199ms
+   × round trips fixture society-v5/life-5-weeks.json 108ms
+   × round trips fixture society-v5/life-crime-death.json 86ms
+   × round trips fixture society-v5/life-crime-raid.json 21ms
+   × round trips fixture society-v5/life-crime-robbery.json 60ms
+   × round trips fixture society-v5/life-crime-wound.json 119ms
+   × round trips fixture society-v5/life-demand-card.json 57ms
+   × round trips fixture society-v5/life-new-game.json 75ms
+   × round trips fixture society-v5/life-rebellion-last-week.json 82ms
+   × round trips fixture society-v6/life-5-weeks.json 54ms
+   × round trips fixture society-v6/life-crime-death.json 21ms
+   × round trips fixture society-v6/life-crime-raid.json 26ms
+   × round trips fixture society-v6/life-crime-robbery.json 92ms
+   × round trips fixture society-v6/life-crime-wound.json 183ms
+   × round trips fixture society-v6/life-demand-card.json 8ms
+   × round trips fixture society-v6/life-laws.json 59ms
+   × round trips fixture society-v6/life-new-game.json 139ms
+   × round trips fixture society-v6/life-rebellion-last-week.json 84ms
+   × round trips fixture society-v7/life-5-weeks.json 32ms
+   × round trips fixture society-v7/life-crime-death.json 38ms
+   × round trips fixture society-v7/life-crime-raid.json 31ms
+   × round trips fixture society-v7/life-crime-robbery.json 110ms
+   × round trips fixture society-v7/life-crime-wound.json 10ms
+   × round trips fixture society-v7/life-demand-card.json 9ms
+   × round trips fixture society-v7/life-laws.json 15ms
+   × round trips fixture society-v7/life-new-game.json 22ms
+   × round trips fixture society-v7/life-rebellion-last-week.json 62ms
+   × Player and 3 NPCs give 4 character records 11ms
+   × corrupt character identifies the offending record 4ms
+node.exe : 
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯ Failed Tests 38 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture society-v1/life-5-weeks.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture society-v1/life-new-game.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture society-v2/life-5-weeks.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture society-v2/life-new-game.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture society-v3/life-5-weeks.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture society-v3/life-new-game.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture society-v4/life-5-weeks.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture 
+society-v4/life-demand-card.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture society-v4/life-new-game.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture 
+society-v4/life-rebellion-last-week.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture society-v5/life-5-weeks.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture 
+society-v5/life-crime-death.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture society-v5/life-crime-raid.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture 
+society-v5/life-crime-robbery.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture 
+society-v5/life-crime-wound.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture 
+society-v5/life-demand-card.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture society-v5/life-new-game.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture 
+society-v5/life-rebellion-last-week.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture society-v6/life-5-weeks.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture 
+society-v6/life-crime-death.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture society-v6/life-crime-raid.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture 
+society-v6/life-crime-robbery.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture 
+society-v6/life-crime-wound.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture 
+society-v6/life-demand-card.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture society-v6/life-laws.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture society-v6/life-new-game.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture 
+society-v6/life-rebellion-last-week.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture society-v7/life-5-weeks.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture 
+society-v7/life-crime-death.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture society-v7/life-crime-raid.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture 
+society-v7/life-crime-robbery.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture 
+society-v7/life-crime-wound.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture 
+society-v7/life-demand-card.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture society-v7/life-laws.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture society-v7/life-new-game.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture 
+society-v7/life-rebellion-last-week.json
+StoreRecordError: Invalid store record: characters:player
+ ❯ bad packages/persistence/src/session-records.ts:18:51
+     16| }
+     17| export function recordsToSession(records: StoredRecord[]): CharacterLi…
+     18|   const bad = (r: StoredRecord): never => { throw new StoreRecordError…
+       |                                                   ^
+     19|   const seen = new Set<string>();
+     20|   for (const r of records) { const k = `${r.table}:${r.id}`; if (r.sch…
+ ❯ recordsToSession packages/persistence/src/session-records.ts:28:111
+ ❯ packages/persistence/src/__tests__/session-records.test.ts:12:41
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/38]⎯
+
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > Player and 3 NPCs give 4 character records
+Error: Enter a name of 1–64 characters without leading or trailing spaces.
+ ❯ session packages/persistence/src/__tests__/session-records.test.ts:16:127
+     14|   }
+     15| }
+     16| const session = () => { const r = createCharacterLifeSession(0, struct…
+       |                                                                                                               
+                ^
+     17| it('Player and 3 NPCs give 4 character records', () => expect(sessionT…
+     18| it('corrupt character identifies the offending record', () => {
+ ❯ packages/persistence/src/__tests__/session-records.test.ts:17:88
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/38]⎯
+
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > corrupt character identifies the offending record
+Error: Enter a name of 1–64 characters without leading or trailing spaces.
+ ❯ session packages/persistence/src/__tests__/session-records.test.ts:16:127
+     14|   }
+     15| }
+     16| const session = () => { const r = createCharacterLifeSession(0, struct…
+       |                                                                                                               
+                ^
+     17| it('Player and 3 NPCs give 4 character records', () => expect(sessionT…
+     18| it('corrupt character identifies the offending record', () => {
+ ❯ packages/persistence/src/__tests__/session-records.test.ts:19:41
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/38]⎯
+
+
+ Test Files  1 failed | 15 passed (16)
+      Tests  38 failed | 166 passed (204)
+   Start at  09:10:53
+   Duration  7.38s (transform 5.18s, setup 0ms, import 10.53s, tests 7.37s, environment 6ms)
+

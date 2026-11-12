@@ -1,0 +1,216 @@
+UTC=2026-11-12T04:40:08.182Z HEAD=1f60d0117a09203100252d061e67057c3c4fb2be TREE=19e4e1cc2c1371cca367efa40dcfe01da6ecc629
+STATUS="M tests/e2e/storage.helpers.ts\n M tests/e2e/storage.spec.ts"
+ENV CI=1
+COMMAND=npm run test:smoke -- tests/e2e/storage.spec.ts -g "fix1 F2"
+
+> build-settlement@0.1.0 pretest:smoke
+> npm run build:regression --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 build:regression
+> vite build regression --config vite.config.ts --outDir dist
+
+vite v6.4.5 building for production...
+transforming...
+✓ 229 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.45 kB │ gzip:   0.31 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-DdNtS9j1.css                   28.13 kB │ gzip:   5.81 kB
+dist/assets/index-DfmZrMG_.js                   318.85 kB │ gzip: 104.08 kB
+✓ built in 3.46s
+
+> build-settlement@0.1.0 test:smoke
+> playwright test tests/e2e/storage.spec.ts -g fix1 F2
+
+[WebServer] (node:24544) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:34800) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:54204) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\storage.spec.ts:59:1 › fix1 F2: pending Continue cannot overwrite a newer Planning command (3.9s)
+(node:34116) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [chromium] › tests\e2e\storage.spec.ts:65:1 › fix1 F2: pending Main menu cannot exit after a newer Planning command (7.9s)
+(node:60236) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 [chromium] › tests\e2e\storage.spec.ts:73:1 › fix1 F2: a newer rejected Import keeps its feedback over pending Continue (7.0s)
+(node:15072) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  4 [chromium] › tests\e2e\storage.spec.ts:81:1 › fix1 F2: the latest Continue supersedes an earlier held result (2.8s)
+
+
+  1) [chromium] › tests\e2e\storage.spec.ts:59:1 › fix1 F2: pending Continue cannot overwrite a newer Planning command 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 3
+    + Received  + 3
+
+    @@ -4,11 +4,11 @@
+            "amountMilli": 10000,
+            "rulesetId": "tile-population-goods-01",
+          },
+          "happiness": 80,
+          "phase": "planning",
+    -     "revision": 1,
+    +     "revision": 2,
+          "society": Object {
+            "classes": Object {
+              "bound": Object {
+                "free": 0,
+                "luminaries": 0,
+    @@ -364,14 +364,14 @@
+            "wallRing": 1,
+          },
+          "tiles": Array [
+            Object {
+              "building": Object {
+    -           "enabled": false,
+    +           "enabled": true,
+                "level": 1,
+                "typeId": "farm",
+    -           "workers": 0,
+    +           "workers": 2,
+              },
+              "id": "field-1",
+              "terrain": "fertile",
+            },
+            Object {
+
+      61 |  await holdStoreCompletion(page,'readonly',1);await button(page,'Continue locally').click();await waitStoreCompletion(page);
+      62 |  const newer=await act(page,initial,'SET_ENABLED',{tileId:'field-1',enabled:false});
+    > 63 |  await releaseStoreCompletion(page);expect(await exportLife(page)).toEqual(newer);
+         |                                                                    ^
+      64 | });
+      65 | test('fix1 F2: pending Main menu cannot exit after a newer Planning command',async({page})=>{
+      66 |  await start(page);const initial=await exportLife(page);await holdStoreCompletion(page,'readwrite');
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\storage.spec.ts:63:68
+
+    Error Context: test-results\storage-fix1-F2-pending-Co-693f6-te-a-newer-Planning-command-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\storage-fix1-F2-pending-Co-693f6-te-a-newer-Planning-command-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\storage-fix1-F2-pending-Co-693f6-te-a-newer-Planning-command-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\storage.spec.ts:65:1 › fix1 F2: pending Main menu cannot exit after a newer Planning command 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('life-shell')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByTestId('life-shell') with timeout 5000ms
+      - waiting for getByTestId('life-shell')
+
+
+      68 |  const newer=await act(page,initial,'SET_ENABLED',{tileId:'field-1',enabled:false});
+      69 |  const status=page.locator('[aria-label="Planning checkpoints"] [role="status"]'),before=await status.textContent();
+    > 70 |  await releaseStoreCompletion(page);await expect(page.getByTestId('life-shell')).toBeVisible();await expect(status).toHaveText(before!);
+         |                                                                                  ^
+      71 |  expect(await exportLife(page)).toEqual(newer);
+      72 | });
+      73 | test('fix1 F2: a newer rejected Import keeps its feedback over pending Continue',async({page})=>{
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\storage.spec.ts:70:82
+
+    Error Context: test-results\storage-fix1-F2-pending-Ma-664a2-er-a-newer-Planning-command-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\storage-fix1-F2-pending-Ma-664a2-er-a-newer-Planning-command-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\storage-fix1-F2-pending-Ma-664a2-er-a-newer-Planning-command-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests\e2e\storage.spec.ts:73:1 › fix1 F2: a newer rejected Import keeps its feedback over pending Continue 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByRole('alert')
+    Expected: "This checkpoint is from an older version of Haven and can no longer be played. Start a New Game."
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveText" getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('alert')
+
+
+      77 |  const message='This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.';
+      78 |  await expect(page.getByRole('alert')).toHaveText(message);await releaseStoreCompletion(page);
+    > 79 |  await expect(page.getByRole('alert')).toHaveText(message);expect(await exportLife(page)).toEqual(initial);
+         |                                        ^
+      80 | });
+      81 | test('fix1 F2: the latest Continue supersedes an earlier held result',async({page})=>{
+      82 |  await start(page);await save(page);await holdStoreCompletion(page,'readonly',1);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\storage.spec.ts:79:40
+
+    Error Context: test-results\storage-fix1-F2-a-newer-re-614b2-dback-over-pending-Continue-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\storage-fix1-F2-a-newer-re-614b2-dback-over-pending-Continue-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\storage-fix1-F2-a-newer-re-614b2-dback-over-pending-Continue-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests\e2e\storage.spec.ts:81:1 › fix1 F2: the latest Continue supersedes an earlier held result 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+    @@ -4,11 +4,11 @@
+            "amountMilli": 10000,
+            "rulesetId": "tile-population-goods-01",
+          },
+          "happiness": 80,
+          "phase": "planning",
+    -     "revision": 1,
+    +     "revision": 2,
+          "society": Object {
+            "classes": Object {
+              "bound": Object {
+                "free": 0,
+                "luminaries": 0,
+
+      84 |  const latest=makeLife(54321);await writeStoredSaveText(page,bytes(latest));await button(page,'Continue locally').click();
+      85 |  await releaseStoreCompletion(page);await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
+    > 86 |  expect(await exportLife(page)).toEqual({...latest,city:{...latest.city,revision:1}});
+         |                                 ^
+      87 | });
+      88 |
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\storage.spec.ts:86:33
+
+    Error Context: test-results\storage-fix1-F2-the-latest-30360-edes-an-earlier-held-result-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\storage-fix1-F2-the-latest-30360-edes-an-earlier-held-result-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\storage-fix1-F2-the-latest-30360-edes-an-earlier-held-result-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [chromium] › tests\e2e\storage.spec.ts:59:1 › fix1 F2: pending Continue cannot overwrite a newer Planning command 
+    [chromium] › tests\e2e\storage.spec.ts:65:1 › fix1 F2: pending Main menu cannot exit after a newer Planning command 
+    [chromium] › tests\e2e\storage.spec.ts:73:1 › fix1 F2: a newer rejected Import keeps its feedback over pending Continue 
+    [chromium] › tests\e2e\storage.spec.ts:81:1 › fix1 F2: the latest Continue supersedes an earlier held result 
+
+EXIT=1 DURATION_MS=50109 END_UTC=2026-11-12T04:40:58.291Z

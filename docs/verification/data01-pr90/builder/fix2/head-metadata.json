@@ -1,0 +1,9 @@
+{
+  "head": "ca137a888e92aeba4794239cc5f5cef48d0181d6",
+  "tree": "721d2937e9f7dddb74d03c002ca0f260816162c7",
+  "base": "14768381cec2aeed06a71b6bae73d0a9502265e4",
+  "originMain": "ca46d18d32cfc5a65adb5395127a80d7faddf195",
+  "branch": "feat/data01-storage",
+  "status": "",
+  "commits": "ca137a888e92aeba4794239cc5f5cef48d0181d6\nfix(ui): discard superseded save feedback\n\nCapture checkpoint and import tickets plus the live revision before manual saves, so their completion cannot clear newer errors or publish stale notices. A manual save advances the action ticket to supersede pending Continue and Main menu actions. Guard autosave failure feedback with the week and revision that requested it so later planning status survives.\n\nCo-authored-by: Codex <noreply@openai.com>\n\n5154ab7dcd186e20df52ba324176437e0e8b99e0\nfix(persistence): validate complete stored character records\n\nReuse the core Player, NPC-list and profile validators before reconstructing character records, so malformed character data identifies its exact record instead of escaping as a partial session. Validate each accumulated NPC prefix to retain list uniqueness checks and record attribution. Preserve all historical fixture data and compatibility results.\n\nCo-authored-by: Codex <noreply@openai.com>\n\n48cfae3cbe53d933588afa2b38f3223b0691a5c9\nfix(ui): preserve newer saves during pending legacy migration\n\nPrefer existing IndexedDB records when a temporarily blocked legacy migration resumes, so a newer explicit save cannot be replaced by the older backup. Mark migration complete without changing slot data, and retain the legacy bytes. Empty-slot recovery still migrates normally.\n\nCo-authored-by: Codex <noreply@openai.com>"
+}

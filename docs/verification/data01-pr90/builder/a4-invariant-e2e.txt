@@ -1,0 +1,19 @@
+UTC=2026-11-12T03:48:14.416Z HEAD=6ecb887650d7d165dcc07f02666b4ac4dba3f955 TREE=52927b934bcad68bc4dabb52f60d27a4db4ff47c
+STATUS="M packages/ui/src/__tests__/character-life-session.test.ts\n M tests/e2e/tile-local-checkpoint.spec.ts"
+ENV CI=1
+COMMAND=npx playwright test tests/e2e/tile-local-checkpoint.spec.ts -g "checkpoint IO stays manual"
+[WebServer] (node:45108) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:57808) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:53540) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:50:2 › checkpoint IO stays manual, Planning-only and isolated (tiles) (3.3s)
+  ok 2 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:50:2 › checkpoint IO stays manual, Planning-only and isolated (population) (2.8s)
+
+  2 passed (19.4s)
+
+EXIT=0 DURATION_MS=22025 END_UTC=2026-11-12T03:48:36.441Z

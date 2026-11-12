@@ -1,0 +1,13 @@
+UTC=2026-11-12T02:17:39.615Z HEAD=e51de7161d3b5164c201ffe83a1bef74702e0d12 TREE=ec6f5efd5bad969d01e08aebebef0cbb72f287e8
+COMMAND=npx vitest run packages/ui/src/__tests__/character-life-session.test.ts
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  09:17:47
+   Duration  1.50s (transform 773ms, setup 0ms, import 986ms, tests 129ms, environment 0ms)
+
+
+EXIT=0 DURATION_MS=9214

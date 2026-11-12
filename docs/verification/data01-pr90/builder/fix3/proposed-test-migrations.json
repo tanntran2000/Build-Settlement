@@ -1,0 +1,30 @@
+[
+  {
+    "file": "packages/ui/src/__tests__/character-life-session.test.ts",
+    "line": 63,
+    "before": "  expect(values).toEqual(before); expect(await store.read('main')).toBeNull();expect(vi.mocked(store.replaceSlot).mock.calls).toEqual([['main',[],[{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]]]);",
+    "after": "  expect(values).toEqual(before); expect(await store.read('main')).toBeNull();expect(vi.mocked(store.migrateSlot).mock.calls).toEqual([['main',null,{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]]);",
+    "invariant": "Reject invalid/foreign legacy data, leave legacy bytes unchanged, leave the main slot empty, and write exactly the marker through the atomic migration port."
+  },
+  {
+    "file": "packages/ui/src/__tests__/character-life-session.test.ts",
+    "line": 160,
+    "before": " values.set(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,text);const before=new Map(values);expect((await readLocalCharacterLife(checkpointDeps)).success).toBe(false);expect(storage.getItem.mock.calls).toEqual([[CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY]]);expect(await store.read('main')).toBeNull();expect(vi.mocked(store.replaceSlot).mock.calls).toEqual([['main',[],[{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]]]);expect(values).toEqual(before);",
+    "after": " values.set(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,text);const before=new Map(values);expect((await readLocalCharacterLife(checkpointDeps)).success).toBe(false);expect(storage.getItem.mock.calls).toEqual([[CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY]]);expect(await store.read('main')).toBeNull();expect(vi.mocked(store.migrateSlot).mock.calls).toEqual([['main',null,{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]]);expect(values).toEqual(before);",
+    "invariant": "Reject invalid/foreign legacy data, leave legacy bytes unchanged, leave the main slot empty, and write exactly the marker through the atomic migration port."
+  },
+  {
+    "file": "packages/ui/src/__tests__/character-life-session.test.ts",
+    "line": 296,
+    "before": " expect(replace).toHaveBeenCalledExactlyOnceWith('main',before,[{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]);",
+    "after": " expect(migrate).toHaveBeenCalledExactlyOnceWith('main',null,{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true});",
+    "invariant": "Existing B wins pending migration; the marker is written without using ordinary replacement."
+  },
+  {
+    "file": "packages/ui/src/__tests__/character-life-session.test.ts",
+    "line": 297,
+    "before": " expect(await replace.mock.results[0].value).toEqual({put:0,deleted:0,unchanged:7});",
+    "after": " expect(await migrate.mock.results[0].value).toEqual(before);",
+    "invariant": "The atomic migration returns the exact surviving records; retain existing stored-record equality and add adapter-level marker-only write checks instead of obsolete WriteStats observation."
+  }
+]

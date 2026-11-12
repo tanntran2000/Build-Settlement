@@ -1,0 +1,6 @@
+{
+  "packages/persistence/src/game-store.ts": "d9882f0c2aa015a6b0cd0ae5fcfb7381746ca543406ddb74fcfd70a545e8ce94",
+  "packages/persistence/src/memory-store.ts": "bf283bc50c39b552655bbbaf3d095b982b2c579fb86e1d640c5d8f379be40baa",
+  "packages/ui/src/character-life-session.ts": "8a070b69ee9c7ba5abb3c3630e7efa6b46ec0a9c81ebe1d9964fa74ba668d8ac",
+  "packages/ui/src/indexeddb-store.ts": "a38b83624bcc3af5e203aa14d727461f5e83b8719b9fcabdd2f18f3d286d2f18"
+}

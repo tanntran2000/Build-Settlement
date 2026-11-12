@@ -1,0 +1,19 @@
+UTC=2026-11-12T03:22:16.902Z HEAD=bd21b19de309cd5725d303d3ca87b98b0978ade5 TREE=062c584af2687046612a697b1b845b470fa9e20c
+STATUS="M packages/ui/src/CharacterLifeApp.svelte\n M packages/ui/src/__tests__/character-life-session.test.ts\n M packages/ui/src/character-life-session.ts\n M tests/e2e/autosave.spec.ts\n M tests/e2e/character-life-navigation.spec.ts\n M tests/e2e/character-life.spec.ts\n M tests/e2e/crime.spec.ts\n M tests/e2e/crisis.spec.ts\n M tests/e2e/ledger.spec.ts\n M tests/e2e/society.spec.ts\n M tests/e2e/tile-local-checkpoint.spec.ts\n M tests/e2e/title.spec.ts\n M tests/e2e/world-session.spec.ts\n?? tests/e2e/storage.helpers.ts\n?? tests/e2e/storage.spec.ts"
+ENV CI=
+COMMAND=npm test
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  99 passed (99)
+      Tests  2157 passed (2157)
+   Start at  10:22:18
+   Duration  63.89s (transform 10.60s, setup 0ms, import 38.97s, tests 165.45s, environment 49ms)
+
+
+EXIT=0 DURATION_MS=65799 END_UTC=2026-11-12T03:23:22.701Z

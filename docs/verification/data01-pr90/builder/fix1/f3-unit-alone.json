@@ -1,0 +1,1 @@
+﻿[["f3-unit-red-alone","npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t \"fix1 F3: unavailable legacy\""]]

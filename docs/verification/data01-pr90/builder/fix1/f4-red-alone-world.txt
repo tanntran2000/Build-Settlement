@@ -1,0 +1,33 @@
+UTC=2026-11-12T04:51:16.357Z HEAD=2c958573f0b0f97bb370627db49aaebfe546ca8c TREE=8d242e407374f38f8758c0ae78a21d65b5de5f97
+STATUS="M packages/persistence/src/__tests__/session-records.test.ts"
+ENV CI=
+COMMAND=npx vitest run packages/persistence/src/__tests__/session-records.test.ts -t "malformed world object shape"
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/persistence/src/__tests__/session-records.test.ts (45 tests | 1 failed | 44 skipped) 19ms
+   × fix1 F4: malformed world object shape identifies world:outside 16ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > fix1 F4: malformed world object shape identifies world:outside
+AssertionError: expected undefined to be an instance of StoreRecordError
+ ❯ expectRecordRef packages/persistence/src/__tests__/session-records.test.ts:36:17
+     34|   let error: unknown;
+     35|   try { recordsToSession(rows); } catch (caught) { error = caught; }
+     36|   expect(error).toBeInstanceOf(StoreRecordError);
+       |                 ^
+     37|   expect((error as StoreRecordError).ref).toBe(ref);
+     38| }
+ ❯ packages/persistence/src/__tests__/session-records.test.ts:53:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 44 skipped (45)
+   Start at  11:51:18
+   Duration  802ms (transform 374ms, setup 0ms, import 486ms, tests 19ms, environment 0ms)
+
+
+EXIT=1 DURATION_MS=3292 END_UTC=2026-11-12T04:51:19.649Z

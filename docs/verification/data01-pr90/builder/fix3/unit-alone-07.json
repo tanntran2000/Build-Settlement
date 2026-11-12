@@ -1,0 +1,1 @@
+[["unit-red-alone-07","npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t \"^fix3 memory: invalid candidate slot cannot mutate records$\""]]

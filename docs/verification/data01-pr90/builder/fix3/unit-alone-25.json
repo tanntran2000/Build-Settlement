@@ -1,0 +1,1 @@
+[["unit-red-alone-25","npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t \"^fix2 F1: pending migration keeps saved B when legacy A is readable$\""]]

@@ -1,0 +1,12 @@
+﻿A1 complete: e51de7161d3b5164c201ffe83a1bef74702e0d12.
+A1 required checks: typecheck 0; npm test 0 (2146 tests, 99 files, 52.89s); build 0 (JS 101.76 kB gzip, CSS 5.79 kB gzip).
+A2 RED: all 8 planned tests ran before A2 product edits; 7 failed, 1 passed; exit 1.
+A2 focused GREEN: 8 passed; exit 0.
+A2 typecheck: exit 0, 0 errors, 0 warnings.
+A2 full unit: exit 1; 2 failed, 2112 passed. Tests crisis-checkpoint.test.ts expect synchronous results from now-async clear function.
+Isolated rerun: both crisis tests failed; exit 1. No fixes attempted to this failure.
+A2 build not run after failed unit suite.
+Builder found the plan labels character-life-session.test.ts new, but it already existed. Builder accidentally replaced it. Original file restored from HEAD; new A2 cases preserved at a2-new-tests.ts in this draft directory. No A2 green-suite claim is valid.
+HOLD: crisis-checkpoint.test.ts is outside PR A allowlist and requires async/storage test migration. Existing character-life-session.test.ts also requires preservation and migration, then the new RED cases must be merged without removing coverage.
+Additional A3 mechanical-migration blocker: character-life-navigation.spec.ts:1042 writes malformed text '{' after load; :1044 asserts exact unchanged raw text. Planned record-to-session serialization helper cannot represent that malformed text. No e2e files edited.
+A3 and A4 not started. No A2 commit, push, PR or merge.

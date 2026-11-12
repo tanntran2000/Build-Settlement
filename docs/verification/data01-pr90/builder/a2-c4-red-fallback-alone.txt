@@ -1,0 +1,25 @@
+UTC=2026-11-12T02:49:03.509Z HEAD=e51de7161d3b5164c201ffe83a1bef74702e0d12 TREE=ec6f5efd5bad969d01e08aebebef0cbb72f287e8
+COMMAND=npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^factory failure falls back"
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/character-life-session.test.ts (50 tests | 1 failed | 49 skipped) 19ms
+   × factory failure falls back to memory with a one-time warning 14ms
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 49 skipped (50)
+   Start at  09:49:06
+   Duration  1.55s (transform 909ms, setup 0ms, import 1.16s, tests 19ms, environment 0ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > factory failure falls back to memory with a one-time warning
+TypeError: createCheckpointDeps is not a function
+ ❯ packages/ui/src/__tests__/character-life-session.test.ts:188:105
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+EXIT=1 DURATION_MS=4211

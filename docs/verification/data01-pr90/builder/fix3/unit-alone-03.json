@@ -1,0 +1,1 @@
+[["unit-red-alone-03","npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t \"^fix3 memory: existing slot wins and only receives the marker$\""]]

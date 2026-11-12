@@ -1,0 +1,55 @@
+UTC=2026-11-12T05:52:28.485Z HEAD=5154ab7dcd186e20df52ba324176437e0e8b99e0 TREE=dacc43c9877d0dd89600f26360cdb9631d52bbd0
+STATUS="M tests/e2e/storage.spec.ts"
+ENV CI=1
+COMMAND=npx playwright test tests/e2e/storage.spec.ts -g "fix2 F3: a delayed autosave"
+[WebServer] (node:26172) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:29552) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:51992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\storage.spec.ts:150:1 › fix2 F3: a delayed autosave failure cannot replace a later week status (7.3s)
+
+
+  1) [chromium] › tests\e2e\storage.spec.ts:150:1 › fix2 F3: a delayed autosave failure cannot replace a later week status 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('aside p[aria-atomic="true"]')
+    Expected: "Planning Week 3 · Year 1. Previous report retained."
+    Received: "Autosave failed. Your last save is kept."
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" locator('aside p[aria-atomic="true"]') with timeout 5000ms
+      - waiting for locator('aside p[aria-atomic="true"]')
+        14 × locator resolved to <p role="status" aria-atomic="true" aria-live="polite" class="svelte-w9sbey">Autosave failed. Your last save is kept.</p>
+           - unexpected value "Autosave failed. Your last save is kept."
+
+
+      155 |  await button(page,'Options').click();const options=page.getByRole('dialog',{name:'Options',exact:true});await options.getByLabel('Autosave',{exact:true}).uncheck();await options.getByRole('button',{name:'Close',exact:true}).click();await expect(options).not.toBeVisible();
+      156 |  await advance();const status=page.locator('aside p[aria-atomic="true"]');await expect(status).toHaveText('Planning Week 3 \u00b7 Year 1. Previous report retained.');
+    > 157 |  await releaseStoreCompletion(page);await expect(status).toHaveText('Planning Week 3 \u00b7 Year 1. Previous report retained.');
+          |                                                          ^
+      158 |  expect((await exportLife(page)).city.world.week).toBe(3);expect(await storedSaveText(page)).toBe(bytes(initial));
+      159 | });
+      160 |
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\storage.spec.ts:157:58
+
+    Error Context: test-results\storage-fix2-F3-a-delayed--92d0e-replace-a-later-week-status-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\storage-fix2-F3-a-delayed--92d0e-replace-a-later-week-status-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\storage-fix2-F3-a-delayed--92d0e-replace-a-later-week-status-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\storage.spec.ts:150:1 › fix2 F3: a delayed autosave failure cannot replace a later week status 
+
+EXIT=1 DURATION_MS=20936 END_UTC=2026-11-12T05:52:49.420Z

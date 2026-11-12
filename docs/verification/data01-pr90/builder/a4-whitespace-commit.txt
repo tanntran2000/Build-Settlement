@@ -1,0 +1,5 @@
+style(persistence): remove trailing blank lines
+
+Remove the two EOF blank lines reported by the required diff-check gate so the approved storage change passes whitespace validation without altering behavior or assertions.
+
+Co-authored-by: Codex <noreply@openai.com>

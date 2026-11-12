@@ -1,0 +1,1409 @@
+UTC=2026-11-12T07:21:25.957Z HEAD=ca137a888e92aeba4794239cc5f5cef48d0181d6 TREE=721d2937e9f7dddb74d03c002ca0f260816162c7
+STATUS="M packages/persistence/src/__tests__/game-store.test.ts\n M packages/ui/src/__tests__/character-life-session.test.ts\n M tests/e2e/storage.helpers.ts\n M tests/e2e/storage.spec.ts"
+ENV CI=1
+COMMAND=npx playwright test tests/e2e/storage.spec.ts -g "fix3 browser"
+[WebServer] (node:54576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:56636) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:33144) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\storage.spec.ts:161:71 › fix3 browser: atomic migration preserves C after existing B (5.1s)
+(node:29224) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [chromium] › tests\e2e\storage.spec.ts:161:71 › fix3 browser: atomic migration preserves C after empty (2.5s)
+(node:53984) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 [chromium] › tests\e2e\storage.spec.ts:161:71 › fix3 browser: atomic migration preserves C after marker winner (2.7s)
+
+
+  1) [chromium] › tests\e2e\storage.spec.ts:161:71 › fix3 browser: atomic migration preserves C after existing B 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 71
+    + Received  + 71
+
+    @@ -748,11 +748,11 @@
+              },
+            },
+            "week": 1,
+            "worldMetadata": Object {
+              "gameVersion": "0.1.0",
+    -         "worldSeed": 33,
+    +         "worldSeed": 22,
+            },
+          },
+        },
+        "npcs": Array [
+          Object {
+    @@ -771,11 +771,11 @@
+              "gender": "female",
+              "health": 100,
+              "id": "npc_starter_1",
+              "legalStatus": "citizen",
+              "memories": Array [],
+    -         "name": "Alice",
+    +         "name": "Edith",
+              "needs": Object {
+                "autonomy": 60,
+                "intimacy": 40,
+                "nutrition": 80,
+                "purpose": 50,
+    @@ -824,11 +824,11 @@
+              "gender": "female",
+              "health": 85,
+              "id": "npc_starter_2",
+              "legalStatus": "free_resident",
+              "memories": Array [],
+    -         "name": "Grace",
+    +         "name": "Iris",
+              "needs": Object {
+                "autonomy": 60,
+                "intimacy": 40,
+                "nutrition": 80,
+                "purpose": 50,
+    @@ -876,11 +876,11 @@
+              "gender": "female",
+              "health": 100,
+              "id": "npc_starter_3",
+              "legalStatus": "contract_bound",
+              "memories": Array [],
+    -         "name": "Iris",
+    +         "name": "Alice",
+              "needs": Object {
+                "autonomy": 60,
+                "intimacy": 40,
+                "nutrition": 80,
+                "purpose": 50,
+    @@ -919,11 +919,11 @@
+            "ai-1",
+            "ai-2",
+          ],
+          "generator": "outside-gen-01",
+          "scenarioId": "outside-trial-01",
+    -     "seed": 33,
+    +     "seed": 22,
+          "tiles": Array [
+            Object {
+              "feature": null,
+              "id": "o01",
+              "knownBy": Array [
+    @@ -1002,14 +1002,11 @@
+                "ai-2",
+              ],
+              "owner": "ai-2",
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o11",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1024,12 +1021,12 @@
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+              "feature": Object {
+    -           "kind": "deposit",
+    -           "resource": "wood",
+    +           "claimedBy": null,
+    +           "kind": "loot",
+              },
+              "id": "o14",
+              "knownBy": Array [],
+              "owner": null,
+            },
+    @@ -1074,14 +1071,11 @@
+              "id": "o21",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o22",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1125,23 +1119,32 @@
+              "id": "o29",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "kind": "deposit",
+    +           "resource": "wood",
+    +         },
+              "id": "o30",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o31",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "kind": "deposit",
+    +           "resource": "wheat",
+    +         },
+              "id": "o32",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1149,14 +1152,11 @@
+              "id": "o33",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o34",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1171,22 +1171,19 @@
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+              "feature": Object {
+    -           "kind": "deposit",
+    -           "resource": "iron",
+    +           "claimedBy": null,
+    +           "kind": "loot",
+              },
+              "id": "o37",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "kind": "deposit",
+    -           "resource": "wheat",
+    -         },
+    +         "feature": null,
+              "id": "o38",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1209,11 +1206,14 @@
+              "id": "o41",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o42",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1227,11 +1227,14 @@
+              "id": "o44",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o45",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1239,11 +1242,14 @@
+              "id": "o46",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o47",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1260,11 +1266,14 @@
+              "id": "o49",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o50",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1278,11 +1287,14 @@
+              "id": "o52",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "kind": "deposit",
+    +           "resource": "iron",
+    +         },
+              "id": "o53",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1296,14 +1308,11 @@
+              "id": "o55",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "kind": "deposit",
+    -           "resource": "wood",
+    -         },
+    +         "feature": null,
+              "id": "o56",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1311,11 +1320,14 @@
+              "id": "o57",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o58",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1323,14 +1335,11 @@
+              "id": "o59",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o60",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1338,14 +1347,11 @@
+              "id": "o61",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o62",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1353,14 +1359,11 @@
+              "id": "o63",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o64",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1380,11 +1383,14 @@
+              "id": "o67",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "kind": "deposit",
+    +           "resource": "wheat",
+    +         },
+              "id": "o68",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1419,23 +1425,17 @@
+              "id": "o73",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o74",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o75",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1461,11 +1461,14 @@
+              "id": "o79",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o80",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1486,28 +1489,28 @@
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+              "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    +           "kind": "deposit",
+    +           "resource": "wheat",
+              },
+              "id": "o84",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "kind": "deposit",
+    -           "resource": "wood",
+    -         },
+    +         "feature": null,
+              "id": "o85",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o86",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1521,14 +1524,11 @@
+              "id": "o88",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o89",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+
+      182 |   const {watchMigrationActivity}=await import('./storage.helpers.ts');const activity=await watchMigrationActivity(page);await releaseStoreCompletion(page);
+      183 |   await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
+    > 184 |   expect(await exportLife(page)).toEqual({...savedC,city:{...savedC.city,revision:1}});
+          |                                  ^
+      185 |   expect((await readStoredRecords(writer)).filter(r=>r.table!=='system')).toEqual(before.filter(r=>r.table!=='system'));expect(await storedSaveText(writer)).toBe(bytes(savedC));
+      186 |   expect((await readStoredRecords(writer)).filter(r=>r.table==='system')).toEqual([marker]);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(legacy);
+      187 |   expect(await activity()).toEqual({readwrite:1,writes:scenario==='marker winner'?[]:[{operation:'put',table:'system',key:['_','migration:legacy-local-checkpoint']}]});
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\storage.spec.ts:184:34
+
+    Error Context: test-results\storage-fix3-browser-atomi-a196d-reserves-C-after-existing-B-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\storage-fix3-browser-atomi-a196d-reserves-C-after-existing-B-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\storage-fix3-browser-atomi-a196d-reserves-C-after-existing-B-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\storage.spec.ts:161:71 › fix3 browser: atomic migration preserves C after empty 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 67
+    + Received  + 67
+
+    @@ -748,11 +748,11 @@
+              },
+            },
+            "week": 1,
+            "worldMetadata": Object {
+              "gameVersion": "0.1.0",
+    -         "worldSeed": 33,
+    +         "worldSeed": 11,
+            },
+          },
+        },
+        "npcs": Array [
+          Object {
+    @@ -771,11 +771,11 @@
+              "gender": "female",
+              "health": 100,
+              "id": "npc_starter_1",
+              "legalStatus": "citizen",
+              "memories": Array [],
+    -         "name": "Alice",
+    +         "name": "June",
+              "needs": Object {
+                "autonomy": 60,
+                "intimacy": 40,
+                "nutrition": 80,
+                "purpose": 50,
+    @@ -824,11 +824,11 @@
+              "gender": "female",
+              "health": 85,
+              "id": "npc_starter_2",
+              "legalStatus": "free_resident",
+              "memories": Array [],
+    -         "name": "Grace",
+    +         "name": "Hazel",
+              "needs": Object {
+                "autonomy": 60,
+                "intimacy": 40,
+                "nutrition": 80,
+                "purpose": 50,
+    @@ -876,11 +876,11 @@
+              "gender": "female",
+              "health": 100,
+              "id": "npc_starter_3",
+              "legalStatus": "contract_bound",
+              "memories": Array [],
+    -         "name": "Iris",
+    +         "name": "Wendy",
+              "needs": Object {
+                "autonomy": 60,
+                "intimacy": 40,
+                "nutrition": 80,
+                "purpose": 50,
+    @@ -919,11 +919,11 @@
+            "ai-1",
+            "ai-2",
+          ],
+          "generator": "outside-gen-01",
+          "scenarioId": "outside-trial-01",
+    -     "seed": 33,
+    +     "seed": 11,
+          "tiles": Array [
+            Object {
+              "feature": null,
+              "id": "o01",
+              "knownBy": Array [
+    @@ -1002,14 +1002,11 @@
+                "ai-2",
+              ],
+              "owner": "ai-2",
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o11",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1032,11 +1029,14 @@
+              "id": "o14",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o15",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1074,14 +1074,11 @@
+              "id": "o21",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o22",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1119,17 +1116,23 @@
+              "id": "o28",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o29",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o30",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1149,14 +1152,11 @@
+              "id": "o33",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o34",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1164,11 +1164,14 @@
+              "id": "o35",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "kind": "deposit",
+    +           "resource": "wood",
+    +         },
+              "id": "o36",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1179,14 +1182,11 @@
+              "id": "o37",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "kind": "deposit",
+    -           "resource": "wheat",
+    -         },
+    +         "feature": null,
+              "id": "o38",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1200,14 +1200,11 @@
+              "id": "o40",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o41",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1246,12 +1243,12 @@
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+              "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    +           "kind": "deposit",
+    +           "resource": "wood",
+              },
+              "id": "o48",
+              "knownBy": Array [],
+              "owner": null,
+            },
+    @@ -1296,14 +1293,11 @@
+              "id": "o55",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "kind": "deposit",
+    -           "resource": "wood",
+    -         },
+    +         "feature": null,
+              "id": "o56",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1328,39 +1322,39 @@
+              "feature": Object {
+                "claimedBy": null,
+                "kind": "loot",
+              },
+              "id": "o60",
+    -         "knownBy": Array [],
+    -         "owner": null,
+    -       },
+    -       Object {
+    -         "feature": null,
+    -         "id": "o61",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+              "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    +           "kind": "deposit",
+    +           "resource": "wood",
+              },
+    -         "id": "o62",
+    +         "id": "o61",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+              "feature": null,
+    -         "id": "o63",
+    +         "id": "o62",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+              "feature": Object {
+                "claimedBy": null,
+                "kind": "loot",
+              },
+    +         "id": "o63",
+    +         "knownBy": Array [],
+    +         "owner": null,
+    +       },
+    +       Object {
+    +         "feature": null,
+              "id": "o64",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1380,11 +1374,14 @@
+              "id": "o67",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o68",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1398,17 +1395,23 @@
+              "id": "o70",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o71",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o72",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1428,14 +1431,11 @@
+              "id": "o74",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o75",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1455,11 +1455,14 @@
+              "id": "o78",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o79",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1479,29 +1482,26 @@
+              "id": "o82",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o83",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o84",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "kind": "deposit",
+    -           "resource": "wood",
+    -         },
+    +         "feature": null,
+              "id": "o85",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1515,20 +1515,20 @@
+              "id": "o87",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o88",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o89",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+
+      182 |   const {watchMigrationActivity}=await import('./storage.helpers.ts');const activity=await watchMigrationActivity(page);await releaseStoreCompletion(page);
+      183 |   await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
+    > 184 |   expect(await exportLife(page)).toEqual({...savedC,city:{...savedC.city,revision:1}});
+          |                                  ^
+      185 |   expect((await readStoredRecords(writer)).filter(r=>r.table!=='system')).toEqual(before.filter(r=>r.table!=='system'));expect(await storedSaveText(writer)).toBe(bytes(savedC));
+      186 |   expect((await readStoredRecords(writer)).filter(r=>r.table==='system')).toEqual([marker]);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(legacy);
+      187 |   expect(await activity()).toEqual({readwrite:1,writes:scenario==='marker winner'?[]:[{operation:'put',table:'system',key:['_','migration:legacy-local-checkpoint']}]});
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\storage.spec.ts:184:34
+
+    Error Context: test-results\storage-fix3-browser-atomi-3ad1e-ion-preserves-C-after-empty-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\storage-fix3-browser-atomi-3ad1e-ion-preserves-C-after-empty-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\storage-fix3-browser-atomi-3ad1e-ion-preserves-C-after-empty-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests\e2e\storage.spec.ts:161:71 › fix3 browser: atomic migration preserves C after marker winner 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 67
+    + Received  + 67
+
+    @@ -748,11 +748,11 @@
+              },
+            },
+            "week": 1,
+            "worldMetadata": Object {
+              "gameVersion": "0.1.0",
+    -         "worldSeed": 33,
+    +         "worldSeed": 11,
+            },
+          },
+        },
+        "npcs": Array [
+          Object {
+    @@ -771,11 +771,11 @@
+              "gender": "female",
+              "health": 100,
+              "id": "npc_starter_1",
+              "legalStatus": "citizen",
+              "memories": Array [],
+    -         "name": "Alice",
+    +         "name": "June",
+              "needs": Object {
+                "autonomy": 60,
+                "intimacy": 40,
+                "nutrition": 80,
+                "purpose": 50,
+    @@ -824,11 +824,11 @@
+              "gender": "female",
+              "health": 85,
+              "id": "npc_starter_2",
+              "legalStatus": "free_resident",
+              "memories": Array [],
+    -         "name": "Grace",
+    +         "name": "Hazel",
+              "needs": Object {
+                "autonomy": 60,
+                "intimacy": 40,
+                "nutrition": 80,
+                "purpose": 50,
+    @@ -876,11 +876,11 @@
+              "gender": "female",
+              "health": 100,
+              "id": "npc_starter_3",
+              "legalStatus": "contract_bound",
+              "memories": Array [],
+    -         "name": "Iris",
+    +         "name": "Wendy",
+              "needs": Object {
+                "autonomy": 60,
+                "intimacy": 40,
+                "nutrition": 80,
+                "purpose": 50,
+    @@ -919,11 +919,11 @@
+            "ai-1",
+            "ai-2",
+          ],
+          "generator": "outside-gen-01",
+          "scenarioId": "outside-trial-01",
+    -     "seed": 33,
+    +     "seed": 11,
+          "tiles": Array [
+            Object {
+              "feature": null,
+              "id": "o01",
+              "knownBy": Array [
+    @@ -1002,14 +1002,11 @@
+                "ai-2",
+              ],
+              "owner": "ai-2",
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o11",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1032,11 +1029,14 @@
+              "id": "o14",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o15",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1074,14 +1074,11 @@
+              "id": "o21",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o22",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1119,17 +1116,23 @@
+              "id": "o28",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o29",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o30",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1149,14 +1152,11 @@
+              "id": "o33",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o34",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1164,11 +1164,14 @@
+              "id": "o35",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "kind": "deposit",
+    +           "resource": "wood",
+    +         },
+              "id": "o36",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1179,14 +1182,11 @@
+              "id": "o37",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "kind": "deposit",
+    -           "resource": "wheat",
+    -         },
+    +         "feature": null,
+              "id": "o38",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1200,14 +1200,11 @@
+              "id": "o40",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o41",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1246,12 +1243,12 @@
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+              "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    +           "kind": "deposit",
+    +           "resource": "wood",
+              },
+              "id": "o48",
+              "knownBy": Array [],
+              "owner": null,
+            },
+    @@ -1296,14 +1293,11 @@
+              "id": "o55",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "kind": "deposit",
+    -           "resource": "wood",
+    -         },
+    +         "feature": null,
+              "id": "o56",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1328,39 +1322,39 @@
+              "feature": Object {
+                "claimedBy": null,
+                "kind": "loot",
+              },
+              "id": "o60",
+    -         "knownBy": Array [],
+    -         "owner": null,
+    -       },
+    -       Object {
+    -         "feature": null,
+    -         "id": "o61",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+              "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    +           "kind": "deposit",
+    +           "resource": "wood",
+              },
+    -         "id": "o62",
+    +         "id": "o61",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+              "feature": null,
+    -         "id": "o63",
+    +         "id": "o62",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+              "feature": Object {
+                "claimedBy": null,
+                "kind": "loot",
+              },
+    +         "id": "o63",
+    +         "knownBy": Array [],
+    +         "owner": null,
+    +       },
+    +       Object {
+    +         "feature": null,
+              "id": "o64",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1380,11 +1374,14 @@
+              "id": "o67",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o68",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1398,17 +1395,23 @@
+              "id": "o70",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o71",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o72",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1428,14 +1431,11 @@
+              "id": "o74",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o75",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1455,11 +1455,14 @@
+              "id": "o78",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o79",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1479,29 +1482,26 @@
+              "id": "o82",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o83",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o84",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "kind": "deposit",
+    -           "resource": "wood",
+    -         },
+    +         "feature": null,
+              "id": "o85",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    @@ -1515,20 +1515,20 @@
+              "id": "o87",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": null,
+    +         "feature": Object {
+    +           "claimedBy": null,
+    +           "kind": "loot",
+    +         },
+              "id": "o88",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+    -         "feature": Object {
+    -           "claimedBy": null,
+    -           "kind": "loot",
+    -         },
+    +         "feature": null,
+              "id": "o89",
+              "knownBy": Array [],
+              "owner": null,
+            },
+            Object {
+
+      182 |   const {watchMigrationActivity}=await import('./storage.helpers.ts');const activity=await watchMigrationActivity(page);await releaseStoreCompletion(page);
+      183 |   await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
+    > 184 |   expect(await exportLife(page)).toEqual({...savedC,city:{...savedC.city,revision:1}});
+          |                                  ^
+      185 |   expect((await readStoredRecords(writer)).filter(r=>r.table!=='system')).toEqual(before.filter(r=>r.table!=='system'));expect(await storedSaveText(writer)).toBe(bytes(savedC));
+      186 |   expect((await readStoredRecords(writer)).filter(r=>r.table==='system')).toEqual([marker]);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(legacy);
+      187 |   expect(await activity()).toEqual({readwrite:1,writes:scenario==='marker winner'?[]:[{operation:'put',table:'system',key:['_','migration:legacy-local-checkpoint']}]});
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\storage.spec.ts:184:34
+
+    Error Context: test-results\storage-fix3-browser-atomi-59b74-erves-C-after-marker-winner-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\storage-fix3-browser-atomi-59b74-erves-C-after-marker-winner-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\storage-fix3-browser-atomi-59b74-erves-C-after-marker-winner-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    [chromium] › tests\e2e\storage.spec.ts:161:71 › fix3 browser: atomic migration preserves C after existing B 
+    [chromium] › tests\e2e\storage.spec.ts:161:71 › fix3 browser: atomic migration preserves C after empty 
+    [chromium] › tests\e2e\storage.spec.ts:161:71 › fix3 browser: atomic migration preserves C after marker winner 
+
+EXIT=1 DURATION_MS=26687 END_UTC=2026-11-12T07:21:52.644Z

@@ -1,0 +1,57 @@
+UTC=2026-11-12T04:46:49.381Z HEAD=447e74cacb60bebaeece15d77baa9ffba24321cb TREE=d4ac0ae62261f5d6712fdb08d58564a8d569b57a
+STATUS="M packages/ui/src/__tests__/character-life-session.test.ts\n M tests/e2e/storage.spec.ts"
+ENV CI=1
+COMMAND=npx playwright test tests/e2e/storage.spec.ts -g "fix1 F3"
+[WebServer] (node:26376) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:55852) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:56132) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\storage.spec.ts:89:1 › fix1 F3: temporarily blocked localStorage retries legacy migration without a marker (953ms)
+
+
+  1) [chromium] › tests\e2e\storage.spec.ts:89:1 › fix1 F3: temporarily blocked localStorage retries legacy migration without a marker 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 9
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "id": "migration:legacy-local-checkpoint",
+    +     "schemaVersion": 1,
+    +     "slotId": "_",
+    +     "table": "system",
+    +     "value": true,
+    +   },
+    + ]
+
+      94 |  },{key:KEY,seed});
+      95 |  await page.goto('/');await expect(page.getByRole('heading',{name:'HAVEN',exact:true})).toBeVisible();
+    > 96 |  expect((await readStoredRecords(page)).filter(r=>r.table==='system')).toEqual([]);
+         |                                                                        ^
+      97 |  await page.evaluate(()=>(window as unknown as {restoreLegacyStorage:()=>void}).restoreLegacyStorage());
+      98 |  await importLife(page,makeLife(54321));await go(page,'session');await button(page,'Continue locally').click();
+      99 |  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\storage.spec.ts:96:72
+
+    Error Context: test-results\storage-fix1-F3-temporaril-f6f95--migration-without-a-marker-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\storage-fix1-F3-temporaril-f6f95--migration-without-a-marker-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\storage-fix1-F3-temporaril-f6f95--migration-without-a-marker-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\storage.spec.ts:89:1 › fix1 F3: temporarily blocked localStorage retries legacy migration without a marker 
+
+EXIT=1 DURATION_MS=21451 END_UTC=2026-11-12T04:47:10.832Z

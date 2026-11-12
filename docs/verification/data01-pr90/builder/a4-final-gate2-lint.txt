@@ -1,0 +1,10 @@
+UTC=2026-11-12T03:24:32.455Z HEAD=6ecb887650d7d165dcc07f02666b4ac4dba3f955 TREE=52927b934bcad68bc4dabb52f60d27a4db4ff47c
+STATUS=""
+ENV CI=
+COMMAND=npm run lint
+
+> build-settlement@0.1.0 lint
+> eslint . --max-warnings=0
+
+
+EXIT=0 DURATION_MS=18636 END_UTC=2026-11-12T03:24:51.090Z

@@ -1,0 +1,28 @@
+READ-ONLY DIAGNOSIS AT HOLD
+packages/simulation/src/tile-trial.ts:99:     } else if (c.type === "LOAD_TRIAL") {
+packages/simulation/src/tile-trial.ts:100:       if (c.snapshot && typeof c.snapshot === 'object' && !Object.hasOwn(c.snapshot, 'society')) return fail('INVALID_STATE', 'Checkpoint economy is incompatible with this society city.');
+packages/simulation/src/tile-trial.ts:101:       if (!isTileTrialPlanningState(c.snapshot) || !c.snapshot.society) return fail("INVALID_SAVE_STATE", "Checkpoint must contain a valid society Planning state.");
+packages/simulation/src/tile-trial.ts:102:       next = structuredClone(c.snapshot);
+packages/simulation/src/tile-trial.ts:103:       next.revision = Math.max(state.revision, next.revision);
+packages/simulation/src/tile-trial.ts:104:     } else if (c.type === "END_WEEK") {
+packages/simulation/src/tile-trial.ts:177:     next.revision = trialSafe(next.revision + 1);
+packages/simulation/src/tile-trial.ts:178:     if (!isTileTrialState(next)) return fail("INVALID_PLAN", "The action exceeds building capacity or the shared workforce pool.");
+packages/simulation/src/tile-trial.ts:179:     return { success: true, nextState: next, ...(report ? { report } : {}) };
+
+packages/ui/src/world-session.ts:43: export function prepareWorldSessionLoad(live: WorldSessionState, loaded: unknown, expectedRevision: number): { success: true; next: WorldSessionState } | Failure {
+packages/ui/src/world-session.ts:44:   try {
+packages/ui/src/world-session.ts:45:     const captured = captureLoadedSession(loaded);
+packages/ui/src/world-session.ts:46:     if (!captured) return fail('Checkpoint must contain a valid complete world session in Planning.');
+packages/ui/src/world-session.ts:47:     const result = executeTileTrialCommand(live.city, { type: 'LOAD_TRIAL', expectedRevision, snapshot: captured.city });
+packages/ui/src/world-session.ts:48:     return result.success ? { success: true, next: { city: result.nextState, outside: captured.outside } } : fail(result.error.message);
+
+tests/e2e/storage.spec.ts:180:    expect((await readStoredRecords(writer)).filter(r=>r.table==='system')).toEqual([marker]);
+tests/e2e/storage.spec.ts:181:   }
+tests/e2e/storage.spec.ts:182:   const {watchMigrationActivity}=await import('./storage.helpers.ts');const activity=await watchMigrationActivity(page);await releaseStoreCompletion(page);
+tests/e2e/storage.spec.ts:183:   await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
+tests/e2e/storage.spec.ts:184:   expect(await exportLife(page)).toEqual({...savedC,city:{...savedC.city,revision:1}});
+tests/e2e/storage.spec.ts:185:   expect((await readStoredRecords(writer)).filter(r=>r.table!=='system')).toEqual(before.filter(r=>r.table!=='system'));expect(await storedSaveText(writer)).toBe(bytes(savedC));
+tests/e2e/storage.spec.ts:186:   expect((await readStoredRecords(writer)).filter(r=>r.table==='system')).toEqual([marker]);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(legacy);
+tests/e2e/storage.spec.ts:187:   expect(await activity()).toEqual({readwrite:1,writes:scenario==='marker winner'?[]:[{operation:'put',table:'system',key:['_','migration:legacy-local-checkpoint']}]});
+tests/e2e/storage.spec.ts:188:   expect((await storeMarks(page)).filter(name=>name==='haven.store.write')).toEqual(['haven.store.write']);
+

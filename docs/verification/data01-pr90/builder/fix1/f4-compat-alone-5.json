@@ -1,0 +1,1 @@
+[["f4-compat-alone-5","npx vitest run packages/persistence/src/__tests__/session-records.test.ts -t \"round trips fixture society-v4/life-new-game.json\""]]

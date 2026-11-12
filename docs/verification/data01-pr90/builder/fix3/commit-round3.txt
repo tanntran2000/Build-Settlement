@@ -1,0 +1,65 @@
+UTC=2026-11-12T07:39:53.928Z
+COMMAND=git diff --name-only
+packages/persistence/src/__tests__/game-store.test.ts
+packages/persistence/src/game-store.ts
+packages/persistence/src/memory-store.ts
+packages/ui/src/__tests__/character-life-session.test.ts
+packages/ui/src/character-life-session.ts
+packages/ui/src/indexeddb-store.ts
+tests/e2e/storage.helpers.ts
+tests/e2e/storage.spec.ts
+warning: in the working copy of 'packages/persistence/src/__tests__/game-store.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/persistence/src/game-store.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/persistence/src/memory-store.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/ui/src/__tests__/character-life-session.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/ui/src/character-life-session.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/e2e/storage.helpers.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/e2e/storage.spec.ts', LF will be replaced by CRLF the next time Git touches it
+EXIT=0
+COMMAND=git diff --check
+warning: in the working copy of 'packages/persistence/src/__tests__/game-store.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/persistence/src/game-store.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/persistence/src/memory-store.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/ui/src/__tests__/character-life-session.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/ui/src/character-life-session.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/e2e/storage.helpers.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/e2e/storage.spec.ts', LF will be replaced by CRLF the next time Git touches it
+EXIT=0
+COMMAND=git add -- packages/persistence/src/game-store.ts packages/persistence/src/memory-store.ts packages/ui/src/character-life-session.ts packages/ui/src/indexeddb-store.ts packages/persistence/src/__tests__/game-store.test.ts packages/ui/src/__tests__/character-life-session.test.ts tests/e2e/storage.helpers.ts tests/e2e/storage.spec.ts
+warning: in the working copy of 'packages/persistence/src/__tests__/game-store.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/persistence/src/game-store.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/persistence/src/memory-store.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/ui/src/__tests__/character-life-session.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/ui/src/character-life-session.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/e2e/storage.helpers.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/e2e/storage.spec.ts', LF will be replaced by CRLF the next time Git touches it
+EXIT=0
+COMMAND=git diff --cached --check
+EXIT=0
+COMMAND=git commit -F C:\Users\Admin\.t3\local-drafts\data01-prA\fix3\commit-message.txt
+[feat/data01-storage c1faf87] fix(persistence): migrate legacy checkpoints atomically
+ 8 files changed, 160 insertions(+), 8 deletions(-)
+EXIT=0
+COMMAND=git rev-parse HEAD
+c1faf87c10f790f68964f92fedecde86b2700d8d
+EXIT=0
+COMMAND=git rev-parse HEAD^{tree}
+ab89dbb7c719499233c6a0565aafe3a44a749882
+EXIT=0
+COMMAND=git status --porcelain
+EXIT=0
+COMMAND=git show --no-patch --format=fuller HEAD
+commit c1faf87c10f790f68964f92fedecde86b2700d8d
+Author: [identity omitted from evidence]
+AuthorDate: Thu Nov 12 14:39:54 2026 +0700
+Commit: [identity omitted from evidence]
+CommitDate: Thu Nov 12 14:39:54 2026 +0700
+
+    fix(persistence): migrate legacy checkpoints atomically
+    
+    A pending legacy migration could overwrite a newer save from another tab after its preliminary read. Add an atomic migrateSlot operation that checks the marker and current slot inside one transaction, preserves existing records, and returns the committed slot for the checkpoint service to load. Keep legacy bytes intact and retain blocked-storage recovery.
+    
+    Cover memory-store semantics, interleaved service reads and real two-page IndexedDB races, including marker-only writes and the existing load revision contract.
+    
+    Co-authored-by: Codex <noreply@openai.com>
+EXIT=0

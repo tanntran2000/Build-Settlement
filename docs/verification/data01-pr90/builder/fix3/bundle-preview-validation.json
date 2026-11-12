@@ -1,0 +1,20 @@
+{
+  "utc": "2026-11-12T07:44:42.025Z",
+  "head": "c1faf87c10f790f68964f92fedecde86b2700d8d",
+  "previews": [
+    {
+      "width": 728,
+      "contentHeight": 269,
+      "consoleMessages": [],
+      "overflowObserved": false
+    },
+    {
+      "width": 390,
+      "contentHeight": 448,
+      "consoleMessages": [],
+      "overflowObserved": false
+    }
+  ],
+  "source": "bundle-comparison.html",
+  "renderAtFinalReply": true
+}

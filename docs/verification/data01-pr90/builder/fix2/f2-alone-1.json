@@ -1,0 +1,1 @@
+[["f2-red-alone-1","npx vitest run packages/persistence/src/__tests__/session-records.test.ts -t \"fix2 F2: malformed npc identifies\""]]

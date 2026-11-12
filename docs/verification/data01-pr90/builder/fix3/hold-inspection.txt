@@ -1,0 +1,14 @@
+UTC=2026-11-12T07:07:52.784Z
+HEAD=ca137a888e92aeba4794239cc5f5cef48d0181d6
+TREE=721d2937e9f7dddb74d03c002ca0f260816162c7
+STATUS=""
+Read-only inspection; no tests or gates executed.
+
+packages/ui/src/__tests__/character-life-session.test.ts:63:   expect(values).toEqual(before); expect(await store.read('main')).toBeNull();expect(vi.mocked(store.replaceSlot).mock.calls).toEqual([['main',[],[{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]]]);
+packages/ui/src/__tests__/character-life-session.test.ts:160:  values.set(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,text);const before=new Map(values);expect((await readLocalCharacterLife(checkpointDeps)).success).toBe(false);expect(storage.getItem.mock.calls).toEqual([[CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY]]);expect(await store.read('main')).toBeNull();expect(vi.mocked(store.replaceSlot).mock.calls).toEqual([['main',[],[{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]]]);expect(values).toEqual(before);
+packages/ui/src/__tests__/character-life-session.test.ts:292:  const before=await d.store.read('main');expect(before).toHaveLength(7);const replace=vi.spyOn(d.store,'replaceSlot');
+packages/ui/src/__tests__/character-life-session.test.ts:294:  expect(await readLocalCharacterLife(d)).toEqual({success:true,state:b});
+packages/ui/src/__tests__/character-life-session.test.ts:295:  expect(await d.store.read('main')).toEqual(before);expect(await d.store.getSystem(MARKER)).toEqual({slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true});
+packages/ui/src/__tests__/character-life-session.test.ts:296:  expect(replace).toHaveBeenCalledExactlyOnceWith('main',before,[{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]);
+packages/ui/src/__tests__/character-life-session.test.ts:297:  expect(await replace.mock.results[0].value).toEqual({put:0,deleted:0,unchanged:7});
+packages/ui/src/__tests__/character-life-session.test.ts:298:  expect(d.legacy.getItem).toHaveBeenCalledTimes(1);expect(d.legacy.removeItem).not.toHaveBeenCalled();expect(original()).toBe(encoded.text);

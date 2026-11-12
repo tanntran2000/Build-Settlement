@@ -1,0 +1,1 @@
+[["a3-read-once-green","npx vitest run packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/crisis-checkpoint.test.ts"],["a3-final-build-preview","npm run build"],["a3-final-e2e","npm run test:smoke -- tests/e2e/storage.spec.ts tests/e2e/autosave.spec.ts tests/e2e/tile-local-checkpoint.spec.ts tests/e2e/title.spec.ts"]]

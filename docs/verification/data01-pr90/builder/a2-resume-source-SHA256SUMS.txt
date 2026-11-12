@@ -1,0 +1,10 @@
+UTC 2026-11-12T02:35:47.575Z
+HEAD e51de7161d3b5164c201ffe83a1bef74702e0d12
+Committed base tree ec6f5efd5bad969d01e08aebebef0cbb72f287e8
+These hashes describe the uncommitted restored product plus merged/awaited tests used by GREEN-attempt and isolation diagnostics. RED used the same test files, A1 product files and no indexeddb-store.ts.
+34b6c9fe8017f6738e0d88297aec257a2ba00eddca1ec9b9c50fc5a49b43aaf1  packages/ui/src/CharacterLifeApp.svelte
+1c4ce7506c8a1387943edaf38aebcbaaba7c2683f4b7cc65363377e6d4c424cb  packages/ui/src/TileManagement.svelte
+2c656ed8ddbdfca14789de9a2ae8b22a3a1ad83c99fba13dbd32c43286d9daaf  packages/ui/src/__tests__/character-life-session.test.ts
+f80e216f95781e7ccac94061b5e7d4669d561e6d2225151624c1337b15f5de20  packages/ui/src/__tests__/crisis-checkpoint.test.ts
+3c698d3771977cc447c8c96409f9250d7649501cb7b259be488b56917496cd0f  packages/ui/src/character-life-session.ts
+7a1403d471cc7a3a9c791c2b6322946383a8690c2ab2527688a325213f962e98  packages/ui/src/indexeddb-store.ts

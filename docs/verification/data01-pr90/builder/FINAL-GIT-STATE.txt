@@ -1,0 +1,23 @@
+UTC 2026-11-12T04:24:03.559Z
+
+HEAD
+9fbf27efd46fe0d6f77c7c60b43d09fc0dada943
+
+TREE
+f1c9cc07837efd76deb27e934cc1b744b61ebdac
+
+STATUS
+On branch feat/data01-storage
+Your branch is ahead of 'origin/main' by 5 commits.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+
+SHORT_STATUS
+
+COMMITS
+e51de7161d3b5164c201ffe83a1bef74702e0d12 feat(persistence): game store port, session records and memory store
+bd21b19de309cd5725d303d3ca87b98b0978ade5 feat(ui): IndexedDB game store and async checkpoint service
+48127254bb285121a36d42526f0574f9466ea4eb feat(ui): saves go to the IndexedDB game store
+6ecb887650d7d165dcc07f02666b4ac4dba3f955 style(persistence): remove trailing blank lines
+9fbf27efd46fe0d6f77c7c60b43d09fc0dada943 test(ui): retain checkpoint storage invariants

@@ -1,0 +1,161 @@
+diff --git a/packages/ui/src/CharacterLifeApp.svelte b/packages/ui/src/CharacterLifeApp.svelte
+index d42ad94..82a8d4f 100644
+--- a/packages/ui/src/CharacterLifeApp.svelte
++++ b/packages/ui/src/CharacterLifeApp.svelte
+@@ -18 +18 @@
+-  function readSlot() {
++  async function readSlot() {
+@@ -20 +20 @@
+-    const result = readLocalCharacterLife();
++    const result = await readLocalCharacterLife();
+@@ -25 +25 @@
+-  onMount(readSlot);
++  onMount(() => { void readSlot(); });
+diff --git a/packages/ui/src/TileManagement.svelte b/packages/ui/src/TileManagement.svelte
+index de0221c..e2d7069 100644
+--- a/packages/ui/src/TileManagement.svelte
++++ b/packages/ui/src/TileManagement.svelte
+@@ -106 +106 @@
+-        const cleared = clearFallenCharacterLifeCheckpoint(true, state.society.crisis.stage);
++        const cleared = await clearFallenCharacterLifeCheckpoint(true, state.society.crisis.stage);
+@@ -124 +124 @@
+-      const result = saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
++      const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+@@ -198,2 +198,2 @@
+-  function saveLocally() {
+-    const result = saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
++  async function saveLocally() {
++    const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+@@ -203,2 +203,2 @@
+-  function continueLocally() {
+-    const result = readLocalCharacterLife();
++  async function continueLocally() {
++    const result = await readLocalCharacterLife();
+@@ -208 +208 @@
+-  function mainMenu() {
++  async function mainMenu() {
+@@ -210 +210 @@
+-    const result = saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
++    const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+diff --git a/packages/ui/src/__tests__/character-life-session.test.ts b/packages/ui/src/__tests__/character-life-session.test.ts
+index bf5125a..37f63ae 100644
+--- a/packages/ui/src/__tests__/character-life-session.test.ts
++++ b/packages/ui/src/__tests__/character-life-session.test.ts
+@@ -2 +2 @@ import { createCharacterLifeSession,createNpcWorldSession,DEFAULT_PLAYER_DRAFT }
+-import { deserializeCharacterLifeSave,serializeCharacterLifeSave } from '@haven/persistence';
++import { createMemoryGameStore,sessionToRecords,deserializeCharacterLifeSave,serializeCharacterLifeSave } from '@haven/persistence';
+@@ -5 +5 @@ import { afterEach,beforeEach,expect,it,vi } from 'vitest';
+-import { CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,isPlayableCheckpoint,prepareCharacterLifeLoad,readLocalCharacterLife,saveLocalCharacterLife } from '../character-life-session.js';
++import { clearFallenCharacterLifeCheckpoint,OLD_CHECKPOINT_MESSAGE,CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,isPlayableCheckpoint,prepareCharacterLifeLoad,readLocalCharacterLife,saveLocalCharacterLife } from '../character-life-session.js';
+@@ -41 +41 @@ it('uses its own slot key', () => {
+-it('save writes only its key and reads back the same session; other keys keep "protected-bytes"', () => {
++it('save writes only its key and reads back the same session; other keys keep "protected-bytes"', async () => {
+@@ -44 +44 @@ it('save writes only its key and reads back the same session; other keys keep "p
+-  expect(saveLocalCharacterLife(s)).toEqual({ success: true, replaced: false });
++  expect((await saveLocalCharacterLife(s))).toEqual({ success: true, replaced: false });
+@@ -46,2 +46,2 @@ it('save writes only its key and reads back the same session; other keys keep "p
+-  expect(readLocalCharacterLife()).toEqual({ success: true, state: s });
+-  expect(saveLocalCharacterLife(s)).toEqual({ success: true, replaced: true });
++  expect((await readLocalCharacterLife())).toEqual({ success: true, state: s });
++  expect((await saveLocalCharacterLife(s))).toEqual({ success: true, replaced: true });
+@@ -50,2 +50,2 @@ it('save writes only its key and reads back the same session; other keys keep "p
+-it('read with empty slot returns the "No local checkpoint" message', () => {
+-  expect(readLocalCharacterLife()).toEqual({ success: false, message: 'No local checkpoint in this browser yet. Choose Save locally first.' });
++it('read with empty slot returns the "No local checkpoint" message', async () => {
++  expect((await readLocalCharacterLife())).toEqual({ success: false, message: 'No local checkpoint in this browser yet. Choose Save locally first.' });
+@@ -53 +53 @@ it('read with empty slot returns the "No local checkpoint" message', () => {
+-it('rejects an NPC-world checkpoint in the life slot and leaves every byte untouched', () => {
++it('rejects an NPC-world checkpoint in the life slot and leaves every byte untouched', async () => {
+@@ -57 +57 @@ it('rejects an NPC-world checkpoint in the life slot and leaves every byte untou
+-  expect(readLocalCharacterLife()).toMatchObject({ success: false, message: expect.stringContaining('left unchanged') });
++  expect((await readLocalCharacterLife())).toMatchObject({ success: false, message: expect.stringContaining('left unchanged') });
+@@ -60 +60 @@ it('rejects an NPC-world checkpoint in the life slot and leaves every byte untou
+-it('contains storage failures and never saves an invalid session', () => {
++it('contains storage failures and never saves an invalid session', async () => {
+@@ -62 +62 @@ it('contains storage failures and never saves an invalid session', () => {
+-  const before = new Map(values), result = saveLocalCharacterLife(session());
++  const before = new Map(values), result = (await saveLocalCharacterLife(session()));
+@@ -66 +66 @@ it('contains storage failures and never saves an invalid session', () => {
+-  expect(readLocalCharacterLife()).toMatchObject({ success: false, message: expect.stringContaining('Import checkpoint') });
++  expect((await readLocalCharacterLife())).toMatchObject({ success: false, message: expect.stringContaining('Import checkpoint') });
+@@ -68 +68 @@ it('contains storage failures and never saves an invalid session', () => {
+-  expect(saveLocalCharacterLife(invalid).success).toBe(false);
++  expect((await saveLocalCharacterLife(invalid)).success).toBe(false);
+@@ -100 +100 @@ it('prepare gives equal results on repeated calls', () => {
+-it('Continue never reads older Life slots',()=>{
++it('Continue never reads older Life slots',async ()=>{
+@@ -104 +104 @@ it('Continue never reads older Life slots',()=>{
+- expect(readLocalCharacterLife()).toMatchObject({success:false,message:expect.stringContaining('No local checkpoint')});
++ expect((await readLocalCharacterLife())).toMatchObject({success:false,message:expect.stringContaining('No local checkpoint')});
+@@ -117 +117 @@ it('accepts society and refuses pinned Goods and legacy Life fixtures',async()=>
+-it('ported F1: active Proxy saves detached descriptor data without get callbacks',()=>{
++it('ported F1: active Proxy saves detached descriptor data without get callbacks',async ()=>{
+@@ -120 +120 @@ it('ported F1: active Proxy saves detached descriptor data without get callbacks
+- expect(saveLocalCharacterLife(proxy)).toEqual({success:true,replaced:true});expect(calls).toBe(0);expect(values.get(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY)).toBe(encoded.text);expect(storage.setItem).toHaveBeenCalledOnce();
++ expect((await saveLocalCharacterLife(proxy))).toEqual({success:true,replaced:true});expect(calls).toBe(0);expect(values.get(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY)).toBe(encoded.text);expect(storage.setItem).toHaveBeenCalledOnce();
+@@ -122 +122 @@ it('ported F1: active Proxy saves detached descriptor data without get callbacks
+-it.each(['accessor','own toJSON','revoked proxy'])('ported F1: invalid %s preserves prior valid bytes before storage access',kind=>{
++it.each(['accessor','own toJSON','revoked proxy'])('ported F1: invalid %s preserves prior valid bytes before storage access',async kind=>{
+@@ -127 +127 @@ it.each(['accessor','own toJSON','revoked proxy'])('ported F1: invalid %s preser
+- expect(saveLocalCharacterLife(kind==='revoked proxy'?proxy.proxy:s).success).toBe(false);expect(calls).toBe(0);expect(storage.getItem).not.toHaveBeenCalled();expect(storage.setItem).not.toHaveBeenCalled();expect(values).toEqual(before);
++ expect((await saveLocalCharacterLife(kind==='revoked proxy'?proxy.proxy:s)).success).toBe(false);expect(calls).toBe(0);expect(storage.getItem).not.toHaveBeenCalled();expect(storage.setItem).not.toHaveBeenCalled();expect(values).toEqual(before);
+@@ -129 +129 @@ it.each(['accessor','own toJSON','revoked proxy'])('ported F1: invalid %s preser
+-it.each(['window','getter','read','write'])('ported slot guard: %s failure preserves browser bytes and session',kind=>{
++it.each(['window','getter','read','write'])('ported slot guard: %s failure preserves browser bytes and session',async kind=>{
+@@ -135,2 +135,2 @@ it.each(['window','getter','read','write'])('ported slot guard: %s failure prese
+- const result=saveLocalCharacterLife(s);expect(result).toMatchObject({success:false,message:expect.stringContaining('Export checkpoint')});expect(JSON.stringify(result)).not.toContain('private');expect(values).toEqual(before);expect(s).toEqual(snapshot);
+- if(kind!=='write')expect(readLocalCharacterLife()).toMatchObject({success:false,message:expect.stringContaining('Import checkpoint')});
++ const result=(await saveLocalCharacterLife(s));expect(result).toMatchObject({success:false,message:expect.stringContaining('Export checkpoint')});expect(JSON.stringify(result)).not.toContain('private');expect(values).toEqual(before);expect(s).toEqual(snapshot);
++ if(kind!=='write')expect((await readLocalCharacterLife())).toMatchObject({success:false,message:expect.stringContaining('Import checkpoint')});
+@@ -138 +138 @@ it.each(['window','getter','read','write'])('ported slot guard: %s failure prese
+-it.each(['goods-v1','legacy-v1'])('saving a %s Life fixture never touches any slot',generation=>{
++it.each(['goods-v1','legacy-v1'])('saving a %s Life fixture never touches any slot',async generation=>{
+@@ -140 +140 @@ it.each(['goods-v1','legacy-v1'])('saving a %s Life fixture never touches any sl
+- expect(saveLocalCharacterLife(data.state)).toMatchObject({success:false,message:'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.'});expect(storage.getItem).not.toHaveBeenCalled();expect(storage.setItem).not.toHaveBeenCalled();expect(values).toEqual(before);
++ expect((await saveLocalCharacterLife(data.state))).toMatchObject({success:false,message:'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.'});expect(storage.getItem).not.toHaveBeenCalled();expect(storage.setItem).not.toHaveBeenCalled();expect(values).toEqual(before);
+@@ -142 +142 @@ it.each(['goods-v1','legacy-v1'])('saving a %s Life fixture never touches any sl
+-it.each(['malformed','empty','version','ruleset','opposite mode','map','negative stock','report','extra field','workforce','oversize','UTF-8 oversize'])('ported checkpoint boundary: %s bytes stay untouched',kind=>{
++it.each(['malformed','empty','version','ruleset','opposite mode','map','negative stock','report','extra field','workforce','oversize','UTF-8 oversize'])('ported checkpoint boundary: %s bytes stay untouched',async kind=>{
+@@ -155 +155 @@ it.each(['malformed','empty','version','ruleset','opposite mode','map','negative
+- values.set(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,text);const before=new Map(values);expect(readLocalCharacterLife().success).toBe(false);expect(storage.getItem.mock.calls).toEqual([[CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY]]);expect(storage.setItem).not.toHaveBeenCalled();expect(values).toEqual(before);
++ values.set(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,text);const before=new Map(values);expect((await readLocalCharacterLife()).success).toBe(false);expect(storage.getItem.mock.calls).toEqual([[CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY]]);expect(storage.setItem).not.toHaveBeenCalled();expect(values).toEqual(before);
+@@ -157 +157 @@ it.each(['malformed','empty','version','ruleset','opposite mode','map','negative
+-it.each(['ASCII','UTF-8'])('ported checkpoint byte cap: oversized %s save never touches storage',encoding=>{
++it.each(['ASCII','UTF-8'])('ported checkpoint byte cap: oversized %s save never touches storage',async encoding=>{
+@@ -159 +159 @@ it.each(['ASCII','UTF-8'])('ported checkpoint byte cap: oversized %s save never
+- expect(saveLocalCharacterLife(s)).toMatchObject({success:false,message:expect.stringContaining('1 MiB')});expect(storage.getItem).not.toHaveBeenCalled();expect(storage.setItem).not.toHaveBeenCalled();expect(values).toEqual(before);
++ expect((await saveLocalCharacterLife(s))).toMatchObject({success:false,message:expect.stringContaining('1 MiB')});expect(storage.getItem).not.toHaveBeenCalled();expect(storage.setItem).not.toHaveBeenCalled();expect(values).toEqual(before);
+@@ -162,0 +163,24 @@ const OLD_LIFE_BYTES = {"goods-v1":"{\"format\":\"haven.character-life-session.s
++
++// DATA-01 A2: merged cases; existing assertions above are unchanged.
++const KEY = CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY;
++const factory = vi.hoisted(() => ({ blocked: false }));
++vi.mock('../indexeddb-store.js', () => ({ createIndexedDbGameStore: () => { if (factory.blocked) throw Error('blocked'); return createMemoryGameStore(); } }));
++const MARKER = 'migration:legacy-local-checkpoint';
++const NONE = 'No local checkpoint in this browser yet. Choose Save locally first.';
++const BLOCKED = 'Could not save in this browser (storage blocked or full). Your game and any earlier local checkpoint were preserved. Use Export checkpoint instead.';
++const OLD = `Local checkpoint not loaded; it was left unchanged. ${OLD_CHECKPOINT_MESSAGE}`;
++const a2Session = () => { const r = createCharacterLifeSession(0, { ...structuredClone(DEFAULT_PLAYER_DRAFT),currentName: 'Ana' }); if (!r.success) throw Error(r.error.message); return r.value; };
++const a2Text = () => { const r = serializeCharacterLifeSave(a2Session()); if (!r.success) throw Error(r.error.message); return r.text; };
++function deps(initial: string | null = null, opts = { failWrites: false }) {
++  let value = initial;
++  return { store: createMemoryGameStore(opts), legacy: { getItem: vi.fn(() => value),removeItem: vi.fn(() => { value = null; }) } };
++}
++afterEach(() => { vi.unstubAllGlobals(); factory.blocked = false; });
++it('migrates legacy once and never touches legacy on second read', async () => { const d = deps(a2Text()); expect(await readLocalCharacterLife(d)).toEqual({ success: true,state: a2Session() }); expect(await d.store.getSystem(MARKER)).not.toBeNull(); expect(await readLocalCharacterLife(d)).toEqual({ success: true,state: a2Session() }); expect(d.legacy.getItem).toHaveBeenCalledTimes(1); expect(d.legacy.removeItem).not.toHaveBeenCalled(); });
++it('empty legacy writes marker', async () => { const d = deps(); expect(await readLocalCharacterLife(d)).toEqual({ success: false,message: NONE }); expect(await d.store.getSystem(MARKER)).not.toBeNull(); });
++it('invalid legacy stays unchanged with existing message', async () => { const d = deps('{}'); expect(await readLocalCharacterLife(d)).toEqual({ success: false,message: OLD }); expect(d.legacy.getItem()).toBe('{}'); expect(d.legacy.removeItem).not.toHaveBeenCalled(); expect(await d.store.getSystem(MARKER)).not.toBeNull(); });
++it('old ruleset legacy migrates and retains refusal message', async () => { const raw = readFileSync(new URL('../../../persistence/src/__tests__/fixtures/society-v6/life-new-game.json',import.meta.url),'utf8'); const d = deps(raw); expect(await readLocalCharacterLife(d)).toEqual({ success: false,message: OLD }); expect(await d.store.read('main')).toEqual(sessionToRecords('main',JSON.parse(raw).state)); expect(d.legacy.getItem()).toBe(raw); });
++it('save and read are identical and replaced changes from false to true', async () => { const d = deps(); expect(await saveLocalCharacterLife(a2Session(),d)).toEqual({ success: true,replaced: false }); expect(await readLocalCharacterLife(d)).toEqual({ success: true,state: a2Session() }); expect(await saveLocalCharacterLife(a2Session(),d)).toEqual({ success: true,replaced: true }); });
++it('failed write returns existing message and preserves records', async () => { const opts = { failWrites: false },d = deps(null,opts); await saveLocalCharacterLife(a2Session(),d); const prior = await d.store.read('main'); opts.failWrites = true; expect(await saveLocalCharacterLife(a2Session(),d)).toEqual({ success: false,message: BLOCKED }); expect(await d.store.read('main')).toEqual(prior); });
++it('fallen clear keeps marker and cannot resurrect legacy', async () => { const d = deps(a2Text()); await readLocalCharacterLife(d); expect(await clearFallenCharacterLifeCheckpoint(true,'fallen',d)).toEqual({ success: true }); expect(await d.store.read('main')).toBeNull(); expect(d.legacy.removeItem).toHaveBeenCalledWith(KEY); expect(await d.store.getSystem(MARKER)).not.toBeNull(); expect(await readLocalCharacterLife(d)).toEqual({ success: false,message: NONE }); expect(d.legacy.getItem).toHaveBeenCalledTimes(1); });
++it('factory failure falls back to memory with a one-time warning', async () => { factory.blocked = true; vi.stubGlobal('window',{ localStorage: deps().legacy }); expect(await readLocalCharacterLife()).toEqual({ success: false,message: BLOCKED }); expect(await readLocalCharacterLife()).toEqual({ success: false,message: NONE }); expect(await saveLocalCharacterLife(a2Session())).toEqual({ success: true,replaced: false }); expect(await readLocalCharacterLife()).toEqual({ success: true,state: a2Session() }); });
+diff --git a/packages/ui/src/__tests__/crisis-checkpoint.test.ts b/packages/ui/src/__tests__/crisis-checkpoint.test.ts
+index 5cb3786..6cc1fc1 100644
+--- a/packages/ui/src/__tests__/crisis-checkpoint.test.ts
++++ b/packages/ui/src/__tests__/crisis-checkpoint.test.ts
+@@ -4,2 +4,2 @@ afterEach(()=>vi.unstubAllGlobals());
+-it('clears only the life slot after a confirmed fallen End Week',()=>{const values=new Map([[KEY,'saved'],['other','protected']]);const removeItem=vi.fn((key:string)=>values.delete(key));vi.stubGlobal('window',{localStorage:{getItem:(key:string)=>values.get(key)??null,removeItem}});for(const [success,stage] of [[false,'fallen'],[true,'none'],[true,'rebellion']] as const){expect(clearFallenCharacterLifeCheckpoint(success,stage)).toEqual({success:true});expect(values.get(KEY)).toBe('saved');}expect(removeItem).not.toHaveBeenCalled();expect(clearFallenCharacterLifeCheckpoint(true,'fallen')).toEqual({success:true});expect(removeItem.mock.calls).toEqual([[KEY]]);expect(values.get('other')).toBe('protected');expect(values.has(KEY)).toBe(false);});
+-it('contains storage failures',()=>{vi.stubGlobal('window',{get localStorage(){throw Error('private')}});expect(clearFallenCharacterLifeCheckpoint(true,'fallen')).toEqual({success:false,message:'Could not clear the local checkpoint. Browser storage is unavailable.'});});
++it('clears only the life slot after a confirmed fallen End Week',async ()=>{const values=new Map([[KEY,'saved'],['other','protected']]);const removeItem=vi.fn((key:string)=>values.delete(key));vi.stubGlobal('window',{localStorage:{getItem:(key:string)=>values.get(key)??null,removeItem}});for(const [success,stage] of [[false,'fallen'],[true,'none'],[true,'rebellion']] as const){expect((await clearFallenCharacterLifeCheckpoint(success,stage))).toEqual({success:true});expect(values.get(KEY)).toBe('saved');}expect(removeItem).not.toHaveBeenCalled();expect((await clearFallenCharacterLifeCheckpoint(true,'fallen'))).toEqual({success:true});expect(removeItem.mock.calls).toEqual([[KEY]]);expect(values.get('other')).toBe('protected');expect(values.has(KEY)).toBe(false);});
++it('contains storage failures',async ()=>{vi.stubGlobal('window',{get localStorage(){throw Error('private')}});expect((await clearFallenCharacterLifeCheckpoint(true,'fallen'))).toEqual({success:false,message:'Could not clear the local checkpoint. Browser storage is unavailable.'});});

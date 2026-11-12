@@ -1,0 +1,53 @@
+UTC=2026-11-12T02:59:42.582Z HEAD=bd21b19de309cd5725d303d3ca87b98b0978ade5 TREE=062c584af2687046612a697b1b845b470fa9e20c
+COMMAND=npx playwright test tests/e2e/storage.spec.ts -g "title menu waits"
+
+Running 1 test using 1 worker
+
+  x  1 [chromium] › tests\e2e\storage.spec.ts:44:1 › title menu waits for the initial async storage read (5.6s)
+
+
+  1) [chromium] › tests\e2e\storage.spec.ts:44:1 › title menu waits for the initial async storage read 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('region', { name: 'Start', exact: true })
+    Expected: 0
+    Received: 1
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('region', { name: 'Start', exact: true }) with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Start', exact: true })
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      44 | test('title menu waits for the initial async storage read',async({page})=>{
+      45 |  await page.addInitScript(()=>{const open=IDBFactory.prototype.open;IDBFactory.prototype.open=function(...args:Parameters<typeof open>){const r=open.apply(this,args);if(args[0]==='haven'){Object.defineProperty(r,'onsuccess',{set(handler){r.addEventListener('success',event=>{Object.assign(window,{releaseStoreRead:()=>handler.call(r,event)});});}});}return r;};});
+    > 46 |  await page.goto('/');await page.waitForFunction(()=>typeof (window as unknown as {releaseStoreRead?:unknown}).releaseStoreRead==='function');await expect(page.getByRole('region',{name:'Start',exact:true})).toHaveCount(0);await expect(page.getByRole('heading',{name:'HAVEN',exact:true})).toHaveCount(0);
+         |                                                                                                                                                                                                                ^
+      47 |  await page.evaluate(()=>(window as unknown as {releaseStoreRead:()=>void}).releaseStoreRead());await expect(button(page,'New Game')).toBeFocused();
+      48 | });
+      49 | test('three started saved and fallen games retain only one marker without record growth',async({page})=>{
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\storage.spec.ts:46:208
+
+    Error Context: test-results\storage-title-menu-waits-for-the-initial-async-storage-read-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\storage-title-menu-waits-for-the-initial-async-storage-read-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\storage-title-menu-waits-for-the-initial-async-storage-read-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\storage.spec.ts:44:1 › title menu waits for the initial async storage read 
+[WebServer] (node:54832) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:13228) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+(node:15768) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+EXIT=1 DURATION_MS=17974

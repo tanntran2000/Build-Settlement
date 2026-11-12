@@ -1,0 +1,1 @@
+[["f2-red-alone-menu","npx playwright test tests/e2e/storage.spec.ts -g \"pending Main menu cannot exit\""]]

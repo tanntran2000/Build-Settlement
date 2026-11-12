@@ -1,0 +1,102 @@
+DATA-01 fix round 2: complete additive test inventory
+Base=14768381cec2aeed06a71b6bae73d0a9502265e4
+HEAD=ca137a888e92aeba4794239cc5f5cef48d0181d6
+TREE=721d2937e9f7dddb74d03c002ca0f260816162c7
+All existing test lines, assertions, fixtures and settings preserved. BEFORE -> AFTER below describes additions only.
+
+packages/persistence/src/__tests__/session-records.test.ts: all original bytes preserved after CRLF/LF normalization.
+Invariant: Complete malformed NPC, Player and profile shapes are refused with the offending record reference; all historical/current round-trip expectations remain unchanged.
+BEFORE: no added lines -> AFTER:
+packages/persistence/src/__tests__/session-records.test.ts:55: 
+packages/persistence/src/__tests__/session-records.test.ts:56: it.each(['npc','player','npc profile','player record profile','player embedded profile'] as const)('fix2 F2: malformed %s identifies its character record',kind=>{
+packages/persistence/src/__tests__/session-records.test.ts:57:  const rows=sessionToRecords('main',session()),npc=kind==='npc'||kind==='npc profile',id=npc?'npc_starter_1':'player';
+packages/persistence/src/__tests__/session-records.test.ts:58:  const value=rows.find(r=>r.table==='characters'&&r.id===id)!.value as Record<string,unknown>;
+packages/persistence/src/__tests__/session-records.test.ts:59:  if(kind==='npc')value.npc={character:{id}};
+packages/persistence/src/__tests__/session-records.test.ts:60:  else if(kind==='player')value.player={character:{id}};
+packages/persistence/src/__tests__/session-records.test.ts:61:  else if(kind==='player embedded profile')(value.player as {profile:unknown}).profile={id};
+packages/persistence/src/__tests__/session-records.test.ts:62:  else value.profile={id};
+packages/persistence/src/__tests__/session-records.test.ts:63:  expectRecordRef(rows,npc?'characters:npc_starter_1':'characters:player');
+packages/persistence/src/__tests__/session-records.test.ts:64: });
+
+packages/ui/src/__tests__/character-life-session.test.ts: all original bytes preserved after CRLF/LF normalization.
+Invariant: Existing IndexedDB records win pending migration; only the marker is added, legacy bytes and all slot records remain unchanged.
+BEFORE: no added lines -> AFTER:
+packages/ui/src/__tests__/character-life-session.test.ts:285: 
+packages/ui/src/__tests__/character-life-session.test.ts:286: it.each(['readable','still blocked'] as const)('fix2 F1: pending migration keeps saved B when legacy A is %s',async availability=>{
+packages/ui/src/__tests__/character-life-session.test.ts:287:  const a=session(11),b=session(22),encoded=serializeCharacterLifeSave(a);if(!encoded.success)throw Error(encoded.error.message);
+packages/ui/src/__tests__/character-life-session.test.ts:288:  const d=deps(encoded.text),original=d.legacy.getItem.getMockImplementation()!;let blocked=true;
+packages/ui/src/__tests__/character-life-session.test.ts:289:  d.legacy.getItem.mockImplementation(()=>{if(blocked)throw Error('temporarily blocked');return original();});
+packages/ui/src/__tests__/character-life-session.test.ts:290:  expect(await readLocalCharacterLife(d)).toEqual({success:false,message:'Could not read browser storage. Your game was preserved. Use Import checkpoint instead.'});
+packages/ui/src/__tests__/character-life-session.test.ts:291:  expect(await d.store.getSystem(MARKER)).toBeNull();expect(await saveLocalCharacterLife(b,d)).toEqual({success:true,replaced:false});
+packages/ui/src/__tests__/character-life-session.test.ts:292:  const before=await d.store.read('main');expect(before).toHaveLength(7);const replace=vi.spyOn(d.store,'replaceSlot');
+packages/ui/src/__tests__/character-life-session.test.ts:293:  blocked=availability==='still blocked';
+packages/ui/src/__tests__/character-life-session.test.ts:294:  expect(await readLocalCharacterLife(d)).toEqual({success:true,state:b});
+packages/ui/src/__tests__/character-life-session.test.ts:295:  expect(await d.store.read('main')).toEqual(before);expect(await d.store.getSystem(MARKER)).toEqual({slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true});
+packages/ui/src/__tests__/character-life-session.test.ts:296:  expect(replace).toHaveBeenCalledExactlyOnceWith('main',before,[{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]);
+packages/ui/src/__tests__/character-life-session.test.ts:297:  expect(await replace.mock.results[0].value).toEqual({put:0,deleted:0,unchanged:7});
+packages/ui/src/__tests__/character-life-session.test.ts:298:  expect(d.legacy.getItem).toHaveBeenCalledTimes(1);expect(d.legacy.removeItem).not.toHaveBeenCalled();expect(original()).toBe(encoded.text);
+packages/ui/src/__tests__/character-life-session.test.ts:299: });
+
+tests/e2e/storage.spec.ts: all original bytes preserved after CRLF/LF normalization.
+Invariant: Existing storage cases remain unchanged; new cases verify migration precedence, stale manual feedback, checkpoint action supersession and later-week autosave feedback.
+BEFORE: no added lines -> AFTER:
+tests/e2e/storage.spec.ts:104: 
+tests/e2e/storage.spec.ts:105: test('fix2 F1: recovered legacy A cannot replace B saved while migration was blocked',async({page})=>{
+tests/e2e/storage.spec.ts:106:  const legacy=bytes(),b=makeLife(54321);await page.addInitScript(({key,legacy})=>{
+tests/e2e/storage.spec.ts:107:   const storage=localStorage;storage.setItem(key,legacy);
+tests/e2e/storage.spec.ts:108:   Object.defineProperty(window,'localStorage',{configurable:true,get(){throw Error('temporarily blocked');}});
+tests/e2e/storage.spec.ts:109:   Object.assign(window,{restoreLegacyStorage:()=>Object.defineProperty(window,'localStorage',{configurable:true,get:()=>storage})});
+tests/e2e/storage.spec.ts:110:  },{key:KEY,legacy});
+tests/e2e/storage.spec.ts:111:  await page.goto('/');await expect(page.getByRole('heading',{name:'HAVEN',exact:true})).toBeVisible();
+tests/e2e/storage.spec.ts:112:  expect((await readStoredRecords(page)).filter(r=>r.table==='system')).toEqual([]);
+tests/e2e/storage.spec.ts:113:  await importLife(page,b);await save(page);const before=(await readStoredRecords(page)).filter(r=>r.table!=='system');expect(before).toHaveLength(7);
+tests/e2e/storage.spec.ts:114:  await page.evaluate(()=>(window as unknown as {restoreLegacyStorage:()=>void}).restoreLegacyStorage());
+tests/e2e/storage.spec.ts:115:  await button(page,'Continue locally').click();await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
+tests/e2e/storage.spec.ts:116:  expect(await exportLife(page)).toEqual({...b,city:{...b.city,revision:1}});
+tests/e2e/storage.spec.ts:117:  expect((await readStoredRecords(page)).filter(r=>r.table!=='system')).toEqual(before);expect(await storedSaveText(page)).toBe(bytes(b));
+tests/e2e/storage.spec.ts:118:  expect((await readStoredRecords(page)).filter(r=>r.table==='system')).toEqual([marker]);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(legacy);
+tests/e2e/storage.spec.ts:119: });
+tests/e2e/storage.spec.ts:120: 
+tests/e2e/storage.spec.ts:121: for(const outcome of ['success','failure'] as const)test('fix2 F3: stale '+outcome+' Save feedback cannot replace a rejected Import',async({page})=>{
+tests/e2e/storage.spec.ts:122:  await start(page);const initial=await exportLife(page);
+tests/e2e/storage.spec.ts:123:  await holdStoreCompletion(page,outcome==='success'?'readwrite':'readonly');if(outcome==='failure')await injectWriteAbort(page,'throw');
+tests/e2e/storage.spec.ts:124:  await button(page,'Save locally').click();await waitStoreCompletion(page);
+tests/e2e/storage.spec.ts:125:  await page.getByLabel('Import checkpoint',{exact:true}).setInputFiles({name:'invalid.json',mimeType:'application/json',buffer:Buffer.from('{')});
+tests/e2e/storage.spec.ts:126:  const message='This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.';
+tests/e2e/storage.spec.ts:127:  await expect(page.getByRole('alert')).toHaveText(message);await releaseStoreCompletion(page);
+tests/e2e/storage.spec.ts:128:  await expect(page.getByRole('alert')).toHaveText(message);await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveCount(0);
+tests/e2e/storage.spec.ts:129:  expect(await exportLife(page)).toEqual(initial);
+tests/e2e/storage.spec.ts:130: });
+tests/e2e/storage.spec.ts:131: test('fix2 F3: Save supersedes a pending Continue without changing the live session',async({page})=>{
+tests/e2e/storage.spec.ts:132:  await start(page);await save(page);await importLife(page,makeLife(54321));const newer=await exportLife(page);
+tests/e2e/storage.spec.ts:133:  await holdStoreCompletion(page,'readonly',1);await button(page,'Continue locally').click();await waitStoreCompletion(page);
+tests/e2e/storage.spec.ts:134:  await button(page,'Save locally').click();await releaseStoreCompletion(page);
+tests/e2e/storage.spec.ts:135:  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+tests/e2e/storage.spec.ts:136:  expect(await exportLife(page)).toEqual(newer);expect(await storedSaveText(page)).toBe(bytes(newer));
+tests/e2e/storage.spec.ts:137: });
+tests/e2e/storage.spec.ts:138: test('fix2 F3: Save supersedes a pending Main menu and keeps the session open',async({page})=>{
+tests/e2e/storage.spec.ts:139:  await start(page);const initial=await exportLife(page);await holdStoreCompletion(page,'readwrite');
+tests/e2e/storage.spec.ts:140:  await button(page,'Main menu').click();await waitStoreCompletion(page);await button(page,'Save locally').click();await releaseStoreCompletion(page);
+tests/e2e/storage.spec.ts:141:  await expect(page.getByTestId('life-shell')).toBeVisible();await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+tests/e2e/storage.spec.ts:142:  expect(await exportLife(page)).toEqual(initial);
+tests/e2e/storage.spec.ts:143: });
+tests/e2e/storage.spec.ts:144: test('fix2 F3: a Planning command supersedes pending Save feedback',async({page})=>{
+tests/e2e/storage.spec.ts:145:  await start(page);const initial=await exportLife(page);await holdStoreCompletion(page,'readwrite');
+tests/e2e/storage.spec.ts:146:  await button(page,'Save locally').click();await waitStoreCompletion(page);const newer=await act(page,initial,'SET_ENABLED',{tileId:'field-1',enabled:false});
+tests/e2e/storage.spec.ts:147:  await go(page,'session');const notice=page.locator('[aria-label="Planning checkpoints"] [role="status"]');await expect(notice).toHaveText('Checkpoint download requested.');
+tests/e2e/storage.spec.ts:148:  await releaseStoreCompletion(page);await expect(notice).toHaveText('Checkpoint download requested.');expect(await exportLife(page)).toEqual(newer);
+tests/e2e/storage.spec.ts:149: });
+tests/e2e/storage.spec.ts:150: test('fix2 F3: a delayed autosave failure cannot replace a later week status',async({page})=>{
+tests/e2e/storage.spec.ts:151:  await start(page);const initial=await exportLife(page);await save(page);
+tests/e2e/storage.spec.ts:152:  await holdStoreCompletion(page,'readonly');await injectWriteAbort(page,'throw');
+tests/e2e/storage.spec.ts:153:  const advance=async()=>{await go(page,'city');await page.getByTestId('life-end-week').click();await button(page,'Plan next week').click();};
+tests/e2e/storage.spec.ts:154:  await advance();await waitStoreCompletion(page);
+tests/e2e/storage.spec.ts:155:  await button(page,'Options').click();const options=page.getByRole('dialog',{name:'Options',exact:true});await options.getByLabel('Autosave',{exact:true}).uncheck();await options.getByRole('button',{name:'Close',exact:true}).click();await expect(options).not.toBeVisible();
+tests/e2e/storage.spec.ts:156:  await advance();const status=page.locator('aside p[aria-atomic="true"]');await expect(status).toHaveText('Planning Week 3 \u00b7 Year 1. Previous report retained.');
+tests/e2e/storage.spec.ts:157:  await releaseStoreCompletion(page);await expect(status).toHaveText('Planning Week 3 \u00b7 Year 1. Previous report retained.');
+tests/e2e/storage.spec.ts:158:  expect((await exportLife(page)).city.world.week).toBe(3);expect(await storedSaveText(page)).toBe(bytes(initial));
+tests/e2e/storage.spec.ts:159: });
+
+Existing test line edits: NONE. All changes are additive.
+Spy -> mark mapping unchanged: checkpoint get -> haven.store.read; set -> haven.store.write; remove -> haven.store.clear.
+Complete product/call-site BEFORE -> AFTER is in complete-product.patch.

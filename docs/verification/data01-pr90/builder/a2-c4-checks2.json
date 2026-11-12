@@ -1,0 +1,1 @@
+[["a2-c4-green-2","npx vitest run packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/crisis-checkpoint.test.ts"],["a2-c4-typecheck-2","npm run typecheck"],["a2-c4-unit","npm test"],["a2-c4-build","npm run build"]]

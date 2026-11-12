@@ -1,0 +1,77 @@
+COMPLETE ROUND-3 EDIT INVENTORY
+HEAD=c1faf87c10f790f68964f92fedecde86b2700d8d
+TREE=ab89dbb7c719499233c6a0565aafe3a44a749882
+BASE=ca137a888e92aeba4794239cc5f5cef48d0181d6
+ .../persistence/src/__tests__/game-store.test.ts   | 38 ++++++++++++++++
+ packages/persistence/src/game-store.ts             |  1 +
+ packages/persistence/src/memory-store.ts           | 13 ++++++
+ .../src/__tests__/character-life-session.test.ts   | 50 ++++++++++++++++++++--
+ packages/ui/src/character-life-session.ts          |  9 ++--
+ packages/ui/src/indexeddb-store.ts                 | 13 ++++++
+ tests/e2e/storage.helpers.ts                       | 12 ++++++
+ tests/e2e/storage.spec.ts                          | 32 ++++++++++++++
+ 8 files changed, 160 insertions(+), 8 deletions(-)
+
+packages/persistence/src/game-store.ts
+@@ -7,0 +8 @@ export interface GameStore {
+
+packages/persistence/src/memory-store.ts
+@@ -17,0 +18,13 @@ export function createMemoryGameStore(opts: { failWrites?: boolean } = {}): Game
+
+packages/ui/src/character-life-session.ts
+@@ -65,0 +66 @@ export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success
+@@ -72 +73 @@ export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success
+@@ -75 +76 @@ export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success
+@@ -79 +80 @@ export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success
+@@ -82 +83 @@ export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success
+
+packages/ui/src/indexeddb-store.ts
+@@ -34,0 +35,13 @@ export function createIndexedDbGameStore(factory: IDBFactory = indexedDB): GameS
+
+packages/persistence/src/__tests__/game-store.test.ts
+@@ -3,0 +4,38 @@ runGameStoreSuite('memory', createMemoryGameStore);
+
+packages/ui/src/__tests__/character-life-session.test.ts
+@@ -36,0 +37,2 @@ beforeEach(() => {
+@@ -63 +65 @@ it('rejects an NPC-world checkpoint in the life slot and leaves every byte untou
+@@ -160 +162 @@ it.each(['malformed','empty','version','ruleset','opposite mode','map','negative
+@@ -196,0 +199,8 @@ function inspectableDeps() {
+@@ -287,0 +298 @@ it.each(['readable','still blocked'] as const)('fix2 F1: pending migration keeps
+@@ -292,0 +304 @@ it.each(['readable','still blocked'] as const)('fix2 F1: pending migration keeps
+@@ -296,2 +308,3 @@ it.each(['readable','still blocked'] as const)('fix2 F1: pending migration keeps
+@@ -299,0 +313,29 @@ it.each(['readable','still blocked'] as const)('fix2 F1: pending migration keeps
+
+tests/e2e/storage.helpers.ts
+@@ -89,0 +90,12 @@ export async function releaseStoreCompletion(page: Page) {
+
+tests/e2e/storage.spec.ts
+@@ -159,0 +160,32 @@ test('fix2 F3: a delayed autosave failure cannot replace a later week status',as
+
+EXACTLY FOUR EXISTING TEST-LINE MIGRATIONS
+packages/ui/src/__tests__/character-life-session.test.ts: base 63 -> final 65
+BEFORE:   expect(values).toEqual(before); expect(await store.read('main')).toBeNull();expect(vi.mocked(store.replaceSlot).mock.calls).toEqual([['main',[],[{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]]]);
+AFTER:   expect(values).toEqual(before); expect(await store.read('main')).toBeNull();expect(vi.mocked(store.migrateSlot).mock.calls).toEqual([['main',null,{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]]);
+INVARIANT: Reject invalid/foreign legacy data, leave legacy bytes unchanged, leave the main slot empty, and write exactly the marker through the atomic migration port.
+
+packages/ui/src/__tests__/character-life-session.test.ts: base 160 -> final 162
+BEFORE:  values.set(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,text);const before=new Map(values);expect((await readLocalCharacterLife(checkpointDeps)).success).toBe(false);expect(storage.getItem.mock.calls).toEqual([[CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY]]);expect(await store.read('main')).toBeNull();expect(vi.mocked(store.replaceSlot).mock.calls).toEqual([['main',[],[{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]]]);expect(values).toEqual(before);
+AFTER:  values.set(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,text);const before=new Map(values);expect((await readLocalCharacterLife(checkpointDeps)).success).toBe(false);expect(storage.getItem.mock.calls).toEqual([[CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY]]);expect(await store.read('main')).toBeNull();expect(vi.mocked(store.migrateSlot).mock.calls).toEqual([['main',null,{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]]);expect(values).toEqual(before);
+INVARIANT: Reject invalid/foreign legacy data, leave legacy bytes unchanged, leave the main slot empty, and write exactly the marker through the atomic migration port.
+
+packages/ui/src/__tests__/character-life-session.test.ts: base 296 -> final 308
+BEFORE:  expect(replace).toHaveBeenCalledExactlyOnceWith('main',before,[{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]);
+AFTER:  expect(migrate).toHaveBeenCalledExactlyOnceWith('main',null,{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true});
+INVARIANT: Existing B wins pending migration; the marker is written without using ordinary replacement.
+
+packages/ui/src/__tests__/character-life-session.test.ts: base 297 -> final 309
+BEFORE:  expect(await replace.mock.results[0].value).toEqual({put:0,deleted:0,unchanged:7});
+AFTER:  expect(await migrate.mock.results[0].value).toEqual(before);
+INVARIANT: The atomic migration returns the exact surviving records; retain existing stored-record equality and add adapter-level marker-only write checks instead of obsolete WriteStats observation.
+
+Old line 297 zero-write invariant remains in the SAME existing fix2 F1 test: final line 307 exact stored-record/marker equality, line 309 exact returned-record equality, line 310 dataPuts=0/dataDeletes=0/markerPuts=1 and no replaceSlot call. Both parameter variants pass in the final full unit suite.
+
+ADDITIVE PROOF: all other test edits are additions; the other three changed test files have zero removed old lines. Existing test cases/assertions/values/timeouts/retries/workers/thresholds were not deleted or loosened. Added cases: 11 memory, 4 service and 3 real two-page browser races. Added supporting setup spy, inspectableDeps atomic method, same-test backing-Map counter and watchMigrationActivity. No round-3 Svelte or checkpoint call-site edit.
+
+APPROVED NEW-TEST CORRECTION AFTER HOLD: storage.spec.ts adds a captured liveRevision before the held read is released; its newly added revision expectation changes from 1 to Math.max(liveRevision,savedC.city.revision)+1. Claude explicitly ruled this is correcting a new-test expectation, not a product fix iteration or weakened assertion. Every other assertion stayed identical; all three browser scenarios now reach and pass stored-record, marker, legacy, write-count and mark assertions. Product hashes/diff remained unchanged. See resumed-diff-review.txt.
+
+SPY/MARK MAPPING: replaceSlot migration spy -> migrateSlot spy (four allowed mechanism migrations); backing-Map set/delete/clear -> zero slot data puts/deletes and one marker put; IDB transaction/object-store operation observer -> one readwrite migration transaction plus marker-only put, or zero puts when the other migration won; storeMarks -> one haven.store.write per IndexedDB migrateSlot invocation.

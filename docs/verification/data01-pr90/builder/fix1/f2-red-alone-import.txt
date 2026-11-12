@@ -1,0 +1,53 @@
+UTC=2026-11-12T04:42:32.452Z HEAD=1f60d0117a09203100252d061e67057c3c4fb2be TREE=19e4e1cc2c1371cca367efa40dcfe01da6ecc629
+STATUS="M tests/e2e/storage.helpers.ts\n M tests/e2e/storage.spec.ts"
+ENV CI=1
+COMMAND=npx playwright test tests/e2e/storage.spec.ts -g "newer rejected Import"
+[WebServer] (node:6692) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:57964) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:56492) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\storage.spec.ts:73:1 › fix1 F2: a newer rejected Import keeps its feedback over pending Continue (6.8s)
+
+
+  1) [chromium] › tests\e2e\storage.spec.ts:73:1 › fix1 F2: a newer rejected Import keeps its feedback over pending Continue 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByRole('alert')
+    Expected: "This checkpoint is from an older version of Haven and can no longer be played. Start a New Game."
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveText" getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('alert')
+
+
+      77 |  const message='This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.';
+      78 |  await expect(page.getByRole('alert')).toHaveText(message);await releaseStoreCompletion(page);
+    > 79 |  await expect(page.getByRole('alert')).toHaveText(message);expect(await exportLife(page)).toEqual(initial);
+         |                                        ^
+      80 | });
+      81 | test('fix1 F2: the latest Continue supersedes an earlier held result',async({page})=>{
+      82 |  await start(page);await save(page);await holdStoreCompletion(page,'readonly',1);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\storage.spec.ts:79:40
+
+    Error Context: test-results\storage-fix1-F2-a-newer-re-614b2-dback-over-pending-Continue-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\storage-fix1-F2-a-newer-re-614b2-dback-over-pending-Continue-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\storage-fix1-F2-a-newer-re-614b2-dback-over-pending-Continue-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\storage.spec.ts:73:1 › fix1 F2: a newer rejected Import keeps its feedback over pending Continue 
+
+EXIT=1 DURATION_MS=19551 END_UTC=2026-11-12T04:42:52.003Z

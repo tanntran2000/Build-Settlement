@@ -1,0 +1,135 @@
+PER-CASE RED / GREEN EVIDENCE
+All RED and all 33 isolated RED reruns occurred before product edits. No second product fix was attempted.
+
+npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t "^fix3 memory: existing marker writes nothing with meta=true$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-01.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t "^fix3 memory: existing marker writes nothing with meta=false$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-02.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t "^fix3 memory: existing slot wins and only receives the marker$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-03.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t "^fix3 memory: empty slot stores candidate and marker with detached return$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-04.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t "^fix3 memory: null candidate writes only marker and preserves other slots$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-05.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t "^fix3 memory: migration takes one synchronous state step$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-06.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t "^fix3 memory: invalid candidate slot cannot mutate records$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-07.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t "^fix3 memory: invalid candidate system cannot mutate records$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-08.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t "^fix3 memory: invalid marker table cannot mutate records$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-09.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t "^fix3 memory: failed migration preserves records with meta=true$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-10.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t "^fix3 memory: failed migration preserves records with meta=false$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-11.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^rejects an NPC-world checkpoint in the life slot and leaves every byte untouched$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-12.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^ported checkpoint boundary: malformed bytes stay untouched$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-13.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^ported checkpoint boundary: empty bytes stay untouched$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-14.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^ported checkpoint boundary: version bytes stay untouched$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-15.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^ported checkpoint boundary: ruleset bytes stay untouched$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-16.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^ported checkpoint boundary: opposite mode bytes stay untouched$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-17.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^ported checkpoint boundary: map bytes stay untouched$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-18.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^ported checkpoint boundary: negative stock bytes stay untouched$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-19.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^ported checkpoint boundary: report bytes stay untouched$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-20.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^ported checkpoint boundary: extra field bytes stay untouched$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-21.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^ported checkpoint boundary: workforce bytes stay untouched$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-22.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^ported checkpoint boundary: oversize bytes stay untouched$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-23.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^ported checkpoint boundary: UTF-8 oversize bytes stay untouched$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-24.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^fix2 F1: pending migration keeps saved B when legacy A is readable$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-25.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^fix2 F1: pending migration keeps saved B when legacy A is still blocked$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-26.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^fix3 service: concurrent C wins after existing B preliminary read$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-27.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^fix3 service: concurrent C wins after empty preliminary read$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-28.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^fix3 service: concurrent C wins after invalid legacy preliminary read$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-29.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "^fix3 service: concurrent C wins after other migration preliminary read$"
+RED: unit-red.txt (30 failed / 55 passed total); unit-red-alone-30.txt (exit 1; 1 failed).
+GREEN: unit-green.txt (exit 0; all 85 pass); regression-green.txt (exit 0; all 292 pass).
+
+npx playwright test tests/e2e/storage.spec.ts -g "fix3 browser: atomic migration preserves C after existing B"
+RED: browser-red.txt (3 failed); browser-red-alone-1.txt (exit 1; 1 failed).
+GREEN: browser-green.txt (27 passed / 1 failed total): FAIL (revision expected 1, got 2). Isolated GREEN rerun browser-green-failure-alone.txt also exit 1 / 1 failed, same difference.
+
+npx playwright test tests/e2e/storage.spec.ts -g "fix3 browser: atomic migration preserves C after empty"
+RED: browser-red.txt (3 failed); browser-red-alone-2.txt (exit 1; 1 failed).
+GREEN: browser-green.txt (27 passed / 1 failed total): PASS; no test edits between RED and GREEN.
+
+npx playwright test tests/e2e/storage.spec.ts -g "fix3 browser: atomic migration preserves C after marker winner"
+RED: browser-red.txt (3 failed); browser-red-alone-3.txt (exit 1; 1 failed).
+GREEN: browser-green.txt (27 passed / 1 failed total): PASS; no test edits between RED and GREEN.
+

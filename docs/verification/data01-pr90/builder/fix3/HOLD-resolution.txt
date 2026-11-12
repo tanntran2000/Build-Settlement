@@ -1,0 +1,1 @@
+Claude resolved the HOLD under owner-approved correction4(a): lines63,160,296 as proposed; line297 returned-record equality plus zero data puts/deletes and marker-only writes in the SAME test; original stored-record equality remains. No other existing test line may change. Owner approval remains Sửa vòng 3.

@@ -1,0 +1,2 @@
+Claude permits correcting only the NEW browser assertion to max(liveRevision,savedC.city.revision)+1. Capture liveRevision before release. Keep every other assertion and all product code unchanged. This expectation correction is not a product fix iteration. Any other browser failure is HOLD.
+Product diff verified identical to final-product.patch from the HOLD.

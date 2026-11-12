@@ -1,0 +1,28 @@
+UTC=2026-11-12T07:35:49.949Z
+HEAD=ca137a888e92aeba4794239cc5f5cef48d0181d6
+COMMITTED_TREE=721d2937e9f7dddb74d03c002ca0f260816162c7
+STATUS
+ M packages/persistence/src/__tests__/game-store.test.ts
+ M packages/persistence/src/game-store.ts
+ M packages/persistence/src/memory-store.ts
+ M packages/ui/src/__tests__/character-life-session.test.ts
+ M packages/ui/src/character-life-session.ts
+ M packages/ui/src/indexeddb-store.ts
+ M tests/e2e/storage.helpers.ts
+ M tests/e2e/storage.spec.ts
+
+COMMAND=git diff --check (working-copy diagnostic; not exact-head gate 1)
+warning: in the working copy of 'packages/persistence/src/__tests__/game-store.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/persistence/src/game-store.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/persistence/src/memory-store.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/ui/src/__tests__/character-life-session.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/ui/src/character-life-session.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/e2e/storage.helpers.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/e2e/storage.spec.ts', LF will be replaced by CRLF the next time Git touches it
+
+EXIT=0
+
+PORT CHECK
+Ports 4173/4174: no listeners
+
+EXIT=0

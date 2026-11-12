@@ -1,0 +1,59 @@
+UTC=2026-11-12T04:42:52.095Z HEAD=1f60d0117a09203100252d061e67057c3c4fb2be TREE=19e4e1cc2c1371cca367efa40dcfe01da6ecc629
+STATUS="M tests/e2e/storage.helpers.ts\n M tests/e2e/storage.spec.ts"
+ENV CI=1
+COMMAND=npx playwright test tests/e2e/storage.spec.ts -g "latest Continue supersedes"
+[WebServer] (node:52228) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:56892) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:56304) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\storage.spec.ts:81:1 › fix1 F2: the latest Continue supersedes an earlier held result (4.2s)
+
+
+  1) [chromium] › tests\e2e\storage.spec.ts:81:1 › fix1 F2: the latest Continue supersedes an earlier held result 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+    @@ -4,11 +4,11 @@
+            "amountMilli": 10000,
+            "rulesetId": "tile-population-goods-01",
+          },
+          "happiness": 80,
+          "phase": "planning",
+    -     "revision": 1,
+    +     "revision": 2,
+          "society": Object {
+            "classes": Object {
+              "bound": Object {
+                "free": 0,
+                "luminaries": 0,
+
+      84 |  const latest=makeLife(54321);await writeStoredSaveText(page,bytes(latest));await button(page,'Continue locally').click();
+      85 |  await releaseStoreCompletion(page);await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
+    > 86 |  expect(await exportLife(page)).toEqual({...latest,city:{...latest.city,revision:1}});
+         |                                 ^
+      87 | });
+      88 |
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\storage.spec.ts:86:33
+
+    Error Context: test-results\storage-fix1-F2-the-latest-30360-edes-an-earlier-held-result-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\storage-fix1-F2-the-latest-30360-edes-an-earlier-held-result-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\storage-fix1-F2-the-latest-30360-edes-an-earlier-held-result-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\storage.spec.ts:81:1 › fix1 F2: the latest Continue supersedes an earlier held result 
+
+EXIT=1 DURATION_MS=19800 END_UTC=2026-11-12T04:43:11.895Z

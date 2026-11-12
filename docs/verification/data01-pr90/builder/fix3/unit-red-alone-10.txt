@@ -1,0 +1,36 @@
+UTC=2026-11-12T07:25:22.641Z HEAD=ca137a888e92aeba4794239cc5f5cef48d0181d6 TREE=721d2937e9f7dddb74d03c002ca0f260816162c7
+STATUS="M packages/persistence/src/__tests__/game-store.test.ts\n M packages/ui/src/__tests__/character-life-session.test.ts\n M tests/e2e/storage.helpers.ts\n M tests/e2e/storage.spec.ts"
+ENV CI=
+COMMAND=npx vitest run packages/persistence/src/__tests__/game-store.test.ts -t "^fix3 memory: failed migration preserves records with meta=true$"
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/persistence/src/__tests__/game-store.test.ts (20 tests | 1 failed | 19 skipped) 15ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/persistence/src/__tests__/game-store.test.ts > fix3 memory: failed migration preserves records with meta=true
+AssertionError: expected 'undefined' to be 'function' // Object.is equality
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ packages/persistence/src/__tests__/game-store.test.ts:39:31
+   × fix3 memory: failed migration preserves records with meta=true 12ms
+     37| it.each([true,false])('fix3 memory: failed migration preserves records…
+     38|  const opts={failWrites:false},s=createMemoryGameStore(opts),b=records…
+     39|  expect(typeof s.migrateSlot).toBe('function');await expect(s.migrateS…
+       |                               ^
+     40|  expect(await s.read('main')).toEqual(hasMeta?b:null);expect(await s.g…
+     41| });
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 19 skipped (20)
+   Start at  14:25:25
+   Duration  713ms (transform 75ms, setup 0ms, import 121ms, tests 15ms, environment 0ms)
+
+
+EXIT=1 DURATION_MS=3402 END_UTC=2026-11-12T07:25:26.043Z

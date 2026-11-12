@@ -1,0 +1,43 @@
+UTC=2026-11-12T04:54:57.845Z HEAD=2c958573f0b0f97bb370627db49aaebfe546ca8c TREE=8d242e407374f38f8758c0ae78a21d65b5de5f97
+STATUS="M packages/persistence/src/__tests__/session-records.test.ts\n M packages/persistence/src/session-records.ts"
+ENV CI=
+COMMAND=npx vitest run packages/persistence/src/__tests__/session-records.test.ts
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/persistence/src/__tests__/session-records.test.ts (45 tests | 6 failed) 402ms
+   × round trips fixture society-v2/life-5-weeks.json 10ms
+   × round trips fixture society-v2/life-new-game.json 5ms
+   × round trips fixture society-v4/life-5-weeks.json 5ms
+   × round trips fixture society-v4/life-demand-card.json 5ms
+   × round trips fixture society-v4/life-new-game.json 5ms
+   × round trips fixture society-v4/life-rebellion-last-week.json 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture society-v2/life-5-weeks.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture society-v2/life-new-game.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture society-v4/life-5-weeks.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture society-v4/life-demand-card.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture society-v4/life-new-game.json
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > round trips fixture society-v4/life-rebellion-last-week.json
+StoreRecordError: Invalid store record: city:city
+ ❯ recordsToSession packages/persistence/src/session-records.ts:65:34
+     63|       typeof meta.rulesetId !== 'string' || !count(meta.revision) || !…
+     64|   const city = get('city','city');
+     65|   if (!isStoredCity(city)) throw new StoreRecordError('city:city');
+       |                                  ^
+     66|   if (meta.rulesetId !== city.society?.rulesetId || meta.revision !== …
+     67|   const outside = get('world','outside');
+ ❯ packages/persistence/src/__tests__/session-records.test.ts:12:23
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  6 failed | 39 passed (45)
+   Start at  11:55:01
+   Duration  1.36s (transform 468ms, setup 0ms, import 606ms, tests 402ms, environment 0ms)
+
+
+EXIT=1 DURATION_MS=5474 END_UTC=2026-11-12T04:55:03.319Z

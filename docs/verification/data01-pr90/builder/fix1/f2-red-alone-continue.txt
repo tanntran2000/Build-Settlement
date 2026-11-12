@@ -1,0 +1,77 @@
+UTC=2026-11-12T04:41:52.623Z HEAD=1f60d0117a09203100252d061e67057c3c4fb2be TREE=19e4e1cc2c1371cca367efa40dcfe01da6ecc629
+STATUS="M tests/e2e/storage.helpers.ts\n M tests/e2e/storage.spec.ts"
+ENV CI=1
+COMMAND=npx playwright test tests/e2e/storage.spec.ts -g "pending Continue cannot overwrite"
+[WebServer] (node:25380) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:55480) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:32556) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\storage.spec.ts:59:1 › fix1 F2: pending Continue cannot overwrite a newer Planning command (3.2s)
+
+
+  1) [chromium] › tests\e2e\storage.spec.ts:59:1 › fix1 F2: pending Continue cannot overwrite a newer Planning command 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 3
+    + Received  + 3
+
+    @@ -4,11 +4,11 @@
+            "amountMilli": 10000,
+            "rulesetId": "tile-population-goods-01",
+          },
+          "happiness": 80,
+          "phase": "planning",
+    -     "revision": 1,
+    +     "revision": 2,
+          "society": Object {
+            "classes": Object {
+              "bound": Object {
+                "free": 0,
+                "luminaries": 0,
+    @@ -364,14 +364,14 @@
+            "wallRing": 1,
+          },
+          "tiles": Array [
+            Object {
+              "building": Object {
+    -           "enabled": false,
+    +           "enabled": true,
+                "level": 1,
+                "typeId": "farm",
+    -           "workers": 0,
+    +           "workers": 2,
+              },
+              "id": "field-1",
+              "terrain": "fertile",
+            },
+            Object {
+
+      61 |  await holdStoreCompletion(page,'readonly',1);await button(page,'Continue locally').click();await waitStoreCompletion(page);
+      62 |  const newer=await act(page,initial,'SET_ENABLED',{tileId:'field-1',enabled:false});
+    > 63 |  await releaseStoreCompletion(page);expect(await exportLife(page)).toEqual(newer);
+         |                                                                    ^
+      64 | });
+      65 | test('fix1 F2: pending Main menu cannot exit after a newer Planning command',async({page})=>{
+      66 |  await start(page);const initial=await exportLife(page);await holdStoreCompletion(page,'readwrite');
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\storage.spec.ts:63:68
+
+    Error Context: test-results\storage-fix1-F2-pending-Co-693f6-te-a-newer-Planning-command-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\storage-fix1-F2-pending-Co-693f6-te-a-newer-Planning-command-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\storage-fix1-F2-pending-Co-693f6-te-a-newer-Planning-command-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\storage.spec.ts:59:1 › fix1 F2: pending Continue cannot overwrite a newer Planning command 
+
+EXIT=1 DURATION_MS=19321 END_UTC=2026-11-12T04:42:11.944Z

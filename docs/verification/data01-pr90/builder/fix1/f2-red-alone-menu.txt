@@ -1,0 +1,53 @@
+UTC=2026-11-12T04:42:12.092Z HEAD=1f60d0117a09203100252d061e67057c3c4fb2be TREE=19e4e1cc2c1371cca367efa40dcfe01da6ecc629
+STATUS="M tests/e2e/storage.helpers.ts\n M tests/e2e/storage.spec.ts"
+ENV CI=1
+COMMAND=npx playwright test tests/e2e/storage.spec.ts -g "pending Main menu cannot exit"
+[WebServer] (node:30544) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:52896) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:38092) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\storage.spec.ts:65:1 › fix1 F2: pending Main menu cannot exit after a newer Planning command (7.1s)
+
+
+  1) [chromium] › tests\e2e\storage.spec.ts:65:1 › fix1 F2: pending Main menu cannot exit after a newer Planning command 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('life-shell')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByTestId('life-shell') with timeout 5000ms
+      - waiting for getByTestId('life-shell')
+
+
+      68 |  const newer=await act(page,initial,'SET_ENABLED',{tileId:'field-1',enabled:false});
+      69 |  const status=page.locator('[aria-label="Planning checkpoints"] [role="status"]'),before=await status.textContent();
+    > 70 |  await releaseStoreCompletion(page);await expect(page.getByTestId('life-shell')).toBeVisible();await expect(status).toHaveText(before!);
+         |                                                                                  ^
+      71 |  expect(await exportLife(page)).toEqual(newer);
+      72 | });
+      73 | test('fix1 F2: a newer rejected Import keeps its feedback over pending Continue',async({page})=>{
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\storage.spec.ts:70:82
+
+    Error Context: test-results\storage-fix1-F2-pending-Ma-664a2-er-a-newer-Planning-command-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\storage-fix1-F2-pending-Ma-664a2-er-a-newer-Planning-command-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\storage-fix1-F2-pending-Ma-664a2-er-a-newer-Planning-command-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\storage.spec.ts:65:1 › fix1 F2: pending Main menu cannot exit after a newer Planning command 
+
+EXIT=1 DURATION_MS=20295 END_UTC=2026-11-12T04:42:32.386Z

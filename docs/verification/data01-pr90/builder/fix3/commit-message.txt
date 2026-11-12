@@ -1,0 +1,7 @@
+fix(persistence): migrate legacy checkpoints atomically
+
+A pending legacy migration could overwrite a newer save from another tab after its preliminary read. Add an atomic migrateSlot operation that checks the marker and current slot inside one transaction, preserves existing records, and returns the committed slot for the checkpoint service to load. Keep legacy bytes intact and retain blocked-storage recovery.
+
+Cover memory-store semantics, interleaved service reads and real two-page IndexedDB races, including marker-only writes and the existing load revision contract.
+
+Co-authored-by: Codex <noreply@openai.com>

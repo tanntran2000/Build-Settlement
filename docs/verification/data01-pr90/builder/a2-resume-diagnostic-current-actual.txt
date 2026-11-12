@@ -1,0 +1,40 @@
+UTC=2026-11-12T02:32:13.830Z HEAD=e51de7161d3b5164c201ffe83a1bef74702e0d12 TREE=ec6f5efd5bad969d01e08aebebef0cbb72f287e8
+COMMAND=npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t "save writes only its key"
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/character-life-session.test.ts (40 tests | 1 failed | 39 skipped) 47ms
+   × save writes only its key and reads back the same session; other keys keep "protected-bytes" 44ms
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 39 skipped (40)
+   Start at  09:32:17
+   Duration  1.44s (transform 797ms, setup 0ms, import 1.01s, tests 47ms, environment 0ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > save writes only its key and reads back the same session; other keys keep "protected-bytes"
+AssertionError: expected Promise{…} to deeply equal { success: true, replaced: false }
+
+- Expected
++ Received
+
+- {
+-   "replaced": false,
+-   "success": true,
+- }
++ Promise {}
+
+ ❯ packages/ui/src/__tests__/character-life-session.test.ts:44:37
+     42|   const s = session(); s.npcs[2].postTileId = 'plain-1';
+     43|   const encoded = serializeCharacterLifeSave(s); if (!encoded.success)…
+     44|   expect(saveLocalCharacterLife(s)).toEqual({ success: true, replaced:…
+       |                                     ^
+     45|   expect(storage.setItem.mock.calls).toEqual([[CHARACTER_LIFE_CHECKPOI…
+     46|   expect(readLocalCharacterLife()).toEqual({ success: true, state: s }…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+EXIT=1 DURATION_MS=4977

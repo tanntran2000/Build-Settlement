@@ -1,0 +1,5 @@
+fix(ui): discard superseded save feedback
+
+Capture checkpoint and import tickets plus the live revision before manual saves, so their completion cannot clear newer errors or publish stale notices. A manual save advances the action ticket to supersede pending Continue and Main menu actions. Guard autosave failure feedback with the week and revision that requested it so later planning status survives.
+
+Co-authored-by: Codex <noreply@openai.com>

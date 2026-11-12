@@ -1,0 +1,5 @@
+fix(ui): retry temporarily unavailable legacy storage
+
+Keep unavailable legacy storage distinct from an absent checkpoint, leaving migration unmarked until the read can complete. Resolve browser localStorage lazily on each use so a temporarily blocked getter can recover without replacing the cached GameStore.
+
+Co-authored-by: Codex <noreply@openai.com>

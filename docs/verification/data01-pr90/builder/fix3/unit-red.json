@@ -1,0 +1,1 @@
+[["unit-red","npx vitest run packages/persistence/src/__tests__/game-store.test.ts packages/ui/src/__tests__/character-life-session.test.ts packages/ui/src/__tests__/crisis-checkpoint.test.ts --reporter=default --reporter=json --outputFile=C:/Users/Admin/.t3/local-drafts/data01-prA/fix3/unit-red-results.json"]]

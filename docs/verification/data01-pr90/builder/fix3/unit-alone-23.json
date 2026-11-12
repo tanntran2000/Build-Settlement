@@ -1,0 +1,1 @@
+[["unit-red-alone-23","npx vitest run packages/ui/src/__tests__/character-life-session.test.ts -t \"^ported checkpoint boundary: oversize bytes stay untouched$\""]]
