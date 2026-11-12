@@ -37,6 +37,7 @@
   let postDrafts: PostDraftEntry[] = [];
   let saveNotice = '';
   let importRead = 0;
+  let checkpointAction = 0;
   let report: Readonly<TileTrialReport> | null = null;
   let outside: OutsideWorldState | null = null;
   let npcs: WorldNpc[] | null = null;
@@ -201,13 +202,17 @@
     error = ''; saveNotice = result.replaced ? 'Saved in this browser. Replaced the previous local checkpoint.' : 'Saved in this browser.';
   }
   async function continueLocally() {
+    const ticket = ++checkpointAction, fileTicket = importRead, expectedRevision = state.revision;
     const result = await readLocalCharacterLife();
+    if (ticket !== checkpointAction || fileTicket !== importRead || state.revision !== expectedRevision) return;
     if (!result.success) { checkpointError(result.message); return; }
-    loadWorldSession(result.state, state.revision, 'Local checkpoint loaded. Planning restored.', true);
+    loadWorldSession(result.state, expectedRevision, 'Local checkpoint loaded. Planning restored.', true);
   }
   async function mainMenu() {
     if (checkpointLocked) return;
+    const ticket = ++checkpointAction, fileTicket = importRead, expectedRevision = state.revision;
     const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+    if (ticket !== checkpointAction || fileTicket !== importRead || state.revision !== expectedRevision) return;
     if (!result.success) { checkpointError(result.message); return; }
     onexit();
   }

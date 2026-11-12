@@ -60,3 +60,30 @@ export async function injectWriteAbort(page: Page,kind='abort') {
     };
   },kind);
 }
+
+// Hold only delivery of a completed transaction, so user commands need no live IDB transaction.
+export async function holdStoreCompletion(page: Page,mode: IDBTransactionMode,skip=0) {
+  await page.evaluate(({mode,skip})=>{
+    const original=IDBDatabase.prototype.transaction;let held=false,remaining=skip;
+    IDBDatabase.prototype.transaction=function(...args: Parameters<typeof original>){
+      const tx=original.apply(this,args);
+      if(this.name==='haven'&&args[1]===mode&&!held){
+        if(remaining>0)remaining--;
+        else {held=true;Object.defineProperty(tx,'oncomplete',{set(handler){tx.addEventListener('complete',event=>{
+          Object.assign(window,{releaseStoreCompletion:()=>handler.call(tx,event)});
+        });}});}
+      }
+      return tx;
+    };
+  },{mode,skip});
+}
+export async function waitStoreCompletion(page: Page) {
+  await page.waitForFunction(()=>typeof (window as unknown as {releaseStoreCompletion?:unknown}).releaseStoreCompletion==='function');
+}
+export async function releaseStoreCompletion(page: Page) {
+  await page.evaluate(async()=>{
+    (window as unknown as {releaseStoreCompletion:()=>void}).releaseStoreCompletion();
+    // The held transaction is complete: drain its Promise/UI continuations before assertions.
+    await new Promise(resolve=>setTimeout(resolve,0));
+  });
+}

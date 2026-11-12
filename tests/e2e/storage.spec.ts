@@ -2,7 +2,8 @@ import { test,expect,type Page } from '@playwright/test';
 import { readFile,writeFile } from 'node:fs/promises';
 import { deserializeCharacterLifeSave,serializeCharacterLifeSave,GAME_DB } from '../../packages/persistence/src/index.ts';
 import { makeLife,importLife,exportLife,go } from './character-life-navigation.helpers.ts';
-import { readStoredRecords,storedSaveText,storeMarks,injectWriteAbort,writeRecords } from './storage.helpers.ts';
+import { readStoredRecords,storedSaveText,storeMarks,injectWriteAbort,writeRecords,holdStoreCompletion,waitStoreCompletion,releaseStoreCompletion,writeStoredSaveText } from './storage.helpers.ts';
+import { act } from './society-command.helpers.ts';
 const KEY='haven.character-life-session-society.checkpoint.v1';
 const BLOCKED='Could not save in this browser (storage blocked or full). Your game and any earlier local checkpoint were preserved. Use Export checkpoint instead.';
 const marker={slotId:'_',id:'migration:legacy-local-checkpoint',table:'system',schemaVersion:1,value:true};
@@ -53,4 +54,34 @@ test('three started saved and fallen games retain only one marker without record
   const fallen=await fallenFixture();fallen.outside=started.outside;await importLife(page,fallen);await save(page);expect((await readStoredRecords(page)).length).toBeGreaterThan(1);const savedRows=(await readStoredRecords(page)).filter(r=>r.table!=='system');await writeRecords(page,[...savedRows,...(['reports','history','items'] as const).map(table=>({slotId:'main',id:'seed-'+started.outside.seed,table,schemaVersion:1 as const,value:{seed:started.outside.seed}}))]);for(const table of GAME_DB.stores.filter(t=>t!=='system'))expect((await readStoredRecords(page)).filter(r=>r.table===table).length).toBeGreaterThan(0);
   await go(page,'city');await page.getByTestId('life-end-week').click();await expect(page.getByRole('heading',{name:'The City Has Fallen',exact:true})).toBeVisible();await expectCleared(page);const rows=await readStoredRecords(page);totals.push(rows.length);runs.push({seed:started.outside.seed,total:rows.length,tables:Object.fromEntries(GAME_DB.stores.map(table=>[table,rows.filter(r=>r.table===table).length]))});await page.reload();await expect(button(page,'Continue')).toBeDisabled();
  }expect(totals).toEqual([1,1,1]);expect(new Set(seeds).size).toBe(3);const countsPath=test.info().outputPath('three-game-record-counts.json');await writeFile(countsPath,JSON.stringify(runs,null,2),'utf8');await test.info().attach('three-game-record-counts',{path:countsPath,contentType:'application/json'});
+});
+
+test('fix1 F2: pending Continue cannot overwrite a newer Planning command',async({page})=>{
+ await start(page);const initial=await exportLife(page);await save(page);
+ await holdStoreCompletion(page,'readonly',1);await button(page,'Continue locally').click();await waitStoreCompletion(page);
+ const newer=await act(page,initial,'SET_ENABLED',{tileId:'field-1',enabled:false});
+ await releaseStoreCompletion(page);expect(await exportLife(page)).toEqual(newer);
+});
+test('fix1 F2: pending Main menu cannot exit after a newer Planning command',async({page})=>{
+ await start(page);const initial=await exportLife(page);await holdStoreCompletion(page,'readwrite');
+ await button(page,'Main menu').click();await waitStoreCompletion(page);
+ const newer=await act(page,initial,'SET_ENABLED',{tileId:'field-1',enabled:false});
+ const status=page.locator('[aria-label="Planning checkpoints"] [role="status"]'),before=await status.textContent();
+ await releaseStoreCompletion(page);await expect(page.getByTestId('life-shell')).toBeVisible();await expect(status).toHaveText(before!);
+ expect(await exportLife(page)).toEqual(newer);
+});
+test('fix1 F2: a newer rejected Import keeps its feedback over pending Continue',async({page})=>{
+ await start(page);const initial=await exportLife(page);await save(page);
+ await holdStoreCompletion(page,'readonly',1);await button(page,'Continue locally').click();await waitStoreCompletion(page);
+ await page.getByLabel('Import checkpoint',{exact:true}).setInputFiles({name:'invalid.json',mimeType:'application/json',buffer:Buffer.from('{')});
+ const message='This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.';
+ await expect(page.getByRole('alert')).toHaveText(message);await releaseStoreCompletion(page);
+ await expect(page.getByRole('alert')).toHaveText(message);expect(await exportLife(page)).toEqual(initial);
+});
+test('fix1 F2: the latest Continue supersedes an earlier held result',async({page})=>{
+ await start(page);await save(page);await holdStoreCompletion(page,'readonly',1);
+ await button(page,'Continue locally').click();await waitStoreCompletion(page);
+ const latest=makeLife(54321);await writeStoredSaveText(page,bytes(latest));await button(page,'Continue locally').click();
+ await releaseStoreCompletion(page);await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
+ expect(await exportLife(page)).toEqual({...latest,city:{...latest.city,revision:1}});
 });
