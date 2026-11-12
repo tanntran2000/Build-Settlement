@@ -15,6 +15,24 @@
 
 **Plan approval:** the owner (Tân) approved this plan on 2026-11-12, including Decisions 1, 4 and 8, verbatim: "Approve, Builder A".
 
+**Plan correction 4:**
+- **(a) Equivalent-storage test-migration rule.** It applies to the DATA-01 unit and e2e tests. An existing test that asserts the old storage mechanism is migrated to the equivalent assertion on the `GameStore` and its records, keeping the same invariant. Old-mechanism assertions include `localStorage.setItem` or `getItem` calls and values, and `localStorage` exceptions. Examples:
+  - "saved exactly this session" becomes "the stored records decode to exactly this session";
+  - "storage throws, so the save or clear fails" becomes "the store fails, so the save or clear fails and the previous records are unchanged".
+- **(a) Rules for each migrated test:**
+  - list it as file:line, before → after, and name the invariant it keeps;
+  - never delete a test or loosen a condition;
+  - unit tests always inject `CheckpointDeps` (store and legacy) and never use the cached default dependencies, which keeps tests isolated.
+- **(b) The fall clears everything.** Add to A2 (unit) and A3 (e2e):
+  - after a fallen city, **every one of the 7 data tables has 0 records** for the slot;
+  - the legacy key is removed;
+  - only the migration marker remains;
+  - over 3 consecutive games, each started, saved and then fallen, the total record count never grows.
+
+  Owner direction: "Phần thua của game nên xóa save và delete các data liên quan của save đó … mỗi new game là 1 seed riêng. Khi thua thì nên xóa thông tin seed đó tránh tình trạnh lưu quá nhiều gây nặng máy". This fits the single slot: the seed lives in the slot's records.
+- **Note for later:** if multiple save slots arrive, each game's slot is keyed by its seed, and a loss clears exactly that slot.
+- **Owner (Tân), 2026-11-12, verbatim:** "ok tôi đồng ý".
+
 **Plan correction 3:** three gaps, found by the Builder:
   - add `crisis-checkpoint.test.ts`, with mechanical await edits;
   - treat `character-life-session.test.ts` as an existing file and merge the new cases in;
