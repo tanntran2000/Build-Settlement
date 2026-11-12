@@ -103,7 +103,7 @@
       lifeStatus = '';
       const resolvedRevision = state.revision, resolvedReport = report;
       if(state.society?.crisis.stage === 'fallen') {
-        const cleared = clearFallenCharacterLifeCheckpoint(true, state.society.crisis.stage);
+        const cleared = await clearFallenCharacterLifeCheckpoint(true, state.society.crisis.stage);
         if (!cleared.success) errorLog.record('RUNTIME', 'INVALID_COMMAND');
         return;
       }
@@ -121,7 +121,7 @@
     lifeStatus = `Planning ${formatLifeWeek(state.world.week)}. Previous report retained.`;
     await tick();
     if (get(options).autosave && !checkpointLocked && outside && npcs && player && profiles) {
-      const result = saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+      const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
       if (!result.success) lifeStatus = 'Autosave failed. Your last save is kept.';
     }
   }
@@ -195,19 +195,19 @@
       loadWorldSession(result.state, expectedRevision, 'Checkpoint imported. Planning restored.');
     } catch { if (ticket === importRead) checkpointError('Could not read the checkpoint file. Your game was preserved.'); }
   }
-  function saveLocally() {
-    const result = saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+  async function saveLocally() {
+    const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
     if (!result.success) { checkpointError(result.message); return; }
     error = ''; saveNotice = result.replaced ? 'Saved in this browser. Replaced the previous local checkpoint.' : 'Saved in this browser.';
   }
-  function continueLocally() {
-    const result = readLocalCharacterLife();
+  async function continueLocally() {
+    const result = await readLocalCharacterLife();
     if (!result.success) { checkpointError(result.message); return; }
     loadWorldSession(result.state, state.revision, 'Local checkpoint loaded. Planning restored.', true);
   }
-  function mainMenu() {
+  async function mainMenu() {
     if (checkpointLocked) return;
-    const result = saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+    const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
     if (!result.success) { checkpointError(result.message); return; }
     onexit();
   }

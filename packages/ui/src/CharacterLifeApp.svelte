@@ -15,14 +15,14 @@
   // Any later choice invalidates a file read still pending.
   let importRead = 0;
 
-  function readSlot() {
+  async function readSlot() {
     cachedCheckpoint = null;
-    const result = readLocalCharacterLife();
+    const result = await readLocalCharacterLife();
     if (result.success && isPlayableCheckpoint(result.state)) {
       cachedCheckpoint = result.state; checkpoint = 'playable';
     } else checkpoint = result.success || result.message.includes(OLD_CHECKPOINT_MESSAGE) ? 'old' : 'none';
   }
-  onMount(readSlot);
+  onMount(() => { void readSlot(); });
   function newGame() { importRead++; error = ''; screen = 'create'; }
   function create(draft: PlayerDraft) {
     // A repeated Create (or one after Cancel) must not start a second session.
