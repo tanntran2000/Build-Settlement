@@ -11,16 +11,20 @@
   let session: CharacterLifeSessionState | null = null;
   let cachedCheckpoint: CharacterLifeSessionState | null = null;
   let checkpoint: 'playable' | 'none' | 'old' = 'none';
+  let checkpointReady = false;
   let error = '';
   // Any later choice invalidates a file read still pending.
   let importRead = 0;
 
   async function readSlot() {
+    checkpointReady = false;
     cachedCheckpoint = null;
     const result = await readLocalCharacterLife();
     if (result.success && isPlayableCheckpoint(result.state)) {
       cachedCheckpoint = result.state; checkpoint = 'playable';
     } else checkpoint = result.success || result.message.includes(OLD_CHECKPOINT_MESSAGE) ? 'old' : 'none';
+    if (!result.success && result.message.startsWith('Could not')) error = result.message;
+    checkpointReady = true;
   }
   onMount(() => { void readSlot(); });
   function newGame() { importRead++; error = ''; screen = 'create'; }
@@ -58,12 +62,15 @@
     <header class="card"><h1>Character Life</h1></header>
     <CharacterCreation oncreate={create} oncancel={() => { screen = 'start'; }} />
   </main>
-{:else}
+{:else if checkpointReady}
   <TitleScreen {checkpoint} {error} oncontinue={continueLocally} onnewgame={newGame} onquit={() => { importRead++; error = ''; }} onload={importCheckpoint} />
+{:else}
+  <main class="ledger-shell storage-loading" lang="en" aria-busy="true"></main>
 {/if}
 
 <style>
   main { max-width: 1180px; margin: auto; padding: 24px; }
   .card { margin-bottom: 16px; } h1 { font-size: 1.9rem; }
+  .storage-loading { max-width: none; min-height: 100dvh; padding: 0; background: var(--wood-dark); }
   @media(max-width: 750px) { main { padding: 12px; } }
 </style>

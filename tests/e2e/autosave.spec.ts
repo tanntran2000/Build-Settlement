@@ -1,3 +1,4 @@
+import {storedSaveText,readStoredRecords,writeStoredSaveText,writeRawRecord,clearStored,storeMarks,resetStoreMarks,injectWriteAbort} from './storage.helpers.ts';
 import { test, expect, type Page } from '@playwright/test';
 import { serializeCharacterLifeSave } from '../../packages/persistence/src/character-life-save.ts';
 import { makeLife, importLife, exportLife } from './character-life-navigation.helpers.ts';
@@ -13,16 +14,9 @@ async function start(page: Page, off = false) {
   if (off) await page.addInitScript(() => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize: 'normal', reduceMotion: null, autosave: false })));
   await page.goto('/'); await importLife(page, makeLife());
 }
-async function watch(page: Page) {
-  await page.evaluate(key => {
-    const get = Storage.prototype.getItem, set = Storage.prototype.setItem, calls: string[][] = [];
-    Object.assign(window, { autosaveCalls: calls, rawSlot: () => get.call(localStorage, key) });
-    Storage.prototype.getItem = function(k) { if (k === key) calls.push(['get', k]); return get.call(this, k); };
-    Storage.prototype.setItem = function(k, value) { if (k === key) calls.push(['set', k]); return set.call(this, k, value); };
-  }, KEY);
-}
-const calls = (page: Page) => page.evaluate(() => (window as unknown as WatchedWindow).autosaveCalls);
-const slot = (page: Page) => page.evaluate(() => (window as unknown as WatchedWindow).rawSlot());
+async function watch(page: Page) { await resetStoreMarks(page); }
+const calls = async(page: Page) => (await storeMarks(page)).map(name=>[name==='haven.store.write'?'set':name==='haven.store.read'?'get':'remove',KEY]);
+const slot = (page: Page) => storedSaveText(page);
 async function nextWeek(page: Page) {
   await page.getByTestId('life-end-week').click();
   await page.getByRole('button', { name: 'Plan next week', exact: true }).click();
@@ -39,18 +33,15 @@ test('On by default: Plan next week writes one checkpoint equal to the real expo
 });
 test('Off: End Week and Plan next week leave the slot and checkpoint IO unchanged', async ({ page }) => {
   await start(page, true); const prior = bytes(makeLife(54321));
-  await page.evaluate(({ key, prior }) => localStorage.setItem(key, prior), { key: KEY, prior }); await watch(page);
+  await writeStoredSaveText(page,prior); await watch(page);
   await nextWeek(page);
   expect(await calls(page)).toEqual([]); expect(await slot(page)).toBe(prior);
   expect((await exportLife(page)).city.world.week).toBe(2);
 });
 test('Write failure: the exact autosave status appears and previous bytes survive', async ({ page }) => {
   await start(page); const prior = bytes(makeLife(54321));
-  await page.evaluate(({ key, prior }) => localStorage.setItem(key, prior), { key: KEY, prior }); await watch(page);
-  await page.evaluate(key => {
-    const set = Storage.prototype.setItem;
-    Storage.prototype.setItem = function(k, value) { if (k === key) throw new DOMException('quota', 'QuotaExceededError'); return set.call(this, k, value); };
-  }, KEY);
+  await writeStoredSaveText(page,prior); await watch(page);
+  await injectWriteAbort(page);
   await nextWeek(page);
   await expect(page.locator('aside p[aria-atomic="true"]')).toHaveText('Autosave failed. Your last save is kept.');
   expect(await slot(page)).toBe(prior); expect((await exportLife(page)).city.world.week).toBe(2);

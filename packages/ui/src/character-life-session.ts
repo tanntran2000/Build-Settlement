@@ -46,10 +46,10 @@ export async function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ s
     let marker: StoredRecord | null;
     try { marker = await d.store.getSystem(MARKER); }
     catch (error) { if (deps) throw error; d.store = createMemoryGameStore(); warnings.add(d); marker = null; }
+    let records = await d.store.read('main');
     let invalid = false;
     if (!marker) {
       const text = d.legacy?.getItem(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY) ?? null;
-      let records: StoredRecord[] = (await d.store.read('main')) ?? [];
       if (text !== null) {
         const loaded = deserializeCharacterLifeSave(text);
         if (loaded.success) records = sessionToRecords('main',loaded.state);
@@ -58,11 +58,11 @@ export async function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ s
           try { const raw = JSON.parse(text); if (raw.format === 'haven.character-life-session.save' && raw.schemaVersion === 1 && raw.cityRulesetId !== SOCIETY_RULESET && raw.state?.city?.society?.rulesetId === raw.cityRulesetId) records = sessionToRecords('main',raw.state); else invalid = true; } catch { invalid = true; }
         }
       }
-      await d.store.replaceSlot('main',records,[{ slotId: '_',id: MARKER,table: 'system',schemaVersion: 1,value: true }]);
+      await d.store.replaceSlot('main',records ?? [],[{ slotId: '_',id: MARKER,table: 'system',schemaVersion: 1,value: true }]);
     }
     if (warnings.has(d)) { warnings.delete(d); return fail(BLOCKED); }
     if (invalid) return fail(OLD);
-    const records = await d.store.read('main'); if (!records) return fail(NONE);
+    if (!records) return fail(NONE);
     let state: CharacterLifeSessionState;
     try { state = recordsToSession(records); } catch { return fail(OLD); }
     return isPlayableCheckpoint(state) && isCharacterLifeSessionState(state) ? { success: true,state } : fail(OLD);
