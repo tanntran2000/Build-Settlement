@@ -19,4 +19,3 @@ it('corrupt character identifies the offending record', () => {
   const rows = sessionToRecords('main', session()); const npc = rows.find(r => r.id === 'npc_starter_1')!; npc.value = null;
   try { recordsToSession(rows); throw Error('Expected invalid record rejection'); } catch (e) { expect(e).toBeInstanceOf(StoreRecordError); expect((e as StoreRecordError).ref).toBe('characters:npc_starter_1'); }
 });
-

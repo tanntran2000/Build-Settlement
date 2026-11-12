@@ -34,4 +34,3 @@ export function recordsToSession(records: StoredRecord[]): CharacterLifeSessionS
   if (!player) throw new StoreRecordError('characters:player');
   return structuredClone({ city: get('city','city'),outside: get('world','outside'),npcs: npcs.sort((a,b) => a.order-b.order).map(v => v.npc),player,profiles: profiles.sort((a,b) => a.order-b.order).map(v => v.profile) }) as CharacterLifeSessionState;
 }
-
