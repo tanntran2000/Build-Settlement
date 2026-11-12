@@ -904,6 +904,7 @@ async function prepareLoadIntent(page: Page) {
   await page.getByLabel('Building type', { exact: true }).selectOption('logging');
   const saved = await exportLife(page);
   await page.getByRole('button', { name: 'Save locally', exact: true }).click();
+  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
   await selectPerson(page, 'npc_starter_1'); await selectArea(page, 'Work'); await postSelect(page).selectOption('plain-1');
   await selectPerson(page, 'npc_starter_2'); await selectArea(page, 'Work');
   await characterWindow(page).getByRole('combobox').selectOption('plain-1');
@@ -1373,7 +1374,9 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 812 
       await importLife(page, exported);
       const roundtrip = await exportLife(page);
       expect(roundtrip).toEqual({ ...exported, city: { ...exported.city, revision: roundtrip.city.revision } });
-      await page.getByRole('button', { name: 'Save locally', exact: true }).click(); await page.reload();
+      await page.getByRole('button', { name: 'Save locally', exact: true }).click();
+      await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+       await page.reload();
       await page.getByRole('button', { name: 'Continue', exact: true }).click();
       const reloaded = await exportLife(page);
       expect(reloaded).toEqual(roundtrip);

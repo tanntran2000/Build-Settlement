@@ -183,6 +183,7 @@ test('fallen city clears cached Continue after New Game and creation Cancel', as
   const parsed = deserializeCharacterLifeSave(await readFile(new URL('../../packages/persistence/src/__tests__/fixtures/society-v7/life-rebellion-last-week.json', import.meta.url), 'utf8'));
   if (!parsed.success) throw Error(parsed.error.message);
   await page.goto('/'); await importLife(page, parsed.state); await go(page, 'session'); await button(page, 'Save locally').click();
+  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
   await page.reload(); await expect(button(page, 'Continue')).toBeEnabled(); await button(page, 'Continue').click();
   await page.getByTestId('life-end-week').click(); await expect(page.getByRole('heading', { name: 'The City Has Fallen', exact: true })).toBeVisible();
   expect(await storedSaveText(page)).toBeNull();
