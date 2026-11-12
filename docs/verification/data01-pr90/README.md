@@ -18,7 +18,7 @@
 | `npm run test:architecture` | 0 | 154/154 |
 | `npm test` | 0 | 2,192/2,192 (99 files) |
 | `npm run build` | 0 | PASS |
-| `CI=1 npm run test:smoke` | 0 | 350/350, Builder run at this head (`builder/fix5/smoke.txt`, 32.4 min). CI `quality-gate` run 43224229750 at this head was still running when this folder was committed; its result is recorded on the PR. |
+| `CI=1 npm run test:smoke` | 0 | 350/350, Builder run at this head (`builder/fix5/smoke.txt`, 32.4 min). CI `quality-gate` run 43224229750 at this head: **success**, smoke 350 passed (14.9 min), finished 2026-11-12T13:23:25Z. |
 
 Fix rounds 4 and 5 change e2e specs only (see below). Claude's last full smoke run was at `c1faf87` (`claude-tester/tester-gates-smoke-c1faf87.txt`, 350/350, 29.6 min). Tester gates 1–7 also passed at `50df817` (`claude-tester/tester-gates-1-7-50df817.txt`).
 
