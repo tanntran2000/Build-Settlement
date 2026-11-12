@@ -117,3 +117,43 @@ test('fix2 F1: recovered legacy A cannot replace B saved while migration was blo
  expect((await readStoredRecords(page)).filter(r=>r.table!=='system')).toEqual(before);expect(await storedSaveText(page)).toBe(bytes(b));
  expect((await readStoredRecords(page)).filter(r=>r.table==='system')).toEqual([marker]);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(legacy);
 });
+
+for(const outcome of ['success','failure'] as const)test('fix2 F3: stale '+outcome+' Save feedback cannot replace a rejected Import',async({page})=>{
+ await start(page);const initial=await exportLife(page);
+ await holdStoreCompletion(page,outcome==='success'?'readwrite':'readonly');if(outcome==='failure')await injectWriteAbort(page,'throw');
+ await button(page,'Save locally').click();await waitStoreCompletion(page);
+ await page.getByLabel('Import checkpoint',{exact:true}).setInputFiles({name:'invalid.json',mimeType:'application/json',buffer:Buffer.from('{')});
+ const message='This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.';
+ await expect(page.getByRole('alert')).toHaveText(message);await releaseStoreCompletion(page);
+ await expect(page.getByRole('alert')).toHaveText(message);await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveCount(0);
+ expect(await exportLife(page)).toEqual(initial);
+});
+test('fix2 F3: Save supersedes a pending Continue without changing the live session',async({page})=>{
+ await start(page);await save(page);await importLife(page,makeLife(54321));const newer=await exportLife(page);
+ await holdStoreCompletion(page,'readonly',1);await button(page,'Continue locally').click();await waitStoreCompletion(page);
+ await button(page,'Save locally').click();await releaseStoreCompletion(page);
+ await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+ expect(await exportLife(page)).toEqual(newer);expect(await storedSaveText(page)).toBe(bytes(newer));
+});
+test('fix2 F3: Save supersedes a pending Main menu and keeps the session open',async({page})=>{
+ await start(page);const initial=await exportLife(page);await holdStoreCompletion(page,'readwrite');
+ await button(page,'Main menu').click();await waitStoreCompletion(page);await button(page,'Save locally').click();await releaseStoreCompletion(page);
+ await expect(page.getByTestId('life-shell')).toBeVisible();await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+ expect(await exportLife(page)).toEqual(initial);
+});
+test('fix2 F3: a Planning command supersedes pending Save feedback',async({page})=>{
+ await start(page);const initial=await exportLife(page);await holdStoreCompletion(page,'readwrite');
+ await button(page,'Save locally').click();await waitStoreCompletion(page);const newer=await act(page,initial,'SET_ENABLED',{tileId:'field-1',enabled:false});
+ await go(page,'session');const notice=page.locator('[aria-label="Planning checkpoints"] [role="status"]');await expect(notice).toHaveText('Checkpoint download requested.');
+ await releaseStoreCompletion(page);await expect(notice).toHaveText('Checkpoint download requested.');expect(await exportLife(page)).toEqual(newer);
+});
+test('fix2 F3: a delayed autosave failure cannot replace a later week status',async({page})=>{
+ await start(page);const initial=await exportLife(page);await save(page);
+ await holdStoreCompletion(page,'readonly');await injectWriteAbort(page,'throw');
+ const advance=async()=>{await go(page,'city');await page.getByTestId('life-end-week').click();await button(page,'Plan next week').click();};
+ await advance();await waitStoreCompletion(page);
+ await button(page,'Options').click();const options=page.getByRole('dialog',{name:'Options',exact:true});await options.getByLabel('Autosave',{exact:true}).uncheck();await options.getByRole('button',{name:'Close',exact:true}).click();await expect(options).not.toBeVisible();
+ await advance();const status=page.locator('aside p[aria-atomic="true"]');await expect(status).toHaveText('Planning Week 3 \u00b7 Year 1. Previous report retained.');
+ await releaseStoreCompletion(page);await expect(status).toHaveText('Planning Week 3 \u00b7 Year 1. Previous report retained.');
+ expect((await exportLife(page)).city.world.week).toBe(3);expect(await storedSaveText(page)).toBe(bytes(initial));
+});

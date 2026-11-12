@@ -119,11 +119,12 @@
   async function nextLifeWeek(): Promise<void> {
     if (state.phase !== 'report') return;
     if (!command('NEXT_WEEK')) return;
+    const savedRevision = state.revision, savedWeek = state.world.week;
     lifeStatus = `Planning ${formatLifeWeek(state.world.week)}. Previous report retained.`;
     await tick();
     if (get(options).autosave && !checkpointLocked && outside && npcs && player && profiles) {
       const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
-      if (!result.success) lifeStatus = 'Autosave failed. Your last save is kept.';
+      if (!result.success && state.revision === savedRevision && state.world.week === savedWeek) lifeStatus = 'Autosave failed. Your last save is kept.';
     }
   }
   async function openLifeCity(): Promise<void> {
@@ -197,7 +198,9 @@
     } catch { if (ticket === importRead) checkpointError('Could not read the checkpoint file. Your game was preserved.'); }
   }
   async function saveLocally() {
+    const ticket = ++checkpointAction, fileTicket = importRead, expectedRevision = state.revision;
     const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+    if (ticket !== checkpointAction || fileTicket !== importRead || state.revision !== expectedRevision) return;
     if (!result.success) { checkpointError(result.message); return; }
     error = ''; saveNotice = result.replaced ? 'Saved in this browser. Replaced the previous local checkpoint.' : 'Saved in this browser.';
   }
