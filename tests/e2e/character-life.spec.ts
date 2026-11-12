@@ -333,6 +333,7 @@ test('Life report and checkpoint operations preserve every other-mode slot byte-
   await button(page, 'Plan next week').click();
   await importLife(page, saved);
   await go(page, 'session'); await button(page, 'Continue locally').click();
+  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Local checkpoint loaded. Planning restored.');
   const restored = await exportLife(page);
   expect({ ...restored, city: { ...restored.city, revision: saved.city.revision } }).toEqual(saved);
   expect(await page.evaluate(keys => keys.map(key => localStorage.getItem(key)), keys)).toEqual(bytes);
