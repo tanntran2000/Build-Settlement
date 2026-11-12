@@ -1,0 +1,6 @@
+UTC=2026-11-12T15:02:28.463Z
+HEAD=623cbc4aa90645805dea59df4b1d8a083f226f46
+TREE=75b10a8c3e1e19ce6f46cd5eb17c9d5eb22947c5
+STATUS=clean
+UTF8: 42 text files strictly decoded; no replacement characters; owner quote preserved.
+Exactly one added line, zero removed lines, sole allowlisted file. Both original working-copy bytes and base Git blob reconstructed after insertion removal. Positive test passed; meaningful negative timed out at added line336 with import notice and read completion withheld. All hooks removed before clean-head gates/smoke.

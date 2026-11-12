@@ -1,0 +1,12 @@
+{
+  "baseHead": "773e0c6cc381bb946f366585da7ef5e9c2da813f",
+  "head": "623cbc4aa90645805dea59df4b1d8a083f226f46",
+  "file": "tests/e2e/character-life.spec.ts",
+  "baseWorkingSha256": "d756d50ccb3420f11e7ae59c62be4385c4ad017d06d6884a80c56e675e9d4061",
+  "restoredWorkingSha256": "d756d50ccb3420f11e7ae59c62be4385c4ad017d06d6884a80c56e675e9d4061",
+  "baseBlobSha256": "26ce5ce030d144f92bb4a7a98ba1d8cc9d2167ea0a051a15d8d337b507000bac",
+  "removedStatementBlobSha256": "26ce5ce030d144f92bb4a7a98ba1d8cc9d2167ea0a051a15d8d337b507000bac",
+  "addedLines": 1,
+  "removedLines": 0,
+  "allOtherFilesUnchanged": true
+}

@@ -1,0 +1,18 @@
+UTC=2026-11-12T14:25:31.600Z HEAD=773e0c6cc381bb946f366585da7ef5e9c2da813f TREE=36fab3ab2fd4717eaf433a7b55b922083cdfcfa7
+STATUS="M tests/e2e/character-life.spec.ts"
+ENV CI=1
+COMMAND=npx playwright test tests/e2e/character-life.spec.ts -g "Life report and checkpoint operations preserve every other-mode slot byte-for-byte"
+[WebServer] (node:52688) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:24380) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:18244) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\character-life.spec.ts:323:1 › Life report and checkpoint operations preserve every other-mode slot byte-for-byte (5.4s)
+
+  1 passed (17.0s)
+
+EXIT=0 DURATION_MS=19831 END_UTC=2026-11-12T14:25:51.431Z

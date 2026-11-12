@@ -1,0 +1,49 @@
+UTC=2026-11-12T14:27:38.282Z
+COMMAND=git diff --name-only
+tests/e2e/character-life.spec.ts
+warning: in the working copy of 'tests/e2e/character-life.spec.ts', LF will be replaced by CRLF the next time Git touches it
+EXIT=0
+COMMAND=git diff --check
+warning: in the working copy of 'tests/e2e/character-life.spec.ts', LF will be replaced by CRLF the next time Git touches it
+EXIT=0
+COMMAND=git diff --no-ext-diff --unified=0
+diff --git a/tests/e2e/character-life.spec.ts b/tests/e2e/character-life.spec.ts
+index 985a9a4..a8d288f 100644
+--- a/tests/e2e/character-life.spec.ts
++++ b/tests/e2e/character-life.spec.ts
+@@ -335,0 +336 @@ test('Life report and checkpoint operations preserve every other-mode slot byte-
++  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Local checkpoint loaded. Planning restored.');
+warning: in the working copy of 'tests/e2e/character-life.spec.ts', LF will be replaced by CRLF the next time Git touches it
+EXIT=0
+COMMAND=git diff --no-ext-diff
+diff --git a/tests/e2e/character-life.spec.ts b/tests/e2e/character-life.spec.ts
+index 985a9a4..a8d288f 100644
+--- a/tests/e2e/character-life.spec.ts
++++ b/tests/e2e/character-life.spec.ts
+@@ -333,6 +333,7 @@ test('Life report and checkpoint operations preserve every other-mode slot byte-
+   await button(page, 'Plan next week').click();
+   await importLife(page, saved);
+   await go(page, 'session'); await button(page, 'Continue locally').click();
++  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Local checkpoint loaded. Planning restored.');
+   const restored = await exportLife(page);
+   expect({ ...restored, city: { ...restored.city, revision: saved.city.revision } }).toEqual(saved);
+   expect(await page.evaluate(keys => keys.map(key => localStorage.getItem(key)), keys)).toEqual(bytes);
+warning: in the working copy of 'tests/e2e/character-life.spec.ts', LF will be replaced by CRLF the next time Git touches it
+EXIT=0
+COMMAND=git add -- tests/e2e/character-life.spec.ts
+warning: in the working copy of 'tests/e2e/character-life.spec.ts', LF will be replaced by CRLF the next time Git touches it
+EXIT=0
+COMMAND=git diff --cached --check
+EXIT=0
+COMMAND=git commit -F C:\Users\Admin\.t3\local-drafts\data01-prA\fix6\commit-message.txt
+[feat/data01-storage 623cbc4] test(e2e): wait for Continue to finish before exporting in the checkpoint slot test
+ 1 file changed, 1 insertion(+)
+EXIT=0
+COMMAND=git rev-parse HEAD
+623cbc4aa90645805dea59df4b1d8a083f226f46
+EXIT=0
+COMMAND=git rev-parse HEAD^{tree}
+75b10a8c3e1e19ce6f46cd5eb17c9d5eb22947c5
+EXIT=0
+COMMAND=git status --porcelain
+EXIT=0

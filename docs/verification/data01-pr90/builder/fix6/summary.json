@@ -1,0 +1,85 @@
+{
+  "head": "623cbc4aa90645805dea59df4b1d8a083f226f46",
+  "tree": "75b10a8c3e1e19ce6f46cd5eb17c9d5eb22947c5",
+  "base": "773e0c6cc381bb946f366585da7ef5e9c2da813f",
+  "utc": "2026-11-12T15:02:26.818Z",
+  "clean": true,
+  "positive": {
+    "passed": 1,
+    "exit": 0,
+    "wallMs": 19831
+  },
+  "negative": {
+    "failed": 1,
+    "exit": 1,
+    "wallMs": 20628,
+    "atAddedLine": 336,
+    "assertionTimeoutMs": 5000,
+    "expectedFailure": true,
+    "observation": {
+      "clicked": true,
+      "readonlyIntercepted": true,
+      "transactionCompleted": true,
+      "completionDelivered": false,
+      "noticeAtClick": "Checkpoint imported. Planning restored.",
+      "status": "Checkpoint imported. Planning restored."
+    }
+  },
+  "gates": [
+    {
+      "label": "gate1",
+      "exit": 0,
+      "wallMs": 204
+    },
+    {
+      "label": "gate2",
+      "exit": 0,
+      "wallMs": 12274
+    },
+    {
+      "label": "gate3",
+      "exit": 0,
+      "wallMs": 35423
+    },
+    {
+      "label": "gate4",
+      "exit": 0,
+      "wallMs": 5800
+    },
+    {
+      "label": "gate5",
+      "exit": 0,
+      "wallMs": 48593
+    },
+    {
+      "label": "gate6",
+      "exit": 0,
+      "wallMs": 51241
+    },
+    {
+      "label": "gate7",
+      "exit": 0,
+      "wallMs": 21815
+    },
+    {
+      "label": "smoke",
+      "exit": 0,
+      "wallMs": 1886105
+    }
+  ],
+  "unit": {
+    "passed": 2192,
+    "files": 99
+  },
+  "architecture": 154,
+  "smoke": {
+    "passed": 350,
+    "reportedDuration": "31.3m",
+    "wallMs": 1886105
+  },
+  "addedLines": 1,
+  "removedLines": 0,
+  "changedFiles": [
+    "tests/e2e/character-life.spec.ts"
+  ]
+}

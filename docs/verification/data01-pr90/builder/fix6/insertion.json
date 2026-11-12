@@ -1,0 +1,10 @@
+{
+  "file": "tests/e2e/character-life.spec.ts",
+  "baseHead": "773e0c6cc381bb946f366585da7ef5e9c2da813f",
+  "title": "Life report and checkpoint operations preserve every other-mode slot byte-for-byte",
+  "offset": 30583,
+  "addition": "\r\n  await expect(page.locator('[aria-label=\"Planning checkpoints\"] [role=\"status\"]')).toContainText('Local checkpoint loaded. Planning restored.');",
+  "statement": "await expect(page.locator('[aria-label=\"Planning checkpoints\"] [role=\"status\"]')).toContainText('Local checkpoint loaded. Planning restored.');",
+  "baseLine": 335,
+  "addedLine": 336
+}

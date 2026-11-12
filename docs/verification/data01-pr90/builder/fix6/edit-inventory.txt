@@ -1,0 +1,3 @@
+tests/e2e/character-life.spec.ts:336
+ADDED:   await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Local checkpoint loaded. Planning restored.');
+Immediately after base line335 Continue locally click. One Git-added line, zero removed lines. Removing exact insertion restores the complete original 773e0c6 file byte-for-byte. All temporary hooks removed; no other test/product/config changed. Original locator used unchanged.

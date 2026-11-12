@@ -1,0 +1,55 @@
+UTC=2026-11-12T14:26:41.988Z HEAD=773e0c6cc381bb946f366585da7ef5e9c2da813f TREE=36fab3ab2fd4717eaf433a7b55b922083cdfcfa7
+STATUS="M tests/e2e/character-life.spec.ts"
+ENV CI=1
+COMMAND=npx playwright test tests/e2e/character-life.spec.ts -g "Life report and checkpoint operations preserve every other-mode slot byte-for-byte"
+[WebServer] (node:46596) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:43640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:58584) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\character-life.spec.ts:323:1 › Life report and checkpoint operations preserve every other-mode slot byte-for-byte (7.2s)
+
+
+  1) [chromium] › tests\e2e\character-life.spec.ts:323:1 › Life report and checkpoint operations preserve every other-mode slot byte-for-byte 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('[aria-label="Planning checkpoints"] [role="status"]')
+    Expected substring: "Local checkpoint loaded. Planning restored."
+    Received string:    "Checkpoint imported. Planning restored."
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" locator('[aria-label="Planning checkpoints"] [role="status"]') with timeout 5000ms
+      - waiting for locator('[aria-label="Planning checkpoints"] [role="status"]')
+        14 × locator resolved to <p role="status" class="svelte-68buw">Checkpoint imported. Planning restored.</p>
+           - unexpected value "Checkpoint imported. Planning restored."
+
+
+      334 |   await importLife(page, saved);
+      335 |   await go(page, 'session'); await button(page, 'Continue locally').click();
+    > 336 |   await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Local checkpoint loaded. Planning restored.');
+          |                                                                                     ^
+      337 |   const restored = await exportLife(page);
+      338 |   expect({ ...restored, city: { ...restored.city, revision: saved.city.revision } }).toEqual(saved);
+      339 |   expect(await page.evaluate(keys => keys.map(key => localStorage.getItem(key)), keys)).toEqual(bytes);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life.spec.ts:336:85
+
+    Error Context: test-results\character-life-Life-report-6dd98-her-mode-slot-byte-for-byte-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\character-life-Life-report-6dd98-her-mode-slot-byte-for-byte-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\character-life-Life-report-6dd98-her-mode-slot-byte-for-byte-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\character-life.spec.ts:323:1 › Life report and checkpoint operations preserve every other-mode slot byte-for-byte 
+
+EXIT=1 DURATION_MS=20628 END_UTC=2026-11-12T14:27:02.616Z

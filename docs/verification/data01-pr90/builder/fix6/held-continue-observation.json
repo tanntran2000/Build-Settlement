@@ -1,0 +1,8 @@
+{
+  "clicked": true,
+  "readonlyIntercepted": true,
+  "transactionCompleted": true,
+  "completionDelivered": false,
+  "noticeAtClick": "Checkpoint imported. Planning restored.",
+  "status": "Checkpoint imported. Planning restored."
+}

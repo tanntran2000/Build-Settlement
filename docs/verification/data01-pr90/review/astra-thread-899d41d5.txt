@@ -446,3 +446,49 @@ Confirmed tree: `36fab3ab2fd4717eaf433a7b55b922083cdfcfa7`
 The [Builder evidence](C:/Users/Admin/.t3/local-drafts/data01-prA/fix5/README.md) accurately distinguishes **non-reproduction** from a RED/GREEN proof: the 300 ms delayed baseline and modified tests both passed all nine cases. It reports gates 1–7 exiting 0, **2,192 unit tests**, and **350 smoke tests** passing. I did not run tests/builds or independently reproduce the timing risks, and I did not verify Linux CI at this head.
 
 **Next: record this PASS against `773e0c6` in #90’s committed review evidence.**
+
+[user]
+Astra, read-only re-review of DATA-01 PR A (#90), fix round 6.
+
+Worktree: C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+Range: `git diff 773e0c6..623cbc4` (one commit 623cbc4, tree 75b10a8).
+
+Context: dot's G5 check, citing your pos41, flagged tests/e2e/character-life.spec.ts:335. That test exports right after "Continue locally" without waiting. Because the expected save was imported just before, an unfinished or failed restore would be masked. Owner Tân chose to fix it inside #90, verbatim: "A, sửa trong #90".
+
+Approved scope: character-life.spec.ts only; one added line after the Continue click:
+`await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Local checkpoint loaded. Planning restored.');`
+No product change.
+
+Builder evidence: C:/Users/Admin/.t3/local-drafts/data01-prA/fix6/. Normal single run passes. With a temporary hold on delivery of the Continue read's completion, the test fails at the new line 336 (status still "Checkpoint imported. Planning restored."). Gates 1–7 exit 0, unit 2,192, smoke 350/350.
+
+Please check:
+1. Diff is exactly one added line in the approved file; nothing weakened.
+2. The awaited message is produced only by a completed Continue (TileManagement.svelte:212), not by the earlier import (line 197) or a save notice, so the wait cannot pass on stale text.
+3. After this wait, the export reflects the restored state, and the test would now catch a failed restore.
+4. Anything else in this test that still reads before an async operation completes.
+
+Do not edit files, run installs, push or merge. Reply PASS or FAIL with findings (P0–P3, file:line).
+
+[assistant]
+Reviewing the single Continue-completion wait at `623cbc4` against the handler and the test’s preceding actions. No files or tests will be changed.
+
+
+[assistant]
+**PASS — the added wait closes the masked-Continue failure in this test. No P0–P3 findings in `773e0c6..623cbc4`.**
+
+Confirmed HEAD: `623cbc4aa90645805dea59df4b1d8a083f226f46`  
+Confirmed tree: `75b10a8c3e1e19ce6f46cd5eb17c9d5eb22947c5`
+
+1. **Exactly the approved change.** The diff is one added line in [character-life.spec.ts:336](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/character-life.spec.ts:336). No existing assertion, value, timeout, retry, worker setting, or product code changed. `git diff --check` exited **0**; the worktree was clean.
+
+2. **The wait cannot match the earlier import or save notice.** This test performs its first Continue after an import whose helper awaits `Checkpoint imported. Planning restored.` Save produces `Saved in this browser…`. Neither matches `Local checkpoint loaded. Planning restored.` The Continue handler supplies that distinct message only after its awaited read succeeds and `loadWorldSession` successfully publishes the restored session.
+
+3. **Export now follows successful restoration.** `loadWorldSession` assigns city, outside, NPCs, player, and profiles before publishing the success notice. Once the new assertion passes, the subsequent export reads that restored state. A failed read, rejected load, or discarded stale completion cannot satisfy the wait, so the previously imported expected state can no longer mask those failures.
+
+4. **No additional read-before-completion defect was identified in this test.** The earlier export after Save reads the live session, which is the intended snapshot; it does not inspect persistence. The later Continue is queued behind that save. Autosave is disabled, the in-game import helper awaits import completion, and the final foreign-slot check follows the new Continue wait.
+
+The inspected Builder logs record a [normal single-test pass](C:/Users/Admin/.t3/local-drafts/data01-prA/fix6/single-positive.txt), an [intentional held-Continue failure at the new line](C:/Users/Admin/.t3/local-drafts/data01-prA/fix6/single-held-continue.txt), and [350 full-smoke passes](C:/Users/Admin/.t3/local-drafts/data01-prA/fix6/smoke.txt), with exits **0**, **1**, and **0**, respectively. The negative case supports the intended distinction: an unfinished Continue no longer passes through to the export assertion.
+
+I performed only Git and file reads. I did not independently run tests/builds, inspect the browser trace interactively, or verify Linux CI at this head.
+
+**Next: record this PASS against `623cbc4` in #90’s committed review evidence.**

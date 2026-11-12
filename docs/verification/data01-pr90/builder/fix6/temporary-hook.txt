@@ -1,0 +1,4 @@
+
+// FIX6 TEMPORARY NEGATIVE PROOF — removed before commit.
+test.beforeEach(async({page})=>{await page.addInitScript({path:"C:/Users/Admin/.t3/local-drafts/data01-prA/fix6/hold-continue-init.js"});});
+test.afterEach(async({page})=>{const proof=await page.evaluate(()=>({...((window as unknown as {__fix6ContinueProof:Record<string,unknown>}).__fix6ContinueProof),status:document.querySelector('[aria-label="Planning checkpoints"] [role="status"]')?.textContent}));await (await import('node:fs/promises')).writeFile("C:/Users/Admin/.t3/local-drafts/data01-prA/fix6/held-continue-observation.json",JSON.stringify(proof,null,2),'utf8');await test.info().attach('held-continue-proof',{body:JSON.stringify(proof),contentType:'application/json'});});

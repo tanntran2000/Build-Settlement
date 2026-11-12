@@ -1,0 +1,7 @@
+test(e2e): wait for Continue to finish before exporting in the checkpoint slot test
+
+The test imported the expected session just before Continue locally, so exporting immediately could pass without proving the restore had completed. Await the distinct local-checkpoint success status before exporting, preserving every existing state and slot assertion.
+
+The single test passes normally and fails at the new wait when a temporary init script withholds the Continue read completion; the earlier import notice remains visible. Remove all temporary instrumentation before commit.
+
+Co-authored-by: Codex <noreply@openai.com>
