@@ -32,6 +32,19 @@ export function createIndexedDbGameStore(factory: IDBFactory = indexedDB): GameS
         return { put: diff.put.length,deleted: diff.remove.length,unchanged: diff.unchanged };
       });
     },
+    async migrateSlot(slotId,candidate,marker) {
+      performance.mark('haven.store.write');
+      if ((candidate !== null && candidate.some(r => r.slotId !== slotId || r.table === 'system')) || marker.table !== 'system') throw Error('Invalid slot records');
+      return transaction('readwrite',async tx => {
+        const [existingMarker,current] = await Promise.all([request(tx.objectStore('system').get([marker.slotId,marker.id])),slotRows(tx,slotId)]);
+        if (!existingMarker) {
+          if (!current.some(r => r.table === 'meta') && candidate !== null) for (const r of candidate) tx.objectStore(r.table).put(r);
+          tx.objectStore('system').put(marker);
+        }
+        const result = await slotRows(tx,slotId);
+        return result.some(r => r.table === 'meta') ? result : null;
+      });
+    },
     async clear(slotId) { performance.mark('haven.store.clear'); return transaction('readwrite',async tx => { for (const r of await slotRows(tx,slotId)) tx.objectStore(r.table).delete([slotId,r.id]); }); },
     async getSystem(id) { return transaction('readonly',async tx => (await request(tx.objectStore('system').get(['_',id]))) ?? null); }
   };

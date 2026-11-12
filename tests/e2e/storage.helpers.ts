@@ -87,3 +87,15 @@ export async function releaseStoreCompletion(page: Page) {
     await new Promise(resolve=>setTimeout(resolve,0));
   });
 }
+
+export async function watchMigrationActivity(page:Page) {
+ await page.evaluate(config=>{
+  const activity={readwrite:0,writes:[] as {operation:string;table:string;key:unknown}[]};Object.assign(window,{migrationActivity:activity});performance.clearMarks('haven.store.write');
+  const transaction=IDBDatabase.prototype.transaction,put=IDBObjectStore.prototype.put,remove=IDBObjectStore.prototype.delete,clear=IDBObjectStore.prototype.clear;
+  IDBDatabase.prototype.transaction=function(...args:Parameters<typeof transaction>){const tx=transaction.apply(this,args);if(this.name===config.name&&args[1]==='readwrite')activity.readwrite++;return tx;};
+  IDBObjectStore.prototype.put=function(...args:Parameters<typeof put>){if(this.transaction.db.name===config.name)activity.writes.push({operation:'put',table:this.name,key:[args[0].slotId,args[0].id]});return put.apply(this,args);};
+  IDBObjectStore.prototype.delete=function(...args:Parameters<typeof remove>){if(this.transaction.db.name===config.name)activity.writes.push({operation:'delete',table:this.name,key:args[0]});return remove.apply(this,args);};
+  IDBObjectStore.prototype.clear=function(){if(this.transaction.db.name===config.name)activity.writes.push({operation:'clear',table:this.name,key:null});return clear.call(this);};
+ },GAME_DB);
+ return ()=>page.evaluate(()=>(window as unknown as {migrationActivity:{readwrite:number;writes:{operation:string;table:string;key:unknown}[]}}).migrationActivity);
+}

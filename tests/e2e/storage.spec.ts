@@ -157,3 +157,35 @@ test('fix2 F3: a delayed autosave failure cannot replace a later week status',as
  await releaseStoreCompletion(page);await expect(status).toHaveText('Planning Week 3 \u00b7 Year 1. Previous report retained.');
  expect((await exportLife(page)).city.world.week).toBe(3);expect(await storedSaveText(page)).toBe(bytes(initial));
 });
+
+for(const scenario of ['existing B','empty','marker winner'] as const)test('fix3 browser: atomic migration preserves C after '+scenario,async({page,context})=>{
+ const legacy=bytes(makeLife(11)),b=makeLife(22),c=makeLife(33);
+ const block=({key,seed}:{key:string;seed:string|null})=>{
+  const storage=localStorage;if(seed!==null)storage.setItem(key,seed);
+  Object.defineProperty(window,'localStorage',{configurable:true,get(){throw Error('temporarily blocked');}});
+  Object.assign(window,{restoreLegacyStorage:()=>Object.defineProperty(window,'localStorage',{configurable:true,get:()=>storage})});
+ };
+ await page.addInitScript(block,{key:KEY,seed:legacy});await page.goto('/');await expect(page.getByRole('heading',{name:'HAVEN',exact:true})).toBeVisible();
+ const writer=await context.newPage();try{
+  await writer.addInitScript(block,{key:KEY,seed:null});await writer.goto('/');await expect(writer.getByRole('heading',{name:'HAVEN',exact:true})).toBeVisible();
+  if(scenario==='existing B'){await importLife(writer,b);await save(writer);expect(await storedSaveText(writer)).toBe(bytes(b));}
+  expect((await readStoredRecords(writer)).filter(r=>r.table==='system')).toEqual([]);
+  await importLife(page,makeLife(44));await go(page,'session');await page.evaluate(()=>(window as unknown as {restoreLegacyStorage:()=>void}).restoreLegacyStorage());
+  const liveRevision=(await exportLife(page)).city.revision;
+  await holdStoreCompletion(page,'readonly',1);await button(page,'Continue locally').click();await waitStoreCompletion(page);
+  await importLife(writer,c);const savedC=await exportLife(writer);await save(writer);
+  const before=await readStoredRecords(writer);expect(before.filter(r=>r.table==='system')).toEqual([]);expect(await storedSaveText(writer)).toBe(bytes(savedC));
+  if(scenario==='marker winner'){
+   await writer.evaluate(()=>(window as unknown as {restoreLegacyStorage:()=>void}).restoreLegacyStorage());await button(writer,'Continue locally').click();
+   await expect(writer.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
+   expect((await readStoredRecords(writer)).filter(r=>r.table==='system')).toEqual([marker]);
+  }
+  const {watchMigrationActivity}=await import('./storage.helpers.ts');const activity=await watchMigrationActivity(page);await releaseStoreCompletion(page);
+  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
+  expect(await exportLife(page)).toEqual({...savedC,city:{...savedC.city,revision:Math.max(liveRevision,savedC.city.revision)+1}});
+  expect((await readStoredRecords(writer)).filter(r=>r.table!=='system')).toEqual(before.filter(r=>r.table!=='system'));expect(await storedSaveText(writer)).toBe(bytes(savedC));
+  expect((await readStoredRecords(writer)).filter(r=>r.table==='system')).toEqual([marker]);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(legacy);
+  expect(await activity()).toEqual({readwrite:1,writes:scenario==='marker winner'?[]:[{operation:'put',table:'system',key:['_','migration:legacy-local-checkpoint']}]});
+  expect((await storeMarks(page)).filter(name=>name==='haven.store.write')).toEqual(['haven.store.write']);
+ }finally{await writer.close();}
+});

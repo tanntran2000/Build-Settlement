@@ -5,6 +5,7 @@ export interface WriteStats { put: number; deleted: number; unchanged: number }
 export interface GameStore {
   read(slotId: string): Promise<StoredRecord[] | null>;
   replaceSlot(slotId: string, next: StoredRecord[], extra?: StoredRecord[]): Promise<WriteStats>;
+  migrateSlot(slotId: string, candidate: StoredRecord[] | null, marker: StoredRecord): Promise<StoredRecord[] | null>;
   clear(slotId: string): Promise<void>;
   getSystem(id: string): Promise<StoredRecord | null>;
 }
