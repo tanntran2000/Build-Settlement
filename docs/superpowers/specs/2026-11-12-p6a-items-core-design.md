@@ -141,7 +141,7 @@ The Player and each named NPC have an **Equipment** view: a paper-doll of slots 
   - 4 Legendary items, one per hard goal;
   - 2 full sets, Common and Rare.
 - 3 consumables: **Heal Potion I, II, III**.
-- The catalog is data in core, marked TRIAL, so the numbers can be retuned without code changes.
+- **Catalog file:** the catalog is the data file `packages/core/src/data/items.json`, following the DATA-01 catalog rules: schema, stable ids, a validator, and a TRIAL marker. The numbers can be retuned without code changes.
 
 ### 4.4 Effective stats
 
@@ -244,6 +244,11 @@ Each goal can be reached once per game and **guarantees** one Legendary item, ch
 
 ## 8. State, commands and save
 
+**Depends on DATA-01** (`2026-11-12-data01-game-data-storage-design.md`), which is implemented first.
+- **Item instances** are stored as records in the DATA-01 `items` table, keyed `[slotId, itemId]`.
+- **The rest of the item state** (Market offers, temporary storage, goals) lives in the `city` record.
+- **The catalog** is the data file `packages/core/src/data/items.json`, with a schema and validator. References use the form `items.json#<id>`.
+
 - **New state:** `city.society.items` holds:
   - the inventory and consumables;
   - the temporary storage, with an expiry week per item;
@@ -258,7 +263,7 @@ Each goal can be reached once per game and **guarantees** one Legendary item, ch
   - Each is all-or-nothing (LAW-04).
 - **Ruleset:** `tile-society-07` becomes `tile-society-08`.
   - Older checkpoints follow the existing old-checkpoint path: they are refused cleanly and left unchanged (LAW-06).
-  - Save size stays within 1 MiB, because item instances are small and the inventory is capped.
+  - **Export file limit:** the JSON export keeps the 1 MiB file limit. Item instances are small and the inventory is capped, so the export stays well under it.
 - **Purity:** core and simulation stay pure TypeScript (LAW-02). All randomness comes from the session seed (LAW-03).
 
 ## 9. UI (PC first)
