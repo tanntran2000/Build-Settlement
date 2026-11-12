@@ -7,7 +7,9 @@ import {expectReport,exportLife,go,importLife,makeLife,reportRegion} from './cha
 import {readFile} from 'node:fs/promises';
 test.beforeEach(async ({ page }) => { await page.addInitScript(() => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize: 'normal', reduceMotion: null, autosave: false }))); });
 const KEY='haven.character-life-session-society.checkpoint.v1',OLD=['haven.tile-trial.checkpoint.v1','haven.tile-population.checkpoint.v1'];
-const save=async(page:Page)=>{await go(page,'session');await page.getByRole('button',{name:'Save locally',exact:true}).click();};
+const save=async(page:Page)=>{await go(page,'session');await page.getByRole('button',{name:'Save locally',exact:true}).click();
+await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+};
 const resume=async(page:Page)=>{await go(page,'session');await page.getByRole('button',{name:'Continue locally',exact:true}).click();};
 const slots=async(page:Page)=>[JSON.stringify(await readStoredRecords(page)),...await page.evaluate(keys=>keys.map(k=>localStorage.getItem(k)),OLD)];
 const seedOld=async(page:Page)=>page.evaluate(keys=>keys.forEach((k,i)=>localStorage.setItem(k,`protected-${i}`)),OLD);

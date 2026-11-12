@@ -146,6 +146,7 @@ for (const [name, cause] of [['life-rebellion-last-week', 'rebellion'], ['life-c
     const initial = await fixture(name), slot = 'haven.character-life-session-society.checkpoint.v1';
     await page.goto('/?mode=world-life'); await importLife(page, initial); await go(page, 'session');
     await page.getByRole('button', { name: 'Save locally', exact: true }).click();
+    await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
     await go(page, 'city'); await page.getByTestId('life-end-week').click();
     const letter = page.locator('[data-fallen-letter]');
     await expect(letter).toHaveCount(1);
@@ -154,6 +155,7 @@ for (const [name, cause] of [['life-rebellion-last-week', 'rebellion'], ['life-c
     await expect(letter.locator('p')).toHaveText(`${END_SCREEN_COPY[cause].text} You ruled for ${initial.city.world.week} weeks.`);
     await expect(page.getByRole('button')).toHaveText(['New Game']);
     await expect(letter.getByRole('button')).toHaveClass(/ledger-wax/);
+    await expect.poll(() => storedSaveText(page)).toBeNull();
     expect(await storedSaveText(page)).toBeNull();
     await fit(page);
     await letter.getByRole('button').click();
