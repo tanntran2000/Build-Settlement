@@ -63,6 +63,8 @@ export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success
     let records = await d.store.read('main');
     let invalid = false;
     if (!marker) {
+      // A save made while migration was blocked is newer than the legacy backup.
+      if (!records) {
         if (!d.legacy) return fail('Could not read browser storage. Your game was preserved. Use Import checkpoint instead.');
         const text = d.legacy.getItem(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY);
       if (text !== null) {
@@ -72,6 +74,7 @@ export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success
           // Preserve valid old-ruleset data without making it playable or rewriting its ruleset.
           try { const raw = JSON.parse(text); if (raw.format === 'haven.character-life-session.save' && raw.schemaVersion === 1 && raw.cityRulesetId !== SOCIETY_RULESET && raw.state?.city?.society?.rulesetId === raw.cityRulesetId) records = sessionToRecords('main',raw.state); else invalid = true; } catch { invalid = true; }
         }
+      }
       }
       await d.store.replaceSlot('main',records ?? [],[{ slotId: '_',id: MARKER,table: 'system',schemaVersion: 1,value: true }]);
     }

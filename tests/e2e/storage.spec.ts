@@ -101,3 +101,19 @@ test('fix1 F3: temporarily blocked localStorage retries legacy migration without
  expect(await storedSaveText(page)).toBe(seed);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(seed);
  expect((await readStoredRecords(page)).filter(r=>r.table==='system')).toEqual([marker]);
 });
+
+test('fix2 F1: recovered legacy A cannot replace B saved while migration was blocked',async({page})=>{
+ const legacy=bytes(),b=makeLife(54321);await page.addInitScript(({key,legacy})=>{
+  const storage=localStorage;storage.setItem(key,legacy);
+  Object.defineProperty(window,'localStorage',{configurable:true,get(){throw Error('temporarily blocked');}});
+  Object.assign(window,{restoreLegacyStorage:()=>Object.defineProperty(window,'localStorage',{configurable:true,get:()=>storage})});
+ },{key:KEY,legacy});
+ await page.goto('/');await expect(page.getByRole('heading',{name:'HAVEN',exact:true})).toBeVisible();
+ expect((await readStoredRecords(page)).filter(r=>r.table==='system')).toEqual([]);
+ await importLife(page,b);await save(page);const before=(await readStoredRecords(page)).filter(r=>r.table!=='system');expect(before).toHaveLength(7);
+ await page.evaluate(()=>(window as unknown as {restoreLegacyStorage:()=>void}).restoreLegacyStorage());
+ await button(page,'Continue locally').click();await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
+ expect(await exportLife(page)).toEqual({...b,city:{...b.city,revision:1}});
+ expect((await readStoredRecords(page)).filter(r=>r.table!=='system')).toEqual(before);expect(await storedSaveText(page)).toBe(bytes(b));
+ expect((await readStoredRecords(page)).filter(r=>r.table==='system')).toEqual([marker]);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(legacy);
+});

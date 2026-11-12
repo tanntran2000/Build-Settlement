@@ -282,3 +282,18 @@ it('fix1 F3: unavailable legacy is distinct from an absent key and can recover',
  d.legacy=deps(a2Text()).legacy;expect(await readLocalCharacterLife(d)).toEqual({success:true,state:a2Session()});
  expect(await d.store.getSystem(MARKER)).not.toBeNull();
 });
+
+it.each(['readable','still blocked'] as const)('fix2 F1: pending migration keeps saved B when legacy A is %s',async availability=>{
+ const a=session(11),b=session(22),encoded=serializeCharacterLifeSave(a);if(!encoded.success)throw Error(encoded.error.message);
+ const d=deps(encoded.text),original=d.legacy.getItem.getMockImplementation()!;let blocked=true;
+ d.legacy.getItem.mockImplementation(()=>{if(blocked)throw Error('temporarily blocked');return original();});
+ expect(await readLocalCharacterLife(d)).toEqual({success:false,message:'Could not read browser storage. Your game was preserved. Use Import checkpoint instead.'});
+ expect(await d.store.getSystem(MARKER)).toBeNull();expect(await saveLocalCharacterLife(b,d)).toEqual({success:true,replaced:false});
+ const before=await d.store.read('main');expect(before).toHaveLength(7);const replace=vi.spyOn(d.store,'replaceSlot');
+ blocked=availability==='still blocked';
+ expect(await readLocalCharacterLife(d)).toEqual({success:true,state:b});
+ expect(await d.store.read('main')).toEqual(before);expect(await d.store.getSystem(MARKER)).toEqual({slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true});
+ expect(replace).toHaveBeenCalledExactlyOnceWith('main',before,[{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]);
+ expect(await replace.mock.results[0].value).toEqual({put:0,deleted:0,unchanged:7});
+ expect(d.legacy.getItem).toHaveBeenCalledTimes(1);expect(d.legacy.removeItem).not.toHaveBeenCalled();expect(original()).toBe(encoded.text);
+});
