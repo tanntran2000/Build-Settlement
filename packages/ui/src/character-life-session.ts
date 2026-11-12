@@ -26,8 +26,11 @@ export function createCheckpointDeps(factory: () => GameStore, legacy: Checkpoin
 }
 function defaultDeps(): CheckpointDeps {
   if (defaults) return defaults;
-  let legacy: CheckpointDeps['legacy'] = null;
-  try { legacy = window.localStorage; } catch { /* Blocked legacy storage. */ }
+  // Resolve browser storage on use: a blocked getter must not become a cached absence.
+  const legacy: NonNullable<CheckpointDeps['legacy']> = {
+    getItem(key) { return window.localStorage.getItem(key); },
+    removeItem(key) { window.localStorage.removeItem(key); }
+  };
   defaults = createCheckpointDeps(() => createIndexedDbGameStore(),legacy); return defaults;
 }
 export function prepareCharacterLifeLoad(live: CharacterLifeSessionState, loaded: unknown, expectedRevision: number): { success: true; next: CharacterLifeSessionState } | Failure {
@@ -60,7 +63,8 @@ export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success
     let records = await d.store.read('main');
     let invalid = false;
     if (!marker) {
-      const text = d.legacy?.getItem(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY) ?? null;
+        if (!d.legacy) return fail('Could not read browser storage. Your game was preserved. Use Import checkpoint instead.');
+        const text = d.legacy.getItem(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY);
       if (text !== null) {
         const loaded = deserializeCharacterLifeSave(text);
         if (loaded.success) records = sessionToRecords('main',loaded.state);

@@ -85,3 +85,19 @@ test('fix1 F2: the latest Continue supersedes an earlier held result',async({pag
  await releaseStoreCompletion(page);await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
  expect(await exportLife(page)).toEqual({...latest,city:{...latest.city,revision:1}});
 });
+
+test('fix1 F3: temporarily blocked localStorage retries legacy migration without a marker',async({page})=>{
+ const seed=bytes();await page.addInitScript(({key,seed})=>{
+  const storage=localStorage;storage.setItem(key,seed);
+  Object.defineProperty(window,'localStorage',{configurable:true,get(){throw Error('temporarily blocked');}});
+  Object.assign(window,{restoreLegacyStorage:()=>Object.defineProperty(window,'localStorage',{configurable:true,get:()=>storage})});
+ },{key:KEY,seed});
+ await page.goto('/');await expect(page.getByRole('heading',{name:'HAVEN',exact:true})).toBeVisible();
+ expect((await readStoredRecords(page)).filter(r=>r.table==='system')).toEqual([]);
+ await page.evaluate(()=>(window as unknown as {restoreLegacyStorage:()=>void}).restoreLegacyStorage());
+ await importLife(page,makeLife(54321));await go(page,'session');await button(page,'Continue locally').click();
+ await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Local checkpoint loaded. Planning restored.');
+ expect(await exportLife(page)).toEqual({...makeLife(),city:{...makeLife().city,revision:1}});
+ expect(await storedSaveText(page)).toBe(seed);expect(await page.evaluate(key=>localStorage.getItem(key),KEY)).toBe(seed);
+ expect((await readStoredRecords(page)).filter(r=>r.table==='system')).toEqual([marker]);
+});

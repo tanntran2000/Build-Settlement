@@ -267,3 +267,18 @@ it('fix1 F1: checkpoint queue is module-wide across dependencies',async()=>{
  finally {held.release();await Promise.all([saving,clearing]);}
  expect(clear).toHaveBeenCalledExactlyOnceWith('main');
 });
+
+it('fix1 F3: throwing legacy read leaves no marker and retries when readable',async()=>{
+ const d=deps(a2Text());d.legacy.getItem.mockImplementationOnce(()=>{throw Error('blocked');});
+ expect(await readLocalCharacterLife(d)).toEqual({success:false,message:'Could not read browser storage. Your game was preserved. Use Import checkpoint instead.'});
+ expect(await d.store.getSystem(MARKER)).toBeNull();expect(await d.store.read('main')).toBeNull();
+ expect(await readLocalCharacterLife(d)).toEqual({success:true,state:a2Session()});
+ expect(await d.store.getSystem(MARKER)).not.toBeNull();expect(d.legacy.getItem).toHaveBeenCalledTimes(2);expect(d.legacy.removeItem).not.toHaveBeenCalled();
+});
+it('fix1 F3: unavailable legacy is distinct from an absent key and can recover',async()=>{
+ const d: import('../character-life-session.js').CheckpointDeps={store:createMemoryGameStore(),legacy:null};
+ expect(await readLocalCharacterLife(d)).toEqual({success:false,message:'Could not read browser storage. Your game was preserved. Use Import checkpoint instead.'});
+ expect(await d.store.getSystem(MARKER)).toBeNull();expect(await d.store.read('main')).toBeNull();
+ d.legacy=deps(a2Text()).legacy;expect(await readLocalCharacterLife(d)).toEqual({success:true,state:a2Session()});
+ expect(await d.store.getSystem(MARKER)).not.toBeNull();
+});
