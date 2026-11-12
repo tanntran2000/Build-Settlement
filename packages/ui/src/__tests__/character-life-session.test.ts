@@ -227,3 +227,43 @@ it('corrupt stored city is refused with the existing message and exact records p
  const d=deps();const rows=sessionToRecords('main',a2Session());rows.find(r=>r.table==='city')!.value='{';await d.store.replaceSlot('main',rows,[{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]);const before=await d.store.read('main');
  expect(await readLocalCharacterLife(d)).toEqual({success:false,message:OLD});expect(await d.store.read('main')).toEqual(before);
 });
+
+function deferred() {
+ let resolve!: () => void; const promise = new Promise<void>(done => { resolve = done; });
+ return { promise,resolve };
+}
+function holdNextRead(store: GameStore) {
+ const entered=deferred(),release=deferred(),read=store.read.bind(store);
+ vi.spyOn(store,'read').mockImplementationOnce(async slot=>{entered.resolve();await release.promise;return read(slot);});
+ return {entered:entered.promise,release:release.resolve};
+}
+it('fix1 F1: pending save cannot restore records after fallen clear',async()=>{
+ const d=inspectableDeps();await savedGame(d,11);const held=holdNextRead(d.store);
+ const saving=saveLocalCharacterLife(session(22),d);await held.entered;
+ const clearing=clearFallenCharacterLifeCheckpoint(true,'fallen',d);await Promise.resolve();held.release();
+ const [saved,cleared]=await Promise.all([saving,clearing]);
+ expect(await d.store.read('main')).toBeNull();
+ expect(saved).toEqual({success:true,replaced:true});expect(cleared).toEqual({success:true});
+ expect(d.rows()).toEqual([{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]);
+});
+it('fix1 F1: read save and clear finish in invocation order',async()=>{
+ const d=inspectableDeps();await readLocalCharacterLife(d);await saveLocalCharacterLife(session(11),d);
+ const held=holdNextRead(d.store),reading=readLocalCharacterLife(d);await held.entered;
+ const saving=saveLocalCharacterLife(session(22),d),clearing=clearFallenCharacterLifeCheckpoint(true,'fallen',d);
+ await Promise.resolve();held.release();
+ expect(await reading).toEqual({success:true,state:session(11)});expect(await saving).toEqual({success:true,replaced:true});expect(await clearing).toEqual({success:true});
+ expect(d.rows()).toEqual([{slotId:'_',id:MARKER,table:'system',schemaVersion:1,value:true}]);
+});
+it('fix1 F1: failed checkpoint does not poison later operations',async()=>{
+ const opts={failWrites:false},d=deps(null,opts);await readLocalCharacterLife(d);await saveLocalCharacterLife(session(11),d);
+ opts.failWrites=true;const failed=saveLocalCharacterLife(session(22),d),reading=readLocalCharacterLife(d);
+ expect(await failed).toEqual({success:false,message:BLOCKED});expect(await reading).toEqual({success:true,state:session(11)});
+ opts.failWrites=false;expect(await saveLocalCharacterLife(session(33),d)).toEqual({success:true,replaced:true});expect(await readLocalCharacterLife(d)).toEqual({success:true,state:session(33)});
+});
+it('fix1 F1: checkpoint queue is module-wide across dependencies',async()=>{
+ const first=deps(),second=deps();await readLocalCharacterLife(first);const held=holdNextRead(first.store),clear=vi.spyOn(second.store,'clear');
+ const saving=saveLocalCharacterLife(session(),first);await held.entered;const clearing=clearFallenCharacterLifeCheckpoint(true,'fallen',second);
+ try {await Promise.resolve();expect(clear).not.toHaveBeenCalled();}
+ finally {held.release();await Promise.all([saving,clearing]);}
+ expect(clear).toHaveBeenCalledExactlyOnceWith('main');
+});

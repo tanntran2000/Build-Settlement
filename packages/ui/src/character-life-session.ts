@@ -14,6 +14,12 @@ const MARKER = 'migration:legacy-local-checkpoint';
 export interface CheckpointDeps { store: GameStore; legacy: Pick<Storage,'getItem' | 'removeItem'> | null }
 let defaults: CheckpointDeps | undefined;
 const warnings = new WeakSet<CheckpointDeps>();
+let checkpointQueue: Promise<void> = Promise.resolve();
+function enqueueCheckpoint<T>(operation: () => Promise<T>): Promise<T> {
+  const pending = checkpointQueue.then(operation);
+  checkpointQueue = pending.then(() => undefined,() => undefined);
+  return pending;
+}
 export function createCheckpointDeps(factory: () => GameStore, legacy: CheckpointDeps['legacy']): CheckpointDeps {
   try { return { store: factory(),legacy }; }
   catch { const deps = { store: createMemoryGameStore(),legacy }; warnings.add(deps); return deps; }
@@ -34,13 +40,18 @@ export function prepareCharacterLifeLoad(live: CharacterLifeSessionState, loaded
     return isCharacterLifeSessionState(next) ? { success: true,next } : fail('Checkpoint player or profiles do not match its characters.');
   } catch { return fail('Could not prepare the Character Life checkpoint. Your game was preserved.'); }
 }
-export async function saveLocalCharacterLife(session: unknown, deps?: CheckpointDeps): Promise<{ success: true; replaced: boolean } | Failure> {
-  const result = serializeCharacterLifeSave(session); if (!result.success) return fail(result.error.message);
+export function saveLocalCharacterLife(session: unknown, deps?: CheckpointDeps): Promise<{ success: true; replaced: boolean } | Failure> {
+  // Capture the invocation's state before waiting behind earlier storage work.
+  const result = serializeCharacterLifeSave(session);
+  return enqueueCheckpoint(async () => {
+  if (!result.success) return fail(result.error.message);
   const d = deps ?? defaultDeps();
   try { const replaced = (await d.store.read('main')) !== null; await d.store.replaceSlot('main',sessionToRecords('main',JSON.parse(result.text).state)); return { success: true,replaced }; }
   catch { return fail(BLOCKED); }
+  });
 }
-export async function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success: true; state: CharacterLifeSessionState } | Failure> {
+export function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ success: true; state: CharacterLifeSessionState } | Failure> {
+  return enqueueCheckpoint(async () => {
   const d = deps ?? defaultDeps();
   try {
     let marker: StoredRecord | null;
@@ -67,10 +78,13 @@ export async function readLocalCharacterLife(deps?: CheckpointDeps): Promise<{ s
     try { state = recordsToSession(records); } catch { return fail(OLD); }
     return isPlayableCheckpoint(state) && isCharacterLifeSessionState(state) ? { success: true,state } : fail(OLD);
   } catch { return fail('Could not read browser storage. Your game was preserved. Use Import checkpoint instead.'); }
+  });
 }
-export async function clearFallenCharacterLifeCheckpoint(confirmed: boolean,stage: import('@haven/core').CrisisStage,deps?: CheckpointDeps): Promise<{ success: true } | Failure> {
+export function clearFallenCharacterLifeCheckpoint(confirmed: boolean,stage: import('@haven/core').CrisisStage,deps?: CheckpointDeps): Promise<{ success: true } | Failure> {
+  return enqueueCheckpoint(async () => {
   if (!confirmed || stage !== 'fallen') return { success: true };
   const d = deps ?? defaultDeps();
   try { await d.store.clear('main'); d.legacy?.removeItem(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY); return { success: true }; }
   catch { return fail('Could not clear the local checkpoint. Browser storage is unavailable.'); }
+  });
 }
