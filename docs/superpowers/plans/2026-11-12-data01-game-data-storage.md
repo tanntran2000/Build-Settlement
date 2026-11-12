@@ -15,6 +15,8 @@
 
 **Plan approval:** the owner (Tân) approved this plan on 2026-11-12, including Decisions 1, 4 and 8, verbatim: "Approve, Builder A".
 
+**Plan correction 2:** the call-site `await`s move from A3 Step 2 into A2 (new Step 3b), so that A2 can pass typecheck and build at its own commit. A3 keeps its full RED e2e list, the title gating and the e2e migration. The Builder held on this ordering. Owner (Tân), 2026-11-12, verbatim: "Yes, move to A2".
+
 **Plan correction:** the A1 Step 1 count changes from 5 to 4 character records, to match Decision 2. The Builder held on this mismatch. Owner (Tân), 2026-11-12, verbatim: "Fix to 4, continue".
 
 ## Global Constraints
@@ -216,7 +218,7 @@ export function runGameStoreSuite(name: string, make: () => GameStore): void; //
 
 ### Task A2: IndexedDB adapter and async checkpoint service
 
-**Files:** `packages/ui/src/indexeddb-store.ts`, `character-life-session.ts`, `__tests__/character-life-session.test.ts`.
+**Files:** `packages/ui/src/indexeddb-store.ts`, `character-life-session.ts`, `__tests__/character-life-session.test.ts`, and the **call sites only** in `CharacterLifeApp.svelte` and `TileManagement.svelte` (moved here from A3; see the plan correction).
 
 **Interfaces:**
 - **Consumes** A1.
@@ -237,6 +239,14 @@ export function runGameStoreSuite(name: string, make: () => GameStore): void; //
 - [ ] **Step 3:** implement both files.
   - The IndexedDB adapter opens the database, creating all stores with `bySlot` on upgrade.
   - `replaceSlot` runs entirely in one `readwrite` transaction over all 8 stores: read `bySlot`, diff, put, delete, then resolve on `complete` and reject on `abort` or `error`.
+- [ ] **Step 3b:** apply `await` at the existing call sites, and nothing else, so that typecheck and build pass at this commit. The call sites are:
+  - `readSlot()` and Continue in the Session view;
+  - Save locally;
+  - autosave;
+  - Main menu;
+  - the fallen-city clear.
+
+  Each edited line is listed as file:line, before → after.
 - [ ] **Step 4:** GREEN, then typecheck, `npm test` and build.
 - [ ] **Step 5:** commit `feat(ui): IndexedDB game store and async checkpoint service`.
 
@@ -254,11 +264,7 @@ export function runGameStoreSuite(name: string, make: () => GameStore): void; //
   7. `indexedDB.open` stubbed to throw: still playable, the warning is shown once, and Export works (**Review Focus 4**).
 
   Run them and record RED.
-- [ ] **Step 2:** apply `await` at the call sites only:
-  - `readSlot()` and Continue in the Session view;
-  - Save locally, autosave, Main menu, the fallen-city clear.
-
-  Then apply the title gating from Decision 7.
+- [ ] **Step 2:** apply the title gating from Decision 7. The call-site `await`s already landed in A2 Step 3b.
 - [ ] **Step 3:** migrate every existing e2e storage access with the helpers or marks. Make mechanical edits only, list every edited line, and run each edited spec by name.
 - [ ] **Step 4:** GREEN for `storage.spec.ts` plus every edited spec. Then typecheck, `npm test` and build.
 - [ ] **Step 5:** commit `feat(ui): saves go to the IndexedDB game store`.
