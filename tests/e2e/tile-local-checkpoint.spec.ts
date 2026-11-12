@@ -11,7 +11,11 @@ const save=async(page:Page)=>{await go(page,'session');await page.getByRole('but
 const resume=async(page:Page)=>{if(await page.getByTestId('life-shell').count())await go(page,'session');await page.getByRole('button',{name:await page.getByTestId('life-shell').count()?'Continue locally':'Continue',exact:true}).click();};
 const slot=(page:Page,key=KEY)=>key===KEY?storedSaveText(page):page.evaluate(key=>localStorage.getItem(key),key);
 const setSlot=(page:Page,text:string,key=KEY)=>key===KEY?writeStoredSaveText(page,text):page.evaluate(({key,text})=>localStorage.setItem(key,text),{key,text});
-const checkpointCalls=async(page:Page)=>(await storeMarks(page)).map(n=>[n==='haven.store.read'?'get':n==='haven.store.write'?'set':'remove',KEY]);
+const checkpointCalls=async(page:Page)=>{
+ const legacy=await page.evaluate(()=>(window as unknown as {checkpointCalls:string[][]}).checkpointCalls);
+ expect(legacy.filter(([,key])=>key===KEY)).toEqual([['get',KEY]]);
+ return [...(await storeMarks(page)).map(n=>[n==='haven.store.read'?'get':n==='haven.store.write'?'set':'remove',KEY]),...legacy.filter(([,key])=>key!==KEY)];
+};
 async function delayReads(page:Page,reject=false){await page.evaluate(reject=>{const original=File.prototype.text;(window as unknown as {releaseReads:(()=>void)[]}).releaseReads=[];File.prototype.text=async function(){const text=await original.call(this);await new Promise<void>((resolve,fail)=>(window as unknown as {releaseReads:(()=>void)[]}).releaseReads.push(()=>reject?fail(Error('raw/private/error')):resolve()));return text;};},reject);}
 const pending=(page:Page,n:number)=>page.waitForFunction(n=>(window as unknown as {releaseReads:unknown[]}).releaseReads.length===n,n);
 const release=(page:Page,n:number)=>page.evaluate(n=>(window as unknown as {releaseReads:(()=>void)[]}).releaseReads[n](),n);

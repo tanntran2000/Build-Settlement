@@ -47,6 +47,7 @@ it('save writes only its key and reads back the same session; other keys keep "p
   const encoded = serializeCharacterLifeSave(s); if (!encoded.success) throw Error();
   expect((await saveLocalCharacterLife(s,checkpointDeps))).toEqual({ success: true, replaced: false });
   expect(serializeCharacterLifeSave(recordsToSession((await store.read('main'))!))).toEqual(encoded);
+  expect(store.replaceSlot).toHaveBeenCalledExactlyOnceWith('main',sessionToRecords('main',s));
   expect((await readLocalCharacterLife(checkpointDeps))).toEqual({ success: true, state: s });
   expect((await saveLocalCharacterLife(s,checkpointDeps))).toEqual({ success: true, replaced: true });
   otherKeys.forEach(k => expect(values.get(k)).toBe('protected-bytes'));
@@ -121,7 +122,7 @@ it('accepts society and refuses pinned Goods and legacy Life fixtures',async()=>
 it('ported F1: active Proxy saves detached descriptor data without get callbacks',async ()=>{
  const s=session();const encoded=serializeCharacterLifeSave(s);if(!encoded.success)throw Error();values.set(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,encoded.text);await store.replaceSlot('main',sessionToRecords('main',s));vi.mocked(store.replaceSlot).mockClear();let calls=0;
  const proxy=new Proxy(s,{get(){calls++;throw Error('private');}});
- expect((await saveLocalCharacterLife(proxy,checkpointDeps))).toEqual({success:true,replaced:true});expect(calls).toBe(0);expect(values.get(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY)).toBe(encoded.text);expect(store.replaceSlot).toHaveBeenCalledOnce();
+ expect((await saveLocalCharacterLife(proxy,checkpointDeps))).toEqual({success:true,replaced:true});expect(calls).toBe(0);expect(values.get(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY)).toBe(encoded.text);expect(store.replaceSlot).toHaveBeenCalledOnce();expect(serializeCharacterLifeSave(recordsToSession((await store.read('main'))!))).toEqual(encoded);
 });
 it.each(['accessor','own toJSON','revoked proxy'])('ported F1: invalid %s preserves prior valid bytes before storage access',async kind=>{
  const s=session(),encoded=serializeCharacterLifeSave(s);if(!encoded.success)throw Error();values.set(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,encoded.text);const before=new Map(values);let calls=0;

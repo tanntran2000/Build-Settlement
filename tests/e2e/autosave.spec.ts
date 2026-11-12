@@ -14,8 +14,11 @@ async function start(page: Page, off = false) {
   if (off) await page.addInitScript(() => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize: 'normal', reduceMotion: null, autosave: false })));
   await page.goto('/'); await importLife(page, makeLife());
 }
-async function watch(page: Page) { await resetStoreMarks(page); }
-const calls = async(page: Page) => (await storeMarks(page)).map(name=>[name==='haven.store.write'?'set':name==='haven.store.read'?'get':'remove',KEY]);
+async function watch(page: Page) {
+ await resetStoreMarks(page);
+ await page.evaluate(key=>{const get=Storage.prototype.getItem,set=Storage.prototype.setItem,calls:string[][]=[];Object.assign(window,{autosaveCalls:calls});Storage.prototype.getItem=function(k){if(k===key)calls.push(['get',k]);return get.call(this,k);};Storage.prototype.setItem=function(k,value){if(k===key)calls.push(['set',k]);return set.call(this,k,value);};},KEY);
+}
+const calls = async(page: Page) => [...(await storeMarks(page)).map(name=>[name==='haven.store.write'?'set':name==='haven.store.read'?'get':'remove',KEY]),...await page.evaluate(()=>(window as unknown as WatchedWindow).autosaveCalls)];
 const slot = (page: Page) => storedSaveText(page);
 async function nextWeek(page: Page) {
   await page.getByTestId('life-end-week').click();
