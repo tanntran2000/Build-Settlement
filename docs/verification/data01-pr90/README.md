@@ -61,4 +61,4 @@ See `owner-approval-record.md`.
 - The smoke runs on Chromium only. Firefox and WebKit IndexedDB transaction behaviour has not been run.
 - Astra's reviews are static code reviews.
 
-`SHA256SUMS.txt` covers every file in this folder except itself.
+`SHA256SUMS.txt` covers every file in this folder except itself, hashed from the committed git blobs (line endings as stored in git).
