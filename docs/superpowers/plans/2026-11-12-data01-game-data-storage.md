@@ -13,6 +13,8 @@
 
 **Spec:** `docs/superpowers/specs/2026-11-12-data01-game-data-storage-design.md`, v0.1. G1 was approved by Tân on 2026-11-12, verbatim: "Approve both".
 
+**Plan approval:** the owner (Tân) approved this plan on 2026-11-12, including Decisions 1, 4 and 8, verbatim: "Approve, Builder A".
+
 ## Global Constraints
 
 - **LAW-02:** `core` and `simulation` stay pure. IndexedDB code lives only in `packages/ui`. `persistence` imports only `core`, and the package graph in `tools/check-architecture.mjs` is unchanged.
