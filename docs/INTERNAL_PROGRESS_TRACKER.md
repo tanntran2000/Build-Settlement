@@ -1,5 +1,28 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## DATA-01 PR B (catalogs as validated JSON) — PR #91 G6 (2026-11-13 UTC)
+
+**G6 PASS (Claude, Orchestrator/Tester).**
+
+- **Merge.** PR #91 (`DATA-01 PR B: catalogs as validated JSON data files`) merged at 2026-11-13T08:03:04Z.
+  - Merge/main commit: `5ff521e3971739ecde05a22dd96c74827c0ae363`.
+  - Accepted head: `7a92d4cab8e87967ec90e8e986d8223de27d6c76`. Base: `5cc2522`.
+- **Trees.** The merge tree `9b1082da1a427175e6d7636ac4001017e769dff6` is identical to the accepted head tree. Claude checked this locally.
+- **Main CI.** Quality Gate run [43390188544](https://github.com/tanntran2000/Build-Settlement/actions/runs/43390188544), job 131767966848 (push, exact merge SHA), SUCCESS at 2026-11-13T08:19:16Z: 2,234 unit tests and 350/350 Chromium smoke (14.8 min).
+- **Pre-merge, at `7a92d4c`:**
+  - Claude Tester gates 1–7 exit 0, and full smoke 350/350. The log shows `CI=1`.
+  - CI 43381342655 success.
+  - Astra PASS on round 2 (thread `mcp:263bb217`). Round 1 had found a mojibake literal type (P2) and a self-referential value test (P3); both were fixed in `7a92d4c`.
+- **Golden.** 3 seeds × 60 weeks. Fixture blob `64c18a2` from one commit only, generated before extraction with the empty-diff proof against `ca46d18`. All 16 constants are pinned to SHA-256 hashes of the base `5cc2522` values.
+- **Evidence.** `docs/verification/data01-pr91/` on branch `docs/p6a-items-design` at `13e2e664020fee27fee3735de627d9e15b1c7e78`.
+- **Owner instructions** (verbatim): "Approve both", "Approve, Builder A", "ok tôi đồng ý", "Giao Builder B", "A, cho 20s".
+- **Disclosed.**
+  - The Builder's smoke at `3a2759f` was 349/350: `character-life-navigation.spec.ts:225` hit the 60 s timeout. The test is slow on the local machine and passed alone. It passed in the final-head runs.
+  - One Vitest overlap was recorded.
+  - B1 was amended before push with a type-only fix; the fixture is unchanged.
+- **Limits.** Chromium only. The golden protects 3 final outcomes.
+- **Next.** DATA-01 PR C (data inspector), waiting for the owner to start it.
+
 ## DATA-01 PR A (IndexedDB game storage) — PR #90 G6 (2026-11-13 UTC)
 
 **G6 PASS (Claude, Orchestrator/Tester).**
