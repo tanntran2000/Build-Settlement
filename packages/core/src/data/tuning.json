@@ -1,0 +1,621 @@
+{
+  "ORDER_TRIAL": {
+    "newGame": {
+      "security": 30,
+      "crime": 10,
+      "authority": 50
+    },
+    "drift": {
+      "security": 5,
+      "crime": 5,
+      "authority": 3
+    },
+    "security": {
+      "base": 10,
+      "perWallRing": 5,
+      "watchHouseByLevel": [
+        10,
+        15
+      ],
+      "slumWatchHouseBonus": 5,
+      "patrolsNumerator": 3,
+      "patrolsDenominator": 2,
+      "barracksPerWorker": 2,
+      "drilledPerWorker": 3,
+      "residentsPerPoint": 20,
+      "slumPenalty": 3,
+      "darkPenalty": 5
+    },
+    "crime": {
+      "base": 10,
+      "perSlum": 5,
+      "desperationDivisor": 5,
+      "dark": 10,
+      "light": -5,
+      "securityDivisor": 2
+    },
+    "authority": {
+      "base": 40,
+      "securityDivisor": 5,
+      "crimeDivisor": 4,
+      "townHall": 10,
+      "satisfactionDivisor": 5,
+      "tensionDivisor": 10
+    },
+    "theft": {
+      "threshold": 20,
+      "bpsPerPoint": 10
+    },
+    "tensionDivisor": 25,
+    "satisfactionLoss": [
+      {
+        "crime": 70,
+        "loss": 2
+      },
+      {
+        "crime": 40,
+        "loss": 1
+      }
+    ],
+    "tax": {
+      "bpsPerPoint": 40
+    },
+    "immigration": {
+      "halveBelow": 30,
+      "bonusAtOrAbove": 70
+    },
+    "bands": {
+      "lowMax": 33,
+      "fairMax": 66
+    }
+  },
+  "GARRISON_TRIAL": {
+    "securityPerStep": 3,
+    "soldiersPerStep": 4,
+    "cap": 12
+  },
+  "CRIME_TRIAL": {
+    "baseChance": 5,
+    "idleWatchHouse": 2,
+    "bands": {
+      "minorMax": 33,
+      "seriousMax": 66
+    },
+    "weights": {
+      "robbery": 4,
+      "smear": 3,
+      "raid": 2,
+      "assassination": 1
+    },
+    "assassinationMinCrime": 70,
+    "robberyBps": {
+      "minor": 500,
+      "serious": 1000,
+      "severe": 2000
+    },
+    "smear": {
+      "minor": 3,
+      "serious": 6,
+      "severe": 10
+    },
+    "raidDeaths": {
+      "minor": 1,
+      "serious": 2,
+      "severe": 3
+    },
+    "fatal": {
+      "minCrime": 90,
+      "maxSecurity": 30,
+      "chance": 0.5
+    },
+    "wound": {
+      "health": 20,
+      "standing": 5,
+      "authority": 5
+    },
+    "standing": {
+      "newGame": 50,
+      "drift": 1,
+      "authorityDivisor": 5
+    }
+  },
+  "CRISIS_TRIAL": {
+    "warningTension": 50,
+    "demandHungerWeeks": 3,
+    "happinessBelow": 30,
+    "protest": {
+      "minWeeks": 2,
+      "tension": 75
+    },
+    "rebellion": {
+      "minWeeks": 2,
+      "tension": 90
+    },
+    "finalWeeks": 4,
+    "calmWeeksToStepDown": 2,
+    "pay": {
+      "demand": {
+        "milliPerResident": 20,
+        "tension": -10
+      },
+      "protest": {
+        "milliPerResident": 40,
+        "tension": -15
+      },
+      "rebellion": {
+        "milliPerResident": 60,
+        "tension": -20
+      }
+    },
+    "promise": {
+      "weeks": 2,
+      "kept": {
+        "demand": -15,
+        "protest": -20,
+        "rebellion": -25
+      },
+      "keptAuthority": 5,
+      "brokenTension": 10,
+      "brokenAuthority": -10
+    },
+    "force": {
+      "security": {
+        "demand": 40,
+        "protest": 55,
+        "rebellion": 70
+      },
+      "tension": {
+        "demand": -10,
+        "protest": -15,
+        "rebellion": -20
+      },
+      "authority": 5,
+      "crime": 5,
+      "satisfaction": -5
+    },
+    "refuse": {
+      "tension": 5
+    }
+  },
+  "SOCIETY_TRIAL": {
+    "rulesetId": "tile-society-07",
+    "standing": 50,
+    "laws": {
+      "active": [],
+      "votedWeek": null,
+      "repealedUntil": {},
+      "promise": null
+    },
+    "order": {
+      "security": 30,
+      "crime": 10,
+      "authority": 50
+    },
+    "crisis": {
+      "fallCause": null,
+      "stage": "none",
+      "weeksInStage": 0,
+      "hungerStreak": 0,
+      "calmStreak": 0,
+      "promise": null,
+      "lastChoice": null
+    },
+    "pendingCard": null,
+    "stocksMilli": {
+      "stone": 0,
+      "wool": 0,
+      "cloth": 0,
+      "herbs": 0
+    },
+    "outside": {
+      "field-1": {
+        "wild": false,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "plain-1": {
+        "wild": false,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "forest-1": {
+        "wild": false,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": 60000,
+        "capMilli": 60000,
+        "deepShaft": false
+      },
+      "ore-1": {
+        "wild": false,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": 80000,
+        "capMilli": 80000,
+        "deepShaft": false
+      },
+      "plain-2": {
+        "wild": false,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "plain-3": {
+        "wild": false,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "forest-2": {
+        "wild": false,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": 60000,
+        "capMilli": 60000,
+        "deepShaft": false
+      },
+      "ore-2": {
+        "wild": false,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": 80000,
+        "capMilli": 80000,
+        "deepShaft": false
+      },
+      "field-2": {
+        "wild": false,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "plain-4": {
+        "wild": false,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "field-3": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "field-4": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "pasture-1": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "pasture-2": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "meadow-1": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "meadow-2": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "forest-3": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": 60000,
+        "capMilli": 60000,
+        "deepShaft": false
+      },
+      "rock-1": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": 100000,
+        "capMilli": 100000,
+        "deepShaft": false
+      },
+      "rock-2": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": 100000,
+        "capMilli": 100000,
+        "deepShaft": false
+      },
+      "plain-5": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "field-5": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "pasture-3": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "meadow-3": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "forest-4": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": 60000,
+        "capMilli": 60000,
+        "deepShaft": false
+      },
+      "forest-5": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": 60000,
+        "capMilli": 60000,
+        "deepShaft": false
+      },
+      "ore-3": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": 80000,
+        "capMilli": 80000,
+        "deepShaft": false
+      },
+      "ore-4": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": 80000,
+        "capMilli": 80000,
+        "deepShaft": false
+      },
+      "rock-3": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": 100000,
+        "capMilli": 100000,
+        "deepShaft": false
+      },
+      "plain-6": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "plain-7": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      }
+    },
+    "research": {
+      "topic": null,
+      "progressMilli": {
+        "deep-mining": 0,
+        "watch-patrols": 0,
+        "barracks-drill": 0
+      },
+      "paid": [],
+      "completed": []
+    },
+    "classes": {
+      "free": 55,
+      "makers": {
+        "common": 20,
+        "elite": 0
+      },
+      "luminaries": {
+        "common": 12,
+        "elite": 0
+      },
+      "merchants": {
+        "common": 13,
+        "elite": 0
+      },
+      "bound": {
+        "free": 0,
+        "makers": 0,
+        "luminaries": 0,
+        "merchants": 0
+      }
+    },
+    "satisfaction": {
+      "free": 80,
+      "makers": 80,
+      "luminaries": 80,
+      "merchants": 80,
+      "bound": 80
+    },
+    "desperation": 0,
+    "tension": 0,
+    "debtPressure": {
+      "free": 0,
+      "makers": 0,
+      "luminaries": 0,
+      "merchants": 0
+    },
+    "corruption": 50,
+    "luxuryStockMilli": 0,
+    "training": {
+      "target": null,
+      "progressMilli": 0
+    },
+    "wallRing": 1
+  },
+  "GOODS_STOCK_TRIAL": {
+    "initialFoodMilli": 20000,
+    "initialGoodsMilli": 10000,
+    "initialGoldMilli": 45000,
+    "woodPerBatchMilli": 2000,
+    "goodsPerBatchMilli": 2000,
+    "capacityPerLevelMilli": 2000,
+    "goldPerGoodsMilli": 1000
+  },
+  "TILE_TRIAL_BALANCE": {
+    "initialWoodMilli": 8000,
+    "initialIronMilli": 4000,
+    "initialHappiness": 80,
+    "loggingWoodPerWorker": 2000,
+    "mineIronPerWorker": 1000,
+    "goodsDemandPerResident": 20,
+    "taxGoldPerResident": 30,
+    "goldPerServiceMilli": 1000,
+    "foodDemandPerResident": 40
+  },
+  "IMMIGRATION_TRIAL_DEFAULTS": {
+    "foodSupportBps": 11000,
+    "catchupBps": 1000,
+    "weeklyCapBps": 200
+  },
+  "OUTSIDE_TRIAL": {
+    "deposit": {
+      "forest": 60000,
+      "ore": 80000,
+      "rock": 100000
+    },
+    "forestRegrowMilli": 3000,
+    "clearWork": {
+      "fertile": 4000,
+      "pasture": 4000,
+      "meadow": 4000,
+      "plain": 4000,
+      "forest": 6000,
+      "ore": 8000,
+      "rock": 8000
+    },
+    "clearFeeGoldMilli": 2000,
+    "forestClearWoodMilli": 5000,
+    "perWorker": {
+      "wool": 1000,
+      "herbs": 500,
+      "stone": 1000
+    },
+    "weaver": {
+      "woolPerBatchMilli": 2000,
+      "clothPerBatchMilli": 1000
+    },
+    "workshopClothRecipe": {
+      "woodMilli": 1000,
+      "clothMilli": 1000
+    },
+    "hospitalHerbsPerLevelMilli": 1000,
+    "storage": {
+      "baseMilli": 40000,
+      "warehousePerLevelMilli": 40000
+    },
+    "research": {
+      "deep-mining": {
+        "workMilli": 8000,
+        "goldMilli": 10000
+      },
+      "watch-patrols": {
+        "workMilli": 6000,
+        "goldMilli": 6000
+      },
+      "barracks-drill": {
+        "workMilli": 8000,
+        "goldMilli": 8000
+      }
+    },
+    "deepShaft": {
+      "stoneMilli": 10000,
+      "woodMilli": 5000,
+      "goldMilli": 10000,
+      "depositBonusMilli": 60000,
+      "outputBps": 15000
+    },
+    "wallRing3StoneMilli": 30000,
+    "level3StoneMilli": 5000
+  }
+}

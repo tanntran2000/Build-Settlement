@@ -1,3 +1,5 @@
+import tuningJson from '../data/tuning.json' with { type: 'json' };
+import { deepFreeze, validateTuning } from '../data/validate.js';
 import { hasWeeklyKeys } from '../domain/canonical-state.js';
 import { CARD_OPTIONS, isPendingCard, type CardOption } from './event-card.js';
 
@@ -9,14 +11,7 @@ export interface CrisisState {
  promise: { stage: CrisisCardKind; weeksLeft: 1 | 2 } | null;
  lastChoice: { stage: CrisisCardKind; option: CardOption; goldMilli: number } | null;
 }
-export const CRISIS_TRIAL = Object.freeze({
- warningTension:50,demandHungerWeeks:3,happinessBelow:30,
- protest:Object.freeze({minWeeks:2,tension:75}),rebellion:Object.freeze({minWeeks:2,tension:90}),finalWeeks:4,calmWeeksToStepDown:2,
- pay:Object.freeze({demand:Object.freeze({milliPerResident:20,tension:-10}),protest:Object.freeze({milliPerResident:40,tension:-15}),rebellion:Object.freeze({milliPerResident:60,tension:-20})}),
- promise:Object.freeze({weeks:2,kept:Object.freeze({demand:-15,protest:-20,rebellion:-25}),keptAuthority:5,brokenTension:10,brokenAuthority:-10}),
- force:Object.freeze({security:Object.freeze({demand:40,protest:55,rebellion:70}),tension:Object.freeze({demand:-10,protest:-15,rebellion:-20}),authority:5,crime:5,satisfaction:-5}),
- refuse:Object.freeze({tension:5}),
-});
+export const CRISIS_TRIAL = deepFreeze(validateTuning(tuningJson).CRISIS_TRIAL);
 export interface CrisisOptionView { option: CardOption; available: boolean; reason: string | null; goldMilli: number; tensionDelta: number }
 export function crisisOptions(kind: CrisisCardKind, f: {population:number;goldMilli:number;security:number;promisePending:boolean}): CrisisOptionView[] {
  const cost=f.population*CRISIS_TRIAL.pay[kind].milliPerResident;

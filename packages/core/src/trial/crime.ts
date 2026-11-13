@@ -1,19 +1,9 @@
+import tuningJson from '../data/tuning.json' with { type: 'json' };
+import { deepFreeze, validateTuning } from '../data/validate.js';
 import type { TileTrialState } from './types.js';
 import { createSeededRandom } from '../world/random.js';
 
-export const CRIME_TRIAL = Object.freeze({
- baseChance: 5,
- idleWatchHouse: 2,
- bands: Object.freeze({ minorMax: 33, seriousMax: 66 }),
- weights: Object.freeze({ robbery: 4, smear: 3, raid: 2, assassination: 1 }),
- assassinationMinCrime: 70,
- robberyBps: Object.freeze({ minor: 500, serious: 1000, severe: 2000 }),
- smear: Object.freeze({ minor: 3, serious: 6, severe: 10 }),
- raidDeaths: Object.freeze({ minor: 1, serious: 2, severe: 3 }),
- fatal: Object.freeze({ minCrime: 90, maxSecurity: 30, chance: 0.5 }),
- wound: Object.freeze({ health: 20, standing: 5, authority: 5 }),
- standing: Object.freeze({ newGame: 50, drift: 1, authorityDivisor: 5 }),
-});
+export const CRIME_TRIAL = deepFreeze(validateTuning(tuningJson).CRIME_TRIAL);
 export function crimeChancePercent(crime: number, idleWatchHouse = false): number { return CRIME_TRIAL.baseChance + Math.trunc(crime / 2) + (idleWatchHouse ? CRIME_TRIAL.idleWatchHouse : 0); }
 export function crimeSeverity(crime: number): 'minor' | 'serious' | 'severe' {
  return crime <= CRIME_TRIAL.bands.minorMax ? 'minor' : crime <= CRIME_TRIAL.bands.seriousMax ? 'serious' : 'severe';

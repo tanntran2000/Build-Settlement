@@ -1,0 +1,152 @@
+[
+  {
+    "id": "field-1",
+    "terrain": "fertile",
+    "ring": 1
+  },
+  {
+    "id": "plain-1",
+    "terrain": "plain",
+    "ring": 1
+  },
+  {
+    "id": "forest-1",
+    "terrain": "forest",
+    "ring": 1
+  },
+  {
+    "id": "ore-1",
+    "terrain": "ore",
+    "ring": 1
+  },
+  {
+    "id": "plain-2",
+    "terrain": "plain",
+    "ring": 1
+  },
+  {
+    "id": "plain-3",
+    "terrain": "plain",
+    "ring": 1
+  },
+  {
+    "id": "forest-2",
+    "terrain": "forest",
+    "ring": 1
+  },
+  {
+    "id": "ore-2",
+    "terrain": "ore",
+    "ring": 1
+  },
+  {
+    "id": "field-2",
+    "terrain": "fertile",
+    "ring": 1
+  },
+  {
+    "id": "plain-4",
+    "terrain": "plain",
+    "ring": 1
+  },
+  {
+    "id": "field-3",
+    "terrain": "fertile",
+    "ring": 2
+  },
+  {
+    "id": "field-4",
+    "terrain": "fertile",
+    "ring": 2
+  },
+  {
+    "id": "pasture-1",
+    "terrain": "pasture",
+    "ring": 2
+  },
+  {
+    "id": "pasture-2",
+    "terrain": "pasture",
+    "ring": 2
+  },
+  {
+    "id": "meadow-1",
+    "terrain": "meadow",
+    "ring": 2
+  },
+  {
+    "id": "meadow-2",
+    "terrain": "meadow",
+    "ring": 2
+  },
+  {
+    "id": "forest-3",
+    "terrain": "forest",
+    "ring": 2
+  },
+  {
+    "id": "rock-1",
+    "terrain": "rock",
+    "ring": 2
+  },
+  {
+    "id": "rock-2",
+    "terrain": "rock",
+    "ring": 2
+  },
+  {
+    "id": "plain-5",
+    "terrain": "plain",
+    "ring": 2
+  },
+  {
+    "id": "field-5",
+    "terrain": "fertile",
+    "ring": 3
+  },
+  {
+    "id": "pasture-3",
+    "terrain": "pasture",
+    "ring": 3
+  },
+  {
+    "id": "meadow-3",
+    "terrain": "meadow",
+    "ring": 3
+  },
+  {
+    "id": "forest-4",
+    "terrain": "forest",
+    "ring": 3
+  },
+  {
+    "id": "forest-5",
+    "terrain": "forest",
+    "ring": 3
+  },
+  {
+    "id": "ore-3",
+    "terrain": "ore",
+    "ring": 3
+  },
+  {
+    "id": "ore-4",
+    "terrain": "ore",
+    "ring": 3
+  },
+  {
+    "id": "rock-3",
+    "terrain": "rock",
+    "ring": 3
+  },
+  {
+    "id": "plain-6",
+    "terrain": "plain",
+    "ring": 3
+  },
+  {
+    "id": "plain-7",
+    "terrain": "plain",
+    "ring": 3
+  }
+]

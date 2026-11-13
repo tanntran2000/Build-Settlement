@@ -1,3 +1,5 @@
+import lawsJson from '../data/laws.json' with { type: 'json' };
+import { deepFreeze, validateLaws } from '../data/validate.js';
 import { hasWeeklyKeys } from '../domain/canonical-state.js';
 import { readDenseArray } from '../world/arrays.js';
 import type { SocietyClassKey, SocietyState } from './society.js';
@@ -18,35 +20,11 @@ export interface LawDefinition {
     desperation?: number; tension?: number; taxBps?: number; costMilli?: number; incomeMilli?: number;
   };
 }
-const stances = (free: LawStance, makers: LawStance, luminaries: LawStance, merchants: LawStance): LawDefinition['stances'] => ({free,makers,luminaries,merchants});
-export const LAW_CATALOG: Readonly<Record<LawId, LawDefinition>> = Object.freeze({
-  curfew: {name:'Curfew',tag:null,stances:stances('against','neutral','neutral','for'),effect:{securityTarget:10,satisfaction:{free:-2}}},
-  'watch-levy': {name:'Watch Levy',tag:null,stances:stances('for','neutral','neutral','against'),effect:{costMilli:1000,crimeTarget:-5}},
-  'guild-charters': {name:'Guild Charters',tag:null,stances:stances('neutral','for','neutral','against'),effect:{satisfaction:{makers:2,merchants:-2}}},
-  'war-tithe': {name:'War Tithe',tag:null,stances:stances('against','against','neutral','against'),effect:{taxBps:1000,satisfaction:{free:-1,makers:-1,luminaries:-1,merchants:-1}}},
-  'poor-relief': {name:'Poor Relief',tag:'light',stances:stances('for','for','neutral','against'),effect:{costMilli:1500,desperation:-3,satisfaction:{free:2}}},
-  'free-assembly': {name:'Free Assembly',tag:'light',stances:stances('for','neutral','for','neutral'),effect:{tension:-3,authorityTarget:-5}},
-  'public-punishments': {name:'Public Punishments',tag:'dark',stances:stances('against','neutral','against','for'),effect:{crimeTarget:-10,tension:2}},
-  'licensed-vice': {name:'Licensed Vice',tag:'dark',stances:stances('neutral','for','against','for'),effect:{incomeMilli:1500,satisfaction:{luminaries:-2}}},
-});
-for (const law of Object.values(LAW_CATALOG)) {
-  Object.freeze(law.stances);
-  if (law.effect.satisfaction) Object.freeze(law.effect.satisfaction);
-  Object.freeze(law.effect); Object.freeze(law);
-}
-export const LAW_TRIAL = Object.freeze({
-  maxActive:3, eliteWeight:5, payMilliPerVote:200,
-  force:Object.freeze({satisfaction:-10,tension:5,standing:-3,minSecurity:40}),
-  promise:Object.freeze({weeks:4,keptAuthority:3,brokenSatisfaction:-10,brokenTension:10}),
-  repeal:Object.freeze({authority:-5,cooldownWeeks:4}), corruptionPerTag:10,
-});
-export const LAW_MESSAGES = Object.freeze({
-  CARD_PENDING:'Answer the crisis first.', UNKNOWN_LAW:'Choose a law from the Council list.',
-  TOWN_HALL_CLOSED:'Staff the Town Hall to call a vote.', VOTE_USED:'The Council has already voted this week.',
-  LAW_ACTIVE:'This law is already in force.', LAW_SLOTS_FULL:'Three laws are in force. Repeal one first.',
-  LAW_COOLDOWN:'This law returns in week {N}.', LOBBY_INVALID:'Only groups with a vote that are not For can be lobbied.',
-  VOTE_SHORT:'The vote would fail: For {F} · Against {A}.', LAW_INACTIVE:'This law is not in force.',
-});
+
+export const LAW_CATALOG: Readonly<Record<LawId, LawDefinition>> = deepFreeze(validateLaws(lawsJson).catalog);
+
+export const LAW_TRIAL = deepFreeze(validateLaws(lawsJson).trial);
+export const LAW_MESSAGES = deepFreeze(validateLaws(lawsJson).messages);
 export interface LawsState {
   active: LawId[];
   votedWeek: number | null;

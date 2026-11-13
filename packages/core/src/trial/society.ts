@@ -1,9 +1,10 @@
-import { CRIME_TRIAL } from './crime.js';
+import tuningJson from '../data/tuning.json' with { type: 'json' };
+import { deepFreeze, validateTuning } from '../data/validate.js';
 import { isLawsState, type LawsState } from './law.js';
 import { isCrisisState, type CrisisState } from './crisis.js';
 import type { PendingCard } from './event-card.js';
-import { ORDER_TRIAL, isOrderState, type OrderState } from './order.js';
-import { createOutsideState, isOutsideState, isOutsideResearch, OUTSIDE_PLOTS, type OutsidePlotState, type OutsideResearch } from './outside.js';
+import { isOrderState, type OrderState } from './order.js';
+import { isOutsideState, isOutsideResearch, OUTSIDE_PLOTS, type OutsidePlotState, type OutsideResearch } from './outside.js';
 import { TILE_TRIAL_BALANCE as B } from './catalog.js';
 import { hasWeeklyKeys } from '../domain/canonical-state.js';
 import { GOODS_STOCK_RULESET,GOODS_STOCK_TRIAL } from './goods-stock.js';
@@ -33,21 +34,7 @@ export interface SocietyState {
   research: OutsideResearch;
 }
 // Reversible TRIAL starting values from the approved society spec.
-export const SOCIETY_TRIAL = Object.freeze({
-  rulesetId: SOCIETY_RULESET,
-  standing: CRIME_TRIAL.standing.newGame,
-  laws: Object.freeze({active:[],votedWeek:null,repealedUntil:{},promise:null}),
-  order: ORDER_TRIAL.newGame,
-  crisis: Object.freeze({fallCause:null,stage:'none',weeksInStage:0,hungerStreak:0,calmStreak:0,promise:null,lastChoice:null}),
-  pendingCard: null,
-  stocksMilli: Object.freeze({stone:0,wool:0,cloth:0,herbs:0}),
-  outside: Object.freeze(createOutsideState()),
-  research: Object.freeze({topic:null,progressMilli:Object.freeze({'deep-mining':0,'watch-patrols':0,'barracks-drill':0}),paid:[],completed:[]}),
-  classes: Object.freeze({ free: 55, makers: Object.freeze({ common: 20, elite: 0 }), luminaries: Object.freeze({ common: 12, elite: 0 }), merchants: Object.freeze({ common: 13, elite: 0 }), bound: Object.freeze({ free: 0, makers: 0, luminaries: 0, merchants: 0 }) }),
-  satisfaction: Object.freeze({ free: 80, makers: 80, luminaries: 80, merchants: 80, bound: 80 }),
-  desperation: 0, tension: 0, debtPressure: Object.freeze({ free: 0, makers: 0, luminaries: 0, merchants: 0 }),
-  corruption: 50, luxuryStockMilli: 0, training: Object.freeze({ target: null, progressMilli: 0 }), wallRing: 1,
-} as const);
+export const SOCIETY_TRIAL = deepFreeze(validateTuning(tuningJson).SOCIETY_TRIAL);
 const groups = ['makers', 'luminaries', 'merchants'] as const;
 const classes = ['free', ...groups] as const;
 const count = (n: unknown): n is number => Number.isSafeInteger(n) && (n as number) >= 0;
