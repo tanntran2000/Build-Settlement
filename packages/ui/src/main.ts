@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import './app.css';
 import { mount } from 'svelte';
 import CharacterLifeApp from './CharacterLifeApp.svelte';
@@ -10,6 +11,14 @@ window.addEventListener('error', event => {
 window.addEventListener('unhandledrejection', () => errorLog.record('RUNTIME', 'UNHANDLED_REJECTION'));
 window.addEventListener('pagehide', () => errorLog.flush());
 
-const app = mount(CharacterLifeApp, { target: document.getElementById('app')! });
+const app = import.meta.env.DEV && new URLSearchParams(window.location.search).get('mode') === 'data-inspector'
+  ? undefined : mount(CharacterLifeApp, { target: document.getElementById('app')! });
+
+if (import.meta.env.DEV) {
+  if (new URLSearchParams(window.location.search).get('mode') === 'data-inspector') {
+    const { default: DataInspector } = await import('./DataInspector.svelte');
+    mount(DataInspector, { target: document.getElementById('app')! });
+  }
+}
 
 export default app;

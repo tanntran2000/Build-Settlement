@@ -25,10 +25,12 @@ type Code = keyof typeof CATALOG;
 type Clock = Readonly<{ week: number }> | Readonly<{ day: number; week: number; year: number }>;
 export type ErrorEntry = Readonly<{
   timestampUtc: string; lastSeenUtc: string; occurrences: number; appVersion: string; buildId: null;
-  mode: Mode; clock: Clock | null; action: Action; kind: typeof CATALOG[Code][0]; code: Code; message: string;
+  mode: Mode; clock: Clock | null; action: Action; kind: typeof CATALOG[Code][0]; code: Code; message: string; ref?: string;
 }>;
 type LogState = { entries: readonly ErrorEntry[]; persistence: 'ready' | 'saved' | 'pending' | 'ram-only'; discarded: boolean; download: '' | 'requested' | 'failed' };
 const entryKeys = ['timestampUtc', 'lastSeenUtc', 'occurrences', 'appVersion', 'buildId', 'mode', 'clock', 'action', 'kind', 'code', 'message'];
+const REF = /^[a-z-]+:[A-Za-z0-9_.#-]{1,64}$/;
+const refFor = (value: unknown): string | undefined => typeof value === 'string' && REF.exec(value)?.[0] === value ? value : undefined;
 const positive = (value: unknown): value is number => Number.isSafeInteger(value) && (value as number) > 0;
 const knownCode = (value: unknown): value is Code => typeof value === 'string' && Object.hasOwn(CATALOG, value);
 function exact(value: unknown, keys: string[]): value is Record<string, unknown> {
@@ -57,17 +59,19 @@ function load(text: string): readonly ErrorEntry[] {
   const data: unknown = JSON.parse(text);
   if (!exact(data, ['schemaVersion', 'entries']) || data.schemaVersion !== 1 || !Array.isArray(data.entries) || data.entries.length > 5) throw new Error('Invalid envelope');
   return Object.freeze(data.entries.map((item: unknown): ErrorEntry => {
-    if (!exact(item, entryKeys) || !knownCode(item.code) || !utc(item.timestampUtc) || !utc(item.lastSeenUtc) || !positive(item.occurrences) ||
+    const keys = item !== null && typeof item === 'object' && Object.hasOwn(item, 'ref') ? [...entryKeys, 'ref'] : entryKeys;
+    if (!exact(item, keys) || !knownCode(item.code) || !utc(item.timestampUtc) || !utc(item.lastSeenUtc) || !positive(item.occurrences) ||
         typeof item.appVersion !== 'string' || item.appVersion.length > 64 || !/^\d{1,6}\.\d{1,6}\.\d{1,6}(?:-[A-Za-z0-9.-]+)?(?:\+[A-Za-z0-9.-]+)?$/.test(item.appVersion) ||
         item.buildId !== null || (item.mode !== 'weekly' && item.mode !== 'r1') ||
         (item.action !== 'RUNTIME' && item.action !== (item.mode === 'weekly' ? 'END_WEEK' : 'ADVANCE_DAY')) ||
         item.kind !== CATALOG[item.code][0] || item.message !== CATALOG[item.code][1]) throw new Error('Invalid entry');
     const clock = clockFor(item.mode, item.clock);
     if (item.clock !== null && clock === null) throw new Error('Invalid clock');
+    const ref = refFor(item.ref);
     return Object.freeze({ timestampUtc: item.timestampUtc, lastSeenUtc: item.lastSeenUtc, occurrences: item.occurrences,
       appVersion: item.appVersion, buildId: null, mode: item.mode, clock,
       action: item.action === 'RUNTIME' ? 'RUNTIME' : item.mode === 'weekly' ? 'END_WEEK' : 'ADVANCE_DAY',
-      kind: CATALOG[item.code][0], code: item.code, message: CATALOG[item.code][1] });
+      kind: CATALOG[item.code][0], code: item.code, message: CATALOG[item.code][1], ...(ref === undefined ? {} : { ref }) });
   }));
 }
 
@@ -123,17 +127,18 @@ export function createErrorLog() {
     setContext(mode: Mode, clock: unknown) {
       try { if (mode === 'weekly' || mode === 'r1') context = { mode, clock: clockFor(mode, clock) }; } catch { /* Context is optional. */ }
     },
-    record(action: Action, rawCode: unknown): string {
+    record(action: Action, rawCode: unknown, rawRef?: unknown): string {
       const code: Code = knownCode(rawCode) ? rawCode : 'UNKNOWN_COMMAND_FAILURE';
       const [kind, message] = CATALOG[code];
       try {
         if (action !== 'RUNTIME' && action !== (context.mode === 'weekly' ? 'END_WEEK' : 'ADVANCE_DAY')) return message;
         const now = new Date().toISOString();
         if (!utc(now)) return message;
+        const ref = refFor(rawRef);
         const last = state.entries.at(-1);
-        const same = last && last.mode === context.mode && last.action === action && last.code === code && last.appVersion === appVersion && JSON.stringify(last.clock) === JSON.stringify(context.clock);
+        const same = last && last.mode === context.mode && last.action === action && last.code === code && last.ref === ref && last.appVersion === appVersion && JSON.stringify(last.clock) === JSON.stringify(context.clock);
         const entry: ErrorEntry = Object.freeze(same ? { ...last, lastSeenUtc: now, occurrences: last.occurrences < Number.MAX_SAFE_INTEGER ? last.occurrences + 1 : last.occurrences } : {
-          timestampUtc: now, lastSeenUtc: now, occurrences: 1, appVersion, buildId: null, ...context, action, kind, code, message,
+          timestampUtc: now, lastSeenUtc: now, occurrences: 1, appVersion, buildId: null, ...context, action, kind, code, message, ...(ref === undefined ? {} : { ref }),
         });
         state.entries = Object.freeze([...(same ? state.entries.slice(0, -1) : state.entries.slice(-4)), entry]);
         state.download = '';
