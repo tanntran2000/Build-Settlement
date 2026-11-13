@@ -1,7 +1,12 @@
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { get } from 'svelte/store';
+import { mount } from 'svelte';
 import { GAME_DB, type StoredRecord } from '@haven/persistence';
 import { createErrorLog, ERROR_LOG_KEY } from '../error-log.js';
+
+vi.mock('svelte', () => ({ mount: vi.fn(() => ({})) }));
+vi.mock('../CharacterLifeApp.svelte', () => ({ default: vi.fn() }));
+vi.mock('../DataInspector.svelte', () => ({ default: vi.fn() }));
 
 async function inspector() {
   const path = '../data-inspector.js';
@@ -53,7 +58,7 @@ beforeEach(() => {
     removeItem: (key: string) => { stored.delete(key); },
   } });
 });
-afterEach(() => { vi.clearAllTimers(); vi.useRealTimers(); vi.unstubAllGlobals(); });
+afterEach(() => { vi.clearAllTimers(); vi.useRealTimers(); vi.unstubAllGlobals(); vi.unstubAllEnvs(); vi.restoreAllMocks(); });
 
 function logger() {
   const log = createErrorLog(); log.initialize('weekly'); log.setContext('weekly', { week: 1 }); return log;
@@ -103,4 +108,66 @@ it('keeps different references in separate adjacent error groups', () => {
   expect(get(log).entries.map(entry => [entry.ref, entry.occurrences])).toEqual([
     ['characters:npc_starter_1', 1], ['characters:npc_starter_2', 2],
   ]);
+});
+
+it('loads an otherwise valid stored entry while dropping a malformed stored reference', () => {
+  const log = logger(); log.record('END_WEEK', 'INVALID_STATE', 'characters:npc_starter_1'); log.flush();
+  const saved = JSON.parse(stored.get(ERROR_LOG_KEY)!);
+  saved.entries[0].ref = 'Jane Doe'; stored.set(ERROR_LOG_KEY, JSON.stringify(saved));
+  const reloaded = logger();
+  expect(get(reloaded).discarded).toBe(false);
+  expect(get(reloaded).entries).toHaveLength(1);
+  expect(get(reloaded).entries[0]).toEqual(expect.objectContaining({ code: 'INVALID_STATE' }));
+  expect(get(reloaded).entries[0]).not.toHaveProperty('ref');
+});
+
+async function startApp(dev: boolean, search: string) {
+  vi.resetModules(); vi.stubEnv('DEV', dev); vi.mocked(mount).mockClear();
+  stored.set(ERROR_LOG_KEY, '{malformed');
+  const storage = {
+    getItem: vi.fn((key: string) => stored.get(key) ?? null),
+    setItem: vi.fn((key: string, value: string) => { stored.set(key, value); }),
+    removeItem: vi.fn((key: string) => { stored.delete(key); }),
+  };
+  const addEventListener = vi.fn<(type: string, handler: (event: unknown) => void) => void>();
+  vi.stubGlobal('window', { localStorage: storage, location: { search }, addEventListener });
+  const target = {};
+  vi.stubGlobal('document', { getElementById: vi.fn(() => target) });
+  const { errorLog } = await import('../error-log.js');
+  const initialize = vi.spyOn(errorLog, 'initialize');
+  const record = vi.spyOn(errorLog, 'record');
+  const flush = vi.spyOn(errorLog, 'flush');
+  await import('../main.js');
+  return { storage, addEventListener, initialize, record, flush, target };
+}
+
+it('starts the dev inspector without error-log initialization, storage mutations or runtime handlers', async () => {
+  const startup = await startApp(true, '?mode=data-inspector');
+  expect(startup.initialize).not.toHaveBeenCalled();
+  expect(startup.storage.setItem).not.toHaveBeenCalled();
+  expect(startup.storage.removeItem).not.toHaveBeenCalled();
+  expect(stored.get(ERROR_LOG_KEY)).toBe('{malformed');
+  expect(startup.addEventListener).not.toHaveBeenCalled();
+  const { default: DataInspector } = await import('../DataInspector.svelte');
+  expect(mount).toHaveBeenCalledExactlyOnceWith(DataInspector, { target: startup.target });
+});
+
+it.each([[true, ''], [false, '?mode=data-inspector']] as const)('preserves normal startup and handler order (DEV=%s, search=%s)', async (dev, search) => {
+  const startup = await startApp(dev, search);
+  expect(startup.initialize).toHaveBeenCalledExactlyOnceWith('weekly');
+  expect(startup.storage.removeItem).toHaveBeenCalledExactlyOnceWith(ERROR_LOG_KEY);
+  expect(startup.addEventListener.mock.calls.map(([type]) => type)).toEqual(['error', 'unhandledrejection', 'pagehide']);
+  const { default: CharacterLifeApp } = await import('../CharacterLifeApp.svelte');
+  expect(mount).toHaveBeenCalledExactlyOnceWith(CharacterLifeApp, { target: startup.target });
+  const order = [startup.initialize.mock.invocationCallOrder[0], ...startup.addEventListener.mock.invocationCallOrder, vi.mocked(mount).mock.invocationCallOrder[0]];
+  expect(order).toEqual([...order].sort((a, b) => a - b));
+  class RuntimeError {}
+  vi.stubGlobal('ErrorEvent', RuntimeError);
+  startup.addEventListener.mock.calls[0][1]({});
+  expect(startup.record).not.toHaveBeenCalled();
+  startup.addEventListener.mock.calls[0][1](new RuntimeError());
+  startup.addEventListener.mock.calls[1][1]({});
+  startup.addEventListener.mock.calls[2][1]({});
+  expect(startup.record.mock.calls).toEqual([['RUNTIME', 'UNCAUGHT_ERROR'], ['RUNTIME', 'UNHANDLED_REJECTION']]);
+  expect(startup.flush).toHaveBeenCalledOnce();
 });
