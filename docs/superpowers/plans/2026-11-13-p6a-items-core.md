@@ -38,6 +38,13 @@
 - Any other change to an existing test is still a HOLD.
 - **Owner (Tân), 2026-11-13, choice in Claude's question dialog, verbatim:** "Allow additive shape edits (Recommended)".
 - **Extension:** correction 2 also covers adding an owner-approved new entry to a whole-object assert. Example: `END_SCREEN_COPY.wounds` (title 'Your Lord Has Died', text 'Your wounds proved fatal.') in `crime-view.test.ts:14`. The matcher and the other entries stay unchanged, and each edit is listed. **Owner (Tân), 2026-11-13, verbatim:** "Allow, extend correction 2 (Recommended)".
+**Plan correction 3 (PR A review fix: the week-1 Market seed).**
+- **The finding (Astra, P2):** `createSocietyState()` drew the week-1 Market with seed 2026, before `createWorldSession` set the real seed. Every game had the same first Market.
+- **The fix:** PR A's allowlist gains `packages/core/src/world/session.ts`, only to draw the week-1 Market from the real session seed. A test covers this through the real New Game path.
+- **Regeneration:** the golden and the v8 fixtures may be regenerated a second time in PR A. The path diff against the previous PR A head must contain only `city.society.items` (the Market).
+- **Owner (Tân), 2026-11-13, choice in Claude's question dialog, verbatim:** "Allow session.ts in PR A (Recommended)".
+- **Second review finding, same round, inside the allowlist:** item state is made canonical in `isItemsState`. Instance lists must be in ascending id order, and an empty `equipped` entry is invalid. This makes the Decision 3 round trip byte-identical for every accepted state.
+
 - **Extension 2:** correction 2 also covers updating an expectation to the stored-record layout that an approved Decision defines. Example: under Decision 3, the stored `city` record holds `items` without the instance lists, in `character-life-navigation.spec.ts:1436`. Exact equality stays, and each edit is listed. **Owner (Tân), 2026-11-13, verbatim:** "Allow, extend correction 2 (Recommended)".
 
 **Base:** `main` `c4d3dc4` (DATA-01 complete).
