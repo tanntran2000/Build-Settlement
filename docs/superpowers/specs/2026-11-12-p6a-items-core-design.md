@@ -1,8 +1,9 @@
-# P6-A — Items core, sources and Player health (design spec v0.2)
+# P6-A — Items core, sources and Player health (design spec v0.3)
 
 **Status:**
 - v0.1 was **G1 approved** by the owner (Tân), 2026-11-12, verbatim: "Approve both" (DATA-01 and P6-A, v0.1).
 - **v0.2 (2026-11-13) adds the owner's item categories, the Necklace slot and Material drops (§1 items 18–21, §4.0, §4.5, §7.6). G1 approved by the owner (Tân), 2026-11-13, verbatim: "Duyệt v0.2".**
+- **v0.3 (2026-11-13) adds the herb leaves as Herb Garden materials and places brewing and effect potions (§1 items 22–25, §3, §4.5). The owner chose each placement in Claude's question dialog (quoted in §1). It is awaiting the owner's review together with the plan.**
 
 - **Base:** `main` `ca46d18`.
 - **Not authorised by this document:** no code, push or PR.
@@ -69,13 +70,17 @@ Owner decisions from the Claude session, 2026-11-11 and 2026-11-12, verbatim whe
 19. Necklace slot, owner's choice in Claude's question dialog: "Add for Player + NPC (Recommended)".
 20. Underwear and the adult accessories, owner's choice: "P6-C with 18+ items (Recommended)".
 21. Materials drop from production when an NPC is posted, and the rarer the tier, the lower the chance: "Material là nguyên liệu có thể rớt trong quá trình khai thác ví dụ sau 1 tuần ở mine dùng để đào Tài nguyên stone thì khi để NPC vào slot thì khả năng rất các material như iron, silver, gold,... Tùy vào độ hiếm thì tỉ lệ rớt càng thấp."
+22. **Used items (v0.3):** "bên cạnh các item trên còn 1 cái rất quan trọng là item về used item * bao gồm health potion, lust potion, love potion, mindbreak potion, berkerser potion,... * bên cạnh đó drug store và Hospital có thể sử dụng các material như green leaf, red leaf, puperl leaf để điều chế potion". "Used item" is the Consumable category.
+23. Herb leaves, owner's choice in Claude's question dialog: "Now in P6-A (Recommended)".
+24. Brewing at the Hospital and Drug Store, owner's choice: "P6-B with Smithy crafting (Recommended)".
+25. Lust, Love, Mindbreak and Berserker potions, owner's choice: "P6-C after P7 (Recommended)".
 
 ## 2. Player outcome
 
 The Player and each named NPC have an **Equipment** view: a paper-doll of slots plus a shared inventory.
 
 - **Getting items:** the Player buys items at the Market, finds items in the weekly report, and earns Legendary items by reaching hard goals.
-- **Materials:** NPCs posted at the Mine, Quarry, Logging Camp, Weaver or Sheep Pasture sometimes bring back materials (iron, silver, gold, glass…). Rarer materials come less often. They are kept for crafting in P6-B, or sold.
+- **Materials:** NPCs posted at the Mine, Quarry, Logging Camp, Weaver, Sheep Pasture or Herb Garden sometimes bring back materials (iron, silver, gold, glass, herb leaves…). Rarer materials come less often. They are kept for crafting in P6-B, or sold.
 - **What equipping does:** it raises the wearer's skills, and the higher skills make the wearer's post produce more, guard better, or raise Authority.
 - **The Player's life:**
   - Wounds can kill the lord.
@@ -85,9 +90,13 @@ The Player and each named NPC have an **Equipment** view: a paper-doll of slots 
 ## 3. Non-goals (P6-A)
 
 **Later parts of P6**
-- **P6-B:** crafting at the Smithy. It turns the Materials from §4.5 into equipment, accessories and outfits. Its recipes and any new materials (for example Steel and Sulfur) are designed there.
+- **P6-B:** one crafting system.
+  - **Smithy:** turns the Materials from §4.5 into equipment, accessories and outfits.
+  - **Hospital and Drug Store:** brew potions from the herb leaves.
+  - Its recipes and any new materials (for example Steel and Sulfur) are designed there.
 - **P6-C, after P7:**
   - 18+ items, including the adult accessories (buttplug, dildo, mouth gag);
+  - the effect potions: Lust, Love, Mindbreak and Berserker. They need the P7 NPC stats or timed buffs;
   - the underwear slots for Pantie and Bra, and any slot that a mouth gag needs;
   - the three intimate slots, which are present in the data but **closed**;
   - the Slum Market and its stock;
@@ -170,7 +179,7 @@ Every item definition has a `category`. All categories use the same four raritie
   - 4 Legendary items, one per hard goal;
   - 2 full sets, Common and Rare.
 - 3 consumables: **Heal Potion I, II, III**.
-- About **12 materials** across the four rarities (§4.5).
+- About **15 materials** across the four rarities (§4.5), including the three herb leaves.
 - **Catalog file:** the catalog is the data file `packages/core/src/data/items.json`, following the DATA-01 catalog rules: schema, stable ids, a validator, and a TRIAL marker. The numbers can be retuned without code changes.
 
 ### 4.4 Effective stats
@@ -195,8 +204,9 @@ Every item definition has a `category`. All categories use the same four raritie
   | Quarry | Glass | Nitrate | Amethyst | — |
   | Logging Camp | Paper | Rubber | — | — |
   | Weaver, Sheep Pasture | Linen | Wool | Silk | — |
+  | Herb Garden (v0.3) | Green Leaf | Red Leaf | Purple Leaf | — |
 
-  Farm, Food Processor, Herb Garden and Workshop drop nothing in P6-A.
+  Farm, Food Processor and Workshop drop nothing in P6-A. The herb leaves have no use in P6-A beyond selling; brewing arrives in P6-B.
 
 ## 5. Stats → effects (TRIAL, tune by playtest)
 

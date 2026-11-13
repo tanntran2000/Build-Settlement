@@ -17,7 +17,10 @@
 
 **Tech Stack:** TypeScript, Svelte 5, Vite, Vitest, Playwright, IndexedDB (DATA-01). No new dependencies.
 
-**Spec:** `docs/superpowers/specs/2026-11-12-p6a-items-core-design.md` **v0.2**. G1 was approved by Tân, verbatim: "Approve both" (v0.1, 2026-11-12) and "Duyệt v0.2" (2026-11-13). Builders read the spec and this plan.
+**Spec:** `docs/superpowers/specs/2026-11-12-p6a-items-core-design.md` **v0.3**.
+- G1 was approved by Tân, verbatim: "Approve both" (v0.1, 2026-11-12) and "Duyệt v0.2" (2026-11-13).
+- v0.3 adds the herb leaves (owner's dialog choices are quoted in spec §1, items 22–25).
+- Builders read the spec and this plan.
 
 **Base:** `main` `c4d3dc4` (DATA-01 complete).
 
@@ -91,8 +94,8 @@
    - **Content:** the plan fixes the catalog, not the spec.
      - About 26 wearables over the 8 slots and both kinds: Common and Rare for every slot, Epic for 4 slots, 4 Legendary, and 2 sets (Common and Rare).
      - Legendary traits: Warden's Oath (NPC Weapon: Security +3 while posted at a Watch House), Crown of Embers (Player Earrings: Authority +3), Ironhide Gloves (Player Hand: wound damage −5), and Ledger of Plenty (NPC Necklace: +5% output at her post).
-     - 3 potions.
-     - The 12 materials in the spec §4.5 table.
+     - 3 potions: Heal Potion I–III. The effect potions (Lust, Love, Mindbreak, Berserker) wait for P6-C, and brewing waits for P6-B (spec v0.3).
+     - The 15 materials in the spec §4.5 table, including Green, Red and Purple Leaf from the Herb Garden.
 2. **State.** `city.society.items: ItemsState` (`packages/core/src/trial/items.ts`):
    ```ts
    interface ItemInstance { id: number; defId: string }
