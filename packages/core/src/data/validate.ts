@@ -289,7 +289,7 @@ type LAW_MESSAGESData = Readonly<{
     LAW_SLOTS_FULL: "Three laws are in force. Repeal one first.";
     LAW_COOLDOWN: "This law returns in week {N}.";
     LOBBY_INVALID: "Only groups with a vote that are not For can be lobbied.";
-    VOTE_SHORT: "The vote would fail: For {F} Ã‚Â· Against {A}.";
+    VOTE_SHORT: "The vote would fail: For {F} · Against {A}.";
     LAW_INACTIVE: "This law is not in force.";
 }>;
 type GOODS_STOCK_TRIALData = Readonly<{
