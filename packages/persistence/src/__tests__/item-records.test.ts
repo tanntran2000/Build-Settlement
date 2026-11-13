@@ -3,7 +3,7 @@ import { expect, it } from 'vitest';
 import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT } from '@haven/core';
 import { serializeCharacterLifeSave, deserializeCharacterLifeSave } from '../character-life-save.js';
 import { recordsToSession, sessionToRecords, StoreRecordError } from '../session-records.js';
-import { executeCharacterLifeCommand } from '../../../simulation/src/character-life-command.js';
+import { executeCharacterLifeCommand } from '@haven/simulation';
 function life(){const r=createCharacterLifeSession(0,{...structuredClone(DEFAULT_PLAYER_DRAFT),currentName:'Ana'});if(!r.success)throw Error(r.error.message);return r.value;}
 function stocked(){const s=life();Object.assign(s.city.society!.items,{nextItemId:7,inventory:[{id:1,defId:'common-ring'},{id:2,defId:'rare-top'}],consumables:[{id:3,defId:'heal-potion-1'}],storage:[{item:{id:4,defId:'epic-top'},expiresWeek:4}],equipped:{player:{weapon:{id:5,defId:'common-weapon'}},npc_starter_1:{necklace:{id:6,defId:'rare-necklace'}}},materials:{iron:10}});return s;}
 it('stores all instance locations in items records and round-trips byte-identically in ascending id order',()=>{
