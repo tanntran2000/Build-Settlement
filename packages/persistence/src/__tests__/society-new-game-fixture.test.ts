@@ -5,11 +5,11 @@ import { deserializeCharacterLifeSave, serializeCharacterLifeSave } from '../ind
 
 it('pins the society new-game tile save bytes', () => {
  const state = createSocietyState();
- if(process.env.GENERATE_SOCIETY_FIXTURES==='1')writeFileSync(new URL('./fixtures/society-v7/new-game.json',import.meta.url),JSON.stringify({format:'haven.tile-trial.save',schemaVersion:1,rulesetId:'tile-society-07',state}),'utf8');
+ if(process.env.GENERATE_SOCIETY_FIXTURES==='1')writeFileSync(new URL('./fixtures/society-v7/new-game.json',import.meta.url),JSON.stringify({format:'haven.tile-trial.save',schemaVersion:1,rulesetId:'tile-society-08',state}),'utf8');
  const bytes = readFileSync(new URL('./fixtures/society-v7/new-game.json', import.meta.url), 'utf8');
  const expected = JSON.parse(bytes) as { state: unknown };
  expect(state).toEqual(expected.state);
- const encoded = ({ success: true, text: JSON.stringify({ format: 'haven.tile-trial.save', schemaVersion: 1, rulesetId: 'tile-society-07', state }) });
+ const encoded = ({ success: true, text: JSON.stringify({ format: 'haven.tile-trial.save', schemaVersion: 1, rulesetId: 'tile-society-08', state }) });
  expect(encoded.success).toBe(true);
  if (!encoded.success) throw Error('Export failed');
  expect(encoded.text).toBe(bytes);

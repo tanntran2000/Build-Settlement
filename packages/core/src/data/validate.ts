@@ -303,7 +303,7 @@ type GOODS_STOCK_TRIALData = Readonly<{
     goldPerGoodsMilli: 1000;
 }>;
 type SOCIETY_TRIALData = Readonly<{
-    readonly rulesetId: "tile-society-07";
+    readonly rulesetId: "tile-society-08";
     readonly standing: 50;
     readonly laws: Readonly<{
         active: never[];
@@ -623,7 +623,7 @@ const tuningSchemas: Record<string, Rule> = {
             "tension": nonnegative
         })
     }), "SOCIETY_TRIAL": object({
-        "rulesetId": literal("tile-society-07"), "standing": nonnegative, "laws": object({
+        "rulesetId": literal("tile-society-08"), "standing": nonnegative, "laws": object({
             "active": tuple([]), "votedWeek": literal(null), "repealedUntil": object({}), "promise": literal(null)
         }), "order": object({
             "security": nonnegative, "crime": nonnegative, "authority": nonnegative

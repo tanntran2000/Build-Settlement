@@ -5,7 +5,21 @@ import { createSocietyState,isSocietyState,SOCIETY_TRIAL,societyPopulation } fro
 it('creates the spec section 3 new game', () => {
   const s = createSocietyState();
   expect(s.society).toEqual({
-    rulesetId: 'tile-society-07', standing:50,
+    rulesetId: 'tile-society-08', standing:50,
+    items: {
+      nextItemId: 1, inventory: [], consumables: [], materials: {}, storage: [], equipped: {},
+      market: [
+        { defId: 'common-ring', priceMilli: 5000 },
+        { defId: 'common-top', priceMilli: 5000 },
+        { defId: 'common-bottom', priceMilli: 5000 },
+        { defId: 'common-ring', priceMilli: 5000 },
+        { defId: 'rare-set', priceMilli: 15000 },
+        { defId: 'rare-weapon', priceMilli: 15000 },
+        { defId: 'epic-hand', priceMilli: 40000 },
+        { defId: 'epic-necklace', priceMilli: 40000 },
+      ],
+      goals: { calm: false, authority: false, week52: false, research: false, rebellionSeen: false, authorityStreak: 0 },
+    },
     laws: {active:[],votedWeek:null,repealedUntil:{},promise:null},
     crisis: {fallCause:null,stage:'none',weeksInStage:0,hungerStreak:0,calmStreak:0,promise:null,lastChoice:null},
     pendingCard: null,

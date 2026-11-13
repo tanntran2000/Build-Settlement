@@ -1,7 +1,7 @@
 <script lang="ts">
  import './ledger-theme.css';
  import { END_SCREEN_COPY } from './society-view.js';
- export let fallCause:'rebellion'|'assassination';
+ export let fallCause:'rebellion'|'assassination'|'wounds';
  export let weeks:number;
  export let onnewgame:()=>void;
 </script>
