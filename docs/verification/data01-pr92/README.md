@@ -48,6 +48,20 @@
 
 The Builder's smoke at `cd00003` could not start: two leftover `vite preview` servers from this worktree held ports 4173/4174. Claude stopped them and ran the smoke (above).
 
+## Measurement scripts and raw artifacts (AGENTS.md §6.2)
+Added after dot's G5 HOLD (2026-11-13). These are the files the Builder actually ran or produced. Nothing was re-measured.
+- **Bundle measurement scripts:**
+  - `builder/measure-base-bundle.mjs`: main `5ff521e` baseline;
+  - `builder/measure-final-bundle.mjs` and `builder/fix1/measure-final-bundle.mjs`: final heads;
+  - `builder/measure-inspector-zero.mjs` and `builder/fix1/measure-inspector-zero.mjs`: the control build with the original `main.ts`, without the inspector route.
+- **Dev capture:** `builder/capture-dev.mjs` and `builder/dev-server.mjs` produced `dev-inspector.png` and the text dumps.
+- **Runners:** `builder/{gates,run,run-smoke,finalize}.py` and the same files under `builder/fix1/`.
+- **Raw artifacts (committed):**
+  - `builder/fix1/final-bundle-artifacts/index-B19EJRvO.js` and `index-DdNtS9j1.css`: the production bundle at head `cd00003`. The JS file's SHA-256 is `9cabd390…c191`, identical to the `dist` built by Claude's gate 7 at the same head.
+  - `builder/fix1/without-inspector-control.js`: the control bundle without the inspector route.
+  - `builder/baseline-bundle-artifacts/index-D_plm-J3.js` and `index-DdNtS9j1.css`: the main `5ff521e` baseline.
+- **Not committed:** the remaining raw artifacts (first-round `abf206a` bundles and an extra baseline build). They are listed with SHA-256 and size in `builder/LOCAL-ONLY-ARTIFACTS.txt`; the files stay in the Builder's local drafts.
+
 ## Independent review (Astra, gpt-6-astra), thread `mcp:263bb217`
 | Round | Head | Verdict |
 |---|---|---|
