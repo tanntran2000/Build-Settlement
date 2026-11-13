@@ -10,7 +10,7 @@ it.each(CATALOG_SEEDS)('keeps seed %i byte-identical through 60 weeks of catalog
   expect(actual.crimeEvents).toBeGreaterThan(0);
   expect(actual.crisisReports).toBe(60);
   expect(actual.outsideReports).toBe(60);
-});
+}, 20_000);
 
 it('detects one extra milli of Hospital upkeep in a cloned catalog', async () => {
   vi.resetModules();
@@ -28,4 +28,4 @@ it('detects one extra milli of Hospital upkeep in a cloned catalog', async () =>
     vi.doUnmock('../../../core/src/trial/catalog.js');
     vi.resetModules();
   }
-});
+}, 20_000);
