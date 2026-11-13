@@ -15,6 +15,11 @@
 
 **Plan approval:** the owner (Tân) approved this plan on 2026-11-12, including Decisions 1, 4 and 8, verbatim: "Approve, Builder A".
 
+**Plan correction 5 (PR C, Decision 14):**
+- **Ref format.** The regex `^[a-z-]+:[A-Za-z0-9_.#-]{1,64}$` is the rule. Catalog refs take a `catalog:` prefix, for example `catalog:buildings.json#hospital`. Save refs stay as `characters:npc_starter_1`. The old example `buildings.json#hospital` does not match the regex, so it is replaced.
+- **Scope.** PR C adds the optional `ref` to `errorLog.record`, including persisting and loading it with the entry, and tests it, as Task C1 Step 1 lists. Wiring real catalog or store failure call sites into the error log is out of PR C (no call site records those failures today). It is a follow-up for P6-A/P7, when data errors reach the UI.
+- **Owner (Tân), 2026-11-13, verbatim** (answers to Claude's two questions): "catalog:buildings.json#hospital (Recommended)"; "API + tests only (Recommended)".
+
 **Plan correction 4:**
 - **(a) Equivalent-storage test-migration rule.** It applies to the DATA-01 unit and e2e tests. An existing test that asserts the old storage mechanism is migrated to the equivalent assertion on the `GameStore` and its records, keeping the same invariant. Old-mechanism assertions include `localStorage.setItem` or `getItem` calls and values, and `localStorage` exceptions. Examples:
   - "saved exactly this session" becomes "the stored records decode to exactly this session";
