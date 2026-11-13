@@ -1,0 +1,6 @@
+HEAD: 5cc2522f27e01b49baaa6e44bba01904edcea5c0
+Tree: bb128a79be7713c7ed3cf1fa9360d035d8127ec4
+UTC: 2026-11-13T04:47:36.110529+00:00
+Exit: 0
+Command: git diff --exit-code ca46d18 HEAD -- packages/core packages/simulation packages/content
+

@@ -1,0 +1,19 @@
+HEAD: 3a2759f46ffe883db857f878aa97930caa979be6
+Tree: 92db8e129d4e1ce5aa02d234b15767de3bf0105d
+UTC: 2026-11-13T06:00:44.730459+00:00
+Exit: 0
+Command: & 'C:/Program Files/Git/bin/bash.exe' 'C:/Users/Admin/.t3/local-drafts/data01-prB/smoke-failed-case.sh'
+
+CI=1
+[WebServer] (node:65740) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:33844) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:57168) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\character-life-navigation.spec.ts:225:1 › fulfillment states match strip and report (55.0s)
+
+  1 passed (1.1m)

@@ -1,0 +1,7 @@
+HEAD: 9d2e111d076cfee9b92b6b6d36de55f1a87259d4
+Tree: 491736af599c691fe65461c7d9a558052fb3b071
+UTC: 2026-11-13T04:58:04.590930+00:00
+Exit: 0
+Command: node C:/Users/Admin/.t3/local-drafts/data01-prB/compare-values.mjs
+
+All 16 extracted constants are JSON-byte-identical to the captured base values (including key order).

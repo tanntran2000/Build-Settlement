@@ -1,0 +1,96 @@
+diff --git a/packages/core/src/trial/catalog.ts b/packages/core/src/trial/catalog.ts
+index fef50b3..bab280c 100644
+--- a/packages/core/src/trial/catalog.ts
++++ b/packages/core/src/trial/catalog.ts
+@@ -1,5 +1,5 @@
+-import tuningJson from '../data/tuning.json';
+-import buildingsJson from '../data/buildings.json';
++import tuningJson from '../data/tuning.json' with { type: 'json' };
++import buildingsJson from '../data/buildings.json' with { type: 'json' };
+ import { deepFreeze, validateTuning, validateBuildings } from '../data/validate.js';
+ // Adjustable IMPLEMENTATION TRIAL values, not user-approved economic balance.
+ export type TrialOperation = "farm" | "processor" | "logging" | "mine" | "goods" | "market" | "society" | "wool" | "herbs" | "stone" | "cloth";
+diff --git a/packages/core/src/trial/crime.ts b/packages/core/src/trial/crime.ts
+index 925a9b9..360b621 100644
+--- a/packages/core/src/trial/crime.ts
++++ b/packages/core/src/trial/crime.ts
+@@ -1,4 +1,4 @@
+-import tuningJson from '../data/tuning.json';
++import tuningJson from '../data/tuning.json' with { type: 'json' };
+ import { deepFreeze, validateTuning } from '../data/validate.js';
+ import type { TileTrialState } from './types.js';
+ import { createSeededRandom } from '../world/random.js';
+diff --git a/packages/core/src/trial/crisis.ts b/packages/core/src/trial/crisis.ts
+index e4262ec..012694d 100644
+--- a/packages/core/src/trial/crisis.ts
++++ b/packages/core/src/trial/crisis.ts
+@@ -1,4 +1,4 @@
+-import tuningJson from '../data/tuning.json';
++import tuningJson from '../data/tuning.json' with { type: 'json' };
+ import { deepFreeze, validateTuning } from '../data/validate.js';
+ import { hasWeeklyKeys } from '../domain/canonical-state.js';
+ import { CARD_OPTIONS, isPendingCard, type CardOption } from './event-card.js';
+diff --git a/packages/core/src/trial/goods-stock.ts b/packages/core/src/trial/goods-stock.ts
+index b137e4b..1536213 100644
+--- a/packages/core/src/trial/goods-stock.ts
++++ b/packages/core/src/trial/goods-stock.ts
+@@ -1,4 +1,4 @@
+-import tuningJson from '../data/tuning.json';
++import tuningJson from '../data/tuning.json' with { type: 'json' };
+ import { deepFreeze, validateTuning } from '../data/validate.js';
+ export const GOODS_STOCK_RULESET = 'tile-population-goods-01';
+ // Reversible IMPLEMENTATION TRIAL values, not owner-selected balance.
+diff --git a/packages/core/src/trial/law.ts b/packages/core/src/trial/law.ts
+index 1f011f7..9117d27 100644
+--- a/packages/core/src/trial/law.ts
++++ b/packages/core/src/trial/law.ts
+@@ -1,4 +1,4 @@
+-import lawsJson from '../data/laws.json';
++import lawsJson from '../data/laws.json' with { type: 'json' };
+ import { deepFreeze, validateLaws } from '../data/validate.js';
+ import { hasWeeklyKeys } from '../domain/canonical-state.js';
+ import { readDenseArray } from '../world/arrays.js';
+diff --git a/packages/core/src/trial/order.ts b/packages/core/src/trial/order.ts
+index 7bb847b..3210689 100644
+--- a/packages/core/src/trial/order.ts
++++ b/packages/core/src/trial/order.ts
+@@ -1,4 +1,4 @@
+-import tuningJson from '../data/tuning.json';
++import tuningJson from '../data/tuning.json' with { type: 'json' };
+ import { deepFreeze, validateTuning } from '../data/validate.js';
+ import type { TileTrialState } from './types.js';
+ import { standingAuthorityTerm } from './crime.js';
+diff --git a/packages/core/src/trial/outside.ts b/packages/core/src/trial/outside.ts
+index c2dd981..cd429f4 100644
+--- a/packages/core/src/trial/outside.ts
++++ b/packages/core/src/trial/outside.ts
+@@ -1,6 +1,6 @@
+-import researchJson from '../data/research.json';
+-import outsidePlotsJson from '../data/outside-plots.json';
+-import tuningJson from '../data/tuning.json';
++import researchJson from '../data/research.json' with { type: 'json' };
++import outsidePlotsJson from '../data/outside-plots.json' with { type: 'json' };
++import tuningJson from '../data/tuning.json' with { type: 'json' };
+ import { deepFreeze, validateResearch, validateOutsidePlots, validateTuning } from '../data/validate.js';
+ import { hasWeeklyKeys } from '../domain/canonical-state.js';
+ 
+diff --git a/packages/core/src/trial/society-map.ts b/packages/core/src/trial/society-map.ts
+index 956e10d..7090f83 100644
+--- a/packages/core/src/trial/society-map.ts
++++ b/packages/core/src/trial/society-map.ts
+@@ -1,4 +1,4 @@
+-import buildingsJson from '../data/buildings.json';
++import buildingsJson from '../data/buildings.json' with { type: 'json' };
+ import { deepFreeze, validateBuildings } from '../data/validate.js';
+ export type SocietyTier = 'housing' | 'service' | 'specialist' | 'slum';
+ export type StaffClass = 'basic' | 'makers' | 'luminaries' | 'merchants';
+diff --git a/packages/core/src/trial/society.ts b/packages/core/src/trial/society.ts
+index c49b107..f90eca8 100644
+--- a/packages/core/src/trial/society.ts
++++ b/packages/core/src/trial/society.ts
+@@ -1,4 +1,4 @@
+-import tuningJson from '../data/tuning.json';
++import tuningJson from '../data/tuning.json' with { type: 'json' };
+ import { deepFreeze, validateTuning } from '../data/validate.js';
+ import { isLawsState, type LawsState } from './law.js';
+ import { isCrisisState, type CrisisState } from './crisis.js';

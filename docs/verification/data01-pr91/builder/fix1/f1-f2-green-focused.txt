@@ -1,0 +1,53 @@
+HEAD: 8c0657e3558c3657b70ab71b1038e33fec1f6e9a
+Tree: d3e24a51a23be3dac87d017dcc93f8f251ad7690
+UTC: 2026-11-13T06:40:38.100764+00:00
+Exit: 0
+Command: npx vitest run packages/core/src/__tests__/catalog-data.test.ts --reporter=verbose
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'buildings.json' validates to the unchanged typed views 22ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'laws.json' validates to the unchanged typed views 7ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'research.json' validates to the unchanged typed views 5ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'outside-plots.json' validates to the unchanged typed views 5ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'tuning.json' validates to the unchanged typed views 7ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'buildings.json' rejects one wrong field with the exact CatalogError message 6ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'laws.json' rejects one wrong field with the exact CatalogError message 4ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'research.json' rejects one wrong field with the exact CatalogError message 6ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'outside-plots.json' rejects one wrong field with the exact CatalogError message 5ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'tuning.json' rejects one wrong field with the exact CatalogError message 4ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'buildings.json' rejects a missing root entry 4ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'laws.json' rejects a missing root entry 6ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'research.json' rejects a missing root entry 5ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'outside-plots.json' rejects a missing root entry 4ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'tuning.json' rejects a missing root entry 9ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'buildings.json' has recursively frozen typed views 12ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'laws.json' has recursively frozen typed views 4ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'research.json' has recursively frozen typed views 0ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'outside-plots.json' has recursively frozen typed views 2ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'tuning.json' has recursively frozen typed views 5ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > preserves the original vote message literal type 1ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'TRIAL_BUILDINGS' keeps the canonical JSON hash from base 5cc2522 4ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'SOCIETY_BUILDINGS' keeps the canonical JSON hash from base 5cc2522 1ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'LAW_CATALOG' keeps the canonical JSON hash from base 5cc2522 1ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'LAW_TRIAL' keeps the canonical JSON hash from base 5cc2522 0ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'LAW_MESSAGES' keeps the canonical JSON hash from base 5cc2522 1ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'RESEARCH_TOPICS' keeps the canonical JSON hash from base 5cc2522 1ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'OUTSIDE_PLOTS' keeps the canonical JSON hash from base 5cc2522 0ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'ORDER_TRIAL' keeps the canonical JSON hash from base 5cc2522 0ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'GARRISON_TRIAL' keeps the canonical JSON hash from base 5cc2522 0ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'CRIME_TRIAL' keeps the canonical JSON hash from base 5cc2522 0ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'CRISIS_TRIAL' keeps the canonical JSON hash from base 5cc2522 0ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'SOCIETY_TRIAL' keeps the canonical JSON hash from base 5cc2522 0ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'GOODS_STOCK_TRIAL' keeps the canonical JSON hash from base 5cc2522 0ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'TILE_TRIAL_BALANCE' keeps the canonical JSON hash from base 5cc2522 0ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'IMMIGRATION_TRIAL_DEFAULTS' keeps the canonical JSON hash from base 5cc2522 0ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > 'OUTSIDE_TRIAL' keeps the canonical JSON hash from base 5cc2522 0ms
+ ✓ packages/core/src/__tests__/catalog-data.test.ts > detects a changed value in a cloned catalog using the pinned base hash 2ms
+
+ Test Files  1 passed (1)
+      Tests  38 passed (38)
+   Start at  13:40:42
+   Duration  1.47s (transform 667ms, setup 0ms, import 887ms, tests 142ms, environment 0ms)
+

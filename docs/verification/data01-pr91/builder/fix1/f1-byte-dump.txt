@@ -1,0 +1,7 @@
+Before separator code points: U+00C3 U+201A U+00C2 U+00B7
+Before separator UTF-8: c3 83 e2 80 9a c3 82 c2 b7
+After separator code points: U+00B7
+After separator UTF-8: c2 b7
+UTF-8 BOM: absent
+Before line bytes: 20 20 20 20 56 4f 54 45 5f 53 48 4f 52 54 3a 20 22 54 68 65 20 76 6f 74 65 20 77 6f 75 6c 64 20 66 61 69 6c 3a 20 46 6f 72 20 7b 46 7d 20 c3 83 e2 80 9a c3 82 c2 b7 20 41 67 61 69 6e 73 74 20 7b 41 7d 2e 22 3b
+After line bytes: 20 20 20 20 56 4f 54 45 5f 53 48 4f 52 54 3a 20 22 54 68 65 20 76 6f 74 65 20 77 6f 75 6c 64 20 66 61 69 6c 3a 20 46 6f 72 20 7b 46 7d 20 c2 b7 20 41 67 61 69 6e 73 74 20 7b 41 7d 2e 22 3b

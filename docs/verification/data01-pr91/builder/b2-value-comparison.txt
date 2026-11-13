@@ -1,0 +1,25 @@
+HEAD: 9d2e111d076cfee9b92b6b6d36de55f1a87259d4
+Tree: 491736af599c691fe65461c7d9a558052fb3b071
+UTC: 2026-11-13T04:57:54.843671+00:00
+Exit: 1
+Command: node C:/Users/Admin/.t3/local-drafts/data01-prB/compare-values.mjs
+
+<anonymous_script>:30
+const fail = (ref, field, rule) => { throw new CatalogError(ref, field, rule); };
+                                           ^
+
+CatalogError: tuning.json#catalog.entries: expected object
+    at fail (eval at load (file:///C:/Users/Admin/.t3/local-drafts/data01-prB/compare-values.mjs:12:2), <anonymous>:30:44)
+    at record (eval at load (file:///C:/Users/Admin/.t3/local-drafts/data01-prB/compare-values.mjs:12:2), <anonymous>:65:9)
+    at validateTuning (eval at load (file:///C:/Users/Admin/.t3/local-drafts/data01-prB/compare-values.mjs:12:2), <anonymous>:160:18)
+    at eval (eval at load (file:///C:/Users/Admin/.t3/local-drafts/data01-prB/compare-values.mjs:12:2), <anonymous>:11:101)
+    at load (file:///C:/Users/Admin/.t3/local-drafts/data01-prB/compare-values.mjs:12:47)
+    at file:///C:/Users/Admin/.t3/local-drafts/data01-prB/compare-values.mjs:12:69
+    at eval (eval at load (file:///C:/Users/Admin/.t3/local-drafts/data01-prB/compare-values.mjs:12:2), <anonymous>:29:14)
+    at load (file:///C:/Users/Admin/.t3/local-drafts/data01-prB/compare-values.mjs:12:47)
+    at file:///C:/Users/Admin/.t3/local-drafts/data01-prB/compare-values.mjs:15:12
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25) {
+  ref: 'tuning.json#catalog'
+}
+
+Node.js v24.19.0

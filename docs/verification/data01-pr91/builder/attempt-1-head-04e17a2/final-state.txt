@@ -1,0 +1,13 @@
+HEAD: 04e17a2acad0e8c03ea7e25250eb30005d267ed0
+Tree: 9179843da7e7adeef08723b90d9e413dca81eea2
+UTC: 2026-11-13T05:09:58.709595+00:00
+Status --short: empty
+Fixture blob: 64c18a2688573e3fe3b8ec0b131cd0318f4d4855
+Commits:
+04e17a2acad0e8c03ea7e25250eb30005d267ed0 refactor(core): catalogs as validated JSON data files
+Co-authored-by: Codex <noreply@openai.com>
+
+9d2e111d076cfee9b92b6b6d36de55f1a87259d4 test(simulation): golden results for catalog extraction
+Fix the negative-control type import to use the core package declaration boundary.
+
+Co-authored-by: Codex <noreply@openai.com>

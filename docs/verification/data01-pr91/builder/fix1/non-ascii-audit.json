@@ -1,0 +1,83 @@
+{
+  "base": "5cc2522f27e01b49baaa6e44bba01904edcea5c0",
+  "sourceLine": 48,
+  "newFiles": [
+    {
+      "file": "packages/core/src/__tests__/catalog-data.test.ts",
+      "nonAscii": [
+        {
+          "line": 69,
+          "column": 85,
+          "codePoint": "U+00B7",
+          "utf8": "c2 b7",
+          "source": "origin/main@5cc2522f27e01b49baaa6e44bba01904edcea5c0:packages/core/src/trial/law.ts:48",
+          "sourceMessage": "The vote would fail: For {F} · Against {A}."
+        }
+      ],
+      "bom": false
+    },
+    {
+      "file": "packages/core/src/data/buildings.json",
+      "nonAscii": "none (ASCII only)",
+      "bom": false
+    },
+    {
+      "file": "packages/core/src/data/laws.json",
+      "nonAscii": [
+        {
+          "line": 161,
+          "column": 49,
+          "codePoint": "U+00B7",
+          "utf8": "c2 b7",
+          "source": "origin/main@5cc2522f27e01b49baaa6e44bba01904edcea5c0:packages/core/src/trial/law.ts:48",
+          "sourceMessage": "The vote would fail: For {F} · Against {A}."
+        }
+      ],
+      "bom": false
+    },
+    {
+      "file": "packages/core/src/data/outside-plots.json",
+      "nonAscii": "none (ASCII only)",
+      "bom": false
+    },
+    {
+      "file": "packages/core/src/data/research.json",
+      "nonAscii": "none (ASCII only)",
+      "bom": false
+    },
+    {
+      "file": "packages/core/src/data/tuning.json",
+      "nonAscii": "none (ASCII only)",
+      "bom": false
+    },
+    {
+      "file": "packages/core/src/data/validate.ts",
+      "nonAscii": [
+        {
+          "line": 292,
+          "column": 47,
+          "codePoint": "U+00B7",
+          "utf8": "c2 b7",
+          "source": "origin/main@5cc2522f27e01b49baaa6e44bba01904edcea5c0:packages/core/src/trial/law.ts:48",
+          "sourceMessage": "The vote would fail: For {F} · Against {A}."
+        }
+      ],
+      "bom": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/catalog-golden.test.ts",
+      "nonAscii": "none (ASCII only)",
+      "bom": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+      "nonAscii": "none (ASCII only)",
+      "bom": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts",
+      "nonAscii": "none (ASCII only)",
+      "bom": false
+    }
+  ]
+}

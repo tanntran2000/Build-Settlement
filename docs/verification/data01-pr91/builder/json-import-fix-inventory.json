@@ -1,0 +1,38 @@
+[
+  {
+    "file": "packages/core/src/trial/catalog.ts",
+    "imports": 2
+  },
+  {
+    "file": "packages/core/src/trial/crime.ts",
+    "imports": 1
+  },
+  {
+    "file": "packages/core/src/trial/crisis.ts",
+    "imports": 1
+  },
+  {
+    "file": "packages/core/src/trial/goods-stock.ts",
+    "imports": 1
+  },
+  {
+    "file": "packages/core/src/trial/law.ts",
+    "imports": 1
+  },
+  {
+    "file": "packages/core/src/trial/order.ts",
+    "imports": 1
+  },
+  {
+    "file": "packages/core/src/trial/outside.ts",
+    "imports": 3
+  },
+  {
+    "file": "packages/core/src/trial/society-map.ts",
+    "imports": 1
+  },
+  {
+    "file": "packages/core/src/trial/society.ts",
+    "imports": 1
+  }
+]

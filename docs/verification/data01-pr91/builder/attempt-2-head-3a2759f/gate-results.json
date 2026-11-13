@@ -1,0 +1,37 @@
+[
+  {
+    "log": "gate-1-diff.txt",
+    "command": "git diff --check origin/main...HEAD",
+    "exit": 0
+  },
+  {
+    "log": "gate-2-lint.txt",
+    "command": "npm run lint",
+    "exit": 0
+  },
+  {
+    "log": "gate-3-typecheck.txt",
+    "command": "npm run typecheck",
+    "exit": 0
+  },
+  {
+    "log": "gate-4-architecture.txt",
+    "command": "npm run check:architecture",
+    "exit": 0
+  },
+  {
+    "log": "gate-5-architecture-tests.txt",
+    "command": "npm run test:architecture",
+    "exit": 0
+  },
+  {
+    "log": "gate-6-unit.txt",
+    "command": "npm test",
+    "exit": 0
+  },
+  {
+    "log": "gate-7-build.txt",
+    "command": "npm run build",
+    "exit": 0
+  }
+]

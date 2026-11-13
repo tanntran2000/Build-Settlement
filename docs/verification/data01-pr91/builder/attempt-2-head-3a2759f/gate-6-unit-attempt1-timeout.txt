@@ -1,0 +1,37 @@
+HEAD: 3a2759f46ffe883db857f878aa97930caa979be6
+Tree: 92db8e129d4e1ce5aa02d234b15767de3bf0105d
+UTC: 2026-11-13T05:17:24.919782+00:00
+Exit: 1
+Command: npm test
+
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/catalog-golden.test.ts (4 tests | 1 failed) 19511ms
+   × keeps seed 0 byte-identical through 60 weeks of catalog commands 5050ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/catalog-golden.test.ts > keeps seed 0 byte-identical through 60 weeks of catalog commands
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ packages/simulation/src/__tests__/catalog-golden.test.ts:7:23
+      5| const golden = JSON.parse(readFileSync(new URL('./fixtures/catalog-gol…
+      6|
+      7| it.each(CATALOG_SEEDS)('keeps seed %i byte-identical through 60 weeks …
+       |                       ^
+      8|   const actual = runCatalogScenario(seed);
+      9|   expect(actual).toEqual(golden.find(entry => entry.seed === seed));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 100 passed (101)
+      Tests  1 failed | 2215 passed (2216)
+   Start at  12:17:29
+   Duration  61.09s (transform 14.63s, setup 0ms, import 47.60s, tests 173.69s, environment 67ms)
+

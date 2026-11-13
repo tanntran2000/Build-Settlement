@@ -1,0 +1,15 @@
+HEAD: 5cc2522f27e01b49baaa6e44bba01904edcea5c0
+Tree: bb128a79be7713c7ed3cf1fa9360d035d8127ec4
+UTC: 2026-11-13T04:48:17.997008+00:00
+Exit: 0
+Command: $env:GENERATE_CATALOG_GOLDEN=1; npx vitest run packages/simulation/src/__tests__/catalog-golden.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  11:48:20
+   Duration  9.12s (transform 578ms, setup 0ms, import 3.80s, tests 5.04s, environment 0ms)
+

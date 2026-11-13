@@ -1,0 +1,20 @@
+HEAD: 8c0657e3558c3657b70ab71b1038e33fec1f6e9a
+Tree: d3e24a51a23be3dac87d017dcc93f8f251ad7690
+UTC: 2026-11-13T06:24:07.687074+00:00
+Status --short: empty
+Fixture blob: 64c18a2688573e3fe3b8ec0b131cd0318f4d4855
+Smoke at this head: not run by Builder; assigned to Claude (Tester).
+Latest commit message:
+test(simulation): explicit 20 s timeout for the golden tests
+
+Owner decision (Tân, 2026-11-13), verbatim: "A, cho 20s".
+
+Set only the per-test timeout arguments for the three golden seeds and
+negative control to 20_000 ms. Keep the fixture, script, seeds, weeks,
+assertions, mock and every other test unchanged.
+
+Measured idle times are about 1.5-2.5 s per test; this isolated run measured
+1.811 s, 1.505 s, 1.527 s and 1.619 s. The earlier full-suite run exceeded
+the previous 5 s timeout on golden seed 0 (5.050 s) under suite load.
+
+Co-authored-by: Codex <noreply@openai.com>

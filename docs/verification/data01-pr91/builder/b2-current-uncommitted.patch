@@ -1,0 +1,490 @@
+diff --git a/packages/core/src/trial/catalog.ts b/packages/core/src/trial/catalog.ts
+index 37d6279..fef50b3 100644
+--- a/packages/core/src/trial/catalog.ts
++++ b/packages/core/src/trial/catalog.ts
+@@ -1,52 +1,18 @@
++import tuningJson from '../data/tuning.json';
++import buildingsJson from '../data/buildings.json';
++import { deepFreeze, validateTuning, validateBuildings } from '../data/validate.js';
+ // Adjustable IMPLEMENTATION TRIAL values, not user-approved economic balance.
+ export type TrialOperation = "farm" | "processor" | "logging" | "mine" | "goods" | "market" | "society" | "wool" | "herbs" | "stone" | "cloth";
+ // Provisional adaptation, not validated balance or imported reference-game rates.
+ export interface ImmigrationTrialConfig { foodSupportBps: number; catchupBps: number; weeklyCapBps: number }
+-export const IMMIGRATION_TRIAL_DEFAULTS: Readonly<ImmigrationTrialConfig> = Object.freeze({ foodSupportBps: 11000, catchupBps: 1000, weeklyCapBps: 200 });
++export const IMMIGRATION_TRIAL_DEFAULTS: Readonly<ImmigrationTrialConfig> = deepFreeze(validateTuning(tuningJson).IMMIGRATION_TRIAL_DEFAULTS);
+ export interface TrialBuildingDefinition {
+   name: string; operation: TrialOperation; terrain: readonly string[]; maxLevel: number;
+   maxWorkers: number; cost: { gold: number; wood: number; iron: number }; upkeepMilli: number;
+ }
+-export const TRIAL_BUILDINGS: Readonly<Record<string, TrialBuildingDefinition>> = Object.freeze({
+-  "sheep-pasture": {"name":"Sheep Pasture","operation":"wool","terrain":["pasture"],"maxLevel":2,"maxWorkers":2,"cost":{"gold":3000,"wood":2000,"iron":0},"upkeepMilli":500},
+-  "herb-garden": {"name":"Herb Garden","operation":"herbs","terrain":["meadow"],"maxLevel":2,"maxWorkers":2,"cost":{"gold":2000,"wood":1000,"iron":0},"upkeepMilli":500},
+-  "quarry": {"name":"Quarry","operation":"stone","terrain":["rock"],"maxLevel":3,"maxWorkers":2,"cost":{"gold":3000,"wood":1000,"iron":1000},"upkeepMilli":500},
+-  "weaver": {"name":"Weaver","operation":"cloth","terrain":["plain"],"maxLevel":2,"maxWorkers":1,"cost":{"gold":3000,"wood":2000,"iron":0},"upkeepMilli":500},
+-  "watch-house": {"name":"Watch House","operation":"society","terrain":["town"],"maxLevel":2,"maxWorkers":2,"cost":{"gold":5000,"wood":4000,"iron":1000},"upkeepMilli":500},
+-  "military-barracks": {"name":"Military Barracks","operation":"society","terrain":["town"],"maxLevel":2,"maxWorkers":4,"cost":{"gold":8000,"wood":6000,"iron":4000},"upkeepMilli":1000},
+-  "library": {"name":"Library","operation":"society","terrain":["town"],"maxLevel":2,"maxWorkers":1,"cost":{"gold":8000,"wood":6000,"iron":2000},"upkeepMilli":1000},
+-  "warehouse": {"name":"Warehouse","operation":"society","terrain":["town"],"maxLevel":3,"maxWorkers":1,"cost":{"gold":6000,"wood":8000,"iron":0},"upkeepMilli":500},
+-  farm: { name: "Farm", operation: "farm", terrain: ["fertile"], maxLevel: 1, maxWorkers: 5, cost: { gold: 3000, wood: 1000, iron: 0 }, upkeepMilli: 1000 },
+-  processor: { name: "Food Processor", operation: "processor", terrain: ["plain"], maxLevel: 1, maxWorkers: 5, cost: { gold: 3000, wood: 2000, iron: 1000 }, upkeepMilli: 500 },
+-  logging: { name: "Logging Camp", operation: "logging", terrain: ["forest"], maxLevel: 3, maxWorkers: 2, cost: { gold: 2000, wood: 0, iron: 0 }, upkeepMilli: 500 },
+-  mine: { name: "Iron Mine", operation: "mine", terrain: ["ore"], maxLevel: 3, maxWorkers: 2, cost: { gold: 3000, wood: 1000, iron: 0 }, upkeepMilli: 500 },
+-  workshop: { name: "Goods Workshop", operation: "goods", terrain: ["plain"], maxLevel: 3, maxWorkers: 1, cost: { gold: 4000, wood: 2000, iron: 1000 }, upkeepMilli: 500 },
+-  'common-housing': {"name":"Common Housing","operation":"society","terrain":["town"],"maxLevel":3,"maxWorkers":0,"cost":{"gold":4000,"wood":4000,"iron":0},"upkeepMilli":0},
+-  'makers-rowhouses': {"name":"Makers' Rowhouses","operation":"society","terrain":["town"],"maxLevel":3,"maxWorkers":0,"cost":{"gold":5000,"wood":5000,"iron":1000},"upkeepMilli":0},
+-  'scholars-quarters': {"name":"Scholars' Quarters","operation":"society","terrain":["town"],"maxLevel":3,"maxWorkers":0,"cost":{"gold":6000,"wood":4000,"iron":1000},"upkeepMilli":0},
+-  'merchant-townhouses': {"name":"Merchant Townhouses","operation":"society","terrain":["town"],"maxLevel":3,"maxWorkers":0,"cost":{"gold":6000,"wood":5000,"iron":0},"upkeepMilli":0},
+-  'elite-manor': {"name":"Elite Manor","operation":"society","terrain":["town"],"maxLevel":2,"maxWorkers":0,"cost":{"gold":15000,"wood":10000,"iron":4000},"upkeepMilli":2000},
+-  'tavern': {"name":"Tavern","operation":"society","terrain":["town"],"maxLevel":2,"maxWorkers":2,"cost":{"gold":4000,"wood":3000,"iron":0},"upkeepMilli":500},
+-  'hospital': {"name":"Hospital","operation":"society","terrain":["town"],"maxLevel":2,"maxWorkers":2,"cost":{"gold":8000,"wood":4000,"iron":2000},"upkeepMilli":1000},
+-  'town-hall': {"name":"Town Hall","operation":"society","terrain":["town"],"maxLevel":1,"maxWorkers":1,"cost":{"gold":20000,"wood":10000,"iron":5000},"upkeepMilli":2000},
+-  'builders-yard': {"name":"Builders' Yard","operation":"society","terrain":["town"],"maxLevel":2,"maxWorkers":2,"cost":{"gold":6000,"wood":6000,"iron":2000},"upkeepMilli":1000},
+-  'academy': {"name":"Academy","operation":"society","terrain":["town"],"maxLevel":2,"maxWorkers":2,"cost":{"gold":10000,"wood":6000,"iron":2000},"upkeepMilli":1000},
+-  'town-market': {"name":"Market","operation":"market","terrain":["town"],"maxLevel":3,"maxWorkers":0,"cost":{"gold":3000,"wood":2000,"iron":0},"upkeepMilli":500},
+-  'trading-post': {"name":"Trading Post","operation":"society","terrain":["town"],"maxLevel":2,"maxWorkers":2,"cost":{"gold":8000,"wood":6000,"iron":0},"upkeepMilli":1000},
+-  'counting-house': {"name":"Counting House","operation":"society","terrain":["town"],"maxLevel":2,"maxWorkers":2,"cost":{"gold":8000,"wood":4000,"iron":1000},"upkeepMilli":1000},
+-  'slave-quarters': {"name":"Slave Quarters","operation":"society","terrain":["town"],"maxLevel":3,"maxWorkers":0,"cost":{"gold":2000,"wood":3000,"iron":0},"upkeepMilli":200},
+-});
+-for (const definition of Object.values(TRIAL_BUILDINGS)) {
+-  Object.freeze(definition.cost); Object.freeze(definition.terrain); Object.freeze(definition);
+-}
+-export const TILE_TRIAL_BALANCE = Object.freeze({
+-  initialWoodMilli: 8000, initialIronMilli: 4000, initialHappiness: 80,
+-  loggingWoodPerWorker: 2000, mineIronPerWorker: 1000,
+-  goodsDemandPerResident: 20,
+-  taxGoldPerResident: 30, goldPerServiceMilli: 1000,
+-  // Approved Food coefficients; the trial does not change these.
+-  foodDemandPerResident: 40,
+-});
++export const TRIAL_BUILDINGS: Readonly<Record<string, TrialBuildingDefinition>> = deepFreeze(validateBuildings(buildingsJson).trial);
++
++export const TILE_TRIAL_BALANCE = deepFreeze(validateTuning(tuningJson).TILE_TRIAL_BALANCE);
+ export function trialBuilding(typeId: string): TrialBuildingDefinition | undefined {
+   return Object.hasOwn(TRIAL_BUILDINGS, typeId) ? TRIAL_BUILDINGS[typeId] : undefined;
+ }
+diff --git a/packages/core/src/trial/crime.ts b/packages/core/src/trial/crime.ts
+index 769f29a..925a9b9 100644
+--- a/packages/core/src/trial/crime.ts
++++ b/packages/core/src/trial/crime.ts
+@@ -1,19 +1,9 @@
++import tuningJson from '../data/tuning.json';
++import { deepFreeze, validateTuning } from '../data/validate.js';
+ import type { TileTrialState } from './types.js';
+ import { createSeededRandom } from '../world/random.js';
+ 
+-export const CRIME_TRIAL = Object.freeze({
+- baseChance: 5,
+- idleWatchHouse: 2,
+- bands: Object.freeze({ minorMax: 33, seriousMax: 66 }),
+- weights: Object.freeze({ robbery: 4, smear: 3, raid: 2, assassination: 1 }),
+- assassinationMinCrime: 70,
+- robberyBps: Object.freeze({ minor: 500, serious: 1000, severe: 2000 }),
+- smear: Object.freeze({ minor: 3, serious: 6, severe: 10 }),
+- raidDeaths: Object.freeze({ minor: 1, serious: 2, severe: 3 }),
+- fatal: Object.freeze({ minCrime: 90, maxSecurity: 30, chance: 0.5 }),
+- wound: Object.freeze({ health: 20, standing: 5, authority: 5 }),
+- standing: Object.freeze({ newGame: 50, drift: 1, authorityDivisor: 5 }),
+-});
++export const CRIME_TRIAL = deepFreeze(validateTuning(tuningJson).CRIME_TRIAL);
+ export function crimeChancePercent(crime: number, idleWatchHouse = false): number { return CRIME_TRIAL.baseChance + Math.trunc(crime / 2) + (idleWatchHouse ? CRIME_TRIAL.idleWatchHouse : 0); }
+ export function crimeSeverity(crime: number): 'minor' | 'serious' | 'severe' {
+  return crime <= CRIME_TRIAL.bands.minorMax ? 'minor' : crime <= CRIME_TRIAL.bands.seriousMax ? 'serious' : 'severe';
+diff --git a/packages/core/src/trial/crisis.ts b/packages/core/src/trial/crisis.ts
+index d2f2340..e4262ec 100644
+--- a/packages/core/src/trial/crisis.ts
++++ b/packages/core/src/trial/crisis.ts
+@@ -1,3 +1,5 @@
++import tuningJson from '../data/tuning.json';
++import { deepFreeze, validateTuning } from '../data/validate.js';
+ import { hasWeeklyKeys } from '../domain/canonical-state.js';
+ import { CARD_OPTIONS, isPendingCard, type CardOption } from './event-card.js';
+ 
+@@ -9,14 +11,7 @@ export interface CrisisState {
+  promise: { stage: CrisisCardKind; weeksLeft: 1 | 2 } | null;
+  lastChoice: { stage: CrisisCardKind; option: CardOption; goldMilli: number } | null;
+ }
+-export const CRISIS_TRIAL = Object.freeze({
+- warningTension:50,demandHungerWeeks:3,happinessBelow:30,
+- protest:Object.freeze({minWeeks:2,tension:75}),rebellion:Object.freeze({minWeeks:2,tension:90}),finalWeeks:4,calmWeeksToStepDown:2,
+- pay:Object.freeze({demand:Object.freeze({milliPerResident:20,tension:-10}),protest:Object.freeze({milliPerResident:40,tension:-15}),rebellion:Object.freeze({milliPerResident:60,tension:-20})}),
+- promise:Object.freeze({weeks:2,kept:Object.freeze({demand:-15,protest:-20,rebellion:-25}),keptAuthority:5,brokenTension:10,brokenAuthority:-10}),
+- force:Object.freeze({security:Object.freeze({demand:40,protest:55,rebellion:70}),tension:Object.freeze({demand:-10,protest:-15,rebellion:-20}),authority:5,crime:5,satisfaction:-5}),
+- refuse:Object.freeze({tension:5}),
+-});
++export const CRISIS_TRIAL = deepFreeze(validateTuning(tuningJson).CRISIS_TRIAL);
+ export interface CrisisOptionView { option: CardOption; available: boolean; reason: string | null; goldMilli: number; tensionDelta: number }
+ export function crisisOptions(kind: CrisisCardKind, f: {population:number;goldMilli:number;security:number;promisePending:boolean}): CrisisOptionView[] {
+  const cost=f.population*CRISIS_TRIAL.pay[kind].milliPerResident;
+diff --git a/packages/core/src/trial/goods-stock.ts b/packages/core/src/trial/goods-stock.ts
+index 9547acc..b137e4b 100644
+--- a/packages/core/src/trial/goods-stock.ts
++++ b/packages/core/src/trial/goods-stock.ts
+@@ -1,8 +1,6 @@
++import tuningJson from '../data/tuning.json';
++import { deepFreeze, validateTuning } from '../data/validate.js';
+ export const GOODS_STOCK_RULESET = 'tile-population-goods-01';
+ // Reversible IMPLEMENTATION TRIAL values, not owner-selected balance.
+-export const GOODS_STOCK_TRIAL = Object.freeze({
+-  initialFoodMilli: 20000, initialGoodsMilli: 10000, initialGoldMilli: 45000,
+-  woodPerBatchMilli: 2000, goodsPerBatchMilli: 2000,
+-  capacityPerLevelMilli: 2000, goldPerGoodsMilli: 1000,
+-});
++export const GOODS_STOCK_TRIAL = deepFreeze(validateTuning(tuningJson).GOODS_STOCK_TRIAL);
+ export interface GoodsStock { rulesetId: typeof GOODS_STOCK_RULESET; amountMilli: number }
+diff --git a/packages/core/src/trial/law.ts b/packages/core/src/trial/law.ts
+index f7f129f..1f011f7 100644
+--- a/packages/core/src/trial/law.ts
++++ b/packages/core/src/trial/law.ts
+@@ -1,3 +1,5 @@
++import lawsJson from '../data/laws.json';
++import { deepFreeze, validateLaws } from '../data/validate.js';
+ import { hasWeeklyKeys } from '../domain/canonical-state.js';
+ import { readDenseArray } from '../world/arrays.js';
+ import type { SocietyClassKey, SocietyState } from './society.js';
+@@ -18,35 +20,11 @@ export interface LawDefinition {
+     desperation?: number; tension?: number; taxBps?: number; costMilli?: number; incomeMilli?: number;
+   };
+ }
+-const stances = (free: LawStance, makers: LawStance, luminaries: LawStance, merchants: LawStance): LawDefinition['stances'] => ({free,makers,luminaries,merchants});
+-export const LAW_CATALOG: Readonly<Record<LawId, LawDefinition>> = Object.freeze({
+-  curfew: {name:'Curfew',tag:null,stances:stances('against','neutral','neutral','for'),effect:{securityTarget:10,satisfaction:{free:-2}}},
+-  'watch-levy': {name:'Watch Levy',tag:null,stances:stances('for','neutral','neutral','against'),effect:{costMilli:1000,crimeTarget:-5}},
+-  'guild-charters': {name:'Guild Charters',tag:null,stances:stances('neutral','for','neutral','against'),effect:{satisfaction:{makers:2,merchants:-2}}},
+-  'war-tithe': {name:'War Tithe',tag:null,stances:stances('against','against','neutral','against'),effect:{taxBps:1000,satisfaction:{free:-1,makers:-1,luminaries:-1,merchants:-1}}},
+-  'poor-relief': {name:'Poor Relief',tag:'light',stances:stances('for','for','neutral','against'),effect:{costMilli:1500,desperation:-3,satisfaction:{free:2}}},
+-  'free-assembly': {name:'Free Assembly',tag:'light',stances:stances('for','neutral','for','neutral'),effect:{tension:-3,authorityTarget:-5}},
+-  'public-punishments': {name:'Public Punishments',tag:'dark',stances:stances('against','neutral','against','for'),effect:{crimeTarget:-10,tension:2}},
+-  'licensed-vice': {name:'Licensed Vice',tag:'dark',stances:stances('neutral','for','against','for'),effect:{incomeMilli:1500,satisfaction:{luminaries:-2}}},
+-});
+-for (const law of Object.values(LAW_CATALOG)) {
+-  Object.freeze(law.stances);
+-  if (law.effect.satisfaction) Object.freeze(law.effect.satisfaction);
+-  Object.freeze(law.effect); Object.freeze(law);
+-}
+-export const LAW_TRIAL = Object.freeze({
+-  maxActive:3, eliteWeight:5, payMilliPerVote:200,
+-  force:Object.freeze({satisfaction:-10,tension:5,standing:-3,minSecurity:40}),
+-  promise:Object.freeze({weeks:4,keptAuthority:3,brokenSatisfaction:-10,brokenTension:10}),
+-  repeal:Object.freeze({authority:-5,cooldownWeeks:4}), corruptionPerTag:10,
+-});
+-export const LAW_MESSAGES = Object.freeze({
+-  CARD_PENDING:'Answer the crisis first.', UNKNOWN_LAW:'Choose a law from the Council list.',
+-  TOWN_HALL_CLOSED:'Staff the Town Hall to call a vote.', VOTE_USED:'The Council has already voted this week.',
+-  LAW_ACTIVE:'This law is already in force.', LAW_SLOTS_FULL:'Three laws are in force. Repeal one first.',
+-  LAW_COOLDOWN:'This law returns in week {N}.', LOBBY_INVALID:'Only groups with a vote that are not For can be lobbied.',
+-  VOTE_SHORT:'The vote would fail: For {F} · Against {A}.', LAW_INACTIVE:'This law is not in force.',
+-});
++
++export const LAW_CATALOG: Readonly<Record<LawId, LawDefinition>> = deepFreeze(validateLaws(lawsJson).catalog);
++
++export const LAW_TRIAL = deepFreeze(validateLaws(lawsJson).trial);
++export const LAW_MESSAGES = deepFreeze(validateLaws(lawsJson).messages);
+ export interface LawsState {
+   active: LawId[];
+   votedWeek: number | null;
+diff --git a/packages/core/src/trial/order.ts b/packages/core/src/trial/order.ts
+index 3db0a7c..7bb847b 100644
+--- a/packages/core/src/trial/order.ts
++++ b/packages/core/src/trial/order.ts
+@@ -1,3 +1,5 @@
++import tuningJson from '../data/tuning.json';
++import { deepFreeze, validateTuning } from '../data/validate.js';
+ import type { TileTrialState } from './types.js';
+ import { standingAuthorityTerm } from './crime.js';
+ import { hasWeeklyKeys } from '../domain/canonical-state.js';
+@@ -11,17 +13,7 @@ export interface OrderFacts {
+  meanSatisfaction: number; townHallStaffed: boolean; patrols: boolean; drill: boolean;
+ }
+ // Reversible TRIAL values from the approved P8-A spec, sections 3–6.
+-export const ORDER_TRIAL = Object.freeze({
+- newGame: Object.freeze({ security: 30, crime: 10, authority: 50 }),
+- drift: Object.freeze({ security: 5, crime: 5, authority: 3 }),
+- security: Object.freeze({ base: 10, perWallRing: 5, watchHouseByLevel: Object.freeze([10,15]), slumWatchHouseBonus: 5, patrolsNumerator: 3, patrolsDenominator: 2, barracksPerWorker: 2, drilledPerWorker: 3, residentsPerPoint: 20, slumPenalty: 3, darkPenalty: 5 }),
+- crime: Object.freeze({ base: 10, perSlum: 5, desperationDivisor: 5, dark: 10, light: -5, securityDivisor: 2 }),
+- authority: Object.freeze({ base: 40, securityDivisor: 5, crimeDivisor: 4, townHall: 10, satisfactionDivisor: 5, tensionDivisor: 10 }),
+- theft: Object.freeze({ threshold: 20, bpsPerPoint: 10 }), tensionDivisor: 25,
+- satisfactionLoss: Object.freeze([Object.freeze({ crime: 70, loss: 2 }), Object.freeze({ crime: 40, loss: 1 })]),
+- tax: Object.freeze({ bpsPerPoint: 40 }), immigration: Object.freeze({ halveBelow: 30, bonusAtOrAbove: 70 }),
+- bands: Object.freeze({ lowMax: 33, fairMax: 66 }),
+-});
++export const ORDER_TRIAL = deepFreeze(validateTuning(tuningJson).ORDER_TRIAL);
+ const clamp = (n: bigint): number => Number(n < 0n ? 0n : n > 100n ? 100n : n);
+ export function securityTarget(f: OrderFacts): number {
+  const b = ORDER_TRIAL.security;
+@@ -54,7 +46,7 @@ export function isOrderState(raw: unknown): raw is OrderState {
+  return hasWeeklyKeys(raw,['security','crime','authority']) && Object.values(raw).every(n => Number.isSafeInteger(n) && (n as number) >= 0 && (n as number) <= 100);
+ }
+ 
+-export const GARRISON_TRIAL = Object.freeze({ securityPerStep: 3, soldiersPerStep: 4, cap: 12 });
++export const GARRISON_TRIAL = deepFreeze(validateTuning(tuningJson).GARRISON_TRIAL);
+ export function garrisonSecurity(soldiers: number): number {
+  return Math.min(GARRISON_TRIAL.cap, GARRISON_TRIAL.securityPerStep*Math.floor(soldiers/GARRISON_TRIAL.soldiersPerStep));
+ }
+diff --git a/packages/core/src/trial/outside.ts b/packages/core/src/trial/outside.ts
+index 41a8d01..c2dd981 100644
+--- a/packages/core/src/trial/outside.ts
++++ b/packages/core/src/trial/outside.ts
+@@ -1,36 +1,23 @@
++import researchJson from '../data/research.json';
++import outsidePlotsJson from '../data/outside-plots.json';
++import tuningJson from '../data/tuning.json';
++import { deepFreeze, validateResearch, validateOutsidePlots, validateTuning } from '../data/validate.js';
+ import { hasWeeklyKeys } from '../domain/canonical-state.js';
+ 
+ export type OutsideTerrain = 'fertile' | 'pasture' | 'meadow' | 'forest' | 'ore' | 'rock' | 'plain';
+-export const RESEARCH_TOPICS = Object.freeze(['deep-mining', 'watch-patrols', 'barracks-drill'] as const);
++export const RESEARCH_TOPICS = deepFreeze(validateResearch(researchJson));
+ export type ResearchTopic = typeof RESEARCH_TOPICS[number];
+ export interface OutsidePlotState {
+  wild: boolean; clearMilli: number; clearWorkers: number; clearPaid: boolean;
+  depositMilli: number | null; capMilli: number | null; deepShaft: boolean;
+ }
+-const ringIds = [
+- 'field-1 plain-1 forest-1 ore-1 plain-2 plain-3 forest-2 ore-2 field-2 plain-4',
+- 'field-3 field-4 pasture-1 pasture-2 meadow-1 meadow-2 forest-3 rock-1 rock-2 plain-5',
+- 'field-5 pasture-3 meadow-3 forest-4 forest-5 ore-3 ore-4 rock-3 plain-6 plain-7',
+-];
+-export const OUTSIDE_PLOTS: readonly Readonly<{id:string;terrain:OutsideTerrain;ring:1|2|3}>[] = Object.freeze(ringIds.flatMap((ids,i)=>ids.split(' ').map(id=>Object.freeze({
+- id, terrain:(id.startsWith('field-')?'fertile':id.split('-')[0]) as OutsideTerrain, ring:(i+1) as 1|2|3,
+-}))));
++
++export const OUTSIDE_PLOTS: readonly Readonly<{id:string;terrain:OutsideTerrain;ring:1|2|3}>[] = deepFreeze(validateOutsidePlots(outsidePlotsJson));
+ export type OutsidePlotId = typeof OUTSIDE_PLOTS[number]['id'];
+ export function outsidePlot(id:string): {terrain:OutsideTerrain;ring:1|2|3} | null {
+  const plot=OUTSIDE_PLOTS.find(p=>p.id===id);return plot?{terrain:plot.terrain,ring:plot.ring}:null;
+ }
+-export const OUTSIDE_TRIAL = Object.freeze({
+- deposit:Object.freeze({forest:60000,ore:80000,rock:100000}), forestRegrowMilli:3000,
+- clearWork:Object.freeze({fertile:4000,pasture:4000,meadow:4000,plain:4000,forest:6000,ore:8000,rock:8000}),
+- clearFeeGoldMilli:2000, forestClearWoodMilli:5000,
+- perWorker:Object.freeze({wool:1000,herbs:500,stone:1000}),
+- weaver:Object.freeze({woolPerBatchMilli:2000,clothPerBatchMilli:1000}),
+- workshopClothRecipe:Object.freeze({woodMilli:1000,clothMilli:1000}), hospitalHerbsPerLevelMilli:1000,
+- storage:Object.freeze({baseMilli:40000,warehousePerLevelMilli:40000}),
+- research:Object.freeze({'deep-mining':Object.freeze({workMilli:8000,goldMilli:10000}),'watch-patrols':Object.freeze({workMilli:6000,goldMilli:6000}),'barracks-drill':Object.freeze({workMilli:8000,goldMilli:8000})}),
+- deepShaft:Object.freeze({stoneMilli:10000,woodMilli:5000,goldMilli:10000,depositBonusMilli:60000,outputBps:15000}),
+- wallRing3StoneMilli:30000, level3StoneMilli:5000,
+-});
++export const OUTSIDE_TRIAL = deepFreeze(validateTuning(tuningJson).OUTSIDE_TRIAL);
+ export function createOutsideState(): Record<OutsidePlotId,OutsidePlotState> {
+  return Object.fromEntries(OUTSIDE_PLOTS.map(p=>{
+   const deposit= p.terrain==='forest'||p.terrain==='ore'||p.terrain==='rock'?OUTSIDE_TRIAL.deposit[p.terrain]:null;
+diff --git a/packages/core/src/trial/society-map.ts b/packages/core/src/trial/society-map.ts
+index b6265f8..956e10d 100644
+--- a/packages/core/src/trial/society-map.ts
++++ b/packages/core/src/trial/society-map.ts
+@@ -1,3 +1,5 @@
++import buildingsJson from '../data/buildings.json';
++import { deepFreeze, validateBuildings } from '../data/validate.js';
+ export type SocietyTier = 'housing' | 'service' | 'specialist' | 'slum';
+ export type StaffClass = 'basic' | 'makers' | 'luminaries' | 'merchants';
+ export interface SocietyBuildingInfo { tier: SocietyTier; alsoTier?: SocietyTier; staff: StaffClass | null; reserved: boolean; housing?: { class: 'free' | 'makers' | 'luminaries' | 'merchants' | 'elite' | 'bound'; byLevel: readonly number[] } }
+@@ -7,166 +9,6 @@ for (const [prefix,tier,ends] of [['house','housing',[4,8,11]],['service','servi
+ }
+ export const SOCIETY_PLOT_IDS: readonly string[] = Object.freeze(Object.keys(plots));
+ export function societyPlot(tileId: string): {tier: SocietyTier;ring:1|2|3} | null { return Object.hasOwn(plots,tileId)?plots[tileId]:null; }
+-export const SOCIETY_BUILDINGS: Readonly<Record<string,SocietyBuildingInfo>> = {
+-  "common-housing": {
+-    "tier": "housing",
+-    "staff": null,
+-    "reserved": false,
+-    "housing": {
+-      "class": "free",
+-      "byLevel": [
+-        30,
+-        50,
+-        70
+-      ]
+-    }
+-  },
+-  "makers-rowhouses": {
+-    "tier": "housing",
+-    "staff": null,
+-    "reserved": false,
+-    "housing": {
+-      "class": "makers",
+-      "byLevel": [
+-        15,
+-        25,
+-        35
+-      ]
+-    }
+-  },
+-  "scholars-quarters": {
+-    "tier": "housing",
+-    "staff": null,
+-    "reserved": false,
+-    "housing": {
+-      "class": "luminaries",
+-      "byLevel": [
+-        10,
+-        18,
+-        25
+-      ]
+-    }
+-  },
+-  "merchant-townhouses": {
+-    "tier": "housing",
+-    "staff": null,
+-    "reserved": false,
+-    "housing": {
+-      "class": "merchants",
+-      "byLevel": [
+-        15,
+-        25,
+-        35
+-      ]
+-    }
+-  },
+-  "elite-manor": {
+-    "tier": "housing",
+-    "staff": null,
+-    "reserved": false,
+-    "housing": {
+-      "class": "elite",
+-      "byLevel": [
+-        6,
+-        12
+-      ]
+-    }
+-  },
+-  "tavern": {
+-    "tier": "service",
+-    "staff": "basic",
+-    "reserved": false
+-  },
+-  "hospital": {
+-    "tier": "service",
+-    "staff": "luminaries",
+-    "reserved": false
+-  },
+-  "town-hall": {
+-    "tier": "service",
+-    "staff": "merchants",
+-    "reserved": false
+-  },
+-  "builders-yard": {
+-    "tier": "specialist",
+-    "staff": "makers",
+-    "reserved": false
+-  },
+-  "academy": {
+-    "tier": "specialist",
+-    "staff": "luminaries",
+-    "reserved": false
+-  },
+-  "town-market": {
+-    "tier": "specialist",
+-    "staff": "merchants",
+-    "reserved": false
+-  },
+-  "trading-post": {
+-    "tier": "specialist",
+-    "staff": "merchants",
+-    "reserved": false
+-  },
+-  "counting-house": {
+-    "tier": "specialist",
+-    "staff": "merchants",
+-    "reserved": false
+-  },
+-  "slave-quarters": {
+-    "tier": "slum",
+-    "staff": null,
+-    "reserved": false,
+-    "housing": {
+-      "class": "bound",
+-      "byLevel": [
+-        25,
+-        45,
+-        70
+-      ]
+-    }
+-  },
+-  "military-barracks": { "tier": "service", "staff": "basic", "reserved": false },
+-  "watch-house": {
+-    "tier": "service",
+-    "alsoTier": "slum",
+-    "staff": "basic",
+-    "reserved": false
+-  },
+-  "warehouse": {
+-    "tier": "specialist",
+-    "staff": "makers",
+-    "reserved": false
+-  },
+-  "smithy": {
+-    "tier": "specialist",
+-    "staff": "makers",
+-    "reserved": true
+-  },
+-  "library": {
+-    "tier": "specialist",
+-    "staff": "luminaries",
+-    "reserved": false
+-  },
+-  "brothel": {
+-    "tier": "slum",
+-    "staff": null,
+-    "reserved": true
+-  },
+-  "black-market": {
+-    "tier": "slum",
+-    "staff": null,
+-    "reserved": true
+-  },
+-  "arena": {
+-    "tier": "slum",
+-    "staff": null,
+-    "reserved": true
+-  },
+-  "drug-store": {
+-    "tier": "slum",
+-    "staff": null,
+-    "reserved": true
+-  }
+-};
++export const SOCIETY_BUILDINGS: Readonly<Record<string,SocietyBuildingInfo>> = deepFreeze(validateBuildings(buildingsJson).society);
+ const outside: Record<string, StaffClass> = {'sheep-pasture':'basic','herb-garden':'basic',quarry:'basic',weaver:'makers',farm:'basic',logging:'basic',mine:'basic',processor:'makers',workshop:'makers'};
+ export function societyStaff(typeId:string): StaffClass | null { return Object.hasOwn(outside,typeId)?outside[typeId]:Object.hasOwn(SOCIETY_BUILDINGS,typeId)?SOCIETY_BUILDINGS[typeId].staff:null; }
+diff --git a/packages/core/src/trial/society.ts b/packages/core/src/trial/society.ts
+index c6326b0..c49b107 100644
+--- a/packages/core/src/trial/society.ts
++++ b/packages/core/src/trial/society.ts
+@@ -1,9 +1,10 @@
+-import { CRIME_TRIAL } from './crime.js';
++import tuningJson from '../data/tuning.json';
++import { deepFreeze, validateTuning } from '../data/validate.js';
+ import { isLawsState, type LawsState } from './law.js';
+ import { isCrisisState, type CrisisState } from './crisis.js';
+ import type { PendingCard } from './event-card.js';
+-import { ORDER_TRIAL, isOrderState, type OrderState } from './order.js';
+-import { createOutsideState, isOutsideState, isOutsideResearch, OUTSIDE_PLOTS, type OutsidePlotState, type OutsideResearch } from './outside.js';
++import { isOrderState, type OrderState } from './order.js';
++import { isOutsideState, isOutsideResearch, OUTSIDE_PLOTS, type OutsidePlotState, type OutsideResearch } from './outside.js';
+ import { TILE_TRIAL_BALANCE as B } from './catalog.js';
+ import { hasWeeklyKeys } from '../domain/canonical-state.js';
+ import { GOODS_STOCK_RULESET,GOODS_STOCK_TRIAL } from './goods-stock.js';
+@@ -33,21 +34,7 @@ export interface SocietyState {
+   research: OutsideResearch;
+ }
+ // Reversible TRIAL starting values from the approved society spec.
+-export const SOCIETY_TRIAL = Object.freeze({
+-  rulesetId: SOCIETY_RULESET,
+-  standing: CRIME_TRIAL.standing.newGame,
+-  laws: Object.freeze({active:[],votedWeek:null,repealedUntil:{},promise:null}),
+-  order: ORDER_TRIAL.newGame,
+-  crisis: Object.freeze({fallCause:null,stage:'none',weeksInStage:0,hungerStreak:0,calmStreak:0,promise:null,lastChoice:null}),
+-  pendingCard: null,
+-  stocksMilli: Object.freeze({stone:0,wool:0,cloth:0,herbs:0}),
+-  outside: Object.freeze(createOutsideState()),
+-  research: Object.freeze({topic:null,progressMilli:Object.freeze({'deep-mining':0,'watch-patrols':0,'barracks-drill':0}),paid:[],completed:[]}),
+-  classes: Object.freeze({ free: 55, makers: Object.freeze({ common: 20, elite: 0 }), luminaries: Object.freeze({ common: 12, elite: 0 }), merchants: Object.freeze({ common: 13, elite: 0 }), bound: Object.freeze({ free: 0, makers: 0, luminaries: 0, merchants: 0 }) }),
+-  satisfaction: Object.freeze({ free: 80, makers: 80, luminaries: 80, merchants: 80, bound: 80 }),
+-  desperation: 0, tension: 0, debtPressure: Object.freeze({ free: 0, makers: 0, luminaries: 0, merchants: 0 }),
+-  corruption: 50, luxuryStockMilli: 0, training: Object.freeze({ target: null, progressMilli: 0 }), wallRing: 1,
+-} as const);
++export const SOCIETY_TRIAL = deepFreeze(validateTuning(tuningJson).SOCIETY_TRIAL);
+ const groups = ['makers', 'luminaries', 'merchants'] as const;
+ const classes = ['free', ...groups] as const;
+ const count = (n: unknown): n is number => Number.isSafeInteger(n) && (n as number) >= 0;

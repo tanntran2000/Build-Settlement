@@ -1,0 +1,30 @@
+{
+  "base": "5cc2522f27e01b49baaa6e44bba01904edcea5c0",
+  "mainGzipKB": {
+    "js": 105.21,
+    "css": 5.81
+  },
+  "files": [
+    {
+      "file": "index-B6fjMyZv.js",
+      "bytes": 338990,
+      "gzipBytes": 108331,
+      "sha256": "0b51d2f1e31e6e611be480691dfacbcdf8ff5e7cb5b6924f36bf88f8a3f6e1e1"
+    },
+    {
+      "file": "index-DdNtS9j1.css",
+      "bytes": 28127,
+      "gzipBytes": 5814,
+      "sha256": "957e3db03aef271e79b33fd544374adbc99e7d2664fc35744b96835f0d072c0d"
+    }
+  ],
+  "totals": {
+    "js": 108331,
+    "css": 5814
+  },
+  "combinedGzipBytes": 114145,
+  "deltaKB": {
+    "js": 3.1210000000000093,
+    "css": 0.004000000000000448
+  }
+}

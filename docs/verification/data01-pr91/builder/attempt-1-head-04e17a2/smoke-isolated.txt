@@ -1,0 +1,17 @@
+HEAD: 04e17a2acad0e8c03ea7e25250eb30005d267ed0
+Tree: 9179843da7e7adeef08723b90d9e413dca81eea2
+UTC: 2026-11-13T05:08:48.534451+00:00
+Exit: 1
+Command: & 'C:/Program Files/Git/bin/bash.exe' 'C:/Users/Admin/.t3/local-drafts/data01-prB/smoke-isolated.sh'
+
+CI=1
+[WebServer] (node:62788) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:54184) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+TypeError: Module "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/data/tuning.json" needs an import attribute of "type: json"
+    at eval (<anonymous>:1:1)
+Error: No tests found.
+Make sure that arguments are regular expressions matching test files.
+You may need to escape symbols like "$" or "*" and quote the arguments.
+

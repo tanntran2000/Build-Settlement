@@ -1,0 +1,1512 @@
+{
+  "TRIAL_BUILDINGS": {
+    "sheep-pasture": {
+      "name": "Sheep Pasture",
+      "operation": "wool",
+      "terrain": [
+        "pasture"
+      ],
+      "maxLevel": 2,
+      "maxWorkers": 2,
+      "cost": {
+        "gold": 3000,
+        "wood": 2000,
+        "iron": 0
+      },
+      "upkeepMilli": 500
+    },
+    "herb-garden": {
+      "name": "Herb Garden",
+      "operation": "herbs",
+      "terrain": [
+        "meadow"
+      ],
+      "maxLevel": 2,
+      "maxWorkers": 2,
+      "cost": {
+        "gold": 2000,
+        "wood": 1000,
+        "iron": 0
+      },
+      "upkeepMilli": 500
+    },
+    "quarry": {
+      "name": "Quarry",
+      "operation": "stone",
+      "terrain": [
+        "rock"
+      ],
+      "maxLevel": 3,
+      "maxWorkers": 2,
+      "cost": {
+        "gold": 3000,
+        "wood": 1000,
+        "iron": 1000
+      },
+      "upkeepMilli": 500
+    },
+    "weaver": {
+      "name": "Weaver",
+      "operation": "cloth",
+      "terrain": [
+        "plain"
+      ],
+      "maxLevel": 2,
+      "maxWorkers": 1,
+      "cost": {
+        "gold": 3000,
+        "wood": 2000,
+        "iron": 0
+      },
+      "upkeepMilli": 500
+    },
+    "watch-house": {
+      "name": "Watch House",
+      "operation": "society",
+      "terrain": [
+        "town"
+      ],
+      "maxLevel": 2,
+      "maxWorkers": 2,
+      "cost": {
+        "gold": 5000,
+        "wood": 4000,
+        "iron": 1000
+      },
+      "upkeepMilli": 500
+    },
+    "military-barracks": {
+      "name": "Military Barracks",
+      "operation": "society",
+      "terrain": [
+        "town"
+      ],
+      "maxLevel": 2,
+      "maxWorkers": 4,
+      "cost": {
+        "gold": 8000,
+        "wood": 6000,
+        "iron": 4000
+      },
+      "upkeepMilli": 1000
+    },
+    "library": {
+      "name": "Library",
+      "operation": "society",
+      "terrain": [
+        "town"
+      ],
+      "maxLevel": 2,
+      "maxWorkers": 1,
+      "cost": {
+        "gold": 8000,
+        "wood": 6000,
+        "iron": 2000
+      },
+      "upkeepMilli": 1000
+    },
+    "warehouse": {
+      "name": "Warehouse",
+      "operation": "society",
+      "terrain": [
+        "town"
+      ],
+      "maxLevel": 3,
+      "maxWorkers": 1,
+      "cost": {
+        "gold": 6000,
+        "wood": 8000,
+        "iron": 0
+      },
+      "upkeepMilli": 500
+    },
+    "farm": {
+      "name": "Farm",
+      "operation": "farm",
+      "terrain": [
+        "fertile"
+      ],
+      "maxLevel": 1,
+      "maxWorkers": 5,
+      "cost": {
+        "gold": 3000,
+        "wood": 1000,
+        "iron": 0
+      },
+      "upkeepMilli": 1000
+    },
+    "processor": {
+      "name": "Food Processor",
+      "operation": "processor",
+      "terrain": [
+        "plain"
+      ],
+      "maxLevel": 1,
+      "maxWorkers": 5,
+      "cost": {
+        "gold": 3000,
+        "wood": 2000,
+        "iron": 1000
+      },
+      "upkeepMilli": 500
+    },
+    "logging": {
+      "name": "Logging Camp",
+      "operation": "logging",
+      "terrain": [
+        "forest"
+      ],
+      "maxLevel": 3,
+      "maxWorkers": 2,
+      "cost": {
+        "gold": 2000,
+        "wood": 0,
+        "iron": 0
+      },
+      "upkeepMilli": 500
+    },
+    "mine": {
+      "name": "Iron Mine",
+      "operation": "mine",
+      "terrain": [
+        "ore"
+      ],
+      "maxLevel": 3,
+      "maxWorkers": 2,
+      "cost": {
+        "gold": 3000,
+        "wood": 1000,
+        "iron": 0
+      },
+      "upkeepMilli": 500
+    },
+    "workshop": {
+      "name": "Goods Workshop",
+      "operation": "goods",
+      "terrain": [
+        "plain"
+      ],
+      "maxLevel": 3,
+      "maxWorkers": 1,
+      "cost": {
+        "gold": 4000,
+        "wood": 2000,
+        "iron": 1000
+      },
+      "upkeepMilli": 500
+    },
+    "common-housing": {
+      "name": "Common Housing",
+      "operation": "society",
+      "terrain": [
+        "town"
+      ],
+      "maxLevel": 3,
+      "maxWorkers": 0,
+      "cost": {
+        "gold": 4000,
+        "wood": 4000,
+        "iron": 0
+      },
+      "upkeepMilli": 0
+    },
+    "makers-rowhouses": {
+      "name": "Makers' Rowhouses",
+      "operation": "society",
+      "terrain": [
+        "town"
+      ],
+      "maxLevel": 3,
+      "maxWorkers": 0,
+      "cost": {
+        "gold": 5000,
+        "wood": 5000,
+        "iron": 1000
+      },
+      "upkeepMilli": 0
+    },
+    "scholars-quarters": {
+      "name": "Scholars' Quarters",
+      "operation": "society",
+      "terrain": [
+        "town"
+      ],
+      "maxLevel": 3,
+      "maxWorkers": 0,
+      "cost": {
+        "gold": 6000,
+        "wood": 4000,
+        "iron": 1000
+      },
+      "upkeepMilli": 0
+    },
+    "merchant-townhouses": {
+      "name": "Merchant Townhouses",
+      "operation": "society",
+      "terrain": [
+        "town"
+      ],
+      "maxLevel": 3,
+      "maxWorkers": 0,
+      "cost": {
+        "gold": 6000,
+        "wood": 5000,
+        "iron": 0
+      },
+      "upkeepMilli": 0
+    },
+    "elite-manor": {
+      "name": "Elite Manor",
+      "operation": "society",
+      "terrain": [
+        "town"
+      ],
+      "maxLevel": 2,
+      "maxWorkers": 0,
+      "cost": {
+        "gold": 15000,
+        "wood": 10000,
+        "iron": 4000
+      },
+      "upkeepMilli": 2000
+    },
+    "tavern": {
+      "name": "Tavern",
+      "operation": "society",
+      "terrain": [
+        "town"
+      ],
+      "maxLevel": 2,
+      "maxWorkers": 2,
+      "cost": {
+        "gold": 4000,
+        "wood": 3000,
+        "iron": 0
+      },
+      "upkeepMilli": 500
+    },
+    "hospital": {
+      "name": "Hospital",
+      "operation": "society",
+      "terrain": [
+        "town"
+      ],
+      "maxLevel": 2,
+      "maxWorkers": 2,
+      "cost": {
+        "gold": 8000,
+        "wood": 4000,
+        "iron": 2000
+      },
+      "upkeepMilli": 1000
+    },
+    "town-hall": {
+      "name": "Town Hall",
+      "operation": "society",
+      "terrain": [
+        "town"
+      ],
+      "maxLevel": 1,
+      "maxWorkers": 1,
+      "cost": {
+        "gold": 20000,
+        "wood": 10000,
+        "iron": 5000
+      },
+      "upkeepMilli": 2000
+    },
+    "builders-yard": {
+      "name": "Builders' Yard",
+      "operation": "society",
+      "terrain": [
+        "town"
+      ],
+      "maxLevel": 2,
+      "maxWorkers": 2,
+      "cost": {
+        "gold": 6000,
+        "wood": 6000,
+        "iron": 2000
+      },
+      "upkeepMilli": 1000
+    },
+    "academy": {
+      "name": "Academy",
+      "operation": "society",
+      "terrain": [
+        "town"
+      ],
+      "maxLevel": 2,
+      "maxWorkers": 2,
+      "cost": {
+        "gold": 10000,
+        "wood": 6000,
+        "iron": 2000
+      },
+      "upkeepMilli": 1000
+    },
+    "town-market": {
+      "name": "Market",
+      "operation": "market",
+      "terrain": [
+        "town"
+      ],
+      "maxLevel": 3,
+      "maxWorkers": 0,
+      "cost": {
+        "gold": 3000,
+        "wood": 2000,
+        "iron": 0
+      },
+      "upkeepMilli": 500
+    },
+    "trading-post": {
+      "name": "Trading Post",
+      "operation": "society",
+      "terrain": [
+        "town"
+      ],
+      "maxLevel": 2,
+      "maxWorkers": 2,
+      "cost": {
+        "gold": 8000,
+        "wood": 6000,
+        "iron": 0
+      },
+      "upkeepMilli": 1000
+    },
+    "counting-house": {
+      "name": "Counting House",
+      "operation": "society",
+      "terrain": [
+        "town"
+      ],
+      "maxLevel": 2,
+      "maxWorkers": 2,
+      "cost": {
+        "gold": 8000,
+        "wood": 4000,
+        "iron": 1000
+      },
+      "upkeepMilli": 1000
+    },
+    "slave-quarters": {
+      "name": "Slave Quarters",
+      "operation": "society",
+      "terrain": [
+        "town"
+      ],
+      "maxLevel": 3,
+      "maxWorkers": 0,
+      "cost": {
+        "gold": 2000,
+        "wood": 3000,
+        "iron": 0
+      },
+      "upkeepMilli": 200
+    }
+  },
+  "SOCIETY_BUILDINGS": {
+    "common-housing": {
+      "tier": "housing",
+      "staff": null,
+      "reserved": false,
+      "housing": {
+        "class": "free",
+        "byLevel": [
+          30,
+          50,
+          70
+        ]
+      }
+    },
+    "makers-rowhouses": {
+      "tier": "housing",
+      "staff": null,
+      "reserved": false,
+      "housing": {
+        "class": "makers",
+        "byLevel": [
+          15,
+          25,
+          35
+        ]
+      }
+    },
+    "scholars-quarters": {
+      "tier": "housing",
+      "staff": null,
+      "reserved": false,
+      "housing": {
+        "class": "luminaries",
+        "byLevel": [
+          10,
+          18,
+          25
+        ]
+      }
+    },
+    "merchant-townhouses": {
+      "tier": "housing",
+      "staff": null,
+      "reserved": false,
+      "housing": {
+        "class": "merchants",
+        "byLevel": [
+          15,
+          25,
+          35
+        ]
+      }
+    },
+    "elite-manor": {
+      "tier": "housing",
+      "staff": null,
+      "reserved": false,
+      "housing": {
+        "class": "elite",
+        "byLevel": [
+          6,
+          12
+        ]
+      }
+    },
+    "tavern": {
+      "tier": "service",
+      "staff": "basic",
+      "reserved": false
+    },
+    "hospital": {
+      "tier": "service",
+      "staff": "luminaries",
+      "reserved": false
+    },
+    "town-hall": {
+      "tier": "service",
+      "staff": "merchants",
+      "reserved": false
+    },
+    "builders-yard": {
+      "tier": "specialist",
+      "staff": "makers",
+      "reserved": false
+    },
+    "academy": {
+      "tier": "specialist",
+      "staff": "luminaries",
+      "reserved": false
+    },
+    "town-market": {
+      "tier": "specialist",
+      "staff": "merchants",
+      "reserved": false
+    },
+    "trading-post": {
+      "tier": "specialist",
+      "staff": "merchants",
+      "reserved": false
+    },
+    "counting-house": {
+      "tier": "specialist",
+      "staff": "merchants",
+      "reserved": false
+    },
+    "slave-quarters": {
+      "tier": "slum",
+      "staff": null,
+      "reserved": false,
+      "housing": {
+        "class": "bound",
+        "byLevel": [
+          25,
+          45,
+          70
+        ]
+      }
+    },
+    "military-barracks": {
+      "tier": "service",
+      "staff": "basic",
+      "reserved": false
+    },
+    "watch-house": {
+      "tier": "service",
+      "alsoTier": "slum",
+      "staff": "basic",
+      "reserved": false
+    },
+    "warehouse": {
+      "tier": "specialist",
+      "staff": "makers",
+      "reserved": false
+    },
+    "smithy": {
+      "tier": "specialist",
+      "staff": "makers",
+      "reserved": true
+    },
+    "library": {
+      "tier": "specialist",
+      "staff": "luminaries",
+      "reserved": false
+    },
+    "brothel": {
+      "tier": "slum",
+      "staff": null,
+      "reserved": true
+    },
+    "black-market": {
+      "tier": "slum",
+      "staff": null,
+      "reserved": true
+    },
+    "arena": {
+      "tier": "slum",
+      "staff": null,
+      "reserved": true
+    },
+    "drug-store": {
+      "tier": "slum",
+      "staff": null,
+      "reserved": true
+    }
+  },
+  "LAW_CATALOG": {
+    "curfew": {
+      "name": "Curfew",
+      "tag": null,
+      "stances": {
+        "free": "against",
+        "makers": "neutral",
+        "luminaries": "neutral",
+        "merchants": "for"
+      },
+      "effect": {
+        "securityTarget": 10,
+        "satisfaction": {
+          "free": -2
+        }
+      }
+    },
+    "watch-levy": {
+      "name": "Watch Levy",
+      "tag": null,
+      "stances": {
+        "free": "for",
+        "makers": "neutral",
+        "luminaries": "neutral",
+        "merchants": "against"
+      },
+      "effect": {
+        "costMilli": 1000,
+        "crimeTarget": -5
+      }
+    },
+    "guild-charters": {
+      "name": "Guild Charters",
+      "tag": null,
+      "stances": {
+        "free": "neutral",
+        "makers": "for",
+        "luminaries": "neutral",
+        "merchants": "against"
+      },
+      "effect": {
+        "satisfaction": {
+          "makers": 2,
+          "merchants": -2
+        }
+      }
+    },
+    "war-tithe": {
+      "name": "War Tithe",
+      "tag": null,
+      "stances": {
+        "free": "against",
+        "makers": "against",
+        "luminaries": "neutral",
+        "merchants": "against"
+      },
+      "effect": {
+        "taxBps": 1000,
+        "satisfaction": {
+          "free": -1,
+          "makers": -1,
+          "luminaries": -1,
+          "merchants": -1
+        }
+      }
+    },
+    "poor-relief": {
+      "name": "Poor Relief",
+      "tag": "light",
+      "stances": {
+        "free": "for",
+        "makers": "for",
+        "luminaries": "neutral",
+        "merchants": "against"
+      },
+      "effect": {
+        "costMilli": 1500,
+        "desperation": -3,
+        "satisfaction": {
+          "free": 2
+        }
+      }
+    },
+    "free-assembly": {
+      "name": "Free Assembly",
+      "tag": "light",
+      "stances": {
+        "free": "for",
+        "makers": "neutral",
+        "luminaries": "for",
+        "merchants": "neutral"
+      },
+      "effect": {
+        "tension": -3,
+        "authorityTarget": -5
+      }
+    },
+    "public-punishments": {
+      "name": "Public Punishments",
+      "tag": "dark",
+      "stances": {
+        "free": "against",
+        "makers": "neutral",
+        "luminaries": "against",
+        "merchants": "for"
+      },
+      "effect": {
+        "crimeTarget": -10,
+        "tension": 2
+      }
+    },
+    "licensed-vice": {
+      "name": "Licensed Vice",
+      "tag": "dark",
+      "stances": {
+        "free": "neutral",
+        "makers": "for",
+        "luminaries": "against",
+        "merchants": "for"
+      },
+      "effect": {
+        "incomeMilli": 1500,
+        "satisfaction": {
+          "luminaries": -2
+        }
+      }
+    }
+  },
+  "LAW_TRIAL": {
+    "maxActive": 3,
+    "eliteWeight": 5,
+    "payMilliPerVote": 200,
+    "force": {
+      "satisfaction": -10,
+      "tension": 5,
+      "standing": -3,
+      "minSecurity": 40
+    },
+    "promise": {
+      "weeks": 4,
+      "keptAuthority": 3,
+      "brokenSatisfaction": -10,
+      "brokenTension": 10
+    },
+    "repeal": {
+      "authority": -5,
+      "cooldownWeeks": 4
+    },
+    "corruptionPerTag": 10
+  },
+  "LAW_MESSAGES": {
+    "CARD_PENDING": "Answer the crisis first.",
+    "UNKNOWN_LAW": "Choose a law from the Council list.",
+    "TOWN_HALL_CLOSED": "Staff the Town Hall to call a vote.",
+    "VOTE_USED": "The Council has already voted this week.",
+    "LAW_ACTIVE": "This law is already in force.",
+    "LAW_SLOTS_FULL": "Three laws are in force. Repeal one first.",
+    "LAW_COOLDOWN": "This law returns in week {N}.",
+    "LOBBY_INVALID": "Only groups with a vote that are not For can be lobbied.",
+    "VOTE_SHORT": "The vote would fail: For {F} · Against {A}.",
+    "LAW_INACTIVE": "This law is not in force."
+  },
+  "RESEARCH_TOPICS": [
+    "deep-mining",
+    "watch-patrols",
+    "barracks-drill"
+  ],
+  "OUTSIDE_PLOTS": [
+    {
+      "id": "field-1",
+      "terrain": "fertile",
+      "ring": 1
+    },
+    {
+      "id": "plain-1",
+      "terrain": "plain",
+      "ring": 1
+    },
+    {
+      "id": "forest-1",
+      "terrain": "forest",
+      "ring": 1
+    },
+    {
+      "id": "ore-1",
+      "terrain": "ore",
+      "ring": 1
+    },
+    {
+      "id": "plain-2",
+      "terrain": "plain",
+      "ring": 1
+    },
+    {
+      "id": "plain-3",
+      "terrain": "plain",
+      "ring": 1
+    },
+    {
+      "id": "forest-2",
+      "terrain": "forest",
+      "ring": 1
+    },
+    {
+      "id": "ore-2",
+      "terrain": "ore",
+      "ring": 1
+    },
+    {
+      "id": "field-2",
+      "terrain": "fertile",
+      "ring": 1
+    },
+    {
+      "id": "plain-4",
+      "terrain": "plain",
+      "ring": 1
+    },
+    {
+      "id": "field-3",
+      "terrain": "fertile",
+      "ring": 2
+    },
+    {
+      "id": "field-4",
+      "terrain": "fertile",
+      "ring": 2
+    },
+    {
+      "id": "pasture-1",
+      "terrain": "pasture",
+      "ring": 2
+    },
+    {
+      "id": "pasture-2",
+      "terrain": "pasture",
+      "ring": 2
+    },
+    {
+      "id": "meadow-1",
+      "terrain": "meadow",
+      "ring": 2
+    },
+    {
+      "id": "meadow-2",
+      "terrain": "meadow",
+      "ring": 2
+    },
+    {
+      "id": "forest-3",
+      "terrain": "forest",
+      "ring": 2
+    },
+    {
+      "id": "rock-1",
+      "terrain": "rock",
+      "ring": 2
+    },
+    {
+      "id": "rock-2",
+      "terrain": "rock",
+      "ring": 2
+    },
+    {
+      "id": "plain-5",
+      "terrain": "plain",
+      "ring": 2
+    },
+    {
+      "id": "field-5",
+      "terrain": "fertile",
+      "ring": 3
+    },
+    {
+      "id": "pasture-3",
+      "terrain": "pasture",
+      "ring": 3
+    },
+    {
+      "id": "meadow-3",
+      "terrain": "meadow",
+      "ring": 3
+    },
+    {
+      "id": "forest-4",
+      "terrain": "forest",
+      "ring": 3
+    },
+    {
+      "id": "forest-5",
+      "terrain": "forest",
+      "ring": 3
+    },
+    {
+      "id": "ore-3",
+      "terrain": "ore",
+      "ring": 3
+    },
+    {
+      "id": "ore-4",
+      "terrain": "ore",
+      "ring": 3
+    },
+    {
+      "id": "rock-3",
+      "terrain": "rock",
+      "ring": 3
+    },
+    {
+      "id": "plain-6",
+      "terrain": "plain",
+      "ring": 3
+    },
+    {
+      "id": "plain-7",
+      "terrain": "plain",
+      "ring": 3
+    }
+  ],
+  "ORDER_TRIAL": {
+    "newGame": {
+      "security": 30,
+      "crime": 10,
+      "authority": 50
+    },
+    "drift": {
+      "security": 5,
+      "crime": 5,
+      "authority": 3
+    },
+    "security": {
+      "base": 10,
+      "perWallRing": 5,
+      "watchHouseByLevel": [
+        10,
+        15
+      ],
+      "slumWatchHouseBonus": 5,
+      "patrolsNumerator": 3,
+      "patrolsDenominator": 2,
+      "barracksPerWorker": 2,
+      "drilledPerWorker": 3,
+      "residentsPerPoint": 20,
+      "slumPenalty": 3,
+      "darkPenalty": 5
+    },
+    "crime": {
+      "base": 10,
+      "perSlum": 5,
+      "desperationDivisor": 5,
+      "dark": 10,
+      "light": -5,
+      "securityDivisor": 2
+    },
+    "authority": {
+      "base": 40,
+      "securityDivisor": 5,
+      "crimeDivisor": 4,
+      "townHall": 10,
+      "satisfactionDivisor": 5,
+      "tensionDivisor": 10
+    },
+    "theft": {
+      "threshold": 20,
+      "bpsPerPoint": 10
+    },
+    "tensionDivisor": 25,
+    "satisfactionLoss": [
+      {
+        "crime": 70,
+        "loss": 2
+      },
+      {
+        "crime": 40,
+        "loss": 1
+      }
+    ],
+    "tax": {
+      "bpsPerPoint": 40
+    },
+    "immigration": {
+      "halveBelow": 30,
+      "bonusAtOrAbove": 70
+    },
+    "bands": {
+      "lowMax": 33,
+      "fairMax": 66
+    }
+  },
+  "GARRISON_TRIAL": {
+    "securityPerStep": 3,
+    "soldiersPerStep": 4,
+    "cap": 12
+  },
+  "CRIME_TRIAL": {
+    "baseChance": 5,
+    "idleWatchHouse": 2,
+    "bands": {
+      "minorMax": 33,
+      "seriousMax": 66
+    },
+    "weights": {
+      "robbery": 4,
+      "smear": 3,
+      "raid": 2,
+      "assassination": 1
+    },
+    "assassinationMinCrime": 70,
+    "robberyBps": {
+      "minor": 500,
+      "serious": 1000,
+      "severe": 2000
+    },
+    "smear": {
+      "minor": 3,
+      "serious": 6,
+      "severe": 10
+    },
+    "raidDeaths": {
+      "minor": 1,
+      "serious": 2,
+      "severe": 3
+    },
+    "fatal": {
+      "minCrime": 90,
+      "maxSecurity": 30,
+      "chance": 0.5
+    },
+    "wound": {
+      "health": 20,
+      "standing": 5,
+      "authority": 5
+    },
+    "standing": {
+      "newGame": 50,
+      "drift": 1,
+      "authorityDivisor": 5
+    }
+  },
+  "CRISIS_TRIAL": {
+    "warningTension": 50,
+    "demandHungerWeeks": 3,
+    "happinessBelow": 30,
+    "protest": {
+      "minWeeks": 2,
+      "tension": 75
+    },
+    "rebellion": {
+      "minWeeks": 2,
+      "tension": 90
+    },
+    "finalWeeks": 4,
+    "calmWeeksToStepDown": 2,
+    "pay": {
+      "demand": {
+        "milliPerResident": 20,
+        "tension": -10
+      },
+      "protest": {
+        "milliPerResident": 40,
+        "tension": -15
+      },
+      "rebellion": {
+        "milliPerResident": 60,
+        "tension": -20
+      }
+    },
+    "promise": {
+      "weeks": 2,
+      "kept": {
+        "demand": -15,
+        "protest": -20,
+        "rebellion": -25
+      },
+      "keptAuthority": 5,
+      "brokenTension": 10,
+      "brokenAuthority": -10
+    },
+    "force": {
+      "security": {
+        "demand": 40,
+        "protest": 55,
+        "rebellion": 70
+      },
+      "tension": {
+        "demand": -10,
+        "protest": -15,
+        "rebellion": -20
+      },
+      "authority": 5,
+      "crime": 5,
+      "satisfaction": -5
+    },
+    "refuse": {
+      "tension": 5
+    }
+  },
+  "SOCIETY_TRIAL": {
+    "rulesetId": "tile-society-07",
+    "standing": 50,
+    "laws": {
+      "active": [],
+      "votedWeek": null,
+      "repealedUntil": {},
+      "promise": null
+    },
+    "order": {
+      "security": 30,
+      "crime": 10,
+      "authority": 50
+    },
+    "crisis": {
+      "fallCause": null,
+      "stage": "none",
+      "weeksInStage": 0,
+      "hungerStreak": 0,
+      "calmStreak": 0,
+      "promise": null,
+      "lastChoice": null
+    },
+    "pendingCard": null,
+    "stocksMilli": {
+      "stone": 0,
+      "wool": 0,
+      "cloth": 0,
+      "herbs": 0
+    },
+    "outside": {
+      "field-1": {
+        "wild": false,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "plain-1": {
+        "wild": false,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "forest-1": {
+        "wild": false,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": 60000,
+        "capMilli": 60000,
+        "deepShaft": false
+      },
+      "ore-1": {
+        "wild": false,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": 80000,
+        "capMilli": 80000,
+        "deepShaft": false
+      },
+      "plain-2": {
+        "wild": false,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "plain-3": {
+        "wild": false,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "forest-2": {
+        "wild": false,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": 60000,
+        "capMilli": 60000,
+        "deepShaft": false
+      },
+      "ore-2": {
+        "wild": false,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": 80000,
+        "capMilli": 80000,
+        "deepShaft": false
+      },
+      "field-2": {
+        "wild": false,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "plain-4": {
+        "wild": false,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "field-3": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "field-4": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "pasture-1": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "pasture-2": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "meadow-1": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "meadow-2": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "forest-3": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": 60000,
+        "capMilli": 60000,
+        "deepShaft": false
+      },
+      "rock-1": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": 100000,
+        "capMilli": 100000,
+        "deepShaft": false
+      },
+      "rock-2": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": 100000,
+        "capMilli": 100000,
+        "deepShaft": false
+      },
+      "plain-5": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "field-5": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "pasture-3": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "meadow-3": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "forest-4": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": 60000,
+        "capMilli": 60000,
+        "deepShaft": false
+      },
+      "forest-5": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": 60000,
+        "capMilli": 60000,
+        "deepShaft": false
+      },
+      "ore-3": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": 80000,
+        "capMilli": 80000,
+        "deepShaft": false
+      },
+      "ore-4": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": 80000,
+        "capMilli": 80000,
+        "deepShaft": false
+      },
+      "rock-3": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": 100000,
+        "capMilli": 100000,
+        "deepShaft": false
+      },
+      "plain-6": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      },
+      "plain-7": {
+        "wild": true,
+        "clearMilli": 0,
+        "clearWorkers": 0,
+        "clearPaid": false,
+        "depositMilli": null,
+        "capMilli": null,
+        "deepShaft": false
+      }
+    },
+    "research": {
+      "topic": null,
+      "progressMilli": {
+        "deep-mining": 0,
+        "watch-patrols": 0,
+        "barracks-drill": 0
+      },
+      "paid": [],
+      "completed": []
+    },
+    "classes": {
+      "free": 55,
+      "makers": {
+        "common": 20,
+        "elite": 0
+      },
+      "luminaries": {
+        "common": 12,
+        "elite": 0
+      },
+      "merchants": {
+        "common": 13,
+        "elite": 0
+      },
+      "bound": {
+        "free": 0,
+        "makers": 0,
+        "luminaries": 0,
+        "merchants": 0
+      }
+    },
+    "satisfaction": {
+      "free": 80,
+      "makers": 80,
+      "luminaries": 80,
+      "merchants": 80,
+      "bound": 80
+    },
+    "desperation": 0,
+    "tension": 0,
+    "debtPressure": {
+      "free": 0,
+      "makers": 0,
+      "luminaries": 0,
+      "merchants": 0
+    },
+    "corruption": 50,
+    "luxuryStockMilli": 0,
+    "training": {
+      "target": null,
+      "progressMilli": 0
+    },
+    "wallRing": 1
+  },
+  "GOODS_STOCK_TRIAL": {
+    "initialFoodMilli": 20000,
+    "initialGoodsMilli": 10000,
+    "initialGoldMilli": 45000,
+    "woodPerBatchMilli": 2000,
+    "goodsPerBatchMilli": 2000,
+    "capacityPerLevelMilli": 2000,
+    "goldPerGoodsMilli": 1000
+  },
+  "TILE_TRIAL_BALANCE": {
+    "initialWoodMilli": 8000,
+    "initialIronMilli": 4000,
+    "initialHappiness": 80,
+    "loggingWoodPerWorker": 2000,
+    "mineIronPerWorker": 1000,
+    "goodsDemandPerResident": 20,
+    "taxGoldPerResident": 30,
+    "goldPerServiceMilli": 1000,
+    "foodDemandPerResident": 40
+  },
+  "IMMIGRATION_TRIAL_DEFAULTS": {
+    "foodSupportBps": 11000,
+    "catchupBps": 1000,
+    "weeklyCapBps": 200
+  },
+  "OUTSIDE_TRIAL": {
+    "deposit": {
+      "forest": 60000,
+      "ore": 80000,
+      "rock": 100000
+    },
+    "forestRegrowMilli": 3000,
+    "clearWork": {
+      "fertile": 4000,
+      "pasture": 4000,
+      "meadow": 4000,
+      "plain": 4000,
+      "forest": 6000,
+      "ore": 8000,
+      "rock": 8000
+    },
+    "clearFeeGoldMilli": 2000,
+    "forestClearWoodMilli": 5000,
+    "perWorker": {
+      "wool": 1000,
+      "herbs": 500,
+      "stone": 1000
+    },
+    "weaver": {
+      "woolPerBatchMilli": 2000,
+      "clothPerBatchMilli": 1000
+    },
+    "workshopClothRecipe": {
+      "woodMilli": 1000,
+      "clothMilli": 1000
+    },
+    "hospitalHerbsPerLevelMilli": 1000,
+    "storage": {
+      "baseMilli": 40000,
+      "warehousePerLevelMilli": 40000
+    },
+    "research": {
+      "deep-mining": {
+        "workMilli": 8000,
+        "goldMilli": 10000
+      },
+      "watch-patrols": {
+        "workMilli": 6000,
+        "goldMilli": 6000
+      },
+      "barracks-drill": {
+        "workMilli": 8000,
+        "goldMilli": 8000
+      }
+    },
+    "deepShaft": {
+      "stoneMilli": 10000,
+      "woodMilli": 5000,
+      "goldMilli": 10000,
+      "depositBonusMilli": 60000,
+      "outputBps": 15000
+    },
+    "wallRing3StoneMilli": 30000,
+    "level3StoneMilli": 5000
+  }
+}

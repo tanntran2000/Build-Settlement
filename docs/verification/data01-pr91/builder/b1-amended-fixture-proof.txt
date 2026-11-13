@@ -1,0 +1,8 @@
+HEAD: 9d2e111d076cfee9b92b6b6d36de55f1a87259d4
+Tree: 491736af599c691fe65461c7d9a558052fb3b071
+UTC: 2026-11-13T04:56:27.998210+00:00
+Exit: 0
+Command: git rev-parse 349e9d7:packages/simulation/src/__tests__/fixtures/catalog-golden.json; git rev-parse HEAD:packages/simulation/src/__tests__/fixtures/catalog-golden.json; git diff --exit-code 349e9d7 HEAD -- packages/simulation/src/__tests__/fixtures/catalog-golden.json packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts
+
+64c18a2688573e3fe3b8ec0b131cd0318f4d4855
+64c18a2688573e3fe3b8ec0b131cd0318f4d4855

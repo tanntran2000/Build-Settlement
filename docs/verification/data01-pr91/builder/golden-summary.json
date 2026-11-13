@@ -1,0 +1,23 @@
+[
+  {
+    "seed": 0,
+    "weeks": 60,
+    "crimeEvents": 2,
+    "crisisReports": 60,
+    "outsideReports": 60
+  },
+  {
+    "seed": 42,
+    "weeks": 60,
+    "crimeEvents": 5,
+    "crisisReports": 60,
+    "outsideReports": 60
+  },
+  {
+    "seed": 20261028,
+    "weeks": 60,
+    "crimeEvents": 4,
+    "crisisReports": 60,
+    "outsideReports": 60
+  }
+]

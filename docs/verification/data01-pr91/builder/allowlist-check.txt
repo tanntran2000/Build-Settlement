@@ -1,0 +1,21 @@
+2026-11-13T05:01:30.262896+00:00
+All 19 changed/new paths are on the PR B allowlist.
+packages/core/src/trial/catalog.ts
+packages/core/src/trial/crime.ts
+packages/core/src/trial/crisis.ts
+packages/core/src/trial/goods-stock.ts
+packages/core/src/trial/law.ts
+packages/core/src/trial/order.ts
+packages/core/src/trial/outside.ts
+packages/core/src/trial/society-map.ts
+packages/core/src/trial/society.ts
+packages/simulation/src/__tests__/catalog-golden.test.ts
+packages/simulation/src/__tests__/fixtures/catalog-golden.json
+packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts
+packages/core/src/__tests__/catalog-data.test.ts
+packages/core/src/data/buildings.json
+packages/core/src/data/laws.json
+packages/core/src/data/outside-plots.json
+packages/core/src/data/research.json
+packages/core/src/data/tuning.json
+packages/core/src/data/validate.ts

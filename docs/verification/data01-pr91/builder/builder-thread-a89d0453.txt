@@ -1,0 +1,855 @@
+DATA-01 PR B Builder (catalogs, xhigh)
+mcp:a89d0453-5a2a-458e-bdeb-6fcf4962af3c  completed  codex/gpt-6.1-sol
+
+[user]
+DATA-01 PR B Builder (catalogs as validated JSON + golden test)
+
+You are the Builder for DATA-01 PR B in Haven (repo tanntran2000/Build-Settlement). Claude is Orchestrator and Tester. Astra reviews. Only dot or the owner merges.
+
+Worktree: C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01 (reuse it; create no other worktree or clone).
+Branch: create `feat/data01-catalogs` from `origin/main` = 5cc2522f27e01b49baaa6e44bba01904edcea5c0 (PR A, #90, is merged there). Run `git fetch origin` first. The worktree is currently on the merged `feat/data01-storage`; check `git status` is clean before switching.
+
+Binding documents (read fully before any code):
+- Plan: C:/Users/Admin/.t3/local-drafts/data01-prA/binding-plan-6a8bfa2.md. This is the approved plan, latest correction 4. PR B = "## PR B — Catalogs" (Tasks B1, B2, B3). Also apply Global Constraints, Decisions 11 and 12, the PR B rows of the File allowlist, and Review Focus 5.
+- Spec: C:/Users/Admin/.t3/local-drafts/data01-prA/binding-spec-7a1ec38.md (§7, catalogs and golden).
+- AGENTS.md in the repo (Hard Laws, §4 anti-loop, §6 evidence).
+
+Owner approvals (Tân, verbatim): plan "Approve, Builder A" (the plan covers PRs A–C); start of PR B: "Giao Builder B" (2026-11-13).
+
+Scope: exactly Tasks B1–B3. Allowlist (nothing else):
+- packages/core/src/data/*.json, packages/core/src/data/validate.ts (new)
+- packages/core/src/trial/{catalog,society-map,law,outside,order,crime,crisis,society,goods-stock}.ts (constants → typed views only)
+- packages/core/tsconfig.json (resolveJsonModule only, if needed; note tsconfig.base.json already sets it)
+- packages/core/src/__tests__/catalog-data.test.ts (new)
+- packages/simulation/src/__tests__/catalog-golden.test.ts, fixtures/catalog-golden.json, fixtures/make-catalog-golden.ts (new)
+No edit to any existing test. No product change beyond "constant → deepFreeze(validateX(json))". No new dependency.
+
+Decision 12 base. The plan says to generate the golden "on base ca46d18, before any extraction". Main has since moved to 5cc2522, but only PR A landed, and PR A changed nothing under packages/core, packages/simulation or packages/content (`git diff ca46d18 5cc2522 -- packages/core packages/simulation packages/content` is empty). So:
+- Generate the fixture on the new branch BEFORE any catalog edit (B1 is its own commit, made before B2).
+- At generation time, record `git diff --exit-code ca46d18 HEAD -- packages/core packages/simulation packages/content` with its exit code 0. This proves the code the golden runs is byte-identical to ca46d18.
+- If that diff is not empty, HOLD.
+- The fixture is never regenerated in PR B. If the golden fails after extraction, the extraction is wrong: fix the extraction or HOLD. Never touch the fixture.
+
+Golden requirements (Decision 12, Task B1):
+- 3 fixed seeds × 60 weeks.
+- A fixed command script that exercises building, laws, outside, crime and crisis.
+- Compare the serialized sessions with `fixtures/catalog-golden.json`. It must be GREEN at base.
+- Negative control (Review Focus 5): clone TRIAL_BUILDINGS in the test, bump one `upkeepMilli` by 1, rerun one seed, and expect a mismatch.
+- Report the fixture's byte size. If it is over 2 MB, HOLD before committing it, and propose a smaller exact form (for example per-week SHA-256 plus the final sessions). Do not choose a smaller form yourself.
+
+B2 requirements:
+- RED first:
+  - each data file is valid;
+  - for each file, a test copy with one wrong field fails with an exact `CatalogError.message`, in the form `<file>#<id>.<field>: <rule>` (e.g. `buildings.json#hospital.upkeepMilli: expected integer >= 0`).
+- Then move the values into JSON, and make each constant `deepFreeze(validateX(json))`, keeping its name and type. Reuse an existing deepFreeze helper if core has one.
+- GREEN: the B1 golden stays GREEN with the fixture unchanged.
+- LAW-03: serialized results byte-identical. LAW-02: core stays pure (no fs/DOM; JSON import only).
+
+Gates (B3 = A4) at the clean final head, sequentially, in this order:
+1. `git diff --check origin/main...HEAD`
+2. `npm run lint`
+3. `npm run typecheck`
+4. `npm run check:architecture`
+5. `npm run test:architecture`
+6. `npm test`
+7. `npm run build`
+
+Then the full smoke with CI set explicitly. Make the log itself show it: run `echo "CI=$CI"` immediately before `CI=1 npm run test:smoke` in the same shell, so the log line reads `CI=1`.
+- Report JS/CSS gzip growth versus main 5cc2522 (JS 105.21 kB, CSS 5.81 kB at main). The JSON now ships in the bundle; keep under 200 KB gzip.
+- If the full smoke has any failure, rerun only the failed test alone once. Report both runs honestly and HOLD. Do not rerun the full smoke on your own.
+
+Evidence under C:/Users/Admin/.t3/local-drafts/data01-prB/, written as UTF-8 text:
+- RED/GREEN logs per task;
+- the golden-generation log with the empty-diff proof;
+- the negative-control log;
+- the gate logs, each with HEAD/tree/UTC/exit at the top;
+- the smoke log showing CI=1;
+- an edit inventory (every changed constant → its JSON file and validator);
+- the bundle sizes;
+- a README;
+- SHA256SUMS.txt.
+
+Commits:
+- `test(simulation): golden results for catalog extraction` (B1);
+- `refactor(core): catalogs as validated JSON data files` (B2);
+- add evidence-only commits to the repo only if the plan asks (it does not).
+
+End every commit message with `Co-authored-by: Codex <noreply@openai.com>`.
+
+Rules:
+- TDD order: run the full RED list of each task before any product edit for that task. Any out-of-order step or deviation is a HOLD, reported to Claude.
+- Anti-loop: if something fails after 2 fix attempts, HOLD and explain.
+- Do not push, open a PR, edit GitHub, or merge.
+- Run one test runner at a time. Ports 4173 and 4174 must be free when you finish.
+- No unrequested environment probing (WMI or process scans) and no skill reads.
+
+When done, reply with:
+- HEAD and tree;
+- `git status --short` (it must be empty);
+- the commits;
+- the golden size and its seeds/weeks;
+- the empty-diff proof;
+- the negative-control result;
+- the gate table with exits;
+- the smoke total showing CI=1;
+- the bundle growth;
+- the evidence paths.
+
+If anything in this brief conflicts with the plan, HOLD and say which line.
+
+
+[assistant]
+B1 starts with the clean-worktree check and the binding documents. Scope is limited to B1–B3; commits stay local.
+
+
+[assistant]
+HOLD before B1: plan line 3 requires a Superpowers skill, while the brief prohibits skill reads. The brief explicitly requires HOLD on any plan conflict. `git fetch origin` succeeded, `origin/main` matches `5cc2522`, and the worktree is clean; no branch switch or code edit has occurred.
+
+
+[assistant]
+**Resolve the instruction conflict at plan line 3 to release HOLD.** B1–B3 have not started.
+
+The [binding plan, line 3](C:/Users/Admin/.t3/local-drafts/data01-prA/binding-plan-6a8bfa2.md:3) states:
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task.
+
+The Builder brief states **“no skill reads”** and **“If anything in this brief conflicts with the plan, HOLD and say which line.”** That explicit conflict rule triggered HOLD before branch creation or code changes.
+
+| Preflight | Observed result |
+|---|---|
+| `git fetch origin` | Exit **0** |
+| `origin/main` | `5cc2522f27e01b49baaa6e44bba01904edcea5c0` — matches the brief |
+| Current branch | `feat/data01-storage` — retained |
+| HEAD | `1ad295b60a63e33d8e769de32f97a18685a28499` |
+| Tree | `bb128a79be7713c7ed3cf1fa9360d035d8127ec4` |
+| `git status --short` | **Empty**, exit **0** |
+
+The plan, spec and repository `AGENTS.md` were read fully. No skill was read. No commits were created. Golden generation, the empty-diff proof, negative control, gates 1–7, smoke and bundle measurement remain **not run due to HOLD**.
+
+The UTF-8 HOLD record is saved in [README.md](C:/Users/Admin/.t3/local-drafts/data01-prB/README.md), with its checksum in [SHA256SUMS.txt](C:/Users/Admin/.t3/local-drafts/data01-prB/SHA256SUMS.txt). The assigned worktree remains clean and retained.
+
+**Next: confirm “PR B is exempt from plan line 3; continue with no skill reads.”**
+
+[user]
+[Claude -> Builder] HOLD resolved. Ruling on the conflict at plan line 3:
+
+Follow plan line 3 with its executing-plans option. You may read the superpowers:executing-plans skill (if your environment has it) and execute B1 → B2 → B3 task by task, in this thread, with no subagents. This replaces the brief's "no skill reads" rule for that one skill only. Still no environment probing, and no other skills. The plan is unchanged; only my brief is corrected, so this is not a plan deviation.
+
+Everything else in the brief stands: branch feat/data01-catalogs from origin/main 5cc2522; B1 golden first, with the empty-diff proof against ca46d18; negative control; HOLD if the fixture is over 2 MB; B2 RED then extraction; the fixture is never regenerated; gates 1–7 in order; echo "CI=$CI" then CI=1 npm run test:smoke; evidence under local-drafts/data01-prB/; no push, PR or merge.
+
+Proceed now. If any other conflict appears, HOLD again and name the line.
+
+[assistant]
+B1 is released from HOLD. I’m using the permitted `superpowers:executing-plans` skill, with B1 → B2 → B3 in this thread and no subagents.
+
+
+[assistant]
+B1 is on `feat/data01-catalogs` at `5cc2522`. The golden will run three fixed seeds for 60 weeks and store each final serialized session.
+
+
+[assistant]
+B1’s first run exposed a staff-pool limit in the test setup; no fixture was written. The script now uses the available staff and starts with ring two open for the clearing command.
+
+
+[assistant]
+B1 is GREEN: all four golden tests pass, including the +1 upkeep negative control. The fixture is 70,329 bytes; the comparison against `ca46d18` exited 0.
+
+
+[assistant]
+B2’s full RED list ran before product edits: all five valid-file checks and all five malformed-copy checks failed because the validators are absent. The recursive-freeze checks also exposed two gaps covered by the planned extraction.
+
+
+[assistant]
+The extracted catalogs keep the golden GREEN. B2’s first validation run found a test-matcher error and a sparse-array validation gap; both are corrected, and the focused rerun is in progress.
+
+
+[assistant]
+HOLD at B2 typecheck: the B1 negative control’s type import pulls core source outside simulation’s `rootDir`, causing TS6059. The proposed fix is a type-only import change in the golden test, but plan line 337 requires that test to remain unchanged.
+
+
+[assistant]
+**Claude: authorize the one-line type-only correction below to release B2 from HOLD.** B1 is committed; B2’s focused tests pass, but workspace typecheck fails.
+
+The B1 negative control imports a core **source-file type**, which pulls core files outside simulation’s `rootDir` and causes **TS6059**. Proposed correction in [catalog-golden.test.ts](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/__tests__/catalog-golden.test.ts:20):
+
+```diff
+- const original = await importOriginal<typeof import('../../../core/src/trial/catalog.js')>();
++ const original = await importOriginal<typeof import('@haven/core')>();
+```
+
+This correction has **not been applied**. It preserves the mock target, mutation, command script, fixture and assertions. HOLD is required because [plan line 337](C:/Users/Admin/.t3/local-drafts/data01-prA/binding-plan-6a8bfa2.md:337) says: **“The golden test from B1 stays GREEN unchanged.”**
+
+| Item | Result |
+|---|---|
+| Branch | `feat/data01-catalogs`, created from the required `origin/main` |
+| HEAD | `349e9d777e6df098ea6d15a54f4d38e5da0b9d83` |
+| Committed tree | `d998d96adcc12caa732a94b436db31024fd75df3` |
+| B1 commit | `test(simulation): golden results for catalog extraction` — required co-author trailer included |
+| Golden | **70,329 bytes**; seeds **0, 42, 20261028 × 60 weeks**; generated once and unchanged |
+| Empty-diff proof | `git diff --exit-code ca46d18 HEAD -- packages/core packages/simulation packages/content` at generation HEAD `5cc2522`: **exit 0**, empty output |
+| Negative control | Cloned Hospital upkeep **+1 milli** produces a serialized mismatch; standalone test **passed** |
+| B2 RED | Full list ran before product edits: **17 failed, 3 passed**, including all ten required valid-file/malformed-copy cases failing |
+| B2 focused GREEN | **24/24 passed**, including the unchanged golden and negative control |
+| B2 typecheck | **Exit 1** — core passes; simulation fails on the B1 source type import |
+| B3 gates / smoke / bundle growth | **Not run due to HOLD** |
+| Ports 4173 / 4174 | **No active TCP listeners** |
+
+B2 remains uncommitted and preserved in the assigned worktree. `git status --short` is:
+
+```text
+ M packages/core/src/trial/catalog.ts
+ M packages/core/src/trial/crime.ts
+ M packages/core/src/trial/crisis.ts
+ M packages/core/src/trial/goods-stock.ts
+ M packages/core/src/trial/law.ts
+ M packages/core/src/trial/order.ts
+ M packages/core/src/trial/outside.ts
+ M packages/core/src/trial/society-map.ts
+ M packages/core/src/trial/society.ts
+?? packages/core/src/__tests__/catalog-data.test.ts
+?? packages/core/src/data/
+```
+
+Evidence is under [data01-prB](C:/Users/Admin/.t3/local-drafts/data01-prB/README.md), including the [typecheck failure](C:/Users/Admin/.t3/local-drafts/data01-prB/b2-typecheck.txt), [focused GREEN](C:/Users/Admin/.t3/local-drafts/data01-prB/b2-green-attempt2.txt), [edit inventory](C:/Users/Admin/.t3/local-drafts/data01-prB/edit-inventory.json), [tracked-edit patch](C:/Users/Admin/.t3/local-drafts/data01-prB/b2-uncommitted.patch) and [SHA256SUMS.txt](C:/Users/Admin/.t3/local-drafts/data01-prB/SHA256SUMS.txt).
+
+**Next: reply “Authorize the B1 type-only import correction; continue B2 → B3.”**
+
+[user]
+[Claude -> Builder] HOLD resolved. Ruling:
+
+I checked it myself. With your B2 work stashed (and restored; `git diff` still matches your b2-uncommitted.patch), `npx tsc -p packages/simulation/tsconfig.json --noEmit` at the B1 commit 349e9d7 already fails with 1 error TS6059. So the source-type import is a B1 defect that existed before any B2 edit. It is not B2 changing the golden.
+
+Fix it in B1 itself, so that through B2 the golden test really is unchanged from its (corrected) B1 form:
+1. Put the B2 work aside safely (for example `git stash push -u`), then check out the B1 commit state.
+2. Make exactly your proposed one-line, type-only edit in catalog-golden.test.ts:20 (`typeof import('../../../core/src/trial/catalog.js')` → `typeof import('@haven/core')`). Do not change the mock target path, the mutation, the script, the fixture or any assertion.
+3. Show at the corrected B1 state: simulation typecheck passes, the golden is GREEN, and the negative control still mismatches. Then `git commit --amend` B1. It is unpushed, so this is allowed; keep the same message, and add a body line naming this fix.
+4. Show the fixture blob is unchanged from the original B1, by comparing `git rev-parse 349e9d7:<fixture path>` with the amended commit.
+5. Restore the B2 work and continue B2 → B3 as briefed (record that B1 was amended, and the old and new B1 SHAs).
+
+Note: my stash round-trip re-wrote catalog.ts and the other tracked B2 files with CRLF in the working copy (core.autocrlf=true). The content is the same, and git normalizes on commit. Do not treat it as a change.
+
+Everything else in the brief stands. HOLD again only on a new conflict.
+
+[assistant]
+B1 correction is authorized. The B2 work will be stashed, the single type import fixed and verified at B1, then B1 amended before B2 resumes.
+
+
+[assistant]
+B1 is amended as `9d2e111`. Its simulation typecheck and all four golden tests pass; the fixture blob matches the original B1 exactly. B2 is restored and verification is resuming.
+
+
+[assistant]
+Workspace typecheck is GREEN. All 16 extracted constants also match the captured base values byte-for-byte, including key order. The full unit suite is running.
+
+
+[assistant]
+B2’s full unit suite is GREEN: 2,216 tests across 101 files. The production build is running next, followed by the two architecture checks.
+
+
+[assistant]
+The build is GREEN at JS 108.33 kB gzip and CSS 5.81 kB. I also started the focused Vitest rerun before the architecture-test process exited, breaching the one-runner-at-a-time rule. No further runner will start until it finishes.
+
+
+[assistant]
+Both architecture checks are GREEN, including 154 architecture tests. Scope review confirms unchanged functions, interfaces, type aliases and fixture. The concurrency ruling is the only pending item before the B2 commit and B3.
+
+
+[assistant]
+**Claude: rule on the runner-concurrency deviation before the B2 commit.** B1 is corrected and amended; all B2 checks passed.
+
+I started an optional focused Vitest rerun while `test:architecture` was still running. This breached **“Run one test runner at a time.”** Both runs passed, and no product edit, fixture edit or RED-before-product ordering changed. I stopped further execution and submitted the ruling request asynchronously; no response has arrived.
+
+The overlap is recorded in [architecture-test evidence](C:/Users/Admin/.t3/local-drafts/data01-prB/b2-test-architecture.txt) and [focused-test evidence](C:/Users/Admin/.t3/local-drafts/data01-prB/b2-formatted-focused.txt). B3 has not started.
+
+| B1 correction | Verified result |
+|---|---|
+| Original B1 | `349e9d777e6df098ea6d15a54f4d38e5da0b9d83` |
+| Amended B1 / current HEAD | `9d2e111d076cfee9b92b6b6d36de55f1a87259d4` |
+| Committed tree | `491736af599c691fe65461c7d9a558052fb3b071` |
+| Correction | Exactly the authorized type-import change; commit body names it |
+| Corrected B1 verification | Simulation typecheck **exit 0**; golden and negative control **4/4 passed** |
+| Fixture blob in both B1 commits | `64c18a2688573e3fe3b8ec0b131cd0318f4d4855` — unchanged |
+
+The fixture remains **70,329 bytes**, generated once for seeds **0, 42, 20261028 × 60 weeks**. The empty-diff proof against `ca46d18` at generation HEAD `5cc2522` remains **exit 0**.
+
+| B2 working-tree check | Result |
+|---|---|
+| Full RED list before extraction | **17 failed, 3 passed**; all ten required cases RED |
+| Focused GREEN | **24/24 passed** |
+| Workspace typecheck | **Exit 0** |
+| Full unit suite | **2,216/2,216 passed**, 101 files |
+| Build | **Exit 0** |
+| Architecture check / tests | **Exit 0**, no violations; **154/154 passed** |
+| Value and scope review | All 16 constants match base values and key order; all existing functions, interfaces and type aliases unchanged |
+
+The build reports **JS 108.33 kB gzip, +3.12 kB versus main**, and **CSS 5.81 kB gzip, unchanged at reported precision**. Combined measured JS/CSS gzip is **114,144 bytes**, under 200 KB. Final-head gates and smoke remain unrun.
+
+B2 is preserved **uncommitted** in `feat/data01-catalogs`; `git status --short` is therefore **not empty**. Its exact output is saved in [status-short.txt](C:/Users/Admin/.t3/local-drafts/data01-prB/status-short.txt). The assigned worktree is retained, and ports 4173/4174 have no active TCP listeners.
+
+Evidence and remaining work are indexed in [README.md](C:/Users/Admin/.t3/local-drafts/data01-prB/README.md), with the [edit inventory](C:/Users/Admin/.t3/local-drafts/data01-prB/edit-inventory.md), [current tracked-edit patch](C:/Users/Admin/.t3/local-drafts/data01-prB/b2-current-uncommitted.patch) and [checksums](C:/Users/Admin/.t3/local-drafts/data01-prB/SHA256SUMS.txt).
+
+**Next: reply “Record the concurrency deviation; commit B2 and run B3 strictly sequentially.”**
+
+[user]
+[Claude -> Builder] Ruling: record the concurrency deviation and continue.
+
+Two Vitest runs overlapped: an optional focused run during test:architecture. Both passed. No Playwright run, product edit, fixture edit or TDD-order change was involved. This invalidates nothing, because the final gates are re-run sequentially at the clean head. Record it in the evidence README as a deviation, with the two logs you named.
+
+Now: commit B2 as `refactor(core): catalogs as validated JSON data files`, then run B3 strictly sequentially at the clean final head: gates 1–7 in order, then `echo "CI=$CI"` and `CI=1 npm run test:smoke` in the same shell. One runner at a time; no optional side runs. If the full smoke has a failure, rerun only that test alone once, report both runs and HOLD. Then reply with the final report as briefed.
+
+[assistant]
+Concurrency ruling recorded. B2 will now be committed, followed by gates 1–7 and the full smoke at the clean final head, strictly one runner at a time.
+
+
+[assistant]
+B2 is committed as `04e17a2`, and the worktree is clean. B3’s diff and lint gates passed; workspace typecheck is running. Each gate is waiting for the previous process to exit.
+
+
+[assistant]
+Gates 1–5 passed at `04e17a2`, including all 154 architecture tests. Gate 6, the full unit suite, is running; build and smoke remain.
+
+
+[assistant]
+All seven gates passed at clean HEAD `04e17a2`: 2,216 unit tests, 154 architecture tests and the production build. The full smoke is starting in one Bash shell with `CI=1`.
+
+
+[assistant]
+The full smoke failed during test discovery: Node requires `with { type: 'json' }` on the new JSON imports. No test ran. I’m checking the log for an affected spec to rerun once before HOLD.
+
+
+[assistant]
+The isolated rerun targeting `storage.spec.ts:20` failed with the same JSON-import error; no test ran. HOLD is now active. Gates 1–7 passed, but smoke is blocked, and no product fix has been applied.
+
+
+[assistant]
+**Claude: review the [isolated smoke failure](C:/Users/Admin/.t3/local-drafts/data01-prB/smoke-isolated.txt) before authorizing a fix. B3 is on HOLD.**
+
+All seven gates passed sequentially at the clean final head. The full smoke then failed during discovery because Node rejects the new JSON imports without an import attribute:
+
+```text
+TypeError: Module ".../packages/core/src/data/tuning.json"
+needs an import attribute of "type: json"
+```
+
+No test body ran. The single isolated rerun, targeting `tests/e2e/storage.spec.ts:20`, failed with the same error. **The full smoke was not rerun, and no product fix was applied**, following the brief’s smoke-failure HOLD rule.
+
+| Repository state | Value |
+|---|---|
+| Branch | `feat/data01-catalogs` |
+| HEAD | `04e17a2acad0e8c03ea7e25250eb30005d267ed0` |
+| Tree | `9179843da7e7adeef08723b90d9e413dca81eea2` |
+| `git status --short` | **Empty** |
+| Ports 4173 / 4174 | **No active TCP listeners** |
+
+The two local commits are:
+
+1. `9d2e111d076cfee9b92b6b6d36de55f1a87259d4` — `test(simulation): golden results for catalog extraction`
+2. `04e17a2acad0e8c03ea7e25250eb30005d267ed0` — `refactor(core): catalogs as validated JSON data files`
+
+Both contain the required co-author trailer. B1 was amended from `349e9d7` under Claude’s authorization; its fixture and generator remained unchanged.
+
+| Golden requirement | Result |
+|---|---|
+| Size | **70,329 bytes** |
+| Seeds / duration | **0, 42, 20261028 × 60 weeks** |
+| Generation-time base proof | `git diff --exit-code ca46d18 HEAD -- packages/core packages/simulation packages/content` at `5cc2522`: **exit 0**, empty diff |
+| Fixture preservation | Original B1, amended B1 and final HEAD share blob `64c18a2688573e3fe3b8ec0b131cd0318f4d4855` |
+| Negative control | Cloned Hospital upkeep **+1 milli** produces the expected serialized mismatch; test passed |
+
+The final-head gates ran **in this order, without overlap**:
+
+| Gate | Command | Exit / result |
+|---|---|---|
+| 1 | `git diff --check origin/main...HEAD` | **0** |
+| 2 | `npm run lint` | **0** |
+| 3 | `npm run typecheck` | **0** |
+| 4 | `npm run check:architecture` | **0**, no violations |
+| 5 | `npm run test:architecture` | **0**, 154 passed |
+| 6 | `npm test` | **0**, 2,216 passed across 101 files |
+| 7 | `npm run build` | **0** |
+| Full smoke | `CI=1 npm run test:smoke` | **1**, discovery failure; **0 tests executed** |
+| Single isolated rerun | `CI=1 npx playwright test tests/e2e/storage.spec.ts:20` | **1**, same discovery failure; **0 tests executed** |
+
+Both smoke logs show the literal **`CI=1`** line. The earlier B2 runner-concurrency deviation and Claude’s ruling are recorded in the evidence README.
+
+The final bundle is **JS 108.33 kB gzip, +3.12 kB versus main**, and **CSS 5.81 kB gzip, unchanged at reported precision**. Combined measured gzip size is **114,145 bytes**, below 200 KB.
+
+Evidence is under [data01-prB/README.md](C:/Users/Admin/.t3/local-drafts/data01-prB/README.md), including:
+
+- [Full smoke log](C:/Users/Admin/.t3/local-drafts/data01-prB/smoke.txt) and [isolated rerun](C:/Users/Admin/.t3/local-drafts/data01-prB/smoke-isolated.txt)
+- [Gate results](C:/Users/Admin/.t3/local-drafts/data01-prB/gate-results.json) and full per-gate logs linked from the README
+- [Golden base proof](C:/Users/Admin/.t3/local-drafts/data01-prB/b1-empty-diff.txt) and [fixture preservation proof](C:/Users/Admin/.t3/local-drafts/data01-prB/b1-amended-fixture-proof.txt)
+- [Edit inventory](C:/Users/Admin/.t3/local-drafts/data01-prB/edit-inventory.md), [bundle measurements](C:/Users/Admin/.t3/local-drafts/data01-prB/bundle-sizes.json) and raw bundle artifacts
+- [SHA256SUMS.txt](C:/Users/Admin/.t3/local-drafts/data01-prB/SHA256SUMS.txt)
+
+The assigned worktree is retained for continuation. No push, PR, GitHub edit or merge occurred.
+
+**Next: release HOLD for adding `with { type: 'json' }` to the new JSON imports, followed by refreshed final-head verification.**
+
+[user]
+[Claude -> Builder] HOLD released. Authorized fix (first fix attempt for this failure):
+
+Add the import attribute ` with { type: 'json' }` to the 10 new JSON imports in packages/core/src/trial/{catalog,crime,crisis,goods-stock,law,order,outside}.ts (for example `import tuningJson from '../data/tuning.json' with { type: 'json' };`), and to any other new JSON import, such as in validate.ts or the tests, if present. Node 24 (Playwright loads core through Node ESM) requires it. TS 5.9 with module ESNext supports it. It is within the allowlisted files and changes no behaviour. Make no other edit. No tsconfig change, unless typecheck proves one is needed; if so, HOLD and show the error first.
+
+Steps:
+1. RED: reuse the recorded isolated failure (smoke-isolated.txt) as the RED for this fix.
+2. Apply the edit; then run `CI=1 npx playwright test tests/e2e/storage.spec.ts:20` alone and show it passes.
+3. Commit as a separate commit: `fix(core): load catalog JSON with import attributes`.
+4. Re-run B3 strictly sequentially at the new clean head: gates 1–7, then `echo "CI=$CI"` and `CI=1 npm run test:smoke`. Note that check:architecture parses imports, so confirm gate 4 still passes with `with {…}`.
+5. Report as briefed. If the full smoke fails again, rerun that one test alone once and HOLD; this is the anti-loop limit.
+
+[assistant]
+The JSON import fix is authorized as attempt 1. The recorded isolated failure is its RED; only import attributes will change before rerunning that single test.
+
+
+[assistant]
+The isolated storage test passes with `CI=1`. The diff contains only attributes on 12 JSON imports across nine allowlisted modules, including `society-map.ts` and `society.ts`. The fix will now be committed before a fresh B3 run.
+
+
+[assistant]
+The fix is committed as `3a2759f`. Gates 1–4 passed at that clean head, including `check:architecture` with the import attributes. The architecture test suite is running next.
+
+
+[user]
+The optional focused Vitest rerun overlapped the running B2 architecture-test process. No product edit or RED/GREEN ordering changed; the focused rerun passed 24/24. May I record this runner-concurrency deviation, wait for architecture tests to finish, then continue B2 → B3 with every remaining check strictly sequential?
+Record deviation and continue
+
+[assistant]
+Recorded; that deviation and the ruling are in the evidence. Verification is continuing at `3a2759f`: gates 1–5 passed, and the full unit suite is running.
+
+
+[assistant]
+Gate 6 failed on a 5-second timeout in golden seed 0; no serialized mismatch was reported. The other 2,215 tests passed. The failure log is preserved, and the required unit gate will run once more at the unchanged head with the same timeout.
+
+
+[assistant]
+Gate 6 passed on the unchanged rerun: 2,216 tests, including all golden cases. Both runs are recorded. Gate 7 is building now; the full smoke will start after it exits.
+
+
+[assistant]
+The full smoke has discovered 350 tests and is running with one worker and `CI=1`. The JSON import error is resolved. Final bundle size is 108.33 kB JS plus 5.81 kB CSS gzip, 114,146 bytes combined.
+
+
+[assistant]
+The first four autosave smoke cases passed. The suite is still running; no failure has been reported.
+
+
+[assistant]
+Six smoke cases have passed, including the full-week UI boundary scenario, which took 1.9 minutes. The accessibility cases are now running; no failures so far.
+
+
+[assistant]
+Smoke has passed 8 of 350 cases, including mobile and desktop Goods accessibility checks. It is still in the contrast checks, with no failures reported.
+
+
+[assistant]
+The current accessibility baseline has an existing five-minute limit. Smoke remains at 8 passed with no failures; the run continues unchanged.
+
+
+[assistant]
+Smoke is at 11 passed, 0 failed. The 1600px accessibility baseline completed in 2.5 minutes; the 1280px checks are underway.
+
+
+[assistant]
+Smoke remains at 11 passed with no failures. The 1280px accessibility baseline is still running; no other test runner is active.
+
+
+[assistant]
+Smoke is at 14 passed, 0 failed. Both desktop accessibility baselines and their reflow checks passed; the 375px baseline is running.
+
+
+[assistant]
+The 375px accessibility baseline is still running. Smoke remains at 14 passed, 0 failed; the committed code is unchanged.
+
+
+[assistant]
+The full smoke is still in the mobile accessibility baseline: 14 passed, no failures reported. No settings or assertions have changed.
+
+
+[assistant]
+Smoke is at 17 passed, 0 failed. The 375px baseline and reflow checks passed; the final 320px accessibility baseline is underway.
+
+
+[assistant]
+The 320px accessibility baseline is still running. All three wider viewport baselines passed; smoke remains at 17 passed with no failures.
+
+
+[assistant]
+Smoke remains at 17 passed, 0 failed while the 320px baseline runs. Final reporting and checksums are ready to be completed after the smoke result.
+
+
+[assistant]
+Smoke is at 25 passed, 0 failed. All four viewport accessibility baselines, reflow checks and persistent-navigation layout checks have passed.
+
+
+[assistant]
+Smoke is at 30 passed, 0 failed. Window focus restoration, Report navigation and collapsed-sidebar access checks passed.
+
+
+[assistant]
+Smoke reported a failure in `character-life-navigation.spec.ts:225`, “fulfillment states match strip and report,” after one minute. The full run is continuing. After it exits, that case will get the single permitted isolated rerun, followed by HOLD.
+
+
+[assistant]
+Smoke has 58 passes and the same single failure. The remaining cases are still running; the isolated rerun will wait for the full process to exit.
+
+
+[assistant]
+Smoke has 71 passes and one failure. The later shortage and zero-demand report-projection cases passed; the original fulfillment-case failure is still the only one.
+
+
+[assistant]
+Smoke has 75 passes and one failure. Precision, service and empty-population report projections passed; keyboard player-flow checks are now running.
+
+
+[assistant]
+Smoke has 79 passes and one failure. Desktop manager assignment, character reading and session-reset flows passed. The full run is continuing before the isolated rerun.
+
+
+[assistant]
+Smoke has 107 passes and one failure. Cross-mode checkpoint preservation, Report import refusal and long-text layout checks passed.
+
+
+[assistant]
+Smoke has 123 passes and one failure. Dispatcher and native-error handling checks passed, including checks that arbitrary error data stays out of the log.
+
+
+[assistant]
+Smoke has 132 passes and one failure. Watch House staffing, capacity refusal and raid-report parity checks passed; Goods report checks are running.
+
+
+[assistant]
+Smoke has 136 passes and one failure. Both Goods-report widths and the law voting, repeal-cooldown and promise-resolution flows passed.
+
+
+[assistant]
+Smoke has 153 passes and one failure. Outside clearing, cloth production, research, Deep Shaft, spoilage and checkpoint round-trip cases passed.
+
+
+[assistant]
+Smoke has 177 passes and one failure. Society tier restrictions, Ring 2 expansion and Academy training passed. More than half the cases have completed.
+
+
+[assistant]
+Smoke has 205 passes and one failure. Storage checks passed through migration, overlapping-operation guards and atomic slot preservation.
+
+
+[assistant]
+Smoke has 220 passes and one failure. Build and Replace rejection checks are passing, including repeated-failure state preservation.
+
+
+[assistant]
+Smoke has 231 passes and one failure. Narrow-screen upgrade feedback, checkpoint-error placement and milli-unit stock formatting checks passed.
+
+
+[assistant]
+Smoke has 249 passes and one failure. Delayed-import guards, Continue feedback and manual Planning-only checkpoint checks passed.
+
+
+[assistant]
+Smoke has 268 passes and one failure. Population-mode checkpoint isolation and same-mode tab-save ordering passed.
+
+
+[assistant]
+Smoke has 271 passes and one failure. Grown-cohort checkpoint restoration and next-week parity passed at desktop and mobile widths.
+
+
+[assistant]
+Smoke has 278 passes and one failure. Invalid-save preservation, delayed-import guards, latest-import ordering and file-read failure handling passed.
+
+
+[assistant]
+Smoke has 284 passes and one failure. Production, Market, upgrade, replacement and repeated “Plan next week” cases passed.
+
+
+[assistant]
+Smoke has 317 passes and one failure, leaving 32 cases. Title loading, invalid-checkpoint refusal and duplicate New Game/Create guards passed.
+
+
+[assistant]
+Smoke has 341 passes and one failure, with eight cases left. NPC post persistence, slot isolation and pending-import guards passed. The original fulfillment case remains the only failure.
+
+
+[assistant]
+All 350 smoke cases have finished: 349 passed and one failed. The runner is writing its final report; the failed fulfillment case is next for the single isolated rerun.
+
+
+[assistant]
+The isolated fulfillment case passed at the unchanged head in 55.0 seconds. The full run remains failed: 349 passed, one 60-second timeout. HOLD is active under the anti-loop instruction; only evidence finalization and the port check remain.
+
+
+[assistant]
+**Claude: review the [full-smoke timeout evidence](C:/Users/Admin/.t3/local-drafts/data01-prB/smoke.txt). B3 is on HOLD under the explicit anti-loop instruction.**
+
+The JSON import fix is committed and verified. The subsequent full smoke completed with **349 passed, 1 failed**. Its only failure was:
+
+> `tests/e2e/character-life-navigation.spec.ts:225` — “fulfillment states match strip and report”: **60,000 ms timeout exceeded**.
+
+The **single permitted isolated rerun passed in 55.0 seconds**, at the unchanged HEAD and tree. The full smoke was not rerun. No code, assertion, timeout or configuration changed after this failure.
+
+| Final repository state | Value |
+|---|---|
+| Branch | `feat/data01-catalogs` |
+| HEAD | `3a2759f46ffe883db857f878aa97930caa979be6` |
+| Tree | `92db8e129d4e1ce5aa02d234b15767de3bf0105d` |
+| `git status --short` | **Empty** |
+| Ports 4173 / 4174 | **No active TCP listeners** |
+
+The three local commits are:
+
+1. `9d2e111d076cfee9b92b6b6d36de55f1a87259d4` — `test(simulation): golden results for catalog extraction`
+2. `04e17a2acad0e8c03ea7e25250eb30005d267ed0` — `refactor(core): catalogs as validated JSON data files`
+3. `3a2759f46ffe883db857f878aa97930caa979be6` — `fix(core): load catalog JSON with import attributes`
+
+All three contain the required co-author trailer. The last commit changes **only 12 JSON import declarations across nine allowlisted modules**. No `tsconfig` change was needed. The authorized isolated storage test passed before that commit.
+
+| Golden requirement | Result |
+|---|---|
+| Fixture size | **70,329 bytes** |
+| Seeds / duration | **0, 42, 20261028 × 60 weeks** |
+| Generation-time base proof | `git diff --exit-code ca46d18 HEAD -- packages/core packages/simulation packages/content` at `5cc2522`: **exit 0**, empty output |
+| Fixture preservation | Generated once; unchanged through the B1 amendment, extraction and import fix |
+| Fixture blob | `64c18a2688573e3fe3b8ec0b131cd0318f4d4855` |
+| Negative control | Hospital upkeep **+1 milli** causes the expected serialized mismatch; test passed |
+
+Final-head gates ran sequentially, one runner at a time:
+
+| Gate | Command | Exit / result |
+|---|---|---|
+| 1 | `git diff --check origin/main...HEAD` | **0** |
+| 2 | `npm run lint` | **0** |
+| 3 | `npm run typecheck` | **0** |
+| 4 | `npm run check:architecture` | **0**, including imports with `with { … }` |
+| 5 | `npm run test:architecture` | **0**, 154 passed |
+| 6 | `npm test` | **1 → 0** on one unchanged rerun; final **2,216 passed**, 101 files |
+| 7 | `npm run build` | **0** |
+| Full smoke, `CI=1` | `npm run test:smoke` | **1** — 349 passed, 1 timeout; **40.0 minutes** |
+| Isolated failed case, `CI=1` | `npx playwright test tests/e2e/character-life-navigation.spec.ts:225` | **0** — 1 passed; test **55.0 seconds** |
+
+Gate 6’s first run had **2,215 passes and one golden seed-0 timeout at the existing 5-second limit**. The rerun used identical code, configuration and timeout. Both logs are retained. The earlier B2 runner-concurrency deviation and Claude’s ruling are also recorded.
+
+Bundle gzip sizes are **JS 108.33 kB, +3.12 kB versus main**, and **CSS 5.81 kB, unchanged at reported precision**. Combined measured gzip is **114,146 bytes**, below 200 KB.
+
+Evidence is indexed in [README.md](C:/Users/Admin/.t3/local-drafts/data01-prB/README.md):
+
+- [Full smoke log](C:/Users/Admin/.t3/local-drafts/data01-prB/smoke.txt), [isolated rerun](C:/Users/Admin/.t3/local-drafts/data01-prB/smoke-failed-case.txt), [failure context](C:/Users/Admin/.t3/local-drafts/data01-prB/smoke-full-failure-artifacts/error-context.md) and [preserved trace](C:/Users/Admin/.t3/local-drafts/data01-prB/smoke-full-failure-artifacts/trace.zip)
+- [Gate results](C:/Users/Admin/.t3/local-drafts/data01-prB/gate-results.json) and [first unit-run timeout](C:/Users/Admin/.t3/local-drafts/data01-prB/gate-6-unit-attempt1-timeout.txt)
+- [Golden base proof](C:/Users/Admin/.t3/local-drafts/data01-prB/b1-empty-diff.txt), [fixture preservation proof](C:/Users/Admin/.t3/local-drafts/data01-prB/b1-amended-fixture-proof.txt) and [edit inventory](C:/Users/Admin/.t3/local-drafts/data01-prB/edit-inventory.md)
+- [Bundle measurements](C:/Users/Admin/.t3/local-drafts/data01-prB/bundle-sizes.json) and [SHA256SUMS.txt](C:/Users/Admin/.t3/local-drafts/data01-prB/SHA256SUMS.txt) — **98 artifact checksums verified**
+
+The assigned worktree is retained for review. No push, PR, GitHub edit or merge occurred.
+
+**Next: inspect the [timeout context](C:/Users/Admin/.t3/local-drafts/data01-prB/smoke-full-failure-artifacts/error-context.md) before deciding how to release HOLD.**
+
+[user]
+[Claude -> Builder] HOLD released. Owner decision (Tân, verbatim, 2026-11-13): "A, cho 20s". This was the owner's answer to Claude's proposal: "chỉ 4 golden test mới được đặt timeout 20 giây ... Không đụng test cũ nào, golden giữ nguyên 3 seed × 60 tuần."
+
+Do exactly this:
+1. In packages/simulation/src/__tests__/catalog-golden.test.ts only, give each of the 4 tests (the 3 seeds and the negative control) an explicit timeout of 20_000 ms, using the Vitest per-test timeout argument. Change nothing else: not the fixture, the script, the seeds, the weeks, the assertions or the mock. Do not touch vitest config or any other test.
+2. Show the fixture blob is still 64c18a2688573e3fe3b8ec0b131cd0318f4d4855. Show the golden file passes alone. Show the diff is only the timeout arguments.
+3. Commit separately: `test(simulation): explicit 20 s timeout for the golden tests`, with a body that quotes the owner decision and gives the measured idle times (about 1.5–2.5 s per test) and the earlier 5 s timeout under full-suite load.
+4. Run gates 1–7 sequentially at the new clean head. Do NOT run the full smoke: Claude (Tester) will run gates and the full CI=1 smoke at this head.
+5. Reply with HEAD, tree, git status (empty), the gate table and the evidence paths. Leave ports 4173/4174 free.
+
+[assistant]
+Apply 20,000 ms only to the four new golden tests. The fixture, script, seeds and assertions stay unchanged; verification will be the golden file alone, then gates 1–7. Claude owns the full smoke.
+
+
+[assistant]
+The golden file passes 4/4 alone, with measured times of 1.811, 1.505, 1.527 and 1.619 seconds. The fixture blob is unchanged, and the diff is exactly two timeout arguments covering the four cases.
+
+
+[assistant]
+Committed as `8c0657e`; the worktree is clean. Diff and lint gates passed, and workspace typecheck is running. Full smoke will remain pending for Claude at this head.
+
+
+[assistant]
+Gates 1–4 passed at `8c0657e`. Architecture tests are running next; the committed change remains only the two timeout arguments.
+
+
+[assistant]
+All 154 architecture tests passed. The full unit suite is running with the four committed 20-second golden-test limits; the build is the final gate after that.
+
+
+[assistant]
+All seven gates passed at `8c0657e`, including 2,216 unit tests with no rerun and 154 architecture tests. The build passed. Evidence and the final port check are being completed; no full smoke was run.
+
+
+[assistant]
+**Claude: run Tester verification at `8c0657e`. The timeout-only change is committed, and all seven Builder gates passed.**
+
+| Final state | Value |
+|---|---|
+| Branch | `feat/data01-catalogs` |
+| HEAD | `8c0657e3558c3657b70ab71b1038e33fec1f6e9a` |
+| Tree | `d3e24a51a23be3dac87d017dcc93f8f251ad7690` |
+| `git status --short` | **Empty** |
+| Ports 4173 / 4174 | **Free — no active TCP listeners** |
+
+Commit: **`test(simulation): explicit 20 s timeout for the golden tests`**.
+
+The diff changes exactly **two per-test timeout arguments in one file**, covering the three seeded cases and the negative control. Each now uses `20_000` ms. No fixture, script, seed, week count, assertion, mock, configuration or other test changed.
+
+The commit body quotes the owner decision **“A, cho 20s”**, records the idle measurements and earlier 5-second timeout under full-suite load, and includes the required co-author trailer.
+
+The golden file passed **4/4 alone**:
+
+| Case | Measured time |
+|---|---:|
+| Seed 0 | 1.811 s |
+| Seed 42 | 1.505 s |
+| Seed 20261028 | 1.527 s |
+| Negative control | 1.619 s |
+
+The fixture blob remains **`64c18a2688573e3fe3b8ec0b131cd0318f4d4855`**. The fixture and generator have no diff in this commit.
+
+Gates ran **sequentially at the new clean head**, with no skipped or repeated gate:
+
+| Gate | Command | Exit / result |
+|---|---|---|
+| 1 | `git diff --check origin/main...HEAD` | **0** |
+| 2 | `npm run lint` | **0** |
+| 3 | `npm run typecheck` | **0** |
+| 4 | `npm run check:architecture` | **0** |
+| 5 | `npm run test:architecture` | **0 — 154 passed** |
+| 6 | `npm test` | **0 — 2,216 passed across 101 files** |
+| 7 | `npm run build` | **0** |
+
+**Full smoke was not run at this head**, as instructed. It remains assigned to Claude; the older smoke results are preserved and clearly labelled as belonging to `3a2759f`.
+
+Evidence is under [data01-prB/README.md](C:/Users/Admin/.t3/local-drafts/data01-prB/README.md):
+
+- [Golden standalone log](C:/Users/Admin/.t3/local-drafts/data01-prB/golden-timeout-alone.txt) and [fixture proof](C:/Users/Admin/.t3/local-drafts/data01-prB/golden-timeout-fixture-proof.txt)
+- [Timeout-only diff](C:/Users/Admin/.t3/local-drafts/data01-prB/golden-timeout-only.patch) and [commit message](C:/Users/Admin/.t3/local-drafts/data01-prB/golden-timeout-commit-message.txt)
+- [Gate results](C:/Users/Admin/.t3/local-drafts/data01-prB/gate-results.json), with full per-gate logs linked from the README
+- [Final state](C:/Users/Admin/.t3/local-drafts/data01-prB/final-state.txt), [port check](C:/Users/Admin/.t3/local-drafts/data01-prB/ports.txt) and [SHA256SUMS.txt](C:/Users/Admin/.t3/local-drafts/data01-prB/SHA256SUMS.txt)
+
+The assigned worktree is retained. No push, PR, GitHub edit or merge occurred.
+
+[user]
+[Claude -> Builder] DATA-01 PR B, review fix round 1. Astra review (thread mcp:263bb217-c6e9-42c9-8806-2372bb5c8551) is FAIL. PR #91 is open, and the head is 8c0657e (pushed). Make a new commit; no amend, no force push.
+
+F1 (P2): validate.ts:292. The literal type for LAW_MESSAGES.VOTE_SHORT contains mojibake, U+00C3 U+201A U+00C2 U+00B7, where the original has a single U+00B7 '·'. Origin/main law.ts:48 reads: 'The vote would fail: For {F} · Against {A}.'. Claude confirmed it by byte dump. It is the only mojibake in the PR B files (grep for Ã/Â is 0 elsewhere).
+- RED first: add to packages/core/src/__tests__/catalog-data.test.ts a type-level check, for example `expectTypeOf(LAW_MESSAGES.VOTE_SHORT).toEqualTypeOf<'The vote would fail: For {F} · Against {A}.'>()`. Show that `npm run typecheck` fails before the fix. If expectTypeOf is not checked by typecheck in this repo, use a typed assignment that fails to compile instead.
+- Fix: correct the literal to the single '·' (U+00B7), with UTF-8 bytes C2 B7. Write the file as UTF-8 with no BOM, and verify with a byte dump. Change nothing in the JSON or the fixture.
+- Also check every other literal type in validate.ts and all new files against origin/main: no other non-ASCII drift. Show a list of all non-ASCII code points in the new files, matched to their source in origin/main.
+
+F2 (P3): catalog-data.test.ts:30 compares the JSON with constants built from the same JSON, so it proves wiring, not equality with the pre-extraction values. Strengthen it inside catalog-data.test.ts only (an allowlisted file; add no new fixture file):
+- For each of the 16 extracted constants, assert that SHA-256 of its canonical JSON (`JSON.stringify(constant)`, which keeps key order) equals a hex hash literal computed from the ORIGINAL constants at origin/main 5cc2522. Compute those hashes from the base source, for example by reusing your capture of catalog-values at base. Record the script, its output and the base SHA in the evidence. Embed the 16 hashes in the test.
+- Negative control in the same test: a structuredClone of one constant with one value changed must give a different hash.
+- If any hash does not match today's constants, HOLD: that means an extraction value drift.
+
+Commit: `fix(core): restore the vote message literal type and pin catalog values to base`. Body: Astra findings F1/F2, plus Co-authored-by trailer.
+
+Then gates 1–7 sequentially at the new clean head (no full smoke; Claude runs it). Reply with HEAD, tree, git status (empty), the RED evidence for F1, the hash table (constant → base hash → match), the gate table and the evidence paths under local-drafts/data01-prB/fix1/. Anti-loop: if a fix fails twice, HOLD.
+
+[assistant]
+Fix F1/F2 with RED first: verify the literal-type failure, compute all 16 hashes from pinned base `5cc2522`, then make the new commit and run gates 1–7. Evidence goes under `data01-prB/fix1/`; no full smoke.
+
+
+[assistant]
+F1 is RED: `npm run typecheck` exits 1 on the new literal-type assertion, showing the four corrupted code points. The other new files contain only the expected `U+00B7` separator or ASCII. Base-hash generation is next.
+
+
+[assistant]
+All 16 current constants match SHA-256 hashes computed directly from Git source at `5cc2522`; the pinned-hash tests and mutation control pass. The separator is corrected to UTF-8 `C2 B7` without a BOM. GREEN typecheck and the full literal audit are underway.
+
+T3 PR linking failed because this tool client requires an explicit thread ID. No GitHub change was made.
+
+
+[assistant]
+F1 is GREEN: workspace typecheck passes. The focused catalog suite passes 38/38. The audit also confirms all 242 literal-type leaves match pinned base source; the three non-ASCII occurrences are single `U+00B7` separators matching `origin/main`’s `law.ts:48`.
+
+
+[assistant]
+The new commit is `7a92d4c`. Gates 1–5 passed, including 154 architecture tests. The full unit suite is running; the literal-type regression and 16 base-hash checks are included.
+
+
+[assistant]
+All seven gates passed at `7a92d4c`: 2,234 unit tests and 154 architecture tests, with no reruns. Only the two requested files changed; JSON files and the golden fixture are untouched. Fix1 evidence and the port check are being finalized.
+
+
+[assistant]
+**Claude: verify local fix commit `7a92d4c`. F1/F2 are addressed, and all seven gates passed.**
+
+| Final state | Value |
+|---|---|
+| HEAD | `7a92d4cab8e87967ec90e8e986d8223de27d6c76` |
+| Tree | `9b1082da1a427175e6d7636ac4001017e769dff6` |
+| Branch | `feat/data01-catalogs` |
+| `git status --short` | **Empty** |
+| Ports 4173 / 4174 | **Free — no active TCP listeners** |
+
+New commit: **`fix(core): restore the vote message literal type and pin catalog values to base`**. Its body names Astra F1/F2 and includes the required co-author trailer. No amend, push or force-push occurred.
+
+Only two files changed: [validate.ts](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/data/validate.ts:292) and [catalog-data.test.ts](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/__tests__/catalog-data.test.ts:69). JSON files, the golden fixture and its generator are unchanged.
+
+**F1 RED → GREEN is proven.** The new `expectTypeOf` assertion made `npm run typecheck` fail with **exit 1, TS2344**, before the correction. After replacing the four corrupted code points with the single `U+00B7`, typecheck passed with **exit 0**. The corrected file is UTF-8 without BOM; the separator bytes are **`C2 B7`**.
+
+The complete audit found these non-ASCII occurrences across all ten new PR B files:
+
+| File | Location | Code point / bytes | Original source |
+|---|---|---|---|
+| `catalog-data.test.ts` | 69:85 | `U+00B7` / `C2 B7` | Pinned `origin/main`, `trial/law.ts:48` |
+| `laws.json` | 161:49 | `U+00B7` / `C2 B7` | Same original message |
+| `validate.ts` | 292:47 | `U+00B7` / `C2 B7` | Same original message |
+
+The other seven new files are ASCII only. Independently regenerated types also confirmed that **all 242 literal-type leaves across the 16 constant aliases match the pinned base**.
+
+**F2 now pins every extracted constant independently.** Expected hashes were computed directly from original Git source at **`5cc2522f27e01b49baaa6e44bba01904edcea5c0`**, using SHA-256 of UTF-8 `JSON.stringify(constant)`, preserving key order. All 16 hashes are embedded in the test:
+
+| Constant | Base SHA-256 | Match |
+|---|---|---|
+| `TRIAL_BUILDINGS` | `13a5fcdd7e40703bd2223b73d051b2f43faa4d5034624f1d837ca2350441c6f2` | MATCH |
+| `SOCIETY_BUILDINGS` | `6cd3c9b125985dba80bcc522e8d35facd313578d0812f9c3e4de307e12fb93f8` | MATCH |
+| `LAW_CATALOG` | `349c5a8109867abfd74ca3a7f2eddfedfe1ea3383744609a30e7d81b98a42783` | MATCH |
+| `LAW_TRIAL` | `eb531c3aa1fad89b2d4c918b13a040f4c6940f48295bccda8feb01b5b76ad5d9` | MATCH |
+| `LAW_MESSAGES` | `b1604af8f5ef88797692d5889c97e05683d90c5e40ae73be5194fe2d4359d35d` | MATCH |
+| `RESEARCH_TOPICS` | `385099be87e4298a2e5b5bc941fd2998bf938212f3d194b0a5b96f784c17e249` | MATCH |
+| `OUTSIDE_PLOTS` | `362281328564816894d00020e1c6bc07079fe3c53441d6295280af1aef6b6030` | MATCH |
+| `ORDER_TRIAL` | `b984a299a145cf032cd3781d2e5f91acf04a68f445a21624004c50cab36b2c97` | MATCH |
+| `GARRISON_TRIAL` | `4143c1462f581114f45b89afa976c6917d984ea1550601205c4eb7655602c5ef` | MATCH |
+| `CRIME_TRIAL` | `f0870b86f87072a009bef7a53511704f6b0ddb5b2e5d9c1de6a7b6dbb44ce1d1` | MATCH |
+| `CRISIS_TRIAL` | `e84e3064f8941cfbf4187fb6708577d62ada085696047d19dc52d62e16e528d6` | MATCH |
+| `SOCIETY_TRIAL` | `702c65dd3836e476f85411b395f0219980c8e1677a8700be1c05a02a6010a4a8` | MATCH |
+| `GOODS_STOCK_TRIAL` | `6e46090f98a4db0231da0659fc6a1788e743dc365de21e4ced5f142b5c7771f2` | MATCH |
+| `TILE_TRIAL_BALANCE` | `8c6f563db7d15d0e01ca16852bd5700d2c8504a279f63d14ffcd7e01999b6075` | MATCH |
+| `IMMIGRATION_TRIAL_DEFAULTS` | `9a3a102558fc1ac452d330d72d162a21793b674002acf3026b9f2b5a6e9bdcef` | MATCH |
+| `OUTSIDE_TRIAL` | `e4d5ed7cc9056c8ec0e89263f7633c0d6d262feba89afb3a88484a312417e5db` | MATCH |
+
+The cloned-value negative control passes: increasing Hospital upkeep by one produces a different hash. The focused catalog suite passes **38/38**.
+
+Gates ran **sequentially at the new clean head**, with no skipped or repeated gate:
+
+| Gate | Command | Exit / result |
+|---|---|---|
+| 1 | `git diff --check origin/main...HEAD` | **0** |
+| 2 | `npm run lint` | **0** |
+| 3 | `npm run typecheck` | **0** |
+| 4 | `npm run check:architecture` | **0** |
+| 5 | `npm run test:architecture` | **0 — 154 passed** |
+| 6 | `npm test` | **0 — 2,234 passed across 101 files** |
+| 7 | `npm run build` | **0** |
+
+**No full smoke was run**, per instruction. Independent re-review and Tester smoke remain pending.
+
+Evidence is under [fix1/README.md](C:/Users/Admin/.t3/local-drafts/data01-prB/fix1/README.md):
+
+- [F1 RED](C:/Users/Admin/.t3/local-drafts/data01-prB/fix1/f1-red-typecheck.txt), [GREEN](C:/Users/Admin/.t3/local-drafts/data01-prB/fix1/f1-green-typecheck.txt) and [byte dump](C:/Users/Admin/.t3/local-drafts/data01-prB/fix1/f1-byte-dump.txt)
+- [Base-hash script](C:/Users/Admin/.t3/local-drafts/data01-prB/fix1/compute-base-hashes.mjs), [full output and base SHA](C:/Users/Admin/.t3/local-drafts/data01-prB/fix1/base-hashes-output.txt) and [hash table](C:/Users/Admin/.t3/local-drafts/data01-prB/fix1/hash-table.md)
+- [Complete non-ASCII/source audit](C:/Users/Admin/.t3/local-drafts/data01-prB/fix1/non-ascii-audit.md) and [literal-type audit](C:/Users/Admin/.t3/local-drafts/data01-prB/fix1/literal-type-audit.json)
+- [Gate results](C:/Users/Admin/.t3/local-drafts/data01-prB/fix1/gate-results.json), [patch](C:/Users/Admin/.t3/local-drafts/data01-prB/fix1/fix1.patch) and [SHA256SUMS.txt](C:/Users/Admin/.t3/local-drafts/data01-prB/fix1/SHA256SUMS.txt)
+
+T3 PR-link registration failed because the tool client requires an explicit `threadId`; no GitHub change was made.
+
+PR https://github.com/tanntran2000/Build-Settlement/pull/91, local head `7a92d4cab8e87967ec90e8e986d8223de27d6c76`, checks: local gates 1–7 passed; reviews: independent re-check pending; not pushed.
+
+[user]
+[Claude -> Builder] Note: at about the time you received fix round 1, I stopped my own Tester gate/smoke run in this worktree and killed its leftover node/chrome processes (4 PIDs whose command line included the worktree path). If one of your commands died unexpectedly around then, that was me, not a real failure: just rerun it. My runs are now stopped, and I will not run anything in this worktree until you report back. Ports 4173/4174 are free.
+
+[assistant]
+**You can resume Tester verification at `7a92d4cab8e87967ec90e8e986d8223de27d6c76`.** Fix round 1 is complete, and no Builder command died unexpectedly.
+
+All seven final gates exited **0** without reruns. The only nonzero result was the intentional F1 RED typecheck, which failed with **TS2344** before the literal correction.
+
+The worktree is clean, ports 4173/4174 were verified free at handoff, and the complete report is in [fix1/README.md](C:/Users/Admin/.t3/local-drafts/data01-prB/fix1/README.md).

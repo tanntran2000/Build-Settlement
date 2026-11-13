@@ -1,0 +1,19 @@
+HEAD: 3a2759f46ffe883db857f878aa97930caa979be6
+Tree: 92db8e129d4e1ce5aa02d234b15767de3bf0105d
+UTC: 2026-11-13T06:19:04.864375+00:00
+Exit: 0
+Command: npx vitest run packages/simulation/src/__tests__/catalog-golden.test.ts --reporter=verbose
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ✓ packages/simulation/src/__tests__/catalog-golden.test.ts > keeps seed 0 byte-identical through 60 weeks of catalog commands 1811ms
+ ✓ packages/simulation/src/__tests__/catalog-golden.test.ts > keeps seed 42 byte-identical through 60 weeks of catalog commands 1505ms
+ ✓ packages/simulation/src/__tests__/catalog-golden.test.ts > keeps seed 20261028 byte-identical through 60 weeks of catalog commands 1527ms
+ ✓ packages/simulation/src/__tests__/catalog-golden.test.ts > detects one extra milli of Hospital upkeep in a cloned catalog 1619ms
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  13:19:09
+   Duration  8.05s (transform 877ms, setup 0ms, import 1.12s, tests 6.47s, environment 0ms)
+

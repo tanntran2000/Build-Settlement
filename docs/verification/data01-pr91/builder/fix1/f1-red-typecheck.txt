@@ -1,0 +1,15 @@
+HEAD: 8c0657e3558c3657b70ab71b1038e33fec1f6e9a
+Tree: d3e24a51a23be3dac87d017dcc93f8f251ad7690
+UTC: 2026-11-13T06:35:16.419812+00:00
+Exit: 1
+Command: npm run typecheck
+
+
+> build-settlement@0.1.0 typecheck
+> npm run typecheck:core && npm run typecheck:simulation && npm run typecheck:persistence && npm run typecheck:content && npm run typecheck:ui
+
+
+> build-settlement@0.1.0 typecheck:core
+> tsc -p packages/core/tsconfig.json --noEmit
+
+packages/core/src/__tests__/catalog-data.test.ts(68,55): error TS2344: Type '"The vote would fail: For {F} · Against {A}."' does not satisfy the constraint '"Expected: literal string: The vote would fail: For {F} · Against {A}., Actual: literal string: The vote would fail: For {F} Ã‚Â· Against {A}."'.

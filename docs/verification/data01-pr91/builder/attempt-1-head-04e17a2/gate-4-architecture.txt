@@ -1,0 +1,605 @@
+HEAD: 04e17a2acad0e8c03ea7e25250eb30005d267ed0
+Tree: 9179843da7e7adeef08723b90d9e413dca81eea2
+UTC: 2026-11-13T05:05:29.008866+00:00
+Exit: 0
+Command: npm run check:architecture
+
+
+> build-settlement@0.1.0 check:architecture
+> node tools/check-architecture.mjs
+
+{
+  "status": "PASS",
+  "files": [
+    "packages/content/src/city-design.ts",
+    "packages/content/src/index.ts",
+    "packages/core/src/character/catalog.ts",
+    "packages/core/src/character/describe.ts",
+    "packages/core/src/character/session.ts",
+    "packages/core/src/character/starter-profiles.ts",
+    "packages/core/src/character/types.ts",
+    "packages/core/src/character/validate.ts",
+    "packages/core/src/data/validate.ts",
+    "packages/core/src/domain/canonical-state.ts",
+    "packages/core/src/domain/character.ts",
+    "packages/core/src/domain/gamestate.ts",
+    "packages/core/src/domain/memory.ts",
+    "packages/core/src/domain/population.ts",
+    "packages/core/src/domain/relationship.ts",
+    "packages/core/src/index.ts",
+    "packages/core/src/medal/index.ts",
+    "packages/core/src/medal/loadout.ts",
+    "packages/core/src/medal/projection.ts",
+    "packages/core/src/medal/types.ts",
+    "packages/core/src/medal/validation.ts",
+    "packages/core/src/social/calculator.ts",
+    "packages/core/src/social/profile.ts",
+    "packages/core/src/social/types.ts",
+    "packages/core/src/social/workforce.ts",
+    "packages/core/src/status/effects.ts",
+    "packages/core/src/status/types.ts",
+    "packages/core/src/trial/catalog.ts",
+    "packages/core/src/trial/crime.ts",
+    "packages/core/src/trial/crisis.ts",
+    "packages/core/src/trial/event-card.ts",
+    "packages/core/src/trial/goods-stock.ts",
+    "packages/core/src/trial/law.ts",
+    "packages/core/src/trial/order.ts",
+    "packages/core/src/trial/outside.ts",
+    "packages/core/src/trial/society-map.ts",
+    "packages/core/src/trial/society.ts",
+    "packages/core/src/trial/state.ts",
+    "packages/core/src/trial/types.ts",
+    "packages/core/src/weekly.ts",
+    "packages/core/src/world/arrays.ts",
+    "packages/core/src/world/generate.ts",
+    "packages/core/src/world/npc-content.ts",
+    "packages/core/src/world/npc.ts",
+    "packages/core/src/world/random.ts",
+    "packages/core/src/world/scenario.ts",
+    "packages/core/src/world/session.ts",
+    "packages/core/src/world/types.ts",
+    "packages/persistence/src/character-life-save.ts",
+    "packages/persistence/src/game-store.ts",
+    "packages/persistence/src/index.ts",
+    "packages/persistence/src/memory-store.ts",
+    "packages/persistence/src/session-records.ts",
+    "packages/persistence/src/tile-trial-save.ts",
+    "packages/persistence/src/world-session-save.ts",
+    "packages/simulation/src/character-life-command.ts",
+    "packages/simulation/src/character-life-observation.ts",
+    "packages/simulation/src/crime-week.ts",
+    "packages/simulation/src/crisis-week.ts",
+    "packages/simulation/src/index.ts",
+    "packages/simulation/src/law-week.ts",
+    "packages/simulation/src/order-week.ts",
+    "packages/simulation/src/outside-week.ts",
+    "packages/simulation/src/society-facilities.ts",
+    "packages/simulation/src/society-week.ts",
+    "packages/simulation/src/tile-trial-immigration.ts",
+    "packages/simulation/src/tile-trial-week.ts",
+    "packages/simulation/src/tile-trial.ts",
+    "packages/simulation/src/weekly.ts",
+    "packages/simulation/src/world-npc.ts",
+    "packages/ui/src/CharacterCreation.svelte",
+    "packages/ui/src/CharacterLifeApp.svelte",
+    "packages/ui/src/CharacterLifeCharacters.svelte",
+    "packages/ui/src/CharacterLifeCity.svelte",
+    "packages/ui/src/CharacterLifeShell.svelte",
+    "packages/ui/src/CharacterProfile.svelte",
+    "packages/ui/src/CityFallen.svelte",
+    "packages/ui/src/CouncilPanel.svelte",
+    "packages/ui/src/CrisisCard.svelte",
+    "packages/ui/src/ErrorLog.svelte",
+    "packages/ui/src/InsideCity.svelte",
+    "packages/ui/src/LibraryPanel.svelte",
+    "packages/ui/src/OptionsDialog.svelte",
+    "packages/ui/src/OutsideCity.svelte",
+    "packages/ui/src/ReportLetter.svelte",
+    "packages/ui/src/SocietyPopulation.svelte",
+    "packages/ui/src/SocietyReport.svelte",
+    "packages/ui/src/SoloWeekReport.svelte",
+    "packages/ui/src/TileManagement.svelte",
+    "packages/ui/src/TitleScreen.svelte",
+    "packages/ui/src/build-env.d.ts",
+    "packages/ui/src/character-life-navigation.ts",
+    "packages/ui/src/character-life-session.ts",
+    "packages/ui/src/clearing-workers.ts",
+    "packages/ui/src/error-log.ts",
+    "packages/ui/src/indexeddb-store.ts",
+    "packages/ui/src/life-calendar.ts",
+    "packages/ui/src/main.ts",
+    "packages/ui/src/milli-format.ts",
+    "packages/ui/src/options.ts",
+    "packages/ui/src/platform.ts",
+    "packages/ui/src/report-letters.ts",
+    "packages/ui/src/society-view.ts",
+    "packages/ui/src/version.ts",
+    "packages/ui/src/world-npc-session.ts",
+    "packages/ui/src/world-session.ts"
+  ],
+  "counts": {
+    "core": 46,
+    "content": 2,
+    "simulation": 15,
+    "persistence": 7,
+    "ui": 36
+  },
+  "edges": [
+    {
+      "from": "persistence",
+      "to": "core",
+      "file": "packages/persistence/src/character-life-save.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "persistence",
+      "to": "core",
+      "file": "packages/persistence/src/session-records.ts",
+      "line": 1,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "persistence",
+      "to": "core",
+      "file": "packages/persistence/src/session-records.ts",
+      "line": 3,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "persistence",
+      "to": "core",
+      "file": "packages/persistence/src/world-session-save.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/character-life-command.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/character-life-observation.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/crime-week.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/crisis-week.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/law-week.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/order-week.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/outside-week.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/society-facilities.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/society-week.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/tile-trial-immigration.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/tile-trial-week.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/tile-trial-week.ts",
+      "line": 6,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/tile-trial.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/tile-trial.ts",
+      "line": 3,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/world-npc.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CharacterCreation.svelte",
+      "line": 2,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CharacterLifeApp.svelte",
+      "line": 3,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/CharacterLifeApp.svelte",
+      "line": 4,
+      "column": 3,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CharacterLifeCharacters.svelte",
+      "line": 2,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/CharacterLifeCharacters.svelte",
+      "line": 3,
+      "column": 3,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CharacterLifeCity.svelte",
+      "line": 2,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CharacterLifeShell.svelte",
+      "line": 4,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CharacterLifeShell.svelte",
+      "line": 20,
+      "column": 46,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CharacterProfile.svelte",
+      "line": 4,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CouncilPanel.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CrisisCard.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/InsideCity.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/LibraryPanel.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/OutsideCity.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/SocietyPopulation.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "content",
+      "file": "packages/ui/src/SocietyPopulation.svelte",
+      "line": 3,
+      "column": 2,
+      "specifier": "@haven/content"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/SocietyReport.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/SocietyReport.svelte",
+      "line": 3,
+      "column": 2,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/SoloWeekReport.svelte",
+      "line": 2,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/TileManagement.svelte",
+      "line": 11,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/TileManagement.svelte",
+      "line": 12,
+      "column": 3,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/TileManagement.svelte",
+      "line": 13,
+      "column": 3,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/character-life-session.ts",
+      "line": 1,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/character-life-session.ts",
+      "line": 2,
+      "column": 1,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/character-life-session.ts",
+      "line": 91,
+      "column": 78,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/indexeddb-store.ts",
+      "line": 1,
+      "column": 2,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/report-letters.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 2,
+      "column": 1,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 68,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 69,
+      "column": 1,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 99,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 100,
+      "column": 1,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 120,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 143,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 167,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/world-npc-session.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/world-npc-session.ts",
+      "line": 2,
+      "column": 1,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/world-session.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/world-session.ts",
+      "line": 2,
+      "column": 1,
+      "specifier": "@haven/simulation"
+    }
+  ],
+  "violations": [],
+  "cycles": [],
+  "errors": []
+}

@@ -1,0 +1,248 @@
+DATA-01 PR B Astra review
+mcp:263bb217-c6e9-42c9-8806-2372bb5c8551  completed  codex/gpt-6-astra
+
+[user]
+Astra, independent READ-ONLY review of DATA-01 PR B (catalogs as validated JSON + golden test).
+
+Worktree: C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01, branch feat/data01-catalogs. Confirm HEAD == 8c0657e3558c3657b70ab71b1038e33fec1f6e9a, tree d3e24a51a23be3dac87d017dcc93f8f251ad7690. Base: origin/main 5cc2522 (PR A merged). Range: `git diff 5cc2522..8c0657e` (4 commits: 9d2e111 B1 golden, 04e17a2 B2 extraction, 3a2759f JSON import attributes, 8c0657e golden timeouts).
+
+Binding plan: C:/Users/Admin/.t3/local-drafts/data01-prA/binding-plan-6a8bfa2.md: "## PR B — Catalogs", Decisions 11 and 12, Global Constraints, the PR B allowlist, Review Focus 5. Spec: C:/Users/Admin/.t3/local-drafts/data01-prA/binding-spec-7a1ec38.md §7.
+
+Owner decisions (Tân, verbatim):
+- "Giao Builder B": start PR B.
+- "A, cho 20s": the 4 new golden tests only get an explicit 20 s timeout. Measured at about 1.5–2.5 s idle; under full-suite load one hit Vitest's 5 s default.
+
+Claude's rulings as Orchestrator (check them):
+- The golden was generated on 5cc2522, not ca46d18. `git diff --exit-code ca46d18 HEAD -- packages/core packages/simulation packages/content` was exit 0 at generation.
+- B1 was amended before push with a one-line, type-only import fix (TS6059). The fixture blob 64c18a2688573e3fe3b8ec0b131cd0318f4d4855 is unchanged across all commits.
+- The JSON import attributes (`with { type: 'json' }`) were added because Node 24 (Playwright) rejected the imports.
+
+Builder evidence: C:/Users/Admin/.t3/local-drafts/data01-prB/README.md (edit inventory, RED/GREEN, golden proofs, gates, bundle +3.12 kB JS). Claude is running gates and the full CI=1 smoke at 8c0657e now. Do NOT run tests or builds.
+
+Avoid truncation (lesson from PR A): read the diff one file at a time (`git diff -U3 5cc2522..8c0657e -- <file>`), paging with `sed -n` ranges until the end. For each file, state the +/− counts you actually saw and reconcile them with `git diff --numstat 5cc2522..8c0657e`. If a file could not be read completely, say so and FAIL coverage.
+
+Check:
+1. Scope: every changed file is in the PR B allowlist. No existing test edited. No dependency or config change.
+2. Value equality: every extracted constant (TRIAL_BUILDINGS, SOCIETY_BUILDINGS, LAW_CATALOG, LAW_TRIAL, LAW_MESSAGES, RESEARCH_TOPICS, OUTSIDE_PLOTS, ORDER_TRIAL, GARRISON_TRIAL, CRIME_TRIAL, CRISIS_TRIAL, SOCIETY_TRIAL, GOODS_STOCK_TRIAL, TILE_TRIAL_BALANCE, IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL) keeps:
+   - its name and type;
+   - every value and key order (LAW-03, byte-identical serialization);
+   - its frozen-ness;
+   - no product logic change beyond `constant → deepFreeze(validateX(json))`.
+3. Validators: each JSON file is validated. `CatalogError` messages follow `<file>#<id>.<field>: <rule>`. The malformed-copy tests assert exact messages and are not vacuous. Validators reject plausible bad data (wrong type, negative, missing id, duplicate id, unknown key, if the spec asks).
+4. Golden:
+   - 3 seeds × 60 weeks.
+   - The command script really exercises building, laws, outside, crime and crisis, so a catalog change in each area would change the output. Say which catalogs are NOT exercised.
+   - The negative control truly fails on +1 upkeep.
+   - The fixture is never regenerated.
+   - The 20 s timeouts apply only to these 4 new tests.
+5. LAW-02: core stays pure (JSON import only; no fs/DOM). The import attributes work with TS 5.9 (module ESNext, bundler resolution), Vite build, Vitest, Node 24 / Playwright, and tools/check-architecture.
+6. Anything else: correctness or maintainability issues (P0–P3, file:line).
+
+Reply PASS or FAIL, with findings P0–P3 (file:line), the per-file count reconciliation, and explicit limits. Do not edit, install, run tests or builds, push or merge.
+
+
+[assistant]
+Review scope is read-only: verify the pinned commit, read every changed file completely, and assess the supplied evidence without running tests or builds.
+
+
+
+[assistant]
+The branch, HEAD, and tree match the requested identities. The golden uses three seeds over 60 weeks, and the timeout change is confined to its four new cases. Complete diff coverage and validator behavior still need review before a verdict.
+
+
+
+[assistant]
+**FAIL — fix the corrupted public literal type at `validate.ts:292`; this review also fails your complete-coverage requirement because the golden fixture output was truncated.**
+
+Confirmed repository identity:
+
+| Item | Observed |
+|---|---|
+| Branch | `feat/data01-catalogs` |
+| HEAD | `8c0657e3558c3657b70ab71b1038e33fec1f6e9a` |
+| Tree | `d3e24a51a23be3dac87d017dcc93f8f251ad7690` |
+| `origin/main` | `5cc2522f27e01b49baaa6e44bba01904edcea5c0` |
+| Working changes | None reported by `git status --short` |
+
+**Findings**
+
+1. **P2 — `LAW_MESSAGES.VOTE_SHORT` no longer has its original literal type.**  
+   [validate.ts:292](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/data/validate.ts:292) declares the separator using four Unicode code points, `U+00C3 U+201A U+00C2 U+00B7`, instead of the original single `U+00B7` (`·`). I verified this with a UTF-8 file read and escaped code-point output; it is an actual source defect, not merely terminal rendering.
+
+   The JSON retains the correct message, but `validateLaws` casts it to `LawCatalog`, so the exported constant’s static literal type disagrees with its runtime value. This violates the explicit requirement to preserve each constant’s type. Correct the literal without changing the JSON or fixture.
+
+2. **P3 — The “unchanged typed views” test does not establish equality with the pre-extraction constants.**  
+   [catalog-data.test.ts:30](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/__tests__/catalog-data.test.ts:30) compares validation of the JSON against constants initialized from that same JSON. It checks wiring, but a valid accidental catalog edit changes both sides together. The golden provides additional protection for its exercised paths, but does not cover every constant or value. This limitation matters particularly for messages and unused catalog entries.
+
+**Checks supported by the inspected source**
+
+All 19 changed paths are in the PR B allowlist. No existing test, dependency, lockfile, or configuration file appears in the range. The nine modified product modules contain extraction/import changes and removal of helpers used to construct the extracted constants; I found no unrelated product algorithm edit in those diffs.
+
+All five JSON files have validators, and every exported view invokes its corresponding validator. The malformed-copy tests mutate real fields, require a `CatalogError`, and compare exact error messages; those assertions are not vacuous. Validators check primitive types, required fields, known keys and IDs, numeric signs, and fixed ordered IDs in the research and outside arrays. Duplicate array IDs are rejected through positional literal checks. Duplicate object keys in raw JSON cannot be detected after JSON parsing; the reviewed spec does not explicitly require raw duplicate-key detection.
+
+The implementation recursively freezes all exported views. **Frozen-ness is strengthened in places rather than preserved exactly:** the old `SOCIETY_BUILDINGS` object was not frozen, and some nested `SOCIETY_TRIAL` containers were mutable. The binding plan explicitly prescribes `deepFreeze`, so I treat that as the planned behavior, but it should not be described as identical runtime frozen-ness.
+
+The golden script visibly performs building and staffing, clearing an outside plot, deep-mining research, two enacted laws, a crisis payment, and 60 weekly cycles for seeds `0`, `42`, and `20261028`. It asserts nonzero crime events and 60 crisis/outside reports. The negative control clones the building catalog, increments Hospital upkeep by one, resets modules, imports the scenario with the mocked catalog, and requires the serialized session to differ. This is a meaningful negative-control construction; **I did not execute it**.
+
+The script does **not exercise `LAW_MESSAGES` as serialized output**, and it contains no explicit garrison setup. I cannot certify sensitivity to `GARRISON_TRIAL`, or to every value in any catalog. In particular, unbuilt buildings, unchosen laws, unused crisis choices, and the two unselected research topics are not comprehensively protected by this scenario. Counting reports also does not by itself prove sensitivity to every subsystem parameter.
+
+The two `20_000` arguments apply precisely to the three parameterized golden cases and the single negative-control case. No global or existing-test timeout changed.
+
+**Per-file diff reconciliation**
+
+Counts below exclude diff headers. “Complete” means I saw the entire file diff; its observed additions/deletions match `git diff --numstat 5cc2522..8c0657e`.
+
+| File, relative to worktree | Observed +/− | Numstat +/− | Coverage |
+|---|---:|---:|---|
+| `packages/core/src/__tests__/catalog-data.test.ts` | 65 / 0 | 65 / 0 | Complete |
+| `packages/core/src/data/buildings.json` | 574 / 0 | 574 / 0 | Complete |
+| `packages/core/src/data/laws.json` | 164 / 0 | 164 / 0 | Complete |
+| `packages/core/src/data/outside-plots.json` | 152 / 0 | 152 / 0 | Complete |
+| `packages/core/src/data/research.json` | 11 / 0 | 11 / 0 | Complete |
+| `packages/core/src/data/tuning.json` | 621 / 0 | 621 / 0 | Complete |
+| `packages/core/src/data/validate.ts` | 801 / 0 | 801 / 0 | Complete, paged |
+| `packages/core/src/trial/catalog.ts` | 7 / 41 | 7 / 41 | Complete |
+| `packages/core/src/trial/crime.ts` | 3 / 13 | 3 / 13 | Complete |
+| `packages/core/src/trial/crisis.ts` | 3 / 8 | 3 / 8 | Complete |
+| `packages/core/src/trial/goods-stock.ts` | 3 / 5 | 3 / 5 | Complete |
+| `packages/core/src/trial/law.ts` | 7 / 29 | 7 / 29 | Complete |
+| `packages/core/src/trial/order.ts` | 4 / 12 | 4 / 12 | Complete |
+| `packages/core/src/trial/outside.ts` | 8 / 21 | 8 / 21 | Complete |
+| `packages/core/src/trial/society-map.ts` | 3 / 161 | 3 / 161 | Complete |
+| `packages/core/src/trial/society.ts` | 5 / 18 | 5 / 18 | Complete |
+| `packages/simulation/src/__tests__/catalog-golden.test.ts` | 31 / 0 | 31 / 0 | Complete |
+| `packages/simulation/src/__tests__/fixtures/catalog-golden.json` | **Not fully observed** | 26 / 0 | **FAIL: output truncated** |
+| `packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts` | 63 / 0 | 63 / 0 | Complete |
+
+**Orchestrator rulings and explicit limits**
+
+1. **Base equivalence is supported.** The inspected generation log records `5cc2522`, UTC time, and exit `0` for the scoped comparison against `ca46d18`. My read-only comparison also produced no diff for `packages/core`, `packages/simulation`, and `packages/content`. This supports the technical equivalence argument for the chosen generation base.
+
+2. **Fixture immutability is partially independently corroborated.** Git reports the requested blob `64c18a2688573e3fe3b8ec0b131cd0318f4d4855` at B1 and HEAD. The amendment proof records the same blob before and after amendment, with exit `0`. I did not independently inspect the original amendment’s full diff or verify the fixture at every intermediate commit, so the “one-line type-only fix” claim remains incompletely checked.
+
+3. **Core purity is supported by the changed production source.** New runtime imports are JSON and the pure validator module; no production `fs` or DOM import was introduced. Filesystem access is confined to the new tests/generator. I did not independently verify the full TS 5.9/Vite/Vitest/Node 24/Playwright/architecture-check compatibility matrix. The Builder README reports successful gates, but I have not audited their full raw logs, and Claude’s current smoke result is outside this review.
+
+4. **This is an incomplete independent review, not G4/G5 approval.** No tests or builds were run, and no files were edited, installed, pushed, or merged. I cannot claim complete value/key-order equality for all 16 constants or complete fixture coverage. The existing worktree was retained; storage reclaimed: 0 bytes.
+
+**Next action:** correct the single corrupted literal at [validate.ts:292](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/data/validate.ts:292).
+
+[user]
+[Claude -> Astra] DATA-01 PR B re-review after fix round 1. READ-ONLY; do not run tests or builds (Claude is running gates and smoke in this worktree now).
+
+HEAD 7a92d4cab8e87967ec90e8e986d8223de27d6c76, tree 9b1082da1a427175e6d7636ac4001017e769dff6. Delta: `git diff 8c0657e..7a92d4c` (one commit, 2 files: validate.ts +1/−1, catalog-data.test.ts +38/−1). Builder evidence: C:/Users/Admin/.t3/local-drafts/data01-prB/fix1/README.md.
+
+1. F1 (your P2): check that validate.ts:292 now has a single U+00B7 (bytes C2 B7), and that the new expectTypeOf test pins the original literal type. The Builder's RED log f1-red-typecheck.txt shows TS2344 before the fix. Check that no other non-ASCII drift remains (fix1/non-ascii-audit.md).
+2. F2 (your P3): the 16 constants are now pinned to SHA-256 of JSON.stringify of the ORIGINAL constants at base 5cc2522, plus a negative control. Verify the hashes really come from base source. Read fix1/compute-base-hashes.mjs and base-source-manifest.json: does it evaluate the constants from `git show 5cc2522:<file>` (or an equivalent pinned read), not from today's JSON? Is the negative control non-vacuous? Does this close your "a valid accidental edit changes both sides" gap for all 16, including LAW_MESSAGES and GARRISON_TRIAL?
+3. Fixture coverage gap (catalog-golden.json was truncated in your read; 26 lines, 70,329 bytes). Do not read it as one blob. Instead:
+   - `git log --format=%H --follow -- packages/simulation/src/__tests__/fixtures/catalog-golden.json` must show only the B1 commit 9d2e111;
+   - `git rev-parse 9d2e111:<path>` and `HEAD:<path>` must both be 64c18a2688573e3fe3b8ec0b131cd0318f4d4855;
+   - check its structure with a short read-only script, e.g. `node -e "const g=require('./packages/simulation/src/__tests__/fixtures/catalog-golden.json'); console.log(Array.isArray(g), g.length, g.map(e=>[e.seed, Object.keys(e)]))"`, and page any long line with `cut -c` ranges as needed;
+   - say whether each entry holds the full serialized session for 60 weeks, or only finals.
+4. Updated consolidated verdict over 5cc2522..7a92d4c: PASS or FAIL, findings P0–P3 (file:line), the per-file count reconciliation for all 19 files (+ the delta), and limits.
+
+Do not edit, install, run tests or builds, push or merge.
+
+[assistant]
+Check the two-file fix and the fixture provenance first. This re-review stays read-only; Claude’s running gates and smoke remain separate evidence.
+
+
+[assistant]
+The corrupted type is fixed, and the fixture history shows only B1 with the same blob at HEAD. All 38 source-manifest entries match the pinned base. The fixture stores three complete final sessions at week 61, plus counters for the 60-week runs; it does not store every intermediate week.
+
+
+[assistant]
+**PASS — independent read-only review of `5cc2522..7a92d4c`. F1 and F2 are closed; no outstanding P0–P3 findings.** This is a code-review verdict, not a claim that Claude’s current gates, smoke, or remote CI have passed.
+
+| Identity | Verified |
+|---|---|
+| HEAD | `7a92d4cab8e87967ec90e8e986d8223de27d6c76` |
+| Tree | `9b1082da1a427175e6d7636ac4001017e769dff6` |
+| Reviewed base | `5cc2522f27e01b49baaa6e44bba01904edcea5c0` |
+| Working tree | Clean when inspected |
+| Fix delta | Exactly two files: `validate.ts` +1/−1; `catalog-data.test.ts` +38/−1 |
+
+**1. F1, previously P2: closed.**
+
+[validate.ts:292](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/data/validate.ts:292) now contains exactly one **U+00B7**, encoded as **C2 B7**. The new [literal-type assertion at catalog-data.test.ts:69](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/__tests__/catalog-data.test.ts:69) pins the complete original message with `expectTypeOf(...).toEqualTypeOf<...>()`.
+
+I read the [RED typecheck log](C:/Users/Admin/.t3/local-drafts/data01-prB/fix1/f1-red-typecheck.txt): it records exit **1**, UTC `2026-11-13T06:35:16.419812+00:00`, and **TS2344** identifying the correct literal versus the corrupted literal. This supports that the assertion catches the original defect through the repository’s typecheck.
+
+My independent UTF-8 scan of all 19 changed files found only:
+
+| File | Non-ASCII content | Assessment |
+|---|---|---|
+| `catalog-data.test.ts:69` | U+00B7 / C2 B7 | Correct original message |
+| `laws.json:161` | U+00B7 / C2 B7 | Correct original message |
+| `validate.ts:292` | U+00B7 / C2 B7 | Corrected type |
+| `trial/order.ts:15` | U+2013 / E2 80 93 | Existing comment, identical to base |
+
+No other non-ASCII drift was found. This corroborates the [non-ASCII audit](C:/Users/Admin/.t3/local-drafts/data01-prB/fix1/non-ascii-audit.md), which covers the ten new files.
+
+**2. F2, previously P3: closed for all 16 constants.**
+
+The [hash provenance script](C:/Users/Admin/.t3/local-drafts/data01-prB/fix1/compute-base-hashes.mjs) computes expected values from the original TypeScript source:
+
+- `BASE` is the full pinned `5cc2522f27e01b49baaa6e44bba01904edcea5c0`.
+- `loader(true)` reads source with `git show ${BASE}:${file}` and recursively resolves relative imports using that same loader.
+- It transpiles and evaluates those original modules in memory. Expected hashes come from `JSON.stringify(baseCore[name])`.
+- `loader(false)` reads current files only for the separate current-value comparison. The previous capture is an additional consistency check, not the source of expected hashes.
+
+I independently verified **all 38 entries** in [base-source-manifest.json](C:/Users/Admin/.t3/local-drafts/data01-prB/fix1/base-source-manifest.json) against the pinned Git objects: both source SHA-256 and Git blob IDs match. **None of those source entries is JSON.**
+
+I also independently reconciled all **16 committed hash literals** against the supplied base-value artifact and the current JSON projections, preserving object-key order. All match, including **`LAW_MESSAGES` and `GARRISON_TRIAL`**.
+
+The [negative control at catalog-data.test.ts:98](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/__tests__/catalog-data.test.ts:98) clones `TRIAL_BUILDINGS`, increments Hospital upkeep by one, and requires its hash to differ from the fixed base hash. Together with the positive hash assertion for the unchanged catalog, this is non-vacuous. A valid accidental edit now changes the actual hash without changing its expected value.
+
+**3. Fixture coverage gap: closed using the requested provenance and structural checks.**
+
+The fixture history contains **only**:
+
+`9d2e111d076cfee9b92b6b6d36de55f1a87259d4`
+
+Both B1 and HEAD resolve the fixture to:
+
+`64c18a2688573e3fe3b8ec0b131cd0318f4d4855`
+
+A read-only script consumed the entire **70,329-byte, 26-line** file, parsed all three entries, and parsed every embedded session string successfully.
+
+| Seed | Weeks recorded | Crime events | Crisis reports | Outside reports | Final session |
+|---:|---:|---:|---:|---:|---|
+| 0 | 60 | 2 | 60 | 60 | Week 61, planning |
+| 42 | 60 | 5 | 60 | 60 | Week 61, planning |
+| 20261028 | 60 | 4 | 60 | 60 | Week 61, planning |
+
+**Each entry contains a complete serialized final session after 60 weeks, not 60 intermediate snapshots.** Each session has the save envelope and the state sections `city`, `outside`, `npcs`, `player`, and `profiles`. The surrounding fixture entry contains the seed, week count, and event/report counters.
+
+This closes the earlier truncated-read limitation by the alternative verification method you specified. I do not claim to have manually reread every character of the embedded session strings.
+
+**4. Consolidated per-file count reconciliation**
+
+The first review covered the complete diffs of the other 18 files. This re-review read the complete two-file fix delta and verified the unchanged fixture through history, blob identity, and full structural parsing. Every consolidated count agrees with `git diff --numstat 5cc2522..7a92d4c`.
+
+| File relative to worktree | Consolidated +/− | Fix delta +/− | Reconciliation |
+|---|---:|---:|---|
+| `packages/core/src/__tests__/catalog-data.test.ts` | 102 / 0 | 38 / 1 | Match |
+| `packages/core/src/data/buildings.json` | 574 / 0 | — | Match |
+| `packages/core/src/data/laws.json` | 164 / 0 | — | Match |
+| `packages/core/src/data/outside-plots.json` | 152 / 0 | — | Match |
+| `packages/core/src/data/research.json` | 11 / 0 | — | Match |
+| `packages/core/src/data/tuning.json` | 621 / 0 | — | Match |
+| `packages/core/src/data/validate.ts` | 801 / 0 | 1 / 1 | Match |
+| `packages/core/src/trial/catalog.ts` | 7 / 41 | — | Match |
+| `packages/core/src/trial/crime.ts` | 3 / 13 | — | Match |
+| `packages/core/src/trial/crisis.ts` | 3 / 8 | — | Match |
+| `packages/core/src/trial/goods-stock.ts` | 3 / 5 | — | Match |
+| `packages/core/src/trial/law.ts` | 7 / 29 | — | Match |
+| `packages/core/src/trial/order.ts` | 4 / 12 | — | Match |
+| `packages/core/src/trial/outside.ts` | 8 / 21 | — | Match |
+| `packages/core/src/trial/society-map.ts` | 3 / 161 | — | Match |
+| `packages/core/src/trial/society.ts` | 5 / 18 | — | Match |
+| `packages/simulation/src/__tests__/catalog-golden.test.ts` | 31 / 0 | — | Match |
+| `packages/simulation/src/__tests__/fixtures/catalog-golden.json` | 26 / 0 | — | Match; provenance and structural verification |
+| `packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts` | 63 / 0 | — | Match |
+
+All 19 files remain within the PR B allowlist. No pre-existing test, dependency, configuration, JSON value, golden fixture, or generator changed in fix round 1.
+
+**Limits of this PASS:** no tests, builds, installs, edits, pushes, or merges were performed. The evidence script was inspected, not executed, because it writes artifacts; its 38 source-manifest entries were independently verified using read-only Git reads. The golden still protects three final outcomes rather than every intermediate state or every gameplay branch. The added hash assertions provide the separate value-and-key-order protection for all 16 constants. Runtime compatibility and exact-head gate/smoke success remain dependent on the execution evidence owned by Claude.
+
+**Next action:** attach this verdict to the exact-head evidence for `7a92d4c` once Claude’s gate and smoke results are available.

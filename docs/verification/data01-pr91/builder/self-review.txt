@@ -1,0 +1,10 @@
+packages/core/src/trial/catalog.ts: all functions, interfaces and type aliases unchanged.
+packages/core/src/trial/society-map.ts: all functions, interfaces and type aliases unchanged.
+packages/core/src/trial/law.ts: all functions, interfaces and type aliases unchanged.
+packages/core/src/trial/outside.ts: all functions, interfaces and type aliases unchanged.
+packages/core/src/trial/order.ts: all functions, interfaces and type aliases unchanged.
+packages/core/src/trial/crime.ts: all functions, interfaces and type aliases unchanged.
+packages/core/src/trial/crisis.ts: all functions, interfaces and type aliases unchanged.
+packages/core/src/trial/society.ts: all functions, interfaces and type aliases unchanged.
+packages/core/src/trial/goods-stock.ts: all functions, interfaces and type aliases unchanged.
+Fixture unchanged: 64c18a2688573e3fe3b8ec0b131cd0318f4d4855

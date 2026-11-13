@@ -1,0 +1,154 @@
+HEAD: 349e9d777e6df098ea6d15a54f4d38e5da0b9d83
+Tree: d998d96adcc12caa732a94b436db31024fd75df3
+UTC: 2026-11-13T04:51:33.670939+00:00
+Exit: 1
+Command: npx vitest run packages/core/src/__tests__/catalog-data.test.ts packages/simulation/src/__tests__/catalog-golden.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/core/src/__tests__/catalog-data.test.ts (20 tests | 7 failed) 200ms
+   × 'buildings.json' rejects one wrong field with the exact CatalogError message 35ms
+   × 'laws.json' rejects one wrong field with the exact CatalogError message 9ms
+   × 'research.json' rejects one wrong field with the exact CatalogError message 9ms
+   × 'outside-plots.json' rejects one wrong field with the exact CatalogError message 35ms
+   × 'tuning.json' rejects one wrong field with the exact CatalogError message 9ms
+   × 'research.json' rejects a missing root entry 6ms
+   × 'outside-plots.json' rejects a missing root entry 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/core/src/__tests__/catalog-data.test.ts > 'buildings.json' rejects one wrong field with the exact CatalogError message
+AssertionError: expected a thrown error to be Error: buildings.json#hospital.upkeepMill…
+
+- Expected
++ Received
+
+- Error {
++ CatalogError {
+    "message": "buildings.json#hospital.upkeepMilli: expected integer >= 0",
++   "ref": "buildings.json#hospital",
++   "name": "CatalogError",
+  }
+
+ ❯ packages/core/src/__tests__/catalog-data.test.ts:42:44
+     40|   target[entry.path[entry.path.length - 1]] = entry.wrong;
+     41|   expect(() => api[entry.validator](copy)).toThrow(api.CatalogError);
+     42|   expect(() => api[entry.validator](copy)).toThrow(new Error(entry.mes…
+       |                                            ^
+     43| });
+     44|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯
+
+ FAIL  packages/core/src/__tests__/catalog-data.test.ts > 'laws.json' rejects one wrong field with the exact CatalogError message
+AssertionError: expected a thrown error to be Error: laws.json#curfew.name: expected no…
+
+- Expected
++ Received
+
+- Error {
++ CatalogError {
+    "message": "laws.json#curfew.name: expected nonempty string",
++   "ref": "laws.json#curfew",
++   "name": "CatalogError",
+  }
+
+ ❯ packages/core/src/__tests__/catalog-data.test.ts:42:44
+     40|   target[entry.path[entry.path.length - 1]] = entry.wrong;
+     41|   expect(() => api[entry.validator](copy)).toThrow(api.CatalogError);
+     42|   expect(() => api[entry.validator](copy)).toThrow(new Error(entry.mes…
+       |                                            ^
+     43| });
+     44|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯
+
+ FAIL  packages/core/src/__tests__/catalog-data.test.ts > 'research.json' rejects one wrong field with the exact CatalogError message
+AssertionError: expected a thrown error to be Error: research.json#unknown.id: expected…
+
+- Expected
++ Received
+
+- Error {
++ CatalogError {
+    "message": "research.json#unknown.id: expected deep-mining",
++   "ref": "research.json#unknown",
++   "name": "CatalogError",
+  }
+
+ ❯ packages/core/src/__tests__/catalog-data.test.ts:42:44
+     40|   target[entry.path[entry.path.length - 1]] = entry.wrong;
+     41|   expect(() => api[entry.validator](copy)).toThrow(api.CatalogError);
+     42|   expect(() => api[entry.validator](copy)).toThrow(new Error(entry.mes…
+       |                                            ^
+     43| });
+     44|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+
+ FAIL  packages/core/src/__tests__/catalog-data.test.ts > 'outside-plots.json' rejects one wrong field with the exact CatalogError message
+AssertionError: expected a thrown error to be Error: outside-plots.json#field-1.ring: e…
+
+- Expected
++ Received
+
+- Error {
++ CatalogError {
+    "message": "outside-plots.json#field-1.ring: expected 1 | 2 | 3",
++   "ref": "outside-plots.json#field-1",
++   "name": "CatalogError",
+  }
+
+ ❯ packages/core/src/__tests__/catalog-data.test.ts:42:44
+     40|   target[entry.path[entry.path.length - 1]] = entry.wrong;
+     41|   expect(() => api[entry.validator](copy)).toThrow(api.CatalogError);
+     42|   expect(() => api[entry.validator](copy)).toThrow(new Error(entry.mes…
+       |                                            ^
+     43| });
+     44|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯
+
+ FAIL  packages/core/src/__tests__/catalog-data.test.ts > 'tuning.json' rejects one wrong field with the exact CatalogError message
+AssertionError: expected a thrown error to be Error: tuning.json#ORDER_TRIAL.newGame.se…
+
+- Expected
++ Received
+
+- Error {
++ CatalogError {
+    "message": "tuning.json#ORDER_TRIAL.newGame.security: expected integer >= 0",
++   "ref": "tuning.json#ORDER_TRIAL",
++   "name": "CatalogError",
+  }
+
+ ❯ packages/core/src/__tests__/catalog-data.test.ts:42:44
+     40|   target[entry.path[entry.path.length - 1]] = entry.wrong;
+     41|   expect(() => api[entry.validator](copy)).toThrow(api.CatalogError);
+     42|   expect(() => api[entry.validator](copy)).toThrow(new Error(entry.mes…
+       |                                            ^
+     43| });
+     44|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/7]⎯
+
+ FAIL  packages/core/src/__tests__/catalog-data.test.ts > 'research.json' rejects a missing root entry
+ FAIL  packages/core/src/__tests__/catalog-data.test.ts > 'outside-plots.json' rejects a missing root entry
+AssertionError: expected function to throw an error, but it didn't
+ ❯ packages/core/src/__tests__/catalog-data.test.ts:49:44
+     47|   const copy = data(entry.file) as Record<string, unknown>;
+     48|   delete copy[Object.keys(copy)[0]];
+     49|   expect(() => api[entry.validator](copy)).toThrow(api.CatalogError);
+       |                                            ^
+     50| });
+     51|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/7]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  7 failed | 17 passed (24)
+   Start at  11:51:40
+   Duration  15.22s (transform 2.34s, setup 0ms, import 3.04s, tests 12.80s, environment 1ms)
+

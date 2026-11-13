@@ -1,0 +1,166 @@
+HEAD: 349e9d777e6df098ea6d15a54f4d38e5da0b9d83
+Tree: d998d96adcc12caa732a94b436db31024fd75df3
+UTC: 2026-11-13T04:52:39.375606+00:00
+Exit: 1
+Command: npm run typecheck
+
+
+> build-settlement@0.1.0 typecheck
+> npm run typecheck:core && npm run typecheck:simulation && npm run typecheck:persistence && npm run typecheck:content && npm run typecheck:ui
+
+
+> build-settlement@0.1.0 typecheck:core
+> tsc -p packages/core/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:simulation
+> tsc -p packages/simulation/tsconfig.json --noEmit
+
+packages/core/src/data/validate.ts(2,42): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/society-map.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via '../trial/society-map.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/data/validate.ts'
+    Imported via './society-map.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/state.ts'
+    Imported via './trial/society-map.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/index.ts'
+packages/core/src/data/validate.ts(3,36): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/law.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via '../trial/law.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/data/validate.ts'
+    Imported via './law.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/society.ts'
+    Imported via './law.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/types.ts'
+    Imported via './trial/law.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/index.ts'
+packages/core/src/domain/character.ts(1,59): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/relationship.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./relationship.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/character.ts'
+    Imported via "./domain/relationship.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/index.ts'
+packages/core/src/domain/character.ts(2,24): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/memory.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./memory.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/character.ts'
+    Imported via "./domain/memory.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/index.ts'
+packages/core/src/index.ts(1,15): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/character.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./domain/character.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/index.ts'
+    Imported via "./character.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/population.ts'
+    Imported via "../domain/character.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/social/types.ts'
+    Imported via '../domain/character.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc.ts'
+    Imported via '../domain/character.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc-content.ts'
+    Imported via '../domain/character.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/character/types.ts'
+    Imported via '../domain/character.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/character/catalog.ts'
+    Imported via '../domain/character.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/character/validate.ts'
+    Imported via '../domain/character.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/character/describe.ts'
+    Imported via '../domain/character.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/character/session.ts'
+packages/core/src/index.ts(2,15): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/population.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./domain/population.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/index.ts'
+    Imported via "./domain/population.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/weekly.ts'
+    Imported via "../domain/population.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/social/calculator.ts'
+    Imported via "../domain/population.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/social/types.ts'
+    Imported via "../domain/population.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/social/workforce.ts'
+    Imported via "./population.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts'
+packages/core/src/index.ts(5,15): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/gamestate.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./domain/gamestate.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/index.ts'
+    Imported via "./gamestate.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts'
+    Imported via '../domain/gamestate.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc.ts'
+packages/core/src/index.ts(7,15): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./domain/canonical-state.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/index.ts'
+    Imported via '../domain/canonical-state.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/law.ts'
+    Imported via '../domain/canonical-state.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/crisis.ts'
+    Imported via '../domain/canonical-state.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/event-card.ts'
+    Imported via '../domain/canonical-state.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/outside.ts'
+    Imported via "../domain/canonical-state.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/types.ts'
+    Imported via '../domain/canonical-state.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/order.ts'
+    Imported via '../domain/canonical-state.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/society.ts'
+    Imported via "../domain/canonical-state.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/state.ts'
+    Imported via '../domain/canonical-state.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/session.ts'
+    Imported via '../domain/canonical-state.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/generate.ts'
+    Imported via '../domain/canonical-state.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc.ts'
+    Imported via '../domain/canonical-state.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/character/validate.ts'
+packages/core/src/index.ts(9,15): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/catalog.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./trial/catalog.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/index.ts'
+    Imported via '../trial/catalog.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/data/validate.ts'
+    Imported via './catalog.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/society.ts'
+    Imported via "./catalog.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/state.ts'
+    Imported via "./catalog.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/state.ts'
+    Imported via '../trial/catalog.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/session.ts'
+    Imported via '../trial/catalog.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/character/describe.ts'
+    Imported via '../../../core/src/trial/catalog.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/__tests__/catalog-golden.test.ts'
+packages/core/src/trial/catalog.ts(3,63): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/data/validate.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via '../data/validate.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/catalog.ts'
+    Imported via '../data/validate.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/society-map.ts'
+    Imported via '../data/validate.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/law.ts'
+    Imported via '../data/validate.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/society.ts'
+    Imported via '../data/validate.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/crisis.ts'
+    Imported via '../data/validate.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/order.ts'
+    Imported via '../data/validate.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/outside.ts'
+    Imported via '../data/validate.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/goods-stock.ts'
+    Imported via '../data/validate.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/crime.ts'
+packages/core/src/trial/crime.ts(4,36): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/random.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via '../world/random.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/crime.ts'
+    Imported via './random.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/generate.ts'
+    Imported via './random.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc.ts'
+packages/core/src/trial/crisis.ts(4,62): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/event-card.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via './event-card.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/crisis.ts'
+    Imported via './event-card.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/society.ts'
+    Imported via './trial/event-card.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/index.ts'
+packages/core/src/trial/law.ts(4,32): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/arrays.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via '../world/arrays.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/law.ts'
+    Imported via '../world/arrays.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/state.ts'
+    Imported via './arrays.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/session.ts'
+    Imported via './arrays.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/generate.ts'
+    Imported via './arrays.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc.ts'
+    Imported via '../world/arrays.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/character/validate.ts'
+    Imported via '../world/arrays.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/character/session.ts'
+packages/core/src/trial/law.ts(5,52): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/society.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via './society.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/law.ts'
+    Imported via './society.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/types.ts'
+    Imported via './society.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/types.ts'
+    Imported via './society.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/state.ts'
+    Imported via '../trial/society.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/session.ts'
+    Imported via '../trial/society.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/generate.ts'
+    Imported via '../trial/society.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/scenario.ts'
+    Imported via '../trial/society.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/character/validate.ts'
+    Imported via './trial/society.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/index.ts'
+packages/core/src/trial/order.ts(3,37): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/types.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via './types.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/order.ts'
+    Imported via './types.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/crime.ts'
+    Imported via './types.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/society.ts'
+    Imported via './types.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/law.ts'
+    Imported via "./trial/types.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/index.ts'
+    Imported via "./types.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/state.ts'
+    Imported via '../trial/types.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/types.ts'
+    Imported via '../trial/types.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc.ts'
+packages/core/src/trial/order.ts(4,39): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/crime.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via './crime.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/order.ts'
+    Imported via './trial/crime.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/index.ts'
+packages/core/src/trial/society.ts(4,49): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/crisis.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via './crisis.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/society.ts'
+    Imported via './crisis.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/event-card.ts'
+    Imported via './crisis.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/types.ts'
+    Imported via './trial/crisis.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/index.ts'
+packages/core/src/trial/society.ts(6,47): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/order.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via './order.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/society.ts'
+    Imported via './order.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/types.ts'
+    Imported via './trial/order.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/index.ts'
+packages/core/src/trial/types.ts(2,36): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/outside.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via './outside.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/types.ts'
+    Imported via './outside.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/society.ts'
+    Imported via '../trial/outside.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/data/validate.ts'
+    Imported via './outside.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/state.ts'
+    Imported via './trial/outside.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/index.ts'
+packages/core/src/trial/types.ts(6,33): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/goods-stock.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via './goods-stock.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/types.ts'
+    Imported via './goods-stock.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/society.ts'
+    Imported via './goods-stock.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/state.ts'
+    Imported via './trial/goods-stock.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/index.ts'

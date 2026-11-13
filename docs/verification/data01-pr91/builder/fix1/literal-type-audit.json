@@ -1,0 +1,107 @@
+{
+  "base": "5cc2522f27e01b49baaa6e44bba01904edcea5c0",
+  "typescript": "5.9.3",
+  "types": [
+    {
+      "constant": "TRIAL_BUILDINGS",
+      "literalCount": 0,
+      "match": true,
+      "nonAsciiLiterals": []
+    },
+    {
+      "constant": "SOCIETY_BUILDINGS",
+      "literalCount": 0,
+      "match": true,
+      "nonAsciiLiterals": []
+    },
+    {
+      "constant": "LAW_CATALOG",
+      "literalCount": 8,
+      "match": true,
+      "nonAsciiLiterals": []
+    },
+    {
+      "constant": "LAW_TRIAL",
+      "literalCount": 14,
+      "match": true,
+      "nonAsciiLiterals": []
+    },
+    {
+      "constant": "LAW_MESSAGES",
+      "literalCount": 10,
+      "match": true,
+      "nonAsciiLiterals": [
+        {
+          "kind": "StringLiteral",
+          "value": "The vote would fail: For {F} · Against {A}."
+        }
+      ]
+    },
+    {
+      "constant": "RESEARCH_TOPICS",
+      "literalCount": 3,
+      "match": true,
+      "nonAsciiLiterals": []
+    },
+    {
+      "constant": "OUTSIDE_PLOTS",
+      "literalCount": 3,
+      "match": true,
+      "nonAsciiLiterals": []
+    },
+    {
+      "constant": "ORDER_TRIAL",
+      "literalCount": 40,
+      "match": true,
+      "nonAsciiLiterals": []
+    },
+    {
+      "constant": "GARRISON_TRIAL",
+      "literalCount": 3,
+      "match": true,
+      "nonAsciiLiterals": []
+    },
+    {
+      "constant": "CRIME_TRIAL",
+      "literalCount": 27,
+      "match": true,
+      "nonAsciiLiterals": []
+    },
+    {
+      "constant": "CRISIS_TRIAL",
+      "literalCount": 32,
+      "match": true,
+      "nonAsciiLiterals": []
+    },
+    {
+      "constant": "SOCIETY_TRIAL",
+      "literalCount": 50,
+      "match": true,
+      "nonAsciiLiterals": []
+    },
+    {
+      "constant": "GOODS_STOCK_TRIAL",
+      "literalCount": 7,
+      "match": true,
+      "nonAsciiLiterals": []
+    },
+    {
+      "constant": "TILE_TRIAL_BALANCE",
+      "literalCount": 9,
+      "match": true,
+      "nonAsciiLiterals": []
+    },
+    {
+      "constant": "IMMIGRATION_TRIAL_DEFAULTS",
+      "literalCount": 0,
+      "match": true,
+      "nonAsciiLiterals": []
+    },
+    {
+      "constant": "OUTSIDE_TRIAL",
+      "literalCount": 36,
+      "match": true,
+      "nonAsciiLiterals": []
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+[
+  {
+    "constant": "IMMIGRATION_TRIAL_DEFAULTS",
+    "module": "packages/core/src/trial/catalog.ts",
+    "json": "packages/core/src/data/tuning.json",
+    "validator": "validateTuning",
+    "key": "IMMIGRATION_TRIAL_DEFAULTS"
+  },
+  {
+    "constant": "TRIAL_BUILDINGS",
+    "module": "packages/core/src/trial/catalog.ts",
+    "json": "packages/core/src/data/buildings.json",
+    "validator": "validateBuildings",
+    "key": "trial"
+  },
+  {
+    "constant": "TILE_TRIAL_BALANCE",
+    "module": "packages/core/src/trial/catalog.ts",
+    "json": "packages/core/src/data/tuning.json",
+    "validator": "validateTuning",
+    "key": "TILE_TRIAL_BALANCE"
+  },
+  {
+    "constant": "SOCIETY_BUILDINGS",
+    "module": "packages/core/src/trial/society-map.ts",
+    "json": "packages/core/src/data/buildings.json",
+    "validator": "validateBuildings",
+    "key": "society"
+  },
+  {
+    "constant": "LAW_CATALOG",
+    "module": "packages/core/src/trial/law.ts",
+    "json": "packages/core/src/data/laws.json",
+    "validator": "validateLaws",
+    "key": "catalog"
+  },
+  {
+    "constant": "LAW_TRIAL",
+    "module": "packages/core/src/trial/law.ts",
+    "json": "packages/core/src/data/laws.json",
+    "validator": "validateLaws",
+    "key": "trial"
+  },
+  {
+    "constant": "LAW_MESSAGES",
+    "module": "packages/core/src/trial/law.ts",
+    "json": "packages/core/src/data/laws.json",
+    "validator": "validateLaws",
+    "key": "messages"
+  },
+  {
+    "constant": "RESEARCH_TOPICS",
+    "module": "packages/core/src/trial/outside.ts",
+    "json": "packages/core/src/data/research.json",
+    "validator": "validateResearch",
+    "key": ""
+  },
+  {
+    "constant": "OUTSIDE_PLOTS",
+    "module": "packages/core/src/trial/outside.ts",
+    "json": "packages/core/src/data/outside-plots.json",
+    "validator": "validateOutsidePlots",
+    "key": ""
+  },
+  {
+    "constant": "OUTSIDE_TRIAL",
+    "module": "packages/core/src/trial/outside.ts",
+    "json": "packages/core/src/data/tuning.json",
+    "validator": "validateTuning",
+    "key": "OUTSIDE_TRIAL"
+  },
+  {
+    "constant": "ORDER_TRIAL",
+    "module": "packages/core/src/trial/order.ts",
+    "json": "packages/core/src/data/tuning.json",
+    "validator": "validateTuning",
+    "key": "ORDER_TRIAL"
+  },
+  {
+    "constant": "GARRISON_TRIAL",
+    "module": "packages/core/src/trial/order.ts",
+    "json": "packages/core/src/data/tuning.json",
+    "validator": "validateTuning",
+    "key": "GARRISON_TRIAL"
+  },
+  {
+    "constant": "CRIME_TRIAL",
+    "module": "packages/core/src/trial/crime.ts",
+    "json": "packages/core/src/data/tuning.json",
+    "validator": "validateTuning",
+    "key": "CRIME_TRIAL"
+  },
+  {
+    "constant": "CRISIS_TRIAL",
+    "module": "packages/core/src/trial/crisis.ts",
+    "json": "packages/core/src/data/tuning.json",
+    "validator": "validateTuning",
+    "key": "CRISIS_TRIAL"
+  },
+  {
+    "constant": "SOCIETY_TRIAL",
+    "module": "packages/core/src/trial/society.ts",
+    "json": "packages/core/src/data/tuning.json",
+    "validator": "validateTuning",
+    "key": "SOCIETY_TRIAL"
+  },
+  {
+    "constant": "GOODS_STOCK_TRIAL",
+    "module": "packages/core/src/trial/goods-stock.ts",
+    "json": "packages/core/src/data/tuning.json",
+    "validator": "validateTuning",
+    "key": "GOODS_STOCK_TRIAL"
+  }
+]
