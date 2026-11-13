@@ -3,7 +3,7 @@
 **Status:**
 - v0.1 was **G1 approved** by the owner (Tân), 2026-11-12, verbatim: "Approve both" (DATA-01 and P6-A, v0.1).
 - **v0.2 (2026-11-13) adds the owner's item categories, the Necklace slot and Material drops (§1 items 18–21, §4.0, §4.5, §7.6). G1 approved by the owner (Tân), 2026-11-13, verbatim: "Duyệt v0.2".**
-- **v0.3 (2026-11-13) adds the herb leaves as Herb Garden materials and places brewing and effect potions (§1 items 22–25, §3, §4.5). The owner chose each placement in Claude's question dialog (quoted in §1). It is awaiting the owner's review together with the plan.**
+- **v0.3 (2026-11-13) adds the herb leaves as Herb Garden materials and places brewing and effect potions (§1 items 22–25, §3, §4.5). The owner chose each placement in Claude's question dialog (quoted in §1). Approved by the owner (Tân) with the plan, 2026-11-13, verbatim: "Duyệt, giao Builder A".**
 
 - **Base:** `main` `ca46d18`.
 - **Not authorised by this document:** no code, push or PR.

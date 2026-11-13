@@ -22,6 +22,8 @@
 - v0.3 adds the herb leaves (owner's dialog choices are quoted in spec §1, items 22–25).
 - Builders read the spec and this plan.
 
+**Plan approval:** the owner (Tân) approved this plan with spec v0.3 on 2026-11-13, verbatim: "Duyệt, giao Builder A".
+
 **Base:** `main` `c4d3dc4` (DATA-01 complete).
 
 ---
