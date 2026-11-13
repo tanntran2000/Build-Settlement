@@ -37,6 +37,7 @@
 - **Recording:** each such edit is listed as file:line, before → after, in the PR's edit inventory.
 - Any other change to an existing test is still a HOLD.
 - **Owner (Tân), 2026-11-13, choice in Claude's question dialog, verbatim:** "Allow additive shape edits (Recommended)".
+- **Extension:** correction 2 also covers adding an owner-approved new entry to a whole-object assert. Example: `END_SCREEN_COPY.wounds` (title 'Your Lord Has Died', text 'Your wounds proved fatal.') in `crime-view.test.ts:14`. The matcher and the other entries stay unchanged, and each edit is listed. **Owner (Tân), 2026-11-13, verbatim:** "Allow, extend correction 2 (Recommended)".
 
 **Base:** `main` `c4d3dc4` (DATA-01 complete).
 
