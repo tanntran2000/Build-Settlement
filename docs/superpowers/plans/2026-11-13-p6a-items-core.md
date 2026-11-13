@@ -32,6 +32,12 @@
 - PR C keeps the rest of the UI.
 - **Owner (Tân), 2026-11-13, choice in Claude's question dialog, verbatim:** "Add end copy to PR A (Recommended)".
 
+**Plan correction 2 (additive shape-test edits, all P6-A PRs).**
+- **The rule:** an existing test that asserts a whole state object (for example `society.test.ts:7`) may add the new `items` field and the v8 ruleset literal, with exact values. Nothing else in that test changes: the matcher (`toEqual`), the other expected fields, and the setup stay as they are.
+- **Recording:** each such edit is listed as file:line, before → after, in the PR's edit inventory.
+- Any other change to an existing test is still a HOLD.
+- **Owner (Tân), 2026-11-13, choice in Claude's question dialog, verbatim:** "Allow additive shape edits (Recommended)".
+
 **Base:** `main` `c4d3dc4` (DATA-01 complete).
 
 ---
