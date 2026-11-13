@@ -7,7 +7,7 @@
 - **Spec and plan:** `docs/superpowers/specs/2026-11-12-data01-game-data-storage-design.md` and `docs/superpowers/plans/2026-11-12-data01-game-data-storage.md`, on this branch. The binding plan is at `6a8bfa2`.
 
 ## Result at the exact head (Claude, Tester)
-`claude-tester/tester-gates-smoke-1ad295b.txt` holds the full gate and smoke output at the exact head.
+`claude-tester/tester-gates-smoke-1ad295b.txt` holds the full gate and smoke output at the exact head. `claude-tester/RUNNER.md` names the runner script and invocation; the script sets `CI=1` before the smoke.
 
 | Gate | Exit | Result |
 |---|---:|---|
