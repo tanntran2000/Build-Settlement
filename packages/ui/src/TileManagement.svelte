@@ -37,6 +37,7 @@
   let postDrafts: PostDraftEntry[] = [];
   let saveNotice = '';
   let importRead = 0;
+  let checkpointAction = 0;
   let report: Readonly<TileTrialReport> | null = null;
   let outside: OutsideWorldState | null = null;
   let npcs: WorldNpc[] | null = null;
@@ -103,7 +104,7 @@
       lifeStatus = '';
       const resolvedRevision = state.revision, resolvedReport = report;
       if(state.society?.crisis.stage === 'fallen') {
-        const cleared = clearFallenCharacterLifeCheckpoint(true, state.society.crisis.stage);
+        const cleared = await clearFallenCharacterLifeCheckpoint(true, state.society.crisis.stage);
         if (!cleared.success) errorLog.record('RUNTIME', 'INVALID_COMMAND');
         return;
       }
@@ -118,11 +119,12 @@
   async function nextLifeWeek(): Promise<void> {
     if (state.phase !== 'report') return;
     if (!command('NEXT_WEEK')) return;
+    const savedRevision = state.revision, savedWeek = state.world.week;
     lifeStatus = `Planning ${formatLifeWeek(state.world.week)}. Previous report retained.`;
     await tick();
     if (get(options).autosave && !checkpointLocked && outside && npcs && player && profiles) {
-      const result = saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
-      if (!result.success) lifeStatus = 'Autosave failed. Your last save is kept.';
+      const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+      if (!result.success && state.revision === savedRevision && state.world.week === savedWeek) lifeStatus = 'Autosave failed. Your last save is kept.';
     }
   }
   async function openLifeCity(): Promise<void> {
@@ -195,19 +197,25 @@
       loadWorldSession(result.state, expectedRevision, 'Checkpoint imported. Planning restored.');
     } catch { if (ticket === importRead) checkpointError('Could not read the checkpoint file. Your game was preserved.'); }
   }
-  function saveLocally() {
-    const result = saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+  async function saveLocally() {
+    const ticket = ++checkpointAction, fileTicket = importRead, expectedRevision = state.revision;
+    const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+    if (ticket !== checkpointAction || fileTicket !== importRead || state.revision !== expectedRevision) return;
     if (!result.success) { checkpointError(result.message); return; }
     error = ''; saveNotice = result.replaced ? 'Saved in this browser. Replaced the previous local checkpoint.' : 'Saved in this browser.';
   }
-  function continueLocally() {
-    const result = readLocalCharacterLife();
+  async function continueLocally() {
+    const ticket = ++checkpointAction, fileTicket = importRead, expectedRevision = state.revision;
+    const result = await readLocalCharacterLife();
+    if (ticket !== checkpointAction || fileTicket !== importRead || state.revision !== expectedRevision) return;
     if (!result.success) { checkpointError(result.message); return; }
-    loadWorldSession(result.state, state.revision, 'Local checkpoint loaded. Planning restored.', true);
+    loadWorldSession(result.state, expectedRevision, 'Local checkpoint loaded. Planning restored.', true);
   }
-  function mainMenu() {
+  async function mainMenu() {
     if (checkpointLocked) return;
-    const result = saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+    const ticket = ++checkpointAction, fileTicket = importRead, expectedRevision = state.revision;
+    const result = await saveLocalCharacterLife({ city: state, outside, npcs, player, profiles });
+    if (ticket !== checkpointAction || fileTicket !== importRead || state.revision !== expectedRevision) return;
     if (!result.success) { checkpointError(result.message); return; }
     onexit();
   }

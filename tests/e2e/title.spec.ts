@@ -1,3 +1,4 @@
+import {storedSaveText,readStoredRecords,writeStoredSaveText,writeRawRecord,clearStored,storeMarks,resetStoreMarks,injectWriteAbort} from './storage.helpers.ts';
 import { test, expect } from '@playwright/test';
 
 test.describe('B1 in-game Options', () => {
@@ -107,11 +108,13 @@ test('empty slot disables Continue and focuses New Game', async ({ page }) => {
   await page.goto('/'); await expect(title(page)).toBeVisible(); await expect(button(page, 'Continue')).toBeDisabled(); await expect(page.getByText('No local checkpoint', { exact: true })).toBeVisible(); await expect(button(page, 'New Game')).toBeFocused();
 });
 test('manual save enables cached Continue with exactly one mount read', async ({ page }) => {
-  await page.goto('/'); await expect(title(page)).toBeVisible(); await importLife(page, makeLife()); await go(page, 'session'); await button(page, 'Save locally').click(); const saved = await exportLife(page);
+  await page.goto('/'); await expect(title(page)).toBeVisible(); await importLife(page, makeLife()); await go(page, 'session'); await button(page, 'Save locally').click();
+  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+   const saved = await exportLife(page);
   await page.addInitScript(key => { const original = Storage.prototype.getItem; Object.assign(window, { titleReads: 0 }); Storage.prototype.getItem = function(k) { if (k === key) (window as unknown as { titleReads: number }).titleReads++; return original.call(this, k); }; }, KEY);
   await page.reload(); await expect(button(page, 'Continue')).toBeEnabled(); await expect(button(page, 'Continue')).toBeFocused();
   await page.keyboard.press('Enter'); await page.keyboard.press('Enter'); await expect(page.getByTestId('life-shell')).toHaveCount(1);
-  expect(await page.evaluate(() => (window as unknown as { titleReads: number }).titleReads)).toBe(1); expect(await exportLife(page)).toEqual(saved);
+  expect((await storeMarks(page)).filter(n=>n==='haven.store.read').length).toBe(1); expect(await exportLife(page)).toEqual(saved);
 });
 test('old checkpoint disables Continue with reason', async ({ page }) => {
   await page.addInitScript(key => localStorage.setItem(key, '{}'), KEY); await page.goto('/'); await expect(title(page)).toBeVisible();
@@ -182,9 +185,10 @@ test('fallen city clears cached Continue after New Game and creation Cancel', as
   const parsed = deserializeCharacterLifeSave(await readFile(new URL('../../packages/persistence/src/__tests__/fixtures/society-v7/life-rebellion-last-week.json', import.meta.url), 'utf8'));
   if (!parsed.success) throw Error(parsed.error.message);
   await page.goto('/'); await importLife(page, parsed.state); await go(page, 'session'); await button(page, 'Save locally').click();
+  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
   await page.reload(); await expect(button(page, 'Continue')).toBeEnabled(); await button(page, 'Continue').click();
   await page.getByTestId('life-end-week').click(); await expect(page.getByRole('heading', { name: 'The City Has Fallen', exact: true })).toBeVisible();
-  expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBeNull();
+  expect(await storedSaveText(page)).toBeNull();
   await button(page, 'New Game').click(); await expect(page.getByRole('heading', { name: 'Character Creation', exact: true })).toBeVisible(); await button(page, 'Cancel').click();
   await expect(title(page)).toBeVisible(); await expect(button(page, 'Continue')).toBeDisabled();
   await expect(page.getByText('No local checkpoint', { exact: true })).toBeVisible();
@@ -216,10 +220,10 @@ test.describe('B2 Main menu', () => {
   test.beforeEach(async ({ page }) => { await page.goto('/'); await importLife(page, makeLife()); });
   test('Main menu saves and refreshes focused Continue on the title', async ({ page }) => {
     const menu = button(page, 'Main menu'); await expect(menu).toBeVisible();
-    expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBeNull();
+    expect(await storedSaveText(page)).toBeNull();
     const before = await exportLife(page); await menu.click();
     await expect(title(page)).toBeVisible(); await expect(button(page, 'Continue')).toBeEnabled(); await expect(button(page, 'Continue')).toBeFocused();
-    expect(JSON.parse((await page.evaluate(key => localStorage.getItem(key), KEY))!).state).toEqual(before);
+    expect(JSON.parse((await storedSaveText(page))!).state).toEqual(before);
     await button(page, 'Continue').click(); expect(await exportLife(page)).toEqual(before);
   });
   test('Main menu is locked with its reason throughout Report', async ({ page }) => {
@@ -229,19 +233,16 @@ test.describe('B2 Main menu', () => {
     await expect(page.getByText('Plan next week first.', { exact: true })).toBeVisible();
     await menu.click({ force: true }); await expect(page.getByTestId('life-shell')).toBeVisible();
     await expect(page.locator('[data-life-view="reports"]')).toBeVisible();
-    expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBeNull();
+    expect(await storedSaveText(page)).toBeNull();
   });
   test('Main menu write failure keeps Planning, the session and the previous save', async ({ page }) => {
     const menu = button(page, 'Main menu'); await expect(menu).toBeVisible();
     const before = await exportLife(page), prior = bytes(makeLife(54321));
-    await page.evaluate(({ key, prior }) => {
-      localStorage.setItem(key, prior); const set = Storage.prototype.setItem;
-      Storage.prototype.setItem = function(k, value) { if (k === key) throw Error('quota'); return set.call(this, k, value); };
-    }, { key: KEY, prior });
+    await writeStoredSaveText(page,prior); await injectWriteAbort(page);
     await menu.click();
     await expect(page.getByRole('alert')).toContainText('Could not save in this browser');
     await expect(page.getByTestId('life-shell')).toBeVisible(); await expect(page.locator('aside')).toContainText('Planning');
-    expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBe(prior);
+    expect(await storedSaveText(page)).toBe(prior);
     expect(await exportLife(page)).toEqual(before);
   });
 });

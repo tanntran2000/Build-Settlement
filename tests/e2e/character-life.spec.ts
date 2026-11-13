@@ -1,3 +1,4 @@
+import {storedSaveText,readStoredRecords,writeStoredSaveText,writeRawRecord,clearStored,storeMarks,resetStoreMarks,injectWriteAbort} from './storage.helpers.ts';
 import {createNpcWorldSession} from '../../packages/core/src/index.ts';
 import { test, expect, type Page } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
@@ -162,7 +163,7 @@ test('private adult section is collapsed by default and records optional values'
 
 test('Continue locally with empty slot shows the message and stays on start', async ({ page }) => {
   await page.goto('/?mode=world-life');
-  await page.evaluate(key => localStorage.removeItem(key), KEY);
+  await clearStored(page);
   await expect(button(page, 'Continue')).toBeDisabled();
   await expect(page.getByText('No local checkpoint', { exact: true })).toHaveText('No local checkpoint');
   await expect(button(page, 'New Game')).toBeVisible();
@@ -316,7 +317,7 @@ test('life Save locally leaves the NPC-world and world slots unchanged', async (
   await button(page, 'Save locally').click();
   await expect(page.getByRole('region', { name: 'Planning checkpoints', exact: true }).getByRole('status')).toHaveText('Saved in this browser.');
   expect(await page.evaluate(keys => keys.map(k => localStorage.getItem(k)), [NPC_KEY, WORLD_KEY])).toEqual(['protected-bytes', 'protected-bytes']);
-  expect(await page.evaluate(k => localStorage.getItem(k)?.startsWith('{"format":"haven.character-life-session.save"'), 'haven.character-life-session-society.checkpoint.v1')).toBe(true);
+  expect((await storedSaveText(page))?.startsWith('{"format":"haven.character-life-session.save"')).toBe(true);
 });
 
 test('Life report and checkpoint operations preserve every other-mode slot byte-for-byte', async ({ page }) => {
@@ -332,6 +333,7 @@ test('Life report and checkpoint operations preserve every other-mode slot byte-
   await button(page, 'Plan next week').click();
   await importLife(page, saved);
   await go(page, 'session'); await button(page, 'Continue locally').click();
+  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Local checkpoint loaded. Planning restored.');
   const restored = await exportLife(page);
   expect({ ...restored, city: { ...restored.city, revision: saved.city.revision } }).toEqual(saved);
   expect(await page.evaluate(keys => keys.map(key => localStorage.getItem(key)), keys)).toEqual(bytes);

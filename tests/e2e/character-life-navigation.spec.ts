@@ -1,3 +1,4 @@
+import {storedSaveText,readStoredRecords,writeStoredSaveText,writeRawRecord,clearStored,storeMarks,resetStoreMarks,injectWriteAbort} from './storage.helpers.ts';
 import { expect, test, type Page, type Locator } from '@playwright/test';
 import { serializeCharacterLifeSave } from '../../packages/persistence/src/character-life-save.ts';
 import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
@@ -903,6 +904,7 @@ async function prepareLoadIntent(page: Page) {
   await page.getByLabel('Building type', { exact: true }).selectOption('logging');
   const saved = await exportLife(page);
   await page.getByRole('button', { name: 'Save locally', exact: true }).click();
+  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
   await selectPerson(page, 'npc_starter_1'); await selectArea(page, 'Work'); await postSelect(page).selectOption('plain-1');
   await selectPerson(page, 'npc_starter_2'); await selectArea(page, 'Work');
   await characterWindow(page).getByRole('combobox').selectOption('plain-1');
@@ -1039,9 +1041,9 @@ for (const kind of ['invalid JSON', 'incompatible schema', 'oversize', 'invalid 
         await releaseRead(page, 0, kind === 'read rejection' ? null : text);
         if (kind === 'superseded reads' || kind === 'newer Import' || kind === 'later Continue') expect({ checkpoint: await checkpoints(page).textContent(), error: await page.getByTestId('life-shell').locator('[data-life-error][role="alert"]').allTextContents() }).toEqual(feedback);
       } else if (kind === 'invalid local Continue') {
-        await page.evaluate(key => localStorage.setItem(key, '{'), lifeKey);
+        await writeRawRecord(page,'city','city','{'); const corruptRecords = await readStoredRecords(page);
         await page.getByRole('button', { name: 'Continue locally', exact: true }).click();
-        expect(await page.evaluate(key => localStorage.getItem(key), lifeKey)).toBe('{');
+        expect(await readStoredRecords(page)).toEqual(corruptRecords);
       } else {
         await putFile(page, kind === 'invalid JSON' ? '{' : kind === 'incompatible schema' ? JSON.stringify({ format: 'haven.character-life-session.save', schemaVersion: 999, state: saved }) : kind === 'oversize' ? 'x'.repeat(1024 * 1024 + 1) : text);
       }
@@ -1339,12 +1341,12 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 812 
       const foreign = { 'haven.tile-trial.checkpoint.v1': 'tile sentinel', 'haven.tile-population.checkpoint.v1': 'population sentinel', 'haven.world-session.checkpoint.v1': 'world sentinel', 'haven.world-npc-session.checkpoint.v1': 'npc sentinel' };
       await page.addInitScript(values => { for (const [k, v] of Object.entries(values)) localStorage.setItem(k, v); }, foreign);
       const saved = await prepareLoadIntent(page), text = encodedLife(saved);
-      const slot = await page.evaluate(key => localStorage.getItem(key), lifeKey);
+      const slot = await storedSaveText(page);
       for (const payload of ['{', 'x'.repeat(1024 * 1024 + 1)]) {
         const before = await lifeUiSnapshot(page); await putFile(page, payload);
         await expect(page.getByTestId('life-shell').locator('[data-life-error][role="alert"]')).toBeVisible();
         await expectCheckpointRejectionPreservesUi(page, before, saved.city.world.week);
-        expect(await page.evaluate(key => localStorage.getItem(key), lifeKey)).toBe(slot);
+        expect(await storedSaveText(page)).toBe(slot);
       }
       await delayReads(page);
       try {
@@ -1372,7 +1374,9 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 812 
       await importLife(page, exported);
       const roundtrip = await exportLife(page);
       expect(roundtrip).toEqual({ ...exported, city: { ...exported.city, revision: roundtrip.city.revision } });
-      await page.getByRole('button', { name: 'Save locally', exact: true }).click(); await page.reload();
+      await page.getByRole('button', { name: 'Save locally', exact: true }).click();
+      await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+       await page.reload();
       await page.getByRole('button', { name: 'Continue', exact: true }).click();
       const reloaded = await exportLife(page);
       expect(reloaded).toEqual(roundtrip);
@@ -1427,9 +1431,11 @@ test('B2 City Report City preserves export and saved checkpoint', async ({ page 
   await page.goto('/?mode=world-life'); await importLife(page, makeLife());
   const before = await exportLife(page);
   await page.getByRole('button', { name: 'Save locally', exact: true }).click();
-  const saved = await page.evaluate(() => JSON.stringify(localStorage));
+  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+  const saved = { legacy: await page.evaluate(() => JSON.stringify(localStorage)), records: await readStoredRecords(page) };
+  expect(saved.records).toContainEqual({slotId:'main',id:'city',table:'city',schemaVersion:1,value:before.city});
   await go(page, 'city'); await go(page, 'reports'); await go(page, 'city');
-  expect(await page.evaluate(() => JSON.stringify(localStorage))).toBe(saved);
+  expect({ legacy: await page.evaluate(() => JSON.stringify(localStorage)), records: await readStoredRecords(page) }).toEqual(saved);
   expect(await exportLife(page)).toEqual(before);
 });
 

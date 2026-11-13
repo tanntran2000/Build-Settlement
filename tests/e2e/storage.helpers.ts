@@ -1,0 +1,101 @@
+import { type Page } from '@playwright/test';
+import { GAME_DB, recordsToSession, sessionToRecords, serializeCharacterLifeSave, type StoredRecord, type TableName } from '../../packages/persistence/src/index.ts';
+
+export async function readStoredRecords(page: Page): Promise<StoredRecord[]> {
+  return page.evaluate(config => new Promise<StoredRecord[]>((resolve,reject) => {
+    const request=indexedDB.open(config.name,config.version);
+    request.onerror=()=>reject(request.error);
+    request.onsuccess=()=>{
+      const db=request.result,tx=db.transaction([...config.stores],'readonly'),rows:StoredRecord[]=[];
+      for(const name of config.stores){const read=tx.objectStore(name).getAll();read.onsuccess=()=>rows.push(...read.result);}
+      tx.oncomplete=()=>{db.close();resolve(rows.sort((a,b)=>`${a.table}:${a.id}`.localeCompare(`${b.table}:${b.id}`)));};
+      tx.onabort=()=>{db.close();reject(tx.error);};
+    };
+  }),GAME_DB);
+}
+export async function storedSaveText(page: Page): Promise<string|null> {
+  const rows=(await readStoredRecords(page)).filter(r=>r.slotId==='main'&&r.table!=='system');
+  if(!rows.some(r=>r.table==='meta'))return null;
+  const result=serializeCharacterLifeSave(recordsToSession(rows));
+  if(!result.success)throw Error(result.error.message);
+  return result.text;
+}
+export async function writeRecords(page: Page,rows: StoredRecord[]) {
+  await page.evaluate(({config,rows})=>new Promise<void>((resolve,reject)=>{
+    const request=indexedDB.open(config.name,config.version);request.onerror=()=>reject(request.error);
+    request.onsuccess=()=>{const db=request.result,tx=db.transaction([...config.stores],'readwrite');
+      for(const name of config.stores.filter(t=>t!=='system'))tx.objectStore(name).clear();
+      for(const row of rows)tx.objectStore(row.table).put(row);
+      tx.oncomplete=()=>{db.close();resolve();};tx.onabort=()=>{db.close();reject(tx.error);};
+    };
+  }),{config:GAME_DB,rows});
+}
+export async function writeStoredSaveText(page: Page,text: string) {
+  let rows:StoredRecord[];
+  try {
+    const data=JSON.parse(text);rows=sessionToRecords('main',data.state);
+    for(const r of rows)r.schemaVersion=data.schemaVersion;
+    const meta=rows.find(r=>r.table==='meta')!;Object.assign(meta.value as object,{saveFormat:data.format});
+    const city=rows.find(r=>r.table==='city')!.value as {society?:{rulesetId:string}};
+    if(city.society)city.society.rulesetId=data.cityRulesetId;
+  } catch {
+    rows=[{slotId:'main',id:'session',table:'meta',schemaVersion:1,value:{saveFormat:'invalid'}},{slotId:'main',id:'city',table:'city',schemaVersion:1,value:text}];
+  }
+  await writeRecords(page,rows);return readStoredRecords(page);
+}
+export async function clearStored(page: Page){await writeRecords(page,[]);}
+export async function writeRawRecord(page: Page,table: TableName,id: string,value: unknown) {
+  const rows=(await readStoredRecords(page)).filter(r=>r.table!=='system');
+  const record=rows.find(r=>r.table===table&&r.id===id);if(!record)throw Error('Missing record '+table+':'+id);
+  record.value=value;await writeRecords(page,rows);
+}
+export async function storeMarks(page: Page){return page.evaluate(()=>performance.getEntriesByType('mark').map(m=>m.name).filter(n=>/^haven\.store\.(read|write|clear)$/.test(n)));}
+export async function resetStoreMarks(page: Page){await page.evaluate(()=>{for(const name of ['read','write','clear'])performance.clearMarks('haven.store.'+name);});}
+export async function injectWriteAbort(page: Page,kind='abort') {
+  await page.evaluate(kind=>{
+    const original=IDBDatabase.prototype.transaction;
+    IDBDatabase.prototype.transaction=function(...args: Parameters<typeof original>){
+      if(args[1]==='readwrite'&&kind==='throw')throw Error('raw/private/storage');
+      const tx=original.apply(this,args);if(args[1]==='readwrite')queueMicrotask(()=>tx.abort());return tx;
+    };
+  },kind);
+}
+
+// Hold only delivery of a completed transaction, so user commands need no live IDB transaction.
+export async function holdStoreCompletion(page: Page,mode: IDBTransactionMode,skip=0) {
+  await page.evaluate(({mode,skip})=>{
+    const original=IDBDatabase.prototype.transaction;let held=false,remaining=skip;
+    IDBDatabase.prototype.transaction=function(...args: Parameters<typeof original>){
+      const tx=original.apply(this,args);
+      if(this.name==='haven'&&args[1]===mode&&!held){
+        if(remaining>0)remaining--;
+        else {held=true;Object.defineProperty(tx,'oncomplete',{set(handler){tx.addEventListener('complete',event=>{
+          Object.assign(window,{releaseStoreCompletion:()=>handler.call(tx,event)});
+        });}});}
+      }
+      return tx;
+    };
+  },{mode,skip});
+}
+export async function waitStoreCompletion(page: Page) {
+  await page.waitForFunction(()=>typeof (window as unknown as {releaseStoreCompletion?:unknown}).releaseStoreCompletion==='function');
+}
+export async function releaseStoreCompletion(page: Page) {
+  await page.evaluate(async()=>{
+    (window as unknown as {releaseStoreCompletion:()=>void}).releaseStoreCompletion();
+    // The held transaction is complete: drain its Promise/UI continuations before assertions.
+    await new Promise(resolve=>setTimeout(resolve,0));
+  });
+}
+
+export async function watchMigrationActivity(page:Page) {
+ await page.evaluate(config=>{
+  const activity={readwrite:0,writes:[] as {operation:string;table:string;key:unknown}[]};Object.assign(window,{migrationActivity:activity});performance.clearMarks('haven.store.write');
+  const transaction=IDBDatabase.prototype.transaction,put=IDBObjectStore.prototype.put,remove=IDBObjectStore.prototype.delete,clear=IDBObjectStore.prototype.clear;
+  IDBDatabase.prototype.transaction=function(...args:Parameters<typeof transaction>){const tx=transaction.apply(this,args);if(this.name===config.name&&args[1]==='readwrite')activity.readwrite++;return tx;};
+  IDBObjectStore.prototype.put=function(...args:Parameters<typeof put>){if(this.transaction.db.name===config.name)activity.writes.push({operation:'put',table:this.name,key:[args[0].slotId,args[0].id]});return put.apply(this,args);};
+  IDBObjectStore.prototype.delete=function(...args:Parameters<typeof remove>){if(this.transaction.db.name===config.name)activity.writes.push({operation:'delete',table:this.name,key:args[0]});return remove.apply(this,args);};
+  IDBObjectStore.prototype.clear=function(){if(this.transaction.db.name===config.name)activity.writes.push({operation:'clear',table:this.name,key:null});return clear.call(this);};
+ },GAME_DB);
+ return ()=>page.evaluate(()=>(window as unknown as {migrationActivity:{readwrite:number;writes:{operation:string;table:string;key:unknown}[]}}).migrationActivity);
+}
