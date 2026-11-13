@@ -68,12 +68,23 @@ export function isItemsState(raw:unknown,characterIds:readonly string[]):raw is 
     };
     const inventory=readDenseArray(raw.inventory),consumables=readDenseArray(raw.consumables),storage=readDenseArray(raw.storage),market=readDenseArray(raw.market);
     if(!inventory||!consumables||!storage||!market||inventory.length>ITEM_TRIAL.inventoryCap||consumables.length>ITEM_TRIAL.consumableCap||storage.length>ITEM_TRIAL.storageCap||market.length>Object.values(ITEM_TRIAL.marketCounts).reduce((a,b)=>a+b,0))return false;
-    if(!inventory.every(v=>instance(v,'wearable'))||!consumables.every(v=>instance(v,'consumable')))return false;
-    if(!storage.every(v=>hasWeeklyKeys(v,['item','expiresWeek'])&&count(v.expiresWeek)&&v.expiresWeek>=1&&instance(v.item,'any')))return false;
+    // Lists share the ascending-id order used to rebuild item-table records.
+    for(const [list,category] of [[inventory,'wearable'],[consumables,'consumable']] as const){
+      let previousId=0;
+      for(const item of list){
+        if(!instance(item,category)||item.id<=previousId)return false;
+        previousId=item.id;
+      }
+    }
+    let previousStorageId=0;
+    for(const entry of storage){
+      if(!hasWeeklyKeys(entry,['item','expiresWeek'])||!count(entry.expiresWeek)||entry.expiresWeek<1||!instance(entry.item,'any')||entry.item.id<=previousStorageId)return false;
+      previousStorageId=entry.item.id;
+    }
     if(!plain(raw.materials)||!Object.entries(raw.materials).every(([id,n])=>Object.hasOwn(ITEM_CATALOG,id)&&ITEM_CATALOG[id].category==='material'&&count(n)&&n>=1&&n<=ITEM_TRIAL.stackCap))return false;
     if(!plain(raw.equipped))return false;
     for(const [characterId,worn] of Object.entries(raw.equipped)){
-      if(!characterIds.includes(characterId)||!plain(worn))return false;
+      if(!characterIds.includes(characterId)||!plain(worn)||!Object.keys(worn).length)return false;
       if(Object.hasOwn(worn,'set')&&['top','bottom','shoes'].some(s=>Object.hasOwn(worn,s)))return false;
       for(const [slot,item] of Object.entries(worn)){
         if(!isOpenItemSlot(slot)||!instance(item,'wearable'))return false;
