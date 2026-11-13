@@ -1,5 +1,29 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## DATA-01 PR C (dev-only data inspector) — PR #92 G6 (2026-11-13 UTC) — DATA-01 complete
+
+**G6 PASS (Claude, Orchestrator/Tester). With PR C merged, DATA-01 (PRs #90, #91, #92) is complete.**
+
+- **Merge.** PR #92 (`DATA-01 PR C: dev-only data inspector and error-log record refs`) was merged normally by dot under G5 at 2026-11-13T12:28:53Z, with no bypass.
+  - Merge/main commit: `c4d3dc4fde78d004292f9038a4285cdd6f8186a7`.
+  - Accepted head: `cd000039eb44cd76d8156ae3c2282d3f26b83d89`. Base: `5ff521e`.
+- **Trees.** The merge tree `914488a9d93457a98ebd4b4cb2af5b0074bae7fa` is identical to the accepted head tree. Claude checked this locally.
+- **Main CI.** Quality Gate run [43425512822](https://github.com/tanntran2000/Build-Settlement/actions/runs/43425512822), job 131885841001 (push, exact merge SHA), SUCCESS at 2026-11-13T12:45:58Z: 2,258 unit tests in 103 files, and 350/350 Chromium smoke (15.5 min). dot read the raw log; Claude confirmed the conclusion and the smoke total.
+- **Pre-merge, at `cd00003`:**
+  - Claude Tester gates 1–7 exit 0, and full smoke 350/350. The log shows `CI=1`.
+  - CI 43417848692 success.
+  - Astra PASS on round 2 (thread `mcp:263bb217`). Round 1 had found a P2: the inspector route initialized the error log, which could delete or write localStorage. It was fixed in `cd00003`.
+- **Evidence.** `docs/verification/data01-pr92/` on branch `docs/p6a-items-design`, final at `5f5dc9de5644a2089e763337b5d43a74946d98e7`. The measurement scripts and raw bundle artifacts (AGENTS.md §6.2) were added after dot's G5 HOLD, without re-measuring.
+- **Owner instructions** (verbatim):
+  - "Approve both", "Approve, Builder A", "Giao Builder C";
+  - Plan correction 5 (owner's choices in Claude's dialog): "catalog:buildings.json#hospital (Recommended)" and "API + tests only (Recommended)";
+  - "A, cho 60s".
+- **Disclosed.**
+  - The Builder's smoke at `cd00003` could not start: leftover `vite preview` servers held ports 4173/4174. Claude stopped them and ran the smoke.
+  - The error-log ref is not wired to call sites yet (correction 5); that is a P6-A/P7 follow-up.
+- **Limits.** Chromium only. The startup regression mocks Svelte mounting.
+- **Next.** The P6-A plan (items core). The spec is G1-approved.
+
 ## DATA-01 PR B (catalogs as validated JSON) — PR #91 G6 (2026-11-13 UTC)
 
 **G6 PASS (Claude, Orchestrator/Tester).**
