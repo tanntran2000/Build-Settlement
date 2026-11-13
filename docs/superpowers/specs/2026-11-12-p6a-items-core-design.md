@@ -1,6 +1,8 @@
-# P6-A — Items core, sources and Player health (design spec v0.1)
+# P6-A — Items core, sources and Player health (design spec v0.2)
 
-**Status:** **G1 approved** by the owner (Tân), 2026-11-12, verbatim: "Approve both" (DATA-01 and P6-A, v0.1).
+**Status:**
+- v0.1 was **G1 approved** by the owner (Tân), 2026-11-12, verbatim: "Approve both" (DATA-01 and P6-A, v0.1).
+- **v0.2 (2026-11-13) adds the owner's item categories, the Necklace slot and Material drops (§1 items 18–21, §4.0, §4.5, §7.6). It is awaiting the owner's G1 review of these changes.**
 
 - **Base:** `main` `ca46d18`.
 - **Not authorised by this document:** no code, push or PR.
@@ -58,11 +60,22 @@ Owner decisions from the Claude session, 2026-11-11 and 2026-11-12, verbatim whe
 **Time**
 17. Time unit: "vì game ko có ngày nên mọi thông tin ngày nên quy về tuần".
 
+**Item categories (2026-11-13, v0.2)**
+18. Four rarities and four categories, as a starting set that will grow: "item sẽ chia làm 4 bậc với độ hiếm từ common -> legendary. Những thứ tôi liệt kê là ý tưởng ban đầu về sau có thể mở rộng ra nhiều loại đồ hơn". The four categories:
+    - **Material:** crafting inputs, for example iron, gold, silver, ruby, amethyst, nitrate, rubber, paper, glass and cloths.
+    - **Equipment:** weapons, for example sword, axe and bow.
+    - **Accessory:** for example Earring, Necklace, Glove and Ring. The adult accessories (buttplug, dildo, mouth gag) come later.
+    - **Outfit:** clothing worn on the body, for example T-shirt and jean shorts. Pantie and Bra come later.
+19. Necklace slot, owner's choice in Claude's question dialog: "Add for Player + NPC (Recommended)".
+20. Underwear and the adult accessories, owner's choice: "P6-C with 18+ items (Recommended)".
+21. Materials drop from production when an NPC is posted, and the rarer the tier, the lower the chance: "Material là nguyên liệu có thể rớt trong quá trình khai thác ví dụ sau 1 tuần ở mine dùng để đào Tài nguyên stone thì khi để NPC vào slot thì khả năng rất các material như iron, silver, gold,... Tùy vào độ hiếm thì tỉ lệ rớt càng thấp."
+
 ## 2. Player outcome
 
 The Player and each named NPC have an **Equipment** view: a paper-doll of slots plus a shared inventory.
 
 - **Getting items:** the Player buys items at the Market, finds items in the weekly report, and earns Legendary items by reaching hard goals.
+- **Materials:** NPCs posted at the Mine, Quarry, Logging Camp, Weaver or Sheep Pasture sometimes bring back materials (iron, silver, gold, glass…). Rarer materials come less often. They are kept for crafting in P6-B, or sold.
 - **What equipping does:** it raises the wearer's skills, and the higher skills make the wearer's post produce more, guard better, or raise Authority.
 - **The Player's life:**
   - Wounds can kill the lord.
@@ -72,9 +85,10 @@ The Player and each named NPC have an **Equipment** view: a paper-doll of slots 
 ## 3. Non-goals (P6-A)
 
 **Later parts of P6**
-- **P6-B:** crafting at the Smithy, and the new materials Steel and Sulfur.
+- **P6-B:** crafting at the Smithy. It turns the Materials from §4.5 into equipment, accessories and outfits. Its recipes and any new materials (for example Steel and Sulfur) are designed there.
 - **P6-C, after P7:**
-  - 18+ items;
+  - 18+ items, including the adult accessories (buttplug, dildo, mouth gag);
+  - the underwear slots for Pantie and Bra, and any slot that a mouth gag needs;
   - the three intimate slots, which are present in the data but **closed**;
   - the Slum Market and its stock;
   - Rose Quartz and Maiden Pearl;
@@ -93,12 +107,27 @@ The Player and each named NPC have an **Equipment** view: a paper-doll of slots 
 
 ## 4. Items
 
+### 4.0 Categories (v0.2)
+
+Every item definition has a `category`. All categories use the same four rarities (§4.2).
+
+| Category | What it is | Slots (P6-A) | Examples (TRIAL names) |
+|---|---|---|---|
+| **Material** | crafting input; never worn | none: stacks in the Materials section (§4.5) | Iron, Silver, Gold, Ruby, Amethyst, Nitrate, Rubber, Paper, Glass, Linen, Silk |
+| **Equipment** | weapons | Weapon | Sword, Axe, Bow |
+| **Accessory** | jewellery and worn small items | Earrings, Necklace, Ring, Hand (gloves) | Earring, Necklace, Ring, Glove |
+| **Outfit** | clothing worn on the body | Top, Bottom, Shoes, full set | T-shirt, Jean shorts, Boots, a full set |
+| **Consumable** | used up, not worn | none: consumable section | Heal Potion I, II, III |
+
+- The categories are a starting set. New categories and items can be added later through the catalog file, without code changes to the existing ones.
+- **Later (P6-C):** the adult accessories, the underwear slots (Pantie, Bra) and the intimate slots.
+
 ### 4.1 Item kinds and slots
 
 | | Everyday slots | Intimate slots |
 |---|---|---|
-| **Player** (7) | Earrings, Top, Bottom, Shoes, Ring, Weapon, Hand | — |
-| **NPC** (10) | the same 7 | Nipple, Vagina, Anus: **closed until P6-C** |
+| **Player** (8) | Earrings, Necklace, Top, Bottom, Shoes, Ring, Weapon, Hand | — |
+| **NPC** (11) | the same 8 | Nipple, Vagina, Anus: **closed until P6-C** |
 
 - **Item kind:**
   - Each item definition has `kind: 'player' | 'npc'` and one `slot`.
@@ -135,12 +164,13 @@ The Player and each named NPC have an **Equipment** view: a paper-doll of slots 
 
 ### 4.3 Catalog (TRIAL content)
 
-- About **24 equipment items** spread over the 7 everyday slots and both kinds:
+- About **26 wearable items** (Equipment, Accessory and Outfit) spread over the 8 everyday slots and both kinds:
   - Common and Rare items for every slot;
   - Epic items for 4 slots;
   - 4 Legendary items, one per hard goal;
   - 2 full sets, Common and Rare.
 - 3 consumables: **Heal Potion I, II, III**.
+- About **12 materials** across the four rarities (§4.5).
 - **Catalog file:** the catalog is the data file `packages/core/src/data/items.json`, following the DATA-01 catalog rules: schema, stable ids, a validator, and a TRIAL marker. The numbers can be retuned without code changes.
 
 ### 4.4 Effective stats
@@ -150,6 +180,23 @@ The Player and each named NPC have an **Equipment** view: a paper-doll of slots 
 - Base values are never changed by equipment. Removing an item restores the previous effective value exactly.
 - Bonuses from closed slots never apply.
 - An Exclusive bonus applies only to a wearer of the matching class.
+
+### 4.5 Materials (v0.2)
+
+- **Not worn and no stats.** Materials are inputs for P6-B crafting. In P6-A they can be collected, stored and sold.
+- **Stacks:** materials are counted per definition (`materialId → count`), not stored as separate instances. One stack holds at most 999. The Materials section holds every material type, so it has no slot limit.
+- **Rarity:** each material has one of the four rarities.
+- **Selling:** at the Market, for 30% of its base price, like other items. Legendary materials cannot be sold.
+- **Catalog (TRIAL), building pool and rarity.** The plan fixes the final list.
+
+  | Production building | Common | Rare | Epic | Legendary |
+  |---|---|---|---|---|
+  | Mine | Iron | Silver | Gold | Ruby |
+  | Quarry | Glass | Nitrate | Amethyst | — |
+  | Logging Camp | Paper | Rubber | — | — |
+  | Weaver, Sheep Pasture | Linen | Wool | Silk | — |
+
+  Farm, Food Processor, Herb Garden and Workshop drop nothing in P6-A.
 
 ## 5. Stats → effects (TRIAL, tune by playtest)
 
@@ -233,7 +280,7 @@ Each goal can be reached once per game and **guarantees** one Legendary item, ch
 
 ### 7.5 Inventory limits
 
-- **Capacity:** 50 equipment and 50 consumables. Capacity counts items in the inventory only; worn items do not count.
+- **Capacity:** 50 wearable items (Equipment, Accessory and Outfit together) and 50 consumables. Capacity counts items in the inventory only; worn items do not count. Materials use their own stacks (§4.5).
 - **Purchases:** a purchase that would exceed capacity is rejected.
 - **Drops when the inventory is full:**
   - A drop that does not fit goes to the **temporary storage**, which has 10 slots.
@@ -241,6 +288,26 @@ Each goal can be reached once per game and **guarantees** one Legendary item, ch
   - An unclaimed item **expires after 3 weeks**, and the report says so.
   - If the temporary storage is also full, the drop is lost, and the report says so.
 - **Destroy:** removes an item permanently. It needs a confirmation in the UI.
+
+### 7.6 Material drops (v0.2)
+
+- **When:** at End Week, for each production building in §4.5 that **has an NPC posted** that week. Buildings run only by workers drop nothing.
+- **Roll:** one seeded roll per posted NPC (LAW-03), with the chance falling as the rarity rises (TRIAL):
+
+  | Tier | Chance per posted NPC per week |
+  |---|---|
+  | Common | 20% |
+  | Rare | 6% |
+  | Epic | 2% |
+  | Legendary | 0.5% |
+  | nothing | 71.5% |
+
+- **Result:**
+  - A hit gives 1 unit of that building's material of that tier.
+  - If the building has no material of that tier, the roll gives nothing.
+  - A stack already at 999 keeps 999, and the report says the unit was lost.
+- **Report:** a Quartermaster row per material found, for example "The Mine crew found Silver.".
+- **Skill:** in P6-A the NPC's skill does not change the chance. This is left for playtest tuning.
 
 ## 8. State, commands and save
 
@@ -251,6 +318,7 @@ Each goal can be reached once per game and **guarantees** one Legendary item, ch
 
 - **New state:** `city.society.items` holds:
   - the inventory and consumables;
+  - the material stacks (`materialId → count`);
   - the temporary storage, with an expiry week per item;
   - equipped items per character id;
   - the current Market offers;
@@ -272,9 +340,10 @@ Each goal can be reached once per game and **guarantees** one Legendary item, ch
   - It is a paper-doll with the slots around a portrait. The portrait is a **flat silhouette** until art exists.
   - The 3 intimate slots show as locked on NPCs.
   - A totals column shows effective skills with the item part in brackets, for example `combat 42 (+8)`, and Regen for the Player.
-  - The inventory grid below has filters (All, Player, NPC, this slot) and an item card with a before→after preview.
+  - The inventory grid below has filters (All, Player, NPC, this slot, and by category: Equipment, Accessory, Outfit) and an item card with a before→after preview.
+  - A **Materials** tab lists the material stacks with rarity and count.
   - Every action has a keyboard path.
-- **Market:** the building panel lists the 8 offers with price and rarity, plus a Sell list from the inventory. Legendary items are not sellable.
+- **Market:** the building panel lists the 8 offers with price and rarity, plus a Sell list from the inventory and the material stacks. Legendary items and Legendary materials are not sellable.
 - **Hospital and Drug Store:** a potion panel to buy potions.
 - **Player information:** health shows `Health 63 / 100 · Regen +4/week`.
 - **Reports:**
@@ -288,7 +357,7 @@ Each goal can be reached once per game and **guarantees** one Legendary item, ch
 | PR | Content |
 |---|---|
 | **A: core** | catalog, the item state, the commands, effective stats, ruleset v8 |
-| **B: week rules** | Market restock, weekly find, temporary-storage expiry, Legendary goals, the Player regen, death by wounds, the §5 effect terms, the new Watch House and Barracks posts, the Drug Store |
+| **B: week rules** | Market restock, weekly find, material drops, temporary-storage expiry, Legendary goals, the Player regen, death by wounds, the §5 effect terms, the new Watch House and Barracks posts, the Drug Store |
 | **C: UI** | the Equipment view, the Market and potion panels, the report rows, the health line |
 
 ## 11. Verification
@@ -309,6 +378,13 @@ Plus `CI=1 npm run test:smoke`. Evidence is committed in git.
 - Effective stats are clamped at 0 and 100; the Exclusive bonus; closed slots give nothing.
 - Buy and sell prices, the 30% resale, Legendary not sellable, Gold never negative.
 - Market restock and weekly find are deterministic for the same seed and week; the rarity counts are 4/2/2.
+- Material drops:
+  - only buildings with a posted NPC drop;
+  - the same seed and week give the same drops;
+  - a tier with no material gives nothing;
+  - a stack stops at 999;
+  - selling a material pays 30%, and a Legendary material cannot be sold.
+- The category and slot rules: Equipment only in Weapon; Accessory only in Earrings, Necklace, Ring or Hand; Outfit only in Top, Bottom, Shoes or a set; Materials and Consumables cannot be worn.
 - Temporary storage: expiry after 3 weeks, and loss when it is full.
 - Each Legendary goal fires once and grants a guaranteed item.
 - Regen order and clamping; death at 0; the fall cause `wounds`.
