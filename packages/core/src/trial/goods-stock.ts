@@ -1,4 +1,4 @@
-import tuningJson from '../data/tuning.json';
+import tuningJson from '../data/tuning.json' with { type: 'json' };
 import { deepFreeze, validateTuning } from '../data/validate.js';
 export const GOODS_STOCK_RULESET = 'tile-population-goods-01';
 // Reversible IMPLEMENTATION TRIAL values, not owner-selected balance.

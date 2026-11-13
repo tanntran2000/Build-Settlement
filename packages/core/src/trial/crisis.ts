@@ -1,4 +1,4 @@
-import tuningJson from '../data/tuning.json';
+import tuningJson from '../data/tuning.json' with { type: 'json' };
 import { deepFreeze, validateTuning } from '../data/validate.js';
 import { hasWeeklyKeys } from '../domain/canonical-state.js';
 import { CARD_OPTIONS, isPendingCard, type CardOption } from './event-card.js';

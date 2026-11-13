@@ -1,4 +1,4 @@
-import lawsJson from '../data/laws.json';
+import lawsJson from '../data/laws.json' with { type: 'json' };
 import { deepFreeze, validateLaws } from '../data/validate.js';
 import { hasWeeklyKeys } from '../domain/canonical-state.js';
 import { readDenseArray } from '../world/arrays.js';

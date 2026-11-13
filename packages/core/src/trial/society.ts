@@ -1,4 +1,4 @@
-import tuningJson from '../data/tuning.json';
+import tuningJson from '../data/tuning.json' with { type: 'json' };
 import { deepFreeze, validateTuning } from '../data/validate.js';
 import { isLawsState, type LawsState } from './law.js';
 import { isCrisisState, type CrisisState } from './crisis.js';

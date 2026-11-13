@@ -1,5 +1,5 @@
-import tuningJson from '../data/tuning.json';
-import buildingsJson from '../data/buildings.json';
+import tuningJson from '../data/tuning.json' with { type: 'json' };
+import buildingsJson from '../data/buildings.json' with { type: 'json' };
 import { deepFreeze, validateTuning, validateBuildings } from '../data/validate.js';
 // Adjustable IMPLEMENTATION TRIAL values, not user-approved economic balance.
 export type TrialOperation = "farm" | "processor" | "logging" | "mine" | "goods" | "market" | "society" | "wool" | "herbs" | "stone" | "cloth";

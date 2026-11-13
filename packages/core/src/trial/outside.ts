@@ -1,6 +1,6 @@
-import researchJson from '../data/research.json';
-import outsidePlotsJson from '../data/outside-plots.json';
-import tuningJson from '../data/tuning.json';
+import researchJson from '../data/research.json' with { type: 'json' };
+import outsidePlotsJson from '../data/outside-plots.json' with { type: 'json' };
+import tuningJson from '../data/tuning.json' with { type: 'json' };
 import { deepFreeze, validateResearch, validateOutsidePlots, validateTuning } from '../data/validate.js';
 import { hasWeeklyKeys } from '../domain/canonical-state.js';
 

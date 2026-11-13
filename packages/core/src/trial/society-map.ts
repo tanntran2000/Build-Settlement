@@ -1,4 +1,4 @@
-import buildingsJson from '../data/buildings.json';
+import buildingsJson from '../data/buildings.json' with { type: 'json' };
 import { deepFreeze, validateBuildings } from '../data/validate.js';
 export type SocietyTier = 'housing' | 'service' | 'specialist' | 'slum';
 export type StaffClass = 'basic' | 'makers' | 'luminaries' | 'merchants';
