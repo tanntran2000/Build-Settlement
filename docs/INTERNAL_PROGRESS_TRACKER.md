@@ -1,5 +1,28 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## DATA-01 PR A (IndexedDB game storage) — PR #90 G6 (2026-11-13 UTC)
+
+**G6 PASS (Claude, Orchestrator/Tester).**
+
+- **Merge.** PR #90 (`DATA-01 PR A: game data storage (IndexedDB)`) was merged normally by dot under G5 at 2026-11-13T04:05:28Z, with no bypass.
+  - Merge/main commit: `5cc2522f27e01b49baaa6e44bba01904edcea5c0`.
+  - Accepted head: `1ad295b60a63e33d8e769de32f97a18685a28499`. Base: `ca46d18`.
+- **Trees.** The merge tree `bb128a79be7713c7ed3cf1fa9360d035d8127ec4` is identical to the accepted head tree. Claude checked this locally with `git rev-parse <sha>^{tree}`.
+- **Main CI.** Quality Gate run [43363208511](https://github.com/tanntran2000/Build-Settlement/actions/runs/43363208511) (push, exact merge SHA), SUCCESS at 2026-11-13T04:22:08Z: 2,192 unit tests in 99 files, and 350/350 Chromium smoke (15.3 min). dot read job 131681336152; Claude confirmed the run conclusion and the smoke total.
+- **Pre-merge, at `1ad295b`:**
+  - Claude Tester gates 1–7 exit 0, and full smoke `CI=1` 350/350 (46.5 min).
+  - CI 43352267286 success (350 smoke).
+  - Astra consolidated PASS over `ca46d18..1ad295b` (thread `mcp:899d41d5`).
+  - The Builder's own full smoke at this head was 349/350. `title.spec.ts:184` timed out while Playwright was setting up the page, and passed alone. That run is kept in the evidence. Astra found no cause for it in the PR source but did not call it environment-only.
+- **Fix rounds.**
+  - **3–7b:** the atomic migration, then test-only waits for the asynchronous save.
+  - **Round 3:** came after the AGENTS.md §4 anti-loop HOLD.
+  - **Rounds 6 and 7:** came from dot's G5 holds: the Continue wait, then the consolidated test-migration audit with findings F1–F3.
+- **Evidence.** `docs/verification/data01-pr90/` on branch `docs/p6a-items-design`, final at `7f410dcccd5f27a50762c729a0fef6a47745537b`. It includes the `CI=1` runner (`claude-tester/RUNNER.md`), the raw exact-head log, all Astra rounds, Builder RED/GREEN logs, and `SHA256SUMS.txt` hashed from the git blobs.
+- **Owner instructions** (verbatim; full table in `owner-approval-record.md`): "Approve both", "Approve, Builder A", "Fix to 4, continue", "Yes, move to A2", "ok tôi đồng ý", "Sửa vòng 3", "Ok hãy triển khai đi", "Đồng ý", "Sửa trong #90", "CI xanh, gửi dot", "A, sửa trong #90" (twice: round 6 on 2026-11-12, round 7 on 2026-11-13).
+- **Limits.** Smoke runs on Chromium only. Firefox and WebKit IndexedDB transaction behaviour has not been run. Astra's reviews are static. Some latent timing risks (rounds 5 and 7) did not reproduce under delay.
+- **Next.** DATA-01 PR B (catalogs + golden), then PR C (inspector).
+
 ## README rewrite — PR #88 G6 (2026-11-11 UTC)
 
 **G6 PASS (Claude, Orchestrator/Tester).**
