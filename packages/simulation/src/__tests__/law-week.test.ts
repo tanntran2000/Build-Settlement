@@ -87,7 +87,20 @@ it('preserves the law-free five-week gameplay pin and determinism',()=>{
  const old=JSON.parse(readFileSync(new URL('../../../persistence/src/__tests__/fixtures/society-v5/life-5-weeks.json',import.meta.url),'utf8')).state;
  const {rulesetId:_ruleset,laws:_laws,...society}=s.city.society!;
  const {rulesetId:_oldRuleset,...oldSociety}=old.city.society;
- expect(society).toEqual(oldSociety);
+ expect(society).toEqual({...oldSociety,items: {
+      nextItemId: 1, inventory: [], consumables: [], materials: {}, storage: [], equipped: {},
+      market: [
+        { defId: 'common-ring', priceMilli: 5000 },
+        { defId: 'common-top', priceMilli: 5000 },
+        { defId: 'common-bottom', priceMilli: 5000 },
+        { defId: 'common-ring', priceMilli: 5000 },
+        { defId: 'rare-set', priceMilli: 15000 },
+        { defId: 'rare-weapon', priceMilli: 15000 },
+        { defId: 'epic-hand', priceMilli: 40000 },
+        { defId: 'epic-necklace', priceMilli: 40000 },
+      ],
+      goals: { calm: false, authority: false, week52: false, research: false, rebellionSeen: false, authorityStreak: 0 },
+    }});
  expect(s.city.world.settlements).toEqual(old.city.world.settlements);
 });
 it('is deterministic with three laws over five weeks',()=>{
