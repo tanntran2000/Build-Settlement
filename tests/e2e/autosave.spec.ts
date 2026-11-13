@@ -30,6 +30,7 @@ test('On by default: Plan next week writes one checkpoint equal to the real expo
   await page.getByTestId('life-end-week').click(); expect(await calls(page)).toEqual([]);
   await page.getByRole('button', { name: 'Plan next week', exact: true }).click();
   const after = await exportLife(page);
+  await expect.poll(() => storedSaveText(page)).toBe(bytes(after));
   expect((await calls(page)).filter(([kind]) => kind === 'set')).toEqual([['set', KEY]]);
   expect(await slot(page)).toBe(bytes(after));
   expect(JSON.parse((await slot(page))!).state).toEqual(after);

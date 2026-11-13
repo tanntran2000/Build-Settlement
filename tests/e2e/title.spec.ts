@@ -108,7 +108,9 @@ test('empty slot disables Continue and focuses New Game', async ({ page }) => {
   await page.goto('/'); await expect(title(page)).toBeVisible(); await expect(button(page, 'Continue')).toBeDisabled(); await expect(page.getByText('No local checkpoint', { exact: true })).toBeVisible(); await expect(button(page, 'New Game')).toBeFocused();
 });
 test('manual save enables cached Continue with exactly one mount read', async ({ page }) => {
-  await page.goto('/'); await expect(title(page)).toBeVisible(); await importLife(page, makeLife()); await go(page, 'session'); await button(page, 'Save locally').click(); const saved = await exportLife(page);
+  await page.goto('/'); await expect(title(page)).toBeVisible(); await importLife(page, makeLife()); await go(page, 'session'); await button(page, 'Save locally').click();
+  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+   const saved = await exportLife(page);
   await page.addInitScript(key => { const original = Storage.prototype.getItem; Object.assign(window, { titleReads: 0 }); Storage.prototype.getItem = function(k) { if (k === key) (window as unknown as { titleReads: number }).titleReads++; return original.call(this, k); }; }, KEY);
   await page.reload(); await expect(button(page, 'Continue')).toBeEnabled(); await expect(button(page, 'Continue')).toBeFocused();
   await page.keyboard.press('Enter'); await page.keyboard.press('Enter'); await expect(page.getByTestId('life-shell')).toHaveCount(1);

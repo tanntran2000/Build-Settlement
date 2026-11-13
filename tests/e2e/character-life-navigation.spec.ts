@@ -1431,7 +1431,9 @@ test('B2 City Report City preserves export and saved checkpoint', async ({ page 
   await page.goto('/?mode=world-life'); await importLife(page, makeLife());
   const before = await exportLife(page);
   await page.getByRole('button', { name: 'Save locally', exact: true }).click();
+  await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
   const saved = { legacy: await page.evaluate(() => JSON.stringify(localStorage)), records: await readStoredRecords(page) };
+  expect(saved.records).toContainEqual({slotId:'main',id:'city',table:'city',schemaVersion:1,value:before.city});
   await go(page, 'city'); await go(page, 'reports'); await go(page, 'city');
   expect({ legacy: await page.evaluate(() => JSON.stringify(localStorage)), records: await readStoredRecords(page) }).toEqual(saved);
   expect(await exportLife(page)).toEqual(before);
