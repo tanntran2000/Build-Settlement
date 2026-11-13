@@ -1,0 +1,9 @@
+{
+  "base": "e192a2891a9df11f6dbc61985aff0b483ce034a4",
+  "file": "tests/e2e/tile-local-checkpoint.spec.ts",
+  "command": "npx playwright test tests/e2e/tile-local-checkpoint.spec.ts -g \"the last explicit same-mode tab save wins without automatically loading\"",
+  "expected": 2,
+  "delayMs": 2000,
+  "delaySha256": "7c49f25d7e95843786b8719394536d1fae215b21c250afd98f0e2fdbdf461132",
+  "observerSha256": "f34120988f739a4dc3381434db4dfb8414687157dd5d43d3ae9c296c9d2f0e5b"
+}

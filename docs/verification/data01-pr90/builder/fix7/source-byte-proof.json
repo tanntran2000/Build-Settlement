@@ -1,0 +1,39 @@
+{
+  "base": "623cbc4aa90645805dea59df4b1d8a083f226f46",
+  "head": "e192a2891a9df11f6dbc61985aff0b483ce034a4",
+  "files": [
+    {
+      "file": "tests/e2e/character-life-navigation.spec.ts",
+      "originalWorkingSha256": "b7a1f12a02411dd820ff72ac9dc941ab5b0c66bae1eee3bd659f901d70d0297f",
+      "restoredWorkingSha256": "b7a1f12a02411dd820ff72ac9dc941ab5b0c66bae1eee3bd659f901d70d0297f",
+      "baseBlobSha256": "995f69852bbc6ba7ed1d1f4c13b2c40ee1e80707a28793335dad8d61240a623c",
+      "strippedBlobSha256": "995f69852bbc6ba7ed1d1f4c13b2c40ee1e80707a28793335dad8d61240a623c",
+      "addedStatements": 2
+    },
+    {
+      "file": "tests/e2e/title.spec.ts",
+      "originalWorkingSha256": "4159131ab18687c25897de17289b6fc94a592410f50bc8a7f49da3a89a049fa0",
+      "restoredWorkingSha256": "4159131ab18687c25897de17289b6fc94a592410f50bc8a7f49da3a89a049fa0",
+      "baseBlobSha256": "ba0c895f286174c96d39e73969188d6ce8d3fd935ff90a9e889d9d1dfa4274a4",
+      "strippedBlobSha256": "ba0c895f286174c96d39e73969188d6ce8d3fd935ff90a9e889d9d1dfa4274a4",
+      "addedStatements": 1
+    },
+    {
+      "file": "tests/e2e/tile-local-checkpoint.spec.ts",
+      "originalWorkingSha256": "4abe4796bdcec032a852b17a3d41d579a01e5952e38f1cd351d79fd27c2c9e29",
+      "restoredWorkingSha256": "4abe4796bdcec032a852b17a3d41d579a01e5952e38f1cd351d79fd27c2c9e29",
+      "baseBlobSha256": "552e5596e121272f4e131e5dffc18172f8432e6de073f06cf7ceb0e26ce7b575",
+      "strippedBlobSha256": "552e5596e121272f4e131e5dffc18172f8432e6de073f06cf7ceb0e26ce7b575",
+      "addedStatements": 1
+    },
+    {
+      "file": "tests/e2e/autosave.spec.ts",
+      "originalWorkingSha256": "7ffb31defea743374a5eb74269052a6553a0ae1c7794430a33e4f28caa143e22",
+      "restoredWorkingSha256": "7ffb31defea743374a5eb74269052a6553a0ae1c7794430a33e4f28caa143e22",
+      "baseBlobSha256": "beef430e4ec9441a57b6e4d27b93591dd449bb75bc9547a9fb2f2ae3c206cb36",
+      "strippedBlobSha256": "beef430e4ec9441a57b6e4d27b93591dd449bb75bc9547a9fb2f2ae3c206cb36",
+      "addedStatements": 1
+    }
+  ],
+  "allOtherTrackedFilesUnchanged": true
+}

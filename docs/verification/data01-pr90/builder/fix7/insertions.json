@@ -1,0 +1,57 @@
+[
+  {
+    "file": "tests/e2e/character-life-navigation.spec.ts",
+    "operations": [
+      {
+        "offset": 104886,
+        "addition": "\r\n  expect(saved.records).toContainEqual({slotId:'main',id:'city',table:'city',schemaVersion:1,value:before.city});",
+        "statement": "expect(saved.records).toContainEqual({slotId:'main',id:'city',table:'city',schemaVersion:1,value:before.city});",
+        "baseLine": 1434,
+        "finding": "F1 exact saved city record"
+      },
+      {
+        "offset": 104760,
+        "addition": "\r\n  await expect(page.locator('[aria-label=\"Planning checkpoints\"] [role=\"status\"]')).toContainText('Saved in this browser.');",
+        "statement": "await expect(page.locator('[aria-label=\"Planning checkpoints\"] [role=\"status\"]')).toContainText('Saved in this browser.');",
+        "baseLine": 1433,
+        "finding": "F1 save wait"
+      }
+    ]
+  },
+  {
+    "file": "tests/e2e/title.spec.ts",
+    "operations": [
+      {
+        "offset": 10189,
+        "addition": "\r\n  await expect(page.locator('[aria-label=\"Planning checkpoints\"] [role=\"status\"]')).toContainText('Saved in this browser.');\r\n  ",
+        "statement": "await expect(page.locator('[aria-label=\"Planning checkpoints\"] [role=\"status\"]')).toContainText('Saved in this browser.');",
+        "baseLine": 111,
+        "finding": "F2a save wait"
+      }
+    ]
+  },
+  {
+    "file": "tests/e2e/tile-local-checkpoint.spec.ts",
+    "operations": [
+      {
+        "offset": 12592,
+        "addition": "\r\n  await expect(second.locator('[aria-label=\"Planning checkpoints\"] [role=\"status\"]')).toContainText('Saved in this browser.');\r\n  ",
+        "statement": "await expect(second.locator('[aria-label=\"Planning checkpoints\"] [role=\"status\"]')).toContainText('Saved in this browser.');",
+        "baseLine": 61,
+        "finding": "F2b saving-page call-site wait"
+      }
+    ]
+  },
+  {
+    "file": "tests/e2e/autosave.spec.ts",
+    "operations": [
+      {
+        "offset": 2292,
+        "addition": "\r\n  await expect.poll(() => storedSaveText(page)).toBe(bytes(after));",
+        "statement": "await expect.poll(() => storedSaveText(page)).toBe(bytes(after));",
+        "baseLine": 32,
+        "finding": "F3 exact stored-session poll"
+      }
+    ]
+  }
+]

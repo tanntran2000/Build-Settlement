@@ -1,0 +1,10 @@
+{
+  "test": "manual save enables cached Continue with exactly one mount read",
+  "observations": [
+    {
+      "url": "http://localhost:4173/",
+      "actions": [],
+      "snapshots": []
+    }
+  ]
+}

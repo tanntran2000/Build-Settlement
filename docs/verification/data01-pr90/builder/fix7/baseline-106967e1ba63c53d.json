@@ -1,0 +1,18 @@
+{
+  "test": "the last explicit same-mode tab save wins without automatically loading (population)",
+  "observations": [
+    {
+      "url": "http://localhost:4173/?mode=population",
+      "actions": [
+        {
+          "action": 1,
+          "name": "Save locally",
+          "delayMs": 300,
+          "transactionCompleted": true,
+          "elapsedMs": 300.39999997615814
+        }
+      ],
+      "snapshots": []
+    }
+  ]
+}

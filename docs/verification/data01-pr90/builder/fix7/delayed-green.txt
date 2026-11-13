@@ -1,0 +1,22 @@
+UTC=2026-11-13T00:38:10.867Z HEAD=623cbc4aa90645805dea59df4b1d8a083f226f46 TREE=75b10a8c3e1e19ce6f46cd5eb17c9d5eb22947c5
+STATUS="M tests/e2e/autosave.spec.ts\n M tests/e2e/character-life-navigation.spec.ts\n M tests/e2e/tile-local-checkpoint.spec.ts\n M tests/e2e/title.spec.ts"
+ENV CI=1
+COMMAND=npx playwright test tests/e2e/character-life-navigation.spec.ts tests/e2e/title.spec.ts tests/e2e/tile-local-checkpoint.spec.ts tests/e2e/autosave.spec.ts -g "B2 City Report City preserves export and saved checkpoint|manual save enables cached Continue with exactly one mount read|the last explicit same-mode tab save wins without automatically loading|On by default: Plan next week writes one checkpoint equal to the real export"
+[WebServer] (node:13856) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:14208) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+(node:29568) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\autosave.spec.ts:28:1 › On by default: Plan next week writes one checkpoint equal to the real export (5.6s)
+  ok 2 [chromium] › tests\e2e\character-life-navigation.spec.ts:1430:1 › B2 City Report City preserves export and saved checkpoint (2.1s)
+  ok 3 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:60:2 › the last explicit same-mode tab save wins without automatically loading (tiles) (4.8s)
+  ok 4 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:60:2 › the last explicit same-mode tab save wins without automatically loading (population) (3.5s)
+  ok 5 [chromium] › tests\e2e\title.spec.ts:110:1 › manual save enables cached Continue with exactly one mount read (1.7s)
+
+  5 passed (37.0s)
+
+EXIT=0 DURATION_MS=47340 END_UTC=2026-11-13T00:38:58.207Z

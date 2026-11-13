@@ -1,0 +1,132 @@
+{
+  "head": "e192a2891a9df11f6dbc61985aff0b483ce034a4",
+  "tree": "1264de25a8c4aa3c094e556ca8c62bae9282ca4e",
+  "base": "623cbc4aa90645805dea59df4b1d8a083f226f46",
+  "utc": "2026-11-13T01:21:02.966Z",
+  "clean": true,
+  "baseline": {
+    "failed": 2,
+    "passed": 3,
+    "exit": 1,
+    "wallMs": 41580
+  },
+  "isolatedF1": {
+    "failed": 1,
+    "exit": 1,
+    "wallMs": 13077
+  },
+  "green": {
+    "passed": 5,
+    "exit": 0,
+    "wallMs": 47340
+  },
+  "cases": [
+    {
+      "name": "On by default: Plan next week writes one checkpoint equal to the real export",
+      "baseline": "PASS",
+      "baselineDuration": "4.6s",
+      "reproduced": false,
+      "green": "PASS",
+      "greenDuration": "5.6s"
+    },
+    {
+      "name": "B2 City Report City preserves export and saved checkpoint",
+      "baseline": "FAIL",
+      "baselineDuration": "1.7s",
+      "reproduced": true,
+      "green": "PASS",
+      "greenDuration": "2.1s"
+    },
+    {
+      "name": "the last explicit same-mode tab save wins without automatically loading (tiles)",
+      "baseline": "PASS",
+      "baselineDuration": "4.0s",
+      "reproduced": false,
+      "green": "PASS",
+      "greenDuration": "4.8s"
+    },
+    {
+      "name": "the last explicit same-mode tab save wins without automatically loading (population)",
+      "baseline": "PASS",
+      "baselineDuration": "2.6s",
+      "reproduced": false,
+      "green": "PASS",
+      "greenDuration": "3.5s"
+    },
+    {
+      "name": "manual save enables cached Continue with exactly one mount read",
+      "baseline": "FAIL",
+      "baselineDuration": "6.1s",
+      "reproduced": true,
+      "green": "PASS",
+      "greenDuration": "1.7s"
+    }
+  ],
+  "f1": {
+    "baselineFirstRecords": 1,
+    "baselineFirstRefs": [
+      "system:migration:legacy-local-checkpoint"
+    ],
+    "greenFirstRecords": 8,
+    "greenHasCity": true
+  },
+  "gates": [
+    {
+      "label": "gate1",
+      "exit": 0,
+      "wallMs": 251
+    },
+    {
+      "label": "gate2",
+      "exit": 0,
+      "wallMs": 15571
+    },
+    {
+      "label": "gate3",
+      "exit": 0,
+      "wallMs": 36578
+    },
+    {
+      "label": "gate4",
+      "exit": 0,
+      "wallMs": 8378
+    },
+    {
+      "label": "gate5",
+      "exit": 0,
+      "wallMs": 50840
+    },
+    {
+      "label": "gate6",
+      "exit": 0,
+      "wallMs": 54140
+    },
+    {
+      "label": "gate7",
+      "exit": 0,
+      "wallMs": 25662
+    },
+    {
+      "label": "smoke",
+      "exit": 0,
+      "wallMs": 2258729
+    }
+  ],
+  "unit": {
+    "passed": 2192,
+    "files": 99
+  },
+  "architecture": 154,
+  "smoke": {
+    "passed": 350,
+    "reportedDuration": "37.5m",
+    "wallMs": 2258729
+  },
+  "addedStatements": 5,
+  "changedFiles": [
+    "tests/e2e/autosave.spec.ts",
+    "tests/e2e/character-life-navigation.spec.ts",
+    "tests/e2e/tile-local-checkpoint.spec.ts",
+    "tests/e2e/title.spec.ts"
+  ]
+}

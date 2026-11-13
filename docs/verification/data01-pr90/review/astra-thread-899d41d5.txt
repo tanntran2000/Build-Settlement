@@ -492,3 +492,391 @@ The inspected Builder logs record a [normal single-test pass](C:/Users/Admin/.t3
 I performed only Git and file reads. I did not independently run tests/builds, inspect the browser trace interactively, or verify Linux CI at this head.
 
 **Next: record this PASS against `623cbc4` in #90’s committed review evidence.**
+
+[user]
+Astra, consolidated independent audit of DATA-01 PR A (#90) test migration, base ca46d18 → final head 623cbc4. READ-ONLY.
+
+Worktree: C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01. Confirm HEAD == 623cbc4aa90645805dea59df4b1d8a083f226f46, tree 75b10a8c3e1e19ce6f46cd5eb17c9d5eb22947c5.
+
+Why: dot's G5 check is on HOLD. Your earlier rounds said the full test-migration audit of the original PR could not be certified, because reads were truncated (pos18, and the limits restated in pos26 and pos34). Rounds 5–7 were delta reviews only. dot needs one independent, consolidated verdict over the whole PR, with no truncation gap. No code change, no new scope, no gate waiver.
+
+Binding plan and spec (acceptance criteria, Decisions, Plan correction 4):
+- C:/Users/Admin/.t3/local-drafts/data01-prA/binding-plan-6a8bfa2.md (PR A = Tasks A1–A4, plus Global Constraints and Review Focus)
+- C:/Users/Admin/.t3/local-drafts/data01-prA/binding-spec-7a1ec38.md
+Builder's own inventory, for cross-checking only (not a substitute): C:/Users/Admin/.t3/local-drafts/data01-prA/complete-edit-inventory.txt.
+
+Test files changed in ca46d18..623cbc4 (`git diff --numstat`). Audit EVERY one:
+- packages/persistence/src/__tests__/game-store-suite.ts (+20), game-store.test.ts (+41), session-records.test.ts (+64)
+- packages/ui/src/__tests__/character-life-session.test.ts (+222 −43), crisis-checkpoint.test.ts (+11 −4)
+- tests/e2e/: autosave (+8 −14), character-life-navigation (+11 −7), character-life (+4 −2), crime (+4 −1), crisis (+7 −2), ledger (+4 −1), order (+3 −1), outside (+3 −1), society (+4 −1), storage.helpers.ts (+101, new), storage.spec.ts (+191, new), tile-local-checkpoint (+23 −9), title (+9 −10), world-npc-session (+3 −1), world-session (+6 −3)
+
+How to avoid truncation:
+- Read one file at a time: `git diff -U2 ca46d18..623cbc4 -- <file>`. If the output is long, page it with `| sed -n '1,120p'`, then `'121,240p'`, and so on until the end. Several statements share one line in some specs, so use `git diff --word-diff=plain` on those. Do not move on until you have seen the whole diff of that file.
+- For each file, state the number of removed (−) and added (+) lines you actually saw, and check them against the numstat above. A mismatch means the read was incomplete; re-read before giving a verdict.
+
+Required output:
+1. Inventory, per file. For every removed or changed assertion or check: the old form → its replacement, and one verdict: PRESERVED (same value/condition, mechanical localStorage→store-helper move), STRENGTHENED, or WEAKENED/REMOVED. Any WEAKENED/REMOVED item is a finding unless the plan explicitly allows it (Plan correction 4(a) covers the four character-life-session.test.ts lines 63/160/296/297, migrated replaceSlot→migrateSlot; check that each keeps its invariant).
+2. New tests: a short note on what each new test or helper proves and whether its assertions are real, not vacuous (for example, a poll that could pass before the state exists).
+3. Acceptance-criteria coverage: for each PR A acceptance criterion / Review Focus line in the binding plan (Tasks A1–A4), name the test(s) at 623cbc4 that cover it, or mark it UNCOVERED.
+4. Consolidated verdict over ca46d18..623cbc4: PASS or FAIL, findings P0–P3 with file:line, and explicit limits (what you did not run or could not see). If any file could not be read completely, say which, and give FAIL for coverage rather than PASS.
+
+Do not edit files, install, run builds or tests, push or merge.
+
+[assistant]
+Auditing every changed test and helper from `ca46d18` to `623cbc4`, with per-file line-count checks to prevent another truncation gap. This review will also map the PR A acceptance criteria to tests and distinguish inspected evidence from tests I have not run.
+
+
+[assistant]
+The existing browser-test diffs retain their expected values and messages. Storage checks now use records or store-operation marks; I’m checking the helpers next, because their behavior determines whether those replacements preserve the original checks.
+
+
+[assistant]
+All 20 test/helper diffs are now read completely, and their added/removed line counts match the supplied inventory. I’m checking surrounding test setup for false positives, especially save-status waits, fall-clearing polls, and operation counts. I’m also using the codebase-memory skill for the small amount of call-path verification needed.
+
+
+[assistant]
+The full audit found two remaining synchronization gaps: the title test reloads after Save without waiting for completion, and the City–Report–City test snapshots records immediately after Save. The latter can compare two empty snapshots and pass without proving that a saved checkpoint survived navigation. I’m checking the other direct observations before finalizing the findings.
+
+
+[assistant]
+The coverage map is complete. The four approved `replaceSlot` → `migrateSlot` changes retain their invariants; the marker-only test directly counts zero data puts and deletes. No test, expected value, timeout, or threshold was removed. The verdict will be FAIL for the remaining asynchronous test-observation gaps, with the complete migration inventory and coverage map attached below.
+
+
+[assistant]
+**FAIL — keep G5 on HOLD for the remaining test-synchronization findings below. The full test-diff audit is complete; there is no remaining truncation gap.**
+
+Confirmed in the assigned worktree:
+
+```text
+Base: ca46d18
+HEAD: 623cbc4aa90645805dea59df4b1d8a083f226f46
+Tree: 75b10a8c3e1e19ce6f46cd5eb17c9d5eb22947c5
+Working tree: clean
+```
+
+I read every changed test/helper diff and reconciled **20 files, +739 / −100 lines**. All per-file counts match the supplied inventory. I also inspected surrounding setup, helper behavior, relevant UI/service code, the binding plan/spec, and the four intermediate `replaceSlot` → `migrateSlot` changes.
+
+**Findings — all P2**
+
+| ID | Location | Concrete failure scenario |
+|---|---|---|
+| **F1** | [character-life-navigation.spec.ts:1434](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/character-life-navigation.spec.ts:1434) | **The “saved checkpoint survives navigation” comparison can use an unsaved baseline.** The test clicks Save, immediately snapshots records, navigates City → Report → City, and compares records again. Save first awaits a store read before creating its write transaction. If that read remains pending, both raw snapshots can contain only the migration marker and the test passes without proving preservation of a saved checkpoint. If the write commits between snapshots, the test fails despite correct navigation. Wait for this Save’s success before taking `saved`; preferably also establish that the saved data exists. |
+| **F2** | [title.spec.ts:111](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/title.spec.ts:111); [tile-local-checkpoint.spec.ts:61](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/tile-local-checkpoint.spec.ts:61) | **Two existing tests still rely on unrelated work allowing Save to finish.** The title test clicks Save, exports the live state, installs an init script, then reloads without observing save completion. A delayed save can be lost on reload, leaving Continue disabled. In the existing same-mode two-tab test, `save(second)` only awaits the click; page A can Continue before page B commits and read A’s old checkpoint. The service queue is local to each page, so A’s queue does not wait for B’s save. Wait for successful Save in the saving page before reload or cross-tab Continue. |
+| **F3** | [autosave.spec.ts:33](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/autosave.spec.ts:33) | **The existing positive autosave test observes asynchronous work without a completion barrier.** After Plan next week, it exports the live session and immediately expects one write mark and saved bytes. Export does not await persistence. If autosave’s preliminary read is delayed, the mark count can still be zero and the slot can still be empty. Preserve the exact count/value assertions, but first wait for the expected stored session, as the new `storage.spec.ts` autosave test already does. |
+
+These are source-established scheduling gaps, **not failures I reproduced during this read-only audit**. No P0/P1 product defect was established here.
+
+**1. Complete per-file inventory**
+
+“PRESERVED” below means the assertion’s value/condition survives the approved storage-mechanism migration. Timing qualifications refer to F1–F3 above.
+
+| File | Added lines seen | Removed lines seen | Audit result |
+|---|---:|---:|---|
+| `packages/persistence/src/__tests__/game-store-suite.ts` | 20 | 0 | New tests; detailed below |
+| `packages/persistence/src/__tests__/game-store.test.ts` | 41 | 0 | New tests; detailed below |
+| `packages/persistence/src/__tests__/session-records.test.ts` | 64 | 0 | New tests; detailed below |
+| `packages/ui/src/__tests__/character-life-session.test.ts` | 222 | 43 | Existing assertion migration PRESERVED; added coverage STRENGTHENED |
+| `packages/ui/src/__tests__/crisis-checkpoint.test.ts` | 11 | 4 | PRESERVED and STRENGTHENED |
+| `tests/e2e/autosave.spec.ts` | 8 | 14 | Values/counts PRESERVED; completion gap F3 |
+| `tests/e2e/character-life-navigation.spec.ts` | 11 | 7 | Most PRESERVED/STRENGTHENED; effective saved-baseline check WEAKENED at F1 |
+| `tests/e2e/character-life.spec.ts` | 4 | 2 | PRESERVED and STRENGTHENED |
+| `tests/e2e/crime.spec.ts` | 4 | 1 | PRESERVED; save-completion precondition STRENGTHENED |
+| `tests/e2e/crisis.spec.ts` | 7 | 2 | PRESERVED; save-completion preconditions STRENGTHENED |
+| `tests/e2e/ledger.spec.ts` | 4 | 1 | PRESERVED and STRENGTHENED |
+| `tests/e2e/order.spec.ts` | 3 | 1 | Existing checks PRESERVED; save wait STRENGTHENED |
+| `tests/e2e/outside.spec.ts` | 3 | 1 | Existing checks PRESERVED; save wait STRENGTHENED |
+| `tests/e2e/society.spec.ts` | 4 | 1 | PRESERVED; save wait STRENGTHENED |
+| `tests/e2e/storage.helpers.ts` | 101 | 0 | New helpers; detailed below |
+| `tests/e2e/storage.spec.ts` | 191 | 0 | New tests; detailed below |
+| `tests/e2e/tile-local-checkpoint.spec.ts` | 23 | 9 | Changed assertions PRESERVED; existing two-tab completion gap F2 |
+| `tests/e2e/title.spec.ts` | 9 | 10 | Changed assertions PRESERVED; existing reload completion gap F2 |
+| `tests/e2e/world-npc-session.spec.ts` | 3 | 1 | Existing checks PRESERVED; save wait STRENGTHENED |
+| `tests/e2e/world-session.spec.ts` | 6 | 3 | PRESERVED; save wait STRENGTHENED |
+| **Total** | **739** | **100** | **All counts reconciled** |
+
+No test declaration, parameterized dataset, expected gameplay value, timeout, retry setting, worker setting, or threshold was removed or relaxed in this range. No dependency, configuration, or CI file changed.
+
+**Existing unit assertions: old → replacement**
+
+All line numbers below refer to `623cbc4`, except the explicitly identified intermediate lines.
+
+| File / final lines | Old assertion or check → replacement | Verdict |
+|---|---|---|
+| `character-life-session.test.ts:47–55` | Synchronous save/read result → awaited result with injected dependencies; exact `setItem(KEY, encoded.text)` → exact `replaceSlot('main', sessionToRecords(...))` plus serialization of stored records equal to `encoded`; `replaced:false/true` retained; foreign keys retained | **PRESERVED** |
+| `:57–65` | Empty-read message retained; foreign-mode rejection and unchanged legacy bytes retained; no legacy write → null data slot plus exact marker-only `migrateSlot` call | **PRESERVED**, permitted by correction 4(a) |
+| `:67–76` | Throwing storage write/read → rejecting `replaceSlot`/`getSystem`; failure text and private-error containment retained; invalid session performs no storage access → no legacy read, store read, or replacement | **PRESERVED** |
+| `:107–113` | “Continue never reads older Life slots” → awaited injected read; existing no-fallback/message checks retained | **PRESERVED** |
+| `:124–127` | Active Proxy: success, `replaced:true`, zero getter calls, exact bytes, one write → same conditions using a seeded store, one `replaceSlot`, and decoded stored bytes | **STRENGTHENED** by explicit stored-record round-trip assertion |
+| `:129–134` | Accessor / own `toJSON` / revoked Proxy: refusal, zero callback calls, unchanged legacy bytes, no storage access → same conditions plus no store read/replacement | **PRESERVED** |
+| `:136–143` | Missing window / throwing getter / read / write failures → store-read/store-write rejection; same failure class, no private text, unchanged protected legacy keys and live session | **PRESERVED** under correction 4(a). The three read-side labels now exercise the same port failure rather than distinct browser APIs. |
+| `:145–147` | Saving Goods/legacy fixture refuses with exact OLD message and touches no slot → same result, no legacy read, store read, or replacement | **PRESERVED** |
+| `:149–162` | All 12 malformed/boundary inputs; failure; exactly one legacy read; no old write; exact original bytes → same inputs/results/read count/bytes, null data slot, exact marker-only migration | **PRESERVED** |
+| `:164–166` | ASCII/UTF-8 oversized save: exact “1 MiB” condition, no storage access, unchanged bytes → same checks using store read/replacement spies | **PRESERVED** |
+| `crisis-checkpoint.test.ts:11` | Three non-fall combinations preserve legacy key and perform no removal; confirmed fall removes exactly KEY and preserves “other” → all retained, plus actual store contents unchanged before fall and null afterward | **STRENGTHENED** |
+| `crisis-checkpoint.test.ts:12` | Throwing browser-storage access produces exact clear-failure message → rejecting `store.clear` produces the same message, with prior records and legacy value explicitly preserved | **STRENGTHENED** |
+
+The four specifically approved intermediate migrations also preserve their invariants:
+
+| Intermediate old line | Final replacement | Verdict |
+|---|---|---|
+| `63` | Final `65`: exact empty-data `replaceSlot` observation → exact `migrateSlot('main', null, marker)`; null data and unchanged legacy remain asserted | **PRESERVED** |
+| `160` | Final `162`: same replacement for every malformed/boundary legacy input; exact legacy read and unchanged bytes remain | **PRESERVED** |
+| `296` | Final `308`: exact “existing records + marker” replacement call → exact null-candidate migration call | **PRESERVED** |
+| `297` | Final `309–310`: `{put:0, deleted:0, unchanged:7}` → returned records equal `before`, **actual Map operations equal `{dataPuts:0, dataDeletes:0, markerPuts:1}`**, and no `replaceSlot` call | **STRENGTHENED**. The zero-data-write invariant remains in the same test. |
+
+**Existing browser assertions: old → replacement**
+
+| File / final location | Old assertion or check → replacement | Verdict |
+|---|---|---|
+| `autosave.spec.ts:18–22, 39, 46–47` | Legacy get/set observer → store marks plus retained legacy observer; raw slot text → `storedSaveText`; legacy seed → record seed; quota exception → IDB abort. Exact write count, no-IO checks, bytes, week and failure status remain | **PRESERVED**, with F3 |
+| `character-life-navigation.spec.ts:1044–1046` | Seed literal `'{'` in active legacy key and require it unchanged → corrupt city record, refuse load, require all raw records unchanged | **PRESERVED**, explicitly approved A3 exception |
+| Same file `:1344,1349` | Legacy slot snapshot/equality → reconstructed stored-save snapshot/equality | **PRESERVED** |
+| Same file `:1434,1436` | Whole-localStorage snapshot/equality → whole-localStorage **plus all records** snapshot/equality | Structurally **STRENGTHENED**, but the saved-baseline precondition is **WEAKENED** by F1 |
+| Same file `:907,1378` | Immediate continuation after Save → successful-save status wait before dependent work | **STRENGTHENED** |
+| `character-life.spec.ts:166,320` | Remove active legacy slot → clear data records; saved-format prefix checked from legacy → same prefix checked from stored records | **PRESERVED** |
+| Same file `:336` | Immediate export after Continue → exact Continue-success status before export | **STRENGTHENED**; import and Save cannot supply this message |
+| `crime.spec.ts:25–27` | Saved slot non-null, then fallen slot null → same checks through store helper; all death text/buttons unchanged | **PRESERVED**; initial Save wait **STRENGTHENED** |
+| `crisis.spec.ts:24–26,33–35` | Saved non-null / fallen null / normal-week exact saved bytes → same helper observations; all other checks unchanged | **PRESERVED**; Save waits **STRENGTHENED** |
+| `ledger.spec.ts:149,158–159` | Direct legacy null assertion → polling store null **followed by the retained direct null assertion**; successful Save established first | **STRENGTHENED** |
+| `order.spec.ts:27–29` | Existing topic/order checks unchanged; Save-success wait inserted before reload | **STRENGTHENED** |
+| `outside.spec.ts:18–20` | Existing serialized-session/revision checks unchanged; Save-success wait inserted before reload | **STRENGTHENED** |
+| `society.spec.ts:39–41` | Legacy non-null → stored-save non-null; exact resumed session retained; Save-success wait before export/read/reload | **PRESERVED / STRENGTHENED** |
+| `tile-local-checkpoint.spec.ts:12–18` | Active slot helpers → record helpers; foreign-key helpers remain legacy; call observer → store marks with separate assertion of exactly one legacy migration read | **PRESERVED** |
+| Same file `:34` | All 11 invalid/missing variants preserve exact seeded text → preserve exact seeded records; live-state equality, foreign bytes, refusal messages and enabled End Week retained | **PRESERVED** under correction 4(a) |
+| Same file `:42–43` | Throwing getter/quota write → transaction-creation throw/transaction abort; identical live-state and both-slot preservation checks | **PRESERVED** |
+| Same file `:56–58` | Boot `get`; save adds `get,set`; navigation/End Week/Plan add nothing → boot `get,set` for initial read and migration marker; save still adds exactly `get,set`; subsequent operations still add nothing | **PRESERVED**. The extra initial `set` is the migration operation. The helper separately pins one legacy read. |
+| Same file `:38,48,57,66` | Successful-save waits inserted before dependent reads/navigation | **STRENGTHENED**; separate unchanged two-tab case has F2 |
+| `title.spec.ts:115` | Exactly one legacy mount read → exactly one `haven.store.read` mark; exact restored session retained | **PRESERVED**; setup/reload has F2 |
+| Same file `:189,221,224,234,243` | Legacy null / decoded exact state / prior exact text → same store-helper observations | **PRESERVED** |
+| Same file `:239` | Legacy seed plus throwing setter → record seed plus IDB abort; Planning/session/previous-save assertions retained | **PRESERVED** |
+| `world-npc-session.spec.ts:29–31` | All post/name/session/foreign-key checks unchanged; Save-success wait inserted | **STRENGTHENED** |
+| `world-session.spec.ts:10–14,38` | Save helper gains completion wait; active-slot text snapshot → raw-record JSON snapshot; wrong-slot seed → record seed; all foreign bytes, messages and state comparisons retained | **PRESERVED / STRENGTHENED** |
+
+The added Save waits do not accept stale success in their inspected call sequences: they follow a first save, or intervening import/export changes the notice. Each `world-session` test using its save helper saves once. The ledger poll cannot pass merely because no save ever existed: its successful-save status is observed first.
+
+**2. New tests and helpers — meaningfulness**
+
+| New unit coverage | What it proves |
+|---|---|
+| `game-store-suite.ts` | Exact write/read; unchanged-write stats; NPC deletion and remaining records; failed replacement preserves prior records; clear preserves marker; slot isolation. Diff tests cover empty inputs, insert/update/delete/unchanged, and table-qualified identity. These establish prior state before checking preservation/deletion. |
+| `game-store.test.ts` | Marker already present with/without data is a no-op even with writes disabled; existing slot wins; empty slot accepts candidate and marker; returned data is detached; null candidate preserves other slots; synchronous migration ordering; invalid arguments cannot mutate; failed migration preserves both populated and empty cases. |
+| `session-records.test.ts` | **36 fixture cases: 9 current + 27 historical.** Current cases require successful serialization and identical text. Historical cases require exact reconstructed data and the same exact serializer refusal. Four character records are asserted. Corrupt-character, metadata, city, world, NPC, Player, outer profile and embedded-profile cases require `StoreRecordError` with the specific reference. The error assertions cannot pass merely because no exception occurred. |
+| `character-life-session.test.ts:184–191` | Each of the eight A2 cases is present: once-only migration, empty marker, invalid legacy retention/message, old-ruleset migration/refusal, identical save/read and replacement flag, failed-write preservation, fall/no resurrection, factory fallback warning once. |
+| Same file `:221–341` | Full seven-table clearing; three-game no-growth; corrupt-record preservation; pending-save/fall ordering; read/save/clear order; queue recovery after failure; queue shared across dependencies; unavailable/throwing legacy retry; newer stored B wins; zero-data-write marker path; concurrent C wins after four preliminary-read scenarios. |
+
+The all-table clear tests are non-vacuous: their setup asserts that **every data table contains records before clearing**. The three-game cases require only the marker afterward on every iteration.
+
+| New browser test(s) in `storage.spec.ts` | What it proves |
+|---|---|
+| `:20,23,26` | Exact Save/reload/Continue round-trip; autosave reaches exact exported bytes through a poll; seeded legacy migrates unchanged and reload performs no migration write. |
+| `:31,36,39,42` | Migrated fallen save cannot resurrect; injected write abort preserves prior raw records and exact message; two real tabs save A → B → A with exact final A; unavailable IDB remains playable, warns once and exports. |
+| `:45,50` | Title absent until initial read completion, then correct focus; three separately started games populate all seven tables and leave exactly one marker, with three distinct seeds. |
+| `:59,65,73,81` | Pending Continue cannot overwrite a newer command or import feedback; pending Main menu cannot exit after a newer command; latest Continue wins over an earlier held result. |
+| `:89,105` | Temporarily inaccessible legacy is retried without prematurely writing a marker; recovered legacy A cannot overwrite newer saved B. |
+| `:121,131,138,144,150` | Both success/failure Save feedback lose to newer import feedback; Save supersedes pending Continue/Main menu; a command supersedes Save feedback; delayed autosave failure cannot overwrite a later week’s status. |
+| `:161`, three scenarios | Two actual pages interleave preliminary read and newer C save. Existing-B, empty and marker-winner paths all preserve C; records/legacy bytes are exact; actual writes are marker-only or zero, as appropriate. |
+
+Helper assessment:
+
+| Helper | Assessment |
+|---|---|
+| `readStoredRecords`, `writeRecords`, `clearStored`, `writeRawRecord` | Raw IDB operations await transaction completion. Raw reads do not fabricate service marks. Corruption snapshots can detect record changes independently of successful decoding. |
+| `storedSaveText` | Reconstructs and serializes stored data; returns null only without a main meta record; corrupt/unsupported data throws instead of silently becoming null. It is a representation adapter, so independent raw comparisons and fixture round-trips remain important. |
+| `writeStoredSaveText` | Converts valid envelopes into records; malformed input becomes deliberately invalid raw records. This preserves refusal/preservation testing. The whitespace “oversize” browser case is not an isolated proof of a size boundary; the unchanged ASCII/UTF-8 unit cases provide that boundary coverage. |
+| Marks and abort injection | Marks establish API-call counts, **not commit completion**—the distinction behind F3. Abort injection exercises an actual transaction-abort failure path and previous-record preservation, but it does not deliberately wait until a successful put before aborting. |
+| Completion holds / migration observer | Holds delivery of an already-completed transaction, allowing another tab to proceed without a retained IDB lock. Only the selected transaction is held. Patches are page-local; Playwright’s page/context fixtures dispose of them, and additional pages close in `finally`. Migration observation counts actual put/delete/clear operations. |
+
+**3. PR A acceptance-criteria coverage**
+
+This distinguishes **test coverage**, **source inspection**, and **execution evidence**. A named test is not a claim that I ran it.
+
+| Binding criterion | Coverage at `623cbc4` |
+|---|---|
+| **A1: lossless fixture round-trip** | `session-records.test.ts` fixture loop: 9 current successful byte comparisons and 27 exact historical-state/refusal comparisons, following the supplied ruling |
+| **A1: Player + 3 NPCs = 4 records** | `Player and 3 NPCs give 4 character records` |
+| **A1: corrupt character throws exact reference** | `corrupt character identifies the offending record`; expanded malformed character/profile cases |
+| **A1: memory write/read, unchanged stats, deletion, failure preservation, clear-marker, isolated slots** | All six cases in `runGameStoreSuite('memory', createMemoryGameStore)` |
+| **A1: diff cases** | Empty inputs; mixed insert/update/delete/unchanged; table identity |
+| **A2: once-only migration and no second legacy access** | Unit `migrates legacy once…`; browser `legacy addInitScript seed…` |
+| **A2: empty/invalid legacy handling** | Unit `empty legacy writes marker`; `invalid legacy stays unchanged…`; existing parameterized boundary cases |
+| **A2: old-ruleset copied as-is and refused with existing message** | Unit `old ruleset legacy migrates…`; historical record round-trips |
+| **A2: identical save/read; `replaced:false → true`** | Unit `save and read are identical…` and migrated existing save test |
+| **A2: failed write preserves prior save and existing text** | Unit `failed write returns existing message…`; browser abort case; existing manual-save/autosave failure cases |
+| **A2: fall clears slot/legacy, retains marker, no resurrection** | Unit `fallen clear keeps marker…`; browser migrated-fall/reload case |
+| **Correction 4(b): all seven tables empty; only marker; three games no growth** | Unit `fallen clears all seven…` / `three consecutive…`; browser `three started saved and fallen games…` |
+| **A2: factory/open failure fallback, warning once, playable/exportable** | Unit factory-failure case; browser blocked-IDB case |
+| **A2: IDB stores, compound keys, `bySlot`, one transaction, complete/abort/error behavior** | **Source-inspected; partially covered behaviorally** by browser writes, aborts, holds and races. Dedicated assertions for every schema/index property and every distinct error/blocked event are **UNCOVERED**. |
+| **A2: awaited read/Continue/Save/autosave/Main menu/fall call sites** | Source-inspected; exercised by existing tests and new pending-operation cases. The remaining test observation gaps are F1–F3. |
+| **A3: seven required new e2e cases** | All seven explicitly present at `storage.spec.ts:20–42` |
+| **A3: title waits; focus; one initial read** | Held-initial-read browser case; existing title focus/enablement checks; one-read mark assertion. The manual-save setup in the latter needs F2. |
+| **A3: mechanically migrate existing storage checks without weakening** | Full inventory above. **Not fully satisfied** because F1 no longer guarantees a saved baseline; F2/F3 leave observations unsynchronized. |
+| **Decision 8: export live; import does not save** | Existing manual-IO/import cases in `tile-local-checkpoint`, `autosave`, navigation and world-session tests; live export helper and UI source inspected |
+| **Decision 9: observable read/write/clear operations** | Store marks in autosave/title/manual-IO tests; separate legacy-get assertion; actual migration-write observer |
+| **Review Focus 1: A → B → A exact save; existing same-mode test retained** | New A/B/A test is present and synchronized. Existing same-mode test remains but has F2. |
+| **Review Focus 2: fallen migrated city never returns** | Unit and browser migration → fall → clear → reload checks |
+| **Review Focus 3: abort retains save, manual message and exact autosave-failure text** | New abort case; existing tile/title manual failures; `autosave.spec.ts` failure case |
+| **Review Focus 4: IDB unavailable** | Unit fallback and browser blocked-IDB case |
+| **Review Focus 5: catalog golden negative control** | **N/A to PR A**; expressly owned by B1 |
+| **A1–A3: RED-before-implementation history and intermediate GREEN runs** | **Not independently verified in this audit.** Final test contents cannot prove execution order. |
+| **A4: exact-head gates 1–7 and smoke** | Inspected supplied final-head evidence: all eight commands recorded exit 0; 2,192 unit tests / 99 files; 154 architecture tests; 350 Chromium smoke tests |
+| **A4: bundle budget and growth** | Final build log: JS 105.21 kB gzip, CSS 5.81 kB. Round-3 measurement reports growth +3.450 / +0.024 kB against a supplied rounded baseline. Product files are unchanged from round 3 to this head. I did not independently reproduce the baseline measurement. |
+
+**4. Evidence and limits**
+
+The inspected [final-head evidence README](C:/Users/Admin/.t3/local-drafts/data01-prA/fix6/README.md), [gate log](C:/Users/Admin/.t3/local-drafts/data01-prA/fix6/gates-and-smoke.txt), and [smoke log](C:/Users/Admin/.t3/local-drafts/data01-prA/fix6/smoke.txt) identify the requested HEAD/tree and record passing runs. The held-Continue negative control fails at the added line 336 with the earlier import message still visible, supporting the round-6 wait’s effectiveness.
+
+- **No changed test/helper diff remains unread.** Some additional context reads encountered very large unchanged inline fixtures; the relevant code was reread in bounded slices. All changed lines were read completely and their counts reconciled.
+- I ran **no tests, builds, installs, browser experiments, or mutation controls**. F1–F3 are static findings; supplied passing runs do not exclude those schedules.
+- I did not independently validate Firefox/WebKit transaction behavior, private-window behavior, or all browser-specific IDB failure events.
+- I did not certify original RED chronology, GitHub CI state, or publication of the evidence on the docs branch. Those are separate from closing the test-diff inspection gap.
+- No files were edited, committed, pushed, or merged.
+
+**Next: present F1–F3 to the owner for the test-only disposition; this audit closes the truncation HOLD but does not support releasing G5 at `623cbc4`.**
+
+[user]
+Astra, read-only re-review of DATA-01 PR A (#90), fix round 7, which addresses your consolidated-audit findings F1–F3.
+
+Worktree: C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01. Range: `git diff 623cbc4..e192a28` (one commit e192a2891a9df11f6dbc61985aff0b483ce034a4, tree 1264de25a8c4aa3c094e556ca8c62bae9282ca4e). Owner Tân approved fixing F1–F3 inside #90, verbatim: "A, sửa trong #90".
+
+Changes (tests only, 4 files, 5 added statements; two one-line tests were split around the additions):
+- F1 character-life-navigation.spec.ts:1434 save-success wait before `saved`; :1436 added `expect(saved.records).toContainEqual({slotId:'main',id:'city',table:'city',schemaVersion:1,value:before.city});`
+- F2a title.spec.ts:112 save-success wait before export and reload.
+- F2b tile-local-checkpoint.spec.ts:62 save-success wait on `second` (the saving page). This is a call-site wait, because the shared `save` helper also serves expected-failure tests.
+- F3 autosave.spec.ts:33 `await expect.poll(() => storedSaveText(page)).toBe(bytes(after));` before the unchanged count/value assertions.
+
+My Tester check: stripping the added statements and whitespace on both sides gives the 623cbc4 files exactly; each file gains exactly one wait/poll.
+
+Builder evidence: C:/Users/Admin/.t3/local-drafts/data01-prA/fix7/. With a 300 ms IndexedDB delay, F1 and F2a reproduced RED before the edit and pass after it. F2b (both modes) and F3 did not reproduce, and pass before and after. F1's pre-fix first snapshot was marker-only (f1-marker-only-proof.json). Gates 1–7 exit 0, unit 2,192, smoke 350/350.
+
+Please check:
+1. F1, F2 and F3 are each closed by these additions, and nothing is weakened.
+2. F2b: page A also calls `save(page)` earlier, with no success wait, before `second` saves. Can A's own earlier save still commit after B's, so A's Continue reads A's data? Is that only a flake, or does it mask a defect? Is a wait on A's earlier save needed for this test to be deterministic?
+3. The F3 poll cannot pass before this autosave (could `bytes(after)` already be stored before Plan next week?).
+4. With F1–F3 closed, give an updated consolidated verdict over ca46d18..e192a28, building on your full audit of ca46d18..623cbc4: PASS or FAIL, findings P0–P3 with file:line, and limits.
+
+Do not edit files, install, run builds or tests, push or merge.
+
+[assistant]
+Checking the five additions against F1–F3, including whether page A’s earlier save is ordered before page B’s. This remains a read-only review; no tests or builds will run.
+
+
+[assistant]
+**FAIL — F1, F2a and F3 are closed; F2b still needs a completion wait for page A’s first save.**
+
+Confirmed:
+
+```text
+HEAD: e192a2891a9df11f6dbc61985aff0b483ce034a4
+Tree: 1264de25a8c4aa3c094e556ca8c62bae9282ca4e
+Working tree: clean
+```
+
+The complete round-7 diff contains only the four approved test files: **+9/−2 physical lines**, representing **five added statements and two line splits**. No existing assertion, expected value, timeout, retry, worker setting, or threshold was weakened. No product file changed.
+
+**Remaining finding**
+
+**P2 — F2b: page A’s initial save is still unordered relative to page B’s save.**  
+Location: [tile-local-checkpoint.spec.ts:61](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/tile-local-checkpoint.spec.ts:61).
+
+`save(page)` awaits the click, not completion. The service performs a preliminary asynchronous read before creating the save’s write transaction. Each page has its own checkpoint queue.
+
+A valid adverse schedule is:
+
+1. A clicks Save; A’s preliminary read or its completion delivery remains pending.
+2. B opens, imports its distinct session, saves, and reaches the newly added success wait.
+3. A’s earlier operation resumes and creates its write transaction **after B’s transaction**, overwriting B with A.
+4. A clicks Continue. Its own queue waits for that earlier A save, then reads A’s records. The test expects B and fails.
+
+The adapter’s transaction serialization does not eliminate this schedule: it orders transactions once created, not Save clicks across pages. The preliminary read and replacement are separate transactions in [character-life-session.ts:46](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/character-life-session.ts:46).
+
+**This is a false-failure/flakiness risk, not a false-positive path that masks the final-state defect.** A and B differ in Player name and gold, and the final exact session comparison remains. If A wins late, that comparison rejects it. The test nevertheless fails to establish its intended “A saves, then B saves” precondition.
+
+**A success wait immediately after the first `await save(page)`, before creating `second`, is needed for deterministic ordering.** Keep it at this call site; the shared helper also serves expected-failure tests. The existing wait on B must remain.
+
+**Disposition of the five additions**
+
+| Finding | Review result |
+|---|---|
+| **F1 — saved baseline** | **Closed.** [character-life-navigation.spec.ts:1434](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/character-life-navigation.spec.ts:1434) waits for this test’s first Save. The new exact city-record assertion at line 1436 excludes a marker-only snapshot and ties the baseline to `before.city`. The original whole-storage equality remains. |
+| **F2a — title reload** | **Closed.** [title.spec.ts:112](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/title.spec.ts:112) waits before export/reload. No earlier Save success exists in that test, so it cannot match stale success text. |
+| **F2b — second-page save** | **Partially closed.** [tile-local-checkpoint.spec.ts:62](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/tile-local-checkpoint.spec.ts:62) correctly waits on **B**, the saving page. B has just imported and has no earlier Save success. The missing A wait remains the P2 above. |
+| **F3 — autosave observation** | **Closed.** [autosave.spec.ts:33](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/autosave.spec.ts:33) waits for exact stored bytes before the unchanged write-count, byte-equality and decoded-state assertions. |
+
+The **F3 poll cannot succeed from a pre-existing copy of `bytes(after)` in this test**. It starts in a fresh browser context, imports a live session without saving, and performs no manual save or record seed. The preceding End Week check requires no checkpoint IO. `after` is exported after Plan next week and contains the advanced session. The initial migration marker cannot satisfy `storedSaveText(page)`: without a main meta record that helper returns null. Export itself does not persist the session.
+
+The poll also does not manufacture the expected write mark. The exact assertion of **one** write remains afterward, so extra writes still fail.
+
+**Updated consolidated verdict: FAIL over `ca46d18..e192a28`.**
+
+The previous complete audit of all 20 test/helper diffs remains applicable. This round preserves its assertions and closes the saved-baseline, title-reload and positive-autosave gaps. **The sole remaining finding from this review is the P2 ordering gap on A’s first save.** No P0/P1 finding was established.
+
+I inspected the [round-7 evidence README](C:/Users/Admin/.t3/local-drafts/data01-prA/fix7/README.md) and [source-byte proof](C:/Users/Admin/.t3/local-drafts/data01-prA/fix7/source-byte-proof.json). They record F1/F2a delayed-baseline failures, five passing cases after the additions, all gates exiting 0, 2,192 unit tests and 350 smoke tests. F2b and F3 are correctly reported as not reproduced under the supplied delay.
+
+Limits: I ran no tests, builds, installs, or browser experiments and made no changes. The remaining schedule is a source-based finding, not a newly reproduced failure. Prior limits concerning cross-browser behavior, original RED chronology, and evidence publication remain unchanged; no test-diff truncation gap remains.
+
+**Next: add the same Save-success wait on page A immediately after its first `save(page)` in the two-tab test.**
+
+[user]
+Astra, read-only re-review of DATA-01 PR A (#90), fix round 7b (the F2b page-A wait you asked for).
+
+Worktree: C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01. Range: `git diff e192a28..1ad295b` (one commit 1ad295b60a63e33d8e769de32f97a18685a28499, tree bb128a79be7713c7ed3cf1fa9360d035d8127ec4). Owner approval for the F2 fix, Tân verbatim: "A, sửa trong #90".
+
+Change: tests/e2e/tile-local-checkpoint.spec.ts:62. Right after page A's first `await save(page)` and before `context.newPage()`, it adds `await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');`. The line was split around it (+3/−1). The page-B wait and the shared helper are unchanged. My check: stripping the added statement and whitespace gives the e192a28 file exactly; the wait count goes 7 → 8.
+
+Builder evidence C:/Users/Admin/.t3/local-drafts/data01-prA/fix7b/: with a 2,000 ms preliminary-read delay, both modes fail before the edit and pass after it. Gates 1–7 exit 0. The Builder's full smoke had 349/350: title.spec.ts:184 "Test timeout of 60000ms exceeded while setting up \"page\"" (before the test body; that test is unchanged and passed alone). I am re-running gates and the full smoke at this head myself; CI also runs at this head.
+
+Please check:
+1. F2b is now closed: A's save completes before B is created, so A's write cannot land after B's. Can the wait on A match stale text? (A has no earlier save success in this test.)
+2. Nothing is weakened.
+3. Does anything in this PR plausibly explain a "setting up page" fixture timeout in title.spec.ts:184 (for example a leftover held transaction or an open IndexedDB connection across tests)? Or is it outside the PR's test code? Answer from the source; say if you cannot tell.
+4. Updated consolidated verdict over ca46d18..1ad295b, building on your full audit and the round-7 review: PASS or FAIL, findings P0–P3 with file:line, and limits.
+
+Do not edit files, install, run builds or tests, push or merge.
+
+[assistant]
+Checking the page-A wait and test isolation around the reported page-fixture timeout. The review remains read-only; execution results will be kept separate from the source verdict.
+
+
+[assistant]
+**PASS — consolidated source/test-migration review over `ca46d18..1ad295b`. F1–F3 are now closed; no remaining P0–P3 findings.**  
+**G5 remains pending a successful full smoke at this head.** This review does not override the Builder’s recorded smoke failure.
+
+Confirmed:
+
+```text
+HEAD: 1ad295b60a63e33d8e769de32f97a18685a28499
+Tree: bb128a79be7713c7ed3cf1fa9360d035d8127ec4
+Working tree: clean
+```
+
+**F2b is closed.** The added wait at [tile-local-checkpoint.spec.ts:62](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/tile-local-checkpoint.spec.ts:62) establishes this order:
+
+1. A’s first Save finishes and publishes its success message.
+2. B is created, imports its distinct session, and saves.
+3. The existing B wait observes B’s completed Save.
+4. A continues and must restore B’s session.
+
+A’s earlier write therefore cannot land after B’s. The new wait cannot match stale Save text: A has no previous Save in this test, and the preceding export publishes the distinct download notice. The success message is published only after the awaited save operation completes.
+
+**Nothing was weakened.** I read the complete `e192a28..1ad295b` diff: one approved file, **+3/−1 physical lines**, comprising one added assertion and a split of the existing long line. The B wait, shared helper, final session comparison, foreign-page cleanup, and all existing values remain unchanged. No timeout, retry, worker, configuration, or product change is present.
+
+**The page-fixture timeout has no established source-level cause in this PR.**
+
+The [smoke log](C:/Users/Admin/.t3/local-drafts/data01-prA/fix7b/smoke.txt) reports:
+
+> Test timeout of 60000ms exceeded while setting up "page".
+
+That occurs before the affected test body can navigate to the application or exercise its IndexedDB code. The inspected source supports these distinctions:
+
+- [title.spec.ts](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/title.spec.ts) imports Playwright’s standard `test`; it does not override the `page` fixture.
+- [playwright.config.ts](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/playwright.config.ts) uses the normal per-test page/context lifecycle, with one worker and no retries.
+- [holdStoreCompletion](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/storage.helpers.ts:65) delays delivery of a **physically completed** transaction’s callback. It does not keep that transaction’s database lock alive. Its patches and release function live in the test page.
+- Raw storage helpers close their connections on completion/abort. The application’s connection lives with its page; the inspected tests do not share a persistent browser context across tests. Extra pages in the storage race tests close in `finally`.
+
+Consequently, I found **no cross-test held transaction or shared IndexedDB connection that explains this failure**. However, source inspection cannot establish the actual cause of a browser/page-creation stall or exclude indirect browser-process resource effects. I would not label it conclusively “environment-only” from this evidence. The isolated pass is diagnostic evidence; it does not turn the failed full smoke into a pass.
+
+The updated consolidated verdict builds on the complete 20-file audit through `623cbc4`, the fully inspected round-7 diff, and this complete round-7b diff. **No test-diff truncation gap remains.** The [round-7b evidence README](C:/Users/Admin/.t3/local-drafts/data01-prA/fix7b/README.md) also records both delayed modes failing before the addition and passing afterward, consistent with the corrected ordering.
+
+Limits: I ran no tests, builds, installs, or browser experiments and made no changes. I have not verified your in-progress rerun or current CI result. Prior limits on cross-browser behavior, original RED chronology, and evidence publication remain.
+
+**Next: attach the completed exact-head full-smoke rerun result to the G5 evidence; the independent source-review blocker is cleared.**

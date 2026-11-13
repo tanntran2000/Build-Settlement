@@ -16,6 +16,7 @@ Owner: Tân. Every quote is verbatim from the owner's own chat message with Clau
 | 11-12 | Fix round 5 inside #90: the three latent timing risks from Astra round 5, in four specs only | "Sửa trong #90" |
 | 11-12 | Send #90 to dot once CI is green | "CI xanh, gửi dot" |
 | 11-12 | Fix round 6 inside #90: the Continue wait in `character-life.spec.ts` raised in dot's G5 check | "A, sửa trong #90" |
+| 11-13 | Fix round 7 inside #90: Astra consolidated-audit findings F1–F3 (round 7b completes F2b under the same approval) | "A, sửa trong #90" |
 
 Claude's own rulings inside the approved plan (not owner decisions) are in `review/brief-data01-*.md`:
 - the fix-round rulings;

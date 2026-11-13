@@ -1,0 +1,130 @@
+UTC=2026-11-13T01:33:57.494Z HEAD=e192a2891a9df11f6dbc61985aff0b483ce034a4 TREE=1264de25a8c4aa3c094e556ca8c62bae9282ca4e
+STATUS="M tests/e2e/tile-local-checkpoint.spec.ts"
+ENV CI=1
+COMMAND=npx playwright test tests/e2e/tile-local-checkpoint.spec.ts -g "the last explicit same-mode tab save wins without automatically loading"
+[WebServer] (node:67340) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:3340) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:22036) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:60:2 › the last explicit same-mode tab save wins without automatically loading (tiles) (6.2s)
+(node:60312) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:60:2 › the last explicit same-mode tab save wins without automatically loading (population) (3.5s)
+
+
+  1) [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:60:2 › the last explicit same-mode tab save wins without automatically loading (tiles) 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 2
+
+    @@ -736,11 +736,11 @@
+                ],
+                "foodProcessorOperational": true,
+                "id": "settlement_haven_01",
+                "inventory": Object {
+                  "food": 20000,
+    -             "gold": 55000,
+    +             "gold": 45000,
+                  "iron": 4000,
+                  "wheat": 0,
+                  "wood": 8000,
+                },
+                "name": "Haven",
+    @@ -1555,11 +1555,11 @@
+            "gender": "other",
+            "health": 100,
+            "id": "player",
+            "legalStatus": "citizen",
+            "memories": Array [],
+    -       "name": "Second Keeper",
+    +       "name": "Ana",
+            "needs": Object {
+              "autonomy": 60,
+              "intimacy": 40,
+              "nutrition": 80,
+              "purpose": 50,
+
+      61 |   await start(page);const first=await exportLife(page);await save(page);const second=await context.newPage();try{await second.goto(`/?mode=${mode}`);const s=makeLife();s.player.character.name='Second Keeper';s.city.world.settlements[s.city.world.activeSettlementId!].inventory.gold=55000;await importLife(second,s);await save(second);
+      62 |   await expect(second.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+    > 63 |   expect(await exportLife(page)).toEqual(first);await resume(page);const restored=await exportLife(page);expect({...restored,city:{...restored.city,revision:s.city.revision}}).toEqual(s);}finally{await second.close();}
+         |                                                                                                                                                                                 ^
+      64 |  });
+      65 | }
+      66 | for(const width of [1280,390])test(`population local checkpoint restores grown cohorts and next-week parity at ${width}px`,async({page})=>{
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\tile-local-checkpoint.spec.ts:63:177
+
+    Error Context: test-results\tile-local-checkpoint-the--c676c-utomatically-loading-tiles--chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\tile-local-checkpoint-the--c676c-utomatically-loading-tiles--chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\tile-local-checkpoint-the--c676c-utomatically-loading-tiles--chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:60:2 › the last explicit same-mode tab save wins without automatically loading (population) 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 2
+
+    @@ -736,11 +736,11 @@
+                ],
+                "foodProcessorOperational": true,
+                "id": "settlement_haven_01",
+                "inventory": Object {
+                  "food": 20000,
+    -             "gold": 55000,
+    +             "gold": 45000,
+                  "iron": 4000,
+                  "wheat": 0,
+                  "wood": 8000,
+                },
+                "name": "Haven",
+    @@ -1555,11 +1555,11 @@
+            "gender": "other",
+            "health": 100,
+            "id": "player",
+            "legalStatus": "citizen",
+            "memories": Array [],
+    -       "name": "Second Keeper",
+    +       "name": "Ana",
+            "needs": Object {
+              "autonomy": 60,
+              "intimacy": 40,
+              "nutrition": 80,
+              "purpose": 50,
+
+      61 |   await start(page);const first=await exportLife(page);await save(page);const second=await context.newPage();try{await second.goto(`/?mode=${mode}`);const s=makeLife();s.player.character.name='Second Keeper';s.city.world.settlements[s.city.world.activeSettlementId!].inventory.gold=55000;await importLife(second,s);await save(second);
+      62 |   await expect(second.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+    > 63 |   expect(await exportLife(page)).toEqual(first);await resume(page);const restored=await exportLife(page);expect({...restored,city:{...restored.city,revision:s.city.revision}}).toEqual(s);}finally{await second.close();}
+         |                                                                                                                                                                                 ^
+      64 |  });
+      65 | }
+      66 | for(const width of [1280,390])test(`population local checkpoint restores grown cohorts and next-week parity at ${width}px`,async({page})=>{
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\tile-local-checkpoint.spec.ts:63:177
+
+    Error Context: test-results\tile-local-checkpoint-the--3bc3b-tically-loading-population--chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\tile-local-checkpoint-the--3bc3b-tically-loading-population--chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\tile-local-checkpoint-the--3bc3b-tically-loading-population--chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:60:2 › the last explicit same-mode tab save wins without automatically loading (tiles) 
+    [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:60:2 › the last explicit same-mode tab save wins without automatically loading (population) 
+
+EXIT=1 DURATION_MS=29503 END_UTC=2026-11-13T01:34:26.997Z

@@ -1,0 +1,45 @@
+{
+  "test": "the last explicit same-mode tab save wins without automatically loading (population)",
+  "a": {
+    "clicked": true,
+    "readIntercepted": true,
+    "readPhysicallyCompleted": true,
+    "completionDelivered": true,
+    "saveWriteCompleted": true,
+    "delayMs": 2000,
+    "readCompletedAt": 1794533818468,
+    "deliveredAt": 1794533820469
+  },
+  "aEvents": [
+    {
+      "event": "first-save-click",
+      "time": 1794533818460
+    },
+    {
+      "event": "read-physically-complete",
+      "time": 1794533818468
+    },
+    {
+      "event": "read-delivered",
+      "time": 1794533820469
+    },
+    {
+      "event": "save-write-complete",
+      "time": 1794533820472,
+      "page": "A",
+      "player": "Ana",
+      "city": true,
+      "gold": 45000
+    }
+  ],
+  "bEvents": [
+    {
+      "event": "save-write-complete",
+      "time": 1794533821294,
+      "page": "B",
+      "player": "Second Keeper",
+      "city": true,
+      "gold": 55000
+    }
+  ]
+}

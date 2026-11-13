@@ -1,0 +1,19 @@
+UTC=2026-11-13T01:36:34.588Z HEAD=e192a2891a9df11f6dbc61985aff0b483ce034a4 TREE=1264de25a8c4aa3c094e556ca8c62bae9282ca4e
+STATUS="M tests/e2e/tile-local-checkpoint.spec.ts"
+ENV CI=1
+COMMAND=npx playwright test tests/e2e/tile-local-checkpoint.spec.ts -g "the last explicit same-mode tab save wins without automatically loading"
+[WebServer] (node:67568) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:16864) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:62092) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:60:2 › the last explicit same-mode tab save wins without automatically loading (tiles) (5.8s)
+  ok 2 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:60:2 › the last explicit same-mode tab save wins without automatically loading (population) (4.5s)
+
+  2 passed (23.9s)
+
+EXIT=0 DURATION_MS=28875 END_UTC=2026-11-13T01:37:03.463Z

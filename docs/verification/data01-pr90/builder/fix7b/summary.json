@@ -1,0 +1,151 @@
+{
+  "head": "1ad295b60a63e33d8e769de32f97a18685a28499",
+  "tree": "bb128a79be7713c7ed3cf1fa9360d035d8127ec4",
+  "base": "e192a2891a9df11f6dbc61985aff0b483ce034a4",
+  "status": "HOLD",
+  "holdReason": "Full smoke failed in unchanged tests/e2e/title.spec.ts:184 while setting up the page fixture, before its body. The case passed alone once. The full smoke remains failed; no out-of-scope fix or further iteration was attempted.",
+  "ownerApproval": "A, sửa trong #90",
+  "gitStatus": "clean",
+  "results": [
+    {
+      "label": "gate1",
+      "exit": 0,
+      "durationMs": 602,
+      "start": "2026-11-13T01:38:13.108Z",
+      "end": "2026-11-13T01:38:13.710Z"
+    },
+    {
+      "label": "gate2",
+      "exit": 0,
+      "durationMs": 15283,
+      "start": "2026-11-13T01:38:13.714Z",
+      "end": "2026-11-13T01:38:28.996Z"
+    },
+    {
+      "label": "gate3",
+      "exit": 0,
+      "durationMs": 38346,
+      "start": "2026-11-13T01:38:28.996Z",
+      "end": "2026-11-13T01:39:07.342Z"
+    },
+    {
+      "label": "gate4",
+      "exit": 0,
+      "durationMs": 8194,
+      "start": "2026-11-13T01:39:07.343Z",
+      "end": "2026-11-13T01:39:15.537Z"
+    },
+    {
+      "label": "gate5",
+      "exit": 0,
+      "durationMs": 54900,
+      "start": "2026-11-13T01:39:15.538Z",
+      "end": "2026-11-13T01:40:10.438Z"
+    },
+    {
+      "label": "gate6",
+      "exit": 0,
+      "durationMs": 59244,
+      "start": "2026-11-13T01:40:10.438Z",
+      "end": "2026-11-13T01:41:09.682Z"
+    },
+    {
+      "label": "gate7",
+      "exit": 0,
+      "durationMs": 23851,
+      "start": "2026-11-13T01:41:09.683Z",
+      "end": "2026-11-13T01:41:33.534Z"
+    },
+    {
+      "label": "smoke",
+      "exit": 1,
+      "durationMs": 2464906,
+      "start": "2026-11-13T01:41:42.307Z",
+      "end": "2026-11-13T02:22:47.214Z"
+    }
+  ],
+  "counts": {
+    "unitTests": "2192",
+    "unitFiles": "99",
+    "architecture": "154",
+    "smoke": [
+      "349",
+      "41.1m"
+    ],
+    "gzipLines": [
+      "computing gzip size...",
+      "dist/index.html                                   0.71 kB │ gzip:   0.41 kB",
+      "dist/assets/index-DdNtS9j1.css                   28.13 kB │ gzip:   5.81 kB",
+      "dist/assets/index-BrbxhwAC.js                   322.94 kB │ gzip: 105.21 kB"
+    ]
+  },
+  "smokeTotal": 350,
+  "smokeFailed": 1,
+  "isolatedRerun": {
+    "exit": 0,
+    "passed": 1,
+    "durationMs": 35684
+  },
+  "cases": [
+    {
+      "mode": "tiles",
+      "baseline": {
+        "first": "B",
+        "second": "A",
+        "aCommitMs": 1794533660431,
+        "bCommitMs": 1794533659117,
+        "gapMs": 1314,
+        "raw": "baseline-5e791e7064f83c3b.json"
+      },
+      "green": {
+        "first": "A",
+        "second": "B",
+        "aCommitMs": 1794533815156,
+        "bCommitMs": 1794533816375,
+        "gapMs": 1219,
+        "raw": "green-5e791e7064f83c3b.json"
+      }
+    },
+    {
+      "mode": "population",
+      "baseline": {
+        "first": "B",
+        "second": "A",
+        "aCommitMs": 1794533665857,
+        "bCommitMs": 1794533664375,
+        "gapMs": 1482,
+        "raw": "baseline-106967e1ba63c53d.json"
+      },
+      "green": {
+        "first": "A",
+        "second": "B",
+        "aCommitMs": 1794533820472,
+        "bCommitMs": 1794533821294,
+        "gapMs": 822,
+        "raw": "green-106967e1ba63c53d.json"
+      }
+    }
+  ],
+  "byteProof": {
+    "baseHead": "e192a2891a9df11f6dbc61985aff0b483ce034a4",
+    "file": "tests/e2e/tile-local-checkpoint.spec.ts",
+    "addedStatement": "await expect(page.locator('[aria-label=\"Planning checkpoints\"] [role=\"status\"]')).toContainText('Saved in this browser.');",
+    "newLine": 62,
+    "baseWorkingSha256": "49c1ce0c61f4c56d55407b6750a612924956df673fac0e491763e7687edd0aca",
+    "reversedWorkingSha256": "49c1ce0c61f4c56d55407b6750a612924956df673fac0e491763e7687edd0aca",
+    "baseGitBlobSha256": "acb72c304337c061b368293b2ecce211e7e23220f0988bdfee4b1d6c26e493f6",
+    "physicalByteRestoration": true,
+    "gitBlobRestorationIgnoringOnlyWhitespace": true,
+    "onlyAllowedFile": true,
+    "hooksRemoved": true,
+    "delayScriptSha256": "7c49f25d7e95843786b8719394536d1fae215b21c250afd98f0e2fdbdf461132",
+    "observerScriptSha256": "f34120988f739a4dc3381434db4dfb8414687157dd5d43d3ae9c296c9d2f0e5b",
+    "gitBlobByteRestoration": true,
+    "gitBlobOriginalBytes": 14254,
+    "gitBlobReversedBytes": 14254
+  },
+  "portState": {
+    "utc": "2026-11-13T02:24:08.7420367Z",
+    "listeners": []
+  }
+}

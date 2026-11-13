@@ -1,0 +1,6 @@
+tests/e2e/tile-local-checkpoint.spec.ts:62
+ADDED: await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+Location: after the first await save(page), before creating the second page.
+Invariant: A saves and commits before B begins; B remains the last explicit save.
+Existing shared helper, second-page wait, assertions, values, timeouts, retries, workers and thresholds unchanged.
+Removing the exact added statement and surrounding inserted whitespace restores all 14317 original working-file bytes.

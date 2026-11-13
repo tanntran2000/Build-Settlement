@@ -1,0 +1,52 @@
+{
+  "test": "B2 City Report City preserves export and saved checkpoint",
+  "rawObservationFile": "baseline-a8faccc635b37fe0.json",
+  "firstSnapshot": {
+    "action": 1,
+    "tables": {
+      "meta": [],
+      "city": [],
+      "world": [],
+      "characters": [],
+      "reports": [],
+      "history": [],
+      "items": [],
+      "system": [
+        {
+          "slotId": "_",
+          "id": "migration:legacy-local-checkpoint",
+          "table": "system",
+          "schemaVersion": 1,
+          "value": true
+        }
+      ]
+    },
+    "rows": [
+      {
+        "slotId": "_",
+        "id": "migration:legacy-local-checkpoint",
+        "table": "system",
+        "schemaVersion": 1,
+        "value": true
+      }
+    ],
+    "statusAtStart": "Checkpoint download requested."
+  },
+  "laterSnapshotCounts": [
+    {
+      "records": 8,
+      "tables": [
+        "meta",
+        "city",
+        "world",
+        "characters",
+        "characters",
+        "characters",
+        "characters",
+        "system"
+      ]
+    }
+  ],
+  "baselineFailed": 2,
+  "baselinePassed": 3
+}

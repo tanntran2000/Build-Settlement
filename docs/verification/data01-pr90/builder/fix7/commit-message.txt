@@ -1,0 +1,7 @@
+test(e2e): wait for save and autosave completion in the remaining migrated specs
+
+The remaining migrated tests could snapshot a marker-only slot, reload before a save committed, continue from another tab before its write, or inspect autosave marks and bytes before completion. Await the saving page result and the exact expected autosave bytes, and establish that the navigation snapshot contains the saved city record. Preserve every existing assertion and runner setting.
+
+The delayed baseline reproduced F1 and the title reload case; both two-tab variants and autosave passed and are recorded as not reproduced. All five cases pass with the additions, and raw F1 observations show marker-only before the fix and a real city record afterward. Remove all temporary instrumentation before commit.
+
+Co-authored-by: Codex <noreply@openai.com>

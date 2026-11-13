@@ -1,0 +1,4 @@
+
+// FIX7 TEMPORARY DELAY/OBSERVATION HOOKS — removed before commit.
+test.beforeEach(async({context})=>{await context.addInitScript({path:"C:/Users/Admin/.t3/local-drafts/data01-prA/fix7/delay-and-observe-init.js"});});
+test.afterEach(async({context},info)=>{const observations=await Promise.all(context.pages().map(page=>page.evaluate(()=>({url:location.href,...((window as unknown as {__fix7Proof:Record<string,unknown>}).__fix7Proof)}))));const fs=await import('node:fs/promises'),crypto=await import('node:crypto');const key=crypto.createHash('sha256').update(info.title).digest('hex').slice(0,16);await fs.writeFile("C:/Users/Admin/.t3/local-drafts/data01-prA/fix7"+'/'+(process.env.FIX7_PHASE||'unknown')+'-'+key+'.json',JSON.stringify({test:info.title,observations},null,2),'utf8');await info.attach('fix7-observations',{body:JSON.stringify(observations),contentType:'application/json'});});

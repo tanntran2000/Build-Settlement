@@ -1,0 +1,18 @@
+{
+  "test": "the last explicit same-mode tab save wins without automatically loading (tiles)",
+  "observations": [
+    {
+      "url": "http://localhost:4173/?mode=tiles",
+      "actions": [
+        {
+          "action": 1,
+          "name": "Save locally",
+          "delayMs": 300,
+          "transactionCompleted": true,
+          "elapsedMs": 300.60000002384186
+        }
+      ],
+      "snapshots": []
+    }
+  ]
+}

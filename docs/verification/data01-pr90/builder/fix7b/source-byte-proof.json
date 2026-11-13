@@ -1,0 +1,18 @@
+{
+  "baseHead": "e192a2891a9df11f6dbc61985aff0b483ce034a4",
+  "file": "tests/e2e/tile-local-checkpoint.spec.ts",
+  "addedStatement": "await expect(page.locator('[aria-label=\"Planning checkpoints\"] [role=\"status\"]')).toContainText('Saved in this browser.');",
+  "newLine": 62,
+  "baseWorkingSha256": "49c1ce0c61f4c56d55407b6750a612924956df673fac0e491763e7687edd0aca",
+  "reversedWorkingSha256": "49c1ce0c61f4c56d55407b6750a612924956df673fac0e491763e7687edd0aca",
+  "baseGitBlobSha256": "acb72c304337c061b368293b2ecce211e7e23220f0988bdfee4b1d6c26e493f6",
+  "physicalByteRestoration": true,
+  "gitBlobRestorationIgnoringOnlyWhitespace": true,
+  "onlyAllowedFile": true,
+  "hooksRemoved": true,
+  "delayScriptSha256": "7c49f25d7e95843786b8719394536d1fae215b21c250afd98f0e2fdbdf461132",
+  "observerScriptSha256": "f34120988f739a4dc3381434db4dfb8414687157dd5d43d3ae9c296c9d2f0e5b",
+  "gitBlobByteRestoration": true,
+  "gitBlobOriginalBytes": 14254,
+  "gitBlobReversedBytes": 14254
+}

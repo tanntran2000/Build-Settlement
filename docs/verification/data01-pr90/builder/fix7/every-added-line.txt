@@ -1,0 +1,10 @@
+Every Git-added line, including rewrapped original one-line code:
+tests/e2e/autosave.spec.ts:33:   await expect.poll(() => storedSaveText(page)).toBe(bytes(after));
+tests/e2e/character-life-navigation.spec.ts:1434:   await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+tests/e2e/character-life-navigation.spec.ts:1436:   expect(saved.records).toContainEqual({slotId:'main',id:'city',table:'city',schemaVersion:1,value:before.city});
+tests/e2e/tile-local-checkpoint.spec.ts:61:   await start(page);const first=await exportLife(page);await save(page);const second=await context.newPage();try{await second.goto(`/?mode=${mode}`);const s=makeLife();s.player.character.name='Second Keeper';s.city.world.settlements[s.city.world.activeSettlementId!].inventory.gold=55000;await importLife(second,s);await save(second);
+tests/e2e/tile-local-checkpoint.spec.ts:62:   await expect(second.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+tests/e2e/tile-local-checkpoint.spec.ts:63:   expect(await exportLife(page)).toEqual(first);await resume(page);const restored=await exportLife(page);expect({...restored,city:{...restored.city,revision:s.city.revision}}).toEqual(s);}finally{await second.close();}
+tests/e2e/title.spec.ts:111:   await page.goto('/'); await expect(title(page)).toBeVisible(); await importLife(page, makeLife()); await go(page, 'session'); await button(page, 'Save locally').click();
+tests/e2e/title.spec.ts:112:   await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+tests/e2e/title.spec.ts:113:    const saved = await exportLife(page);

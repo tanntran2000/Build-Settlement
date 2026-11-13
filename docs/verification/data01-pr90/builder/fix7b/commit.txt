@@ -1,0 +1,11 @@
+1ad295b60a63e33d8e769de32f97a18685a28499
+test(e2e): wait for the first tab's save in the two-tab checkpoint test
+The first tab only awaited its Save click, allowing its preliminary read to finish after the second tab saved. This could reverse the intended A-then-B write order and make Continue restore A. Await the first tab's visible save result before opening the second tab. Preserve the shared helper and every existing assertion.
+
+The same temporary two-second read-completion delay reproduced both modes before the addition and passed both afterward, with native commit observations confirming B-then-A before and A-then-B after. Temporary hooks are removed.
+
+Co-authored-by: Codex <noreply@openai.com>
+
+
+ tests/e2e/tile-local-checkpoint.spec.ts | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)

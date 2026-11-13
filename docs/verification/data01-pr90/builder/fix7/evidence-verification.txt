@@ -1,0 +1,6 @@
+UTC=2026-11-13T01:21:04.993Z
+HEAD=e192a2891a9df11f6dbc61985aff0b483ce034a4
+TREE=1264de25a8c4aa3c094e556ca8c62bae9282ca4e
+STATUS=clean
+UTF8: 66 text files strictly decoded; no replacement characters; owner quote preserved.
+Four approved specs only; five byte-preserving statement insertions. Baseline F1/F2a reproduced, F2b/F3 not reproduced honestly; all five delayed cases GREEN. Raw F1 marker-only first snapshot and saved-city green snapshot retained. All hooks removed before clean-head gates/smoke.

@@ -1,0 +1,12 @@
+{
+  "base": "623cbc4aa90645805dea59df4b1d8a083f226f46",
+  "files": [
+    "tests/e2e/character-life-navigation.spec.ts",
+    "tests/e2e/title.spec.ts",
+    "tests/e2e/tile-local-checkpoint.spec.ts",
+    "tests/e2e/autosave.spec.ts"
+  ],
+  "grep": "B2 City Report City preserves export and saved checkpoint|manual save enables cached Continue with exactly one mount read|the last explicit same-mode tab save wins without automatically loading|On by default: Plan next week writes one checkpoint equal to the real export",
+  "command": "npx playwright test tests/e2e/character-life-navigation.spec.ts tests/e2e/title.spec.ts tests/e2e/tile-local-checkpoint.spec.ts tests/e2e/autosave.spec.ts -g \"B2 City Report City preserves export and saved checkpoint|manual save enables cached Continue with exactly one mount read|the last explicit same-mode tab save wins without automatically loading|On by default: Plan next week writes one checkpoint equal to the real export\"",
+  "expected": 5
+}
