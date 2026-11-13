@@ -1,0 +1,100 @@
+HEAD: 5ff521e3971739ecde05a22dd96c74827c0ae363
+Tree: 9b1082da1a427175e6d7636ac4001017e769dff6
+UTC: 2026-11-13T10:31:05.703563+00:00
+Exit: 1
+Command: npm run typecheck
+
+
+> build-settlement@0.1.0 typecheck
+> npm run typecheck:core && npm run typecheck:simulation && npm run typecheck:persistence && npm run typecheck:content && npm run typecheck:ui
+
+
+> build-settlement@0.1.0 typecheck:core
+> tsc -p packages/core/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:simulation
+> tsc -p packages/simulation/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:persistence
+> tsc -p packages/persistence/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:content
+> tsc -p packages/content/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:ui
+> npm run check --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 check
+> svelte-check --tsconfig ./tsconfig.json
+
+Loading svelte-check in workspace: c:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\ui
+Getting Svelte diagnostics...
+
+c:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\ui\src\DataInspector.svelte:76:3
+Warn: Non-interactive element `<section>` cannot have interactive role 'tabpanel'
+https://svelte.dev/e/a11y_no_noninteractive_element_to_interactive_role (svelte)
+  </div>
+  <section id="inspector-panel" role="tabpanel" aria-labelledby={`inspector-tab-${tab}`}>
+    <label for="inspector-search">Search by id</label>
+    <input id="inspector-search" type="search" bind:value={query} placeholder="Filter record ids" />
+    <div class="layout">
+      <nav aria-label={tab === 'save' ? 'Save tables' : 'Catalog files'}>
+        {#if tab === 'save'}
+          <h2>Local slot: main</h2>
+          {#each tables as table}
+            <button class:chosen={selectedTable === table.table} aria-pressed={selectedTable === table.table}
+              onclick={() => selectedTable = table.table}>{table.table} <span>{table.count}</span></button>
+          {/each}
+        {:else}
+          <h2>Catalog files</h2>
+          {#each catalogs as catalog}
+            <button class:chosen={selectedCatalog === catalog.file} aria-pressed={selectedCatalog === catalog.file}
+              onclick={() => selectedCatalog = catalog.file}>{catalog.file} <span>{catalog.count}</span></button>
+          {/each}
+        {/if}
+      </nav>
+      <div class="records" aria-live="polite">
+        {#if tab === 'save' && loading}
+          <p role="status">Reading local save data...</p>
+        {:else if tab === 'save' && error}
+          <p role="alert">{error}</p>
+        {:else}
+          <h2>{tab === 'save' ? selectedTable : selectedCatalog}</h2>
+          <p>{matching.length} of {rows.length} records shown</p>
+          {#each matching as row (row.id)}
+            <article><h3>{row.id}</h3><pre>{JSON.stringify(tab === 'save' ? row : row.value, null, 2)}</pre></article>
+          {:else}
+            <p>No matching records.</p>
+          {/each}
+        {/if}
+      </div>
+    </div>
+  </section>
+</main>
+
+c:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\ui\src\main.ts:13:25
+Error: Property 'env' does not exist on type 'ImportMeta'. 
+
+const app = import.meta.env.DEV && new URLSearchParams(window.location.search).get('mode') === 'data-inspector'
+  ? undefined : mount(CharacterLifeApp, { target: document.getElementById('app')! });
+
+c:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\ui\src\main.ts:16:17
+Error: Property 'env' does not exist on type 'ImportMeta'. 
+
+if (import.meta.env.DEV) {
+  if (new URLSearchParams(window.location.search).get('mode') === 'data-inspector') {
+
+====================================
+svelte-check found 2 errors and 1 warning in 2 files
+npm error Lifecycle script `check` failed with error:
+npm error code 1
+npm error path C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\ui
+npm error workspace @haven/ui@0.1.0
+npm error location C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\ui
+npm error command failed
+npm error command C:\Windows\system32\cmd.exe /d /s /c svelte-check --tsconfig ./tsconfig.json

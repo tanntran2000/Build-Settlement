@@ -1,0 +1,13 @@
+feat(ui): dev-only data inspector and error-log record refs
+
+Add a read-only DEV inspector for local save tables and five catalogs, plus
+validated optional error-log refs with persistence and old-entry compatibility.
+Keep ref wiring at the API and tests only (plan correction 5).
+
+Owner decision (Tân, 2026-11-13), verbatim: "A, cho 60s".
+The 60_000 ms limit is confined to the new inspector production-build test
+and its completion hook. Claude measured two idle production builds at
+7.5–11 s; the completed affected RED build took 7.773 s and GREEN 5.544 s.
+The earlier default 5 s limit timed out before build completion.
+
+Co-authored-by: Codex <noreply@openai.com>

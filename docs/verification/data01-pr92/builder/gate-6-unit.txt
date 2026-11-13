@@ -1,0 +1,19 @@
+HEAD: abf206a33a445706bf8f17f9791a61ceb8740b27
+Tree: 03663548c5ec0ba7f09a2bf254db4a240c3f3217
+UTC: 2026-11-13T10:39:13.107687+00:00
+Exit: 0
+Command: npm test
+
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  103 passed (103)
+      Tests  2254 passed (2254)
+   Start at  17:39:14
+   Duration  55.74s (transform 9.59s, setup 0ms, import 40.43s, tests 183.70s, environment 50ms)
+

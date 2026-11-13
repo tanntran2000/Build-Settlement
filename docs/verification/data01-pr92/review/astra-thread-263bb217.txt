@@ -1,0 +1,465 @@
+DATA-01 PR B Astra review
+mcp:263bb217-c6e9-42c9-8806-2372bb5c8551  completed  codex/gpt-6-astra
+
+[user]
+Astra, independent READ-ONLY review of DATA-01 PR B (catalogs as validated JSON + golden test).
+
+Worktree: C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01, branch feat/data01-catalogs. Confirm HEAD == 8c0657e3558c3657b70ab71b1038e33fec1f6e9a, tree d3e24a51a23be3dac87d017dcc93f8f251ad7690. Base: origin/main 5cc2522 (PR A merged). Range: `git diff 5cc2522..8c0657e` (4 commits: 9d2e111 B1 golden, 04e17a2 B2 extraction, 3a2759f JSON import attributes, 8c0657e golden timeouts).
+
+Binding plan: C:/Users/Admin/.t3/local-drafts/data01-prA/binding-plan-6a8bfa2.md: "## PR B — Catalogs", Decisions 11 and 12, Global Constraints, the PR B allowlist, Review Focus 5. Spec: C:/Users/Admin/.t3/local-drafts/data01-prA/binding-spec-7a1ec38.md §7.
+
+Owner decisions (Tân, verbatim):
+- "Giao Builder B": start PR B.
+- "A, cho 20s": the 4 new golden tests only get an explicit 20 s timeout. Measured at about 1.5–2.5 s idle; under full-suite load one hit Vitest's 5 s default.
+
+Claude's rulings as Orchestrator (check them):
+- The golden was generated on 5cc2522, not ca46d18. `git diff --exit-code ca46d18 HEAD -- packages/core packages/simulation packages/content` was exit 0 at generation.
+- B1 was amended before push with a one-line, type-only import fix (TS6059). The fixture blob 64c18a2688573e3fe3b8ec0b131cd0318f4d4855 is unchanged across all commits.
+- The JSON import attributes (`with { type: 'json' }`) were added because Node 24 (Playwright) rejected the imports.
+
+Builder evidence: C:/Users/Admin/.t3/local-drafts/data01-prB/README.md (edit inventory, RED/GREEN, golden proofs, gates, bundle +3.12 kB JS). Claude is running gates and the full CI=1 smoke at 8c0657e now. Do NOT run tests or builds.
+
+Avoid truncation (lesson from PR A): read the diff one file at a time (`git diff -U3 5cc2522..8c0657e -- <file>`), paging with `sed -n` ranges until the end. For each file, state the +/− counts you actually saw and reconcile them with `git diff --numstat 5cc2522..8c0657e`. If a file could not be read completely, say so and FAIL coverage.
+
+Check:
+1. Scope: every changed file is in the PR B allowlist. No existing test edited. No dependency or config change.
+2. Value equality: every extracted constant (TRIAL_BUILDINGS, SOCIETY_BUILDINGS, LAW_CATALOG, LAW_TRIAL, LAW_MESSAGES, RESEARCH_TOPICS, OUTSIDE_PLOTS, ORDER_TRIAL, GARRISON_TRIAL, CRIME_TRIAL, CRISIS_TRIAL, SOCIETY_TRIAL, GOODS_STOCK_TRIAL, TILE_TRIAL_BALANCE, IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL) keeps:
+   - its name and type;
+   - every value and key order (LAW-03, byte-identical serialization);
+   - its frozen-ness;
+   - no product logic change beyond `constant → deepFreeze(validateX(json))`.
+3. Validators: each JSON file is validated. `CatalogError` messages follow `<file>#<id>.<field>: <rule>`. The malformed-copy tests assert exact messages and are not vacuous. Validators reject plausible bad data (wrong type, negative, missing id, duplicate id, unknown key, if the spec asks).
+4. Golden:
+   - 3 seeds × 60 weeks.
+   - The command script really exercises building, laws, outside, crime and crisis, so a catalog change in each area would change the output. Say which catalogs are NOT exercised.
+   - The negative control truly fails on +1 upkeep.
+   - The fixture is never regenerated.
+   - The 20 s timeouts apply only to these 4 new tests.
+5. LAW-02: core stays pure (JSON import only; no fs/DOM). The import attributes work with TS 5.9 (module ESNext, bundler resolution), Vite build, Vitest, Node 24 / Playwright, and tools/check-architecture.
+6. Anything else: correctness or maintainability issues (P0–P3, file:line).
+
+Reply PASS or FAIL, with findings P0–P3 (file:line), the per-file count reconciliation, and explicit limits. Do not edit, install, run tests or builds, push or merge.
+
+
+[assistant]
+Review scope is read-only: verify the pinned commit, read every changed file completely, and assess the supplied evidence without running tests or builds.
+
+
+
+[assistant]
+The branch, HEAD, and tree match the requested identities. The golden uses three seeds over 60 weeks, and the timeout change is confined to its four new cases. Complete diff coverage and validator behavior still need review before a verdict.
+
+
+
+[assistant]
+**FAIL — fix the corrupted public literal type at `validate.ts:292`; this review also fails your complete-coverage requirement because the golden fixture output was truncated.**
+
+Confirmed repository identity:
+
+| Item | Observed |
+|---|---|
+| Branch | `feat/data01-catalogs` |
+| HEAD | `8c0657e3558c3657b70ab71b1038e33fec1f6e9a` |
+| Tree | `d3e24a51a23be3dac87d017dcc93f8f251ad7690` |
+| `origin/main` | `5cc2522f27e01b49baaa6e44bba01904edcea5c0` |
+| Working changes | None reported by `git status --short` |
+
+**Findings**
+
+1. **P2 — `LAW_MESSAGES.VOTE_SHORT` no longer has its original literal type.**  
+   [validate.ts:292](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/data/validate.ts:292) declares the separator using four Unicode code points, `U+00C3 U+201A U+00C2 U+00B7`, instead of the original single `U+00B7` (`·`). I verified this with a UTF-8 file read and escaped code-point output; it is an actual source defect, not merely terminal rendering.
+
+   The JSON retains the correct message, but `validateLaws` casts it to `LawCatalog`, so the exported constant’s static literal type disagrees with its runtime value. This violates the explicit requirement to preserve each constant’s type. Correct the literal without changing the JSON or fixture.
+
+2. **P3 — The “unchanged typed views” test does not establish equality with the pre-extraction constants.**  
+   [catalog-data.test.ts:30](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/__tests__/catalog-data.test.ts:30) compares validation of the JSON against constants initialized from that same JSON. It checks wiring, but a valid accidental catalog edit changes both sides together. The golden provides additional protection for its exercised paths, but does not cover every constant or value. This limitation matters particularly for messages and unused catalog entries.
+
+**Checks supported by the inspected source**
+
+All 19 changed paths are in the PR B allowlist. No existing test, dependency, lockfile, or configuration file appears in the range. The nine modified product modules contain extraction/import changes and removal of helpers used to construct the extracted constants; I found no unrelated product algorithm edit in those diffs.
+
+All five JSON files have validators, and every exported view invokes its corresponding validator. The malformed-copy tests mutate real fields, require a `CatalogError`, and compare exact error messages; those assertions are not vacuous. Validators check primitive types, required fields, known keys and IDs, numeric signs, and fixed ordered IDs in the research and outside arrays. Duplicate array IDs are rejected through positional literal checks. Duplicate object keys in raw JSON cannot be detected after JSON parsing; the reviewed spec does not explicitly require raw duplicate-key detection.
+
+The implementation recursively freezes all exported views. **Frozen-ness is strengthened in places rather than preserved exactly:** the old `SOCIETY_BUILDINGS` object was not frozen, and some nested `SOCIETY_TRIAL` containers were mutable. The binding plan explicitly prescribes `deepFreeze`, so I treat that as the planned behavior, but it should not be described as identical runtime frozen-ness.
+
+The golden script visibly performs building and staffing, clearing an outside plot, deep-mining research, two enacted laws, a crisis payment, and 60 weekly cycles for seeds `0`, `42`, and `20261028`. It asserts nonzero crime events and 60 crisis/outside reports. The negative control clones the building catalog, increments Hospital upkeep by one, resets modules, imports the scenario with the mocked catalog, and requires the serialized session to differ. This is a meaningful negative-control construction; **I did not execute it**.
+
+The script does **not exercise `LAW_MESSAGES` as serialized output**, and it contains no explicit garrison setup. I cannot certify sensitivity to `GARRISON_TRIAL`, or to every value in any catalog. In particular, unbuilt buildings, unchosen laws, unused crisis choices, and the two unselected research topics are not comprehensively protected by this scenario. Counting reports also does not by itself prove sensitivity to every subsystem parameter.
+
+The two `20_000` arguments apply precisely to the three parameterized golden cases and the single negative-control case. No global or existing-test timeout changed.
+
+**Per-file diff reconciliation**
+
+Counts below exclude diff headers. “Complete” means I saw the entire file diff; its observed additions/deletions match `git diff --numstat 5cc2522..8c0657e`.
+
+| File, relative to worktree | Observed +/− | Numstat +/− | Coverage |
+|---|---:|---:|---|
+| `packages/core/src/__tests__/catalog-data.test.ts` | 65 / 0 | 65 / 0 | Complete |
+| `packages/core/src/data/buildings.json` | 574 / 0 | 574 / 0 | Complete |
+| `packages/core/src/data/laws.json` | 164 / 0 | 164 / 0 | Complete |
+| `packages/core/src/data/outside-plots.json` | 152 / 0 | 152 / 0 | Complete |
+| `packages/core/src/data/research.json` | 11 / 0 | 11 / 0 | Complete |
+| `packages/core/src/data/tuning.json` | 621 / 0 | 621 / 0 | Complete |
+| `packages/core/src/data/validate.ts` | 801 / 0 | 801 / 0 | Complete, paged |
+| `packages/core/src/trial/catalog.ts` | 7 / 41 | 7 / 41 | Complete |
+| `packages/core/src/trial/crime.ts` | 3 / 13 | 3 / 13 | Complete |
+| `packages/core/src/trial/crisis.ts` | 3 / 8 | 3 / 8 | Complete |
+| `packages/core/src/trial/goods-stock.ts` | 3 / 5 | 3 / 5 | Complete |
+| `packages/core/src/trial/law.ts` | 7 / 29 | 7 / 29 | Complete |
+| `packages/core/src/trial/order.ts` | 4 / 12 | 4 / 12 | Complete |
+| `packages/core/src/trial/outside.ts` | 8 / 21 | 8 / 21 | Complete |
+| `packages/core/src/trial/society-map.ts` | 3 / 161 | 3 / 161 | Complete |
+| `packages/core/src/trial/society.ts` | 5 / 18 | 5 / 18 | Complete |
+| `packages/simulation/src/__tests__/catalog-golden.test.ts` | 31 / 0 | 31 / 0 | Complete |
+| `packages/simulation/src/__tests__/fixtures/catalog-golden.json` | **Not fully observed** | 26 / 0 | **FAIL: output truncated** |
+| `packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts` | 63 / 0 | 63 / 0 | Complete |
+
+**Orchestrator rulings and explicit limits**
+
+1. **Base equivalence is supported.** The inspected generation log records `5cc2522`, UTC time, and exit `0` for the scoped comparison against `ca46d18`. My read-only comparison also produced no diff for `packages/core`, `packages/simulation`, and `packages/content`. This supports the technical equivalence argument for the chosen generation base.
+
+2. **Fixture immutability is partially independently corroborated.** Git reports the requested blob `64c18a2688573e3fe3b8ec0b131cd0318f4d4855` at B1 and HEAD. The amendment proof records the same blob before and after amendment, with exit `0`. I did not independently inspect the original amendment’s full diff or verify the fixture at every intermediate commit, so the “one-line type-only fix” claim remains incompletely checked.
+
+3. **Core purity is supported by the changed production source.** New runtime imports are JSON and the pure validator module; no production `fs` or DOM import was introduced. Filesystem access is confined to the new tests/generator. I did not independently verify the full TS 5.9/Vite/Vitest/Node 24/Playwright/architecture-check compatibility matrix. The Builder README reports successful gates, but I have not audited their full raw logs, and Claude’s current smoke result is outside this review.
+
+4. **This is an incomplete independent review, not G4/G5 approval.** No tests or builds were run, and no files were edited, installed, pushed, or merged. I cannot claim complete value/key-order equality for all 16 constants or complete fixture coverage. The existing worktree was retained; storage reclaimed: 0 bytes.
+
+**Next action:** correct the single corrupted literal at [validate.ts:292](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/data/validate.ts:292).
+
+[user]
+[Claude -> Astra] DATA-01 PR B re-review after fix round 1. READ-ONLY; do not run tests or builds (Claude is running gates and smoke in this worktree now).
+
+HEAD 7a92d4cab8e87967ec90e8e986d8223de27d6c76, tree 9b1082da1a427175e6d7636ac4001017e769dff6. Delta: `git diff 8c0657e..7a92d4c` (one commit, 2 files: validate.ts +1/−1, catalog-data.test.ts +38/−1). Builder evidence: C:/Users/Admin/.t3/local-drafts/data01-prB/fix1/README.md.
+
+1. F1 (your P2): check that validate.ts:292 now has a single U+00B7 (bytes C2 B7), and that the new expectTypeOf test pins the original literal type. The Builder's RED log f1-red-typecheck.txt shows TS2344 before the fix. Check that no other non-ASCII drift remains (fix1/non-ascii-audit.md).
+2. F2 (your P3): the 16 constants are now pinned to SHA-256 of JSON.stringify of the ORIGINAL constants at base 5cc2522, plus a negative control. Verify the hashes really come from base source. Read fix1/compute-base-hashes.mjs and base-source-manifest.json: does it evaluate the constants from `git show 5cc2522:<file>` (or an equivalent pinned read), not from today's JSON? Is the negative control non-vacuous? Does this close your "a valid accidental edit changes both sides" gap for all 16, including LAW_MESSAGES and GARRISON_TRIAL?
+3. Fixture coverage gap (catalog-golden.json was truncated in your read; 26 lines, 70,329 bytes). Do not read it as one blob. Instead:
+   - `git log --format=%H --follow -- packages/simulation/src/__tests__/fixtures/catalog-golden.json` must show only the B1 commit 9d2e111;
+   - `git rev-parse 9d2e111:<path>` and `HEAD:<path>` must both be 64c18a2688573e3fe3b8ec0b131cd0318f4d4855;
+   - check its structure with a short read-only script, e.g. `node -e "const g=require('./packages/simulation/src/__tests__/fixtures/catalog-golden.json'); console.log(Array.isArray(g), g.length, g.map(e=>[e.seed, Object.keys(e)]))"`, and page any long line with `cut -c` ranges as needed;
+   - say whether each entry holds the full serialized session for 60 weeks, or only finals.
+4. Updated consolidated verdict over 5cc2522..7a92d4c: PASS or FAIL, findings P0–P3 (file:line), the per-file count reconciliation for all 19 files (+ the delta), and limits.
+
+Do not edit, install, run tests or builds, push or merge.
+
+[assistant]
+Check the two-file fix and the fixture provenance first. This re-review stays read-only; Claude’s running gates and smoke remain separate evidence.
+
+
+[assistant]
+The corrupted type is fixed, and the fixture history shows only B1 with the same blob at HEAD. All 38 source-manifest entries match the pinned base. The fixture stores three complete final sessions at week 61, plus counters for the 60-week runs; it does not store every intermediate week.
+
+
+[assistant]
+**PASS — independent read-only review of `5cc2522..7a92d4c`. F1 and F2 are closed; no outstanding P0–P3 findings.** This is a code-review verdict, not a claim that Claude’s current gates, smoke, or remote CI have passed.
+
+| Identity | Verified |
+|---|---|
+| HEAD | `7a92d4cab8e87967ec90e8e986d8223de27d6c76` |
+| Tree | `9b1082da1a427175e6d7636ac4001017e769dff6` |
+| Reviewed base | `5cc2522f27e01b49baaa6e44bba01904edcea5c0` |
+| Working tree | Clean when inspected |
+| Fix delta | Exactly two files: `validate.ts` +1/−1; `catalog-data.test.ts` +38/−1 |
+
+**1. F1, previously P2: closed.**
+
+[validate.ts:292](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/data/validate.ts:292) now contains exactly one **U+00B7**, encoded as **C2 B7**. The new [literal-type assertion at catalog-data.test.ts:69](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/__tests__/catalog-data.test.ts:69) pins the complete original message with `expectTypeOf(...).toEqualTypeOf<...>()`.
+
+I read the [RED typecheck log](C:/Users/Admin/.t3/local-drafts/data01-prB/fix1/f1-red-typecheck.txt): it records exit **1**, UTC `2026-11-13T06:35:16.419812+00:00`, and **TS2344** identifying the correct literal versus the corrupted literal. This supports that the assertion catches the original defect through the repository’s typecheck.
+
+My independent UTF-8 scan of all 19 changed files found only:
+
+| File | Non-ASCII content | Assessment |
+|---|---|---|
+| `catalog-data.test.ts:69` | U+00B7 / C2 B7 | Correct original message |
+| `laws.json:161` | U+00B7 / C2 B7 | Correct original message |
+| `validate.ts:292` | U+00B7 / C2 B7 | Corrected type |
+| `trial/order.ts:15` | U+2013 / E2 80 93 | Existing comment, identical to base |
+
+No other non-ASCII drift was found. This corroborates the [non-ASCII audit](C:/Users/Admin/.t3/local-drafts/data01-prB/fix1/non-ascii-audit.md), which covers the ten new files.
+
+**2. F2, previously P3: closed for all 16 constants.**
+
+The [hash provenance script](C:/Users/Admin/.t3/local-drafts/data01-prB/fix1/compute-base-hashes.mjs) computes expected values from the original TypeScript source:
+
+- `BASE` is the full pinned `5cc2522f27e01b49baaa6e44bba01904edcea5c0`.
+- `loader(true)` reads source with `git show ${BASE}:${file}` and recursively resolves relative imports using that same loader.
+- It transpiles and evaluates those original modules in memory. Expected hashes come from `JSON.stringify(baseCore[name])`.
+- `loader(false)` reads current files only for the separate current-value comparison. The previous capture is an additional consistency check, not the source of expected hashes.
+
+I independently verified **all 38 entries** in [base-source-manifest.json](C:/Users/Admin/.t3/local-drafts/data01-prB/fix1/base-source-manifest.json) against the pinned Git objects: both source SHA-256 and Git blob IDs match. **None of those source entries is JSON.**
+
+I also independently reconciled all **16 committed hash literals** against the supplied base-value artifact and the current JSON projections, preserving object-key order. All match, including **`LAW_MESSAGES` and `GARRISON_TRIAL`**.
+
+The [negative control at catalog-data.test.ts:98](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/__tests__/catalog-data.test.ts:98) clones `TRIAL_BUILDINGS`, increments Hospital upkeep by one, and requires its hash to differ from the fixed base hash. Together with the positive hash assertion for the unchanged catalog, this is non-vacuous. A valid accidental edit now changes the actual hash without changing its expected value.
+
+**3. Fixture coverage gap: closed using the requested provenance and structural checks.**
+
+The fixture history contains **only**:
+
+`9d2e111d076cfee9b92b6b6d36de55f1a87259d4`
+
+Both B1 and HEAD resolve the fixture to:
+
+`64c18a2688573e3fe3b8ec0b131cd0318f4d4855`
+
+A read-only script consumed the entire **70,329-byte, 26-line** file, parsed all three entries, and parsed every embedded session string successfully.
+
+| Seed | Weeks recorded | Crime events | Crisis reports | Outside reports | Final session |
+|---:|---:|---:|---:|---:|---|
+| 0 | 60 | 2 | 60 | 60 | Week 61, planning |
+| 42 | 60 | 5 | 60 | 60 | Week 61, planning |
+| 20261028 | 60 | 4 | 60 | 60 | Week 61, planning |
+
+**Each entry contains a complete serialized final session after 60 weeks, not 60 intermediate snapshots.** Each session has the save envelope and the state sections `city`, `outside`, `npcs`, `player`, and `profiles`. The surrounding fixture entry contains the seed, week count, and event/report counters.
+
+This closes the earlier truncated-read limitation by the alternative verification method you specified. I do not claim to have manually reread every character of the embedded session strings.
+
+**4. Consolidated per-file count reconciliation**
+
+The first review covered the complete diffs of the other 18 files. This re-review read the complete two-file fix delta and verified the unchanged fixture through history, blob identity, and full structural parsing. Every consolidated count agrees with `git diff --numstat 5cc2522..7a92d4c`.
+
+| File relative to worktree | Consolidated +/− | Fix delta +/− | Reconciliation |
+|---|---:|---:|---|
+| `packages/core/src/__tests__/catalog-data.test.ts` | 102 / 0 | 38 / 1 | Match |
+| `packages/core/src/data/buildings.json` | 574 / 0 | — | Match |
+| `packages/core/src/data/laws.json` | 164 / 0 | — | Match |
+| `packages/core/src/data/outside-plots.json` | 152 / 0 | — | Match |
+| `packages/core/src/data/research.json` | 11 / 0 | — | Match |
+| `packages/core/src/data/tuning.json` | 621 / 0 | — | Match |
+| `packages/core/src/data/validate.ts` | 801 / 0 | 1 / 1 | Match |
+| `packages/core/src/trial/catalog.ts` | 7 / 41 | — | Match |
+| `packages/core/src/trial/crime.ts` | 3 / 13 | — | Match |
+| `packages/core/src/trial/crisis.ts` | 3 / 8 | — | Match |
+| `packages/core/src/trial/goods-stock.ts` | 3 / 5 | — | Match |
+| `packages/core/src/trial/law.ts` | 7 / 29 | — | Match |
+| `packages/core/src/trial/order.ts` | 4 / 12 | — | Match |
+| `packages/core/src/trial/outside.ts` | 8 / 21 | — | Match |
+| `packages/core/src/trial/society-map.ts` | 3 / 161 | — | Match |
+| `packages/core/src/trial/society.ts` | 5 / 18 | — | Match |
+| `packages/simulation/src/__tests__/catalog-golden.test.ts` | 31 / 0 | — | Match |
+| `packages/simulation/src/__tests__/fixtures/catalog-golden.json` | 26 / 0 | — | Match; provenance and structural verification |
+| `packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts` | 63 / 0 | — | Match |
+
+All 19 files remain within the PR B allowlist. No pre-existing test, dependency, configuration, JSON value, golden fixture, or generator changed in fix round 1.
+
+**Limits of this PASS:** no tests, builds, installs, edits, pushes, or merges were performed. The evidence script was inspected, not executed, because it writes artifacts; its 38 source-manifest entries were independently verified using read-only Git reads. The golden still protects three final outcomes rather than every intermediate state or every gameplay branch. The added hash assertions provide the separate value-and-key-order protection for all 16 constants. Runtime compatibility and exact-head gate/smoke success remain dependent on the execution evidence owned by Claude.
+
+**Next action:** attach this verdict to the exact-head evidence for `7a92d4c` once Claude’s gate and smoke results are available.
+
+[user]
+[Claude -> Astra] DATA-01 PR C review (dev-only data inspector + error-log record refs). READ-ONLY. Do not run tests or builds; Claude is running gates and the full smoke in this worktree now.
+
+Worktree: C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01, branch feat/data01-inspector. Confirm HEAD == abf206a33a445706bf8f17f9791a61ceb8740b27, tree 03663548c5ec0ba7f09a2bf254db4a240c3f3217. Base: origin/main 5ff521e (PR B merged). Range: `git diff 5ff521e..abf206a` (1 commit, 6 files, +341/−7).
+
+Binding plan: C:/Users/Admin/.t3/local-drafts/data01-prA/binding-plan-c5.md: "## PR C — Inspector" (Tasks C1, C2), Decisions 13 and 14 AS AMENDED by Plan correction 5 (top of the file), and the PR C allowlist. Spec §8: C:/Users/Admin/.t3/local-drafts/data01-prA/binding-spec-7a1ec38.md.
+
+Owner decisions (Tân, verbatim):
+- "Giao Builder C".
+- Correction 5: "catalog:buildings.json#hospital (Recommended)" (the regex is the rule; catalog refs take a `catalog:` prefix) and "API + tests only (Recommended)" (no call-site wiring in PR C).
+- "A, cho 60s": 60 s timeout for the new inspector build test only. Claude measured the UI production build at 7.5–11 s idle.
+
+Builder evidence: C:/Users/Admin/.t3/local-drafts/data01-prC/README.md. It has RED 8 failed / 69 passed, then GREEN 77/77; gates 1–7 exit 0 (2,254 unit); smoke 350/350; production JS +137 bytes gzip vs main; an inspector zero-byte control; a dev screenshot and dumps.
+
+Read each file's full diff, page with sed ranges, and reconcile +/− with `git diff --numstat 5ff521e..abf206a`.
+
+Check:
+1. Scope: only the 6 allowlisted files; no existing test edited; no dependency or config change; no call-site wiring (correction 5).
+2. Production exclusion:
+   - main.ts mounts the inspector only under `import.meta.env.DEV`, through a dynamic import, at `?mode=data-inspector`.
+   - The production build cannot reach it (dead-code elimination of the DEV branch).
+   - The top-level `await` in main.ts is safe for the build target and for production.
+   - The normal app mounts exactly as before when not in inspector mode.
+   - inspector-build.test.ts truly builds production (NODE_ENV=production) and asserts that dist has no `data-inspector` / `DataInspector`; it is not vacuous.
+   - The 60 s limits apply only to that test and its hook.
+3. error-log.ts:
+   - the ref regex is exactly `^[a-z-]+:[A-Za-z0-9_.#-]{1,64}$`;
+   - non-matching refs are dropped, and no name, text or value is logged;
+   - old stored entries without `ref` still load;
+   - stored entries with an invalid `ref` are handled safely, and the entry-key strictness is not weakened for other keys;
+   - de-duplication now includes ref;
+   - persistence round-trips the ref;
+   - the existing error-log tests pass unchanged (57).
+4. Inspector:
+   - read-only: no writes or deletes to IndexedDB or localStorage, and opening it must not create or upgrade the `haven` DB if it is missing (the Builder says it does not create it; verify in the source);
+   - listTables, findById (case-insensitive) and listCatalogs (5 files with counts) are correct and pure in data-inspector.ts;
+   - UI copy is English.
+5. Anything else, P0–P3 with file:line.
+
+Reply PASS or FAIL, with findings, the per-file count reconciliation and limits. Do not edit, install, run tests or builds, push or merge.
+
+[assistant]
+Review the six-file diff against correction 5 and check the inspector’s database-open path. No tests or builds will run during this read-only review.
+
+
+[assistant]
+One read-only violation is visible in the entry point: inspector mode still initializes the runtime logger, which deletes a malformed stored log. The inspector’s IndexedDB path itself uses a read-only transaction and aborts database creation.
+
+
+[assistant]
+**FAIL — one P2 finding: opening the inspector can delete or write localStorage through the normal runtime logger.** The six-file diff is fully covered; no truncation remains.
+
+| Identity | Verified |
+|---|---|
+| Branch | `feat/data01-inspector` |
+| HEAD | `abf206a33a445706bf8f17f9791a61ceb8740b27` |
+| Tree | `03663548c5ec0ba7f09a2bf254db4a240c3f3217` |
+| `origin/main` | `5ff521e3971739ecde05a22dd96c74827c0ae363` |
+| Working tree | Clean when inspected |
+
+**1. P2 — Inspector mode runs storage-mutating logger initialization and handlers.**
+
+At [main.ts:7](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/main.ts:7), `errorLog.initialize('weekly')` runs unconditionally, before the inspector-mode branch. The global error, rejection, and pagehide handlers are also installed unconditionally.
+
+The resulting violations are concrete:
+
+- If `haven.runtime-errors.v1` contains malformed JSON or an invalid envelope, logger initialization reaches `storage.removeItem(ERROR_LOG_KEY)` in [error-log.ts:120](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/error-log.ts:120). **Simply opening the inspector deletes that localStorage entry.**
+- An uncaught error or unhandled rejection while inspecting can call `record()`, which persists through `flush()` and `storage.setItem(...)`.
+
+The component’s database code is read-only, but the **complete inspector route is not**, contrary to check 4.
+
+**Requested fix:** determine inspector mode before logger initialization and handler registration, and keep the normal logger setup on the normal-app path. Add a regression covering inspector startup with a malformed stored error log and verifying zero storage writes/deletes. Preserve normal-app logging behavior.
+
+No other P0–P3 findings identified.
+
+**2. Production exclusion and scope**
+
+The changed paths are exactly the six allowed files. No existing test, dependency, lockfile, configuration, or catalog/store failure call site changed. Correction 5’s “API + tests only” scope is respected.
+
+The inspector is dynamically imported only within `if (import.meta.env.DEV)` and only for `?mode=data-inspector`. In production, the false DEV condition removes that branch and the dynamic import. The normal application still mounts at the same target; production ignores the inspector query parameter.
+
+The top-level `await` is confined to the removed production branch. The supplied production build log shows Vite successfully building this source. In development, that `await` requires a browser supporting top-level await; I did not independently test a browser compatibility matrix.
+
+The [build test](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/inspector-build.test.ts:23) starts Vite using `process.execPath`, explicitly sets `NODE_ENV: 'production'`, awaits successful completion, requires nonempty output, and recursively scans every output file’s contents for both forbidden markers. It therefore checks a newly completed production build, rather than merely scanning a possibly stale directory.
+
+Its source assertion verifies that a DEV guard exists. That assertion alone would not prove a functioning inspector route, but the actual route and component are present in this reviewed diff. The two `60_000` limits apply only to this new test and its completion hook.
+
+**3. Error-reference API and inspector behavior**
+
+The reference API matches correction 5:
+
+| Requirement | Source assessment |
+|---|---|
+| Exact regex | `^[a-z-]+:[A-Za-z0-9_.#-]{1,64}$` |
+| Invalid references | Dropped on both record and load |
+| Trailing newline | Rejected by requiring the matched substring to equal the complete input |
+| Old entries without `ref` | Accepted using the original exact-key set |
+| Other unexpected entry keys | Still rejected; only optional `ref` is added |
+| Deduplication | Includes normalized `ref` |
+| Persistence | Serializes valid `ref`; load reconstructs and freezes it |
+
+Messages still come from the fixed error catalog. Invalid raw references are not copied into the entry. The regex enforces syntax, not semantic identity: callers must still supply record IDs rather than personal information that happens to fit the permitted syntax. No new call-site wiring introduces such data here.
+
+Stored invalid references are safely omitted while preserving an otherwise valid entry. The new tests cover invalid incoming references, valid persistence round trips, old entries, and deduplication; they do **not directly test malformed stored references**, although the load implementation handles them.
+
+The inspector component itself:
+
+- Opens `haven` **without specifying a version**, so it does not request an upgrade of an existing database.
+- Aborts `onupgradeneeded`, rolling back creation when the database is missing.
+- Uses only `readonly` transactions and `getAll()`, and closes the database after reading.
+- Performs no direct localStorage operations or database writes/deletes.
+
+`listTables`, `findById`, and `listCatalogs` are pure with respect to their inputs and storage. Search trims the query and matches IDs case-insensitively. The five displayed catalog counts are **32 buildings, 10 law entries, 3 research topics, 30 outside plots, and 9 tuning entries**. Buildings with both trial and society definitions are combined under one ID. UI copy is English.
+
+**4. Full per-file count reconciliation**
+
+Every diff was read separately and completely. Observed additions/deletions match `git diff --numstat 5ff521e..abf206a`.
+
+| File relative to worktree | Observed +/− | Numstat +/− | Coverage |
+|---|---:|---:|---|
+| `packages/ui/src/DataInspector.svelte` | 127 / 0 | 127 / 0 | Complete |
+| `packages/ui/src/__tests__/data-inspector.test.ts` | 106 / 0 | 106 / 0 | Complete |
+| `packages/ui/src/__tests__/inspector-build.test.ts` | 44 / 0 | 44 / 0 | Complete |
+| `packages/ui/src/data-inspector.ts` | 43 / 0 | 43 / 0 | Complete |
+| `packages/ui/src/error-log.ts` | 11 / 6 | 11 / 6 | Complete |
+| `packages/ui/src/main.ts` | 10 / 1 | 10 / 1 | Complete |
+| **Total** | **341 / 7** | **341 / 7** | **Complete** |
+
+**Evidence and limits:** I inspected the Builder README and relevant log excerpts showing the focused suite at **77/77**, full unit suite at **2,254**, successful production build, and smoke at **350/350**. The README attributes **57 unchanged error-log tests** to the focused run. These are supplied execution results; I ran no tests or builds and do not claim Claude’s current run has finished. I inspected the production comparison script but did not rerun its measurement. No edits, installs, pushes, or merges occurred.
+
+**Next action:** move normal runtime-logger initialization and handlers behind the normal-app branch in [main.ts](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/main.ts:7).
+
+[user]
+[Claude -> Astra] DATA-01 PR C re-review after fix round 1. READ-ONLY; do not run tests or builds (Claude is running gates and smoke now).
+
+HEAD cd000039eb44cd76d8156ae3c2282d3f26b83d89, tree 914488a9d93457a98ebd4b4cb2af5b0074bae7fa. Delta: `git diff abf206a..cd00003` (one commit: main.ts +11/−13, data-inspector.test.ts +69/−0). Builder evidence: C:/Users/Admin/.t3/local-drafts/data01-prC/fix1/README.md. RED was 1 failed / 79 passed (inspector startup called initialize). GREEN 81/81; gates 1–7 exit 0 (2,258 unit). The Builder's smoke did not start because of leftover preview servers, which Claude cleared; Claude is running the smoke.
+
+Check:
+1. Your P2 is closed. In inspector mode (DEV and ?mode=data-inspector), nothing calls errorLog.initialize, and no error, unhandledrejection or pagehide handler is registered, so no localStorage read-delete or write path is reachable. The new regression truly proves zero writes and deletes with a malformed stored log, and that no handlers are registered. It is not vacuous.
+2. The normal path keeps the original behavior: initialize(weekly), the same three handlers in the same order, the same mount, and `export default app` still set in the normal app. Production cannot enter inspector mode; check the DEV guard and that the dynamic import is removed.
+3. The optional malformed-stored-ref test is correct.
+4. Updated consolidated verdict over 5ff521e..cd00003: PASS or FAIL, findings P0–P3 (file:line), per-file count reconciliation, and limits.
+
+[assistant]
+Check the startup guard and new regression tests against the prior P2 finding. This review remains read-only while Claude runs gates and smoke.
+
+
+[assistant]
+**PASS — the P2 read-only violation is closed at `cd00003`. No outstanding P0–P3 findings in the consolidated range `5ff521e..cd00003`.** This is an independent code-review verdict; exact-head smoke remains pending Claude’s result.
+
+| Identity | Verified |
+|---|---|
+| HEAD | `cd000039eb44cd76d8156ae3c2282d3f26b83d89` |
+| Tree | `914488a9d93457a98ebd4b4cb2af5b0074bae7fa` |
+| Fix commit | `cd00003 fix(ui): keep the inspector route free of error-log storage` |
+| Working tree | Clean when inspected |
+
+**1. P2 closure: inspector startup no longer initializes storage-backed logging.**
+
+[main.ts:7](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/main.ts:7) computes inspector mode before choosing the startup branch. For `DEV && ?mode=data-inspector`, it mounts the inspector and skips:
+
+- `errorLog.initialize('weekly')`;
+- registration of `error`, `unhandledrejection`, and `pagehide` handlers;
+- the normal application mount.
+
+The static logger import remains, but creating the logger does not access storage. The previously identified initialization/deletion and runtime-handler/write paths are therefore unreachable from inspector startup.
+
+The regression is **non-vacuous**. It imports the real entry point and real logger, with spies that retain the logger’s behavior. It seeds malformed stored JSON, verifies no `setItem` or `removeItem`, checks that the exact malformed bytes remain, and requires zero registered handlers. It also requires exactly one inspector mount, proving the startup path actually ran. Svelte mounting and the two components are mocked, so this is specifically an entry-point regression, not a full browser/component test.
+
+The inspected [RED log](C:/Users/Admin/.t3/local-drafts/data01-prC/fix1/red-startup.txt) shows this regression failing because `initialize('weekly')` was called once: **1 failed / 79 passed**. The [GREEN log](C:/Users/Admin/.t3/local-drafts/data01-prC/fix1/green-startup.txt) records **81/81 passed** after the fix.
+
+**2. Normal startup and production exclusion are preserved.**
+
+The normal branch retains the original sequence:
+
+1. Initialize the logger with `'weekly'`.
+2. Register `error`, `unhandledrejection`, and `pagehide`, in that order.
+3. Mount `CharacterLifeApp` into `#app` and assign the result to `app`.
+
+`export default app` consequently still exports the normal mount result. The handler bodies are unchanged.
+
+The new parameterized regression covers both ordinary DEV startup and production with `?mode=data-inspector`. It checks initialization, actual malformed-log removal on the normal path, handler order, mounting order, and handler behavior—including ignoring a non-`ErrorEvent`.
+
+Production cannot select the inspector because `inspectorMode` includes `import.meta.env.DEV`. The dynamic import also retains its explicit inner DEV guard, allowing production dead-code elimination to remove the inspector branch and its top-level `await`. The production-exclusion test is unchanged and continues to build production itself and scan the output.
+
+**3. The malformed stored-reference test is correct.**
+
+The added test first persists a valid entry through the real logger, changes only its stored `ref` to `'Jane Doe'`, and reloads through a fresh logger. It verifies that:
+
+- the log is not marked discarded;
+- one entry survives with `code: 'INVALID_STATE'`;
+- the invalid `ref` is omitted.
+
+This directly covers the previously untested load path without changing `error-log.ts`.
+
+**4. Full count reconciliation**
+
+The fix brief’s delta counts differ from Git’s actual output. The fully read delta is **`main.ts` +12/−12** and **`data-inspector.test.ts` +68/−1**. The latter replaces the cleanup-hook line as well as adding tests. This is a reporting correction, not a code defect.
+
+All six consolidated files remain allowlisted. The four files unchanged by this fix retain the complete coverage from the first review.
+
+| File relative to worktree | Consolidated +/− | Actual fix delta +/− | Coverage |
+|---|---:|---:|---|
+| `packages/ui/src/DataInspector.svelte` | 127 / 0 | — | Complete; unchanged from first review |
+| `packages/ui/src/__tests__/data-inspector.test.ts` | 173 / 0 | 68 / 1 | Complete original diff plus complete fix delta |
+| `packages/ui/src/__tests__/inspector-build.test.ts` | 44 / 0 | — | Complete; unchanged from first review |
+| `packages/ui/src/data-inspector.ts` | 43 / 0 | — | Complete; unchanged from first review |
+| `packages/ui/src/error-log.ts` | 11 / 6 | — | Complete; unchanged from first review |
+| `packages/ui/src/main.ts` | 17 / 8 | 12 / 12 | Complete original diff plus complete fix delta |
+| **Total** | **415 / 14** | **80 / 13** | **Matches Git numstat** |
+
+No dependency, configuration, timeout, or pre-existing test was changed by this fix. The edited inspector test file was introduced within PR C.
+
+**Evidence and limits:** I inspected the exact-head unit log, which records **2,258 passed across 103 files**, exit **0**, at UTC `2026-11-13T11:25:13.239257+00:00`, with the matching HEAD and tree. The build log records the same identity and exit **0** at UTC `2026-11-13T11:26:28.280215+00:00`. I ran no tests or builds and made no edits, installs, pushes, or merges. The Builder’s blocked smoke attempt is not a passing result; the previous head’s smoke cannot establish this head’s result.
+
+**Next action:** attach this PASS to the evidence for `cd00003` and add Claude’s exact-head smoke result when available.

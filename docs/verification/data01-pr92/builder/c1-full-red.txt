@@ -1,0 +1,264 @@
+HEAD: 5ff521e3971739ecde05a22dd96c74827c0ae363
+Tree: 9b1082da1a427175e6d7636ac4001017e769dff6
+UTC: 2026-11-13T08:49:25.362372+00:00
+Exit: 1
+Command: npx vitest run packages/ui/src/__tests__/data-inspector.test.ts packages/ui/src/__tests__/inspector-build.test.ts packages/ui/src/__tests__/error-log.test.ts --reporter=verbose
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > records only the fixed catalog and a cloned pre-action clock, never a payload 57ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > normalizes INVALID_COMMAND to validation 4ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > normalizes WEEK_MISMATCH to validation 3ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > normalizes NO_ACTIVE_SETTLEMENT to validation 3ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > normalizes FORBIDDEN to validation 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > normalizes COMMAND_NOT_YET_IMPLEMENTED to validation 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > normalizes INVALID_STATE to command_failure 3ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > normalizes OVERFLOW to command_failure 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > normalizes INVARIANT_VIOLATION to command_failure 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > normalizes EXECUTION_ERROR to exception 3ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > normalizes UNEXPECTED_ACTION_ERROR to exception 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > normalizes UNCAUGHT_ERROR to exception 1ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > normalizes UNHANDLED_REJECTION to exception 1ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > keeps the last five adjacent groups, with A-B-A separate and safe counters 5ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > updates RAM immediately and throttles 10000 events to first plus trailing storage writes 351ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > dedupes only identical adjacent mode/clock/action/code/version and records latest UTC 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > uses null for an invalid weekly clock undefined 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > uses null for an invalid weekly clock {} 1ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > uses null for an invalid weekly clock {"week":0} 1ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > uses null for an invalid weekly clock {"week":1,"seed":"TOKEN-secret https://private.invalid/?token=secret#save <script>save-payload</script>"} 1ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > uses null for an invalid weekly clock {"week":1.5} 1ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > uses null for an invalid weekly clock {"week":9007199254740992} 4ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > uses null for inconsistent R1 clocks and contains throwing clock access 3ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > loads valid records through reload without changing their version or saving game data 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema null and removes only its own key 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema undefined and removes only its own key 1ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {} and removes only its own key 1ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":2,"entries":[]} and removes only its own key 1ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[],"save":"TOKEN-secret https://private.invalid/?token=secret#save <script>save-payload</script>"} and removes only its own key 1ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."},{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."},{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."},{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."},{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."},{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."}]} and removes only its own key 1ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"TOKEN-secret https://private.invalid/?token=secret#save <script>save-payload</script>","message":"Enter a valid workforce amount and try again."}]} and removes only its own key 1ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"TOKEN-secret https://private.invalid/?token=secret#save <script>save-payload</script>"}]} and removes only its own key 1ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"exception","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."}]} and removes only its own key 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again.","stack":"TOKEN-secret https://private.invalid/?token=secret#save <script>save-payload</script>"}]} and removes only its own key 3ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":"TOKEN-secret https://private.invalid/?token=secret#save <script>save-payload</script>","mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."}]} and removes only its own key 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"TOKEN-secret https://private.invalid/?token=secret#save <script>save-payload</script>","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."}]} and removes only its own key 1ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":0,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."}]} and removes only its own key 1ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1.5,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."}]} and removes only its own key 1ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":9007199254740992,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."}]} and removes only its own key 1ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"bad","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."}]} and removes only its own key 1ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-02-31T00:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."}]} and removes only its own key 1ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1,"url":"TOKEN-secret https://private.invalid/?token=secret#save <script>save-payload</script>"},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."}]} and removes only its own key 1ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"future","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."}]} and removes only its own key 1ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"IMPORT_SAVE","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."}]} and removes only its own key 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > bounds malformed/oversized text before accepting storage 30ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > bounds malformed/oversized text before accepting storage 1ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > bounds malformed/oversized text before accepting storage 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > checks oversized string/UTF-8 bytes before JSON.parse 3ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > checks oversized string/UTF-8 bytes before JSON.parse 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > contains storage getter failures, keeps RAM and never retries 374ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > contains storage getItem failures, keeps RAM and never retries 361ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > contains storage setItem failures, keeps RAM and never retries 764ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > contains storage removeItem failures, keeps RAM and never retries 519ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > explicit safe JSON download > flushes and downloads normalized bounded JSON with fixed filename/MIME, then revokes URL 19ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > explicit safe JSON download > contains Blob export failure and preserves records without recursive entries 3ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > explicit safe JSON download > contains URL export failure and preserves records without recursive entries 4ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > explicit safe JSON download > contains click export failure and preserves records without recursive entries 5ms
+ × packages/ui/src/__tests__/data-inspector.test.ts > counts every database table, including empty tables, without changing records 46ms
+   → Cannot find module '/packages/ui/src/data-inspector.js' imported from C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/data-inspector.test.ts
+ × packages/ui/src/__tests__/data-inspector.test.ts > finds ids case-insensitively by substring and leaves the input unchanged 8ms
+   → Cannot find module '/packages/ui/src/data-inspector.js' imported from C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/data-inspector.test.ts
+ × packages/ui/src/__tests__/data-inspector.test.ts > lists five catalog files with all entry counts and searchable stable ids 5ms
+   → Cannot find module '/packages/ui/src/data-inspector.js' imported from C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/data-inspector.test.ts
+ × packages/ui/src/__tests__/data-inspector.test.ts > keeps a valid reference characters:npc_starter_1 19ms
+   → expected { …(11) } to have property "ref" with value 'characters:npc_starter_1'
+ × packages/ui/src/__tests__/data-inspector.test.ts > keeps a valid reference catalog:buildings.json#hospital 3ms
+   → expected { …(11) } to have property "ref" with value 'catalog:buildings.json#hospital'
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > drops non-matching references without logging raw values: "Jane Doe" 5ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > drops non-matching references without logging raw values: "buildings.json#hospital" 2ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > drops non-matching references without logging raw values: "Characters:npc_starter_1" 2ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > drops non-matching references without logging raw values: "characters:" 2ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > drops non-matching references without logging raw values: "characters:Jane Doe" 5ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > drops non-matching references without logging raw values: "characters:npc?token=value" 2ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > drops non-matching references without logging raw values: "characters:npc\n" 2ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > drops non-matching references without logging raw values: "characters:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" 2ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > drops non-matching references without logging raw values: null 2ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > drops non-matching references without logging raw values: {} 2ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > drops non-matching references without logging raw values: 7 2ms
+ × packages/ui/src/__tests__/data-inspector.test.ts > round-trips a valid reference through persistence and reload 5ms
+   → expected undefined to be 'catalog:buildings.json#hospital' // Object.is equality
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > still loads an old stored entry without an optional reference 4ms
+ × packages/ui/src/__tests__/data-inspector.test.ts > keeps different references in separate adjacent error groups 16ms
+   → expected [ [ undefined, 3 ] ] to deeply equal [ …(2) ]
+ × packages/ui/src/__tests__/inspector-build.test.ts > builds production itself and excludes every inspector module and marker 5032ms
+   → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/inspector-build.test.ts [ packages/ui/src/__tests__/inspector-build.test.ts ]
+Error: Hook timed out in 10000ms.
+If this is a long-running hook, pass a timeout value as the last argument or configure it globally with "hookTimeout".
+ ❯ packages/ui/src/__tests__/inspector-build.test.ts:21:1
+     19| // Observe completion even if the test hits Vitest's default timeout, …
+     20| // duration/output are retained and no child build is left running on …
+     21| afterAll(async () => { await buildFinished; });
+       | ^
+     22|
+     23| it('builds production itself and excludes every inspector module and m…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/9]⎯
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/data-inspector.test.ts > counts every database table, including empty tables, without changing records
+Error: Cannot find module '/packages/ui/src/data-inspector.js' imported from C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/data-inspector.test.ts
+ ❯ inspector packages/ui/src/__tests__/data-inspector.test.ts:8:10
+      6| async function inspector() {
+      7|   const path = '../data-inspector.js';
+      8|   return await import(path) as typeof import('../data-inspector.js');
+       |          ^
+      9| }
+     10| const rows: StoredRecord[] = [
+ ❯ packages/ui/src/__tests__/data-inspector.test.ts:17:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/9]⎯
+
+ FAIL  packages/ui/src/__tests__/data-inspector.test.ts > finds ids case-insensitively by substring and leaves the input unchanged
+Error: Cannot find module '/packages/ui/src/data-inspector.js' imported from C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/data-inspector.test.ts
+ ❯ inspector packages/ui/src/__tests__/data-inspector.test.ts:8:10
+      6| async function inspector() {
+      7|   const path = '../data-inspector.js';
+      8|   return await import(path) as typeof import('../data-inspector.js');
+       |          ^
+      9| }
+     10| const rows: StoredRecord[] = [
+ ❯ packages/ui/src/__tests__/data-inspector.test.ts:25:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/9]⎯
+
+ FAIL  packages/ui/src/__tests__/data-inspector.test.ts > lists five catalog files with all entry counts and searchable stable ids
+Error: Cannot find module '/packages/ui/src/data-inspector.js' imported from C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/data-inspector.test.ts
+ ❯ inspector packages/ui/src/__tests__/data-inspector.test.ts:8:10
+      6| async function inspector() {
+      7|   const path = '../data-inspector.js';
+      8|   return await import(path) as typeof import('../data-inspector.js');
+       |          ^
+      9| }
+     10| const rows: StoredRecord[] = [
+ ❯ packages/ui/src/__tests__/data-inspector.test.ts:34:38
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/9]⎯
+
+ FAIL  packages/ui/src/__tests__/data-inspector.test.ts > keeps a valid reference characters:npc_starter_1
+AssertionError: expected { …(11) } to have property "ref" with value 'characters:npc_starter_1'
+
+- Expected:
+"characters:npc_starter_1"
+
++ Received:
+undefined
+
+ ❯ packages/ui/src/__tests__/data-inspector.test.ts:64:31
+     62| it.each(['characters:npc_starter_1', 'catalog:buildings.json#hospital'…
+     63|   const log = logger(); log.record('END_WEEK', 'INVALID_STATE', ref);
+     64|   expect(get(log).entries[0]).toHaveProperty('ref', ref);
+       |                               ^
+     65| });
+     66|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/9]⎯
+
+ FAIL  packages/ui/src/__tests__/data-inspector.test.ts > keeps a valid reference catalog:buildings.json#hospital
+AssertionError: expected { …(11) } to have property "ref" with value 'catalog:buildings.json#hospital'
+
+- Expected:
+"catalog:buildings.json#hospital"
+
++ Received:
+undefined
+
+ ❯ packages/ui/src/__tests__/data-inspector.test.ts:64:31
+     62| it.each(['characters:npc_starter_1', 'catalog:buildings.json#hospital'…
+     63|   const log = logger(); log.record('END_WEEK', 'INVALID_STATE', ref);
+     64|   expect(get(log).entries[0]).toHaveProperty('ref', ref);
+       |                               ^
+     65| });
+     66|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/9]⎯
+
+ FAIL  packages/ui/src/__tests__/data-inspector.test.ts > round-trips a valid reference through persistence and reload
+AssertionError: expected undefined to be 'catalog:buildings.json#hospital' // Object.is equality
+
+- Expected:
+"catalog:buildings.json#hospital"
+
++ Received:
+undefined
+
+ ❯ packages/ui/src/__tests__/data-inspector.test.ts:81:65
+     79| it('round-trips a valid reference through persistence and reload', () …
+     80|   const log = logger(); log.record('END_WEEK', 'INVALID_STATE', 'catal…
+     81|   expect(JSON.parse(stored.get(ERROR_LOG_KEY)!).entries[0].ref).toBe('…
+       |                                                                 ^
+     82|   const reloaded = logger();
+     83|   expect(get(reloaded).entries).toEqual(get(log).entries);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/9]⎯
+
+ FAIL  packages/ui/src/__tests__/data-inspector.test.ts > keeps different references in separate adjacent error groups
+AssertionError: expected [ [ undefined, 3 ] ] to deeply equal [ …(2) ]
+
+- Expected
++ Received
+
+  [
+    [
+-     "characters:npc_starter_1",
+-     1,
+-   ],
+-   [
+-     "characters:npc_starter_2",
+-     2,
++     undefined,
++     3,
+    ],
+  ]
+
+ ❯ packages/ui/src/__tests__/data-inspector.test.ts:103:73
+    101|   log.record('END_WEEK', 'INVALID_STATE', 'characters:npc_starter_2');
+    102|   log.record('END_WEEK', 'INVALID_STATE', 'characters:npc_starter_2');
+    103|   expect(get(log).entries.map(entry => [entry.ref, entry.occurrences])…
+       |                                                                         ^
+    104|     ['characters:npc_starter_1', 1], ['characters:npc_starter_2', 2],
+    105|   ]);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/9]⎯
+
+ FAIL  packages/ui/src/__tests__/inspector-build.test.ts > builds production itself and excludes every inspector module and marker
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ packages/ui/src/__tests__/inspector-build.test.ts:23:1
+     21| afterAll(async () => { await buildFinished; });
+     22|
+     23| it('builds production itself and excludes every inspector module and m…
+       | ^
+     24|   const start = performance.now();
+     25|   buildFinished = new Promise<void>((resolve, reject) => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/9]⎯
+
+
+ Test Files  2 failed | 1 passed (3)
+      Tests  8 failed | 69 passed (77)
+   Start at  15:49:31
+   Duration  17.26s (transform 4.39s, setup 0ms, import 6.60s, tests 17.79s, environment 6ms)
+

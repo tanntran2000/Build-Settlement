@@ -1,0 +1,27 @@
+HEAD: cd000039eb44cd76d8156ae3c2282d3f26b83d89
+Tree: 914488a9d93457a98ebd4b4cb2af5b0074bae7fa
+UTC: 2026-11-13T11:28:28.450115+00:00
+Exit: 0
+Command: node C:/Users/Admin/.t3/local-drafts/data01-prC/fix1/measure-final-bundle.mjs
+
+{
+  "head": "cd000039eb44cd76d8156ae3c2282d3f26b83d89",
+  "tree": "914488a9d93457a98ebd4b4cb2af5b0074bae7fa",
+  "base": "5ff521e3971739ecde05a22dd96c74827c0ae363",
+  "files": [
+    {
+      "name": "index-B19EJRvO.js",
+      "bytes": 339287,
+      "gzipBytes": 108464,
+      "gzipDeltaFromBase": 135,
+      "sha256": "9cabd390362f9ba6d8b07e7c214cdc506244e008d26647635da7cbce25cbc191"
+    },
+    {
+      "name": "index-DdNtS9j1.css",
+      "bytes": 28127,
+      "gzipBytes": 5814,
+      "gzipDeltaFromBase": 0,
+      "sha256": "957e3db03aef271e79b33fd544374adbc99e7d2664fc35744b96835f0d072c0d"
+    }
+  ]
+}

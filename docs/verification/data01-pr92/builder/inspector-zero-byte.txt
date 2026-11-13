@@ -1,0 +1,19 @@
+HEAD: abf206a33a445706bf8f17f9791a61ceb8740b27
+Tree: 03663548c5ec0ba7f09a2bf254db4a240c3f3217
+UTC: 2026-11-13T11:12:36.831627+00:00
+Exit: 0
+Command: node C:/Users/Admin/.t3/local-drafts/data01-prC/measure-inspector-zero.mjs
+
+{
+  "head": "abf206a33a445706bf8f17f9791a61ceb8740b27",
+  "variant": "Current error-log refs in both builds; current dev route vs original main.ts provided only in-memory",
+  "currentJsBytes": 339287,
+  "withoutInspectorJsBytes": 339349,
+  "rawByteDelta": -62,
+  "inspectorAddedJsBytes": 0,
+  "byteIdentical": false,
+  "currentGzipBytes": 108466,
+  "controlGzipBytes": 108479,
+  "currentSha256": "55b29628b4c9fc83184af0621ec31a986ace351a45f61e0f182eec860e6b8a61",
+  "controlSha256": "2e9c518eeea2ecd3eec1e95f93b5746ca9ac71a39eb65390ce1bb8cd7fd7e93b"
+}

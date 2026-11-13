@@ -1,0 +1,18 @@
+{
+  "base": "5ff521e3971739ecde05a22dd96c74827c0ae363",
+  "source": "INVALID production baseline: initial child inherited NODE_ENV=test from Vitest; retained for honest setup history",
+  "files": [
+    {
+      "name": "index-DdJm7Zr2.js",
+      "bytes": 370884,
+      "gzipBytes": 119142,
+      "sha256": "84cef977d1cc7f952fc9bbfcdc806223bbe2a0a90fd7677ac3f39e176febb72d"
+    },
+    {
+      "name": "index-DdNtS9j1.css",
+      "bytes": 28127,
+      "gzipBytes": 5814,
+      "sha256": "957e3db03aef271e79b33fd544374adbc99e7d2664fc35744b96835f0d072c0d"
+    }
+  ]
+}

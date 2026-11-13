@@ -1,0 +1,47 @@
+HAVEN / DEVELOPER TOOLS
+
+Data inspector
+
+Read-only view of the local save slot and validated game catalogs.
+
+Save
+Catalogs
+Search by id
+Catalog files
+buildings.json
+32
+laws.json
+10
+research.json
+3
+outside-plots.json
+30
+tuning.json
+9
+buildings.json
+
+1 of 32 records shown
+
+hospital
+{
+  "trial": {
+    "name": "Hospital",
+    "operation": "society",
+    "terrain": [
+      "town"
+    ],
+    "maxLevel": 2,
+    "maxWorkers": 2,
+    "cost": {
+      "gold": 8000,
+      "wood": 4000,
+      "iron": 2000
+    },
+    "upkeepMilli": 1000
+  },
+  "society": {
+    "tier": "service",
+    "staff": "luminaries",
+    "reserved": false
+  }
+}

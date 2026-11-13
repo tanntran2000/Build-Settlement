@@ -1,0 +1,14 @@
+fix(ui): keep the inspector route free of error-log storage
+
+Address Astra P2: decide the DEV inspector route before logger startup.
+Only the normal app initializes the weekly error log and installs the
+error, unhandledrejection and pagehide handlers, in their original order.
+Inspector startup mounts only the inspector and leaves malformed stored
+logs untouched.
+
+Exercise the real main module with mocked component mounts to prove zero
+inspector storage writes/deletes and no runtime handlers. Preserve normal
+DEV and production-query initialization, handler order and behavior.
+Also cover dropping malformed stored refs without discarding the entry.
+
+Co-authored-by: Codex <noreply@openai.com>

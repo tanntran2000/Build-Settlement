@@ -1,0 +1,21 @@
+{
+  "head": "abf206a33a445706bf8f17f9791a61ceb8740b27",
+  "tree": "03663548c5ec0ba7f09a2bf254db4a240c3f3217",
+  "base": "5ff521e3971739ecde05a22dd96c74827c0ae363",
+  "files": [
+    {
+      "name": "index-BPY21Xrp.js",
+      "bytes": 339287,
+      "gzipBytes": 108466,
+      "gzipDeltaFromBase": 137,
+      "sha256": "55b29628b4c9fc83184af0621ec31a986ace351a45f61e0f182eec860e6b8a61"
+    },
+    {
+      "name": "index-DdNtS9j1.css",
+      "bytes": 28127,
+      "gzipBytes": 5814,
+      "gzipDeltaFromBase": 0,
+      "sha256": "957e3db03aef271e79b33fd544374adbc99e7d2664fc35744b96835f0d072c0d"
+    }
+  ]
+}

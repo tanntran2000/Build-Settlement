@@ -1,0 +1,9 @@
+HEAD: abf206a33a445706bf8f17f9791a61ceb8740b27
+Tree: 03663548c5ec0ba7f09a2bf254db4a240c3f3217
+UTC: 2026-11-13T11:12:58.368006+00:00
+Exit: 0
+Command: & C:/Users/Admin/.t3/local-drafts/data01-prC/check-ports.ps1
+
+Port 3000 : FREE
+Port 4173 : FREE
+Port 4174 : FREE

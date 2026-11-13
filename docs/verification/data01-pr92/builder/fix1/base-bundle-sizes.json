@@ -1,0 +1,21 @@
+{
+  "base": "5ff521e3971739ecde05a22dd96c74827c0ae363",
+  "source": "Completed base production build in c1-build-red-60s.txt, owner-approved 60-second test limit",
+  "files": [
+    {
+      "name": "index-DdNtS9j1.css",
+      "bytes": 28127,
+      "gzipBytes": 5814,
+      "sha256": "957e3db03aef271e79b33fd544374adbc99e7d2664fc35744b96835f0d072c0d"
+    },
+    {
+      "name": "index-D_plm-J3.js",
+      "bytes": 338990,
+      "gzipBytes": 108329,
+      "sha256": "29758208727661bee44c9b07092b81a52d9441f8b33400967ffab1acf601155c"
+    }
+  ],
+  "validProductionBaseline": true,
+  "nodeEnv": "production",
+  "buildMilliseconds": 7773
+}

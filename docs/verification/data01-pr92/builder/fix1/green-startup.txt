@@ -1,0 +1,111 @@
+HEAD: abf206a33a445706bf8f17f9791a61ceb8740b27
+Tree: 03663548c5ec0ba7f09a2bf254db4a240c3f3217
+UTC: 2026-11-13T11:20:22.387277+00:00
+Exit: 0
+Command: npx vitest run packages/ui/src/__tests__/data-inspector.test.ts packages/ui/src/__tests__/error-log.test.ts packages/ui/src/__tests__/inspector-build.test.ts --reporter=verbose
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > records only the fixed catalog and a cloned pre-action clock, never a payload 25ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > normalizes INVALID_COMMAND to validation 3ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > normalizes WEEK_MISMATCH to validation 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > normalizes NO_ACTIVE_SETTLEMENT to validation 3ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > normalizes FORBIDDEN to validation 4ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > normalizes COMMAND_NOT_YET_IMPLEMENTED to validation 3ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > normalizes INVALID_STATE to command_failure 3ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > normalizes OVERFLOW to command_failure 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > normalizes INVARIANT_VIOLATION to command_failure 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > normalizes EXECUTION_ERROR to exception 3ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > normalizes UNEXPECTED_ACTION_ERROR to exception 5ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > normalizes UNCAUGHT_ERROR to exception 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > normalizes UNHANDLED_REJECTION to exception 3ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > keeps the last five adjacent groups, with A-B-A separate and safe counters 7ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > updates RAM immediately and throttles 10000 events to first plus trailing storage writes 373ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > dedupes only identical adjacent mode/clock/action/code/version and records latest UTC 3ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > uses null for an invalid weekly clock undefined 4ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > uses null for an invalid weekly clock {} 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > uses null for an invalid weekly clock {"week":0} 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > uses null for an invalid weekly clock {"week":1,"seed":"TOKEN-secret https://private.invalid/?token=secret#save <script>save-payload</script>"} 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > uses null for an invalid weekly clock {"week":1.5} 6ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > uses null for an invalid weekly clock {"week":9007199254740992} 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > safe diagnostic records > uses null for inconsistent R1 clocks and contains throwing clock access 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > loads valid records through reload without changing their version or saving game data 3ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema null and removes only its own key 6ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema undefined and removes only its own key 3ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {} and removes only its own key 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":2,"entries":[]} and removes only its own key 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[],"save":"TOKEN-secret https://private.invalid/?token=secret#save <script>save-payload</script>"} and removes only its own key 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."},{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."},{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."},{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."},{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."},{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."}]} and removes only its own key 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"TOKEN-secret https://private.invalid/?token=secret#save <script>save-payload</script>","message":"Enter a valid workforce amount and try again."}]} and removes only its own key 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"TOKEN-secret https://private.invalid/?token=secret#save <script>save-payload</script>"}]} and removes only its own key 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"exception","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."}]} and removes only its own key 3ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again.","stack":"TOKEN-secret https://private.invalid/?token=secret#save <script>save-payload</script>"}]} and removes only its own key 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":"TOKEN-secret https://private.invalid/?token=secret#save <script>save-payload</script>","mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."}]} and removes only its own key 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"TOKEN-secret https://private.invalid/?token=secret#save <script>save-payload</script>","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."}]} and removes only its own key 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":0,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."}]} and removes only its own key 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1.5,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."}]} and removes only its own key 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":9007199254740992,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."}]} and removes only its own key 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"bad","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."}]} and removes only its own key 3ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-02-31T00:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."}]} and removes only its own key 4ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1,"url":"TOKEN-secret https://private.invalid/?token=secret#save <script>save-payload</script>"},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."}]} and removes only its own key 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"future","clock":{"week":1},"action":"END_WEEK","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."}]} and removes only its own key 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > discards corrupt schema {"schemaVersion":1,"entries":[{"timestampUtc":"2026-10-19T10:00:00.000Z","lastSeenUtc":"2026-10-19T10:00:00.000Z","occurrences":1,"appVersion":"0.1.0","buildId":null,"mode":"weekly","clock":{"week":1},"action":"IMPORT_SAVE","kind":"validation","code":"INVALID_WORKFORCE_INPUT","message":"Enter a valid workforce amount and try again."}]} and removes only its own key 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > bounds malformed/oversized text before accepting storage 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > bounds malformed/oversized text before accepting storage 3ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > bounds malformed/oversized text before accepting storage 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > checks oversized string/UTF-8 bytes before JSON.parse 3ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > checks oversized string/UTF-8 bytes before JSON.parse 1ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > contains storage getter failures, keeps RAM and never retries 234ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > counts every database table, including empty tables, without changing records 45ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > finds ids case-insensitively by substring and leaves the input unchanged 6ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > lists five catalog files with all entry counts and searchable stable ids 14ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > keeps a valid reference characters:npc_starter_1 8ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > keeps a valid reference catalog:buildings.json#hospital 3ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > drops non-matching references without logging raw values: "Jane Doe" 3ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > drops non-matching references without logging raw values: "buildings.json#hospital" 2ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > drops non-matching references without logging raw values: "Characters:npc_starter_1" 2ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > drops non-matching references without logging raw values: "characters:" 3ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > drops non-matching references without logging raw values: "characters:Jane Doe" 2ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > drops non-matching references without logging raw values: "characters:npc?token=value" 2ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > drops non-matching references without logging raw values: "characters:npc\n" 2ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > drops non-matching references without logging raw values: "characters:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" 2ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > drops non-matching references without logging raw values: null 2ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > contains storage getItem failures, keeps RAM and never retries 251ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > drops non-matching references without logging raw values: {} 2ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > drops non-matching references without logging raw values: 7 2ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > round-trips a valid reference through persistence and reload 3ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > still loads an old stored entry without an optional reference 3ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > keeps different references in separate adjacent error groups 4ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > loads an otherwise valid stored entry while dropping a malformed stored reference 4ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > starts the dev inspector without error-log initialization, storage mutations or runtime handlers 79ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > preserves normal startup and handler order (DEV=true, search=) 10ms
+ ✓ packages/ui/src/__tests__/data-inspector.test.ts > preserves normal startup and handler order (DEV=false, search=?mode=data-inspector) 7ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > contains storage setItem failures, keeps RAM and never retries 342ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > bounded storage and corruption boundary > contains storage removeItem failures, keeps RAM and never retries 316ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > explicit safe JSON download > flushes and downloads normalized bounded JSON with fixed filename/MIME, then revokes URL 11ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > explicit safe JSON download > contains Blob export failure and preserves records without recursive entries 3ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > explicit safe JSON download > contains URL export failure and preserves records without recursive entries 3ms
+ ✓ packages/ui/src/__tests__/error-log.test.ts > explicit safe JSON download > contains click export failure and preserves records without recursive entries 3ms
+stdout | packages/ui/src/__tests__/inspector-build.test.ts > builds production itself and excludes every inspector module and marker
+INSPECTOR_PRODUCTION_NODE_ENV=production
+INSPECTOR_PRODUCTION_BUILD_MS=11829
+vite v6.4.5 building for production...
+transforming...
+✓ 234 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.71 kB │ gzip:   0.41 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-DdNtS9j1.css                   28.13 kB │ gzip:   5.81 kB
+dist/assets/index-owvdwYz5.js                   339.29 kB │ gzip: 108.47 kB
+✓ built in 5.31s
+
+
+ ✓ packages/ui/src/__tests__/inspector-build.test.ts > builds production itself and excludes every inspector module and marker 11941ms
+
+ Test Files  3 passed (3)
+      Tests  81 passed (81)
+   Start at  18:20:27
+   Duration  12.70s (transform 1.48s, setup 0ms, import 2.35s, tests 13.86s, environment 1ms)
+

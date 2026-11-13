@@ -1,0 +1,27 @@
+HEAD: 5ff521e3971739ecde05a22dd96c74827c0ae363
+Tree: 9b1082da1a427175e6d7636ac4001017e769dff6
+UTC: 2026-11-13T10:33:11.933053+00:00
+Exit: 1
+Command: node C:/Users/Admin/.t3/local-drafts/data01-prC/measure-inspector-zero.mjs
+
+{
+  "head": "5ff521e3971739ecde05a22dd96c74827c0ae363",
+  "variant": "Current error-log refs in both builds; current dev route vs original main.ts provided only in-memory",
+  "currentJsBytes": 339287,
+  "withoutInspectorJsBytes": 339349,
+  "inspectorAddedJsBytes": -62,
+  "byteIdentical": false,
+  "currentGzipBytes": 108465,
+  "controlGzipBytes": 108479,
+  "currentSha256": "083dcd8cede50fa6c888468d421755c89e04e135931f9a6d18bec3fdedf4fabb",
+  "controlSha256": "811043fd392c90dbe7f9d5794dbc59436a028dcc90cdd8689b88bb25f1f4b03c"
+}
+file:///C:/Users/Admin/.t3/local-drafts/data01-prC/measure-inspector-zero.mjs:25
+if(!data.byteIdentical)throw Error('Inspector adds or changes production JS; investigate before acceptance');
+                             ^
+
+Error: Inspector adds or changes production JS; investigate before acceptance
+    at file:///C:/Users/Admin/.t3/local-drafts/data01-prC/measure-inspector-zero.mjs:25:30
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.19.0

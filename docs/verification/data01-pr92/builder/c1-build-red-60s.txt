@@ -1,0 +1,69 @@
+HEAD: 5ff521e3971739ecde05a22dd96c74827c0ae363
+Tree: 9b1082da1a427175e6d7636ac4001017e769dff6
+UTC: 2026-11-13T10:27:53.923207+00:00
+Exit: 1
+Command: npx vitest run packages/ui/src/__tests__/inspector-build.test.ts --reporter=verbose
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+stdout | packages/ui/src/__tests__/inspector-build.test.ts > builds production itself and excludes every inspector module and marker
+INSPECTOR_PRODUCTION_NODE_ENV=production
+INSPECTOR_PRODUCTION_BUILD_MS=7773
+vite v6.4.5 building for production...
+transforming...
+✓ 234 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.71 kB │ gzip:   0.41 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-DdNtS9j1.css                   28.13 kB │ gzip:   5.81 kB
+dist/assets/index-D_plm-J3.js                   338.99 kB │ gzip: 108.33 kB
+✓ built in 3.91s
+
+
+ × packages/ui/src/__tests__/inspector-build.test.ts > builds production itself and excludes every inspector module and marker 7852ms
+   → expected 'import \'./app.css\';\r\nimport { mou…' to match /if\s*\(import\.meta\.env\.DEV\)/
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/inspector-build.test.ts > builds production itself and excludes every inspector module and marker
+AssertionError: expected 'import \'./app.css\';\r\nimport { mou…' to match /if\s*\(import\.meta\.env\.DEV\)/
+
+- Expected:
+/if\s*\(import\.meta\.env\.DEV\)/
+
++ Received:
+"import './app.css';
+import { mount } from 'svelte';
+import CharacterLifeApp from './CharacterLifeApp.svelte';
+import { errorLog } from './error-log.js';
+
+errorLog.initialize('weekly');
+window.addEventListener('error', event => {
+  if (event instanceof ErrorEvent) errorLog.record('RUNTIME', 'UNCAUGHT_ERROR');
+});
+window.addEventListener('unhandledrejection', () => errorLog.record('RUNTIME', 'UNHANDLED_REJECTION'));
+window.addEventListener('pagehide', () => errorLog.flush());
+
+const app = mount(CharacterLifeApp, { target: document.getElementById('app')! });
+
+export default app;
+"
+
+ ❯ packages/ui/src/__tests__/inspector-build.test.ts:43:62
+     41|   // The exclusion proof must coexist with the actual dev-only feature…
+     42|   // than passing vacuously before an inspector route exists.
+     43|   expect(await readFile(join(ui, 'src', 'main.ts'), 'utf8')).toMatch(/…
+       |                                                              ^
+     44| }, 60_000);
+     45|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  17:27:57
+   Duration  8.25s (transform 38ms, setup 0ms, import 70ms, tests 7.86s, environment 0ms)
+
