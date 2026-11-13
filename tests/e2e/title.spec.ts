@@ -146,7 +146,7 @@ for (const kind of ['junk', 'throws'] as const) test(`options storage ${kind} st
 import { readFile, writeFile } from 'node:fs/promises';
 import { deserializeCharacterLifeSave } from '../../packages/persistence/src/character-life-save.ts';
 test('Large report at 320px keeps all six letters and stock ledger inside the page', async ({ page }) => {
-  const parsed = deserializeCharacterLifeSave(await readFile(new URL('../../packages/persistence/src/__tests__/fixtures/society-v7/life-laws.json', import.meta.url), 'utf8'));
+  const parsed = deserializeCharacterLifeSave(await readFile(new URL('../../packages/persistence/src/__tests__/fixtures/society-v8/life-laws.json', import.meta.url), 'utf8'));
   if (!parsed.success) throw Error(parsed.error.message);
   await page.setViewportSize({ width: 320, height: 900 });
   await page.addInitScript(() => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize: 'large', reduceMotion: true, autosave: true })));
@@ -182,7 +182,7 @@ test('Fullscreen reflects live document changes while Options stays open', async
 });
 
 test('fallen city clears cached Continue after New Game and creation Cancel', async ({ page }) => {
-  const parsed = deserializeCharacterLifeSave(await readFile(new URL('../../packages/persistence/src/__tests__/fixtures/society-v7/life-rebellion-last-week.json', import.meta.url), 'utf8'));
+  const parsed = deserializeCharacterLifeSave(await readFile(new URL('../../packages/persistence/src/__tests__/fixtures/society-v8/life-rebellion-last-week.json', import.meta.url), 'utf8'));
   if (!parsed.success) throw Error(parsed.error.message);
   await page.goto('/'); await importLife(page, parsed.state); await go(page, 'session'); await button(page, 'Save locally').click();
   await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');

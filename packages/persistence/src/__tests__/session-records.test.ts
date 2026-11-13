@@ -11,7 +11,7 @@ for (const version of readdirSync(root)) {
       const before = serializeCharacterLifeSave(s);
       const decoded = recordsToSession(sessionToRecords('main', s));
       const after = serializeCharacterLifeSave(decoded);
-      if (version === 'society-v7') {
+      if (version === 'society-v8') {
         expect(before.success).toBe(true); expect(after.success).toBe(true);
         if (!before.success || !after.success) throw Error('Current fixture must serialize successfully');
         expect(after.text).toBe(before.text);

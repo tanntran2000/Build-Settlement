@@ -4,7 +4,7 @@ import { crisisOptions, societyPopulation } from '@haven/core';
 import { deserializeCharacterLifeSave } from '@haven/persistence';
 import { crisisFixture, crisisFixtureBytes, fixtureStep } from './crisis-fixture-helper.js';
 it.each(['life-5-weeks','life-demand-card','life-rebellion-last-week'] as const)('pins production-generated %s bytes',name=>{
- const url=new URL(`../../../persistence/src/__tests__/fixtures/society-v7/${name}.json`,import.meta.url);
+ const url=new URL(`../../../persistence/src/__tests__/fixtures/society-v8/${name}.json`,import.meta.url);
  const bytes=crisisFixtureBytes(name);
  if(process.env.GENERATE_CRISIS_FIXTURES==='1')writeFileSync(url,bytes,'utf8');
  expect(readFileSync(url,'utf8')).toBe(bytes);

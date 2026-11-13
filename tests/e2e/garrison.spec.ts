@@ -19,7 +19,7 @@ test('Watch House staffing, level-two capacity and three-worker refusal',async({
  const actual=await expectReport(page,result.report);expect(actual.order).toEqual(result.report.order);await openReportDetails(page,'captain');await expect(page.getByRole('region',{name:'Order',exact:true}).getByText(`Garrison: ${result.report.order!.soldiers} soldiers, Security +${result.report.order!.garrisonSecurity}.`,{exact:true})).toBeVisible();await fits(page);
 });
 test('crafted raid reports garrison deaths with complete Order parity',async({page})=>{
- const loaded=deserializeCharacterLifeSave(await readFile(new URL('../../packages/persistence/src/__tests__/fixtures/society-v7/life-crime-raid.json',import.meta.url),'utf8'));if(!loaded.success)throw Error(loaded.error.message);const s=loaded.state;
+ const loaded=deserializeCharacterLifeSave(await readFile(new URL('../../packages/persistence/src/__tests__/fixtures/society-v8/life-crime-raid.json',import.meta.url),'utf8'));if(!loaded.success)throw Error(loaded.error.message);const s=loaded.state;
  const result=executeCharacterLifeCommand(s,{type:'END_WEEK',expectedRevision:s.city.revision,expectedWeek:s.city.world.week});if(!result.success||!result.report)throw Error('Week failed');
  await page.goto('/?mode=world-life');await importLife(page,s);await go(page,'city');await page.getByTestId('life-end-week').click();const actual=await expectReport(page,result.report);expect(actual.order).toEqual(result.report.order);
  await openReportDetails(page,'captain');const n=result.report.crimeEvent!.event!.soldiersKilled!;expect(n).toBeGreaterThan(0);await expect(page.getByRole('region',{name:'Crime',exact:true}).locator('p')).toHaveText(`A gang attacked the garrison: ${n} soldier${n===1?'':'s'} died.`);await fits(page);

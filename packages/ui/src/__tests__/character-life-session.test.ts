@@ -10,7 +10,7 @@ const session = (seed = 0, currentName = 'Ana') => { const r = createCharacterLi
 
 it('loads live and pinned v3 cities into a detached complete Life session without conversion or grants', () => {
   const oldSession = () => session();
-  const decoded=deserializeCharacterLifeSave(readFileSync('packages/persistence/src/__tests__/fixtures/society-v7/life-new-game.json','utf8'));
+  const decoded=deserializeCharacterLifeSave(readFileSync('packages/persistence/src/__tests__/fixtures/society-v8/life-new-game.json','utf8'));
   if(!decoded.success)throw Error(decoded.error.message);
   const fresh={success:true,value:decoded.state};
   fresh.value.city.goodsStock!.amountMilli = 321;

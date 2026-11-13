@@ -6,7 +6,7 @@ import { crisisFixtureSession } from './crisis-fixture-helper.js';
 import { executeCharacterLifeCommand } from '../character-life-command.js';
 const names=['robbery','raid','wound','death'] as const;
 type Name=typeof names[number];
-const url=(name:Name)=>new URL(`../../../persistence/src/__tests__/fixtures/society-v7/life-crime-${name}.json`,import.meta.url);
+const url=(name:Name)=>new URL(`../../../persistence/src/__tests__/fixtures/society-v8/life-crime-${name}.json`,import.meta.url);
 function end(s:CharacterLifeSessionState){return executeCharacterLifeCommand(s,{type:'END_WEEK',expectedRevision:s.city.revision,expectedWeek:s.city.world.week});}
 function matches(s:CharacterLifeSessionState,name:Name){const r=end(s);if(!r.success)return false;const e=r.report?.crimeEvent?.event;return name==='wound'?e?.outcome==='wounded':name==='death'?e?.outcome==='killed':e?.kind===name;}
 export function findCrimeFixture(name:Name){
