@@ -24,6 +24,14 @@
 
 **Plan approval:** the owner (Tân) approved this plan with spec v0.3 on 2026-11-13, verbatim: "Duyệt, giao Builder A".
 
+**Plan correction 1 (PR A allowlist).**
+- **The gap:** adding `'wounds'` to `fallCause` in A2 breaks typecheck, because `CityFallen.svelte` and `END_SCREEN_COPY` in `society-view.ts` accept only `'rebellion' | 'assassination'`. The Builder raised this as a HOLD before A1.
+- **The fix:** PR A's allowlist gains two minimal edits:
+  - `CityFallen.svelte` accepts `'wounds'`;
+  - `society-view.ts` gains `END_SCREEN_COPY.wounds = { title: 'Your Lord Has Died', text: 'Your wounds proved fatal.' }` (spec §6 copy).
+- PR C keeps the rest of the UI.
+- **Owner (Tân), 2026-11-13, choice in Claude's question dialog, verbatim:** "Add end copy to PR A (Recommended)".
+
 **Base:** `main` `c4d3dc4` (DATA-01 complete).
 
 ---
@@ -211,6 +219,7 @@ PR A  packages/core/src/data/items.json (new), packages/core/src/data/validate.t
       packages/core/src/trial/items.ts (new: types, state, validators, effective stats, context, itemRandom)
       packages/core/src/trial/society.ts (items field, ruleset 08), packages/core/src/data/tuning.json (rulesetId)
       packages/core/src/trial/crisis.ts (fallCause 'wounds' type + validator)
+      packages/ui/src/CityFallen.svelte, packages/ui/src/society-view.ts (END_SCREEN_COPY.wounds only; Plan correction 1)
       packages/core/src/index.ts (exports)
       packages/simulation/src/item-command.ts (new), character-life-command.ts (routing, health floor removal only in PR B)
       packages/persistence/src/session-records.ts (items table, v7 historical)
