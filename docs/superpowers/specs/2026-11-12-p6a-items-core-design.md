@@ -2,7 +2,7 @@
 
 **Status:**
 - v0.1 was **G1 approved** by the owner (Tân), 2026-11-12, verbatim: "Approve both" (DATA-01 and P6-A, v0.1).
-- **v0.2 (2026-11-13) adds the owner's item categories, the Necklace slot and Material drops (§1 items 18–21, §4.0, §4.5, §7.6). It is awaiting the owner's G1 review of these changes.**
+- **v0.2 (2026-11-13) adds the owner's item categories, the Necklace slot and Material drops (§1 items 18–21, §4.0, §4.5, §7.6). G1 approved by the owner (Tân), 2026-11-13, verbatim: "Duyệt v0.2".**
 
 - **Base:** `main` `ca46d18`.
 - **Not authorised by this document:** no code, push or PR.
