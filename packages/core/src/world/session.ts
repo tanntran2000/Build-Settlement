@@ -1,6 +1,7 @@
 import { hasWeeklyKeys } from '../domain/canonical-state.js';
 import { } from '../trial/catalog.js';
 import { createSocietyState,SOCIETY_RULESET } from '../trial/society.js';
+import { createItemsState } from '../trial/items.js';
 import { isTileTrialPlanningState } from '../trial/state.js';
 import { readDenseArray } from './arrays.js';
 import { createOutsideWorld } from './generate.js';
@@ -16,6 +17,7 @@ export function createWorldSession(seed: unknown): WorldResult<WorldSessionState
     if (!outside.success) return outside;
     const city = createSocietyState();
     city.world.worldMetadata.worldSeed = outside.value.seed;
+    city.society!.items = createItemsState(outside.value.seed);
     return { success: true, value: { city, outside: outside.value } };
   } catch { return { success: false, error: { code: 'WORLD_GENERATION_FAILED', message: 'Could not create the world session.' } }; }
 }

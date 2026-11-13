@@ -68,7 +68,20 @@ it('creates a society world session', () => {
   const result = createWorldSession(20261028);
   expect(result.success).toBe(true);
   if (!result.success) throw Error('Factory failed');
-  expect(result.value.city.society).toEqual(createSocietyState().society);
+  expect(result.value.city.society).toEqual({ ...createSocietyState().society, items: {
+    nextItemId: 1, inventory: [], consumables: [], materials: {}, storage: [], equipped: {},
+    market: [
+      { defId: 'common-shoes', priceMilli: 5000 },
+      { defId: 'common-necklace', priceMilli: 5000 },
+      { defId: 'common-top', priceMilli: 5000 },
+      { defId: 'common-ring', priceMilli: 5000 },
+      { defId: 'rare-shoes', priceMilli: 15000 },
+      { defId: 'rare-earrings', priceMilli: 15000 },
+      { defId: 'epic-top', priceMilli: 40000 },
+      { defId: 'epic-top', priceMilli: 40000 },
+    ],
+    goals: { calm: false, authority: false, week52: false, research: false, rebellionSeen: false, authorityStreak: 0 },
+  } });
 });
 it('rejects accessors and non-plain society objects without reading getters', () => {
   let reads = 0;
