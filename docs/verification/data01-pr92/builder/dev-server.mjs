@@ -1,0 +1,11 @@
+import {createRequire} from 'node:module';
+import path from 'node:path';
+import {pathToFileURL} from 'node:url';
+process.env.NODE_ENV='development';
+const ui=path.resolve('packages/ui'),require=createRequire(path.join(ui,'package.json'));
+const {createServer}=await import(pathToFileURL(path.join(path.dirname(require.resolve('vite/package.json')),'dist/node/index.js')).href);
+const server=await createServer({root:ui,configFile:path.join(ui,'vite.config.ts'),server:{host:'127.0.0.1',port:3000,strictPort:true}});
+await server.listen();
+console.log('DEV_INSPECTOR_READY http://127.0.0.1:3000/?mode=data-inspector');
+process.stdin.once('data',async()=>{await server.close();console.log('DEV_INSPECTOR_STOPPED');process.exit(0);});
+process.stdin.resume();

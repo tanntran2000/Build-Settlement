@@ -1,0 +1,7 @@
+# Local-only artifacts (not committed; SHA-256 of the files in C:/Users/Admin/.t3/local-drafts/data01-prC/)
+
+84cef977d1cc7f952fc9bbfcdc806223bbe2a0a90fd7677ac3f39e176febb72d  baseline-bundle-artifacts/index-DdJm7Zr2.js  (370884 bytes)
+55b29628b4c9fc83184af0621ec31a986ace351a45f61e0f182eec860e6b8a61  final-bundle-artifacts/index-BPY21Xrp.js  (339287 bytes)
+957e3db03aef271e79b33fd544374adbc99e7d2664fc35744b96835f0d072c0d  final-bundle-artifacts/index-DdNtS9j1.css  (28127 bytes)
+8cd281d2303eb013f5335612169b4ee314283f6432bb7267bd7a318cd2767b80  fix1/final-bundle-artifacts/index-owvdwYz5.js  (339287 bytes)
+2e9c518eeea2ecd3eec1e95f93b5746ca9ac71a39eb65390ce1bb8cd7fd7e93b  without-inspector-control.js  (339349 bytes)
