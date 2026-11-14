@@ -240,7 +240,7 @@ async function readItemReport(panel: Locator): Promise<TileTrialReport['items']>
     return matches[0][0];
   }
   function goal(label: string): NonNullable<TileTrialReport['items']['legendary']>['goal'] {
-    const goals = { 'Calm city': 'calm', 'Authority 100': 'authority', 'Week 52': 'week52', 'Research complete': 'research' } as const;
+    const goals = { 'Calm city': 'calm', 'Authority 90+ for 4 weeks': 'authority', 'Week 52': 'week52', 'Research complete': 'research' } as const;
     expect(Object.hasOwn(goals, label)).toBe(true);
     return goals[label as keyof typeof goals];
   }

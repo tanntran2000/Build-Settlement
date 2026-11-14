@@ -10,18 +10,25 @@
  export let onapply:(next:CharacterLifeSessionState)=>void;
  let view='Inventory',filter='All',slot:Slot='weapon',error='',destroyTarget:ItemInstance|null=null;
  let dialog:HTMLDialogElement,opener:HTMLButtonElement|null=null;
+ let equipment:HTMLElement,focusInventoryOnClose=false;
  $: items=session.city.society!.items;
  $: kind=characterId===session.player.character.id?'player' as const:'npc' as const;
  $: totals=characterTotals(session,characterId);
  $: worn=items.equipped[characterId]??{};
  function run(type:string,fields:Record<string,unknown>) {
    const r=executeCharacterLifeCommand(session,{type,expectedRevision:session.city.revision,...fields});
-   error=r.success?'':itemError(r.error.code);if(r.success)onapply(r.next);
+   error=r.success?'':itemError(r.error.code);if(r.success)onapply(r.next);return r.success;
  }
- async function confirm(item:ItemInstance,event:MouseEvent){destroyTarget=item;opener=event.currentTarget as HTMLButtonElement;await tick();dialog.showModal();}
- function close(){dialog.close();destroyTarget=null;opener?.focus();}
+ async function confirm(item:ItemInstance,event:MouseEvent){destroyTarget=item;opener=event.currentTarget as HTMLButtonElement;focusInventoryOnClose=false;await tick();dialog.showModal();}
+ function close(){dialog.close();destroyTarget=null;}
+ async function restoreFocus(){
+   const inventory=focusInventoryOnClose,previousOpener=opener;focusInventoryOnClose=false;destroyTarget=null;
+   await tick();
+   const target=inventory?equipment.querySelector<HTMLButtonElement>('[aria-label="Item sections"] button'):previousOpener;
+   if(target?.isConnected)target.focus();
+ }
 </script>
-<section aria-label="Equipment" class="equipment">
+<section bind:this={equipment} aria-label="Equipment" class="equipment">
  <header><h4>Equipment</h4><p>Outfit the bearer. Skills take effect at End Week.</p></header>
  {#if error}<p role="alert">{error}</p>{/if}
  <div class="loadout">
@@ -64,7 +71,7 @@
   <h5>Temporary storage {items.storage.length} / {ITEM_TRIAL.storageCap}</h5><p>Claim items before they expire. Space is shared by all characters.</p>
   <div class="cards">{#each items.storage as entry (entry.item.id)}<div><p>Expires after week {entry.expiresWeek}</p><ItemCard definition={ITEM_CATALOG[entry.item.defId]} {locked} onclaim={()=>run('CLAIM_STORED_ITEM',{itemId:entry.item.id})} /></div>{:else}<p>Temporary storage is empty.</p>{/each}</div>
  {/if}
- <dialog bind:this={dialog} aria-labelledby="destroy-item-heading" oncancel={()=>destroyTarget=null} onclose={()=>{destroyTarget=null;opener?.focus();}}><h4 id="destroy-item-heading">Destroy item?</h4><p>{destroyTarget?ITEM_CATALOG[destroyTarget.defId].name:''} will be lost permanently.</p><button onclick={close}>Cancel</button><button disabled={locked} onclick={()=>{if(destroyTarget)run('DESTROY_ITEM',{itemId:destroyTarget.id});close();}}>Destroy</button></dialog>
+ <dialog bind:this={dialog} aria-labelledby="destroy-item-heading" oncancel={()=>destroyTarget=null} onclose={restoreFocus}><h4 id="destroy-item-heading">Destroy item?</h4><p>{destroyTarget?ITEM_CATALOG[destroyTarget.defId].name:''} will be lost permanently.</p><button onclick={close}>Cancel</button><button disabled={locked} onclick={()=>{if(destroyTarget)focusInventoryOnClose=run('DESTROY_ITEM',{itemId:destroyTarget.id});close();}}>Destroy</button></dialog>
 </section>
 <style>
  .equipment{min-width:0}h4{font-size:1.3rem;margin:8px 0}h5{font-size:1.1rem;margin:12px 0}.loadout{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:16px}.doll{--focus:var(--ink);position:relative;min-height:330px;background:#d9c499;border:3px double #6b4f2e;padding:12px}.doll svg{position:absolute;width:110px;height:260px;left:50%;top:30px;transform:translateX(-50%);fill:#756248;opacity:.65;pointer-events:none}.slots{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:10px 75px}.slots button{display:flex;flex-direction:column;text-align:left;min-height:60px;min-width:0;padding:8px;overflow-wrap:anywhere;background:#f5f0e3;color:#3b2a17;border:2px solid #6b4f2e}.slots span{font-size:.9rem}.totals{min-width:0}.totals button{display:block;margin:8px 0;width:100%;overflow-wrap:anywhere}.switches{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}button{min-height:44px}button[aria-pressed='true']{font-weight:700;outline:2px solid #6b4f2e;outline-offset:1px}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:8px;border-bottom:1px solid #6b4f2e}dialog{max-width:min(90vw,420px);background:#ead8ae;color:#3b2a17;border:4px double #6b4f2e;padding:24px}dialog button{margin:8px}dialog::backdrop{background:#21140ccc}@media(max-width:600px){.loadout{grid-template-columns:1fr}.slots{gap:8px 50px}.doll{padding:8px}}

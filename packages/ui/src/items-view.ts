@@ -49,7 +49,7 @@ export function healthLine(session:CharacterLifeSessionState):string {
   const hospital=session.city.tiles.some(t=>t.building?.typeId==='hospital'&&potionShop(session.city,t.id));
   return `Health ${session.player.character.health} / 100 · Regen +${characterTotals(session,session.player.character.id).regen!+Number(hospital)}/week`;
 }
-export const ITEM_GOAL_LABELS={calm:'Calm city',authority:'Authority 100',week52:'Week 52',research:'Research complete'} as const;
+export const ITEM_GOAL_LABELS={calm:'Calm city',authority:'Authority 90+ for 4 weeks',week52:'Week 52',research:'Research complete'} as const;
 export function itemReportRows(report:ItemWeekReport,id:'steward'|'quartermaster') {
   const rows:{label:string;value:string;tone:'gain'|'loss'|'muted'}[]=[];
   const add=(label:string,value:string,tone:'gain'|'loss'|'muted')=>rows.push({label,value,tone});

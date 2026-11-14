@@ -224,3 +224,24 @@ test('C1 Destroy confirms, cancels and accepts with the keyboard',async({page})=
   dialog=page.getByRole('dialog',{name:'Destroy item?',exact:true});await dialog.getByRole('button',{name:'Destroy',exact:true}).focus();await page.keyboard.press('Enter');
   expect((await exportLife(page)).city.society!.items.inventory.some(i=>i.id===item.id)).toBe(false);
 });
+
+test('Review F1 Destroy restores keyboard focus after removal, Cancel and Escape',async({page})=>{
+  const {s,def,item}=purchased();await importLife(page,s);const panel=await inventory(page);
+  const opener=panel.getByRole('article',{name:def.name,exact:true}).getByRole('button',{name:'Destroy',exact:true});
+  const dialog=panel.getByRole('dialog',{name:'Destroy item?',exact:true});
+  for(const action of ['Cancel','Escape']){
+    await tabTo(page,opener);await page.keyboard.press('Enter');await expect(dialog).toBeVisible();
+    if(action==='Cancel'){await tabTo(page,dialog.getByRole('button',{name:'Cancel',exact:true}));await page.keyboard.press('Enter');}
+    else await page.keyboard.press('Escape');
+    await expect(dialog).not.toBeVisible();await expect(opener).toBeFocused();
+    expect(await exportLife(page)).toEqual(s);await inventory(page);
+  }
+  await tabTo(page,opener);await page.keyboard.press('Enter');
+  await tabTo(page,dialog.getByRole('button',{name:'Destroy',exact:true}));await page.keyboard.press('Enter');
+  await expect(dialog).not.toBeVisible();await expect(opener).toHaveCount(0);
+  await expect.poll(()=>panel.evaluate(e=>{
+    const active=document.activeElement,style=active?getComputedStyle(active):null;
+    return {connected:active?.isConnected??false,visible:!!active?.getClientRects().length&&style?.visibility!=='hidden'&&style?.display!=='none',insideEquipment:e.contains(active)};
+  })).toEqual({connected:true,visible:true,insideEquipment:true});
+  expect(await exportLife(page)).toEqual(act(s,'DESTROY_ITEM',{itemId:item.id}));
+});

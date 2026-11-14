@@ -93,7 +93,7 @@ describe('C2 shops, recovery and item letters',()=>{
   });
   it('names only delivered Legendary rewards and tells the Player to make room for pending rewards',async()=>{
     const v=await view();expect(v.itemReportRows).toBeTypeOf('function');
-    expect(v.itemReportRows(itemReport,'steward')).toEqual([{label:'Legendary earned',value:"Warden's Oath · Calm city",tone:'gain'},{label:'Reward waiting',value:'Authority 100 · Make room in inventory or temporary storage.',tone:'loss'}]);
+    expect(v.itemReportRows(itemReport,'steward')).toEqual([{label:'Legendary earned',value:"Warden's Oath · Calm city",tone:'gain'},{label:'Reward waiting',value:'Authority 90+ for 4 weeks · Make room in inventory or temporary storage.',tone:'loss'}]);
     expect(v.itemReportRows({...itemReport,legendary:null},'steward').some(r=>r.label==='Legendary earned')).toBe(false);
   });
   it('includes item summary candidates while retaining the four-row cap',()=>{
