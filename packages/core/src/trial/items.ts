@@ -30,12 +30,14 @@ export const ITEM_CATALOG = deepFreeze(catalog.definitions);
 export const ITEM_TRIAL = deepFreeze(catalog.ITEM_TRIAL);
 
 export interface ItemInstance { id:number; defId:string }
+export const ITEM_GOAL_IDS = Object.freeze(['calm','authority','week52','research'] as const);
+export type ItemGoal = typeof ITEM_GOAL_IDS[number];
 export interface ItemsState {
   nextItemId:number; inventory:ItemInstance[]; consumables:ItemInstance[]; materials:Record<string,number>;
   storage:{item:ItemInstance;expiresWeek:number}[];
   equipped:Record<string,Partial<Record<Slot,ItemInstance>>>;
   market:{defId:string;priceMilli:number}[];
-  goals:{calm:boolean;authority:boolean;week52:boolean;research:boolean;rebellionSeen:boolean;authorityStreak:number};
+  goals:{calm:boolean;authority:boolean;week52:boolean;research:boolean;rebellionSeen:boolean;authorityStreak:number;pending?:ItemGoal[]};
 }
 export interface ItemWeekContext { postSkills:Record<string,Skills>;postTraits:Record<string,string[]>;playerSkills:Skills;playerTraits:string[];playerRegen:number }
 export const ITEM_STREAM_SALT = Object.freeze({market:0x49544d31,find:0x49544631,material:0x49544d32,legendary:0x49544c31});
@@ -110,7 +112,19 @@ export function isItemsState(raw:unknown,characterIds:readonly string[]):raw is 
     const ownerKeys=Object.keys(Object.fromEntries(ownerFirstIds.sort((a,b)=>a[1]-b[1])));
     if(!Object.keys(raw.equipped).every((key,i)=>key===ownerKeys[i]))return false;
     if(!market.every(v=>hasWeeklyKeys(v,['defId','priceMilli'])&&typeof v.defId==='string'&&Object.hasOwn(ITEM_CATALOG,v.defId)&&isWearable(ITEM_CATALOG[v.defId])&&ITEM_CATALOG[v.defId].rarity!=='legendary'&&count(v.priceMilli)))return false;
-    return hasWeeklyKeys(raw.goals,['calm','authority','week52','research','rebellionSeen','authorityStreak'])&&count(raw.goals.authorityStreak)&&['calm','authority','week52','research','rebellionSeen'].every(k=>typeof (raw.goals as Record<string,unknown>)[k]==='boolean');
+    if(!plain(raw.goals))return false;
+    const goals=raw.goals,goalKeys=[...ITEM_GOAL_IDS,'rebellionSeen','authorityStreak'];
+    if(!hasWeeklyKeys(goals,Object.hasOwn(goals,'pending')?[...goalKeys,'pending']:goalKeys)||!count(goals.authorityStreak)||[...ITEM_GOAL_IDS,'rebellionSeen'].some(k=>typeof goals[k]!=='boolean'))return false;
+    if(Object.hasOwn(goals,'pending')){
+      const pending=readDenseArray(goals.pending);if(!pending?.length)return false;
+      let previous=-1;
+      for(const goal of pending){
+        const index=ITEM_GOAL_IDS.indexOf(goal as ItemGoal);
+        if(index<=previous||goals[goal as ItemGoal]!==true)return false;
+        previous=index;
+      }
+    }
+    return true;
   } catch {return false;}
 }
 function applies(d:ItemDefinition,socialClass:string|null):boolean {return isWearable(d)&&isOpenItemSlot(d.slot)&&(!d.exclusiveClass||d.exclusiveClass===socialClass);}

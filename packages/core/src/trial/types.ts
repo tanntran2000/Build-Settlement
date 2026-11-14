@@ -6,6 +6,7 @@ import type { CanonicalGameState, WeeklyStocks } from "../domain/canonical-state
 import type { GoodsStock } from './goods-stock.js';
 import type { LawId } from './law.js';
 import type { SocietyClassKey } from './society.js';
+import type { ItemGoal } from './items.js';
 
 export interface LawWeekReport {
  inForce: LawId[];
@@ -79,6 +80,7 @@ export interface ItemWeekReport {
   found: {defId:string;stored:boolean;lost:boolean}|null;
   expired: string[];
   legendary: {goal:'calm'|'authority'|'week52'|'research';defId:string}|null;
+  pendingLegendary?: ItemGoal[];
   hospitalOperated: boolean;
   regen: number;
 }

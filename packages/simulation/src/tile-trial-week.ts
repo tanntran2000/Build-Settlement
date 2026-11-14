@@ -1,4 +1,4 @@
-import { LAW_CATALOG, lawTerms, ITEM_CATALOG, ITEM_TRIAL, itemRandom, drawItemMarket, drawItemRarity, isWearable, RESEARCH_TOPICS, type ItemWeekContext, type ItemWeekReport } from '@haven/core';
+import { LAW_CATALOG, lawTerms, ITEM_CATALOG, ITEM_TRIAL, ITEM_GOAL_IDS, itemRandom, drawItemMarket, drawItemRarity, isWearable, RESEARCH_TOPICS, type ItemWeekContext, type ItemWeekReport } from '@haven/core';
 import { resolveLawGold, resolveLawPromiseWeek } from './law-week.js';
 import { resolveCrimeWeek } from './crime-week.js';
 import { resolveCrisisWeek } from './crisis-week.js';
@@ -228,14 +228,21 @@ function resolveItemWeek(s:TileTrialState,ctx:ItemWeekContext|undefined,hospital
   goals.rebellionSeen ||= wasRebellion||society.crisis.stage==='rebellion';
   goals.authorityStreak=society.order.authority>=90?trialSafe(goals.authorityStreak+1):0;
   const candidates={calm:goals.rebellionSeen&&society.crisis.stage==='none',authority:goals.authorityStreak>=4,week52:week>=52,research:RESEARCH_TOPICS.every(topic=>society.research.completed.includes(topic))};
-  for(const goal of ['calm','authority','week52','research'] as const){
-    if(goals[goal]||!candidates[goal])continue;
+  const pending=[...(goals.pending??[])];
+  for(const goal of ITEM_GOAL_IDS)if(!goals[goal]&&candidates[goal]){goals[goal]=true;pending.push(goal);}
+  pending.sort((a,b)=>ITEM_GOAL_IDS.indexOf(a)-ITEM_GOAL_IDS.indexOf(b));
+  const legendaryRng=itemRandom(seed,week,'legendary');let delivered=0;
+  for(const goal of pending){
+    if(items.inventory.length>=ITEM_TRIAL.inventoryCap&&items.storage.length>=ITEM_TRIAL.storageCap)break;
     const owned=new Set([...items.inventory,...items.consumables,...items.storage.map(entry=>entry.item),...Object.values(items.equipped).flatMap(worn=>Object.values(worn))].map(item=>item.defId));
     const pool=Object.keys(ITEM_CATALOG).filter(id=>isWearable(ITEM_CATALOG[id])&&ITEM_CATALOG[id].rarity==='legendary'&&!owned.has(id));
-    goals[goal]=true;
-    if(pool.length){const defId=pool[Math.floor(itemRandom(seed,week,'legendary')()*pool.length)];grant(defId);report.legendary={goal,defId};}
-    break;
+    if(!pool.length)break;
+    const defId=pool[Math.floor(legendaryRng()*pool.length)];
+    if(grant(defId).lost)break;
+    report.legendary??={goal,defId};delivered++;
   }
+  const waiting=pending.slice(delivered);
+  if(waiting.length){goals.pending=waiting;report.pendingLegendary=[...waiting];}else delete goals.pending;
   items.market=drawItemMarket(seed,s.world.week);
   let marketNegotiationPercent=0;
   for(const tile of s.tiles)if(tile.building?.enabled&&tile.building.typeId==='town-market'&&ctx?.postSkills[tile.id]){
