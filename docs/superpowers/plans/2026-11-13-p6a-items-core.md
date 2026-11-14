@@ -84,6 +84,17 @@
 
 **Plan correction 7 (PR B, several Markets).** Spec §5 gives the Market negotiation term per posted NPC (−1% per 5 points above 50, at most −10%) but not how several Markets combine. With several enabled Markets that have NPCs posted, the shared offers use the strongest single discount, capped at 10%; extra Markets do not stack. **Owner (Tân), 2026-11-14, dialog choice, verbatim:** "Keep strongest, max 10% (Recommended)".
 
+**Plan correction 8 (PR C preflight, Builder Step 0 HOLD).** Evidence: `local-drafts/p6a-prC/STEP0-HOLD.md` and `step0-proposed-edits.md`.
+- **Existing-test edits:** the 10 listed before → after blocks P1–P10 in 3 e2e files (`character-life-boundary.spec.ts`, `character-life-navigation.spec.ts`, `character-life-navigation.helpers.ts`) are allowed exactly as listed, and nothing else in those files changes. They replace the Inventory placeholder checks with exact Equipment slot, lock and filter checks (Player 8 slots, NPC 11 with 3 locked), and add the visible `items` report, read by a new parser from the rendered cells, to the existing exact report equality. **Owner (Tân), 2026-11-14, dialog choice, verbatim:** "Approve the 10 edits (Recommended)".
+- **Extra files:** PR C's allowlist gains, each only for the stated purpose:
+  - `packages/ui/src/CharacterProfile.svelte`: mount Equipment in the existing Inventory tab;
+  - `packages/ui/src/items-view.ts` (new): pure display helpers, previews, filters and digit validation;
+  - `packages/ui/src/TileManagement.svelte`: pass Player health and regen to the shell, and item-command errors through the current dispatcher path;
+  - `packages/ui/src/SoloWeekReport.svelte`: show item rows in the existing Steward and Quartermaster letter Details.
+
+  Any other file outside the allowlist is a HOLD. **Owner (Tân), 2026-11-14, dialog choice, verbatim:** "Allow these 4 files (Recommended)".
+- **Task order:** C1's e2e equips an item bought through the real command path on a posted NPC and checks the next report's post effect. The full UI-buy workflow e2e moves to C2 (RED before C2 product edits, GREEN before its commit). Both at 1280. **Owner (Tân), 2026-11-14, dialog choice, verbatim:** "Move the buy e2e to C2 (Recommended)".
+
 - **Extension 2:** correction 2 also covers updating an expectation to the stored-record layout that an approved Decision defines. Example: under Decision 3, the stored `city` record holds `items` without the instance lists, in `character-life-navigation.spec.ts:1436`. Exact equality stays, and each edit is listed. **Owner (Tân), 2026-11-13, verbatim:** "Allow, extend correction 2 (Recommended)".
 
 **Base:** `main` `c4d3dc4` (DATA-01 complete).
