@@ -1,5 +1,38 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## P6-A PR C (item UI) — PR #95 G6 (2026-11-14 UTC)
+
+**G6 PASS (Claude, Orchestrator/Tester).** P6-A is complete: PR A #93 (item core), PR B #94 (week rules), PR C #95 (item UI).
+
+- **Merge.** PR #95 (`P6-A PR C: item UI (equipment, Market, potions, item reports, lord health)`) was merged under G5 at 2026-11-14T15:45:16Z (GitHub account `tanntran2000`; dot or the owner per AGENTS.md G5).
+  - Merge/main commit: `e85917733e229701830ad7f53dfcfbe2fefab831` (parents `2c04321`, `5e97f04`).
+  - Accepted head: `5e97f049330c2e6c4e213b845815afb368d8a7b3`. Base: `2c04321`.
+- **Trees.** The merge tree `49f6b676c3ae57f66ef9ce6275eb89a806f52a9a` is identical to the accepted head tree. Claude checked this locally.
+- **Main CI.** Quality Gate run [43611865888](https://github.com/tanntran2000/Build-Settlement/actions/runs/43611865888), job 132498442156 (push, exact merge SHA), SUCCESS at 2026-11-14T16:03:43Z: 2,488 unit tests in 120 files, and 370/370 Chromium smoke (16.8 min). Claude read the conclusion, the unit total and the smoke total from the log. The dependency audit reports 3 low advisories, none moderate or higher.
+- **Pre-merge, at `5e97f04`:**
+  - Claude Tester gates 1–7 exit 0, and full smoke 370/370. The log shows `CI=1` and the CPU load at start.
+  - CI 43606493794 success.
+  - Astra PASS on round 2 (thread `mcp:94caacb1`). Round 1 (`f046e36`) found a P2 (a confirmed Destroy restored focus to the removed button) and a P3 (the Authority goal label said "Authority 100").
+  - Builder HOLDs on the way: Step 0 preflight; two C1 anti-loop HOLDs on one new e2e test; a C3 smoke HOLD (11 failures: accessibility, portrait, 320px report); two gate-6 HOLDs where `lord-health.test.ts:73` and `society-renewable-support.test.ts:160` (PR B) exceeded 5 s on a loaded machine. Limits were kept; quiet runs and CI passed.
+- **Evidence.** `docs/verification/p6a-pr95/` on branch `docs/p6a-items-design`, at `058f815`.
+- **Owner instructions** (verbatim; full table in `owner-approval-record.md`):
+  - "Giao Builder C";
+  - Plan corrections, owner's choices in Claude's dialog:
+    - 8: "Approve the 10 edits (Recommended)", "Allow these 4 files (Recommended)", "Move the buy e2e to C2 (Recommended)";
+    - C1 HOLDs: "Allow the Farm fix (Recommended)", "Allow this Planning fix (Recommended)";
+    - 9: "Approve all 4 incl. P11 (Recommended)", "Use option D now (Recommended)"; NPC silhouette: "hợp lý rồi", "Builder traces it";
+    - gate 6: "Rerun, no timeout change (Recommended)";
+    - 10: "Approve, incl. P7 line (Recommended)".
+- **Disclosed.**
+  - One review round and five Builder HOLDs before the merge.
+  - 11 existing-test edits (P1–P11, one P7 line amended in correction 10). No golden, fixture, catalog or pin change.
+  - Bundle 133.46 kB gzip total (+11.13 kB vs main), under 200 kB.
+  - Claude ran one gate run in parallel with Astra (CPU 100%); it was not counted. Gates now run with nothing else on the machine.
+- **Limits.**
+  - Chromium only. Astra's review is source-only plus read-only artifact scripts.
+  - `lord-health.test.ts:73` runs close to its 5 s limit in a full parallel suite on a loaded machine.
+  - Adult item detail and visuals are P6-C.
+
 ## P6-A PR B (week rules) — PR #94 G6 (2026-11-14 UTC)
 
 **G6 PASS (Claude, Orchestrator/Tester).** P6-A PR B is complete; PR C (UI) follows.
