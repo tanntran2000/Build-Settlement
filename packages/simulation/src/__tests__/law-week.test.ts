@@ -77,7 +77,7 @@ it('decrements a pending promise once each week',()=>{
  expect(resolveLawPromiseWeek(s)).toBeNull();expect(s.society!.laws.promise!.weeksLeft).toBe(3);
 });
 it('preserves the law-free five-week gameplay pin and determinism',()=>{
- const bytes=readFileSync(new URL('../../../persistence/src/__tests__/fixtures/society-v7/life-new-game.json',import.meta.url),'utf8');
+ const bytes=readFileSync(new URL('../../../persistence/src/__tests__/fixtures/society-v8/life-new-game.json',import.meta.url),'utf8');
  const decoded=deserializeCharacterLifeSave(bytes);if(!decoded.success)throw Error(decoded.error.message);
  let s=decoded.state,other=structuredClone(s);
  for(let i=0;i<5;i++){
@@ -87,7 +87,20 @@ it('preserves the law-free five-week gameplay pin and determinism',()=>{
  const old=JSON.parse(readFileSync(new URL('../../../persistence/src/__tests__/fixtures/society-v5/life-5-weeks.json',import.meta.url),'utf8')).state;
  const {rulesetId:_ruleset,laws:_laws,...society}=s.city.society!;
  const {rulesetId:_oldRuleset,...oldSociety}=old.city.society;
- expect(society).toEqual(oldSociety);
+ expect(society).toEqual({...oldSociety,items: {
+      nextItemId: 1, inventory: [], consumables: [], materials: {}, storage: [], equipped: {},
+      market: [
+        { defId: 'common-shoes', priceMilli: 5000 },
+        { defId: 'common-necklace', priceMilli: 5000 },
+        { defId: 'common-top', priceMilli: 5000 },
+        { defId: 'common-ring', priceMilli: 5000 },
+        { defId: 'rare-shoes', priceMilli: 15000 },
+        { defId: 'rare-earrings', priceMilli: 15000 },
+        { defId: 'epic-top', priceMilli: 40000 },
+        { defId: 'epic-top', priceMilli: 40000 },
+      ],
+      goals: { calm: false, authority: false, week52: false, research: false, rebellionSeen: false, authorityStreak: 0 },
+    }});
  expect(s.city.world.settlements).toEqual(old.city.world.settlements);
 });
 it('is deterministic with three laws over five weeks',()=>{

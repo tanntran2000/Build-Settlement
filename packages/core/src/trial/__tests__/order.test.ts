@@ -30,7 +30,7 @@ it.each([[30, 50, 5, 35], [30, 27, 5, 27], [50, 0, 3, 47], [30, 30, 5, 30]])('dr
 it.each([[0,'Low'],[33,'Low'],[34,'Fair'],[66,'Fair'],[67,'High'],[100,'High']])('bands %s as %s', (v,e) => expect(orderBand(Number(v))).toBe(e));
 it('creates isolated v3 order and three research topics', () => {
  const s = createSocietyState();
- expect(s.society!.rulesetId).toBe('tile-society-07');
+ expect(s.society!.rulesetId).toBe('tile-society-08');
  expect(s.society!.order).toEqual({ security: 30, crime: 10, authority: 50 });
  expect(RESEARCH_TOPICS).toEqual(['deep-mining','watch-patrols','barracks-drill']);
  expect(s.society!.research.progressMilli).toEqual({'deep-mining':0,'watch-patrols':0,'barracks-drill':0});

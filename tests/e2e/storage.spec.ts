@@ -11,7 +11,7 @@ const button=(page:Page,name:string)=>page.getByRole('button',{name,exact:true})
 function bytes(session=makeLife()){const r=serializeCharacterLifeSave(session);if(!r.success)throw Error(r.error.message);return r.text;}
 async function save(page:Page){await go(page,'session');await button(page,'Save locally').click();await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');}
 async function start(page:Page){await page.goto('/');await expect(page.getByRole('heading',{name:'HAVEN',exact:true})).toBeVisible();await importLife(page,makeLife());}
-async function fallenFixture(){const r=deserializeCharacterLifeSave(await readFile(new URL('../../packages/persistence/src/__tests__/fixtures/society-v7/life-rebellion-last-week.json',import.meta.url),'utf8'));if(!r.success)throw Error(r.error.message);return r.state;}
+async function fallenFixture(){const r=deserializeCharacterLifeSave(await readFile(new URL('../../packages/persistence/src/__tests__/fixtures/society-v8/life-rebellion-last-week.json',import.meta.url),'utf8'));if(!r.success)throw Error(r.error.message);return r.state;}
 async function expectCleared(page:Page){
  await expect.poll(()=>readStoredRecords(page)).toEqual([marker]);
  const rows=await readStoredRecords(page);for(const table of GAME_DB.stores.filter(t=>t!=='system'))expect(rows.filter(r=>r.slotId==='main'&&r.table===table)).toHaveLength(0);

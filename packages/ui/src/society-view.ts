@@ -147,7 +147,8 @@ export function standingRow(city:TileTrialState):string {
 export function crimeChanceRow(city:TileTrialState):string {
  return `Crime events: ${crimeChancePercent(city.society!.order.crime,idleWatchHouse(city))}% a week`;
 }
-export const END_SCREEN_COPY:Record<'rebellion'|'assassination',{title:string;text:string}>={
+export const END_SCREEN_COPY:Record<'rebellion'|'assassination'|'wounds',{title:string;text:string}>={
+ wounds:{title:'Your Lord Has Died',text:'Your wounds proved fatal.'},
  rebellion:{title:'The City Has Fallen',text:'Hunger turned Haven against you.'},
  assassination:{title:'The Lord Is Dead',text:"An assassin's blade ended your rule."},
 };

@@ -8,7 +8,7 @@ import { END_SCREEN_COPY } from '../../packages/ui/src/society-view.ts';
 import { makeLife, importLife, go, expectReport, reportRegion } from './character-life-navigation.helpers.ts';
 
 async function fixture(name: string) {
-  const result = deserializeCharacterLifeSave(await readFile(new URL(`../../packages/persistence/src/__tests__/fixtures/society-v7/${name}.json`, import.meta.url), 'utf8'));
+  const result = deserializeCharacterLifeSave(await readFile(new URL(`../../packages/persistence/src/__tests__/fixtures/society-v8/${name}.json`, import.meta.url), 'utf8'));
   if (!result.success) throw Error(result.error.message);
   return result.state;
 }

@@ -24,7 +24,7 @@ function fixture(){
  s=action(s,{type:'REPEAL_LAW',lawId:'free-assembly'});
  return action(s,{type:'ENACT_LAW',lawId:'guild-charters',lobby:{free:'promise'}});
 }
-const url=new URL('../../../persistence/src/__tests__/fixtures/society-v7/life-laws.json',import.meta.url);
+const url=new URL('../../../persistence/src/__tests__/fixtures/society-v8/life-laws.json',import.meta.url);
 it('pins the production-command Week 4 laws checkpoint and round-trips it',()=>{
  const s=fixture();
  expect(s.city.world.week).toBe(4);expect(s.city.phase).toBe('planning');

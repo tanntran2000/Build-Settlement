@@ -1,0 +1,510 @@
+{
+  "definitions": {
+    "common-weapon": {
+      "name": "Plain Weapon",
+      "category": "equipment",
+      "rarity": "common",
+      "kind": "player",
+      "slot": "weapon",
+      "mainStat": "combat",
+      "regen": 1,
+      "basePriceMilli": 5000
+    },
+    "rare-weapon": {
+      "name": "Fine Weapon",
+      "category": "equipment",
+      "rarity": "rare",
+      "kind": "npc",
+      "slot": "weapon",
+      "mainStat": "combat",
+      "secondaryStat": "negotiation",
+      "basePriceMilli": 15000
+    },
+    "common-earrings": {
+      "name": "Plain Earrings",
+      "category": "accessory",
+      "rarity": "common",
+      "kind": "player",
+      "slot": "earrings",
+      "mainStat": "negotiation",
+      "regen": 1,
+      "basePriceMilli": 5000
+    },
+    "rare-earrings": {
+      "name": "Fine Earrings",
+      "category": "accessory",
+      "rarity": "rare",
+      "kind": "npc",
+      "slot": "earrings",
+      "mainStat": "negotiation",
+      "secondaryStat": "management",
+      "basePriceMilli": 15000
+    },
+    "common-necklace": {
+      "name": "Plain Necklace",
+      "category": "accessory",
+      "rarity": "common",
+      "kind": "player",
+      "slot": "necklace",
+      "mainStat": "management",
+      "regen": 1,
+      "basePriceMilli": 5000
+    },
+    "rare-necklace": {
+      "name": "Fine Necklace",
+      "category": "accessory",
+      "rarity": "rare",
+      "kind": "npc",
+      "slot": "necklace",
+      "mainStat": "management",
+      "secondaryStat": "medical",
+      "basePriceMilli": 15000
+    },
+    "common-ring": {
+      "name": "Plain Ring",
+      "category": "accessory",
+      "rarity": "common",
+      "kind": "player",
+      "slot": "ring",
+      "mainStat": "medical",
+      "regen": 1,
+      "basePriceMilli": 5000
+    },
+    "rare-ring": {
+      "name": "Fine Ring",
+      "category": "accessory",
+      "rarity": "rare",
+      "kind": "npc",
+      "slot": "ring",
+      "mainStat": "medical",
+      "secondaryStat": "technical",
+      "basePriceMilli": 15000
+    },
+    "common-hand": {
+      "name": "Plain Hand",
+      "category": "accessory",
+      "rarity": "common",
+      "kind": "player",
+      "slot": "hand",
+      "mainStat": "technical",
+      "regen": 1,
+      "basePriceMilli": 5000
+    },
+    "rare-hand": {
+      "name": "Fine Hand",
+      "category": "accessory",
+      "rarity": "rare",
+      "kind": "npc",
+      "slot": "hand",
+      "mainStat": "technical",
+      "secondaryStat": "combat",
+      "basePriceMilli": 15000
+    },
+    "common-top": {
+      "name": "Plain Top",
+      "category": "outfit",
+      "rarity": "common",
+      "kind": "player",
+      "slot": "top",
+      "mainStat": "combat",
+      "regen": 1,
+      "basePriceMilli": 5000
+    },
+    "rare-top": {
+      "name": "Fine Top",
+      "category": "outfit",
+      "rarity": "rare",
+      "kind": "npc",
+      "slot": "top",
+      "mainStat": "combat",
+      "secondaryStat": "negotiation",
+      "basePriceMilli": 15000
+    },
+    "common-bottom": {
+      "name": "Plain Bottom",
+      "category": "outfit",
+      "rarity": "common",
+      "kind": "player",
+      "slot": "bottom",
+      "mainStat": "negotiation",
+      "regen": 1,
+      "basePriceMilli": 5000
+    },
+    "rare-bottom": {
+      "name": "Fine Bottom",
+      "category": "outfit",
+      "rarity": "rare",
+      "kind": "npc",
+      "slot": "bottom",
+      "mainStat": "negotiation",
+      "secondaryStat": "management",
+      "basePriceMilli": 15000
+    },
+    "common-shoes": {
+      "name": "Plain Shoes",
+      "category": "outfit",
+      "rarity": "common",
+      "kind": "player",
+      "slot": "shoes",
+      "mainStat": "management",
+      "regen": 1,
+      "basePriceMilli": 5000
+    },
+    "rare-shoes": {
+      "name": "Fine Shoes",
+      "category": "outfit",
+      "rarity": "rare",
+      "kind": "npc",
+      "slot": "shoes",
+      "mainStat": "management",
+      "secondaryStat": "medical",
+      "basePriceMilli": 15000
+    },
+    "epic-weapon": {
+      "name": "Masterwork weapon",
+      "category": "equipment",
+      "rarity": "epic",
+      "kind": "player",
+      "slot": "weapon",
+      "mainStat": "combat",
+      "secondaryStat": "negotiation",
+      "regen": 3,
+      "basePriceMilli": 40000
+    },
+    "epic-top": {
+      "name": "Masterwork top",
+      "category": "outfit",
+      "rarity": "epic",
+      "kind": "player",
+      "slot": "top",
+      "mainStat": "negotiation",
+      "secondaryStat": "management",
+      "regen": 3,
+      "basePriceMilli": 40000
+    },
+    "epic-hand": {
+      "name": "Masterwork hand",
+      "category": "accessory",
+      "rarity": "epic",
+      "kind": "npc",
+      "slot": "hand",
+      "mainStat": "management",
+      "secondaryStat": "medical",
+      "basePriceMilli": 40000
+    },
+    "epic-necklace": {
+      "name": "Masterwork necklace",
+      "category": "accessory",
+      "rarity": "epic",
+      "kind": "npc",
+      "slot": "necklace",
+      "mainStat": "medical",
+      "secondaryStat": "technical",
+      "basePriceMilli": 40000
+    },
+    "wardens-oath": {
+      "name": "Warden's Oath",
+      "category": "equipment",
+      "rarity": "legendary",
+      "kind": "npc",
+      "slot": "weapon",
+      "mainStat": "combat",
+      "secondaryStat": "management",
+      "trait": "warden",
+      "basePriceMilli": 0
+    },
+    "crown-of-embers": {
+      "name": "Crown of Embers",
+      "category": "accessory",
+      "rarity": "legendary",
+      "kind": "player",
+      "slot": "earrings",
+      "mainStat": "management",
+      "secondaryStat": "negotiation",
+      "regen": 5,
+      "trait": "crown",
+      "basePriceMilli": 0
+    },
+    "ironhide-gloves": {
+      "name": "Ironhide Gloves",
+      "category": "accessory",
+      "rarity": "legendary",
+      "kind": "player",
+      "slot": "hand",
+      "mainStat": "medical",
+      "secondaryStat": "combat",
+      "regen": 5,
+      "trait": "ironhide",
+      "basePriceMilli": 0
+    },
+    "ledger-of-plenty": {
+      "name": "Ledger of Plenty",
+      "category": "accessory",
+      "rarity": "legendary",
+      "kind": "npc",
+      "slot": "necklace",
+      "mainStat": "technical",
+      "secondaryStat": "management",
+      "trait": "ledger",
+      "basePriceMilli": 0
+    },
+    "common-set": {
+      "name": "Travelling Set",
+      "category": "outfit",
+      "rarity": "common",
+      "kind": "player",
+      "slot": "set",
+      "mainStat": "management",
+      "regen": 1,
+      "basePriceMilli": 15000
+    },
+    "rare-set": {
+      "name": "Steward Set",
+      "category": "outfit",
+      "rarity": "rare",
+      "kind": "npc",
+      "slot": "set",
+      "mainStat": "management",
+      "secondaryStat": "negotiation",
+      "basePriceMilli": 45000
+    },
+    "heal-potion-1": {
+      "name": "Heal Potion I",
+      "category": "consumable",
+      "rarity": "common",
+      "basePriceMilli": 3000
+    },
+    "heal-potion-2": {
+      "name": "Heal Potion II",
+      "category": "consumable",
+      "rarity": "rare",
+      "basePriceMilli": 8000
+    },
+    "heal-potion-3": {
+      "name": "Heal Potion III",
+      "category": "consumable",
+      "rarity": "epic",
+      "basePriceMilli": 15000
+    },
+    "iron": {
+      "name": "Iron",
+      "category": "material",
+      "rarity": "common",
+      "basePriceMilli": 1000,
+      "building": [
+        "mine"
+      ]
+    },
+    "silver": {
+      "name": "Silver",
+      "category": "material",
+      "rarity": "rare",
+      "basePriceMilli": 3000,
+      "building": [
+        "mine"
+      ]
+    },
+    "gold": {
+      "name": "Gold",
+      "category": "material",
+      "rarity": "epic",
+      "basePriceMilli": 8000,
+      "building": [
+        "mine"
+      ]
+    },
+    "ruby": {
+      "name": "Ruby",
+      "category": "material",
+      "rarity": "legendary",
+      "basePriceMilli": 0,
+      "building": [
+        "mine"
+      ]
+    },
+    "glass": {
+      "name": "Glass",
+      "category": "material",
+      "rarity": "common",
+      "basePriceMilli": 1000,
+      "building": [
+        "quarry"
+      ]
+    },
+    "nitrate": {
+      "name": "Nitrate",
+      "category": "material",
+      "rarity": "rare",
+      "basePriceMilli": 3000,
+      "building": [
+        "quarry"
+      ]
+    },
+    "amethyst": {
+      "name": "Amethyst",
+      "category": "material",
+      "rarity": "epic",
+      "basePriceMilli": 8000,
+      "building": [
+        "quarry"
+      ]
+    },
+    "paper": {
+      "name": "Paper",
+      "category": "material",
+      "rarity": "common",
+      "basePriceMilli": 1000,
+      "building": [
+        "logging"
+      ]
+    },
+    "rubber": {
+      "name": "Rubber",
+      "category": "material",
+      "rarity": "rare",
+      "basePriceMilli": 3000,
+      "building": [
+        "logging"
+      ]
+    },
+    "linen": {
+      "name": "Linen",
+      "category": "material",
+      "rarity": "common",
+      "basePriceMilli": 1000,
+      "building": [
+        "weaver",
+        "sheep-pasture"
+      ]
+    },
+    "wool": {
+      "name": "Wool",
+      "category": "material",
+      "rarity": "rare",
+      "basePriceMilli": 3000,
+      "building": [
+        "weaver",
+        "sheep-pasture"
+      ]
+    },
+    "silk": {
+      "name": "Silk",
+      "category": "material",
+      "rarity": "epic",
+      "basePriceMilli": 8000,
+      "building": [
+        "weaver",
+        "sheep-pasture"
+      ]
+    },
+    "green-leaf": {
+      "name": "Green Leaf",
+      "category": "material",
+      "rarity": "common",
+      "basePriceMilli": 1000,
+      "building": [
+        "herb-garden"
+      ]
+    },
+    "red-leaf": {
+      "name": "Red Leaf",
+      "category": "material",
+      "rarity": "rare",
+      "basePriceMilli": 3000,
+      "building": [
+        "herb-garden"
+      ]
+    },
+    "purple-leaf": {
+      "name": "Purple Leaf",
+      "category": "material",
+      "rarity": "epic",
+      "basePriceMilli": 8000,
+      "building": [
+        "herb-garden"
+      ]
+    }
+  },
+  "ITEM_TRIAL": {
+    "marker": "TRIAL",
+    "bonuses": {
+      "common": {
+        "main": 2,
+        "secondary": 0,
+        "regen": 1
+      },
+      "rare": {
+        "main": 4,
+        "secondary": 1,
+        "regen": 2
+      },
+      "epic": {
+        "main": 8,
+        "secondary": 2,
+        "regen": 3
+      },
+      "legendary": {
+        "main": 12,
+        "secondary": 4,
+        "regen": 5
+      }
+    },
+    "setMultiplier": 3,
+    "marketCounts": {
+      "common": 4,
+      "rare": 2,
+      "epic": 2
+    },
+    "marketPricesMilli": {
+      "common": 5000,
+      "rare": 15000,
+      "epic": 40000
+    },
+    "resaleBps": 3000,
+    "potionPricesMilli": {
+      "1": 3000,
+      "2": 8000,
+      "3": 15000
+    },
+    "potionHeal": {
+      "1": 5,
+      "2": 10,
+      "3": 15
+    },
+    "findOddsBps": {
+      "common": 2500,
+      "rare": 1000,
+      "epic": 600
+    },
+    "materialOddsBps": {
+      "common": 2000,
+      "rare": 600,
+      "epic": 200,
+      "legendary": 50
+    },
+    "stackCap": 999,
+    "inventoryCap": 50,
+    "consumableCap": 50,
+    "storageCap": 10,
+    "storageWeeks": 3,
+    "effects": {
+      "threshold": 50,
+      "outputStep": 5,
+      "outputPercent": 1,
+      "outputCapPercent": 10,
+      "securityStep": 10,
+      "securityCap": 5,
+      "authorityStep": 10,
+      "marketStep": 5,
+      "marketCapPercent": 10,
+      "fatalStep": 5,
+      "fatalCap": 10,
+      "woundStep": 10,
+      "woundFloor": 10,
+      "wardenSecurity": 3,
+      "crownAuthority": 3,
+      "ironhideWoundReduction": 5,
+      "ledgerOutputPercent": 5
+    }
+  }
+}

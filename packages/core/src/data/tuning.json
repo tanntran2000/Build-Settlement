@@ -178,7 +178,7 @@
     }
   },
   "SOCIETY_TRIAL": {
-    "rulesetId": "tile-society-07",
+    "rulesetId": "tile-society-08",
     "standing": 50,
     "laws": {
       "active": [],

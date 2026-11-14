@@ -83,7 +83,7 @@ const pinnedCatalogs = [
   { name: 'GARRISON_TRIAL', value: GARRISON_TRIAL, hash: '4143c1462f581114f45b89afa976c6917d984ea1550601205c4eb7655602c5ef' },
   { name: 'CRIME_TRIAL', value: CRIME_TRIAL, hash: 'f0870b86f87072a009bef7a53511704f6b0ddb5b2e5d9c1de6a7b6dbb44ce1d1' },
   { name: 'CRISIS_TRIAL', value: CRISIS_TRIAL, hash: 'e84e3064f8941cfbf4187fb6708577d62ada085696047d19dc52d62e16e528d6' },
-  { name: 'SOCIETY_TRIAL', value: SOCIETY_TRIAL, hash: '702c65dd3836e476f85411b395f0219980c8e1677a8700be1c05a02a6010a4a8' },
+  { name: 'SOCIETY_TRIAL', value: SOCIETY_TRIAL, hash: 'd390d44efdd2fba06fd4d8c0812e83837ef25b5d84e19956bb5ff00a0dbcac80' },
   { name: 'GOODS_STOCK_TRIAL', value: GOODS_STOCK_TRIAL, hash: '6e46090f98a4db0231da0659fc6a1788e743dc365de21e4ced5f142b5c7771f2' },
   { name: 'TILE_TRIAL_BALANCE', value: TILE_TRIAL_BALANCE, hash: '8c6f563db7d15d0e01ca16852bd5700d2c8504a279f63d14ffcd7e01999b6075' },
   { name: 'IMMIGRATION_TRIAL_DEFAULTS', value: IMMIGRATION_TRIAL_DEFAULTS, hash: '9a3a102558fc1ac452d330d72d162a21793b674002acf3026b9f2b5a6e9bdcef' },
@@ -99,4 +99,13 @@ it('detects a changed value in a cloned catalog using the pinned base hash', () 
   const changed = structuredClone(TRIAL_BUILDINGS);
   changed.hospital.upkeepMilli += 1;
   expect(catalogHash(changed)).not.toBe(pinnedCatalogs[0].hash);
+});
+
+it('pins ITEM_CATALOG for P6-A', async () => {
+  const { ITEM_CATALOG }=await import('../trial/items.js');
+  expect(catalogHash(ITEM_CATALOG)).toBe('fa866064967ee36dac69a3b8c5c6090bb2b40b7236c3f104d5a8e89d84e974c6');
+});
+it('pins ITEM_TRIAL for P6-A', async () => {
+  const { ITEM_TRIAL }=await import('../trial/items.js');
+  expect(catalogHash(ITEM_TRIAL)).toBe('fcdbbc87ed52f6df25246e044b25e3c6acbd56de98360f31b7a16ec4a3b5e198');
 });

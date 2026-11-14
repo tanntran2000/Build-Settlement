@@ -32,3 +32,4 @@ export * from './trial/event-card.js';
 
 export * from './trial/crime.js';
 export * from './trial/law.js';
+export * from './trial/items.js';

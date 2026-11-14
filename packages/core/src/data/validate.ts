@@ -2,6 +2,7 @@ import type { ImmigrationTrialConfig, TrialBuildingDefinition } from '../trial/c
 import type { SocietyBuildingInfo } from '../trial/society-map.js';
 import type { LawDefinition } from '../trial/law.js';
 import type { OutsideTerrain, OutsidePlotState } from '../trial/outside.js';
+import type { ItemDefinition, ItemTrial } from '../trial/items.js';
 type IMMIGRATION_TRIAL_DEFAULTSData = Readonly<ImmigrationTrialConfig>;
 type TRIAL_BUILDINGSData = Readonly<Record<string, TrialBuildingDefinition>>;
 type TILE_TRIAL_BALANCEData = Readonly<{
@@ -302,7 +303,7 @@ type GOODS_STOCK_TRIALData = Readonly<{
     goldPerGoodsMilli: 1000;
 }>;
 type SOCIETY_TRIALData = Readonly<{
-    readonly rulesetId: "tile-society-07";
+    readonly rulesetId: "tile-society-08";
     readonly standing: 50;
     readonly laws: Readonly<{
         active: never[];
@@ -622,7 +623,7 @@ const tuningSchemas: Record<string, Rule> = {
             "tension": nonnegative
         })
     }), "SOCIETY_TRIAL": object({
-        "rulesetId": literal("tile-society-07"), "standing": nonnegative, "laws": object({
+        "rulesetId": literal("tile-society-08"), "standing": nonnegative, "laws": object({
             "active": tuple([]), "votedWeek": literal(null), "repealedUntil": object({}), "promise": literal(null)
         }), "order": object({
             "security": nonnegative, "crime": nonnegative, "authority": nonnegative
@@ -798,4 +799,47 @@ export function validateTuning(json: unknown): TuningCatalog {
     for (const [id, rule] of Object.entries(tuningSchemas))
         rule(data[id], `tuning.json#${id}`, '');
     return data as unknown as TuningCatalog;
+}
+
+export function validateItems(json: unknown): {definitions:Record<string,ItemDefinition>;ITEM_TRIAL:ItemTrial} {
+    const root = record(json, 'items.json#catalog', 'entries');
+    object({definitions:()=>{},ITEM_TRIAL:()=>{}})(root,'items.json#catalog','');
+    const definitions = record(root.definitions,'items.json#catalog','definitions');
+    if (!Object.keys(definitions).length) fail('items.json#catalog','definitions','expected nonempty object');
+    const rarity: Rule = (v,r,f) => { if(!['common','rare','epic','legendary'].includes(v as string)) fail(r,f,'expected one of common|rare|epic|legendary'); };
+    const skill = oneOf('management','technical','medical','combat','negotiation');
+    for (const [id,value] of Object.entries(definitions)) {
+        const ref = `items.json#${id}`;
+        if(!/^[a-z][a-z0-9-]*$/.test(id))fail(ref,'id','expected stable lowercase id');
+        const d=record(value,ref,'definition');
+        object({name:text,category:oneOf('material','equipment','accessory','outfit','consumable'),rarity,
+            kind:optional(oneOf('player','npc')),slot:optional(text),mainStat:optional(skill),secondaryStat:optional(skill),
+            regen:optional(nonnegative),exclusiveClass:optional(text),trait:optional(text),basePriceMilli:nonnegative,
+            building:optional(list(oneOf('mine','quarry','logging','weaver','sheep-pasture','herb-garden')))})(d,ref,'');
+        const wearable=['equipment','accessory','outfit'].includes(d.category as string);
+        if(wearable){
+            oneOf('player','npc')(d.kind,ref,'kind'); skill(d.mainStat,ref,'mainStat');
+            const slots=d.category==='equipment'?['weapon']:d.category==='accessory'?['earrings','necklace','ring','hand']:['top','bottom','shoes','set'];
+            oneOf(...slots)(d.slot,ref,'slot');
+            if(d.rarity!=='common')skill(d.secondaryStat,ref,'secondaryStat');
+            if(d.kind==='npc'&&d.regen!==undefined)fail(ref,'regen','Player only');
+            if(d.kind==='player')nonnegative(d.regen,ref,'regen');
+            if(d.rarity==='legendary')text(d.trait,ref,'trait');
+            if(d.building!==undefined)fail(ref,'building','material only');
+        } else {
+            for(const key of ['kind','slot','mainStat','secondaryStat','regen','exclusiveClass','trait'])if(d[key]!==undefined)fail(ref,key,'wearable only');
+            if(d.category==='material')list(oneOf('mine','quarry','logging','weaver','sheep-pasture','herb-garden'))(d.building,ref,'building');
+            else if(d.building!==undefined)fail(ref,'building','material only');
+        }
+    }
+    const rarities = (rule:Rule)=>object({common:rule,rare:rule,epic:rule,legendary:rule});
+    const sale = (rule:Rule)=>object({common:rule,rare:rule,epic:rule});
+    const potions=object({'1':positive,'2':positive,'3':positive});
+    const bps:Rule=(v,r,f)=>{nonnegative(v,r,f);if((v as number)>10000)fail(r,f,'expected <= 10000');};
+    object({marker:literal('TRIAL'),bonuses:rarities(object({main:positive,secondary:nonnegative,regen:positive})),
+        setMultiplier:positive,marketCounts:sale(positive),marketPricesMilli:sale(positive),resaleBps:bps,
+        potionPricesMilli:potions,potionHeal:potions,findOddsBps:sale(bps),materialOddsBps:rarities(bps),
+        stackCap:positive,inventoryCap:positive,consumableCap:positive,storageCap:positive,storageWeeks:positive,
+        effects:object(Object.fromEntries(['threshold','outputStep','outputPercent','outputCapPercent','securityStep','securityCap','authorityStep','marketStep','marketCapPercent','fatalStep','fatalCap','woundStep','woundFloor','wardenSecurity','crownAuthority','ironhideWoundReduction','ledgerOutputPercent'].map(k=>[k,positive])))})(root.ITEM_TRIAL,'items.json#ITEM_TRIAL','');
+    return root as unknown as {definitions:Record<string,ItemDefinition>;ITEM_TRIAL:ItemTrial};
 }
