@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { ITEM_CATALOG, createCharacterLifeSession, DEFAULT_PLAYER_DRAFT } from '@haven/core';
+import { ITEM_CATALOG, createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, type ItemWeekReport, type TileTrialReport } from '@haven/core';
+import { reportLetters } from '../report-letters.js';
 
 async function view() {
   const module = await import('../items-view.js').catch(() => null);
@@ -53,5 +54,53 @@ describe('C1 item views', () => {
     s.city.society!.items.equipped.player={weapon:{id:1,defId:'common-weapon'}};
     expect(v.characterTotals(s,'player').regen).toBe(2);
     expect(v.characterTotals(s,s.npcs[0].character.id).regen).toBeNull();
+  });
+});
+
+describe('C2 shops, recovery and item letters',()=>{
+  it('validates whole digit counts against the available stack before dispatch',async()=>{
+    const v=await view();expect(v.parseItemCount).toBeTypeOf('function');
+    for(const input of ['','0','-1','1.5','1e2',' 2','9007199254740992'])expect(v.parseItemCount(input,999)).toBeNull();
+    expect(v.parseItemCount('7',7)).toBe(7);expect(v.parseItemCount('8',7)).toBeNull();
+  });
+  it('shows potion sales only at an enabled Drug Store or staffed supplied Hospital',async()=>{
+    const v=await view(),s=session();expect(v.potionShop).toBeTypeOf('function');
+    s.city.tiles.find(t=>t.id==='service-1')!.building={typeId:'hospital',level:1,workers:2,enabled:true};
+    s.city.world.settlements[s.city.world.activeSettlementId!].inventory.gold=100000;s.city.society!.stocksMilli.herbs=10000;
+    expect(v.potionShop(s.city,'service-1')).toBe(true);
+    s.city.tiles.find(t=>t.id==='service-1')!.building!.workers=1;expect(v.potionShop(s.city,'service-1')).toBe(false);
+    s.city.tiles.find(t=>t.id==='slum-1')!.building={typeId:'drug-store',level:1,workers:0,enabled:true};expect(v.potionShop(s.city,'slum-1')).toBe(true);
+    s.city.tiles.find(t=>t.id==='slum-1')!.building!.enabled=false;expect(v.potionShop(s.city,'slum-1')).toBe(false);
+  });
+  it('formats the exact health line including operating Hospital and gear regen',async()=>{
+    const v=await view(),s=session();expect(v.healthLine).toBeTypeOf('function');s.player.character.health=63;
+    s.city.world.settlements[s.city.world.activeSettlementId!].inventory.gold=100000;s.city.society!.stocksMilli.herbs=10000;
+    s.city.tiles.find(t=>t.id==='service-1')!.building={typeId:'hospital',level:1,workers:2,enabled:true};
+    s.city.society!.items.equipped.player={weapon:{id:1,defId:'common-weapon'},ring:{id:2,defId:'common-ring'}};
+    expect(v.healthLine(s)).toBe('Health 63 / 100 · Regen +4/week');
+  });
+  const itemReport:ItemWeekReport={materials:[{tileId:'ore-1',materialId:'iron',lost:false},{tileId:'ore-2',materialId:'silver',lost:true}],found:{defId:'rare-ring',stored:false,lost:true},expired:['common-ring'],legendary:{goal:'calm',defId:'wardens-oath'},pendingLegendary:['authority'],hospitalOperated:false,regen:1};
+  it('describes every Quartermaster event including both capacity losses and expiration',async()=>{
+    const v=await view();expect(v.itemReportRows).toBeTypeOf('function');
+    const rows=v.itemReportRows(itemReport,'quartermaster');
+    expect(rows).toEqual([
+      {label:'Material found',value:'Iron · ore-1',tone:'gain'},
+      {label:'Material lost',value:'Silver · ore-2 · stack full (999)',tone:'loss'},
+      {label:'Item lost',value:'Fine Ring · inventory and temporary storage full',tone:'loss'},
+      {label:'Expired item',value:'Plain Ring',tone:'loss'},
+    ]);
+    expect(v.itemReportRows({...itemReport,materials:[],expired:[],found:{defId:'rare-ring',stored:true,lost:false}},'quartermaster')).toEqual([{label:'Item found',value:'Fine Ring · temporary storage',tone:'gain'}]);
+  });
+  it('names only delivered Legendary rewards and tells the Player to make room for pending rewards',async()=>{
+    const v=await view();expect(v.itemReportRows).toBeTypeOf('function');
+    expect(v.itemReportRows(itemReport,'steward')).toEqual([{label:'Legendary earned',value:"Warden's Oath · Calm city",tone:'gain'},{label:'Reward waiting',value:'Authority 100 · Make room in inventory or temporary storage.',tone:'loss'}]);
+    expect(v.itemReportRows({...itemReport,legendary:null},'steward').some(r=>r.label==='Legendary earned')).toBe(false);
+  });
+  it('includes item summary candidates while retaining the four-row cap',()=>{
+    const r={items:itemReport,before:{gold:0},after:{gold:0},taxMilli:0,upkeepPaidMilli:0,unpaidUpkeepMilli:0,foodConsumedMilli:0,foodDemandMilli:0,goods:{servedMilli:0,demandMilli:0},happinessBefore:50,happinessAfter:50} as TileTrialReport;
+    const letters=reportLetters(r);
+    expect(letters.find(l=>l.id==='steward')!.rows.some(row=>row.label==='Legendary earned')).toBe(true);
+    expect(letters.find(l=>l.id==='quartermaster')!.rows.some(row=>row.label==='Material lost')).toBe(true);
+    for(const letter of letters)expect(letter.rows.length).toBeLessThanOrEqual(4);
   });
 });

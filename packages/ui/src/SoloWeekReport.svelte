@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { WEEKLY_RESOURCE_KEYS, type TileTrialReport } from '@haven/core';
+  import { WEEKLY_RESOURCE_KEYS, ITEM_CATALOG, type TileTrialReport } from '@haven/core';
+  import { ITEM_GOAL_LABELS } from './items-view.js';
   import { garrisonReportLine, lawReportLines, crimeReportLine, crisisReportLines, outsideReportLines, orderReportLines, ORDER_GOODS } from './society-view.js';
   import ReportLetter from './ReportLetter.svelte';
   import { reportLetters, reportStamps } from './report-letters.js';
@@ -30,6 +31,12 @@
         <ReportLetter {letter}>
           {#snippet details()}
             {#if letter.id === 'steward'}
+    <section aria-label="Steward item details"><h4>Rewards</h4>
+      <table><caption>Legendary rewards</caption><thead><tr><th scope="col">Goal</th><th scope="col">Item</th></tr></thead><tbody>{#if report.items.legendary}<tr><td>{ITEM_GOAL_LABELS[report.items.legendary.goal]}</td><td>{ITEM_CATALOG[report.items.legendary.defId].name}</td></tr>{/if}</tbody></table>
+      {#if !report.items.legendary}<p>No Legendary reward delivered this week.</p>{/if}
+      <table><caption>Rewards waiting</caption><thead><tr><th scope="col">Goal</th><th scope="col">Status</th></tr></thead><tbody>{#each report.items.pendingLegendary??[] as goal}<tr><td>{ITEM_GOAL_LABELS[goal]}</td><td>Make room in inventory or temporary storage.</td></tr>{/each}</tbody></table>
+      {#if !report.items.pendingLegendary?.length}<p>No rewards waiting.</p>{/if}
+    </section>
     <section>
       <h3>Gold and upkeep</h3>
       <p>Tax: {formatMilli(report.taxMilli)} Gold. Upkeep covered: {formatMilli(report.upkeepPaidMilli)} Gold; unfunded: {formatMilli(report.unpaidUpkeepMilli)} Gold (no debt). Farm batch payment: {formatMilli(report.farmBatchGoldMilli)} Gold; extra Farm upkeep: {formatMilli(report.farmExtraUpkeepMilli)} Gold.</p>
@@ -42,6 +49,15 @@
     </details>
               {#if !letters.some(item => item.id === 'council')}{@render lawsDetails()}{/if}
             {:else if letter.id === 'quartermaster'}
+    <section aria-label="Quartermaster item details"><h4>Items this week</h4>
+      <table><caption>Materials this week</caption><thead><tr><th scope="col">Plot</th><th scope="col">Material</th><th scope="col">Outcome</th></tr></thead><tbody>{#each report.items.materials as material}<tr><td>{material.tileId}</td><td>{ITEM_CATALOG[material.materialId].name}</td><td>{material.lost?'Lost: stack full (999)':'Kept'}</td></tr>{/each}</tbody></table>
+      {#if !report.items.materials.length}<p>No materials found.</p>{/if}
+      <table><caption>Item found</caption><thead><tr><th scope="col">Item</th><th scope="col">Outcome</th></tr></thead><tbody>{#if report.items.found}<tr><td>{ITEM_CATALOG[report.items.found.defId].name}</td><td>{report.items.found.lost?'Lost: inventory and temporary storage full':report.items.found.stored?'Temporary storage':'Inventory'}</td></tr>{/if}</tbody></table>
+      {#if !report.items.found}<p>No item found.</p>{/if}
+      <table><caption>Expired items</caption><thead><tr><th scope="col">Item</th></tr></thead><tbody>{#each report.items.expired as id}<tr><td>{ITEM_CATALOG[id].name}</td></tr>{/each}</tbody></table>
+      {#if !report.items.expired.length}<p>No items expired.</p>{/if}
+      <dl role="group" aria-label="Recovery this week"><div><dt>Hospital operated</dt><dd>{report.items.hospitalOperated?'Yes':'No'}</dd></div><div><dt>Regeneration</dt><dd>+{report.items.regen}</dd></div></dl>
+    </section>
     <section>
       <h3>Needs and services</h3>
       <p>Food consumed: {formatMilli(report.foodConsumedMilli)} / {formatMilli(report.foodDemandMilli)} · {formatFulfillment(report.foodConsumedMilli, report.foodDemandMilli)}.</p>

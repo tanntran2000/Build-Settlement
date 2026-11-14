@@ -34,5 +34,5 @@
 <style>
  .item-card{min-width:0;padding:16px;background:#21140c;color:#f5ead4;border:3px solid #b78149;box-shadow:inset 0 0 0 2px #120a03;overflow-wrap:anywhere}
  .item-card[data-rarity='rare']{border-color:#b7c9cf}.item-card[data-rarity='epic']{border-color:#b58cdd}.item-card[data-rarity='legendary']{border-color:#ff9c70;box-shadow:0 0 9px #a44625,inset 0 0 0 2px #120a03}
- h5{font-size:1.15rem;margin:6px 0}.rarity{font-size:.9rem}p{margin:6px 0}dl{margin:8px 0}dl>div{display:flex;justify-content:space-between;gap:12px}dd{margin:0}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}button{min-height:44px;padding:8px 12px;background:#ead8ae;color:#3b2a17;border:2px solid #b78149}
+ h5{font-size:1.15rem;margin:6px 0}.rarity{font-size:.9rem}p{margin:6px 0}dl{margin:8px 0}dl>div{display:flex;justify-content:space-between;gap:12px}dd{margin:0}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.item-card .actions button,.item-card .actions button:hover{min-height:44px;padding:8px 12px;background:#ead8ae;color:#3b2a17;border:2px solid #b78149}
 </style>

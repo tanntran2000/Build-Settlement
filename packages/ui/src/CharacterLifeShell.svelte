@@ -11,6 +11,7 @@
   import type { LifeDestination, LifeWindow } from './character-life-navigation.js';
 
   export let state: TileTrialState;
+  export let recoveryLine: string;
   export let report: Readonly<TileTrialReport> | null;
   export let destination: LifeDestination;
   export let activeWindow: LifeWindow;
@@ -76,6 +77,7 @@
       <div class="card ledger-board" data-life-nav-zone="top">
     <h1 class="ledger-parchment">Character Life</h1>
     <p>{formatLifeWeek(state.world.week)} · {locked ? 'Report' : 'Planning'}</p>
+    <p>{recoveryLine}</p>
     <button class="ledger-wax" data-testid="life-end-week" disabled={!!state.society?.pendingCard} aria-disabled={locked || !!state.society?.pendingCard} onmousedown={event => { if (locked) event.preventDefault(); }} onclick={event => { endWeekClickTime = event.timeStamp; onendweek(event.currentTarget); }}>{state.society?.pendingCard ? 'Answer the crisis first.' : locked ? 'Report open — Plan next week in Report' : 'End Week'}</button>
     {#if unapplied.length}
       <p>Unapplied changes ({unapplied.length})</p>

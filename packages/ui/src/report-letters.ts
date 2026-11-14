@@ -96,6 +96,7 @@ function letterRows(report: Readonly<TileTrialReport>, id: LetterId): LetterRow[
     value(label, `${before} → ${after}`, direction(before, after, lowerIsBetter));
   switch (id) {
     case 'steward': {
+      rows.push(...itemReportRows(report.items,'steward'));
       value('Gold', `${formatMilli(report.before.gold)} → ${formatMilli(report.after.gold)}`, direction(report.before.gold, report.after.gold));
       value('Tax', signedMilli(report.taxMilli), report.taxMilli > 0 ? 'gain' : 'muted');
       value('Upkeep paid', signedMilli(-report.upkeepPaidMilli), report.upkeepPaidMilli > 0 ? 'loss' : 'muted');
@@ -105,6 +106,7 @@ function letterRows(report: Readonly<TileTrialReport>, id: LetterId): LetterRow[
       break;
     }
     case 'quartermaster': {
+      rows.push(...itemReportRows(report.items,'quartermaster'));
       value('Food eaten', `${formatMilli(report.foodConsumedMilli)} of ${formatMilli(report.foodDemandMilli)}`, report.foodConsumedMilli < report.foodDemandMilli ? 'loss' : 'muted');
       value('Goods served', `${formatMilli(report.goods.servedMilli)} of ${formatMilli(report.goods.demandMilli)}`, report.goods.servedMilli < report.goods.demandMilli ? 'loss' : 'muted');
       if (report.outside) {
@@ -210,3 +212,4 @@ export function reportStamps(report: Readonly<TileTrialReport>): { label: 'Food'
     { label: 'Happiness', value: `${happinessDelta > 0 ? '+' : happinessDelta < 0 ? '−' : ''}${Math.abs(happinessDelta)}` },
   ];
 }
+import { itemReportRows } from './items-view.js';
