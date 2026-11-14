@@ -12,6 +12,7 @@
   export let area: CharacterArea = 'description';
   export let onarea: (area: CharacterArea) => void = () => {};
   export let work: Snippet | undefined = undefined;
+  export let inventory: Snippet | undefined = undefined;
   const title = (key: string) => key[0].toUpperCase() + key.slice(1);
   const tabs: { id: CharacterArea; label: string }[] = [
     { id: 'description', label: 'Description' }, { id: 'inventory', label: 'Inventory' },
@@ -37,9 +38,9 @@
 </script>
 
 <div class="profile">
-  <div class="full-body" role="group" aria-label="Full-body character display">
+  {#if area !== 'inventory'}<div class="full-body" role="group" aria-label="Full-body character display">
     <p>Character artwork unavailable.</p>
-  </div>
+  </div>{/if}
   <div role="tablist" aria-label={`${c.name} profile`}>
     {#each tabs as tab, i}
       <button bind:this={buttons[i]} id={`${id}-tab-${tab.id}`} role="tab" aria-selected={area === tab.id} aria-controls={`${id}-panel`} tabindex={area === tab.id ? 0 : -1}
@@ -71,8 +72,7 @@
         </details>
       {/if}
     {:else if area === 'inventory'}
-      <p>Inventory and equipment are not implemented yet.</p>
-      <p>Current clothing is described in Description.</p>
+      {#if inventory}{@render inventory()}{/if}
     {:else if area === 'work'}
       {#if view.role === 'player'}
         <p>Leader of Haven.</p>

@@ -100,8 +100,11 @@ async function profileParity(page: Page, scope: Locator, c: VisibleCharacter) {
   } else await expect(panel).toHaveText('Your own relationships are not tracked yet. Open a person to see how they regard you.');
   await expect(panel.getByRole('meter')).toHaveCount(0);
   await selectArea(page, 'Inventory');
-  await expect(panel.locator('p')).toHaveText(['Inventory and equipment are not implemented yet.', 'Current clothing is described in Description.']);
-  await expect(panel.locator('button,input,select,ul,ol,[data-slot]')).toHaveCount(0);
+  const equipment = panel.getByRole('region', { name: 'Equipment', exact: true });
+  await expect(equipment).toBeVisible();
+  await expect(equipment.locator('[data-item-slot]')).toHaveCount(c.id === 'player' ? 8 : 11);
+  await expect(equipment.locator('[data-item-slot][data-locked="true"]')).toHaveCount(c.id === 'player' ? 0 : 3);
+  await expect(equipment.getByRole('group', { name: 'Inventory filters', exact: true }).getByRole('button')).toHaveText(['All', 'Player', 'NPC', 'This slot', 'Equipment', 'Accessory', 'Outfit']);
   await expectOneCharacterWindow(page);
 }
 
