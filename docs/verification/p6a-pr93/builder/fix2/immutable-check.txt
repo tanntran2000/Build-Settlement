@@ -1,0 +1,159 @@
+HEAD: 4afe92763856cc3f82445803298beacc7ccedf68
+Tree: 8e95ed5e017bff02d4ff43d61789244ce2ff6519
+UTC start: 2026-11-14T01:36:54.094Z
+Command: node C:/Users/Admin/.t3/local-drafts/p6a-prA/fix2/check-immutable.mjs
+Exit: 0
+
+{
+  "base": "f1944ce047b59654f75365dfea4cc8a2f83dddec",
+  "utc": "2026-11-14T01:36:56.239Z",
+  "files": [
+    {
+      "file": "packages/core/src/__tests__/catalog-data.test.ts",
+      "baseSha256": "a674e5970c146efb1c3115b58fe4277fbf59c135bfcd2f7bd107ed077bc609c7",
+      "committedSha256": "a674e5970c146efb1c3115b58fe4277fbf59c135bfcd2f7bd107ed077bc609c7",
+      "workingSha256": "b2aba358497a9c0ef8653528511d68835d0954f5bdf387c9250e8f1f8032cbba"
+    },
+    {
+      "file": "packages/core/src/data/items.json",
+      "baseSha256": "a4735c01d917662043d391db5bbabb2a4df66972ddcbf2883c98ed0f7aa11234",
+      "committedSha256": "a4735c01d917662043d391db5bbabb2a4df66972ddcbf2883c98ed0f7aa11234",
+      "workingSha256": "a4735c01d917662043d391db5bbabb2a4df66972ddcbf2883c98ed0f7aa11234"
+    },
+    {
+      "file": "packages/core/src/data/tuning.json",
+      "baseSha256": "ee957b401b358ab5dde5649780df473b5c369ed7bc2a1bc4841edadd1dee3568",
+      "committedSha256": "ee957b401b358ab5dde5649780df473b5c369ed7bc2a1bc4841edadd1dee3568",
+      "workingSha256": "3d03984340bb0bb41778e0058ac02bc03f60f2c7ec7ca1c53e253853595ffb33"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-5-weeks.json",
+      "baseSha256": "c2417b06c6c65919790a5527c8999a5c5c21baa7caef7310f622568d1db00268",
+      "committedSha256": "c2417b06c6c65919790a5527c8999a5c5c21baa7caef7310f622568d1db00268",
+      "workingSha256": "c2417b06c6c65919790a5527c8999a5c5c21baa7caef7310f622568d1db00268"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-crime-death.json",
+      "baseSha256": "e3a3c0a7f1653b8e91da3918b5aca6d1f07dd6d9f23cf360d94d722485a1441b",
+      "committedSha256": "e3a3c0a7f1653b8e91da3918b5aca6d1f07dd6d9f23cf360d94d722485a1441b",
+      "workingSha256": "e3a3c0a7f1653b8e91da3918b5aca6d1f07dd6d9f23cf360d94d722485a1441b"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-crime-raid.json",
+      "baseSha256": "cca73d949b19912efe34bf321b487e83a42a20df06d45d548a5a2110069609c2",
+      "committedSha256": "cca73d949b19912efe34bf321b487e83a42a20df06d45d548a5a2110069609c2",
+      "workingSha256": "cca73d949b19912efe34bf321b487e83a42a20df06d45d548a5a2110069609c2"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-crime-robbery.json",
+      "baseSha256": "b2bac5b3b0dc97ee77070a5ab8f783d4d80f983759be20fe820f1a3ea9d8d3c6",
+      "committedSha256": "b2bac5b3b0dc97ee77070a5ab8f783d4d80f983759be20fe820f1a3ea9d8d3c6",
+      "workingSha256": "b2bac5b3b0dc97ee77070a5ab8f783d4d80f983759be20fe820f1a3ea9d8d3c6"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-crime-wound.json",
+      "baseSha256": "74d581b92bdcf4f628463bf0abeea10954d3c8ada3614712fcf2e4f058309bde",
+      "committedSha256": "74d581b92bdcf4f628463bf0abeea10954d3c8ada3614712fcf2e4f058309bde",
+      "workingSha256": "74d581b92bdcf4f628463bf0abeea10954d3c8ada3614712fcf2e4f058309bde"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-demand-card.json",
+      "baseSha256": "b407a7adb81e65d3da918f1166d0d1e7b0a99b97158093fde8b5c8368cc905be",
+      "committedSha256": "b407a7adb81e65d3da918f1166d0d1e7b0a99b97158093fde8b5c8368cc905be",
+      "workingSha256": "b407a7adb81e65d3da918f1166d0d1e7b0a99b97158093fde8b5c8368cc905be"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-laws.json",
+      "baseSha256": "6ac7754314bdde02ec86d301d9261bc78efe2e136da66dc9e56318e7dea0a98f",
+      "committedSha256": "6ac7754314bdde02ec86d301d9261bc78efe2e136da66dc9e56318e7dea0a98f",
+      "workingSha256": "6ac7754314bdde02ec86d301d9261bc78efe2e136da66dc9e56318e7dea0a98f"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-new-game.json",
+      "baseSha256": "dc3809f5ef80672611b06795ac5b1c630737f536f95c4709b4eb24d65e14962f",
+      "committedSha256": "dc3809f5ef80672611b06795ac5b1c630737f536f95c4709b4eb24d65e14962f",
+      "workingSha256": "dc3809f5ef80672611b06795ac5b1c630737f536f95c4709b4eb24d65e14962f"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-rebellion-last-week.json",
+      "baseSha256": "0972d6e6847b943a36a35f8b30a1e4d6eb3157749e326c97fb8062819b2c70ed",
+      "committedSha256": "0972d6e6847b943a36a35f8b30a1e4d6eb3157749e326c97fb8062819b2c70ed",
+      "workingSha256": "0972d6e6847b943a36a35f8b30a1e4d6eb3157749e326c97fb8062819b2c70ed"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/new-game.json",
+      "baseSha256": "b7206e038ef1ca31abaae9a445067718adbd90591bbf283b11093091a6a080c4",
+      "committedSha256": "b7206e038ef1ca31abaae9a445067718adbd90591bbf283b11093091a6a080c4",
+      "workingSha256": "b7206e038ef1ca31abaae9a445067718adbd90591bbf283b11093091a6a080c4"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-5-weeks.json",
+      "baseSha256": "608efcb03e571e6b16a055b4854fc5d20ab9d703583960f8706a4b3c78e50dee",
+      "committedSha256": "608efcb03e571e6b16a055b4854fc5d20ab9d703583960f8706a4b3c78e50dee",
+      "workingSha256": "608efcb03e571e6b16a055b4854fc5d20ab9d703583960f8706a4b3c78e50dee"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-crime-death.json",
+      "baseSha256": "f3e6c6faea46ab7d9e0976c94bede189cd72566091c831112444a9d89e133c97",
+      "committedSha256": "f3e6c6faea46ab7d9e0976c94bede189cd72566091c831112444a9d89e133c97",
+      "workingSha256": "f3e6c6faea46ab7d9e0976c94bede189cd72566091c831112444a9d89e133c97"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-crime-raid.json",
+      "baseSha256": "00849b1a7295cc2c842f6c870cda22294807d7f66515bf12b88a2c489a53da27",
+      "committedSha256": "00849b1a7295cc2c842f6c870cda22294807d7f66515bf12b88a2c489a53da27",
+      "workingSha256": "00849b1a7295cc2c842f6c870cda22294807d7f66515bf12b88a2c489a53da27"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-crime-robbery.json",
+      "baseSha256": "e7c800b3e8472a2f79a47ab1eb835608ae2f44bfee2a029fb63f695e8af48a38",
+      "committedSha256": "e7c800b3e8472a2f79a47ab1eb835608ae2f44bfee2a029fb63f695e8af48a38",
+      "workingSha256": "e7c800b3e8472a2f79a47ab1eb835608ae2f44bfee2a029fb63f695e8af48a38"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-crime-wound.json",
+      "baseSha256": "191f1f45ad029b9502fe60fe8d65bdf3e42d8f4b156b6ad61f01b5e5bd24a56b",
+      "committedSha256": "191f1f45ad029b9502fe60fe8d65bdf3e42d8f4b156b6ad61f01b5e5bd24a56b",
+      "workingSha256": "191f1f45ad029b9502fe60fe8d65bdf3e42d8f4b156b6ad61f01b5e5bd24a56b"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-demand-card.json",
+      "baseSha256": "7a5b3327ab45124201057524f78c3b54610a65b1b2a2f037c44b587f88d249d7",
+      "committedSha256": "7a5b3327ab45124201057524f78c3b54610a65b1b2a2f037c44b587f88d249d7",
+      "workingSha256": "7a5b3327ab45124201057524f78c3b54610a65b1b2a2f037c44b587f88d249d7"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-laws.json",
+      "baseSha256": "9572210aad0738ee03eecb39735ac0088156d3f07eeac79eb1d4ae0b0def2c78",
+      "committedSha256": "9572210aad0738ee03eecb39735ac0088156d3f07eeac79eb1d4ae0b0def2c78",
+      "workingSha256": "9572210aad0738ee03eecb39735ac0088156d3f07eeac79eb1d4ae0b0def2c78"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-new-game.json",
+      "baseSha256": "05e8a903f40fc71b3b8a62b62d80fbe642965abc8299941cfec2db9386be057c",
+      "committedSha256": "05e8a903f40fc71b3b8a62b62d80fbe642965abc8299941cfec2db9386be057c",
+      "workingSha256": "05e8a903f40fc71b3b8a62b62d80fbe642965abc8299941cfec2db9386be057c"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-rebellion-last-week.json",
+      "baseSha256": "066bfd260b25f7a07a15aafdef89c87a52cb2363de7b43cf39a48ab74f5908a8",
+      "committedSha256": "066bfd260b25f7a07a15aafdef89c87a52cb2363de7b43cf39a48ab74f5908a8",
+      "workingSha256": "066bfd260b25f7a07a15aafdef89c87a52cb2363de7b43cf39a48ab74f5908a8"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/new-game.json",
+      "baseSha256": "3542e2e0c70ce5d74eb7228926913f1ff9d6e9772f0eb5dd0296ca4de343b4f3",
+      "committedSha256": "3542e2e0c70ce5d74eb7228926913f1ff9d6e9772f0eb5dd0296ca4de343b4f3",
+      "workingSha256": "3542e2e0c70ce5d74eb7228926913f1ff9d6e9772f0eb5dd0296ca4de343b4f3"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+      "baseSha256": "68b8312eb5998bd03e2ca28bfd16c73dceebf5add910efca2ffb99c650c94898",
+      "committedSha256": "68b8312eb5998bd03e2ca28bfd16c73dceebf5add910efca2ffb99c650c94898",
+      "workingSha256": "68b8312eb5998bd03e2ca28bfd16c73dceebf5add910efca2ffb99c650c94898"
+    }
+  ]
+}
+PASS: 24 committed blobs unchanged; golden and v7/v8 working fixture bytes unchanged. Pin/catalog working files match after checkout CRLF normalization; hash pins unchanged.
+
+UTC end: 2026-11-14T01:36:56.253Z

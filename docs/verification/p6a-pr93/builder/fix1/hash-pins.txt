@@ -1,0 +1,5 @@
+﻿SOCIETY_TRIAL: 702c65dd3836e476f85411b395f0219980c8e1677a8700be1c05a02a6010a4a8 → d390d44efdd2fba06fd4d8c0812e83837ef25b5d84e19956bb5ff00a0dbcac80; reason: rulesetId tile-society-07 → tile-society-08 only (Decision 9).
+ITEM_CATALOG: new → fa866064967ee36dac69a3b8c5c6090bb2b40b7236c3f104d5a8e89d84e974c6
+ITEM_TRIAL: new → fcdbbc87ed52f6df25246e044b25e3c6acbd56de98360f31b7a16ec4a3b5e198
+SOCIETY_BUILDINGS: unchanged in PR A.
+Review fix1: no hash pin changed; the session seed affects initial state only.

@@ -1,0 +1,17 @@
+HEAD: b31dc0268279abcb29483d372cd17d156fa825f0
+Tree: cb345d790c050f9f240d695331db45a79f56177d
+UTC start: 2026-11-13T16:58:58.029Z
+Command: npx vitest run packages/core/src/world/__tests__/item-market-seed.test.ts packages/core/src/trial/__tests__/items-canonical.test.ts packages/persistence/src/__tests__/items-canonical.test.ts
+Exit: 0
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  3 passed (3)
+      Tests  12 passed (12)
+   Start at  23:59:00
+   Duration  1.63s (transform 1.48s, setup 0ms, import 2.01s, tests 231ms, environment 1ms)
+
+
+UTC end: 2026-11-13T16:59:02.366Z

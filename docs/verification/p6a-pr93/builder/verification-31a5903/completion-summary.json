@@ -1,0 +1,123 @@
+{
+  "status": "HOLD",
+  "utc": "2026-11-13T15:20:22.332Z",
+  "head": "31a5903b8a49fa93cec1c2242b650e7300ddb5c7",
+  "tree": "89ee115c7661b1f3f1e660e394b4da5813fd0402",
+  "gitStatus": "empty",
+  "base": "c4d3dc4fde78d004292f9038a4285cdd6f8186a7",
+  "gates": [
+    {
+      "gate": 1,
+      "command": "git diff --check origin/main...HEAD",
+      "exit": 0
+    },
+    {
+      "gate": 2,
+      "command": "npm run lint",
+      "exit": 0
+    },
+    {
+      "gate": 3,
+      "command": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "gate": 4,
+      "command": "npm run check:architecture",
+      "exit": 0
+    },
+    {
+      "gate": 5,
+      "command": "npm run test:architecture",
+      "exit": 0
+    },
+    {
+      "gate": 6,
+      "command": "npm test",
+      "exit": 0
+    },
+    {
+      "gate": 7,
+      "command": "npm run build",
+      "exit": 0
+    }
+  ],
+  "unit": {
+    "passed": 2342,
+    "files": 109,
+    "timeoutFailures": 0
+  },
+  "architectureTests": 154,
+  "smoke": {
+    "ci": 1,
+    "total": 350,
+    "passed": 349,
+    "failed": 1,
+    "exit": 1,
+    "duration": "30.9 minutes"
+  },
+  "isolated": {
+    "ci": 1,
+    "total": 1,
+    "passed": 0,
+    "failed": 1,
+    "exit": 1,
+    "reruns": 1
+  },
+  "failure": {
+    "test": "tests/e2e/character-life-navigation.spec.ts:1430",
+    "assertionLine": 1436,
+    "reason": "Raw city-record expectation still includes runtime item instance collections, contrary to Decision 3."
+  },
+  "inventory": {
+    "existingFiles": 28,
+    "hunks": 36
+  },
+  "bundle": {
+    "utc": "2026-11-13T15:18:21.266Z",
+    "head": "31a5903b8a49fa93cec1c2242b650e7300ddb5c7",
+    "files": [
+      {
+        "name": "index-BfJkr0Vz.js",
+        "bytes": 359928,
+        "gzipBytes": 114124,
+        "sha256": "d32830939434d68cf0579c959bffea4d093de1086e0cae7bc3f8f81bce7813de"
+      },
+      {
+        "name": "index-DdNtS9j1.css",
+        "bytes": 28127,
+        "gzipBytes": 5814,
+        "sha256": "957e3db03aef271e79b33fd544374adbc99e7d2664fc35744b96835f0d072c0d"
+      }
+    ],
+    "baselineGzipKB": {
+      "js": 108.46,
+      "css": 5.81
+    },
+    "gzipBytes": {
+      "js": 114124,
+      "css": 5814
+    },
+    "growthGzipKB": {
+      "js": 5.6640000000000015,
+      "css": 0.004000000000000448
+    }
+  },
+  "evidencePreservation": {
+    "files": 36,
+    "directory": "preserved-evidence-091539d",
+    "sha256VerifiedBeforeRemoval": true
+  },
+  "productEvidenceDirectoryPresent": false,
+  "pushed": false,
+  "prCreated": false,
+  "merged": false,
+  "storageReclaimedBytes": 0,
+  "timeoutAttributionCorrection": {
+    "source": "Claude",
+    "date": "2026-11-13",
+    "p6aEarlierGate6": "Two shape-pin failures only; no golden timeout",
+    "goldenTimeoutBelongedTo": "DATA-01 PR B",
+    "rule": "Never change timeouts; report any timeout"
+  }
+}

@@ -1,0 +1,133 @@
+HEAD: c4d3dc4fde78d004292f9038a4285cdd6f8186a7
+Tree: 914488a9d93457a98ebd4b4cb2af5b0074bae7fa
+UTC start: 2026-11-13T14:06:54.162Z
+UTC end: 2026-11-13T14:06:59.378Z
+Command: npx vitest run packages/core/src/__tests__/items-catalog.test.ts packages/core/src/__tests__/catalog-data.test.ts
+Exit: 1
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/core/src/__tests__/items-catalog.test.ts (9 tests | 9 failed) 44ms
+   × validates every definition and freezes the catalog and TRIAL values 22ms
+   × contains 26 wearables: 9 Common, 9 Rare, 4 Epic, 4 Legendary; 3 potions and 15 materials 3ms
+   × covers every everyday slot with Common and Rare and both kinds, plus sets 2ms
+   × restricts category slots, kinds, building pools and Legendary traits 2ms
+   × rejects malformed rarity with the precise catalog reference 11ms
+   × rejects malformed wearable kind 1ms
+   × rejects malformed wearable slot 0ms
+   × rejects malformed wearable mainStat 0ms
+   × rejects malformed wearable basePriceMilli 1ms
+ ❯ packages/core/src/__tests__/catalog-data.test.ts (40 tests | 2 failed) 64ms
+   × pins ITEM_CATALOG for P6-A 6ms
+   × pins ITEM_TRIAL for P6-A 2ms
+
+ Test Files  2 failed (2)
+      Tests  11 failed | 38 passed (49)
+   Start at  21:06:57
+   Duration  1.28s (transform 511ms, setup 0ms, import 753ms, tests 108ms, environment 0ms)
+
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 11 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/core/src/__tests__/catalog-data.test.ts > pins ITEM_CATALOG for P6-A
+Error: Cannot find module '/packages/core/src/trial/items.js' imported from C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/__tests__/catalog-data.test.ts
+ ❯ packages/core/src/__tests__/catalog-data.test.ts:105:26
+    103|
+    104| it('pins ITEM_CATALOG for P6-A', async () => {
+    105|   const { ITEM_CATALOG }=await import('../trial/items.js');
+       |                          ^
+    106|   expect(catalogHash(ITEM_CATALOG)).toBe('PENDING_CATALOG_HASH');
+    107| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/11]⎯
+
+ FAIL  packages/core/src/__tests__/catalog-data.test.ts > pins ITEM_TRIAL for P6-A
+Error: Cannot find module '/packages/core/src/trial/items.js' imported from C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/__tests__/catalog-data.test.ts
+ ❯ packages/core/src/__tests__/catalog-data.test.ts:109:24
+    107| });
+    108| it('pins ITEM_TRIAL for P6-A', async () => {
+    109|   const { ITEM_TRIAL }=await import('../trial/items.js');
+       |                        ^
+    110|   expect(catalogHash(ITEM_TRIAL)).toBe('PENDING_TRIAL_HASH');
+    111| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/11]⎯
+
+ FAIL  packages/core/src/__tests__/items-catalog.test.ts > validates every definition and freezes the catalog and TRIAL values
+Error: Cannot find module '/packages/core/src/trial/items.js' imported from C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/__tests__/items-catalog.test.ts
+ ❯ packages/core/src/__tests__/items-catalog.test.ts:8:40
+      6| const api = () => import('../trial/items.js');
+      7| it('validates every definition and freezes the catalog and TRIAL value…
+      8|   const { ITEM_CATALOG, ITEM_TRIAL } = await api();
+       |                                        ^
+      9|   expect(validation.validateItems(load())).toEqual({definitions:ITEM_C…
+     10|   const frozen = (v: unknown) => { if(v && typeof v==='object'){expect…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/11]⎯
+
+ FAIL  packages/core/src/__tests__/items-catalog.test.ts > contains 26 wearables: 9 Common, 9 Rare, 4 Epic, 4 Legendary; 3 potions and 15 materials
+Error: Cannot find module '/packages/core/src/trial/items.js' imported from C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/__tests__/items-catalog.test.ts
+ ❯ packages/core/src/__tests__/items-catalog.test.ts:14:29
+     12| });
+     13| it('contains 26 wearables: 9 Common, 9 Rare, 4 Epic, 4 Legendary; 3 po…
+     14|   const defs=Object.values((await api()).ITEM_CATALOG);
+       |                             ^
+     15|   const worn=defs.filter(d=>!['material','consumable'].includes(d.cate…
+     16|   expect(worn).toHaveLength(26);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/11]⎯
+
+ FAIL  packages/core/src/__tests__/items-catalog.test.ts > covers every everyday slot with Common and Rare and both kinds, plus sets
+Error: Cannot find module '/packages/core/src/trial/items.js' imported from C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/__tests__/items-catalog.test.ts
+ ❯ packages/core/src/__tests__/items-catalog.test.ts:23:29
+     21| });
+     22| it('covers every everyday slot with Common and Rare and both kinds, pl…
+     23|   const defs=Object.values((await api()).ITEM_CATALOG);
+       |                             ^
+     24|   for(const slot of ['weapon','earrings','necklace','ring','hand','top…
+     25|     for(const rarity of ['common','rare'])expect(defs.some(d=>d.slot==…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/11]⎯
+
+ FAIL  packages/core/src/__tests__/items-catalog.test.ts > restricts category slots, kinds, building pools and Legendary traits
+Error: Cannot find module '/packages/core/src/trial/items.js' imported from C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/__tests__/items-catalog.test.ts
+ ❯ packages/core/src/__tests__/items-catalog.test.ts:32:33
+     30| it('restricts category slots, kinds, building pools and Legendary trai…
+     31|   const slots={equipment:['weapon'],accessory:['earrings','necklace','…
+     32|   for(const d of Object.values((await api()).ITEM_CATALOG)){
+       |                                 ^
+     33|     if(d.category==='material') { expect(d.slot).toBeUndefined(); expe…
+     34|     else if(d.category==='consumable')expect(d.slot).toBeUndefined();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/11]⎯
+
+ FAIL  packages/core/src/__tests__/items-catalog.test.ts > rejects malformed rarity with the precise catalog reference
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\core\src\data\items.json'
+ ❯ load packages/core/src/__tests__/items-catalog.test.ts:5:31
+      3| import * as validation from '../data/validate.js';
+      4|
+      5| const load = () => JSON.parse(readFileSync(new URL('../data/items.json…
+       |                               ^
+      6| const api = () => import('../trial/items.js');
+      7| it('validates every definition and freezes the catalog and TRIAL value…
+ ❯ packages/core/src/__tests__/items-catalog.test.ts:39:14
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/11]⎯
+
+ FAIL  packages/core/src/__tests__/items-catalog.test.ts > rejects malformed wearable kind
+ FAIL  packages/core/src/__tests__/items-catalog.test.ts > rejects malformed wearable slot
+ FAIL  packages/core/src/__tests__/items-catalog.test.ts > rejects malformed wearable mainStat
+ FAIL  packages/core/src/__tests__/items-catalog.test.ts > rejects malformed wearable basePriceMilli
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\core\src\data\items.json'
+ ❯ load packages/core/src/__tests__/items-catalog.test.ts:5:31
+      3| import * as validation from '../data/validate.js';
+      4|
+      5| const load = () => JSON.parse(readFileSync(new URL('../data/items.json…
+       |                               ^
+      6| const api = () => import('../trial/items.js');
+      7| it('validates every definition and freezes the catalog and TRIAL value…
+ ❯ packages/core/src/__tests__/items-catalog.test.ts:43:14
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/11]⎯
+

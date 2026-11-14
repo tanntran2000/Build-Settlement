@@ -1,0 +1,38 @@
+HEAD: 83e38aa317b0d9b9f1785fff594e450fd4d4c13e
+Tree: 6d90357c3fd124af67a9542343243c5dd3b45d7e
+UTC start: 2026-11-13T14:22:25.843Z
+UTC end: 2026-11-13T14:22:32.956Z
+Command: npx vitest run packages/persistence/src/__tests__
+Exit: 1
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/persistence/src/__tests__/session-records.test.ts (59 tests | 1 failed) 1693ms
+   × fix1 F4: inconsistent meta rulesetId identifies meta:session 42ms
+
+ Test Files  1 failed | 17 passed (18)
+      Tests  1 failed | 250 passed (251)
+   Start at  21:22:28
+   Duration  4.60s (transform 4.06s, setup 0ms, import 9.96s, tests 5.88s, environment 8ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/persistence/src/__tests__/session-records.test.ts > fix1 F4: inconsistent meta rulesetId identifies meta:session
+AssertionError: expected 'city:city' to be 'meta:session' // Object.is equality
+
+Expected: "meta:session"
+Received: "city:city"
+
+ ❯ expectRecordRef packages/persistence/src/__tests__/session-records.test.ts:37:43
+     35|   try { recordsToSession(rows); } catch (caught) { error = caught; }
+     36|   expect(error).toBeInstanceOf(StoreRecordError);
+     37|   expect((error as StoreRecordError).ref).toBe(ref);
+       |                                           ^
+     38| }
+     39| it.each(['rulesetId','revision','phase'] as const)('fix1 F4: inconsist…
+ ❯ packages/persistence/src/__tests__/session-records.test.ts:42:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+

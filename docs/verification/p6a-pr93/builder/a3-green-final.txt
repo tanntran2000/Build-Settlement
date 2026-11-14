@@ -1,0 +1,16 @@
+HEAD: bef7b7d71130b0a6abc81e71d842b0d7185e9b29
+Tree: ad7cdfb13620f7b7a1274cc343152f839b7e89de
+UTC start: 2026-11-13T14:26:30.558Z
+UTC end: 2026-11-13T14:27:05.031Z
+Command: npx vitest run packages/persistence/src/__tests__ packages/simulation/src/__tests__/catalog-golden.test.ts packages/simulation/src/__tests__/crime-fixtures.test.ts packages/simulation/src/__tests__/crisis-fixtures.test.ts packages/simulation/src/__tests__/law-fixture.test.ts
+Exit: 0
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  22 passed (22)
+      Tests  302 passed (302)
+   Start at  21:26:33
+   Duration  31.75s (transform 6.71s, setup 0ms, import 15.26s, tests 52.32s, environment 10ms)
+

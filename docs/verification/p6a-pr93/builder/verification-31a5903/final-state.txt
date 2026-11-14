@@ -1,0 +1,9 @@
+﻿UTC: 2026-11-13T15:20:23.5366337Z
+HEAD: 31a5903b8a49fa93cec1c2242b650e7300ddb5c7
+Tree: 89ee115c7661b1f3f1e660e394b4da5813fd0402
+Git status: empty
+Ports 4173/4174: 0 listeners
+Historical v7 fixtures: unchanged from base
+Product evidence directory: absent; docs diff: empty
+Status: HOLD after full and single isolated smoke failure
+No push, PR, merge or force push; 0 bytes reclaimed.

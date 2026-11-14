@@ -1,0 +1,401 @@
+HEAD: 1cd14d55f91c69c037953811574b32347f3fcdc9
+Tree: f5ed79213326794ea9143618a7a80be52ab6a653
+UTC start: 2026-11-13T14:10:57.675Z
+UTC end: 2026-11-13T14:11:01.674Z
+Command: npx vitest run packages/core/src/trial/__tests__/items.test.ts packages/simulation/src/__tests__/item-command.test.ts packages/ui/src/__tests__/wounds-end-copy.test.ts
+Exit: 1
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/core/src/trial/__tests__/items.test.ts (17 tests | 17 failed) 30ms
+   × starts society v8 with a deterministic 4/2/2 market and an empty inventory 11ms
+   × clamps effective skills at 0 and 100 without changing base stats 1ms
+   × applies Exclusive bonuses only to the matching class and ignores closed slots 1ms
+   × multiplies set main, secondary and Player regen by three 1ms
+   × builds current post skills/traits and Player context without mutating the session 11ms
+   × keeps item streams deterministic and independent of crime draws 1ms
+   × refuses malformed items: duplicate 0ms
+   × refuses malformed items: unknown definition 0ms
+   × refuses malformed items: bad slot 0ms
+   × refuses malformed items: kind 1ms
+   × refuses malformed items: set conflict 1ms
+   × refuses malformed items: cap 0ms
+   × refuses malformed items: stack 0ms
+   × refuses malformed items: next id 0ms
+   × refuses malformed items: unknown character 0ms
+   × refuses malformed items: accessor 0ms
+   × refuses malformed items: sparse 0ms
+ ❯ packages/ui/src/__tests__/wounds-end-copy.test.ts (1 test | 1 failed) 9ms
+   × uses the exact approved wounds end copy 8ms
+ ❯ packages/simulation/src/__tests__/item-command.test.ts (28 tests | 28 failed) 115ms
+   × equips and unequips common-weapon 14ms
+   × equips and unequips rare-weapon 4ms
+   × rejects KIND_MISMATCH atomically 3ms
+   × rejects SLOT_MISMATCH for accessory into top and material equipped 4ms
+   × swaps a set and individual pieces both ways atomically 3ms
+   × rejects a three-piece set swap when fewer than three spaces remain after removing the set 3ms
+   × buys at exact price and rejects insufficient Gold without mutation 3ms
+   × sells common-weapon for 30 percent 3ms
+   × sells rare-weapon for 30 percent 3ms
+   × sells epic-weapon for 30 percent 3ms
+   × refuses sale of Legendary wearables 2ms
+   × sells materials within stack bounds and refuses Legendary material 2ms
+   × destroys an inventory item 2ms
+   × claims stored items only when space exists 2ms
+   × potion 1 heals 5, clamps at 100, costs no action, and targets only Player 2ms
+   × potion 2 heals 10, clamps at 100, costs no action, and targets only Player 3ms
+   × potion 3 heals 15, clamps at 100, costs no action, and targets only Player 2ms
+   × buys potions at an operating Hospital and rejects absent or idle shops 11ms
+   × BUY_ITEM rejects Report and stale revision atomically 5ms
+   × SELL_ITEM rejects Report and stale revision atomically 5ms
+   × SELL_MATERIAL rejects Report and stale revision atomically 4ms
+   × DESTROY_ITEM rejects Report and stale revision atomically 4ms
+   × EQUIP_ITEM rejects Report and stale revision atomically 5ms
+   × UNEQUIP_ITEM rejects Report and stale revision atomically 4ms
+   × USE_CONSUMABLE rejects Report and stale revision atomically 4ms
+   × BUY_POTION rejects Report and stale revision atomically 5ms
+   × CLAIM_STORED_ITEM rejects Report and stale revision atomically 5ms
+   × refuses full purchase inventory and permits consumable sale 2ms
+
+ Test Files  3 failed (3)
+      Tests  46 failed (46)
+   Start at  21:11:00
+   Duration  1.52s (transform 1.70s, setup 0ms, import 2.26s, tests 154ms, environment 0ms)
+
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 46 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > equips and unequips common-weapon
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > equips and unequips rare-weapon
+TypeError: Cannot read properties of undefined (reading 'nextItemId')
+ ❯ add packages/simulation/src/__tests__/item-command.test.ts:7:85
+      5| function life(){const r=createCharacterLifeSession(0,{...structuredClo…
+      6| const items=(s:CharacterLifeSessionState)=>s.city.society!.items;
+      7| function add(s:CharacterLifeSessionState,defId:string,consumable=false…
+       |                                                                                     ^
+      8| const gold=(s:CharacterLifeSessionState)=>s.city.world.settlements[s.c…
+      9| function action(s:CharacterLifeSessionState,type:string,fields:Record<…
+ ❯ packages/simulation/src/__tests__/item-command.test.ts:13:28
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > rejects KIND_MISMATCH atomically
+TypeError: Cannot read properties of undefined (reading 'nextItemId')
+ ❯ add packages/simulation/src/__tests__/item-command.test.ts:7:85
+      5| function life(){const r=createCharacterLifeSession(0,{...structuredClo…
+      6| const items=(s:CharacterLifeSessionState)=>s.city.society!.items;
+      7| function add(s:CharacterLifeSessionState,defId:string,consumable=false…
+       |                                                                                     ^
+      8| const gold=(s:CharacterLifeSessionState)=>s.city.world.settlements[s.c…
+      9| function action(s:CharacterLifeSessionState,type:string,fields:Record<…
+ ❯ packages/simulation/src/__tests__/item-command.test.ts:16:89
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > rejects SLOT_MISMATCH for accessory into top and material equipped
+TypeError: Cannot read properties of undefined (reading 'nextItemId')
+ ❯ add packages/simulation/src/__tests__/item-command.test.ts:7:85
+      5| function life(){const r=createCharacterLifeSession(0,{...structuredClo…
+      6| const items=(s:CharacterLifeSessionState)=>s.city.society!.items;
+      7| function add(s:CharacterLifeSessionState,defId:string,consumable=false…
+       |                                                                                     ^
+      8| const gold=(s:CharacterLifeSessionState)=>s.city.world.settlements[s.c…
+      9| function action(s:CharacterLifeSessionState,type:string,fields:Record<…
+ ❯ packages/simulation/src/__tests__/item-command.test.ts:18:47
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > swaps a set and individual pieces both ways atomically
+TypeError: Cannot read properties of undefined (reading 'nextItemId')
+ ❯ add packages/simulation/src/__tests__/item-command.test.ts:7:85
+      5| function life(){const r=createCharacterLifeSession(0,{...structuredClo…
+      6| const items=(s:CharacterLifeSessionState)=>s.city.society!.items;
+      7| function add(s:CharacterLifeSessionState,defId:string,consumable=false…
+       |                                                                                     ^
+      8| const gold=(s:CharacterLifeSessionState)=>s.city.world.settlements[s.c…
+      9| function action(s:CharacterLifeSessionState,type:string,fields:Record<…
+ ❯ packages/simulation/src/__tests__/item-command.test.ts:22:78
+ ❯ packages/simulation/src/__tests__/item-command.test.ts:22:71
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > rejects a three-piece set swap when fewer than three spaces remain after removing the set
+TypeError: Cannot read properties of undefined (reading 'nextItemId')
+ ❯ add packages/simulation/src/__tests__/item-command.test.ts:7:85
+      5| function life(){const r=createCharacterLifeSession(0,{...structuredClo…
+      6| const items=(s:CharacterLifeSessionState)=>s.city.society!.items;
+      7| function add(s:CharacterLifeSessionState,defId:string,consumable=false…
+       |                                                                                     ^
+      8| const gold=(s:CharacterLifeSessionState)=>s.city.world.settlements[s.c…
+      9| function action(s:CharacterLifeSessionState,type:string,fields:Record<…
+ ❯ packages/simulation/src/__tests__/item-command.test.ts:28:86
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > buys at exact price and rejects insufficient Gold without mutation
+TypeError: Cannot read properties of undefined (reading 'market')
+ ❯ packages/simulation/src/__tests__/item-command.test.ts:33:37
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > sells common-weapon for 30 percent
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > sells rare-weapon for 30 percent
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > sells epic-weapon for 30 percent
+TypeError: Cannot read properties of undefined (reading 'nextItemId')
+ ❯ add packages/simulation/src/__tests__/item-command.test.ts:7:85
+      5| function life(){const r=createCharacterLifeSession(0,{...structuredClo…
+      6| const items=(s:CharacterLifeSessionState)=>s.city.society!.items;
+      7| function add(s:CharacterLifeSessionState,defId:string,consumable=false…
+       |                                                                                     ^
+      8| const gold=(s:CharacterLifeSessionState)=>s.city.world.settlements[s.c…
+      9| function action(s:CharacterLifeSessionState,type:string,fields:Record<…
+ ❯ packages/simulation/src/__tests__/item-command.test.ts:37:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > refuses sale of Legendary wearables
+TypeError: Cannot read properties of undefined (reading 'nextItemId')
+ ❯ add packages/simulation/src/__tests__/item-command.test.ts:7:85
+      5| function life(){const r=createCharacterLifeSession(0,{...structuredClo…
+      6| const items=(s:CharacterLifeSessionState)=>s.city.society!.items;
+      7| function add(s:CharacterLifeSessionState,defId:string,consumable=false…
+       |                                                                                     ^
+      8| const gold=(s:CharacterLifeSessionState)=>s.city.world.settlements[s.c…
+      9| function action(s:CharacterLifeSessionState,type:string,fields:Record<…
+ ❯ packages/simulation/src/__tests__/item-command.test.ts:39:91
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > sells materials within stack bounds and refuses Legendary material
+TypeError: Cannot read properties of undefined (reading 'materials')
+ ❯ packages/simulation/src/__tests__/item-command.test.ts:41:25
+     39| it('refuses sale of Legendary wearables',()=>{const s=life();reject(s,…
+     40| it('sells materials within stack bounds and refuses Legendary material…
+     41|  const s=life();items(s).materials.iron=2;items(s).materials.ruby=1;co…
+       |                         ^
+     42|  const next=ok(s,'SELL_MATERIAL',{materialId:'iron',count:2});expect(g…
+     43|  reject(s,'SELL_MATERIAL',{materialId:'iron',count:3},'ITEM_UNKNOWN');…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > destroys an inventory item
+TypeError: Cannot read properties of undefined (reading 'nextItemId')
+ ❯ add packages/simulation/src/__tests__/item-command.test.ts:7:85
+      5| function life(){const r=createCharacterLifeSession(0,{...structuredClo…
+      6| const items=(s:CharacterLifeSessionState)=>s.city.society!.items;
+      7| function add(s:CharacterLifeSessionState,defId:string,consumable=false…
+       |                                                                                     ^
+      8| const gold=(s:CharacterLifeSessionState)=>s.city.world.settlements[s.c…
+      9| function action(s:CharacterLifeSessionState,type:string,fields:Record<…
+ ❯ packages/simulation/src/__tests__/item-command.test.ts:45:92
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > claims stored items only when space exists
+TypeError: Cannot read properties of undefined (reading 'nextItemId')
+ ❯ packages/simulation/src/__tests__/item-command.test.ts:47:20
+     45| it('destroys an inventory item',()=>{const s=life();const next=ok(s,'D…
+     46| it('claims stored items only when space exists',()=>{
+     47|  const s=life(),id=items(s).nextItemId++;items(s).storage.push({item:{…
+       |                    ^
+     48|  expect(items(ok(s,'CLAIM_STORED_ITEM',{itemId:id})).storage).toHaveLe…
+     49|  while(items(s).inventory.length<50)add(s,'common-ring');reject(s,'CLA…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > potion 1 heals 5, clamps at 100, costs no action, and targets only Player
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > potion 2 heals 10, clamps at 100, costs no action, and targets only Player
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > potion 3 heals 15, clamps at 100, costs no action, and targets only Player
+TypeError: Cannot read properties of undefined (reading 'nextItemId')
+ ❯ add packages/simulation/src/__tests__/item-command.test.ts:7:85
+      5| function life(){const r=createCharacterLifeSession(0,{...structuredClo…
+      6| const items=(s:CharacterLifeSessionState)=>s.city.society!.items;
+      7| function add(s:CharacterLifeSessionState,defId:string,consumable=false…
+       |                                                                                     ^
+      8| const gold=(s:CharacterLifeSessionState)=>s.city.world.settlements[s.c…
+      9| function action(s:CharacterLifeSessionState,type:string,fields:Record<…
+ ❯ packages/simulation/src/__tests__/item-command.test.ts:52:59
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > buys potions at an operating Hospital and rejects absent or idle shops
+AssertionError: expected { success: false, error: { …(2) } } to match object { success: false, …(1) }
+(1 matching property omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "error": {
+-     "code": "NO_SHOP",
++     "code": "UNSUPPORTED_ACTION",
+    },
+    "success": false,
+  }
+
+ ❯ reject packages/simulation/src/__tests__/item-command.test.ts:11:162
+
+ ❯ packages/simulation/src/__tests__/item-command.test.ts:58:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > BUY_ITEM rejects Report and stale revision atomically
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > SELL_ITEM rejects Report and stale revision atomically
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > SELL_MATERIAL rejects Report and stale revision atomically
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > DESTROY_ITEM rejects Report and stale revision atomically
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > EQUIP_ITEM rejects Report and stale revision atomically
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > UNEQUIP_ITEM rejects Report and stale revision atomically
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > USE_CONSUMABLE rejects Report and stale revision atomically
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > BUY_POTION rejects Report and stale revision atomically
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > CLAIM_STORED_ITEM rejects Report and stale revision atomically
+AssertionError: expected { success: false, error: { …(2) } } to match object { success: false, …(1) }
+(1 matching property omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "error": {
+-     "code": "STALE_COMMAND",
++     "code": "UNSUPPORTED_ACTION",
+    },
+    "success": false,
+  }
+
+ ❯ reject packages/simulation/src/__tests__/item-command.test.ts:11:162
+
+ ❯ packages/simulation/src/__tests__/item-command.test.ts:65:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > refuses full purchase inventory and permits consumable sale
+TypeError: Cannot read properties of undefined (reading 'inventory')
+ ❯ packages/simulation/src/__tests__/item-command.test.ts:68:31
+     66| });
+     67| it('refuses full purchase inventory and permits consumable sale',()=>{
+     68|  const s=life();while(items(s).inventory.length<50)add(s,'common-ring'…
+       |                               ^
+     69|  const id=add(s,'heal-potion-1',true),before=gold(s).gold;expect(gold(…
+     70| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/46]⎯
+
+ FAIL  packages/ui/src/__tests__/wounds-end-copy.test.ts > uses the exact approved wounds end copy
+AssertionError: expected undefined to deeply equal { title: 'Your Lord Has Died', …(1) }
+
+- Expected:
+{
+  "text": "Your wounds proved fatal.",
+  "title": "Your Lord Has Died",
+}
+
++ Received:
+undefined
+
+ ❯ packages/ui/src/__tests__/wounds-end-copy.test.ts:4:33
+      2| import { END_SCREEN_COPY } from '../society-view.js';
+      3| it('uses the exact approved wounds end copy',()=>{
+      4|  expect(END_SCREEN_COPY.wounds).toEqual({title:'Your Lord Has Died',te…
+       |                                 ^
+      5| });
+      6|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/46]⎯
+
+ FAIL  packages/core/src/trial/__tests__/items.test.ts > starts society v8 with a deterministic 4/2/2 market and an empty inventory
+AssertionError: expected 'tile-society-07' to be 'tile-society-08' // Object.is equality
+
+Expected: "tile-society-08"
+Received: "tile-society-07"
+
+ ❯ packages/core/src/trial/__tests__/items.test.ts:8:50
+      6| const base={management:50,technical:50,medical:50,combat:50,negotiatio…
+      7| it('starts society v8 with a deterministic 4/2/2 market and an empty i…
+      8|  expect(createSocietyState().society!.rulesetId).toBe('tile-society-08…
+       |                                                  ^
+      9|  const s=api.createItemsState(42);expect(s).toEqual(api.createItemsSta…
+     10|  for(const [r,n] of Object.entries({common:4,rare:2,epic:2}))expect(s.…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/46]⎯
+
+ FAIL  packages/core/src/trial/__tests__/items.test.ts > clamps effective skills at 0 and 100 without changing base stats
+TypeError: effectiveSkills is not a function
+ ❯ packages/core/src/trial/__tests__/items.test.ts:13:92
+     11| });
+     12| it('clamps effective skills at 0 and 100 without changing base stats',…
+     13|  const original={...base,combat:99,medical:-10};const before={...origi…
+       |                                                                                            ^
+     14|  expect(stats.combat).toBe(100);expect(stats.medical).toBe(0);expect(o…
+     15| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/46]⎯
+
+ FAIL  packages/core/src/trial/__tests__/items.test.ts > applies Exclusive bonuses only to the matching class and ignores closed slots
+TypeError: effectiveSkills is not a function
+ ❯ packages/core/src/trial/__tests__/items.test.ts:18:13
+     16| it('applies Exclusive bonuses only to the matching class and ignores c…
+     17|  const d={...api.ITEM_CATALOG['rare-weapon'],exclusiveClass:'makers'};
+     18|  expect(api.effectiveSkills(base,[d],'makers').combat).toBe(54);expect…
+       |             ^
+     19|  expect(api.effectiveSkills(base,[{...d,slot:'nipple'}],'makers')).toE…
+     20| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/46]⎯
+
+ FAIL  packages/core/src/trial/__tests__/items.test.ts > multiplies set main, secondary and Player regen by three
+TypeError: effectiveSkills is not a function
+ ❯ packages/core/src/trial/__tests__/items.test.ts:22:13
+     20| });
+     21| it('multiplies set main, secondary and Player regen by three',()=>{
+     22|  expect(api.effectiveSkills(base,[api.ITEM_CATALOG['rare-set']],null))…
+       |             ^
+     23|  const r=createCharacterLifeSession(0,{...structuredClone(DEFAULT_PLAY…
+     24|  s.city.society!.items.equipped.player={set:{id:1,defId:'common-set'}}…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/46]⎯
+
+ FAIL  packages/core/src/trial/__tests__/items.test.ts > builds current post skills/traits and Player context without mutating the session
+TypeError: Cannot read properties of undefined (reading 'equipped')
+ ❯ packages/core/src/trial/__tests__/items.test.ts:29:55
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/46]⎯
+
+ FAIL  packages/core/src/trial/__tests__/items.test.ts > keeps item streams deterministic and independent of crime draws
+TypeError: itemRandom is not a function
+ ❯ draws packages/core/src/trial/__tests__/items.test.ts:35:76
+     33| it('keeps item streams deterministic and independent of crime draws',(…
+     34|  const crime=crimeRandom(42,1),expected=crimeRandom(42,1);expect(crime…
+     35|  const draws=(stream:'market'|'find'|'material'|'legendary')=>{const r…
+       |                                                                            ^
+     36|  expect(draws('market')).toEqual(draws('market'));expect(draws('market…
+     37| });
+ ❯ packages/core/src/trial/__tests__/items.test.ts:36:9
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/46]⎯
+
+ FAIL  packages/core/src/trial/__tests__/items.test.ts > refuses malformed items: duplicate
+ FAIL  packages/core/src/trial/__tests__/items.test.ts > refuses malformed items: unknown definition
+ FAIL  packages/core/src/trial/__tests__/items.test.ts > refuses malformed items: bad slot
+ FAIL  packages/core/src/trial/__tests__/items.test.ts > refuses malformed items: kind
+ FAIL  packages/core/src/trial/__tests__/items.test.ts > refuses malformed items: set conflict
+ FAIL  packages/core/src/trial/__tests__/items.test.ts > refuses malformed items: cap
+ FAIL  packages/core/src/trial/__tests__/items.test.ts > refuses malformed items: stack
+ FAIL  packages/core/src/trial/__tests__/items.test.ts > refuses malformed items: next id
+ FAIL  packages/core/src/trial/__tests__/items.test.ts > refuses malformed items: unknown character
+ FAIL  packages/core/src/trial/__tests__/items.test.ts > refuses malformed items: accessor
+ FAIL  packages/core/src/trial/__tests__/items.test.ts > refuses malformed items: sparse
+TypeError: createItemsState is not a function
+ ❯ packages/core/src/trial/__tests__/items.test.ts:39:14
+     37| });
+     38| it.each(['duplicate','unknown definition','bad slot','kind','set confl…
+     39|  const s=api.createItemsState(0);s.nextItemId=3;s.inventory=[{id:1,def…
+       |              ^
+     40|  if(kind==='duplicate')s.consumables=[{id:1,defId:'heal-potion-1'}];
+     41|  if(kind==='unknown definition')s.inventory[0].defId='absent';
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/46]⎯
+
+End of recorded output.

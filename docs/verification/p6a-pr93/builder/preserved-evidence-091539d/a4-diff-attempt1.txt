@@ -1,0 +1,26 @@
+HEAD: 73ff9a9c5d5a7bde298dc3a1a151d2af1715e529
+Tree: c64de4647a58f5c4f4138458d0f52f1d4ad3bec8
+UTC start: 2026-11-13T14:29:42.581Z
+Command: git diff --check origin/main...HEAD
+Exit: 2
+
+docs/verification/p6a-prA-builder/a1-green.txt:16: new blank line at EOF.
+docs/verification/p6a-prA-builder/a1-red.txt:133: new blank line at EOF.
+docs/verification/p6a-prA-builder/a2-existing-shape-probe.txt:112: new blank line at EOF.
+docs/verification/p6a-prA-builder/a2-green-final.txt:16: new blank line at EOF.
+docs/verification/p6a-prA-builder/a2-green-first.txt:36: new blank line at EOF.
+docs/verification/p6a-prA-builder/a2-green.txt:16: new blank line at EOF.
+docs/verification/p6a-prA-builder/a2-red-valid-draft.txt:400: new blank line at EOF.
+docs/verification/p6a-prA-builder/a2-red.txt:416: new blank line at EOF.
+docs/verification/p6a-prA-builder/a3-fixture-generation.txt:16: new blank line at EOF.
+docs/verification/p6a-prA-builder/a3-golden-generation.txt:16: new blank line at EOF.
+docs/verification/p6a-prA-builder/a3-green-final.txt:16: new blank line at EOF.
+docs/verification/p6a-prA-builder/a3-green.txt:16: new blank line at EOF.
+docs/verification/p6a-prA-builder/a3-persistence-green-first.txt:38: new blank line at EOF.
+docs/verification/p6a-prA-builder/a3-persistence-green.txt:16: new blank line at EOF.
+docs/verification/p6a-prA-builder/a3-red.txt:118: new blank line at EOF.
+docs/verification/p6a-prA-builder/a3-typecheck.txt:11: new blank line at EOF.
+docs/verification/p6a-prA-builder/review-edge-green.txt:16: new blank line at EOF.
+docs/verification/p6a-prA-builder/review-edge-red.txt:79: new blank line at EOF.
+
+UTC end: 2026-11-13T14:29:42.690Z

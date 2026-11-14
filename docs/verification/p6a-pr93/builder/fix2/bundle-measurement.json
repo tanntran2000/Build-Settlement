@@ -1,0 +1,30 @@
+{
+  "utc": "2026-11-14T01:36:35.060Z",
+  "head": "4afe92763856cc3f82445803298beacc7ccedf68",
+  "files": [
+    {
+      "name": "index-D3qUbemE.js",
+      "bytes": 360476,
+      "gzipBytes": 114370,
+      "sha256": "e84108d3fe16ec81ea223726b12f54b8cf5310bf32d9fa0a713aa77f5fcc00c8"
+    },
+    {
+      "name": "index-DdNtS9j1.css",
+      "bytes": 28127,
+      "gzipBytes": 5814,
+      "sha256": "957e3db03aef271e79b33fd544374adbc99e7d2664fc35744b96835f0d072c0d"
+    }
+  ],
+  "baselineGzipKB": {
+    "js": 108.46,
+    "css": 5.81
+  },
+  "gzipBytes": {
+    "js": 114370,
+    "css": 5814
+  },
+  "growthGzipKB": {
+    "js": 5.910000000000011,
+    "css": 0.004000000000000448
+  }
+}

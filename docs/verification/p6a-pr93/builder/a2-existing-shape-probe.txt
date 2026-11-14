@@ -1,0 +1,112 @@
+HEAD: 1cd14d55f91c69c037953811574b32347f3fcdc9
+Tree: f5ed79213326794ea9143618a7a80be52ab6a653
+UTC start: 2026-11-13T14:13:13.840Z
+UTC end: 2026-11-13T14:13:17.229Z
+Command: npx vitest run packages/core/src/trial/__tests__/society.test.ts
+Exit: 1
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/core/src/trial/__tests__/society.test.ts (19 tests | 1 failed) 44ms
+   × creates the spec section 3 new game 18ms
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 18 passed (19)
+   Start at  21:13:16
+   Duration  922ms (transform 430ms, setup 0ms, import 569ms, tests 44ms, environment 0ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/core/src/trial/__tests__/society.test.ts > creates the spec section 3 new game
+AssertionError: expected { rulesetId: 'tile-society-08', …(18) } to deeply equal { rulesetId: 'tile-society-07', …(17) }
+
+- Expected
++ Received
+
+@@ -35,10 +35,60 @@
+      "luminaries": 0,
+      "makers": 0,
+      "merchants": 0,
+    },
+    "desperation": 0,
++   "items": {
++     "consumables": [],
++     "equipped": {},
++     "goals": {
++       "authority": false,
++       "authorityStreak": 0,
++       "calm": false,
++       "rebellionSeen": false,
++       "research": false,
++       "week52": false,
++     },
++     "inventory": [],
++     "market": [
++       {
++         "defId": "common-ring",
++         "priceMilli": 5000,
++       },
++       {
++         "defId": "common-top",
++         "priceMilli": 5000,
++       },
++       {
++         "defId": "common-bottom",
++         "priceMilli": 5000,
++       },
++       {
++         "defId": "common-ring",
++         "priceMilli": 5000,
++       },
++       {
++         "defId": "rare-set",
++         "priceMilli": 15000,
++       },
++       {
++         "defId": "rare-weapon",
++         "priceMilli": 15000,
++       },
++       {
++         "defId": "epic-hand",
++         "priceMilli": 40000,
++       },
++       {
++         "defId": "epic-necklace",
++         "priceMilli": 40000,
++       },
++     ],
++     "materials": {},
++     "nextItemId": 1,
++     "storage": [],
++   },
+    "laws": {
+      "active": [],
+      "promise": null,
+      "repealedUntil": {},
+      "votedWeek": null,
+@@ -330,11 +380,11 @@
+        "deep-mining": 0,
+        "watch-patrols": 0,
+      },
+      "topic": null,
+    },
+-   "rulesetId": "tile-society-07",
++   "rulesetId": "tile-society-08",
+    "satisfaction": {
+      "bound": 80,
+      "free": 80,
+      "luminaries": 80,
+      "makers": 80,
+
+ ❯ packages/core/src/trial/__tests__/society.test.ts:7:21
+      5| it('creates the spec section 3 new game', () => {
+      6|   const s = createSocietyState();
+      7|   expect(s.society).toEqual({
+       |                     ^
+      8|     rulesetId: 'tile-society-07', standing:50,
+      9|     laws: {active:[],votedWeek:null,repealedUntil:{},promise:null},
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+

@@ -1,0 +1,642 @@
+P6-A PR A Astra review
+mcp:94caacb1-f51f-4c8b-be73-fe7bd70decd9  completed  codex/gpt-6-astra
+
+[user]
+Astra, independent READ-ONLY review of P6-A PR A (item core). Do not run tests or builds; Claude is running gates and the full smoke in this worktree now.
+
+Worktree: C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01, branch feat/p6a-item-core. Confirm HEAD == b31dc0268279abcb29483d372cd17d156fa825f0, tree cb345d790c050f9f240d695331db45a79f56177d. Base origin/main c4d3dc4. Range `git diff c4d3dc4..b31dc02`: 6 commits, 60 files, +1246/−63.
+
+Binding plan: C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-f5c7349.md. Covers PR A = Tasks A1–A4, Decisions 1–13 (as they touch PR A), the PR A allowlist, Review Focus 1 and 5, Plan correction 1 (wounds end copy in PR A) and Plan correction 2 with extensions 1–2 (additive whole-object and stored-layout test edits). Spec v0.3: C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-spec-17e7aaf.md.
+
+Owner decisions (Tân, verbatim):
+- "Approve both", "Duyệt v0.2";
+- v0.3 dialog choices (spec §1 items 19–25);
+- "Duyệt, giao Builder A";
+- correction 1: "Add end copy to PR A (Recommended)";
+- correction 2: "Allow additive shape edits (Recommended)";
+- extensions 1 and 2: "Allow, extend correction 2 (Recommended)", given twice.
+
+Builder evidence: C:/Users/Admin/.t3/local-drafts/p6a-prA/README.md. It contains:
+- the existing-test edit inventory (existing-test-edits.md: 29 files, 37 hunks);
+- hash-pins.txt;
+- a3-golden-path-diff.txt;
+- the gates and the CI=1 smoke at b31dc02 (350/350);
+- the bundle: JS +5.66 kB gzip.
+
+Avoid truncation: read each changed file's full diff, page with `sed -n` ranges, and reconcile +/− per file with `git diff --numstat c4d3dc4..b31dc02`. For the large fixture JSON files (society-v8/*, catalog-golden.json), check their provenance, blob ids and structure with a short read-only script instead of reading them as one blob. State this per file.
+
+Check:
+1. **Scope.** Every changed file is in the PR A allowlist, or covered by correction 1 or 2, or is a new test/fixture. Product files: items.json, tuning.json, validate.ts, index.ts, crisis.ts, items.ts, society.ts, session-records.ts, character-life-command.ts, item-command.ts, CityFallen.svelte, society-view.ts. There is no PR B logic (week rules, effect terms, regen, death rule; the health floor stays) and no other UI.
+2. **The existing-test edit inventory.**
+   - Every edit to an existing test is either a v7 → v8 path or literal edit (Decision 10, the 629f883 precedent) or a correction 2 edit (items field, the approved wounds entry, or the Decision 3 stored-record layout).
+   - Nothing is loosened.
+   - Verify the inventory against the actual diff: no unlisted edit.
+3. **Catalog (Decision 1).**
+   - The counts, slots per category, kinds, sets ×3, the 4 Legendary items with traits, Heal Potion I–III, and the 15 materials (spec §4.5, including the herb leaves) are all present.
+   - The validator messages are exact.
+   - JSON is imported `with { type: 'json' }`.
+   - The hash pins: only SOCIETY_TRIAL changed (rulesetId 07 → 08 only; verify that nothing else changed in tuning.json), and ITEM_CATALOG and ITEM_TRIAL are new.
+4. **State and commands (Decisions 2, 4–6).**
+   - `isSocietyState` validates the items fully: unique ids, catalog defIds, slot/category/kind, set exclusivity, caps, stacks of 1–999.
+   - Every command is all-or-nothing, Gold never goes negative, Planning-only, stale-revision checked, and errors use the listed codes.
+   - The 30% resale is rounded down; Legendary items and Legendary materials cannot be sold.
+   - Potions heal Player only and clamp at 100.
+   - `BUY_POTION` needs an operating Hospital or a built Drug Store. Note: the Drug Store becomes buildable only in PR B; say how PR A handles it.
+   - `itemRandom` never touches crimeRandom.
+   - `buildItemWeekContext` is correct and pure.
+5. **Persistence (Decision 3).**
+   - Item instances go to `items`-table records `item:<id>` with `place`, and the city record has no instance lists.
+   - The round trip is byte-identical, with lists rebuilt in ascending id order.
+   - An unknown `place` gives a StoreRecordError ref.
+   - v7 is historical in `isStoredCity` and refused unchanged.
+   - The v8 fixtures load; the v7 fixture bytes are unchanged.
+6. **Golden (Decision 9):** regenerated once, and the path diff is only `city.society.rulesetId` and `city.society.items` for all 3 seeds. Verify with the committed path-diff script and output.
+7. **Determinism and LAW-04** in the new code. Plus anything else, P0–P3 with file:line.
+
+Reply PASS or FAIL, with findings, the per-file count reconciliation, and limits. Do not edit, install, run tests or builds, push or merge.
+
+
+[assistant]
+Review is read-only: I’m checking the pinned commit, binding documents, and complete per-file diffs. Claude’s tests and builds remain untouched.
+
+
+[assistant]
+The pinned HEAD and tree match. Command mutations operate on a cloned session, and PR B’s week integration remains absent. I’m checking persistence ordering and the initial Market seed; both affect correctness beyond the passing test totals.
+
+
+[assistant]
+**FAIL — fix the initial Market seed and the persistence canonicalization gap before accepting PR A.** This is a **partial independent review**, not a completed exhaustive sign-off: some combined diff reads were truncated, so I cannot honestly certify every requested file and inventory entry.
+
+Confirmed repository identity:
+
+| Check | Observed |
+|---|---|
+| Branch | `feat/p6a-item-core` |
+| HEAD | `b31dc0268279abcb29483d372cd17d156fa825f0` |
+| Tree | `cb345d790c050f9f240d695331db45a79f56177d` |
+| `origin/main` | `c4d3dc4fde78d004292f9038a4285cdd6f8186a7` |
+| Aggregate diff | **60 files, +1246/−63** |
+
+1. **P2 — The initial Market ignores the session seed.**  
+   [society.ts:52](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/society.ts:52) initializes items with `createItemsState(2026)`. [session.ts:17](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/session.ts:17) subsequently replaces `worldMetadata.worldSeed` with the requested seed without rebuilding items.
+
+   Therefore every new world receives the Market drawn from seed **2026**, regardless of its actual seed. A read-only inspection of the committed golden confirms identical eight-offer Markets for seeds **0, 42 and 20261028**. `itemRandom` itself uses the specified mixing formula; its initialization caller supplies the wrong seed.
+
+   **Required correction:** initialize the week-one Market from the validated session seed, and cover the actual session creation path. Any necessary file outside the existing allowlist needs the corresponding scope decision.
+
+2. **P2 — Accepted item states do not universally preserve save bytes through record persistence.**  
+   [items.ts:58](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/items.ts:58) accepts instance arrays in arbitrary order and allows an empty equipped entry such as `equipped: { player: {} }`. [session-records.ts:66](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/session-records.ts:66) stores only actual instances, while reconstruction starts with empty collections and processes records in ascending instance-id order.
+
+   Two concrete accepted shapes consequently change on round trip:
+
+   - `inventory: [{id:2,...}, {id:1,...}]` returns in order `1,2`.
+   - `equipped: {player:{}}` returns as `equipped: {}` because there is no item record representing the empty entry.
+
+   The new tests cover sorted inventory and command-generated equipment ordering, but not these accepted shapes. This violates the unqualified byte-identical round-trip requirement in Decision 3. **This finding is based on source inspection, not a runtime reproduction.**
+
+   **Required correction:** define and enforce canonical item state at the relevant validation/import boundary, or preserve all accepted representations. Keep ascending-id reconstruction as required by Decision 3.
+
+The inspected command implementation clones the session before changes and returns failures without exposing the clone. It checks Planning, revisions and capacity; rejects Legendary resale; floors resale to milli-Gold; and heals only the Player with a ceiling of 100. `itemRandom` creates its own generator and does not consume a crime generator. `buildItemWeekContext` constructs fresh result objects without mutating the supplied session.
+
+`BUY_POTION` recognizes an enabled `drug-store`, but PR A does not make that building buildable. Its branch is preparation for PR B; ordinary PR A construction cannot reach it. The Hospital branch requires full staffing plus sufficient current Gold for upkeep and herbs. The inspected dispatcher changes do not connect item context to week execution.
+
+**Per-file count reconciliation**
+
+These are the actual `git diff --numstat c4d3dc4..b31dc02` counts. They reconcile numerically to **+1246/−63 across 60 files**; this table is not a claim that every full diff was successfully read.
+
+```text
+ +    −  Path
+10    1  packages/core/src/__tests__/catalog-data.test.ts
+45    0  packages/core/src/__tests__/items-catalog.test.ts
+510   0  packages/core/src/data/items.json
+1     1  packages/core/src/data/tuning.json
+46    2  packages/core/src/data/validate.ts
+1     0  packages/core/src/index.ts
+1     1  packages/core/src/trial/__tests__/crime.test.ts
+1     1  packages/core/src/trial/__tests__/crisis.test.ts
+52    0  packages/core/src/trial/__tests__/items.test.ts
+1     1  packages/core/src/trial/__tests__/law.test.ts
+1     1  packages/core/src/trial/__tests__/order.test.ts
+1     1  packages/core/src/trial/__tests__/outside.test.ts
+15    1  packages/core/src/trial/__tests__/society.test.ts
+2     2  packages/core/src/trial/crisis.ts
+109   0  packages/core/src/trial/items.ts
+8     4  packages/core/src/trial/society.ts
+1     1  packages/core/src/world/__tests__/session.test.ts
+2     2  packages/persistence/src/__tests__/character-life-save.test.ts
+1     0  packages/persistence/src/__tests__/fixtures/society-v8/life-5-weeks.json
+1     0  packages/persistence/src/__tests__/fixtures/society-v8/life-crime-death.json
+1     0  packages/persistence/src/__tests__/fixtures/society-v8/life-crime-raid.json
+1     0  packages/persistence/src/__tests__/fixtures/society-v8/life-crime-robbery.json
+1     0  packages/persistence/src/__tests__/fixtures/society-v8/life-crime-wound.json
+1     0  packages/persistence/src/__tests__/fixtures/society-v8/life-demand-card.json
+1     0  packages/persistence/src/__tests__/fixtures/society-v8/life-laws.json
+1     0  packages/persistence/src/__tests__/fixtures/society-v8/life-new-game.json
+1     0  packages/persistence/src/__tests__/fixtures/society-v8/life-rebellion-last-week.json
+1     0  packages/persistence/src/__tests__/fixtures/society-v8/new-game.json
+48    0  packages/persistence/src/__tests__/item-records.test.ts
+1     1  packages/persistence/src/__tests__/session-records.test.ts
+7     7  packages/persistence/src/__tests__/society-new-game-fixture.test.ts
+33    0  packages/persistence/src/__tests__/society-v7-fixture.test.ts
+60   10  packages/persistence/src/session-records.ts
+1     1  packages/simulation/src/__tests__/crime-fixtures.test.ts
+1     1  packages/simulation/src/__tests__/crisis-fixtures.test.ts
+14    0  packages/simulation/src/__tests__/fixtures/catalog-golden-path-diff.txt
+3     3  packages/simulation/src/__tests__/fixtures/catalog-golden.json
+33    0  packages/simulation/src/__tests__/fixtures/golden-path-diff.ts
+81    0  packages/simulation/src/__tests__/item-command.test.ts
+1     1  packages/simulation/src/__tests__/law-fixture.test.ts
+15    2  packages/simulation/src/__tests__/law-week.test.ts
+6     1  packages/simulation/src/character-life-command.ts
+97    0  packages/simulation/src/item-command.ts
+1     1  packages/ui/src/CityFallen.svelte
+1     1  packages/ui/src/__tests__/character-life-session.test.ts
+1     1  packages/ui/src/__tests__/crime-view.test.ts
+1     1  packages/ui/src/__tests__/world-session.test.ts
+5     0  packages/ui/src/__tests__/wounds-end-copy.test.ts
+2     1  packages/ui/src/society-view.ts
+6     1  tests/e2e/character-life-navigation.spec.ts
+1     1  tests/e2e/crime.spec.ts
+1     1  tests/e2e/crisis.spec.ts
+1     1  tests/e2e/garrison.spec.ts
+1     1  tests/e2e/laws.spec.ts
+1     1  tests/e2e/ledger.spec.ts
+1     1  tests/e2e/society.spec.ts
+1     1  tests/e2e/storage.spec.ts
+1     1  tests/e2e/tile-save.spec.ts
+2     2  tests/e2e/title.spec.ts
+1     1  tests/e2e/world-session.spec.ts
+1246 63  TOTAL
+```
+
+**Large-fixture inspection**
+
+A short read-only Python script parsed each committed v8 fixture and compared it structurally against its corresponding v7 fixture at the base. For **each** file below, the only differences were the outer ruleset, the state’s society ruleset, and the added `items` object. No full JSON blob was dumped.
+
+| `society-v8/` file | Committed blob |
+|---|---|
+| `life-5-weeks.json` | `2f7260e9b4b5ca7483d852bf4e60bc2ece2abe48` |
+| `life-crime-death.json` | `ff430d775f9c671318c55b46abcb1d629ea7618d` |
+| `life-crime-raid.json` | `e7ce9151598e719e4083e2db6b8ec745c1e0f167` |
+| `life-crime-robbery.json` | `978b921d9666dd7a959eebf6f7a4e4fbe630d863` |
+| `life-crime-wound.json` | `49a3fe7640e8db92291ce1a7c8828f1ac68f288f` |
+| `life-demand-card.json` | `05728f38391987aa925e41f940bc73c42bc454a4` |
+| `life-laws.json` | `7b7f5fdab467aef79b3757dbeee74f707fe375c4` |
+| `life-new-game.json` | `b994fe5d5e8e85fc09989f2465fe318a1db910e3` |
+| `life-rebellion-last-week.json` | `84340365719e03387f8ad5fd663c17c7df460537` |
+| `new-game.json` | `412fc65cca52621afb7e1a083096e8e72e712ec1` |
+
+The historical `society-v7/` directory has **no changes in the reviewed range**. For `catalog-golden.json`, the script parsed all three scenarios and inspected their item Markets. I read the committed path-diff script, but **did not execute it or independently complete its baseline/output verification**. Generator provenance and the “regenerated once” claim remain Builder-reported.
+
+**Limits and outstanding review work**
+
+- No tests, builds, installs, edits, pushes or merges were performed. The fixture inspection script exited **0**. Builder-reported **350/350 smoke** and gate results are not represented here as independently executed evidence.
+- The exact `tuning.json` diff contains only `SOCIETY_TRIAL.rulesetId: 07 → 08`. I inspected the pin changes, but did not independently recompute their hashes.
+- I have **not completed** the full catalog-content audit, exact validator-message audit, complete allowlist reconciliation, or the **29-file/37-hunk inventory comparison**. Truncated reads prevent a defensible “nothing omitted or loosened” verdict.
+- The initial combined identity command mishandled unquoted `HEAD^{tree}` in PowerShell; a separate quoted command successfully confirmed the required tree. No repository mutation resulted.
+
+**Next action: send findings 1–2 to Builder A for assessment; this review must not be used as exhaustive independent approval.**
+
+[user]
+Astra, full independent READ-ONLY re-review of P6-A PR A (item core) after review fix round 1. Do not run tests or builds; Claude is running gates 1–7 and the full CI=1 smoke in this worktree now.
+
+Worktree: C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01, branch feat/p6a-item-core (pushed). Confirm HEAD == f1944ce047b59654f75365dfea4cc8a2f83dddec, tree a2456278c9cccf837ef0041cba44ed1f9e7ac7fc. Base origin/main c4d3dc4. Previous reviewed head b31dc02 (your round 1: FAIL, F1 and F2, partial review because of truncated reads).
+
+Binding plan: C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-09d46d0.md (adds Plan correction 3: `packages/core/src/world/session.ts` may change in PR A for the week-1 Market seed, and the golden and v8 fixtures may be regenerated a second time with a path diff vs b31dc02 containing only `city.society.items`). Spec v0.3: C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-spec-17e7aaf.md.
+
+Owner decisions (Tân, verbatim):
+- "Approve both", "Duyệt v0.2"; v0.3 dialog choices (spec §1 items 19–25); "Duyệt, giao Builder A";
+- correction 1: "Add end copy to PR A (Recommended)";
+- correction 2: "Allow additive shape edits (Recommended)"; extensions 1 and 2: "Allow, extend correction 2 (Recommended)", given twice;
+- correction 3: "Allow session.ts in PR A (Recommended)".
+
+Builder evidence for this round: C:/Users/Admin/.t3/local-drafts/p6a-prA/fix1/README.md (fix-round inventory 3 files / 5 hunks; whole-PR inventory whole-pr-existing-test-edits.md: 29 files / 38 hunks; final-path-diff.txt). Earlier evidence: C:/Users/Admin/.t3/local-drafts/p6a-prA/README.md.
+
+This review must be COMPLETE. Avoid truncation: read each changed file's diff on its own (`git diff c4d3dc4..f1944ce -- <file>`), page long ones with `sed -n` ranges, and reconcile +/− per file with `git diff --numstat c4d3dc4..f1944ce`. For large fixture JSON files (society-v8/*, catalog-golden.json) check provenance, blob ids and structure with a short read-only script instead of reading them whole. State per file what you read. If any read is still truncated, say which and do not issue PASS.
+
+Check:
+1. **F1 closed.** `createWorldSession` draws the week-1 Market from the validated session seed (session.ts:20). Find every other path that creates a new city with `createSocietyState()` (which still uses seed 2026 at society.ts:52) and say whether real play can reach it; in particular, why `fixtures/society-v8/new-game.json` stays byte-identical, and whether that is correct. The new tests (item-market-seed.test.ts, the Character Life New Game test) go through the real path.
+2. **F2 closed.** `isItemsState` (items.ts:71) rejects non-ascending inventory, consumable and storage ids and empty equipped entries. Check that every command result stays canonical (sorted lists after unequip/return/buy/storage moves; no empty equipped entry after removing the last worn item), so no accepted command can produce a state that the validator then refuses. Check the round trip is byte-identical for every accepted shape.
+3. **Market content.** Seed 20261028 now gives `epic-top` twice. Say whether duplicate offers are allowed by the spec/plan (Market 8 slots, rarity counts) or are a defect.
+4. **Scope and allowlist.** Every changed file vs c4d3dc4 is in the PR A allowlist, covered by correction 1, 2 or 3, or is a new test/fixture/path-diff script. No PR B logic (week rules, effect terms, regen, death rule; health floor stays), no other UI, no `docs/` files.
+5. **Existing-test inventory.** Verify the whole-PR inventory (29 files / 38 hunks) against the actual diff: every edit is a v7→v8 path/literal edit (Decision 10, 629f883 precedent), a correction 2 edit, or a correction 3 Market literal; nothing loosened; no unlisted edit. The fix round edited society.test.ts, session.test.ts and law-week.test.ts; check those three closely.
+6. **Golden and fixtures (Decision 9, correction 3).** The second regeneration's path diff vs b31dc02 contains only `city.society.items` paths for all 3 golden seeds and the v8 fixtures; v7 fixture bytes unchanged. Verify with the committed review-fix1-path-diff.ts and its .txt output, and say whether the script's comparison is sound.
+7. **Items not finished in round 1** (all required this time):
+   - Catalog (Decision 1): counts, slots per category, kinds, sets ×3, the 4 Legendary items with traits, Heal Potion I–III, the 15 materials of spec §4.5 including the herb leaves.
+   - Validator messages: exact `items.json#<id>.<field>: <rule>` format.
+   - JSON imported `with { type: 'json' }`.
+   - Hash pins: only SOCIETY_TRIAL changed (rulesetId 07 → 08 only; nothing else in tuning.json), ITEM_CATALOG and ITEM_TRIAL new.
+8. **State, commands, persistence (Decisions 2–6, 3):** all-or-nothing, Gold never negative, Planning-only, stale revision, listed error codes, 30% resale rounded down, Legendary items/materials unsellable, potions heal Player only and clamp at 100, BUY_POTION building rule (and how PR A handles the Drug Store before PR B), itemRandom never touches crimeRandom, buildItemWeekContext pure, `item:<id>` records with `place`, unknown place → StoreRecordError ref, v7 historical and refused.
+9. Determinism and LAW-04 in the new code. Anything else, P0–P3 with file:line.
+
+Reply PASS or FAIL, with findings, the per-file count reconciliation, what you read per file, and limits. Do not edit, install, run tests or builds, push or merge.
+
+[assistant]
+The re-review will cover every changed file individually, with structural checks for the large fixtures. Tests and builds remain with Claude.
+
+
+[assistant]
+F1’s initialization now uses the validated session seed. F2 rejects the two previously reported shapes; I’m also checking equipment object ordering, since “byte-identical for every accepted shape” is broader than sorted inventory arrays.
+
+
+[assistant]
+All 55 non-fixture diffs have now been read without truncation. One persistence gap remains: validation permits equipment keys in an order that record reconstruction changes. I’m finishing the fixture and inventory reconciliation before issuing the verdict.
+
+
+[assistant]
+**FAIL — F1 is closed; F2 is only partially closed. Two P2 persistence findings remain.** The full requested diff review is complete: **66 files, +1499/−64**, with no outstanding truncated reads.
+
+Reviewed [PR #93](https://github.com/tanntran2000/Build-Settlement/pull/93) at:
+
+| Identity | Confirmed value |
+|---|---|
+| Branch | `feat/p6a-item-core` |
+| HEAD | `f1944ce047b59654f75365dfea4cc8a2f83dddec` |
+| Tree | `a2456278c9cccf837ef0041cba44ed1f9e7ac7fc` |
+| Base / `origin/main` | `c4d3dc4fde78d004292f9038a4285cdd6f8186a7` |
+| Final working-tree status | Clean |
+
+**Findings**
+
+1. **P2 — F2 remains open: equipment object ordering is accepted but not preserved through storage.**
+
+   [items.ts:85](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/items.ts:85) now rejects unordered instance arrays and empty equipment entries, but does not enforce the enumeration order of equipment slots or character entries. [session-records.ts:107](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/session-records.ts:107) reconstructs equipment by ascending instance id.
+
+   For example, this equipment shape passes the inspected item validation, assuming `nextItemId: 3` and no other instances:
+
+   ```ts
+   equipped: {
+     player: {
+       weapon: { id: 2, defId: 'common-weapon' },
+       ring: { id: 1, defId: 'common-ring' },
+     },
+   }
+   ```
+
+   Record reconstruction inserts `ring` before `weapon`. The values remain equal, but serialized bytes change. The same problem applies to the order of character entries when their lowest equipped ids are out of order.
+
+   There is also a simpler representation gap: an instance written as `{ defId: 'common-ring', id: 1 }` is accepted, whereas reconstruction creates `{ id: 1, defId: 'common-ring' }`. `hasWeeklyKeys` checks membership, not key order, and the save serializer preserves property order.
+
+   **Impact:** the promised byte-identical round trip for **every accepted shape** is still false. Command-generated equipment is sorted, so the ordinary command path is better protected than imported accepted states.
+
+   **Required correction:** establish a canonical serialization/import representation for every reconstructed item object, including equipment ordering, or reject noncanonical representations consistently. Add coverage beyond the already sorted mixed-location example.
+
+2. **P2 — A checkpoint can accept equipment for a nonexistent character, then fail item commands and record loading.**
+
+   [society.ts:67](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/society.ts:67) calls:
+
+   ```ts
+   isItemsState(raw.items, ['player', ...Object.keys(raw.items.equipped)])
+   ```
+
+   That makes every equipment owner self-authorizing at the society-validation boundary. The inspected Character Life validation validates NPCs and profiles separately but does not cross-check equipment owners against them.
+
+   For example, a valid checkpoint supplemented with:
+
+   ```ts
+   nextItemId: 2,
+   equipped: {
+     missing_npc: {
+       weapon: { id: 1, defId: 'rare-weapon' },
+     },
+   }
+   ```
+
+   passes that ownership check. However:
+
+   - [item-command.ts:18](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/item-command.ts:18) validates against actual session character ids and rejects item commands with `FORBIDDEN`.
+   - [session-records.ts:117](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/session-records.ts:117) checks equipment owners against character records and rejects the reconstructed record.
+
+   **Impact:** an accepted imported session is not necessarily usable or round-trippable through the item table.
+
+   **Required correction:** cross-check equipment ownership at the complete session validation/import boundary, where actual Player and NPC ids are available. Keep the society-only validator’s structural responsibility separate.
+
+Both findings are supported by complete source inspection. I did **not** execute runtime reproductions, in accordance with the instruction not to run tests. No P0 or P1 finding was identified.
+
+**Fixes, scope and behavior reviewed**
+
+| Area | Result |
+|---|---|
+| **F1: real New Game seed** | **Closed.** `createWorldSession` replaces the default item state with `createItemsState(outside.value.seed)` after outside-world validation. |
+| **F2: ascending arrays / empty equipment** | Those specific cases are fixed. Inventory, consumables and storage require strictly ascending ids; empty equipment entries are rejected. The broader persistence guarantee remains open as above. |
+| **Command canonicality** | `receive` sorts returned/purchased/claimed items; removals preserve list order; unequipping the last item removes the character entry; every successful item command sorts equipment entries and slots. Set swaps account for removal of the incoming item before checking displaced-item capacity. |
+| **Duplicate Market offers** | **Allowed by the binding documents.** They require eight offer slots with rarity counts 4/2/2, not eight distinct definitions. Two `epic-top` offers for seed 20261028 are not a defect. Purchasing one removes only that offer. |
+| **Allowlist** | All product changes fall within PR A and corrections 1–3. Remaining changes are permitted existing-test edits, new tests, fixtures or path-diff evidence/scripts. No `docs/` files changed. |
+| **PR B exclusion** | No weekly item rules, production/Order/crime effect integration, regen, wound-death execution, new posts or buildable Drug Store changes. The health floor remains `Math.max(1, ...)`. |
+| **UI scope** | Only the approved `wounds` prop type and exact end-screen copy, plus tests. |
+
+The production `createSocietyState()` callers were searched across the repository. Their roles are:
+
+| Caller | Reachability and effect |
+|---|---|
+| `world/session.ts:18` | Actual world creation; immediately replaces items using the validated session seed. |
+| `character/validate.ts:93` | Reachable during play, but creates a disposable city solely to validate outside-world data. |
+| `simulation/world-npc.ts:45` | Same disposable validation role; does not replace the player’s city. |
+| `trial/state.ts:83` | Uses the factory’s tile layout as a validation reference. |
+| `persistence/session-records.ts:35,130` | Supplies historical-validation defaults and an outside-world validation scaffold; does not create a new playable session. |
+
+The real UI path is `CharacterLifeApp → createCharacterLifeSession → createNpcWorldSession → createWorldSession`. The new seed tests exercise both world creation and Character Life creation.
+
+`fixtures/society-v8/new-game.json` correctly remains byte-identical to b31dc02: it is the **standalone tile-factory fixture**, whose world seed is still 2026. Its generator calls `createSocietyState()` directly. The nine `life-*` fixtures use the Character Life path and correctly receive the revised seeded Markets.
+
+**Catalog, validation and command checks**
+
+| Requirement | Review result |
+|---|---|
+| Catalog content | 26 wearables: 9 Common, 9 Rare, 4 Epic, 4 Legendary; 3 Heal Potions; 15 materials. |
+| Slots and kinds | Common/Rare coverage for all eight everyday slots, both kinds represented; Equipment→weapon, Accessory→earrings/necklace/ring/hand, Outfit→top/bottom/shoes/set. |
+| Sets | Common and Rare sets present. Main/secondary bonuses and Player regen multiply by three in the applicable calculations. |
+| Legendary items | Warden’s Oath→`warden`; Crown of Embers→`crown`; Ironhide Gloves→`ironhide`; Ledger of Plenty→`ledger`, with the approved kinds and slots. Their gameplay effect integration remains PR B. |
+| Materials | Mine: Iron/Silver/Gold/Ruby; Quarry: Glass/Nitrate/Amethyst; Logging: Paper/Rubber; Weaver and Sheep Pasture: Linen/Wool/Silk; Herb Garden: Green/Red/Purple Leaf. |
+| Validator messages | `CatalogError` constructs `${ref}.${field}: ${rule}`. The rarity case is exactly `items.json#iron.rarity: expected one of common|rare|epic|legendary`. |
+| JSON import | Uses `with { type: 'json' }`. Catalog and trial exports are recursively frozen. |
+| State constraints | Unique instance ids, existing catalog ids, category/kind/slot checks, set exclusion, caps, safe integer ids/counts and material stacks 1–999 are enforced; session ownership gap is finding 2. |
+| Command atomicity | Mutations occur on a detached clone. Failure paths do not publish it. Gold subtraction is preceded by affordability checks; sale arithmetic and revision increments reject unsafe values. |
+| Phase / revision / errors | Item handler requires Planning, rejects fallen cities, checks revision and uses the specified item error codes. The outer dispatcher retains its existing malformed-command/invalid-session errors. |
+| Resale | Floors 3000-bps resale to milli-Gold. Legendary wearables and materials cannot be sold. |
+| Potions | Affect Player only, consume one instance and clamp health at 100. |
+| Potion shops | Hospital requires enabled status, full staffing, current upkeep affordability and herbs. An enabled Drug Store branch exists, but normal PR A construction cannot build it; PR B enables that building. |
+| Randomness / context | Item RNG uses its own seeded generator and specified salts; it does not advance crime RNG. Context construction uses fresh result objects and does not mutate the session. |
+| Item records | `item:<id>` records carry `defId` and `place`; the city record omits all four instance collections. Unknown places produce an `items:item:<id>` `StoreRecordError` reference. |
+| Historical saves | v7 is recognized as historical by stored-city validation and refused by current checkpoint import with the existing incompatibility response. No v7 fixture bytes changed. |
+
+Hash pins were independently recomputed from the committed JSON and match:
+
+```text
+SOCIETY_TRIAL before
+702c65dd3836e476f85411b395f0219980c8e1677a8700be1c05a02a6010a4a8
+SOCIETY_TRIAL after
+d390d44efdd2fba06fd4d8c0812e83837ef25b5d84e19956bb5ff00a0dbcac80
+ITEM_CATALOG
+fa866064967ee36dac69a3b8c5c6090bb2b40b7236c3f104d5a8e89d84e974c6
+ITEM_TRIAL
+fcdbbc87ed52f6df25246e044b25e3c6acbd56de98360f31b7a16ec4a3b5e198
+```
+
+The only `tuning.json` change is `SOCIETY_TRIAL.rulesetId` from 07 to 08. No existing catalog pin besides `SOCIETY_TRIAL` changed.
+
+**Existing-test inventory and golden verification**
+
+The [whole-PR inventory](C:/Users/Admin/.t3/local-drafts/p6a-prA/fix1/whole-pr-existing-test-edits.md) matches the actual zero-context diff: **29 existing test files, 38 hunks, 38 inventory entries, zero unmatched edits**. Each recorded before/after block was compared against Git output.
+
+The close inspection of the three fix-round test files found:
+
+| File | Changes |
+|---|---|
+| `trial/__tests__/society.test.ts` | Preserves the default-factory Market assertion; adds the exact session-seeded item expectation to the world-session assertion. |
+| `world/__tests__/session.test.ts` | Preserves setup, exact whole-city equality and outside-world expectations; supplies exact Market literals for the two tested seeds. |
+| `simulation/src/__tests__/law-week.test.ts` | Preserves the law-free gameplay comparison and settlement equality; adds the approved item shape with corrected Market literals. |
+
+No existing matcher, non-item expectation, timeout, threshold or setup was loosened. Catalog pins are separately authorized by Decision 9.
+
+Both committed comparison scripts were reviewed and executed as **read-only artifact checks**, not test runners:
+
+| Artifact check | Result |
+|---|---|
+| `review-fix1-path-diff.ts` | Exit **0**, UTC `2026-11-13T18:23:22Z`. All three golden seeds and nine Life fixtures changed only Market `defId` paths; standalone tile fixture unchanged. |
+| `golden-path-diff.ts` against the preserved main baseline | Exit **0**, UTC `2026-11-13T18:24:00Z`. All three seeds differ only at `city.society.rulesetId` and `city.society.items` in decoded state. |
+| Preserved golden baseline | Independently verified byte-equal to the `c4d3dc4` Git blob. |
+| Inventory/hash/count inspection | Exit **0**, UTC `2026-11-13T18:23:46Z`. |
+| Historical v7 directory | No changed files against the main base. |
+
+The fix-round script’s comparison is sound **for these artifacts**: it checks scenario summaries and envelope equality, recursively checks changed paths and constrains them more narrowly than correction 3—to `city.society.items.market.*`. Its output matches the committed output apart from the execution timestamp. It is not a general canonical-JSON verifier: property-order-only differences are not reported by its recursive comparison.
+
+The generation logs identify the existing four fixture-generator test files and golden-generator test, with recorded exit 0. I inspected that provenance without rerunning either generator.
+
+**Per-file reading and count reconciliation**
+
+`D` means the **entire individual file diff** was read, including every hunk. `S` means the large JSON was parsed and structurally compared, its blob identified, and its provenance checked instead of dumping the full blob.
+
+All **55 D-file** addition/deletion counts were also programmatically reconciled against `git diff --numstat`. The **11 S-files** account for the remaining JSON changes.
+
+```text
+Mode   +   −  Path
+D     10   1  packages/core/src/__tests__/catalog-data.test.ts
+D     45   0  packages/core/src/__tests__/items-catalog.test.ts
+D    510   0  packages/core/src/data/items.json
+D      1   1  packages/core/src/data/tuning.json
+D     46   2  packages/core/src/data/validate.ts
+D      1   0  packages/core/src/index.ts
+D      1   1  packages/core/src/trial/__tests__/crime.test.ts
+D      1   1  packages/core/src/trial/__tests__/crisis.test.ts
+D     31   0  packages/core/src/trial/__tests__/items-canonical.test.ts
+D     52   0  packages/core/src/trial/__tests__/items.test.ts
+D      1   1  packages/core/src/trial/__tests__/law.test.ts
+D      1   1  packages/core/src/trial/__tests__/order.test.ts
+D      1   1  packages/core/src/trial/__tests__/outside.test.ts
+D     29   2  packages/core/src/trial/__tests__/society.test.ts
+D      2   2  packages/core/src/trial/crisis.ts
+D    120   0  packages/core/src/trial/items.ts
+D      8   4  packages/core/src/trial/society.ts
+D     27   0  packages/core/src/world/__tests__/item-market-seed.test.ts
+D     19   1  packages/core/src/world/__tests__/session.test.ts
+D      2   0  packages/core/src/world/session.ts
+
+D      2   2  packages/persistence/src/__tests__/character-life-save.test.ts
+S      1   0  packages/persistence/src/__tests__/fixtures/society-v8/life-5-weeks.json
+S      1   0  packages/persistence/src/__tests__/fixtures/society-v8/life-crime-death.json
+S      1   0  packages/persistence/src/__tests__/fixtures/society-v8/life-crime-raid.json
+S      1   0  packages/persistence/src/__tests__/fixtures/society-v8/life-crime-robbery.json
+S      1   0  packages/persistence/src/__tests__/fixtures/society-v8/life-crime-wound.json
+S      1   0  packages/persistence/src/__tests__/fixtures/society-v8/life-demand-card.json
+S      1   0  packages/persistence/src/__tests__/fixtures/society-v8/life-laws.json
+S      1   0  packages/persistence/src/__tests__/fixtures/society-v8/life-new-game.json
+S      1   0  packages/persistence/src/__tests__/fixtures/society-v8/life-rebellion-last-week.json
+S      1   0  packages/persistence/src/__tests__/fixtures/society-v8/new-game.json
+D     48   0  packages/persistence/src/__tests__/item-records.test.ts
+D     48   0  packages/persistence/src/__tests__/items-canonical.test.ts
+D      1   1  packages/persistence/src/__tests__/session-records.test.ts
+D      7   7  packages/persistence/src/__tests__/society-new-game-fixture.test.ts
+D     33   0  packages/persistence/src/__tests__/society-v7-fixture.test.ts
+D     60  10  packages/persistence/src/session-records.ts
+
+D      1   1  packages/simulation/src/__tests__/crime-fixtures.test.ts
+D      1   1  packages/simulation/src/__tests__/crisis-fixtures.test.ts
+D     14   0  packages/simulation/src/__tests__/fixtures/catalog-golden-path-diff.txt
+S      3   3  packages/simulation/src/__tests__/fixtures/catalog-golden.json
+D     33   0  packages/simulation/src/__tests__/fixtures/golden-path-diff.ts
+D     53   0  packages/simulation/src/__tests__/fixtures/review-fix1-path-diff.ts
+D     49   0  packages/simulation/src/__tests__/fixtures/review-fix1-path-diff.txt
+D     81   0  packages/simulation/src/__tests__/item-command.test.ts
+D      1   1  packages/simulation/src/__tests__/law-fixture.test.ts
+D     15   2  packages/simulation/src/__tests__/law-week.test.ts
+D      6   1  packages/simulation/src/character-life-command.ts
+D     97   0  packages/simulation/src/item-command.ts
+
+D      1   1  packages/ui/src/CityFallen.svelte
+D      1   1  packages/ui/src/__tests__/character-life-session.test.ts
+D      1   1  packages/ui/src/__tests__/crime-view.test.ts
+D      1   1  packages/ui/src/__tests__/world-session.test.ts
+D      5   0  packages/ui/src/__tests__/wounds-end-copy.test.ts
+D      2   1  packages/ui/src/society-view.ts
+
+D      6   1  tests/e2e/character-life-navigation.spec.ts
+D      1   1  tests/e2e/crime.spec.ts
+D      1   1  tests/e2e/crisis.spec.ts
+D      1   1  tests/e2e/garrison.spec.ts
+D      1   1  tests/e2e/laws.spec.ts
+D      1   1  tests/e2e/ledger.spec.ts
+D      1   1  tests/e2e/society.spec.ts
+D      1   1  tests/e2e/storage.spec.ts
+D      1   1  tests/e2e/tile-save.spec.ts
+D      2   2  tests/e2e/title.spec.ts
+D      1   1  tests/e2e/world-session.spec.ts
+    1499  64  TOTAL — 66 files
+```
+
+For each structurally inspected fixture, the committed blob is:
+
+| Fixture | Blob |
+|---|---|
+| `society-v8/life-5-weeks.json` | `074fa6252c43a35e4e9a848bc73f9e7dc72678d6` |
+| `society-v8/life-crime-death.json` | `1628d205ce20f59b93477eccd453430184c62409` |
+| `society-v8/life-crime-raid.json` | `8130786fe5934d8ffe95be47ab5462a001ff1bbb` |
+| `society-v8/life-crime-robbery.json` | `700ee73357a3b390d0defa7ecc5e05c085d9d8a2` |
+| `society-v8/life-crime-wound.json` | `2bb1d05e0e4b8b9e4e985b07977cf4c3b8591b99` |
+| `society-v8/life-demand-card.json` | `e7258579510f2af4bb1f4f7d8d79b79c0d9c2d0d` |
+| `society-v8/life-laws.json` | `f98ef1504ae6a08c2fb3c62d65afd3ace0960462` |
+| `society-v8/life-new-game.json` | `cfe754881a05f4950af9cc357bd18c5cea567287` |
+| `society-v8/life-rebellion-last-week.json` | `36b7015406c3664579c96a5f8343bd60381b6b95` |
+| `society-v8/new-game.json` | `412fc65cca52621afb7e1a083096e8e72e712ec1` |
+| `catalog-golden.json` | `a1e48c030706e38d346dde8ea5cada5e03974612` |
+
+**Limits:** This is a complete static diff review with executed read-only artifact comparisons. No tests, builds, installs, source edits, fixture regeneration, pushes or merges were performed. Runtime gate/smoke results remain Claude’s responsibility; Builder-reported results were not substituted for independent execution. No usable graph index existed for this worktree, so call-path checks used direct source inspection and repository searches.
+
+**Next action: give Builder A the two P2 findings above for the next bounded correction.**
+
+[user]
+Astra, READ-ONLY re-review round 3 of P6-A PR A after review fix round 2. Do not run tests or builds (read-only artifact scripts like before are fine); Claude is running gates 1–7 and the full CI=1 smoke in this worktree now.
+
+Worktree: C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01, branch feat/p6a-item-core (pushed). Confirm HEAD == 4afe92763856cc3f82445803298beacc7ccedf68, tree 8e95ed5e017bff02d4ff43d61789244ce2ff6519. Your round 2 reviewed f1944ce completely (66 files) and found two P2. New range f1944ce..4afe927: 2 commits, 4 files, +135/−5 (items.ts, character/validate.ts, two new tests).
+
+Binding plan: C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-ba75ec8.md — **Plan correction 4** allows `packages/core/src/character/validate.ts` in PR A only for the equipment-owner check. Owner (Tân), 2026-11-14, verbatim: "Allow validate.ts in PR A (Recommended)". All earlier owner quotes stand as in round 2.
+
+Builder evidence: C:/Users/Admin/.t3/local-drafts/p6a-prA/fix2/README.md (RED 12 failed / 3 passed at f1944ce, GREEN 15/15; 0 existing-test edits this round; immutable-check.txt: 21 golden/fixture files and the pin files byte-identical to f1944ce).
+
+Check:
+1. **Round-2 finding 1 closed.** `isItemsState` (items.ts:59 onward) now accepts only the form the item-table rebuild (session-records.ts ~105–125) produces. Verify against the rebuild code exactly: item-state key order, `{id, defId}` key order, `{item, expiresWeek}` key order, slot order inside an owner (the validator now requires ascending item id across slots — is that exactly the rebuild order?), owner-entry order including JS integer-like key enumeration. Are `market`, `goals` and `materials` stored as-is in the city record (so their order needs no check), or rebuilt?
+2. **No accepted command produces a state the validator now refuses.** Find how each item command orders equipment slots and owner entries (your round 2 said "every successful item command sorts equipment entries and slots" — sorted by what key?). If commands sort slots by slot name while the validator wants ascending item id, that is a defect: give a concrete command sequence.
+3. **Round-2 finding 2 closed.** `isCharacterLifeSessionState` (character/validate.ts:86) refuses unknown equipment owners and accepts the Player and real NPCs; the UI and persistence checkpoint import both go through it. Edit limited to that check (correction 4). Any other caller that now refuses a state it used to accept, and is that correct?
+4. **Scope:** only those 4 files changed since f1944ce; no golden/fixture/pin byte change; no docs/ files; whole-PR allowlist still holds with correction 4.
+5. The two new tests (item-owner-import.test.ts, items-rebuild-order.test.ts) actually exercise the failing shapes and the real import path, and assert bytes, not just deep equality.
+6. Anything else in the new code, P0–P3 with file:line.
+
+Reply PASS or FAIL for the whole PR at 4afe927 (your round 2 full review plus this delta), with findings, what you read, and limits. Do not edit, install, run tests or builds, push or merge.
+
+[assistant]
+Round 3 will compare the four-file delta against the record rebuild and command ordering, then verify the unchanged fixture and pin files. Tests and builds remain untouched.
+
+
+[assistant]
+Both prior findings are closed in the inspected code. Commands sort equipment slots by **instance id**, not slot name, and owner ordering matches reconstruction—including integer-like owner keys. The owner check now covers import, export and checkpoint preparation through the complete-session validator.
+
+
+[assistant]
+**PASS — independent review of the whole PR at `4afe927` is complete. Both round-2 P2 findings are closed; no new P0–P3 findings.** This verdict combines the complete review at `f1944ce` with the four-file delta reviewed here. Runtime gate and smoke acceptance remains with Claude.
+
+| Identity | Confirmed |
+|---|---|
+| PR | [P6-A PR A #93](https://github.com/tanntran2000/Build-Settlement/pull/93) |
+| HEAD | `4afe92763856cc3f82445803298beacc7ccedf68` |
+| Tree | `8e95ed5e017bff02d4ff43d61789244ce2ff6519` |
+| Delta from reviewed `f1944ce` | **2 commits, 4 files, +135/−5** |
+| Whole PR against `c4d3dc4` | **69 files, +1630/−65** |
+| Final working-tree status | Clean |
+
+**1. Canonical item representation — closed**
+
+The revised [items.ts](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/items.ts:59) matches the unchanged [item-record reconstruction](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/session-records.ts:105):
+
+| Reconstructed layer | Validator requirement | Match |
+|---|---|---|
+| Item-state object | `nextItemId, inventory, consumables, materials, storage, equipped, market, goals` | Exact rebuild literal order |
+| Item instances | `{ id, defId }` | Exact rebuild literal order |
+| Storage wrappers | `{ item, expiresWeek }` | Exact rebuild literal order |
+| Inventory, consumables, storage | Strictly ascending instance ids | Matches globally id-sorted records filtered into each list |
+| Equipment slots within an owner | Strictly ascending instance ids | Matches the order that owner’s records are encountered |
+| Equipment owners | Lowest equipped instance id first, subject to JavaScript integer-key enumeration | Matches reconstruction |
+
+The owner-order check uses `Object.fromEntries` before examining keys. That correctly reproduces JavaScript’s treatment of integer-like keys: `"1"` and `"2"` enumerate numerically before other string keys even when their first item ids imply a different insertion order. Prototype-named owners are handled as own data properties.
+
+`materials`, `market` and `goals` are **retained in the city record and reused during reconstruction**. Their internal property order is preserved; they do not need the new ordering restrictions applied to reconstructed layers.
+
+The formerly accepted byte-changing representations—reversed equipment slots, reordered owners, reversed instance keys, reversed storage-wrapper keys and reordered item-state keys—are now rejected at the checkpoint boundary.
+
+**2. Command ordering remains compatible**
+
+The common success path in [item-command.ts:90](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/item-command.ts:90) sorts:
+
+- **Slots by the contained item’s numeric `id`**, using `a[1].id - b[1].id`.
+- **Owners by their minimum equipped item id**, followed by `Object.fromEntries`, which applies the same integer-key enumeration rules as reconstruction.
+
+It does **not** sort slots alphabetically. There is no slot-name-versus-item-id mismatch.
+
+| Commands | Canonicality reasoning |
+|---|---|
+| `BUY_ITEM`, `BUY_POTION` | Create `{id, defId}` in the required order; `receive` sorts the destination list by id. |
+| `EQUIP_ITEM`, `UNEQUIP_ITEM` | Returned items go through `receive`; the final common path sorts equipment; removing the last worn item deletes the empty owner entry. |
+| `CLAIM_STORED_ITEM` | Moves the existing canonical instance through `receive`; removing its storage entry preserves remaining storage order. |
+| `SELL_ITEM`, `DESTROY_ITEM`, `USE_CONSUMABLE` | Remove entries without disturbing remaining order. |
+| `SELL_MATERIAL` | Changes retained material data; the same final equipment canonicalization still runs. |
+
+The item-state root order survives cloning and assignment to existing properties. No inspected command path produces a new representation that the stricter validator rejects solely because of ordering.
+
+**3. Unknown equipment owners — closed**
+
+The change in [character/validate.ts:79](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/character/validate.ts:79) first validates the session, Player and NPC profiles, then requires every equipment owner to be either `PLAYER_CHARACTER_ID` or an actual NPC id.
+
+The change is limited to the equipment-owner check authorized by [Plan correction 4](C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-ba75ec8.md:48), with the owner decision:
+
+> “Allow validate.ts in PR A (Recommended)”
+
+I traced its use through the persistence codec and UI checkpoint paths:
+
+| Caller | Effect |
+|---|---|
+| `deserializeCharacterLifeSave` | Rejects imported checkpoints with nonexistent equipment owners. |
+| `serializeCharacterLifeSave` | Also refuses to export or locally save that malformed session. This is correct: such a checkpoint cannot be reconstructed consistently. |
+| `prepareCharacterLifeLoad` | Checks both captured input and prepared result before publishing a loaded session. |
+| `readLocalCharacterLife` | Checks the reconstructed session before accepting Continue. |
+| `createCharacterLifeSession` | Uses the stricter final validation; ordinary New Game has empty equipment and remains valid. |
+
+`isLiveCharacterLifeSessionState` is unchanged. This is consistent with the bounded correction: imports and checkpoint preparation now exclude unknown owners, while item commands independently validate against the actual roster.
+
+**4. Tests and immutable artifacts**
+
+Both new test files were read in full.
+
+| New test | What it verifies |
+|---|---|
+| [item-owner-import.test.ts](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/__tests__/item-owner-import.test.ts) | Unknown owners fail both the core boundary and the real persistence importer used by the UI. Player and real-NPC controls succeed, then compare the complete serialized text after record round trip. |
+| [items-rebuild-order.test.ts](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/__tests__/items-rebuild-order.test.ts) | Exercises all eight identified ordering mutations; checks export/import refusal and unchanged input. Canonical counterparts use reversed record input and **`Buffer` byte equality**, not merely deep equality. The additional command case covers numeric and prototype-named owners. |
+
+The tests exercise the relevant codec path directly; they are not browser tests. Their assertions genuinely cover bytes and rejection behavior. I did **not** run them.
+
+I read and executed the read-only [immutable-check script](C:/Users/Admin/.t3/local-drafts/p6a-prA/fix2/check-immutable.mjs):
+
+- **Exit code: 0**
+- **UTC: `2026-11-14T01:40:38.539Z`**
+- **24 committed blobs unchanged:** 21 golden/v7/v8 fixture files plus three catalog/pin files.
+- Working fixture bytes are identical to `f1944ce`. The three working catalog/pin source files match after checkout CRLF normalization; their committed blobs are byte-identical.
+
+No regeneration or pin update occurred in this delta.
+
+**5. Scope and reading reconciliation**
+
+Each changed file’s complete individual diff was read without truncation:
+
+| File | Added | Removed | Read |
+|---|---:|---:|---|
+| `packages/core/src/character/validate.ts` | 5 | 1 | Full delta and surrounding validation functions |
+| `packages/core/src/trial/items.ts` | 12 | 4 | Full delta, compared with the previously reviewed validator and rebuild |
+| `packages/persistence/src/__tests__/item-owner-import.test.ts` | 36 | 0 | Entire new file |
+| `packages/persistence/src/__tests__/items-rebuild-order.test.ts` | 82 | 0 | Entire new file |
+| **Total** | **135** | **5** | **4 files** |
+
+Additional reads covered the complete item-command implementation, item-table write/rebuild logic, UI checkpoint preparation/save/load paths, validator callers, correction 4, Builder README and immutable-check script.
+
+Only those four files changed since `f1944ce`. There are **zero existing-test edits** in this round and no `docs/` changes. The whole-PR allowlist remains satisfied with correction 4. The prior full review’s catalog, fixture, inventory, scope and PR-B-exclusion conclusions remain applicable because those files are unchanged.
+
+**Limits:** PASS is the independent source-review verdict, supported by the executed immutable-artifact check. No tests, builds, installs, edits, pushes or merges were performed. Builder-reported RED/GREEN and gate totals were not treated as independently executed results. Claude’s running gates and smoke still determine runtime acceptance.
+
+**Next action: attach this PASS verdict to PR #93’s verification evidence alongside Claude’s results for `4afe927`.**

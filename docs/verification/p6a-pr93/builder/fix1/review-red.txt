@@ -1,0 +1,82 @@
+HEAD: b31dc0268279abcb29483d372cd17d156fa825f0
+Tree: cb345d790c050f9f240d695331db45a79f56177d
+UTC start: 2026-11-13T16:58:34.690Z
+Command: npx vitest run packages/core/src/world/__tests__/item-market-seed.test.ts packages/core/src/trial/__tests__/items-canonical.test.ts packages/persistence/src/__tests__/items-canonical.test.ts
+Exit: 1
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/core/src/trial/__tests__/items-canonical.test.ts (6 tests | 5 failed) 22ms
+   × rejects non-canonical inventory ids without changing the input 13ms
+   × rejects non-canonical consumable ids without changing the input 2ms
+   × rejects non-canonical storage ids without changing the input 1ms
+   × rejects non-canonical empty player equipment without changing the input 1ms
+   × rejects non-canonical empty NPC equipment without changing the input 1ms
+ ❯ packages/core/src/world/__tests__/item-market-seed.test.ts (4 tests | 2 failed) 72ms
+   × draws different week-1 Markets for different world-session seeds 24ms
+   × draws different week-1 Markets through the real New Game path 18ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/core/src/trial/__tests__/items-canonical.test.ts > rejects non-canonical inventory ids without changing the input
+ FAIL  packages/core/src/trial/__tests__/items-canonical.test.ts > rejects non-canonical consumable ids without changing the input
+ FAIL  packages/core/src/trial/__tests__/items-canonical.test.ts > rejects non-canonical storage ids without changing the input
+ FAIL  packages/core/src/trial/__tests__/items-canonical.test.ts > rejects non-canonical empty player equipment without changing the input
+ FAIL  packages/core/src/trial/__tests__/items-canonical.test.ts > rejects non-canonical empty NPC equipment without changing the input
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ packages/core/src/trial/__tests__/items-canonical.test.ts:17:60
+     15|   mutate(items);
+     16|   const before = structuredClone(items);
+     17|   expect(isItemsState(items, ['player', 'npc_starter_1'])).toBe(false);
+       |                                                            ^
+     18|   expect(items).toEqual(before);
+     19| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯
+
+ FAIL  packages/core/src/world/__tests__/item-market-seed.test.ts > draws different week-1 Markets for different world-session seeds
+AssertionError: expected [ Array(8) ] to not deeply equal [ Array(8) ]
+
+Compared values have no visual difference.
+
+ ❯ packages/core/src/world/__tests__/item-market-seed.test.ts:17:51
+     15|
+     16| it('draws different week-1 Markets for different world-session seeds',…
+     17|   expect(world(0).city.society!.items.market).not.toEqual(world(42).ci…
+       |                                                   ^
+     18| });
+     19|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯
+
+ FAIL  packages/core/src/world/__tests__/item-market-seed.test.ts > draws different week-1 Markets through the real New Game path
+AssertionError: expected [ Array(8) ] to not deeply equal [ Array(8) ]
+
+Compared values have no visual difference.
+
+ ❯ packages/core/src/world/__tests__/item-market-seed.test.ts:21:53
+     19|
+     20| it('draws different week-1 Markets through the real New Game path', ()…
+     21|   expect(newGame(0).city.society!.items.market).not.toEqual(newGame(42…
+       |                                                     ^
+     22| });
+     23|
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+
+ Test Files  2 failed | 1 passed (3)
+      Tests  7 failed | 5 passed (12)
+   Start at  23:58:37
+   Duration  1.53s (transform 1.49s, setup 0ms, import 1.96s, tests 245ms, environment 0ms)
+
+
+UTC end: 2026-11-13T16:58:38.819Z

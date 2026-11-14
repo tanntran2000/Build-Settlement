@@ -1,0 +1,10 @@
+import { spawnSync } from 'node:child_process';
+import { writeFileSync } from 'node:fs';
+const [name, command] = process.argv.slice(2);
+const git = arg => spawnSync('git', arg, {encoding:'utf8'}).stdout.trim();
+const start = new Date().toISOString();
+const r = spawnSync(command, {shell:true, encoding:'utf8', maxBuffer:64*1024*1024, env:process.env});
+const log = `HEAD: ${git(['rev-parse','HEAD'])}\nTree: ${git(['rev-parse','HEAD^{tree}'])}\nUTC start: ${start}\nUTC end: ${new Date().toISOString()}\nCommand: ${command}\nExit: ${r.status}\n\n${r.stdout ?? ''}${r.stderr ?? ''}${r.error ?? ''}`;
+writeFileSync(new URL(`./${name}.txt`, import.meta.url), log, 'utf8');
+console.log(log.slice(-6500));
+process.exitCode=r.status ?? 1;

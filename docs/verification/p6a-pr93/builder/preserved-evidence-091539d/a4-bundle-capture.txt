@@ -1,0 +1,39 @@
+HEAD: ff9984e58002b4e915a9f51e0bb65f15eb0257a8
+Tree: af5c55a33d7d2f284c5ba79b978f553667a0da24
+UTC start: 2026-11-13T14:28:09.799Z
+UTC end: 2026-11-13T14:28:10.166Z
+Command: node docs/verification/p6a-prA-builder/measure-bundle.mjs --capture
+Exit: 0
+
+{
+  "utc": "2026-11-13T14:28:09.951Z",
+  "head": "ff9984e58002b4e915a9f51e0bb65f15eb0257a8",
+  "files": [
+    {
+      "name": "index-B_jDH5nO.js",
+      "bytes": 359928,
+      "gzipBytes": 114123,
+      "sha256": "c9bd8661db1ac2491d3f01721a20022be57fc15a8c6bda3ad9ad881ff393f885"
+    },
+    {
+      "name": "index-DdNtS9j1.css",
+      "bytes": 28127,
+      "gzipBytes": 5814,
+      "sha256": "957e3db03aef271e79b33fd544374adbc99e7d2664fc35744b96835f0d072c0d"
+    }
+  ],
+  "baselineGzipKB": {
+    "js": 108.46,
+    "css": 5.81
+  },
+  "gzipBytes": {
+    "js": 114123,
+    "css": 5814
+  },
+  "growthGzipKB": {
+    "js": 5.663000000000011,
+    "css": 0.004000000000000448
+  }
+}
+PASS: bundle budget and raw artifact verified.
+End of recorded output.

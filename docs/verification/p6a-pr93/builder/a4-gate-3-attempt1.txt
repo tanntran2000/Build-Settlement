@@ -1,0 +1,57 @@
+HEAD: 1ba12b1b3128070ea8427ed735c22d5c1a923b20
+Tree: fedd08750e1fee0812ad6e5ff04990b554b9a42e
+UTC start: 2026-11-13T14:30:13.061Z
+Command: npm run typecheck
+Exit: 2
+
+
+> build-settlement@0.1.0 typecheck
+> npm run typecheck:core && npm run typecheck:simulation && npm run typecheck:persistence && npm run typecheck:content && npm run typecheck:ui
+
+
+> build-settlement@0.1.0 typecheck:core
+> tsc -p packages/core/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:simulation
+> tsc -p packages/simulation/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:persistence
+> tsc -p packages/persistence/tsconfig.json --noEmit
+
+packages/persistence/src/__tests__/item-records.test.ts(6,45): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/character-life-command.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via '../../../simulation/src/character-life-command.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/__tests__/item-records.test.ts'
+    Imported via './character-life-command.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/item-command.ts'
+packages/simulation/src/character-life-command.ts(2,68): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/world-npc.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src'. 'rootDir' is expected to contain all source files.
+packages/simulation/src/character-life-command.ts(3,78): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/item-command.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src'. 'rootDir' is expected to contain all source files.
+packages/simulation/src/crime-week.ts(2,39): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/society-facilities.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via './society-facilities.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/crime-week.ts'
+    Imported via './society-facilities.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/tile-trial-week.ts'
+packages/simulation/src/law-week.ts(2,46): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/society-week.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via './society-week.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/law-week.ts'
+    Imported via './society-week.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/society-facilities.ts'
+    Imported via './society-week.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/tile-trial-week.ts'
+    Imported via './society-week.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/tile-trial.ts'
+packages/simulation/src/tile-trial-immigration.ts(2,146): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/weekly.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./weekly.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/tile-trial-immigration.ts'
+    Imported via "./weekly.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/tile-trial-week.ts'
+packages/simulation/src/tile-trial-week.ts(2,55): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/law-week.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src'. 'rootDir' is expected to contain all source files.
+packages/simulation/src/tile-trial-week.ts(3,34): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/crime-week.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src'. 'rootDir' is expected to contain all source files.
+packages/simulation/src/tile-trial-week.ts(4,35): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/crisis-week.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src'. 'rootDir' is expected to contain all source files.
+packages/simulation/src/tile-trial-week.ts(5,70): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/order-week.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src'. 'rootDir' is expected to contain all source files.
+packages/simulation/src/tile-trial-week.ts(9,54): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/outside-week.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src'. 'rootDir' is expected to contain all source files.
+packages/simulation/src/tile-trial-week.ts(10,41): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/tile-trial-immigration.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src'. 'rootDir' is expected to contain all source files.
+packages/simulation/src/world-npc.ts(2,27): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/tile-trial-week.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Imported via "./tile-trial-week.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/world-npc.ts'
+    Imported via './tile-trial-week.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/law-week.ts'
+    Imported via './tile-trial-week.js' from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/crisis-week.ts'
+    Imported via "./tile-trial-week.js" from file 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/tile-trial.ts'
+packages/simulation/src/world-npc.ts(3,41): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/tile-trial.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src'. 'rootDir' is expected to contain all source files.
+
+UTC end: 2026-11-13T14:30:27.359Z

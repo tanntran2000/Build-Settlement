@@ -1,0 +1,12 @@
+HEAD: 1ba12b1b3128070ea8427ed735c22d5c1a923b20
+Tree: fedd08750e1fee0812ad6e5ff04990b554b9a42e
+UTC start: 2026-11-13T14:31:26.694Z
+UTC end: 2026-11-13T14:31:29.852Z
+Command: npm run typecheck:persistence
+Exit: 0
+
+
+> build-settlement@0.1.0 typecheck:persistence
+> tsc -p packages/persistence/tsconfig.json --noEmit
+
+End of recorded output.

@@ -1,0 +1,17 @@
+HEAD: f1944ce047b59654f75365dfea4cc8a2f83dddec
+Tree: a2456278c9cccf837ef0041cba44ed1f9e7ac7fc
+UTC start: 2026-11-14T01:01:25.324Z
+Command: npx vitest run packages/persistence/src/__tests__/items-rebuild-order.test.ts packages/persistence/src/__tests__/item-owner-import.test.ts packages/persistence/src/__tests__/items-canonical.test.ts packages/persistence/src/__tests__/item-records.test.ts packages/persistence/src/__tests__/character-life-save.test.ts packages/core/src/trial/__tests__/items.test.ts packages/core/src/trial/__tests__/items-canonical.test.ts packages/simulation/src/__tests__/item-command.test.ts packages/ui/src/__tests__/character-life-session.test.ts
+Exit: 0
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  9 passed (9)
+      Tests  161 passed (161)
+   Start at  08:01:27
+   Duration  3.83s (transform 5.63s, setup 0ms, import 9.29s, tests 5.95s, environment 6ms)
+
+
+UTC end: 2026-11-14T01:01:31.527Z

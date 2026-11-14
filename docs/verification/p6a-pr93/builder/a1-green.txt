@@ -1,0 +1,16 @@
+HEAD: c4d3dc4fde78d004292f9038a4285cdd6f8186a7
+Tree: 914488a9d93457a98ebd4b4cb2af5b0074bae7fa
+UTC start: 2026-11-13T14:07:48.694Z
+UTC end: 2026-11-13T14:07:53.286Z
+Command: npx vitest run packages/core/src/__tests__/items-catalog.test.ts packages/core/src/__tests__/catalog-data.test.ts
+Exit: 0
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  2 passed (2)
+      Tests  49 passed (49)
+   Start at  21:07:51
+   Duration  1.21s (transform 644ms, setup 0ms, import 821ms, tests 169ms, environment 0ms)
+

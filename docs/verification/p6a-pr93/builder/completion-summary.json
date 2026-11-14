@@ -1,0 +1,156 @@
+{
+  "status": "BUILDER_VERIFIED",
+  "utc": "2026-11-13T16:00:45.033Z",
+  "head": "b31dc0268279abcb29483d372cd17d156fa825f0",
+  "tree": "cb345d790c050f9f240d695331db45a79f56177d",
+  "base": "c4d3dc4fde78d004292f9038a4285cdd6f8186a7",
+  "gitStatus": "empty",
+  "bindingPlan": "binding-plan-f5c7349.md",
+  "spec": "binding-spec-17e7aaf.md",
+  "commits": [
+    {
+      "sha": "1cd14d55f91c69c037953811574b32347f3fcdc9",
+      "title": "feat(core): item catalog and validator"
+    },
+    {
+      "sha": "bef7b7d71130b0a6abc81e71d842b0d7185e9b29",
+      "title": "feat(core): item state, effective stats and item commands"
+    },
+    {
+      "sha": "ff9984e58002b4e915a9f51e0bb65f15eb0257a8",
+      "title": "feat(persistence): store item instances and pin society v8"
+    },
+    {
+      "sha": "7a2b6cf2f7d5a449ed7238e55c9d98646ac9c160",
+      "title": "test(persistence): import simulation through its public entry point"
+    },
+    {
+      "sha": "31a5903b8a49fa93cec1c2242b650e7300ddb5c7",
+      "title": "test: extend approved P6-A item and wounds shape pins"
+    },
+    {
+      "sha": "b31dc0268279abcb29483d372cd17d156fa825f0",
+      "title": "test(e2e): align city-record expectation with item storage layout"
+    }
+  ],
+  "gates": [
+    {
+      "gate": 1,
+      "command": "git diff --check origin/main...HEAD",
+      "exit": 0
+    },
+    {
+      "gate": 2,
+      "command": "npm run lint",
+      "exit": 0
+    },
+    {
+      "gate": 3,
+      "command": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "gate": 4,
+      "command": "npm run check:architecture",
+      "exit": 0
+    },
+    {
+      "gate": 5,
+      "command": "npm run test:architecture",
+      "exit": 0
+    },
+    {
+      "gate": 6,
+      "command": "npm test",
+      "exit": 0
+    },
+    {
+      "gate": 7,
+      "command": "npm run build",
+      "exit": 0
+    }
+  ],
+  "unit": {
+    "passed": 2342,
+    "files": 109,
+    "timeoutFailures": 0
+  },
+  "architectureTests": {
+    "passed": 154
+  },
+  "smoke": {
+    "ci": 1,
+    "total": 350,
+    "passed": 350,
+    "failed": 0,
+    "exit": 0,
+    "workers": 1,
+    "duration": "30.5m"
+  },
+  "inventory": {
+    "existingFiles": 29,
+    "hunks": 37
+  },
+  "bundle": {
+    "utc": "2026-11-13T15:59:19.682Z",
+    "head": "b31dc0268279abcb29483d372cd17d156fa825f0",
+    "files": [
+      {
+        "name": "index-DdNtS9j1.css",
+        "bytes": 28127,
+        "gzipBytes": 5814,
+        "sha256": "957e3db03aef271e79b33fd544374adbc99e7d2664fc35744b96835f0d072c0d"
+      },
+      {
+        "name": "index-DxQW_VpZ.js",
+        "bytes": 359928,
+        "gzipBytes": 114124,
+        "sha256": "a60dd36cf7452ee0060db48200861815c58b0cd34537c2e68153f4ffc3c9b8c5"
+      }
+    ],
+    "baselineGzipKB": {
+      "js": 108.46,
+      "css": 5.81
+    },
+    "gzipBytes": {
+      "js": 114124,
+      "css": 5814
+    },
+    "growthGzipKB": {
+      "js": 5.6640000000000015,
+      "css": 0.004000000000000448
+    }
+  },
+  "evidence": {
+    "localOnly": true,
+    "preservedRemovedDirectoryFiles": 36,
+    "preservedManifestEntriesVerified": 35,
+    "docsBranchCommitOwner": "Claude",
+    "independentReviewer": "Astra"
+  },
+  "priorSmoke": {
+    "head": "31a5903b8a49fa93cec1c2242b650e7300ddb5c7",
+    "full": {
+      "passed": 349,
+      "failed": 1,
+      "ci": 1,
+      "exit": 1
+    },
+    "singleIsolatedRerun": {
+      "passed": 0,
+      "failed": 1,
+      "ci": 1,
+      "exit": 1
+    },
+    "resolution": "Owner-approved Extension 2 stored-record expectation projection, committed as b31dc02; exact matcher and following preservation assertions unchanged"
+  },
+  "pushed": false,
+  "prCreated": false,
+  "merged": false,
+  "storageReclaimedBytes": 0,
+  "ports": {
+    "4173": "free",
+    "4174": "free"
+  },
+  "finalSmokeArtifacts": 91
+}

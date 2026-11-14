@@ -1,0 +1,16 @@
+HEAD: 7a2b6cf2f7d5a449ed7238e55c9d98646ac9c160
+Tree: 086d7fff169c52b2272e58d5b7a376ee4bbc3b85
+UTC start: 2026-11-13T14:42:47.889Z
+UTC end: 2026-11-13T14:42:52.036Z
+Command: npx vitest run packages/ui/src/__tests__/crime-view.test.ts packages/simulation/src/__tests__/law-week.test.ts
+Exit: 0
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  2 passed (2)
+      Tests  62 passed (62)
+   Start at  21:42:50
+   Duration  1.26s (transform 1.11s, setup 0ms, import 1.49s, tests 241ms, environment 0ms)
+

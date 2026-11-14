@@ -1,0 +1,36 @@
+HEAD: 1cd14d55f91c69c037953811574b32347f3fcdc9
+Tree: f5ed79213326794ea9143618a7a80be52ab6a653
+UTC start: 2026-11-13T14:12:33.917Z
+UTC end: 2026-11-13T14:12:37.841Z
+Command: npx vitest run packages/core/src/trial/__tests__/items.test.ts packages/simulation/src/__tests__/item-command.test.ts packages/ui/src/__tests__/wounds-end-copy.test.ts
+Exit: 1
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/item-command.test.ts (28 tests | 1 failed) 488ms
+   × buys potions at an operating Hospital and rejects absent or idle shops 22ms
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 45 passed (46)
+   Start at  21:12:36
+   Duration  1.50s (transform 1.39s, setup 0ms, import 1.94s, tests 525ms, environment 0ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/item-command.test.ts > buys potions at an operating Hospital and rejects absent or idle shops
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ ok packages/simulation/src/__tests__/item-command.test.ts:10:193
+
+ ❯ packages/simulation/src/__tests__/item-command.test.ts:60:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+

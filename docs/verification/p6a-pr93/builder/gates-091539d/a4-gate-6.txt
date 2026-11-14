@@ -1,0 +1,129 @@
+HEAD: 091539d7aef3a75b07d6dbae425ee87c148e9419
+Tree: 9ff51ddd432a9ebd2713630d0863d300d3ff772b
+UTC start: 2026-11-13T14:33:27.124Z
+Command: npm test
+Exit: 1
+
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/law-week.test.ts (21 tests | 1 failed) 1262ms
+   × preserves the law-free five-week gameplay pin and determinism 994ms
+ ❯ packages/ui/src/__tests__/crime-view.test.ts (41 tests | 1 failed) 80ms
+   × pins both end screens 39ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/law-week.test.ts > preserves the law-free five-week gameplay pin and determinism
+AssertionError: expected { Object (standing, order, ...) } to deeply equal { Object (standing, order, ...) }
+
+- Expected
++ Received
+
+@@ -35,10 +35,60 @@
+      "luminaries": 100,
+      "makers": 0,
+      "merchants": 100,
+    },
+    "desperation": 0,
++   "items": {
++     "consumables": [],
++     "equipped": {},
++     "goals": {
++       "authority": false,
++       "authorityStreak": 0,
++       "calm": false,
++       "rebellionSeen": false,
++       "research": false,
++       "week52": false,
++     },
++     "inventory": [],
++     "market": [
++       {
++         "defId": "common-ring",
++         "priceMilli": 5000,
++       },
++       {
++         "defId": "common-top",
++         "priceMilli": 5000,
++       },
++       {
++         "defId": "common-bottom",
++         "priceMilli": 5000,
++       },
++       {
++         "defId": "common-ring",
++         "priceMilli": 5000,
++       },
++       {
++         "defId": "rare-set",
++         "priceMilli": 15000,
++       },
++       {
++         "defId": "rare-weapon",
++         "priceMilli": 15000,
++       },
++       {
++         "defId": "epic-hand",
++         "priceMilli": 40000,
++       },
++       {
++         "defId": "epic-necklace",
++         "priceMilli": 40000,
++       },
++     ],
++     "materials": {},
++     "nextItemId": 1,
++     "storage": [],
++   },
+    "luxuryStockMilli": 0,
+    "order": {
+      "authority": 39,
+      "crime": 5,
+      "security": 10,
+
+ ❯ packages/simulation/src/__tests__/law-week.test.ts:90:18
+     88|  const {rulesetId:_ruleset,laws:_laws,...society}=s.city.society!;
+     89|  const {rulesetId:_oldRuleset,...oldSociety}=old.city.society;
+     90|  expect(society).toEqual(oldSociety);
+       |                  ^
+     91|  expect(s.city.world.settlements).toEqual(old.city.world.settlements);
+     92| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  packages/ui/src/__tests__/crime-view.test.ts > pins both end screens
+AssertionError: expected { wounds: { …(2) }, …(2) } to deeply equal { rebellion: { …(2) }, …(1) }
+
+- Expected
++ Received
+
+@@ -5,6 +5,10 @@
+    },
+    "rebellion": {
+      "text": "Hunger turned Haven against you.",
+      "title": "The City Has Fallen",
+    },
++   "wounds": {
++     "text": "Your wounds proved fatal.",
++     "title": "Your Lord Has Died",
++   },
+  }
+
+ ❯ packages/ui/src/__tests__/crime-view.test.ts:14:56
+
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+ Test Files  2 failed | 107 passed (109)
+      Tests  2 failed | 2340 passed (2342)
+   Start at  21:33:28
+   Duration  56.03s (transform 10.37s, setup 0ms, import 43.75s, tests 192.61s, environment 62ms)
+
+
+UTC end: 2026-11-13T14:34:24.684Z

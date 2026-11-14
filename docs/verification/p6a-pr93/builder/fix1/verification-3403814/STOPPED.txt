@@ -1,0 +1,1 @@
+﻿Verification intentionally stopped after gate 5 (154/154 passed), before npm test. The final diff inventory exposed an incidental EOF-only hunk in society.test.ts. No test failed, no timeout changed, and no smoke started. Re-run all gates at the corrected clean head.

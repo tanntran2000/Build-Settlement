@@ -1,0 +1,118 @@
+HEAD: 83e38aa317b0d9b9f1785fff594e450fd4d4c13e
+Tree: 6d90357c3fd124af67a9542343243c5dd3b45d7e
+UTC start: 2026-11-13T14:21:11.509Z
+UTC end: 2026-11-13T14:21:15.097Z
+Command: npx vitest run packages/persistence/src/__tests__/item-records.test.ts packages/persistence/src/__tests__/society-v7-fixture.test.ts
+Exit: 1
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/persistence/src/__tests__/item-records.test.ts (4 tests | 4 failed) 67ms
+   × stores all instance locations in items records and round-trips byte-identically in ascending id order 39ms
+   × rejects unknown place with StoreRecordError ref items:item:1 20ms
+   × reads historical v7 records without changing bytes and refuses checkpoint import unchanged 5ms
+   × loads every new v8 Character Life fixture as current and round-trips exact bytes 1ms
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  4 failed | 11 passed (15)
+   Start at  21:21:13
+   Duration  1.07s (transform 945ms, setup 0ms, import 1.30s, tests 139ms, environment 0ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/persistence/src/__tests__/item-records.test.ts > stores all instance locations in items records and round-trips byte-identically in ascending id order
+AssertionError: expected [] to deeply equal [ …(6) ]
+
+- Expected
++ Received
+
+- [
+-   {
+-     "id": "item:1",
+-     "value": {
+-       "defId": "common-ring",
+-       "place": "inventory",
+-     },
+-   },
+-   {
+-     "id": "item:2",
+-     "value": {
+-       "defId": "rare-top",
+-       "place": "inventory",
+-     },
+-   },
+-   {
+-     "id": "item:3",
+-     "value": {
+-       "defId": "heal-potion-1",
+-       "place": "consumables",
+-     },
+-   },
+-   {
+-     "id": "item:4",
+-     "value": {
+-       "defId": "epic-top",
+-       "place": "storage:4",
+-     },
+-   },
+-   {
+-     "id": "item:5",
+-     "value": {
+-       "defId": "common-weapon",
+-       "place": "equipped:player:weapon",
+-     },
+-   },
+-   {
+-     "id": "item:6",
+-     "value": {
+-       "defId": "rare-necklace",
+-       "place": "equipped:npc_starter_1:necklace",
+-     },
+-   },
+- ]
++ []
+
+ ❯ packages/persistence/src/__tests__/item-records.test.ts:10:78
+      8| it('stores all instance locations in items records and round-trips byt…
+      9|  const s=stocked(),before=serializeCharacterLifeSave(s),rows=sessionTo…
+     10|  expect(rows.filter(r=>r.table==='items').map(r=>({id:r.id,value:r.val…
+       |                                                                              ^
+     11|   {id:'item:1',value:{defId:'common-ring',place:'inventory'}},{id:'ite…
+     12|   {id:'item:3',value:{defId:'heal-potion-1',place:'consumables'}},{id:…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  packages/persistence/src/__tests__/item-records.test.ts > rejects unknown place with StoreRecordError ref items:item:1
+AssertionError: expected undefined to be an instance of StoreRecordError
+ ❯ packages/persistence/src/__tests__/item-records.test.ts:23:16
+     21|  const rows=sessionToRecords('main',life());rows.push({slotId:'main',i…
+     22|  let error:unknown;try{recordsToSession(rows);}catch(e){error=e;}
+     23|  expect(error).toBeInstanceOf(StoreRecordError);expect((error as Store…
+       |                ^
+     24| });
+     25| it('reads historical v7 records without changing bytes and refuses che…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  packages/persistence/src/__tests__/item-records.test.ts > reads historical v7 records without changing bytes and refuses checkpoint import unchanged
+StoreRecordError: Invalid store record: city:city
+ ❯ recordsToSession packages/persistence/src/session-records.ts:77:34
+     75|       typeof meta.rulesetId !== 'string' || !count(meta.revision) || !…
+     76|   const city = get('city','city');
+     77|   if (!isStoredCity(city)) throw new StoreRecordError('city:city');
+       |                                  ^
+     78|   if (meta.rulesetId !== city.society?.rulesetId || meta.revision !== …
+     79|   const outside = get('world','outside');
+ ❯ packages/persistence/src/__tests__/item-records.test.ts:27:9
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  packages/persistence/src/__tests__/item-records.test.ts > loads every new v8 Character Life fixture as current and round-trips exact bytes
+Error: ENOENT: no such file or directory, scandir 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\persistence\src\__tests__\fixtures\society-v8\'
+ ❯ packages/persistence/src/__tests__/item-records.test.ts:32:69
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+

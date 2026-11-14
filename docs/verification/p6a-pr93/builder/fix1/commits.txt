@@ -1,0 +1,5 @@
+fbc9ae63464702dfc125f758747e49538021870d fix(core): draw the initial Market from the session seed
+ee5447ab3df1fb2624fd1b3437d4f6f48416e139 fix(core): reject non-canonical item collections
+340381490fafc41debc1ee5b5a9605ce2e1aa6c0 test: refresh item Markets and verify the review fixture diff
+d7866ce66a738cf023875cfa85de20e5e8fdce31 test: preserve the original society test file ending
+f1944ce047b59654f75365dfea4cc8a2f83dddec chore: encode the review path-diff output as UTF-8

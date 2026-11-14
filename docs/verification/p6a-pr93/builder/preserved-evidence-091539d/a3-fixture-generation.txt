@@ -1,0 +1,17 @@
+HEAD: 83e38aa317b0d9b9f1785fff594e450fd4d4c13e
+Tree: 6d90357c3fd124af67a9542343243c5dd3b45d7e
+UTC start: 2026-11-13T14:21:47.957Z
+UTC end: 2026-11-13T14:22:13.622Z
+Command: npx vitest run packages/persistence/src/__tests__/society-new-game-fixture.test.ts packages/simulation/src/__tests__/crisis-fixtures.test.ts packages/simulation/src/__tests__/crime-fixtures.test.ts packages/simulation/src/__tests__/law-fixture.test.ts
+Exit: 0
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  4 passed (4)
+      Tests  55 passed (55)
+   Start at  21:21:50
+   Duration  22.83s (transform 2.61s, setup 0ms, import 3.93s, tests 23.83s, environment 1ms)
+
+End of recorded output.

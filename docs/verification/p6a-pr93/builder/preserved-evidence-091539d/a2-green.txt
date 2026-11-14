@@ -1,0 +1,17 @@
+HEAD: 1cd14d55f91c69c037953811574b32347f3fcdc9
+Tree: f5ed79213326794ea9143618a7a80be52ab6a653
+UTC start: 2026-11-13T14:18:46.677Z
+UTC end: 2026-11-13T14:18:52.530Z
+Command: npx vitest run packages/core/src/trial/__tests__/items.test.ts packages/simulation/src/__tests__/item-command.test.ts packages/ui/src/__tests__/wounds-end-copy.test.ts packages/core/src/trial/__tests__/society.test.ts
+Exit: 0
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  4 passed (4)
+      Tests  65 passed (65)
+   Start at  21:18:50
+   Duration  2.27s (transform 2.55s, setup 0ms, import 3.78s, tests 809ms, environment 1ms)
+
+End of recorded output.

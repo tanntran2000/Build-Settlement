@@ -1,0 +1,17 @@
+HEAD: f1944ce047b59654f75365dfea4cc8a2f83dddec
+Tree: a2456278c9cccf837ef0041cba44ed1f9e7ac7fc
+UTC start: 2026-11-14T01:00:59.713Z
+Command: npx vitest run packages/persistence/src/__tests__/items-rebuild-order.test.ts packages/persistence/src/__tests__/item-owner-import.test.ts
+Exit: 0
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  2 passed (2)
+      Tests  15 passed (15)
+   Start at  08:01:02
+   Duration  1.93s (transform 1.32s, setup 0ms, import 1.77s, tests 762ms, environment 0ms)
+
+
+UTC end: 2026-11-14T01:01:04.489Z

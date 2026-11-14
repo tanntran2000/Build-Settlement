@@ -1,0 +1,9 @@
+HEAD: f1944ce047b59654f75365dfea4cc8a2f83dddec
+Tree: a2456278c9cccf837ef0041cba44ed1f9e7ac7fc
+UTC start: 2026-11-13T18:14:58.010Z
+Command: node C:/Users/Admin/.t3/local-drafts/p6a-prA/fix1/preflight-utf8.mjs
+Exit: 0
+
+PASS: 63 text artifacts, including the committed path-diff output, decode strictly as UTF-8 without replacement characters.
+
+UTC end: 2026-11-13T18:14:58.181Z

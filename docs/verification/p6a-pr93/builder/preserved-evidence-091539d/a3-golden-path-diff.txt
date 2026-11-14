@@ -1,0 +1,15 @@
+HEAD: 83e38aa317b0d9b9f1785fff594e450fd4d4c13e
+Tree: 6d90357c3fd124af67a9542343243c5dd3b45d7e
+UTC start: 2026-11-13T14:23:15.074Z
+UTC end: 2026-11-13T14:23:15.420Z
+Command: node packages/simulation/src/__tests__/fixtures/golden-path-diff.ts C:/Users/Admin/.t3/local-drafts/p6a-prA/catalog-golden-before.json packages/simulation/src/__tests__/fixtures/catalog-golden.json
+Exit: 0
+
+UTC: 2026-11-13T14:23:15.301Z
+SHA256 fd0f47398dc870e68ccef156dda7d588ffcd5937a7e4437820a3ab8a11147e5e C:/Users/Admin/.t3/local-drafts/p6a-prA/catalog-golden-before.json
+SHA256 f5e1ee1317efb26d893480fdbe9265e3bdfa88457d859074f35f3afe86bc5edb packages/simulation/src/__tests__/fixtures/catalog-golden.json
+Seed 0: city.society.rulesetId, city.society.items
+Seed 42: city.society.rulesetId, city.society.items
+Seed 20261028: city.society.rulesetId, city.society.items
+PASS: only city.society.rulesetId and city.society.items differ in all decoded sessions.
+End of recorded output.

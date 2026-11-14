@@ -1,0 +1,183 @@
+HEAD: b31dc0268279abcb29483d372cd17d156fa825f0
+Tree: cb345d790c050f9f240d695331db45a79f56177d
+UTC start: 2026-11-13T16:59:30.878Z
+Command: npx vitest run packages/core/src/world/__tests__/session.test.ts packages/core/src/trial/__tests__/society.test.ts
+Exit: 1
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/core/src/world/__tests__/session.test.ts (25 tests | 2 failed) 93ms
+   × matches all 90 scenario tiles for seed 0 28ms
+   × matches all 90 scenario tiles for seed 4294967295 12ms
+ ❯ packages/core/src/trial/__tests__/society.test.ts (19 tests | 1 failed) 50ms
+   × creates a society world session 20ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/core/src/trial/__tests__/society.test.ts > creates a society world session
+AssertionError: expected { rulesetId: 'tile-society-08', …(18) } to deeply equal { rulesetId: 'tile-society-08', …(18) }
+
+- Expected
++ Received
+
+@@ -49,39 +49,39 @@
+        "week52": false,
+      },
+      "inventory": [],
+      "market": [
+        {
+-         "defId": "common-ring",
++         "defId": "common-shoes",
+          "priceMilli": 5000,
+        },
+        {
+-         "defId": "common-top",
++         "defId": "common-necklace",
+          "priceMilli": 5000,
+        },
+        {
+-         "defId": "common-bottom",
++         "defId": "common-top",
+          "priceMilli": 5000,
+        },
+        {
+          "defId": "common-ring",
+          "priceMilli": 5000,
+        },
+        {
+-         "defId": "rare-set",
++         "defId": "rare-shoes",
+          "priceMilli": 15000,
+        },
+        {
+-         "defId": "rare-weapon",
++         "defId": "rare-earrings",
+          "priceMilli": 15000,
+        },
+        {
+-         "defId": "epic-hand",
++         "defId": "epic-top",
+          "priceMilli": 40000,
+        },
+        {
+-         "defId": "epic-necklace",
++         "defId": "epic-top",
+          "priceMilli": 40000,
+        },
+      ],
+      "materials": {},
+      "nextItemId": 1,
+
+ ❯ packages/core/src/trial/__tests__/society.test.ts:71:37
+     69|   expect(result.success).toBe(true);
+     70|   if (!result.success) throw Error('Factory failed');
+     71|   expect(result.value.city.society).toEqual(createSocietyState().socie…
+       |                                     ^
+     72| });
+     73| it('rejects accessors and non-plain society objects without reading ge…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  packages/core/src/world/__tests__/session.test.ts > matches all 90 scenario tiles for seed 0
+AssertionError: expected { world: { week: 1, …(3) }, …(6) } to deeply equal { world: { week: 1, …(3) }, …(6) }
+
+- Expected
++ Received
+
+@@ -61,27 +61,27 @@
+          {
+            "defId": "common-ring",
+            "priceMilli": 5000,
+          },
+          {
+-           "defId": "common-top",
++           "defId": "common-bottom",
+            "priceMilli": 5000,
+          },
+          {
+-           "defId": "common-bottom",
++           "defId": "common-necklace",
+            "priceMilli": 5000,
+          },
+          {
+-           "defId": "common-ring",
++           "defId": "common-hand",
+            "priceMilli": 5000,
+          },
+          {
+-           "defId": "rare-set",
++           "defId": "rare-necklace",
+            "priceMilli": 15000,
+          },
+          {
+-           "defId": "rare-weapon",
++           "defId": "rare-bottom",
+            "priceMilli": 15000,
+          },
+          {
+            "defId": "epic-hand",
+            "priceMilli": 40000,
+
+ ❯ packages/core/src/world/__tests__/session.test.ts:14:131
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  packages/core/src/world/__tests__/session.test.ts > matches all 90 scenario tiles for seed 4294967295
+AssertionError: expected { world: { week: 1, …(3) }, …(6) } to deeply equal { world: { week: 1, …(3) }, …(6) }
+
+- Expected
++ Received
+
+@@ -57,31 +57,31 @@
+          "week52": false,
+        },
+        "inventory": [],
+        "market": [
+          {
+-           "defId": "common-ring",
++           "defId": "common-weapon",
+            "priceMilli": 5000,
+          },
+          {
+            "defId": "common-top",
+            "priceMilli": 5000,
+          },
+          {
+-           "defId": "common-bottom",
++           "defId": "common-hand",
+            "priceMilli": 5000,
+          },
+          {
+-           "defId": "common-ring",
++           "defId": "common-earrings",
+            "priceMilli": 5000,
+          },
+          {
+-           "defId": "rare-set",
++           "defId": "rare-necklace",
+            "priceMilli": 15000,
+          },
+          {
+-           "defId": "rare-weapon",
++           "defId": "rare-hand",
+            "priceMilli": 15000,
+          },
+          {
+            "defId": "epic-hand",
+            "priceMilli": 40000,
+
+ ❯ packages/core/src/world/__tests__/session.test.ts:14:131
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  3 failed | 41 passed (44)
+   Start at  23:59:33
+   Duration  788ms (transform 557ms, setup 0ms, import 783ms, tests 143ms, environment 0ms)
+
+
+UTC end: 2026-11-13T16:59:34.036Z

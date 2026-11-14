@@ -1,0 +1,43 @@
+HEAD: 31a5903b8a49fa93cec1c2242b650e7300ddb5c7
+Tree: 89ee115c7661b1f3f1e660e394b4da5813fd0402
+UTC start: 2026-11-13T15:24:36.579Z
+Command: echo CI=%CI% && npm run test:smoke -- tests/e2e/character-life-navigation.spec.ts:1430
+Exit: 0
+
+CI=1 
+
+> build-settlement@0.1.0 pretest:smoke
+> npm run build:regression --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 build:regression
+> vite build regression --config vite.config.ts --outDir dist
+
+vite v6.4.5 building for production...
+transforming...
+✓ 238 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.45 kB │ gzip:   0.31 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-DdNtS9j1.css                   28.13 kB │ gzip:   5.81 kB
+dist/assets/index-BfJkr0Vz.js                   359.93 kB │ gzip: 114.12 kB
+✓ built in 2.42s
+
+> build-settlement@0.1.0 test:smoke
+> playwright test tests/e2e/character-life-navigation.spec.ts:1430
+
+[WebServer] (node:50156) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:65436) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:31312) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\character-life-navigation.spec.ts:1430:1 › B2 City Report City preserves export and saved checkpoint (2.1s)
+
+  1 passed (15.9s)
+
+UTC end: 2026-11-13T15:24:59.168Z

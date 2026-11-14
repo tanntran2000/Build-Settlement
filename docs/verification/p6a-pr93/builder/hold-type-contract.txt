@@ -1,0 +1,15 @@
+﻿HEAD: c4d3dc4fde78d004292f9038a4285cdd6f8186a7
+Tree: 914488a9d93457a98ebd4b4cb2af5b0074bae7fa
+UTC: 2026-11-13T13:56:28.4463516Z
+Command: node C:/Users/Admin/.t3/local-drafts/p6a-prA/hold-type-contract.mjs
+Exit code: 1
+
+UTC: 2026-11-13T13:56:27.769Z
+Source: packages/core/src/trial/crisis.ts fallCause: 'rebellion' | 'assassination' | null
+Target: packages/ui/src/CityFallen.svelte fallCause: 'rebellion'|'assassination'
+Assignment: packages/ui/src/TileManagement.svelte:225
+Current contract: 0 diagnostic(s)
+PR A required contract (+ 'wounds'): 1 diagnostic(s)
+TS2322: Type 'NonNullable<Source>' is not assignable to type 'Target'.
+  Type '"wounds"' is not assignable to type 'Target'.
+Scope conflict reproduced: true

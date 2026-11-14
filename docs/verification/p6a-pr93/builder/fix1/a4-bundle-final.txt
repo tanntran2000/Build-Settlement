@@ -1,0 +1,39 @@
+HEAD: f1944ce047b59654f75365dfea4cc8a2f83dddec
+Tree: a2456278c9cccf837ef0041cba44ed1f9e7ac7fc
+UTC start: 2026-11-13T18:14:35.023Z
+Command: node C:/Users/Admin/.t3/local-drafts/p6a-prA/fix1/measure-bundle.mjs --capture
+Exit: 0
+
+{
+  "utc": "2026-11-13T18:14:35.189Z",
+  "head": "f1944ce047b59654f75365dfea4cc8a2f83dddec",
+  "files": [
+    {
+      "name": "index-DGg9b1bo.js",
+      "bytes": 360100,
+      "gzipBytes": 114196,
+      "sha256": "93410dda09df59638bc54029a7043f85196e3db99c34be329465ed43805e22dc"
+    },
+    {
+      "name": "index-DdNtS9j1.css",
+      "bytes": 28127,
+      "gzipBytes": 5814,
+      "sha256": "957e3db03aef271e79b33fd544374adbc99e7d2664fc35744b96835f0d072c0d"
+    }
+  ],
+  "baselineGzipKB": {
+    "js": 108.46,
+    "css": 5.81
+  },
+  "gzipBytes": {
+    "js": 114196,
+    "css": 5814
+  },
+  "growthGzipKB": {
+    "js": 5.736000000000004,
+    "css": 0.004000000000000448
+  }
+}
+PASS: bundle budget and raw artifact verified.
+
+UTC end: 2026-11-13T18:14:35.268Z

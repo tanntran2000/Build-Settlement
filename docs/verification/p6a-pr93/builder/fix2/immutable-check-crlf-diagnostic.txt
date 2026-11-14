@@ -1,0 +1,28 @@
+HEAD: 4afe92763856cc3f82445803298beacc7ccedf68
+Tree: 8e95ed5e017bff02d4ff43d61789244ce2ff6519
+UTC start: 2026-11-14T01:01:58.249Z
+Command: node C:/Users/Admin/.t3/local-drafts/p6a-prA/fix2/check-immutable.mjs
+Exit: 1
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: HOLD: working immutable file changed: packages/core/src/__tests__/catalog-data.test.ts
+    at file:///C:/Users/Admin/.t3/local-drafts/p6a-prA/fix2/check-immutable.mjs:23:10
+    at Array.map (<anonymous>)
+    at file:///C:/Users/Admin/.t3/local-drafts/p6a-prA/fix2/check-immutable.mjs:18:23
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+UTC end: 2026-11-14T01:01:58.553Z

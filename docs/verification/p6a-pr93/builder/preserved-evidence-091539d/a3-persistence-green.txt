@@ -1,0 +1,17 @@
+HEAD: 83e38aa317b0d9b9f1785fff594e450fd4d4c13e
+Tree: 6d90357c3fd124af67a9542343243c5dd3b45d7e
+UTC start: 2026-11-13T14:22:53.226Z
+UTC end: 2026-11-13T14:23:00.484Z
+Command: npx vitest run packages/persistence/src/__tests__
+Exit: 0
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  18 passed (18)
+      Tests  251 passed (251)
+   Start at  21:22:55
+   Duration  4.72s (transform 4.31s, setup 0ms, import 10.18s, tests 5.89s, environment 8ms)
+
+End of recorded output.

@@ -1,0 +1,16 @@
+HEAD: 1cd14d55f91c69c037953811574b32347f3fcdc9
+Tree: f5ed79213326794ea9143618a7a80be52ab6a653
+UTC start: 2026-11-13T14:12:42.098Z
+UTC end: 2026-11-13T14:12:46.306Z
+Command: npm run typecheck
+Exit: 2
+
+
+> build-settlement@0.1.0 typecheck
+> npm run typecheck:core && npm run typecheck:simulation && npm run typecheck:persistence && npm run typecheck:content && npm run typecheck:ui
+
+
+> build-settlement@0.1.0 typecheck:core
+> tsc -p packages/core/tsconfig.json --noEmit
+
+packages/core/src/trial/items.ts(64,66): error TS2365: Operator '>=' cannot be applied to types 'number' and '{}'.

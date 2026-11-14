@@ -1,0 +1,6 @@
+diff --git a/packages/ui/src/__tests__/crime-view.test.ts b/packages/ui/src/__tests__/crime-view.test.ts
+--- a/packages/ui/src/__tests__/crime-view.test.ts
++++ b/packages/ui/src/__tests__/crime-view.test.ts
+@@ -14 +14 @@
+-it('pins both end screens',()=>expect(END_SCREEN_COPY).toEqual({rebellion:{title:'The City Has Fallen',text:'Hunger turned Haven against you.'},assassination:{title:'The Lord Is Dead',text:"An assassin's blade ended your rule."}}));
++it('pins both end screens',()=>expect(END_SCREEN_COPY).toEqual({rebellion:{title:'The City Has Fallen',text:'Hunger turned Haven against you.'},assassination:{title:'The Lord Is Dead',text:"An assassin's blade ended your rule."},wounds:{title:'Your Lord Has Died',text:'Your wounds proved fatal.'}}));
