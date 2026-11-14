@@ -1,0 +1,13 @@
+{
+  "HEAD": "16689892b4b448d04cac1a8e398f52e5269e7e53",
+  "tree": "b8413c359472872846aa268d5b864770fc684746",
+  "UTC": "2026-11-14T12:12:58.862Z",
+  "exit": 1,
+  "gate": 6,
+  "test": "packages/simulation/src/__tests__/lord-health.test.ts:73",
+  "elapsedMs": 6529,
+  "existingTimeoutMs": 5000,
+  "passed": 2487,
+  "failed": 1,
+  "action": "Repeat gates once with identical code, configuration, assertions and timeout; no smoke or gate 7 ran in attempt 1"
+}

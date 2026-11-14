@@ -1,0 +1,47 @@
+[WebServer] (node:71908) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:74148) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:60968) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\character-life-navigation.spec.ts:347:3 › full-body placeholder preserves profile disclosure at 1280px (8.1s)
+
+
+  1) [chromium] › tests\e2e\character-life-navigation.spec.ts:347:3 › full-body placeholder preserves profile disclosure at 1280px 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('group', { name: 'Full-body character display', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('group', { name: 'Full-body character display', exact: true }) with timeout 5000ms
+      - waiting for locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('group', { name: 'Full-body character display', exact: true })
+
+
+      379 |       for (const area of ['Description', 'Inventory', 'Work', 'Relations']) {
+      380 |         await selectArea(page, area);
+    > 381 |         await expect(placeholder).toBeVisible();
+          |                                   ^
+      382 |         expect(await placeholder.evaluate(el => el.outerHTML)).toBe(staticMarkup);
+      383 |       }
+      384 |       const bounds = await placeholder.evaluate(el => {
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.spec.ts:381:35
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1280-profile\character-life-navigation--2a09e-rofile-disclosure-at-1280px-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1280-profile\character-life-navigation--2a09e-rofile-disclosure-at-1280px-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1280-profile\character-life-navigation--2a09e-rofile-disclosure-at-1280px-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\character-life-navigation.spec.ts:347:3 › full-body placeholder preserves profile disclosure at 1280px 

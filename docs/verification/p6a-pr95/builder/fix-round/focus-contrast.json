@@ -1,0 +1,929 @@
+{
+  "HEAD": "16689892b4b448d04cac1a8e398f52e5269e7e53",
+  "tree": "b8413c359472872846aa268d5b864770fc684746",
+  "UTC": "2026-11-14T12:21:38.574Z",
+  "sourceRun": "fix-GREEN-e2e.txt (pre-commit correction 9 working tree)",
+  "required": 3,
+  "measurements": [
+    {
+      "file": "character-life-navigation--0585a-hell-accessibility-baseline-chromium-measurements.json",
+      "width": 320,
+      "dollFocus": [
+        {
+          "label": "EarringsEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "NecklaceEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "TopEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "BottomEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "ShoesEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "RingEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "WeaponEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "HandEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "EarringsEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "NecklaceEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "TopEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "BottomEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "ShoesEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "RingEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "WeaponEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "HandEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        }
+      ]
+    },
+    {
+      "file": "character-life-navigation--c0613-hell-accessibility-baseline-chromium-measurements.json",
+      "width": 375,
+      "dollFocus": [
+        {
+          "label": "EarringsEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "NecklaceEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "TopEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "BottomEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "ShoesEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "RingEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "WeaponEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "HandEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "EarringsEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "NecklaceEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "TopEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "BottomEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "ShoesEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "RingEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "WeaponEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "HandEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        }
+      ]
+    },
+    {
+      "file": "character-life-navigation--e57a3-hell-accessibility-baseline-chromium-measurements.json",
+      "width": 1280,
+      "dollFocus": [
+        {
+          "label": "EarringsEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "NecklaceEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "TopEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "BottomEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "ShoesEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "RingEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "WeaponEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "HandEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "EarringsEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "NecklaceEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "TopEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "BottomEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "ShoesEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "RingEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "WeaponEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "HandEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        }
+      ]
+    },
+    {
+      "file": "character-life-navigation--f621c-hell-accessibility-baseline-chromium-measurements.json",
+      "width": 1600,
+      "dollFocus": [
+        {
+          "label": "EarringsEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "NecklaceEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "TopEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "BottomEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "ShoesEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "RingEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "WeaponEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "HandEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "EarringsEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "NecklaceEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "TopEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "BottomEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "ShoesEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "RingEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "WeaponEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        },
+        {
+          "label": "HandEmpty",
+          "ratio": 8.045857293418425,
+          "color": [
+            59,
+            42,
+            23
+          ],
+          "bg": [
+            217,
+            196,
+            153
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "UTC": "2026-11-14T13:01:42.866Z",
+  "base": "16689892b4b448d04cac1a8e398f52e5269e7e53",
+  "reference": "owner-npc-silhouette-reference.webp",
+  "referenceSha256": "6cb8a6a5ee9f795e52043e4dbc5d833e292919f03deb9a829af7da0a0a0840a5",
+  "method": "Hand-placed cubic Bezier points in the 100 × 200 reference coordinate space; arm openings use evenodd fill; two face lines and the reference hair gaps use parchment knockouts",
+  "markupBytes": 2736,
+  "limitBytes": 6000,
+  "playerUnchanged": true,
+  "testAssertionsUnchanged": true,
+  "ownerDecisions": [
+    "hợp lý rồi",
+    "Builder traces it",
+    "Rerun, no timeout change (Recommended)"
+  ]
+}

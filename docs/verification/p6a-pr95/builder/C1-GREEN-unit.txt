@@ -1,0 +1,63 @@
+HEAD=2c04321ba342871e6a858110ea2320a8e4df0d5d
+TREE=d5597ae4296afc90b41557eb062ca43f7ab85313
+UTC=2026-11-14T09:04:54.097Z
+EXIT=1
+COMMAND=npx vitest run packages/ui/src/__tests__/items-view.test.ts
+CI=
+FINISHED=2026-11-14T09:04:58.227Z
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/items-view.test.ts (6 tests | 3 failed) 28ms
+     × previews replacement and full sets without mutating base skills or inventory 7ms
+     × shows materials with rarity and exact counts without treating them as wearables 2ms
+     × counts Player equipment regen and effective deltas without changing NPC health 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/items-view.test.ts > C1 item views > previews replacement and full sets without mutating base skills or inventory
+Error: Enter a name of 1–64 characters without leading or trailing spaces.
+ ❯ session packages/ui/src/__tests__/items-view.test.ts:11:28
+      9| function session() {
+     10|   const made = createCharacterLifeSession(12345, structuredClone(DEFAU…
+     11|   if (!made.success) throw Error(made.error.message);
+       |                            ^
+     12|   return made.value;
+     13| }
+ ❯ packages/ui/src/__tests__/items-view.test.ts:21:33
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  packages/ui/src/__tests__/items-view.test.ts > C1 item views > shows materials with rarity and exact counts without treating them as wearables
+Error: Enter a name of 1–64 characters without leading or trailing spaces.
+ ❯ session packages/ui/src/__tests__/items-view.test.ts:11:28
+      9| function session() {
+     10|   const made = createCharacterLifeSession(12345, structuredClone(DEFAU…
+     11|   if (!made.success) throw Error(made.error.message);
+       |                            ^
+     12|   return made.value;
+     13| }
+ ❯ packages/ui/src/__tests__/items-view.test.ts:48:33
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  packages/ui/src/__tests__/items-view.test.ts > C1 item views > counts Player equipment regen and effective deltas without changing NPC health
+Error: Enter a name of 1–64 characters without leading or trailing spaces.
+ ❯ session packages/ui/src/__tests__/items-view.test.ts:11:28
+      9| function session() {
+     10|   const made = createCharacterLifeSession(12345, structuredClone(DEFAU…
+     11|   if (!made.success) throw Error(made.error.message);
+       |                            ^
+     12|   return made.value;
+     13| }
+ ❯ packages/ui/src/__tests__/items-view.test.ts:52:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 3 passed (6)
+   Start at  16:04:57
+   Duration  907ms (transform 461ms, setup 0ms, import 580ms, tests 28ms, environment 0ms)
+

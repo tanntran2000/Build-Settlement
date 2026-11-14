@@ -1,0 +1,13 @@
+PR C, NPC silhouette replacement, then a clean rerun of all gates. Binding plan is now C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-bb5b3b3.md: read the last bullets of Plan correction 9.
+
+The owner approved a Codex-drawn reference image: C:/Users/Admin/.t3/local-drafts/p6a-prC/owner-npc-silhouette-reference.webp (887x1774, sha256 starts 6cb8a6a5ee9f795e). Owner (Tân), 2026-11-14, verbatim: "hợp lý rồi", then "Builder traces it".
+
+Task, in EquipmentView.svelte only, for NPCs only (the Player keeps the neutral "Character silhouette"):
+- Replace the option D SVG with a hand-traced SVG of the reference: same pose and proportions (wavy shoulder-length hair, two thin parchment lines framing the face, hands on hips with elbows out, full bust, narrow waist, wide hips, the thin gap between the legs, small feet). No braid. No added detail.
+- viewBox "0 0 100 200"; role="img" aria-label "NPC silhouette"; two colours only: the existing `.doll svg` fill and knockout lines/gaps equal to the doll panel background (#d9c499); no raster, no filters; under 6 KB of markup.
+- Keep the "NPC silhouette" / "Character silhouette" assertion you added. If any test pins the option D markup, update only that new assertion of yours (it is your own new test), not any existing test.
+- Put a side-by-side PNG (reference vs your SVG at 300 px tall, and the SVG at 140 px tall) in local-drafts/p6a-prC/silhouette/ for the owner to compare.
+
+Then rerun gates 1–7 and the full `CI=1` smoke at the clean final head (one runner, ports checked), refresh the 1280px Equipment screenshots (NPC and Player), the bundle, the immutable check, the edit inventory and SHA256SUMS. One commit `fix(ui): trace owner-approved NPC silhouette`, ending `Co-authored-by: Codex <noreply@openai.com>`. If any smoke case fails, rerun it alone once and HOLD. Do not push, open a PR or merge.
+
+Your C3 gate-6 HOLD is answered. Owner (Tân), 2026-11-14, dialog choice, verbatim: "Rerun, no timeout change (Recommended)". PR C touches only packages/ui and tests/e2e, so the two simulation timeouts (lord-health.test.ts:73, society-renewable-support.test.ts:160) are treated as machine load. Before the gates, check that no other heavy job runs (record CPU load and the top processes in the log). Keep every 5 s limit unchanged. If either test times out again, measure each one alone three times (vitest run -t with the exact name), record the times, and HOLD; do not change any timeout.

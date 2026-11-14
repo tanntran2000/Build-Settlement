@@ -1,0 +1,423 @@
+{
+  "texts": [
+    {
+      "text": "Equipment",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Outfit the bearer. Skills take effect at End Week.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Earrings",
+      "contrast": 12.066365540264457,
+      "required": 3
+    },
+    {
+      "text": "Empty",
+      "contrast": 12.066365540264457,
+      "required": 4.5
+    },
+    {
+      "text": "Necklace",
+      "contrast": 12.066365540264457,
+      "required": 3
+    },
+    {
+      "text": "Empty",
+      "contrast": 12.066365540264457,
+      "required": 4.5
+    },
+    {
+      "text": "Top",
+      "contrast": 12.066365540264457,
+      "required": 3
+    },
+    {
+      "text": "Empty",
+      "contrast": 12.066365540264457,
+      "required": 4.5
+    },
+    {
+      "text": "Bottom",
+      "contrast": 12.066365540264457,
+      "required": 3
+    },
+    {
+      "text": "Empty",
+      "contrast": 12.066365540264457,
+      "required": 4.5
+    },
+    {
+      "text": "Shoes",
+      "contrast": 12.066365540264457,
+      "required": 3
+    },
+    {
+      "text": "Empty",
+      "contrast": 12.066365540264457,
+      "required": 4.5
+    },
+    {
+      "text": "Ring",
+      "contrast": 12.066365540264457,
+      "required": 3
+    },
+    {
+      "text": "Empty",
+      "contrast": 12.066365540264457,
+      "required": 4.5
+    },
+    {
+      "text": "Weapon",
+      "contrast": 12.066365540264457,
+      "required": 3
+    },
+    {
+      "text": "Empty",
+      "contrast": 12.066365540264457,
+      "required": 4.5
+    },
+    {
+      "text": "Hand",
+      "contrast": 12.066365540264457,
+      "required": 3
+    },
+    {
+      "text": "Empty",
+      "contrast": 12.066365540264457,
+      "required": 4.5
+    },
+    {
+      "text": "Nipple",
+      "contrast": 5.365435785687814,
+      "required": 3
+    },
+    {
+      "text": "Locked",
+      "contrast": 5.365435785687814,
+      "required": 4.5
+    },
+    {
+      "text": "Vagina",
+      "contrast": 5.365435785687814,
+      "required": 3
+    },
+    {
+      "text": "Locked",
+      "contrast": 5.365435785687814,
+      "required": 4.5
+    },
+    {
+      "text": "Anus",
+      "contrast": 5.365435785687814,
+      "required": 3
+    },
+    {
+      "text": "Locked",
+      "contrast": 5.365435785687814,
+      "required": 4.5
+    },
+    {
+      "text": "Effective skills",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "management 40 (+0)",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "technical 65 (+0)",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "medical 15 (+0)",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "combat 30 (+0)",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "negotiation 25 (+0)",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Inventory",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Materials",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Temporary storage",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Inventory 1 / 50",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "All",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Player",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "NPC",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "This slot",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Equipment",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Accessory",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Outfit",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Rare · Outfit",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Steward Set",
+      "contrast": 17.94813766823384,
+      "required": 4.5
+    },
+    {
+      "text": "Npc · Set",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Management +12",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "· Negotiation +3",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Covers Top, Bottom and Shoes.",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Before → After",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Management",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "40 → 52",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Technical",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "65 → 65",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Medical",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "15 → 15",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Combat",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "30 → 30",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Negotiation",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "25 → 28",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Equip",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Destroy",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    }
+  ],
+  "clipped": [],
+  "controls": [
+    {
+      "label": "EarringsEmpty",
+      "width": 336.828125,
+      "height": 66.75
+    },
+    {
+      "label": "NecklaceEmpty",
+      "width": 336.828125,
+      "height": 66.75
+    },
+    {
+      "label": "TopEmpty",
+      "width": 336.828125,
+      "height": 66.75
+    },
+    {
+      "label": "BottomEmpty",
+      "width": 336.828125,
+      "height": 66.75
+    },
+    {
+      "label": "ShoesEmpty",
+      "width": 336.828125,
+      "height": 66.75
+    },
+    {
+      "label": "RingEmpty",
+      "width": 336.828125,
+      "height": 66.75
+    },
+    {
+      "label": "WeaponEmpty",
+      "width": 336.828125,
+      "height": 66.75
+    },
+    {
+      "label": "HandEmpty",
+      "width": 336.828125,
+      "height": 66.75
+    },
+    {
+      "label": "NippleLocked",
+      "width": 336.828125,
+      "height": 66.75
+    },
+    {
+      "label": "VaginaLocked",
+      "width": 336.828125,
+      "height": 66.75
+    },
+    {
+      "label": "AnusLocked",
+      "width": 336.828125,
+      "height": 66.75
+    },
+    {
+      "label": "Inventory",
+      "width": 120.5,
+      "height": 44.59375
+    },
+    {
+      "label": "Materials",
+      "width": 117.015625,
+      "height": 44.59375
+    },
+    {
+      "label": "Temporary storage",
+      "width": 211.0625,
+      "height": 44.59375
+    },
+    {
+      "label": "All",
+      "width": 45.578125,
+      "height": 44.59375
+    },
+    {
+      "label": "Player",
+      "width": 85.53125,
+      "height": 44.59375
+    },
+    {
+      "label": "NPC",
+      "width": 59.40625,
+      "height": 44.59375
+    },
+    {
+      "label": "This slot",
+      "width": 105.828125,
+      "height": 44.59375
+    },
+    {
+      "label": "Equipment",
+      "width": 123.140625,
+      "height": 44.59375
+    },
+    {
+      "label": "Accessory",
+      "width": 123.546875,
+      "height": 44.59375
+    },
+    {
+      "label": "Outfit",
+      "width": 84.375,
+      "height": 44.59375
+    },
+    {
+      "label": "Equip",
+      "width": 76.375,
+      "height": 46.59375
+    },
+    {
+      "label": "Destroy",
+      "width": 107.109375,
+      "height": 46.59375
+    }
+  ],
+  "pageOverflow": false
+}

@@ -1,0 +1,293 @@
+{
+  "HEAD": "5e97f049330c2e6c4e213b845815afb368d8a7b3",
+  "tree": "49f6b676c3ae57f66ef9ce6275eb89a806f52a9a",
+  "base": "2c04321ba342871e6a858110ea2320a8e4df0d5d",
+  "reviewBase": "f046e36c98fcfbbd16808e759b7b09f0f1f4c98e",
+  "branch": "feat/p6a-item-ui",
+  "UTC": "2026-11-14T14:40:39.770Z",
+  "exit": 0,
+  "status": "Review fix round 1 complete; clean-head gates and full smoke pass",
+  "gitStatus": "",
+  "commits": [
+    "ce612d2461993486cb7fa35c6463c4c2a57ea3fe feat(ui): equipment view and inventory",
+    "8af03070496d8e41ae85fecaea2d29c4cc474811 feat(ui): market, potions, item reports and lord health",
+    "16689892b4b448d04cac1a8e398f52e5269e7e53 fix(ui): resolve item panel accessibility and copy",
+    "f046e36c98fcfbbd16808e759b7b09f0f1f4c98e fix(ui): trace owner-approved NPC silhouette",
+    "5e97f049330c2e6c4e213b845815afb368d8a7b3 fix(ui): destroy focus and authority goal label"
+  ],
+  "reviewCommit": "5e97f049330c2e6c4e213b845815afb368d8a7b3",
+  "findings": {
+    "F1": {
+      "red": "new keyboard case fails outside Equipment",
+      "green": "20/20 item browser cases and final full smoke pass",
+      "productFixAttempts": 1
+    },
+    "F2": {
+      "red": "1 failed / 11 passed",
+      "green": "12/12 item-view unit cases and final full suites pass",
+      "productFixAttempts": 1
+    }
+  },
+  "scope": {
+    "HEAD": "5e97f049330c2e6c4e213b845815afb368d8a7b3",
+    "tree": "49f6b676c3ae57f66ef9ce6275eb89a806f52a9a",
+    "base": "f046e36c98fcfbbd16808e759b7b09f0f1f4c98e",
+    "UTC": "2026-11-14T14:40:41.012Z",
+    "exit": 0,
+    "changedFiles": [
+      "packages/ui/src/EquipmentView.svelte",
+      "packages/ui/src/__tests__/items-view.test.ts",
+      "packages/ui/src/items-view.ts",
+      "tests/e2e/character-life-navigation.helpers.ts",
+      "tests/e2e/items.spec.ts"
+    ],
+    "p7LineOnly": true,
+    "newUnitExpectationOnly": true,
+    "earlierItemCasesUnchanged": true,
+    "societyViewTestUnchanged": true,
+    "silhouettesUnchanged": true,
+    "stylesUnchanged": true
+  },
+  "gates": [
+    {
+      "name": "gate1-diff",
+      "HEAD": "5e97f049330c2e6c4e213b845815afb368d8a7b3",
+      "tree": "49f6b676c3ae57f66ef9ce6275eb89a806f52a9a",
+      "UTC": "2026-11-14T14:01:01.483Z",
+      "finished": "2026-11-14T14:01:01.648Z",
+      "exit": 0,
+      "command": "git diff --check origin/main...HEAD",
+      "CI": ""
+    },
+    {
+      "name": "gate2-lint",
+      "HEAD": "5e97f049330c2e6c4e213b845815afb368d8a7b3",
+      "tree": "49f6b676c3ae57f66ef9ce6275eb89a806f52a9a",
+      "UTC": "2026-11-14T14:01:01.721Z",
+      "finished": "2026-11-14T14:01:12.830Z",
+      "exit": 0,
+      "command": "npm run lint",
+      "CI": ""
+    },
+    {
+      "name": "gate3-typecheck",
+      "HEAD": "5e97f049330c2e6c4e213b845815afb368d8a7b3",
+      "tree": "49f6b676c3ae57f66ef9ce6275eb89a806f52a9a",
+      "UTC": "2026-11-14T14:01:12.913Z",
+      "finished": "2026-11-14T14:01:47.499Z",
+      "exit": 0,
+      "command": "npm run typecheck",
+      "CI": ""
+    },
+    {
+      "name": "gate4-architecture",
+      "HEAD": "5e97f049330c2e6c4e213b845815afb368d8a7b3",
+      "tree": "49f6b676c3ae57f66ef9ce6275eb89a806f52a9a",
+      "UTC": "2026-11-14T14:01:47.593Z",
+      "finished": "2026-11-14T14:01:53.719Z",
+      "exit": 0,
+      "command": "npm run check:architecture",
+      "CI": ""
+    },
+    {
+      "name": "gate5-architecture-tests",
+      "HEAD": "5e97f049330c2e6c4e213b845815afb368d8a7b3",
+      "tree": "49f6b676c3ae57f66ef9ce6275eb89a806f52a9a",
+      "UTC": "2026-11-14T14:01:53.827Z",
+      "finished": "2026-11-14T14:02:41.048Z",
+      "exit": 0,
+      "command": "npm run test:architecture",
+      "CI": ""
+    },
+    {
+      "name": "gate6-unit",
+      "HEAD": "5e97f049330c2e6c4e213b845815afb368d8a7b3",
+      "tree": "49f6b676c3ae57f66ef9ce6275eb89a806f52a9a",
+      "UTC": "2026-11-14T14:02:41.138Z",
+      "finished": "2026-11-14T14:03:43.575Z",
+      "exit": 0,
+      "command": "npm test",
+      "CI": ""
+    },
+    {
+      "name": "gate7-build",
+      "HEAD": "5e97f049330c2e6c4e213b845815afb368d8a7b3",
+      "tree": "49f6b676c3ae57f66ef9ce6275eb89a806f52a9a",
+      "UTC": "2026-11-14T14:03:43.659Z",
+      "finished": "2026-11-14T14:04:05.908Z",
+      "exit": 0,
+      "command": "npm run build",
+      "CI": ""
+    },
+    {
+      "name": "smoke-full",
+      "HEAD": "5e97f049330c2e6c4e213b845815afb368d8a7b3",
+      "tree": "49f6b676c3ae57f66ef9ce6275eb89a806f52a9a",
+      "UTC": "2026-11-14T14:04:07.069Z",
+      "finished": "2026-11-14T14:38:02.200Z",
+      "exit": 0,
+      "command": "echo CI=%CI% && npm run test:smoke -- --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/review-fix1-smoke",
+      "CI": "1"
+    }
+  ],
+  "unitPassed": 2488,
+  "architecturePassed": 154,
+  "smoke": {
+    "CI": 1,
+    "passed": 370,
+    "failed": 0,
+    "duration": "33.8m"
+  },
+  "preflight": {
+    "file": "fix1/load-approved.json",
+    "cpuSamples": [
+      {
+        "totalPercent": 7,
+        "UTC": "2026-11-14T13:59:54.6109777Z"
+      },
+      {
+        "totalPercent": 0,
+        "UTC": "2026-11-14T13:59:55.9001676Z"
+      },
+      {
+        "totalPercent": 20,
+        "UTC": "2026-11-14T13:59:57.1776686Z"
+      },
+      {
+        "totalPercent": 10,
+        "UTC": "2026-11-14T13:59:58.4620499Z"
+      },
+      {
+        "totalPercent": 0,
+        "UTC": "2026-11-14T13:59:59.7372784Z"
+      }
+    ],
+    "averageCpuPercent": 7.4,
+    "topProcesses": [
+      {
+        "process": "powershell",
+        "pid": 72016,
+        "cpuPercent": 1.862,
+        "workingSetMB": 72.3
+      },
+      {
+        "process": "T3 Code (Nightly)",
+        "pid": 5940,
+        "cpuPercent": 0.612,
+        "workingSetMB": 262.2
+      },
+      {
+        "process": "T3 Code (Nightly)",
+        "pid": 59112,
+        "cpuPercent": 0.459,
+        "workingSetMB": 332
+      },
+      {
+        "process": "codex",
+        "pid": 64988,
+        "cpuPercent": 0.403,
+        "workingSetMB": 319.2
+      },
+      {
+        "process": "explorer",
+        "pid": 42232,
+        "cpuPercent": 0.361,
+        "workingSetMB": 91.6
+      },
+      {
+        "process": "codebase-memory-mcp",
+        "pid": 69324,
+        "cpuPercent": 0.236,
+        "workingSetMB": 5.2
+      },
+      {
+        "process": "codebase-memory-mcp",
+        "pid": 62304,
+        "cpuPercent": 0.153,
+        "workingSetMB": 9.8
+      },
+      {
+        "process": "claude",
+        "pid": 56764,
+        "cpuPercent": 0.111,
+        "workingSetMB": 244.2
+      },
+      {
+        "process": "T3 Code (Nightly)",
+        "pid": 57692,
+        "cpuPercent": 0.097,
+        "workingSetMB": 72.8
+      },
+      {
+        "process": "javaw",
+        "pid": 22448,
+        "cpuPercent": 0.069,
+        "workingSetMB": 101.3
+      },
+      {
+        "process": "cloudflared",
+        "pid": 16924,
+        "cpuPercent": 0.056,
+        "workingSetMB": 24
+      },
+      {
+        "process": "taskhostw",
+        "pid": 14752,
+        "cpuPercent": 0.042,
+        "workingSetMB": 8.6
+      }
+    ],
+    "knownHeavyJobs": [],
+    "ownerReportedClaudeAndAstraIdle": true
+  },
+  "inventory": {
+    "wholePrBlocks": 11,
+    "wholePrFiles": 3,
+    "approvedP7AmendedLines": 1,
+    "otherApprovedBlocksUnchanged": 10
+  },
+  "immutableFilesUnchanged": 61,
+  "accessibilityAudits": 14,
+  "comprehensiveAudits": 8,
+  "screenshots": [
+    "death-letter-1280.png",
+    "equipment-1280.png",
+    "equipment-npc-1280.png",
+    "equipment-player-1280.png",
+    "market-1280.png",
+    "materials-1280.png",
+    "potions-1280.png",
+    "quartermaster-items-1280.png",
+    "steward-items-1280.png",
+    "temporary-storage-1280.png"
+  ],
+  "bundle": {
+    "jsGzipBytes": 126720,
+    "cssGzipBytes": 6743,
+    "totalGzipBytes": 133463,
+    "jsKB": 126.72,
+    "cssKB": 6.743,
+    "totalKB": 133.463
+  },
+  "ports": {
+    "4173": "free",
+    "4174": "free",
+    "checkedUTC": "2026-11-14T14:40:39.6123676Z"
+  },
+  "pushed": false,
+  "PRUpdated": false,
+  "merged": false,
+  "ownerAuthorizedProcessStop": {
+    "verifiedName": "msedge.exe",
+    "pid": 72952,
+    "HEAD": "5e97f049330c2e6c4e213b845815afb368d8a7b3",
+    "stopped": true,
+    "ownerDecision": "Stop only PID 72952",
+    "UTC": "2026-11-14T13:59:25.3523909Z",
+    "verifiedCreationUTC": "2026-11-14T10:00:34.2874310Z",
+    "finishedUTC": "2026-11-14T13:59:27.0621970Z",
+    "tree": "49f6b676c3ae57f66ef9ce6275eb89a806f52a9a",
+    "exit": 0,
+    "stillPresent": false
+  }
+}

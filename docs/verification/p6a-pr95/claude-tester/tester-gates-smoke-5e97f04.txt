@@ -1,0 +1,1381 @@
+CPU load % (before gates): 53
+
+Name                   Id
+----                   --
+T3 Code (Nightly)    5940
+T3 Code (Nightly)   59112
+msedgewebview2      58580
+codebase-memory-mcp 69324
+claude              58136
+cloudflared         16924
+claude              56764
+claude              29892
+
+
+
+UTC start: 2026-11-14T14:45:33Z
+HEAD: 5e97f049330c2e6c4e213b845815afb368d8a7b3  tree: 49f6b676c3ae57f66ef9ce6275eb89a806f52a9a
+status:
+(end status)
+
+===== git diff --check origin/main...HEAD =====
+===== exit=0  seconds=1 : git diff --check origin/main...HEAD =====
+
+===== npm run lint =====
+
+> build-settlement@0.1.0 lint
+> eslint . --max-warnings=0
+
+===== exit=0  seconds=20 : npm run lint =====
+
+===== npm run typecheck =====
+
+> build-settlement@0.1.0 typecheck
+> npm run typecheck:core && npm run typecheck:simulation && npm run typecheck:persistence && npm run typecheck:content && npm run typecheck:ui
+
+
+> build-settlement@0.1.0 typecheck:core
+> tsc -p packages/core/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:simulation
+> tsc -p packages/simulation/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:persistence
+> tsc -p packages/persistence/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:content
+> tsc -p packages/content/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:ui
+> npm run check --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 check
+> svelte-check --tsconfig ./tsconfig.json
+
+1794667588976 START "c:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\packages\\ui"
+1794667588982 COMPLETED 430 FILES 0 ERRORS 0 WARNINGS 0 FILES_WITH_PROBLEMS
+===== exit=0  seconds=35 : npm run typecheck =====
+
+===== npm run check:architecture =====
+
+> build-settlement@0.1.0 check:architecture
+> node tools/check-architecture.mjs
+
+{
+  "status": "PASS",
+  "files": [
+    "packages/content/src/city-design.ts",
+    "packages/content/src/index.ts",
+    "packages/core/src/character/catalog.ts",
+    "packages/core/src/character/describe.ts",
+    "packages/core/src/character/session.ts",
+    "packages/core/src/character/starter-profiles.ts",
+    "packages/core/src/character/types.ts",
+    "packages/core/src/character/validate.ts",
+    "packages/core/src/data/validate.ts",
+    "packages/core/src/domain/canonical-state.ts",
+    "packages/core/src/domain/character.ts",
+    "packages/core/src/domain/gamestate.ts",
+    "packages/core/src/domain/memory.ts",
+    "packages/core/src/domain/population.ts",
+    "packages/core/src/domain/relationship.ts",
+    "packages/core/src/index.ts",
+    "packages/core/src/medal/index.ts",
+    "packages/core/src/medal/loadout.ts",
+    "packages/core/src/medal/projection.ts",
+    "packages/core/src/medal/types.ts",
+    "packages/core/src/medal/validation.ts",
+    "packages/core/src/social/calculator.ts",
+    "packages/core/src/social/profile.ts",
+    "packages/core/src/social/types.ts",
+    "packages/core/src/social/workforce.ts",
+    "packages/core/src/status/effects.ts",
+    "packages/core/src/status/types.ts",
+    "packages/core/src/trial/catalog.ts",
+    "packages/core/src/trial/crime.ts",
+    "packages/core/src/trial/crisis.ts",
+    "packages/core/src/trial/event-card.ts",
+    "packages/core/src/trial/goods-stock.ts",
+    "packages/core/src/trial/items.ts",
+    "packages/core/src/trial/law.ts",
+    "packages/core/src/trial/order.ts",
+    "packages/core/src/trial/outside.ts",
+    "packages/core/src/trial/society-map.ts",
+    "packages/core/src/trial/society.ts",
+    "packages/core/src/trial/state.ts",
+    "packages/core/src/trial/types.ts",
+    "packages/core/src/weekly.ts",
+    "packages/core/src/world/arrays.ts",
+    "packages/core/src/world/generate.ts",
+    "packages/core/src/world/npc-content.ts",
+    "packages/core/src/world/npc.ts",
+    "packages/core/src/world/random.ts",
+    "packages/core/src/world/scenario.ts",
+    "packages/core/src/world/session.ts",
+    "packages/core/src/world/types.ts",
+    "packages/persistence/src/character-life-save.ts",
+    "packages/persistence/src/game-store.ts",
+    "packages/persistence/src/index.ts",
+    "packages/persistence/src/memory-store.ts",
+    "packages/persistence/src/session-records.ts",
+    "packages/persistence/src/tile-trial-save.ts",
+    "packages/persistence/src/world-session-save.ts",
+    "packages/simulation/src/character-life-command.ts",
+    "packages/simulation/src/character-life-observation.ts",
+    "packages/simulation/src/crime-week.ts",
+    "packages/simulation/src/crisis-week.ts",
+    "packages/simulation/src/index.ts",
+    "packages/simulation/src/item-command.ts",
+    "packages/simulation/src/law-week.ts",
+    "packages/simulation/src/order-week.ts",
+    "packages/simulation/src/outside-week.ts",
+    "packages/simulation/src/society-facilities.ts",
+    "packages/simulation/src/society-week.ts",
+    "packages/simulation/src/tile-trial-immigration.ts",
+    "packages/simulation/src/tile-trial-week.ts",
+    "packages/simulation/src/tile-trial.ts",
+    "packages/simulation/src/weekly.ts",
+    "packages/simulation/src/world-npc.ts",
+    "packages/ui/src/CharacterCreation.svelte",
+    "packages/ui/src/CharacterLifeApp.svelte",
+    "packages/ui/src/CharacterLifeCharacters.svelte",
+    "packages/ui/src/CharacterLifeCity.svelte",
+    "packages/ui/src/CharacterLifeShell.svelte",
+    "packages/ui/src/CharacterProfile.svelte",
+    "packages/ui/src/CityFallen.svelte",
+    "packages/ui/src/CouncilPanel.svelte",
+    "packages/ui/src/CrisisCard.svelte",
+    "packages/ui/src/DataInspector.svelte",
+    "packages/ui/src/EquipmentView.svelte",
+    "packages/ui/src/ErrorLog.svelte",
+    "packages/ui/src/InsideCity.svelte",
+    "packages/ui/src/ItemCard.svelte",
+    "packages/ui/src/LibraryPanel.svelte",
+    "packages/ui/src/MarketPanel.svelte",
+    "packages/ui/src/OptionsDialog.svelte",
+    "packages/ui/src/OutsideCity.svelte",
+    "packages/ui/src/PotionPanel.svelte",
+    "packages/ui/src/ReportLetter.svelte",
+    "packages/ui/src/SocietyPopulation.svelte",
+    "packages/ui/src/SocietyReport.svelte",
+    "packages/ui/src/SoloWeekReport.svelte",
+    "packages/ui/src/TileManagement.svelte",
+    "packages/ui/src/TitleScreen.svelte",
+    "packages/ui/src/build-env.d.ts",
+    "packages/ui/src/character-life-navigation.ts",
+    "packages/ui/src/character-life-session.ts",
+    "packages/ui/src/clearing-workers.ts",
+    "packages/ui/src/data-inspector.ts",
+    "packages/ui/src/error-log.ts",
+    "packages/ui/src/indexeddb-store.ts",
+    "packages/ui/src/items-view.ts",
+    "packages/ui/src/life-calendar.ts",
+    "packages/ui/src/main.ts",
+    "packages/ui/src/milli-format.ts",
+    "packages/ui/src/options.ts",
+    "packages/ui/src/platform.ts",
+    "packages/ui/src/report-letters.ts",
+    "packages/ui/src/society-view.ts",
+    "packages/ui/src/version.ts",
+    "packages/ui/src/world-npc-session.ts",
+    "packages/ui/src/world-session.ts"
+  ],
+  "counts": {
+    "core": 47,
+    "content": 2,
+    "simulation": 16,
+    "persistence": 7,
+    "ui": 43
+  },
+  "edges": [
+    {
+      "from": "persistence",
+      "to": "core",
+      "file": "packages/persistence/src/character-life-save.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "persistence",
+      "to": "core",
+      "file": "packages/persistence/src/session-records.ts",
+      "line": 1,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "persistence",
+      "to": "core",
+      "file": "packages/persistence/src/session-records.ts",
+      "line": 3,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "persistence",
+      "to": "core",
+      "file": "packages/persistence/src/session-records.ts",
+      "line": 5,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "persistence",
+      "to": "core",
+      "file": "packages/persistence/src/world-session-save.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/character-life-command.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/character-life-observation.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/crime-week.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/crisis-week.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/item-command.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/law-week.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/order-week.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/outside-week.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/society-facilities.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/society-week.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/tile-trial-immigration.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/tile-trial-week.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/tile-trial-week.ts",
+      "line": 6,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/tile-trial.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/tile-trial.ts",
+      "line": 3,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "simulation",
+      "to": "core",
+      "file": "packages/simulation/src/world-npc.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CharacterCreation.svelte",
+      "line": 2,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CharacterLifeApp.svelte",
+      "line": 3,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/CharacterLifeApp.svelte",
+      "line": 4,
+      "column": 3,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CharacterLifeCharacters.svelte",
+      "line": 3,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/CharacterLifeCharacters.svelte",
+      "line": 4,
+      "column": 3,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CharacterLifeCity.svelte",
+      "line": 2,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CharacterLifeShell.svelte",
+      "line": 4,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CharacterLifeShell.svelte",
+      "line": 21,
+      "column": 46,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CharacterProfile.svelte",
+      "line": 4,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CouncilPanel.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/CrisisCard.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/DataInspector.svelte",
+      "line": 3,
+      "column": 3,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/EquipmentView.svelte",
+      "line": 3,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/EquipmentView.svelte",
+      "line": 4,
+      "column": 2,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/InsideCity.svelte",
+      "line": 4,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/ItemCard.svelte",
+      "line": 2,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/LibraryPanel.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/MarketPanel.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/OutsideCity.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/PotionPanel.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/SocietyPopulation.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "content",
+      "file": "packages/ui/src/SocietyPopulation.svelte",
+      "line": 3,
+      "column": 2,
+      "specifier": "@haven/content"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/SocietyReport.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/SocietyReport.svelte",
+      "line": 3,
+      "column": 2,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/SoloWeekReport.svelte",
+      "line": 2,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/TileManagement.svelte",
+      "line": 12,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/TileManagement.svelte",
+      "line": 13,
+      "column": 3,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/TileManagement.svelte",
+      "line": 14,
+      "column": 3,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/character-life-session.ts",
+      "line": 1,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/character-life-session.ts",
+      "line": 2,
+      "column": 1,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/character-life-session.ts",
+      "line": 91,
+      "column": 78,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/data-inspector.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/data-inspector.ts",
+      "line": 6,
+      "column": 1,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/indexeddb-store.ts",
+      "line": 1,
+      "column": 2,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/items-view.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/report-letters.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 2,
+      "column": 1,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 68,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 69,
+      "column": 1,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 99,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 100,
+      "column": 1,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 120,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 143,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 168,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/world-npc-session.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/world-npc-session.ts",
+      "line": 2,
+      "column": 1,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/world-session.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/world-session.ts",
+      "line": 2,
+      "column": 1,
+      "specifier": "@haven/simulation"
+    }
+  ],
+  "violations": [],
+  "cycles": [],
+  "errors": []
+}
+===== exit=0  seconds=8 : npm run check:architecture =====
+
+===== npm run test:architecture =====
+
+> build-settlement@0.1.0 test:architecture
+> node --test tools/architecture.test.mjs
+
+✔ static multiline: simulation -> core is PASS (69.0195ms)
+✔ static multiline: content -> core is VIOLATION (42.7391ms)
+✔ side effect: simulation -> core is PASS (38.3876ms)
+✔ side effect: content -> core is VIOLATION (40.22ms)
+✔ default import: simulation -> core is PASS (44.928ms)
+✔ default import: content -> core is VIOLATION (44.9822ms)
+✔ namespace import: simulation -> core is PASS (39.7063ms)
+✔ namespace import: content -> core is VIOLATION (39.0198ms)
+✔ type import: simulation -> core is PASS (39.5915ms)
+✔ type import: content -> core is VIOLATION (39.0978ms)
+✔ inline type import: simulation -> core is PASS (39.1839ms)
+✔ inline type import: content -> core is VIOLATION (43.0194ms)
+✔ named re-export: simulation -> core is PASS (41.3448ms)
+✔ named re-export: content -> core is VIOLATION (40.4979ms)
+✔ star re-export: simulation -> core is PASS (40.6564ms)
+✔ star re-export: content -> core is VIOLATION (40.6461ms)
+✔ namespace re-export: simulation -> core is PASS (40.1779ms)
+✔ namespace re-export: content -> core is VIOLATION (40.1272ms)
+✔ type re-export: simulation -> core is PASS (40.1574ms)
+✔ type re-export: content -> core is VIOLATION (41.7947ms)
+✔ type star re-export: simulation -> core is PASS (42.6804ms)
+✔ type star re-export: content -> core is VIOLATION (40.4011ms)
+✔ dynamic import: simulation -> core is PASS (43.1182ms)
+✔ dynamic import: content -> core is VIOLATION (40.5268ms)
+✔ template dynamic import: simulation -> core is PASS (50.4122ms)
+✔ template dynamic import: content -> core is VIOLATION (39.7374ms)
+✔ import type expression: simulation -> core is PASS (41.0268ms)
+✔ import type expression: content -> core is VIOLATION (41.3997ms)
+✔ typeof import expression: simulation -> core is PASS (42.7182ms)
+✔ typeof import expression: content -> core is VIOLATION (44.6463ms)
+✔ import equals require: simulation -> core is PASS (51.447ms)
+✔ import equals require: content -> core is VIOLATION (42.5222ms)
+✔ literal require: simulation -> core is PASS (42.7533ms)
+✔ literal require: content -> core is VIOLATION (43.0445ms)
+✔ template require: simulation -> core is PASS (44.6081ms)
+✔ template require: content -> core is VIOLATION (42.1515ms)
+✔ file URL: static multiline retains simulation -> core PASS (67.3445ms)
+✔ file URL: static multiline retains content -> core VIOLATION (63.9571ms)
+✔ file URL: side effect retains simulation -> core PASS (64.5239ms)
+✔ file URL: side effect retains content -> core VIOLATION (64.7919ms)
+✔ file URL: default import retains simulation -> core PASS (62.7433ms)
+✔ file URL: default import retains content -> core VIOLATION (62.8581ms)
+✔ file URL: namespace import retains simulation -> core PASS (62.1373ms)
+✔ file URL: namespace import retains content -> core VIOLATION (61.7914ms)
+✔ file URL: type import retains simulation -> core PASS (62.0001ms)
+✔ file URL: type import retains content -> core VIOLATION (62.2664ms)
+✔ file URL: inline type import retains simulation -> core PASS (63.1219ms)
+✔ file URL: inline type import retains content -> core VIOLATION (63.9661ms)
+✔ file URL: named re-export retains simulation -> core PASS (67.4179ms)
+✔ file URL: named re-export retains content -> core VIOLATION (63.6592ms)
+✔ file URL: star re-export retains simulation -> core PASS (61.576ms)
+✔ file URL: star re-export retains content -> core VIOLATION (58.8729ms)
+✔ file URL: namespace re-export retains simulation -> core PASS (60.3289ms)
+✔ file URL: namespace re-export retains content -> core VIOLATION (63.3334ms)
+✔ file URL: type re-export retains simulation -> core PASS (63.1423ms)
+✔ file URL: type re-export retains content -> core VIOLATION (60.3291ms)
+✔ file URL: type star re-export retains simulation -> core PASS (59.6345ms)
+✔ file URL: type star re-export retains content -> core VIOLATION (59.6037ms)
+✔ file URL: dynamic import retains simulation -> core PASS (61.8956ms)
+✔ file URL: dynamic import retains content -> core VIOLATION (61.0929ms)
+✔ file URL: template dynamic import retains simulation -> core PASS (58.8022ms)
+✔ file URL: template dynamic import retains content -> core VIOLATION (59.5515ms)
+✔ file URL: import type expression retains simulation -> core PASS (59.5138ms)
+✔ file URL: import type expression retains content -> core VIOLATION (64.4125ms)
+✔ file URL: typeof import expression retains simulation -> core PASS (61.879ms)
+✔ file URL: typeof import expression retains content -> core VIOLATION (65.5015ms)
+✔ file URL: import equals require retains simulation -> core PASS (64.3649ms)
+✔ file URL: import equals require retains content -> core VIOLATION (60.1691ms)
+✔ file URL: literal require retains simulation -> core PASS (60.3127ms)
+✔ file URL: literal require retains content -> core VIOLATION (64.21ms)
+✔ file URL: template require retains simulation -> core PASS (60.201ms)
+✔ file URL: template require retains content -> core VIOLATION (59.9958ms)
+✔ file URL: all supported syntax in Svelte instance body (523.6902ms)
+✔ file URL: all supported syntax in Svelte module body (467.8338ms)
+✔ file URL: declarations, encoded names, URL normalization and .js -> .ts never execute source (152.8942ms)
+✔ file URL: malformed and missing targets are located INCOMPLETE, with CLI exit 2 (2517.0977ms)
+✔ file URL: platform paths and remote hosts cannot trigger filesystem lookup outside declared packages (98.9038ms)
+✔ file URL: package cycles retain witness locations and CLI violation exit; local file cycles stay legal (2496.1682ms)
+✔ the complete approved matrix, including type-only edges (428.7212ms)
+✔ normalized relative paths, index resolution, declarations and .js -> .ts (52.1254ms)
+✔ exact package identities, subpaths, escapes and external lookalikes (75.4316ms)
+✔ comments, regex, plain strings, template text and Svelte markup create no edges (52.0459ms)
+✔ Svelte module and instance scripts retain actual source lines (47.335ms)
+✔ every dependency syntax is scanned in Svelte scripts (548.6269ms)
+✔ scope01: unsupported script generics="T" is explicitly INCOMPLETE (152.1599ms)
+✔ scope01: unsupported script generics="T extends import('@haven/simulation').Value" is explicitly INCOMPLETE (113.4654ms)
+✔ scope01: unsupported script generics="" is explicitly INCOMPLETE (110.7029ms)
+✔ scope01: unsupported script generics is explicitly INCOMPLETE (140.472ms)
+✔ scope01: unsupported script generics="not valid TypeScript" is explicitly INCOMPLETE (160.1448ms)
+✔ scope01: unsupported script module generics="T" is explicitly INCOMPLETE (120.7159ms)
+✔ scope01: unsupported script module generics="T extends import('@haven/simulation').Value" is explicitly INCOMPLETE (125.7721ms)
+✔ scope01: unsupported script module generics="" is explicitly INCOMPLETE (169.7716ms)
+✔ scope01: unsupported script module generics is explicitly INCOMPLETE (135.0537ms)
+✔ scope01: unsupported script module generics="not valid TypeScript" is explicitly INCOMPLETE (140.6742ms)
+✔ scope01: unsupported script context="module" generics="T" is explicitly INCOMPLETE (149.3286ms)
+✔ scope01: unsupported script context="module" generics="T extends import('@haven/simulation').Value" is explicitly INCOMPLETE (151.864ms)
+✔ scope01: unsupported script context="module" generics="" is explicitly INCOMPLETE (129.641ms)
+✔ scope01: unsupported script context="module" generics is explicitly INCOMPLETE (99.7032ms)
+✔ scope01: unsupported script context="module" generics="not valid TypeScript" is explicitly INCOMPLETE (104.8488ms)
+✔ scope01: attribute-like comments, script strings, markup and CSS stay excluded (69.4706ms)
+✔ scope01: TypeScript generic/type body dependencies retain ui -> core enforcement (64.7635ms)
+✔ scope01: TypeScript generic/type body dependencies retain content -> core enforcement (57.7867ms)
+✔ scope01: declarations generic/type body dependencies retain ui -> core enforcement (57.6591ms)
+✔ scope01: declarations generic/type body dependencies retain content -> core enforcement (55.9625ms)
+✔ scope01: Svelte instance body generic/type body dependencies retain ui -> core enforcement (58.5534ms)
+✔ scope01: Svelte instance body generic/type body dependencies retain content -> core enforcement (56.9351ms)
+✔ scope01: Svelte module body generic/type body dependencies retain ui -> core enforcement (67.2163ms)
+✔ scope01: Svelte module body generic/type body dependencies retain content -> core enforcement (54.5102ms)
+✔ scope01: unsupported attributes preserve proven body edges in both script blocks (51.5289ms)
+✔ scope01: unsupported generics CLI exits 2 with a located error, not a violation (5364.6449ms)
+✔ s1: expression-valued generics={"T"} gets its actual multiline location (109.0428ms)
+✔ s1: expression-valued generics={'T'} gets its actual multiline location (82.2368ms)
+✔ s1: expression-valued generics={`T`} gets its actual multiline location (77.3925ms)
+✔ s1: expression-valued generics={typeName} gets its actual multiline location (78.3818ms)
+✔ s1: expression-valued module generics={"T"} gets its actual multiline location (76.048ms)
+✔ s1: expression-valued module generics={'T'} gets its actual multiline location (68.7304ms)
+✔ s1: expression-valued module generics={`T`} gets its actual multiline location (72.957ms)
+✔ s1: expression-valued module generics={typeName} gets its actual multiline location (68.7439ms)
+✔ s1: expression-valued context="module" generics={"T"} gets its actual multiline location (68.1068ms)
+✔ s1: expression-valued context="module" generics={'T'} gets its actual multiline location (66.7362ms)
+✔ s1: expression-valued context="module" generics={`T`} gets its actual multiline location (65.528ms)
+✔ s1: expression-valued context="module" generics={typeName} gets its actual multiline location (65.8687ms)
+✔ s1: parser fallback retains every required dependency syntax in instance body (506.8598ms)
+✔ s1: parser fallback retains every required dependency syntax in module body (467.0781ms)
+✔ s1: fallback keeps both body type violations and attribute locations across script blocks (48.5232ms)
+✔ s1: BOM ranges preserve multiline attribute and body locations (44.042ms)
+✔ s1: fallback reports computed body imports alongside the unsupported attribute (42.3375ms)
+✔ s1: fallback distinguishes actual script attributes from comment/string/markup/CSS lookalikes (71.768ms)
+✔ s1: a malformed body remains an INCOMPLETE parse failure (45.7023ms)
+✔ s1: the reported expression-attribute CLI reproduction exits 2 with line and reason (2530.2251ms)
+✔ scan includes exactly eligible production .ts/.svelte, recursively (90.6889ms)
+✔ computed dependency cannot pass: import(name); (47.9751ms)
+✔ computed dependency cannot pass: import(`@haven/${name}`); (45.6236ms)
+✔ computed dependency cannot pass: import('@haven/' + name); (48.5228ms)
+✔ computed dependency cannot pass: require(name); (48.367ms)
+✔ computed dependency cannot pass: require(); (53.2663ms)
+✔ unresolved internal/relative dependency: import './missing'; (54.7286ms)
+✔ unresolved internal/relative dependency: import '@haven/core/no-such-file'; (50.1223ms)
+✔ unresolved internal/relative dependency: import '@haven/core/../../missing'; (51.2648ms)
+✔ relative asset imports resolve without expanding the production scan (83.0614ms)
+✔ parse error is incomplete verification: packages/core/src/index.ts const = ; (56.4945ms)
+✔ parse error is incomplete verification: packages/ui/src/Bad.svelte <script lang="ts">const = ;</script> (51.6431ms)
+✔ parse error is incomplete verification: packages/ui/src/Bad.svelte <script>import "@haven/core";</script><div> (55.8449ms)
+✔ missing and empty scope fail without fabricated line numbers (65.0405ms)
+✔ a scope containing only excluded files is empty (69.7489ms)
+✔ unreadable root and source preserve path/cause without a line (47.2391ms)
+✔ manifest failure cannot make internal imports appear external (55.2026ms)
+✔ two/three package cycles include a witness and every import location (87.1653ms)
+✔ within-package file cycles are legal, package DAG has no cycles (74.481ms)
+✔ diagnostics and graph output are stable across scans and creation order (129.8374ms)
+✔ symlink escape is verification failure, never scanned or followed (78.0791ms)
+✔ a source root symlink cannot escape and an internal symlink can be scanned (129.0908ms)
+✔ inspected TypeScript, Svelte and local config code is never executed (66.3892ms)
+✔ CLI exit 0/1/2 means PASS/VIOLATION/INCOMPLETE; output is stable JSON (16377.7534ms)
+ℹ tests 154
+ℹ suites 0
+ℹ pass 154
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 44254.1852
+===== exit=0  seconds=46 : npm run test:architecture =====
+
+===== npm test =====
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  120 passed (120)
+      Tests  2488 passed (2488)
+   Start at  21:47:25
+   Duration  59.86s (transform 10.88s, setup 0ms, import 47.61s, tests 206.27s, environment 56ms)
+
+===== exit=0  seconds=62 : npm test =====
+
+===== npm run build =====
+
+> build-settlement@0.1.0 build
+> npm run build --workspace=@haven/core && npm run build --workspace=@haven/simulation && npm run build --workspace=@haven/ui
+
+
+> @haven/core@0.1.0 build
+> tsc
+
+
+> @haven/simulation@0.1.0 build
+> tsc
+
+
+> @haven/ui@0.1.0 build
+> vite build
+
+[36mvite v6.4.5 [32mbuilding for production...[36m[39m
+transforming...
+[32m✓[39m 246 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mdist/[22m[32mindex.html                                 [39m[1m[2m  0.71 kB[22m[1m[22m[2m │ gzip:   0.41 kB[22m
+[2mdist/[22m[32massets/PixelifySans-Variable-lrcDQVzA.ttf  [39m[1m[2m 79.16 kB[22m[1m[22m
+[2mdist/[22m[35massets/index-CxB-ZnFZ.css                  [39m[1m[2m 32.98 kB[22m[1m[22m[2m │ gzip:   6.74 kB[22m
+[2mdist/[22m[36massets/index-DlvafnCY.js                   [39m[1m[2m398.90 kB[22m[1m[22m[2m │ gzip: 126.72 kB[22m
+[32m✓ built in 3.74s[39m
+===== exit=0  seconds=22 : npm run build =====
+CI=1 (exported before the smoke)
+
+===== npm run test:smoke =====
+
+> build-settlement@0.1.0 pretest:smoke
+> npm run build:regression --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 build:regression
+> vite build regression --config vite.config.ts --outDir dist
+
+[36mvite v6.4.5 [32mbuilding for production...[36m[39m
+transforming...
+[32m✓[39m 247 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mdist/[22m[32mindex.html                                 [39m[1m[2m  0.45 kB[22m[1m[22m[2m │ gzip:   0.31 kB[22m
+[2mdist/[22m[32massets/PixelifySans-Variable-lrcDQVzA.ttf  [39m[1m[2m 79.16 kB[22m[1m[22m
+[2mdist/[22m[35massets/index-CxB-ZnFZ.css                  [39m[1m[2m 32.98 kB[22m[1m[22m[2m │ gzip:   6.74 kB[22m
+[2mdist/[22m[36massets/index-DlvafnCY.js                   [39m[1m[2m398.90 kB[22m[1m[22m[2m │ gzip: 126.72 kB[22m
+[32m✓ built in 3.12s[39m
+
+> build-settlement@0.1.0 test:smoke
+> playwright test
+
+
+Running 370 tests using 1 worker
+
+  ok   1 [chromium] › tests\e2e\autosave.spec.ts:28:1 › On by default: Plan next week writes one checkpoint equal to the real export (3.6s)
+  ok   2 [chromium] › tests\e2e\autosave.spec.ts:38:1 › Off: End Week and Plan next week leave the slot and checkpoint IO unchanged (1.1s)
+  ok   3 [chromium] › tests\e2e\autosave.spec.ts:45:1 › Write failure: the exact autosave status appears and previous bytes survive (1.2s)
+  ok   4 [chromium] › tests\e2e\autosave.spec.ts:53:1 › Never: creating a New Game and importing a checkpoint do not autosave (1.0s)
+  ok   5 [chromium] › tests\e2e\character-life-boundary.spec.ts:257:1 › same-session UI projection through assignment and full week (1.7m)
+  ok   6 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:8:3 › Goods stock accessibility at 375px (22.9s)
+  ok   7 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:8:3 › Goods stock accessibility at 1280px (24.7s)
+  ok   8 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:212:5 › accessibility at 1600px › native control text preserves active and inactive contrast (1.9s)
+  ok   9 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:250:5 › accessibility at 1600px › life shell accessibility baseline (2.2m)
+  ok  10 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:329:5 › accessibility at 1600px › long character and report content reflows (12.8s)
+  ok  11 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:212:5 › accessibility at 1280px › native control text preserves active and inactive contrast (1.7s)
+  ok  12 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:250:5 › accessibility at 1280px › life shell accessibility baseline (2.2m)
+  ok  13 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:329:5 › accessibility at 1280px › long character and report content reflows (12.0s)
+  ok  14 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:212:5 › accessibility at 375px › native control text preserves active and inactive contrast (1.6s)
+  ok  15 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:250:5 › accessibility at 375px › life shell accessibility baseline (2.2m)
+  ok  16 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:329:5 › accessibility at 375px › long character and report content reflows (10.9s)
+  ok  17 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:212:5 › accessibility at 320px › native control text preserves active and inactive contrast (3.1s)
+  ok  18 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:250:5 › accessibility at 320px › life shell accessibility baseline (2.2m)
+  ok  19 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:329:5 › accessibility at 320px › long character and report content reflows (12.0s)
+  ok  20 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:400:1 › ledger font family at 1280px (550ms)
+  ok  21 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:406:1 › ledger fonts blocked reflows at 375px with 44px buttons (1.2s)
+  ok  22 [chromium] › tests\e2e\character-life-navigation.spec.ts:24:3 › reference layout keeps navigation persistent at 320px (2.1s)
+  ok  23 [chromium] › tests\e2e\character-life-navigation.spec.ts:24:3 › reference layout keeps navigation persistent at 375px (2.4s)
+  ok  24 [chromium] › tests\e2e\character-life-navigation.spec.ts:24:3 › reference layout keeps navigation persistent at 1280px (3.6s)
+  ok  25 [chromium] › tests\e2e\character-life-navigation.spec.ts:24:3 › reference layout keeps navigation persistent at 1600px (2.4s)
+  ok  26 [chromium] › tests\e2e\character-life-navigation.spec.ts:97:3 › city windows preserve state and return focus at 375px (4.8s)
+  ok  27 [chromium] › tests\e2e\character-life-navigation.spec.ts:97:3 › city windows preserve state and return focus at 1280px (5.2s)
+  ok  28 [chromium] › tests\e2e\character-life-navigation.spec.ts:155:1 › leaving Report does not acknowledge the week (1.6s)
+  ok  29 [chromium] › tests\e2e\character-life-navigation.spec.ts:195:1 › food stock remains reachable when sidebar collapses (2.3s)
+  ok  30 [chromium] › tests\e2e\character-life-navigation.spec.ts:220:1 › report calendar parser reconstructs absolute weeks independently (307ms)
+  ok  31 [chromium] › tests\e2e\character-life-navigation.spec.ts:225:1 › fulfillment states match strip and report (44.7s)
+  ok  32 [chromium] › tests\e2e\character-life-navigation.spec.ts:251:1 › near-full requirement track retains 99.99 percent exactly (766ms)
+  ok  33 [chromium] › tests\e2e\character-life-navigation.spec.ts:265:1 › all Life calendar surfaces cross year boundaries (9.5s)
+  ok  34 [chromium] › tests\e2e\character-life-navigation.spec.ts:300:1 › rejected load keeps absolute week 41 diagnostic beside Year 2 presentation (1.9s)
+  ok  35 [chromium] › tests\e2e\character-life-navigation.spec.ts:315:3 › pending load error is visible in active window: Information (5.0s)
+  ok  36 [chromium] › tests\e2e\character-life-navigation.spec.ts:315:3 › pending load error is visible in active window: Player (4.3s)
+  ok  37 [chromium] › tests\e2e\character-life-navigation.spec.ts:315:3 › pending load error is visible in active window: Population (4.3s)
+  ok  38 [chromium] › tests\e2e\character-life-navigation.spec.ts:347:3 › full-body placeholder preserves profile disclosure at 375px (4.4s)
+  ok  39 [chromium] › tests\e2e\character-life-navigation.spec.ts:347:3 › full-body placeholder preserves profile disclosure at 1280px (5.0s)
+  ok  40 [chromium] › tests\e2e\character-life-navigation.spec.ts:409:1 › age-17 checkpoint rejection preserves the valid profile and open adult disclosure (2.5s)
+  ok  41 [chromium] › tests\e2e\character-life-navigation.spec.ts:436:1 › one character window remembers areas and closes new-person disclosures (8.7s)
+  ok  42 [chromium] › tests\e2e\character-life-navigation.spec.ts:494:1 › inventory shows equipment and player unavailable areas stay honest (2.0s)
+  ok  43 [chromium] › tests\e2e\character-life-navigation.spec.ts:517:1 › NPC Work uses the displayed post and reports stale choices locally (5.3s)
+  ok  44 [chromium] › tests\e2e\character-life-navigation.spec.ts:585:1 › life shell navigation is read-only (1.9s)
+  ok  45 [chromium] › tests\e2e\character-life-navigation.spec.ts:617:1 › city actions retain costs and targeted errors (2.1s)
+  ok  46 [chromium] › tests\e2e\character-life-navigation.spec.ts:664:1 › turn repeat is guarded without stealing focus (2.2s)
+  ok  47 [chromium] › tests\e2e\character-life-navigation.spec.ts:716:1 › unavailable Life Plan next week is visibly inactive (1.2s)
+  ok  48 [chromium] › tests\e2e\character-life-navigation.spec.ts:753:1 › report oracle formatter preserves grouped exact milli values (120ms)
+  ok  49 [chromium] › tests\e2e\character-life-navigation.spec.ts:759:1 › report oracle parser preserves grouped exact milli integers (116ms)
+  ok  50 [chromium] › tests\e2e\character-life-navigation.spec.ts:765:1 › report oracle parser rejects malformed grouping and sub-milli precision (119ms)
+  ok  51 [chromium] › tests\e2e\character-life-navigation.spec.ts:769:1 › UI snapshots retain ErrorLog history, counts and diagnostic feedback (1.3s)
+  ok  52 [chromium] › tests\e2e\character-life-navigation.spec.ts:790:1 › checkpoint feedback normalization rejects unrelated diagnostic changes (1.6s)
+  ok  53 [chromium] › tests\e2e\character-life-navigation.spec.ts:820:1 › unapplied drafts survive navigation with committed-only resolution (7.4s)
+  ok  54 [chromium] › tests\e2e\character-life-navigation.spec.ts:877:1 › unapplied drafts follow distinct workforce and post lifetimes (1.8s)
+  ok  55 [chromium] › tests\e2e\character-life-navigation.spec.ts:935:3 › same-id load resets UI only after publication: Continue (3.4s)
+  ok  56 [chromium] › tests\e2e\character-life-navigation.spec.ts:962:3 › same-ID Player private disclosure resets on successful Continue (1.2s)
+  ok  57 [chromium] › tests\e2e\character-life-navigation.spec.ts:935:3 › same-id load resets UI only after publication: Import (3.3s)
+  ok  58 [chromium] › tests\e2e\character-life-navigation.spec.ts:962:3 › same-ID Player private disclosure resets on successful Import (1.2s)
+  ok  59 [chromium] › tests\e2e\character-life-navigation.spec.ts:1011:3 › rejected and superseded loads preserve UI intent: invalid JSON (4.6s)
+  ok  60 [chromium] › tests\e2e\character-life-navigation.spec.ts:1011:3 › rejected and superseded loads preserve UI intent: incompatible schema (4.1s)
+  ok  61 [chromium] › tests\e2e\character-life-navigation.spec.ts:1011:3 › rejected and superseded loads preserve UI intent: oversize (4.0s)
+  ok  62 [chromium] › tests\e2e\character-life-navigation.spec.ts:1011:3 › rejected and superseded loads preserve UI intent: invalid local Continue (3.9s)
+  ok  63 [chromium] › tests\e2e\character-life-navigation.spec.ts:1011:3 › rejected and superseded loads preserve UI intent: read rejection (4.3s)
+  ok  64 [chromium] › tests\e2e\character-life-navigation.spec.ts:1011:3 › rejected and superseded loads preserve UI intent: Report phase (6.0s)
+  ok  65 [chromium] › tests\e2e\character-life-navigation.spec.ts:1011:3 › rejected and superseded loads preserve UI intent: stale revision (4.2s)
+  ok  66 [chromium] › tests\e2e\character-life-navigation.spec.ts:1011:3 › rejected and superseded loads preserve UI intent: superseded reads (3.4s)
+  ok  67 [chromium] › tests\e2e\character-life-navigation.spec.ts:1011:3 › rejected and superseded loads preserve UI intent: newer Import (3.1s)
+  ok  68 [chromium] › tests\e2e\character-life-navigation.spec.ts:1011:3 › rejected and superseded loads preserve UI intent: later Continue (3.7s)
+  ok  69 [chromium] › tests\e2e\character-life-navigation.spec.ts:1079:1 › rejected and superseded loads preserve UI intent: open Player disclosure (1.8s)
+  ok  70 [chromium] › tests\e2e\character-life-navigation.spec.ts:1092:1 › rejected and superseded loads preserve UI intent: targeted workforce error (2.1s)
+  ok  71 [chromium] › tests\e2e\character-life-navigation.spec.ts:1106:3 › report matches complete executor projection: shortage (7.2s)
+  ok  72 [chromium] › tests\e2e\character-life-navigation.spec.ts:1106:3 › report matches complete executor projection: zero (8.3s)
+  ok  73 [chromium] › tests\e2e\character-life-navigation.spec.ts:1106:3 › report matches complete executor projection: precision (9.5s)
+  ok  74 [chromium] › tests\e2e\character-life-navigation.spec.ts:1106:3 › report matches complete executor projection: service (7.3s)
+  ok  75 [chromium] › tests\e2e\character-life-navigation.spec.ts:1106:3 › report matches complete executor projection: empty (9.8s)
+  ok  76 [chromium] › tests\e2e\character-life-navigation.spec.ts:1157:5 › player flows at 1280px › F1 weekly turn — keyboard (28.8s)
+  ok  77 [chromium] › tests\e2e\character-life-navigation.spec.ts:1228:5 › player flows at 1280px › turn pointer repeats remain guarded (1.7s)
+  ok  78 [chromium] › tests\e2e\character-life-navigation.spec.ts:1259:5 › player flows at 1280px › F2 manager assignment — keyboard (11.4s)
+  ok  79 [chromium] › tests\e2e\character-life-navigation.spec.ts:1299:5 › player flows at 1280px › F3 read people (5.3s)
+  ok  80 [chromium] › tests\e2e\character-life-navigation.spec.ts:1349:5 › player flows at 1280px › F4 session reset and atomic failures (9.4s)
+  ok  81 [chromium] › tests\e2e\character-life-navigation.spec.ts:1157:5 › player flows at 375px › F1 weekly turn — keyboard (28.1s)
+  ok  82 [chromium] › tests\e2e\character-life-navigation.spec.ts:1228:5 › player flows at 375px › turn pointer repeats remain guarded (1.6s)
+  ok  83 [chromium] › tests\e2e\character-life-navigation.spec.ts:1259:5 › player flows at 375px › F2 manager assignment — keyboard (10.0s)
+  ok  84 [chromium] › tests\e2e\character-life-navigation.spec.ts:1299:5 › player flows at 375px › F3 read people (5.3s)
+  ok  85 [chromium] › tests\e2e\character-life-navigation.spec.ts:1349:5 › player flows at 375px › F4 session reset and atomic failures (10.2s)
+  ok  86 [chromium] › tests\e2e\character-life-navigation.spec.ts:1418:1 › B2 Report view switches after End Week and guards double Enter (964ms)
+  ok  87 [chromium] › tests\e2e\character-life-navigation.spec.ts:1441:1 › B2 City Report City preserves export and saved checkpoint (1.5s)
+  ok  88 [chromium] › tests\e2e\character-life-navigation.spec.ts:1458:1 › B2 pending load error remains visible while Report is selected (2.8s)
+  ok  89 [chromium] › tests\e2e\character-life.spec.ts:23:1 › start screen shows Character Life with New Game, Continue locally, Import (419ms)
+  ok  90 [chromium] › tests\e2e\character-life.spec.ts:33:1 › Create character is disabled until a name is entered; age 17 shows the age message (950ms)
+  ok  91 [chromium] › tests\e2e\character-life.spec.ts:55:1 › Next/Back keep entered values across tabs; arrow keys move between tabs (1.2s)
+  ok  92 [chromium] › tests\e2e\character-life.spec.ts:93:1 › Cancel returns to start and a new draft is empty (876ms)
+  ok  93 [chromium] › tests\e2e\character-life.spec.ts:110:1 › double click on Create character opens exactly one game (920ms)
+  ok  94 [chromium] › tests\e2e\character-life.spec.ts:125:1 › preset changes appearance fields; Review shows the short line (800ms)
+  ok  95 [chromium] › tests\e2e\character-life.spec.ts:145:1 › private adult section is collapsed by default and records optional values (788ms)
+  ok  96 [chromium] › tests\e2e\character-life.spec.ts:164:1 › Continue locally with empty slot shows the message and stays on start (554ms)
+  ok  97 [chromium] › tests\e2e\character-life.spec.ts:173:1 › importing a foreign file shows the Character Life message and stays on start (621ms)
+  ok  98 [chromium] › tests\e2e\character-life.spec.ts:213:1 › after creation the Player window shows the entered name and short line; 3 NPC roster rows open one profile (3.7s)
+  ok  99 [chromium] › tests\e2e\character-life.spec.ts:237:1 › assigning starter 1 to field-1 changes its long text to "currently manages the Farm." (1.7s)
+  ok 100 [chromium] › tests\e2e\character-life.spec.ts:248:1 › Private section is collapsed by default (884ms)
+  ok 101 [chromium] › tests\e2e\character-life.spec.ts:260:1 › Save locally, reload, Continue locally restores player name, profiles and posts (1.9s)
+  ok 102 [chromium] › tests\e2e\character-life.spec.ts:278:1 › Export then Import in a new game restores the session; file name matches the life pattern (2.6s)
+  ok 103 [chromium] › tests\e2e\character-life.spec.ts:296:1 › importing an NPC-world export into world-life is rejected with the Character Life incompatible message and nothing changes (1.8s)
+  ok 104 [chromium] › tests\e2e\character-life.spec.ts:309:1 › life Save locally leaves the NPC-world and world slots unchanged (929ms)
+  ok 105 [chromium] › tests\e2e\character-life.spec.ts:323:1 › Life report and checkpoint operations preserve every other-mode slot byte-for-byte (1.9s)
+  ok 106 [chromium] › tests\e2e\character-life.spec.ts:342:1 › Import during Report shows "Choose Plan next week before importing." (1.7s)
+  ok 107 [chromium] › tests\e2e\character-life.spec.ts:399:1 › 64-character unbroken name, birth name, label and biography stay inside their cards at 375px (1.1s)
+  ok 108 [chromium] › tests\e2e\character-life.spec.ts:404:1 › desktop profiles are unaffected: short values stay on one line and long text still fits at 1280px (2.4s)
+  ok 109 [chromium] › tests\e2e\crime.spec.ts:11:55 › robbery report and resulting state match the crafted save (5.7s)
+  ok 110 [chromium] › tests\e2e\crime.spec.ts:11:55 › raid report and resulting state match the crafted save (4.2s)
+  ok 111 [chromium] › tests\e2e\crime.spec.ts:11:55 › wound report and resulting state match the crafted save (4.5s)
+  ok 112 [chromium] › tests\e2e\crime.spec.ts:24:1 › assassination clears checkpoint, Continue refuses and New Game works (1.6s)
+  ok 113 [chromium] › tests\e2e\crisis.spec.ts:11:1 › Demand card locks End Week; Pay applies once and appears in the next report (6.1s)
+  ok 114 [chromium] › tests\e2e\crisis.spec.ts:18:1 › all choices show availability reasons and dispatch through Information (2.5s)
+  ok 115 [chromium] › tests\e2e\crisis.spec.ts:23:1 › last hungry Rebellion week clears save; reload offers New Game at Calm (1.4s)
+  ok 116 [chromium] › tests\e2e\crisis.spec.ts:29:1 › Fallen screen New Game opens Character Creation directly (707ms)
+  ok 117 [chromium] › tests\e2e\crisis.spec.ts:32:1 › normal End Week preserves a manual checkpoint byte-for-byte (1.0s)
+  ok 118 [chromium] › tests\e2e\crisis.spec.ts:38:1 › B2 pending crisis dispatches from Report and leaves the view selected (975ms)
+  ok 119 [chromium] › tests\e2e\error-log.spec.ts:40:1 › both entries expose an English panel; real JSON download persists on its origin while games reset (3.6s)
+  ok 120 [chromium] › tests\e2e\error-log.spec.ts:66:1 › real guard failures and alternating global errors retain only the last five groups (2.8s)
+  ok 121 [chromium] › tests\e2e\error-log.spec.ts:86:5 › weekly throw dispatcher failure never records or renders arbitrary error data (2.0s)
+  ok 122 [chromium] › tests\e2e\error-log.spec.ts:86:5 › weekly unknown dispatcher failure never records or renders arbitrary error data (2.6s)
+  ok 123 [chromium] › tests\e2e\error-log.spec.ts:103:1 › global capture ignores raw event objects and resources, bounds storms, and uses the latest mode clock without network (2.4s)
+  ok 124 [chromium] › tests\e2e\error-log.spec.ts:135:1 › weekly native uncaught errors and rejected promises are captured after initialization without exporting their contents (974ms)
+  ok 125 [chromium] › tests\e2e\error-log.spec.ts:149:1 › production keeps old R1 log records on its origin and captures the new Weekly clock without bridging regression storage (3.0s)
+  ok 126 [chromium] › tests\e2e\error-log.spec.ts:174:3 › getter storage failure keeps export and gameplay working in RAM without retries (2.7s)
+  ok 127 [chromium] › tests\e2e\error-log.spec.ts:174:3 › quota storage failure keeps export and gameplay working in RAM without retries (2.2s)
+  ok 128 [chromium] › tests\e2e\error-log.spec.ts:193:1 › corrupt storage discards only the logger key; export failure keeps the in-memory log (1.2s)
+  ok 129 [chromium] › tests\e2e\error-log.spec.ts:207:1 › panel remains usable with no active settlement and keyboard-triggered download (468ms)
+  ok 130 [chromium] › tests\e2e\garrison.spec.ts:8:1 › New Game shows zero soldiers and fits both widths (923ms)
+  ok 131 [chromium] › tests\e2e\garrison.spec.ts:12:1 › Watch House staffing, level-two capacity and three-worker refusal (6.5s)
+  ok 132 [chromium] › tests\e2e\garrison.spec.ts:21:1 › crafted raid reports garrison deaths with complete Order parity (4.3s)
+  ok 133 [chromium] › tests\e2e\goods-stock.spec.ts:5:85 › Society five-week report and navigation parity at 375px (21.7s)
+  ok 134 [chromium] › tests\e2e\goods-stock.spec.ts:5:85 › Society five-week report and navigation parity at 1280px (22.3s)
+  ok 135 [chromium] › tests\e2e\items.spec.ts:30:1 › C1 paper doll, totals, filters and Materials expose real item state (1.8s)
+  ok 136 [chromium] › tests\e2e\items.spec.ts:45:1 › C3 Legendary cards describe their catalog effects (1.0s)
+  ok 137 [chromium] › tests\e2e\items.spec.ts:59:1 › C3 Player and NPC silhouettes have their distinct accessible labels (2.0s)
+  ok 138 [chromium] › tests\e2e\items.spec.ts:73:1 › C2 UI buy, keyboard equip and next Farm report show the post effect (5.1s)
+  ok 139 [chromium] › tests\e2e\items.spec.ts:88:1 › C2 Market sells items and digit-only material quantities, with no Legendary Sell (2.2s)
+  ok 140 [chromium] › tests\e2e\items.spec.ts:103:1 › C2 claims temporary storage through the command path (1.1s)
+  ok 141 [chromium] › tests\e2e\items.spec.ts:110:1 › C2 operating Hospital and worker-free Drug Store sell potions; inventory Use restores Player health (1.5s)
+  ok 142 [chromium] › tests\e2e\items.spec.ts:124:1 › C2 visible item letters include stack loss, storage-full loss, expiry, delivered and waiting Legendary rewards (3.6s)
+  ok 143 [chromium] › tests\e2e\items.spec.ts:130:1 › C2 health line and wounds death letter use the exact approved copy (817ms)
+  ok 144 [chromium] › tests\e2e\items.spec.ts:172:93 › C2 accessibility equipment at 1280 (9.7s)
+  ok 145 [chromium] › tests\e2e\items.spec.ts:172:93 › C2 accessibility market at 1280 (4.6s)
+  ok 146 [chromium] › tests\e2e\items.spec.ts:172:93 › C2 accessibility potions at 1280 (3.0s)
+  ok 147 [chromium] › tests\e2e\items.spec.ts:172:93 › C2 accessibility letters at 1280 (1.3s)
+  ok 148 [chromium] › tests\e2e\items.spec.ts:172:93 › C2 accessibility equipment at 1600 (8.9s)
+  ok 149 [chromium] › tests\e2e\items.spec.ts:172:93 › C2 accessibility market at 1600 (3.9s)
+  ok 150 [chromium] › tests\e2e\items.spec.ts:172:93 › C2 accessibility potions at 1600 (2.9s)
+  ok 151 [chromium] › tests\e2e\items.spec.ts:172:93 › C2 accessibility letters at 1600 (1.0s)
+C1 attempt 3 Farm proof {"effective":61,"percent":2,"extraWheat":80,"visibleWheatDelta":"0.08"}
+  ok 152 [chromium] › tests\e2e\items.spec.ts:188:1 › C1 card preview and keyboard equip on a posted NPC change the next report (1.6s)
+  ok 153 [chromium] › tests\e2e\items.spec.ts:218:1 › C1 Destroy confirms, cancels and accepts with the keyboard (1.8s)
+  ok 154 [chromium] › tests\e2e\items.spec.ts:228:1 › Review F1 Destroy restores keyboard focus after removal, Cancel and Escape (7.0s)
+  ok 155 [chromium] › tests\e2e\laws.spec.ts:9:1 › New Game builds and staffs the Council, votes and reports Poor Relief (6.8s)
+  ok 156 [chromium] › tests\e2e\laws.spec.ts:23:1 › crafted laws show full slots, repeal cooldown and resolve the promise after four weeks (16.7s)
+  ok 157 [chromium] › tests\e2e\ledger.spec.ts:62:1 › B3 empty Report and blocked fonts retain the fallback at both widths (3.2s)
+  ok 158 [chromium] › tests\e2e\ledger.spec.ts:77:3 › B3 new-game letters preserve rows, Details and complete report parity (9.6s)
+  ok 159 [chromium] › tests\e2e\ledger.spec.ts:77:3 › B3 crime-raid letters preserve rows, Details and complete report parity (8.1s)
+  ok 160 [chromium] › tests\e2e\ledger.spec.ts:77:3 › B3 crime-wound letters preserve rows, Details and complete report parity (9.7s)
+  ok 161 [chromium] › tests\e2e\ledger.spec.ts:77:3 › B3 laws letters preserve rows, Details and complete report parity (9.6s)
+  ok 162 [chromium] › tests\e2e\ledger.spec.ts:124:1 › B3 urgent letter precedes reports and keeps crisis command behavior (6.6s)
+  ok 163 [chromium] › tests\e2e\ledger.spec.ts:145:3 › B3 rebellion is one sealed letter with unchanged fall behavior (1.2s)
+  ok 164 [chromium] › tests\e2e\ledger.spec.ts:145:3 › B3 assassination is one sealed letter with unchanged fall behavior (1.2s)
+  ok 165 [chromium] › tests\e2e\order.spec.ts:7:1 › Information order rows are unique and fit mobile and desktop (745ms)
+  ok 166 [chromium] › tests\e2e\order.spec.ts:13:1 › Slum Watch House is staffed and Order report matches engine (4.5s)
+  ok 167 [chromium] › tests\e2e\order.spec.ts:21:1 › Barracks worker digits reject empty and unsafe drafts without dispatch (2.1s)
+  ok 168 [chromium] › tests\e2e\order.spec.ts:26:1 › Library offers all topics and order survives Save Continue Export Import (1.8s)
+  ok 169 [chromium] › tests\e2e\outside.spec.ts:13:1 › outside starts with 30 plots, 10 open and 20 locked (851ms)
+  ok 170 [chromium] › tests\e2e\outside.spec.ts:14:1 › wall extension opens ring 2 and clearing progress (784ms)
+  ok 171 [chromium] › tests\e2e\outside.spec.ts:15:1 › clears pasture and produces Cloth through Sheep Pasture and Weaver (1.8s)
+  ok 172 [chromium] › tests\e2e\outside.spec.ts:16:1 › research completes and Deep Shaft adds 60 deposit (1.4s)
+  ok 173 [chromium] › tests\e2e\outside.spec.ts:17:1 › full Wheat store spoils with exact report reason (1.5s)
+  ok 174 [chromium] › tests\e2e\outside.spec.ts:18:1 › Save Continue Export Import preserves checkpoint bytes (2.8s)
+  ok 175 [chromium] › tests\e2e\outside.spec.ts:21:1 › navigation without End Week keeps export byte identical (1.5s)
+  ok 176 [chromium] › tests\e2e\outside.spec.ts:22:1 › outside has no horizontal overflow at mobile and desktop widths (961ms)
+  ok 177 [chromium] › tests\e2e\outside.spec.ts:23:48 › invalid clearing draft "abc" stays local (1.3s)
+  ok 178 [chromium] › tests\e2e\outside.spec.ts:23:48 › invalid clearing draft "" stays local (1.3s)
+  ok 179 [chromium] › tests\e2e\outside.spec.ts:23:48 › invalid clearing draft "9007199254740992" stays local (1.4s)
+  ok 180 [chromium] › tests\e2e\outside.spec.ts:28:1 › above-pool clearing shows the engine error without changing the session (1.4s)
+  ok 181 [chromium] › tests\e2e\outside.spec.ts:33:62 › assigned clearing workers handle empty input (1.2s)
+  ok 182 [chromium] › tests\e2e\outside.spec.ts:33:62 › assigned clearing workers handle filtered-text input (1.3s)
+  ok 183 [chromium] › tests\e2e\outside.spec.ts:33:62 › assigned clearing workers handle zero input (1.3s)
+  ok 184 [chromium] › tests\e2e\outside.spec.ts:43:52 › clearing workers filter typing and paste before guarded dispatch (3.3s)
+  ok 185 [chromium] › tests\e2e\outside.spec.ts:43:52 › building workers filter typing and paste before guarded dispatch (4.0s)
+  ok 186 [chromium] › tests\e2e\outside.spec.ts:57:1 › city and Information test IDs are unique for all ten stored goods (815ms)
+  ok 187 [chromium] › tests\e2e\smoke.spec.ts:9:1 › regression build cannot overwrite or enter the production artifact (6.3s)
+  ok 188 [chromium] › tests\e2e\smoke.spec.ts:33:1 › advances society weeks through commands, floors shortage stocks at zero and reports why (3.6s)
+  ok 189 [chromium] › tests\e2e\society.spec.ts:15:2 › one society New Game at / (1.3s)
+  ok 190 [chromium] › tests\e2e\society.spec.ts:15:2 › one society New Game at /?mode=weekly (1.6s)
+  ok 191 [chromium] › tests\e2e\society.spec.ts:15:2 › one society New Game at /?mode=tiles (2.5s)
+  ok 192 [chromium] › tests\e2e\society.spec.ts:15:2 › one society New Game at /?mode=population (2.1s)
+  ok 193 [chromium] › tests\e2e\society.spec.ts:15:2 › one society New Game at /?mode=world (1.3s)
+  ok 194 [chromium] › tests\e2e\society.spec.ts:15:2 › one society New Game at /?mode=world-npc (1.3s)
+  ok 195 [chromium] › tests\e2e\society.spec.ts:15:2 › one society New Game at /?mode=world-life (1.3s)
+  ok 196 [chromium] › tests\e2e\society.spec.ts:22:1 › tier lists and locked plots enforce the engine rules (1.0s)
+  ok 197 [chromium] › tests\e2e\society.spec.ts:28:1 › Builders Yard opens Ring 2 and its plots (940ms)
+  ok 198 [chromium] › tests\e2e\society.spec.ts:31:1 › Academy trains exactly two residents each of two weeks (2.4s)
+  ok 199 [chromium] › tests\e2e\society.spec.ts:35:1 › hungry Bound report matches the seeded executor result (813ms)
+  ok 200 [chromium] › tests\e2e\society.spec.ts:38:1 › one slot round-trips and rejects older or other-mode imports atomically (2.9s)
+  ok 201 [chromium] › tests\e2e\society.spec.ts:47:31 › navigation preserves bytes and full-ring layout at 375px (1.6s)
+  ok 202 [chromium] › tests\e2e\society.spec.ts:47:31 › navigation preserves bytes and full-ring layout at 1280px (2.4s)
+  ok 203 [chromium] › tests\e2e\society.spec.ts:50:1 › NPC choices include the inside Market and a built Town Hall (1.6s)
+  ok 204 [chromium] › tests\e2e\storage.spec.ts:20:1 › Save locally reload and Continue preserve the identical exportLife (1.7s)
+  ok 205 [chromium] › tests\e2e\storage.spec.ts:23:1 › autosave stores exactly the exported live session (1.1s)
+  ok 206 [chromium] › tests\e2e\storage.spec.ts:26:1 › legacy addInitScript seed migrates once and keeps the legacy bytes (1.3s)
+  ok 207 [chromium] › tests\e2e\storage.spec.ts:31:1 › fallen migrated city clears every table and legacy and cannot resurrect after reload (859ms)
+  ok 208 [chromium] › tests\e2e\storage.spec.ts:36:1 › an injected write abort keeps the last save and exact failure message (1.4s)
+  ok 209 [chromium] › tests\e2e\storage.spec.ts:39:1 › two tabs saving A B A leave exactly the last A session (2.2s)
+  ok 210 [chromium] › tests\e2e\storage.spec.ts:42:1 › blocked IndexedDB stays playable warns once and exports (1.2s)
+  ok 211 [chromium] › tests\e2e\storage.spec.ts:45:1 › title menu waits for the initial async storage read (418ms)
+  ok 212 [chromium] › tests\e2e\storage.spec.ts:50:1 › three started saved and fallen games retain only one marker without record growth (4.7s)
+  ok 213 [chromium] › tests\e2e\storage.spec.ts:59:1 › fix1 F2: pending Continue cannot overwrite a newer Planning command (2.1s)
+  ok 214 [chromium] › tests\e2e\storage.spec.ts:65:1 › fix1 F2: pending Main menu cannot exit after a newer Planning command (2.8s)
+  ok 215 [chromium] › tests\e2e\storage.spec.ts:73:1 › fix1 F2: a newer rejected Import keeps its feedback over pending Continue (1.5s)
+  ok 216 [chromium] › tests\e2e\storage.spec.ts:81:1 › fix1 F2: the latest Continue supersedes an earlier held result (1.2s)
+  ok 217 [chromium] › tests\e2e\storage.spec.ts:89:1 › fix1 F3: temporarily blocked localStorage retries legacy migration without a marker (1.1s)
+  ok 218 [chromium] › tests\e2e\storage.spec.ts:105:1 › fix2 F1: recovered legacy A cannot replace B saved while migration was blocked (1.2s)
+  ok 219 [chromium] › tests\e2e\storage.spec.ts:121:53 › fix2 F3: stale success Save feedback cannot replace a rejected Import (1.1s)
+  ok 220 [chromium] › tests\e2e\storage.spec.ts:121:53 › fix2 F3: stale failure Save feedback cannot replace a rejected Import (1.2s)
+  ok 221 [chromium] › tests\e2e\storage.spec.ts:131:1 › fix2 F3: Save supersedes a pending Continue without changing the live session (1.5s)
+  ok 222 [chromium] › tests\e2e\storage.spec.ts:138:1 › fix2 F3: Save supersedes a pending Main menu and keeps the session open (1.2s)
+  ok 223 [chromium] › tests\e2e\storage.spec.ts:144:1 › fix2 F3: a Planning command supersedes pending Save feedback (1.7s)
+  ok 224 [chromium] › tests\e2e\storage.spec.ts:150:1 › fix2 F3: a delayed autosave failure cannot replace a later week status (2.0s)
+  ok 225 [chromium] › tests\e2e\storage.spec.ts:161:71 › fix3 browser: atomic migration preserves C after existing B (3.8s)
+  ok 226 [chromium] › tests\e2e\storage.spec.ts:161:71 › fix3 browser: atomic migration preserves C after empty (2.5s)
+  ok 227 [chromium] › tests\e2e\storage.spec.ts:161:71 › fix3 browser: atomic migration preserves C after marker winner (2.6s)
+  ok 228 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:40:3 › displays exact Gold 8796093022208001 without changing its checkpoint integer (2.0s)
+  ok 229 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:40:3 › displays exact Gold 9007199254740991 without changing its checkpoint integer (1.9s)
+  ok 230 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › terrain Build rejection stays contextual at 1280px and repeated failures preserve state (2.6s)
+  ok 231 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › Gold Build rejection stays contextual at 1280px and repeated failures preserve state (3.2s)
+  ok 232 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › Wood Build rejection stays contextual at 1280px and repeated failures preserve state (4.1s)
+  ok 233 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › Iron Build rejection stays contextual at 1280px and repeated failures preserve state (3.2s)
+  ok 234 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › terrain Replace rejection stays contextual at 1280px and repeated failures preserve state (2.6s)
+  ok 235 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › Gold Upgrade rejection stays contextual at 1280px and repeated failures preserve state (3.2s)
+  ok 236 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:103:3 › Pause arithmetic rejection is beside its control at 1280px (2.0s)
+  ok 237 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › terrain Build rejection stays contextual at 390px and repeated failures preserve state (2.6s)
+  ok 238 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › Gold Build rejection stays contextual at 390px and repeated failures preserve state (4.8s)
+  ok 239 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › Wood Build rejection stays contextual at 390px and repeated failures preserve state (3.4s)
+  ok 240 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › Iron Build rejection stays contextual at 390px and repeated failures preserve state (2.9s)
+  ok 241 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › terrain Replace rejection stays contextual at 390px and repeated failures preserve state (2.5s)
+  ok 242 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › Gold Upgrade rejection stays contextual at 390px and repeated failures preserve state (3.1s)
+  ok 243 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:103:3 › Pause arithmetic rejection is beside its control at 390px (1.9s)
+  ok 244 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › terrain Build rejection stays contextual at 320px and repeated failures preserve state (2.6s)
+  ok 245 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › Gold Build rejection stays contextual at 320px and repeated failures preserve state (4.2s)
+  ok 246 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › Wood Build rejection stays contextual at 320px and repeated failures preserve state (3.0s)
+  ok 247 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › Iron Build rejection stays contextual at 320px and repeated failures preserve state (2.8s)
+  ok 248 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › terrain Replace rejection stays contextual at 320px and repeated failures preserve state (2.5s)
+  ok 249 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:62:5 › Gold Upgrade rejection stays contextual at 320px and repeated failures preserve state (4.6s)
+  ok 250 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:103:3 › Pause arithmetic rejection is beside its control at 320px (3.1s)
+  ok 251 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:123:1 › checkpoint errors stay in checkpoints and a valid load clears building feedback (2.2s)
+  ok 252 [chromium] › tests\e2e\tile-feedback-precision.spec.ts:137:1 › stock ledger preserves grouped integer milli digits and a negative net (1.2s)
+  ok 253 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:23:1 › saves a multiweek plan locally, continues after reload and resumes the same economics (23.4s)
+  ok 254 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:29:2 › explicit save replaces only its own slot and file import never writes it (tiles) (3.2s)
+  ok 255 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects missing while preserving full state and both slots (tiles) (1.9s)
+  ok 256 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects malformed while preserving full state and both slots (tiles) (1.9s)
+  ok 257 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects empty object while preserving full state and both slots (tiles) (2.1s)
+  ok 258 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects opposite mode while preserving full state and both slots (tiles) (3.0s)
+  ok 259 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects version while preserving full state and both slots (tiles) (2.2s)
+  ok 260 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects ruleset while preserving full state and both slots (tiles) (1.9s)
+  ok 261 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects map while preserving full state and both slots (tiles) (1.9s)
+  ok 262 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects negative stock while preserving full state and both slots (tiles) (2.0s)
+  ok 263 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects report phase while preserving full state and both slots (tiles) (2.0s)
+  ok 264 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects oversize while preserving full state and both slots (tiles) (2.1s)
+  ok 265 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects revision overflow while preserving full state and both slots (tiles) (2.1s)
+  ok 266 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:36:2 › blocked or full storage preserves full state, both slots and file backups (tiles) (5.0s)
+  ok 267 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:46:49 › a delayed file import cannot overwrite a successful Continue (tiles) (2.5s)
+  ok 268 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:46:49 › a late file read rejection cannot replace Continue feedback (tiles) (2.3s)
+  ok 269 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:51:2 › failed Continue leaves a pending valid import usable (tiles) (1.5s)
+  ok 270 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:54:2 › checkpoint IO stays manual, Planning-only and isolated (tiles) (2.8s)
+  ok 271 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:60:2 › the last explicit same-mode tab save wins without automatically loading (tiles) (2.1s)
+  ok 272 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:29:2 › explicit save replaces only its own slot and file import never writes it (population) (2.9s)
+  ok 273 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects missing while preserving full state and both slots (population) (2.1s)
+  ok 274 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects malformed while preserving full state and both slots (population) (2.8s)
+  ok 275 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects empty object while preserving full state and both slots (population) (1.9s)
+  ok 276 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects opposite mode while preserving full state and both slots (population) (2.0s)
+  ok 277 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects version while preserving full state and both slots (population) (2.0s)
+  ok 278 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects ruleset while preserving full state and both slots (population) (2.0s)
+  ok 279 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects map while preserving full state and both slots (population) (2.1s)
+  ok 280 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects negative stock while preserving full state and both slots (population) (2.4s)
+  ok 281 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects report phase while preserving full state and both slots (population) (2.1s)
+  ok 282 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects oversize while preserving full state and both slots (population) (3.3s)
+  ok 283 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:32:164 › rejects revision overflow while preserving full state and both slots (population) (2.1s)
+  ok 284 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:36:2 › blocked or full storage preserves full state, both slots and file backups (population) (3.6s)
+  ok 285 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:46:49 › a delayed file import cannot overwrite a successful Continue (population) (1.7s)
+  ok 286 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:46:49 › a late file read rejection cannot replace Continue feedback (population) (1.7s)
+  ok 287 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:51:2 › failed Continue leaves a pending valid import usable (population) (1.4s)
+  ok 288 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:54:2 › checkpoint IO stays manual, Planning-only and isolated (population) (2.7s)
+  ok 289 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:60:2 › the last explicit same-mode tab save wins without automatically loading (population) (2.2s)
+  ok 290 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:68:31 › population local checkpoint restores grown cohorts and next-week parity at 1280px (14.8s)
+  ok 291 [chromium] › tests\e2e\tile-local-checkpoint.spec.ts:68:31 › population local checkpoint restores grown cohorts and next-week parity at 390px (14.2s)
+  ok 292 [chromium] › tests\e2e\tile-population.spec.ts:7:31 › society population grows once, preserves workforce and roundtrips at 1280px (15.4s)
+  ok 293 [chromium] › tests\e2e\tile-population.spec.ts:7:31 › society population grows once, preserves workforce and roundtrips at 390px (14.7s)
+  ok 294 [chromium] › tests\e2e\tile-population.spec.ts:14:1 › older ruleset files cannot replace the society game (1.2s)
+  ok 295 [chromium] › tests\e2e\tile-save.spec.ts:8:1 › exports a real file, restores a multiweek plan and resumes the same economics (23.5s)
+  ok 296 [chromium] › tests\e2e\tile-save.spec.ts:16:1 › invalid, incompatible, report and oversized files preserve the plan (3.1s)
+  ok 297 [chromium] › tests\e2e\tile-save.spec.ts:20:1 › a delayed import cannot overwrite gameplay that advanced while reading (1.8s)
+  ok 298 [chromium] › tests\e2e\tile-save.spec.ts:23:1 › the latest selected import wins even when an older read completes last (1.6s)
+  ok 299 [chromium] › tests\e2e\tile-save.spec.ts:27:1 › a file read failure is recoverable and never changes the game (1.7s)
+  ok 300 [chromium] › tests\e2e\tile-save.spec.ts:30:1 › the previous report is UI-only and survives cancel or invalid import until a valid load clears it (10.2s)
+  ok 301 [chromium] › tests\e2e\tile-trial.spec.ts:5:1 › one game entry rejects unsuitable placement without spending (1.6s)
+  ok 302 [chromium] › tests\e2e\tile-trial.spec.ts:8:1 › builds production and inside Market, serves Goods once, then upgrades and replaces (16.5s)
+  ok 303 [chromium] › tests\e2e\tile-trial.spec.ts:14:1 › invalid worker and unaffordable replacement preserve plan (4.2s)
+  ok 304 [chromium] › tests\e2e\tile-trial.spec.ts:22:31 › double-click Plan next week preserves the new plan at 1280px (9.7s)
+  ok 305 [chromium] › tests\e2e\tile-trial.spec.ts:22:31 › double-click Plan next week preserves the new plan at 390px (9.2s)
+  ok 306 [chromium] › tests\e2e\tile-trial.spec.ts:25:1 › repeated keyboard activation cannot turn planning into another End Week (8.4s)
+  ok 307 [chromium] › tests\e2e\tile-trial.spec.ts:28:1 › repeated touch taps at Plan coordinates preserve planning until intentional End Week (1.7s)
+  ok 308 [chromium] › tests\e2e\tile-workforce.spec.ts:41:1 › confirmed equal assignments survive three weeks and checkpoint restoration without another assignment (6.6s)
+  ok 309 [chromium] › tests\e2e\tile-workforce.spec.ts:71:1 › editor distinguishes confirmed workforce from a draft without committing on blur or Enter (1.6s)
+  ok 310 [chromium] › tests\e2e\tile-workforce.spec.ts:97:3 › rejected assignment shows a local error and the unchanged confirmed amount at 1280px (2.9s)
+  ok 311 [chromium] › tests\e2e\tile-workforce.spec.ts:97:3 › rejected assignment shows a local error and the unchanged confirmed amount at 390px (2.9s)
+  ok 312 [chromium] › tests\e2e\title.spec.ts:6:3 › B1 in-game Options › Options plaque opens the shared dialog (870ms)
+  ok 313 [chromium] › tests\e2e\title.spec.ts:11:3 › B1 in-game Options › Options changes apply immediately in game (1.6s)
+  ok 314 [chromium] › tests\e2e\title.spec.ts:18:3 › B1 in-game Options › About downloads the real error log in game (1.3s)
+  ok 315 [chromium] › tests\e2e\title.spec.ts:28:3 › B1 in-game Options › Session no longer renders ErrorLog (893ms)
+  ok 316 [chromium] › tests\e2e\title.spec.ts:37:1 › fallback and version position (467ms)
+  ok 317 [chromium] › tests\e2e\title.spec.ts:44:1 › keyboard wraps, Home End, focus ring and Enter (511ms)
+  ok 318 [chromium] › tests\e2e\title.spec.ts:53:1 › Options persist and Large uses 3px (782ms)
+  ok 319 [chromium] › tests\e2e\title.spec.ts:65:1 › fullscreen refusal (461ms)
+  ok 320 [chromium] › tests\e2e\title.spec.ts:71:1 › About and error log (519ms)
+  ok 321 [chromium] › tests\e2e\title.spec.ts:77:1 › Quit and return (511ms)
+  ok 322 [chromium] › tests\e2e\title.spec.ts:81:38 › art integer scale and reduce motion false (433ms)
+  ok 323 [chromium] › tests\e2e\title.spec.ts:81:38 › art integer scale and reduce motion true (422ms)
+  ok 324 [chromium] › tests\e2e\title.spec.ts:89:89 › layout 320 normal (670ms)
+  ok 325 [chromium] › tests\e2e\title.spec.ts:89:89 › layout 320 large (645ms)
+  ok 326 [chromium] › tests\e2e\title.spec.ts:89:89 › layout 375 normal (723ms)
+  ok 327 [chromium] › tests\e2e\title.spec.ts:89:89 › layout 375 large (717ms)
+  ok 328 [chromium] › tests\e2e\title.spec.ts:89:89 › layout 1280 normal (665ms)
+  ok 329 [chromium] › tests\e2e\title.spec.ts:89:89 › layout 1280 large (709ms)
+  ok 330 [chromium] › tests\e2e\title.spec.ts:89:89 › layout 1600 normal (740ms)
+  ok 331 [chromium] › tests\e2e\title.spec.ts:89:89 › layout 1600 large (834ms)
+  ok 332 [chromium] › tests\e2e\title.spec.ts:107:1 › empty slot disables Continue and focuses New Game (375ms)
+  ok 333 [chromium] › tests\e2e\title.spec.ts:110:1 › manual save enables cached Continue with exactly one mount read (1.3s)
+  ok 334 [chromium] › tests\e2e\title.spec.ts:119:1 › old checkpoint disables Continue with reason (397ms)
+  ok 335 [chromium] › tests\e2e\title.spec.ts:123:1 › valid Load checkpoint replaces stale mount cache (827ms)
+  ok 336 [chromium] › tests\e2e\title.spec.ts:129:50 › Load refuses oversize and keeps title (662ms)
+  ok 337 [chromium] › tests\e2e\title.spec.ts:129:50 › Load refuses old and keeps title (390ms)
+  ok 338 [chromium] › tests\e2e\title.spec.ts:133:1 › double New Game and Create produce one session (955ms)
+  ok 339 [chromium] › tests\e2e\title.spec.ts:139:49 › options storage junk still renders title (780ms)
+  ok 340 [chromium] › tests\e2e\title.spec.ts:139:49 › options storage throws still renders title (777ms)
+  ok 341 [chromium] › tests\e2e\title.spec.ts:148:1 › Large report at 320px keeps all six letters and stock ledger inside the page (1.7s)
+  ok 342 [chromium] › tests\e2e\title.spec.ts:174:1 › Fullscreen reflects live document changes while Options stays open (571ms)
+  ok 343 [chromium] › tests\e2e\title.spec.ts:184:1 › fallen city clears cached Continue after New Game and creation Cancel (1.3s)
+  ok 344 [chromium] › tests\e2e\title.spec.ts:197:1 › Quit invalidates a pending checkpoint file read (596ms)
+  ok 345 [chromium] › tests\e2e\title.spec.ts:221:3 › B2 Main menu › Main menu saves and refreshes focused Continue on the title (1.5s)
+  ok 346 [chromium] › tests\e2e\title.spec.ts:229:3 › B2 Main menu › Main menu is locked with its reason throughout Report (775ms)
+  ok 347 [chromium] › tests\e2e\title.spec.ts:238:3 › B2 Main menu › Main menu write failure keeps Planning, the session and the previous save (1.2s)
+  ok 348 [chromium] › tests\e2e\workforce-draft-error.spec.ts:27:5 › editing rejected workforce to valid clears only its old error at 1280px (3.0s)
+  ok 349 [chromium] › tests\e2e\workforce-draft-error.spec.ts:27:5 › editing rejected workforce to still invalid clears only its old error at 1280px (3.1s)
+  ok 350 [chromium] › tests\e2e\workforce-draft-error.spec.ts:27:5 › editing rejected workforce to confirmed value clears only its old error at 1280px (4.4s)
+  ok 351 [chromium] › tests\e2e\workforce-draft-error.spec.ts:27:5 › editing rejected workforce to valid clears only its old error at 390px (3.6s)
+  ok 352 [chromium] › tests\e2e\workforce-draft-error.spec.ts:27:5 › editing rejected workforce to still invalid clears only its old error at 390px (2.9s)
+  ok 353 [chromium] › tests\e2e\workforce-draft-error.spec.ts:27:5 › editing rejected workforce to confirmed value clears only its old error at 390px (2.8s)
+  ok 354 [chromium] › tests\e2e\world-npc-session.spec.ts:12:1 › New Game lists 3 named starters, all unassigned, with stats, traits and post-skill status (2.1s)
+  ok 355 [chromium] › tests\e2e\world-npc-session.spec.ts:16:1 › same pinned seed reproduces names; clicks never reroll them (2.9s)
+  ok 356 [chromium] › tests\e2e\world-npc-session.spec.ts:19:1 › only built manager tiles are offered; a low-stat starter can take the Farm slot (1.8s)
+  ok 357 [chromium] › tests\e2e\world-npc-session.spec.ts:22:1 › pause keeps the post; replacing the building clears it (3.7s)
+  ok 358 [chromium] › tests\e2e\world-npc-session.spec.ts:25:1 › assignment is refused in Report and kept through the week (2.3s)
+  ok 359 [chromium] › tests\e2e\world-npc-session.spec.ts:28:1 › save, continue, export and import preserve posts and resolved names; slots stay separate (4.3s)
+  ok 360 [chromium] › tests\e2e\world-npc-session.spec.ts:33:1 › non-Life world files are refused without changing the game or either older slot (1.5s)
+  ok 361 [chromium] › tests\e2e\world-session.spec.ts:22:1 › U7: fresh seeds differ but summary and rendered metadata reveal no hidden world data (1.9s)
+  ok 362 [chromium] › tests\e2e\world-session.spec.ts:25:1 › U2: End Week while import is pending rejects both halves and preserves all three slots (2.1s)
+  ok 363 [chromium] › tests\e2e\world-session.spec.ts:28:63 › U3: successful Continue invalidates pending success and its feedback (6.5s)
+  ok 364 [chromium] › tests\e2e\world-session.spec.ts:28:63 › U3: successful Continue invalidates pending invalid JSON and its feedback (6.3s)
+  ok 365 [chromium] › tests\e2e\world-session.spec.ts:28:63 › U3: successful Continue invalidates pending read rejection and its feedback (6.1s)
+  ok 366 [chromium] › tests\e2e\world-session.spec.ts:31:1 › U3: failed Continue leaves a pending valid import eligible (1.5s)
+  ok 367 [chromium] › tests\e2e\world-session.spec.ts:34:1 › U4: only newest reversed import publishes city and outside; older failures cannot replace feedback (2.4s)
+  ok 368 [chromium] › tests\e2e\world-session.spec.ts:37:1 › U5/U6b: wrong-slot bytes never overwrite or fall back at any old bookmark (12.8s)
+  ok 369 [chromium] › tests\e2e\world-session.spec.ts:40:1 › U8: Report locks all four checkpoint controls (966ms)
+  ok 370 [chromium] › tests\e2e\world-session.spec.ts:43:1 › U9: local and portable saves restore the whole populated session and uninterrupted next week (21.6s)
+
+  Slow test file: [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts (10.4m)
+  Slow test file: [chromium] › tests\e2e\character-life-navigation.spec.ts (5.9m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  370 passed (33.0m)
+===== exit=0  seconds=1991 : npm run test:smoke =====
+UTC end: 2026-11-14T15:21:58Z

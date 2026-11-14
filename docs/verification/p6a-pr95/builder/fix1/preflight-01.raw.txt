@@ -1,0 +1,208 @@
+{
+    "logicalProcessors":  8,
+    "exit":  0,
+    "HEAD":  "5e97f049330c2e6c4e213b845815afb368d8a7b3",
+    "tree":  "49f6b676c3ae57f66ef9ce6275eb89a806f52a9a",
+    "sampledMilliseconds":  17215.0036,
+    "cpuSamples":  [
+                       {
+                           "totalPercent":  29,
+                           "UTC":  "2026-11-14T13:42:03.2923219Z"
+                       },
+                       {
+                           "totalPercent":  27,
+                           "UTC":  "2026-11-14T13:42:04.6100536Z"
+                       },
+                       {
+                           "totalPercent":  27,
+                           "UTC":  "2026-11-14T13:42:05.8936799Z"
+                       },
+                       {
+                           "totalPercent":  24,
+                           "UTC":  "2026-11-14T13:42:07.1708102Z"
+                       },
+                       {
+                           "totalPercent":  23,
+                           "UTC":  "2026-11-14T13:42:08.4476496Z"
+                       }
+                   ],
+    "ownerReportedClaudeAndAstraIdle":  true,
+    "finishedUTC":  "2026-11-14T13:42:14.0900837Z",
+    "quiet":  false,
+    "UTC":  "2026-11-14T13:41:52.2348830Z",
+    "listeners":  [
+
+                  ],
+    "knownHeavyJobs":  [
+
+                       ],
+    "operationalQuietCheck":  "No other detected build/test job or listener; mean total CPU \u003c=15%; agent CPU deltas \u003c=2%. This is a scheduling check, not a test/configuration threshold change.",
+    "agentProcesses":  [
+                           {
+                               "process":  "codex",
+                               "pid":  64988,
+                               "cpuPercent":  0.59,
+                               "workingSetMB":  327
+                           },
+                           {
+                               "process":  "claude",
+                               "pid":  58136,
+                               "cpuPercent":  0.113,
+                               "workingSetMB":  560.1
+                           },
+                           {
+                               "process":  "claude",
+                               "pid":  68812,
+                               "cpuPercent":  0.091,
+                               "workingSetMB":  275
+                           },
+                           {
+                               "process":  "codex",
+                               "pid":  60824,
+                               "cpuPercent":  0.034,
+                               "workingSetMB":  14.1
+                           },
+                           {
+                               "process":  "claude",
+                               "pid":  56764,
+                               "cpuPercent":  0.023,
+                               "workingSetMB":  243.1
+                           },
+                           {
+                               "process":  "codex",
+                               "pid":  15428,
+                               "cpuPercent":  0,
+                               "workingSetMB":  118.3
+                           },
+                           {
+                               "process":  "claude",
+                               "pid":  15596,
+                               "cpuPercent":  0,
+                               "workingSetMB":  12.1
+                           },
+                           {
+                               "process":  "claude",
+                               "pid":  29892,
+                               "cpuPercent":  0,
+                               "workingSetMB":  40.6
+                           },
+                           {
+                               "process":  "claude",
+                               "pid":  37952,
+                               "cpuPercent":  0,
+                               "workingSetMB":  5.6
+                           },
+                           {
+                               "process":  "claude",
+                               "pid":  41404,
+                               "cpuPercent":  0,
+                               "workingSetMB":  19.6
+                           },
+                           {
+                               "process":  "claude",
+                               "pid":  63348,
+                               "cpuPercent":  0,
+                               "workingSetMB":  14.4
+                           },
+                           {
+                               "process":  "claude",
+                               "pid":  67780,
+                               "cpuPercent":  0,
+                               "workingSetMB":  25.2
+                           },
+                           {
+                               "process":  "claude",
+                               "pid":  42900,
+                               "cpuPercent":  0,
+                               "workingSetMB":  66.6
+                           },
+                           {
+                               "process":  "claude",
+                               "pid":  50768,
+                               "cpuPercent":  0,
+                               "workingSetMB":  5.1
+                           },
+                           {
+                               "process":  "claude",
+                               "pid":  58424,
+                               "cpuPercent":  0,
+                               "workingSetMB":  12.7
+                           }
+                       ],
+    "averageCpuPercent":  26,
+    "topProcesses":  [
+                         {
+                             "process":  "msedge",
+                             "pid":  72952,
+                             "cpuPercent":  20.229,
+                             "workingSetMB":  46.1
+                         },
+                         {
+                             "process":  "powershell",
+                             "pid":  50428,
+                             "cpuPercent":  2.235,
+                             "workingSetMB":  72.6
+                         },
+                         {
+                             "process":  "codex",
+                             "pid":  64988,
+                             "cpuPercent":  0.59,
+                             "workingSetMB":  327
+                         },
+                         {
+                             "process":  "ChatGPT",
+                             "pid":  16016,
+                             "cpuPercent":  0.59,
+                             "workingSetMB":  203.9
+                         },
+                         {
+                             "process":  "codebase-memory-mcp",
+                             "pid":  69324,
+                             "cpuPercent":  0.397,
+                             "workingSetMB":  5.3
+                         },
+                         {
+                             "process":  "codebase-memory-mcp",
+                             "pid":  10272,
+                             "cpuPercent":  0.238,
+                             "workingSetMB":  1.1
+                         },
+                         {
+                             "process":  "T3 Code (Nightly)",
+                             "pid":  5940,
+                             "cpuPercent":  0.227,
+                             "workingSetMB":  300.6
+                         },
+                         {
+                             "process":  "codebase-memory-mcp",
+                             "pid":  62304,
+                             "cpuPercent":  0.216,
+                             "workingSetMB":  10
+                         },
+                         {
+                             "process":  "codebase-memory-mcp",
+                             "pid":  14400,
+                             "cpuPercent":  0.204,
+                             "workingSetMB":  9.7
+                         },
+                         {
+                             "process":  "codebase-memory-mcp",
+                             "pid":  22348,
+                             "cpuPercent":  0.193,
+                             "workingSetMB":  8.5
+                         },
+                         {
+                             "process":  "codebase-memory-mcp",
+                             "pid":  72592,
+                             "cpuPercent":  0.193,
+                             "workingSetMB":  7.3
+                         },
+                         {
+                             "process":  "ChatGPT",
+                             "pid":  58020,
+                             "cpuPercent":  0.182,
+                             "workingSetMB":  430.6
+                         }
+                     ],
+    "method":  "Five CPU samples with one-second pauses; process CPU-time deltas normalized by logical processor count. No process stopped."
+}

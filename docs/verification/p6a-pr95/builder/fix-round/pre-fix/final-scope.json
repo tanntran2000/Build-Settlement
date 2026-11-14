@@ -1,0 +1,29 @@
+{
+  "HEAD": "8af03070496d8e41ae85fecaea2d29c4cc474811",
+  "tree": "025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4",
+  "base": "2c04321ba342871e6a858110ea2320a8e4df0d5d",
+  "UTC": "2026-11-14T10:52:06.013Z",
+  "exit": 0,
+  "changedFiles": [
+    "packages/ui/src/CharacterLifeCharacters.svelte",
+    "packages/ui/src/CharacterLifeShell.svelte",
+    "packages/ui/src/CharacterProfile.svelte",
+    "packages/ui/src/EquipmentView.svelte",
+    "packages/ui/src/InsideCity.svelte",
+    "packages/ui/src/ItemCard.svelte",
+    "packages/ui/src/MarketPanel.svelte",
+    "packages/ui/src/PotionPanel.svelte",
+    "packages/ui/src/SoloWeekReport.svelte",
+    "packages/ui/src/TileManagement.svelte",
+    "packages/ui/src/__tests__/items-view.test.ts",
+    "packages/ui/src/items-view.ts",
+    "packages/ui/src/report-letters.ts",
+    "tests/e2e/character-life-boundary.spec.ts",
+    "tests/e2e/character-life-navigation.helpers.ts",
+    "tests/e2e/character-life-navigation.spec.ts",
+    "tests/e2e/items.spec.ts"
+  ],
+  "noDocs": true,
+  "noDependencies": true,
+  "noTimeoutOrSkipEdits": true
+}

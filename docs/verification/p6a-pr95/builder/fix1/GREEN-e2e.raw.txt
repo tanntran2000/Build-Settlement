@@ -1,0 +1,55 @@
+CI=1 
+
+> build-settlement@0.1.0 pretest:smoke
+> npm run build:regression --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 build:regression
+> vite build regression --config vite.config.ts --outDir dist
+
+vite v6.4.5 building for production...
+transforming...
+✓ 247 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.45 kB │ gzip:   0.31 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-CxB-ZnFZ.css                   32.98 kB │ gzip:   6.74 kB
+dist/assets/index-DVG0GD3m.js                   398.90 kB │ gzip: 126.72 kB
+✓ built in 6.68s
+
+> build-settlement@0.1.0 test:smoke
+> playwright test tests/e2e/items.spec.ts --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/review-fix1-GREEN
+
+[WebServer] (node:31884) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:11256) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 20 tests using 1 worker
+
+(node:69736) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [chromium] › tests\e2e\items.spec.ts:30:1 › C1 paper doll, totals, filters and Materials expose real item state (2.5s)
+  ok  2 [chromium] › tests\e2e\items.spec.ts:45:1 › C3 Legendary cards describe their catalog effects (1.0s)
+  ok  3 [chromium] › tests\e2e\items.spec.ts:59:1 › C3 Player and NPC silhouettes have their distinct accessible labels (1.5s)
+  ok  4 [chromium] › tests\e2e\items.spec.ts:73:1 › C2 UI buy, keyboard equip and next Farm report show the post effect (7.2s)
+  ok  5 [chromium] › tests\e2e\items.spec.ts:88:1 › C2 Market sells items and digit-only material quantities, with no Legendary Sell (2.6s)
+  ok  6 [chromium] › tests\e2e\items.spec.ts:103:1 › C2 claims temporary storage through the command path (1.4s)
+  ok  7 [chromium] › tests\e2e\items.spec.ts:110:1 › C2 operating Hospital and worker-free Drug Store sell potions; inventory Use restores Player health (2.1s)
+  ok  8 [chromium] › tests\e2e\items.spec.ts:124:1 › C2 visible item letters include stack loss, storage-full loss, expiry, delivered and waiting Legendary rewards (5.4s)
+  ok  9 [chromium] › tests\e2e\items.spec.ts:130:1 › C2 health line and wounds death letter use the exact approved copy (1.3s)
+  ok 10 [chromium] › tests\e2e\items.spec.ts:172:93 › C2 accessibility equipment at 1280 (10.2s)
+  ok 11 [chromium] › tests\e2e\items.spec.ts:172:93 › C2 accessibility market at 1280 (5.5s)
+  ok 12 [chromium] › tests\e2e\items.spec.ts:172:93 › C2 accessibility potions at 1280 (4.6s)
+  ok 13 [chromium] › tests\e2e\items.spec.ts:172:93 › C2 accessibility letters at 1280 (2.3s)
+  ok 14 [chromium] › tests\e2e\items.spec.ts:172:93 › C2 accessibility equipment at 1600 (12.5s)
+  ok 15 [chromium] › tests\e2e\items.spec.ts:172:93 › C2 accessibility market at 1600 (5.5s)
+  ok 16 [chromium] › tests\e2e\items.spec.ts:172:93 › C2 accessibility potions at 1600 (4.5s)
+  ok 17 [chromium] › tests\e2e\items.spec.ts:172:93 › C2 accessibility letters at 1600 (2.0s)
+C1 attempt 3 Farm proof {"effective":61,"percent":2,"extraWheat":80,"visibleWheatDelta":"0.08"}
+  ok 18 [chromium] › tests\e2e\items.spec.ts:188:1 › C1 card preview and keyboard equip on a posted NPC change the next report (2.3s)
+  ok 19 [chromium] › tests\e2e\items.spec.ts:218:1 › C1 Destroy confirms, cancels and accepts with the keyboard (3.1s)
+  ok 20 [chromium] › tests\e2e\items.spec.ts:228:1 › Review F1 Destroy restores keyboard focus after removal, Cancel and Escape (6.6s)
+
+  20 passed (1.7m)

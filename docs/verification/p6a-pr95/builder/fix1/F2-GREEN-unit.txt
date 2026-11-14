@@ -1,0 +1,17 @@
+HEAD=f046e36c98fcfbbd16808e759b7b09f0f1f4c98e
+TREE=baf52e8b3e19f76f904ca8b39a51f9793a56a534
+UTC=2026-11-14T13:37:40.833Z
+EXIT=0
+COMMAND=npx vitest run packages/ui/src/__tests__/items-view.test.ts
+CI=
+FINISHED=2026-11-14T13:37:47.112Z
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  1 passed (1)
+      Tests  12 passed (12)
+   Start at  20:37:45
+   Duration  1.80s (transform 974ms, setup 0ms, import 1.24s, tests 67ms, environment 0ms)
+

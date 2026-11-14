@@ -1,0 +1,111 @@
+HEAD=ce612d2461993486cb7fa35c6463c4c2a57ea3fe
+TREE=cd053a15fba9509b2bbfc9e5ebe015b6d1ea3de1
+UTC=2026-11-14T09:23:32.760Z
+EXIT=1
+COMMAND=npx vitest run packages/ui/src/__tests__/items-view.test.ts
+CI=
+FINISHED=2026-11-14T09:23:36.622Z
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/items-view.test.ts (12 tests | 6 failed) 70ms
+     × validates whole digit counts against the available stack before dispatch 9ms
+     × shows potion sales only at an enabled Drug Store or staffed supplied Hospital 5ms
+     × formats the exact health line including operating Hospital and gear regen 5ms
+     × describes every Quartermaster event including both capacity losses and expiration 1ms
+     × names only delivered Legendary rewards and tells the Player to make room for pending rewards 1ms
+     × includes item summary candidates while retaining the four-row cap 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/items-view.test.ts > C2 shops, recovery and item letters > validates whole digit counts against the available stack before dispatch
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ packages/ui/src/__tests__/items-view.test.ts:62:51
+     60| describe('C2 shops, recovery and item letters',()=>{
+     61|   it('validates whole digit counts against the available stack before …
+     62|     const v=await view();expect(v.parseItemCount).toBeTypeOf('function…
+       |                                                   ^
+     63|     for(const input of ['','0','-1','1.5','1e2',' 2','9007199254740992…
+     64|     expect(v.parseItemCount('7',7)).toBe(7);expect(v.parseItemCount('8…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  packages/ui/src/__tests__/items-view.test.ts > C2 shops, recovery and item letters > shows potion sales only at an enabled Drug Store or staffed supplied Hospital
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ packages/ui/src/__tests__/items-view.test.ts:67:59
+     65|   });
+     66|   it('shows potion sales only at an enabled Drug Store or staffed supp…
+     67|     const v=await view(),s=session();expect(v.potionShop).toBeTypeOf('…
+       |                                                           ^
+     68|     s.city.tiles.find(t=>t.id==='service-1')!.building={typeId:'hospit…
+     69|     s.city.world.settlements[s.city.world.activeSettlementId!].invento…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  packages/ui/src/__tests__/items-view.test.ts > C2 shops, recovery and item letters > formats the exact health line including operating Hospital and gear regen
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ packages/ui/src/__tests__/items-view.test.ts:76:59
+     74|   });
+     75|   it('formats the exact health line including operating Hospital and g…
+     76|     const v=await view(),s=session();expect(v.healthLine).toBeTypeOf('…
+       |                                                           ^
+     77|     s.city.world.settlements[s.city.world.activeSettlementId!].invento…
+     78|     s.city.tiles.find(t=>t.id==='service-1')!.building={typeId:'hospit…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  packages/ui/src/__tests__/items-view.test.ts > C2 shops, recovery and item letters > describes every Quartermaster event including both capacity losses and expiration
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ packages/ui/src/__tests__/items-view.test.ts:84:51
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  packages/ui/src/__tests__/items-view.test.ts > C2 shops, recovery and item letters > names only delivered Legendary rewards and tells the Player to make room for pending rewards
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ packages/ui/src/__tests__/items-view.test.ts:95:51
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  packages/ui/src/__tests__/items-view.test.ts > C2 shops, recovery and item letters > includes item summary candidates while retaining the four-row cap
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ packages/ui/src/__tests__/items-view.test.ts:102:95
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  6 failed | 6 passed (12)
+   Start at  16:23:35
+   Duration  1.23s (transform 649ms, setup 0ms, import 813ms, tests 70ms, environment 0ms)
+

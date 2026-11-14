@@ -1,0 +1,59 @@
+HEAD=8af03070496d8e41ae85fecaea2d29c4cc474811
+TREE=025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4
+UTC=2026-11-14T10:40:15.887Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/character-life-navigation-accessibility.spec.ts:329 -g accessibility.at.375px --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/smoke-rerun-375-reflow
+CI=1
+FINISHED=2026-11-14T10:40:54.845Z
+
+[WebServer] (node:44100) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:62020) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:71140) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:329:5 › accessibility at 375px › long character and report content reflows (19.6s)
+
+
+  1) [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:329:5 › accessibility at 375px › long character and report content reflows 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 5
+
+    - Array []
+    + Array [
+    +   "selected only by color: WeaponEmpty",
+    +   "selected only by color: Inventory",
+    +   "selected only by color: All",
+    + ]
+
+      392 |       await writeFile(path, JSON.stringify({ measurements, sizes, columns, failures }, null, 2));
+      393 |       await info.attach('reflow', { path, contentType: 'application/json' });
+    > 394 |       expect([...new Set(failures)]).toEqual([]);
+          |                                      ^
+      395 |     });
+      396 |   });
+      397 | }
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation-accessibility.spec.ts:394:38
+
+    attachment #1: reflow (application/json) ───────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-375-reflow\character-life-navigation--89cf1--and-report-content-reflows-chromium\attachments\reflow-9dbd4891e090b473a34f94830d7d1d672bf93809.json
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-375-reflow\character-life-navigation--89cf1--and-report-content-reflows-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-375-reflow\character-life-navigation--89cf1--and-report-content-reflows-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-375-reflow\character-life-navigation--89cf1--and-report-content-reflows-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:329:5 › accessibility at 375px › long character and report content reflows 

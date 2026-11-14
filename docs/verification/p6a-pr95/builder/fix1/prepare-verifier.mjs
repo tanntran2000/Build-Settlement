@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+const root='C:/Users/Admin/.t3/local-drafts/p6a-prC/';
+let verifier=fs.readFileSync(root+'verify-correction9.mjs','utf8');
+const anchor="  if (implemented) check(normalized(entry.file) === proposed, `Implemented file differs from approved P1–P11 blocks: ${entry.file}`);";
+if(verifier.split(anchor).length!==2)throw Error('Verifier anchor mismatch');
+verifier=verifier.replace(anchor,"  const amendment=JSON.parse(fs.readFileSync(path.join(root,'fix1/P7-amendment.json'),'utf8'));\n  if(entry.file===amendment.file){\n    check(proposed.split(amendment.before).length===2,'P7 amendment anchor is not unique');\n    proposed=proposed.replace(amendment.before,amendment.after);\n  }\n"+anchor.replace('approved P1–P11 blocks','approved correction 10 P1–P11 blocks'));
+fs.writeFileSync(root+'verify-correction10.mjs',verifier,'utf8');
+const amendment=JSON.parse(fs.readFileSync(root+'fix1/P7-amendment.json','utf8'));
+amendment.reason='Exact Authority goal threshold and four-week streak, spec §7.4';
+fs.writeFileSync(root+'fix1/P7-amendment.json',JSON.stringify(amendment,null,2)+'\n','utf8');

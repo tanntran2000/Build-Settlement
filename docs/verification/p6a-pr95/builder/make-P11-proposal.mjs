@@ -1,0 +1,11 @@
+import fs from 'node:fs';import {createHash} from 'node:crypto';import {execFileSync} from 'node:child_process';
+const root='C:/Users/Admin/.t3/local-drafts/p6a-prC/';
+const file='tests/e2e/character-life-navigation.spec.ts',bytes=fs.readFileSync(file),source=bytes.toString('utf8').replace(/\r\n/g,'\n');
+const before="        await expect(placeholder).toBeVisible();\n        expect(await placeholder.evaluate(el => el.outerHTML)).toBe(staticMarkup);";
+const after="        if (area === 'Inventory') {\n          await expect(placeholder).toHaveCount(0);\n          await expect(win.getByRole('region', { name: 'Equipment', exact: true })).toBeVisible();\n        } else {\n          await expect(placeholder).toBeVisible();\n          expect(await placeholder.evaluate(el => el.outerHTML)).toBe(staticMarkup);\n        }";
+const offset=source.indexOf(before);if(offset<0||source.indexOf(before,offset+before.length)>=0)throw Error('P11 anchor missing/ambiguous');
+const HEAD=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim();
+const proposal={id:'P11',proposalOnly:true,HEAD,file,line:source.slice(0,offset).split('\n').length,sourceSha256:createHash('sha256').update(bytes).digest('hex'),before,after,reason:'The existing all-tabs fallback loop conflicts with the approved Inventory silhouette design. Preserve the original assertions for the other three areas and explicitly assert the implemented Equipment view in Inventory.'};
+fs.writeFileSync(root+'P11-proposal.json',JSON.stringify(proposal,null,2)+'\n','utf8');
+fs.writeFileSync(root+'proposed-P11-character-life-navigation.spec.ts',source.replace(before,after),'utf8');
+console.log('P11 proposed externally at line '+proposal.line+'; product file untouched.');

@@ -1,0 +1,14 @@
+{
+  "UTC": "2026-11-14T14:39:46.616Z",
+  "HEAD": "5e97f049330c2e6c4e213b845815afb368d8a7b3",
+  "preview": "unavailable",
+  "render": "unavailable",
+  "renderCode": "thread_credential_required",
+  "error": "This tool acts as the calling T3 thread, so it needs an agent running inside T3 Code. This MCP client signed in from outside a thread.",
+  "fallbacks": [
+    "bundle/comparison.html",
+    "bundle/comparison.png",
+    "review-preview.html"
+  ],
+  "method": "Standalone HTML chart rasterized with the installed Playwright Chromium, no server; browser closed afterward"
+}

@@ -1,0 +1,16 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { spawn, execFileSync } from 'node:child_process';
+const [name, command] = process.argv.slice(2);
+if (!name || !command) throw Error('Usage: run-evidence.mjs name command');
+const root = 'C:/Users/Admin/.t3/local-drafts/p6a-prC/';
+const git = args => execFileSync('git', args, { encoding: 'utf8' }).trim();
+const start = new Date().toISOString(), head = git(['rev-parse','HEAD']), tree = git(['rev-parse','HEAD^{tree}']);
+const raw = path.join(root, name + '.raw.txt'), output = fs.createWriteStream(raw, { encoding: 'utf8' });
+const child = spawn('cmd.exe', ['/d','/s','/c',command], { env: process.env, windowsHide: true });
+child.stdout.pipe(output, { end: false }); child.stderr.pipe(output, { end: false });
+const exit = await new Promise((resolve,reject) => { child.on('error',reject); child.on('close',resolve); });
+await new Promise(resolve => output.end(resolve));
+const log = `HEAD=${head}\nTREE=${tree}\nUTC=${start}\nEXIT=${exit}\nCOMMAND=${command}\nCI=${process.env.CI ?? ''}\nFINISHED=${new Date().toISOString()}\n\n` + fs.readFileSync(raw,'utf8');
+fs.writeFileSync(path.join(root,name+'.txt'),log,'utf8');
+console.log(log.slice(0,350)); console.log(log.slice(-5500)); process.exitCode=Number(exit);

@@ -1,0 +1,54 @@
+{
+  "UTC": "2026-11-14T09:17:31.168Z",
+  "exit": 0,
+  "changed": [
+    "tests/e2e/items.spec.ts"
+  ],
+  "files": [
+    {
+      "file": "packages/ui/src/CharacterLifeCharacters.svelte",
+      "before": "5e829c20682600ef7ad8b72bf48da85afdad2298e3485fa60d14f9c117fdb7bb",
+      "after": "5e829c20682600ef7ad8b72bf48da85afdad2298e3485fa60d14f9c117fdb7bb"
+    },
+    {
+      "file": "packages/ui/src/CharacterProfile.svelte",
+      "before": "9e76a2b8f04e7adb85be24c1898d1ec643c844e52afc8b56765ad919e5ddc883",
+      "after": "9e76a2b8f04e7adb85be24c1898d1ec643c844e52afc8b56765ad919e5ddc883"
+    },
+    {
+      "file": "tests/e2e/character-life-boundary.spec.ts",
+      "before": "3a68dafddab2c66f201dd6cdbd9875aa06b5e3ed3bdff7ecc0724b288d7386ad",
+      "after": "3a68dafddab2c66f201dd6cdbd9875aa06b5e3ed3bdff7ecc0724b288d7386ad"
+    },
+    {
+      "file": "tests/e2e/character-life-navigation.spec.ts",
+      "before": "6ac3f3243a61d7f6e5ce9f37eeed54b1099eac87ef6e4ace6807af8304e7ae6c",
+      "after": "6ac3f3243a61d7f6e5ce9f37eeed54b1099eac87ef6e4ace6807af8304e7ae6c"
+    },
+    {
+      "file": "packages/ui/src/EquipmentView.svelte",
+      "before": "1e79b7539022ff1ff237dccb67c7735dc007ba99b511ff955a5d5f02d31d52ae",
+      "after": "1e79b7539022ff1ff237dccb67c7735dc007ba99b511ff955a5d5f02d31d52ae"
+    },
+    {
+      "file": "packages/ui/src/ItemCard.svelte",
+      "before": "69b18c073e415f77eda13e1f9058e6d13ae63ea1997cc636c885dd0aca1aff96",
+      "after": "69b18c073e415f77eda13e1f9058e6d13ae63ea1997cc636c885dd0aca1aff96"
+    },
+    {
+      "file": "packages/ui/src/__tests__/items-view.test.ts",
+      "before": "6ab2a11506a2b5fce32326503bedeaf37af0369710d72448105d85017ed0a114",
+      "after": "6ab2a11506a2b5fce32326503bedeaf37af0369710d72448105d85017ed0a114"
+    },
+    {
+      "file": "packages/ui/src/items-view.ts",
+      "before": "c935a975567e324bf8d7d3bb31f714ae6733aa70f0a4f3ef475284e9bac7b352",
+      "after": "c935a975567e324bf8d7d3bb31f714ae6733aa70f0a4f3ef475284e9bac7b352"
+    },
+    {
+      "file": "tests/e2e/items.spec.ts",
+      "before": "aa6728867c395763bb4684643458ccb42e9c267aa6c64d374042d8fd052c9a36",
+      "after": "70afd3431cc3a601b6989ac842d3fea169681acfb9aacfdd41e109a30bca2dd7"
+    }
+  ]
+}

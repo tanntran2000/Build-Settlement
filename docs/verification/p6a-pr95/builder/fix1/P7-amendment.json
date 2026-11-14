@@ -1,0 +1,9 @@
+{
+  "file": "tests/e2e/character-life-navigation.helpers.ts",
+  "line": 243,
+  "block": "P7",
+  "before": "'Authority 100': 'authority'",
+  "after": "'Authority 90+ for 4 weeks': 'authority'",
+  "ownerDecision": "Approve, incl. P7 line (Recommended)",
+  "reason": "Exact Authority goal threshold and four-week streak, spec §7.4"
+}

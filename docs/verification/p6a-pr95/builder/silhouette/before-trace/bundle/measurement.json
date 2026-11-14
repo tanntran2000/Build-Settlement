@@ -1,0 +1,44 @@
+{
+  "HEAD": "16689892b4b448d04cac1a8e398f52e5269e7e53",
+  "tree": "b8413c359472872846aa268d5b864770fc684746",
+  "UTC": "2026-11-14T12:18:20.153Z",
+  "exit": 0,
+  "method": "node:zlib gzipSync defaults, decimal kB; production assets only",
+  "baseline": {
+    "head": "2c04321ba342871e6a858110ea2320a8e4df0d5d",
+    "jsKB": 116.52,
+    "cssKB": 5.81,
+    "source": "Owner baseline, independently reproduced in C1-RED-build.txt at the base; rounded to 0.01 decimal kB."
+  },
+  "final": {
+    "jsGzipBytes": 125479,
+    "cssGzipBytes": 6743,
+    "totalGzipBytes": 132222,
+    "jsKB": 125.479,
+    "cssKB": 6.743,
+    "totalKB": 132.222
+  },
+  "growthKB": {
+    "js": 8.959000000000003,
+    "css": 0.9330000000000007
+  },
+  "budgetGzipBytes": 200000,
+  "artifacts": [
+    {
+      "name": "index-BQhm1nxa.js",
+      "kind": "JS",
+      "bytes": 396999,
+      "gzipBytes": 125479,
+      "sha256": "3393fb01250844438c803651bec82dddcf0da612dbdd210c875a12ece24c7cad",
+      "gzipSha256": "59bba259c59fb0805bf736d52c5b0917aacf97a056531a75a9c347b129451b6a"
+    },
+    {
+      "name": "index-CxB-ZnFZ.css",
+      "kind": "CSS",
+      "bytes": 32979,
+      "gzipBytes": 6743,
+      "sha256": "a9a62ae4562b11e0b2d26b74927764d865866f2908516c1ca9f40dad0375eb8a",
+      "gzipSha256": "4323255978e2298ccdc9e75d8fe78b79783d6e5200b63af33960ce100226a751"
+    }
+  ]
+}

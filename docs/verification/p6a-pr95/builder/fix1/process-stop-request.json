@@ -1,0 +1,14 @@
+{
+  "UTC": "2026-11-14T13:58:15.145Z",
+  "HEAD": "5e97f049330c2e6c4e213b845815afb368d8a7b3",
+  "pid": 72952,
+  "process": "msedge.exe",
+  "expectedCreationUTC": "2026-11-14T10:00:34.2874310Z",
+  "latestCpuPercent": 20.405,
+  "source": "fix1/load-06.json",
+  "ownerPermission": "Stop only PID 72952",
+  "status": "Approved and completed after identity verification",
+  "safetyCheck": "Name and creation timestamp must match before Stop-Process",
+  "resolvedUTC": "2026-11-14T13:59:56.547Z",
+  "result": "fix1/edge-stop-result.json"
+}

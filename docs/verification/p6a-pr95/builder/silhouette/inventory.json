@@ -1,0 +1,11 @@
+{
+  "HEAD": "f046e36c98fcfbbd16808e759b7b09f0f1f4c98e",
+  "tree": "baf52e8b3e19f76f904ca8b39a51f9793a56a534",
+  "base": "16689892b4b448d04cac1a8e398f52e5269e7e53",
+  "productFiles": [
+    "packages/ui/src/EquipmentView.svelte"
+  ],
+  "existingTestEdits": 0,
+  "newTestEdits": 0,
+  "playerAndNpcLabelAssertionsUnchanged": true
+}

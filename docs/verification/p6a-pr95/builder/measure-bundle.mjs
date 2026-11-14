@@ -1,0 +1,22 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { gzipSync } from 'node:zlib';
+import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+const root='C:/Users/Admin/.t3/local-drafts/p6a-prC/bundle/';
+const git=args=>execFileSync('git',args,{encoding:'utf8'}).trim();
+if(git(['status','--porcelain=v1']))throw Error('Measure the clean final head');
+fs.mkdirSync(root+'raw',{recursive:true});
+const files=fs.readdirSync('packages/ui/dist/assets').filter(f=>/\.(js|css)$/.test(f));
+const artifacts=files.map(name=>{
+ const bytes=fs.readFileSync(path.join('packages/ui/dist/assets',name)),compressed=gzipSync(bytes);
+ fs.writeFileSync(root+'raw/'+name+'.gz',compressed);
+ return {name,kind:name.endsWith('.js')?'JS':'CSS',bytes:bytes.length,gzipBytes:compressed.length,sha256:createHash('sha256').update(bytes).digest('hex'),gzipSha256:createHash('sha256').update(compressed).digest('hex')};
+});
+const js=artifacts.filter(a=>a.kind==='JS').reduce((n,a)=>n+a.gzipBytes,0),css=artifacts.filter(a=>a.kind==='CSS').reduce((n,a)=>n+a.gzipBytes,0);
+const baseline={head:'2c04321ba342871e6a858110ea2320a8e4df0d5d',jsKB:116.52,cssKB:5.81,source:'Owner baseline, independently reproduced in C1-RED-build.txt at the base; rounded to 0.01 decimal kB.'};
+const result={HEAD:git(['rev-parse','HEAD']),tree:git(['rev-parse','HEAD^{tree}']),UTC:new Date().toISOString(),exit:js+css<200000?0:1,method:'node:zlib gzipSync defaults, decimal kB; production assets only',baseline,final:{jsGzipBytes:js,cssGzipBytes:css,totalGzipBytes:js+css,jsKB:js/1000,cssKB:css/1000,totalKB:(js+css)/1000},growthKB:{js:js/1000-baseline.jsKB,css:css/1000-baseline.cssKB},budgetGzipBytes:200000,artifacts};
+fs.writeFileSync(root+'measurement.json',JSON.stringify(result,null,2)+'\n','utf8');
+const rows=[['Main',baseline.jsKB,baseline.cssKB],['PR C',js/1000,css/1000]];
+const html=`<!doctype html><html lang="en"><meta charset="utf-8"><title>PR C bundle comparison</title><style>body{font:16px var(--font-sans,system-ui);color:var(--foreground,#3b2a17);margin:0;padding:0}h1{font-size:26px}.row{margin:28px 0}.bar{display:flex;height:44px;background:var(--muted,#d9c499);width:100%}.js{background:var(--chart-1,#72512f)}.css{background:var(--chart-2,#a44d35)}small{display:block;margin-top:8px}code{font-size:13px;overflow-wrap:anywhere}.legend{display:flex;gap:30px}i{display:inline-block;width:16px;height:16px;margin-right:8px}</style><h1>PR C production bundle</h1><p>Gzip, decimal kB. Limit: 200 kB total JS + CSS.</p><div class="legend"><span><i style="background:var(--chart-1,#72512f)"></i>JavaScript</span><span><i style="background:var(--chart-2,#a44d35)"></i>CSS</span></div>${rows.map(([label,j,c])=>`<div class="row"><strong>${label}: ${(j+c).toFixed(2)} kB total</strong><div class="bar"><div class="js" style="width:${j/2}%"></div><div class="css" style="width:${c/2}%"></div></div><small>JS ${j.toFixed(2)} kB · CSS ${c.toFixed(2)} kB</small></div>`).join('')}<p>Head <code>${result.HEAD}</code></p><p>Raw gzip files and hashes accompany measurement.json.</p></html>`;
+fs.writeFileSync(root+'comparison.html',html,'utf8');console.log(JSON.stringify(result,null,2));process.exitCode=result.exit;

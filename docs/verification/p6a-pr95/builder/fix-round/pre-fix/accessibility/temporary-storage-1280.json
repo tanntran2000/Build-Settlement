@@ -1,0 +1,293 @@
+{
+  "texts": [
+    {
+      "text": "Equipment",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Outfit the bearer. Skills take effect at End Week.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Earrings",
+      "contrast": 12.066365540264457,
+      "required": 4.5
+    },
+    {
+      "text": "Empty",
+      "contrast": 12.066365540264457,
+      "required": 4.5
+    },
+    {
+      "text": "Necklace",
+      "contrast": 12.066365540264457,
+      "required": 4.5
+    },
+    {
+      "text": "Empty",
+      "contrast": 12.066365540264457,
+      "required": 4.5
+    },
+    {
+      "text": "Top",
+      "contrast": 12.066365540264457,
+      "required": 4.5
+    },
+    {
+      "text": "Empty",
+      "contrast": 12.066365540264457,
+      "required": 4.5
+    },
+    {
+      "text": "Bottom",
+      "contrast": 12.066365540264457,
+      "required": 4.5
+    },
+    {
+      "text": "Empty",
+      "contrast": 12.066365540264457,
+      "required": 4.5
+    },
+    {
+      "text": "Shoes",
+      "contrast": 12.066365540264457,
+      "required": 4.5
+    },
+    {
+      "text": "Empty",
+      "contrast": 12.066365540264457,
+      "required": 4.5
+    },
+    {
+      "text": "Ring",
+      "contrast": 12.066365540264457,
+      "required": 4.5
+    },
+    {
+      "text": "Empty",
+      "contrast": 12.066365540264457,
+      "required": 4.5
+    },
+    {
+      "text": "Weapon",
+      "contrast": 12.066365540264457,
+      "required": 4.5
+    },
+    {
+      "text": "Empty",
+      "contrast": 12.066365540264457,
+      "required": 4.5
+    },
+    {
+      "text": "Hand",
+      "contrast": 12.066365540264457,
+      "required": 4.5
+    },
+    {
+      "text": "Empty",
+      "contrast": 12.066365540264457,
+      "required": 4.5
+    },
+    {
+      "text": "Nipple",
+      "contrast": 5.365435785687814,
+      "required": 4.5
+    },
+    {
+      "text": "Locked",
+      "contrast": 5.365435785687814,
+      "required": 4.5
+    },
+    {
+      "text": "Vagina",
+      "contrast": 5.365435785687814,
+      "required": 4.5
+    },
+    {
+      "text": "Locked",
+      "contrast": 5.365435785687814,
+      "required": 4.5
+    },
+    {
+      "text": "Anus",
+      "contrast": 5.365435785687814,
+      "required": 4.5
+    },
+    {
+      "text": "Locked",
+      "contrast": 5.365435785687814,
+      "required": 4.5
+    },
+    {
+      "text": "Effective skills",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "management 40 (+0)",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "technical 65 (+0)",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "medical 15 (+0)",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "combat 30 (+0)",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "negotiation 25 (+0)",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Inventory",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Materials",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Temporary storage",
+      "contrast": 12.066365540264457,
+      "required": 4.5
+    },
+    {
+      "text": "Temporary storage 1 / 10",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Claim items before they expire. Space is shared by all characters.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Expires after week 4",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Common · Accessory",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Plain Ring",
+      "contrast": 8.727253250449747,
+      "required": 4.5
+    },
+    {
+      "text": "Player · Ring",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Medical +2",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Regen +1/week",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Claim",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    }
+  ],
+  "clipped": [],
+  "controls": [
+    {
+      "label": "EarringsEmpty",
+      "width": 246.15625,
+      "height": 62.546875
+    },
+    {
+      "label": "NecklaceEmpty",
+      "width": 246.171875,
+      "height": 62.546875
+    },
+    {
+      "label": "TopEmpty",
+      "width": 246.15625,
+      "height": 62.546875
+    },
+    {
+      "label": "BottomEmpty",
+      "width": 246.171875,
+      "height": 62.546875
+    },
+    {
+      "label": "ShoesEmpty",
+      "width": 246.15625,
+      "height": 62.546875
+    },
+    {
+      "label": "RingEmpty",
+      "width": 246.171875,
+      "height": 62.546875
+    },
+    {
+      "label": "WeaponEmpty",
+      "width": 246.15625,
+      "height": 62.546875
+    },
+    {
+      "label": "HandEmpty",
+      "width": 246.171875,
+      "height": 62.546875
+    },
+    {
+      "label": "NippleLocked",
+      "width": 246.15625,
+      "height": 62.546875
+    },
+    {
+      "label": "VaginaLocked",
+      "width": 246.171875,
+      "height": 62.546875
+    },
+    {
+      "label": "AnusLocked",
+      "width": 246.15625,
+      "height": 62.546875
+    },
+    {
+      "label": "Inventory",
+      "width": 105.578125,
+      "height": 44
+    },
+    {
+      "label": "Materials",
+      "width": 102.640625,
+      "height": 44
+    },
+    {
+      "label": "Temporary storage",
+      "width": 181.84375,
+      "height": 44
+    },
+    {
+      "label": "Claim",
+      "width": 66.46875,
+      "height": 44
+    }
+  ],
+  "pageOverflow": false
+}

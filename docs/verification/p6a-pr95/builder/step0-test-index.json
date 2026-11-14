@@ -1,0 +1,938 @@
+[
+  {
+    "file": "packages/content/src/__tests__/city-design.test.ts",
+    "sha256": "92b050b60dafb381841b5b2242cb1bba0dceca2f9eddaf07f38deb62bd1659a2",
+    "lines": 23,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/core/src/__tests__/architecture.test.ts",
+    "sha256": "8576d823b619111e76b975f25fda472f9da9cf7cac4f90d806688f541bcdc53c",
+    "lines": 120,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/core/src/__tests__/catalog-data.test.ts",
+    "sha256": "e0460a599f356dfe70c3fca6902c68e995d6c4f5b3954f2c1a4fbdfed5be5afb",
+    "lines": 112,
+    "hitCount": 2
+  },
+  {
+    "file": "packages/core/src/__tests__/items-catalog.test.ts",
+    "sha256": "e2c613b8a977edec65bbff0ef57d50f68763508a728b9b6fd0ccd9e4ffd2dd55",
+    "lines": 46,
+    "hitCount": 1
+  },
+  {
+    "file": "packages/core/src/__tests__/society-world-integrity.test.ts",
+    "sha256": "edd312b50ef10e7ab36b5a3f351650f1337cddc4dfffa7d953246cd412615d56",
+    "lines": 27,
+    "hitCount": 3
+  },
+  {
+    "file": "packages/core/src/__tests__/weekly.test.ts",
+    "sha256": "1c9cea3371aefb08d6b2f3358e8b976ca4006e216dbac94d278e6d7d2acae583",
+    "lines": 30,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/core/src/character/__tests__/describe.test.ts",
+    "sha256": "8589286048f0a6134ba90b332811a84f44bd45881d120384290542c95cf2237c",
+    "lines": 198,
+    "hitCount": 4
+  },
+  {
+    "file": "packages/core/src/character/__tests__/session.test.ts",
+    "sha256": "9852335fbba051227f24f675a02f184b3da0fefd2b301d4e3372dcf3cd8c62ac",
+    "lines": 207,
+    "hitCount": 1
+  },
+  {
+    "file": "packages/core/src/character/__tests__/validate.test.ts",
+    "sha256": "36e1562307c6ac59815edc0403ddfd08ab20da3c5a15eccb3803b5e58a91cd91",
+    "lines": 370,
+    "hitCount": 8
+  },
+  {
+    "file": "packages/core/src/domain/__tests__/canonical-state.test.ts",
+    "sha256": "f2d82f2e0240313c29aea2a9d951a3b15ac6336b1b40cbe9b17b354435f34043",
+    "lines": 135,
+    "hitCount": 16
+  },
+  {
+    "file": "packages/core/src/domain/__tests__/domain.test.ts",
+    "sha256": "3c32eeb6441678f5e230cb2cf8c0576fe9eea0609a967ef03ac01d5c84e8a45f",
+    "lines": 244,
+    "hitCount": 11
+  },
+  {
+    "file": "packages/core/src/medal/__tests__/loadout.test.ts",
+    "sha256": "566537d637c128baf51b960c05b2a38312d8f59df346b3bedc77538a1380029c",
+    "lines": 319,
+    "hitCount": 49
+  },
+  {
+    "file": "packages/core/src/medal/__tests__/projection.test.ts",
+    "sha256": "134eef4155973dfd09e557aba93ee9ee16389a54ed0f758fc515b6bb43aa72e3",
+    "lines": 142,
+    "hitCount": 25
+  },
+  {
+    "file": "packages/core/src/medal/__tests__/validation.test.ts",
+    "sha256": "a0b2f3b8d78d180b283ab5f31326a816361590f424bbcdf62909fad6c3a345f0",
+    "lines": 274,
+    "hitCount": 26
+  },
+  {
+    "file": "packages/core/src/social/__tests__/effective_workforce.test.ts",
+    "sha256": "d76a146ab1cd2733e0aab577ef2bb2f280283adcd9def28c33e4ccc36a6abb77",
+    "lines": 69,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/core/src/social/__tests__/foundation_v2_social.test.ts",
+    "sha256": "f502f747d0a4887ba500dd58bb0b692d7e65b5b57c07b63a51bf2e9f489c113a",
+    "lines": 224,
+    "hitCount": 2
+  },
+  {
+    "file": "packages/core/src/social/__tests__/pop01a_resource_core.test.ts",
+    "sha256": "9d683dde477da9d8f5f24a4d65546a364d4b10b4dd6ef51f50919f06fc080f4e",
+    "lines": 248,
+    "hitCount": 1
+  },
+  {
+    "file": "packages/core/src/status/__tests__/effects.test.ts",
+    "sha256": "0253e73d892827a77b97a346d48c2ea04b370b8e80a7799481a8bfc1d9de4cab",
+    "lines": 247,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/core/src/trial/__tests__/crime.test.ts",
+    "sha256": "4c518521a6fb1bcf897359a76b53efca5088f1b1cd86f855254beb731ee51acd",
+    "lines": 14,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/core/src/trial/__tests__/crisis.test.ts",
+    "sha256": "7daf01eb6fca232a654dc67752c2395452455920cd1cebadf475bb8a6e961e56",
+    "lines": 39,
+    "hitCount": 3
+  },
+  {
+    "file": "packages/core/src/trial/__tests__/garrison.test.ts",
+    "sha256": "18f2faac9d65c73ac84b139a602ff158179f72da12b5b8833878dd2a05bfb6ab",
+    "lines": 13,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/core/src/trial/__tests__/items-canonical.test.ts",
+    "sha256": "a2227f017b05343f3e777fae30421edd3eed5c8019d8c641ccfde66b9dc985f0",
+    "lines": 32,
+    "hitCount": 4
+  },
+  {
+    "file": "packages/core/src/trial/__tests__/items.test.ts",
+    "sha256": "5688cf4da9b017e26515ad7727b934ad6409442ad7c12493865099220611ef6a",
+    "lines": 53,
+    "hitCount": 17
+  },
+  {
+    "file": "packages/core/src/trial/__tests__/law.test.ts",
+    "sha256": "5b69e00e75791d7029f85b2401dcf36df276781f84a4d8ba4f19d9c66a29b982",
+    "lines": 126,
+    "hitCount": 8
+  },
+  {
+    "file": "packages/core/src/trial/__tests__/order.test.ts",
+    "sha256": "ba81f4063a19a2800fb6f57f2f84061619dc8c2c7c77ea47d69ee1dd8fff4a90",
+    "lines": 68,
+    "hitCount": 1
+  },
+  {
+    "file": "packages/core/src/trial/__tests__/outside.test.ts",
+    "sha256": "bf3506f1c7b4c1004d23205094de9f42d7dfa430bc3204faabe49ea4f9b222f8",
+    "lines": 132,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/core/src/trial/__tests__/society-map.test.ts",
+    "sha256": "0f6a8c88640a85bb89452e952b83c544626a92f1b67fdbfd8ed560a4851cf43a",
+    "lines": 61,
+    "hitCount": 9
+  },
+  {
+    "file": "packages/core/src/trial/__tests__/society-stock-integrity.test.ts",
+    "sha256": "17a1ccd1e49485998f5849e3fcb16d01575732cd7df5b8ef077d4191d47ee523",
+    "lines": 68,
+    "hitCount": 1
+  },
+  {
+    "file": "packages/core/src/trial/__tests__/society.test.ts",
+    "sha256": "827482c6e5ed5e2db886d2670f4a92fdadb17c68cc1d6b575b652287777959f4",
+    "lines": 107,
+    "hitCount": 2
+  },
+  {
+    "file": "packages/core/src/world/__tests__/generate.test.ts",
+    "sha256": "b42c4d2b865fd1ee42ed2090c7d9f1e13d00edd4a37f60765194c1b1c8ccd45d",
+    "lines": 118,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/core/src/world/__tests__/item-market-seed.test.ts",
+    "sha256": "17b7bb7fb9a199b71050f2d6d893b0f58130ba9fc21119a1e76cde21f3131504",
+    "lines": 28,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/core/src/world/__tests__/npc.test.ts",
+    "sha256": "a097008d45e725bb4eaa03ea00bd1e21ab2369c61abcd848f15728742e5a49d1",
+    "lines": 141,
+    "hitCount": 2
+  },
+  {
+    "file": "packages/core/src/world/__tests__/random.test.ts",
+    "sha256": "4918ea2b09cad86bf0cf04652f2bf88297527bea5aa946b7b80818087e98b232",
+    "lines": 15,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/core/src/world/__tests__/session.test.ts",
+    "sha256": "bc5db72c9c8e8982aebb790012fc467f71efa8c9ada029a7b544c883d0d20ec7",
+    "lines": 89,
+    "hitCount": 2
+  },
+  {
+    "file": "packages/persistence/src/__tests__/character-life-save.test.ts",
+    "sha256": "432a71a021423e0603dd31a27c358a1e0e1abb9d614822fc4cde00da4fa17877",
+    "lines": 94,
+    "hitCount": 3
+  },
+  {
+    "file": "packages/persistence/src/__tests__/crisis-save.test.ts",
+    "sha256": "2ae2b6882584a9a9c42520c8fef49db78ec6481c6f31e191a07b7f2b70b99ac6",
+    "lines": 28,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/game-store-suite.ts",
+    "sha256": "a24c4103d09b01609bd0bb5701c2509bc73e0adeb83738a771502e1c625ec3a3",
+    "lines": 21,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/game-store.test.ts",
+    "sha256": "a8147bbe3d13ee9a1bea672dc7d119905bb289a8ad7ee2dd98a264f2b362cfd0",
+    "lines": 42,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/garrison-fixtures.test.ts",
+    "sha256": "2b853aca569df7517695edffd75ce8f5163f0b0357e207140cb38d3e1fed697d",
+    "lines": 7,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/item-owner-import.test.ts",
+    "sha256": "e9949832c725f9e48c92209d7ad9a0b025ca2b83952f6917b7d53b00b0dcaad7",
+    "lines": 37,
+    "hitCount": 3
+  },
+  {
+    "file": "packages/persistence/src/__tests__/item-records.test.ts",
+    "sha256": "166034883bb6a6d26d71cb1e49df88109c5de232d566c479ee2c6d264bdb91a1",
+    "lines": 49,
+    "hitCount": 8
+  },
+  {
+    "file": "packages/persistence/src/__tests__/items-canonical.test.ts",
+    "sha256": "ad6470605a3c940f9e9a23fba0783d8193758aa12d746f33f2f173f7843fb063",
+    "lines": 49,
+    "hitCount": 8
+  },
+  {
+    "file": "packages/persistence/src/__tests__/items-rebuild-order.test.ts",
+    "sha256": "e4726d3478de6eedcd6f7c0d4f54d716b916c74f0fcc5a5dbb329e7de8eed28f",
+    "lines": 83,
+    "hitCount": 11
+  },
+  {
+    "file": "packages/persistence/src/__tests__/law-save.test.ts",
+    "sha256": "0f022066f81befe6f5aab588a201a151edd4ff5ee92cc46c2fcf2648add07ea4",
+    "lines": 52,
+    "hitCount": 1
+  },
+  {
+    "file": "packages/persistence/src/__tests__/session-records.test.ts",
+    "sha256": "1f0e76fb41a51300aab9355d43e77107365448b43a9057b8a8dc8c83a82830bd",
+    "lines": 65,
+    "hitCount": 3
+  },
+  {
+    "file": "packages/persistence/src/__tests__/society-new-game-fixture.test.ts",
+    "sha256": "5caae0dc159d481222c9bc0f0d32d3268e688dc2ace81be9f8c9cb10bd4d4572",
+    "lines": 53,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/society-only-save.test.ts",
+    "sha256": "0a5c0f23f65d2586c8ffc06ede0686db3cc0dd02d6c950c2980f75b01f509115",
+    "lines": 3740,
+    "hitCount": 16
+  },
+  {
+    "file": "packages/persistence/src/__tests__/society-save.test.ts",
+    "sha256": "afa8d5cb9bac33c0c40cd8d6539d472841a6cce625558b823fb7e7f0c4a9f6c8",
+    "lines": 41,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/society-v1-fixture.test.ts",
+    "sha256": "1b025feac60a18f9e1bc9850edda552250cf352410721bf0cab39f277334b884",
+    "lines": 23,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/society-v2-fixture.test.ts",
+    "sha256": "2de437aea768e7a91e9d39a1159da28c1662843f135156e32015529ab10efd25",
+    "lines": 26,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/society-v3-fixture.test.ts",
+    "sha256": "a308da8d9cfb5269c3726d0faca097cc02ce777d77a53aed22942d8e143163e8",
+    "lines": 26,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/society-v4-fixture.test.ts",
+    "sha256": "fcca2635fe42c648af00622e2465dbf905309d539b5627899fd7d1e39958645c",
+    "lines": 26,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/society-v5-fixture.test.ts",
+    "sha256": "92edc0bd4f14b515e43f3308bba3136593aae4e756dce1d7b427d5020b1e397e",
+    "lines": 26,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/society-v6-fixture.test.ts",
+    "sha256": "c5bce00431394b7b7ad937a3744fa3969feebc0ac22904af0abe96c19da31221",
+    "lines": 34,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/society-v7-fixture.test.ts",
+    "sha256": "d9d0811bc2c2de826b4180341789aea711716f37700c37754af04b12ee6cff60",
+    "lines": 34,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/world-session-save.test.ts",
+    "sha256": "074fed0998920f4aefc29d8880d31123e9d325faed2bff6dae1d72278870477e",
+    "lines": 101,
+    "hitCount": 4
+  },
+  {
+    "file": "packages/simulation/src/__tests__/authority-refusals.test.ts",
+    "sha256": "97af15e79976289ac92a269d674fc3884c82607993430e6c17f59e9d6d4a87f8",
+    "lines": 55,
+    "hitCount": 8
+  },
+  {
+    "file": "packages/simulation/src/__tests__/catalog-golden.test.ts",
+    "sha256": "3d9f3ddf7afe0d5993a18021f98a7ab8dc4143f7fcfd6f264f985e28a663547f",
+    "lines": 32,
+    "hitCount": 4
+  },
+  {
+    "file": "packages/simulation/src/__tests__/character-life-command.test.ts",
+    "sha256": "184f75c4ef12a402f6b4aab92be132ae100742acb2cdf7a9af5f36d8dd16ce02",
+    "lines": 356,
+    "hitCount": 22
+  },
+  {
+    "file": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+    "sha256": "df75a08190d0ddc7e144bcdb6d7c656708f7dc4d910a6d9e196643dc1dff0261",
+    "lines": 368,
+    "hitCount": 37
+  },
+  {
+    "file": "packages/simulation/src/__tests__/crime-fixtures.test.ts",
+    "sha256": "20419886fa3597793b6779b737f6d50a3145d01a011260866cf315f39c5775a8",
+    "lines": 66,
+    "hitCount": 14
+  },
+  {
+    "file": "packages/simulation/src/__tests__/crime-week.test.ts",
+    "sha256": "b4cd9e452ab082d9cbde6203985265af98fd71dcf0f46a9935c39e76e3f0bb99",
+    "lines": 70,
+    "hitCount": 4
+  },
+  {
+    "file": "packages/simulation/src/__tests__/crisis-commands.test.ts",
+    "sha256": "9eb41c60cf19e961f777c6a242a939c761c85bf11d6c7707b6abfa1efed12c6f",
+    "lines": 62,
+    "hitCount": 8
+  },
+  {
+    "file": "packages/simulation/src/__tests__/crisis-fixture-helper.ts",
+    "sha256": "92e62fa680c6569ba6b623829898106aff5d69f9186e4e07c13ea697f981058e",
+    "lines": 42,
+    "hitCount": 1
+  },
+  {
+    "file": "packages/simulation/src/__tests__/crisis-fixtures.test.ts",
+    "sha256": "4e42caa9c6b728e5de572022a169230f7dd63feec4292e6466e055ec1a2f7405",
+    "lines": 23,
+    "hitCount": 2
+  },
+  {
+    "file": "packages/simulation/src/__tests__/crisis-week.test.ts",
+    "sha256": "18de12d87db050e5fd46241cb442b130638a74635ca091d0df9004b131baebae",
+    "lines": 66,
+    "hitCount": 2
+  },
+  {
+    "file": "packages/simulation/src/__tests__/exhausted-materials.test.ts",
+    "sha256": "9cf08796bfe0c76bf827b1fc85e5cc31264e39bb29fce542e6202e64c4d3bbff",
+    "lines": 48,
+    "hitCount": 3
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/golden-path-diff.ts",
+    "sha256": "1fd8617b71dbf12eb7e36e0cb04583af31cd7e5781aa3e572c2c49c684936d0e",
+    "lines": 34,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts",
+    "sha256": "3d9f4a5987770afe1a8deefdc963b0b5ebe5203fe11edc6a1b0d1e5d06754d2e",
+    "lines": 64,
+    "hitCount": 9
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/p6b-path-diff.ts",
+    "sha256": "fbdf6107f23042f2a3f066be0b8f18fd18e14477e07db79f9d00f0206b9c64e6",
+    "lines": 50,
+    "hitCount": 2
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/review-fix1-path-diff.ts",
+    "sha256": "f90f14c789d24aeb34f49bd3e497a78522146a5f243ad7a0579519e07d615e14",
+    "lines": 54,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/garrison-week.test.ts",
+    "sha256": "f26f6f0bf9b73ea330e8f49436a2d6494599a5544c50a869de9027751a1ad737",
+    "lines": 69,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/item-command.test.ts",
+    "sha256": "0674f45632f93e013abef4ea4888b40c261a9ceaea80ab94e41d4f4046a9b828",
+    "lines": 82,
+    "hitCount": 33
+  },
+  {
+    "file": "packages/simulation/src/__tests__/item-effects.test.ts",
+    "sha256": "5f37eded22f4701db48ac4894d3e7db8894d5e7f9734e48eee20ce039bbc0a8c",
+    "lines": 156,
+    "hitCount": 17
+  },
+  {
+    "file": "packages/simulation/src/__tests__/items-week.test.ts",
+    "sha256": "211dd4b3bd214b3e4c6d33bbd62b856604d3a662c8168dcc534640fcf2875f1b",
+    "lines": 150,
+    "hitCount": 12
+  },
+  {
+    "file": "packages/simulation/src/__tests__/law-command.test.ts",
+    "sha256": "227215de0d1d9197c0e49178a3e1ffe5a30962eaebbd31e01804acfee25f50dd",
+    "lines": 98,
+    "hitCount": 5
+  },
+  {
+    "file": "packages/simulation/src/__tests__/law-fixture.test.ts",
+    "sha256": "edab685a94a09651876c17f5945b551f973caddb9e32f23f26828fcbc23e1791",
+    "lines": 51,
+    "hitCount": 2
+  },
+  {
+    "file": "packages/simulation/src/__tests__/law-week.test.ts",
+    "sha256": "843af4e92c02f2c89cd0545dca342e10adfa7bc295516f5b658d65e00f111547",
+    "lines": 151,
+    "hitCount": 6
+  },
+  {
+    "file": "packages/simulation/src/__tests__/legendary-pending.test.ts",
+    "sha256": "e0070d198181b5b504250b979014a67c1e8ce17adfb07e471745c0dc551660b0",
+    "lines": 107,
+    "hitCount": 25
+  },
+  {
+    "file": "packages/simulation/src/__tests__/lord-health.test.ts",
+    "sha256": "7ce2caedf8fdb1ba05277309821282f2cdc5f10760ee16d7b276376c03c006a2",
+    "lines": 100,
+    "hitCount": 35
+  },
+  {
+    "file": "packages/simulation/src/__tests__/order-commands.test.ts",
+    "sha256": "46bce595300c9ef418db06feb347621b8787bf5719a9648d7dbf628cbebd1205",
+    "lines": 184,
+    "hitCount": 9
+  },
+  {
+    "file": "packages/simulation/src/__tests__/order-tax-week.test.ts",
+    "sha256": "9b6e2b1838881f865426c409c4197db72ef0f19956bc49747d02a788271149dd",
+    "lines": 53,
+    "hitCount": 11
+  },
+  {
+    "file": "packages/simulation/src/__tests__/order-week.test.ts",
+    "sha256": "99e6c0a82910563d3fe1e57f7ae4993e7b355e6aedbbcfb230fe948994a9162f",
+    "lines": 180,
+    "hitCount": 15
+  },
+  {
+    "file": "packages/simulation/src/__tests__/outside-commands.test.ts",
+    "sha256": "3e4953afb38226c62660afea85990c3799d9bd94167622cef2059a6ab7a48ab0",
+    "lines": 97,
+    "hitCount": 2
+  },
+  {
+    "file": "packages/simulation/src/__tests__/outside-session.test.ts",
+    "sha256": "689cf7a9d9c674ca6f340070fea6702b1c3b2bace44f35d7f2065e400c08b89d",
+    "lines": 20,
+    "hitCount": 1
+  },
+  {
+    "file": "packages/simulation/src/__tests__/outside-week.test.ts",
+    "sha256": "e903d30d39c9a622c0e078fd80262d4590ffb96e154afac95369860e7b96f3cb",
+    "lines": 116,
+    "hitCount": 4
+  },
+  {
+    "file": "packages/simulation/src/__tests__/society-command-transaction.test.ts",
+    "sha256": "92fe92326bfd24411cec987b2d4d9df21ce9d1f2e810becdd919519756905789",
+    "lines": 193,
+    "hitCount": 22
+  },
+  {
+    "file": "packages/simulation/src/__tests__/society-end-week.test.ts",
+    "sha256": "e4d83232eab225dd33446aca2179e1f9b6b6c757cc0021c62706a1cf2e620630",
+    "lines": 117,
+    "hitCount": 29
+  },
+  {
+    "file": "packages/simulation/src/__tests__/society-facilities.test.ts",
+    "sha256": "b9d21eb09216e444c5a2c5bf7110cdda6a795fc87520d97f185c401c0e248270",
+    "lines": 28,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/society-factory-determinism.test.ts",
+    "sha256": "e5b935d1c9b6366f94629800e6399f9d6b3fe0467d021cda6e4b6e350852bcc2",
+    "lines": 22,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/society-guard.test.ts",
+    "sha256": "fa79995ca02ff365f3f48eb9fcfe2fd81138e74360635e67d9cf0bdec23a25b3",
+    "lines": 38,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/society-immigration-integrity.test.ts",
+    "sha256": "2d669a53586f1787b583a38491ae89419a88ba131471c0cbd9c06b58f3953b4c",
+    "lines": 49,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/society-life.test.ts",
+    "sha256": "7df467383e1db09f0a2e2504bba86d3da9ba3670bf8b2131e54445cb2af49dba",
+    "lines": 50,
+    "hitCount": 2
+  },
+  {
+    "file": "packages/simulation/src/__tests__/society-plots.test.ts",
+    "sha256": "3b7066d9f75f34c417a6cc2cd0a803f0012317d103f279737c3fd2190eacee95",
+    "lines": 91,
+    "hitCount": 9
+  },
+  {
+    "file": "packages/simulation/src/__tests__/society-renewable-support.test.ts",
+    "sha256": "aa71d335f60fce02ba4429b87beff87096b9b941d3e3d701135b8865bb1a4f41",
+    "lines": 200,
+    "hitCount": 48
+  },
+  {
+    "file": "packages/simulation/src/__tests__/society-restore-integrity.test.ts",
+    "sha256": "c9f38e9389021c2aae38715df57a3efddfc99c36d1855f7b4c9f969854c0acc5",
+    "lines": 44,
+    "hitCount": 4
+  },
+  {
+    "file": "packages/simulation/src/__tests__/society-run-fixture.test.ts",
+    "sha256": "4b4329fc37537baaf379ea2bd2e55c8567702297915a145d203b1744f57a5899",
+    "lines": 25,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/society-stock-integrity.test.ts",
+    "sha256": "eeae7b1f2fab8d095ff9e8502f7785056912cd0ccc4a1599007ed8dac0735731",
+    "lines": 183,
+    "hitCount": 31
+  },
+  {
+    "file": "packages/simulation/src/__tests__/society-stock-policy-ports.test.ts",
+    "sha256": "9b5329b8811865fe0fdd85996286e272e2863e0688a2e9e86d0724290ce7758b",
+    "lines": 144,
+    "hitCount": 22
+  },
+  {
+    "file": "packages/simulation/src/__tests__/society-week.test.ts",
+    "sha256": "de609bdb7efe42dae45c09fcd8c82a7ddd766f72a465a2814d3ce5c0c643b19e",
+    "lines": 176,
+    "hitCount": 14
+  },
+  {
+    "file": "packages/simulation/src/__tests__/tile-trial.test.ts",
+    "sha256": "6226da814fa482af8005a4f45dec7d10902bd82bcaecf7495a05052517503ee9",
+    "lines": 53,
+    "hitCount": 3
+  },
+  {
+    "file": "packages/simulation/src/__tests__/world-npc.test.ts",
+    "sha256": "7065d3d0f63346f6d9a953912c5cf52f6c330e40ec7b48b903b3488e74b0441e",
+    "lines": 173,
+    "hitCount": 14
+  },
+  {
+    "file": "packages/ui/src/__tests__/character-life-session.test.ts",
+    "sha256": "dea93ee40d15ba692c1a5eeaff7e8c372389fec18d7efef7c18181a2566ecd69",
+    "lines": 342,
+    "hitCount": 17
+  },
+  {
+    "file": "packages/ui/src/__tests__/clearing-workers.test.ts",
+    "sha256": "eaeaae0d0a8c77754c0cfaa1b757d7b96f7f460df9bac0047030bd4fd0031ca3",
+    "lines": 11,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/ui/src/__tests__/crime-view.test.ts",
+    "sha256": "a80a7d751d1b6e22ca82063eddf9c422d6a3cdf61dfdcd83bebb36b3825a9b71",
+    "lines": 15,
+    "hitCount": 4
+  },
+  {
+    "file": "packages/ui/src/__tests__/crisis-checkpoint.test.ts",
+    "sha256": "2363bfdeb8d81bcb8d162a065e01b6d8277e7617b285e1ca19c14e7647553ea7",
+    "lines": 13,
+    "hitCount": 1
+  },
+  {
+    "file": "packages/ui/src/__tests__/crisis-view.test.ts",
+    "sha256": "064855c1f1ed0f788d5898730e02919fe41c6ce9f5e10f6ded7e2c1feeaa8da6",
+    "lines": 12,
+    "hitCount": 5
+  },
+  {
+    "file": "packages/ui/src/__tests__/data-inspector.test.ts",
+    "sha256": "a5627408fd9dcd417e0c2ffc923620adb94f616d6ed19c96878973cf83b47be8",
+    "lines": 174,
+    "hitCount": 6
+  },
+  {
+    "file": "packages/ui/src/__tests__/error-log.test.ts",
+    "sha256": "b89f845f53d222706581925144b95782aa6dd81e595beecefbb5c3c124ce1842",
+    "lines": 131,
+    "hitCount": 1
+  },
+  {
+    "file": "packages/ui/src/__tests__/garrison-view.test.ts",
+    "sha256": "cc41b3176976ba752456478db8133711db06c48d8f87b120729edabb2a3b7ac0",
+    "lines": 24,
+    "hitCount": 6
+  },
+  {
+    "file": "packages/ui/src/__tests__/inspector-build.test.ts",
+    "sha256": "33fb151097980d4da04d10a88d8e1e375697fbd1d15b32c6e77d85f12fb93ad8",
+    "lines": 45,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/ui/src/__tests__/law-view.test.ts",
+    "sha256": "a31a47938e7c383c34b1727f91353085f2971f4641b1c178d2b67fdf16183219",
+    "lines": 21,
+    "hitCount": 8
+  },
+  {
+    "file": "packages/ui/src/__tests__/ledger-contrast.test.ts",
+    "sha256": "dbdd01d5939982d09b246c51aeefba5b48ce7af494885652f61fd84eae45b3d6",
+    "lines": 24,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/ui/src/__tests__/life-calendar.test.ts",
+    "sha256": "5e476a2d593b96c7e261a74104b3df67c65ab78519777f6d73c650ff8397798f",
+    "lines": 22,
+    "hitCount": 1
+  },
+  {
+    "file": "packages/ui/src/__tests__/milli-format.test.ts",
+    "sha256": "80209060455da2a431c7d5d4eac8e9f82189fdb09e5e666d23976948c4ae04b5",
+    "lines": 48,
+    "hitCount": 4
+  },
+  {
+    "file": "packages/ui/src/__tests__/options.test.ts",
+    "sha256": "9dd8c865a54bc0743d8a92384b7d9691b007ebe1a79d1e1e088473f5ad8f24ff",
+    "lines": 20,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/ui/src/__tests__/outside-view.test.ts",
+    "sha256": "826adb982d637c52289964fd470dfb52a806536e5bd8f57c6cda82bafffbd1c6",
+    "lines": 9,
+    "hitCount": 4
+  },
+  {
+    "file": "packages/ui/src/__tests__/platform.test.ts",
+    "sha256": "a5d81cfe8fb36799d2d3d70176ccbe0569c3dcee75fddc0d7ff5bf6849085e48",
+    "lines": 7,
+    "hitCount": 1
+  },
+  {
+    "file": "packages/ui/src/__tests__/report-letters.test.ts",
+    "sha256": "a750fcaffd89a22aa1981c9aa4f15b3273b332fc180623d8904d311abd259798",
+    "lines": 524,
+    "hitCount": 151
+  },
+  {
+    "file": "packages/ui/src/__tests__/society-view.test.ts",
+    "sha256": "509cdf25f262f6c016e00aa0208c5d48006a5e507a88b93b887888ed3d9a665f",
+    "lines": 58,
+    "hitCount": 10
+  },
+  {
+    "file": "packages/ui/src/__tests__/version.test.ts",
+    "sha256": "ed28e28f2a8f50d062974a7ea4beb3cf25857771b44bfe38e5da4897a3556e22",
+    "lines": 4,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/ui/src/__tests__/worker-input.test.ts",
+    "sha256": "2902da7c2b451154599f91c45c6178a0a39eaccf3a19c9aadc4be620a7c02795",
+    "lines": 6,
+    "hitCount": 0
+  },
+  {
+    "file": "packages/ui/src/__tests__/world-npc-session.test.ts",
+    "sha256": "bc2d5c7ff861adc812fc021b8d797bc9785d912473b3a2445e9a09ac645ab315",
+    "lines": 36,
+    "hitCount": 1
+  },
+  {
+    "file": "packages/ui/src/__tests__/world-session.test.ts",
+    "sha256": "b86d27e8eaf64406c2315387a5ca21b826057d9abc0276f96af7621b38937467",
+    "lines": 106,
+    "hitCount": 4
+  },
+  {
+    "file": "packages/ui/src/__tests__/wounds-end-copy.test.ts",
+    "sha256": "5e4827012095c758313b705e6dabc78029a3bdfd1fee70557cd6b2abaa18e5f4",
+    "lines": 6,
+    "hitCount": 0
+  },
+  {
+    "file": "tests/e2e/autosave.spec.ts",
+    "sha256": "61067251f0f915497fc48e4c7f54e975da0af84c2b814b40fd9ffff95d118ce0",
+    "lines": 62,
+    "hitCount": 1
+  },
+  {
+    "file": "tests/e2e/character-life-boundary.spec.ts",
+    "sha256": "9fe07eff3fee62a1ab63485c97c0c9fabf4009fdedf03272df1d17fbb198622c",
+    "lines": 308,
+    "hitCount": 30
+  },
+  {
+    "file": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+    "sha256": "588cc6dd3eb3a1598a8a9c3983c28abf63c5485a0bc9f31319d6021c7cfd6c4f",
+    "lines": 417,
+    "hitCount": 40
+  },
+  {
+    "file": "tests/e2e/character-life-navigation.helpers.ts",
+    "sha256": "850297e35016a5bcd7e1eb1d6114cdc0070ea4aff19512354223639845a74335",
+    "lines": 484,
+    "hitCount": 70
+  },
+  {
+    "file": "tests/e2e/character-life-navigation.spec.ts",
+    "sha256": "ca9eaa6dd9de1e42f43a28742cc0452b2ab113efeca61c6819de9d0b9d8ee304",
+    "lines": 1462,
+    "hitCount": 192
+  },
+  {
+    "file": "tests/e2e/character-life.spec.ts",
+    "sha256": "a0bd5edc9b06c8e6054cb72e41d39da866e6e54f029abb8aabd6491a195105ca",
+    "lines": 415,
+    "hitCount": 14
+  },
+  {
+    "file": "tests/e2e/crime.spec.ts",
+    "sha256": "9306e3531cae32a31219f1aba130a96ab87b5d1e37308359a17f279a4ef6b87c",
+    "lines": 30,
+    "hitCount": 10
+  },
+  {
+    "file": "tests/e2e/crisis.spec.ts",
+    "sha256": "858125831beb5f096b9a4dde33b6e2f01820d47e814a212bc05be5c7714fc29a",
+    "lines": 61,
+    "hitCount": 13
+  },
+  {
+    "file": "tests/e2e/error-log.spec.ts",
+    "sha256": "3d556b04f7525c1ec8e88d6aa6357796668c9d3f39dd640949e4853a1060f2dd",
+    "lines": 212,
+    "hitCount": 2
+  },
+  {
+    "file": "tests/e2e/garrison.spec.ts",
+    "sha256": "fe91eda105d44a8e5a128829fb3103f28e69c9d0f9a7ee3b222d4dd01f93e552",
+    "lines": 27,
+    "hitCount": 8
+  },
+  {
+    "file": "tests/e2e/goods-stock.spec.ts",
+    "sha256": "bdf8013b7012545bbd927c9dc476160e20fdddca5c41a458f0b6b54a5d1e62bf",
+    "lines": 41,
+    "hitCount": 7
+  },
+  {
+    "file": "tests/e2e/laws.spec.ts",
+    "sha256": "c861c00e45f2cf03d549e422fa1fbdc3871ef4c68a212caa3b7b65a4863ee218",
+    "lines": 30,
+    "hitCount": 6
+  },
+  {
+    "file": "tests/e2e/ledger.spec.ts",
+    "sha256": "e845524ab658a3a7717bf41b8908665cde3cfd2d1beef655f0f44b2b4a029ae2",
+    "lines": 165,
+    "hitCount": 51
+  },
+  {
+    "file": "tests/e2e/order.spec.ts",
+    "sha256": "db96f99555a8e31dc675d0c669f1a277173ea0048df793894d557e2737bfcaff",
+    "lines": 31,
+    "hitCount": 8
+  },
+  {
+    "file": "tests/e2e/outside.spec.ts",
+    "sha256": "091a67e3012bc8cddff58a19dc7da587aa65057abda561ec9d2859a96ff2e798",
+    "lines": 65,
+    "hitCount": 5
+  },
+  {
+    "file": "tests/e2e/smoke.spec.ts",
+    "sha256": "87d1e2df2db9b457237f3fe6b348de52ea55631ff866dfed5bb3a0c330764a75",
+    "lines": 46,
+    "hitCount": 4
+  },
+  {
+    "file": "tests/e2e/society-command.helpers.ts",
+    "sha256": "8801d840501bb72c2d1d1ece01c726286d5e794832ab624c563f49a1991ba953",
+    "lines": 28,
+    "hitCount": 5
+  },
+  {
+    "file": "tests/e2e/society.spec.ts",
+    "sha256": "e86468cc6b82330ddb70dd752ea851af6f12cde1f2de9845618eccce3d65f91c",
+    "lines": 55,
+    "hitCount": 9
+  },
+  {
+    "file": "tests/e2e/storage.helpers.ts",
+    "sha256": "a295bf1e6cc982cdf146179d0a1a7a1ae5edd6b160494638d6ccbbcbdeef740c",
+    "lines": 102,
+    "hitCount": 0
+  },
+  {
+    "file": "tests/e2e/storage.spec.ts",
+    "sha256": "a72e80424c7d676e39833a90a745664bd974fc66c8b173643450f1dc046741bd",
+    "lines": 192,
+    "hitCount": 15
+  },
+  {
+    "file": "tests/e2e/tile-feedback-precision.spec.ts",
+    "sha256": "228cb601faada7db25bcf9b53ffb174711b0acfe38765dc9c37916b502a07490",
+    "lines": 149,
+    "hitCount": 13
+  },
+  {
+    "file": "tests/e2e/tile-local-checkpoint.spec.ts",
+    "sha256": "b32ff1c854274ce437219a457bb7e6bd3d7ac32feaf2b9b21298c4a8f43f14ae",
+    "lines": 73,
+    "hitCount": 15
+  },
+  {
+    "file": "tests/e2e/tile-population.spec.ts",
+    "sha256": "920467af91a469180d99874d060b40c2f14f53489c4b42abeaa9fd00d03dff02",
+    "lines": 19,
+    "hitCount": 3
+  },
+  {
+    "file": "tests/e2e/tile-save.spec.ts",
+    "sha256": "24cc90f973f3d927dfc799470d1fc30f75b1efc60396d7d63f27c2b6e6e73c89",
+    "lines": 38,
+    "hitCount": 12
+  },
+  {
+    "file": "tests/e2e/tile-trial.spec.ts",
+    "sha256": "4a34ad0ef3d94c074710b9284420896491d71dbb923748e99bd7c28f6c4ecdf3",
+    "lines": 31,
+    "hitCount": 6
+  },
+  {
+    "file": "tests/e2e/tile-workforce.spec.ts",
+    "sha256": "aaac582cf86d1d92ca7ecbc66303adbb47d76a5b2b57552d846c9309ea308027",
+    "lines": 130,
+    "hitCount": 8
+  },
+  {
+    "file": "tests/e2e/title.spec.ts",
+    "sha256": "0a21523af28cae48175788770eef4bd1cec33adc34ab040e322ff476048d06b7",
+    "lines": 249,
+    "hitCount": 17
+  },
+  {
+    "file": "tests/e2e/workforce-draft-error.spec.ts",
+    "sha256": "2be73ac69b9361470a61224881cb40fa8ea81db3221e78f0f08d4d88e3ebe006",
+    "lines": 77,
+    "hitCount": 7
+  },
+  {
+    "file": "tests/e2e/world-npc-session.spec.ts",
+    "sha256": "bda786f1ddadb5eed65271e8d657d8b2f5d73256aa99a705c67972bb96239494",
+    "lines": 36,
+    "hitCount": 6
+  },
+  {
+    "file": "tests/e2e/world-session.spec.ts",
+    "sha256": "2f04a7b7a8b075991276892354ff14e2b1678efc6c8dcf73401d768421746f49",
+    "lines": 48,
+    "hitCount": 11
+  },
+  {
+    "file": "tools/architecture.test.mjs",
+    "sha256": "7330f1dead1e6b39603c43b3125e5d55339c04d9a0e372139c32dbd7a6553a4a",
+    "lines": 681,
+    "hitCount": 11
+  }
+]

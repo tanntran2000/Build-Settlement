@@ -1,0 +1,102 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { createHash } from 'node:crypto';
+import { execFileSync, spawnSync } from 'node:child_process';
+const root='C:/Users/Admin/.t3/local-drafts/p6a-prC/';
+const base='2c04321ba342871e6a858110ea2320a8e4df0d5d',oldHead='8af03070496d8e41ae85fecaea2d29c4cc474811';
+const git=args=>execFileSync('git',args,{encoding:'utf8'}).trim();
+const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
+const read=name=>fs.readFileSync(root+name,'utf8');
+const json=name=>JSON.parse(read(name));
+const write=(name,value)=>fs.writeFileSync(root+name,JSON.stringify(value,null,2)+'\n','utf8');
+const head=git(['rev-parse','HEAD']),tree=git(['rev-parse','HEAD^{tree}']),utc=new Date().toISOString();
+if(git(['status','--porcelain=v1']))throw Error('Dirty final worktree');
+if(!process.env.P6C_STEP0_PORTS_UTC)throw Error('Check ports in this shell before finalizing');
+const verified=spawnSync(process.execPath,[root+'verify-correction9.mjs','--implemented'],{encoding:'utf8'});
+fs.writeFileSync(root+'immutable-and-inventory.txt',verified.stdout+verified.stderr,'utf8');
+if(verified.status!==0)throw Error('Immutable/inventory failure');
+const immutable=JSON.parse(verified.stdout);
+const original=json('step0-proposed-edits.json'),p11=json('P11-proposal.json');
+const edits=[...original.edits,{...p11,proposalOnly:false,task:'C3 correction 9'}].map(e=>{
+ const source=fs.readFileSync(e.file,'utf8').replaceAll('\r\n','\n'),index=source.indexOf(e.after);
+ if(index<0)throw Error('Missing approved after block '+e.id);
+ return {...e,afterLine:source.slice(0,index).split('\n').length};
+});
+write('edit-inventory.json',{HEAD:head,tree,base,blocks:edits.length,files:original.files.length,edits});
+fs.writeFileSync(root+'edit-inventory.md',`# Approved and applied existing-test edits — P1–P11\n\nHEAD ${head}; tree ${tree}; base ${base}. Exactly 11 blocks in three existing files. verify-correction9.mjs reconstructs the approved text from the base and rejects every other existing-test edit. P1–P10 remain the original correction 8 blocks; P11 is the exact correction 9 owner-approved proposal.\n\n`+edits.map(e=>`## ${e.id}: ${e.file}:${e.line} → ${e.afterLine}\n\n${e.why??e.reason}\n\nBefore:\n\n\`\`\`ts\n${e.before}\n\`\`\`\n\nAfter:\n\n\`\`\`ts\n${e.after}\n\`\`\`\n`).join('\n'),'utf8');
+write('fix-round/inventory.json',{HEAD:head,tree,base:oldHead,existingTestBlocks:1,existingTestFiles:1,edit:edits.at(-1),newTests:['C3 Legendary cards describe their catalog effects','C3 Player and NPC silhouettes have their distinct accessible labels']});
+const allowed=new Set(['packages/ui/src/CharacterLifeCharacters.svelte','packages/ui/src/CharacterLifeShell.svelte','packages/ui/src/CharacterProfile.svelte','packages/ui/src/EquipmentView.svelte','packages/ui/src/InsideCity.svelte','packages/ui/src/ItemCard.svelte','packages/ui/src/MarketPanel.svelte','packages/ui/src/PotionPanel.svelte','packages/ui/src/SoloWeekReport.svelte','packages/ui/src/TileManagement.svelte','packages/ui/src/items-view.ts','packages/ui/src/report-letters.ts','packages/ui/src/__tests__/items-view.test.ts','tests/e2e/items.spec.ts',...original.files.map(e=>e.file)]);
+const changed=git(['diff','--name-only',base,'HEAD']).split('\n').filter(Boolean);
+if(changed.some(f=>!allowed.has(f)))throw Error('PR scope violation');
+const fixChanged=git(['diff','--name-only',oldHead,'HEAD']).split('\n').filter(Boolean);
+const fixAllowed=['packages/ui/src/EquipmentView.svelte','packages/ui/src/ItemCard.svelte','packages/ui/src/SoloWeekReport.svelte',p11.file,'tests/e2e/items.spec.ts'].sort();
+if(JSON.stringify(fixChanged.sort())!==JSON.stringify(fixAllowed))throw Error('Fix-round scope violation');
+const diff=git(['diff',base,'HEAD']);
+if(/^\+[^+].*(?:setTimeout|test\.skip|test\.fixme)/m.test(diff))throw Error('Unexpected timeout/skip');
+write('final-scope.json',{HEAD:head,tree,base,UTC:utc,exit:0,changedFiles:changed,fixRoundFiles:fixChanged,noDocs:true,noDependencies:true,noTimeoutOrSkipEdits:true});
+fs.writeFileSync(root+'fix-round/committed.patch',git(['diff',oldHead,'HEAD'])+'\n','utf8');
+const field=(text,key)=>text.match(new RegExp('^'+key+'=(.*)$','m'))?.[1].trim();
+const gateNames=['fix-gate1-diff','fix-gate2-lint','fix-gate3-typecheck','fix-gate4-architecture','fix-gate5-architecture-tests','fix-gate6-unit','fix-gate7-build','fix-smoke-full'];
+const gates=gateNames.map(name=>{
+ const text=read(name+'.txt');
+ if(field(text,'HEAD')!==head||field(text,'TREE')!==tree||field(text,'EXIT')!=='0')throw Error('Gate head/result mismatch '+name);
+ return {name,HEAD:head,tree,UTC:field(text,'UTC'),finished:field(text,'FINISHED'),exit:0,command:field(text,'COMMAND'),CI:field(text,'CI')};
+});
+for(let i=1;i<gates.length;i++)if(Date.parse(gates[i].UTC)<Date.parse(gates[i-1].finished))throw Error('Overlapping gates');
+const smoke=read('fix-smoke-full.txt');
+if(!/^CI=1\s*$/m.test(smoke)||field(smoke,'CI')!=='1'||!/Running \d+ tests using 1 worker/.test(smoke))throw Error('Missing CI=1 or single-runner proof');
+const smokeMatch=[...smoke.matchAll(/(\d+) passed \(([^)]+)\)/g)].at(-1);
+if(!smokeMatch||/\n\s*\d+ failed\s*\n/.test(smoke))throw Error('Smoke did not fully pass');
+const unitMatch=read('fix-gate6-unit.txt').match(/Tests\s+(\d+) passed/),archMatch=read('fix-gate5-architecture-tests.txt').match(/(?:#|ℹ)\s+tests (\d+)/u);
+if(!unitMatch||!archMatch)throw Error('Missing suite totals');
+const start=Date.parse(gates.at(-1).UTC),end=Date.parse(gates.at(-1).finished);
+function fresh(file){const modified=fs.statSync(file).mtimeMs;if(modified<start||modified>end+2000)throw Error('Artifact not refreshed by final smoke: '+file);}
+const audits=fs.readdirSync(root+'accessibility').filter(f=>f.endsWith('.json')).map(name=>{
+ const file=root+'accessibility/'+name;fresh(file);const m=JSON.parse(fs.readFileSync(file,'utf8'));
+ const failures=[...(m.pageOverflow?['page overflow']:[]),...m.clipped,...m.texts.filter(t=>t.contrast+.01<t.required),...m.controls.filter(c=>c.width<24||c.height<24)];
+ if(failures.length)throw Error('Accessibility failures '+name);
+ return {name,sha256:sha(fs.readFileSync(file)),textSamples:m.texts.length,controls:m.controls.length,failures};
+});
+if(audits.length!==14)throw Error('Expected 14 new-panel audits');
+const smokeArtifacts='C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/fix-round-smoke';
+const comprehensive=fs.readdirSync(smokeArtifacts,{withFileTypes:true}).filter(e=>e.isDirectory()).flatMap(e=>{
+ return ['measurements.json','reflow.json'].filter(name=>fs.existsSync(path.join(smokeArtifacts,e.name,name))).map(name=>({source:path.join(smokeArtifacts,e.name,name),name:e.name+'-'+name}));
+});
+if(comprehensive.length!==8)throw Error('Missing four-width comprehensive accessibility artifacts');
+fs.mkdirSync(root+'accessibility/comprehensive',{recursive:true});
+const focusEvidence=[];
+for(const a of comprehensive){
+ fresh(a.source);const bytes=fs.readFileSync(a.source),data=JSON.parse(bytes);
+ if(data.failures?.length)throw Error('Comprehensive audit failure '+a.source);
+ fs.writeFileSync(root+'accessibility/comprehensive/'+a.name,bytes);
+ if(data.focus)focusEvidence.push({file:a.name,width:data.measurements[0].width,dollFocus:data.focus.filter(f=>JSON.stringify(f.bg)==='[217,196,153]').map(({label,ratio,color,bg})=>({label,ratio,color,bg}))});
+}
+write('fix-round/focus-contrast.json',{HEAD:head,tree,UTC:utc,required:3,measurements:focusEvidence});
+fs.copyFileSync('tests/e2e/items.spec.ts',root+'accessibility/items.spec.ts');
+write('accessibility-summary.json',{HEAD:head,tree,UTC:utc,exit:0,viewports:[1280,1600],audits,comprehensiveRegression:'All four widths, selected-state, focus contrast, profile and 320px large-report cases pass in fix-smoke-full.txt'});
+fs.writeFileSync(root+'accessibility/README.md',`# Final accessibility evidence\n\nHEAD ${head}; tree ${tree}. All 14 new-panel measurements were refreshed during the final CI=1 smoke. The comprehensive existing accessibility cases also pass at 1600, 1280, 375 and 320px.\n\nThe adjacent items.spec.ts is an exact copy of tracked measurement/test source. Run it from the repository (imports resolve there). Measurements cover text contrast, clipping/overflow, target sizes and actual keyboard traversal. Thresholds and timeouts are unchanged. Historical failing artifacts remain in fix-round/pre-fix and red-accessibility.\n`,'utf8');
+const screenshots=fs.readdirSync(root+'screenshots').filter(f=>f.endsWith('.png'));
+if(screenshots.length!==10||!screenshots.includes('equipment-player-1280.png')||!screenshots.includes('equipment-npc-1280.png'))throw Error('Missing final Player/NPC captures');
+for(const file of screenshots)fresh(root+'screenshots/'+file);
+write('screenshots/manifest.json',{HEAD:head,tree,UTC:utc,width:1280,files:screenshots.map(name=>({name,sha256:sha(fs.readFileSync(root+'screenshots/'+name))}))});
+const bundle=json('bundle/measurement.json');
+if(bundle.HEAD!==head||bundle.tree!==tree||bundle.exit!==0||bundle.final.totalGzipBytes>=200000)throw Error('Bundle failure');
+for(const a of bundle.artifacts)if(sha(fs.readFileSync(root+'bundle/raw/'+a.name+'.gz'))!==a.gzipSha256)throw Error('Raw bundle artifact mismatch');
+const commits=git(['log','--reverse','--format=%H %s',`${base}..HEAD`]).split('\n');
+for(const line of commits)if(!git(['show','-s','--format=%B',line.split(' ')[0]]).endsWith('Co-authored-by: Codex <noreply@openai.com>'))throw Error('Missing commit trailer');
+const summary={HEAD:head,tree,base,branch:git(['branch','--show-current']),UTC:utc,exit:0,status:'C1–C3 complete',gitStatus:'',commits,gates,gateAttempts:2,initialGateAttempt:json('fix-round/gate-attempt1/result.json'),unitPassed:Number(unitMatch[1]),architecturePassed:Number(archMatch[1]),smoke:{CI:1,passed:Number(smokeMatch[1]),failed:0,duration:smokeMatch[2]},inventory:{blocks:11,files:3,fixRoundBlocks:1},protectedFilesUnchanged:immutable.goldenFixtureCatalogPinFilesUnchanged,accessibilityAudits:audits.length,screenshots,bundle:bundle.final,ports:{4173:'free',4174:'free',checkedUTC:process.env.P6C_STEP0_PORTS_UTC},pushed:false,PRCreated:false,merged:false};
+write('final-summary.json',summary);
+const owner=[['Assignment','Giao Builder C'],['Existing tests P1–P10','Approve the 10 edits (Recommended)'],['Four UI scope additions','Allow these 4 files (Recommended)'],['Buy e2e in C2','Move the buy e2e to C2 (Recommended)'],['C1 attempt 3','Allow the Farm fix (Recommended)'],['C1 attempt 4','Allow this Planning fix (Recommended)'],['Correction 9 package and P11','Approve all 4 incl. P11 (Recommended)'],['NPC silhouette','Use option D now (Recommended)']];
+const readme=`# P6-A PR C — completed Builder evidence\n\nHEAD **${head}**; tree **${tree}**; base ${base}; branch feat/p6a-item-ui. Builder: Codex. UTC ${utc}. Status empty; ports 4173/4174 free. No push, PR creation or merge. Ready for Claude's independent testing and Astra review; no independent-review verdict is claimed.\n\n## Exact-head gates\n\n| Gate | Command | Exit |\n| --- | --- | ---: |\n${gates.map((g,i)=>'| '+(i+1)+' | '+g.command+' | '+g.exit+' |').join('\n')}\n\nUnit: **${summary.unitPassed} passed**. Architecture: **${summary.architecturePassed} passed**. Full smoke: **CI=1, ${summary.smoke.passed} passed, 0 failed (${summary.smoke.duration})**, one worker, no final-run rerun. fix-round-gates.ps1 ran gates 1–7 sequentially, checked both ports, printed CI, set CI=1 and ran the full smoke in the same shell. fix-gates-session.txt and every fix-gate*.txt / fix-smoke-full.txt retain HEAD/tree/UTC/exit/command/full output.\n\n## RED and GREEN\n\n| Task / round | RED | GREEN |\n| --- | --- | --- |\n| C1 | C1-RED-unit.txt; C1-RED-e2e.txt (six new unit cases and three new browser cases) | C1-GREEN-check.txt: 6 unit passes; C1-GREEN-e2e-attempt4.txt: 3 browser passes |\n| C2 | C2-RED-unit.txt; C2-RED-e2e-valid-fixtures.txt | C2-GREEN-check-attempt1.txt; C2-GREEN-e2e-final.txt |\n| Correction 9 | fix-RED-e2e.txt: both new cases fail at the expected Ledger sentence and NPC label before product edits | fix-GREEN-e2e.txt: all 30 focused cases pass; final full smoke passes |\n| C3 | Previous smoke at 8af0307: 356 passed / 11 failed; each failed case reproduced alone, owner HOLD release recorded | All final gates and full smoke pass at the clean head above |\n\nEarlier attempts and HOLD reports are retained. The C1 Farm and Planning changes were individually owner approved; no timeout, threshold, purchase/equip check or exact session equality was relaxed. The correction 9 focused run contains all 19 new item cases plus the 11 previous smoke failures. Pre-commit RED/GREEN logs identify the then-current committed HEAD and tree; the work was dirty only with the documented test/fix package. The final gates test the clean committed result.\n\n## Commits and scope\n\n${commits.map(c=>'- '+c).join('\n')}\n\n[edit-inventory.md](edit-inventory.md) and JSON list exact before → after text with file/line: **11 approved blocks in three existing files**. Correction 9 adds only P11 (one block in one existing file) plus two cases in the new items.spec.ts. [verify-correction9.mjs](verify-correction9.mjs) reconstructs P1–P11 from the base and checks all existing-test changes. Original proposals and verify-step0.mjs are preserved.\n\n[immutable-and-inventory.txt](immutable-and-inventory.txt) verifies **61 protected golden, fixture, catalog and pin files byte-identical to main 2c04321**, using working-byte SHA-256 and committed Git blob ids. No pin change or golden/fixture regeneration. final-scope.json lists all 17 allowlisted PR files and the five-file correction 9 diff. No docs, dependency, skipped-test or timeout changes on the product branch.\n\nCorrection 9 closes selected-state/focus contrast, 320px new-item Details wrapping, exact P11, catalog-driven Legendary copy, and the supplied NPC silhouette. Player SVG is unchanged. The stock ledger CSS/markup is unchanged by this fix. fix-round/committed.patch retains the entire five-file change.\n\n## Bundle and visuals\n\n[measure-bundle.mjs](measure-bundle.mjs) plus [bundle/measurement.json](bundle/measurement.json) and [bundle/raw/](bundle/raw/) contain the script, exact per-asset results, source hashes and raw gzip artifacts. Baseline main: JS 116.52 kB, CSS 5.81 kB gzip (independently reproduced at base in C1-RED-build.txt). Final: **JS ${bundle.final.jsKB.toFixed(2)} kB + CSS ${bundle.final.cssKB.toFixed(2)} kB = ${bundle.final.totalKB.toFixed(2)} kB gzip**, below 200 kB. Growth: +${bundle.growthKB.js.toFixed(2)} kB JS, +${bundle.growthKB.css.toFixed(2)} kB CSS.\n\nFourteen fresh new-panel accessibility artifacts cover seven views at 1280 and 1600. Existing comprehensive audits also pass at 320/375/1280/1600. [accessibility-summary.json](accessibility-summary.json) indexes the raw measurements and exact test script.\n\nAll ten 1280px captures were refreshed in the final smoke:\n\n${screenshots.map(f=>'- ['+f+'](screenshots/'+f+')').join('\n')}\n\n[review-preview.html](review-preview.html) is a standalone bundle chart and screenshot gallery. T3 inline preview is unavailable from this external client; visual-renderer-status.json records the failures. PNG files and standalone HTML remain directly reviewable.\n\n## Owner decisions — Tân, 2026-11-14, verbatim\n\n| Decision | Quote |\n| --- | --- |\n${owner.map(([k,v])=>'| '+k+' | "'+v+'" |').join('\n')}\n\nBinding plan: C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-9d4a2d6.md, correction 9. fix-round/binding-inputs.json records its hash. Original plan/spec input hashes and all Step 0 evidence are retained. Inline executing-plans/TDD approach; explicit user scope/no-subagent/HOLD rules applied. Claude will commit evidence on the WP docs branch per AGENTS §6; no docs file was added to the product branch.\n\n## Evidence integrity\n\nAll text is UTF-8. SHA256SUMS.txt covers every file recursively except the top-level manifest itself, including nested manifests and PNG/gzip binaries. LOCAL-ONLY.json hashes every large Playwright artifact kept outside this folder. Historical logs and pre-fix artifacts remain preserved; nested historical manifests intentionally describe their original snapshots. The assigned worktree is retained for Claude/Astra; storage reclaimed: 0 bytes.\n`;
+if(!readme.includes('T\u00e2n')||!readme.includes('→')||!readme.includes('—'))throw Error('Unicode corruption');
+fs.writeFileSync(root+'README.md',readme.replace('## RED and GREEN','The first exact-head gate attempt stopped at gate 6: lord-health.test.ts:73 took 6529ms against its existing 5000ms timeout (2487 passed / 1 failed). No test, source, configuration or timeout changed. All gates were repeated once at the same clean head and passed. [fix-round/gate-attempt1/](fix-round/gate-attempt1/) retains the full initial logs and result; this timeout is disclosed rather than discarded.\n\n## RED and GREEN'),'utf8');
+fs.appendFileSync(root+'progress.md',`\nCorrection 9 complete at ${head}, tree ${tree}: all gates exit 0; ${summary.unitPassed} unit, ${summary.architecturePassed} architecture, CI=1 smoke ${summary.smoke.passed}/${summary.smoke.passed} (${summary.smoke.duration}). P1–P11 exact, 61 protected files unchanged, 14 refreshed audits and 10 refreshed 1280px PNGs. Bundle ${bundle.final.totalKB.toFixed(3)} kB gzip. Clean status; ports free; no push/PR/merge.\n`,'utf8');
+function list(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?list(path.join(dir,e.name)):[path.join(dir,e.name)]);}
+const outside='C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright';
+write('LOCAL-ONLY.json',{HEAD:head,tree,UTC:utc,reason:'Large Playwright artifacts outside evidence',files:list(outside).map(file=>({file,bytes:fs.statSync(file).size,sha256:sha(fs.readFileSync(file))}))});
+const covered=list(root).filter(f=>path.relative(root,f).replaceAll('\\','/')!=='SHA256SUMS.txt').sort();
+for(const f of covered)if(/\.(?:md|json|txt|ts|mjs|ps1|svelte|html|css|patch)$/.test(f))new TextDecoder('utf-8',{fatal:true}).decode(fs.readFileSync(f));
+const manifest=covered.map(f=>sha(fs.readFileSync(f))+'  '+path.relative(root,f).replaceAll('\\','/')).join('\n')+'\n';
+fs.writeFileSync(root+'SHA256SUMS.txt',manifest,'utf8');
+for(const line of manifest.trimEnd().split('\n')){const [expected,file]=line.split('  ');if(sha(fs.readFileSync(path.join(root,file)))!==expected)throw Error('Manifest mismatch: '+file);}
+console.log(JSON.stringify({...summary,evidenceFiles:covered.length+1,manifestEntries:covered.length},null,2));

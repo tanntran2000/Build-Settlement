@@ -1,0 +1,46 @@
+﻿[
+    {
+        "log":  "smoke-rerun-1600-baseline",
+        "exit":  1
+    },
+    {
+        "log":  "smoke-rerun-1600-reflow",
+        "exit":  1
+    },
+    {
+        "log":  "smoke-rerun-1280-baseline",
+        "exit":  1
+    },
+    {
+        "log":  "smoke-rerun-1280-reflow",
+        "exit":  1
+    },
+    {
+        "log":  "smoke-rerun-375-baseline",
+        "exit":  1
+    },
+    {
+        "log":  "smoke-rerun-375-reflow",
+        "exit":  1
+    },
+    {
+        "log":  "smoke-rerun-320-baseline",
+        "exit":  1
+    },
+    {
+        "log":  "smoke-rerun-320-reflow",
+        "exit":  1
+    },
+    {
+        "log":  "smoke-rerun-375-profile",
+        "exit":  1
+    },
+    {
+        "log":  "smoke-rerun-1280-profile",
+        "exit":  1
+    },
+    {
+        "log":  "smoke-rerun-320-large-report",
+        "exit":  1
+    }
+]

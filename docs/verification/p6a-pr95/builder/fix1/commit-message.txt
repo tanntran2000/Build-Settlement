@@ -1,0 +1,7 @@
+fix(ui): destroy focus and authority goal label
+
+Restore focus to the persistent Inventory control after a successful Destroy removes its opener. Keep Cancel and Escape returning focus to the opener.
+
+State the Authority reward threshold and four-week streak exactly in item reports, its unit expectation and the approved P7 parser line.
+
+Co-authored-by: Codex <noreply@openai.com>

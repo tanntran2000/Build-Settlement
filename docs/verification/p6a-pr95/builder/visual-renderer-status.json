@@ -1,0 +1,11 @@
+{
+  "HEAD": "8af03070496d8e41ae85fecaea2d29c4cc474811",
+  "UTC": "2026-11-14T10:49:29.352Z",
+  "inlinePreviewAvailable": false,
+  "attempts": [
+    "mcp__t3__html_preview",
+    "mcp__codex_apps__t3_settlement_html_preview"
+  ],
+  "error": "This tool acts as the calling T3 thread, so it needs an agent running inside T3 Code. This MCP client signed in from outside a thread.",
+  "fallback": "Standalone review-preview.html, bundle/comparison.html and eight original PNG files are available; no inline-render success is claimed."
+}

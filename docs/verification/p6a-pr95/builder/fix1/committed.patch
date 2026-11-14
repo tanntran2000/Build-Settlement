@@ -1,0 +1,111 @@
+diff --git a/packages/ui/src/EquipmentView.svelte b/packages/ui/src/EquipmentView.svelte
+index 575188c..cbc8ea5 100644
+--- a/packages/ui/src/EquipmentView.svelte
++++ b/packages/ui/src/EquipmentView.svelte
+@@ -10,18 +10,25 @@
+  export let onapply:(next:CharacterLifeSessionState)=>void;
+  let view='Inventory',filter='All',slot:Slot='weapon',error='',destroyTarget:ItemInstance|null=null;
+  let dialog:HTMLDialogElement,opener:HTMLButtonElement|null=null;
++ let equipment:HTMLElement,focusInventoryOnClose=false;
+  $: items=session.city.society!.items;
+  $: kind=characterId===session.player.character.id?'player' as const:'npc' as const;
+  $: totals=characterTotals(session,characterId);
+  $: worn=items.equipped[characterId]??{};
+  function run(type:string,fields:Record<string,unknown>) {
+    const r=executeCharacterLifeCommand(session,{type,expectedRevision:session.city.revision,...fields});
+-   error=r.success?'':itemError(r.error.code);if(r.success)onapply(r.next);
++   error=r.success?'':itemError(r.error.code);if(r.success)onapply(r.next);return r.success;
++ }
++ async function confirm(item:ItemInstance,event:MouseEvent){destroyTarget=item;opener=event.currentTarget as HTMLButtonElement;focusInventoryOnClose=false;await tick();dialog.showModal();}
++ function close(){dialog.close();destroyTarget=null;}
++ async function restoreFocus(){
++   const inventory=focusInventoryOnClose,previousOpener=opener;focusInventoryOnClose=false;destroyTarget=null;
++   await tick();
++   const target=inventory?equipment.querySelector<HTMLButtonElement>('[aria-label="Item sections"] button'):previousOpener;
++   if(target?.isConnected)target.focus();
+  }
+- async function confirm(item:ItemInstance,event:MouseEvent){destroyTarget=item;opener=event.currentTarget as HTMLButtonElement;await tick();dialog.showModal();}
+- function close(){dialog.close();destroyTarget=null;opener?.focus();}
+ </script>
+-<section aria-label="Equipment" class="equipment">
++<section bind:this={equipment} aria-label="Equipment" class="equipment">
+  <header><h4>Equipment</h4><p>Outfit the bearer. Skills take effect at End Week.</p></header>
+  {#if error}<p role="alert">{error}</p>{/if}
+  <div class="loadout">
+@@ -64,7 +71,7 @@
+   <h5>Temporary storage {items.storage.length} / {ITEM_TRIAL.storageCap}</h5><p>Claim items before they expire. Space is shared by all characters.</p>
+   <div class="cards">{#each items.storage as entry (entry.item.id)}<div><p>Expires after week {entry.expiresWeek}</p><ItemCard definition={ITEM_CATALOG[entry.item.defId]} {locked} onclaim={()=>run('CLAIM_STORED_ITEM',{itemId:entry.item.id})} /></div>{:else}<p>Temporary storage is empty.</p>{/each}</div>
+  {/if}
+- <dialog bind:this={dialog} aria-labelledby="destroy-item-heading" oncancel={()=>destroyTarget=null} onclose={()=>{destroyTarget=null;opener?.focus();}}><h4 id="destroy-item-heading">Destroy item?</h4><p>{destroyTarget?ITEM_CATALOG[destroyTarget.defId].name:''} will be lost permanently.</p><button onclick={close}>Cancel</button><button disabled={locked} onclick={()=>{if(destroyTarget)run('DESTROY_ITEM',{itemId:destroyTarget.id});close();}}>Destroy</button></dialog>
++ <dialog bind:this={dialog} aria-labelledby="destroy-item-heading" oncancel={()=>destroyTarget=null} onclose={restoreFocus}><h4 id="destroy-item-heading">Destroy item?</h4><p>{destroyTarget?ITEM_CATALOG[destroyTarget.defId].name:''} will be lost permanently.</p><button onclick={close}>Cancel</button><button disabled={locked} onclick={()=>{if(destroyTarget)focusInventoryOnClose=run('DESTROY_ITEM',{itemId:destroyTarget.id});close();}}>Destroy</button></dialog>
+ </section>
+ <style>
+  .equipment{min-width:0}h4{font-size:1.3rem;margin:8px 0}h5{font-size:1.1rem;margin:12px 0}.loadout{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:16px}.doll{--focus:var(--ink);position:relative;min-height:330px;background:#d9c499;border:3px double #6b4f2e;padding:12px}.doll svg{position:absolute;width:110px;height:260px;left:50%;top:30px;transform:translateX(-50%);fill:#756248;opacity:.65;pointer-events:none}.slots{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:10px 75px}.slots button{display:flex;flex-direction:column;text-align:left;min-height:60px;min-width:0;padding:8px;overflow-wrap:anywhere;background:#f5f0e3;color:#3b2a17;border:2px solid #6b4f2e}.slots span{font-size:.9rem}.totals{min-width:0}.totals button{display:block;margin:8px 0;width:100%;overflow-wrap:anywhere}.switches{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}button{min-height:44px}button[aria-pressed='true']{font-weight:700;outline:2px solid #6b4f2e;outline-offset:1px}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:8px;border-bottom:1px solid #6b4f2e}dialog{max-width:min(90vw,420px);background:#ead8ae;color:#3b2a17;border:4px double #6b4f2e;padding:24px}dialog button{margin:8px}dialog::backdrop{background:#21140ccc}@media(max-width:600px){.loadout{grid-template-columns:1fr}.slots{gap:8px 50px}.doll{padding:8px}}
+diff --git a/packages/ui/src/__tests__/items-view.test.ts b/packages/ui/src/__tests__/items-view.test.ts
+index 47448d3..3124801 100644
+--- a/packages/ui/src/__tests__/items-view.test.ts
++++ b/packages/ui/src/__tests__/items-view.test.ts
+@@ -93,7 +93,7 @@ describe('C2 shops, recovery and item letters',()=>{
+   });
+   it('names only delivered Legendary rewards and tells the Player to make room for pending rewards',async()=>{
+     const v=await view();expect(v.itemReportRows).toBeTypeOf('function');
+-    expect(v.itemReportRows(itemReport,'steward')).toEqual([{label:'Legendary earned',value:"Warden's Oath · Calm city",tone:'gain'},{label:'Reward waiting',value:'Authority 100 · Make room in inventory or temporary storage.',tone:'loss'}]);
++    expect(v.itemReportRows(itemReport,'steward')).toEqual([{label:'Legendary earned',value:"Warden's Oath · Calm city",tone:'gain'},{label:'Reward waiting',value:'Authority 90+ for 4 weeks · Make room in inventory or temporary storage.',tone:'loss'}]);
+     expect(v.itemReportRows({...itemReport,legendary:null},'steward').some(r=>r.label==='Legendary earned')).toBe(false);
+   });
+   it('includes item summary candidates while retaining the four-row cap',()=>{
+diff --git a/packages/ui/src/items-view.ts b/packages/ui/src/items-view.ts
+index 05e5dfa..74a0d92 100644
+--- a/packages/ui/src/items-view.ts
++++ b/packages/ui/src/items-view.ts
+@@ -49,7 +49,7 @@ export function healthLine(session:CharacterLifeSessionState):string {
+   const hospital=session.city.tiles.some(t=>t.building?.typeId==='hospital'&&potionShop(session.city,t.id));
+   return `Health ${session.player.character.health} / 100 · Regen +${characterTotals(session,session.player.character.id).regen!+Number(hospital)}/week`;
+ }
+-export const ITEM_GOAL_LABELS={calm:'Calm city',authority:'Authority 100',week52:'Week 52',research:'Research complete'} as const;
++export const ITEM_GOAL_LABELS={calm:'Calm city',authority:'Authority 90+ for 4 weeks',week52:'Week 52',research:'Research complete'} as const;
+ export function itemReportRows(report:ItemWeekReport,id:'steward'|'quartermaster') {
+   const rows:{label:string;value:string;tone:'gain'|'loss'|'muted'}[]=[];
+   const add=(label:string,value:string,tone:'gain'|'loss'|'muted')=>rows.push({label,value,tone});
+diff --git a/tests/e2e/character-life-navigation.helpers.ts b/tests/e2e/character-life-navigation.helpers.ts
+index d95028c..8ac310d 100644
+--- a/tests/e2e/character-life-navigation.helpers.ts
++++ b/tests/e2e/character-life-navigation.helpers.ts
+@@ -240,7 +240,7 @@ async function readItemReport(panel: Locator): Promise<TileTrialReport['items']>
+     return matches[0][0];
+   }
+   function goal(label: string): NonNullable<TileTrialReport['items']['legendary']>['goal'] {
+-    const goals = { 'Calm city': 'calm', 'Authority 100': 'authority', 'Week 52': 'week52', 'Research complete': 'research' } as const;
++    const goals = { 'Calm city': 'calm', 'Authority 90+ for 4 weeks': 'authority', 'Week 52': 'week52', 'Research complete': 'research' } as const;
+     expect(Object.hasOwn(goals, label)).toBe(true);
+     return goals[label as keyof typeof goals];
+   }
+diff --git a/tests/e2e/items.spec.ts b/tests/e2e/items.spec.ts
+index 4122d3d..a9622ac 100644
+--- a/tests/e2e/items.spec.ts
++++ b/tests/e2e/items.spec.ts
+@@ -224,3 +224,24 @@ test('C1 Destroy confirms, cancels and accepts with the keyboard',async({page})=
+   dialog=page.getByRole('dialog',{name:'Destroy item?',exact:true});await dialog.getByRole('button',{name:'Destroy',exact:true}).focus();await page.keyboard.press('Enter');
+   expect((await exportLife(page)).city.society!.items.inventory.some(i=>i.id===item.id)).toBe(false);
+ });
++
++test('Review F1 Destroy restores keyboard focus after removal, Cancel and Escape',async({page})=>{
++  const {s,def,item}=purchased();await importLife(page,s);const panel=await inventory(page);
++  const opener=panel.getByRole('article',{name:def.name,exact:true}).getByRole('button',{name:'Destroy',exact:true});
++  const dialog=panel.getByRole('dialog',{name:'Destroy item?',exact:true});
++  for(const action of ['Cancel','Escape']){
++    await tabTo(page,opener);await page.keyboard.press('Enter');await expect(dialog).toBeVisible();
++    if(action==='Cancel'){await tabTo(page,dialog.getByRole('button',{name:'Cancel',exact:true}));await page.keyboard.press('Enter');}
++    else await page.keyboard.press('Escape');
++    await expect(dialog).not.toBeVisible();await expect(opener).toBeFocused();
++    expect(await exportLife(page)).toEqual(s);await inventory(page);
++  }
++  await tabTo(page,opener);await page.keyboard.press('Enter');
++  await tabTo(page,dialog.getByRole('button',{name:'Destroy',exact:true}));await page.keyboard.press('Enter');
++  await expect(dialog).not.toBeVisible();await expect(opener).toHaveCount(0);
++  await expect.poll(()=>panel.evaluate(e=>{
++    const active=document.activeElement,style=active?getComputedStyle(active):null;
++    return {connected:active?.isConnected??false,visible:!!active?.getClientRects().length&&style?.visibility!=='hidden'&&style?.display!=='none',insideEquipment:e.contains(active)};
++  })).toEqual({connected:true,visible:true,insideEquipment:true});
++  expect(await exportLife(page)).toEqual(act(s,'DESTROY_ITEM',{itemId:item.id}));
++});

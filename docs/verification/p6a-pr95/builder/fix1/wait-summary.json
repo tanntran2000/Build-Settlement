@@ -1,0 +1,204 @@
+{
+  "HEAD": "5e97f049330c2e6c4e213b845815afb368d8a7b3",
+  "tree": "49f6b676c3ae57f66ef9ce6275eb89a806f52a9a",
+  "base": "f046e36c98fcfbbd16808e759b7b09f0f1f4c98e",
+  "branch": "feat/p6a-item-ui",
+  "UTC": "2026-11-14T13:52:50.826Z",
+  "exit": 2,
+  "status": "WAIT for quiet-machine preflight; findings fixed and focused tests green",
+  "gitStatus": "",
+  "commit": "5e97f049330c2e6c4e213b845815afb368d8a7b3 fix(ui): destroy focus and authority goal label",
+  "findings": {
+    "F1": {
+      "red": "new keyboard case fails outside Equipment",
+      "green": "20/20 item browser cases passed, CI=1",
+      "productFixAttempts": 1
+    },
+    "F2": {
+      "red": "1 failed / 11 passed",
+      "green": "12/12 item-view unit cases passed",
+      "productFixAttempts": 1
+    }
+  },
+  "scope": {
+    "HEAD": "5e97f049330c2e6c4e213b845815afb368d8a7b3",
+    "tree": "49f6b676c3ae57f66ef9ce6275eb89a806f52a9a",
+    "base": "f046e36c98fcfbbd16808e759b7b09f0f1f4c98e",
+    "UTC": "2026-11-14T13:52:53.492Z",
+    "exit": 0,
+    "changedFiles": [
+      "packages/ui/src/EquipmentView.svelte",
+      "packages/ui/src/__tests__/items-view.test.ts",
+      "packages/ui/src/items-view.ts",
+      "tests/e2e/character-life-navigation.helpers.ts",
+      "tests/e2e/items.spec.ts"
+    ],
+    "p7LineOnly": true,
+    "newUnitExpectationOnly": true,
+    "earlierItemCasesUnchanged": true,
+    "societyViewTestUnchanged": true,
+    "silhouettesUnchanged": true,
+    "stylesUnchanged": true
+  },
+  "inventory": {
+    "blocks": 11,
+    "files": 3,
+    "p7AmendedLines": 1,
+    "otherApprovedBlocksUnchanged": 10
+  },
+  "immutableFilesUnchanged": 61,
+  "loadChecks": [
+    {
+      "file": "load-01.json",
+      "UTC": "2026-11-14T13:41:52.2348830Z",
+      "samples": [
+        {
+          "totalPercent": 29,
+          "UTC": "2026-11-14T13:42:03.2923219Z"
+        },
+        {
+          "totalPercent": 27,
+          "UTC": "2026-11-14T13:42:04.6100536Z"
+        },
+        {
+          "totalPercent": 27,
+          "UTC": "2026-11-14T13:42:05.8936799Z"
+        },
+        {
+          "totalPercent": 24,
+          "UTC": "2026-11-14T13:42:07.1708102Z"
+        },
+        {
+          "totalPercent": 23,
+          "UTC": "2026-11-14T13:42:08.4476496Z"
+        }
+      ],
+      "meanCpu": 26,
+      "topProcess": {
+        "process": "msedge",
+        "pid": 72952,
+        "cpuPercent": 20.229,
+        "workingSetMB": 46.1
+      },
+      "otherBuildTestJobs": 0,
+      "quiet": false
+    },
+    {
+      "file": "load-02.json",
+      "UTC": "2026-11-14T13:44:09.4787996Z",
+      "samples": [
+        {
+          "totalPercent": 20,
+          "UTC": "2026-11-14T13:44:13.3247366Z"
+        },
+        {
+          "totalPercent": 37,
+          "UTC": "2026-11-14T13:44:14.6298943Z"
+        },
+        {
+          "totalPercent": 30,
+          "UTC": "2026-11-14T13:44:15.9148735Z"
+        },
+        {
+          "totalPercent": 23,
+          "UTC": "2026-11-14T13:44:17.1916162Z"
+        },
+        {
+          "totalPercent": 23,
+          "UTC": "2026-11-14T13:44:18.4800596Z"
+        }
+      ],
+      "meanCpu": 26.6,
+      "topProcess": {
+        "process": "msedge",
+        "pid": 72952,
+        "cpuPercent": 20.698,
+        "workingSetMB": 44.9
+      },
+      "otherBuildTestJobs": 0,
+      "quiet": false
+    },
+    {
+      "file": "load-03.json",
+      "UTC": "2026-11-14T13:47:37.7419783Z",
+      "samples": [
+        {
+          "totalPercent": 23,
+          "UTC": "2026-11-14T13:47:41.5666848Z"
+        },
+        {
+          "totalPercent": 22,
+          "UTC": "2026-11-14T13:47:42.8681508Z"
+        },
+        {
+          "totalPercent": 24,
+          "UTC": "2026-11-14T13:47:44.1595968Z"
+        },
+        {
+          "totalPercent": 22,
+          "UTC": "2026-11-14T13:47:45.4450819Z"
+        },
+        {
+          "totalPercent": 28,
+          "UTC": "2026-11-14T13:47:46.7218735Z"
+        }
+      ],
+      "meanCpu": 23.8,
+      "topProcess": {
+        "process": "msedge",
+        "pid": 72952,
+        "cpuPercent": 19.835,
+        "workingSetMB": 44.9
+      },
+      "otherBuildTestJobs": 0,
+      "quiet": false
+    },
+    {
+      "file": "load-04.json",
+      "UTC": "2026-11-14T13:51:14.3569975Z",
+      "samples": [
+        {
+          "totalPercent": 20,
+          "UTC": "2026-11-14T13:51:19.5935088Z"
+        },
+        {
+          "totalPercent": 16,
+          "UTC": "2026-11-14T13:51:20.8849691Z"
+        },
+        {
+          "totalPercent": 23,
+          "UTC": "2026-11-14T13:51:22.1770540Z"
+        },
+        {
+          "totalPercent": 20,
+          "UTC": "2026-11-14T13:51:23.4600811Z"
+        },
+        {
+          "totalPercent": 42,
+          "UTC": "2026-11-14T13:51:24.7480706Z"
+        }
+      ],
+      "meanCpu": 24.2,
+      "topProcess": {
+        "process": "msedge",
+        "pid": 72952,
+        "cpuPercent": 18.987,
+        "workingSetMB": 44.9
+      },
+      "otherBuildTestJobs": 0,
+      "quiet": false
+    }
+  ],
+  "gates": "NOT STARTED — waiting for high background load to stop",
+  "fullSmoke": "NOT RUN — waiting for quiet preflight",
+  "finalHeadScreenshots": "PENDING — current captures are pre-commit GREEN only",
+  "finalHeadBundle": "PENDING — no final-head build yet",
+  "ports": {
+    "4173": "free",
+    "4174": "free",
+    "checkedUTC": "2026-11-14T13:52:50.4094773Z"
+  },
+  "pushed": false,
+  "PRUpdated": false,
+  "merged": false
+}

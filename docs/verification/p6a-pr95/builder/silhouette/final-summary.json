@@ -1,0 +1,246 @@
+{
+  "HEAD": "f046e36c98fcfbbd16808e759b7b09f0f1f4c98e",
+  "tree": "baf52e8b3e19f76f904ca8b39a51f9793a56a534",
+  "base": "2c04321ba342871e6a858110ea2320a8e4df0d5d",
+  "traceBase": "16689892b4b448d04cac1a8e398f52e5269e7e53",
+  "branch": "feat/p6a-item-ui",
+  "UTC": "2026-11-14T13:16:41.717Z",
+  "exit": 1,
+  "status": "HOLD per owner protocol after repeated gate-6 timeout and six isolated measurements",
+  "gitStatus": "",
+  "commits": [
+    "ce612d2461993486cb7fa35c6463c4c2a57ea3fe feat(ui): equipment view and inventory",
+    "8af03070496d8e41ae85fecaea2d29c4cc474811 feat(ui): market, potions, item reports and lord health",
+    "16689892b4b448d04cac1a8e398f52e5269e7e53 fix(ui): resolve item panel accessibility and copy",
+    "f046e36c98fcfbbd16808e759b7b09f0f1f4c98e fix(ui): trace owner-approved NPC silhouette"
+  ],
+  "trace": {
+    "HEAD": "f046e36c98fcfbbd16808e759b7b09f0f1f4c98e",
+    "tree": "baf52e8b3e19f76f904ca8b39a51f9793a56a534",
+    "base": "16689892b4b448d04cac1a8e398f52e5269e7e53",
+    "UTC": "2026-11-14T13:16:43.360Z",
+    "exit": 0,
+    "changedFiles": [
+      "packages/ui/src/EquipmentView.svelte"
+    ],
+    "markupBytes": 2736,
+    "limitBytes": 6000,
+    "viewBox": "0 0 100 200",
+    "role": "img",
+    "ariaLabel": "NPC silhouette",
+    "fill": "#756248",
+    "opacity": 0.65,
+    "knockout": "#d9c499",
+    "raster": false,
+    "filters": false,
+    "referenceSha256": "6cb8a6a5ee9f795e52043e4dbc5d833e292919f03deb9a829af7da0a0a0840a5",
+    "playerUnchanged": true,
+    "allNonNpcMarkupUnchanged": true,
+    "testsUnchanged": true
+  },
+  "comparisonPng": "silhouette/reference-vs-trace.png",
+  "gates": [
+    {
+      "name": "trace-gate1-diff",
+      "HEAD": "f046e36c98fcfbbd16808e759b7b09f0f1f4c98e",
+      "tree": "baf52e8b3e19f76f904ca8b39a51f9793a56a534",
+      "UTC": "2026-11-14T13:06:28.454Z",
+      "finished": "2026-11-14T13:06:28.733Z",
+      "exit": 0,
+      "command": "git diff --check origin/main...HEAD"
+    },
+    {
+      "name": "trace-gate2-lint",
+      "HEAD": "f046e36c98fcfbbd16808e759b7b09f0f1f4c98e",
+      "tree": "baf52e8b3e19f76f904ca8b39a51f9793a56a534",
+      "UTC": "2026-11-14T13:06:28.850Z",
+      "finished": "2026-11-14T13:06:55.288Z",
+      "exit": 0,
+      "command": "npm run lint"
+    },
+    {
+      "name": "trace-gate3-typecheck",
+      "HEAD": "f046e36c98fcfbbd16808e759b7b09f0f1f4c98e",
+      "tree": "baf52e8b3e19f76f904ca8b39a51f9793a56a534",
+      "UTC": "2026-11-14T13:06:55.437Z",
+      "finished": "2026-11-14T13:07:53.556Z",
+      "exit": 0,
+      "command": "npm run typecheck"
+    },
+    {
+      "name": "trace-gate4-architecture",
+      "HEAD": "f046e36c98fcfbbd16808e759b7b09f0f1f4c98e",
+      "tree": "baf52e8b3e19f76f904ca8b39a51f9793a56a534",
+      "UTC": "2026-11-14T13:07:53.667Z",
+      "finished": "2026-11-14T13:08:04.244Z",
+      "exit": 0,
+      "command": "npm run check:architecture"
+    },
+    {
+      "name": "trace-gate5-architecture-tests",
+      "HEAD": "f046e36c98fcfbbd16808e759b7b09f0f1f4c98e",
+      "tree": "baf52e8b3e19f76f904ca8b39a51f9793a56a534",
+      "UTC": "2026-11-14T13:08:04.377Z",
+      "finished": "2026-11-14T13:09:12.867Z",
+      "exit": 0,
+      "command": "npm run test:architecture"
+    },
+    {
+      "name": "trace-gate6-unit",
+      "HEAD": "f046e36c98fcfbbd16808e759b7b09f0f1f4c98e",
+      "tree": "baf52e8b3e19f76f904ca8b39a51f9793a56a534",
+      "UTC": "2026-11-14T13:09:13.008Z",
+      "finished": "2026-11-14T13:10:39.801Z",
+      "exit": 1,
+      "command": "npm test"
+    }
+  ],
+  "unit": {
+    "passed": 2487,
+    "failed": 1,
+    "test": "packages/simulation/src/__tests__/lord-health.test.ts:73",
+    "elapsedMs": 5070,
+    "unchangedTimeoutMs": 5000
+  },
+  "isolatedMeasurements": [
+    {
+      "id": "lord-health",
+      "file": "packages/simulation/src/__tests__/lord-health.test.ts",
+      "exactName": "a Calm game below Crime 70 survives all 60 weeks from health one",
+      "attempt": 1,
+      "command": "node \"C:\\\\Users\\\\Admin\\\\.t3\\\\worktrees\\\\Build-Settlement\\\\qa-g6-closeout-01\\\\node_modules\\\\vitest\\\\vitest.mjs\" \"run\" \"packages/simulation/src/__tests__/lord-health.test.ts\" \"-t\" \"a Calm game below Crime 70 survives all 60 weeks from health one\" \"--reporter=json\" \"--outputFile=C:/Users/Admin/.t3/local-drafts/p6a-prC/trace-measured-lord-health-1.json\"",
+      "exit": 0,
+      "wallMs": 5805,
+      "testMs": 1973.1728000000003,
+      "matchedTests": 1,
+      "exactNameMatched": true,
+      "log": "trace-measured-lord-health-1.txt",
+      "rawReport": "trace-measured-lord-health-1.json"
+    },
+    {
+      "id": "lord-health",
+      "file": "packages/simulation/src/__tests__/lord-health.test.ts",
+      "exactName": "a Calm game below Crime 70 survives all 60 weeks from health one",
+      "attempt": 2,
+      "command": "node \"C:\\\\Users\\\\Admin\\\\.t3\\\\worktrees\\\\Build-Settlement\\\\qa-g6-closeout-01\\\\node_modules\\\\vitest\\\\vitest.mjs\" \"run\" \"packages/simulation/src/__tests__/lord-health.test.ts\" \"-t\" \"a Calm game below Crime 70 survives all 60 weeks from health one\" \"--reporter=json\" \"--outputFile=C:/Users/Admin/.t3/local-drafts/p6a-prC/trace-measured-lord-health-2.json\"",
+      "exit": 0,
+      "wallMs": 4798,
+      "testMs": 2021.3346000000001,
+      "matchedTests": 1,
+      "exactNameMatched": true,
+      "log": "trace-measured-lord-health-2.txt",
+      "rawReport": "trace-measured-lord-health-2.json"
+    },
+    {
+      "id": "lord-health",
+      "file": "packages/simulation/src/__tests__/lord-health.test.ts",
+      "exactName": "a Calm game below Crime 70 survives all 60 weeks from health one",
+      "attempt": 3,
+      "command": "node \"C:\\\\Users\\\\Admin\\\\.t3\\\\worktrees\\\\Build-Settlement\\\\qa-g6-closeout-01\\\\node_modules\\\\vitest\\\\vitest.mjs\" \"run\" \"packages/simulation/src/__tests__/lord-health.test.ts\" \"-t\" \"a Calm game below Crime 70 survives all 60 weeks from health one\" \"--reporter=json\" \"--outputFile=C:/Users/Admin/.t3/local-drafts/p6a-prC/trace-measured-lord-health-3.json\"",
+      "exit": 0,
+      "wallMs": 6990,
+      "testMs": 4069.3755999999994,
+      "matchedTests": 1,
+      "exactNameMatched": true,
+      "log": "trace-measured-lord-health-3.txt",
+      "rawReport": "trace-measured-lord-health-3.json"
+    },
+    {
+      "id": "renewable-support",
+      "file": "packages/simulation/src/__tests__/society-renewable-support.test.ts",
+      "exactName": "society renewable support and transaction ports preserves complete gameplay and assignments through sixty weeks of snapshot restores",
+      "attempt": 1,
+      "command": "node \"C:\\\\Users\\\\Admin\\\\.t3\\\\worktrees\\\\Build-Settlement\\\\qa-g6-closeout-01\\\\node_modules\\\\vitest\\\\vitest.mjs\" \"run\" \"packages/simulation/src/__tests__/society-renewable-support.test.ts\" \"-t\" \"society renewable support and transaction ports preserves complete gameplay and assignments through sixty weeks of snapshot restores\" \"--reporter=json\" \"--outputFile=C:/Users/Admin/.t3/local-drafts/p6a-prC/trace-measured-renewable-support-1.json\"",
+      "exit": 0,
+      "wallMs": 4148,
+      "testMs": 1453.2789000000002,
+      "matchedTests": 1,
+      "exactNameMatched": true,
+      "log": "trace-measured-renewable-support-1.txt",
+      "rawReport": "trace-measured-renewable-support-1.json"
+    },
+    {
+      "id": "renewable-support",
+      "file": "packages/simulation/src/__tests__/society-renewable-support.test.ts",
+      "exactName": "society renewable support and transaction ports preserves complete gameplay and assignments through sixty weeks of snapshot restores",
+      "attempt": 2,
+      "command": "node \"C:\\\\Users\\\\Admin\\\\.t3\\\\worktrees\\\\Build-Settlement\\\\qa-g6-closeout-01\\\\node_modules\\\\vitest\\\\vitest.mjs\" \"run\" \"packages/simulation/src/__tests__/society-renewable-support.test.ts\" \"-t\" \"society renewable support and transaction ports preserves complete gameplay and assignments through sixty weeks of snapshot restores\" \"--reporter=json\" \"--outputFile=C:/Users/Admin/.t3/local-drafts/p6a-prC/trace-measured-renewable-support-2.json\"",
+      "exit": 0,
+      "wallMs": 4055,
+      "testMs": 1478.7243999999998,
+      "matchedTests": 1,
+      "exactNameMatched": true,
+      "log": "trace-measured-renewable-support-2.txt",
+      "rawReport": "trace-measured-renewable-support-2.json"
+    },
+    {
+      "id": "renewable-support",
+      "file": "packages/simulation/src/__tests__/society-renewable-support.test.ts",
+      "exactName": "society renewable support and transaction ports preserves complete gameplay and assignments through sixty weeks of snapshot restores",
+      "attempt": 3,
+      "command": "node \"C:\\\\Users\\\\Admin\\\\.t3\\\\worktrees\\\\Build-Settlement\\\\qa-g6-closeout-01\\\\node_modules\\\\vitest\\\\vitest.mjs\" \"run\" \"packages/simulation/src/__tests__/society-renewable-support.test.ts\" \"-t\" \"society renewable support and transaction ports preserves complete gameplay and assignments through sixty weeks of snapshot restores\" \"--reporter=json\" \"--outputFile=C:/Users/Admin/.t3/local-drafts/p6a-prC/trace-measured-renewable-support-3.json\"",
+      "exit": 0,
+      "wallMs": 4055,
+      "testMs": 1432.9099,
+      "matchedTests": 1,
+      "exactNameMatched": true,
+      "log": "trace-measured-renewable-support-3.txt",
+      "rawReport": "trace-measured-renewable-support-3.json"
+    }
+  ],
+  "architecturePassed": 154,
+  "gate7": "NOT RUN — owner-directed HOLD",
+  "fullSmoke": "NOT RUN — owner-directed HOLD",
+  "equipmentScreenshots": "NOT REFRESHED — owner-directed HOLD",
+  "bundle": "NOT REFRESHED — previous qualified snapshot retained",
+  "inventory": {
+    "blocks": 11,
+    "files": 3,
+    "traceRoundTestEdits": 0
+  },
+  "protectedFilesUnchanged": 61,
+  "loadPreflights": [
+    {
+      "file": "silhouette/load-preflight.json",
+      "cpuPercent": [
+        42,
+        17,
+        20,
+        23,
+        50
+      ],
+      "topProcess": {
+        "process": "msedge",
+        "pid": 72952,
+        "cpuPercent": 20.388,
+        "workingSetMB": 48.3
+      },
+      "otherBuildTestJobs": 0
+    },
+    {
+      "file": "silhouette/load-preflight2.json",
+      "cpuPercent": [
+        19,
+        24,
+        31,
+        25,
+        24
+      ],
+      "topProcess": {
+        "process": "msedge",
+        "pid": 72952,
+        "cpuPercent": 20.373,
+        "workingSetMB": 48.3
+      },
+      "otherBuildTestJobs": 0
+    }
+  ],
+  "ports": {
+    "4173": "free",
+    "4174": "free",
+    "checkedUTC": "2026-11-14T13:16:40.9372876Z"
+  },
+  "pushed": false,
+  "PRCreated": false,
+  "merged": false
+}

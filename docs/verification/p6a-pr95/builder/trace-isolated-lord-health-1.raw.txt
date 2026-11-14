@@ -1,0 +1,155 @@
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ↓ packages/persistence/src/__tests__/game-store.test.ts > diffRecords > empty inputs
+ ↓ packages/persistence/src/__tests__/game-store.test.ts > diffRecords > insert, update, delete and unchanged
+ ↓ packages/persistence/src/__tests__/game-store.test.ts > diffRecords > table is part of identity
+ ↓ packages/persistence/src/__tests__/game-store.test.ts > memory > write then read
+ ↓ packages/persistence/src/__tests__/game-store.test.ts > memory > unchanged records are not rewritten
+ ↓ packages/persistence/src/__tests__/game-store.test.ts > memory > a removed NPC record is deleted
+ ↓ packages/persistence/src/__tests__/game-store.test.ts > memory > failWrites leaves the previous records
+ ↓ packages/persistence/src/__tests__/game-store.test.ts > memory > clear keeps system records
+ ↓ packages/persistence/src/__tests__/game-store.test.ts > memory > two slots are isolated
+ ↓ packages/persistence/src/__tests__/game-store.test.ts > fix3 memory: existing marker writes nothing with meta=true
+ ↓ packages/persistence/src/__tests__/game-store.test.ts > fix3 memory: existing marker writes nothing with meta=false
+ ↓ packages/persistence/src/__tests__/game-store.test.ts > fix3 memory: existing slot wins and only receives the marker
+ ↓ packages/persistence/src/__tests__/game-store.test.ts > fix3 memory: empty slot stores candidate and marker with detached return
+ ↓ packages/persistence/src/__tests__/game-store.test.ts > fix3 memory: null candidate writes only marker and preserves other slots
+ ↓ packages/persistence/src/__tests__/game-store.test.ts > fix3 memory: migration takes one synchronous state step
+ ↓ packages/persistence/src/__tests__/game-store.test.ts > fix3 memory: invalid candidate slot cannot mutate records
+ ↓ packages/persistence/src/__tests__/game-store.test.ts > fix3 memory: invalid candidate system cannot mutate records
+ ↓ packages/persistence/src/__tests__/game-store.test.ts > fix3 memory: invalid marker table cannot mutate records
+ ↓ packages/persistence/src/__tests__/game-store.test.ts > fix3 memory: failed migration preserves records with meta=true
+ ↓ packages/persistence/src/__tests__/game-store.test.ts > fix3 memory: failed migration preserves records with meta=false
+ ↓ packages/core/src/trial/__tests__/crime.test.ts > chance 0
+ ↓ packages/core/src/trial/__tests__/crime.test.ts > chance 50
+ ↓ packages/core/src/trial/__tests__/crime.test.ts > chance 100
+ ↓ packages/core/src/trial/__tests__/crime.test.ts > severity 33
+ ↓ packages/core/src/trial/__tests__/crime.test.ts > severity 34
+ ↓ packages/core/src/trial/__tests__/crime.test.ts > severity 66
+ ↓ packages/core/src/trial/__tests__/crime.test.ts > severity 67
+ ↓ packages/core/src/trial/__tests__/crime.test.ts > standing term 0
+ ↓ packages/core/src/trial/__tests__/crime.test.ts > standing term 50
+ ↓ packages/core/src/trial/__tests__/crime.test.ts > standing term 54
+ ↓ packages/core/src/trial/__tests__/crime.test.ts > standing term 55
+ ↓ packages/core/src/trial/__tests__/crime.test.ts > standing term 100
+ ↓ packages/core/src/trial/__tests__/crime.test.ts > replays seeded streams
+ ↓ packages/core/src/trial/__tests__/crime.test.ts > starts v6 with neutral standing and no fall cause
+ ↓ packages/core/src/trial/__tests__/crime.test.ts > uses the validated session seed
+ ↓ packages/core/src/trial/__tests__/crime.test.ts > refuses standing 101
+ ↓ packages/core/src/trial/__tests__/crime.test.ts > refuses standing 1.5
+ ↓ packages/core/src/trial/__tests__/crime.test.ts > refuses standing -1
+ ↓ packages/core/src/trial/__tests__/crime.test.ts > refuses standing NaN
+ ↓ packages/core/src/trial/__tests__/crime.test.ts > refuses standing Infinity
+ ↓ packages/core/src/trial/__tests__/crime.test.ts > refuses inconsistent fall none rebellion
+ ↓ packages/core/src/trial/__tests__/crime.test.ts > refuses inconsistent fall fallen null
+ ↓ packages/core/src/trial/__tests__/crime.test.ts > refuses inconsistent fall fallen other
+ ↓ packages/core/src/trial/__tests__/crime.test.ts > refuses v4
+ ↓ packages/core/src/trial/__tests__/crime.test.ts > accepts fallen cause rebellion
+ ↓ packages/core/src/trial/__tests__/crime.test.ts > accepts fallen cause assassination
+ ↓ packages/persistence/src/__tests__/society-new-game-fixture.test.ts > pins the society new-game tile save bytes
+ ↓ packages/persistence/src/__tests__/society-new-game-fixture.test.ts > pins the society new-game Character Life save bytes
+ ↓ packages/persistence/src/__tests__/society-new-game-fixture.test.ts > round-trips the pinned v6 Character Life checkpoint
+ ↓ packages/persistence/src/__tests__/society-new-game-fixture.test.ts > refuses edited v6 high without changing the checkpoint
+ ↓ packages/persistence/src/__tests__/society-new-game-fixture.test.ts > refuses edited v6 negative without changing the checkpoint
+ ↓ packages/persistence/src/__tests__/society-new-game-fixture.test.ts > refuses edited v6 fractional without changing the checkpoint
+ ↓ packages/persistence/src/__tests__/society-new-game-fixture.test.ts > refuses edited v6 missing score without changing the checkpoint
+ ↓ packages/persistence/src/__tests__/society-new-game-fixture.test.ts > refuses edited v6 extra score without changing the checkpoint
+ ↓ packages/persistence/src/__tests__/society-new-game-fixture.test.ts > refuses edited v6 missing research without changing the checkpoint
+ ↓ packages/persistence/src/__tests__/society-new-game-fixture.test.ts > refuses edited v6 unknown completed without changing the checkpoint
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > crime zero roll 0.0499
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > crime zero roll 0.05
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > Standing 49 drifts to 50
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > Standing 51 drifts to 50
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > Standing 50 drifts to 50
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > Standing 0 drifts to 1
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > Standing 100 drifts to 99
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > seeds End Week N with N rather than N+1
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > robbery severity and floor at crime 33
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > robbery severity and floor at crime 34
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > robbery severity and floor at crime 66
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > robbery severity and floor at crime 67
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > robbery severity and floor at crime 100
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > smear at crime 0
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > smear at crime 50
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > smear at crime 100
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > availability 69
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > availability 70
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > raid at crime 33
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > raid at crime 50
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > raid at crime 100
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > caps a raid and removes Bound after Free
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > assassination 90/29/0.29/0
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > assassination 90/29/0.3/0
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > assassination 90/30/0.3/0
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > assassination 89/0/0/0
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > assassination 90/0/0/0.5
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > replays five complete weeks and separates two seeds over twenty crime steps
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > robs the approved basis points at 0
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > robs the approved basis points at 50
+ ↓ packages/simulation/src/__tests__/crime-week.test.ts > robs the approved basis points at 100
+ ↓ packages/simulation/src/__tests__/crime-fixtures.test.ts > pins production-searched robbery
+ ↓ packages/simulation/src/__tests__/crime-fixtures.test.ts > pins production-searched raid
+ ↓ packages/simulation/src/__tests__/crime-fixtures.test.ts > pins production-searched wound
+ ↓ packages/simulation/src/__tests__/crime-fixtures.test.ts > pins production-searched death
+ ↓ packages/simulation/src/__tests__/crime-fixtures.test.ts > a lethal wound sets wounds fall cause without regen and preserves a refused session
+ ↓ packages/simulation/src/__tests__/crime-fixtures.test.ts > reports the population left after raid casualties
+ ↓ packages/simulation/src/__tests__/crime-fixtures.test.ts > skips crisis on assassination death and refuses subsequent commands
+ ↓ packages/simulation/src/__tests__/crime-fixtures.test.ts > preserves zero health through a non-week command and falls at End Week
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > regens with Hospital false and gear false by exactly 1
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > regens with Hospital true and gear false by exactly 2
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > regens with Hospital false and gear true by exactly 2
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > regens with Hospital true and gear true by exactly 3
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > clamps regen to 100 and requires a fully staffed, funded, supplied Hospital
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > a wound to exactly zero kills before Hospital and gear regen
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > a wound leaving exactly one survives and then receives Hospital and gear regen
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > CITY_FALLEN blocks every later city, NPC and item command without mutation
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > a Calm game below Crime 70 survives all 60 weeks from health one
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > builds the worker-free Drug Store in the Slum at Hospital level-1 cost and upkeep and sells all potions
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders a quiet week
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders gold robbery with the Order display name
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders food robbery with the Order display name
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders wheat robbery with the Order display name
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders wood robbery with the Order display name
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders iron robbery with the Order display name
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders stone robbery with the Order display name
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders wool robbery with the Order display name
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders cloth robbery with the Order display name
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders herbs robbery with the Order display name
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders goods robbery with the Order display name
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders luxury robbery with the Order display name
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders gold robbery with no loss
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders food robbery with no loss
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders wheat robbery with no loss
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders wood robbery with no loss
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders iron robbery with no loss
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders stone robbery with no loss
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders wool robbery with no loss
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders cloth robbery with no loss
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders herbs robbery with no loss
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders goods robbery with no loss
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders luxury robbery with no loss
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders smear
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders 1 raid deaths
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders 2 raid deaths
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders 3 raid deaths
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders foiled assassination
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders wound
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders Standing 0
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders Standing 33
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders Standing 34
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders Standing 50
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders Standing 66
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders Standing 67
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders Standing 100
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders Crime 0 chance
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders Crime 35 chance
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders Crime 50 chance
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders Crime 100 chance
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > pins both end screens
+
+ Test Files  7 skipped (7)
+      Tests  146 skipped (146)
+   Start at  20:12:04
+   Duration  2.94s (transform 5.69s, setup 0ms, import 8.79s, tests 0ms, environment 3ms)
+

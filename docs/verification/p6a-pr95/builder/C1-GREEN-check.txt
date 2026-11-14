@@ -1,0 +1,43 @@
+HEAD=2c04321ba342871e6a858110ea2320a8e4df0d5d
+TREE=d5597ae4296afc90b41557eb062ca43f7ab85313
+UTC=2026-11-14T09:05:30.151Z
+EXIT=0
+COMMAND=npx vitest run packages/ui/src/__tests__/items-view.test.ts && npm run typecheck:ui && npm run build --workspace=@haven/ui
+CI=
+FINISHED=2026-11-14T09:05:56.497Z
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  16:05:32
+   Duration  899ms (transform 454ms, setup 0ms, import 573ms, tests 34ms, environment 0ms)
+
+
+> build-settlement@0.1.0 typecheck:ui
+> npm run check --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 check
+> svelte-check --tsconfig ./tsconfig.json
+
+Loading svelte-check in workspace: c:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\ui
+Getting Svelte diagnostics...
+
+svelte-check found 0 errors and 0 warnings
+
+> @haven/ui@0.1.0 build
+> vite build
+
+vite v6.4.5 building for production...
+transforming...
+✓ 242 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.71 kB │ gzip:   0.41 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-w2hUdv7j.css                   30.90 kB │ gzip:   6.37 kB
+dist/assets/index-CMZzAuDD.js                   380.55 kB │ gzip: 121.14 kB
+✓ built in 3.21s

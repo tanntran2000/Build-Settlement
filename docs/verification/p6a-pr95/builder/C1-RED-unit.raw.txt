@@ -1,0 +1,97 @@
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/items-view.test.ts (6 tests | 6 failed) 26ms
+     × has eight everyday slots and three NPC-only locked slots 15ms
+     × previews replacement and full sets without mutating base skills or inventory 3ms
+     × filters kind, slot and category independently 2ms
+     × uses rarity labels and frames, with every specified class colour and Exclusive label 2ms
+     × shows materials with rarity and exact counts without treating them as wearables 2ms
+     × counts Player equipment regen and effective deltas without changing NPC health 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/items-view.test.ts > C1 item views > has eight everyday slots and three NPC-only locked slots
+AssertionError: item display helpers exist: expected null not to be null
+ ❯ view packages/ui/src/__tests__/items-view.test.ts:6:52
+      4| async function view() {
+      5|   const module = await import('../items-view.js').catch(() => null);
+      6|   expect(module, 'item display helpers exist').not.toBeNull();
+       |                                                    ^
+      7|   return module!;
+      8| }
+ ❯ packages/ui/src/__tests__/items-view.test.ts:16:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  packages/ui/src/__tests__/items-view.test.ts > C1 item views > previews replacement and full sets without mutating base skills or inventory
+AssertionError: item display helpers exist: expected null not to be null
+ ❯ view packages/ui/src/__tests__/items-view.test.ts:6:52
+      4| async function view() {
+      5|   const module = await import('../items-view.js').catch(() => null);
+      6|   expect(module, 'item display helpers exist').not.toBeNull();
+       |                                                    ^
+      7|   return module!;
+      8| }
+ ❯ packages/ui/src/__tests__/items-view.test.ts:21:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  packages/ui/src/__tests__/items-view.test.ts > C1 item views > filters kind, slot and category independently
+AssertionError: item display helpers exist: expected null not to be null
+ ❯ view packages/ui/src/__tests__/items-view.test.ts:6:52
+      4| async function view() {
+      5|   const module = await import('../items-view.js').catch(() => null);
+      6|   expect(module, 'item display helpers exist').not.toBeNull();
+       |                                                    ^
+      7|   return module!;
+      8| }
+ ❯ packages/ui/src/__tests__/items-view.test.ts:28:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  packages/ui/src/__tests__/items-view.test.ts > C1 item views > uses rarity labels and frames, with every specified class colour and Exclusive label
+AssertionError: item display helpers exist: expected null not to be null
+ ❯ view packages/ui/src/__tests__/items-view.test.ts:6:52
+      4| async function view() {
+      5|   const module = await import('../items-view.js').catch(() => null);
+      6|   expect(module, 'item display helpers exist').not.toBeNull();
+       |                                                    ^
+      7|   return module!;
+      8| }
+ ❯ packages/ui/src/__tests__/items-view.test.ts:36:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  packages/ui/src/__tests__/items-view.test.ts > C1 item views > shows materials with rarity and exact counts without treating them as wearables
+AssertionError: item display helpers exist: expected null not to be null
+ ❯ view packages/ui/src/__tests__/items-view.test.ts:6:52
+      4| async function view() {
+      5|   const module = await import('../items-view.js').catch(() => null);
+      6|   expect(module, 'item display helpers exist').not.toBeNull();
+       |                                                    ^
+      7|   return module!;
+      8| }
+ ❯ packages/ui/src/__tests__/items-view.test.ts:48:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  packages/ui/src/__tests__/items-view.test.ts > C1 item views > counts Player equipment regen and effective deltas without changing NPC health
+AssertionError: item display helpers exist: expected null not to be null
+ ❯ view packages/ui/src/__tests__/items-view.test.ts:6:52
+      4| async function view() {
+      5|   const module = await import('../items-view.js').catch(() => null);
+      6|   expect(module, 'item display helpers exist').not.toBeNull();
+       |                                                    ^
+      7|   return module!;
+      8| }
+ ❯ packages/ui/src/__tests__/items-view.test.ts:52:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  6 failed (6)
+   Start at  16:01:00
+   Duration  1.17s (transform 469ms, setup 0ms, import 610ms, tests 26ms, environment 0ms)
+

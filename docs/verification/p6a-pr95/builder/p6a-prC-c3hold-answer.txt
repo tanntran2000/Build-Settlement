@@ -1,0 +1,23 @@
+C3 HOLD answered by the owner. Binding plan is now C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-9d4a2d6.md: read Plan correction 9 fully.
+
+Owner (Tân), 2026-11-14, dialog choices, verbatim:
+1. "Approve all 4 incl. P11 (Recommended)": apply exactly the C3-HOLD.md fix package: (1) EquipmentView selected cue + darker focus token (≥3:1); (2) SoloWeekReport item-Details fixed layout and wrapping at 320px, stock ledger unchanged; (3) P11 exactly as in P11-profile-placeholder-proposal.md; (4) ItemCard Ledger of Plenty copy from the catalog effect, with a Legendary-copy RED case in items.spec.ts.
+2. "Use option D now (Recommended)": NPCs (not the Player) get this flat pictogram silhouette in EquipmentView.svelte. Keep the Player's current figure. Use it as given; you may change only colours to the existing tokens. Fill stays the current `.doll svg` fill (#756248, opacity .65); the knockout stroke must equal the doll panel background (#d9c499) so the cut lines read as gaps. Keep role="img", and use aria-label "NPC silhouette" for NPCs:
+
+<svg viewBox="0 0 100 200"><g stroke="#d9c499" stroke-width="2" stroke-linejoin="round">
+<path d="M28 128C26 150 33 168 35 193L46 193L48 140Z"/>
+<path d="M72 128C74 150 67 168 65 193L54 193L52 140Z"/>
+<path d="M29 152L47 155M71 152L53 155" fill="none"/>
+<path d="M40 98L60 98C67 106 67 116 60 124L40 124C33 116 33 106 40 98Z"/>
+<circle cx="35" cy="124" r="17"/><circle cx="65" cy="124" r="17"/>
+<path d="M36 44C44 40 56 40 64 44C70 48 70 56 66 64L60 100L40 100L34 64C30 56 30 48 36 44Z"/>
+<circle cx="38.5" cy="71" r="14.5"/><circle cx="61.5" cy="71" r="14.5"/>
+<path d="M64 44C72 46 78 52 82 62L89 80L70 103L64 97L80 80L74 65Z"/>
+<path d="M36 44C28 46 22 52 18 62L11 80L30 103L36 97L20 80L26 65Z"/>
+<path d="M58 14C66 6 75 10 73 20C71 29 64 34 60 30C64 26 66 20 62 16Z" stroke="none"/>
+<rect x="46" y="33" width="8" height="10" stroke="none"/>
+<circle cx="50" cy="24" r="12"/></g></svg>
+
+   Add a unit or e2e assertion that an NPC shows "NPC silhouette" and the Player shows the existing "Character silhouette". If an existing test pins the silhouette markup, HOLD with file:line rather than editing it.
+
+Rules: RED first for (4) and the silhouette assertion; no other file, test edit, timeout or threshold change; nothing loosened. Then rerun gates 1–7 and the full `CI=1` smoke at the clean final head (one runner, ports checked). If any smoke case still fails, rerun it alone once and HOLD. Refresh the 1280px screenshots (Equipment for an NPC and for the Player), the bundle, the immutable check, the edit inventory (P1–P11) and SHA256SUMS. One commit for the fix round, ending `Co-authored-by: Codex <noreply@openai.com>`. Do not push, open a PR or merge.

@@ -1,0 +1,53 @@
+[WebServer] (node:65924) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:60508) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:33360) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:329:5 › accessibility at 320px › long character and report content reflows (17.1s)
+
+
+  1) [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:329:5 › accessibility at 320px › long character and report content reflows 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 7
+
+    - Array []
+    + Array [
+    +   "selected only by color: WeaponEmpty",
+    +   "selected only by color: Inventory",
+    +   "selected only by color: All",
+    +   "text outside panel/viewport: Outcome",
+    +   "text clipped x: Outcome",
+    + ]
+
+      392 |       await writeFile(path, JSON.stringify({ measurements, sizes, columns, failures }, null, 2));
+      393 |       await info.attach('reflow', { path, contentType: 'application/json' });
+    > 394 |       expect([...new Set(failures)]).toEqual([]);
+          |                                      ^
+      395 |     });
+      396 |   });
+      397 | }
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation-accessibility.spec.ts:394:38
+
+    attachment #1: reflow (application/json) ───────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-320-reflow\character-life-navigation--77412--and-report-content-reflows-chromium\attachments\reflow-1ef20ec2af72af9a26982db0cc8160f073c4df7d.json
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-320-reflow\character-life-navigation--77412--and-report-content-reflows-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-320-reflow\character-life-navigation--77412--and-report-content-reflows-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-320-reflow\character-life-navigation--77412--and-report-content-reflows-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:329:5 › accessibility at 320px › long character and report content reflows 

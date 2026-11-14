@@ -1,0 +1,56 @@
+HEAD=8af03070496d8e41ae85fecaea2d29c4cc474811
+TREE=025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4
+UTC=2026-11-14T10:46:23.649Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/title.spec.ts:148  --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/smoke-rerun-320-large-report
+CI=1
+FINISHED=2026-11-14T10:46:55.201Z
+
+[WebServer] (node:70892) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:74340) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:58292) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\title.spec.ts:148:1 › Large report at 320px keeps all six letters and stock ledger inside the page (2.2s)
+
+
+  1) [chromium] › tests\e2e\title.spec.ts:148:1 › Large report at 320px keeps all six letters and stock ledger inside the page 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    344
+
+      161 |   await test.info().attach('report-layout-metrics', { path: await persistJson(JSON.stringify(metrics, null, 2)), contentType: 'application/json' });
+      162 |   await test.info().attach('report-large-320', { path: await persistScreenshot(page, 'report-large-320'), contentType: 'image/png' });
+    > 163 |   expect(metrics.px).toBe('3px'); expect(metrics.document).toBeLessThanOrEqual(metrics.viewport);
+          |                                                            ^
+      164 |   for (const letter of metrics.letters) { expect(letter.left).toBeGreaterThanOrEqual(0); expect(letter.right).toBeLessThanOrEqual(metrics.viewport); expect(letter.scroll).toBeLessThanOrEqual(letter.client); }
+      165 | });
+      166 |
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:163:60
+
+    attachment #1: report-layout-metrics (application/json) ────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-320-large-report\title-Large-report-at-320p-a1c00-tock-ledger-inside-the-page-chromium\attachments\report-layout-metrics-03de59fd4d1da244488a2e7f2f1af531fd1bc675.json
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: report-large-320 (image/png) ────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-320-large-report\title-Large-report-at-320p-a1c00-tock-ledger-inside-the-page-chromium\attachments\report-large-320-e0f03c8303331d0de2590b897f55d4c2c81194a8.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-320-large-report\title-Large-report-at-320p-a1c00-tock-ledger-inside-the-page-chromium\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-320-large-report\title-Large-report-at-320p-a1c00-tock-ledger-inside-the-page-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-320-large-report\title-Large-report-at-320p-a1c00-tock-ledger-inside-the-page-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\title.spec.ts:148:1 › Large report at 320px keeps all six letters and stock ledger inside the page 

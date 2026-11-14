@@ -1,0 +1,37 @@
+HEAD=ce612d2461993486cb7fa35c6463c4c2a57ea3fe
+TREE=cd053a15fba9509b2bbfc9e5ebe015b6d1ea3de1
+UTC=2026-11-14T09:32:13.594Z
+EXIT=0
+COMMAND=npx playwright test tests/e2e/items.spec.ts --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/C2-GREEN-final
+CI=
+FINISHED=2026-11-14T09:33:29.530Z
+
+[WebServer] (node:70688) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:66012) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 17 tests using 1 worker
+
+(node:71252) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [chromium] › tests\e2e\items.spec.ts:30:1 › C1 paper doll, totals, filters and Materials expose real item state (1.9s)
+  ok  2 [chromium] › tests\e2e\items.spec.ts:45:1 › C2 UI buy, keyboard equip and next Farm report show the post effect (6.8s)
+  ok  3 [chromium] › tests\e2e\items.spec.ts:60:1 › C2 Market sells items and digit-only material quantities, with no Legendary Sell (2.3s)
+  ok  4 [chromium] › tests\e2e\items.spec.ts:75:1 › C2 claims temporary storage through the command path (1.3s)
+  ok  5 [chromium] › tests\e2e\items.spec.ts:82:1 › C2 operating Hospital and worker-free Drug Store sell potions; inventory Use restores Player health (1.6s)
+  ok  6 [chromium] › tests\e2e\items.spec.ts:96:1 › C2 visible item letters include stack loss, storage-full loss, expiry, delivered and waiting Legendary rewards (3.8s)
+  ok  7 [chromium] › tests\e2e\items.spec.ts:102:1 › C2 health line and wounds death letter use the exact approved copy (967ms)
+  ok  8 [chromium] › tests\e2e\items.spec.ts:144:93 › C2 accessibility equipment at 1280 (8.9s)
+  ok  9 [chromium] › tests\e2e\items.spec.ts:144:93 › C2 accessibility market at 1280 (4.0s)
+  ok 10 [chromium] › tests\e2e\items.spec.ts:144:93 › C2 accessibility potions at 1280 (2.9s)
+  ok 11 [chromium] › tests\e2e\items.spec.ts:144:93 › C2 accessibility letters at 1280 (1.4s)
+  ok 12 [chromium] › tests\e2e\items.spec.ts:144:93 › C2 accessibility equipment at 1600 (11.3s)
+  ok 13 [chromium] › tests\e2e\items.spec.ts:144:93 › C2 accessibility market at 1600 (4.5s)
+  ok 14 [chromium] › tests\e2e\items.spec.ts:144:93 › C2 accessibility potions at 1600 (3.6s)
+  ok 15 [chromium] › tests\e2e\items.spec.ts:144:93 › C2 accessibility letters at 1600 (2.2s)
+C1 attempt 3 Farm proof {"effective":61,"percent":2,"extraWheat":80,"visibleWheatDelta":"0.08"}
+  ok 16 [chromium] › tests\e2e\items.spec.ts:160:1 › C1 card preview and keyboard equip on a posted NPC change the next report (2.6s)
+  ok 17 [chromium] › tests\e2e\items.spec.ts:190:1 › C1 Destroy confirms, cancels and accepts with the keyboard (2.5s)
+
+  17 passed (1.2m)

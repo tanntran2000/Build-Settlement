@@ -1,0 +1,530 @@
+HEAD=16689892b4b448d04cac1a8e398f52e5269e7e53
+TREE=b8413c359472872846aa268d5b864770fc684746
+UTC=2026-11-14T12:12:59.543Z
+EXIT=1
+COMMAND=powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:/Users/Admin/.t3/local-drafts/p6a-prC/fix-round-gates.ps1
+CI=
+FINISHED=2026-11-14T12:16:45.516Z
+
+HEAD=16689892b4b448d04cac1a8e398f52e5269e7e53
+TREE=b8413c359472872846aa268d5b864770fc684746
+UTC=2026-11-14T12:13:00.488Z
+EXIT=0
+COMMAND=git diff --check origin/main...HEAD
+CI=
+FINISHED=2026-11-14T12:13:00.775Z
+
+
+HEAD=16689892b4b448d04cac1a8e398f52e5269e7e53
+TREE=b8413c359472872846aa268d5b864770fc684746
+UTC=2026-11-14T12:13:00.488Z
+EXIT=0
+COMMAND=git diff --check origin/main...HEAD
+CI=
+FINISHED=2026-11-14T12:13:00.775Z
+
+
+HEAD=16689892b4b448d04cac1a8e398f52e5269e7e53
+TREE=b8413c359472872846aa268d5b864770fc684746
+UTC=2026-11-14T12:13:00.907Z
+EXIT=0
+COMMAND=npm run lint
+CI=
+FINISHED=2026-11-14T12:13:15.951Z
+
+
+> build-settlement@0.1.0 lint
+> eslint . --max-warnings=0
+
+
+HEAD=16689892b4b448d04cac1a8e398f52e5269e7e53
+TREE=b8413c359472872846aa268d5b864770fc684746
+UTC=2026-11-14T12:13:00.907Z
+EXIT=0
+COMMAND=npm run lint
+CI=
+FINISHED=2026-11-14T12:13:15.951Z
+
+
+> build-settlement@0.1.0 lint
+> eslint . --max-warnings=0
+
+
+HEAD=16689892b4b448d04cac1a8e398f52e5269e7e53
+TREE=b8413c359472872846aa268d5b864770fc684746
+UTC=2026-11-14T12:13:16.078Z
+EXIT=0
+COMMAND=npm run typecheck
+CI=
+FINISHED=2026-11-14T12:14:03.823Z
+
+
+> build-settlement@0.1.0 typecheck
+> npm run typecheck:core && npm run typecheck:simulation && npm run typecheck:persistence && npm run typecheck:content &&
+HEAD=16689892b4b448d04cac1a8e398f52e5269e7e53
+TREE=b8413c359472872846aa268d5b864770fc684746
+UTC=2026-11-14T12:13:16.078Z
+EXIT=0
+COMMAND=npm run typecheck
+CI=
+FINISHED=2026-11-14T12:14:03.823Z
+
+
+> build-settlement@0.1.0 typecheck
+> npm run typecheck:core && npm run typecheck:simulation && npm run typecheck:persistence && npm run typecheck:content && npm run typecheck:ui
+
+
+> build-settlement@0.1.0 typecheck:core
+> tsc -p packages/core/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:simulation
+> tsc -p packages/simulation/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:persistence
+> tsc -p packages/persistence/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:content
+> tsc -p packages/content/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:ui
+> npm run check --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 check
+> svelte-check --tsconfig ./tsconfig.json
+
+Loading svelte-check in workspace: c:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\ui
+Getting Svelte diagnostics...
+
+svelte-check found 0 errors and 0 warnings
+
+HEAD=16689892b4b448d04cac1a8e398f52e5269e7e53
+TREE=b8413c359472872846aa268d5b864770fc684746
+UTC=2026-11-14T12:14:03.977Z
+EXIT=0
+COMMAND=npm run check:architecture
+CI=
+FINISHED=2026-11-14T12:14:15.558Z
+
+
+> build-settlement@0.1.0 check:architecture
+> node tools/check-architecture.mjs
+
+{
+  "status": "PASS",
+  "files": [
+    "packages/content/src/city-
+: 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/PotionPanel.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/SocietyPopulation.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "content",
+      "file": "packages/ui/src/SocietyPopulation.svelte",
+      "line": 3,
+      "column": 2,
+      "specifier": "@haven/content"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/SocietyReport.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/SocietyReport.svelte",
+      "line": 3,
+      "column": 2,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/SoloWeekReport.svelte",
+      "line": 2,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/TileManagement.svelte",
+      "line": 12,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/TileManagement.svelte",
+      "line": 13,
+      "column": 3,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/TileManagement.svelte",
+      "line": 14,
+      "column": 3,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/character-life-session.ts",
+      "line": 1,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/character-life-session.ts",
+      "line": 2,
+      "column": 1,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/character-life-session.ts",
+      "line": 91,
+      "column": 78,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/data-inspector.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/data-inspector.ts",
+      "line": 6,
+      "column": 1,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/indexeddb-store.ts",
+      "line": 1,
+      "column": 2,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/items-view.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/report-letters.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 2,
+      "column": 1,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 68,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 69,
+      "column": 1,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 99,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 100,
+      "column": 1,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 120,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 143,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 168,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/world-npc-session.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/world-npc-session.ts",
+      "line": 2,
+      "column": 1,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/world-session.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/world-session.ts",
+      "line": 2,
+      "column": 1,
+      "specifier": "@haven/simulation"
+    }
+  ],
+  "violations": [],
+  "cycles": [],
+  "errors": []
+}
+
+HEAD=16689892b4b448d04cac1a8e398f52e5269e7e53
+TREE=b8413c359472872846aa268d5b864770fc684746
+UTC=2026-11-14T12:14:15.669Z
+EXIT=0
+COMMAND=npm run test:architecture
+CI=
+FINISHED=2026-11-14T12:15:24.518Z
+
+
+> build-settlement@0.1.0 test:architecture
+> node --test tools/architecture.test.mjs
+
+✔ static multiline: simulation -> core is PASS (104.7781ms)
+✔ 
+
+✔ scope01: unsupported script context="module" generics="T extends import('@haven/simulation').Value" is explicitly INCOMPLETE (88.7145ms)
+✔ scope01: unsupported script context="module" generics="" is explicitly INCOMPLETE (86.9656ms)
+✔ scope01: unsupported script context="module" generics is explicitly INCOMPLETE (89.4474ms)
+✔ scope01: unsupported script context="module" generics="not valid TypeScript" is explicitly INCOMPLETE (110.3881ms)
+✔ scope01: attribute-like comments, script strings, markup and CSS stay excluded (71.9203ms)
+✔ scope01: TypeScript generic/type body dependencies retain ui -> core enforcement (71.3189ms)
+✔ scope01: TypeScript generic/type body dependencies retain content -> core enforcement (76.4657ms)
+✔ scope01: declarations generic/type body dependencies retain ui -> core enforcement (77.3205ms)
+✔ scope01: declarations generic/type body dependencies retain content -> core enforcement (62.0365ms)
+✔ scope01: Svelte instance body generic/type body dependencies retain ui -> core enforcement (75.1788ms)
+✔ scope01: Svelte instance body generic/type body dependencies retain content -> core enforcement (67.5066ms)
+✔ scope01: Svelte module body generic/type body dependencies retain ui -> core enforcement (71.1354ms)
+✔ scope01: Svelte module body generic/type body dependencies retain content -> core enforcement (61.8767ms)
+✔ scope01: unsupported attributes preserve proven body edges in both script blocks (59.903ms)
+✔ scope01: unsupported generics CLI exits 2 with a located error, not a violation (8262.1688ms)
+✔ s1: expression-valued generics={"T"} gets its actual multiline location (186.143ms)
+✔ s1: expression-valued generics={'T'} gets its actual multiline location (215.007ms)
+✔ s1: expression-valued generics={`T`} gets its actual multiline location (168.128ms)
+✔ s1: expression-valued generics={typeName} gets its actual multiline location (229.3014ms)
+✔ s1: expression-valued module generics={"T"} gets its actual multiline location (338.091ms)
+✔ s1: expression-valued module generics={'T'} gets its actual multiline location (182.8393ms)
+✔ s1: expression-valued module generics={`T`} gets its actual multiline location (156.0819ms)
+✔ s1: expression-valued module generics={typeName} gets its actual multiline location (153.1794ms)
+✔ s1: expression-valued context="module" generics={"T"} gets its actual multiline location (166.0388ms)
+✔ s1: expression-valued context="module" generics={'T'} gets its actual multiline location (164.9196ms)
+✔ s1: expression-valued context="module" generics={`T`} gets its actual multiline location (185.5717ms)
+✔ s1: expression-valued context="module" generics={typeName} gets its actual multiline location (239.6959ms)
+✔ s1: parser fallback retains every required dependency syntax in instance body (1016.4638ms)
+✔ s1: parser fallback retains every required dependency syntax in module body (658.6489ms)
+✔ s1: fallback keeps both body type violations and attribute locations across script blocks (63.6606ms)
+✔ s1: BOM ranges preserve multiline attribute and body locations (66.5194ms)
+✔ s1: fallback reports computed body imports alongside the unsupported attribute (66.2756ms)
+✔ s1: fallback distinguishes actual script attributes from comment/string/markup/CSS lookalikes (109.1713ms)
+✔ s1: a malformed body remains an INCOMPLETE parse failure (67.8032ms)
+✔ s1: the reported expression-attribute CLI reproduction exits 2 with line and reason (5157.9849ms)
+✔ scan includes exactly eligible production .ts/.svelte, recursively (102.7542ms)
+✔ computed dependency cannot pass: import(name); (56.7865ms)
+✔ computed dependency cannot pass: import(`@haven/${name}`); (59.2812ms)
+✔ computed dependency cannot pass: import('@haven/' + name); (54.6729ms)
+✔ computed dependency cannot pass: require(name); (54.6839ms)
+✔ computed dependency cannot pass: require(); (53.7153ms)
+✔ unresolved internal/relative dependency: import './missing'; (60.2395ms)
+✔ unresolved internal/relative dependency: import '@haven/core/no-such-file'; (51.6465ms)
+✔ unresolved internal/relative dependency: import '@haven/core/../../missing'; (53.1004ms)
+✔ relative asset imports resolve without expanding the production scan (85.5582ms)
+✔ parse error is incomplete verification: packages/core/src/index.ts const = ; (50.7602ms)
+✔ parse error is incomplete verification: packages/ui/src/Bad.svelte <script lang="ts">const = ;</script> (52.8737ms)
+✔ parse error is incomplete verification: packages/ui/src/Bad.svelte <script>import "@haven/core";</script><div> (52.9246ms)
+✔ missing and empty scope fail without fabricated line numbers (45.3122ms)
+✔ a scope containing only excluded files is empty (47.7058ms)
+✔ unreadable root and source preserve path/cause without a line (50.6493ms)
+✔ manifest failure cannot make internal imports appear external (54.0736ms)
+✔ two/three package cycles include a witness and every import location (91.9104ms)
+✔ within-package file cycles are legal, package DAG has no cycles (71.9975ms)
+✔ diagnostics and graph output are stable across scans and creation order (145.1073ms)
+✔ symlink escape is verification failure, never scanned or followed (88.0771ms)
+✔ a source root symlink cannot escape and an internal symlink can be scanned (138.0299ms)
+✔ inspected TypeScript, Svelte and local config code is never executed (86.872ms)
+✔ CLI exit 0/1/2 means PASS/VIOLATION/INCOMPLETE; output is stable JSON (24192.7122ms)
+ℹ tests 154
+ℹ suites 0
+ℹ pass 154
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 67597.8671
+
+HEAD=16689892b4b448d04cac1a8e398f52e5269e7e53
+TREE=b8413c359472872846aa268d5b864770fc684746
+UTC=2026-11-14T12:15:24.640Z
+EXIT=1
+COMMAND=npm test
+CI=
+FINISHED=2026-11-14T12:16:45.336Z
+
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/lord
+HEAD=16689892b4b448d04cac1a8e398f52e5269e7e53
+TREE=b8413c359472872846aa268d5b864770fc684746
+UTC=2026-11-14T12:15:24.640Z
+EXIT=1
+COMMAND=npm test
+CI=
+FINISHED=2026-11-14T12:16:45.336Z
+
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/lord-health.test.ts (10 tests | 1 failed) 6684ms
+   × a Calm game below Crime 70 survives all 60 weeks from health one 5141ms
+ ❯ packages/simulation/src/__tests__/society-renewable-support.test.ts (17 tests | 1 failed) 9344ms
+     × preserves complete gameplay and assignments through sixty weeks of snapshot restores 5042ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/lord-health.test.ts > a Calm game below Crime 70 survives all 60 weeks from health one
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ packages/simulation/src/__tests__/lord-health.test.ts:73:1
+     71|   expect(fallen).toEqual(before);
+     72| });
+     73| it('a Calm game below Crime 70 survives all 60 weeks from health one',…
+       | ^
+     74|   let s = life(); s.player.character.health = 1;
+     75|   const stocks = s.city.world.settlements[s.city.world.activeSettlemen…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  packages/simulation/src/__tests__/society-renewable-support.test.ts > society renewable support and transaction ports > preserves complete gameplay and assignments through sixty weeks of snapshot restores
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ packages/simulation/src/__tests__/society-renewable-support.test.ts:160:3
+    158|     expect(overflow.success).toBe(false); expect(huge).toEqual(before)…
+    159|   });
+    160|   it('preserves complete gameplay and assignments through sixty weeks …
+       |   ^
+    161|     let s = expanded(), resumed = structuredClone(s);
+    162|     const assignments = s.tiles.map(t => t.building?.workers ?? 0);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 118 passed (120)
+      Tests  2 failed | 2486 passed (2488)
+   Start at  19:15:26
+   Duration  78.42s (transform 12.69s, setup 0ms, import 53.47s, tests 260.54s, environment 66ms)
+
+
+HOLD: fix-gate6-unit failed; exit 1
+At C:\Users\Admin\.t3\local-drafts\p6a-prC\fix-round-gates.ps1:15 char:30
++ ... TCODE -ne 0) { throw "HOLD: $($gate[0]) failed; exit $LASTEXITCODE" }
++                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (HOLD: fix-gate6-unit failed; exit 1:String) [], RuntimeException
+    + FullyQualifiedErrorId : HOLD: fix-gate6-unit failed; exit 1
+ 

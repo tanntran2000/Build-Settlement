@@ -1,0 +1,112 @@
+﻿{
+    "exit":  0,
+    "sampledMilliseconds":  19772.5334,
+    "method":  "Five one-second total CPU samples; top processes use CPU-time deltas normalized by logical processor count. No process stopped.",
+    "logicalProcessors":  8,
+    "cpuSamples":  [
+                       {
+                           "totalPercent":  42,
+                           "UTC":  "2026-11-14T13:04:14.2890982Z"
+                       },
+                       {
+                           "totalPercent":  17,
+                           "UTC":  "2026-11-14T13:04:15.6165904Z"
+                       },
+                       {
+                           "totalPercent":  20,
+                           "UTC":  "2026-11-14T13:04:16.8953131Z"
+                       },
+                       {
+                           "totalPercent":  23,
+                           "UTC":  "2026-11-14T13:04:18.1834879Z"
+                       },
+                       {
+                           "totalPercent":  50,
+                           "UTC":  "2026-11-14T13:04:19.4715853Z"
+                       }
+                   ],
+    "UTC":  "2026-11-14T13:04:00.7047553Z",
+    "tree":  "baf52e8b3e19f76f904ca8b39a51f9793a56a534",
+    "topProcesses":  [
+                         {
+                             "process":  "msedge",
+                             "pid":  72952,
+                             "cpuPercent":  20.388,
+                             "workingSetMB":  48.3
+                         },
+                         {
+                             "process":  "powershell",
+                             "pid":  20116,
+                             "cpuPercent":  1.936,
+                             "workingSetMB":  73.3
+                         },
+                         {
+                             "process":  "T3 Code (Nightly)",
+                             "pid":  59112,
+                             "cpuPercent":  0.968,
+                             "workingSetMB":  290.9
+                         },
+                         {
+                             "process":  "T3 Code (Nightly)",
+                             "pid":  5940,
+                             "cpuPercent":  0.919,
+                             "workingSetMB":  277.3
+                         },
+                         {
+                             "process":  "codex",
+                             "pid":  64988,
+                             "cpuPercent":  0.83,
+                             "workingSetMB":  282.9
+                         },
+                         {
+                             "process":  "codebase-memory-mcp",
+                             "pid":  69324,
+                             "cpuPercent":  0.445,
+                             "workingSetMB":  5.3
+                         },
+                         {
+                             "process":  "claude",
+                             "pid":  29892,
+                             "cpuPercent":  0.346,
+                             "workingSetMB":  42
+                         },
+                         {
+                             "process":  "codebase-memory-mcp",
+                             "pid":  72592,
+                             "cpuPercent":  0.286,
+                             "workingSetMB":  7.4
+                         },
+                         {
+                             "process":  "codebase-memory-mcp",
+                             "pid":  74128,
+                             "cpuPercent":  0.277,
+                             "workingSetMB":  9.8
+                         },
+                         {
+                             "process":  "claude",
+                             "pid":  56764,
+                             "cpuPercent":  0.277,
+                             "workingSetMB":  245.5
+                         },
+                         {
+                             "process":  "codebase-memory-mcp",
+                             "pid":  39896,
+                             "cpuPercent":  0.267,
+                             "workingSetMB":  9.9
+                         },
+                         {
+                             "process":  "codebase-memory-mcp",
+                             "pid":  10272,
+                             "cpuPercent":  0.267,
+                             "workingSetMB":  1.1
+                         }
+                     ],
+    "knownHeavyJobs":  [
+
+                       ],
+    "listeners":  [
+
+                  ],
+    "finishedUTC":  "2026-11-14T13:04:25.9988609Z",
+    "HEAD":  "f046e36c98fcfbbd16808e759b7b09f0f1f4c98e"
+}

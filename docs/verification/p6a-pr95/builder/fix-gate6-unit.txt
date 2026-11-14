@@ -1,0 +1,54 @@
+HEAD=16689892b4b448d04cac1a8e398f52e5269e7e53
+TREE=b8413c359472872846aa268d5b864770fc684746
+UTC=2026-11-14T12:15:24.640Z
+EXIT=1
+COMMAND=npm test
+CI=
+FINISHED=2026-11-14T12:16:45.336Z
+
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/lord-health.test.ts (10 tests | 1 failed) 6684ms
+   × a Calm game below Crime 70 survives all 60 weeks from health one 5141ms
+ ❯ packages/simulation/src/__tests__/society-renewable-support.test.ts (17 tests | 1 failed) 9344ms
+     × preserves complete gameplay and assignments through sixty weeks of snapshot restores 5042ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/lord-health.test.ts > a Calm game below Crime 70 survives all 60 weeks from health one
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ packages/simulation/src/__tests__/lord-health.test.ts:73:1
+     71|   expect(fallen).toEqual(before);
+     72| });
+     73| it('a Calm game below Crime 70 survives all 60 weeks from health one',…
+       | ^
+     74|   let s = life(); s.player.character.health = 1;
+     75|   const stocks = s.city.world.settlements[s.city.world.activeSettlemen…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  packages/simulation/src/__tests__/society-renewable-support.test.ts > society renewable support and transaction ports > preserves complete gameplay and assignments through sixty weeks of snapshot restores
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ packages/simulation/src/__tests__/society-renewable-support.test.ts:160:3
+    158|     expect(overflow.success).toBe(false); expect(huge).toEqual(before)…
+    159|   });
+    160|   it('preserves complete gameplay and assignments through sixty weeks …
+       |   ^
+    161|     let s = expanded(), resumed = structuredClone(s);
+    162|     const assignments = s.tiles.map(t => t.building?.workers ?? 0);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 118 passed (120)
+      Tests  2 failed | 2486 passed (2488)
+   Start at  19:15:26
+   Duration  78.42s (transform 12.69s, setup 0ms, import 53.47s, tests 260.54s, environment 66ms)
+

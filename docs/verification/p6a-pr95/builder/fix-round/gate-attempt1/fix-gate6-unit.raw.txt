@@ -1,0 +1,31 @@
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/lord-health.test.ts (10 tests | 1 failed) 8391ms
+   × a Calm game below Crime 70 survives all 60 weeks from health one 6529ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/lord-health.test.ts > a Calm game below Crime 70 survives all 60 weeks from health one
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ packages/simulation/src/__tests__/lord-health.test.ts:73:1
+     71|   expect(fallen).toEqual(before);
+     72| });
+     73| it('a Calm game below Crime 70 survives all 60 weeks from health one',…
+       | ^
+     74|   let s = life(); s.player.character.health = 1;
+     75|   const stocks = s.city.world.settlements[s.city.world.activeSettlemen…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 119 passed (120)
+      Tests  1 failed | 2487 passed (2488)
+   Start at  19:10:14
+   Duration  79.10s (transform 13.58s, setup 0ms, import 54.87s, tests 268.11s, environment 72ms)
+

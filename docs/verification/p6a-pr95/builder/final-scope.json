@@ -1,0 +1,37 @@
+{
+  "HEAD": "5e97f049330c2e6c4e213b845815afb368d8a7b3",
+  "tree": "49f6b676c3ae57f66ef9ce6275eb89a806f52a9a",
+  "base": "2c04321ba342871e6a858110ea2320a8e4df0d5d",
+  "reviewBase": "f046e36c98fcfbbd16808e759b7b09f0f1f4c98e",
+  "UTC": "2026-11-14T14:40:39.770Z",
+  "exit": 0,
+  "wholePrFiles": [
+    "packages/ui/src/CharacterLifeCharacters.svelte",
+    "packages/ui/src/CharacterLifeShell.svelte",
+    "packages/ui/src/CharacterProfile.svelte",
+    "packages/ui/src/EquipmentView.svelte",
+    "packages/ui/src/InsideCity.svelte",
+    "packages/ui/src/ItemCard.svelte",
+    "packages/ui/src/MarketPanel.svelte",
+    "packages/ui/src/PotionPanel.svelte",
+    "packages/ui/src/SoloWeekReport.svelte",
+    "packages/ui/src/TileManagement.svelte",
+    "packages/ui/src/__tests__/items-view.test.ts",
+    "packages/ui/src/items-view.ts",
+    "packages/ui/src/report-letters.ts",
+    "tests/e2e/character-life-boundary.spec.ts",
+    "tests/e2e/character-life-navigation.helpers.ts",
+    "tests/e2e/character-life-navigation.spec.ts",
+    "tests/e2e/items.spec.ts"
+  ],
+  "reviewFiles": [
+    "packages/ui/src/EquipmentView.svelte",
+    "packages/ui/src/__tests__/items-view.test.ts",
+    "packages/ui/src/items-view.ts",
+    "tests/e2e/character-life-navigation.helpers.ts",
+    "tests/e2e/items.spec.ts"
+  ],
+  "noDocs": true,
+  "noDependencies": true,
+  "noTimeoutOrThresholdChanges": true
+}

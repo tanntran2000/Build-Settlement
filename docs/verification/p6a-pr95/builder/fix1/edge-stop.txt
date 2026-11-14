@@ -1,0 +1,21 @@
+HEAD=5e97f049330c2e6c4e213b845815afb368d8a7b3
+TREE=49f6b676c3ae57f66ef9ce6275eb89a806f52a9a
+UTC=2026-11-14T13:59:24.739Z
+EXIT=0
+COMMAND=powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:/Users/Admin/.t3/local-drafts/p6a-prC/fix1/stop-approved-edge.ps1
+CI=
+FINISHED=2026-11-14T13:59:27.139Z
+
+{
+    "verifiedName":  "msedge.exe",
+    "pid":  72952,
+    "HEAD":  "5e97f049330c2e6c4e213b845815afb368d8a7b3",
+    "stopped":  true,
+    "ownerDecision":  "Stop only PID 72952",
+    "UTC":  "2026-11-14T13:59:25.3523909Z",
+    "verifiedCreationUTC":  "2026-11-14T10:00:34.2874310Z",
+    "finishedUTC":  "2026-11-14T13:59:27.0621970Z",
+    "tree":  "49f6b676c3ae57f66ef9ce6275eb89a806f52a9a",
+    "exit":  0,
+    "stillPresent":  false
+}

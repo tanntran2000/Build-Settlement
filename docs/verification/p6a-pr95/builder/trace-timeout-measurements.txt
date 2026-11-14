@@ -1,0 +1,93 @@
+HEAD=f046e36c98fcfbbd16808e759b7b09f0f1f4c98e
+TREE=baf52e8b3e19f76f904ca8b39a51f9793a56a534
+UTC=2026-11-14T13:11:57.850Z
+EXIT=1
+COMMAND=node C:/Users/Admin/.t3/local-drafts/p6a-prC/silhouette/measure-timeouts.mjs
+CI=
+FINISHED=2026-11-14T13:12:07.224Z
+
+HEAD=f046e36c98fcfbbd16808e759b7b09f0f1f4c98e
+TREE=baf52e8b3e19f76f904ca8b39a51f9793a56a534
+UTC=2026-11-14T13:11:58.392Z
+EXIT=0
+COMMAND=npx vitest run packages/simulation/src/__tests__/lord-health.test.ts -t "^a Calm game below Crime 70 survives all 60 weeks from health one$" --reporter=verbose
+CI=
+FINISHED=2026-11-14T13:12:07.172Z
+
+
+ RUN  v4.1.12 
+rc/__tests__/crime-fixtures.test.ts > pins production-searched wound
+ ↓ packages/simulation/src/__tests__/crime-fixtures.test.ts > pins production-searched death
+ ↓ packages/simulation/src/__tests__/crime-fixtures.test.ts > a lethal wound sets wounds fall cause without regen and preserves a refused session
+ ↓ packages/simulation/src/__tests__/crime-fixtures.test.ts > reports the population left after raid casualties
+ ↓ packages/simulation/src/__tests__/crime-fixtures.test.ts > skips crisis on assassination death and refuses subsequent commands
+ ↓ packages/simulation/src/__tests__/crime-fixtures.test.ts > preserves zero health through a non-week command and falls at End Week
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > regens with Hospital false and gear false by exactly 1
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > regens with Hospital true and gear false by exactly 2
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > regens with Hospital false and gear true by exactly 2
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > regens with Hospital true and gear true by exactly 3
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > clamps regen to 100 and requires a fully staffed, funded, supplied Hospital
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > a wound to exactly zero kills before Hospital and gear regen
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > a wound leaving exactly one survives and then receives Hospital and gear regen
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > CITY_FALLEN blocks every later city, NPC and item command without mutation
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > a Calm game below Crime 70 survives all 60 weeks from health one
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > builds the worker-free Drug Store in the Slum at Hospital level-1 cost and upkeep and sells all potions
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders a quiet week
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders gold robbery with the Order display name
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders food robbery with the Order display name
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders wheat robbery with the Order display name
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders wood robbery with the Order display name
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders iron robbery with the Order display name
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders stone robbery with the Order display name
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders wool robbery with the Order display name
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders cloth robbery with the Order display name
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders herbs robbery with the Order display name
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders goods robbery with the Order display name
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders luxury robbery with the Order display name
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders gold robbery with no loss
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders food robbery with no loss
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders wheat robbery with no loss
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders wood robbery with no loss
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders iron robbery with no loss
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders stone robbery with no loss
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders wool robbery with no loss
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders cloth robbery with no loss
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders herbs robbery with no loss
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders goods robbery with no loss
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders luxury robbery with no loss
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders smear
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders 1 raid deaths
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders 2 raid deaths
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders 3 raid deaths
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders foiled assassination
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders wound
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders Standing 0
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders Standing 33
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders Standing 34
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders Standing 50
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders Standing 66
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders Standing 67
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders Standing 100
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders Crime 0 chance
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders Crime 35 chance
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders Crime 50 chance
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > renders Crime 100 chance
+ ↓ packages/ui/src/__tests__/crime-view.test.ts > pins both end screens
+
+ Test Files  7 skipped (7)
+      Tests  146 skipped (146)
+   Start at  20:12:04
+   Duration  2.94s (transform 5.69s, setup 0ms, import 8.79s, tests 0ms, environment 3ms)
+
+
+file:///C:/Users/Admin/.t3/local-drafts/p6a-prC/silhouette/measure-timeouts.mjs:23
+ if(Number(count)!==1)throw Error('HOLD: measurement did not select exactly one test; preserve logs');
+                            ^
+
+Error: HOLD: measurement did not select exactly one test; preserve logs
+    at file:///C:/Users/Admin/.t3/local-drafts/p6a-prC/silhouette/measure-timeouts.mjs:23:29
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.19.0

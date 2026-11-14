@@ -1,0 +1,22 @@
+{
+  "HEAD": "f046e36c98fcfbbd16808e759b7b09f0f1f4c98e",
+  "tree": "baf52e8b3e19f76f904ca8b39a51f9793a56a534",
+  "UTC": "2026-11-14T13:11:58.252Z",
+  "ownerDecision": "Rerun, no timeout change (Recommended)",
+  "existingTimeoutMs": 5000,
+  "status": "HOLD after the requested measurements, irrespective of isolated outcomes",
+  "runs": [
+    {
+      "id": "lord-health",
+      "file": "packages/simulation/src/__tests__/lord-health.test.ts",
+      "exactName": "a Calm game below Crime 70 survives all 60 weeks from health one",
+      "attempt": 1,
+      "command": "npx vitest run packages/simulation/src/__tests__/lord-health.test.ts -t \"^a Calm game below Crime 70 survives all 60 weeks from health one$\" --reporter=verbose",
+      "exit": 0,
+      "wallMs": 8942,
+      "testMs": null,
+      "matchedTests": null,
+      "log": "trace-isolated-lord-health-1.txt"
+    }
+  ]
+}

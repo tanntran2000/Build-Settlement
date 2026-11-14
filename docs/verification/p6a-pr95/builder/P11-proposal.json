@@ -1,0 +1,11 @@
+{
+  "id": "P11",
+  "proposalOnly": true,
+  "HEAD": "8af03070496d8e41ae85fecaea2d29c4cc474811",
+  "file": "tests/e2e/character-life-navigation.spec.ts",
+  "line": 381,
+  "sourceSha256": "c15047773eaa8528d9761225a6ba83bcf614d37d97d3e9d7aa6c807654f92b2f",
+  "before": "        await expect(placeholder).toBeVisible();\n        expect(await placeholder.evaluate(el => el.outerHTML)).toBe(staticMarkup);",
+  "after": "        if (area === 'Inventory') {\n          await expect(placeholder).toHaveCount(0);\n          await expect(win.getByRole('region', { name: 'Equipment', exact: true })).toBeVisible();\n        } else {\n          await expect(placeholder).toBeVisible();\n          expect(await placeholder.evaluate(el => el.outerHTML)).toBe(staticMarkup);\n        }",
+  "reason": "The existing all-tabs fallback loop conflicts with the approved Inventory silhouette design. Preserve the original assertions for the other three areas and explicitly assert the implemented Equipment view in Inventory."
+}

@@ -1,0 +1,9 @@
+{
+  "UTC": "2026-11-14T13:36:15.946Z",
+  "plan": "C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-037d7ee.md",
+  "sha256": "edf667367a289087d0458ac17c4a99404904c0d5aff8604ea04f64d4ad34740c",
+  "ownerDecision": "Approve, incl. P7 line (Recommended)",
+  "base": "f046e36c98fcfbbd16808e759b7b09f0f1f4c98e",
+  "pr": "https://github.com/tanntran2000/Build-Settlement/pull/95",
+  "threadLinkError": "Pass threadId: this MCP client is not running inside a T3 thread."
+}

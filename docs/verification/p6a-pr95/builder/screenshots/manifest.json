@@ -1,0 +1,49 @@
+{
+  "HEAD": "5e97f049330c2e6c4e213b845815afb368d8a7b3",
+  "tree": "49f6b676c3ae57f66ef9ce6275eb89a806f52a9a",
+  "UTC": "2026-11-14T14:40:39.770Z",
+  "width": 1280,
+  "source": "fix1/smoke-full.txt",
+  "files": [
+    {
+      "name": "death-letter-1280.png",
+      "sha256": "0f342619576fc76ed35616e076f229aaa3462c8002d077fa356ad47484b991e2"
+    },
+    {
+      "name": "equipment-1280.png",
+      "sha256": "f113aa8d75bafe32cdb2cd07e981e848db0fffbb5b4d25d60bc803b1c2a0c908"
+    },
+    {
+      "name": "equipment-npc-1280.png",
+      "sha256": "0bb5e3347a8318b57fbdb7b69f586f61d7933bdfe0e31553c9105c36ed01e75f"
+    },
+    {
+      "name": "equipment-player-1280.png",
+      "sha256": "618829b8098e64a23f949ec3a3d1eb70d9bd463e6d996577da194b735926bf53"
+    },
+    {
+      "name": "market-1280.png",
+      "sha256": "3fcbcddf3ea140b2d69e10e845ab74e38d19b15d2179e693470040ca6b0e33b9"
+    },
+    {
+      "name": "materials-1280.png",
+      "sha256": "376f275658af3eab9013abd7daf24c37f8e60371e53156c3ad0772778626da0d"
+    },
+    {
+      "name": "potions-1280.png",
+      "sha256": "ef303131fc103a88b1feec36794c6ef93b3f4cdb61869c02d16bbd9ea2cd4a25"
+    },
+    {
+      "name": "quartermaster-items-1280.png",
+      "sha256": "e9c99fe26550021ee643c1b28eccb8e97e3af2d9f7a78ccae0b617d8faf45b1d"
+    },
+    {
+      "name": "steward-items-1280.png",
+      "sha256": "67b00563fe5cf5bafdcab47757a48c462f13328132f615f5a8664d636abb53b3"
+    },
+    {
+      "name": "temporary-storage-1280.png",
+      "sha256": "395138959aae5739dfabffabf1b503d1aff38b7bae4786cf532d06ebd59da1d1"
+    }
+  ]
+}

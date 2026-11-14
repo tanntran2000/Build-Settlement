@@ -1,0 +1,75 @@
+HEAD=8af03070496d8e41ae85fecaea2d29c4cc474811
+TREE=025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4
+UTC=2026-11-14T10:32:05.508Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/character-life-navigation-accessibility.spec.ts:250 -g accessibility.at.1280px --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/smoke-rerun-1280-baseline
+CI=1
+FINISHED=2026-11-14T10:35:55.226Z
+
+[WebServer] (node:74504) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:64312) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:55756) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:250:5 › accessibility at 1280px › life shell accessibility baseline (3.3m)
+
+
+  1) [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:250:5 › accessibility at 1280px › life shell accessibility baseline 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 21
+
+    - Array []
+    + Array [
+    +   "selected only by color: WeaponEmpty",
+    +   "selected only by color: Inventory",
+    +   "selected only by color: All",
+    +   "focus visibility/contrast: EarringsEmpty {\"clips\":[],\"box\":{\"left\":339,\"right\":585.15625,\"top\":426.5625,\"bottom\":489.109375},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: NecklaceEmpty {\"clips\":[],\"box\":{\"left\":660.15625,\"right\":906.328125,\"top\":426.5625,\"bottom\":489.109375},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: TopEmpty {\"clips\":[],\"box\":{\"left\":339,\"right\":585.15625,\"top\":499.109375,\"bottom\":561.65625},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: BottomEmpty {\"clips\":[],\"box\":{\"left\":660.15625,\"right\":906.328125,\"top\":499.109375,\"bottom\":561.65625},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: ShoesEmpty {\"clips\":[],\"box\":{\"left\":339,\"right\":585.15625,\"top\":571.65625,\"bottom\":634.203125},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: RingEmpty {\"clips\":[],\"box\":{\"left\":660.15625,\"right\":906.328125,\"top\":571.65625,\"bottom\":634.203125},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: WeaponEmpty {\"clips\":[],\"box\":{\"left\":339,\"right\":585.15625,\"top\":644.203125,\"bottom\":706.75},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: HandEmpty {\"clips\":[],\"box\":{\"left\":660.15625,\"right\":906.328125,\"top\":644.203125,\"bottom\":706.75},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: EarringsEmpty {\"clips\":[],\"box\":{\"left\":339,\"right\":585.15625,\"top\":428.5625,\"bottom\":491.109375},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: NecklaceEmpty {\"clips\":[],\"box\":{\"left\":660.15625,\"right\":906.328125,\"top\":428.5625,\"bottom\":491.109375},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: TopEmpty {\"clips\":[],\"box\":{\"left\":339,\"right\":585.15625,\"top\":501.109375,\"bottom\":563.65625},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: BottomEmpty {\"clips\":[],\"box\":{\"left\":660.15625,\"right\":906.328125,\"top\":501.109375,\"bottom\":563.65625},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: ShoesEmpty {\"clips\":[],\"box\":{\"left\":339,\"right\":585.15625,\"top\":573.65625,\"bottom\":636.203125},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: RingEmpty {\"clips\":[],\"box\":{\"left\":660.15625,\"right\":906.328125,\"top\":573.65625,\"bottom\":636.203125},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: WeaponEmpty {\"clips\":[],\"box\":{\"left\":339,\"right\":585.15625,\"top\":646.203125,\"bottom\":708.75},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: HandEmpty {\"clips\":[],\"box\":{\"left\":660.15625,\"right\":906.328125,\"top\":646.203125,\"bottom\":708.75},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    + ]
+
+      324 |       await writeFile(path, JSON.stringify({ method: 'CSS viewport widths; no calibrated zoom or screen-reader claim', measurements, tabCounts, focus, failures }, null, 2));
+      325 |       await info.attach('measurements', { path, contentType: 'application/json' });
+    > 326 |       expect([...new Set(failures)]).toEqual([]);
+          |                                      ^
+      327 |     });
+      328 |
+      329 |     test('long character and report content reflows', async ({ page }, info) => {
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation-accessibility.spec.ts:326:38
+
+    attachment #1: measurements (application/json) ─────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1280-baseline\character-life-navigation--e57a3-hell-accessibility-baseline-chromium\attachments\measurements-14b4b78344a26d07314415051f6bacb372376def.json
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1280-baseline\character-life-navigation--e57a3-hell-accessibility-baseline-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1280-baseline\character-life-navigation--e57a3-hell-accessibility-baseline-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1280-baseline\character-life-navigation--e57a3-hell-accessibility-baseline-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:250:5 › accessibility at 1280px › life shell accessibility baseline 

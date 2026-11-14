@@ -1,0 +1,526 @@
+HEAD=ce612d2461993486cb7fa35c6463c4c2a57ea3fe
+TREE=cd053a15fba9509b2bbfc9e5ebe015b6d1ea3de1
+UTC=2026-11-14T09:24:23.458Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/items.spec.ts -g C2 --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/C2-RED
+CI=
+FINISHED=2026-11-14T09:25:42.478Z
+
+[WebServer] (node:2332) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:47468) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 14 tests using 1 worker
+
+(node:54376) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   1 [chromium] › tests\e2e\items.spec.ts:45:1 › C2 UI buy, keyboard equip and next Farm report show the post effect (6.3s)
+(node:7744) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   2 [chromium] › tests\e2e\items.spec.ts:60:1 › C2 Market sells items and digit-only material quantities, with no Legendary Sell (6.2s)
+(node:56920) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  3 [chromium] › tests\e2e\items.spec.ts:75:1 › C2 claims temporary storage through the command path (1.3s)
+  x   4 [chromium] › tests\e2e\items.spec.ts:82:1 › C2 operating Hospital and worker-free Drug Store sell potions; inventory Use restores Player health (461ms)
+(node:6852) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   5 [chromium] › tests\e2e\items.spec.ts:96:1 › C2 visible item letters include stack loss, storage-full loss, expiry, delivered and waiting Legendary rewards (7.5s)
+(node:71144) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   6 [chromium] › tests\e2e\items.spec.ts:102:1 › C2 health line and wounds death letter use the exact approved copy (608ms)
+(node:68288) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   7 [chromium] › tests\e2e\items.spec.ts:141:93 › C2 accessibility equipment at 1280 (1.2s)
+(node:21148) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   8 [chromium] › tests\e2e\items.spec.ts:141:93 › C2 accessibility market at 1280 (6.0s)
+(node:70660) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   9 [chromium] › tests\e2e\items.spec.ts:141:93 › C2 accessibility potions at 1280 (745ms)
+(node:10292) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  10 [chromium] › tests\e2e\items.spec.ts:141:93 › C2 accessibility letters at 1280 (1.8s)
+(node:66648) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  11 [chromium] › tests\e2e\items.spec.ts:141:93 › C2 accessibility equipment at 1600 (1.3s)
+(node:58672) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  12 [chromium] › tests\e2e\items.spec.ts:141:93 › C2 accessibility market at 1600 (6.0s)
+(node:70908) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  13 [chromium] › tests\e2e\items.spec.ts:141:93 › C2 accessibility potions at 1600 (1.4s)
+(node:37308) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  14 [chromium] › tests\e2e\items.spec.ts:141:93 › C2 accessibility letters at 1600 (1.3s)
+
+
+  1) [chromium] › tests\e2e\items.spec.ts:45:1 › C2 UI buy, keyboard equip and next Farm report show the post effect 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('region', { name: 'Item Market', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('region', { name: 'Item Market', exact: true }) with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Item Market', exact: true })
+
+
+      49 |   const expectedBuy=act(s,'BUY_ITEM',{offerIndex:index});
+      50 |   await importLife(page,s);await go(page,'city');await page.getByRole('button',{name:'Select spec-1',exact:true}).click();
+    > 51 |   const market=page.getByRole('region',{name:'Item Market',exact:true});await expect(market).toBeVisible();
+         |                                                                                              ^
+      52 |   await expect(market.getByRole('group',{name:'Weekly offers'}).getByRole('article')).toHaveCount(8);
+      53 |   await market.getByRole('group',{name:'Weekly offers'}).getByRole('article').nth(index).getByRole('button',{name:'Buy',exact:true}).focus();await page.keyboard.press('Enter');
+      54 |   expect(await exportLife(page)).toEqual(expectedBuy);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:51:94
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-UI-buy-keyboard-e-e2451-report-show-the-post-effect-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-UI-buy-keyboard-e-e2451-report-show-the-post-effect-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-UI-buy-keyboard-e-e2451-report-show-the-post-effect-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\items.spec.ts:60:1 › C2 Market sells items and digit-only material quantities, with no Legendary Sell 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('region', { name: 'Item Market', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('region', { name: 'Item Market', exact: true }) with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Item Market', exact: true })
+
+
+      61 |   const {s,item,def}=purchased();const items=s.city.society!.items;items.materials={iron:7,ruby:1};items.inventory.push({id:items.nextItemId++,defId:'wardens-oath'});
+      62 |   await importLife(page,s);await go(page,'city');await page.getByRole('button',{name:'Select spec-1',exact:true}).click();
+    > 63 |   const market=page.getByRole('region',{name:'Item Market',exact:true});await expect(market).toBeVisible();
+         |                                                                                              ^
+      64 |   const sell=market.getByRole('group',{name:'Sell inventory',exact:true});
+      65 |   await expect(sell.getByRole('article',{name:"Warden's Oath",exact:true}).getByRole('button',{name:'Sell',exact:true})).toHaveCount(0);
+      66 |   const ruby=market.getByRole('row').filter({has:page.getByRole('rowheader',{name:'Ruby',exact:true})});await expect(ruby.getByRole('button',{name:'Sell material',exact:true})).toHaveCount(0);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:63:94
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-Market-sells-item-bb080-ties-with-no-Legendary-Sell-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-Market-sells-item-bb080-ties-with-no-Legendary-Sell-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-Market-sells-item-bb080-ties-with-no-Legendary-Sell-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests\e2e\items.spec.ts:82:1 › C2 operating Hospital and worker-free Drug Store sell potions; inventory Use restores Player health 
+
+    Error: BUILD: World session is invalid; nothing was changed.
+
+       8 | function act(s: CharacterLifeSessionState, type: string, fields: Record<string,unknown> = {}) {
+       9 |   const r=executeCharacterLifeCommand(s,{type,expectedRevision:s.city.revision,...fields});
+    > 10 |   if(!r.success)throw Error(`${type}: ${r.error.message}`); return r.next;
+         |                       ^
+      11 | }
+      12 | function funded(seed=12345) {
+      13 |   const s=makeLife(seed); const stock=s.city.world.settlements[s.city.world.activeSettlementId!].inventory;
+        at act (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:10:23)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:83:57
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-operating-Hospita-3401f--Use-restores-Player-health-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-operating-Hospita-3401f--Use-restores-Player-health-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-operating-Hospita-3401f--Use-restores-Player-health-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests\e2e\items.spec.ts:96:1 › C2 visible item letters include stack loss, storage-full loss, expiry, delivered and waiting Legendary rewards 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('region', { name: 'Quartermaster item details', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('region', { name: 'Quartermaster item details', exact: true }) with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Quartermaster item details', exact: true })
+
+
+       98 |   expect(r.report.items.materials.some(m=>m.lost)).toBe(true);expect(r.report.items.found!.lost).toBe(true);expect(r.report.items.expired).toEqual(['rare-ring']);expect(r.report.items.legendary).not.toBeNull();expect(r.report.items.pendingLegendary).toEqual(['authority']);
+       99 |   await importLife(page,s);await page.getByTestId('life-end-week').click();await openReportDetails(page,'quartermaster');await openReportDetails(page,'steward');
+    > 100 |   await expect(page.getByRole('region',{name:'Quartermaster item details',exact:true})).toBeVisible();await expectReport(page,r.report);
+          |                                                                                         ^
+      101 | });
+      102 | test('C2 health line and wounds death letter use the exact approved copy',async({page})=>{
+      103 |   const s=clinic(funded());s.player.character.health=63;s.city.society!.items.equipped.player={weapon:{id:1,defId:'common-weapon'},ring:{id:2,defId:'common-ring'}};s.city.society!.items.nextItemId=3;
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:100:89
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-visible-item-lett-ac1fa-d-waiting-Legendary-rewards-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-visible-item-lett-ac1fa-d-waiting-Legendary-rewards-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-visible-item-lett-ac1fa-d-waiting-Legendary-rewards-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium] › tests\e2e\items.spec.ts:102:1 › C2 health line and wounds death letter use the exact approved copy 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+       at character-life-navigation.helpers.ts:96
+
+      94 | export async function importLife(page: Page, session: CharacterLifeSessionState): Promise<void> {
+      95 |   const encoded = serializeCharacterLifeSave(session);
+    > 96 |   expect(encoded.success).toBe(true);
+         |                           ^
+      97 |   if (!encoded.success) throw new Error(encoded.error.message);
+      98 |   const inGame = await page.getByTestId('life-shell').count() > 0;
+      99 |   if (inGame) await go(page, 'session');
+        at importLife (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:96:27)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:104:9
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-health-line-and-w-8cc24-use-the-exact-approved-copy-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-health-line-and-w-8cc24-use-the-exact-approved-copy-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-health-line-and-w-8cc24-use-the-exact-approved-copy-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [chromium] › tests\e2e\items.spec.ts:141:93 › C2 accessibility equipment at 1280 ──────────────
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 12
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "contrast": 1.3072393319435858,
+    +     "required": 4.5,
+    +     "text": "Equip",
+    +   },
+    +   Object {
+    +     "contrast": 1.3072393319435858,
+    +     "required": 4.5,
+    +     "text": "Destroy",
+    +   },
+    + ]
+
+      132 |   await writeFile(`${evidence}/accessibility/${name}-${width}.json`,JSON.stringify(measured,null,2),'utf8');
+      133 |   expect(measured.pageOverflow).toBe(false);expect(measured.clipped).toEqual([]);
+    > 134 |   expect(measured.texts.filter(t=>t.contrast+.01<t.required)).toEqual([]);
+          |                                                               ^
+      135 |   expect(measured.controls.filter(c=>c.width<24||c.height<24)).toEqual([]);
+      136 |   for(const control of await root.locator('button:not(:disabled),input:not(:disabled),select:not(:disabled)').all()){
+      137 |     if(!await control.isVisible())continue;await tabTo(page,control);await expect(control).toBeFocused();
+        at auditItems (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:134:63)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:145:80
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-accessibility-equipment-at-1280-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-accessibility-equipment-at-1280-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-accessibility-equipment-at-1280-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [chromium] › tests\e2e\items.spec.ts:141:93 › C2 accessibility market at 1280 ─────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('region', { name: 'Item Market', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('region', { name: 'Item Market', exact: true }) with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Item Market', exact: true })
+
+
+      109 |
+      110 | async function auditItems(page:Page,root:Locator,name:string,width:number){
+    > 111 |   await expect(root).toBeVisible();await page.evaluate(()=>document.fonts.ready.then(()=>undefined));
+          |                      ^
+      112 |   const measured=await root.evaluate(node=>{
+      113 |     const rgb=(s:string)=>s.match(/[\d.]+/g)!.map(Number);
+      114 |     const over=(a:number[],b:number[])=>a.slice(0,3).map((v,i)=>v*(a[3]??1)+b[i]*(1-(a[3]??1)));
+        at auditItems (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:111:22)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:154:9
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-accessibility-market-at-1280-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-accessibility-market-at-1280-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-accessibility-market-at-1280-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [chromium] › tests\e2e\items.spec.ts:141:93 › C2 accessibility potions at 1280 ────────────────
+
+    Error: BUY_POTION: World session is invalid; nothing was changed.
+
+       8 | function act(s: CharacterLifeSessionState, type: string, fields: Record<string,unknown> = {}) {
+       9 |   const r=executeCharacterLifeCommand(s,{type,expectedRevision:s.city.revision,...fields});
+    > 10 |   if(!r.success)throw Error(`${type}: ${r.error.message}`); return r.next;
+         |                       ^
+      11 | }
+      12 | function funded(seed=12345) {
+      13 |   const s=makeLife(seed); const stock=s.city.world.settlements[s.city.world.activeSettlementId!].inventory;
+        at act (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:10:23)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:150:30
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-accessibility-potions-at-1280-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-accessibility-potions-at-1280-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-accessibility-potions-at-1280-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9) [chromium] › tests\e2e\items.spec.ts:141:93 › C2 accessibility letters at 1280 ────────────────
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 32
+
+    - Array []
+    + Array [
+    +   "Luxury",
+    +   "Satisfaction",
+    +   "Arrivals",
+    +   "Trained",
+    +   "Enslaved",
+    +   "—",
+    +   "80 → 82",
+    +   "0",
+    +   "0",
+    +   "0",
+    +   "—",
+    +   "80 → 82",
+    +   "0",
+    +   "0",
+    +   "0",
+    +   "—",
+    +   "80 → 82",
+    +   "0",
+    +   "0",
+    +   "0",
+    +   "—",
+    +   "80 → 82",
+    +   "0",
+    +   "0",
+    +   "0",
+    +   "—",
+    +   "80 → 80",
+    +   "0",
+    +   "0",
+    +   "0",
+    + ]
+
+      131 |   await mkdir(`${evidence}/accessibility`,{recursive:true});await mkdir(`${evidence}/screenshots`,{recursive:true});
+      132 |   await writeFile(`${evidence}/accessibility/${name}-${width}.json`,JSON.stringify(measured,null,2),'utf8');
+    > 133 |   expect(measured.pageOverflow).toBe(false);expect(measured.clipped).toEqual([]);
+          |                                                                      ^
+      134 |   expect(measured.texts.filter(t=>t.contrast+.01<t.required)).toEqual([]);
+      135 |   expect(measured.controls.filter(c=>c.width<24||c.height<24)).toEqual([]);
+      136 |   for(const control of await root.locator('button:not(:disabled),input:not(:disabled),select:not(:disabled)').all()){
+        at auditItems (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:133:70)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:154:3
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-accessibility-letters-at-1280-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-accessibility-letters-at-1280-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-accessibility-letters-at-1280-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  10) [chromium] › tests\e2e\items.spec.ts:141:93 › C2 accessibility equipment at 1600 ─────────────
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 12
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "contrast": 1.3072393319435858,
+    +     "required": 4.5,
+    +     "text": "Equip",
+    +   },
+    +   Object {
+    +     "contrast": 1.3072393319435858,
+    +     "required": 4.5,
+    +     "text": "Destroy",
+    +   },
+    + ]
+
+      132 |   await writeFile(`${evidence}/accessibility/${name}-${width}.json`,JSON.stringify(measured,null,2),'utf8');
+      133 |   expect(measured.pageOverflow).toBe(false);expect(measured.clipped).toEqual([]);
+    > 134 |   expect(measured.texts.filter(t=>t.contrast+.01<t.required)).toEqual([]);
+          |                                                               ^
+      135 |   expect(measured.controls.filter(c=>c.width<24||c.height<24)).toEqual([]);
+      136 |   for(const control of await root.locator('button:not(:disabled),input:not(:disabled),select:not(:disabled)').all()){
+      137 |     if(!await control.isVisible())continue;await tabTo(page,control);await expect(control).toBeFocused();
+        at auditItems (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:134:63)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:145:80
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-accessibility-equipment-at-1600-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-accessibility-equipment-at-1600-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-accessibility-equipment-at-1600-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  11) [chromium] › tests\e2e\items.spec.ts:141:93 › C2 accessibility market at 1600 ────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('region', { name: 'Item Market', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('region', { name: 'Item Market', exact: true }) with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Item Market', exact: true })
+
+
+      109 |
+      110 | async function auditItems(page:Page,root:Locator,name:string,width:number){
+    > 111 |   await expect(root).toBeVisible();await page.evaluate(()=>document.fonts.ready.then(()=>undefined));
+          |                      ^
+      112 |   const measured=await root.evaluate(node=>{
+      113 |     const rgb=(s:string)=>s.match(/[\d.]+/g)!.map(Number);
+      114 |     const over=(a:number[],b:number[])=>a.slice(0,3).map((v,i)=>v*(a[3]??1)+b[i]*(1-(a[3]??1)));
+        at auditItems (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:111:22)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:154:9
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-accessibility-market-at-1600-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-accessibility-market-at-1600-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-accessibility-market-at-1600-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  12) [chromium] › tests\e2e\items.spec.ts:141:93 › C2 accessibility potions at 1600 ───────────────
+
+    Error: BUY_POTION: World session is invalid; nothing was changed.
+
+       8 | function act(s: CharacterLifeSessionState, type: string, fields: Record<string,unknown> = {}) {
+       9 |   const r=executeCharacterLifeCommand(s,{type,expectedRevision:s.city.revision,...fields});
+    > 10 |   if(!r.success)throw Error(`${type}: ${r.error.message}`); return r.next;
+         |                       ^
+      11 | }
+      12 | function funded(seed=12345) {
+      13 |   const s=makeLife(seed); const stock=s.city.world.settlements[s.city.world.activeSettlementId!].inventory;
+        at act (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:10:23)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:150:30
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-accessibility-potions-at-1600-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-accessibility-potions-at-1600-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-accessibility-potions-at-1600-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  13) [chromium] › tests\e2e\items.spec.ts:141:93 › C2 accessibility letters at 1600 ───────────────
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 14
+
+    - Array []
+    + Array [
+    +   "Trained",
+    +   "Enslaved",
+    +   "0",
+    +   "0",
+    +   "0",
+    +   "0",
+    +   "0",
+    +   "0",
+    +   "0",
+    +   "0",
+    +   "0",
+    +   "0",
+    + ]
+
+      131 |   await mkdir(`${evidence}/accessibility`,{recursive:true});await mkdir(`${evidence}/screenshots`,{recursive:true});
+      132 |   await writeFile(`${evidence}/accessibility/${name}-${width}.json`,JSON.stringify(measured,null,2),'utf8');
+    > 133 |   expect(measured.pageOverflow).toBe(false);expect(measured.clipped).toEqual([]);
+          |                                                                      ^
+      134 |   expect(measured.texts.filter(t=>t.contrast+.01<t.required)).toEqual([]);
+      135 |   expect(measured.controls.filter(c=>c.width<24||c.height<24)).toEqual([]);
+      136 |   for(const control of await root.locator('button:not(:disabled),input:not(:disabled),select:not(:disabled)').all()){
+        at auditItems (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:133:70)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:154:3
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-accessibility-letters-at-1600-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-accessibility-letters-at-1600-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\C2-RED\items-C2-accessibility-letters-at-1600-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  13 failed
+    [chromium] › tests\e2e\items.spec.ts:45:1 › C2 UI buy, keyboard equip and next Farm report show the post effect 
+    [chromium] › tests\e2e\items.spec.ts:60:1 › C2 Market sells items and digit-only material quantities, with no Legendary Sell 
+    [chromium] › tests\e2e\items.spec.ts:82:1 › C2 operating Hospital and worker-free Drug Store sell potions; inventory Use restores Player health 
+    [chromium] › tests\e2e\items.spec.ts:96:1 › C2 visible item letters include stack loss, storage-full loss, expiry, delivered and waiting Legendary rewards 
+    [chromium] › tests\e2e\items.spec.ts:102:1 › C2 health line and wounds death letter use the exact approved copy 
+    [chromium] › tests\e2e\items.spec.ts:141:93 › C2 accessibility equipment at 1280 ───────────────
+    [chromium] › tests\e2e\items.spec.ts:141:93 › C2 accessibility market at 1280 ──────────────────
+    [chromium] › tests\e2e\items.spec.ts:141:93 › C2 accessibility potions at 1280 ─────────────────
+    [chromium] › tests\e2e\items.spec.ts:141:93 › C2 accessibility letters at 1280 ─────────────────
+    [chromium] › tests\e2e\items.spec.ts:141:93 › C2 accessibility equipment at 1600 ───────────────
+    [chromium] › tests\e2e\items.spec.ts:141:93 › C2 accessibility market at 1600 ──────────────────
+    [chromium] › tests\e2e\items.spec.ts:141:93 › C2 accessibility potions at 1600 ─────────────────
+    [chromium] › tests\e2e\items.spec.ts:141:93 › C2 accessibility letters at 1600 ─────────────────
+  1 passed (1.3m)

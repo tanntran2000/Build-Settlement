@@ -1,0 +1,107 @@
+{
+  "texts": [
+    {
+      "text": "Items this week",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Materials this week",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Plot",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Material",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Outcome",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "ore-1",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Iron",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Lost: stack full (999)",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Item found",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Item",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Outcome",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Plain Bottom",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Lost: inventory and temporary storage full",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Expired items",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Item",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Fine Ring",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Hospital operated",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "No",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Regeneration",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "+1",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    }
+  ],
+  "clipped": [],
+  "controls": [],
+  "pageOverflow": false
+}

@@ -1,0 +1,252 @@
+﻿{
+  "HEAD": "8af03070496d8e41ae85fecaea2d29c4cc474811",
+  "tree": "025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4",
+  "base": "2c04321ba342871e6a858110ea2320a8e4df0d5d",
+  "branch": "feat/p6a-item-ui",
+  "UTC": "2026-11-14T10:52:06.013Z",
+  "exit": 1,
+  "status": "HOLD: smoke accessibility failures",
+  "gitStatus": "",
+  "commits": [
+    "ce612d2461993486cb7fa35c6463c4c2a57ea3fe feat(ui): equipment view and inventory",
+    "8af03070496d8e41ae85fecaea2d29c4cc474811 feat(ui): market, potions, item reports and lord health"
+  ],
+  "gates": [
+    {
+      "name": "gate1-diff",
+      "HEAD": "8af03070496d8e41ae85fecaea2d29c4cc474811",
+      "tree": "025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4",
+      "UTC": "2026-11-14T09:34:11.514Z",
+      "exit": 0,
+      "command": "git diff --check origin/main...HEAD",
+      "CI": ""
+    },
+    {
+      "name": "gate2-lint",
+      "HEAD": "8af03070496d8e41ae85fecaea2d29c4cc474811",
+      "tree": "025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4",
+      "UTC": "2026-11-14T09:34:11.861Z",
+      "exit": 0,
+      "command": "npm run lint",
+      "CI": ""
+    },
+    {
+      "name": "gate3-typecheck",
+      "HEAD": "8af03070496d8e41ae85fecaea2d29c4cc474811",
+      "tree": "025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4",
+      "UTC": "2026-11-14T09:34:31.994Z",
+      "exit": 0,
+      "command": "npm run typecheck",
+      "CI": ""
+    },
+    {
+      "name": "gate4-architecture",
+      "HEAD": "8af03070496d8e41ae85fecaea2d29c4cc474811",
+      "tree": "025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4",
+      "UTC": "2026-11-14T09:35:22.975Z",
+      "exit": 0,
+      "command": "npm run check:architecture",
+      "CI": ""
+    },
+    {
+      "name": "gate5-architecture-tests",
+      "HEAD": "8af03070496d8e41ae85fecaea2d29c4cc474811",
+      "tree": "025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4",
+      "UTC": "2026-11-14T09:35:29.519Z",
+      "exit": 0,
+      "command": "npm run test:architecture",
+      "CI": ""
+    },
+    {
+      "name": "gate6-unit",
+      "HEAD": "8af03070496d8e41ae85fecaea2d29c4cc474811",
+      "tree": "025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4",
+      "UTC": "2026-11-14T09:36:32.488Z",
+      "exit": 0,
+      "command": "npm test",
+      "CI": ""
+    },
+    {
+      "name": "gate7-build",
+      "HEAD": "8af03070496d8e41ae85fecaea2d29c4cc474811",
+      "tree": "025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4",
+      "UTC": "2026-11-14T09:37:34.447Z",
+      "exit": 0,
+      "command": "npm run build",
+      "CI": ""
+    },
+    {
+      "name": "smoke-full",
+      "HEAD": "8af03070496d8e41ae85fecaea2d29c4cc474811",
+      "tree": "025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4",
+      "UTC": "2026-11-14T09:37:59.762Z",
+      "exit": 1,
+      "command": "echo CI=%CI% && npm run test:smoke -- --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/final-smoke",
+      "CI": "1"
+    }
+  ],
+  "unitPassed": 2488,
+  "smoke": {
+    "CI": 1,
+    "passed": 356,
+    "failed": 11,
+    "duration": "43.3m",
+    "reruns": [
+      {
+        "file": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+        "line": 250,
+        "width": 1600,
+        "test": "life shell accessibility baseline",
+        "log": "smoke-rerun-1600-baseline",
+        "filter": "-g accessibility.at.1600px",
+        "exit": 1,
+        "failed": true,
+        "passed": false
+      },
+      {
+        "file": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+        "line": 329,
+        "width": 1600,
+        "test": "long character and report content reflows",
+        "log": "smoke-rerun-1600-reflow",
+        "filter": "-g accessibility.at.1600px",
+        "exit": 1,
+        "failed": true,
+        "passed": false
+      },
+      {
+        "file": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+        "line": 250,
+        "width": 1280,
+        "test": "life shell accessibility baseline",
+        "log": "smoke-rerun-1280-baseline",
+        "filter": "-g accessibility.at.1280px",
+        "exit": 1,
+        "failed": true,
+        "passed": false
+      },
+      {
+        "file": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+        "line": 329,
+        "width": 1280,
+        "test": "long character and report content reflows",
+        "log": "smoke-rerun-1280-reflow",
+        "filter": "-g accessibility.at.1280px",
+        "exit": 1,
+        "failed": true,
+        "passed": false
+      },
+      {
+        "file": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+        "line": 250,
+        "width": 375,
+        "test": "life shell accessibility baseline",
+        "log": "smoke-rerun-375-baseline",
+        "filter": "-g accessibility.at.375px",
+        "exit": 1,
+        "failed": true,
+        "passed": false
+      },
+      {
+        "file": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+        "line": 329,
+        "width": 375,
+        "test": "long character and report content reflows",
+        "log": "smoke-rerun-375-reflow",
+        "filter": "-g accessibility.at.375px",
+        "exit": 1,
+        "failed": true,
+        "passed": false
+      },
+      {
+        "file": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+        "line": 250,
+        "width": 320,
+        "test": "life shell accessibility baseline",
+        "log": "smoke-rerun-320-baseline",
+        "filter": "-g accessibility.at.320px",
+        "exit": 1,
+        "failed": true,
+        "passed": false
+      },
+      {
+        "file": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+        "line": 329,
+        "width": 320,
+        "test": "long character and report content reflows",
+        "log": "smoke-rerun-320-reflow",
+        "filter": "-g accessibility.at.320px",
+        "exit": 1,
+        "failed": true,
+        "passed": false
+      },
+      {
+        "file": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 347,
+        "width": 375,
+        "test": "full-body placeholder preserves profile disclosure at 375px",
+        "log": "smoke-rerun-375-profile",
+        "filter": "-g at.375px",
+        "exit": 1,
+        "failed": true,
+        "passed": false
+      },
+      {
+        "file": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 347,
+        "width": 1280,
+        "test": "full-body placeholder preserves profile disclosure at 1280px",
+        "log": "smoke-rerun-1280-profile",
+        "filter": "-g at.1280px",
+        "exit": 1,
+        "failed": true,
+        "passed": false
+      },
+      {
+        "file": "tests/e2e/title.spec.ts",
+        "line": 148,
+        "width": 320,
+        "test": "Large report at 320px keeps all six letters and stock ledger inside the page",
+        "log": "smoke-rerun-320-large-report",
+        "filter": "",
+        "exit": 1,
+        "failed": true,
+        "passed": false
+      }
+    ]
+  },
+  "inventory": {
+    "blocks": 10,
+    "files": 3
+  },
+  "protectedFilesUnchanged": 61,
+  "accessibilityAudits": 14,
+  "screenshots": [
+    "death-letter-1280.png",
+    "equipment-1280.png",
+    "market-1280.png",
+    "materials-1280.png",
+    "potions-1280.png",
+    "quartermaster-items-1280.png",
+    "steward-items-1280.png",
+    "temporary-storage-1280.png"
+  ],
+  "bundle": {
+    "jsGzipBytes": 124924,
+    "cssGzipBytes": 6648,
+    "totalGzipBytes": 131572,
+    "jsKB": 124.924,
+    "cssKB": 6.648,
+    "totalKB": 131.572
+  },
+  "ports": {
+    "4173": "free",
+    "4174": "free",
+    "checkedUTC": "2026-11-14T10:52:05.7535817Z"
+  },
+  "pushed": false,
+  "PRCreated": false,
+  "merged": false,
+  "evidenceFiles": 183,
+  "manifestEntries": 182
+}

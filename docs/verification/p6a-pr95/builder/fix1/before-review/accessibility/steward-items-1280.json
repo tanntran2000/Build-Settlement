@@ -1,0 +1,62 @@
+{
+  "texts": [
+    {
+      "text": "Rewards",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Legendary rewards",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Goal",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Item",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Calm city",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Crown of Embers",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Rewards waiting",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Goal",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Status",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Authority 100",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Make room in inventory or temporary storage.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    }
+  ],
+  "clipped": [],
+  "controls": [],
+  "pageOverflow": false
+}

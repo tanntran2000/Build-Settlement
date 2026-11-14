@@ -1,0 +1,23 @@
+HEAD=2c04321ba342871e6a858110ea2320a8e4df0d5d
+TREE=d5597ae4296afc90b41557eb062ca43f7ab85313
+UTC=2026-11-14T09:20:46.807Z
+EXIT=0
+COMMAND=npx playwright test tests/e2e/items.spec.ts -g C1 --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/C1-attempt4
+CI=
+FINISHED=2026-11-14T09:21:06.329Z
+
+[WebServer] (node:51732) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:51900) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:67548) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\items.spec.ts:28:1 › C1 paper doll, totals, filters and Materials expose real item state (1.9s)
+C1 attempt 3 Farm proof {"effective":61,"percent":2,"extraWheat":80,"visibleWheatDelta":"0.08"}
+  ok 2 [chromium] › tests\e2e\items.spec.ts:41:1 › C1 card preview and keyboard equip on a posted NPC change the next report (2.5s)
+  ok 3 [chromium] › tests\e2e\items.spec.ts:71:1 › C1 Destroy confirms, cancels and accepts with the keyboard (2.4s)
+
+  3 passed (16.6s)

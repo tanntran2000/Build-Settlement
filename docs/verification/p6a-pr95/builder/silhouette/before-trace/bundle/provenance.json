@@ -1,0 +1,24 @@
+{
+  "HEAD": "16689892b4b448d04cac1a8e398f52e5269e7e53",
+  "tree": "b8413c359472872846aa268d5b864770fc684746",
+  "UTC": "2026-11-14T12:21:38.574Z",
+  "status": "Existing asset snapshot only; final-head gate 7 blocked by gate 6 HOLD",
+  "latestSuccessfulBuilderBuildLog": "fix-build.txt",
+  "buildLogCommittedHead": "8af03070496d8e41ae85fecaea2d29c4cc474811",
+  "matchingFinalHeadBuildLog": null,
+  "assets": [
+    {
+      "name": "index-BQhm1nxa.js",
+      "modifiedUTC": "2026-11-14T12:15:58.846Z",
+      "sha256": "3393fb01250844438c803651bec82dddcf0da612dbdd210c875a12ece24c7cad",
+      "gzipSha256": "59bba259c59fb0805bf736d52c5b0917aacf97a056531a75a9c347b129451b6a"
+    },
+    {
+      "name": "index-CxB-ZnFZ.css",
+      "modifiedUTC": "2026-11-14T12:15:58.840Z",
+      "sha256": "a9a62ae4562b11e0b2d26b74927764d865866f2908516c1ca9f40dad0375eb8a",
+      "gzipSha256": "4323255978e2298ccdc9e75d8fe78b79783d6e5200b63af33960ce100226a751"
+    }
+  ],
+  "note": "The current JS asset name differs from fix-build.txt and was modified during the unit-gate window. No Builder build was run then. The producing invocation is unverified; do not treat the snapshot as final-head build proof."
+}

@@ -1,0 +1,44 @@
+{
+  "HEAD": "5e97f049330c2e6c4e213b845815afb368d8a7b3",
+  "tree": "49f6b676c3ae57f66ef9ce6275eb89a806f52a9a",
+  "UTC": "2026-11-14T14:38:27.775Z",
+  "exit": 0,
+  "method": "node:zlib gzipSync defaults, decimal kB; production assets only",
+  "baseline": {
+    "head": "2c04321ba342871e6a858110ea2320a8e4df0d5d",
+    "jsKB": 116.52,
+    "cssKB": 5.81,
+    "source": "Owner baseline, independently reproduced in C1-RED-build.txt at the base; rounded to 0.01 decimal kB."
+  },
+  "final": {
+    "jsGzipBytes": 126720,
+    "cssGzipBytes": 6743,
+    "totalGzipBytes": 133463,
+    "jsKB": 126.72,
+    "cssKB": 6.743,
+    "totalKB": 133.463
+  },
+  "growthKB": {
+    "js": 10.200000000000003,
+    "css": 0.9330000000000007
+  },
+  "budgetGzipBytes": 200000,
+  "artifacts": [
+    {
+      "name": "index-CxB-ZnFZ.css",
+      "kind": "CSS",
+      "bytes": 32979,
+      "gzipBytes": 6743,
+      "sha256": "a9a62ae4562b11e0b2d26b74927764d865866f2908516c1ca9f40dad0375eb8a",
+      "gzipSha256": "4323255978e2298ccdc9e75d8fe78b79783d6e5200b63af33960ce100226a751"
+    },
+    {
+      "name": "index-DlvafnCY.js",
+      "kind": "JS",
+      "bytes": 398899,
+      "gzipBytes": 126720,
+      "sha256": "383cdc4e53fd3ea1df46b3172aed6d5a00258661f625233c2f49b3c8da19bf4f",
+      "gzipSha256": "69cfaa318a2ff3f14a3b5c255bf4ee164b593265431daf9ddcd75b55f4fd0f33"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+HEAD=f046e36c98fcfbbd16808e759b7b09f0f1f4c98e
+TREE=baf52e8b3e19f76f904ca8b39a51f9793a56a534
+UTC=2026-11-14T13:13:30.863Z
+EXIT=0
+COMMAND=node "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\node_modules\\vitest\\vitest.mjs" "run" "packages/simulation/src/__tests__/lord-health.test.ts" "-t" "a Calm game below Crime 70 survives all 60 weeks from health one" "--reporter=json" "--outputFile=C:/Users/Admin/.t3/local-drafts/p6a-prC/trace-measured-lord-health-3.json"
+ARGS_JSON=["C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\node_modules\\vitest\\vitest.mjs","run","packages/simulation/src/__tests__/lord-health.test.ts","-t","a Calm game below Crime 70 survives all 60 weeks from health one","--reporter=json","--outputFile=C:/Users/Admin/.t3/local-drafts/p6a-prC/trace-measured-lord-health-3.json"]
+FINISHED=2026-11-14T13:13:37.851Z
+
+JSON report written to C:/Users/Admin/.t3/local-drafts/p6a-prC/trace-measured-lord-health-3.json

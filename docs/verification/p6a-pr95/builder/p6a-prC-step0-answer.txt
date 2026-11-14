@@ -1,0 +1,8 @@
+Step 0 HOLD answered by the owner. Binding plan is now C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-b5ec12c.md: read Plan correction 8 fully.
+
+Owner (Tân), 2026-11-14, dialog choices, verbatim:
+1. "Approve the 10 edits (Recommended)": exactly P1–P10 in the 3 e2e files as listed in step0-proposed-edits.md, including the P7 parser in proposed-read-item-report.ts that reads the rendered cells; nothing else in those files changes.
+2. "Allow these 4 files (Recommended)": CharacterProfile.svelte, items-view.ts (new), TileManagement.svelte, SoloWeekReport.svelte, each only for the stated purpose. Any other file outside the allowlist is a HOLD.
+3. "Move the buy e2e to C2 (Recommended)": C1 e2e equips an item bought through the real command path on a posted NPC and checks the next report's post effect; the full UI-buy e2e is RED before C2 product edits and GREEN before the C2 commit. Both at 1280.
+
+Proceed with C1 RED and the rest of the brief (C1–C3, gates 1–7, CI=1 smoke, bundle, screenshots, immutable check, evidence under local-drafts/p6a-prC/). If an applied edit differs from the approved text, HOLD. Do not push, open a PR or merge.

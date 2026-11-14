@@ -1,0 +1,20 @@
+{
+  "HEAD": "5e97f049330c2e6c4e213b845815afb368d8a7b3",
+  "tree": "49f6b676c3ae57f66ef9ce6275eb89a806f52a9a",
+  "base": "f046e36c98fcfbbd16808e759b7b09f0f1f4c98e",
+  "UTC": "2026-11-14T14:40:41.012Z",
+  "exit": 0,
+  "changedFiles": [
+    "packages/ui/src/EquipmentView.svelte",
+    "packages/ui/src/__tests__/items-view.test.ts",
+    "packages/ui/src/items-view.ts",
+    "tests/e2e/character-life-navigation.helpers.ts",
+    "tests/e2e/items.spec.ts"
+  ],
+  "p7LineOnly": true,
+  "newUnitExpectationOnly": true,
+  "earlierItemCasesUnchanged": true,
+  "societyViewTestUnchanged": true,
+  "silhouettesUnchanged": true,
+  "stylesUnchanged": true
+}

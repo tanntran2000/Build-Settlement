@@ -1,0 +1,9 @@
+HEAD=f046e36c98fcfbbd16808e759b7b09f0f1f4c98e
+TREE=baf52e8b3e19f76f904ca8b39a51f9793a56a534
+UTC=2026-11-14T13:13:37.855Z
+EXIT=0
+COMMAND=node "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\node_modules\\vitest\\vitest.mjs" "run" "packages/simulation/src/__tests__/society-renewable-support.test.ts" "-t" "society renewable support and transaction ports preserves complete gameplay and assignments through sixty weeks of snapshot restores" "--reporter=json" "--outputFile=C:/Users/Admin/.t3/local-drafts/p6a-prC/trace-measured-renewable-support-1.json"
+ARGS_JSON=["C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\node_modules\\vitest\\vitest.mjs","run","packages/simulation/src/__tests__/society-renewable-support.test.ts","-t","society renewable support and transaction ports preserves complete gameplay and assignments through sixty weeks of snapshot restores","--reporter=json","--outputFile=C:/Users/Admin/.t3/local-drafts/p6a-prC/trace-measured-renewable-support-1.json"]
+FINISHED=2026-11-14T13:13:42.001Z
+
+JSON report written to C:/Users/Admin/.t3/local-drafts/p6a-prC/trace-measured-renewable-support-1.json

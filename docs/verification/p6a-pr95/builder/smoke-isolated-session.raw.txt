@@ -1,0 +1,744 @@
+HEAD=8af03070496d8e41ae85fecaea2d29c4cc474811
+TREE=025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4
+UTC=2026-11-14T10:27:18.604Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/character-life-navigation-accessibility.spec.ts:250 -g accessibility.at.1600px --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/smoke-rerun-1600-baseline
+CI=1
+FINISHED=2026-
+HEAD=8af03070496d8e41ae85fecaea2d29c4cc474811
+TREE=025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4
+UTC=2026-11-14T10:27:18.604Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/character-life-navigation-accessibility.spec.ts:250 -g accessibility.at.1600px --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/smoke-rerun-1600-baseline
+CI=1
+FINISHED=2026-11-14T10:31:23.290Z
+
+[WebServer] (node:34136) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:70552) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:72364) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:250:5 › accessibility at 1600px › life shell accessibility baseline (3.6m)
+
+
+  1) [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:250:5 › accessibility at 1600px › life shell accessibility baseline 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 13
+
+    - Array []
+    + Array [
+    +   "selected only by color: WeaponEmpty",
+    +   "selected only by color: Inventory",
+    +   "selected only by color: All",
+    +   "focus visibility/contrast: EarringsEmpty {\"clips\":[],\"box\":{\"left\":379,\"right\":715.828125,\"top\":452.34375,\"bottom\":519.09375},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: NecklaceEmpty {\"clips\":[],\"box\":{\"left\":790.828125,\"right\":1127.65625,\"top\":452.34375,\"bottom\":519.09375},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: TopEmpty {\"clips\":[],\"box\":{\"left\":379,\"right\":715.828125,\"top\":529.09375,\"bottom\":595.84375},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: BottomEmpty {\"clips\":[],\"box\":{\"left\":790.828125,\"right\":1127.65625,\"top\":529.09375,\"bottom\":595.84375},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: ShoesEmpty {\"clips\":[],\"box\":{\"left\":379,\"right\":715.828125,\"top\":605.84375,\"bottom\":672.59375},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: RingEmpty {\"clips\":[],\"box\":{\"left\":790.828125,\"right\":1127.65625,\"top\":605.84375,\"bottom\":672.59375},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: WeaponEmpty {\"clips\":[],\"box\":{\"left\":379,\"right\":715.828125,\"top\":682.59375,\"bottom\":749.34375},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: HandEmpty {\"clips\":[],\"box\":{\"left\":790.828125,\"right\":1127.65625,\"top\":682.59375,\"bottom\":749.34375},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    + ]
+
+      324 |       await writeFile(path, JSON.stringify({ method: 'CSS viewport widths; no calibrated zoom or screen-reader claim', measurements, tabCounts, focus, failures }, null, 2));
+      325 |       await info.attach('measurements', { path, contentType: 'application/json' });
+    > 326 |       expect([...new Set(failures)]).toEqual([]);
+          |                                      ^
+      327 |     });
+      328 |
+      329 |     test('long character and report content reflows', async ({ page }, info) => {
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation-accessibility.spec.ts:326:38
+
+    attachment #1: measurements (application/json) ─────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1600-baseline\character-life-navigation--f621c-hell-accessibility-baseline-chromium\attachments\measurements-94425160c01b339ef889daf1b180dcfcd18c9136.json
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1600-baseline\character-life-navigation--f621c-hell-accessibility-baseline-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1600-baseline\character-life-navigation--f621c-hell-accessibility-baseline-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1600-baseline\character-life-navigation--f621c-hell-accessibility-baseline-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:250:5 › accessibility at 1600px › life shell accessibility baseline 
+
+HEAD=8af03070496d8e41ae85fecaea2d29c4cc474811
+TREE=025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4
+UTC=2026-11-14T10:31:23.776Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/character-life-navigation-accessibility.spec.ts:329 -g accessibility.at.1600px --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/smoke-rerun-1600-reflow
+CI=1
+FINISHED=2026-11
+HEAD=8af03070496d8e41ae85fecaea2d29c4cc474811
+TREE=025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4
+UTC=2026-11-14T10:31:23.776Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/character-life-navigation-accessibility.spec.ts:329 -g accessibility.at.1600px --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/smoke-rerun-1600-reflow
+CI=1
+FINISHED=2026-11-14T10:32:05.106Z
+
+[WebServer] (node:60076) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:72332) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:24292) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:329:5 › accessibility at 1600px › long character and report content reflows (19.9s)
+
+
+  1) [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:329:5 › accessibility at 1600px › long character and report content reflows 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 5
+
+    - Array []
+    + Array [
+    +   "selected only by color: WeaponEmpty",
+    +   "selected only by color: Inventory",
+    +   "selected only by color: All",
+    + ]
+
+      392 |       await writeFile(path, JSON.stringify({ measurements, sizes, columns, failures }, null, 2));
+      393 |       await info.attach('reflow', { path, contentType: 'application/json' });
+    > 394 |       expect([...new Set(failures)]).toEqual([]);
+          |                                      ^
+      395 |     });
+      396 |   });
+      397 | }
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation-accessibility.spec.ts:394:38
+
+    attachment #1: reflow (application/json) ───────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1600-reflow\character-life-navigation--d9965--and-report-content-reflows-chromium\attachments\reflow-739a937cd9d45322d3263767cd3079f7247c01f5.json
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1600-reflow\character-life-navigation--d9965--and-report-content-reflows-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1600-reflow\character-life-navigation--d9965--and-report-content-reflows-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1600-reflow\character-life-navigation--d9965--and-report-content-reflows-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:329:5 › accessibility at 1600px › long character and report content reflows 
+
+HEAD=8af03070496d8e41ae85fecaea2d29c4cc474811
+TREE=025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4
+UTC=2026-11-14T10:32:05.508Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/character-life-navigation-accessibility.spec.ts:250 -g accessibility.at.1280px --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/smoke-rerun-1280-baseline
+CI=1
+FINISHED=2026-
+ttom\":489.109375},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: NecklaceEmpty {\"clips\":[],\"box\":{\"left\":660.15625,\"right\":906.328125,\"top\":426.5625,\"bottom\":489.109375},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: TopEmpty {\"clips\":[],\"box\":{\"left\":339,\"right\":585.15625,\"top\":499.109375,\"bottom\":561.65625},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: BottomEmpty {\"clips\":[],\"box\":{\"left\":660.15625,\"right\":906.328125,\"top\":499.109375,\"bottom\":561.65625},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: ShoesEmpty {\"clips\":[],\"box\":{\"left\":339,\"right\":585.15625,\"top\":571.65625,\"bottom\":634.203125},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: RingEmpty {\"clips\":[],\"box\":{\"left\":660.15625,\"right\":906.328125,\"top\":571.65625,\"bottom\":634.203125},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: WeaponEmpty {\"clips\":[],\"box\":{\"left\":339,\"right\":585.15625,\"top\":644.203125,\"bottom\":706.75},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: HandEmpty {\"clips\":[],\"box\":{\"left\":660.15625,\"right\":906.328125,\"top\":644.203125,\"bottom\":706.75},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: EarringsEmpty {\"clips\":[],\"box\":{\"left\":339,\"right\":585.15625,\"top\":428.5625,\"bottom\":491.109375},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: NecklaceEmpty {\"clips\":[],\"box\":{\"left\":660.15625,\"right\":906.328125,\"top\":428.5625,\"bottom\":491.109375},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: TopEmpty {\"clips\":[],\"box\":{\"left\":339,\"right\":585.15625,\"top\":501.109375,\"bottom\":563.65625},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: BottomEmpty {\"clips\":[],\"box\":{\"left\":660.15625,\"right\":906.328125,\"top\":501.109375,\"bottom\":563.65625},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: ShoesEmpty {\"clips\":[],\"box\":{\"left\":339,\"right\":585.15625,\"top\":573.65625,\"bottom\":636.203125},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: RingEmpty {\"clips\":[],\"box\":{\"left\":660.15625,\"right\":906.328125,\"top\":573.65625,\"bottom\":636.203125},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: WeaponEmpty {\"clips\":[],\"box\":{\"left\":339,\"right\":585.15625,\"top\":646.203125,\"bottom\":708.75},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: HandEmpty {\"clips\":[],\"box\":{\"left\":660.15625,\"right\":906.328125,\"top\":646.203125,\"bottom\":708.75},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    + ]
+
+      324 |       await writeFile(path, JSON.stringify({ method: 'CSS viewport widths; no calibrated zoom or screen-reader claim', measurements, tabCounts, focus, failures }, null, 2));
+      325 |       await info.attach('measurements', { path, contentType: 'application/json' });
+    > 326 |       expect([...new Set(failures)]).toEqual([]);
+          |                                      ^
+      327 |     });
+      328 |
+      329 |     test('long character and report content reflows', async ({ page }, info) => {
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation-accessibility.spec.ts:326:38
+
+    attachment #1: measurements (application/json) ─────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1280-baseline\character-life-navigation--e57a3-hell-accessibility-baseline-chromium\attachments\measurements-14b4b78344a26d07314415051f6bacb372376def.json
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1280-baseline\character-life-navigation--e57a3-hell-accessibility-baseline-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1280-baseline\character-life-navigation--e57a3-hell-accessibility-baseline-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1280-baseline\character-life-navigation--e57a3-hell-accessibility-baseline-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:250:5 › accessibility at 1280px › life shell accessibility baseline 
+
+HEAD=8af03070496d8e41ae85fecaea2d29c4cc474811
+TREE=025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4
+UTC=2026-11-14T10:35:55.701Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/character-life-navigation-accessibility.spec.ts:329 -g accessibility.at.1280px --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/smoke-rerun-1280-reflow
+CI=1
+FINISHED=2026-11
+HEAD=8af03070496d8e41ae85fecaea2d29c4cc474811
+TREE=025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4
+UTC=2026-11-14T10:35:55.701Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/character-life-navigation-accessibility.spec.ts:329 -g accessibility.at.1280px --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/smoke-rerun-1280-reflow
+CI=1
+FINISHED=2026-11-14T10:36:42.740Z
+
+[WebServer] (node:71492) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:74168) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:49524) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:329:5 › accessibility at 1280px › long character and report content reflows (22.1s)
+
+
+  1) [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:329:5 › accessibility at 1280px › long character and report content reflows 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 5
+
+    - Array []
+    + Array [
+    +   "selected only by color: WeaponEmpty",
+    +   "selected only by color: Inventory",
+    +   "selected only by color: All",
+    + ]
+
+      392 |       await writeFile(path, JSON.stringify({ measurements, sizes, columns, failures }, null, 2));
+      393 |       await info.attach('reflow', { path, contentType: 'application/json' });
+    > 394 |       expect([...new Set(failures)]).toEqual([]);
+          |                                      ^
+      395 |     });
+      396 |   });
+      397 | }
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation-accessibility.spec.ts:394:38
+
+    attachment #1: reflow (application/json) ───────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1280-reflow\character-life-navigation--ca2f8--and-report-content-reflows-chromium\attachments\reflow-b7c9a3c07eeb14058eeecdf5a264900a1b19164d.json
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1280-reflow\character-life-navigation--ca2f8--and-report-content-reflows-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1280-reflow\character-life-navigation--ca2f8--and-report-content-reflows-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1280-reflow\character-life-navigation--ca2f8--and-report-content-reflows-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:329:5 › accessibility at 1280px › long character and report content reflows 
+
+HEAD=8af03070496d8e41ae85fecaea2d29c4cc474811
+TREE=025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4
+UTC=2026-11-14T10:36:43.109Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/character-life-navigation-accessibility.spec.ts:250 -g accessibility.at.375px --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/smoke-rerun-375-baseline
+CI=1
+FINISHED=2026-11
+HEAD=8af03070496d8e41ae85fecaea2d29c4cc474811
+TREE=025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4
+UTC=2026-11-14T10:36:43.109Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/character-life-navigation-accessibility.spec.ts:250 -g accessibility.at.375px --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/smoke-rerun-375-baseline
+CI=1
+FINISHED=2026-11-14T10:40:15.440Z
+
+[WebServer] (node:64328) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:35044) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:72764) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:250:5 › accessibility at 375px › life shell accessibility baseline (3.2m)
+
+
+  1) [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:250:5 › accessibility at 375px › life shell accessibility baseline 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 13
+
+    - Array []
+    + Array [
+    +   "selected only by color: WeaponEmpty",
+    +   "selected only by color: Inventory",
+    +   "selected only by color: All",
+    +   "focus visibility/contrast: EarringsEmpty {\"clips\":[],\"box\":{\"left\":43,\"right\":162.5,\"top\":374.875,\"bottom\":437.421875},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: NecklaceEmpty {\"clips\":[],\"box\":{\"left\":212.5,\"right\":332,\"top\":374.875,\"bottom\":437.421875},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: TopEmpty {\"clips\":[],\"box\":{\"left\":43,\"right\":162.5,\"top\":445.421875,\"bottom\":507.96875},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: BottomEmpty {\"clips\":[],\"box\":{\"left\":212.5,\"right\":332,\"top\":445.421875,\"bottom\":507.96875},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: ShoesEmpty {\"clips\":[],\"box\":{\"left\":43,\"right\":162.5,\"top\":515.96875,\"bottom\":578.515625},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: RingEmpty {\"clips\":[],\"box\":{\"left\":212.5,\"right\":332,\"top\":515.96875,\"bottom\":578.515625},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: WeaponEmpty {\"clips\":[],\"box\":{\"left\":43,\"right\":162.5,\"top\":586.515625,\"bottom\":649.0625},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: HandEmpty {\"clips\":[],\"box\":{\"left\":212.5,\"right\":332,\"top\":586.515625,\"bottom\":649.0625},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    + ]
+
+      324 |       await writeFile(path, JSON.stringify({ method: 'CSS viewport widths; no calibrated zoom or screen-reader claim', measurements, tabCounts, focus, failures }, null, 2));
+      325 |       await info.attach('measurements', { path, contentType: 'application/json' });
+    > 326 |       expect([...new Set(failures)]).toEqual([]);
+          |                                      ^
+      327 |     });
+      328 |
+      329 |     test('long character and report content reflows', async ({ page }, info) => {
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation-accessibility.spec.ts:326:38
+
+    attachment #1: measurements (application/json) ─────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-375-baseline\character-life-navigation--c0613-hell-accessibility-baseline-chromium\attachments\measurements-c091d8096295894bffb15ed2a49ae0201b45a02d.json
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-375-baseline\character-life-navigation--c0613-hell-accessibility-baseline-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-375-baseline\character-life-navigation--c0613-hell-accessibility-baseline-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-375-baseline\character-life-navigation--c0613-hell-accessibility-baseline-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:250:5 › accessibility at 375px › life shell accessibility baseline 
+
+HEAD=8af03070496d8e41ae85fecaea2d29c4cc474811
+TREE=025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4
+UTC=2026-11-14T10:40:15.887Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/character-life-navigation-accessibility.spec.ts:329 -g accessibility.at.375px --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/smoke-rerun-375-reflow
+CI=1
+FINISHED=2026-11-1
+HEAD=8af03070496d8e41ae85fecaea2d29c4cc474811
+TREE=025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4
+UTC=2026-11-14T10:40:15.887Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/character-life-navigation-accessibility.spec.ts:329 -g accessibility.at.375px --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/smoke-rerun-375-reflow
+CI=1
+FINISHED=2026-11-14T10:40:54.845Z
+
+[WebServer] (node:44100) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:62020) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:71140) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:329:5 › accessibility at 375px › long character and report content reflows (19.6s)
+
+
+  1) [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:329:5 › accessibility at 375px › long character and report content reflows 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 5
+
+    - Array []
+    + Array [
+    +   "selected only by color: WeaponEmpty",
+    +   "selected only by color: Inventory",
+    +   "selected only by color: All",
+    + ]
+
+      392 |       await writeFile(path, JSON.stringify({ measurements, sizes, columns, failures }, null, 2));
+      393 |       await info.attach('reflow', { path, contentType: 'application/json' });
+    > 394 |       expect([...new Set(failures)]).toEqual([]);
+          |                                      ^
+      395 |     });
+      396 |   });
+      397 | }
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation-accessibility.spec.ts:394:38
+
+    attachment #1: reflow (application/json) ───────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-375-reflow\character-life-navigation--89cf1--and-report-content-reflows-chromium\attachments\reflow-9dbd4891e090b473a34f94830d7d1d672bf93809.json
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-375-reflow\character-life-navigation--89cf1--and-report-content-reflows-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-375-reflow\character-life-navigation--89cf1--and-report-content-reflows-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-375-reflow\character-life-navigation--89cf1--and-report-content-reflows-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:329:5 › accessibility at 375px › long character and report content reflows 
+
+HEAD=8af03070496d8e41ae85fecaea2d29c4cc474811
+TREE=025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4
+UTC=2026-11-14T10:40:55.394Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/character-life-navigation-accessibility.spec.ts:250 -g accessibility.at.320px --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/smoke-rerun-320-baseline
+CI=1
+FINISHED=2026-11
+HEAD=8af03070496d8e41ae85fecaea2d29c4cc474811
+TREE=025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4
+UTC=2026-11-14T10:40:55.394Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/character-life-navigation-accessibility.spec.ts:250 -g accessibility.at.320px --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/smoke-rerun-320-baseline
+CI=1
+FINISHED=2026-11-14T10:44:42.931Z
+
+[WebServer] (node:54112) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:34696) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:3080) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:250:5 › accessibility at 320px › life shell accessibility baseline (3.3m)
+
+
+  1) [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:250:5 › accessibility at 320px › life shell accessibility baseline 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 15
+
+    - Array []
+    + Array [
+    +   "selected only by color: WeaponEmpty",
+    +   "selected only by color: Inventory",
+    +   "selected only by color: All",
+    +   "focus visibility/contrast: EarringsEmpty {\"clips\":[],\"box\":{\"left\":43,\"right\":135,\"top\":584.265625,\"bottom\":646.8125},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: NecklaceEmpty {\"clips\":[],\"box\":{\"left\":185,\"right\":277,\"top\":584.265625,\"bottom\":646.8125},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: TopEmpty {\"clips\":[],\"box\":{\"left\":43,\"right\":135,\"top\":654.8125,\"bottom\":717.359375},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: BottomEmpty {\"clips\":[],\"box\":{\"left\":185,\"right\":277,\"top\":654.8125,\"bottom\":717.359375},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: ShoesEmpty {\"clips\":[],\"box\":{\"left\":43,\"right\":135,\"top\":725.359375,\"bottom\":787.90625},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: RingEmpty {\"clips\":[],\"box\":{\"left\":185,\"right\":277,\"top\":725.359375,\"bottom\":787.90625},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: WeaponEmpty {\"clips\":[],\"box\":{\"left\":43,\"right\":135,\"top\":741.90625,\"bottom\":804.453125},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: HandEmpty {\"clips\":[],\"box\":{\"left\":185,\"right\":277,\"top\":741.90625,\"bottom\":804.453125},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "text outside panel/viewport: Outcome",
+    +   "text clipped x: Outcome",
+    + ]
+
+      324 |       await writeFile(path, JSON.stringify({ method: 'CSS viewport widths; no calibrated zoom or screen-reader claim', measurements, tabCounts, focus, failures }, null, 2));
+      325 |       await info.attach('measurements', { path, contentType: 'application/json' });
+    > 326 |       expect([...new Set(failures)]).toEqual([]);
+          |                                      ^
+      327 |     });
+      328 |
+      329 |     test('long character and report content reflows', async ({ page }, info) => {
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation-accessibility.spec.ts:326:38
+
+    attachment #1: measurements (application/json) ─────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-320-baseline\character-life-navigation--0585a-hell-accessibility-baseline-chromium\attachments\measurements-7f637ea1a78efae490767c9364f5e3e2044ed92b.json
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-320-baseline\character-life-navigation--0585a-hell-accessibility-baseline-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-320-baseline\character-life-navigation--0585a-hell-accessibility-baseline-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-320-baseline\character-life-navigation--0585a-hell-accessibility-baseline-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:250:5 › accessibility at 320px › life shell accessibility baseline 
+
+HEAD=8af03070496d8e41ae85fecaea2d29c4cc474811
+TREE=025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4
+UTC=2026-11-14T10:44:43.429Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/character-life-navigation-accessibility.spec.ts:329 -g accessibility.at.320px --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/smoke-rerun-320-reflow
+CI=1
+FINISHED=2026-11-1
+HEAD=8af03070496d8e41ae85fecaea2d29c4cc474811
+TREE=025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4
+UTC=2026-11-14T10:44:43.429Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/character-life-navigation-accessibility.spec.ts:329 -g accessibility.at.320px --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/smoke-rerun-320-reflow
+CI=1
+FINISHED=2026-11-14T10:45:23.557Z
+
+[WebServer] (node:65924) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:60508) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:33360) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:329:5 › accessibility at 320px › long character and report content reflows (17.1s)
+
+
+  1) [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:329:5 › accessibility at 320px › long character and report content reflows 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 7
+
+    - Array []
+    + Array [
+    +   "selected only by color: WeaponEmpty",
+    +   "selected only by color: Inventory",
+    +   "selected only by color: All",
+    +   "text outside panel/viewport: Outcome",
+    +   "text clipped x: Outcome",
+    + ]
+
+      392 |       await writeFile(path, JSON.stringify({ measurements, sizes, columns, failures }, null, 2));
+      393 |       await info.attach('reflow', { path, contentType: 'application/json' });
+    > 394 |       expect([...new Set(failures)]).toEqual([]);
+          |                                      ^
+      395 |     });
+      396 |   });
+      397 | }
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation-accessibility.spec.ts:394:38
+
+    attachment #1: reflow (application/json) ───────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-320-reflow\character-life-navigation--77412--and-report-content-reflows-chromium\attachments\reflow-1ef20ec2af72af9a26982db0cc8160f073c4df7d.json
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-320-reflow\character-life-navigation--77412--and-report-content-reflows-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-320-reflow\character-life-navigation--77412--and-report-content-reflows-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-320-reflow\character-life-navigation--77412--and-report-content-reflows-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:329:5 › accessibility at 320px › long character and report content reflows 
+
+HEAD=8af03070496d8e41ae85fecaea2d29c4cc474811
+TREE=025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4
+UTC=2026-11-14T10:45:24.013Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/character-life-navigation.spec.ts:347 -g at.375px --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/smoke-rerun-375-profile
+CI=1
+FINISHED=2026-11-14T10:45:53.071Z
+
+[WebServer
+HEAD=8af03070496d8e41ae85fecaea2d29c4cc474811
+TREE=025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4
+UTC=2026-11-14T10:45:24.013Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/character-life-navigation.spec.ts:347 -g at.375px --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/smoke-rerun-375-profile
+CI=1
+FINISHED=2026-11-14T10:45:53.071Z
+
+[WebServer] (node:31180) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:27128) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:74044) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\character-life-navigation.spec.ts:347:3 › full-body placeholder preserves profile disclosure at 375px (7.6s)
+
+
+  1) [chromium] › tests\e2e\character-life-navigation.spec.ts:347:3 › full-body placeholder preserves profile disclosure at 375px 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('group', { name: 'Full-body character display', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('group', { name: 'Full-body character display', exact: true }) with timeout 5000ms
+      - waiting for locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('group', { name: 'Full-body character display', exact: true })
+
+
+      379 |       for (const area of ['Description', 'Inventory', 'Work', 'Relations']) {
+      380 |         await selectArea(page, area);
+    > 381 |         await expect(placeholder).toBeVisible();
+          |                                   ^
+      382 |         expect(await placeholder.evaluate(el => el.outerHTML)).toBe(staticMarkup);
+      383 |       }
+      384 |       const bounds = await placeholder.evaluate(el => {
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.spec.ts:381:35
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-375-profile\character-life-navigation--77e2c-profile-disclosure-at-375px-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-375-profile\character-life-navigation--77e2c-profile-disclosure-at-375px-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-375-profile\character-life-navigation--77e2c-profile-disclosure-at-375px-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\character-life-navigation.spec.ts:347:3 › full-body placeholder preserves profile disclosure at 375px 
+
+HEAD=8af03070496d8e41ae85fecaea2d29c4cc474811
+TREE=025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4
+UTC=2026-11-14T10:45:53.498Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/character-life-navigation.spec.ts:347 -g at.1280px --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/smoke-rerun-1280-profile
+CI=1
+FINISHED=2026-11-14T10:46:23.220Z
+
+[WebServ
+HEAD=8af03070496d8e41ae85fecaea2d29c4cc474811
+TREE=025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4
+UTC=2026-11-14T10:45:53.498Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/character-life-navigation.spec.ts:347 -g at.1280px --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/smoke-rerun-1280-profile
+CI=1
+FINISHED=2026-11-14T10:46:23.220Z
+
+[WebServer] (node:71908) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:74148) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:60968) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\character-life-navigation.spec.ts:347:3 › full-body placeholder preserves profile disclosure at 1280px (8.1s)
+
+
+  1) [chromium] › tests\e2e\character-life-navigation.spec.ts:347:3 › full-body placeholder preserves profile disclosure at 1280px 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('group', { name: 'Full-body character display', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('group', { name: 'Full-body character display', exact: true }) with timeout 5000ms
+      - waiting for locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('group', { name: 'Full-body character display', exact: true })
+
+
+      379 |       for (const area of ['Description', 'Inventory', 'Work', 'Relations']) {
+      380 |         await selectArea(page, area);
+    > 381 |         await expect(placeholder).toBeVisible();
+          |                                   ^
+      382 |         expect(await placeholder.evaluate(el => el.outerHTML)).toBe(staticMarkup);
+      383 |       }
+      384 |       const bounds = await placeholder.evaluate(el => {
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.spec.ts:381:35
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1280-profile\character-life-navigation--2a09e-rofile-disclosure-at-1280px-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1280-profile\character-life-navigation--2a09e-rofile-disclosure-at-1280px-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1280-profile\character-life-navigation--2a09e-rofile-disclosure-at-1280px-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\character-life-navigation.spec.ts:347:3 › full-body placeholder preserves profile disclosure at 1280px 
+
+HEAD=8af03070496d8e41ae85fecaea2d29c4cc474811
+TREE=025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4
+UTC=2026-11-14T10:46:23.649Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/title.spec.ts:148  --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/smoke-rerun-320-large-report
+CI=1
+FINISHED=2026-11-14T10:46:55.201Z
+
+[WebServer] (node:70892) Warning: Th
+HEAD=8af03070496d8e41ae85fecaea2d29c4cc474811
+TREE=025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4
+UTC=2026-11-14T10:46:23.649Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/title.spec.ts:148  --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/smoke-rerun-320-large-report
+CI=1
+FINISHED=2026-11-14T10:46:55.201Z
+
+[WebServer] (node:70892) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:74340) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:58292) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\title.spec.ts:148:1 › Large report at 320px keeps all six letters and stock ledger inside the page (2.2s)
+
+
+  1) [chromium] › tests\e2e\title.spec.ts:148:1 › Large report at 320px keeps all six letters and stock ledger inside the page 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 320
+    Received:    344
+
+      161 |   await test.info().attach('report-layout-metrics', { path: await persistJson(JSON.stringify(metrics, null, 2)), contentType: 'application/json' });
+      162 |   await test.info().attach('report-large-320', { path: await persistScreenshot(page, 'report-large-320'), contentType: 'image/png' });
+    > 163 |   expect(metrics.px).toBe('3px'); expect(metrics.document).toBeLessThanOrEqual(metrics.viewport);
+          |                                                            ^
+      164 |   for (const letter of metrics.letters) { expect(letter.left).toBeGreaterThanOrEqual(0); expect(letter.right).toBeLessThanOrEqual(metrics.viewport); expect(letter.scroll).toBeLessThanOrEqual(letter.client); }
+      165 | });
+      166 |
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\title.spec.ts:163:60
+
+    attachment #1: report-layout-metrics (application/json) ────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-320-large-report\title-Large-report-at-320p-a1c00-tock-ledger-inside-the-page-chromium\attachments\report-layout-metrics-03de59fd4d1da244488a2e7f2f1af531fd1bc675.json
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: report-large-320 (image/png) ────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-320-large-report\title-Large-report-at-320p-a1c00-tock-ledger-inside-the-page-chromium\attachments\report-large-320-e0f03c8303331d0de2590b897f55d4c2c81194a8.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-320-large-report\title-Large-report-at-320p-a1c00-tock-ledger-inside-the-page-chromium\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-320-large-report\title-Large-report-at-320p-a1c00-tock-ledger-inside-the-page-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-320-large-report\title-Large-report-at-320p-a1c00-tock-ledger-inside-the-page-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\title.spec.ts:148:1 › Large report at 320px keeps all six letters and stock ledger inside the page 
+

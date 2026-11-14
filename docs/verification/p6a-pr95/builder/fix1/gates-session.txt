@@ -1,0 +1,599 @@
+HEAD=5e97f049330c2e6c4e213b845815afb368d8a7b3
+TREE=49f6b676c3ae57f66ef9ce6275eb89a806f52a9a
+UTC=2026-11-14T14:01:00.655Z
+EXIT=0
+COMMAND=powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:/Users/Admin/.t3/local-drafts/p6a-prC/fix1/gates.ps1
+CI=
+FINISHED=2026-11-14T14:38:02.286Z
+
+HEAD=5e97f049330c2e6c4e213b845815afb368d8a7b3
+TREE=49f6b676c3ae57f66ef9ce6275eb89a806f52a9a
+UTC=2026-11-14T14:01:01.483Z
+EXIT=0
+COMMAND=git diff --check origin/main...HEAD
+CI=
+FINISHED=2026-11-14T14:01:01.648Z
+
+
+HEAD=5e97f049330c2e6c4e213b845815afb368d8a7b3
+TREE=49f6b676c3ae57f66ef9ce6275eb89a806f52a9a
+UTC=2026-11-14T14:01:01.483Z
+EXIT=0
+COMMAND=git diff --check origin/main...HEAD
+CI=
+FINISHED=2026-11-14T14:01:01.648Z
+
+
+HEAD=5e97f049330c2e6c4e213b845815afb368d8a7b3
+TREE=49f6b676c3ae57f66ef9ce6275eb89a806f52a9a
+UTC=2026-11-14T14:01:01.721Z
+EXIT=0
+COMMAND=npm run lint
+CI=
+FINISHED=2026-11-14T14:01:12.830Z
+
+
+> build-settlement@0.1.0 lint
+> eslint . --max-warnings=0
+
+
+HEAD=5e97f049330c2e6c4e213b845815afb368d8a7b3
+TREE=49f6b676c3ae57f66ef9ce6275eb89a806f52a9a
+UTC=2026-11-14T14:01:01.721Z
+EXIT=0
+COMMAND=npm run lint
+CI=
+FINISHED=2026-11-14T14:01:12.830Z
+
+
+> build-settlement@0.1.0 lint
+> eslint . --max-warnings=0
+
+
+HEAD=5e97f049330c2e6c4e213b845815afb368d8a7b3
+TREE=49f6b676c3ae57f66ef9ce6275eb89a806f52a9a
+UTC=2026-11-14T14:01:12.913Z
+EXIT=0
+COMMAND=npm run typecheck
+CI=
+FINISHED=2026-11-14T14:01:47.499Z
+
+
+> build-settlement@0.1.0 typecheck
+> npm run typecheck:core && npm run typecheck:simulation && npm run typecheck:persistence && npm run typecheck:content &&
+HEAD=5e97f049330c2e6c4e213b845815afb368d8a7b3
+TREE=49f6b676c3ae57f66ef9ce6275eb89a806f52a9a
+UTC=2026-11-14T14:01:12.913Z
+EXIT=0
+COMMAND=npm run typecheck
+CI=
+FINISHED=2026-11-14T14:01:47.499Z
+
+
+> build-settlement@0.1.0 typecheck
+> npm run typecheck:core && npm run typecheck:simulation && npm run typecheck:persistence && npm run typecheck:content && npm run typecheck:ui
+
+
+> build-settlement@0.1.0 typecheck:core
+> tsc -p packages/core/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:simulation
+> tsc -p packages/simulation/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:persistence
+> tsc -p packages/persistence/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:content
+> tsc -p packages/content/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:ui
+> npm run check --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 check
+> svelte-check --tsconfig ./tsconfig.json
+
+Loading svelte-check in workspace: c:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\ui
+Getting Svelte diagnostics...
+
+svelte-check found 0 errors and 0 warnings
+
+HEAD=5e97f049330c2e6c4e213b845815afb368d8a7b3
+TREE=49f6b676c3ae57f66ef9ce6275eb89a806f52a9a
+UTC=2026-11-14T14:01:47.593Z
+EXIT=0
+COMMAND=npm run check:architecture
+CI=
+FINISHED=2026-11-14T14:01:53.719Z
+
+
+> build-settlement@0.1.0 check:architecture
+> node tools/check-architecture.mjs
+
+{
+  "status": "PASS",
+  "files": [
+    "packages/content/src/city-
+: 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/PotionPanel.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/SocietyPopulation.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "content",
+      "file": "packages/ui/src/SocietyPopulation.svelte",
+      "line": 3,
+      "column": 2,
+      "specifier": "@haven/content"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/SocietyReport.svelte",
+      "line": 2,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/SocietyReport.svelte",
+      "line": 3,
+      "column": 2,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/SoloWeekReport.svelte",
+      "line": 2,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/TileManagement.svelte",
+      "line": 12,
+      "column": 3,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/TileManagement.svelte",
+      "line": 13,
+      "column": 3,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/TileManagement.svelte",
+      "line": 14,
+      "column": 3,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/character-life-session.ts",
+      "line": 1,
+      "column": 2,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/character-life-session.ts",
+      "line": 2,
+      "column": 1,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/character-life-session.ts",
+      "line": 91,
+      "column": 78,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/data-inspector.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/data-inspector.ts",
+      "line": 6,
+      "column": 1,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/indexeddb-store.ts",
+      "line": 1,
+      "column": 2,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/items-view.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/report-letters.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 2,
+      "column": 1,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 68,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 69,
+      "column": 1,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 99,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 100,
+      "column": 1,
+      "specifier": "@haven/simulation"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 120,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 143,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/society-view.ts",
+      "line": 168,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/world-npc-session.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "persistence",
+      "file": "packages/ui/src/world-npc-session.ts",
+      "line": 2,
+      "column": 1,
+      "specifier": "@haven/persistence"
+    },
+    {
+      "from": "ui",
+      "to": "core",
+      "file": "packages/ui/src/world-session.ts",
+      "line": 1,
+      "column": 1,
+      "specifier": "@haven/core"
+    },
+    {
+      "from": "ui",
+      "to": "simulation",
+      "file": "packages/ui/src/world-session.ts",
+      "line": 2,
+      "column": 1,
+      "specifier": "@haven/simulation"
+    }
+  ],
+  "violations": [],
+  "cycles": [],
+  "errors": []
+}
+
+HEAD=5e97f049330c2e6c4e213b845815afb368d8a7b3
+TREE=49f6b676c3ae57f66ef9ce6275eb89a806f52a9a
+UTC=2026-11-14T14:01:53.827Z
+EXIT=0
+COMMAND=npm run test:architecture
+CI=
+FINISHED=2026-11-14T14:02:41.048Z
+
+
+> build-settlement@0.1.0 test:architecture
+> node --test tools/architecture.test.mjs
+
+✔ static multiline: simulation -> core is PASS (70.1129ms)
+✔ s
+LETE (64.4073ms)
+✔ scope01: unsupported script context="module" generics="T extends import('@haven/simulation').Value" is explicitly INCOMPLETE (63.5012ms)
+✔ scope01: unsupported script context="module" generics="" is explicitly INCOMPLETE (64.0684ms)
+✔ scope01: unsupported script context="module" generics is explicitly INCOMPLETE (65.1494ms)
+✔ scope01: unsupported script context="module" generics="not valid TypeScript" is explicitly INCOMPLETE (72.695ms)
+✔ scope01: attribute-like comments, script strings, markup and CSS stay excluded (52.9447ms)
+✔ scope01: TypeScript generic/type body dependencies retain ui -> core enforcement (49.2283ms)
+✔ scope01: TypeScript generic/type body dependencies retain content -> core enforcement (45.5442ms)
+✔ scope01: declarations generic/type body dependencies retain ui -> core enforcement (46.4914ms)
+✔ scope01: declarations generic/type body dependencies retain content -> core enforcement (45.5024ms)
+✔ scope01: Svelte instance body generic/type body dependencies retain ui -> core enforcement (55.8817ms)
+✔ scope01: Svelte instance body generic/type body dependencies retain content -> core enforcement (48.6605ms)
+✔ scope01: Svelte module body generic/type body dependencies retain ui -> core enforcement (49.404ms)
+✔ scope01: Svelte module body generic/type body dependencies retain content -> core enforcement (50.0561ms)
+✔ scope01: unsupported attributes preserve proven body edges in both script blocks (44.8788ms)
+✔ scope01: unsupported generics CLI exits 2 with a located error, not a violation (6110.4634ms)
+✔ s1: expression-valued generics={"T"} gets its actual multiline location (94.5828ms)
+✔ s1: expression-valued generics={'T'} gets its actual multiline location (64.392ms)
+✔ s1: expression-valued generics={`T`} gets its actual multiline location (64.2364ms)
+✔ s1: expression-valued generics={typeName} gets its actual multiline location (64.4701ms)
+✔ s1: expression-valued module generics={"T"} gets its actual multiline location (61.8264ms)
+✔ s1: expression-valued module generics={'T'} gets its actual multiline location (63.4099ms)
+✔ s1: expression-valued module generics={`T`} gets its actual multiline location (64.1927ms)
+✔ s1: expression-valued module generics={typeName} gets its actual multiline location (62.7462ms)
+✔ s1: expression-valued context="module" generics={"T"} gets its actual multiline location (65.9285ms)
+✔ s1: expression-valued context="module" generics={'T'} gets its actual multiline location (62.0332ms)
+✔ s1: expression-valued context="module" generics={`T`} gets its actual multiline location (65.5955ms)
+✔ s1: expression-valued context="module" generics={typeName} gets its actual multiline location (75.6988ms)
+✔ s1: parser fallback retains every required dependency syntax in instance body (479.927ms)
+✔ s1: parser fallback retains every required dependency syntax in module body (457.0005ms)
+✔ s1: fallback keeps both body type violations and attribute locations across script blocks (48.4514ms)
+✔ s1: BOM ranges preserve multiline attribute and body locations (44.4857ms)
+✔ s1: fallback reports computed body imports alongside the unsupported attribute (42.8451ms)
+✔ s1: fallback distinguishes actual script attributes from comment/string/markup/CSS lookalikes (68.2408ms)
+✔ s1: a malformed body remains an INCOMPLETE parse failure (40.3551ms)
+✔ s1: the reported expression-attribute CLI reproduction exits 2 with line and reason (2483.6564ms)
+✔ scan includes exactly eligible production .ts/.svelte, recursively (94.769ms)
+✔ computed dependency cannot pass: import(name); (50.1378ms)
+✔ computed dependency cannot pass: import(`@haven/${name}`); (46.0778ms)
+✔ computed dependency cannot pass: import('@haven/' + name); (49.7471ms)
+✔ computed dependency cannot pass: require(name); (44.2805ms)
+✔ computed dependency cannot pass: require(); (46.2637ms)
+✔ unresolved internal/relative dependency: import './missing'; (49.0806ms)
+✔ unresolved internal/relative dependency: import '@haven/core/no-such-file'; (50.4455ms)
+✔ unresolved internal/relative dependency: import '@haven/core/../../missing'; (47.8727ms)
+✔ relative asset imports resolve without expanding the production scan (83.7082ms)
+✔ parse error is incomplete verification: packages/core/src/index.ts const = ; (53.4927ms)
+✔ parse error is incomplete verification: packages/ui/src/Bad.svelte <script lang="ts">const = ;</script> (59.0215ms)
+✔ parse error is incomplete verification: packages/ui/src/Bad.svelte <script>import "@haven/core";</script><div> (93.0702ms)
+✔ missing and empty scope fail without fabricated line numbers (41.973ms)
+✔ a scope containing only excluded files is empty (52.4505ms)
+✔ unreadable root and source preserve path/cause without a line (44.2886ms)
+✔ manifest failure cannot make internal imports appear external (52.4394ms)
+✔ two/three package cycles include a witness and every import location (85.9125ms)
+✔ within-package file cycles are legal, package DAG has no cycles (68.9248ms)
+✔ diagnostics and graph output are stable across scans and creation order (122.3278ms)
+✔ symlink escape is verification failure, never scanned or followed (76.8475ms)
+✔ a source root symlink cannot escape and an internal symlink can be scanned (122.7749ms)
+✔ inspected TypeScript, Svelte and local config code is never executed (53.1013ms)
+✔ CLI exit 0/1/2 means PASS/VIOLATION/INCOMPLETE; output is stable JSON (16707.3155ms)
+ℹ tests 154
+ℹ suites 0
+ℹ pass 154
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 44453.9615
+
+HEAD=5e97f049330c2e6c4e213b845815afb368d8a7b3
+TREE=49f6b676c3ae57f66ef9ce6275eb89a806f52a9a
+UTC=2026-11-14T14:02:41.138Z
+EXIT=0
+COMMAND=npm test
+CI=
+FINISHED=2026-11-14T14:03:43.575Z
+
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  120 passed (120)
+      Test
+HEAD=5e97f049330c2e6c4e213b845815afb368d8a7b3
+TREE=49f6b676c3ae57f66ef9ce6275eb89a806f52a9a
+UTC=2026-11-14T14:02:41.138Z
+EXIT=0
+COMMAND=npm test
+CI=
+FINISHED=2026-11-14T14:03:43.575Z
+
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  120 passed (120)
+      Tests  2488 passed (2488)
+   Start at  21:02:42
+   Duration  60.63s (transform 12.32s, setup 0ms, import 50.67s, tests 201.60s, environment 69ms)
+
+
+HEAD=5e97f049330c2e6c4e213b845815afb368d8a7b3
+TREE=49f6b676c3ae57f66ef9ce6275eb89a806f52a9a
+UTC=2026-11-14T14:03:43.659Z
+EXIT=0
+COMMAND=npm run build
+CI=
+FINISHED=2026-11-14T14:04:05.908Z
+
+
+> build-settlement@0.1.0 build
+> npm run build --workspace=@haven/core && npm run build --workspace=@haven/simulation && npm run build --workspace=@haven/ui
+
+
+>
+HEAD=5e97f049330c2e6c4e213b845815afb368d8a7b3
+TREE=49f6b676c3ae57f66ef9ce6275eb89a806f52a9a
+UTC=2026-11-14T14:03:43.659Z
+EXIT=0
+COMMAND=npm run build
+CI=
+FINISHED=2026-11-14T14:04:05.908Z
+
+
+> build-settlement@0.1.0 build
+> npm run build --workspace=@haven/core && npm run build --workspace=@haven/simulation && npm run build --workspace=@haven/ui
+
+
+> @haven/core@0.1.0 build
+> tsc
+
+
+> @haven/simulation@0.1.0 build
+> tsc
+
+
+> @haven/ui@0.1.0 build
+> vite build
+
+vite v6.4.5 building for production...
+transforming...
+✓ 246 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.71 kB │ gzip:   0.41 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-CxB-ZnFZ.css                   32.98 kB │ gzip:   6.74 kB
+dist/assets/index-DlvafnCY.js                   398.90 kB │ gzip: 126.72 kB
+✓ built in 4.51s
+
+CI=
+HEAD=5e97f049330c2e6c4e213b845815afb368d8a7b3
+TREE=49f6b676c3ae57f66ef9ce6275eb89a806f52a9a
+UTC=2026-11-14T14:04:07.069Z
+EXIT=0
+COMMAND=echo CI=%CI% && npm run test:smoke -- --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/review-fix1-smoke
+CI=1
+FINISHED=2026-11-14T14:38:02.200Z
+
+CI=1 
+
+> build-settlement@0.1.0 pretest:smoke
+> npm run b
+ and focuses New Game (423ms)
+  ok 333 [chromium] › tests\e2e\title.spec.ts:110:1 › manual save enables cached Continue with exactly one mount read (2.2s)
+  ok 334 [chromium] › tests\e2e\title.spec.ts:119:1 › old checkpoint disables Continue with reason (546ms)
+  ok 335 [chromium] › tests\e2e\title.spec.ts:123:1 › valid Load checkpoint replaces stale mount cache (1.1s)
+  ok 336 [chromium] › tests\e2e\title.spec.ts:129:50 › Load refuses oversize and keeps title (644ms)
+  ok 337 [chromium] › tests\e2e\title.spec.ts:129:50 › Load refuses old and keeps title (486ms)
+  ok 338 [chromium] › tests\e2e\title.spec.ts:133:1 › double New Game and Create produce one session (946ms)
+  ok 339 [chromium] › tests\e2e\title.spec.ts:139:49 › options storage junk still renders title (517ms)
+  ok 340 [chromium] › tests\e2e\title.spec.ts:139:49 › options storage throws still renders title (449ms)
+  ok 341 [chromium] › tests\e2e\title.spec.ts:148:1 › Large report at 320px keeps all six letters and stock ledger inside the page (1.1s)
+  ok 342 [chromium] › tests\e2e\title.spec.ts:174:1 › Fullscreen reflects live document changes while Options stays open (503ms)
+  ok 343 [chromium] › tests\e2e\title.spec.ts:184:1 › fallen city clears cached Continue after New Game and creation Cancel (1.1s)
+  ok 344 [chromium] › tests\e2e\title.spec.ts:197:1 › Quit invalidates a pending checkpoint file read (572ms)
+  ok 345 [chromium] › tests\e2e\title.spec.ts:221:3 › B2 Main menu › Main menu saves and refreshes focused Continue on the title (1.7s)
+  ok 346 [chromium] › tests\e2e\title.spec.ts:229:3 › B2 Main menu › Main menu is locked with its reason throughout Report (888ms)
+  ok 347 [chromium] › tests\e2e\title.spec.ts:238:3 › B2 Main menu › Main menu write failure keeps Planning, the session and the previous save (1.2s)
+  ok 348 [chromium] › tests\e2e\workforce-draft-error.spec.ts:27:5 › editing rejected workforce to valid clears only its old error at 1280px (3.0s)
+  ok 349 [chromium] › tests\e2e\workforce-draft-error.spec.ts:27:5 › editing rejected workforce to still invalid clears only its old error at 1280px (3.0s)
+  ok 350 [chromium] › tests\e2e\workforce-draft-error.spec.ts:27:5 › editing rejected workforce to confirmed value clears only its old error at 1280px (3.0s)
+  ok 351 [chromium] › tests\e2e\workforce-draft-error.spec.ts:27:5 › editing rejected workforce to valid clears only its old error at 390px (2.8s)
+  ok 352 [chromium] › tests\e2e\workforce-draft-error.spec.ts:27:5 › editing rejected workforce to still invalid clears only its old error at 390px (4.0s)
+  ok 353 [chromium] › tests\e2e\workforce-draft-error.spec.ts:27:5 › editing rejected workforce to confirmed value clears only its old error at 390px (3.0s)
+  ok 354 [chromium] › tests\e2e\world-npc-session.spec.ts:12:1 › New Game lists 3 named starters, all unassigned, with stats, traits and post-skill status (2.2s)
+  ok 355 [chromium] › tests\e2e\world-npc-session.spec.ts:16:1 › same pinned seed reproduces names; clicks never reroll them (3.3s)
+  ok 356 [chromium] › tests\e2e\world-npc-session.spec.ts:19:1 › only built manager tiles are offered; a low-stat starter can take the Farm slot (1.9s)
+  ok 357 [chromium] › tests\e2e\world-npc-session.spec.ts:22:1 › pause keeps the post; replacing the building clears it (3.3s)
+  ok 358 [chromium] › tests\e2e\world-npc-session.spec.ts:25:1 › assignment is refused in Report and kept through the week (2.1s)
+  ok 359 [chromium] › tests\e2e\world-npc-session.spec.ts:28:1 › save, continue, export and import preserve posts and resolved names; slots stay separate (5.3s)
+  ok 360 [chromium] › tests\e2e\world-npc-session.spec.ts:33:1 › non-Life world files are refused without changing the game or either older slot (1.4s)
+  ok 361 [chromium] › tests\e2e\world-session.spec.ts:22:1 › U7: fresh seeds differ but summary and rendered metadata reveal no hidden world data (1.8s)
+  ok 362 [chromium] › tests\e2e\world-session.spec.ts:25:1 › U2: End Week while import is pending rejects both halves and preserves all three slots (2.0s)
+  ok 363 [chromium] › tests\e2e\world-session.spec.ts:28:63 › U3: successful Continue invalidates pending success and its feedback (6.3s)
+  ok 364 [chromium] › tests\e2e\world-session.spec.ts:28:63 › U3: successful Continue invalidates pending invalid JSON and its feedback (7.5s)
+  ok 365 [chromium] › tests\e2e\world-session.spec.ts:28:63 › U3: successful Continue invalidates pending read rejection and its feedback (5.9s)
+  ok 366 [chromium] › tests\e2e\world-session.spec.ts:31:1 › U3: failed Continue leaves a pending valid import eligible (1.4s)
+  ok 367 [chromium] › tests\e2e\world-session.spec.ts:34:1 › U4: only newest reversed import publishes city and outside; older failures cannot replace feedback (2.6s)
+  ok 368 [chromium] › tests\e2e\world-session.spec.ts:37:1 › U5/U6b: wrong-slot bytes never overwrite or fall back at any old bookmark (11.5s)
+  ok 369 [chromium] › tests\e2e\world-session.spec.ts:40:1 › U8: Report locks all four checkpoint controls (785ms)
+  ok 370 [chromium] › tests\e2e\world-session.spec.ts:43:1 › U9: local and portable saves restore the whole populated session and uninterrupted next week (23.0s)
+
+  Slow test file: [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts (10.7m)
+  Slow test file: [chromium] › tests\e2e\character-life-navigation.spec.ts (6.0m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  370 passed (33.8m)
+

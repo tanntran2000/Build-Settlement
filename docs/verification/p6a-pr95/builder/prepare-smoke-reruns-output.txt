@@ -1,0 +1,94 @@
+﻿{
+  "failed": 11,
+  "isolatedRunsRequired": 11,
+  "failures": [
+    {
+      "file": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+      "line": 250,
+      "width": 1600,
+      "test": "life shell accessibility baseline",
+      "log": "smoke-rerun-1600-baseline",
+      "filter": "-g accessibility.at.1600px"
+    },
+    {
+      "file": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+      "line": 329,
+      "width": 1600,
+      "test": "long character and report content reflows",
+      "log": "smoke-rerun-1600-reflow",
+      "filter": "-g accessibility.at.1600px"
+    },
+    {
+      "file": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+      "line": 250,
+      "width": 1280,
+      "test": "life shell accessibility baseline",
+      "log": "smoke-rerun-1280-baseline",
+      "filter": "-g accessibility.at.1280px"
+    },
+    {
+      "file": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+      "line": 329,
+      "width": 1280,
+      "test": "long character and report content reflows",
+      "log": "smoke-rerun-1280-reflow",
+      "filter": "-g accessibility.at.1280px"
+    },
+    {
+      "file": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+      "line": 250,
+      "width": 375,
+      "test": "life shell accessibility baseline",
+      "log": "smoke-rerun-375-baseline",
+      "filter": "-g accessibility.at.375px"
+    },
+    {
+      "file": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+      "line": 329,
+      "width": 375,
+      "test": "long character and report content reflows",
+      "log": "smoke-rerun-375-reflow",
+      "filter": "-g accessibility.at.375px"
+    },
+    {
+      "file": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+      "line": 250,
+      "width": 320,
+      "test": "life shell accessibility baseline",
+      "log": "smoke-rerun-320-baseline",
+      "filter": "-g accessibility.at.320px"
+    },
+    {
+      "file": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+      "line": 329,
+      "width": 320,
+      "test": "long character and report content reflows",
+      "log": "smoke-rerun-320-reflow",
+      "filter": "-g accessibility.at.320px"
+    },
+    {
+      "file": "tests/e2e/character-life-navigation.spec.ts",
+      "line": 347,
+      "width": 375,
+      "test": "full-body placeholder preserves profile disclosure at 375px",
+      "log": "smoke-rerun-375-profile",
+      "filter": "-g at.375px"
+    },
+    {
+      "file": "tests/e2e/character-life-navigation.spec.ts",
+      "line": 347,
+      "width": 1280,
+      "test": "full-body placeholder preserves profile disclosure at 1280px",
+      "log": "smoke-rerun-1280-profile",
+      "filter": "-g at.1280px"
+    },
+    {
+      "file": "tests/e2e/title.spec.ts",
+      "line": 148,
+      "width": 320,
+      "test": "Large report at 320px keeps all six letters and stock ledger inside the page",
+      "log": "smoke-rerun-320-large-report",
+      "filter": ""
+    }
+  ]
+}

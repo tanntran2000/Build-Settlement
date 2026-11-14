@@ -1,0 +1,122 @@
+diff --git a/packages/ui/src/EquipmentView.svelte b/packages/ui/src/EquipmentView.svelte
+index 2aa1f52..6d47bf9 100644
+--- a/packages/ui/src/EquipmentView.svelte
++++ b/packages/ui/src/EquipmentView.svelte
+@@ -26,7 +26,23 @@
+  {#if error}<p role="alert">{error}</p>{/if}
+  <div class="loadout">
+   <div class="doll">
++   {#if kind==='npc'}
++   <svg role="img" aria-label="NPC silhouette" viewBox="0 0 100 200"><g stroke="#d9c499" stroke-width="2" stroke-linejoin="round">
++    <path d="M28 128C26 150 33 168 35 193L46 193L48 140Z"/>
++    <path d="M72 128C74 150 67 168 65 193L54 193L52 140Z"/>
++    <path d="M29 152L47 155M71 152L53 155" fill="none"/>
++    <path d="M40 98L60 98C67 106 67 116 60 124L40 124C33 116 33 106 40 98Z"/>
++    <circle cx="35" cy="124" r="17"/><circle cx="65" cy="124" r="17"/>
++    <path d="M36 44C44 40 56 40 64 44C70 48 70 56 66 64L60 100L40 100L34 64C30 56 30 48 36 44Z"/>
++    <circle cx="38.5" cy="71" r="14.5"/><circle cx="61.5" cy="71" r="14.5"/>
++    <path d="M64 44C72 46 78 52 82 62L89 80L70 103L64 97L80 80L74 65Z"/>
++    <path d="M36 44C28 46 22 52 18 62L11 80L30 103L36 97L20 80L26 65Z"/>
++    <path d="M58 14C66 6 75 10 73 20C71 29 64 34 60 30C64 26 66 20 62 16Z" stroke="none"/>
++    <rect x="46" y="33" width="8" height="10" stroke="none"/>
++    <circle cx="50" cy="24" r="12"/></g></svg>
++   {:else}
+    <svg role="img" aria-label="Character silhouette" viewBox="0 0 100 200"><circle cx="50" cy="24" r="17"/><path d="M34 47H66L83 100L72 105L61 72L63 125L69 188H54L50 139L46 188H31L37 125L39 72L28 105L17 100Z"/></svg>
++   {/if}
+    <div class="slots">{#each equipmentSlots(kind) as entry}
+     <button data-item-slot={entry.id} data-locked={entry.locked?'true':undefined} disabled={entry.locked} aria-pressed={slot===entry.id} onclick={()=>{slot=entry.id;filter='This slot';view='Inventory';}}>
+      <strong>{entry.label}</strong><span>{entry.locked?'Locked':worn[entry.id]?ITEM_CATALOG[worn[entry.id]!.defId].name:['top','bottom','shoes'].includes(entry.id)&&worn.set?ITEM_CATALOG[worn.set.defId].name:'Empty'}</span>
+@@ -55,5 +71,5 @@
+  <dialog bind:this={dialog} aria-labelledby="destroy-item-heading" oncancel={()=>destroyTarget=null} onclose={()=>{destroyTarget=null;opener?.focus();}}><h4 id="destroy-item-heading">Destroy item?</h4><p>{destroyTarget?ITEM_CATALOG[destroyTarget.defId].name:''} will be lost permanently.</p><button onclick={close}>Cancel</button><button disabled={locked} onclick={()=>{if(destroyTarget)run('DESTROY_ITEM',{itemId:destroyTarget.id});close();}}>Destroy</button></dialog>
+ </section>
+ <style>
+- .equipment{min-width:0}h4{font-size:1.3rem;margin:8px 0}h5{font-size:1.1rem;margin:12px 0}.loadout{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:16px}.doll{position:relative;min-height:330px;background:#d9c499;border:3px double #6b4f2e;padding:12px}.doll svg{position:absolute;width:110px;height:260px;left:50%;top:30px;transform:translateX(-50%);fill:#756248;opacity:.65;pointer-events:none}.slots{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:10px 75px}.slots button{display:flex;flex-direction:column;text-align:left;min-height:60px;min-width:0;padding:8px;overflow-wrap:anywhere;background:#f5f0e3;color:#3b2a17;border:2px solid #6b4f2e}.slots span{font-size:.9rem}.totals{min-width:0}.totals button{display:block;margin:8px 0;width:100%;overflow-wrap:anywhere}.switches{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}button{min-height:44px}button[aria-pressed='true']{outline:2px solid #6b4f2e;outline-offset:1px}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:8px;border-bottom:1px solid #6b4f2e}dialog{max-width:min(90vw,420px);background:#ead8ae;color:#3b2a17;border:4px double #6b4f2e;padding:24px}dialog button{margin:8px}dialog::backdrop{background:#21140ccc}@media(max-width:600px){.loadout{grid-template-columns:1fr}.slots{gap:8px 50px}.doll{padding:8px}}
++ .equipment{min-width:0}h4{font-size:1.3rem;margin:8px 0}h5{font-size:1.1rem;margin:12px 0}.loadout{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:16px}.doll{--focus:var(--ink);position:relative;min-height:330px;background:#d9c499;border:3px double #6b4f2e;padding:12px}.doll svg{position:absolute;width:110px;height:260px;left:50%;top:30px;transform:translateX(-50%);fill:#756248;opacity:.65;pointer-events:none}.slots{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:10px 75px}.slots button{display:flex;flex-direction:column;text-align:left;min-height:60px;min-width:0;padding:8px;overflow-wrap:anywhere;background:#f5f0e3;color:#3b2a17;border:2px solid #6b4f2e}.slots span{font-size:.9rem}.totals{min-width:0}.totals button{display:block;margin:8px 0;width:100%;overflow-wrap:anywhere}.switches{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}button{min-height:44px}button[aria-pressed='true']{font-weight:700;outline:2px solid #6b4f2e;outline-offset:1px}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:8px;border-bottom:1px solid #6b4f2e}dialog{max-width:min(90vw,420px);background:#ead8ae;color:#3b2a17;border:4px double #6b4f2e;padding:24px}dialog button{margin:8px}dialog::backdrop{background:#21140ccc}@media(max-width:600px){.loadout{grid-template-columns:1fr}.slots{gap:8px 50px}.doll{padding:8px}}
+ </style>
+diff --git a/packages/ui/src/ItemCard.svelte b/packages/ui/src/ItemCard.svelte
+index 6c8a56d..0b356e4 100644
+--- a/packages/ui/src/ItemCard.svelte
++++ b/packages/ui/src/ItemCard.svelte
+@@ -20,7 +20,7 @@
+   {#if definition.mainStat}<p>{itemTitle(definition.mainStat)} +{ITEM_TRIAL.bonuses[definition.rarity].main*(definition.slot==='set'?ITEM_TRIAL.setMultiplier:1)}{#if definition.secondaryStat} · {itemTitle(definition.secondaryStat)} +{ITEM_TRIAL.bonuses[definition.rarity].secondary*(definition.slot==='set'?ITEM_TRIAL.setMultiplier:1)}{/if}</p>{/if}
+   {#if definition.regen}<p>Regen +{definition.regen*(definition.slot==='set'?ITEM_TRIAL.setMultiplier:1)}/week</p>{/if}
+   {#if definition.slot==='set'}<p>Covers Top, Bottom and Shoes.</p>{/if}
+-  {#if definition.trait}<p>While worn: {({warden:'Watch House Security +3',crown:'Authority +3',ironhide:'Wound damage −5',ledger:'One more research point'} as Record<string,string>)[definition.trait]??itemTitle(definition.trait)}.</p>{/if}
++  {#if definition.trait}<p>While worn: {({warden:`Watch House Security +${ITEM_TRIAL.effects.wardenSecurity}`,crown:`Authority +${ITEM_TRIAL.effects.crownAuthority}`,ironhide:`Wound damage −${ITEM_TRIAL.effects.ironhideWoundReduction}`,ledger:`Post output +${ITEM_TRIAL.effects.ledgerOutputPercent}%`} as Record<string,string>)[definition.trait]??itemTitle(definition.trait)}.</p>{/if}
+   {#if preview.length}<p>Before → After</p><dl>{#each preview as row}<div><dt>{itemTitle(row.skill)}</dt><dd>{row.before} → {row.after}</dd></div>{/each}</dl>{/if}
+   {#if priceMilli!==undefined}<p>{formatMilli(priceMilli)} Gold</p>{/if}
+   <div class="actions">
+diff --git a/packages/ui/src/SoloWeekReport.svelte b/packages/ui/src/SoloWeekReport.svelte
+index 0d7c10e..511c1e8 100644
+--- a/packages/ui/src/SoloWeekReport.svelte
++++ b/packages/ui/src/SoloWeekReport.svelte
+@@ -131,6 +131,10 @@
+   table { width: 100%; border-collapse: collapse; }
+   caption { text-align: left; font-weight: bold; margin-bottom: 12px; }
+   th, td { padding: 8px; text-align: right; border-bottom: 1px solid var(--border-color); min-width: 6rem; max-width: 10rem; }
++  section[aria-label='Steward item details'] table,
++  section[aria-label='Quartermaster item details'] table { table-layout: fixed; }
++  section[aria-label='Steward item details'] :is(th, td),
++  section[aria-label='Quartermaster item details'] :is(th, td) { min-width: 0; max-width: none; overflow-wrap: anywhere; }
+   th:first-child { text-align: left; }
+   details { margin: 8px 0; } .weekly-report summary { cursor: pointer; min-width: 44px; min-height: 44px; padding-block: 10px; }
+   ul { padding-left: 1.5rem; }
+diff --git a/tests/e2e/character-life-navigation.spec.ts b/tests/e2e/character-life-navigation.spec.ts
+index 829165c..28e028a 100644
+--- a/tests/e2e/character-life-navigation.spec.ts
++++ b/tests/e2e/character-life-navigation.spec.ts
+@@ -378,8 +378,13 @@ for (const width of [375, 1280]) {
+       }
+       for (const area of ['Description', 'Inventory', 'Work', 'Relations']) {
+         await selectArea(page, area);
+-        await expect(placeholder).toBeVisible();
+-        expect(await placeholder.evaluate(el => el.outerHTML)).toBe(staticMarkup);
++        if (area === 'Inventory') {
++          await expect(placeholder).toHaveCount(0);
++          await expect(win.getByRole('region', { name: 'Equipment', exact: true })).toBeVisible();
++        } else {
++          await expect(placeholder).toBeVisible();
++          expect(await placeholder.evaluate(el => el.outerHTML)).toBe(staticMarkup);
++        }
+       }
+       const bounds = await placeholder.evaluate(el => {
+         const box = el.getBoundingClientRect(), card = el.closest('.card')!.getBoundingClientRect();
+diff --git a/tests/e2e/items.spec.ts b/tests/e2e/items.spec.ts
+index efb37e9..4122d3d 100644
+--- a/tests/e2e/items.spec.ts
++++ b/tests/e2e/items.spec.ts
+@@ -42,6 +42,34 @@ test('C1 paper doll, totals, filters and Materials expose real item state',async
+ });
+ 
+ const evidence='C:/Users/Admin/.t3/local-drafts/p6a-prC';
++test('C3 Legendary cards describe their catalog effects',async({page})=>{
++  const s=funded();
++  s.city.society!.items.inventory=['wardens-oath','crown-of-embers','ironhide-gloves','ledger-of-plenty'].map((defId,k)=>({id:k+1,defId}));
++  s.city.society!.items.nextItemId=5;
++  await importLife(page,s);const panel=await inventory(page);
++  const effects=ITEM_TRIAL.effects;
++  for(const [name,text] of [
++    ["Warden's Oath",`While worn: Watch House Security +${effects.wardenSecurity}.`],
++    ['Crown of Embers',`While worn: Authority +${effects.crownAuthority}.`],
++    ['Ironhide Gloves',`While worn: Wound damage −${effects.ironhideWoundReduction}.`],
++    ['Ledger of Plenty',`While worn: Post output +${effects.ledgerOutputPercent}%.`],
++  ])await expect(panel.getByRole('article',{name,exact:true}).getByText(text,{exact:true})).toBeVisible();
++});
++
++test('C3 Player and NPC silhouettes have their distinct accessible labels',async({page})=>{
++  const s=funded();await importLife(page,s);
++  await mkdir(`${evidence}/screenshots`,{recursive:true});
++  for(const [id,label,name] of [
++    [s.player.character.id,'Character silhouette','equipment-player'],
++    [s.npcs[0].character.id,'NPC silhouette','equipment-npc'],
++  ]){
++    const panel=await inventory(page,id);
++    await expect(panel.getByRole('img',{name:label,exact:true})).toBeVisible();
++    await panel.evaluate(node=>{node.scrollIntoView({block:'start'});for(let p=node.parentElement;p;p=p.parentElement)if(p.scrollHeight>p.clientHeight&&/auto|scroll/.test(getComputedStyle(p).overflowY))p.scrollTop=Math.max(0,p.scrollTop-140);});
++    await page.screenshot({path:`${evidence}/screenshots/${name}-1280.png`,fullPage:true});
++  }
++});
++
+ test('C2 UI buy, keyboard equip and next Farm report show the post effect',async({page})=>{
+   let s=funded();s.npcs[0].character.skills.management=49;
+   s=act(s,'ASSIGN_NPC',{npcId:s.npcs[0].character.id,tileId:'field-1'});

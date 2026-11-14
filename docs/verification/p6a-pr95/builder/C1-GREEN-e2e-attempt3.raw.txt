@@ -1,0 +1,49 @@
+[WebServer] (node:70996) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:71084) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:71264) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\items.spec.ts:28:1 › C1 paper doll, totals, filters and Materials expose real item state (5.4s)
+C1 attempt 3 Farm proof {"effective":61,"percent":2,"extraWheat":80,"visibleWheatDelta":"0.08"}
+  x  2 [chromium] › tests\e2e\items.spec.ts:41:1 › C1 card preview and keyboard equip on a posted NPC change the next report (2.6s)
+(node:65068) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [chromium] › tests\e2e\items.spec.ts:69:1 › C1 Destroy confirms, cancels and accepts with the keyboard (2.2s)
+
+
+  1) [chromium] › tests\e2e\items.spec.ts:41:1 › C1 card preview and keyboard equip on a posted NPC change the next report 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "false"
+    Received: "true"
+
+       at character-life-navigation.helpers.ts:106
+
+      104 |
+      105 | export async function exportLife(page: Page): Promise<CharacterLifeSessionState> {
+    > 106 |   expect(await page.getByTestId('life-end-week').getAttribute('aria-disabled')).toBe('false');
+          |                                                                                 ^
+      107 |   await go(page, 'session');
+      108 |   const pending = page.waitForEvent('download');
+      109 |   await page.getByRole('button', { name: 'Export checkpoint', exact: true }).click();
+        at exportLife (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:106:81)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:67:10
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\C1-attempt3\items-C1-card-preview-and--bd493--NPC-change-the-next-report-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\C1-attempt3\items-C1-card-preview-and--bd493--NPC-change-the-next-report-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\C1-attempt3\items-C1-card-preview-and--bd493--NPC-change-the-next-report-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\items.spec.ts:41:1 › C1 card preview and keyboard equip on a posted NPC change the next report 
+  2 passed (22.9s)

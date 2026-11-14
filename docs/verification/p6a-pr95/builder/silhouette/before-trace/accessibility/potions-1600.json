@@ -1,0 +1,78 @@
+{
+  "texts": [
+    {
+      "text": "Potion shop",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "The Hospital is staffed and supplied.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Heal Potion I",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Restore 5 health · 3 Gold",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Buy Heal Potion I",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Heal Potion II",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Restore 10 health · 8 Gold",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Buy Heal Potion II",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Heal Potion III",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Restore 15 health · 15 Gold",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Buy Heal Potion III",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    }
+  ],
+  "clipped": [],
+  "controls": [
+    {
+      "label": "Buy Heal Potion I",
+      "width": 177.546875,
+      "height": 44.59375
+    },
+    {
+      "label": "Buy Heal Potion II",
+      "width": 185.234375,
+      "height": 44.59375
+    },
+    {
+      "label": "Buy Heal Potion III",
+      "width": 192.90625,
+      "height": 44.59375
+    }
+  ],
+  "pageOverflow": false
+}

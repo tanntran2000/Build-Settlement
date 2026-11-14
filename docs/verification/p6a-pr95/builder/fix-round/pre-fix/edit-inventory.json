@@ -1,0 +1,109 @@
+{
+  "HEAD": "8af03070496d8e41ae85fecaea2d29c4cc474811",
+  "tree": "025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4",
+  "base": "2c04321ba342871e6a858110ea2320a8e4df0d5d",
+  "blocks": 10,
+  "files": 3,
+  "edits": [
+    {
+      "id": "P1",
+      "file": "tests/e2e/character-life-boundary.spec.ts",
+      "line": 103,
+      "task": "C1",
+      "before": "  await expect(panel.locator('p')).toHaveText(['Inventory and equipment are not implemented yet.', 'Current clothing is described in Description.']);\n  await expect(panel.locator('button,input,select,ul,ol,[data-slot]')).toHaveCount(0);",
+      "after": "  const equipment = panel.getByRole('region', { name: 'Equipment', exact: true });\n  await expect(equipment).toBeVisible();\n  await expect(equipment.locator('[data-item-slot]')).toHaveCount(c.id === 'player' ? 8 : 11);\n  await expect(equipment.locator('[data-item-slot][data-locked=\"true\"]')).toHaveCount(c.id === 'player' ? 0 : 3);\n  await expect(equipment.getByRole('group', { name: 'Inventory filters', exact: true }).getByRole('button')).toHaveText(['All', 'Player', 'NPC', 'This slot', 'Equipment', 'Accessory', 'Outfit']);",
+      "why": "C1 replaces the Inventory placeholder and empty-control surface with the real equipment view. Keep the observation setup and all other profile assertions.",
+      "afterLine": 103
+    },
+    {
+      "id": "P2",
+      "file": "tests/e2e/character-life-navigation.spec.ts",
+      "line": 489,
+      "task": "C1",
+      "before": "test('inventory and player unavailable areas are honest', async ({ page }) => {",
+      "after": "test('inventory shows equipment and player unavailable areas stay honest', async ({ page }) => {",
+      "why": "Rename the existing test to describe the now implemented Inventory; retain its Player Work and Relations assertions.",
+      "afterLine": 489
+    },
+    {
+      "id": "P3",
+      "file": "tests/e2e/character-life-navigation.spec.ts",
+      "line": 497,
+      "task": "C1",
+      "before": "    await expect(panel.locator('p')).toHaveText(['Inventory and equipment are not implemented yet.', 'Current clothing is described in Description.']);\n    await expect(panel.locator('button,input,select,ul,ol,[data-slot]')).toHaveCount(0);",
+      "after": "    const equipment = panel.getByRole('region', { name: 'Equipment', exact: true });\n    await expect(equipment).toBeVisible();\n    await expect(equipment.locator('[data-item-slot]')).toHaveCount(id === 'player' ? 8 : 11);\n    await expect(equipment.locator('[data-item-slot][data-locked=\"true\"]')).toHaveCount(id === 'player' ? 0 : 3);\n    await expect(equipment.getByRole('group', { name: 'Inventory filters', exact: true }).getByRole('button')).toHaveText(['All', 'Player', 'NPC', 'This slot', 'Equipment', 'Accessory', 'Outfit']);",
+      "why": "C1 implements Inventory for every selected character. Replace the obsolete empty placeholder with exact slot, lock and filter assertions.",
+      "afterLine": 497
+    },
+    {
+      "id": "P4",
+      "file": "tests/e2e/character-life-navigation.spec.ts",
+      "line": 844,
+      "task": "C2",
+      "before": "  const {items: _items,society: _society,luxuryImportedMilli: _luxury,trainingGoldMilli: _training,...expectedBase}=expected.report;",
+      "after": "  const {society: _society,luxuryImportedMilli: _luxury,trainingGoldMilli: _training,...expectedBase}=expected.report;",
+      "why": "C2 renders items. Include the parsed items field in this existing exact executor-report equality.",
+      "afterLine": 847
+    },
+    {
+      "id": "P5",
+      "file": "tests/e2e/character-life-navigation.spec.ts",
+      "line": 1330,
+      "task": "C1",
+      "before": "        await expect(panel.locator('p')).toHaveText(['Inventory and equipment are not implemented yet.', 'Current clothing is described in Description.']);\n        await expect(panel.locator('button,input,select,ul,ol,[data-slot]')).toHaveCount(0);",
+      "after": "        const equipment = panel.getByRole('region', { name: 'Equipment', exact: true });\n        await expect(equipment).toBeVisible();\n        await expect(equipment.locator('[data-item-slot]')).toHaveCount(c.id === 'player' ? 8 : 11);\n        await expect(equipment.locator('[data-item-slot][data-locked=\"true\"]')).toHaveCount(c.id === 'player' ? 0 : 3);\n        await expect(equipment.getByRole('group', { name: 'Inventory filters', exact: true }).getByRole('button')).toHaveText(['All', 'Player', 'NPC', 'This slot', 'Equipment', 'Accessory', 'Outfit']);",
+      "why": "The F3 profile audit traverses the implemented Inventory. Preserve all disclosure, selection and tab-memory assertions.",
+      "afterLine": 1333
+    },
+    {
+      "id": "P6",
+      "file": "tests/e2e/character-life-navigation.helpers.ts",
+      "line": 3,
+      "task": "C2",
+      "before": "import { createCharacterLifeSession,DEFAULT_PLAYER_DRAFT,isCharacterLifeSessionState,TRIAL_BUILDINGS,WEEKLY_RESOURCE_KEYS,type CharacterLifeSessionState,type TileTrialReport } from '../../packages/core/src/index.ts';",
+      "after": "import { createCharacterLifeSession,DEFAULT_PLAYER_DRAFT,ITEM_CATALOG,isCharacterLifeSessionState,TRIAL_BUILDINGS,WEEKLY_RESOURCE_KEYS,type CharacterLifeSessionState,type TileTrialReport } from '../../packages/core/src/index.ts';",
+      "why": "The visible report parser resolves item names back to stable catalog ids; no expected report payload is copied.",
+      "afterLine": 3
+    },
+    {
+      "id": "P7",
+      "file": "tests/e2e/character-life-navigation.helpers.ts",
+      "line": 218,
+      "task": "C2",
+      "before": "// Read the complete report from rendered text, including the calculation disclosure.",
+      "after": "// Read visible tables inside the existing Steward/Quartermaster Details disclosures.\n// Read visible cell text; never copy expected.items or a JSON parity payload.\nasync function readItemReport(panel: Locator): Promise<TileTrialReport['items']> {\n  const quartermaster = panel.getByRole('region', { name: 'Quartermaster item details', exact: true });\n  const steward = panel.getByRole('region', { name: 'Steward item details', exact: true });\n  await expect(quartermaster).toBeVisible();\n  await expect(steward).toBeVisible();\n  async function rows(region: Locator, name: string, columns: string[]): Promise<string[][]> {\n    const table = region.getByRole('table', { name, exact: true });\n    await expect(table).toBeVisible();\n    await expect(table.getByRole('columnheader')).toHaveText(columns);\n    const values: string[][] = [];\n    for (const row of await table.locator('tbody > tr').all()) {\n      const cells = await row.locator('th,td').allTextContents();\n      expect(cells).toHaveLength(columns.length);\n      values.push(cells.map(value => value.trim()));\n    }\n    return values;\n  }\n  function definition(name: string): string {\n    const matches = Object.entries(ITEM_CATALOG).filter(([, item]) => item.name === name);\n    expect(matches).toHaveLength(1);\n    return matches[0][0];\n  }\n  function goal(label: string): NonNullable<TileTrialReport['items']['legendary']>['goal'] {\n    const goals = { 'Calm city': 'calm', 'Authority 100': 'authority', 'Week 52': 'week52', 'Research complete': 'research' } as const;\n    expect(Object.hasOwn(goals, label)).toBe(true);\n    return goals[label as keyof typeof goals];\n  }\n  const materials = (await rows(quartermaster, 'Materials this week', ['Plot', 'Material', 'Outcome'])).map(([tileId, name, outcome]) => {\n    expect(['Kept', 'Lost: stack full (999)']).toContain(outcome);\n    return { tileId, materialId: definition(name), lost: outcome === 'Lost: stack full (999)' };\n  });\n  const foundRows = await rows(quartermaster, 'Item found', ['Item', 'Outcome']);\n  expect(foundRows.length).toBeLessThanOrEqual(1);\n  let found: TileTrialReport['items']['found'] = null;\n  if (foundRows.length) {\n    const [name, outcome] = foundRows[0];\n    expect(['Inventory', 'Temporary storage', 'Lost: inventory and temporary storage full']).toContain(outcome);\n    found = { defId: definition(name), stored: outcome === 'Temporary storage', lost: outcome === 'Lost: inventory and temporary storage full' };\n  }\n  const expired = (await rows(quartermaster, 'Expired items', ['Item'])).map(([name]) => definition(name));\n  const legendaryRows = await rows(steward, 'Legendary rewards', ['Goal', 'Item']);\n  expect(legendaryRows.length).toBeLessThanOrEqual(1);\n  const legendary = legendaryRows.length ? { goal: goal(legendaryRows[0][0]), defId: definition(legendaryRows[0][1]) } : null;\n  const pendingLegendary = (await rows(steward, 'Rewards waiting', ['Goal', 'Status'])).map(([label, status]) => {\n    expect(status).toBe('Make room in inventory or temporary storage.');\n    return goal(label);\n  });\n  const recovery = quartermaster.getByRole('group', { name: 'Recovery this week', exact: true });\n  await expect(recovery).toBeVisible();\n  await expect(recovery.locator('dt')).toHaveText(['Hospital operated', 'Regeneration']);\n  const values = await recovery.locator('dd').allTextContents();\n  expect(values).toHaveLength(2);\n  expect(['Yes', 'No']).toContain(values[0]);\n  expect(values[1]).toMatch(/^\\+\\d+$/);\n  const result: TileTrialReport['items'] = { materials, found, expired, legendary, hospitalOperated: values[0] === 'Yes', regen: Number(values[1].slice(1)) };\n  if (pendingLegendary.length) result.pendingLegendary = pendingLegendary;\n  return result;\n}\n\n// Read the complete report from rendered text, including the calculation disclosure.",
+      "why": "Add a strict reader of visible item tables and recovery text inside the existing opened letter Details. Preserve row order, null cases, booleans and absent pendingLegendary.",
+      "afterLine": 218
+    },
+    {
+      "id": "P8",
+      "file": "tests/e2e/character-life-navigation.helpers.ts",
+      "line": 219,
+      "task": "C2",
+      "before": "export async function expectReport(page: Page, expected: Readonly<TileTrialReport>): Promise<Omit<TileTrialReport, 'items'>> {",
+      "after": "export async function expectReport(page: Page, expected: Readonly<TileTrialReport>): Promise<TileTrialReport> {",
+      "why": "The rendered report now includes items; return the full TileTrialReport type.",
+      "afterLine": 280
+    },
+    {
+      "id": "P9",
+      "file": "tests/e2e/character-life-navigation.helpers.ts",
+      "line": 281,
+      "task": "C2",
+      "before": "  const actual: Omit<TileTrialReport, 'items'> = {\n    week: absoluteWeek, before, after,",
+      "after": "  const actual: TileTrialReport = {\n    week: absoluteWeek, before, after,\n    items: await readItemReport(panel),",
+      "why": "Include the independently parsed visible item report in actual, retaining every existing expected field and equality.",
+      "afterLine": 342
+    },
+    {
+      "id": "P10",
+      "file": "tests/e2e/character-life-navigation.helpers.ts",
+      "line": 379,
+      "task": "C2",
+      "before": "  const { items: _items, society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;",
+      "after": "  const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;",
+      "why": "Stop excluding the now rendered items field. The exact toEqual matcher is unchanged; existing separately checked society/luxury/training fields stay as before.",
+      "afterLine": 441
+    }
+  ]
+}

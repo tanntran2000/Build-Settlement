@@ -1,0 +1,9 @@
+C1 attempt-3 HOLD answered by the owner. Owner (Tân), 2026-11-14, dialog choice, verbatim: "Allow this Planning fix (Recommended)".
+
+Scope: exactly one further attempt (attempt 4), only in the new test `tests/e2e/items.spec.ts`, as proposed in C1-attempt3-HOLD.md:
+- after the Wheat check, compute the expected Planning session through the real `NEXT_WEEK` command;
+- activate the UI's "Plan next week" button;
+- compare the exported session exactly with that executor-produced Planning session.
+Keep every purchase, equipment and Farm-effect assertion. No product code, existing test, timeout or threshold change. Record it as attempt 4 in the C1 logs.
+
+The owner did not grant a broader permission: any other failure, in this test or another, is a HOLD with evidence. If C1 passes, commit it and continue with C2 and C3 per the brief and Plan correction 8. Do not push, open a PR or merge.

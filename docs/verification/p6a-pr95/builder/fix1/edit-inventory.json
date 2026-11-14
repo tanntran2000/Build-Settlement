@@ -1,0 +1,35 @@
+{
+  "HEAD": "5e97f049330c2e6c4e213b845815afb368d8a7b3",
+  "tree": "49f6b676c3ae57f66ef9ce6275eb89a806f52a9a",
+  "base": "f046e36c98fcfbbd16808e759b7b09f0f1f4c98e",
+  "baselineExistingTestLines": 1,
+  "wholePrBlocks": 11,
+  "wholePrFiles": 3,
+  "edits": [
+    {
+      "file": "tests/e2e/character-life-navigation.helpers.ts",
+      "line": 243,
+      "block": "P7",
+      "before": "'Authority 100': 'authority'",
+      "after": "'Authority 90+ for 4 weeks': 'authority'",
+      "ownerDecision": "Approve, incl. P7 line (Recommended)",
+      "reason": "Exact Authority goal threshold and four-week streak, spec §7.4",
+      "actualLine": 243,
+      "classification": "one approved line inside P7"
+    },
+    {
+      "file": "packages/ui/src/__tests__/items-view.test.ts",
+      "line": 96,
+      "before": "Authority 100 · Make room in inventory or temporary storage.",
+      "after": "Authority 90+ for 4 weeks · Make room in inventory or temporary storage.",
+      "classification": "exact expectation in the new PR C unit test"
+    },
+    {
+      "file": "tests/e2e/items.spec.ts",
+      "line": 228,
+      "before": "(no Review F1 case)",
+      "after": "Review F1 Destroy restores keyboard focus after removal, Cancel and Escape",
+      "classification": "additive case in the new PR C e2e file; all earlier cases unchanged"
+    }
+  ]
+}

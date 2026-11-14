@@ -1,0 +1,53 @@
+HEAD=2c04321ba342871e6a858110ea2320a8e4df0d5d
+TREE=d5597ae4296afc90b41557eb062ca43f7ab85313
+UTC=2026-11-14T09:06:00.582Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/items.spec.ts -g C1 --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/C1-GREEN-1
+CI=
+FINISHED=2026-11-14T09:06:20.529Z
+
+[WebServer] (node:1716) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:40772) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:70968) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\items.spec.ts:28:1 › C1 paper doll, totals, filters and Materials expose real item state (2.8s)
+  x  2 [chromium] › tests\e2e\items.spec.ts:41:1 › C1 card preview and keyboard equip on a posted NPC change the next report (1.9s)
+(node:32572) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [chromium] › tests\e2e\items.spec.ts:62:1 › C1 Destroy confirms, cancels and accepts with the keyboard (2.0s)
+
+
+  1) [chromium] › tests\e2e\items.spec.ts:41:1 › C1 card preview and keyboard equip on a posted NPC change the next report 
+
+    Error: expect(received).not.toEqual(expected) // deep equality
+
+    Expected: not {"activities": ["field-1: Farm 2 batches; batch Gold credited against this Farm upkeep.", "plain-1: Food Processor 2 batches."], "after": {"food": 40000, "gold": 964450, "iron": 40000, "wheat": 0, "wood": 40000}, "before": {"food": 1000000, "gold": 965000, "iron": 995000, "wheat": 0, "wood": 990000}, "crimeEvent": {"chancePercent": 7, "event": null, "lordHealthLoss": 0, "standingAfter": 50, "standingBefore": 50}, "crisis": {"calmStreak": 1, "cardOpened": null, "hungerStreak": 0, "hungry": false, "lastChoice": null, "promise": null, "stageAfter": "none", "stageBefore": "none", "tensionAfter": 0, "tensionBefore": 0, "weeksInStage": 1}, "farmBatchGoldMilli": 2000, "farmExtraUpkeepMilli": 0, "foodConsumedMilli": 4000, "foodDemandMilli": 4000, "goods": {"demandMilli": 1450, "fulfillmentBps": 10000, "ironUsed": 0, "revenueMilli": 1450, "servedMilli": 1450, "woodUsed": 0}, "goodsStock": {"capacityMilli": 2000, "closingMilli": 8550, "demandMilli": 1450, "distributedMilli": 1450, "limitedBy": "none", "openingMilli": 10000, "producedMilli": 0, "unmetMilli": 0}, "happinessAfter": 82, "happinessBefore": 80, "immigration": {"arrivals": 0, "populationAfter": 100, "populationBefore": 100, "reason": "no-capacity", "renewableFoodMilli": 4000, "target": 90, "usefulWorkerSlots": 10}, "items": {"expired": [], "found": {"defId": "epic-weapon", "lost": false, "stored": false}, "hospitalOperated": false, "legendary": null, "materials": [], "regen": 1}, "laws": {"costs": [], "inForce": [], "incomeMilli": 0, "promise": null, "unfunded": []}, "luxuryImportedMilli": 0, "order": {"after": {"authority": 47, "crime": 5, "security": 25}, "arrivalsBudgetAfter": 0, "arrivalsBudgetBefore": 0, "before": {"authority": 50, "crime": 10, "security": 30}, "garrisonSecurity": 0, "satisfactionLost": 0, "soldiers": 0, "targets": {"authority": 40, "crime": 0, "security": 10}, "taxDeltaMilli": 0, "taxModifierBps": 0, "tensionAdded": 0, "theftMilli": {}}, "outside": {"cleared": [], "exhausted": [], "hospitalsIdle": [], "producedMilli": {"cloth": 0, "herbs": 0, "iron": 0, "stone": 0, "wood": 0, "wool": 0}, "researchCompleted": [], "spoiledMilli": {"food": 960000, "iron": 955000, "wood": 950000}, "stocksAfter": {"cloth": 0, "herbs": 0, "stone": 0, "wool": 0}, "stocksBefore": {"cloth": 0, "herbs": 0, "stone": 0, "wool": 0}}, "society": {"classes": {"bound": {"arrivals": 0, "debtAfter": null, "debtBefore": null, "enslaved": 0, "foodBps": 10000, "goodsBps": 10000, "luxuryBps": null, "notes": [], "satisfactionAfter": 80, "satisfactionBefore": 80, "trained": 0}, "free": {"arrivals": 0, "debtAfter": 12, "debtBefore": 0, "enslaved": 0, "foodBps": 10000, "goodsBps": 10000, "luxuryBps": null, "notes": ["unemployed"], "satisfactionAfter": 82, "satisfactionBefore": 80, "trained": 0}, "luminaries": {"arrivals": 0, "debtAfter": 20, "debtBefore": 0, "enslaved": 0, "foodBps": 10000, "goodsBps": 10000, "luxuryBps": null, "notes": ["unemployed"], "satisfactionAfter": 82, "satisfactionBefore": 80, "trained": 0}, "makers": {"arrivals": 0, "debtAfter": 0, "debtBefore": 0, "enslaved": 0, "foodBps": 10000, "goodsBps": 10000, "luxuryBps": null, "notes": [], "satisfactionAfter": 82, "satisfactionBefore": 80, "trained": 0}, "merchants": {"arrivals": 0, "debtAfter": 20, "debtBefore": 0, "enslaved": 0, "foodBps": 10000, "goodsBps": 10000, "luxuryBps": null, "notes": ["unemployed"], "satisfactionAfter": 82, "satisfactionBefore": 80, "trained": 0}}, "corruptionAfter": 48, "desperationAfter": 0, "desperationBefore": 0, "eliteArrived": null, "tensionAfter": 0, "tensionBefore": 0}, "taxMilli": 3000, "trainingGoldMilli": 0, "unpaidUpkeepMilli": 0, "upkeepPaidMilli": 4000, "week": 1}
+
+
+      55 |   const after=await exportLife(page);expect(after.city.society!.items.equipped[npc.character.id][def.slot!]!.id).toBe(item.id);
+      56 |   const expected=executeCharacterLifeCommand(after,{type:'END_WEEK',expectedRevision:after.city.revision,expectedWeek:1});if(!expected.success||!expected.report)throw Error('expected');
+    > 57 |   expect(expected.report).not.toEqual(baseline.report);
+         |                               ^
+      58 |   await page.getByTestId('life-end-week').click();await go(page,'reports');await openReportDetails(page,type==='watch-house'||type==='town-hall'?'captain':'quartermaster');
+      59 |   await expect(reportRegion(page)).toContainText(type==='watch-house'?'Security':type==='town-hall'?'Authority':type==='town-market'?'Goods':'Food');
+      60 |   expect(await exportLife(page)).toEqual(expected.next);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:57:31
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\C1-GREEN-1\items-C1-card-preview-and--bd493--NPC-change-the-next-report-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\C1-GREEN-1\items-C1-card-preview-and--bd493--NPC-change-the-next-report-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\C1-GREEN-1\items-C1-card-preview-and--bd493--NPC-change-the-next-report-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\items.spec.ts:41:1 › C1 card preview and keyboard equip on a posted NPC change the next report 
+  2 passed (17.4s)

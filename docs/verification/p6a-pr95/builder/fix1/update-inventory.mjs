@@ -1,0 +1,23 @@
+import fs from 'node:fs';
+import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+const root='C:/Users/Admin/.t3/local-drafts/p6a-prC/';
+const read=name=>fs.readFileSync(root+name,'utf8');
+const original=JSON.parse(read('step0-proposed-edits.json')),p11=JSON.parse(read('P11-proposal.json')),amendment=JSON.parse(read('fix1/P7-amendment.json'));
+const git=args=>execFileSync('git',args,{encoding:'utf8'}).trim();
+const head=git(['rev-parse','HEAD']),tree=git(['rev-parse','HEAD^{tree}']);
+const hash=text=>createHash('sha256').update(text).digest('hex');
+const edits=[...original.edits,{...p11,proposalOnly:false,task:'C3 correction 9'}].map(e=>{
+ const after=e.id==='P7'?e.after.replace(amendment.before,amendment.after):e.after;
+ if(e.id==='P7'&&e.after.split(amendment.before).length!==2)throw Error('P7 amendment anchor');
+ const text=fs.readFileSync(e.file,'utf8').replaceAll('\r\n','\n'),index=text.indexOf(after);
+ if(index<0)throw Error('Approved block absent '+e.id);
+ return {...e,after,afterLine:text.slice(0,index).split('\n').length,blockSha256:hash(e.before+'\0'+after),...(e.id==='P7'?{correction10:amendment}:{}),unchangedFromPriorApproval:e.id!=='P7'};
+});
+fs.writeFileSync(root+'edit-inventory.json',JSON.stringify({HEAD:head,tree,base:original.base,blocks:11,files:3,amendmentInsideP7:amendment,edits},null,2)+'\n','utf8');
+fs.writeFileSync(root+'edit-inventory.md',`# P1–P11 — approved existing-test inventory\n\nHEAD ${head}; tree ${tree}; base ${original.base}. Exactly **11 blocks in three existing files**. Correction 10 changes only the one P7 map key below; P1–P6 and P8–P11 are byte-identical to their prior approved block strings. verify-correction10.mjs reconstructs every complete existing file from the original base. Original proposals and prior verifiers remain preserved.\n\nCorrection 10, ${amendment.file}:${amendment.line}:\n\n\`\`\`diff\n-${amendment.before}\n+${amendment.after}\n\`\`\`\n\nThe expected value change in the newly created items-view.test.ts and the added case in the newly created items.spec.ts are separately listed in fix1/edit-inventory.json; they do not add a baseline P-block.\n\n`+edits.map(e=>`## ${e.id}: ${e.file}:${e.line} → ${e.afterLine}\n\n${e.why??e.reason}\n\nBefore:\n\n\`\`\`ts\n${e.before}\n\`\`\`\n\nAfter:\n\n\`\`\`ts\n${e.after}\n\`\`\`\n`).join('\n'),'utf8');
+const unit='packages/ui/src/__tests__/items-view.test.ts',test='tests/e2e/items.spec.ts';
+const line=(file,anchor)=>fs.readFileSync(file,'utf8').replaceAll('\r\n','\n').split(anchor)[0].split('\n').length;
+const fix={HEAD:head,tree,base:'f046e36c98fcfbbd16808e759b7b09f0f1f4c98e',baselineExistingTestLines:1,wholePrBlocks:11,wholePrFiles:3,edits:[{...amendment,actualLine:line(amendment.file,amendment.after),classification:'one approved line inside P7'},{file:unit,line:line(unit,'Authority 90+ for 4 weeks'),before:'Authority 100 · Make room in inventory or temporary storage.',after:'Authority 90+ for 4 weeks · Make room in inventory or temporary storage.',classification:'exact expectation in the new PR C unit test'},{file:test,line:line(test,"test('Review F1"),before:'(no Review F1 case)',after:'Review F1 Destroy restores keyboard focus after removal, Cancel and Escape',classification:'additive case in the new PR C e2e file; all earlier cases unchanged'}]};
+fs.writeFileSync(root+'fix1/edit-inventory.json',JSON.stringify(fix,null,2)+'\n','utf8');
+console.log(JSON.stringify({HEAD:head,tree,blocks:11,files:3,p7AmendedLines:1,otherApprovedBlocksUnchanged:10},null,2));

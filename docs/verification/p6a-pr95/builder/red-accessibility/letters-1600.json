@@ -1,0 +1,1046 @@
+{
+  "texts": [
+    {
+      "text": "Week 1 · Year 1 report",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "To the Lord of Haven",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Food 100%",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Goods 100%",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Happiness +2",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Your steward",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "News",
+      "contrast": 6.81816251908405,
+      "required": 4.5
+    },
+    {
+      "text": "The treasury grew",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Gold",
+      "contrast": 5.489633667604363,
+      "required": 4.5
+    },
+    {
+      "text": "997 → 998.55",
+      "contrast": 5.489633667604363,
+      "required": 4.5
+    },
+    {
+      "text": "Tax",
+      "contrast": 5.489633667604363,
+      "required": 4.5
+    },
+    {
+      "text": "+3.6",
+      "contrast": 5.489633667604363,
+      "required": 4.5
+    },
+    {
+      "text": "Upkeep paid",
+      "contrast": 6.055011660899248,
+      "required": 4.5
+    },
+    {
+      "text": "−2.5",
+      "contrast": 6.055011660899248,
+      "required": 4.5
+    },
+    {
+      "text": "Details",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Gold and upkeep",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Tax: 3.6 Gold. Upkeep covered: 2.5 Gold; unfunded: 0 Gold (no debt). Farm batch payment: 2 Gold; extra Farm upkeep: 0 Gold.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "How this is calculated",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Stock change is closing stock minus opening stock for this resolved week. It is not gross production or a forecast.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "TRIAL: each class eats and uses Goods separately; the Bound eat last. Missing Food, Goods or housing lowers that class's satisfaction and stops its arrivals. Each class supplies 1 WF per 10 residents; Elites do not work.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Immigration target: 90. Useful worker slots: 12. Renewable Food: 4. Reason: no-capacity.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Laws",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "No laws in force.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Quartermaster",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Watch",
+      "contrast": 7.117522397283716,
+      "required": 4.5
+    },
+    {
+      "text": "Some stores spoiled",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Food eaten",
+      "contrast": 5.365435785687814,
+      "required": 4.5
+    },
+    {
+      "text": "4 of 4",
+      "contrast": 5.365435785687814,
+      "required": 4.5
+    },
+    {
+      "text": "Goods served",
+      "contrast": 5.365435785687814,
+      "required": 4.5
+    },
+    {
+      "text": "1.45 of 1.45",
+      "contrast": 5.365435785687814,
+      "required": 4.5
+    },
+    {
+      "text": "Spoiled",
+      "contrast": 6.055011660899248,
+      "required": 4.5
+    },
+    {
+      "text": "Food −960 · Wood −959 · Iron −960",
+      "contrast": 6.055011660899248,
+      "required": 4.5
+    },
+    {
+      "text": "Details",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Needs and services",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Food consumed: 4 / 4 · 100%.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Food unmet: 0.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Goods service: 1.45 / 1.45 · 100%. Materials used once: 0 Wood, 0 Iron. Revenue: 1.45 Gold.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Goods stock: opening 10 · produced 0 · distributed 1.45 · closing 8.55. Demand 1.45; unmet 0; capacity 2; limited by none.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Goods unmet: 0.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Weekly stock ledger",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Stock",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Before",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Stock change",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "After",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "gold",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "997",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "1.55",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "998.55",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "wheat",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "food",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "1,000",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "-960",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "40",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "wood",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "999",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "-959",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "40",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "iron",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "1,000",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "-960",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "40",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Building activity",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "field-1: Farm 2 batches; batch Gold credited against this Farm upkeep.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "ore-1: extracted Iron.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "plain-1: Food Processor 2 batches.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Outside",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "960 Food spoiled: storage full.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "959 Wood spoiled: storage full.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "960 Iron spoiled: storage full.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "wood produced",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "iron produced",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "stone produced",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "wool produced",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "herbs produced",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "cloth produced",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "stone stock before / after",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0 / 0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "wool stock before / after",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0 / 0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "cloth stock before / after",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0 / 0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "herbs stock before / after",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0 / 0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Census clerk",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "News",
+      "contrast": 6.81816251908405,
+      "required": 4.5
+    },
+    {
+      "text": "The census is unchanged",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Free residents",
+      "contrast": 5.489633667604363,
+      "required": 4.5
+    },
+    {
+      "text": "80 → 82",
+      "contrast": 5.489633667604363,
+      "required": 4.5
+    },
+    {
+      "text": "Makers",
+      "contrast": 5.489633667604363,
+      "required": 4.5
+    },
+    {
+      "text": "80 → 82",
+      "contrast": 5.489633667604363,
+      "required": 4.5
+    },
+    {
+      "text": "Luminaries",
+      "contrast": 5.489633667604363,
+      "required": 4.5
+    },
+    {
+      "text": "80 → 82",
+      "contrast": 5.489633667604363,
+      "required": 4.5
+    },
+    {
+      "text": "Merchants",
+      "contrast": 5.489633667604363,
+      "required": 4.5
+    },
+    {
+      "text": "80 → 82",
+      "contrast": 5.489633667604363,
+      "required": 4.5
+    },
+    {
+      "text": "Details",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Population and happiness",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Population: 100 → 100 · 0 arrivals · Available next week.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Happiness: 80 → 82.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Classes this week",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Class",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Food",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Goods",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Luxury",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Satisfaction",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Arrivals",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Trained",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Enslaved",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Free residents",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "100%",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "100%",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "—",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "80 → 82",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Makers",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "100%",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "100%",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "—",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "80 → 82",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Luminaries",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "100%",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "100%",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "—",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "80 → 82",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Merchants",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "100%",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "100%",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "—",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "80 → 82",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "The Bound",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "100%",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "100%",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "—",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "80 → 80",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Some Free residents had no work, so debt pressure rose.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Some Luminaries had no work, so debt pressure rose.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Some Merchants had no work, so debt pressure rose.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Bound Desperation: 0 → 0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Luxury imported: 0. Training cost: 0 Gold.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Captain of the watch",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "News",
+      "contrast": 6.81816251908405,
+      "required": 4.5
+    },
+    {
+      "text": "The streets are quiet",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Security",
+      "contrast": 6.055011660899248,
+      "required": 4.5
+    },
+    {
+      "text": "30 → 25",
+      "contrast": 6.055011660899248,
+      "required": 4.5
+    },
+    {
+      "text": "Crime",
+      "contrast": 5.489633667604363,
+      "required": 4.5
+    },
+    {
+      "text": "10 → 5",
+      "contrast": 5.489633667604363,
+      "required": 4.5
+    },
+    {
+      "text": "Authority",
+      "contrast": 6.055011660899248,
+      "required": 4.5
+    },
+    {
+      "text": "100 → 97",
+      "contrast": 6.055011660899248,
+      "required": 4.5
+    },
+    {
+      "text": "Authority 100: taxes +20%.",
+      "contrast": 5.489633667604363,
+      "required": 4.5
+    },
+    {
+      "text": "Details",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Order",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Garrison: 0 soldiers, Security +0.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Security 30 → 25 (target 10)",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Crime 10 → 5 (target 0)",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Authority 100 → 97 (target 40)",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Authority 100: taxes +20%.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Order calculation",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "taxModifierBps",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "2000",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "taxDeltaMilli",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "600",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "arrivalsBudgetBefore",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "arrivalsBudgetAfter",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "tensionAdded",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "satisfactionLost",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Crime",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "A quiet week on the streets.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Word from the streets",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "News",
+      "contrast": 6.81816251908405,
+      "required": 4.5
+    },
+    {
+      "text": "The streets are calm",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Tension",
+      "contrast": 5.365435785687814,
+      "required": 4.5
+    },
+    {
+      "text": "0 → 0",
+      "contrast": 5.365435785687814,
+      "required": 4.5
+    },
+    {
+      "text": "Desperation",
+      "contrast": 5.365435785687814,
+      "required": 4.5
+    },
+    {
+      "text": "0 → 0",
+      "contrast": 5.365435785687814,
+      "required": 4.5
+    },
+    {
+      "text": "Details",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Crisis",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Your steward",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Plan next week",
+      "contrast": 7.20407718640868,
+      "required": 4.5
+    }
+  ],
+  "clipped": [
+    "Trained",
+    "Enslaved",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0"
+  ],
+  "controls": [
+    {
+      "label": "Plan next week",
+      "width": 170.15625,
+      "height": 50.59375
+    }
+  ],
+  "pageOverflow": false
+}

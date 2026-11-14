@@ -1,0 +1,36 @@
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/items-view.test.ts (12 tests | 1 failed) 96ms
+     × names only delivered Legendary rewards and tells the Player to make room for pending rewards 23ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/items-view.test.ts > C2 shops, recovery and item letters > names only delivered Legendary rewards and tells the Player to make room for pending rewards
+AssertionError: expected [ { …(3) }, …(1) ] to deeply equal [ { …(3) }, …(1) ]
+
+- Expected
++ Received
+
+@@ -5,8 +5,8 @@
+      "value": "Warden's Oath · Calm city",
+    },
+    {
+      "label": "Reward waiting",
+      "tone": "loss",
+-     "value": "Authority 90+ for 4 weeks · Make room in inventory or temporary storage.",
++     "value": "Authority 100 · Make room in inventory or temporary storage.",
+    },
+  ]
+
+ ❯ packages/ui/src/__tests__/items-view.test.ts:96:52
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 11 passed (12)
+   Start at  20:34:01
+   Duration  2.27s (transform 1.23s, setup 0ms, import 1.55s, tests 96ms, environment 0ms)
+

@@ -1,0 +1,101 @@
+{"id":"lord-health","file":"packages/simulation/src/__tests__/lord-health.test.ts","exactName":"a Calm game below Crime 70 survives all 60 weeks from health one","attempt":1,"command":"node \"C:\\\\Users\\\\Admin\\\\.t3\\\\worktrees\\\\Build-Settlement\\\\qa-g6-closeout-01\\\\node_modules\\\\vitest\\\\vitest.mjs\" \"run\" \"packages/simulation/src/__tests__/lord-health.test.ts\" \"-t\" \"a Calm game below Crime 70 survives all 60 weeks from health one\" \"--reporter=json\" \"--outputFile=C:/Users/Admin/.t3/local-drafts/p6a-prC/trace-measured-lord-health-1.json\"","exit":0,"wallMs":5805,"testMs":1973.1728000000003,"matchedTests":1,"exactNameMatched":true,"log":"trace-measured-lord-health-1.txt","rawReport":"trace-measured-lord-health-1.json"}
+{"id":"lord-health","file":"packages/simulation/src/__tests__/lord-health.test.ts","exactName":"a Calm game below Crime 70 survives all 60 weeks from health one","attempt":2,"command":"node \"C:\\\\Users\\\\Admin\\\\.t3\\\\worktrees\\\\Build-Settlement\\\\qa-g6-closeout-01\\\\node_modules\\\\vitest\\\\vitest.mjs\" \"run\" \"packages/simulation/src/__tests__/lord-health.test.ts\" \"-t\" \"a Calm game below Crime 70 survives all 60 weeks from health one\" \"--reporter=json\" \"--outputFile=C:/Users/Admin/.t3/local-drafts/p6a-prC/trace-measured-lord-health-2.json\"","exit":0,"wallMs":4798,"testMs":2021.3346000000001,"matchedTests":1,"exactNameMatched":true,"log":"trace-measured-lord-health-2.txt","rawReport":"trace-measured-lord-health-2.json"}
+{"id":"lord-health","file":"packages/simulation/src/__tests__/lord-health.test.ts","exactName":"a Calm game below Crime 70 survives all 60 weeks from health one","attempt":3,"command":"node \"C:\\\\Users\\\\Admin\\\\.t3\\\\worktrees\\\\Build-Settlement\\\\qa-g6-closeout-01\\\\node_modules\\\\vitest\\\\vitest.mjs\" \"run\" \"packages/simulation/src/__tests__/lord-health.test.ts\" \"-t\" \"a Calm game below Crime 70 survives all 60 weeks from health one\" \"--reporter=json\" \"--outputFile=C:/Users/Admin/.t3/local-drafts/p6a-prC/trace-measured-lord-health-3.json\"","exit":0,"wallMs":6990,"testMs":4069.3755999999994,"matchedTests":1,"exactNameMatched":true,"log":"trace-measured-lord-health-3.txt","rawReport":"trace-measured-lord-health-3.json"}
+{"id":"renewable-support","file":"packages/simulation/src/__tests__/society-renewable-support.test.ts","exactName":"society renewable support and transaction ports preserves complete gameplay and assignments through sixty weeks of snapshot restores","attempt":1,"command":"node \"C:\\\\Users\\\\Admin\\\\.t3\\\\worktrees\\\\Build-Settlement\\\\qa-g6-closeout-01\\\\node_modules\\\\vitest\\\\vitest.mjs\" \"run\" \"packages/simulation/src/__tests__/society-renewable-support.test.ts\" \"-t\" \"society renewable support and transaction ports preserves complete gameplay and assignments through sixty weeks of snapshot restores\" \"--reporter=json\" \"--outputFile=C:/Users/Admin/.t3/local-drafts/p6a-prC/trace-measured-renewable-support-1.json\"","exit":0,"wallMs":4148,"testMs":1453.2789000000002,"matchedTests":1,"exactNameMatched":true,"log":"trace-measured-renewable-support-1.txt","rawReport":"trace-measured-renewable-support-1.json"}
+{"id":"renewable-support","file":"packages/simulation/src/__tests__/society-renewable-support.test.ts","exactName":"society renewable support and transaction ports preserves complete gameplay and assignments through sixty weeks of snapshot restores","attempt":2,"command":"node \"C:\\\\Users\\\\Admin\\\\.t3\\\\worktrees\\\\Build-Settlement\\\\qa-g6-closeout-01\\\\node_modules\\\\vitest\\\\vitest.mjs\" \"run\" \"packages/simulation/src/__tests__/society-renewable-support.test.ts\" \"-t\" \"society renewable support and transaction ports preserves complete gameplay and assignments through sixty weeks of snapshot restores\" \"--reporter=json\" \"--outputFile=C:/Users/Admin/.t3/local-drafts/p6a-prC/trace-measured-renewable-support-2.json\"","exit":0,"wallMs":4055,"testMs":1478.7243999999998,"matchedTests":1,"exactNameMatched":true,"log":"trace-measured-renewable-support-2.txt","rawReport":"trace-measured-renewable-support-2.json"}
+{"id":"renewable-support","file":"packages/simulation/src/__tests__/society-renewable-support.test.ts","exactName":"society renewable support and transaction ports preserves complete gameplay and assignments through sixty weeks of snapshot restores","attempt":3,"command":"node \"C:\\\\Users\\\\Admin\\\\.t3\\\\worktrees\\\\Build-Settlement\\\\qa-g6-closeout-01\\\\node_modules\\\\vitest\\\\vitest.mjs\" \"run\" \"packages/simulation/src/__tests__/society-renewable-support.test.ts\" \"-t\" \"society renewable support and transaction ports preserves complete gameplay and assignments through sixty weeks of snapshot restores\" \"--reporter=json\" \"--outputFile=C:/Users/Admin/.t3/local-drafts/p6a-prC/trace-measured-renewable-support-3.json\"","exit":0,"wallMs":4055,"testMs":1432.9099,"matchedTests":1,"exactNameMatched":true,"log":"trace-measured-renewable-support-3.txt","rawReport":"trace-measured-renewable-support-3.json"}
+{
+  "HEAD": "f046e36c98fcfbbd16808e759b7b09f0f1f4c98e",
+  "tree": "baf52e8b3e19f76f904ca8b39a51f9793a56a534",
+  "UTC": "2026-11-14T13:13:20.250Z",
+  "ownerDecision": "Rerun, no timeout change (Recommended)",
+  "existingTimeoutMs": 5000,
+  "status": "HOLD after the requested measurements, irrespective of isolated outcomes",
+  "runs": [
+    {
+      "id": "lord-health",
+      "file": "packages/simulation/src/__tests__/lord-health.test.ts",
+      "exactName": "a Calm game below Crime 70 survives all 60 weeks from health one",
+      "attempt": 1,
+      "command": "node \"C:\\\\Users\\\\Admin\\\\.t3\\\\worktrees\\\\Build-Settlement\\\\qa-g6-closeout-01\\\\node_modules\\\\vitest\\\\vitest.mjs\" \"run\" \"packages/simulation/src/__tests__/lord-health.test.ts\" \"-t\" \"a Calm game below Crime 70 survives all 60 weeks from health one\" \"--reporter=json\" \"--outputFile=C:/Users/Admin/.t3/local-drafts/p6a-prC/trace-measured-lord-health-1.json\"",
+      "exit": 0,
+      "wallMs": 5805,
+      "testMs": 1973.1728000000003,
+      "matchedTests": 1,
+      "exactNameMatched": true,
+      "log": "trace-measured-lord-health-1.txt",
+      "rawReport": "trace-measured-lord-health-1.json"
+    },
+    {
+      "id": "lord-health",
+      "file": "packages/simulation/src/__tests__/lord-health.test.ts",
+      "exactName": "a Calm game below Crime 70 survives all 60 weeks from health one",
+      "attempt": 2,
+      "command": "node \"C:\\\\Users\\\\Admin\\\\.t3\\\\worktrees\\\\Build-Settlement\\\\qa-g6-closeout-01\\\\node_modules\\\\vitest\\\\vitest.mjs\" \"run\" \"packages/simulation/src/__tests__/lord-health.test.ts\" \"-t\" \"a Calm game below Crime 70 survives all 60 weeks from health one\" \"--reporter=json\" \"--outputFile=C:/Users/Admin/.t3/local-drafts/p6a-prC/trace-measured-lord-health-2.json\"",
+      "exit": 0,
+      "wallMs": 4798,
+      "testMs": 2021.3346000000001,
+      "matchedTests": 1,
+      "exactNameMatched": true,
+      "log": "trace-measured-lord-health-2.txt",
+      "rawReport": "trace-measured-lord-health-2.json"
+    },
+    {
+      "id": "lord-health",
+      "file": "packages/simulation/src/__tests__/lord-health.test.ts",
+      "exactName": "a Calm game below Crime 70 survives all 60 weeks from health one",
+      "attempt": 3,
+      "command": "node \"C:\\\\Users\\\\Admin\\\\.t3\\\\worktrees\\\\Build-Settlement\\\\qa-g6-closeout-01\\\\node_modules\\\\vitest\\\\vitest.mjs\" \"run\" \"packages/simulation/src/__tests__/lord-health.test.ts\" \"-t\" \"a Calm game below Crime 70 survives all 60 weeks from health one\" \"--reporter=json\" \"--outputFile=C:/Users/Admin/.t3/local-drafts/p6a-prC/trace-measured-lord-health-3.json\"",
+      "exit": 0,
+      "wallMs": 6990,
+      "testMs": 4069.3755999999994,
+      "matchedTests": 1,
+      "exactNameMatched": true,
+      "log": "trace-measured-lord-health-3.txt",
+      "rawReport": "trace-measured-lord-health-3.json"
+    },
+    {
+      "id": "renewable-support",
+      "file": "packages/simulation/src/__tests__/society-renewable-support.test.ts",
+      "exactName": "society renewable support and transaction ports preserves complete gameplay and assignments through sixty weeks of snapshot restores",
+      "attempt": 1,
+      "command": "node \"C:\\\\Users\\\\Admin\\\\.t3\\\\worktrees\\\\Build-Settlement\\\\qa-g6-closeout-01\\\\node_modules\\\\vitest\\\\vitest.mjs\" \"run\" \"packages/simulation/src/__tests__/society-renewable-support.test.ts\" \"-t\" \"society renewable support and transaction ports preserves complete gameplay and assignments through sixty weeks of snapshot restores\" \"--reporter=json\" \"--outputFile=C:/Users/Admin/.t3/local-drafts/p6a-prC/trace-measured-renewable-support-1.json\"",
+      "exit": 0,
+      "wallMs": 4148,
+      "testMs": 1453.2789000000002,
+      "matchedTests": 1,
+      "exactNameMatched": true,
+      "log": "trace-measured-renewable-support-1.txt",
+      "rawReport": "trace-measured-renewable-support-1.json"
+    },
+    {
+      "id": "renewable-support",
+      "file": "packages/simulation/src/__tests__/society-renewable-support.test.ts",
+      "exactName": "society renewable support and transaction ports preserves complete gameplay and assignments through sixty weeks of snapshot restores",
+      "attempt": 2,
+      "command": "node \"C:\\\\Users\\\\Admin\\\\.t3\\\\worktrees\\\\Build-Settlement\\\\qa-g6-closeout-01\\\\node_modules\\\\vitest\\\\vitest.mjs\" \"run\" \"packages/simulation/src/__tests__/society-renewable-support.test.ts\" \"-t\" \"society renewable support and transaction ports preserves complete gameplay and assignments through sixty weeks of snapshot restores\" \"--reporter=json\" \"--outputFile=C:/Users/Admin/.t3/local-drafts/p6a-prC/trace-measured-renewable-support-2.json\"",
+      "exit": 0,
+      "wallMs": 4055,
+      "testMs": 1478.7243999999998,
+      "matchedTests": 1,
+      "exactNameMatched": true,
+      "log": "trace-measured-renewable-support-2.txt",
+      "rawReport": "trace-measured-renewable-support-2.json"
+    },
+    {
+      "id": "renewable-support",
+      "file": "packages/simulation/src/__tests__/society-renewable-support.test.ts",
+      "exactName": "society renewable support and transaction ports preserves complete gameplay and assignments through sixty weeks of snapshot restores",
+      "attempt": 3,
+      "command": "node \"C:\\\\Users\\\\Admin\\\\.t3\\\\worktrees\\\\Build-Settlement\\\\qa-g6-closeout-01\\\\node_modules\\\\vitest\\\\vitest.mjs\" \"run\" \"packages/simulation/src/__tests__/society-renewable-support.test.ts\" \"-t\" \"society renewable support and transaction ports preserves complete gameplay and assignments through sixty weeks of snapshot restores\" \"--reporter=json\" \"--outputFile=C:/Users/Admin/.t3/local-drafts/p6a-prC/trace-measured-renewable-support-3.json\"",
+      "exit": 0,
+      "wallMs": 4055,
+      "testMs": 1432.9099,
+      "matchedTests": 1,
+      "exactNameMatched": true,
+      "log": "trace-measured-renewable-support-3.txt",
+      "rawReport": "trace-measured-renewable-support-3.json"
+    }
+  ],
+  "finishedUTC": "2026-11-14T13:13:50.116Z"
+}

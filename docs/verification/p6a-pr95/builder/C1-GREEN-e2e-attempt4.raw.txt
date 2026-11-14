@@ -1,0 +1,15 @@
+[WebServer] (node:51732) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:51900) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:67548) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\items.spec.ts:28:1 › C1 paper doll, totals, filters and Materials expose real item state (1.9s)
+C1 attempt 3 Farm proof {"effective":61,"percent":2,"extraWheat":80,"visibleWheatDelta":"0.08"}
+  ok 2 [chromium] › tests\e2e\items.spec.ts:41:1 › C1 card preview and keyboard equip on a posted NPC change the next report (2.5s)
+  ok 3 [chromium] › tests\e2e\items.spec.ts:71:1 › C1 Destroy confirms, cancels and accepts with the keyboard (2.4s)
+
+  3 passed (16.6s)

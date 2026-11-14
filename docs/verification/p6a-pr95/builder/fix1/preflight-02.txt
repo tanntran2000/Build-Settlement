@@ -1,0 +1,216 @@
+HEAD=5e97f049330c2e6c4e213b845815afb368d8a7b3
+TREE=49f6b676c3ae57f66ef9ce6275eb89a806f52a9a
+UTC=2026-11-14T13:44:08.957Z
+EXIT=0
+COMMAND=powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:/Users/Admin/.t3/local-drafts/p6a-prC/fix1/load-preflight.ps1 -EvidenceStem load-02
+CI=
+FINISHED=2026-11-14T13:44:23.701Z
+
+{
+    "logicalProcessors":  8,
+    "exit":  0,
+    "HEAD":  "5e97f049330c2e6c4e213b845815afb368d8a7b3",
+    "tree":  "49f6b676c3ae57f66ef9ce6275eb89a806f52a9a",
+    "sampledMilliseconds":  10002.630000000001,
+    "cpuSamples":  [
+                       {
+                           "totalPercent":  20,
+                           "UTC":  "2026-11-14T13:44:13.3247366Z"
+                       },
+                       {
+                           "totalPercent":  37,
+                           "UTC":  "2026-11-14T13:44:14.6298943Z"
+                       },
+                       {
+                           "totalPercent":  30,
+                           "UTC":  "2026-11-14T13:44:15.9148735Z"
+                       },
+                       {
+                           "totalPercent":  23,
+                           "UTC":  "2026-11-14T13:44:17.1916162Z"
+                       },
+                       {
+                           "totalPercent":  23,
+                           "UTC":  "2026-11-14T13:44:18.4800596Z"
+                       }
+                   ],
+    "ownerReportedClaudeAndAstraIdle":  true,
+    "finishedUTC":  "2026-11-14T13:44:23.5714888Z",
+    "quiet":  false,
+    "UTC":  "2026-11-14T13:44:09.4787996Z",
+    "listeners":  [
+
+                  ],
+    "knownHeavyJobs":  [
+
+                       ],
+    "operationalQuietCheck":  "No other detected build/test job or listener; mean total CPU \u003c=15%; agent CPU deltas \u003c=2%. This is a scheduling check, not a test/configuration threshold change.",
+    "agentProcesses":  [
+                           {
+                               "process":  "codex",
+                               "pid":  64988,
+                               "cpuPercent":  0.762,
+                               "workingSetMB":  327.1
+                           },
+                           {
+                               "process":  "claude",
+                               "pid":  67780,
+                               "cpuPercent":  0.059,
+                               "workingSetMB":  25.2
+                           },
+                           {
+                               "process":  "claude",
+                               "pid":  56764,
+                               "cpuPercent":  0.059,
+                               "workingSetMB":  241.5
+                           },
+                           {
+                               "process":  "claude",
+                               "pid":  68812,
+                               "cpuPercent":  0.039,
+                               "workingSetMB":  274.5
+                           },
+                           {
+                               "process":  "claude",
+                               "pid":  58136,
+                               "cpuPercent":  0.039,
+                               "workingSetMB":  559.1
+                           },
+                           {
+                               "process":  "codex",
+                               "pid":  60824,
+                               "cpuPercent":  0,
+                               "workingSetMB":  13.6
+                           },
+                           {
+                               "process":  "codex",
+                               "pid":  15428,
+                               "cpuPercent":  0,
+                               "workingSetMB":  114.3
+                           },
+                           {
+                               "process":  "claude",
+                               "pid":  63348,
+                               "cpuPercent":  0,
+                               "workingSetMB":  14.4
+                           },
+                           {
+                               "process":  "claude",
+                               "pid":  15596,
+                               "cpuPercent":  0,
+                               "workingSetMB":  12.1
+                           },
+                           {
+                               "process":  "claude",
+                               "pid":  42900,
+                               "cpuPercent":  0,
+                               "workingSetMB":  66.4
+                           },
+                           {
+                               "process":  "claude",
+                               "pid":  50768,
+                               "cpuPercent":  0,
+                               "workingSetMB":  5.1
+                           },
+                           {
+                               "process":  "claude",
+                               "pid":  58424,
+                               "cpuPercent":  0,
+                               "workingSetMB":  12.7
+                           },
+                           {
+                               "process":  "claude",
+                               "pid":  29892,
+                               "cpuPercent":  0,
+                               "workingSetMB":  43
+                           },
+                           {
+                               "process":  "claude",
+                               "pid":  37952,
+                               "cpuPercent":  0,
+                               "workingSetMB":  5.6
+                           },
+                           {
+                               "process":  "claude",
+                               "pid":  41404,
+                               "cpuPercent":  0,
+                               "workingSetMB":  19.6
+                           }
+                       ],
+    "averageCpuPercent":  26.6,
+    "topProcesses":  [
+                         {
+                             "process":  "msedge",
+                             "pid":  72952,
+                             "cpuPercent":  20.698,
+                             "workingSetMB":  44.9
+                         },
+                         {
+                             "process":  "powershell",
+                             "pid":  1620,
+                             "cpuPercent":  3.808,
+                             "workingSetMB":  72.5
+                         },
+                         {
+                             "process":  "codex",
+                             "pid":  64988,
+                             "cpuPercent":  0.762,
+                             "workingSetMB":  327.1
+                         },
+                         {
+                             "process":  "codebase-memory-mcp",
+                             "pid":  69324,
+                             "cpuPercent":  0.312,
+                             "workingSetMB":  5.3
+                         },
+                         {
+                             "process":  "T3 Code (Nightly)",
+                             "pid":  5940,
+                             "cpuPercent":  0.293,
+                             "workingSetMB":  211.4
+                         },
+                         {
+                             "process":  "codebase-memory-mcp",
+                             "pid":  62304,
+                             "cpuPercent":  0.215,
+                             "workingSetMB":  9.8
+                         },
+                         {
+                             "process":  "codebase-memory-mcp",
+                             "pid":  14400,
+                             "cpuPercent":  0.195,
+                             "workingSetMB":  9.7
+                         },
+                         {
+                             "process":  "codebase-memory-mcp",
+                             "pid":  72592,
+                             "cpuPercent":  0.195,
+                             "workingSetMB":  7.3
+                         },
+                         {
+                             "process":  "codebase-memory-mcp",
+                             "pid":  10272,
+                             "cpuPercent":  0.176,
+                             "workingSetMB":  1.1
+                         },
+                         {
+                             "process":  "codebase-memory-mcp",
+                             "pid":  22348,
+                             "cpuPercent":  0.137,
+                             "workingSetMB":  8.5
+                         },
+                         {
+                             "process":  "ms-teams",
+                             "pid":  56880,
+                             "cpuPercent":  0.098,
+                             "workingSetMB":  45.6
+                         },
+                         {
+                             "process":  "ZaloCall",
+                             "pid":  60440,
+                             "cpuPercent":  0.078,
+                             "workingSetMB":  10.1
+                         }
+                     ],
+    "method":  "Five CPU samples with one-second pauses; process CPU-time deltas normalized by logical processor count. No process stopped."
+}

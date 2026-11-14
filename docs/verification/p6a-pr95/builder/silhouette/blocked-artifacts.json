@@ -1,0 +1,18 @@
+{
+  "HEAD": "f046e36c98fcfbbd16808e759b7b09f0f1f4c98e",
+  "tree": "baf52e8b3e19f76f904ca8b39a51f9793a56a534",
+  "UTC": "2026-11-14T13:16:41.717Z",
+  "reason": "Owner directed HOLD after the six isolated measurements; gate 7 and full smoke were not run",
+  "equipmentScreenshots": "Not refreshed for this trace; root screenshots remain historical correction 9 captures",
+  "comparisonPng": "silhouette/reference-vs-trace.png (current trace, reference/SVG 300px and SVG 140px)",
+  "bundle": "Not refreshed for this trace; retain previous qualified snapshot",
+  "previousBundleHead": "16689892b4b448d04cac1a8e398f52e5269e7e53",
+  "previousBundle": {
+    "jsGzipBytes": 125479,
+    "cssGzipBytes": 6743,
+    "totalGzipBytes": 132222,
+    "jsKB": 125.479,
+    "cssKB": 6.743,
+    "totalKB": 132.222
+  }
+}

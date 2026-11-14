@@ -1,0 +1,48 @@
+HEAD=2c04321ba342871e6a858110ea2320a8e4df0d5d
+TREE=d5597ae4296afc90b41557eb062ca43f7ab85313
+UTC=2026-11-14T09:01:18.126Z
+EXIT=0
+COMMAND=npm run build && npm run build:regression --workspace=@haven/ui
+CI=
+FINISHED=2026-11-14T09:01:49.424Z
+
+
+> build-settlement@0.1.0 build
+> npm run build --workspace=@haven/core && npm run build --workspace=@haven/simulation && npm run build --workspace=@haven/ui
+
+
+> @haven/core@0.1.0 build
+> tsc
+
+
+> @haven/simulation@0.1.0 build
+> tsc
+
+
+> @haven/ui@0.1.0 build
+> vite build
+
+vite v6.4.5 building for production...
+transforming...
+✓ 237 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.71 kB │ gzip:   0.41 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-DdNtS9j1.css                   28.13 kB │ gzip:   5.81 kB
+dist/assets/index-D5_UjbGr.js                   366.72 kB │ gzip: 116.52 kB
+✓ built in 3.73s
+
+> @haven/ui@0.1.0 build:regression
+> vite build regression --config vite.config.ts --outDir dist
+
+vite v6.4.5 building for production...
+transforming...
+✓ 238 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.45 kB │ gzip:   0.31 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-DdNtS9j1.css                   28.13 kB │ gzip:   5.81 kB
+dist/assets/index-D5_UjbGr.js                   366.72 kB │ gzip: 116.52 kB
+✓ built in 3.05s

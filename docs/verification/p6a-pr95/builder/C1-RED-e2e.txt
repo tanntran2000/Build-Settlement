@@ -1,0 +1,126 @@
+HEAD=2c04321ba342871e6a858110ea2320a8e4df0d5d
+TREE=d5597ae4296afc90b41557eb062ca43f7ab85313
+UTC=2026-11-14T09:02:01.400Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/items.spec.ts -g C1 --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/C1-RED
+CI=
+FINISHED=2026-11-14T09:03:33.011Z
+
+[WebServer] (node:59880) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:71616) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:56172) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\items.spec.ts:28:1 › C1 paper doll, totals, filters and Materials expose real item state (9.0s)
+(node:17252) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [chromium] › tests\e2e\items.spec.ts:41:1 › C1 card preview and keyboard equip on a posted NPC change the next report (5.9s)
+(node:47624) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 [chromium] › tests\e2e\items.spec.ts:62:1 › C1 Destroy confirms, cancels and accepts with the keyboard (1.0m)
+
+
+  1) [chromium] › tests\e2e\items.spec.ts:28:1 › C1 paper doll, totals, filters and Materials expose real item state 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('tabpanel').getByRole('region', { name: 'Equipment', exact: true }).locator('[data-item-slot]')
+    Expected: 8
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('tabpanel').getByRole('region', { name: 'Equipment', exact: true }).locator('[data-item-slot]') with timeout 5000ms
+      - waiting for locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('tabpanel').getByRole('region', { name: 'Equipment', exact: true }).locator('[data-item-slot]')
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      29 |   const {s}=purchased();s.city.society!.items.materials.iron=7;
+      30 |   await importLife(page,s);let panel=await inventory(page);
+    > 31 |   await expect(panel.locator('[data-item-slot]')).toHaveCount(8);
+         |                                                   ^
+      32 |   await expect(panel.getByRole('img',{name:'Character silhouette',exact:true})).toBeVisible();
+      33 |   await expect(panel.getByRole('group',{name:'Inventory filters'}).getByRole('button')).toHaveText(['All','Player','NPC','This slot','Equipment','Accessory','Outfit']);
+      34 |   await expect(panel.getByText(/^Regen \+/)).toBeVisible();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:31:51
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\C1-RED\items-C1-paper-doll-totals-3d54c-ials-expose-real-item-state-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\C1-RED\items-C1-paper-doll-totals-3d54c-ials-expose-real-item-state-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\C1-RED\items-C1-paper-doll-totals-3d54c-ials-expose-real-item-state-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\items.spec.ts:41:1 › C1 card preview and keyboard equip on a posted NPC change the next report 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('tabpanel').getByRole('region', { name: 'Equipment', exact: true }).getByRole('article', { name: 'Steward Set', exact: true }).getByText(/Before → After/)
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('tabpanel').getByRole('region', { name: 'Equipment', exact: true }).getByRole('article', { name: 'Steward Set', exact: true }).getByText(/Before → After/) with timeout 5000ms
+      - waiting for locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('tabpanel').getByRole('region', { name: 'Equipment', exact: true }).getByRole('article', { name: 'Steward Set', exact: true }).getByText(/Before → After/)
+
+
+      51 |   await importLife(page,s);const panel=await inventory(page,npc.character.id);
+      52 |   const card=panel.getByRole('article',{name:def.name,exact:true});
+    > 53 |   await expect(card.getByText(/Before → After/)).toBeVisible();
+         |                                                  ^
+      54 |   const equip=card.getByRole('button',{name:'Equip',exact:true});await equip.focus();await page.keyboard.press('Enter');
+      55 |   const after=await exportLife(page);expect(after.city.society!.items.equipped[npc.character.id][def.slot!]!.id).toBe(item.id);
+      56 |   const expected=executeCharacterLifeCommand(after,{type:'END_WEEK',expectedRevision:after.city.revision,expectedWeek:1});if(!expected.success||!expected.report)throw Error('expected');
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:53:50
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\C1-RED\items-C1-card-preview-and--bd493--NPC-change-the-next-report-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\C1-RED\items-C1-card-preview-and--bd493--NPC-change-the-next-report-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\C1-RED\items-C1-card-preview-and--bd493--NPC-change-the-next-report-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests\e2e\items.spec.ts:62:1 › C1 Destroy confirms, cancels and accepts with the keyboard 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('tabpanel').getByRole('region', { name: 'Equipment', exact: true }).getByRole('article', { name: 'Steward Set', exact: true }).getByRole('button', { name: 'Destroy', exact: true })
+
+
+      62 | test('C1 Destroy confirms, cancels and accepts with the keyboard',async({page})=>{
+      63 |   const {s,def,item}=purchased();await importLife(page,s);let panel=await inventory(page);
+    > 64 |   await panel.getByRole('article',{name:def.name,exact:true}).getByRole('button',{name:'Destroy',exact:true}).click();
+         |                                                                                                               ^
+      65 |   let dialog=page.getByRole('dialog',{name:'Destroy item?',exact:true});await expect(dialog).toBeVisible();
+      66 |   await dialog.getByRole('button',{name:'Cancel',exact:true}).click();expect((await exportLife(page)).city.society!.items.inventory.some(i=>i.id===item.id)).toBe(true);
+      67 |   panel=await inventory(page);await panel.getByRole('article',{name:def.name,exact:true}).getByRole('button',{name:'Destroy',exact:true}).click();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\items.spec.ts:64:111
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\C1-RED\items-C1-Destroy-confirms--64737-d-accepts-with-the-keyboard-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\C1-RED\items-C1-Destroy-confirms--64737-d-accepts-with-the-keyboard-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\C1-RED\items-C1-Destroy-confirms--64737-d-accepts-with-the-keyboard-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    [chromium] › tests\e2e\items.spec.ts:28:1 › C1 paper doll, totals, filters and Materials expose real item state 
+    [chromium] › tests\e2e\items.spec.ts:41:1 › C1 card preview and keyboard equip on a posted NPC change the next report 
+    [chromium] › tests\e2e\items.spec.ts:62:1 › C1 Destroy confirms, cancels and accepts with the keyboard 

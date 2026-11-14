@@ -1,0 +1,67 @@
+HEAD=8af03070496d8e41ae85fecaea2d29c4cc474811
+TREE=025cbcb04ad3f3722d0bbd4a1ae1165e4915bfc4
+UTC=2026-11-14T10:27:18.604Z
+EXIT=1
+COMMAND=npx playwright test tests/e2e/character-life-navigation-accessibility.spec.ts:250 -g accessibility.at.1600px --output=C:/Users/Admin/.t3/local-drafts/p6a-prC-playwright/smoke-rerun-1600-baseline
+CI=1
+FINISHED=2026-11-14T10:31:23.290Z
+
+[WebServer] (node:34136) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:70552) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:72364) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:250:5 › accessibility at 1600px › life shell accessibility baseline (3.6m)
+
+
+  1) [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:250:5 › accessibility at 1600px › life shell accessibility baseline 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 13
+
+    - Array []
+    + Array [
+    +   "selected only by color: WeaponEmpty",
+    +   "selected only by color: Inventory",
+    +   "selected only by color: All",
+    +   "focus visibility/contrast: EarringsEmpty {\"clips\":[],\"box\":{\"left\":379,\"right\":715.828125,\"top\":452.34375,\"bottom\":519.09375},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: NecklaceEmpty {\"clips\":[],\"box\":{\"left\":790.828125,\"right\":1127.65625,\"top\":452.34375,\"bottom\":519.09375},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: TopEmpty {\"clips\":[],\"box\":{\"left\":379,\"right\":715.828125,\"top\":529.09375,\"bottom\":595.84375},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: BottomEmpty {\"clips\":[],\"box\":{\"left\":790.828125,\"right\":1127.65625,\"top\":529.09375,\"bottom\":595.84375},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: ShoesEmpty {\"clips\":[],\"box\":{\"left\":379,\"right\":715.828125,\"top\":605.84375,\"bottom\":672.59375},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: RingEmpty {\"clips\":[],\"box\":{\"left\":790.828125,\"right\":1127.65625,\"top\":605.84375,\"bottom\":672.59375},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: WeaponEmpty {\"clips\":[],\"box\":{\"left\":379,\"right\":715.828125,\"top\":682.59375,\"bottom\":749.34375},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    +   "focus visibility/contrast: HandEmpty {\"clips\":[],\"box\":{\"left\":790.828125,\"right\":1127.65625,\"top\":682.59375,\"bottom\":749.34375},\"outline\":3,\"color\":[121,113,159],\"bg\":[217,196,153],\"inViewport\":true}",
+    + ]
+
+      324 |       await writeFile(path, JSON.stringify({ method: 'CSS viewport widths; no calibrated zoom or screen-reader claim', measurements, tabCounts, focus, failures }, null, 2));
+      325 |       await info.attach('measurements', { path, contentType: 'application/json' });
+    > 326 |       expect([...new Set(failures)]).toEqual([]);
+          |                                      ^
+      327 |     });
+      328 |
+      329 |     test('long character and report content reflows', async ({ page }, info) => {
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation-accessibility.spec.ts:326:38
+
+    attachment #1: measurements (application/json) ─────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1600-baseline\character-life-navigation--f621c-hell-accessibility-baseline-chromium\attachments\measurements-94425160c01b339ef889daf1b180dcfcd18c9136.json
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1600-baseline\character-life-navigation--f621c-hell-accessibility-baseline-chromium\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1600-baseline\character-life-navigation--f621c-hell-accessibility-baseline-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p6a-prC-playwright\smoke-rerun-1600-baseline\character-life-navigation--f621c-hell-accessibility-baseline-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:250:5 › accessibility at 1600px › life shell accessibility baseline 

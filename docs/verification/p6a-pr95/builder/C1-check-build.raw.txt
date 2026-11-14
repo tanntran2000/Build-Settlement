@@ -1,0 +1,26 @@
+
+> build-settlement@0.1.0 typecheck:ui
+> npm run check --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 check
+> svelte-check --tsconfig ./tsconfig.json
+
+Loading svelte-check in workspace: c:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\ui
+Getting Svelte diagnostics...
+
+c:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\ui\src\EquipmentView.svelte:30:45
+Error: Argument of type 'string' is not assignable to parameter of type '"player" | "npc"'. (ts)
+   <svg role="img" aria-label="Character silhouette" viewBox="0 0 100 200"><circle cx="50" cy="24" r="17"/><path d="M34 47H66L83 100L72 105L61 72L63 125L69 188H54L50 139L46 188H31L37 125L39 72L28 105L17 100Z"/></svg>
+   <div class="slots">{#each equipmentSlots(kind) as entry}
+    <button data-item-slot={entry.id} data-locked={entry.locked?'true':undefined} disabled={entry.locked} aria-pressed={slot===entry.id} onclick={()=>{slot=entry.id;filter='This slot';view='Inventory';}}>
+
+====================================
+svelte-check found 1 error and 0 warnings in 1 file
+npm error Lifecycle script `check` failed with error:
+npm error code 1
+npm error path C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\ui
+npm error workspace @haven/ui@0.1.0
+npm error location C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\ui
+npm error command failed
+npm error command C:\Windows\system32\cmd.exe /d /s /c svelte-check --tsconfig ./tsconfig.json

@@ -1,0 +1,458 @@
+{
+  "texts": [
+    {
+      "text": "Item Market",
+      "contrast": 9.762563058847864,
+      "required": 3
+    },
+    {
+      "text": "Shared weekly offers · purchases leave the shelf until next week.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Weekly offers · 7 remaining",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Common · Outfit",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Plain Shoes",
+      "contrast": 8.727253250449747,
+      "required": 4.5
+    },
+    {
+      "text": "Player · Shoes",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Management +2",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Regen +1/week",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "5 Gold",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Buy",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Common · Outfit",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Plain Bottom",
+      "contrast": 8.727253250449747,
+      "required": 4.5
+    },
+    {
+      "text": "Player · Bottom",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Negotiation +2",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Regen +1/week",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "5 Gold",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Buy",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Common · Equipment",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Plain Weapon",
+      "contrast": 8.727253250449747,
+      "required": 4.5
+    },
+    {
+      "text": "Player · Weapon",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Combat +2",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Regen +1/week",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "5 Gold",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Buy",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Common · Accessory",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Plain Earrings",
+      "contrast": 8.727253250449747,
+      "required": 4.5
+    },
+    {
+      "text": "Player · Earrings",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Negotiation +2",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Regen +1/week",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "5 Gold",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Buy",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Rare · Accessory",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Fine Earrings",
+      "contrast": 17.94813766823384,
+      "required": 4.5
+    },
+    {
+      "text": "Npc · Earrings",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Negotiation +4",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "· Management +1",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "15 Gold",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Buy",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Epic · Accessory",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Masterwork necklace",
+      "contrast": 17.94813766823384,
+      "required": 4.5
+    },
+    {
+      "text": "Npc · Necklace",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Medical +8",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "· Technical +2",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "40 Gold",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Buy",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Epic · Outfit",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Masterwork top",
+      "contrast": 8.727253250449747,
+      "required": 4.5
+    },
+    {
+      "text": "Player · Top",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Negotiation +8",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "· Management +2",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Regen +3/week",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "40 Gold",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Buy",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Sell inventory",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Resale is 30% of base price. Legendary items cannot be sold.",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Rare · Outfit",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Steward Set",
+      "contrast": 17.94813766823384,
+      "required": 4.5
+    },
+    {
+      "text": "Npc · Set",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Management +12",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "· Negotiation +3",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Covers Top, Bottom and Shoes.",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "13.5 Gold",
+      "contrast": 15.044228250528105,
+      "required": 4.5
+    },
+    {
+      "text": "Sell",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Sell materials",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Materials for sale",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Material",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Rarity",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Count",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Each",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Sale",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Iron",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Common",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "7",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "0.3 Gold",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Sell material",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Ruby",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Legendary",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "1",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Not for sale",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    },
+    {
+      "text": "Legendary · kept",
+      "contrast": 9.762563058847864,
+      "required": 4.5
+    }
+  ],
+  "clipped": [],
+  "controls": [
+    {
+      "label": "Buy",
+      "width": 56.140625,
+      "height": 44
+    },
+    {
+      "label": "Buy",
+      "width": 56.140625,
+      "height": 44
+    },
+    {
+      "label": "Buy",
+      "width": 56.140625,
+      "height": 44
+    },
+    {
+      "label": "Buy",
+      "width": 56.140625,
+      "height": 44
+    },
+    {
+      "label": "Buy",
+      "width": 56.140625,
+      "height": 44
+    },
+    {
+      "label": "Buy",
+      "width": 56.140625,
+      "height": 44
+    },
+    {
+      "label": "Buy",
+      "width": 56.140625,
+      "height": 44
+    },
+    {
+      "label": "Sell",
+      "width": 53.390625,
+      "height": 44
+    },
+    {
+      "label": "Sell Iron count",
+      "width": 80,
+      "height": 44
+    },
+    {
+      "label": "Sell material",
+      "width": 122,
+      "height": 44
+    }
+  ],
+  "pageOverflow": false
+}

@@ -1,0 +1,158 @@
+{
+  "HEAD": "16689892b4b448d04cac1a8e398f52e5269e7e53",
+  "tree": "b8413c359472872846aa268d5b864770fc684746",
+  "base": "2c04321ba342871e6a858110ea2320a8e4df0d5d",
+  "branch": "feat/p6a-item-ui",
+  "UTC": "2026-11-14T12:21:38.574Z",
+  "exit": 1,
+  "status": "HOLD: gate 6 repeated existing unit timeouts",
+  "gitStatus": "",
+  "commits": [
+    "ce612d2461993486cb7fa35c6463c4c2a57ea3fe feat(ui): equipment view and inventory",
+    "8af03070496d8e41ae85fecaea2d29c4cc474811 feat(ui): market, potions, item reports and lord health",
+    "16689892b4b448d04cac1a8e398f52e5269e7e53 fix(ui): resolve item panel accessibility and copy"
+  ],
+  "gates": [
+    {
+      "name": "fix-gate1-diff",
+      "HEAD": "16689892b4b448d04cac1a8e398f52e5269e7e53",
+      "tree": "b8413c359472872846aa268d5b864770fc684746",
+      "UTC": "2026-11-14T12:13:00.488Z",
+      "finished": "2026-11-14T12:13:00.775Z",
+      "exit": 0,
+      "command": "git diff --check origin/main...HEAD"
+    },
+    {
+      "name": "fix-gate2-lint",
+      "HEAD": "16689892b4b448d04cac1a8e398f52e5269e7e53",
+      "tree": "b8413c359472872846aa268d5b864770fc684746",
+      "UTC": "2026-11-14T12:13:00.907Z",
+      "finished": "2026-11-14T12:13:15.951Z",
+      "exit": 0,
+      "command": "npm run lint"
+    },
+    {
+      "name": "fix-gate3-typecheck",
+      "HEAD": "16689892b4b448d04cac1a8e398f52e5269e7e53",
+      "tree": "b8413c359472872846aa268d5b864770fc684746",
+      "UTC": "2026-11-14T12:13:16.078Z",
+      "finished": "2026-11-14T12:14:03.823Z",
+      "exit": 0,
+      "command": "npm run typecheck"
+    },
+    {
+      "name": "fix-gate4-architecture",
+      "HEAD": "16689892b4b448d04cac1a8e398f52e5269e7e53",
+      "tree": "b8413c359472872846aa268d5b864770fc684746",
+      "UTC": "2026-11-14T12:14:03.977Z",
+      "finished": "2026-11-14T12:14:15.558Z",
+      "exit": 0,
+      "command": "npm run check:architecture"
+    },
+    {
+      "name": "fix-gate5-architecture-tests",
+      "HEAD": "16689892b4b448d04cac1a8e398f52e5269e7e53",
+      "tree": "b8413c359472872846aa268d5b864770fc684746",
+      "UTC": "2026-11-14T12:14:15.669Z",
+      "finished": "2026-11-14T12:15:24.518Z",
+      "exit": 0,
+      "command": "npm run test:architecture"
+    },
+    {
+      "name": "fix-gate6-unit",
+      "HEAD": "16689892b4b448d04cac1a8e398f52e5269e7e53",
+      "tree": "b8413c359472872846aa268d5b864770fc684746",
+      "UTC": "2026-11-14T12:15:24.640Z",
+      "finished": "2026-11-14T12:16:45.336Z",
+      "exit": 1,
+      "command": "npm test"
+    }
+  ],
+  "gateAttempts": 2,
+  "initialAttempt": {
+    "HEAD": "16689892b4b448d04cac1a8e398f52e5269e7e53",
+    "tree": "b8413c359472872846aa268d5b864770fc684746",
+    "UTC": "2026-11-14T12:12:58.862Z",
+    "exit": 1,
+    "gate": 6,
+    "test": "packages/simulation/src/__tests__/lord-health.test.ts:73",
+    "elapsedMs": 6529,
+    "existingTimeoutMs": 5000,
+    "passed": 2487,
+    "failed": 1,
+    "action": "Repeat gates once with identical code, configuration, assertions and timeout; no smoke or gate 7 ran in attempt 1"
+  },
+  "unit": {
+    "attempt1": {
+      "passed": 2487,
+      "failed": 1
+    },
+    "attempt2": {
+      "passed": 2486,
+      "failed": 2
+    },
+    "timeouts": [
+      {
+        "file": "packages/simulation/src/__tests__/lord-health.test.ts",
+        "line": 73,
+        "existingTimeoutMs": 5000,
+        "attempt1Ms": 6529,
+        "attempt2Ms": 5141
+      },
+      {
+        "file": "packages/simulation/src/__tests__/society-renewable-support.test.ts",
+        "line": 160,
+        "existingTimeoutMs": 5000,
+        "attempt2Ms": 5042
+      }
+    ]
+  },
+  "architecturePassed": 154,
+  "gate7": "NOT RUN — gate 6 HOLD",
+  "fullSmoke": "NOT RUN — gate 6 HOLD",
+  "focusedSmoke": {
+    "CI": 1,
+    "passed": 30,
+    "failed": 0,
+    "duration": "17.1m",
+    "log": "fix-GREEN-e2e.txt"
+  },
+  "inventory": {
+    "blocks": 11,
+    "files": 3,
+    "fixRoundBlocks": 1,
+    "fixRoundFiles": 1
+  },
+  "protectedFilesUnchanged": 61,
+  "accessibilityAudits": 14,
+  "comprehensiveAudits": 8,
+  "screenshots": [
+    "death-letter-1280.png",
+    "equipment-1280.png",
+    "equipment-npc-1280.png",
+    "equipment-player-1280.png",
+    "market-1280.png",
+    "materials-1280.png",
+    "potions-1280.png",
+    "quartermaster-items-1280.png",
+    "steward-items-1280.png",
+    "temporary-storage-1280.png"
+  ],
+  "bundle": {
+    "jsGzipBytes": 125479,
+    "cssGzipBytes": 6743,
+    "totalGzipBytes": 132222,
+    "jsKB": 125.479,
+    "cssKB": 6.743,
+    "totalKB": 132.222,
+    "qualification": "existing asset snapshot; final-head build proof unavailable"
+  },
+  "ports": {
+    "4173": "free",
+    "4174": "free",
+    "checkedUTC": "2026-11-14T12:21:38.3275133Z"
+  },
+  "pushed": false,
+  "PRCreated": false,
+  "merged": false
+}

@@ -1,0 +1,9 @@
+C1 anti-loop HOLD answered by the owner. Owner (Tân), 2026-11-14, dialog choice, verbatim: "Allow the Farm fix (Recommended)".
+
+Scope of this permission: exactly one further attempt, only in the new test `tests/e2e/items.spec.ts`:
+- post the management-item wearer at the existing Farm (`field-1`) instead of the Town Hall (spec §5: management affects Farm output; Town Hall uses negotiation);
+- keep the real `BUY_ITEM` purchase, the keyboard equip, the exact equipped-item id, the strict report inequality and the exact final-session equality;
+- assert the visible Wheat delta directly in the next report. Make sure the wearer's effective management actually crosses at least one +1% step above 50 and that the integer output change is nonzero; if the rounding makes it zero, HOLD rather than tune numbers.
+- No product code, existing test, timeout or threshold changes for this fix. Record it as attempt 3 in the C1 logs.
+
+If it passes, commit C1 and continue with C2 and C3 per the brief and Plan correction 8. If it still fails, HOLD again with the evidence. Do not push, open a PR or merge.

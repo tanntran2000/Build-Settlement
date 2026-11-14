@@ -1,0 +1,7 @@
+fix(ui): resolve item panel accessibility and copy
+
+Give selected equipment controls a non-colour cue and sufficient keyboard focus contrast. Wrap the item Details tables at narrow widths while preserving the stock ledger.
+
+Use catalog effects for Legendary trait copy, render the approved NPC silhouette, and retain the Player figure. Add the two RED-first browser cases and apply the exact approved P11 expectation.
+
+Co-authored-by: Codex <noreply@openai.com>
