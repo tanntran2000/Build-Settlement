@@ -94,6 +94,16 @@
 
   Any other file outside the allowlist is a HOLD. **Owner (Tân), 2026-11-14, dialog choice, verbatim:** "Allow these 4 files (Recommended)".
 - **Task order:** C1's e2e equips an item bought through the real command path on a posted NPC and checks the next report's post effect. The full UI-buy workflow e2e moves to C2 (RED before C2 product edits, GREEN before its commit). Both at 1280. **Owner (Tân), 2026-11-14, dialog choice, verbatim:** "Move the buy e2e to C2 (Recommended)".
+- **C1 e2e attempts 3 and 4 (anti-loop HOLDs), new test `tests/e2e/items.spec.ts` only:** post the management-item wearer at the Farm and assert the Wheat delta (spec §5: Town Hall uses negotiation); then press "Plan next week" before the export and compare it exactly with the real `NEXT_WEEK` session. **Owner (Tân), 2026-11-14, dialog choices, verbatim:** "Allow the Farm fix (Recommended)", "Allow this Planning fix (Recommended)".
+
+**Plan correction 9 (PR C, C3 smoke HOLD at `8af0307`).** The full `CI=1` smoke had 11 failures, each reproduced in an isolated rerun. Evidence: `local-drafts/p6a-prC/C3-HOLD.md`, `P11-profile-placeholder-proposal.md`.
+- One fix round, in allowlisted files only:
+  1. `EquipmentView.svelte`: a non-colour selected cue (font weight) and a darker focus token so slot focus contrast reaches 3:1 (measured 2.632:1);
+  2. `SoloWeekReport.svelte`: fixed layout and wrapping scoped to the new item Details so the 320px large-text report does not overflow; the stock ledger is unchanged;
+  3. existing-test edit **P11** at `tests/e2e/character-life-navigation.spec.ts:381`, exactly as in `P11-profile-placeholder-proposal.md`: in the Inventory area the old full-body fallback is absent and Equipment is visible; the other areas keep their original checks. The whole-PR inventory becomes 11 blocks (P1–P11) in the same 3 files;
+  4. `ItemCard.svelte`: the Ledger of Plenty copy states the catalog effect (+5% output at the wearer's post, Decision 1), with a Legendary-copy RED case in `items.spec.ts`.
+- **Owner (Tân), 2026-11-14, dialog choice, verbatim:** "Approve all 4 incl. P11 (Recommended)".
+- **NPC silhouette:** NPCs use the flat pictogram silhouette "option D" (curvy figure, hands on hips, ponytail, knockout lines in the panel colour) in `EquipmentView.svelte`; the Player keeps the current neutral figure. It is still a flat silhouette (spec §9). No adult detail (that is P6-C). **Owner (Tân), 2026-11-14, dialog choice, verbatim:** "Use option D now (Recommended)".
 
 - **Extension 2:** correction 2 also covers updating an expectation to the stored-record layout that an approved Decision defines. Example: under Decision 3, the stored `city` record holds `items` without the instance lists, in `character-life-navigation.spec.ts:1436`. Exact equality stays, and each edit is listed. **Owner (Tân), 2026-11-13, verbatim:** "Allow, extend correction 2 (Recommended)".
 
