@@ -1,5 +1,37 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## P6-A PR A (item core) — PR #93 G6 (2026-11-14 UTC)
+
+**G6 PASS (Claude, Orchestrator/Tester).** P6-A PR A is complete; PR B (week rules) and PR C (UI) follow.
+
+- **Merge.** PR #93 (`P6-A PR A: item core (catalog, state, commands, persistence)`) was merged normally by dot under G5 at 2026-11-14T02:26:26Z, with no bypass.
+  - Merge/main commit: `5e9674e31fb017f730dced4178514ebbfe1dbf24`.
+  - Accepted head: `4afe92763856cc3f82445803298beacc7ccedf68`. Base: `c4d3dc4`.
+- **Trees.** The merge tree `8e95ed5e017bff02d4ff43d61789244ce2ff6519` is identical to the accepted head tree. Claude checked this locally.
+- **Main CI.** Quality Gate run [43546313425](https://github.com/tanntran2000/Build-Settlement/actions/runs/43546313425), job 132298357649 (push, exact merge SHA), SUCCESS at 2026-11-14T02:41:34Z: 2,369 unit tests in 114 files, and 350/350 Chromium smoke (13.8 min). dot read the raw log; Claude confirmed the conclusion, the unit total and the smoke total. The dependency audit reports 3 low advisories, none moderate or higher.
+- **Pre-merge, at `4afe927`:**
+  - Claude Tester gates 1–7 exit 0, and full smoke 350/350. The log shows `CI=1`.
+  - CI 43541797957 success.
+  - Astra PASS on round 3 (thread `mcp:94caacb1`).
+    - Round 1 (`b31dc02`) found two P2: every game had the seed-2026 week-1 Market, and non-canonical lists broke the byte round trip.
+    - Round 2 (`f1944ce`) found two P2: slot, owner and key order still broke the round trip, and imported equipment could name a character that does not exist.
+- **Evidence.** `docs/verification/p6a-pr93/` on branch `docs/p6a-items-design`, at `a550e1b`.
+- **Owner instructions** (verbatim; full table in `owner-approval-record.md`):
+  - "Approve both", "Duyệt v0.2", "Duyệt, giao Builder A";
+  - Plan corrections, owner's choices in Claude's dialog:
+    - 1: "Add end copy to PR A (Recommended)";
+    - 2: "Allow additive shape edits (Recommended)", and "Allow, extend correction 2 (Recommended)" twice;
+    - 3: "Allow session.ts in PR A (Recommended)";
+    - 4: "Allow validate.ts in PR A (Recommended)".
+- **Disclosed.**
+  - Two review rounds failed before the PASS.
+  - The golden and the v8 fixtures were regenerated twice (Decision 9 and correction 3). Each path diff was limited to `city.society` items paths, plus the `rulesetId` the first time.
+- **Limits.**
+  - Chromium only. Astra's review is source-only.
+  - The Drug Store becomes buildable only in PR B.
+  - Week rules, item effects, regen, the death rule, the new posts and the item UI are in PR B and PR C.
+- **Next.** P6-A PR B (week rules).
+
 ## DATA-01 PR C (dev-only data inspector) — PR #92 G6 (2026-11-13 UTC) — DATA-01 complete
 
 **G6 PASS (Claude, Orchestrator/Tester). With PR C merged, DATA-01 (PRs #90, #91, #92) is complete.**
