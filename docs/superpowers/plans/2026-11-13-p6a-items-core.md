@@ -51,6 +51,26 @@
 - No golden or fixture regeneration is expected. Any byte change in the golden or the v7/v8 fixtures is a HOLD.
 - **Owner (Tân), 2026-11-14, choice in Claude's question dialog, verbatim:** "Allow validate.ts in PR A (Recommended)".
 
+**Plan correction 5 (PR B preflight, Builder Step 0 HOLD).** The Builder listed every existing test and file that PR B's approved behaviour breaks, before any product edit. Evidence: `local-drafts/p6a-prB/STEP0-HOLD.md` and `step0-proposed-edits.md`.
+- **Existing-test edits:** the 22 listed before → after blocks in 12 files (P1–P22) are allowed exactly as listed, and nothing else in those tests changes. They cover:
+  - the health floor and a health-0 lord at End Week now fall with `fallCause 'wounds'` (crime-fixtures.test.ts), and `crime.spec.ts:18` expects 81;
+  - the post list gains `watch-house` and `military-barracks` (npc.test.ts);
+  - the Drug Store becomes active (society-map.test.ts, character-life-observation.test.ts);
+  - the inert `items` report field in synthetic reports;
+  - the e2e visible-report parser excludes the unrendered `items` field and still checks every other field exactly (navigation helpers and spec);
+  - the law-week item literal;
+  - the two catalog pins below;
+  - the UI sentence below.
+  - **Owner (Tân), 2026-11-14, dialog choice, verbatim:** "Approve the 22 edits (Recommended)".
+- **Drug Store definition:** PR B's allowlist gains `packages/core/src/data/validate.ts`, only to add `drug-store` to the closed building-id list. The TRIAL definition is:
+  - town terrain, `maxLevel 1`, `maxWorkers 0`;
+  - the Hospital level-1 cost (8 Gold, 4 Wood, 2 Iron);
+  - upkeep 1 Gold per week.
+
+  Both `TRIAL_BUILDINGS` and `SOCIETY_BUILDINGS` pins change, each recorded old → new with the reason. **Owner (Tân), 2026-11-14, dialog choice, verbatim:** "Allow validate.ts + 2 pins (Recommended)".
+- **v8 fixtures:** exactly `society-v8/life-5-weeks.json` and `society-v8/life-laws.json` may be regenerated. Their committed path diff may contain only `city.society.items.*`. Any other path, or any other fixture changing, is a HOLD. **Owner (Tân), 2026-11-14, dialog choice, verbatim:** "Allow these 2 files (Recommended)".
+- **UI sentence:** PR B's allowlist gains `packages/ui/src/CharacterLifeCharacters.svelte`, only to replace "NPC effects on output are not active yet." with "NPC post skills apply at End Week.", together with its two e2e asserts. **Owner (Tân), 2026-11-14, dialog choice, verbatim:** "Change it in PR B (Recommended)".
+
 - **Extension 2:** correction 2 also covers updating an expectation to the stored-record layout that an approved Decision defines. Example: under Decision 3, the stored `city` record holds `items` without the instance lists, in `character-life-navigation.spec.ts:1436`. Exact equality stays, and each edit is listed. **Owner (Tân), 2026-11-13, verbatim:** "Allow, extend correction 2 (Recommended)".
 
 **Base:** `main` `c4d3dc4` (DATA-01 complete).
