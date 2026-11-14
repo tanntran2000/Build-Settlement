@@ -45,6 +45,12 @@
 - **Owner (Tân), 2026-11-13, choice in Claude's question dialog, verbatim:** "Allow session.ts in PR A (Recommended)".
 - **Second review finding, same round, inside the allowlist:** item state is made canonical in `isItemsState`. Instance lists must be in ascending id order, and an empty `equipped` entry is invalid. This makes the Decision 3 round trip byte-identical for every accepted state.
 
+**Plan correction 4 (PR A review fix round 2: equipment owners and canonical order).**
+- **Finding 1 (Astra, P2, round 2):** `isItemsState` still accepts equipment slots, character entries and instance keys in an order that the item-table rebuild does not reproduce. Example: `player: { weapon: {id:2}, ring: {id:1} }` returns with `ring` first, and `{ defId, id }` returns as `{ id, defId }`. **Fix, inside the allowlist (`items.ts`):** `isItemsState` accepts only the canonical form that the rebuild produces: instance keys in rebuild order, slots and character entries in rebuild order. Each case gets a RED byte round-trip test.
+- **Finding 2 (Astra, P2, round 2):** `society.ts:67` lets every `equipped` owner authorize itself. An imported checkpoint can give equipment to a character that does not exist, and then item commands and the item-table rebuild refuse it. **Fix:** PR A's allowlist gains `packages/core/src/character/validate.ts`, only to check in `isCharacterLifeSessionState` that every `equipped` owner is the Player or an existing NPC. A RED test covers the import path. The society-only validator keeps its structural role.
+- No golden or fixture regeneration is expected. Any byte change in the golden or the v7/v8 fixtures is a HOLD.
+- **Owner (Tân), 2026-11-14, choice in Claude's question dialog, verbatim:** "Allow validate.ts in PR A (Recommended)".
+
 - **Extension 2:** correction 2 also covers updating an expectation to the stored-record layout that an approved Decision defines. Example: under Decision 3, the stored `city` record holds `items` without the instance lists, in `character-life-navigation.spec.ts:1436`. Exact equality stays, and each edit is listed. **Owner (Tân), 2026-11-13, verbatim:** "Allow, extend correction 2 (Recommended)".
 
 **Base:** `main` `c4d3dc4` (DATA-01 complete).
