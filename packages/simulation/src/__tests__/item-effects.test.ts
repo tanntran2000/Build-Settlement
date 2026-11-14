@@ -29,7 +29,8 @@ function output(typeId: string, tileId: string, good: string, ctx?: ItemWeekCont
   if (good === 'wheat') return r.after.wheat-r.before.wheat+(r.outside!.spoiledMilli.wheat??0);
   if (good === 'food') return r.after.food-r.before.food+r.foodConsumedMilli+(r.outside!.spoiledMilli.food??0);
   if (good === 'goods') return r.goodsStock!.producedMilli;
-  return r.outside!.producedMilli[good as keyof typeof r.outside.producedMilli];
+  const outside = r.outside!;
+  return outside.producedMilli[good as keyof typeof outside.producedMilli];
 }
 for (const [typeId,tileId,skillName,good] of production) {
   it.each([[50,0],[55,1],[100,10]])(`${typeId} uses ${skillName} %i for exactly +%i percent output`, (skill,percent) => {

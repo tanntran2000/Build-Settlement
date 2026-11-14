@@ -72,8 +72,8 @@ it('preserves the original vote message literal type', () => {
 // SHA-256 of JSON.stringify(original constant), read directly from the pinned Git
 // source at 5cc2522f27e01b49baaa6e44bba01904edcea5c0 before catalog extraction.
 const pinnedCatalogs = [
-  { name: 'TRIAL_BUILDINGS', value: TRIAL_BUILDINGS, hash: '13a5fcdd7e40703bd2223b73d051b2f43faa4d5034624f1d837ca2350441c6f2' },
-  { name: 'SOCIETY_BUILDINGS', value: SOCIETY_BUILDINGS, hash: '6cd3c9b125985dba80bcc522e8d35facd313578d0812f9c3e4de307e12fb93f8' },
+  { name: 'TRIAL_BUILDINGS', value: TRIAL_BUILDINGS, hash: 'ecaa53f29be9a8028a9f68923e6c7d5bc9ef4b510692e7cd2bd580415433f54f' },
+  { name: 'SOCIETY_BUILDINGS', value: SOCIETY_BUILDINGS, hash: '2bcf0b8352d2769d4d0da0d3d9039ee1196083445067ae75509efd26c09673f1' },
   { name: 'LAW_CATALOG', value: LAW_CATALOG, hash: '349c5a8109867abfd74ca3a7f2eddfedfe1ea3383744609a30e7d81b98a42783' },
   { name: 'LAW_TRIAL', value: LAW_TRIAL, hash: 'eb531c3aa1fad89b2d4c918b13a040f4c6940f48295bccda8feb01b5b76ad5d9' },
   { name: 'LAW_MESSAGES', value: LAW_MESSAGES, hash: 'b1604af8f5ef88797692d5889c97e05683d90c5e40ae73be5194fe2d4359d35d' },

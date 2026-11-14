@@ -31,10 +31,13 @@ it.each(names)('pins production-searched %s',name=>{
  expect(resolved.report!.order!.after.authority).toBe(resolved.next.city.society!.order.authority);
 });
 function load(name:Name){const r=deserializeCharacterLifeSave(readFileSync(url(name),'utf8'));if(!r.success)throw Error(r.error.message);return r.state;}
-it('floors wounded health at one and preserves a refused session',()=>{
+it('a lethal wound sets wounds fall cause without regen and preserves a refused session',()=>{
  const s=load('wound');s.player.character.health=15;const before=structuredClone(s),r=end(s);
  expect(r.success).toBe(true);if(!r.success)throw Error(r.error.message);
- expect(r.report!.crimeEvent!.lordHealthLoss).toBe(20);expect(r.next.player.character.health).toBe(1);expect(s).toEqual(before);
+ expect(r.report!.crimeEvent!.lordHealthLoss).toBe(20);expect(r.next.player.character.health).toBe(0);expect(s).toEqual(before);
+ expect(r.next.city.society!.crisis).toMatchObject({stage:'fallen',fallCause:'wounds'});
+ expect(r.next.city.society!.pendingCard).toBeNull();
+ expect(executeCharacterLifeCommand(r.next,{type:'NEXT_WEEK',expectedRevision:r.next.city.revision})).toMatchObject({success:false,error:{code:'CITY_FALLEN'}});
  const refused=executeCharacterLifeCommand(s,{type:'END_WEEK',expectedRevision:-1,expectedWeek:s.city.world.week});expect(refused.success).toBe(false);expect(s).toEqual(before);
 });
 it('reports the population left after raid casualties',()=>{
@@ -49,7 +52,7 @@ it('skips crisis on assassination death and refuses subsequent commands',()=>{
  expect(r.report!.crisis).toBeUndefined();expect(r.next.city.society!.crisis.fallCause).toBe('assassination');
  expect(executeCharacterLifeCommand(r.next,{type:'NEXT_WEEK',expectedRevision:r.next.city.revision})).toMatchObject({success:false,error:{code:'CITY_FALLEN'}});
 });
-it('preserves zero health through a non-week command and an unwounded End Week',()=>{
+it('preserves zero health through a non-week command and falls at End Week',()=>{
  const s=crisisFixtureSession();s.player.character.health=0;
  const assigned=executeCharacterLifeCommand(s,{type:'SET_WORKERS',tileId:'field-1',workers:1,expectedRevision:s.city.revision});
  expect(assigned.success).toBe(true);if(!assigned.success)throw Error(assigned.error.message);
@@ -57,4 +60,6 @@ it('preserves zero health through a non-week command and an unwounded End Week',
  const resolved=end(assigned.next);expect(resolved.success).toBe(true);if(!resolved.success)throw Error(resolved.error.message);
  expect(resolved.report!.crimeEvent!.lordHealthLoss).toBe(0);
  expect(resolved.next.player.character.health).toBe(0);expect(s.player.character.health).toBe(0);
+ expect(resolved.next.city.society!.crisis).toMatchObject({stage:'fallen',fallCause:'wounds'});
+ expect(resolved.next.city.society!.pendingCard).toBeNull();
 });

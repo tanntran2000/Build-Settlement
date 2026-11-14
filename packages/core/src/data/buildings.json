@@ -404,6 +404,21 @@
         "iron": 0
       },
       "upkeepMilli": 200
+    },
+    "drug-store": {
+      "name": "Drug Store",
+      "operation": "society",
+      "terrain": [
+        "town"
+      ],
+      "maxLevel": 1,
+      "maxWorkers": 0,
+      "cost": {
+        "gold": 8000,
+        "wood": 4000,
+        "iron": 2000
+      },
+      "upkeepMilli": 1000
     }
   },
   "society": {
@@ -568,7 +583,7 @@
     "drug-store": {
       "tier": "slum",
       "staff": null,
-      "reserved": true
+      "reserved": false
     }
   }
 }
