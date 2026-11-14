@@ -91,6 +91,7 @@ export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext): Readon
   }
   // Capture operation before land cleanup can remove exhausted buildings or release workers.
   const hospitalOperated=funded.some(t=>t.building!.typeId==='hospital'&&t.building!.workers===buildingWorkerCap('hospital',t.building!.level)&&operatingIds.has(t.id));
+  const materialPosts=s.tiles.flatMap(tile=>tile.building&&ctx?.postSkills[tile.id]?[{tileId:tile.id,typeId:tile.building.typeId}]:[]);
   const facilities = societyFacilities(s, operatingIds);
   const withCHTaxMilli=scaled(baseTaxMilli,100+10*facilities.countingHouseLevels,100);
   const taxMilli=scaled(withCHTaxMilli,10000+taxModifierBps,10000);
@@ -187,7 +188,7 @@ export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext): Readon
   const crimeEvent=resolveCrimeWeek(s,operatingIds,crimeRandom(s.world.worldMetadata.worldSeed,s.world.week-1),ctx);
   if(immigration&&crimeEvent.event?.soldiersKilled)immigration=Object.freeze({...immigration,populationAfter:societyPopulation(s.society)});
   const crisis=s.society.crisis.fallCause==='assassination'?undefined:resolveCrisisWeek(s,{foodDemandMilli,foodConsumedMilli});
-  const items=resolveItemWeek(s,ctx,hospitalOperated,crisis?.stageBefore==='rebellion');
+  const items=resolveItemWeek(s,ctx,hospitalOperated,crisis?.stageBefore==='rebellion',materialPosts);
   societyReport.tensionAfter=s.society.tension;
   order.after.authority=s.society.order.authority;
   spoilOutsideStocks(s,operatingIds,outside);
@@ -197,20 +198,19 @@ export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext): Readon
   return Object.freeze({ items, laws, crimeEvent, ...(crisis ? {crisis} : {}), order, outside, week: s.world.week - 1, before: Object.freeze(before), after: Object.freeze({ ...stocks }), taxMilli, farmBatchGoldMilli, farmExtraUpkeepMilli, upkeepPaidMilli, unpaidUpkeepMilli, foodDemandMilli, foodConsumedMilli, happinessBefore, happinessAfter: s.happiness, goods, ...(goodsStock ? { goodsStock } : {}), ...(societyReport ? { society:societyReport,luxuryImportedMilli,trainingGoldMilli } : {}), activities: Object.freeze(activities), ...(immigration ? { immigration } : {}) });
 }
 
-function resolveItemWeek(s:TileTrialState,ctx:ItemWeekContext|undefined,hospitalOperated:boolean,wasRebellion:boolean):ItemWeekReport {
+function resolveItemWeek(s:TileTrialState,ctx:ItemWeekContext|undefined,hospitalOperated:boolean,wasRebellion:boolean,materialPosts:readonly {tileId:string;typeId:string}[]):ItemWeekReport {
   const society=s.society!,items=society.items,week=s.world.week-1,seed=s.world.worldMetadata.worldSeed;
   const report:ItemWeekReport={materials:[],found:null,expired:[],legendary:null,hospitalOperated,regen:1+Number(hospitalOperated)+(ctx?.playerRegen??0)};
   const materialRng=itemRandom(seed,week,'material');
-  for(const tile of s.tiles){
-    if(!tile.building||!ctx?.postSkills[tile.id])continue;
-    const pool=Object.keys(ITEM_CATALOG).filter(id=>ITEM_CATALOG[id].category==='material'&&ITEM_CATALOG[id].building!.includes(tile.building!.typeId));
+  for(const post of materialPosts){
+    const pool=Object.keys(ITEM_CATALOG).filter(id=>ITEM_CATALOG[id].category==='material'&&ITEM_CATALOG[id].building!.includes(post.typeId));
     if(!pool.length)continue;
     const rarity=drawItemRarity(ITEM_TRIAL.materialOddsBps,materialRng);
     const materialId=pool.find(id=>ITEM_CATALOG[id].rarity===rarity);
     if(!materialId)continue;
     const count=items.materials[materialId]??0,lost=count>=ITEM_TRIAL.stackCap;
     if(!lost)items.materials[materialId]=count+1;
-    report.materials.push({tileId:tile.id,materialId,lost});
+    report.materials.push({tileId:post.tileId,materialId,lost});
   }
   const grant=(defId:string):{stored:boolean;lost:boolean}=>{
     if(items.inventory.length<ITEM_TRIAL.inventoryCap){items.inventory.push({id:items.nextItemId++,defId});return {stored:false,lost:false};}
