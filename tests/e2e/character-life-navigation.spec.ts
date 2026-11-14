@@ -378,8 +378,13 @@ for (const width of [375, 1280]) {
       }
       for (const area of ['Description', 'Inventory', 'Work', 'Relations']) {
         await selectArea(page, area);
-        await expect(placeholder).toBeVisible();
-        expect(await placeholder.evaluate(el => el.outerHTML)).toBe(staticMarkup);
+        if (area === 'Inventory') {
+          await expect(placeholder).toHaveCount(0);
+          await expect(win.getByRole('region', { name: 'Equipment', exact: true })).toBeVisible();
+        } else {
+          await expect(placeholder).toBeVisible();
+          expect(await placeholder.evaluate(el => el.outerHTML)).toBe(staticMarkup);
+        }
       }
       const bounds = await placeholder.evaluate(el => {
         const box = el.getBoundingClientRect(), card = el.closest('.card')!.getBoundingClientRect();
@@ -486,7 +491,7 @@ test('one character window remembers areas and closes new-person disclosures', a
   expect(await exportLife(page)).toEqual(before);
 });
 
-test('inventory and player unavailable areas are honest', async ({ page }) => {
+test('inventory shows equipment and player unavailable areas stay honest', async ({ page }) => {
   await page.goto('/?mode=world-life');
   const session = makeLife();
   await importLife(page, session);
@@ -494,8 +499,11 @@ test('inventory and player unavailable areas are honest', async ({ page }) => {
     await selectPerson(page, id);
     await expectOneCharacterWindow(page);
     const panel = await selectArea(page, 'Inventory');
-    await expect(panel.locator('p')).toHaveText(['Inventory and equipment are not implemented yet.', 'Current clothing is described in Description.']);
-    await expect(panel.locator('button,input,select,ul,ol,[data-slot]')).toHaveCount(0);
+    const equipment = panel.getByRole('region', { name: 'Equipment', exact: true });
+    await expect(equipment).toBeVisible();
+    await expect(equipment.locator('[data-item-slot]')).toHaveCount(id === 'player' ? 8 : 11);
+    await expect(equipment.locator('[data-item-slot][data-locked="true"]')).toHaveCount(id === 'player' ? 0 : 3);
+    await expect(equipment.getByRole('group', { name: 'Inventory filters', exact: true }).getByRole('button')).toHaveText(['All', 'Player', 'NPC', 'This slot', 'Equipment', 'Accessory', 'Outfit']);
   }
   await selectPerson(page, 'player');
   const work = await selectArea(page, 'Work');
@@ -841,7 +849,7 @@ test('unapplied drafts survive navigation with committed-only resolution', async
   const endWeek = shell.getByTestId('life-end-week'); await endWeek.focus(); await page.keyboard.press('Enter');
   await expect(page.locator('#life-reports-heading')).toBeFocused();
   const actualReport = await expectReport(page, expected.report);
-  const {items: _items,society: _society,luxuryImportedMilli: _luxury,trainingGoldMilli: _training,...expectedBase}=expected.report;
+  const {society: _society,luxuryImportedMilli: _luxury,trainingGoldMilli: _training,...expectedBase}=expected.report;
   expect(actualReport).toEqual(expectedBase);
   expect(Number(await shell.getAttribute('data-revision'))).toBe(beforeWeekRevision + 1);
   await expect(workersInput(page)).toHaveValue(String(committedWorkers));
@@ -1327,8 +1335,11 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 812 
           await expect(panel.locator('dd')).toHaveText(Object.values(c.relationship).map(String));
         } else await expect(panel).toHaveText('Your own relationships are not tracked yet. Open a person to see how they regard you.');
         await selectArea(page, 'Inventory');
-        await expect(panel.locator('p')).toHaveText(['Inventory and equipment are not implemented yet.', 'Current clothing is described in Description.']);
-        await expect(panel.locator('button,input,select,ul,ol,[data-slot]')).toHaveCount(0);
+        const equipment = panel.getByRole('region', { name: 'Equipment', exact: true });
+        await expect(equipment).toBeVisible();
+        await expect(equipment.locator('[data-item-slot]')).toHaveCount(c.id === 'player' ? 8 : 11);
+        await expect(equipment.locator('[data-item-slot][data-locked="true"]')).toHaveCount(c.id === 'player' ? 0 : 3);
+        await expect(equipment.getByRole('group', { name: 'Inventory filters', exact: true }).getByRole('button')).toHaveText(['All', 'Player', 'NPC', 'This slot', 'Equipment', 'Accessory', 'Outfit']);
         await selectPerson(page, c.id === 'player' ? 'npc_starter_1' : 'player');
         await selectPerson(page, c.id); await expect(win.getByRole('tab', { name: 'Inventory', exact: true })).toHaveAttribute('aria-selected', 'true');
         await selectArea(page, 'Description'); await expect(panel.locator('details[open]')).toHaveCount(0);

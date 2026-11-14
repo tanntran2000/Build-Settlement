@@ -1,4 +1,5 @@
 <script lang="ts">
+  import EquipmentView from './EquipmentView.svelte';
   import { managerSlotTileIds, PLAYER_CHARACTER_ID, TRIAL_BUILDINGS, type CharacterLifeSessionState, type CharacterView } from '@haven/core';
   import { executeCharacterLifeCommand } from '@haven/simulation';
   import CharacterProfile from './CharacterProfile.svelte';
@@ -65,6 +66,7 @@
   {#key selectedCharacterId}
     <CharacterProfile {view} traitIds={npc?.traits ?? []} relationship={npc?.character.relationshipToPlayer ?? null}
       area={areas[selectedCharacterId] ?? 'description'} onarea={area => { areas[selectedCharacterId] = area; }}>
+      {#snippet inventory()}<EquipmentView {session} characterId={selectedCharacterId} {locked} {onapply} />{/snippet}
       {#snippet work()}
         {#if npc}
           <p data-testid={`npc-post-${npc.character.id}`}>Post: {postLabel(npc.postTileId)}</p>
