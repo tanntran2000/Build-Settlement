@@ -89,6 +89,8 @@ export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext): Readon
     const due=scaled(b.level,O.hospitalHerbsPerLevelMilli);
     if(newStocks.herbs<due){operatingIds.delete(tile.id);outside.hospitalsIdle.push(tile.id);}else newStocks.herbs-=due;
   }
+  // Capture operation before land cleanup can remove exhausted buildings or release workers.
+  const hospitalOperated=funded.some(t=>t.building!.typeId==='hospital'&&t.building!.workers===buildingWorkerCap('hospital',t.building!.level)&&operatingIds.has(t.id));
   const facilities = societyFacilities(s, operatingIds);
   const withCHTaxMilli=scaled(baseTaxMilli,100+10*facilities.countingHouseLevels,100);
   const taxMilli=scaled(withCHTaxMilli,10000+taxModifierBps,10000);
@@ -185,7 +187,6 @@ export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext): Readon
   const crimeEvent=resolveCrimeWeek(s,operatingIds,crimeRandom(s.world.worldMetadata.worldSeed,s.world.week-1),ctx);
   if(immigration&&crimeEvent.event?.soldiersKilled)immigration=Object.freeze({...immigration,populationAfter:societyPopulation(s.society)});
   const crisis=s.society.crisis.fallCause==='assassination'?undefined:resolveCrisisWeek(s,{foodDemandMilli,foodConsumedMilli});
-  const hospitalOperated=funded.some(t=>t.building!.typeId==='hospital'&&t.building!.workers===buildingWorkerCap('hospital',t.building!.level)&&operatingIds.has(t.id));
   const items=resolveItemWeek(s,ctx,hospitalOperated,crisis?.stageBefore==='rebellion');
   societyReport.tensionAfter=s.society.tension;
   order.after.authority=s.society.order.authority;
