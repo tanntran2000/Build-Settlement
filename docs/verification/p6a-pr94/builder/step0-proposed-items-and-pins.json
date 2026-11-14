@@ -1,0 +1,189 @@
+{
+  "life-5-weeks": {
+    "draws": [
+      {
+        "week": 1,
+        "roll": 8618,
+        "rarity": null,
+        "defId": null
+      },
+      {
+        "week": 2,
+        "roll": 5008,
+        "rarity": null,
+        "defId": null
+      },
+      {
+        "week": 3,
+        "roll": 26,
+        "rarity": "common",
+        "defId": "common-necklace"
+      },
+      {
+        "week": 4,
+        "roll": 7245,
+        "rarity": null,
+        "defId": null
+      },
+      {
+        "week": 5,
+        "roll": 8471,
+        "rarity": null,
+        "defId": null
+      }
+    ],
+    "items": {
+      "nextItemId": 2,
+      "inventory": [
+        {
+          "id": 1,
+          "defId": "common-necklace"
+        }
+      ],
+      "consumables": [],
+      "materials": {},
+      "storage": [],
+      "equipped": {},
+      "market": [
+        {
+          "defId": "common-top",
+          "priceMilli": 5000
+        },
+        {
+          "defId": "common-earrings",
+          "priceMilli": 5000
+        },
+        {
+          "defId": "common-ring",
+          "priceMilli": 5000
+        },
+        {
+          "defId": "common-shoes",
+          "priceMilli": 5000
+        },
+        {
+          "defId": "rare-set",
+          "priceMilli": 15000
+        },
+        {
+          "defId": "rare-ring",
+          "priceMilli": 15000
+        },
+        {
+          "defId": "epic-top",
+          "priceMilli": 40000
+        },
+        {
+          "defId": "epic-hand",
+          "priceMilli": 40000
+        }
+      ],
+      "goals": {
+        "calm": false,
+        "authority": false,
+        "week52": false,
+        "research": false,
+        "rebellionSeen": false,
+        "authorityStreak": 0
+      }
+    }
+  },
+  "life-laws": {
+    "draws": [
+      {
+        "week": 1,
+        "roll": 8618,
+        "rarity": null,
+        "defId": null
+      },
+      {
+        "week": 2,
+        "roll": 5008,
+        "rarity": null,
+        "defId": null
+      },
+      {
+        "week": 3,
+        "roll": 26,
+        "rarity": "common",
+        "defId": "common-necklace"
+      }
+    ],
+    "items": {
+      "nextItemId": 2,
+      "inventory": [
+        {
+          "id": 1,
+          "defId": "common-necklace"
+        }
+      ],
+      "consumables": [],
+      "materials": {},
+      "storage": [],
+      "equipped": {},
+      "market": [
+        {
+          "defId": "common-set",
+          "priceMilli": 5000
+        },
+        {
+          "defId": "common-weapon",
+          "priceMilli": 5000
+        },
+        {
+          "defId": "common-earrings",
+          "priceMilli": 5000
+        },
+        {
+          "defId": "common-weapon",
+          "priceMilli": 5000
+        },
+        {
+          "defId": "rare-necklace",
+          "priceMilli": 15000
+        },
+        {
+          "defId": "rare-set",
+          "priceMilli": 15000
+        },
+        {
+          "defId": "epic-hand",
+          "priceMilli": 40000
+        },
+        {
+          "defId": "epic-hand",
+          "priceMilli": 40000
+        }
+      ],
+      "goals": {
+        "calm": false,
+        "authority": false,
+        "week52": false,
+        "research": false,
+        "rebellionSeen": false,
+        "authorityStreak": 0
+      }
+    }
+  },
+  "drugStore": {
+    "definition": {
+      "name": "Drug Store",
+      "operation": "society",
+      "terrain": [
+        "town"
+      ],
+      "maxLevel": 1,
+      "maxWorkers": 0,
+      "cost": {
+        "gold": 8000,
+        "wood": 4000,
+        "iron": 2000
+      },
+      "upkeepMilli": 1000
+    },
+    "oldTrialHash": "13a5fcdd7e40703bd2223b73d051b2f43faa4d5034624f1d837ca2350441c6f2",
+    "oldSocietyHash": "6cd3c9b125985dba80bcc522e8d35facd313578d0812f9c3e4de307e12fb93f8",
+    "proposedTrialHash": "ecaa53f29be9a8028a9f68923e6c7d5bc9ef4b510692e7cd2bd580415433f54f",
+    "proposedSocietyHash": "2bcf0b8352d2769d4d0da0d3d9039ee1196083445067ae75509efd26c09673f1"
+  }
+}

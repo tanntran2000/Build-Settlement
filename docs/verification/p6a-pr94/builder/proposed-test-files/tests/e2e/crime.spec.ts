@@ -1,0 +1,29 @@
+import {storedSaveText,readStoredRecords,writeStoredSaveText,writeRawRecord,clearStored,storeMarks,resetStoreMarks,injectWriteAbort} from './storage.helpers.ts';
+import {test,expect,type Page} from '@playwright/test';
+import {readFile} from 'node:fs/promises';
+import {deserializeCharacterLifeSave} from '../../packages/persistence/src/index.ts';
+import {executeCharacterLifeCommand} from '../../packages/simulation/src/character-life-command.ts';
+import {societyPopulation} from '../../packages/core/src/index.ts';
+import {importLife,go,exportLife,openReportDetails,expectReport,reportUnits} from './character-life-navigation.helpers.ts';
+const button=(page:Page,name:string)=>page.getByRole('button',{name,exact:true});
+async function fixture(name:string){const r=deserializeCharacterLifeSave(await readFile(new URL(`../../packages/persistence/src/__tests__/fixtures/society-v8/life-${name}.json`,import.meta.url),'utf8'));if(!r.success)throw Error(r.error.message);return r.state;}
+async function fit(page:Page){for(const width of [375,1280]){await page.setViewportSize({width,height:900});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);}const ids=await page.locator('[data-testid]').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('data-testid')));expect(ids.filter((id,i)=>ids.indexOf(id)!==i)).toEqual([]);}
+for(const kind of ['robbery','raid','wound'] as const)test(`${kind} report and resulting state match the crafted save`,async({page})=>{
+ const s=await fixture(`crime-${kind}`);const result=executeCharacterLifeCommand(s,{type:'END_WEEK',expectedRevision:s.city.revision,expectedWeek:s.city.world.week});if(!result.success||!result.report)throw Error('Week failed');const c=result.report.crimeEvent!,e=c.event!;
+ await page.goto('/?mode=world-life');await importLife(page,s);await go(page,'city');await page.getByTestId('life-end-week').click();const actualReport=await expectReport(page,result.report);expect(actualReport.crimeEvent).toEqual(c);
+ await openReportDetails(page,'captain');
+ const region=page.getByRole('region',{name:'Crime',exact:true});
+ if(kind==='robbery'){expect(e.kind).toBe('robbery');expect(e.lossMilli).toBeGreaterThan(0);await expect(region.locator('p')).toHaveText(`A gang robbed the ${e.target==='gold'?'treasury':'stores'}: −${reportUnits(e.lossMilli!)} ${e.target![0].toUpperCase()+e.target!.slice(1)}.`);}
+ if(kind==='raid'){expect(e.kind).toBe('raid');expect(e.soldiersKilled).toBeGreaterThan(0);await expect(region.locator('p')).toHaveText(`A gang attacked the garrison: ${e.soldiersKilled} soldier${e.soldiersKilled===1?'':'s'} died.`);expect(societyPopulation(result.next.city.society!)).toBe(result.report.immigration!.populationAfter);}
+ if(kind==='wound'){expect(e.outcome).toBe('wounded');await expect(region.locator('p')).toHaveText('An assassin wounded you: health −20, Standing −5, Authority −5.');expect(result.next.player.character.health).toBe(81);}
+ await fit(page);await button(page,'Plan next week').click();const actual=await exportLife(page);const planned=executeCharacterLifeCommand(result.next,{type:'NEXT_WEEK',expectedRevision:result.next.city.revision});if(!planned.success)throw Error(planned.error.message);expect(actual).toEqual(planned.next);
+ if(kind==='raid')expect(societyPopulation(actual.city.society!)).toBe(societyPopulation(result.next.city.society!));
+ if(kind==='wound'){expect(actual.player.character.health).toBe(result.next.player.character.health);await page.locator('#life-nav-information').click();await expect(page.getByTestId('trial-standing')).toContainText(`Standing ${c.standingAfter} · `);await fit(page);}
+});
+const slot='haven.character-life-session-society.checkpoint.v1';
+test('assassination clears checkpoint, Continue refuses and New Game works',async({page})=>{
+ const s=await fixture('crime-death');await page.goto('/?mode=world-life');await importLife(page,s);await go(page,'session');await button(page,'Save locally').click();
+ await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');
+ expect(await storedSaveText(page)).not.toBeNull();await go(page,'city');await page.getByTestId('life-end-week').click();await expect(page.getByRole('heading',{name:'The Lord Is Dead',exact:true})).toBeVisible();await expect(page.getByText(`An assassin's blade ended your rule. You ruled for ${s.city.world.week} weeks.`,{exact:true})).toBeVisible();await expect(page.getByRole('button')).toHaveText(['New Game']);expect(await storedSaveText(page)).toBeNull();await fit(page);
+ await button(page,'New Game').click();await expect(page.getByRole('heading',{name:'Character Creation',exact:true})).toBeVisible();await page.reload();await expect(button(page,'Continue')).toBeDisabled();await expect(page.getByText('No local checkpoint',{exact:true})).toHaveText('No local checkpoint');await button(page,'New Game').click();await page.getByLabel('Name',{exact:true}).fill('New Keeper');await page.getByRole('tab',{name:'Review',exact:true}).click();await button(page,'Create character').click();await expect(page.getByTestId('life-shell')).toBeVisible();await page.locator('#life-nav-information').click();await expect(page.getByTestId('trial-standing')).toHaveText('Standing 50 · Fair');await expect(page.getByTestId('trial-crime-chance')).toHaveText('Crime events: 10% a week');await fit(page);
+});

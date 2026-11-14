@@ -1,0 +1,51 @@
+HEAD=0c6422d03cb62f52aacc352ab5dd7ca31b7ec724
+TREE=46cb96252407743b07038948d3a8539678f9c442
+UTC=2026-11-14T03:54:22.361Z
+EXIT=1
+COMMAND=npx vitest run packages/simulation/src/__tests__/item-effects.test.ts packages/core/src/world/__tests__/npc.test.ts packages/simulation/src/__tests__/items-week.test.ts packages/simulation/src/__tests__/world-npc.test.ts packages/simulation/src/__tests__/character-life-command.test.ts
+ELAPSED_MS=6401
+WORKING_STATUS="M packages/core/src/world/__tests__/npc.test.ts\n M packages/core/src/world/npc-content.ts\n M packages/simulation/src/character-life-command.ts\n M packages/simulation/src/crime-week.ts\n M packages/simulation/src/order-week.ts\n M packages/simulation/src/tile-trial-week.ts\n M packages/simulation/src/tile-trial.ts\n M packages/simulation/src/world-npc.ts\n M packages/ui/src/CharacterLifeCharacters.svelte\n M tests/e2e/character-life-boundary.spec.ts\n M tests/e2e/world-npc-session.spec.ts\n?? packages/simulation/src/__tests__/item-effects.test.ts"
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/character-life-command.test.ts (35 tests | 1 failed) 2921ms
+     × 'BUILD' detaches nested mutable session data 35ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/character-life-command.test.ts > success detaches all five parts > 'BUILD' detaches nested mutable session data
+AssertionError: expected "executeWorldNpcCityCommand" to be called once with arguments: [ { city: { …(7) }, …(2) }, …(1) ]
+
+Received:
+
+  1st executeWorldNpcCityCommand call:
+
+@@ -1595,6 +1595,7 @@
+      "expectedRevision": 0,
+      "tileId": "forest-1",
+      "type": "BUILD",
+      "typeId": "logging",
+    },
++   undefined,
+  ]
+
+
+Number of calls: 1
+
+ ❯ packages/simulation/src/__tests__/character-life-command.test.ts:282:17
+    280|     const raw = freeze({ expectedRevision: s.city.revision, ...action …
+    281|     const r = success(executeCharacterLifeCommand(s, raw));
+    282|     expect(spy).toHaveBeenCalledExactlyOnceWith({ city: s.city, outsid…
+       |                 ^
+    283|     expect(spy.mock.calls[0][1]).toBe(raw);
+    284|     r.next.city.world.settlements.settlement_haven_01.inventory.gold =…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 4 passed (5)
+      Tests  1 failed | 179 passed (180)
+   Start at  10:54:24
+   Duration  3.98s (transform 1.82s, setup 0ms, import 2.98s, tests 5.09s, environment 1ms)
+

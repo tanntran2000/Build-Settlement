@@ -1,0 +1,17 @@
+HEAD=33e903f315761bfbec9d5f637b0d8b2bde60b1df
+TREE=d364041b2b6a7eff73a6001b42f8412a1a95b35f
+UTC=2026-11-14T03:58:15.553Z
+EXIT=0
+COMMAND=npx vitest run packages/simulation/src/__tests__/crisis-fixtures.test.ts -t " pins production-generated life-5-weeks bytes\
+ELAPSED_MS=3997
+WORKING_STATUS="M packages/core/src/__tests__/catalog-data.test.ts\n M packages/core/src/data/buildings.json\n M packages/core/src/data/validate.ts\n M packages/core/src/trial/__tests__/society-map.test.ts\n M packages/persistence/src/__tests__/fixtures/society-v8/life-5-weeks.json\n M packages/simulation/src/__tests__/character-life-observation.test.ts\n M packages/simulation/src/__tests__/crime-fixtures.test.ts\n M packages/simulation/src/character-life-command.ts\n M tests/e2e/crime.spec.ts\n?? packages/simulation/src/__tests__/fixtures/p6b-path-diff.ts\n?? packages/simulation/src/__tests__/lord-health.test.ts"
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  10:58:17
+   Duration  1.60s (transform 607ms, setup 0ms, import 776ms, tests 540ms, environment 0ms)
+

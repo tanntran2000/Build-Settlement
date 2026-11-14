@@ -1,0 +1,2230 @@
+P6-A PR A Builder (item core, xhigh)
+mcp:5f929410-f90f-4d67-8ff3-10b6baada98d  completed  codex/gpt-6.1-sol
+
+[user]
+P6-A PR A Builder (item core: catalog, state, commands, persistence, ruleset v8)
+
+You are the Builder for P6-A PR A in Haven (repo tanntran2000/Build-Settlement). Claude is Orchestrator and Tester. Astra reviews. Only dot or the owner merges.
+
+Worktree: C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01 (reuse it; create no other worktree or clone). It is on the merged `feat/data01-inspector`. Run `git fetch origin`, check `git status` is clean, then create `feat/p6a-item-core` from `origin/main` = c4d3dc4fde78d004292f9038a4285cdd6f8186a7.
+
+Binding documents (read fully before any code):
+- Plan: C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-17e7aaf.md (approved). PR A = Tasks A1–A4. Apply Global Constraints, Decisions 1–13 as they touch PR A, the PR A file allowlist, and Review Focus 1 and 5.
+- Spec: C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-spec-17e7aaf.md (v0.3).
+- AGENTS.md in the repo (Hard Laws, §4 anti-loop, §6 evidence).
+You may use the executing-plans approach (task by task, in this thread, no subagents).
+
+Owner approvals (Tân, verbatim): spec "Approve both", "Duyệt v0.2"; v0.3 dialog choices (spec §1 items 19–25); plan and start "Duyệt, giao Builder A" (2026-11-13).
+
+Key rules for PR A (from the plan; HOLD if anything conflicts):
+- **A1, catalog.**
+  - `packages/core/src/data/items.json`, with `definitions` and `ITEM_TRIAL`, validated by `validateItems` in validate.ts. Errors read `items.json#<id>.<field>: <rule>`.
+  - Import JSON `with { type: 'json' }`.
+  - Content per Decision 1:
+    - about 26 wearables over 8 slots and both kinds;
+    - a set gives ×3;
+    - 4 Legendary items with the named traits;
+    - Heal Potion I–III;
+    - 15 materials (spec §4.5, including the herb leaves).
+  - Add hash pins for `ITEM_CATALOG` and `ITEM_TRIAL` in catalog-data.test.ts.
+- **A2, state and commands.**
+  - `city.society.items` per Decision 2, `executeItemCommand` per Decision 4, and `buildItemWeekContext` and `itemRandom` per Decisions 5–6. `buildItemWeekContext` is built and unit-tested in PR A; it is used in PR B.
+  - The `fallCause` type gains 'wounds', but the death rule itself is PR B; keep the health floor in PR A.
+  - The ruleset becomes `tile-society-08` (society.ts and tuning.json).
+  - The SOCIETY_TRIAL hash pin changes. Record old → new and the reason (Decision 9).
+- **A3, persistence.**
+  - Item instances go to the `items` table (Decision 3), and the round trip stays byte-identical.
+  - `isStoredCity` learns v7 as historical.
+  - Generate `fixtures/society-v8/` like v7, and keep v7 as refusal cases (`society-v7-fixture.test.ts`).
+  - Follow the v6→v7 precedent commit 629f883 for the mechanical one-line path and literal edits. List every edited existing test as file:line, before → after.
+  - Regenerate `catalog-golden.json` ONCE with the existing `make-catalog-golden.ts`, and commit a path-diff script and its output. Only `city.society.rulesetId` and `city.society.items` may differ. Any other path is a HOLD.
+- **Tests and order.**
+  - Run each task's full RED list before any product edit.
+  - Only mechanical, listed edits to existing tests are allowed. Do not loosen any assertion, value or threshold.
+  - Do NOT set any new per-test timeout yourself. If one is needed, measure it and HOLD (owner decision).
+- **A4, gates**, sequentially at the clean final head:
+  1. `git diff --check origin/main...HEAD`
+  2. lint
+  3. typecheck
+  4. `check:architecture`
+  5. `test:architecture`
+  6. `npm test`
+  7. build
+  Then, in the same shell, `echo "CI=$CI"` and `CI=1 npm run test:smoke`. Run one runner at a time, with no side runs. If the smoke fails, rerun that test alone once, report both runs, and HOLD.
+- **Ports.** 4173/4174 must be free before smoke. If a leftover `vite preview` from this worktree holds them, report it and HOLD; do not kill unknown processes.
+- **Evidence:** C:/Users/Admin/.t3/local-drafts/p6a-prA/. Include:
+  - RED and GREEN logs per task;
+  - the edit inventory of the existing tests;
+  - the hash-pin changes (old → new and the reason);
+  - the golden path diff, with its script and output;
+  - the fixture generation log;
+  - gate logs with HEAD, tree, UTC and exit at the top;
+  - the smoke log showing CI=1;
+  - bundle sizes vs main (JS 108.46 kB, CSS 5.81 kB), with the **measurement script and at least one raw artifact** (AGENTS.md §6.2);
+  - a README and SHA256SUMS.txt.
+  All UTF-8.
+- **Commits**, one per task, using the plan's commit messages and ending with `Co-authored-by: Codex <noreply@openai.com>`.
+- Do not push, open a PR or merge. Leave ports 4173/4174 free.
+
+When done, reply with:
+- HEAD and tree;
+- git status (empty);
+- the commits;
+- the RED and GREEN summary per task;
+- the edit inventory count;
+- the hash-pin changes;
+- the golden path-diff result;
+- the gate table;
+- the smoke total showing CI=1;
+- the bundle;
+- the evidence paths.
+
+HOLD on any conflict with the plan or spec, and name the line.
+
+
+[assistant]
+Bắt đầu tại worktree được giao: đọc đầy đủ plan, spec và AGENTS.md, rồi xác minh nhánh nền trước khi chạy RED cho A1. Công việc sẽ theo từng task A1–A4 trong thread này, không dùng subagent.
+
+
+[assistant]
+Nền `origin/main` đúng SHA `c4d3dc4`; worktree sạch. Áp dụng skill `executing-plans` cho A1–A4 và `codebase-memory` cho tra cứu cấu trúc; graph hiện không có index cho worktree này nên sẽ đọc source trực tiếp.
+
+
+[assistant]
+Preflight found a scope conflict: A2 requires adding `'wounds'` to `fallCause`, but `TileManagement.svelte` passes that type directly to `CityFallen`, which accepts only `'rebellion' | 'assassination'`. Those UI files are outside PR A’s allowlist. Checking the exact lines before recording HOLD; no product files have changed.
+
+
+[assistant]
+HOLD confirmed by a TypeScript contract reproduction: the current types produce 0 diagnostics; adding `'wounds'` produces TS2322 at the `CityFallen` assignment. PR A requires that change at plan line 213, while lines 224–226 assign the UI support to PR C. Product files remain unchanged.
+
+
+[assistant]
+**Resolve the PR A allowlist conflict before implementation resumes. Status: HOLD before A1; no product files changed.**
+
+The approved plan requires adding `'wounds'` to `fallCause` in PR A at [plan line 213](C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-17e7aaf.md:213), and A2 requires typecheck at [line 288](C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-17e7aaf.md:288). However, the UI support is assigned to PR C at [lines 224–226](C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-17e7aaf.md:224).
+
+The dependency causing the conflict is concrete:
+
+1. [TileManagement.svelte:225](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/TileManagement.svelte:225) passes `crisis.fallCause!` directly to `CityFallen`.
+2. [CityFallen.svelte:4](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/CityFallen.svelte:4) accepts only `'rebellion' | 'assassination'`.
+3. [society-view.ts:150](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/society-view.ts:150) likewise has end-screen copy only for those two causes.
+
+A focused TypeScript reproduction extracted the actual type declarations: **current contract: 0 diagnostics; required PR A contract with `'wounds'`: TS2322, exit 1**. This was an in-memory contract check, not a full Svelte check or project gate.
+
+| Repository state | Result |
+|---|---|
+| Fetch and baseline | `git fetch origin` exited 0; `origin/main` matched the required SHA |
+| Branch | `feat/p6a-item-core`, created from `origin/main` |
+| HEAD | `c4d3dc4fde78d004292f9038a4285cdd6f8186a7` |
+| Tree | `914488a9d93457a98ebd4b4cb2af5b0074bae7fa` |
+| Git status | Empty — 0 porcelain lines |
+
+| Requested implementation evidence | Result |
+|---|---|
+| Task commits | None |
+| A1 / A2 / A3 RED and GREEN | Not started — preflight HOLD |
+| Existing-test edit inventory | **0 edits** |
+| Hash-pin changes | None |
+| Golden regeneration and path diff | Not run |
+
+| Gate | Status |
+|---|---|
+| 1. Diff check | Not run |
+| 2. Lint | Not run |
+| 3. Typecheck | Not run |
+| 4. Architecture check | Not run |
+| 5. Architecture tests | Not run |
+| 6. Unit tests | Not run |
+| 7. Build | Not run |
+
+**Smoke:** not run; no smoke total or `CI=1` execution is claimed. Ports **4173 and 4174 have no listeners**.
+
+**Bundle:** not measured; the supplied main baseline remains JS **108.46 kB**, CSS **5.81 kB**.
+
+Local UTF-8 evidence is preserved in:
+
+- [README and HOLD explanation](C:/Users/Admin/.t3/local-drafts/p6a-prA/README.md)
+- [Type-contract reproduction script](C:/Users/Admin/.t3/local-drafts/p6a-prA/hold-type-contract.mjs) and [output with HEAD, tree, UTC and exit code](C:/Users/Admin/.t3/local-drafts/p6a-prA/hold-type-contract.txt)
+- [Final repository and port state](C:/Users/Admin/.t3/local-drafts/p6a-prA/final-state.txt)
+- [SHA256SUMS.txt](C:/Users/Admin/.t3/local-drafts/p6a-prA/SHA256SUMS.txt)
+
+The assigned worktree is retained. No push, PR, merge or cleanup occurred; reclaimed storage is **0 bytes**.
+
+**Next: approve adding the minimal `'wounds'` prop and end-screen copy support in `CityFallen.svelte` and `society-view.ts` to PR A’s allowlist.** This approval is needed because the binding plan assigns those files to PR C and your instruction requires HOLD on a conflict.
+
+[user]
+[Claude -> Builder] HOLD released. You found a real plan gap. Owner decision (Tân, 2026-11-13, choice in Claude's dialog, verbatim): "Add end copy to PR A (Recommended)".
+
+Plan correction 1 is committed (plan 2c4bd20). New binding copy: C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-2c4bd20.md. Use it from now on. PR A's allowlist gains two minimal edits, and only these:
+- packages/ui/src/CityFallen.svelte: accept `'wounds'` in its fallCause prop type;
+- packages/ui/src/society-view.ts: add `END_SCREEN_COPY.wounds = { title: 'Your Lord Has Died', text: 'Your wounds proved fatal.' }` (spec §6 text exactly).
+Nothing else in the UI. The rest of the UI stays in PR C. The death rule itself stays in PR B, and the health floor stays in PR A.
+
+Include a RED for the copy: a unit test in a NEW test file (for example packages/ui/src/__tests__/wounds-end-copy.test.ts) that asserts the exact wounds title and text. Run it with the A2 RED list.
+
+Proceed with A1 → A4 as briefed. HOLD again on any new conflict, and name the line.
+
+[assistant]
+Resume A1 using the corrected plan; the approved two-file UI compatibility change and its new RED test belong to A2. The health floor stays in PR A.
+
+
+[assistant]
+A1 RED is recorded: 11 failures from the missing item catalog/module, with 38 existing catalog tests passing. Next is the 26-wearable catalog, 3 potions, 15 materials and strict validation.
+
+
+[assistant]
+A1 is committed as `1cd14d5`; all 49 catalog tests pass. A2 RED now covers 46 cases, including the exact wounds copy, and implementation is underway. The first RED run used an unnamed player draft; that test setup was corrected and the full RED list rerun before A2 product edits.
+
+
+[assistant]
+A2 is on HOLD at a second plan gap: `society.test.ts:7` compares the entire initial society object, so the required new `items` field fails that assertion. Plan line 205 authorizes fixture-path and ruleset-literal edits; the expected-object addition needs approval. The probe recorded 1 failure and 18 passes; the existing test remains unchanged.
+
+
+[assistant]
+**Review the [proposed expected-state patch](C:/Users/Admin/.t3/local-drafts/p6a-prA/proposed-society-test.patch) to release A2’s HOLD.** A1 is committed; A2 has uncommitted work.
+
+The new conflict is in [society.test.ts:7](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/__tests__/society.test.ts:7): its `toEqual` assertion lists the entire initial society object. Adding the required `society.items` field needs a corresponding expected-state addition.
+
+[Plan line 62](C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-2c4bd20.md:62) requires HOLD for unlisted existing-test edits; [Decision 10, line 205](C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-2c4bd20.md:205) lists fixture-path and ruleset-literal substitutions. The targeted probe confirmed **1 failure, 18 passes, exit 1**, with the diff showing the new `items` field and the ruleset change.
+
+The proposed patch retains `toEqual`, preserves every other expected field, and adds explicit initial item-state and Market literals. **`git apply --check` exited 0. The patch has not been applied.**
+
+| Current repository state | Value |
+|---|---|
+| Branch | `feat/p6a-item-core` |
+| HEAD | `1cd14d55f91c69c037953811574b32347f3fcdc9` |
+| Committed tree | `f5ed79213326794ea9143618a7a80be52ab6a653` |
+| Git status | **Not empty:** 9 modified tracked files, 4 new files — A2 WIP |
+| Commit | `1cd14d5 feat(core): item catalog and validator`, with the requested co-author trailer |
+
+| Task | RED | Latest verification |
+|---|---|---|
+| A1 | 11 failed / 38 passed | **49 passed**, exit 0; committed |
+| A2, including wounds copy | 46 failed after correcting the new-test player setup | **45 passed / 1 failed**, exit 1; uncommitted |
+| A3 | Not run | Pending |
+| A4 | Not run | Pending |
+
+Two ordinary A2 fixes remain after the HOLD is released:
+
+1. The new Hospital test supplies 1 worker; the existing operating rule requires 2. Its setup needs correction while retaining its assertions.
+2. Typecheck reports TS2365 at `items.ts:64` because an `unknown` field loses narrowing inside a closure.
+
+Neither has received a fix iteration yet. No timeout was added.
+
+**Existing-test edits so far:** two new pin tests appended to `catalog-data.test.ts`; no existing assertions changed. The new pins are:
+
+| Pin | Change |
+|---|---|
+| `ITEM_CATALOG` | New → `fa866064967ee36dac69a3b8c5c6090bb2b40b7236c3f104d5a8e89d84e974c6` |
+| `ITEM_TRIAL` | New → `fcdbbc87ed52f6df25246e044b25e3c6acbd56de98360f31b7a16ec4a3b5e198` |
+
+The `SOCIETY_TRIAL` pin update, fixtures, golden regeneration/path diff, final gates 1–7, `CI=1` smoke and bundle measurement remain pending. Ports **4173/4174 are free**. No push, PR or merge occurred.
+
+Evidence is preserved in the [README](C:/Users/Admin/.t3/local-drafts/p6a-prA/README.md), [existing-test failure log](C:/Users/Admin/.t3/local-drafts/p6a-prA/a2-existing-shape-probe.txt), [execution ledger](C:/Users/Admin/.t3/local-drafts/p6a-prA/progress.md), [tracked WIP patch](C:/Users/Admin/.t3/local-drafts/p6a-prA/a2-wip-tracked.patch), and [SHA256SUMS.txt](C:/Users/Admin/.t3/local-drafts/p6a-prA/SHA256SUMS.txt).
+
+**Next: approve the explicit `items` expected-state addition in `society.test.ts` shown in the proposed patch.**
+
+[user]
+[Claude -> Builder] HOLD released. Owner decision (Tân, 2026-11-13, dialog choice, verbatim): "Allow additive shape edits (Recommended)". Plan correction 2 is committed (plan e19d477); new binding copy: C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-e19d477.md.
+
+Correction 2: an existing whole-state test may add the new `items` field and the v8 ruleset literal with exact values. The matcher, the other expected fields and the setup stay unchanged. List each such edit as file:line, before → after. Any other existing-test change is still a HOLD.
+
+Apply your proposed society.test.ts:7 patch, which fits this rule. Then continue A2: the Hospital test setup (use the existing 2-worker operating rule; keep its assertions) and the TS2365 narrowing fix count as your normal first fix iterations. Then A3 and A4 as briefed.
+
+[assistant]
+Resume A2 with correction 2: apply the approved expected-state patch, fix the Hospital test setup and TS2365 narrowing, then rerun A2 verification.
+
+
+[assistant]
+A2’s 65 targeted tests now pass, including the approved whole-state assertion and wounds copy. Workspace typecheck also passes with 0 errors and 0 warnings. Next are the ruleset literal/pin updates and the A2 commit.
+
+
+[assistant]
+A2 is committed as `83e38aa`; 313 tests and workspace typecheck pass. A3 RED recorded four expected failures: missing item records, an unvalidated item location, v7 record handling and missing v8 fixtures. Fixture generation is now running through the existing generators.
+
+
+[assistant]
+A3’s 300 tests pass. The golden was regenerated once; its committed path-diff output confirms that all three decoded sessions changed only at `city.society.rulesetId` and `city.society.items`. Persistence typecheck also passes. The final diff review is next.
+
+
+[assistant]
+Diff review found three item-boundary bugs: prototype-name NPC IDs could lose equipment, IDs containing `:` failed record decoding, and equipping items out of ID order changed round-trip save bytes. All three now have RED→GREEN regressions; A3’s full test set is rerunning after the fixes.
+
+
+[assistant]
+A3 is committed as `ff9984e`. The evidence commit includes the test-edit inventory, bundle measurement script and raw bundle artifact. Gates 1–7 will now run in order at clean final head `73ff9a9`, followed by the port check and full smoke with `CI=1`.
+
+
+[assistant]
+Gate 1 and lint pass after fixing terminal blank lines in the evidence logs. Typecheck then caught a direct source import in the new persistence integration test; it needs the public `@haven/simulation` entry point. That is a normal test-wiring fix. The ordered gates will restart at the amended clean head.
+
+
+[assistant]
+Gates 1–4 pass at `091539d`: diff check, lint, workspace typecheck and architecture check. Typecheck reports 0 errors and 0 warnings; architecture reports no violations, cycles or errors. Architecture tests are running next.
+
+
+[assistant]
+Architecture tests pass: **154/154**. The full unit suite is running as gate 6; build, smoke and final artifact verification remain.
+
+
+[assistant]
+A4 is on HOLD at gate 6: **2,340 tests pass; 2 fail**. Both failures are expected-shape pins. Correction 2 covers adding `items` to the old gameplay comparison, but it does not authorize adding `wounds` to the existing `END_SCREEN_COPY` map assertion. That second edit needs approval; build and smoke have not started.
+
+
+[assistant]
+**Review the [exact wounds-map patch](C:/Users/Admin/.t3/local-drafts/p6a-prA/proposed-wounds-map-pin.patch) to release A4’s HOLD.** A1–A3 are complete. Final gates reached **2,340 passing tests and 2 failing expected-shape pins**.
+
+The blocking edit is at [crime-view.test.ts:14](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/crime-view.test.ts:14). Its full `END_SCREEN_COPY` assertion still expects only rebellion and assassination. The proposed patch adds:
+
+```ts
+wounds: {
+  title: 'Your Lord Has Died',
+  text: 'Your wounds proved fatal.'
+}
+```
+
+It preserves the matcher, setup and both existing entries. **`git apply --check` passes; the patch is not applied.** Approval is required because [plan correction 2, lines 36–38](C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-e19d477.md:36) permits only the `items` field and v8 literal, and explicitly places other existing-test changes on HOLD.
+
+The other failure, [law-week.test.ts:90](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/__tests__/law-week.test.ts:90), needs the exact `items` field added to its historical-state comparison. That edit is already covered by correction 2. Its [proposed patch](C:/Users/Admin/.t3/local-drafts/p6a-prA/proposed-law-week-items.patch) also passes the applicability check and remains unapplied.
+
+| Repository state | Value |
+|---|---|
+| Branch | `feat/p6a-item-core` |
+| HEAD | `091539d7aef3a75b07d6dbae425ee87c148e9419` |
+| Tree | `9ff51ddd432a9ebd2713630d0863d300d3ff772b` |
+| Git status | **Empty** |
+| Ports 4173/4174 | **Free** |
+
+| Task | Commit | RED → GREEN |
+|---|---|---|
+| A1 | `1cd14d5` — `feat(core): item catalog and validator` | 11 failed / 38 passed → **49 passed** |
+| A2 | `bef7b7d` — `feat(core): item state, effective stats and item commands` | 46 failed → **313 targeted passed**, workspace typecheck passed |
+| A3 | `ff9984e` — `feat(persistence): store item instances and pin society v8` | 4 failed / 11 passed → **302 passed** |
+| A4 | `091539d` — `test: record P6-A PR A verification evidence` | Gates below; HOLD |
+
+Additional regressions for prototype-name NPC IDs, colon-containing IDs and reverse equipment order were verified RED→GREEN in a **35-test** run. Every commit has the requested co-author trailer.
+
+| Final-head gate | Exit | Result |
+|---|---:|---|
+| 1. Diff check | 0 | PASS |
+| 2. Lint | 0 | PASS |
+| 3. Typecheck | 0 | PASS — 0 errors, 0 warnings |
+| 4. Architecture check | 0 | PASS — no errors, violations or cycles |
+| 5. Architecture tests | 0 | PASS — **154 tests** |
+| 6. Unit tests | 1 | **2,340 passed, 2 failed** |
+| 7. Build | — | Not run after gate 6 failed |
+
+**Smoke:** not started; no `CI=1` smoke total is claimed. No timeout was added.
+
+**Edit inventory:** **27 existing files / 34 hunks**, with file:line and before → after records. Neither proposed patch is included yet.
+
+**Hash pins:**
+
+```text
+SOCIETY_TRIAL
+702c65dd3836e476f85411b395f0219980c8e1677a8700be1c05a02a6010a4a8
+→ d390d44efdd2fba06fd4d8c0812e83837ef25b5d84e19956bb5ff00a0dbcac80
+Reason: rulesetId 07 → 08 only.
+
+ITEM_CATALOG — new
+fa866064967ee36dac69a3b8c5c6090bb2b40b7236c3f104d5a8e89d84e974c6
+
+ITEM_TRIAL — new
+fcdbbc87ed52f6df25246e044b25e3c6acbd56de98360f31b7a16ec4a3b5e198
+```
+
+`SOCIETY_BUILDINGS` is unchanged. Ten v8 fixtures were generated; historical v7 fixture bytes remain unchanged. The golden was regenerated **once**. For all three seeds, its path diff contains only `city.society.rulesetId` and `city.society.items`; summary counters are unchanged.
+
+The preparatory production build passed and measured **JS 114.123 kB gzip, CSS 5.814 kB gzip; total 119.937 kB**, below 200 kB. Against the supplied rounded main references, that is **+5.663 kB JS / +0.004 kB CSS**. Final gate-7 revalidation remains pending.
+
+Evidence is preserved in:
+
+- [Current README and HOLD record](C:/Users/Admin/.t3/local-drafts/p6a-prA/README.md), [final unit log](C:/Users/Admin/.t3/local-drafts/p6a-prA/a4-gate-6.txt) and [local SHA256SUMS](C:/Users/Admin/.t3/local-drafts/p6a-prA/SHA256SUMS.txt).
+- [Committed evidence snapshot](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/docs/verification/p6a-prA-builder/README.md), including the inventory, measurement script and raw compressed bundle. All **35 committed artifact checksums** were verified against Git blobs.
+
+No push, PR or merge occurred. The assigned worktree is retained; reclaimed storage is **0 bytes**.
+
+**Next: approve adding the exact `wounds` entry to the existing `END_SCREEN_COPY` map assertion.**
+
+[user]
+[Claude -> Builder] HOLD released. Owner decision (Tân, 2026-11-13, dialog choice, verbatim): "Allow, extend correction 2 (Recommended)". Correction 2 now also covers adding an owner-approved new entry to a whole-object assert. Plan 9068ffe; binding copy: C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-9068ffe.md.
+
+Do, in this order:
+1. Remove the evidence directory from the product branch. Commit 091539d added docs/verification/p6a-prA-builder/ (35 files), which is outside the PR A allowlist; Claude commits evidence to the docs branch. The branch is unpushed, so run `git reset --soft ff9984e`, unstage docs/verification/p6a-prA-builder/, and delete it from the working tree only after confirming that every file in it is also kept under C:/Users/Admin/.t3/local-drafts/p6a-prA/ (copy it there first if not). Recommit only the packages/persistence/src/__tests__/item-records.test.ts change as its own commit, with a clear test message and the trailer. No force push is involved, because nothing was pushed.
+2. Apply your proposed crime-view.test.ts:14 wounds-entry patch and the law-week.test.ts:90 items patch. Both are now covered by correction 2. Add both to the edit inventory, file:line, before → after.
+3. Re-run A4 from the clean final head: gates 1–7 sequentially, then `echo "CI=$CI"` and `CI=1 npm run test:smoke`. Measure the bundle at the final head.
+
+Note: gate 6 earlier had one golden seed-0 timeout. If that recurs under load, report it; do not change timeouts. The golden tests already have the owner-approved 20 s.
+
+[assistant]
+Resume with plan `9068ffe`: preserve the evidence locally before removing it from the product branch, commit the test-import fix separately, apply both approved assertion patches, then rerun A4 at a clean head. Timeouts stay unchanged.
+
+
+[assistant]
+The evidence directory is removed from the product branch; all **36 files**, including its checksum manifest, are preserved locally and hash-verified. The import fix is committed separately as `7a2b6cf`. Both approved assertion patches pass **62/62 tests** and are committed as `31a5903`; the inventory now has **28 existing files / 36 hunks**.
+
+
+[assistant]
+Gates 1–4 pass at clean head `31a5903`: diff, lint, workspace typecheck and architecture check. Architecture tests are running next. The final product diff contains no `docs/verification/p6a-prA-builder/` files.
+
+
+[assistant]
+Architecture tests pass: **154/154**. Gate 6 is running the full unit suite with the existing timeouts, including the approved 20-second golden-test timeout.
+
+
+[assistant]
+Gate 6 passes: **2,342/2,342 tests across 109 files**. The golden timeout did not recur. Build is running as gate 7; the port check and full `CI=1` smoke follow.
+
+
+[assistant]
+All **seven gates pass** at `31a5903`. Ports 4173/4174 were free before smoke. The log confirms **`CI=1`**, and the full smoke is running **350 tests with one worker**.
+
+
+[assistant]
+Smoke is still running; the first four cases have reported PASS. No new result has arrived from the current case yet. The run is unchanged, with no timeout adjustment or rerun.
+
+
+[assistant]
+The long same-session boundary case passed, along with the 375px and 1280px accessibility cases and the 1600px contrast check. Smoke continues with **8 cases passed so far** and no failures reported.
+
+
+[assistant]
+The 1600px life-shell accessibility baseline passed in **2.0 minutes**, and its long-content reflow check passed too. Smoke now reports **11 passed / 350**, with no failures.
+
+
+[assistant]
+Smoke remains at **11 completed cases** while the next accessibility case runs. The completed cases have all passed; no rerun has been needed.
+
+
+[assistant]
+The 1280px life-shell baseline passed in **2.1 minutes**, followed by its long-content reflow check. Smoke now reports **14 passed / 350** and is progressing through the narrower viewport checks.
+
+
+[assistant]
+Smoke remains at **14 completed cases**, all passing. The next narrow-screen accessibility case is still running. No files, assertions or timeout settings have changed during this run.
+
+
+[assistant]
+The **375px life-shell baseline and long-content reflow checks pass**. The 320px contrast check also passes. Smoke is now at **17 passed / 350**, with no failures reported.
+
+
+[assistant]
+The **320px life-shell accessibility baseline passes** in 2.0 minutes. The baseline checks have now passed at all four widths—1600, 1280, 375 and 320px. Smoke continues at **18 passed / 350**.
+
+
+[assistant]
+Smoke is at **32 passed / 350**, with no failures. Navigation, focus restoration and the stock-display checks have passed, including the 41.7-second fulfilment/report comparison.
+
+
+[assistant]
+Smoke is at **59 passed / 350**, with no failures. Save/load publication, stale post choices, read-only navigation and preservation of unapplied drafts have passed in this run.
+
+
+[assistant]
+Smoke is at **74 passed / 350**, with no failures. Incompatible, oversized, stale and superseded load cases have passed, along with several comparisons between the UI report and executor output.
+
+
+[assistant]
+Smoke is at **80 passed / 350**, with no failures. The 1280px keyboard flows for weekly turns, manager assignment, reading people and atomic session-reset failures have passed.
+
+
+[assistant]
+Smoke has reported a failure in case **87**: `character-life-navigation.spec.ts:1430`, “B2 City Report City preserves export and saved checkpoint.” The full run is continuing. After it finishes, each failing case will get one isolated rerun, then the task will go on HOLD as briefed.
+
+
+[assistant]
+Smoke has completed **133 cases: 132 passed, 1 failed**. No additional failure has been reported. The full run is continuing before the required isolated rerun of case 87.
+
+
+[assistant]
+Smoke has completed **148 cases: 147 passed, 1 failed**. Crisis, crime, law, report-letter and Order checks have passed. After the full run, its failure artifacts will be preserved before the isolated rerun.
+
+
+[assistant]
+Smoke has completed **192 cases: 191 passed, 1 failed**. Storage round trips, autosave, failed writes, migration, blocked IndexedDB and multiple-tab saves have passed. The Report-navigation case remains the only reported failure.
+
+
+[assistant]
+Smoke has completed **231 cases: 230 passed, 1 failed**. Exact large-integer display and contextual command-rejection checks passed at desktop and narrow widths. The isolated rerun is still waiting for the full run to finish.
+
+
+[assistant]
+Smoke has completed **262 cases: 261 passed, 1 failed**. Tile and population checkpoint-isolation tests are progressing without additional failures. The product head is unchanged.
+
+
+[assistant]
+Smoke has completed **274 cases: 273 passed, 1 failed**. Population growth, workforce preservation, checkpoint parity and rejection of older rulesets have passed. There is still only one reported failure.
+
+
+[assistant]
+Smoke has completed **290 cases: 289 passed, 1 failed**. Build/replace, repeated turn activation and workforce restoration checks have passed. Sixty cases remain before the isolated rerun and HOLD report.
+
+
+[assistant]
+Smoke has completed **338 cases: 337 passed, 1 failed**. Twelve cases remain. The single isolated rerun will start after this full run finishes and its failure artifacts are copied locally.
+
+
+[assistant]
+All **350 smoke cases have executed**; case 87 is the only reported failure. The runner is finishing cleanup. Next is preservation of the full-run artifacts, followed by that case’s one isolated rerun.
+
+
+[assistant]
+Full smoke finished with **349 passed / 1 failed**, `CI=1`, in **30.9 minutes**. The failure is at line **1436**, before navigation: it expects the raw stored `city` record to equal the full runtime city, while Decision 3 removes the four instance collections from that record. The isolated rerun and final-head bundle measurement are next; product code and assertions remain unchanged.
+
+
+[assistant]
+The **single isolated rerun also failed** at the same line 1436 assertion, so the task is now on **HOLD** under the smoke rule. All seven gates remain passed. Final-head bundle measurement passes at **119.938 kB gzip total**, and ports 4173/4174 are free. Logs, traces and the next proposed test correction are being preserved locally.
+
+
+[assistant]
+**Review the [proposed storage-record expectation patch](C:/Users/Admin/.t3/local-drafts/p6a-prA/proposed-storage-record-pin.patch). Status: HOLD after the full smoke and its single isolated rerun both failed.**
+
+The failure is at [character-life-navigation.spec.ts:1436](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/character-life-navigation.spec.ts:1436), before navigation begins. It expects the raw stored `city` record to equal the full runtime `before.city`. [Decision 3, plan line 140](C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-9068ffe.md:140) requires that record to omit `inventory`, `consumables`, `storage` and `equipped`; the actual record correctly contains the remaining item metadata.
+
+The proposed patch changes that expected value to the storage representation. It retains `toContainEqual`, all other city fields, and the subsequent saved-record and full-export preservation assertions. **Its applicability check passes; it is not applied.** This projection change falls outside the additive-only rule at [plan line 38](C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-9068ffe.md:38).
+
+| Final repository state | Value |
+|---|---|
+| Branch | `feat/p6a-item-core` |
+| HEAD | `31a5903b8a49fa93cec1c2242b650e7300ddb5c7` |
+| Tree | `89ee115c7661b1f3f1e660e394b4da5813fd0402` |
+| Git status | **Empty** |
+| Ports 4173/4174 | **Free** |
+
+The evidence-directory correction is complete. All **36 files, including the checksum manifest**, were copied locally and individually hash-verified before the authorized reset and removal. The product branch contains **no evidence-directory or other `docs/` changes**. The [preservation log](C:/Users/Admin/.t3/local-drafts/p6a-prA/evidence-preservation.txt) records the copy.
+
+| Commit | Change |
+|---|---|
+| `1cd14d5` | Item catalog and validator |
+| `bef7b7d` | Item state, effective stats and commands |
+| `ff9984e` | Item persistence and society-v8 fixtures |
+| `7a2b6cf` | Public-entry-point test import fix, committed separately |
+| `31a5903` | Both approved whole-object assertion patches |
+
+All five commits have the requested co-author trailer.
+
+| Task | RED | GREEN |
+|---|---|---|
+| A1 | 11 failed / 38 passed | **49 passed** |
+| A2 | 46 failed | **313 targeted passed**, workspace typecheck passed |
+| A3 | 4 failed / 11 passed | **302 passed** |
+
+The approved assertion patches additionally passed **62/62 tests**. The edge-regression set passed **35 tests** after RED. The final unit run had **no recurrence of the golden seed-0 timeout**; no timeout setting changed.
+
+| Final-head gate | Exit | Result |
+|---|---:|---|
+| 1. Diff check | 0 | PASS |
+| 2. Lint | 0 | PASS |
+| 3. Typecheck | 0 | PASS — 0 errors, 0 warnings |
+| 4. Architecture check | 0 | PASS |
+| 5. Architecture tests | 0 | PASS — **154 tests** |
+| 6. Unit tests | 0 | PASS — **2,342 tests / 109 files** |
+| 7. Build | 0 | PASS |
+
+| Smoke run | CI | Result | Exit |
+|---|---:|---|---:|
+| Full, one worker | **1** | **349 passed / 1 failed**, 30.9 minutes | 1 |
+| Required single isolated rerun | **1** | **0 passed / 1 failed**, same assertion | 1 |
+
+**Edit inventory:** **28 existing files / 36 hunks**, including both approved patches. The proposed storage-record correction is excluded because it remains unapplied.
+
+**Hash pins:**
+
+```text
+SOCIETY_TRIAL
+702c65dd3836e476f85411b395f0219980c8e1677a8700be1c05a02a6010a4a8
+→ d390d44efdd2fba06fd4d8c0812e83837ef25b5d84e19956bb5ff00a0dbcac80
+Reason: rulesetId 07 → 08 only.
+
+ITEM_CATALOG — new
+fa866064967ee36dac69a3b8c5c6090bb2b40b7236c3f104d5a8e89d84e974c6
+
+ITEM_TRIAL — new
+fcdbbc87ed52f6df25246e044b25e3c6acbd56de98360f31b7a16ec4a3b5e198
+```
+
+`SOCIETY_BUILDINGS` is unchanged. The golden was regenerated **once**; all three decoded sessions differ only at `city.society.rulesetId` and `city.society.items`. Ten v8 fixtures were generated, and historical v7 fixture bytes remain unchanged.
+
+| Bundle, gzip | Supplied main reference | Final head | Difference |
+|---|---:|---:|---:|
+| JS | 108.46 kB | **114.124 kB** | +5.664 kB |
+| CSS | 5.81 kB | **5.814 kB** | +0.004 kB |
+| Total | 114.27 kB | **119.938 kB** | Below 200 kB |
+
+Differences use the supplied rounded main references. Measurement ran at the final head, and the raw compressed JS artifact was verified against its asset hash.
+
+All evidence is local for Claude’s docs-branch commit:
+
+- [README](C:/Users/Admin/.t3/local-drafts/p6a-prA/README.md), [machine-readable summary](C:/Users/Admin/.t3/local-drafts/p6a-prA/completion-summary.json) and [complete gate log](C:/Users/Admin/.t3/local-drafts/p6a-prA/gates-1-7.txt).
+- [Full smoke log](C:/Users/Admin/.t3/local-drafts/p6a-prA/a4-smoke.txt) and [single isolated rerun log](C:/Users/Admin/.t3/local-drafts/p6a-prA/a4-smoke-isolated.txt); both runs’ traces and contexts are preserved.
+- [Exact existing-test edit inventory](C:/Users/Admin/.t3/local-drafts/p6a-prA/existing-test-edits.md).
+- [Bundle script](C:/Users/Admin/.t3/local-drafts/p6a-prA/measure-bundle.mjs), [raw measurements](C:/Users/Admin/.t3/local-drafts/p6a-prA/bundle-measurement.json) and [raw JS artifact](C:/Users/Admin/.t3/local-drafts/p6a-prA/bundle-raw.js.gz).
+- [SHA256SUMS.txt](C:/Users/Admin/.t3/local-drafts/p6a-prA/SHA256SUMS.txt), covering **217 local artifacts**.
+
+No push, PR, merge or force push occurred. The assigned worktree is retained; **0 bytes reclaimed**.
+
+**Next: approve the storage-aware expected-city projection in the proposed patch.**
+
+[user]
+[Claude -> Builder] Correction to my last note: your gate 6 in this PR had only the 2 shape-pin failures, not a golden timeout. I mixed it up with DATA-01 PR B. The rule stays the same: never change timeouts; report any timeout.
+
+[assistant]
+The local handoff record will be corrected: P6-A’s earlier gate 6 had only the two shape-pin failures; the golden timeout belonged to DATA-01 PR B. The current smoke HOLD remains in place.
+
+
+[assistant]
+Recorded in the [handoff README](C:/Users/Admin/.t3/local-drafts/p6a-prA/README.md) and summary: **P6-A’s earlier gate 6 had only the two shape-pin failures. The golden timeout belonged to DATA-01 PR B.** Checksums are refreshed; historical execution logs remain unchanged.
+
+The rule remains: **never change timeouts; report any timeout.** No tests were rerun and no product files changed. HEAD remains `31a5903`, with an empty git status.
+
+**Current HOLD remains the raw-city-record smoke assertion at line 1436. Next: review the [proposed storage-aware expectation patch](C:/Users/Admin/.t3/local-drafts/p6a-prA/proposed-storage-record-pin.patch).**
+
+[user]
+[Claude -> Builder] HOLD released. Owner decision (Tân, 2026-11-13, dialog choice, verbatim): "Allow, extend correction 2 (Recommended)". Extension 2: an expectation may be updated to the stored-record layout an approved Decision defines (here Decision 3, a city record without the item instance lists); exact equality stays, and the edit is listed. Plan f5c7349; binding copy: C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-f5c7349.md.
+
+Apply your proposed character-life-navigation.spec.ts:1436 patch and list it. Then re-run A4 from the clean final head: gates 1–7 sequentially, then `echo "CI=$CI"` and `CI=1 npm run test:smoke`, and the bundle. If the smoke fails for a different reason, rerun that test alone once and HOLD with both runs.
+
+[assistant]
+Resume with plan `f5c7349`: apply the approved stored-record expectation patch, add its before → after entry to the inventory, then rerun A4 at a clean final head. Equality checks and timeouts stay unchanged.
+
+
+[assistant]
+The approved patch makes the previously failing case pass: **1/1 with `CI=1`**, including navigation and both preservation assertions. The inventory will be refreshed and the change committed before the full ordered A4 rerun.
+
+
+[assistant]
+Gates 1–4 pass at clean head `b31dc02`: diff, lint, workspace typecheck and architecture check. The inventory is now **29 existing files / 37 hunks**. Architecture tests are running next.
+
+
+[assistant]
+Architecture tests pass: **154/154**. Gate 6 is running the full unit suite at `b31dc02` with the existing timeout settings.
+
+
+[assistant]
+Gate 6 passes: **2,342/2,342 tests across 109 files**, with no timeout reported. Build is running as gate 7; the port check and full `CI=1` smoke follow.
+
+
+[assistant]
+All **seven gates pass** at `b31dc02`. The log confirms **`CI=1`**, and full smoke is running **350 tests with one worker**. The previous full run took 30.9 minutes, so this rerun is expected to take about 31 minutes.
+
+
+[assistant]
+The first **4 smoke cases pass**. The longer same-session boundary and accessibility checks are next in the run; no failure or timeout has been reported.
+
+
+[assistant]
+Smoke is at **8 passed / 350**, with no failures. The same-session boundary check, 375px and 1280px Goods-stock accessibility checks, and 1600px contrast check have passed.
+
+
+[assistant]
+Smoke remains at **8 completed cases**, all passing, while the next accessibility baseline runs. No timeout setting or source file has changed.
+
+
+[assistant]
+The 1600px life-shell accessibility baseline and long-content reflow check pass. Smoke now reports **11 passed / 350**, with no failures.
+
+
+[assistant]
+Smoke remains at **11 completed cases**, all passing. The current accessibility baseline is still running; this is consistent with the roughly two-minute baseline cases in the previous run.
+
+
+[assistant]
+The 1280px life-shell baseline and reflow check pass. Smoke is now at **14 passed / 350**, moving through the narrow-screen accessibility cases.
+
+
+[assistant]
+Smoke remains at **14 completed cases**, all passing. The current narrow-screen baseline is still running; no failure or timeout has been reported.
+
+
+[assistant]
+The **375px baseline and long-content reflow checks pass**, along with the 320px contrast check. Smoke is at **17 passed / 350**, with no failures.
+
+
+[assistant]
+Smoke remains at **17 completed cases**, all passing. The 320px baseline is still running. Final head `b31dc02` and all verification settings remain unchanged.
+
+
+[assistant]
+The 320px baseline and reflow checks pass. Baseline checks have now passed at all four widths: **1600, 1280, 375 and 320px**. Smoke is at **26 passed / 350**, with no failures.
+
+
+[assistant]
+Smoke is at **37 passed / 350**, with no failures. Report/calendar comparisons, focus restoration and pending-load error visibility checks have passed.
+
+
+[assistant]
+Smoke is at **58 passed / 350**, with no failures. Read-only navigation, stale post choices, draft preservation and Continue/Import publication checks have passed.
+
+
+[assistant]
+Smoke is at **75 passed / 350**, with no failures. Invalid and superseded load checks and the report/executor comparisons have passed. The previously failing navigation case is coming up in this full run.
+
+
+[assistant]
+Smoke is at **80 passed / 350**, with no failures. The desktop keyboard flows have passed; the mobile equivalents run before the corrected case.
+
+
+[assistant]
+The corrected case **87 passes in the full smoke run**, including navigation, saved-record preservation and full-export equality. Smoke has reached **109 passed / 350**, with no failures.
+
+
+[assistant]
+Smoke is at **132 passed / 350**, with no failures. Crime, crisis, error-log handling and garrison checks have passed. The corrected navigation case remains green in this run.
+
+
+[assistant]
+Smoke is at **135 passed / 350**, with no failures. Five-week Goods-stock/report parity passes at both 375px and 1280px; law checks are now running.
+
+
+[assistant]
+Smoke is at **151 passed / 350**, with no failures. Law resolution, report-letter parity, fall screens and Order checks have passed. Outside-land tests are progressing.
+
+
+[assistant]
+Smoke is at **185 passed / 350**, with no failures. Outside-land, society and initial storage round-trip checks have passed; the run is now more than halfway through.
+
+
+[assistant]
+Smoke is at **213 passed / 350**, with no failures. Storage migration, failed-write recovery, multiple-tab saves and large-integer precision checks have passed.
+
+
+[assistant]
+Smoke is at **233 passed / 350**, with no failures. Precision and contextual rejection checks pass at 1280px, 390px and 320px. Checkpoint-isolation tests are now running.
+
+
+[assistant]
+Smoke is at **260 passed / 350**, with no failures. Tile checkpoint tests pass, and population checkpoint rejection and isolation tests are progressing.
+
+
+[assistant]
+Smoke is at **271 passed / 350**, with no failures. Population checkpoint restoration matches uninterrupted next-week results at both 1280px and 390px.
+
+
+[assistant]
+Smoke is at **281 passed / 350**, with no failures. File export/import, delayed-read ordering and preservation of reports after invalid loads have passed.
+
+
+[assistant]
+Smoke is at **308 passed / 350**, with no failures. Build/replace, repeated turn activation, workforce restoration and title/options checks have passed. Forty-two cases remain.
+
+
+[assistant]
+Smoke is at **342 passed / 350**, with no failures. NPC post persistence, slot isolation and world-session boundary checks have passed. Eight cases remain.
+
+
+[assistant]
+All **350 smoke cases have reported PASS** at `b31dc02`. The runner is finishing cleanup and final-head bundle measurement. Then the local evidence package and final repository/port state will be checked.
+
+
+[assistant]
+Full smoke passes: **350/350**, `CI=1`, exit 0, in **30.5 minutes**. Final-head bundle measurement passes at **119.938 kB gzip**. The remaining work is the local README/summary, artifact checksums and a final clean-status/port check.
+
+
+[assistant]
+The final checksum step hit a PowerShell console-encoding issue in its verification expression. The UTF-8 README itself is intact. That check is being rerun with Unicode escapes; no product files or test results changed.
+
+
+[assistant]
+**Review head `b31dc02`: Builder work A1–A4 is complete. All seven gates and all 350 smoke tests pass at the clean final head.**
+
+The approved stored-record expectation now matches Decision 3. It retains `toContainEqual`, every other expected city field, and the subsequent saved-record and full-export preservation assertions. No timeout or threshold changed.
+
+```text
+HEAD  b31dc0268279abcb29483d372cd17d156fa825f0
+TREE  cb345d790c050f9f240d695331db45a79f56177d
+```
+
+**Git status: empty. Ports 4173/4174: free.** The product branch contains no evidence directory or other `docs/` changes.
+
+| Commit | Change |
+|---|---|
+| `1cd14d5` | `feat(core): item catalog and validator` |
+| `bef7b7d` | `feat(core): item state, effective stats and item commands` |
+| `ff9984e` | `feat(persistence): store item instances and pin society v8` |
+
+The follow-up test commits are `7a2b6cf` for the public-entry-point import, `31a5903` for the approved whole-object pins, and **`b31dc02`** for the stored-record expectation. All six commits have the requested `Co-authored-by: Codex <noreply@openai.com>` trailer.
+
+| Task | RED | GREEN |
+|---|---|---|
+| A1 | 11 failed / 38 passed | **49 passed** |
+| A2 | 46 failed | **313 targeted passed**, full workspace typecheck passed |
+| A3 | 4 failed / 11 passed | **302 passed** |
+
+Additional checks recorded **35 passing edge-regression tests**, **62 passing approved assertion tests**, and a passing targeted `CI=1` run of the corrected smoke case. The prior full-smoke failure and its single failed isolated rerun remain preserved as historical evidence.
+
+| Final-head gate | Exit | Result |
+|---|---:|---|
+| 1. Diff check | 0 | PASS |
+| 2. Lint | 0 | PASS |
+| 3. Typecheck | 0 | PASS — 0 errors, 0 warnings |
+| 4. Architecture check | 0 | PASS — no errors, violations or cycles |
+| 5. Architecture tests | 0 | PASS — **154 tests** |
+| 6. Unit tests | 0 | PASS — **2,342 tests / 109 files** |
+| 7. Build | 0 | PASS |
+
+**Full smoke: `CI=1`, 350 passed / 0 failed, exit 0, one worker, 30.5 minutes.** The corrected case 87 passes in this full run. No timeout was reported.
+
+**Existing-test inventory: 29 files / 37 hunks**, recorded as file:line, before → after. It includes the approved stored-record projection.
+
+**Hash-pin changes:**
+
+```text
+SOCIETY_TRIAL
+702c65dd3836e476f85411b395f0219980c8e1677a8700be1c05a02a6010a4a8
+→ d390d44efdd2fba06fd4d8c0812e83837ef25b5d84e19956bb5ff00a0dbcac80
+Reason: rulesetId 07 → 08 only.
+
+ITEM_CATALOG — new
+fa866064967ee36dac69a3b8c5c6090bb2b40b7236c3f104d5a8e89d84e974c6
+
+ITEM_TRIAL — new
+fcdbbc87ed52f6df25246e044b25e3c6acbd56de98360f31b7a16ec4a3b5e198
+```
+
+`SOCIETY_BUILDINGS` is unchanged. The golden was regenerated **once**. For seeds 0, 42 and 20261028, the decoded path diff contains only `city.society.rulesetId` and `city.society.items`; scenario counters are unchanged. Ten v8 fixtures were generated, and historical v7 fixture bytes remain unchanged.
+
+| Bundle, gzip | Supplied main reference | Final head | Difference |
+|---|---:|---:|---:|
+| JS | 108.46 kB | **114.124 kB** | +5.664 kB |
+| CSS | 5.81 kB | **5.814 kB** | +0.004 kB |
+
+**Total: 119.938 kB gzip, below 200 kB.** Differences use the supplied rounded main references. The measurement ran at the final head, and the raw compressed JS artifact was verified against its asset hash.
+
+All evidence is local under `C:/Users/Admin/.t3/local-drafts/p6a-prA/` for Claude’s docs-branch commit:
+
+- [README](C:/Users/Admin/.t3/local-drafts/p6a-prA/README.md), [machine-readable summary](C:/Users/Admin/.t3/local-drafts/p6a-prA/completion-summary.json) and [final repository/port state](C:/Users/Admin/.t3/local-drafts/p6a-prA/final-state.txt).
+- [Complete gates 1–7 log](C:/Users/Admin/.t3/local-drafts/p6a-prA/gates-1-7.txt) and [full `CI=1` smoke log](C:/Users/Admin/.t3/local-drafts/p6a-prA/a4-smoke.txt).
+- [Exact test-edit inventory](C:/Users/Admin/.t3/local-drafts/p6a-prA/existing-test-edits.md), [hash-pin record](C:/Users/Admin/.t3/local-drafts/p6a-prA/hash-pins.txt) and [golden path-diff output](C:/Users/Admin/.t3/local-drafts/p6a-prA/a3-golden-path-diff.txt).
+- [Bundle measurement script](C:/Users/Admin/.t3/local-drafts/p6a-prA/measure-bundle.mjs), [raw measurements](C:/Users/Admin/.t3/local-drafts/p6a-prA/bundle-measurement.json) and [raw JS artifact](C:/Users/Admin/.t3/local-drafts/p6a-prA/bundle-raw.js.gz).
+- [SHA256SUMS.txt](C:/Users/Admin/.t3/local-drafts/p6a-prA/SHA256SUMS.txt), covering **335 verified local artifacts**. All 36 files removed from the product evidence directory remain preserved locally.
+
+No push, PR, merge or force push occurred. The assigned worktree is retained for review; **0 bytes reclaimed**.
+
+**Next: Claude, commit the local evidence package on the WP docs branch for Astra’s review of this head.**
+
+[user]
+[Claude -> Builder] P6-A PR A, review fix round 1. PR #93 is open at b31dc02 (pushed). Make new commits; no amend, no force push. Claude's own gates and smoke at b31dc02 passed (350/350) and are now finished, so the worktree is yours.
+
+Astra (thread mcp:94caacb1-f51f-4c8b-be73-fe7bd70decd9) is FAIL with two P2s. Owner decision for F1 (Tân, verbatim): "Allow session.ts in PR A (Recommended)". This is Plan correction 3 (plan 09d46d0); binding copy C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-09d46d0.md.
+
+F1 (P2): society.ts:52 calls `createItemsState(2026)`, and session.ts:17 later sets the real seed without rebuilding items, so every new game gets the same week-1 Market (the golden shows identical Markets for seeds 0, 42 and 20261028).
+- Fix: draw the week-1 Market from the real session seed. You may edit packages/core/src/world/session.ts, only for this.
+- RED: through the real New Game / createWorldSession path, two different seeds give different week-1 Markets (pick seeds where they differ), and the same seed gives the same Market.
+
+F2 (P2): items.ts:58 accepts instance arrays in any order and an empty equipped entry (`equipped:{player:{}}`), but the Decision 3 records round trip rebuilds in ascending id order with no empty entries, so the bytes change.
+- Fix: make the item state canonical in `isItemsState`. Inventory, consumables and storage must be in ascending id order, and an empty equipped entry is invalid. Commands must keep producing canonical state.
+- RED: these non-canonical shapes are rejected, and a canonical state round-trips byte-identically.
+
+After both fixes:
+1. Regenerate the v8 fixtures and the golden once more (allowed by correction 3). Commit a path diff against b31dc02 that contains only `city.society.items`. Any other path is a HOLD.
+2. Update the edit inventory for any additional existing-test edit, under correction 2 rules only.
+3. Re-run gates 1–7 sequentially, then `echo "CI=$CI"` and `CI=1 npm run test:smoke`, and the bundle.
+4. Evidence goes under local-drafts/p6a-prA/fix1/. Keep the product branch free of docs/ files.
+Anti-loop: HOLD after 2 failed attempts on the same failure.
+
+[assistant]
+Review fixes will be committed on top of pushed head `b31dc02`. The corrected plan and Astra’s findings will be checked first, then F1 and F2 will get RED tests before implementation. Evidence will stay under `local-drafts/p6a-prA/fix1/`.
+
+
+[assistant]
+Use `binding-plan-09d46d0.md` for this round. The worktree is clean at `b31dc02`; correction 3 covers both fixes. I’m applying the receiving-code-review skill to verify each finding before changing code.
+
+
+[assistant]
+Add regression tests for both confirmed gaps: the New Game path uses seed 2026 for every initial Market, and validation accepts unsorted lists plus empty equipment entries. The RED run will also check canonical round trips and command output. Estimated test time: under one minute.
+
+
+[assistant]
+Both fixes pass the new regressions: **12/12 GREEN**, after the RED run reproduced seven failures. Existing commands already preserve canonical order and remove empty equipment entries.
+
+Next: update the affected whole-state item expectations and regenerate the fixtures and golden once.
+
+
+[assistant]
+The v8 fixture generators passed **55/55 tests**. F1 and F2 are committed separately as `fbc9ae6` and `ee5447a`.
+
+The single golden regeneration is running now. Its follow-up path check will compare all three golden seeds and all ten v8 fixtures against `b31dc02`, permitting only Market changes under `city.society.items`.
+
+
+[assistant]
+The path check passed: **all three golden seeds and nine Character Life fixtures differ only in Market `defId` values**. The standalone city fixture is unchanged.
+
+Final head is `3403814`, with a clean worktree. The inventory records three existing test files and six hunks. Next: gates 1–7, then the CI=1 smoke; the previous full smoke took about 31 minutes.
+
+
+[assistant]
+Restore one incidental end-of-file newline in `society.test.ts` before continuing. It appears as a separate hunk outside the approved expectation change.
+
+Gates 1–4 passed at `3403814`. This verification run is stopping; the corrected head will get the full sequence again. No assertion or timeout needs changing.
+
+
+[assistant]
+The corrected head is `d7866ce`; the inventory now contains only the intended item expectations: **three files, five hunks**.
+
+Gates 1–5 passed at this head, including **154/154 architecture tests**. Gate 6, `npm test`, is running now.
+
+
+[assistant]
+All seven gates passed at `d7866ce`: **2,354/2,354 unit tests across 112 files**, with no timeout. Build also passed; its JS gzip estimate is 114.20 kB.
+
+Next is the full CI=1 smoke. The same shell checks ports 4173/4174 first, then runs all 350 tests.
+
+
+[assistant]
+CI=1 is confirmed in the smoke log. Both ports were free before startup, and Playwright is running **350 tests with one worker**. The first four autosave tests passed; no failure has been reported.
+
+
+[assistant]
+Smoke progress: **5/350 passed**. The first Character Life boundary scenario passed after about 1.6 minutes. The runner is still sequential, and no failure has been reported.
+
+
+[assistant]
+Smoke progress: **8/350 passed**. Goods stock accessibility checks passed at 375px and 1280px, and the 1600px contrast check passed. No failures so far.
+
+
+[assistant]
+Smoke remains at **8 completed tests** while the next accessibility scenario runs. No failure has been logged. Gates 1–7 are already complete at the same head.
+
+
+[assistant]
+Smoke progress: **11/350 passed**. The 1600px life-shell accessibility baseline and long-content reflow checks passed. The 1280px contrast check also passed; no failures so far.
+
+
+[assistant]
+Smoke is still at **11 completed tests** during the 1280px accessibility baseline. The preceding 1600px version took about two minutes. No failure has been logged.
+
+
+[assistant]
+The same smoke run remains active at **11/350 completed**, with no reported failure. Source and test files remain unchanged while verification runs.
+
+
+[assistant]
+Smoke progress: **14/350 passed**. The 1280px accessibility baseline and reflow checks passed. The 375px contrast check passed as well; no failures so far.
+
+
+[assistant]
+Smoke remains at **14 completed tests** while the 375px life-shell baseline runs. No failure has been logged. Bundle capture and evidence checks follow the full smoke.
+
+
+[assistant]
+Smoke progress: **15/350 passed**. The 375px life-shell accessibility baseline passed in about 2.1 minutes. No failures so far.
+
+
+[assistant]
+Smoke progress: **17/350 passed**. Long-content reflow at 375px and control contrast at 320px passed. The final viewport baseline is running now.
+
+
+[assistant]
+Smoke remains at **17 completed tests** during the 320px accessibility baseline. No failure has been logged, and no timeout setting has changed.
+
+
+[assistant]
+Smoke progress: **25/350 passed**. Accessibility baselines passed at all four widths, and persistent navigation passed at 320, 375, 1280 and 1600px. No failures so far.
+
+
+[assistant]
+Smoke progress: **30/350 passed**. City-window state and focus checks, Report navigation, the collapsed-sidebar food stock path, and the calendar parser all passed.
+
+
+[assistant]
+Smoke progress: **42/350 passed**. Fulfillment and calendar checks passed, along with load-error display and character-window checks. No failures have been reported.
+
+
+[assistant]
+Smoke progress: **62/350 passed**. NPC Work, command errors, draft state, Continue/Import behavior, and invalid-checkpoint handling all passed.
+
+
+[assistant]
+Smoke progress: **74/350 passed**. Stale and superseded loads preserved UI state, and report projections passed for shortage, zero, precision and service cases. No failures so far.
+
+
+[assistant]
+Smoke progress: **78/350 passed**. The 1280px keyboard weekly-turn and manager-assignment flows passed, along with the repeated-click guard.
+
+
+[assistant]
+Smoke progress: **82/350 passed**. The 1280px session-reset and atomic-failure flow passed, including the approved stored-record expectation. The 375px weekly-turn flow also passed.
+
+
+[assistant]
+Smoke progress: **107/350 passed**. The saved-checkpoint/export test at `character-life-navigation.spec.ts:1430` passed. Character creation, save/load, export/import and mode-isolation checks passed too.
+
+
+[assistant]
+Smoke progress: **126/350 passed**. Crime and crisis fixtures passed with the regenerated Markets, including wound, assassination and rebellion cases. Error-log and storage-failure checks are also passing.
+
+
+[assistant]
+Smoke progress: **133/350 passed**. Storage-failure handling, garrison staffing, raid reports and the 375px five-week Goods stock flow passed. No failures have been reported.
+
+
+[assistant]
+Smoke progress: **139/350 passed**. The 1280px five-week Goods stock flow and law voting, cooldown and promise checks passed. Ledger report checks are continuing.
+
+
+[assistant]
+Smoke progress: **159/350 passed**. Ledger letters, Order, outside production, research and checkpoint-byte preservation checks all passed.
+
+
+[assistant]
+Smoke progress: **183/350 passed**. All New Game entry modes passed, along with society progression, atomic import rejection and navigation-byte preservation checks.
+
+
+[assistant]
+Smoke progress: **210/350 passed**. IndexedDB round trips, write-abort recovery, concurrent-save protection and exact large-integer display all passed. No failures so far.
+
+
+[assistant]
+Smoke progress: **226/350 passed**. Build, replacement and upgrade failures remained local to their controls and preserved state across desktop and mobile widths.
+
+
+[assistant]
+Smoke progress: **239/350 passed**. Multiweek local saves resumed with matching economics. Malformed, wrong-mode and wrong-version checkpoint rejection tests passed while preserving state and both slots.
+
+
+[assistant]
+Smoke progress: **262/350 passed**. Tile and population checkpoint rejection, blocked-storage recovery and delayed-import protection checks are passing. No failures have been reported.
+
+
+[assistant]
+Smoke progress: **271/350 passed**. Population checkpoints restored grown cohorts and preserved next-week results at 1280px and 390px. No failures so far.
+
+
+[assistant]
+Smoke progress: **279/350 passed**. Older-ruleset imports were refused, multiweek file exports restored matching economics, and delayed or failed file reads preserved gameplay.
+
+
+[assistant]
+Smoke progress: **285/350 passed**. Building, upgrades, replacement failures and double-click turn guards passed. No failures have been reported.
+
+
+[assistant]
+Smoke progress: **327/350 passed**. Workforce persistence, title-screen layouts, old-checkpoint refusal and Main menu save-failure checks passed. Twenty-three tests remain.
+
+
+[assistant]
+Smoke progress: **342/350 passed**. NPC posts, seeded names, session round trips and pending-import guards passed. Eight tests remain before bundle capture and evidence verification.
+
+
+[assistant]
+**All 350 smoke tests passed with CI=1**, exit 0, in **31.2 minutes**. No test failed or needed a rerun.
+
+Bundle capture passed: **JS 114,196 bytes gzip; CSS 5,814 bytes**, totaling **120,010 bytes**. Ports 4173/4174 are free. Next: finalize the README and verify the evidence checksums.
+
+
+[assistant]
+Convert the committed path-diff output to UTF-8, then restart verification at the new head.
+
+The encoding check caught a mistake: PowerShell’s `Tee-Object` wrote that file as UTF-16. All tests passed, but the file must be UTF-8. I’m preserving the passed run and correcting the output; AGENTS.md §6 requires all gates and the smoke again after this new commit. Expect about 34 more minutes.
+
+
+[assistant]
+The UTF-8 correction is committed as `f1944ce`. Strict decoding passed for **all 61 text artifacts**, including the committed path-diff output.
+
+The worktree is clean. Exact-head verification has restarted; gate 1 passed, and lint is running.
+
+
+[assistant]
+At `f1944ce`, gates **1–4 passed**. Architecture tests are running next. The only change since the prior complete pass is the path-diff output’s encoding.
+
+
+[assistant]
+Architecture tests passed again: **154/154**. Gate 6 is running at `f1944ce`; build and the CI=1 smoke follow.
+
+
+[assistant]
+Unit tests passed again: **2,354/2,354 across 112 files**, with no timeout. Build is running at `f1944ce`; the same shell will then check the ports and start the full smoke.
+
+
+[assistant]
+All seven gates passed at `f1944ce`. Both ports were free, CI=1 is visible in the log, and the repeat smoke is running with one worker. **4/350 tests have passed** so far.
+
+
+[assistant]
+The repeat smoke remains at **4 completed tests** while the long Character Life boundary scenario runs. No failure has been logged.
+
+
+[assistant]
+Repeat smoke: **6/350 passed**. The Character Life boundary scenario and 375px Goods stock accessibility check passed. No failures so far.
+
+
+[assistant]
+Repeat smoke: **8/350 passed**. The 1280px Goods stock accessibility and 1600px contrast checks passed. The next life-shell accessibility baseline is running.
+
+
+[assistant]
+Repeat smoke remains at **8 completed tests** during the 1600px life-shell baseline. No failure has been logged. The source and test files are unchanged since the previous complete pass.
+
+
+[assistant]
+Repeat smoke: **11/350 passed**. The 1600px life-shell baseline and reflow checks passed, followed by 1280px contrast. No failures so far.
+
+
+[assistant]
+Repeat smoke remains at **11 completed tests** while the 1280px life-shell baseline runs. No failure has been logged; all seven gates already passed at `f1944ce`.
+
+
+[assistant]
+The 1280px accessibility case is still running. The repeat smoke has **11 completed tests and no reported failures**.
+
+
+[assistant]
+Repeat smoke: **14/350 passed**. The 1280px baseline passed in about 2.3 minutes; its reflow check and 375px contrast passed too.
+
+
+[assistant]
+Repeat smoke remains at **14 completed tests** during the 375px life-shell baseline. No failure has been logged. The UTF-8 preflight passed before this run began.
+
+
+[assistant]
+Repeat smoke: **15/350 passed**. The 375px accessibility baseline passed in about two minutes. No failures so far.
+
+
+[assistant]
+Repeat smoke: **17/350 passed**. The 375px reflow and 320px contrast checks passed. The final viewport baseline is running now.
+
+
+[assistant]
+Repeat smoke remains at **17 completed tests** during the 320px baseline. No failure has been logged; only the existing smoke runner is active.
+
+
+[assistant]
+Repeat smoke: **26/350 passed**. Accessibility baselines passed at all four widths. Font fallback, persistent navigation and the first city-window focus check also passed.
+
+
+[assistant]
+Repeat smoke: **32/350 passed**. City-window focus, Report navigation, fulfillment reporting and exact 99.99% display checks passed. No failures so far.
+
+
+[assistant]
+Repeat smoke: **52/350 passed**. Calendar boundaries, load-error display, NPC Work, command guards and exact report parsing checks passed.
+
+
+[assistant]
+Repeat smoke: **66/350 passed**. Draft state, Continue/Import UI resets and rejection or supersession of pending loads all passed. No failures so far.
+
+
+[assistant]
+Repeat smoke: **75/350 passed**. All five report-projection cases passed: shortage, zero, precision, service and empty. Keyboard player flows are next.
+
+
+[assistant]
+Repeat smoke: **79/350 passed**. The 1280px weekly-turn, repeated-click guard, manager-assignment and character-reading flows passed.
+
+
+[assistant]
+Repeat smoke: **84/350 passed**. Session reset and atomic failures passed at 1280px. The corresponding 375px keyboard turn, assignment and character flows passed too.
+
+
+[assistant]
+Repeat smoke: **110/350 passed**. The saved-checkpoint/export test passed again at `f1944ce`. Character creation, save/load, mode isolation and the robbery and raid fixtures also passed.
+
+
+[assistant]
+Repeat smoke: **131/350 passed**. Wound, assassination and crisis cases passed, along with error-log recovery and Watch House staffing checks. No failures so far.
+
+
+[assistant]
+Repeat smoke: **135/350 passed**. Five-week Goods stock flows passed at both widths, and the New Game Council and Poor Relief flow passed.
+
+
+[assistant]
+Repeat smoke: **141/350 passed**. Law cooldown and promise checks passed. Ledger letters matched the new-game, raid, wound and law reports.
+
+
+[assistant]
+Repeat smoke: **166/350 passed**. Order, research, outside production, checkpoint-byte preservation and invalid workforce input checks passed. No failures so far.
+
+
+[assistant]
+Repeat smoke: **193/350 passed**. All New Game entry modes and society round trips passed. IndexedDB checks are passing for autosaves, migration, write aborts and concurrent saves.
+
+
+[assistant]
+Repeat smoke: **216/350 passed**. Save supersession, atomic migration, exact large Gold values and desktop command-rejection checks passed.
+
+
+[assistant]
+Repeat smoke: **232/350 passed**. Command-rejection feedback passed at 390px and 320px, along with exact milli-value and negative-net ledger display checks.
+
+
+[assistant]
+Repeat smoke: **249/350 passed**. Multiweek local saves, atomic checkpoint rejection, blocked-storage preservation and delayed-import protection passed in tile mode.
+
+
+[assistant]
+Repeat smoke: **270/350 passed**. Population-mode checkpoint rejection and recovery checks passed. Grown cohorts restored with matching next-week results at 1280px.
+
+
+[assistant]
+Repeat smoke: **274/350 passed**. Population growth, workforce preservation and round trips passed at 1280px and 390px. Older-ruleset files were refused without replacing the society game.
+
+
+[assistant]
+Repeat smoke: **283/350 passed**. Portable multiweek saves, delayed-import protection, Market construction, upgrades and atomic replacement failures passed.
+
+
+[assistant]
+Repeat smoke: **320/350 passed**. Turn-repeat guards, workforce persistence, Options, title layouts and old-checkpoint refusal passed. Thirty tests remain.
+
+
+[assistant]
+Repeat smoke: **342/350 passed**. Main menu save failures, workforce feedback, NPC session round trips and pending-import guards passed. Eight tests remain.
+
+
+[assistant]
+Repeat smoke: **349/350 passed**. The final whole-session save/restore and next-week continuity test is running. No failures have been reported.
+
+
+[assistant]
+**The final-head smoke passed: 350/350 with CI=1**, exit 0, in **31.3 minutes**. All seven gates also passed at `f1944ce`.
+
+The bundle totals **120,010 bytes gzip**, and ports 4173/4174 are free. Next: run the final checksum and UTF-8 checks.
+
+
+[assistant]
+**Send `f1944ce` to Astra for re-review. Both P2 fixes are implemented, and all final-head gates and the CI=1 smoke passed.**
+
+| Final state | Value |
+|---|---|
+| HEAD | `f1944ce047b59654f75365dfea4cc8a2f83dddec` |
+| Tree | `a2456278c9cccf837ef0041cba44ed1f9e7ac7fc` |
+| Branch | `feat/p6a-item-core` |
+| `git status --porcelain=v1` | Empty |
+| Ports 4173 / 4174 | Free |
+
+F1 now draws the initial Market from the validated session seed in [session.ts:20](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/session.ts:20). Tests exercise both `createWorldSession` and the real Character Life New Game path: seeds 0 and 42 produce different Markets, and repeated use of either seed produces the same Market.
+
+F2 now rejects non-ascending inventory, consumable and storage IDs, plus empty Player or NPC equipment entries, in [items.ts:71](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/items.ts:71). Tests also verify byte-identical persistence with reversed record order and canonical state after commands return older items to inventory or remove the last worn item.
+
+Five new commits were added above pushed head `b31dc02`:
+
+| Commit | Message |
+|---|---|
+| `fbc9ae6` | `fix(core): draw the initial Market from the session seed` |
+| `ee5447a` | `fix(core): reject non-canonical item collections` |
+| `3403814` | `test: refresh item Markets and verify the review fixture diff` |
+| `d7866ce` | `test: preserve the original society test file ending` |
+| `f1944ce` | `chore: encode the review path-diff output as UTF-8` |
+
+Every commit has the required `Co-authored-by: Codex <noreply@openai.com>` trailer. No amend, push, force push, PR creation or merge was performed.
+
+The task-stage RED/GREEN results are:
+
+| Task / finding | RED | GREEN |
+|---|---|---|
+| A1, original implementation | 11 failed / 38 passed | 49 passed |
+| A2, original implementation | 46 failed after correcting the new-test draft | 313 targeted passed; typecheck passed |
+| A3, original implementation | 4 failed / 11 passed | 302 passed |
+| F1, review fix | 2 different-seed assertions failed | 4/4 passed |
+| F2, review fix | 5 non-canonical shapes were accepted | 8/8 passed |
+
+This round’s combined new regressions passed **12/12**, the affected regression suite passed **129/129**, fixture generation passed **55/55**, and golden generation passed **4/4**. Original A1–A3 evidence remains in the parent evidence folder; this round’s logs are in `fix1/`.
+
+The golden was regenerated **once in this round**, using the existing generator. The committed path-diff script compared all three golden seeds and all ten v8 fixtures against `b31dc02`. **Only `city.society.items.market.*.defId` changed.** All other gameplay, summary and envelope fields matched. Nine Character Life fixtures changed; standalone `new-game.json` stayed byte-identical. The v7 fixtures were unchanged. See the [exact-head path-diff log](C:/Users/Admin/.t3/local-drafts/p6a-prA/fix1/final-path-diff.txt).
+
+The additional existing-test inventory contains **3 files / 5 hunks**; the whole-PR inventory contains **29 files / 38 hunks**. Each edit is recorded as file:line, before → after in the [review-fix inventory](C:/Users/Admin/.t3/local-drafts/p6a-prA/fix1/existing-test-edits.md) and [whole-PR inventory](C:/Users/Admin/.t3/local-drafts/p6a-prA/fix1/whole-pr-existing-test-edits.md).
+
+All gates ran sequentially at the clean final HEAD and tree above:
+
+| Gate | Command | Result | Exit |
+|---|---|---|---:|
+| 1 | `git diff --check origin/main...HEAD` | PASS | 0 |
+| 2 | `npm run lint` | PASS | 0 |
+| 3 | `npm run typecheck` | PASS | 0 |
+| 4 | `npm run check:architecture` | PASS | 0 |
+| 5 | `npm run test:architecture` | **154/154 passed** | 0 |
+| 6 | `npm test` | **2,354/2,354 passed, 112 files** | 0 |
+| 7 | `npm run build` | PASS | 0 |
+| Smoke | `CI=1 npm run test:smoke` | **350/350 passed in 31.3 minutes** | 0 |
+
+The [smoke log](C:/Users/Admin/.t3/local-drafts/p6a-prA/fix1/a4-smoke.txt) shows **CI=1**. No smoke test failed or required an isolated rerun, and no timeout was added or changed.
+
+An earlier complete run at `d7866ce` also passed. Final evidence validation then caught the path-diff output written as UTF-16 by PowerShell `Tee-Object`. Commit `f1944ce` converted it to UTF-8, after which **all seven gates and the full smoke were repeated**. The earlier logs and restart reasons are preserved.
+
+No hash pin changed in this review round. The whole-PR pin changes remain:
+
+| Pin | Old → new / reason |
+|---|---|
+| `SOCIETY_TRIAL` | `702c65dd3836e476f85411b395f0219980c8e1677a8700be1c05a02a6010a4a8` → `d390d44efdd2fba06fd4d8c0812e83837ef25b5d84e19956bb5ff00a0dbcac80`; ruleset `07` → `08` only |
+| `ITEM_CATALOG` | New → `fa866064967ee36dac69a3b8c5c6090bb2b40b7236c3f104d5a8e89d84e974c6` |
+| `ITEM_TRIAL` | New → `fcdbbc87ed52f6df25246e044b25e3c6acbd56de98360f31b7a16ec4a3b5e198` |
+| `SOCIETY_BUILDINGS` | Unchanged in PR A |
+
+The measured final bundle is:
+
+| Asset | Main gzip baseline | Final gzip | Difference |
+|---|---:|---:|---:|
+| JS | 108.46 kB | **114.196 kB** | +5.736 kB |
+| CSS | 5.81 kB | **5.814 kB** | +0.004 kB |
+| Total | — | **120,010 bytes** | Below 200,000 bytes |
+
+The supplied main baselines are rounded. The [measurement script](C:/Users/Admin/.t3/local-drafts/p6a-prA/fix1/measure-bundle.mjs), [raw results](C:/Users/Admin/.t3/local-drafts/p6a-prA/fix1/bundle-measurement.json) and [raw gzip artifact](C:/Users/Admin/.t3/local-drafts/p6a-prA/fix1/bundle-raw.js.gz) are included.
+
+Evidence is ready under **`C:/Users/Admin/.t3/local-drafts/p6a-prA/fix1/`**:
+
+- [README and complete handoff](C:/Users/Admin/.t3/local-drafts/p6a-prA/fix1/README.md)
+- [SHA256SUMS.txt — 63 verified artifacts](C:/Users/Admin/.t3/local-drafts/p6a-prA/fix1/SHA256SUMS.txt)
+- [Strict UTF-8 validation log](C:/Users/Admin/.t3/local-drafts/p6a-prA/fix1/utf8-check.txt)
+- [Final repository state](C:/Users/Admin/.t3/local-drafts/p6a-prA/fix1/final-state.txt)
+
+The product branch contains no `docs/` changes. The assigned worktree is retained; no clone or worktree was created. **Next: Claude opens the evidence README for the docs-branch handoff and assigns Astra the new HEAD for re-review.**
+
+[user]
+P6-A PR A — review fix round 2 (Astra round 2: FAIL, two P2). Same worktree C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01, branch feat/p6a-item-core, start from pushed head f1944ce047b59654f75365dfea4cc8a2f83dddec. Claude's gates 1–7 and CI=1 smoke at f1944ce passed (2,354 unit, 350/350 smoke) and are finished; the worktree is free and ports 4173/4174 should be free (check).
+
+Binding plan is now C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-ba75ec8.md: read **Plan correction 4**. Owner (Tân), 2026-11-14, verbatim: "Allow validate.ts in PR A (Recommended)".
+
+Anti-loop note: finding 1 is the second fix attempt on the original F2 (byte-identical round trip). If it cannot be closed in this round, HOLD and report; do not start a third approach.
+
+**Finding 1 (P2), inside the allowlist — `packages/core/src/trial/items.ts`.**
+`isItemsState` (items.ts:85) still accepts shapes the item-table rebuild (session-records.ts:107) does not reproduce byte for byte:
+- equipment slots out of rebuild order, e.g. `equipped: { player: { weapon: {id:2,defId:'common-weapon'}, ring: {id:1,defId:'common-ring'} } }` (rebuild puts `ring` first);
+- character entries out of rebuild order (when their lowest equipped ids are out of order);
+- instance objects with keys in another order, e.g. `{ defId:'common-ring', id:1 }` (rebuild gives `{ id, defId }`); same for storage entries `{ item, expiresWeek }` if their key order can differ.
+Fix: `isItemsState` accepts only the canonical form that the rebuild produces. Derive the canonical order from the rebuild code; do not change the rebuild unless it is required and stays in session-records.ts. Command results must stay valid (Astra confirmed commands already sort equipment entries and slots — keep that).
+RED first: a byte round-trip test per case (slot order, character-entry order, instance key order, storage key order if applicable) that fails at f1944ce.
+
+**Finding 2 (P2), Plan correction 4 — `packages/core/src/character/validate.ts` only.**
+`society.ts:67` calls `isItemsState(raw.items, ['player', ...Object.keys(raw.items.equipped)])`, so every equipment owner authorizes itself. A checkpoint with `equipped: { missing_npc: { weapon: {id:1,defId:'rare-weapon'} } }` (nextItemId 2) is accepted, then item-command.ts:18 rejects commands with FORBIDDEN and session-records.ts:117 rejects the rebuild.
+Fix: in `isCharacterLifeSessionState`, check that every `equipped` owner is the Player id or an existing NPC id of that session. Keep society.ts's structural check as it is (no change to society.ts unless needed only to remove the self-authorization, and then say why). Edit validate.ts only for this check.
+RED first: the import path (`isCharacterLifeSessionState` and the UI/persistence checkpoint import that uses it) refuses a checkpoint with an unknown owner; the same checkpoint with a real NPC id is accepted.
+
+**Rules (unchanged from the original brief):**
+- Only listed, mechanical edits to existing tests (inventory file:line, before → after). Nothing loosened. No new per-test timeout.
+- No golden or fixture regeneration is expected. If any byte of catalog-golden.json or the v7/v8 fixtures changes, HOLD.
+- No hash-pin change expected; if one changes, HOLD.
+- No `docs/` files on the product branch. Evidence under C:/Users/Admin/.t3/local-drafts/p6a-prA/fix2/ (RED/GREEN logs, fix-round inventory, updated whole-PR inventory, gate logs with HEAD/tree/UTC/exit at top, smoke log showing CI=1, bundle with script and raw artifact, README, SHA256SUMS.txt, all UTF-8 — use `Out-File -Encoding utf8` or bash redirection, not Tee-Object defaults).
+- Gates sequentially at the clean final head: 1 `git diff --check origin/main...HEAD`, 2 lint, 3 typecheck, 4 check:architecture, 5 test:architecture, 6 npm test, 7 build; then in the same shell `echo "CI=$CI"` and `CI=1 npm run test:smoke`. One runner at a time. Smoke failure: rerun that test alone once, report both, HOLD.
+- Commits end with `Co-authored-by: Codex <noreply@openai.com>`. Do not push, open a PR or merge. Leave ports 4173/4174 free.
+
+Reply with: HEAD and tree; empty git status; commits; RED/GREEN per finding; inventory counts (fix round and whole PR); golden/fixture byte check result; hash pins (unchanged?); gate table; smoke total with CI=1; bundle; evidence paths.
+
+[assistant]
+Check the corrected plan, pushed head and free ports first. Both findings will get RED tests before product edits. This is the second attempt on byte-identical item persistence; any unresolved canonicalization case will trigger HOLD.
+
+
+[assistant]
+The rebuild fixes more than list order: it reconstructs item-state keys, instance keys, storage-wrapper keys, equipment slots and equipment owners. The RED cases will cover each rebuilt layer, including JavaScript’s numeric-key ordering.
+
+Unknown-owner tests will exercise both `isCharacterLifeSessionState` and `deserializeCharacterLifeSave`, the checkpoint importer used by the UI.
+
+
+[assistant]
+Both findings now pass their new regressions: **15/15 GREEN**, after RED reproduced eight byte-order failures and four unknown-owner failures.
+
+`items.ts` validates the rebuild’s key and equipment order. `isCharacterLifeSessionState` now checks owners against the actual Player/NPC roster. The rebuild, commands and society-only validator are unchanged.
+
+
+[assistant]
+The affected suite passed **161/161 tests**. Both fixes are committed at `4afe927`, and the worktree is clean.
+
+No existing test changed: **0 files / 0 hunks this round**; the whole-PR inventory remains **29 files / 38 hunks**. All 21 golden/v7/v8 fixture files are byte-identical to `f1944ce`, and hash pins are unchanged. Next: exact-head gates and the roughly 31-minute smoke.
+
+
+[assistant]
+Gates **1–4 passed** at `4afe927`. Architecture tests are running. The evidence scripts are ready to check final-head logs, unchanged fixture bytes and UTF-8 before handoff.
+
+
+[assistant]
+Architecture tests passed: **154/154**. Gate 6 is running at the clean final head. Build and the CI=1 smoke follow.
+
+
+[assistant]
+Unit tests passed: **2,369/2,369 across 114 files**, with no timeout. Build is running. The same shell will then check ports 4173/4174 and start the full CI=1 smoke.
+
+
+[assistant]
+All seven gates passed at `4afe927`. Both ports were free before startup, and CI=1 is visible in the smoke log. Playwright is running 350 tests with one worker; **4 have passed** so far.
+
+
+[assistant]
+Smoke remains at **4 completed tests** while the long Character Life boundary scenario runs. No failure has been logged.
+
+
+[assistant]
+Smoke: **6/350 passed**. The Character Life boundary scenario and the 375px Goods stock accessibility check passed. No failures so far.
+
+
+[assistant]
+Smoke: **8/350 passed**. The 1280px Goods stock accessibility and 1600px contrast checks passed. The next life-shell baseline is running.
+
+
+[assistant]
+Smoke remains at **8 completed tests** during the 1600px life-shell baseline. No failure has been logged; source and test files remain unchanged during verification.
+
+
+[assistant]
+Smoke: **11/350 passed**. The 1600px accessibility baseline and reflow checks passed, followed by 1280px contrast. No failures so far.
+
+
+[assistant]
+Smoke remains at **11 completed tests** while the 1280px life-shell baseline runs. No failure has been logged. All seven gates are complete at `4afe927`.
+
+
+[assistant]
+Smoke: **14/350 passed**. The 1280px baseline and reflow checks passed, followed by 375px contrast. The mobile life-shell baseline is next.
+
+
+[assistant]
+Smoke remains at **14 completed tests** during the 375px accessibility baseline. No failure has been logged.
+
+
+[assistant]
+The 375px baseline is still running. Smoke has **14 completed tests and no reported failures**; no timeout or source change has been made.
+
+
+[assistant]
+Smoke: **17/350 passed**. The 375px baseline and reflow checks passed, along with 320px contrast. The final viewport baseline is running.
+
+
+[assistant]
+Smoke remains at **17 completed tests** during the 320px baseline. No failure has been logged. The new canonicalization and owner checks already passed the full unit suite.
+
+
+[assistant]
+Smoke: **25/350 passed**. Accessibility baselines passed at all four widths, followed by font fallback and persistent-navigation checks.
+
+
+[assistant]
+Smoke: **30/350 passed**. City-window state and focus, Report navigation, collapsed-sidebar access and calendar parsing passed.
+
+
+[assistant]
+Smoke: **51/350 passed**. Fulfillment, year boundaries, load errors, character windows, NPC Work and exact report parsing all passed.
+
+
+[assistant]
+Smoke: **65/350 passed**. Draft state, Continue/Import UI resets, and invalid, oversized, Report-phase and stale checkpoint rejection checks passed.
+
+
+[assistant]
+Smoke: **75/350 passed**. Superseded-load checks passed, and all five report projections matched the executor. Keyboard player flows are next.
+
+
+[assistant]
+Smoke: **80/350 passed**. The 1280px keyboard turn, manager assignment, character-reading, session-reset and atomic-failure flows passed.
+
+
+[assistant]
+Smoke: **87/350 passed**. The 375px player flows passed, and the saved-checkpoint/export preservation test passed at the final head.
+
+
+[assistant]
+Smoke: **114/350 passed**. Character creation, save/load, export/import and mode isolation passed, followed by crime fixtures and crisis choices.
+
+
+[assistant]
+Smoke: **132/350 passed**. Rebellion, fallen-city handling, manual-checkpoint preservation, error-log recovery and garrison checks passed. No failures so far.
+
+
+[assistant]
+Smoke: **138/350 passed**. Five-week Goods stock flows passed at both widths, along with law voting, cooldown and promise resolution. Ledger report checks are continuing.
+
+
+[assistant]
+Smoke: **155/350 passed**. Ledger letters, Order, outside production, research and checkpoint-byte preservation checks passed.
+
+
+[assistant]
+Smoke: **179/350 passed**. Invalid workforce inputs, shortage floors, all New Game entry modes and society progression passed. No failures so far.
+
+
+[assistant]
+Smoke: **207/350 passed**. IndexedDB round trips, legacy migration, write-abort recovery, concurrent saves and stale-feedback protection all passed.
+
+
+[assistant]
+Smoke: **225/350 passed**. Exact large-integer Gold display and contextual command-rejection checks passed across desktop and mobile widths.
+
+
+[assistant]
+Smoke: **241/350 passed**. Multiweek local saves resumed with matching economics. Invalid checkpoint rejection checks are passing while preserving state and both slots.
+
+
+[assistant]
+Smoke: **263/350 passed**. Tile and population checkpoint rejection, blocked-storage recovery and delayed-import protection checks passed. No failures so far.
+
+
+[assistant]
+Smoke: **272/350 passed**. Population checkpoints restored grown cohorts with matching next-week results at both widths. Workforce preservation and growth checks are continuing.
+
+
+[assistant]
+Smoke: **281/350 passed**. Older-ruleset refusal, portable multiweek saves, delayed imports and file-read failure recovery passed. No failures so far.
+
+
+[assistant]
+Smoke: **289/350 passed**. Market construction, upgrades, atomic replacement failures, turn-repeat guards and workforce persistence passed.
+
+
+[assistant]
+Smoke: **332/350 passed**. Options, title layouts, old-checkpoint refusal, Main menu save failures and workforce error-clearing checks passed. Eighteen tests remain.
+
+
+[assistant]
+Smoke: **345/350 passed**. NPC session round trips, fresh-seed behavior and pending-import guards passed. Five tests remain.
+
+
+[assistant]
+**All 350 smoke tests passed with CI=1**, exit 0, in **30.7 minutes**. No test failed or needed a rerun.
+
+The bundle totals **120,184 bytes gzip**, and ports 4173/4174 are free. Next: recheck unchanged fixtures and pins, then finalize the evidence manifest and UTF-8 verification.
+
+
+[assistant]
+**Send `4afe927` to Astra for re-review. Both round-2 fixes passed their regressions, all seven gates, and the full CI=1 smoke.**
+
+| Final state | Value |
+|---|---|
+| HEAD | `4afe92763856cc3f82445803298beacc7ccedf68` |
+| Tree | `8e95ed5e017bff02d4ff43d61789244ce2ff6519` |
+| Branch | `feat/p6a-item-core` |
+| `git status --porcelain=v1` | **Empty** |
+| Ports 4173 / 4174 | **Free** |
+
+Finding 1 is addressed in [items.ts:59](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/items.ts:59). Validation now requires the order produced by the rebuild: item-state keys, `{ id, defId }` instance keys, `{ item, expiresWeek }` storage keys, ascending equipment slots, and owner entries ordered by their lowest equipped ID. It accounts for JavaScript’s integer-like property ordering. Command results remain valid, including numeric and prototype-named NPC IDs. The rebuild and command implementation were unchanged.
+
+Finding 2 is addressed in [character/validate.ts:86](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/character/validate.ts:86). `isCharacterLifeSessionState` now checks equipment owners against the validated Player and actual NPC roster. Unknown owners are refused through both validation and checkpoint import; real Player/NPC owners are accepted. The society-only validator was unchanged.
+
+Two new commits were added above `f1944ce`:
+
+| Commit | Message |
+|---|---|
+| `210b14b350565e296d422e31e0d57d7d7b17e58c` | `fix(core): require item-table canonical key and equipment order` |
+| `4afe92763856cc3f82445803298beacc7ccedf68` | `fix(core): reject unknown Character Life equipment owners` |
+
+Both have the required `Co-authored-by: Codex <noreply@openai.com>` trailer. **No push, PR creation, amend, force push or merge was performed.**
+
+The RED/GREEN results were:
+
+| Finding | RED at `f1944ce` | GREEN |
+|---|---|---|
+| 1 — canonical rebuild order | **8 byte-identity failures**; numeric/prototype-owner control passed | **9/9 passed** |
+| 2 — equipment owners | **4 failures** across validation and checkpoint import; real-owner controls passed | **6/6 passed** |
+| Combined new regressions | 12 failed / 3 passed | **15/15 passed** |
+| Affected regression suite | — | **161/161 passed across 9 files** |
+
+Finding 1 passed in this round’s implementation; no third approach was started.
+
+No existing test was edited. The [fix-round inventory](C:/Users/Admin/.t3/local-drafts/p6a-prA/fix2/existing-test-edits.md) is **0 files / 0 hunks**. The [whole-PR inventory](C:/Users/Admin/.t3/local-drafts/p6a-prA/fix2/whole-pr-existing-test-edits.md) remains **29 existing files / 38 hunks**.
+
+**Golden and fixture byte check: PASS.** All **21 golden/v7/v8 fixture files** are byte-identical to `f1944ce`, both committed and in the working tree. No regeneration ran. **Hash pins are unchanged.** The [immutable-check log](C:/Users/Admin/.t3/local-drafts/p6a-prA/fix2/immutable-check.txt) records the hashes and verifies 24 unchanged committed blobs, including the three pin/catalog files.
+
+All gates ran sequentially at the clean final HEAD and tree above:
+
+| Gate | Command | Result | Exit |
+|---|---|---|---:|
+| 1 | `git diff --check origin/main...HEAD` | PASS | 0 |
+| 2 | `npm run lint` | PASS | 0 |
+| 3 | `npm run typecheck` | PASS | 0 |
+| 4 | `npm run check:architecture` | PASS | 0 |
+| 5 | `npm run test:architecture` | **154/154 passed** | 0 |
+| 6 | `npm test` | **2,369/2,369 passed, 114 files** | 0 |
+| 7 | `npm run build` | PASS | 0 |
+| Smoke | `CI=1 npm run test:smoke` | **350/350 passed in 30.7 minutes** | 0 |
+
+The [smoke log](C:/Users/Admin/.t3/local-drafts/p6a-prA/fix2/a4-smoke.txt) shows **CI=1**. No smoke test failed or needed an isolated rerun. No timeout was added or changed.
+
+The final bundle measurement is:
+
+| Asset | Main gzip baseline | Final gzip | Difference |
+|---|---:|---:|---:|
+| JS | 108.46 kB | **114.370 kB** | +5.910 kB |
+| CSS | 5.81 kB | **5.814 kB** | +0.004 kB |
+| Total | — | **120,184 bytes** | Below 200,000 bytes |
+
+Main baselines are rounded. The [measurement script](C:/Users/Admin/.t3/local-drafts/p6a-prA/fix2/measure-bundle.mjs), [raw results](C:/Users/Admin/.t3/local-drafts/p6a-prA/fix2/bundle-measurement.json), and [raw gzip artifact](C:/Users/Admin/.t3/local-drafts/p6a-prA/fix2/bundle-raw.js.gz) are included.
+
+Evidence is ready under **`C:/Users/Admin/.t3/local-drafts/p6a-prA/fix2/`**:
+
+- [README and complete handoff](C:/Users/Admin/.t3/local-drafts/p6a-prA/fix2/README.md)
+- [RED log](C:/Users/Admin/.t3/local-drafts/p6a-prA/fix2/review-red.txt) and [GREEN log](C:/Users/Admin/.t3/local-drafts/p6a-prA/fix2/review-green.txt)
+- [SHA256SUMS.txt — 33 verified artifacts](C:/Users/Admin/.t3/local-drafts/p6a-prA/fix2/SHA256SUMS.txt)
+- [Final repository state](C:/Users/Admin/.t3/local-drafts/p6a-prA/fix2/final-state.txt)
+
+All evidence text passed strict UTF-8 verification. The product branch contains no `docs/` changes. **Next: Claude opens the evidence README for the docs-branch handoff and assigns Astra the new local HEAD for re-review.**
+
+[user]
+P6-A PR B Builder (week rules: drops, finds, goals, Market restock, skill effects, new posts, lord health and death, Drug Store)
+
+You are the Builder for P6-A PR B in Haven (repo tanntran2000/Build-Settlement). Claude is Orchestrator and Tester. Astra reviews. Only dot or the owner merges. PR A (#93) is merged: main = 5e9674e31fb017f730dced4178514ebbfe1dbf24.
+
+Owner (Tân), 2026-11-14, verbatim: "Giao Builder B".
+
+Worktree: C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01 (reuse it; create no other worktree or clone). Run `git fetch origin`, check `git status` is clean and ports 4173/4174 are free, then create `feat/p6a-week-rules` from `origin/main` = 5e9674e.
+
+Binding documents (read fully before any code):
+- Plan: C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-ba75ec8.md (approved, corrections 1–4). PR B = Tasks B1–B4. Apply Global Constraints, Decisions 5–9 and 11–13, the PR B file allowlist plus each task's **Files** line, and Review Focus 2, 3 and 4.
+- Spec: C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-spec-17e7aaf.md (v0.3), especially §4.5, §5, §6, §7.6, §12.
+- AGENTS.md in the repo (Hard Laws, §4 anti-loop, §6 evidence).
+You may use the executing-plans approach (task by task, in this thread, no subagents).
+
+**Step 0 — preflight, before any RED or product edit.** PR B changes behaviour that existing tests pin. Example: `simulation/src/__tests__/crime-fixtures.test.ts` "floors wounded health at one" asserts health 1 after a 20-point wound at health 15; Decision 8 removes that floor, so the same input now kills (`fallCause 'wounds'`). Search the whole repo (unit and e2e) for every existing test or fixture that asserts a behaviour Decisions 7, 8, 11, 12 or 13 change: the health floor, the reserved Drug Store, the NPC post building list, Market offers after End Week, Player health after End Week, report shapes, golden values. For each, give file:line, the current assertion, why PR B breaks it, and the exact proposed after-text. Also say whether any `fixtures/society-v8/*` file must change (the plan allowlist does not list v8 fixture regeneration for PR B). Then **HOLD once with the full list**; the owner decides. Do not edit any existing test before that answer.
+
+Key rules for PR B (from the plan; HOLD if anything conflicts and name the line):
+- **B1 (Decision 7):**
+  - week order after crime and crisis: material drops → find → storage expiry → Legendary goals → Market restock;
+  - all draws go through `itemRandom(seed, week, stream)`, never `crimeRandom`;
+  - `TileTrialReport.items: ItemWeekReport`;
+  - Review Focus 4: a drop at a 999 stack is lost, and a find with a full inventory and full storage is lost;
+  - with no items and no posts, the crime, crisis, order and law report fields equal the PR A output for 60 weeks (LAW-03).
+- **B2 (Decisions 5 and 11):**
+  - add the §5 terms where each quantity is already computed, using integer arithmetic;
+  - test each term at skill 50, at the first step above 50, and at the cap;
+  - add the Legendary traits;
+  - Watch House and Military Barracks accept `ASSIGN_NPC`;
+  - Review Focus 3: a replaced building clears the post, and worn items stay equipped;
+  - with `ctx` absent, nothing changes.
+- **B3 (Decisions 8 and 12):**
+  - regen = 1 + Hospital + gear, capped at 100;
+  - a wound to exactly 0 means death, with no regen that week; a wound to 1 survives and then regens (Review Focus 2);
+  - `CITY_FALLEN` blocks every later command;
+  - a Calm game with Crime < 70 cannot die in 60 weeks (spec §12);
+  - the Drug Store is buildable in the Slum, at the Hospital level-1 cost and upkeep, and sells potions without workers.
+- **Hash pins and golden (Decision 9):**
+  - only `SOCIETY_BUILDINGS` changes (Drug Store no longer reserved); record old → new and the reason;
+  - regenerate `catalog-golden.json` ONCE with the existing `make-catalog-golden.ts`, and commit a path-diff script and its output vs 5e9674e;
+  - only `city.society.items.*`, `player.character.health` and report fields under `items` may differ; any other path is a HOLD.
+- **Tests and order:**
+  - run each task's full RED list before any product edit;
+  - existing-test edits only as approved after Step 0, each listed as file:line, before → after; nothing loosened;
+  - no new per-test timeout: measure it and HOLD.
+- **B4, gates**, sequentially at the clean final head:
+  1. `git diff --check origin/main...HEAD`
+  2. lint
+  3. typecheck
+  4. `check:architecture`
+  5. `test:architecture`
+  6. `npm test`
+  7. build
+
+  Then, in the same shell, `echo "CI=$CI"` and `CI=1 npm run test:smoke`. One runner at a time. If the smoke fails, rerun that test alone once, report both runs, and HOLD.
+- **Ports:** 4173/4174 must be free before the smoke. If a leftover `vite preview` holds them, report it and HOLD; kill nothing.
+- **Evidence:** C:/Users/Admin/.t3/local-drafts/p6a-prB/. Include:
+  - RED and GREEN logs per task;
+  - the Step 0 preflight;
+  - the edit inventory;
+  - the hash-pin changes;
+  - the golden path-diff script and its output;
+  - gate logs with HEAD, tree, UTC and exit at the top;
+  - the smoke log showing CI=1;
+  - the bundle vs main (JS 114.37 kB, CSS 5.81 kB), with its script and a raw artifact;
+  - a README and SHA256SUMS.txt.
+
+  All UTF-8 (bash redirection or `Out-File -Encoding utf8`, not Tee-Object defaults). No `docs/` files on the product branch.
+- **Commits:** one per task, with the plan's commit messages, each ending `Co-authored-by: Codex <noreply@openai.com>`. Do not push, open a PR or merge. Leave ports 4173/4174 free.
+
+After the Step 0 HOLD is answered and the work is done, reply with:
+- HEAD and tree, and the empty git status;
+- the commits;
+- RED and GREEN per task;
+- the edit inventory count;
+- the hash-pin changes;
+- the golden path-diff result;
+- the gate table, and the smoke total showing CI=1;
+- the bundle;
+- the evidence paths.
+
+[assistant]
+Run Step 0 only: verify `origin/main`, the clean worktree and free ports, then read the binding documents and audit existing behavior pins. No RED run or code edit will start before the required HOLD. The audit will produce one complete list of exact proposed test changes for the owner.
+
+
+[assistant]
+Preflight is clear: `origin/main` is exactly `5e9674e`, the worktree is clean, and both ports are free. I’m using the executing-plans approach; the user-required Step 0 HOLD takes precedence over its continuous-execution guidance.
+
+
+[assistant]
+The audit found more than the health-floor pin: the exact NPC post list, reserved-building metadata, five-week item-state expectations and production-generated v8 checkpoints also depend on PR A behavior. I’m separating assertions that need edits from dynamic executor comparisons that can remain intact.
+
+
+[assistant]
+A plan conflict is confirmed: the Drug Store has no `trial` definition. Making it buildable with Hospital costs requires adding one, which also changes `TRIAL_BUILDINGS`; the brief permits only the `SOCIETY_BUILDINGS` pin change. This will be included in the single Step 0 HOLD.
+
+
+[assistant]
+Two more scope gaps are confirmed: `data/validate.ts` has a closed building-ID list that rejects Drug Store, and the shared e2e report parser cannot compare the new `items` field before PR C renders it. I’m preparing exact proposed edits and fixture replacements outside the product branch for the owner’s review.
+
+
+[assistant]
+The proposed replacements are ready: two v8 files need new weekly item state—`life-5-weeks.json` and `life-laws.json`. The other eight v8 files need no change. The inventory contains 22 exact proposed edit blocks across 12 test/support files, including the optional UI sentence correction; repository files remain untouched.
+
+
+[assistant]
+Step 0 is at the evidence check. The repository remains untouched; I’m verifying the proposed edits, fixture differences, and HOLD report before handing the decision to the owner.
+
+[assistant]
+The preflight found three scope conflicts: Drug Store needs a trial catalog entry, a second hash-pin change, and a validator edit; two v8 fixtures need updated item state; and the e2e report parser needs an explicit projection until PR C renders items. The evidence package contains all 22 proposed edit blocks. Git status is empty, and ports 4173/4174 are free.
+
+[assistant]
+**Review the [Step 0 HOLD package](C:/Users/Admin/.t3/local-drafts/p6a-prB/STEP0-HOLD.md) for owner approval before B1 RED.** The audit is complete; no repository files have been edited.
+
+`git fetch origin` succeeded. The assigned worktree is now on `feat/p6a-week-rules` at the required base:
+
+```text
+HEAD:   5e9674e31fb017f730dced4178514ebbfe1dbf24
+Tree:   8e95ed5e017bff02d4ff43d61789244ce2ff6519
+Status: empty
+Ports:  4173 and 4174 free
+```
+
+I read the binding plan, spec, and AGENTS.md fully and audited **150 tracked test/support files**. The proposed inventory contains **22 edit blocks across 12 existing test/support files**; three blocks in two files are conditional on the optional UI sentence correction. The **applied inventory is zero**.
+
+**The complete existing-test list**
+
+Every verbatim before → after block is in [step0-proposed-edits.md](C:/Users/Admin/.t3/local-drafts/p6a-prB/step0-proposed-edits.md). Complete proposed file copies are also preserved outside the worktree.
+
+| Existing file and base line | Current assertion or shape | Why it changes; proposed replacement |
+|---|---|---|
+| `packages/simulation/src/__tests__/crime-fixtures.test.ts:34,37` | “floors wounded health at one”; health `1` after damage `20` at health `15` | Decision 8 makes this lethal. Rename the test; assert health `0`, crisis `{stage:'fallen',fallCause:'wounds'}`, null pending card, and subsequent `NEXT_WEEK` refusal with `CITY_FALLEN`. Preserve damage `20` and source-state equality. **P1–P2** |
+| Same file `:52,59` | “preserves zero health through … an unwounded End Week”; health `0` | Proposed reading of Decision 8: preserve non-week behavior and both health-zero equalities, but assert fallen/wounds and null pending card after End Week. Rename accordingly. **P3–P4; owner confirmation requested.** |
+| `tests/e2e/crime.spec.ts:18` | `.toBe(Math.max(1,s.player.character.health-20))` | Fixture starts at `100`, takes `20`, then receives base regen `1`. Replace with **`.toBe(81)`**. Damage-report assertions stay unchanged. **P5** |
+| `packages/core/src/world/__tests__/npc.test.ts:30` | Exact 11-entry `NPC_MANAGER_BUILDING_TYPES` array | Append exactly **`'watch-house', 'military-barracks'`**, preserving the existing entries and matcher. **P6** |
+| `packages/core/src/trial/__tests__/society-map.test.ts:24,42,58` | Eighteen active town names; Drug Store appears in the reserved-only expected object | Rename to nineteen; add **`'drug-store': 'Drug Store'`** to active names; remove **`'drug-store': { staff: null, reserved: true }`** from the reserved-only expectation. **P7–P9** |
+| `packages/simulation/src/__tests__/character-life-observation.test.ts:223,287` | Exact building-ID list; typed synthetic report without `items` | Append **`'drug-store'`** to the list. Add the inert `items` field shown below to the report fixture. Keep the following catalog-order equality and all visible-observation expectations. **P10–P11** |
+| `packages/ui/src/__tests__/report-letters.test.ts:7` | Typed synthetic report without `items` | Add the same inert `items` field; preserve all letter assertions and overrides. **P12** |
+| `tests/e2e/character-life-navigation.helpers.ts:219,281,379` | Parsed visible report typed as full `TileTrialReport`; expected base includes every new field | Change return/local types to **`Omit<TileTrialReport, 'items'>`** and destructure **`items: _items`** out of the expected visible projection. Preserve `expect(actual).toEqual(baseReport)` and every prior visible field. **P13–P15; owner approval requested.** |
+| `tests/e2e/character-life-navigation.spec.ts:844` | Expected visible base does not exclude `items` | Add **`items: _items`** to the existing destructure; preserve the exact matcher at line 845. **P16** |
+| `packages/simulation/src/__tests__/law-week.test.ts:90` | Exact five-week item state remains empty with the initial Market | Replace only the `items` literal with the proposed week-6 state: `nextItemId: 2`, inventory `[{id:1,defId:'common-necklace'}]`, and restocked Market. Exact full literal is **P17**. All non-item society fields and settlement equality stay unchanged. |
+| `packages/core/src/__tests__/catalog-data.test.ts:75,76` | Exact `TRIAL_BUILDINGS` and `SOCIETY_BUILDINGS` hashes | Update to the candidate hashes below. The extra **TRIAL** pin requires a plan exception. **P18–P19** |
+| `tests/e2e/character-life-boundary.spec.ts:233`; `tests/e2e/world-npc-session.spec.ts:12,13` | Exact sentence “NPC effects on output are not active yet.” and related test title | **Conditional:** replace the sentence with **“NPC post skills apply at End Week.”** and rename the title to describe post-skill status. Otherwise defer these edits and the UI sentence to PR C. **P20–P22** |
+
+The proposed inert synthetic report field is:
+
+```ts
+items: {
+  materials: [], found: null, expired: [], legendary: null,
+  hospitalOperated: false, regen: 0,
+},
+```
+
+**Five decisions are included in the HOLD**
+
+1. **Approve the existing-test package, including the zero-health reading and exact draw schedule.** The proposed find schedule uses the resolved week’s `find` stream, cumulative rarity thresholds `2500/3500/4100` bps, then a second draw from catalog-ordered wearables. Restock uses the next planning week’s `market` stream. The exact expected values come from an independent reference script, not an implemented PR B run.
+
+2. **Extend Drug Store scope.** Decision 12 at [plan line 230](C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-ba75ec8.md:230) requires a buildable Drug Store, but it currently has no trial definition. Adding it also requires adding `drug-store` to the closed ID list in [data/validate.ts:526](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/data/validate.ts:526), outside the [PR B allowlist at line 249](C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-ba75ec8.md:249). It necessarily changes `TRIAL_BUILDINGS` as well as `SOCIETY_BUILDINGS`, conflicting with the brief’s single-pin restriction. Proposed definition: `operation: 'society'`, `terrain: ['town']`, `maxLevel: 1`, `maxWorkers: 0`, Hospital level-1 cost `{gold:8000,wood:4000,iron:2000}`, and `upkeepMilli:1000`.
+
+3. **Authorize regeneration of exactly two v8 fixtures.** `life-5-weeks.json` and `life-laws.json` resolve weekly ticks and are pinned to runtime-generated bytes at `crisis-fixtures.test.ts:10` and `law-fixture.test.ts:34`. Their item state must change. Proposed full after-files and the [path diff](C:/Users/Admin/.t3/local-drafts/p6a-prB/step0-proposed-fixture-paths.json) are preserved; **only `city.society.items.*` differs**. Keep both equality assertions unchanged. The other **eight v8 files**, all v7 files, and older fixtures need no change.
+
+4. **Authorize the visible-report projection in P13–P16.** PR C renders item reports. The PR B e2e parser can continue asserting every existing visible field exactly while explicitly excluding the new, unrendered `items` field. New B1/B3 tests will assert the complete item payload.
+
+5. **Allow the single UI sentence correction or explicitly defer it to PR C.** The source is [CharacterLifeCharacters.svelte:71](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/CharacterLifeCharacters.svelte:71), outside PR B’s allowlist. The proposed sentence and its two assertions are listed above.
+
+Candidate pins for that exact proposed catalog definition—**not applied**:
+
+```text
+SOCIETY_BUILDINGS
+6cd3c9b125985dba80bcc522e8d35facd313578d0812f9c3e4de307e12fb93f8
+→ 2bcf0b8352d2769d4d0da0d3d9039ee1196083445067ae75509efd26c09673f1
+
+TRIAL_BUILDINGS
+13a5fcdd7e40703bd2223b73d051b2f43faa4d5034624f1d837ca2350441c6f2
+→ ecaa53f29be9a8028a9f68923e6c7d5bc9ef4b510692e7cd2bd580415433f54f
+```
+
+`catalog-golden.test.ts` keeps its exact equality assertion. The already-authorized one-time golden regeneration remains pending implementation; its path diff must satisfy the approved restrictions. No golden or fixture bytes have changed.
+
+**Evidence is ready:** [README](C:/Users/Admin/.t3/local-drafts/p6a-prB/README.md), [full HOLD report](C:/Users/Admin/.t3/local-drafts/p6a-prB/STEP0-HOLD.md), [exact edit inventory](C:/Users/Admin/.t3/local-drafts/p6a-prB/step0-proposed-edits.md), [environment verification](C:/Users/Admin/.t3/local-drafts/p6a-prB/step0-environment.txt), and [SHA256SUMS.txt](C:/Users/Admin/.t3/local-drafts/p6a-prB/SHA256SUMS.txt). All **30 artifacts** passed UTF-8 validation and SHA-256 verification.
+
+**Next: provide the owner’s decision on this Step 0 package.** B1 RED, product edits, commits, gates, smoke, and bundle measurement remain held as requested.
+
+[user]
+Step 0 HOLD answered by the owner. Binding plan is now C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-bbef8e4.md: read **Plan correction 5**.
+
+Owner (Tân), 2026-11-14, choices in Claude's question dialog, verbatim:
+1. Existing-test package P1–P22 (including the zero-health reading, the find/restock draw schedule, and the e2e visible-report projection P13–P16): "Approve the 22 edits (Recommended)".
+2. Drug Store: `validate.ts` only to add `drug-store` to the closed building-id list; your proposed TRIAL definition (town terrain, maxLevel 1, maxWorkers 0, cost {gold:8000,wood:4000,iron:2000}, upkeepMilli 1000); both TRIAL_BUILDINGS and SOCIETY_BUILDINGS pins change, record old → new and the reason: "Allow validate.ts + 2 pins (Recommended)".
+3. Regenerate exactly `society-v8/life-5-weeks.json` and `society-v8/life-laws.json`; their committed path diff may contain only `city.society.items.*`; any other path or any other fixture changing is a HOLD: "Allow these 2 files (Recommended)".
+4. UI sentence in `CharacterLifeCharacters.svelte`: replace "NPC effects on output are not active yet." with "NPC post skills apply at End Week." plus the two e2e asserts (P20–P22): "Change it in PR B (Recommended)".
+
+Apply exactly the listed before → after blocks; nothing else in those files changes. The Drug Store must still be buildable in the Slum per Decision 12 / B3 RED. Proceed with B1 RED and the rest of the brief (B1–B4, golden once with path diff vs 5e9674e, gates 1–7, CI=1 smoke, bundle, evidence under local-drafts/p6a-prB/). If your actual candidate pins or fixture bytes differ from the Step 0 candidates after implementation, record both. Do not push, open a PR or merge.
+
+[assistant]
+The Step 0 HOLD is released. I’m continuing with the executing-plans approach: read correction 5, run B1’s full RED list, and keep the approved P1–P22 edits exact. Each task will get its own commit and evidence.
+
+[assistant]
+Correction 5 matches the approved package. B1’s tests will cover the full RED list, including loss at capacity, expiry order, each Legendary goal, and a 60-week comparison against PR A’s crime, crisis, order, and law results.
+
+[assistant]
+B1’s full list is green: **24/24 tests passed on the first implementation attempt**. All three 60-week report hashes still match PR A. I’m applying the approved report-shape and law-week test blocks before committing B1.
+
+[assistant]
+B1 is committed as `0c6422d`, with **215/215 targeted tests green**. B2 will test each skill term at 50, its first effective step, and 100, plus all four Legendary traits, the new combat posts, and equipment retention when a building is replaced.
+
+[assistant]
+B2’s new cases pass. One existing delegation test failed because a non-week command received an extra `undefined` argument. I’m restoring the original two-argument call for those commands and passing context only on End Week.
+
+[assistant]
+B2 is committed as `33e903f`, with **180/180 targeted tests green**. B3’s RED list will cover death at exactly zero, survival at one before regen, `CITY_FALLEN` for later commands, 60 Calm weeks, and building and using a Drug Store in the Slum.
+
+[assistant]
+B3’s health, death, Drug Store, and pin cases pass. One new Hospital test still fails: an idle variant is rejected as an invalid session. I’m checking the existing state rules before changing that test setup; the first setup correction did not resolve it.
+
+[assistant]
+B3’s targeted list is green: **76/76 passed**, including the Slum Drug Store and both approved candidate hashes. The remaining test setup issue was a disabled Hospital retaining workers; the existing validator requires zero workers when disabled. I’m regenerating the two authorized fixtures and the golden once, with path checks against `5e9674e`.
+
+[assistant]
+Both regenerated fixtures match the Step 0 candidate bytes exactly. The path check passed for all three golden seeds and confirmed **51 other fixture files are byte-identical**. Typecheck found two narrowing errors; both are corrected, and the recheck is running.
+
+[assistant]
+B3’s integration check passed: **51/51 fixture, health, and golden tests**. Typecheck is also green. I’m checking the final diff against P1–P22 before committing B3, then running the final gates and CI smoke sequentially.
+
+[assistant]
+B3 is committed as `5220016`; git status is empty. The final run is starting at that head: gates 1–7, then `CI=1` smoke in the same shell, then the bundle measurement. Smoke uses one worker for 350 tests; allow roughly 30–40 minutes.
+
+[assistant]
+Gates **1–4 passed** at `5220016`: diff check, lint, typecheck, and architecture check. Typecheck reported zero errors and warnings. Architecture tests are running next, followed by the unit suite.
+
+[assistant]
+Architecture tests passed **154/154**. Gate 6, the full unit suite, is now running. I’m using verification-before-completion to keep the final handoff tied to the logs from this exact head.
+
+[assistant]
+Gate 6 found two failures in existing land-exhaustion tests: land cleanup removes an exhausted building before the new Hospital-operation check reads it. **2,455/2,457 tests passed; no timeout occurred.** I’m capturing Hospital operation before cleanup, then I’ll rerun the failed cases and all final gates at the corrected head.
+
+[assistant]
+The cleanup fix is committed as `a391fbb`. The unchanged exhaustion tests and all new task tests passed **120/120**. The golden and fixture bytes are unchanged by this fix. I’m restarting gates 1–7 and smoke from the new clean head; the first gate attempt is preserved in the evidence.
+
+[assistant]
+Gates **1–4 passed again at `a391fbb`**, including typecheck with zero errors and warnings. Architecture tests are running. No repository files have changed during this gate sequence.
+
+[assistant]
+The full unit suite passed **2,457/2,457** across 117 files at `a391fbb`. Gate 7, the production build, is running. No timeout or assertion change was needed.
+
+[assistant]
+All **seven gates passed** at `a391fbb`. The production build reports gzip JS **116.31 kB** and CSS **5.81 kB**. Ports were free before smoke, and the full `CI=1` smoke run has started.
+
+[assistant]
+Smoke has logged **4 passed tests** so far, and the log confirms `CI=1`. The runner is still active. The seven gates remain green at the unchanged head.
+
+[assistant]
+Smoke is at **8/350 passed**, with no failures logged. The same-session week test and accessibility checks at 375 and 1280 pixels have passed; the 1600-pixel checks are underway.
+
+[assistant]
+Smoke is at **9/350 passed**. The 1600-pixel shell accessibility baseline passed after 2.1 minutes under its existing timeout. The head and gate results are unchanged.
+
+[assistant]
+Smoke is at **11/350 passed**, with no failures logged. The long-content reflow check passed; the 1280-pixel shell accessibility baseline is running next.
+
+[assistant]
+The 1280-pixel accessibility baseline is still running. Smoke remains at **11 completed tests**, with no failure logged. No code or configuration has changed.
+
+[assistant]
+Smoke is at **14/350 passed**. The 1280-pixel shell baseline and reflow checks passed; the 375-pixel accessibility checks have started.
+
+[assistant]
+The 375-pixel shell baseline is still active. Smoke remains at **14 completed tests**, with no failures logged. The sequential run is continuing.
+
+[assistant]
+Smoke is at **15/350 passed**. The shell accessibility baselines have now passed at **1600, 1280, and 375 pixels**. The remaining narrow-layout reflow check is next.
+
+[assistant]
+Smoke is at **17/350 passed**. The 375-pixel reflow check passed, and the 320-pixel accessibility checks are running. No failures have been logged.
+
+[assistant]
+The 320-pixel shell baseline is still running. Smoke remains at **17 completed tests**, with no failure logged. All final-head gate logs are saved.
+
+[assistant]
+Smoke is at **27/350 passed**. Accessibility and reflow checks have passed at all four widths, including 320 pixels. Navigation state and focus-restoration checks are now progressing.
+
+[assistant]
+Smoke is at **32/350 passed**. The calendar parser, fulfillment-to-report comparison, and exact 99.99% display check passed. The existing e2e assertions remain intact apart from approved P1–P22 edits.
+
+[assistant]
+Smoke is at **51/350 passed**, with no failures logged. Navigation recovery, exact milli-value parsing, and ErrorLog state checks have passed.
+
+[assistant]
+Smoke is at **65/350 passed**. The report comparison and load-rejection cases are passing, including Report-phase and stale-revision preservation. The approved visible-report projection is working in the browser tests.
+
+[assistant]
+Smoke is at **75/350 passed**. The precision, service, and empty-city scenarios all matched the executor’s visible report fields. No failures have been logged.
+
+[assistant]
+Smoke is at **80/350 passed**. Mouse and keyboard manager assignment, people inspection, session reset, and atomic-failure flows have passed at 1280 pixels.
+
+[assistant]
+Smoke is at **87/350 passed**. The same player flows passed at 375 pixels, along with double-Enter protection and preservation of exports and saved checkpoints across City/Report navigation.
+
+[assistant]
+Smoke is at **125/350 passed, 0 failed**. The wound scenario passed with the approved health-81 expectation. Raid, assassination, and crisis checkpoint-preservation cases also passed.
+
+[assistant]
+Smoke is at **133/350 passed, 0 failed**. Crafted raid Order parity and the five-week society report/navigation check at 375 pixels have passed.
+
+[assistant]
+Smoke is at **140/350 passed, 0 failed**. Raid and wound letters preserved their rows, Details views, and report parity with the executor.
+
+[assistant]
+Smoke is at **166/350 passed, 0 failed**. Ledger, outside-building controls, and stored-goods test-ID checks have passed. The same `CI=1` run is continuing at `a391fbb`.
+
+[assistant]
+Smoke is at **194/350 passed, 0 failed**. Save/Continue and Main-menu race protections passed, including prevention of a pending load from overwriting a newer Planning command.
+
+[assistant]
+Smoke is at **217/350 passed, 0 failed**. Precision-feedback tests are passing for contextual refusals and state preservation after repeated rejected commands.
+
+[assistant]
+Smoke is at **232/350 passed, 0 failed**. Checkpoint error placement and grouped milli-value displays passed, including negative net values. No rerun has been needed.
+
+[assistant]
+Smoke is at **253/350 passed, 0 failed**. Checkpoint slot-isolation and import-preservation cases are passing. The final port check and bundle capture will run after smoke finishes.
+
+[assistant]
+Smoke is at **270/350 passed, 0 failed**. Local checkpoints restored grown cohorts and preserved next-week parity at 1280 pixels.
+
+[assistant]
+Smoke is at **275/350 passed, 0 failed**. Older-ruleset refusal and multiweek file export/import checks passed, including resumed economic results.
+
+[assistant]
+Smoke is at **284/350 passed, 0 failed**. Invalid worker commands, unaffordable replacements, and double-click protection preserved the plan as expected.
+
+[assistant]
+Smoke is at **320/350 passed, 0 failed**. Title-screen and storage-fallback checks passed. The remaining tests include the world/NPC session flows and approved post-skill sentence.
+
+[assistant]
+Smoke is at **342/350 passed, 0 failed**. World/NPC session checks passed, including seed differences, hidden-world-data protection, and import/End Week concurrency. Eight tests remain.
+
+[assistant]
+All **350 smoke test rows passed**. I’m waiting for the runner’s final exit, then checking that ports 4173/4174 are free and capturing the bundle measurement and raw artifact.
+
+[assistant]
+Final verification passed at `a391fbb`: **2,457 unit tests and 350/350 smoke tests with `CI=1`**. Smoke took 31.8 minutes, and ports 4173/4174 are free. Bundle capture measured JS **116.310 kB** and CSS **5.814 kB** gzip. I’m checking the evidence manifest and final git status.
+
+[assistant]
+**Review `a391fbb` for Claude’s independent testing and Astra’s review. Builder B tasks B1–B4 are complete.** Nothing was pushed, no PR was opened, and nothing was merged.
+
+```text
+Branch: feat/p6a-week-rules
+HEAD:   a391fbb3fe530d7ad5c9139c03dfe56b6bcf02ce
+Tree:   e0d04ec81cfdf078654b7c8c9271c15b8dd5b4b2
+Base:   5e9674e31fb017f730dced4178514ebbfe1dbf24
+
+git status --porcelain=v1: <empty>
+Ports 4173/4174: free
+```
+
+**Commits**
+
+| Commit | Message |
+|---|---|
+| `0c6422d` | `feat(simulation): item drops, finds, goals and market restock` |
+| `33e903f` | `feat(simulation): skill effects from items and new combat posts` |
+| `5220016` | `feat(simulation): lord health, death by wounds and the Drug Store` |
+| `a391fbb` | `fix(simulation): capture Hospital operation before land cleanup` |
+
+All four commits end with `Co-authored-by: Codex <noreply@openai.com>`.
+
+**RED → GREEN**
+
+| Task | RED evidence | GREEN evidence |
+|---|---|---|
+| B1 | **21 failed, 3 baseline checks passed**, before product edits. [RED log](C:/Users/Admin/.t3/local-drafts/p6a-prB/B1-red.txt) | **24/24 new cases**; **215/215** across four targeted files. [GREEN log](C:/Users/Admin/.t3/local-drafts/p6a-prB/B1-green-final.txt) |
+| B2 | **39 failed, 57 passed**; all 54 new effect cases ran. [RED log](C:/Users/Admin/.t3/local-drafts/p6a-prB/B2-red-final.txt) | **180/180** across five targeted files. [GREEN log](C:/Users/Admin/.t3/local-drafts/p6a-prB/B2-green-final.txt) |
+| B3 | **17 failed, 59 passed**; all 10 new health/Drug Store cases failed before implementation. [RED log](C:/Users/Admin/.t3/local-drafts/p6a-prB/B3-red.txt) | **76/76** targeted; **51/51** health, fixture, and golden integration cases. [Targeted log](C:/Users/Admin/.t3/local-drafts/p6a-prB/B3-green-final.txt), [integration log](C:/Users/Admin/.t3/local-drafts/p6a-prB/B3-green-integration.txt) |
+| B4 correction | First gate 6 found **2 land-exhaustion failures, 2,455 passed**. [Original gate log](C:/Users/Admin/.t3/local-drafts/p6a-prB/gates-attempt-1/gate-6-unit.txt) | Capturing Hospital operation before cleanup fixed both unchanged existing tests; **120/120** targeted cases passed, followed by the complete final gates. [Fix log](C:/Users/Admin/.t3/local-drafts/p6a-prB/B4-fix-green.txt) |
+
+All three seeded **60-week crime, crisis, order, and law report hashes match PR A**. No timeout was changed.
+
+The existing-test inventory is **exactly 22 approved blocks in 12 files**, with no additional edits to those files. Three new test files add **88 cases**. The [inventory verifier](C:/Users/Admin/.t3/local-drafts/p6a-prB/verify-approved-edits.mjs) checked the complete files against the approved replacements.
+
+**Hash pins**
+
+Both actual hashes match the Step 0 candidates. Every other pin remains unchanged.
+
+```text
+TRIAL_BUILDINGS
+13a5fcdd7e40703bd2223b73d051b2f43faa4d5034624f1d837ca2350441c6f2
+→ ecaa53f29be9a8028a9f68923e6c7d5bc9ef4b510692e7cd2bd580415433f54f
+
+Reason: append the exact owner-approved Drug Store trial definition.
+
+SOCIETY_BUILDINGS
+6cd3c9b125985dba80bcc522e8d35facd313578d0812f9c3e4de307e12fb93f8
+→ 2bcf0b8352d2769d4d0da0d3d9039ee1196083445067ae75509efd26c09673f1
+
+Reason: Drug Store reserved true → false.
+```
+
+**Golden and fixtures**
+
+The golden was regenerated **once** with the existing generator. Against `5e9674e`, all three golden seeds differ **only under `city.society.items.*`**; no other path changed.
+
+Exactly two v8 fixtures changed: `life-5-weeks.json` and `life-laws.json`. Both match the **exact Step 0 candidate bytes**, and their path differences contain only `city.society.items.*`. All **51 other fixture files are byte-identical**.
+
+The [path-diff script](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/__tests__/fixtures/p6b-path-diff.ts) and [output](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/__tests__/fixtures/p6b-path-diff.txt) are committed. The [final-head rerun](C:/Users/Admin/.t3/local-drafts/p6a-prB/final-path-diff.txt) also passed.
+
+**Final gates at `a391fbb`**
+
+| Gate | Result | Exit | Elapsed |
+|---|---|---:|---:|
+| [1. Diff check](C:/Users/Admin/.t3/local-drafts/p6a-prB/gate-1-diff.txt) | PASS | 0 | <1 s |
+| [2. Lint](C:/Users/Admin/.t3/local-drafts/p6a-prB/gate-2-lint.txt) | PASS | 0 | 12 s |
+| [3. Typecheck](C:/Users/Admin/.t3/local-drafts/p6a-prB/gate-3-typecheck.txt) | PASS; zero errors/warnings | 0 | 33 s |
+| [4. Architecture check](C:/Users/Admin/.t3/local-drafts/p6a-prB/gate-4-check-architecture.txt) | PASS | 0 | 8 s |
+| [5. Architecture tests](C:/Users/Admin/.t3/local-drafts/p6a-prB/gate-5-test-architecture.txt) | **154/154** | 0 | 46 s |
+| [6. Unit tests](C:/Users/Admin/.t3/local-drafts/p6a-prB/gate-6-unit.txt) | **2,457/2,457**, 117 files | 0 | 62 s |
+| [7. Build](C:/Users/Admin/.t3/local-drafts/p6a-prB/gate-7-build.txt) | PASS | 0 | 23 s |
+| [Full smoke](C:/Users/Admin/.t3/local-drafts/p6a-prB/smoke.txt) | **350/350, `CI=1`** | 0 | 31.8 min |
+
+The final sequence ran sequentially in one Git Bash shell, with one runner at a time. Smoke needed **no rerun**. The log includes the `CI=1` echo and invocation.
+
+**Bundle components**
+
+| Gzip component | Supplied main baseline | Final | Growth |
+|---|---:|---:|---:|
+| JavaScript | 114.370 kB | **116.310 kB** | +1.940 kB |
+| CSS | 5.810 kB | **5.814 kB** | +0.004 kB |
+
+The measurement script, per-file results, and raw gzip artifact were captured and verified at the final head.
+
+Recorded ruling: with several enabled Markets, shared offers use the **strongest posted negotiation discount**, capped at 10%. A different aggregation policy would require changing pricing and its new test; this is recorded for review.
+
+**Evidence**
+
+All evidence is under `C:/Users/Admin/.t3/local-drafts/p6a-prB/`. **114 artifacts** passed SHA-256 verification; all text passed strict UTF-8 validation.
+
+- [README and handoff](C:/Users/Admin/.t3/local-drafts/p6a-prB/README.md), [SHA256SUMS.txt](C:/Users/Admin/.t3/local-drafts/p6a-prB/SHA256SUMS.txt), [final state](C:/Users/Admin/.t3/local-drafts/p6a-prB/final-state.txt).
+- [Executed edit inventory](C:/Users/Admin/.t3/local-drafts/p6a-prB/edit-inventory.md), [hash-pin record](C:/Users/Admin/.t3/local-drafts/p6a-prB/hash-pin-changes.md), [candidate comparison](C:/Users/Admin/.t3/local-drafts/p6a-prB/candidate-comparison.json).
+- [Step 0 audit](C:/Users/Admin/.t3/local-drafts/p6a-prB/STEP0-HOLD.md), [owner approvals](C:/Users/Admin/.t3/local-drafts/p6a-prB/owner-approvals.md), [execution ledger](C:/Users/Admin/.t3/local-drafts/p6a-prB/progress.md).
+- [Gate runner](C:/Users/Admin/.t3/local-drafts/p6a-prB/run-final-gates.sh), [smoke log](C:/Users/Admin/.t3/local-drafts/p6a-prB/smoke.txt), [free-port verification](C:/Users/Admin/.t3/local-drafts/p6a-prB/final-ports.txt).
+- [Bundle script](C:/Users/Admin/.t3/local-drafts/p6a-prB/measure-bundle.mjs), [raw measurement results](C:/Users/Admin/.t3/local-drafts/p6a-prB/bundle-measurement.json), [raw gzip artifact](C:/Users/Admin/.t3/local-drafts/p6a-prB/bundle-raw.js.gz).
+
+No `docs/` files are on the product branch. Evidence is prepared for Claude to commit on the docs branch before G5.
+
+**Next: open the [evidence README](C:/Users/Admin/.t3/local-drafts/p6a-prB/README.md) for independent verification.**
+
+[user]
+Builder B, PR B fix round 1. PR #94 is open: https://github.com/tanntran2000/Build-Settlement/pull/94 (branch feat/p6a-week-rules, head a391fbb, pushed by Claude). Astra round 1 at a391fbb: FAIL, two P2 findings, no P0/P1. Everything else (scope, P1–P22 edits, pins, golden, fixtures, B2, B3, Drug Store, the Market ruling) was accepted.
+
+Binding plan is now C:/Users/Admin/.t3/local-drafts/p6a-prA/binding-plan-2851fb1.md. Read **Plan correction 6** fully before any edit.
+
+Finding 1 (P2), tile-trial-week.ts:235: `goals[goal]` is set true before delivery, `grant(defId)`'s `{lost:true}` result is ignored, and `report.legendary` is still set. With 50 inventory items and 10 live storage entries, a reached goal loses its guaranteed Legendary for good.
+Owner (Tân), 2026-11-14, dialog choice, verbatim: "Wait for space (Recommended)". Implement correction 6:
+- the goal is still marked reached; its reward waits in optional `goals.pending` (goal ids in goal order; absent when empty);
+- each End Week, in the goals step, deliver waiting rewards in goal order while space exists (inventory first, then storage), each choosing by seed an unowned Legendary at delivery;
+- the report names a Legendary only when delivered; an additive `ItemWeekReport` field lists rewards still waiting;
+- `isItemsState` in items.ts validates `goals.pending` (known goal ids, reached, unique, goal order, absent when empty) so the byte round trip holds.
+- If persistence or any other file outside correction 6 needs a change, HOLD with the reason.
+
+Finding 2 (P2), tile-trial-week.ts:205: `finishOutsideLand` (line 172) nulls an exhausted Mine/Quarry building before item resolution, so the posted NPC gets no material roll for the week it operated, and later tiles' material-stream draws shift. Spec §7.6: one roll per eligible building with an NPC posted that week. Capture the eligible building and post facts before cleanup, as a391fbb does for the Hospital.
+
+Rules:
+- RED first, before any product edit, and log it:
+  - F1: a goal reached with inventory 50 and storage 10 live → no item, goal reached, pending kept, report names no Legendary and lists the wait; next End Week with one free slot → delivered once, pending cleared, report names it; two waiting rewards with one slot → only the first in goal order delivered; `isItemsState` rejects bad `pending` (unknown id, not reached, duplicate, wrong order, empty array) and the round trip stays byte-identical.
+  - F2: an NPC posted on a Mine (and a Quarry) that exhausts its deposit this End Week still gets its roll (seed it to hit); the draws for other eligible tiles are the same as when the exhausted tile still had deposit.
+- No existing test edit, golden, fixture or pin change is expected. If any byte changes, HOLD with the path diff. No new timeout.
+- One commit per finding, ending `Co-authored-by: Codex <noreply@openai.com>`. Do not push, open or update a PR, or merge; Claude pushes.
+- Then gates 1–7 sequentially at the clean final head, `echo "CI=$CI"`, `CI=1 npm run test:smoke`. Ports 4173/4174 are free now (Claude stopped its own run); check before the smoke and HOLD if they are taken, kill nothing. If the smoke fails, rerun that test alone once, report both, and HOLD.
+- Bundle vs main (JS 114.37 kB, CSS 5.81 kB) with script and raw artifact.
+- Evidence in C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/ (RED/GREEN logs, gate logs with HEAD/tree/UTC/exit at the top, smoke log with CI=1, an immutable check that golden/fixtures/pins/P1–P22 files are byte-identical to a391fbb, README, SHA256SUMS.txt). UTF-8 only.
+- Anti-loop: if one finding still fails after 2 attempts, HOLD.
+
+Reply with: HEAD, tree, empty status; commits; RED and GREEN per finding; the immutable check; gate table and smoke total with CI=1; bundle; evidence paths.
+
+[assistant]
+Fix round 1 starts with correction 6 and the two full RED lists. I’ll keep the accepted tests, golden, fixtures, and pins unchanged, make one commit per finding, and leave PR #94 for Claude to push.
+
+[assistant]
+Correction 6 is read. The worktree is clean at `a391fbb`, and ports 4173/4174 are free. Persistence already retains the nested `goals` object, so I can test pending rewards without changing persistence code. I’m capturing the immutable baseline before adding the new tests.
+
+[assistant]
+Both RED lists now reproduce the findings before product edits. F1 has **8 failures and 9 passing guards**. F2 has **2 failures** showing the missing Mine/Quarry drop and shifted later draw. I corrected F2’s new fixture to stay within the existing worker limit; all accepted tests remain untouched.
+
+[assistant]
+F1 passed on the first implementation attempt: **47/47 targeted tests**, including the new pending-reward cases and byte-identical record round trips. Full inventories now keep the reward queued, and empty pending fields stay absent. I’m committing F1 before fixing the material snapshot.
+
+[assistant]
+F2 passed on its first implementation attempt: **75/75 targeted tests**. Posted Mines and Quarries now retain their final-week roll, and later tiles receive the same draws as the non-exhausted control. Only the three authorized product files and two new test files have changed.
+
+[assistant]
+Both fixes are committed: F1 `d5d7e44`, F2 `4607790`. The immutable check passed for **207 protected files**, including the golden, fixtures, pins/data, and all 12 P1–P22 files. Final gates are starting from clean head `4607790`; smoke will run afterward in the same shell.
+
+[assistant]
+Gates **1–4 passed** at `4607790`: diff check, lint, typecheck with zero errors/warnings, and architecture check. No additional product files were needed. Architecture tests are running next.
+
+[assistant]
+The full unit suite passed **2,476/2,476** across 119 files, and architecture tests passed **154/154**. Gate 7, the production build, is running. The unchanged golden and fixture assertions passed with the unit suite.
+
+[assistant]
+All **seven gates passed** at `4607790`. The build reports gzip JS **116.52 kB** and CSS **5.81 kB**. Ports were free before the full `CI=1` smoke run, which is now active.
+
+[assistant]
+Smoke is at **6/350 passed, 0 failed**, and the log confirms `CI=1`. The same-session assignment/week flow and the first narrow-screen accessibility check passed. The head remains `4607790`.
+
+[assistant]
+Smoke is at **8/350 passed, 0 failed**. The 1280-pixel accessibility check passed, and the longer 1600-pixel shell baseline is running. No configuration has changed.
+
+[assistant]
+The 1600-pixel shell baseline is still running. Smoke remains at **8 completed tests, 0 failures**. The seven final-head gates are already green.
+
+[assistant]
+Smoke is at **11/350 passed, 0 failed**. The 1600-pixel baseline and long-content reflow checks passed; the 1280-pixel baseline is next.
+
+[assistant]
+The 1280-pixel baseline is still active. Smoke remains at **11 passed, 0 failed**. Repository files are unchanged during the run.
+
+[assistant]
+Smoke is at **12/350 passed, 0 failed**. The 1280-pixel shell baseline passed. Its reflow check and the narrower layouts remain in progress.
+
+[assistant]
+Smoke is at **14/350 passed, 0 failed**. The 1280-pixel reflow check passed, and the 375-pixel shell baseline is running. No smoke rerun has been needed.
+
+[assistant]
+The 375-pixel baseline is still active: **14 tests passed, 0 failed**. The runner remains on the unchanged final head.
+
+[assistant]
+Smoke is at **17/350 passed, 0 failed**. The 375-pixel baseline and reflow checks passed; the 320-pixel accessibility checks are underway.
+
+[assistant]
+The 320-pixel shell baseline is still running. Smoke remains at **17 passed, 0 failed**. After smoke, I’ll recheck the protected bytes and verify the bundle artifact.
+
+[assistant]
+Smoke is at **20/350 passed, 0 failed**. Shell accessibility and reflow checks have passed at all four widths, including 320 pixels. Navigation checks are next.
+
+[assistant]
+Smoke is at **30/350 passed, 0 failed**. Navigation persistence, collapsed-sidebar stock access, and independent calendar parsing passed.
+
+[assistant]
+Smoke is at **42/350 passed, 0 failed**. Fulfillment/report comparisons and character-window state checks passed. The accepted UI expectations remain unchanged.
+
+[assistant]
+Smoke is at **63/350 passed, 0 failed**. Report parsing and rejected/superseded load cases passed, including preservation of UI intent after read failures.
+
+[assistant]
+Smoke is at **74/350 passed, 0 failed**. Precision and service reports matched the executor’s visible projection. No existing report test needed an edit.
+
+[assistant]
+Smoke is at **79/350 passed, 0 failed**. Mouse/keyboard manager assignment and people-inspection flows passed at 1280 pixels.
+
+[assistant]
+Smoke is at **84/350 passed, 0 failed**. The same manager-assignment and people flows passed at 375 pixels. The runner is continuing through session-reset checks.
+
+[assistant]
+Smoke is at **110/350 passed, 0 failed**. Session-reset and checkpoint flows passed, followed by the crafted robbery and raid report/state checks.
+
+[assistant]
+Smoke is at **132/350 passed, 0 failed**. Wound, assassination, crisis, and garrison cases passed, including Watch House staffing and raid Order parity.
+
+[assistant]
+Smoke is at **135/350 passed, 0 failed**. Five-week society report/navigation parity passed at 375 and 1280 pixels. Council voting and Poor Relief reporting also passed.
+
+[assistant]
+Smoke is at **146/350 passed, 0 failed**. Ledger letter checks and the staffed Slum Watch House’s Order report matched the engine.
+
+[assistant]
+Smoke is at **177/350 passed, 0 failed**. Outside controls, tier restrictions, and Ring 2 unlocking passed. The run has passed its halfway point.
+
+[assistant]
+Smoke is at **209/350 passed, 0 failed**. Save/load race protections and exact large-integer Gold displays passed, including `9007199254740991`.
+
+[assistant]
+Smoke is at **227/350 passed, 0 failed**. Contextual resource refusals and repeated-failure state preservation passed at 320 pixels.
+
+[assistant]
+Smoke is at **243/350 passed, 0 failed**. Local checkpoint tests rejected negative stock and Report-phase saves while preserving full state and both slots.
+
+[assistant]
+Smoke is at **267/350 passed, 0 failed**. Population checkpoint concurrency checks passed, including late read rejection and a failed Continue leaving a valid import usable.
+
+[assistant]
+Smoke is at **272/350 passed, 0 failed**. Checkpoints restored grown cohorts and next-week parity at 390 pixels; the population growth/round-trip case also passed at 1280 pixels.
+
+[assistant]
+Smoke is at **281/350 passed, 0 failed**. File save/import checks preserved reports correctly, and unsuitable building placement spent no resources.
+
+[assistant]
+Smoke is at **298/350 passed, 0 failed**. Building-command guards and title keyboard/options checks passed. The final session tests are approaching.
+
+[assistant]
+Smoke is at **338/350 passed, 0 failed**. NPC pause, replacement, and Report-phase assignment rules passed. Twelve tests remain.
+
+[assistant]
+Smoke is at **349/350 passed, 0 failed**. Wrong-slot protection and Report-phase checkpoint locks passed. The final populated-session round-trip test is running.
+
+[assistant]
+Fix-round verification passed: **2,476 unit tests and 350/350 smoke tests with `CI=1`**, with no smoke rerun or timeout change. Ports 4173/4174 are free. I’m running the final immutable comparison and verifying the raw bundle artifact before sealing the evidence.
+
+[assistant]
+The final immutable check passed: **all 207 protected files retain their original bytes**, including the golden, fixtures, data/pins, and P1–P22 files. The bundle artifact verified successfully. I’m sealing the UTF-8 evidence package and recording the final clean status.
+
+[assistant]
+**Claude: take `4607790` for independent verification and Astra re-review. Both P2 findings are fixed and locally verified.** Nothing was pushed, no PR was opened or updated, and nothing was merged.
+
+```text
+Branch: feat/p6a-week-rules
+HEAD:   46077908545e9cc43a65eafe00ba889af5e7634e
+Tree:   d5597ae4296afc90b41557eb062ca43f7ab85313
+Base:   a391fbb3fe530d7ad5c9139c03dfe56b6bcf02ce
+
+git status --porcelain=v1: <empty>
+Ports 4173/4174: free
+```
+
+**Commits — one per finding**
+
+| Finding | Commit | Message |
+|---|---|---|
+| F1 | `d5d7e44517a0cf82167a84d5e75b1d8010511d02` | `fix(simulation): retain Legendary rewards until space is available` |
+| F2 | `46077908545e9cc43a65eafe00ba889af5e7634e` | `fix(simulation): preserve posted material rolls before land cleanup` |
+
+Both commits end with `Co-authored-by: Codex <noreply@openai.com>`.
+
+**RED → GREEN**
+
+| Finding | RED before product edits | GREEN |
+|---|---|---|
+| F1 — guaranteed Legendary rewards | **8 failed, 9 passing guards**, 17 new cases. [RED log](C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/F1-red.txt) | **47/47** across the new pending-reward tests, existing weekly-item tests, and existing item-record tests. [GREEN log](C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/F1-green-attempt1.txt) |
+| F2 — exhausted Mine/Quarry rolls | **2/2 failed**, reproducing the missing drop and shifted later draw. [RED log](C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/F2-red-final.txt) | **75/75** across four targeted files. [GREEN log](C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/F2-green-attempt1.txt) |
+
+Both fixes passed on their **first implementation attempt**. Two new test files add **19 cases**; **no existing test was edited** and **no timeout was changed**.
+
+F1 keeps reached rewards in canonical `goals.pending` order until delivery succeeds. Delivery prefers inventory, then storage, and chooses an unowned Legendary using the delivery week’s seeded stream. Reports name a Legendary only after delivery; optional `pendingLegendary` lists rewards still waiting. Empty pending fields are absent. Invalid pending shapes are rejected, and record round trips remain byte-identical with both zero and two item instances. **No persistence code change was needed.**
+
+F2 captures posted tile IDs and building types before cleanup. A posted Mine or Quarry receives its final-week roll even after its building is removed, and later eligible tiles retain their original material-stream draws.
+
+**Immutable check: PASS**
+
+All **207 protected files** retain their original working bytes and committed blobs from clean `a391fbb`, including:
+
+- `catalog-golden.json` and all persistence fixtures;
+- catalog data and pin assertions;
+- every existing test and all **12 P1–P22 files**.
+
+There was **no golden or fixture regeneration, pin change, or existing-test edit**. Only the three authorized product files and two new test files differ.
+
+The baseline was captured once before edits; verification does not regenerate it. Evidence: [check script](C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/immutable-check.mjs), [baseline manifest](C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/immutable-baseline.json), [final exact-head result](C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/final-immutable.txt).
+
+**Final gates at `4607790`**
+
+| Gate | Result | Exit | Elapsed |
+|---|---|---:|---:|
+| [1. Diff check](C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/gate-1-diff.txt) | PASS | 0 | <1 s |
+| [2. Lint](C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/gate-2-lint.txt) | PASS | 0 | 16 s |
+| [3. Typecheck](C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/gate-3-typecheck.txt) | PASS; zero errors/warnings | 0 | 34 s |
+| [4. Architecture check](C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/gate-4-check-architecture.txt) | PASS | 0 | 6 s |
+| [5. Architecture tests](C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/gate-5-test-architecture.txt) | **154/154** | 0 | 46 s |
+| [6. Unit tests](C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/gate-6-unit.txt) | **2,476/2,476**, 119 files | 0 | 62 s |
+| [7. Build](C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/gate-7-build.txt) | PASS | 0 | 22 s |
+| [Full smoke](C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/smoke.txt) | **350/350 with `CI=1`** | 0 | 30.9 min test time |
+
+Gates ran sequentially at the clean final head, followed by the CI echo and smoke in the same shell. **No smoke rerun was needed.** Final ports are free; no process was killed.
+
+**Bundle components**
+
+| Gzip component | Supplied main baseline | Final | Growth |
+|---|---:|---:|---:|
+| JavaScript | 114.370 kB | **116.519 kB** | +2.149 kB |
+| CSS | 5.810 kB | **5.814 kB** | +0.004 kB |
+
+The bundle remains within the 200 kB gzip budget. The [measurement script](C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/measure-bundle.mjs), [per-file results](C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/bundle-measurement.json), and [raw production JavaScript artifact](C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/bundle-raw.js) are included and verified.
+
+**Evidence package**
+
+Everything is under `C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/`. All **50 artifacts** passed UTF-8 validation and SHA-256 verification.
+
+- [README](C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/README.md) and [execution ledger](C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/progress.md).
+- [SHA256SUMS.txt](C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/SHA256SUMS.txt) and [final state](C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/final-state.txt).
+- [Machine-readable summary](C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/final-summary.json), [gate runner](C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/run-final-gates.sh), and [final port check](C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/final-ports.txt).
+
+Evidence remains outside the product branch for Claude’s docs-branch commit. [PR #94](https://github.com/tanntran2000/Build-Settlement/pull/94) is ready for Claude’s push and independent verification; Astra’s re-review is pending.
+
+**Next: open the [fix1 README](C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/README.md).**

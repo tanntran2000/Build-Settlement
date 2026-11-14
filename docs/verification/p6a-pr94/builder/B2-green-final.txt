@@ -1,0 +1,17 @@
+HEAD=0c6422d03cb62f52aacc352ab5dd7ca31b7ec724
+TREE=46cb96252407743b07038948d3a8539678f9c442
+UTC=2026-11-14T03:54:37.565Z
+EXIT=0
+COMMAND=npx vitest run packages/simulation/src/__tests__/item-effects.test.ts packages/core/src/world/__tests__/npc.test.ts packages/simulation/src/__tests__/items-week.test.ts packages/simulation/src/__tests__/world-npc.test.ts packages/simulation/src/__tests__/character-life-command.test.ts
+ELAPSED_MS=7185
+WORKING_STATUS="M packages/core/src/world/__tests__/npc.test.ts\n M packages/core/src/world/npc-content.ts\n M packages/simulation/src/character-life-command.ts\n M packages/simulation/src/crime-week.ts\n M packages/simulation/src/order-week.ts\n M packages/simulation/src/tile-trial-week.ts\n M packages/simulation/src/tile-trial.ts\n M packages/simulation/src/world-npc.ts\n M packages/ui/src/CharacterLifeCharacters.svelte\n M tests/e2e/character-life-boundary.spec.ts\n M tests/e2e/world-npc-session.spec.ts\n?? packages/simulation/src/__tests__/item-effects.test.ts"
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  5 passed (5)
+      Tests  180 passed (180)
+   Start at  10:54:39
+   Duration  4.75s (transform 3.01s, setup 0ms, import 4.72s, tests 6.33s, environment 2ms)
+

@@ -1,0 +1,101 @@
+HEAD=5e9674e31fb017f730dced4178514ebbfe1dbf24
+TREE=8e95ed5e017bff02d4ff43d61789244ce2ff6519
+UTC=2026-11-14T03:50:44.867Z
+EXIT=1
+COMMAND=npx vitest run packages/simulation/src/__tests__/items-week.test.ts packages/simulation/src/__tests__/law-week.test.ts packages/ui/src/__tests__/report-letters.test.ts packages/simulation/src/__tests__/character-life-observation.test.ts
+ELAPSED_MS=4741
+WORKING_STATUS="M packages/core/src/trial/items.ts\n M packages/core/src/trial/types.ts\n M packages/simulation/src/tile-trial-week.ts\n?? packages/simulation/src/__tests__/items-week.test.ts"
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/law-week.test.ts (21 tests | 1 failed) 475ms
+   × preserves the law-free five-week gameplay pin and determinism 359ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/law-week.test.ts > preserves the law-free five-week gameplay pin and determinism
+AssertionError: expected { Object (standing, order, ...) } to deeply equal { Object (standing, order, ...) }
+
+- Expected
++ Received
+
+@@ -46,47 +46,52 @@
+        "calm": false,
+        "rebellionSeen": false,
+        "research": false,
+        "week52": false,
+      },
+-     "inventory": [],
++     "inventory": [
++       {
++         "defId": "common-necklace",
++         "id": 1,
++       },
++     ],
+      "market": [
+        {
+-         "defId": "common-shoes",
++         "defId": "common-top",
+          "priceMilli": 5000,
+        },
+        {
+-         "defId": "common-necklace",
++         "defId": "common-earrings",
+          "priceMilli": 5000,
+        },
+        {
+-         "defId": "common-top",
++         "defId": "common-ring",
+          "priceMilli": 5000,
+        },
+        {
+-         "defId": "common-ring",
++         "defId": "common-shoes",
+          "priceMilli": 5000,
+        },
+        {
+-         "defId": "rare-shoes",
++         "defId": "rare-set",
+          "priceMilli": 15000,
+        },
+        {
+-         "defId": "rare-earrings",
++         "defId": "rare-ring",
+          "priceMilli": 15000,
+        },
+        {
+          "defId": "epic-top",
+          "priceMilli": 40000,
+        },
+        {
+-         "defId": "epic-top",
++         "defId": "epic-hand",
+          "priceMilli": 40000,
+        },
+      ],
+      "materials": {},
+-     "nextItemId": 1,
++     "nextItemId": 2,
+      "storage": [],
+    },
+    "luxuryStockMilli": 0,
+    "order": {
+      "authority": 39,
+
+ ❯ packages/simulation/src/__tests__/law-week.test.ts:90:18
+     88|  const {rulesetId:_ruleset,laws:_laws,...society}=s.city.society!;
+     89|  const {rulesetId:_oldRuleset,...oldSociety}=old.city.society;
+     90|  expect(society).toEqual({...oldSociety,items: {
+       |                  ^
+     91|       nextItemId: 1, inventory: [], consumables: [], materials: {}, st…
+     92|       market: [
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  1 failed | 214 passed (215)
+   Start at  10:50:47
+   Duration  2.40s (transform 2.20s, setup 0ms, import 3.22s, tests 2.23s, environment 1ms)
+

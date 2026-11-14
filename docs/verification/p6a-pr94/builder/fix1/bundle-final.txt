@@ -1,0 +1,39 @@
+HEAD=46077908545e9cc43a65eafe00ba889af5e7634e
+TREE=d5597ae4296afc90b41557eb062ca43f7ab85313
+UTC=2026-11-14T05:50:15Z
+EXIT=0
+ELAPSED_SECONDS=0
+COMMAND=node C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/measure-bundle.mjs --capture
+
+{
+  "utc": "2026-11-14T05:50:15.664Z",
+  "head": "46077908545e9cc43a65eafe00ba889af5e7634e",
+  "tree": "d5597ae4296afc90b41557eb062ca43f7ab85313",
+  "files": [
+    {
+      "name": "index-C8nCraik.js",
+      "bytes": 366721,
+      "gzipBytes": 116519,
+      "sha256": "36ed411dfc574d0791117defebc44e973ee22fb05a99f908cb06e4a8a7572e92"
+    },
+    {
+      "name": "index-DdNtS9j1.css",
+      "bytes": 28127,
+      "gzipBytes": 5814,
+      "sha256": "957e3db03aef271e79b33fd544374adbc99e7d2664fc35744b96835f0d072c0d"
+    }
+  ],
+  "baselineGzipKB": {
+    "js": 114.37,
+    "css": 5.81
+  },
+  "gzipBytes": {
+    "js": 116519,
+    "css": 5814
+  },
+  "growthGzipKB": {
+    "js": 2.149000000000001,
+    "css": 0.004000000000000448
+  }
+}
+PASS: bundle budget and raw artifact verified.

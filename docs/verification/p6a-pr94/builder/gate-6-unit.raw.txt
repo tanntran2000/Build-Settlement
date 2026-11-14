@@ -1,0 +1,13 @@
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  117 passed (117)
+      Tests  2457 passed (2457)
+   Start at  11:10:10
+   Duration  58.93s (transform 10.30s, setup 0ms, import 46.45s, tests 193.80s, environment 52ms)
+

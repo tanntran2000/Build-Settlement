@@ -1,0 +1,195 @@
+HEAD=5e9674e31fb017f730dced4178514ebbfe1dbf24
+TREE=8e95ed5e017bff02d4ff43d61789244ce2ff6519
+UTC=2026-11-14T03:49:02.882Z
+EXIT=1
+COMMAND=npx vitest run packages/simulation/src/__tests__/items-week.test.ts
+ELAPSED_MS=3632
+WORKING_STATUS="?? packages/simulation/src/__tests__/items-week.test.ts"
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/items-week.test.ts (24 tests | 21 failed) 212ms
+   × repeats the complete find, material, goal and next-week Market result for the same seed/week 18ms
+   × uses the catalog find odds for common 3ms
+   × uses the catalog find odds for rare 2ms
+   × uses the catalog find odds for epic 2ms
+   × uses the catalog find odds for nothing 2ms
+   × allows posted material drops only from the logging catalog pool 2ms
+   × allows posted material drops only from the mine catalog pool 2ms
+   × allows posted material drops only from the quarry catalog pool 2ms
+   × allows posted material drops only from the sheep-pasture catalog pool 2ms
+   × allows posted material drops only from the herb-garden catalog pool 2ms
+   × allows posted material drops only from the weaver catalog pool 1ms
+   × does not draw drops for unposted buildings, unsupported buildings, or an absent rarity 2ms
+   × reports a drop lost at a 999 stack without changing unrelated stocks 3ms
+   × puts a find in temporary storage when the inventory is full 2ms
+   × loses a find before expiring full storage, without spending gold or allocating an id 4ms
+   × expires an unclaimed item after exactly three weeks 1ms
+   × awards the calm Legendary goal exactly once, excluding owned definitions 1ms
+   × awards the authority Legendary goal exactly once, excluding owned definitions 2ms
+   × awards the week52 Legendary goal exactly once, excluding owned definitions 1ms
+   × awards the research Legendary goal exactly once, excluding owned definitions 1ms
+   × remembers rebellion and resets the Authority streak below 90 2ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 21 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/items-week.test.ts > repeats the complete find, material, goal and next-week Market result for the same seed/week
+AssertionError: expected undefined to be defined
+ ❯ packages/simulation/src/__tests__/items-week.test.ts:36:23
+     34|   a.society!.items.goals.rebellionSeen = b.society!.items.goals.rebell…
+     35|   const first = runTileTrialWeek(a, context(['field-1'])), second = ru…
+     36|   expect(first.items).toBeDefined(); expect(first.items).toEqual(secon…
+       |                       ^
+     37|   expect(a.society!.items.market.map(o => ITEM_CATALOG[o.defId].rarity…
+     38|   expect(a.society!.items.market).not.toEqual(createSocietyState().soc…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/21]⎯
+
+ FAIL  packages/simulation/src/__tests__/items-week.test.ts > uses the catalog find odds for common
+ FAIL  packages/simulation/src/__tests__/items-week.test.ts > uses the catalog find odds for rare
+ FAIL  packages/simulation/src/__tests__/items-week.test.ts > uses the catalog find odds for epic
+TypeError: Cannot read properties of undefined (reading 'found')
+ ❯ packages/simulation/src/__tests__/items-week.test.ts:48:25
+     46|   expect([ITEM_TRIAL.findOddsBps.common, ITEM_TRIAL.findOddsBps.rare, …
+     47|   if (rarity === 'nothing') expect(r.items.found).toBeNull();
+     48|   else { expect(r.items.found).toMatchObject({ stored: false, lost: fa…
+       |                         ^
+     49|   expect(isItemsState(s.society!.items, ['player'])).toBe(true);
+     50| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/21]⎯
+
+ FAIL  packages/simulation/src/__tests__/items-week.test.ts > uses the catalog find odds for nothing
+TypeError: Cannot read properties of undefined (reading 'found')
+ ❯ packages/simulation/src/__tests__/items-week.test.ts:47:44
+     45|   const s = city(seedFor('find', min, max)), r = runTileTrialWeek(s);
+     46|   expect([ITEM_TRIAL.findOddsBps.common, ITEM_TRIAL.findOddsBps.rare, …
+     47|   if (rarity === 'nothing') expect(r.items.found).toBeNull();
+       |                                            ^
+     48|   else { expect(r.items.found).toMatchObject({ stored: false, lost: fa…
+     49|   expect(isItemsState(s.society!.items, ['player'])).toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/21]⎯
+
+ FAIL  packages/simulation/src/__tests__/items-week.test.ts > allows posted material drops only from the logging catalog pool
+ FAIL  packages/simulation/src/__tests__/items-week.test.ts > allows posted material drops only from the mine catalog pool
+ FAIL  packages/simulation/src/__tests__/items-week.test.ts > allows posted material drops only from the quarry catalog pool
+ FAIL  packages/simulation/src/__tests__/items-week.test.ts > allows posted material drops only from the sheep-pasture catalog pool
+ FAIL  packages/simulation/src/__tests__/items-week.test.ts > allows posted material drops only from the herb-garden catalog pool
+ FAIL  packages/simulation/src/__tests__/items-week.test.ts > allows posted material drops only from the weaver catalog pool
+TypeError: Cannot read properties of undefined (reading 'materials')
+ ❯ packages/simulation/src/__tests__/items-week.test.ts:59:18
+     57|   tile.building = { typeId, level: 1, workers: 0, enabled: true };
+     58|   const r = runTileTrialWeek(s, context([tileId]));
+     59|   expect(r.items.materials).toHaveLength(1);
+       |                  ^
+     60|   const drop = r.items.materials[0];
+     61|   expect(drop).toMatchObject({ tileId, lost: false }); expect(ITEM_CAT…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/21]⎯
+
+ FAIL  packages/simulation/src/__tests__/items-week.test.ts > does not draw drops for unposted buildings, unsupported buildings, or an absent rarity
+TypeError: Cannot read properties of undefined (reading 'materials')
+ ❯ packages/simulation/src/__tests__/items-week.test.ts:68:30
+     66|   const seed = seedFor('material', 2800, 2850), s = city(seed);
+     67|   s.tiles.find(t => t.id === 'forest-1')!.building = { typeId: 'loggin…
+     68|   expect(runTileTrialWeek(s).items.materials).toEqual([]);
+       |                              ^
+     69|   const absent = city(seed);
+     70|   absent.tiles.find(t => t.id === 'meadow-1')!.building = { typeId: 'h…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/21]⎯
+
+ FAIL  packages/simulation/src/__tests__/items-week.test.ts > reports a drop lost at a 999 stack without changing unrelated stocks
+TypeError: Cannot read properties of undefined (reading 'materials')
+ ❯ packages/simulation/src/__tests__/items-week.test.ts:80:18
+     78|   s.society!.items.materials[id] = ITEM_TRIAL.stackCap;
+     79|   const control = structuredClone(s), r = runTileTrialWeek(s, context(…
+     80|   expect(r.items.materials).toEqual([{ tileId: 'forest-1', materialId:…
+       |                  ^
+     81|   expect(s.society!.items.materials[id]).toBe(999); expect(s.world.set…
+     82| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/21]⎯
+
+ FAIL  packages/simulation/src/__tests__/items-week.test.ts > puts a find in temporary storage when the inventory is full
+TypeError: Cannot read properties of undefined (reading 'found')
+ ❯ packages/simulation/src/__tests__/items-week.test.ts:87:18
+     85|   const s = city(foundSeed); fill(s, false);
+     86|   const r = runTileTrialWeek(s);
+     87|   expect(r.items.found).toMatchObject({ stored: true, lost: false });
+       |                  ^
+     88|   expect(s.society!.items.storage).toEqual([{ item: { id: 51, defId: r…
+     89|   expect(isItemsState(s.society!.items, ['player'])).toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/21]⎯
+
+ FAIL  packages/simulation/src/__tests__/items-week.test.ts > loses a find before expiring full storage, without spending gold or allocating an id
+TypeError: Cannot read properties of undefined (reading 'found')
+ ❯ packages/simulation/src/__tests__/items-week.test.ts:96:18
+     94|   const control = structuredClone(s), nextId = s.society!.items.nextIt…
+     95|   const r = runTileTrialWeek(s); runTileTrialWeek(control);
+     96|   expect(r.items.found).toMatchObject({ stored: false, lost: true });
+       |                  ^
+     97|   expect(r.items.expired).toEqual(Array(10).fill('common-ring'));
+     98|   expect(s.society!.items.storage).toEqual([]); expect(s.society!.item…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/21]⎯
+
+ FAIL  packages/simulation/src/__tests__/items-week.test.ts > expires an unclaimed item after exactly three weeks
+TypeError: Cannot read properties of undefined (reading 'expired')
+ ❯ packages/simulation/src/__tests__/items-week.test.ts:104:30
+    102|   const s = city(42, 3); s.society!.items.nextItemId = 2;
+    103|   s.society!.items.storage = [{ item: { id: 1, defId: 'common-ring' },…
+    104|   expect(runTileTrialWeek(s).items.expired).toEqual([]);
+       |                              ^
+    105|   s.phase = 'planning'; expect(runTileTrialWeek(s).items.expired).toEq…
+    106|   expect(s.society!.items.storage).toEqual([]);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/21]⎯
+
+ FAIL  packages/simulation/src/__tests__/items-week.test.ts > awards the calm Legendary goal exactly once, excluding owned definitions
+ FAIL  packages/simulation/src/__tests__/items-week.test.ts > awards the week52 Legendary goal exactly once, excluding owned definitions
+ FAIL  packages/simulation/src/__tests__/items-week.test.ts > awards the research Legendary goal exactly once, excluding owned definitions
+TypeError: Cannot read properties of undefined (reading 'legendary')
+ ❯ packages/simulation/src/__tests__/items-week.test.ts:120:23
+    118|     const r = runTileTrialWeek(s); s.phase = 'planning';
+    119|     if (goal === 'authority' && i < 3) expect(r.items.legendary).toBeN…
+    120|     awarded = r.items.legendary;
+       |                       ^
+    121|   }
+    122|   expect(awarded).toMatchObject({ goal }); expect(awarded!.defId).not.…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/21]⎯
+
+ FAIL  packages/simulation/src/__tests__/items-week.test.ts > awards the authority Legendary goal exactly once, excluding owned definitions
+TypeError: Cannot read properties of undefined (reading 'legendary')
+ ❯ packages/simulation/src/__tests__/items-week.test.ts:119:55
+    117|     if (goal === 'authority') s.society!.order.authority = 100;
+    118|     const r = runTileTrialWeek(s); s.phase = 'planning';
+    119|     if (goal === 'authority' && i < 3) expect(r.items.legendary).toBeN…
+       |                                                       ^
+    120|     awarded = r.items.legendary;
+    121|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/21]⎯
+
+ FAIL  packages/simulation/src/__tests__/items-week.test.ts > remembers rebellion and resets the Authority streak below 90
+TypeError: Cannot read properties of undefined (reading 'legendary')
+ ❯ packages/simulation/src/__tests__/items-week.test.ts:130:18
+    128|   const s = city(); s.society!.crisis.stage = 'rebellion'; s.society!.…
+    129|   const r = runTileTrialWeek(s);
+    130|   expect(r.items.legendary).toBeNull(); expect(s.society!.items.goals.…
+       |                  ^
+    131|   expect(s.society!.items.goals.authorityStreak).toBe(0);
+    132| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/21]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  21 failed | 3 passed (24)
+   Start at  10:49:05
+   Duration  1.26s (transform 518ms, setup 0ms, import 668ms, tests 212ms, environment 0ms)
+

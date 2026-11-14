@@ -1,0 +1,8 @@
+HEAD=a391fbb3fe530d7ad5c9139c03dfe56b6bcf02ce
+TREE=e0d04ec81cfdf078654b7c8c9271c15b8dd5b4b2
+UTC=2026-11-14T04:11:32Z
+EXIT=0
+ELAPSED_SECONDS=1
+COMMAND=powershell.exe -NoProfile -File C:/Users/Admin/.t3/local-drafts/p6a-prB/check-ports.ps1
+
+PASS: ports 4173 and 4174 are free. No process was killed.

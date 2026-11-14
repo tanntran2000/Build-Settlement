@@ -1,0 +1,372 @@
+HEAD=33e903f315761bfbec9d5f637b0d8b2bde60b1df
+TREE=d364041b2b6a7eff73a6001b42f8412a1a95b35f
+UTC=2026-11-14T03:55:56.815Z
+EXIT=1
+COMMAND=npx vitest run packages/simulation/src/__tests__/lord-health.test.ts packages/simulation/src/__tests__/crime-fixtures.test.ts packages/core/src/trial/__tests__/society-map.test.ts packages/core/src/__tests__/catalog-data.test.ts packages/simulation/src/__tests__/character-life-observation.test.ts
+ELAPSED_MS=5071
+WORKING_STATUS="M packages/core/src/__tests__/catalog-data.test.ts\n M packages/core/src/trial/__tests__/society-map.test.ts\n M packages/simulation/src/__tests__/character-life-observation.test.ts\n M packages/simulation/src/__tests__/crime-fixtures.test.ts\n M tests/e2e/crime.spec.ts\n?? packages/simulation/src/__tests__/lord-health.test.ts"
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/core/src/trial/__tests__/society-map.test.ts (4 tests | 2 failed) 67ms
+   × pins all nineteen active town building names to the approved catalog 31ms
+   × pins reserved staff metadata without enabling reserved buildings 9ms
+ ❯ packages/core/src/__tests__/catalog-data.test.ts (40 tests | 2 failed) 178ms
+   × 'TRIAL_BUILDINGS' keeps the canonical JSON hash from base 5cc2522 17ms
+   × 'SOCIETY_BUILDINGS' keeps the canonical JSON hash from base 5cc2522 3ms
+ ❯ packages/simulation/src/__tests__/crime-fixtures.test.ts (8 tests | 2 failed) 336ms
+   × a lethal wound sets wounds fall cause without regen and preserves a refused session 38ms
+   × preserves zero health through a non-week command and falls at End Week 41ms
+ ❯ packages/simulation/src/__tests__/lord-health.test.ts (10 tests | 10 failed) 420ms
+   × regens with Hospital false and gear false by exactly 1 79ms
+   × regens with Hospital true and gear false by exactly 2 33ms
+   × regens with Hospital false and gear true by exactly 2 49ms
+   × regens with Hospital true and gear true by exactly 3 45ms
+   × clamps regen to 100 and requires a fully staffed, funded, supplied Hospital 40ms
+   × a wound to exactly zero kills before Hospital and gear regen 47ms
+   × a wound leaving exactly one survives and then receives Hospital and gear regen 42ms
+   × CITY_FALLEN blocks every later city, NPC and item command without mutation 37ms
+   × a Calm game below Crime 70 survives all 60 weeks from health one 28ms
+   × builds the worker-free Drug Store in the Slum at Hospital level-1 cost and upkeep and sells all potions 17ms
+ ❯ packages/simulation/src/__tests__/character-life-observation.test.ts (14 tests | 1 failed) 1200ms
+     × projects every tile, offered building field, exact units and initial free labels 33ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 17 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/core/src/__tests__/catalog-data.test.ts > 'TRIAL_BUILDINGS' keeps the canonical JSON hash from base 5cc2522
+AssertionError: expected '13a5fcdd7e40703bd2223b73d051b2f43faa4…' to be 'ecaa53f29be9a8028a9f68923e6c7d5bc9ef4…' // Object.is equality
+
+Expected: "ecaa53f29be9a8028a9f68923e6c7d5bc9ef4b510692e7cd2bd580415433f54f"
+Received: "13a5fcdd7e40703bd2223b73d051b2f43faa4d5034624f1d837ca2350441c6f2"
+
+ ❯ packages/core/src/__tests__/catalog-data.test.ts:95:30
+     93|
+     94| it.each(pinnedCatalogs)('$name keeps the canonical JSON hash from base…
+     95|   expect(catalogHash(value)).toBe(hash);
+       |                              ^
+     96| });
+     97|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/17]⎯
+
+ FAIL  packages/core/src/__tests__/catalog-data.test.ts > 'SOCIETY_BUILDINGS' keeps the canonical JSON hash from base 5cc2522
+AssertionError: expected '6cd3c9b125985dba80bcc522e8d35facd3135…' to be '2bcf0b8352d2769d4d0da0d3d9039ee119608…' // Object.is equality
+
+Expected: "2bcf0b8352d2769d4d0da0d3d9039ee1196083445067ae75509efd26c09673f1"
+Received: "6cd3c9b125985dba80bcc522e8d35facd313578d0812f9c3e4de307e12fb93f8"
+
+ ❯ packages/core/src/__tests__/catalog-data.test.ts:95:30
+     93|
+     94| it.each(pinnedCatalogs)('$name keeps the canonical JSON hash from base…
+     95|   expect(catalogHash(value)).toBe(hash);
+       |                              ^
+     96| });
+     97|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/17]⎯
+
+ FAIL  packages/simulation/src/__tests__/character-life-observation.test.ts > actionable catalogues and phase controls > projects every tile, offered building field, exact units and initial free labels
+AssertionError: expected [ 'sheep-pasture', …(26) ] to deeply equal [ 'sheep-pasture', …(27) ]
+
+- Expected
++ Received
+
+@@ -24,7 +24,6 @@
+    "academy",
+    "town-market",
+    "trading-post",
+    "counting-house",
+    "slave-quarters",
+-   "drug-store",
+  ]
+
+ ❯ packages/simulation/src/__tests__/character-life-observation.test.ts:223:44
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/17]⎯
+
+ FAIL  packages/simulation/src/__tests__/crime-fixtures.test.ts > a lethal wound sets wounds fall cause without regen and preserves a refused session
+AssertionError: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ packages/simulation/src/__tests__/crime-fixtures.test.ts:37:95
+     35|  const s=load('wound');s.player.character.health=15;const before=struc…
+     36|  expect(r.success).toBe(true);if(!r.success)throw Error(r.error.messag…
+     37|  expect(r.report!.crimeEvent!.lordHealthLoss).toBe(20);expect(r.next.p…
+       |                                                                                               ^
+     38|  expect(r.next.city.society!.crisis).toMatchObject({stage:'fallen',fal…
+     39|  expect(r.next.city.society!.pendingCard).toBeNull();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/17]⎯
+
+ FAIL  packages/simulation/src/__tests__/crime-fixtures.test.ts > preserves zero health through a non-week command and falls at End Week
+AssertionError: expected { Object (fallCause, stage, ...) } to match object { Object (stage, fallCause) }
+(5 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "fallCause": "wounds",
+-   "stage": "fallen",
++   "fallCause": null,
++   "stage": "none",
+  }
+
+ ❯ packages/simulation/src/__tests__/crime-fixtures.test.ts:63:45
+     61|  expect(resolved.report!.crimeEvent!.lordHealthLoss).toBe(0);
+     62|  expect(resolved.next.player.character.health).toBe(0);expect(s.player…
+     63|  expect(resolved.next.city.society!.crisis).toMatchObject({stage:'fall…
+       |                                             ^
+     64|  expect(resolved.next.city.society!.pendingCard).toBeNull();
+     65| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/17]⎯
+
+ FAIL  packages/simulation/src/__tests__/lord-health.test.ts > regens with Hospital false and gear false by exactly 1
+AssertionError: expected 50 to be 51 // Object.is equality
+
+- Expected
++ Received
+
+- 51
++ 50
+
+ ❯ packages/simulation/src/__tests__/lord-health.test.ts:34:42
+     32|   const r = command(s,'END_WEEK',{expectedWeek:1});
+     33|   expect(r.report!.items).toMatchObject({hospitalOperated:withHospital…
+     34|   expect(r.next.player.character.health).toBe(50+regen);
+       |                                          ^
+     35| });
+     36| it('clamps regen to 100 and requires a fully staffed, funded, supplied…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/17]⎯
+
+ FAIL  packages/simulation/src/__tests__/lord-health.test.ts > regens with Hospital true and gear false by exactly 2
+ FAIL  packages/simulation/src/__tests__/lord-health.test.ts > regens with Hospital false and gear true by exactly 2
+AssertionError: expected 50 to be 52 // Object.is equality
+
+- Expected
++ Received
+
+- 52
++ 50
+
+ ❯ packages/simulation/src/__tests__/lord-health.test.ts:34:42
+     32|   const r = command(s,'END_WEEK',{expectedWeek:1});
+     33|   expect(r.report!.items).toMatchObject({hospitalOperated:withHospital…
+     34|   expect(r.next.player.character.health).toBe(50+regen);
+       |                                          ^
+     35| });
+     36| it('clamps regen to 100 and requires a fully staffed, funded, supplied…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/17]⎯
+
+ FAIL  packages/simulation/src/__tests__/lord-health.test.ts > regens with Hospital true and gear true by exactly 3
+AssertionError: expected 50 to be 53 // Object.is equality
+
+- Expected
++ Received
+
+- 53
++ 50
+
+ ❯ packages/simulation/src/__tests__/lord-health.test.ts:34:42
+     32|   const r = command(s,'END_WEEK',{expectedWeek:1});
+     33|   expect(r.report!.items).toMatchObject({hospitalOperated:withHospital…
+     34|   expect(r.next.player.character.health).toBe(50+regen);
+       |                                          ^
+     35| });
+     36| it('clamps regen to 100 and requires a fully staffed, funded, supplied…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/17]⎯
+
+ FAIL  packages/simulation/src/__tests__/lord-health.test.ts > clamps regen to 100 and requires a fully staffed, funded, supplied Hospital
+AssertionError: expected 99 to be 100 // Object.is equality
+
+- Expected
++ Received
+
+- 100
++ 99
+
+ ❯ packages/simulation/src/__tests__/lord-health.test.ts:38:79
+     36| it('clamps regen to 100 and requires a fully staffed, funded, supplied…
+     37|   let s = life(); hospital(s); s = gear(s); s.player.character.health …
+     38|   expect(command(s,'END_WEEK',{expectedWeek:1}).next.player.character.…
+       |                                                                               ^
+     39|   for (const reason of ['workers','herbs','disabled'] as const) {
+     40|     const idle = structuredClone(s); idle.player.character.health = 50;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/17]⎯
+
+ FAIL  packages/simulation/src/__tests__/lord-health.test.ts > a wound to exactly zero kills before Hospital and gear regen
+AssertionError: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ packages/simulation/src/__tests__/lord-health.test.ts:51:97
+     49|   let s = wound(); hospital(s); s = gear(s); s.player.character.health…
+     50|   const r = command(s,'END_WEEK',{expectedWeek:1});
+     51|   expect(r.report!.crimeEvent!.lordHealthLoss).toBe(20); expect(r.next…
+       |                                                                                                 ^
+     52|   expect(r.next.city.society!.crisis).toMatchObject({stage:'fallen',fa…
+     53|   expect(r.next.city.society!.pendingCard).toBeNull(); expect(r.report…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/17]⎯
+
+ FAIL  packages/simulation/src/__tests__/lord-health.test.ts > a wound leaving exactly one survives and then receives Hospital and gear regen
+AssertionError: expected 1 to be 4 // Object.is equality
+
+- Expected
++ Received
+
+- 4
++ 1
+
+ ❯ packages/simulation/src/__tests__/lord-health.test.ts:58:97
+     56|   let s = wound(); hospital(s); s = gear(s); s.player.character.health…
+     57|   const r = command(s,'END_WEEK',{expectedWeek:1});
+     58|   expect(r.report!.crimeEvent!.lordHealthLoss).toBe(20); expect(r.next…
+       |                                                                                                 ^
+     59|   expect(r.next.city.society!.crisis.stage).not.toBe('fallen'); expect…
+     60| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/17]⎯
+
+ FAIL  packages/simulation/src/__tests__/lord-health.test.ts > CITY_FALLEN blocks every later city, NPC and item command without mutation
+AssertionError: expected { success: false, error: { …(2) } } to match object { success: false, …(1) }
+(1 matching property omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "error": {
+-     "code": "CITY_FALLEN",
++     "code": "FORBIDDEN",
+    },
+    "success": false,
+  }
+
+ ❯ packages/simulation/src/__tests__/lord-health.test.ts:65:94
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/17]⎯
+
+ FAIL  packages/simulation/src/__tests__/lord-health.test.ts > a Calm game below Crime 70 survives all 60 weeks from health one
+AssertionError: expected 1 to be 2 // Object.is equality
+
+- Expected
++ Received
+
+- 2
++ 1
+
+ ❯ packages/simulation/src/__tests__/lord-health.test.ts:77:93
+     75|     const r = command(s,'END_WEEK',{expectedWeek:week}); s = r.next;
+     76|     expect(s.city.society!.order.crime).toBeLessThan(70); expect(s.cit…
+     77|     expect(r.report!.crimeEvent!.lordHealthLoss).toBe(0); expect(s.pla…
+       |                                                                                             ^
+     78|     s = command(s,'NEXT_WEEK').next;
+     79|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/17]⎯
+
+ FAIL  packages/simulation/src/__tests__/lord-health.test.ts > builds the worker-free Drug Store in the Slum at Hospital level-1 cost and upkeep and sells all potions
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ command packages/simulation/src/__tests__/lord-health.test.ts:14:48
+     12| function command(s: CharacterLifeSessionState,type: string,fields: Rec…
+     13|   const before = structuredClone(s), r = executeCharacterLifeCommand(s…
+     14|   expect(s).toEqual(before); expect(r.success).toBe(true); if (!r.succ…
+       |                                                ^
+     15| }
+     16| function hospital(s: CharacterLifeSessionState) {
+ ❯ packages/simulation/src/__tests__/lord-health.test.ts:84:37
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/17]⎯
+
+ FAIL  packages/core/src/trial/__tests__/society-map.test.ts > pins all nineteen active town building names to the approved catalog
+AssertionError: expected { 'watch-house': 'Watch House', …(17) } to deeply equal { 'watch-house': 'Watch House', …(18) }
+
+- Expected
++ Received
+
+@@ -1,11 +1,10 @@
+  {
+    "academy": "Academy",
+    "builders-yard": "Builders' Yard",
+    "common-housing": "Common Housing",
+    "counting-house": "Counting House",
+-   "drug-store": "Drug Store",
+    "elite-manor": "Elite Manor",
+    "hospital": "Hospital",
+    "library": "Library",
+    "makers-rowhouses": "Makers' Rowhouses",
+    "merchant-townhouses": "Merchant Townhouses",
+
+ ❯ packages/core/src/trial/__tests__/society-map.test.ts:47:57
+     45|   expect(Object.fromEntries(Object.entries(TRIAL_BUILDINGS)
+     46|     .filter(([, definition]) => definition.terrain.includes('town'))
+     47|     .map(([id, definition]) => [id, definition.name]))).toEqual(names);
+       |                                                         ^
+     48| });
+     49|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/17]⎯
+
+ FAIL  packages/core/src/trial/__tests__/society-map.test.ts > pins reserved staff metadata without enabling reserved buildings
+AssertionError: expected { …(5) } to deeply equal { …(4) }
+
+- Expected
++ Received
+
+@@ -9,10 +9,14 @@
+    },
+    "brothel": {
+      "reserved": true,
+      "staff": null,
+    },
++   "drug-store": {
++     "reserved": true,
++     "staff": null,
++   },
+    "smithy": {
+      "reserved": true,
+      "staff": "makers",
+    },
+  }
+
+ ❯ packages/core/src/trial/__tests__/society-map.test.ts:54:82
+     52|   expect(Object.fromEntries(Object.entries(SOCIETY_BUILDINGS)
+     53|     .filter(([, info]) => info.reserved)
+     54|     .map(([id, info]) => [id, { staff: info.staff, reserved: info.rese…
+       |                                                                                  ^
+     55|     smithy: { staff: 'makers', reserved: true },
+     56|     brothel: { staff: null, reserved: true },
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/17]⎯
+
+
+ Test Files  5 failed (5)
+      Tests  17 failed | 59 passed (76)
+   Start at  10:55:59
+   Duration  2.65s (transform 2.90s, setup 0ms, import 4.33s, tests 2.20s, environment 1ms)
+

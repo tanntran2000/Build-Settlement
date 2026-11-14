@@ -1,0 +1,29 @@
+﻿HEAD=a391fbb3fe530d7ad5c9139c03dfe56b6bcf02ce
+TREE=e0d04ec81cfdf078654b7c8c9271c15b8dd5b4b2
+UTC=2026-11-14T04:45:48.6573031Z
+EXIT=0
+BRANCH=feat/p6a-week-rules
+git status --porcelain=v1: <empty>
+Ports 4173/4174: free; no process killed
+All four commits have the required trailer
+
+a391fbb3fe530d7ad5c9139c03dfe56b6bcf02ce
+fix(simulation): capture Hospital operation before land cleanup
+
+Co-authored-by: Codex <noreply@openai.com>
+
+52200163aa63f17b8229c3fc83ab8bd83385e6a2
+feat(simulation): lord health, death by wounds and the Drug Store
+
+Co-authored-by: Codex <noreply@openai.com>
+
+33e903f315761bfbec9d5f637b0d8b2bde60b1df
+feat(simulation): skill effects from items and new combat posts
+
+Co-authored-by: Codex <noreply@openai.com>
+
+0c6422d03cb62f52aacc352ab5dd7ca31b7ec724
+feat(simulation): item drops, finds, goals and market restock
+
+Co-authored-by: Codex <noreply@openai.com>
+

@@ -1,0 +1,21 @@
+import { spawn } from 'node:child_process';
+import { execFileSync } from 'node:child_process';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const root=path.dirname(fileURLToPath(import.meta.url));
+const [name,command]=process.argv.slice(2);
+if(!name||!command)throw Error('Usage: node run-command.mjs <log-name> <command>');
+const git=args=>execFileSync('git',args,{encoding:'utf8'}).trim();
+const head=git(['rev-parse','HEAD']),tree=git(['rev-parse','HEAD^{tree}']);
+const start=new Date(),output=[];
+const child=spawn('cmd.exe',['/d','/s','/c',command],{env:process.env,windowsHide:true});
+child.stdout.on('data',b=>output.push(b));child.stderr.on('data',b=>output.push(b));
+child.on('error',e=>{throw e;});
+child.on('close',code=>{
+ const body=Buffer.concat(output).toString('utf8');
+ const header=`HEAD=${head}\nTREE=${tree}\nUTC=${start.toISOString()}\nEXIT=${code}\nCOMMAND=${command}\nELAPSED_MS=${Date.now()-start.getTime()}\nWORKING_STATUS=${JSON.stringify(git(['status','--porcelain=v1']))}\n\n`;
+ const file=path.join(root,name+'.txt');fs.writeFileSync(file,header+body,'utf8');
+ console.log(`Evidence: ${file}\nExit: ${code}\n`+body.split(/\r?\n/).slice(-28).join('\n'));
+ process.exitCode=code??1;
+});

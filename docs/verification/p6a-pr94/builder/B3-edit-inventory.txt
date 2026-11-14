@@ -1,0 +1,26 @@
+HEAD=33e903f315761bfbec9d5f637b0d8b2bde60b1df
+TREE=d364041b2b6a7eff73a6001b42f8412a1a95b35f
+UTC=2026-11-14T03:59:46.340Z
+EXIT=0
+COMMAND=node C:/Users/Admin/.t3/local-drafts/p6a-prB/verify-approved-edits.mjs
+ELAPSED_MS=1214
+WORKING_STATUS="M packages/core/src/__tests__/catalog-data.test.ts\n M packages/core/src/data/buildings.json\n M packages/core/src/data/validate.ts\n M packages/core/src/trial/__tests__/society-map.test.ts\n M packages/persistence/src/__tests__/fixtures/society-v8/life-5-weeks.json\n M packages/persistence/src/__tests__/fixtures/society-v8/life-laws.json\n M packages/simulation/src/__tests__/character-life-observation.test.ts\n M packages/simulation/src/__tests__/crime-fixtures.test.ts\n M packages/simulation/src/__tests__/fixtures/catalog-golden.json\n M packages/simulation/src/character-life-command.ts\n M tests/e2e/crime.spec.ts\n?? packages/simulation/src/__tests__/fixtures/p6b-path-diff.ts\n?? packages/simulation/src/__tests__/fixtures/p6b-path-diff.txt\n?? packages/simulation/src/__tests__/lord-health.test.ts"
+
+PASS exact approved edits: packages/simulation/src/__tests__/crime-fixtures.test.ts
+PASS exact approved edits: tests/e2e/crime.spec.ts
+PASS exact approved edits: packages/core/src/world/__tests__/npc.test.ts
+PASS exact approved edits: packages/core/src/trial/__tests__/society-map.test.ts
+PASS exact approved edits: packages/simulation/src/__tests__/character-life-observation.test.ts
+PASS exact approved edits: packages/ui/src/__tests__/report-letters.test.ts
+PASS exact approved edits: tests/e2e/character-life-navigation.helpers.ts
+PASS exact approved edits: tests/e2e/character-life-navigation.spec.ts
+PASS exact approved edits: packages/simulation/src/__tests__/law-week.test.ts
+PASS exact approved edits: packages/core/src/__tests__/catalog-data.test.ts
+PASS exact approved edits: tests/e2e/character-life-boundary.spec.ts
+PASS exact approved edits: tests/e2e/world-npc-session.spec.ts
+warning: in the working copy of 'packages/core/src/data/validate.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/core/src/trial/__tests__/society-map.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/crime-fixtures.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/fixtures/catalog-golden.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/e2e/crime.spec.ts', LF will be replaced by CRLF the next time Git touches it
+PASS: exactly 22 approved blocks in 12 existing test/support files; no other existing test changed.

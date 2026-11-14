@@ -1,0 +1,200 @@
+[
+  {
+    "id": 1,
+    "file": "packages/simulation/src/__tests__/crime-fixtures.test.ts",
+    "line": 34,
+    "category": "required",
+    "why": "Decision 8 removes the health floor; the existing input has health 15 and takes damage 20.",
+    "before": "it('floors wounded health at one and preserves a refused session',()=>{",
+    "after": "it('a lethal wound sets wounds fall cause without regen and preserves a refused session',()=>{"
+  },
+  {
+    "id": 2,
+    "file": "packages/simulation/src/__tests__/crime-fixtures.test.ts",
+    "line": 37,
+    "category": "required",
+    "why": "Exact death, no regeneration, pending-card removal and subsequent-command refusal replace the obsolete floor.",
+    "before": " expect(r.report!.crimeEvent!.lordHealthLoss).toBe(20);expect(r.next.player.character.health).toBe(1);expect(s).toEqual(before);",
+    "after": " expect(r.report!.crimeEvent!.lordHealthLoss).toBe(20);expect(r.next.player.character.health).toBe(0);expect(s).toEqual(before);\n expect(r.next.city.society!.crisis).toMatchObject({stage:'fallen',fallCause:'wounds'});\n expect(r.next.city.society!.pendingCard).toBeNull();\n expect(executeCharacterLifeCommand(r.next,{type:'NEXT_WEEK',expectedRevision:r.next.city.revision})).toMatchObject({success:false,error:{code:'CITY_FALLEN'}});"
+  },
+  {
+    "id": 3,
+    "file": "packages/simulation/src/__tests__/crime-fixtures.test.ts",
+    "line": 52,
+    "category": "zero-health ruling",
+    "why": "Decision 8 checks health <= 0 after the weekly subtraction, including a pre-existing zero. This edge needs an explicit owner ruling.",
+    "before": "it('preserves zero health through a non-week command and an unwounded End Week',()=>{",
+    "after": "it('preserves zero health through a non-week command and falls at End Week',()=>{"
+  },
+  {
+    "id": 4,
+    "file": "packages/simulation/src/__tests__/crime-fixtures.test.ts",
+    "line": 59,
+    "category": "zero-health ruling",
+    "why": "Keep both zero-health equalities; add the Decision 8 fall result, rather than reviving a zero-health checkpoint.",
+    "before": " expect(resolved.next.player.character.health).toBe(0);expect(s.player.character.health).toBe(0);",
+    "after": " expect(resolved.next.player.character.health).toBe(0);expect(s.player.character.health).toBe(0);\n expect(resolved.next.city.society!.crisis).toMatchObject({stage:'fallen',fallCause:'wounds'});\n expect(resolved.next.city.society!.pendingCard).toBeNull();"
+  },
+  {
+    "id": 5,
+    "file": "tests/e2e/crime.spec.ts",
+    "line": 18,
+    "category": "required",
+    "why": "Stored wound fixture starts at health 100, has no Hospital/gear, and receives 20 damage plus base regen 1. Wound-report damage text stays 20.",
+    "before": "expect(result.next.player.character.health).toBe(Math.max(1,s.player.character.health-20));",
+    "after": "expect(result.next.player.character.health).toBe(81);"
+  },
+  {
+    "id": 6,
+    "file": "packages/core/src/world/__tests__/npc.test.ts",
+    "line": 30,
+    "category": "required",
+    "why": "Decision 11 appends exactly two manager post types; the matcher and existing entries stay.",
+    "before": "expect([...NPC_MANAGER_BUILDING_TYPES]).toEqual(['farm', 'processor', 'logging', 'mine', 'workshop', 'town-hall', 'town-market', 'quarry', 'sheep-pasture', 'herb-garden', 'weaver']);",
+    "after": "expect([...NPC_MANAGER_BUILDING_TYPES]).toEqual(['farm', 'processor', 'logging', 'mine', 'workshop', 'town-hall', 'town-market', 'quarry', 'sheep-pasture', 'herb-garden', 'weaver', 'watch-house', 'military-barracks']);"
+  },
+  {
+    "id": 7,
+    "file": "packages/core/src/trial/__tests__/society-map.test.ts",
+    "line": 24,
+    "category": "required",
+    "why": "The buildable Drug Store requires a new town-terrain trial definition.",
+    "before": "it('pins all eighteen active town building names to the approved catalog', () => {",
+    "after": "it('pins all nineteen active town building names to the approved catalog', () => {"
+  },
+  {
+    "id": 8,
+    "file": "packages/core/src/trial/__tests__/society-map.test.ts",
+    "line": 42,
+    "category": "required",
+    "why": "Preserve the exact active-building-name assertion and add the one new definition.",
+    "before": "    'slave-quarters': 'Slave Quarters',",
+    "after": "    'slave-quarters': 'Slave Quarters',\n    'drug-store': 'Drug Store',"
+  },
+  {
+    "id": 9,
+    "file": "packages/core/src/trial/__tests__/society-map.test.ts",
+    "line": 58,
+    "category": "required",
+    "why": "Decision 12 removes Drug Store from the reserved-only filtered object. Its staff remains null in the catalog.",
+    "before": "    'drug-store': { staff: null, reserved: true },\n",
+    "after": ""
+  },
+  {
+    "id": 10,
+    "file": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+    "line": 223,
+    "category": "required",
+    "why": "Append Drug Store to the exact projected catalog order; append its trial definition at the end. The following equality to Object.keys(TRIAL_BUILDINGS) remains intact.",
+    "before": "    expect(o.buildings.map(b => b.typeId)).toEqual(['sheep-pasture', 'herb-garden', 'quarry', 'weaver', 'watch-house', 'military-barracks', 'library', 'warehouse', 'farm', 'processor', 'logging', 'mine', 'workshop', 'common-housing', 'makers-rowhouses', 'scholars-quarters', 'merchant-townhouses', 'elite-manor', 'tavern', 'hospital', 'town-hall', 'builders-yard', 'academy', 'town-market', 'trading-post', 'counting-house', 'slave-quarters']);",
+    "after": "    expect(o.buildings.map(b => b.typeId)).toEqual(['sheep-pasture', 'herb-garden', 'quarry', 'weaver', 'watch-house', 'military-barracks', 'library', 'warehouse', 'farm', 'processor', 'logging', 'mine', 'workshop', 'common-housing', 'makers-rowhouses', 'scholars-quarters', 'merchant-townhouses', 'elite-manor', 'tavern', 'hospital', 'town-hall', 'builders-yard', 'academy', 'town-market', 'trading-post', 'counting-house', 'slave-quarters', 'drug-store']);"
+  },
+  {
+    "id": 11,
+    "file": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+    "line": 287,
+    "category": "required report-shape addition",
+    "why": "Required TileTrialReport.items needs an explicit inert synthetic report field. VisibleReport continues exposing its existing UI fields; no expected observation field is removed.",
+    "before": "function reportFixture(): TileTrialReport {\n  return {",
+    "after": "function reportFixture(): TileTrialReport {\n  return {\n    items: { materials: [], found: null, expired: [], legendary: null, hospitalOperated: false, regen: 0 },"
+  },
+  {
+    "id": 12,
+    "file": "packages/ui/src/__tests__/report-letters.test.ts",
+    "line": 7,
+    "category": "required report-shape addition",
+    "why": "The typed synthetic report helper needs the required items field; all existing letter assertions, overrides and values remain intact.",
+    "before": "function report(overrides: Partial<TileTrialReport> = {}): TileTrialReport {\n  return {",
+    "after": "function report(overrides: Partial<TileTrialReport> = {}): TileTrialReport {\n  return {\n    items: { materials: [], found: null, expired: [], legendary: null, hospitalOperated: false, regen: 0 },"
+  },
+  {
+    "id": 13,
+    "file": "tests/e2e/character-life-navigation.helpers.ts",
+    "line": 219,
+    "category": "UI projection ruling",
+    "why": "PR C renders item reports. This helper must explicitly describe the visible PR B UI projection, while preserving every existing visible-field assertion. Requires owner approval of the projection.",
+    "before": "export async function expectReport(page: Page, expected: Readonly<TileTrialReport>): Promise<TileTrialReport> {",
+    "after": "export async function expectReport(page: Page, expected: Readonly<TileTrialReport>): Promise<Omit<TileTrialReport, 'items'>> {"
+  },
+  {
+    "id": 14,
+    "file": "tests/e2e/character-life-navigation.helpers.ts",
+    "line": 281,
+    "category": "UI projection ruling",
+    "why": "Match the declared visible projection instead of inventing an items result from expected data.",
+    "before": "  const actual: TileTrialReport = {",
+    "after": "  const actual: Omit<TileTrialReport, 'items'> = {"
+  },
+  {
+    "id": 15,
+    "file": "tests/e2e/character-life-navigation.helpers.ts",
+    "line": 379,
+    "category": "UI projection ruling",
+    "why": "Keep expect(actual).toEqual(baseReport) exactly; only the newly introduced, not-yet-rendered items field is excluded. New B1/B3 unit tests must assert items fully.",
+    "before": "  const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;",
+    "after": "  const { items: _items, society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;"
+  },
+  {
+    "id": 16,
+    "file": "tests/e2e/character-life-navigation.spec.ts",
+    "line": 844,
+    "category": "UI projection ruling",
+    "why": "The caller repeats the same exact visible-report comparison at line 845. Keep its matcher and all previously observed fields.",
+    "before": "  const {society: _society,luxuryImportedMilli: _luxury,trainingGoldMilli: _training,...expectedBase}=expected.report;",
+    "after": "  const {items: _items,society: _society,luxuryImportedMilli: _luxury,trainingGoldMilli: _training,...expectedBase}=expected.report;"
+  },
+  {
+    "id": 17,
+    "file": "packages/simulation/src/__tests__/law-week.test.ts",
+    "line": 90,
+    "category": "required",
+    "why": "Decision 7 finds one common-necklace in week 3 and restocks the week-6 Market. Keep exact equality, all non-item oldSociety fields and the settlement equality. Proposed exact values depend on the documented draw schedule.",
+    "before": " expect(society).toEqual({...oldSociety,items: {\n      nextItemId: 1, inventory: [], consumables: [], materials: {}, storage: [], equipped: {},\n      market: [\n        { defId: 'common-shoes', priceMilli: 5000 },\n        { defId: 'common-necklace', priceMilli: 5000 },\n        { defId: 'common-top', priceMilli: 5000 },\n        { defId: 'common-ring', priceMilli: 5000 },\n        { defId: 'rare-shoes', priceMilli: 15000 },\n        { defId: 'rare-earrings', priceMilli: 15000 },\n        { defId: 'epic-top', priceMilli: 40000 },\n        { defId: 'epic-top', priceMilli: 40000 },\n      ],\n      goals: { calm: false, authority: false, week52: false, research: false, rebellionSeen: false, authorityStreak: 0 },\n    }});",
+    "after": " expect(society).toEqual({...oldSociety,items: {\n  \"nextItemId\": 2,\n  \"inventory\": [\n    {\n      \"id\": 1,\n      \"defId\": \"common-necklace\"\n    }\n  ],\n  \"consumables\": [],\n  \"materials\": {},\n  \"storage\": [],\n  \"equipped\": {},\n  \"market\": [\n    {\n      \"defId\": \"common-top\",\n      \"priceMilli\": 5000\n    },\n    {\n      \"defId\": \"common-earrings\",\n      \"priceMilli\": 5000\n    },\n    {\n      \"defId\": \"common-ring\",\n      \"priceMilli\": 5000\n    },\n    {\n      \"defId\": \"common-shoes\",\n      \"priceMilli\": 5000\n    },\n    {\n      \"defId\": \"rare-set\",\n      \"priceMilli\": 15000\n    },\n    {\n      \"defId\": \"rare-ring\",\n      \"priceMilli\": 15000\n    },\n    {\n      \"defId\": \"epic-top\",\n      \"priceMilli\": 40000\n    },\n    {\n      \"defId\": \"epic-hand\",\n      \"priceMilli\": 40000\n    }\n  ],\n  \"goals\": {\n    \"calm\": false,\n    \"authority\": false,\n    \"week52\": false,\n    \"research\": false,\n    \"rebellionSeen\": false,\n    \"authorityStreak\": 0\n  }\n}});"
+  },
+  {
+    "id": 18,
+    "file": "packages/core/src/__tests__/catalog-data.test.ts",
+    "line": 76,
+    "category": "approved Decision 9 pin update",
+    "why": "Decision 12 changes only society.drug-store.reserved to false.",
+    "before": "6cd3c9b125985dba80bcc522e8d35facd313578d0812f9c3e4de307e12fb93f8",
+    "after": "2bcf0b8352d2769d4d0da0d3d9039ee1196083445067ae75509efd26c09673f1"
+  },
+  {
+    "id": 19,
+    "file": "packages/core/src/__tests__/catalog-data.test.ts",
+    "line": 75,
+    "category": "additional pin ruling",
+    "why": "A missing Drug Store trial definition must be added. This TRIAL_BUILDINGS pin change conflicts with the PR B brief and needs explicit authorization.",
+    "before": "13a5fcdd7e40703bd2223b73d051b2f43faa4d5034624f1d837ca2350441c6f2",
+    "after": "ecaa53f29be9a8028a9f68923e6c7d5bc9ef4b510692e7cd2bd580415433f54f"
+  },
+  {
+    "id": 20,
+    "file": "tests/e2e/character-life-boundary.spec.ts",
+    "line": 233,
+    "category": "optional UI-copy ruling",
+    "why": "Only if the owner moves one status sentence from PR C to PR B. Otherwise this assertion and its UI source remain untouched until PR C.",
+    "before": "await expect(card.getByText('NPC effects on output are not active yet.', { exact: true })).toBeVisible();",
+    "after": "await expect(card.getByText('NPC post skills apply at End Week.', { exact: true })).toBeVisible();"
+  },
+  {
+    "id": 21,
+    "file": "tests/e2e/world-npc-session.spec.ts",
+    "line": 13,
+    "category": "optional UI-copy ruling",
+    "why": "Same conditional sentence correction. NPC personality trait summaries remain inactive and their assertions stay unchanged.",
+    "before": "await expect(characterWindow(page)).toContainText('NPC effects on output are not active yet.');",
+    "after": "await expect(characterWindow(page)).toContainText('NPC post skills apply at End Week.');"
+  },
+  {
+    "id": 22,
+    "file": "tests/e2e/world-npc-session.spec.ts",
+    "line": 12,
+    "category": "optional UI-copy ruling",
+    "why": "Update only the test title if the owner approves the one-sentence UI change.",
+    "before": "test('New Game lists 3 named starters, all unassigned, with stats, traits and disabled-effect labels',",
+    "after": "test('New Game lists 3 named starters, all unassigned, with stats, traits and post-skill status',"
+  }
+]

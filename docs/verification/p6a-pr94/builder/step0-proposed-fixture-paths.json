@@ -1,0 +1,37 @@
+[
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-5-weeks.json",
+    "line": 1,
+    "beforeSha256": "608efcb03e571e6b16a055b4854fc5d20ab9d703583960f8706a4b3c78e50dee",
+    "proposalSha256": "fc1085270a8627604ac467988a9b5f414d29cebfc0b49a04f59b642be908b546",
+    "paths": [
+      "city.society.items.nextItemId",
+      "city.society.items.inventory.0",
+      "city.society.items.market.0.defId",
+      "city.society.items.market.1.defId",
+      "city.society.items.market.2.defId",
+      "city.society.items.market.3.defId",
+      "city.society.items.market.4.defId",
+      "city.society.items.market.5.defId",
+      "city.society.items.market.7.defId"
+    ]
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-laws.json",
+    "line": 1,
+    "beforeSha256": "9572210aad0738ee03eecb39735ac0088156d3f07eeac79eb1d4ae0b0def2c78",
+    "proposalSha256": "e6ece2312fd7f77d492a31deb683ebe28559f3b65c9939697d7ed67b3fa9b9e6",
+    "paths": [
+      "city.society.items.nextItemId",
+      "city.society.items.inventory.0",
+      "city.society.items.market.0.defId",
+      "city.society.items.market.1.defId",
+      "city.society.items.market.2.defId",
+      "city.society.items.market.3.defId",
+      "city.society.items.market.4.defId",
+      "city.society.items.market.5.defId",
+      "city.society.items.market.6.defId",
+      "city.society.items.market.7.defId"
+    ]
+  }
+]

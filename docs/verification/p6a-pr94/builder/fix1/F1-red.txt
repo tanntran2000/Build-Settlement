@@ -1,0 +1,173 @@
+HEAD=a391fbb3fe530d7ad5c9139c03dfe56b6bcf02ce
+TREE=e0d04ec81cfdf078654b7c8c9271c15b8dd5b4b2
+UTC=2026-11-14T05:10:14.947Z
+EXIT=1
+COMMAND=npx vitest run packages/simulation/src/__tests__/legendary-pending.test.ts
+ELAPSED_MS=3939
+WORKING_STATUS="?? packages/simulation/src/__tests__/exhausted-materials.test.ts\n?? packages/simulation/src/__tests__/legendary-pending.test.ts"
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/legendary-pending.test.ts (17 tests | 8 failed) 119ms
+   × keeps a reached reward pending at 50/10, then delivers it exactly once after space is freed 45ms
+   × delivers only the first waiting goal when exactly one inventory slot is free 9ms
+   × delivers waiting goals in order while two slots exist and chooses distinct unowned Legendaries 5ms
+   × uses temporary storage for a waiting reward when the inventory is full 5ms
+   × inserts a newly reached earlier goal ahead of an already waiting later goal 6ms
+   × accepts a canonical, nonempty pending goal list and preserves the legacy absent form 4ms
+   × round-trips pending rewards byte-identically through records with 0 instances 5ms
+   × round-trips pending rewards byte-identically through records with 2 instances 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/legendary-pending.test.ts > keeps a reached reward pending at 50/10, then delivers it exactly once after space is freed
+AssertionError: expected undefined to deeply equal [ 'calm' ]
+
+- Expected:
+[
+  "calm",
+]
+
++ Received:
+undefined
+
+ ❯ packages/simulation/src/__tests__/legendary-pending.test.ts:32:68
+     30|   const first = end(s), items = first.next.city.society!.items;
+     31|   expect(items.inventory).toHaveLength(50); expect(items.storage).toHa…
+     32|   expect(items.goals.calm).toBe(true); expect(items.goals.pending).toE…
+       |                                                                    ^
+     33|   expect(legendary(first.next)).toEqual([]); expect(first.report!.item…
+     34|   expect(first.report!.items.pendingLegendary).toEqual(['calm']); expe…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+ FAIL  packages/simulation/src/__tests__/legendary-pending.test.ts > delivers only the first waiting goal when exactly one inventory slot is free
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ action packages/simulation/src/__tests__/legendary-pending.test.ts:23:48
+     21| function action(s: CharacterLifeSessionState,type: string,fields: Reco…
+     22|   const before = structuredClone(s), r = executeCharacterLifeCommand(s…
+     23|   expect(s).toEqual(before); expect(r.success).toBe(true); if (!r.succ…
+       |                                                ^
+     24| }
+     25| const end = (s: CharacterLifeSessionState) => action(s,'END_WEEK',{exp…
+ ❯ end packages/simulation/src/__tests__/legendary-pending.test.ts:25:47
+ ❯ packages/simulation/src/__tests__/legendary-pending.test.ts:47:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯
+
+ FAIL  packages/simulation/src/__tests__/legendary-pending.test.ts > delivers waiting goals in order while two slots exist and chooses distinct unowned Legendaries
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ action packages/simulation/src/__tests__/legendary-pending.test.ts:23:48
+     21| function action(s: CharacterLifeSessionState,type: string,fields: Reco…
+     22|   const before = structuredClone(s), r = executeCharacterLifeCommand(s…
+     23|   expect(s).toEqual(before); expect(r.success).toBe(true); if (!r.succ…
+       |                                                ^
+     24| }
+     25| const end = (s: CharacterLifeSessionState) => action(s,'END_WEEK',{exp…
+ ❯ end packages/simulation/src/__tests__/legendary-pending.test.ts:25:47
+ ❯ packages/simulation/src/__tests__/legendary-pending.test.ts:55:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/8]⎯
+
+ FAIL  packages/simulation/src/__tests__/legendary-pending.test.ts > uses temporary storage for a waiting reward when the inventory is full
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ action packages/simulation/src/__tests__/legendary-pending.test.ts:23:48
+     21| function action(s: CharacterLifeSessionState,type: string,fields: Reco…
+     22|   const before = structuredClone(s), r = executeCharacterLifeCommand(s…
+     23|   expect(s).toEqual(before); expect(r.success).toBe(true); if (!r.succ…
+       |                                                ^
+     24| }
+     25| const end = (s: CharacterLifeSessionState) => action(s,'END_WEEK',{exp…
+ ❯ end packages/simulation/src/__tests__/legendary-pending.test.ts:25:47
+ ❯ packages/simulation/src/__tests__/legendary-pending.test.ts:64:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/8]⎯
+
+ FAIL  packages/simulation/src/__tests__/legendary-pending.test.ts > inserts a newly reached earlier goal ahead of an already waiting later goal
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ action packages/simulation/src/__tests__/legendary-pending.test.ts:23:48
+     21| function action(s: CharacterLifeSessionState,type: string,fields: Reco…
+     22|   const before = structuredClone(s), r = executeCharacterLifeCommand(s…
+     23|   expect(s).toEqual(before); expect(r.success).toBe(true); if (!r.succ…
+       |                                                ^
+     24| }
+     25| const end = (s: CharacterLifeSessionState) => action(s,'END_WEEK',{exp…
+ ❯ end packages/simulation/src/__tests__/legendary-pending.test.ts:25:47
+ ❯ packages/simulation/src/__tests__/legendary-pending.test.ts:71:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/8]⎯
+
+ FAIL  packages/simulation/src/__tests__/legendary-pending.test.ts > accepts a canonical, nonempty pending goal list and preserves the legacy absent form
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ packages/simulation/src/__tests__/legendary-pending.test.ts:87:42
+     85|   expect(isItemsState(items,['player'])).toBe(true);
+     86|   Object.assign(items.goals,{calm:true,authority:true,pending:['calm',…
+     87|   expect(isItemsState(items,['player'])).toBe(true);
+       |                                          ^
+     88| });
+     89| it.each([
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/8]⎯
+
+ FAIL  packages/simulation/src/__tests__/legendary-pending.test.ts > round-trips pending rewards byte-identically through records with 0 instances
+ FAIL  packages/simulation/src/__tests__/legendary-pending.test.ts > round-trips pending rewards byte-identically through records with 2 instances
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ packages/simulation/src/__tests__/legendary-pending.test.ts:100:72
+     98| it.each([0,2])('round-trips pending rewards byte-identically through r…
+     99|   const s = life(count,0); Object.assign(s.city.society!.items.goals,{…
+    100|   const before = serializeCharacterLifeSave(s); expect(before.success)…
+       |                                                                        ^
+    101|   const records = sessionToRecords('main',s), untouched = structuredCl…
+    102|   const rebuilt = recordsToSession([...records].reverse());
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/8]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  8 failed | 9 passed (17)
+   Start at  12:10:17
+   Duration  1.26s (transform 618ms, setup 0ms, import 791ms, tests 119ms, environment 0ms)
+

@@ -1,0 +1,34 @@
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/outside-week.test.ts (32 tests | 2 failed) 334ms
+     × exhausts ore-1, closes it, releases workers and permits a Processor 27ms
+     × exhausts rock-1, closes it, releases workers and permits a Processor 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/outside-week.test.ts > outside weekly land and research > exhausts ore-1, closes it, releases workers and permits a Processor
+ FAIL  packages/simulation/src/__tests__/outside-week.test.ts > outside weekly land and research > exhausts rock-1, closes it, releases workers and permits a Processor
+TypeError: Cannot read properties of null (reading 'typeId')
+ ❯ packages/simulation/src/tile-trial-week.ts:188:53
+    186|   if(immigration&&crimeEvent.event?.soldiersKilled)immigration=Object.…
+    187|   const crisis=s.society.crisis.fallCause==='assassination'?undefined:…
+    188|   const hospitalOperated=funded.some(t=>t.building!.typeId==='hospital…
+       |                                                     ^
+    189|   const items=resolveItemWeek(s,ctx,hospitalOperated,crisis?.stageBefo…
+    190|   societyReport.tensionAfter=s.society.tension;
+ ❯ runTileTrialWeek packages/simulation/src/tile-trial-week.ts:188:33
+ ❯ packages/simulation/src/__tests__/outside-week.test.ts:111:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+
+ Test Files  1 failed | 116 passed (117)
+      Tests  2 failed | 2455 passed (2457)
+   Start at  11:06:21
+   Duration  61.46s (transform 12.36s, setup 0ms, import 48.67s, tests 209.90s, environment 53ms)
+

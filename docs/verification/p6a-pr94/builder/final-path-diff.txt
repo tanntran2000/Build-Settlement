@@ -1,0 +1,178 @@
+HEAD=a391fbb3fe530d7ad5c9139c03dfe56b6bcf02ce
+TREE=e0d04ec81cfdf078654b7c8c9271c15b8dd5b4b2
+UTC=2026-11-14T04:44:04.900Z
+EXIT=0
+COMMAND=node packages/simulation/src/__tests__/fixtures/p6b-path-diff.ts
+ELAPSED_MS=2445
+WORKING_STATUS=""
+
+Base: 5e9674e31fb017f730dced4178514ebbfe1dbf24
+UTC: 2026-11-14T04:44:05.093Z
+File: packages/simulation/src/__tests__/fixtures/catalog-golden.json
+Before SHA256: 68b8312eb5998bd03e2ca28bfd16c73dceebf5add910efca2ffb99c650c94898
+After SHA256: b7c987c55aff0975964a26b512f8bdaaa850fed8becb1f278b83543d28706675
+Golden seed 0: city.society.items.nextItemId, city.society.items.inventory.0, city.society.items.inventory.1, city.society.items.inventory.2, city.society.items.inventory.3, city.society.items.inventory.4, city.society.items.inventory.5, city.society.items.inventory.6, city.society.items.inventory.7, city.society.items.inventory.8, city.society.items.inventory.9, city.society.items.inventory.10, city.society.items.inventory.11, city.society.items.inventory.12, city.society.items.inventory.13, city.society.items.inventory.14, city.society.items.inventory.15, city.society.items.inventory.16, city.society.items.inventory.17, city.society.items.inventory.18, city.society.items.inventory.19, city.society.items.inventory.20, city.society.items.inventory.21, city.society.items.inventory.22, city.society.items.inventory.23, city.society.items.inventory.24, city.society.items.inventory.25, city.society.items.inventory.26, city.society.items.inventory.27, city.society.items.inventory.28, city.society.items.inventory.29, city.society.items.inventory.30, city.society.items.inventory.31, city.society.items.market.0.defId, city.society.items.market.1.defId, city.society.items.market.2.defId, city.society.items.market.5.defId, city.society.items.market.6.defId, city.society.items.goals.week52
+Golden seed 42: city.society.items.nextItemId, city.society.items.inventory.0, city.society.items.inventory.1, city.society.items.inventory.2, city.society.items.inventory.3, city.society.items.inventory.4, city.society.items.inventory.5, city.society.items.inventory.6, city.society.items.inventory.7, city.society.items.inventory.8, city.society.items.inventory.9, city.society.items.inventory.10, city.society.items.inventory.11, city.society.items.inventory.12, city.society.items.inventory.13, city.society.items.inventory.14, city.society.items.inventory.15, city.society.items.inventory.16, city.society.items.inventory.17, city.society.items.inventory.18, city.society.items.inventory.19, city.society.items.inventory.20, city.society.items.inventory.21, city.society.items.inventory.22, city.society.items.inventory.23, city.society.items.inventory.24, city.society.items.inventory.25, city.society.items.inventory.26, city.society.items.inventory.27, city.society.items.inventory.28, city.society.items.inventory.29, city.society.items.inventory.30, city.society.items.market.0.defId, city.society.items.market.1.defId, city.society.items.market.2.defId, city.society.items.market.3.defId, city.society.items.market.4.defId, city.society.items.market.5.defId, city.society.items.market.6.defId, city.society.items.market.7.defId, city.society.items.goals.week52
+Golden seed 20261028: city.society.items.nextItemId, city.society.items.inventory.0, city.society.items.inventory.1, city.society.items.inventory.2, city.society.items.inventory.3, city.society.items.inventory.4, city.society.items.inventory.5, city.society.items.inventory.6, city.society.items.inventory.7, city.society.items.inventory.8, city.society.items.inventory.9, city.society.items.inventory.10, city.society.items.inventory.11, city.society.items.inventory.12, city.society.items.inventory.13, city.society.items.inventory.14, city.society.items.inventory.15, city.society.items.inventory.16, city.society.items.inventory.17, city.society.items.inventory.18, city.society.items.inventory.19, city.society.items.inventory.20, city.society.items.inventory.21, city.society.items.market.0.defId, city.society.items.market.1.defId, city.society.items.market.2.defId, city.society.items.market.3.defId, city.society.items.market.5.defId, city.society.items.market.6.defId, city.society.items.market.7.defId, city.society.items.goals.week52
+File: packages/persistence/src/__tests__/fixtures/society-v1/life-5-weeks.json
+Before SHA256: e70b5bb137846b4b3accc2020d52daabe0d78746934945d7079ff33831f9d921
+After SHA256: e70b5bb137846b4b3accc2020d52daabe0d78746934945d7079ff33831f9d921
+File: packages/persistence/src/__tests__/fixtures/society-v1/life-new-game.json
+Before SHA256: e30b0c8cc7906d4df134633c07286e3c411bc035a43a245f3668b3914920e333
+After SHA256: e30b0c8cc7906d4df134633c07286e3c411bc035a43a245f3668b3914920e333
+File: packages/persistence/src/__tests__/fixtures/society-v1/new-game.json
+Before SHA256: ca370a78f79ec75430e415f5a5007f866801c55a1c28ca79ef845713b6a35f9a
+After SHA256: ca370a78f79ec75430e415f5a5007f866801c55a1c28ca79ef845713b6a35f9a
+File: packages/persistence/src/__tests__/fixtures/society-v2/life-5-weeks.json
+Before SHA256: 18a14dd3bc702ebb6e23a1313f18ee933a6dafd10f3c1d72f8a450171ca4f5d7
+After SHA256: 18a14dd3bc702ebb6e23a1313f18ee933a6dafd10f3c1d72f8a450171ca4f5d7
+File: packages/persistence/src/__tests__/fixtures/society-v2/life-new-game.json
+Before SHA256: d3600023571e5073447c2921d75d78b4a9fdc7f2f46f8f59c7ddec54718cca29
+After SHA256: d3600023571e5073447c2921d75d78b4a9fdc7f2f46f8f59c7ddec54718cca29
+File: packages/persistence/src/__tests__/fixtures/society-v2/new-game.json
+Before SHA256: b058599f7d1b9caa2a33259ae94dd0123c7f6d1012132447e9a675c64801ab21
+After SHA256: b058599f7d1b9caa2a33259ae94dd0123c7f6d1012132447e9a675c64801ab21
+File: packages/persistence/src/__tests__/fixtures/society-v3/life-5-weeks.json
+Before SHA256: e956e2a52632b94bc3424f1f6bf97a11c27fa5874bb09038f2f6d0e8bad95b66
+After SHA256: e956e2a52632b94bc3424f1f6bf97a11c27fa5874bb09038f2f6d0e8bad95b66
+File: packages/persistence/src/__tests__/fixtures/society-v3/life-new-game.json
+Before SHA256: 90012ab645fea566584dcdebccc9c238381d005f0c59c0a11aad2d16d6ff09f0
+After SHA256: 90012ab645fea566584dcdebccc9c238381d005f0c59c0a11aad2d16d6ff09f0
+File: packages/persistence/src/__tests__/fixtures/society-v3/new-game.json
+Before SHA256: 9bc7d7dc0d7613b1ca8b3f291841307bb941537b6a19aef76a5f121b2fa7e5c3
+After SHA256: 9bc7d7dc0d7613b1ca8b3f291841307bb941537b6a19aef76a5f121b2fa7e5c3
+File: packages/persistence/src/__tests__/fixtures/society-v4/life-5-weeks.json
+Before SHA256: 71ebc03892b807101874610951d92c6186c88509496b896cb776650ce109fb8e
+After SHA256: 71ebc03892b807101874610951d92c6186c88509496b896cb776650ce109fb8e
+File: packages/persistence/src/__tests__/fixtures/society-v4/life-demand-card.json
+Before SHA256: ad671d6fe321f9fa4f4155c6d5b8b88ebe2aa983d07d23f33c1babc01239c0e9
+After SHA256: ad671d6fe321f9fa4f4155c6d5b8b88ebe2aa983d07d23f33c1babc01239c0e9
+File: packages/persistence/src/__tests__/fixtures/society-v4/life-new-game.json
+Before SHA256: 34a34c214bec38e6f8fa2d2e696432bd3d8387850370477b5d4d3b917e8f3772
+After SHA256: 34a34c214bec38e6f8fa2d2e696432bd3d8387850370477b5d4d3b917e8f3772
+File: packages/persistence/src/__tests__/fixtures/society-v4/life-rebellion-last-week.json
+Before SHA256: 2ea365ffbfbafd0cfb0f3cfdddea96a41c456e7b2da04b9776a4c1244e01302e
+After SHA256: 2ea365ffbfbafd0cfb0f3cfdddea96a41c456e7b2da04b9776a4c1244e01302e
+File: packages/persistence/src/__tests__/fixtures/society-v4/new-game.json
+Before SHA256: d4070e55a9faa4b27754d3a6177a2e89d2a97cf8423222e1d53818fcf8498945
+After SHA256: d4070e55a9faa4b27754d3a6177a2e89d2a97cf8423222e1d53818fcf8498945
+File: packages/persistence/src/__tests__/fixtures/society-v5/life-5-weeks.json
+Before SHA256: a9e2312b7fc305cd7cbf62a0ae5f5fb13dce74626cd6936085b57167ffaa5312
+After SHA256: a9e2312b7fc305cd7cbf62a0ae5f5fb13dce74626cd6936085b57167ffaa5312
+File: packages/persistence/src/__tests__/fixtures/society-v5/life-crime-death.json
+Before SHA256: 8d2afc1d5d52057ab456050399cb7565f696194093840b2dbfeefdf1d2b82a27
+After SHA256: 8d2afc1d5d52057ab456050399cb7565f696194093840b2dbfeefdf1d2b82a27
+File: packages/persistence/src/__tests__/fixtures/society-v5/life-crime-raid.json
+Before SHA256: e999318d66e60d11c219410e8ac90e115f383a7cd875ae85340eddd2dc5b126d
+After SHA256: e999318d66e60d11c219410e8ac90e115f383a7cd875ae85340eddd2dc5b126d
+File: packages/persistence/src/__tests__/fixtures/society-v5/life-crime-robbery.json
+Before SHA256: f12cace0b43db46aa89bb728c5e0d367a44ee9c815b85906b653b0280e292695
+After SHA256: f12cace0b43db46aa89bb728c5e0d367a44ee9c815b85906b653b0280e292695
+File: packages/persistence/src/__tests__/fixtures/society-v5/life-crime-wound.json
+Before SHA256: 3f8d44a4298f0162d9317bfe14f4f8d9ef43725404cea9ad7980e322fb306cb1
+After SHA256: 3f8d44a4298f0162d9317bfe14f4f8d9ef43725404cea9ad7980e322fb306cb1
+File: packages/persistence/src/__tests__/fixtures/society-v5/life-demand-card.json
+Before SHA256: d3f4916be5d2608a9939d153c28f0efb4dd63debc9788d03a52af92758e7d356
+After SHA256: d3f4916be5d2608a9939d153c28f0efb4dd63debc9788d03a52af92758e7d356
+File: packages/persistence/src/__tests__/fixtures/society-v5/life-new-game.json
+Before SHA256: 22b612309cb6559549be84b9fba11d6a132362b6f4bf0c07507a6d5691f95d5c
+After SHA256: 22b612309cb6559549be84b9fba11d6a132362b6f4bf0c07507a6d5691f95d5c
+File: packages/persistence/src/__tests__/fixtures/society-v5/life-rebellion-last-week.json
+Before SHA256: c4baf215c2186e57c66f503e9168b5a89bb8383d00554187fc2f8c8b80853893
+After SHA256: c4baf215c2186e57c66f503e9168b5a89bb8383d00554187fc2f8c8b80853893
+File: packages/persistence/src/__tests__/fixtures/society-v5/new-game.json
+Before SHA256: 84180362b3376ee3b7bab05ab27821a8b9c701064f1887b64be8c07689751fd4
+After SHA256: 84180362b3376ee3b7bab05ab27821a8b9c701064f1887b64be8c07689751fd4
+File: packages/persistence/src/__tests__/fixtures/society-v6/life-5-weeks.json
+Before SHA256: ab1cd918f6627fd2ec315d3fb6c14ecbfbf5c272d63beb953c6fc00d44248ec3
+After SHA256: ab1cd918f6627fd2ec315d3fb6c14ecbfbf5c272d63beb953c6fc00d44248ec3
+File: packages/persistence/src/__tests__/fixtures/society-v6/life-crime-death.json
+Before SHA256: cda6ac17a309ea9d5b726672218dcc7a99f399406a9c67c7d989361409a38a6e
+After SHA256: cda6ac17a309ea9d5b726672218dcc7a99f399406a9c67c7d989361409a38a6e
+File: packages/persistence/src/__tests__/fixtures/society-v6/life-crime-raid.json
+Before SHA256: 6319a60e2c89c5fe6aced78606bcd33277ca3674a972af426e829af04b738169
+After SHA256: 6319a60e2c89c5fe6aced78606bcd33277ca3674a972af426e829af04b738169
+File: packages/persistence/src/__tests__/fixtures/society-v6/life-crime-robbery.json
+Before SHA256: 4e800727152a69105e55b6961dacaa60c4aec5c844eddc21e9f7ac43a00c8346
+After SHA256: 4e800727152a69105e55b6961dacaa60c4aec5c844eddc21e9f7ac43a00c8346
+File: packages/persistence/src/__tests__/fixtures/society-v6/life-crime-wound.json
+Before SHA256: 649c99969ce3d11c55b582ecb62bd5e7edfdb12d7a25938eeee625c42185859f
+After SHA256: 649c99969ce3d11c55b582ecb62bd5e7edfdb12d7a25938eeee625c42185859f
+File: packages/persistence/src/__tests__/fixtures/society-v6/life-demand-card.json
+Before SHA256: 5f6cf57321ede5ab4784b9259e13fc5366c8db69402e64fa0381a1892a17a07a
+After SHA256: 5f6cf57321ede5ab4784b9259e13fc5366c8db69402e64fa0381a1892a17a07a
+File: packages/persistence/src/__tests__/fixtures/society-v6/life-laws.json
+Before SHA256: 890936db4ad74c61740335cba0318ff4b2f1a34812a7bfe1a3648c2e9e438da0
+After SHA256: 890936db4ad74c61740335cba0318ff4b2f1a34812a7bfe1a3648c2e9e438da0
+File: packages/persistence/src/__tests__/fixtures/society-v6/life-new-game.json
+Before SHA256: c6ea8ddfa68ddf4bdc0399bcbef297fecca594ef3647010f8304badb5ae48e17
+After SHA256: c6ea8ddfa68ddf4bdc0399bcbef297fecca594ef3647010f8304badb5ae48e17
+File: packages/persistence/src/__tests__/fixtures/society-v6/life-rebellion-last-week.json
+Before SHA256: d12ebf1247eb33e258c8e1dc185decfce4fc18620044f005a1fd3f9f9a87db42
+After SHA256: d12ebf1247eb33e258c8e1dc185decfce4fc18620044f005a1fd3f9f9a87db42
+File: packages/persistence/src/__tests__/fixtures/society-v6/new-game.json
+Before SHA256: 95af9ed81e251471629f8cc31be22984d35a90fa3d3d32bdc2f455a04ccb457a
+After SHA256: 95af9ed81e251471629f8cc31be22984d35a90fa3d3d32bdc2f455a04ccb457a
+File: packages/persistence/src/__tests__/fixtures/society-v7/life-5-weeks.json
+Before SHA256: c2417b06c6c65919790a5527c8999a5c5c21baa7caef7310f622568d1db00268
+After SHA256: c2417b06c6c65919790a5527c8999a5c5c21baa7caef7310f622568d1db00268
+File: packages/persistence/src/__tests__/fixtures/society-v7/life-crime-death.json
+Before SHA256: e3a3c0a7f1653b8e91da3918b5aca6d1f07dd6d9f23cf360d94d722485a1441b
+After SHA256: e3a3c0a7f1653b8e91da3918b5aca6d1f07dd6d9f23cf360d94d722485a1441b
+File: packages/persistence/src/__tests__/fixtures/society-v7/life-crime-raid.json
+Before SHA256: cca73d949b19912efe34bf321b487e83a42a20df06d45d548a5a2110069609c2
+After SHA256: cca73d949b19912efe34bf321b487e83a42a20df06d45d548a5a2110069609c2
+File: packages/persistence/src/__tests__/fixtures/society-v7/life-crime-robbery.json
+Before SHA256: b2bac5b3b0dc97ee77070a5ab8f783d4d80f983759be20fe820f1a3ea9d8d3c6
+After SHA256: b2bac5b3b0dc97ee77070a5ab8f783d4d80f983759be20fe820f1a3ea9d8d3c6
+File: packages/persistence/src/__tests__/fixtures/society-v7/life-crime-wound.json
+Before SHA256: 74d581b92bdcf4f628463bf0abeea10954d3c8ada3614712fcf2e4f058309bde
+After SHA256: 74d581b92bdcf4f628463bf0abeea10954d3c8ada3614712fcf2e4f058309bde
+File: packages/persistence/src/__tests__/fixtures/society-v7/life-demand-card.json
+Before SHA256: b407a7adb81e65d3da918f1166d0d1e7b0a99b97158093fde8b5c8368cc905be
+After SHA256: b407a7adb81e65d3da918f1166d0d1e7b0a99b97158093fde8b5c8368cc905be
+File: packages/persistence/src/__tests__/fixtures/society-v7/life-laws.json
+Before SHA256: 6ac7754314bdde02ec86d301d9261bc78efe2e136da66dc9e56318e7dea0a98f
+After SHA256: 6ac7754314bdde02ec86d301d9261bc78efe2e136da66dc9e56318e7dea0a98f
+File: packages/persistence/src/__tests__/fixtures/society-v7/life-new-game.json
+Before SHA256: dc3809f5ef80672611b06795ac5b1c630737f536f95c4709b4eb24d65e14962f
+After SHA256: dc3809f5ef80672611b06795ac5b1c630737f536f95c4709b4eb24d65e14962f
+File: packages/persistence/src/__tests__/fixtures/society-v7/life-rebellion-last-week.json
+Before SHA256: 0972d6e6847b943a36a35f8b30a1e4d6eb3157749e326c97fb8062819b2c70ed
+After SHA256: 0972d6e6847b943a36a35f8b30a1e4d6eb3157749e326c97fb8062819b2c70ed
+File: packages/persistence/src/__tests__/fixtures/society-v7/new-game.json
+Before SHA256: b7206e038ef1ca31abaae9a445067718adbd90591bbf283b11093091a6a080c4
+After SHA256: b7206e038ef1ca31abaae9a445067718adbd90591bbf283b11093091a6a080c4
+File: packages/persistence/src/__tests__/fixtures/society-v8/life-5-weeks.json
+Before SHA256: 608efcb03e571e6b16a055b4854fc5d20ab9d703583960f8706a4b3c78e50dee
+After SHA256: fc1085270a8627604ac467988a9b5f414d29cebfc0b49a04f59b642be908b546
+packages/persistence/src/__tests__/fixtures/society-v8/life-5-weeks.json: city.society.items.nextItemId, city.society.items.inventory.0, city.society.items.market.0.defId, city.society.items.market.1.defId, city.society.items.market.2.defId, city.society.items.market.3.defId, city.society.items.market.4.defId, city.society.items.market.5.defId, city.society.items.market.7.defId
+File: packages/persistence/src/__tests__/fixtures/society-v8/life-crime-death.json
+Before SHA256: f3e6c6faea46ab7d9e0976c94bede189cd72566091c831112444a9d89e133c97
+After SHA256: f3e6c6faea46ab7d9e0976c94bede189cd72566091c831112444a9d89e133c97
+File: packages/persistence/src/__tests__/fixtures/society-v8/life-crime-raid.json
+Before SHA256: 00849b1a7295cc2c842f6c870cda22294807d7f66515bf12b88a2c489a53da27
+After SHA256: 00849b1a7295cc2c842f6c870cda22294807d7f66515bf12b88a2c489a53da27
+File: packages/persistence/src/__tests__/fixtures/society-v8/life-crime-robbery.json
+Before SHA256: e7c800b3e8472a2f79a47ab1eb835608ae2f44bfee2a029fb63f695e8af48a38
+After SHA256: e7c800b3e8472a2f79a47ab1eb835608ae2f44bfee2a029fb63f695e8af48a38
+File: packages/persistence/src/__tests__/fixtures/society-v8/life-crime-wound.json
+Before SHA256: 191f1f45ad029b9502fe60fe8d65bdf3e42d8f4b156b6ad61f01b5e5bd24a56b
+After SHA256: 191f1f45ad029b9502fe60fe8d65bdf3e42d8f4b156b6ad61f01b5e5bd24a56b
+File: packages/persistence/src/__tests__/fixtures/society-v8/life-demand-card.json
+Before SHA256: 7a5b3327ab45124201057524f78c3b54610a65b1b2a2f037c44b587f88d249d7
+After SHA256: 7a5b3327ab45124201057524f78c3b54610a65b1b2a2f037c44b587f88d249d7
+File: packages/persistence/src/__tests__/fixtures/society-v8/life-laws.json
+Before SHA256: 9572210aad0738ee03eecb39735ac0088156d3f07eeac79eb1d4ae0b0def2c78
+After SHA256: e6ece2312fd7f77d492a31deb683ebe28559f3b65c9939697d7ed67b3fa9b9e6
+packages/persistence/src/__tests__/fixtures/society-v8/life-laws.json: city.society.items.nextItemId, city.society.items.inventory.0, city.society.items.market.0.defId, city.society.items.market.1.defId, city.society.items.market.2.defId, city.society.items.market.3.defId, city.society.items.market.4.defId, city.society.items.market.5.defId, city.society.items.market.6.defId, city.society.items.market.7.defId
+File: packages/persistence/src/__tests__/fixtures/society-v8/life-new-game.json
+Before SHA256: 05e8a903f40fc71b3b8a62b62d80fbe642965abc8299941cfec2db9386be057c
+After SHA256: 05e8a903f40fc71b3b8a62b62d80fbe642965abc8299941cfec2db9386be057c
+File: packages/persistence/src/__tests__/fixtures/society-v8/life-rebellion-last-week.json
+Before SHA256: 066bfd260b25f7a07a15aafdef89c87a52cb2363de7b43cf39a48ab74f5908a8
+After SHA256: 066bfd260b25f7a07a15aafdef89c87a52cb2363de7b43cf39a48ab74f5908a8
+File: packages/persistence/src/__tests__/fixtures/society-v8/new-game.json
+Before SHA256: 3542e2e0c70ce5d74eb7228926913f1ff9d6e9772f0eb5dd0296ca4de343b4f3
+After SHA256: 3542e2e0c70ce5d74eb7228926913f1ff9d6e9772f0eb5dd0296ca4de343b4f3
+PASS: 3 golden seeds satisfy the PR B path allowlist; exactly 2 v8 fixtures change only city.society.items.*; 51 other fixture files are byte-identical.

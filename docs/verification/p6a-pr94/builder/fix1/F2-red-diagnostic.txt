@@ -1,0 +1,44 @@
+HEAD=a391fbb3fe530d7ad5c9139c03dfe56b6bcf02ce
+TREE=e0d04ec81cfdf078654b7c8c9271c15b8dd5b4b2
+UTC=2026-11-14T05:10:54.470Z
+EXIT=1
+COMMAND=npx vitest run packages/simulation/src/__tests__/exhausted-materials.test.ts
+ELAPSED_MS=20036
+WORKING_STATUS="?? packages/simulation/src/__tests__/exhausted-materials.test.ts\n?? packages/simulation/src/__tests__/legendary-pending.test.ts"
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/exhausted-materials.test.ts (2 tests | 2 failed) 83ms
+   × keeps the mine material roll and later tile draws when ore-1 is exhausted 60ms
+   × keeps the quarry material roll and later tile draws when rock-1 is exhausted 19ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/exhausted-materials.test.ts > keeps the mine material roll and later tile draws when ore-1 is exhausted
+ FAIL  packages/simulation/src/__tests__/exhausted-materials.test.ts > keeps the quarry material roll and later tile draws when rock-1 is exhausted
+AssertionError: {"success":false,"error":{"code":"INVALID_STATE","message":"World session is invalid; nothing was changed."}}: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ end packages/simulation/src/__tests__/exhausted-materials.test.ts:30:66
+     28| function end(s: CharacterLifeSessionState) {
+     29|   const before = structuredClone(s), r = executeCharacterLifeCommand(s…
+     30|   expect(s).toEqual(before); expect(r.success,JSON.stringify(r)).toBe(…
+       |                                                                  ^
+     31| }
+     32| it.each([['mine','ore-1'],['quarry','rock-1']])('keeps the %s material…
+ ❯ packages/simulation/src/__tests__/exhausted-materials.test.ts:35:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  12:11:10
+   Duration  3.56s (transform 1.36s, setup 0ms, import 1.79s, tests 83ms, environment 0ms)
+

@@ -1,0 +1,60 @@
+import { expect,it } from 'vitest';
+import { createSocietyState,isTileTrialPlanningState,managerSlotTileIds } from '../../index.js';
+import { SOCIETY_PLOT_IDS,societyPlot } from '../society-map.js';
+it('pins the society map and ring boundaries', () => {
+ expect(SOCIETY_PLOT_IDS).toHaveLength(33);
+ expect(societyPlot('house-4')).toEqual({tier:'housing',ring:1});
+ expect(societyPlot('house-5')).toEqual({tier:'housing',ring:2});
+ expect(societyPlot('slum-1')).toEqual({tier:'slum',ring:1});
+ expect(societyPlot('slum-4')).toEqual({tier:'slum',ring:3});
+ expect(societyPlot('field-1')).toBeNull();
+ const city = createSocietyState();
+ expect(city.tiles).toHaveLength(63);
+ expect(isTileTrialPlanningState(city)).toBe(true);
+});
+
+it('preserves Market manager posts in both economies and adds Town Hall', () => {
+ const city = createSocietyState();
+ expect(managerSlotTileIds(city)).toEqual(['field-1','plain-1','spec-1']);
+ city.tiles.push({id:'service-1',terrain:'town',building:{typeId:'town-hall',level:1,workers:0,enabled:true}});
+ expect(managerSlotTileIds(city)).toContain('service-1');
+});
+
+import { TRIAL_BUILDINGS } from '../../index.js';
+it('pins all nineteen active town building names to the approved catalog', () => {
+  const names = {
+    "watch-house": "Watch House", "military-barracks": "Military Barracks",
+    'common-housing': 'Common Housing',
+    'makers-rowhouses': "Makers' Rowhouses",
+    'scholars-quarters': "Scholars' Quarters",
+    'merchant-townhouses': 'Merchant Townhouses',
+    'elite-manor': 'Elite Manor',
+    library: 'Library',
+    warehouse: 'Warehouse',
+    tavern: 'Tavern',
+    hospital: 'Hospital',
+    'town-hall': 'Town Hall',
+    'builders-yard': "Builders' Yard",
+    academy: 'Academy',
+    'town-market': 'Market',
+    'trading-post': 'Trading Post',
+    'counting-house': 'Counting House',
+    'slave-quarters': 'Slave Quarters',
+    'drug-store': 'Drug Store',
+  };
+  expect(Object.fromEntries(Object.entries(TRIAL_BUILDINGS)
+    .filter(([, definition]) => definition.terrain.includes('town'))
+    .map(([id, definition]) => [id, definition.name]))).toEqual(names);
+});
+
+import { SOCIETY_BUILDINGS } from '../society-map.js';
+it('pins reserved staff metadata without enabling reserved buildings', () => {
+  expect(Object.fromEntries(Object.entries(SOCIETY_BUILDINGS)
+    .filter(([, info]) => info.reserved)
+    .map(([id, info]) => [id, { staff: info.staff, reserved: info.reserved }]))).toEqual({
+    smithy: { staff: 'makers', reserved: true },
+    brothel: { staff: null, reserved: true },
+    'black-market': { staff: null, reserved: true },
+    arena: { staff: null, reserved: true },
+  });
+});

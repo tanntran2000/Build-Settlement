@@ -1,0 +1,682 @@
+HEAD=0c6422d03cb62f52aacc352ab5dd7ca31b7ec724
+TREE=46cb96252407743b07038948d3a8539678f9c442
+UTC=2026-11-14T03:53:20.179Z
+EXIT=1
+COMMAND=npx vitest run packages/simulation/src/__tests__/item-effects.test.ts packages/core/src/world/__tests__/npc.test.ts
+ELAPSED_MS=3979
+WORKING_STATUS="M packages/core/src/world/__tests__/npc.test.ts\n?? packages/simulation/src/__tests__/item-effects.test.ts"
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/core/src/world/__tests__/npc.test.ts (42 tests | 1 failed) 381ms
+     × maps manager posts to the existing and outside building types 10ms
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts (54 tests | 38 failed) 461ms
+   × farm uses management 55 for exactly +1 percent output 14ms
+   × farm uses management 100 for exactly +10 percent output 6ms
+   × processor uses management 55 for exactly +1 percent output 5ms
+   × processor uses management 100 for exactly +10 percent output 3ms
+   × sheep-pasture uses management 55 for exactly +1 percent output 4ms
+   × sheep-pasture uses management 100 for exactly +10 percent output 3ms
+   × herb-garden uses management 55 for exactly +1 percent output 4ms
+   × herb-garden uses management 100 for exactly +10 percent output 4ms
+   × logging uses technical 55 for exactly +1 percent output 3ms
+   × logging uses technical 100 for exactly +10 percent output 3ms
+   × mine uses technical 55 for exactly +1 percent output 4ms
+   × mine uses technical 100 for exactly +10 percent output 3ms
+   × workshop uses technical 55 for exactly +1 percent output 3ms
+   × workshop uses technical 100 for exactly +10 percent output 4ms
+   × quarry uses technical 55 for exactly +1 percent output 5ms
+   × quarry uses technical 100 for exactly +10 percent output 5ms
+   × weaver uses technical 55 for exactly +1 percent output 5ms
+   × weaver uses technical 100 for exactly +10 percent output 4ms
+   × applies the watch-house combat Security term at 50, 60 and 100 2ms
+   × applies the military-barracks combat Security term at 50, 60 and 100 1ms
+   × Town Hall negotiation 60 adds Authority 1 1ms
+   × Town Hall negotiation 100 adds Authority 5 2ms
+   × Player management 60 adds Authority 1 2ms
+   × Player management 100 adds Authority 5 2ms
+   × Market negotiation 55 discounts the shared next-week offers by 1 percent 13ms
+   × Market negotiation 100 discounts the shared next-week offers by 10 percent 9ms
+   × uses one shared list and the strongest active Market negotiation rather than stacking posts 6ms
+   × Player combat 55 gives exactly 49 percent fatal chance 2ms
+   × Player combat 100 gives exactly 40 percent fatal chance 1ms
+   × Player medical 60 gives wound damage 19 1ms
+   × Player medical 100 gives wound damage 15 1ms
+   × Warden adds Security 3 only at her operating Watch House 2ms
+   × Crown adds Player Authority 3 1ms
+   × Ironhide removes 5 wound damage and combined medical never lowers damage below 10 1ms
+   × Ledger adds 5 percent at her own production post 5ms
+   × accepts ASSIGN_NPC at watch-house through the real session path 45ms
+   × accepts ASSIGN_NPC at military-barracks through the real session path 38ms
+   × uses the equipped Player skills in the real End Week context 44ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 39 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > farm uses management 55 for exactly +1 percent output
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > processor uses management 55 for exactly +1 percent output
+AssertionError: expected 10000 to be 10100 // Object.is equality
+
+- Expected
++ Received
+
+- 10100
++ 10000
+
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts:39:44
+     37|     const base = output(typeId,tileId,good);
+     38|     expect(base).toBeGreaterThan(0);
+     39|     expect(output(typeId,tileId,good,ctx)).toBe(Math.floor(base*(100+p…
+       |                                            ^
+     40|   });
+     41| }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/39]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > farm uses management 100 for exactly +10 percent output
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > processor uses management 100 for exactly +10 percent output
+AssertionError: expected 10000 to be 11000 // Object.is equality
+
+- Expected
++ Received
+
+- 11000
++ 10000
+
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts:39:44
+     37|     const base = output(typeId,tileId,good);
+     38|     expect(base).toBeGreaterThan(0);
+     39|     expect(output(typeId,tileId,good,ctx)).toBe(Math.floor(base*(100+p…
+       |                                            ^
+     40|   });
+     41| }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/39]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > sheep-pasture uses management 55 for exactly +1 percent output
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > mine uses technical 55 for exactly +1 percent output
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > workshop uses technical 55 for exactly +1 percent output
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > quarry uses technical 55 for exactly +1 percent output
+AssertionError: expected 2000 to be 2020 // Object.is equality
+
+- Expected
++ Received
+
+- 2020
++ 2000
+
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts:39:44
+     37|     const base = output(typeId,tileId,good);
+     38|     expect(base).toBeGreaterThan(0);
+     39|     expect(output(typeId,tileId,good,ctx)).toBe(Math.floor(base*(100+p…
+       |                                            ^
+     40|   });
+     41| }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/39]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > sheep-pasture uses management 100 for exactly +10 percent output
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > mine uses technical 100 for exactly +10 percent output
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > workshop uses technical 100 for exactly +10 percent output
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > quarry uses technical 100 for exactly +10 percent output
+AssertionError: expected 2000 to be 2200 // Object.is equality
+
+- Expected
++ Received
+
+- 2200
++ 2000
+
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts:39:44
+     37|     const base = output(typeId,tileId,good);
+     38|     expect(base).toBeGreaterThan(0);
+     39|     expect(output(typeId,tileId,good,ctx)).toBe(Math.floor(base*(100+p…
+       |                                            ^
+     40|   });
+     41| }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/39]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > herb-garden uses management 55 for exactly +1 percent output
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > weaver uses technical 55 for exactly +1 percent output
+AssertionError: expected 1000 to be 1010 // Object.is equality
+
+- Expected
++ Received
+
+- 1010
++ 1000
+
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts:39:44
+     37|     const base = output(typeId,tileId,good);
+     38|     expect(base).toBeGreaterThan(0);
+     39|     expect(output(typeId,tileId,good,ctx)).toBe(Math.floor(base*(100+p…
+       |                                            ^
+     40|   });
+     41| }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/39]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > herb-garden uses management 100 for exactly +10 percent output
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > weaver uses technical 100 for exactly +10 percent output
+AssertionError: expected 1000 to be 1100 // Object.is equality
+
+- Expected
++ Received
+
+- 1100
++ 1000
+
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts:39:44
+     37|     const base = output(typeId,tileId,good);
+     38|     expect(base).toBeGreaterThan(0);
+     39|     expect(output(typeId,tileId,good,ctx)).toBe(Math.floor(base*(100+p…
+       |                                            ^
+     40|   });
+     41| }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/39]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > logging uses technical 55 for exactly +1 percent output
+AssertionError: expected 4000 to be 4040 // Object.is equality
+
+- Expected
++ Received
+
+- 4040
++ 4000
+
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts:39:44
+     37|     const base = output(typeId,tileId,good);
+     38|     expect(base).toBeGreaterThan(0);
+     39|     expect(output(typeId,tileId,good,ctx)).toBe(Math.floor(base*(100+p…
+       |                                            ^
+     40|   });
+     41| }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/39]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > logging uses technical 100 for exactly +10 percent output
+AssertionError: expected 4000 to be 4400 // Object.is equality
+
+- Expected
++ Received
+
+- 4400
++ 4000
+
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts:39:44
+     37|     const base = output(typeId,tileId,good);
+     38|     expect(base).toBeGreaterThan(0);
+     39|     expect(output(typeId,tileId,good,ctx)).toBe(Math.floor(base*(100+p…
+       |                                            ^
+     40|   });
+     41| }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/39]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > applies the watch-house combat Security term at 50, 60 and 100
+AssertionError: expected 20 to be 21 // Object.is equality
+
+- Expected
++ Received
+
+- 21
++ 20
+
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts:50:80
+     48|     const s = fundedCity(); s.tiles.find(t => t.id === 'service-1')!.b…
+     49|     const base = order(structuredClone(s),['service-1']);
+     50|     expect(order(s,['service-1'],context('service-1',skill)).targets.s…
+       |                                                                                ^
+     51|   }
+     52| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/39]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > applies the military-barracks combat Security term at 50, 60 and 100
+AssertionError: expected 14 to be 15 // Object.is equality
+
+- Expected
++ Received
+
+- 15
++ 14
+
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts:50:80
+     48|     const s = fundedCity(); s.tiles.find(t => t.id === 'service-1')!.b…
+     49|     const base = order(structuredClone(s),['service-1']);
+     50|     expect(order(s,['service-1'],context('service-1',skill)).targets.s…
+       |                                                                                ^
+     51|   }
+     52| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/39]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > Town Hall negotiation 60 adds Authority 1
+AssertionError: expected 50 to be 51 // Object.is equality
+
+- Expected
++ Received
+
+- 51
++ 50
+
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts:56:79
+     54|   const s = fundedCity(); s.tiles.find(t => t.id === 'service-1')!.bui…
+     55|   const base = order(structuredClone(s),['service-1']);
+     56|   expect(order(s,['service-1'],context('service-1',skill)).targets.aut…
+       |                                                                               ^
+     57| });
+     58| it.each([[50,0],[60,1],[100,5]])('Player management %i adds Authority …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/39]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > Town Hall negotiation 100 adds Authority 5
+AssertionError: expected 50 to be 55 // Object.is equality
+
+- Expected
++ Received
+
+- 55
++ 50
+
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts:56:79
+     54|   const s = fundedCity(); s.tiles.find(t => t.id === 'service-1')!.bui…
+     55|   const base = order(structuredClone(s),['service-1']);
+     56|   expect(order(s,['service-1'],context('service-1',skill)).targets.aut…
+       |                                                                               ^
+     57| });
+     58| it.each([[50,0],[60,1],[100,5]])('Player management %i adds Authority …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/39]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > Player management 60 adds Authority 1
+AssertionError: expected 40 to be 41 // Object.is equality
+
+- Expected
++ Received
+
+- 41
++ 40
+
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts:60:45
+     58| it.each([[50,0],[60,1],[100,5]])('Player management %i adds Authority …
+     59|   const s = fundedCity(), base = order(structuredClone(s),[]), ctx = c…
+     60|   expect(order(s,[],ctx).targets.authority).toBe(base.targets.authorit…
+       |                                             ^
+     61| });
+     62| it.each([[50,0],[55,1],[100,10]])('Market negotiation %i discounts the…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/39]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > Player management 100 adds Authority 5
+AssertionError: expected 40 to be 45 // Object.is equality
+
+- Expected
++ Received
+
+- 45
++ 40
+
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts:60:45
+     58| it.each([[50,0],[60,1],[100,5]])('Player management %i adds Authority …
+     59|   const s = fundedCity(), base = order(structuredClone(s),[]), ctx = c…
+     60|   expect(order(s,[],ctx).targets.authority).toBe(base.targets.authorit…
+       |                                             ^
+     61| });
+     62| it.each([[50,0],[55,1],[100,10]])('Market negotiation %i discounts the…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/39]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > Market negotiation 55 discounts the shared next-week offers by 1 percent
+AssertionError: expected [ …(8) ] to deeply equal [ …(8) ]
+
+- Expected
++ Received
+
+  [
+    {
+      "defId": "common-earrings",
+-     "priceMilli": 4950,
++     "priceMilli": 5000,
+    },
+    {
+      "defId": "common-weapon",
+-     "priceMilli": 4950,
++     "priceMilli": 5000,
+    },
+    {
+      "defId": "common-earrings",
+-     "priceMilli": 4950,
++     "priceMilli": 5000,
+    },
+    {
+      "defId": "common-earrings",
+-     "priceMilli": 4950,
++     "priceMilli": 5000,
+    },
+    {
+      "defId": "rare-bottom",
+-     "priceMilli": 14850,
++     "priceMilli": 15000,
+    },
+    {
+      "defId": "rare-set",
+-     "priceMilli": 14850,
++     "priceMilli": 15000,
+    },
+    {
+      "defId": "epic-weapon",
+-     "priceMilli": 39600,
++     "priceMilli": 40000,
+    },
+    {
+      "defId": "epic-necklace",
+-     "priceMilli": 39600,
++     "priceMilli": 40000,
+    },
+  ]
+
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts:65:35
+     63|   const a = fundedCity(), b = structuredClone(a);
+     64|   runTileTrialWeek(a); runTileTrialWeek(b,context('spec-1',skill));
+     65|   expect(b.society!.items.market).toEqual(a.society!.items.market.map(…
+       |                                   ^
+     66| });
+     67| it('uses one shared list and the strongest active Market negotiation r…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/39]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > Market negotiation 100 discounts the shared next-week offers by 10 percent
+AssertionError: expected [ …(8) ] to deeply equal [ …(8) ]
+
+- Expected
++ Received
+
+  [
+    {
+      "defId": "common-earrings",
+-     "priceMilli": 4500,
++     "priceMilli": 5000,
+    },
+    {
+      "defId": "common-weapon",
+-     "priceMilli": 4500,
++     "priceMilli": 5000,
+    },
+    {
+      "defId": "common-earrings",
+-     "priceMilli": 4500,
++     "priceMilli": 5000,
+    },
+    {
+      "defId": "common-earrings",
+-     "priceMilli": 4500,
++     "priceMilli": 5000,
+    },
+    {
+      "defId": "rare-bottom",
+-     "priceMilli": 13500,
++     "priceMilli": 15000,
+    },
+    {
+      "defId": "rare-set",
+-     "priceMilli": 13500,
++     "priceMilli": 15000,
+    },
+    {
+      "defId": "epic-weapon",
+-     "priceMilli": 36000,
++     "priceMilli": 40000,
+    },
+    {
+      "defId": "epic-necklace",
+-     "priceMilli": 36000,
++     "priceMilli": 40000,
+    },
+  ]
+
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts:65:35
+     63|   const a = fundedCity(), b = structuredClone(a);
+     64|   runTileTrialWeek(a); runTileTrialWeek(b,context('spec-1',skill));
+     65|   expect(b.society!.items.market).toEqual(a.society!.items.market.map(…
+       |                                   ^
+     66| });
+     67| it('uses one shared list and the strongest active Market negotiation r…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/39]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > uses one shared list and the strongest active Market negotiation rather than stacking posts
+AssertionError: expected [ 5000, 5000, 5000, 5000, 15000, …(3) ] to deeply equal [ 4500, 4500, 4500, 4500, 13500, …(3) ]
+
+- Expected
++ Received
+
+  [
+-   4500,
+-   4500,
+-   4500,
+-   4500,
+-   13500,
+-   13500,
+-   36000,
+-   36000,
++   5000,
++   5000,
++   5000,
++   5000,
++   15000,
++   15000,
++   40000,
++   40000,
+  ]
+
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts:71:58
+     69|   const ctx = context('spec-1',100); ctx.postSkills['spec-2'] = { ...c…
+     70|   const control = structuredClone(s); runTileTrialWeek(control); runTi…
+     71|   expect(s.society!.items.market.map(o => o.priceMilli)).toEqual(contr…
+       |                                                          ^
+     72| });
+     73|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/39]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > Player combat 55 gives exactly 49 percent fatal chance
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > Player combat 100 gives exactly 40 percent fatal chance
+AssertionError: expected 'killed' to be 'wounded' // Object.is equality
+
+Expected: "wounded"
+Received: "killed"
+
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts:82:63
+     80|   const ctx = context(); ctx.playerSkills.combat = skill;
+     81|   expect(assassination(ctx,chance/100-0.0001).event?.outcome).toBe('ki…
+     82|   expect(assassination(ctx,chance/100+0.0001).event?.outcome).toBe('wo…
+       |                                                               ^
+     83| });
+     84| it.each([[50,20],[60,19],[100,15]])('Player medical %i gives wound dam…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/39]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > Player medical 60 gives wound damage 19
+AssertionError: expected 20 to be 19 // Object.is equality
+
+- Expected
++ Received
+
+- 19
++ 20
+
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts:86:53
+     84| it.each([[50,20],[60,19],[100,15]])('Player medical %i gives wound dam…
+     85|   const ctx = context(); ctx.playerSkills.medical = skill;
+     86|   expect(assassination(ctx,0.99,80).lordHealthLoss).toBe(damage);
+       |                                                     ^
+     87| });
+     88| it('Warden adds Security 3 only at her operating Watch House', () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/39]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > Player medical 100 gives wound damage 15
+AssertionError: expected 20 to be 15 // Object.is equality
+
+- Expected
++ Received
+
+- 15
++ 20
+
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts:86:53
+     84| it.each([[50,20],[60,19],[100,15]])('Player medical %i gives wound dam…
+     85|   const ctx = context(); ctx.playerSkills.medical = skill;
+     86|   expect(assassination(ctx,0.99,80).lordHealthLoss).toBe(damage);
+       |                                                     ^
+     87| });
+     88| it('Warden adds Security 3 only at her operating Watch House', () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/39]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > Warden adds Security 3 only at her operating Watch House
+AssertionError: expected 20 to be 23 // Object.is equality
+
+- Expected
++ Received
+
+- 23
++ 20
+
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts:93:57
+     91|     const ctx = context('service-1'); ctx.postTraits['service-1'] = ['…
+     92|     const base = order(structuredClone(s),['service-1']);
+     93|     expect(order(s,['service-1'],ctx).targets.security).toBe(base.targ…
+       |                                                         ^
+     94|   }
+     95| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/39]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > Crown adds Player Authority 3
+AssertionError: expected 40 to be 43 // Object.is equality
+
+- Expected
++ Received
+
+- 43
++ 40
+
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts:98:45
+     96| it('Crown adds Player Authority 3', () => {
+     97|   const s = fundedCity(), base = order(structuredClone(s),[]), ctx = c…
+     98|   expect(order(s,[],ctx).targets.authority).toBe(base.targets.authorit…
+       |                                             ^
+     99| });
+    100| it('Ironhide removes 5 wound damage and combined medical never lowers …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/39]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > Ironhide removes 5 wound damage and combined medical never lowers damage below 10
+AssertionError: expected 20 to be 15 // Object.is equality
+
+- Expected
++ Received
+
+- 15
++ 20
+
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts:102:53
+    100| it('Ironhide removes 5 wound damage and combined medical never lowers …
+    101|   const ctx = context(); ctx.playerTraits = ['ironhide'];
+    102|   expect(assassination(ctx,0.99,80).lordHealthLoss).toBe(15);
+       |                                                     ^
+    103|   ctx.playerSkills.medical = 100; expect(assassination(ctx,0.99,80).lo…
+    104| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/39]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > Ledger adds 5 percent at her own production post
+AssertionError: expected 10000 to be 10500 // Object.is equality
+
+- Expected
++ Received
+
+- 10500
++ 10000
+
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts:107:48
+    105| it('Ledger adds 5 percent at her own production post', () => {
+    106|   const ctx = context('field-1'); ctx.postTraits['field-1'] = ['ledger…
+    107|   expect(output('farm','field-1','wheat',ctx)).toBe(output('farm','fie…
+       |                                                ^
+    108|   expect(output('processor','plain-1','food',ctx)).toBe(output('proces…
+    109| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/39]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > accepts ASSIGN_NPC at watch-house through the real session path
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > accepts ASSIGN_NPC at military-barracks through the real session path
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ command packages/simulation/src/__tests__/item-effects.test.ts:120:21
+    118| function command(s: CharacterLifeSessionState, type: string, fields: R…
+    119|   const r = executeCharacterLifeCommand(s,{ type,expectedRevision:s.ci…
+    120|   expect(r.success).toBe(true); if (!r.success) throw Error(r.error.co…
+       |                     ^
+    121| }
+    122| it.each(['watch-house','military-barracks'])('accepts ASSIGN_NPC at %s…
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts:124:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/39]⎯
+
+ FAIL  packages/simulation/src/__tests__/item-effects.test.ts > uses the equipped Player skills in the real End Week context
+AssertionError: expected 40 to be 44 // Object.is equality
+
+- Expected
++ Received
+
+- 44
++ 40
+
+ ❯ packages/simulation/src/__tests__/item-effects.test.ts:152:46
+    150|   s = command(s,'EQUIP_ITEM',{itemId:1,characterId:'player'}).next;
+    151|   const r = command(s,'END_WEEK',{expectedWeek:1});
+    152|   expect(r.report!.order!.targets.authority).toBe(base.report!.order!.…
+       |                                              ^
+    153|   expect(ITEM_TRIAL.effects.crownAuthority).toBe(3);
+    154| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/39]⎯
+
+ FAIL  packages/core/src/world/__tests__/npc.test.ts > starter content > maps manager posts to the existing and outside building types
+AssertionError: expected [ Array(11) ] to deeply equal [ 'farm', 'processor', …(11) ]
+
+- Expected
++ Received
+
+@@ -8,8 +8,6 @@
+    "town-market",
+    "quarry",
+    "sheep-pasture",
+    "herb-garden",
+    "weaver",
+-   "watch-house",
+-   "military-barracks",
+  ]
+
+ ❯ packages/core/src/world/__tests__/npc.test.ts:30:45
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/39]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  39 failed | 57 passed (96)
+   Start at  10:53:22
+   Duration  1.58s (transform 710ms, setup 0ms, import 980ms, tests 842ms, environment 0ms)
+

@@ -1,0 +1,10 @@
+HEAD=a391fbb3fe530d7ad5c9139c03dfe56b6bcf02ce
+TREE=e0d04ec81cfdf078654b7c8c9271c15b8dd5b4b2
+UTC=2026-11-14T05:08:53.563Z
+EXIT=0
+COMMAND=node C:/Users/Admin/.t3/local-drafts/p6a-prB/fix1/immutable-check.mjs --capture
+ELAPSED_MS=21499
+WORKING_STATUS=""
+
+Captured immutable baseline once: 207 files; 12 P1–P22 files.
+PASS: 207 protected files retain exact working bytes and committed blobs from a391fbb; includes every existing test, all fixtures, golden, data/pins, and 12 P1–P22 files. Only correction 6 product files and two new test files may differ.

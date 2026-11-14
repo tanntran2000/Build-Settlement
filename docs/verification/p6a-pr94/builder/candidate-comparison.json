@@ -1,0 +1,17 @@
+{
+  "fixtures": [
+    {
+      "name": "life-5-weeks",
+      "candidateSha256": "fc1085270a8627604ac467988a9b5f414d29cebfc0b49a04f59b642be908b546",
+      "actualSha256": "fc1085270a8627604ac467988a9b5f414d29cebfc0b49a04f59b642be908b546",
+      "byteIdentical": true
+    },
+    {
+      "name": "life-laws",
+      "candidateSha256": "e6ece2312fd7f77d492a31deb683ebe28559f3b65c9939697d7ed67b3fa9b9e6",
+      "actualSha256": "e6ece2312fd7f77d492a31deb683ebe28559f3b65c9939697d7ed67b3fa9b9e6",
+      "byteIdentical": true
+    }
+  ],
+  "pinsMatchCandidates": true
+}

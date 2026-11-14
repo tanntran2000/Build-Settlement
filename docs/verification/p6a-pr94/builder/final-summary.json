@@ -1,0 +1,50 @@
+{
+  "head": "a391fbb3fe530d7ad5c9139c03dfe56b6bcf02ce",
+  "tree": "e0d04ec81cfdf078654b7c8c9271c15b8dd5b4b2",
+  "base": "5e9674e31fb017f730dced4178514ebbfe1dbf24",
+  "branch": "feat/p6a-week-rules",
+  "status": "",
+  "commits": [
+    "0c6422d03cb62f52aacc352ab5dd7ca31b7ec724 feat(simulation): item drops, finds, goals and market restock",
+    "33e903f315761bfbec9d5f637b0d8b2bde60b1df feat(simulation): skill effects from items and new combat posts",
+    "52200163aa63f17b8229c3fc83ab8bd83385e6a2 feat(simulation): lord health, death by wounds and the Drug Store",
+    "a391fbb3fe530d7ad5c9139c03dfe56b6bcf02ce fix(simulation): capture Hospital operation before land cleanup"
+  ],
+  "existingTestBlocks": 22,
+  "existingTestFiles": 12,
+  "newTests": 88,
+  "smokeCI": 1,
+  "smokePassed": 350,
+  "bundle": {
+    "utc": "2026-11-14T04:43:30.391Z",
+    "head": "a391fbb3fe530d7ad5c9139c03dfe56b6bcf02ce",
+    "tree": "e0d04ec81cfdf078654b7c8c9271c15b8dd5b4b2",
+    "files": [
+      {
+        "name": "index-DdNtS9j1.css",
+        "bytes": 28127,
+        "gzipBytes": 5814,
+        "sha256": "957e3db03aef271e79b33fd544374adbc99e7d2664fc35744b96835f0d072c0d"
+      },
+      {
+        "name": "index-DgAMFhHA.js",
+        "bytes": 366141,
+        "gzipBytes": 116310,
+        "sha256": "89884cc58a2e7a40f078e4efdf5b6d1034d74902553600afa5066cad0ff1f866"
+      }
+    ],
+    "baselineGzipKB": {
+      "js": 114.37,
+      "css": 5.81
+    },
+    "gzipBytes": {
+      "js": 116310,
+      "css": 5814
+    },
+    "growthGzipKB": {
+      "js": 1.9399999999999977,
+      "css": 0.004000000000000448
+    }
+  },
+  "unitPassed": 2457
+}

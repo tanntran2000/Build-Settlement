@@ -1,0 +1,17 @@
+HEAD=d5d7e44517a0cf82167a84d5e75b1d8010511d02
+TREE=7c0c44fbd1931d26513884addecbd16335bf5484
+UTC=2026-11-14T05:12:56.125Z
+EXIT=0
+COMMAND=npx vitest run packages/simulation/src/__tests__/exhausted-materials.test.ts packages/simulation/src/__tests__/outside-week.test.ts packages/simulation/src/__tests__/items-week.test.ts packages/simulation/src/__tests__/legendary-pending.test.ts
+ELAPSED_MS=5040
+WORKING_STATUS="M packages/simulation/src/tile-trial-week.ts\n?? packages/simulation/src/__tests__/exhausted-materials.test.ts"
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  4 passed (4)
+      Tests  75 passed (75)
+   Start at  12:12:59
+   Duration  2.04s (transform 2.98s, setup 0ms, import 4.30s, tests 1.32s, environment 1ms)
+

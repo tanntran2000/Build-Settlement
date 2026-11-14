@@ -1,0 +1,83 @@
+HEAD=a391fbb3fe530d7ad5c9139c03dfe56b6bcf02ce
+TREE=e0d04ec81cfdf078654b7c8c9271c15b8dd5b4b2
+UTC=2026-11-14T05:11:17.230Z
+EXIT=1
+COMMAND=npx vitest run packages/simulation/src/__tests__/exhausted-materials.test.ts
+ELAPSED_MS=7513
+WORKING_STATUS="?? packages/simulation/src/__tests__/exhausted-materials.test.ts\n?? packages/simulation/src/__tests__/legendary-pending.test.ts"
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/exhausted-materials.test.ts (2 tests | 2 failed) 236ms
+   × keeps the mine material roll and later tile draws when ore-1 is exhausted 153ms
+   × keeps the quarry material roll and later tile draws when rock-1 is exhausted 80ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/exhausted-materials.test.ts > keeps the mine material roll and later tile draws when ore-1 is exhausted
+AssertionError: expected [ { tileId: 'forest-4', …(2) } ] to deeply equal [ { tileId: 'ore-1', …(2) }, …(1) ]
+
+- Expected
++ Received
+
+  [
+    {
+      "lost": false,
+-     "materialId": "iron",
+-     "tileId": "ore-1",
+-   },
+-   {
+-     "lost": false,
+-     "materialId": "rubber",
++     "materialId": "paper",
+      "tileId": "forest-4",
+    },
+  ]
+
+ ❯ packages/simulation/src/__tests__/exhausted-materials.test.ts:44:37
+     42|     {tileId:'forest-4',materialId:material('logging','rare'),lost:fals…
+     43|   ];
+     44|   expect(a.report!.items.materials).toEqual(expected);
+       |                                     ^
+     45|   expect(a.report!.items.materials).toEqual(b.report!.items.materials);
+     46|   expect(a.next.city.society!.items.materials).toEqual(b.next.city.soc…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  packages/simulation/src/__tests__/exhausted-materials.test.ts > keeps the quarry material roll and later tile draws when rock-1 is exhausted
+AssertionError: expected [ { tileId: 'forest-4', …(2) } ] to deeply equal [ { tileId: 'rock-1', …(2) }, …(1) ]
+
+- Expected
++ Received
+
+  [
+    {
+      "lost": false,
+-     "materialId": "glass",
+-     "tileId": "rock-1",
+-   },
+-   {
+-     "lost": false,
+-     "materialId": "rubber",
++     "materialId": "paper",
+      "tileId": "forest-4",
+    },
+  ]
+
+ ❯ packages/simulation/src/__tests__/exhausted-materials.test.ts:44:37
+     42|     {tileId:'forest-4',materialId:material('logging','rare'),lost:fals…
+     43|   ];
+     44|   expect(a.report!.items.materials).toEqual(expected);
+       |                                     ^
+     45|   expect(a.report!.items.materials).toEqual(b.report!.items.materials);
+     46|   expect(a.next.city.society!.items.materials).toEqual(b.next.city.soc…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  12:11:22
+   Duration  2.31s (transform 1.12s, setup 0ms, import 1.42s, tests 236ms, environment 0ms)
+

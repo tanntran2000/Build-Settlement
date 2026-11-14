@@ -1,0 +1,1457 @@
+{
+  "base": "a391fbb3fe530d7ad5c9139c03dfe56b6bcf02ce",
+  "tree": "e0d04ec81cfdf078654b7c8c9271c15b8dd5b4b2",
+  "utc": "2026-11-14T05:09:02.252Z",
+  "note": "Working bytes captured at the clean base; original git blob bytes are checked separately, preserving Windows line endings.",
+  "files": [
+    {
+      "file": "packages/content/src/__tests__/city-design.test.ts",
+      "workingBytes": 1474,
+      "workingSha256": "92b050b60dafb381841b5b2242cb1bba0dceca2f9eddaf07f38deb62bd1659a2",
+      "baseBlobSha256": "56cd5c38532ea2fc676626c820bf1914fdfa37e3c13b8572688201c6f181a595",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/__tests__/architecture.test.ts",
+      "workingBytes": 3886,
+      "workingSha256": "8576d823b619111e76b975f25fda472f9da9cf7cac4f90d806688f541bcdc53c",
+      "baseBlobSha256": "855a05e3594378e39d3d2f01b36721e07255b9f285e1ec083e3ae954af518801",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/__tests__/catalog-data.test.ts",
+      "workingBytes": 6961,
+      "workingSha256": "e0460a599f356dfe70c3fca6902c68e995d6c4f5b3954f2c1a4fbdfed5be5afb",
+      "baseBlobSha256": "397cb54bb918ed8c7d8e4961aafc0ffe0987ec57b9400b135be8a32fb9fe792e",
+      "p1p22": true
+    },
+    {
+      "file": "packages/core/src/__tests__/items-catalog.test.ts",
+      "workingBytes": 3147,
+      "workingSha256": "e2c613b8a977edec65bbff0ef57d50f68763508a728b9b6fd0ccd9e4ffd2dd55",
+      "baseBlobSha256": "e2c613b8a977edec65bbff0ef57d50f68763508a728b9b6fd0ccd9e4ffd2dd55",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/__tests__/society-world-integrity.test.ts",
+      "workingBytes": 1810,
+      "workingSha256": "edd312b50ef10e7ab36b5a3f351650f1337cddc4dfffa7d953246cd412615d56",
+      "baseBlobSha256": "38333b376a80831a73c3570385319e9455bdf5e82f9d5a17f5457302e7b9be89",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/__tests__/weekly.test.ts",
+      "workingBytes": 2013,
+      "workingSha256": "1c9cea3371aefb08d6b2f3358e8b976ca4006e216dbac94d278e6d7d2acae583",
+      "baseBlobSha256": "f052967a5f47352dc5845edeed79f154568c0c96190e2f61f7f151113306d443",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/character/__tests__/describe.test.ts",
+      "workingBytes": 14888,
+      "workingSha256": "8589286048f0a6134ba90b332811a84f44bd45881d120384290542c95cf2237c",
+      "baseBlobSha256": "73093e06fc0fca4a6320c55d9659a5d126e5d95f611764ba68a87156ca9ade32",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/character/__tests__/session.test.ts",
+      "workingBytes": 14931,
+      "workingSha256": "9852335fbba051227f24f675a02f184b3da0fefd2b301d4e3372dcf3cd8c62ac",
+      "baseBlobSha256": "acd1a8bc1ac3e4abda2aba2c02dea8db1a3d8ef3b10fbdffc1a760dd51f9d4c8",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/character/__tests__/validate.test.ts",
+      "workingBytes": 25042,
+      "workingSha256": "36e1562307c6ac59815edc0403ddfd08ab20da3c5a15eccb3803b5e58a91cd91",
+      "baseBlobSha256": "c60825ce87103f19378b0e84abfc898e0dddcb89e5be687e0ade90f44cbf8dff",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/data/buildings.json",
+      "workingBytes": 11781,
+      "workingSha256": "56fc897356bfed140ac90935718d249d08d1ff0d95fca01cb789a5d9b7282411",
+      "baseBlobSha256": "904879ccc83736b661940c5aaa0df17f1cc8390b2fad846b3cab15e330201463",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/data/items.json",
+      "workingBytes": 11471,
+      "workingSha256": "a4735c01d917662043d391db5bbabb2a4df66972ddcbf2883c98ed0f7aa11234",
+      "baseBlobSha256": "a4735c01d917662043d391db5bbabb2a4df66972ddcbf2883c98ed0f7aa11234",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/data/laws.json",
+      "workingBytes": 3903,
+      "workingSha256": "edc42f2d9c722875c04158a2ae25213fd1b4d4d1bb6ec013d67eb23db5b0dc27",
+      "baseBlobSha256": "17d1dcd815970dee383db3aa021fa58bc2e309c6aaa54735c46e9ee8c6335b92",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/data/outside-plots.json",
+      "workingBytes": 2211,
+      "workingSha256": "e4f47e223aeb2615af8df610fb80a138ba0a3bfeb2be031284669c1c51ce8c9b",
+      "baseBlobSha256": "d9d2cbc5351c43274a1619814b4ed1f327bb84bd4906ba263ba95757e0161e63",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/data/research.json",
+      "workingBytes": 118,
+      "workingSha256": "c2a0c6b10b53e36ecf9561be317a73c16ed402971ca4eeedc35cd94514c97724",
+      "baseBlobSha256": "cc0d8d527e0538128e215dc8fc15d1ba5e5701ae741e7f66a198b7175b3f3ee6",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/data/tuning.json",
+      "workingBytes": 13925,
+      "workingSha256": "3d03984340bb0bb41778e0058ac02bc03f60f2c7ec7ca1c53e253853595ffb33",
+      "baseBlobSha256": "ee957b401b358ab5dde5649780df473b5c369ed7bc2a1bc4841edadd1dee3568",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/domain/__tests__/canonical-state.test.ts",
+      "workingBytes": 9354,
+      "workingSha256": "f2d82f2e0240313c29aea2a9d951a3b15ac6336b1b40cbe9b17b354435f34043",
+      "baseBlobSha256": "4f8681a19cb8a02e54ef01fb6ea41f4aef08a6fa87e0b3ebb651e6283a9bb452",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/domain/__tests__/domain.test.ts",
+      "workingBytes": 7833,
+      "workingSha256": "3c32eeb6441678f5e230cb2cf8c0576fe9eea0609a967ef03ac01d5c84e8a45f",
+      "baseBlobSha256": "c98baf2dc657f7e749b046016ab7d687803610c167f67e625823dc6ba00a38df",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/medal/__tests__/loadout.test.ts",
+      "workingBytes": 11488,
+      "workingSha256": "566537d637c128baf51b960c05b2a38312d8f59df346b3bedc77538a1380029c",
+      "baseBlobSha256": "e2022558efb27fe61ffe273519f1e7c521c2dd8114999179f0499ba9809d820d",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/medal/__tests__/projection.test.ts",
+      "workingBytes": 5103,
+      "workingSha256": "134eef4155973dfd09e557aba93ee9ee16389a54ed0f758fc515b6bb43aa72e3",
+      "baseBlobSha256": "6ef401e42da8767ea0750460347a547ae9b24458f7bb799e6eaeca90d168595e",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/medal/__tests__/validation.test.ts",
+      "workingBytes": 10343,
+      "workingSha256": "a0b2f3b8d78d180b283ab5f31326a816361590f424bbcdf62909fad6c3a345f0",
+      "baseBlobSha256": "58df94a3488f726123d0720f6d26c9f400e972ef49ad41187a68c9d662eddd4d",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/social/__tests__/effective_workforce.test.ts",
+      "workingBytes": 2435,
+      "workingSha256": "d76a146ab1cd2733e0aab577ef2bb2f280283adcd9def28c33e4ccc36a6abb77",
+      "baseBlobSha256": "4c63af11513db080e34c3f9da9db66b391f696e8515a624937e4708c77e6936a",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/social/__tests__/foundation_v2_social.test.ts",
+      "workingBytes": 8724,
+      "workingSha256": "f502f747d0a4887ba500dd58bb0b692d7e65b5b57c07b63a51bf2e9f489c113a",
+      "baseBlobSha256": "9904e676a30c2c7f4cfc7c701f5ea3bebf89a378fca7f642fbb1232a95f97248",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/social/__tests__/pop01a_resource_core.test.ts",
+      "workingBytes": 9543,
+      "workingSha256": "9d683dde477da9d8f5f24a4d65546a364d4b10b4dd6ef51f50919f06fc080f4e",
+      "baseBlobSha256": "e92b4e6a8ad3fee1e3a7eba3b1585a2e687f1ebde44a85c7e9499266cc3ce0c0",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/status/__tests__/effects.test.ts",
+      "workingBytes": 7983,
+      "workingSha256": "0253e73d892827a77b97a346d48c2ea04b370b8e80a7799481a8bfc1d9de4cab",
+      "baseBlobSha256": "7b9b65150859924331745118f7c77344a5685252fb68c6f2ddbdcc84c325d682",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/crime.test.ts",
+      "workingBytes": 1929,
+      "workingSha256": "4c518521a6fb1bcf897359a76b53efca5088f1b1cd86f855254beb731ee51acd",
+      "baseBlobSha256": "6421bcdf8de7d52c828d1e9fc792a79a7098a96b24375716f4bd94eb9a551021",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/crisis.test.ts",
+      "workingBytes": 2756,
+      "workingSha256": "7daf01eb6fca232a654dc67752c2395452455920cd1cebadf475bb8a6e961e56",
+      "baseBlobSha256": "accbc4c984575dd666d7e03c8e860a0d504687bb17b97547c61f1f091ccd18d2",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/garrison.test.ts",
+      "workingBytes": 644,
+      "workingSha256": "18f2faac9d65c73ac84b139a602ff158179f72da12b5b8833878dd2a05bfb6ab",
+      "baseBlobSha256": "69a2e69af7dfcc393764711a95dda809d6493b3275144450e29e33d9c0fa4ef7",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/items-canonical.test.ts",
+      "workingBytes": 1675,
+      "workingSha256": "a2227f017b05343f3e777fae30421edd3eed5c8019d8c641ccfde66b9dc985f0",
+      "baseBlobSha256": "a2227f017b05343f3e777fae30421edd3eed5c8019d8c641ccfde66b9dc985f0",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/items.test.ts",
+      "workingBytes": 4553,
+      "workingSha256": "5688cf4da9b017e26515ad7727b934ad6409442ad7c12493865099220611ef6a",
+      "baseBlobSha256": "5688cf4da9b017e26515ad7727b934ad6409442ad7c12493865099220611ef6a",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/law.test.ts",
+      "workingBytes": 8830,
+      "workingSha256": "5b69e00e75791d7029f85b2401dcf36df276781f84a4d8ba4f19d9c66a29b982",
+      "baseBlobSha256": "5fb385a91ed1b8be24a14cb09131f3a2da16908f16a502144e84cbaa365f645e",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/order.test.ts",
+      "workingBytes": 5876,
+      "workingSha256": "ba81f4063a19a2800fb6f57f2f84061619dc8c2c7c77ea47d69ee1dd8fff4a90",
+      "baseBlobSha256": "2b94c3b4cff42bfd9746cdb3e0bab260182e8733d45ed2626e8c22fdce476edc",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/outside.test.ts",
+      "workingBytes": 9305,
+      "workingSha256": "bf3506f1c7b4c1004d23205094de9f42d7dfa430bc3204faabe49ea4f9b222f8",
+      "baseBlobSha256": "b7503bf8042fe458cea86070479c6eaba63d7919dd21c8a036aaec42e9bfa7eb",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/society-map.test.ts",
+      "workingBytes": 2710,
+      "workingSha256": "0f6a8c88640a85bb89452e952b83c544626a92f1b67fdbfd8ed560a4851cf43a",
+      "baseBlobSha256": "3e3f483a089d992d3225cf066b959c1965585eb198a522122885445976211848",
+      "p1p22": true
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/society-stock-integrity.test.ts",
+      "workingBytes": 3813,
+      "workingSha256": "17a1ccd1e49485998f5849e3fcb16d01575732cd7df5b8ef077d4191d47ee523",
+      "baseBlobSha256": "5ed01cb1fc99547297f0a1548ad6884804f11877c86a51d886fabd8669e58a30",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/society.test.ts",
+      "workingBytes": 6114,
+      "workingSha256": "827482c6e5ed5e2db886d2670f4a92fdadb17c68cc1d6b575b652287777959f4",
+      "baseBlobSha256": "fe6cba967fb11507571942e901eb32c163e3fe16339b9c52b8e05ded8127f34a",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/world/__tests__/generate.test.ts",
+      "workingBytes": 7946,
+      "workingSha256": "b42c4d2b865fd1ee42ed2090c7d9f1e13d00edd4a37f60765194c1b1c8ccd45d",
+      "baseBlobSha256": "abc79625ec846ce2dd7349fc6b5b0f3b2766cf07db183a0b5f67df6c64eb1b15",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/world/__tests__/item-market-seed.test.ts",
+      "workingBytes": 1188,
+      "workingSha256": "17b7bb7fb9a199b71050f2d6d893b0f58130ba9fc21119a1e76cde21f3131504",
+      "baseBlobSha256": "17b7bb7fb9a199b71050f2d6d893b0f58130ba9fc21119a1e76cde21f3131504",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/world/__tests__/npc.test.ts",
+      "workingBytes": 9256,
+      "workingSha256": "a097008d45e725bb4eaa03ea00bd1e21ab2369c61abcd848f15728742e5a49d1",
+      "baseBlobSha256": "35048a54398be9c5c5c23ff7405281dbd2cfa720d3a29ae9321c7d93fa0bd789",
+      "p1p22": true
+    },
+    {
+      "file": "packages/core/src/world/__tests__/random.test.ts",
+      "workingBytes": 737,
+      "workingSha256": "4918ea2b09cad86bf0cf04652f2bf88297527bea5aa946b7b80818087e98b232",
+      "baseBlobSha256": "8c3bd36522f457e25c0bab228b1db761f25ca603e15f6afef1df0aae29035406",
+      "p1p22": false
+    },
+    {
+      "file": "packages/core/src/world/__tests__/session.test.ts",
+      "workingBytes": 6387,
+      "workingSha256": "bc5db72c9c8e8982aebb790012fc467f71efa8c9ada029a7b544c883d0d20ec7",
+      "baseBlobSha256": "1fedc8c83d0e32c2b43a2257c13d654dfc08b35389f9a8b6fdb7c2f99e6f60e3",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/character-life-save.test.ts",
+      "workingBytes": 7562,
+      "workingSha256": "432a71a021423e0603dd31a27c358a1e0e1abb9d614822fc4cde00da4fa17877",
+      "baseBlobSha256": "fa30f00563a89a1b805f366d61b6d1f0f0247c7de37d7493c1ac0b83e9f96f62",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/crisis-save.test.ts",
+      "workingBytes": 2287,
+      "workingSha256": "2ae2b6882584a9a9c42520c8fef49db78ec6481c6f31e191a07b7f2b70b99ac6",
+      "baseBlobSha256": "45d2b2b40661820315a270845748b68a51fa2426251d65d112173b46fa0298b5",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v1/life-5-weeks.json",
+      "workingBytes": 14273,
+      "workingSha256": "e70b5bb137846b4b3accc2020d52daabe0d78746934945d7079ff33831f9d921",
+      "baseBlobSha256": "e70b5bb137846b4b3accc2020d52daabe0d78746934945d7079ff33831f9d921",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v1/life-new-game.json",
+      "workingBytes": 14268,
+      "workingSha256": "e30b0c8cc7906d4df134633c07286e3c411bc035a43a245f3668b3914920e333",
+      "baseBlobSha256": "e30b0c8cc7906d4df134633c07286e3c411bc035a43a245f3668b3914920e333",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v1/new-game.json",
+      "workingBytes": 3837,
+      "workingSha256": "ca370a78f79ec75430e415f5a5007f866801c55a1c28ca79ef845713b6a35f9a",
+      "baseBlobSha256": "ca370a78f79ec75430e415f5a5007f866801c55a1c28ca79ef845713b6a35f9a",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v2/life-5-weeks.json",
+      "workingBytes": 19344,
+      "workingSha256": "18a14dd3bc702ebb6e23a1313f18ee933a6dafd10f3c1d72f8a450171ca4f5d7",
+      "baseBlobSha256": "18a14dd3bc702ebb6e23a1313f18ee933a6dafd10f3c1d72f8a450171ca4f5d7",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v2/life-new-game.json",
+      "workingBytes": 19339,
+      "workingSha256": "d3600023571e5073447c2921d75d78b4a9fdc7f2f46f8f59c7ddec54718cca29",
+      "baseBlobSha256": "d3600023571e5073447c2921d75d78b4a9fdc7f2f46f8f59c7ddec54718cca29",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v2/new-game.json",
+      "workingBytes": 8908,
+      "workingSha256": "b058599f7d1b9caa2a33259ae94dd0123c7f6d1012132447e9a675c64801ab21",
+      "baseBlobSha256": "b058599f7d1b9caa2a33259ae94dd0123c7f6d1012132447e9a675c64801ab21",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v3/life-5-weeks.json",
+      "workingBytes": 19430,
+      "workingSha256": "e956e2a52632b94bc3424f1f6bf97a11c27fa5874bb09038f2f6d0e8bad95b66",
+      "baseBlobSha256": "e956e2a52632b94bc3424f1f6bf97a11c27fa5874bb09038f2f6d0e8bad95b66",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v3/life-new-game.json",
+      "workingBytes": 19426,
+      "workingSha256": "90012ab645fea566584dcdebccc9c238381d005f0c59c0a11aad2d16d6ff09f0",
+      "baseBlobSha256": "90012ab645fea566584dcdebccc9c238381d005f0c59c0a11aad2d16d6ff09f0",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v3/new-game.json",
+      "workingBytes": 8995,
+      "workingSha256": "9bc7d7dc0d7613b1ca8b3f291841307bb941537b6a19aef76a5f121b2fa7e5c3",
+      "baseBlobSha256": "9bc7d7dc0d7613b1ca8b3f291841307bb941537b6a19aef76a5f121b2fa7e5c3",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v4/life-5-weeks.json",
+      "workingBytes": 19557,
+      "workingSha256": "71ebc03892b807101874610951d92c6186c88509496b896cb776650ce109fb8e",
+      "baseBlobSha256": "71ebc03892b807101874610951d92c6186c88509496b896cb776650ce109fb8e",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v4/life-demand-card.json",
+      "workingBytes": 19620,
+      "workingSha256": "ad671d6fe321f9fa4f4155c6d5b8b88ebe2aa983d07d23f33c1babc01239c0e9",
+      "baseBlobSha256": "ad671d6fe321f9fa4f4155c6d5b8b88ebe2aa983d07d23f33c1babc01239c0e9",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v4/life-new-game.json",
+      "workingBytes": 19553,
+      "workingSha256": "34a34c214bec38e6f8fa2d2e696432bd3d8387850370477b5d4d3b917e8f3772",
+      "baseBlobSha256": "34a34c214bec38e6f8fa2d2e696432bd3d8387850370477b5d4d3b917e8f3772",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v4/life-rebellion-last-week.json",
+      "workingBytes": 19563,
+      "workingSha256": "2ea365ffbfbafd0cfb0f3cfdddea96a41c456e7b2da04b9776a4c1244e01302e",
+      "baseBlobSha256": "2ea365ffbfbafd0cfb0f3cfdddea96a41c456e7b2da04b9776a4c1244e01302e",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v4/new-game.json",
+      "workingBytes": 9122,
+      "workingSha256": "d4070e55a9faa4b27754d3a6177a2e89d2a97cf8423222e1d53818fcf8498945",
+      "baseBlobSha256": "d4070e55a9faa4b27754d3a6177a2e89d2a97cf8423222e1d53818fcf8498945",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v5/life-5-weeks.json",
+      "workingBytes": 19592,
+      "workingSha256": "a9e2312b7fc305cd7cbf62a0ae5f5fb13dce74626cd6936085b57167ffaa5312",
+      "baseBlobSha256": "a9e2312b7fc305cd7cbf62a0ae5f5fb13dce74626cd6936085b57167ffaa5312",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v5/life-crime-death.json",
+      "workingBytes": 19582,
+      "workingSha256": "8d2afc1d5d52057ab456050399cb7565f696194093840b2dbfeefdf1d2b82a27",
+      "baseBlobSha256": "8d2afc1d5d52057ab456050399cb7565f696194093840b2dbfeefdf1d2b82a27",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v5/life-crime-raid.json",
+      "workingBytes": 19640,
+      "workingSha256": "e999318d66e60d11c219410e8ac90e115f383a7cd875ae85340eddd2dc5b126d",
+      "baseBlobSha256": "e999318d66e60d11c219410e8ac90e115f383a7cd875ae85340eddd2dc5b126d",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v5/life-crime-robbery.json",
+      "workingBytes": 19580,
+      "workingSha256": "f12cace0b43db46aa89bb728c5e0d367a44ee9c815b85906b653b0280e292695",
+      "baseBlobSha256": "f12cace0b43db46aa89bb728c5e0d367a44ee9c815b85906b653b0280e292695",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v5/life-crime-wound.json",
+      "workingBytes": 19581,
+      "workingSha256": "3f8d44a4298f0162d9317bfe14f4f8d9ef43725404cea9ad7980e322fb306cb1",
+      "baseBlobSha256": "3f8d44a4298f0162d9317bfe14f4f8d9ef43725404cea9ad7980e322fb306cb1",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v5/life-demand-card.json",
+      "workingBytes": 19655,
+      "workingSha256": "d3f4916be5d2608a9939d153c28f0efb4dd63debc9788d03a52af92758e7d356",
+      "baseBlobSha256": "d3f4916be5d2608a9939d153c28f0efb4dd63debc9788d03a52af92758e7d356",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v5/life-new-game.json",
+      "workingBytes": 19588,
+      "workingSha256": "22b612309cb6559549be84b9fba11d6a132362b6f4bf0c07507a6d5691f95d5c",
+      "baseBlobSha256": "22b612309cb6559549be84b9fba11d6a132362b6f4bf0c07507a6d5691f95d5c",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v5/life-rebellion-last-week.json",
+      "workingBytes": 19598,
+      "workingSha256": "c4baf215c2186e57c66f503e9168b5a89bb8383d00554187fc2f8c8b80853893",
+      "baseBlobSha256": "c4baf215c2186e57c66f503e9168b5a89bb8383d00554187fc2f8c8b80853893",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v5/new-game.json",
+      "workingBytes": 9153,
+      "workingSha256": "84180362b3376ee3b7bab05ab27821a8b9c701064f1887b64be8c07689751fd4",
+      "baseBlobSha256": "84180362b3376ee3b7bab05ab27821a8b9c701064f1887b64be8c07689751fd4",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-5-weeks.json",
+      "workingBytes": 19664,
+      "workingSha256": "ab1cd918f6627fd2ec315d3fb6c14ecbfbf5c272d63beb953c6fc00d44248ec3",
+      "baseBlobSha256": "ab1cd918f6627fd2ec315d3fb6c14ecbfbf5c272d63beb953c6fc00d44248ec3",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-crime-death.json",
+      "workingBytes": 19654,
+      "workingSha256": "cda6ac17a309ea9d5b726672218dcc7a99f399406a9c67c7d989361409a38a6e",
+      "baseBlobSha256": "cda6ac17a309ea9d5b726672218dcc7a99f399406a9c67c7d989361409a38a6e",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-crime-raid.json",
+      "workingBytes": 19712,
+      "workingSha256": "6319a60e2c89c5fe6aced78606bcd33277ca3674a972af426e829af04b738169",
+      "baseBlobSha256": "6319a60e2c89c5fe6aced78606bcd33277ca3674a972af426e829af04b738169",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-crime-robbery.json",
+      "workingBytes": 19652,
+      "workingSha256": "4e800727152a69105e55b6961dacaa60c4aec5c844eddc21e9f7ac43a00c8346",
+      "baseBlobSha256": "4e800727152a69105e55b6961dacaa60c4aec5c844eddc21e9f7ac43a00c8346",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-crime-wound.json",
+      "workingBytes": 19653,
+      "workingSha256": "649c99969ce3d11c55b582ecb62bd5e7edfdb12d7a25938eeee625c42185859f",
+      "baseBlobSha256": "649c99969ce3d11c55b582ecb62bd5e7edfdb12d7a25938eeee625c42185859f",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-demand-card.json",
+      "workingBytes": 19727,
+      "workingSha256": "5f6cf57321ede5ab4784b9259e13fc5366c8db69402e64fa0381a1892a17a07a",
+      "baseBlobSha256": "5f6cf57321ede5ab4784b9259e13fc5366c8db69402e64fa0381a1892a17a07a",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-laws.json",
+      "workingBytes": 19853,
+      "workingSha256": "890936db4ad74c61740335cba0318ff4b2f1a34812a7bfe1a3648c2e9e438da0",
+      "baseBlobSha256": "890936db4ad74c61740335cba0318ff4b2f1a34812a7bfe1a3648c2e9e438da0",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-new-game.json",
+      "workingBytes": 19660,
+      "workingSha256": "c6ea8ddfa68ddf4bdc0399bcbef297fecca594ef3647010f8304badb5ae48e17",
+      "baseBlobSha256": "c6ea8ddfa68ddf4bdc0399bcbef297fecca594ef3647010f8304badb5ae48e17",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-rebellion-last-week.json",
+      "workingBytes": 19670,
+      "workingSha256": "d12ebf1247eb33e258c8e1dc185decfce4fc18620044f005a1fd3f9f9a87db42",
+      "baseBlobSha256": "d12ebf1247eb33e258c8e1dc185decfce4fc18620044f005a1fd3f9f9a87db42",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v6/new-game.json",
+      "workingBytes": 9225,
+      "workingSha256": "95af9ed81e251471629f8cc31be22984d35a90fa3d3d32bdc2f455a04ccb457a",
+      "baseBlobSha256": "95af9ed81e251471629f8cc31be22984d35a90fa3d3d32bdc2f455a04ccb457a",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-5-weeks.json",
+      "workingBytes": 19664,
+      "workingSha256": "c2417b06c6c65919790a5527c8999a5c5c21baa7caef7310f622568d1db00268",
+      "baseBlobSha256": "c2417b06c6c65919790a5527c8999a5c5c21baa7caef7310f622568d1db00268",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-crime-death.json",
+      "workingBytes": 19654,
+      "workingSha256": "e3a3c0a7f1653b8e91da3918b5aca6d1f07dd6d9f23cf360d94d722485a1441b",
+      "baseBlobSha256": "e3a3c0a7f1653b8e91da3918b5aca6d1f07dd6d9f23cf360d94d722485a1441b",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-crime-raid.json",
+      "workingBytes": 19712,
+      "workingSha256": "cca73d949b19912efe34bf321b487e83a42a20df06d45d548a5a2110069609c2",
+      "baseBlobSha256": "cca73d949b19912efe34bf321b487e83a42a20df06d45d548a5a2110069609c2",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-crime-robbery.json",
+      "workingBytes": 19652,
+      "workingSha256": "b2bac5b3b0dc97ee77070a5ab8f783d4d80f983759be20fe820f1a3ea9d8d3c6",
+      "baseBlobSha256": "b2bac5b3b0dc97ee77070a5ab8f783d4d80f983759be20fe820f1a3ea9d8d3c6",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-crime-wound.json",
+      "workingBytes": 19653,
+      "workingSha256": "74d581b92bdcf4f628463bf0abeea10954d3c8ada3614712fcf2e4f058309bde",
+      "baseBlobSha256": "74d581b92bdcf4f628463bf0abeea10954d3c8ada3614712fcf2e4f058309bde",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-demand-card.json",
+      "workingBytes": 19727,
+      "workingSha256": "b407a7adb81e65d3da918f1166d0d1e7b0a99b97158093fde8b5c8368cc905be",
+      "baseBlobSha256": "b407a7adb81e65d3da918f1166d0d1e7b0a99b97158093fde8b5c8368cc905be",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-laws.json",
+      "workingBytes": 19853,
+      "workingSha256": "6ac7754314bdde02ec86d301d9261bc78efe2e136da66dc9e56318e7dea0a98f",
+      "baseBlobSha256": "6ac7754314bdde02ec86d301d9261bc78efe2e136da66dc9e56318e7dea0a98f",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-new-game.json",
+      "workingBytes": 19660,
+      "workingSha256": "dc3809f5ef80672611b06795ac5b1c630737f536f95c4709b4eb24d65e14962f",
+      "baseBlobSha256": "dc3809f5ef80672611b06795ac5b1c630737f536f95c4709b4eb24d65e14962f",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-rebellion-last-week.json",
+      "workingBytes": 19670,
+      "workingSha256": "0972d6e6847b943a36a35f8b30a1e4d6eb3157749e326c97fb8062819b2c70ed",
+      "baseBlobSha256": "0972d6e6847b943a36a35f8b30a1e4d6eb3157749e326c97fb8062819b2c70ed",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/new-game.json",
+      "workingBytes": 9225,
+      "workingSha256": "b7206e038ef1ca31abaae9a445067718adbd90591bbf283b11093091a6a080c4",
+      "baseBlobSha256": "b7206e038ef1ca31abaae9a445067718adbd90591bbf283b11093091a6a080c4",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-5-weeks.json",
+      "workingBytes": 20257,
+      "workingSha256": "fc1085270a8627604ac467988a9b5f414d29cebfc0b49a04f59b642be908b546",
+      "baseBlobSha256": "fc1085270a8627604ac467988a9b5f414d29cebfc0b49a04f59b642be908b546",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-crime-death.json",
+      "workingBytes": 20218,
+      "workingSha256": "f3e6c6faea46ab7d9e0976c94bede189cd72566091c831112444a9d89e133c97",
+      "baseBlobSha256": "f3e6c6faea46ab7d9e0976c94bede189cd72566091c831112444a9d89e133c97",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-crime-raid.json",
+      "workingBytes": 20276,
+      "workingSha256": "00849b1a7295cc2c842f6c870cda22294807d7f66515bf12b88a2c489a53da27",
+      "baseBlobSha256": "00849b1a7295cc2c842f6c870cda22294807d7f66515bf12b88a2c489a53da27",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-crime-robbery.json",
+      "workingBytes": 20216,
+      "workingSha256": "e7c800b3e8472a2f79a47ab1eb835608ae2f44bfee2a029fb63f695e8af48a38",
+      "baseBlobSha256": "e7c800b3e8472a2f79a47ab1eb835608ae2f44bfee2a029fb63f695e8af48a38",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-crime-wound.json",
+      "workingBytes": 20217,
+      "workingSha256": "191f1f45ad029b9502fe60fe8d65bdf3e42d8f4b156b6ad61f01b5e5bd24a56b",
+      "baseBlobSha256": "191f1f45ad029b9502fe60fe8d65bdf3e42d8f4b156b6ad61f01b5e5bd24a56b",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-demand-card.json",
+      "workingBytes": 20291,
+      "workingSha256": "7a5b3327ab45124201057524f78c3b54610a65b1b2a2f037c44b587f88d249d7",
+      "baseBlobSha256": "7a5b3327ab45124201057524f78c3b54610a65b1b2a2f037c44b587f88d249d7",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-laws.json",
+      "workingBytes": 20454,
+      "workingSha256": "e6ece2312fd7f77d492a31deb683ebe28559f3b65c9939697d7ed67b3fa9b9e6",
+      "baseBlobSha256": "e6ece2312fd7f77d492a31deb683ebe28559f3b65c9939697d7ed67b3fa9b9e6",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-new-game.json",
+      "workingBytes": 20224,
+      "workingSha256": "05e8a903f40fc71b3b8a62b62d80fbe642965abc8299941cfec2db9386be057c",
+      "baseBlobSha256": "05e8a903f40fc71b3b8a62b62d80fbe642965abc8299941cfec2db9386be057c",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-rebellion-last-week.json",
+      "workingBytes": 20234,
+      "workingSha256": "066bfd260b25f7a07a15aafdef89c87a52cb2363de7b43cf39a48ab74f5908a8",
+      "baseBlobSha256": "066bfd260b25f7a07a15aafdef89c87a52cb2363de7b43cf39a48ab74f5908a8",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/new-game.json",
+      "workingBytes": 9788,
+      "workingSha256": "3542e2e0c70ce5d74eb7228926913f1ff9d6e9772f0eb5dd0296ca4de343b4f3",
+      "baseBlobSha256": "3542e2e0c70ce5d74eb7228926913f1ff9d6e9772f0eb5dd0296ca4de343b4f3",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/game-store.test.ts",
+      "workingBytes": 3863,
+      "workingSha256": "a8147bbe3d13ee9a1bea672dc7d119905bb289a8ad7ee2dd98a264f2b362cfd0",
+      "baseBlobSha256": "9b18441c989dd4dc038dac514772a9b1212eba53134f395145c61427b03c262c",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/garrison-fixtures.test.ts",
+      "workingBytes": 426,
+      "workingSha256": "2b853aca569df7517695edffd75ce8f5163f0b0357e207140cb38d3e1fed697d",
+      "baseBlobSha256": "eec65463343ed5cfcef65b456410fe4f161e02e4ac4dfaaffdbfabf03cb36fc5",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/item-owner-import.test.ts",
+      "workingBytes": 2119,
+      "workingSha256": "e9949832c725f9e48c92209d7ad9a0b025ca2b83952f6917b7d53b00b0dcaad7",
+      "baseBlobSha256": "e9949832c725f9e48c92209d7ad9a0b025ca2b83952f6917b7d53b00b0dcaad7",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/item-records.test.ts",
+      "workingBytes": 4789,
+      "workingSha256": "166034883bb6a6d26d71cb1e49df88109c5de232d566c479ee2c6d264bdb91a1",
+      "baseBlobSha256": "166034883bb6a6d26d71cb1e49df88109c5de232d566c479ee2c6d264bdb91a1",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/items-canonical.test.ts",
+      "workingBytes": 2718,
+      "workingSha256": "ad6470605a3c940f9e9a23fba0783d8193758aa12d746f33f2f173f7843fb063",
+      "baseBlobSha256": "ad6470605a3c940f9e9a23fba0783d8193758aa12d746f33f2f173f7843fb063",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/items-rebuild-order.test.ts",
+      "workingBytes": 4991,
+      "workingSha256": "e4726d3478de6eedcd6f7c0d4f54d716b916c74f0fcc5a5dbb329e7de8eed28f",
+      "baseBlobSha256": "e4726d3478de6eedcd6f7c0d4f54d716b916c74f0fcc5a5dbb329e7de8eed28f",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/law-save.test.ts",
+      "workingBytes": 3352,
+      "workingSha256": "0f022066f81befe6f5aab588a201a151edd4ff5ee92cc46c2fcf2648add07ea4",
+      "baseBlobSha256": "0f022066f81befe6f5aab588a201a151edd4ff5ee92cc46c2fcf2648add07ea4",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/session-records.test.ts",
+      "workingBytes": 4312,
+      "workingSha256": "1f0e76fb41a51300aab9355d43e77107365448b43a9057b8a8dc8c83a82830bd",
+      "baseBlobSha256": "1f0e76fb41a51300aab9355d43e77107365448b43a9057b8a8dc8c83a82830bd",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/society-new-game-fixture.test.ts",
+      "workingBytes": 3434,
+      "workingSha256": "5caae0dc159d481222c9bc0f0d32d3268e688dc2ace81be9f8c9cb10bd4d4572",
+      "baseBlobSha256": "148c5a724fe323c4a468d350a3a5bb6ac69a3810a21d72e6792c58915f98525a",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/society-only-save.test.ts",
+      "workingBytes": 95330,
+      "workingSha256": "0a5c0f23f65d2586c8ffc06ede0686db3cc0dd02d6c950c2980f75b01f509115",
+      "baseBlobSha256": "0a5c0f23f65d2586c8ffc06ede0686db3cc0dd02d6c950c2980f75b01f509115",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/society-save.test.ts",
+      "workingBytes": 2711,
+      "workingSha256": "afa8d5cb9bac33c0c40cd8d6539d472841a6cce625558b823fb7e7f0c4a9f6c8",
+      "baseBlobSha256": "afa8d5cb9bac33c0c40cd8d6539d472841a6cce625558b823fb7e7f0c4a9f6c8",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/society-v1-fixture.test.ts",
+      "workingBytes": 1417,
+      "workingSha256": "1b025feac60a18f9e1bc9850edda552250cf352410721bf0cab39f277334b884",
+      "baseBlobSha256": "5fdd582d3e696ed3307923778785cdc3d1276e369c16b67de961ea80b8f79dd6",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/society-v2-fixture.test.ts",
+      "workingBytes": 1639,
+      "workingSha256": "2de437aea768e7a91e9d39a1159da28c1662843f135156e32015529ab10efd25",
+      "baseBlobSha256": "2de437aea768e7a91e9d39a1159da28c1662843f135156e32015529ab10efd25",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/society-v3-fixture.test.ts",
+      "workingBytes": 1664,
+      "workingSha256": "a308da8d9cfb5269c3726d0faca097cc02ce777d77a53aed22942d8e143163e8",
+      "baseBlobSha256": "e9c37fcf51832363ac2108c9c246196748a5b8f6e0e1cbc89d66f0a1367e6a9a",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/society-v4-fixture.test.ts",
+      "workingBytes": 1720,
+      "workingSha256": "fcca2635fe42c648af00622e2465dbf905309d539b5627899fd7d1e39958645c",
+      "baseBlobSha256": "39c2e14dbd6ac7dc6cddbdbdf8872e9d600cab8bac50ea0b42047f2e11ef01b9",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/society-v5-fixture.test.ts",
+      "workingBytes": 1792,
+      "workingSha256": "92edc0bd4f14b515e43f3308bba3136593aae4e756dce1d7b427d5020b1e397e",
+      "baseBlobSha256": "92edc0bd4f14b515e43f3308bba3136593aae4e756dce1d7b427d5020b1e397e",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/society-v6-fixture.test.ts",
+      "workingBytes": 2394,
+      "workingSha256": "c5bce00431394b7b7ad937a3744fa3969feebc0ac22904af0abe96c19da31221",
+      "baseBlobSha256": "28355c54be20855daebc36bb92432ad9b68f430b92bf7bc745bf340a6b8d8363",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/society-v7-fixture.test.ts",
+      "workingBytes": 2394,
+      "workingSha256": "d9d0811bc2c2de826b4180341789aea711716f37700c37754af04b12ee6cff60",
+      "baseBlobSha256": "7a289fbb6aeaa724501b6107492ffb74c95f14f7aee7da50d96ea919988941cd",
+      "p1p22": false
+    },
+    {
+      "file": "packages/persistence/src/__tests__/world-session-save.test.ts",
+      "workingBytes": 7868,
+      "workingSha256": "074fed0998920f4aefc29d8880d31123e9d325faed2bff6dae1d72278870477e",
+      "baseBlobSha256": "1100a9a2705bb47895df465f54646b2c86396dff7d958556206e98d9b25b2bd9",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/authority-refusals.test.ts",
+      "workingBytes": 3743,
+      "workingSha256": "97af15e79976289ac92a269d674fc3884c82607993430e6c17f59e9d6d4a87f8",
+      "baseBlobSha256": "5f2bc80ce36a03191f1d798608bd3f71c00495db2b83a9724e7a82ef6a9625b0",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/catalog-golden.test.ts",
+      "workingBytes": 1537,
+      "workingSha256": "3d9f3ddf7afe0d5993a18021f98a7ab8dc4143f7fcfd6f264f985e28a663547f",
+      "baseBlobSha256": "074d9f44a54b5ada1953736a7e945c58da05931e755ae2f4d97f4a32be0dc592",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/character-life-command.test.ts",
+      "workingBytes": 22261,
+      "workingSha256": "184f75c4ef12a402f6b4aab92be132ae100742acb2cdf7a9af5f36d8dd16ce02",
+      "baseBlobSha256": "26d26c3bd675bf56d38440bea3302d161060674a763e4fa493e13b43ac2c577c",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+      "workingBytes": 23704,
+      "workingSha256": "df75a08190d0ddc7e144bcdb6d7c656708f7dc4d910a6d9e196643dc1dff0261",
+      "baseBlobSha256": "746efb0d807f267bd705fac92a97a4c291bf3b3cebf780b1d01103d5b2a97419",
+      "p1p22": true
+    },
+    {
+      "file": "packages/simulation/src/__tests__/crime-fixtures.test.ts",
+      "workingBytes": 5441,
+      "workingSha256": "20419886fa3597793b6779b737f6d50a3145d01a011260866cf315f39c5775a8",
+      "baseBlobSha256": "491762658c756986be74c3d72cb6c37aefa4f3cb462526676f2efe3f653058db",
+      "p1p22": true
+    },
+    {
+      "file": "packages/simulation/src/__tests__/crime-week.test.ts",
+      "workingBytes": 4874,
+      "workingSha256": "b4cd9e452ab082d9cbde6203985265af98fd71dcf0f46a9935c39e76e3f0bb99",
+      "baseBlobSha256": "28a6ae031e1fa877ea60c41049876b5fcb11ab295abd7381250b5ce17a442e81",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/crisis-commands.test.ts",
+      "workingBytes": 6525,
+      "workingSha256": "9eb41c60cf19e961f777c6a242a939c761c85bf11d6c7707b6abfa1efed12c6f",
+      "baseBlobSha256": "52c10c0c0e1f1971165b6a39505978eeb90650b0bd3cf5a641fe369463065d12",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/crisis-fixtures.test.ts",
+      "workingBytes": 1655,
+      "workingSha256": "4e42caa9c6b728e5de572022a169230f7dd63feec4292e6466e055ec1a2f7405",
+      "baseBlobSha256": "9823b92a87d53a0c5545d514a3ccd08bae853c8ed9102eeb980da8bd3603a3f9",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/crisis-week.test.ts",
+      "workingBytes": 4512,
+      "workingSha256": "18de12d87db050e5fd46241cb442b130638a74635ca091d0df9004b131baebae",
+      "baseBlobSha256": "38fb881cc7c927d2602f68050f1ae0f99759777fd510bdcf686a46570618b11a",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+      "workingBytes": 75463,
+      "workingSha256": "b7c987c55aff0975964a26b512f8bdaaa850fed8becb1f278b83543d28706675",
+      "baseBlobSha256": "b7c987c55aff0975964a26b512f8bdaaa850fed8becb1f278b83543d28706675",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/garrison-week.test.ts",
+      "workingBytes": 4144,
+      "workingSha256": "f26f6f0bf9b73ea330e8f49436a2d6494599a5544c50a869de9027751a1ad737",
+      "baseBlobSha256": "07202b4aef5f53d602a92f2201c28876dfd1f3adff0a07034b18ebdb3b8f5ca8",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/item-command.test.ts",
+      "workingBytes": 8211,
+      "workingSha256": "0674f45632f93e013abef4ea4888b40c261a9ceaea80ab94e41d4f4046a9b828",
+      "baseBlobSha256": "0674f45632f93e013abef4ea4888b40c261a9ceaea80ab94e41d4f4046a9b828",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/item-effects.test.ts",
+      "workingBytes": 10614,
+      "workingSha256": "5f37eded22f4701db48ac4894d3e7db8894d5e7f9734e48eee20ce039bbc0a8c",
+      "baseBlobSha256": "5f37eded22f4701db48ac4894d3e7db8894d5e7f9734e48eee20ce039bbc0a8c",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/items-week.test.ts",
+      "workingBytes": 9292,
+      "workingSha256": "211dd4b3bd214b3e4c6d33bbd62b856604d3a662c8168dcc534640fcf2875f1b",
+      "baseBlobSha256": "211dd4b3bd214b3e4c6d33bbd62b856604d3a662c8168dcc534640fcf2875f1b",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/law-command.test.ts",
+      "workingBytes": 6259,
+      "workingSha256": "227215de0d1d9197c0e49178a3e1ffe5a30962eaebbd31e01804acfee25f50dd",
+      "baseBlobSha256": "339fc63b041fa144e33543d8b87d6d3c65b86639373d239ae5f9db593ddec678",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/law-fixture.test.ts",
+      "workingBytes": 3478,
+      "workingSha256": "edab685a94a09651876c17f5945b551f973caddb9e32f23f26828fcbc23e1791",
+      "baseBlobSha256": "326e9364a1123670feb4bfc21b3447f00ebabfee84a847730ea0476a7749a5a3",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/law-week.test.ts",
+      "workingBytes": 7673,
+      "workingSha256": "843af4e92c02f2c89cd0545dca342e10adfa7bc295516f5b658d65e00f111547",
+      "baseBlobSha256": "a40e6ea482df25ede5dd8e4eada0d595577e719278d3c28cde7381bfc14c835c",
+      "p1p22": true
+    },
+    {
+      "file": "packages/simulation/src/__tests__/lord-health.test.ts",
+      "workingBytes": 6950,
+      "workingSha256": "7ce2caedf8fdb1ba05277309821282f2cdc5f10760ee16d7b276376c03c006a2",
+      "baseBlobSha256": "7ce2caedf8fdb1ba05277309821282f2cdc5f10760ee16d7b276376c03c006a2",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/order-commands.test.ts",
+      "workingBytes": 12982,
+      "workingSha256": "46bce595300c9ef418db06feb347621b8787bf5719a9648d7dbf628cbebd1205",
+      "baseBlobSha256": "bf276f91d49e24afb28788a687dbfebd859b3ead41179a9416b6d00c2d502e9f",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/order-tax-week.test.ts",
+      "workingBytes": 3685,
+      "workingSha256": "9b6e2b1838881f865426c409c4197db72ef0f19956bc49747d02a788271149dd",
+      "baseBlobSha256": "5c03ac4dc2e4867a8a956e8687b6eb877f84b324a42cf2de6d8dbc1c9524b8eb",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/order-week.test.ts",
+      "workingBytes": 12826,
+      "workingSha256": "99e6c0a82910563d3fe1e57f7ae4993e7b355e6aedbbcfb230fe948994a9162f",
+      "baseBlobSha256": "7653fe3ffab6aee3fe3e6b413ae987a1ab715ec984e4b51541b7442c85f53661",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/outside-commands.test.ts",
+      "workingBytes": 12028,
+      "workingSha256": "3e4953afb38226c62660afea85990c3799d9bd94167622cef2059a6ab7a48ab0",
+      "baseBlobSha256": "be7d6cd78cad98985214ebe14cbcd181fa8a788fe04026f2cbc3e7e39bae9330",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/outside-session.test.ts",
+      "workingBytes": 1981,
+      "workingSha256": "689cf7a9d9c674ca6f340070fea6702b1c3b2bace44f35d7f2065e400c08b89d",
+      "baseBlobSha256": "2ec480e1e764554aaec61e49d42abc55b4ecc8d58e030aa5a44d6ab7faa93332",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/outside-week.test.ts",
+      "workingBytes": 9648,
+      "workingSha256": "e903d30d39c9a622c0e078fd80262d4590ffb96e154afac95369860e7b96f3cb",
+      "baseBlobSha256": "e903d30d39c9a622c0e078fd80262d4590ffb96e154afac95369860e7b96f3cb",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-command-transaction.test.ts",
+      "workingBytes": 11120,
+      "workingSha256": "92fe92326bfd24411cec987b2d4d9df21ce9d1f2e810becdd919519756905789",
+      "baseBlobSha256": "7efa4695bf4529bb713df193166d5b9f5574634ecfdd85575969d1e4b68d3cee",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-end-week.test.ts",
+      "workingBytes": 7962,
+      "workingSha256": "e4d83232eab225dd33446aca2179e1f9b6b6c757cc0021c62706a1cf2e620630",
+      "baseBlobSha256": "40dbb24a1265c7f4673c90b3e0bc78ea6aef4c0566455126dd260e19be7e3eaf",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-facilities.test.ts",
+      "workingBytes": 1467,
+      "workingSha256": "b9d21eb09216e444c5a2c5bf7110cdda6a795fc87520d97f185c401c0e248270",
+      "baseBlobSha256": "0e3edabf2e4b4353437256d2a3175843cac1af9ea74b41ae4b4e7209ed17a691",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-factory-determinism.test.ts",
+      "workingBytes": 1086,
+      "workingSha256": "e5b935d1c9b6366f94629800e6399f9d6b3fe0467d021cda6e4b6e350852bcc2",
+      "baseBlobSha256": "78eae2e0263e45270936f09b37d435d1bdf3b480c86d245259abb5f28e87edc8",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-guard.test.ts",
+      "workingBytes": 2828,
+      "workingSha256": "fa79995ca02ff365f3f48eb9fcfe2fd81138e74360635e67d9cf0bdec23a25b3",
+      "baseBlobSha256": "68f32aeeacea055e05a313c5db52a94f4dbd29f9c7d4e7d0a0a129ab32f01c2c",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-immigration-integrity.test.ts",
+      "workingBytes": 3518,
+      "workingSha256": "2d669a53586f1787b583a38491ae89419a88ba131471c0cbd9c06b58f3953b4c",
+      "baseBlobSha256": "2d669a53586f1787b583a38491ae89419a88ba131471c0cbd9c06b58f3953b4c",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-life.test.ts",
+      "workingBytes": 3164,
+      "workingSha256": "7df467383e1db09f0a2e2504bba86d3da9ba3670bf8b2131e54445cb2af49dba",
+      "baseBlobSha256": "7df467383e1db09f0a2e2504bba86d3da9ba3670bf8b2131e54445cb2af49dba",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-plots.test.ts",
+      "workingBytes": 8662,
+      "workingSha256": "3b7066d9f75f34c417a6cc2cd0a803f0012317d103f279737c3fd2190eacee95",
+      "baseBlobSha256": "cc154e292f9dbab1ea5487e4303ad9d89d01d552620126c430a7b96965b5e130",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-renewable-support.test.ts",
+      "workingBytes": 14532,
+      "workingSha256": "aa71d335f60fce02ba4429b87beff87096b9b941d3e3d701135b8865bb1a4f41",
+      "baseBlobSha256": "f01dd89818375143d16c60de167ad48e34776f6947a21defdcb697e51cee3baa",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-restore-integrity.test.ts",
+      "workingBytes": 3223,
+      "workingSha256": "c9f38e9389021c2aae38715df57a3efddfc99c36d1855f7b4c9f969854c0acc5",
+      "baseBlobSha256": "c9f38e9389021c2aae38715df57a3efddfc99c36d1855f7b4c9f969854c0acc5",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-run-fixture.test.ts",
+      "workingBytes": 1979,
+      "workingSha256": "4b4329fc37537baaf379ea2bd2e55c8567702297915a145d203b1744f57a5899",
+      "baseBlobSha256": "551af71a1accb5012071e0f75880c13f4705764b55bb9a9b991d5afd6947447c",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-stock-integrity.test.ts",
+      "workingBytes": 12718,
+      "workingSha256": "eeae7b1f2fab8d095ff9e8502f7785056912cd0ccc4a1599007ed8dac0735731",
+      "baseBlobSha256": "a5e522abdc48729449f2f82c238c401932fda54870b8930136445f2b92b88afb",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-stock-policy-ports.test.ts",
+      "workingBytes": 10305,
+      "workingSha256": "9b5329b8811865fe0fdd85996286e272e2863e0688a2e9e86d0724290ce7758b",
+      "baseBlobSha256": "fe9d4ba57808820ff20cb1b0cd197430a7e76e8d5d17370d2854033dc165417a",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-week.test.ts",
+      "workingBytes": 12843,
+      "workingSha256": "de609bdb7efe42dae45c09fcd8c82a7ddd766f72a465a2814d3ce5c0c643b19e",
+      "baseBlobSha256": "f4b9bdaf0d7b07fd0a45d5bc836a19776185848b9328ca87b23fdc183455808f",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/tile-trial.test.ts",
+      "workingBytes": 3262,
+      "workingSha256": "6226da814fa482af8005a4f45dec7d10902bd82bcaecf7495a05052517503ee9",
+      "baseBlobSha256": "052b8bc61c3075d9d358b5122bbfc5cb76ab9869f25e504f0925e2dee6459710",
+      "p1p22": false
+    },
+    {
+      "file": "packages/simulation/src/__tests__/world-npc.test.ts",
+      "workingBytes": 11892,
+      "workingSha256": "7065d3d0f63346f6d9a953912c5cf52f6c330e40ec7b48b903b3488e74b0441e",
+      "baseBlobSha256": "cc48153cb6a0d805e3401c6871175b269a0bfefe0661c4c07329784ee96a9ef8",
+      "p1p22": false
+    },
+    {
+      "file": "packages/ui/src/__tests__/character-life-session.test.ts",
+      "workingBytes": 70562,
+      "workingSha256": "dea93ee40d15ba692c1a5eeaff7e8c372389fec18d7efef7c18181a2566ecd69",
+      "baseBlobSha256": "dea93ee40d15ba692c1a5eeaff7e8c372389fec18d7efef7c18181a2566ecd69",
+      "p1p22": false
+    },
+    {
+      "file": "packages/ui/src/__tests__/clearing-workers.test.ts",
+      "workingBytes": 1424,
+      "workingSha256": "eaeaae0d0a8c77754c0cfaa1b757d7b96f7f460df9bac0047030bd4fd0031ca3",
+      "baseBlobSha256": "9d145a154c523c91a005408ad5da2777a766534179c723397a9b5bb1dc42abb5",
+      "p1p22": false
+    },
+    {
+      "file": "packages/ui/src/__tests__/crime-view.test.ts",
+      "workingBytes": 2721,
+      "workingSha256": "a80a7d751d1b6e22ca82063eddf9c422d6a3cdf61dfdcd83bebb36b3825a9b71",
+      "baseBlobSha256": "0d80be148b7d340e8d368627303501a36668ca1e717d9c7e0579d13976d5dc16",
+      "p1p22": false
+    },
+    {
+      "file": "packages/ui/src/__tests__/crisis-checkpoint.test.ts",
+      "workingBytes": 2002,
+      "workingSha256": "2363bfdeb8d81bcb8d162a065e01b6d8277e7617b285e1ca19c14e7647553ea7",
+      "baseBlobSha256": "2363bfdeb8d81bcb8d162a065e01b6d8277e7617b285e1ca19c14e7647553ea7",
+      "p1p22": false
+    },
+    {
+      "file": "packages/ui/src/__tests__/crisis-view.test.ts",
+      "workingBytes": 2738,
+      "workingSha256": "064855c1f1ed0f788d5898730e02919fe41c6ce9f5e10f6ded7e2c1feeaa8da6",
+      "baseBlobSha256": "f490dc7d4762d626b5abaf98bc89e71b8ac328074979ef8530e82f3444ce4eee",
+      "p1p22": false
+    },
+    {
+      "file": "packages/ui/src/__tests__/data-inspector.test.ts",
+      "workingBytes": 9153,
+      "workingSha256": "a5627408fd9dcd417e0c2ffc923620adb94f616d6ed19c96878973cf83b47be8",
+      "baseBlobSha256": "d07c40a02fd65dd89fdab8f8fa682031b9426fa96c8ca820fe3b614ba9a45d34",
+      "p1p22": false
+    },
+    {
+      "file": "packages/ui/src/__tests__/error-log.test.ts",
+      "workingBytes": 10849,
+      "workingSha256": "b89f845f53d222706581925144b95782aa6dd81e595beecefbb5c3c124ce1842",
+      "baseBlobSha256": "cb7af1b9d9ff36c23c1b1512dcd09db43b523921b782a1b576c0f78e0b1f5c4a",
+      "p1p22": false
+    },
+    {
+      "file": "packages/ui/src/__tests__/garrison-view.test.ts",
+      "workingBytes": 1586,
+      "workingSha256": "cc41b3176976ba752456478db8133711db06c48d8f87b120729edabb2a3b7ac0",
+      "baseBlobSha256": "a00d3ca5440d2ec4fc740a3a78c5d88312d97fc66ff7e3dfc869ca80d0d189b7",
+      "p1p22": false
+    },
+    {
+      "file": "packages/ui/src/__tests__/inspector-build.test.ts",
+      "workingBytes": 2353,
+      "workingSha256": "33fb151097980d4da04d10a88d8e1e375697fbd1d15b32c6e77d85f12fb93ad8",
+      "baseBlobSha256": "bfbb43397aa093973ad0cc4ff21636bcea894d38c12216611c7523b5dcd1e9af",
+      "p1p22": false
+    },
+    {
+      "file": "packages/ui/src/__tests__/law-view.test.ts",
+      "workingBytes": 2576,
+      "workingSha256": "a31a47938e7c383c34b1727f91353085f2971f4641b1c178d2b67fdf16183219",
+      "baseBlobSha256": "16801cb824488ab174232f9d2ae35b5b6d5d72e1dbb4bc3ffb27e5ca765669f5",
+      "p1p22": false
+    },
+    {
+      "file": "packages/ui/src/__tests__/ledger-contrast.test.ts",
+      "workingBytes": 1296,
+      "workingSha256": "dbdd01d5939982d09b246c51aeefba5b48ce7af494885652f61fd84eae45b3d6",
+      "baseBlobSha256": "bf2f206adbb06f4354d94ff8940ccd2045d822bb7303df01fab818f346560b04",
+      "p1p22": false
+    },
+    {
+      "file": "packages/ui/src/__tests__/life-calendar.test.ts",
+      "workingBytes": 715,
+      "workingSha256": "5e476a2d593b96c7e261a74104b3df67c65ab78519777f6d73c650ff8397798f",
+      "baseBlobSha256": "487733dfd20ddeb80f42a16495c2be641b2386fd569c43dd3d038661663845a7",
+      "p1p22": false
+    },
+    {
+      "file": "packages/ui/src/__tests__/milli-format.test.ts",
+      "workingBytes": 2084,
+      "workingSha256": "80209060455da2a431c7d5d4eac8e9f82189fdb09e5e666d23976948c4ae04b5",
+      "baseBlobSha256": "2b8dc43d5c2bb0ee3f151f425475295a816335e64bd1eac19511be6fa715e2bd",
+      "p1p22": false
+    },
+    {
+      "file": "packages/ui/src/__tests__/options.test.ts",
+      "workingBytes": 1411,
+      "workingSha256": "9dd8c865a54bc0743d8a92384b7d9691b007ebe1a79d1e1e088473f5ad8f24ff",
+      "baseBlobSha256": "2c61b6ec86c33784fd914c9b8639ddcf987b5b35898bd4618d8fb6ad1ab91f4a",
+      "p1p22": false
+    },
+    {
+      "file": "packages/ui/src/__tests__/outside-view.test.ts",
+      "workingBytes": 2691,
+      "workingSha256": "826adb982d637c52289964fd470dfb52a806536e5bd8f57c6cda82bafffbd1c6",
+      "baseBlobSha256": "84075ef53204f5a8c140e1fd4f56e59fdfbc65c67c59d805aef926aa7edf74a3",
+      "p1p22": false
+    },
+    {
+      "file": "packages/ui/src/__tests__/platform.test.ts",
+      "workingBytes": 676,
+      "workingSha256": "a5d81cfe8fb36799d2d3d70176ccbe0569c3dcee75fddc0d7ff5bf6849085e48",
+      "baseBlobSha256": "f678d825f6267654a1c1f078b04ea04d7c674f18b653d351a071fc94a94e5e63",
+      "p1p22": false
+    },
+    {
+      "file": "packages/ui/src/__tests__/report-letters.test.ts",
+      "workingBytes": 34096,
+      "workingSha256": "a750fcaffd89a22aa1981c9aa4f15b3273b332fc180623d8904d311abd259798",
+      "baseBlobSha256": "ac70e4cd2d7cfaa00515d53b0c7112ca40697abad5b9f4ed5982f202ee3c7336",
+      "p1p22": true
+    },
+    {
+      "file": "packages/ui/src/__tests__/society-view.test.ts",
+      "workingBytes": 4971,
+      "workingSha256": "509cdf25f262f6c016e00aa0208c5d48006a5e507a88b93b887888ed3d9a665f",
+      "baseBlobSha256": "2cf88cad4ad63fdbfe4273c1c896b9a027a1bb82429dfd17093f8f6c14897628",
+      "p1p22": false
+    },
+    {
+      "file": "packages/ui/src/__tests__/version.test.ts",
+      "workingBytes": 187,
+      "workingSha256": "ed28e28f2a8f50d062974a7ea4beb3cf25857771b44bfe38e5da4897a3556e22",
+      "baseBlobSha256": "05f276b274230abdd291fa544fe8260ca5d585cb42885ae13e570715e780d2e9",
+      "p1p22": false
+    },
+    {
+      "file": "packages/ui/src/__tests__/worker-input.test.ts",
+      "workingBytes": 740,
+      "workingSha256": "2902da7c2b451154599f91c45c6178a0a39eaccf3a19c9aadc4be620a7c02795",
+      "baseBlobSha256": "ecd331933f267ca7db099b0b32ba341bb7413c9ff49567f9f0e32dfce5294015",
+      "p1p22": false
+    },
+    {
+      "file": "packages/ui/src/__tests__/world-npc-session.test.ts",
+      "workingBytes": 2586,
+      "workingSha256": "bc2d5c7ff861adc812fc021b8d797bc9785d912473b3a2445e9a09ac645ab315",
+      "baseBlobSha256": "d5b8d38e11cb8ae1acec6eed725046881c296279b897e577364ff5e117253b70",
+      "p1p22": false
+    },
+    {
+      "file": "packages/ui/src/__tests__/world-session.test.ts",
+      "workingBytes": 8312,
+      "workingSha256": "b86d27e8eaf64406c2315387a5ca21b826057d9abc0276f96af7621b38937467",
+      "baseBlobSha256": "da0f9fca47d04f8a7f82d67ef7fa82486ad3d9d7c852102b7ceebd0758837c11",
+      "p1p22": false
+    },
+    {
+      "file": "packages/ui/src/__tests__/wounds-end-copy.test.ts",
+      "workingBytes": 250,
+      "workingSha256": "5e4827012095c758313b705e6dabc78029a3bdfd1fee70557cd6b2abaa18e5f4",
+      "baseBlobSha256": "5e4827012095c758313b705e6dabc78029a3bdfd1fee70557cd6b2abaa18e5f4",
+      "p1p22": false
+    },
+    {
+      "file": "tests/e2e/autosave.spec.ts",
+      "workingBytes": 4355,
+      "workingSha256": "61067251f0f915497fc48e4c7f54e975da0af84c2b814b40fd9ffff95d118ce0",
+      "baseBlobSha256": "066bd8d1185d59239f6ace49b514cd9df7c785af2804b19425814cb536775225",
+      "p1p22": false
+    },
+    {
+      "file": "tests/e2e/character-life-boundary.spec.ts",
+      "workingBytes": 22672,
+      "workingSha256": "9fe07eff3fee62a1ab63485c97c0c9fabf4009fdedf03272df1d17fbb198622c",
+      "baseBlobSha256": "9fe07eff3fee62a1ab63485c97c0c9fabf4009fdedf03272df1d17fbb198622c",
+      "p1p22": true
+    },
+    {
+      "file": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+      "workingBytes": 31354,
+      "workingSha256": "588cc6dd3eb3a1598a8a9c3983c28abf63c5485a0bc9f31319d6021c7cfd6c4f",
+      "baseBlobSha256": "27469bfdce2d87527523d3403a2db7b6b47753c62002df2e78e7995e4ad298f2",
+      "p1p22": false
+    },
+    {
+      "file": "tests/e2e/character-life-navigation.helpers.ts",
+      "workingBytes": 36125,
+      "workingSha256": "850297e35016a5bcd7e1eb1d6114cdc0070ea4aff19512354223639845a74335",
+      "baseBlobSha256": "850297e35016a5bcd7e1eb1d6114cdc0070ea4aff19512354223639845a74335",
+      "p1p22": true
+    },
+    {
+      "file": "tests/e2e/character-life-navigation.spec.ts",
+      "workingBytes": 106534,
+      "workingSha256": "ca9eaa6dd9de1e42f43a28742cc0452b2ab113efeca61c6819de9d0b9d8ee304",
+      "baseBlobSha256": "df982f62ea807f2355773af3d8699bb502e4702c26ddc55d1b4626f1a78e86aa",
+      "p1p22": true
+    },
+    {
+      "file": "tests/e2e/character-life.spec.ts",
+      "workingBytes": 35479,
+      "workingSha256": "a0bd5edc9b06c8e6054cb72e41d39da866e6e54f029abb8aabd6491a195105ca",
+      "baseBlobSha256": "bc7807a9ac35ea2882dfa8b224a00ed88d28b042e3be24ff3de0ea4f7f9f78f5",
+      "p1p22": false
+    },
+    {
+      "file": "tests/e2e/crime.spec.ts",
+      "workingBytes": 5405,
+      "workingSha256": "9306e3531cae32a31219f1aba130a96ab87b5d1e37308359a17f279a4ef6b87c",
+      "baseBlobSha256": "9306e3531cae32a31219f1aba130a96ab87b5d1e37308359a17f279a4ef6b87c",
+      "p1p22": true
+    },
+    {
+      "file": "tests/e2e/crisis.spec.ts",
+      "workingBytes": 8963,
+      "workingSha256": "858125831beb5f096b9a4dde33b6e2f01820d47e814a212bc05be5c7714fc29a",
+      "baseBlobSha256": "858125831beb5f096b9a4dde33b6e2f01820d47e814a212bc05be5c7714fc29a",
+      "p1p22": false
+    },
+    {
+      "file": "tests/e2e/error-log.spec.ts",
+      "workingBytes": 17014,
+      "workingSha256": "3d556b04f7525c1ec8e88d6aa6357796668c9d3f39dd640949e4853a1060f2dd",
+      "baseBlobSha256": "1f67ed538311781c19524ec8a9b290648e003bed28e204dca02e788770553877",
+      "p1p22": false
+    },
+    {
+      "file": "tests/e2e/garrison.spec.ts",
+      "workingBytes": 4244,
+      "workingSha256": "fe91eda105d44a8e5a128829fb3103f28e69c9d0f9a7ee3b222d4dd01f93e552",
+      "baseBlobSha256": "fe91eda105d44a8e5a128829fb3103f28e69c9d0f9a7ee3b222d4dd01f93e552",
+      "p1p22": false
+    },
+    {
+      "file": "tests/e2e/goods-stock.spec.ts",
+      "workingBytes": 3038,
+      "workingSha256": "bdf8013b7012545bbd927c9dc476160e20fdddca5c41a458f0b6b54a5d1e62bf",
+      "baseBlobSha256": "bdf8013b7012545bbd927c9dc476160e20fdddca5c41a458f0b6b54a5d1e62bf",
+      "p1p22": false
+    },
+    {
+      "file": "tests/e2e/laws.spec.ts",
+      "workingBytes": 6209,
+      "workingSha256": "c861c00e45f2cf03d549e422fa1fbdc3871ef4c68a212caa3b7b65a4863ee218",
+      "baseBlobSha256": "c861c00e45f2cf03d549e422fa1fbdc3871ef4c68a212caa3b7b65a4863ee218",
+      "p1p22": false
+    },
+    {
+      "file": "tests/e2e/ledger.spec.ts",
+      "workingBytes": 12324,
+      "workingSha256": "e845524ab658a3a7717bf41b8908665cde3cfd2d1beef655f0f44b2b4a029ae2",
+      "baseBlobSha256": "e845524ab658a3a7717bf41b8908665cde3cfd2d1beef655f0f44b2b4a029ae2",
+      "p1p22": false
+    },
+    {
+      "file": "tests/e2e/order.spec.ts",
+      "workingBytes": 4157,
+      "workingSha256": "db96f99555a8e31dc675d0c669f1a277173ea0048df793894d557e2737bfcaff",
+      "baseBlobSha256": "db96f99555a8e31dc675d0c669f1a277173ea0048df793894d557e2737bfcaff",
+      "p1p22": false
+    },
+    {
+      "file": "tests/e2e/outside.spec.ts",
+      "workingBytes": 12318,
+      "workingSha256": "091a67e3012bc8cddff58a19dc7da587aa65057abda561ec9d2859a96ff2e798",
+      "baseBlobSha256": "091a67e3012bc8cddff58a19dc7da587aa65057abda561ec9d2859a96ff2e798",
+      "p1p22": false
+    },
+    {
+      "file": "tests/e2e/smoke.spec.ts",
+      "workingBytes": 3296,
+      "workingSha256": "87d1e2df2db9b457237f3fe6b348de52ea55631ff866dfed5bb3a0c330764a75",
+      "baseBlobSha256": "9d53182678a5b3ec3dfa6edea537ef48ea8f93b056a44d7096bf491e4279e1df",
+      "p1p22": false
+    },
+    {
+      "file": "tests/e2e/society-command.helpers.ts",
+      "workingBytes": 3144,
+      "workingSha256": "8801d840501bb72c2d1d1ece01c726286d5e794832ab624c563f49a1991ba953",
+      "baseBlobSha256": "c5209710dddbbf8b51794f6bd59c7a6f4366aed99b95a2a29a8762c5bf0a20d8",
+      "p1p22": false
+    },
+    {
+      "file": "tests/e2e/society.spec.ts",
+      "workingBytes": 39168,
+      "workingSha256": "e86468cc6b82330ddb70dd752ea851af6f12cde1f2de9845618eccce3d65f91c",
+      "baseBlobSha256": "e86468cc6b82330ddb70dd752ea851af6f12cde1f2de9845618eccce3d65f91c",
+      "p1p22": false
+    },
+    {
+      "file": "tests/e2e/storage.helpers.ts",
+      "workingBytes": 6692,
+      "workingSha256": "a295bf1e6cc982cdf146179d0a1a7a1ae5edd6b160494638d6ccbbcbdeef740c",
+      "baseBlobSha256": "a295bf1e6cc982cdf146179d0a1a7a1ae5edd6b160494638d6ccbbcbdeef740c",
+      "p1p22": false
+    },
+    {
+      "file": "tests/e2e/storage.spec.ts",
+      "workingBytes": 21322,
+      "workingSha256": "a72e80424c7d676e39833a90a745664bd974fc66c8b173643450f1dc046741bd",
+      "baseBlobSha256": "a72e80424c7d676e39833a90a745664bd974fc66c8b173643450f1dc046741bd",
+      "p1p22": false
+    },
+    {
+      "file": "tests/e2e/tile-feedback-precision.spec.ts",
+      "workingBytes": 9585,
+      "workingSha256": "228cb601faada7db25bcf9b53ffb174711b0acfe38765dc9c37916b502a07490",
+      "baseBlobSha256": "228cb601faada7db25bcf9b53ffb174711b0acfe38765dc9c37916b502a07490",
+      "p1p22": false
+    },
+    {
+      "file": "tests/e2e/tile-local-checkpoint.spec.ts",
+      "workingBytes": 14445,
+      "workingSha256": "b32ff1c854274ce437219a457bb7e6bd3d7ac32feaf2b9b21298c4a8f43f14ae",
+      "baseBlobSha256": "1a3ecfd124b471fc77fa729a240dbc1e6296213ba2efdfadc692d0d983550b39",
+      "p1p22": false
+    },
+    {
+      "file": "tests/e2e/tile-population.spec.ts",
+      "workingBytes": 32432,
+      "workingSha256": "920467af91a469180d99874d060b40c2f14f53489c4b42abeaa9fd00d03dff02",
+      "baseBlobSha256": "668402726be0cb0213d5388ad8678826b16f8e04e487e3fbe6d8d5ef28c981ee",
+      "p1p22": false
+    },
+    {
+      "file": "tests/e2e/tile-save.spec.ts",
+      "workingBytes": 7260,
+      "workingSha256": "24cc90f973f3d927dfc799470d1fc30f75b1efc60396d7d63f27c2b6e6e73c89",
+      "baseBlobSha256": "31edeb2886c34f40380607a11645364307c0d9ef421674d546d3abf2bfcc69d3",
+      "p1p22": false
+    },
+    {
+      "file": "tests/e2e/tile-trial.spec.ts",
+      "workingBytes": 6703,
+      "workingSha256": "4a34ad0ef3d94c074710b9284420896491d71dbb923748e99bd7c28f6c4ecdf3",
+      "baseBlobSha256": "b389b04ab1f2a6720c9a8a6b97e84945cb09bef6f605108d463867cc14d8c2f3",
+      "p1p22": false
+    },
+    {
+      "file": "tests/e2e/tile-workforce.spec.ts",
+      "workingBytes": 7874,
+      "workingSha256": "aaac582cf86d1d92ca7ecbc66303adbb47d76a5b2b57552d846c9309ea308027",
+      "baseBlobSha256": "cd104deb7a717e654d5d1eda3046cfad2440873c8a3cfba8170863c3796b2780",
+      "p1p22": false
+    },
+    {
+      "file": "tests/e2e/title.spec.ts",
+      "workingBytes": 22879,
+      "workingSha256": "0a21523af28cae48175788770eef4bd1cec33adc34ab040e322ff476048d06b7",
+      "baseBlobSha256": "86211d0a71c5530ea333cf5915e686ff310fe562fbae89d0922087d9a75e0f6d",
+      "p1p22": false
+    },
+    {
+      "file": "tests/e2e/workforce-draft-error.spec.ts",
+      "workingBytes": 5022,
+      "workingSha256": "2be73ac69b9361470a61224881cb40fa8ea81db3221e78f0f08d4d88e3ebe006",
+      "baseBlobSha256": "e02ea2b7e3cb6d65ab889c82c4b14c62773fe18f9dac1b708b82244762932be2",
+      "p1p22": false
+    },
+    {
+      "file": "tests/e2e/world-npc-session.spec.ts",
+      "workingBytes": 18759,
+      "workingSha256": "bda786f1ddadb5eed65271e8d657d8b2f5d73256aa99a705c67972bb96239494",
+      "baseBlobSha256": "68492ed6bd294503f2c1456aa5098fe74f46b91b9c78ab3ea891429593481e88",
+      "p1p22": true
+    },
+    {
+      "file": "tests/e2e/world-session.spec.ts",
+      "workingBytes": 41978,
+      "workingSha256": "2f04a7b7a8b075991276892354ff14e2b1678efc6c8dcf73401d768421746f49",
+      "baseBlobSha256": "7206302022b4c7cbc75f9be26f8679b9d9da0f73363ed2dca0700177264c695e",
+      "p1p22": false
+    }
+  ]
+}
