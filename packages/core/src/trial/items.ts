@@ -56,12 +56,13 @@ export const isWearable=(d:ItemDefinition):boolean=>['equipment','accessory','ou
 export const isOpenItemSlot=(slot:unknown):slot is Slot=>['weapon','earrings','necklace','ring','hand','top','bottom','shoes','set'].includes(slot as string);
 const count=(v:unknown):v is number=>Number.isSafeInteger(v)&&(v as number)>=0;
 const plain=(v:unknown):v is Record<string,unknown>=>!!v&&typeof v==='object'&&hasWeeklyKeys(v,Object.keys(v));
+const orderedKeys=(v:unknown,keys:readonly string[]):v is Record<string,unknown>=>hasWeeklyKeys(v,keys)&&Object.keys(v).every((key,i)=>key===keys[i]);
 export function isItemsState(raw:unknown,characterIds:readonly string[]):raw is ItemsState {
   try {
-    if(!hasWeeklyKeys(raw,['nextItemId','inventory','consumables','materials','storage','equipped','market','goals'])||!count(raw.nextItemId)||raw.nextItemId<1)return false;
+    if(!orderedKeys(raw,['nextItemId','inventory','consumables','materials','storage','equipped','market','goals'])||!count(raw.nextItemId)||raw.nextItemId<1)return false;
     const nextItemId=raw.nextItemId,ids=new Set<number>();
     const instance=(v:unknown,category:'wearable'|'consumable'|'any'):v is ItemInstance=>{
-      if(!hasWeeklyKeys(v,['id','defId'])||!count(v.id)||v.id<1||v.id>=nextItemId||ids.has(v.id)||typeof v.defId!=='string'||!Object.hasOwn(ITEM_CATALOG,v.defId))return false;
+      if(!orderedKeys(v,['id','defId'])||!count(v.id)||v.id<1||v.id>=nextItemId||ids.has(v.id)||typeof v.defId!=='string'||!Object.hasOwn(ITEM_CATALOG,v.defId))return false;
       const d=ITEM_CATALOG[v.defId];if(!isWearable(d)&&d.category!=='consumable')return false;
       if(category==='wearable'&&!isWearable(d)||category==='consumable'&&d.category!=='consumable')return false;
       ids.add(v.id);return true;
@@ -78,19 +79,26 @@ export function isItemsState(raw:unknown,characterIds:readonly string[]):raw is 
     }
     let previousStorageId=0;
     for(const entry of storage){
-      if(!hasWeeklyKeys(entry,['item','expiresWeek'])||!count(entry.expiresWeek)||entry.expiresWeek<1||!instance(entry.item,'any')||entry.item.id<=previousStorageId)return false;
+      if(!orderedKeys(entry,['item','expiresWeek'])||!count(entry.expiresWeek)||entry.expiresWeek<1||!instance(entry.item,'any')||entry.item.id<=previousStorageId)return false;
       previousStorageId=entry.item.id;
     }
     if(!plain(raw.materials)||!Object.entries(raw.materials).every(([id,n])=>Object.hasOwn(ITEM_CATALOG,id)&&ITEM_CATALOG[id].category==='material'&&count(n)&&n>=1&&n<=ITEM_TRIAL.stackCap))return false;
     if(!plain(raw.equipped))return false;
+    const ownerFirstIds:[string,number][]=[];
     for(const [characterId,worn] of Object.entries(raw.equipped)){
       if(!characterIds.includes(characterId)||!plain(worn)||!Object.keys(worn).length)return false;
       if(Object.hasOwn(worn,'set')&&['top','bottom','shoes'].some(s=>Object.hasOwn(worn,s)))return false;
+      let previousWornId=0;
       for(const [slot,item] of Object.entries(worn)){
-        if(!isOpenItemSlot(slot)||!instance(item,'wearable'))return false;
+        if(!isOpenItemSlot(slot)||!instance(item,'wearable')||item.id<=previousWornId)return false;
+        if(previousWornId===0)ownerFirstIds.push([characterId,item.id]);
+        previousWornId=item.id;
         const d=ITEM_CATALOG[item.defId];if(d.slot!==slot||d.kind!==(characterId==='player'?'player':'npc'))return false;
       }
     }
+    // Rebuild inserts owners at their first item id; integer-like keys enumerate first in JS.
+    const ownerKeys=Object.keys(Object.fromEntries(ownerFirstIds.sort((a,b)=>a[1]-b[1])));
+    if(!Object.keys(raw.equipped).every((key,i)=>key===ownerKeys[i]))return false;
     if(!market.every(v=>hasWeeklyKeys(v,['defId','priceMilli'])&&typeof v.defId==='string'&&Object.hasOwn(ITEM_CATALOG,v.defId)&&isWearable(ITEM_CATALOG[v.defId])&&ITEM_CATALOG[v.defId].rarity!=='legendary'&&count(v.priceMilli)))return false;
     return hasWeeklyKeys(raw.goals,['calm','authority','week52','research','rebellionSeen','authorityStreak'])&&count(raw.goals.authorityStreak)&&['calm','authority','week52','research','rebellionSeen'].every(k=>typeof (raw.goals as Record<string,unknown>)[k]==='boolean');
   } catch {return false;}
