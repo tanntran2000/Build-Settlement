@@ -1,5 +1,35 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## P6-A PR B (week rules) — PR #94 G6 (2026-11-14 UTC)
+
+**G6 PASS (Claude, Orchestrator/Tester).** P6-A PR B is complete; PR C (UI) follows.
+
+- **Merge.** PR #94 (`P6-A PR B: week rules (drops, finds, goals, effects, posts, lord health, Drug Store)`) was merged normally by dot under G5 at 2026-11-14T08:11:43Z, with no bypass.
+  - Merge/main commit: `2c04321ba342871e6a858110ea2320a8e4df0d5d` (parents `5e9674e`, `4607790`).
+  - Accepted head: `46077908545e9cc43a65eafe00ba889af5e7634e`. Base: `5e9674e`.
+- **Trees.** The merge tree `d5597ae4296afc90b41557eb062ca43f7ab85313` is identical to the accepted head tree. Claude checked this locally.
+- **Main CI.** Quality Gate run [43574636109](https://github.com/tanntran2000/Build-Settlement/actions/runs/43574636109), job 132386102398 (push, exact merge SHA), SUCCESS at 2026-11-14T08:26:58Z: 2,476 unit tests in 119 files, and 350/350 Chromium smoke (13.9 min). Claude read the conclusion, the unit total and the smoke total from the log. The dependency audit reports 3 low advisories, none moderate or higher.
+- **Pre-merge, at `4607790`:**
+  - Claude Tester gates 1–7 exit 0, and full smoke 350/350. The log shows `CI=1`.
+  - CI 43563726886 success.
+  - Astra PASS on round 2 (thread `mcp:94caacb1`). Round 1 (`a391fbb`) found two P2: a reached Legendary goal lost its guaranteed reward when inventory and storage were full, and an exhausted Mine/Quarry lost its material roll for the week it operated.
+  - dot held G5 once: the owner decision on the several-Markets rule was missing, and the evidence manifest missed two nested `SHA256SUMS.txt` files. Both were fixed in evidence `3acfafd`; the product head did not change.
+- **Evidence.** `docs/verification/p6a-pr94/` on branch `docs/p6a-items-design`, at `3acfafd` (replaces `f00a914`).
+- **Owner instructions** (verbatim; full table in `owner-approval-record.md`):
+  - "Giao Builder B";
+  - Plan corrections, owner's choices in Claude's dialog:
+    - 5: "Approve the 22 edits (Recommended)", "Allow validate.ts + 2 pins (Recommended)", "Allow these 2 files (Recommended)", "Change it in PR B (Recommended)";
+    - 6: "Wait for space (Recommended)";
+    - 7: "Keep strongest, max 10% (Recommended)".
+  - dot reports the owner told dot directly "kiểm tra lại nếu đạt tiến hành merg đi" before the merge (dot's report; not seen by Claude).
+- **Disclosed.**
+  - One review round and one G5 round failed before the merge.
+  - The golden and 2 v8 fixtures were regenerated once; the path diff was limited to `city.society.items.*`. Pins changed: `TRIAL_BUILDINGS`, `SOCIETY_BUILDINGS` (Drug Store).
+  - 22 existing-test edits (P1–P22), all approved in correction 5.
+- **Limits.**
+  - Chromium only. Astra's review is source-only plus read-only artifact scripts.
+  - The item UI (equipment, Market, potions, Steward copy for waiting Legendaries) is PR C.
+
 ## P6-A PR A (item core) — PR #93 G6 (2026-11-14 UTC)
 
 **G6 PASS (Claude, Orchestrator/Tester).** P6-A PR A is complete; PR B (week rules) and PR C (UI) follow.
