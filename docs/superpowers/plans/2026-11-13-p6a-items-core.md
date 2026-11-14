@@ -82,6 +82,8 @@
 - **Exhausted Mine or Quarry (finding 2).** Spec §7.6 gives one roll per eligible building with an NPC posted that week. The eligible building and post facts are captured before land cleanup, as `a391fbb` does for the Hospital, so a building removed by cleanup still rolls for the week it operated. This is the spec as written and needs no new decision.
 - No existing test, golden or fixture byte is expected to change. Any change is a HOLD with its path diff.
 
+**Plan correction 7 (PR B, several Markets).** Spec §5 gives the Market negotiation term per posted NPC (−1% per 5 points above 50, at most −10%) but not how several Markets combine. With several enabled Markets that have NPCs posted, the shared offers use the strongest single discount, capped at 10%; extra Markets do not stack. **Owner (Tân), 2026-11-14, dialog choice, verbatim:** "Keep strongest, max 10% (Recommended)".
+
 - **Extension 2:** correction 2 also covers updating an expectation to the stored-record layout that an approved Decision defines. Example: under Decision 3, the stored `city` record holds `items` without the instance lists, in `character-life-navigation.spec.ts:1436`. Exact equality stays, and each edit is listed. **Owner (Tân), 2026-11-13, verbatim:** "Allow, extend correction 2 (Recommended)".
 
 **Base:** `main` `c4d3dc4` (DATA-01 complete).

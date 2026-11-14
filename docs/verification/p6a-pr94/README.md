@@ -67,7 +67,12 @@ See `owner-approval-record.md`.
 ## Limits
 - Smoke runs on Chromium only.
 - Astra's review is read-only source review plus read-only artifact scripts; it ran no tests.
-- The Market rule for several Markets (strongest discount, capped at 10%) is the Builder's reading of spec §5, not an owner decision.
+- The Market rule for several Markets (strongest discount, capped at 10%) was the Builder's reading of spec §5. After dot's G5 HOLD the owner kept it: "Keep strongest, max 10% (Recommended)" (Plan correction 7).
 - The item UI (equipment, Market, potion panels, Steward copy for waiting Legendaries) is PR C.
 
-`SHA256SUMS.txt` covers every file in this folder except itself, hashed from the committed git blobs.
+## G5 round 1 (dot HOLD at evidence `f00a914`)
+- The owner decision on the Market rule was missing; it is now recorded (above and in `owner-approval-record.md`).
+- The first `SHA256SUMS.txt` had 171 lines for 173 files: the generator excluded every file named `SHA256SUMS.txt`, so `builder/SHA256SUMS.txt` and `builder/fix1/SHA256SUMS.txt` were left out. It now excludes only the top-level `SHA256SUMS.txt`.
+- The product head `4607790` did not change, so the gates, smoke, CI and Astra results above still apply.
+
+`SHA256SUMS.txt` covers every file in this folder except itself (including the nested `builder/SHA256SUMS.txt` and `builder/fix1/SHA256SUMS.txt`), hashed from the committed git blobs.
