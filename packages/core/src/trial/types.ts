@@ -6,6 +6,7 @@ import type { CanonicalGameState, WeeklyStocks } from "../domain/canonical-state
 import type { GoodsStock } from './goods-stock.js';
 import type { LawId } from './law.js';
 import type { SocietyClassKey } from './society.js';
+import type { ItemGoal } from './items.js';
 
 export interface LawWeekReport {
  inForce: LawId[];
@@ -38,6 +39,7 @@ export interface CrimeEventReport {
  lordHealthLoss:number;
 }
 export interface TileTrialReport {
+  items: ItemWeekReport;
   laws?: LawWeekReport;
   crimeEvent?: CrimeEventReport;
   crisis?: CrisisReport;
@@ -72,6 +74,15 @@ export interface TileTrialReport {
   happinessAfter: number;
   goods: { demandMilli: number; servedMilli: number; fulfillmentBps: number; woodUsed: number; ironUsed: number; revenueMilli: number };
   activities: readonly string[];
+}
+export interface ItemWeekReport {
+  materials: {tileId:string;materialId:string;lost:boolean}[];
+  found: {defId:string;stored:boolean;lost:boolean}|null;
+  expired: string[];
+  legendary: {goal:'calm'|'authority'|'week52'|'research';defId:string}|null;
+  pendingLegendary?: ItemGoal[];
+  hospitalOperated: boolean;
+  regen: number;
 }
 export interface OrderReport {
  soldiers: number; garrisonSecurity: number;

@@ -1,4 +1,4 @@
-import { hasWeeklyKeys, isLiveCharacterLifeSessionState, type CharacterLifeSessionState, type TileTrialReport } from '@haven/core';
+import { hasWeeklyKeys, isLiveCharacterLifeSessionState, buildItemWeekContext, type CharacterLifeSessionState, type TileTrialReport } from '@haven/core';
 import { executeWorldNpcCityCommand, executeWorldNpcCommand } from './world-npc.js';
 import { executeItemCommand, ITEM_COMMAND_TYPES, type ItemCommandType } from './item-command.js';
 
@@ -35,14 +35,24 @@ export function executeCharacterLifeCommand(session: unknown, raw: unknown): Cha
 
   const world = { city: session.city, outside: session.outside, npcs: session.npcs };
   const result = type === 'ASSIGN_NPC' || type === 'UNASSIGN_NPC'
-    ? executeWorldNpcCommand(world, raw) : executeWorldNpcCityCommand(world, raw);
+    ? executeWorldNpcCommand(world, raw)
+    : type==='END_WEEK'?executeWorldNpcCityCommand(world,raw,buildItemWeekContext(session)):executeWorldNpcCityCommand(world,raw);
   if (!result.success) return result;
 
   try {
     const next = { city: result.next.city, outside: result.next.outside, npcs: result.next.npcs,
       player: structuredClone(session.player), profiles: structuredClone(session.profiles) };
-    const lordHealthLoss=(result as {report?:Readonly<TileTrialReport>}).report?.crimeEvent?.lordHealthLoss??0;
-    if(lordHealthLoss>0)next.player.character.health=Math.max(1,next.player.character.health-lordHealthLoss);
+    const report=(result as {report?:Readonly<TileTrialReport>}).report;
+    const lordHealthLoss=report?.crimeEvent?.lordHealthLoss??0;
+    if(type==='END_WEEK'){
+      if(!report)throw Error('End Week did not produce a report.');
+      const health=next.player.character.health-lordHealthLoss;
+      if(health<=0){
+        next.player.character.health=0;
+        next.city.society!.crisis.stage='fallen';next.city.society!.crisis.fallCause='wounds';next.city.society!.pendingCard=null;
+        report.items.regen=0;
+      }else next.player.character.health=Math.min(100,health+report.items.regen);
+    }
     if (isLiveCharacterLifeSessionState(next)) return { ...result, next };
   } catch { return fail('EXECUTION_ERROR', 'The action failed validation; the original session was preserved.'); }
   return fail('EXECUTION_ERROR', 'The action failed validation; the original session was preserved.');

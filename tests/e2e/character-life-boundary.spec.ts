@@ -230,7 +230,7 @@ async function uiParity(page: Page, o: Observation, fullReport: Readonly<TileTri
     await selectArea(page, 'Work');
     await expect(card.getByTestId(`npc-post-${npc.id}`)).toHaveText(`Post: ${npc.postLabel}`);
     await expect(card.locator('header > p')).toHaveText(npc.postLabel);
-    await expect(card.getByText('NPC effects on output are not active yet.', { exact: true })).toBeVisible();
+    await expect(card.getByText('NPC post skills apply at End Week.', { exact: true })).toBeVisible();
     if (npc.postTileId) {
       await expect(button(card, 'Unassign')).toBeEnabled({ enabled: !locked });
       await expect(card.getByRole('combobox')).toHaveCount(0);

@@ -1,11 +1,14 @@
-import { societySoldiers, soldierTiles, idleWatchHouse, CRIME_TRIAL as C, crimeChancePercent, crimeSeverity, crimeRandom, societyPopulation, type CrimeEventReport, type TileTrialState } from '@haven/core';
+import { societySoldiers, soldierTiles, idleWatchHouse, CRIME_TRIAL as C, crimeChancePercent, crimeSeverity, crimeRandom, societyPopulation, ITEM_TRIAL, type ItemWeekContext, type CrimeEventReport, type TileTrialState } from '@haven/core';
 import { releaseSocietyWorkers } from './society-facilities.js';
 
-export function resolveCrimeWeek(s:TileTrialState, fundedTileIds:ReadonlySet<string>, rng=crimeRandom(s.world.worldMetadata.worldSeed,s.world.week-1)):CrimeEventReport {
+export function resolveCrimeWeek(s:TileTrialState, fundedTileIds:ReadonlySet<string>, rng=crimeRandom(s.world.worldMetadata.worldSeed,s.world.week-1),ctx?:ItemWeekContext):CrimeEventReport {
  const society=s.society!,order=society.order,standingBefore=society.standing;
  const clamp=(n:number)=>Math.max(0,Math.min(100,n));
  society.standing=clamp(standingBefore+Math.sign(C.standing.newGame-standingBefore)*C.standing.drift);
  const report:CrimeEventReport={standingBefore,standingAfter:society.standing,chancePercent:crimeChancePercent(order.crime,idleWatchHouse(s,fundedTileIds)),event:null,lordHealthLoss:0};
+ const effects=ITEM_TRIAL.effects;
+ const combatFatalReduction=ctx?Math.min(effects.fatalCap,Math.floor(Math.max(0,ctx.playerSkills.combat-effects.threshold)/effects.fatalStep)):0;
+ const fatalChance=(C.fatal.chance*100-combatFatalReduction)/100;
  if(rng()*100>=report.chancePercent)return report;
  const barracks=soldierTiles(s);
  const soldiers=societySoldiers(s);
@@ -31,10 +34,12 @@ export function resolveCrimeWeek(s:TileTrialState, fundedTileIds:ReadonlySet<str
   s.world.settlements[s.world.activeSettlementId!].cohorts.find(c=>c.id==='weekly_middle')!.count=societyPopulation(society);
   releaseSocietyWorkers(s);event.soldiersKilled=deaths;
  }else if(rng()*100<order.security){event.outcome='foiled';}
- else if(order.crime>=C.fatal.minCrime&&order.security<C.fatal.maxSecurity&&rng()<C.fatal.chance){
+ else if(order.crime>=C.fatal.minCrime&&order.security<C.fatal.maxSecurity&&rng()<fatalChance){
   event.outcome='killed';society.crisis.stage='fallen';society.crisis.fallCause='assassination';society.pendingCard=null;
  }else{
-  event.outcome='wounded';report.lordHealthLoss=C.wound.health;
+  const medicalWoundReduction=ctx?Math.floor(Math.max(0,ctx.playerSkills.medical-effects.threshold)/effects.woundStep):0;
+  const ironhideWoundReduction=ctx?.playerTraits.includes('ironhide')?effects.ironhideWoundReduction:0;
+  event.outcome='wounded';report.lordHealthLoss=Math.max(effects.woundFloor,C.wound.health-medicalWoundReduction-ironhideWoundReduction);
   event.standingLoss=Math.min(society.standing,C.wound.standing);society.standing-=event.standingLoss;
   event.authorityLoss=Math.min(order.authority,C.wound.authority);order.authority-=event.authorityLoss;
  }

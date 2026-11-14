@@ -88,19 +88,60 @@ it('preserves the law-free five-week gameplay pin and determinism',()=>{
  const {rulesetId:_ruleset,laws:_laws,...society}=s.city.society!;
  const {rulesetId:_oldRuleset,...oldSociety}=old.city.society;
  expect(society).toEqual({...oldSociety,items: {
-      nextItemId: 1, inventory: [], consumables: [], materials: {}, storage: [], equipped: {},
-      market: [
-        { defId: 'common-shoes', priceMilli: 5000 },
-        { defId: 'common-necklace', priceMilli: 5000 },
-        { defId: 'common-top', priceMilli: 5000 },
-        { defId: 'common-ring', priceMilli: 5000 },
-        { defId: 'rare-shoes', priceMilli: 15000 },
-        { defId: 'rare-earrings', priceMilli: 15000 },
-        { defId: 'epic-top', priceMilli: 40000 },
-        { defId: 'epic-top', priceMilli: 40000 },
-      ],
-      goals: { calm: false, authority: false, week52: false, research: false, rebellionSeen: false, authorityStreak: 0 },
-    }});
+  "nextItemId": 2,
+  "inventory": [
+    {
+      "id": 1,
+      "defId": "common-necklace"
+    }
+  ],
+  "consumables": [],
+  "materials": {},
+  "storage": [],
+  "equipped": {},
+  "market": [
+    {
+      "defId": "common-top",
+      "priceMilli": 5000
+    },
+    {
+      "defId": "common-earrings",
+      "priceMilli": 5000
+    },
+    {
+      "defId": "common-ring",
+      "priceMilli": 5000
+    },
+    {
+      "defId": "common-shoes",
+      "priceMilli": 5000
+    },
+    {
+      "defId": "rare-set",
+      "priceMilli": 15000
+    },
+    {
+      "defId": "rare-ring",
+      "priceMilli": 15000
+    },
+    {
+      "defId": "epic-top",
+      "priceMilli": 40000
+    },
+    {
+      "defId": "epic-hand",
+      "priceMilli": 40000
+    }
+  ],
+  "goals": {
+    "calm": false,
+    "authority": false,
+    "week52": false,
+    "research": false,
+    "rebellionSeen": false,
+    "authorityStreak": 0
+  }
+}});
  expect(s.city.world.settlements).toEqual(old.city.world.settlements);
 });
 it('is deterministic with three laws over five weeks',()=>{

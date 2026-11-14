@@ -220,7 +220,7 @@ describe('actionable catalogues and phase controls', () => {
     expect([o.week, o.phase, o.revision]).toEqual([city.world.week, city.phase, city.revision]);
     expect(o.tiles).toEqual(city.tiles.map(t => ({ id: t.id, terrain: t.terrain, building: t.building && {
       typeId: t.building.typeId, level: t.building.level, workers: t.building.workers, enabled: t.building.enabled } })));
-    expect(o.buildings.map(b => b.typeId)).toEqual(['sheep-pasture', 'herb-garden', 'quarry', 'weaver', 'watch-house', 'military-barracks', 'library', 'warehouse', 'farm', 'processor', 'logging', 'mine', 'workshop', 'common-housing', 'makers-rowhouses', 'scholars-quarters', 'merchant-townhouses', 'elite-manor', 'tavern', 'hospital', 'town-hall', 'builders-yard', 'academy', 'town-market', 'trading-post', 'counting-house', 'slave-quarters']);
+    expect(o.buildings.map(b => b.typeId)).toEqual(['sheep-pasture', 'herb-garden', 'quarry', 'weaver', 'watch-house', 'military-barracks', 'library', 'warehouse', 'farm', 'processor', 'logging', 'mine', 'workshop', 'common-housing', 'makers-rowhouses', 'scholars-quarters', 'merchant-townhouses', 'elite-manor', 'tavern', 'hospital', 'town-hall', 'builders-yard', 'academy', 'town-market', 'trading-post', 'counting-house', 'slave-quarters', 'drug-store']);
     expect(o.buildings.map(b => b.typeId)).toEqual(Object.keys(TRIAL_BUILDINGS));
     o.buildings.forEach(b => {
       const d = TRIAL_BUILDINGS[b.typeId];
@@ -286,6 +286,7 @@ describe('actionable catalogues and phase controls', () => {
 
 function reportFixture(): TileTrialReport {
   return {
+    items: { materials: [], found: null, expired: [], legendary: null, hospitalOperated: false, regen: 0 },
     week: 7, before: { gold: 11001, wheat: 12002, food: 13003, wood: 14004, iron: 15005 },
     after: { gold: 21001, wheat: 22002, food: 23003, wood: 24004, iron: 25005 },
     taxMilli: 31001, farmBatchGoldMilli: 32002, farmExtraUpkeepMilli: 33003, upkeepPaidMilli: 34004,

@@ -21,7 +21,7 @@ it('preserves Market manager posts in both economies and adds Town Hall', () => 
 });
 
 import { TRIAL_BUILDINGS } from '../../index.js';
-it('pins all eighteen active town building names to the approved catalog', () => {
+it('pins all nineteen active town building names to the approved catalog', () => {
   const names = {
     "watch-house": "Watch House", "military-barracks": "Military Barracks",
     'common-housing': 'Common Housing',
@@ -40,6 +40,7 @@ it('pins all eighteen active town building names to the approved catalog', () =>
     'trading-post': 'Trading Post',
     'counting-house': 'Counting House',
     'slave-quarters': 'Slave Quarters',
+    'drug-store': 'Drug Store',
   };
   expect(Object.fromEntries(Object.entries(TRIAL_BUILDINGS)
     .filter(([, definition]) => definition.terrain.includes('town'))
@@ -55,6 +56,5 @@ it('pins reserved staff metadata without enabling reserved buildings', () => {
     brothel: { staff: null, reserved: true },
     'black-market': { staff: null, reserved: true },
     arena: { staff: null, reserved: true },
-    'drug-store': { staff: null, reserved: true },
   });
 });

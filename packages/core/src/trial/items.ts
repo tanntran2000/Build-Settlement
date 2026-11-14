@@ -30,26 +30,38 @@ export const ITEM_CATALOG = deepFreeze(catalog.definitions);
 export const ITEM_TRIAL = deepFreeze(catalog.ITEM_TRIAL);
 
 export interface ItemInstance { id:number; defId:string }
+export const ITEM_GOAL_IDS = Object.freeze(['calm','authority','week52','research'] as const);
+export type ItemGoal = typeof ITEM_GOAL_IDS[number];
 export interface ItemsState {
   nextItemId:number; inventory:ItemInstance[]; consumables:ItemInstance[]; materials:Record<string,number>;
   storage:{item:ItemInstance;expiresWeek:number}[];
   equipped:Record<string,Partial<Record<Slot,ItemInstance>>>;
   market:{defId:string;priceMilli:number}[];
-  goals:{calm:boolean;authority:boolean;week52:boolean;research:boolean;rebellionSeen:boolean;authorityStreak:number};
+  goals:{calm:boolean;authority:boolean;week52:boolean;research:boolean;rebellionSeen:boolean;authorityStreak:number;pending?:ItemGoal[]};
 }
 export interface ItemWeekContext { postSkills:Record<string,Skills>;postTraits:Record<string,string[]>;playerSkills:Skills;playerTraits:string[];playerRegen:number }
 export const ITEM_STREAM_SALT = Object.freeze({market:0x49544d31,find:0x49544631,material:0x49544d32,legendary:0x49544c31});
 export function itemRandom(seed:number,week:number,stream:keyof typeof ITEM_STREAM_SALT):()=>number {
   return createSeededRandom(mixSeed(mixSeed(seed,week),ITEM_STREAM_SALT[stream]));
 }
-export function createItemsState(seed:number):ItemsState {
-  const rng=itemRandom(seed,1,'market');
+export function drawItemMarket(seed:number,week:number):ItemsState['market'] {
+  const rng=itemRandom(seed,week,'market');
   const market:ItemsState['market']=[];
   for(const rarity of ['common','rare','epic'] as const){
     const pool=Object.keys(ITEM_CATALOG).filter(id=>isWearable(ITEM_CATALOG[id])&&ITEM_CATALOG[id].rarity===rarity);
     for(let i=0;i<ITEM_TRIAL.marketCounts[rarity];i++)market.push({defId:pool[Math.floor(rng()*pool.length)],priceMilli:ITEM_TRIAL.marketPricesMilli[rarity]});
   }
-  return {nextItemId:1,inventory:[],consumables:[],materials:{},storage:[],equipped:{},market,
+  return market;
+}
+export function drawItemRarity(odds:Partial<Record<Rarity,number>>,rng:()=>number):Rarity|null {
+  const roll=Math.floor(rng()*10000);let boundary=0;
+  for(const rarity of ['common','rare','epic','legendary'] as const){
+    boundary+=odds[rarity]??0;if(roll<boundary)return rarity;
+  }
+  return null;
+}
+export function createItemsState(seed:number):ItemsState {
+  return {nextItemId:1,inventory:[],consumables:[],materials:{},storage:[],equipped:{},market:drawItemMarket(seed,1),
     goals:{calm:false,authority:false,week52:false,research:false,rebellionSeen:false,authorityStreak:0}};
 }
 export const isWearable=(d:ItemDefinition):boolean=>['equipment','accessory','outfit'].includes(d.category);
@@ -100,7 +112,19 @@ export function isItemsState(raw:unknown,characterIds:readonly string[]):raw is 
     const ownerKeys=Object.keys(Object.fromEntries(ownerFirstIds.sort((a,b)=>a[1]-b[1])));
     if(!Object.keys(raw.equipped).every((key,i)=>key===ownerKeys[i]))return false;
     if(!market.every(v=>hasWeeklyKeys(v,['defId','priceMilli'])&&typeof v.defId==='string'&&Object.hasOwn(ITEM_CATALOG,v.defId)&&isWearable(ITEM_CATALOG[v.defId])&&ITEM_CATALOG[v.defId].rarity!=='legendary'&&count(v.priceMilli)))return false;
-    return hasWeeklyKeys(raw.goals,['calm','authority','week52','research','rebellionSeen','authorityStreak'])&&count(raw.goals.authorityStreak)&&['calm','authority','week52','research','rebellionSeen'].every(k=>typeof (raw.goals as Record<string,unknown>)[k]==='boolean');
+    if(!plain(raw.goals))return false;
+    const goals=raw.goals,goalKeys=[...ITEM_GOAL_IDS,'rebellionSeen','authorityStreak'];
+    if(!hasWeeklyKeys(goals,Object.hasOwn(goals,'pending')?[...goalKeys,'pending']:goalKeys)||!count(goals.authorityStreak)||[...ITEM_GOAL_IDS,'rebellionSeen'].some(k=>typeof goals[k]!=='boolean'))return false;
+    if(Object.hasOwn(goals,'pending')){
+      const pending=readDenseArray(goals.pending);if(!pending?.length)return false;
+      let previous=-1;
+      for(const goal of pending){
+        const index=ITEM_GOAL_IDS.indexOf(goal as ItemGoal);
+        if(index<=previous||goals[goal as ItemGoal]!==true)return false;
+        previous=index;
+      }
+    }
+    return true;
   } catch {return false;}
 }
 function applies(d:ItemDefinition,socialClass:string|null):boolean {return isWearable(d)&&isOpenItemSlot(d.slot)&&(!d.exclusiveClass||d.exclusiveClass===socialClass);}

@@ -1,4 +1,4 @@
-import { createSocietyState,hasWeeklyKeys,isNpcWorldSessionState,isTileTrialState,isWorldNpcList,isWorldSessionState,managerSlotTileIds,type NpcWorldSessionState,type TileTrialReport,type TileTrialState } from "@haven/core";
+import { createSocietyState,hasWeeklyKeys,isNpcWorldSessionState,isTileTrialState,isWorldNpcList,isWorldSessionState,managerSlotTileIds,type NpcWorldSessionState,type TileTrialReport,type TileTrialState,type ItemWeekContext } from "@haven/core";
 import { trialSafe } from "./tile-trial-week.js";
 import { executeTileTrialCommand } from "./tile-trial.js";
 
@@ -36,7 +36,7 @@ export function executeWorldNpcCommand(session: unknown, raw: unknown): WorldNpc
 }
 
 // City commands for an NPC session: a post whose tile was replaced or lost its slot is cleared in the same result.
-export function executeWorldNpcCityCommand(session: unknown, raw: unknown): WorldNpcCityResult {
+export function executeWorldNpcCityCommand(session: unknown, raw: unknown,ctx?:ItemWeekContext): WorldNpcCityResult {
   const fail = (code: string, message: string): WorldNpcCityResult => ({ success: false, error: { code, message } });
   try {
     if (!hasWeeklyKeys(session, ["city", "outside", "npcs"]) || !isTileTrialState(session.city) || !isWorldNpcList(session.npcs, session.city)) return fail("INVALID_STATE", "World session is invalid; nothing was changed.");
@@ -45,7 +45,7 @@ export function executeWorldNpcCityCommand(session: unknown, raw: unknown): Worl
     if (!isWorldSessionState({ city: createSocietyState(), outside: session.outside })) return fail("INVALID_STATE", "World session is invalid; nothing was changed.");
     const type = raw && typeof raw === "object" ? Object.getOwnPropertyDescriptor(raw, "type")?.value : undefined;
     if (type === "LOAD_TRIAL") return fail("INVALID_COMMAND", "Load an NPC world checkpoint through Continue or Import.");
-    const result = executeTileTrialCommand(session.city, raw);
+    const result = executeTileTrialCommand(session.city, raw,ctx);
     if (!result.success) return fail(result.error.code, result.error.message);
     const city: TileTrialState = result.nextState, slots = managerSlotTileIds(city);
     const replaced = type === "REPLACE" ? Object.getOwnPropertyDescriptor(raw, "tileId")?.value : undefined;

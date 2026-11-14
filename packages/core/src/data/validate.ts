@@ -524,7 +524,7 @@ const lawSchema = object({
     }),
 });
 const BUILDING_IDS = [
-    "sheep-pasture", "herb-garden", "quarry", "weaver", "watch-house", "military-barracks", "library", "warehouse", "farm", "processor", "logging", "mine", "workshop", "common-housing", "makers-rowhouses", "scholars-quarters", "merchant-townhouses", "elite-manor", "tavern", "hospital", "town-hall", "builders-yard", "academy", "town-market", "trading-post", "counting-house", "slave-quarters"
+    "sheep-pasture", "herb-garden", "quarry", "weaver", "watch-house", "military-barracks", "library", "warehouse", "farm", "processor", "logging", "mine", "workshop", "common-housing", "makers-rowhouses", "scholars-quarters", "merchant-townhouses", "elite-manor", "tavern", "hospital", "town-hall", "builders-yard", "academy", "town-market", "trading-post", "counting-house", "slave-quarters", "drug-store"
 ];
 const SOCIETY_IDS = [
     "common-housing", "makers-rowhouses", "scholars-quarters", "merchant-townhouses", "elite-manor", "tavern", "hospital", "town-hall", "builders-yard", "academy", "town-market", "trading-post", "counting-house", "slave-quarters", "military-barracks", "watch-house", "warehouse", "smithy", "library", "brothel", "black-market", "arena", "drug-store"
