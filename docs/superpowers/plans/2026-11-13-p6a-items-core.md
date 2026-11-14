@@ -105,6 +105,12 @@
 - **Owner (Tân), 2026-11-14, dialog choice, verbatim:** "Approve all 4 incl. P11 (Recommended)".
 - **NPC silhouette:** NPCs use the flat pictogram silhouette "option D" (curvy figure, hands on hips, ponytail, knockout lines in the panel colour) in `EquipmentView.svelte`; the Player keeps the current neutral figure. It is still a flat silhouette (spec §9). No adult detail (that is P6-C). **Owner (Tân), 2026-11-14, dialog choice, verbatim:** "Use option D now (Recommended)".
 - **NPC silhouette, replaced:** the owner then approved a Codex-drawn reference image (`local-drafts/p6a-prC/owner-npc-silhouette-reference.webp`, sha256 `6cb8a6a5ee9f795e…`): wavy shoulder-length hair with two thin face lines, no braid, hands on hips, full bust and hips. **Owner (Tân), 2026-11-14, verbatim:** "hợp lý rồi". The Builder traces it into a flat two-colour SVG in `EquipmentView.svelte` for NPCs only, replacing option D; the Player keeps the neutral figure. **Owner (Tân), 2026-11-14, verbatim:** "Builder traces it".
+- **Gate 6 timeouts:** two existing simulation tests (`lord-health.test.ts:73`, `society-renewable-support.test.ts:160`) exceeded their 5 s limit only in full-suite runs on a loaded machine; PR C changes no simulation code. The limits stay unchanged and gates are rerun on a quiet machine. **Owner (Tân), 2026-11-14, dialog choice, verbatim:** "Rerun, no timeout change (Recommended)".
+
+**Plan correction 10 (PR C, Astra round 1 at `f046e36`).**
+- **Destroy focus (P2):** after a confirmed Destroy removes the item card, focus moves to a control that still exists (not the removed opener); Cancel and Escape still return focus to the opener. A new test asserts the focus target after confirmation.
+- **Authority goal label (P3):** the Steward label for the Authority goal reads "Authority 90+ for 4 weeks" (spec §7.4: 90 or more for 4 weeks in a row), in `items-view.ts`, its new unit test, and the one label-to-goal map line inside approved edit P7 (`tests/e2e/character-life-navigation.helpers.ts:243`). Nothing else in P1–P11 changes.
+- **Owner (Tân), 2026-11-14, dialog choice, verbatim:** "Approve, incl. P7 line (Recommended)".
 
 - **Extension 2:** correction 2 also covers updating an expectation to the stored-record layout that an approved Decision defines. Example: under Decision 3, the stored `city` record holds `items` without the instance lists, in `character-life-navigation.spec.ts:1436`. Exact equality stays, and each edit is listed. **Owner (Tân), 2026-11-13, verbatim:** "Allow, extend correction 2 (Recommended)".
 
