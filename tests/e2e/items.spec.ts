@@ -42,6 +42,34 @@ test('C1 paper doll, totals, filters and Materials expose real item state',async
 });
 
 const evidence='C:/Users/Admin/.t3/local-drafts/p6a-prC';
+test('C3 Legendary cards describe their catalog effects',async({page})=>{
+  const s=funded();
+  s.city.society!.items.inventory=['wardens-oath','crown-of-embers','ironhide-gloves','ledger-of-plenty'].map((defId,k)=>({id:k+1,defId}));
+  s.city.society!.items.nextItemId=5;
+  await importLife(page,s);const panel=await inventory(page);
+  const effects=ITEM_TRIAL.effects;
+  for(const [name,text] of [
+    ["Warden's Oath",`While worn: Watch House Security +${effects.wardenSecurity}.`],
+    ['Crown of Embers',`While worn: Authority +${effects.crownAuthority}.`],
+    ['Ironhide Gloves',`While worn: Wound damage −${effects.ironhideWoundReduction}.`],
+    ['Ledger of Plenty',`While worn: Post output +${effects.ledgerOutputPercent}%.`],
+  ])await expect(panel.getByRole('article',{name,exact:true}).getByText(text,{exact:true})).toBeVisible();
+});
+
+test('C3 Player and NPC silhouettes have their distinct accessible labels',async({page})=>{
+  const s=funded();await importLife(page,s);
+  await mkdir(`${evidence}/screenshots`,{recursive:true});
+  for(const [id,label,name] of [
+    [s.player.character.id,'Character silhouette','equipment-player'],
+    [s.npcs[0].character.id,'NPC silhouette','equipment-npc'],
+  ]){
+    const panel=await inventory(page,id);
+    await expect(panel.getByRole('img',{name:label,exact:true})).toBeVisible();
+    await panel.evaluate(node=>{node.scrollIntoView({block:'start'});for(let p=node.parentElement;p;p=p.parentElement)if(p.scrollHeight>p.clientHeight&&/auto|scroll/.test(getComputedStyle(p).overflowY))p.scrollTop=Math.max(0,p.scrollTop-140);});
+    await page.screenshot({path:`${evidence}/screenshots/${name}-1280.png`,fullPage:true});
+  }
+});
+
 test('C2 UI buy, keyboard equip and next Farm report show the post effect',async({page})=>{
   let s=funded();s.npcs[0].character.skills.management=49;
   s=act(s,'ASSIGN_NPC',{npcId:s.npcs[0].character.id,tileId:'field-1'});

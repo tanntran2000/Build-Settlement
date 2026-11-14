@@ -378,8 +378,13 @@ for (const width of [375, 1280]) {
       }
       for (const area of ['Description', 'Inventory', 'Work', 'Relations']) {
         await selectArea(page, area);
-        await expect(placeholder).toBeVisible();
-        expect(await placeholder.evaluate(el => el.outerHTML)).toBe(staticMarkup);
+        if (area === 'Inventory') {
+          await expect(placeholder).toHaveCount(0);
+          await expect(win.getByRole('region', { name: 'Equipment', exact: true })).toBeVisible();
+        } else {
+          await expect(placeholder).toBeVisible();
+          expect(await placeholder.evaluate(el => el.outerHTML)).toBe(staticMarkup);
+        }
       }
       const bounds = await placeholder.evaluate(el => {
         const box = el.getBoundingClientRect(), card = el.closest('.card')!.getBoundingClientRect();

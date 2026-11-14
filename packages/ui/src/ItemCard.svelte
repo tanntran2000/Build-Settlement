@@ -20,7 +20,7 @@
   {#if definition.mainStat}<p>{itemTitle(definition.mainStat)} +{ITEM_TRIAL.bonuses[definition.rarity].main*(definition.slot==='set'?ITEM_TRIAL.setMultiplier:1)}{#if definition.secondaryStat} · {itemTitle(definition.secondaryStat)} +{ITEM_TRIAL.bonuses[definition.rarity].secondary*(definition.slot==='set'?ITEM_TRIAL.setMultiplier:1)}{/if}</p>{/if}
   {#if definition.regen}<p>Regen +{definition.regen*(definition.slot==='set'?ITEM_TRIAL.setMultiplier:1)}/week</p>{/if}
   {#if definition.slot==='set'}<p>Covers Top, Bottom and Shoes.</p>{/if}
-  {#if definition.trait}<p>While worn: {({warden:'Watch House Security +3',crown:'Authority +3',ironhide:'Wound damage −5',ledger:'One more research point'} as Record<string,string>)[definition.trait]??itemTitle(definition.trait)}.</p>{/if}
+  {#if definition.trait}<p>While worn: {({warden:`Watch House Security +${ITEM_TRIAL.effects.wardenSecurity}`,crown:`Authority +${ITEM_TRIAL.effects.crownAuthority}`,ironhide:`Wound damage −${ITEM_TRIAL.effects.ironhideWoundReduction}`,ledger:`Post output +${ITEM_TRIAL.effects.ledgerOutputPercent}%`} as Record<string,string>)[definition.trait]??itemTitle(definition.trait)}.</p>{/if}
   {#if preview.length}<p>Before → After</p><dl>{#each preview as row}<div><dt>{itemTitle(row.skill)}</dt><dd>{row.before} → {row.after}</dd></div>{/each}</dl>{/if}
   {#if priceMilli!==undefined}<p>{formatMilli(priceMilli)} Gold</p>{/if}
   <div class="actions">

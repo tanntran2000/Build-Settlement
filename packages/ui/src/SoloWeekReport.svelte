@@ -131,6 +131,10 @@
   table { width: 100%; border-collapse: collapse; }
   caption { text-align: left; font-weight: bold; margin-bottom: 12px; }
   th, td { padding: 8px; text-align: right; border-bottom: 1px solid var(--border-color); min-width: 6rem; max-width: 10rem; }
+  section[aria-label='Steward item details'] table,
+  section[aria-label='Quartermaster item details'] table { table-layout: fixed; }
+  section[aria-label='Steward item details'] :is(th, td),
+  section[aria-label='Quartermaster item details'] :is(th, td) { min-width: 0; max-width: none; overflow-wrap: anywhere; }
   th:first-child { text-align: left; }
   details { margin: 8px 0; } .weekly-report summary { cursor: pointer; min-width: 44px; min-height: 44px; padding-block: 10px; }
   ul { padding-left: 1.5rem; }
