@@ -216,7 +216,7 @@ export async function openReportDetails(page: Page, ...ids: string[]): Promise<v
 }
 
 // Read the complete report from rendered text, including the calculation disclosure.
-export async function expectReport(page: Page, expected: Readonly<TileTrialReport>): Promise<TileTrialReport> {
+export async function expectReport(page: Page, expected: Readonly<TileTrialReport>): Promise<Omit<TileTrialReport, 'items'>> {
   const panel = reportRegion(page), u = reportUnits;
   // Open base letters for visible text/table assertions; read other parity attributes while closed.
   const closedLetters = [];
@@ -278,7 +278,7 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
     expect(food.slice(0, 2).map(milli)).toEqual([0, 0]);
   }
   // Zero-demand BPS comes only from the executor, not an invented UI percentage.
-  const actual: TileTrialReport = {
+  const actual: Omit<TileTrialReport, 'items'> = {
     week: absoluteWeek, before, after,
     taxMilli: milli(t[0]), upkeepPaidMilli: milli(t[1]), unpaidUpkeepMilli: milli(t[2]), farmBatchGoldMilli: milli(t[3]), farmExtraUpkeepMilli: milli(t[4]),
     foodConsumedMilli: milli(food[0]), foodDemandMilli: milli(food[1]), happinessBefore: Number(h[0]), happinessAfter: Number(h[1]),
@@ -376,7 +376,7 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
   }
   const laws=panel.getByRole('region',{name:'Laws',exact:true,includeHidden:true});
   if(await laws.count()) actual.laws=await laws.evaluate(node=>({inForce:JSON.parse(node.getAttribute('data-laws-in-force')!),costs:JSON.parse(node.getAttribute('data-laws-costs')!),unfunded:JSON.parse(node.getAttribute('data-laws-unfunded')!),incomeMilli:Number(node.getAttribute('data-laws-income-milli')),promise:JSON.parse(node.getAttribute('data-laws-promise')!)}));
-  const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
+  const { items: _items, society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
   expect(actual).toEqual(baseReport);
   if (society) {
     const labels = { free: 'Free residents', makers: 'Makers', luminaries: 'Luminaries', merchants: 'Merchants', bound: 'The Bound' };

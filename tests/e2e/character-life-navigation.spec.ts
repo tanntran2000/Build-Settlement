@@ -841,7 +841,7 @@ test('unapplied drafts survive navigation with committed-only resolution', async
   const endWeek = shell.getByTestId('life-end-week'); await endWeek.focus(); await page.keyboard.press('Enter');
   await expect(page.locator('#life-reports-heading')).toBeFocused();
   const actualReport = await expectReport(page, expected.report);
-  const {society: _society,luxuryImportedMilli: _luxury,trainingGoldMilli: _training,...expectedBase}=expected.report;
+  const {items: _items,society: _society,luxuryImportedMilli: _luxury,trainingGoldMilli: _training,...expectedBase}=expected.report;
   expect(actualReport).toEqual(expectedBase);
   expect(Number(await shell.getAttribute('data-revision'))).toBe(beforeWeekRevision + 1);
   await expect(workersInput(page)).toHaveValue(String(committedWorkers));

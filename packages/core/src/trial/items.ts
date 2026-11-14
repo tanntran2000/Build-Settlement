@@ -42,14 +42,24 @@ export const ITEM_STREAM_SALT = Object.freeze({market:0x49544d31,find:0x49544631
 export function itemRandom(seed:number,week:number,stream:keyof typeof ITEM_STREAM_SALT):()=>number {
   return createSeededRandom(mixSeed(mixSeed(seed,week),ITEM_STREAM_SALT[stream]));
 }
-export function createItemsState(seed:number):ItemsState {
-  const rng=itemRandom(seed,1,'market');
+export function drawItemMarket(seed:number,week:number):ItemsState['market'] {
+  const rng=itemRandom(seed,week,'market');
   const market:ItemsState['market']=[];
   for(const rarity of ['common','rare','epic'] as const){
     const pool=Object.keys(ITEM_CATALOG).filter(id=>isWearable(ITEM_CATALOG[id])&&ITEM_CATALOG[id].rarity===rarity);
     for(let i=0;i<ITEM_TRIAL.marketCounts[rarity];i++)market.push({defId:pool[Math.floor(rng()*pool.length)],priceMilli:ITEM_TRIAL.marketPricesMilli[rarity]});
   }
-  return {nextItemId:1,inventory:[],consumables:[],materials:{},storage:[],equipped:{},market,
+  return market;
+}
+export function drawItemRarity(odds:Partial<Record<Rarity,number>>,rng:()=>number):Rarity|null {
+  const roll=Math.floor(rng()*10000);let boundary=0;
+  for(const rarity of ['common','rare','epic','legendary'] as const){
+    boundary+=odds[rarity]??0;if(roll<boundary)return rarity;
+  }
+  return null;
+}
+export function createItemsState(seed:number):ItemsState {
+  return {nextItemId:1,inventory:[],consumables:[],materials:{},storage:[],equipped:{},market:drawItemMarket(seed,1),
     goals:{calm:false,authority:false,week52:false,research:false,rebellionSeen:false,authorityStreak:0}};
 }
 export const isWearable=(d:ItemDefinition):boolean=>['equipment','accessory','outfit'].includes(d.category);

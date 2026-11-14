@@ -38,6 +38,7 @@ export interface CrimeEventReport {
  lordHealthLoss:number;
 }
 export interface TileTrialReport {
+  items: ItemWeekReport;
   laws?: LawWeekReport;
   crimeEvent?: CrimeEventReport;
   crisis?: CrisisReport;
@@ -72,6 +73,14 @@ export interface TileTrialReport {
   happinessAfter: number;
   goods: { demandMilli: number; servedMilli: number; fulfillmentBps: number; woodUsed: number; ironUsed: number; revenueMilli: number };
   activities: readonly string[];
+}
+export interface ItemWeekReport {
+  materials: {tileId:string;materialId:string;lost:boolean}[];
+  found: {defId:string;stored:boolean;lost:boolean}|null;
+  expired: string[];
+  legendary: {goal:'calm'|'authority'|'week52'|'research';defId:string}|null;
+  hospitalOperated: boolean;
+  regen: number;
 }
 export interface OrderReport {
  soldiers: number; garrisonSecurity: number;

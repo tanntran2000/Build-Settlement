@@ -1,4 +1,4 @@
-import { LAW_CATALOG, lawTerms } from '@haven/core';
+import { LAW_CATALOG, lawTerms, ITEM_CATALOG, ITEM_TRIAL, itemRandom, drawItemMarket, drawItemRarity, isWearable, RESEARCH_TOPICS, type ItemWeekContext, type ItemWeekReport } from '@haven/core';
 import { resolveLawGold, resolveLawPromiseWeek } from './law-week.js';
 import { resolveCrimeWeek } from './crime-week.js';
 import { resolveCrisisWeek } from './crisis-week.js';
@@ -19,7 +19,7 @@ function scaled(a: number, b: number, divisor = 1): number {
   if (result > BigInt(Number.MAX_SAFE_INTEGER)) throw Error("Trial arithmetic overflow.");
   return Number(result);
 }
-export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
+export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext): Readonly<TileTrialReport> {
   if (!s.society || !s.goodsStock) throw Error('Invalid society city.');
   const settlement = s.world.settlements[s.world.activeSettlementId!]; const stocks = settlement.inventory;
   const orderBefore = {...s.society.order};
@@ -178,11 +178,56 @@ export function runTileTrialWeek(s: TileTrialState): Readonly<TileTrialReport> {
   const crimeEvent=resolveCrimeWeek(s,operatingIds,crimeRandom(s.world.worldMetadata.worldSeed,s.world.week-1));
   if(immigration&&crimeEvent.event?.soldiersKilled)immigration=Object.freeze({...immigration,populationAfter:societyPopulation(s.society)});
   const crisis=s.society.crisis.fallCause==='assassination'?undefined:resolveCrisisWeek(s,{foodDemandMilli,foodConsumedMilli});
+  const hospitalOperated=funded.some(t=>t.building!.typeId==='hospital'&&t.building!.workers===buildingWorkerCap('hospital',t.building!.level)&&operatingIds.has(t.id));
+  const items=resolveItemWeek(s,ctx,hospitalOperated,crisis?.stageBefore==='rebellion');
   societyReport.tensionAfter=s.society.tension;
   order.after.authority=s.society.order.authority;
   spoilOutsideStocks(s,operatingIds,outside);
   if(goodsStock)goodsStock=Object.freeze({...goodsStock,closingMilli:s.goodsStock.amountMilli});
   outside.stocksAfter={...s.society.stocksMilli};
   const goods = Object.freeze({ demandMilli, servedMilli, fulfillmentBps, woodUsed, ironUsed, revenueMilli });
-  return Object.freeze({ laws, crimeEvent, ...(crisis ? {crisis} : {}), order, outside, week: s.world.week - 1, before: Object.freeze(before), after: Object.freeze({ ...stocks }), taxMilli, farmBatchGoldMilli, farmExtraUpkeepMilli, upkeepPaidMilli, unpaidUpkeepMilli, foodDemandMilli, foodConsumedMilli, happinessBefore, happinessAfter: s.happiness, goods, ...(goodsStock ? { goodsStock } : {}), ...(societyReport ? { society:societyReport,luxuryImportedMilli,trainingGoldMilli } : {}), activities: Object.freeze(activities), ...(immigration ? { immigration } : {}) });
+  return Object.freeze({ items, laws, crimeEvent, ...(crisis ? {crisis} : {}), order, outside, week: s.world.week - 1, before: Object.freeze(before), after: Object.freeze({ ...stocks }), taxMilli, farmBatchGoldMilli, farmExtraUpkeepMilli, upkeepPaidMilli, unpaidUpkeepMilli, foodDemandMilli, foodConsumedMilli, happinessBefore, happinessAfter: s.happiness, goods, ...(goodsStock ? { goodsStock } : {}), ...(societyReport ? { society:societyReport,luxuryImportedMilli,trainingGoldMilli } : {}), activities: Object.freeze(activities), ...(immigration ? { immigration } : {}) });
+}
+
+function resolveItemWeek(s:TileTrialState,ctx:ItemWeekContext|undefined,hospitalOperated:boolean,wasRebellion:boolean):ItemWeekReport {
+  const society=s.society!,items=society.items,week=s.world.week-1,seed=s.world.worldMetadata.worldSeed;
+  const report:ItemWeekReport={materials:[],found:null,expired:[],legendary:null,hospitalOperated,regen:1+Number(hospitalOperated)+(ctx?.playerRegen??0)};
+  const materialRng=itemRandom(seed,week,'material');
+  for(const tile of s.tiles){
+    if(!tile.building||!ctx?.postSkills[tile.id])continue;
+    const pool=Object.keys(ITEM_CATALOG).filter(id=>ITEM_CATALOG[id].category==='material'&&ITEM_CATALOG[id].building!.includes(tile.building!.typeId));
+    if(!pool.length)continue;
+    const rarity=drawItemRarity(ITEM_TRIAL.materialOddsBps,materialRng);
+    const materialId=pool.find(id=>ITEM_CATALOG[id].rarity===rarity);
+    if(!materialId)continue;
+    const count=items.materials[materialId]??0,lost=count>=ITEM_TRIAL.stackCap;
+    if(!lost)items.materials[materialId]=count+1;
+    report.materials.push({tileId:tile.id,materialId,lost});
+  }
+  const grant=(defId:string):{stored:boolean;lost:boolean}=>{
+    if(items.inventory.length<ITEM_TRIAL.inventoryCap){items.inventory.push({id:items.nextItemId++,defId});return {stored:false,lost:false};}
+    if(items.storage.length<ITEM_TRIAL.storageCap){items.storage.push({item:{id:items.nextItemId++,defId},expiresWeek:week+ITEM_TRIAL.storageWeeks});return {stored:true,lost:false};}
+    return {stored:false,lost:true};
+  };
+  const findRng=itemRandom(seed,week,'find'),rarity=drawItemRarity(ITEM_TRIAL.findOddsBps,findRng);
+  if(rarity){
+    const pool=Object.keys(ITEM_CATALOG).filter(id=>isWearable(ITEM_CATALOG[id])&&ITEM_CATALOG[id].rarity===rarity);
+    const defId=pool[Math.floor(findRng()*pool.length)];report.found={defId,...grant(defId)};
+  }
+  report.expired=items.storage.filter(entry=>entry.expiresWeek<=week).map(entry=>entry.item.defId);
+  items.storage=items.storage.filter(entry=>entry.expiresWeek>week);
+  const goals=items.goals;
+  goals.rebellionSeen ||= wasRebellion||society.crisis.stage==='rebellion';
+  goals.authorityStreak=society.order.authority>=90?trialSafe(goals.authorityStreak+1):0;
+  const candidates={calm:goals.rebellionSeen&&society.crisis.stage==='none',authority:goals.authorityStreak>=4,week52:week>=52,research:RESEARCH_TOPICS.every(topic=>society.research.completed.includes(topic))};
+  for(const goal of ['calm','authority','week52','research'] as const){
+    if(goals[goal]||!candidates[goal])continue;
+    const owned=new Set([...items.inventory,...items.consumables,...items.storage.map(entry=>entry.item),...Object.values(items.equipped).flatMap(worn=>Object.values(worn))].map(item=>item.defId));
+    const pool=Object.keys(ITEM_CATALOG).filter(id=>isWearable(ITEM_CATALOG[id])&&ITEM_CATALOG[id].rarity==='legendary'&&!owned.has(id));
+    goals[goal]=true;
+    if(pool.length){const defId=pool[Math.floor(itemRandom(seed,week,'legendary')()*pool.length)];grant(defId);report.legendary={goal,defId};}
+    break;
+  }
+  items.market=drawItemMarket(seed,s.world.week);
+  return report;
 }

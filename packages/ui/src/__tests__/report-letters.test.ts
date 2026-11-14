@@ -6,6 +6,7 @@ import { reportLetters, reportStamps, type LetterId, type LetterRow, type Report
 
 function report(overrides: Partial<TileTrialReport> = {}): TileTrialReport {
   return {
+    items: { materials: [], found: null, expired: [], legendary: null, hospitalOperated: false, regen: 0 },
     week: 1,
     before: { gold: 10000, food: 2000, wheat: 0, wood: 0, iron: 0 },
     after: { gold: 10000, food: 1000, wheat: 0, wood: 0, iron: 0 },

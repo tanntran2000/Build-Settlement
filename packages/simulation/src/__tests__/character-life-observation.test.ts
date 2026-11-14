@@ -286,6 +286,7 @@ describe('actionable catalogues and phase controls', () => {
 
 function reportFixture(): TileTrialReport {
   return {
+    items: { materials: [], found: null, expired: [], legendary: null, hospitalOperated: false, regen: 0 },
     week: 7, before: { gold: 11001, wheat: 12002, food: 13003, wood: 14004, iron: 15005 },
     after: { gold: 21001, wheat: 22002, food: 23003, wood: 24004, iron: 25005 },
     taxMilli: 31001, farmBatchGoldMilli: 32002, farmExtraUpkeepMilli: 33003, upkeepPaidMilli: 34004,
