@@ -1,4 +1,4 @@
-import { hasWeeklyKeys, isLiveCharacterLifeSessionState, type CharacterLifeSessionState, type TileTrialReport } from '@haven/core';
+import { hasWeeklyKeys, isLiveCharacterLifeSessionState, buildItemWeekContext, type CharacterLifeSessionState, type TileTrialReport } from '@haven/core';
 import { executeWorldNpcCityCommand, executeWorldNpcCommand } from './world-npc.js';
 import { executeItemCommand, ITEM_COMMAND_TYPES, type ItemCommandType } from './item-command.js';
 
@@ -35,7 +35,8 @@ export function executeCharacterLifeCommand(session: unknown, raw: unknown): Cha
 
   const world = { city: session.city, outside: session.outside, npcs: session.npcs };
   const result = type === 'ASSIGN_NPC' || type === 'UNASSIGN_NPC'
-    ? executeWorldNpcCommand(world, raw) : executeWorldNpcCityCommand(world, raw);
+    ? executeWorldNpcCommand(world, raw)
+    : type==='END_WEEK'?executeWorldNpcCityCommand(world,raw,buildItemWeekContext(session)):executeWorldNpcCityCommand(world,raw);
   if (!result.success) return result;
 
   try {

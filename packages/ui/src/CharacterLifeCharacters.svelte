@@ -68,7 +68,7 @@
       {#snippet work()}
         {#if npc}
           <p data-testid={`npc-post-${npc.character.id}`}>Post: {postLabel(npc.postTileId)}</p>
-          <p>NPC effects on output are not active yet.</p>
+    <p>NPC post skills apply at End Week.</p>
           {#if assignError?.npcId === npc.character.id}<p id="life-assign-error" role="alert">{assignError.message}</p>{/if}
           {#if npc.postTileId}
             <button disabled={locked} aria-describedby={assignError?.npcId === npc.character.id ? 'life-assign-error' : undefined}

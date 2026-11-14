@@ -19,6 +19,13 @@ function scaled(a: number, b: number, divisor = 1): number {
   if (result > BigInt(Number.MAX_SAFE_INTEGER)) throw Error("Trial arithmetic overflow.");
   return Number(result);
 }
+function itemOutput(amount:number,tileId:string,skill:'management'|'technical',ctx?:ItemWeekContext):number {
+  const skills=ctx?.postSkills[tileId];if(!skills)return amount;
+  const effects=ITEM_TRIAL.effects;
+  const skillPercent=Math.min(effects.outputCapPercent,Math.floor(Math.max(0,skills[skill]-effects.threshold)/effects.outputStep)*effects.outputPercent);
+  const ledgerPercent=ctx?.postTraits[tileId]?.includes('ledger')?effects.ledgerOutputPercent:0;
+  return scaled(amount,100+skillPercent+ledgerPercent,100);
+}
 export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext): Readonly<TileTrialReport> {
   if (!s.society || !s.goodsStock) throw Error('Invalid society city.');
   const settlement = s.world.settlements[s.world.activeSettlementId!]; const stocks = settlement.inventory;
@@ -52,7 +59,7 @@ export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext): Readon
     if (d.operation === "farm") {
       farmBatches += batches;
       farmBatchGoldMilli = trialSafe(farmBatchGoldMilli + batchGold); farmExtraUpkeepMilli = trialSafe(farmExtraUpkeepMilli + extra);
-      add("wheat", batches * FARM_WHEAT_PER_BATCH_MILLI);
+      add("wheat", itemOutput(batches * FARM_WHEAT_PER_BATCH_MILLI,tile.id,'management',ctx));
       activities.push(`${tile.id}: Farm ${batches} batches; batch Gold credited against this Farm upkeep.`);
     } else funded.push(tile);
   }
@@ -63,7 +70,7 @@ export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext): Readon
       if(d.operation==='stone'&&b.workers!==buildingWorkerCap(b.typeId,b.level))continue;
       const good=d.operation==='logging'?'wood':d.operation==='mine'?'iron':'stone';
       const rate=good==='wood'?B.loggingWoodPerWorker:good==='iron'?B.mineIronPerWorker:O.perWorker.stone;
-      const wanted=scaled(scaled(b.workers,rate),plot.deepShaft?O.deepShaft.outputBps:10000,10000);
+      const wanted=itemOutput(scaled(scaled(b.workers,rate),plot.deepShaft?O.deepShaft.outputBps:10000,10000),tile.id,'technical',ctx);
       const output=Math.min(wanted,plot.depositMilli!);plot.depositMilli!-=output;
       if(good==='stone')newStocks.stone=trialSafe(newStocks.stone+output);else add(good,output);
       outside.producedMilli[good]=trialSafe(outside.producedMilli[good]+output);
@@ -72,7 +79,7 @@ export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext): Readon
       activities.push(`${tile.id}: extracted ${good==='wood'?'Wood':good==='iron'?'Iron':'Stone'}.`);
     }
     if((d.operation==='wool'||d.operation==='herbs')&&b.workers===buildingWorkerCap(b.typeId,b.level)){
-      const good=d.operation,output=scaled(b.workers,O.perWorker[good]);
+      const good=d.operation,output=itemOutput(scaled(b.workers,O.perWorker[good]),tile.id,'management',ctx);
       newStocks[good]=trialSafe(newStocks[good]+output);outside.producedMilli[good]=trialSafe(outside.producedMilli[good]+output);
     }
   }
@@ -107,14 +114,14 @@ export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext): Readon
     const b = tile.building!; if (trialBuilding(b.typeId)!.operation !== "processor") continue;
     const batches = Math.min(b.workers, PROCESSOR_MAX_BATCHES, Math.floor(stocks.wheat / PROCESSOR_WHEAT_PER_BATCH_MILLI));
     processorBatches += batches;
-    stocks.wheat -= batches * PROCESSOR_WHEAT_PER_BATCH_MILLI; add("food", batches * PROCESSOR_FOOD_PER_BATCH_MILLI);
+    stocks.wheat -= batches * PROCESSOR_WHEAT_PER_BATCH_MILLI; add("food", itemOutput(batches * PROCESSOR_FOOD_PER_BATCH_MILLI,tile.id,'management',ctx));
     activities.push(`${tile.id}: Food Processor ${batches} batches.`);
   }
   for(const tile of funded){
     const b=tile.building!,d=trialBuilding(b.typeId)!;if(d.operation!=='cloth'||b.workers!==buildingWorkerCap(b.typeId,b.level))continue;
     const batches=Math.min(b.workers,Math.floor(newStocks.wool/O.weaver.woolPerBatchMilli));
     newStocks.wool-=scaled(batches,O.weaver.woolPerBatchMilli);
-    const output=scaled(batches,O.weaver.clothPerBatchMilli);newStocks.cloth=trialSafe(newStocks.cloth+output);outside.producedMilli.cloth=trialSafe(outside.producedMilli.cloth+output);
+    const output=itemOutput(scaled(batches,O.weaver.clothPerBatchMilli),tile.id,'technical',ctx);newStocks.cloth=trialSafe(newStocks.cloth+output);outside.producedMilli.cloth=trialSafe(outside.producedMilli.cloth+output);
   }
   const societyDemand = allocateRequirements({society:s.society!,foodAvailableMilli:0,goodsServableMilli:Number.MAX_SAFE_INTEGER,luxuryImportedMilli:0}).goodsConsumedMilli;
   const demandMilli = societyDemand; let servedMilli = 0, woodUsed = 0, ironUsed = 0;
@@ -131,7 +138,7 @@ export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext): Readon
       newStocks.cloth-=scaled(clothBatches,O.workshopClothRecipe.clothMilli);
       const wood=trialSafe(clothWood+scaled(plainBatches,G.woodPerBatchMilli));
       stocks.wood -= wood; woodUsed = trialSafe(woodUsed + wood);
-      producedMilli = trialSafe(producedMilli + scaled(batches, G.goodsPerBatchMilli));
+      producedMilli = trialSafe(producedMilli + itemOutput(scaled(batches, G.goodsPerBatchMilli),tile.id,'technical',ctx));
       activities.push(`${tile.id}: Goods Workshop ${batches} batches; Goods stored, Wood charged once.`);
     }
     const available = trialSafe(openingMilli + producedMilli);
@@ -166,7 +173,7 @@ export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext): Readon
     immigration = Object.freeze({...immigration, arrivals:trialSafe(arrivals+(resolved.report.eliteArrived===null?0:1)), populationAfter:societyPopulation(resolved.society)});
   }
   s.world.week = trialSafe(s.world.week + 1); s.phase = "report";
-  const order = resolveOrderWeek(s,operatingIds,{before:orderBefore,taxModifierBps,taxDeltaMilli,arrivalsBudgetBefore,arrivalsBudgetAfter},terms);
+  const order = resolveOrderWeek(s,operatingIds,{before:orderBefore,taxModifierBps,taxDeltaMilli,arrivalsBudgetBefore,arrivalsBudgetAfter},terms,ctx);
   if(order.tensionAdded>0)societyReport.tensionAfter=s.society.tension;
   if(order.satisfactionLost>0){
     s.happiness=cityHappiness(s.society.satisfaction,societyCounts(s.society),happinessBefore);
@@ -175,7 +182,7 @@ export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext): Readon
   const lawPromise=resolveLawPromiseWeek(s);
   if(lawPromise?.outcome==='broken')societyReport.classes[lawPromise.group].satisfactionAfter=s.society.satisfaction[lawPromise.group];
   const laws={inForce:[...s.society.laws.active],costs:lawGold.costs,unfunded:lawGold.unfunded,incomeMilli:lawGold.incomeMilli,promise:lawPromise};
-  const crimeEvent=resolveCrimeWeek(s,operatingIds,crimeRandom(s.world.worldMetadata.worldSeed,s.world.week-1));
+  const crimeEvent=resolveCrimeWeek(s,operatingIds,crimeRandom(s.world.worldMetadata.worldSeed,s.world.week-1),ctx);
   if(immigration&&crimeEvent.event?.soldiersKilled)immigration=Object.freeze({...immigration,populationAfter:societyPopulation(s.society)});
   const crisis=s.society.crisis.fallCause==='assassination'?undefined:resolveCrisisWeek(s,{foodDemandMilli,foodConsumedMilli});
   const hospitalOperated=funded.some(t=>t.building!.typeId==='hospital'&&t.building!.workers===buildingWorkerCap('hospital',t.building!.level)&&operatingIds.has(t.id));
@@ -229,5 +236,11 @@ function resolveItemWeek(s:TileTrialState,ctx:ItemWeekContext|undefined,hospital
     break;
   }
   items.market=drawItemMarket(seed,s.world.week);
+  let marketNegotiationPercent=0;
+  for(const tile of s.tiles)if(tile.building?.enabled&&tile.building.typeId==='town-market'&&ctx?.postSkills[tile.id]){
+    const effect=ITEM_TRIAL.effects,skill=ctx.postSkills[tile.id].negotiation;
+    marketNegotiationPercent=Math.max(marketNegotiationPercent,Math.min(effect.marketCapPercent,Math.floor(Math.max(0,skill-effect.threshold)/effect.marketStep)));
+  }
+  if(marketNegotiationPercent)items.market=items.market.map(offer=>({...offer,priceMilli:scaled(offer.priceMilli,100-marketNegotiationPercent,100)}));
   return report;
 }

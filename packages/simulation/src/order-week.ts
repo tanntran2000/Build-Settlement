@@ -1,4 +1,4 @@
-import { societySoldiers, garrisonSecurity, lawTerms, type LawTerms, ORDER_TRIAL as O, SOCIETY_BUILDINGS, societyPlot, societyPopulation, buildingWorkerCap,trialBuilding, securityTarget, crimeTarget, authorityTarget, driftToward, type OrderFacts, type OrderReport, type TileTrialState } from '@haven/core';
+import { societySoldiers, garrisonSecurity, lawTerms, type LawTerms, ORDER_TRIAL as O, SOCIETY_BUILDINGS, societyPlot, societyPopulation, buildingWorkerCap,trialBuilding, securityTarget, crimeTarget, authorityTarget, driftToward, ITEM_TRIAL, type ItemWeekContext, type OrderFacts, type OrderReport, type TileTrialState } from '@haven/core';
 
 const classes=['free','makers','luminaries','merchants'] as const;
 export function orderFacts(s:TileTrialState,fundedTileIds:ReadonlySet<string>,terms:LawTerms=lawTerms([])):OrderFacts {
@@ -22,8 +22,21 @@ export function authorityArrivals(authority:number,budget:number,hasRoom:boolean
  if(authority>=O.immigration.bonusAtOrAbove&&hasRoom){if(!Number.isSafeInteger(budget+1))throw Error('Order arrivals overflow.');return budget+1;}
  return budget;
 }
-export function resolveOrderWeek(s:TileTrialState,fundedTileIds:ReadonlySet<string>,partial:Pick<OrderReport,'before'|'taxModifierBps'|'taxDeltaMilli'|'arrivalsBudgetBefore'|'arrivalsBudgetAfter'>,terms:LawTerms=lawTerms([])):OrderReport {
+export function resolveOrderWeek(s:TileTrialState,fundedTileIds:ReadonlySet<string>,partial:Pick<OrderReport,'before'|'taxModifierBps'|'taxDeltaMilli'|'arrivalsBudgetBefore'|'arrivalsBudgetAfter'>,terms:LawTerms=lawTerms([]),ctx?:ItemWeekContext):OrderReport {
  const facts=orderFacts(s,fundedTileIds,terms), order=s.society!.order;
+ const effects=ITEM_TRIAL.effects;
+ let postCombatSecurity=0,wardenSecurity=0,townHallNegotiationAuthority=0;
+ for(const tile of s.tiles){
+  const b=tile.building,skills=ctx?.postSkills[tile.id];
+  if(!b?.enabled||!fundedTileIds.has(tile.id)||!skills)continue;
+  if(b.typeId==='watch-house'||b.typeId==='military-barracks')postCombatSecurity+=Math.min(effects.securityCap,Math.floor(Math.max(0,skills.combat-effects.threshold)/effects.securityStep));
+  if(b.typeId==='watch-house'&&ctx?.postTraits[tile.id]?.includes('warden'))wardenSecurity+=effects.wardenSecurity;
+  if(b.typeId==='town-hall')townHallNegotiationAuthority+=Math.floor(Math.max(0,skills.negotiation-effects.threshold)/effects.authorityStep);
+ }
+ const playerManagementAuthority=ctx?Math.floor(Math.max(0,ctx.playerSkills.management-effects.threshold)/effects.authorityStep):0;
+ const crownAuthority=ctx?.playerTraits.includes('crown')?effects.crownAuthority:0;
+ facts.lawSecurity+=postCombatSecurity+wardenSecurity;
+ facts.lawAuthority+=townHallNegotiationAuthority+playerManagementAuthority+crownAuthority;
  const security=securityTarget(facts); order.security=driftToward(order.security,security,O.drift.security);
  const crime=crimeTarget(facts,order.security); order.crime=driftToward(order.crime,crime,O.drift.crime);
  const authority=authorityTarget(facts,order.security,order.crime); order.authority=driftToward(order.authority,authority,O.drift.authority);
