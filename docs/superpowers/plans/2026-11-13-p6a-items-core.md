@@ -71,6 +71,17 @@
 - **v8 fixtures:** exactly `society-v8/life-5-weeks.json` and `society-v8/life-laws.json` may be regenerated. Their committed path diff may contain only `city.society.items.*`. Any other path, or any other fixture changing, is a HOLD. **Owner (Tân), 2026-11-14, dialog choice, verbatim:** "Allow these 2 files (Recommended)".
 - **UI sentence:** PR B's allowlist gains `packages/ui/src/CharacterLifeCharacters.svelte`, only to replace "NPC effects on output are not active yet." with "NPC post skills apply at End Week.", together with its two e2e asserts. **Owner (Tân), 2026-11-14, dialog choice, verbatim:** "Change it in PR B (Recommended)".
 
+**Plan correction 6 (PR B, Astra round 1 at `a391fbb`).**
+- **Legendary goal with no space (finding 1).** Spec §7.4 guarantees the Legendary. When a goal is reached and the inventory and the temporary storage are both full:
+  - the goal is still marked reached (it never fires twice);
+  - its reward waits in a new optional field `goals.pending` (goal ids in goal order; absent when empty, so existing saves and their bytes stay valid);
+  - at each End Week, in the goals step, waiting rewards are delivered in goal order while space exists (inventory first, then storage, as §7.5), each choosing by seed an unowned Legendary at delivery;
+  - the report names a Legendary only when it is delivered, and an additive `ItemWeekReport` field lists the rewards still waiting (the Steward copy is PR C).
+  - PR B's allowlist gains the `isItemsState` check for `goals.pending` in `packages/core/src/trial/items.ts`. Any other file this needs (for example persistence) is a HOLD.
+  - **Owner (Tân), 2026-11-14, dialog choice, verbatim:** "Wait for space (Recommended)".
+- **Exhausted Mine or Quarry (finding 2).** Spec §7.6 gives one roll per eligible building with an NPC posted that week. The eligible building and post facts are captured before land cleanup, as `a391fbb` does for the Hospital, so a building removed by cleanup still rolls for the week it operated. This is the spec as written and needs no new decision.
+- No existing test, golden or fixture byte is expected to change. Any change is a HOLD with its path diff.
+
 - **Extension 2:** correction 2 also covers updating an expectation to the stored-record layout that an approved Decision defines. Example: under Decision 3, the stored `city` record holds `items` without the instance lists, in `character-life-navigation.spec.ts:1436`. Exact equality stays, and each edit is listed. **Owner (Tân), 2026-11-13, verbatim:** "Allow, extend correction 2 (Recommended)".
 
 **Base:** `main` `c4d3dc4` (DATA-01 complete).
