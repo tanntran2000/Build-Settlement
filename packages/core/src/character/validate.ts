@@ -80,7 +80,11 @@ export function isCharacterLifeSessionState(raw: unknown): raw is CharacterLifeS
   try {
     if (!keysOf(raw, ['city', 'outside', 'npcs', 'player', 'profiles']) ||
         !isNpcWorldSessionState({ city: raw.city, outside: raw.outside, npcs: raw.npcs })) return false;
-    return hasCharacterLifeProfiles(raw, raw.npcs as WorldNpc[]);
+    const npcs = raw.npcs as WorldNpc[];
+    if (!hasCharacterLifeProfiles(raw, npcs)) return false;
+    const city = raw.city as CharacterLifeSessionState['city'];
+    return !city.society || Object.keys(city.society.items.equipped).every(owner =>
+      owner === PLAYER_CHARACTER_ID || npcs.some(npc => npc.character.id === owner));
   } catch { return false; }
 }
 
