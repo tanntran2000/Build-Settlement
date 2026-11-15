@@ -29,6 +29,11 @@
 - **Scope:** existing-test edit P1 only (`packages/core/src/world/__tests__/npc.test.ts:30`: append `'smithy', 'hospital', 'drug-store'` to the expected post list, exact equality kept); product line X1 `packages/core/src/trial/society.ts:66` accepts exactly the old eight `items` keys or the nine keys with `workshops` last; `tile-trial.ts` joins task B1's Files for the shared `REPLACE` → `WORKSHOP_BUSY` guard. **Owner (Tân), 2026-11-15, dialog choice, verbatim:** "Approve P1, X1 and tile-trial.ts (Recommended)".
 - **Rules:** D1 `items.crafted` and `items.workshopsIdle` are optional and omitted when empty (`output` is the recipe's output defId; the e2e visible-report parser is unchanged in PR B); D2 placing an order needs the recipe's building type built and enabled, while staffing, Herbs and paid upkeep are checked at End Week; D3 a Smithy or Hospital with 0 workers completes nothing even with a skilled NPC posted, and the Hospital must be operating by the existing rules, while the Drug Store has base 1 without workers; D4 a refined material whose stack is at 999 waits in the workshop `ready` list (temporary storage holds item instances only); wearables and potions go inventory/consumables → storage → ready. **Owner, verbatim:** "Accept D1–D4 (Recommended)".
 
+**Plan correction 5 (PR C preflight, Step 0 HOLD).** Evidence: `local-drafts/p6b-prC/step0-preflight.md`, `step0-proposed-edits.md` / `.json` (sha256 `ff0bf9a602286768e96c007e27c679e67660d92ec6b152a3746a021f5773014b`).
+- **Existing-test edits** in `tests/e2e/character-life-navigation.helpers.ts` only: P1 (line 3, import `RECIPES`), P2 (line 85, the one-tabpanel check scoped to the Characters area because the City page gains Buy/Brew tabs), P3 (after line 275, a strict parser for the Workshop output and Idle workshops tables), exactly as listed.
+- **Product lines outside the allowlist:** X1 `packages/ui/src/CharacterLifeCity.svelte:45` passes `{npcs}` to `InsideCity`; X2 `packages/ui/src/TileManagement.svelte:80` adds the 6 crafting error codes; X3 `TileManagement.svelte:88` routes `PLACE_CRAFT_ORDER` and `CANCEL_CRAFT_ORDER` errors to the panel. Nothing else in those files changes.
+- **Owner (Tân), 2026-11-15, dialog choice, verbatim:** "Approve P1–P3 and X1–X3 (Recommended)".
+
 **Base:** `main` `e859177` (P6-A complete).
 
 ---
