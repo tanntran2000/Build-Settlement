@@ -1,13 +1,13 @@
 import {
   hasWeeklyKeys, isLiveCharacterLifeSessionState, isItemsState, isOpenItemSlot, isWearable,
-  ITEM_CATALOG, ITEM_TRIAL, buildingWorkerCap, trialBuilding, OUTSIDE_TRIAL,
+  ITEM_CATALOG, ITEM_TRIAL, CRAFT_TRIAL, RECIPES, buildingWorkerCap, trialBuilding, OUTSIDE_TRIAL,
   type CharacterLifeSessionState, type ItemInstance, type Slot,
 } from '@haven/core';
 import type { CharacterLifeCommandResult } from './character-life-command.js';
 
-export const ITEM_COMMAND_TYPES = ['BUY_ITEM','SELL_ITEM','SELL_MATERIAL','DESTROY_ITEM','EQUIP_ITEM','UNEQUIP_ITEM','USE_CONSUMABLE','BUY_POTION','CLAIM_STORED_ITEM'] as const;
+export const ITEM_COMMAND_TYPES = ['BUY_ITEM','SELL_ITEM','SELL_MATERIAL','DESTROY_ITEM','EQUIP_ITEM','UNEQUIP_ITEM','USE_CONSUMABLE','BUY_POTION','CLAIM_STORED_ITEM','PLACE_CRAFT_ORDER','CANCEL_CRAFT_ORDER'] as const;
 export type ItemCommandType = typeof ITEM_COMMAND_TYPES[number];
-const fields:Record<ItemCommandType,string[]>={BUY_ITEM:['offerIndex'],SELL_ITEM:['itemId'],SELL_MATERIAL:['materialId','count'],DESTROY_ITEM:['itemId'],EQUIP_ITEM:['itemId','characterId'],UNEQUIP_ITEM:['characterId','slot'],USE_CONSUMABLE:['itemId'],BUY_POTION:['tileId','potion'],CLAIM_STORED_ITEM:['itemId']};
+const fields:Record<ItemCommandType,string[]>={BUY_ITEM:['offerIndex'],SELL_ITEM:['itemId'],SELL_MATERIAL:['materialId','count'],DESTROY_ITEM:['itemId'],EQUIP_ITEM:['itemId','characterId'],UNEQUIP_ITEM:['characterId','slot'],USE_CONSUMABLE:['itemId'],BUY_POTION:['tileId','potion'],CLAIM_STORED_ITEM:['itemId'],PLACE_CRAFT_ORDER:['tileId','recipeId'],CANCEL_CRAFT_ORDER:['tileId','index']};
 const fail=(code:string,message=code):CharacterLifeCommandResult=>({success:false,error:{code,message}});
 const count=(v:unknown):v is number=>Number.isSafeInteger(v)&&(v as number)>=0;
 const safe=(v:number):number=>{if(!Number.isSafeInteger(v)||v<0)throw Error('Unsafe item arithmetic');return v;};
@@ -24,7 +24,8 @@ export function executeItemCommand(session:CharacterLifeSessionState,raw:unknown
   if(!count(raw.expectedRevision)||raw.expectedRevision!==session.city.revision)return fail('STALE_COMMAND');
   if(type==='EQUIP_ITEM'&&Object.hasOwn(raw,'slot'))return fail('SLOT_MISMATCH');
   if(type==='USE_CONSUMABLE'&&Object.hasOwn(raw,'characterId'))return fail('FORBIDDEN');
-  if(!hasWeeklyKeys(raw,['type','expectedRevision',...fields[type]]))return fail('FORBIDDEN');
+  const optionalItem=type==='PLACE_CRAFT_ORDER'&&Object.hasOwn(raw,'itemId')?['itemId']:[];
+  if(!hasWeeklyKeys(raw,['type','expectedRevision',...fields[type],...optionalItem]))return fail('FORBIDDEN');
   const next=structuredClone(session),s=next.city.society!.items;
   const stock=next.city.world.settlements[next.city.world.activeSettlementId!].inventory;
   const locate=(id:unknown)=>[s.inventory,s.consumables].map(list=>({list,index:list.findIndex(i=>i.id===id)})).find(p=>p.index>=0);
@@ -41,7 +42,43 @@ export function executeItemCommand(session:CharacterLifeSessionState,raw:unknown
   if(type==='BUY_ITEM'||type==='SELL_ITEM'||type==='SELL_MATERIAL'){
     if(!next.city.tiles.some(t=>t.building?.typeId==='town-market'&&t.building.enabled))return fail('NO_SHOP');
   }
-  if(type==='BUY_ITEM'){
+  if(type==='PLACE_CRAFT_ORDER'){
+    if(typeof raw.recipeId!=='string'||!Object.hasOwn(RECIPES,raw.recipeId))return fail('RECIPE_UNKNOWN');
+    const recipe=RECIPES[raw.recipeId],tileId=raw.tileId;
+    const building=typeof tileId==='string'?next.city.tiles.find(t=>t.id===tileId)?.building:undefined;
+    if(!building?.enabled||!recipe.workshops.includes(building.typeId as 'smithy'|'hospital'|'drug-store'))return fail('NO_WORKSHOP');
+    const heldItems:ItemInstance[]=[],materials:Record<string,number>={};
+    for(const input of recipe.inputs){
+      if(ITEM_CATALOG[input.defId].category==='material'){
+        if((s.materials[input.defId]??0)<input.count)return fail('MISSING_INPUT');
+        materials[input.defId]=input.count;
+      }else{
+        const found=locate(raw.itemId);
+        if(input.count!==1||!found||found.list[found.index].defId!==input.defId)return fail('MISSING_INPUT');
+        heldItems.push(found.list[found.index]);
+      }
+    }
+    const workshop=s.workshops&&Object.hasOwn(s.workshops,tileId as string)?s.workshops[tileId as string]:{orders:[],ready:[]};
+    if(workshop.orders.length>=CRAFT_TRIAL.queueCap)return fail('QUEUE_FULL');
+    if(stock.gold<recipe.feeMilli)return fail('NOT_ENOUGH_GOLD');
+    for(const item of heldItems){const found=locate(item.id)!;found.list.splice(found.index,1);}
+    for(const [id,n] of Object.entries(materials)){s.materials[id]-=n;if(!s.materials[id])delete s.materials[id];}
+    stock.gold-=recipe.feeMilli;
+    workshop.orders.push({recipeId:raw.recipeId,items:heldItems,materials:Object.fromEntries(Object.keys(ITEM_CATALOG).filter(id=>Object.hasOwn(materials,id)).map(id=>[id,materials[id]])),feeMilli:recipe.feeMilli});
+    s.workshops=Object.fromEntries([...Object.entries(s.workshops??{}).filter(([id])=>id!==tileId),[tileId as string,workshop] as const].sort(([a],[b])=>a<b?-1:a>b?1:0));
+  } else if(type==='CANCEL_CRAFT_ORDER'){
+    const tileId=raw.tileId;
+    const workshop=typeof tileId==='string'&&s.workshops&&Object.hasOwn(s.workshops,tileId)?s.workshops[tileId]:undefined;
+    if(!workshop||!count(raw.index)||!workshop.orders[raw.index])return fail('ORDER_UNKNOWN');
+    const order=workshop.orders[raw.index];
+    for(const item of order.items)if(!receive(item))return fail('INVENTORY_FULL');
+    for(const [id,n] of Object.entries(order.materials)){
+      const total=safe((s.materials[id]??0)+n);if(total>ITEM_TRIAL.stackCap)return fail('INVENTORY_FULL');s.materials[id]=total;
+    }
+    stock.gold=safe(stock.gold+order.feeMilli);workshop.orders.splice(raw.index,1);
+    if(!workshop.orders.length&&!workshop.ready.length)delete s.workshops![tileId as string];
+    if(!Object.keys(s.workshops!).length)delete s.workshops;
+  } else if(type==='BUY_ITEM'){
     if(!count(raw.offerIndex)||!s.market[raw.offerIndex])return fail('ITEM_UNKNOWN');
     const offer=s.market[raw.offerIndex],error=purchase(offer.defId,offer.priceMilli);if(error)return error;s.market.splice(raw.offerIndex,1);
   } else if(type==='BUY_POTION'){
