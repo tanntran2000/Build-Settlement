@@ -1,5 +1,30 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## P6-B PR B (craft orders) — PR #97 G6 (2026-11-15 UTC)
+
+**G6 PASS (Claude, Orchestrator/Tester).** P6-B PR B is complete; PR C (crafting UI) follows.
+
+- **Merge.** PR #97 (`P6-B PR B: craft orders (place, cancel, End Week completion, persistence)`) was merged under G5 at 2026-11-15T11:44:06Z (GitHub account `tanntran2000`; dot or the owner per AGENTS.md G5).
+  - Merge/main commit: `43fcb9b856c66606230d6d7ba49140ae94cfaa00` (parents `0de2d1f`, `735e3ff`).
+  - Accepted head: `735e3ff4d71c7fad04914913778f8325a86f79a8`. Base: `0de2d1f`.
+- **Trees.** The merge tree `bc5965abab73df37f43baeafd9e4f9d847a23826` is identical to the accepted head tree. Claude checked this locally.
+- **Main CI.** Quality Gate run [43710349028](https://github.com/tanntran2000/Build-Settlement/actions/runs/43710349028), job 132800334779 (push, exact merge SHA), SUCCESS at 2026-11-15T12:03:14Z: 2,768 unit tests and 370/370 Chromium smoke (17.5 min). The dependency audit reports 3 low advisories, none moderate or higher.
+- **Pre-merge, at `735e3ff`:**
+  - Claude Tester gates 1–7 exit 0, and full smoke 370/370 with `CI=1`.
+  - CI 43702766789 success.
+  - Astra (thread `mcp:30d3cb3c` "P6-B Astra review"): round 1 PASS, no P0–P3, 13/13 per-file ledger.
+  - Builder (thread `mcp:3f312a3e` "P6-B Builder"): one Step 0 HOLD, then B1–B3 with no further HOLD.
+- **Evidence.** `docs/verification/p6b-pr97/` on branch `docs/p6b-crafting-design`, at `19a88c8` (the owner approval record was added there after `6334222` missed it).
+- **Owner instructions** (verbatim; full table in `owner-approval-record.md`):
+  - "Giao Builder B";
+  - Plan correction 4: "Approve P1, X1 and tile-trial.ts (Recommended)", "Accept D1–D4 (Recommended)".
+- **Disclosed.**
+  - One existing-test edit (P1, post list) and one product line outside the allowlist (X1, `society.ts:66`), both approved.
+  - With no orders, 85 protected golden, fixture and pin files are byte-identical; 9 no-order regression hashes were captured at the untouched base.
+- **Limits.**
+  - Chromium only; Astra's review is read-only (NPC-world routing and city fall checked by source).
+  - Reviewed against the 47-recipe catalog. The crafting UI is PR C.
+
 ## P6-B PR A (crafting data) — PR #96 G6 (2026-11-15 UTC)
 
 **G6 PASS (Claude, Orchestrator/Tester).** P6-B PR A is complete; PR B (orders and week) and PR C (UI) follow.
