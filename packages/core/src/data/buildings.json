@@ -419,6 +419,21 @@
         "iron": 2000
       },
       "upkeepMilli": 1000
+    },
+    "smithy": {
+      "name": "Smithy",
+      "operation": "society",
+      "terrain": [
+        "town"
+      ],
+      "maxLevel": 2,
+      "maxWorkers": 1,
+      "cost": {
+        "gold": 10000,
+        "wood": 6000,
+        "iron": 6000
+      },
+      "upkeepMilli": 1000
     }
   },
   "society": {
@@ -558,7 +573,7 @@
     "smithy": {
       "tier": "specialist",
       "staff": "makers",
-      "reserved": true
+      "reserved": false
     },
     "library": {
       "tier": "specialist",

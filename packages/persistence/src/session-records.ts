@@ -15,7 +15,7 @@ function isStoredCity(raw: unknown): raw is CharacterLifeSessionState['city'] {
         !raw.society || typeof raw.society !== 'object') return false;
     const ruleset = Object.getOwnPropertyDescriptor(raw.society, 'rulesetId')?.value;
     if (ruleset === SOCIETY_RULESET) return isTileTrialState(raw);
-    const version = typeof ruleset === 'string' ? /^tile-society-0([1-7])$/.exec(ruleset) : null;
+    const version = typeof ruleset === 'string' ? /^tile-society-0([1-8])$/.exec(ruleset) : null;
     if (!version || !isCanonicalGameState(raw.world) || !raw.world.activeSettlementId || !count(raw.revision) ||
         !['planning','report'].includes(raw.phase as string) || typeof raw.happiness !== 'number' ||
         !Number.isFinite(raw.happiness) || raw.happiness < 0 || raw.happiness > 100 ||
@@ -31,6 +31,7 @@ function isStoredCity(raw: unknown): raw is CharacterLifeSessionState['city'] {
       if (v >= 5) keys.push('standing');
       if (v >= 6) keys.push('laws');
     }
+    if (v >= 8) keys.push('items');
     if (!hasWeeklyKeys(raw.society, keys)) return false;
     const defaults = createSocietyState().society!;
     const validation: Record<string, unknown> = { ...defaults, ...raw.society, rulesetId: SOCIETY_RULESET };

@@ -4,8 +4,8 @@ import { createSocietyState } from '../society.js';
 import * as api from '../items.js';
 import { crimeRandom } from '../crime.js';
 const base={management:50,technical:50,medical:50,combat:50,negotiation:50};
-it('starts society v8 with a deterministic 4/2/2 market and an empty inventory',()=>{
- expect(createSocietyState().society!.rulesetId).toBe('tile-society-08');
+it('starts society v9 with a deterministic 4/2/2 market and an empty inventory',()=>{
+ expect(createSocietyState().society!.rulesetId).toBe('tile-society-09');
  const s=api.createItemsState(42);expect(s).toEqual(api.createItemsState(42));expect(s.inventory).toEqual([]);expect(api.isItemsState(s,['player'])).toBe(true);
  for(const [r,n] of Object.entries({common:4,rare:2,epic:2}))expect(s.market.filter(o=>api.ITEM_CATALOG[o.defId].rarity===r)).toHaveLength(n);
 });
