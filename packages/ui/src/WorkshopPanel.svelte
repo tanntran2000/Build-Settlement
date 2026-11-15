@@ -1,7 +1,7 @@
 <script lang="ts">
   import { tick } from 'svelte';
   import { CRAFT_TRIAL, ITEM_CATALOG, RECIPES, TRIAL_BUILDINGS, type TileTrialState, type WorldNpc } from '@haven/core';
-  import { craftingRecipes, workshopCapacity } from './items-view.js';
+  import { craftingRecipes, workshopForecast } from './items-view.js';
   import { formatMilli } from './milli-format.js';
   import ItemCard from './ItemCard.svelte';
 
@@ -19,7 +19,8 @@
   $: workshop=state.society!.items.workshops?.[tileId];
   $: orders=workshop?.orders??[];
   $: recipes=craftingRecipes(state,tileId);
-  $: capacity=workshopCapacity(state,npcs,tileId);
+  $: forecast=workshopForecast(state,npcs,tileId);
+  $: capacity=forecast.capacity;
   $: failure=managementError&&['PLACE_CRAFT_ORDER','CANCEL_CRAFT_ORDER'].includes(managementError.action)?managementError.message:'';
 
   async function run(type:string,fields:Record<string,unknown>,opener:HTMLButtonElement) {
@@ -33,7 +34,8 @@
 <section bind:this={root} class="workshop" aria-label={building?.typeId==='smithy'?'Smithy workshop':`${name} brewing`}>
   <header><p class="eyebrow">Workshop ledger · {tileId}</p><h4>{name} · {building?.typeId==='smithy'?'Craft orders':'Brew orders'}</h4></header>
   <p class="capacity">{Math.min(orders.length,capacity)} of {capacity} this week · {orders.length} / {CRAFT_TRIAL.queueCap} orders queued</p>
-  <p>Planning capacity assumes upkeep is paid at End Week. Hospitals also need full staffing and Herbs. Inputs and the fee are held when you place an order.</p>
+  {#if forecast.reason}<p><strong>{forecast.reason}</strong></p>{/if}
+  <p>Forecast includes this week's tax, upkeep and Herb production. Inputs and the fee are held when you place an order.</p>
   {#if !building?.enabled}<p>Workshop paused. Orders and ready outputs are kept.</p>{/if}
   {#if failure}<p role="alert" class="failure">{failure}</p>{/if}
   <div class="ledger-columns">

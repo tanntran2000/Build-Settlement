@@ -2,12 +2,14 @@ import { describe, expect, it } from 'vitest';
 import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, ITEM_CATALOG, RECIPES, type CharacterLifeSessionState, type ItemWeekReport, type TileTrialReport } from '@haven/core';
 import * as view from '../items-view.js';
 import { reportLetters } from '../report-letters.js';
+import { executeCharacterLifeCommand } from '@haven/simulation';
 
 function life() {
   const made = createCharacterLifeSession(42, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' });
   if (!made.success) throw Error(made.error.message);
   const s = made.value;
   stock(s).gold = 100000;
+  s.city.society!.stocksMilli.herbs = 10000;
   for (const [id, typeId, workers] of [['spec-2', 'smithy', 1], ['service-1', 'hospital', 2], ['slum-1', 'drug-store', 0]] as const) {
     s.city.tiles.find(t => t.id === id)!.building = { typeId, level: 1, workers, enabled: true };
   }
@@ -151,5 +153,80 @@ describe('C2 crafting Quartermaster rows', () => {
     expect(quartermaster.rows).toHaveLength(4);
     expect(quartermaster.rows.map(r => r.label)).toEqual(['Item crafted', 'Material refined', 'Waiting for room', 'Workshop idle']);
     expect(report.items.crafted).toHaveLength(5); expect(JSON.stringify(report)).toBe(before);
+  });
+});
+
+describe('F1 weekly workshop operation forecast', () => {
+  function operatingLife() {
+    const s = life();
+    s.city.society!.classes.free = 37; s.city.society!.classes.makers.common = 30; s.city.society!.classes.luminaries.common = 20;
+    return s;
+  }
+  it('gives a fully staffed funded Hospital zero and a reason when no Herbs can arrive', () => {
+    const s = operatingLife(); s.city.society!.stocksMilli.herbs = 0;
+    expect(view.workshopCapacity(s.city, [], 'service-1')).toBe(0);
+    expect(view.workshopForecast(s.city, [], 'service-1')).toEqual({ capacity: 0, reason: 'Idle this week: not enough Herbs.' });
+  });
+  it.each(['spec-2', 'service-1', 'slum-1'])('gives unfunded %s zero and an upkeep reason', tileId => {
+    const s = operatingLife(); stock(s).gold = 0; s.city.society!.stocksMilli.herbs = 10000;
+    expect(view.workshopCapacity(s.city, [], tileId)).toBe(0);
+    expect(view.workshopForecast(s.city, [], tileId)).toEqual({ capacity: 0, reason: 'Idle this week: upkeep unpaid.' });
+  });
+  it('uses workers and effective medical steps when the Hospital is funded and supplied', () => {
+    const s = operatingLife(); s.city.society!.stocksMilli.herbs = 1000;
+    const npc = s.npcs[0]; npc.postTileId = 'service-1'; npc.character.skills.medical = 80;
+    expect(view.workshopForecast(s.city, s.npcs, 'service-1')).toEqual({ capacity: 4, reason: null });
+  });
+  it('gives funded worker-free Drug Store base one', () => {
+    const s = operatingLife();
+    expect(view.workshopForecast(s.city, [], 'slum-1')).toEqual({ capacity: 1, reason: null });
+  });
+  it('uses same-week Herb output before Hospital consumption, independent of tile placement order', () => {
+    const s = operatingLife(); s.city.society!.stocksMilli.herbs = 0;
+    s.city.society!.wallRing = 2;
+    s.city.society!.outside['meadow-1'].wild = false;
+    s.city.tiles.find(t => t.id === 'meadow-1')!.building = { typeId: 'herb-garden', level: 1, workers: 2, enabled: true };
+    const herb = s.city.tiles.findIndex(t => t.id === 'meadow-1'); s.city.tiles.push(...s.city.tiles.splice(herb, 1));
+    const before = JSON.stringify(s);
+    expect(view.workshopForecast(s.city, [], 'service-1')).toEqual({ capacity: 2, reason: null });
+    expect(JSON.stringify(s)).toBe(before);
+  });
+  it('allocates Herbs to fully staffed Hospitals in tile order and excludes paused producers', () => {
+    const s = operatingLife(); s.city.society!.stocksMilli.herbs = 1000;
+    s.city.tiles.find(t => t.id === 'service-2')!.building = { typeId: 'hospital', level: 1, workers: 2, enabled: true };
+    expect(view.workshopForecast(s.city, [], 'service-1')).toEqual({ capacity: 2, reason: null });
+    expect(view.workshopForecast(s.city, [], 'service-2')).toEqual({ capacity: 0, reason: 'Idle this week: not enough Herbs.' });
+    s.city.society!.stocksMilli.herbs = 0;
+    s.city.tiles.find(t => t.id === 'plain-2')!.building = { typeId: 'herb-garden', level: 1, workers: 2, enabled: false };
+    expect(view.workshopCapacity(s.city, [], 'service-1')).toBe(0);
+  });
+  it('credits this-week tax before upkeep, so zero opening Gold need not mean idle', () => {
+    const s = operatingLife(); stock(s).gold = 0;
+    for (const tile of s.city.tiles) if (tile.building && tile.id !== 'slum-1') tile.building.enabled = false;
+    expect(view.workshopForecast(s.city, [], 'slum-1')).toEqual({ capacity: 1, reason: null });
+  });
+  it.each(['no-herbs', 'supplied', 'same-week-herbs', 'unfunded', 'drug-funded', 'drug-unfunded'])('matches actual End Week throughput for %s without changing the input', scenario => {
+    let s = operatingLife();
+    const tileId = scenario.startsWith('drug-') ? 'slum-1' : 'service-1';
+    s.city.society!.items.materials['green-leaf'] = 12;
+    for (let index = 0; index < 6; index++) {
+      const result = executeCharacterLifeCommand(s, { type: 'PLACE_CRAFT_ORDER', expectedRevision: s.city.revision, tileId, recipeId: 'brew-heal-potion-1' });
+      if (!result.success) throw Error(result.error.message); s = result.next;
+    }
+    s.city.society!.stocksMilli.herbs = scenario === 'no-herbs' || scenario === 'same-week-herbs' ? 0 : 1000;
+    if (scenario.includes('unfunded')) stock(s).gold = 0;
+    if (scenario === 'same-week-herbs') {
+      s.city.society!.wallRing = 2;
+      const tile = s.city.tiles.find(t => t.id === 'meadow-1')!; tile.building = { typeId: 'herb-garden', level: 1, workers: 2, enabled: true };
+      Object.assign(s.city.society!.outside['meadow-1'], { wild: false, clearMilli: 4000 });
+      s.city.tiles.find(t => t.id === 'field-1')!.building!.workers = 1;
+    }
+    const before = JSON.stringify(s), forecast = view.workshopForecast(s.city, s.npcs, tileId);
+    expect(JSON.stringify(s)).toBe(before);
+    const resolved = executeCharacterLifeCommand(s, { type: 'END_WEEK', expectedRevision: s.city.revision, expectedWeek: s.city.world.week });
+    if (!resolved.success) throw Error(`Parity fixture: ${resolved.error.code}: ${resolved.error.message}`);
+    if (!resolved.report) throw Error('Parity fixture did not produce a report');
+    expect(resolved.report.items.crafted?.filter(row => row.tileId === tileId).length ?? 0).toBe(forecast.capacity);
+    expect(!!resolved.report.items.workshopsIdle?.includes(tileId)).toBe(forecast.capacity === 0);
   });
 });

@@ -118,6 +118,23 @@ test('C1 queue holds inputs/Gold, shows ready outputs, and failed cancel stays a
   expect(await exportLife(page)).toEqual(s);
 });
 
+test('F1 no-Herbs Hospital forecast agrees with End Week and explains why the queue waits', async ({ page }) => {
+  let s = supplied(); s.city.society!.stocksMilli.herbs = 0;
+  s = act(s, 'PLACE_CRAFT_ORDER', { tileId: 'service-1', recipeId: 'brew-heal-potion-1' });
+  const result = executeCharacterLifeCommand(s, { type: 'END_WEEK', expectedRevision: s.city.revision, expectedWeek: s.city.world.week });
+  if (!result.success || !result.report) throw Error('No-Herbs fixture');
+  const completed = result.report.items.crafted?.filter(row => row.tileId === 'service-1').length ?? 0;
+  expect(completed).toBe(0); expect(result.report.items.workshopsIdle).toContain('service-1');
+  await importLife(page, s); await selectPlot(page, 'service-1'); await page.getByRole('tab', { name: 'Brew', exact: true }).click();
+  const workshop = page.getByRole('region', { name: 'Hospital brewing', exact: true });
+  await expect(workshop).toContainText(`${completed} of 0 this week`);
+  await expect(workshop.getByText('Idle this week: not enough Herbs.', { exact: true })).toBeVisible();
+  expect(await exportLife(page)).toEqual(s);
+  await page.getByTestId('life-end-week').click(); await expectReport(page, result.report);
+  await page.getByRole('button', { name: 'Plan next week', exact: true }).click();
+  expect(await exportLife(page)).toEqual(act(result.next, 'NEXT_WEEK'));
+});
+
 const evidence = 'C:/Users/Admin/.t3/local-drafts/p6b-prC';
 function reportSession() {
   let s = supplied();
