@@ -1,6 +1,6 @@
 # P6-B — Crafting: refining, upgrades and brewing (design spec v0.1)
 
-**Status:** draft for the owner's review (G1). Not approved yet.
+**Status:** v0.1 **G1 approved** by the owner (Tân), 2026-11-15, verbatim: "Duyệt spec".
 
 - **Base:** `main` `e859177` (P6-A complete: #93, #94, #95).
 - **Not authorised by this document:** no code, push or PR.
