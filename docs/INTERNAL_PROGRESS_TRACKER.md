@@ -1,5 +1,31 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## P6-B PR A (crafting data) — PR #96 G6 (2026-11-15 UTC)
+
+**G6 PASS (Claude, Orchestrator/Tester).** P6-B PR A is complete; PR B (orders and week) and PR C (UI) follow.
+
+- **Merge.** PR #96 (`P6-B PR A: crafting data (families, item ladders, recipes, Smithy, ruleset 09)`) was merged under G5 at 2026-11-15T05:49:16Z (GitHub account `tanntran2000`; dot or the owner per AGENTS.md G5).
+  - Merge/main commit: `0de2d1ffa91abadf76ced9696f440a09bf19f8af` (parents `e859177`, `a607111`).
+  - Accepted head: `a60711120b8c3d7ff9759a14cbb7a6c09ec396c5`. Base: `e859177`.
+- **Trees.** The merge tree `1b26a634536c83699780f1a9479ce64ebb10717d` is identical to the accepted head tree. Claude checked this locally.
+- **Main CI.** Quality Gate run [43682706526](https://github.com/tanntran2000/Build-Settlement/actions/runs/43682706526), job 132716571680 (push, exact merge SHA), SUCCESS at 2026-11-15T06:01:51Z: 2,559 unit tests in 123 files, and 370/370 Chromium smoke (11.5 min). The dependency audit reports 3 low advisories, none moderate or higher.
+- **Pre-merge, at `a607111`:**
+  - Claude Tester gates 1–7 exit 0, and full smoke 370/370 with `CI=1`.
+  - CI 43676162532 success.
+  - Astra (new thread `mcp:30d3cb3c` "P6-B Astra review"): round 1 FAIL as an incomplete review (no defect found), round 2 PASS with a 61-row ledger and a 35/35 byte-exact reconstruction of the 59 test edits. One nonblocking P3: duplicate raw JSON keys are dropped before `validateRecipes`.
+  - Builder: Step 0 by the P6-A thread `mcp:5f929410`, then a new thread `mcp:3f312a3e` "P6-B Builder" (owner: "Sau Step 0"). HOLDs: Step 0; a gate-6 timeout in `lord-health.test.ts:73` (5.4 s in the suite, 1.3–1.5 s alone; owner set that test to 15 s); a smoke HOLD on duplicate Player/NPC item names (fixed with "Lord's" / "Retainer's" prefixes).
+- **Evidence.** `docs/verification/p6b-pr96/` on branch `docs/p6b-crafting-design`, at `a00ddb2`.
+- **Owner instructions** (verbatim; full table in `owner-approval-record.md`):
+  - "bắt đầu đi", "A đi" (crafting as End-Week orders; recipe system now with 18+ recipes in P6-C; full Player/NPC ladders), "nên theo hướng B …", "ok tôi đồng ý theo nhóm để dễ kiểm soát", "Duyệt spec", "Duyệt, giao Builder A", "Sau Step 0";
+  - Plan corrections: 1 "Approve the 58 edits (Recommended)", "Allow the 3 lines (Recommended)", "Allow both (Recommended)", "120 Gold, 3× rule (Recommended)"; 2 "Set this test to 15 s (Recommended)"; 3 "Lord's / Retainer's prefix (Recommended)".
+- **Disclosed.**
+  - Ruleset `tile-society-09`: v8 saves are refused unchanged, as with every ruleset change.
+  - Golden regenerated once; path diff only `city.society.rulesetId` and `city.society.items.*`; 53 historical fixtures byte-identical.
+  - 59 existing-test edits, including a seed change in the Farm e2e and one 15 s per-test timeout.
+- **Limits.**
+  - Chromium only; Astra's review is read-only.
+  - No crafting behaviour yet: orders, the End Week step and the UI are PR B and PR C.
+
 ## P6-A PR C (item UI) — PR #95 G6 (2026-11-14 UTC)
 
 **G6 PASS (Claude, Orchestrator/Tester).** P6-A is complete: PR A #93 (item core), PR B #94 (week rules), PR C #95 (item UI).
