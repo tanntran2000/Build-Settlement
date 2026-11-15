@@ -51,6 +51,16 @@ export function healthLine(session:CharacterLifeSessionState):string {
   return `Health ${session.player.character.health} / 100 · Regen +${characterTotals(session,session.player.character.id).regen!+Number(hospital)}/week`;
 }
 export const ITEM_GOAL_LABELS={calm:'Calm city',authority:'Authority 90+ for 4 weeks',week52:'Week 52',research:'Research complete'} as const;
+export const WORKSHOP_IDLE_COPY='No orders completed. Check workers, supplies and upkeep.';
+type CraftedOutput=NonNullable<ItemWeekReport['crafted']>[number];
+export const craftWork=(entry:CraftedOutput)=>RECIPES[entry.recipeId].kind==='refine'?'Refined':ITEM_CATALOG[entry.output].category==='consumable'?'Brewed':'Crafted';
+export const craftDestination=(place:CraftedOutput['place'])=>({inventory:'Inventory',consumables:'Potion inventory',materials:'Material stack',storage:'Temporary storage',ready:'Waiting for room'}[place]);
+export function craftingHint(definition:ItemDefinition):string|null {
+  if(!definition.slot||!['common','rare'].includes(definition.rarity))return null;
+  const recipe=Object.values(RECIPES).find(recipe=>recipe.kind==='upgrade'&&recipe.workshops.includes('smithy')&&recipe.inputs.some(input=>ITEM_CATALOG[input.defId].name===definition.name));
+  const material=recipe?.inputs.find(input=>ITEM_CATALOG[input.defId].category==='material');
+  return material?`Can upgrade at the Smithy · Needs ${material.count} ${ITEM_CATALOG[material.defId].name} (${itemTitle(ITEM_CATALOG[material.defId].rarity)}).`:null;
+}
 export function itemReportRows(report:ItemWeekReport,id:'steward'|'quartermaster') {
   const rows:{label:string;value:string;tone:'gain'|'loss'|'muted'}[]=[];
   const add=(label:string,value:string,tone:'gain'|'loss'|'muted')=>rows.push({label,value,tone});
@@ -61,6 +71,11 @@ export function itemReportRows(report:ItemWeekReport,id:'steward'|'quartermaster
     for(const m of report.materials)add(m.lost?'Material lost':'Material found',`${ITEM_CATALOG[m.materialId].name} · ${m.tileId}${m.lost?' · stack full (999)':''}`,m.lost?'loss':'gain');
     if(report.found){const f=report.found;add(f.lost?'Item lost':'Item found',`${ITEM_CATALOG[f.defId].name} · ${f.lost?'inventory and temporary storage full':f.stored?'temporary storage':'inventory'}`,f.lost?'loss':'gain');}
     for(const id of report.expired)add('Expired item',ITEM_CATALOG[id].name,'loss');
+    for(const entry of report.crafted??[]){
+      const label=entry.place==='ready'?'Waiting for room':({Refined:'Material refined',Brewed:'Potion brewed',Crafted:'Item crafted'} as const)[craftWork(entry)];
+      add(label,`${ITEM_CATALOG[entry.output].name} · ${entry.tileId} · ${craftDestination(entry.place)}`,entry.place==='ready'?'loss':'gain');
+    }
+    for(const tileId of report.workshopsIdle??[])add('Workshop idle',`${tileId} · ${WORKSHOP_IDLE_COPY}`,'loss');
   }
   return rows;
 }

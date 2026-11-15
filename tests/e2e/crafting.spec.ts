@@ -1,7 +1,8 @@
 import { test, expect, type Page } from '@playwright/test';
 import { ITEM_CATALOG, ITEM_TRIAL, type CharacterLifeSessionState } from '../../packages/core/src/index.ts';
 import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
-import { makeLife, importLife, exportLife, go, selectPerson, selectArea, keyActivate, tabTo, expectOneCharacterWindow } from './character-life-navigation.helpers.ts';
+import { mkdir, writeFile } from 'node:fs/promises';
+import { makeLife, importLife, exportLife, go, selectPerson, selectArea, keyActivate, tabTo, expectOneCharacterWindow, expectReport, openReportDetails, reportRegion } from './character-life-navigation.helpers.ts';
 
 function act(s: CharacterLifeSessionState, type: string, fields: Record<string, unknown> = {}) {
   const r = executeCharacterLifeCommand(s, { type, expectedRevision: s.city.revision, ...fields });
@@ -115,4 +116,111 @@ test('C1 queue holds inputs/Gold, shows ready outputs, and failed cancel stays a
   await smithy(page).getByRole('button', { name: 'Cancel order 1', exact: true }).click();
   await expect(smithy(page).getByRole('alert')).toHaveText('There is no room in the inventory.');
   expect(await exportLife(page)).toEqual(s);
+});
+
+const evidence = 'C:/Users/Admin/.t3/local-drafts/p6b-prC';
+function reportSession() {
+  let s = supplied();
+  s.npcs[0].character.skills.technical = 80;
+  s = act(s, 'ASSIGN_NPC', { npcId: s.npcs[0].character.id, tileId: 'spec-2' });
+  s.city.society!.items.materials.linen = 2; s.city.society!.items.materials.wool = 999;
+  for (const recipeId of ['refine-silver', 'upgrade-rare-ring-player', 'refine-wool']) s = act(s, 'PLACE_CRAFT_ORDER', { tileId: 'spec-2', recipeId, ...(recipeId.startsWith('upgrade') ? { itemId: 1 } : {}) });
+  for (const tileId of ['service-1', 'slum-1']) s = act(s, 'PLACE_CRAFT_ORDER', { tileId, recipeId: 'brew-heal-potion-1' });
+  return act(s, 'SET_ENABLED', { tileId: 'slum-1', enabled: false });
+}
+async function resolveReport(page: Page) {
+  const s = reportSession(), result = executeCharacterLifeCommand(s, { type: 'END_WEEK', expectedRevision: s.city.revision, expectedWeek: s.city.world.week });
+  if (!result.success || !result.report) throw Error('Report fixture');
+  await importLife(page, s); await page.getByTestId('life-end-week').click();
+  await openReportDetails(page, 'quartermaster', 'steward');
+  return result.report;
+}
+
+test('C2 Common/Rare cards name the Smithy material; Epic and Legendary cards have no upgrade hint', async ({ page }) => {
+  const s = supplied(), items = s.city.society!.items;
+  const epic = Object.keys(ITEM_CATALOG).find(id => ITEM_CATALOG[id].kind === 'player' && ITEM_CATALOG[id].slot === 'ring' && ITEM_CATALOG[id].rarity === 'epic')!;
+  for (const defId of ['rare-ring-player', epic, 'wardens-oath']) items.inventory.push({ id: items.nextItemId++, defId });
+  await importLife(page, s); await selectPerson(page, 'player'); const panel = await selectArea(page, 'Inventory');
+  await expect(panel.getByRole('article', { name: 'Plain Ring', exact: true }).getByText('Can upgrade at the Smithy · Needs 1 Nitrate (Rare).', { exact: true })).toBeVisible();
+  await expect(panel.getByRole('article', { name: "Lord's Fine Ring", exact: true }).getByText('Can upgrade at the Smithy · Needs 1 Amethyst (Epic).', { exact: true })).toBeVisible();
+  for (const id of [epic, 'wardens-oath']) await expect(panel.getByRole('article', { name: ITEM_CATALOG[id].name, exact: true }).getByText(/Can upgrade at the Smithy/)).toHaveCount(0);
+});
+
+test('C2 Quartermaster visible tables reconstruct every craft event, waiting output and idle workshop', async ({ page }) => {
+  const report = await resolveReport(page);
+  expect(report.items.crafted).toHaveLength(4); expect(report.items.workshopsIdle).toEqual(['slum-1']);
+  expect(report.items.crafted?.some(c => c.output === 'wool' && c.place === 'ready')).toBe(true);
+  const details = page.getByRole('region', { name: 'Quartermaster item details', exact: true });
+  await expect(details.getByRole('table', { name: 'Workshop output', exact: true }).getByRole('row')).toHaveCount(5);
+  await expect(details.getByRole('table', { name: 'Workshop output', exact: true })).toContainText('Waiting for room');
+  await expect(details.getByRole('table', { name: 'Idle workshops', exact: true })).toContainText('slum-1');
+  await expectReport(page, report);
+  for (const letter of await reportRegion(page).locator('[data-letter]').all()) expect(await letter.locator(':scope > dl > div').count()).toBeLessThanOrEqual(4);
+});
+
+// Independent measured accessibility oracle: visible rendered text/controls only.
+async function auditPanel(page: Page, root: ReturnType<Page['locator']>, name: string, width: number) {
+  const measured = await root.evaluate(root => {
+    const rgba = (s: string) => s.match(/[\d.]+/g)!.map(Number);
+    const light = (rgb: number[]) => rgb.slice(0, 3).map(v => { v /= 255; return v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; }).reduce((n, v, i) => n + v * [.2126, .7152, .0722][i], 0);
+    function background(el: Element | null): number[] { for (; el; el = el.parentElement) { const c = rgba(getComputedStyle(el).backgroundColor); if (c.length === 3 || c[3] === 1) return c; } return [255, 255, 255]; }
+    const texts: { text: string; ratio: number; required: number; size: number }[] = [], clipped: string[] = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); let node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent?.trim() || !node.parentElement) continue;
+      const range = document.createRange(); range.selectNodeContents(node);
+      if (!range.getClientRects().length) continue;
+      const style = getComputedStyle(node.parentElement), foreground = light(rgba(style.color)), back = light(background(node.parentElement));
+      texts.push({ text: node.textContent.trim(), ratio: (Math.max(foreground, back) + .05) / (Math.min(foreground, back) + .05), required: node.parentElement.closest(':disabled,[aria-disabled="true"]') ? 3 : 4.5, size: parseFloat(style.fontSize) });
+      for (const box of range.getClientRects()) if (box.left < -.5 || box.right > innerWidth + .5) clipped.push(node.textContent.trim());
+    }
+    const controls = [...root.querySelectorAll('button,input,select,summary')].filter(el => el.getClientRects().length).map(el => { const box = el.getBoundingClientRect(); return { text: el.textContent?.trim(), width: box.width, height: box.height, left: box.left, right: box.right }; });
+    return { viewport: innerWidth, texts, clipped, controls, overflow: document.documentElement.scrollWidth > innerWidth };
+  });
+  await mkdir(`${evidence}/accessibility`, { recursive: true });
+  await writeFile(`${evidence}/accessibility/${name}-${width}.json`, JSON.stringify(measured, null, 2) + '\n', 'utf8');
+  expect(measured.overflow).toBe(false); expect(measured.clipped).toEqual([]);
+  expect(measured.texts.filter(t => t.ratio + .01 < t.required || t.size < 14)).toEqual([]);
+  expect(measured.controls.filter(c => c.width < 24 || c.height < 24 || c.left < -.5 || c.right > width + .5)).toEqual([]);
+  // Establish keyboard modality even if the selected tab was just clicked.
+  await page.keyboard.press('Tab');
+  for (const control of await root.locator('button:not(:disabled):not([tabindex="-1"]),input:not(:disabled),select:not(:disabled)').all()) {
+    if (!await control.isVisible()) continue; await tabTo(page, control); await expect(control).toBeFocused();
+    const focus = await control.evaluate(el => { const s = getComputedStyle(el); return { style: s.outlineStyle, width: parseFloat(s.outlineWidth), hidden: !!el.closest('[hidden], [aria-hidden="true"]') }; });
+    expect(focus.hidden).toBe(false); expect(focus.style, `keyboard outline: ${await control.textContent()}`).not.toBe('none'); expect(focus.width).toBeGreaterThanOrEqual(2);
+  }
+  if (width === 1280) {
+    await mkdir(`${evidence}/screenshots`, { recursive: true });
+    const reveal = (node: HTMLElement | SVGElement) => { node.scrollIntoView({ block: 'start' }); for (let p = node.parentElement; p; p = p.parentElement) if (p.scrollHeight > p.clientHeight && /auto|scroll/.test(getComputedStyle(p).overflowY)) p.scrollTop = Math.max(0, p.scrollTop - 140); };
+    await root.evaluate(reveal); await page.screenshot({ path: `${evidence}/screenshots/${name}-1280.png` });
+    if (name === 'quartermaster-rows') { await reportRegion(page).locator('.letters-grid').evaluate(reveal); await page.screenshot({ path: `${evidence}/screenshots/steward-quartermaster-1280.png` }); }
+  }
+}
+
+for (const width of [1280, 1600]) for (const panel of ['smithy-queue', 'brew-tab', 'drug-store-brew', 'quartermaster-rows']) {
+  test(`C2 accessibility ${panel} at ${width}`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 1000 });
+    let root;
+    if (panel === 'quartermaster-rows') {
+      const report = await resolveReport(page); await expectReport(page, report);
+      root = page.getByRole('region', { name: 'Quartermaster item details', exact: true });
+      const destination = root.getByRole('table', { name: 'Workshop output', exact: true }).getByRole('columnheader', { name: 'Destination', exact: true });
+      expect(await destination.evaluate(el => { const range = document.createRange(); range.selectNodeContents(el); return range.getClientRects().length; })).toBe(1);
+    } else {
+      const s = act(supplied(), 'PLACE_CRAFT_ORDER', { tileId: 'spec-2', recipeId: 'upgrade-rare-ring-player', itemId: 1 });
+      await importLife(page, s); await selectPlot(page, panel === 'smithy-queue' ? 'spec-2' : panel === 'brew-tab' ? 'service-1' : 'slum-1');
+      if (panel !== 'smithy-queue') await page.getByRole('tab', { name: 'Brew', exact: true }).click();
+      root = panel === 'smithy-queue' ? smithy(page) : page.getByRole('region', { name: 'Potion services', exact: true });
+    }
+    await auditPanel(page, root, panel, width);
+  });
+}
+
+for (const width of [320, 375]) test(`C2 new workshops and report reflow at ${width}`, async ({ page }) => {
+  await page.setViewportSize({ width, height: 812 });
+  await importLife(page, supplied()); await selectPlot(page, 'spec-2'); await auditPanel(page, smithy(page), 'smithy-reflow', width);
+  await selectPlot(page, 'service-1'); await page.getByRole('tab', { name: 'Brew', exact: true }).click();
+  await auditPanel(page, page.getByRole('region', { name: 'Potion services', exact: true }), 'brew-reflow', width);
+  const report = await resolveReport(page); await expectReport(page, report);
+  await auditPanel(page, page.getByRole('region', { name: 'Quartermaster item details', exact: true }), 'report-reflow', width);
 });

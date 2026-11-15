@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, ITEM_CATALOG, RECIPES, type CharacterLifeSessionState } from '@haven/core';
+import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, ITEM_CATALOG, RECIPES, type CharacterLifeSessionState, type ItemWeekReport, type TileTrialReport } from '@haven/core';
 import * as view from '../items-view.js';
+import { reportLetters } from '../report-letters.js';
 
 function life() {
   const made = createCharacterLifeSession(42, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' });
@@ -106,4 +107,49 @@ describe('C1 workshop capacity and errors', () => {
     ['ORDER_UNKNOWN', 'This order is no longer available.'],
     ['WORKSHOP_BUSY', 'Cancel orders and make room for ready outputs before replacing this workshop.'],
   ])('shows the specific command error %s', (code, message) => expect(view.itemError(code)).toBe(message));
+});
+
+describe('C2 Smithy hints', () => {
+  it.each(Object.entries(ITEM_CATALOG))('gives only upgradeable Smithy wearables their exact next material: %s', (id, definition) => {
+    const recipe = definition.slot ? Object.values(RECIPES).find(r => r.kind === 'upgrade' && r.workshops.includes('smithy') && r.inputs.some(i => i.defId === id)) : undefined;
+    const material = recipe?.inputs.find(i => ITEM_CATALOG[i.defId].category === 'material');
+    const hint = view.craftingHint(definition);
+    if (material) expect(hint).toBe(`Can upgrade at the Smithy · Needs ${material.count} ${ITEM_CATALOG[material.defId].name} (${view.itemTitle(ITEM_CATALOG[material.defId].rarity)}).`);
+    else expect(hint).toBeNull();
+  });
+});
+
+describe('C2 crafting Quartermaster rows', () => {
+  const legacy: ItemWeekReport = { materials: [], found: null, expired: [], legendary: null, hospitalOperated: false, regen: 1 };
+  const crafted: NonNullable<ItemWeekReport['crafted']> = [
+    { tileId: 'spec-2', recipeId: 'upgrade-rare-ring-player', output: 'rare-ring-player', place: 'inventory' },
+    { tileId: 'spec-2', recipeId: 'refine-silver', output: 'silver', place: 'materials' },
+    { tileId: 'service-1', recipeId: 'brew-heal-potion-1', output: 'heal-potion-1', place: 'consumables' },
+    { tileId: 'service-1', recipeId: 'upgrade-heal-potion-2', output: 'heal-potion-2', place: 'storage' },
+    { tileId: 'spec-2', recipeId: 'refine-nitrate', output: 'nitrate', place: 'ready' },
+  ];
+  it('names crafted, refined, brewed, waiting and idle events with every exact destination, without mutation', () => {
+    const report = { ...legacy, crafted, workshopsIdle: ['slum-1'] }, before = JSON.stringify(report);
+    expect(view.itemReportRows(report, 'quartermaster')).toEqual([
+      { label: 'Item crafted', value: "Lord's Fine Ring · spec-2 · Inventory", tone: 'gain' },
+      { label: 'Material refined', value: 'Silver · spec-2 · Material stack', tone: 'gain' },
+      { label: 'Potion brewed', value: 'Heal Potion I · service-1 · Potion inventory', tone: 'gain' },
+      { label: 'Potion brewed', value: 'Heal Potion II · service-1 · Temporary storage', tone: 'gain' },
+      { label: 'Waiting for room', value: 'Nitrate · spec-2 · Waiting for room', tone: 'loss' },
+      { label: 'Workshop idle', value: 'slum-1 · No orders completed. Check workers, supplies and upkeep.', tone: 'loss' },
+    ]);
+    expect(JSON.stringify(report)).toBe(before);
+    expect(view.itemReportRows(report, 'steward')).toEqual([]);
+  });
+  it('adds no rows for a legacy report or empty optional fields', () => {
+    expect(view.itemReportRows(legacy, 'quartermaster')).toEqual([]);
+    expect(view.itemReportRows({ ...legacy, crafted: [], workshopsIdle: [] }, 'quartermaster')).toEqual([]);
+  });
+  it('keeps the four-row summary cap while leaving all source details intact', () => {
+    const report = { items: { ...legacy, crafted, workshopsIdle: ['slum-1'] }, before: { gold: 0 }, after: { gold: 0 }, taxMilli: 0, upkeepPaidMilli: 0, unpaidUpkeepMilli: 0, foodConsumedMilli: 0, foodDemandMilli: 0, goods: { servedMilli: 0, demandMilli: 0 }, happinessBefore: 50, happinessAfter: 50 } as TileTrialReport;
+    const before = JSON.stringify(report), letters = reportLetters(report), quartermaster = letters.find(l => l.id === 'quartermaster')!;
+    expect(quartermaster.rows).toHaveLength(4);
+    expect(quartermaster.rows.map(r => r.label)).toEqual(['Item crafted', 'Material refined', 'Waiting for room', 'Workshop idle']);
+    expect(report.items.crafted).toHaveLength(5); expect(JSON.stringify(report)).toBe(before);
+  });
 });
