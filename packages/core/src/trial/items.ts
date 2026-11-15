@@ -5,6 +5,7 @@ import { readDenseArray } from '../world/arrays.js';
 import { createSeededRandom } from '../world/random.js';
 import { mixSeed } from './crime.js';
 import type { CharacterLifeSessionState } from '../character/types.js';
+import { CRAFT_TRIAL, RECIPES } from './recipes.js';
 
 export type Rarity = 'common' | 'rare' | 'epic' | 'legendary';
 export type MaterialFamily = 'metal' | 'mineral' | 'cloth' | 'herb' | 'paper';
@@ -31,6 +32,8 @@ export const ITEM_CATALOG = deepFreeze(catalog.definitions);
 export const ITEM_TRIAL = deepFreeze(catalog.ITEM_TRIAL);
 
 export interface ItemInstance { id:number; defId:string }
+export interface CraftOrder { recipeId:string; items:ItemInstance[]; materials:Record<string,number>; feeMilli:number }
+export interface Workshop { orders:CraftOrder[]; ready:({item:ItemInstance}|{material:string;count:number})[] }
 export const ITEM_GOAL_IDS = Object.freeze(['calm','authority','week52','research'] as const);
 export type ItemGoal = typeof ITEM_GOAL_IDS[number];
 export interface ItemsState {
@@ -39,6 +42,7 @@ export interface ItemsState {
   equipped:Record<string,Partial<Record<Slot,ItemInstance>>>;
   market:{defId:string;priceMilli:number}[];
   goals:{calm:boolean;authority:boolean;week52:boolean;research:boolean;rebellionSeen:boolean;authorityStreak:number;pending?:ItemGoal[]};
+  workshops?:Record<string,Workshop>;
 }
 export interface ItemWeekContext { postSkills:Record<string,Skills>;postTraits:Record<string,string[]>;playerSkills:Skills;playerTraits:string[];playerRegen:number }
 export const ITEM_STREAM_SALT = Object.freeze({market:0x49544d31,find:0x49544631,material:0x49544d32,legendary:0x49544c31});
@@ -72,7 +76,9 @@ const plain=(v:unknown):v is Record<string,unknown>=>!!v&&typeof v==='object'&&h
 const orderedKeys=(v:unknown,keys:readonly string[]):v is Record<string,unknown>=>hasWeeklyKeys(v,keys)&&Object.keys(v).every((key,i)=>key===keys[i]);
 export function isItemsState(raw:unknown,characterIds:readonly string[]):raw is ItemsState {
   try {
-    if(!orderedKeys(raw,['nextItemId','inventory','consumables','materials','storage','equipped','market','goals'])||!count(raw.nextItemId)||raw.nextItemId<1)return false;
+    const keys=['nextItemId','inventory','consumables','materials','storage','equipped','market','goals'];
+    if(plain(raw)&&Object.hasOwn(raw,'workshops'))keys.push('workshops');
+    if(!orderedKeys(raw,keys)||!count(raw.nextItemId)||raw.nextItemId<1)return false;
     const nextItemId=raw.nextItemId,ids=new Set<number>();
     const instance=(v:unknown,category:'wearable'|'consumable'|'any'):v is ItemInstance=>{
       if(!orderedKeys(v,['id','defId'])||!count(v.id)||v.id<1||v.id>=nextItemId||ids.has(v.id)||typeof v.defId!=='string'||!Object.hasOwn(ITEM_CATALOG,v.defId))return false;
@@ -123,6 +129,33 @@ export function isItemsState(raw:unknown,characterIds:readonly string[]):raw is 
         const index=ITEM_GOAL_IDS.indexOf(goal as ItemGoal);
         if(index<=previous||goals[goal as ItemGoal]!==true)return false;
         previous=index;
+      }
+    }
+    if(Object.hasOwn(raw,'workshops')){
+      if(!plain(raw.workshops)||!Object.keys(raw.workshops).length)return false;
+      let previousTile='';
+      for(const [tileId,workshop] of Object.entries(raw.workshops)){
+        if(tileId.trim()!==tileId||tileId<=previousTile||!orderedKeys(workshop,['orders','ready']))return false;
+        previousTile=tileId;
+        const orders=readDenseArray(workshop.orders),ready=readDenseArray(workshop.ready);
+        if(!orders||!ready||orders.length>CRAFT_TRIAL.queueCap||!orders.length&&!ready.length)return false;
+        for(const order of orders){
+          if(!orderedKeys(order,['recipeId','items','materials','feeMilli'])||typeof order.recipeId!=='string'||!Object.hasOwn(RECIPES,order.recipeId))return false;
+          const recipe=RECIPES[order.recipeId],held=readDenseArray(order.items);
+          if(order.feeMilli!==recipe.feeMilli||!held)return false;
+          const materials=Object.fromEntries(Object.keys(ITEM_CATALOG).flatMap(id=>recipe.inputs.filter(i=>i.defId===id&&ITEM_CATALOG[id].category==='material').map(i=>[id,i.count])));
+          if(!orderedKeys(order.materials,Object.keys(materials)))return false;
+          for(const [id,n] of Object.entries(materials))if(order.materials[id]!==n)return false;
+          const inputs=recipe.inputs.filter(i=>ITEM_CATALOG[i.defId].category!=='material');
+          if(held.length!==inputs.reduce((n,i)=>n+i.count,0))return false;
+          let previousHeldId=0;
+          for(const item of held){if(!instance(item,'any')||item.id<=previousHeldId)return false;previousHeldId=item.id;}
+          if(inputs.some(input=>held.filter(item=>(item as ItemInstance).defId===input.defId).length!==input.count))return false;
+        }
+        for(const output of ready){
+          if(orderedKeys(output,['item'])){if(!instance(output.item,'any'))return false;}
+          else if(!orderedKeys(output,['material','count'])||typeof output.material!=='string'||!Object.hasOwn(ITEM_CATALOG,output.material)||ITEM_CATALOG[output.material].category!=='material'||!count(output.count)||output.count<1||output.count>ITEM_TRIAL.stackCap)return false;
+        }
       }
     }
     return true;
