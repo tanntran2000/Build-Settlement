@@ -1,0 +1,73 @@
+import { expect, it } from 'vitest';
+import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, type CharacterLifeSessionState } from '@haven/core';
+import { executeCharacterLifeCommand } from '@haven/simulation';
+import { recordsToSession, sessionToRecords, StoreRecordError } from '../session-records.js';
+import { deserializeCharacterLifeSave, serializeCharacterLifeSave } from '../character-life-save.js';
+
+function act(s:CharacterLifeSessionState,type:string,fields:Record<string,unknown>){const r=executeCharacterLifeCommand(s,{type,expectedRevision:s.city.revision,...fields});if(!r.success)throw Error(r.error.code);return r.next;}
+function session(){
+  const r=createCharacterLifeSession(42,{...structuredClone(DEFAULT_PLAYER_DRAFT),currentName:'Ana'});if(!r.success)throw Error();
+  const s=r.value;Object.assign(s.city.world.settlements[s.city.world.activeSettlementId!].inventory,{gold:1_000_000,wood:1_000_000,iron:1_000_000});
+  s.city.tiles.find(t=>t.id==='spec-2')!.building={typeId:'smithy',level:1,workers:0,enabled:true};
+  s.city.tiles.find(t=>t.id==='service-1')!.building={typeId:'hospital',level:1,workers:0,enabled:true};
+  Object.assign(s.city.society!.items,{nextItemId:3,inventory:[{id:1,defId:'common-ring'}],consumables:[{id:2,defId:'heal-potion-1'}],materials:{iron:4,nitrate:1,'green-leaf':4,'red-leaf':1}});
+  return s;
+}
+function heldAndReady(){
+  let s=session();s=act(s,'PLACE_CRAFT_ORDER',{tileId:'spec-2',recipeId:'upgrade-rare-ring-player',itemId:1});
+  s=act(s,'PLACE_CRAFT_ORDER',{tileId:'service-1',recipeId:'upgrade-heal-potion-2',itemId:2});
+  const items=s.city.society!.items,item={id:items.nextItemId++,defId:'rare-top'};
+  items.workshops!['spec-2'].ready=[{material:'silver',count:1},{item}];
+  items.inventory.push({id:items.nextItemId++,defId:'common-hand'});
+  return s;
+}
+it('extracts held and ready instances into order/ready rows without duplicate city payloads',()=>{
+  const s=heldAndReady(),before=structuredClone(s),rows=sessionToRecords('main',s);
+  expect(rows.filter(r=>r.table==='items').map(r=>({id:r.id,value:r.value}))).toEqual([
+    {id:'item:1',value:{defId:'common-ring',place:'order:spec-2:0'}},
+    {id:'item:2',value:{defId:'heal-potion-1',place:'order:service-1:0'}},
+    {id:'item:3',value:{defId:'rare-top',place:'ready:spec-2:1'}},
+    {id:'item:4',value:{defId:'common-hand',place:'inventory'}},
+  ]);
+  const city=rows.find(r=>r.table==='city')!.value as CharacterLifeSessionState['city'];
+  expect(JSON.stringify(city)).not.toContain('"id":1,"defId":"common-ring"');expect(JSON.stringify(city)).not.toContain('"id":3,"defId":"rare-top"');expect(s).toEqual(before);
+});
+it('round-trips held items, mixed ready indices and ready materials byte-identically in reversed record order',()=>{
+  const s=heldAndReady(),before=serializeCharacterLifeSave(s),rows=sessionToRecords('main',s),snapshot=structuredClone(rows);
+  expect(before.success).toBe(true);const rebuilt=recordsToSession(rows.reverse());
+  expect(rebuilt).toEqual(s);expect(serializeCharacterLifeSave(rebuilt)).toEqual(before);expect(rows.reverse()).toEqual(snapshot);
+});
+it('cancel after save/import/rebuild returns the exact ids, stacks and Gold once',()=>{
+  const initial=session(),gold=initial.city.world.settlements[initial.city.world.activeSettlementId!].inventory.gold;
+  let s=act(initial,'PLACE_CRAFT_ORDER',{tileId:'spec-2',recipeId:'upgrade-rare-ring-player',itemId:1});
+  s=act(s,'PLACE_CRAFT_ORDER',{tileId:'service-1',recipeId:'upgrade-heal-potion-2',itemId:2});
+  const saved=serializeCharacterLifeSave(recordsToSession(sessionToRecords('main',s)));expect(saved.success).toBe(true);if(!saved.success)throw Error();
+  const loaded=deserializeCharacterLifeSave(saved.text);expect(loaded.success).toBe(true);if(!loaded.success)throw Error();
+  s=act(loaded.state,'CANCEL_CRAFT_ORDER',{tileId:'spec-2',index:0});s=act(s,'CANCEL_CRAFT_ORDER',{tileId:'service-1',index:0});
+  expect(s.city.society!.items).toEqual(initial.city.society!.items);expect(s.city.world.settlements[s.city.world.activeSettlementId!].inventory.gold).toBe(gold);
+  const before=structuredClone(s),again=executeCharacterLifeCommand(s,{type:'CANCEL_CRAFT_ORDER',tileId:'spec-2',index:0,expectedRevision:s.city.revision});
+  expect(again).toMatchObject({success:false,error:{code:'ORDER_UNKNOWN'}});expect(s).toEqual(before);
+  expect(serializeCharacterLifeSave(recordsToSession(sessionToRecords('main',s)))).toEqual(serializeCharacterLifeSave(s));
+});
+it('preserves FIFO order when record ids do not follow queue order',()=>{
+  let s=session();s.city.society!.items.inventory.push({id:3,defId:'common-ring'});s.city.society!.items.nextItemId=4;s.city.society!.items.materials.nitrate=2;
+  s=act(s,'PLACE_CRAFT_ORDER',{tileId:'spec-2',recipeId:'upgrade-rare-ring-player',itemId:3});s=act(s,'PLACE_CRAFT_ORDER',{tileId:'spec-2',recipeId:'upgrade-rare-ring-player',itemId:1});
+  expect(recordsToSession(sessionToRecords('main',s).reverse()).city.society!.items.workshops!['spec-2'].orders.map(o=>o.items[0].id)).toEqual([3,1]);
+});
+it.each(['void','order:spec-2:-1','order:spec-2:00','order:spec-2:6','order:missing:0','ready:spec-2:0','ready:spec-2:9','ready:spec-2:1:extra'])('refuses bad place %s without changing records',place=>{
+  const rows=sessionToRecords('main',heldAndReady()),row=rows.find(r=>r.id==='item:4')!;row.value={defId:'common-hand',place};const before=structuredClone(rows);
+  let error:unknown;try{recordsToSession(rows);}catch(e){error=e;}
+  expect(error).toBeInstanceOf(StoreRecordError);expect((error as StoreRecordError).ref).toBe('items:item:4');expect(rows).toEqual(before);
+});
+it('rejects two rows claiming the same held-order location',()=>{
+  const rows=sessionToRecords('main',heldAndReady()),row=rows.find(r=>r.id==='item:4')!;row.value={defId:'common-ring',place:'order:spec-2:0'};
+  expect(()=>recordsToSession(rows)).toThrow(StoreRecordError);
+});
+it.each(['item:1','item:2','item:3'])('refuses a missing required held/ready row %s',id=>{
+  const rows=sessionToRecords('main',heldAndReady()).filter(r=>r.id!==id);expect(()=>recordsToSession(rows)).toThrow(StoreRecordError);
+});
+it('ready-only workshops keep the byte-identical save and busy replacement refusal after load',()=>{
+  const s=heldAndReady();s.city.society!.items.workshops!['spec-2'].orders=[];
+  const rebuilt=recordsToSession(sessionToRecords('main',s));expect(serializeCharacterLifeSave(rebuilt)).toEqual(serializeCharacterLifeSave(s));
+  const r=executeCharacterLifeCommand(rebuilt,{type:'REPLACE',tileId:'spec-2',typeId:'library',expectedRevision:rebuilt.city.revision});expect(r).toMatchObject({success:false,error:{code:'WORKSHOP_BUSY'}});
+});

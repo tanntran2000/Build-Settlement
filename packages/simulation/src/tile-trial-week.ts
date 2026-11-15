@@ -1,4 +1,5 @@
 import { LAW_CATALOG, lawTerms, ITEM_CATALOG, ITEM_TRIAL, ITEM_GOAL_IDS, itemRandom, drawItemMarket, drawItemRarity, isWearable, RESEARCH_TOPICS, type ItemWeekContext, type ItemWeekReport } from '@haven/core';
+import { completeCraftOrders } from './craft-week.js';
 import { resolveLawGold, resolveLawPromiseWeek } from './law-week.js';
 import { resolveCrimeWeek } from './crime-week.js';
 import { resolveCrisisWeek } from './crisis-week.js';
@@ -91,6 +92,7 @@ export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext): Readon
   }
   // Capture operation before land cleanup can remove exhausted buildings or release workers.
   const hospitalOperated=funded.some(t=>t.building!.typeId==='hospital'&&t.building!.workers===buildingWorkerCap('hospital',t.building!.level)&&operatingIds.has(t.id));
+  const craftTiles=s.society.items.workshops?s.tiles.map(t=>({...t,building:t.building?{...t.building}:null})):[];
   const materialPosts=s.tiles.flatMap(tile=>tile.building&&ctx?.postSkills[tile.id]?[{tileId:tile.id,typeId:tile.building.typeId}]:[]);
   const facilities = societyFacilities(s, operatingIds);
   const withCHTaxMilli=scaled(baseTaxMilli,100+10*facilities.countingHouseLevels,100);
@@ -189,6 +191,9 @@ export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext): Readon
   if(immigration&&crimeEvent.event?.soldiersKilled)immigration=Object.freeze({...immigration,populationAfter:societyPopulation(s.society)});
   const crisis=s.society.crisis.fallCause==='assassination'?undefined:resolveCrisisWeek(s,{foodDemandMilli,foodConsumedMilli});
   const items=resolveItemWeek(s,ctx,hospitalOperated,crisis?.stageBefore==='rebellion',materialPosts);
+  const crafting=completeCraftOrders(s.society.items,{tiles:craftTiles,operatingIds,week:s.world.week-1,ctx});
+  if(crafting.crafted.length)items.crafted=crafting.crafted;
+  if(crafting.workshopsIdle.length)items.workshopsIdle=crafting.workshopsIdle;
   societyReport.tensionAfter=s.society.tension;
   order.after.authority=s.society.order.authority;
   spoilOutsideStocks(s,operatingIds,outside);

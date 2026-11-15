@@ -2,7 +2,7 @@
 import { CHARACTER_LIFE_SAVE_FORMAT } from './character-life-save.js';
 import { createSocietyState, GOODS_STOCK_RULESET, hasWeeklyKeys, isCanonicalGameState, isCharacterProfile, isPlayerCharacter, isSocietyState, isTileTrialState, isWorldNpcList, isWorldSessionState, SOCIETY_RULESET } from '@haven/core';
 import type { StoredRecord, TableName } from './game-store.js';
-import { ITEM_CATALOG, isItemsState, isOpenItemSlot, type ItemsState, type ItemInstance } from '@haven/core';
+import { ITEM_CATALOG, RECIPES, isItemsState, isOpenItemSlot, isWearable, type ItemsState, type ItemInstance } from '@haven/core';
 export class StoreRecordError extends Error {
   constructor(public readonly ref: string) { super(`Invalid store record: ${ref}`); this.name = 'StoreRecordError'; }
 }
@@ -72,6 +72,10 @@ export function sessionToRecords(slotId: string, session: CharacterLifeSessionSt
     for(const item of items.consumables)add(item,'consumables');
     for(const {item,expiresWeek} of items.storage)add(item,`storage:${expiresWeek}`);
     for(const [characterId,worn] of Object.entries(items.equipped))for(const [slot,item] of Object.entries(worn))add(item,`equipped:${characterId}:${slot}`);
+    for(const [tileId,workshop] of Object.entries(items.workshops??{})){
+      workshop.orders.forEach((order,index)=>{for(const item of order.items)add(item,`order:${tileId}:${index}`);order.items=[];});
+      workshop.ready.forEach((output,index)=>{if('item' in output){add(output.item,`ready:${tileId}:${index}`);(output as {item:ItemInstance|null}).item=null;}});
+    }
     const {inventory,consumables,storage,equipped,...rest}=items;
     // Only this detached storage representation omits the instance collections.
     (city.society as unknown as {items:unknown}).items=rest;
@@ -102,17 +106,43 @@ export function recordsToSession(records: StoredRecord[]): CharacterLifeSessionS
     const society=Object.getOwnPropertyDescriptor(city,'society')?.value;
     if(!society||typeof society!=='object')throw new StoreRecordError('city:city');
     const rest=Object.getOwnPropertyDescriptor(society,'items')?.value;
-    if(!hasWeeklyKeys(rest,['nextItemId','materials','market','goals']))throw new StoreRecordError('city:city');
+    if(!hasWeeklyKeys(rest,['nextItemId','materials','market','goals'])&&!hasWeeklyKeys(rest,['nextItemId','materials','market','goals','workshops']))throw new StoreRecordError('city:city');
     const items:ItemsState={nextItemId:rest.nextItemId as number,inventory:[],consumables:[],materials:rest.materials as ItemsState['materials'],storage:[],equipped:{},market:rest.market as ItemsState['market'],goals:rest.goals as ItemsState['goals']};
+    if(Object.hasOwn(rest,'workshops')){
+      const workshops=rest.workshops;
+      const dense=(v:unknown):v is unknown[]=>Array.isArray(v)&&Object.getPrototypeOf(v)===Array.prototype&&Reflect.ownKeys(v).length===v.length+1&&Array.from({length:v.length},(_,i)=>Object.getOwnPropertyDescriptor(v,String(i))).every(d=>d?.enumerable&&'value' in d);
+      if(!workshops||typeof workshops!=='object'||!hasWeeklyKeys(workshops,Object.keys(workshops)))throw new StoreRecordError('city:city');
+      for(const workshop of Object.values(workshops)){
+        if(!hasWeeklyKeys(workshop,['orders','ready'])||!dense(workshop.orders)||!dense(workshop.ready))throw new StoreRecordError('city:city');
+        for(const order of workshop.orders)if(!hasWeeklyKeys(order,['recipeId','items','materials','feeMilli'])||!dense(order.items)||order.items.length)throw new StoreRecordError('city:city');
+        for(const output of workshop.ready)if(!(hasWeeklyKeys(output,['item'])&&output.item===null)&&!hasWeeklyKeys(output,['material','count']))throw new StoreRecordError('city:city');
+      }
+      // Detached placeholders preserve mixed ready-list indices; only table rows
+      // can fill them. The completed live state is validated after all rows land.
+      items.workshops=workshops as unknown as ItemsState['workshops'];
+    }
     const characterIds=records.filter(r=>r.table==='characters').map(r=>r.id);
     for(const r of [...itemRows].sort((a,b)=>Number(a.id.slice(5))-Number(b.id.slice(5)))){
       const value=r.value;
       if(!/^item:[1-9]\d*$/.test(r.id)||!Number.isSafeInteger(Number(r.id.slice(5)))||!hasWeeklyKeys(value,['defId','place'])||typeof value.defId!=='string'||!Object.hasOwn(ITEM_CATALOG,value.defId)||typeof value.place!=='string')bad(r);
       const v=value as {defId:string;place:string},item={id:Number(r.id.slice(5)),defId:v.defId};
+      if(items.workshops&&(item.id>=items.nextItemId||!isWearable(ITEM_CATALOG[item.defId])&&ITEM_CATALOG[item.defId].category!=='consumable'))bad(r);
       if(v.place==='inventory')items.inventory.push(item);
       else if(v.place==='consumables')items.consumables.push(item);
       else if(/^storage:[1-9]\d*$/.test(v.place))items.storage.push({item,expiresWeek:Number(v.place.slice(8))});
-      else {
+      else if(v.place.startsWith('order:')||v.place.startsWith('ready:')){
+        const match=/^(order|ready):(.+):(0|[1-9]\d*)$/.exec(v.place);
+        if(!match||!Number.isSafeInteger(Number(match[3]))||!items.workshops||!Object.hasOwn(items.workshops,match[2]))bad(r);
+        const [,place,tileId,indexText]=match!,index=Number(indexText),workshop=items.workshops![tileId];
+        if(place==='order'){
+          const order=workshop.orders[index],recipe=order&&Object.hasOwn(RECIPES,order.recipeId)?RECIPES[order.recipeId]:undefined;
+          if(!order||order.items.length||!recipe?.inputs.some(i=>i.defId===item.defId&&ITEM_CATALOG[i.defId].category!=='material'))bad(r);
+          order.items.push(item);
+        }else {
+          const output=workshop.ready[index];if(!output||!('item' in output)||output.item!==null)bad(r);
+          workshop.ready[index]={item};
+        }
+      }else {
         const match=/^equipped:(.+):([^:]+)$/.exec(v.place);
         if(!match||!characterIds.includes(match[1])||!isOpenItemSlot(match[2]))bad(r);
         const [,characterId,slot]=match!;
@@ -121,8 +151,9 @@ export function recordsToSession(records: StoredRecord[]): CharacterLifeSessionS
         if(Object.hasOwn(worn,slot))bad(r);
         Object.assign(worn,{[slot]:item});
       }
-      if(!isItemsState(items,characterIds))bad(r);
+      if(!items.workshops&&!isItemsState(items,characterIds))bad(r);
     }
+    if(!isItemsState(items,characterIds))throw new StoreRecordError('city:city');
     society.items=items;
   } else if(itemRows.length)bad(itemRows[0]);
   if (!isStoredCity(city)) throw new StoreRecordError('city:city');

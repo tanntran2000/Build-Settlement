@@ -83,6 +83,8 @@ export interface ItemWeekReport {
   pendingLegendary?: ItemGoal[];
   hospitalOperated: boolean;
   regen: number;
+  crafted?: {tileId:string;recipeId:string;output:string;place:'inventory'|'consumables'|'materials'|'storage'|'ready'}[];
+  workshopsIdle?: string[];
 }
 export interface OrderReport {
  soldiers: number; garrisonSecurity: number;
