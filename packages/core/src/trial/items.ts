@@ -7,6 +7,7 @@ import { mixSeed } from './crime.js';
 import type { CharacterLifeSessionState } from '../character/types.js';
 
 export type Rarity = 'common' | 'rare' | 'epic' | 'legendary';
+export type MaterialFamily = 'metal' | 'mineral' | 'cloth' | 'herb' | 'paper';
 export type Category = 'material' | 'equipment' | 'accessory' | 'outfit' | 'consumable';
 export type Slot = 'weapon' | 'earrings' | 'necklace' | 'ring' | 'hand' | 'top' | 'bottom' | 'shoes' | 'set' | 'nipple' | 'vagina' | 'anus';
 export type Skill = 'management' | 'technical' | 'medical' | 'combat' | 'negotiation';
@@ -14,7 +15,7 @@ export type Skills = Record<Skill, number>;
 export interface ItemDefinition {
   name: string; category: Category; rarity: Rarity; kind?: 'player' | 'npc'; slot?: Slot;
   mainStat?: Skill; secondaryStat?: Skill; regen?: number; exclusiveClass?: string;
-  trait?: string; basePriceMilli: number; building?: string[];
+  trait?: string; basePriceMilli: number; building?: string[]; family?: MaterialFamily;
 }
 export interface ItemTrial {
   marker: 'TRIAL'; bonuses: Record<Rarity,{main:number;secondary:number;regen:number}>;

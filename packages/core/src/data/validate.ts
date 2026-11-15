@@ -3,6 +3,8 @@ import type { SocietyBuildingInfo } from '../trial/society-map.js';
 import type { LawDefinition } from '../trial/law.js';
 import type { OutsideTerrain, OutsidePlotState } from '../trial/outside.js';
 import type { ItemDefinition, ItemTrial } from '../trial/items.js';
+import type { CraftTrial, RecipeDefinition } from '../trial/recipes.js';
+import itemJson from './items.json' with { type: 'json' };
 type IMMIGRATION_TRIAL_DEFAULTSData = Readonly<ImmigrationTrialConfig>;
 type TRIAL_BUILDINGSData = Readonly<Record<string, TrialBuildingDefinition>>;
 type TILE_TRIAL_BALANCEData = Readonly<{
@@ -815,7 +817,10 @@ export function validateItems(json: unknown): {definitions:Record<string,ItemDef
         object({name:text,category:oneOf('material','equipment','accessory','outfit','consumable'),rarity,
             kind:optional(oneOf('player','npc')),slot:optional(text),mainStat:optional(skill),secondaryStat:optional(skill),
             regen:optional(nonnegative),exclusiveClass:optional(text),trait:optional(text),basePriceMilli:nonnegative,
-            building:optional(list(oneOf('mine','quarry','logging','weaver','sheep-pasture','herb-garden')))})(d,ref,'');
+            building:optional(list(oneOf('mine','quarry','logging','weaver','sheep-pasture','herb-garden'))),
+            family:optional(oneOf('metal','mineral','cloth','herb','paper'))})(d,ref,'');
+        if(d.category==='material')oneOf('metal','mineral','cloth','herb','paper')(d.family,ref,'family');
+        else if(d.family!==undefined)fail(ref,'family','material only');
         const wearable=['equipment','accessory','outfit'].includes(d.category as string);
         if(wearable){
             oneOf('player','npc')(d.kind,ref,'kind'); skill(d.mainStat,ref,'mainStat');
@@ -842,4 +847,67 @@ export function validateItems(json: unknown): {definitions:Record<string,ItemDef
         stackCap:positive,inventoryCap:positive,consumableCap:positive,storageCap:positive,storageWeeks:positive,
         effects:object(Object.fromEntries(['threshold','outputStep','outputPercent','outputCapPercent','securityStep','securityCap','authorityStep','marketStep','marketCapPercent','fatalStep','fatalCap','woundStep','woundFloor','wardenSecurity','crownAuthority','ironhideWoundReduction','ledgerOutputPercent'].map(k=>[k,positive])))})(root.ITEM_TRIAL,'items.json#ITEM_TRIAL','');
     return root as unknown as {definitions:Record<string,ItemDefinition>;ITEM_TRIAL:ItemTrial};
+}
+
+export function validateRecipes(json: unknown): {recipes:Record<string,RecipeDefinition>;CRAFT_TRIAL:CraftTrial} {
+    const root=record(json,'recipes.json#catalog','entries');
+    object({recipes:()=>{},CRAFT_TRIAL:()=>{}})(root,'recipes.json#catalog','');
+    const family=oneOf('metal','mineral','cloth','herb','paper');
+    const fees=object({rare:nonnegative,epic:nonnegative});
+    const steps:Rule=(value,ref,field)=>{
+        if(!Array.isArray(value)||value.some((n,i)=>!Number.isSafeInteger(n)||n<0||n>100||i>0&&n<=value[i-1]))
+            fail(ref,field,'expected strictly ascending skill steps in [0, 100]');
+    };
+    object({marker:literal('TRIAL'),queueCap:positive,skillSteps:steps,drugStoreBase:nonnegative,
+        slotFamily:object(Object.fromEntries(['weapon','earrings','necklace','ring','hand','top','bottom','shoes','set'].map(slot=>[slot,family]))),
+        fees:object({refine:fees,upgrade:fees,potion:object({'1':nonnegative,'2':nonnegative,'3':nonnegative})})})(root.CRAFT_TRIAL,'recipes.json#CRAFT_TRIAL','');
+    const trial=root.CRAFT_TRIAL as unknown as CraftTrial;
+    const recipes=record(root.recipes,'recipes.json#catalog','recipes');
+    if(!Object.keys(recipes).length)fail('recipes.json#catalog','recipes','expected nonempty object');
+    // Read the validated data directly: importing the runtime ITEM_CATALOG here would
+    // create a cycle through trial/items.ts, which also uses this validator module.
+    const definitions=validateItems(itemJson).definitions;
+    const tiers=['common','rare','epic'];
+    for(const [id,value] of Object.entries(recipes)){
+        const ref=`recipes.json#${id}`;
+        if(!/^[a-z][a-z0-9-]*$/.test(id))fail(ref,'id','expected stable lowercase id');
+        object({kind:oneOf('refine','upgrade','fixed'),workshops:list(oneOf('smithy','hospital','drug-store')),
+            inputs:list(object({defId:text,count:positive})),output:text,feeMilli:nonnegative})(value,ref,'');
+        const recipe=value as RecipeDefinition;
+        if(new Set(recipe.workshops).size!==recipe.workshops.length)fail(ref,'workshops','duplicate workshop');
+        if(!Object.hasOwn(definitions,recipe.output))fail(ref,'output','unknown item id');
+        const output=definitions[recipe.output];
+        if(output.rarity==='legendary')fail(ref,'output','Legendary output is forbidden');
+        for(const [i,input] of recipe.inputs.entries()){
+            if(!Object.hasOwn(definitions,input.defId))fail(ref,`inputs.${i}.defId`,'unknown item id');
+            if(definitions[input.defId].rarity==='legendary')fail(ref,`inputs.${i}.defId`,'Legendary input is forbidden');
+        }
+        const inputs=recipe.inputs.map(input=>definitions[input.defId]);
+        const outputFamily=output.family??(output.slot?trial.slotFamily[output.slot as keyof CraftTrial['slotFamily']]:'herb');
+        if(recipe.kind==='refine'){
+            if(inputs.length!==1||recipe.inputs[0].count!==2||inputs[0].category!=='material'||output.category!=='material')fail(ref,'inputs','refine requires 2 of one material');
+            if(inputs[0].family!==output.family)fail(ref,'inputs','refine materials must have the same family');
+        }
+        if(recipe.kind==='upgrade'){
+            if(inputs.length!==2||recipe.inputs.some(input=>input.count!==1)||inputs[0].category==='material'||inputs[1].category!=='material')fail(ref,'inputs','upgrade requires 1 item and 1 material');
+            const item=inputs[0],material=inputs[1];
+            const potions=item.category==='consumable'&&output.category==='consumable';
+            if(!potions&&(!item.slot||item.slot!==output.slot||item.kind!==output.kind))fail(ref,'output','upgrade must preserve slot and kind');
+            if(material.family!==outputFamily)fail(ref,'inputs',`material family must be ${outputFamily}`);
+            if(material.rarity!==output.rarity)fail(ref,'inputs','material rarity must equal output rarity');
+        }
+        if(recipe.kind!=='fixed'&&(tiers.indexOf(output.rarity)!==tiers.indexOf(inputs[0].rarity)+1||!['common','rare'].includes(inputs[0].rarity)))
+            fail(ref,'output','rarity must be one tier above input');
+        if(recipe.kind!=='fixed'&&id!==`${recipe.kind}-${recipe.output}`)fail(ref,'id',`expected ${recipe.kind}-${recipe.output}`);
+        const allowed=outputFamily==='herb'?['hospital','drug-store']:['metal','mineral','cloth'].includes(outputFamily)?['smithy']:[];
+        if(!allowed.length||recipe.workshops.some(workshop=>!allowed.includes(workshop)))fail(ref,'workshops',`${outputFamily} recipes require ${allowed.join(' or ')}`);
+        let expectedFee:number|undefined;
+        if(output.category==='consumable'){
+            const tier=/^heal-potion-([123])$/.exec(recipe.output)?.[1] as '1'|'2'|'3'|undefined;
+            if(tier)expectedFee=trial.fees.potion[tier];
+        } else if(recipe.kind!=='fixed')expectedFee=trial.fees[recipe.kind][output.rarity as 'rare'|'epic'];
+        if(expectedFee===undefined)fail(ref,'feeMilli','no TRIAL fee for output');
+        if(recipe.feeMilli!==expectedFee)fail(ref,'feeMilli',`must equal TRIAL fee ${expectedFee}`);
+    }
+    return root as unknown as {recipes:Record<string,RecipeDefinition>;CRAFT_TRIAL:CraftTrial};
 }

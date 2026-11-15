@@ -1,0 +1,854 @@
+{
+  "recipes": {
+    "refine-silver": {
+      "kind": "refine",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "iron",
+          "count": 2
+        }
+      ],
+      "output": "silver",
+      "feeMilli": 1000
+    },
+    "refine-gold": {
+      "kind": "refine",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "silver",
+          "count": 2
+        }
+      ],
+      "output": "gold",
+      "feeMilli": 3000
+    },
+    "refine-nitrate": {
+      "kind": "refine",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "glass",
+          "count": 2
+        }
+      ],
+      "output": "nitrate",
+      "feeMilli": 1000
+    },
+    "refine-amethyst": {
+      "kind": "refine",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "nitrate",
+          "count": 2
+        }
+      ],
+      "output": "amethyst",
+      "feeMilli": 3000
+    },
+    "refine-wool": {
+      "kind": "refine",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "linen",
+          "count": 2
+        }
+      ],
+      "output": "wool",
+      "feeMilli": 1000
+    },
+    "refine-silk": {
+      "kind": "refine",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "wool",
+          "count": 2
+        }
+      ],
+      "output": "silk",
+      "feeMilli": 3000
+    },
+    "refine-red-leaf": {
+      "kind": "refine",
+      "workshops": [
+        "hospital",
+        "drug-store"
+      ],
+      "inputs": [
+        {
+          "defId": "green-leaf",
+          "count": 2
+        }
+      ],
+      "output": "red-leaf",
+      "feeMilli": 1000
+    },
+    "refine-purple-leaf": {
+      "kind": "refine",
+      "workshops": [
+        "hospital",
+        "drug-store"
+      ],
+      "inputs": [
+        {
+          "defId": "red-leaf",
+          "count": 2
+        }
+      ],
+      "output": "purple-leaf",
+      "feeMilli": 3000
+    },
+    "upgrade-rare-weapon-player": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "common-weapon",
+          "count": 1
+        },
+        {
+          "defId": "silver",
+          "count": 1
+        }
+      ],
+      "output": "rare-weapon-player",
+      "feeMilli": 3000
+    },
+    "upgrade-rare-weapon": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "common-weapon-npc",
+          "count": 1
+        },
+        {
+          "defId": "silver",
+          "count": 1
+        }
+      ],
+      "output": "rare-weapon",
+      "feeMilli": 3000
+    },
+    "upgrade-epic-weapon": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "rare-weapon-player",
+          "count": 1
+        },
+        {
+          "defId": "gold",
+          "count": 1
+        }
+      ],
+      "output": "epic-weapon",
+      "feeMilli": 8000
+    },
+    "upgrade-epic-weapon-npc": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "rare-weapon",
+          "count": 1
+        },
+        {
+          "defId": "gold",
+          "count": 1
+        }
+      ],
+      "output": "epic-weapon-npc",
+      "feeMilli": 8000
+    },
+    "upgrade-rare-earrings-player": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "common-earrings",
+          "count": 1
+        },
+        {
+          "defId": "nitrate",
+          "count": 1
+        }
+      ],
+      "output": "rare-earrings-player",
+      "feeMilli": 3000
+    },
+    "upgrade-rare-earrings": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "common-earrings-npc",
+          "count": 1
+        },
+        {
+          "defId": "nitrate",
+          "count": 1
+        }
+      ],
+      "output": "rare-earrings",
+      "feeMilli": 3000
+    },
+    "upgrade-epic-earrings-player": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "rare-earrings-player",
+          "count": 1
+        },
+        {
+          "defId": "amethyst",
+          "count": 1
+        }
+      ],
+      "output": "epic-earrings-player",
+      "feeMilli": 8000
+    },
+    "upgrade-epic-earrings-npc": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "rare-earrings",
+          "count": 1
+        },
+        {
+          "defId": "amethyst",
+          "count": 1
+        }
+      ],
+      "output": "epic-earrings-npc",
+      "feeMilli": 8000
+    },
+    "upgrade-rare-necklace-player": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "common-necklace",
+          "count": 1
+        },
+        {
+          "defId": "nitrate",
+          "count": 1
+        }
+      ],
+      "output": "rare-necklace-player",
+      "feeMilli": 3000
+    },
+    "upgrade-rare-necklace": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "common-necklace-npc",
+          "count": 1
+        },
+        {
+          "defId": "nitrate",
+          "count": 1
+        }
+      ],
+      "output": "rare-necklace",
+      "feeMilli": 3000
+    },
+    "upgrade-epic-necklace-player": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "rare-necklace-player",
+          "count": 1
+        },
+        {
+          "defId": "amethyst",
+          "count": 1
+        }
+      ],
+      "output": "epic-necklace-player",
+      "feeMilli": 8000
+    },
+    "upgrade-epic-necklace": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "rare-necklace",
+          "count": 1
+        },
+        {
+          "defId": "amethyst",
+          "count": 1
+        }
+      ],
+      "output": "epic-necklace",
+      "feeMilli": 8000
+    },
+    "upgrade-rare-ring-player": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "common-ring",
+          "count": 1
+        },
+        {
+          "defId": "nitrate",
+          "count": 1
+        }
+      ],
+      "output": "rare-ring-player",
+      "feeMilli": 3000
+    },
+    "upgrade-rare-ring": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "common-ring-npc",
+          "count": 1
+        },
+        {
+          "defId": "nitrate",
+          "count": 1
+        }
+      ],
+      "output": "rare-ring",
+      "feeMilli": 3000
+    },
+    "upgrade-epic-ring-player": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "rare-ring-player",
+          "count": 1
+        },
+        {
+          "defId": "amethyst",
+          "count": 1
+        }
+      ],
+      "output": "epic-ring-player",
+      "feeMilli": 8000
+    },
+    "upgrade-epic-ring-npc": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "rare-ring",
+          "count": 1
+        },
+        {
+          "defId": "amethyst",
+          "count": 1
+        }
+      ],
+      "output": "epic-ring-npc",
+      "feeMilli": 8000
+    },
+    "upgrade-rare-hand-player": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "common-hand",
+          "count": 1
+        },
+        {
+          "defId": "silver",
+          "count": 1
+        }
+      ],
+      "output": "rare-hand-player",
+      "feeMilli": 3000
+    },
+    "upgrade-rare-hand": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "common-hand-npc",
+          "count": 1
+        },
+        {
+          "defId": "silver",
+          "count": 1
+        }
+      ],
+      "output": "rare-hand",
+      "feeMilli": 3000
+    },
+    "upgrade-epic-hand-player": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "rare-hand-player",
+          "count": 1
+        },
+        {
+          "defId": "gold",
+          "count": 1
+        }
+      ],
+      "output": "epic-hand-player",
+      "feeMilli": 8000
+    },
+    "upgrade-epic-hand": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "rare-hand",
+          "count": 1
+        },
+        {
+          "defId": "gold",
+          "count": 1
+        }
+      ],
+      "output": "epic-hand",
+      "feeMilli": 8000
+    },
+    "upgrade-rare-top-player": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "common-top",
+          "count": 1
+        },
+        {
+          "defId": "wool",
+          "count": 1
+        }
+      ],
+      "output": "rare-top-player",
+      "feeMilli": 3000
+    },
+    "upgrade-rare-top": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "common-top-npc",
+          "count": 1
+        },
+        {
+          "defId": "wool",
+          "count": 1
+        }
+      ],
+      "output": "rare-top",
+      "feeMilli": 3000
+    },
+    "upgrade-epic-top": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "rare-top-player",
+          "count": 1
+        },
+        {
+          "defId": "silk",
+          "count": 1
+        }
+      ],
+      "output": "epic-top",
+      "feeMilli": 8000
+    },
+    "upgrade-epic-top-npc": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "rare-top",
+          "count": 1
+        },
+        {
+          "defId": "silk",
+          "count": 1
+        }
+      ],
+      "output": "epic-top-npc",
+      "feeMilli": 8000
+    },
+    "upgrade-rare-bottom-player": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "common-bottom",
+          "count": 1
+        },
+        {
+          "defId": "wool",
+          "count": 1
+        }
+      ],
+      "output": "rare-bottom-player",
+      "feeMilli": 3000
+    },
+    "upgrade-rare-bottom": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "common-bottom-npc",
+          "count": 1
+        },
+        {
+          "defId": "wool",
+          "count": 1
+        }
+      ],
+      "output": "rare-bottom",
+      "feeMilli": 3000
+    },
+    "upgrade-epic-bottom-player": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "rare-bottom-player",
+          "count": 1
+        },
+        {
+          "defId": "silk",
+          "count": 1
+        }
+      ],
+      "output": "epic-bottom-player",
+      "feeMilli": 8000
+    },
+    "upgrade-epic-bottom-npc": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "rare-bottom",
+          "count": 1
+        },
+        {
+          "defId": "silk",
+          "count": 1
+        }
+      ],
+      "output": "epic-bottom-npc",
+      "feeMilli": 8000
+    },
+    "upgrade-rare-shoes-player": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "common-shoes",
+          "count": 1
+        },
+        {
+          "defId": "wool",
+          "count": 1
+        }
+      ],
+      "output": "rare-shoes-player",
+      "feeMilli": 3000
+    },
+    "upgrade-rare-shoes": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "common-shoes-npc",
+          "count": 1
+        },
+        {
+          "defId": "wool",
+          "count": 1
+        }
+      ],
+      "output": "rare-shoes",
+      "feeMilli": 3000
+    },
+    "upgrade-epic-shoes-player": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "rare-shoes-player",
+          "count": 1
+        },
+        {
+          "defId": "silk",
+          "count": 1
+        }
+      ],
+      "output": "epic-shoes-player",
+      "feeMilli": 8000
+    },
+    "upgrade-epic-shoes-npc": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "rare-shoes",
+          "count": 1
+        },
+        {
+          "defId": "silk",
+          "count": 1
+        }
+      ],
+      "output": "epic-shoes-npc",
+      "feeMilli": 8000
+    },
+    "upgrade-rare-set-player": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "common-set",
+          "count": 1
+        },
+        {
+          "defId": "wool",
+          "count": 1
+        }
+      ],
+      "output": "rare-set-player",
+      "feeMilli": 3000
+    },
+    "upgrade-rare-set": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "common-set-npc",
+          "count": 1
+        },
+        {
+          "defId": "wool",
+          "count": 1
+        }
+      ],
+      "output": "rare-set",
+      "feeMilli": 3000
+    },
+    "upgrade-epic-set-player": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "rare-set-player",
+          "count": 1
+        },
+        {
+          "defId": "silk",
+          "count": 1
+        }
+      ],
+      "output": "epic-set-player",
+      "feeMilli": 8000
+    },
+    "upgrade-epic-set-npc": {
+      "kind": "upgrade",
+      "workshops": [
+        "smithy"
+      ],
+      "inputs": [
+        {
+          "defId": "rare-set",
+          "count": 1
+        },
+        {
+          "defId": "silk",
+          "count": 1
+        }
+      ],
+      "output": "epic-set-npc",
+      "feeMilli": 8000
+    },
+    "upgrade-heal-potion-2": {
+      "kind": "upgrade",
+      "workshops": [
+        "hospital",
+        "drug-store"
+      ],
+      "inputs": [
+        {
+          "defId": "heal-potion-1",
+          "count": 1
+        },
+        {
+          "defId": "red-leaf",
+          "count": 1
+        }
+      ],
+      "output": "heal-potion-2",
+      "feeMilli": 2000
+    },
+    "upgrade-heal-potion-3": {
+      "kind": "upgrade",
+      "workshops": [
+        "hospital",
+        "drug-store"
+      ],
+      "inputs": [
+        {
+          "defId": "heal-potion-2",
+          "count": 1
+        },
+        {
+          "defId": "purple-leaf",
+          "count": 1
+        }
+      ],
+      "output": "heal-potion-3",
+      "feeMilli": 4000
+    },
+    "brew-heal-potion-1": {
+      "kind": "fixed",
+      "workshops": [
+        "hospital",
+        "drug-store"
+      ],
+      "inputs": [
+        {
+          "defId": "green-leaf",
+          "count": 2
+        }
+      ],
+      "output": "heal-potion-1",
+      "feeMilli": 1000
+    }
+  },
+  "CRAFT_TRIAL": {
+    "marker": "TRIAL",
+    "queueCap": 6,
+    "skillSteps": [
+      60,
+      80
+    ],
+    "drugStoreBase": 1,
+    "slotFamily": {
+      "weapon": "metal",
+      "earrings": "mineral",
+      "necklace": "mineral",
+      "ring": "mineral",
+      "hand": "metal",
+      "top": "cloth",
+      "bottom": "cloth",
+      "shoes": "cloth",
+      "set": "cloth"
+    },
+    "fees": {
+      "refine": {
+        "rare": 1000,
+        "epic": 3000
+      },
+      "upgrade": {
+        "rare": 3000,
+        "epic": 8000
+      },
+      "potion": {
+        "1": 1000,
+        "2": 2000,
+        "3": 4000
+      }
+    }
+  }
+}

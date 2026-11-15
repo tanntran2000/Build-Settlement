@@ -12,23 +12,23 @@ it.each([
   [4294967295, [['o30', 'iron'], ['o41', 'iron'], ['o52', 'wood'], ['o68', 'wood'], ['o48', 'wood'], ['o86', 'wood']], 'o11 o13 o15 o18 o27 o29 o36 o54 o57 o62 o63 o67'],
 ] as const)('matches all 90 scenario tiles for seed %s', (seed, deposits, loot) => {
   const s = session(seed); const expectedCity=createSocietyState();expectedCity.world.worldMetadata.worldSeed=seed;expect(s.city).toEqual({ ...expectedCity, society: { ...expectedCity.society!, items: { ...expectedCity.society!.items, market: seed === 0 ? [
-    { defId: 'common-ring', priceMilli: 5000 },
     { defId: 'common-bottom', priceMilli: 5000 },
-    { defId: 'common-necklace', priceMilli: 5000 },
+    { defId: 'common-hand-npc', priceMilli: 5000 },
     { defId: 'common-hand', priceMilli: 5000 },
-    { defId: 'rare-necklace', priceMilli: 15000 },
-    { defId: 'rare-bottom', priceMilli: 15000 },
-    { defId: 'epic-hand', priceMilli: 40000 },
-    { defId: 'epic-necklace', priceMilli: 40000 },
-  ] : [
-    { defId: 'common-weapon', priceMilli: 5000 },
-    { defId: 'common-top', priceMilli: 5000 },
-    { defId: 'common-hand', priceMilli: 5000 },
-    { defId: 'common-earrings', priceMilli: 5000 },
-    { defId: 'rare-necklace', priceMilli: 15000 },
+    { defId: 'common-weapon-npc', priceMilli: 5000 },
     { defId: 'rare-hand', priceMilli: 15000 },
-    { defId: 'epic-hand', priceMilli: 40000 },
-    { defId: 'epic-necklace', priceMilli: 40000 },
+    { defId: 'rare-hand-player', priceMilli: 15000 },
+    { defId: 'epic-ring-npc', priceMilli: 40000 },
+    { defId: 'epic-shoes-npc', priceMilli: 40000 },
+  ] : [
+    { defId: 'common-earrings', priceMilli: 5000 },
+    { defId: 'common-necklace-npc', priceMilli: 5000 },
+    { defId: 'common-set', priceMilli: 5000 },
+    { defId: 'common-ring', priceMilli: 5000 },
+    { defId: 'rare-top', priceMilli: 15000 },
+    { defId: 'rare-set', priceMilli: 15000 },
+    { defId: 'epic-ring-npc', priceMilli: 40000 },
+    { defId: 'epic-shoes-npc', priceMilli: 40000 },
   ] } } }); expect(WORLD_SESSION_CITY_RULESET).toBe('tile-society-08');
   expect(s.outside.actors).toEqual(['player', 'ai-1', 'ai-2']);
   const lootIds = loot.split(' ');

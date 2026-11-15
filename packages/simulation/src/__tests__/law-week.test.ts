@@ -92,7 +92,7 @@ it('preserves the law-free five-week gameplay pin and determinism',()=>{
   "inventory": [
     {
       "id": 1,
-      "defId": "common-necklace"
+      "defId": "common-top"
     }
   ],
   "consumables": [],
@@ -101,11 +101,7 @@ it('preserves the law-free five-week gameplay pin and determinism',()=>{
   "equipped": {},
   "market": [
     {
-      "defId": "common-top",
-      "priceMilli": 5000
-    },
-    {
-      "defId": "common-earrings",
+      "defId": "common-earrings-npc",
       "priceMilli": 5000
     },
     {
@@ -117,19 +113,23 @@ it('preserves the law-free five-week gameplay pin and determinism',()=>{
       "priceMilli": 5000
     },
     {
-      "defId": "rare-set",
+      "defId": "common-bottom-npc",
+      "priceMilli": 5000
+    },
+    {
+      "defId": "rare-shoes-player",
       "priceMilli": 15000
     },
     {
-      "defId": "rare-ring",
+      "defId": "rare-shoes",
       "priceMilli": 15000
     },
     {
-      "defId": "epic-top",
+      "defId": "epic-ring-player",
       "priceMilli": 40000
     },
     {
-      "defId": "epic-hand",
+      "defId": "epic-ring-npc",
       "priceMilli": 40000
     }
   ],

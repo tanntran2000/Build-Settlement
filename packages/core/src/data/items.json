@@ -293,7 +293,8 @@
       "basePriceMilli": 1000,
       "building": [
         "mine"
-      ]
+      ],
+      "family": "metal"
     },
     "silver": {
       "name": "Silver",
@@ -302,7 +303,8 @@
       "basePriceMilli": 3000,
       "building": [
         "mine"
-      ]
+      ],
+      "family": "metal"
     },
     "gold": {
       "name": "Gold",
@@ -311,7 +313,8 @@
       "basePriceMilli": 8000,
       "building": [
         "mine"
-      ]
+      ],
+      "family": "metal"
     },
     "ruby": {
       "name": "Ruby",
@@ -320,7 +323,8 @@
       "basePriceMilli": 0,
       "building": [
         "mine"
-      ]
+      ],
+      "family": "metal"
     },
     "glass": {
       "name": "Glass",
@@ -329,7 +333,8 @@
       "basePriceMilli": 1000,
       "building": [
         "quarry"
-      ]
+      ],
+      "family": "mineral"
     },
     "nitrate": {
       "name": "Nitrate",
@@ -338,7 +343,8 @@
       "basePriceMilli": 3000,
       "building": [
         "quarry"
-      ]
+      ],
+      "family": "mineral"
     },
     "amethyst": {
       "name": "Amethyst",
@@ -347,7 +353,8 @@
       "basePriceMilli": 8000,
       "building": [
         "quarry"
-      ]
+      ],
+      "family": "mineral"
     },
     "paper": {
       "name": "Paper",
@@ -356,7 +363,8 @@
       "basePriceMilli": 1000,
       "building": [
         "logging"
-      ]
+      ],
+      "family": "paper"
     },
     "rubber": {
       "name": "Rubber",
@@ -365,7 +373,8 @@
       "basePriceMilli": 3000,
       "building": [
         "logging"
-      ]
+      ],
+      "family": "paper"
     },
     "linen": {
       "name": "Linen",
@@ -375,7 +384,8 @@
       "building": [
         "weaver",
         "sheep-pasture"
-      ]
+      ],
+      "family": "cloth"
     },
     "wool": {
       "name": "Wool",
@@ -385,7 +395,8 @@
       "building": [
         "weaver",
         "sheep-pasture"
-      ]
+      ],
+      "family": "cloth"
     },
     "silk": {
       "name": "Silk",
@@ -395,7 +406,8 @@
       "building": [
         "weaver",
         "sheep-pasture"
-      ]
+      ],
+      "family": "cloth"
     },
     "green-leaf": {
       "name": "Green Leaf",
@@ -404,7 +416,8 @@
       "basePriceMilli": 1000,
       "building": [
         "herb-garden"
-      ]
+      ],
+      "family": "herb"
     },
     "red-leaf": {
       "name": "Red Leaf",
@@ -413,7 +426,8 @@
       "basePriceMilli": 3000,
       "building": [
         "herb-garden"
-      ]
+      ],
+      "family": "herb"
     },
     "purple-leaf": {
       "name": "Purple Leaf",
@@ -422,7 +436,335 @@
       "basePriceMilli": 8000,
       "building": [
         "herb-garden"
-      ]
+      ],
+      "family": "herb"
+    },
+    "common-weapon-npc": {
+      "name": "Plain Weapon",
+      "category": "equipment",
+      "rarity": "common",
+      "kind": "npc",
+      "slot": "weapon",
+      "mainStat": "combat",
+      "basePriceMilli": 5000
+    },
+    "rare-weapon-player": {
+      "name": "Fine Weapon",
+      "category": "equipment",
+      "rarity": "rare",
+      "kind": "player",
+      "slot": "weapon",
+      "mainStat": "combat",
+      "secondaryStat": "negotiation",
+      "regen": 2,
+      "basePriceMilli": 15000
+    },
+    "epic-weapon-npc": {
+      "name": "Masterwork Weapon",
+      "category": "equipment",
+      "rarity": "epic",
+      "kind": "npc",
+      "slot": "weapon",
+      "mainStat": "combat",
+      "secondaryStat": "negotiation",
+      "basePriceMilli": 40000
+    },
+    "common-earrings-npc": {
+      "name": "Plain Earrings",
+      "category": "accessory",
+      "rarity": "common",
+      "kind": "npc",
+      "slot": "earrings",
+      "mainStat": "negotiation",
+      "basePriceMilli": 5000
+    },
+    "rare-earrings-player": {
+      "name": "Fine Earrings",
+      "category": "accessory",
+      "rarity": "rare",
+      "kind": "player",
+      "slot": "earrings",
+      "mainStat": "negotiation",
+      "secondaryStat": "management",
+      "regen": 2,
+      "basePriceMilli": 15000
+    },
+    "epic-earrings-player": {
+      "name": "Masterwork Earrings",
+      "category": "accessory",
+      "rarity": "epic",
+      "kind": "player",
+      "slot": "earrings",
+      "mainStat": "negotiation",
+      "secondaryStat": "management",
+      "regen": 3,
+      "basePriceMilli": 40000
+    },
+    "epic-earrings-npc": {
+      "name": "Masterwork Earrings",
+      "category": "accessory",
+      "rarity": "epic",
+      "kind": "npc",
+      "slot": "earrings",
+      "mainStat": "negotiation",
+      "secondaryStat": "management",
+      "basePriceMilli": 40000
+    },
+    "common-necklace-npc": {
+      "name": "Plain Necklace",
+      "category": "accessory",
+      "rarity": "common",
+      "kind": "npc",
+      "slot": "necklace",
+      "mainStat": "management",
+      "basePriceMilli": 5000
+    },
+    "rare-necklace-player": {
+      "name": "Fine Necklace",
+      "category": "accessory",
+      "rarity": "rare",
+      "kind": "player",
+      "slot": "necklace",
+      "mainStat": "management",
+      "secondaryStat": "medical",
+      "regen": 2,
+      "basePriceMilli": 15000
+    },
+    "epic-necklace-player": {
+      "name": "Masterwork Necklace",
+      "category": "accessory",
+      "rarity": "epic",
+      "kind": "player",
+      "slot": "necklace",
+      "mainStat": "management",
+      "secondaryStat": "medical",
+      "regen": 3,
+      "basePriceMilli": 40000
+    },
+    "common-ring-npc": {
+      "name": "Plain Ring",
+      "category": "accessory",
+      "rarity": "common",
+      "kind": "npc",
+      "slot": "ring",
+      "mainStat": "medical",
+      "basePriceMilli": 5000
+    },
+    "rare-ring-player": {
+      "name": "Fine Ring",
+      "category": "accessory",
+      "rarity": "rare",
+      "kind": "player",
+      "slot": "ring",
+      "mainStat": "medical",
+      "secondaryStat": "technical",
+      "regen": 2,
+      "basePriceMilli": 15000
+    },
+    "epic-ring-player": {
+      "name": "Masterwork Ring",
+      "category": "accessory",
+      "rarity": "epic",
+      "kind": "player",
+      "slot": "ring",
+      "mainStat": "medical",
+      "secondaryStat": "technical",
+      "regen": 3,
+      "basePriceMilli": 40000
+    },
+    "epic-ring-npc": {
+      "name": "Masterwork Ring",
+      "category": "accessory",
+      "rarity": "epic",
+      "kind": "npc",
+      "slot": "ring",
+      "mainStat": "medical",
+      "secondaryStat": "technical",
+      "basePriceMilli": 40000
+    },
+    "common-hand-npc": {
+      "name": "Plain Hand",
+      "category": "accessory",
+      "rarity": "common",
+      "kind": "npc",
+      "slot": "hand",
+      "mainStat": "technical",
+      "basePriceMilli": 5000
+    },
+    "rare-hand-player": {
+      "name": "Fine Hand",
+      "category": "accessory",
+      "rarity": "rare",
+      "kind": "player",
+      "slot": "hand",
+      "mainStat": "technical",
+      "secondaryStat": "combat",
+      "regen": 2,
+      "basePriceMilli": 15000
+    },
+    "epic-hand-player": {
+      "name": "Masterwork Hand",
+      "category": "accessory",
+      "rarity": "epic",
+      "kind": "player",
+      "slot": "hand",
+      "mainStat": "technical",
+      "secondaryStat": "combat",
+      "regen": 3,
+      "basePriceMilli": 40000
+    },
+    "common-top-npc": {
+      "name": "Plain Top",
+      "category": "outfit",
+      "rarity": "common",
+      "kind": "npc",
+      "slot": "top",
+      "mainStat": "combat",
+      "basePriceMilli": 5000
+    },
+    "rare-top-player": {
+      "name": "Fine Top",
+      "category": "outfit",
+      "rarity": "rare",
+      "kind": "player",
+      "slot": "top",
+      "mainStat": "combat",
+      "secondaryStat": "negotiation",
+      "regen": 2,
+      "basePriceMilli": 15000
+    },
+    "epic-top-npc": {
+      "name": "Masterwork Top",
+      "category": "outfit",
+      "rarity": "epic",
+      "kind": "npc",
+      "slot": "top",
+      "mainStat": "combat",
+      "secondaryStat": "negotiation",
+      "basePriceMilli": 40000
+    },
+    "common-bottom-npc": {
+      "name": "Plain Bottom",
+      "category": "outfit",
+      "rarity": "common",
+      "kind": "npc",
+      "slot": "bottom",
+      "mainStat": "negotiation",
+      "basePriceMilli": 5000
+    },
+    "rare-bottom-player": {
+      "name": "Fine Bottom",
+      "category": "outfit",
+      "rarity": "rare",
+      "kind": "player",
+      "slot": "bottom",
+      "mainStat": "negotiation",
+      "secondaryStat": "management",
+      "regen": 2,
+      "basePriceMilli": 15000
+    },
+    "epic-bottom-player": {
+      "name": "Masterwork Bottom",
+      "category": "outfit",
+      "rarity": "epic",
+      "kind": "player",
+      "slot": "bottom",
+      "mainStat": "negotiation",
+      "secondaryStat": "management",
+      "regen": 3,
+      "basePriceMilli": 40000
+    },
+    "epic-bottom-npc": {
+      "name": "Masterwork Bottom",
+      "category": "outfit",
+      "rarity": "epic",
+      "kind": "npc",
+      "slot": "bottom",
+      "mainStat": "negotiation",
+      "secondaryStat": "management",
+      "basePriceMilli": 40000
+    },
+    "common-shoes-npc": {
+      "name": "Plain Shoes",
+      "category": "outfit",
+      "rarity": "common",
+      "kind": "npc",
+      "slot": "shoes",
+      "mainStat": "management",
+      "basePriceMilli": 5000
+    },
+    "rare-shoes-player": {
+      "name": "Fine Shoes",
+      "category": "outfit",
+      "rarity": "rare",
+      "kind": "player",
+      "slot": "shoes",
+      "mainStat": "management",
+      "secondaryStat": "medical",
+      "regen": 2,
+      "basePriceMilli": 15000
+    },
+    "epic-shoes-player": {
+      "name": "Masterwork Shoes",
+      "category": "outfit",
+      "rarity": "epic",
+      "kind": "player",
+      "slot": "shoes",
+      "mainStat": "management",
+      "secondaryStat": "medical",
+      "regen": 3,
+      "basePriceMilli": 40000
+    },
+    "epic-shoes-npc": {
+      "name": "Masterwork Shoes",
+      "category": "outfit",
+      "rarity": "epic",
+      "kind": "npc",
+      "slot": "shoes",
+      "mainStat": "management",
+      "secondaryStat": "medical",
+      "basePriceMilli": 40000
+    },
+    "common-set-npc": {
+      "name": "Travelling Set",
+      "category": "outfit",
+      "rarity": "common",
+      "kind": "npc",
+      "slot": "set",
+      "mainStat": "management",
+      "basePriceMilli": 15000
+    },
+    "rare-set-player": {
+      "name": "Steward Set",
+      "category": "outfit",
+      "rarity": "rare",
+      "kind": "player",
+      "slot": "set",
+      "mainStat": "management",
+      "secondaryStat": "negotiation",
+      "regen": 2,
+      "basePriceMilli": 45000
+    },
+    "epic-set-player": {
+      "name": "Noble Set",
+      "category": "outfit",
+      "rarity": "epic",
+      "kind": "player",
+      "slot": "set",
+      "mainStat": "management",
+      "secondaryStat": "negotiation",
+      "regen": 3,
+      "basePriceMilli": 120000
+    },
+    "epic-set-npc": {
+      "name": "Noble Set",
+      "category": "outfit",
+      "rarity": "epic",
+      "kind": "npc",
+      "slot": "set",
+      "mainStat": "management",
+      "secondaryStat": "negotiation",
+      "basePriceMilli": 120000
     }
   },
   "ITEM_TRIAL": {

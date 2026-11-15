@@ -9,7 +9,7 @@ function act(s: CharacterLifeSessionState, type: string, fields: Record<string,u
   const r=executeCharacterLifeCommand(s,{type,expectedRevision:s.city.revision,...fields});
   if(!r.success)throw Error(`${type}: ${r.error.message}`); return r.next;
 }
-function funded(seed=12345) {
+function funded(seed=82) {
   const s=makeLife(seed); const stock=s.city.world.settlements[s.city.world.activeSettlementId!].inventory;
   stock.gold=1000000;stock.wood=1000000;stock.iron=1000000;stock.food=1000000;
   return s;
