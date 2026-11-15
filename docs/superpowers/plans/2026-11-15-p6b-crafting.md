@@ -13,6 +13,8 @@
 
 **Spec:** `docs/superpowers/specs/2026-11-15-p6b-crafting-design.md` **v0.1**, G1 approved by Tân, 2026-11-15, verbatim: "Duyệt spec". Builders read the spec and this plan.
 
+**Plan approval:** the owner (Tân) approved this plan on 2026-11-15, verbatim: "Duyệt, giao Builder A".
+
 **Base:** `main` `e859177` (P6-A complete).
 
 ---
