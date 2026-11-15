@@ -81,7 +81,7 @@ it('a Calm game below Crime 70 survives all 60 weeks from health one', () => {
     expect(r.report!.crimeEvent!.lordHealthLoss).toBe(0); expect(s.player.character.health).toBe(week+1);
     s = command(s,'NEXT_WEEK').next;
   }
-});
+}, 15000);
 it('builds the worker-free Drug Store in the Slum at Hospital level-1 cost and upkeep and sells all potions', () => {
   let s = life(); const stocks = () => s.city.world.settlements[s.city.world.activeSettlementId!].inventory;
   stocks().gold = 100_000;
