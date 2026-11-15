@@ -1,0 +1,56 @@
+{
+  "base": "0de2d1ffa91abadf76ced9696f440a09bf19f8af",
+  "head": "735e3ff4d71c7fad04914913778f8325a86f79a8",
+  "tree": "bc5965abab73df37f43baeafd9e4f9d847a23826",
+  "approval": {
+    "status": "approved",
+    "base": "0de2d1ffa91abadf76ced9696f440a09bf19f8af",
+    "owner": "Tân",
+    "date": "2026-11-15",
+    "quote": "Approve P1, X1 and tile-trial.ts (Recommended)",
+    "rulesQuote": "Accept D1–D4 (Recommended)",
+    "proposalSha256": "1976eadd970e5b17521fc92afe973340f92735b8098f0afbf094378682582431",
+    "plan": "binding-plan-16e48a1.md"
+  },
+  "existingTestEdits": [
+    {
+      "id": "P1",
+      "path": "packages/core/src/world/__tests__/npc.test.ts",
+      "line": 30,
+      "before": "    expect([...NPC_MANAGER_BUILDING_TYPES]).toEqual(['farm', 'processor', 'logging', 'mine', 'workshop', 'town-hall', 'town-market', 'quarry', 'sheep-pasture', 'herb-garden', 'weaver', 'watch-house', 'military-barracks']);",
+      "after": "    expect([...NPC_MANAGER_BUILDING_TYPES]).toEqual(['farm', 'processor', 'logging', 'mine', 'workshop', 'town-hall', 'town-market', 'quarry', 'sheep-pasture', 'herb-garden', 'weaver', 'watch-house', 'military-barracks', 'smithy', 'hospital', 'drug-store']);",
+      "reason": "Decision 5 appends the three supported NPC workshop posts. Keep exact equality, order, and all other bytes.",
+      "status": "applied exactly"
+    }
+  ],
+  "outsideAllowlistEdits": [
+    {
+      "id": "X1",
+      "path": "packages/core/src/trial/society.ts",
+      "line": 66,
+      "before": "    return hasWeeklyKeys(raw.items,['nextItemId','inventory','consumables','materials','storage','equipped','market','goals']) &&",
+      "after": "    return (hasWeeklyKeys(raw.items,['nextItemId','inventory','consumables','materials','storage','equipped','market','goals']) || hasWeeklyKeys(raw.items,['nextItemId','inventory','consumables','materials','storage','equipped','market','goals','workshops'])) &&",
+      "reason": "The parent validator otherwise rejects every nonempty optional workshops state before isItemsState can validate it. Only this line changes; isItemsState still checks the exact canonical shape and contents.",
+      "status": "applied exactly"
+    }
+  ],
+  "changedProductAndTestPaths": [
+    "packages/core/src/trial/items.ts",
+    "packages/core/src/trial/society.ts",
+    "packages/core/src/trial/types.ts",
+    "packages/core/src/world/__tests__/npc.test.ts",
+    "packages/core/src/world/npc-content.ts",
+    "packages/persistence/src/__tests__/craft-records.test.ts",
+    "packages/persistence/src/session-records.ts",
+    "packages/simulation/src/__tests__/craft-command.test.ts",
+    "packages/simulation/src/__tests__/craft-week.test.ts",
+    "packages/simulation/src/craft-week.ts",
+    "packages/simulation/src/item-command.ts",
+    "packages/simulation/src/tile-trial-week.ts",
+    "packages/simulation/src/tile-trial.ts"
+  ],
+  "immutableFiles": 85,
+  "immutableChangedPaths": [],
+  "existingHashPinChanges": [],
+  "newRegressionPins": 9
+}

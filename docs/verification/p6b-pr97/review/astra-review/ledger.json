@@ -1,0 +1,119 @@
+[
+  {
+    "n": 1,
+    "path": "packages/core/src/trial/items.ts",
+    "added": 34,
+    "deleted": 1,
+    "result": "PASS",
+    "method": "full per-file diff via sed -n",
+    "notes": "Canonical optional workshops, order/ready shapes, shared ID uniqueness and exact recipe inputs"
+  },
+  {
+    "n": 2,
+    "path": "packages/core/src/trial/society.ts",
+    "added": 1,
+    "deleted": 1,
+    "result": "PASS",
+    "method": "full per-file diff via sed -n",
+    "notes": "X1 only; old or optional-workshops item keys"
+  },
+  {
+    "n": 3,
+    "path": "packages/core/src/trial/types.ts",
+    "added": 2,
+    "deleted": 0,
+    "result": "PASS",
+    "method": "full per-file diff via sed -n",
+    "notes": "D1 optional report fields only"
+  },
+  {
+    "n": 4,
+    "path": "packages/core/src/world/__tests__/npc.test.ts",
+    "added": 1,
+    "deleted": 1,
+    "result": "PASS",
+    "method": "full per-file diff via sed -n",
+    "notes": "P1 only; exact equality retained"
+  },
+  {
+    "n": 5,
+    "path": "packages/core/src/world/npc-content.ts",
+    "added": 1,
+    "deleted": 1,
+    "result": "PASS",
+    "method": "full per-file diff via sed -n",
+    "notes": "Three approved NPC posts appended"
+  },
+  {
+    "n": 6,
+    "path": "packages/persistence/src/__tests__/craft-records.test.ts",
+    "added": 73,
+    "deleted": 0,
+    "result": "PASS",
+    "method": "full per-file diff via sed -n",
+    "notes": "Save/load, FIFO and malformed-place coverage; tests inspected, not run"
+  },
+  {
+    "n": 7,
+    "path": "packages/persistence/src/session-records.ts",
+    "added": 35,
+    "deleted": 4,
+    "result": "PASS",
+    "method": "full per-file diff via sed -n",
+    "notes": "Detached extraction/rebuild and final validation; order/ready places"
+  },
+  {
+    "n": 8,
+    "path": "packages/simulation/src/__tests__/craft-command.test.ts",
+    "added": 175,
+    "deleted": 0,
+    "result": "PASS",
+    "method": "full per-file diff via sed -n",
+    "notes": "Command atomicity, errors, busy guard and canonical-state coverage; tests inspected, not run"
+  },
+  {
+    "n": 9,
+    "path": "packages/simulation/src/__tests__/craft-week.test.ts",
+    "added": 188,
+    "deleted": 0,
+    "result": "PASS",
+    "method": "full per-file diff via sed -n",
+    "notes": "Capacity, delivery, integration and nine no-order hashes; tests inspected, not run"
+  },
+  {
+    "n": 10,
+    "path": "packages/simulation/src/craft-week.ts",
+    "added": 69,
+    "deleted": 0,
+    "result": "PASS",
+    "method": "full per-file diff via sed -n",
+    "notes": "Ready-first delivery, ascending tiles, operating capacity, FIFO and safe IDs"
+  },
+  {
+    "n": 11,
+    "path": "packages/simulation/src/item-command.ts",
+    "added": 42,
+    "deleted": 5,
+    "result": "PASS",
+    "method": "full per-file diff via sed -n",
+    "notes": "Planning/revision checks, held inputs, fees and atomic cancellation"
+  },
+  {
+    "n": 12,
+    "path": "packages/simulation/src/tile-trial-week.ts",
+    "added": 5,
+    "deleted": 0,
+    "result": "PASS",
+    "method": "full per-file diff via sed -n",
+    "notes": "Capture operating buildings; completion after P6-A; omit empty report fields"
+  },
+  {
+    "n": 13,
+    "path": "packages/simulation/src/tile-trial.ts",
+    "added": 1,
+    "deleted": 0,
+    "result": "PASS",
+    "method": "full per-file diff via sed -n",
+    "notes": "Shared REPLACE guard before building mutation"
+  }
+]

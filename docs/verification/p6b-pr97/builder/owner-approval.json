@@ -1,0 +1,10 @@
+{
+    "status":  "approved",
+    "base":  "0de2d1ffa91abadf76ced9696f440a09bf19f8af",
+    "owner":  "Tân",
+    "date":  "2026-11-15",
+    "quote":  "Approve P1, X1 and tile-trial.ts (Recommended)",
+    "rulesQuote":  "Accept D1–D4 (Recommended)",
+    "proposalSha256":  "1976eadd970e5b17521fc92afe973340f92735b8098f0afbf094378682582431",
+    "plan":  "binding-plan-16e48a1.md"
+}

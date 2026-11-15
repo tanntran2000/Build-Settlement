@@ -1,0 +1,5 @@
+
+> build-settlement@0.1.0 typecheck:persistence
+> tsc -p packages/persistence/tsconfig.json --noEmit
+
+EXIT: 0

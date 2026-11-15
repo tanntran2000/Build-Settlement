@@ -1,0 +1,92 @@
+[
+    {
+        "name":  "gate1-diff-check",
+        "command":  "git diff --check origin/main...HEAD",
+        "head":  "735e3ff4d71c7fad04914913778f8325a86f79a8",
+        "tree":  "bc5965abab73df37f43baeafd9e4f9d847a23826",
+        "startUtc":  "2026-11-15T09:26:37.0915101Z",
+        "endUtc":  "2026-11-15T09:26:37.1528802Z",
+        "exit":  0,
+        "seconds":  0.061
+    },
+    {
+        "name":  "gate2-lint",
+        "command":  "npm.cmd run lint",
+        "head":  "735e3ff4d71c7fad04914913778f8325a86f79a8",
+        "tree":  "bc5965abab73df37f43baeafd9e4f9d847a23826",
+        "startUtc":  "2026-11-15T09:26:37.3333877Z",
+        "endUtc":  "2026-11-15T09:26:45.8624824Z",
+        "exit":  0,
+        "seconds":  8.529
+    },
+    {
+        "name":  "gate3-typecheck",
+        "command":  "npm.cmd run typecheck",
+        "head":  "735e3ff4d71c7fad04914913778f8325a86f79a8",
+        "tree":  "bc5965abab73df37f43baeafd9e4f9d847a23826",
+        "startUtc":  "2026-11-15T09:26:45.9830917Z",
+        "endUtc":  "2026-11-15T09:27:17.4591388Z",
+        "exit":  0,
+        "seconds":  31.476
+    },
+    {
+        "name":  "gate4-check-architecture",
+        "command":  "npm.cmd run check:architecture",
+        "head":  "735e3ff4d71c7fad04914913778f8325a86f79a8",
+        "tree":  "bc5965abab73df37f43baeafd9e4f9d847a23826",
+        "startUtc":  "2026-11-15T09:27:17.5991141Z",
+        "endUtc":  "2026-11-15T09:27:24.5128534Z",
+        "exit":  0,
+        "seconds":  6.914
+    },
+    {
+        "name":  "gate5-test-architecture",
+        "command":  "npm.cmd run test:architecture",
+        "head":  "735e3ff4d71c7fad04914913778f8325a86f79a8",
+        "tree":  "bc5965abab73df37f43baeafd9e4f9d847a23826",
+        "startUtc":  "2026-11-15T09:27:24.8849190Z",
+        "endUtc":  "2026-11-15T09:28:08.2611310Z",
+        "exit":  0,
+        "seconds":  43.376
+    },
+    {
+        "name":  "gate6-unit",
+        "command":  "npm.cmd test",
+        "head":  "735e3ff4d71c7fad04914913778f8325a86f79a8",
+        "tree":  "bc5965abab73df37f43baeafd9e4f9d847a23826",
+        "startUtc":  "2026-11-15T09:28:08.4089810Z",
+        "endUtc":  "2026-11-15T09:29:06.9690975Z",
+        "exit":  0,
+        "seconds":  58.56
+    },
+    {
+        "name":  "gate7-build",
+        "command":  "npm.cmd run build",
+        "head":  "735e3ff4d71c7fad04914913778f8325a86f79a8",
+        "tree":  "bc5965abab73df37f43baeafd9e4f9d847a23826",
+        "startUtc":  "2026-11-15T09:29:07.1291905Z",
+        "endUtc":  "2026-11-15T09:29:29.6987065Z",
+        "exit":  0,
+        "seconds":  22.57
+    },
+    {
+        "name":  "bundle-measurement",
+        "command":  "node C:/Users/Admin/.t3/local-drafts/p6b-prB/measure-bundle.mjs",
+        "head":  "735e3ff4d71c7fad04914913778f8325a86f79a8",
+        "tree":  "bc5965abab73df37f43baeafd9e4f9d847a23826",
+        "startUtc":  "2026-11-15T09:29:29.8989439Z",
+        "endUtc":  "2026-11-15T09:29:30.2342454Z",
+        "exit":  0,
+        "seconds":  0.335
+    },
+    {
+        "name":  "b3-smoke-ci1",
+        "command":  "npm.cmd run test:smoke",
+        "head":  "735e3ff4d71c7fad04914913778f8325a86f79a8",
+        "tree":  "bc5965abab73df37f43baeafd9e4f9d847a23826",
+        "startUtc":  "2026-11-15T09:29:32.1483161Z",
+        "endUtc":  "2026-11-15T10:03:06.3434382Z",
+        "exit":  0,
+        "seconds":  2014.195
+    }
+]

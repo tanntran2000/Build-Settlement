@@ -1,0 +1,13 @@
+UTC: 2026-11-15T09:22:12.2905133Z
+HEAD: 4480ed81effbdae282de7d3b6d4cb023a137bc7c
+COMMAND: npm exec -- vitest run craft-command craft-week craft-records item-records items-canonical items-rebuild-order --maxWorkers=1 (full file names below)
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  6 passed (6)
+      Tests  226 passed (226)
+   Start at  16:22:05
+   Duration  6.27s (transform 724ms, setup 0ms, import 1.80s, tests 2.68s, environment 1ms)
+
+EXIT: 0

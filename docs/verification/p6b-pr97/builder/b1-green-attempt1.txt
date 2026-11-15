@@ -1,0 +1,18 @@
+UTC: 2026-11-15T09:12:48.3072526Z
+HEAD: 0de2d1ffa91abadf76ced9696f440a09bf19f8af
+COMMAND: npm exec -- vitest run craft-command craft-week item-command core/world/npc --maxWorkers=1 (full paths in JSON)
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ✓ packages/simulation/src/__tests__/craft-command.test.ts (110 tests) 977ms
+ ✓ packages/simulation/src/__tests__/item-command.test.ts (29 tests) 513ms
+ ✓ packages/core/src/world/__tests__/npc.test.ts (42 tests) 293ms
+ ✓ packages/simulation/src/__tests__/craft-week.test.ts (3 tests) 206ms
+
+ Test Files  4 passed (4)
+      Tests  184 passed (184)
+   Start at  16:12:44
+   Duration  4.26s (transform 630ms, setup 0ms, import 1.17s, tests 1.99s, environment 1ms)
+
+JSON report written to C:/Users/Admin/.t3/local-drafts/p6b-prB/b1-green-attempt1.json
+EXIT: 0

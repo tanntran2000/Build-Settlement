@@ -1,0 +1,541 @@
+UTC: 2026-11-15T09:21:06.794Z
+HEAD: 4480ed81effbdae282de7d3b6d4cb023a137bc7c
+B2 product files temporarily restored to exact B1 bytes; new craft-week.ts absent. Always restored in finally.
+Fixture correction: upgrade-heal-potion-2 requires one red-leaf; green-leaf alone was insufficient. First RED/GREEN attempt retained.
+COMMAND: node node_modules/vitest/vitest.mjs run packages/simulation/src/__tests__/craft-week.test.ts packages/persistence/src/__tests__/craft-records.test.ts --maxWorkers=1 --reporter=default --reporter=json --outputFile=C:\Users\Admin\.t3\local-drafts\p6b-prB\b2-red-corrected.json
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/persistence/src/__tests__/craft-records.test.ts (17 tests | 13 failed) 345ms
+   × extracts held and ready instances into order/ready rows without duplicate city payloads 43ms
+   × round-trips held items, mixed ready indices and ready materials byte-identically in reversed record order 25ms
+   × cancel after save/import/rebuild returns the exact ids, stacks and Gold once 19ms
+   × preserves FIFO order when record ids do not follow queue order 18ms
+   × refuses bad place void without changing records 22ms
+   × refuses bad place order:spec-2:-1 without changing records 21ms
+   × refuses bad place order:spec-2:00 without changing records 18ms
+   × refuses bad place order:spec-2:6 without changing records 18ms
+   × refuses bad place order:missing:0 without changing records 20ms
+   × refuses bad place ready:spec-2:0 without changing records 17ms
+   × refuses bad place ready:spec-2:9 without changing records 18ms
+   × refuses bad place ready:spec-2:1:extra without changing records 18ms
+   ✓ rejects two rows claiming the same held-order location 17ms
+   ✓ refuses a missing required held/ready row item:1 17ms
+   ✓ refuses a missing required held/ready row item:2 17ms
+   ✓ refuses a missing required held/ready row item:3 16ms
+   × ready-only workshops keep the byte-identical save and busy replacement refusal after load 19ms
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts (82 tests | 79 failed) 335ms
+   ✓ preserves all no-order reports and item states for sixty weeks at seed 0 85ms
+   ✓ preserves all no-order reports and item states for sixty weeks at seed 42 68ms
+   ✓ preserves all no-order reports and item states for sixty weeks at seed 20261028 60ms
+     × Smithy workers 0 and skill 100 complete 0 8ms
+     × Smithy workers 1 and skill 59 complete 1 1ms
+     × Smithy workers 1 and skill 60 complete 2 1ms
+     × Smithy workers 1 and skill 79 complete 2 1ms
+     × Smithy workers 1 and skill 80 complete 3 1ms
+     × Smithy workers 2 and skill 0 complete 2 1ms
+     × Smithy workers 2 and skill 80 complete 4 1ms
+     × Drug Store without workers at medical 59 completes 1 1ms
+     × Drug Store without workers at medical 60 completes 2 0ms
+     × Drug Store without workers at medical 79 completes 2 1ms
+     × Drug Store without workers at medical 80 completes 3 0ms
+     × uses technical for Smithy and medical for Hospital/Drug Store 1ms
+     × keeps every held input and reports unpaid as idle 1ms
+     × keeps every held input and reports disabled as idle 0ms
+     × keeps every held input and reports unbuilt as idle 0ms
+     × keeps every held input and reports zero workers as idle 0ms
+     × keeps every held input and reports partial Hospital as idle 0ms
+     × keeps every held input and reports idle Hospital as idle 0ms
+     × keeps FIFO order rather than choosing a recipe by kind or tier 0ms
+     × completes tiles in ascending id independent of tile-array order 0ms
+     × completes refine-silver once with its exact output and a fresh item id 1ms
+     × completes refine-gold once with its exact output and a fresh item id 0ms
+     × completes refine-nitrate once with its exact output and a fresh item id 0ms
+     × completes refine-amethyst once with its exact output and a fresh item id 0ms
+     × completes refine-wool once with its exact output and a fresh item id 0ms
+     × completes refine-silk once with its exact output and a fresh item id 0ms
+     × completes refine-red-leaf once with its exact output and a fresh item id 0ms
+     × completes refine-purple-leaf once with its exact output and a fresh item id 0ms
+     × completes upgrade-rare-weapon-player once with its exact output and a fresh item id 0ms
+     × completes upgrade-rare-weapon once with its exact output and a fresh item id 0ms
+     × completes upgrade-epic-weapon once with its exact output and a fresh item id 0ms
+     × completes upgrade-epic-weapon-npc once with its exact output and a fresh item id 0ms
+     × completes upgrade-rare-earrings-player once with its exact output and a fresh item id 0ms
+     × completes upgrade-rare-earrings once with its exact output and a fresh item id 0ms
+     × completes upgrade-epic-earrings-player once with its exact output and a fresh item id 0ms
+     × completes upgrade-epic-earrings-npc once with its exact output and a fresh item id 1ms
+     × completes upgrade-rare-necklace-player once with its exact output and a fresh item id 0ms
+     × completes upgrade-rare-necklace once with its exact output and a fresh item id 0ms
+     × completes upgrade-epic-necklace-player once with its exact output and a fresh item id 0ms
+     × completes upgrade-epic-necklace once with its exact output and a fresh item id 0ms
+     × completes upgrade-rare-ring-player once with its exact output and a fresh item id 0ms
+     × completes upgrade-rare-ring once with its exact output and a fresh item id 0ms
+     × completes upgrade-epic-ring-player once with its exact output and a fresh item id 0ms
+     × completes upgrade-epic-ring-npc once with its exact output and a fresh item id 0ms
+     × completes upgrade-rare-hand-player once with its exact output and a fresh item id 0ms
+     × completes upgrade-rare-hand once with its exact output and a fresh item id 0ms
+     × completes upgrade-epic-hand-player once with its exact output and a fresh item id 0ms
+     × completes upgrade-epic-hand once with its exact output and a fresh item id 0ms
+     × completes upgrade-rare-top-player once with its exact output and a fresh item id 0ms
+     × completes upgrade-rare-top once with its exact output and a fresh item id 0ms
+     × completes upgrade-epic-top once with its exact output and a fresh item id 0ms
+     × completes upgrade-epic-top-npc once with its exact output and a fresh item id 0ms
+     × completes upgrade-rare-bottom-player once with its exact output and a fresh item id 0ms
+     × completes upgrade-rare-bottom once with its exact output and a fresh item id 0ms
+     × completes upgrade-epic-bottom-player once with its exact output and a fresh item id 0ms
+     × completes upgrade-epic-bottom-npc once with its exact output and a fresh item id 0ms
+     × completes upgrade-rare-shoes-player once with its exact output and a fresh item id 0ms
+     × completes upgrade-rare-shoes once with its exact output and a fresh item id 0ms
+     × completes upgrade-epic-shoes-player once with its exact output and a fresh item id 0ms
+     × completes upgrade-epic-shoes-npc once with its exact output and a fresh item id 0ms
+     × completes upgrade-rare-set-player once with its exact output and a fresh item id 0ms
+     × completes upgrade-rare-set once with its exact output and a fresh item id 0ms
+     × completes upgrade-epic-set-player once with its exact output and a fresh item id 0ms
+     × completes upgrade-epic-set-npc once with its exact output and a fresh item id 0ms
+     × completes upgrade-heal-potion-2 once with its exact output and a fresh item id 0ms
+     × completes upgrade-heal-potion-3 once with its exact output and a fresh item id 0ms
+     × completes brew-heal-potion-1 once with its exact output and a fresh item id 0ms
+     × full destination for upgrade-rare-ring-player uses P6-A storage expiry 1ms
+     × full destination for brew-heal-potion-1 uses P6-A storage expiry 0ms
+     × delivers all ready outputs before any tile can consume the last free slot 0ms
+     × retains everything full at once, never expires ready, then delivers each exactly once 1ms
+     × can deliver a ready item while its workshop is disabled and removes the empty entry 0ms
+     × uses no random stream and gives identical results for identical orders 4ms
+     × does not add any key or change any byte when no orders have ever existed 1ms
+   × End Week integrates crafted rows after the old item steps using effective posted skill 26ms
+   × End Week reports unpaid without completing Hospital orders 15ms
+   × End Week reports disabled without completing Hospital orders 15ms
+   × End Week reports no Herbs without completing Hospital orders 11ms
+   × End Week reports partial staffing without completing Hospital orders 12ms
+
+ Test Files  2 failed (2)
+      Tests  92 failed | 7 passed (99)
+   Start at  16:21:03
+   Duration  2.80s (transform 661ms, setup 0ms, import 986ms, tests 681ms, environment 0ms)
+
+JSON report written to C:/Users/Admin/.t3/local-drafts/p6b-prB/b2-red-corrected.json
+
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 92 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > extracts held and ready instances into order/ready rows without duplicate city payloads
+AssertionError: expected [ { id: 'item:4', value: { …(2) } } ] to deeply equal [ …(4) ]
+
+- Expected
++ Received
+
+@@ -1,28 +1,7 @@
+  [
+    {
+-     "id": "item:1",
+-     "value": {
+-       "defId": "common-ring",
+-       "place": "order:spec-2:0",
+-     },
+-   },
+-   {
+-     "id": "item:2",
+-     "value": {
+-       "defId": "heal-potion-1",
+-       "place": "order:service-1:0",
+-     },
+-   },
+-   {
+-     "id": "item:3",
+-     "value": {
+-       "defId": "rare-top",
+-       "place": "ready:spec-2:1",
+-     },
+-   },
+-   {
+      "id": "item:4",
+      "value": {
+        "defId": "common-hand",
+        "place": "inventory",
+      },
+
+ ❯ packages/persistence/src/__tests__/craft-records.test.ts:26:79
+     24| it('extracts held and ready instances into order/ready rows without du…
+     25|   const s=heldAndReady(),before=structuredClone(s),rows=sessionToRecor…
+     26|   expect(rows.filter(r=>r.table==='items').map(r=>({id:r.id,value:r.va…
+       |                                                                               ^
+     27|     {id:'item:1',value:{defId:'common-ring',place:'order:spec-2:0'}},
+     28|     {id:'item:2',value:{defId:'heal-potion-1',place:'order:service-1:0…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/92]⎯
+
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > round-trips held items, mixed ready indices and ready materials byte-identically in reversed record order
+StoreRecordError: Invalid store record: city:city
+ ❯ recordsToSession packages/persistence/src/session-records.ts:105:79
+
+ ❯ packages/persistence/src/__tests__/craft-records.test.ts:37:51
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/92]⎯
+
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > cancel after save/import/rebuild returns the exact ids, stacks and Gold once
+StoreRecordError: Invalid store record: city:city
+ ❯ recordsToSession packages/persistence/src/session-records.ts:105:79
+
+ ❯ packages/persistence/src/__tests__/craft-records.test.ts:44:42
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/92]⎯
+
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > preserves FIFO order when record ids do not follow queue order
+StoreRecordError: Invalid store record: city:city
+ ❯ recordsToSession packages/persistence/src/session-records.ts:105:79
+
+ ❯ packages/persistence/src/__tests__/craft-records.test.ts:55:10
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/92]⎯
+
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > refuses bad place void without changing records
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > refuses bad place order:spec-2:-1 without changing records
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > refuses bad place order:spec-2:00 without changing records
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > refuses bad place order:spec-2:6 without changing records
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > refuses bad place order:missing:0 without changing records
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > refuses bad place ready:spec-2:0 without changing records
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > refuses bad place ready:spec-2:9 without changing records
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > refuses bad place ready:spec-2:1:extra without changing records
+AssertionError: expected 'city:city' to be 'items:item:4' // Object.is equality
+
+Expected: "items:item:4"
+Received: "city:city"
+
+ ❯ packages/persistence/src/__tests__/craft-records.test.ts:60:90
+     58|   const rows=sessionToRecords('main',heldAndReady()),row=rows.find(r=>…
+     59|   let error:unknown;try{recordsToSession(rows);}catch(e){error=e;}
+     60|   expect(error).toBeInstanceOf(StoreRecordError);expect((error as Stor…
+       |                                                                                          ^
+     61| });
+     62| it('rejects two rows claiming the same held-order location',()=>{
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/92]⎯
+
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > ready-only workshops keep the byte-identical save and busy replacement refusal after load
+StoreRecordError: Invalid store record: city:city
+ ❯ recordsToSession packages/persistence/src/session-records.ts:105:79
+
+ ❯ packages/persistence/src/__tests__/craft-records.test.ts:71:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/92]⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > capacity and workshop operation > Smithy workers 0 and skill 100 complete 0
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > capacity and workshop operation > Smithy workers 1 and skill 59 complete 1
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > capacity and workshop operation > Smithy workers 1 and skill 60 complete 2
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > capacity and workshop operation > Smithy workers 1 and skill 79 complete 2
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > capacity and workshop operation > Smithy workers 1 and skill 80 complete 3
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > capacity and workshop operation > Smithy workers 2 and skill 0 complete 2
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > capacity and workshop operation > Smithy workers 2 and skill 80 complete 4
+AssertionError: craft-week implementation exists: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ complete packages/simulation/src/__tests__/craft-week.test.ts:35:74
+     33| const modules=import.meta.glob('../craft-week.ts');
+     34| async function complete(items:ItemsState,input:Parameters<typeof impor…
+     35|   expect(modules['../craft-week.ts'],'craft-week implementation exists…
+       |                                                                          ^
+     36|   const module=await modules['../craft-week.ts']() as typeof import('.…
+     37|   return module.completeCraftOrders(items,input);
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:61:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/92]⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > capacity and workshop operation > Drug Store without workers at medical 59 completes 1
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > capacity and workshop operation > Drug Store without workers at medical 60 completes 2
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > capacity and workshop operation > Drug Store without workers at medical 79 completes 2
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > capacity and workshop operation > Drug Store without workers at medical 80 completes 3
+AssertionError: craft-week implementation exists: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ complete packages/simulation/src/__tests__/craft-week.test.ts:35:74
+     33| const modules=import.meta.glob('../craft-week.ts');
+     34| async function complete(items:ItemsState,input:Parameters<typeof impor…
+     35|   expect(modules['../craft-week.ts'],'craft-week implementation exists…
+       |                                                                          ^
+     36|   const module=await modules['../craft-week.ts']() as typeof import('.…
+     37|   return module.completeCraftOrders(items,input);
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:68:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/92]⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > capacity and workshop operation > uses technical for Smithy and medical for Hospital/Drug Store
+AssertionError: craft-week implementation exists: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ complete packages/simulation/src/__tests__/craft-week.test.ts:35:74
+     33| const modules=import.meta.glob('../craft-week.ts');
+     34| async function complete(items:ItemsState,input:Parameters<typeof impor…
+     35|   expect(modules['../craft-week.ts'],'craft-week implementation exists…
+       |                                                                          ^
+     36|   const module=await modules['../craft-week.ts']() as typeof import('.…
+     37|   return module.completeCraftOrders(items,input);
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:73:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/92]⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > capacity and workshop operation > keeps every held input and reports unpaid as idle
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > capacity and workshop operation > keeps every held input and reports disabled as idle
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > capacity and workshop operation > keeps every held input and reports unbuilt as idle
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > capacity and workshop operation > keeps every held input and reports zero workers as idle
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > capacity and workshop operation > keeps every held input and reports partial Hospital as idle
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > capacity and workshop operation > keeps every held input and reports idle Hospital as idle
+AssertionError: craft-week implementation exists: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ complete packages/simulation/src/__tests__/craft-week.test.ts:35:74
+     33| const modules=import.meta.glob('../craft-week.ts');
+     34| async function complete(items:ItemsState,input:Parameters<typeof impor…
+     35|   expect(modules['../craft-week.ts'],'craft-week implementation exists…
+       |                                                                          ^
+     36|   const module=await modules['../craft-week.ts']() as typeof import('.…
+     37|   return module.completeCraftOrders(items,input);
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:85:54
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/92]⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > capacity and workshop operation > keeps FIFO order rather than choosing a recipe by kind or tier
+AssertionError: craft-week implementation exists: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ complete packages/simulation/src/__tests__/craft-week.test.ts:35:74
+     33| const modules=import.meta.glob('../craft-week.ts');
+     34| async function complete(items:ItemsState,input:Parameters<typeof impor…
+     35|   expect(modules['../craft-week.ts'],'craft-week implementation exists…
+       |                                                                          ^
+     36|   const module=await modules['../craft-week.ts']() as typeof import('.…
+     37|   return module.completeCraftOrders(items,input);
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:90:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/92]⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > capacity and workshop operation > completes tiles in ascending id independent of tile-array order
+AssertionError: craft-week implementation exists: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ complete packages/simulation/src/__tests__/craft-week.test.ts:35:74
+     33| const modules=import.meta.glob('../craft-week.ts');
+     34| async function complete(items:ItemsState,input:Parameters<typeof impor…
+     35|   expect(modules['../craft-week.ts'],'craft-week implementation exists…
+       |                                                                          ^
+     36|   const module=await modules['../craft-week.ts']() as typeof import('.…
+     37|   return module.completeCraftOrders(items,input);
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:96:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/92]⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes refine-silver once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes refine-gold once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes refine-nitrate once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes refine-amethyst once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes refine-wool once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes refine-silk once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes refine-red-leaf once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes refine-purple-leaf once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-rare-weapon-player once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-rare-weapon once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-epic-weapon once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-epic-weapon-npc once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-rare-earrings-player once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-rare-earrings once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-epic-earrings-player once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-epic-earrings-npc once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-rare-necklace-player once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-rare-necklace once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-epic-necklace-player once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-epic-necklace once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-rare-ring-player once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-rare-ring once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-epic-ring-player once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-epic-ring-npc once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-rare-hand-player once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-rare-hand once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-epic-hand-player once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-epic-hand once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-rare-top-player once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-rare-top once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-epic-top once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-epic-top-npc once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-rare-bottom-player once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-rare-bottom once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-epic-bottom-player once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-epic-bottom-npc once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-rare-shoes-player once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-rare-shoes once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-epic-shoes-player once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-epic-shoes-npc once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-rare-set-player once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-rare-set once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-epic-set-player once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-epic-set-npc once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-heal-potion-2 once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes upgrade-heal-potion-3 once with its exact output and a fresh item id
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > completes brew-heal-potion-1 once with its exact output and a fresh item id
+AssertionError: craft-week implementation exists: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ complete packages/simulation/src/__tests__/craft-week.test.ts:35:74
+     33| const modules=import.meta.glob('../craft-week.ts');
+     34| async function complete(items:ItemsState,input:Parameters<typeof impor…
+     35|   expect(modules['../craft-week.ts'],'craft-week implementation exists…
+       |                                                                          ^
+     36|   const module=await modules['../craft-week.ts']() as typeof import('.…
+     37|   return module.completeCraftOrders(items,input);
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:104:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/92]⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > full destination for upgrade-rare-ring-player uses P6-A storage expiry
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > full destination for brew-heal-potion-1 uses P6-A storage expiry
+AssertionError: craft-week implementation exists: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ complete packages/simulation/src/__tests__/craft-week.test.ts:35:74
+     33| const modules=import.meta.glob('../craft-week.ts');
+     34| async function complete(items:ItemsState,input:Parameters<typeof impor…
+     35|   expect(modules['../craft-week.ts'],'craft-week implementation exists…
+       |                                                                          ^
+     36|   const module=await modules['../craft-week.ts']() as typeof import('.…
+     37|   return module.completeCraftOrders(items,input);
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:117:48
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/92]⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > delivers all ready outputs before any tile can consume the last free slot
+AssertionError: craft-week implementation exists: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ complete packages/simulation/src/__tests__/craft-week.test.ts:35:74
+     33| const modules=import.meta.glob('../craft-week.ts');
+     34| async function complete(items:ItemsState,input:Parameters<typeof impor…
+     35|   expect(modules['../craft-week.ts'],'craft-week implementation exists…
+       |                                                                          ^
+     36|   const module=await modules['../craft-week.ts']() as typeof import('.…
+     37|   return module.completeCraftOrders(items,input);
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:124:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/92]⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > retains everything full at once, never expires ready, then delivers each exactly once
+AssertionError: craft-week implementation exists: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ complete packages/simulation/src/__tests__/craft-week.test.ts:35:74
+     33| const modules=import.meta.glob('../craft-week.ts');
+     34| async function complete(items:ItemsState,input:Parameters<typeof impor…
+     35|   expect(modules['../craft-week.ts'],'craft-week implementation exists…
+       |                                                                          ^
+     36|   const module=await modules['../craft-week.ts']() as typeof import('.…
+     37|   return module.completeCraftOrders(items,input);
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:133:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/92]⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > can deliver a ready item while its workshop is disabled and removes the empty entry
+AssertionError: craft-week implementation exists: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ complete packages/simulation/src/__tests__/craft-week.test.ts:35:74
+     33| const modules=import.meta.glob('../craft-week.ts');
+     34| async function complete(items:ItemsState,input:Parameters<typeof impor…
+     35|   expect(modules['../craft-week.ts'],'craft-week implementation exists…
+       |                                                                          ^
+     36|   const module=await modules['../craft-week.ts']() as typeof import('.…
+     37|   return module.completeCraftOrders(items,input);
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:146:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/92]⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > uses no random stream and gives identical results for identical orders
+AssertionError: craft-week implementation exists: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ complete packages/simulation/src/__tests__/craft-week.test.ts:35:74
+     33| const modules=import.meta.glob('../craft-week.ts');
+     34| async function complete(items:ItemsState,input:Parameters<typeof impor…
+     35|   expect(modules['../craft-week.ts'],'craft-week implementation exists…
+       |                                                                          ^
+     36|   const module=await modules['../craft-week.ts']() as typeof import('.…
+     37|   return module.completeCraftOrders(items,input);
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:151:23
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/92]⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > outputs, ready delivery and determinism > does not add any key or change any byte when no orders have ever existed
+AssertionError: craft-week implementation exists: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ complete packages/simulation/src/__tests__/craft-week.test.ts:35:74
+     33| const modules=import.meta.glob('../craft-week.ts');
+     34| async function complete(items:ItemsState,input:Parameters<typeof impor…
+     35|   expect(modules['../craft-week.ts'],'craft-week implementation exists…
+       |                                                                          ^
+     36|   const module=await modules['../craft-week.ts']() as typeof import('.…
+     37|   return module.completeCraftOrders(items,input);
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:156:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/92]⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > End Week integrates crafted rows after the old item steps using effective posted skill
+AssertionError: Target cannot be null or undefined.
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:177:35
+    175|   const effective=buildItemWeekContext(s).postSkills['spec-2'].technic…
+    176|   const r=executeCharacterLifeCommand(s,{type:'END_WEEK',expectedRevis…
+    177|   expect(r.report!.items.crafted).toHaveLength(3);expect(r.next.city.s…
+       |                                   ^
+    178|   expect(Object.hasOwn(r.report!.items,'workshopsIdle')).toBe(false);
+    179| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/92]⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > End Week reports unpaid without completing Hospital orders
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > End Week reports disabled without completing Hospital orders
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > End Week reports no Herbs without completing Hospital orders
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > End Week reports partial staffing without completing Hospital orders
+AssertionError: expected undefined to deeply equal [ 'service-1' ]
+
+- Expected:
+[
+  "service-1",
+]
+
++ Received:
+undefined
+
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:192:41
+    190|   s.city.society!.items.workshops={'service-1':{orders:[order(s.city.s…
+    191|   const r=executeCharacterLifeCommand(s,{type:'END_WEEK',expectedRevis…
+    192|   expect(r.report!.items.workshopsIdle).toEqual(['service-1']);expect(…
+       |                                         ^
+    193| });
+    194|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/92]⎯
+
+
+EXIT: 1

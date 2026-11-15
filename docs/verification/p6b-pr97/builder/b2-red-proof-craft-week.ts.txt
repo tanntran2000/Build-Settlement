@@ -1,0 +1,69 @@
+import { CRAFT_TRIAL, ITEM_CATALOG, ITEM_TRIAL, RECIPES, buildingWorkerCap,
+  type ItemsState, type Workshop, type ItemWeekContext, type ItemWeekReport, type TileTrialState } from '@haven/core';
+
+export interface CraftWeekInput {
+  tiles:TileTrialState['tiles']; operatingIds:ReadonlySet<string>; week:number; ctx?:ItemWeekContext;
+}
+export interface CraftWeekResult {
+  crafted:NonNullable<ItemWeekReport['crafted']>; workshopsIdle:string[];
+}
+type Place=NonNullable<ItemWeekReport['crafted']>[number]['place'];
+
+// Called after drops, expiry, goals and restocking. Ready outputs own their ids
+// already; delivery never allocates a replacement or consumes a random stream.
+export function completeCraftOrders(items:ItemsState,input:CraftWeekInput):CraftWeekResult {
+  const result:CraftWeekResult={crafted:[],workshopsIdle:[]};
+  if(!items.workshops)return result;
+  const tileIds=Object.keys(items.workshops).sort();
+  const deliver=(output:Workshop['ready'][number]):Place|undefined=>{
+    if('material' in output){
+      const total=(items.materials[output.material]??0)+output.count;
+      if(total>ITEM_TRIAL.stackCap)return;
+      items.materials[output.material]=total;return 'materials';
+    }
+    const item=output.item,consumable=ITEM_CATALOG[item.defId].category==='consumable';
+    const list=consumable?items.consumables:items.inventory;
+    if(list.length<(consumable?ITEM_TRIAL.consumableCap:ITEM_TRIAL.inventoryCap)){
+      list.push(item);list.sort((a,b)=>a.id-b.id);return consumable?'consumables':'inventory';
+    }
+    if(items.storage.length<ITEM_TRIAL.storageCap){
+      const expiresWeek=input.week+ITEM_TRIAL.storageWeeks;
+      if(!Number.isSafeInteger(expiresWeek))throw Error('Unsafe craft storage expiry');
+      items.storage.push({item,expiresWeek});items.storage.sort((a,b)=>a.item.id-b.item.id);return 'storage';
+    }
+  };
+  // Across all tiles, old ready outputs have priority over newly completed ones.
+  for(const tileId of tileIds){
+    const workshop=items.workshops[tileId];workshop.ready=workshop.ready.filter(output=>!deliver(output));
+  }
+  for(const tileId of tileIds){
+    const workshop=items.workshops[tileId];
+    if(!workshop.orders.length)continue;
+    const building=input.tiles.find(t=>t.id===tileId)?.building;
+    let capacity=0;
+    if(building?.enabled&&input.operatingIds.has(tileId)){
+      const type=building.typeId;
+      const staffed=type==='drug-store'||building.workers>0&&(type!=='hospital'||building.workers===buildingWorkerCap(type,building.level));
+      if(staffed&&['smithy','hospital','drug-store'].includes(type)){
+        const skill=input.ctx?.postSkills[tileId]?.[type==='smithy'?'technical':'medical']??0;
+        capacity=(type==='drug-store'?CRAFT_TRIAL.drugStoreBase:building.workers)+CRAFT_TRIAL.skillSteps.filter(step=>skill>=step).length;
+      }
+    }
+    if(!capacity){result.workshopsIdle.push(tileId);continue;}
+    for(let i=0;i<capacity&&workshop.orders.length;i++){
+      const order=workshop.orders[0],recipe=RECIPES[order.recipeId];
+      if(!recipe.workshops.includes(building!.typeId as 'smithy'|'hospital'|'drug-store'))break;
+      let output:Workshop['ready'][number];
+      if(ITEM_CATALOG[recipe.output].category==='material')output={material:recipe.output,count:1};
+      else {
+        if(!Number.isSafeInteger(items.nextItemId+1))throw Error('Unsafe craft item id');
+        output={item:{id:items.nextItemId++,defId:recipe.output}};
+      }
+      const place=deliver(output)??'ready';if(place==='ready')workshop.ready.push(output);
+      workshop.orders.shift();result.crafted.push({tileId,recipeId:order.recipeId,output:recipe.output,place});
+    }
+  }
+  for(const tileId of tileIds)if(!items.workshops[tileId].orders.length&&!items.workshops[tileId].ready.length)delete items.workshops[tileId];
+  if(!Object.keys(items.workshops).length)delete items.workshops;
+  return result;
+}

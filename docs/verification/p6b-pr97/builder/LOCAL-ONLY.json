@@ -1,0 +1,822 @@
+{
+  "head": "735e3ff4d71c7fad04914913778f8325a86f79a8",
+  "utc": "2026-11-15T10:04:14.832Z",
+  "policy": "Raw Playwright test outputs, generated legacy screenshots and preserved originals stay outside this evidence folder. No trace copied here. Legacy p6a-prC originals restored byte-identically by preserve-legacy-e2e-artifacts.mjs.",
+  "files": [
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-after-full-smoke.json",
+      "bytes": 6041,
+      "sha256": "5c8af3f586566c5e32d078dae7f376d2ca6cbded6c05624320ec860fd73ac3de"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-before-full-smoke.json",
+      "bytes": 6039,
+      "sha256": "263c96a7c609aca98353c91301ca7683cb009e12516cc970ed3ce8363f36ded8"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/accessibility/comprehensive/character-life-navigation--0585a-hell-accessibility-baseline-chromium-measurements.json",
+      "bytes": 2395414,
+      "sha256": "3621c1535809937c13cdeedf417ac275accee011ee6473581c5084b7ea01166b"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/accessibility/comprehensive/character-life-navigation--77412--and-report-content-reflows-chromium-reflow.json",
+      "bytes": 2023433,
+      "sha256": "f8ae0b4440fcdafb97d85d9578881fdf5768f0ee3a94eb38b1e9d5667fe79f8d"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/accessibility/comprehensive/character-life-navigation--89cf1--and-report-content-reflows-chromium-reflow.json",
+      "bytes": 1995930,
+      "sha256": "281a8b4ab2d6dbb201c5a0638796130f96f99fcd34e78668aab2d50bf0115a3d"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/accessibility/comprehensive/character-life-navigation--c0613-hell-accessibility-baseline-chromium-measurements.json",
+      "bytes": 2370473,
+      "sha256": "2677f8c6777c1bf679efbf602340d5bad5bd190865a4724c5cbde0c7ccaf3dda"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/accessibility/comprehensive/character-life-navigation--ca2f8--and-report-content-reflows-chromium-reflow.json",
+      "bytes": 1963230,
+      "sha256": "de136a80849b8132ff8913d906545048271bece1a8d24ae68780717ce1309acf"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/accessibility/comprehensive/character-life-navigation--d9965--and-report-content-reflows-chromium-reflow.json",
+      "bytes": 1960320,
+      "sha256": "b9f0aebdd2a742e5efd985e0133a9fc3a1cb457a797bf8950bfb061adf27c12f"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/accessibility/comprehensive/character-life-navigation--e57a3-hell-accessibility-baseline-chromium-measurements.json",
+      "bytes": 2375964,
+      "sha256": "ede1821a00e9cc3cc4d3fcd7050b93eeec820489bea552eb87b1663b9bb9b9f7"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/accessibility/comprehensive/character-life-navigation--f621c-hell-accessibility-baseline-chromium-measurements.json",
+      "bytes": 2377591,
+      "sha256": "0b97ae0a396d1e54070d587d00acdc8a63ff9fd2aedd4a15d5e2ef38515d120d"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/accessibility/equipment-1280.json",
+      "bytes": 8147,
+      "sha256": "b0fd18f62b24999d34527ffae0c4f3b2dda6069c93c8b249636bd6fa74f4c09d"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/accessibility/equipment-1600.json",
+      "bytes": 8162,
+      "sha256": "64e57b9ad9200b70df99a11f414c79532768bc40e71392ff68673af5b172d898"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/accessibility/items.spec.ts",
+      "bytes": 23068,
+      "sha256": "2855b3661e1f0075658e550f9cca04c7750ecaed28c96f9bdc9eb8d64f04d354"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/accessibility/market-1280.json",
+      "bytes": 9139,
+      "sha256": "b0d06167db3824b928f89278abd01e1fe429c5f894771ee7ed24a48c4142e245"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/accessibility/market-1600.json",
+      "bytes": 9178,
+      "sha256": "4d7263f7bddb675728abb0ff25d91e33f090bca6e0baf71eb43f0514b48f8c16"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/accessibility/materials-1280.json",
+      "bytes": 5465,
+      "sha256": "6a0f9983eb7fb2db96ac103b7fa18d3a48bf5374e1c1576bbfe67a4f598c4c5a"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/accessibility/materials-1600.json",
+      "bytes": 5406,
+      "sha256": "0afcc4f56d59f747cd11c7afb82bdec7bf1d892cd79e9ecff6f2ddf2e29b747d"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/accessibility/potions-1280.json",
+      "bytes": 1578,
+      "sha256": "8f9ec995b51269eaddb779e577f8edcc7779b16abb9a7280f9b56815824d32ab"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/accessibility/potions-1600.json",
+      "bytes": 1593,
+      "sha256": "c429829304090f53f311da99abfd07232dc10188a748c76d65067b60a798ab5e"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/accessibility/quartermaster-items-1280.json",
+      "bytes": 2104,
+      "sha256": "1ea48330ad16a5e4afeb3d40ff6b6058a1f48e90859fb6fb15d3e3c9261002fe"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/accessibility/quartermaster-items-1600.json",
+      "bytes": 2086,
+      "sha256": "f4c9d62ccdd2dc75bb1c44c3855b67d1204f4f24219fd81a5a70b1852b380098"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/accessibility/README.md",
+      "bytes": 548,
+      "sha256": "2410d6893a8a1433cb538e134f4498c91450b67ed3f3aa1f6761f52142c5178a"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/accessibility/steward-items-1280.json",
+      "bytes": 1217,
+      "sha256": "cbf339b536f922fbc4ff78b46847ac96aa498a9dd5250391f5a66c83271c556d"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/accessibility/steward-items-1600.json",
+      "bytes": 1205,
+      "sha256": "d1e2467f99b32edb6206c1c25c85dfede494c7d3cad07c57e7a9d004116c4b57"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/accessibility/temporary-storage-1280.json",
+      "bytes": 5768,
+      "sha256": "ee803b7fd7a44fea86a21fddf52438016887731bf09284343b3d78401e6a7567"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/accessibility/temporary-storage-1600.json",
+      "bytes": 5724,
+      "sha256": "ade596d7bfc7ba0b8043bb296eec0b144d4470b2fba29ae3c2fa8255580cecd6"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/screenshots/death-letter-1280.png",
+      "bytes": 10644,
+      "sha256": "0f342619576fc76ed35616e076f229aaa3462c8002d077fa356ad47484b991e2"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/screenshots/equipment-1280.png",
+      "bytes": 81510,
+      "sha256": "f113aa8d75bafe32cdb2cd07e981e848db0fffbb5b4d25d60bc803b1c2a0c908"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/screenshots/equipment-npc-1280.png",
+      "bytes": 74111,
+      "sha256": "72009ff37cee9c148966a29b145eae93980f2a3652e5bfca93b62f19fa744c0d"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/screenshots/equipment-player-1280.png",
+      "bytes": 74953,
+      "sha256": "98974a8c1f93d22bcd64a0caf2fd3a128261f1484004cdf6e0a4a189d1dfcfa8"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/screenshots/manifest.json",
+      "bytes": 1568,
+      "sha256": "7a31baf083b71738bed5ebecaecea75badeef17ca998266194ae5b478982da0b"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/screenshots/market-1280.png",
+      "bytes": 69353,
+      "sha256": "d9c3b99919c46010fbd4cd4785929dff4d830617f51abb2d96ac9cb541b8a990"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/screenshots/materials-1280.png",
+      "bytes": 79145,
+      "sha256": "1dc19c8a568088dde1fa9f01b1196fe5fcd858afcaf43a1c43d1d118bd39ef3a"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/screenshots/potions-1280.png",
+      "bytes": 62247,
+      "sha256": "ef303131fc103a88b1feec36794c6ef93b3f4cdb61869c02d16bbd9ea2cd4a25"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/screenshots/quartermaster-items-1280.png",
+      "bytes": 94543,
+      "sha256": "aa57aeb5add49738e3a0f19c47a537b684e39b24c25de9d1f39455a2b2ee0219"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/screenshots/steward-items-1280.png",
+      "bytes": 93766,
+      "sha256": "7cdc372c016db1308db164f6e6aa8f371c2b623041045ab474f6afea92ab1124"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-generated-full-smoke/screenshots/temporary-storage-1280.png",
+      "bytes": 78386,
+      "sha256": "395138959aae5739dfabffabf1b503d1aff38b7bae4786cf532d06ebd59da1d1"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/accessibility/comprehensive/character-life-navigation--0585a-hell-accessibility-baseline-chromium-measurements.json",
+      "bytes": 2395414,
+      "sha256": "3621c1535809937c13cdeedf417ac275accee011ee6473581c5084b7ea01166b"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/accessibility/comprehensive/character-life-navigation--77412--and-report-content-reflows-chromium-reflow.json",
+      "bytes": 2023433,
+      "sha256": "f8ae0b4440fcdafb97d85d9578881fdf5768f0ee3a94eb38b1e9d5667fe79f8d"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/accessibility/comprehensive/character-life-navigation--89cf1--and-report-content-reflows-chromium-reflow.json",
+      "bytes": 1995930,
+      "sha256": "281a8b4ab2d6dbb201c5a0638796130f96f99fcd34e78668aab2d50bf0115a3d"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/accessibility/comprehensive/character-life-navigation--c0613-hell-accessibility-baseline-chromium-measurements.json",
+      "bytes": 2370473,
+      "sha256": "2677f8c6777c1bf679efbf602340d5bad5bd190865a4724c5cbde0c7ccaf3dda"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/accessibility/comprehensive/character-life-navigation--ca2f8--and-report-content-reflows-chromium-reflow.json",
+      "bytes": 1963230,
+      "sha256": "de136a80849b8132ff8913d906545048271bece1a8d24ae68780717ce1309acf"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/accessibility/comprehensive/character-life-navigation--d9965--and-report-content-reflows-chromium-reflow.json",
+      "bytes": 1960320,
+      "sha256": "b9f0aebdd2a742e5efd985e0133a9fc3a1cb457a797bf8950bfb061adf27c12f"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/accessibility/comprehensive/character-life-navigation--e57a3-hell-accessibility-baseline-chromium-measurements.json",
+      "bytes": 2375964,
+      "sha256": "ede1821a00e9cc3cc4d3fcd7050b93eeec820489bea552eb87b1663b9bb9b9f7"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/accessibility/comprehensive/character-life-navigation--f621c-hell-accessibility-baseline-chromium-measurements.json",
+      "bytes": 2377591,
+      "sha256": "0b97ae0a396d1e54070d587d00acdc8a63ff9fd2aedd4a15d5e2ef38515d120d"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/accessibility/equipment-1280.json",
+      "bytes": 8147,
+      "sha256": "b0fd18f62b24999d34527ffae0c4f3b2dda6069c93c8b249636bd6fa74f4c09d"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/accessibility/equipment-1600.json",
+      "bytes": 8162,
+      "sha256": "64e57b9ad9200b70df99a11f414c79532768bc40e71392ff68673af5b172d898"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/accessibility/items.spec.ts",
+      "bytes": 23068,
+      "sha256": "2855b3661e1f0075658e550f9cca04c7750ecaed28c96f9bdc9eb8d64f04d354"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/accessibility/market-1280.json",
+      "bytes": 9139,
+      "sha256": "b0d06167db3824b928f89278abd01e1fe429c5f894771ee7ed24a48c4142e245"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/accessibility/market-1600.json",
+      "bytes": 9178,
+      "sha256": "4d7263f7bddb675728abb0ff25d91e33f090bca6e0baf71eb43f0514b48f8c16"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/accessibility/materials-1280.json",
+      "bytes": 5465,
+      "sha256": "6a0f9983eb7fb2db96ac103b7fa18d3a48bf5374e1c1576bbfe67a4f598c4c5a"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/accessibility/materials-1600.json",
+      "bytes": 5406,
+      "sha256": "0afcc4f56d59f747cd11c7afb82bdec7bf1d892cd79e9ecff6f2ddf2e29b747d"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/accessibility/potions-1280.json",
+      "bytes": 1578,
+      "sha256": "8f9ec995b51269eaddb779e577f8edcc7779b16abb9a7280f9b56815824d32ab"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/accessibility/potions-1600.json",
+      "bytes": 1593,
+      "sha256": "c429829304090f53f311da99abfd07232dc10188a748c76d65067b60a798ab5e"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/accessibility/quartermaster-items-1280.json",
+      "bytes": 2104,
+      "sha256": "1ea48330ad16a5e4afeb3d40ff6b6058a1f48e90859fb6fb15d3e3c9261002fe"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/accessibility/quartermaster-items-1600.json",
+      "bytes": 2086,
+      "sha256": "f4c9d62ccdd2dc75bb1c44c3855b67d1204f4f24219fd81a5a70b1852b380098"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/accessibility/README.md",
+      "bytes": 548,
+      "sha256": "2410d6893a8a1433cb538e134f4498c91450b67ed3f3aa1f6761f52142c5178a"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/accessibility/steward-items-1280.json",
+      "bytes": 1217,
+      "sha256": "cbf339b536f922fbc4ff78b46847ac96aa498a9dd5250391f5a66c83271c556d"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/accessibility/steward-items-1600.json",
+      "bytes": 1205,
+      "sha256": "d1e2467f99b32edb6206c1c25c85dfede494c7d3cad07c57e7a9d004116c4b57"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/accessibility/temporary-storage-1280.json",
+      "bytes": 5768,
+      "sha256": "ee803b7fd7a44fea86a21fddf52438016887731bf09284343b3d78401e6a7567"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/accessibility/temporary-storage-1600.json",
+      "bytes": 5724,
+      "sha256": "ade596d7bfc7ba0b8043bb296eec0b144d4470b2fba29ae3c2fa8255580cecd6"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/screenshots/death-letter-1280.png",
+      "bytes": 10644,
+      "sha256": "0f342619576fc76ed35616e076f229aaa3462c8002d077fa356ad47484b991e2"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/screenshots/equipment-1280.png",
+      "bytes": 81510,
+      "sha256": "f113aa8d75bafe32cdb2cd07e981e848db0fffbb5b4d25d60bc803b1c2a0c908"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/screenshots/equipment-npc-1280.png",
+      "bytes": 74111,
+      "sha256": "72009ff37cee9c148966a29b145eae93980f2a3652e5bfca93b62f19fa744c0d"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/screenshots/equipment-player-1280.png",
+      "bytes": 74953,
+      "sha256": "98974a8c1f93d22bcd64a0caf2fd3a128261f1484004cdf6e0a4a189d1dfcfa8"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/screenshots/manifest.json",
+      "bytes": 1568,
+      "sha256": "7a31baf083b71738bed5ebecaecea75badeef17ca998266194ae5b478982da0b"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/screenshots/market-1280.png",
+      "bytes": 69353,
+      "sha256": "d9c3b99919c46010fbd4cd4785929dff4d830617f51abb2d96ac9cb541b8a990"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/screenshots/materials-1280.png",
+      "bytes": 79145,
+      "sha256": "1dc19c8a568088dde1fa9f01b1196fe5fcd858afcaf43a1c43d1d118bd39ef3a"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/screenshots/potions-1280.png",
+      "bytes": 62247,
+      "sha256": "ef303131fc103a88b1feec36794c6ef93b3f4cdb61869c02d16bbd9ea2cd4a25"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/screenshots/quartermaster-items-1280.png",
+      "bytes": 94543,
+      "sha256": "aa57aeb5add49738e3a0f19c47a537b684e39b24c25de9d1f39455a2b2ee0219"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/screenshots/steward-items-1280.png",
+      "bytes": 93766,
+      "sha256": "7cdc372c016db1308db164f6e6aa8f371c2b623041045ab474f6afea92ab1124"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/local-drafts/p6b-prB-local-only/legacy-original-full-smoke/screenshots/temporary-storage-1280.png",
+      "bytes": 78386,
+      "sha256": "395138959aae5739dfabffabf1b503d1aff38b7bae4786cf532d06ebd59da1d1"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--0585a-hell-accessibility-baseline-chromium/attachments/measurements-29bb9ff1b222c47946d35b0b1f32550776879e92.json",
+      "bytes": 2395408,
+      "sha256": "b1fccd64c9c891748b66f481c7b9968a7b72c44815172d126bf0df16de751422"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--0585a-hell-accessibility-baseline-chromium/measurements.json",
+      "bytes": 2395408,
+      "sha256": "b1fccd64c9c891748b66f481c7b9968a7b72c44815172d126bf0df16de751422"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--111d9-nter-repeats-remain-guarded-chromium/attachments/pointer-repeat-geometry-6435e2c623259e69725b010d5a0e0e7dca24c534.json",
+      "bytes": 361,
+      "sha256": "97748b577b84c95bbadd85e02b0f360d2e5e3a6fdff789e7a06408476205bf1f"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--111d9-nter-repeats-remain-guarded-chromium/pointer-repeat-geometry.json",
+      "bytes": 361,
+      "sha256": "97748b577b84c95bbadd85e02b0f360d2e5e3a6fdff789e7a06408476205bf1f"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--6dbc9-ctive-and-inactive-contrast-chromium/attachments/native-controls-9039b5be3dd092cc0de7ad5496b2ad97a275f6a7.json",
+      "bytes": 15948,
+      "sha256": "9cfc692a7d13ebe85d966dfc0425563347d3940f0a5a18f8573a364e0ae88c30"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--6dbc9-ctive-and-inactive-contrast-chromium/native-controls.json",
+      "bytes": 15948,
+      "sha256": "9cfc692a7d13ebe85d966dfc0425563347d3940f0a5a18f8573a364e0ae88c30"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--7657e-tock-accessibility-at-375px-chromium/attachments/goods-accessibility-884b20812e06fd7a7008dfe1ad74756e7301834f.json",
+      "bytes": 539142,
+      "sha256": "4961dd693ae4c80969fde564c03f2dda13f5e3a392979db12860d26d86e66ba4"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--7657e-tock-accessibility-at-375px-chromium/goods-accessibility.json",
+      "bytes": 539142,
+      "sha256": "4961dd693ae4c80969fde564c03f2dda13f5e3a392979db12860d26d86e66ba4"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--77412--and-report-content-reflows-chromium/attachments/reflow-08639836bafae7dd4832f1edfc7a1d721dba5635.json",
+      "bytes": 2023431,
+      "sha256": "660012754f77e786d15ddbbd43f63f8ebf85ef1ecec3ca5989c856e1c1955413"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--77412--and-report-content-reflows-chromium/reflow.json",
+      "bytes": 2023431,
+      "sha256": "660012754f77e786d15ddbbd43f63f8ebf85ef1ecec3ca5989c856e1c1955413"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--7a157-ctive-and-inactive-contrast-chromium/attachments/native-controls-63cd1db15c930f43c4ef02928a4997f7a4dc78d6.json",
+      "bytes": 15940,
+      "sha256": "c265907ae84195f8d84e69899076f550378d49550faf2b575695f0f0d453563a"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--7a157-ctive-and-inactive-contrast-chromium/native-controls.json",
+      "bytes": 15940,
+      "sha256": "c265907ae84195f8d84e69899076f550378d49550faf2b575695f0f0d453563a"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--89cf1--and-report-content-reflows-chromium/attachments/reflow-d7cae562f2832b1d593dc644efe05a309423b919.json",
+      "bytes": 1995935,
+      "sha256": "d890e708e3bca91f9f84b89fb9f478c2e603d61b10ceb56da0719dbbc8996aa7"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--89cf1--and-report-content-reflows-chromium/reflow.json",
+      "bytes": 1995935,
+      "sha256": "d890e708e3bca91f9f84b89fb9f478c2e603d61b10ceb56da0719dbbc8996aa7"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--9fc2b-ctive-and-inactive-contrast-chromium/attachments/native-controls-25774e3fe4b07ac8e90aa871bb318d84551ff20e.json",
+      "bytes": 15940,
+      "sha256": "b76718a8fd0ec0e53173635b3f1edab02dd7fdad85f8e1c56fa71648225220a7"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--9fc2b-ctive-and-inactive-contrast-chromium/native-controls.json",
+      "bytes": 15940,
+      "sha256": "b76718a8fd0ec0e53173635b3f1edab02dd7fdad85f8e1c56fa71648225220a7"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--afde0-ock-accessibility-at-1280px-chromium/attachments/goods-accessibility-e185f51b75237f435e0fae9b1cda109224e52537.json",
+      "bytes": 541410,
+      "sha256": "ec2967c2b6c6442c039984423f5e7b998969ea0e733f16cb848202575a949f41"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--afde0-ock-accessibility-at-1280px-chromium/goods-accessibility.json",
+      "bytes": 541410,
+      "sha256": "ec2967c2b6c6442c039984423f5e7b998969ea0e733f16cb848202575a949f41"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--b8ed3-nter-repeats-remain-guarded-chromium/attachments/pointer-repeat-geometry-600d30e9235cbdd21ebb3dbe1d5dc31a7053d90e.json",
+      "bytes": 358,
+      "sha256": "8164107833a0c14897c5c4146226dc3f815bfb7e4e853d07603ff4d11fc757a4"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--b8ed3-nter-repeats-remain-guarded-chromium/pointer-repeat-geometry.json",
+      "bytes": 358,
+      "sha256": "8164107833a0c14897c5c4146226dc3f815bfb7e4e853d07603ff4d11fc757a4"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--c0613-hell-accessibility-baseline-chromium/attachments/measurements-23707a6d1a4c86dd14f7bb8782de171f02bf0816.json",
+      "bytes": 2370488,
+      "sha256": "cd1b81310e750672b19c8c3f4dc4e0eb49d2f00438ae526191b7a1aaf28a41c7"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--c0613-hell-accessibility-baseline-chromium/measurements.json",
+      "bytes": 2370488,
+      "sha256": "cd1b81310e750672b19c8c3f4dc4e0eb49d2f00438ae526191b7a1aaf28a41c7"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--ca2f8--and-report-content-reflows-chromium/attachments/reflow-367d63e350aa8267863d4ec06a4fe6048fb32938.json",
+      "bytes": 1963237,
+      "sha256": "68ad9a6aca94616542fa85bbf832bdb536dfa1484ae326ed4e0a92de88b6a63e"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--ca2f8--and-report-content-reflows-chromium/reflow.json",
+      "bytes": 1963237,
+      "sha256": "68ad9a6aca94616542fa85bbf832bdb536dfa1484ae326ed4e0a92de88b6a63e"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--d9965--and-report-content-reflows-chromium/attachments/reflow-7e7df7f6c1cd916a7161b3237de181b523acceb6.json",
+      "bytes": 1960459,
+      "sha256": "20f6d02a47c82479948c3624586c063e3a4e165f6df890550fea983e6918dd19"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--d9965--and-report-content-reflows-chromium/reflow.json",
+      "bytes": 1960459,
+      "sha256": "20f6d02a47c82479948c3624586c063e3a4e165f6df890550fea983e6918dd19"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--dd3e5-ctive-and-inactive-contrast-chromium/attachments/native-controls-274e5aa8684a6cee1e63616531346f2838bc383b.json",
+      "bytes": 15947,
+      "sha256": "a401000ab23ac2c635b80a7edae49b56d6fc4a7d4459d491e26a02d77e1d39c4"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--dd3e5-ctive-and-inactive-contrast-chromium/native-controls.json",
+      "bytes": 15947,
+      "sha256": "a401000ab23ac2c635b80a7edae49b56d6fc4a7d4459d491e26a02d77e1d39c4"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--e57a3-hell-accessibility-baseline-chromium/attachments/measurements-8aa6b4910d4a7cfdabe5dd52e3720c1bc08052e4.json",
+      "bytes": 2375985,
+      "sha256": "7006fd4a732c70993f9eef08283b0b31a27fcce7f8e59829c17ab0b15ad65d45"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--e57a3-hell-accessibility-baseline-chromium/measurements.json",
+      "bytes": 2375985,
+      "sha256": "7006fd4a732c70993f9eef08283b0b31a27fcce7f8e59829c17ab0b15ad65d45"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--f621c-hell-accessibility-baseline-chromium/attachments/measurements-783b42cec1572c0db8391aed3abf39e5525409fa.json",
+      "bytes": 2378047,
+      "sha256": "9dee74f540c407a598323fc2060238c14406ad795470bf7dd8af77ded0f422a5"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/character-life-navigation--f621c-hell-accessibility-baseline-chromium/measurements.json",
+      "bytes": 2378047,
+      "sha256": "9dee74f540c407a598323fc2060238c14406ad795470bf7dd8af77ded0f422a5"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/goods-stock-Society-five-w-be7af-navigation-parity-at-1280px-chromium/goods-week5-city.png",
+      "bytes": 74947,
+      "sha256": "85a2f9e4d666cd45d612b507a01cc540d939e5e87aa25ad162e40ead74fce89f"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/goods-stock-Society-five-w-be7af-navigation-parity-at-1280px-chromium/goods-week5-report.png",
+      "bytes": 72163,
+      "sha256": "66fd6c0ea704b65560829c50b97732f9df790837f05291e39306e6eac5ee5035"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/goods-stock-Society-five-w-fbc68--navigation-parity-at-375px-chromium/goods-week5-city.png",
+      "bytes": 289484,
+      "sha256": "3e00b9d746f73db528ddb0436f1b51b7a880370b90a57ba0e4f1fa996909d0df"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/goods-stock-Society-five-w-fbc68--navigation-parity-at-375px-chromium/goods-week5-report.png",
+      "bytes": 21920,
+      "sha256": "ee7237a63c3bfeefacd07b176482dc4bf2a40b2fe70adfb277caa4527a5c0b9f"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/storage-three-started-save-9c305-arker-without-record-growth-chromium/attachments/three-game-record-counts-567087032e1319861db7beacf49ca3863bdf109f.json",
+      "bytes": 668,
+      "sha256": "7b62ee21781d8638ff01152d5cae48acdbed0d31c269946a086c5cc5b9bf1fc2"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/storage-three-started-save-9c305-arker-without-record-growth-chromium/three-game-record-counts.json",
+      "bytes": 668,
+      "sha256": "7b62ee21781d8638ff01152d5cae48acdbed0d31c269946a086c5cc5b9bf1fc2"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-Large-report-at-320p-a1c00-tock-ledger-inside-the-page-chromium/attachments/report-large-320-0ce1644ec89d7424f970cc55b28e9f4ab8beb801.png",
+      "bytes": 156233,
+      "sha256": "fa846bea1825ebad448bf017ddaea516f0dbaed44e2e8b2e2280cb72ebb01f79"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-Large-report-at-320p-a1c00-tock-ledger-inside-the-page-chromium/attachments/report-layout-metrics-4fc48383137a5318152c63200157f166efaf64be.json",
+      "bytes": 825,
+      "sha256": "81d0571a26123390c29b7f4d7dd1b86a485c8ce928e3a987a79f16a764ad9b7a"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-Large-report-at-320p-a1c00-tock-ledger-inside-the-page-chromium/metrics.json",
+      "bytes": 825,
+      "sha256": "81d0571a26123390c29b7f4d7dd1b86a485c8ce928e3a987a79f16a764ad9b7a"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-Large-report-at-320p-a1c00-tock-ledger-inside-the-page-chromium/report-large-320.png",
+      "bytes": 156233,
+      "sha256": "fa846bea1825ebad448bf017ddaea516f0dbaed44e2e8b2e2280cb72ebb01f79"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-1280-large-chromium/attachments/layout-metrics-e652ecf853f2599c4b8296df71e6bbcd0b55fcef.json",
+      "bytes": 48,
+      "sha256": "806807a36022f60ed1dec1b96c901a7daa4fd16f932d6746ab7b6906013b4833"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-1280-large-chromium/attachments/options-layout-795f4938b0d2c3f3678cf3bc510a75dd8e3281c2.png",
+      "bytes": 39970,
+      "sha256": "c2d12aa20d301b5743f0c7533cc5a355fe0bbef2b692d3be22021faa13ffb755"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-1280-large-chromium/attachments/title-layout-99202411446c31e7d2db486e4f4be5127883bde1.png",
+      "bytes": 17713,
+      "sha256": "cc40de986ac0c3efb244d9ea6a898c999e6f91cd1f0e69a2e4e84e9e568288f2"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-1280-large-chromium/metrics.json",
+      "bytes": 48,
+      "sha256": "806807a36022f60ed1dec1b96c901a7daa4fd16f932d6746ab7b6906013b4833"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-1280-large-chromium/options-layout.png",
+      "bytes": 39970,
+      "sha256": "c2d12aa20d301b5743f0c7533cc5a355fe0bbef2b692d3be22021faa13ffb755"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-1280-large-chromium/title-layout.png",
+      "bytes": 17713,
+      "sha256": "cc40de986ac0c3efb244d9ea6a898c999e6f91cd1f0e69a2e4e84e9e568288f2"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-1280-normal-chromium/attachments/layout-metrics-50bd8e3a16d3e7dff7bca66212dac4eccee49114.json",
+      "bytes": 49,
+      "sha256": "d63076c0f6caffe09457b554cc9cdf7430a06e66d0c434282ae660568f32cc4c"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-1280-normal-chromium/attachments/options-layout-6414572a65d2e135f601835b5dc6f955c37523c0.png",
+      "bytes": 32705,
+      "sha256": "a72718562101e8fcce61d46ceab987cfe7f217f7a485a9327a0cadfab3fbc060"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-1280-normal-chromium/attachments/title-layout-02d64e21e94ef4c951d801be5af3aed4e9382516.png",
+      "bytes": 15369,
+      "sha256": "7457db355a3fcd50fa315fc28589cc0b91741005598707b23372546c13ca5645"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-1280-normal-chromium/metrics.json",
+      "bytes": 49,
+      "sha256": "d63076c0f6caffe09457b554cc9cdf7430a06e66d0c434282ae660568f32cc4c"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-1280-normal-chromium/options-layout.png",
+      "bytes": 32705,
+      "sha256": "a72718562101e8fcce61d46ceab987cfe7f217f7a485a9327a0cadfab3fbc060"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-1280-normal-chromium/title-layout.png",
+      "bytes": 15369,
+      "sha256": "7457db355a3fcd50fa315fc28589cc0b91741005598707b23372546c13ca5645"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-1600-large-chromium/attachments/layout-metrics-44706db6b87138bfc474122b5c9feab214279c21.json",
+      "bytes": 48,
+      "sha256": "22c3c317b4e6d8877e1b1157297542851a96cbb2de1e2f55ca09d12545b812d6"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-1600-large-chromium/attachments/options-layout-e3a799a8d608d9e9272e43cc2ec7c65a970477c7.png",
+      "bytes": 41298,
+      "sha256": "627b6bca33d7600d5efd3a64eafbf69ad46a91f9c8d753ba90719e16a03138bd"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-1600-large-chromium/attachments/title-layout-5c6f3e9ffca96f1e1e057f94682e84f42a36d910.png",
+      "bytes": 18758,
+      "sha256": "5c5a8feafdaa43c8f04a78b66eb2285ed8c79ada6d962797771f0eaf278a9e4b"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-1600-large-chromium/metrics.json",
+      "bytes": 48,
+      "sha256": "22c3c317b4e6d8877e1b1157297542851a96cbb2de1e2f55ca09d12545b812d6"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-1600-large-chromium/options-layout.png",
+      "bytes": 41298,
+      "sha256": "627b6bca33d7600d5efd3a64eafbf69ad46a91f9c8d753ba90719e16a03138bd"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-1600-large-chromium/title-layout.png",
+      "bytes": 18758,
+      "sha256": "5c5a8feafdaa43c8f04a78b66eb2285ed8c79ada6d962797771f0eaf278a9e4b"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-1600-normal-chromium/attachments/layout-metrics-bf3148ae938acd51e916a5c0d19c2758dc535a4d.json",
+      "bytes": 49,
+      "sha256": "74e69d987be95e946499dcf8bf5de2e66544e99737779884289bdd0d1d230291"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-1600-normal-chromium/attachments/options-layout-1c2b9b45c1d0a2889fa93ca91933772293ab2ce1.png",
+      "bytes": 34106,
+      "sha256": "1576343e94c3e6a1149660a76edf417830f5a92689915c58f723b108d49c3941"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-1600-normal-chromium/attachments/title-layout-b4e50aa1f9779575c59fc7edd87281a2d75f1186.png",
+      "bytes": 16591,
+      "sha256": "356a987f504492aa51ee372b66a190b1a38a6d97dbfa497e4752fabcec27bde7"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-1600-normal-chromium/metrics.json",
+      "bytes": 49,
+      "sha256": "74e69d987be95e946499dcf8bf5de2e66544e99737779884289bdd0d1d230291"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-1600-normal-chromium/options-layout.png",
+      "bytes": 34106,
+      "sha256": "1576343e94c3e6a1149660a76edf417830f5a92689915c58f723b108d49c3941"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-1600-normal-chromium/title-layout.png",
+      "bytes": 16591,
+      "sha256": "356a987f504492aa51ee372b66a190b1a38a6d97dbfa497e4752fabcec27bde7"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-320-large-chromium/attachments/layout-metrics-90d84ce1e13e30ba3e37bfcab4269c2fb7973bf9.json",
+      "bytes": 46,
+      "sha256": "6cf8e901a9f4e149749c31c8666c2632acfd5d11c5f295fba3a111b83ac8cd88"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-320-large-chromium/attachments/options-layout-764fd3105d21dce1a25c17eec8e3f9b9c32a9417.png",
+      "bytes": 28010,
+      "sha256": "2c868eb8df20b2c1a65139d86d6ad88d22f978202521feaedfe6adba70b67bd8"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-320-large-chromium/attachments/title-layout-33c7d5d5410ec4031ca57a287eb503dab161833f.png",
+      "bytes": 13962,
+      "sha256": "7b36c424a6b24e8ad829c22c8686e113a29ed6d9887a239a09a44cf2efc96514"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-320-large-chromium/metrics.json",
+      "bytes": 46,
+      "sha256": "6cf8e901a9f4e149749c31c8666c2632acfd5d11c5f295fba3a111b83ac8cd88"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-320-large-chromium/options-layout.png",
+      "bytes": 28010,
+      "sha256": "2c868eb8df20b2c1a65139d86d6ad88d22f978202521feaedfe6adba70b67bd8"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-320-large-chromium/title-layout.png",
+      "bytes": 13962,
+      "sha256": "7b36c424a6b24e8ad829c22c8686e113a29ed6d9887a239a09a44cf2efc96514"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-320-normal-chromium/attachments/layout-metrics-c5d3bb321f4559ed4f6c7cda3e8024fb4562dfb1.json",
+      "bytes": 47,
+      "sha256": "0cec964d0f146254888c337c487b40e2527ceb4ad78c2d291359ec97f17bd9d6"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-320-normal-chromium/attachments/options-layout-5845296e37310ad4e261eb5e5081e00e4daae137.png",
+      "bytes": 26311,
+      "sha256": "7516ce4b0f4ae2b74670677c351496ae27a6c9e044ffb02c661ad8271d56a966"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-320-normal-chromium/attachments/title-layout-2eac8816d2e8507a50ddad8f5eb7a06b6bd28761.png",
+      "bytes": 12921,
+      "sha256": "9ac08f2080a9d152977f826b7e7de65587aa4647b098bd745133a3ece644bcc0"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-320-normal-chromium/metrics.json",
+      "bytes": 47,
+      "sha256": "0cec964d0f146254888c337c487b40e2527ceb4ad78c2d291359ec97f17bd9d6"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-320-normal-chromium/options-layout.png",
+      "bytes": 26311,
+      "sha256": "7516ce4b0f4ae2b74670677c351496ae27a6c9e044ffb02c661ad8271d56a966"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-320-normal-chromium/title-layout.png",
+      "bytes": 12921,
+      "sha256": "9ac08f2080a9d152977f826b7e7de65587aa4647b098bd745133a3ece644bcc0"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-375-large-chromium/attachments/layout-metrics-2bf0b5fff355977499458736ed43a5e8ff52b66a.json",
+      "bytes": 46,
+      "sha256": "f9f79e830008a4d3cdf00861ae3997dab1e6f58be265d69b25b97fdde684999f"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-375-large-chromium/attachments/options-layout-aa156f5e1ee60e126fce865d9903ed7ea000e31c.png",
+      "bytes": 29805,
+      "sha256": "e43a04086886f74077ea9622d28a3002b68bbd2751c4171635f9178ced804229"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-375-large-chromium/attachments/title-layout-bbe4ad2ff1061b88675ff5007fda837ec53e26e3.png",
+      "bytes": 14439,
+      "sha256": "a3340c4151cc6eb81be0247170b6bb58355f2fe2bdedbc8fc9d8a1e2609ded62"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-375-large-chromium/metrics.json",
+      "bytes": 46,
+      "sha256": "f9f79e830008a4d3cdf00861ae3997dab1e6f58be265d69b25b97fdde684999f"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-375-large-chromium/options-layout.png",
+      "bytes": 29805,
+      "sha256": "e43a04086886f74077ea9622d28a3002b68bbd2751c4171635f9178ced804229"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-375-large-chromium/title-layout.png",
+      "bytes": 14439,
+      "sha256": "a3340c4151cc6eb81be0247170b6bb58355f2fe2bdedbc8fc9d8a1e2609ded62"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-375-normal-chromium/attachments/layout-metrics-16d5075f656f95fc52144a4888182cd912f7e9e5.json",
+      "bytes": 47,
+      "sha256": "c21abc23316567fffeb310e08acd5b070f7d2d4616dfdc241b8f5ed31cd13558"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-375-normal-chromium/attachments/options-layout-1e276bf3c5adb95feaea4cbfbdb72d24652a2ae2.png",
+      "bytes": 27349,
+      "sha256": "8774887dac59e7bed0af3416627c215204848e8a5d9238698d06c49eedea0923"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-375-normal-chromium/attachments/title-layout-1f28095fa101196457c4b52706a77055b20800f7.png",
+      "bytes": 13425,
+      "sha256": "0f48df35dd4565f8c7eed822ba0f4eeef09bf62f442e2b3099cc1378315831da"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-375-normal-chromium/metrics.json",
+      "bytes": 47,
+      "sha256": "c21abc23316567fffeb310e08acd5b070f7d2d4616dfdc241b8f5ed31cd13558"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-375-normal-chromium/options-layout.png",
+      "bytes": 27349,
+      "sha256": "8774887dac59e7bed0af3416627c215204848e8a5d9238698d06c49eedea0923"
+    },
+    {
+      "path": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/test-results/title-layout-375-normal-chromium/title-layout.png",
+      "bytes": 13425,
+      "sha256": "0f48df35dd4565f8c7eed822ba0f4eeef09bf62f442e2b3099cc1378315831da"
+    }
+  ]
+}

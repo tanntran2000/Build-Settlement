@@ -1,0 +1,30 @@
+UTC: 2026-11-15T08:29:03.9905404Z
+WORKTREE: C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+COMMAND: git fetch origin
+
+EXIT: 0
+COMMAND: git rev-parse HEAD
+0de2d1ffa91abadf76ced9696f440a09bf19f8af
+EXIT: 0
+COMMAND: git rev-parse HEAD^{tree}
+1b26a634536c83699780f1a9479ce64ebb10717d
+EXIT: 0
+COMMAND: git rev-parse origin/main
+0de2d1ffa91abadf76ced9696f440a09bf19f8af
+EXIT: 0
+COMMAND: git branch --show-current
+feat/p6b-crafting-orders
+EXIT: 0
+COMMAND: git status --porcelain=v1
+
+EXIT: 0
+COMMAND: git worktree list
+D:/NghienCuuTiemNang/Build-Settlement                                         a00ddb2 [docs/p6b-crafting-design]
+C:/Users/Admin/.t3/worktrees/Build-Settlement/benchmark-arch-gate-a-01        2a2bb72 [benchmark/arch-gate-a-01]
+C:/Users/Admin/.t3/worktrees/Build-Settlement/benchmark-test-a-01             2a2bb72 (detached HEAD)
+C:/Users/Admin/.t3/worktrees/Build-Settlement/integrate-windows-smoke-main-01 8a7548b [integrate/windows-smoke-main-01]
+C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01               0de2d1f [feat/p6b-crafting-orders]
+C:/Users/Admin/.t3/worktrees/Build-Settlement/verify-windows-smoke-main-01    8a7548b [verify/windows-smoke-main-01]
+EXIT: 0
+PORTS 4173/4174: FREE
+CodeGraph: .codegraph absent; skipped. Codebase-memory: worktree not in list_projects; direct source fallback. No indexing performed.

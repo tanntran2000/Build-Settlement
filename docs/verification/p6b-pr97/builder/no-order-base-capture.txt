@@ -1,0 +1,26 @@
+UTC: 2026-11-15T09:08:35.0936187Z
+HEAD: 0de2d1ffa91abadf76ced9696f440a09bf19f8af
+TREE: 1b26a634536c83699780f1a9479ce64ebb10717d
+COMMAND: npm exec -- vitest run packages/simulation/src/__tests__/craft-week.test.ts --maxWorkers=1
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  16:08:33
+   Duration  1.48s (transform 545ms, setup 0ms, import 716ms, tests 212ms, environment 0ms)
+
+EXIT: 0
+
+CAPTURE TO RAW ARTIFACT (console output was not emitted by runner)
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  16:09:00
+   Duration  1.18s (transform 526ms, setup 0ms, import 687ms, tests 212ms, environment 0ms)
+
+EXIT: 0

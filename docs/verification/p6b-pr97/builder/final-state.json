@@ -1,0 +1,32 @@
+{
+    "utc":  "2026-11-15T10:06:12.9904823Z",
+    "head":  "735e3ff4d71c7fad04914913778f8325a86f79a8",
+    "tree":  "bc5965abab73df37f43baeafd9e4f9d847a23826",
+    "base":  "0de2d1ffa91abadf76ced9696f440a09bf19f8af",
+    "branch":  "feat/p6b-crafting-orders",
+    "status":  [
+
+               ],
+    "ports4173and4174":  "FREE",
+    "unitTests":  2768,
+    "smokeTests":  370,
+    "smokeCI":  "1",
+    "gateExitCodes":  [
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0
+                      ],
+    "pushed":  false,
+    "prOpened":  false,
+    "merged":  false,
+    "existingTestEdits":  1,
+    "outsideAllowlistLines":  1,
+    "immutableChangedPaths":  [
+
+                              ],
+    "storageReclaimedBytes":  0
+}

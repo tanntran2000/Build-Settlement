@@ -1,0 +1,15 @@
+COMMAND: node verify-edit-inventory.mjs --mode preflight
+UTC: 2026-11-15T08:36:19.385Z
+MODE: preflight
+HEAD: 0de2d1ffa91abadf76ced9696f440a09bf19f8af
+TREE: 1b26a634536c83699780f1a9479ce64ebb10717d
+BASE: 0de2d1ffa91abadf76ced9696f440a09bf19f8af
+PROPOSAL_SHA256: 1976eadd970e5b17521fc92afe973340f92735b8098f0afbf094378682582431
+EXISTING_TEST_FILES_CHECKED: 152
+EXACT_EXISTING_TEST_EDITS: 1 (proposed; none applied)
+OUTSIDE_ALLOWLIST_EDITS: 1 (proposed; none applied)
+IMMUTABLE_FILES: 85; changed paths []
+ALLOWED_CHANGED_PATHS: []
+STATUS: CLEAN
+RESULT: PASS (B0 audit only; no RED/GREEN/gates claimed)
+EXIT: 0

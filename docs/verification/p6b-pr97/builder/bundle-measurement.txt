@@ -1,0 +1,88 @@
+UTC: 2026-11-15T09:26:36.9914699Z
+HEAD: 735e3ff4d71c7fad04914913778f8325a86f79a8
+TREE: bc5965abab73df37f43baeafd9e4f9d847a23826
+CPU LOAD:
+
+Name                                     LoadPercentage NumberOfLogicalProcessors
+----                                     -------------- -------------------------
+Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz              4                         8
+
+
+TOP PROCESSES (CPU seconds are cumulative):
+
+   Id ProcessName                CPU WorkingSet64
+   -- -----------                --- ------------
+72168 cloudflared         911.984375     38293504
+57432 claude              828.140625    587628544
+67228 T3 Code (Nightly)   718.953125    257236992
+74368 T3 Code (Nightly)    487.40625    255434752
+52232 msedgewebview2      474.765625    173113344
+48340 claude               438.78125    122269696
+57060 claude              340.078125    297897984
+49904 codebase-memory-mcp   327.6875      9138176
+74360 claude              280.609375     94576640
+52992 claude              279.265625    338518016
+
+
+OTHER TEST/BUILD JOBS:
+REVIEW: no review/subagent job launched by this Builder; independent review is pending handoff.
+CURRENT PROCESS CPU COUNTERS (raw per-process, may span cores):
+
+Name                        IDProcess PercentProcessorTime WorkingSet
+----                        --------- -------------------- ----------
+codex#2                          4424                   38  386207744
+T3 Code (Nightly)#4             67228                   10  251252736
+T3 Code (Nightly)#3             74368                   10  257302528
+System                              4                   10     946176
+ChatGPT#14                      73880                    5   86736896
+FoxitPDFReaderUpdateService      3808                    5    2162688
+MsMpEng                          4272                    5  527953920
+WmiPrvSE#2                      51276                    5   15138816
+node#10                         53408                    0   76632064
+powershell#2                    40468                    0   92045312
+
+
+
+UTC_START: 2026-11-15T09:29:29.8989439Z
+COMMAND: node C:/Users/Admin/.t3/local-drafts/p6b-prB/measure-bundle.mjs
+CI=
+{
+  "utc": "2026-11-15T09:29:30.046Z",
+  "head": "735e3ff4d71c7fad04914913778f8325a86f79a8",
+  "tree": "bc5965abab73df37f43baeafd9e4f9d847a23826",
+  "method": "Sum Node gzipSync(default compression) byte lengths of production dist JS/CSS; decimal kB (1000 bytes). Baseline is the supplied rounded main report, not a new main build.",
+  "baselineGzipKB": {
+    "JS": 129.82,
+    "CSS": 6.74
+  },
+  "totalsGzipBytes": {
+    "JS": 132138,
+    "CSS": 6743
+  },
+  "deltaBytesAgainstReportedMain": {
+    "JS": 2318,
+    "CSS": 3
+  },
+  "combinedGzipBytes": 138881,
+  "under200KB": true,
+  "files": [
+    {
+      "file": "assets/index-CxB-ZnFZ.css",
+      "artifact": "bundle-artifacts/assets_index-CxB-ZnFZ.css",
+      "kind": "CSS",
+      "bytes": 32979,
+      "gzipBytes": 6743,
+      "sha256": "a9a62ae4562b11e0b2d26b74927764d865866f2908516c1ca9f40dad0375eb8a"
+    },
+    {
+      "file": "assets/index-D3002w-9.js",
+      "artifact": "bundle-artifacts/assets_index-D3002w-9.js",
+      "kind": "JS",
+      "bytes": 425264,
+      "gzipBytes": 132138,
+      "sha256": "f09c896048d926cbaed23443122be27915581cf89fafa1765407fdb2f75757f1"
+    }
+  ]
+}
+UTC_END: 2026-11-15T09:29:30.2342454Z
+EXIT: 0

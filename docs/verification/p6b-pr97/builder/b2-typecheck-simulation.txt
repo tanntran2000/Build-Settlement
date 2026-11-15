@@ -1,0 +1,6 @@
+
+> build-settlement@0.1.0 typecheck:simulation
+> tsc -p packages/simulation/tsconfig.json --noEmit
+
+packages/simulation/src/__tests__/craft-week.test.ts(33,27): error TS2339: Property 'glob' does not exist on type 'ImportMeta'.
+EXIT: 2

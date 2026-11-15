@@ -1,0 +1,7 @@
+PR B Step 0 HOLD answered by the owner. Binding plan is now C:/Users/Admin/.t3/local-drafts/p6b-prB/binding-plan-16e48a1.md: read Plan correction 4.
+
+Owner (Tân), 2026-11-15, dialog choices, verbatim:
+1. "Approve P1, X1 and tile-trial.ts (Recommended)": P1 exactly as listed (npc.test.ts:30, append 'smithy', 'hospital', 'drug-store'); X1 exactly society.ts:66 (accept the old eight keys or the nine with `workshops` last; nothing else in that file); tile-trial.ts added to B1 for the shared REPLACE → WORKSHOP_BUSY guard.
+2. "Accept D1–D4 (Recommended)": D1 optional report fields omitted when empty, `output` = recipe output defId, visible-report parser unchanged; D2 placing needs the building type built and enabled, staffing/Herbs/upkeep checked at End Week; D3 Smithy/Hospital with 0 workers complete nothing even with a skilled NPC, Hospital must be operating by existing rules, Drug Store base 1 without workers; D4 a refined material whose stack is at 999 waits in `ready`, items go inventory/consumables → storage → ready.
+
+Proceed with B1 RED and the rest of the brief (B1, B2, B3: gates on a quiet machine, CI=1 smoke, bundle, immutable check, evidence under local-drafts/p6b-prB/). No other existing-test edit or file outside the allowlist: HOLD if one is needed. Do not push, open a PR or merge.

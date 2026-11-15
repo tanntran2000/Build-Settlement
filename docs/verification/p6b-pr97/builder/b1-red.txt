@@ -1,0 +1,598 @@
+UTC: 2026-11-15T09:11:07.9316625Z
+HEAD: 0de2d1ffa91abadf76ced9696f440a09bf19f8af
+TREE: 1b26a634536c83699780f1a9479ce64ebb10717d
+COMMAND: npm exec -- vitest run packages/simulation/src/__tests__/craft-command.test.ts --maxWorkers=1 --reporter=default --reporter=json --outputFile=<evidence>/b1-red.json
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/craft-command.test.ts (110 tests | 93 failed) 353ms
+     × holds exact inputs and fee for refine-silver without modifying the caller 18ms
+     × holds exact inputs and fee for upgrade-rare-ring-player without modifying the caller 6ms
+     × holds exact inputs and fee for brew-heal-potion-1 without modifying the caller 4ms
+     × places catalog recipe refine-silver with all inputs held once 4ms
+     × places catalog recipe refine-gold with all inputs held once 5ms
+     × places catalog recipe refine-nitrate with all inputs held once 3ms
+     × places catalog recipe refine-amethyst with all inputs held once 3ms
+     × places catalog recipe refine-wool with all inputs held once 3ms
+     × places catalog recipe refine-silk with all inputs held once 3ms
+     × places catalog recipe refine-red-leaf with all inputs held once 3ms
+     × places catalog recipe refine-purple-leaf with all inputs held once 3ms
+     × places catalog recipe upgrade-rare-weapon-player with all inputs held once 3ms
+     × places catalog recipe upgrade-rare-weapon with all inputs held once 3ms
+     × places catalog recipe upgrade-epic-weapon with all inputs held once 2ms
+     × places catalog recipe upgrade-epic-weapon-npc with all inputs held once 3ms
+     × places catalog recipe upgrade-rare-earrings-player with all inputs held once 3ms
+     × places catalog recipe upgrade-rare-earrings with all inputs held once 3ms
+     × places catalog recipe upgrade-epic-earrings-player with all inputs held once 2ms
+     × places catalog recipe upgrade-epic-earrings-npc with all inputs held once 2ms
+     × places catalog recipe upgrade-rare-necklace-player with all inputs held once 3ms
+     × places catalog recipe upgrade-rare-necklace with all inputs held once 2ms
+     × places catalog recipe upgrade-epic-necklace-player with all inputs held once 2ms
+     × places catalog recipe upgrade-epic-necklace with all inputs held once 2ms
+     × places catalog recipe upgrade-rare-ring-player with all inputs held once 2ms
+     × places catalog recipe upgrade-rare-ring with all inputs held once 2ms
+     × places catalog recipe upgrade-epic-ring-player with all inputs held once 3ms
+     × places catalog recipe upgrade-epic-ring-npc with all inputs held once 3ms
+     × places catalog recipe upgrade-rare-hand-player with all inputs held once 4ms
+     × places catalog recipe upgrade-rare-hand with all inputs held once 3ms
+     × places catalog recipe upgrade-epic-hand-player with all inputs held once 3ms
+     × places catalog recipe upgrade-epic-hand with all inputs held once 3ms
+     × places catalog recipe upgrade-rare-top-player with all inputs held once 3ms
+     × places catalog recipe upgrade-rare-top with all inputs held once 3ms
+     × places catalog recipe upgrade-epic-top with all inputs held once 4ms
+     × places catalog recipe upgrade-epic-top-npc with all inputs held once 3ms
+     × places catalog recipe upgrade-rare-bottom-player with all inputs held once 3ms
+     × places catalog recipe upgrade-rare-bottom with all inputs held once 3ms
+     × places catalog recipe upgrade-epic-bottom-player with all inputs held once 3ms
+     × places catalog recipe upgrade-epic-bottom-npc with all inputs held once 3ms
+     × places catalog recipe upgrade-rare-shoes-player with all inputs held once 3ms
+     × places catalog recipe upgrade-rare-shoes with all inputs held once 3ms
+     × places catalog recipe upgrade-epic-shoes-player with all inputs held once 3ms
+     × places catalog recipe upgrade-epic-shoes-npc with all inputs held once 2ms
+     × places catalog recipe upgrade-rare-set-player with all inputs held once 3ms
+     × places catalog recipe upgrade-rare-set with all inputs held once 3ms
+     × places catalog recipe upgrade-epic-set-player with all inputs held once 2ms
+     × places catalog recipe upgrade-epic-set-npc with all inputs held once 2ms
+     × places catalog recipe upgrade-heal-potion-2 with all inputs held once 2ms
+     × places catalog recipe upgrade-heal-potion-3 with all inputs held once 2ms
+     × places catalog recipe brew-heal-potion-1 with all inputs held once 2ms
+     × queues at enabled smithy without requiring workers or current Herbs/upkeep 3ms
+     × queues at enabled hospital without requiring workers or current Herbs/upkeep 3ms
+     × queues at enabled drug-store without requiring workers or current Herbs/upkeep 3ms
+     × RECIPE_UNKNOWN is atomic 10ms
+     × NO_WORKSHOP for wrong is atomic 4ms
+     × NO_WORKSHOP for unbuilt is atomic 4ms
+     × NO_WORKSHOP for disabled is atomic 4ms
+     × NO_WORKSHOP for unknown is atomic 4ms
+     × MISSING_INPUT for short material stack is atomic 4ms
+     × MISSING_INPUT for missing upgrade instance is atomic 3ms
+     × MISSING_INPUT for wrong upgrade instance is atomic 4ms
+     × MISSING_INPUT for worn upgrade instance is atomic 4ms
+     × MISSING_INPUT for storage upgrade instance is atomic 4ms
+     × MISSING_INPUT for held upgrade instance is atomic 3ms
+     × QUEUE_FULL at exactly six leaves the seventh inputs and fee untouched 3ms
+     × NOT_ENOUGH_GOLD is atomic 4ms
+     × PLACE_CRAFT_ORDER refuses Report and stale revision atomically 3ms
+     × CANCEL_CRAFT_ORDER refuses Report and stale revision atomically 3ms
+     × canonical tile ordering is independent of placement order 3ms
+     × cancel refine-silver returns exact ids, stacks and Gold once 3ms
+     × cancel upgrade-rare-ring-player returns exact ids, stacks and Gold once 3ms
+     × cancel upgrade-heal-potion-2 returns exact ids, stacks and Gold once 3ms
+     × cancel brew-heal-potion-1 returns exact ids, stacks and Gold once 3ms
+     × INVENTORY_FULL when returning inventory is atomic 4ms
+     × INVENTORY_FULL when returning consumables is atomic 3ms
+     × INVENTORY_FULL when returning materials is atomic 3ms
+     × returns an older input before newer inventory ids and preserves ready outputs 2ms
+     × ORDER_UNKNOWN for index -1 is atomic 3ms
+     × ORDER_UNKNOWN for index 1 is atomic 4ms
+     × ORDER_UNKNOWN for index 0.5 is atomic 4ms
+     × ORDER_UNKNOWN for index 0 is atomic 4ms
+     × ORDER_UNKNOWN for index NaN is atomic 3ms
+     × held input cannot be used by EQUIP_ITEM 3ms
+     × held input cannot be used by SELL_ITEM 3ms
+     × held input cannot be used by DESTROY_ITEM 3ms
+     × held input cannot be used by USE_CONSUMABLE 4ms
+     × REPLACE refuses a busy orders tile through both entry points 3ms
+     × REPLACE refuses a busy ready tile through both entry points 4ms
+     × REPLACE succeeds after the last order is cancelled 2ms
+     × accepts nonempty canonical queues and ready outputs through the parent session validator 3ms
+     ✓ rejects empty map without mutating it 3ms
+     ✓ rejects empty entry without mutating it 2ms
+     ✓ rejects unsorted tiles without mutating it 2ms
+     ✓ rejects unknown recipe without mutating it 2ms
+     ✓ rejects wrong fee without mutating it 2ms
+     ✓ rejects wrong stack without mutating it 2ms
+     ✓ rejects extra material without mutating it 2ms
+     ✓ rejects duplicate held id without mutating it 2ms
+     ✓ rejects wrong held definition without mutating it 2ms
+     ✓ rejects over-cap queue without mutating it 2ms
+     ✓ rejects sparse orders without mutating it 2ms
+     ✓ rejects sparse ready without mutating it 2ms
+     ✓ rejects ready count zero without mutating it 3ms
+     ✓ rejects unknown ready material without mutating it 2ms
+     ✓ rejects ready duplicate id without mutating it 2ms
+     ✓ rejects wrong state key order without mutating it 2ms
+     ✓ rejects accessor without mutating it 2ms
+   × ASSIGN_NPC accepts spec-2 (smithy) 3ms
+   × ASSIGN_NPC accepts service-1 (hospital) 3ms
+   × ASSIGN_NPC accepts spec-3 (drug-store) 3ms
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯ Failed Tests 93 ⎯⎯⎯⎯⎯⎯⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > holds exact inputs and fee for refine-silver without modifying the caller
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > holds exact inputs and fee for upgrade-rare-ring-player without modifying the caller
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > holds exact inputs and fee for brew-heal-potion-1 without modifying the caller
+Error: PLACE_CRAFT_ORDER: UNSUPPORTED_ACTION
+ ❯ act packages/simulation/src/__tests__/craft-command.test.ts:29:23
+     27| function act(s:CharacterLifeSessionState,type:string,fields:Record<str…
+     28|   const r=executeCharacterLifeCommand(s,{type,expectedRevision:s.city.…
+     29|   if(!r.success)throw Error(`${type}: ${r.error.code}`);
+       |                       ^
+     30|   return r.next;
+     31| }
+ ❯ packages/simulation/src/__tests__/craft-command.test.ts:52:82
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/93]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe refine-silver with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe refine-gold with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe refine-nitrate with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe refine-amethyst with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe refine-wool with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe refine-silk with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe refine-red-leaf with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe refine-purple-leaf with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-rare-weapon-player with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-rare-weapon with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-epic-weapon with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-epic-weapon-npc with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-rare-earrings-player with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-rare-earrings with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-epic-earrings-player with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-epic-earrings-npc with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-rare-necklace-player with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-rare-necklace with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-epic-necklace-player with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-epic-necklace with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-rare-ring-player with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-rare-ring with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-epic-ring-player with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-epic-ring-npc with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-rare-hand-player with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-rare-hand with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-epic-hand-player with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-epic-hand with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-rare-top-player with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-rare-top with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-epic-top with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-epic-top-npc with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-rare-bottom-player with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-rare-bottom with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-epic-bottom-player with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-epic-bottom-npc with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-rare-shoes-player with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-rare-shoes with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-epic-shoes-player with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-epic-shoes-npc with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-rare-set-player with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-rare-set with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-epic-set-player with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-epic-set-npc with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-heal-potion-2 with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe upgrade-heal-potion-3 with all inputs held once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > places catalog recipe brew-heal-potion-1 with all inputs held once
+Error: PLACE_CRAFT_ORDER: UNSUPPORTED_ACTION
+ ❯ act packages/simulation/src/__tests__/craft-command.test.ts:29:23
+     27| function act(s:CharacterLifeSessionState,type:string,fields:Record<str…
+     28|   const r=executeCharacterLifeCommand(s,{type,expectedRevision:s.city.…
+     29|   if(!r.success)throw Error(`${type}: ${r.error.code}`);
+       |                       ^
+     30|   return r.next;
+     31| }
+ ❯ packages/simulation/src/__tests__/craft-command.test.ts:60:16
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/93]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > queues at enabled smithy without requiring workers or current Herbs/upkeep
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > queues at enabled hospital without requiring workers or current Herbs/upkeep
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > queues at enabled drug-store without requiring workers or current Herbs/upkeep
+Error: PLACE_CRAFT_ORDER: UNSUPPORTED_ACTION
+ ❯ act packages/simulation/src/__tests__/craft-command.test.ts:29:23
+     27| function act(s:CharacterLifeSessionState,type:string,fields:Record<str…
+     28|   const r=executeCharacterLifeCommand(s,{type,expectedRevision:s.city.…
+     29|   if(!r.success)throw Error(`${type}: ${r.error.code}`);
+       |                       ^
+     30|   return r.next;
+     31| }
+ ❯ packages/simulation/src/__tests__/craft-command.test.ts:69:18
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/93]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > RECIPE_UNKNOWN is atomic
+AssertionError: expected { success: false, error: { …(2) } } to match object { success: false, …(1) }
+(1 matching property omitted from actual)
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+  {
+    "error": {
+-     "code": "RECIPE_UNKNOWN",
++     "code": "UNSUPPORTED_ACTION",
+    },
+    "success": false,
+  }
+System.Management.Automation.RemoteException
+ ❯ refuse packages/simulation/src/__tests__/craft-command.test.ts:35:13
+     33|   const before=structuredClone(s),bytes=JSON.stringify(s);
+     34|   const r=executeCharacterLifeCommand(s,{expectedRevision:s.city.revis…
+     35|   expect(r).toMatchObject({success:false,error:{code}});
+       |             ^
+     36|   expect(s).toEqual(before);expect(JSON.stringify(s)).toBe(bytes);
+     37| }
+ ❯ packages/simulation/src/__tests__/craft-command.test.ts:71:37
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/93]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > NO_WORKSHOP for wrong is atomic
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > NO_WORKSHOP for unbuilt is atomic
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > NO_WORKSHOP for disabled is atomic
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > NO_WORKSHOP for unknown is atomic
+AssertionError: expected { success: false, error: { …(2) } } to match object { success: false, …(1) }
+(1 matching property omitted from actual)
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+  {
+    "error": {
+-     "code": "NO_WORKSHOP",
++     "code": "UNSUPPORTED_ACTION",
+    },
+    "success": false,
+  }
+System.Management.Automation.RemoteException
+ ❯ refuse packages/simulation/src/__tests__/craft-command.test.ts:35:13
+     33|   const before=structuredClone(s),bytes=JSON.stringify(s);
+     34|   const r=executeCharacterLifeCommand(s,{expectedRevision:s.city.revis…
+     35|   expect(r).toMatchObject({success:false,error:{code}});
+       |             ^
+     36|   expect(s).toEqual(before);expect(JSON.stringify(s)).toBe(bytes);
+     37| }
+ ❯ packages/simulation/src/__tests__/craft-command.test.ts:77:5
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/93]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > MISSING_INPUT for short material stack is atomic
+AssertionError: expected { success: false, error: { …(2) } } to match object { success: false, …(1) }
+(1 matching property omitted from actual)
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+  {
+    "error": {
+-     "code": "MISSING_INPUT",
++     "code": "UNSUPPORTED_ACTION",
+    },
+    "success": false,
+  }
+System.Management.Automation.RemoteException
+ ❯ refuse packages/simulation/src/__tests__/craft-command.test.ts:35:13
+     33|   const before=structuredClone(s),bytes=JSON.stringify(s);
+     34|   const r=executeCharacterLifeCommand(s,{expectedRevision:s.city.revis…
+     35|   expect(r).toMatchObject({success:false,error:{code}});
+       |             ^
+     36|   expect(s).toEqual(before);expect(JSON.stringify(s)).toBe(bytes);
+     37| }
+ ❯ packages/simulation/src/__tests__/craft-command.test.ts:79:103
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/93]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > MISSING_INPUT for missing upgrade instance is atomic
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > MISSING_INPUT for wrong upgrade instance is atomic
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > MISSING_INPUT for worn upgrade instance is atomic
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > MISSING_INPUT for storage upgrade instance is atomic
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > MISSING_INPUT for held upgrade instance is atomic
+AssertionError: expected { success: false, error: { …(2) } } to match object { success: false, …(1) }
+(1 matching property omitted from actual)
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+  {
+    "error": {
+-     "code": "MISSING_INPUT",
++     "code": "UNSUPPORTED_ACTION",
+    },
+    "success": false,
+  }
+System.Management.Automation.RemoteException
+ ❯ refuse packages/simulation/src/__tests__/craft-command.test.ts:35:13
+     33|   const before=structuredClone(s),bytes=JSON.stringify(s);
+     34|   const r=executeCharacterLifeCommand(s,{expectedRevision:s.city.revis…
+     35|   expect(r).toMatchObject({success:false,error:{code}});
+       |             ^
+     36|   expect(s).toEqual(before);expect(JSON.stringify(s)).toBe(bytes);
+     37| }
+ ❯ packages/simulation/src/__tests__/craft-command.test.ts:86:5
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/93]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > QUEUE_FULL at exactly six leaves the seventh inputs and fee untouched
+Error: PLACE_CRAFT_ORDER: UNSUPPORTED_ACTION
+ ❯ act packages/simulation/src/__tests__/craft-command.test.ts:29:23
+     27| function act(s:CharacterLifeSessionState,type:string,fields:Record<str…
+     28|   const r=executeCharacterLifeCommand(s,{type,expectedRevision:s.city.…
+     29|   if(!r.success)throw Error(`${type}: ${r.error.code}`);
+       |                       ^
+     30|   return r.next;
+     31| }
+ ❯ packages/simulation/src/__tests__/craft-command.test.ts:90:27
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/93]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > NOT_ENOUGH_GOLD is atomic
+AssertionError: expected { success: false, error: { …(2) } } to match object { success: false, …(1) }
+(1 matching property omitted from actual)
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+  {
+    "error": {
+-     "code": "NOT_ENOUGH_GOLD",
++     "code": "UNSUPPORTED_ACTION",
+    },
+    "success": false,
+  }
+System.Management.Automation.RemoteException
+ ❯ refuse packages/simulation/src/__tests__/craft-command.test.ts:35:13
+     33|   const before=structuredClone(s),bytes=JSON.stringify(s);
+     34|   const r=executeCharacterLifeCommand(s,{expectedRevision:s.city.revis…
+     35|   expect(r).toMatchObject({success:false,error:{code}});
+       |             ^
+     36|   expect(s).toEqual(before);expect(JSON.stringify(s)).toBe(bytes);
+     37| }
+ ❯ packages/simulation/src/__tests__/craft-command.test.ts:93:107
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/93]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > PLACE_CRAFT_ORDER refuses Report and stale revision atomically
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > CANCEL_CRAFT_ORDER refuses Report and stale revision atomically
+AssertionError: expected { success: false, error: { …(2) } } to match object { success: false, …(1) }
+(1 matching property omitted from actual)
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+  {
+    "error": {
+-     "code": "STALE_COMMAND",
++     "code": "UNSUPPORTED_ACTION",
+    },
+    "success": false,
+  }
+System.Management.Automation.RemoteException
+ ❯ refuse packages/simulation/src/__tests__/craft-command.test.ts:35:13
+     33|   const before=structuredClone(s),bytes=JSON.stringify(s);
+     34|   const r=executeCharacterLifeCommand(s,{expectedRevision:s.city.revis…
+     35|   expect(r).toMatchObject({success:false,error:{code}});
+       |             ^
+     36|   expect(s).toEqual(before);expect(JSON.stringify(s)).toBe(bytes);
+     37| }
+ ❯ packages/simulation/src/__tests__/craft-command.test.ts:96:5
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/93]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > place craft orders > canonical tile ordering is independent of placement order
+Error: PLACE_CRAFT_ORDER: UNSUPPORTED_ACTION
+ ❯ act packages/simulation/src/__tests__/craft-command.test.ts:29:23
+     27| function act(s:CharacterLifeSessionState,type:string,fields:Record<str…
+     28|   const r=executeCharacterLifeCommand(s,{type,expectedRevision:s.city.…
+     29|   if(!r.success)throw Error(`${type}: ${r.error.code}`);
+       |                       ^
+     30|   return r.next;
+     31| }
+ ❯ packages/simulation/src/__tests__/craft-command.test.ts:100:7
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/93]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > cancel and held inputs > cancel refine-silver returns exact ids, stacks and Gold once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > cancel and held inputs > cancel upgrade-rare-ring-player returns exact ids, stacks and Gold once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > cancel and held inputs > cancel upgrade-heal-potion-2 returns exact ids, stacks and Gold once
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > cancel and held inputs > cancel brew-heal-potion-1 returns exact ids, stacks and Gold once
+Error: PLACE_CRAFT_ORDER: UNSUPPORTED_ACTION
+ ❯ act packages/simulation/src/__tests__/craft-command.test.ts:29:23
+     27| function act(s:CharacterLifeSessionState,type:string,fields:Record<str…
+     28|   const r=executeCharacterLifeCommand(s,{type,expectedRevision:s.city.…
+     29|   if(!r.success)throw Error(`${type}: ${r.error.code}`);
+       |                       ^
+     30|   return r.next;
+     31| }
+ ❯ packages/simulation/src/__tests__/craft-command.test.ts:108:18
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/93]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > cancel and held inputs > INVENTORY_FULL when returning inventory is atomic
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > cancel and held inputs > INVENTORY_FULL when returning consumables is atomic
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > cancel and held inputs > INVENTORY_FULL when returning materials is atomic
+AssertionError: expected { success: false, error: { …(2) } } to match object { success: false, …(1) }
+(1 matching property omitted from actual)
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+  {
+    "error": {
+-     "code": "INVENTORY_FULL",
++     "code": "UNSUPPORTED_ACTION",
+    },
+    "success": false,
+  }
+System.Management.Automation.RemoteException
+ ❯ refuse packages/simulation/src/__tests__/craft-command.test.ts:35:13
+     33|   const before=structuredClone(s),bytes=JSON.stringify(s);
+     34|   const r=executeCharacterLifeCommand(s,{expectedRevision:s.city.revis…
+     35|   expect(r).toMatchObject({success:false,error:{code}});
+       |             ^
+     36|   expect(s).toEqual(before);expect(JSON.stringify(s)).toBe(bytes);
+     37| }
+ ❯ packages/simulation/src/__tests__/craft-command.test.ts:117:5
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/93]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > cancel and held inputs > returns an older input before newer inventory ids and preserves ready outputs
+Error: CANCEL_CRAFT_ORDER: UNSUPPORTED_ACTION
+ ❯ act packages/simulation/src/__tests__/craft-command.test.ts:29:23
+     27| function act(s:CharacterLifeSessionState,type:string,fields:Record<str…
+     28|   const r=executeCharacterLifeCommand(s,{type,expectedRevision:s.city.…
+     29|   if(!r.success)throw Error(`${type}: ${r.error.code}`);
+       |                       ^
+     30|   return r.next;
+     31| }
+ ❯ packages/simulation/src/__tests__/craft-command.test.ts:122:7
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/93]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > cancel and held inputs > ORDER_UNKNOWN for index -1 is atomic
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > cancel and held inputs > ORDER_UNKNOWN for index 1 is atomic
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > cancel and held inputs > ORDER_UNKNOWN for index 0.5 is atomic
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > cancel and held inputs > ORDER_UNKNOWN for index 0 is atomic
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > cancel and held inputs > ORDER_UNKNOWN for index NaN is atomic
+AssertionError: expected { success: false, error: { …(2) } } to match object { success: false, …(1) }
+(1 matching property omitted from actual)
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+  {
+    "error": {
+-     "code": "ORDER_UNKNOWN",
++     "code": "UNSUPPORTED_ACTION",
+    },
+    "success": false,
+  }
+System.Management.Automation.RemoteException
+ ❯ refuse packages/simulation/src/__tests__/craft-command.test.ts:35:13
+     33|   const before=structuredClone(s),bytes=JSON.stringify(s);
+     34|   const r=executeCharacterLifeCommand(s,{expectedRevision:s.city.revis…
+     35|   expect(r).toMatchObject({success:false,error:{code}});
+       |             ^
+     36|   expect(s).toEqual(before);expect(JSON.stringify(s)).toBe(bytes);
+     37| }
+ ❯ packages/simulation/src/__tests__/craft-command.test.ts:125:77
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/93]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > cancel and held inputs > held input cannot be used by EQUIP_ITEM
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > cancel and held inputs > held input cannot be used by SELL_ITEM
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > cancel and held inputs > held input cannot be used by DESTROY_ITEM
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > cancel and held inputs > held input cannot be used by USE_CONSUMABLE
+AssertionError: expected { success: false, error: { …(2) } } to match object { success: false, …(1) }
+(1 matching property omitted from actual)
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+  {
+    "error": {
+-     "code": "ITEM_UNKNOWN",
++     "code": "INVALID_STATE",
+    },
+    "success": false,
+  }
+System.Management.Automation.RemoteException
+ ❯ refuse packages/simulation/src/__tests__/craft-command.test.ts:35:13
+     33|   const before=structuredClone(s),bytes=JSON.stringify(s);
+     34|   const r=executeCharacterLifeCommand(s,{expectedRevision:s.city.revis…
+     35|   expect(r).toMatchObject({success:false,error:{code}});
+       |             ^
+     36|   expect(s).toEqual(before);expect(JSON.stringify(s)).toBe(bytes);
+     37| }
+ ❯ packages/simulation/src/__tests__/craft-command.test.ts:128:5
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/93]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > cancel and held inputs > REPLACE refuses a busy orders tile through both entry points
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > cancel and held inputs > REPLACE refuses a busy ready tile through both entry points
+AssertionError: expected { success: false, error: { …(2) } } to match object { success: false, …(1) }
+(1 matching property omitted from actual)
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+  {
+    "error": {
+-     "code": "WORKSHOP_BUSY",
++     "code": "INVALID_STATE",
+    },
+    "success": false,
+  }
+System.Management.Automation.RemoteException
+ ❯ refuse packages/simulation/src/__tests__/craft-command.test.ts:35:13
+     33|   const before=structuredClone(s),bytes=JSON.stringify(s);
+     34|   const r=executeCharacterLifeCommand(s,{expectedRevision:s.city.revis…
+     35|   expect(r).toMatchObject({success:false,error:{code}});
+       |             ^
+     36|   expect(s).toEqual(before);expect(JSON.stringify(s)).toBe(bytes);
+     37| }
+ ❯ packages/simulation/src/__tests__/craft-command.test.ts:133:5
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/93]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > cancel and held inputs > REPLACE succeeds after the last order is cancelled
+Error: CANCEL_CRAFT_ORDER: UNSUPPORTED_ACTION
+ ❯ act packages/simulation/src/__tests__/craft-command.test.ts:29:23
+     27| function act(s:CharacterLifeSessionState,type:string,fields:Record<str…
+     28|   const r=executeCharacterLifeCommand(s,{type,expectedRevision:s.city.…
+     29|   if(!r.success)throw Error(`${type}: ${r.error.code}`);
+       |                       ^
+     30|   return r.next;
+     31| }
+ ❯ packages/simulation/src/__tests__/craft-command.test.ts:138:11
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/93]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > canonical workshop state > accepts nonempty canonical queues and ready outputs through the parent session validator
+AssertionError: expected false to be true // Object.is equality
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+- true
++ false
+System.Management.Automation.RemoteException
+ ❯ packages/simulation/src/__tests__/craft-command.test.ts:147:47
+    145|     const s=queued('upgrade-rare-ring-player');const item=add(s,'heal-…
+    146|     items(s).workshops!['spec-2'].ready=[{item},{material:'silver',cou…
+    147|     expect(isItemsState(items(s),['player'])).toBe(true);expect(isLive…
+       |                                               ^
+    148|   });
+    149|   const mutations:[string,(s:CharacterLifeSessionState)=>void][]=[
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/93]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > ASSIGN_NPC accepts spec-2 (smithy)
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > ASSIGN_NPC accepts service-1 (hospital)
+ FAIL  packages/simulation/src/__tests__/craft-command.test.ts > ASSIGN_NPC accepts spec-3 (drug-store)
+Error: ASSIGN_NPC: INVALID_STATE
+ ❯ act packages/simulation/src/__tests__/craft-command.test.ts:29:23
+     27| function act(s:CharacterLifeSessionState,type:string,fields:Record<str…
+     28|   const r=executeCharacterLifeCommand(s,{type,expectedRevision:s.city.…
+     29|   if(!r.success)throw Error(`${type}: ${r.error.code}`);
+       |                       ^
+     30|   return r.next;
+     31| }
+ ❯ packages/simulation/src/__tests__/craft-command.test.ts:174:14
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/93]⎯
+System.Management.Automation.RemoteException
+
+ Test Files  1 failed (1)
+      Tests  93 failed | 17 passed (110)
+   Start at  16:11:05
+   Duration  1.92s (transform 579ms, setup 0ms, import 746ms, tests 353ms, environment 0ms)
+
+JSON report written to C:/Users/Admin/.t3/local-drafts/p6b-prB/b1-red.json
+EXIT: 1

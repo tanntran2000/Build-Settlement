@@ -1,0 +1,13 @@
+diff --git a/packages/core/src/world/__tests__/npc.test.ts b/packages/core/src/world/__tests__/npc.test.ts
+index 4ba7b6c..c8ba411 100644
+--- a/packages/core/src/world/__tests__/npc.test.ts
++++ b/packages/core/src/world/__tests__/npc.test.ts
+@@ -27,7 +27,7 @@ describe('starter content', () => {
+     expect(isWorldNpcList(WORLD_STARTER_NPCS, createSocietyState())).toBe(true);
+   });
+   it('maps manager posts to the existing and outside building types', () => {
+-    expect([...NPC_MANAGER_BUILDING_TYPES]).toEqual(['farm', 'processor', 'logging', 'mine', 'workshop', 'town-hall', 'town-market', 'quarry', 'sheep-pasture', 'herb-garden', 'weaver', 'watch-house', 'military-barracks']);
++    expect([...NPC_MANAGER_BUILDING_TYPES]).toEqual(['farm', 'processor', 'logging', 'mine', 'workshop', 'town-hall', 'town-market', 'quarry', 'sheep-pasture', 'herb-garden', 'weaver', 'watch-house', 'military-barracks', 'smithy', 'hospital', 'drug-store']);
+   });
+ });
+ 

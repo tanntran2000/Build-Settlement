@@ -1,0 +1,15 @@
+COMMAND: node verify-edit-inventory.mjs --mode final --approval owner-approval.json
+UTC: 2026-11-15T10:04:13.313Z
+MODE: final
+HEAD: 735e3ff4d71c7fad04914913778f8325a86f79a8
+TREE: bc5965abab73df37f43baeafd9e4f9d847a23826
+BASE: 0de2d1ffa91abadf76ced9696f440a09bf19f8af
+PROPOSAL_SHA256: 1976eadd970e5b17521fc92afe973340f92735b8098f0afbf094378682582431
+EXISTING_TEST_FILES_CHECKED: 152
+EXACT_EXISTING_TEST_EDITS: 1 (applied exactly)
+OUTSIDE_ALLOWLIST_EDITS: 1 (applied exactly)
+IMMUTABLE_FILES: 85; changed paths []
+ALLOWED_CHANGED_PATHS: ["packages/core/src/trial/items.ts","packages/core/src/trial/society.ts","packages/core/src/trial/types.ts","packages/core/src/world/__tests__/npc.test.ts","packages/core/src/world/npc-content.ts","packages/persistence/src/__tests__/craft-records.test.ts","packages/persistence/src/session-records.ts","packages/simulation/src/__tests__/craft-command.test.ts","packages/simulation/src/__tests__/craft-week.test.ts","packages/simulation/src/craft-week.ts","packages/simulation/src/item-command.ts","packages/simulation/src/tile-trial-week.ts","packages/simulation/src/tile-trial.ts"]
+STATUS: CLEAN
+RESULT: PASS (edit inventory and immutable bytes only; runtime gates are separate)
+EXIT: 0

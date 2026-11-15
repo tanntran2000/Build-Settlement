@@ -1,0 +1,13 @@
+diff --git a/packages/core/src/trial/types.ts b/packages/core/src/trial/types.ts
+index 9b0e818..e423542 100644
+--- a/packages/core/src/trial/types.ts
++++ b/packages/core/src/trial/types.ts
+@@ -83,6 +83,8 @@ export interface ItemWeekReport {
+   pendingLegendary?: ItemGoal[];
+   hospitalOperated: boolean;
+   regen: number;
++  crafted?: {tileId:string;recipeId:string;output:string;place:'inventory'|'consumables'|'materials'|'storage'|'ready'}[];
++  workshopsIdle?: string[];
+ }
+ export interface OrderReport {
+  soldiers: number; garrisonSecurity: number;

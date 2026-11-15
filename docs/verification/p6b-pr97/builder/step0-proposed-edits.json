@@ -1,0 +1,99 @@
+{
+  "base": "0de2d1ffa91abadf76ced9696f440a09bf19f8af",
+  "status": "PROPOSED ONLY — owner Step 0 answer required; no product or test edits applied",
+  "idNamespace": "PR B only; PR A P1–P59 are historical and are not reopened.",
+  "existingTestEdits": [
+    {
+      "id": "P1",
+      "path": "packages/core/src/world/__tests__/npc.test.ts",
+      "line": 30,
+      "before": "    expect([...NPC_MANAGER_BUILDING_TYPES]).toEqual(['farm', 'processor', 'logging', 'mine', 'workshop', 'town-hall', 'town-market', 'quarry', 'sheep-pasture', 'herb-garden', 'weaver', 'watch-house', 'military-barracks']);",
+      "after": "    expect([...NPC_MANAGER_BUILDING_TYPES]).toEqual(['farm', 'processor', 'logging', 'mine', 'workshop', 'town-hall', 'town-market', 'quarry', 'sheep-pasture', 'herb-garden', 'weaver', 'watch-house', 'military-barracks', 'smithy', 'hospital', 'drug-store']);",
+      "reason": "Decision 5 appends the three supported NPC workshop posts. Keep exact equality, order, and all other bytes."
+    }
+  ],
+  "outsideAllowlistEdits": [
+    {
+      "id": "X1",
+      "path": "packages/core/src/trial/society.ts",
+      "line": 66,
+      "before": "    return hasWeeklyKeys(raw.items,['nextItemId','inventory','consumables','materials','storage','equipped','market','goals']) &&",
+      "after": "    return (hasWeeklyKeys(raw.items,['nextItemId','inventory','consumables','materials','storage','equipped','market','goals']) || hasWeeklyKeys(raw.items,['nextItemId','inventory','consumables','materials','storage','equipped','market','goals','workshops'])) &&",
+      "reason": "The parent validator otherwise rejects every nonempty optional workshops state before isItemsState can validate it. Only this line changes; isItemsState still checks the exact canonical shape and contents."
+    }
+  ],
+  "additionalTaskFiles": [
+    {
+      "path": "packages/simulation/src/tile-trial.ts",
+      "task": "B1",
+      "reason": "Already explicitly permitted by PR B allowlist lines 104–105, but absent from B1 Files line 166. Put WORKSHOP_BUSY in the shared REPLACE path so direct tile, NPC-world and Character Life callers all receive the refusal."
+    }
+  ],
+  "allowedProductFiles": [
+    "packages/core/src/trial/items.ts",
+    "packages/core/src/trial/types.ts",
+    "packages/core/src/world/npc-content.ts",
+    "packages/simulation/src/item-command.ts",
+    "packages/simulation/src/character-life-command.ts",
+    "packages/simulation/src/tile-trial.ts",
+    "packages/simulation/src/craft-week.ts",
+    "packages/simulation/src/tile-trial-week.ts",
+    "packages/persistence/src/session-records.ts"
+  ],
+  "newTestFiles": [
+    "packages/simulation/src/__tests__/craft-command.test.ts",
+    "packages/simulation/src/__tests__/craft-week.test.ts",
+    "packages/persistence/src/__tests__/craft-records.test.ts"
+  ],
+  "resolutions": [
+    {
+      "id": "D1",
+      "issue": "Report fields versus no-order byte identity",
+      "references": [
+        "plan:93",
+        "PR B brief: no orders => every existing golden, fixture and 60-week report hash unchanged"
+      ],
+      "proposed": "Add crafted?: {tileId:string;recipeId:string;output:string;place:'inventory'|'consumables'|'materials'|'storage'|'ready'}[] and workshopsIdle?: string[] as optional last fields of ItemWeekReport; output is the recipe output definition id. Omit each field when its array is empty. A never-used workshop produces no new report keys. Do not add empty arrays to old reports or change the visible parser in PR B.",
+      "reason": "Unconditional empty arrays would change report JSON and require edits to synthetic reports and the visible parser; it would conflict with the byte-identity requirement."
+    },
+    {
+      "id": "D2",
+      "issue": "Placement operating wording versus exact NO_WORKSHOP definition",
+      "references": [
+        "spec:89",
+        "plan:87",
+        "PR B brief B1/Decision 8"
+      ],
+      "proposed": "Follow the specific Decision 8 contract: placement requires a built, enabled building permitted by the recipe. Staffing, Hospital Herbs and actual paid upkeep determine completion at End Week, not whether the player can queue the order. Do not introduce another placement error or refusal.",
+      "reason": "Spec says operating at placement, while Decision 8 and the current brief define the check as built and enabled."
+    },
+    {
+      "id": "D3",
+      "issue": "Zero workers versus adding NPC skill bonuses",
+      "references": [
+        "spec:96",
+        "spec:161",
+        "plan:92",
+        "plan:187"
+      ],
+      "proposed": "Smithy and Hospital with zero workers complete zero orders even with a posted NPC at effective skill 80 or 100. Apply skill bonuses only after the workshop can operate; Drug Store retains worker-free base 1. Hospital must also satisfy the existing fully staffed and supplied operating rule.",
+      "reason": "The bare workers-plus-bonus formula could otherwise complete two orders at zero workers, contrary to the explicit spec and B2 RED requirement. Existing operatingIds includes funded partially staffed Hospitals, so set membership alone is insufficient."
+    },
+    {
+      "id": "D4",
+      "issue": "Material output when its stack is full",
+      "references": [
+        "spec:117",
+        "plan:81",
+        "plan:92",
+        "packages/core/src/trial/items.ts:38"
+      ],
+      "proposed": "Material output goes to its stack if below 999; otherwise it becomes ready {material,count} directly. Existing temporary storage continues to hold item instances only. Wearables and potions use their respective inventory, then existing item storage, then ready; ready delivery follows the same destination rules and never allocates another id.",
+      "reason": "Spec expressly says a 999 stack waits. P6-A storage has no material representation, while the approved ready union does. No storage schema or P6-A cap is expanded."
+    }
+  ],
+  "immutableChanges": [],
+  "hashPinChanges": [],
+  "existingFixtureChanges": [],
+  "existingHelperChanges": []
+}

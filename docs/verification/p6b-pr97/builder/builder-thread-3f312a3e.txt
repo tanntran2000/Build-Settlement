@@ -1,0 +1,977 @@
+P6-B Builder (crafting, xhigh)
+mcp:3f312a3e-be8b-44c4-850c-97bedc86e94a  completed  codex/gpt-6.1-sol
+
+[user]
+You are the new P6-B Builder thread. A previous Builder thread (mcp:5f929410, P6-A) completed P6-B PR A Task A0 (Step 0 preflight) and stopped; you continue from Task A1. Owner (Tân), 2026-11-15, verbatim: "Sau Step 0" (a fresh Builder thread takes over after Step 0).
+
+Read these first, fully:
+1. The PR A brief below (it is your task; Step 0 is already done).
+2. The Step 0 package: C:/Users/Admin/.t3/local-drafts/p6b-prA/step0-preflight.md, step0-proposed-edits.md (+ .json), step0-candidates.json, step0-candidate-items.json, README.md, progress.md.
+3. Binding plan, now C:/Users/Admin/.t3/local-drafts/p6b-prA/binding-plan-40b57c3.md: read **Plan correction 1**. Spec: binding-spec-cd1b18a.md.
+
+Step 0 HOLD answered by the owner (Tân), 2026-11-15, dialog choices, verbatim:
+1. "Approve the 58 edits (Recommended)": exactly P1–P58 in the 35 files as listed in step0-proposed-edits.md, including P49 `funded(seed=12345)` → `funded(seed=82)`; nothing else in those files changes.
+2. "Allow the 3 lines (Recommended)": `packages/core/src/trial/society.ts:14` SOCIETY_RULESET → 'tile-society-09' (nothing else in that file), and `packages/core/src/data/validate.ts:306` and `:626` ruleset literals 08 → 09.
+3. "Allow both (Recommended)": new `packages/simulation/src/__tests__/smithy-data.test.ts` and `packages/persistence/src/__tests__/society-v8-fixture.test.ts`.
+4. "120 Gold, 3× rule (Recommended)": new set prices 15000 / 45000 / 120000 milli-Gold; ordinary new items 5000 / 15000 / 40000. The candidate ITEM_CATALOG pin in P4 stands.
+
+The branch `feat/p6b-crafting-data` already exists in the worktree at e859177 with a clean status. Check `git status` is clean, HEAD = e85917733e229701830ad7f53dfcfbe2fefab831, and ports 4173/4174 are free before you start. If anything differs, HOLD and report it.
+
+Then proceed with A1 RED and the rest of the brief (A1, A2, A3: golden once with p6b-crafting-path-diff, gates on a quiet machine, CI=1 smoke, bundle, evidence under local-drafts/p6b-prA/). If your actual pins, candidate data or applied edits differ from the Step 0 candidates, record both and HOLD if they differ in substance. Do not push, open a PR or merge.
+
+================ PR A brief ================
+
+P6-B PR A Builder (data: material families, full item ladders, recipe catalog, Smithy, ruleset 09, fixtures, golden)
+
+You are the Builder for P6-B PR A in Haven (repo tanntran2000/Build-Settlement). Claude is Orchestrator and Tester. Astra reviews. Only dot or the owner merges. P6-A is complete: main = e85917733e229701830ad7f53dfcfbe2fefab831.
+
+Owner (Tân), 2026-11-15, verbatim: "Duyệt, giao Builder A".
+
+Worktree: C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01 (reuse it; create no other worktree or clone). Run `git fetch origin`, check `git status` is clean and ports 4173/4174 are free, then create `feat/p6b-crafting-data` from `origin/main` = e859177.
+
+Binding documents (read fully before any code):
+- Plan: C:/Users/Admin/.t3/local-drafts/p6b-prA/binding-plan-cd1b18a.md (approved). PR A = Tasks A0–A3. Apply Global Constraints, Decisions 1–4 and 7, the PR A file allowlist plus each task's **Files** line.
+- Spec: C:/Users/Admin/.t3/local-drafts/p6b-prA/binding-spec-cd1b18a.md (v0.1, G1 approved "Duyệt spec"), especially §4, §5, §6.1, §8, §11.
+- AGENTS.md in the repo (Hard Laws, §4 anti-loop, §6 evidence).
+You may use the executing-plans approach (task by task, in this thread, no subagents).
+
+**Task A0 — Step 0 preflight, before any RED or product edit.** PR A changes data that existing tests pin. Search the whole repo (unit and e2e) for every existing test, fixture or pin PR A changes, for example:
+- catalog counts and per-rarity/per-slot assertions (26 wearables today → 54 non-Legendary + 4 Legendary);
+- Market draws for fixed seeds (the pool grows), including e2e that read Market offers;
+- `ITEM_CATALOG`, `TRIAL_BUILDINGS`, `SOCIETY_BUILDINGS`, `SOCIETY_TRIAL` pins; the closed building-id list;
+- ruleset literals `tile-society-08`, v8 fixtures and tests that treat v8 as current;
+- `catalog-golden.json` and any test reading Market or item state from it;
+- reserved-building lists that include the Smithy.
+For each: file:line, the current assertion, why PR A changes it, and the exact proposed after-text. List any file you need outside the allowlist and why. State which golden/fixture files would change and the expected path set. Then **HOLD once with the full list**; the owner decides. Do not edit any existing test before that answer.
+
+Key rules for PR A (from the plan; HOLD if anything conflicts and name the line):
+- **A1:** material `family` per Decision 1; 32 new definitions with ids `<rarity>-<slot>-<kind>`; the 22 existing non-Legendary definitions and the 4 Legendary ones byte-identical; stats per Decision 2 (Noble Set for the epic set); `recipes.json` with 47 recipes (8 refine, 38 upgrade, 1 fixed `brew-heal-potion-1`) and `CRAFT_TRIAL` exactly as Decision 3; `validateRecipes` with `recipes.json#<id>.<field>: <rule>` messages; JSON imports `with { type: 'json' }`; new pins `RECIPES`, `CRAFT_TRIAL`.
+- **A2:** the Smithy definition exactly as Decision 4 (`maxWorkers 1`, `maxLevel 2`, 10 Gold / 6 Wood / 6 Iron, upkeep 1 Gold, town terrain, Specialist tier, reserved false); ruleset `tile-society-09`; v8 refused unchanged like v7; new `fixtures/society-v9/` with the same scenarios as v8; the golden regenerated ONCE with the existing `make-catalog-golden.ts`; commit `p6b-crafting-path-diff.ts` and its `.txt` (do NOT reuse the existing `p6b-path-diff.ts`, which belongs to P6-A PR B). Allowed golden paths: `city.society.rulesetId`, `city.society.items.*`; any other path is a HOLD.
+- No order, command, week or UI code in PR A (that is PR B and C).
+- **Tests and order:** each task's full RED list before any product edit; existing-test edits only as approved after Step 0, each listed file:line before → after; nothing loosened; no new per-test timeout (measure and HOLD).
+- **A3 gates**, sequentially at the clean final head, on a quiet machine: first record CPU load and the top processes in the log and start only when no other test, build or review job runs; then:
+  1. `git diff --check origin/main...HEAD`
+  2. lint
+  3. typecheck
+  4. `check:architecture`
+  5. `test:architecture`
+  6. `npm test`
+  7. build
+
+  Then, in the same shell, `echo "CI=$CI"` and `CI=1 npm run test:smoke`. One runner at a time. If the smoke fails, rerun that test alone once, report both runs, and HOLD. If `lord-health.test.ts:73` or `society-renewable-support.test.ts:160` time out, measure each alone three times and HOLD; never change a timeout.
+- **Ports:** 4173/4174 must be free before the smoke. If something holds them, report it and HOLD; kill nothing.
+- **Evidence:** C:/Users/Admin/.t3/local-drafts/p6b-prA/. Include: the Step 0 preflight; RED and GREEN logs per task; the edit inventory and a verifier script; hash-pin changes (old → new and reason); the golden path-diff script output; gate logs with HEAD, tree, UTC, exit and CPU load at the top; the smoke log showing CI=1; the bundle vs main (JS 126.72 kB, CSS 6.74 kB gzip) with its script and a raw artifact; a README; and SHA256SUMS.txt covering every file except the top-level manifest, nested manifests included. UTF-8 only. No `docs/` files on the product branch.
+- **Commits:** one per task (A1, A2), with the plan's commit messages, each ending `Co-authored-by: Codex <noreply@openai.com>`. Do not push, open a PR or merge. Leave ports 4173/4174 free.
+- **Anti-loop:** if one failure is still failing after 2 attempts, HOLD.
+
+After the Step 0 HOLD is answered and the work is done, reply with: HEAD and tree, empty git status; the commits; RED and GREEN per task; the edit inventory count; the hash-pin changes; the golden path-diff result; CPU load at gate start; the gate table and smoke total with CI=1; the bundle; the evidence paths.
+
+
+[assistant]
+Kiểm tra trạng thái bàn giao trước khi sửa mã: HEAD, worktree sạch và cổng 4173/4174. Sau đó tiếp tục A1 theo đúng 58 chỉnh sửa đã được Tân duyệt; không push, mở PR hay merge.
+
+
+[assistant]
+Bàn giao khớp: HEAD `e859177`, nhánh `feat/p6b-crafting-data`, git sạch, hai cổng đều trống. Đang dùng skill `codebase-memory` để kiểm tra ngữ cảnh mã và đọc đầy đủ Plan correction 1 cùng gói Step 0 trước A1 RED.
+
+
+[assistant]
+A1 bắt đầu với RED cho đủ thang vật phẩm, họ nguyên liệu, 47 công thức, lỗi validator và pin. Dùng skill `executing-plans` cùng `test-driven-development`; ledger tiếp tục ở `local-drafts/p6b-prA/`, review độc lập do Claude/Astra phụ trách.
+
+
+[assistant]
+A1 RED đã ghi nhận 45 lỗi đúng phạm vi: catalog còn 26 wearable, chưa có family/recipe API và pin vẫn là bản cũ. Bắt đầu triển khai dữ liệu ứng viên đã duyệt và validator; 26 định nghĩa wearable cũ được giữ nguyên.
+
+
+[assistant]
+A1 đã commit `db7c65a`: 157/157 test tại commit sạch PASS, typecheck core PASS, dữ liệu và pin khớp Step 0. Chuyển sang A2 RED cho Smithy, ruleset 09, từ chối v8 và fixture v9.
+
+
+[assistant]
+A2 RED đã ghi nhận 46 lỗi dự kiến. Đang áp dụng Smithy và ruleset 09; tiếp theo sinh 10 fixture v9, giữ nguyên v1–v8 và tái sinh golden đúng một lần.
+
+
+[assistant]
+10 fixture v9 đã sinh xong, 55/55 test PASS. Lần sinh đầu không nhận cờ môi trường do mất dấu ngoặc kép khi gọi PowerShell; lần chạy lại đã PASS, cả hai log được giữ. Golden đang được sinh một lần bằng generator gốc.
+
+
+[assistant]
+A2 còn 1 test lỗi do setup: Processor đang dùng hết hai suất Makers. Theo skill `systematic-debugging`, sẽ cho Processor về 0 worker bằng dispatcher rồi kiểm tra lại cap Smithy 1/2; giữ nguyên assertion và dữ liệu. Path diff đã PASS, không có đường dẫn ngoài ruleset/items.
+
+
+[assistant]
+A2 đã commit `2a92985`: 168/168 test tại commit sạch PASS. A3 còn gates 1–7, smoke với `CI=1` và đo bundle; dự kiến 5–10 phút. Bắt đầu bằng ghi tải CPU và kiểm tra không có job test/build chạy song song.
+
+
+[assistant]
+A3: diff và lint PASS; typecheck toàn workspace đang chạy. CPU lúc bắt đầu là **6%**, không phát hiện job test/build/review khác. Mọi gate vẫn chạy tuần tự trong cùng script.
+
+
+[assistant]
+A3: gates 1–5 đều PASS; full unit suite đang chạy. Chưa ghi nhận lỗi mới; timeout và assertion được giữ nguyên.
+
+
+[assistant]
+Gate 6 đã báo lỗi test Calm 60 tuần trong `lord-health.test.ts`, thời lượng 5.437 giây. Chờ suite kết thúc để xác nhận lỗi; nếu là timeout, điều khoản A3 yêu cầu đo test riêng 3 lần rồi HOLD, chưa chạy build/smoke.
+
+
+[assistant]
+**HOLD theo A3:** `lord-health.test.ts:73` timeout 5.000 ms trong full suite; tổng **2.556 PASS, 1 FAIL**. Ba lần đo riêng đều PASS: **1.521 / 1.285 / 1.325 ms**. Đang đóng gói bằng chứng; build, smoke và bundle chưa chạy. Git vẫn sạch, cổng 4173/4174 trống.
+
+
+[assistant]
+Review the [timeout measurements](C:/Users/Admin/.t3/local-drafts/p6b-prA/timeout-measurements.json) for the next owner decision. **A1 and A2 are committed; A3 is on mandatory HOLD.**
+
+The full unit suite timed out at [lord-health.test.ts:73](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/__tests__/lord-health.test.ts:73): **5000 ms limit, 5437 ms reported duration**. Result: **2556 passed, 1 failed / 2557 tests**.
+
+The three required isolated measurements all passed with the unchanged timeout:
+
+| Isolated run | Test duration | Exit |
+|---|---:|---:|
+| 1 | 1521 ms | 0 |
+| 2 | 1285 ms | 0 |
+| 3 | 1325 ms | 0 |
+
+Your A3 instruction requires measuring this test alone three times **and HOLD**. Those isolated passes do not replace the failed full-suite result. No code or timeout changes followed the failure.
+
+```text
+Branch: feat/p6b-crafting-data
+HEAD:   2a92985e20c5eb0eb0a9faa053bcd73f64410286
+Tree:   209ba99e59335ba39097a5f58bb435cd17b0dfff
+Git status: empty
+Ports 4173/4174: free
+```
+
+The two task commits are complete, with the required co-author trailer:
+
+| Task | Commit and message | RED | GREEN at clean task head |
+|---|---|---|---|
+| A1 | `db7c65a1ccd0b679ae37d3214e71dd075bd3c69d` — `feat(core): material families, item ladders and recipe catalog` | 45 failed, 47 passed; exit 1 | **157/157 PASS**, six files; exit 0 |
+| A2 | `2a92985e20c5eb0eb0a9faa053bcd73f64410286` — `feat(core): smithy, ruleset 09 and fixtures` | 46 failed, 113 passed; exit 1 | **168/168 PASS**, nine files; exit 0 |
+
+A2 needed one correction to its new test setup: the starting Processor occupied both Makers workforce units. The test now frees them through `SET_WORKERS` before checking Smithy’s 1/2 worker caps. Assertions and candidate product data stayed intact. Both failed and successful runs are retained.
+
+Gates ran sequentially at the final clean head. **CPU load at gate start was 6%**, with zero other detected test/build/review job processes; the log includes the top processes.
+
+| Gate | Command | Result | Exit |
+|---|---|---|---:|
+| 1 | `git diff --check origin/main...HEAD` | PASS | 0 |
+| 2 | `npm run lint` | PASS | 0 |
+| 3 | `npm run typecheck` | PASS | 0 |
+| 4 | `npm run check:architecture` | PASS | 0 |
+| 5 | `npm run test:architecture` | PASS — 154/154 | 0 |
+| 6 | `npm test` | **FAIL — one timeout** | 1 |
+| 7 | `npm run build` | Not run — HOLD | — |
+| Smoke | `CI=1 npm run test:smoke` | Not run — HOLD | — |
+
+**Smoke total and bundle growth are unavailable.** Build, smoke and bundle measurement stopped at the required HOLD. The supplied main baseline remains JS **126.72 kB** / CSS **6.74 kB** gzip; no PR A bundle result or raw bundle artifact is claimed.
+
+The final verifier confirms **exactly 58 approved edit blocks across 35 existing test files**, with **61 changed files overall**. Actual candidate data and all four changed pins match Step 0. All 26 prior wearable definitions and `ITEM_TRIAL` remain unchanged.
+
+Hash changes below use 12-character prefixes; [hash-pin-changes.md](C:/Users/Admin/.t3/local-drafts/p6b-prA/hash-pin-changes.md) contains the full SHA-256 values.
+
+| Pin | Before → after |
+|---|---|
+| `ITEM_CATALOG` | `fa866064967e` → `7d1cc84733e7` |
+| `TRIAL_BUILDINGS` | `ecaa53f29be9` → `5f27eec1560b` |
+| `SOCIETY_BUILDINGS` | `2bcf0b8352d2` → `e23c932be89d` |
+| `SOCIETY_TRIAL` | `d390d44efdd2` → `49add1753fd6` |
+| `RECIPES` | new → `7ccddfc8953f` |
+| `CRAFT_TRIAL` | new → `587e7927288b` |
+
+**Golden path diff PASS:** golden regenerated once using the unchanged generator; three seeds and ten new v9 scenarios change only the permitted ruleset/items state paths. All **53 historical fixture files** remain byte-identical. The new `p6b-crafting-path-diff.ts` and `.txt` are committed; the P6-A path evidence is unchanged.
+
+The evidence package is retained under `C:/Users/Admin/.t3/local-drafts/p6b-prA/`:
+
+1. [README — complete HOLD handoff](C:/Users/Admin/.t3/local-drafts/p6b-prA/README.md)
+2. [Full gate log, CPU snapshot and exit codes](C:/Users/Admin/.t3/local-drafts/p6b-prA/a3-gates.txt)
+3. [Edit inventory](C:/Users/Admin/.t3/local-drafts/p6b-prA/edit-inventory-a2.json) and [verifier script](C:/Users/Admin/.t3/local-drafts/p6b-prA/verify-edits.mjs)
+4. [Golden path-diff output](C:/Users/Admin/.t3/local-drafts/p6b-prA/golden-path-diff.txt)
+5. [SHA256SUMS.txt](C:/Users/Admin/.t3/local-drafts/p6b-prA/SHA256SUMS.txt) — **61 evidence files verified**, UTF-8 and non-ASCII owner text preserved
+
+No push, PR or merge was performed. The assigned worktree and both commits are retained for the owner/Tester; no environments were removed and storage reclaimed is **0 bytes**.
+
+**Next: open the [HOLD handoff README](C:/Users/Admin/.t3/local-drafts/p6b-prA/README.md) to decide how A3 should resume.**
+
+[user]
+A3 timeout HOLD answered by the owner. Binding plan is now C:/Users/Admin/.t3/local-drafts/p6b-prA/binding-plan-00af2a9.md: read Plan correction 2.
+
+Owner (Tân), 2026-11-15, dialog choice, verbatim: "Set this test to 15 s (Recommended)".
+
+Scope, exactly:
+- In `packages/simulation/src/__tests__/lord-health.test.ts`, give only the test at line 73 ('a Calm game below Crime 70 survives all 60 weeks from health one') a per-test timeout of 15000 ms (the third argument of `it`, or the file's existing style). Change nothing else in that test or file: no assertion, setup or loop change.
+- Record it as existing-test edit P59 (file:line, before → after) in the edit inventory and the verifier; P1–P58 stay byte-identical.
+- No other timeout or threshold changes. If any other test times out, measure it alone three times and HOLD.
+
+Commit it as its own commit `test(simulation): give the 60-week lord-health test a 15 s timeout`, ending `Co-authored-by: Codex <noreply@openai.com>`. Then rerun gates 1–7 from the start at the clean final head on a quiet machine (record CPU load and top processes), `echo "CI=$CI"`, `CI=1 npm run test:smoke`, the bundle vs main (JS 126.72 kB, CSS 6.74 kB) with its script and a raw artifact, refresh README and SHA256SUMS. Do not push, open a PR or merge.
+
+[assistant]
+Tiếp tục A3 theo quyết định 15 giây: đọc Plan correction 2, kiểm tra bàn giao, rồi thêm đúng timeout cho test 60 tuần và ghi P59. Sau commit riêng, chạy lại toàn bộ gates từ đầu; dự kiến 5–10 phút nếu không có lỗi mới.
+
+
+[assistant]
+P59 đã commit `b0c0b37`: đúng một dòng đổi thành `}, 15000);`. Verifier xác nhận phần còn lại của file và P1–P58 giữ nguyên. Git sạch; bắt đầu gates 1–7 từ đầu tại commit mới.
+
+
+[assistant]
+A3 tại `b0c0b37`: diff và lint PASS; typecheck toàn workspace đang chạy. Tải CPU lúc bắt đầu ghi nhận **0%**, không phát hiện job test/build/review khác. Log HOLD cũ đã được lưu riêng.
+
+
+[assistant]
+Gates 1–5 tại `b0c0b37` đều PASS. Full unit suite đang chạy với timeout 15 giây đã duyệt; nếu có test khác timeout, sẽ đo riêng ba lần rồi HOLD theo chỉ dẫn mới.
+
+
+[assistant]
+Full unit suite đã PASS tại `b0c0b37`; không có timeout mới. Build đang chạy, sau đó script sẽ kiểm tra cổng và chạy full smoke với `CI=1`.
+
+
+[assistant]
+Gates 1–7 đều PASS. Full smoke đã bắt đầu với **370 test, 1 worker**; log có `CI=1` và xác nhận cổng 4173/4174 trống trước khi chạy.
+
+
+[assistant]
+Smoke vẫn đang chạy với 1 worker; log hiện ghi bốn test autosave PASS và chưa có tổng kết. Gates 1–7 đã hoàn tất; chưa có kết luận cho smoke.
+
+
+[assistant]
+Smoke phát hiện lỗi assertion trong `character-life-boundary.spec.ts`: kiểm tra tên “Fine Ring” mong 1 định nghĩa nhưng catalog hiện có 2, cho Player và NPC. Đây không phải timeout. Theo brief gốc, sau khi full smoke kết thúc sẽ chạy riêng test này một lần rồi HOLD; không sửa thêm assertion.
+
+
+[assistant]
+Full smoke đang ở các bài accessibility dài; bài hiện tại có timeout 300 giây từ trước. Dự kiến còn 10–20 phút cho toàn bộ smoke và lần chạy riêng bắt buộc. Lỗi đã xác nhận vẫn là assertion tên “Fine Ring” trùng giữa Player/NPC; chưa sửa file nào.
+
+
+[assistant]
+Accessibility 1600px đã PASS; bài 1280px đang chạy. Nguồn lỗi “Fine Ring” nằm ở helper báo cáo `character-life-navigation.helpers.ts:238–239`, nơi yêu cầu tên item là duy nhất. Helper này chưa được sửa và nằm ngoài phạm vi P59.
+
+
+[assistant]
+Accessibility 1280px đã PASS. Bundle tại `b0c0b37` đã đo xong: **JS 129.79 kB**, **CSS 6.74 kB**, tổng **136.54 kB gzip** — dưới 200 kB. Script, kết quả byte và raw JS/CSS đã lưu; smoke đang tiếp tục.
+
+
+[assistant]
+Accessibility 375px đã PASS; đang chạy bài 320px. Bundle và bằng chứng P59 đã lưu. Sau full smoke, còn lần chạy riêng test lỗi và cập nhật manifest; phần mã không thay đổi thêm.
+
+
+[assistant]
+Các bài accessibility 1600/1280/375/320px đã PASS; smoke đã qua nhóm kiểm tra dài và tiếp tục các test còn lại. Hiện vẫn chỉ ghi nhận một lỗi assertion “Fine Ring”, chưa có timeout mới.
+
+
+[assistant]
+Nhóm kiểm tra điều hướng, inventory và NPC Work tiếp tục PASS; smoke đã chạy qua 43/370 test. Chưa ghi nhận lỗi thứ hai. Kết quả đầy đủ sẽ được giữ trong log trước lần chạy riêng bắt buộc.
+
+
+[assistant]
+Smoke đã qua 64/370 test; các tình huống load lỗi, checkpoint quá lớn và Report phase đều PASS. Vẫn chỉ có lỗi parser tên item đã xác định.
+
+
+[assistant]
+Smoke đã qua 74/370 test. Các kịch bản báo cáo shortage, zero, precision và service đều PASS; không có timeout mới hoặc chỉnh sửa mã bổ sung.
+
+
+[assistant]
+Smoke: **79/370 test đã chạy**, vẫn một lỗi assertion và chưa có timeout mới. Các luồng bàn phím F1/F2 ở 1280px đang PASS.
+
+
+[assistant]
+Smoke: **83/370 test đã chạy**. Luồng bàn phím 375px cũng PASS; kết quả lỗi vẫn chỉ là parser “Fine Ring”. Đang giữ nguyên các giới hạn đã duyệt.
+
+
+[assistant]
+Smoke hiện ghi nhận **4 lỗi assertion**, cùng do helper yêu cầu tên item duy nhất: Fine Ring, Plain Top, Fine Earrings và Plain Hand. Chưa có timeout mới. Sau full run, mỗi test lỗi sẽ được chạy riêng một lần theo brief rồi HOLD; không mở rộng phạm vi sửa mã.
+
+
+[assistant]
+Smoke đã qua **161/370 test**, hiện có **11 lỗi** ở các bài dùng chung parser báo cáo. Các lỗi đã kiểm tra đều là assertion tên item trùng, chưa có timeout mới. Dự kiến còn khoảng 6–10 phút cho phần còn lại và các lần chạy riêng.
+
+
+[assistant]
+Smoke đã qua **198/370 test**. Các kiểm tra ruleset, tier, xây dựng và Academy đang PASS; các lỗi báo cáo vẫn được giữ nguyên để chạy riêng sau full run. Chưa có timeout mới.
+
+
+[assistant]
+Smoke đã qua **230/370 test**; các kiểm tra storage, migration và số nguyên lớn đang PASS. Còn full run, các lần chạy riêng test lỗi và chốt manifest; P59 vẫn là thay đổi duy nhất sau `2a92985`.
+
+
+[assistant]
+Smoke đã qua **250/370 test**. Nhóm kiểm tra từ chối Build/Replace/Upgrade ở màn hình hẹp đang PASS; chưa có timeout mới. Đang tiếp tục full run trước khi đo riêng các lỗi parser.
+
+
+[assistant]
+Smoke đã qua **292/370 test**. Một số bài population/report cũng báo lỗi; chúng sẽ được đối chiếu và chạy riêng cùng các lỗi trước đó. Chưa có timeout mới, và chưa sửa thêm mã.
+
+
+[assistant]
+Smoke đã qua **319/370 test**. Các lỗi mới ở nhóm tile-trial cũng là assertion tên “Fine Ring” trùng trong cùng helper; không phải timeout. Full run gần xong, sau đó sẽ chạy riêng từng test lỗi và chốt báo cáo HOLD.
+
+
+[assistant]
+Full smoke đã kết thúc: **348 PASS, 22 FAIL**, `CI=1`, exit 1; không có timeout mới. Các lỗi nằm ở những bài đọc báo cáo qua helper tên item. Đang lưu artifact của full run, rồi chạy riêng mỗi test lỗi đúng một lần; dự kiến thêm 6–8 phút.
+
+
+[assistant]
+Đã đối chiếu artifact của cả **22 lỗi**: tất cả đều là kiểm tra tên item trùng ở cùng helper; **0 timeout**. Các tên liên quan là Fine Ring, Fine Earrings, Plain Hand và Plain Top. Lần chạy riêng đầu tiên đang thực hiện.
+
+
+[assistant]
+Đã chạy riêng **5/22 test lỗi**; cả 5 đều tái hiện assertion tên item trùng. Mỗi test chỉ chạy lại một lần với `CI=1`; không có timeout hay chỉnh sửa bổ sung.
+
+
+[assistant]
+Đã chạy riêng **8/22 test lỗi**; cả 8 đều tái hiện cùng lỗi parser. Các bước buy/equip trong test items đã đi tới phần kiểm tra báo cáo rồi thất bại ở helper, không phải do timeout.
+
+
+[assistant]
+Đã chạy riêng **11/22 test lỗi**, tất cả đều tái hiện assertion tên item trùng. Còn khoảng 4–5 phút cho các test còn lại và chốt evidence; mỗi lần chạy vẫn giữ nguyên mã và timeout.
+
+
+[assistant]
+Đã chạy riêng **16/22 test lỗi**; cả 16 đều tái hiện lỗi helper, không có timeout. Còn sáu test trước khi tổng hợp kết quả và kiểm tra manifest.
+
+
+[assistant]
+Đã chạy riêng **19/22 test lỗi**; cả 19 đều tái hiện lỗi parser và đều giữ timeout cũ. Còn ba test, sau đó kiểm tra lại git status, cổng và toàn bộ evidence.
+
+
+[assistant]
+Cả **22/22 lần chạy riêng** đều tái hiện đúng assertion tên item trùng; **0 timeout**. Đang chốt README, inventory và SHA256SUMS. A3 sẽ giữ **HOLD** theo brief; không sửa helper ngoài P1–P59.
+
+
+[assistant]
+Review the [smoke finding](C:/Users/Admin/.t3/local-drafts/p6b-prA/smoke-finding.md). **P59 is committed and gates 1–7 pass; A3 remains on HOLD because smoke failed.**
+
+Only the approved timeout changed in [lord-health.test.ts:73](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/__tests__/lord-health.test.ts:73): its closing line is now `}, 15000);`. No assertion, setup, loop or other file content changed in this commit.
+
+Commit: `b0c0b37cb25601b69f03b8844ac8a3f957304d4d`  
+Message: `test(simulation): give the 60-week lord-health test a 15 s timeout`  
+Trailer: `Co-authored-by: Codex <noreply@openai.com>`
+
+```text
+Branch: feat/p6b-crafting-data
+HEAD:   b0c0b37cb25601b69f03b8844ac8a3f957304d4d
+Tree:   5f9d377ec748ea62e56634b6e34dbd42d71ef868
+Git status: empty
+Ports 4173/4174: free
+```
+
+All gates were rerun from the start at this clean head. Recorded gate-start CPU load was **0%**, with zero other detected test/build/review jobs; the log includes the top processes.
+
+| Gate | Command | Result | Exit |
+|---|---|---|---:|
+| 1 | `git diff --check origin/main...HEAD` | PASS | 0 |
+| 2 | `npm run lint` | PASS | 0 |
+| 3 | `npm run typecheck` | PASS | 0 |
+| 4 | `npm run check:architecture` | PASS | 0 |
+| 5 | `npm run test:architecture` | PASS | 0 |
+| 6 | `npm test` | **2557/2557 PASS** | 0 |
+| 7 | `npm run build` | PASS | 0 |
+| Smoke | `CI=1 npm run test:smoke` | **348 PASS, 22 FAIL**, 32.4 minutes | 1 |
+
+**All 22 smoke failures share the same report-helper assumption.** At [character-life-navigation.helpers.ts:238](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/character-life-navigation.helpers.ts:238), the helper finds catalog definitions by display name and asserts exactly one match. The approved Player/NPC ladders share names, so it receives two matches for Fine Ring, Fine Earrings, Plain Hand or Plain Top.
+
+Each of the **22 failed tests was rerun alone exactly once with `CI=1`**. All 22 reproduced the same assertion and matching definition IDs. **There were no new timeouts.** The helper is outside P1–P59 and remains untouched.
+
+HOLD follows the original PR A instruction: “If the smoke fails, rerun that test alone once, report both runs, and HOLD.”
+
+The bundle measurement completed at the same head:
+
+| Output | Supplied main gzip | PR A gzip | Growth |
+|---|---:|---:|---:|
+| JS | 126.72 kB | **129.79 kB** | +3.07 kB |
+| CSS | 6.74 kB | **6.74 kB** | +0.00 kB at reported precision |
+| Combined | 133.46 kB | **136.54 kB** | +3.08 kB |
+
+Combined JS/CSS remains below **200 kB gzip**. Exact measured totals are **129,793 bytes JS** and **6,743 bytes CSS**; growth uses the supplied rounded main figures.
+
+Evidence is refreshed under `C:/Users/Admin/.t3/local-drafts/p6b-prA/`:
+
+1. [README and current HOLD handoff](C:/Users/Admin/.t3/local-drafts/p6b-prA/README.md), with the [full gate log](C:/Users/Admin/.t3/local-drafts/p6b-prA/a3-gates.txt).
+2. [P59 before → after](C:/Users/Admin/.t3/local-drafts/p6b-prA/p59-edit.md), [final inventory](C:/Users/Admin/.t3/local-drafts/p6b-prA/edit-inventory-a3.json) and [verifier](C:/Users/Admin/.t3/local-drafts/p6b-prA/verify-edits.mjs). **59 approved blocks across 35 existing test files; P1–P58 remain byte-identical.**
+3. [All 22 failure cases](C:/Users/Admin/.t3/local-drafts/p6b-prA/smoke-finding.md) and [isolated-run results, logs and artifact hashes](C:/Users/Admin/.t3/local-drafts/p6b-prA/smoke-isolated-results.json).
+4. [Bundle script](C:/Users/Admin/.t3/local-drafts/p6b-prA/measure-bundle.mjs), [raw results](C:/Users/Admin/.t3/local-drafts/p6b-prA/bundle-results.json), [raw JS](C:/Users/Admin/.t3/local-drafts/p6b-prA/bundle-artifacts/assets_index-DxeR3vNM.js) and [raw CSS](C:/Users/Admin/.t3/local-drafts/p6b-prA/bundle-artifacts/assets_index-CxB-ZnFZ.css).
+5. [SHA256SUMS.txt](C:/Users/Admin/.t3/local-drafts/p6b-prA/SHA256SUMS.txt): **242 evidence files verified**, nested manifests included; UTF-8 and owner text verified.
+
+No push, PR or merge was performed. The assigned worktree and all three commits are retained; storage reclaimed is **0 bytes**.
+
+**Next: review [smoke-finding.md](C:/Users/Admin/.t3/local-drafts/p6b-prA/smoke-finding.md) to decide the permitted scope for correcting the report helper.**
+
+[user]
+A3 smoke HOLD answered by the owner. Binding plan is now C:/Users/Admin/.t3/local-drafts/p6b-prA/binding-plan-3bee3ae.md: read Plan correction 3.
+
+Owner (Tân), 2026-11-15, dialog choice, verbatim: "Lord's / Retainer's prefix (Recommended)".
+
+Fix (product data, not the test helper):
+- In `packages/core/src/data/items.json`, rename only the 32 NEW definitions from A1: Player kind → `Lord's <current name>`, NPC kind → `Retainer's <current name>` (for example `rare-ring-player` "Lord's Fine Ring", `common-ring-npc` "Retainer's Plain Ring", `epic-set-player` "Lord's Noble Set", `epic-set-npc` "Retainer's Noble Set"). The 26 existing definitions stay byte-identical. Use a straight apostrophe (').
+- RED first: a new assertion in your new `recipes-catalog.test.ts` (or `items-catalog`-style new test of yours) that every item name in ITEM_CATALOG is unique and that each new definition carries the right prefix for its kind; run it and see it fail before the data edit.
+- Recalculate the `ITEM_CATALOG` pin. That pin line is already your approved P-edit; update its after-text to the new hash and record old → new and the reason in hash-pin-changes.md. No other existing-test edit is expected; if one is needed, HOLD with file:line.
+- Check whether the golden or the v9 fixtures contain item names; if any byte changes, regenerate once more with the path diff and report it (only allowed paths).
+- Leave `character-life-navigation.helpers.ts` untouched.
+
+Commit `fix(core): unique item names with Lord's and Retainer's prefixes`, ending `Co-authored-by: Codex <noreply@openai.com>`. Then rerun the 22 failed smoke cases alone first (expect green), then gates 1–7 from the start at the clean final head on a quiet machine (record CPU), `echo "CI=$CI"`, the full `CI=1 npm run test:smoke`, the bundle, README and SHA256SUMS. If any smoke case fails, rerun it alone once and HOLD. Do not push, open a PR or merge.
+
+[assistant]
+Đọc Plan correction 3 và kiểm tra bàn giao trước RED. Phạm vi lần này: thêm prefix cho đúng 32 item mới, cập nhật pin `ITEM_CATALOG`, giữ nguyên 26 định nghĩa cũ và test helper; sau commit sẽ chạy 22 smoke case riêng trước toàn bộ gates.
+
+
+[assistant]
+RED đã ghi nhận **3 FAIL, 42 PASS**: uniqueness, prefix và tên kỳ vọng cho item mới đều thất bại trước khi sửa data. Bắt đầu thêm prefix cho 32 định nghĩa mới. Kiểm chứng dự kiến khoảng **45–50 phút**, gồm 22 smoke case riêng và full smoke vốn mất 32.4 phút ở lần trước.
+
+
+[assistant]
+GREEN: **94/94 catalog test PASS**, **59/59 fixture/golden test PASS**. Golden và 10 fixture v9 không chứa các tên item bị đổi và giữ nguyên từng byte, nên không tái sinh. Pin mới là `7fdeadb1…`; chỉ P4 được cập nhật after-text. Helper và các edit đã duyệt khác giữ nguyên.
+
+
+[assistant]
+Đã commit `a607111`: đổi đúng 32 tên, cập nhật P4 và test mới về uniqueness/prefix. Asset trình duyệt đã build tại commit sạch này để tránh dùng bundle cũ. Bắt đầu chạy riêng 22 smoke case trước các gates cuối.
+
+
+[assistant]
+Case đầu tiên đang chạy hết luồng UI, bao gồm phần trước đây dừng ở lỗi “Fine Ring”. Chưa có kết quả cuối cho case này; timeout gốc được giữ nguyên. Các case còn lại sẽ chạy tuần tự sau đó.
+
+
+[assistant]
+**5/22 smoke case đã PASS**, gồm case UI dài đầu tiên, calendar và crime/garrison. Không cần rerun; helper vẫn nguyên bản. Đang tiếp tục 17 case còn lại.
+
+
+[assistant]
+**10/22 smoke case PASS** tại `a607111`, không có failure rerun. Các case report/item trước đây lỗi đều đang đọc đúng tên mới. Tiếp tục 12 case còn lại rồi chạy lại gates từ đầu.
+
+
+[assistant]
+**13/22 smoke case PASS**, gồm các case checkpoint/population ở cả 390px và 1280px. Chưa có lỗi hay timeout; không cần sửa thêm test.
+
+
+[assistant]
+**15/22 smoke case PASS**. Các case save/load nhiều tuần và population đã qua; không có thay đổi code sau commit. Còn bảy case trước khi bắt đầu gates cuối.
+
+
+[assistant]
+**19/22 smoke case PASS**, chưa có lỗi hoặc timeout. Ba case cuối đang chạy; sau đó full gates và smoke sẽ kiểm tra lại toàn bộ head `a607111`.
+
+
+[assistant]
+**22/22 smoke case trước đây lỗi đã PASS riêng**, mỗi case một lần với `CI=1`, không cần rerun. Bắt đầu lại gates 1–7 tại head sạch `a607111`, rồi full smoke; dự kiến full smoke khoảng 33–35 phút.
+
+
+[assistant]
+Gates 1–2 đã PASS. Tải CPU lúc bắt đầu ghi nhận **13%**; log đã lưu top processes và không phát hiện test/build/review runner khác. Typecheck toàn workspace đang chạy.
+
+
+[assistant]
+Gates 1–5 đều PASS. Full unit suite đang chạy tại `a607111`; sau đó là build và full smoke với `CI=1`. Không có thay đổi source sau 22 case riêng đã GREEN.
+
+
+[assistant]
+Gates **1–7 đều PASS**. Script đã ghi `CI=1` và bắt đầu full smoke; hai cổng được kiểm tra trống trước khi chạy. Tiếp tục chờ kết quả toàn bộ 370 test.
+
+
+[assistant]
+Full unit suite đã xác nhận **2559/2559 PASS**. Bundle mới là **JS 129.82 kB + CSS 6.74 kB = 136.56 kB gzip**, dưới 200 kB. Full smoke đang chạy case UI dài đầu tiên, chưa có lỗi.
+
+
+[assistant]
+Case UI dài đầu tiên đã PASS trong full smoke. Hai bài Goods accessibility cũng PASS; đang chạy nhóm accessibility nhiều viewport với timeout gốc. Chưa có lỗi trong lần full run này.
+
+
+[assistant]
+Head vẫn là `a607111`, source giữ nguyên. Phần còn lại là full smoke; bài accessibility 1600px đang chạy và chưa có lỗi được ghi nhận.
+
+
+[assistant]
+Accessibility **1600px đã PASS**, gồm kiểm tra reflow nội dung dài. Full smoke đang chuyển sang 1280px; 22 case riêng trước đó và gates 1–7 vẫn GREEN.
+
+
+[assistant]
+Full smoke vẫn **0 lỗi**. Bài accessibility 1280px đang chạy trong giới hạn gốc; chưa cần bất kỳ chỉnh sửa hay rerun nào.
+
+
+[assistant]
+Accessibility **1280px đã PASS**; full smoke vẫn **0 lỗi**. Tiếp theo là reflow và các viewport 375/320px.
+
+
+[assistant]
+Reflow 1280px và native-control contrast 375px đều PASS. Bài accessibility tổng thể 375px đang chạy; full smoke chưa có lỗi.
+
+
+[assistant]
+Full smoke: **14/370 test hoàn tất, 0 lỗi**. Case accessibility 375px dài vẫn đang chạy; source và các giới hạn test giữ nguyên.
+
+
+[assistant]
+Accessibility và reflow **375px đã PASS**. Nhóm 320px đã bắt đầu; full smoke hiện **17/370 test hoàn tất, 0 lỗi**.
+
+
+[assistant]
+Full smoke vẫn **0 lỗi**. Case accessibility 320px đang chạy trong timeout 300 giây vốn có; đây là viewport cuối của nhóm kiểm tra dài.
+
+
+[assistant]
+Cả bốn viewport **1600/1280/375/320px đã PASS** nhóm accessibility. Full smoke đã qua **24/370 test**, vẫn **0 lỗi**, và đang chuyển sang các kiểm tra điều hướng.
+
+
+[assistant]
+Full smoke đã qua **75/370 test, 0 lỗi**. Case calendar từng lỗi đã PASS trong full run; các kịch bản report precision/service cũng đang GREEN.
+
+
+[assistant]
+Full smoke: **80/370 test, 0 lỗi**. Các luồng bàn phím 1280px đã PASS; đang tiếp tục cùng nhóm kiểm tra ở 375px.
+
+
+[assistant]
+Full smoke đã qua **97/370 test, 0 lỗi**. Các luồng 375px và kiểm tra Character Life/import tiếp tục PASS; chưa cần rerun nào.
+
+
+[assistant]
+Full smoke: **123/370 test, 0 lỗi**. Raid và wound report từng thất bại đã PASS trong full run; các kiểm tra error-log cũng đang GREEN.
+
+
+[assistant]
+Full smoke đã qua **133/370 test, 0 lỗi**. Garrison report và báo cáo năm tuần ở 375px đã PASS với tên mới, trong khi helper vẫn không đổi.
+
+
+[assistant]
+Full smoke: **148/370 test, 0 lỗi**. Các case buy/equip, hiệu ứng Farm và item letters trước đây lỗi đều đã PASS trong full run.
+
+
+[assistant]
+Full smoke đã qua **158/370 test, 0 lỗi**. Luật, fallback font và các kiểm tra report parity đang PASS; không có rerun hay sửa mã bổ sung.
+
+
+[assistant]
+Full smoke: **183/370 test, 0 lỗi**. Các case ledger/crime letters từng lỗi đã PASS; nhóm Outside đang tiếp tục.
+
+
+[assistant]
+Full smoke đã qua **220/370 test, 0 lỗi**. Các kiểm tra storage/migration và bảo vệ kết quả import/save đang PASS. Phần code vẫn đúng commit đã kiểm chứng.
+
+
+[assistant]
+Full smoke: **250/370 test, 0 lỗi**. Các kiểm tra từ chối Build/Replace/Upgrade ở 320px đã PASS; còn nhóm checkpoint, population và world/session.
+
+
+[assistant]
+Full smoke đã qua **278/370 test, 0 lỗi**. Các trường hợp checkpoint sai version/ruleset đều PASS và giữ nguyên state theo kỳ vọng.
+
+
+[assistant]
+Full smoke: **294/370 test, 0 lỗi**. Hai case population/round-trip từng lỗi ở 1280px và 390px đều đã PASS; đang tiếp tục các kiểm tra save và thao tác tuần.
+
+
+[assistant]
+Full smoke đã qua **304/370 test, 0 lỗi**. Case build/upgrade/replace từng lỗi đã PASS trong full run, cùng các kiểm tra bảo toàn plan khi lệnh không hợp lệ.
+
+
+[assistant]
+Full smoke: **348/370 test, 0 lỗi**. Nhóm title/session đã PASS; còn các case cuối về workforce và world/session trước khi chốt evidence.
+
+
+[assistant]
+Full smoke đã qua **368/370 test, 0 lỗi**. Còn hai case cuối, sau đó kiểm tra git/cổng và cập nhật README cùng SHA256SUMS.
+
+
+[assistant]
+**Full smoke 370/370 PASS với `CI=1`, exit 0**, hoàn tất trong 33.4 phút. Gates 1–7 cũng PASS; git sạch và cổng 4173/4174 đã trống. Đang chốt evidence và manifest cuối.
+
+
+[assistant]
+Open the [handoff README](C:/Users/Admin/.t3/local-drafts/p6b-prA/README.md) for Orchestrator/Tester review. **A1–A3 are complete for the Builder: all local gates and full smoke pass, with no remaining HOLD.**
+
+Committed `a60711120b8c3d7ff9759a14cbb7a6c09ec396c5`:
+
+`fix(core): unique item names with Lord's and Retainer's prefixes`
+
+The commit ends with `Co-authored-by: Codex <noreply@openai.com>`.
+
+Exactly **32 new definitions** received straight-apostrophe `Lord's ` or `Retainer's ` prefixes. All **26 historical wearable definitions** and every other item field remain unchanged. All **76 item names are unique**. `character-life-navigation.helpers.ts` remains untouched.
+
+```text
+Branch: feat/p6b-crafting-data
+HEAD:   a60711120b8c3d7ff9759a14cbb7a6c09ec396c5
+Tree:   1b26a634536c83699780f1a9479ce64ebb10717d
+Git status: empty
+Ports 4173/4174: free
+```
+
+The naming fix followed RED → GREEN before the smoke runs:
+
+| Validation | Result | Exit |
+|---|---|---:|
+| Naming RED, before data edit | 3 failed, 42 passed | 1 |
+| Catalog GREEN after the fix | **94/94 passed** | 0 |
+| Golden/fixture comparisons | **59/59 passed** | 0 |
+| Previously failing smoke cases, each run separately with `CI=1` | **22/22 passed**, one attempt each | 0 |
+
+Then gates 1–7 ran again from the start at the clean final head. Recorded CPU load at gate start was **13%**, with zero other detected test/build/review runner jobs; the log includes the top processes.
+
+| Gate | Command | Result | Exit |
+|---|---|---|---:|
+| 1 | `git diff --check origin/main...HEAD` | PASS | 0 |
+| 2 | `npm run lint` | PASS | 0 |
+| 3 | `npm run typecheck` | PASS | 0 |
+| 4 | `npm run check:architecture` | PASS | 0 |
+| 5 | `npm run test:architecture` | PASS | 0 |
+| 6 | `npm test` | **2559/2559 passed** | 0 |
+| 7 | `npm run build` | PASS | 0 |
+| Smoke | Full `CI=1 npm run test:smoke` | **370/370 passed**, 33.4 minutes | 0 |
+
+No failure rerun was required at the naming-fix head.
+
+Only **P4’s effective after-text** changed among the existing approved edits. P1–P3, P5–P58 and P59 remain exact. The final inventory still contains **59 approved blocks across 35 existing test files**, with **61 changed files overall**.
+
+The `ITEM_CATALOG` pin changed because of the 32 approved name prefixes:
+
+```text
+Previous: 7d1cc84733e7b5837cb596ea04b558943e8927689f7352fc35ea555e95581635
+Current:  7fdeadb141aba95586555f531e044fcdc8a5eccd2c2766fab94c48714793f96d
+```
+
+All other pins remain unchanged. The effective P4 before/after text and reason are recorded in [p4-names-pin-revision.md](C:/Users/Admin/.t3/local-drafts/p6b-prA/p4-names-pin-revision.md) and [hash-pin-changes.md](C:/Users/Admin/.t3/local-drafts/p6b-prA/hash-pin-changes.md). The original Step 0 package is preserved as historical evidence.
+
+The golden and ten v9 fixtures store item definition IDs rather than the affected display names. **All eleven files remain byte-identical to `b0c0b37`; no additional regeneration was needed.** The golden generation total remains one, and the existing allowed-path diff remains valid.
+
+The bundle remains below the 200 kB gzip budget:
+
+| Output | Supplied main | Final head | Growth |
+|---|---:|---:|---:|
+| JS | 126.72 kB | **129.82 kB** | +3.10 kB |
+| CSS | 6.74 kB | **6.74 kB** | +0.00 kB at reported precision |
+| Combined | 133.46 kB | **136.56 kB** | +3.10 kB |
+
+Exact measured gzip totals are **129,817 bytes JS** and **6,743 bytes CSS**. Growth uses the supplied rounded main figures.
+
+The refreshed evidence package contains:
+
+1. [README](C:/Users/Admin/.t3/local-drafts/p6b-prA/README.md) and [full gate log](C:/Users/Admin/.t3/local-drafts/p6b-prA/a3-gates.txt), including HEAD/tree, UTC, CPU, commands, outputs and exits.
+2. [All 32 name edits](C:/Users/Admin/.t3/local-drafts/p6b-prA/correction3-name-edits.json), [final inventory](C:/Users/Admin/.t3/local-drafts/p6b-prA/edit-inventory-names.json) and [verifier](C:/Users/Admin/.t3/local-drafts/p6b-prA/verify-edits.mjs).
+3. [22 separate smoke-case results](C:/Users/Admin/.t3/local-drafts/p6b-prA/names-smoke-isolated-results.json) and [fixture inspection with raw hashes](C:/Users/Admin/.t3/local-drafts/p6b-prA/name-fixture-inspection.json).
+4. [Bundle script](C:/Users/Admin/.t3/local-drafts/p6b-prA/measure-bundle.mjs), [raw results](C:/Users/Admin/.t3/local-drafts/p6b-prA/bundle-results.json), [raw JS](C:/Users/Admin/.t3/local-drafts/p6b-prA/bundle-artifacts/assets_index-plziRAbs.js) and [raw CSS](C:/Users/Admin/.t3/local-drafts/p6b-prA/bundle-artifacts/assets_index-CxB-ZnFZ.css).
+5. [SHA256SUMS.txt](C:/Users/Admin/.t3/local-drafts/p6b-prA/SHA256SUMS.txt): **293 evidence files verified**, nested manifests included; UTF-8 and owner text checks passed.
+
+The four commits—`db7c65a`, `2a92985`, `b0c0b37` and `a607111`—are retained in the assigned worktree. **No push, PR or merge was performed.** No environment was removed; storage reclaimed is **0 bytes**.
+
+**Next: use the [README](C:/Users/Admin/.t3/local-drafts/p6b-prA/README.md) for the independent Tester/Reviewer handoff.**
+
+[user]
+P6-B PR B Builder (craft orders: state, place/cancel commands, End Week completion, delivery, persistence, reports)
+
+You are the P6-B Builder, now on PR B. Claude is Orchestrator and Tester. Astra reviews. Only dot or the owner merges. PR A (#96) is merged: main = 0de2d1ffa91abadf76ced9696f440a09bf19f8af.
+
+Owner (Tân), 2026-11-15, verbatim: "Giao Builder B".
+
+Worktree: C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01 (reuse it; create no other worktree or clone). Run `git fetch origin`, check `git status` is clean and ports 4173/4174 are free, then create `feat/p6b-crafting-orders` from `origin/main` = 0de2d1f.
+
+Binding documents (read fully before any code):
+- Plan: C:/Users/Admin/.t3/local-drafts/p6b-prB/binding-plan-3bee3ae.md (approved; Plan corrections 1–3 are PR A history but their rules still bind). PR B = Tasks B0–B3. Apply Global Constraints, Decisions 5, 6, 8 and 9, the PR B file allowlist plus each task's **Files** line, and Review Focus 1–5.
+- Spec: C:/Users/Admin/.t3/local-drafts/p6b-prB/binding-spec-cd1b18a.md (v0.1), especially §6 (Smithy posts, orders, capacity, fees, output and full inventory, busy workshop), §7, §8.
+- AGENTS.md in the repo (Hard Laws, §4 anti-loop, §6 evidence).
+You may use the executing-plans approach (task by task, in this thread, no subagents).
+
+**Task B0 — Step 0 preflight, before any RED or product edit.** Search the whole repo (unit and e2e) for every existing test, fixture or pin PR B changes, for example:
+- the NPC post list (`NPC_MANAGER_BUILDING_TYPES` gains smithy, hospital, drug-store) and any test or e2e listing posts or post labels;
+- `isItemsState` key lists and canonical-form tests (new optional `workshops` field);
+- the report shape (`items.crafted`, `items.workshopsIdle`) in report tests, synthetic reports and the e2e visible-report parser;
+- `REPLACE` behaviour tests (new `WORKSHOP_BUSY` refusal);
+- persistence `place` handling and item-record tests (new `order:` / `ready:` places);
+- the golden and fixtures (none expected to change: no orders exist in them; say so or list the paths).
+For each: file:line, the current assertion, why PR B changes it, and the exact proposed after-text. List any file you need outside the allowlist and why. Then **HOLD once with the full list**; the owner decides. Do not edit any existing test before that answer.
+
+Key rules for PR B (from the plan; HOLD if anything conflicts and name the line):
+- **B1 (Decisions 5, 6, 8):** `Workshop`, `CraftOrder` and the optional canonical `workshops` field in `ItemsState` with `isItemsState`; `PLACE_CRAFT_ORDER { tileId, recipeId, itemId? }` and `CANCEL_CRAFT_ORDER { tileId, index }` in `item-command.ts`, Planning only, revision checked, all-or-nothing; the exact error codes of Decision 8; inputs and fee leave at placement and are held in the order; cancel returns exact ids, stacks and Gold or refuses with `INVENTORY_FULL`; a held item cannot be equipped, sold, destroyed or placed twice; `REPLACE` on a tile with a workshops entry → `WORKSHOP_BUSY`; `ASSIGN_NPC` at smithy, hospital and drug-store.
+- **B2 (Decision 9):** `completeCraftOrders` in new `packages/simulation/src/craft-week.ts`, called in `runTileTrialWeek` after the P6-A item steps: deliver `ready` first, then per tile in ascending id complete up to capacity (workers or Drug Store base 1, plus 1 per `skillSteps` value 60/80 reached by the posted NPC's effective post skill, technical at the Smithy and medical at the Hospital and Drug Store); a non-operating workshop completes nothing and is listed in `workshopsIdle`; outputs go inventory/consumables/stacks → storage → `ready` (never lost, `ready` never expires); upgrades give a fresh id with the same slot and kind; no random stream consumed; report fields `items.crafted` and `items.workshopsIdle`; persistence places `order:<tileId>:<index>` and `ready:<tileId>:<index>` with a byte-identical round trip.
+- With no orders placed, every existing golden, fixture and 60-week report hash is unchanged (LAW-03). If any byte changes, HOLD with the path diff.
+- **Tests and order:** each task's full RED list (plan B1 and B2, plus Review Focus 1–5) before any product edit; existing-test edits only as approved after Step 0, each listed file:line before → after; nothing loosened; no new per-test timeout (measure and HOLD). `lord-health.test.ts:73` already has its approved 15 s.
+- **B3 gates**, sequentially at the clean final head, on a quiet machine: first record CPU load and the top processes in the log and start only when no other test, build or review job runs; then:
+  1. `git diff --check origin/main...HEAD`
+  2. lint
+  3. typecheck
+  4. `check:architecture`
+  5. `test:architecture`
+  6. `npm test`
+  7. build
+
+  Then, in the same shell, `echo "CI=$CI"` and `CI=1 npm run test:smoke`. One runner at a time. If the smoke fails, rerun each failed test alone once, report both runs, and HOLD. If any test times out, measure it alone three times and HOLD; never change a timeout.
+- **Ports:** 4173/4174 must be free before the smoke. If something holds them, report it and HOLD; kill nothing.
+- **Evidence:** C:/Users/Admin/.t3/local-drafts/p6b-prB/. Include: the Step 0 preflight; RED and GREEN logs per task; the edit inventory and a verifier script (with a clear final-mode argument); an immutable check that golden, fixtures and pins are byte-identical to 0de2d1f; gate logs with HEAD, tree, UTC, exit and CPU load at the top; the smoke log showing CI=1; the bundle vs main (JS 129.82 kB, CSS 6.74 kB gzip) with its script and a raw artifact; a README; and SHA256SUMS.txt covering every file except the top-level manifest, nested manifests included. UTF-8 only. No `docs/` files on the product branch. Keep Playwright traces out of the evidence folder or list them in a LOCAL-ONLY manifest.
+- **Commits:** one per task (B1, B2), with the plan's commit messages, each ending `Co-authored-by: Codex <noreply@openai.com>`. Do not push, open a PR or merge. Leave ports 4173/4174 free.
+- **Anti-loop:** if one failure is still failing after 2 attempts, HOLD. A queued message never overrides a HOLD: if your last reply was a HOLD, keep it and wait for Claude.
+
+After the Step 0 HOLD is answered and the work is done, reply with: HEAD and tree, empty git status; the commits; RED and GREEN per task; the edit inventory count; the immutable check; CPU load at gate start; the gate table and smoke total with CI=1; the bundle; the evidence paths.
+
+[assistant]
+Kiểm tra bàn giao PR B và lập **B0 Step 0** trước mọi RED hay sửa mã. Phần này chỉ audit, ghi danh sách before → after và HOLD để owner duyệt; dự kiến 15–25 phút.
+
+
+[assistant]
+B0 đang audit: nhánh `feat/p6b-crafting-orders` đã ở đúng `0de2d1f`, working tree sạch. Worktree này chưa được index; tiếp tục kiểm tra trực tiếp mã nguồn và toàn bộ test để lập danh sách cần duyệt.
+
+
+[assistant]
+Đã thấy hai điểm cần đưa vào B0: test pin danh sách post tại `world/__tests__/npc.test.ts:30`, và validator cha tại `trial/society.ts:66` vẫn chỉ nhận tám key cũ nên sẽ từ chối `workshops`. File validator này nằm ngoài allowlist PR B. Đang đối chiếu report và persistence để tìm hết các điểm tương tự.
+
+
+[assistant]
+B0 đã quét 152 file test, 74 file fixture/golden và 7 nhóm tìm kiếm. Chưa thấy order nào trong 64 fixture JSON. Report cần giữ nguyên shape khi không có crafting để bảo toàn byte; đang ghi đề xuất hai field report optional, chỉ xuất hiện khi có dữ liệu.
+
+
+[assistant]
+Danh sách hiện có **P1: một assertion cũ cần đổi**, **X1: một dòng validator ngoài allowlist**, và `tile-trial.ts` cần được bổ sung vào Files của B1 để chặn `REPLACE` ở đường dùng chung. Gói HOLD cũng ghi rõ bốn cách xử lý chỗ chưa khớp giữa plan/spec. Còn khoảng 5 phút để kiểm tra verifier và manifest.
+
+
+[assistant]
+**Duyệt gói B0 dưới đây để mở B1. Hiện trạng: HOLD; chưa chạy RED hoặc sửa mã/test.**
+
+Nhánh `feat/p6b-crafting-orders` đã được tạo từ đúng `origin/main` sau fetch:
+
+```text
+HEAD:   0de2d1ffa91abadf76ced9696f440a09bf19f8af
+Tree:   1b26a634536c83699780f1a9479ce64ebb10717d
+Status: sạch, không có thay đổi
+Ports:  4173/4174 đều trống
+```
+
+Audit đã bao phủ **152 file test**, **74 file fixture/golden** và các đường tích hợp state, command, report, persistence. Danh sách xin duyệt gồm:
+
+1. **P1 — một assertion cũ trong một file:** [npc.test.ts:30](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/__tests__/npc.test.ts:30). Append đúng `'smithy', 'hospital', 'drug-store'` vào cuối expected array của `NPC_MANAGER_BUILDING_TYPES`. Giữ nguyên 13 phần tử hiện tại, thứ tự và phép so sánh exact equality; không đổi gì khác trong file.
+
+2. **X1 — một dòng product ngoài allowlist:** [society.ts:66](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/society.ts:66). Validator cha hiện chỉ nhận tám key cũ, nên sẽ từ chối mọi state có `workshops` trước khi gọi `isItemsState`. Đề xuất nhận **đúng bộ tám key cũ hoặc đúng bộ chín key có `workshops` ở cuối**; giữ phần kiểm tra canonical và nội dung tại `isItemsState`. Chỉ dòng 66 thay đổi.
+
+3. **Bổ sung `tile-trial.ts` vào Files của B1.** File này đã có trong allowlist tổng PR B nhưng thiếu ở Files của task B1. Đặt guard `WORKSHOP_BUSY` tại đường `REPLACE` dùng chung để bao phủ cả direct tile command, NPC-world và Character Life.
+
+4. **Chốt bốn cách xử lý hợp đồng trước RED:**
+
+| ID | Điểm cần chốt | Đề xuất |
+|---|---|---|
+| **D1** | Hai field report mới và yêu cầu giữ nguyên byte khi không có order | `crafted?` và `workshopsIdle?` là optional; bỏ từng field khi mảng rỗng. `output` là output definition ID của recipe. Giữ nguyên visible-report parser trong PR B. |
+| **D2** | Spec nói workshop “operating” khi đặt; Decision 8 nói built + enabled | Theo Decision 8 và brief hiện tại: đặt order cần đúng loại building đã xây và enabled. Staffing, Herbs và upkeep thực trả kiểm tra lúc End Week. |
+| **D3** | Công thức workers + skill bonus có thể cho capacity khi workers = 0 | Smithy/Hospital có 0 workers hoàn thành 0 order dù NPC đạt skill 80+. Hospital phải đủ staffing/supply theo quy tắc vận hành hiện có; Drug Store giữ base 1 không cần worker. |
+| **D4** | Material stack đầy nhưng temporary storage chỉ chứa item instance | Material đi **stack → ready** khi stack đạt 999. Wearable/potion đi inventory/consumables → storage → ready. Không mở rộng schema storage. |
+
+**Không đề xuất thay đổi fixture, golden, hash pin, e2e/helper, timeout hay threshold nào.** Expected golden/fixture path diff là `[]`. Cả 64 fixture JSON đã được kiểm tra, kể cả session JSON lồng trong golden; không có workshop/order hiện hữu.
+
+Gói review nằm tại:
+
+- [Step 0 preflight đầy đủ](C:/Users/Admin/.t3/local-drafts/p6b-prB/step0-preflight.md)
+- [Exact before → after và D1–D4](C:/Users/Admin/.t3/local-drafts/p6b-prB/step0-proposed-edits.md) · [JSON inventory](C:/Users/Admin/.t3/local-drafts/p6b-prB/step0-proposed-edits.json)
+- [Verifier result](C:/Users/Admin/.t3/local-drafts/p6b-prB/step0-verification.txt) · [Immutable baseline](C:/Users/Admin/.t3/local-drafts/p6b-prB/immutable-baseline.json)
+- [README](C:/Users/Admin/.t3/local-drafts/p6b-prB/README.md) · [SHA256SUMS](C:/Users/Admin/.t3/local-drafts/p6b-prB/SHA256SUMS.txt)
+
+Verifier B0 **PASS**: toàn bộ test cũ chưa đổi, **85 file được bảo vệ giống byte Git tại base**, không có changed path. Manifest đã verify đủ **20 file**, UTF-8 hợp lệ. Đây là kiểm tra evidence; **B1/B2 RED–GREEN và B3 gates/smoke/bundle chưa chạy**. Không có commit PR B, push, PR hoặc merge.
+
+HOLD này được yêu cầu trực tiếp bởi Task B0 trong brief và [binding plan](C:/Users/Admin/.t3/local-drafts/p6b-prB/binding-plan-3bee3ae.md:160): owner quyết định danh sách trước mọi RED hoặc sửa test cũ. **Bước tiếp theo: Claude chuyển owner duyệt P1, X1, Files của B1 và D1–D4 trong gói trên.**
+
+[user]
+PR B Step 0 HOLD answered by the owner. Binding plan is now C:/Users/Admin/.t3/local-drafts/p6b-prB/binding-plan-16e48a1.md: read Plan correction 4.
+
+Owner (Tân), 2026-11-15, dialog choices, verbatim:
+1. "Approve P1, X1 and tile-trial.ts (Recommended)": P1 exactly as listed (npc.test.ts:30, append 'smithy', 'hospital', 'drug-store'); X1 exactly society.ts:66 (accept the old eight keys or the nine with `workshops` last; nothing else in that file); tile-trial.ts added to B1 for the shared REPLACE → WORKSHOP_BUSY guard.
+2. "Accept D1–D4 (Recommended)": D1 optional report fields omitted when empty, `output` = recipe output defId, visible-report parser unchanged; D2 placing needs the building type built and enabled, staffing/Herbs/upkeep checked at End Week; D3 Smithy/Hospital with 0 workers complete nothing even with a skilled NPC, Hospital must be operating by existing rules, Drug Store base 1 without workers; D4 a refined material whose stack is at 999 waits in `ready`, items go inventory/consumables → storage → ready.
+
+Proceed with B1 RED and the rest of the brief (B1, B2, B3: gates on a quiet machine, CI=1 smoke, bundle, immutable check, evidence under local-drafts/p6b-prB/). No other existing-test edit or file outside the allowlist: HOLD if one is needed. Do not push, open a PR or merge.
+
+[assistant]
+B1 bắt đầu với RED và baseline không có order tại `0de2d1f`. Áp dụng đúng P1, X1, guard trong `tile-trial.ts` và D1–D4 đã duyệt; dự kiến 60–90 phút cho B1/B2, sau đó khoảng 40 phút cho gates và smoke.
+
+
+[assistant]
+Baseline 60 tuần đã được ghi tại base: đủ hash của report, item state và city cho ba seed. B1 đang thêm toàn bộ test RED cho place/cancel, input bị giữ, canonical state, busy REPLACE và ba post mới.
+
+
+[assistant]
+B1 đã GREEN **110/110 test mới**, cùng 74 test liên quan và baseline. Typecheck core/simulation cũng pass; đang chạy toàn bộ unit suite trước commit B1.
+
+
+[assistant]
+B1 đã commit `4480ed8`: full unit suite **2672/2672 pass**, không có timeout. B2 đang viết RED cho capacity, ready delivery, report và save/load/cancel; các file golden, fixture và pin vẫn giữ nguyên.
+
+
+[assistant]
+B2 RED đã chạy đủ **99 test: 96 fail, 3 baseline pass**, đúng ở phần completion/report/persistence chưa có. Đang thêm completion sau các bước item cũ, giao ready trước mọi order mới, và tách held/ready item sang records riêng.
+
+
+[assistant]
+B2 đã GREEN **99/99 test mới**; toàn bộ unit suite **2768/2768 pass**. Fixture test potion đã được sửa để cấp đúng Red Leaf, rồi chạy lại RED với mã B2 tạm trả về B1 và GREEN đầy đủ; cả hai lượt được giữ trong evidence.
+
+
+[assistant]
+B3 đang chạy tại head sạch `735e3ff`. Verifier xác nhận đúng P1/X1, toàn bộ test cũ còn lại nguyên vẹn và **85 file fixture/golden/pin giống base**. Gates sẽ chạy tuần tự, rồi full smoke với `CI=1`; smoke dự kiến khoảng 35 phút.
+
+
+[assistant]
+Gates **1–5 đã pass**, gồm **154/154 architecture tests**. Gate 6 đang chạy full unit suite tại cùng head; CPU lúc bắt đầu gates là **4%**, không phát hiện test/build job khác.
+
+
+[assistant]
+Gates **1–7 đều pass** tại `735e3ff`; full unit **2768/2768**. Smoke đã bắt đầu với **370 test, 1 worker, `CI=1`**; bundle production cũng đã đo xong và dưới ngân sách 200 kB gzip.
+
+
+[assistant]
+Smoke đang ở **5/370 pass**, chưa có lỗi. Case projection qua assignment và full week vừa hoàn tất trong 1,6 phút; tiếp tục cùng runner, không đổi timeout.
+
+
+[assistant]
+Smoke **8/370 pass**; các case Goods stock accessibility ở 375px và 1280px đã xanh. Chưa có failure hoặc rerun.
+
+
+[assistant]
+Smoke vẫn ở nhóm accessibility; kết quả hiện tại **8/370 pass**, chưa ghi nhận lỗi. Runner và head giữ nguyên.
+
+
+[assistant]
+Smoke **11/370 pass**. Baseline accessibility và kiểm tra reflow ở 1600px đã xanh; đang sang nhóm 1280px.
+
+
+[assistant]
+Nhóm accessibility 1280px đang chạy; hiện **11/370 pass**, chưa có failure. Không có runner thứ hai.
+
+
+[assistant]
+Smoke **14/370 pass**, log chưa có failure/timeout. Nhóm 1280px đã hoàn tất; đang chạy accessibility ở 375px.
+
+
+[assistant]
+Case baseline accessibility 375px vẫn đang chạy. Smoke hiện **14/370 pass**, log chưa có failure hoặc timeout.
+
+
+[assistant]
+Smoke **17/370 pass**. Accessibility 375px đã hoàn tất; đang chạy viewport 320px. Chưa có failure hoặc rerun.
+
+
+[assistant]
+Smoke vẫn đang chạy baseline accessibility 320px; kết quả gần nhất **17/370 pass**, chưa có failure. Các case accessibility dài chiếm phần đầu suite; dự kiến còn khoảng 25 phút.
+
+
+[assistant]
+Smoke **25/370 pass**. Các viewport accessibility 1600/1280/375/320 đã xanh; suite chuyển sang navigation và layout.
+
+
+[assistant]
+Smoke **30/370 pass**, log chưa có failure/timeout. Navigation và calendar parser đang xanh tại cùng head `735e3ff`.
+
+
+[assistant]
+Smoke **44/370 pass**. Case NPC Work với post được hiển thị và stale choices đã xanh, cùng các kiểm tra inventory và navigation chỉ đọc.
+
+
+[assistant]
+Smoke **63/370 pass**, chưa có failure. Các trường hợp load bị từ chối hoặc thay thế đang giữ đúng UI intent.
+
+
+[assistant]
+Smoke **75/370 pass**. Các case so khớp report với executor cho precision, service và empty đã xanh; visible-report parser vẫn nguyên vẹn.
+
+
+[assistant]
+Smoke **80/370 pass**. Keyboard manager assignment, đọc nhân vật và session reset/atomic failures ở 1280px đều xanh.
+
+
+[assistant]
+Smoke **103/370 pass**, chưa có failure/timeout. Save/Continue và Export/Import đã xác nhận khôi phục đúng player, profiles và posts.
+
+
+[assistant]
+Smoke **130/370 pass**. Các nhóm Character Life, crime/crisis và error log đã đi qua; suite đang sang garrison. Chưa có failure.
+
+
+[assistant]
+Smoke **147/370 pass**. Nhóm Items và accessibility của Market/Potions/Letters ở 1280px đã xanh; chưa có failure hoặc rerun.
+
+
+[assistant]
+Smoke **157/370 pass**. Items, law voting/repeal và report fallback với blocked fonts đã xanh. Log chưa có failure/timeout.
+
+
+[assistant]
+Smoke **177/370 pass**, chưa có failure. Nhóm Outside đang xác nhận export byte-identical khi chỉ navigation và không overflow ở mobile/desktop.
+
+
+[assistant]
+Smoke **211/370 pass**. Storage đã xanh qua các case nhiều tab, IndexedDB bị chặn và async initial read; log chưa có failure.
+
+
+[assistant]
+Smoke **244/370 pass**, chưa có failure/timeout. Các refusal và contextual error ở 390px/320px đang giữ nguyên state.
+
+
+[assistant]
+Smoke **259/370 pass**. Checkpoint refusal đang bảo toàn full state và cả hai slot; chưa có failure hoặc rerun.
+
+
+[assistant]
+Smoke **289/370 pass**; còn 81 case. Nhóm checkpoint ở population mode cũng xanh, không có failure/timeout.
+
+
+[assistant]
+Smoke **294/370 pass**. Population growth/round-trip ở 1280px và 390px đã xanh; older-ruleset import vẫn bị từ chối đúng.
+
+
+[assistant]
+Smoke **310/370 pass**; còn 60 case. Workforce assignment và checkpoint restoration đang xanh, chưa có failure/timeout.
+
+
+[assistant]
+Smoke **361/370 pass**, còn 9 case và chưa có failure. Khi runner kết thúc, còn khoảng 2–3 phút để kiểm tra ports/status và khóa manifest evidence.
+
+
+[assistant]
+Smoke **369/370 pass**; chỉ còn case cuối, chưa có failure. Head vẫn là `735e3ff`.
+
+
+[assistant]
+Full smoke đã **370/370 pass với `CI=1`**, không rerun hay timeout; ports 4173/4174 đã trống. Đang phục hồi các artifact cũ mà e2e ghi cố định, rồi khóa README, immutable check và SHA256SUMS.
+
+
+[assistant]
+Immutable check cuối đã pass; đúng P1/X1, không có thay đổi khác trong test cũ hoặc 85 file được bảo vệ. Cả 35 artifact cũ đã phục hồi byte-identically. Đang chốt manifest và trạng thái bàn giao.
+
+
+[assistant]
+Dùng head `735e3ff` cho Tester/Astra review. **B1–B3 đã hoàn tất; gates 1–7 và full smoke đều PASS.**
+
+```text
+Branch: feat/p6b-crafting-orders
+HEAD:   735e3ff4d71c7fad04914913778f8325a86f79a8
+Tree:   bc5965abab73df37f43baeafd9e4f9d847a23826
+Base:   0de2d1ffa91abadf76ced9696f440a09bf19f8af
+```
+
+`git status --porcelain=v1` rỗng. Ports **4173/4174 trống**. Không push, mở PR hoặc merge.
+
+Craft orders hiện giữ inputs và fee ngay khi đặt, cancel trả lại đúng tài sản, End Week xử lý capacity và giao ready trước order mới. Held/ready items được lưu bằng các place mới và round-trip byte-identical.
+
+| Task | Commit | Message |
+|---|---|---|
+| B1 | `4480ed81effbdae282de7d3b6d4cb023a137bc7c` | `feat(simulation): craft orders` |
+| B2 | `735e3ff4d71c7fad04914913778f8325a86f79a8` | `feat(simulation): complete craft orders at end week` |
+
+Cả hai commit đều kết thúc bằng `Co-authored-by: Codex <noreply@openai.com>`.
+
+| Task | RED đã xác nhận | GREEN |
+|---|---|---|
+| B1 | 93 fail / 17 pass, tổng 110 | **110/110 test mới**, full suite **2672/2672** |
+| B2 | 92 fail / 7 pass, tổng 99 | **99/99 test mới**, full suite **2768/2768** |
+
+Các lượt ban đầu được giữ đầy đủ. Hai fixture trong test mới đã được hiệu chỉnh: Drug Store đặt tại slum tile, và potion II cấp đúng Red Leaf. Với B2, đã trả các file product về đúng byte B1 để chứng minh lại toàn bộ RED trước khi phục hồi implementation và chạy GREEN. Chi tiết ở [README](C:/Users/Admin/.t3/local-drafts/p6b-prB/README.md).
+
+CPU lúc bắt đầu gates là **4%**; CPU, top processes và kiểm tra job khác được ghi trong [quiet-machine log](C:/Users/Admin/.t3/local-drafts/p6b-prB/b3-quiet-machine.txt).
+
+| Gate | Command | Kết quả | Thời gian |
+|---|---|---|---:|
+| 1 | `git diff --check origin/main...HEAD` | PASS, exit 0 | 0.06 s |
+| 2 | `npm run lint` | PASS, exit 0 | 8.53 s |
+| 3 | `npm run typecheck` | PASS, exit 0 | 31.48 s |
+| 4 | `npm run check:architecture` | PASS, exit 0 | 6.91 s |
+| 5 | `npm run test:architecture` | **154/154**, exit 0 | 43.38 s |
+| 6 | `npm test` | **2768/2768**, exit 0 | 58.56 s |
+| 7 | `npm run build` | PASS, exit 0 | 22.57 s |
+
+Full smoke: **370/370 pass**, **`CI=1`**, exit 0, **33.4 phút**. Không rerun và không timeout. [Smoke log](C:/Users/Admin/.t3/local-drafts/p6b-prB/b3-smoke-ci1.txt) · [Full gate logs](C:/Users/Admin/.t3/local-drafts/p6b-prB/b3-gates-1-7.txt).
+
+- **Edit inventory:** đúng **1 existing-test assertion P1** và **1 approved product line X1**; tổng branch đổi 13 file source/test. [Inventory](C:/Users/Admin/.t3/local-drafts/p6b-prB/edit-inventory.md).
+- **Immutable check:** kiểm tra 152 test cũ; **85 file được bảo vệ giống byte base**, golden/fixture changed paths **`[]`**, không regenerate. [Final verifier result](C:/Users/Admin/.t3/local-drafts/p6b-prB/final-edit-immutable-verification.txt) · [Verifier với `--mode final`](C:/Users/Admin/.t3/local-drafts/p6b-prB/verify-edit-inventory.mjs).
+- **Hash pins:** 24 pin hiện hữu giữ nguyên; thêm 9 regression hash cho no-order reports/items/city, được capture tại base trước product edits. [Old → new và raw references](C:/Users/Admin/.t3/local-drafts/p6b-prB/hash-pin-changes.md).
+- **Bundle evidence:** [measurement JSON](C:/Users/Admin/.t3/local-drafts/p6b-prB/bundle-results.json) · [script](C:/Users/Admin/.t3/local-drafts/p6b-prB/measure-bundle.mjs) · [raw artifact manifest](C:/Users/Admin/.t3/local-drafts/p6b-prB/bundle-artifacts/SHA256SUMS.txt).
+- **Evidence integrity:** **86 file** được kiểm tra UTF-8 và SHA-256, gồm nested manifests; `sha256sum -c` exit 0. [SHA256SUMS](C:/Users/Admin/.t3/local-drafts/p6b-prB/SHA256SUMS.txt) · [Final state](C:/Users/Admin/.t3/local-drafts/p6b-prB/final-state.json). Playwright outputs ở ngoài evidence folder, được kê trong [LOCAL-ONLY manifest](C:/Users/Admin/.t3/local-drafts/p6b-prB/LOCAL-ONLY.json); cả 35 artifact cũ đã phục hồi byte-identically.
+
+Worktree được giữ lại cho review; storage reclaimed **0 bytes**. Independent Tester/Astra review chưa chạy trong Builder run.
+
+**Next: Claude mở [README bàn giao](C:/Users/Admin/.t3/local-drafts/p6b-prB/README.md) để bắt đầu kiểm thử/review tại đúng HEAD trên.**

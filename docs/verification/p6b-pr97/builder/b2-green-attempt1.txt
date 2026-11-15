@@ -1,0 +1,107 @@
+UTC: 2026-11-15T09:20:22.5081889Z
+HEAD: 4480ed81effbdae282de7d3b6d4cb023a137bc7c
+COMMAND: npm exec -- vitest run craft-week.test.ts craft-records.test.ts --maxWorkers=1 (full paths in JSON)
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ✓ packages/simulation/src/__tests__/craft-week.test.ts (82 tests) 327ms
+ ❯ packages/persistence/src/__tests__/craft-records.test.ts (17 tests | 16 failed) 288ms
+   × extracts held and ready instances into order/ready rows without duplicate city payloads 37ms
+   × round-trips held items, mixed ready indices and ready materials byte-identically in reversed record order 17ms
+   × cancel after save/import/rebuild returns the exact ids, stacks and Gold once 16ms
+   ✓ preserves FIFO order when record ids do not follow queue order 22ms
+   × refuses bad place void without changing records 15ms
+   × refuses bad place order:spec-2:-1 without changing records 18ms
+   × refuses bad place order:spec-2:00 without changing records 15ms
+   × refuses bad place order:spec-2:6 without changing records 14ms
+   × refuses bad place order:missing:0 without changing records 14ms
+   × refuses bad place ready:spec-2:0 without changing records 15ms
+   × refuses bad place ready:spec-2:9 without changing records 15ms
+   × refuses bad place ready:spec-2:1:extra without changing records 14ms
+   × rejects two rows claiming the same held-order location 16ms
+   × refuses a missing required held/ready row item:1 13ms
+   × refuses a missing required held/ready row item:2 14ms
+   × refuses a missing required held/ready row item:3 14ms
+   × ready-only workshops keep the byte-identical save and busy replacement refusal after load 15ms
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯ Failed Tests 16 ⎯⎯⎯⎯⎯⎯⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > extracts held and ready instances into order/ready rows without duplicate city payloads
+Error: MISSING_INPUT
+ ❯ act packages/persistence/src/__tests__/craft-records.test.ts:7:194
+System.Management.Automation.RemoteException
+ ❯ heldAndReady packages/persistence/src/__tests__/craft-records.test.ts:18:5
+ ❯ packages/persistence/src/__tests__/craft-records.test.ts:25:11
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/16]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > round-trips held items, mixed ready indices and ready materials byte-identically in reversed record order
+Error: MISSING_INPUT
+ ❯ act packages/persistence/src/__tests__/craft-records.test.ts:7:194
+System.Management.Automation.RemoteException
+ ❯ heldAndReady packages/persistence/src/__tests__/craft-records.test.ts:18:5
+ ❯ packages/persistence/src/__tests__/craft-records.test.ts:36:11
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/16]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > cancel after save/import/rebuild returns the exact ids, stacks and Gold once
+Error: MISSING_INPUT
+ ❯ act packages/persistence/src/__tests__/craft-records.test.ts:7:194
+System.Management.Automation.RemoteException
+ ❯ packages/persistence/src/__tests__/craft-records.test.ts:43:5
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/16]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > refuses bad place void without changing records
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > refuses bad place order:spec-2:-1 without changing records
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > refuses bad place order:spec-2:00 without changing records
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > refuses bad place order:spec-2:6 without changing records
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > refuses bad place order:missing:0 without changing records
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > refuses bad place ready:spec-2:0 without changing records
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > refuses bad place ready:spec-2:9 without changing records
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > refuses bad place ready:spec-2:1:extra without changing records
+Error: MISSING_INPUT
+ ❯ act packages/persistence/src/__tests__/craft-records.test.ts:7:194
+System.Management.Automation.RemoteException
+ ❯ heldAndReady packages/persistence/src/__tests__/craft-records.test.ts:18:5
+ ❯ packages/persistence/src/__tests__/craft-records.test.ts:58:38
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/16]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > rejects two rows claiming the same held-order location
+Error: MISSING_INPUT
+ ❯ act packages/persistence/src/__tests__/craft-records.test.ts:7:194
+System.Management.Automation.RemoteException
+ ❯ heldAndReady packages/persistence/src/__tests__/craft-records.test.ts:18:5
+ ❯ packages/persistence/src/__tests__/craft-records.test.ts:63:38
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/16]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > refuses a missing required held/ready row item:1
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > refuses a missing required held/ready row item:2
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > refuses a missing required held/ready row item:3
+Error: MISSING_INPUT
+ ❯ act packages/persistence/src/__tests__/craft-records.test.ts:7:194
+System.Management.Automation.RemoteException
+ ❯ heldAndReady packages/persistence/src/__tests__/craft-records.test.ts:18:5
+ ❯ packages/persistence/src/__tests__/craft-records.test.ts:67:38
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/16]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/persistence/src/__tests__/craft-records.test.ts > ready-only workshops keep the byte-identical save and busy replacement refusal after load
+Error: MISSING_INPUT
+ ❯ act packages/persistence/src/__tests__/craft-records.test.ts:7:194
+System.Management.Automation.RemoteException
+ ❯ heldAndReady packages/persistence/src/__tests__/craft-records.test.ts:18:5
+ ❯ packages/persistence/src/__tests__/craft-records.test.ts:70:11
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/16]⎯
+System.Management.Automation.RemoteException
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  16 failed | 83 passed (99)
+   Start at  16:20:20
+   Duration  2.22s (transform 674ms, setup 0ms, import 1.01s, tests 615ms, environment 0ms)
+
+JSON report written to C:/Users/Admin/.t3/local-drafts/p6b-prB/b2-green-attempt1.json
+EXIT: 1

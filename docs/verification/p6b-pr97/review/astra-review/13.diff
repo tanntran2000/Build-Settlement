@@ -1,0 +1,12 @@
+diff --git a/packages/simulation/src/tile-trial.ts b/packages/simulation/src/tile-trial.ts
+index 754ffc0..de4c5cf 100644
+--- a/packages/simulation/src/tile-trial.ts
++++ b/packages/simulation/src/tile-trial.ts
+@@ -108,6 +108,7 @@ export function executeTileTrialCommand(state: unknown, raw: unknown,ctx?:ItemWe
+     else {
+       const tile = next.tiles.find(t => t.id === c.tileId);
+       if (!tile) return fail("INVALID_TILE", "Select a valid tile.");
++      if(c.type==='REPLACE'&&next.society!.items.workshops&&Object.hasOwn(next.society!.items.workshops,tile.id))return fail('WORKSHOP_BUSY','Cancel workshop orders and make room for ready outputs before replacing this building.');
+       const outside=outsidePlot(tile.id), plotState=next.society!.outside[tile.id];
+       if(['CLEAR','BUILD','REPLACE','UPGRADE','BUILD_DEEP_SHAFT'].includes(c.type) && outside){
+         if(outside.ring>next.society!.wallRing)return fail('LOCKED_PLOT','Extend the wall first.');

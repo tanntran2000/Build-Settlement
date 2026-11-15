@@ -1,0 +1,13 @@
+diff --git a/packages/core/src/trial/society.ts b/packages/core/src/trial/society.ts
+index 1a880bd..865954c 100644
+--- a/packages/core/src/trial/society.ts
++++ b/packages/core/src/trial/society.ts
+@@ -63,7 +63,7 @@ export function isSocietyState(raw: unknown): raw is SocietyState {
+       const tier = raw.classes[group];
+       if (!hasWeeklyKeys(tier, ['common', 'elite']) || !count(tier.common) || !count(tier.elite)) return false;
+     }
+-    return hasWeeklyKeys(raw.items,['nextItemId','inventory','consumables','materials','storage','equipped','market','goals']) &&
++    return (hasWeeklyKeys(raw.items,['nextItemId','inventory','consumables','materials','storage','equipped','market','goals']) || hasWeeklyKeys(raw.items,['nextItemId','inventory','consumables','materials','storage','equipped','market','goals','workshops'])) &&
+       raw.items.equipped!==null && typeof raw.items.equipped==='object' && isItemsState(raw.items,['player',...Object.keys(raw.items.equipped)]) &&
+       hasWeeklyKeys(raw.stocksMilli,['stone','wool','cloth','herbs']) && Object.values(raw.stocksMilli).every(count) &&
+       isCrisisState(raw.crisis, raw.pendingCard) && isOrderState(raw.order) && isOutsideState(raw.outside) && isOutsideResearch(raw.research) &&
