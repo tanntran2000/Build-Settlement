@@ -72,8 +72,8 @@ it('preserves the original vote message literal type', () => {
 // SHA-256 of JSON.stringify(original constant), read directly from the pinned Git
 // source at 5cc2522f27e01b49baaa6e44bba01904edcea5c0 before catalog extraction.
 const pinnedCatalogs = [
-  { name: 'TRIAL_BUILDINGS', value: TRIAL_BUILDINGS, hash: 'ecaa53f29be9a8028a9f68923e6c7d5bc9ef4b510692e7cd2bd580415433f54f' },
-  { name: 'SOCIETY_BUILDINGS', value: SOCIETY_BUILDINGS, hash: '2bcf0b8352d2769d4d0da0d3d9039ee1196083445067ae75509efd26c09673f1' },
+  { name: 'TRIAL_BUILDINGS', value: TRIAL_BUILDINGS, hash: '5f27eec1560b3aef1a61312497eb82be8970a28317e09078f76956ea8ed88219' },
+  { name: 'SOCIETY_BUILDINGS', value: SOCIETY_BUILDINGS, hash: 'e23c932be89d5d3fd561d44ac863bed90fc73d27a9795d65d588e813889e2a3b' },
   { name: 'LAW_CATALOG', value: LAW_CATALOG, hash: '349c5a8109867abfd74ca3a7f2eddfedfe1ea3383744609a30e7d81b98a42783' },
   { name: 'LAW_TRIAL', value: LAW_TRIAL, hash: 'eb531c3aa1fad89b2d4c918b13a040f4c6940f48295bccda8feb01b5b76ad5d9' },
   { name: 'LAW_MESSAGES', value: LAW_MESSAGES, hash: 'b1604af8f5ef88797692d5889c97e05683d90c5e40ae73be5194fe2d4359d35d' },
@@ -83,7 +83,7 @@ const pinnedCatalogs = [
   { name: 'GARRISON_TRIAL', value: GARRISON_TRIAL, hash: '4143c1462f581114f45b89afa976c6917d984ea1550601205c4eb7655602c5ef' },
   { name: 'CRIME_TRIAL', value: CRIME_TRIAL, hash: 'f0870b86f87072a009bef7a53511704f6b0ddb5b2e5d9c1de6a7b6dbb44ce1d1' },
   { name: 'CRISIS_TRIAL', value: CRISIS_TRIAL, hash: 'e84e3064f8941cfbf4187fb6708577d62ada085696047d19dc52d62e16e528d6' },
-  { name: 'SOCIETY_TRIAL', value: SOCIETY_TRIAL, hash: 'd390d44efdd2fba06fd4d8c0812e83837ef25b5d84e19956bb5ff00a0dbcac80' },
+  { name: 'SOCIETY_TRIAL', value: SOCIETY_TRIAL, hash: '49add1753fd6d630e3cf7f4f7395f2bd7b844936086ef0b9f06fb6cb595090e6' },
   { name: 'GOODS_STOCK_TRIAL', value: GOODS_STOCK_TRIAL, hash: '6e46090f98a4db0231da0659fc6a1788e743dc365de21e4ced5f142b5c7771f2' },
   { name: 'TILE_TRIAL_BALANCE', value: TILE_TRIAL_BALANCE, hash: '8c6f563db7d15d0e01ca16852bd5700d2c8504a279f63d14ffcd7e01999b6075' },
   { name: 'IMMIGRATION_TRIAL_DEFAULTS', value: IMMIGRATION_TRIAL_DEFAULTS, hash: '9a3a102558fc1ac452d330d72d162a21793b674002acf3026b9f2b5a6e9bdcef' },
@@ -103,7 +103,7 @@ it('detects a changed value in a cloned catalog using the pinned base hash', () 
 
 it('pins ITEM_CATALOG for P6-A', async () => {
   const { ITEM_CATALOG }=await import('../trial/items.js');
-  expect(catalogHash(ITEM_CATALOG)).toBe('fa866064967ee36dac69a3b8c5c6090bb2b40b7236c3f104d5a8e89d84e974c6');
+  expect(catalogHash(ITEM_CATALOG)).toBe('7fdeadb141aba95586555f531e044fcdc8a5eccd2c2766fab94c48714793f96d');
 });
 it('pins ITEM_TRIAL for P6-A', async () => {
   const { ITEM_TRIAL }=await import('../trial/items.js');

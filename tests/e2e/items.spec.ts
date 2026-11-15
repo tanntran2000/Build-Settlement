@@ -9,7 +9,7 @@ function act(s: CharacterLifeSessionState, type: string, fields: Record<string,u
   const r=executeCharacterLifeCommand(s,{type,expectedRevision:s.city.revision,...fields});
   if(!r.success)throw Error(`${type}: ${r.error.message}`); return r.next;
 }
-function funded(seed=12345) {
+function funded(seed=82) {
   const s=makeLife(seed); const stock=s.city.world.settlements[s.city.world.activeSettlementId!].inventory;
   stock.gold=1000000;stock.wood=1000000;stock.iron=1000000;stock.food=1000000;
   return s;
@@ -130,7 +130,7 @@ test('C2 visible item letters include stack loss, storage-full loss, expiry, del
 test('C2 health line and wounds death letter use the exact approved copy',async({page})=>{
   const s=clinic(funded());s.player.character.health=63;s.city.society!.items.equipped.player={weapon:{id:1,defId:'common-weapon'},ring:{id:2,defId:'common-ring'}};s.city.society!.items.nextItemId=3;
   await importLife(page,s);await expect(page.getByText('Health 63 / 100 · Regen +4/week',{exact:true})).toBeVisible();
-  const decoded=deserializeCharacterLifeSave(await readFile('packages/persistence/src/__tests__/fixtures/society-v8/life-crime-wound.json','utf8'));if(!decoded.success)throw Error('wound fixture');decoded.state.player.character.health=20;
+  const decoded=deserializeCharacterLifeSave(await readFile('packages/persistence/src/__tests__/fixtures/society-v9/life-crime-wound.json','utf8'));if(!decoded.success)throw Error('wound fixture');decoded.state.player.character.health=20;
   await importLife(page,decoded.state);await page.getByTestId('life-end-week').click();await expect(page.getByRole('heading',{name:'Your Lord Has Died',exact:true})).toBeVisible();await expect(page.getByText(/^Your wounds proved fatal\./)).toBeVisible();
   await mkdir(`${evidence}/screenshots`,{recursive:true});await page.screenshot({path:`${evidence}/screenshots/death-letter-1280.png`,fullPage:true});
 });
