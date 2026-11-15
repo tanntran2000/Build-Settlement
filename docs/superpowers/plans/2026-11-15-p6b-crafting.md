@@ -23,6 +23,8 @@
 
 **Plan correction 2 (PR A, gate-6 timeout HOLD at `2a92985`).** `packages/simulation/src/__tests__/lord-health.test.ts:73` (the 60-week Calm game) took 5437 ms in the full suite against its 5000 ms limit at 6% machine load; alone it takes 1285–1521 ms (three runs). PR A may give **only that test** a 15000 ms per-test timeout, with no other change to it; every other limit stays. **Owner (Tân), 2026-11-15, dialog choice, verbatim:** "Set this test to 15 s (Recommended)".
 
+**Plan correction 3 (PR A, smoke HOLD at `b0c0b37`: duplicate item names).** Decision 2's naming gave a Player and an NPC item the same name (two "Fine Ring"s), so 22 smoke tests could not tell them apart in the report, and neither could a player. The 26 existing definitions keep their names. Each of the 32 new definitions gets a kind prefix: Player kind `Lord's <name>` (for example "Lord's Fine Ring", "Lord's Masterwork Ring", "Lord's Steward Set", "Lord's Noble Set"), NPC kind `Retainer's <name>` (for example "Retainer's Plain Ring", "Retainer's Travelling Set", "Retainer's Noble Set"). Every item name is then unique; a new test asserts that. `ITEM_CATALOG` is recalculated; no existing test edit is expected for this. **Owner (Tân), 2026-11-15, dialog choice, verbatim:** "Lord's / Retainer's prefix (Recommended)".
+
 **Base:** `main` `e859177` (P6-A complete).
 
 ---
