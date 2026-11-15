@@ -1,0 +1,89 @@
+<script lang="ts">
+  import { tick } from 'svelte';
+  import { CRAFT_TRIAL, ITEM_CATALOG, RECIPES, TRIAL_BUILDINGS, type TileTrialState, type WorldNpc } from '@haven/core';
+  import { craftingRecipes, workshopCapacity } from './items-view.js';
+  import { formatMilli } from './milli-format.js';
+  import ItemCard from './ItemCard.svelte';
+
+  export let state:TileTrialState;
+  export let npcs:WorldNpc[]=[];
+  export let tileId:string;
+  export let locked:boolean;
+  export let managementError:{action:string;message:string}|null;
+  export let oncommand:(type:string,fields?:Record<string,unknown>)=>boolean;
+  let expanded=true;
+  let root:HTMLElement;
+  let recipeToggle:HTMLButtonElement;
+  $: building=state.tiles.find(tile=>tile.id===tileId)?.building;
+  $: name=building?TRIAL_BUILDINGS[building.typeId].name:'';
+  $: workshop=state.society!.items.workshops?.[tileId];
+  $: orders=workshop?.orders??[];
+  $: recipes=craftingRecipes(state,tileId);
+  $: capacity=workshopCapacity(state,npcs,tileId);
+  $: failure=managementError&&['PLACE_CRAFT_ORDER','CANCEL_CRAFT_ORDER'].includes(managementError.action)?managementError.message:'';
+
+  async function run(type:string,fields:Record<string,unknown>,opener:HTMLButtonElement) {
+    if(!oncommand(type,fields))return;
+    await tick();
+    if(opener.isConnected&&!opener.disabled)opener.focus();
+    else (root.querySelector<HTMLButtonElement>('[data-cancel-order]:not(:disabled)')??recipeToggle).focus();
+  }
+</script>
+
+<section bind:this={root} class="workshop" aria-label={building?.typeId==='smithy'?'Smithy workshop':`${name} brewing`}>
+  <header><p class="eyebrow">Workshop ledger · {tileId}</p><h4>{name} · {building?.typeId==='smithy'?'Craft orders':'Brew orders'}</h4></header>
+  <p class="capacity">{Math.min(orders.length,capacity)} of {capacity} this week · {orders.length} / {CRAFT_TRIAL.queueCap} orders queued</p>
+  <p>Planning capacity assumes upkeep is paid at End Week. Hospitals also need full staffing and Herbs. Inputs and the fee are held when you place an order.</p>
+  {#if !building?.enabled}<p>Workshop paused. Orders and ready outputs are kept.</p>{/if}
+  {#if failure}<p role="alert" class="failure">{failure}</p>{/if}
+  <div class="ledger-columns">
+    <div>
+      <button bind:this={recipeToggle} class="recipe-toggle" aria-expanded={expanded} aria-controls={`recipes-${tileId}`} onclick={()=>expanded=!expanded}>Available recipes</button>
+      <div id={`recipes-${tileId}`} hidden={!expanded}>
+        {#if orders.length>=CRAFT_TRIAL.queueCap}<p>The workshop queue is full. Cancel an order to make room.</p>{/if}
+        {#if !recipes.length}<p>No recipes can be placed now. Check owned inputs, Gold and queue space.</p>{/if}
+        {#each ['Refine','Upgrade','Brew'] as group}
+          {#if recipes.some(recipe=>recipe.group===group)}<section class="recipe-group" aria-label={`${group} recipes`}><h5>{group}</h5>
+            {#each recipes.filter(recipe=>recipe.group===group) as recipe (recipe.recipeId)}
+              <div class="recipe" data-craft-recipe={recipe.recipeId}>
+                <h6>{ITEM_CATALOG[recipe.output].name}</h6>
+                <p>Inputs: {recipe.inputs.map(input=>`${input.count} ${ITEM_CATALOG[input.defId].name}`).join(' + ')}</p>
+                <p>Fee: {formatMilli(recipe.feeMilli)} Gold</p>
+                {#if recipe.before}<p class="comparison">Before → After</p><div class="upgrade-cards"><ItemCard definition={ITEM_CATALOG[recipe.before]} /><ItemCard definition={ITEM_CATALOG[recipe.output]} /></div>
+                {:else}<ItemCard definition={ITEM_CATALOG[recipe.output]} />{/if}
+                <button disabled={locked} onclick={event=>run('PLACE_CRAFT_ORDER',recipe.fields,event.currentTarget)}>Place {ITEM_CATALOG[recipe.output].name}</button>
+              </div>
+            {/each}
+          </section>{/if}
+        {/each}
+      </div>
+    </div>
+    <div class="queue"><h5>Order queue</h5>
+      <p>Orders complete in order at End Week. Cancel returns the exact inputs and Gold; make room in inventories and material stacks first.</p>
+      {#if !orders.length}<p>No orders queued.</p>{/if}
+      <ol>{#each orders as order,index}<li>
+        <strong>{ITEM_CATALOG[RECIPES[order.recipeId].output].name}</strong>
+        <p>Held inputs: {[...order.items.map(item=>`1 ${ITEM_CATALOG[item.defId].name}`),...Object.entries(order.materials).map(([id,count])=>`${count} ${ITEM_CATALOG[id].name}`)].join(' + ')}</p>
+        <p>Held fee: {formatMilli(order.feeMilli)} Gold</p>
+        <button data-cancel-order aria-label={`Cancel order ${index+1}`} disabled={locked} onclick={event=>run('CANCEL_CRAFT_ORDER',{tileId,index},event.currentTarget)}>Cancel order {index+1}</button>
+      </li>{/each}</ol>
+      {#if workshop?.ready.length}<section data-testid="workshop-ready" class="ready"><h5>Ready outputs · Waiting for room</h5><p>Delivered at the next End Week with room. Ready outputs never expire.</p>
+        {#each workshop.ready as output}{@const defId='item' in output?output.item.defId:output.material}
+          {#if 'material' in output}<p>{output.count} {ITEM_CATALOG[defId].name}</p>{/if}
+          <ItemCard definition={ITEM_CATALOG[defId]} />
+        {/each}
+      </section>{/if}
+    </div>
+  </div>
+</section>
+
+<style>
+  .workshop{min-width:0;padding:20px;margin:16px 0;border:4px double #6b4f2e;background:#ead8ae;color:#3b2a17;overflow-wrap:anywhere}
+  .eyebrow{font-size:.9rem;margin:0 0 6px}.capacity{font-weight:bold;border-block:1px solid #6b4f2e;padding:12px 0}h4{font-size:1.4rem;margin:0 0 12px}h5{font-size:1.15rem;margin:16px 0 10px}h6{font-size:1.05rem;margin:0 0 10px}p{line-height:1.5;margin:8px 0}
+  .ledger-columns{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px}.ledger-columns>*{min-width:0}.recipe{border-top:2px solid #8b6c42;padding:16px 0}.upgrade-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.comparison{font-weight:bold}
+  ol{padding-left:24px}li{padding:12px 0;border-bottom:1px solid #8b6c42}.ready{border-top:3px double #6b4f2e;margin-top:20px}.ready :global(.item-card){margin:10px 0}
+  button{font:inherit;min-height:44px;min-width:44px;max-width:100%;white-space:normal;padding:10px 14px;margin-top:12px;border:2px solid #6b4f2e;background:#3b2a17;color:#fff2d5;cursor:pointer}button:disabled{background:#ead8ae;color:#6b4f2e;cursor:default}.recipe-toggle{margin-top:0}.failure{border:2px solid #8c2a1f;padding:10px}
+  button:focus-visible{outline:3px solid #154c77;outline-offset:3px;scroll-margin-block:12px}
+  @media(max-width:1100px){.ledger-columns{grid-template-columns:minmax(0,1fr)}}
+  @media(max-width:600px){.upgrade-cards{grid-template-columns:minmax(0,1fr)}.workshop{padding:14px}}
+</style>

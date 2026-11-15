@@ -42,7 +42,7 @@
   }
 </script>
 
-  <InsideCity {state} {selectedId} {locked} {managementError} {onselect} {oncommand} />
+  <InsideCity {state} {npcs} {selectedId} {locked} {managementError} {onselect} {oncommand} />
   <LibraryPanel {state} {locked} {managementError} {oncommand} />
   <div class="layout">
     <OutsideCity {state} {npcs} {selectedId} {locked} {managementError} {onselect} {oncommand} />

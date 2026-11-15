@@ -1,4 +1,5 @@
 import { ITEM_CATALOG, ITEM_TRIAL, effectiveSkills, buildingWorkerCap, TRIAL_BUILDINGS, OUTSIDE_TRIAL, type ItemDefinition, type ItemsState, type Slot, type CharacterLifeSessionState, type Skill, type TileTrialState, type ItemWeekReport } from '@haven/core';
+import { CRAFT_TRIAL, RECIPES, type WorldNpc } from '@haven/core';
 
 export const itemTitle = (s: string) => s.replace(/(^|[-_ ])\w/g, part => part.replace(/[-_]/g,' ').toUpperCase());
 const everyday: Slot[] = ['earrings','necklace','top','bottom','shoes','ring','weapon','hand'];
@@ -33,7 +34,7 @@ export function matchesItem(d:ItemDefinition,filter:string,slot:string):boolean 
 export function materialRows(items:ItemsState) {
   return Object.entries(items.materials).map(([id,count])=>({id,name:ITEM_CATALOG[id].name,rarity:itemTitle(ITEM_CATALOG[id].rarity),count})).sort((a,b)=>a.name.localeCompare(b.name));
 }
-export const itemError=(code:string)=>({INVENTORY_FULL:'There is no room in the inventory.',KIND_MISMATCH:'Choose an item for this character.',SLOT_MISMATCH:'This item does not fit that slot.',STALE_COMMAND:'The inventory changed. Try again.',FORBIDDEN:'Plan next week before changing items.',ITEM_UNKNOWN:'This item is no longer available.',NOT_ENOUGH_GOLD:'Not enough Gold.',NO_SHOP:'This shop is not operating.',NOT_SELLABLE:'Legendary items cannot be sold.'}[code]??'The item action could not be completed.');
+export const itemError=(code:string)=>({INVENTORY_FULL:'There is no room in the inventory.',KIND_MISMATCH:'Choose an item for this character.',SLOT_MISMATCH:'This item does not fit that slot.',STALE_COMMAND:'The inventory changed. Try again.',FORBIDDEN:'Plan next week before changing items.',ITEM_UNKNOWN:'This item is no longer available.',NOT_ENOUGH_GOLD:'Not enough Gold.',NO_SHOP:'This shop is not operating.',NOT_SELLABLE:'Legendary items cannot be sold.',RECIPE_UNKNOWN:'This recipe is no longer available.',NO_WORKSHOP:'Choose an enabled workshop for this recipe.',MISSING_INPUT:'The required inputs are no longer available.',QUEUE_FULL:'The workshop queue is full.',ORDER_UNKNOWN:'This order is no longer available.',WORKSHOP_BUSY:'Cancel orders and make room for ready outputs before replacing this workshop.'}[code]??'The item action could not be completed.');
 
 export function parseItemCount(text:string,available:number):number|null {
   if(!/^\d+$/.test(text))return null;const count=Number(text);
@@ -62,4 +63,31 @@ export function itemReportRows(report:ItemWeekReport,id:'steward'|'quartermaster
     for(const id of report.expired)add('Expired item',ITEM_CATALOG[id].name,'loss');
   }
   return rows;
+}
+
+// Planning projection only: placement does not require workers, Herbs or upkeep.
+export function craftingRecipes(state:TileTrialState,tileId:string) {
+  const building=state.tiles.find(t=>t.id===tileId)?.building,items=state.society!.items;
+  if(!building?.enabled||(items.workshops?.[tileId]?.orders.length??0)>=CRAFT_TRIAL.queueCap)return [];
+  const gold=state.world.settlements[state.world.activeSettlementId!].inventory.gold;
+  const owned=[...items.inventory,...items.consumables].sort((a,b)=>a.id-b.id);
+  return Object.entries(RECIPES).flatMap(([recipeId,recipe])=>{
+    if(!recipe.workshops.some(type=>type===building.typeId)||gold<recipe.feeMilli)return [];
+    if(!recipe.inputs.every(input=>ITEM_CATALOG[input.defId].category==='material'?(items.materials[input.defId]??0)>=input.count:owned.some(item=>item.defId===input.defId)))return [];
+    const itemInput=recipe.inputs.find(input=>ITEM_CATALOG[input.defId].category!=='material');
+    const item=itemInput?owned.find(item=>item.defId===itemInput.defId):undefined;
+    return [{recipeId,group:recipe.kind==='refine'?'Refine':recipe.kind==='upgrade'?'Upgrade':'Brew',inputs:recipe.inputs,
+      before:itemInput?.defId,output:recipe.output,feeMilli:recipe.feeMilli,fields:{tileId,recipeId,...(item?{itemId:item.id}:{})}}];
+  });
+}
+
+// Potential capacity; the actual End Week step also checks funded operation.
+export function workshopCapacity(state:TileTrialState,npcs:readonly WorldNpc[],tileId:string):number {
+  const b=state.tiles.find(t=>t.id===tileId)?.building;
+  if(!b?.enabled||!['smithy','hospital','drug-store'].includes(b.typeId))return 0;
+  if(b.typeId!=='drug-store'&&(b.workers===0||b.typeId==='hospital'&&b.workers!==buildingWorkerCap(b.typeId,b.level)))return 0;
+  const npc=npcs.find(n=>n.postTileId===tileId),items=state.society!.items;
+  const worn=npc?Object.values(items.equipped[npc.character.id]??{}).map(item=>ITEM_CATALOG[item.defId]):[];
+  const skill=npc?effectiveSkills(npc.character.skills,worn,npc.character.socialClass)[b.typeId==='smithy'?'technical':'medical']:0;
+  return (b.typeId==='drug-store'?CRAFT_TRIAL.drugStoreBase:b.workers)+CRAFT_TRIAL.skillSteps.filter(step=>skill>=step).length;
 }

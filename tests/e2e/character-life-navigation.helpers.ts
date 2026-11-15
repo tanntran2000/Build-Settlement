@@ -82,7 +82,7 @@ export async function expectOneCharacterWindow(page: Page) {
   await expect(characters.getByRole('tablist')).toHaveCount(1);
   await expect(characters.getByRole('tab')).toHaveText(['Description', 'Inventory', 'Work', 'Relations']);
   await expect(characters.getByRole('tabpanel')).toHaveCount(1);
-  expect(await page.locator('[role=tabpanel]').count()).toBe(1);
+  expect(await characters.locator('[role=tabpanel]').count()).toBe(1);
 }
 
 export async function go(page: Page, destination: LifeDestination): Promise<void> {
