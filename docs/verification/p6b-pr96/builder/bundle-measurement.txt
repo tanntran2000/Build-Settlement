@@ -1,0 +1,48 @@
+HEAD: a60711120b8c3d7ff9759a14cbb7a6c09ec396c5
+Tree: 1b26a634536c83699780f1a9479ce64ebb10717d
+UTC: 2026-11-15T03:41:50.8443211Z
+Command: node C:/Users/Admin/.t3/local-drafts/p6b-prA/measure-bundle.mjs
+Status before:
+
+{
+  "utc": "2026-11-15T03:41:51.406Z",
+  "head": "a60711120b8c3d7ff9759a14cbb7a6c09ec396c5",
+  "tree": "1b26a634536c83699780f1a9479ce64ebb10717d",
+  "method": "Sum Node gzipSync(default compression) byte lengths of production dist JS/CSS; decimal kB (1000 bytes). Baseline is the supplied rounded main report, not a new main build.",
+  "baselineGzipKB": {
+    "JS": 126.72,
+    "CSS": 6.74
+  },
+  "totalsGzipBytes": {
+    "JS": 129817,
+    "CSS": 6743
+  },
+  "deltaBytesAgainstReportedMain": {
+    "JS": 3097,
+    "CSS": 3
+  },
+  "combinedGzipBytes": 136560,
+  "under200KB": true,
+  "files": [
+    {
+      "file": "assets/index-CxB-ZnFZ.css",
+      "artifact": "bundle-artifacts/assets_index-CxB-ZnFZ.css",
+      "kind": "CSS",
+      "bytes": 32979,
+      "gzipBytes": 6743,
+      "sha256": "a9a62ae4562b11e0b2d26b74927764d865866f2908516c1ca9f40dad0375eb8a"
+    },
+    {
+      "file": "assets/index-plziRAbs.js",
+      "artifact": "bundle-artifacts/assets_index-plziRAbs.js",
+      "kind": "JS",
+      "bytes": 417435,
+      "gzipBytes": 129817,
+      "sha256": "1c887b727c51fccd8dc1939bc439999306242a16c14ac18bb4dc77979cacfa46"
+    }
+  ]
+}
+
+Exit: 0
+UTC end: 2026-11-15T03:41:51.8558739Z
+Elapsed seconds: 0.7826347

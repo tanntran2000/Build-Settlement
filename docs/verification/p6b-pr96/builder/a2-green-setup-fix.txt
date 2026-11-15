@@ -1,0 +1,23 @@
+HEAD: db7c65a1ccd0b679ae37d3214e71dd075bd3c69d
+Tree: 94962a9ee504920932f5bec0882b7c82c5a9055a
+UTC: 2026-11-15T02:03:45.9525737Z
+Command: npm test -- packages/simulation/src/__tests__/smithy-data.test.ts packages/persistence/src/__tests__/society-v8-fixture.test.ts packages/persistence/src/__tests__/society-new-game-fixture.test.ts packages/persistence/src/__tests__/item-records.test.ts packages/persistence/src/__tests__/session-records.test.ts packages/core/src/__tests__/catalog-data.test.ts packages/core/src/trial/__tests__/society-map.test.ts packages/core/src/trial/__tests__/society.test.ts packages/simulation/src/__tests__/catalog-golden.test.ts
+Status before:
+ M packages/core/src/__tests__/catalog-data.test.ts  M packages/core/src/data/buildings.json  M packages/core/src/data/tuning.json  M packages/core/src/data/validate.ts  M packages/core/src/trial/__tests__/crime.test.ts  M packages/core/src/trial/__tests__/crisis.test.ts  M packages/core/src/trial/__tests__/items.test.ts  M packages/core/src/trial/__tests__/law.test.ts  M packages/core/src/trial/__tests__/order.test.ts  M packages/core/src/trial/__tests__/outside.test.ts  M packages/core/src/trial/__tests__/society-map.test.ts  M packages/core/src/trial/__tests__/society.test.ts  M packages/core/src/trial/society.ts  M packages/core/src/world/__tests__/session.test.ts  M packages/persistence/src/__tests__/character-life-save.test.ts  M packages/persistence/src/__tests__/item-records.test.ts  M packages/persistence/src/__tests__/items-rebuild-order.test.ts  M packages/persistence/src/__tests__/session-records.test.ts  M packages/persistence/src/__tests__/society-new-game-fixture.test.ts  M packages/persistence/src/session-records.ts  M packages/simulation/src/__tests__/character-life-observation.test.ts  M packages/simulation/src/__tests__/crime-fixtures.test.ts  M packages/simulation/src/__tests__/crisis-fixtures.test.ts  M packages/simulation/src/__tests__/fixtures/catalog-golden.json  M packages/simulation/src/__tests__/law-fixture.test.ts  M packages/simulation/src/__tests__/law-week.test.ts  M packages/simulation/src/__tests__/lord-health.test.ts  M packages/ui/src/__tests__/character-life-session.test.ts  M packages/ui/src/__tests__/world-session.test.ts  M tests/e2e/crime.spec.ts  M tests/e2e/crisis.spec.ts  M tests/e2e/garrison.spec.ts  M tests/e2e/items.spec.ts  M tests/e2e/laws.spec.ts  M tests/e2e/ledger.spec.ts  M tests/e2e/society.spec.ts  M tests/e2e/storage.spec.ts  M tests/e2e/tile-save.spec.ts  M tests/e2e/title.spec.ts  M tests/e2e/world-session.spec.ts ?? packages/persistence/src/__tests__/fixtures/society-v9/ ?? packages/persistence/src/__tests__/society-v8-fixture.test.ts ?? packages/simulation/src/__tests__/fixtures/p6b-crafting-path-diff.ts ?? packages/simulation/src/__tests__/fixtures/p6b-crafting-path-diff.txt ?? packages/simulation/src/__tests__/smithy-data.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/simulation/src/__tests__/smithy-data.test.ts packages/persistence/src/__tests__/society-v8-fixture.test.ts packages/persistence/src/__tests__/society-new-game-fixture.test.ts packages/persistence/src/__tests__/item-records.test.ts packages/persistence/src/__tests__/session-records.test.ts packages/core/src/__tests__/catalog-data.test.ts packages/core/src/trial/__tests__/society-map.test.ts packages/core/src/trial/__tests__/society.test.ts packages/simulation/src/__tests__/catalog-golden.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  9 passed (9)
+      Tests  168 passed (168)
+   Start at  09:03:47
+   Duration  5.69s (transform 3.28s, setup 0ms, import 5.74s, tests 5.90s, environment 2ms)
+
+
+Exit: 0
+UTC end: 2026-11-15T02:03:52.9576478Z
+Elapsed seconds: 6.9171887

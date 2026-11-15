@@ -1,0 +1,118 @@
+{
+  "utc": "2026-11-15T03:14:33.588Z",
+  "status": "HOLD_SMOKE",
+  "head": "b0c0b37cb25601b69f03b8844ac8a3f957304d4d",
+  "tree": "5f9d377ec748ea62e56634b6e34dbd42d71ef868",
+  "gateStartCPUPercent": 0,
+  "gates": [
+    {
+      "gate": 1,
+      "command": "git diff --check origin/main...HEAD",
+      "exit": 0,
+      "utc": "2026-11-15T02:29:19.7717741Z",
+      "seconds": 0.0857262
+    },
+    {
+      "gate": 2,
+      "command": "npm run lint",
+      "exit": 0,
+      "utc": "2026-11-15T02:29:19.9236210Z",
+      "seconds": 11.4189929
+    },
+    {
+      "gate": 3,
+      "command": "npm run typecheck",
+      "exit": 0,
+      "utc": "2026-11-15T02:29:31.3426139Z",
+      "seconds": 32.842351199999996
+    },
+    {
+      "gate": 4,
+      "command": "npm run check:architecture",
+      "exit": 0,
+      "utc": "2026-11-15T02:30:04.1849651Z",
+      "seconds": 5.8771419
+    },
+    {
+      "gate": 5,
+      "command": "npm run test:architecture",
+      "exit": 0,
+      "utc": "2026-11-15T02:30:10.0621070Z",
+      "seconds": 43.4992556
+    },
+    {
+      "gate": 6,
+      "command": "npm test",
+      "exit": 0,
+      "utc": "2026-11-15T02:30:53.5644911Z",
+      "seconds": 58.353636099999996
+    },
+    {
+      "gate": 7,
+      "command": "npm run build",
+      "exit": 0,
+      "utc": "2026-11-15T02:31:51.9181272Z",
+      "seconds": 24.2887888
+    },
+    {
+      "gate": 8,
+      "command": "echo CI=%CI% && npm run test:smoke",
+      "exit": 1,
+      "utc": "2026-11-15T02:32:17.5302417Z",
+      "seconds": 1956.6607680999998
+    }
+  ],
+  "unit": {
+    "passed": 2557,
+    "total": 2557
+  },
+  "smoke": {
+    "CI": "1",
+    "passed": 348,
+    "failed": 22,
+    "duration": "32.4m",
+    "failureNames": [
+      "tests\\e2e\\character-life-boundary.spec.ts:257:1 › same-session UI projection through assignment and full week ",
+      "tests\\e2e\\character-life-navigation.spec.ts:265:1 › all Life calendar surfaces cross year boundaries ",
+      "tests\\e2e\\crime.spec.ts:11:55 › raid report and resulting state match the crafted save ",
+      "tests\\e2e\\crime.spec.ts:11:55 › wound report and resulting state match the crafted save ",
+      "tests\\e2e\\garrison.spec.ts:21:1 › crafted raid reports garrison deaths with complete Order parity ",
+      "tests\\e2e\\goods-stock.spec.ts:5:85 › Society five-week report and navigation parity at 375px ",
+      "tests\\e2e\\goods-stock.spec.ts:5:85 › Society five-week report and navigation parity at 1280px ",
+      "tests\\e2e\\items.spec.ts:73:1 › C2 UI buy, keyboard equip and next Farm report show the post effect ",
+      "tests\\e2e\\items.spec.ts:124:1 › C2 visible item letters include stack loss, storage-full loss, expiry, delivered and waiting Legendary rewards ",
+      "tests\\e2e\\ledger.spec.ts:77:3 › B3 crime-raid letters preserve rows, Details and complete report parity ",
+      "tests\\e2e\\ledger.spec.ts:77:3 › B3 crime-wound letters preserve rows, Details and complete report parity ",
+      "tests\\e2e\\tile-local-checkpoint.spec.ts:23:1 › saves a multiweek plan locally, continues after reload and resumes the same economics ",
+      "tests\\e2e\\tile-local-checkpoint.spec.ts:68:31 › population local checkpoint restores grown cohorts and next-week parity at 1280px ",
+      "tests\\e2e\\tile-local-checkpoint.spec.ts:68:31 › population local checkpoint restores grown cohorts and next-week parity at 390px ",
+      "tests\\e2e\\tile-population.spec.ts:7:31 › society population grows once, preserves workforce and roundtrips at 1280px ",
+      "tests\\e2e\\tile-population.spec.ts:7:31 › society population grows once, preserves workforce and roundtrips at 390px ",
+      "tests\\e2e\\tile-save.spec.ts:8:1 › exports a real file, restores a multiweek plan and resumes the same economics ",
+      "tests\\e2e\\tile-trial.spec.ts:8:1 › builds production and inside Market, serves Goods once, then upgrades and replaces ",
+      "tests\\e2e\\tile-trial.spec.ts:22:31 › double-click Plan next week preserves the new plan at 1280px ",
+      "tests\\e2e\\tile-trial.spec.ts:22:31 › double-click Plan next week preserves the new plan at 390px ",
+      "tests\\e2e\\tile-trial.spec.ts:25:1 › repeated keyboard activation cannot turn planning into another End Week ",
+      "tests\\e2e\\world-session.spec.ts:43:1 › U9: local and portable saves restore the whole populated session and uninterrupted next week "
+    ],
+    "isolated": {
+      "cases": 22,
+      "runs": 22,
+      "failedRuns": 22,
+      "results": "smoke-isolated-results.json"
+    }
+  },
+  "bundleGzipBytes": {
+    "JS": 129793,
+    "CSS": 6743
+  },
+  "bundleDeltaBytes": {
+    "JS": 3073,
+    "CSS": 3
+  },
+  "approvedExistingTestBlocks": 59,
+  "approvedExistingTestFiles": 35,
+  "changedFileCount": 61,
+  "noFurtherProductEdits": true,
+  "basis": "Original PR A brief: if smoke fails, rerun that test alone once, report both runs, and HOLD."
+}

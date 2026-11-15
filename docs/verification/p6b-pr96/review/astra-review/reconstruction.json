@@ -1,0 +1,312 @@
+{
+  "base": "e859177",
+  "head": "a607111",
+  "files": 35,
+  "blocks": 59,
+  "results": [
+    {
+      "file": "packages/core/src/__tests__/catalog-data.test.ts",
+      "blocks": [
+        "P1",
+        "P2",
+        "P3",
+        "P4"
+      ],
+      "exact": true,
+      "sha256": "c24c521d344aa23d68a14d13c2facc76e0138193780b52d7e7aff7a54b6674ec"
+    },
+    {
+      "file": "packages/core/src/__tests__/items-catalog.test.ts",
+      "blocks": [
+        "P5",
+        "P6",
+        "P7",
+        "P8"
+      ],
+      "exact": true,
+      "sha256": "e816e6bc73a537064864db621ff223c1919b6c1d52b897c71eff4dc061c8ae43"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/crime.test.ts",
+      "blocks": [
+        "P9"
+      ],
+      "exact": true,
+      "sha256": "7459c583cbfab54ea6dcb199377de5f933c6ef415ee7e0b3701f06d47399dc2c"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/crisis.test.ts",
+      "blocks": [
+        "P10"
+      ],
+      "exact": true,
+      "sha256": "bd87ff9d95e6c8963a98b9385dc18b4fc3ec12c3d2c86a7d219d1dabfc0b844b"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/items.test.ts",
+      "blocks": [
+        "P11",
+        "P12"
+      ],
+      "exact": true,
+      "sha256": "23fbc0374a164f407f0bef5ddf1e468d13742995f14d370cd9df490984277a80"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/law.test.ts",
+      "blocks": [
+        "P13"
+      ],
+      "exact": true,
+      "sha256": "4225de3e3d77c72af9a324524238a4a886c6d5ec7133273f3e0eb4890c6401ca"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/order.test.ts",
+      "blocks": [
+        "P14"
+      ],
+      "exact": true,
+      "sha256": "8bd820fa35d3f809e0cfdec36c566a5563ce396d52e0800579155689a6b1f9e6"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/outside.test.ts",
+      "blocks": [
+        "P15"
+      ],
+      "exact": true,
+      "sha256": "9e1ef587cb51d4aca954a156e8b015163d52f9d27ed449dbf903d4d6695ddbf2"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/society-map.test.ts",
+      "blocks": [
+        "P16",
+        "P17",
+        "P18"
+      ],
+      "exact": true,
+      "sha256": "c71edab65ecde2c11d93173b314f9c7d7142d6e70e90bce238b794f46a29f761"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/society.test.ts",
+      "blocks": [
+        "P19",
+        "P20",
+        "P21"
+      ],
+      "exact": true,
+      "sha256": "f0f35066e474c2204a1f4a86101fa2c0e1bdf569e732d28f59d5a024662cd7d5"
+    },
+    {
+      "file": "packages/core/src/world/__tests__/session.test.ts",
+      "blocks": [
+        "P22",
+        "P23"
+      ],
+      "exact": true,
+      "sha256": "8caf710f5e849db1211f02daf6947c3dd00e936f58b8f1d5468354d1f338df37"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/character-life-save.test.ts",
+      "blocks": [
+        "P24",
+        "P25"
+      ],
+      "exact": true,
+      "sha256": "f171e1c76ca2a37007c097e26025b0c02dfdc7bbbc4b55b02b1559409d9103a8"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/item-records.test.ts",
+      "blocks": [
+        "P26",
+        "P27"
+      ],
+      "exact": true,
+      "sha256": "6530dc38b07e8efe9fcf48635d9a926ef1427088f92d26e8ca5a45ca567df448"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/items-rebuild-order.test.ts",
+      "blocks": [
+        "P28"
+      ],
+      "exact": true,
+      "sha256": "4873e1c71d513861c821177c69da8ea394679a9b109d498aab596793f14a9f6e"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/session-records.test.ts",
+      "blocks": [
+        "P29"
+      ],
+      "exact": true,
+      "sha256": "a4149209abe08f9c2d504f20d5b8c4276f1f3ef44ce765e0acad581db0e64aac"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/society-new-game-fixture.test.ts",
+      "blocks": [
+        "P30",
+        "P31",
+        "P32",
+        "P33",
+        "P34",
+        "P35",
+        "P36"
+      ],
+      "exact": true,
+      "sha256": "c17314cf9960f7e372ee9a04d6f169fbde67b9f411b2cac03a630ab7ccf66683"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+      "blocks": [
+        "P37"
+      ],
+      "exact": true,
+      "sha256": "fa2992e6c95bc7edcab6041d906d16f9640e6311ac0b5a0cd7e216d7516c2ee4"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/crime-fixtures.test.ts",
+      "blocks": [
+        "P38"
+      ],
+      "exact": true,
+      "sha256": "1b0b37e7ad24c3e508408551ad39e3dec291b1da2e2c6b9cc91165c07ea5cba8"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/crisis-fixtures.test.ts",
+      "blocks": [
+        "P39"
+      ],
+      "exact": true,
+      "sha256": "5c31c52a6a709295aacb4fcefbc2d0cc2b3a4765ed7679d17cbe8b0963abbffd"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/law-fixture.test.ts",
+      "blocks": [
+        "P40"
+      ],
+      "exact": true,
+      "sha256": "28e3a378374e5a9cbf05af46f88051676b05dff7c67fc8c8baf566f8d2c610b8"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/law-week.test.ts",
+      "blocks": [
+        "P41",
+        "P42"
+      ],
+      "exact": true,
+      "sha256": "cb216f3107c3a9a28cdaf0ca042830cfee8aaab341faf6c565d8fe11259c219f"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/lord-health.test.ts",
+      "blocks": [
+        "P43",
+        "P59"
+      ],
+      "exact": true,
+      "sha256": "6db0c2ebbe0e751726752669a2c2bf291f0f6acc82332784f2af9458cdd0a524"
+    },
+    {
+      "file": "packages/ui/src/__tests__/character-life-session.test.ts",
+      "blocks": [
+        "P44"
+      ],
+      "exact": true,
+      "sha256": "a4537ccbb18669e347d4d74d5fa431c063b8d916dbec52604578dc3c9233801b"
+    },
+    {
+      "file": "packages/ui/src/__tests__/world-session.test.ts",
+      "blocks": [
+        "P45"
+      ],
+      "exact": true,
+      "sha256": "0a827391058115e28d4cdc14862b6d9b2f90b20018b5532af6d8fe200649a767"
+    },
+    {
+      "file": "tests/e2e/crime.spec.ts",
+      "blocks": [
+        "P46"
+      ],
+      "exact": true,
+      "sha256": "48c8d7e102f2aa99167cccb12163fbd092aee0bf3544edf27fdd4b5baeef69ac"
+    },
+    {
+      "file": "tests/e2e/crisis.spec.ts",
+      "blocks": [
+        "P47"
+      ],
+      "exact": true,
+      "sha256": "7194f8a776c099cbf263b11456f5df713a971dd64e899724812cec5bfbf54f93"
+    },
+    {
+      "file": "tests/e2e/garrison.spec.ts",
+      "blocks": [
+        "P48"
+      ],
+      "exact": true,
+      "sha256": "1cad873ef1353b31bf5e10e3765bc652e5f61f2670f17db2ba5b0a5aed45ceee"
+    },
+    {
+      "file": "tests/e2e/items.spec.ts",
+      "blocks": [
+        "P49",
+        "P50"
+      ],
+      "exact": true,
+      "sha256": "8768bf0e3dd5fa34ef4bf4c672e395045cad500e427886a480b3a4175ae34393"
+    },
+    {
+      "file": "tests/e2e/laws.spec.ts",
+      "blocks": [
+        "P51"
+      ],
+      "exact": true,
+      "sha256": "4f1c1ee96c24ba6eb7bb867ae0e25b1b2808b6fa6a25b851935f73bfb7f38183"
+    },
+    {
+      "file": "tests/e2e/ledger.spec.ts",
+      "blocks": [
+        "P52"
+      ],
+      "exact": true,
+      "sha256": "e0a21cd5d8582a58e4c08938128f5657f90699a28cf4110c4120fa2d1c4bcb9d"
+    },
+    {
+      "file": "tests/e2e/society.spec.ts",
+      "blocks": [
+        "P53"
+      ],
+      "exact": true,
+      "sha256": "e54b4deaad5cdab95b921dfc00d720e7942ed3188b8695bf86b5e5dc38ca822b"
+    },
+    {
+      "file": "tests/e2e/storage.spec.ts",
+      "blocks": [
+        "P54"
+      ],
+      "exact": true,
+      "sha256": "31c96d3b84cd77dccc30bbcbc3e5da2058b14f1c2973465d38950f2893d5b38a"
+    },
+    {
+      "file": "tests/e2e/tile-save.spec.ts",
+      "blocks": [
+        "P55"
+      ],
+      "exact": true,
+      "sha256": "701c8de3ab68662bbb5393a5e093e3028773acec17391543b013b302a2139b11"
+    },
+    {
+      "file": "tests/e2e/title.spec.ts",
+      "blocks": [
+        "P56",
+        "P57"
+      ],
+      "exact": true,
+      "sha256": "cc15d7b3b3d06a8c80ec66261176f4eaee451e28d3268ad347485e33c1bcadd6"
+    },
+    {
+      "file": "tests/e2e/world-session.spec.ts",
+      "blocks": [
+        "P58"
+      ],
+      "exact": true,
+      "sha256": "cd28fa8c1a6e475f18f2ee8abe01306aa1eb2d0a23bc41cebe1eedc04a908bfa"
+    }
+  ]
+}

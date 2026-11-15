@@ -1,0 +1,23 @@
+HEAD: b0c0b37cb25601b69f03b8844ac8a3f957304d4d
+Tree: 5f9d377ec748ea62e56634b6e34dbd42d71ef868
+UTC: 2026-11-15T03:24:32.8710093Z
+Command: npm test -- packages/simulation/src/__tests__/catalog-golden.test.ts packages/persistence/src/__tests__/society-new-game-fixture.test.ts packages/simulation/src/__tests__/crisis-fixtures.test.ts packages/simulation/src/__tests__/law-fixture.test.ts packages/simulation/src/__tests__/crime-fixtures.test.ts
+Status before:
+ M packages/core/src/__tests__/catalog-data.test.ts  M packages/core/src/__tests__/recipes-catalog.test.ts  M packages/core/src/data/items.json
+
+> build-settlement@0.1.0 test
+> vitest run packages/simulation/src/__tests__/catalog-golden.test.ts packages/persistence/src/__tests__/society-new-game-fixture.test.ts packages/simulation/src/__tests__/crisis-fixtures.test.ts packages/simulation/src/__tests__/law-fixture.test.ts packages/simulation/src/__tests__/crime-fixtures.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  5 passed (5)
+      Tests  59 passed (59)
+   Start at  10:24:34
+   Duration  24.74s (transform 2.50s, setup 0ms, import 3.89s, tests 31.02s, environment 1ms)
+
+
+Exit: 0
+UTC end: 2026-11-15T03:24:58.9991738Z
+Elapsed seconds: 26.0656476

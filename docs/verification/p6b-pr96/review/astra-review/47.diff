@@ -1,0 +1,22 @@
+diff --git a/packages/simulation/src/__tests__/lord-health.test.ts b/packages/simulation/src/__tests__/lord-health.test.ts
+index 47127ee..e1ff6ed 100644
+--- a/packages/simulation/src/__tests__/lord-health.test.ts
++++ b/packages/simulation/src/__tests__/lord-health.test.ts
+@@ -23,7 +23,7 @@ function gear(s: CharacterLifeSessionState) {
+   return command(s,'EQUIP_ITEM',{itemId:i.inventory.at(-1)!.id,characterId:'player'}).next;
+ }
+ function wound() {
+-  const r = deserializeCharacterLifeSave(readFileSync(new URL('../../../persistence/src/__tests__/fixtures/society-v8/life-crime-wound.json',import.meta.url),'utf8'));
++  const r = deserializeCharacterLifeSave(readFileSync(new URL('../../../persistence/src/__tests__/fixtures/society-v9/life-crime-wound.json',import.meta.url),'utf8'));
+   if (!r.success) throw Error(r.error.message); return r.state;
+ }
+ it.each([[false,false,1],[true,false,2],[false,true,2],[true,true,3]] as const)('regens with Hospital %s and gear %s by exactly %i', (withHospital,withGear,regen) => {
+@@ -81,7 +81,7 @@ it('a Calm game below Crime 70 survives all 60 weeks from health one', () => {
+     expect(r.report!.crimeEvent!.lordHealthLoss).toBe(0); expect(s.player.character.health).toBe(week+1);
+     s = command(s,'NEXT_WEEK').next;
+   }
+-});
++}, 15000);
+ it('builds the worker-free Drug Store in the Slum at Hospital level-1 cost and upkeep and sells all potions', () => {
+   let s = life(); const stocks = () => s.city.world.settlements[s.city.world.activeSettlementId!].inventory;
+   stocks().gold = 100_000;

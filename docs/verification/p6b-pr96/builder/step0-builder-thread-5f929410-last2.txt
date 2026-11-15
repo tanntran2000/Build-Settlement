@@ -1,0 +1,60 @@
+P6-A PR A Builder (item core, xhigh)
+mcp:5f929410-f90f-4d67-8ff3-10b6baada98d  completed  codex/gpt-6.1-sol
+
+[assistant]
+The proposal is now 58 edit blocks across 35 existing test files. The verifier confirms each before-block matches its base line and the working tree is untouched. The HOLD package also identifies two A2 test-file permissions and one price ambiguity: new Epic sets have no existing price to follow. The candidate uses the current set-price multiplier and labels that choice explicitly.
+
+
+[assistant]
+**Review the [Step 0 decision package](C:/Users/Admin/.t3/local-drafts/p6b-prA/step0-preflight.md). A0 is complete and on HOLD before any RED run or product edit.** The [binding plan, line 118](C:/Users/Admin/.t3/local-drafts/p6b-prA/binding-plan-cd1b18a.md:118) requires: “HOLD once for the owner.”
+
+The assigned worktree now has branch `feat/p6b-crafting-data` at the required base:
+
+```text
+HEAD:   e85917733e229701830ad7f53dfcfbe2fefab831
+Tree:   49f6b676c3ae57f66ef9ce6275eb89a806f52a9a
+Status: empty
+```
+
+`git fetch origin` exited **0**. Ports **4173/4174 are free**. No process was stopped, and no additional worktree or clone was created.
+
+Four owner decisions are needed:
+
+1. **Approve P1–P58: 58 exact edit blocks across 35 existing test files.**  
+   The [full proposed-edit inventory](C:/Users/Admin/.t3/local-drafts/p6b-prA/step0-proposed-edits.md) gives every base **file:line**, current text, reason and exact proposed after-text. It covers catalog counts, four existing pins, seeded Market/find expectations, Smithy building lists, ruleset literals and current-fixture paths.
+
+   This includes one explicit setup change in `tests/e2e/items.spec.ts:12`: `funded(seed=12345)` → `funded(seed=82)`. With the proposed catalog, seed 12345 has no `rare-set`; seed 82’s first NPC offer is the unchanged Steward Set. The real purchase, keyboard equip, item-id check, strict Farm Wheat increase and exact final-session equality all remain.
+
+2. **Approve the minimal ruleset scope correction.**  
+   The PR A allowlist at plan lines **88–93**, and A2’s Files line **136**, omit `packages/core/src/trial/society.ts`. Its line **14** must change:
+
+   ```ts
+   export const SOCIETY_RULESET = 'tile-society-08';
+   ```
+   →
+   ```ts
+   export const SOCIETY_RULESET = 'tile-society-09';
+   ```
+
+   Also explicitly include the two `08` → `09` ruleset schema/type literals in the already-listed `data/validate.ts`, at lines **306 and 626**. Its listed purposes mention recipe/family/Smithy validation, but omit these required ruleset literals. Leaving them at 08 would reject the new tuning data.
+
+3. **Approve two new A2 test files.**  
+   These cover A2’s required RED cases but are outside PR A’s explicit new-test listing:
+
+   | New file | Purpose |
+   |---|---|
+   | `packages/simulation/src/__tests__/smithy-data.test.ts` | Real build/upgrade/worker commands: Specialist placement, exact cost and 1/2 worker caps |
+   | `packages/persistence/src/__tests__/society-v8-fixture.test.ts` | Refuse the v8 tile checkpoint and nine life checkpoints without changing their data |
+
+4. **Clarify the price of new sets under Decision 2, plan line 54.**  
+   The plan says `basePriceMilli` follows the existing rarity value. Existing Common/Rare sets cost **15000/45000**, three times ordinary items; there is no existing Epic set price.
+
+   The proposed catalog keeps that pattern: new sets cost **15000 / 45000 / 120000**. This interpretation is explicit in the package. The candidate `ITEM_CATALOG` pin depends on it. All **22 existing non-Legendary definitions and four Legendary definitions remain unchanged**.
+
+The only existing fixture expected to change is `catalog-golden.json`, regenerated **once after approval and implementation**. Its allowed differences remain exclusively `city.society.rulesetId` and `city.society.items.*`. The package lists all **10 new society-v9 fixture files** and their expected envelope/ruleset/item paths. **Every existing v1–v8 fixture stays byte-identical.** No fixture or golden generation has run.
+
+The four existing pin candidates—`ITEM_CATALOG`, `TRIAL_BUILDINGS`, `SOCIETY_BUILDINGS`, `SOCIETY_TRIAL`—have full old → new values and reasons in the package. `ITEM_TRIAL` and every other existing pin remain unchanged; `RECIPES` and `CRAFT_TRIAL` will receive new pins.
+
+Evidence is under [local-drafts/p6b-prA](C:/Users/Admin/.t3/local-drafts/p6b-prA/README.md). The [read-only verifier result](C:/Users/Admin/.t3/local-drafts/p6b-prA/step0-verification.txt) exited **0**: the audit searched **148 tracked test files**, all 58 proposals match their base lines, and the 55-file fixture/pin-source baseline is untouched. UTF-8 checks and the [SHA256 manifest](C:/Users/Admin/.t3/local-drafts/p6b-prA/SHA256SUMS.txt) verify successfully.
+
+**Next: approve or revise decisions 1–4 in the Step 0 package.**

@@ -1,0 +1,20 @@
+{
+  "utc": "2026-11-15T03:06:43.885Z",
+  "head": "b0c0b37cb25601b69f03b8844ac8a3f957304d4d",
+  "label": "case-01-alone-1",
+  "artifacts": [
+    {
+      "file": "character-life-boundary-sa-7982a-gh-assignment-and-full-week-chromium/error-context.md",
+      "bytes": 33465,
+      "sha256": "140b3ca8fef01b43cb56bd351a48780347a25aa10139997f6a319916c79f96e2",
+      "over1MB": false
+    },
+    {
+      "file": "character-life-boundary-sa-7982a-gh-assignment-and-full-week-chromium/trace.zip",
+      "bytes": 23023438,
+      "sha256": "73c2eb6e869d4999ef67ecd9db4ef2eb2612f5492176ee14242e6e57af1b9c34",
+      "over1MB": true
+    }
+  ],
+  "note": "Raw local failure artifacts preserved before a later Playwright run can replace test-results. Files over 1 MB should be represented by hashes for later docs-branch publication."
+}

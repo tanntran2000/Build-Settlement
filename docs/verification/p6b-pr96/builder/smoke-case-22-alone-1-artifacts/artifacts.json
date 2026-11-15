@@ -1,0 +1,20 @@
+{
+  "utc": "2026-11-15T03:14:06.349Z",
+  "head": "b0c0b37cb25601b69f03b8844ac8a3f957304d4d",
+  "label": "case-22-alone-1",
+  "artifacts": [
+    {
+      "file": "world-session-U9-local-and-39144-and-uninterrupted-next-week-chromium/error-context.md",
+      "bytes": 33926,
+      "sha256": "48800271659c1d61a6d36fbc0bcd5e275b2828ca9aabe106bde630f773594913",
+      "over1MB": false
+    },
+    {
+      "file": "world-session-U9-local-and-39144-and-uninterrupted-next-week-chromium/trace.zip",
+      "bytes": 2002088,
+      "sha256": "18cb6d5cb8cf2b66d123ecec60ad2d1fe68ec1e2a3011cd7ff6919b6862dff6d",
+      "over1MB": true
+    }
+  ],
+  "note": "Raw local failure artifacts preserved before a later Playwright run can replace test-results. Files over 1 MB should be represented by hashes for later docs-branch publication."
+}

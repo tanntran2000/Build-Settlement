@@ -1,0 +1,23 @@
+HEAD: e85917733e229701830ad7f53dfcfbe2fefab831
+Tree: 49f6b676c3ae57f66ef9ce6275eb89a806f52a9a
+UTC: 2026-11-15T01:57:45.3231993Z
+Command: npm test -- packages/core/src/__tests__/recipes-catalog.test.ts packages/core/src/__tests__/items-catalog.test.ts packages/core/src/__tests__/catalog-data.test.ts
+Status before:
+ M packages/core/src/__tests__/catalog-data.test.ts  M packages/core/src/__tests__/items-catalog.test.ts  M packages/core/src/data/items.json  M packages/core/src/data/validate.ts  M packages/core/src/index.ts  M packages/core/src/trial/__tests__/society.test.ts  M packages/core/src/trial/items.ts  M packages/core/src/world/__tests__/session.test.ts  M packages/simulation/src/__tests__/law-week.test.ts  M tests/e2e/items.spec.ts ?? packages/core/src/__tests__/recipes-catalog.test.ts ?? packages/core/src/data/recipes.json ?? packages/core/src/trial/recipes.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/core/src/__tests__/recipes-catalog.test.ts packages/core/src/__tests__/items-catalog.test.ts packages/core/src/__tests__/catalog-data.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  3 passed (3)
+      Tests  92 passed (92)
+   Start at  08:57:46
+   Duration  945ms (transform 862ms, setup 0ms, import 1.18s, tests 265ms, environment 0ms)
+
+
+Exit: 0
+UTC end: 2026-11-15T01:57:47.5357116Z
+Elapsed seconds: 2.1571951

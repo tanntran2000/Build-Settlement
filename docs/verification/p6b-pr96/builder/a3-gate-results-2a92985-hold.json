@@ -1,0 +1,44 @@
+[
+    {
+        "gate":  1,
+        "command":  "git diff --check origin/main...HEAD",
+        "exit":  0,
+        "utc":  "2026-11-15T02:05:26.4731338Z",
+        "seconds":  0.1059714
+    },
+    {
+        "gate":  2,
+        "command":  "npm run lint",
+        "exit":  0,
+        "utc":  "2026-11-15T02:05:26.6700799Z",
+        "seconds":  15.8584172
+    },
+    {
+        "gate":  3,
+        "command":  "npm run typecheck",
+        "exit":  0,
+        "utc":  "2026-11-15T02:05:42.5441673Z",
+        "seconds":  37.6453171
+    },
+    {
+        "gate":  4,
+        "command":  "npm run check:architecture",
+        "exit":  0,
+        "utc":  "2026-11-15T02:06:20.2072766Z",
+        "seconds":  6.1370616999999994
+    },
+    {
+        "gate":  5,
+        "command":  "npm run test:architecture",
+        "exit":  0,
+        "utc":  "2026-11-15T02:06:26.3599682Z",
+        "seconds":  45.2703735
+    },
+    {
+        "gate":  6,
+        "command":  "npm test",
+        "exit":  1,
+        "utc":  "2026-11-15T02:07:11.6303417Z",
+        "seconds":  63.319571599999996
+    }
+]

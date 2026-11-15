@@ -1,0 +1,20 @@
+{
+  "utc": "2026-11-15T03:07:49.955Z",
+  "head": "b0c0b37cb25601b69f03b8844ac8a3f957304d4d",
+  "label": "case-05-alone-1",
+  "artifacts": [
+    {
+      "file": "garrison-crafted-raid-repo-9e6f1--with-complete-Order-parity-chromium/error-context.md",
+      "bytes": 33547,
+      "sha256": "9745b50e62d883473d57b14af17521000ea0108e263697f5643fbd6badc77733",
+      "over1MB": false
+    },
+    {
+      "file": "garrison-crafted-raid-repo-9e6f1--with-complete-Order-parity-chromium/trace.zip",
+      "bytes": 552730,
+      "sha256": "b16f559b776bb616b90a96742360041633585646063b54d58112e59c5ea23471",
+      "over1MB": false
+    }
+  ],
+  "note": "Raw local failure artifacts preserved before a later Playwright run can replace test-results. Files over 1 MB should be represented by hashes for later docs-branch publication."
+}

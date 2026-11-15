@@ -1,0 +1,290 @@
+HEAD: db7c65a1ccd0b679ae37d3214e71dd075bd3c69d
+Tree: 94962a9ee504920932f5bec0882b7c82c5a9055a
+UTC: 2026-11-15T02:01:30.4981594Z
+Command: set GENERATE_SOCIETY_FIXTURES=1 && set GENERATE_CRISIS_FIXTURES=1 && set GENERATE_LAW_FIXTURE=1 && set GENERATE_CRIME_FIXTURES=1 && npm test -- packages/persistence/src/__tests__/society-new-game-fixture.test.ts packages/simulation/src/__tests__/crisis-fixtures.test.ts packages/simulation/src/__tests__/law-fixture.test.ts packages/simulation/src/__tests__/crime-fixtures.test.ts
+Status before:
+ M packages/core/src/__tests__/catalog-data.test.ts  M packages/core/src/data/buildings.json  M packages/core/src/data/tuning.json  M packages/core/src/data/validate.ts  M packages/core/src/trial/__tests__/crime.test.ts  M packages/core/src/trial/__tests__/crisis.test.ts  M packages/core/src/trial/__tests__/items.test.ts  M packages/core/src/trial/__tests__/law.test.ts  M packages/core/src/trial/__tests__/order.test.ts  M packages/core/src/trial/__tests__/outside.test.ts  M packages/core/src/trial/__tests__/society-map.test.ts  M packages/core/src/trial/__tests__/society.test.ts  M packages/core/src/trial/society.ts  M packages/core/src/world/__tests__/session.test.ts  M packages/persistence/src/__tests__/character-life-save.test.ts  M packages/persistence/src/__tests__/item-records.test.ts  M packages/persistence/src/__tests__/items-rebuild-order.test.ts  M packages/persistence/src/__tests__/session-records.test.ts  M packages/persistence/src/__tests__/society-new-game-fixture.test.ts  M packages/persistence/src/session-records.ts  M packages/simulation/src/__tests__/character-life-observation.test.ts  M packages/simulation/src/__tests__/crime-fixtures.test.ts  M packages/simulation/src/__tests__/crisis-fixtures.test.ts  M packages/simulation/src/__tests__/law-fixture.test.ts  M packages/simulation/src/__tests__/law-week.test.ts  M packages/simulation/src/__tests__/lord-health.test.ts  M packages/ui/src/__tests__/character-life-session.test.ts  M packages/ui/src/__tests__/world-session.test.ts  M tests/e2e/crime.spec.ts  M tests/e2e/crisis.spec.ts  M tests/e2e/garrison.spec.ts  M tests/e2e/items.spec.ts  M tests/e2e/laws.spec.ts  M tests/e2e/ledger.spec.ts  M tests/e2e/society.spec.ts  M tests/e2e/storage.spec.ts  M tests/e2e/tile-save.spec.ts  M tests/e2e/title.spec.ts  M tests/e2e/world-session.spec.ts ?? packages/persistence/src/__tests__/society-v8-fixture.test.ts ?? packages/simulation/src/__tests__/fixtures/p6b-crafting-path-diff.ts ?? packages/simulation/src/__tests__/smithy-data.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/persistence/src/__tests__/society-new-game-fixture.test.ts packages/simulation/src/__tests__/crisis-fixtures.test.ts packages/simulation/src/__tests__/law-fixture.test.ts packages/simulation/src/__tests__/crime-fixtures.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/persistence/src/__tests__/society-new-game-fixture.test.ts (10 tests | 10 failed) 32ms
+   × pins the society new-game tile save bytes 7ms
+   × pins the society new-game Character Life save bytes 19ms
+   × round-trips the pinned v6 Character Life checkpoint 1ms
+   × refuses edited v6 high without changing the checkpoint 1ms
+   × refuses edited v6 negative without changing the checkpoint 0ms
+   × refuses edited v6 fractional without changing the checkpoint 0ms
+   × refuses edited v6 missing score without changing the checkpoint 0ms
+   × refuses edited v6 extra score without changing the checkpoint 0ms
+   × refuses edited v6 missing research without changing the checkpoint 1ms
+   × refuses edited v6 unknown completed without changing the checkpoint 1ms
+ ❯ packages/simulation/src/__tests__/crime-fixtures.test.ts (8 tests | 7 failed) 74ms
+   × pins production-searched robbery 7ms
+   × pins production-searched raid 1ms
+   × pins production-searched wound 1ms
+   × pins production-searched death 1ms
+   × a lethal wound sets wounds fall cause without regen and preserves a refused session 1ms
+   × reports the population left after raid casualties 1ms
+   × skips crisis on assassination death and refuses subsequent commands 1ms
+ ❯ packages/simulation/src/__tests__/law-fixture.test.ts (33 tests | 33 failed) 213ms
+   × pins the production-command Week 4 laws checkpoint and round-trips it 199ms
+   × matches preview on life-laws for 'curfew' with Free undefined and every remaining lobby combination 1ms
+   × matches preview on life-laws for 'curfew' with Free 'pay' and every remaining lobby combination 0ms
+   × matches preview on life-laws for 'curfew' with Free 'promise' and every remaining lobby combination 0ms
+   × matches preview on life-laws for 'curfew' with Free 'force' and every remaining lobby combination 0ms
+   × matches preview on life-laws for 'watch-levy' with Free undefined and every remaining lobby combination 1ms
+   × matches preview on life-laws for 'watch-levy' with Free 'pay' and every remaining lobby combination 1ms
+   × matches preview on life-laws for 'watch-levy' with Free 'promise' and every remaining lobby combination 0ms
+   × matches preview on life-laws for 'watch-levy' with Free 'force' and every remaining lobby combination 1ms
+   × matches preview on life-laws for 'guild-charters' with Free undefined and every remaining lobby combination 1ms
+   × matches preview on life-laws for 'guild-charters' with Free 'pay' and every remaining lobby combination 0ms
+   × matches preview on life-laws for 'guild-charters' with Free 'promise' and every remaining lobby combination 0ms
+   × matches preview on life-laws for 'guild-charters' with Free 'force' and every remaining lobby combination 0ms
+   × matches preview on life-laws for 'war-tithe' with Free undefined and every remaining lobby combination 0ms
+   × matches preview on life-laws for 'war-tithe' with Free 'pay' and every remaining lobby combination 0ms
+   × matches preview on life-laws for 'war-tithe' with Free 'promise' and every remaining lobby combination 0ms
+   × matches preview on life-laws for 'war-tithe' with Free 'force' and every remaining lobby combination 0ms
+   × matches preview on life-laws for 'poor-relief' with Free undefined and every remaining lobby combination 0ms
+   × matches preview on life-laws for 'poor-relief' with Free 'pay' and every remaining lobby combination 0ms
+   × matches preview on life-laws for 'poor-relief' with Free 'promise' and every remaining lobby combination 0ms
+   × matches preview on life-laws for 'poor-relief' with Free 'force' and every remaining lobby combination 0ms
+   × matches preview on life-laws for 'free-assembly' with Free undefined and every remaining lobby combination 0ms
+   × matches preview on life-laws for 'free-assembly' with Free 'pay' and every remaining lobby combination 0ms
+   × matches preview on life-laws for 'free-assembly' with Free 'promise' and every remaining lobby combination 0ms
+   × matches preview on life-laws for 'free-assembly' with Free 'force' and every remaining lobby combination 0ms
+   × matches preview on life-laws for 'public-punishments' with Free undefined and every remaining lobby combination 0ms
+   × matches preview on life-laws for 'public-punishments' with Free 'pay' and every remaining lobby combination 0ms
+   × matches preview on life-laws for 'public-punishments' with Free 'promise' and every remaining lobby combination 0ms
+   × matches preview on life-laws for 'public-punishments' with Free 'force' and every remaining lobby combination 0ms
+   × matches preview on life-laws for 'licensed-vice' with Free undefined and every remaining lobby combination 0ms
+   × matches preview on life-laws for 'licensed-vice' with Free 'pay' and every remaining lobby combination 0ms
+   × matches preview on life-laws for 'licensed-vice' with Free 'promise' and every remaining lobby combination 0ms
+   × matches preview on life-laws for 'licensed-vice' with Free 'force' and every remaining lobby combination 0ms
+ ❯ packages/simulation/src/__tests__/crisis-fixtures.test.ts (4 tests | 3 failed) 398ms
+   × pins production-generated life-5-weeks bytes 152ms
+   × pins production-generated life-demand-card bytes 8ms
+   × pins production-generated life-rebellion-last-week bytes 115ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 53 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/persistence/src/__tests__/society-new-game-fixture.test.ts > pins the society new-game tile save bytes
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\persistence\src\__tests__\fixtures\society-v9\new-game.json'
+ ❯ packages/persistence/src/__tests__/society-new-game-fixture.test.ts:9:16
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/53]⎯
+
+ FAIL  packages/persistence/src/__tests__/society-new-game-fixture.test.ts > pins the society new-game Character Life save bytes
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\persistence\src\__tests__\fixtures\society-v9\life-new-game.json'
+ ❯ packages/persistence/src/__tests__/society-new-game-fixture.test.ts:26:16
+     24|  if (!encoded.success) throw Error('Export failed');
+     25|  if(process.env.GENERATE_SOCIETY_FIXTURES==='1')writeFileSync(new URL(…
+     26|  const bytes = readFileSync(new URL('./fixtures/society-v9/life-new-ga…
+       |                ^
+     27|  expect(encoded.text).toBe(bytes);
+     28| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/53]⎯
+
+ FAIL  packages/persistence/src/__tests__/society-new-game-fixture.test.ts > round-trips the pinned v6 Character Life checkpoint
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\persistence\src\__tests__\fixtures\society-v9\life-new-game.json'
+ ❯ packages/persistence/src/__tests__/society-new-game-fixture.test.ts:31:14
+     29|
+     30| it('round-trips the pinned v6 Character Life checkpoint',()=>{
+     31|  const bytes=readFileSync(new URL('./fixtures/society-v9/life-new-game…
+       |              ^
+     32|  const decoded=deserializeCharacterLifeSave(bytes);expect(decoded.succ…
+     33|  if(!decoded.success)throw Error(decoded.error.message);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/53]⎯
+
+ FAIL  packages/persistence/src/__tests__/society-new-game-fixture.test.ts > refuses edited v6 high without changing the checkpoint
+ FAIL  packages/persistence/src/__tests__/society-new-game-fixture.test.ts > refuses edited v6 negative without changing the checkpoint
+ FAIL  packages/persistence/src/__tests__/society-new-game-fixture.test.ts > refuses edited v6 fractional without changing the checkpoint
+ FAIL  packages/persistence/src/__tests__/society-new-game-fixture.test.ts > refuses edited v6 missing score without changing the checkpoint
+ FAIL  packages/persistence/src/__tests__/society-new-game-fixture.test.ts > refuses edited v6 extra score without changing the checkpoint
+ FAIL  packages/persistence/src/__tests__/society-new-game-fixture.test.ts > refuses edited v6 missing research without changing the checkpoint
+ FAIL  packages/persistence/src/__tests__/society-new-game-fixture.test.ts > refuses edited v6 unknown completed without changing the checkpoint
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\persistence\src\__tests__\fixtures\society-v9\life-new-game.json'
+ ❯ packages/persistence/src/__tests__/society-new-game-fixture.test.ts:38:16
+     36|
+     37| it.each(['high','negative','fractional','missing score','extra score',…
+     38|  const bytes = readFileSync(new URL('./fixtures/society-v9/life-new-ga…
+       |                ^
+     39|  const envelope = JSON.parse(bytes), society = envelope.state.city.soc…
+     40|  if (kind === 'high') society.order.security = 101;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/53]⎯
+
+ FAIL  packages/simulation/src/__tests__/crime-fixtures.test.ts > pins production-searched robbery
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\persistence\src\__tests__\fixtures\society-v9\life-crime-robbery.json'
+ ❯ packages/simulation/src/__tests__/crime-fixtures.test.ts:28:39
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/53]⎯
+
+ FAIL  packages/simulation/src/__tests__/crime-fixtures.test.ts > pins production-searched raid
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\persistence\src\__tests__\fixtures\society-v9\life-crime-raid.json'
+ ❯ packages/simulation/src/__tests__/crime-fixtures.test.ts:28:39
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/53]⎯
+
+ FAIL  packages/simulation/src/__tests__/crime-fixtures.test.ts > pins production-searched wound
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\persistence\src\__tests__\fixtures\society-v9\life-crime-wound.json'
+ ❯ packages/simulation/src/__tests__/crime-fixtures.test.ts:28:39
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/53]⎯
+
+ FAIL  packages/simulation/src/__tests__/crime-fixtures.test.ts > pins production-searched death
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\persistence\src\__tests__\fixtures\society-v9\life-crime-death.json'
+ ❯ packages/simulation/src/__tests__/crime-fixtures.test.ts:28:39
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/53]⎯
+
+ FAIL  packages/simulation/src/__tests__/crime-fixtures.test.ts > a lethal wound sets wounds fall cause without regen and preserves a refused session
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\persistence\src\__tests__\fixtures\society-v9\life-crime-wound.json'
+ ❯ load packages/simulation/src/__tests__/crime-fixtures.test.ts:33:63
+     31|  expect(resolved.report!.order!.after.authority).toBe(resolved.next.ci…
+     32| });
+     33| function load(name:Name){const r=deserializeCharacterLifeSave(readFile…
+       |                                                               ^
+     34| it('a lethal wound sets wounds fall cause without regen and preserves …
+     35|  const s=load('wound');s.player.character.health=15;const before=struc…
+ ❯ packages/simulation/src/__tests__/crime-fixtures.test.ts:35:10
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/53]⎯
+
+ FAIL  packages/simulation/src/__tests__/crime-fixtures.test.ts > reports the population left after raid casualties
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\persistence\src\__tests__\fixtures\society-v9\life-crime-raid.json'
+ ❯ load packages/simulation/src/__tests__/crime-fixtures.test.ts:33:63
+     31|  expect(resolved.report!.order!.after.authority).toBe(resolved.next.ci…
+     32| });
+     33| function load(name:Name){const r=deserializeCharacterLifeSave(readFile…
+       |                                                               ^
+     34| it('a lethal wound sets wounds fall cause without regen and preserves …
+     35|  const s=load('wound');s.player.character.health=15;const before=struc…
+ ❯ packages/simulation/src/__tests__/crime-fixtures.test.ts:44:10
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/53]⎯
+
+ FAIL  packages/simulation/src/__tests__/crime-fixtures.test.ts > skips crisis on assassination death and refuses subsequent commands
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\persistence\src\__tests__\fixtures\society-v9\life-crime-death.json'
+ ❯ load packages/simulation/src/__tests__/crime-fixtures.test.ts:33:63
+     31|  expect(resolved.report!.order!.after.authority).toBe(resolved.next.ci…
+     32| });
+     33| function load(name:Name){const r=deserializeCharacterLifeSave(readFile…
+       |                                                               ^
+     34| it('a lethal wound sets wounds fall cause without regen and preserves …
+     35|  const s=load('wound');s.player.character.health=15;const before=struc…
+ ❯ packages/simulation/src/__tests__/crime-fixtures.test.ts:50:10
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/53]⎯
+
+ FAIL  packages/simulation/src/__tests__/crisis-fixtures.test.ts > pins production-generated life-5-weeks bytes
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\persistence\src\__tests__\fixtures\society-v9\life-5-weeks.json'
+ ❯ packages/simulation/src/__tests__/crisis-fixtures.test.ts:10:9
+      8|  const bytes=crisisFixtureBytes(name);
+      9|  if(process.env.GENERATE_CRISIS_FIXTURES==='1')writeFileSync(url,bytes…
+     10|  expect(readFileSync(url,'utf8')).toBe(bytes);
+       |         ^
+     11|  expect(deserializeCharacterLifeSave(bytes)).toEqual({success:true,sta…
+     12| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/53]⎯
+
+ FAIL  packages/simulation/src/__tests__/crisis-fixtures.test.ts > pins production-generated life-demand-card bytes
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\persistence\src\__tests__\fixtures\society-v9\life-demand-card.json'
+ ❯ packages/simulation/src/__tests__/crisis-fixtures.test.ts:10:9
+      8|  const bytes=crisisFixtureBytes(name);
+      9|  if(process.env.GENERATE_CRISIS_FIXTURES==='1')writeFileSync(url,bytes…
+     10|  expect(readFileSync(url,'utf8')).toBe(bytes);
+       |         ^
+     11|  expect(deserializeCharacterLifeSave(bytes)).toEqual({success:true,sta…
+     12| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/53]⎯
+
+ FAIL  packages/simulation/src/__tests__/crisis-fixtures.test.ts > pins production-generated life-rebellion-last-week bytes
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\persistence\src\__tests__\fixtures\society-v9\life-rebellion-last-week.json'
+ ❯ packages/simulation/src/__tests__/crisis-fixtures.test.ts:10:9
+      8|  const bytes=crisisFixtureBytes(name);
+      9|  if(process.env.GENERATE_CRISIS_FIXTURES==='1')writeFileSync(url,bytes…
+     10|  expect(readFileSync(url,'utf8')).toBe(bytes);
+       |         ^
+     11|  expect(deserializeCharacterLifeSave(bytes)).toEqual({success:true,sta…
+     12| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/53]⎯
+
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > pins the production-command Week 4 laws checkpoint and round-trips it
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\persistence\src\__tests__\fixtures\society-v9\life-laws.json'
+ ❯ packages/simulation/src/__tests__/law-fixture.test.ts:34:14
+     32|  const encoded=serializeCharacterLifeSave(s);if(!encoded.success)throw…
+     33|  if(process.env.GENERATE_LAW_FIXTURE==='1')writeFileSync(url,encoded.t…
+     34|  const bytes=readFileSync(url,'utf8');expect(bytes).toBe(encoded.text);
+       |              ^
+     35|  expect(deserializeCharacterLifeSave(bytes)).toEqual({success:true,sta…
+     36|  expect(fixture()).toEqual(s);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/53]⎯
+
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'curfew' with Free undefined and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'curfew' with Free 'pay' and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'curfew' with Free 'promise' and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'curfew' with Free 'force' and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'watch-levy' with Free undefined and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'watch-levy' with Free 'pay' and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'watch-levy' with Free 'promise' and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'watch-levy' with Free 'force' and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'guild-charters' with Free undefined and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'guild-charters' with Free 'pay' and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'guild-charters' with Free 'promise' and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'guild-charters' with Free 'force' and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'war-tithe' with Free undefined and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'war-tithe' with Free 'pay' and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'war-tithe' with Free 'promise' and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'war-tithe' with Free 'force' and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'poor-relief' with Free undefined and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'poor-relief' with Free 'pay' and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'poor-relief' with Free 'promise' and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'poor-relief' with Free 'force' and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'free-assembly' with Free undefined and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'free-assembly' with Free 'pay' and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'free-assembly' with Free 'promise' and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'free-assembly' with Free 'force' and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'public-punishments' with Free undefined and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'public-punishments' with Free 'pay' and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'public-punishments' with Free 'promise' and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'public-punishments' with Free 'force' and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'licensed-vice' with Free undefined and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'licensed-vice' with Free 'pay' and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'licensed-vice' with Free 'promise' and every remaining lobby combination
+ FAIL  packages/simulation/src/__tests__/law-fixture.test.ts > matches preview on life-laws for 'licensed-vice' with Free 'force' and every remaining lobby combination
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\persistence\src\__tests__\fixtures\society-v9\life-laws.json'
+ ❯ packages/simulation/src/__tests__/law-fixture.test.ts:40:45
+     38| const options=[undefined,'pay','promise','force'];
+     39| it.each(LAW_IDS.flatMap(lawId=>options.map(free=>({lawId,free}))))('ma…
+     40|  const decoded=deserializeCharacterLifeSave(readFileSync(url,'utf8'));…
+       |                                             ^
+     41|  const s=decoded.state;
+     42|  for(const makers of options)for(const luminaries of options)for(const…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/53]⎯
+
+
+ Test Files  4 failed (4)
+      Tests  53 failed | 2 passed (55)
+   Start at  09:01:31
+   Duration  1.77s (transform 2.35s, setup 0ms, import 3.33s, tests 717ms, environment 1ms)
+
+
+Exit: 1
+UTC end: 2026-11-15T02:01:33.5909379Z
+Elapsed seconds: 3.0186713

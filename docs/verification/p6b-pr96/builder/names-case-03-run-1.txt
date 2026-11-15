@@ -1,0 +1,26 @@
+HEAD: a60711120b8c3d7ff9759a14cbb7a6c09ec396c5
+Tree: 1b26a634536c83699780f1a9479ce64ebb10717d
+UTC: 2026-11-15T03:28:51.820Z
+CI=1
+Executable: C:\Program Files\nodejs\node.exe
+Arguments: ["node_modules/@playwright/test/cli.js","test","tests/e2e/crime.spec.ts","--grep","raid report and resulting state match the crafted save"]
+PORTS_4173_4174_FREE
+
+
+Running 1 test using 1 worker
+
+  ok 1 [chromium] › tests\e2e\crime.spec.ts:11:55 › raid report and resulting state match the crafted save (7.3s)
+
+  1 passed (15.0s)
+[WebServer] (node:7880) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:62368) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+(node:53872) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Exit: 0
+UTC end: 2026-11-15T03:29:07.722Z
+Elapsed seconds: 15.902
+Ports after: PORTS_4173_4174_FREE
+

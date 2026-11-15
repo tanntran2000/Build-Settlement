@@ -1,0 +1,33 @@
+HEAD: 2a92985e20c5eb0eb0a9faa053bcd73f64410286
+Tree: 209ba99e59335ba39097a5f58bb435cd17b0dfff
+UTC: 2026-11-15T02:08:39.4280609Z
+Command: npm test -- packages/simulation/src/__tests__/lord-health.test.ts -t "a Calm game below Crime 70 survives all 60 weeks from health one" --reporter=verbose
+Status before:
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/simulation/src/__tests__/lord-health.test.ts -t a Calm game below Crime 70 survives all 60 weeks from health one --reporter=verbose
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > regens with Hospital false and gear false by exactly 1
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > regens with Hospital true and gear false by exactly 2
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > regens with Hospital false and gear true by exactly 2
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > regens with Hospital true and gear true by exactly 3
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > clamps regen to 100 and requires a fully staffed, funded, supplied Hospital
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > a wound to exactly zero kills before Hospital and gear regen
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > a wound leaving exactly one survives and then receives Hospital and gear regen
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > CITY_FALLEN blocks every later city, NPC and item command without mutation
+ ✓ packages/simulation/src/__tests__/lord-health.test.ts > a Calm game below Crime 70 survives all 60 weeks from health one 1325ms
+ ↓ packages/simulation/src/__tests__/lord-health.test.ts > builds the worker-free Drug Store in the Slum at Hospital level-1 cost and upkeep and sells all potions
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 9 skipped (10)
+   Start at  09:08:40
+   Duration  2.76s (transform 875ms, setup 0ms, import 1.10s, tests 1.33s, environment 0ms)
+
+
+Exit: 0
+UTC end: 2026-11-15T02:08:43.5992873Z
+Elapsed seconds: 4.1267081

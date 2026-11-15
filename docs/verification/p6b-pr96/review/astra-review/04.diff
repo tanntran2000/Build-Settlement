@@ -1,0 +1,35 @@
+diff --git a/packages/core/src/data/buildings.json b/packages/core/src/data/buildings.json
+index 9fa7b69..fb7a89a 100644
+--- a/packages/core/src/data/buildings.json
++++ b/packages/core/src/data/buildings.json
+@@ -419,6 +419,21 @@
+         "iron": 2000
+       },
+       "upkeepMilli": 1000
++    },
++    "smithy": {
++      "name": "Smithy",
++      "operation": "society",
++      "terrain": [
++        "town"
++      ],
++      "maxLevel": 2,
++      "maxWorkers": 1,
++      "cost": {
++        "gold": 10000,
++        "wood": 6000,
++        "iron": 6000
++      },
++      "upkeepMilli": 1000
+     }
+   },
+   "society": {
+@@ -558,7 +573,7 @@
+     "smithy": {
+       "tier": "specialist",
+       "staff": "makers",
+-      "reserved": true
++      "reserved": false
+     },
+     "library": {
+       "tier": "specialist",

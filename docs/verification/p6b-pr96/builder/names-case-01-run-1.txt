@@ -1,0 +1,26 @@
+HEAD: a60711120b8c3d7ff9759a14cbb7a6c09ec396c5
+Tree: 1b26a634536c83699780f1a9479ce64ebb10717d
+UTC: 2026-11-15T03:26:37.245Z
+CI=1
+Executable: C:\Program Files\nodejs\node.exe
+Arguments: ["node_modules/@playwright/test/cli.js","test","tests/e2e/character-life-boundary.spec.ts","--grep","same-session UI projection through assignment and full week"]
+PORTS_4173_4174_FREE
+
+
+Running 1 test using 1 worker
+
+  ok 1 [chromium] › tests\e2e\character-life-boundary.spec.ts:257:1 › same-session UI projection through assignment and full week (1.7m)
+
+  1 passed (1.8m)
+[WebServer] (node:74408) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:60112) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+(node:7296) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Exit: 0
+UTC end: 2026-11-15T03:28:27.216Z
+Elapsed seconds: 109.97
+Ports after: PORTS_4173_4174_FREE
+

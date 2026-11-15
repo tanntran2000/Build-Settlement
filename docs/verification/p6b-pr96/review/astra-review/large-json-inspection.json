@@ -1,0 +1,1311 @@
+[
+  {
+    "path": "packages/core/src/data/items.json",
+    "blob": "9475ff3d72723e935cc0eeba4436e6f7837fac3f",
+    "sha256": "0eb87b062fb0567f453d001dfe3cf99f3b9d1a0fca8966bd5aa89b38e3263c8b",
+    "duplicate_keys": 0,
+    "definitions": 76,
+    "new_ids": [
+      "common-weapon-npc",
+      "rare-weapon-player",
+      "epic-weapon-npc",
+      "common-earrings-npc",
+      "rare-earrings-player",
+      "epic-earrings-player",
+      "epic-earrings-npc",
+      "common-necklace-npc",
+      "rare-necklace-player",
+      "epic-necklace-player",
+      "common-ring-npc",
+      "rare-ring-player",
+      "epic-ring-player",
+      "epic-ring-npc",
+      "common-hand-npc",
+      "rare-hand-player",
+      "epic-hand-player",
+      "common-top-npc",
+      "rare-top-player",
+      "epic-top-npc",
+      "common-bottom-npc",
+      "rare-bottom-player",
+      "epic-bottom-player",
+      "epic-bottom-npc",
+      "common-shoes-npc",
+      "rare-shoes-player",
+      "epic-shoes-player",
+      "epic-shoes-npc",
+      "common-set-npc",
+      "rare-set-player",
+      "epic-set-player",
+      "epic-set-npc"
+    ],
+    "old_key_order_preserved": true,
+    "changed_paths": [
+      "definitions.iron.family",
+      "definitions.silver.family",
+      "definitions.gold.family",
+      "definitions.ruby.family",
+      "definitions.glass.family",
+      "definitions.nitrate.family",
+      "definitions.amethyst.family",
+      "definitions.paper.family",
+      "definitions.rubber.family",
+      "definitions.linen.family",
+      "definitions.wool.family",
+      "definitions.silk.family",
+      "definitions.green-leaf.family",
+      "definitions.red-leaf.family",
+      "definitions.purple-leaf.family",
+      "definitions.common-weapon-npc",
+      "definitions.rare-weapon-player",
+      "definitions.epic-weapon-npc",
+      "definitions.common-earrings-npc",
+      "definitions.rare-earrings-player",
+      "definitions.epic-earrings-player",
+      "definitions.epic-earrings-npc",
+      "definitions.common-necklace-npc",
+      "definitions.rare-necklace-player",
+      "definitions.epic-necklace-player",
+      "definitions.common-ring-npc",
+      "definitions.rare-ring-player",
+      "definitions.epic-ring-player",
+      "definitions.epic-ring-npc",
+      "definitions.common-hand-npc",
+      "definitions.rare-hand-player",
+      "definitions.epic-hand-player",
+      "definitions.common-top-npc",
+      "definitions.rare-top-player",
+      "definitions.epic-top-npc",
+      "definitions.common-bottom-npc",
+      "definitions.rare-bottom-player",
+      "definitions.epic-bottom-player",
+      "definitions.epic-bottom-npc",
+      "definitions.common-shoes-npc",
+      "definitions.rare-shoes-player",
+      "definitions.epic-shoes-player",
+      "definitions.epic-shoes-npc",
+      "definitions.common-set-npc",
+      "definitions.rare-set-player",
+      "definitions.epic-set-player",
+      "definitions.epic-set-npc"
+    ]
+  },
+  {
+    "path": "packages/core/src/data/recipes.json",
+    "blob": "c47f6d632624b6508b3831a3a4ffd01d77cdceeb",
+    "sha256": "4444e9aef0b79b9e4432cd4812c88234c9d7a74bbb80c7b3aa5533e3702c2278",
+    "duplicate_keys": 0,
+    "recipes": {
+      "refine": 8,
+      "upgrade": 38,
+      "fixed": 1
+    },
+    "rows": [
+      {
+        "id": "refine-silver",
+        "kind": "refine",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "iron",
+            "count": 2
+          }
+        ],
+        "output": "silver",
+        "feeMilli": 1000
+      },
+      {
+        "id": "refine-gold",
+        "kind": "refine",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "silver",
+            "count": 2
+          }
+        ],
+        "output": "gold",
+        "feeMilli": 3000
+      },
+      {
+        "id": "refine-nitrate",
+        "kind": "refine",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "glass",
+            "count": 2
+          }
+        ],
+        "output": "nitrate",
+        "feeMilli": 1000
+      },
+      {
+        "id": "refine-amethyst",
+        "kind": "refine",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "nitrate",
+            "count": 2
+          }
+        ],
+        "output": "amethyst",
+        "feeMilli": 3000
+      },
+      {
+        "id": "refine-wool",
+        "kind": "refine",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "linen",
+            "count": 2
+          }
+        ],
+        "output": "wool",
+        "feeMilli": 1000
+      },
+      {
+        "id": "refine-silk",
+        "kind": "refine",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "wool",
+            "count": 2
+          }
+        ],
+        "output": "silk",
+        "feeMilli": 3000
+      },
+      {
+        "id": "refine-red-leaf",
+        "kind": "refine",
+        "workshops": [
+          "hospital",
+          "drug-store"
+        ],
+        "inputs": [
+          {
+            "defId": "green-leaf",
+            "count": 2
+          }
+        ],
+        "output": "red-leaf",
+        "feeMilli": 1000
+      },
+      {
+        "id": "refine-purple-leaf",
+        "kind": "refine",
+        "workshops": [
+          "hospital",
+          "drug-store"
+        ],
+        "inputs": [
+          {
+            "defId": "red-leaf",
+            "count": 2
+          }
+        ],
+        "output": "purple-leaf",
+        "feeMilli": 3000
+      },
+      {
+        "id": "upgrade-rare-weapon-player",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "common-weapon",
+            "count": 1
+          },
+          {
+            "defId": "silver",
+            "count": 1
+          }
+        ],
+        "output": "rare-weapon-player",
+        "feeMilli": 3000
+      },
+      {
+        "id": "upgrade-rare-weapon",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "common-weapon-npc",
+            "count": 1
+          },
+          {
+            "defId": "silver",
+            "count": 1
+          }
+        ],
+        "output": "rare-weapon",
+        "feeMilli": 3000
+      },
+      {
+        "id": "upgrade-epic-weapon",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "rare-weapon-player",
+            "count": 1
+          },
+          {
+            "defId": "gold",
+            "count": 1
+          }
+        ],
+        "output": "epic-weapon",
+        "feeMilli": 8000
+      },
+      {
+        "id": "upgrade-epic-weapon-npc",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "rare-weapon",
+            "count": 1
+          },
+          {
+            "defId": "gold",
+            "count": 1
+          }
+        ],
+        "output": "epic-weapon-npc",
+        "feeMilli": 8000
+      },
+      {
+        "id": "upgrade-rare-earrings-player",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "common-earrings",
+            "count": 1
+          },
+          {
+            "defId": "nitrate",
+            "count": 1
+          }
+        ],
+        "output": "rare-earrings-player",
+        "feeMilli": 3000
+      },
+      {
+        "id": "upgrade-rare-earrings",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "common-earrings-npc",
+            "count": 1
+          },
+          {
+            "defId": "nitrate",
+            "count": 1
+          }
+        ],
+        "output": "rare-earrings",
+        "feeMilli": 3000
+      },
+      {
+        "id": "upgrade-epic-earrings-player",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "rare-earrings-player",
+            "count": 1
+          },
+          {
+            "defId": "amethyst",
+            "count": 1
+          }
+        ],
+        "output": "epic-earrings-player",
+        "feeMilli": 8000
+      },
+      {
+        "id": "upgrade-epic-earrings-npc",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "rare-earrings",
+            "count": 1
+          },
+          {
+            "defId": "amethyst",
+            "count": 1
+          }
+        ],
+        "output": "epic-earrings-npc",
+        "feeMilli": 8000
+      },
+      {
+        "id": "upgrade-rare-necklace-player",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "common-necklace",
+            "count": 1
+          },
+          {
+            "defId": "nitrate",
+            "count": 1
+          }
+        ],
+        "output": "rare-necklace-player",
+        "feeMilli": 3000
+      },
+      {
+        "id": "upgrade-rare-necklace",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "common-necklace-npc",
+            "count": 1
+          },
+          {
+            "defId": "nitrate",
+            "count": 1
+          }
+        ],
+        "output": "rare-necklace",
+        "feeMilli": 3000
+      },
+      {
+        "id": "upgrade-epic-necklace-player",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "rare-necklace-player",
+            "count": 1
+          },
+          {
+            "defId": "amethyst",
+            "count": 1
+          }
+        ],
+        "output": "epic-necklace-player",
+        "feeMilli": 8000
+      },
+      {
+        "id": "upgrade-epic-necklace",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "rare-necklace",
+            "count": 1
+          },
+          {
+            "defId": "amethyst",
+            "count": 1
+          }
+        ],
+        "output": "epic-necklace",
+        "feeMilli": 8000
+      },
+      {
+        "id": "upgrade-rare-ring-player",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "common-ring",
+            "count": 1
+          },
+          {
+            "defId": "nitrate",
+            "count": 1
+          }
+        ],
+        "output": "rare-ring-player",
+        "feeMilli": 3000
+      },
+      {
+        "id": "upgrade-rare-ring",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "common-ring-npc",
+            "count": 1
+          },
+          {
+            "defId": "nitrate",
+            "count": 1
+          }
+        ],
+        "output": "rare-ring",
+        "feeMilli": 3000
+      },
+      {
+        "id": "upgrade-epic-ring-player",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "rare-ring-player",
+            "count": 1
+          },
+          {
+            "defId": "amethyst",
+            "count": 1
+          }
+        ],
+        "output": "epic-ring-player",
+        "feeMilli": 8000
+      },
+      {
+        "id": "upgrade-epic-ring-npc",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "rare-ring",
+            "count": 1
+          },
+          {
+            "defId": "amethyst",
+            "count": 1
+          }
+        ],
+        "output": "epic-ring-npc",
+        "feeMilli": 8000
+      },
+      {
+        "id": "upgrade-rare-hand-player",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "common-hand",
+            "count": 1
+          },
+          {
+            "defId": "silver",
+            "count": 1
+          }
+        ],
+        "output": "rare-hand-player",
+        "feeMilli": 3000
+      },
+      {
+        "id": "upgrade-rare-hand",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "common-hand-npc",
+            "count": 1
+          },
+          {
+            "defId": "silver",
+            "count": 1
+          }
+        ],
+        "output": "rare-hand",
+        "feeMilli": 3000
+      },
+      {
+        "id": "upgrade-epic-hand-player",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "rare-hand-player",
+            "count": 1
+          },
+          {
+            "defId": "gold",
+            "count": 1
+          }
+        ],
+        "output": "epic-hand-player",
+        "feeMilli": 8000
+      },
+      {
+        "id": "upgrade-epic-hand",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "rare-hand",
+            "count": 1
+          },
+          {
+            "defId": "gold",
+            "count": 1
+          }
+        ],
+        "output": "epic-hand",
+        "feeMilli": 8000
+      },
+      {
+        "id": "upgrade-rare-top-player",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "common-top",
+            "count": 1
+          },
+          {
+            "defId": "wool",
+            "count": 1
+          }
+        ],
+        "output": "rare-top-player",
+        "feeMilli": 3000
+      },
+      {
+        "id": "upgrade-rare-top",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "common-top-npc",
+            "count": 1
+          },
+          {
+            "defId": "wool",
+            "count": 1
+          }
+        ],
+        "output": "rare-top",
+        "feeMilli": 3000
+      },
+      {
+        "id": "upgrade-epic-top",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "rare-top-player",
+            "count": 1
+          },
+          {
+            "defId": "silk",
+            "count": 1
+          }
+        ],
+        "output": "epic-top",
+        "feeMilli": 8000
+      },
+      {
+        "id": "upgrade-epic-top-npc",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "rare-top",
+            "count": 1
+          },
+          {
+            "defId": "silk",
+            "count": 1
+          }
+        ],
+        "output": "epic-top-npc",
+        "feeMilli": 8000
+      },
+      {
+        "id": "upgrade-rare-bottom-player",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "common-bottom",
+            "count": 1
+          },
+          {
+            "defId": "wool",
+            "count": 1
+          }
+        ],
+        "output": "rare-bottom-player",
+        "feeMilli": 3000
+      },
+      {
+        "id": "upgrade-rare-bottom",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "common-bottom-npc",
+            "count": 1
+          },
+          {
+            "defId": "wool",
+            "count": 1
+          }
+        ],
+        "output": "rare-bottom",
+        "feeMilli": 3000
+      },
+      {
+        "id": "upgrade-epic-bottom-player",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "rare-bottom-player",
+            "count": 1
+          },
+          {
+            "defId": "silk",
+            "count": 1
+          }
+        ],
+        "output": "epic-bottom-player",
+        "feeMilli": 8000
+      },
+      {
+        "id": "upgrade-epic-bottom-npc",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "rare-bottom",
+            "count": 1
+          },
+          {
+            "defId": "silk",
+            "count": 1
+          }
+        ],
+        "output": "epic-bottom-npc",
+        "feeMilli": 8000
+      },
+      {
+        "id": "upgrade-rare-shoes-player",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "common-shoes",
+            "count": 1
+          },
+          {
+            "defId": "wool",
+            "count": 1
+          }
+        ],
+        "output": "rare-shoes-player",
+        "feeMilli": 3000
+      },
+      {
+        "id": "upgrade-rare-shoes",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "common-shoes-npc",
+            "count": 1
+          },
+          {
+            "defId": "wool",
+            "count": 1
+          }
+        ],
+        "output": "rare-shoes",
+        "feeMilli": 3000
+      },
+      {
+        "id": "upgrade-epic-shoes-player",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "rare-shoes-player",
+            "count": 1
+          },
+          {
+            "defId": "silk",
+            "count": 1
+          }
+        ],
+        "output": "epic-shoes-player",
+        "feeMilli": 8000
+      },
+      {
+        "id": "upgrade-epic-shoes-npc",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "rare-shoes",
+            "count": 1
+          },
+          {
+            "defId": "silk",
+            "count": 1
+          }
+        ],
+        "output": "epic-shoes-npc",
+        "feeMilli": 8000
+      },
+      {
+        "id": "upgrade-rare-set-player",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "common-set",
+            "count": 1
+          },
+          {
+            "defId": "wool",
+            "count": 1
+          }
+        ],
+        "output": "rare-set-player",
+        "feeMilli": 3000
+      },
+      {
+        "id": "upgrade-rare-set",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "common-set-npc",
+            "count": 1
+          },
+          {
+            "defId": "wool",
+            "count": 1
+          }
+        ],
+        "output": "rare-set",
+        "feeMilli": 3000
+      },
+      {
+        "id": "upgrade-epic-set-player",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "rare-set-player",
+            "count": 1
+          },
+          {
+            "defId": "silk",
+            "count": 1
+          }
+        ],
+        "output": "epic-set-player",
+        "feeMilli": 8000
+      },
+      {
+        "id": "upgrade-epic-set-npc",
+        "kind": "upgrade",
+        "workshops": [
+          "smithy"
+        ],
+        "inputs": [
+          {
+            "defId": "rare-set",
+            "count": 1
+          },
+          {
+            "defId": "silk",
+            "count": 1
+          }
+        ],
+        "output": "epic-set-npc",
+        "feeMilli": 8000
+      },
+      {
+        "id": "upgrade-heal-potion-2",
+        "kind": "upgrade",
+        "workshops": [
+          "hospital",
+          "drug-store"
+        ],
+        "inputs": [
+          {
+            "defId": "heal-potion-1",
+            "count": 1
+          },
+          {
+            "defId": "red-leaf",
+            "count": 1
+          }
+        ],
+        "output": "heal-potion-2",
+        "feeMilli": 2000
+      },
+      {
+        "id": "upgrade-heal-potion-3",
+        "kind": "upgrade",
+        "workshops": [
+          "hospital",
+          "drug-store"
+        ],
+        "inputs": [
+          {
+            "defId": "heal-potion-2",
+            "count": 1
+          },
+          {
+            "defId": "purple-leaf",
+            "count": 1
+          }
+        ],
+        "output": "heal-potion-3",
+        "feeMilli": 4000
+      },
+      {
+        "id": "brew-heal-potion-1",
+        "kind": "fixed",
+        "workshops": [
+          "hospital",
+          "drug-store"
+        ],
+        "inputs": [
+          {
+            "defId": "green-leaf",
+            "count": 2
+          }
+        ],
+        "output": "heal-potion-1",
+        "feeMilli": 1000
+      }
+    ],
+    "CRAFT_TRIAL": {
+      "marker": "TRIAL",
+      "queueCap": 6,
+      "skillSteps": [
+        60,
+        80
+      ],
+      "drugStoreBase": 1,
+      "slotFamily": {
+        "weapon": "metal",
+        "earrings": "mineral",
+        "necklace": "mineral",
+        "ring": "mineral",
+        "hand": "metal",
+        "top": "cloth",
+        "bottom": "cloth",
+        "shoes": "cloth",
+        "set": "cloth"
+      },
+      "fees": {
+        "refine": {
+          "rare": 1000,
+          "epic": 3000
+        },
+        "upgrade": {
+          "rare": 3000,
+          "epic": 8000
+        },
+        "potion": {
+          "1": 1000,
+          "2": 2000,
+          "3": 4000
+        }
+      }
+    }
+  },
+  {
+    "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-5-weeks.json",
+    "blob": "3e91f6eb696f407db2d716fb8098f27e5d8d6e67",
+    "sha256": "127c75ae30f0588194c3adcb3d60c80b7f55622f35422f080d83f395c5fb877e",
+    "duplicate_keys": 0,
+    "changed_paths": [
+      "cityRulesetId",
+      "state.city.society.rulesetId",
+      "state.city.society.items.inventory.0.defId",
+      "state.city.society.items.market.0.defId",
+      "state.city.society.items.market.1.defId",
+      "state.city.society.items.market.2.defId",
+      "state.city.society.items.market.3.defId",
+      "state.city.society.items.market.4.defId",
+      "state.city.society.items.market.5.defId",
+      "state.city.society.items.market.6.defId",
+      "state.city.society.items.market.7.defId"
+    ]
+  },
+  {
+    "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-death.json",
+    "blob": "6d0ea2283082d17ba6fca58959a40d5f9eb54377",
+    "sha256": "63be0f806c715809517744a8d249e05fbe09e68ebfb8ad19293e3f508156234b",
+    "duplicate_keys": 0,
+    "changed_paths": [
+      "cityRulesetId",
+      "state.city.society.rulesetId",
+      "state.city.society.items.market.0.defId",
+      "state.city.society.items.market.1.defId",
+      "state.city.society.items.market.2.defId",
+      "state.city.society.items.market.3.defId",
+      "state.city.society.items.market.4.defId",
+      "state.city.society.items.market.5.defId",
+      "state.city.society.items.market.6.defId",
+      "state.city.society.items.market.7.defId"
+    ]
+  },
+  {
+    "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-raid.json",
+    "blob": "376b002179f19aba4501ff7ebc68bb2be72a0d22",
+    "sha256": "2c0a968e164d1e3518c1b17812b8c61d8aa8788270a4049fbb9d7334dcef58da",
+    "duplicate_keys": 0,
+    "changed_paths": [
+      "cityRulesetId",
+      "state.city.society.rulesetId",
+      "state.city.society.items.market.0.defId",
+      "state.city.society.items.market.1.defId",
+      "state.city.society.items.market.2.defId",
+      "state.city.society.items.market.3.defId",
+      "state.city.society.items.market.4.defId",
+      "state.city.society.items.market.5.defId",
+      "state.city.society.items.market.6.defId",
+      "state.city.society.items.market.7.defId"
+    ]
+  },
+  {
+    "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-robbery.json",
+    "blob": "60dfb3747afc6e4a81b76be5e73df52ac9c2d921",
+    "sha256": "c1cc74255ed39333fbba6362a9b7f25dce9ef194c73a74c05884e76f7b8cca67",
+    "duplicate_keys": 0,
+    "changed_paths": [
+      "cityRulesetId",
+      "state.city.society.rulesetId",
+      "state.city.society.items.market.0.defId",
+      "state.city.society.items.market.1.defId",
+      "state.city.society.items.market.2.defId",
+      "state.city.society.items.market.3.defId",
+      "state.city.society.items.market.4.defId",
+      "state.city.society.items.market.5.defId",
+      "state.city.society.items.market.6.defId",
+      "state.city.society.items.market.7.defId"
+    ]
+  },
+  {
+    "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-wound.json",
+    "blob": "09a043eecbfb06cc303d654d9cde0b1bfcc85527",
+    "sha256": "36f36c603cba9b1e5f03a9c481d86acc131090741f39c017f1cd0ade195523e2",
+    "duplicate_keys": 0,
+    "changed_paths": [
+      "cityRulesetId",
+      "state.city.society.rulesetId",
+      "state.city.society.items.market.0.defId",
+      "state.city.society.items.market.1.defId",
+      "state.city.society.items.market.2.defId",
+      "state.city.society.items.market.3.defId",
+      "state.city.society.items.market.4.defId",
+      "state.city.society.items.market.5.defId",
+      "state.city.society.items.market.6.defId",
+      "state.city.society.items.market.7.defId"
+    ]
+  },
+  {
+    "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-demand-card.json",
+    "blob": "3a9c8bfc12c934442a18b670344452d13f5aa64e",
+    "sha256": "71ef9061c44fadf551f474cd888f924e7976a9a8a368a9def9a8706905d31ab0",
+    "duplicate_keys": 0,
+    "changed_paths": [
+      "cityRulesetId",
+      "state.city.society.rulesetId",
+      "state.city.society.items.market.0.defId",
+      "state.city.society.items.market.1.defId",
+      "state.city.society.items.market.2.defId",
+      "state.city.society.items.market.3.defId",
+      "state.city.society.items.market.4.defId",
+      "state.city.society.items.market.5.defId",
+      "state.city.society.items.market.6.defId",
+      "state.city.society.items.market.7.defId"
+    ]
+  },
+  {
+    "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-laws.json",
+    "blob": "27db6eabe1d783e78d7f584e616b1e65b197fbb1",
+    "sha256": "8daf63999e0d13e5956584f68ddf0adff53e423c832a3e73f86138fd9739c910",
+    "duplicate_keys": 0,
+    "changed_paths": [
+      "cityRulesetId",
+      "state.city.society.rulesetId",
+      "state.city.society.items.inventory.0.defId",
+      "state.city.society.items.market.0.defId",
+      "state.city.society.items.market.2.defId",
+      "state.city.society.items.market.4.defId",
+      "state.city.society.items.market.5.defId",
+      "state.city.society.items.market.6.defId",
+      "state.city.society.items.market.7.defId"
+    ]
+  },
+  {
+    "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-new-game.json",
+    "blob": "7837fbe5f468c54d3507fbff122e25e910304ce1",
+    "sha256": "695d8bd3ab198209ee2793d7c521caec6f2a9df167cb9c7826e8470ca64f24a7",
+    "duplicate_keys": 0,
+    "changed_paths": [
+      "cityRulesetId",
+      "state.city.society.rulesetId",
+      "state.city.society.items.market.0.defId",
+      "state.city.society.items.market.1.defId",
+      "state.city.society.items.market.2.defId",
+      "state.city.society.items.market.3.defId",
+      "state.city.society.items.market.4.defId",
+      "state.city.society.items.market.5.defId",
+      "state.city.society.items.market.6.defId",
+      "state.city.society.items.market.7.defId"
+    ]
+  },
+  {
+    "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-rebellion-last-week.json",
+    "blob": "67aa3080ccddd00c5a07f54073eb6a4f2739be41",
+    "sha256": "fe87d1ed940e7ac748b43acb04f292b7de81390c710d620a790074e309e13729",
+    "duplicate_keys": 0,
+    "changed_paths": [
+      "cityRulesetId",
+      "state.city.society.rulesetId",
+      "state.city.society.items.market.0.defId",
+      "state.city.society.items.market.1.defId",
+      "state.city.society.items.market.2.defId",
+      "state.city.society.items.market.3.defId",
+      "state.city.society.items.market.4.defId",
+      "state.city.society.items.market.5.defId",
+      "state.city.society.items.market.6.defId",
+      "state.city.society.items.market.7.defId"
+    ]
+  },
+  {
+    "path": "packages/persistence/src/__tests__/fixtures/society-v9/new-game.json",
+    "blob": "2790804da97483f17549279b314ad2299291e4cd",
+    "sha256": "d3892eb83325414c24d3399f2042c1e2afcf852cde525ab6b57bb6f6740761fb",
+    "duplicate_keys": 0,
+    "changed_paths": [
+      "rulesetId",
+      "state.society.rulesetId",
+      "state.society.items.market.0.defId",
+      "state.society.items.market.1.defId",
+      "state.society.items.market.2.defId",
+      "state.society.items.market.3.defId",
+      "state.society.items.market.4.defId",
+      "state.society.items.market.6.defId",
+      "state.society.items.market.7.defId"
+    ]
+  },
+  {
+    "path": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "blob": "19ec3e29cc181bad35b8f2aa3818ef05ec700aa2",
+    "sha256": "23b891b31ec93a70876dea69bd4b90d9bc940230514399780ddb45ef8e4ad505",
+    "duplicate_keys": 0,
+    "scenarios": [
+      {
+        "seed": 0,
+        "paths": [
+          "city.society.rulesetId",
+          "city.society.items.inventory.0.defId",
+          "city.society.items.inventory.1.defId",
+          "city.society.items.inventory.2.defId",
+          "city.society.items.inventory.3.defId",
+          "city.society.items.inventory.4.defId",
+          "city.society.items.inventory.5.defId",
+          "city.society.items.inventory.6.defId",
+          "city.society.items.inventory.7.defId",
+          "city.society.items.inventory.8.defId",
+          "city.society.items.inventory.9.defId",
+          "city.society.items.inventory.10.defId",
+          "city.society.items.inventory.11.defId",
+          "city.society.items.inventory.12.defId",
+          "city.society.items.inventory.13.defId",
+          "city.society.items.inventory.14.defId",
+          "city.society.items.inventory.15.defId",
+          "city.society.items.inventory.16.defId",
+          "city.society.items.inventory.17.defId",
+          "city.society.items.inventory.18.defId",
+          "city.society.items.inventory.19.defId",
+          "city.society.items.inventory.20.defId",
+          "city.society.items.inventory.21.defId",
+          "city.society.items.inventory.22.defId",
+          "city.society.items.inventory.23.defId",
+          "city.society.items.inventory.24.defId",
+          "city.society.items.inventory.25.defId",
+          "city.society.items.inventory.26.defId",
+          "city.society.items.inventory.28.defId",
+          "city.society.items.inventory.29.defId",
+          "city.society.items.inventory.30.defId",
+          "city.society.items.inventory.31.defId",
+          "city.society.items.market.0.defId",
+          "city.society.items.market.2.defId",
+          "city.society.items.market.3.defId",
+          "city.society.items.market.4.defId",
+          "city.society.items.market.5.defId",
+          "city.society.items.market.6.defId",
+          "city.society.items.market.7.defId"
+        ]
+      },
+      {
+        "seed": 42,
+        "paths": [
+          "city.society.rulesetId",
+          "city.society.items.inventory.0.defId",
+          "city.society.items.inventory.1.defId",
+          "city.society.items.inventory.2.defId",
+          "city.society.items.inventory.3.defId",
+          "city.society.items.inventory.4.defId",
+          "city.society.items.inventory.5.defId",
+          "city.society.items.inventory.6.defId",
+          "city.society.items.inventory.7.defId",
+          "city.society.items.inventory.8.defId",
+          "city.society.items.inventory.9.defId",
+          "city.society.items.inventory.10.defId",
+          "city.society.items.inventory.11.defId",
+          "city.society.items.inventory.12.defId",
+          "city.society.items.inventory.13.defId",
+          "city.society.items.inventory.14.defId",
+          "city.society.items.inventory.16.defId",
+          "city.society.items.inventory.17.defId",
+          "city.society.items.inventory.18.defId",
+          "city.society.items.inventory.19.defId",
+          "city.society.items.inventory.20.defId",
+          "city.society.items.inventory.21.defId",
+          "city.society.items.inventory.22.defId",
+          "city.society.items.inventory.23.defId",
+          "city.society.items.inventory.24.defId",
+          "city.society.items.inventory.25.defId",
+          "city.society.items.inventory.27.defId",
+          "city.society.items.inventory.28.defId",
+          "city.society.items.inventory.29.defId",
+          "city.society.items.inventory.30.defId",
+          "city.society.items.market.0.defId",
+          "city.society.items.market.1.defId",
+          "city.society.items.market.2.defId",
+          "city.society.items.market.3.defId",
+          "city.society.items.market.4.defId",
+          "city.society.items.market.5.defId",
+          "city.society.items.market.6.defId",
+          "city.society.items.market.7.defId"
+        ]
+      },
+      {
+        "seed": 20261028,
+        "paths": [
+          "city.society.rulesetId",
+          "city.society.items.inventory.0.defId",
+          "city.society.items.inventory.1.defId",
+          "city.society.items.inventory.2.defId",
+          "city.society.items.inventory.3.defId",
+          "city.society.items.inventory.4.defId",
+          "city.society.items.inventory.5.defId",
+          "city.society.items.inventory.6.defId",
+          "city.society.items.inventory.7.defId",
+          "city.society.items.inventory.8.defId",
+          "city.society.items.inventory.9.defId",
+          "city.society.items.inventory.10.defId",
+          "city.society.items.inventory.11.defId",
+          "city.society.items.inventory.12.defId",
+          "city.society.items.inventory.13.defId",
+          "city.society.items.inventory.14.defId",
+          "city.society.items.inventory.15.defId",
+          "city.society.items.inventory.16.defId",
+          "city.society.items.inventory.17.defId",
+          "city.society.items.inventory.18.defId",
+          "city.society.items.inventory.21.defId",
+          "city.society.items.market.0.defId",
+          "city.society.items.market.1.defId",
+          "city.society.items.market.2.defId",
+          "city.society.items.market.3.defId",
+          "city.society.items.market.4.defId",
+          "city.society.items.market.5.defId",
+          "city.society.items.market.6.defId",
+          "city.society.items.market.7.defId"
+        ]
+      }
+    ]
+  }
+]

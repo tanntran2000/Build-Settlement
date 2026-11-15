@@ -1,0 +1,20 @@
+{
+  "utc": "2026-11-15T03:11:00.134Z",
+  "head": "b0c0b37cb25601b69f03b8844ac8a3f957304d4d",
+  "label": "case-14-alone-1",
+  "artifacts": [
+    {
+      "file": "tile-local-checkpoint-save-60903--resumes-the-same-economics-chromium/error-context.md",
+      "bytes": 33793,
+      "sha256": "84a9bb6c8c9b053162e9322e42991ceeff0df799525aa2aac230dfd8fa1d7e2e",
+      "over1MB": false
+    },
+    {
+      "file": "tile-local-checkpoint-save-60903--resumes-the-same-economics-chromium/trace.zip",
+      "bytes": 3956941,
+      "sha256": "fa45390365a8a2cbc9be8f5417ce636712eaafeeccfef69684014cee1f367af1",
+      "over1MB": true
+    }
+  ],
+  "note": "Raw local failure artifacts preserved before a later Playwright run can replace test-results. Files over 1 MB should be represented by hashes for later docs-branch publication."
+}

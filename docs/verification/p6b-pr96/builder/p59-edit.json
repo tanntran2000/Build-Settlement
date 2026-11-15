@@ -1,0 +1,17 @@
+{
+  "id": "P59",
+  "base": "2a92985e20c5eb0eb0a9faa053bcd73f64410286",
+  "file": "packages/simulation/src/__tests__/lord-health.test.ts",
+  "line": 73,
+  "changedLine": 84,
+  "before": "it('a Calm game below Crime 70 survives all 60 weeks from health one', () => {\n  let s = life(); s.player.character.health = 1;\n  const stocks = s.city.world.settlements[s.city.world.activeSettlementId!].inventory;\n  for (const key of ['gold','food','wood','iron'] as const) stocks[key] = 1_000_000;\n  s.city.goodsStock!.amountMilli = 1_000_000;\n  for (let week = 1; week <= 60; week++) {\n    const r = command(s,'END_WEEK',{expectedWeek:week}); s = r.next;\n    expect(s.city.society!.order.crime).toBeLessThan(70); expect(s.city.society!.crisis.stage).toBe('none');\n    expect(r.report!.crimeEvent!.lordHealthLoss).toBe(0); expect(s.player.character.health).toBe(week+1);\n    s = command(s,'NEXT_WEEK').next;\n  }\n});",
+  "after": "it('a Calm game below Crime 70 survives all 60 weeks from health one', () => {\n  let s = life(); s.player.character.health = 1;\n  const stocks = s.city.world.settlements[s.city.world.activeSettlementId!].inventory;\n  for (const key of ['gold','food','wood','iron'] as const) stocks[key] = 1_000_000;\n  s.city.goodsStock!.amountMilli = 1_000_000;\n  for (let week = 1; week <= 60; week++) {\n    const r = command(s,'END_WEEK',{expectedWeek:week}); s = r.next;\n    expect(s.city.society!.order.crime).toBeLessThan(70); expect(s.city.society!.crisis.stage).toBe('none');\n    expect(r.report!.crimeEvent!.lordHealthLoss).toBe(0); expect(s.player.character.health).toBe(week+1);\n    s = command(s,'NEXT_WEEK').next;\n  }\n}, 15000);",
+  "reason": "Plan correction 2: only the 60-week Calm-game test receives a 15000 ms per-test timeout; assertions, setup, loop and all other bytes stay unchanged.",
+  "owner": "Tân",
+  "date": "2026-11-15",
+  "ownerQuote": "Set this test to 15 s (Recommended)",
+  "approvedPackageSHA256": {
+    "step0-proposed-edits.md": "9f30e97ceabc1640f55bf8e3cb266fddc8e7b4d4bc9f8ed70337147c774b8814",
+    "step0-proposed-edits.json": "e0335c5c71609dd579bcbe50c37b13f48ba49e9515fa31c923693496ea89eb26"
+  }
+}

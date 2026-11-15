@@ -1,0 +1,17 @@
+{
+    "utc":  "2026-11-15T03:14:30.2634573Z",
+    "head":  "b0c0b37cb25601b69f03b8844ac8a3f957304d4d",
+    "tree":  "5f9d377ec748ea62e56634b6e34dbd42d71ef868",
+    "branch":  "feat/p6b-crafting-data",
+    "gitStatus":  [
+
+                  ],
+    "listeningPorts":  [
+
+                       ],
+    "ports4173And4174Free":  true,
+    "worktree":  "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01",
+    "environmentsRemoved":  0,
+    "storageReclaimedBytes":  0,
+    "disposition":  "Retained assigned worktree and three local commits; mandatory A3 smoke HOLD after 22 isolated reproductions of duplicate-name report-helper assertions"
+}

@@ -1,0 +1,14 @@
+HEAD: e85917733e229701830ad7f53dfcfbe2fefab831
+Tree: 49f6b676c3ae57f66ef9ce6275eb89a806f52a9a
+UTC: 2026-11-15T01:58:00.2066985Z
+Command: npm run typecheck:core
+Status before:
+ M packages/core/src/__tests__/catalog-data.test.ts  M packages/core/src/__tests__/items-catalog.test.ts  M packages/core/src/data/items.json  M packages/core/src/data/validate.ts  M packages/core/src/index.ts  M packages/core/src/trial/__tests__/society.test.ts  M packages/core/src/trial/items.ts  M packages/core/src/world/__tests__/session.test.ts  M packages/simulation/src/__tests__/law-week.test.ts  M tests/e2e/items.spec.ts ?? packages/core/src/__tests__/recipes-catalog.test.ts ?? packages/core/src/data/recipes.json ?? packages/core/src/trial/recipes.ts
+
+> build-settlement@0.1.0 typecheck:core
+> tsc -p packages/core/tsconfig.json --noEmit
+
+
+Exit: 0
+UTC end: 2026-11-15T01:58:03.7932502Z
+Elapsed seconds: 3.5358813

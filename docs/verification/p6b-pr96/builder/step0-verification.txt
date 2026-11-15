@@ -1,0 +1,14 @@
+{
+  "utc": "2026-11-15T01:54:40.144Z",
+  "head": "e85917733e229701830ad7f53dfcfbe2fefab831",
+  "tree": "49f6b676c3ae57f66ef9ce6275eb89a806f52a9a",
+  "status": "",
+  "auditedTestFiles": 148,
+  "proposedBlocks": 58,
+  "proposedTestFiles": 35,
+  "immutableBaselineFiles": 55,
+  "checks": "Proposals uniquely match their base line numbers; all current v8 test references covered; no repository edits; golden/fixtures/pin source unchanged; candidate preserves all 26 existing wearables.",
+  "errors": [],
+  "exit": 0,
+  "note": "This is a read-only Step 0 evidence check, not implementation verification or a RED/GREEN run."
+}

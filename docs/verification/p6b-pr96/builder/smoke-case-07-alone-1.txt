@@ -1,0 +1,60 @@
+HEAD: b0c0b37cb25601b69f03b8844ac8a3f957304d4d
+Tree: 5f9d377ec748ea62e56634b6e34dbd42d71ef868
+UTC: 2026-11-15T03:08:18.034Z
+CI=1
+Command executable: C:\Program Files\nodejs\node.exe
+Arguments: ["node_modules/@playwright/test/cli.js","test","tests/e2e/goods-stock.spec.ts","--grep","Society five-week report and navigation parity at 375px"]
+PORTS_4173_4174_FREE
+
+
+Running 1 test using 1 worker
+
+  x  1 [chromium] › tests\e2e\goods-stock.spec.ts:5:85 › Society five-week report and navigation parity at 375px (11.9s)
+
+
+  1) [chromium] › tests\e2e\goods-stock.spec.ts:5:85 › Society five-week report and navigation parity at 375px 
+
+    Error: expect(received).toHaveLength(expected)
+
+    Expected length: 1
+    Received length: 2
+    Received array:  [["common-top", {"basePriceMilli": 5000, "category": "outfit", "kind": "player", "mainStat": "combat", "name": "Plain Top", "rarity": "common", "regen": 1, "slot": "top"}], ["common-top-npc", {"basePriceMilli": 5000, "category": "outfit", "kind": "npc", "mainStat": "combat", "name": "Plain Top", "rarity": "common", "slot": "top"}]]
+
+       at character-life-navigation.helpers.ts:239
+
+      237 |   function definition(name: string): string {
+      238 |     const matches = Object.entries(ITEM_CATALOG).filter(([, item]) => item.name === name);
+    > 239 |     expect(matches).toHaveLength(1);
+          |                     ^
+      240 |     return matches[0][0];
+      241 |   }
+      242 |   function goal(label: string): NonNullable<TileTrialReport['items']['legendary']>['goal'] {
+        at definition (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:239:21)
+        at readItemReport (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:257:22)
+        at expectReport (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:344:12)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\goods-stock.spec.ts:24:20
+
+    Error Context: test-results\goods-stock-Society-five-w-fbc68--navigation-parity-at-375px-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\goods-stock-Society-five-w-fbc68--navigation-parity-at-375px-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\goods-stock-Society-five-w-fbc68--navigation-parity-at-375px-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\goods-stock.spec.ts:5:85 › Society five-week report and navigation parity at 375px 
+[WebServer] (node:71672) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:14580) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+(node:73116) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Exit: 1
+UTC end: 2026-11-15T03:08:41.797Z
+Elapsed seconds: 23.763
+Ports after: PORTS_4173_4174_FREE
+

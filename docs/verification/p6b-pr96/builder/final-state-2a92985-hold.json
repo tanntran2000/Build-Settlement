@@ -1,0 +1,17 @@
+{
+    "utc":  "2026-11-15T02:10:38.9414446Z",
+    "head":  "2a92985e20c5eb0eb0a9faa053bcd73f64410286",
+    "tree":  "209ba99e59335ba39097a5f58bb435cd17b0dfff",
+    "branch":  "feat/p6b-crafting-data",
+    "gitStatus":  [
+
+                  ],
+    "listeningPorts":  [
+
+                       ],
+    "ports4173And4174Free":  true,
+    "worktree":  "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01",
+    "environmentsRemoved":  0,
+    "storageReclaimedBytes":  0,
+    "disposition":  "Retained assigned worktree and both local commits for owner/Tester; mandatory A3 HOLD after timeout"
+}

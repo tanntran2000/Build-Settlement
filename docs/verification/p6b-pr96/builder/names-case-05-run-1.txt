@@ -1,0 +1,26 @@
+HEAD: a60711120b8c3d7ff9759a14cbb7a6c09ec396c5
+Tree: 1b26a634536c83699780f1a9479ce64ebb10717d
+UTC: 2026-11-15T03:29:25.576Z
+CI=1
+Executable: C:\Program Files\nodejs\node.exe
+Arguments: ["node_modules/@playwright/test/cli.js","test","tests/e2e/garrison.spec.ts","--grep","crafted raid reports garrison deaths with complete Order parity"]
+PORTS_4173_4174_FREE
+
+
+Running 1 test using 1 worker
+
+  ok 1 [chromium] › tests\e2e\garrison.spec.ts:21:1 › crafted raid reports garrison deaths with complete Order parity (4.5s)
+
+  1 passed (13.0s)
+[WebServer] (node:46168) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:73268) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+(node:49376) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Exit: 0
+UTC end: 2026-11-15T03:29:39.452Z
+Elapsed seconds: 13.876
+Ports after: PORTS_4173_4174_FREE
+

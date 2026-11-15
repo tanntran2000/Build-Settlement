@@ -1,0 +1,20 @@
+{
+  "utc": "2026-11-15T03:09:13.867Z",
+  "head": "b0c0b37cb25601b69f03b8844ac8a3f957304d4d",
+  "label": "case-09-alone-1",
+  "artifacts": [
+    {
+      "file": "items-C2-visible-item-lett-ac1fa-d-waiting-Legendary-rewards-chromium/error-context.md",
+      "bytes": 34619,
+      "sha256": "73757f0b6e40293eed130782ec2bea5127e2c2d24da2b619ab28204f50422d1e",
+      "over1MB": false
+    },
+    {
+      "file": "items-C2-visible-item-lett-ac1fa-d-waiting-Legendary-rewards-chromium/trace.zip",
+      "bytes": 519175,
+      "sha256": "414309ae6661cc5d93ea2bcde2e37bba5753c11030ca8fd61c7ac79f6ee5f9cc",
+      "over1MB": false
+    }
+  ],
+  "note": "Raw local failure artifacts preserved before a later Playwright run can replace test-results. Files over 1 MB should be represented by hashes for later docs-branch publication."
+}

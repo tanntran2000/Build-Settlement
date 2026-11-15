@@ -1,0 +1,20 @@
+{
+  "utc": "2026-11-15T03:08:41.883Z",
+  "head": "b0c0b37cb25601b69f03b8844ac8a3f957304d4d",
+  "label": "case-07-alone-1",
+  "artifacts": [
+    {
+      "file": "goods-stock-Society-five-w-fbc68--navigation-parity-at-375px-chromium/error-context.md",
+      "bytes": 33348,
+      "sha256": "c4da396c7c01293935514950cfb93b5f7a670e9551e65107ca1d4c823ccd037f",
+      "over1MB": false
+    },
+    {
+      "file": "goods-stock-Society-five-w-fbc68--navigation-parity-at-375px-chromium/trace.zip",
+      "bytes": 1614072,
+      "sha256": "29c0b155335a34aedd9aa8a230f675a0b365a571bfc2d5d8ed15345872657881",
+      "over1MB": true
+    }
+  ],
+  "note": "Raw local failure artifacts preserved before a later Playwright run can replace test-results. Files over 1 MB should be represented by hashes for later docs-branch publication."
+}

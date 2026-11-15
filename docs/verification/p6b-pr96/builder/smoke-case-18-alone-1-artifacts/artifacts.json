@@ -1,0 +1,20 @@
+{
+  "utc": "2026-11-15T03:12:44.365Z",
+  "head": "b0c0b37cb25601b69f03b8844ac8a3f957304d4d",
+  "label": "case-18-alone-1",
+  "artifacts": [
+    {
+      "file": "tile-trial-builds-producti-f25d0--then-upgrades-and-replaces-chromium/error-context.md",
+      "bytes": 33767,
+      "sha256": "4bf05f33c9efe0ac91551cb438fa180aec23cec558499e86dc70e823719eb237",
+      "over1MB": false
+    },
+    {
+      "file": "tile-trial-builds-producti-f25d0--then-upgrades-and-replaces-chromium/trace.zip",
+      "bytes": 4160201,
+      "sha256": "7a9cf25fa66b323b179be8f97a25d3a5bbaecc1730ac996cc6e91a5969ee19a7",
+      "over1MB": true
+    }
+  ],
+  "note": "Raw local failure artifacts preserved before a later Playwright run can replace test-results. Files over 1 MB should be represented by hashes for later docs-branch publication."
+}

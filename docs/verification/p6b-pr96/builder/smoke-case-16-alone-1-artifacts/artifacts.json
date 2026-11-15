@@ -1,0 +1,20 @@
+{
+  "utc": "2026-11-15T03:11:53.091Z",
+  "head": "b0c0b37cb25601b69f03b8844ac8a3f957304d4d",
+  "label": "case-16-alone-1",
+  "artifacts": [
+    {
+      "file": "tile-population-society-po-16542-rce-and-roundtrips-at-390px-chromium/error-context.md",
+      "bytes": 33911,
+      "sha256": "f3b40874cc0563bc54636533ac0908eb260d1f90f03b22afaf29875575ae4824",
+      "over1MB": false
+    },
+    {
+      "file": "tile-population-society-po-16542-rce-and-roundtrips-at-390px-chromium/trace.zip",
+      "bytes": 1849828,
+      "sha256": "ef7ad18fd3abed64f647f4664346d45d59c408382a04b8b04426f5b2bf94d0ce",
+      "over1MB": true
+    }
+  ],
+  "note": "Raw local failure artifacts preserved before a later Playwright run can replace test-results. Files over 1 MB should be represented by hashes for later docs-branch publication."
+}

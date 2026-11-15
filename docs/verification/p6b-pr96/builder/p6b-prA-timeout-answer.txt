@@ -1,0 +1,10 @@
+A3 timeout HOLD answered by the owner. Binding plan is now C:/Users/Admin/.t3/local-drafts/p6b-prA/binding-plan-00af2a9.md: read Plan correction 2.
+
+Owner (Tân), 2026-11-15, dialog choice, verbatim: "Set this test to 15 s (Recommended)".
+
+Scope, exactly:
+- In `packages/simulation/src/__tests__/lord-health.test.ts`, give only the test at line 73 ('a Calm game below Crime 70 survives all 60 weeks from health one') a per-test timeout of 15000 ms (the third argument of `it`, or the file's existing style). Change nothing else in that test or file: no assertion, setup or loop change.
+- Record it as existing-test edit P59 (file:line, before → after) in the edit inventory and the verifier; P1–P58 stay byte-identical.
+- No other timeout or threshold changes. If any other test times out, measure it alone three times and HOLD.
+
+Commit it as its own commit `test(simulation): give the 60-week lord-health test a 15 s timeout`, ending `Co-authored-by: Codex <noreply@openai.com>`. Then rerun gates 1–7 from the start at the clean final head on a quiet machine (record CPU load and top processes), `echo "CI=$CI"`, `CI=1 npm run test:smoke`, the bundle vs main (JS 126.72 kB, CSS 6.74 kB) with its script and a raw artifact, refresh README and SHA256SUMS. Do not push, open a PR or merge.

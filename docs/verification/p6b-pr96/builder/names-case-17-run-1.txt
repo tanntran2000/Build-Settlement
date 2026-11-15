@@ -1,0 +1,26 @@
+HEAD: a60711120b8c3d7ff9759a14cbb7a6c09ec396c5
+Tree: 1b26a634536c83699780f1a9479ce64ebb10717d
+UTC: 2026-11-15T03:34:24.045Z
+CI=1
+Executable: C:\Program Files\nodejs\node.exe
+Arguments: ["node_modules/@playwright/test/cli.js","test","tests/e2e/tile-save.spec.ts","--grep","exports a real file, restores a multiweek plan and resumes the same economics"]
+PORTS_4173_4174_FREE
+
+
+Running 1 test using 1 worker
+
+  ok 1 [chromium] › tests\e2e\tile-save.spec.ts:8:1 › exports a real file, restores a multiweek plan and resumes the same economics (23.4s)
+
+  1 passed (34.1s)
+[WebServer] (node:32456) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:41572) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+(node:57164) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Exit: 0
+UTC end: 2026-11-15T03:34:58.937Z
+Elapsed seconds: 34.892
+Ports after: PORTS_4173_4174_FREE
+

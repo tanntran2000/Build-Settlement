@@ -1,0 +1,23 @@
+HEAD: db7c65a1ccd0b679ae37d3214e71dd075bd3c69d
+Tree: 94962a9ee504920932f5bec0882b7c82c5a9055a
+UTC: 2026-11-15T01:58:51.6672318Z
+Command: npm test -- packages/core/src/__tests__/recipes-catalog.test.ts packages/core/src/__tests__/items-catalog.test.ts packages/core/src/__tests__/catalog-data.test.ts packages/core/src/trial/__tests__/society.test.ts packages/core/src/world/__tests__/session.test.ts packages/simulation/src/__tests__/law-week.test.ts
+Status before:
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/core/src/__tests__/recipes-catalog.test.ts packages/core/src/__tests__/items-catalog.test.ts packages/core/src/__tests__/catalog-data.test.ts packages/core/src/trial/__tests__/society.test.ts packages/core/src/world/__tests__/session.test.ts packages/simulation/src/__tests__/law-week.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  6 passed (6)
+      Tests  157 passed (157)
+   Start at  08:58:52
+   Duration  1.45s (transform 1.87s, setup 0ms, import 2.93s, tests 697ms, environment 1ms)
+
+
+Exit: 0
+UTC end: 2026-11-15T01:58:54.3912669Z
+Elapsed seconds: 2.6680263

@@ -1,0 +1,26 @@
+HEAD: a60711120b8c3d7ff9759a14cbb7a6c09ec396c5
+Tree: 1b26a634536c83699780f1a9479ce64ebb10717d
+UTC: 2026-11-15T03:33:54.345Z
+CI=1
+Executable: C:\Program Files\nodejs\node.exe
+Arguments: ["node_modules/@playwright/test/cli.js","test","tests/e2e/tile-population.spec.ts","--grep","society population grows once, preserves workforce and roundtrips at 390px"]
+PORTS_4173_4174_FREE
+
+
+Running 1 test using 1 worker
+
+  ok 1 [chromium] › tests\e2e\tile-population.spec.ts:7:31 › society population grows once, preserves workforce and roundtrips at 390px (16.1s)
+
+  1 passed (26.6s)
+[WebServer] (node:73260) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:13316) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+(node:71928) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Exit: 0
+UTC end: 2026-11-15T03:34:21.928Z
+Elapsed seconds: 27.583
+Ports after: PORTS_4173_4174_FREE
+

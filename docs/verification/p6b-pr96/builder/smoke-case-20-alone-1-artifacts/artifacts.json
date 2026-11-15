@@ -1,0 +1,20 @@
+{
+  "utc": "2026-11-15T03:13:25.207Z",
+  "head": "b0c0b37cb25601b69f03b8844ac8a3f957304d4d",
+  "label": "case-20-alone-1",
+  "artifacts": [
+    {
+      "file": "tile-trial-double-click-Pl-60197-rves-the-new-plan-at-1280px-chromium/error-context.md",
+      "bytes": 33581,
+      "sha256": "729d98ea1d41344e7d562c13318663c8bbc9aff75323db5ab59d3b4083b0c1b5",
+      "over1MB": false
+    },
+    {
+      "file": "tile-trial-double-click-Pl-60197-rves-the-new-plan-at-1280px-chromium/trace.zip",
+      "bytes": 2082273,
+      "sha256": "d5d36001c10b0627a0c56f140fc41ef5c042991518ecf47a9e378c2c207f4c47",
+      "over1MB": true
+    }
+  ],
+  "note": "Raw local failure artifacts preserved before a later Playwright run can replace test-results. Files over 1 MB should be represented by hashes for later docs-branch publication."
+}

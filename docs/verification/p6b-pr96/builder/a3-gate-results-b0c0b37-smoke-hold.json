@@ -1,0 +1,58 @@
+[
+    {
+        "gate":  1,
+        "command":  "git diff --check origin/main...HEAD",
+        "exit":  0,
+        "utc":  "2026-11-15T02:29:19.7717741Z",
+        "seconds":  0.0857262
+    },
+    {
+        "gate":  2,
+        "command":  "npm run lint",
+        "exit":  0,
+        "utc":  "2026-11-15T02:29:19.9236210Z",
+        "seconds":  11.4189929
+    },
+    {
+        "gate":  3,
+        "command":  "npm run typecheck",
+        "exit":  0,
+        "utc":  "2026-11-15T02:29:31.3426139Z",
+        "seconds":  32.842351199999996
+    },
+    {
+        "gate":  4,
+        "command":  "npm run check:architecture",
+        "exit":  0,
+        "utc":  "2026-11-15T02:30:04.1849651Z",
+        "seconds":  5.8771419
+    },
+    {
+        "gate":  5,
+        "command":  "npm run test:architecture",
+        "exit":  0,
+        "utc":  "2026-11-15T02:30:10.0621070Z",
+        "seconds":  43.4992556
+    },
+    {
+        "gate":  6,
+        "command":  "npm test",
+        "exit":  0,
+        "utc":  "2026-11-15T02:30:53.5644911Z",
+        "seconds":  58.353636099999996
+    },
+    {
+        "gate":  7,
+        "command":  "npm run build",
+        "exit":  0,
+        "utc":  "2026-11-15T02:31:51.9181272Z",
+        "seconds":  24.2887888
+    },
+    {
+        "gate":  8,
+        "command":  "echo CI=%CI% \u0026\u0026 npm run test:smoke",
+        "exit":  1,
+        "utc":  "2026-11-15T02:32:17.5302417Z",
+        "seconds":  1956.6607680999998
+    }
+]

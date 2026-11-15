@@ -1,0 +1,13 @@
+diff --git a/packages/core/src/trial/__tests__/crisis.test.ts b/packages/core/src/trial/__tests__/crisis.test.ts
+index 3748370..5455034 100644
+--- a/packages/core/src/trial/__tests__/crisis.test.ts
++++ b/packages/core/src/trial/__tests__/crisis.test.ts
+@@ -3,7 +3,7 @@ import { cardId, isPendingCard, crisisOptions, createSocietyState, isSocietyStat
+ 
+ it('starts v4 calm with no card', () => {
+  const s=createSocietyState().society!;
+- expect(s.rulesetId).toBe('tile-society-08');
++ expect(s.rulesetId).toBe('tile-society-09');
+  expect(s.crisis).toEqual({fallCause:null,stage:'none',weeksInStage:0,hungerStreak:0,calmStreak:0,promise:null,lastChoice:null});
+  expect(s.pendingCard).toBeNull();
+ });

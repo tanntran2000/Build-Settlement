@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+const root='C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/data/';
+const buildings=JSON.parse(fs.readFileSync(root+'buildings.json','utf8'));
+buildings.trial.smithy={name:'Smithy',operation:'society',terrain:['town'],maxLevel:2,maxWorkers:1,cost:{gold:10000,wood:6000,iron:6000},upkeepMilli:1000};
+buildings.society.smithy.reserved=false;
+fs.writeFileSync(root+'buildings.json',JSON.stringify(buildings,null,2)+'\n','utf8');
+const tuning=JSON.parse(fs.readFileSync(root+'tuning.json','utf8'));tuning.SOCIETY_TRIAL.rulesetId='tile-society-09';
+fs.writeFileSync(root+'tuning.json',JSON.stringify(tuning,null,2)+'\n','utf8');
+const validate=root+'validate.ts',text=fs.readFileSync(validate,'utf8');
+const before='"slave-quarters", "drug-store"\n];';
+if(text.split(before).length!==2)throw Error('Closed building id list mismatch');
+fs.writeFileSync(validate,text.replace(before,'"slave-quarters", "drug-store", "smithy"\n];'),'utf8');

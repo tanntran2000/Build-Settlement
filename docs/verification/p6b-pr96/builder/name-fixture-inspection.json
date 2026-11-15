@@ -1,0 +1,87 @@
+{
+  "utc": "2026-11-15T04:14:24.576Z",
+  "head": "a60711120b8c3d7ff9759a14cbb7a6c09ec396c5",
+  "comparisonHead": "b0c0b37cb25601b69f03b8844ac8a3f957304d4d",
+  "files": [
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+      "bytes": 75851,
+      "sha256": "23b891b31ec93a70876dea69bd4b90d9bc940230514399780ddb45ef8e4ad505",
+      "affectedItemNamePaths": [],
+      "unchangedFromPreviousHead": true
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-5-weeks.json",
+      "bytes": 20285,
+      "sha256": "127c75ae30f0588194c3adcb3d60c80b7f55622f35422f080d83f395c5fb877e",
+      "affectedItemNamePaths": [],
+      "unchangedFromPreviousHead": true
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-death.json",
+      "bytes": 20250,
+      "sha256": "63be0f806c715809517744a8d249e05fbe09e68ebfb8ad19293e3f508156234b",
+      "affectedItemNamePaths": [],
+      "unchangedFromPreviousHead": true
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-raid.json",
+      "bytes": 20308,
+      "sha256": "2c0a968e164d1e3518c1b17812b8c61d8aa8788270a4049fbb9d7334dcef58da",
+      "affectedItemNamePaths": [],
+      "unchangedFromPreviousHead": true
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-robbery.json",
+      "bytes": 20248,
+      "sha256": "c1cc74255ed39333fbba6362a9b7f25dce9ef194c73a74c05884e76f7b8cca67",
+      "affectedItemNamePaths": [],
+      "unchangedFromPreviousHead": true
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-wound.json",
+      "bytes": 20249,
+      "sha256": "36f36c603cba9b1e5f03a9c481d86acc131090741f39c017f1cd0ade195523e2",
+      "affectedItemNamePaths": [],
+      "unchangedFromPreviousHead": true
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-demand-card.json",
+      "bytes": 20323,
+      "sha256": "71ef9061c44fadf551f474cd888f924e7976a9a8a368a9def9a8706905d31ab0",
+      "affectedItemNamePaths": [],
+      "unchangedFromPreviousHead": true
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-laws.json",
+      "bytes": 20465,
+      "sha256": "8daf63999e0d13e5956584f68ddf0adff53e423c832a3e73f86138fd9739c910",
+      "affectedItemNamePaths": [],
+      "unchangedFromPreviousHead": true
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-new-game.json",
+      "bytes": 20256,
+      "sha256": "695d8bd3ab198209ee2793d7c521caec6f2a9df167cb9c7826e8470ca64f24a7",
+      "affectedItemNamePaths": [],
+      "unchangedFromPreviousHead": true
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-rebellion-last-week.json",
+      "bytes": 20266,
+      "sha256": "fe87d1ed940e7ac748b43acb04f292b7de81390c710d620a790074e309e13729",
+      "affectedItemNamePaths": [],
+      "unchangedFromPreviousHead": true
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v9/new-game.json",
+      "bytes": 9814,
+      "sha256": "d3892eb83325414c24d3399f2042c1e2afcf852cde525ab6b57bb6f6740761fb",
+      "affectedItemNamePaths": [],
+      "unchangedFromPreviousHead": true
+    }
+  ],
+  "affectedItemNamesStored": false,
+  "regenerated": false,
+  "reason": "Golden and v9 checkpoints store item definition ids, not the affected display names. Production fixture/golden comparison tests run without generation flags and confirm unchanged bytes."
+}

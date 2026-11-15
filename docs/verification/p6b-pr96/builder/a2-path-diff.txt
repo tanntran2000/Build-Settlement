@@ -1,0 +1,223 @@
+HEAD: db7c65a1ccd0b679ae37d3214e71dd075bd3c69d
+Tree: 94962a9ee504920932f5bec0882b7c82c5a9055a
+UTC: 2026-11-15T02:02:37.7209393Z
+Command: node packages/simulation/src/__tests__/fixtures/p6b-crafting-path-diff.ts
+Status before:
+ M packages/core/src/__tests__/catalog-data.test.ts  M packages/core/src/data/buildings.json  M packages/core/src/data/tuning.json  M packages/core/src/data/validate.ts  M packages/core/src/trial/__tests__/crime.test.ts  M packages/core/src/trial/__tests__/crisis.test.ts  M packages/core/src/trial/__tests__/items.test.ts  M packages/core/src/trial/__tests__/law.test.ts  M packages/core/src/trial/__tests__/order.test.ts  M packages/core/src/trial/__tests__/outside.test.ts  M packages/core/src/trial/__tests__/society-map.test.ts  M packages/core/src/trial/__tests__/society.test.ts  M packages/core/src/trial/society.ts  M packages/core/src/world/__tests__/session.test.ts  M packages/persistence/src/__tests__/character-life-save.test.ts  M packages/persistence/src/__tests__/item-records.test.ts  M packages/persistence/src/__tests__/items-rebuild-order.test.ts  M packages/persistence/src/__tests__/session-records.test.ts  M packages/persistence/src/__tests__/society-new-game-fixture.test.ts  M packages/persistence/src/session-records.ts  M packages/simulation/src/__tests__/character-life-observation.test.ts  M packages/simulation/src/__tests__/crime-fixtures.test.ts  M packages/simulation/src/__tests__/crisis-fixtures.test.ts  M packages/simulation/src/__tests__/fixtures/catalog-golden.json  M packages/simulation/src/__tests__/law-fixture.test.ts  M packages/simulation/src/__tests__/law-week.test.ts  M packages/simulation/src/__tests__/lord-health.test.ts  M packages/ui/src/__tests__/character-life-session.test.ts  M packages/ui/src/__tests__/world-session.test.ts  M tests/e2e/crime.spec.ts  M tests/e2e/crisis.spec.ts  M tests/e2e/garrison.spec.ts  M tests/e2e/items.spec.ts  M tests/e2e/laws.spec.ts  M tests/e2e/ledger.spec.ts  M tests/e2e/society.spec.ts  M tests/e2e/storage.spec.ts  M tests/e2e/tile-save.spec.ts  M tests/e2e/title.spec.ts  M tests/e2e/world-session.spec.ts ?? packages/persistence/src/__tests__/fixtures/society-v9/ ?? packages/persistence/src/__tests__/society-v8-fixture.test.ts ?? packages/simulation/src/__tests__/fixtures/p6b-crafting-path-diff.ts ?? packages/simulation/src/__tests__/smithy-data.test.ts
+Base: e85917733e229701830ad7f53dfcfbe2fefab831
+UTC: 2026-11-15T02:02:37.924Z
+Golden before SHA256: b7c987c55aff0975964a26b512f8bdaaa850fed8becb1f278b83543d28706675
+Golden after SHA256: 23b891b31ec93a70876dea69bd4b90d9bc940230514399780ddb45ef8e4ad505
+Golden seed 0: 39 changed state paths; unexpected: 0
+  city.society.rulesetId
+  city.society.items.inventory.0.defId
+  city.society.items.inventory.1.defId
+  city.society.items.inventory.2.defId
+  city.society.items.inventory.3.defId
+  city.society.items.inventory.4.defId
+  city.society.items.inventory.5.defId
+  city.society.items.inventory.6.defId
+  city.society.items.inventory.7.defId
+  city.society.items.inventory.8.defId
+  city.society.items.inventory.9.defId
+  city.society.items.inventory.10.defId
+  city.society.items.inventory.11.defId
+  city.society.items.inventory.12.defId
+  city.society.items.inventory.13.defId
+  city.society.items.inventory.14.defId
+  city.society.items.inventory.15.defId
+  city.society.items.inventory.16.defId
+  city.society.items.inventory.17.defId
+  city.society.items.inventory.18.defId
+  city.society.items.inventory.19.defId
+  city.society.items.inventory.20.defId
+  city.society.items.inventory.21.defId
+  city.society.items.inventory.22.defId
+  city.society.items.inventory.23.defId
+  city.society.items.inventory.24.defId
+  city.society.items.inventory.25.defId
+  city.society.items.inventory.26.defId
+  city.society.items.inventory.28.defId
+  city.society.items.inventory.29.defId
+  city.society.items.inventory.30.defId
+  city.society.items.inventory.31.defId
+  city.society.items.market.0.defId
+  city.society.items.market.2.defId
+  city.society.items.market.3.defId
+  city.society.items.market.4.defId
+  city.society.items.market.5.defId
+  city.society.items.market.6.defId
+  city.society.items.market.7.defId
+Golden seed 42: 38 changed state paths; unexpected: 0
+  city.society.rulesetId
+  city.society.items.inventory.0.defId
+  city.society.items.inventory.1.defId
+  city.society.items.inventory.2.defId
+  city.society.items.inventory.3.defId
+  city.society.items.inventory.4.defId
+  city.society.items.inventory.5.defId
+  city.society.items.inventory.6.defId
+  city.society.items.inventory.7.defId
+  city.society.items.inventory.8.defId
+  city.society.items.inventory.9.defId
+  city.society.items.inventory.10.defId
+  city.society.items.inventory.11.defId
+  city.society.items.inventory.12.defId
+  city.society.items.inventory.13.defId
+  city.society.items.inventory.14.defId
+  city.society.items.inventory.16.defId
+  city.society.items.inventory.17.defId
+  city.society.items.inventory.18.defId
+  city.society.items.inventory.19.defId
+  city.society.items.inventory.20.defId
+  city.society.items.inventory.21.defId
+  city.society.items.inventory.22.defId
+  city.society.items.inventory.23.defId
+  city.society.items.inventory.24.defId
+  city.society.items.inventory.25.defId
+  city.society.items.inventory.27.defId
+  city.society.items.inventory.28.defId
+  city.society.items.inventory.29.defId
+  city.society.items.inventory.30.defId
+  city.society.items.market.0.defId
+  city.society.items.market.1.defId
+  city.society.items.market.2.defId
+  city.society.items.market.3.defId
+  city.society.items.market.4.defId
+  city.society.items.market.5.defId
+  city.society.items.market.6.defId
+  city.society.items.market.7.defId
+Golden seed 20261028: 29 changed state paths; unexpected: 0
+  city.society.rulesetId
+  city.society.items.inventory.0.defId
+  city.society.items.inventory.1.defId
+  city.society.items.inventory.2.defId
+  city.society.items.inventory.3.defId
+  city.society.items.inventory.4.defId
+  city.society.items.inventory.5.defId
+  city.society.items.inventory.6.defId
+  city.society.items.inventory.7.defId
+  city.society.items.inventory.8.defId
+  city.society.items.inventory.9.defId
+  city.society.items.inventory.10.defId
+  city.society.items.inventory.11.defId
+  city.society.items.inventory.12.defId
+  city.society.items.inventory.13.defId
+  city.society.items.inventory.14.defId
+  city.society.items.inventory.15.defId
+  city.society.items.inventory.16.defId
+  city.society.items.inventory.17.defId
+  city.society.items.inventory.18.defId
+  city.society.items.inventory.21.defId
+  city.society.items.market.0.defId
+  city.society.items.market.1.defId
+  city.society.items.market.2.defId
+  city.society.items.market.3.defId
+  city.society.items.market.4.defId
+  city.society.items.market.5.defId
+  city.society.items.market.6.defId
+  city.society.items.market.7.defId
+v9/life-5-weeks.json: 10 changed state paths; unexpected: 0
+  city.society.rulesetId
+  city.society.items.inventory.0.defId
+  city.society.items.market.0.defId
+  city.society.items.market.1.defId
+  city.society.items.market.2.defId
+  city.society.items.market.3.defId
+  city.society.items.market.4.defId
+  city.society.items.market.5.defId
+  city.society.items.market.6.defId
+  city.society.items.market.7.defId
+v9/life-crime-death.json: 9 changed state paths; unexpected: 0
+  city.society.rulesetId
+  city.society.items.market.0.defId
+  city.society.items.market.1.defId
+  city.society.items.market.2.defId
+  city.society.items.market.3.defId
+  city.society.items.market.4.defId
+  city.society.items.market.5.defId
+  city.society.items.market.6.defId
+  city.society.items.market.7.defId
+v9/life-crime-raid.json: 9 changed state paths; unexpected: 0
+  city.society.rulesetId
+  city.society.items.market.0.defId
+  city.society.items.market.1.defId
+  city.society.items.market.2.defId
+  city.society.items.market.3.defId
+  city.society.items.market.4.defId
+  city.society.items.market.5.defId
+  city.society.items.market.6.defId
+  city.society.items.market.7.defId
+v9/life-crime-robbery.json: 9 changed state paths; unexpected: 0
+  city.society.rulesetId
+  city.society.items.market.0.defId
+  city.society.items.market.1.defId
+  city.society.items.market.2.defId
+  city.society.items.market.3.defId
+  city.society.items.market.4.defId
+  city.society.items.market.5.defId
+  city.society.items.market.6.defId
+  city.society.items.market.7.defId
+v9/life-crime-wound.json: 9 changed state paths; unexpected: 0
+  city.society.rulesetId
+  city.society.items.market.0.defId
+  city.society.items.market.1.defId
+  city.society.items.market.2.defId
+  city.society.items.market.3.defId
+  city.society.items.market.4.defId
+  city.society.items.market.5.defId
+  city.society.items.market.6.defId
+  city.society.items.market.7.defId
+v9/life-demand-card.json: 9 changed state paths; unexpected: 0
+  city.society.rulesetId
+  city.society.items.market.0.defId
+  city.society.items.market.1.defId
+  city.society.items.market.2.defId
+  city.society.items.market.3.defId
+  city.society.items.market.4.defId
+  city.society.items.market.5.defId
+  city.society.items.market.6.defId
+  city.society.items.market.7.defId
+v9/life-laws.json: 8 changed state paths; unexpected: 0
+  city.society.rulesetId
+  city.society.items.inventory.0.defId
+  city.society.items.market.0.defId
+  city.society.items.market.2.defId
+  city.society.items.market.4.defId
+  city.society.items.market.5.defId
+  city.society.items.market.6.defId
+  city.society.items.market.7.defId
+v9/life-new-game.json: 9 changed state paths; unexpected: 0
+  city.society.rulesetId
+  city.society.items.market.0.defId
+  city.society.items.market.1.defId
+  city.society.items.market.2.defId
+  city.society.items.market.3.defId
+  city.society.items.market.4.defId
+  city.society.items.market.5.defId
+  city.society.items.market.6.defId
+  city.society.items.market.7.defId
+v9/life-rebellion-last-week.json: 9 changed state paths; unexpected: 0
+  city.society.rulesetId
+  city.society.items.market.0.defId
+  city.society.items.market.1.defId
+  city.society.items.market.2.defId
+  city.society.items.market.3.defId
+  city.society.items.market.4.defId
+  city.society.items.market.5.defId
+  city.society.items.market.6.defId
+  city.society.items.market.7.defId
+v9/new-game.json: 8 changed state paths; unexpected: 0
+  society.rulesetId
+  society.items.market.0.defId
+  society.items.market.1.defId
+  society.items.market.2.defId
+  society.items.market.3.defId
+  society.items.market.4.defId
+  society.items.market.6.defId
+  society.items.market.7.defId
+PASS: 3 golden seeds, 10 new v9 scenarios; only ruleset/items state paths change; all 53 historical fixtures are byte-identical; original generator/P6-A path evidence Git blobs unchanged.
+
+Exit: 0
+UTC end: 2026-11-15T02:02:40.4667476Z
+Elapsed seconds: 2.6908509

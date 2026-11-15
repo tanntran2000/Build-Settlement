@@ -1,0 +1,551 @@
+[
+  {
+    "n": 1,
+    "path": "packages/core/src/__tests__/catalog-data.test.ts",
+    "added": 4,
+    "deleted": 4,
+    "method": "full diff",
+    "lines": 33,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 2,
+    "path": "packages/core/src/__tests__/items-catalog.test.ts",
+    "added": 4,
+    "deleted": 4,
+    "method": "full diff",
+    "lines": 28,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 3,
+    "path": "packages/core/src/__tests__/recipes-catalog.test.ts",
+    "added": 151,
+    "deleted": 0,
+    "method": "full diff",
+    "lines": 157,
+    "result": "PASS; scope and content inspected"
+  },
+  {
+    "n": 4,
+    "path": "packages/core/src/data/buildings.json",
+    "added": 16,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 35,
+    "result": "PASS; scope and content inspected"
+  },
+  {
+    "n": 5,
+    "path": "packages/core/src/data/items.json",
+    "added": 357,
+    "deleted": 15,
+    "method": "scripted for large JSON",
+    "lines": 481,
+    "result": "PASS; scope and content inspected"
+  },
+  {
+    "n": 6,
+    "path": "packages/core/src/data/recipes.json",
+    "added": 854,
+    "deleted": 0,
+    "method": "scripted for large JSON",
+    "lines": 860,
+    "result": "PASS; scope and content inspected"
+  },
+  {
+    "n": 7,
+    "path": "packages/core/src/data/tuning.json",
+    "added": 1,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 13,
+    "result": "PASS; scope and content inspected"
+  },
+  {
+    "n": 8,
+    "path": "packages/core/src/data/validate.ts",
+    "added": 72,
+    "deleted": 4,
+    "method": "full diff",
+    "lines": 119,
+    "result": "PASS; parsed-object validator boundary noted (P3)"
+  },
+  {
+    "n": 9,
+    "path": "packages/core/src/index.ts",
+    "added": 1,
+    "deleted": 0,
+    "method": "full diff",
+    "lines": 9,
+    "result": "PASS; scope and content inspected"
+  },
+  {
+    "n": 10,
+    "path": "packages/core/src/trial/__tests__/crime.test.ts",
+    "added": 1,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 13,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 11,
+    "path": "packages/core/src/trial/__tests__/crisis.test.ts",
+    "added": 1,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 13,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 12,
+    "path": "packages/core/src/trial/__tests__/items.test.ts",
+    "added": 2,
+    "deleted": 2,
+    "method": "full diff",
+    "lines": 15,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 13,
+    "path": "packages/core/src/trial/__tests__/law.test.ts",
+    "added": 1,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 13,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 14,
+    "path": "packages/core/src/trial/__tests__/order.test.ts",
+    "added": 1,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 13,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 15,
+    "path": "packages/core/src/trial/__tests__/outside.test.ts",
+    "added": 1,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 13,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 16,
+    "path": "packages/core/src/trial/__tests__/society-map.test.ts",
+    "added": 2,
+    "deleted": 2,
+    "method": "full diff",
+    "lines": 29,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 17,
+    "path": "packages/core/src/trial/__tests__/society.test.ts",
+    "added": 14,
+    "deleted": 14,
+    "method": "full diff",
+    "lines": 52,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 18,
+    "path": "packages/core/src/trial/items.ts",
+    "added": 2,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 21,
+    "result": "PASS; scope and content inspected"
+  },
+  {
+    "n": 19,
+    "path": "packages/core/src/trial/recipes.ts",
+    "added": 32,
+    "deleted": 0,
+    "method": "full diff",
+    "lines": 38,
+    "result": "PASS; scope and content inspected"
+  },
+  {
+    "n": 20,
+    "path": "packages/core/src/trial/society.ts",
+    "added": 1,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 13,
+    "result": "PASS; scope and content inspected"
+  },
+  {
+    "n": 21,
+    "path": "packages/core/src/world/__tests__/session.test.ts",
+    "added": 14,
+    "deleted": 14,
+    "method": "full diff",
+    "lines": 43,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 22,
+    "path": "packages/persistence/src/__tests__/character-life-save.test.ts",
+    "added": 2,
+    "deleted": 2,
+    "method": "full diff",
+    "lines": 21,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 23,
+    "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-5-weeks.json",
+    "added": 1,
+    "deleted": 0,
+    "method": "scripted for large JSON",
+    "lines": 8,
+    "result": "PASS; scope and content inspected"
+  },
+  {
+    "n": 24,
+    "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-death.json",
+    "added": 1,
+    "deleted": 0,
+    "method": "scripted for large JSON",
+    "lines": 8,
+    "result": "PASS; scope and content inspected"
+  },
+  {
+    "n": 25,
+    "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-raid.json",
+    "added": 1,
+    "deleted": 0,
+    "method": "scripted for large JSON",
+    "lines": 8,
+    "result": "PASS; scope and content inspected"
+  },
+  {
+    "n": 26,
+    "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-robbery.json",
+    "added": 1,
+    "deleted": 0,
+    "method": "scripted for large JSON",
+    "lines": 8,
+    "result": "PASS; scope and content inspected"
+  },
+  {
+    "n": 27,
+    "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-wound.json",
+    "added": 1,
+    "deleted": 0,
+    "method": "scripted for large JSON",
+    "lines": 8,
+    "result": "PASS; scope and content inspected"
+  },
+  {
+    "n": 28,
+    "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-demand-card.json",
+    "added": 1,
+    "deleted": 0,
+    "method": "scripted for large JSON",
+    "lines": 8,
+    "result": "PASS; scope and content inspected"
+  },
+  {
+    "n": 29,
+    "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-laws.json",
+    "added": 1,
+    "deleted": 0,
+    "method": "scripted for large JSON",
+    "lines": 8,
+    "result": "PASS; scope and content inspected"
+  },
+  {
+    "n": 30,
+    "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-new-game.json",
+    "added": 1,
+    "deleted": 0,
+    "method": "scripted for large JSON",
+    "lines": 8,
+    "result": "PASS; scope and content inspected"
+  },
+  {
+    "n": 31,
+    "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-rebellion-last-week.json",
+    "added": 1,
+    "deleted": 0,
+    "method": "scripted for large JSON",
+    "lines": 8,
+    "result": "PASS; scope and content inspected"
+  },
+  {
+    "n": 32,
+    "path": "packages/persistence/src/__tests__/fixtures/society-v9/new-game.json",
+    "added": 1,
+    "deleted": 0,
+    "method": "scripted for large JSON",
+    "lines": 8,
+    "result": "PASS; scope and content inspected"
+  },
+  {
+    "n": 33,
+    "path": "packages/persistence/src/__tests__/item-records.test.ts",
+    "added": 2,
+    "deleted": 2,
+    "method": "full diff",
+    "lines": 15,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 34,
+    "path": "packages/persistence/src/__tests__/items-rebuild-order.test.ts",
+    "added": 1,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 13,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 35,
+    "path": "packages/persistence/src/__tests__/session-records.test.ts",
+    "added": 1,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 13,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 36,
+    "path": "packages/persistence/src/__tests__/society-new-game-fixture.test.ts",
+    "added": 7,
+    "deleted": 7,
+    "method": "full diff",
+    "lines": 44,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 37,
+    "path": "packages/persistence/src/__tests__/society-v8-fixture.test.ts",
+    "added": 27,
+    "deleted": 0,
+    "method": "full diff",
+    "lines": 33,
+    "result": "PASS; historical JSON-derived record coverage; native v8 row layout not exercised"
+  },
+  {
+    "n": 38,
+    "path": "packages/persistence/src/session-records.ts",
+    "added": 2,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 21,
+    "result": "PASS; scope and content inspected"
+  },
+  {
+    "n": 39,
+    "path": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+    "added": 1,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 13,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 40,
+    "path": "packages/simulation/src/__tests__/crime-fixtures.test.ts",
+    "added": 1,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 13,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 41,
+    "path": "packages/simulation/src/__tests__/crisis-fixtures.test.ts",
+    "added": 1,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 13,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 42,
+    "path": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "added": 3,
+    "deleted": 3,
+    "method": "scripted for large JSON",
+    "lines": 30,
+    "result": "PASS; scope and content inspected"
+  },
+  {
+    "n": 43,
+    "path": "packages/simulation/src/__tests__/fixtures/p6b-crafting-path-diff.ts",
+    "added": 58,
+    "deleted": 0,
+    "method": "full diff",
+    "lines": 64,
+    "result": "PASS; scope and content inspected"
+  },
+  {
+    "n": 44,
+    "path": "packages/simulation/src/__tests__/fixtures/p6b-crafting-path-diff.txt",
+    "added": 213,
+    "deleted": 0,
+    "method": "full diff",
+    "lines": 219,
+    "result": "PASS; scope and content inspected"
+  },
+  {
+    "n": 45,
+    "path": "packages/simulation/src/__tests__/law-fixture.test.ts",
+    "added": 1,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 13,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 46,
+    "path": "packages/simulation/src/__tests__/law-week.test.ts",
+    "added": 10,
+    "deleted": 10,
+    "method": "full diff",
+    "lines": 66,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 47,
+    "path": "packages/simulation/src/__tests__/lord-health.test.ts",
+    "added": 2,
+    "deleted": 2,
+    "method": "full diff",
+    "lines": 22,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 48,
+    "path": "packages/simulation/src/__tests__/smithy-data.test.ts",
+    "added": 53,
+    "deleted": 0,
+    "method": "full diff",
+    "lines": 59,
+    "result": "PASS; scope and content inspected"
+  },
+  {
+    "n": 49,
+    "path": "packages/ui/src/__tests__/character-life-session.test.ts",
+    "added": 1,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 13,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 50,
+    "path": "packages/ui/src/__tests__/world-session.test.ts",
+    "added": 1,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 13,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 51,
+    "path": "tests/e2e/crime.spec.ts",
+    "added": 1,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 13,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 52,
+    "path": "tests/e2e/crisis.spec.ts",
+    "added": 1,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 13,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 53,
+    "path": "tests/e2e/garrison.spec.ts",
+    "added": 1,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 13,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 54,
+    "path": "tests/e2e/items.spec.ts",
+    "added": 2,
+    "deleted": 2,
+    "method": "full diff",
+    "lines": 22,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 55,
+    "path": "tests/e2e/laws.spec.ts",
+    "added": 1,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 13,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 56,
+    "path": "tests/e2e/ledger.spec.ts",
+    "added": 1,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 13,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 57,
+    "path": "tests/e2e/society.spec.ts",
+    "added": 1,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 13,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 58,
+    "path": "tests/e2e/storage.spec.ts",
+    "added": 1,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 13,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 59,
+    "path": "tests/e2e/tile-save.spec.ts",
+    "added": 1,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 13,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 60,
+    "path": "tests/e2e/title.spec.ts",
+    "added": 2,
+    "deleted": 2,
+    "method": "full diff",
+    "lines": 22,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  },
+  {
+    "n": 61,
+    "path": "tests/e2e/world-session.spec.ts",
+    "added": 1,
+    "deleted": 1,
+    "method": "full diff",
+    "lines": 13,
+    "result": "PASS; approved edits reconstructed byte-for-byte"
+  }
+]

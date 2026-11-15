@@ -1,0 +1,20 @@
+{
+  "utc": "2026-11-15T03:09:33.164Z",
+  "head": "b0c0b37cb25601b69f03b8844ac8a3f957304d4d",
+  "label": "case-10-alone-1",
+  "artifacts": [
+    {
+      "file": "ledger-B3-crime-raid-lette-a10dc--and-complete-report-parity-chromium/error-context.md",
+      "bytes": 33551,
+      "sha256": "12e399809c1aba89d811902ddef6787c96519bb5dbb4a9fae58b227ec8996641",
+      "over1MB": false
+    },
+    {
+      "file": "ledger-B3-crime-raid-lette-a10dc--and-complete-report-parity-chromium/trace.zip",
+      "bytes": 1060770,
+      "sha256": "c4443db5bca097ec9f1c3b4172f90b05e7119448b28515cb1ed5db7e2c75dfa5",
+      "over1MB": true
+    }
+  ],
+  "note": "Raw local failure artifacts preserved before a later Playwright run can replace test-results. Files over 1 MB should be represented by hashes for later docs-branch publication."
+}

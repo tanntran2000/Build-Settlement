@@ -1,0 +1,168 @@
+P6-B Astra review
+mcp:30d3cb3c-8db4-4a8c-a11a-2307938aa863  completed  codex/gpt-6-astra
+
+[user]
+Astra, independent READ-ONLY review of P6-B PR A (crafting data), PR #96 https://github.com/tanntran2000/Build-Settlement/pull/96. Do not run tests or builds. Claude's gates and full smoke at this head are done (all exit 0; 2,559 unit; 370/370 smoke with CI=1); CI quality-gate run 43676162532 success.
+
+Worktree: C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01, branch feat/p6b-crafting-data. Confirm HEAD == a60711120b8c3d7ff9759a14cbb7a6c09ec396c5, tree 1b26a634536c83699780f1a9479ce64ebb10717d. Base origin/main e859177. Range `git diff e859177..a607111`: 4 commits, 61 files, +1942/−116.
+
+Binding plan: C:/Users/Admin/.t3/local-drafts/p6b-prA/binding-plan-3bee3ae.md (Decisions 1–4 and 7, PR A allowlist, Plan corrections 1–3). Spec: C:/Users/Admin/.t3/local-drafts/p6b-prA/binding-spec-cd1b18a.md (§4, §5, §6.1, §8).
+
+Owner decisions (Tân, verbatim): "bắt đầu đi"; "A đi"; "nên theo hướng B …"; "ok tôi đồng ý theo nhóm để dễ kiểm soát"; "Duyệt spec"; "Duyệt, giao Builder A"; "Sau Step 0"; correction 1: "Approve the 58 edits (Recommended)", "Allow the 3 lines (Recommended)", "Allow both (Recommended)", "120 Gold, 3× rule (Recommended)"; correction 2: "Set this test to 15 s (Recommended)"; correction 3: "Lord's / Retainer's prefix (Recommended)".
+
+Builder evidence: C:/Users/Admin/.t3/local-drafts/p6b-prA/README.md (Step 0 package, step0-proposed-edits.md, p59-edit.md, correction3-name-edits.json, verify-edits.mjs — run it read-only with the argument `NAMES`, hash-pin-changes.md, golden-path-diff.txt, gates, smoke, bundle).
+
+Avoid truncation: read each changed file's full diff with `sed -n` ranges and reconcile with `git diff --numstat e859177..a607111`. For items.json, recipes.json, catalog-golden.json and the society-v9 fixtures, use short read-only scripts (structure, counts, path diffs, blob ids) instead of reading them as one blob. State this per file.
+
+Check:
+1. **Scope.** Every changed file is in the PR A allowlist or corrections 1–3 (society.ts:14 and validate.ts:306/:626 ruleset literals; smithy-data.test.ts and society-v8-fixture.test.ts). No order, command, week or UI code. The 26 existing item definitions and ITEM_TRIAL are byte-identical.
+2. **Catalog (Decisions 1–2, correction 3).** Each material's family is right; 54 non-Legendary wearables, exactly one per (rarity, slot, kind); new ids `<rarity>-<slot>-<kind>`; stats follow the slot pattern (main = slot's common main, secondary = slot's rare secondary, Player regen by rarity, NPC none); prices 5/15/40 and sets 15/45/120 Gold; every item name unique with the right Lord's / Retainer's prefix.
+3. **Recipes (Decision 3).** 47 recipes: 8 refine, 38 upgrade, 1 fixed; every rule of Decision 3 enforced by `validateRecipes` (family, tier step, same slot and kind, workshop by family, fee table, no Legendary output); error messages in the `recipes.json#<id>.<field>: <rule>` form; JSON imported `with { type: 'json' }`.
+4. **Smithy and ruleset (Decisions 4, 7).** Smithy definition exact; reserved false; ruleset 09 everywhere it must be; v8 refused unchanged like v7; v9 fixtures are the v8 scenarios regenerated.
+5. **Existing-test edits.** Exactly P1–P59 (P4 after-text per correction 3); nothing else changed in those files; nothing loosened. Re-check independently, not only via the verifier. Judge P49's seed change and P59's 15 s timeout against their approvals.
+6. **Pins and golden.** Recompute the changed pins; golden regenerated once; path diff vs e859177 only `city.society.rulesetId` and `city.society.items.*`; 53 historical fixtures byte-identical.
+7. LAW-03/04/06 implications of the data changes, plus anything else, P0–P3 with file:line.
+
+Reply PASS or FAIL, with findings, the per-file count reconciliation, and limits. Do not edit, install, run tests or builds, push or merge.
+
+
+[assistant]
+Review the exact PR head against the approved plan and evidence. This is a read-only review; test and build results will be attributed to Claude and CI.
+
+
+
+[assistant]
+HEAD, tree, and base match the requested values; the worktree is clean. The supplied verifier writes an inventory file, so I’ll suppress that write in memory while running its `NAMES` checks to preserve the read-only constraint.
+
+
+
+[assistant]
+**FAIL — review sign-off withheld because this review did not complete every required verification.** No confirmed P0–P3 product defect was found in the inspected changes to [PR #96](https://github.com/tanntran2000/Build-Settlement/pull/96). This is an incomplete-review verdict, not a claim that the implementation fails.
+
+The exact local revision is confirmed:
+
+| Identity | Observed value |
+|---|---|
+| HEAD | `a60711120b8c3d7ff9759a14cbb7a6c09ec396c5` |
+| Tree | `1b26a634536c83699780f1a9479ce64ebb10717d` |
+| `origin/main` | `e85917733e229701830ad7f53dfcfbe2fefab831` |
+| Commit range | Four commits |
+| Worktree | Clean before and after inspection |
+
+**Verified results**
+
+1. **Scope and approved edits:** The supplied `NAMES` verifier completed with exit 0 after I removed its inventory-file write **in memory**, preserving the read-only constraint. It reported 59 approved blocks across 35 existing test files, 61 changed files within its corrected allowlist, preservation of 26 historical wearables and `ITEM_TRIAL`, and 53 unchanged historical fixtures. I also inspected existing-test diffs independently, including the seeded expectations, fixture paths, catalog counts, P49 and P59. P49’s `12345 → 82` seed change matches correction 1; P59 adds only the approved 15-second timeout to the named test. Neither removes its assertions.
+
+2. **Catalog and recipes:** Independent read-only inspection found 76 definitions and **47 recipes: 8 refine, 38 upgrade, 1 fixed**. Checks of new IDs, historical wearable values, slot-derived stats, Player/NPC regeneration, new-item prices, unique names, upgrade slot/kind preservation, material family and tier progression completed with exit 0. The validator source covers the requested recipe relationships, workshop-family restrictions, fee lookup, Legendary exclusion and catalog-style errors. JSON imports use `with { type: 'json' }`.
+
+3. **Smithy and persistence:** The inspected diff gives Smithy the approved definition and `reserved: false`. The ruleset changes and historical-v8 record handling match the approved changes. No order, command, week or UI **product implementation** appears in the changed-file inventory; UI and end-to-end changes are tests.
+
+4. **Pins and fixtures:** Recomputed pins matched the supplied expected values. The read-only committed path-inspection script completed successfully: **three golden scenarios and ten v9 fixtures differ only within the permitted ruleset/items state paths**, with the corresponding envelope ruleset bump; all **53 historical fixtures are byte-identical**. Existing generator and P6-A path-evidence Git blobs are unchanged.
+
+The recomputed pins were:
+
+| Catalog | SHA-256 |
+|---|---|
+| `ITEM_CATALOG` | `7fdeadb141aba95586555f531e044fcdc8a5eccd2c2766fab94c48714793f96d` |
+| `TRIAL_BUILDINGS` | `5f27eec1560b3aef1a61312497eb82be8970a28317e09078f76956ea8ed88219` |
+| `SOCIETY_BUILDINGS` | `e23c932be89d5d3fd561d44ac863bed90fc73d27a9795d65d588e813889e2a3b` |
+| `SOCIETY_TRIAL` | `49add1753fd6d630e3cf7f4f7395f2bd7b844936086ef0b9f06fb6cb595090e6` |
+| `RECIPES` | `7ccddfc8953ff24d17edf085224ffa8d9937a93080f6021d6379a38e11cc8065` |
+| `CRAFT_TRIAL` | `587e7927288b57df15e2ffa68b1f3244b8eba3b92b107c0da40e58fcdad7d6b8` |
+
+**Count reconciliation**
+
+The observed `git diff --numstat` contains all 61 files. The following partition reconciles the requested totals, but does **not** substitute for the requested completed per-file review ledger:
+
+| File group | Files | Added | Deleted |
+|---|---:|---:|---:|
+| Existing test files | 35 | 97 | 97 |
+| New recipe, Smithy and v8 tests | 3 | 231 | 0 |
+| Product data, types, validator, exports and persistence | 10 | 1,338 | 16 |
+| New society-v9 fixtures | 10 | 10 | 0 |
+| Golden and crafting path-diff artifacts | 3 | 274 | 3 |
+| **Total** | **61** | **1,950** | **116** |
+
+**There is a concrete discrepancy in the request’s range summary:** the observed per-file numstat sums to **+1,950/−116**, not **+1,942/−116**. The eight-line difference should be reconciled before recording the review inventory.
+
+**Limits preventing PASS**
+
+- Two broad tool outputs were truncated. I recovered substantial omitted source through narrower reads, but did not finish the prescribed `sed -n` per-file accounting or independently reconstruct all P1–P59 edits separately from the supplied verifier.
+- I verified the golden’s resulting paths and preserved generator blobs. I did **not** independently establish the historical claim that generation ran exactly once.
+- LAW-03/04/06 inspection found no demonstrated violation in the reviewed changes. Exhaustive call-path verification and malformed-input analysis were not completed, so this is not a complete invariant sign-off.
+- No tests, builds, installation, edits, push or merge were performed. The **2,559 unit / 370 smoke** results and successful CI run **43676162532** remain supplied evidence; I did not independently authenticate that remote run or audit its full logs.
+
+**Next action: keep G5 pending until a completed independent review resolves the +1,950 versus +1,942 inventory discrepancy and supplies the missing per-file sign-off.**
+
+[user]
+Astra, round 2 on PR #96 at the same head a60711120b8c3d7ff9759a14cbb7a6c09ec396c5 (tree 1b26a634536c83699780f1a9479ce64ebb10717d). Nothing changed since your round 1. Please complete the review you could not finish; your verified results from round 1 stand.
+
+1. **Line counts.** Claude re-ran both: `git diff --numstat e859177..a607111 | awk '{a+=$1;d+=$2} END{print a, d}'` gives **1942 116**, and `git diff --shortstat` gives 61 files, +1942/−116. Your group table sums to 1950, so one of your group subtotals is off by 8. Recompute the per-file ledger from numstat directly; do not use grouped estimates.
+
+2. **Avoid truncation this time.** Write your working notes and the per-file ledger to files under `C:/Users/Admin/.t3/local-drafts/p6b-prA/astra-review/` (this folder is outside the repo; you may create it; write nothing anywhere else). Read each changed file's diff on its own (`git diff e859177..a607111 -- <file>`), paging with `sed -n` ranges, and append one ledger row per file: path, +, −, how read (full diff / scripted for large JSON), result. Keep tool outputs short (pipe through `head`/`sed -n`), so nothing is cut.
+
+3. **Independent P1–P59 reconstruction.** Without the Builder's verifier: for each of the 35 existing test files, take the base blob at e859177, apply the approved before → after blocks from `step0-proposed-edits.json` (with P4's after-text per `correction3-name-edits.json` and P59 per `p59-edit.json`), and compare byte-for-byte with HEAD. Report N/35 exact.
+
+4. **Invariants.** LAW-03: PR A adds no command or week code; confirm no new randomness or iteration-order dependency (for example object key order of the new catalog entries feeding `drawItemMarket`) beyond the documented Market pool change. LAW-04/06: `validateRecipes` refuses malformed recipes (wrong family, tier skip, Legendary output, kind change, wrong fee, unknown defId, duplicate ids); v8 refusal leaves stored bytes unchanged. Name any malformed-input class the validator lets through.
+
+5. **Golden generated once:** state what you can prove from the evidence (generator blob unchanged, one regeneration log) and what you cannot.
+
+Reply PASS or FAIL with findings (P0–P3, file:line), the ledger path and its 61-row total, the 35-file reconstruction result, and limits. Do not edit the repo, install, run tests or builds, push or merge.
+
+[assistant]
+Complete the remaining review at the unchanged head. I’ll save the per-file ledger and working notes only in the authorized `astra-review` folder, and correct the round-1 subtotal from raw numstat.
+
+
+[assistant]
+Use the installed `codebase-memory` skill for the remaining call-path inspection. Round-1 catalog and fixture results remain valid; the new work is the independent reconstruction, complete diff ledger, and validator edge cases.
+
+
+[assistant]
+The independent reconstruction is **35/35 byte-exact**, covering all P1–P59 blocks. Raw numstat confirms **61 files, +1,942/−116**. My round-1 total was wrong; the ledger now derives every count directly from Git.
+
+
+[assistant]
+The remaining source inspection found no new RNG or ordering mechanism. Both the Market and weekly item-find code use the catalog’s existing key order; the larger wearable pool changes their selected IDs, as covered by the approved expectation edits.
+
+One boundary needs explicit qualification: `validateRecipes` receives an already-parsed object. It cannot detect duplicate recipe keys discarded during JSON parsing. I’m checking the committed JSON for duplicates separately.
+
+
+[assistant]
+All 61 ledger rows are complete. The golden has one recorded regeneration run and one changing commit; its generator blob is unchanged. That supports the supplied history, but cannot prove that no unlogged regeneration occurred.
+
+The v8 refusal path preserves existing stored records. The new fixture test covers records made from historical JSON; native v8 split-item records instead reach the UI’s existing “old checkpoint, left unchanged” refusal path. I’m documenting that coverage limit.
+
+
+[assistant]
+**PASS — independent review of PR #96 is complete at `a60711120b8c3d7ff9759a14cbb7a6c09ec396c5`.** No P0–P2 findings. One nonblocking P3 validator-boundary observation is documented below.
+
+The tree remains `1b26a634536c83699780f1a9479ce64ebb10717d`, and the repository worktree is clean.
+
+1. **Counts and per-file ledger: 61/61 complete, +1,942/−116.**  
+   Claude’s count was correct. My round-1 grouped table was wrong and should be discarded. The 35 existing-test files total **+89/−89**, not the **+97/−97** I reported.
+
+   The [61-row ledger](C:/Users/Admin/.t3/local-drafts/p6b-prA/astra-review/ledger.md) records each path, additions, deletions, reading method and result. Each diff was captured separately; ordinary files received full-diff inspection, while all 13 large JSON files received structural inspection, duplicate-key checks, blob identification and applicable path comparisons.
+
+2. **Independent P1–P59 reconstruction: 35/35 byte-exact, exit 0.**  
+   Starting from each base Git blob, the independent script applied the approved blocks, substituted P4’s correction-3 after-text, and added P59. It compared the resulting buffers directly with HEAD, without line-ending normalization or the Builder’s verifier. [Per-file reconstruction results](C:/Users/Admin/.t3/local-drafts/p6b-prA/astra-review/reconstruction.json) include the block IDs and resulting hashes.
+
+   P49’s shared seed change is exactly authorized by correction 1. P59 changes only the approved test’s timeout to 15 seconds. Assertions remain intact; no additional existing-test changes remain.
+
+3. **Invariants: no blocking violation found.**  
+   **LAW-03:** No command or week implementation changed, and no RNG or clock was added. The original catalog keys retain their order; new definitions are appended. The existing catalog-order dependency remains deterministic. The expanded pool changes both **Market offers and weekly wearable finds**—the latter is covered by the approved Step-0 edits and golden inventory changes. Material and Legendary pools retain their entries and order.
+
+   **LAW-04:** Source inspection confirms rejection paths for wrong families, tier skips, Legendary input/output, wearable kind/slot changes, incorrect fees, unknown definition IDs, invalid counts, invalid workshops and duplicate workshops.
+
+   **LAW-06:** Historical JSON checkpoints are refused before loading. Record handling uses detached copies; existing stored v8 records reach the old-checkpoint refusal without being replaced or cleared. One coverage limit: the new fixture test creates historical records using the current writer, rather than exercising the native v8 split-item storage layout. That layout is nevertheless refused by the existing UI error path.
+
+4. **P3 — duplicate raw recipe keys are outside the validator’s detection boundary.**  
+   At [recipes.ts:1](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/recipes.ts:1) and [validate.ts:865](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/data/validate.ts:865), JSON is already parsed before recipe enumeration. Duplicate raw object keys can therefore be discarded before `validateRecipes` sees them. **It would be incorrect to claim this validator rejects duplicate raw recipe IDs.** The independent duplicate-aware scan found **zero duplicate keys in the committed JSON**.
+
+   This is nonblocking for the approved parsed-object validator contract and current catalog. Fixed recipes also accept repeated input `defId` rows and other non-Legendary ingredients, consistent with Decision 3’s generic fixed-recipe shape. Exact catalog contents are enforced by tests and pins, rather than entirely by `validateRecipes`.
+
+5. **Golden provenance and review limits are explicit.**  
+   The generator blob is unchanged; only commit `2a92985` changes the golden in this range. The supplied generation log records **one regeneration invocation, exit 0**. That proves one recorded run—not the absence of unlogged runs or repeated generation producing identical bytes.
+
+   No tests, builds, installation, repository edits, push or merge were performed. Claude’s **2,559 unit / 370 smoke** results and CI run **43676162532** remain attributed evidence, not reviewer reruns or independently authenticated CI results.
+
+The complete findings, source reasoning and verification record are in [REVIEW.md](C:/Users/Admin/.t3/local-drafts/p6b-prA/astra-review/REVIEW.md). All review artifacts are confined to the authorized `astra-review` directory.

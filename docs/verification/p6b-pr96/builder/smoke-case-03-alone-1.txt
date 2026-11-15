@@ -1,0 +1,60 @@
+HEAD: b0c0b37cb25601b69f03b8844ac8a3f957304d4d
+Tree: 5f9d377ec748ea62e56634b6e34dbd42d71ef868
+UTC: 2026-11-15T03:07:06.431Z
+CI=1
+Command executable: C:\Program Files\nodejs\node.exe
+Arguments: ["node_modules/@playwright/test/cli.js","test","tests/e2e/crime.spec.ts","--grep","raid report and resulting state match the crafted save"]
+PORTS_4173_4174_FREE
+
+
+Running 1 test using 1 worker
+
+  x  1 [chromium] › tests\e2e\crime.spec.ts:11:55 › raid report and resulting state match the crafted save (3.1s)
+
+
+  1) [chromium] › tests\e2e\crime.spec.ts:11:55 › raid report and resulting state match the crafted save 
+
+    Error: expect(received).toHaveLength(expected)
+
+    Expected length: 1
+    Received length: 2
+    Received array:  [["rare-earrings", {"basePriceMilli": 15000, "category": "accessory", "kind": "npc", "mainStat": "negotiation", "name": "Fine Earrings", "rarity": "rare", "secondaryStat": "management", "slot": "earrings"}], ["rare-earrings-player", {"basePriceMilli": 15000, "category": "accessory", "kind": "player", "mainStat": "negotiation", "name": "Fine Earrings", "rarity": "rare", "regen": 2, "secondaryStat": "management", "slot": "earrings"}]]
+
+       at character-life-navigation.helpers.ts:239
+
+      237 |   function definition(name: string): string {
+      238 |     const matches = Object.entries(ITEM_CATALOG).filter(([, item]) => item.name === name);
+    > 239 |     expect(matches).toHaveLength(1);
+          |                     ^
+      240 |     return matches[0][0];
+      241 |   }
+      242 |   function goal(label: string): NonNullable<TileTrialReport['items']['legendary']>['goal'] {
+        at definition (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:239:21)
+        at readItemReport (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:257:22)
+        at expectReport (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:344:12)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\crime.spec.ts:13:153
+
+    Error Context: test-results\crime-raid-report-and-resulting-state-match-the-crafted-save-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\crime-raid-report-and-resulting-state-match-the-crafted-save-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\crime-raid-report-and-resulting-state-match-the-crafted-save-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\crime.spec.ts:11:55 › raid report and resulting state match the crafted save 
+[WebServer] (node:63948) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:30784) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+(node:64812) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Exit: 1
+UTC end: 2026-11-15T03:07:20.133Z
+Elapsed seconds: 13.702
+Ports after: PORTS_4173_4174_FREE
+

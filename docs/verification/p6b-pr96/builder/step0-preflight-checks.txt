@@ -1,0 +1,23 @@
+{
+  "head": "e85917733e229701830ad7f53dfcfbe2fefab831",
+  "tree": "49f6b676c3ae57f66ef9ce6275eb89a806f52a9a",
+  "originMain": "e85917733e229701830ad7f53dfcfbe2fefab831",
+  "branch": "feat/p6b-crafting-data",
+  "status": "",
+  "utc": "2026-11-15T01:37:51.465Z",
+  "exit": 0,
+  "fetch": {
+    "command": "git fetch origin",
+    "stdout": "",
+    "stderr": "",
+    "exit": 0
+  },
+  "ports": {
+    "command": "powershell.exe -NoProfile -Command $p=@(Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue | Where-Object { $_.LocalPort -in 4173,4174 } | Select-Object LocalPort,OwningProcess); ConvertTo-Json -InputObject $p -Compress",
+    "stdout": "[]\r\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "listeners": [],
+  "note": "A0 preflight only. No tests, builds, product edits or process termination."
+}

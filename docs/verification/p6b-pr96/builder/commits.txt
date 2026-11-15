@@ -1,0 +1,15 @@
+HEAD: a60711120b8c3d7ff9759a14cbb7a6c09ec396c5
+Tree: 1b26a634536c83699780f1a9479ce64ebb10717d
+Status: empty
+
+a60711120b8c3d7ff9759a14cbb7a6c09ec396c5 fix(core): unique item names with Lord's and Retainer's prefixes
+Co-authored-by: Codex <noreply@openai.com>
+
+b0c0b37cb25601b69f03b8844ac8a3f957304d4d test(simulation): give the 60-week lord-health test a 15 s timeout
+Co-authored-by: Codex <noreply@openai.com>
+
+2a92985e20c5eb0eb0a9faa053bcd73f64410286 feat(core): smithy, ruleset 09 and fixtures
+Co-authored-by: Codex <noreply@openai.com>
+
+db7c65a1ccd0b679ae37d3214e71dd075bd3c69d feat(core): material families, item ladders and recipe catalog
+Co-authored-by: Codex <noreply@openai.com>

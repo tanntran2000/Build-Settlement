@@ -1,0 +1,23 @@
+HEAD: 2a92985e20c5eb0eb0a9faa053bcd73f64410286
+Tree: 209ba99e59335ba39097a5f58bb435cd17b0dfff
+UTC: 2026-11-15T02:04:31.8035011Z
+Command: npm test -- packages/simulation/src/__tests__/smithy-data.test.ts packages/persistence/src/__tests__/society-v8-fixture.test.ts packages/persistence/src/__tests__/society-new-game-fixture.test.ts packages/persistence/src/__tests__/item-records.test.ts packages/persistence/src/__tests__/session-records.test.ts packages/core/src/__tests__/catalog-data.test.ts packages/core/src/trial/__tests__/society-map.test.ts packages/core/src/trial/__tests__/society.test.ts packages/simulation/src/__tests__/catalog-golden.test.ts
+Status before:
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/simulation/src/__tests__/smithy-data.test.ts packages/persistence/src/__tests__/society-v8-fixture.test.ts packages/persistence/src/__tests__/society-new-game-fixture.test.ts packages/persistence/src/__tests__/item-records.test.ts packages/persistence/src/__tests__/session-records.test.ts packages/core/src/__tests__/catalog-data.test.ts packages/core/src/trial/__tests__/society-map.test.ts packages/core/src/trial/__tests__/society.test.ts packages/simulation/src/__tests__/catalog-golden.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  9 passed (9)
+      Tests  168 passed (168)
+   Start at  09:04:33
+   Duration  10.28s (transform 4.43s, setup 0ms, import 7.82s, tests 11.37s, environment 2ms)
+
+
+Exit: 0
+UTC end: 2026-11-15T02:04:43.3882863Z
+Elapsed seconds: 11.5182478

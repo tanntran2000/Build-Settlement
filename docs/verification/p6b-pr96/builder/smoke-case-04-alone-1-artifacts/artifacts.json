@@ -1,0 +1,20 @@
+{
+  "utc": "2026-11-15T03:07:36.334Z",
+  "head": "b0c0b37cb25601b69f03b8844ac8a3f957304d4d",
+  "label": "case-04-alone-1",
+  "artifacts": [
+    {
+      "file": "crime-wound-report-and-res-c2f55-tate-match-the-crafted-save-chromium/error-context.md",
+      "bytes": 33579,
+      "sha256": "e40ca8b0ee3cc1d9d11f72fe59efdf9fb6fad33b737e5aa4630a3e074108ec88",
+      "over1MB": false
+    },
+    {
+      "file": "crime-wound-report-and-res-c2f55-tate-match-the-crafted-save-chromium/trace.zip",
+      "bytes": 660681,
+      "sha256": "8e86cb1b43b583db2580b52e956a735804367c06eb77f8c2fb30d345dd42667e",
+      "over1MB": false
+    }
+  ],
+  "note": "Raw local failure artifacts preserved before a later Playwright run can replace test-results. Files over 1 MB should be represented by hashes for later docs-branch publication."
+}

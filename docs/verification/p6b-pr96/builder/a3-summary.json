@@ -1,0 +1,107 @@
+{
+  "utc": "2026-11-15T04:14:24.892Z",
+  "status": "BUILDER_COMPLETE",
+  "head": "a60711120b8c3d7ff9759a14cbb7a6c09ec396c5",
+  "tree": "1b26a634536c83699780f1a9479ce64ebb10717d",
+  "branch": "feat/p6b-crafting-data",
+  "gateStartCPUPercent": 13,
+  "gates": [
+    {
+      "gate": 1,
+      "command": "git diff --check origin/main...HEAD",
+      "exit": 0,
+      "utc": "2026-11-15T03:37:15.9532939Z",
+      "seconds": 0.0925512
+    },
+    {
+      "gate": 2,
+      "command": "npm run lint",
+      "exit": 0,
+      "utc": "2026-11-15T03:37:16.1113427Z",
+      "seconds": 15.1546068
+    },
+    {
+      "gate": 3,
+      "command": "npm run typecheck",
+      "exit": 0,
+      "utc": "2026-11-15T03:37:31.2659495Z",
+      "seconds": 34.5043727
+    },
+    {
+      "gate": 4,
+      "command": "npm run check:architecture",
+      "exit": 0,
+      "utc": "2026-11-15T03:38:05.7703222Z",
+      "seconds": 5.8772959
+    },
+    {
+      "gate": 5,
+      "command": "npm run test:architecture",
+      "exit": 0,
+      "utc": "2026-11-15T03:38:11.6476181Z",
+      "seconds": 46.9001071
+    },
+    {
+      "gate": 6,
+      "command": "npm test",
+      "exit": 0,
+      "utc": "2026-11-15T03:38:58.5679575Z",
+      "seconds": 63.9301712
+    },
+    {
+      "gate": 7,
+      "command": "npm run build",
+      "exit": 0,
+      "utc": "2026-11-15T03:40:02.5137513Z",
+      "seconds": 20.341262699999998
+    },
+    {
+      "gate": 8,
+      "command": "echo CI=%CI% && npm run test:smoke",
+      "exit": 0,
+      "utc": "2026-11-15T03:40:23.7421271Z",
+      "seconds": 2010.7969351
+    }
+  ],
+  "unit": {
+    "passed": 2559,
+    "total": 2559
+  },
+  "smoke": {
+    "CI": "1",
+    "passed": 370,
+    "duration": "33.4m"
+  },
+  "previouslyFailingCases": {
+    "passed": 22,
+    "total": 22,
+    "eachSeparate": true,
+    "retries": 0
+  },
+  "naming": {
+    "renamed": 32,
+    "preservedHistoricalWearables": 26,
+    "uniqueNames": 76,
+    "itemCatalogPinBefore": "7d1cc84733e7b5837cb596ea04b558943e8927689f7352fc35ea555e95581635",
+    "itemCatalogPinAfter": "7fdeadb141aba95586555f531e044fcdc8a5eccd2c2766fab94c48714793f96d",
+    "helperUnchanged": true,
+    "p4AfterTextRevised": true
+  },
+  "fixtures": {
+    "filesUnchanged": 11,
+    "regenerated": false,
+    "totalGoldenGenerations": 1
+  },
+  "bundleGzipBytes": {
+    "JS": 129817,
+    "CSS": 6743
+  },
+  "bundleDeltaBytes": {
+    "JS": 3097,
+    "CSS": 3
+  },
+  "approvedExistingTestBlocks": 59,
+  "approvedExistingTestFiles": 35,
+  "changedFileCount": 61,
+  "publication": "Local Builder handoff only. No push/PR/merge. Independent review and docs-branch evidence publication remain with Orchestrator/Tester."
+}

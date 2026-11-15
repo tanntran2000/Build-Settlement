@@ -1,0 +1,12 @@
+A3 smoke HOLD answered by the owner. Binding plan is now C:/Users/Admin/.t3/local-drafts/p6b-prA/binding-plan-3bee3ae.md: read Plan correction 3.
+
+Owner (Tân), 2026-11-15, dialog choice, verbatim: "Lord's / Retainer's prefix (Recommended)".
+
+Fix (product data, not the test helper):
+- In `packages/core/src/data/items.json`, rename only the 32 NEW definitions from A1: Player kind → `Lord's <current name>`, NPC kind → `Retainer's <current name>` (for example `rare-ring-player` "Lord's Fine Ring", `common-ring-npc` "Retainer's Plain Ring", `epic-set-player` "Lord's Noble Set", `epic-set-npc` "Retainer's Noble Set"). The 26 existing definitions stay byte-identical. Use a straight apostrophe (').
+- RED first: a new assertion in your new `recipes-catalog.test.ts` (or `items-catalog`-style new test of yours) that every item name in ITEM_CATALOG is unique and that each new definition carries the right prefix for its kind; run it and see it fail before the data edit.
+- Recalculate the `ITEM_CATALOG` pin. That pin line is already your approved P-edit; update its after-text to the new hash and record old → new and the reason in hash-pin-changes.md. No other existing-test edit is expected; if one is needed, HOLD with file:line.
+- Check whether the golden or the v9 fixtures contain item names; if any byte changes, regenerate once more with the path diff and report it (only allowed paths).
+- Leave `character-life-navigation.helpers.ts` untouched.
+
+Commit `fix(core): unique item names with Lord's and Retainer's prefixes`, ending `Co-authored-by: Codex <noreply@openai.com>`. Then rerun the 22 failed smoke cases alone first (expect green), then gates 1–7 from the start at the clean final head on a quiet machine (record CPU), `echo "CI=$CI"`, the full `CI=1 npm run test:smoke`, the bundle, README and SHA256SUMS. If any smoke case fails, rerun it alone once and HOLD. Do not push, open a PR or merge.

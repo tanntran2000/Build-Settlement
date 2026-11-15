@@ -1,0 +1,20 @@
+{
+  "utc": "2026-11-15T03:12:17.263Z",
+  "head": "b0c0b37cb25601b69f03b8844ac8a3f957304d4d",
+  "label": "case-17-alone-1",
+  "artifacts": [
+    {
+      "file": "tile-save-exports-a-real-f-35ae7--resumes-the-same-economics-chromium/error-context.md",
+      "bytes": 33760,
+      "sha256": "123f40006cdf520d9791d6e52aad7acf5277e1b06ad93fb7304ffa0d85445d66",
+      "over1MB": false
+    },
+    {
+      "file": "tile-save-exports-a-real-f-35ae7--resumes-the-same-economics-chromium/trace.zip",
+      "bytes": 3868248,
+      "sha256": "fe3d15ed2ae2a921df978871fac4f13bbc54ec19c4aaeb3f6548443f5bd65bd2",
+      "over1MB": true
+    }
+  ],
+  "note": "Raw local failure artifacts preserved before a later Playwright run can replace test-results. Files over 1 MB should be represented by hashes for later docs-branch publication."
+}

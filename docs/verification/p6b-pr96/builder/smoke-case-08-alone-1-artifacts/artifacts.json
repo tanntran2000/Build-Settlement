@@ -1,0 +1,20 @@
+{
+  "utc": "2026-11-15T03:08:57.670Z",
+  "head": "b0c0b37cb25601b69f03b8844ac8a3f957304d4d",
+  "label": "case-08-alone-1",
+  "artifacts": [
+    {
+      "file": "items-C2-UI-buy-keyboard-e-e2451-report-show-the-post-effect-chromium/error-context.md",
+      "bytes": 33863,
+      "sha256": "3d1f091a7c54464e0d62567b6a0353f49b8f2bb02681b8bcb6cb622ac1d24bb7",
+      "over1MB": false
+    },
+    {
+      "file": "items-C2-UI-buy-keyboard-e-e2451-report-show-the-post-effect-chromium/trace.zip",
+      "bytes": 941434,
+      "sha256": "36eaea04b58c1ea2549945a6ee719171b48c778e0fde5eababaf5263d2f5e21d",
+      "over1MB": false
+    }
+  ],
+  "note": "Raw local failure artifacts preserved before a later Playwright run can replace test-results. Files over 1 MB should be represented by hashes for later docs-branch publication."
+}

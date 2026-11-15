@@ -1,0 +1,20 @@
+{
+  "utc": "2026-11-15T03:10:11.542Z",
+  "head": "b0c0b37cb25601b69f03b8844ac8a3f957304d4d",
+  "label": "case-12-alone-1",
+  "artifacts": [
+    {
+      "file": "tile-local-checkpoint-popu-0f7a2-d-next-week-parity-at-390px-chromium/error-context.md",
+      "bytes": 33931,
+      "sha256": "8842d3dc82270c6635d8f2f5f138aad55a86f83443eb9b99cda3348124f321e5",
+      "over1MB": false
+    },
+    {
+      "file": "tile-local-checkpoint-popu-0f7a2-d-next-week-parity-at-390px-chromium/trace.zip",
+      "bytes": 792738,
+      "sha256": "b18e68f7d003ee620d077216cf4b6ab697e3ff48959f45ce2e33e0900c84d5b9",
+      "over1MB": false
+    }
+  ],
+  "note": "Raw local failure artifacts preserved before a later Playwright run can replace test-results. Files over 1 MB should be represented by hashes for later docs-branch publication."
+}

@@ -1,0 +1,217 @@
+{
+  "utc": "2026-11-15T03:23:51.432Z",
+  "base": "e85917733e229701830ad7f53dfcfbe2fefab831",
+  "previousHead": "b0c0b37cb25601b69f03b8844ac8a3f957304d4d",
+  "owner": "Tân",
+  "ownerQuote": "Lord's / Retainer's prefix (Recommended)",
+  "plan": "binding-plan-3bee3ae.md",
+  "names": [
+    {
+      "id": "common-weapon-npc",
+      "kind": "npc",
+      "before": "Plain Weapon",
+      "after": "Retainer's Plain Weapon"
+    },
+    {
+      "id": "rare-weapon-player",
+      "kind": "player",
+      "before": "Fine Weapon",
+      "after": "Lord's Fine Weapon"
+    },
+    {
+      "id": "epic-weapon-npc",
+      "kind": "npc",
+      "before": "Masterwork Weapon",
+      "after": "Retainer's Masterwork Weapon"
+    },
+    {
+      "id": "common-earrings-npc",
+      "kind": "npc",
+      "before": "Plain Earrings",
+      "after": "Retainer's Plain Earrings"
+    },
+    {
+      "id": "rare-earrings-player",
+      "kind": "player",
+      "before": "Fine Earrings",
+      "after": "Lord's Fine Earrings"
+    },
+    {
+      "id": "epic-earrings-player",
+      "kind": "player",
+      "before": "Masterwork Earrings",
+      "after": "Lord's Masterwork Earrings"
+    },
+    {
+      "id": "epic-earrings-npc",
+      "kind": "npc",
+      "before": "Masterwork Earrings",
+      "after": "Retainer's Masterwork Earrings"
+    },
+    {
+      "id": "common-necklace-npc",
+      "kind": "npc",
+      "before": "Plain Necklace",
+      "after": "Retainer's Plain Necklace"
+    },
+    {
+      "id": "rare-necklace-player",
+      "kind": "player",
+      "before": "Fine Necklace",
+      "after": "Lord's Fine Necklace"
+    },
+    {
+      "id": "epic-necklace-player",
+      "kind": "player",
+      "before": "Masterwork Necklace",
+      "after": "Lord's Masterwork Necklace"
+    },
+    {
+      "id": "common-ring-npc",
+      "kind": "npc",
+      "before": "Plain Ring",
+      "after": "Retainer's Plain Ring"
+    },
+    {
+      "id": "rare-ring-player",
+      "kind": "player",
+      "before": "Fine Ring",
+      "after": "Lord's Fine Ring"
+    },
+    {
+      "id": "epic-ring-player",
+      "kind": "player",
+      "before": "Masterwork Ring",
+      "after": "Lord's Masterwork Ring"
+    },
+    {
+      "id": "epic-ring-npc",
+      "kind": "npc",
+      "before": "Masterwork Ring",
+      "after": "Retainer's Masterwork Ring"
+    },
+    {
+      "id": "common-hand-npc",
+      "kind": "npc",
+      "before": "Plain Hand",
+      "after": "Retainer's Plain Hand"
+    },
+    {
+      "id": "rare-hand-player",
+      "kind": "player",
+      "before": "Fine Hand",
+      "after": "Lord's Fine Hand"
+    },
+    {
+      "id": "epic-hand-player",
+      "kind": "player",
+      "before": "Masterwork Hand",
+      "after": "Lord's Masterwork Hand"
+    },
+    {
+      "id": "common-top-npc",
+      "kind": "npc",
+      "before": "Plain Top",
+      "after": "Retainer's Plain Top"
+    },
+    {
+      "id": "rare-top-player",
+      "kind": "player",
+      "before": "Fine Top",
+      "after": "Lord's Fine Top"
+    },
+    {
+      "id": "epic-top-npc",
+      "kind": "npc",
+      "before": "Masterwork Top",
+      "after": "Retainer's Masterwork Top"
+    },
+    {
+      "id": "common-bottom-npc",
+      "kind": "npc",
+      "before": "Plain Bottom",
+      "after": "Retainer's Plain Bottom"
+    },
+    {
+      "id": "rare-bottom-player",
+      "kind": "player",
+      "before": "Fine Bottom",
+      "after": "Lord's Fine Bottom"
+    },
+    {
+      "id": "epic-bottom-player",
+      "kind": "player",
+      "before": "Masterwork Bottom",
+      "after": "Lord's Masterwork Bottom"
+    },
+    {
+      "id": "epic-bottom-npc",
+      "kind": "npc",
+      "before": "Masterwork Bottom",
+      "after": "Retainer's Masterwork Bottom"
+    },
+    {
+      "id": "common-shoes-npc",
+      "kind": "npc",
+      "before": "Plain Shoes",
+      "after": "Retainer's Plain Shoes"
+    },
+    {
+      "id": "rare-shoes-player",
+      "kind": "player",
+      "before": "Fine Shoes",
+      "after": "Lord's Fine Shoes"
+    },
+    {
+      "id": "epic-shoes-player",
+      "kind": "player",
+      "before": "Masterwork Shoes",
+      "after": "Lord's Masterwork Shoes"
+    },
+    {
+      "id": "epic-shoes-npc",
+      "kind": "npc",
+      "before": "Masterwork Shoes",
+      "after": "Retainer's Masterwork Shoes"
+    },
+    {
+      "id": "common-set-npc",
+      "kind": "npc",
+      "before": "Travelling Set",
+      "after": "Retainer's Travelling Set"
+    },
+    {
+      "id": "rare-set-player",
+      "kind": "player",
+      "before": "Steward Set",
+      "after": "Lord's Steward Set"
+    },
+    {
+      "id": "epic-set-player",
+      "kind": "player",
+      "before": "Noble Set",
+      "after": "Lord's Noble Set"
+    },
+    {
+      "id": "epic-set-npc",
+      "kind": "npc",
+      "before": "Noble Set",
+      "after": "Retainer's Noble Set"
+    }
+  ],
+  "previousItemCatalogPin": "7d1cc84733e7b5837cb596ea04b558943e8927689f7352fc35ea555e95581635",
+  "itemCatalogPin": "7fdeadb141aba95586555f531e044fcdc8a5eccd2c2766fab94c48714793f96d",
+  "p4": {
+    "file": "packages/core/src/__tests__/catalog-data.test.ts",
+    "line": 106,
+    "before": "  expect(catalogHash(ITEM_CATALOG)).toBe('fa866064967ee36dac69a3b8c5c6090bb2b40b7236c3f104d5a8e89d84e974c6');",
+    "after": "  expect(catalogHash(ITEM_CATALOG)).toBe('7fdeadb141aba95586555f531e044fcdc8a5eccd2c2766fab94c48714793f96d');",
+    "reason": "Plan correction 3: unique display names for only the 32 new Player/NPC definitions; all prior definitions and other fields unchanged.",
+    "id": "P4",
+    "previousAfter": "  expect(catalogHash(ITEM_CATALOG)).toBe('7d1cc84733e7b5837cb596ea04b558943e8927689f7352fc35ea555e95581635');"
+  },
+  "helper": {
+    "file": "tests/e2e/character-life-navigation.helpers.ts",
+    "sha256": "2796a277fe1073a11b028cde77d63f0d0b26ac3357e4e945f20b279a0da4f7e8"
+  }
+}

@@ -1,0 +1,52 @@
+diff --git a/packages/core/src/trial/__tests__/society.test.ts b/packages/core/src/trial/__tests__/society.test.ts
+index 5d5c260..0119f1c 100644
+--- a/packages/core/src/trial/__tests__/society.test.ts
++++ b/packages/core/src/trial/__tests__/society.test.ts
+@@ -5,18 +5,18 @@ import { createSocietyState,isSocietyState,SOCIETY_TRIAL,societyPopulation } fro
+ it('creates the spec section 3 new game', () => {
+   const s = createSocietyState();
+   expect(s.society).toEqual({
+-    rulesetId: 'tile-society-08', standing:50,
++    rulesetId: 'tile-society-09', standing:50,
+     items: {
+       nextItemId: 1, inventory: [], consumables: [], materials: {}, storage: [], equipped: {},
+       market: [
+-        { defId: 'common-ring', priceMilli: 5000 },
+-        { defId: 'common-top', priceMilli: 5000 },
+         { defId: 'common-bottom', priceMilli: 5000 },
+-        { defId: 'common-ring', priceMilli: 5000 },
+-        { defId: 'rare-set', priceMilli: 15000 },
++        { defId: 'common-earrings-npc', priceMilli: 5000 },
++        { defId: 'common-hand-npc', priceMilli: 5000 },
++        { defId: 'common-shoes', priceMilli: 5000 },
++        { defId: 'rare-shoes-player', priceMilli: 15000 },
+         { defId: 'rare-weapon', priceMilli: 15000 },
+-        { defId: 'epic-hand', priceMilli: 40000 },
+-        { defId: 'epic-necklace', priceMilli: 40000 },
++        { defId: 'epic-ring-npc', priceMilli: 40000 },
++        { defId: 'epic-set-npc', priceMilli: 40000 },
+       ],
+       goals: { calm: false, authority: false, week52: false, research: false, rebellionSeen: false, authorityStreak: 0 },
+     },
+@@ -71,14 +71,14 @@ it('creates a society world session', () => {
+   expect(result.value.city.society).toEqual({ ...createSocietyState().society, items: {
+     nextItemId: 1, inventory: [], consumables: [], materials: {}, storage: [], equipped: {},
+     market: [
+-      { defId: 'common-shoes', priceMilli: 5000 },
+-      { defId: 'common-necklace', priceMilli: 5000 },
++      { defId: 'common-top-npc', priceMilli: 5000 },
+       { defId: 'common-top', priceMilli: 5000 },
+-      { defId: 'common-ring', priceMilli: 5000 },
+-      { defId: 'rare-shoes', priceMilli: 15000 },
+-      { defId: 'rare-earrings', priceMilli: 15000 },
+-      { defId: 'epic-top', priceMilli: 40000 },
+-      { defId: 'epic-top', priceMilli: 40000 },
++      { defId: 'common-earrings-npc', priceMilli: 5000 },
++      { defId: 'common-shoes', priceMilli: 5000 },
++      { defId: 'rare-bottom-player', priceMilli: 15000 },
++      { defId: 'rare-necklace', priceMilli: 15000 },
++      { defId: 'epic-ring-player', priceMilli: 40000 },
++      { defId: 'epic-earrings-npc', priceMilli: 40000 },
+     ],
+     goals: { calm: false, authority: false, week52: false, research: false, rebellionSeen: false, authorityStreak: 0 },
+   } });

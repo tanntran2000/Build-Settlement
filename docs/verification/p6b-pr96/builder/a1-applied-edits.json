@@ -1,0 +1,86 @@
+{
+  "task": "A1",
+  "base": "e85917733e229701830ad7f53dfcfbe2fefab831",
+  "edits": [
+    {
+      "file": "packages/core/src/__tests__/catalog-data.test.ts",
+      "line": 106,
+      "before": "  expect(catalogHash(ITEM_CATALOG)).toBe('fa866064967ee36dac69a3b8c5c6090bb2b40b7236c3f104d5a8e89d84e974c6');",
+      "after": "  expect(catalogHash(ITEM_CATALOG)).toBe('7d1cc84733e7b5837cb596ea04b558943e8927689f7352fc35ea555e95581635');",
+      "reason": "15 material families and 32 missing wearable ladder definitions; exact candidate JSON.stringify SHA-256.",
+      "id": "P4"
+    },
+    {
+      "file": "packages/core/src/__tests__/items-catalog.test.ts",
+      "line": 13,
+      "before": "it('contains 26 wearables: 9 Common, 9 Rare, 4 Epic, 4 Legendary; 3 potions and 15 materials', async () => {",
+      "after": "it('contains 58 wearables: 18 Common, 18 Rare, 18 Epic, 4 Legendary; 3 potions and 15 materials', async () => {",
+      "reason": "Decision 2: complete 54 non-Legendary ladder plus 4 Legendary.",
+      "id": "P5"
+    },
+    {
+      "file": "packages/core/src/__tests__/items-catalog.test.ts",
+      "line": 16,
+      "before": "  expect(worn).toHaveLength(26);",
+      "after": "  expect(worn).toHaveLength(58);",
+      "reason": "Decision 2: exact complete catalog count.",
+      "id": "P6"
+    },
+    {
+      "file": "packages/core/src/__tests__/items-catalog.test.ts",
+      "line": 17,
+      "before": "  for(const [r,n] of Object.entries({common:9,rare:9,epic:4,legendary:4}))expect(worn.filter(d=>d.rarity===r)).toHaveLength(n);",
+      "after": "  for(const [r,n] of Object.entries({common:18,rare:18,epic:18,legendary:4}))expect(worn.filter(d=>d.rarity===r)).toHaveLength(n);",
+      "reason": "Decision 2: 9 slots x 2 kinds per non-Legendary rarity; Legendary unchanged.",
+      "id": "P7"
+    },
+    {
+      "file": "packages/core/src/__tests__/items-catalog.test.ts",
+      "line": 28,
+      "before": "  expect(defs.filter(d=>d.slot==='set').map(d=>d.rarity)).toEqual(['common','rare']);",
+      "after": "  expect(defs.filter(d=>d.slot==='set').map(d=>d.rarity)).toEqual(['common','rare','common','rare','epic','epic']);",
+      "reason": "Decision 2: retain original sets first; append missing sets in rarity/kind order.",
+      "id": "P8"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/society.test.ts",
+      "line": 12,
+      "before": "        { defId: 'common-ring', priceMilli: 5000 },\n        { defId: 'common-top', priceMilli: 5000 },\n        { defId: 'common-bottom', priceMilli: 5000 },\n        { defId: 'common-ring', priceMilli: 5000 },\n        { defId: 'rare-set', priceMilli: 15000 },\n        { defId: 'rare-weapon', priceMilli: 15000 },\n        { defId: 'epic-hand', priceMilli: 40000 },\n        { defId: 'epic-necklace', priceMilli: 40000 },",
+      "after": "        { defId: 'common-bottom', priceMilli: 5000 },\n        { defId: 'common-earrings-npc', priceMilli: 5000 },\n        { defId: 'common-hand-npc', priceMilli: 5000 },\n        { defId: 'common-shoes', priceMilli: 5000 },\n        { defId: 'rare-shoes-player', priceMilli: 15000 },\n        { defId: 'rare-weapon', priceMilli: 15000 },\n        { defId: 'epic-ring-npc', priceMilli: 40000 },\n        { defId: 'epic-set-npc', priceMilli: 40000 },",
+      "reason": "Decision 2: pin the enlarged pool's exact week-1 Market for seed 2026; preserve the whole-state matcher.",
+      "id": "P20"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/society.test.ts",
+      "line": 74,
+      "before": "      { defId: 'common-shoes', priceMilli: 5000 },\n      { defId: 'common-necklace', priceMilli: 5000 },\n      { defId: 'common-top', priceMilli: 5000 },\n      { defId: 'common-ring', priceMilli: 5000 },\n      { defId: 'rare-shoes', priceMilli: 15000 },\n      { defId: 'rare-earrings', priceMilli: 15000 },\n      { defId: 'epic-top', priceMilli: 40000 },\n      { defId: 'epic-top', priceMilli: 40000 },",
+      "after": "      { defId: 'common-top-npc', priceMilli: 5000 },\n      { defId: 'common-top', priceMilli: 5000 },\n      { defId: 'common-earrings-npc', priceMilli: 5000 },\n      { defId: 'common-shoes', priceMilli: 5000 },\n      { defId: 'rare-bottom-player', priceMilli: 15000 },\n      { defId: 'rare-necklace', priceMilli: 15000 },\n      { defId: 'epic-ring-player', priceMilli: 40000 },\n      { defId: 'epic-earrings-npc', priceMilli: 40000 },",
+      "reason": "Decision 2: pin the enlarged pool's exact week-1 Market for seed 20261028; preserve the whole-state matcher.",
+      "id": "P21"
+    },
+    {
+      "file": "packages/core/src/world/__tests__/session.test.ts",
+      "line": 15,
+      "before": "    { defId: 'common-ring', priceMilli: 5000 },\n    { defId: 'common-bottom', priceMilli: 5000 },\n    { defId: 'common-necklace', priceMilli: 5000 },\n    { defId: 'common-hand', priceMilli: 5000 },\n    { defId: 'rare-necklace', priceMilli: 15000 },\n    { defId: 'rare-bottom', priceMilli: 15000 },\n    { defId: 'epic-hand', priceMilli: 40000 },\n    { defId: 'epic-necklace', priceMilli: 40000 },\n  ] : [\n    { defId: 'common-weapon', priceMilli: 5000 },\n    { defId: 'common-top', priceMilli: 5000 },\n    { defId: 'common-hand', priceMilli: 5000 },\n    { defId: 'common-earrings', priceMilli: 5000 },\n    { defId: 'rare-necklace', priceMilli: 15000 },\n    { defId: 'rare-hand', priceMilli: 15000 },\n    { defId: 'epic-hand', priceMilli: 40000 },\n    { defId: 'epic-necklace', priceMilli: 40000 },",
+      "after": "    { defId: 'common-bottom', priceMilli: 5000 },\n    { defId: 'common-hand-npc', priceMilli: 5000 },\n    { defId: 'common-hand', priceMilli: 5000 },\n    { defId: 'common-weapon-npc', priceMilli: 5000 },\n    { defId: 'rare-hand', priceMilli: 15000 },\n    { defId: 'rare-hand-player', priceMilli: 15000 },\n    { defId: 'epic-ring-npc', priceMilli: 40000 },\n    { defId: 'epic-shoes-npc', priceMilli: 40000 },\n  ] : [\n    { defId: 'common-earrings', priceMilli: 5000 },\n    { defId: 'common-necklace-npc', priceMilli: 5000 },\n    { defId: 'common-set', priceMilli: 5000 },\n    { defId: 'common-ring', priceMilli: 5000 },\n    { defId: 'rare-top', priceMilli: 15000 },\n    { defId: 'rare-set', priceMilli: 15000 },\n    { defId: 'epic-ring-npc', priceMilli: 40000 },\n    { defId: 'epic-shoes-npc', priceMilli: 40000 },",
+      "reason": "Decision 2: exact ordered Markets for seed 0 and uint32-max, every outside-world assertion unchanged.",
+      "id": "P22"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/law-week.test.ts",
+      "line": 91,
+      "before": "  \"nextItemId\": 2,\n  \"inventory\": [\n    {\n      \"id\": 1,\n      \"defId\": \"common-necklace\"\n    }\n  ],\n  \"consumables\": [],\n  \"materials\": {},\n  \"storage\": [],\n  \"equipped\": {},\n  \"market\": [\n    {\n      \"defId\": \"common-top\",\n      \"priceMilli\": 5000\n    },\n    {\n      \"defId\": \"common-earrings\",\n      \"priceMilli\": 5000\n    },\n    {\n      \"defId\": \"common-ring\",\n      \"priceMilli\": 5000\n    },\n    {\n      \"defId\": \"common-shoes\",\n      \"priceMilli\": 5000\n    },\n    {\n      \"defId\": \"rare-set\",\n      \"priceMilli\": 15000\n    },\n    {\n      \"defId\": \"rare-ring\",\n      \"priceMilli\": 15000\n    },\n    {\n      \"defId\": \"epic-top\",\n      \"priceMilli\": 40000\n    },\n    {\n      \"defId\": \"epic-hand\",\n      \"priceMilli\": 40000\n    }\n  ],\n  \"goals\": {\n    \"calm\": false,\n    \"authority\": false,\n    \"week52\": false,\n    \"research\": false,\n    \"rebellionSeen\": false,\n    \"authorityStreak\": 0\n  }",
+      "after": "  \"nextItemId\": 2,\n  \"inventory\": [\n    {\n      \"id\": 1,\n      \"defId\": \"common-top\"\n    }\n  ],\n  \"consumables\": [],\n  \"materials\": {},\n  \"storage\": [],\n  \"equipped\": {},\n  \"market\": [\n    {\n      \"defId\": \"common-earrings-npc\",\n      \"priceMilli\": 5000\n    },\n    {\n      \"defId\": \"common-ring\",\n      \"priceMilli\": 5000\n    },\n    {\n      \"defId\": \"common-shoes\",\n      \"priceMilli\": 5000\n    },\n    {\n      \"defId\": \"common-bottom-npc\",\n      \"priceMilli\": 5000\n    },\n    {\n      \"defId\": \"rare-shoes-player\",\n      \"priceMilli\": 15000\n    },\n    {\n      \"defId\": \"rare-shoes\",\n      \"priceMilli\": 15000\n    },\n    {\n      \"defId\": \"epic-ring-player\",\n      \"priceMilli\": 40000\n    },\n    {\n      \"defId\": \"epic-ring-npc\",\n      \"priceMilli\": 40000\n    }\n  ],\n  \"goals\": {\n    \"calm\": false,\n    \"authority\": false,\n    \"week52\": false,\n    \"research\": false,\n    \"rebellionSeen\": false,\n    \"authorityStreak\": 0\n  }",
+      "reason": "Decision 2: only the item find id and exact Market data change in this whole-object expectation; law and old non-item gameplay equality remain intact.",
+      "id": "P42"
+    },
+    {
+      "file": "tests/e2e/items.spec.ts",
+      "line": 12,
+      "before": "function funded(seed=12345) {",
+      "after": "function funded(seed=82) {",
+      "reason": "Decision 2 expands Market pools. Seed 12345 now buys common-bottom-npc first (negotiation), and has no rare-set. Seed 82 first NPC offer is the unchanged rare-set. Preserve real BUY_ITEM, keyboard equip, item-id, management/Farm Wheat inequality and exact session equality assertions.",
+      "id": "P49"
+    }
+  ]
+}

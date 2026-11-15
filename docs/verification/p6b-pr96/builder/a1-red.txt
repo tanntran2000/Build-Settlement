@@ -1,0 +1,404 @@
+HEAD: e85917733e229701830ad7f53dfcfbe2fefab831
+Tree: 49f6b676c3ae57f66ef9ce6275eb89a806f52a9a
+UTC: 2026-11-15T01:56:53.3300539Z
+Command: npm test -- packages/core/src/__tests__/recipes-catalog.test.ts packages/core/src/__tests__/items-catalog.test.ts packages/core/src/__tests__/catalog-data.test.ts
+Status before:
+ M packages/core/src/__tests__/catalog-data.test.ts  M packages/core/src/__tests__/items-catalog.test.ts  M packages/core/src/trial/__tests__/society.test.ts  M packages/core/src/world/__tests__/session.test.ts  M packages/simulation/src/__tests__/law-week.test.ts  M tests/e2e/items.spec.ts ?? packages/core/src/__tests__/recipes-catalog.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/core/src/__tests__/recipes-catalog.test.ts packages/core/src/__tests__/items-catalog.test.ts packages/core/src/__tests__/catalog-data.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/core/src/__tests__/items-catalog.test.ts (9 tests | 2 failed) 122ms
+   × contains 58 wearables: 18 Common, 18 Rare, 18 Epic, 4 Legendary; 3 potions and 15 materials 9ms
+   × covers every everyday slot with Common and Rare and both kinds, plus sets 3ms
+ ❯ packages/core/src/__tests__/recipes-catalog.test.ts (43 tests | 42 failed) 40ms
+   × has exactly one non-Legendary wearable per slot, tier and wearer 10ms
+   × gives each new definition the approved id, stats, name, regen and price 1ms
+   × assigns every material to its approved family 1ms
+   × rejects missing family 5ms
+   × rejects unknown family 2ms
+   × rejects family on a wearable 2ms
+   × validates all 47 recipes and recursively freezes both public views 1ms
+   × contains eight 2-to-1 same-family one-tier refinements and no Legendary output 1ms
+   × contains 38 upgrades keeping slot and wearer with one matching material 1ms
+   × brews exactly one fixed Heal Potion I from two Green Leaves 1ms
+   × routes metal/mineral/cloth to Smithy and herbs to Hospital and Drug Store 1ms
+   × pins RECIPES and the exact CRAFT_TRIAL decision 0ms
+   × looks up the output rarity of each recipe and refuses an unknown id 0ms
+   × rejects 'wrong upgrade family' with an exact catalog reference 0ms
+   × rejects 'unknown input' with an exact catalog reference 0ms
+   × rejects 'unknown output' with an exact catalog reference 0ms
+   × rejects 'Legendary output' with an exact catalog reference 0ms
+   × rejects 'Legendary material output' with an exact catalog reference 0ms
+   × rejects 'Legendary input' with an exact catalog reference 0ms
+   × rejects 'wrong refine count' with an exact catalog reference 0ms
+   × rejects 'wrong refine family' with an exact catalog reference 0ms
+   × rejects 'skipped refine tier' with an exact catalog reference 0ms
+   × rejects 'wearable refine input' with an exact catalog reference 0ms
+   × rejects 'wrong upgrade slot' with an exact catalog reference 0ms
+   × rejects 'wrong upgrade kind' with an exact catalog reference 0ms
+   × rejects 'wrong material tier' with an exact catalog reference 0ms
+   × rejects 'skipped upgrade tier' with an exact catalog reference 0ms
+   × rejects 'extra upgrade item' with an exact catalog reference 0ms
+   × rejects 'wrong upgrade count' with an exact catalog reference 0ms
+   × rejects 'wrong fee' with an exact catalog reference 1ms
+   × rejects 'negative fee' with an exact catalog reference 0ms
+   × rejects 'zero count' with an exact catalog reference 0ms
+   × rejects 'fractional count' with an exact catalog reference 0ms
+   × rejects 'missing workshop' with an exact catalog reference 0ms
+   × rejects 'unknown workshop' with an exact catalog reference 0ms
+   × rejects 'wrong workshop' with an exact catalog reference 0ms
+   × rejects 'wrong herb workshop' with an exact catalog reference 0ms
+   × rejects 'duplicate workshops' with an exact catalog reference 0ms
+   × rejects 'unexpected field' with an exact catalog reference 0ms
+   × rejects malformed TRIAL queueCap 0ms
+   × rejects malformed TRIAL skillSteps 0ms
+   × rejects malformed TRIAL drugStoreBase 0ms
+ ❯ packages/core/src/__tests__/catalog-data.test.ts (40 tests | 1 failed) 406ms
+   × pins ITEM_CATALOG for P6-A 8ms
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯ Failed Tests 45 ⎯⎯⎯⎯⎯⎯⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/__tests__/catalog-data.test.ts > pins ITEM_CATALOG for P6-A
+AssertionError: expected 'fa866064967ee36dac69a3b8c5c6090bb2b40…' to be '7d1cc84733e7b5837cb596ea04b558943e892…' // Object.is equality
+System.Management.Automation.RemoteException
+Expected: "7d1cc84733e7b5837cb596ea04b558943e8927689f7352fc35ea555e95581635"
+Received: "fa866064967ee36dac69a3b8c5c6090bb2b40b7236c3f104d5a8e89d84e974c6"
+System.Management.Automation.RemoteException
+ ❯ packages/core/src/__tests__/catalog-data.test.ts:106:37
+    104| it('pins ITEM_CATALOG for P6-A', async () => {
+    105|   const { ITEM_CATALOG }=await import('../trial/items.js');
+    106|   expect(catalogHash(ITEM_CATALOG)).toBe('7d1cc84733e7b5837cb596ea04b5…
+       |                                     ^
+    107| });
+    108| it('pins ITEM_TRIAL for P6-A', async () => {
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/45]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/__tests__/items-catalog.test.ts > contains 58 wearables: 18 Common, 18 Rare, 18 Epic, 4 Legendary; 3 potions and 15 materials
+AssertionError: expected [ …(26) ] to have a length of 58 but got 26
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+- 58
++ 26
+System.Management.Automation.RemoteException
+ ❯ packages/core/src/__tests__/items-catalog.test.ts:16:16
+     14|   const defs=Object.values((await api()).ITEM_CATALOG);
+     15|   const worn=defs.filter(d=>!['material','consumable'].includes(d.cate…
+     16|   expect(worn).toHaveLength(58);
+       |                ^
+     17|   for(const [r,n] of Object.entries({common:18,rare:18,epic:18,legenda…
+     18|   expect(defs.filter(d=>d.category==='consumable').map(d=>d.name)).toE…
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/45]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/__tests__/items-catalog.test.ts > covers every everyday slot with Common and Rare and both kinds, plus sets
+AssertionError: expected [ 'common', 'rare' ] to deeply equal [ 'common', 'rare', 'common', …(3) ]
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+  [
+    "common",
+    "rare",
+-   "common",
+-   "rare",
+-   "epic",
+-   "epic",
+  ]
+System.Management.Automation.RemoteException
+ ❯ packages/core/src/__tests__/items-catalog.test.ts:28:59
+     26|     for(const kind of ['player','npc'])expect(defs.some(d=>d.slot===sl…
+     27|   }
+     28|   expect(defs.filter(d=>d.slot==='set').map(d=>d.rarity)).toEqual(['co…
+       |                                                           ^
+     29| });
+     30| it('restricts category slots, kinds, building pools and Legendary trai…
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/45]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > has exactly one non-Legendary wearable per slot, tier and wearer
+AssertionError: expected [ …(22) ] to have a length of 54 but got 22
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+- 54
++ 22
+System.Management.Automation.RemoteException
+ ❯ packages/core/src/__tests__/recipes-catalog.test.ts:20:21
+     18| it('has exactly one non-Legendary wearable per slot, tier and wearer',…
+     19|   const wearables=Object.values(core.ITEM_CATALOG).filter(d=>d.slot&&d…
+     20|   expect(wearables).toHaveLength(54);
+       |                     ^
+     21|   for(const slot of slots)for(const rarity of tiers)for(const kind of …
+     22| });
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/45]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > gives each new definition the approved id, stats, name, regen and price
+AssertionError: expected [] to have a length of 32 but got +0
+System.Management.Automation.RemoteException
+- Expected
++ Received
+System.Management.Automation.RemoteException
+- 32
++ 0
+System.Management.Automation.RemoteException
+ ❯ packages/core/src/__tests__/recipes-catalog.test.ts:29:26
+     27| it('gives each new definition the approved id, stats, name, regen and …
+     28|   const newDefinitions=Object.entries(core.ITEM_CATALOG).filter(([id])…
+     29|   expect(newDefinitions).toHaveLength(32);
+       |                          ^
+     30|   for(const [id,d] of newDefinitions){
+     31|     const slot=d.slot!,rarity=d.rarity as typeof tiers[number];
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/45]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > assigns every material to its approved family
+AssertionError: expected undefined to be 'metal' // Object.is equality
+System.Management.Automation.RemoteException
+- Expected:
+"metal"
+System.Management.Automation.RemoteException
++ Received:
+undefined
+System.Management.Automation.RemoteException
+ ❯ packages/core/src/__tests__/recipes-catalog.test.ts:42:111
+     40| });
+     41| it('assigns every material to its approved family', () => {
+     42|   for(const [family,ids] of Object.entries(families))for(const id of i…
+       |                                                                                                               ^
+     43|   expect(Object.values(core.ITEM_CATALOG).filter(d=>d.category==='mate…
+     44| });
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/45]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects missing family
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects unknown family
+AssertionError: expected [Function] to throw error including 'items.json#iron.family: expected meta…' but got 'items.json#iron.family: unexpected fi…'
+System.Management.Automation.RemoteException
+Expected: "items.json#iron.family: expected metal | mineral | cloth | herb | paper"
+Received: "items.json#iron.family: unexpected field"
+System.Management.Automation.RemoteException
+ ❯ packages/core/src/__tests__/recipes-catalog.test.ts:51:46
+     49| ] as const)('rejects %s',(_name,id,family,message)=>{
+     50|   const copy=loadItems();copy.definitions[id].family=family;
+     51|   expect(()=>validation.validateItems(copy)).toThrow(message);
+       |                                              ^
+     52| });
+     53| it('validates all 47 recipes and recursively freezes both public views…
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/45]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects family on a wearable
+AssertionError: expected [Function] to throw error including 'items.json#common-ring.family: materi…' but got 'items.json#common-ring.family: unexpe…'
+System.Management.Automation.RemoteException
+Expected: "items.json#common-ring.family: material only"
+Received: "items.json#common-ring.family: unexpected field"
+System.Management.Automation.RemoteException
+ ❯ packages/core/src/__tests__/recipes-catalog.test.ts:51:46
+     49| ] as const)('rejects %s',(_name,id,family,message)=>{
+     50|   const copy=loadItems();copy.definitions[id].family=family;
+     51|   expect(()=>validation.validateItems(copy)).toThrow(message);
+       |                                              ^
+     52| });
+     53| it('validates all 47 recipes and recursively freezes both public views…
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/45]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > validates all 47 recipes and recursively freezes both public views
+AssertionError: expected undefined to be type of 'function'
+System.Management.Automation.RemoteException
+Expected: "function"
+Received: "undefined"
+System.Management.Automation.RemoteException
+ ❯ load packages/core/src/__tests__/recipes-catalog.test.ts:15:38
+     13| const loadItems = () => JSON.parse(readFileSync(new URL('../data/items…
+     14| const load = () => {
+     15|   expect(validation.validateRecipes).toBeTypeOf('function');
+       |                                      ^
+     16|   return JSON.parse(readFileSync(new URL('../data/recipes.json',import…
+     17| };
+ ❯ packages/core/src/__tests__/recipes-catalog.test.ts:54:14
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/45]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > contains eight 2-to-1 same-family one-tier refinements and no Legendary output
+AssertionError: expected undefined to be type of 'function'
+System.Management.Automation.RemoteException
+Expected: "function"
+Received: "undefined"
+System.Management.Automation.RemoteException
+ ❯ load packages/core/src/__tests__/recipes-catalog.test.ts:15:38
+     13| const loadItems = () => JSON.parse(readFileSync(new URL('../data/items…
+     14| const load = () => {
+     15|   expect(validation.validateRecipes).toBeTypeOf('function');
+       |                                      ^
+     16|   return JSON.parse(readFileSync(new URL('../data/recipes.json',import…
+     17| };
+ ❯ packages/core/src/__tests__/recipes-catalog.test.ts:60:3
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/45]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > contains 38 upgrades keeping slot and wearer with one matching material
+AssertionError: expected undefined to be type of 'function'
+System.Management.Automation.RemoteException
+Expected: "function"
+Received: "undefined"
+System.Management.Automation.RemoteException
+ ❯ load packages/core/src/__tests__/recipes-catalog.test.ts:15:38
+     13| const loadItems = () => JSON.parse(readFileSync(new URL('../data/items…
+     14| const load = () => {
+     15|   expect(validation.validateRecipes).toBeTypeOf('function');
+       |                                      ^
+     16|   return JSON.parse(readFileSync(new URL('../data/recipes.json',import…
+     17| };
+ ❯ packages/core/src/__tests__/recipes-catalog.test.ts:71:3
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/45]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > brews exactly one fixed Heal Potion I from two Green Leaves
+AssertionError: expected undefined to be type of 'function'
+System.Management.Automation.RemoteException
+Expected: "function"
+Received: "undefined"
+System.Management.Automation.RemoteException
+ ❯ load packages/core/src/__tests__/recipes-catalog.test.ts:15:38
+     13| const loadItems = () => JSON.parse(readFileSync(new URL('../data/items…
+     14| const load = () => {
+     15|   expect(validation.validateRecipes).toBeTypeOf('function');
+       |                                      ^
+     16|   return JSON.parse(readFileSync(new URL('../data/recipes.json',import…
+     17| };
+ ❯ packages/core/src/__tests__/recipes-catalog.test.ts:83:3
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/45]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > routes metal/mineral/cloth to Smithy and herbs to Hospital and Drug Store
+AssertionError: expected undefined to be type of 'function'
+System.Management.Automation.RemoteException
+Expected: "function"
+Received: "undefined"
+System.Management.Automation.RemoteException
+ ❯ load packages/core/src/__tests__/recipes-catalog.test.ts:15:38
+     13| const loadItems = () => JSON.parse(readFileSync(new URL('../data/items…
+     14| const load = () => {
+     15|   expect(validation.validateRecipes).toBeTypeOf('function');
+       |                                      ^
+     16|   return JSON.parse(readFileSync(new URL('../data/recipes.json',import…
+     17| };
+ ❯ packages/core/src/__tests__/recipes-catalog.test.ts:86:3
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/45]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > pins RECIPES and the exact CRAFT_TRIAL decision
+AssertionError: expected undefined to be type of 'function'
+System.Management.Automation.RemoteException
+Expected: "function"
+Received: "undefined"
+System.Management.Automation.RemoteException
+ ❯ load packages/core/src/__tests__/recipes-catalog.test.ts:15:38
+     13| const loadItems = () => JSON.parse(readFileSync(new URL('../data/items…
+     14| const load = () => {
+     15|   expect(validation.validateRecipes).toBeTypeOf('function');
+       |                                      ^
+     16|   return JSON.parse(readFileSync(new URL('../data/recipes.json',import…
+     17| };
+ ❯ packages/core/src/__tests__/recipes-catalog.test.ts:93:3
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/45]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > looks up the output rarity of each recipe and refuses an unknown id
+AssertionError: expected undefined to be type of 'function'
+System.Management.Automation.RemoteException
+Expected: "function"
+Received: "undefined"
+System.Management.Automation.RemoteException
+ ❯ load packages/core/src/__tests__/recipes-catalog.test.ts:15:38
+     13| const loadItems = () => JSON.parse(readFileSync(new URL('../data/items…
+     14| const load = () => {
+     15|   expect(validation.validateRecipes).toBeTypeOf('function');
+       |                                      ^
+     16|   return JSON.parse(readFileSync(new URL('../data/recipes.json',import…
+     17| };
+ ❯ packages/core/src/__tests__/recipes-catalog.test.ts:98:3
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/45]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects 'wrong upgrade family' with an exact catalog reference
+
+ Test Files  3 failed (3)
+      Tests  45 failed | 47 passed (92)
+   Start at  08:56:55
+   Duration  1.53s (transform 946ms, setup 0ms, import 1.26s, tests 568ms, environment 1ms)
+
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects 'unknown input' with an exact catalog reference
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects 'unknown output' with an exact catalog reference
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects 'Legendary output' with an exact catalog reference
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects 'Legendary material output' with an exact catalog reference
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects 'Legendary input' with an exact catalog reference
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects 'wrong refine count' with an exact catalog reference
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects 'wrong refine family' with an exact catalog reference
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects 'skipped refine tier' with an exact catalog reference
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects 'wearable refine input' with an exact catalog reference
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects 'wrong upgrade slot' with an exact catalog reference
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects 'wrong upgrade kind' with an exact catalog reference
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects 'wrong material tier' with an exact catalog reference
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects 'skipped upgrade tier' with an exact catalog reference
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects 'extra upgrade item' with an exact catalog reference
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects 'wrong upgrade count' with an exact catalog reference
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects 'wrong fee' with an exact catalog reference
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects 'negative fee' with an exact catalog reference
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects 'zero count' with an exact catalog reference
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects 'fractional count' with an exact catalog reference
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects 'missing workshop' with an exact catalog reference
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects 'unknown workshop' with an exact catalog reference
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects 'wrong workshop' with an exact catalog reference
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects 'wrong herb workshop' with an exact catalog reference
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects 'duplicate workshops' with an exact catalog reference
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects 'unexpected field' with an exact catalog reference
+AssertionError: expected undefined to be type of 'function'
+System.Management.Automation.RemoteException
+Expected: "function"
+Received: "undefined"
+System.Management.Automation.RemoteException
+ ❯ load packages/core/src/__tests__/recipes-catalog.test.ts:15:38
+     13| const loadItems = () => JSON.parse(readFileSync(new URL('../data/items…
+     14| const load = () => {
+     15|   expect(validation.validateRecipes).toBeTypeOf('function');
+       |                                      ^
+     16|   return JSON.parse(readFileSync(new URL('../data/recipes.json',import…
+     17| };
+ ❯ packages/core/src/__tests__/recipes-catalog.test.ts:131:14
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/45]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects malformed TRIAL queueCap
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects malformed TRIAL skillSteps
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > rejects malformed TRIAL drugStoreBase
+AssertionError: expected undefined to be type of 'function'
+System.Management.Automation.RemoteException
+Expected: "function"
+Received: "undefined"
+System.Management.Automation.RemoteException
+ ❯ load packages/core/src/__tests__/recipes-catalog.test.ts:15:38
+     13| const loadItems = () => JSON.parse(readFileSync(new URL('../data/items…
+     14| const load = () => {
+     15|   expect(validation.validateRecipes).toBeTypeOf('function');
+       |                                      ^
+     16|   return JSON.parse(readFileSync(new URL('../data/recipes.json',import…
+     17| };
+ ❯ packages/core/src/__tests__/recipes-catalog.test.ts:138:14
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/45]⎯
+System.Management.Automation.RemoteException
+
+Exit: 1
+UTC end: 2026-11-15T01:56:57.1164533Z
+Elapsed seconds: 3.7124287

@@ -1,0 +1,316 @@
+HEAD: a60711120b8c3d7ff9759a14cbb7a6c09ec396c5
+Tree: 1b26a634536c83699780f1a9479ce64ebb10717d
+UTC: 2026-11-15T04:14:21.8544112Z
+Command: node C:/Users/Admin/.t3/local-drafts/p6b-prA/verify-edits.mjs NAMES
+Status before:
+
+{
+  "utc": "2026-11-15T04:14:23.885Z",
+  "phase": "NAMES",
+  "base": "e85917733e229701830ad7f53dfcfbe2fefab831",
+  "head": "a60711120b8c3d7ff9759a14cbb7a6c09ec396c5",
+  "tree": "1b26a634536c83699780f1a9479ce64ebb10717d",
+  "approvedExistingTestBlocks": 59,
+  "approvedExistingTestFiles": 35,
+  "p59": {
+    "id": "P59",
+    "base": "2a92985e20c5eb0eb0a9faa053bcd73f64410286",
+    "file": "packages/simulation/src/__tests__/lord-health.test.ts",
+    "line": 73,
+    "changedLine": 84,
+    "before": "it('a Calm game below Crime 70 survives all 60 weeks from health one', () => {\n  let s = life(); s.player.character.health = 1;\n  const stocks = s.city.world.settlements[s.city.world.activeSettlementId!].inventory;\n  for (const key of ['gold','food','wood','iron'] as const) stocks[key] = 1_000_000;\n  s.city.goodsStock!.amountMilli = 1_000_000;\n  for (let week = 1; week <= 60; week++) {\n    const r = command(s,'END_WEEK',{expectedWeek:week}); s = r.next;\n    expect(s.city.society!.order.crime).toBeLessThan(70); expect(s.city.society!.crisis.stage).toBe('none');\n    expect(r.report!.crimeEvent!.lordHealthLoss).toBe(0); expect(s.player.character.health).toBe(week+1);\n    s = command(s,'NEXT_WEEK').next;\n  }\n});",
+    "after": "it('a Calm game below Crime 70 survives all 60 weeks from health one', () => {\n  let s = life(); s.player.character.health = 1;\n  const stocks = s.city.world.settlements[s.city.world.activeSettlementId!].inventory;\n  for (const key of ['gold','food','wood','iron'] as const) stocks[key] = 1_000_000;\n  s.city.goodsStock!.amountMilli = 1_000_000;\n  for (let week = 1; week <= 60; week++) {\n    const r = command(s,'END_WEEK',{expectedWeek:week}); s = r.next;\n    expect(s.city.society!.order.crime).toBeLessThan(70); expect(s.city.society!.crisis.stage).toBe('none');\n    expect(r.report!.crimeEvent!.lordHealthLoss).toBe(0); expect(s.player.character.health).toBe(week+1);\n    s = command(s,'NEXT_WEEK').next;\n  }\n}, 15000);",
+    "reason": "Plan correction 2: only the 60-week Calm-game test receives a 15000 ms per-test timeout; assertions, setup, loop and all other bytes stay unchanged.",
+    "owner": "Tân",
+    "date": "2026-11-15",
+    "ownerQuote": "Set this test to 15 s (Recommended)",
+    "approvedPackageSHA256": {
+      "step0-proposed-edits.md": "9f30e97ceabc1640f55bf8e3cb266fddc8e7b4d4bc9f8ed70337147c774b8814",
+      "step0-proposed-edits.json": "e0335c5c71609dd579bcbe50c37b13f48ba49e9515fa31c923693496ea89eb26"
+    }
+  },
+  "p4Revision": {
+    "file": "packages/core/src/__tests__/catalog-data.test.ts",
+    "line": 106,
+    "before": "  expect(catalogHash(ITEM_CATALOG)).toBe('fa866064967ee36dac69a3b8c5c6090bb2b40b7236c3f104d5a8e89d84e974c6');",
+    "after": "  expect(catalogHash(ITEM_CATALOG)).toBe('7fdeadb141aba95586555f531e044fcdc8a5eccd2c2766fab94c48714793f96d');",
+    "reason": "Plan correction 3: unique display names for only the 32 new Player/NPC definitions; all prior definitions and other fields unchanged.",
+    "id": "P4",
+    "previousAfter": "  expect(catalogHash(ITEM_CATALOG)).toBe('7d1cc84733e7b5837cb596ea04b558943e8927689f7352fc35ea555e95581635');"
+  },
+  "originalStep0InventoryUnchanged": true,
+  "unchangedApprovedEditsExceptP4": true,
+  "approvedNewNames": [
+    {
+      "id": "common-weapon-npc",
+      "kind": "npc",
+      "before": "Plain Weapon",
+      "after": "Retainer's Plain Weapon"
+    },
+    {
+      "id": "rare-weapon-player",
+      "kind": "player",
+      "before": "Fine Weapon",
+      "after": "Lord's Fine Weapon"
+    },
+    {
+      "id": "epic-weapon-npc",
+      "kind": "npc",
+      "before": "Masterwork Weapon",
+      "after": "Retainer's Masterwork Weapon"
+    },
+    {
+      "id": "common-earrings-npc",
+      "kind": "npc",
+      "before": "Plain Earrings",
+      "after": "Retainer's Plain Earrings"
+    },
+    {
+      "id": "rare-earrings-player",
+      "kind": "player",
+      "before": "Fine Earrings",
+      "after": "Lord's Fine Earrings"
+    },
+    {
+      "id": "epic-earrings-player",
+      "kind": "player",
+      "before": "Masterwork Earrings",
+      "after": "Lord's Masterwork Earrings"
+    },
+    {
+      "id": "epic-earrings-npc",
+      "kind": "npc",
+      "before": "Masterwork Earrings",
+      "after": "Retainer's Masterwork Earrings"
+    },
+    {
+      "id": "common-necklace-npc",
+      "kind": "npc",
+      "before": "Plain Necklace",
+      "after": "Retainer's Plain Necklace"
+    },
+    {
+      "id": "rare-necklace-player",
+      "kind": "player",
+      "before": "Fine Necklace",
+      "after": "Lord's Fine Necklace"
+    },
+    {
+      "id": "epic-necklace-player",
+      "kind": "player",
+      "before": "Masterwork Necklace",
+      "after": "Lord's Masterwork Necklace"
+    },
+    {
+      "id": "common-ring-npc",
+      "kind": "npc",
+      "before": "Plain Ring",
+      "after": "Retainer's Plain Ring"
+    },
+    {
+      "id": "rare-ring-player",
+      "kind": "player",
+      "before": "Fine Ring",
+      "after": "Lord's Fine Ring"
+    },
+    {
+      "id": "epic-ring-player",
+      "kind": "player",
+      "before": "Masterwork Ring",
+      "after": "Lord's Masterwork Ring"
+    },
+    {
+      "id": "epic-ring-npc",
+      "kind": "npc",
+      "before": "Masterwork Ring",
+      "after": "Retainer's Masterwork Ring"
+    },
+    {
+      "id": "common-hand-npc",
+      "kind": "npc",
+      "before": "Plain Hand",
+      "after": "Retainer's Plain Hand"
+    },
+    {
+      "id": "rare-hand-player",
+      "kind": "player",
+      "before": "Fine Hand",
+      "after": "Lord's Fine Hand"
+    },
+    {
+      "id": "epic-hand-player",
+      "kind": "player",
+      "before": "Masterwork Hand",
+      "after": "Lord's Masterwork Hand"
+    },
+    {
+      "id": "common-top-npc",
+      "kind": "npc",
+      "before": "Plain Top",
+      "after": "Retainer's Plain Top"
+    },
+    {
+      "id": "rare-top-player",
+      "kind": "player",
+      "before": "Fine Top",
+      "after": "Lord's Fine Top"
+    },
+    {
+      "id": "epic-top-npc",
+      "kind": "npc",
+      "before": "Masterwork Top",
+      "after": "Retainer's Masterwork Top"
+    },
+    {
+      "id": "common-bottom-npc",
+      "kind": "npc",
+      "before": "Plain Bottom",
+      "after": "Retainer's Plain Bottom"
+    },
+    {
+      "id": "rare-bottom-player",
+      "kind": "player",
+      "before": "Fine Bottom",
+      "after": "Lord's Fine Bottom"
+    },
+    {
+      "id": "epic-bottom-player",
+      "kind": "player",
+      "before": "Masterwork Bottom",
+      "after": "Lord's Masterwork Bottom"
+    },
+    {
+      "id": "epic-bottom-npc",
+      "kind": "npc",
+      "before": "Masterwork Bottom",
+      "after": "Retainer's Masterwork Bottom"
+    },
+    {
+      "id": "common-shoes-npc",
+      "kind": "npc",
+      "before": "Plain Shoes",
+      "after": "Retainer's Plain Shoes"
+    },
+    {
+      "id": "rare-shoes-player",
+      "kind": "player",
+      "before": "Fine Shoes",
+      "after": "Lord's Fine Shoes"
+    },
+    {
+      "id": "epic-shoes-player",
+      "kind": "player",
+      "before": "Masterwork Shoes",
+      "after": "Lord's Masterwork Shoes"
+    },
+    {
+      "id": "epic-shoes-npc",
+      "kind": "npc",
+      "before": "Masterwork Shoes",
+      "after": "Retainer's Masterwork Shoes"
+    },
+    {
+      "id": "common-set-npc",
+      "kind": "npc",
+      "before": "Travelling Set",
+      "after": "Retainer's Travelling Set"
+    },
+    {
+      "id": "rare-set-player",
+      "kind": "player",
+      "before": "Steward Set",
+      "after": "Lord's Steward Set"
+    },
+    {
+      "id": "epic-set-player",
+      "kind": "player",
+      "before": "Noble Set",
+      "after": "Lord's Noble Set"
+    },
+    {
+      "id": "epic-set-npc",
+      "kind": "npc",
+      "before": "Noble Set",
+      "after": "Retainer's Noble Set"
+    }
+  ],
+  "itemCandidate": "correction3-candidate-items.json",
+  "preservedWearables": 26,
+  "historicalFixtureFilesUnchanged": 53,
+  "pins": {
+    "ITEM_CATALOG": "7fdeadb141aba95586555f531e044fcdc8a5eccd2c2766fab94c48714793f96d",
+    "TRIAL_BUILDINGS": "5f27eec1560b3aef1a61312497eb82be8970a28317e09078f76956ea8ed88219",
+    "SOCIETY_BUILDINGS": "e23c932be89d5d3fd561d44ac863bed90fc73d27a9795d65d588e813889e2a3b",
+    "SOCIETY_TRIAL": "49add1753fd6d630e3cf7f4f7395f2bd7b844936086ef0b9f06fb6cb595090e6"
+  },
+  "candidateDataIdentical": true,
+  "changedFileCount": 61,
+  "changedFiles": [
+    "packages/core/src/__tests__/catalog-data.test.ts",
+    "packages/core/src/__tests__/items-catalog.test.ts",
+    "packages/core/src/__tests__/recipes-catalog.test.ts",
+    "packages/core/src/data/buildings.json",
+    "packages/core/src/data/items.json",
+    "packages/core/src/data/recipes.json",
+    "packages/core/src/data/tuning.json",
+    "packages/core/src/data/validate.ts",
+    "packages/core/src/index.ts",
+    "packages/core/src/trial/__tests__/crime.test.ts",
+    "packages/core/src/trial/__tests__/crisis.test.ts",
+    "packages/core/src/trial/__tests__/items.test.ts",
+    "packages/core/src/trial/__tests__/law.test.ts",
+    "packages/core/src/trial/__tests__/order.test.ts",
+    "packages/core/src/trial/__tests__/outside.test.ts",
+    "packages/core/src/trial/__tests__/society-map.test.ts",
+    "packages/core/src/trial/__tests__/society.test.ts",
+    "packages/core/src/trial/items.ts",
+    "packages/core/src/trial/recipes.ts",
+    "packages/core/src/trial/society.ts",
+    "packages/core/src/world/__tests__/session.test.ts",
+    "packages/persistence/src/__tests__/character-life-save.test.ts",
+    "packages/persistence/src/__tests__/fixtures/society-v9/life-5-weeks.json",
+    "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-death.json",
+    "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-raid.json",
+    "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-robbery.json",
+    "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-wound.json",
+    "packages/persistence/src/__tests__/fixtures/society-v9/life-demand-card.json",
+    "packages/persistence/src/__tests__/fixtures/society-v9/life-laws.json",
+    "packages/persistence/src/__tests__/fixtures/society-v9/life-new-game.json",
+    "packages/persistence/src/__tests__/fixtures/society-v9/life-rebellion-last-week.json",
+    "packages/persistence/src/__tests__/fixtures/society-v9/new-game.json",
+    "packages/persistence/src/__tests__/item-records.test.ts",
+    "packages/persistence/src/__tests__/items-rebuild-order.test.ts",
+    "packages/persistence/src/__tests__/session-records.test.ts",
+    "packages/persistence/src/__tests__/society-new-game-fixture.test.ts",
+    "packages/persistence/src/__tests__/society-v8-fixture.test.ts",
+    "packages/persistence/src/session-records.ts",
+    "packages/simulation/src/__tests__/character-life-observation.test.ts",
+    "packages/simulation/src/__tests__/crime-fixtures.test.ts",
+    "packages/simulation/src/__tests__/crisis-fixtures.test.ts",
+    "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "packages/simulation/src/__tests__/fixtures/p6b-crafting-path-diff.ts",
+    "packages/simulation/src/__tests__/fixtures/p6b-crafting-path-diff.txt",
+    "packages/simulation/src/__tests__/law-fixture.test.ts",
+    "packages/simulation/src/__tests__/law-week.test.ts",
+    "packages/simulation/src/__tests__/lord-health.test.ts",
+    "packages/simulation/src/__tests__/smithy-data.test.ts",
+    "packages/ui/src/__tests__/character-life-session.test.ts",
+    "packages/ui/src/__tests__/world-session.test.ts",
+    "tests/e2e/crime.spec.ts",
+    "tests/e2e/crisis.spec.ts",
+    "tests/e2e/garrison.spec.ts",
+    "tests/e2e/items.spec.ts",
+    "tests/e2e/laws.spec.ts",
+    "tests/e2e/ledger.spec.ts",
+    "tests/e2e/society.spec.ts",
+    "tests/e2e/storage.spec.ts",
+    "tests/e2e/tile-save.spec.ts",
+    "tests/e2e/title.spec.ts",
+    "tests/e2e/world-session.spec.ts"
+  ],
+  "exit": 0
+}
+
+Exit: 0
+UTC end: 2026-11-15T04:14:23.9762102Z
+Elapsed seconds: 2.0657264

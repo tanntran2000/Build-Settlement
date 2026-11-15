@@ -1,0 +1,20 @@
+{
+  "utc": "2026-11-15T03:13:44.553Z",
+  "head": "b0c0b37cb25601b69f03b8844ac8a3f957304d4d",
+  "label": "case-21-alone-1",
+  "artifacts": [
+    {
+      "file": "tile-trial-repeated-keyboa-53c8a-nning-into-another-End-Week-chromium/error-context.md",
+      "bytes": 33377,
+      "sha256": "7637f297a6b17945679d5a409a171a63029091e5767a54c1308691b547b671f1",
+      "over1MB": false
+    },
+    {
+      "file": "tile-trial-repeated-keyboa-53c8a-nning-into-another-End-Week-chromium/trace.zip",
+      "bytes": 1579703,
+      "sha256": "daeb7a4bace514c64ee506c76f826c1e2d89928ab1c87e73eda10227f1a8b22c",
+      "over1MB": true
+    }
+  ],
+  "note": "Raw local failure artifacts preserved before a later Playwright run can replace test-results. Files over 1 MB should be represented by hashes for later docs-branch publication."
+}

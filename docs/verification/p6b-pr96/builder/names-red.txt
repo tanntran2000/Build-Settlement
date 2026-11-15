@@ -1,0 +1,108 @@
+HEAD: b0c0b37cb25601b69f03b8844ac8a3f957304d4d
+Tree: 5f9d377ec748ea62e56634b6e34dbd42d71ef868
+UTC: 2026-11-15T03:22:38.2998522Z
+Command: npm test -- packages/core/src/__tests__/recipes-catalog.test.ts
+Status before:
+ M packages/core/src/__tests__/recipes-catalog.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/core/src/__tests__/recipes-catalog.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/core/src/__tests__/recipes-catalog.test.ts (45 tests | 3 failed) 123ms
+   × gives each new definition the approved id, stats, name, regen and price 14ms
+   × has a unique display name for every item definition 4ms
+   × prefixes all 32 new definitions for their wearer with straight apostrophes 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > gives each new definition the approved id, stats, name, regen and price
+AssertionError: expected 'Plain Weapon' to be 'Retainer\'s Plain Weapon' // Object.is equality
+
+Expected: "Retainer's Plain Weapon"
+Received: "Plain Weapon"
+
+ ❯ packages/core/src/__tests__/recipes-catalog.test.ts:37:20
+     35|     expect(d.regen).toBe(d.kind==='player'?{common:1,rare:2,epic:3}[ra…
+     36|     const name=slot==='set'?{common:'Travelling Set',rare:'Steward Set…
+     37|     expect(d.name).toBe((d.kind==='player'?"Lord's ":"Retainer's ")+na…
+       |                    ^
+     38|     expect(d.basePriceMilli).toBe({common:5000,rare:15000,epic:40000}[…
+     39|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > has a unique display name for every item definition
+AssertionError: expected [ Array(23) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "Plain Weapon",
++   "Fine Weapon",
++   "Plain Earrings",
++   "Fine Earrings",
++   "Masterwork Earrings",
++   "Plain Necklace",
++   "Fine Necklace",
++   "Plain Ring",
++   "Fine Ring",
++   "Masterwork Ring",
++   "Plain Hand",
++   "Fine Hand",
++   "Plain Top",
++   "Fine Top",
++   "Plain Bottom",
++   "Fine Bottom",
++   "Masterwork Bottom",
++   "Plain Shoes",
++   "Fine Shoes",
++   "Masterwork Shoes",
++   "Travelling Set",
++   "Steward Set",
++   "Noble Set",
++ ]
+
+ ❯ packages/core/src/__tests__/recipes-catalog.test.ts:43:67
+     41| it('has a unique display name for every item definition', () => {
+     42|   const names=Object.values(core.ITEM_CATALOG).map(d=>d.name);
+     43|   expect(names.filter((name,index)=>names.indexOf(name)!==index)).toEq…
+       |                                                                   ^
+     44| });
+     45| it('prefixes all 32 new definitions for their wearer with straight apo…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  packages/core/src/__tests__/recipes-catalog.test.ts > prefixes all 32 new definitions for their wearer with straight apostrophes
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ packages/core/src/__tests__/recipes-catalog.test.ts:49:92
+     47|   expect(added).toHaveLength(32);
+     48|   for(const [,definition] of added){
+     49|     expect(definition.name.startsWith(definition.kind==='player'?"Lord…
+       |                                                                                            ^
+     50|     expect(definition.name).not.toMatch(/[‘’]/);
+     51|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 42 passed (45)
+   Start at  10:22:39
+   Duration  1.06s (transform 476ms, setup 0ms, import 619ms, tests 123ms, environment 0ms)
+
+
+Exit: 1
+UTC end: 2026-11-15T03:22:40.8899518Z
+Elapsed seconds: 2.5324674

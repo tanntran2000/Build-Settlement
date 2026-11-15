@@ -1,0 +1,31 @@
+{
+  "utc": "2026-11-15T01:58:37.627Z",
+  "phase": "A1",
+  "base": "e85917733e229701830ad7f53dfcfbe2fefab831",
+  "head": "e85917733e229701830ad7f53dfcfbe2fefab831",
+  "tree": "49f6b676c3ae57f66ef9ce6275eb89a806f52a9a",
+  "approvedExistingTestBlocks": 10,
+  "approvedExistingTestFiles": 6,
+  "preservedWearables": 26,
+  "historicalFixtureFilesUnchanged": 53,
+  "pins": {
+    "ITEM_CATALOG": "7d1cc84733e7b5837cb596ea04b558943e8927689f7352fc35ea555e95581635",
+    "TRIAL_BUILDINGS": "ecaa53f29be9a8028a9f68923e6c7d5bc9ef4b510692e7cd2bd580415433f54f",
+    "SOCIETY_BUILDINGS": "2bcf0b8352d2769d4d0da0d3d9039ee1196083445067ae75509efd26c09673f1",
+    "SOCIETY_TRIAL": "d390d44efdd2fba06fd4d8c0812e83837ef25b5d84e19956bb5ff00a0dbcac80"
+  },
+  "candidateDataIdentical": true,
+  "changedTrackedFiles": [
+    "packages/core/src/__tests__/catalog-data.test.ts",
+    "packages/core/src/__tests__/items-catalog.test.ts",
+    "packages/core/src/data/items.json",
+    "packages/core/src/data/validate.ts",
+    "packages/core/src/index.ts",
+    "packages/core/src/trial/__tests__/society.test.ts",
+    "packages/core/src/trial/items.ts",
+    "packages/core/src/world/__tests__/session.test.ts",
+    "packages/simulation/src/__tests__/law-week.test.ts",
+    "tests/e2e/items.spec.ts"
+  ],
+  "exit": 0
+}

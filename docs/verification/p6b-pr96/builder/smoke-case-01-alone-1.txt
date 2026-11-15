@@ -1,0 +1,62 @@
+HEAD: b0c0b37cb25601b69f03b8844ac8a3f957304d4d
+Tree: 5f9d377ec748ea62e56634b6e34dbd42d71ef868
+UTC: 2026-11-15T03:05:13.311Z
+CI=1
+Command executable: C:\Program Files\nodejs\node.exe
+Arguments: ["node_modules/@playwright/test/cli.js","test","tests/e2e/character-life-boundary.spec.ts","--grep","same-session UI projection through assignment and full week"]
+PORTS_4173_4174_FREE
+
+
+Running 1 test using 1 worker
+
+  x  1 [chromium] › tests\e2e\character-life-boundary.spec.ts:257:1 › same-session UI projection through assignment and full week (1.3m)
+
+
+  1) [chromium] › tests\e2e\character-life-boundary.spec.ts:257:1 › same-session UI projection through assignment and full week 
+
+    Error: expect(received).toHaveLength(expected)
+
+    Expected length: 1
+    Received length: 2
+    Received array:  [["rare-ring", {"basePriceMilli": 15000, "category": "accessory", "kind": "npc", "mainStat": "medical", "name": "Fine Ring", "rarity": "rare", "secondaryStat": "technical", "slot": "ring"}], ["rare-ring-player", {"basePriceMilli": 15000, "category": "accessory", "kind": "player", "mainStat": "medical", "name": "Fine Ring", "rarity": "rare", "regen": 2, "secondaryStat": "technical", "slot": "ring"}]]
+
+       at character-life-navigation.helpers.ts:239
+
+      237 |   function definition(name: string): string {
+      238 |     const matches = Object.entries(ITEM_CATALOG).filter(([, item]) => item.name === name);
+    > 239 |     expect(matches).toHaveLength(1);
+          |                     ^
+      240 |     return matches[0][0];
+      241 |   }
+      242 |   function goal(label: string): NonNullable<TileTrialReport['items']['legendary']>['goal'] {
+        at definition (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:239:21)
+        at readItemReport (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:257:22)
+        at expectReport (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:344:12)
+        at reportParity (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-boundary.spec.ts:118:3)
+        at uiParity (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-boundary.spec.ts:251:3)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-boundary.spec.ts:299:5
+
+    Error Context: test-results\character-life-boundary-sa-7982a-gh-assignment-and-full-week-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\character-life-boundary-sa-7982a-gh-assignment-and-full-week-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\character-life-boundary-sa-7982a-gh-assignment-and-full-week-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\character-life-boundary.spec.ts:257:1 › same-session UI projection through assignment and full week 
+[WebServer] (node:62824) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:46184) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+(node:17340) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Exit: 1
+UTC end: 2026-11-15T03:06:43.691Z
+Elapsed seconds: 90.38
+Ports after: PORTS_4173_4174_FREE
+

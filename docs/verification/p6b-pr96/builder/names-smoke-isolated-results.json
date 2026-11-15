@@ -1,0 +1,693 @@
+{
+  "head": "a60711120b8c3d7ff9759a14cbb7a6c09ec396c5",
+  "tree": "1b26a634536c83699780f1a9479ce64ebb10717d",
+  "CI": "1",
+  "status": "GREEN",
+  "sourceFailuresHead": "b0c0b37cb25601b69f03b8844ac8a3f957304d4d",
+  "cases": [
+    {
+      "index": 1,
+      "file": "tests/e2e/character-life-boundary.spec.ts",
+      "title": "character-life-boundary.spec.ts >> same-session UI projection through assignment and full week",
+      "name": "same-session UI projection through assignment and full week",
+      "sourceArtifact": "character-life-boundary-sa-7982a-gh-assignment-and-full-week-chromium/error-context.md",
+      "timeout": false,
+      "definitions": [
+        {
+          "id": "rare-ring",
+          "name": "Fine Ring",
+          "kind": "npc"
+        },
+        {
+          "id": "rare-ring-player",
+          "name": "Fine Ring",
+          "kind": "player"
+        }
+      ],
+      "rawError": "```\nError: expect(received).toHaveLength(expected)\n\nExpected length: 1\nReceived length: 2\nReceived array:  [[\"rare-ring\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"npc\", \"mainStat\": \"medical\", \"name\": \"Fine Ring\", \"rarity\": \"rare\", \"secondaryStat\": \"technical\", \"slot\": \"ring\"}], [\"rare-ring-player\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"player\", \"mainStat\": \"medical\", \"name\": \"Fine Ring\", \"rarity\": \"rare\", \"regen\": 2, \"secondaryStat\": \"technical\", \"slot\": \"ring\"}]]\n```"
+    },
+    {
+      "index": 2,
+      "file": "tests/e2e/character-life-navigation.spec.ts",
+      "title": "character-life-navigation.spec.ts >> all Life calendar surfaces cross year boundaries",
+      "name": "all Life calendar surfaces cross year boundaries",
+      "sourceArtifact": "character-life-navigation--b5603-faces-cross-year-boundaries-chromium/error-context.md",
+      "timeout": false,
+      "definitions": [
+        {
+          "id": "common-top",
+          "name": "Plain Top",
+          "kind": "player"
+        },
+        {
+          "id": "common-top-npc",
+          "name": "Plain Top",
+          "kind": "npc"
+        }
+      ],
+      "rawError": "```\nError: expect(received).toHaveLength(expected)\n\nExpected length: 1\nReceived length: 2\nReceived array:  [[\"common-top\", {\"basePriceMilli\": 5000, \"category\": \"outfit\", \"kind\": \"player\", \"mainStat\": \"combat\", \"name\": \"Plain Top\", \"rarity\": \"common\", \"regen\": 1, \"slot\": \"top\"}], [\"common-top-npc\", {\"basePriceMilli\": 5000, \"category\": \"outfit\", \"kind\": \"npc\", \"mainStat\": \"combat\", \"name\": \"Plain Top\", \"rarity\": \"common\", \"slot\": \"top\"}]]\n```"
+    },
+    {
+      "index": 3,
+      "file": "tests/e2e/crime.spec.ts",
+      "title": "crime.spec.ts >> raid report and resulting state match the crafted save",
+      "name": "raid report and resulting state match the crafted save",
+      "sourceArtifact": "crime-raid-report-and-resulting-state-match-the-crafted-save-chromium/error-context.md",
+      "timeout": false,
+      "definitions": [
+        {
+          "id": "rare-earrings",
+          "name": "Fine Earrings",
+          "kind": "npc"
+        },
+        {
+          "id": "rare-earrings-player",
+          "name": "Fine Earrings",
+          "kind": "player"
+        }
+      ],
+      "rawError": "```\nError: expect(received).toHaveLength(expected)\n\nExpected length: 1\nReceived length: 2\nReceived array:  [[\"rare-earrings\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"npc\", \"mainStat\": \"negotiation\", \"name\": \"Fine Earrings\", \"rarity\": \"rare\", \"secondaryStat\": \"management\", \"slot\": \"earrings\"}], [\"rare-earrings-player\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"player\", \"mainStat\": \"negotiation\", \"name\": \"Fine Earrings\", \"rarity\": \"rare\", \"regen\": 2, \"secondaryStat\": \"management\", \"slot\": \"earrings\"}]]\n```"
+    },
+    {
+      "index": 4,
+      "file": "tests/e2e/crime.spec.ts",
+      "title": "crime.spec.ts >> wound report and resulting state match the crafted save",
+      "name": "wound report and resulting state match the crafted save",
+      "sourceArtifact": "crime-wound-report-and-res-c2f55-tate-match-the-crafted-save-chromium/error-context.md",
+      "timeout": false,
+      "definitions": [
+        {
+          "id": "common-hand",
+          "name": "Plain Hand",
+          "kind": "player"
+        },
+        {
+          "id": "common-hand-npc",
+          "name": "Plain Hand",
+          "kind": "npc"
+        }
+      ],
+      "rawError": "```\nError: expect(received).toHaveLength(expected)\n\nExpected length: 1\nReceived length: 2\nReceived array:  [[\"common-hand\", {\"basePriceMilli\": 5000, \"category\": \"accessory\", \"kind\": \"player\", \"mainStat\": \"technical\", \"name\": \"Plain Hand\", \"rarity\": \"common\", \"regen\": 1, \"slot\": \"hand\"}], [\"common-hand-npc\", {\"basePriceMilli\": 5000, \"category\": \"accessory\", \"kind\": \"npc\", \"mainStat\": \"technical\", \"name\": \"Plain Hand\", \"rarity\": \"common\", \"slot\": \"hand\"}]]\n```"
+    },
+    {
+      "index": 5,
+      "file": "tests/e2e/garrison.spec.ts",
+      "title": "garrison.spec.ts >> crafted raid reports garrison deaths with complete Order parity",
+      "name": "crafted raid reports garrison deaths with complete Order parity",
+      "sourceArtifact": "garrison-crafted-raid-repo-9e6f1--with-complete-Order-parity-chromium/error-context.md",
+      "timeout": false,
+      "definitions": [
+        {
+          "id": "rare-earrings",
+          "name": "Fine Earrings",
+          "kind": "npc"
+        },
+        {
+          "id": "rare-earrings-player",
+          "name": "Fine Earrings",
+          "kind": "player"
+        }
+      ],
+      "rawError": "```\nError: expect(received).toHaveLength(expected)\n\nExpected length: 1\nReceived length: 2\nReceived array:  [[\"rare-earrings\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"npc\", \"mainStat\": \"negotiation\", \"name\": \"Fine Earrings\", \"rarity\": \"rare\", \"secondaryStat\": \"management\", \"slot\": \"earrings\"}], [\"rare-earrings-player\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"player\", \"mainStat\": \"negotiation\", \"name\": \"Fine Earrings\", \"rarity\": \"rare\", \"regen\": 2, \"secondaryStat\": \"management\", \"slot\": \"earrings\"}]]\n```"
+    },
+    {
+      "index": 6,
+      "file": "tests/e2e/goods-stock.spec.ts",
+      "title": "goods-stock.spec.ts >> Society five-week report and navigation parity at 1280px",
+      "name": "Society five-week report and navigation parity at 1280px",
+      "sourceArtifact": "goods-stock-Society-five-w-be7af-navigation-parity-at-1280px-chromium/error-context.md",
+      "timeout": false,
+      "definitions": [
+        {
+          "id": "common-top",
+          "name": "Plain Top",
+          "kind": "player"
+        },
+        {
+          "id": "common-top-npc",
+          "name": "Plain Top",
+          "kind": "npc"
+        }
+      ],
+      "rawError": "```\nError: expect(received).toHaveLength(expected)\n\nExpected length: 1\nReceived length: 2\nReceived array:  [[\"common-top\", {\"basePriceMilli\": 5000, \"category\": \"outfit\", \"kind\": \"player\", \"mainStat\": \"combat\", \"name\": \"Plain Top\", \"rarity\": \"common\", \"regen\": 1, \"slot\": \"top\"}], [\"common-top-npc\", {\"basePriceMilli\": 5000, \"category\": \"outfit\", \"kind\": \"npc\", \"mainStat\": \"combat\", \"name\": \"Plain Top\", \"rarity\": \"common\", \"slot\": \"top\"}]]\n```"
+    },
+    {
+      "index": 7,
+      "file": "tests/e2e/goods-stock.spec.ts",
+      "title": "goods-stock.spec.ts >> Society five-week report and navigation parity at 375px",
+      "name": "Society five-week report and navigation parity at 375px",
+      "sourceArtifact": "goods-stock-Society-five-w-fbc68--navigation-parity-at-375px-chromium/error-context.md",
+      "timeout": false,
+      "definitions": [
+        {
+          "id": "common-top",
+          "name": "Plain Top",
+          "kind": "player"
+        },
+        {
+          "id": "common-top-npc",
+          "name": "Plain Top",
+          "kind": "npc"
+        }
+      ],
+      "rawError": "```\nError: expect(received).toHaveLength(expected)\n\nExpected length: 1\nReceived length: 2\nReceived array:  [[\"common-top\", {\"basePriceMilli\": 5000, \"category\": \"outfit\", \"kind\": \"player\", \"mainStat\": \"combat\", \"name\": \"Plain Top\", \"rarity\": \"common\", \"regen\": 1, \"slot\": \"top\"}], [\"common-top-npc\", {\"basePriceMilli\": 5000, \"category\": \"outfit\", \"kind\": \"npc\", \"mainStat\": \"combat\", \"name\": \"Plain Top\", \"rarity\": \"common\", \"slot\": \"top\"}]]\n```"
+    },
+    {
+      "index": 8,
+      "file": "tests/e2e/items.spec.ts",
+      "title": "items.spec.ts >> C2 UI buy, keyboard equip and next Farm report show the post effect",
+      "name": "C2 UI buy, keyboard equip and next Farm report show the post effect",
+      "sourceArtifact": "items-C2-UI-buy-keyboard-e-e2451-report-show-the-post-effect-chromium/error-context.md",
+      "timeout": false,
+      "definitions": [
+        {
+          "id": "rare-earrings",
+          "name": "Fine Earrings",
+          "kind": "npc"
+        },
+        {
+          "id": "rare-earrings-player",
+          "name": "Fine Earrings",
+          "kind": "player"
+        }
+      ],
+      "rawError": "```\nError: expect(received).toHaveLength(expected)\n\nExpected length: 1\nReceived length: 2\nReceived array:  [[\"rare-earrings\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"npc\", \"mainStat\": \"negotiation\", \"name\": \"Fine Earrings\", \"rarity\": \"rare\", \"secondaryStat\": \"management\", \"slot\": \"earrings\"}], [\"rare-earrings-player\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"player\", \"mainStat\": \"negotiation\", \"name\": \"Fine Earrings\", \"rarity\": \"rare\", \"regen\": 2, \"secondaryStat\": \"management\", \"slot\": \"earrings\"}]]\n```"
+    },
+    {
+      "index": 9,
+      "file": "tests/e2e/items.spec.ts",
+      "title": "items.spec.ts >> C2 visible item letters include stack loss, storage-full loss, expiry, delivered and waiting Legendary rewards",
+      "name": "C2 visible item letters include stack loss, storage-full loss, expiry, delivered and waiting Legendary rewards",
+      "sourceArtifact": "items-C2-visible-item-lett-ac1fa-d-waiting-Legendary-rewards-chromium/error-context.md",
+      "timeout": false,
+      "definitions": [
+        {
+          "id": "common-hand",
+          "name": "Plain Hand",
+          "kind": "player"
+        },
+        {
+          "id": "common-hand-npc",
+          "name": "Plain Hand",
+          "kind": "npc"
+        }
+      ],
+      "rawError": "```\nError: expect(received).toHaveLength(expected)\n\nExpected length: 1\nReceived length: 2\nReceived array:  [[\"common-hand\", {\"basePriceMilli\": 5000, \"category\": \"accessory\", \"kind\": \"player\", \"mainStat\": \"technical\", \"name\": \"Plain Hand\", \"rarity\": \"common\", \"regen\": 1, \"slot\": \"hand\"}], [\"common-hand-npc\", {\"basePriceMilli\": 5000, \"category\": \"accessory\", \"kind\": \"npc\", \"mainStat\": \"technical\", \"name\": \"Plain Hand\", \"rarity\": \"common\", \"slot\": \"hand\"}]]\n```"
+    },
+    {
+      "index": 10,
+      "file": "tests/e2e/ledger.spec.ts",
+      "title": "ledger.spec.ts >> B3 crime-raid letters preserve rows, Details and complete report parity",
+      "name": "B3 crime-raid letters preserve rows, Details and complete report parity",
+      "sourceArtifact": "ledger-B3-crime-raid-lette-a10dc--and-complete-report-parity-chromium/error-context.md",
+      "timeout": false,
+      "definitions": [
+        {
+          "id": "rare-earrings",
+          "name": "Fine Earrings",
+          "kind": "npc"
+        },
+        {
+          "id": "rare-earrings-player",
+          "name": "Fine Earrings",
+          "kind": "player"
+        }
+      ],
+      "rawError": "```\nError: expect(received).toHaveLength(expected)\n\nExpected length: 1\nReceived length: 2\nReceived array:  [[\"rare-earrings\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"npc\", \"mainStat\": \"negotiation\", \"name\": \"Fine Earrings\", \"rarity\": \"rare\", \"secondaryStat\": \"management\", \"slot\": \"earrings\"}], [\"rare-earrings-player\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"player\", \"mainStat\": \"negotiation\", \"name\": \"Fine Earrings\", \"rarity\": \"rare\", \"regen\": 2, \"secondaryStat\": \"management\", \"slot\": \"earrings\"}]]\n```"
+    },
+    {
+      "index": 11,
+      "file": "tests/e2e/ledger.spec.ts",
+      "title": "ledger.spec.ts >> B3 crime-wound letters preserve rows, Details and complete report parity",
+      "name": "B3 crime-wound letters preserve rows, Details and complete report parity",
+      "sourceArtifact": "ledger-B3-crime-wound-lett-aa6c4--and-complete-report-parity-chromium/error-context.md",
+      "timeout": false,
+      "definitions": [
+        {
+          "id": "common-hand",
+          "name": "Plain Hand",
+          "kind": "player"
+        },
+        {
+          "id": "common-hand-npc",
+          "name": "Plain Hand",
+          "kind": "npc"
+        }
+      ],
+      "rawError": "```\nError: expect(received).toHaveLength(expected)\n\nExpected length: 1\nReceived length: 2\nReceived array:  [[\"common-hand\", {\"basePriceMilli\": 5000, \"category\": \"accessory\", \"kind\": \"player\", \"mainStat\": \"technical\", \"name\": \"Plain Hand\", \"rarity\": \"common\", \"regen\": 1, \"slot\": \"hand\"}], [\"common-hand-npc\", {\"basePriceMilli\": 5000, \"category\": \"accessory\", \"kind\": \"npc\", \"mainStat\": \"technical\", \"name\": \"Plain Hand\", \"rarity\": \"common\", \"slot\": \"hand\"}]]\n```"
+    },
+    {
+      "index": 12,
+      "file": "tests/e2e/tile-local-checkpoint.spec.ts",
+      "title": "tile-local-checkpoint.spec.ts >> population local checkpoint restores grown cohorts and next-week parity at 390px",
+      "name": "population local checkpoint restores grown cohorts and next-week parity at 390px",
+      "sourceArtifact": "tile-local-checkpoint-popu-0f7a2-d-next-week-parity-at-390px-chromium/error-context.md",
+      "timeout": false,
+      "definitions": [
+        {
+          "id": "rare-ring",
+          "name": "Fine Ring",
+          "kind": "npc"
+        },
+        {
+          "id": "rare-ring-player",
+          "name": "Fine Ring",
+          "kind": "player"
+        }
+      ],
+      "rawError": "```\nError: expect(received).toHaveLength(expected)\n\nExpected length: 1\nReceived length: 2\nReceived array:  [[\"rare-ring\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"npc\", \"mainStat\": \"medical\", \"name\": \"Fine Ring\", \"rarity\": \"rare\", \"secondaryStat\": \"technical\", \"slot\": \"ring\"}], [\"rare-ring-player\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"player\", \"mainStat\": \"medical\", \"name\": \"Fine Ring\", \"rarity\": \"rare\", \"regen\": 2, \"secondaryStat\": \"technical\", \"slot\": \"ring\"}]]\n```"
+    },
+    {
+      "index": 13,
+      "file": "tests/e2e/tile-local-checkpoint.spec.ts",
+      "title": "tile-local-checkpoint.spec.ts >> population local checkpoint restores grown cohorts and next-week parity at 1280px",
+      "name": "population local checkpoint restores grown cohorts and next-week parity at 1280px",
+      "sourceArtifact": "tile-local-checkpoint-popu-a58d1--next-week-parity-at-1280px-chromium/error-context.md",
+      "timeout": false,
+      "definitions": [
+        {
+          "id": "rare-ring",
+          "name": "Fine Ring",
+          "kind": "npc"
+        },
+        {
+          "id": "rare-ring-player",
+          "name": "Fine Ring",
+          "kind": "player"
+        }
+      ],
+      "rawError": "```\nError: expect(received).toHaveLength(expected)\n\nExpected length: 1\nReceived length: 2\nReceived array:  [[\"rare-ring\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"npc\", \"mainStat\": \"medical\", \"name\": \"Fine Ring\", \"rarity\": \"rare\", \"secondaryStat\": \"technical\", \"slot\": \"ring\"}], [\"rare-ring-player\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"player\", \"mainStat\": \"medical\", \"name\": \"Fine Ring\", \"rarity\": \"rare\", \"regen\": 2, \"secondaryStat\": \"technical\", \"slot\": \"ring\"}]]\n```"
+    },
+    {
+      "index": 14,
+      "file": "tests/e2e/tile-local-checkpoint.spec.ts",
+      "title": "tile-local-checkpoint.spec.ts >> saves a multiweek plan locally, continues after reload and resumes the same economics",
+      "name": "saves a multiweek plan locally, continues after reload and resumes the same economics",
+      "sourceArtifact": "tile-local-checkpoint-save-60903--resumes-the-same-economics-chromium/error-context.md",
+      "timeout": false,
+      "definitions": [
+        {
+          "id": "rare-ring",
+          "name": "Fine Ring",
+          "kind": "npc"
+        },
+        {
+          "id": "rare-ring-player",
+          "name": "Fine Ring",
+          "kind": "player"
+        }
+      ],
+      "rawError": "```\nError: expect(received).toHaveLength(expected)\n\nExpected length: 1\nReceived length: 2\nReceived array:  [[\"rare-ring\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"npc\", \"mainStat\": \"medical\", \"name\": \"Fine Ring\", \"rarity\": \"rare\", \"secondaryStat\": \"technical\", \"slot\": \"ring\"}], [\"rare-ring-player\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"player\", \"mainStat\": \"medical\", \"name\": \"Fine Ring\", \"rarity\": \"rare\", \"regen\": 2, \"secondaryStat\": \"technical\", \"slot\": \"ring\"}]]\n```"
+    },
+    {
+      "index": 15,
+      "file": "tests/e2e/tile-population.spec.ts",
+      "title": "tile-population.spec.ts >> society population grows once, preserves workforce and roundtrips at 1280px",
+      "name": "society population grows once, preserves workforce and roundtrips at 1280px",
+      "sourceArtifact": "tile-population-society-po-0f716-ce-and-roundtrips-at-1280px-chromium/error-context.md",
+      "timeout": false,
+      "definitions": [
+        {
+          "id": "rare-ring",
+          "name": "Fine Ring",
+          "kind": "npc"
+        },
+        {
+          "id": "rare-ring-player",
+          "name": "Fine Ring",
+          "kind": "player"
+        }
+      ],
+      "rawError": "```\nError: expect(received).toHaveLength(expected)\n\nExpected length: 1\nReceived length: 2\nReceived array:  [[\"rare-ring\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"npc\", \"mainStat\": \"medical\", \"name\": \"Fine Ring\", \"rarity\": \"rare\", \"secondaryStat\": \"technical\", \"slot\": \"ring\"}], [\"rare-ring-player\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"player\", \"mainStat\": \"medical\", \"name\": \"Fine Ring\", \"rarity\": \"rare\", \"regen\": 2, \"secondaryStat\": \"technical\", \"slot\": \"ring\"}]]\n```"
+    },
+    {
+      "index": 16,
+      "file": "tests/e2e/tile-population.spec.ts",
+      "title": "tile-population.spec.ts >> society population grows once, preserves workforce and roundtrips at 390px",
+      "name": "society population grows once, preserves workforce and roundtrips at 390px",
+      "sourceArtifact": "tile-population-society-po-16542-rce-and-roundtrips-at-390px-chromium/error-context.md",
+      "timeout": false,
+      "definitions": [
+        {
+          "id": "rare-ring",
+          "name": "Fine Ring",
+          "kind": "npc"
+        },
+        {
+          "id": "rare-ring-player",
+          "name": "Fine Ring",
+          "kind": "player"
+        }
+      ],
+      "rawError": "```\nError: expect(received).toHaveLength(expected)\n\nExpected length: 1\nReceived length: 2\nReceived array:  [[\"rare-ring\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"npc\", \"mainStat\": \"medical\", \"name\": \"Fine Ring\", \"rarity\": \"rare\", \"secondaryStat\": \"technical\", \"slot\": \"ring\"}], [\"rare-ring-player\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"player\", \"mainStat\": \"medical\", \"name\": \"Fine Ring\", \"rarity\": \"rare\", \"regen\": 2, \"secondaryStat\": \"technical\", \"slot\": \"ring\"}]]\n```"
+    },
+    {
+      "index": 17,
+      "file": "tests/e2e/tile-save.spec.ts",
+      "title": "tile-save.spec.ts >> exports a real file, restores a multiweek plan and resumes the same economics",
+      "name": "exports a real file, restores a multiweek plan and resumes the same economics",
+      "sourceArtifact": "tile-save-exports-a-real-f-35ae7--resumes-the-same-economics-chromium/error-context.md",
+      "timeout": false,
+      "definitions": [
+        {
+          "id": "rare-ring",
+          "name": "Fine Ring",
+          "kind": "npc"
+        },
+        {
+          "id": "rare-ring-player",
+          "name": "Fine Ring",
+          "kind": "player"
+        }
+      ],
+      "rawError": "```\nError: expect(received).toHaveLength(expected)\n\nExpected length: 1\nReceived length: 2\nReceived array:  [[\"rare-ring\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"npc\", \"mainStat\": \"medical\", \"name\": \"Fine Ring\", \"rarity\": \"rare\", \"secondaryStat\": \"technical\", \"slot\": \"ring\"}], [\"rare-ring-player\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"player\", \"mainStat\": \"medical\", \"name\": \"Fine Ring\", \"rarity\": \"rare\", \"regen\": 2, \"secondaryStat\": \"technical\", \"slot\": \"ring\"}]]\n```"
+    },
+    {
+      "index": 18,
+      "file": "tests/e2e/tile-trial.spec.ts",
+      "title": "tile-trial.spec.ts >> builds production and inside Market, serves Goods once, then upgrades and replaces",
+      "name": "builds production and inside Market, serves Goods once, then upgrades and replaces",
+      "sourceArtifact": "tile-trial-builds-producti-f25d0--then-upgrades-and-replaces-chromium/error-context.md",
+      "timeout": false,
+      "definitions": [
+        {
+          "id": "rare-ring",
+          "name": "Fine Ring",
+          "kind": "npc"
+        },
+        {
+          "id": "rare-ring-player",
+          "name": "Fine Ring",
+          "kind": "player"
+        }
+      ],
+      "rawError": "```\nError: expect(received).toHaveLength(expected)\n\nExpected length: 1\nReceived length: 2\nReceived array:  [[\"rare-ring\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"npc\", \"mainStat\": \"medical\", \"name\": \"Fine Ring\", \"rarity\": \"rare\", \"secondaryStat\": \"technical\", \"slot\": \"ring\"}], [\"rare-ring-player\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"player\", \"mainStat\": \"medical\", \"name\": \"Fine Ring\", \"rarity\": \"rare\", \"regen\": 2, \"secondaryStat\": \"technical\", \"slot\": \"ring\"}]]\n```"
+    },
+    {
+      "index": 19,
+      "file": "tests/e2e/tile-trial.spec.ts",
+      "title": "tile-trial.spec.ts >> double-click Plan next week preserves the new plan at 390px",
+      "name": "double-click Plan next week preserves the new plan at 390px",
+      "sourceArtifact": "tile-trial-double-click-Pl-2ceb5-erves-the-new-plan-at-390px-chromium/error-context.md",
+      "timeout": false,
+      "definitions": [
+        {
+          "id": "rare-ring",
+          "name": "Fine Ring",
+          "kind": "npc"
+        },
+        {
+          "id": "rare-ring-player",
+          "name": "Fine Ring",
+          "kind": "player"
+        }
+      ],
+      "rawError": "```\nError: expect(received).toHaveLength(expected)\n\nExpected length: 1\nReceived length: 2\nReceived array:  [[\"rare-ring\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"npc\", \"mainStat\": \"medical\", \"name\": \"Fine Ring\", \"rarity\": \"rare\", \"secondaryStat\": \"technical\", \"slot\": \"ring\"}], [\"rare-ring-player\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"player\", \"mainStat\": \"medical\", \"name\": \"Fine Ring\", \"rarity\": \"rare\", \"regen\": 2, \"secondaryStat\": \"technical\", \"slot\": \"ring\"}]]\n```"
+    },
+    {
+      "index": 20,
+      "file": "tests/e2e/tile-trial.spec.ts",
+      "title": "tile-trial.spec.ts >> double-click Plan next week preserves the new plan at 1280px",
+      "name": "double-click Plan next week preserves the new plan at 1280px",
+      "sourceArtifact": "tile-trial-double-click-Pl-60197-rves-the-new-plan-at-1280px-chromium/error-context.md",
+      "timeout": false,
+      "definitions": [
+        {
+          "id": "rare-ring",
+          "name": "Fine Ring",
+          "kind": "npc"
+        },
+        {
+          "id": "rare-ring-player",
+          "name": "Fine Ring",
+          "kind": "player"
+        }
+      ],
+      "rawError": "```\nError: expect(received).toHaveLength(expected)\n\nExpected length: 1\nReceived length: 2\nReceived array:  [[\"rare-ring\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"npc\", \"mainStat\": \"medical\", \"name\": \"Fine Ring\", \"rarity\": \"rare\", \"secondaryStat\": \"technical\", \"slot\": \"ring\"}], [\"rare-ring-player\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"player\", \"mainStat\": \"medical\", \"name\": \"Fine Ring\", \"rarity\": \"rare\", \"regen\": 2, \"secondaryStat\": \"technical\", \"slot\": \"ring\"}]]\n```"
+    },
+    {
+      "index": 21,
+      "file": "tests/e2e/tile-trial.spec.ts",
+      "title": "tile-trial.spec.ts >> repeated keyboard activation cannot turn planning into another End Week",
+      "name": "repeated keyboard activation cannot turn planning into another End Week",
+      "sourceArtifact": "tile-trial-repeated-keyboa-53c8a-nning-into-another-End-Week-chromium/error-context.md",
+      "timeout": false,
+      "definitions": [
+        {
+          "id": "rare-ring",
+          "name": "Fine Ring",
+          "kind": "npc"
+        },
+        {
+          "id": "rare-ring-player",
+          "name": "Fine Ring",
+          "kind": "player"
+        }
+      ],
+      "rawError": "```\nError: expect(received).toHaveLength(expected)\n\nExpected length: 1\nReceived length: 2\nReceived array:  [[\"rare-ring\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"npc\", \"mainStat\": \"medical\", \"name\": \"Fine Ring\", \"rarity\": \"rare\", \"secondaryStat\": \"technical\", \"slot\": \"ring\"}], [\"rare-ring-player\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"player\", \"mainStat\": \"medical\", \"name\": \"Fine Ring\", \"rarity\": \"rare\", \"regen\": 2, \"secondaryStat\": \"technical\", \"slot\": \"ring\"}]]\n```"
+    },
+    {
+      "index": 22,
+      "file": "tests/e2e/world-session.spec.ts",
+      "title": "world-session.spec.ts >> U9: local and portable saves restore the whole populated session and uninterrupted next week",
+      "name": "U9: local and portable saves restore the whole populated session and uninterrupted next week",
+      "sourceArtifact": "world-session-U9-local-and-39144-and-uninterrupted-next-week-chromium/error-context.md",
+      "timeout": false,
+      "definitions": [
+        {
+          "id": "rare-ring",
+          "name": "Fine Ring",
+          "kind": "npc"
+        },
+        {
+          "id": "rare-ring-player",
+          "name": "Fine Ring",
+          "kind": "player"
+        }
+      ],
+      "rawError": "```\nError: expect(received).toHaveLength(expected)\n\nExpected length: 1\nReceived length: 2\nReceived array:  [[\"rare-ring\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"npc\", \"mainStat\": \"medical\", \"name\": \"Fine Ring\", \"rarity\": \"rare\", \"secondaryStat\": \"technical\", \"slot\": \"ring\"}], [\"rare-ring-player\", {\"basePriceMilli\": 15000, \"category\": \"accessory\", \"kind\": \"player\", \"mainStat\": \"medical\", \"name\": \"Fine Ring\", \"rarity\": \"rare\", \"regen\": 2, \"secondaryStat\": \"technical\", \"slot\": \"ring\"}]]\n```"
+    }
+  ],
+  "runs": [
+    {
+      "case": 1,
+      "file": "tests/e2e/character-life-boundary.spec.ts",
+      "name": "same-session UI projection through assignment and full week",
+      "attempt": 1,
+      "exit": 0,
+      "seconds": 109.97,
+      "utc": "2026-11-15T03:26:37.245Z",
+      "log": "names-case-01-run-1.txt"
+    },
+    {
+      "case": 2,
+      "file": "tests/e2e/character-life-navigation.spec.ts",
+      "name": "all Life calendar surfaces cross year boundaries",
+      "attempt": 1,
+      "exit": 0,
+      "seconds": 19.95,
+      "utc": "2026-11-15T03:28:29.596Z",
+      "log": "names-case-02-run-1.txt"
+    },
+    {
+      "case": 3,
+      "file": "tests/e2e/crime.spec.ts",
+      "name": "raid report and resulting state match the crafted save",
+      "attempt": 1,
+      "exit": 0,
+      "seconds": 15.902,
+      "utc": "2026-11-15T03:28:51.820Z",
+      "log": "names-case-03-run-1.txt"
+    },
+    {
+      "case": 4,
+      "file": "tests/e2e/crime.spec.ts",
+      "name": "wound report and resulting state match the crafted save",
+      "attempt": 1,
+      "exit": 0,
+      "seconds": 13.674,
+      "utc": "2026-11-15T03:29:09.822Z",
+      "log": "names-case-04-run-1.txt"
+    },
+    {
+      "case": 5,
+      "file": "tests/e2e/garrison.spec.ts",
+      "name": "crafted raid reports garrison deaths with complete Order parity",
+      "attempt": 1,
+      "exit": 0,
+      "seconds": 13.876,
+      "utc": "2026-11-15T03:29:25.576Z",
+      "log": "names-case-05-run-1.txt"
+    },
+    {
+      "case": 6,
+      "file": "tests/e2e/goods-stock.spec.ts",
+      "name": "Society five-week report and navigation parity at 1280px",
+      "attempt": 1,
+      "exit": 0,
+      "seconds": 32.972,
+      "utc": "2026-11-15T03:29:41.469Z",
+      "log": "names-case-06-run-1.txt"
+    },
+    {
+      "case": 7,
+      "file": "tests/e2e/goods-stock.spec.ts",
+      "name": "Society five-week report and navigation parity at 375px",
+      "attempt": 1,
+      "exit": 0,
+      "seconds": 32.018,
+      "utc": "2026-11-15T03:30:16.459Z",
+      "log": "names-case-07-run-1.txt"
+    },
+    {
+      "case": 8,
+      "file": "tests/e2e/items.spec.ts",
+      "name": "C2 UI buy, keyboard equip and next Farm report show the post effect",
+      "attempt": 1,
+      "exit": 0,
+      "seconds": 14.699,
+      "utc": "2026-11-15T03:30:50.488Z",
+      "log": "names-case-08-run-1.txt"
+    },
+    {
+      "case": 9,
+      "file": "tests/e2e/items.spec.ts",
+      "name": "C2 visible item letters include stack loss, storage-full loss, expiry, delivered and waiting Legendary rewards",
+      "attempt": 1,
+      "exit": 0,
+      "seconds": 12.838,
+      "utc": "2026-11-15T03:31:07.281Z",
+      "log": "names-case-09-run-1.txt"
+    },
+    {
+      "case": 10,
+      "file": "tests/e2e/ledger.spec.ts",
+      "name": "B3 crime-raid letters preserve rows, Details and complete report parity",
+      "attempt": 1,
+      "exit": 0,
+      "seconds": 17.571,
+      "utc": "2026-11-15T03:31:22.219Z",
+      "log": "names-case-10-run-1.txt"
+    },
+    {
+      "case": 11,
+      "file": "tests/e2e/ledger.spec.ts",
+      "name": "B3 crime-wound letters preserve rows, Details and complete report parity",
+      "attempt": 1,
+      "exit": 0,
+      "seconds": 17.606,
+      "utc": "2026-11-15T03:31:41.859Z",
+      "log": "names-case-11-run-1.txt"
+    },
+    {
+      "case": 12,
+      "file": "tests/e2e/tile-local-checkpoint.spec.ts",
+      "name": "population local checkpoint restores grown cohorts and next-week parity at 390px",
+      "attempt": 1,
+      "exit": 0,
+      "seconds": 27.838,
+      "utc": "2026-11-15T03:32:01.710Z",
+      "log": "names-case-12-run-1.txt"
+    },
+    {
+      "case": 13,
+      "file": "tests/e2e/tile-local-checkpoint.spec.ts",
+      "name": "population local checkpoint restores grown cohorts and next-week parity at 1280px",
+      "attempt": 1,
+      "exit": 0,
+      "seconds": 21.702,
+      "utc": "2026-11-15T03:32:32.014Z",
+      "log": "names-case-13-run-1.txt"
+    },
+    {
+      "case": 14,
+      "file": "tests/e2e/tile-local-checkpoint.spec.ts",
+      "name": "saves a multiweek plan locally, continues after reload and resumes the same economics",
+      "attempt": 1,
+      "exit": 0,
+      "seconds": 31.023,
+      "utc": "2026-11-15T03:32:56.134Z",
+      "log": "names-case-14-run-1.txt"
+    },
+    {
+      "case": 15,
+      "file": "tests/e2e/tile-population.spec.ts",
+      "name": "society population grows once, preserves workforce and roundtrips at 1280px",
+      "attempt": 1,
+      "exit": 0,
+      "seconds": 23.059,
+      "utc": "2026-11-15T03:33:29.231Z",
+      "log": "names-case-15-run-1.txt"
+    },
+    {
+      "case": 16,
+      "file": "tests/e2e/tile-population.spec.ts",
+      "name": "society population grows once, preserves workforce and roundtrips at 390px",
+      "attempt": 1,
+      "exit": 0,
+      "seconds": 27.583,
+      "utc": "2026-11-15T03:33:54.345Z",
+      "log": "names-case-16-run-1.txt"
+    },
+    {
+      "case": 17,
+      "file": "tests/e2e/tile-save.spec.ts",
+      "name": "exports a real file, restores a multiweek plan and resumes the same economics",
+      "attempt": 1,
+      "exit": 0,
+      "seconds": 34.892,
+      "utc": "2026-11-15T03:34:24.045Z",
+      "log": "names-case-17-run-1.txt"
+    },
+    {
+      "case": 18,
+      "file": "tests/e2e/tile-trial.spec.ts",
+      "name": "builds production and inside Market, serves Goods once, then upgrades and replaces",
+      "attempt": 1,
+      "exit": 0,
+      "seconds": 23.366,
+      "utc": "2026-11-15T03:35:01.014Z",
+      "log": "names-case-18-run-1.txt"
+    },
+    {
+      "case": 19,
+      "file": "tests/e2e/tile-trial.spec.ts",
+      "name": "double-click Plan next week preserves the new plan at 390px",
+      "attempt": 1,
+      "exit": 0,
+      "seconds": 16.994,
+      "utc": "2026-11-15T03:35:26.452Z",
+      "log": "names-case-19-run-1.txt"
+    },
+    {
+      "case": 20,
+      "file": "tests/e2e/tile-trial.spec.ts",
+      "name": "double-click Plan next week preserves the new plan at 1280px",
+      "attempt": 1,
+      "exit": 0,
+      "seconds": 17.917,
+      "utc": "2026-11-15T03:35:45.507Z",
+      "log": "names-case-20-run-1.txt"
+    },
+    {
+      "case": 21,
+      "file": "tests/e2e/tile-trial.spec.ts",
+      "name": "repeated keyboard activation cannot turn planning into another End Week",
+      "attempt": 1,
+      "exit": 0,
+      "seconds": 19.471,
+      "utc": "2026-11-15T03:36:05.557Z",
+      "log": "names-case-21-run-1.txt"
+    },
+    {
+      "case": 22,
+      "file": "tests/e2e/world-session.spec.ts",
+      "name": "U9: local and portable saves restore the whole populated session and uninterrupted next week",
+      "attempt": 1,
+      "exit": 0,
+      "seconds": 31.679,
+      "utc": "2026-11-15T03:36:27.082Z",
+      "log": "names-case-22-run-1.txt"
+    }
+  ]
+}
