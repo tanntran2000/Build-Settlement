@@ -440,7 +440,7 @@
       "family": "herb"
     },
     "common-weapon-npc": {
-      "name": "Plain Weapon",
+      "name": "Retainer's Plain Weapon",
       "category": "equipment",
       "rarity": "common",
       "kind": "npc",
@@ -449,7 +449,7 @@
       "basePriceMilli": 5000
     },
     "rare-weapon-player": {
-      "name": "Fine Weapon",
+      "name": "Lord's Fine Weapon",
       "category": "equipment",
       "rarity": "rare",
       "kind": "player",
@@ -460,7 +460,7 @@
       "basePriceMilli": 15000
     },
     "epic-weapon-npc": {
-      "name": "Masterwork Weapon",
+      "name": "Retainer's Masterwork Weapon",
       "category": "equipment",
       "rarity": "epic",
       "kind": "npc",
@@ -470,7 +470,7 @@
       "basePriceMilli": 40000
     },
     "common-earrings-npc": {
-      "name": "Plain Earrings",
+      "name": "Retainer's Plain Earrings",
       "category": "accessory",
       "rarity": "common",
       "kind": "npc",
@@ -479,7 +479,7 @@
       "basePriceMilli": 5000
     },
     "rare-earrings-player": {
-      "name": "Fine Earrings",
+      "name": "Lord's Fine Earrings",
       "category": "accessory",
       "rarity": "rare",
       "kind": "player",
@@ -490,7 +490,7 @@
       "basePriceMilli": 15000
     },
     "epic-earrings-player": {
-      "name": "Masterwork Earrings",
+      "name": "Lord's Masterwork Earrings",
       "category": "accessory",
       "rarity": "epic",
       "kind": "player",
@@ -501,7 +501,7 @@
       "basePriceMilli": 40000
     },
     "epic-earrings-npc": {
-      "name": "Masterwork Earrings",
+      "name": "Retainer's Masterwork Earrings",
       "category": "accessory",
       "rarity": "epic",
       "kind": "npc",
@@ -511,7 +511,7 @@
       "basePriceMilli": 40000
     },
     "common-necklace-npc": {
-      "name": "Plain Necklace",
+      "name": "Retainer's Plain Necklace",
       "category": "accessory",
       "rarity": "common",
       "kind": "npc",
@@ -520,7 +520,7 @@
       "basePriceMilli": 5000
     },
     "rare-necklace-player": {
-      "name": "Fine Necklace",
+      "name": "Lord's Fine Necklace",
       "category": "accessory",
       "rarity": "rare",
       "kind": "player",
@@ -531,7 +531,7 @@
       "basePriceMilli": 15000
     },
     "epic-necklace-player": {
-      "name": "Masterwork Necklace",
+      "name": "Lord's Masterwork Necklace",
       "category": "accessory",
       "rarity": "epic",
       "kind": "player",
@@ -542,7 +542,7 @@
       "basePriceMilli": 40000
     },
     "common-ring-npc": {
-      "name": "Plain Ring",
+      "name": "Retainer's Plain Ring",
       "category": "accessory",
       "rarity": "common",
       "kind": "npc",
@@ -551,7 +551,7 @@
       "basePriceMilli": 5000
     },
     "rare-ring-player": {
-      "name": "Fine Ring",
+      "name": "Lord's Fine Ring",
       "category": "accessory",
       "rarity": "rare",
       "kind": "player",
@@ -562,7 +562,7 @@
       "basePriceMilli": 15000
     },
     "epic-ring-player": {
-      "name": "Masterwork Ring",
+      "name": "Lord's Masterwork Ring",
       "category": "accessory",
       "rarity": "epic",
       "kind": "player",
@@ -573,7 +573,7 @@
       "basePriceMilli": 40000
     },
     "epic-ring-npc": {
-      "name": "Masterwork Ring",
+      "name": "Retainer's Masterwork Ring",
       "category": "accessory",
       "rarity": "epic",
       "kind": "npc",
@@ -583,7 +583,7 @@
       "basePriceMilli": 40000
     },
     "common-hand-npc": {
-      "name": "Plain Hand",
+      "name": "Retainer's Plain Hand",
       "category": "accessory",
       "rarity": "common",
       "kind": "npc",
@@ -592,7 +592,7 @@
       "basePriceMilli": 5000
     },
     "rare-hand-player": {
-      "name": "Fine Hand",
+      "name": "Lord's Fine Hand",
       "category": "accessory",
       "rarity": "rare",
       "kind": "player",
@@ -603,7 +603,7 @@
       "basePriceMilli": 15000
     },
     "epic-hand-player": {
-      "name": "Masterwork Hand",
+      "name": "Lord's Masterwork Hand",
       "category": "accessory",
       "rarity": "epic",
       "kind": "player",
@@ -614,7 +614,7 @@
       "basePriceMilli": 40000
     },
     "common-top-npc": {
-      "name": "Plain Top",
+      "name": "Retainer's Plain Top",
       "category": "outfit",
       "rarity": "common",
       "kind": "npc",
@@ -623,7 +623,7 @@
       "basePriceMilli": 5000
     },
     "rare-top-player": {
-      "name": "Fine Top",
+      "name": "Lord's Fine Top",
       "category": "outfit",
       "rarity": "rare",
       "kind": "player",
@@ -634,7 +634,7 @@
       "basePriceMilli": 15000
     },
     "epic-top-npc": {
-      "name": "Masterwork Top",
+      "name": "Retainer's Masterwork Top",
       "category": "outfit",
       "rarity": "epic",
       "kind": "npc",
@@ -644,7 +644,7 @@
       "basePriceMilli": 40000
     },
     "common-bottom-npc": {
-      "name": "Plain Bottom",
+      "name": "Retainer's Plain Bottom",
       "category": "outfit",
       "rarity": "common",
       "kind": "npc",
@@ -653,7 +653,7 @@
       "basePriceMilli": 5000
     },
     "rare-bottom-player": {
-      "name": "Fine Bottom",
+      "name": "Lord's Fine Bottom",
       "category": "outfit",
       "rarity": "rare",
       "kind": "player",
@@ -664,7 +664,7 @@
       "basePriceMilli": 15000
     },
     "epic-bottom-player": {
-      "name": "Masterwork Bottom",
+      "name": "Lord's Masterwork Bottom",
       "category": "outfit",
       "rarity": "epic",
       "kind": "player",
@@ -675,7 +675,7 @@
       "basePriceMilli": 40000
     },
     "epic-bottom-npc": {
-      "name": "Masterwork Bottom",
+      "name": "Retainer's Masterwork Bottom",
       "category": "outfit",
       "rarity": "epic",
       "kind": "npc",
@@ -685,7 +685,7 @@
       "basePriceMilli": 40000
     },
     "common-shoes-npc": {
-      "name": "Plain Shoes",
+      "name": "Retainer's Plain Shoes",
       "category": "outfit",
       "rarity": "common",
       "kind": "npc",
@@ -694,7 +694,7 @@
       "basePriceMilli": 5000
     },
     "rare-shoes-player": {
-      "name": "Fine Shoes",
+      "name": "Lord's Fine Shoes",
       "category": "outfit",
       "rarity": "rare",
       "kind": "player",
@@ -705,7 +705,7 @@
       "basePriceMilli": 15000
     },
     "epic-shoes-player": {
-      "name": "Masterwork Shoes",
+      "name": "Lord's Masterwork Shoes",
       "category": "outfit",
       "rarity": "epic",
       "kind": "player",
@@ -716,7 +716,7 @@
       "basePriceMilli": 40000
     },
     "epic-shoes-npc": {
-      "name": "Masterwork Shoes",
+      "name": "Retainer's Masterwork Shoes",
       "category": "outfit",
       "rarity": "epic",
       "kind": "npc",
@@ -726,7 +726,7 @@
       "basePriceMilli": 40000
     },
     "common-set-npc": {
-      "name": "Travelling Set",
+      "name": "Retainer's Travelling Set",
       "category": "outfit",
       "rarity": "common",
       "kind": "npc",
@@ -735,7 +735,7 @@
       "basePriceMilli": 15000
     },
     "rare-set-player": {
-      "name": "Steward Set",
+      "name": "Lord's Steward Set",
       "category": "outfit",
       "rarity": "rare",
       "kind": "player",
@@ -746,7 +746,7 @@
       "basePriceMilli": 45000
     },
     "epic-set-player": {
-      "name": "Noble Set",
+      "name": "Lord's Noble Set",
       "category": "outfit",
       "rarity": "epic",
       "kind": "player",
@@ -757,7 +757,7 @@
       "basePriceMilli": 120000
     },
     "epic-set-npc": {
-      "name": "Noble Set",
+      "name": "Retainer's Noble Set",
       "category": "outfit",
       "rarity": "epic",
       "kind": "npc",

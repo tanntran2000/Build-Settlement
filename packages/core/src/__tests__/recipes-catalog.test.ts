@@ -34,8 +34,20 @@ it('gives each new definition the approved id, stats, name, regen and price', ()
     expect(d.secondaryStat).toBe(rarity==='common'?undefined:core.ITEM_CATALOG[`rare-${slot}`].secondaryStat);
     expect(d.regen).toBe(d.kind==='player'?{common:1,rare:2,epic:3}[rarity]:undefined);
     const name=slot==='set'?{common:'Travelling Set',rare:'Steward Set',epic:'Noble Set'}[rarity]:`${{common:'Plain',rare:'Fine',epic:'Masterwork'}[rarity]} ${slot[0].toUpperCase()+slot.slice(1)}`;
-    expect(d.name).toBe(name);
+    expect(d.name).toBe((d.kind==='player'?"Lord's ":"Retainer's ")+name);
     expect(d.basePriceMilli).toBe({common:5000,rare:15000,epic:40000}[rarity]*(slot==='set'?3:1));
+  }
+});
+it('has a unique display name for every item definition', () => {
+  const names=Object.values(core.ITEM_CATALOG).map(d=>d.name);
+  expect(names.filter((name,index)=>names.indexOf(name)!==index)).toEqual([]);
+});
+it('prefixes all 32 new definitions for their wearer with straight apostrophes', () => {
+  const added=Object.entries(core.ITEM_CATALOG).filter(([id])=>/-(player|npc)$/.test(id));
+  expect(added).toHaveLength(32);
+  for(const [,definition] of added){
+    expect(definition.name.startsWith(definition.kind==='player'?"Lord's ":"Retainer's ")).toBe(true);
+    expect(definition.name).not.toMatch(/[‘’]/);
   }
 });
 it('assigns every material to its approved family', () => {

@@ -103,7 +103,7 @@ it('detects a changed value in a cloned catalog using the pinned base hash', () 
 
 it('pins ITEM_CATALOG for P6-A', async () => {
   const { ITEM_CATALOG }=await import('../trial/items.js');
-  expect(catalogHash(ITEM_CATALOG)).toBe('7d1cc84733e7b5837cb596ea04b558943e8927689f7352fc35ea555e95581635');
+  expect(catalogHash(ITEM_CATALOG)).toBe('7fdeadb141aba95586555f531e044fcdc8a5eccd2c2766fab94c48714793f96d');
 });
 it('pins ITEM_TRIAL for P6-A', async () => {
   const { ITEM_TRIAL }=await import('../trial/items.js');
