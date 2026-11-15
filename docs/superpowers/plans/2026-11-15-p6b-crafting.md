@@ -15,6 +15,12 @@
 
 **Plan approval:** the owner (Tân) approved this plan on 2026-11-15, verbatim: "Duyệt, giao Builder A".
 
+**Plan correction 1 (PR A preflight, Step 0 HOLD).** Evidence: `local-drafts/p6b-prA/step0-preflight.md`, `step0-proposed-edits.md`.
+- **Existing-test edits:** exactly P1–P58 in 35 files as listed (catalog counts, 4 pins, seeded Market/find literals, Smithy building lists, ruleset 08 → 09 literals, v8 → v9 current-fixture paths, and `tests/e2e/items.spec.ts` `funded(seed=12345)` → `funded(seed=82)` so the Farm test still finds the Steward Set). **Owner (Tân), 2026-11-15, dialog choice, verbatim:** "Approve the 58 edits (Recommended)".
+- **Ruleset files:** PR A also changes `packages/core/src/trial/society.ts:14` (`SOCIETY_RULESET` → `'tile-society-09'`, nothing else in that file) and the two ruleset literals at `packages/core/src/data/validate.ts:306` and `:626`. **Owner, verbatim:** "Allow the 3 lines (Recommended)".
+- **New tests:** `packages/simulation/src/__tests__/smithy-data.test.ts` and `packages/persistence/src/__tests__/society-v8-fixture.test.ts`. **Owner, verbatim:** "Allow both (Recommended)".
+- **Set prices (Decision 2):** new sets keep the 3× set rule: Common 15000, Rare 45000, Epic (Noble Set) 120000 milli-Gold; ordinary new items 5000 / 15000 / 40000. **Owner, verbatim:** "120 Gold, 3× rule (Recommended)".
+
 **Base:** `main` `e859177` (P6-A complete).
 
 ---
