@@ -1,6 +1,6 @@
 # P7 — NPC direction: structure, mechanisms, interactions (v0.1)
 
-**Status:** draft for owner review (G1). Base `main` `753e450`. It does not authorise code, a push or a PR. Each sub-project in §9 still gets its own spec, plan and G1.
+**Status:** the split in §9 is **approved** by the owner, 2026-11-17, verbatim: "Approve v0.2 split (Recommended)". Sections 1–8 are the direction for P7-C, D and E; each of those specs repeats its §10 questions for G1. Base `main` `753e450`. It does not authorise code, a push or a PR. Each sub-project in §9 still gets its own spec, plan and G1.
 
 **Owner direction (Tân, 2026-11-17), verbatim:** "vậy trước mắt cứ làm P7 trước đi. Nhớ ghi rõ kết cấu, cách thức và hướng nủa NPC. Tập trung mạnh vào việc tương tác giữa NPC - Player, NPC-NPC, NPC với người dân trong thành (NTR Route)".
 

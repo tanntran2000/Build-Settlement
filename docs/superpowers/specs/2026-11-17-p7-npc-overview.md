@@ -10,7 +10,7 @@ The owner's P7 notes (2026-11-03 to 2026-11-13) describe at least seven independ
 
 ## Proposed order
 
-**Revision v0.2 (2026-11-17, draft for owner G1):** the owner asked P7 to focus on interactions: "Tập trung mạnh vào việc tương tác giữa NPC - Player, NPC-NPC, NPC với người dân trong thành (NTR Route)". The old P7-C is split into three interaction sub-projects. NPC structure, mechanisms and the three interaction axes are written in `2026-11-17-p7-npc-direction.md`; until the owner approves v0.2, the v0.1 order (A, B, C, D, E) stands.
+**Revision v0.2 (2026-11-17), approved by the owner, verbatim: "Approve v0.2 split (Recommended)".** the owner asked P7 to focus on interactions: "Tập trung mạnh vào việc tương tác giữa NPC - Player, NPC-NPC, NPC với người dân trong thành (NTR Route)". The old P7-C is split into three interaction sub-projects. NPC structure, mechanisms and the three interaction axes are written in `2026-11-17-p7-npc-direction.md`.
 
 | # | Sub-project | What the player gets | Depends on |
 |---|---|---|---|
