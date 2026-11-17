@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, ITEM_CATALOG, RECIPES, type CharacterLifeSessionState, type ItemWeekReport, type TileTrialReport } from '@haven/core';
 import * as view from '../items-view.js';
 import { reportLetters } from '../report-letters.js';
-import { executeCharacterLifeCommand } from '@haven/simulation';
+import { executeCharacterLifeCommand, resolveWorkshopOperation } from '@haven/simulation';
 
 function life() {
   const made = createCharacterLifeSession(42, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' });
@@ -17,6 +17,69 @@ function life() {
 }
 const stock = (s: CharacterLifeSessionState) => s.city.world.settlements[s.city.world.activeSettlementId!].inventory;
 const items = (s: CharacterLifeSessionState) => s.city.society!.items;
+
+describe('R2 shared weekly operation allocation', () => {
+  function allocationLife() {
+    const s = life();
+    for (const tile of s.city.tiles) if (tile.building) tile.building.enabled = false;
+    for (const cohort of s.city.world.settlements[s.city.world.activeSettlementId!].cohorts) cohort.count = 0;
+    return s;
+  }
+  it.each([
+    ['service-1', 10000, 0, { operating: false, reason: 'herbs' }],
+    ['service-1', 0, 1000, { operating: false, reason: 'upkeep' }],
+    ['slum-1', 1000, 0, { operating: true }],
+    ['slum-1', 0, 0, { operating: false, reason: 'upkeep' }],
+  ] as const)('resolves %s with Gold %i and Herbs %i without mutating input', (tileId, gold, herbs, expected) => {
+    const s = allocationLife(); stock(s).gold = gold; s.city.society!.stocksMilli.herbs = herbs;
+    s.city.tiles.find(t => t.id === tileId)!.building!.enabled = true;
+    const before = JSON.stringify(s);
+    expect(resolveWorkshopOperation(s.city).byTile[tileId]).toEqual(expected);
+    expect(JSON.stringify(s)).toBe(before);
+  });
+  it('funds competing workshops in tile order and leaves unpaid Gold available for later tiles', () => {
+    const s = allocationLife(); stock(s).gold = 1000;
+    const smithy = s.city.tiles.find(t => t.id === 'spec-2')!, drugStore = s.city.tiles.find(t => t.id === 'slum-1')!;
+    smithy.building!.enabled = true; drugStore.building!.enabled = true;
+    s.city.tiles = [smithy, drugStore];
+    expect(resolveWorkshopOperation(s.city).byTile).toEqual({ 'spec-2': { operating: true }, 'slum-1': { operating: false, reason: 'upkeep' } });
+    smithy.building!.level = 2;
+    expect(resolveWorkshopOperation(s.city).byTile).toEqual({ 'spec-2': { operating: false, reason: 'upkeep' }, 'slum-1': { operating: true } });
+  });
+  it('produces same-week Herbs before the Hospital consumes them even when the producer is last', () => {
+    const s = allocationLife(); stock(s).gold = 1500; s.city.society!.stocksMilli.herbs = 0;
+    const hospital = s.city.tiles.find(t => t.id === 'service-1')!, garden = s.city.tiles.find(t => t.id === 'meadow-1')!;
+    hospital.building!.enabled = true;
+    garden.building = { typeId: 'herb-garden', level: 1, workers: 2, enabled: true };
+    s.city.tiles = [hospital, garden];
+    const before = JSON.stringify(s);
+    const result = resolveWorkshopOperation(s.city);
+    expect(result.byTile['service-1']).toEqual({ operating: true });
+    expect(result.outside.producedMilli.herbs).toBe(1000);
+    expect(result.stocksMilli.herbs).toBe(0);
+    expect(JSON.stringify(s)).toBe(before);
+  });
+  it('debits Farm batches before later workshop upkeep', () => {
+    const s = allocationLife(); stock(s).gold = 2000;
+    const farm = s.city.tiles.find(t => t.id === 'field-1')!, drugStore = s.city.tiles.find(t => t.id === 'slum-1')!;
+    farm.building!.enabled = true; farm.building!.workers = 2; drugStore.building!.enabled = true;
+    s.city.tiles = [farm, drugStore];
+    expect(resolveWorkshopOperation(s.city).byTile['slum-1']).toEqual({ operating: false, reason: 'upkeep' });
+  });
+  it('reports disabled and insufficient workshop staffing separately from funding', () => {
+    const s = allocationLife();
+    expect(resolveWorkshopOperation(s.city).byTile['spec-2']).toEqual({ operating: false, reason: 'disabled' });
+    const hospital = s.city.tiles.find(t => t.id === 'service-1')!; hospital.building!.enabled = true; hospital.building!.workers = 1;
+    expect(resolveWorkshopOperation(s.city).byTile['service-1']).toEqual({ operating: false, reason: 'staff' });
+  });
+  it('retains End Week safe-integer overflow rejection without touching the input', () => {
+    const s = allocationLife(); stock(s).gold = Number.MAX_SAFE_INTEGER;
+    s.city.world.settlements[s.city.world.activeSettlementId!].cohorts[0].count = 1;
+    const before = JSON.stringify(s);
+    expect(() => resolveWorkshopOperation(s.city)).toThrow('Trial arithmetic exceeds safe nonnegative integer bounds.');
+    expect(JSON.stringify(s)).toBe(before);
+  });
+});
 function supply(s: CharacterLifeSessionState, recipeId: string) {
   for (const input of RECIPES[recipeId].inputs) {
     if (ITEM_CATALOG[input.defId].category === 'material') items(s).materials[input.defId] = input.count;

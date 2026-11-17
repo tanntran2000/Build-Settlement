@@ -1,97 +1,32 @@
-import { LAW_CATALOG, lawTerms, ITEM_CATALOG, ITEM_TRIAL, ITEM_GOAL_IDS, itemRandom, drawItemMarket, drawItemRarity, isWearable, RESEARCH_TOPICS, type ItemWeekContext, type ItemWeekReport } from '@haven/core';
+import { resolveWorkshopOperation, trialSafe, scaled, itemOutput } from './workshop-operation.js';
+export { trialSafe } from './workshop-operation.js';
+import { lawTerms, ITEM_CATALOG, ITEM_TRIAL, ITEM_GOAL_IDS, itemRandom, drawItemMarket, drawItemRarity, isWearable, RESEARCH_TOPICS, type ItemWeekContext, type ItemWeekReport } from '@haven/core';
 import { completeCraftOrders } from './craft-week.js';
 import { resolveLawGold, resolveLawPromiseWeek } from './law-week.js';
 import { resolveCrimeWeek } from './crime-week.js';
 import { resolveCrisisWeek } from './crisis-week.js';
-import { authorityTaxBps, authorityArrivals, resolveOrderWeek } from './order-week.js';
-import { crimeRandom,TILE_TRIAL_BALANCE as B,GOODS_STOCK_TRIAL as G,OUTSIDE_TRIAL as O,societyPopulation,buildingWorkerCap,trialBuilding,type TileTrialReport,type TileTrialState,type WeeklyResource } from '@haven/core';
+import { authorityArrivals, resolveOrderWeek } from './order-week.js';
+import { crimeRandom,GOODS_STOCK_TRIAL as G,OUTSIDE_TRIAL as O,societyPopulation,buildingWorkerCap,trialBuilding,type TileTrialReport,type TileTrialState,type WeeklyResource } from '@haven/core';
 import { releaseSocietyWorkers,societyEmployment,societyFacilities } from './society-facilities.js';
 import { allocateRequirements,resolveSocietyWeek,cityHappiness,societyCounts } from './society-week.js';
 import { finishOutsideLand,spoilOutsideStocks } from './outside-week.js';
 import { resolveTrialImmigration } from "./tile-trial-immigration.js";
-import { FARM_GOLD_PER_BATCH_MILLI,FARM_MAX_BATCHES,FARM_WHEAT_PER_BATCH_MILLI,PROCESSOR_FOOD_PER_BATCH_MILLI,PROCESSOR_MAX_BATCHES,PROCESSOR_WHEAT_PER_BATCH_MILLI } from "./weekly.js";
+import { PROCESSOR_FOOD_PER_BATCH_MILLI,PROCESSOR_MAX_BATCHES,PROCESSOR_WHEAT_PER_BATCH_MILLI } from "./weekly.js";
 
-export function trialSafe(n: number): number {
-  if (!Number.isSafeInteger(n) || n < 0) throw Error("Trial arithmetic exceeds safe nonnegative integer bounds.");
-  return n;
-}
-function scaled(a: number, b: number, divisor = 1): number {
-  const result = BigInt(a) * BigInt(b) / BigInt(divisor);
-  if (result > BigInt(Number.MAX_SAFE_INTEGER)) throw Error("Trial arithmetic overflow.");
-  return Number(result);
-}
-function itemOutput(amount:number,tileId:string,skill:'management'|'technical',ctx?:ItemWeekContext):number {
-  const skills=ctx?.postSkills[tileId];if(!skills)return amount;
-  const effects=ITEM_TRIAL.effects;
-  const skillPercent=Math.min(effects.outputCapPercent,Math.floor(Math.max(0,skills[skill]-effects.threshold)/effects.outputStep)*effects.outputPercent);
-  const ledgerPercent=ctx?.postTraits[tileId]?.includes('ledger')?effects.ledgerOutputPercent:0;
-  return scaled(amount,100+skillPercent+ledgerPercent,100);
-}
 export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext): Readonly<TileTrialReport> {
   if (!s.society || !s.goodsStock) throw Error('Invalid society city.');
-  const settlement = s.world.settlements[s.world.activeSettlementId!]; const stocks = settlement.inventory;
-  const orderBefore = {...s.society.order};
-  const before = { ...stocks }; const activities: string[] = [];
-  const outside: NonNullable<TileTrialReport['outside']> = {producedMilli:{wood:0,iron:0,stone:0,wool:0,herbs:0,cloth:0},stocksBefore:{...s.society.stocksMilli},stocksAfter:{...s.society.stocksMilli},hospitalsIdle:[],cleared:[],researchCompleted:[],exhausted:[],spoiledMilli:{}};
-  const newStocks=s.society.stocksMilli;
-  const add = (key: WeeklyResource, amount: number) => { stocks[key] = trialSafe(stocks[key] + amount); };
-  const population = settlement.cohorts.reduce((n, c) => trialSafe(n + c.count), 0);
-  const baseTaxMilli=scaled(population,B.taxGoldPerResident);
-  const taxModifierBps=authorityTaxBps(orderBefore.authority)+lawTerms(s.society.laws.active).taxBps;
-  const creditedTaxMilli=taxModifierBps<0?scaled(baseTaxMilli,10000+taxModifierBps,10000):baseTaxMilli;
-  add('gold',creditedTaxMilli);
-  for(const id of s.society.laws.active)add('gold',LAW_CATALOG[id].effect.incomeMilli??0);
-  let farmBatchGoldMilli = 0, farmExtraUpkeepMilli = 0, upkeepPaidMilli = 0, unpaidUpkeepMilli = 0, marketCapacity = 0;
-  const funded: typeof s.tiles = [];
-  const fundedTileIds: string[] = [];
-  let farmBatches = 0, processorBatches = 0, woodProducedMilli = 0, ironProducedMilli = 0, operatingDebitMilli = 0;
-  for (const tile of s.tiles) {
-    const b = tile.building; if (!b || !b.enabled) continue;
-    const d = trialBuilding(b.typeId)!; const due = scaled(d.upkeepMilli, b.level);
-    const batches = d.operation === "farm" ? Math.min(b.workers, FARM_MAX_BATCHES, Math.floor(stocks.gold / FARM_GOLD_PER_BATCH_MILLI)) : 0;
-    const batchGold = batches * FARM_GOLD_PER_BATCH_MILLI;
-    const extra = Math.max(0, due - batchGold); const debit = trialSafe(batchGold + extra);
-    if (stocks.gold < debit) {
-      unpaidUpkeepMilli = trialSafe(unpaidUpkeepMilli + due);
-      activities.push(`${tile.id}: ${d.name} idle; upkeep unfunded.`); continue;
-    }
-    stocks.gold -= debit; upkeepPaidMilli = trialSafe(upkeepPaidMilli + due);
-    fundedTileIds.push(tile.id); operatingDebitMilli = trialSafe(operatingDebitMilli + debit);
-    if (d.operation === "farm") {
-      farmBatches += batches;
-      farmBatchGoldMilli = trialSafe(farmBatchGoldMilli + batchGold); farmExtraUpkeepMilli = trialSafe(farmExtraUpkeepMilli + extra);
-      add("wheat", itemOutput(batches * FARM_WHEAT_PER_BATCH_MILLI,tile.id,'management',ctx));
-      activities.push(`${tile.id}: Farm ${batches} batches; batch Gold credited against this Farm upkeep.`);
-    } else funded.push(tile);
-  }
-  // Extraction precedes Hospital inputs and processing, independent of placement order.
-  for(const tile of funded){
-    const b=tile.building!,d=trialBuilding(b.typeId)!,plot=s.society.outside[tile.id];
-    if(d.operation==='logging'||d.operation==='mine'||d.operation==='stone'){
-      if(d.operation==='stone'&&b.workers!==buildingWorkerCap(b.typeId,b.level))continue;
-      const good=d.operation==='logging'?'wood':d.operation==='mine'?'iron':'stone';
-      const rate=good==='wood'?B.loggingWoodPerWorker:good==='iron'?B.mineIronPerWorker:O.perWorker.stone;
-      const wanted=itemOutput(scaled(scaled(b.workers,rate),plot.deepShaft?O.deepShaft.outputBps:10000,10000),tile.id,'technical',ctx);
-      const output=Math.min(wanted,plot.depositMilli!);plot.depositMilli!-=output;
-      if(good==='stone')newStocks.stone=trialSafe(newStocks.stone+output);else add(good,output);
-      outside.producedMilli[good]=trialSafe(outside.producedMilli[good]+output);
-      if(good==='wood')woodProducedMilli=trialSafe(woodProducedMilli+output);
-      if(good==='iron')ironProducedMilli=trialSafe(ironProducedMilli+output);
-      activities.push(`${tile.id}: extracted ${good==='wood'?'Wood':good==='iron'?'Iron':'Stone'}.`);
-    }
-    if((d.operation==='wool'||d.operation==='herbs')&&b.workers===buildingWorkerCap(b.typeId,b.level)){
-      const good=d.operation,output=itemOutput(scaled(b.workers,O.perWorker[good]),tile.id,'management',ctx);
-      newStocks[good]=trialSafe(newStocks[good]+output);outside.producedMilli[good]=trialSafe(outside.producedMilli[good]+output);
-    }
-  }
-  const operatingIds=new Set(fundedTileIds);
-  for(const tile of funded){
-    const b=tile.building!;if(b.typeId!=='hospital'||b.workers!==buildingWorkerCap(b.typeId,b.level))continue;
-    const due=scaled(b.level,O.hospitalHerbsPerLevelMilli);
-    if(newStocks.herbs<due){operatingIds.delete(tile.id);outside.hospitalsIdle.push(tile.id);}else newStocks.herbs-=due;
-  }
+  const operation=resolveWorkshopOperation(s,ctx);
+  const {before,orderBefore,activities,outside,population,baseTaxMilli,taxModifierBps,creditedTaxMilli,
+    farmBatchGoldMilli,farmExtraUpkeepMilli,upkeepPaidMilli,unpaidUpkeepMilli,farmBatches,
+    woodProducedMilli,ironProducedMilli,operatingDebitMilli,fundedTileIds,operatingIds}=operation;
+  const settlement=s.world.settlements[s.world.activeSettlementId!],stocks=settlement.inventory,newStocks=s.society.stocksMilli;
+  Object.assign(stocks,operation.stocks);Object.assign(newStocks,operation.stocksMilli);
+  for(const [id,plot] of Object.entries(operation.outsidePlots))Object.assign(s.society.outside[id],plot);
+  const funded=s.tiles.filter(tile=>operation.fundedNonFarmTileIds.includes(tile.id));
+  const add=(key:WeeklyResource,amount:number)=>{stocks[key]=trialSafe(stocks[key]+amount);};
+  let marketCapacity=0,processorBatches=0;
   // Capture operation before land cleanup can remove exhausted buildings or release workers.
-  const hospitalOperated=funded.some(t=>t.building!.typeId==='hospital'&&t.building!.workers===buildingWorkerCap('hospital',t.building!.level)&&operatingIds.has(t.id));
+  const hospitalOperated=s.tiles.some(t=>t.building?.typeId==='hospital'&&operation.byTile[t.id].operating);
   const craftTiles=s.society.items.workshops?s.tiles.map(t=>({...t,building:t.building?{...t.building}:null})):[];
   const materialPosts=s.tiles.flatMap(tile=>tile.building&&ctx?.postSkills[tile.id]?[{tileId:tile.id,typeId:tile.building.typeId}]:[]);
   const facilities = societyFacilities(s, operatingIds);

@@ -5,3 +5,4 @@ export * from "./character-life-command.js";
 export * from "./character-life-observation.js";
 export * from "./society-week.js";
 export * from "./order-week.js";
+export { resolveWorkshopOperation, type WorkshopTileOperation } from "./workshop-operation.js";

@@ -1,6 +1,6 @@
 import { ITEM_CATALOG, ITEM_TRIAL, effectiveSkills, buildingWorkerCap, TRIAL_BUILDINGS, OUTSIDE_TRIAL, type ItemDefinition, type ItemsState, type Slot, type CharacterLifeSessionState, type Skill, type TileTrialState, type ItemWeekReport } from '@haven/core';
-import { CRAFT_TRIAL, RECIPES, TILE_TRIAL_BALANCE, LAW_CATALOG, lawTerms, isWearable, isOpenItemSlot, type WorldNpc } from '@haven/core';
-import { authorityTaxBps, FARM_MAX_BATCHES, FARM_GOLD_PER_BATCH_MILLI } from '@haven/simulation';
+import { CRAFT_TRIAL, RECIPES, type WorldNpc } from '@haven/core';
+import { resolveWorkshopOperation } from '@haven/simulation';
 
 export const itemTitle = (s: string) => s.replace(/(^|[-_ ])\w/g, part => part.replace(/[-_]/g,' ').toUpperCase());
 const everyday: Slot[] = ['earrings','necklace','top','bottom','shoes','ring','weapon','hand'];
@@ -103,51 +103,17 @@ function postedEquipment(state:TileTrialState,npcs:readonly WorldNpc[],tileId:st
   return {npc,worn};
 }
 
-// Project only the operation prelude of runTileTrialWeek. Shared tax/law/skill
-// helpers and TRIAL data supply the rules; no clock, RNG or caller state changes.
-function workshopOperation(state:TileTrialState,npcs:readonly WorldNpc[]) {
-  const society=state.society!,settlement=state.world.settlements[state.world.activeSettlementId!];
-  const baseTax=settlement.cohorts.reduce((total,c)=>total+BigInt(c.count),0n)*BigInt(TILE_TRIAL_BALANCE.taxGoldPerResident);
-  const modifier=authorityTaxBps(society.order.authority)+lawTerms(society.laws.active).taxBps;
-  // Counting House/positive tax top-ups and law costs happen after operation.
-  let gold=BigInt(settlement.inventory.gold)+(modifier<0?baseTax*BigInt(10000+modifier)/10000n:baseTax);
-  for(const id of society.laws.active)gold+=BigInt(LAW_CATALOG[id].effect.incomeMilli??0);
-  const funded:TileTrialState['tiles']=[],idle=new Map<string,string>();
-  for(const tile of state.tiles){
-    const b=tile.building;if(!b?.enabled)continue;
-    const d=TRIAL_BUILDINGS[b.typeId],due=BigInt(d.upkeepMilli)*BigInt(b.level);
-    const batches=d.operation==='farm'?Math.min(b.workers,FARM_MAX_BATCHES,Number(gold/BigInt(FARM_GOLD_PER_BATCH_MILLI))):0;
-    const batchGold=BigInt(batches)*BigInt(FARM_GOLD_PER_BATCH_MILLI),debit=due>batchGold?due:batchGold;
-    if(gold<debit){idle.set(tile.id,'Idle this week: upkeep unpaid.');continue;}
-    gold-=debit;funded.push(tile);
-  }
-  // All funded Herb output arrives before any Hospital consumes Herbs.
-  let herbs=BigInt(society.stocksMilli.herbs);
-  for(const tile of funded){
-    const b=tile.building!;
-    if(TRIAL_BUILDINGS[b.typeId].operation!=='herbs'||b.workers!==buildingWorkerCap(b.typeId,b.level))continue;
-    const {npc,worn}=postedEquipment(state,npcs,tile.id),effects=ITEM_TRIAL.effects;
-    const skill=npc?effectiveSkills(npc.character.skills,worn,npc.character.socialClass).management:0;
-    const skillPercent=Math.min(effects.outputCapPercent,Math.floor(Math.max(0,skill-effects.threshold)/effects.outputStep)*effects.outputPercent);
-    const ledger=npc&&worn.some(d=>isWearable(d)&&isOpenItemSlot(d.slot)&&(!d.exclusiveClass||d.exclusiveClass===npc.character.socialClass)&&d.trait==='ledger')?effects.ledgerOutputPercent:0;
-    herbs+=BigInt(b.workers)*BigInt(OUTSIDE_TRIAL.perWorker.herbs)*BigInt(100+skillPercent+ledger)/100n;
-  }
-  for(const tile of funded){
-    const b=tile.building!;if(b.typeId!=='hospital'||b.workers!==buildingWorkerCap(b.typeId,b.level))continue;
-    const due=BigInt(b.level)*BigInt(OUTSIDE_TRIAL.hospitalHerbsPerLevelMilli);
-    if(herbs<due)idle.set(tile.id,'Idle this week: not enough Herbs.');else herbs-=due;
-  }
-  return idle;
-}
-
 export function workshopForecast(state:TileTrialState,npcs:readonly WorldNpc[],tileId:string):{capacity:number;reason:string|null} {
   const b=state.tiles.find(t=>t.id===tileId)?.building;
   if(!b||!['smithy','hospital','drug-store'].includes(b.typeId))return {capacity:0,reason:'No workshop selected.'};
-  if(!b.enabled)return {capacity:0,reason:'Idle this week: workshop paused.'};
-  const reason=workshopOperation(state,npcs).get(tileId);
-  if(reason)return {capacity:0,reason};
-  if(b.typeId!=='drug-store'&&b.workers===0)return {capacity:0,reason:'Idle this week: no workers.'};
-  if(b.typeId==='hospital'&&b.workers!==buildingWorkerCap(b.typeId,b.level))return {capacity:0,reason:'Idle this week: Hospital is not fully staffed.'};
+  const operation=resolveWorkshopOperation(state,npcs).byTile[tileId];
+  if(!operation.operating){
+    const reason=operation.reason==='disabled'?'Idle this week: workshop paused.':
+      operation.reason==='upkeep'?'Idle this week: upkeep unpaid.':
+      operation.reason==='herbs'?'Idle this week: not enough Herbs.':
+      b.workers===0?'Idle this week: no workers.':'Idle this week: Hospital is not fully staffed.';
+    return {capacity:0,reason};
+  }
   const {npc,worn}=postedEquipment(state,npcs,tileId);
   const skill=npc?effectiveSkills(npc.character.skills,worn,npc.character.socialClass)[b.typeId==='smithy'?'technical':'medical']:0;
   return {capacity:(b.typeId==='drug-store'?CRAFT_TRIAL.drugStoreBase:b.workers)+CRAFT_TRIAL.skillSteps.filter(step=>skill>=step).length,reason:null};
