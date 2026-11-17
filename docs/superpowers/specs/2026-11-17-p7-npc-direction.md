@@ -1,8 +1,15 @@
-# P7 — NPC direction: structure, mechanisms, interactions (v0.1)
+# P7 — NPC direction: structure, mechanisms, interactions (v0.2)
 
-**Status:** the split in §9 is **approved** by the owner, 2026-11-17, verbatim: "Approve v0.2 split (Recommended)". Sections 1–8 are the direction for P7-C, D and E; each of those specs repeats its §10 questions for G1. Base `main` `753e450`. It does not authorise code, a push or a PR. Each sub-project in §9 still gets its own spec, plan and G1.
+**Status:** the split in §9 is **approved** by the owner, 2026-11-17, verbatim: "Approve v0.2 split (Recommended)". v0.2 rewrites the NTR route (§5.5, §6, §7) after the owner's second direction below; §10 lists what is still open. Sections 1–8 are the direction for P7-C, D and E; each of those specs repeats its §10 questions for G1. Base `main` `753e450`. It does not authorise code, a push or a PR.
 
-**Owner direction (Tân, 2026-11-17), verbatim:** "vậy trước mắt cứ làm P7 trước đi. Nhớ ghi rõ kết cấu, cách thức và hướng nủa NPC. Tập trung mạnh vào việc tương tác giữa NPC - Player, NPC-NPC, NPC với người dân trong thành (NTR Route)".
+**Owner direction 1 (Tân, 2026-11-17), verbatim:** "vậy trước mắt cứ làm P7 trước đi. Nhớ ghi rõ kết cấu, cách thức và hướng nủa NPC. Tập trung mạnh vào việc tương tác giữa NPC - Player, NPC-NPC, NPC với người dân trong thành (NTR Route)".
+
+**Owner direction 2 (Tân, 2026-11-17), verbatim:** "như đã biết thì các ero game 18+ được quy đinh với tình tiết nam và nữ. Nhưng hiện 100% NPC sẽ là nữ nên việc quan hệ này vẫn tạo được nhưng sẽ thiếu thốn về ham muốn. Chính vì đánh vô tâm lý này khi NPC có mức độ thân mật với Player cao nếu trong thời gian nhất định Player ko để mắt đến thì sẽ có ham muốn phát sinh với dân trong city (Nam - nữ). Đối với mối quan hệ NPC - NPC (nữ - nữ) sẽ hiếm gặp hơn. Vì game này xoay quanh vấn đề giữa các NPC và Player nên việc tạo ra các sự kiện NTR bên cạnh sự kiện thân mật giữa NPC và Player là cần thiết".
+
+In short:
+- **NTR comes from a deep bond plus neglect.** An NPC close to the Player, left alone for too long, starts to desire male city residents.
+- **NPC–NPC (female–female) is rarer** and only partly meets her desire.
+- **NTR events are a core event line**, beside the Player's own intimacy events.
 
 All NPCs are female adults, 18 or older. Adult content is mechanics only: stats, counters, outcomes and short non-graphic report lines. UI and data text is English. Public text never names other games. Every number marked TRIAL is a starting value for balance.
 
@@ -10,22 +17,22 @@ All NPCs are female adults, 18 or older. Adult content is mechanics only: stats,
 
 ## 1. What the Player should feel
 
-NPCs are people with wants, not workers with a bonus. Each week they choose what to do with their free time, and those choices touch three circles:
+NPCs are people with wants, not workers with a bonus. The Player has few actions per week and many NPCs, so **attention is the scarce resource**:
 
-1. **The Player:** they ask for time, accept or refuse, grow closer or colder.
-2. **Other NPCs:** friends, rivals and lovers, who pull each other toward Light or Dark.
-3. **The city:** when the Player does not meet their needs, or when their Mind runs Dark, they find partners among the residents (the **NTR route**), and the city's Corruption moves with them.
+1. **The Player:** the closer an NPC is to him, the more she needs his attention, and the more she has to lose.
+2. **Other NPCs:** friends and rivals; rarely lovers, which comforts her but does not replace him.
+3. **The city:** neglect a close NPC and she starts to look at the men of the city. The **NTR route** is a slow, visible arc that the Player can stop early, fight late, or lose.
 
-The Player can always see why an NPC acted (§4.4) and can steer it with actions and house rules, but never fully control it.
+The Player can always see why an NPC acted (§4.4) and can steer her with actions and house rules, but never fully control her.
 
 ## 2. Structure: four layers per NPC
 
 | Layer | Holds | Changes | Built in |
 |---|---|---|---|
 | **1. Identity** | origin, birth week → age and title, hobbies (2), traits, Beauty, appearance ids | rarely (age yearly; traits by events) | P7-A (appearance: P7-ART) |
-| **2. Inner state** | Mind (0 Light ↔ 100 Dark), Lust and its base, Arousal, Stress; existing needs (`intimacy`, `recognition`…) and emotions (`jealousy`, `shame`, `stress`…) | every week | P7-A (Mind/Lust/Arousal/Stress), P7-C onward (needs, emotions) |
-| **3. Bonds** | to the Player: the existing 8-axis relationship (trust, affection, attraction, respect, fear, resentment, dependency, familiarity); to NPCs: a **bond graph** (§6); to residents: up to 3 **regulars** (§7.3) | every week | P7-D, P7-E |
-| **4. Record** | Sex-exp per part, keyed history counters, last 20 events | on each event | P7-A |
+| **2. Inner state** | Mind (0 Light ↔ 100 Dark), Lust and its base, Arousal, Stress; existing needs (`intimacy`, `recognition`…) and emotions (`jealousy`, `shame`, `stress`…); **weeks without the Player's attention** (§5.5) | every week | P7-A (Mind/Lust/Arousal/Stress), P7-C onward |
+| **3. Bonds** | to the Player: the existing 8-axis relationship (trust, affection, attraction, respect, fear, resentment, dependency, familiarity); to NPCs: a **bond graph** (§6); to residents: one **rival** at a time (§7.3) | every week | P7-C, P7-D, P7-E |
+| **4. Record** | Sex-exp per part, keyed history counters (with Player / with NPC / with outsider), last 20 events | on each event | P7-A |
 
 Layers 1 and 4 are what the NPC **is** and **has done**; layers 2 and 3 decide what she **wants** next.
 
@@ -33,13 +40,14 @@ Layers 1 and 4 are what the NPC **is** and **has done**; layers 2 and 3 decide w
 
 Everything runs inside End Week, in this fixed order, from one seeded stream (LAW-03):
 
-1. **Player actions (during Planning):** the Player spends 5 action points per week (hard maximum 12). One action = one turn for temporary effects (owner, 2026-11-03).
+1. **Player actions (during Planning):** the Player spends 5 action points per week (hard maximum 12). One action = one turn for temporary effects (owner, 2026-11-03). Each action on an NPC counts as **attention** for her this week.
 2. **Work:** posted NPCs work; Stress rises; at Stress 100 they stop working (P7-A).
-3. **Drives:** Arousal rises with Lust; unmet needs grow; emotions decay toward calm.
+3. **Drives:** Arousal rises with Lust; unmet needs grow; neglect counters move (§5.5); emotions decay toward calm.
 4. **Intent:** each NPC picks one leisure intent by utility score (§4).
 5. **Pairing:** intents that need a partner are matched (§4.3).
-6. **Outcomes:** stats, bonds, Sex-exp, history and the city Corruption delta are applied.
-7. **Report:** one short letter line per notable outcome, grouped by NPC.
+6. **NTR stages:** each NPC on the route rolls to advance or fall back (§7.2).
+7. **Outcomes:** stats, bonds, Sex-exp, history and the city Corruption delta are applied.
+8. **Report:** one short letter line per notable outcome, grouped by NPC, including NTR clues (§7.4).
 
 Pure TypeScript in `packages/simulation`, no DOM (LAW-02). Cost is O(NPCs + bonds); the budget stays < 50 ms per tick for 100 NPCs.
 
@@ -56,22 +64,21 @@ Each week every NPC scores these intents and takes the highest:
 | **Rest** | Stress, `sadness` | Arousal |
 | **Hobby** | a hobby venue in the city, low Stress | high Arousal |
 | **Seek Player** | Arousal, affection and attraction to the Player, unmet `intimacy` | resentment, fear, recent refusals by the Player |
-| **Seek NPC partner** | Arousal, a bond with high closeness (§6) | rivalry, partner's low Arousal |
-| **Seek outsider** (NTR) | Arousal, Dark Mind, Lust, weeks of unmet `intimacy`, refusals by the Player | Light Mind, house rule (§7.6), `shame` |
+| **Seek man in the city** (NTR) | **bond to the Player × weeks neglected** (main factor), Arousal, Lust, NTR stage, Dark Mind | the Player's attention this week, Light Mind, `shame`, house rule (§7.6) |
+| **Seek NPC partner** (rare) | an NPC lover (§6.2), both lonely | low base weight (TRIAL), rivalry |
 | **Socialise** | `recognition` need, friends at the same post | Stress |
 
 `score = base + Σ weight × factor`, all integers. Ties break by a seeded draw. Weights live in a data file (TRIAL) with a validator, like every catalog.
 
 ### 4.3 Pairing order (Arousal partner seeking)
-Owner rule (2026-11-03): she first tries partners she is close to; if the Player refuses, or the other NPC's Arousal is low, she turns to an outside resident.
+1. **Player:** becomes a **request** in the next Planning: accept (costs 1 action) or refuse. A refusal counts as neglect (§5.5).
+2. **Her rival, then a man in the city:** taken when the NTR intent wins (§7).
+3. **NPC lover:** rare; it **halves** Arousal and meets `intimacy` only by half, so it does not stop the neglect counter (owner: female–female is rarer and leaves desire unmet).
 
-1. **Player:** becomes a **request** in the next Planning: accept (costs 1 action) or refuse. A refusal is counted and raises the next week's outsider score.
-2. **NPC partner:** the closest bonded NPC whose own intent or Arousal accepts; both resolve together. Processed in NPC id order for determinism.
-3. **Regular:** one of her up to 3 resident regulars (§7.3).
-4. **Random resident:** a seeded draw from the city's classes (§7.2).
+All pairing runs in NPC id order with seeded draws, so the same save and commands always give the same events.
 
 ### 4.4 Why she did it (readability)
-Each intent stores its top three factors. The NPC sheet and the report line show them in plain words, for example: "Sought a partner in the city: high Arousal, refused by you twice, Mind leans Dark." Text labels, never colour alone.
+Each intent stores its top three factors. The NPC sheet and the report line show them in plain words, for example: "Went to the Tavern alone: you have not seen her for 4 weeks, she is very close to you, high Arousal." Text labels, never colour alone.
 
 ## 5. Axis 1 — NPC ↔ Player
 
@@ -85,16 +92,31 @@ Each intent stores its top three factors. The NPC sheet and the report line show
 | Praise | respect +, `recognition` met | → Light |
 | Discipline | fear +, resentment + | → Dark |
 | Order rest | Stress − (she gives no post bonus this week) | — |
+| **Watch her** (new) | reveals her NTR stage and her rival (§7.4) | — |
 
 ### 5.2 Acceptance
 Every action that needs her consent rolls `accept% = clamp(base + affection + attraction/2 + Lust/2 − Stress/2 − resentment − shame)` (TRIAL weights), with **slave vs servant** status adding or removing a flat term. Low Lust makes refusal likely, slaves included (owner, 2026-11-03).
 - On refusal the Player may **accept it** (trust +) or, **for slaves only**, **force it** (Claude's suggestion, not confirmed): Mind → Dark, fear +, resentment +, trust −.
 
 ### 5.3 Requests from her
-When she seeks the Player (§4.3), the Planning screen shows her request card. Ignoring it counts as a refusal. This makes neglect visible before it becomes the NTR route.
+When she seeks the Player (§4.3), the Planning screen shows her request card. Ignoring it counts as neglect.
 
 ### 5.4 Jealousy
-When the Player spends actions on one NPC, every other NPC with high affection for the Player gains `jealousy`. High jealousy lowers acceptance and can sour the NPC–NPC bond between the two women (§6).
+When the Player spends actions on one NPC, every other NPC with high affection for the Player gains `jealousy`. High jealousy lowers acceptance and can sour the bond between the two women (§6).
+
+### 5.5 Attention and neglect (the NTR trigger)
+- **Attention:** any Player action on her this week (talk, gift, date, intimacy, praise, an accepted request).
+- **`weeksNeglected`:** +1 each week without attention; reset to 0 by attention.
+- **Need for him** = her bond to the Player (affection + attraction, TRIAL). **The closer she is, the sooner neglect hurts**:
+
+| Bond | Neglect weeks before Longing (TRIAL) |
+|---|---|
+| very close (≥ 80) | 2 |
+| close (60–79) | 3 |
+| warm (40–59) | 5 |
+| below 40 | never: no bond, so no NTR (Dark NPCs may still go to the Brothel, §7.7) |
+
+This turns the action budget into the core tension: the more NPCs the Player keeps close, the more he must spread his week.
 
 ## 6. Axis 2 — NPC ↔ NPC (bond graph)
 
@@ -104,76 +126,87 @@ A sparse list of bonds: `{ a, b, closeness 0–100, rivalry 0–100, lovers: boo
 ### 6.2 How bonds form and move
 - **Meeting:** two NPCs meet when they share a post building, the Mansion, or a hobby venue in the same week. A first meeting creates a bond at closeness 10.
 - **Weekly drift:** closeness rises with a shared hobby and with resting together; rivalry rises with jealousy over the Player, with Minds far apart (one Light, one Dark), and with sharing a post while one is Exhausted.
-- **Lovers:** when closeness ≥ 70 and the two have paired by Arousal twice, the bond becomes `lovers`. Lovers are each other's first partner after the Player (§4.3).
+- **Lovers are rare:** only when closeness ≥ 80, both are in Longing or later, and a low seeded weekly chance passes (TRIAL 10 %). Lover time comforts (Stress −, Arousal halved) but does **not** reset neglect, so it slows the NTR route without stopping it.
 
 ### 6.3 What bonds do
-- **Mind pull:** each week a close pair (closeness ≥ 60) moves each Mind 1 point toward the other. A Dark NPC can corrupt a Light friend; a Light one can redeem her. The Player decides who works and rests together.
+- **Mind pull:** each week a close pair (closeness ≥ 60) moves each Mind 1 point toward the other. A Dark NPC can corrupt a Light friend; a Light one can redeem her.
+- **Gossip:** a close friend of an NPC on the NTR route can reveal her stage to the Player (a free clue, §7.4).
 - **Stress:** friends at the same post halve each other's Stress rise; rivals at the same post add +1.
 - **Work:** rivals at one building lower its NPC bonus (P7-F slots).
-- **History:** "Grew close with Mira", "Quarrelled with Anna".
 
-## 7. Axis 3 — NPC ↔ city residents (NTR route)
+## 7. Axis 3 — NPC ↔ city men (NTR route)
 
-### 7.1 When it happens
-She takes the **Seek outsider** intent (§4.2) when it scores highest. The usual causes:
-- Arousal is high and the Player refused her or left her request unanswered for weeks. Owner (2026-11-12): if the Player does not meet her needs, she finds outsiders on her own.
-- Her Mind is on the Dark half: Dark NPCs prefer outsiders to known partners (owner, 2026-11-03).
-- No close NPC partner is available.
+### 7.1 Who is at risk
+Only an NPC **with a bond to the Player** (§5.5) enters the NTR route. The deeper the bond, the faster neglect starts it, and the heavier the loss. Later, the Mansion stages (Maid → Concubine → Wife) raise the weight further: a Wife who strays is the biggest event in the game.
 
-### 7.2 Who the resident is
-Residents today are counted classes (Free, Makers, Luminaries, Merchants, Bound), not people. The partner is a **seeded draw of a class**, weighted by that class's population and the venue: the Brothel draws more Makers and Bound; the Tavern draws more Merchants and Luminaries (TRIAL). No resident record is created for a one-off.
-
-### 7.3 Regulars
-If the same NPC meets the same class at the same venue 3 times (TRIAL), a **regular** is created: a light record `{ name (seeded), class, closeness }`, at most 3 per NPC. A regular is preferred over a random resident, so the story gets names: "Anna met her regular, Bren the merchant, at the Tavern." Regulars are the hook for later events (gifts, jealousy, kidnap in P7-G).
-
-### 7.4 Venues and Light/Dark behaviour (owner, 2026-11-03)
-| Mind | Partner choice | Venue | City effect |
+### 7.2 Stages (one arc per NPC, TRIAL)
+| # | Stage | Enters when | What the Player can see |
 |---|---|---|---|
-| **Light** | known people first: the Player, NPC lovers, regulars | **Tavern** | none (keeps the city Light) |
-| **Dark** | outsiders first | **Brothel** (Slum) | city **Corruption +** (small, capped per week) |
+| 0 | **Content** | attention keeps `weeksNeglected` low | — |
+| 1 | **Longing** | neglect passes her threshold (§5.5) | "She waited for you again." Stress +, Arousal rises faster |
+| 2 | **Temptation** | 2 more neglected weeks, or Arousal 100 while Longing | a **rival** appears (§7.3); "A man from the Merchants keeps her company at the Tavern." |
+| 3 | **Secret affair** | a seeded weekly roll while Tempted; Light Mind and `shame` lower the chance | outsider counters rise; clues: late returns, gifts that are not his, lower acceptance |
+| 4 | **Open** | 4 weeks in Secret affair without discovery | she no longer hides; affection to the Player −, Mind → Dark each week |
+| 5 | **Lost** | 4 weeks Open, or a failed win-back | she leaves with her rival (or the arc feeds the P7-G crime chain) — point of no return |
 
-Without the venue she prefers, the event still happens at home with a lower chance.
+Each stage is one stored field per NPC plus the rival id; the roll uses the seeded stream.
 
-### 7.5 Outcomes
-- Arousal → 0; `intimacy` need met; Sex-exp +5–10 to one part; history counters split by **with Player / with NPC / with outsider**, by part (owner, 2026-11-12).
-- Dark route: Mind → Dark +1, and city Corruption + on the existing `society.corruption` (bands: Light < 40, Dark > 60).
-- A Light NPC on the outsider route: `shame` +, affection to the Player − (she feels she strayed).
-- The Player's other high-affection NPCs who learn of it gain `jealousy`.
+### 7.3 The rival
+At Temptation a **named male resident** is drawn by seed from the city's classes (Free, Makers, Luminaries, Merchants, Bound), weighted by class size and the venue: Tavern → Merchants and Luminaries, Brothel → Makers and Bound (TRIAL). A rival is a light record `{ name, class, hold 0–100 }`, one per NPC at a time. Hold rises each week of the affair and is what the Player must beat to win her back.
 
-### 7.6 Player control: house rule per NPC (proposal)
+### 7.4 Clues and discovery
+- Each stage adds a short clue line to the report. Early clues are vague; later ones are clear.
+- **Watch her** (1 action), a close NPC friend's gossip (§6.3), or Open stage reveals the true stage and the rival's name.
+
+### 7.5 Player responses
+| Stage | Cheap fix | Harder options |
+|---|---|---|
+| Longing | any attention → back to Content | — |
+| Temptation | a date or intimacy → back to Longing; rival removed | — |
+| Secret affair (discovered) | **Win back:** attention over several weeks lowers the rival's hold; at 0 she returns (Content) | **Confront:** fast but trust −, resentment +; **Forbid** (house rule Faithful); **Punish** (Dark push) |
+| Open | Win back at double cost | **Accept it:** switches the arc to netorase (§7.7) |
+| Lost | — | only through later events |
+
+### 7.6 House rule per NPC (proposal)
 | Rule | Effect |
 |---|---|
-| **Free** | no limit |
-| **Discreet** | outsider events allowed at a lower chance; no Corruption change |
-| **Faithful** | outsider intent blocked; unmet needs raise Stress and resentment instead; a Dark NPC may break the rule (seeded chance by Mind) |
+| **Free** | outsider time is allowed: no betrayal, no stage clues; counts as netorase (§7.7) |
+| **Faithful** (default) | outsider time is betrayal: the NTR stages run; a Dark NPC may break the rule more easily |
 
-### 7.7 Report
-One short, non-graphic line per event: who, where, with whom (class or the regular's name), what changed. The History tab keeps the counters.
+### 7.7 Not NTR: Brothel work and loose Dark NPCs
+- The Player **posting her to the Brothel**, or setting **Free**, is netorase or work: counters and Sex-exp rise, city Corruption + (small, capped), but no betrayal, no rival, no loss.
+- A **Dark NPC with no bond** to the Player may visit the Brothel by her own intent; this is behaviour, not NTR.
+
+### 7.8 Outcomes of each outsider event
+- Arousal → 0; `intimacy` met; Sex-exp +5–10 to one part; history counter "with outsider" by part (owner, 2026-11-12).
+- Rival hold +; affection to the Player − from Secret affair onward; a Light NPC gains `shame`.
+- City Corruption + only on the Dark side (the existing `society.corruption`, bands Light < 40, Dark > 60).
+- The Player's other close NPCs who learn of it gain `jealousy`.
+
+### 7.9 Paired event line
+Every Player–NPC intimacy event has an NTR counterpart in the same event catalog: the same NPC, same venue type, the rival in place of the Player. Both lines share one data file, one report format and later the same illustration slots (P7-ART). Report lines stay short and non-graphic.
 
 ## 8. Data, save and checks
-- New state per NPC is small: intent + 3 reason ids, ≤ 5 bonds, ≤ 3 regulars, house rule. Bonds live in one city-level list. The 1 MiB save cap holds at 100 NPCs.
-- Weights, venue class mixes and event lines live in data files with validators (DATA-01 pattern).
-- Every rule gets edge tests. Determinism: the same seed and commands give the same NTR events. 100 NPCs × 60 weeks stays under the tick budget.
+- New state per NPC: intent + 3 reason ids, `weeksNeglected`, NTR stage, rival `{ name, class, hold }` or null, house rule, ≤ 5 bonds. The 1 MiB save cap holds at 100 NPCs.
+- Weights, thresholds, venue class mixes and event lines live in data files with validators (DATA-01 pattern).
+- Edge tests per rule (neglect thresholds by bond band, each stage move, win-back at hold 0, Free vs Faithful). Determinism: the same seed and commands give the same NTR events. 100 NPCs × 60 weeks stays under the tick budget.
 
-## 9. Revised P7 split (replaces the order in the overview)
+## 9. P7 split (approved v0.2)
 
 | # | Sub-project | Player gets | Needs |
 |---|---|---|---|
 | **P7-A** | NPC core sheet *(in progress)* | stats, sheet, Stress | — |
 | **P7-B** | Acquisition | Auction House, Guild, Slave Market; no starter NPCs | A |
-| **P7-C** | **NPC ↔ Player** | action points (5, max 12), actions §5, acceptance, requests, jealousy | A, B |
-| **P7-D** | **Intent engine + NPC ↔ NPC** | weekly utility intents §4, bond graph §6, Mind pull | C |
-| **P7-E** | **NPC ↔ residents (NTR route)** | outsider intent, venues, regulars, Corruption, house rules §7 | D |
+| **P7-C** | **NPC ↔ Player** | action points (5, max 12), actions §5, acceptance, requests, attention and neglect counter | A, B |
+| **P7-D** | **Intent engine + NPC ↔ NPC** | weekly utility intents §4, bond graph §6, Mind pull, rare lovers | C |
+| **P7-E** | **NTR route** | stages, rival, clues, Watch, win-back, house rule, Brothel netorase §7 | D |
 | **P7-F** | Work slots + Barracks | 2–3 NPC slots per building, soldier training | A |
 | **P7-G** | Crime chain | kidnap, rescue, defection, Black Market sale | B, E, F, Expedition |
 | **P7-ART** | Appearance | paper-doll layers, palette swaps | art track (Codex draws) |
 
-P7-F can run in parallel with C–E because it touches different files. Mansion and P6-C stay after P7.
-
-## 10. Questions for the owner (G1)
-1. Approve the structure (§2), the weekly loop (§3–4) and the revised split (§9)?
-2. **NTR visibility:** always on, or a settings toggle so a player can turn outsider events off?
-3. **House rule per NPC** (Free / Discreet / Faithful): keep, or no Player control?
-4. **Regulars:** up to 3 named resident partners per NPC, or anonymous residents only?
-5. **NPC ↔ NPC lovers and Mind pull** between close NPCs: keep both?
-6. **Force on refusal** (slaves only, Dark push): allow?
+## 10. Questions for the owner (asked again in the P7-C/D/E specs)
+1. **NTR setting:** always on, or a setting (Off / Netorase only / Full NTR) because many players avoid NTR?
+2. **Stages and Lost:** keep the 6 stages in §7.2? At Lost, does she leave the city with her rival, or stay but belong to him?
+3. **Free / Faithful** house rule per NPC: keep?
+4. **Netori** (the Player taking a resident's wife) as a later idea, or not at all?
+5. **Force on refusal** (slaves only, Dark push): allow?
