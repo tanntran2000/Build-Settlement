@@ -1,5 +1,31 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## P6-B PR C (crafting UI and shared forecast) — PR #98 G6 (2026-11-17 UTC)
+
+**G6 PASS (Claude, Orchestrator/Tester).** P6-B is complete: PR A #96 (crafting data), PR B #97 (craft orders), PR C #98 (crafting UI and shared workshop forecast).
+
+- **Merge.** PR #98 (`P6-B PR C: crafting UI and shared workshop forecast`) was merged under G5 at 2026-11-17T05:14:51Z (GitHub account `tanntran2000`; dot or the owner per AGENTS.md G5).
+  - Merge/main commit: `753e4503673df86830fba2ef2c9ef1e64a843729` (parents `43fcb9b`, `060baa2`).
+  - Accepted head: `060baa24d44d6a61c2b184a77ab161ae6f62d610`. Base: `43fcb9b`.
+- **Trees.** The merge tree `77cbeae3332cfaf26ba23e08ae67300d49d8c69d` is identical to the accepted head tree. Claude checked this locally.
+- **Main CI.** Quality Gate run [44022743286](https://github.com/tanntran2000/Build-Settlement/actions/runs/44022743286), job 133835769733 (push, exact merge SHA), SUCCESS at 2026-11-17T05:30:59Z: 2,935 unit tests and 387/387 Chromium smoke (14.8 min). The dependency audit reports 0 advisories.
+- **Pre-merge, at `060baa2`:**
+  - Claude Tester gates 1–7 exit 0, and full smoke 387/387 with `CI=1`.
+  - CI 44009849333 success.
+  - Astra (thread `mcp:30d3cb3c`): round 1 FAIL (P2 the weekly capacity forecast ignored unpaid upkeep and missing Hospital Herbs), round 2 FAIL (P2 the fixed forecast copied End Week's allocation into the UI), round 3 PASS, no P0–P3.
+  - Builder (thread `mcp:3f312a3e`): Step 0 HOLD; fix round 1; fix round 2 extracted `resolveWorkshopOperation` into `packages/simulation/src/workshop-operation.ts`, used by End Week and the panel, with End Week byte-identical; a timeout HOLD on `society-renewable-support.test.ts:160` (1.2–1.5 s alone).
+- **Evidence.** `docs/verification/p6b-pr98/` on branch `docs/p6b-crafting-design`, at `0f581e4`.
+- **Owner instructions** (verbatim; full table in `owner-approval-record.md`):
+  - "Giao Builder C";
+  - Plan corrections: 5 "Approve P1–P3 and X1–X3 (Recommended)"; 6 "Share it now (Recommended)"; 7 "Set this test to 15 s (Recommended)".
+- **Disclosed.**
+  - Two review rounds failed before the PASS.
+  - Existing-test edits: P1–P3 in the e2e helper and P4, a 15 s timeout for `society-renewable-support.test.ts:160` (the second 60-week test with an owner-approved 15 s limit, after `lord-health.test.ts:73`).
+  - Correction 6 widened PR C into `packages/simulation` (`tile-trial-week.ts`, new `workshop-operation.ts`, an `index.ts` export); golden, fixtures, pins and the 9 no-order hashes stay byte-identical.
+- **Limits.**
+  - Chromium only; Astra's review is read-only.
+  - The owner's 18+ recipes stay in the P6-C backlog.
+
 ## P6-B PR B (craft orders) — PR #97 G6 (2026-11-15 UTC)
 
 **G6 PASS (Claude, Orchestrator/Tester).** P6-B PR B is complete; PR C (crafting UI) follows.
