@@ -177,7 +177,7 @@ export function buildItemWeekContext(session:CharacterLifeSessionState):ItemWeek
   const definitions=(id:string)=>Object.values(Object.hasOwn(equipped,id)?equipped[id]:{}).map(i=>ITEM_CATALOG[i.defId]);
   const player=definitions(session.player.character.id),postSkills:Record<string,Skills>={},postTraits:Record<string,string[]>={};
   const traits=(defs:ItemDefinition[],socialClass:string|null)=>defs.filter(d=>applies(d,socialClass)&&d.trait).map(d=>d.trait!);
-  for(const npc of session.npcs)if(npc.postTileId){
+  for(const npc of session.npcs)if(npc.postTileId&&npc.life.working){
     const worn=definitions(npc.character.id),socialClass=npc.character.socialClass;
     postSkills[npc.postTileId]=effectiveSkills(npc.character.skills,worn,socialClass);postTraits[npc.postTileId]=traits(worn,socialClass);
   }

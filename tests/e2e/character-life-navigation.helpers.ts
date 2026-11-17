@@ -302,7 +302,7 @@ async function readItemReport(panel: Locator): Promise<TileTrialReport['items']>
   return result;
 }
 
-// Read the complete report from rendered text, including the calculation disclosure.
+// Read every currently rendered report field; NPC life notes are rendered in PR C.
 export async function expectReport(page: Page, expected: Readonly<TileTrialReport>): Promise<TileTrialReport> {
   const panel = reportRegion(page), u = reportUnits;
   // Open base letters for visible text/table assertions; read other parity attributes while closed.
@@ -465,6 +465,8 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
   const laws=panel.getByRole('region',{name:'Laws',exact:true,includeHidden:true});
   if(await laws.count()) actual.laws=await laws.evaluate(node=>({inForce:JSON.parse(node.getAttribute('data-laws-in-force')!),costs:JSON.parse(node.getAttribute('data-laws-costs')!),unfunded:JSON.parse(node.getAttribute('data-laws-unfunded')!),incomeMilli:Number(node.getAttribute('data-laws-income-milli')),promise:JSON.parse(node.getAttribute('data-laws-promise')!)}));
   const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
+  // PR B adds simulation-only NPC life notes; retain parity for every existing rendered field.
+  delete baseReport.npcLife;
   expect(actual).toEqual(baseReport);
   if (society) {
     const labels = { free: 'Free residents', makers: 'Makers', luminaries: 'Luminaries', merchants: 'Merchants', bound: 'The Bound' };
