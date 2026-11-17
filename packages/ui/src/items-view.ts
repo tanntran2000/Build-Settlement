@@ -1,4 +1,6 @@
 import { ITEM_CATALOG, ITEM_TRIAL, effectiveSkills, buildingWorkerCap, TRIAL_BUILDINGS, OUTSIDE_TRIAL, type ItemDefinition, type ItemsState, type Slot, type CharacterLifeSessionState, type Skill, type TileTrialState, type ItemWeekReport } from '@haven/core';
+import { CRAFT_TRIAL, RECIPES, type WorldNpc } from '@haven/core';
+import { resolveWorkshopOperation } from '@haven/simulation';
 
 export const itemTitle = (s: string) => s.replace(/(^|[-_ ])\w/g, part => part.replace(/[-_]/g,' ').toUpperCase());
 const everyday: Slot[] = ['earrings','necklace','top','bottom','shoes','ring','weapon','hand'];
@@ -33,7 +35,7 @@ export function matchesItem(d:ItemDefinition,filter:string,slot:string):boolean 
 export function materialRows(items:ItemsState) {
   return Object.entries(items.materials).map(([id,count])=>({id,name:ITEM_CATALOG[id].name,rarity:itemTitle(ITEM_CATALOG[id].rarity),count})).sort((a,b)=>a.name.localeCompare(b.name));
 }
-export const itemError=(code:string)=>({INVENTORY_FULL:'There is no room in the inventory.',KIND_MISMATCH:'Choose an item for this character.',SLOT_MISMATCH:'This item does not fit that slot.',STALE_COMMAND:'The inventory changed. Try again.',FORBIDDEN:'Plan next week before changing items.',ITEM_UNKNOWN:'This item is no longer available.',NOT_ENOUGH_GOLD:'Not enough Gold.',NO_SHOP:'This shop is not operating.',NOT_SELLABLE:'Legendary items cannot be sold.'}[code]??'The item action could not be completed.');
+export const itemError=(code:string)=>({INVENTORY_FULL:'There is no room in the inventory.',KIND_MISMATCH:'Choose an item for this character.',SLOT_MISMATCH:'This item does not fit that slot.',STALE_COMMAND:'The inventory changed. Try again.',FORBIDDEN:'Plan next week before changing items.',ITEM_UNKNOWN:'This item is no longer available.',NOT_ENOUGH_GOLD:'Not enough Gold.',NO_SHOP:'This shop is not operating.',NOT_SELLABLE:'Legendary items cannot be sold.',RECIPE_UNKNOWN:'This recipe is no longer available.',NO_WORKSHOP:'Choose an enabled workshop for this recipe.',MISSING_INPUT:'The required inputs are no longer available.',QUEUE_FULL:'The workshop queue is full.',ORDER_UNKNOWN:'This order is no longer available.',WORKSHOP_BUSY:'Cancel orders and make room for ready outputs before replacing this workshop.'}[code]??'The item action could not be completed.');
 
 export function parseItemCount(text:string,available:number):number|null {
   if(!/^\d+$/.test(text))return null;const count=Number(text);
@@ -50,6 +52,16 @@ export function healthLine(session:CharacterLifeSessionState):string {
   return `Health ${session.player.character.health} / 100 · Regen +${characterTotals(session,session.player.character.id).regen!+Number(hospital)}/week`;
 }
 export const ITEM_GOAL_LABELS={calm:'Calm city',authority:'Authority 90+ for 4 weeks',week52:'Week 52',research:'Research complete'} as const;
+export const WORKSHOP_IDLE_COPY='No orders completed. Check workers, supplies and upkeep.';
+type CraftedOutput=NonNullable<ItemWeekReport['crafted']>[number];
+export const craftWork=(entry:CraftedOutput)=>RECIPES[entry.recipeId].kind==='refine'?'Refined':ITEM_CATALOG[entry.output].category==='consumable'?'Brewed':'Crafted';
+export const craftDestination=(place:CraftedOutput['place'])=>({inventory:'Inventory',consumables:'Potion inventory',materials:'Material stack',storage:'Temporary storage',ready:'Waiting for room'}[place]);
+export function craftingHint(definition:ItemDefinition):string|null {
+  if(!definition.slot||!['common','rare'].includes(definition.rarity))return null;
+  const recipe=Object.values(RECIPES).find(recipe=>recipe.kind==='upgrade'&&recipe.workshops.includes('smithy')&&recipe.inputs.some(input=>ITEM_CATALOG[input.defId].name===definition.name));
+  const material=recipe?.inputs.find(input=>ITEM_CATALOG[input.defId].category==='material');
+  return material?`Can upgrade at the Smithy · Needs ${material.count} ${ITEM_CATALOG[material.defId].name} (${itemTitle(ITEM_CATALOG[material.defId].rarity)}).`:null;
+}
 export function itemReportRows(report:ItemWeekReport,id:'steward'|'quartermaster') {
   const rows:{label:string;value:string;tone:'gain'|'loss'|'muted'}[]=[];
   const add=(label:string,value:string,tone:'gain'|'loss'|'muted')=>rows.push({label,value,tone});
@@ -60,6 +72,50 @@ export function itemReportRows(report:ItemWeekReport,id:'steward'|'quartermaster
     for(const m of report.materials)add(m.lost?'Material lost':'Material found',`${ITEM_CATALOG[m.materialId].name} · ${m.tileId}${m.lost?' · stack full (999)':''}`,m.lost?'loss':'gain');
     if(report.found){const f=report.found;add(f.lost?'Item lost':'Item found',`${ITEM_CATALOG[f.defId].name} · ${f.lost?'inventory and temporary storage full':f.stored?'temporary storage':'inventory'}`,f.lost?'loss':'gain');}
     for(const id of report.expired)add('Expired item',ITEM_CATALOG[id].name,'loss');
+    for(const entry of report.crafted??[]){
+      const label=entry.place==='ready'?'Waiting for room':({Refined:'Material refined',Brewed:'Potion brewed',Crafted:'Item crafted'} as const)[craftWork(entry)];
+      add(label,`${ITEM_CATALOG[entry.output].name} · ${entry.tileId} · ${craftDestination(entry.place)}`,entry.place==='ready'?'loss':'gain');
+    }
+    for(const tileId of report.workshopsIdle??[])add('Workshop idle',`${tileId} · ${WORKSHOP_IDLE_COPY}`,'loss');
   }
   return rows;
 }
+
+// Planning projection only: placement does not require workers, Herbs or upkeep.
+export function craftingRecipes(state:TileTrialState,tileId:string) {
+  const building=state.tiles.find(t=>t.id===tileId)?.building,items=state.society!.items;
+  if(!building?.enabled||(items.workshops?.[tileId]?.orders.length??0)>=CRAFT_TRIAL.queueCap)return [];
+  const gold=state.world.settlements[state.world.activeSettlementId!].inventory.gold;
+  const owned=[...items.inventory,...items.consumables].sort((a,b)=>a.id-b.id);
+  return Object.entries(RECIPES).flatMap(([recipeId,recipe])=>{
+    if(!recipe.workshops.some(type=>type===building.typeId)||gold<recipe.feeMilli)return [];
+    if(!recipe.inputs.every(input=>ITEM_CATALOG[input.defId].category==='material'?(items.materials[input.defId]??0)>=input.count:owned.some(item=>item.defId===input.defId)))return [];
+    const itemInput=recipe.inputs.find(input=>ITEM_CATALOG[input.defId].category!=='material');
+    const item=itemInput?owned.find(item=>item.defId===itemInput.defId):undefined;
+    return [{recipeId,group:recipe.kind==='refine'?'Refine':recipe.kind==='upgrade'?'Upgrade':'Brew',inputs:recipe.inputs,
+      before:itemInput?.defId,output:recipe.output,feeMilli:recipe.feeMilli,fields:{tileId,recipeId,...(item?{itemId:item.id}:{})}}];
+  });
+}
+
+function postedEquipment(state:TileTrialState,npcs:readonly WorldNpc[],tileId:string) {
+  const npc=npcs.find(n=>n.postTileId===tileId),equipped=state.society!.items.equipped;
+  const worn=npc?Object.values(Object.hasOwn(equipped,npc.character.id)?equipped[npc.character.id]:{}).map(item=>ITEM_CATALOG[item.defId]):[];
+  return {npc,worn};
+}
+
+export function workshopForecast(state:TileTrialState,npcs:readonly WorldNpc[],tileId:string):{capacity:number;reason:string|null} {
+  const b=state.tiles.find(t=>t.id===tileId)?.building;
+  if(!b||!['smithy','hospital','drug-store'].includes(b.typeId))return {capacity:0,reason:'No workshop selected.'};
+  const operation=resolveWorkshopOperation(state,npcs).byTile[tileId];
+  if(!operation.operating){
+    const reason=operation.reason==='disabled'?'Idle this week: workshop paused.':
+      operation.reason==='upkeep'?'Idle this week: upkeep unpaid.':
+      operation.reason==='herbs'?'Idle this week: not enough Herbs.':
+      b.workers===0?'Idle this week: no workers.':'Idle this week: Hospital is not fully staffed.';
+    return {capacity:0,reason};
+  }
+  const {npc,worn}=postedEquipment(state,npcs,tileId);
+  const skill=npc?effectiveSkills(npc.character.skills,worn,npc.character.socialClass)[b.typeId==='smithy'?'technical':'medical']:0;
+  return {capacity:(b.typeId==='drug-store'?CRAFT_TRIAL.drugStoreBase:b.workers)+CRAFT_TRIAL.skillSteps.filter(step=>skill>=step).length,reason:null};
+}
+export const workshopCapacity=(state:TileTrialState,npcs:readonly WorldNpc[],tileId:string):number=>workshopForecast(state,npcs,tileId).capacity;
