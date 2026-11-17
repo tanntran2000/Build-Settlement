@@ -1,6 +1,6 @@
 # P7-A — NPC core sheet (design spec v0.1)
 
-**Status:** draft by Claude for the owner's review (G1). Not approved. Part of P7 (see `2026-11-17-p7-npc-overview.md`).
+**Status:** v0.1 **G1 approved** by the owner (Tân), 2026-11-17, verbatim: "Duyệt P7-A". The TRIAL values in §4–§5 (open questions 2–3) stand as written. Open question 4 (18+ tab labels in the public repo) stays open and must be answered before PR C. Part of P7 (see `2026-11-17-p7-npc-overview.md`).
 
 - **Base:** `main` `753e450`.
 - **Not authorised by this document:** no code, push or PR.

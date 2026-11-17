@@ -1,6 +1,6 @@
 # P7 — NPCs: sub-project split (proposal v0.1)
 
-**Status:** draft by Claude for the owner's review (G1). Not approved. Base `main` `753e450` (P6-B complete).
+**Status:** approved with P7-A by the owner (Tân), 2026-11-17, verbatim: "Duyệt P7-A". Each later sub-project still needs its own spec and G1. Base `main` `753e450` (P6-B complete).
 
 All NPCs are female adults, 18 or older (owner, 2026-11-11). Adult content is mechanics only: stats, counters and outcomes, never graphic text. All UI text is English. Public text never names other games.
 
