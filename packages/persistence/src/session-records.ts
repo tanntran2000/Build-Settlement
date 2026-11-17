@@ -1,6 +1,6 @@
-﻿import type { CharacterLifeSessionState, CharacterProfile, WorldNpc, PlayerCharacter } from '@haven/core';
+﻿import type { CharacterLifeSessionState, CharacterProfile, WorldNpc, PlayerCharacter, TileTrialState } from '@haven/core';
 import { CHARACTER_LIFE_SAVE_FORMAT } from './character-life-save.js';
-import { createSocietyState, GOODS_STOCK_RULESET, hasWeeklyKeys, isCanonicalGameState, isCharacterProfile, isPlayerCharacter, isSocietyState, isTileTrialState, isWorldNpcList, isWorldSessionState, SOCIETY_RULESET } from '@haven/core';
+import { createSocietyState, isNamedCharacterRecord, managerSlotTileIds, WORLD_TRAITS, GOODS_STOCK_RULESET, hasWeeklyKeys, isCanonicalGameState, isCharacterProfile, isPlayerCharacter, isSocietyState, isTileTrialState, isWorldNpcList, isWorldSessionState, SOCIETY_RULESET } from '@haven/core';
 import type { StoredRecord, TableName } from './game-store.js';
 import { ITEM_CATALOG, RECIPES, isItemsState, isOpenItemSlot, isWearable, type ItemsState, type ItemInstance } from '@haven/core';
 export class StoreRecordError extends Error {
@@ -15,7 +15,7 @@ function isStoredCity(raw: unknown): raw is CharacterLifeSessionState['city'] {
         !raw.society || typeof raw.society !== 'object') return false;
     const ruleset = Object.getOwnPropertyDescriptor(raw.society, 'rulesetId')?.value;
     if (ruleset === SOCIETY_RULESET) return isTileTrialState(raw);
-    const version = typeof ruleset === 'string' ? /^tile-society-0([1-8])$/.exec(ruleset) : null;
+    const version = typeof ruleset === 'string' ? /^tile-society-0([1-9])$/.exec(ruleset) : null;
     if (!version || !isCanonicalGameState(raw.world) || !raw.world.activeSettlementId || !count(raw.revision) ||
         !['planning','report'].includes(raw.phase as string) || typeof raw.happiness !== 'number' ||
         !Number.isFinite(raw.happiness) || raw.happiness < 0 || raw.happiness > 100 ||
@@ -166,10 +166,39 @@ export function recordsToSession(records: StoredRecord[]): CharacterLifeSessionS
     const v = r.value as { kind: string; player: PlayerCharacter; npc: WorldNpc; order: number; profile: CharacterProfile; profileOrder: number };
     if (!v || !v.profile || v.profile.id !== r.id) bad(r);
     if (v.kind === 'player') { if (player || !isPlayerCharacter(v.player) || v.player.character.id !== r.id || !isCharacterProfile(v.profile,v.player.character)) bad(r); player = v.player; }
-    else if (v.kind === 'npc') { if (!isWorldNpcList([...npcs.map(n => n.npc),v.npc],city) || v.npc.character.id !== r.id || !isCharacterProfile(v.profile,v.npc.character) || !Number.isInteger(v.order) || v.order < 0 || !Number.isInteger(v.profileOrder) || v.profileOrder < 0) bad(r); npcs.push({ npc: v.npc,order: v.order }); }
+    else if (v.kind === 'npc') { if (!(meta.rulesetId === SOCIETY_RULESET ? isWorldNpcList([...npcs.map(n => n.npc),v.npc],city) : /^tile-society-0[1-9]$/.test(meta.rulesetId) && isHistoricalNpcList([...npcs.map(n => n.npc),v.npc],city)) || v.npc.character.id !== r.id || !isCharacterProfile(v.profile,v.npc.character) || !Number.isInteger(v.order) || v.order < 0 || !Number.isInteger(v.profileOrder) || v.profileOrder < 0) bad(r); npcs.push({ npc: v.npc,order: v.order }); }
     else bad(r);
     if (v.kind === 'npc') profiles.push({ profile: v.profile,order: v.profileOrder });
   }
   if (!player) throw new StoreRecordError('characters:player');
   return structuredClone({ city,outside,npcs: npcs.sort((a,b) => a.order-b.order).map(v => v.npc),player,profiles: profiles.sort((a,b) => a.order-b.order).map(v => v.profile) }) as CharacterLifeSessionState;
+}
+
+function isHistoricalNpcList(raw: unknown, city: TileTrialState): boolean {
+  try {
+    if (!Array.isArray(raw) || Object.getPrototypeOf(raw) !== Array.prototype ||
+        Reflect.ownKeys(raw).length !== raw.length + 1) return false;
+    const slots = managerSlotTileIds(city), traitIds = WORLD_TRAITS.map(t => t.id);
+    const ids = new Set<string>(), posts = new Set<string>();
+    for (let i = 0; i < raw.length; i++) {
+      const entry = Object.getOwnPropertyDescriptor(raw, String(i));
+      if (!entry?.enumerable || !('value' in entry)) return false;
+      const npc = entry.value;
+      if (!hasWeeklyKeys(npc, ['character', 'traits', 'postTileId'])) return false;
+      const c = npc.character, traits = npc.traits;
+      if (!isNamedCharacterRecord(c) || ids.has(c.id) || !Array.isArray(traits) ||
+          Object.getPrototypeOf(traits) !== Array.prototype || Reflect.ownKeys(traits).length !== traits.length + 1) return false;
+      const seenTraits = new Set<string>();
+      for (let j = 0; j < traits.length; j++) {
+        const trait = Object.getOwnPropertyDescriptor(traits, String(j));
+        if (!trait?.enumerable || !('value' in trait) || typeof trait.value !== 'string' ||
+            !traitIds.includes(trait.value) || seenTraits.has(trait.value)) return false;
+        seenTraits.add(trait.value);
+      }
+      const post = npc.postTileId;
+      if (post !== null && (typeof post !== 'string' || !slots.includes(post) || posts.has(post))) return false;
+      ids.add(c.id); if (post !== null) posts.add(post);
+    }
+    return true;
+  } catch { return false; }
 }

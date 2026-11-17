@@ -5,12 +5,13 @@ import type { TileTrialState } from '../trial/types.js';
 import { readDenseArray } from './arrays.js';
 import { NPC_MANAGER_BUILDING_TYPES,WORLD_NPC_GIVEN_NAMES,WORLD_STARTER_NPCS,WORLD_TRAITS } from './npc-content.js';
 import { createSeededRandom } from './random.js';
+import { createNpcLife, isNpcLife, npcAge, type NpcLife } from './npc-life.js';
 import { createWorldSession,isWorldSessionState } from './session.js';
 import type { WorldResult,WorldSessionState } from './types.js';
 
 export interface TraitDefinition { id: string; name: string; summary: string }
 // `character.occupation` is background only; the current post is `postTileId`.
-export interface WorldNpc { character: NamedCharacter; traits: string[]; postTileId: string | null }
+export interface WorldNpc { character: NamedCharacter; traits: string[]; postTileId: string | null; life: NpcLife }
 export interface NpcWorldSessionState extends WorldSessionState { npcs: WorldNpc[] }
 
 const CHARACTER_KEYS = ['id', 'name', 'gender', 'age', 'occupation', 'socialClass', 'legalStatus', 'needs', 'emotions', 'relationshipToPlayer', 'memories', 'skills', 'health'];
@@ -47,9 +48,9 @@ export function isWorldNpcList(raw: unknown, city: TileTrialState): raw is World
     if (!list) return false;
     const slots = managerSlotTileIds(city), traitIds = WORLD_TRAITS.map(t => t.id), ids = new Set<string>(), posts = new Set<string>();
     for (const npc of list) {
-      if (!hasWeeklyKeys(npc, ['character', 'traits', 'postTileId'])) return false;
+      if (!hasWeeklyKeys(npc, ['character', 'traits', 'postTileId', 'life']) || !isNpcLife(npc.life)) return false;
       const c = npc.character, traits = readDenseArray(npc.traits);
-      if (!isNamedCharacterRecord(c) || ids.has(c.id)) return false;
+      if (!isNamedCharacterRecord(c) || c.gender !== 'female' || c.age < 18 || npcAge(npc.life, city.world.week) < 18 || ids.has(c.id)) return false;
       if (!traits || !traits.every(t => oneOf(t, traitIds)) || new Set(traits).size !== traits.length) return false;
       const post = npc.postTileId;
       if (post !== null && (typeof post !== 'string' || !slots.includes(post) || posts.has(post))) return false;
@@ -73,6 +74,9 @@ export function createNpcWorldSession(seed: unknown): WorldResult<NpcWorldSessio
   if (!base.success) return base;
   const random = createSeededRandom((base.value.outside.seed ^ 0x4e504331) >>> 0), pool = [...WORLD_NPC_GIVEN_NAMES];
   const npcs = structuredClone(WORLD_STARTER_NPCS) as WorldNpc[];
-  for (const npc of npcs) npc.character.name = pool.splice(Math.floor(random() * pool.length), 1)[0];
+  for (const npc of npcs) {
+    npc.character.name = pool.splice(Math.floor(random() * pool.length), 1)[0];
+    npc.life = createNpcLife(base.value.outside.seed, npc.character.id, npc.character.age);
+  }
   return { success: true, value: { ...base.value, npcs } };
 }

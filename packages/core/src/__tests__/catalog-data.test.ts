@@ -5,6 +5,7 @@ import {
   TRIAL_BUILDINGS, SOCIETY_BUILDINGS, LAW_CATALOG, LAW_TRIAL, LAW_MESSAGES, RESEARCH_TOPICS,
   OUTSIDE_PLOTS, ORDER_TRIAL, GARRISON_TRIAL, CRIME_TRIAL, CRISIS_TRIAL, SOCIETY_TRIAL,
   GOODS_STOCK_TRIAL, TILE_TRIAL_BALANCE, IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL,
+  NPC_ORIGINS, NPC_HOBBIES, P7A_TRIAL,
 } from '../index.js';
 
 const cases = [
@@ -18,6 +19,8 @@ const cases = [
     path: ['0', 'ring'], wrong: 0, message: 'outside-plots.json#field-1.ring: expected 1 | 2 | 3' },
   { file: 'tuning.json', validator: 'validateTuning', view: () => ({ ORDER_TRIAL, GARRISON_TRIAL, CRIME_TRIAL, CRISIS_TRIAL, SOCIETY_TRIAL, GOODS_STOCK_TRIAL, TILE_TRIAL_BALANCE, IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL }),
     path: ['ORDER_TRIAL', 'newGame', 'security'], wrong: -1, message: 'tuning.json#ORDER_TRIAL.newGame.security: expected integer >= 0' },
+  { file: 'npc-life.json', validator: 'validateNpcLife', view: () => ({ origins: NPC_ORIGINS, hobbies: NPC_HOBBIES, P7A_TRIAL }),
+    path: ['origins', 'frontier', 'name'], wrong: 7, message: 'npc-life.json#frontier.name: expected nonempty string' },
 ] as const;
 
 function data(file: string): unknown {
@@ -83,7 +86,7 @@ const pinnedCatalogs = [
   { name: 'GARRISON_TRIAL', value: GARRISON_TRIAL, hash: '4143c1462f581114f45b89afa976c6917d984ea1550601205c4eb7655602c5ef' },
   { name: 'CRIME_TRIAL', value: CRIME_TRIAL, hash: 'f0870b86f87072a009bef7a53511704f6b0ddb5b2e5d9c1de6a7b6dbb44ce1d1' },
   { name: 'CRISIS_TRIAL', value: CRISIS_TRIAL, hash: 'e84e3064f8941cfbf4187fb6708577d62ada085696047d19dc52d62e16e528d6' },
-  { name: 'SOCIETY_TRIAL', value: SOCIETY_TRIAL, hash: '49add1753fd6d630e3cf7f4f7395f2bd7b844936086ef0b9f06fb6cb595090e6' },
+  { name: 'SOCIETY_TRIAL', value: SOCIETY_TRIAL, hash: '69779e596f2abca5afe88b5858be9d850a6a062dd772ea093bbfebf3ec983acc' },
   { name: 'GOODS_STOCK_TRIAL', value: GOODS_STOCK_TRIAL, hash: '6e46090f98a4db0231da0659fc6a1788e743dc365de21e4ced5f142b5c7771f2' },
   { name: 'TILE_TRIAL_BALANCE', value: TILE_TRIAL_BALANCE, hash: '8c6f563db7d15d0e01ca16852bd5700d2c8504a279f63d14ffcd7e01999b6075' },
   { name: 'IMMIGRATION_TRIAL_DEFAULTS', value: IMMIGRATION_TRIAL_DEFAULTS, hash: '9a3a102558fc1ac452d330d72d162a21793b674002acf3026b9f2b5a6e9bdcef' },
@@ -108,4 +111,11 @@ it('pins ITEM_CATALOG for P6-A', async () => {
 it('pins ITEM_TRIAL for P6-A', async () => {
   const { ITEM_TRIAL }=await import('../trial/items.js');
   expect(catalogHash(ITEM_TRIAL)).toBe('fcdbbc87ed52f6df25246e044b25e3c6acbd56de98360f31b7a16ec4a3b5e198');
+});
+it.each([
+  { name: 'NPC_ORIGINS', value: NPC_ORIGINS, hash: 'c252b2c5d31d302c307df967c94b43714f4e3debd527299819f60117f0378f09' },
+  { name: 'NPC_HOBBIES', value: NPC_HOBBIES, hash: '8a4c0e75fca9aa9b8fd5e26a5bfac38aa161864e02b97832c77955089d7205c2' },
+  { name: 'P7A_TRIAL', value: P7A_TRIAL, hash: 'b1429bf557d9a96e825a2d9a6d788524ee1e57db1572d35a6c405f2924797013' },
+])('$name keeps the P7-A canonical JSON hash', ({ value, hash }) => {
+  expect(catalogHash(value)).toBe(hash);
 });
