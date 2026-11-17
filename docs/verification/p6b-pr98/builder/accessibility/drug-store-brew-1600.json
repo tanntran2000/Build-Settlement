@@ -1,0 +1,188 @@
+{
+  "viewport": 1600,
+  "texts": [
+    {
+      "text": "Buy",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Brew",
+      "ratio": 7.117522397283716,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Workshop ledger · slum-1",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 14.4
+    },
+    {
+      "text": "Drug Store · Brew orders",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 24
+    },
+    {
+      "text": "0 of 1 this week · 0 / 6 orders queued",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Forecast includes this week's tax, upkeep and Herb production. Inputs and the fee are held when you place an order.",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Available recipes",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Refine",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 18.4
+    },
+    {
+      "text": "Red Leaf",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16.8
+    },
+    {
+      "text": "Inputs: 2 Green Leaf",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Fee: 1 Gold",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Rare · Material",
+      "ratio": 15.044228250528105,
+      "required": 4.5,
+      "size": 14.4
+    },
+    {
+      "text": "Red Leaf",
+      "ratio": 17.94813766823384,
+      "required": 4.5,
+      "size": 18.4
+    },
+    {
+      "text": "Place Red Leaf",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Brew",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 18.4
+    },
+    {
+      "text": "Heal Potion I",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16.8
+    },
+    {
+      "text": "Inputs: 2 Green Leaf",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Fee: 1 Gold",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Common · Consumable",
+      "ratio": 15.044228250528105,
+      "required": 4.5,
+      "size": 14.4
+    },
+    {
+      "text": "Heal Potion I",
+      "ratio": 17.94813766823384,
+      "required": 4.5,
+      "size": 18.4
+    },
+    {
+      "text": "Place Heal Potion I",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Order queue",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 18.4
+    },
+    {
+      "text": "Orders complete in order at End Week. Cancel returns the exact inputs and Gold; make room in inventories and material stacks first.",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "No orders queued.",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    }
+  ],
+  "clipped": [],
+  "controls": [
+    {
+      "text": "Buy",
+      "width": 73.40625,
+      "height": 50.59375,
+      "left": 344,
+      "right": 417.40625
+    },
+    {
+      "text": "Brew",
+      "width": 87.40625,
+      "height": 50.59375,
+      "left": 425.40625,
+      "right": 512.8125
+    },
+    {
+      "text": "Available recipes",
+      "width": 179.1875,
+      "height": 44.59375,
+      "left": 368,
+      "right": 547.1875
+    },
+    {
+      "text": "Place Red Leaf",
+      "width": 159.953125,
+      "height": 44.59375,
+      "left": 368,
+      "right": 527.953125
+    },
+    {
+      "text": "Place Heal Potion I",
+      "width": 192.359375,
+      "height": 44.59375,
+      "left": 368,
+      "right": 560.359375
+    }
+  ],
+  "overflow": false
+}

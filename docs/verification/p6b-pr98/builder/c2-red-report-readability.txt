@@ -1,0 +1,86 @@
+UTC_START: 2026-11-15T13:10:39.436Z
+HEAD: 75ccc69faaf40102ad217f22debf555c508be0b8
+TREE: f463578799f24d10271a5a45734c28fe25b59c21
+STATUS: M packages/ui/src/ItemCard.svelte
+ M packages/ui/src/SoloWeekReport.svelte
+ M packages/ui/src/__tests__/crafting-view.test.ts
+ M packages/ui/src/items-view.ts
+ M tests/e2e/character-life-navigation.helpers.ts
+ M tests/e2e/crafting.spec.ts
+COMMAND: npx playwright test tests/e2e/crafting.spec.ts --grep quartermaster-rows
+CI=1
+
+[WebServer] (node:46416) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:22880) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:70524) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\crafting.spec.ts:201:3 › C2 accessibility quartermaster-rows at 1280 (4.0s)
+(node:11220) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [chromium] › tests\e2e\crafting.spec.ts:201:3 › C2 accessibility quartermaster-rows at 1600 (3.7s)
+
+
+  1) [chromium] › tests\e2e\crafting.spec.ts:201:3 › C2 accessibility quartermaster-rows at 1280 ───
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 3
+
+      206 |       root = page.getByRole('region', { name: 'Quartermaster item details', exact: true });
+      207 |       const destination = root.getByRole('table', { name: 'Workshop output', exact: true }).getByRole('columnheader', { name: 'Destination', exact: true });
+    > 208 |       expect(await destination.evaluate(el => { const range = document.createRange(); range.selectNodeContents(el); return range.getClientRects().length; })).toBe(1);
+          |                                                                                                                                                               ^
+      209 |     } else {
+      210 |       const s = act(supplied(), 'PLACE_CRAFT_ORDER', { tileId: 'spec-2', recipeId: 'upgrade-rare-ring-player', itemId: 1 });
+      211 |       await importLife(page, s); await selectPlot(page, panel === 'smithy-queue' ? 'spec-2' : panel === 'brew-tab' ? 'service-1' : 'slum-1');
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\crafting.spec.ts:208:159
+
+    Error Context: test-results\crafting-C2-accessibility-quartermaster-rows-at-1280-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\crafting-C2-accessibility-quartermaster-rows-at-1280-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\crafting-C2-accessibility-quartermaster-rows-at-1280-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\crafting.spec.ts:201:3 › C2 accessibility quartermaster-rows at 1600 ───
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 3
+
+      206 |       root = page.getByRole('region', { name: 'Quartermaster item details', exact: true });
+      207 |       const destination = root.getByRole('table', { name: 'Workshop output', exact: true }).getByRole('columnheader', { name: 'Destination', exact: true });
+    > 208 |       expect(await destination.evaluate(el => { const range = document.createRange(); range.selectNodeContents(el); return range.getClientRects().length; })).toBe(1);
+          |                                                                                                                                                               ^
+      209 |     } else {
+      210 |       const s = act(supplied(), 'PLACE_CRAFT_ORDER', { tileId: 'spec-2', recipeId: 'upgrade-rare-ring-player', itemId: 1 });
+      211 |       await importLife(page, s); await selectPlot(page, panel === 'smithy-queue' ? 'spec-2' : panel === 'brew-tab' ? 'service-1' : 'slum-1');
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\crafting.spec.ts:208:159
+
+    Error Context: test-results\crafting-C2-accessibility-quartermaster-rows-at-1600-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\crafting-C2-accessibility-quartermaster-rows-at-1600-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\crafting-C2-accessibility-quartermaster-rows-at-1600-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests\e2e\crafting.spec.ts:201:3 › C2 accessibility quartermaster-rows at 1280 ────
+    [chromium] › tests\e2e\crafting.spec.ts:201:3 › C2 accessibility quartermaster-rows at 1600 ────
+
+UTC_END: 2026-11-15T13:10:58.497Z
+SECONDS: 19.061
+EXIT: 1

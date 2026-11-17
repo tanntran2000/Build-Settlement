@@ -1,0 +1,32 @@
+UTC_START: 2026-11-15T12:58:36.868Z
+HEAD: 43fcb9b856c66606230d6d7ba49140ae94cfaa00
+TREE: bc5965abab73df37f43baeafd9e4f9d847a23826
+STATUS: M packages/ui/src/CharacterLifeCity.svelte
+ M packages/ui/src/InsideCity.svelte
+ M packages/ui/src/PotionPanel.svelte
+ M packages/ui/src/TileManagement.svelte
+ M packages/ui/src/items-view.ts
+ M tests/e2e/character-life-navigation.helpers.ts
+?? packages/ui/src/WorkshopPanel.svelte
+?? packages/ui/src/__tests__/crafting-view.test.ts
+?? tests/e2e/crafting.spec.ts
+COMMAND: npm test -- packages/ui/src/__tests__/crafting-view.test.ts
+CI=
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/ui/src/__tests__/crafting-view.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  1 passed (1)
+      Tests  64 passed (64)
+   Start at  19:58:38
+   Duration  1.00s (transform 433ms, setup 0ms, import 567ms, tests 160ms, environment 0ms)
+
+
+UTC_END: 2026-11-15T12:58:39.227Z
+SECONDS: 2.359
+EXIT: 0

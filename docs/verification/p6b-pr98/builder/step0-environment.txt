@@ -1,0 +1,31 @@
+UTC: 2026-11-15T12:36:18.6282981Z
+WORKTREE: C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+git fetch origin: exit 0; origin/main verified before branch creation.
+COMMAND: git rev-parse HEAD
+43fcb9b856c66606230d6d7ba49140ae94cfaa00
+EXIT: 0
+COMMAND: git rev-parse HEAD^{tree}
+bc5965abab73df37f43baeafd9e4f9d847a23826
+EXIT: 0
+COMMAND: git rev-parse origin/main
+43fcb9b856c66606230d6d7ba49140ae94cfaa00
+EXIT: 0
+COMMAND: git branch --show-current
+feat/p6b-crafting-ui
+EXIT: 0
+COMMAND: git status --porcelain=v1
+
+EXIT: 0
+COMMAND: git worktree list
+D:/NghienCuuTiemNang/Build-Settlement                                         19a88c8 [docs/p6b-crafting-design]
+C:/Users/Admin/.t3/worktrees/Build-Settlement/benchmark-arch-gate-a-01        2a2bb72 [benchmark/arch-gate-a-01]
+C:/Users/Admin/.t3/worktrees/Build-Settlement/benchmark-test-a-01             2a2bb72 (detached HEAD)
+C:/Users/Admin/.t3/worktrees/Build-Settlement/integrate-windows-smoke-main-01 8a7548b [integrate/windows-smoke-main-01]
+C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01               43fcb9b [feat/p6b-crafting-ui]
+C:/Users/Admin/.t3/worktrees/Build-Settlement/verify-windows-smoke-main-01    8a7548b [verify/windows-smoke-main-01]
+EXIT: 0
+COMMAND: git reflog show feat/p6b-crafting-ui -1
+43fcb9b feat/p6b-crafting-ui@{0}: branch: Created from origin/main
+EXIT: 0
+PORTS 4173/4174: FREE
+CodeGraph absent; assigned worktree not indexed by codebase-memory; source fallback. No new worktree/clone/install, test or build.

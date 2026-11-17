@@ -1,0 +1,164 @@
+{
+  "catalog": {
+    "curfew": {
+      "name": "Curfew",
+      "tag": null,
+      "stances": {
+        "free": "against",
+        "makers": "neutral",
+        "luminaries": "neutral",
+        "merchants": "for"
+      },
+      "effect": {
+        "securityTarget": 10,
+        "satisfaction": {
+          "free": -2
+        }
+      }
+    },
+    "watch-levy": {
+      "name": "Watch Levy",
+      "tag": null,
+      "stances": {
+        "free": "for",
+        "makers": "neutral",
+        "luminaries": "neutral",
+        "merchants": "against"
+      },
+      "effect": {
+        "costMilli": 1000,
+        "crimeTarget": -5
+      }
+    },
+    "guild-charters": {
+      "name": "Guild Charters",
+      "tag": null,
+      "stances": {
+        "free": "neutral",
+        "makers": "for",
+        "luminaries": "neutral",
+        "merchants": "against"
+      },
+      "effect": {
+        "satisfaction": {
+          "makers": 2,
+          "merchants": -2
+        }
+      }
+    },
+    "war-tithe": {
+      "name": "War Tithe",
+      "tag": null,
+      "stances": {
+        "free": "against",
+        "makers": "against",
+        "luminaries": "neutral",
+        "merchants": "against"
+      },
+      "effect": {
+        "taxBps": 1000,
+        "satisfaction": {
+          "free": -1,
+          "makers": -1,
+          "luminaries": -1,
+          "merchants": -1
+        }
+      }
+    },
+    "poor-relief": {
+      "name": "Poor Relief",
+      "tag": "light",
+      "stances": {
+        "free": "for",
+        "makers": "for",
+        "luminaries": "neutral",
+        "merchants": "against"
+      },
+      "effect": {
+        "costMilli": 1500,
+        "desperation": -3,
+        "satisfaction": {
+          "free": 2
+        }
+      }
+    },
+    "free-assembly": {
+      "name": "Free Assembly",
+      "tag": "light",
+      "stances": {
+        "free": "for",
+        "makers": "neutral",
+        "luminaries": "for",
+        "merchants": "neutral"
+      },
+      "effect": {
+        "tension": -3,
+        "authorityTarget": -5
+      }
+    },
+    "public-punishments": {
+      "name": "Public Punishments",
+      "tag": "dark",
+      "stances": {
+        "free": "against",
+        "makers": "neutral",
+        "luminaries": "against",
+        "merchants": "for"
+      },
+      "effect": {
+        "crimeTarget": -10,
+        "tension": 2
+      }
+    },
+    "licensed-vice": {
+      "name": "Licensed Vice",
+      "tag": "dark",
+      "stances": {
+        "free": "neutral",
+        "makers": "for",
+        "luminaries": "against",
+        "merchants": "for"
+      },
+      "effect": {
+        "incomeMilli": 1500,
+        "satisfaction": {
+          "luminaries": -2
+        }
+      }
+    }
+  },
+  "trial": {
+    "maxActive": 3,
+    "eliteWeight": 5,
+    "payMilliPerVote": 200,
+    "force": {
+      "satisfaction": -10,
+      "tension": 5,
+      "standing": -3,
+      "minSecurity": 40
+    },
+    "promise": {
+      "weeks": 4,
+      "keptAuthority": 3,
+      "brokenSatisfaction": -10,
+      "brokenTension": 10
+    },
+    "repeal": {
+      "authority": -5,
+      "cooldownWeeks": 4
+    },
+    "corruptionPerTag": 10
+  },
+  "messages": {
+    "CARD_PENDING": "Answer the crisis first.",
+    "UNKNOWN_LAW": "Choose a law from the Council list.",
+    "TOWN_HALL_CLOSED": "Staff the Town Hall to call a vote.",
+    "VOTE_USED": "The Council has already voted this week.",
+    "LAW_ACTIVE": "This law is already in force.",
+    "LAW_SLOTS_FULL": "Three laws are in force. Repeal one first.",
+    "LAW_COOLDOWN": "This law returns in week {N}.",
+    "LOBBY_INVALID": "Only groups with a vote that are not For can be lobbied.",
+    "VOTE_SHORT": "The vote would fail: For {F} · Against {A}.",
+    "LAW_INACTIVE": "This law is not in force."
+  }
+}

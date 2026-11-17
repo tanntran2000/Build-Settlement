@@ -1,0 +1,61 @@
+UTC_START: 2026-11-15T14:53:12.998Z
+HEAD: 09a042a7a3e5c9b0cb09ccbecdd293bf86b4e29f
+TREE: 0ae12c7f62462fb14090a61c788a998f00a031ca
+STATUS: M packages/ui/src/__tests__/crafting-view.test.ts
+ M tests/e2e/crafting.spec.ts
+COMMAND: npx playwright test tests/e2e/crafting.spec.ts --grep F1
+CI=1
+
+[WebServer] (node:71896) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:45656) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:69696) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\crafting.spec.ts:121:1 › F1 no-Herbs Hospital forecast agrees with End Week and explains why the queue waits (8.8s)
+
+
+  1) [chromium] › tests\e2e\crafting.spec.ts:121:1 › F1 no-Herbs Hospital forecast agrees with End Week and explains why the queue waits 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('region', { name: 'Hospital brewing', exact: true })
+    Expected substring: "0 of 0 this week"
+    Received string:    "Workshop ledger · service-1Hospital · Brew orders 1 of 2 this week · 1 / 6 orders queued Planning capacity assumes upkeep is paid at End Week. Hospitals also need full staffing and Herbs. Inputs and the fee are held when you place an order.   Available recipes   Refine Red Leaf Inputs: 2 Green Leaf Fee: 1 Gold Rare · MaterialRed Leaf               Place Red LeafBrew Heal Potion I Inputs: 2 Green Leaf Fee: 1 Gold Common · ConsumableHeal Potion I               Place Heal Potion I Order queue Orders complete in order at End Week. Cancel returns the exact inputs and Gold; make room in inventories and material stacks first.  Heal Potion I Held inputs: 2 Green Leaf Held fee: 1 Gold Cancel order 1 "
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" getByRole('region', { name: 'Hospital brewing', exact: true }) with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Hospital brewing', exact: true })
+        14 × locator resolved to <section aria-label="Hospital brewing" class="workshop svelte-144ugg4">…</section>
+           - unexpected value "Workshop ledger · service-1Hospital · Brew orders 1 of 2 this week · 1 / 6 orders queued Planning capacity assumes upkeep is paid at End Week. Hospitals also need full staffing and Herbs. Inputs and the fee are held when you place an order.   Available recipes   Refine Red Leaf Inputs: 2 Green Leaf Fee: 1 Gold Rare · MaterialRed Leaf               Place Red LeafBrew Heal Potion I Inputs: 2 Green Leaf Fee: 1 Gold Common · ConsumableHeal Potion I               Place Heal Potion I Order queue Orders complete in order at End Week. Cancel returns the exact inputs and Gold; make room in inventories and material stacks first.  Heal Potion I Held inputs: 2 Green Leaf Held fee: 1 Gold Cancel order 1 "
+
+
+      128 |   await importLife(page, s); await selectPlot(page, 'service-1'); await page.getByRole('tab', { name: 'Brew', exact: true }).click();
+      129 |   const workshop = page.getByRole('region', { name: 'Hospital brewing', exact: true });
+    > 130 |   await expect(workshop).toContainText(`${completed} of 0 this week`);
+          |                          ^
+      131 |   await expect(workshop.getByText('Idle this week: not enough Herbs.', { exact: true })).toBeVisible();
+      132 |   expect(await exportLife(page)).toEqual(s);
+      133 |   await page.getByTestId('life-end-week').click(); await expectReport(page, result.report);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\crafting.spec.ts:130:26
+
+    Error Context: test-results\crafting-F1-no-Herbs-Hospi-1a476-xplains-why-the-queue-waits-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\crafting-F1-no-Herbs-Hospi-1a476-xplains-why-the-queue-waits-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\crafting-F1-no-Herbs-Hospi-1a476-xplains-why-the-queue-waits-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\crafting.spec.ts:121:1 › F1 no-Herbs Hospital forecast agrees with End Week and explains why the queue waits 
+
+UTC_END: 2026-11-15T14:53:33.506Z
+SECONDS: 20.508
+EXIT: 1

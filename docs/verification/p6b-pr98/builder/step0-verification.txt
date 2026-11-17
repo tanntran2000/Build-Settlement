@@ -1,0 +1,40 @@
+UTC: 2026-11-15T12:41:53.776Z
+COMMAND: node C:/Users/Admin/.t3/local-drafts/p6b-prC/verify-edit-inventory.mjs --mode preflight
+EXIT: 0
+HEAD: 43fcb9b856c66606230d6d7ba49140ae94cfaa00
+TREE: bc5965abab73df37f43baeafd9e4f9d847a23826
+BASE: 43fcb9b856c66606230d6d7ba49140ae94cfaa00
+CPU: N/A — C0 audit only, no runtime gate or test/build job started.
+
+Full stdout:
+UTC: 2026-11-15T12:41:53.776Z
+MODE: preflight
+HEAD: 43fcb9b856c66606230d6d7ba49140ae94cfaa00
+TREE: bc5965abab73df37f43baeafd9e4f9d847a23826
+BASE: 43fcb9b856c66606230d6d7ba49140ae94cfaa00
+PROPOSAL_SHA256: ff0bf9a602286768e96c007e27c679e67660d92ec6b152a3746a021f5773014b
+EXISTING_TEST_FILES: 155; plus edited helper; total checked 156
+EXACT_EXISTING_TEST_EDITS: 3 (proposed; none applied)
+EXACT_OUTSIDE_ALLOWLIST_LINES: 3 in 2 files (proposed; none applied)
+IMMUTABLE_FILES: 86; changed paths []
+CHANGED_PATHS: []
+STATUS: CLEAN
+RESULT: PASS (C0 audit only; no RED/GREEN/gates claimed)
+
+stderr: empty
+
+Additional C0 audit checks (not product runtime tests):
+- Base recipes.json: 47 recipes; 47 unique output definitions; duplicate outputs [].
+- refresh-sha256.mjs --verify: exit 0; 17 evidence files; UTF-8 decoding valid.
+- Independent Git for Windows sha256sum.exe -c SHA256SUMS.txt: exit 0; all 17 files OK.
+- Two ad-hoc character-presence probes exited 1: the first incorrectly required
+  Tân in step0-proposed-edits.md, and the second incorrectly required an arrow
+  in that file. Neither character occurs in that document's intended text.
+  No document edit was made to satisfy those probes. A read-only codepoint
+  diagnostic (exit 0) confirms Tân in all four owner-bearing files, arrows in
+  the preflight/README where used, and no replacement or TÃ mojibake marker
+  in any of the five inspected files. Fatal UTF-8 decoding of all evidence
+  text passes in refresh-sha256.mjs --verify. No product test failed or ran.
+- node --check on collector, package writer and edit verifier: no syntax errors.
+- Final observed branch feat/p6b-crafting-ui; HEAD/tree as above; git status empty;
+  no listening connections on 4173/4174. No RED, product tests or build run.

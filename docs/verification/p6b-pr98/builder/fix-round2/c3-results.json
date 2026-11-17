@@ -1,0 +1,122 @@
+[
+    {
+        "name":  "gate1-diff-check",
+        "command":  "git diff --check origin/main...HEAD",
+        "head":  "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+        "tree":  "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+        "startUtc":  "2026-11-17T02:30:24.1759032Z",
+        "endUtc":  "2026-11-17T02:30:24.2359028Z",
+        "exit":  0,
+        "seconds":  0.06
+    },
+    {
+        "name":  "gate2-lint",
+        "command":  "npm.cmd run lint",
+        "head":  "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+        "tree":  "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+        "startUtc":  "2026-11-17T02:30:24.3684371Z",
+        "endUtc":  "2026-11-17T02:30:46.7681600Z",
+        "exit":  0,
+        "seconds":  22.4
+    },
+    {
+        "name":  "gate3-typecheck",
+        "command":  "npm.cmd run typecheck",
+        "head":  "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+        "tree":  "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+        "startUtc":  "2026-11-17T02:30:46.9514258Z",
+        "endUtc":  "2026-11-17T02:31:27.2453041Z",
+        "exit":  0,
+        "seconds":  40.294
+    },
+    {
+        "name":  "gate4-check-architecture",
+        "command":  "npm.cmd run check:architecture",
+        "head":  "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+        "tree":  "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+        "startUtc":  "2026-11-17T02:31:27.3673009Z",
+        "endUtc":  "2026-11-17T02:31:34.1295837Z",
+        "exit":  0,
+        "seconds":  6.762
+    },
+    {
+        "name":  "gate5-test-architecture",
+        "command":  "npm.cmd run test:architecture",
+        "head":  "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+        "tree":  "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+        "startUtc":  "2026-11-17T02:31:34.2869026Z",
+        "endUtc":  "2026-11-17T02:32:24.7685075Z",
+        "exit":  0,
+        "seconds":  50.482
+    },
+    {
+        "name":  "gate6-unit",
+        "command":  "npm.cmd test",
+        "head":  "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+        "tree":  "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+        "startUtc":  "2026-11-17T02:32:24.9094691Z",
+        "endUtc":  "2026-11-17T02:33:36.6339891Z",
+        "exit":  0,
+        "seconds":  71.725
+    },
+    {
+        "name":  "gate7-build",
+        "command":  "npm.cmd run build",
+        "head":  "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+        "tree":  "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+        "startUtc":  "2026-11-17T02:33:36.7559564Z",
+        "endUtc":  "2026-11-17T02:34:00.0577688Z",
+        "exit":  0,
+        "seconds":  23.302
+    },
+    {
+        "name":  "c3-legacy-before",
+        "command":  "node C:/Users/Admin/.t3/local-drafts/p6b-prC/preserve-legacy-e2e-artifacts.mjs before fix-round2-full-smoke",
+        "head":  "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+        "tree":  "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+        "startUtc":  "2026-11-17T02:34:01.4145637Z",
+        "endUtc":  "2026-11-17T02:34:01.7700447Z",
+        "exit":  0,
+        "seconds":  0.355
+    },
+    {
+        "name":  "c3-smoke-ci1",
+        "command":  "npm.cmd run test:smoke",
+        "head":  "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+        "tree":  "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+        "startUtc":  "2026-11-17T02:34:01.8910852Z",
+        "endUtc":  "2026-11-17T03:15:44.0296373Z",
+        "exit":  0,
+        "seconds":  2502.139
+    },
+    {
+        "name":  "c3-legacy-after",
+        "command":  "node C:/Users/Admin/.t3/local-drafts/p6b-prC/preserve-legacy-e2e-artifacts.mjs after fix-round2-full-smoke",
+        "head":  "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+        "tree":  "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+        "startUtc":  "2026-11-17T03:15:44.2571680Z",
+        "endUtc":  "2026-11-17T03:15:45.0169170Z",
+        "exit":  0,
+        "seconds":  0.76
+    },
+    {
+        "name":  "bundle-measurement",
+        "command":  "node C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/measure-bundle.mjs",
+        "head":  "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+        "tree":  "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+        "startUtc":  "2026-11-17T03:15:45.6398547Z",
+        "endUtc":  "2026-11-17T03:15:45.9017356Z",
+        "exit":  0,
+        "seconds":  0.262
+    },
+    {
+        "name":  "c3-final-inventory-immutable",
+        "command":  "node C:/Users/Admin/.t3/local-drafts/p6b-prC/verify-edit-inventory.mjs --mode final --approval C:/Users/Admin/.t3/local-drafts/p6b-prC/owner-approval.json --round2-approval C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/owner-approval.json --timeout-approval C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/timeout-owner-approval.json",
+        "head":  "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+        "tree":  "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+        "startUtc":  "2026-11-17T03:15:46.0732677Z",
+        "endUtc":  "2026-11-17T03:16:30.7790362Z",
+        "exit":  0,
+        "seconds":  44.706
+    }
+]

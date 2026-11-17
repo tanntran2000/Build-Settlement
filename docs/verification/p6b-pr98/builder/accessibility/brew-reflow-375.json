@@ -1,0 +1,188 @@
+{
+  "viewport": 375,
+  "texts": [
+    {
+      "text": "Buy",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Brew",
+      "ratio": 7.117522397283716,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Workshop ledger · service-1",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 14.4
+    },
+    {
+      "text": "Hospital · Brew orders",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 20
+    },
+    {
+      "text": "0 of 2 this week · 0 / 6 orders queued",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Forecast includes this week's tax, upkeep and Herb production. Inputs and the fee are held when you place an order.",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Available recipes",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Refine",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 18.4
+    },
+    {
+      "text": "Red Leaf",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16.8
+    },
+    {
+      "text": "Inputs: 2 Green Leaf",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Fee: 1 Gold",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Rare · Material",
+      "ratio": 15.044228250528105,
+      "required": 4.5,
+      "size": 14.4
+    },
+    {
+      "text": "Red Leaf",
+      "ratio": 17.94813766823384,
+      "required": 4.5,
+      "size": 18.4
+    },
+    {
+      "text": "Place Red Leaf",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Brew",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 18.4
+    },
+    {
+      "text": "Heal Potion I",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16.8
+    },
+    {
+      "text": "Inputs: 2 Green Leaf",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Fee: 1 Gold",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Common · Consumable",
+      "ratio": 15.044228250528105,
+      "required": 4.5,
+      "size": 14.4
+    },
+    {
+      "text": "Heal Potion I",
+      "ratio": 17.94813766823384,
+      "required": 4.5,
+      "size": 18.4
+    },
+    {
+      "text": "Place Heal Potion I",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Order queue",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 18.4
+    },
+    {
+      "text": "Orders complete in order at End Week. Cancel returns the exact inputs and Gold; make room in inventories and material stacks first.",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "No orders queued.",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    }
+  ],
+  "clipped": [],
+  "controls": [
+    {
+      "text": "Buy",
+      "width": 68.140625,
+      "height": 46.390625,
+      "left": 12,
+      "right": 80.140625
+    },
+    {
+      "text": "Brew",
+      "width": 79.921875,
+      "height": 46.390625,
+      "left": 88.140625,
+      "right": 168.0625
+    },
+    {
+      "text": "Available recipes",
+      "width": 155,
+      "height": 44,
+      "left": 30,
+      "right": 185
+    },
+    {
+      "text": "Place Red Leaf",
+      "width": 138.8125,
+      "height": 44,
+      "left": 30,
+      "right": 168.8125
+    },
+    {
+      "text": "Place Heal Potion I",
+      "width": 166.09375,
+      "height": 44,
+      "left": 30,
+      "right": 196.09375
+    }
+  ],
+  "overflow": false
+}

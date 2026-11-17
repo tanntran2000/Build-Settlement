@@ -1,0 +1,426 @@
+UTC_START: 2026-11-15T13:05:20.072Z
+HEAD: 75ccc69faaf40102ad217f22debf555c508be0b8
+TREE: f463578799f24d10271a5a45734c28fe25b59c21
+STATUS: M packages/ui/src/__tests__/crafting-view.test.ts
+ M tests/e2e/character-life-navigation.helpers.ts
+ M tests/e2e/crafting.spec.ts
+COMMAND: npx playwright test tests/e2e/crafting.spec.ts --grep C2
+CI=1
+
+[WebServer] (node:23908) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:56096) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 12 tests using 1 worker
+
+(node:21788) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   1 [chromium] › tests\e2e\crafting.spec.ts:139:1 › C2 Common/Rare cards name the Smithy material; Epic and Legendary cards have no upgrade hint (6.2s)
+(node:45736) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   2 [chromium] › tests\e2e\crafting.spec.ts:149:1 › C2 Quartermaster visible tables reconstruct every craft event, waiting output and idle workshop (6.2s)
+(node:64916) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  3 [chromium] › tests\e2e\crafting.spec.ts:199:3 › C2 accessibility smithy-queue at 1280 (3.2s)
+  ok  4 [chromium] › tests\e2e\crafting.spec.ts:199:3 › C2 accessibility brew-tab at 1280 (5.5s)
+  ok  5 [chromium] › tests\e2e\crafting.spec.ts:199:3 › C2 accessibility drug-store-brew at 1280 (4.0s)
+  x   6 [chromium] › tests\e2e\crafting.spec.ts:199:3 › C2 accessibility quartermaster-rows at 1280 (3.7s)
+(node:14272) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  7 [chromium] › tests\e2e\crafting.spec.ts:199:3 › C2 accessibility smithy-queue at 1600 (3.4s)
+  ok  8 [chromium] › tests\e2e\crafting.spec.ts:199:3 › C2 accessibility brew-tab at 1600 (5.1s)
+  ok  9 [chromium] › tests\e2e\crafting.spec.ts:199:3 › C2 accessibility drug-store-brew at 1600 (4.2s)
+  x  10 [chromium] › tests\e2e\crafting.spec.ts:199:3 › C2 accessibility quartermaster-rows at 1600 (3.7s)
+(node:52512) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  11 [chromium] › tests\e2e\crafting.spec.ts:215:33 › C2 new workshops and report reflow at 320 (11.8s)
+(node:63008) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  12 [chromium] › tests\e2e\crafting.spec.ts:215:33 › C2 new workshops and report reflow at 375 (10.3s)
+
+
+  1) [chromium] › tests\e2e\crafting.spec.ts:139:1 › C2 Common/Rare cards name the Smithy material; Epic and Legendary cards have no upgrade hint 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('tabpanel').getByRole('article', { name: 'Plain Ring', exact: true }).getByText('Can upgrade at the Smithy · Needs 1 Nitrate (Rare).', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('tabpanel').getByRole('article', { name: 'Plain Ring', exact: true }).getByText('Can upgrade at the Smithy · Needs 1 Nitrate (Rare).', { exact: true }) with timeout 5000ms
+      - waiting for locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByRole('tabpanel').getByRole('article', { name: 'Plain Ring', exact: true }).getByText('Can upgrade at the Smithy · Needs 1 Nitrate (Rare).', { exact: true })
+
+
+      142 |   for (const defId of ['rare-ring-player', epic, 'wardens-oath']) items.inventory.push({ id: items.nextItemId++, defId });
+      143 |   await importLife(page, s); await selectPerson(page, 'player'); const panel = await selectArea(page, 'Inventory');
+    > 144 |   await expect(panel.getByRole('article', { name: 'Plain Ring', exact: true }).getByText('Can upgrade at the Smithy · Needs 1 Nitrate (Rare).', { exact: true })).toBeVisible();
+          |                                                                                                                                                                   ^
+      145 |   await expect(panel.getByRole('article', { name: "Lord's Fine Ring", exact: true }).getByText('Can upgrade at the Smithy · Needs 1 Amethyst (Epic).', { exact: true })).toBeVisible();
+      146 |   for (const id of [epic, 'wardens-oath']) await expect(panel.getByRole('article', { name: ITEM_CATALOG[id].name, exact: true }).getByText(/Can upgrade at the Smithy/)).toHaveCount(0);
+      147 | });
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\crafting.spec.ts:144:163
+
+    Error Context: test-results\crafting-C2-Common-Rare-ca-ac922--cards-have-no-upgrade-hint-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\crafting-C2-Common-Rare-ca-ac922--cards-have-no-upgrade-hint-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\crafting-C2-Common-Rare-ca-ac922--cards-have-no-upgrade-hint-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\crafting.spec.ts:149:1 › C2 Quartermaster visible tables reconstruct every craft event, waiting output and idle workshop 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('region', { name: 'Quartermaster item details', exact: true }).getByRole('table', { name: 'Workshop output', exact: true }).getByRole('row')
+    Expected: 5
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('region', { name: 'Quartermaster item details', exact: true }).getByRole('table', { name: 'Workshop output', exact: true }).getByRole('row') with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Quartermaster item details', exact: true }).getByRole('table', { name: 'Workshop output', exact: true }).getByRole('row')
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      152 |   expect(report.items.crafted?.some(c => c.output === 'wool' && c.place === 'ready')).toBe(true);
+      153 |   const details = page.getByRole('region', { name: 'Quartermaster item details', exact: true });
+    > 154 |   await expect(details.getByRole('table', { name: 'Workshop output', exact: true }).getByRole('row')).toHaveCount(5);
+          |                                                                                                       ^
+      155 |   await expect(details.getByRole('table', { name: 'Workshop output', exact: true })).toContainText('Waiting for room');
+      156 |   await expect(details.getByRole('table', { name: 'Idle workshops', exact: true })).toContainText('slum-1');
+      157 |   await expectReport(page, report);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\crafting.spec.ts:154:103
+
+    Error Context: test-results\crafting-C2-Quartermaster--cf586-ng-output-and-idle-workshop-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\crafting-C2-Quartermaster--cf586-ng-output-and-idle-workshop-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\crafting-C2-Quartermaster--cf586-ng-output-and-idle-workshop-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests\e2e\crafting.spec.ts:199:3 › C2 accessibility quartermaster-rows at 1280 ───
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 29
+    + Received  +  0
+
+    @@ -69,45 +69,16 @@
+          "renewableFoodMilli": 4000,
+          "target": 90,
+          "usefulWorkerSlots": 10,
+        },
+        "items": Object {
+    -     "crafted": Array [
+    -       Object {
+    -         "output": "heal-potion-1",
+    -         "place": "consumables",
+    -         "recipeId": "brew-heal-potion-1",
+    -         "tileId": "service-1",
+    -       },
+    -       Object {
+    -         "output": "silver",
+    -         "place": "materials",
+    -         "recipeId": "refine-silver",
+    -         "tileId": "spec-2",
+    -       },
+    -       Object {
+    -         "output": "rare-ring-player",
+    -         "place": "inventory",
+    -         "recipeId": "upgrade-rare-ring-player",
+    -         "tileId": "spec-2",
+    -       },
+    -       Object {
+    -         "output": "wool",
+    -         "place": "ready",
+    -         "recipeId": "refine-wool",
+    -         "tileId": "spec-2",
+    -       },
+    -     ],
+          "expired": Array [],
+          "found": null,
+          "hospitalOperated": true,
+          "legendary": null,
+          "materials": Array [],
+          "regen": 2,
+    -     "workshopsIdle": Array [
+    -       "slum-1",
+    -     ],
+        },
+        "laws": Object {
+          "costs": Array [],
+          "inForce": Array [],
+          "incomeMilli": 0,
+
+       at character-life-navigation.helpers.ts:468
+
+      466 |   if(await laws.count()) actual.laws=await laws.evaluate(node=>({inForce:JSON.parse(node.getAttribute('data-laws-in-force')!),costs:JSON.parse(node.getAttribute('data-laws-costs')!),unfunded:JSON.parse(node.getAttribute('data-laws-unfunded')!),incomeMilli:Number(node.getAttribute('data-laws-income-milli')),promise:JSON.parse(node.getAttribute('data-laws-promise')!)}));
+      467 |   const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
+    > 468 |   expect(actual).toEqual(baseReport);
+          |                  ^
+      469 |   if (society) {
+      470 |     const labels = { free: 'Free residents', makers: 'Makers', luminaries: 'Luminaries', merchants: 'Merchants', bound: 'The Bound' };
+      471 |     const classes = panel.getByRole('table', { name: 'Classes this week', exact: true });
+        at expectReport (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:468:18)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\crafting.spec.ts:203:49
+
+    Error Context: test-results\crafting-C2-accessibility-quartermaster-rows-at-1280-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\crafting-C2-accessibility-quartermaster-rows-at-1280-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\crafting-C2-accessibility-quartermaster-rows-at-1280-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests\e2e\crafting.spec.ts:199:3 › C2 accessibility quartermaster-rows at 1600 ───
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 29
+    + Received  +  0
+
+    @@ -69,45 +69,16 @@
+          "renewableFoodMilli": 4000,
+          "target": 90,
+          "usefulWorkerSlots": 10,
+        },
+        "items": Object {
+    -     "crafted": Array [
+    -       Object {
+    -         "output": "heal-potion-1",
+    -         "place": "consumables",
+    -         "recipeId": "brew-heal-potion-1",
+    -         "tileId": "service-1",
+    -       },
+    -       Object {
+    -         "output": "silver",
+    -         "place": "materials",
+    -         "recipeId": "refine-silver",
+    -         "tileId": "spec-2",
+    -       },
+    -       Object {
+    -         "output": "rare-ring-player",
+    -         "place": "inventory",
+    -         "recipeId": "upgrade-rare-ring-player",
+    -         "tileId": "spec-2",
+    -       },
+    -       Object {
+    -         "output": "wool",
+    -         "place": "ready",
+    -         "recipeId": "refine-wool",
+    -         "tileId": "spec-2",
+    -       },
+    -     ],
+          "expired": Array [],
+          "found": null,
+          "hospitalOperated": true,
+          "legendary": null,
+          "materials": Array [],
+          "regen": 2,
+    -     "workshopsIdle": Array [
+    -       "slum-1",
+    -     ],
+        },
+        "laws": Object {
+          "costs": Array [],
+          "inForce": Array [],
+          "incomeMilli": 0,
+
+       at character-life-navigation.helpers.ts:468
+
+      466 |   if(await laws.count()) actual.laws=await laws.evaluate(node=>({inForce:JSON.parse(node.getAttribute('data-laws-in-force')!),costs:JSON.parse(node.getAttribute('data-laws-costs')!),unfunded:JSON.parse(node.getAttribute('data-laws-unfunded')!),incomeMilli:Number(node.getAttribute('data-laws-income-milli')),promise:JSON.parse(node.getAttribute('data-laws-promise')!)}));
+      467 |   const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
+    > 468 |   expect(actual).toEqual(baseReport);
+          |                  ^
+      469 |   if (society) {
+      470 |     const labels = { free: 'Free residents', makers: 'Makers', luminaries: 'Luminaries', merchants: 'Merchants', bound: 'The Bound' };
+      471 |     const classes = panel.getByRole('table', { name: 'Classes this week', exact: true });
+        at expectReport (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:468:18)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\crafting.spec.ts:203:49
+
+    Error Context: test-results\crafting-C2-accessibility-quartermaster-rows-at-1600-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\crafting-C2-accessibility-quartermaster-rows-at-1600-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\crafting-C2-accessibility-quartermaster-rows-at-1600-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium] › tests\e2e\crafting.spec.ts:215:33 › C2 new workshops and report reflow at 320 ────
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 29
+    + Received  +  0
+
+    @@ -69,45 +69,16 @@
+          "renewableFoodMilli": 4000,
+          "target": 90,
+          "usefulWorkerSlots": 10,
+        },
+        "items": Object {
+    -     "crafted": Array [
+    -       Object {
+    -         "output": "heal-potion-1",
+    -         "place": "consumables",
+    -         "recipeId": "brew-heal-potion-1",
+    -         "tileId": "service-1",
+    -       },
+    -       Object {
+    -         "output": "silver",
+    -         "place": "materials",
+    -         "recipeId": "refine-silver",
+    -         "tileId": "spec-2",
+    -       },
+    -       Object {
+    -         "output": "rare-ring-player",
+    -         "place": "inventory",
+    -         "recipeId": "upgrade-rare-ring-player",
+    -         "tileId": "spec-2",
+    -       },
+    -       Object {
+    -         "output": "wool",
+    -         "place": "ready",
+    -         "recipeId": "refine-wool",
+    -         "tileId": "spec-2",
+    -       },
+    -     ],
+          "expired": Array [],
+          "found": null,
+          "hospitalOperated": true,
+          "legendary": null,
+          "materials": Array [],
+          "regen": 2,
+    -     "workshopsIdle": Array [
+    -       "slum-1",
+    -     ],
+        },
+        "laws": Object {
+          "costs": Array [],
+          "inForce": Array [],
+          "incomeMilli": 0,
+
+       at character-life-navigation.helpers.ts:468
+
+      466 |   if(await laws.count()) actual.laws=await laws.evaluate(node=>({inForce:JSON.parse(node.getAttribute('data-laws-in-force')!),costs:JSON.parse(node.getAttribute('data-laws-costs')!),unfunded:JSON.parse(node.getAttribute('data-laws-unfunded')!),incomeMilli:Number(node.getAttribute('data-laws-income-milli')),promise:JSON.parse(node.getAttribute('data-laws-promise')!)}));
+      467 |   const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
+    > 468 |   expect(actual).toEqual(baseReport);
+          |                  ^
+      469 |   if (society) {
+      470 |     const labels = { free: 'Free residents', makers: 'Makers', luminaries: 'Luminaries', merchants: 'Merchants', bound: 'The Bound' };
+      471 |     const classes = panel.getByRole('table', { name: 'Classes this week', exact: true });
+        at expectReport (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:468:18)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\crafting.spec.ts:220:45
+
+    Error Context: test-results\crafting-C2-new-workshops-and-report-reflow-at-320-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\crafting-C2-new-workshops-and-report-reflow-at-320-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\crafting-C2-new-workshops-and-report-reflow-at-320-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [chromium] › tests\e2e\crafting.spec.ts:215:33 › C2 new workshops and report reflow at 375 ────
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 29
+    + Received  +  0
+
+    @@ -69,45 +69,16 @@
+          "renewableFoodMilli": 4000,
+          "target": 90,
+          "usefulWorkerSlots": 10,
+        },
+        "items": Object {
+    -     "crafted": Array [
+    -       Object {
+    -         "output": "heal-potion-1",
+    -         "place": "consumables",
+    -         "recipeId": "brew-heal-potion-1",
+    -         "tileId": "service-1",
+    -       },
+    -       Object {
+    -         "output": "silver",
+    -         "place": "materials",
+    -         "recipeId": "refine-silver",
+    -         "tileId": "spec-2",
+    -       },
+    -       Object {
+    -         "output": "rare-ring-player",
+    -         "place": "inventory",
+    -         "recipeId": "upgrade-rare-ring-player",
+    -         "tileId": "spec-2",
+    -       },
+    -       Object {
+    -         "output": "wool",
+    -         "place": "ready",
+    -         "recipeId": "refine-wool",
+    -         "tileId": "spec-2",
+    -       },
+    -     ],
+          "expired": Array [],
+          "found": null,
+          "hospitalOperated": true,
+          "legendary": null,
+          "materials": Array [],
+          "regen": 2,
+    -     "workshopsIdle": Array [
+    -       "slum-1",
+    -     ],
+        },
+        "laws": Object {
+          "costs": Array [],
+          "inForce": Array [],
+          "incomeMilli": 0,
+
+       at character-life-navigation.helpers.ts:468
+
+      466 |   if(await laws.count()) actual.laws=await laws.evaluate(node=>({inForce:JSON.parse(node.getAttribute('data-laws-in-force')!),costs:JSON.parse(node.getAttribute('data-laws-costs')!),unfunded:JSON.parse(node.getAttribute('data-laws-unfunded')!),incomeMilli:Number(node.getAttribute('data-laws-income-milli')),promise:JSON.parse(node.getAttribute('data-laws-promise')!)}));
+      467 |   const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
+    > 468 |   expect(actual).toEqual(baseReport);
+          |                  ^
+      469 |   if (society) {
+      470 |     const labels = { free: 'Free residents', makers: 'Makers', luminaries: 'Luminaries', merchants: 'Merchants', bound: 'The Bound' };
+      471 |     const classes = panel.getByRole('table', { name: 'Classes this week', exact: true });
+        at expectReport (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:468:18)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\crafting.spec.ts:220:45
+
+    Error Context: test-results\crafting-C2-new-workshops-and-report-reflow-at-375-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\crafting-C2-new-workshops-and-report-reflow-at-375-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\crafting-C2-new-workshops-and-report-reflow-at-375-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6 failed
+    [chromium] › tests\e2e\crafting.spec.ts:139:1 › C2 Common/Rare cards name the Smithy material; Epic and Legendary cards have no upgrade hint 
+    [chromium] › tests\e2e\crafting.spec.ts:149:1 › C2 Quartermaster visible tables reconstruct every craft event, waiting output and idle workshop 
+    [chromium] › tests\e2e\crafting.spec.ts:199:3 › C2 accessibility quartermaster-rows at 1280 ────
+    [chromium] › tests\e2e\crafting.spec.ts:199:3 › C2 accessibility quartermaster-rows at 1600 ────
+    [chromium] › tests\e2e\crafting.spec.ts:215:33 › C2 new workshops and report reflow at 320 ─────
+    [chromium] › tests\e2e\crafting.spec.ts:215:33 › C2 new workshops and report reflow at 375 ─────
+  6 passed (1.4m)
+
+UTC_END: 2026-11-15T13:06:47.365Z
+SECONDS: 87.293
+EXIT: 1

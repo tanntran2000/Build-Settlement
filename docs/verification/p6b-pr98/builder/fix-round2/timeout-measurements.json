@@ -1,0 +1,32 @@
+[
+    {
+        "testMilliseconds":  "1220",
+        "exit":  0,
+        "run":  1,
+        "wallSeconds":  9.9085763,
+        "cpuAtStart":  100,
+        "log":  "C:\\Users\\Admin\\.t3\\local-drafts\\p6b-prC\\fix-round2\\timeout-alone-1.txt",
+        "utcEnd":  "2026-11-17T01:12:27.0077509Z",
+        "utcStart":  "2026-11-17T01:12:17.0991746Z"
+    },
+    {
+        "testMilliseconds":  "1467",
+        "exit":  0,
+        "run":  2,
+        "wallSeconds":  7.7385357999999993,
+        "cpuAtStart":  10,
+        "log":  "C:\\Users\\Admin\\.t3\\local-drafts\\p6b-prC\\fix-round2\\timeout-alone-2.txt",
+        "utcEnd":  "2026-11-17T01:12:36.6940499Z",
+        "utcStart":  "2026-11-17T01:12:28.9555141Z"
+    },
+    {
+        "testMilliseconds":  "1249",
+        "exit":  0,
+        "run":  3,
+        "wallSeconds":  5.4578675,
+        "cpuAtStart":  42,
+        "log":  "C:\\Users\\Admin\\.t3\\local-drafts\\p6b-prC\\fix-round2\\timeout-alone-3.txt",
+        "utcEnd":  "2026-11-17T01:12:44.0279018Z",
+        "utcStart":  "2026-11-17T01:12:38.5700343Z"
+    }
+]

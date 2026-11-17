@@ -1,0 +1,47 @@
+UTC_START: 2026-11-17T01:08:54.429Z
+HEAD: ed4105f9aa0054396bf0da7b21cb6a27ddbdaa37
+TREE: a164cb535cb914ee19f6e027b97013479c08e786
+STATUS: M packages/simulation/src/index.ts
+ M packages/simulation/src/tile-trial-week.ts
+ M packages/ui/src/__tests__/crafting-view.test.ts
+ M packages/ui/src/items-view.ts
+?? packages/simulation/src/workshop-operation.ts
+COMMAND: npm run typecheck
+CI=
+
+
+> build-settlement@0.1.0 typecheck
+> npm run typecheck:core && npm run typecheck:simulation && npm run typecheck:persistence && npm run typecheck:content && npm run typecheck:ui
+
+
+> build-settlement@0.1.0 typecheck:core
+> tsc -p packages/core/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:simulation
+> tsc -p packages/simulation/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:persistence
+> tsc -p packages/persistence/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:content
+> tsc -p packages/content/tsconfig.json --noEmit
+
+
+> build-settlement@0.1.0 typecheck:ui
+> npm run check --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 check
+> svelte-check --tsconfig ./tsconfig.json
+
+Loading svelte-check in workspace: c:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\ui
+Getting Svelte diagnostics...
+
+svelte-check found 0 errors and 0 warnings
+
+UTC_END: 2026-11-17T01:09:41.291Z
+SECONDS: 46.862
+EXIT: 0

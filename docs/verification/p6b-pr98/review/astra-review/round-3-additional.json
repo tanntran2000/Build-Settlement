@@ -1,0 +1,42 @@
+{
+  "sixParityCasesUnchanged": true,
+  "P4": [
+    {
+      "line": 170,
+      "before": "  });",
+      "after": "  }, 15000);"
+    }
+  ],
+  "rows": [
+    {
+      "path": "packages/simulation/src/__tests__/society-renewable-support.test.ts",
+      "a": 1,
+      "d": 1
+    },
+    {
+      "path": "packages/simulation/src/index.ts",
+      "a": 1,
+      "d": 0
+    },
+    {
+      "path": "packages/simulation/src/tile-trial-week.ts",
+      "a": 17,
+      "d": 82
+    },
+    {
+      "path": "packages/simulation/src/workshop-operation.ts",
+      "a": 123,
+      "d": 0
+    },
+    {
+      "path": "packages/ui/src/__tests__/crafting-view.test.ts",
+      "a": 64,
+      "d": 1
+    },
+    {
+      "path": "packages/ui/src/items-view.ts",
+      "a": 10,
+      "d": 44
+    }
+  ]
+}

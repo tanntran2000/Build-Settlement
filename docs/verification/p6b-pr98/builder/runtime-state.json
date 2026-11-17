@@ -1,0 +1,11 @@
+{
+    "status":  "All requested local checks complete",
+    "head":  "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+    "tree":  "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+    "units":  2935,
+    "smoke":  387,
+    "runnerSession":  null,
+    "builderPushed":  false,
+    "review":  "Independent re-review pending",
+    "integrityTranscript":  "checksum-verification.txt"
+}

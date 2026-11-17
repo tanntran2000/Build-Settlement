@@ -1,0 +1,46 @@
+UTC_START: 2026-11-17T01:10:13.609Z
+HEAD: ed4105f9aa0054396bf0da7b21cb6a27ddbdaa37
+TREE: a164cb535cb914ee19f6e027b97013479c08e786
+STATUS: M packages/simulation/src/index.ts
+ M packages/simulation/src/tile-trial-week.ts
+ M packages/ui/src/__tests__/crafting-view.test.ts
+ M packages/ui/src/items-view.ts
+?? packages/simulation/src/workshop-operation.ts
+COMMAND: npm test
+CI=
+
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/society-renewable-support.test.ts (17 tests | 1 failed) 10822ms
+     × preserves complete gameplay and assignments through sixty weeks of snapshot restores 5488ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/society-renewable-support.test.ts > society renewable support and transaction ports > preserves complete gameplay and assignments through sixty weeks of snapshot restores
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ packages/simulation/src/__tests__/society-renewable-support.test.ts:160:3
+    158|     expect(overflow.success).toBe(false); expect(huge).toEqual(before)…
+    159|   });
+    160|   it('preserves complete gameplay and assignments through sixty weeks …
+       |   ^
+    161|     let s = expanded(), resumed = structuredClone(s);
+    162|     const assignments = s.tiles.map(t => t.building?.workers ?? 0);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 126 passed (127)
+      Tests  1 failed | 2934 passed (2935)
+   Start at  08:10:16
+   Duration  77.62s (transform 15.08s, setup 0ms, import 62.50s, tests 276.38s, environment 75ms)
+
+
+UTC_END: 2026-11-17T01:11:34.054Z
+SECONDS: 80.445
+EXIT: 1

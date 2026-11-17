@@ -1,0 +1,138 @@
+{
+  "viewport": 1600,
+  "texts": [
+    {
+      "text": "Workshop ledger · spec-2",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 14.4
+    },
+    {
+      "text": "Smithy · Craft orders",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 24
+    },
+    {
+      "text": "1 of 1 this week · 1 / 6 orders queued",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Forecast includes this week's tax, upkeep and Herb production. Inputs and the fee are held when you place an order.",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Available recipes",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Refine",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 18.4
+    },
+    {
+      "text": "Silver",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16.8
+    },
+    {
+      "text": "Inputs: 2 Iron",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Fee: 1 Gold",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Rare · Material",
+      "ratio": 15.044228250528105,
+      "required": 4.5,
+      "size": 14.4
+    },
+    {
+      "text": "Silver",
+      "ratio": 17.94813766823384,
+      "required": 4.5,
+      "size": 18.4
+    },
+    {
+      "text": "Place Silver",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Order queue",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 18.4
+    },
+    {
+      "text": "Orders complete in order at End Week. Cancel returns the exact inputs and Gold; make room in inventories and material stacks first.",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Lord's Fine Ring",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Held inputs: 1 Plain Ring + 1 Nitrate",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Held fee: 3 Gold",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Cancel order 1",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    }
+  ],
+  "clipped": [],
+  "controls": [
+    {
+      "text": "Available recipes",
+      "width": 179.1875,
+      "height": 44.59375,
+      "left": 368,
+      "right": 547.1875
+    },
+    {
+      "text": "Place Silver",
+      "width": 129.46875,
+      "height": 44.59375,
+      "left": 368,
+      "right": 497.46875
+    },
+    {
+      "text": "Cancel order 1",
+      "width": 156.09375,
+      "height": 44.59375,
+      "left": 1105.59375,
+      "right": 1261.6875
+    }
+  ],
+  "overflow": false
+}

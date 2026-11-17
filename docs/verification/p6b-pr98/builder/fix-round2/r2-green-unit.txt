@@ -1,0 +1,24 @@
+UTC_START: 2026-11-17T01:08:37.059Z
+HEAD: ed4105f9aa0054396bf0da7b21cb6a27ddbdaa37
+TREE: a164cb535cb914ee19f6e027b97013479c08e786
+STATUS: M packages/simulation/src/index.ts
+ M packages/simulation/src/tile-trial-week.ts
+ M packages/ui/src/__tests__/crafting-view.test.ts
+ M packages/ui/src/items-view.ts
+?? packages/simulation/src/workshop-operation.ts
+COMMAND: npx vitest run packages/ui/src/__tests__/crafting-view.test.ts packages/simulation/src/__tests__/craft-week.test.ts packages/simulation/src/__tests__/item-effects.test.ts
+CI=
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  3 passed (3)
+      Tests  303 passed (303)
+   Start at  08:08:40
+   Duration  2.68s (transform 2.40s, setup 0ms, import 3.38s, tests 2.29s, environment 1ms)
+
+
+UTC_END: 2026-11-17T01:08:43.221Z
+SECONDS: 6.162
+EXIT: 0

@@ -1,0 +1,1294 @@
+P6-B Builder (crafting, xhigh)
+mcp:3f312a3e-be8b-44c4-850c-97bedc86e94a  completed  codex/gpt-6.1-sol
+
+[assistant]
+Case UI dài đầu tiên đã PASS trong full smoke. Hai bài Goods accessibility cũng PASS; đang chạy nhóm accessibility nhiều viewport với timeout gốc. Chưa có lỗi trong lần full run này.
+
+
+[assistant]
+Head vẫn là `a607111`, source giữ nguyên. Phần còn lại là full smoke; bài accessibility 1600px đang chạy và chưa có lỗi được ghi nhận.
+
+
+[assistant]
+Accessibility **1600px đã PASS**, gồm kiểm tra reflow nội dung dài. Full smoke đang chuyển sang 1280px; 22 case riêng trước đó và gates 1–7 vẫn GREEN.
+
+
+[assistant]
+Full smoke vẫn **0 lỗi**. Bài accessibility 1280px đang chạy trong giới hạn gốc; chưa cần bất kỳ chỉnh sửa hay rerun nào.
+
+
+[assistant]
+Accessibility **1280px đã PASS**; full smoke vẫn **0 lỗi**. Tiếp theo là reflow và các viewport 375/320px.
+
+
+[assistant]
+Reflow 1280px và native-control contrast 375px đều PASS. Bài accessibility tổng thể 375px đang chạy; full smoke chưa có lỗi.
+
+
+[assistant]
+Full smoke: **14/370 test hoàn tất, 0 lỗi**. Case accessibility 375px dài vẫn đang chạy; source và các giới hạn test giữ nguyên.
+
+
+[assistant]
+Accessibility và reflow **375px đã PASS**. Nhóm 320px đã bắt đầu; full smoke hiện **17/370 test hoàn tất, 0 lỗi**.
+
+
+[assistant]
+Full smoke vẫn **0 lỗi**. Case accessibility 320px đang chạy trong timeout 300 giây vốn có; đây là viewport cuối của nhóm kiểm tra dài.
+
+
+[assistant]
+Cả bốn viewport **1600/1280/375/320px đã PASS** nhóm accessibility. Full smoke đã qua **24/370 test**, vẫn **0 lỗi**, và đang chuyển sang các kiểm tra điều hướng.
+
+
+[assistant]
+Full smoke đã qua **75/370 test, 0 lỗi**. Case calendar từng lỗi đã PASS trong full run; các kịch bản report precision/service cũng đang GREEN.
+
+
+[assistant]
+Full smoke: **80/370 test, 0 lỗi**. Các luồng bàn phím 1280px đã PASS; đang tiếp tục cùng nhóm kiểm tra ở 375px.
+
+
+[assistant]
+Full smoke đã qua **97/370 test, 0 lỗi**. Các luồng 375px và kiểm tra Character Life/import tiếp tục PASS; chưa cần rerun nào.
+
+
+[assistant]
+Full smoke: **123/370 test, 0 lỗi**. Raid và wound report từng thất bại đã PASS trong full run; các kiểm tra error-log cũng đang GREEN.
+
+
+[assistant]
+Full smoke đã qua **133/370 test, 0 lỗi**. Garrison report và báo cáo năm tuần ở 375px đã PASS với tên mới, trong khi helper vẫn không đổi.
+
+
+[assistant]
+Full smoke: **148/370 test, 0 lỗi**. Các case buy/equip, hiệu ứng Farm và item letters trước đây lỗi đều đã PASS trong full run.
+
+
+[assistant]
+Full smoke đã qua **158/370 test, 0 lỗi**. Luật, fallback font và các kiểm tra report parity đang PASS; không có rerun hay sửa mã bổ sung.
+
+
+[assistant]
+Full smoke: **183/370 test, 0 lỗi**. Các case ledger/crime letters từng lỗi đã PASS; nhóm Outside đang tiếp tục.
+
+
+[assistant]
+Full smoke đã qua **220/370 test, 0 lỗi**. Các kiểm tra storage/migration và bảo vệ kết quả import/save đang PASS. Phần code vẫn đúng commit đã kiểm chứng.
+
+
+[assistant]
+Full smoke: **250/370 test, 0 lỗi**. Các kiểm tra từ chối Build/Replace/Upgrade ở 320px đã PASS; còn nhóm checkpoint, population và world/session.
+
+
+[assistant]
+Full smoke đã qua **278/370 test, 0 lỗi**. Các trường hợp checkpoint sai version/ruleset đều PASS và giữ nguyên state theo kỳ vọng.
+
+
+[assistant]
+Full smoke: **294/370 test, 0 lỗi**. Hai case population/round-trip từng lỗi ở 1280px và 390px đều đã PASS; đang tiếp tục các kiểm tra save và thao tác tuần.
+
+
+[assistant]
+Full smoke đã qua **304/370 test, 0 lỗi**. Case build/upgrade/replace từng lỗi đã PASS trong full run, cùng các kiểm tra bảo toàn plan khi lệnh không hợp lệ.
+
+
+[assistant]
+Full smoke: **348/370 test, 0 lỗi**. Nhóm title/session đã PASS; còn các case cuối về workforce và world/session trước khi chốt evidence.
+
+
+[assistant]
+Full smoke đã qua **368/370 test, 0 lỗi**. Còn hai case cuối, sau đó kiểm tra git/cổng và cập nhật README cùng SHA256SUMS.
+
+
+[assistant]
+**Full smoke 370/370 PASS với `CI=1`, exit 0**, hoàn tất trong 33.4 phút. Gates 1–7 cũng PASS; git sạch và cổng 4173/4174 đã trống. Đang chốt evidence và manifest cuối.
+
+
+[assistant]
+Open the [handoff README](C:/Users/Admin/.t3/local-drafts/p6b-prA/README.md) for Orchestrator/Tester review. **A1–A3 are complete for the Builder: all local gates and full smoke pass, with no remaining HOLD.**
+
+Committed `a60711120b8c3d7ff9759a14cbb7a6c09ec396c5`:
+
+`fix(core): unique item names with Lord's and Retainer's prefixes`
+
+The commit ends with `Co-authored-by: Codex <noreply@openai.com>`.
+
+Exactly **32 new definitions** received straight-apostrophe `Lord's ` or `Retainer's ` prefixes. All **26 historical wearable definitions** and every other item field remain unchanged. All **76 item names are unique**. `character-life-navigation.helpers.ts` remains untouched.
+
+```text
+Branch: feat/p6b-crafting-data
+HEAD:   a60711120b8c3d7ff9759a14cbb7a6c09ec396c5
+Tree:   1b26a634536c83699780f1a9479ce64ebb10717d
+Git status: empty
+Ports 4173/4174: free
+```
+
+The naming fix followed RED → GREEN before the smoke runs:
+
+| Validation | Result | Exit |
+|---|---|---:|
+| Naming RED, before data edit | 3 failed, 42 passed | 1 |
+| Catalog GREEN after the fix | **94/94 passed** | 0 |
+| Golden/fixture comparisons | **59/59 passed** | 0 |
+| Previously failing smoke cases, each run separately with `CI=1` | **22/22 passed**, one attempt each | 0 |
+
+Then gates 1–7 ran again from the start at the clean final head. Recorded CPU load at gate start was **13%**, with zero other detected test/build/review runner jobs; the log includes the top processes.
+
+| Gate | Command | Result | Exit |
+|---|---|---|---:|
+| 1 | `git diff --check origin/main...HEAD` | PASS | 0 |
+| 2 | `npm run lint` | PASS | 0 |
+| 3 | `npm run typecheck` | PASS | 0 |
+| 4 | `npm run check:architecture` | PASS | 0 |
+| 5 | `npm run test:architecture` | PASS | 0 |
+| 6 | `npm test` | **2559/2559 passed** | 0 |
+| 7 | `npm run build` | PASS | 0 |
+| Smoke | Full `CI=1 npm run test:smoke` | **370/370 passed**, 33.4 minutes | 0 |
+
+No failure rerun was required at the naming-fix head.
+
+Only **P4’s effective after-text** changed among the existing approved edits. P1–P3, P5–P58 and P59 remain exact. The final inventory still contains **59 approved blocks across 35 existing test files**, with **61 changed files overall**.
+
+The `ITEM_CATALOG` pin changed because of the 32 approved name prefixes:
+
+```text
+Previous: 7d1cc84733e7b5837cb596ea04b558943e8927689f7352fc35ea555e95581635
+Current:  7fdeadb141aba95586555f531e044fcdc8a5eccd2c2766fab94c48714793f96d
+```
+
+All other pins remain unchanged. The effective P4 before/after text and reason are recorded in [p4-names-pin-revision.md](C:/Users/Admin/.t3/local-drafts/p6b-prA/p4-names-pin-revision.md) and [hash-pin-changes.md](C:/Users/Admin/.t3/local-drafts/p6b-prA/hash-pin-changes.md). The original Step 0 package is preserved as historical evidence.
+
+The golden and ten v9 fixtures store item definition IDs rather than the affected display names. **All eleven files remain byte-identical to `b0c0b37`; no additional regeneration was needed.** The golden generation total remains one, and the existing allowed-path diff remains valid.
+
+The bundle remains below the 200 kB gzip budget:
+
+| Output | Supplied main | Final head | Growth |
+|---|---:|---:|---:|
+| JS | 126.72 kB | **129.82 kB** | +3.10 kB |
+| CSS | 6.74 kB | **6.74 kB** | +0.00 kB at reported precision |
+| Combined | 133.46 kB | **136.56 kB** | +3.10 kB |
+
+Exact measured gzip totals are **129,817 bytes JS** and **6,743 bytes CSS**. Growth uses the supplied rounded main figures.
+
+The refreshed evidence package contains:
+
+1. [README](C:/Users/Admin/.t3/local-drafts/p6b-prA/README.md) and [full gate log](C:/Users/Admin/.t3/local-drafts/p6b-prA/a3-gates.txt), including HEAD/tree, UTC, CPU, commands, outputs and exits.
+2. [All 32 name edits](C:/Users/Admin/.t3/local-drafts/p6b-prA/correction3-name-edits.json), [final inventory](C:/Users/Admin/.t3/local-drafts/p6b-prA/edit-inventory-names.json) and [verifier](C:/Users/Admin/.t3/local-drafts/p6b-prA/verify-edits.mjs).
+3. [22 separate smoke-case results](C:/Users/Admin/.t3/local-drafts/p6b-prA/names-smoke-isolated-results.json) and [fixture inspection with raw hashes](C:/Users/Admin/.t3/local-drafts/p6b-prA/name-fixture-inspection.json).
+4. [Bundle script](C:/Users/Admin/.t3/local-drafts/p6b-prA/measure-bundle.mjs), [raw results](C:/Users/Admin/.t3/local-drafts/p6b-prA/bundle-results.json), [raw JS](C:/Users/Admin/.t3/local-drafts/p6b-prA/bundle-artifacts/assets_index-plziRAbs.js) and [raw CSS](C:/Users/Admin/.t3/local-drafts/p6b-prA/bundle-artifacts/assets_index-CxB-ZnFZ.css).
+5. [SHA256SUMS.txt](C:/Users/Admin/.t3/local-drafts/p6b-prA/SHA256SUMS.txt): **293 evidence files verified**, nested manifests included; UTF-8 and owner text checks passed.
+
+The four commits—`db7c65a`, `2a92985`, `b0c0b37` and `a607111`—are retained in the assigned worktree. **No push, PR or merge was performed.** No environment was removed; storage reclaimed is **0 bytes**.
+
+**Next: use the [README](C:/Users/Admin/.t3/local-drafts/p6b-prA/README.md) for the independent Tester/Reviewer handoff.**
+
+[user]
+P6-B PR B Builder (craft orders: state, place/cancel commands, End Week completion, delivery, persistence, reports)
+
+You are the P6-B Builder, now on PR B. Claude is Orchestrator and Tester. Astra reviews. Only dot or the owner merges. PR A (#96) is merged: main = 0de2d1ffa91abadf76ced9696f440a09bf19f8af.
+
+Owner (Tân), 2026-11-15, verbatim: "Giao Builder B".
+
+Worktree: C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01 (reuse it; create no other worktree or clone). Run `git fetch origin`, check `git status` is clean and ports 4173/4174 are free, then create `feat/p6b-crafting-orders` from `origin/main` = 0de2d1f.
+
+Binding documents (read fully before any code):
+- Plan: C:/Users/Admin/.t3/local-drafts/p6b-prB/binding-plan-3bee3ae.md (approved; Plan corrections 1–3 are PR A history but their rules still bind). PR B = Tasks B0–B3. Apply Global Constraints, Decisions 5, 6, 8 and 9, the PR B file allowlist plus each task's **Files** line, and Review Focus 1–5.
+- Spec: C:/Users/Admin/.t3/local-drafts/p6b-prB/binding-spec-cd1b18a.md (v0.1), especially §6 (Smithy posts, orders, capacity, fees, output and full inventory, busy workshop), §7, §8.
+- AGENTS.md in the repo (Hard Laws, §4 anti-loop, §6 evidence).
+You may use the executing-plans approach (task by task, in this thread, no subagents).
+
+**Task B0 — Step 0 preflight, before any RED or product edit.** Search the whole repo (unit and e2e) for every existing test, fixture or pin PR B changes, for example:
+- the NPC post list (`NPC_MANAGER_BUILDING_TYPES` gains smithy, hospital, drug-store) and any test or e2e listing posts or post labels;
+- `isItemsState` key lists and canonical-form tests (new optional `workshops` field);
+- the report shape (`items.crafted`, `items.workshopsIdle`) in report tests, synthetic reports and the e2e visible-report parser;
+- `REPLACE` behaviour tests (new `WORKSHOP_BUSY` refusal);
+- persistence `place` handling and item-record tests (new `order:` / `ready:` places);
+- the golden and fixtures (none expected to change: no orders exist in them; say so or list the paths).
+For each: file:line, the current assertion, why PR B changes it, and the exact proposed after-text. List any file you need outside the allowlist and why. Then **HOLD once with the full list**; the owner decides. Do not edit any existing test before that answer.
+
+Key rules for PR B (from the plan; HOLD if anything conflicts and name the line):
+- **B1 (Decisions 5, 6, 8):** `Workshop`, `CraftOrder` and the optional canonical `workshops` field in `ItemsState` with `isItemsState`; `PLACE_CRAFT_ORDER { tileId, recipeId, itemId? }` and `CANCEL_CRAFT_ORDER { tileId, index }` in `item-command.ts`, Planning only, revision checked, all-or-nothing; the exact error codes of Decision 8; inputs and fee leave at placement and are held in the order; cancel returns exact ids, stacks and Gold or refuses with `INVENTORY_FULL`; a held item cannot be equipped, sold, destroyed or placed twice; `REPLACE` on a tile with a workshops entry → `WORKSHOP_BUSY`; `ASSIGN_NPC` at smithy, hospital and drug-store.
+- **B2 (Decision 9):** `completeCraftOrders` in new `packages/simulation/src/craft-week.ts`, called in `runTileTrialWeek` after the P6-A item steps: deliver `ready` first, then per tile in ascending id complete up to capacity (workers or Drug Store base 1, plus 1 per `skillSteps` value 60/80 reached by the posted NPC's effective post skill, technical at the Smithy and medical at the Hospital and Drug Store); a non-operating workshop completes nothing and is listed in `workshopsIdle`; outputs go inventory/consumables/stacks → storage → `ready` (never lost, `ready` never expires); upgrades give a fresh id with the same slot and kind; no random stream consumed; report fields `items.crafted` and `items.workshopsIdle`; persistence places `order:<tileId>:<index>` and `ready:<tileId>:<index>` with a byte-identical round trip.
+- With no orders placed, every existing golden, fixture and 60-week report hash is unchanged (LAW-03). If any byte changes, HOLD with the path diff.
+- **Tests and order:** each task's full RED list (plan B1 and B2, plus Review Focus 1–5) before any product edit; existing-test edits only as approved after Step 0, each listed file:line before → after; nothing loosened; no new per-test timeout (measure and HOLD). `lord-health.test.ts:73` already has its approved 15 s.
+- **B3 gates**, sequentially at the clean final head, on a quiet machine: first record CPU load and the top processes in the log and start only when no other test, build or review job runs; then:
+  1. `git diff --check origin/main...HEAD`
+  2. lint
+  3. typecheck
+  4. `check:architecture`
+  5. `test:architecture`
+  6. `npm test`
+  7. build
+
+  Then, in the same shell, `echo "CI=$CI"` and `CI=1 npm run test:smoke`. One runner at a time. If the smoke fails, rerun each failed test alone once, report both runs, and HOLD. If any test times out, measure it alone three times and HOLD; never change a timeout.
+- **Ports:** 4173/4174 must be free before the smoke. If something holds them, report it and HOLD; kill nothing.
+- **Evidence:** C:/Users/Admin/.t3/local-drafts/p6b-prB/. Include: the Step 0 preflight; RED and GREEN logs per task; the edit inventory and a verifier script (with a clear final-mode argument); an immutable check that golden, fixtures and pins are byte-identical to 0de2d1f; gate logs with HEAD, tree, UTC, exit and CPU load at the top; the smoke log showing CI=1; the bundle vs main (JS 129.82 kB, CSS 6.74 kB gzip) with its script and a raw artifact; a README; and SHA256SUMS.txt covering every file except the top-level manifest, nested manifests included. UTF-8 only. No `docs/` files on the product branch. Keep Playwright traces out of the evidence folder or list them in a LOCAL-ONLY manifest.
+- **Commits:** one per task (B1, B2), with the plan's commit messages, each ending `Co-authored-by: Codex <noreply@openai.com>`. Do not push, open a PR or merge. Leave ports 4173/4174 free.
+- **Anti-loop:** if one failure is still failing after 2 attempts, HOLD. A queued message never overrides a HOLD: if your last reply was a HOLD, keep it and wait for Claude.
+
+After the Step 0 HOLD is answered and the work is done, reply with: HEAD and tree, empty git status; the commits; RED and GREEN per task; the edit inventory count; the immutable check; CPU load at gate start; the gate table and smoke total with CI=1; the bundle; the evidence paths.
+
+[assistant]
+Kiểm tra bàn giao PR B và lập **B0 Step 0** trước mọi RED hay sửa mã. Phần này chỉ audit, ghi danh sách before → after và HOLD để owner duyệt; dự kiến 15–25 phút.
+
+
+[assistant]
+B0 đang audit: nhánh `feat/p6b-crafting-orders` đã ở đúng `0de2d1f`, working tree sạch. Worktree này chưa được index; tiếp tục kiểm tra trực tiếp mã nguồn và toàn bộ test để lập danh sách cần duyệt.
+
+
+[assistant]
+Đã thấy hai điểm cần đưa vào B0: test pin danh sách post tại `world/__tests__/npc.test.ts:30`, và validator cha tại `trial/society.ts:66` vẫn chỉ nhận tám key cũ nên sẽ từ chối `workshops`. File validator này nằm ngoài allowlist PR B. Đang đối chiếu report và persistence để tìm hết các điểm tương tự.
+
+
+[assistant]
+B0 đã quét 152 file test, 74 file fixture/golden và 7 nhóm tìm kiếm. Chưa thấy order nào trong 64 fixture JSON. Report cần giữ nguyên shape khi không có crafting để bảo toàn byte; đang ghi đề xuất hai field report optional, chỉ xuất hiện khi có dữ liệu.
+
+
+[assistant]
+Danh sách hiện có **P1: một assertion cũ cần đổi**, **X1: một dòng validator ngoài allowlist**, và `tile-trial.ts` cần được bổ sung vào Files của B1 để chặn `REPLACE` ở đường dùng chung. Gói HOLD cũng ghi rõ bốn cách xử lý chỗ chưa khớp giữa plan/spec. Còn khoảng 5 phút để kiểm tra verifier và manifest.
+
+
+[assistant]
+**Duyệt gói B0 dưới đây để mở B1. Hiện trạng: HOLD; chưa chạy RED hoặc sửa mã/test.**
+
+Nhánh `feat/p6b-crafting-orders` đã được tạo từ đúng `origin/main` sau fetch:
+
+```text
+HEAD:   0de2d1ffa91abadf76ced9696f440a09bf19f8af
+Tree:   1b26a634536c83699780f1a9479ce64ebb10717d
+Status: sạch, không có thay đổi
+Ports:  4173/4174 đều trống
+```
+
+Audit đã bao phủ **152 file test**, **74 file fixture/golden** và các đường tích hợp state, command, report, persistence. Danh sách xin duyệt gồm:
+
+1. **P1 — một assertion cũ trong một file:** [npc.test.ts:30](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/__tests__/npc.test.ts:30). Append đúng `'smithy', 'hospital', 'drug-store'` vào cuối expected array của `NPC_MANAGER_BUILDING_TYPES`. Giữ nguyên 13 phần tử hiện tại, thứ tự và phép so sánh exact equality; không đổi gì khác trong file.
+
+2. **X1 — một dòng product ngoài allowlist:** [society.ts:66](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/society.ts:66). Validator cha hiện chỉ nhận tám key cũ, nên sẽ từ chối mọi state có `workshops` trước khi gọi `isItemsState`. Đề xuất nhận **đúng bộ tám key cũ hoặc đúng bộ chín key có `workshops` ở cuối**; giữ phần kiểm tra canonical và nội dung tại `isItemsState`. Chỉ dòng 66 thay đổi.
+
+3. **Bổ sung `tile-trial.ts` vào Files của B1.** File này đã có trong allowlist tổng PR B nhưng thiếu ở Files của task B1. Đặt guard `WORKSHOP_BUSY` tại đường `REPLACE` dùng chung để bao phủ cả direct tile command, NPC-world và Character Life.
+
+4. **Chốt bốn cách xử lý hợp đồng trước RED:**
+
+| ID | Điểm cần chốt | Đề xuất |
+|---|---|---|
+| **D1** | Hai field report mới và yêu cầu giữ nguyên byte khi không có order | `crafted?` và `workshopsIdle?` là optional; bỏ từng field khi mảng rỗng. `output` là output definition ID của recipe. Giữ nguyên visible-report parser trong PR B. |
+| **D2** | Spec nói workshop “operating” khi đặt; Decision 8 nói built + enabled | Theo Decision 8 và brief hiện tại: đặt order cần đúng loại building đã xây và enabled. Staffing, Herbs và upkeep thực trả kiểm tra lúc End Week. |
+| **D3** | Công thức workers + skill bonus có thể cho capacity khi workers = 0 | Smithy/Hospital có 0 workers hoàn thành 0 order dù NPC đạt skill 80+. Hospital phải đủ staffing/supply theo quy tắc vận hành hiện có; Drug Store giữ base 1 không cần worker. |
+| **D4** | Material stack đầy nhưng temporary storage chỉ chứa item instance | Material đi **stack → ready** khi stack đạt 999. Wearable/potion đi inventory/consumables → storage → ready. Không mở rộng schema storage. |
+
+**Không đề xuất thay đổi fixture, golden, hash pin, e2e/helper, timeout hay threshold nào.** Expected golden/fixture path diff là `[]`. Cả 64 fixture JSON đã được kiểm tra, kể cả session JSON lồng trong golden; không có workshop/order hiện hữu.
+
+Gói review nằm tại:
+
+- [Step 0 preflight đầy đủ](C:/Users/Admin/.t3/local-drafts/p6b-prB/step0-preflight.md)
+- [Exact before → after và D1–D4](C:/Users/Admin/.t3/local-drafts/p6b-prB/step0-proposed-edits.md) · [JSON inventory](C:/Users/Admin/.t3/local-drafts/p6b-prB/step0-proposed-edits.json)
+- [Verifier result](C:/Users/Admin/.t3/local-drafts/p6b-prB/step0-verification.txt) · [Immutable baseline](C:/Users/Admin/.t3/local-drafts/p6b-prB/immutable-baseline.json)
+- [README](C:/Users/Admin/.t3/local-drafts/p6b-prB/README.md) · [SHA256SUMS](C:/Users/Admin/.t3/local-drafts/p6b-prB/SHA256SUMS.txt)
+
+Verifier B0 **PASS**: toàn bộ test cũ chưa đổi, **85 file được bảo vệ giống byte Git tại base**, không có changed path. Manifest đã verify đủ **20 file**, UTF-8 hợp lệ. Đây là kiểm tra evidence; **B1/B2 RED–GREEN và B3 gates/smoke/bundle chưa chạy**. Không có commit PR B, push, PR hoặc merge.
+
+HOLD này được yêu cầu trực tiếp bởi Task B0 trong brief và [binding plan](C:/Users/Admin/.t3/local-drafts/p6b-prB/binding-plan-3bee3ae.md:160): owner quyết định danh sách trước mọi RED hoặc sửa test cũ. **Bước tiếp theo: Claude chuyển owner duyệt P1, X1, Files của B1 và D1–D4 trong gói trên.**
+
+[user]
+PR B Step 0 HOLD answered by the owner. Binding plan is now C:/Users/Admin/.t3/local-drafts/p6b-prB/binding-plan-16e48a1.md: read Plan correction 4.
+
+Owner (Tân), 2026-11-15, dialog choices, verbatim:
+1. "Approve P1, X1 and tile-trial.ts (Recommended)": P1 exactly as listed (npc.test.ts:30, append 'smithy', 'hospital', 'drug-store'); X1 exactly society.ts:66 (accept the old eight keys or the nine with `workshops` last; nothing else in that file); tile-trial.ts added to B1 for the shared REPLACE → WORKSHOP_BUSY guard.
+2. "Accept D1–D4 (Recommended)": D1 optional report fields omitted when empty, `output` = recipe output defId, visible-report parser unchanged; D2 placing needs the building type built and enabled, staffing/Herbs/upkeep checked at End Week; D3 Smithy/Hospital with 0 workers complete nothing even with a skilled NPC, Hospital must be operating by existing rules, Drug Store base 1 without workers; D4 a refined material whose stack is at 999 waits in `ready`, items go inventory/consumables → storage → ready.
+
+Proceed with B1 RED and the rest of the brief (B1, B2, B3: gates on a quiet machine, CI=1 smoke, bundle, immutable check, evidence under local-drafts/p6b-prB/). No other existing-test edit or file outside the allowlist: HOLD if one is needed. Do not push, open a PR or merge.
+
+[assistant]
+B1 bắt đầu với RED và baseline không có order tại `0de2d1f`. Áp dụng đúng P1, X1, guard trong `tile-trial.ts` và D1–D4 đã duyệt; dự kiến 60–90 phút cho B1/B2, sau đó khoảng 40 phút cho gates và smoke.
+
+
+[assistant]
+Baseline 60 tuần đã được ghi tại base: đủ hash của report, item state và city cho ba seed. B1 đang thêm toàn bộ test RED cho place/cancel, input bị giữ, canonical state, busy REPLACE và ba post mới.
+
+
+[assistant]
+B1 đã GREEN **110/110 test mới**, cùng 74 test liên quan và baseline. Typecheck core/simulation cũng pass; đang chạy toàn bộ unit suite trước commit B1.
+
+
+[assistant]
+B1 đã commit `4480ed8`: full unit suite **2672/2672 pass**, không có timeout. B2 đang viết RED cho capacity, ready delivery, report và save/load/cancel; các file golden, fixture và pin vẫn giữ nguyên.
+
+
+[assistant]
+B2 RED đã chạy đủ **99 test: 96 fail, 3 baseline pass**, đúng ở phần completion/report/persistence chưa có. Đang thêm completion sau các bước item cũ, giao ready trước mọi order mới, và tách held/ready item sang records riêng.
+
+
+[assistant]
+B2 đã GREEN **99/99 test mới**; toàn bộ unit suite **2768/2768 pass**. Fixture test potion đã được sửa để cấp đúng Red Leaf, rồi chạy lại RED với mã B2 tạm trả về B1 và GREEN đầy đủ; cả hai lượt được giữ trong evidence.
+
+
+[assistant]
+B3 đang chạy tại head sạch `735e3ff`. Verifier xác nhận đúng P1/X1, toàn bộ test cũ còn lại nguyên vẹn và **85 file fixture/golden/pin giống base**. Gates sẽ chạy tuần tự, rồi full smoke với `CI=1`; smoke dự kiến khoảng 35 phút.
+
+
+[assistant]
+Gates **1–5 đã pass**, gồm **154/154 architecture tests**. Gate 6 đang chạy full unit suite tại cùng head; CPU lúc bắt đầu gates là **4%**, không phát hiện test/build job khác.
+
+
+[assistant]
+Gates **1–7 đều pass** tại `735e3ff`; full unit **2768/2768**. Smoke đã bắt đầu với **370 test, 1 worker, `CI=1`**; bundle production cũng đã đo xong và dưới ngân sách 200 kB gzip.
+
+
+[assistant]
+Smoke đang ở **5/370 pass**, chưa có lỗi. Case projection qua assignment và full week vừa hoàn tất trong 1,6 phút; tiếp tục cùng runner, không đổi timeout.
+
+
+[assistant]
+Smoke **8/370 pass**; các case Goods stock accessibility ở 375px và 1280px đã xanh. Chưa có failure hoặc rerun.
+
+
+[assistant]
+Smoke vẫn ở nhóm accessibility; kết quả hiện tại **8/370 pass**, chưa ghi nhận lỗi. Runner và head giữ nguyên.
+
+
+[assistant]
+Smoke **11/370 pass**. Baseline accessibility và kiểm tra reflow ở 1600px đã xanh; đang sang nhóm 1280px.
+
+
+[assistant]
+Nhóm accessibility 1280px đang chạy; hiện **11/370 pass**, chưa có failure. Không có runner thứ hai.
+
+
+[assistant]
+Smoke **14/370 pass**, log chưa có failure/timeout. Nhóm 1280px đã hoàn tất; đang chạy accessibility ở 375px.
+
+
+[assistant]
+Case baseline accessibility 375px vẫn đang chạy. Smoke hiện **14/370 pass**, log chưa có failure hoặc timeout.
+
+
+[assistant]
+Smoke **17/370 pass**. Accessibility 375px đã hoàn tất; đang chạy viewport 320px. Chưa có failure hoặc rerun.
+
+
+[assistant]
+Smoke vẫn đang chạy baseline accessibility 320px; kết quả gần nhất **17/370 pass**, chưa có failure. Các case accessibility dài chiếm phần đầu suite; dự kiến còn khoảng 25 phút.
+
+
+[assistant]
+Smoke **25/370 pass**. Các viewport accessibility 1600/1280/375/320 đã xanh; suite chuyển sang navigation và layout.
+
+
+[assistant]
+Smoke **30/370 pass**, log chưa có failure/timeout. Navigation và calendar parser đang xanh tại cùng head `735e3ff`.
+
+
+[assistant]
+Smoke **44/370 pass**. Case NPC Work với post được hiển thị và stale choices đã xanh, cùng các kiểm tra inventory và navigation chỉ đọc.
+
+
+[assistant]
+Smoke **63/370 pass**, chưa có failure. Các trường hợp load bị từ chối hoặc thay thế đang giữ đúng UI intent.
+
+
+[assistant]
+Smoke **75/370 pass**. Các case so khớp report với executor cho precision, service và empty đã xanh; visible-report parser vẫn nguyên vẹn.
+
+
+[assistant]
+Smoke **80/370 pass**. Keyboard manager assignment, đọc nhân vật và session reset/atomic failures ở 1280px đều xanh.
+
+
+[assistant]
+Smoke **103/370 pass**, chưa có failure/timeout. Save/Continue và Export/Import đã xác nhận khôi phục đúng player, profiles và posts.
+
+
+[assistant]
+Smoke **130/370 pass**. Các nhóm Character Life, crime/crisis và error log đã đi qua; suite đang sang garrison. Chưa có failure.
+
+
+[assistant]
+Smoke **147/370 pass**. Nhóm Items và accessibility của Market/Potions/Letters ở 1280px đã xanh; chưa có failure hoặc rerun.
+
+
+[assistant]
+Smoke **157/370 pass**. Items, law voting/repeal và report fallback với blocked fonts đã xanh. Log chưa có failure/timeout.
+
+
+[assistant]
+Smoke **177/370 pass**, chưa có failure. Nhóm Outside đang xác nhận export byte-identical khi chỉ navigation và không overflow ở mobile/desktop.
+
+
+[assistant]
+Smoke **211/370 pass**. Storage đã xanh qua các case nhiều tab, IndexedDB bị chặn và async initial read; log chưa có failure.
+
+
+[assistant]
+Smoke **244/370 pass**, chưa có failure/timeout. Các refusal và contextual error ở 390px/320px đang giữ nguyên state.
+
+
+[assistant]
+Smoke **259/370 pass**. Checkpoint refusal đang bảo toàn full state và cả hai slot; chưa có failure hoặc rerun.
+
+
+[assistant]
+Smoke **289/370 pass**; còn 81 case. Nhóm checkpoint ở population mode cũng xanh, không có failure/timeout.
+
+
+[assistant]
+Smoke **294/370 pass**. Population growth/round-trip ở 1280px và 390px đã xanh; older-ruleset import vẫn bị từ chối đúng.
+
+
+[assistant]
+Smoke **310/370 pass**; còn 60 case. Workforce assignment và checkpoint restoration đang xanh, chưa có failure/timeout.
+
+
+[assistant]
+Smoke **361/370 pass**, còn 9 case và chưa có failure. Khi runner kết thúc, còn khoảng 2–3 phút để kiểm tra ports/status và khóa manifest evidence.
+
+
+[assistant]
+Smoke **369/370 pass**; chỉ còn case cuối, chưa có failure. Head vẫn là `735e3ff`.
+
+
+[assistant]
+Full smoke đã **370/370 pass với `CI=1`**, không rerun hay timeout; ports 4173/4174 đã trống. Đang phục hồi các artifact cũ mà e2e ghi cố định, rồi khóa README, immutable check và SHA256SUMS.
+
+
+[assistant]
+Immutable check cuối đã pass; đúng P1/X1, không có thay đổi khác trong test cũ hoặc 85 file được bảo vệ. Cả 35 artifact cũ đã phục hồi byte-identically. Đang chốt manifest và trạng thái bàn giao.
+
+
+[assistant]
+Dùng head `735e3ff` cho Tester/Astra review. **B1–B3 đã hoàn tất; gates 1–7 và full smoke đều PASS.**
+
+```text
+Branch: feat/p6b-crafting-orders
+HEAD:   735e3ff4d71c7fad04914913778f8325a86f79a8
+Tree:   bc5965abab73df37f43baeafd9e4f9d847a23826
+Base:   0de2d1ffa91abadf76ced9696f440a09bf19f8af
+```
+
+`git status --porcelain=v1` rỗng. Ports **4173/4174 trống**. Không push, mở PR hoặc merge.
+
+Craft orders hiện giữ inputs và fee ngay khi đặt, cancel trả lại đúng tài sản, End Week xử lý capacity và giao ready trước order mới. Held/ready items được lưu bằng các place mới và round-trip byte-identical.
+
+| Task | Commit | Message |
+|---|---|---|
+| B1 | `4480ed81effbdae282de7d3b6d4cb023a137bc7c` | `feat(simulation): craft orders` |
+| B2 | `735e3ff4d71c7fad04914913778f8325a86f79a8` | `feat(simulation): complete craft orders at end week` |
+
+Cả hai commit đều kết thúc bằng `Co-authored-by: Codex <noreply@openai.com>`.
+
+| Task | RED đã xác nhận | GREEN |
+|---|---|---|
+| B1 | 93 fail / 17 pass, tổng 110 | **110/110 test mới**, full suite **2672/2672** |
+| B2 | 92 fail / 7 pass, tổng 99 | **99/99 test mới**, full suite **2768/2768** |
+
+Các lượt ban đầu được giữ đầy đủ. Hai fixture trong test mới đã được hiệu chỉnh: Drug Store đặt tại slum tile, và potion II cấp đúng Red Leaf. Với B2, đã trả các file product về đúng byte B1 để chứng minh lại toàn bộ RED trước khi phục hồi implementation và chạy GREEN. Chi tiết ở [README](C:/Users/Admin/.t3/local-drafts/p6b-prB/README.md).
+
+CPU lúc bắt đầu gates là **4%**; CPU, top processes và kiểm tra job khác được ghi trong [quiet-machine log](C:/Users/Admin/.t3/local-drafts/p6b-prB/b3-quiet-machine.txt).
+
+| Gate | Command | Kết quả | Thời gian |
+|---|---|---|---:|
+| 1 | `git diff --check origin/main...HEAD` | PASS, exit 0 | 0.06 s |
+| 2 | `npm run lint` | PASS, exit 0 | 8.53 s |
+| 3 | `npm run typecheck` | PASS, exit 0 | 31.48 s |
+| 4 | `npm run check:architecture` | PASS, exit 0 | 6.91 s |
+| 5 | `npm run test:architecture` | **154/154**, exit 0 | 43.38 s |
+| 6 | `npm test` | **2768/2768**, exit 0 | 58.56 s |
+| 7 | `npm run build` | PASS, exit 0 | 22.57 s |
+
+Full smoke: **370/370 pass**, **`CI=1`**, exit 0, **33.4 phút**. Không rerun và không timeout. [Smoke log](C:/Users/Admin/.t3/local-drafts/p6b-prB/b3-smoke-ci1.txt) · [Full gate logs](C:/Users/Admin/.t3/local-drafts/p6b-prB/b3-gates-1-7.txt).
+
+- **Edit inventory:** đúng **1 existing-test assertion P1** và **1 approved product line X1**; tổng branch đổi 13 file source/test. [Inventory](C:/Users/Admin/.t3/local-drafts/p6b-prB/edit-inventory.md).
+- **Immutable check:** kiểm tra 152 test cũ; **85 file được bảo vệ giống byte base**, golden/fixture changed paths **`[]`**, không regenerate. [Final verifier result](C:/Users/Admin/.t3/local-drafts/p6b-prB/final-edit-immutable-verification.txt) · [Verifier với `--mode final`](C:/Users/Admin/.t3/local-drafts/p6b-prB/verify-edit-inventory.mjs).
+- **Hash pins:** 24 pin hiện hữu giữ nguyên; thêm 9 regression hash cho no-order reports/items/city, được capture tại base trước product edits. [Old → new và raw references](C:/Users/Admin/.t3/local-drafts/p6b-prB/hash-pin-changes.md).
+- **Bundle evidence:** [measurement JSON](C:/Users/Admin/.t3/local-drafts/p6b-prB/bundle-results.json) · [script](C:/Users/Admin/.t3/local-drafts/p6b-prB/measure-bundle.mjs) · [raw artifact manifest](C:/Users/Admin/.t3/local-drafts/p6b-prB/bundle-artifacts/SHA256SUMS.txt).
+- **Evidence integrity:** **86 file** được kiểm tra UTF-8 và SHA-256, gồm nested manifests; `sha256sum -c` exit 0. [SHA256SUMS](C:/Users/Admin/.t3/local-drafts/p6b-prB/SHA256SUMS.txt) · [Final state](C:/Users/Admin/.t3/local-drafts/p6b-prB/final-state.json). Playwright outputs ở ngoài evidence folder, được kê trong [LOCAL-ONLY manifest](C:/Users/Admin/.t3/local-drafts/p6b-prB/LOCAL-ONLY.json); cả 35 artifact cũ đã phục hồi byte-identically.
+
+Worktree được giữ lại cho review; storage reclaimed **0 bytes**. Independent Tester/Astra review chưa chạy trong Builder run.
+
+**Next: Claude mở [README bàn giao](C:/Users/Admin/.t3/local-drafts/p6b-prB/README.md) để bắt đầu kiểm thử/review tại đúng HEAD trên.**
+
+[user]
+P6-B PR C Builder (crafting UI: workshop panel, Brew tab, item-card upgrade hint, Quartermaster rows)
+
+You are the P6-B Builder, now on PR C. Claude is Orchestrator and Tester. Astra reviews. Only dot or the owner merges. PR B (#97) is merged: main = 43fcb9b856c66606230d6d7ba49140ae94cfaa00.
+
+Owner (Tân), 2026-11-15, verbatim: "Giao Builder C".
+
+Worktree: C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01 (reuse it; create no other worktree or clone). Run `git fetch origin`, check `git status` is clean and ports 4173/4174 are free, then create `feat/p6b-crafting-ui` from `origin/main` = 43fcb9b.
+
+Binding documents (read fully before any code):
+- Plan: C:/Users/Admin/.t3/local-drafts/p6b-prC/binding-plan-16e48a1.md (approved; corrections 1–4 still bind). PR C = Tasks C0–C3. Apply Global Constraints (UI copy, keyboard paths, rarity by frame and label, e2e at 1280 and 1600 with 320/375 still passing, bundle), the PR C file allowlist plus each task's **Files** line.
+- Spec: C:/Users/Admin/.t3/local-drafts/p6b-prC/binding-spec-cd1b18a.md (v0.1), especially §9 (UI) and §6 (orders, capacity, fees, ready outputs).
+- AGENTS.md in the repo (Hard Laws, §4 anti-loop, §6 evidence).
+You may use the executing-plans approach (task by task, in this thread, no subagents).
+
+Owner rules that bind the UI:
+- All UI text in English, ledger style (wood frames, parchment, letter reports). No other game's name anywhere.
+- PC first: design and e2e at 1280 and 1600; the existing 320/375 tests must keep passing.
+- Rarity by frame and label, never colour alone. A keyboard path for every action; focus returns to a control that still exists after an action removes one.
+- No free-text numeric input in PR C (each Place button places one order). If you find you need a number field, it must accept digits only and validate before dispatch — and HOLD first.
+- UI never edits state directly; everything goes through the existing command dispatcher (`PLACE_CRAFT_ORDER`, `CANCEL_CRAFT_ORDER`) (LAW-02). No new dependency.
+- Item names are already unique ("Lord's" / "Retainer's" prefixes); the report parser can map names to ids.
+
+**Task C0 — Step 0 preflight, before any RED or product edit.** Search the whole repo (unit and e2e) for every existing test, fixture, accessibility baseline or parser that PR C changes, for example:
+- the InsideCity building panels (Smithy panel mount; Hospital and Drug Store PotionPanel gaining a Brew tab);
+- the item card tests (new "Can upgrade at the Smithy" hint);
+- the e2e visible-report parser and report-letter tests (new crafted / waiting / idle rows);
+- accessibility baselines and reflow audits that will now include new panels;
+- screenshots or snapshots that pin panel text.
+For each: file:line, the current assertion, why PR C changes it, and the exact proposed after-text. List any file you need outside the allowlist and why. Then **HOLD once with the full list**; the owner decides. Do not edit any existing test before that answer.
+
+Key rules for PR C (from the plan; HOLD if anything conflicts and name the line):
+- **C1:** WorkshopPanel for the Smithy (recipes the city can make now, grouped Refine / Upgrade; upgrade before → after card; fee; "N of M this week"; Cancel per order; ready outputs waiting for room; command errors shown); a Brew tab on the Hospital and Drug Store panels with the herb recipes; keyboard paths; e2e at 1280: build a Smithy, refine 2 Iron, upgrade a Plain Ring for the Player, cancel an order, brew a Heal Potion, End Week, see the outputs.
+- **C2:** the item card shows "Can upgrade at the Smithy" with the needed material (not for Epic or Legendary); Quartermaster rows for crafted, refined, brewed, waiting for room and idle workshop; accessibility audit of the new panels at 1280 and 1600; the visible report parser reads the new rows.
+- At least one 1280px screenshot per new panel (Smithy panel with a queue, Brew tab, Steward/Quartermaster rows) for the owner to see the look.
+- **Tests and order:** each task's full RED list before any product edit; existing-test edits only as approved after Step 0; nothing loosened; no new per-test timeout (measure and HOLD).
+- **C3 gates**, sequentially at the clean final head, on a quiet machine: record CPU load and top processes first and start only when no other test, build or review job runs; gates 1–7 (`git diff --check origin/main...HEAD`, lint, typecheck, `check:architecture`, `test:architecture`, `npm test`, build); then in the same shell `echo "CI=$CI"` and `CI=1 npm run test:smoke`. If the smoke fails, rerun each failed test alone once, report both, and HOLD. If any test times out, measure it alone three times and HOLD.
+- **Ports:** 4173/4174 free before the smoke; if held, report and HOLD; kill nothing.
+- **Evidence:** C:/Users/Admin/.t3/local-drafts/p6b-prC/: Step 0, RED/GREEN per task, edit inventory + verifier (clear final-mode argument), immutable check (golden, fixtures, pins byte-identical to 43fcb9b), accessibility summary, screenshots, gate logs with HEAD/tree/UTC/exit/CPU, smoke log with CI=1, bundle vs main (JS 132.14 kB, CSS 6.74 kB gzip) with script and raw artifact, README, SHA256SUMS.txt (every file except the top manifest, nested manifests included). UTF-8 only. No `docs/` files on the product branch. Keep Playwright traces out of the evidence folder or list them in a LOCAL-ONLY manifest.
+- **Commits:** one per task (C1, C2), with the plan's commit messages, each ending `Co-authored-by: Codex <noreply@openai.com>`. Do not push, open a PR or merge. Leave ports 4173/4174 free.
+- **Anti-loop:** if one failure is still failing after 2 attempts, HOLD. A queued message never overrides a HOLD.
+
+After the Step 0 HOLD is answered and the work is done, reply with: HEAD and tree, empty git status; the commits; RED and GREEN per task; the edit inventory count; the immutable check; CPU load at gate start; the gate table and smoke total with CI=1; the bundle; the screenshot paths; the evidence paths.
+
+[assistant]
+C0 bắt đầu bằng kiểm tra base, working tree và ports, rồi audit toàn bộ test/parser liên quan. Khoảng 15–25 phút để lập gói before → after và HOLD cho owner duyệt; chưa chạy RED hay sửa product.
+
+
+[assistant]
+C0 đã xác nhận đúng base `43fcb9b`, tree sạch và ports trống. Đã thấy một scope gap: `InsideCity` chưa nhận NPC, nên cần thêm đường truyền NPC từ `CharacterLifeCity` để hiển thị capacity có effective post skill.
+
+
+[assistant]
+C0 đã tìm thêm đường lỗi cần sửa: `TileManagement` chưa nhận các craft error code và chưa đưa lỗi place/cancel về panel. Gói HOLD sẽ liệt kê chính xác ba dòng ngoài allowlist, cùng các thay đổi parser và scope tabpanel của helper e2e.
+
+
+[assistant]
+Tiếp tục C0: kiểm tra kết quả quét toàn repo và đóng gói danh sách before → after để duyệt. Branch `feat/p6b-crafting-ui` đã ở đúng base `43fcb9b`; chưa sửa sản phẩm hay chạy RED. Dự kiến khoảng 15 phút để hoàn tất gói HOLD.
+
+
+[assistant]
+Quét xong 473 tệp được theo dõi, gồm 155 tệp test. Không có workshop/order trong 64 fixture JSON và không tìm thấy snapshot ảnh cần cập nhật. Gói duyệt hiện gồm 3 chỉnh sửa helper e2e và 3 dòng sản phẩm ngoài allowlist; 86 tệp golden, fixture, dữ liệu và pin sẽ được giữ nguyên byte.
+
+
+[assistant]
+Verifier C0 đã PASS: 155 tệp test, helper e2e và 86 tệp bất biến đều khớp base; Git vẫn sạch. Các khối before → after đã được ghi đầy đủ. Còn khoảng 5 phút để hoàn tất README, checksum và kiểm tra gói trước khi dừng ở HOLD.
+
+
+[assistant]
+**Claude: chuyển Tân duyệt P1–P3 và X1–X3 trong [gói before → after đầy đủ](C:/Users/Admin/.t3/local-drafts/p6b-prC/step0-proposed-edits.md). C0 hoàn tất và đang HOLD theo yêu cầu Step 0.**
+
+Branch `feat/p6b-crafting-ui` đã được tạo từ đúng `origin/main` sau `git fetch origin` thành công. Trạng thái hiện tại:
+
+```text
+HEAD:   43fcb9b856c66606230d6d7ba49140ae94cfaa00
+TREE:   bc5965abab73df37f43baeafd9e4f9d847a23826
+STATUS: empty
+PORTS:  4173/4174 free
+```
+
+Đã đọc đầy đủ plan, corrections 1–4, spec và AGENTS.md. C1–C3 chờ câu trả lời Step 0; chưa có sửa đổi sản phẩm/test, RED, build hay commit PR C.
+
+**Danh sách chỉnh sửa helper e2e cần duyệt — 3 edits, 1 file**
+
+| ID | File:line tại base | Before → After |
+|---|---|---|
+| P1 | [character-life-navigation.helpers.ts:3](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/character-life-navigation.helpers.ts:3) | Trong import hiện có: `ITEM_CATALOG,` → `ITEM_CATALOG,RECIPES,`. Parser dùng catalog tĩnh để suy ra recipe id từ tên output duy nhất. |
+| P2 | [character-life-navigation.helpers.ts:85](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/character-life-navigation.helpers.ts:85) | `expect(await page.locator('[role=tabpanel]').count()).toBe(1);` → `expect(await characters.locator('[role=tabpanel]').count()).toBe(1);`. Giữ đúng một panel của Characters khi City có thêm widget Buy/Brew độc lập. |
+| P3 | [character-life-navigation.helpers.ts:275](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/character-life-navigation.helpers.ts:275) | Chèn khối parser giữa dòng gán `pendingLegendary` và `return result;`. Đọc bảng hiển thị **Workshop output** và **Idle workshops**, kiểm tra chính xác headers, số cột, tên item/recipe duy nhất, destination và status. Toàn bộ after-text nằm trong gói liên kết phía trên. |
+
+P2 thuộc C1; P1/P3 thuộc C2. Những assertion, count và kiểm tra keyboard/hidden-view còn lại được giữ nguyên.
+
+**Danh sách ngoài allowlist cần duyệt — 3 dòng, 2 file**
+
+| ID | File:line tại base | Before → After |
+|---|---|---|
+| X1 | [CharacterLifeCity.svelte:45](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/CharacterLifeCity.svelte:45) | Thêm `{npcs}` ngay sau `{state}` ở mount `<InsideCity … />`, để hiển thị capacity theo effective skill của NPC được phân công. |
+| X2 | [TileManagement.svelte:80](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/TileManagement.svelte:80) | Sau `NOT_SELLABLE`, nối đúng 6 known error codes: `RECIPE_UNKNOWN`, `NO_WORKSHOP`, `MISSING_INPUT`, `QUEUE_FULL`, `ORDER_UNKNOWN`, `WORKSHOP_BUSY`. |
+| X3 | [TileManagement.svelte:88](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/TileManagement.svelte:88) | Sau `UNEQUIP_ITEM`, nối `PLACE_CRAFT_ORDER`, `CANCEL_CRAFT_ORDER` vào route `managementError/itemError`, để panel hiển thị lỗi từ dispatcher. |
+
+X1–X3 thuộc C1. Các byte khác trong hai file này giữ nguyên.
+
+**Kết quả audit và bằng chứng**
+
+- Đã quét **473 tracked files**, gồm **155 tệp test**, qua 7 nhóm tìm kiếm. Không tìm thấy snapshot ảnh/text cần cập nhật. Các assertion mua potion, card, report cũ và ngưỡng accessibility giữ nguyên.
+- **64 fixture JSON** không có `workshops`, `crafted` hoặc `workshopsIdle`. Expected golden/fixture/pin diff: **`[]`**; không regenerate.
+- Verifier preflight **PASS, exit 0**: kiểm tra 155 tệp test, helper e2e và **86 đường dẫn bất biến** với base. Verifier có rõ `--mode final --approval …`.
+- **17 tệp evidence** đã qua kiểm tra SHA256 độc lập; text hợp lệ UTF-8. RED/GREEN, gates, CI=1 smoke, bundle và screenshots sẽ được thực hiện sau khi HOLD được trả lời.
+
+Các tài liệu chính:
+
+1. [Step 0 preflight: phạm vi, compatibility và RED lists](C:/Users/Admin/.t3/local-drafts/p6b-prC/step0-preflight.md)
+2. [Inventory JSON chứa exact before/after](C:/Users/Admin/.t3/local-drafts/p6b-prC/step0-proposed-edits.json)
+3. [Log verifier](C:/Users/Admin/.t3/local-drafts/p6b-prC/step0-verification.txt)
+4. [README](C:/Users/Admin/.t3/local-drafts/p6b-prC/README.md) và [SHA256SUMS](C:/Users/Admin/.t3/local-drafts/p6b-prC/SHA256SUMS.txt)
+
+SHA256 của proposal JSON cần gắn với quyết định duyệt:
+
+```text
+ff0bf9a602286768e96c007e27c679e67660d92ec6b152a3746a021f5773014b
+```
+
+**Bước tiếp theo: Claude trả lời bằng quyết định của Tân về đúng P1–P3 và X1–X3 này.**
+
+[user]
+PR C Step 0 HOLD answered by the owner. Binding plan is now C:/Users/Admin/.t3/local-drafts/p6b-prC/binding-plan-6ff7e4f.md: read Plan correction 5.
+
+Owner (Tân), 2026-11-15, dialog choice, verbatim: "Approve P1–P3 and X1–X3 (Recommended)".
+
+This approves exactly the package `step0-proposed-edits.json` with sha256 ff0bf9a602286768e96c007e27c679e67660d92ec6b152a3746a021f5773014b (Claude re-checked the hash): P1–P3 in tests/e2e/character-life-navigation.helpers.ts, X1 CharacterLifeCity.svelte:45, X2 TileManagement.svelte:80, X3 TileManagement.svelte:88. Nothing else in those files changes; any other existing-test edit or file outside the allowlist is a HOLD.
+
+Proceed with C1 RED and the rest of the brief (C1, C2, C3: screenshots at 1280, accessibility audit, gates on a quiet machine, CI=1 smoke, bundle, immutable check, evidence under local-drafts/p6b-prC/). For the final verifier, record this approval in your owner-approval file. Do not push, open a PR or merge.
+
+[assistant]
+Tiếp tục C1: ghi nhận approval đúng SHA256, đọc Plan correction 5 và viết đầy đủ RED trước khi sửa sản phẩm. Phần UI và kiểm chứng dự kiến 2–3 giờ; full smoke có thể chiếm khoảng 35 phút. Gói P1–P3/X1–X3 đã được duyệt, mọi phát sinh ngoài phạm vi sẽ HOLD.
+
+
+[assistant]
+C1 RED đang bao phủ recipe/input/fee, capacity theo NPC và trang bị, queue/ready, lỗi dispatcher, keyboard và hành trình build → refine → upgrade → cancel → brew. Buy giữ nguyên luật cũ; Brew cho phép đặt trước khi có staffing/Herbs/upkeep theo D2.
+
+
+[assistant]
+RED đã xác nhận đủ: 64 unit cases và 4 e2e cases thất bại ở các chức năng UI chưa có. Fixture mới đã được sửa cân bằng workforce trước lần RED e2e xác nhận. Bắt đầu phần sản phẩm C1 trong allowlist và đúng X1–X3 đã duyệt.
+
+
+[assistant]
+64/64 unit cases C1 đã GREEN. Smithy/Brew đã có recipe cards, queue, ready outputs, capacity và focus sau Place/Cancel; X1–X3 đã áp dụng đúng inventory. Đang kiểm tra typecheck trước khi chạy lại hành trình e2e.
+
+
+[assistant]
+Hành trình C1 đã chạy được; 3/4 e2e GREEN. Đang áp dụng systematic-debugging cho case keyboard: test dùng Tab tới tab Brew đang có `tabindex=-1`, trong khi widget dùng roving focus. Sửa case mới để Tab tới Buy rồi ArrowRight tới Brew, giữ kiểm tra focus và hidden controls.
+
+
+[assistant]
+C1 đã commit `75ccc69`: 64 unit mới GREEN, 232 unit tương thích GREEN và 4/4 e2e GREEN. Bắt đầu C2 RED cho item hint, năm loại dòng Quartermaster, parser hiển thị và audit panel ở 1280/1600 cùng reflow 320/375.
+
+
+[assistant]
+C2 RED đã thấy thiếu hint và các dòng report mới. Audit text/contrast/reflow của Smithy đạt; probe focus của Brew đang đo ngay sau click chuột nên `:focus-visible` chưa bật. Sửa probe để bắt đầu bằng Tab thật, rồi xác nhận lại trước khi sửa sản phẩm C2.
+
+
+[assistant]
+C2 đã GREEN 311 unit, gồm các test item/report cũ. Hint chỉ xuất hiện trên wearable Common/Rare; Quartermaster có crafted/refined/brewed/waiting/idle và giữ cap 4 dòng tóm tắt. Đang chạy 16 e2e để kiểm tra parser, accessibility và chụp ảnh.
+
+
+[assistant]
+16/16 e2e đã GREEN. Xem ảnh phát hiện bảng craft bị bó hẹp trong card report ba cột và ảnh element bị cắt bởi vùng cuộn. Thêm RED cho header trên PC, rồi chỉnh layout riêng report có crafting và chụp viewport thật 1280px để ảnh duyệt đọc được.
+
+
+[assistant]
+C2 đã commit `09a042a`: 311 unit GREEN, 16/16 e2e GREEN, typecheck 0 lỗi/0 cảnh báo. Ảnh 1280px đã đọc được đủ bảng output/waiting/idle. Chuyển sang C3 tại head sạch này: kiểm tra immutable, ghi CPU/top processes, rồi chạy gates và full CI=1 smoke tuần tự.
+
+
+[assistant]
+C3 bắt đầu ở CPU 3%, không có test/build runner khác được phát hiện. Gate 1–2 đã PASS; typecheck đang chạy. HEAD giữ nguyên `09a042a`, và precheck xác nhận đủ 6 approved edits cùng 86 tệp bất biến.
+
+
+[assistant]
+Gate 1–6 đã PASS, gồm 154 architecture tests và 2.911 unit tests; không có timeout. Build cuối đang chạy, sau đó sẽ kiểm tra ports và bắt đầu full smoke `CI=1`. CPU tại lúc bắt đầu gates là 3%.
+
+
+[assistant]
+Gate 1–7 đều PASS tại `09a042a`. Full smoke đã bắt đầu với `CI=1`, 386 cases, một worker; 35 artifact cũ của P6-A đã được sao lưu để khôi phục sau run. Các case autosave đầu tiên đang GREEN.
+
+
+[assistant]
+Smoke hiện 8/386 GREEN, chưa có failure. Đang vào các accessibility baseline dài; case contrast native controls ở 1600px đã PASS. Các file sản phẩm và HEAD vẫn giữ nguyên.
+
+
+[assistant]
+11/386 smoke cases GREEN. Toàn bộ baseline 1600px, gồm shell accessibility và reflow nội dung dài, đã PASS. Đang kiểm tra baseline 1280px; chưa có failure hay timeout.
+
+
+[assistant]
+Baseline shell 1280px đang chạy trong cùng full smoke. Các case đã hoàn tất vẫn 11/11 GREEN; không chạy thêm kiểm chứng song song và không sửa code trong lúc gates/smoke chạy.
+
+
+[assistant]
+14/386 GREEN. Baseline accessibility và reflow ở cả 1280px lẫn 1600px đã PASS. Smoke chuyển sang 375px; chưa cần rerun hay đo timeout.
+
+
+[assistant]
+17/386 GREEN. Baseline 375px đã PASS cả accessibility và reflow; đang chạy 320px. Chưa có failure, và không có thay đổi timeout hoặc threshold.
+
+
+[assistant]
+30/386 GREEN. Các baseline 320/375/1280/1600 đã qua; smoke đang kiểm tra navigation và report. Những case đã hoàn tất chưa có failure.
+
+
+[assistant]
+63/386 GREEN. Các luồng navigation, giữ focus và bảo toàn UI khi load/import bị từ chối đang PASS. Chưa có smoke failure; HEAD và source vẫn giữ nguyên.
+
+
+[assistant]
+75/386 GREEN. Các report cũ vẫn khớp đầy đủ executor projection, gồm trường hợp empty; parser mới giữ được trường hợp không có crafting. Chưa có failure.
+
+
+[assistant]
+80/386 GREEN. Bộ player flow 1280px đã qua cả keyboard, NPC assignment và session reset/atomic failures. Smoke tiếp tục sang các flow 375px.
+
+
+[assistant]
+106/386 GREEN. Các luồng Character Life và guard import khi đang ở Report đã PASS. Chưa có failure hay timeout; các case crafting mới sẽ chạy trong cùng full smoke này.
+
+
+[assistant]
+121/386 GREEN. Trong full smoke tại final head, journey crafting, hint, parser và các audit 1280px đã PASS; Smithy/Brew ở 1600px cũng đã qua. Ảnh và raw accessibility đang được làm mới từ run này.
+
+
+[assistant]
+140/386 GREEN. Đủ 16 case crafting đã PASS trong full smoke, gồm reflow 320/375 và report ledger 1280/1600. Smoke tiếp tục kiểm tra các phần còn lại; chưa có failure.
+
+
+[assistant]
+164/386 GREEN. Bộ item cũ vẫn PASS các luồng mua/bán potion, equip và accessibility; equipment 1600px vừa qua. Chưa có failure và chưa cần rerun.
+
+
+[assistant]
+187/386 GREEN. Bộ item cũ đã qua; smoke đang kiểm tra production và Outside City. Toàn bộ run vẫn chưa có failure.
+
+
+[assistant]
+247/386 GREEN. Các case từ chối Build do thiếu Gold đang PASS kiểm tra lỗi đúng ngữ cảnh và state không đổi sau lỗi lặp lại. Còn 139 cases; chưa có failure.
+
+
+[assistant]
+268/386 GREEN. Các kiểm tra stock ledger về chữ số milli, grouping và số âm đã PASS. Chưa có failure; sau smoke sẽ còn bundle, immutable check cuối và checksum evidence.
+
+
+[assistant]
+305/386 GREEN. Các checkpoint cục bộ và quy tắc save trong từng tab đang PASS. Còn 81 cases; chưa có failure hay timeout.
+
+
+[assistant]
+318/386 GREEN. Luồng production → Market → Goods → upgrade/replace hiện có vẫn PASS. Còn 68 cases, chưa có failure hay timeout.
+
+
+[assistant]
+377/386 GREEN, còn 9 cases cuối. Chưa có failure hay timeout. Khi smoke kết thúc, script sẽ khôi phục artifact cũ, đo bundle và xác nhận immutable/status/ports trước khi đóng gói evidence.
+
+
+[assistant]
+**Full smoke PASS: 386/386, `CI=1`, 34,3 phút.** Không có failure, timeout hay rerun. Đã khôi phục 35 artifact P6-A; bundle đo được JS 136,582 kB và CSS 7,152 kB gzip. Đang hoàn tất immutable check cuối và checksum.
+
+
+[assistant]
+Immutable check cuối đã PASS: đúng 6 approved edits, 11 changed paths, toàn bộ 86 tệp bất biến giữ nguyên byte. Git sạch, ports 4173/4174 trống. README, inventory, raw bundle và ảnh đã sẵn sàng; còn checksum toàn bộ evidence và handoff.
+
+
+[assistant]
+**Claude: dùng HEAD `09a042a` cho Tester/Astra. C1–C3 đã hoàn tất trên `feat/p6b-crafting-ui`.**
+
+```text
+HEAD:   09a042a7a3e5c9b0cb09ccbecdd293bf86b4e29f
+TREE:   0ae12c7f62462fb14090a61c788a998f00a031ca
+BASE:   43fcb9b856c66606230d6d7ba49140ae94cfaa00
+STATUS: empty
+PORTS:  4173/4174 free
+```
+
+Không push, mở PR hoặc merge. Worktree được giữ nguyên để review.
+
+**Hai commit đúng theo task**, đều kết thúc bằng `Co-authored-by: Codex <noreply@openai.com>`:
+
+1. `75ccc69faaf40102ad217f22debf555c508be0b8` — `feat(ui): workshop panel and brewing`
+2. `09a042a7a3e5c9b0cb09ccbecdd293bf86b4e29f` — `feat(ui): crafting hints and report rows`
+
+**RED → GREEN**
+
+| Task | RED đã quan sát trước product edit | GREEN |
+|---|---|---|
+| C1 | 64 unit failures; 4 e2e failures vì chưa có UI | 232 unit, gồm 64 case mới; **4/4 e2e** |
+| C2 | 78 unit failures / 65 passes; 6 e2e feature failures / 6 panel passes; thêm 2 RED về header ledger trên PC | **311 unit; 16/16 e2e**; UI typecheck **0 errors, 0 warnings** |
+
+Các lần sửa fixture và oracle của **test mới** được ghi rõ; không nới assertion, threshold hoặc timeout của test hiện có. Toàn bộ log RED/GREEN được liên kết trong [README](C:/Users/Admin/.t3/local-drafts/p6b-prC/README.md).
+
+Report có crafting dùng letter toàn chiều rộng để bảng output dễ đọc ở PC; đổi lại cần cuộn dọc nhiều hơn. Layout report không có crafting và thứ tự letter giữ nguyên.
+
+**Inventory và immutable check đều PASS**
+
+- **6 approved edits:** P1–P3 trong helper e2e; X1–X3 là đúng 3 dòng sản phẩm trong 2 file ngoài allowlist ban đầu.
+- **11 changed paths** tổng cộng; không có existing-test edit khác.
+- **86 đường dẫn golden/fixture/data/pin byte-identical với base `43fcb9b`**; changed set **`[]`**. Không regenerate golden hoặc fixture.
+- Approval đúng proposal SHA256 đã được ghi trong [owner-approval.json](C:/Users/Admin/.t3/local-drafts/p6b-prC/owner-approval.json).
+
+Xem [edit inventory](C:/Users/Admin/.t3/local-drafts/p6b-prC/edit-inventory.md), [final verifier log](C:/Users/Admin/.t3/local-drafts/p6b-prC/c3-final-inventory-immutable.txt) và [hash-pin changes — none](C:/Users/Admin/.t3/local-drafts/p6b-prC/hash-pin-changes.md). Verifier có chế độ rõ ràng `--mode final --approval …`.
+
+**Gates tại clean final head**
+
+CPU tại lúc bắt đầu: **3%**, không phát hiện test/build runner khác. CPU load và top processes nằm trong [quiet-machine log](C:/Users/Admin/.t3/local-drafts/p6b-prC/c3-quiet-machine.txt).
+
+| Gate | Kết quả | Thời gian |
+|---|---|---:|
+| 1. `git diff --check origin/main...HEAD` | PASS, exit 0 | 0,061 s |
+| 2. lint | PASS, exit 0 | 13,733 s |
+| 3. typecheck | PASS, exit 0 | 30,079 s |
+| 4. `check:architecture` | PASS, exit 0 | 6,152 s |
+| 5. `test:architecture` | **154 PASS**, exit 0 | 42,352 s |
+| 6. `npm test` | **2.911 PASS / 127 files**, exit 0 | 62,097 s |
+| 7. build | PASS, exit 0 | 20,939 s |
+
+**Full smoke: 386/386 PASS, `CI=1`, 34,3 phút theo Playwright.** Chạy trong cùng shell sau CI echo, một worker. Không có smoke failure, timeout hoặc rerun. [Full smoke log](C:/Users/Admin/.t3/local-drafts/p6b-prC/c3-smoke-ci1.txt) · [gate results](C:/Users/Admin/.t3/local-drafts/p6b-prC/c3-results.json)
+
+**Bundle gzip — số byte đo thực tế**
+
+| Loại | Main baseline được cung cấp | PR C | Tăng |
+|---|---:|---:|---:|
+| JS | 132.140 B | **136.582 B** | +4.442 B |
+| CSS | 6.740 B | **7.152 B** | +412 B |
+
+Tổng **143.734 B**, dưới ngân sách 200.000 B. Baseline dùng số báo cáo đã làm tròn được cung cấp trong brief.
+
+[Script đo](C:/Users/Admin/.t3/local-drafts/p6b-prC/measure-bundle.mjs) · [Kết quả đầy đủ](C:/Users/Admin/.t3/local-drafts/p6b-prC/bundle-results.json) · [Raw JS](C:/Users/Admin/.t3/local-drafts/p6b-prC/bundle-artifacts/assets_index-BIKN_jcN.js) · [Raw CSS](C:/Users/Admin/.t3/local-drafts/p6b-prC/bundle-artifacts/assets_index-DLT9rNeI.css)
+
+**Accessibility và screenshot paths**
+
+14 raw measurements đã PASS: panel mới ở **1280/1600**, reflow mới ở **320/375**; các suite 320/375 hiện có cũng PASS trong full smoke. [Accessibility summary](C:/Users/Admin/.t3/local-drafts/p6b-prC/accessibility-summary.md)
+
+1. [smithy-queue-1280.png](C:/Users/Admin/.t3/local-drafts/p6b-prC/screenshots/smithy-queue-1280.png)
+2. [brew-tab-1280.png](C:/Users/Admin/.t3/local-drafts/p6b-prC/screenshots/brew-tab-1280.png)
+3. [drug-store-brew-1280.png](C:/Users/Admin/.t3/local-drafts/p6b-prC/screenshots/drug-store-brew-1280.png)
+4. [quartermaster-rows-1280.png](C:/Users/Admin/.t3/local-drafts/p6b-prC/screenshots/quartermaster-rows-1280.png)
+5. [steward-quartermaster-1280.png](C:/Users/Admin/.t3/local-drafts/p6b-prC/screenshots/steward-quartermaster-1280.png)
+
+Tất cả ảnh là viewport thực **1280×1000**, được làm mới trong full smoke tại final head.
+
+**Evidence đã đóng gói và kiểm tra SHA256 cho 101 file**, bao gồm nested manifest; chỉ loại trừ manifest cấp cao nhất. UTF-8 hợp lệ. Đã khôi phục byte-identical toàn bộ **35 artifact P6-A** sau smoke.
+
+[README](C:/Users/Admin/.t3/local-drafts/p6b-prC/README.md) · [Final state](C:/Users/Admin/.t3/local-drafts/p6b-prC/final-state.json) · [SHA256SUMS](C:/Users/Admin/.t3/local-drafts/p6b-prC/SHA256SUMS.txt) · [Checksum verification](C:/Users/Admin/.t3/local-drafts/p6b-prC/checksum-verification.txt) · [LOCAL-ONLY manifest](C:/Users/Admin/.t3/local-drafts/p6b-prC/LOCAL-ONLY.md)
+
+**Bước tiếp theo: Claude bắt đầu Tester/Astra tại đúng HEAD trên.** Independent review và bước đưa exact-head evidence lên WP docs branch trước G5 vẫn thuộc handoff tiếp theo.
+
+[user]
+Builder, PR C fix round 1. PR #98 is open (branch feat/p6b-crafting-ui, head 09a042a, pushed by Claude). Astra round 1 at 09a042a: FAIL, one P2, no other P0–P3. Everything else (scope, P1–P3/X1–X3 reconstruction, immutable files, LAW-02, hints, report rows, parser, accessibility, layout) was accepted. Her notes: C:/Users/Admin/.t3/local-drafts/p6b-prC/astra-review/review.md.
+
+Finding (P2): `workshopCapacity` at packages/ui/src/items-view.ts:100 checks enabled, staffing and posted skill but not whether the workshop will operate; WorkshopPanel.svelte:35 shows it as "N of M this week". Case: an enabled level-1 Hospital with 2 workers, no posted NPC, one queued Heal Potion I, society Herbs 0 and no Herb production that week, Gold enough for upkeep → the panel shows "1 of 2 this week", but End Week drops the Hospital from `operatingIds` for missing Herbs (tile-trial-week.ts:91) and completes 0 orders (craft-week.ts:44). An unfunded workshop has the same mismatch. This is spec §6.3/§9 parity with PR B; no owner decision is needed.
+
+Fix:
+- Make the weekly count reflect the same operating rules End Week uses: upkeep that cannot be paid, and a Hospital without enough Herbs, give 0 this week, and the panel says why in plain English (for example "Idle this week: not enough Herbs" / "Idle this week: upkeep unpaid"). Match the simulation's order of steps (for example whether same-week Herb output arrives before the Hospital consumes Herbs) so the forecast and End Week agree.
+- Prefer reusing the existing pure logic over duplicating it. Stay inside the PR C allowlist (packages/ui). If an exact forecast needs a change in core or simulation, HOLD first with the file and line; do not edit outside the allowlist.
+- RED first: unit cases in your new crafting-view.test.ts for fully staffed + no Herbs → 0 with the reason, unfunded → 0 with the reason, Herbs available and funded → workers (+ skill steps), Drug Store base 1 with upkeep funded and unfunded; and one e2e (in your new crafting.spec.ts) where the panel forecast equals the End Week result for the no-Herbs Hospital. No existing-test edit.
+
+Then rerun gates 1–7 and the full `CI=1` smoke at the clean final head on a quiet machine (record CPU), refresh the Smithy/Brew screenshots, bundle, inventory/immutable check and SHA256SUMS. One commit `fix(ui): weekly craft capacity follows operating rules`, ending `Co-authored-by: Codex <noreply@openai.com>`. If a smoke case fails, rerun it alone once and HOLD; anti-loop after 2 attempts. Do not push, open or update a PR, or merge.
+
+[assistant]
+Đọc finding và luồng End Week để viết RED cho forecast/rationale, rồi sửa trong `packages/ui`. Dự kiến 20–40 phút cho fix và targeted tests, thêm khoảng 35 phút cho full smoke. Giữ nguyên phạm vi đã được Astra chấp nhận; không push hoặc cập nhật PR.
+
+
+[assistant]
+Đang dùng skill receiving-code-review để đối chiếu finding. Đã xác nhận: thuế/law income được cộng trước upkeep, Herb output được cộng trước khi các Hospital dùng Herbs, và Hospital tranh nguồn Herbs theo thứ tự tile. Hiện logic này nằm inline trong simulation; đang kiểm tra API tái sử dụng để tránh tạo một bản sao rule trong UI.
+
+
+[assistant]
+Không cần sửa core/simulation. Giữ projection trong UI, dùng lại tax/law/skill helpers và TRIAL data hiện có, theo đúng thứ tự funding → Herb output → Hospital consumption. RED sẽ thêm cả Herbs tạo trong cùng tuần, cạnh tranh Herbs giữa Hospital và Gold được thu trước upkeep.
+
+
+[assistant]
+RED đã xác nhận lỗi: 15 unit cases mới thất bại và e2e no-Herbs thấy forecast khác End Week. Bắt đầu sửa projection UI và reason text; các phần recipe placement, hints, report và parser giữ nguyên.
+
+
+[assistant]
+326 unit đã GREEN, gồm 6 case đối chiếu forecast trực tiếp với End Week và kiểm tra không đổi input. Các audit desktop đang GREEN; reflow 375px là case cuối của targeted e2e. Không sửa core/simulation hoặc các file P1–P3/X1–X3.
+
+
+[assistant]
+Fix đã commit `ed4105f`: 326 unit GREEN, 17/17 targeted e2e GREEN, typecheck 0 lỗi/0 cảnh báo. Forecast đã đối chiếu với End Week cho no-Herbs, same-week Herbs và funded/unfunded Drug Store. Bắt đầu gates 1–7 và full smoke tại head sạch này.
+
+
+[assistant]
+Gates 1–4 đã PASS ở `ed4105f`. CPU lúc bắt đầu là 5%; không phát hiện test/build runner khác. Log fix round nằm riêng trong `fix-round1/` để giữ lại evidence đã được review ở `09a042a`.
+
+
+[assistant]
+Gate 1–7 đều PASS ở `ed4105f`: 2.926 unit và 154 architecture tests, không timeout. Full smoke `CI=1` đã bắt đầu với 387 cases, một worker; 4 case autosave đầu tiên GREEN.
+
+
+[assistant]
+Smoke 8/387 GREEN, chưa có failure. Đang chạy các baseline accessibility dài ở 1600px; code giữ nguyên tại `ed4105f` trong suốt run.
+
+
+[assistant]
+11/387 GREEN. Baseline shell và reflow 1600px đã PASS; đang kiểm tra 1280px. Chưa có failure hay timeout.
+
+
+[assistant]
+14/387 GREEN. Baseline accessibility và reflow ở 1280/1600 đã PASS. Smoke chuyển sang 375px; chưa có failure.
+
+
+[assistant]
+17/387 GREEN. Baseline 375px đã qua; đang chạy 320px. Chưa có failure, timeout hoặc thay đổi code trong lúc smoke chạy.
+
+
+[assistant]
+Case shell accessibility 320px vẫn đang chạy trong cùng runner. Các case đã hoàn tất giữ 17/17 GREEN; chưa có failure. Không chạy thêm job song song.
+
+
+[assistant]
+30/387 GREEN. Baseline accessibility/reflow ở cả 320, 375, 1280 và 1600px đã PASS. Smoke đang kiểm tra navigation và report; chưa có failure.
+
+
+[assistant]
+61/387 GREEN. Các luồng navigation và bảo toàn UI khi load bị từ chối đang PASS. Chưa có failure hay timeout; branch vẫn ở đúng fix commit.
+
+
+[assistant]
+77/387 GREEN. Các report parity cũ vẫn khớp executor; smoke đang chạy player flow 1280px. Chưa có failure hay timeout.
+
+
+[assistant]
+82/387 GREEN. Player flow 1280px đã qua; các flow 375px đang PASS, gồm guard chống End Week lặp. Chưa có failure.
+
+
+[assistant]
+124/387 GREEN. Case F1 no-Herbs đã PASS trong full smoke: forecast 0, reason đúng, End Week không hoàn thành order và queue được giữ nguyên. Các audit crafting desktop cùng reflow 320px cũng đã qua.
+
+
+[assistant]
+155/387 GREEN. Đủ 17 case crafting đã PASS tại final head. Các luồng item cũ đang chạy tiếp; buy → keyboard equip → Farm report vừa qua.
+
+
+[assistant]
+183/387 GREEN. Các luồng item cũ đã qua; Order report và staffing vẫn khớp engine. Chưa có failure hay timeout.
+
+
+[assistant]
+236/387 GREEN. Các case storage/import và feedback khi request cũ trả về muộn đang PASS. Còn 151 cases, chưa có failure.
+
+
+[assistant]
+274/387 GREEN. Các case từ chối checkpoint hỏng vẫn giữ nguyên state và cả hai save slots. Chưa có failure, timeout hoặc rerun.
+
+
+[assistant]
+309/387 GREEN. Population/workforce và checkpoint round-trip đang PASS. Còn 78 cases; chưa có failure hay timeout.
+
+
+[assistant]
+322/387 GREEN. Các flow production/upgrade/replace và guard Plan next week vẫn PASS. Chưa có failure; còn 65 cases.
+
+
+[assistant]
+382/387 GREEN, còn 5 cases cuối. Chưa có failure hay timeout. Sau smoke, script sẽ khôi phục artifact cũ, đo bundle và kiểm tra immutable/status/ports.
+
+
+[assistant]
+**Full smoke PASS: 387/387, `CI=1`, 33,0 phút.** Không có failure, timeout hay rerun. Immutable check cuối cũng PASS; ports đã trống và 35 artifact P6-A đã được khôi phục. Đang đóng gói README, bundle, ảnh và SHA256SUMS cho head mới.
+
+
+[assistant]
+All seven gates and the full `CI=1` smoke passed at `ed4105f`: 2,926 unit tests and 387 smoke cases are green. The fix is committed locally. Final evidence checksums and the clean-status/port check remain; those should take about two minutes.
+
+[assistant]
+Evidence checks passed: the manifest covers all 163 files, including both nested bundle manifests, and the text files are valid UTF-8. Git status is clean and ports 4173/4174 are free. The local commit is ready for Astra’s re-review; nothing was pushed and PR #98 was not updated.
+
+[assistant]
+**Claude: send local commit `ed4105f` to Astra for re-review of [PR #98](https://github.com/tanntran2000/Build-Settlement/pull/98).** The operating-capacity fix is complete, all seven gates and the full `CI=1` smoke passed, and the evidence is frozen. Nothing was pushed; the PR was not updated or merged.
+
+The panel now forecasts **0 this week** when upkeep cannot be funded or a Hospital lacks Herbs, with the corresponding English reason. The calculation follows End Week’s ordering: guaranteed tax and law income, tile-order funding, same-week Herb production, then Hospital Herb consumption. Shared pure helpers and catalog values are reused. Core, simulation and persistence remain unchanged.
+
+The fix changes four files: [items-view.ts](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/items-view.ts), [WorkshopPanel.svelte](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/WorkshopPanel.svelte), and this PR’s new unit/e2e files. Placement eligibility remains unchanged.
+
+**Committed state**
+
+```text
+Branch: feat/p6b-crafting-ui
+HEAD:   ed4105f9aa0054396bf0da7b21cb6a27ddbdaa37
+Tree:   a164cb535cb914ee19f6e027b97013479c08e786
+Status: empty
+Ports:  4173 and 4174 free
+```
+
+The single fix commit is `fix(ui): weekly craft capacity follows operating rules`, ending with `Co-authored-by: Codex <noreply@openai.com>`.
+
+**RED → GREEN**
+
+| Check | Result |
+|---|---|
+| New unit RED | 15 expected failures; 143 passes |
+| No-Herbs Hospital e2e RED | Reproduced the panel/End Week mismatch |
+| Targeted unit GREEN | 326 passed across three files |
+| Crafting e2e GREEN | 17/17 passed |
+| Dispatcher parity | Six scenarios passed, including same-week Herbs and funded/unfunded Drug Store |
+
+One initial GREEN run exposed a new test fixture locked behind Ring 1. Its setup was corrected to Ring 2; assertions and timeouts were unchanged. [RED log](C:/Users/Admin/.t3/local-drafts/p6b-prC/f1-red-unit-full.txt), [unit GREEN log](C:/Users/Admin/.t3/local-drafts/p6b-prC/f1-green-unit-valid-meadow.txt), [e2e GREEN log](C:/Users/Admin/.t3/local-drafts/p6b-prC/f1-green-e2e.txt).
+
+**Final gates at the committed head**
+
+CPU at gate start was **5%**, with no competing test/build job detected. The [quiet-machine log](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round1/c3-quiet-machine.txt) records CPU and top processes.
+
+| Gate | Result | Time |
+|---|---|---:|
+| 1. Diff check | PASS, exit 0 | 0.06 s |
+| 2. Lint | PASS, exit 0 | 10.17 s |
+| 3. Typecheck | PASS, 0 errors/warnings | 33.22 s |
+| 4. Architecture check | PASS, exit 0 | 7.08 s |
+| 5. Architecture tests | PASS, 154 tests | 42.90 s |
+| 6. Unit tests | PASS, **2,926 tests / 127 files** | 64.31 s |
+| 7. Build | PASS, exit 0 | 20.33 s |
+
+Full smoke: **387/387 passed with `CI=1`**, first run, approximately 33 minutes. No timeout or smoke rerun. The CI echo and smoke ran in the same shell. [Gate results](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round1/c3-results.json) · [CI environment](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round1/c3-ci-environment.txt) · [full smoke log](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round1/c3-smoke-ci1.txt).
+
+**Scope and refreshed evidence**
+
+- **Inventory:** four files in this fix; eleven paths across the PR. The six approved P1–P3/X1–X3 edits remain exact. No new existing-base-test edit.
+- **Immutable check:** all **86 protected paths** remain byte-identical to `43fcb9b`; golden, fixtures and pins are unchanged. Core/simulation/persistence subtree hashes also match the base. [Final verifier log](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round1/c3-final-inventory-immutable.txt) · [inventory](C:/Users/Admin/.t3/local-drafts/p6b-prC/edit-inventory.md).
+- **Bundle:** gzip JS **137,259 bytes** and CSS **7,152 bytes**, increases of **5,119 / 412 bytes** against the supplied main baseline. Combined: **144,411 bytes**. [Measurement script](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round1/measure-bundle.mjs) · [raw measurements](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round1/bundle-results.json) · [raw JS/CSS manifest](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round1/bundle-artifacts/SHA256SUMS.txt).
+- **Visual/accessibility evidence:** five 1280×1000 screenshots and fourteen accessibility audit artifacts were refreshed during the final smoke. The 1280/1600 audits and 320/375 reflow checks passed. [Accessibility summary](C:/Users/Admin/.t3/local-drafts/p6b-prC/accessibility-summary.md).
+- **Checksums:** all **163 files** verified, including both nested bundle manifests; only the top-level manifest excludes itself. UTF-8 owner names and punctuation verified. [SHA256SUMS.txt](C:/Users/Admin/.t3/local-drafts/p6b-prC/SHA256SUMS.txt) · [verification transcript](C:/Users/Admin/.t3/local-drafts/p6b-prC/checksum-verification.txt).
+
+Refreshed screenshots: [Smithy queue](C:/Users/Admin/.t3/local-drafts/p6b-prC/screenshots/smithy-queue-1280.png), [Hospital Brew](C:/Users/Admin/.t3/local-drafts/p6b-prC/screenshots/brew-tab-1280.png), [Drug Store Brew](C:/Users/Admin/.t3/local-drafts/p6b-prC/screenshots/drug-store-brew-1280.png), [Quartermaster rows](C:/Users/Admin/.t3/local-drafts/p6b-prC/screenshots/quartermaster-rows-1280.png), [Steward/Quartermaster](C:/Users/Admin/.t3/local-drafts/p6b-prC/screenshots/steward-quartermaster-1280.png).
+
+**Next: open the [fix-round evidence README](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round1/README.md) for Astra’s handoff.** Astra’s independent verdict at the new local head is pending.
+
+[user]
+Builder, PR C fix round 2. Head ed4105f is on PR #98. Astra round 2: FAIL on one P2 (R2-1): the capacity forecast is correct, but `workshopOperation` in packages/ui/src/items-view.ts:106 re-implements End Week's operating allocation (tax-credit timing, tile-order funding, Farm debits, Herb production, Hospital consumption) instead of sharing it with packages/simulation/src/tile-trial-week.ts:30. Notes: C:/Users/Admin/.t3/local-drafts/p6b-prC/astra-review/round-2-review.md.
+
+Owner (Tân), 2026-11-17, dialog choice, verbatim: "Share it now (Recommended)". Binding plan is now C:/Users/Admin/.t3/local-drafts/p6b-prC/binding-plan-c00f9a3.md: read Plan correction 6.
+
+Task:
+- Extract the operating allocation into ONE pure function in packages/simulation (a new file such as `workshop-operation.ts`, or an export from tile-trial-week.ts), returning per tile whether it operates this week and why not (for example `{ operating: boolean; reason?: 'upkeep' | 'herbs' | 'disabled' | 'staff' }`), computed in End Week's exact order. `runTileTrialWeek` uses it for its operating decisions; the panel uses it for the forecast (via `@haven/simulation` exports, the way the UI already imports simulation). Delete the UI copy; keep only display formatting in items-view.ts.
+- Allowed files for this round: packages/simulation/src/tile-trial-week.ts, the new simulation file, packages/simulation/src/index.ts (export only), and the PR C UI/test files already in the PR. Anything else is a HOLD.
+- End Week must not change at all: golden, every fixture, every pin and the 9 no-order regression hashes byte-identical; all existing simulation tests pass unchanged; the 6 parity tests keep passing (keep them; they now guard the shared function).
+- RED/GREEN: first add a unit test that calls the new shared function directly for the cases already covered (no Herbs, unfunded, competing Gold, same-week Herbs, Drug Store without workers) and see it fail because the function does not exist; then extract; then GREEN. Record the immutable check against 43fcb9b.
+
+One commit `refactor(simulation): share the weekly workshop operation forecast`, ending `Co-authored-by: Codex <noreply@openai.com>`. Then gates 1–7 and the full `CI=1` smoke at the clean final head on a quiet machine (record CPU), refreshed bundle, inventory/immutable check and SHA256SUMS. If a smoke case fails, rerun it alone once and HOLD; anti-loop after 2 attempts. Do not push, open or update a PR, or merge.
+
+[assistant]
+Round 2 starts with the shared-operation extraction. The first checkpoint is the new direct-function RED test, after reading correction 6 and Astra’s notes; the full validation will take about 45–60 minutes, including smoke.
+
+[assistant]
+The worktree is clean at `ed4105f`, and both ports are free. I’m using the executing-plans, TDD and codebase-memory skills for this round; correction 6 authorizes the simulation extraction, and the existing six parity tests will stay intact.
+
+[assistant]
+The End Week prelude also produces Farm and extraction accounting used later in the report. The extraction will return those effects with tile statuses, so End Week can apply them and the panel can read the same result without keeping a second allocation algorithm.
+
+[assistant]
+The nine new direct-function tests failed on the missing export, then passed after extraction. The targeted run passed 303 tests, including the unchanged six dispatcher parity cases and all nine no-order hashes. Typecheck is running; next is the full unit suite before the commit.
+
+[assistant]
+The full unit run has a failure in the 60-week snapshot-restore test at 5,488 ms. The run is still active; once its final error confirms whether this is a timeout, the binding rule requires three isolated measurements and a HOLD. No timeout will be changed.
+
+[assistant]
+The error is confirmed: `society-renewable-support.test.ts:160` timed out at its unchanged 5,000 ms limit. The full run ended with 2,934 passes and this one failure. The inherited timeout rule now applies: three isolated measurements, then HOLD before committing or running the final gates/smoke.
+
+[assistant]
+All three isolated runs passed: 1,220 ms, 1,467 ms and 1,249 ms. CPU snapshots were 100%, 10% and 42%, so these measurements do not establish a consistently quiet baseline. The timeout HOLD remains; I’m preserving the uncommitted extraction, immutable-file check and logs for Claude’s ruling.
+
+[assistant]
+The HOLD package preserves all five uncommitted files, their hashes and a recoverable patch. The byte check passed for all 86 protected paths and the approved edits; the evidence manifest verifies all 205 files. No commit, final gates, smoke or bundle refresh has been performed for round 2.
+
+[assistant]
+**Claude: review the [timeout HOLD package](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/README.md) and return a resume ruling.** Round 2 is preserved uncommitted; the full unit suite timed out before the requested commit and final gates.
+
+The failing test is [society-renewable-support.test.ts:160](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/__tests__/society-renewable-support.test.ts:160), “preserves complete gameplay and assignments through sixty weeks of snapshot restores.” The pre-commit full run ended with **2,934 passed, one timeout, exit 1**. [Full unit log](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/r2-green-full-unit.txt).
+
+The required three isolated runs are recorded with CPU snapshots, top processes, durations and exit codes in [timeout-measurements.json](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/timeout-measurements.json). These results do not establish whether the extraction caused a slowdown.
+
+The extraction and targeted checks reached this state:
+
+- **Shared allocator implemented:** [workshop-operation.ts](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/workshop-operation.ts) owns the original operating prelude and safe-integer checks. End Week applies its returned effects; the panel calls the same export. The UI allocation copy is removed.
+- **RED → GREEN:** nine new direct-function cases failed because the export did not exist. After extraction, **303 targeted tests passed**, including the six unchanged dispatcher parity cases and all nine no-order hash assertions. Typecheck also exited 0. [RED](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/r2-red-unit.txt) · [GREEN](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/r2-green-unit.txt) · [typecheck](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/r2-green-typecheck.txt).
+- **Immutable bytes verified:** all **86 protected paths** match `43fcb9b` in HEAD and the working snapshot. Original simulation tests and approved P1–P3/X1–X3 edits remain unchanged. [Byte-check result](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/immutable-hold-check.json).
+- **Work preserved:** five files remain uncommitted. Raw copies and hashes are saved with a [recoverable patch](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/working.patch). The [manifest](C:/Users/Admin/.t3/local-drafts/p6b-prC/SHA256SUMS.txt) verifies all **205 evidence files**, including nested manifests; text is valid UTF-8.
+
+```text
+Branch:         feat/p6b-crafting-ui
+HEAD:           ed4105f9aa0054396bf0da7b21cb6a27ddbdaa37
+Committed tree: a164cb535cb914ee19f6e027b97013479c08e786
+Working status: four modified files + one new simulation file
+Ports:          4173 and 4174 free
+```
+
+**Still pending:** the single round-2 commit, final gates 1–7, full `CI=1` smoke and refreshed bundle. Nothing was pushed; PR #98 was not updated or merged.
+
+The HOLD comes from the original PR C instruction: **“If any test times out, measure it alone three times and HOLD.”** No timeout, assertion or threshold was changed. **Next: Claude, return the ruling for resuming from this preserved snapshot.**
+
+[user]
+Fix round 2 timeout HOLD answered by the owner. Binding plan is now C:/Users/Admin/.t3/local-drafts/p6b-prC/binding-plan-d02a155.md: read Plan correction 7.
+
+Owner (Tân), 2026-11-17, dialog choice, verbatim: "Set this test to 15 s (Recommended)".
+
+Scope, exactly:
+- In `packages/simulation/src/__tests__/society-renewable-support.test.ts`, give only the test at line 160 ("preserves complete gameplay and assignments through sixty weeks of snapshot restores") a 15000 ms per-test timeout, in the same style as the approved lord-health one (`}, 15000);`). Nothing else in that test or file changes.
+- Record it as existing-test edit P4 (file:line, before → after) in the edit inventory and the verifier's approval file; P1–P3 and X1–X3 stay byte-identical. Update your immutable check so this one approved line is the only change in that file.
+- No other timeout or threshold change. If any other test times out, measure it alone three times and HOLD.
+
+Resume from your preserved snapshot: commit the round-2 refactor as `refactor(simulation): share the weekly workshop operation forecast` and the timeout as its own commit `test(simulation): give the snapshot-restore test a 15 s timeout`, each ending `Co-authored-by: Codex <noreply@openai.com>`. Then gates 1–7 from the start at the clean final head on a quiet machine (record CPU), `echo "CI=$CI"`, the full `CI=1 npm run test:smoke`, refreshed bundle, inventory/immutable check and SHA256SUMS. Do not push, open or update a PR, or merge.
+
+[assistant]
+The owner has authorized the single timeout change. I’ll verify the preserved snapshot, read correction 7, then create the two commits and run the full validation. Allow about 45–60 minutes, including smoke.
+
+[assistant]
+The refactor is committed as `2e5d1bd`. P4 changes only the test’s closing line to `}, 15000);`, and all 17 tests in that file passed. Next are the separate timeout commit and final validation at a clean head.
+
+[assistant]
+Both commits are in place at clean head `060baa2`. The verifier confirms P4 is the only change in its test file, P1–P3/X1–X3 remain exact, and all 86 protected paths are unchanged. Gates started at a five-sample CPU average of 6.39%; diff check and lint passed.
+
+[assistant]
+Gates 1–5 passed, including typecheck with zero errors/warnings and all 154 architecture tests. The full unit suite is running at `060baa2`; build and the full `CI=1` smoke follow in the same shell.
+
+[assistant]
+All seven gates passed at `060baa2`: 2,935 unit tests, 154 architecture tests, typecheck and production build are green. The shell recorded `CI=` followed by `CI=1`; the full smoke is now running with one worker.
+
+[assistant]
+Smoke is still in its first long scenario; the first four cases passed, with no failure reported. The run remains on one worker. Bundle measurement and the final immutable/archive checks are queued after smoke.
+
+[assistant]
+Smoke has passed 8 of 387 cases with no failure reported, including the 375px and 1280px goods-stock accessibility checks. The current longer case is still running; no rerun has been needed.
+
+[assistant]
+Smoke has passed 11 of 387 cases. The 1600px life-shell accessibility baseline and long-content reflow checks passed; the 1280px checks are now running. No failure or timeout has been reported.
+
+[assistant]
+The long 1280px accessibility baseline is still running, with no new failure reported. The head remains `060baa2`. Based on the previous full run, roughly 25–30 minutes of smoke remain.
+
+[assistant]
+Smoke has passed 14 of 387 cases. The 1280px life-shell baseline and reflow checks passed; the suite has moved to 375px accessibility. No failure, timeout or retry has been reported.
+
+[assistant]
+The 375px accessibility baseline is still running, with no new failure reported. All seven gates remain passed; smoke is the current validation step.
+
+[assistant]
+Smoke has passed 17 of 387 cases. The 375px baseline and long-content reflow checks passed; 320px accessibility is next. No failure or retry has been reported.
+
+[assistant]
+The 320px life-shell baseline is still running. Smoke remains at 17 completed cases with no failure reported; the final artifact checks are prepared and will run after smoke.
+
+[assistant]
+The early accessibility baselines take minutes each, so the case count is advancing slowly. Smoke remains at 17 completed cases with no failure reported; roughly 20–25 minutes remain based on the previous run.
+
+[assistant]
+Smoke has passed 26 of 387 cases. The 320px baseline and reflow checks passed, along with navigation layouts at 320, 375, 1280 and 1600px. No failure or timeout has been reported.
+
+[assistant]
+Smoke has passed 30 of 387 cases. Window focus restoration, report navigation and the independent report-calendar parser passed. The current longer report scenario is still running; no rerun has been needed.
+
+[assistant]
+Smoke has passed 46 of 387 cases. Report fulfillment, year boundaries, load-error handling and command-error UI checks passed. No failure or timeout has been reported.
+
+[assistant]
+Smoke has passed 61 of 387 cases, including exact report parsing and rejected-load behavior. The run remains on one worker; no failed case has required an isolated rerun.
+
+[assistant]
+Smoke has passed 72 of 387 cases. The visible reports matched the executor’s shortage and zero-output projections. No failure or timeout has been reported.
+
+[assistant]
+Smoke has passed 78 of 387 cases, including the 1280px keyboard weekly-turn and manager-assignment flows. P4’s resumed full unit run is already green; smoke remains the main check in progress.
+
+[assistant]
+Smoke has passed 83 of 387 cases. The weekly-turn and manager-assignment keyboard flows also passed at 375px. No failure or timeout has been reported.
+
+[assistant]
+Smoke has passed 112 of 387 cases. The crafting flow passed at 1280px: build Smithy, refine, upgrade, cancel, brew and receive outputs. Keyboard focus, unstaffed placement and atomic cancel-error checks passed too.
+
+[assistant]
+All 17 crafting smoke cases passed, including the no-Herbs Hospital forecast versus End Week, report parsing, 1280/1600 accessibility and 320/375 reflow. Overall smoke is at 133 of 387, with no failure or timeout reported.
+
+[assistant]
+Smoke has passed 149 of 387 cases. Crisis, error-log and garrison regression checks passed after crafting. The head is unchanged; no rerun has been needed.
+
+[assistant]
+Smoke has passed 158 of 387 cases. Goods-stock parity passed at 375px and 1280px, followed by item, post-effect and potion-shop checks. No failure or timeout has been reported.
+
+[assistant]
+Smoke has passed 171 of 387 cases. Equipment, Market, potions and letters passed accessibility checks at 1280px and 1600px; keyboard Destroy/focus-restoration checks passed too. No failed case has required a rerun.
+
+[assistant]
+Smoke has passed 177 of 387 cases. Law workflows and the first ledger/report-parity scenarios passed. The run continues without a reported failure or timeout.
+
+[assistant]
+Smoke has passed 204 of 387 cases. Ledger, Order, outside-land and persistence checks passed, along with the regression/production artifact-boundary check. The suite is past halfway by case count; no failure has been reported.
+
+[assistant]
+Smoke has passed 238 of 387 cases. Society, save/load, migration and storage-concurrency checks passed. No failure, timeout or rerun has been reported.
+
+[assistant]
+Smoke has passed 255 of 387 cases, including large-integer precision and contextual command-refusal checks. The run remains on one worker with no failure reported.
+
+[assistant]
+Smoke has passed 269 of 387 cases. The command-refusal checks passed at 390px and 320px, and the stock ledger retained exact milli-unit digits. No failure or timeout has been reported.
+
+[assistant]
+Smoke has passed 303 of 387 cases. Multiweek checkpoint economics and invalid-checkpoint refusal checks passed in both tile and population modes. Eighty-four cases remain; no failure has been reported.
+
+[assistant]
+Smoke has passed 309 of 387 cases. Grown-cohort checkpoint restoration and next-week parity passed at desktop and narrow widths. No failure, timeout or rerun has been reported.
+
+[assistant]
+Smoke has passed 318 of 387 cases. File export/import, delayed-import guards and ruleset refusal checks passed. The remaining cases are tile and world regressions.
+
+[assistant]
+Smoke has passed 324 of 387 cases. Production, replacement and repeated keyboard/touch activation guards passed. No failure or timeout has been reported; artifact verification follows smoke.
+
+[assistant]
+Smoke has passed 369 of 387 cases. Workforce drafts, title/options and layout checks passed. Eighteen cases remain, with no failure or timeout reported.
+
+[assistant]
+Full smoke passed: **387/387 with `CI=1`**, no failed-case rerun or timeout. It reported 41.5 minutes. Bundle measurement also passed at 144,561 gzip bytes combined. The final byte verifier is running; archive verification and checksum freeze remain, about 2–3 minutes.
+
+[assistant]
+The final verifier and committed-archive check passed. All 86 protected paths match the base, and the archived P4 file matches the base plus only the approved timeout line. README, inventory, bundle, screenshots and accessibility evidence are refreshed; final checksums and the status/port check remain.
+
+[assistant]
+Evidence freeze passed: all 330 files are covered, every nested manifest verifies, and text files are valid UTF-8. The final status check is clean and ports 4173/4174 are free. Both commits remain local; the package is ready for Astra’s independent re-review.
+
+[assistant]
+**Claude: hand local head `060baa2` to Astra for re-review of [PR #98](https://github.com/tanntran2000/Build-Settlement/pull/98).** Both requested commits are complete, and all final local checks passed. Nothing was pushed; the PR was not updated or merged.
+
+```text
+Branch: feat/p6b-crafting-ui
+HEAD:   060baa24d44d6a61c2b184a77ab161ae6f62d610
+Tree:   77cbeae3332cfaf26ba23e08ae67300d49d8c69d
+Status: empty
+Ports:  4173 and 4174 free
+```
+
+The two separate commits are:
+
+1. `2e5d1bdf5eb6c15561c310491bde4806863d5bd1` — `refactor(simulation): share the weekly workshop operation forecast`
+2. `060baa24d44d6a61c2b184a77ab161ae6f62d610` — `test(simulation): give the snapshot-restore test a 15 s timeout`
+
+Both end with `Co-authored-by: Codex <noreply@openai.com>`. The refactor’s five files match the preserved HOLD snapshot’s canonical Git hashes.
+
+**P4 changes only [society-renewable-support.test.ts:170](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/__tests__/society-renewable-support.test.ts:170)**, the closing line of the test starting at line 160:
+
+```diff
+-  });
++  }, 15000);
+```
+
+No other byte in that file changed. The [timeout approval file](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/timeout-owner-approval.json) records P4 and Tân’s verbatim decision: **“Set this test to 15 s (Recommended)”**. P1–P3 and X1–X3 still reconstruct exactly from the frozen Step 0 package.
+
+The shared pure allocator in [workshop-operation.ts](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/workshop-operation.ts) now supplies End Week and the panel. The UI allocation copy is removed. The original tax/funding order, Farm debits, extraction, Herb production, Hospital consumption and arithmetic guards remain covered by the tests.
+
+**Final validation at the clean head**
+
+CPU at gate start averaged **6.39% across five one-second PDH samples**. The raw Win32 snapshot of 20%, individual samples and top processes are also retained in the [quiet-machine log](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/c3-quiet-machine.txt). No competing test/build job was detected.
+
+| Gate | Result | Time |
+|---|---|---:|
+| 1. Diff check | PASS, exit 0 | 0.06 s |
+| 2. Lint | PASS, exit 0 | 22.40 s |
+| 3. Typecheck | PASS, 0 errors/warnings | 40.29 s |
+| 4. Architecture check | PASS, exit 0 | 6.76 s |
+| 5. Architecture tests | PASS, **154 tests** | 50.48 s |
+| 6. Unit tests | PASS, **2,935 tests / 127 files** | 71.73 s |
+| 7. Build | PASS, exit 0 | 23.30 s |
+
+Full smoke: **387/387 passed with `CI=1`**, reporting **41.5 minutes**. The CI echo and smoke ran in the same shell. No final-run retry, failed-case rerun or timeout occurred. All 17 crafting cases passed, including no-Herbs Hospital parity, keyboard paths, report parsing, accessibility and reflow. [Gate results](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/c3-results.json) · [CI environment](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/c3-ci-environment.txt) · [full smoke log](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/c3-smoke-ci1.txt).
+
+**Inventory and immutable proof**
+
+- **Seven approved edits:** P1–P4 plus X1–X3. Six paths changed in this round; fifteen across the PR.
+- **All 86 protected paths remain byte-identical to `43fcb9b`**. Golden, fixtures and pins were not regenerated.
+- **All nine no-order hash assertions and the six unchanged parity tests pass.** All other existing simulation-test bytes remain unchanged.
+- The committed archive check verified **87 files**: the 86 protected files plus P4’s exact approved after-bytes, followed by `sha256sum -c`. [Inventory](C:/Users/Admin/.t3/local-drafts/p6b-prC/edit-inventory.md) · [final verifier log](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/c3-final-inventory-immutable.txt) · [archive proof](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/immutable-archive-results.json).
+
+Bundle measurements are **137,409 gzip bytes JS** and **7,152 bytes CSS**, increases of **5,269 / 412 bytes** against the supplied main baseline. Combined: **144,561 bytes**. [Measurement script](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/measure-bundle.mjs) · [raw results](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/bundle-results.json) · [raw artifact manifest](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/bundle-artifacts/SHA256SUMS.txt).
+
+Five screenshots and fourteen accessibility artifacts were refreshed by the final smoke: [Smithy](C:/Users/Admin/.t3/local-drafts/p6b-prC/screenshots/smithy-queue-1280.png), [Hospital Brew](C:/Users/Admin/.t3/local-drafts/p6b-prC/screenshots/brew-tab-1280.png), [Drug Store Brew](C:/Users/Admin/.t3/local-drafts/p6b-prC/screenshots/drug-store-brew-1280.png), [Quartermaster](C:/Users/Admin/.t3/local-drafts/p6b-prC/screenshots/quartermaster-rows-1280.png), [Steward/Quartermaster](C:/Users/Admin/.t3/local-drafts/p6b-prC/screenshots/steward-quartermaster-1280.png).
+
+The [SHA256 manifest](C:/Users/Admin/.t3/local-drafts/p6b-prC/SHA256SUMS.txt) covers **all 330 evidence files**, excluding only itself. Every nested manifest verifies, and text is valid UTF-8. [Verification transcript](C:/Users/Admin/.t3/local-drafts/p6b-prC/checksum-verification.txt).
+
+**Next: open the [final round-2 README](C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/README.md) for Astra’s handoff.** Independent re-review at this local head remains pending.

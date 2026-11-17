@@ -1,0 +1,91 @@
+EXIT: 0
+GATE_CPU_PERCENT: 6.39
+PDH_CPU_SAMPLES: [{"utc":"2026-11-17T02:30:19.9140000Z","percent":6.27},{"utc":"2026-11-17T02:30:20.9220000Z","percent":5.97},{"utc":"2026-11-17T02:30:21.9370000Z","percent":4.17},{"utc":"2026-11-17T02:30:22.9480000Z","percent":4.61},{"utc":"2026-11-17T02:30:23.9520000Z","percent":10.91}]
+UTC_SNAPSHOT: 2026-11-17T02:30:24.0539013Z
+HEAD: 060baa24d44d6a61c2b184a77ab161ae6f62d610
+TREE: 77cbeae3332cfaf26ba23e08ae67300d49d8c69d
+CPU LOAD:
+
+Name                                     LoadPercentage NumberOfLogicalProcessors
+----                                     -------------- -------------------------
+Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz             20                         8
+
+
+TOP PROCESSES (cumulative CPU seconds):
+
+   Id ProcessName                 CPU WorkingSet64
+   -- -----------                 --- ------------
+72060 browser             5743.328125     75837440
+21592 browser              4911.40625    164675584
+47380 Zalo                 659.421875    242278400
+51560 ChatGPT                617.3125    289206272
+64728 msedgewebview2         545.4375      9797632
+72784 T3 Code (Nightly)       337.125    228364288
+72488 codex                331.046875     83460096
+71368 ChatGPT              326.015625    202956800
+74404 explorer               311.9375    133804032
+57552 codebase-memory-mcp    251.5625      9191424
+
+
+CURRENT PROCESS CPU COUNTERS (raw per-process, can span cores):
+
+Name                  IDProcess PercentProcessorTime WorkingSet
+----                  --------- -------------------- ----------
+WmiPrvSE#2                60404                   19   17858560
+System                        4                    9      24576
+MsMpEng                    4272                    9  388034560
+claude#13                 77676                    4  307728384
+msedgewebview2            56200                    4   54435840
+browser                   21592                    4  164675584
+codebase-memory-mcp#7     75400                    4    7802880
+codebase-memory-mcp#2     35588                    4    2383872
+codebase-memory-mcp#6     50936                    4    2142208
+node#20                   12036                    0    5165056
+
+
+OTHER TEST/BUILD JOBS:
+REVIEW: no delegated/background review job launched by this Builder. Claude/Astra review is pending handoff.
+
+UTC_START: 2026-11-17T03:15:45.6398547Z
+COMMAND: node C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/measure-bundle.mjs
+CI=1
+{
+  "utc": "2026-11-17T03:15:45.760Z",
+  "head": "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+  "tree": "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+  "method": "Sum Node gzipSync(default compression) byte lengths of production dist JS/CSS; decimal kB (1000 bytes). Baseline is the supplied rounded main report, not a new main build.",
+  "baselineGzipKB": {
+    "JS": 132.14,
+    "CSS": 6.74
+  },
+  "totalsGzipBytes": {
+    "JS": 137409,
+    "CSS": 7152
+  },
+  "deltaBytesAgainstReportedMain": {
+    "JS": 5269,
+    "CSS": 412
+  },
+  "combinedGzipBytes": 144561,
+  "under200KB": true,
+  "files": [
+    {
+      "file": "assets/index-CBlQNAPd.js",
+      "artifact": "bundle-artifacts/assets_index-CBlQNAPd.js",
+      "kind": "JS",
+      "bytes": 442106,
+      "gzipBytes": 137409,
+      "sha256": "e849db77c2d67b07c68632ccda636e88912e6144fa2d84d6ae8cbe31a5c1e116"
+    },
+    {
+      "file": "assets/index-DLT9rNeI.css",
+      "artifact": "bundle-artifacts/assets_index-DLT9rNeI.css",
+      "kind": "CSS",
+      "bytes": 35427,
+      "gzipBytes": 7152,
+      "sha256": "48220c778ce4ca3a2cc8b36a4d4692a4358db576c8683c31c7e22afe8b8919c8"
+    }
+  ]
+}
+UTC_END: 2026-11-17T03:15:45.9017356Z
+EXIT: 0

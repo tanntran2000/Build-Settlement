@@ -1,0 +1,26 @@
+UTC_START: 2026-11-15T12:55:08.708Z
+HEAD: 43fcb9b856c66606230d6d7ba49140ae94cfaa00
+TREE: bc5965abab73df37f43baeafd9e4f9d847a23826
+STATUS: ?? packages/ui/src/__tests__/crafting-view.test.ts
+?? tests/e2e/crafting.spec.ts
+COMMAND: npm run build --workspace=@haven/ui
+CI=
+
+
+> @haven/ui@0.1.0 build
+> vite build
+
+vite v6.4.5 building for production...
+transforming...
+✓ 249 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.71 kB │ gzip:   0.41 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-CxB-ZnFZ.css                   32.98 kB │ gzip:   6.74 kB
+dist/assets/index-BLTFTA5Z.js                   425.26 kB │ gzip: 132.14 kB
+✓ built in 2.73s
+
+UTC_END: 2026-11-15T12:55:15.412Z
+SECONDS: 6.704
+EXIT: 0

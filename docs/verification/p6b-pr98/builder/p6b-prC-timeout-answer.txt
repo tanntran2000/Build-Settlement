@@ -1,0 +1,10 @@
+Fix round 2 timeout HOLD answered by the owner. Binding plan is now C:/Users/Admin/.t3/local-drafts/p6b-prC/binding-plan-d02a155.md: read Plan correction 7.
+
+Owner (Tân), 2026-11-17, dialog choice, verbatim: "Set this test to 15 s (Recommended)".
+
+Scope, exactly:
+- In `packages/simulation/src/__tests__/society-renewable-support.test.ts`, give only the test at line 160 ("preserves complete gameplay and assignments through sixty weeks of snapshot restores") a 15000 ms per-test timeout, in the same style as the approved lord-health one (`}, 15000);`). Nothing else in that test or file changes.
+- Record it as existing-test edit P4 (file:line, before → after) in the edit inventory and the verifier's approval file; P1–P3 and X1–X3 stay byte-identical. Update your immutable check so this one approved line is the only change in that file.
+- No other timeout or threshold change. If any other test times out, measure it alone three times and HOLD.
+
+Resume from your preserved snapshot: commit the round-2 refactor as `refactor(simulation): share the weekly workshop operation forecast` and the timeout as its own commit `test(simulation): give the snapshot-restore test a 15 s timeout`, each ending `Co-authored-by: Codex <noreply@openai.com>`. Then gates 1–7 from the start at the clean final head on a quiet machine (record CPU), `echo "CI=$CI"`, the full `CI=1 npm run test:smoke`, refreshed bundle, inventory/immutable check and SHA256SUMS. Do not push, open or update a PR, or merge.

@@ -1,0 +1,52 @@
+EXIT: 0
+UTC_SNAPSHOT: 2026-11-15T15:02:35.9388019Z
+HEAD: ed4105f9aa0054396bf0da7b21cb6a27ddbdaa37
+TREE: a164cb535cb914ee19f6e027b97013479c08e786
+CPU LOAD:
+
+Name                                     LoadPercentage NumberOfLogicalProcessors
+----                                     -------------- -------------------------
+Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz              5                         8
+
+
+TOP PROCESSES (cumulative CPU seconds):
+
+   Id ProcessName                 CPU WorkingSet64
+   -- -----------                 --- ------------
+67228 T3 Code (Nightly)   1417.484375    280039424
+72168 cloudflared            1384.875     38338560
+57432 claude              1303.078125    586858496
+74368 T3 Code (Nightly)        963.75    264007680
+52232 msedgewebview2       760.453125    157638656
+48340 claude                 642.8125     99422208
+49904 codebase-memory-mcp  632.015625      8929280
+57060 claude                582.09375    272949248
+48224 ChatGPT               538.40625    147623936
+74360 claude               520.640625     95617024
+
+
+CURRENT PROCESS CPU COUNTERS (raw per-process, can span cores):
+
+Name                  IDProcess PercentProcessorTime WorkingSet
+----                  --------- -------------------- ----------
+T3 Code (Nightly)#3       74368                  123  255680512
+codex#2                   44304                   76  354881536
+System                        4                   30    1605632
+WmiPrvSE#2                13832                   10   15204352
+javaw                     41788                    5  216936448
+MsMpEng                    4272                    5  494428160
+codebase-memory-mcp#2     51732                    5   12017664
+node#25                   53360                    0   40353792
+node#26                   74196                    0   55181312
+node#24                   73620                    0   60690432
+
+
+OTHER TEST/BUILD JOBS:
+REVIEW: no delegated/background review job launched by this Builder. Claude/Astra review is pending handoff.
+
+UTC_START: 2026-11-15T15:05:36.2460570Z
+COMMAND: node C:/Users/Admin/.t3/local-drafts/p6b-prC/preserve-legacy-e2e-artifacts.mjs before fix-round1-full-smoke
+CI=
+Preserved 35 pre-existing hardcoded items.spec.ts artifacts outside PR C evidence.
+UTC_END: 2026-11-15T15:05:36.5617719Z
+EXIT: 0

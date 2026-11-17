@@ -1,0 +1,14 @@
+import { spawn, execFileSync } from 'node:child_process';
+import { createWriteStream } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+const root=dirname(fileURLToPath(import.meta.url)),[name,...args]=process.argv.slice(2);
+if(!name||!args.length||!/^[a-z0-9-]+$/.test(name))throw Error('Usage: run-task.mjs <safe-log-name> <command...>');
+const command=args.join(' '),git=(...v)=>execFileSync('git',v,{encoding:'utf8'}).trim();
+const path=join(root,`${name}.txt`),log=createWriteStream(path,{encoding:'utf8'}),start=new Date();
+log.write(`UTC_START: ${start.toISOString()}\nHEAD: ${git('rev-parse','HEAD')}\nTREE: ${git('rev-parse','HEAD^{tree}')}\nSTATUS: ${git('status','--short')||'CLEAN'}\nCOMMAND: ${command}\nCI=${process.env.CI??''}\n\n`);
+console.log(`START ${name}: ${command}`);
+const run=spawn(process.env.ComSpec??'cmd.exe',['/d','/s','/c',command],{stdio:['ignore','pipe','pipe'],env:{...process.env,NO_COLOR:'1'}});
+run.stdout.on('data',chunk=>log.write(chunk));run.stderr.on('data',chunk=>log.write(chunk));
+run.on('error',error=>{log.write(String(error));process.exitCode=1;});
+run.on('close',code=>{const end=new Date();log.end(`\nUTC_END: ${end.toISOString()}\nSECONDS: ${(end-start)/1000}\nEXIT: ${code}\n`);console.log(`END ${name}: exit ${code}; ${(end-start)/1000}s; ${path}`);process.exitCode=code??1;});

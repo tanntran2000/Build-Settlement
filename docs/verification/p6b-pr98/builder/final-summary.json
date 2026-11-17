@@ -1,0 +1,224 @@
+{
+  "status": "Complete locally; independent re-review pending",
+  "base": "43fcb9b856c66606230d6d7ba49140ae94cfaa00",
+  "parent": "ed4105f9aa0054396bf0da7b21cb6a27ddbdaa37",
+  "head": "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+  "tree": "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+  "commits": [
+    "2e5d1bdf5eb6c15561c310491bde4806863d5bd1",
+    "060baa24d44d6a61c2b184a77ab161ae6f62d610"
+  ],
+  "cpuAtGateStartPercent": 6.39,
+  "cpuMethod": "Five one-second PDH samples; raw Win32 snapshot and top processes also retained",
+  "units": 2935,
+  "unitFiles": 127,
+  "architectureTests": 154,
+  "smoke": 387,
+  "ci": 1,
+  "approvedEditCount": 7,
+  "existingTestEdits": 4,
+  "restrictedProductEdits": 3,
+  "fixChangedPaths": 6,
+  "changedPaths": 15,
+  "immutableFiles": 86,
+  "immutableChanges": [],
+  "approvedTimeout": {
+    "id": "P4",
+    "path": "packages/simulation/src/__tests__/society-renewable-support.test.ts",
+    "testLine": 160,
+    "line": 170,
+    "before": "  });\n  it('stops and resumes immigration over forty-five weeks when renewable support changes', () => {",
+    "after": "  }, 15000);\n  it('stops and resumes immigration over forty-five weeks when renewable support changes', () => {",
+    "reason": "Owner-approved 15000 ms timeout for only the 60-week snapshot-restore test; assertions, setup and loop unchanged."
+  },
+  "unchangedPackages": [
+    {
+      "name": "core",
+      "baseTree": "34ea9e64f68b139c950ff83bf66ce0d586c784e3",
+      "headTree": "34ea9e64f68b139c950ff83bf66ce0d586c784e3"
+    },
+    {
+      "name": "persistence",
+      "baseTree": "5218db339d263803601a5eb8b4e08c96712e85cc",
+      "headTree": "5218db339d263803601a5eb8b4e08c96712e85cc"
+    }
+  ],
+  "archive": {
+    "utc": "2026-11-17T03:17:25.158Z",
+    "base": "43fcb9b856c66606230d6d7ba49140ae94cfaa00",
+    "head": "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+    "tree": "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+    "method": "git -c core.autocrlf=false archive --format=tar HEAD -- <86 protected paths and P4>; decode tar bytes; compare base/P4; sha256sum.exe -c SHA256SUMS.txt",
+    "archiveSha256": "57bcccfa9e7e6bb80b1fc6b53ad3023a36ef8a46c5d4d2eaca5fb6b7c82318c7",
+    "archiveBytes": 1484800,
+    "protectedFiles": 86,
+    "approvedTestExceptions": 1,
+    "archiveFiles": 87,
+    "result": "PASS",
+    "sha256sumExit": 0
+  },
+  "bundle": {
+    "utc": "2026-11-17T03:15:45.760Z",
+    "head": "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+    "tree": "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+    "method": "Sum Node gzipSync(default compression) byte lengths of production dist JS/CSS; decimal kB (1000 bytes). Baseline is the supplied rounded main report, not a new main build.",
+    "baselineGzipKB": {
+      "JS": 132.14,
+      "CSS": 6.74
+    },
+    "totalsGzipBytes": {
+      "JS": 137409,
+      "CSS": 7152
+    },
+    "deltaBytesAgainstReportedMain": {
+      "JS": 5269,
+      "CSS": 412
+    },
+    "combinedGzipBytes": 144561,
+    "under200KB": true,
+    "files": [
+      {
+        "file": "assets/index-CBlQNAPd.js",
+        "artifact": "bundle-artifacts/assets_index-CBlQNAPd.js",
+        "kind": "JS",
+        "bytes": 442106,
+        "gzipBytes": 137409,
+        "sha256": "e849db77c2d67b07c68632ccda636e88912e6144fa2d84d6ae8cbe31a5c1e116"
+      },
+      {
+        "file": "assets/index-DLT9rNeI.css",
+        "artifact": "bundle-artifacts/assets_index-DLT9rNeI.css",
+        "kind": "CSS",
+        "bytes": 35427,
+        "gzipBytes": 7152,
+        "sha256": "48220c778ce4ca3a2cc8b36a4d4692a4358db576c8683c31c7e22afe8b8919c8"
+      }
+    ]
+  },
+  "results": [
+    {
+      "name": "gate1-diff-check",
+      "command": "git diff --check origin/main...HEAD",
+      "head": "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+      "tree": "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+      "startUtc": "2026-11-17T02:30:24.1759032Z",
+      "endUtc": "2026-11-17T02:30:24.2359028Z",
+      "exit": 0,
+      "seconds": 0.06
+    },
+    {
+      "name": "gate2-lint",
+      "command": "npm.cmd run lint",
+      "head": "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+      "tree": "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+      "startUtc": "2026-11-17T02:30:24.3684371Z",
+      "endUtc": "2026-11-17T02:30:46.7681600Z",
+      "exit": 0,
+      "seconds": 22.4
+    },
+    {
+      "name": "gate3-typecheck",
+      "command": "npm.cmd run typecheck",
+      "head": "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+      "tree": "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+      "startUtc": "2026-11-17T02:30:46.9514258Z",
+      "endUtc": "2026-11-17T02:31:27.2453041Z",
+      "exit": 0,
+      "seconds": 40.294
+    },
+    {
+      "name": "gate4-check-architecture",
+      "command": "npm.cmd run check:architecture",
+      "head": "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+      "tree": "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+      "startUtc": "2026-11-17T02:31:27.3673009Z",
+      "endUtc": "2026-11-17T02:31:34.1295837Z",
+      "exit": 0,
+      "seconds": 6.762
+    },
+    {
+      "name": "gate5-test-architecture",
+      "command": "npm.cmd run test:architecture",
+      "head": "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+      "tree": "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+      "startUtc": "2026-11-17T02:31:34.2869026Z",
+      "endUtc": "2026-11-17T02:32:24.7685075Z",
+      "exit": 0,
+      "seconds": 50.482
+    },
+    {
+      "name": "gate6-unit",
+      "command": "npm.cmd test",
+      "head": "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+      "tree": "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+      "startUtc": "2026-11-17T02:32:24.9094691Z",
+      "endUtc": "2026-11-17T02:33:36.6339891Z",
+      "exit": 0,
+      "seconds": 71.725
+    },
+    {
+      "name": "gate7-build",
+      "command": "npm.cmd run build",
+      "head": "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+      "tree": "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+      "startUtc": "2026-11-17T02:33:36.7559564Z",
+      "endUtc": "2026-11-17T02:34:00.0577688Z",
+      "exit": 0,
+      "seconds": 23.302
+    },
+    {
+      "name": "c3-legacy-before",
+      "command": "node C:/Users/Admin/.t3/local-drafts/p6b-prC/preserve-legacy-e2e-artifacts.mjs before fix-round2-full-smoke",
+      "head": "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+      "tree": "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+      "startUtc": "2026-11-17T02:34:01.4145637Z",
+      "endUtc": "2026-11-17T02:34:01.7700447Z",
+      "exit": 0,
+      "seconds": 0.355
+    },
+    {
+      "name": "c3-smoke-ci1",
+      "command": "npm.cmd run test:smoke",
+      "head": "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+      "tree": "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+      "startUtc": "2026-11-17T02:34:01.8910852Z",
+      "endUtc": "2026-11-17T03:15:44.0296373Z",
+      "exit": 0,
+      "seconds": 2502.139
+    },
+    {
+      "name": "c3-legacy-after",
+      "command": "node C:/Users/Admin/.t3/local-drafts/p6b-prC/preserve-legacy-e2e-artifacts.mjs after fix-round2-full-smoke",
+      "head": "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+      "tree": "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+      "startUtc": "2026-11-17T03:15:44.2571680Z",
+      "endUtc": "2026-11-17T03:15:45.0169170Z",
+      "exit": 0,
+      "seconds": 0.76
+    },
+    {
+      "name": "bundle-measurement",
+      "command": "node C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/measure-bundle.mjs",
+      "head": "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+      "tree": "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+      "startUtc": "2026-11-17T03:15:45.6398547Z",
+      "endUtc": "2026-11-17T03:15:45.9017356Z",
+      "exit": 0,
+      "seconds": 0.262
+    },
+    {
+      "name": "c3-final-inventory-immutable",
+      "command": "node C:/Users/Admin/.t3/local-drafts/p6b-prC/verify-edit-inventory.mjs --mode final --approval C:/Users/Admin/.t3/local-drafts/p6b-prC/owner-approval.json --round2-approval C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/owner-approval.json --timeout-approval C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/timeout-owner-approval.json",
+      "head": "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+      "tree": "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+      "startUtc": "2026-11-17T03:15:46.0732677Z",
+      "endUtc": "2026-11-17T03:16:30.7790362Z",
+      "exit": 0,
+      "seconds": 44.706
+    }
+  ],
+  "builderPushed": false,
+  "builderUpdatedPr": false,
+  "builderMerged": false,
+  "review": "Astra R2 FAIL at parent; shared-operation fix now local; independent re-review at final head pending"
+}

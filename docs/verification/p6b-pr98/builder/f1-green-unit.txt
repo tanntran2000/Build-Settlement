@@ -1,0 +1,44 @@
+UTC_START: 2026-11-15T14:56:37.864Z
+HEAD: 09a042a7a3e5c9b0cb09ccbecdd293bf86b4e29f
+TREE: 0ae12c7f62462fb14090a61c788a998f00a031ca
+STATUS: M packages/ui/src/WorkshopPanel.svelte
+ M packages/ui/src/__tests__/crafting-view.test.ts
+ M packages/ui/src/items-view.ts
+ M tests/e2e/crafting.spec.ts
+COMMAND: npm test -- packages/ui/src/__tests__/crafting-view.test.ts
+CI=
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/ui/src/__tests__/crafting-view.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts (158 tests | 1 failed) 628ms
+     × matches actual End Week throughput for same-week-herbs without changing the input 58ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > F1 weekly workshop operation forecast > matches actual End Week throughput for same-week-herbs without changing the input
+Error: Parity fixture did not resolve
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:224:54
+    222|     expect(JSON.stringify(s)).toBe(before);
+    223|     const resolved = executeCharacterLifeCommand(s, { type: 'END_WEEK'…
+    224|     if (!resolved.success || !resolved.report) throw Error('Parity fix…
+       |                                                      ^
+    225|     expect(resolved.report.items.crafted?.filter(row => row.tileId ===…
+    226|     expect(!!resolved.report.items.workshopsIdle?.includes(tileId)).to…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 157 passed (158)
+   Start at  21:56:39
+   Duration  1.98s (transform 790ms, setup 0ms, import 1.01s, tests 628ms, environment 0ms)
+
+
+UTC_END: 2026-11-15T14:56:41.538Z
+SECONDS: 3.674
+EXIT: 1

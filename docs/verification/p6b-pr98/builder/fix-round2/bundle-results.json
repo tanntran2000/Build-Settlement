@@ -1,0 +1,38 @@
+{
+  "utc": "2026-11-17T03:15:45.760Z",
+  "head": "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+  "tree": "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+  "method": "Sum Node gzipSync(default compression) byte lengths of production dist JS/CSS; decimal kB (1000 bytes). Baseline is the supplied rounded main report, not a new main build.",
+  "baselineGzipKB": {
+    "JS": 132.14,
+    "CSS": 6.74
+  },
+  "totalsGzipBytes": {
+    "JS": 137409,
+    "CSS": 7152
+  },
+  "deltaBytesAgainstReportedMain": {
+    "JS": 5269,
+    "CSS": 412
+  },
+  "combinedGzipBytes": 144561,
+  "under200KB": true,
+  "files": [
+    {
+      "file": "assets/index-CBlQNAPd.js",
+      "artifact": "bundle-artifacts/assets_index-CBlQNAPd.js",
+      "kind": "JS",
+      "bytes": 442106,
+      "gzipBytes": 137409,
+      "sha256": "e849db77c2d67b07c68632ccda636e88912e6144fa2d84d6ae8cbe31a5c1e116"
+    },
+    {
+      "file": "assets/index-DLT9rNeI.css",
+      "artifact": "bundle-artifacts/assets_index-DLT9rNeI.css",
+      "kind": "CSS",
+      "bytes": 35427,
+      "gzipBytes": 7152,
+      "sha256": "48220c778ce4ca3a2cc8b36a4d4692a4358db576c8683c31c7e22afe8b8919c8"
+    }
+  ]
+}

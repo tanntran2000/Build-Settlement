@@ -1,0 +1,179 @@
+UTC_START: 2026-11-15T14:55:18.769Z
+HEAD: 09a042a7a3e5c9b0cb09ccbecdd293bf86b4e29f
+TREE: 0ae12c7f62462fb14090a61c788a998f00a031ca
+STATUS: M packages/ui/src/__tests__/crafting-view.test.ts
+ M tests/e2e/crafting.spec.ts
+COMMAND: npm test -- packages/ui/src/__tests__/crafting-view.test.ts
+CI=
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/ui/src/__tests__/crafting-view.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts (158 tests | 15 failed) 463ms
+     × gives a fully staffed funded Hospital zero and a reason when no Herbs can arrive 9ms
+     × gives unfunded spec-2 zero and an upkeep reason 3ms
+     × gives unfunded service-1 zero and an upkeep reason 3ms
+     × gives unfunded slum-1 zero and an upkeep reason 2ms
+     × uses workers and effective medical steps when the Hospital is funded and supplied 2ms
+     × gives funded worker-free Drug Store base one 2ms
+     × uses same-week Herb output before Hospital consumption, independent of tile placement order 2ms
+     × allocates Herbs to fully staffed Hospitals in tile order and excludes paused producers 2ms
+     × credits this-week tax before upkeep, so zero opening Gold need not mean idle 2ms
+     × matches actual End Week throughput for no-herbs without changing the input 51ms
+     × matches actual End Week throughput for supplied without changing the input 46ms
+     × matches actual End Week throughput for same-week-herbs without changing the input 46ms
+     × matches actual End Week throughput for unfunded without changing the input 45ms
+     × matches actual End Week throughput for drug-funded without changing the input 44ms
+     × matches actual End Week throughput for drug-unfunded without changing the input 42ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 15 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > F1 weekly workshop operation forecast > gives a fully staffed funded Hospital zero and a reason when no Herbs can arrive
+AssertionError: expected 2 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 2
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:166:60
+    164|   it('gives a fully staffed funded Hospital zero and a reason when no …
+    165|     const s = operatingLife(); s.city.society!.stocksMilli.herbs = 0;
+    166|     expect(view.workshopCapacity(s.city, [], 'service-1')).toBe(0);
+       |                                                            ^
+    167|     expect(view.workshopForecast(s.city, [], 'service-1')).toEqual({ c…
+    168|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/15]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > F1 weekly workshop operation forecast > gives unfunded spec-2 zero and an upkeep reason
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > F1 weekly workshop operation forecast > gives unfunded slum-1 zero and an upkeep reason
+AssertionError: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:171:55
+    169|   it.each(['spec-2', 'service-1', 'slum-1'])('gives unfunded %s zero a…
+    170|     const s = operatingLife(); stock(s).gold = 0; s.city.society!.stoc…
+    171|     expect(view.workshopCapacity(s.city, [], tileId)).toBe(0);
+       |                                                       ^
+    172|     expect(view.workshopForecast(s.city, [], tileId)).toEqual({ capaci…
+    173|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/15]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > F1 weekly workshop operation forecast > gives unfunded service-1 zero and an upkeep reason
+AssertionError: expected 2 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 2
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:171:55
+    169|   it.each(['spec-2', 'service-1', 'slum-1'])('gives unfunded %s zero a…
+    170|     const s = operatingLife(); stock(s).gold = 0; s.city.society!.stoc…
+    171|     expect(view.workshopCapacity(s.city, [], tileId)).toBe(0);
+       |                                                       ^
+    172|     expect(view.workshopForecast(s.city, [], tileId)).toEqual({ capaci…
+    173|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/15]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > F1 weekly workshop operation forecast > uses workers and effective medical steps when the Hospital is funded and supplied
+TypeError: workshopForecast is not a function
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:177:17
+    175|     const s = operatingLife(); s.city.society!.stocksMilli.herbs = 100…
+    176|     const npc = s.npcs[0]; npc.postTileId = 'service-1'; npc.character…
+    177|     expect(view.workshopForecast(s.city, s.npcs, 'service-1')).toEqual…
+       |                 ^
+    178|   });
+    179|   it('gives funded worker-free Drug Store base one', () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/15]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > F1 weekly workshop operation forecast > gives funded worker-free Drug Store base one
+TypeError: workshopForecast is not a function
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:181:17
+    179|   it('gives funded worker-free Drug Store base one', () => {
+    180|     const s = operatingLife();
+    181|     expect(view.workshopForecast(s.city, [], 'slum-1')).toEqual({ capa…
+       |                 ^
+    182|   });
+    183|   it('uses same-week Herb output before Hospital consumption, independ…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/15]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > F1 weekly workshop operation forecast > uses same-week Herb output before Hospital consumption, independent of tile placement order
+TypeError: workshopForecast is not a function
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:188:17
+    186|     const herb = s.city.tiles.findIndex(t => t.id === 'plain-2'); s.ci…
+    187|     const before = JSON.stringify(s);
+    188|     expect(view.workshopForecast(s.city, [], 'service-1')).toEqual({ c…
+       |                 ^
+    189|     expect(JSON.stringify(s)).toBe(before);
+    190|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/15]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > F1 weekly workshop operation forecast > allocates Herbs to fully staffed Hospitals in tile order and excludes paused producers
+TypeError: workshopForecast is not a function
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:194:17
+    192|     const s = operatingLife(); s.city.society!.stocksMilli.herbs = 100…
+    193|     s.city.tiles.find(t => t.id === 'service-2')!.building = { typeId:…
+    194|     expect(view.workshopForecast(s.city, [], 'service-1')).toEqual({ c…
+       |                 ^
+    195|     expect(view.workshopForecast(s.city, [], 'service-2')).toEqual({ c…
+    196|     s.city.society!.stocksMilli.herbs = 0;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/15]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > F1 weekly workshop operation forecast > credits this-week tax before upkeep, so zero opening Gold need not mean idle
+TypeError: workshopForecast is not a function
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:203:17
+    201|     const s = operatingLife(); stock(s).gold = 0;
+    202|     for (const tile of s.city.tiles) if (tile.building && tile.id !== …
+    203|     expect(view.workshopForecast(s.city, [], 'slum-1')).toEqual({ capa…
+       |                 ^
+    204|   });
+    205|   it.each(['no-herbs', 'supplied', 'same-week-herbs', 'unfunded', 'dru…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/15]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > F1 weekly workshop operation forecast > matches actual End Week throughput for no-herbs without changing the input
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > F1 weekly workshop operation forecast > matches actual End Week throughput for supplied without changing the input
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > F1 weekly workshop operation forecast > matches actual End Week throughput for same-week-herbs without changing the input
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > F1 weekly workshop operation forecast > matches actual End Week throughput for unfunded without changing the input
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > F1 weekly workshop operation forecast > matches actual End Week throughput for drug-funded without changing the input
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > F1 weekly workshop operation forecast > matches actual End Week throughput for drug-unfunded without changing the input
+TypeError: workshopForecast is not a function
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:220:55
+    218|       s.city.tiles.find(t => t.id === 'field-1')!.building!.workers = …
+    219|     }
+    220|     const before = JSON.stringify(s), forecast = view.workshopForecast…
+       |                                                       ^
+    221|     expect(JSON.stringify(s)).toBe(before);
+    222|     const resolved = executeCharacterLifeCommand(s, { type: 'END_WEEK'…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/15]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  15 failed | 143 passed (158)
+   Start at  21:55:20
+   Duration  1.61s (transform 655ms, setup 0ms, import 836ms, tests 463ms, environment 0ms)
+
+
+UTC_END: 2026-11-15T14:55:21.821Z
+SECONDS: 3.052
+EXIT: 1

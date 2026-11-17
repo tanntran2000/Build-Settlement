@@ -1,0 +1,54 @@
+diff --git a/tests/e2e/character-life-navigation.helpers.ts b/tests/e2e/character-life-navigation.helpers.ts
+index 8ac310d..635db85 100644
+--- a/tests/e2e/character-life-navigation.helpers.ts
++++ b/tests/e2e/character-life-navigation.helpers.ts
+@@ -1,6 +1,6 @@
+ import { expect,type Locator,type Page } from '@playwright/test';
+ import { readFile } from 'node:fs/promises';
+-import { createCharacterLifeSession,DEFAULT_PLAYER_DRAFT,ITEM_CATALOG,isCharacterLifeSessionState,TRIAL_BUILDINGS,WEEKLY_RESOURCE_KEYS,type CharacterLifeSessionState,type TileTrialReport } from '../../packages/core/src/index.ts';
++import { createCharacterLifeSession,DEFAULT_PLAYER_DRAFT,ITEM_CATALOG,RECIPES,isCharacterLifeSessionState,TRIAL_BUILDINGS,WEEKLY_RESOURCE_KEYS,type CharacterLifeSessionState,type TileTrialReport } from '../../packages/core/src/index.ts';
+ import { serializeCharacterLifeSave } from '../../packages/persistence/src/character-life-save.ts';
+ import type { LifeDestination } from '../../packages/ui/src/character-life-navigation.ts';
+ 
+@@ -82,7 +82,7 @@ export async function expectOneCharacterWindow(page: Page) {
+   await expect(characters.getByRole('tablist')).toHaveCount(1);
+   await expect(characters.getByRole('tab')).toHaveText(['Description', 'Inventory', 'Work', 'Relations']);
+   await expect(characters.getByRole('tabpanel')).toHaveCount(1);
+-  expect(await page.locator('[role=tabpanel]').count()).toBe(1);
++  expect(await characters.locator('[role=tabpanel]').count()).toBe(1);
+ }
+ 
+ export async function go(page: Page, destination: LifeDestination): Promise<void> {
+@@ -273,6 +273,32 @@ async function readItemReport(panel: Locator): Promise<TileTrialReport['items']>
+   expect(values[1]).toMatch(/^\+\d+$/);
+   const result: TileTrialReport['items'] = { materials, found, expired, legendary, hospitalOperated: values[0] === 'Yes', regen: Number(values[1].slice(1)) };
+   if (pendingLegendary.length) result.pendingLegendary = pendingLegendary;
++  const outputTable = quartermaster.getByRole('table', { name: 'Workshop output', exact: true });
++  expect(await outputTable.count()).toBeLessThanOrEqual(1);
++  if (await outputTable.count()) {
++    const outputRows = await rows(quartermaster, 'Workshop output', ['Plot', 'Work', 'Output', 'Destination']);
++    expect(outputRows.length).toBeGreaterThan(0);
++    const places = { Inventory: 'inventory', 'Potion inventory': 'consumables', 'Material stack': 'materials', 'Temporary storage': 'storage', 'Waiting for room': 'ready' } as const;
++    result.crafted = outputRows.map(([tileId, work, name, destination]) => {
++      const output = definition(name);
++      const matches = Object.entries(RECIPES).filter(([, recipe]) => recipe.output === output);
++      expect(matches).toHaveLength(1);
++      const [recipeId, recipe] = matches[0];
++      expect(work).toBe(recipe.kind === 'refine' ? 'Refined' : ITEM_CATALOG[output].category === 'consumable' ? 'Brewed' : 'Crafted');
++      expect(Object.hasOwn(places, destination)).toBe(true);
++      return { tileId, recipeId, output, place: places[destination as keyof typeof places] };
++    });
++  }
++  const idleTable = quartermaster.getByRole('table', { name: 'Idle workshops', exact: true });
++  expect(await idleTable.count()).toBeLessThanOrEqual(1);
++  if (await idleTable.count()) {
++    const idleRows = await rows(quartermaster, 'Idle workshops', ['Plot', 'Status']);
++    expect(idleRows.length).toBeGreaterThan(0);
++    result.workshopsIdle = idleRows.map(([tileId, status]) => {
++      expect(status).toBe('No orders completed. Check workers, supplies and upkeep.');
++      return tileId;
++    });
++  }
+   return result;
+ }
+ 

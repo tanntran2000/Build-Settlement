@@ -1,0 +1,49 @@
+{
+  "status": "HOLD - dirty snapshot, not final-mode completion",
+  "base": "43fcb9b856c66606230d6d7ba49140ae94cfaa00",
+  "head": "ed4105f9aa0054396bf0da7b21cb6a27ddbdaa37",
+  "committedTree": "a164cb535cb914ee19f6e027b97013479c08e786",
+  "step0ProposalSha256": "ff0bf9a602286768e96c007e27c679e67660d92ec6b152a3746a021f5773014b",
+  "approvedEdits": 6,
+  "additionalAllowedSimulationPaths": [
+    "packages/simulation/src/tile-trial-week.ts",
+    "packages/simulation/src/workshop-operation.ts",
+    "packages/simulation/src/index.ts"
+  ],
+  "fixPaths": [
+    {
+      "path": "packages/simulation/src/index.ts",
+      "bytes": 359,
+      "rawSha256": "64b55e359be179b9617687a0c7bbf7c30dcebb08412dd47f2e17d661b4b8e601",
+      "canonicalSha256": "8937d9e65bcf28175b3b865bb25f7eae3b34d11aef4b53b040e6cab20f8a393d"
+    },
+    {
+      "path": "packages/simulation/src/tile-trial-week.ts",
+      "bytes": 16132,
+      "rawSha256": "c3b8437e2afb88928e04801198d0045d55e004ccd11d41078036ba2ae7d7d62c",
+      "canonicalSha256": "c3b8437e2afb88928e04801198d0045d55e004ccd11d41078036ba2ae7d7d62c"
+    },
+    {
+      "path": "packages/simulation/src/workshop-operation.ts",
+      "bytes": 8786,
+      "rawSha256": "a4e16ebaeb6fcf819ff79e9058e08f24ed70134cd1d3a1e315dd7cb4233e0990",
+      "canonicalSha256": "a4e16ebaeb6fcf819ff79e9058e08f24ed70134cd1d3a1e315dd7cb4233e0990"
+    },
+    {
+      "path": "packages/ui/src/__tests__/crafting-view.test.ts",
+      "bytes": 20658,
+      "rawSha256": "97b9eb62c7b26e19272f4a2ea4d7e06de9a192fef181eb106224e95456c848f7",
+      "canonicalSha256": "97b9eb62c7b26e19272f4a2ea4d7e06de9a192fef181eb106224e95456c848f7"
+    },
+    {
+      "path": "packages/ui/src/items-view.ts",
+      "bytes": 10851,
+      "rawSha256": "1ecb8f52579a9c64dba13af20273c78fc51d1d0edde2589ae8874aa1f1904367",
+      "canonicalSha256": "1ecb8f52579a9c64dba13af20273c78fc51d1d0edde2589ae8874aa1f1904367"
+    }
+  ],
+  "immutableFiles": 86,
+  "immutableChanges": [],
+  "existingBaseTestsUnchanged": true,
+  "noOrderHashes": 9
+}

@@ -1,0 +1,10 @@
+{
+  "status": "approved",
+  "owner": "Tân",
+  "date": "2026-11-15",
+  "quote": "Approve P1–P3 and X1–X3 (Recommended)",
+  "base": "43fcb9b856c66606230d6d7ba49140ae94cfaa00",
+  "proposalSha256": "ff0bf9a602286768e96c007e27c679e67660d92ec6b152a3746a021f5773014b",
+  "bindingPlan": "binding-plan-6ff7e4f.md",
+  "scope": "Exactly P1–P3 and X1–X3. Nothing else in those files changes. Any other existing-test edit or outside-allowlist file requires HOLD."
+}

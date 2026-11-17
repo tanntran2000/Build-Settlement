@@ -1,0 +1,86 @@
+{
+  "head": "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+  "tree": "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+  "smokeRun": {
+    "name": "c3-smoke-ci1",
+    "command": "npm.cmd run test:smoke",
+    "head": "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+    "tree": "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+    "startUtc": "2026-11-17T02:34:01.8910852Z",
+    "endUtc": "2026-11-17T03:15:44.0296373Z",
+    "exit": 0,
+    "seconds": 2502.139
+  },
+  "measurements": [
+    {
+      "file": "accessibility/brew-reflow-320.json",
+      "viewport": 320,
+      "sha256": "4667f5fb8e09a3ee915f169a0283e10cbe9125961f605369651e55ad0fe40d3f"
+    },
+    {
+      "file": "accessibility/brew-reflow-375.json",
+      "viewport": 375,
+      "sha256": "d70bfc747d571ec7408b687f61088e3feca22d677c492f0040e1860a4e6e9d9c"
+    },
+    {
+      "file": "accessibility/brew-tab-1280.json",
+      "viewport": 1280,
+      "sha256": "a7349a14c5311520d6fbd415ef45024da22ab439069abcd220462da9d86c3d0b"
+    },
+    {
+      "file": "accessibility/brew-tab-1600.json",
+      "viewport": 1600,
+      "sha256": "3c4795e4e3934590e92f77b0b3539a783e201e27ff9499c212b0d9194628b1d4"
+    },
+    {
+      "file": "accessibility/drug-store-brew-1280.json",
+      "viewport": 1280,
+      "sha256": "ce12272604373de8f413aca81950902c17b3dd5d7804aa4521b2bfb99477e052"
+    },
+    {
+      "file": "accessibility/drug-store-brew-1600.json",
+      "viewport": 1600,
+      "sha256": "5ed68164c73b00af5bd13374697aab7955e86c0e548e060c3610f22516909d8f"
+    },
+    {
+      "file": "accessibility/quartermaster-rows-1280.json",
+      "viewport": 1280,
+      "sha256": "a4343f1bc40a86ba2ecbc5a86f30602450ad9008017e1005c4e0c8829338e88d"
+    },
+    {
+      "file": "accessibility/quartermaster-rows-1600.json",
+      "viewport": 1600,
+      "sha256": "095041ec9fc544760338adcca5d23ef4fcaaed3cc0e608d384a6c57c2d451e2b"
+    },
+    {
+      "file": "accessibility/report-reflow-320.json",
+      "viewport": 320,
+      "sha256": "2e4cfda9a6d771883a8840c1d4ca2e1cf7638e6bbdc8d8ac4e0b8ad23990e1dd"
+    },
+    {
+      "file": "accessibility/report-reflow-375.json",
+      "viewport": 375,
+      "sha256": "86a04e19f29dc35c02d7d36c2e7735c73bf98235543e2953761406d8d102cb39"
+    },
+    {
+      "file": "accessibility/smithy-queue-1280.json",
+      "viewport": 1280,
+      "sha256": "fa225d34470906c832bfb1b4a7bd3998b1ba33c80f7d00d9aef819f14290e1e8"
+    },
+    {
+      "file": "accessibility/smithy-queue-1600.json",
+      "viewport": 1600,
+      "sha256": "ff625ee79e84e93734b3dbe1fda683385703e6a0d10488c5754f2ccfc460b074"
+    },
+    {
+      "file": "accessibility/smithy-reflow-320.json",
+      "viewport": 320,
+      "sha256": "d3db608fcc82ac4f3eacd7e6b52ad049507431a2e4ce86a3ee8c99ad289bce74"
+    },
+    {
+      "file": "accessibility/smithy-reflow-375.json",
+      "viewport": 375,
+      "sha256": "4c77c7969c23ab82df46a908edc2d2da93c1f2ff6256d97026953830fa802b67"
+    }
+  ]
+}

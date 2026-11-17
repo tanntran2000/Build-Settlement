@@ -1,0 +1,28 @@
+diff --git a/packages/ui/src/ItemCard.svelte b/packages/ui/src/ItemCard.svelte
+index 0b356e4..85c2122 100644
+--- a/packages/ui/src/ItemCard.svelte
++++ b/packages/ui/src/ItemCard.svelte
+@@ -1,6 +1,6 @@
+ <script lang="ts">
+   import { ITEM_TRIAL, type ItemDefinition } from '@haven/core';
+-  import { itemPresentation, itemTitle } from './items-view.js';
++  import { itemPresentation, itemTitle, craftingHint } from './items-view.js';
+   import { formatMilli } from './milli-format.js';
+   export let definition:ItemDefinition;
+   export let preview:{skill:string;before:number;after:number}[]=[];
+@@ -12,6 +12,7 @@
+   export let onbuy:(()=>void)|undefined=undefined;
+   export let priceMilli:number|undefined=undefined;
+   $: look=itemPresentation(definition);
++  $: hint=craftingHint(definition);
+ </script>
+ <article aria-label={definition.name} data-rarity={definition.rarity} class="item-card">
+   <header><span class="rarity">{look.rarity} · {itemTitle(definition.category)}</span><h5 style:color={look.colour}>{definition.name}</h5></header>
+@@ -20,6 +21,7 @@
+   {#if definition.mainStat}<p>{itemTitle(definition.mainStat)} +{ITEM_TRIAL.bonuses[definition.rarity].main*(definition.slot==='set'?ITEM_TRIAL.setMultiplier:1)}{#if definition.secondaryStat} · {itemTitle(definition.secondaryStat)} +{ITEM_TRIAL.bonuses[definition.rarity].secondary*(definition.slot==='set'?ITEM_TRIAL.setMultiplier:1)}{/if}</p>{/if}
+   {#if definition.regen}<p>Regen +{definition.regen*(definition.slot==='set'?ITEM_TRIAL.setMultiplier:1)}/week</p>{/if}
+   {#if definition.slot==='set'}<p>Covers Top, Bottom and Shoes.</p>{/if}
++  {#if hint}<p>{hint}</p>{/if}
+   {#if definition.trait}<p>While worn: {({warden:`Watch House Security +${ITEM_TRIAL.effects.wardenSecurity}`,crown:`Authority +${ITEM_TRIAL.effects.crownAuthority}`,ironhide:`Wound damage −${ITEM_TRIAL.effects.ironhideWoundReduction}`,ledger:`Post output +${ITEM_TRIAL.effects.ledgerOutputPercent}%`} as Record<string,string>)[definition.trait]??itemTitle(definition.trait)}.</p>{/if}
+   {#if preview.length}<p>Before → After</p><dl>{#each preview as row}<div><dt>{itemTitle(row.skill)}</dt><dd>{row.before} → {row.after}</dd></div>{/each}</dl>{/if}
+   {#if priceMilli!==undefined}<p>{formatMilli(priceMilli)} Gold</p>{/if}

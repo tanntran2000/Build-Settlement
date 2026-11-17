@@ -1,0 +1,136 @@
+{
+  "base": "43fcb9b856c66606230d6d7ba49140ae94cfaa00",
+  "parent": "ed4105f9aa0054396bf0da7b21cb6a27ddbdaa37",
+  "head": "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+  "tree": "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+  "commits": [
+    "2e5d1bdf5eb6c15561c310491bde4806863d5bd1",
+    "060baa24d44d6a61c2b184a77ab161ae6f62d610"
+  ],
+  "approvedEditCount": 7,
+  "existingTestEditCount": 4,
+  "restrictedProductEditCount": 3,
+  "existingTestEdits": [
+    {
+      "id": "P1",
+      "path": "tests/e2e/character-life-navigation.helpers.ts",
+      "line": 3,
+      "before": "import { createCharacterLifeSession,DEFAULT_PLAYER_DRAFT,ITEM_CATALOG,isCharacterLifeSessionState,TRIAL_BUILDINGS,WEEKLY_RESOURCE_KEYS,type CharacterLifeSessionState,type TileTrialReport } from '../../packages/core/src/index.ts';",
+      "after": "import { createCharacterLifeSession,DEFAULT_PLAYER_DRAFT,ITEM_CATALOG,RECIPES,isCharacterLifeSessionState,TRIAL_BUILDINGS,WEEKLY_RESOURCE_KEYS,type CharacterLifeSessionState,type TileTrialReport } from '../../packages/core/src/index.ts';",
+      "why": "The visible report oracle derives recipe ids from unique rendered output names and the static recipe catalog, independently of production UI helpers.",
+      "task": "C2"
+    },
+    {
+      "id": "P2",
+      "path": "tests/e2e/character-life-navigation.helpers.ts",
+      "line": 85,
+      "before": "  expect(await page.locator('[role=tabpanel]').count()).toBe(1);",
+      "after": "  expect(await characters.locator('[role=tabpanel]').count()).toBe(1);",
+      "why": "Buy/Brew adds a separate legitimate tab widget in the mounted City view. Preserve exactly one mounted Character tabpanel by scoping this character-window assertion to Characters. Existing visible-count, keyboard traversal and hidden-view checks remain.",
+      "task": "C1"
+    },
+    {
+      "id": "P3",
+      "path": "tests/e2e/character-life-navigation.helpers.ts",
+      "line": 275,
+      "before": "  if (pendingLegendary.length) result.pendingLegendary = pendingLegendary;\n  return result;",
+      "after": "  if (pendingLegendary.length) result.pendingLegendary = pendingLegendary;\n  const outputTable = quartermaster.getByRole('table', { name: 'Workshop output', exact: true });\n  expect(await outputTable.count()).toBeLessThanOrEqual(1);\n  if (await outputTable.count()) {\n    const outputRows = await rows(quartermaster, 'Workshop output', ['Plot', 'Work', 'Output', 'Destination']);\n    expect(outputRows.length).toBeGreaterThan(0);\n    const places = { Inventory: 'inventory', 'Potion inventory': 'consumables', 'Material stack': 'materials', 'Temporary storage': 'storage', 'Waiting for room': 'ready' } as const;\n    result.crafted = outputRows.map(([tileId, work, name, destination]) => {\n      const output = definition(name);\n      const matches = Object.entries(RECIPES).filter(([, recipe]) => recipe.output === output);\n      expect(matches).toHaveLength(1);\n      const [recipeId, recipe] = matches[0];\n      expect(work).toBe(recipe.kind === 'refine' ? 'Refined' : ITEM_CATALOG[output].category === 'consumable' ? 'Brewed' : 'Crafted');\n      expect(Object.hasOwn(places, destination)).toBe(true);\n      return { tileId, recipeId, output, place: places[destination as keyof typeof places] };\n    });\n  }\n  const idleTable = quartermaster.getByRole('table', { name: 'Idle workshops', exact: true });\n  expect(await idleTable.count()).toBeLessThanOrEqual(1);\n  if (await idleTable.count()) {\n    const idleRows = await rows(quartermaster, 'Idle workshops', ['Plot', 'Status']);\n    expect(idleRows.length).toBeGreaterThan(0);\n    result.workshopsIdle = idleRows.map(([tileId, status]) => {\n      expect(status).toBe('No orders completed. Check workers, supplies and upkeep.');\n      return tileId;\n    });\n  }\n  return result;",
+      "why": "Parse optional crafted and idle rows from visible Quartermaster tables, with exact headers, nonempty rows, unique item/recipe lookup and explicit English destination/status validation. Keep all old parsing intact and omit absent optional keys.",
+      "task": "C2"
+    },
+    {
+      "id": "P4",
+      "path": "packages/simulation/src/__tests__/society-renewable-support.test.ts",
+      "testLine": 160,
+      "line": 170,
+      "before": "  });\n  it('stops and resumes immigration over forty-five weeks when renewable support changes', () => {",
+      "after": "  }, 15000);\n  it('stops and resumes immigration over forty-five weeks when renewable support changes', () => {",
+      "reason": "Owner-approved 15000 ms timeout for only the 60-week snapshot-restore test; assertions, setup and loop unchanged."
+    }
+  ],
+  "outsideAllowlistEdits": [
+    {
+      "id": "X1",
+      "path": "packages/ui/src/CharacterLifeCity.svelte",
+      "line": 45,
+      "before": "  <InsideCity {state} {selectedId} {locked} {managementError} {onselect} {oncommand} />",
+      "after": "  <InsideCity {state} {npcs} {selectedId} {locked} {managementError} {onselect} {oncommand} />",
+      "why": "Pass the existing read-only NPC list through the sole InsideCity mount so the capacity display includes the posted NPC effective technical/medical skill and worn items. No state mutation or dispatcher change.",
+      "task": "C1"
+    },
+    {
+      "id": "X2",
+      "path": "packages/ui/src/TileManagement.svelte",
+      "line": 80,
+      "before": "      const known = ['INVALID_COMMAND', 'STALE_COMMAND', 'FORBIDDEN', 'UNSUPPORTED_RULESET', 'INVALID_STATE', 'INVALID_WORKFORCE', 'INVALID_PLAN', 'EXECUTION_ERROR', 'WEEK_MISMATCH', 'INVALID_TILE', 'INVALID_BUILDING', 'INVALID_PLACEMENT', 'OCCUPIED', 'EMPTY_TILE', 'MAX_LEVEL', 'INSUFFICIENT_RESOURCES', 'LOCKED_PLOT', 'NOT_AVAILABLE', 'WRONG_TIER', 'WALL_COMPLETE', 'PREREQUISITE_MISSING', 'UNSUPPORTED_ACTION', 'CARD_PENDING', 'CITY_FALLEN', 'UNKNOWN_CARD', 'UNKNOWN_OPTION', 'OPTION_UNAVAILABLE', 'SLOT_MISMATCH', 'KIND_MISMATCH', 'NOT_ENOUGH_GOLD', 'INVENTORY_FULL', 'NO_SHOP', 'ITEM_UNKNOWN', 'NOT_SELLABLE'];",
+      "after": "      const known = ['INVALID_COMMAND', 'STALE_COMMAND', 'FORBIDDEN', 'UNSUPPORTED_RULESET', 'INVALID_STATE', 'INVALID_WORKFORCE', 'INVALID_PLAN', 'EXECUTION_ERROR', 'WEEK_MISMATCH', 'INVALID_TILE', 'INVALID_BUILDING', 'INVALID_PLACEMENT', 'OCCUPIED', 'EMPTY_TILE', 'MAX_LEVEL', 'INSUFFICIENT_RESOURCES', 'LOCKED_PLOT', 'NOT_AVAILABLE', 'WRONG_TIER', 'WALL_COMPLETE', 'PREREQUISITE_MISSING', 'UNSUPPORTED_ACTION', 'CARD_PENDING', 'CITY_FALLEN', 'UNKNOWN_CARD', 'UNKNOWN_OPTION', 'OPTION_UNAVAILABLE', 'SLOT_MISMATCH', 'KIND_MISMATCH', 'NOT_ENOUGH_GOLD', 'INVENTORY_FULL', 'NO_SHOP', 'ITEM_UNKNOWN', 'NOT_SELLABLE', 'RECIPE_UNKNOWN', 'NO_WORKSHOP', 'MISSING_INPUT', 'QUEUE_FULL', 'ORDER_UNKNOWN', 'WORKSHOP_BUSY'];",
+      "why": "Recognize the six craft/busy error codes already implemented by PR B instead of misclassifying them as UNKNOWN_COMMAND_FAILURE. Keep every old code and its order.",
+      "task": "C1"
+    },
+    {
+      "id": "X3",
+      "path": "packages/ui/src/TileManagement.svelte",
+      "line": 88,
+      "before": "      else if (['BUY_ITEM','SELL_ITEM','SELL_MATERIAL','BUY_POTION','USE_CONSUMABLE','CLAIM_STORED_ITEM','DESTROY_ITEM','EQUIP_ITEM','UNEQUIP_ITEM'].includes(type)) managementError = {action:type,message:itemError(result.error.code)};",
+      "after": "      else if (['BUY_ITEM','SELL_ITEM','SELL_MATERIAL','BUY_POTION','USE_CONSUMABLE','CLAIM_STORED_ITEM','DESTROY_ITEM','EQUIP_ITEM','UNEQUIP_ITEM','PLACE_CRAFT_ORDER','CANCEL_CRAFT_ORDER'].includes(type)) managementError = {action:type,message:itemError(result.error.code)};",
+      "why": "Route place/cancel failures through the existing managementError/itemError channel so the panel can show command errors. Leave revision checks, dispatch and every old route intact.",
+      "task": "C1"
+    }
+  ],
+  "fixPaths": [
+    "packages/simulation/src/__tests__/society-renewable-support.test.ts",
+    "packages/simulation/src/index.ts",
+    "packages/simulation/src/tile-trial-week.ts",
+    "packages/simulation/src/workshop-operation.ts",
+    "packages/ui/src/__tests__/crafting-view.test.ts",
+    "packages/ui/src/items-view.ts"
+  ],
+  "allPaths": [
+    "packages/simulation/src/__tests__/society-renewable-support.test.ts",
+    "packages/simulation/src/index.ts",
+    "packages/simulation/src/tile-trial-week.ts",
+    "packages/simulation/src/workshop-operation.ts",
+    "packages/ui/src/CharacterLifeCity.svelte",
+    "packages/ui/src/InsideCity.svelte",
+    "packages/ui/src/ItemCard.svelte",
+    "packages/ui/src/PotionPanel.svelte",
+    "packages/ui/src/SoloWeekReport.svelte",
+    "packages/ui/src/TileManagement.svelte",
+    "packages/ui/src/WorkshopPanel.svelte",
+    "packages/ui/src/__tests__/crafting-view.test.ts",
+    "packages/ui/src/items-view.ts",
+    "tests/e2e/character-life-navigation.helpers.ts",
+    "tests/e2e/crafting.spec.ts"
+  ],
+  "immutablePaths": 86,
+  "immutableChanges": [],
+  "P4OnlyChangeInItsFile": true,
+  "sixParityTestsUnchanged": true,
+  "noOrderHashes": 9,
+  "unchangedPackages": [
+    {
+      "name": "core",
+      "baseTree": "34ea9e64f68b139c950ff83bf66ce0d586c784e3",
+      "headTree": "34ea9e64f68b139c950ff83bf66ce0d586c784e3"
+    },
+    {
+      "name": "persistence",
+      "baseTree": "5218db339d263803601a5eb8b4e08c96712e85cc",
+      "headTree": "5218db339d263803601a5eb8b4e08c96712e85cc"
+    }
+  ],
+  "archive": {
+    "utc": "2026-11-17T03:17:25.158Z",
+    "base": "43fcb9b856c66606230d6d7ba49140ae94cfaa00",
+    "head": "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+    "tree": "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+    "method": "git -c core.autocrlf=false archive --format=tar HEAD -- <86 protected paths and P4>; decode tar bytes; compare base/P4; sha256sum.exe -c SHA256SUMS.txt",
+    "archiveSha256": "57bcccfa9e7e6bb80b1fc6b53ad3023a36ef8a46c5d4d2eaca5fb6b7c82318c7",
+    "archiveBytes": 1484800,
+    "protectedFiles": 86,
+    "approvedTestExceptions": 1,
+    "archiveFiles": 87,
+    "result": "PASS",
+    "sha256sumExit": 0
+  }
+}

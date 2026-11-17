@@ -1,0 +1,79 @@
+[
+  {
+    "path": "packages/ui/src/CharacterLifeCity.svelte",
+    "added": 1,
+    "deleted": 1,
+    "howRead": "Full individual diff, sed -n paging; saved 01.diff",
+    "result": "PASS: X1 exact; forwards read-only NPC list."
+  },
+  {
+    "path": "packages/ui/src/InsideCity.svelte",
+    "added": 5,
+    "deleted": 2,
+    "howRead": "Full individual diff, sed -n paging; saved 02.diff",
+    "result": "PASS: Smithy panel and NPC propagation; existing routing retained."
+  },
+  {
+    "path": "packages/ui/src/ItemCard.svelte",
+    "added": 3,
+    "deleted": 1,
+    "howRead": "Full individual diff, sed -n paging; saved 03.diff",
+    "result": "PASS: Common/Rare material hint; existing rarity label and frame retained."
+  },
+  {
+    "path": "packages/ui/src/PotionPanel.svelte",
+    "added": 23,
+    "deleted": 1,
+    "howRead": "Full individual diff, sed -n paging; saved 04.diff",
+    "result": "PASS: Buy/Brew keyboard tabs, panels and error forwarding."
+  },
+  {
+    "path": "packages/ui/src/SoloWeekReport.svelte",
+    "added": 13,
+    "deleted": 2,
+    "howRead": "Full individual diff, sed -n paging; saved 05.diff",
+    "result": "PASS: Optional crafting tables; conditional full-width layout; existing letter order retained."
+  },
+  {
+    "path": "packages/ui/src/TileManagement.svelte",
+    "added": 2,
+    "deleted": 2,
+    "howRead": "Full individual diff, sed -n paging; saved 06.diff",
+    "result": "PASS: X2/X3 exact; existing current-revision dispatcher and returned state path."
+  },
+  {
+    "path": "packages/ui/src/WorkshopPanel.svelte",
+    "added": 89,
+    "deleted": 0,
+    "howRead": "Full individual diff, sed -n paging; saved 07.diff",
+    "result": "P2 F1: this-week count uses potential capacity without operation checks; other panel behaviors reviewed."
+  },
+  {
+    "path": "packages/ui/src/__tests__/crafting-view.test.ts",
+    "added": 155,
+    "deleted": 0,
+    "howRead": "Full individual diff, sed -n paging; saved 08.diff",
+    "result": "Coverage gap for F1: meaningful projection tests, but no zero-Herbs/funding parity assertion."
+  },
+  {
+    "path": "packages/ui/src/items-view.ts",
+    "added": 44,
+    "deleted": 1,
+    "howRead": "Full individual diff, sed -n paging; saved 09.diff",
+    "result": "P2 F1: workshopCapacity omits Herbs and funded operation; other projections reviewed."
+  },
+  {
+    "path": "tests/e2e/character-life-navigation.helpers.ts",
+    "added": 28,
+    "deleted": 2,
+    "howRead": "Full individual diff, sed -n paging; saved 10.diff",
+    "result": "PASS: P1-P3 exact; strict visible-table parser and unique catalog lookup."
+  },
+  {
+    "path": "tests/e2e/crafting.spec.ts",
+    "added": 226,
+    "deleted": 0,
+    "howRead": "Full individual diff, sed -n paging; saved 11.diff",
+    "result": "PASS with F1 coverage gap: real place/cancel/End Week and rendered reports; keyboard/audit cases reviewed."
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "status": "approved",
+  "owner": "Tân",
+  "date": "2026-11-17",
+  "quote": "Share it now (Recommended)",
+  "base": "43fcb9b856c66606230d6d7ba49140ae94cfaa00",
+  "parent": "ed4105f9aa0054396bf0da7b21cb6a27ddbdaa37",
+  "bindingPlan": "binding-plan-c00f9a3.md",
+  "bindingPlanSha256": "cb5640e7bfecc1009132586ede3f97f185336846fdb109bd7ac2cb070914e896",
+  "additionalAllowedFiles": [
+    "packages/simulation/src/tile-trial-week.ts",
+    "packages/simulation/src/workshop-operation.ts",
+    "packages/simulation/src/index.ts"
+  ],
+  "scope": "Correction 6. One pure shared operation allocator used by End Week and UI. index.ts export only. Existing PR C UI/test files remain allowed. No existing-base-test edits; no golden, fixture, pin or no-order hash change. No push, PR update or merge."
+}

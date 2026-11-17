@@ -1,0 +1,277 @@
+{
+  "viewport": 375,
+  "texts": [
+    {
+      "text": "Workshop ledger · spec-2",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 14.4
+    },
+    {
+      "text": "Smithy · Craft orders",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 20
+    },
+    {
+      "text": "0 of 1 this week · 0 / 6 orders queued",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Forecast includes this week's tax, upkeep and Herb production. Inputs and the fee are held when you place an order.",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Available recipes",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Refine",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 18.4
+    },
+    {
+      "text": "Silver",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16.8
+    },
+    {
+      "text": "Inputs: 2 Iron",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Fee: 1 Gold",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Rare · Material",
+      "ratio": 15.044228250528105,
+      "required": 4.5,
+      "size": 14.4
+    },
+    {
+      "text": "Silver",
+      "ratio": 17.94813766823384,
+      "required": 4.5,
+      "size": 18.4
+    },
+    {
+      "text": "Place Silver",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Amethyst",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16.8
+    },
+    {
+      "text": "Inputs: 2 Nitrate",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Fee: 3 Gold",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Epic · Material",
+      "ratio": 15.044228250528105,
+      "required": 4.5,
+      "size": 14.4
+    },
+    {
+      "text": "Amethyst",
+      "ratio": 17.94813766823384,
+      "required": 4.5,
+      "size": 18.4
+    },
+    {
+      "text": "Place Amethyst",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Upgrade",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 18.4
+    },
+    {
+      "text": "Lord's Fine Ring",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16.8
+    },
+    {
+      "text": "Inputs: 1 Plain Ring + 1 Nitrate",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Fee: 3 Gold",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Before → After",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Common · Accessory",
+      "ratio": 15.044228250528105,
+      "required": 4.5,
+      "size": 14.4
+    },
+    {
+      "text": "Plain Ring",
+      "ratio": 8.727253250449747,
+      "required": 4.5,
+      "size": 18.4
+    },
+    {
+      "text": "Player · Ring",
+      "ratio": 15.044228250528105,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Medical +2",
+      "ratio": 15.044228250528105,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Regen +1/week",
+      "ratio": 15.044228250528105,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Can upgrade at the Smithy · Needs 1 Nitrate (Rare).",
+      "ratio": 15.044228250528105,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Rare · Accessory",
+      "ratio": 15.044228250528105,
+      "required": 4.5,
+      "size": 14.4
+    },
+    {
+      "text": "Lord's Fine Ring",
+      "ratio": 8.727253250449747,
+      "required": 4.5,
+      "size": 18.4
+    },
+    {
+      "text": "Player · Ring",
+      "ratio": 15.044228250528105,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Medical +4",
+      "ratio": 15.044228250528105,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "· Technical +1",
+      "ratio": 15.044228250528105,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Regen +2/week",
+      "ratio": 15.044228250528105,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Can upgrade at the Smithy · Needs 1 Amethyst (Epic).",
+      "ratio": 15.044228250528105,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Place Lord's Fine Ring",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "Order queue",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 18.4
+    },
+    {
+      "text": "Orders complete in order at End Week. Cancel returns the exact inputs and Gold; make room in inventories and material stacks first.",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    },
+    {
+      "text": "No orders queued.",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 16
+    }
+  ],
+  "clipped": [],
+  "controls": [
+    {
+      "text": "Available recipes",
+      "width": 155,
+      "height": 44,
+      "left": 30,
+      "right": 185
+    },
+    {
+      "text": "Place Silver",
+      "width": 113.125,
+      "height": 44,
+      "left": 30,
+      "right": 143.125
+    },
+    {
+      "text": "Place Amethyst",
+      "width": 149.8125,
+      "height": 44,
+      "left": 30,
+      "right": 179.8125
+    },
+    {
+      "text": "Place Lord's Fine Ring",
+      "width": 188.3125,
+      "height": 44,
+      "left": 30,
+      "right": 218.3125
+    }
+  ],
+  "overflow": false
+}

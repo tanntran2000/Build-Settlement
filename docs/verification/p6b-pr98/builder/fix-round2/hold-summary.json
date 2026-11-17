@@ -1,0 +1,110 @@
+{
+  "status": "HOLD",
+  "reason": "Existing society-renewable-support.test.ts:160 timed out in the pre-commit full unit run; inherited PR C timeout rule requires three isolated runs and HOLD.",
+  "utc": "2026-11-17T01:20:47.676Z",
+  "base": "43fcb9b856c66606230d6d7ba49140ae94cfaa00",
+  "head": "ed4105f9aa0054396bf0da7b21cb6a27ddbdaa37",
+  "committedTree": "a164cb535cb914ee19f6e027b97013479c08e786",
+  "gitStatus": "M packages/simulation/src/index.ts\n M packages/simulation/src/tile-trial-week.ts\n M packages/ui/src/__tests__/crafting-view.test.ts\n M packages/ui/src/items-view.ts\n?? packages/simulation/src/workshop-operation.ts",
+  "committed": false,
+  "fixPaths": [
+    {
+      "path": "packages/simulation/src/index.ts",
+      "bytes": 359,
+      "rawSha256": "64b55e359be179b9617687a0c7bbf7c30dcebb08412dd47f2e17d661b4b8e601",
+      "canonicalSha256": "8937d9e65bcf28175b3b865bb25f7eae3b34d11aef4b53b040e6cab20f8a393d"
+    },
+    {
+      "path": "packages/simulation/src/tile-trial-week.ts",
+      "bytes": 16132,
+      "rawSha256": "c3b8437e2afb88928e04801198d0045d55e004ccd11d41078036ba2ae7d7d62c",
+      "canonicalSha256": "c3b8437e2afb88928e04801198d0045d55e004ccd11d41078036ba2ae7d7d62c"
+    },
+    {
+      "path": "packages/simulation/src/workshop-operation.ts",
+      "bytes": 8786,
+      "rawSha256": "a4e16ebaeb6fcf819ff79e9058e08f24ed70134cd1d3a1e315dd7cb4233e0990",
+      "canonicalSha256": "a4e16ebaeb6fcf819ff79e9058e08f24ed70134cd1d3a1e315dd7cb4233e0990"
+    },
+    {
+      "path": "packages/ui/src/__tests__/crafting-view.test.ts",
+      "bytes": 20658,
+      "rawSha256": "97b9eb62c7b26e19272f4a2ea4d7e06de9a192fef181eb106224e95456c848f7",
+      "canonicalSha256": "97b9eb62c7b26e19272f4a2ea4d7e06de9a192fef181eb106224e95456c848f7"
+    },
+    {
+      "path": "packages/ui/src/items-view.ts",
+      "bytes": 10851,
+      "rawSha256": "1ecb8f52579a9c64dba13af20273c78fc51d1d0edde2589ae8874aa1f1904367",
+      "canonicalSha256": "1ecb8f52579a9c64dba13af20273c78fc51d1d0edde2589ae8874aa1f1904367"
+    }
+  ],
+  "workingSourceDigest": "6395891ca2b56e4bba237fd573fbb326d42973e1aeee6fe7dfeb3089db64150d",
+  "immutableFiles": 86,
+  "immutableChanges": [],
+  "existingBaseTestsChecked": 155,
+  "approvedStep0Edits": 6,
+  "sixParityTestsUnchanged": true,
+  "noOrderHashes": 9,
+  "red": {
+    "newFailures": 9,
+    "oldPasses": 158,
+    "log": "r2-red-unit.txt"
+  },
+  "targetedGreen": {
+    "passed": 303,
+    "files": 3,
+    "log": "r2-green-unit.txt"
+  },
+  "typecheck": {
+    "exit": 0,
+    "log": "r2-green-typecheck.txt"
+  },
+  "fullUnit": {
+    "passed": 2934,
+    "failed": 1,
+    "total": 2935,
+    "exit": 1,
+    "timedOutMilliseconds": 5488,
+    "limitMilliseconds": 5000,
+    "log": "r2-green-full-unit.txt"
+  },
+  "measurements": [
+    {
+      "testMilliseconds": "1220",
+      "exit": 0,
+      "run": 1,
+      "wallSeconds": 9.9085763,
+      "cpuAtStart": 100,
+      "log": "C:\\Users\\Admin\\.t3\\local-drafts\\p6b-prC\\fix-round2\\timeout-alone-1.txt",
+      "utcEnd": "2026-11-17T01:12:27.0077509Z",
+      "utcStart": "2026-11-17T01:12:17.0991746Z"
+    },
+    {
+      "testMilliseconds": "1467",
+      "exit": 0,
+      "run": 2,
+      "wallSeconds": 7.738535799999999,
+      "cpuAtStart": 10,
+      "log": "C:\\Users\\Admin\\.t3\\local-drafts\\p6b-prC\\fix-round2\\timeout-alone-2.txt",
+      "utcEnd": "2026-11-17T01:12:36.6940499Z",
+      "utcStart": "2026-11-17T01:12:28.9555141Z"
+    },
+    {
+      "testMilliseconds": "1249",
+      "exit": 0,
+      "run": 3,
+      "wallSeconds": 5.4578675,
+      "cpuAtStart": 42,
+      "log": "C:\\Users\\Admin\\.t3\\local-drafts\\p6b-prC\\fix-round2\\timeout-alone-3.txt",
+      "utcEnd": "2026-11-17T01:12:44.0279018Z",
+      "utcStart": "2026-11-17T01:12:38.5700343Z"
+    }
+  ],
+  "finalGates": "NOT RUN",
+  "smoke": "NOT RUN",
+  "bundle": "NOT REFRESHED",
+  "builderPushed": false,
+  "builderUpdatedPr": false,
+  "builderMerged": false
+}

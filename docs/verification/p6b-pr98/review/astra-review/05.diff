@@ -1,0 +1,46 @@
+diff --git a/packages/ui/src/SoloWeekReport.svelte b/packages/ui/src/SoloWeekReport.svelte
+index 511c1e8..cd172d5 100644
+--- a/packages/ui/src/SoloWeekReport.svelte
++++ b/packages/ui/src/SoloWeekReport.svelte
+@@ -1,6 +1,6 @@
+ <script lang="ts">
+   import { WEEKLY_RESOURCE_KEYS, ITEM_CATALOG, type TileTrialReport } from '@haven/core';
+-  import { ITEM_GOAL_LABELS } from './items-view.js';
++  import { ITEM_GOAL_LABELS, craftWork, craftDestination, WORKSHOP_IDLE_COPY } from './items-view.js';
+   import { garrisonReportLine, lawReportLines, crimeReportLine, crisisReportLines, outsideReportLines, orderReportLines, ORDER_GOODS } from './society-view.js';
+   import ReportLetter from './ReportLetter.svelte';
+   import { reportLetters, reportStamps } from './report-letters.js';
+@@ -15,7 +15,7 @@
+ 
+ </script>
+ 
+-<section class="card weekly-report" aria-label="Weekly city report">
++<section class="card weekly-report" class:crafting-report={!!report?.items.crafted?.length||!!report?.items.workshopsIdle?.length} aria-label="Weekly city report">
+   {#if report}
+     {@const letters = reportLetters(report)}
+     {#snippet lawsDetails()}
+@@ -56,6 +56,16 @@
+       {#if !report.items.found}<p>No item found.</p>{/if}
+       <table><caption>Expired items</caption><thead><tr><th scope="col">Item</th></tr></thead><tbody>{#each report.items.expired as id}<tr><td>{ITEM_CATALOG[id].name}</td></tr>{/each}</tbody></table>
+       {#if !report.items.expired.length}<p>No items expired.</p>{/if}
++      {#if report.items.crafted?.length}
++        <table><caption>Workshop output</caption><thead><tr><th scope="col">Plot</th><th scope="col">Work</th><th scope="col">Output</th><th scope="col">Destination</th></tr></thead><tbody>
++          {#each report.items.crafted as output}<tr><td>{output.tileId}</td><td>{craftWork(output)}</td><td>{ITEM_CATALOG[output.output].name}</td><td>{craftDestination(output.place)}</td></tr>{/each}
++        </tbody></table>
++      {/if}
++      {#if report.items.workshopsIdle?.length}
++        <table><caption>Idle workshops</caption><thead><tr><th scope="col">Plot</th><th scope="col">Status</th></tr></thead><tbody>
++          {#each report.items.workshopsIdle as tileId}<tr><td>{tileId}</td><td>{WORKSHOP_IDLE_COPY}</td></tr>{/each}
++        </tbody></table>
++      {/if}
+       <dl role="group" aria-label="Recovery this week"><div><dt>Hospital operated</dt><dd>{report.items.hospitalOperated?'Yes':'No'}</dd></div><div><dt>Regeneration</dt><dd>+{report.items.regen}</dd></div></dl>
+     </section>
+     <section>
+@@ -145,6 +155,7 @@
+   .report-stamps { display: flex; flex-wrap: wrap; gap: 8px; font-variant-numeric: tabular-nums; }
+   .report-stamps span { border: calc(2 * var(--px)) solid var(--brass-edge); padding: 8px; }
+   .letters-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 16px; margin-block: 16px; }
++  .crafting-report .letters-grid { grid-template-columns: minmax(0, 1fr); }
+   .signature { text-align: right; }
+   @media (max-width: 750px) { .letters-grid { grid-template-columns: minmax(0, 1fr); } .report-heading { display: block; } }
+ </style>

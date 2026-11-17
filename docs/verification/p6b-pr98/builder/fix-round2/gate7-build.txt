@@ -1,0 +1,79 @@
+EXIT: 0
+GATE_CPU_PERCENT: 6.39
+PDH_CPU_SAMPLES: [{"utc":"2026-11-17T02:30:19.9140000Z","percent":6.27},{"utc":"2026-11-17T02:30:20.9220000Z","percent":5.97},{"utc":"2026-11-17T02:30:21.9370000Z","percent":4.17},{"utc":"2026-11-17T02:30:22.9480000Z","percent":4.61},{"utc":"2026-11-17T02:30:23.9520000Z","percent":10.91}]
+UTC_SNAPSHOT: 2026-11-17T02:30:24.0539013Z
+HEAD: 060baa24d44d6a61c2b184a77ab161ae6f62d610
+TREE: 77cbeae3332cfaf26ba23e08ae67300d49d8c69d
+CPU LOAD:
+
+Name                                     LoadPercentage NumberOfLogicalProcessors
+----                                     -------------- -------------------------
+Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz             20                         8
+
+
+TOP PROCESSES (cumulative CPU seconds):
+
+   Id ProcessName                 CPU WorkingSet64
+   -- -----------                 --- ------------
+72060 browser             5743.328125     75837440
+21592 browser              4911.40625    164675584
+47380 Zalo                 659.421875    242278400
+51560 ChatGPT                617.3125    289206272
+64728 msedgewebview2         545.4375      9797632
+72784 T3 Code (Nightly)       337.125    228364288
+72488 codex                331.046875     83460096
+71368 ChatGPT              326.015625    202956800
+74404 explorer               311.9375    133804032
+57552 codebase-memory-mcp    251.5625      9191424
+
+
+CURRENT PROCESS CPU COUNTERS (raw per-process, can span cores):
+
+Name                  IDProcess PercentProcessorTime WorkingSet
+----                  --------- -------------------- ----------
+WmiPrvSE#2                60404                   19   17858560
+System                        4                    9      24576
+MsMpEng                    4272                    9  388034560
+claude#13                 77676                    4  307728384
+msedgewebview2            56200                    4   54435840
+browser                   21592                    4  164675584
+codebase-memory-mcp#7     75400                    4    7802880
+codebase-memory-mcp#2     35588                    4    2383872
+codebase-memory-mcp#6     50936                    4    2142208
+node#20                   12036                    0    5165056
+
+
+OTHER TEST/BUILD JOBS:
+REVIEW: no delegated/background review job launched by this Builder. Claude/Astra review is pending handoff.
+
+UTC_START: 2026-11-17T02:33:36.7559564Z
+COMMAND: npm.cmd run build
+CI=
+
+> build-settlement@0.1.0 build
+> npm run build --workspace=@haven/core && npm run build --workspace=@haven/simulation && npm run build --workspace=@haven/ui
+
+
+> @haven/core@0.1.0 build
+> tsc
+
+
+> @haven/simulation@0.1.0 build
+> tsc
+
+
+> @haven/ui@0.1.0 build
+> vite build
+
+vite v6.4.5 building for production...
+transforming...
+✓ 252 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.71 kB │ gzip:   0.41 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-DLT9rNeI.css                   35.43 kB │ gzip:   7.15 kB
+dist/assets/index-CBlQNAPd.js                   442.11 kB │ gzip: 137.41 kB
+✓ built in 4.46s
+UTC_END: 2026-11-17T02:34:00.0577688Z
+EXIT: 0

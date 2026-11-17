@@ -1,0 +1,217 @@
+EXIT: 0
+UTC_SNAPSHOT: 2026-11-15T13:15:41.7379656Z
+HEAD: 09a042a7a3e5c9b0cb09ccbecdd293bf86b4e29f
+TREE: 0ae12c7f62462fb14090a61c788a998f00a031ca
+CPU LOAD:
+
+Name                                     LoadPercentage NumberOfLogicalProcessors
+----                                     -------------- -------------------------
+Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz              3                         8
+
+
+TOP PROCESSES (cumulative CPU seconds):
+
+   Id ProcessName                 CPU WorkingSet64
+   -- -----------                 --- ------------
+72168 cloudflared            1224.125     42303488
+67228 T3 Code (Nightly)   1217.890625    260358144
+57432 claude                1149.5625    581263360
+74368 T3 Code (Nightly)    801.921875    258859008
+52232 msedgewebview2       664.859375     49029120
+48340 claude               569.484375     95313920
+48224 ChatGPT               537.28125    149786624
+49904 codebase-memory-mcp  525.328125      8929280
+57060 claude                 511.8125    269537280
+74360 claude                460.71875     93745152
+
+
+CURRENT PROCESS CPU COUNTERS (raw per-process, can span cores):
+
+Name                IDProcess PercentProcessorTime WorkingSet
+----                --------- -------------------- ----------
+codex#2                 51724                   94  336142336
+T3 Code (Nightly)#4     67228                   21  264855552
+T3 Code (Nightly)#3     74368                   21  262668288
+MsMpEng                  4272                   15  491454464
+WmiPrvSE#2              71732                   10   15417344
+claude#5                57432                    5  580747264
+cloudflared             72168                    5   42311680
+claude#10               52992                    5  342851584
+T3 Code (Nightly)#2     73060                    5   57237504
+dwm                     39688                    5   49254400
+
+
+OTHER TEST/BUILD JOBS:
+REVIEW: no delegated/background review job launched by this Builder. Claude/Astra review is pending handoff.
+
+UTC_START: 2026-11-15T13:16:32.5159520Z
+COMMAND: npm.cmd run test:architecture
+CI=
+
+> build-settlement@0.1.0 test:architecture
+> node --test tools/architecture.test.mjs
+
+✔ static multiline: simulation -> core is PASS (64.537ms)
+✔ static multiline: content -> core is VIOLATION (41.8176ms)
+✔ side effect: simulation -> core is PASS (41.768ms)
+✔ side effect: content -> core is VIOLATION (38.1943ms)
+✔ default import: simulation -> core is PASS (39.8152ms)
+✔ default import: content -> core is VIOLATION (43.5325ms)
+✔ namespace import: simulation -> core is PASS (38.161ms)
+✔ namespace import: content -> core is VIOLATION (38.218ms)
+✔ type import: simulation -> core is PASS (38.2652ms)
+✔ type import: content -> core is VIOLATION (37.7159ms)
+✔ inline type import: simulation -> core is PASS (37.3683ms)
+✔ inline type import: content -> core is VIOLATION (38.0547ms)
+✔ named re-export: simulation -> core is PASS (41.8198ms)
+✔ named re-export: content -> core is VIOLATION (38.6051ms)
+✔ star re-export: simulation -> core is PASS (37.8072ms)
+✔ star re-export: content -> core is VIOLATION (39.2597ms)
+✔ namespace re-export: simulation -> core is PASS (37.9129ms)
+✔ namespace re-export: content -> core is VIOLATION (38.5084ms)
+✔ type re-export: simulation -> core is PASS (38.5846ms)
+✔ type re-export: content -> core is VIOLATION (66.2658ms)
+✔ type star re-export: simulation -> core is PASS (38.6622ms)
+✔ type star re-export: content -> core is VIOLATION (38.0092ms)
+✔ dynamic import: simulation -> core is PASS (41.9424ms)
+✔ dynamic import: content -> core is VIOLATION (43.4101ms)
+✔ template dynamic import: simulation -> core is PASS (48.8329ms)
+✔ template dynamic import: content -> core is VIOLATION (40.7143ms)
+✔ import type expression: simulation -> core is PASS (40.1001ms)
+✔ import type expression: content -> core is VIOLATION (42.7209ms)
+✔ typeof import expression: simulation -> core is PASS (40.964ms)
+✔ typeof import expression: content -> core is VIOLATION (39.0759ms)
+✔ import equals require: simulation -> core is PASS (41.7573ms)
+✔ import equals require: content -> core is VIOLATION (39.0368ms)
+✔ literal require: simulation -> core is PASS (39.7112ms)
+✔ literal require: content -> core is VIOLATION (39.7602ms)
+✔ template require: simulation -> core is PASS (40.4592ms)
+✔ template require: content -> core is VIOLATION (38.1789ms)
+✔ file URL: static multiline retains simulation -> core PASS (58.9193ms)
+✔ file URL: static multiline retains content -> core VIOLATION (61.3988ms)
+✔ file URL: side effect retains simulation -> core PASS (58.4397ms)
+✔ file URL: side effect retains content -> core VIOLATION (59.0203ms)
+✔ file URL: default import retains simulation -> core PASS (58.8239ms)
+✔ file URL: default import retains content -> core VIOLATION (60.0702ms)
+✔ file URL: namespace import retains simulation -> core PASS (58.2079ms)
+✔ file URL: namespace import retains content -> core VIOLATION (58.5397ms)
+✔ file URL: type import retains simulation -> core PASS (61.8118ms)
+✔ file URL: type import retains content -> core VIOLATION (57.8609ms)
+✔ file URL: inline type import retains simulation -> core PASS (58.1188ms)
+✔ file URL: inline type import retains content -> core VIOLATION (57.9924ms)
+✔ file URL: named re-export retains simulation -> core PASS (64.0869ms)
+✔ file URL: named re-export retains content -> core VIOLATION (114.4659ms)
+✔ file URL: star re-export retains simulation -> core PASS (59.688ms)
+✔ file URL: star re-export retains content -> core VIOLATION (74.3031ms)
+✔ file URL: namespace re-export retains simulation -> core PASS (79.4205ms)
+✔ file URL: namespace re-export retains content -> core VIOLATION (73.7687ms)
+✔ file URL: type re-export retains simulation -> core PASS (87.6593ms)
+✔ file URL: type re-export retains content -> core VIOLATION (77.8069ms)
+✔ file URL: type star re-export retains simulation -> core PASS (67.992ms)
+✔ file URL: type star re-export retains content -> core VIOLATION (71.6485ms)
+✔ file URL: dynamic import retains simulation -> core PASS (70.0307ms)
+✔ file URL: dynamic import retains content -> core VIOLATION (71.7717ms)
+✔ file URL: template dynamic import retains simulation -> core PASS (76.1532ms)
+✔ file URL: template dynamic import retains content -> core VIOLATION (97.8096ms)
+✔ file URL: import type expression retains simulation -> core PASS (86.3985ms)
+✔ file URL: import type expression retains content -> core VIOLATION (78.1506ms)
+✔ file URL: typeof import expression retains simulation -> core PASS (83.3624ms)
+✔ file URL: typeof import expression retains content -> core VIOLATION (112.0772ms)
+✔ file URL: import equals require retains simulation -> core PASS (76.1411ms)
+✔ file URL: import equals require retains content -> core VIOLATION (65.7228ms)
+✔ file URL: literal require retains simulation -> core PASS (64.9162ms)
+✔ file URL: literal require retains content -> core VIOLATION (70.4047ms)
+✔ file URL: template require retains simulation -> core PASS (68.2671ms)
+✔ file URL: template require retains content -> core VIOLATION (63.3618ms)
+✔ file URL: all supported syntax in Svelte instance body (542.0571ms)
+✔ file URL: all supported syntax in Svelte module body (453.7737ms)
+✔ file URL: declarations, encoded names, URL normalization and .js -> .ts never execute source (142.0081ms)
+✔ file URL: malformed and missing targets are located INCOMPLETE, with CLI exit 2 (2493.5996ms)
+✔ file URL: platform paths and remote hosts cannot trigger filesystem lookup outside declared packages (99.481ms)
+✔ file URL: package cycles retain witness locations and CLI violation exit; local file cycles stay legal (2364.9043ms)
+✔ the complete approved matrix, including type-only edges (423.4042ms)
+✔ normalized relative paths, index resolution, declarations and .js -> .ts (55.8446ms)
+✔ exact package identities, subpaths, escapes and external lookalikes (70.3671ms)
+✔ comments, regex, plain strings, template text and Svelte markup create no edges (44.8139ms)
+✔ Svelte module and instance scripts retain actual source lines (42.1703ms)
+✔ every dependency syntax is scanned in Svelte scripts (439.2465ms)
+✔ scope01: unsupported script generics="T" is explicitly INCOMPLETE (73.8531ms)
+✔ scope01: unsupported script generics="T extends import('@haven/simulation').Value" is explicitly INCOMPLETE (60.1642ms)
+✔ scope01: unsupported script generics="" is explicitly INCOMPLETE (58.5775ms)
+✔ scope01: unsupported script generics is explicitly INCOMPLETE (61.7679ms)
+✔ scope01: unsupported script generics="not valid TypeScript" is explicitly INCOMPLETE (61.4364ms)
+✔ scope01: unsupported script module generics="T" is explicitly INCOMPLETE (60.2714ms)
+✔ scope01: unsupported script module generics="T extends import('@haven/simulation').Value" is explicitly INCOMPLETE (65.1108ms)
+✔ scope01: unsupported script module generics="" is explicitly INCOMPLETE (63.3535ms)
+✔ scope01: unsupported script module generics is explicitly INCOMPLETE (61.1771ms)
+✔ scope01: unsupported script module generics="not valid TypeScript" is explicitly INCOMPLETE (62.8048ms)
+✔ scope01: unsupported script context="module" generics="T" is explicitly INCOMPLETE (59.4567ms)
+✔ scope01: unsupported script context="module" generics="T extends import('@haven/simulation').Value" is explicitly INCOMPLETE (60.0932ms)
+✔ scope01: unsupported script context="module" generics="" is explicitly INCOMPLETE (61.0025ms)
+✔ scope01: unsupported script context="module" generics is explicitly INCOMPLETE (62.6727ms)
+✔ scope01: unsupported script context="module" generics="not valid TypeScript" is explicitly INCOMPLETE (61.0135ms)
+✔ scope01: attribute-like comments, script strings, markup and CSS stay excluded (45.8372ms)
+✔ scope01: TypeScript generic/type body dependencies retain ui -> core enforcement (46.9909ms)
+✔ scope01: TypeScript generic/type body dependencies retain content -> core enforcement (44.553ms)
+✔ scope01: declarations generic/type body dependencies retain ui -> core enforcement (48.5813ms)
+✔ scope01: declarations generic/type body dependencies retain content -> core enforcement (50.2184ms)
+✔ scope01: Svelte instance body generic/type body dependencies retain ui -> core enforcement (47.7534ms)
+✔ scope01: Svelte instance body generic/type body dependencies retain content -> core enforcement (46.7347ms)
+✔ scope01: Svelte module body generic/type body dependencies retain ui -> core enforcement (49.9488ms)
+✔ scope01: Svelte module body generic/type body dependencies retain content -> core enforcement (46.612ms)
+✔ scope01: unsupported attributes preserve proven body edges in both script blocks (43.5173ms)
+✔ scope01: unsupported generics CLI exits 2 with a located error, not a violation (4572.1439ms)
+✔ s1: expression-valued generics={"T"} gets its actual multiline location (85.9818ms)
+✔ s1: expression-valued generics={'T'} gets its actual multiline location (65.7478ms)
+✔ s1: expression-valued generics={`T`} gets its actual multiline location (60.6173ms)
+✔ s1: expression-valued generics={typeName} gets its actual multiline location (62.8166ms)
+✔ s1: expression-valued module generics={"T"} gets its actual multiline location (62.0115ms)
+✔ s1: expression-valued module generics={'T'} gets its actual multiline location (62.6179ms)
+✔ s1: expression-valued module generics={`T`} gets its actual multiline location (60.2546ms)
+✔ s1: expression-valued module generics={typeName} gets its actual multiline location (61.561ms)
+✔ s1: expression-valued context="module" generics={"T"} gets its actual multiline location (62.2773ms)
+✔ s1: expression-valued context="module" generics={'T'} gets its actual multiline location (62.2109ms)
+✔ s1: expression-valued context="module" generics={`T`} gets its actual multiline location (59.9205ms)
+✔ s1: expression-valued context="module" generics={typeName} gets its actual multiline location (74.7572ms)
+✔ s1: parser fallback retains every required dependency syntax in instance body (460.9806ms)
+✔ s1: parser fallback retains every required dependency syntax in module body (435.8959ms)
+✔ s1: fallback keeps both body type violations and attribute locations across script blocks (41.6566ms)
+✔ s1: BOM ranges preserve multiline attribute and body locations (41.3926ms)
+✔ s1: fallback reports computed body imports alongside the unsupported attribute (43.1282ms)
+✔ s1: fallback distinguishes actual script attributes from comment/string/markup/CSS lookalikes (69.0533ms)
+✔ s1: a malformed body remains an INCOMPLETE parse failure (43.6776ms)
+✔ s1: the reported expression-attribute CLI reproduction exits 2 with line and reason (2321.2579ms)
+✔ scan includes exactly eligible production .ts/.svelte, recursively (71.4924ms)
+✔ computed dependency cannot pass: import(name); (36.2816ms)
+✔ computed dependency cannot pass: import(`@haven/${name}`); (34.7024ms)
+✔ computed dependency cannot pass: import('@haven/' + name); (34.94ms)
+✔ computed dependency cannot pass: require(name); (34.0392ms)
+✔ computed dependency cannot pass: require(); (33.7708ms)
+✔ unresolved internal/relative dependency: import './missing'; (35.2845ms)
+✔ unresolved internal/relative dependency: import '@haven/core/no-such-file'; (35.7902ms)
+✔ unresolved internal/relative dependency: import '@haven/core/../../missing'; (35.1055ms)
+✔ relative asset imports resolve without expanding the production scan (57.2968ms)
+✔ parse error is incomplete verification: packages/core/src/index.ts const = ; (36.3725ms)
+✔ parse error is incomplete verification: packages/ui/src/Bad.svelte <script lang="ts">const = ;</script> (39.229ms)
+✔ parse error is incomplete verification: packages/ui/src/Bad.svelte <script>import "@haven/core";</script><div> (38.8304ms)
+✔ missing and empty scope fail without fabricated line numbers (30.2635ms)
+✔ a scope containing only excluded files is empty (36.7228ms)
+✔ unreadable root and source preserve path/cause without a line (34.6274ms)
+✔ manifest failure cannot make internal imports appear external (39.535ms)
+✔ two/three package cycles include a witness and every import location (69.7452ms)
+✔ within-package file cycles are legal, package DAG has no cycles (49.5944ms)
+✔ diagnostics and graph output are stable across scans and creation order (98.5565ms)
+✔ symlink escape is verification failure, never scanned or followed (63.2015ms)
+✔ a source root symlink cannot escape and an internal symlink can be scanned (91.3ms)
+✔ inspected TypeScript, Svelte and local config code is never executed (41.7388ms)
+✔ CLI exit 0/1/2 means PASS/VIOLATION/INCOMPLETE; output is stable JSON (16630.3617ms)
+ℹ tests 154
+ℹ suites 0
+ℹ pass 154
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 41548.1335
+UTC_END: 2026-11-15T13:17:14.8679407Z
+EXIT: 0

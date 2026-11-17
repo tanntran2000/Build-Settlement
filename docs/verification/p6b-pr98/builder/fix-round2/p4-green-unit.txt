@@ -1,0 +1,20 @@
+UTC_START: 2026-11-17T02:25:31.575Z
+HEAD: 2e5d1bdf5eb6c15561c310491bde4806863d5bd1
+TREE: ababcbdffc81ba734b183e22129163c309f7063f
+STATUS: M packages/simulation/src/__tests__/society-renewable-support.test.ts
+COMMAND: npx vitest run packages/simulation/src/__tests__/society-renewable-support.test.ts
+CI=
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  1 passed (1)
+      Tests  17 passed (17)
+   Start at  09:25:46
+   Duration  5.07s (transform 1.22s, setup 0ms, import 1.55s, tests 2.12s, environment 0ms)
+
+
+UTC_END: 2026-11-17T02:25:51.685Z
+SECONDS: 20.11
+EXIT: 0

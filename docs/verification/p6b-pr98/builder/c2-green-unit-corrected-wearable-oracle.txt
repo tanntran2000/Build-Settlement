@@ -1,0 +1,29 @@
+UTC_START: 2026-11-15T13:07:33.315Z
+HEAD: 75ccc69faaf40102ad217f22debf555c508be0b8
+TREE: f463578799f24d10271a5a45734c28fe25b59c21
+STATUS: M packages/ui/src/ItemCard.svelte
+ M packages/ui/src/SoloWeekReport.svelte
+ M packages/ui/src/__tests__/crafting-view.test.ts
+ M packages/ui/src/items-view.ts
+ M tests/e2e/character-life-navigation.helpers.ts
+ M tests/e2e/crafting.spec.ts
+COMMAND: npm test -- packages/ui/src/__tests__/crafting-view.test.ts packages/ui/src/__tests__/items-view.test.ts packages/ui/src/__tests__/report-letters.test.ts
+CI=
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/ui/src/__tests__/crafting-view.test.ts packages/ui/src/__tests__/items-view.test.ts packages/ui/src/__tests__/report-letters.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  3 passed (3)
+      Tests  311 passed (311)
+   Start at  20:07:34
+   Duration  1.37s (transform 1.86s, setup 0ms, import 2.57s, tests 290ms, environment 0ms)
+
+
+UTC_END: 2026-11-15T13:07:36.035Z
+SECONDS: 2.72
+EXIT: 0

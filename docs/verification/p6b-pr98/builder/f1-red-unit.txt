@@ -1,0 +1,156 @@
+UTC_START: 2026-11-15T14:53:02.792Z
+HEAD: 09a042a7a3e5c9b0cb09ccbecdd293bf86b4e29f
+TREE: 0ae12c7f62462fb14090a61c788a998f00a031ca
+STATUS: M packages/ui/src/__tests__/crafting-view.test.ts
+ M tests/e2e/crafting.spec.ts
+COMMAND: npm test -- packages/ui/src/__tests__/crafting-view.test.ts
+CI=
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/ui/src/__tests__/crafting-view.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts (152 tests | 9 failed) 191ms
+     × gives a fully staffed funded Hospital zero and a reason when no Herbs can arrive 8ms
+     × gives unfunded spec-2 zero and an upkeep reason 3ms
+     × gives unfunded service-1 zero and an upkeep reason 3ms
+     × gives unfunded slum-1 zero and an upkeep reason 2ms
+     × uses workers and effective medical steps when the Hospital is funded and supplied 2ms
+     × gives funded worker-free Drug Store base one 2ms
+     × uses same-week Herb output before Hospital consumption, independent of tile placement order 2ms
+     × allocates Herbs to fully staffed Hospitals in tile order and excludes paused producers 2ms
+     × credits this-week tax before upkeep, so zero opening Gold need not mean idle 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 9 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > F1 weekly workshop operation forecast > gives a fully staffed funded Hospital zero and a reason when no Herbs can arrive
+AssertionError: expected 2 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 2
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:165:60
+    163|   it('gives a fully staffed funded Hospital zero and a reason when no …
+    164|     const s = operatingLife(); s.city.society!.stocksMilli.herbs = 0;
+    165|     expect(view.workshopCapacity(s.city, [], 'service-1')).toBe(0);
+       |                                                            ^
+    166|     expect(view.workshopForecast(s.city, [], 'service-1')).toEqual({ c…
+    167|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/9]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > F1 weekly workshop operation forecast > gives unfunded spec-2 zero and an upkeep reason
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > F1 weekly workshop operation forecast > gives unfunded slum-1 zero and an upkeep reason
+AssertionError: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:170:55
+    168|   it.each(['spec-2', 'service-1', 'slum-1'])('gives unfunded %s zero a…
+    169|     const s = operatingLife(); stock(s).gold = 0; s.city.society!.stoc…
+    170|     expect(view.workshopCapacity(s.city, [], tileId)).toBe(0);
+       |                                                       ^
+    171|     expect(view.workshopForecast(s.city, [], tileId)).toEqual({ capaci…
+    172|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/9]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > F1 weekly workshop operation forecast > gives unfunded service-1 zero and an upkeep reason
+AssertionError: expected 2 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 2
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:170:55
+    168|   it.each(['spec-2', 'service-1', 'slum-1'])('gives unfunded %s zero a…
+    169|     const s = operatingLife(); stock(s).gold = 0; s.city.society!.stoc…
+    170|     expect(view.workshopCapacity(s.city, [], tileId)).toBe(0);
+       |                                                       ^
+    171|     expect(view.workshopForecast(s.city, [], tileId)).toEqual({ capaci…
+    172|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/9]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > F1 weekly workshop operation forecast > uses workers and effective medical steps when the Hospital is funded and supplied
+TypeError: workshopForecast is not a function
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:176:17
+    174|     const s = operatingLife(); s.city.society!.stocksMilli.herbs = 100…
+    175|     const npc = s.npcs[0]; npc.postTileId = 'service-1'; npc.character…
+    176|     expect(view.workshopForecast(s.city, s.npcs, 'service-1')).toEqual…
+       |                 ^
+    177|   });
+    178|   it('gives funded worker-free Drug Store base one', () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/9]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > F1 weekly workshop operation forecast > gives funded worker-free Drug Store base one
+TypeError: workshopForecast is not a function
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:180:17
+    178|   it('gives funded worker-free Drug Store base one', () => {
+    179|     const s = operatingLife();
+    180|     expect(view.workshopForecast(s.city, [], 'slum-1')).toEqual({ capa…
+       |                 ^
+    181|   });
+    182|   it('uses same-week Herb output before Hospital consumption, independ…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/9]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > F1 weekly workshop operation forecast > uses same-week Herb output before Hospital consumption, independent of tile placement order
+TypeError: workshopForecast is not a function
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:187:17
+    185|     const herb = s.city.tiles.findIndex(t => t.id === 'plain-2'); s.ci…
+    186|     const before = JSON.stringify(s);
+    187|     expect(view.workshopForecast(s.city, [], 'service-1')).toEqual({ c…
+       |                 ^
+    188|     expect(JSON.stringify(s)).toBe(before);
+    189|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/9]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > F1 weekly workshop operation forecast > allocates Herbs to fully staffed Hospitals in tile order and excludes paused producers
+TypeError: workshopForecast is not a function
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:193:17
+    191|     const s = operatingLife(); s.city.society!.stocksMilli.herbs = 100…
+    192|     s.city.tiles.find(t => t.id === 'service-2')!.building = { typeId:…
+    193|     expect(view.workshopForecast(s.city, [], 'service-1')).toEqual({ c…
+       |                 ^
+    194|     expect(view.workshopForecast(s.city, [], 'service-2')).toEqual({ c…
+    195|     s.city.society!.stocksMilli.herbs = 0;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/9]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > F1 weekly workshop operation forecast > credits this-week tax before upkeep, so zero opening Gold need not mean idle
+TypeError: workshopForecast is not a function
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:202:17
+    200|     const s = operatingLife(); stock(s).gold = 0;
+    201|     for (const tile of s.city.tiles) if (tile.building && tile.id !== …
+    202|     expect(view.workshopForecast(s.city, [], 'slum-1')).toEqual({ capa…
+       |                 ^
+    203|   });
+    204| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/9]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  9 failed | 143 passed (152)
+   Start at  21:53:04
+   Duration  1.44s (transform 672ms, setup 0ms, import 859ms, tests 191ms, environment 0ms)
+
+
+UTC_END: 2026-11-15T14:53:05.830Z
+SECONDS: 3.038
+EXIT: 1

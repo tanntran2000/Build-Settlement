@@ -1,0 +1,10 @@
+{
+  "phase": "All local checks passed; evidence generated",
+  "head": "ed4105f9aa0054396bf0da7b21cb6a27ddbdaa37",
+  "tree": "a164cb535cb914ee19f6e027b97013479c08e786",
+  "units": 2926,
+  "smoke": 387,
+  "execSessionId": null,
+  "builderPushed": false,
+  "remaining": "Checksum verification and final handoff; no PR update/push/merge."
+}

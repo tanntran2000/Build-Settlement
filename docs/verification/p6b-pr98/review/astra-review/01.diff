@@ -1,0 +1,13 @@
+diff --git a/packages/ui/src/CharacterLifeCity.svelte b/packages/ui/src/CharacterLifeCity.svelte
+index 62239ea..b4716b4 100644
+--- a/packages/ui/src/CharacterLifeCity.svelte
++++ b/packages/ui/src/CharacterLifeCity.svelte
+@@ -42,7 +42,7 @@
+   }
+ </script>
+ 
+-  <InsideCity {state} {selectedId} {locked} {managementError} {onselect} {oncommand} />
++  <InsideCity {state} {npcs} {selectedId} {locked} {managementError} {onselect} {oncommand} />
+   <LibraryPanel {state} {locked} {managementError} {oncommand} />
+   <div class="layout">
+     <OutsideCity {state} {npcs} {selectedId} {locked} {managementError} {onselect} {oncommand} />

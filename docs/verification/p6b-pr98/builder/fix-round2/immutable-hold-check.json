@@ -1,0 +1,11 @@
+{
+  "utc": "2026-11-17T01:20:47.676Z",
+  "base": "43fcb9b856c66606230d6d7ba49140ae94cfaa00",
+  "head": "ed4105f9aa0054396bf0da7b21cb6a27ddbdaa37",
+  "mode": "uncommitted HOLD snapshot",
+  "immutableFiles": 86,
+  "changed": [],
+  "restrictedFilesChecked": 158,
+  "sixParityTestsUnchanged": true,
+  "result": "PASS for byte checks only; full suite FAIL and final-mode runtime gates pending"
+}

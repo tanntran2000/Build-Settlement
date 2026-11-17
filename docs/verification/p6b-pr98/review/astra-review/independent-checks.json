@@ -1,0 +1,255 @@
+{
+  "head": "09a042a7a3e5c9b0cb09ccbecdd293bf86b4e29f",
+  "headTree": "0ae12c7f62462fb14090a61c788a998f00a031ca",
+  "commits": 2,
+  "rows": [
+    {
+      "path": "packages/ui/src/CharacterLifeCity.svelte",
+      "added": 1,
+      "deleted": 1
+    },
+    {
+      "path": "packages/ui/src/InsideCity.svelte",
+      "added": 5,
+      "deleted": 2
+    },
+    {
+      "path": "packages/ui/src/ItemCard.svelte",
+      "added": 3,
+      "deleted": 1
+    },
+    {
+      "path": "packages/ui/src/PotionPanel.svelte",
+      "added": 23,
+      "deleted": 1
+    },
+    {
+      "path": "packages/ui/src/SoloWeekReport.svelte",
+      "added": 13,
+      "deleted": 2
+    },
+    {
+      "path": "packages/ui/src/TileManagement.svelte",
+      "added": 2,
+      "deleted": 2
+    },
+    {
+      "path": "packages/ui/src/WorkshopPanel.svelte",
+      "added": 89,
+      "deleted": 0
+    },
+    {
+      "path": "packages/ui/src/__tests__/crafting-view.test.ts",
+      "added": 155,
+      "deleted": 0
+    },
+    {
+      "path": "packages/ui/src/items-view.ts",
+      "added": 44,
+      "deleted": 1
+    },
+    {
+      "path": "tests/e2e/character-life-navigation.helpers.ts",
+      "added": 28,
+      "deleted": 2
+    },
+    {
+      "path": "tests/e2e/crafting.spec.ts",
+      "added": 226,
+      "deleted": 0
+    }
+  ],
+  "total": {
+    "files": 11,
+    "added": 589,
+    "deleted": 12
+  },
+  "proposalSha256": "ff0bf9a602286768e96c007e27c679e67660d92ec6b152a3746a021f5773014b",
+  "reconstruction": [
+    {
+      "path": "tests/e2e/character-life-navigation.helpers.ts",
+      "ids": [
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "exact": true
+    },
+    {
+      "path": "packages/ui/src/CharacterLifeCity.svelte",
+      "ids": [
+        "X1"
+      ],
+      "exact": true
+    },
+    {
+      "path": "packages/ui/src/TileManagement.svelte",
+      "ids": [
+        "X2",
+        "X3"
+      ],
+      "exact": true
+    }
+  ],
+  "immutable": {
+    "count": 86,
+    "failures": []
+  },
+  "tree": {
+    "packages/core": {
+      "base": "34ea9e64f68b139c950ff83bf66ce0d586c784e3",
+      "head": "34ea9e64f68b139c950ff83bf66ce0d586c784e3"
+    },
+    "packages/simulation": {
+      "base": "aa88387f92c255d66e6946fe4fcdf747d13b8c96",
+      "head": "aa88387f92c255d66e6946fe4fcdf747d13b8c96"
+    },
+    "packages/persistence": {
+      "base": "5218db339d263803601a5eb8b4e08c96712e85cc",
+      "head": "5218db339d263803601a5eb8b4e08c96712e85cc"
+    }
+  },
+  "audits": [
+    {
+      "name": "brew-reflow-320.json",
+      "viewport": 320,
+      "texts": 24,
+      "controls": 5,
+      "contrastPass": true,
+      "sizePass": true,
+      "targetPass": true,
+      "overflow": false
+    },
+    {
+      "name": "brew-reflow-375.json",
+      "viewport": 375,
+      "texts": 24,
+      "controls": 5,
+      "contrastPass": true,
+      "sizePass": true,
+      "targetPass": true,
+      "overflow": false
+    },
+    {
+      "name": "brew-tab-1280.json",
+      "viewport": 1280,
+      "texts": 24,
+      "controls": 5,
+      "contrastPass": true,
+      "sizePass": true,
+      "targetPass": true,
+      "overflow": false
+    },
+    {
+      "name": "brew-tab-1600.json",
+      "viewport": 1600,
+      "texts": 24,
+      "controls": 5,
+      "contrastPass": true,
+      "sizePass": true,
+      "targetPass": true,
+      "overflow": false
+    },
+    {
+      "name": "drug-store-brew-1280.json",
+      "viewport": 1280,
+      "texts": 24,
+      "controls": 5,
+      "contrastPass": true,
+      "sizePass": true,
+      "targetPass": true,
+      "overflow": false
+    },
+    {
+      "name": "drug-store-brew-1600.json",
+      "viewport": 1600,
+      "texts": 24,
+      "controls": 5,
+      "contrastPass": true,
+      "sizePass": true,
+      "targetPass": true,
+      "overflow": false
+    },
+    {
+      "name": "quartermaster-rows-1280.json",
+      "viewport": 1280,
+      "texts": 43,
+      "controls": 0,
+      "contrastPass": true,
+      "sizePass": true,
+      "targetPass": true,
+      "overflow": false
+    },
+    {
+      "name": "quartermaster-rows-1600.json",
+      "viewport": 1600,
+      "texts": 43,
+      "controls": 0,
+      "contrastPass": true,
+      "sizePass": true,
+      "targetPass": true,
+      "overflow": false
+    },
+    {
+      "name": "report-reflow-320.json",
+      "viewport": 320,
+      "texts": 43,
+      "controls": 0,
+      "contrastPass": true,
+      "sizePass": true,
+      "targetPass": true,
+      "overflow": false
+    },
+    {
+      "name": "report-reflow-375.json",
+      "viewport": 375,
+      "texts": 43,
+      "controls": 0,
+      "contrastPass": true,
+      "sizePass": true,
+      "targetPass": true,
+      "overflow": false
+    },
+    {
+      "name": "smithy-queue-1280.json",
+      "viewport": 1280,
+      "texts": 18,
+      "controls": 3,
+      "contrastPass": true,
+      "sizePass": true,
+      "targetPass": true,
+      "overflow": false
+    },
+    {
+      "name": "smithy-queue-1600.json",
+      "viewport": 1600,
+      "texts": 18,
+      "controls": 3,
+      "contrastPass": true,
+      "sizePass": true,
+      "targetPass": true,
+      "overflow": false
+    },
+    {
+      "name": "smithy-reflow-320.json",
+      "viewport": 320,
+      "texts": 40,
+      "controls": 4,
+      "contrastPass": true,
+      "sizePass": true,
+      "targetPass": true,
+      "overflow": false
+    },
+    {
+      "name": "smithy-reflow-375.json",
+      "viewport": 375,
+      "texts": 40,
+      "controls": 4,
+      "contrastPass": true,
+      "sizePass": true,
+      "targetPass": true,
+      "overflow": false
+    }
+  ],
+  "status": ""
+}

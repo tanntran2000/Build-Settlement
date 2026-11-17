@@ -1,0 +1,55 @@
+EXIT: 0
+UTC_SNAPSHOT: 2026-11-15T13:15:41.7379656Z
+HEAD: 09a042a7a3e5c9b0cb09ccbecdd293bf86b4e29f
+TREE: 0ae12c7f62462fb14090a61c788a998f00a031ca
+CPU LOAD:
+
+Name                                     LoadPercentage NumberOfLogicalProcessors
+----                                     -------------- -------------------------
+Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz              3                         8
+
+
+TOP PROCESSES (cumulative CPU seconds):
+
+   Id ProcessName                 CPU WorkingSet64
+   -- -----------                 --- ------------
+72168 cloudflared            1224.125     42303488
+67228 T3 Code (Nightly)   1217.890625    260358144
+57432 claude                1149.5625    581263360
+74368 T3 Code (Nightly)    801.921875    258859008
+52232 msedgewebview2       664.859375     49029120
+48340 claude               569.484375     95313920
+48224 ChatGPT               537.28125    149786624
+49904 codebase-memory-mcp  525.328125      8929280
+57060 claude                 511.8125    269537280
+74360 claude                460.71875     93745152
+
+
+CURRENT PROCESS CPU COUNTERS (raw per-process, can span cores):
+
+Name                IDProcess PercentProcessorTime WorkingSet
+----                --------- -------------------- ----------
+codex#2                 51724                   94  336142336
+T3 Code (Nightly)#4     67228                   21  264855552
+T3 Code (Nightly)#3     74368                   21  262668288
+MsMpEng                  4272                   15  491454464
+WmiPrvSE#2              71732                   10   15417344
+claude#5                57432                    5  580747264
+cloudflared             72168                    5   42311680
+claude#10               52992                    5  342851584
+T3 Code (Nightly)#2     73060                    5   57237504
+dwm                     39688                    5   49254400
+
+
+OTHER TEST/BUILD JOBS:
+REVIEW: no delegated/background review job launched by this Builder. Claude/Astra review is pending handoff.
+
+UTC_START: 2026-11-15T13:15:42.1524741Z
+COMMAND: npm.cmd run lint
+CI=
+
+> build-settlement@0.1.0 lint
+> eslint . --max-warnings=0
+
+UTC_END: 2026-11-15T13:15:55.8858619Z
+EXIT: 0

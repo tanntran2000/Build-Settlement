@@ -1,0 +1,112 @@
+UTC_START: 2026-11-17T01:07:07.992Z
+HEAD: ed4105f9aa0054396bf0da7b21cb6a27ddbdaa37
+TREE: a164cb535cb914ee19f6e027b97013479c08e786
+STATUS: M packages/ui/src/__tests__/crafting-view.test.ts
+COMMAND: npx vitest run packages/ui/src/__tests__/crafting-view.test.ts
+CI=
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts (167 tests | 9 failed) 575ms
+     × resolves service-1 with Gold 10000 and Herbs 0 without mutating input 15ms
+     × resolves service-1 with Gold 0 and Herbs 1000 without mutating input 4ms
+     × resolves slum-1 with Gold 1000 and Herbs 0 without mutating input 4ms
+     × resolves slum-1 with Gold 0 and Herbs 0 without mutating input 5ms
+     × funds competing workshops in tile order and leaves unpaid Gold available for later tiles 3ms
+     × produces same-week Herbs before the Hospital consumes them even when the producer is last 3ms
+     × debits Farm batches before later workshop upkeep 3ms
+     × reports disabled and insufficient workshop staffing separately from funding 3ms
+     × retains End Week safe-integer overflow rejection without touching the input 10ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 9 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > R2 shared weekly operation allocation > resolves service-1 with Gold 10000 and Herbs 0 without mutating input
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > R2 shared weekly operation allocation > resolves service-1 with Gold 0 and Herbs 1000 without mutating input
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > R2 shared weekly operation allocation > resolves slum-1 with Gold 1000 and Herbs 0 without mutating input
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > R2 shared weekly operation allocation > resolves slum-1 with Gold 0 and Herbs 0 without mutating input
+TypeError: resolveWorkshopOperation is not a function
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:37:12
+     35|     s.city.tiles.find(t => t.id === tileId)!.building!.enabled = true;
+     36|     const before = JSON.stringify(s);
+     37|     expect(resolveWorkshopOperation(s.city).byTile[tileId]).toEqual(ex…
+       |            ^
+     38|     expect(JSON.stringify(s)).toBe(before);
+     39|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/9]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > R2 shared weekly operation allocation > funds competing workshops in tile order and leaves unpaid Gold available for later tiles
+TypeError: resolveWorkshopOperation is not a function
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:45:12
+     43|     smithy.building!.enabled = true; drugStore.building!.enabled = tru…
+     44|     s.city.tiles = [smithy, drugStore];
+     45|     expect(resolveWorkshopOperation(s.city).byTile).toEqual({ 'spec-2'…
+       |            ^
+     46|     smithy.building!.level = 2;
+     47|     expect(resolveWorkshopOperation(s.city).byTile).toEqual({ 'spec-2'…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/9]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > R2 shared weekly operation allocation > produces same-week Herbs before the Hospital consumes them even when the producer is last
+TypeError: resolveWorkshopOperation is not a function
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:56:20
+     54|     s.city.tiles = [hospital, garden];
+     55|     const before = JSON.stringify(s);
+     56|     const result = resolveWorkshopOperation(s.city);
+       |                    ^
+     57|     expect(result.byTile['service-1']).toEqual({ operating: true });
+     58|     expect(result.outside.producedMilli.herbs).toBe(1000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/9]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > R2 shared weekly operation allocation > debits Farm batches before later workshop upkeep
+TypeError: resolveWorkshopOperation is not a function
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:67:12
+     65|     farm.building!.enabled = true; farm.building!.workers = 2; drugSto…
+     66|     s.city.tiles = [farm, drugStore];
+     67|     expect(resolveWorkshopOperation(s.city).byTile['slum-1']).toEqual(…
+       |            ^
+     68|   });
+     69|   it('reports disabled and insufficient workshop staffing separately f…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/9]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > R2 shared weekly operation allocation > reports disabled and insufficient workshop staffing separately from funding
+TypeError: resolveWorkshopOperation is not a function
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:71:12
+     69|   it('reports disabled and insufficient workshop staffing separately f…
+     70|     const s = allocationLife();
+     71|     expect(resolveWorkshopOperation(s.city).byTile['spec-2']).toEqual(…
+       |            ^
+     72|     const hospital = s.city.tiles.find(t => t.id === 'service-1')!; ho…
+     73|     expect(resolveWorkshopOperation(s.city).byTile['service-1']).toEqu…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/9]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > R2 shared weekly operation allocation > retains End Week safe-integer overflow rejection without touching the input
+AssertionError: expected [Function] to throw error including 'Trial arithmetic exceeds safe nonnega…' but got '(0 , __vite_ssr_import_4__.resolveWor…'
+
+Expected: "Trial arithmetic exceeds safe nonnegative integer bounds."
+Received: "(0 , __vite_ssr_import_4__.resolveWorkshopOperation) is not a function"
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:79:52
+     77|     s.city.world.settlements[s.city.world.activeSettlementId!].cohorts…
+     78|     const before = JSON.stringify(s);
+     79|     expect(() => resolveWorkshopOperation(s.city)).toThrow('Trial arit…
+       |                                                    ^
+     80|     expect(JSON.stringify(s)).toBe(before);
+     81|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/9]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  9 failed | 158 passed (167)
+   Start at  08:07:12
+   Duration  2.14s (transform 752ms, setup 0ms, import 961ms, tests 575ms, environment 0ms)
+
+
+UTC_END: 2026-11-17T01:07:14.429Z
+SECONDS: 6.437
+EXIT: 1

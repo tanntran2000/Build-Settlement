@@ -1,0 +1,39 @@
+UTC_START: 2026-11-15T12:58:47.673Z
+HEAD: 43fcb9b856c66606230d6d7ba49140ae94cfaa00
+TREE: bc5965abab73df37f43baeafd9e4f9d847a23826
+STATUS: M packages/ui/src/CharacterLifeCity.svelte
+ M packages/ui/src/InsideCity.svelte
+ M packages/ui/src/PotionPanel.svelte
+ M packages/ui/src/TileManagement.svelte
+ M packages/ui/src/items-view.ts
+ M tests/e2e/character-life-navigation.helpers.ts
+?? packages/ui/src/WorkshopPanel.svelte
+?? packages/ui/src/__tests__/crafting-view.test.ts
+?? tests/e2e/crafting.spec.ts
+COMMAND: npm run typecheck:ui
+CI=
+
+
+> build-settlement@0.1.0 typecheck:ui
+> npm run check --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 check
+> svelte-check --tsconfig ./tsconfig.json
+
+Loading svelte-check in workspace: c:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\ui
+Getting Svelte diagnostics...
+
+c:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\ui\src\WorkshopPanel.svelte:83:111
+Warn: Unused CSS selector ".upgrade-cards>*"
+https://svelte.dev/e/css_unused_selector (svelte)
+  .eyebrow{font-size:.9rem;margin:0 0 6px}.capacity{font-weight:bold;border-block:1px solid #6b4f2e;padding:12px 0}h4{font-size:1.4rem;margin:0 0 12px}h5{font-size:1.15rem;margin:16px 0 10px}h6{font-size:1.05rem;margin:0 0 10px}p{line-height:1.5;margin:8px 0}
+  .ledger-columns{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px}.ledger-columns>*,.upgrade-cards>*{min-width:0}.recipe{border-top:2px solid #8b6c42;padding:16px 0}.upgrade-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.comparison{font-weight:bold}
+  ol{padding-left:24px}li{padding:12px 0;border-bottom:1px solid #8b6c42}.ready{border-top:3px double #6b4f2e;margin-top:20px}.ready :global(.item-card){margin:10px 0}
+
+====================================
+svelte-check found 0 errors and 1 warning in 1 file
+
+UTC_END: 2026-11-15T12:58:59.652Z
+SECONDS: 11.979
+EXIT: 0

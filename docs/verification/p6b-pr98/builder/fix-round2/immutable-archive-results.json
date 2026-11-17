@@ -1,0 +1,14 @@
+{
+  "utc": "2026-11-17T03:17:25.158Z",
+  "base": "43fcb9b856c66606230d6d7ba49140ae94cfaa00",
+  "head": "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+  "tree": "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+  "method": "git -c core.autocrlf=false archive --format=tar HEAD -- <86 protected paths and P4>; decode tar bytes; compare base/P4; sha256sum.exe -c SHA256SUMS.txt",
+  "archiveSha256": "57bcccfa9e7e6bb80b1fc6b53ad3023a36ef8a46c5d4d2eaca5fb6b7c82318c7",
+  "archiveBytes": 1484800,
+  "protectedFiles": 86,
+  "approvedTestExceptions": 1,
+  "archiveFiles": 87,
+  "result": "PASS",
+  "sha256sumExit": 0
+}

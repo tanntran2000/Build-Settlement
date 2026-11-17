@@ -1,0 +1,5 @@
+UTC: 2026-11-17T02:34:01.8840472Z
+COMMAND: echo CI before setting
+CI=
+COMMAND: CI=1 npm run test:smoke
+CI=1

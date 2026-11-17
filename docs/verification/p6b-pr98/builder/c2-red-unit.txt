@@ -1,0 +1,259 @@
+UTC_START: 2026-11-15T13:03:28.269Z
+HEAD: 75ccc69faaf40102ad217f22debf555c508be0b8
+TREE: f463578799f24d10271a5a45734c28fe25b59c21
+STATUS: M packages/ui/src/__tests__/crafting-view.test.ts
+ M tests/e2e/character-life-navigation.helpers.ts
+ M tests/e2e/crafting.spec.ts
+COMMAND: npm test -- packages/ui/src/__tests__/crafting-view.test.ts
+CI=
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/ui/src/__tests__/crafting-view.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts (143 tests | 78 failed) 183ms
+     × gives only upgradeable Smithy wearables their exact next material: common-weapon 4ms
+     × gives only upgradeable Smithy wearables their exact next material: rare-weapon 0ms
+     × gives only upgradeable Smithy wearables their exact next material: common-earrings 0ms
+     × gives only upgradeable Smithy wearables their exact next material: rare-earrings 0ms
+     × gives only upgradeable Smithy wearables their exact next material: common-necklace 0ms
+     × gives only upgradeable Smithy wearables their exact next material: rare-necklace 0ms
+     × gives only upgradeable Smithy wearables their exact next material: common-ring 0ms
+     × gives only upgradeable Smithy wearables their exact next material: rare-ring 0ms
+     × gives only upgradeable Smithy wearables their exact next material: common-hand 0ms
+     × gives only upgradeable Smithy wearables their exact next material: rare-hand 0ms
+     × gives only upgradeable Smithy wearables their exact next material: common-top 0ms
+     × gives only upgradeable Smithy wearables their exact next material: rare-top 0ms
+     × gives only upgradeable Smithy wearables their exact next material: common-bottom 0ms
+     × gives only upgradeable Smithy wearables their exact next material: rare-bottom 0ms
+     × gives only upgradeable Smithy wearables their exact next material: common-shoes 0ms
+     × gives only upgradeable Smithy wearables their exact next material: rare-shoes 0ms
+     × gives only upgradeable Smithy wearables their exact next material: epic-weapon 0ms
+     × gives only upgradeable Smithy wearables their exact next material: epic-top 0ms
+     × gives only upgradeable Smithy wearables their exact next material: epic-hand 0ms
+     × gives only upgradeable Smithy wearables their exact next material: epic-necklace 0ms
+     × gives only upgradeable Smithy wearables their exact next material: wardens-oath 0ms
+     × gives only upgradeable Smithy wearables their exact next material: crown-of-embers 0ms
+     × gives only upgradeable Smithy wearables their exact next material: ironhide-gloves 0ms
+     × gives only upgradeable Smithy wearables their exact next material: ledger-of-plenty 0ms
+     × gives only upgradeable Smithy wearables their exact next material: common-set 0ms
+     × gives only upgradeable Smithy wearables their exact next material: rare-set 0ms
+     × gives only upgradeable Smithy wearables their exact next material: heal-potion-1 0ms
+     × gives only upgradeable Smithy wearables their exact next material: heal-potion-2 0ms
+     × gives only upgradeable Smithy wearables their exact next material: heal-potion-3 0ms
+     × gives only upgradeable Smithy wearables their exact next material: iron 0ms
+     × gives only upgradeable Smithy wearables their exact next material: silver 0ms
+     × gives only upgradeable Smithy wearables their exact next material: gold 0ms
+     × gives only upgradeable Smithy wearables their exact next material: ruby 0ms
+     × gives only upgradeable Smithy wearables their exact next material: glass 0ms
+     × gives only upgradeable Smithy wearables their exact next material: nitrate 0ms
+     × gives only upgradeable Smithy wearables their exact next material: amethyst 0ms
+     × gives only upgradeable Smithy wearables their exact next material: paper 0ms
+     × gives only upgradeable Smithy wearables their exact next material: rubber 0ms
+     × gives only upgradeable Smithy wearables their exact next material: linen 0ms
+     × gives only upgradeable Smithy wearables their exact next material: wool 0ms
+     × gives only upgradeable Smithy wearables their exact next material: silk 0ms
+     × gives only upgradeable Smithy wearables their exact next material: green-leaf 0ms
+     × gives only upgradeable Smithy wearables their exact next material: red-leaf 0ms
+     × gives only upgradeable Smithy wearables their exact next material: purple-leaf 0ms
+     × gives only upgradeable Smithy wearables their exact next material: common-weapon-npc 0ms
+     × gives only upgradeable Smithy wearables their exact next material: rare-weapon-player 0ms
+     × gives only upgradeable Smithy wearables their exact next material: epic-weapon-npc 0ms
+     × gives only upgradeable Smithy wearables their exact next material: common-earrings-npc 0ms
+     × gives only upgradeable Smithy wearables their exact next material: rare-earrings-player 0ms
+     × gives only upgradeable Smithy wearables their exact next material: epic-earrings-player 0ms
+     × gives only upgradeable Smithy wearables their exact next material: epic-earrings-npc 0ms
+     × gives only upgradeable Smithy wearables their exact next material: common-necklace-npc 0ms
+     × gives only upgradeable Smithy wearables their exact next material: rare-necklace-player 0ms
+     × gives only upgradeable Smithy wearables their exact next material: epic-necklace-player 0ms
+     × gives only upgradeable Smithy wearables their exact next material: common-ring-npc 0ms
+     × gives only upgradeable Smithy wearables their exact next material: rare-ring-player 0ms
+     × gives only upgradeable Smithy wearables their exact next material: epic-ring-player 0ms
+     × gives only upgradeable Smithy wearables their exact next material: epic-ring-npc 0ms
+     × gives only upgradeable Smithy wearables their exact next material: common-hand-npc 0ms
+     × gives only upgradeable Smithy wearables their exact next material: rare-hand-player 0ms
+     × gives only upgradeable Smithy wearables their exact next material: epic-hand-player 0ms
+     × gives only upgradeable Smithy wearables their exact next material: common-top-npc 0ms
+     × gives only upgradeable Smithy wearables their exact next material: rare-top-player 0ms
+     × gives only upgradeable Smithy wearables their exact next material: epic-top-npc 0ms
+     × gives only upgradeable Smithy wearables their exact next material: common-bottom-npc 0ms
+     × gives only upgradeable Smithy wearables their exact next material: rare-bottom-player 0ms
+     × gives only upgradeable Smithy wearables their exact next material: epic-bottom-player 0ms
+     × gives only upgradeable Smithy wearables their exact next material: epic-bottom-npc 0ms
+     × gives only upgradeable Smithy wearables their exact next material: common-shoes-npc 0ms
+     × gives only upgradeable Smithy wearables their exact next material: rare-shoes-player 0ms
+     × gives only upgradeable Smithy wearables their exact next material: epic-shoes-player 0ms
+     × gives only upgradeable Smithy wearables their exact next material: epic-shoes-npc 0ms
+     × gives only upgradeable Smithy wearables their exact next material: common-set-npc 0ms
+     × gives only upgradeable Smithy wearables their exact next material: rare-set-player 0ms
+     × gives only upgradeable Smithy wearables their exact next material: epic-set-player 0ms
+     × gives only upgradeable Smithy wearables their exact next material: epic-set-npc 0ms
+     × names crafted, refined, brewed, waiting and idle events with every exact destination, without mutation 5ms
+     × keeps the four-row summary cap while leaving all source details intact 3ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 78 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: common-weapon
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: rare-weapon
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: common-earrings
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: rare-earrings
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: common-necklace
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: rare-necklace
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: common-ring
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: rare-ring
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: common-hand
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: rare-hand
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: common-top
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: rare-top
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: common-bottom
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: rare-bottom
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: common-shoes
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: rare-shoes
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: epic-weapon
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: epic-top
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: epic-hand
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: epic-necklace
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: wardens-oath
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: crown-of-embers
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: ironhide-gloves
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: ledger-of-plenty
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: common-set
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: rare-set
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: heal-potion-1
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: heal-potion-2
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: heal-potion-3
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: iron
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: silver
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: gold
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: ruby
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: glass
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: nitrate
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: amethyst
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: paper
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: rubber
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: linen
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: wool
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: silk
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: green-leaf
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: red-leaf
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: purple-leaf
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: common-weapon-npc
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: rare-weapon-player
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: epic-weapon-npc
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: common-earrings-npc
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: rare-earrings-player
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: epic-earrings-player
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: epic-earrings-npc
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: common-necklace-npc
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: rare-necklace-player
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: epic-necklace-player
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: common-ring-npc
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: rare-ring-player
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: epic-ring-player
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: epic-ring-npc
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: common-hand-npc
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: rare-hand-player
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: epic-hand-player
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: common-top-npc
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: rare-top-player
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: epic-top-npc
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: common-bottom-npc
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: rare-bottom-player
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: epic-bottom-player
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: epic-bottom-npc
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: common-shoes-npc
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: rare-shoes-player
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: epic-shoes-player
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: epic-shoes-npc
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: common-set-npc
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: rare-set-player
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: epic-set-player
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: epic-set-npc
+TypeError: craftingHint is not a function
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:116:23
+    114|     const recipe = Object.values(RECIPES).find(r => r.kind === 'upgrad…
+    115|     const material = recipe?.inputs.find(i => ITEM_CATALOG[i.defId].ca…
+    116|     const hint = view.craftingHint(definition);
+       |                       ^
+    117|     if (material) expect(hint).toBe(`Can upgrade at the Smithy · Needs…
+    118|     else expect(hint).toBeNull();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/78]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 crafting Quartermaster rows > names crafted, refined, brewed, waiting and idle events with every exact destination, without mutation
+AssertionError: expected [] to deeply equal [ …(6) ]
+
+- Expected
++ Received
+
+- [
+-   {
+-     "label": "Item crafted",
+-     "tone": "gain",
+-     "value": "Lord's Fine Ring · spec-2 · Inventory",
+-   },
+-   {
+-     "label": "Material refined",
+-     "tone": "gain",
+-     "value": "Silver · spec-2 · Material stack",
+-   },
+-   {
+-     "label": "Potion brewed",
+-     "tone": "gain",
+-     "value": "Heal Potion I · service-1 · Potion inventory",
+-   },
+-   {
+-     "label": "Potion brewed",
+-     "tone": "gain",
+-     "value": "Heal Potion II · service-1 · Temporary storage",
+-   },
+-   {
+-     "label": "Waiting for room",
+-     "tone": "loss",
+-     "value": "Nitrate · spec-2 · Waiting for room",
+-   },
+-   {
+-     "label": "Workshop idle",
+-     "tone": "loss",
+-     "value": "slum-1 · No orders completed. Check workers, supplies and upkeep.",
+-   },
+- ]
++ []
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:133:58
+    131|   it('names crafted, refined, brewed, waiting and idle events with eve…
+    132|     const report = { ...legacy, crafted, workshopsIdle: ['slum-1'] }, …
+    133|     expect(view.itemReportRows(report, 'quartermaster')).toEqual([
+       |                                                          ^
+    134|       { label: 'Item crafted', value: "Lord's Fine Ring · spec-2 · Inv…
+    135|       { label: 'Material refined', value: 'Silver · spec-2 · Material …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/78]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 crafting Quartermaster rows > keeps the four-row summary cap while leaving all source details intact
+AssertionError: expected [ { label: 'Food eaten', …(2) }, …(1) ] to have a length of 4 but got 2
+
+- Expected
++ Received
+
+- 4
++ 2
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:151:32
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/78]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  78 failed | 65 passed (143)
+   Start at  20:03:29
+   Duration  1.99s (transform 668ms, setup 0ms, import 849ms, tests 183ms, environment 0ms)
+
+
+UTC_END: 2026-11-15T13:03:31.611Z
+SECONDS: 3.342
+EXIT: 1

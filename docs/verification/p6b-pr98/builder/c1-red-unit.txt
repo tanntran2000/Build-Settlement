@@ -1,0 +1,334 @@
+UTC_START: 2026-11-15T12:53:43.329Z
+HEAD: 43fcb9b856c66606230d6d7ba49140ae94cfaa00
+TREE: bc5965abab73df37f43baeafd9e4f9d847a23826
+STATUS: ?? packages/ui/src/__tests__/crafting-view.test.ts
+COMMAND: npm test -- packages/ui/src/__tests__/crafting-view.test.ts
+CI=
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/ui/src/__tests__/crafting-view.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts (64 tests | 64 failed) 257ms
+     × lists only owned and affordable Smithy recipes, grouped Refine / Upgrade without mutation 25ms
+     × offers catalog recipe refine-silver only at its workshop, with exact single-order fields 5ms
+     × offers catalog recipe refine-gold only at its workshop, with exact single-order fields 25ms
+     × offers catalog recipe refine-nitrate only at its workshop, with exact single-order fields 7ms
+     × offers catalog recipe refine-amethyst only at its workshop, with exact single-order fields 11ms
+     × offers catalog recipe refine-wool only at its workshop, with exact single-order fields 8ms
+     × offers catalog recipe refine-silk only at its workshop, with exact single-order fields 7ms
+     × offers catalog recipe refine-red-leaf only at its workshop, with exact single-order fields 6ms
+     × offers catalog recipe refine-purple-leaf only at its workshop, with exact single-order fields 5ms
+     × offers catalog recipe upgrade-rare-weapon-player only at its workshop, with exact single-order fields 4ms
+     × offers catalog recipe upgrade-rare-weapon only at its workshop, with exact single-order fields 5ms
+     × offers catalog recipe upgrade-epic-weapon only at its workshop, with exact single-order fields 5ms
+     × offers catalog recipe upgrade-epic-weapon-npc only at its workshop, with exact single-order fields 3ms
+     × offers catalog recipe upgrade-rare-earrings-player only at its workshop, with exact single-order fields 5ms
+     × offers catalog recipe upgrade-rare-earrings only at its workshop, with exact single-order fields 4ms
+     × offers catalog recipe upgrade-epic-earrings-player only at its workshop, with exact single-order fields 3ms
+     × offers catalog recipe upgrade-epic-earrings-npc only at its workshop, with exact single-order fields 2ms
+     × offers catalog recipe upgrade-rare-necklace-player only at its workshop, with exact single-order fields 2ms
+     × offers catalog recipe upgrade-rare-necklace only at its workshop, with exact single-order fields 3ms
+     × offers catalog recipe upgrade-epic-necklace-player only at its workshop, with exact single-order fields 3ms
+     × offers catalog recipe upgrade-epic-necklace only at its workshop, with exact single-order fields 3ms
+     × offers catalog recipe upgrade-rare-ring-player only at its workshop, with exact single-order fields 3ms
+     × offers catalog recipe upgrade-rare-ring only at its workshop, with exact single-order fields 3ms
+     × offers catalog recipe upgrade-epic-ring-player only at its workshop, with exact single-order fields 2ms
+     × offers catalog recipe upgrade-epic-ring-npc only at its workshop, with exact single-order fields 2ms
+     × offers catalog recipe upgrade-rare-hand-player only at its workshop, with exact single-order fields 2ms
+     × offers catalog recipe upgrade-rare-hand only at its workshop, with exact single-order fields 3ms
+     × offers catalog recipe upgrade-epic-hand-player only at its workshop, with exact single-order fields 2ms
+     × offers catalog recipe upgrade-epic-hand only at its workshop, with exact single-order fields 2ms
+     × offers catalog recipe upgrade-rare-top-player only at its workshop, with exact single-order fields 2ms
+     × offers catalog recipe upgrade-rare-top only at its workshop, with exact single-order fields 3ms
+     × offers catalog recipe upgrade-epic-top only at its workshop, with exact single-order fields 3ms
+     × offers catalog recipe upgrade-epic-top-npc only at its workshop, with exact single-order fields 3ms
+     × offers catalog recipe upgrade-rare-bottom-player only at its workshop, with exact single-order fields 2ms
+     × offers catalog recipe upgrade-rare-bottom only at its workshop, with exact single-order fields 3ms
+     × offers catalog recipe upgrade-epic-bottom-player only at its workshop, with exact single-order fields 2ms
+     × offers catalog recipe upgrade-epic-bottom-npc only at its workshop, with exact single-order fields 4ms
+     × offers catalog recipe upgrade-rare-shoes-player only at its workshop, with exact single-order fields 3ms
+     × offers catalog recipe upgrade-rare-shoes only at its workshop, with exact single-order fields 3ms
+     × offers catalog recipe upgrade-epic-shoes-player only at its workshop, with exact single-order fields 2ms
+     × offers catalog recipe upgrade-epic-shoes-npc only at its workshop, with exact single-order fields 3ms
+     × offers catalog recipe upgrade-rare-set-player only at its workshop, with exact single-order fields 3ms
+     × offers catalog recipe upgrade-rare-set only at its workshop, with exact single-order fields 2ms
+     × offers catalog recipe upgrade-epic-set-player only at its workshop, with exact single-order fields 2ms
+     × offers catalog recipe upgrade-epic-set-npc only at its workshop, with exact single-order fields 3ms
+     × offers catalog recipe upgrade-heal-potion-2 only at its workshop, with exact single-order fields 2ms
+     × offers catalog recipe upgrade-heal-potion-3 only at its workshop, with exact single-order fields 2ms
+     × offers catalog recipe brew-heal-potion-1 only at its workshop, with exact single-order fields 3ms
+     × excludes equipped, stored and held items and chooses the lowest owned instance id 2ms
+     × allows Brew placement without staffing, Herbs stock or upkeep, but not without the fee 3ms
+     × hides placement recipes for absent/paused workshops and a full queue 3ms
+     × Smithy workers 0, technical 100 gives 0 capacity 4ms
+     × Smithy workers 1, technical 59 gives 1 capacity 3ms
+     × Smithy workers 1, technical 60 gives 2 capacity 2ms
+     × Smithy workers 1, technical 79 gives 2 capacity 2ms
+     × Smithy workers 1, technical 80 gives 3 capacity 2ms
+     × counts effective posted skill including worn gear and never another NPC or the Player 3ms
+     × requires full Hospital staffing, uses medical steps, and gives worker-free Drug Store base one 2ms
+     × shows the specific command error RECIPE_UNKNOWN 7ms
+     × shows the specific command error NO_WORKSHOP 3ms
+     × shows the specific command error MISSING_INPUT 1ms
+     × shows the specific command error QUEUE_FULL 4ms
+     × shows the specific command error ORDER_UNKNOWN 2ms
+     × shows the specific command error WORKSHOP_BUSY 2ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 64 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > lists only owned and affordable Smithy recipes, grouped Refine / Upgrade without mutation
+TypeError: craftingRecipes is not a function
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:31:23
+     29|     const s = life(); supply(s, 'refine-silver'); supply(s, 'upgrade-r…
+     30|     const before = JSON.stringify(s);
+     31|     const rows = view.craftingRecipes(s.city, 'spec-2');
+       |                       ^
+     32|     expect(rows.map(r => [r.recipeId, r.group])).toEqual([['refine-sil…
+     33|     expect(rows[1]).toMatchObject({ before: 'common-ring', output: 'ra…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/64]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe refine-silver only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe refine-gold only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe refine-nitrate only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe refine-amethyst only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe refine-wool only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe refine-silk only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe refine-red-leaf only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe refine-purple-leaf only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-rare-weapon-player only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-rare-weapon only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-epic-weapon only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-epic-weapon-npc only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-rare-earrings-player only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-rare-earrings only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-epic-earrings-player only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-epic-earrings-npc only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-rare-necklace-player only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-rare-necklace only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-epic-necklace-player only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-epic-necklace only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-rare-ring-player only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-rare-ring only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-epic-ring-player only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-epic-ring-npc only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-rare-hand-player only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-rare-hand only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-epic-hand-player only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-epic-hand only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-rare-top-player only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-rare-top only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-epic-top only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-epic-top-npc only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-rare-bottom-player only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-rare-bottom only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-epic-bottom-player only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-epic-bottom-npc only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-rare-shoes-player only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-rare-shoes only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-epic-shoes-player only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-epic-shoes-npc only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-rare-set-player only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-rare-set only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-epic-set-player only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-epic-set-npc only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-heal-potion-2 only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe upgrade-heal-potion-3 only at its workshop, with exact single-order fields
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > offers catalog recipe brew-heal-potion-1 only at its workshop, with exact single-order fields
+TypeError: craftingRecipes is not a function
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:41:22
+     39|     const s = life(), recipe = RECIPES[recipeId]; supply(s, recipeId);
+     40|     const tileId = recipe.workshops[0] === 'smithy' ? 'spec-2' : 'serv…
+     41|     const row = view.craftingRecipes(s.city, tileId).find(r => r.recip…
+       |                      ^
+     42|     expect(row).toBeDefined();
+     43|     const item = [...items(s).inventory, ...items(s).consumables][0];
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/64]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > excludes equipped, stored and held items and chooses the lowest owned instance id
+TypeError: craftingRecipes is not a function
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:53:17
+     51|     items(s).storage = [{ item: { id: 2, defId: 'common-ring' }, expir…
+     52|     items(s).workshops = { 'spec-2': { orders: [{ recipeId: 'upgrade-r…
+     53|     expect(view.craftingRecipes(s.city, 'spec-2')).toEqual([]);
+       |                 ^
+     54|     items(s).inventory = [{ id: 5, defId: 'common-ring' }, { id: 4, de…
+     55|     expect(view.craftingRecipes(s.city, 'spec-2')[0].fields).toEqual({…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/64]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > allows Brew placement without staffing, Herbs stock or upkeep, but not without the fee
+TypeError: craftingRecipes is not a function
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:62:63
+     60|     s.city.society!.stocksMilli.herbs = 0; stock(s).gold = 1000;
+     61|     expect(view.potionShop(s.city, 'service-1')).toBe(false);
+     62|     for (const tileId of ['service-1', 'slum-1']) expect(view.crafting…
+       |                                                               ^
+     63|     stock(s).gold = 999; expect(view.craftingRecipes(s.city, 'service-…
+     64|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/64]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 crafting recipe projection > hides placement recipes for absent/paused workshops and a full queue
+TypeError: craftingRecipes is not a function
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:67:17
+     65|   it('hides placement recipes for absent/paused workshops and a full q…
+     66|     const s = life(); supply(s, 'refine-silver');
+     67|     expect(view.craftingRecipes(s.city, 'missing')).toEqual([]);
+       |                 ^
+     68|     s.city.tiles.find(t => t.id === 'spec-2')!.building!.enabled = fal…
+     69|     expect(view.craftingRecipes(s.city, 'spec-2')).toEqual([]);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/64]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 workshop capacity and errors > Smithy workers 0, technical 100 gives 0 capacity
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 workshop capacity and errors > Smithy workers 1, technical 59 gives 1 capacity
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 workshop capacity and errors > Smithy workers 1, technical 60 gives 2 capacity
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 workshop capacity and errors > Smithy workers 1, technical 79 gives 2 capacity
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 workshop capacity and errors > Smithy workers 1, technical 80 gives 3 capacity
+TypeError: workshopCapacity is not a function
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:80:17
+     78|     const s = life(), npc = s.npcs[0]; npc.postTileId = 'spec-2'; npc.…
+     79|     s.city.tiles.find(t => t.id === 'spec-2')!.building!.workers = wor…
+     80|     expect(view.workshopCapacity(s.city, s.npcs, 'spec-2')).toBe(expec…
+       |                 ^
+     81|   });
+     82|   it('counts effective posted skill including worn gear and never anot…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/64]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 workshop capacity and errors > counts effective posted skill including worn gear and never another NPC or the Player
+TypeError: workshopCapacity is not a function
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:87:17
+     85|     items(s).equipped[npc.character.id] = { [gear[1].slot!]: { id: 1, …
+     86|     const before = JSON.stringify(s);
+     87|     expect(view.workshopCapacity(s.city, s.npcs, 'spec-2')).toBe(2); e…
+       |                 ^
+     88|     npc.postTileId = null; expect(view.workshopCapacity(s.city, s.npcs…
+     89|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/64]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 workshop capacity and errors > requires full Hospital staffing, uses medical steps, and gives worker-free Drug Store base one
+TypeError: workshopCapacity is not a function
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:92:17
+     90|   it('requires full Hospital staffing, uses medical steps, and gives w…
+     91|     const s = life(), npc = s.npcs[0]; npc.postTileId = 'service-1'; n…
+     92|     expect(view.workshopCapacity(s.city, s.npcs, 'service-1')).toBe(4);
+       |                 ^
+     93|     s.city.tiles.find(t => t.id === 'service-1')!.building!.workers = …
+     94|     expect(view.workshopCapacity(s.city, s.npcs, 'service-1')).toBe(0);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/64]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 workshop capacity and errors > shows the specific command error RECIPE_UNKNOWN
+AssertionError: expected 'The item action could not be complete…' to be 'This recipe is no longer available.' // Object.is equality
+
+Expected: "This recipe is no longer available."
+Received: "The item action could not be completed."
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:108:93
+    106|     ['ORDER_UNKNOWN', 'This order is no longer available.'],
+    107|     ['WORKSHOP_BUSY', 'Cancel orders and make room for ready outputs b…
+    108|   ])('shows the specific command error %s', (code, message) => expect(…
+       |                                                                                             ^
+    109| });
+    110|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/64]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 workshop capacity and errors > shows the specific command error NO_WORKSHOP
+AssertionError: expected 'The item action could not be complete…' to be 'Choose an enabled workshop for this r…' // Object.is equality
+
+Expected: "Choose an enabled workshop for this recipe."
+Received: "The item action could not be completed."
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:108:93
+    106|     ['ORDER_UNKNOWN', 'This order is no longer available.'],
+    107|     ['WORKSHOP_BUSY', 'Cancel orders and make room for ready outputs b…
+    108|   ])('shows the specific command error %s', (code, message) => expect(…
+       |                                                                                             ^
+    109| });
+    110|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/64]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 workshop capacity and errors > shows the specific command error MISSING_INPUT
+AssertionError: expected 'The item action could not be complete…' to be 'The required inputs are no longer ava…' // Object.is equality
+
+Expected: "The required inputs are no longer available."
+Received: "The item action could not be completed."
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:108:93
+    106|     ['ORDER_UNKNOWN', 'This order is no longer available.'],
+    107|     ['WORKSHOP_BUSY', 'Cancel orders and make room for ready outputs b…
+    108|   ])('shows the specific command error %s', (code, message) => expect(…
+       |                                                                                             ^
+    109| });
+    110|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/64]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 workshop capacity and errors > shows the specific command error QUEUE_FULL
+AssertionError: expected 'The item action could not be complete…' to be 'The workshop queue is full.' // Object.is equality
+
+Expected: "The workshop queue is full."
+Received: "The item action could not be completed."
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:108:93
+    106|     ['ORDER_UNKNOWN', 'This order is no longer available.'],
+    107|     ['WORKSHOP_BUSY', 'Cancel orders and make room for ready outputs b…
+    108|   ])('shows the specific command error %s', (code, message) => expect(…
+       |                                                                                             ^
+    109| });
+    110|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/64]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 workshop capacity and errors > shows the specific command error ORDER_UNKNOWN
+AssertionError: expected 'The item action could not be complete…' to be 'This order is no longer available.' // Object.is equality
+
+Expected: "This order is no longer available."
+Received: "The item action could not be completed."
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:108:93
+    106|     ['ORDER_UNKNOWN', 'This order is no longer available.'],
+    107|     ['WORKSHOP_BUSY', 'Cancel orders and make room for ready outputs b…
+    108|   ])('shows the specific command error %s', (code, message) => expect(…
+       |                                                                                             ^
+    109| });
+    110|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/64]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C1 workshop capacity and errors > shows the specific command error WORKSHOP_BUSY
+AssertionError: expected 'The item action could not be complete…' to be 'Cancel orders and make room for ready…' // Object.is equality
+
+Expected: "Cancel orders and make room for ready outputs before replacing this workshop."
+Received: "The item action could not be completed."
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:108:93
+    106|     ['ORDER_UNKNOWN', 'This order is no longer available.'],
+    107|     ['WORKSHOP_BUSY', 'Cancel orders and make room for ready outputs b…
+    108|   ])('shows the specific command error %s', (code, message) => expect(…
+       |                                                                                             ^
+    109| });
+    110|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/64]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  64 failed (64)
+   Start at  19:53:45
+   Duration  1.97s (transform 511ms, setup 0ms, import 676ms, tests 257ms, environment 0ms)
+
+
+UTC_END: 2026-11-15T12:53:47.784Z
+SECONDS: 4.455
+EXIT: 1

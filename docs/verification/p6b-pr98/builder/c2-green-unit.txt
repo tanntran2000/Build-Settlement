@@ -1,0 +1,153 @@
+UTC_START: 2026-11-15T13:07:15.509Z
+HEAD: 75ccc69faaf40102ad217f22debf555c508be0b8
+TREE: f463578799f24d10271a5a45734c28fe25b59c21
+STATUS: M packages/ui/src/ItemCard.svelte
+ M packages/ui/src/SoloWeekReport.svelte
+ M packages/ui/src/__tests__/crafting-view.test.ts
+ M packages/ui/src/items-view.ts
+ M tests/e2e/character-life-navigation.helpers.ts
+ M tests/e2e/crafting.spec.ts
+COMMAND: npm test -- packages/ui/src/__tests__/crafting-view.test.ts packages/ui/src/__tests__/items-view.test.ts packages/ui/src/__tests__/report-letters.test.ts
+CI=
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/ui/src/__tests__/crafting-view.test.ts packages/ui/src/__tests__/items-view.test.ts packages/ui/src/__tests__/report-letters.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts (143 tests | 6 failed) 186ms
+     × gives only upgradeable Smithy wearables their exact next material: silver 5ms
+     × gives only upgradeable Smithy wearables their exact next material: gold 1ms
+     × gives only upgradeable Smithy wearables their exact next material: nitrate 0ms
+     × gives only upgradeable Smithy wearables their exact next material: amethyst 0ms
+     × gives only upgradeable Smithy wearables their exact next material: wool 0ms
+     × gives only upgradeable Smithy wearables their exact next material: silk 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: silver
+AssertionError: expected null to be 'Can upgrade at the Smithy · Needs 1 S…' // Object.is equality
+
+- Expected:
+"Can upgrade at the Smithy · Needs 1 Silver (Rare)."
+
++ Received:
+null
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:117:32
+    115|     const material = recipe?.inputs.find(i => ITEM_CATALOG[i.defId].ca…
+    116|     const hint = view.craftingHint(definition);
+    117|     if (material) expect(hint).toBe(`Can upgrade at the Smithy · Needs…
+       |                                ^
+    118|     else expect(hint).toBeNull();
+    119|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: gold
+AssertionError: expected null to be 'Can upgrade at the Smithy · Needs 1 G…' // Object.is equality
+
+- Expected:
+"Can upgrade at the Smithy · Needs 1 Gold (Epic)."
+
++ Received:
+null
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:117:32
+    115|     const material = recipe?.inputs.find(i => ITEM_CATALOG[i.defId].ca…
+    116|     const hint = view.craftingHint(definition);
+    117|     if (material) expect(hint).toBe(`Can upgrade at the Smithy · Needs…
+       |                                ^
+    118|     else expect(hint).toBeNull();
+    119|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: nitrate
+AssertionError: expected null to be 'Can upgrade at the Smithy · Needs 1 N…' // Object.is equality
+
+- Expected:
+"Can upgrade at the Smithy · Needs 1 Nitrate (Rare)."
+
++ Received:
+null
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:117:32
+    115|     const material = recipe?.inputs.find(i => ITEM_CATALOG[i.defId].ca…
+    116|     const hint = view.craftingHint(definition);
+    117|     if (material) expect(hint).toBe(`Can upgrade at the Smithy · Needs…
+       |                                ^
+    118|     else expect(hint).toBeNull();
+    119|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: amethyst
+AssertionError: expected null to be 'Can upgrade at the Smithy · Needs 1 A…' // Object.is equality
+
+- Expected:
+"Can upgrade at the Smithy · Needs 1 Amethyst (Epic)."
+
++ Received:
+null
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:117:32
+    115|     const material = recipe?.inputs.find(i => ITEM_CATALOG[i.defId].ca…
+    116|     const hint = view.craftingHint(definition);
+    117|     if (material) expect(hint).toBe(`Can upgrade at the Smithy · Needs…
+       |                                ^
+    118|     else expect(hint).toBeNull();
+    119|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: wool
+AssertionError: expected null to be 'Can upgrade at the Smithy · Needs 1 W…' // Object.is equality
+
+- Expected:
+"Can upgrade at the Smithy · Needs 1 Wool (Rare)."
+
++ Received:
+null
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:117:32
+    115|     const material = recipe?.inputs.find(i => ITEM_CATALOG[i.defId].ca…
+    116|     const hint = view.craftingHint(definition);
+    117|     if (material) expect(hint).toBe(`Can upgrade at the Smithy · Needs…
+       |                                ^
+    118|     else expect(hint).toBeNull();
+    119|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  packages/ui/src/__tests__/crafting-view.test.ts > C2 Smithy hints > gives only upgradeable Smithy wearables their exact next material: silk
+AssertionError: expected null to be 'Can upgrade at the Smithy · Needs 1 S…' // Object.is equality
+
+- Expected:
+"Can upgrade at the Smithy · Needs 1 Silk (Epic)."
+
++ Received:
+null
+
+ ❯ packages/ui/src/__tests__/crafting-view.test.ts:117:32
+    115|     const material = recipe?.inputs.find(i => ITEM_CATALOG[i.defId].ca…
+    116|     const hint = view.craftingHint(definition);
+    117|     if (material) expect(hint).toBe(`Can upgrade at the Smithy · Needs…
+       |                                ^
+    118|     else expect(hint).toBeNull();
+    119|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  6 failed | 305 passed (311)
+   Start at  20:07:16
+   Duration  1.44s (transform 1.85s, setup 0ms, import 2.60s, tests 272ms, environment 0ms)
+
+
+UTC_END: 2026-11-15T13:07:18.371Z
+SECONDS: 2.862
+EXIT: 1

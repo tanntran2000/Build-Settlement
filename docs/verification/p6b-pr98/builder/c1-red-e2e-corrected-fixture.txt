@@ -1,0 +1,175 @@
+UTC_START: 2026-11-15T12:56:12.603Z
+HEAD: 43fcb9b856c66606230d6d7ba49140ae94cfaa00
+TREE: bc5965abab73df37f43baeafd9e4f9d847a23826
+STATUS: M tests/e2e/character-life-navigation.helpers.ts
+?? packages/ui/src/__tests__/crafting-view.test.ts
+?? tests/e2e/crafting.spec.ts
+COMMAND: npx playwright test tests/e2e/crafting.spec.ts
+CI=1
+
+[WebServer] (node:71236) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:62536) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:42292) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\crafting.spec.ts:31:1 › C1 1280 builds a Smithy, refines 2 Iron, upgrades a Player ring, cancels, brews and receives outputs (7.1s)
+(node:25592) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [chromium] › tests\e2e\crafting.spec.ts:73:1 › C1 keyboard Place and Cancel keep surviving focus, and hidden Brew never enters Characters tab order (5.8s)
+(node:53036) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 [chromium] › tests\e2e\crafting.spec.ts:89:1 › C1 Hospital and Drug Store Brew tabs permit unstaffed orders and preserve the default Buy path (5.8s)
+(node:63608) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  4 [chromium] › tests\e2e\crafting.spec.ts:103:1 › C1 queue holds inputs/Gold, shows ready outputs, and failed cancel stays atomic with a panel error (5.8s)
+
+
+  1) [chromium] › tests\e2e\crafting.spec.ts:31:1 › C1 1280 builds a Smithy, refines 2 Iron, upgrades a Player ring, cancels, brews and receives outputs 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('region', { name: 'Smithy workshop', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('region', { name: 'Smithy workshop', exact: true }) with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Smithy workshop', exact: true })
+
+
+      35 |   await page.getByRole('region', { name: 'Manage tile', exact: true }).getByRole('button', { name: 'Build', exact: true }).click();
+      36 |   s = act(s, 'BUILD', { tileId: 'spec-2', typeId: 'smithy' });
+    > 37 |   await expect(smithy(page)).toBeVisible();
+         |                              ^
+      38 |   await page.getByLabel('Assigned workers (WF)', { exact: true }).fill('1');
+      39 |   await page.getByRole('button', { name: 'Assign workers', exact: true }).click(); s = act(s, 'SET_WORKERS', { tileId: 'spec-2', workers: 1 });
+      40 |   await selectPerson(page, s.npcs[0].character.id); const work = await selectArea(page, 'Work');
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\crafting.spec.ts:37:30
+
+    Error Context: test-results\crafting-C1-1280-builds-a--16245--brews-and-receives-outputs-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\crafting-C1-1280-builds-a--16245--brews-and-receives-outputs-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\crafting-C1-1280-builds-a--16245--brews-and-receives-outputs-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\crafting.spec.ts:73:1 › C1 keyboard Place and Cancel keep surviving focus, and hidden Brew never enters Characters tab order 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-craft-recipe="refine-silver"]').getByRole('button', { name: /^Place / })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('[data-craft-recipe="refine-silver"]').getByRole('button', { name: /^Place / }) with timeout 5000ms
+      - waiting for locator('[data-craft-recipe="refine-silver"]').getByRole('button', { name: /^Place / })
+
+
+       at character-life-navigation.helpers.ts:20
+
+      18 | // Traverse the real tab order; never manufacture focus or skip hidden-view checks.
+      19 | export async function tabTo(page: Page, target: Locator) {
+    > 20 |   await expect(target).toBeVisible();
+         |                        ^
+      21 |   for (let step = 0; step < 160; step++) {
+      22 |     if (await target.evaluate(node => node === document.activeElement)) return;
+      23 |     await page.keyboard.press('Tab');
+        at tabTo (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:20:24)
+        at keyActivate (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:30:9)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\crafting.spec.ts:76:9
+
+    Error Context: test-results\crafting-C1-keyboard-Place-7114c-enters-Characters-tab-order-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\crafting-C1-keyboard-Place-7114c-enters-Characters-tab-order-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\crafting-C1-keyboard-Place-7114c-enters-Characters-tab-order-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests\e2e\crafting.spec.ts:89:1 › C1 Hospital and Drug Store Brew tabs permit unstaffed orders and preserve the default Buy path 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator: getByRole('tab', { name: 'Buy', exact: true })
+    Expected: "true"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveAttribute" getByRole('tab', { name: 'Buy', exact: true }) with timeout 5000ms
+      - waiting for getByRole('tab', { name: 'Buy', exact: true })
+
+
+      92 |   for (const [tileId, region] of [['service-1', 'Hospital brewing'], ['slum-1', 'Drug Store brewing']]) {
+      93 |     await selectPlot(page, tileId);
+    > 94 |     await expect(page.getByRole('tab', { name: 'Buy', exact: true })).toHaveAttribute('aria-selected', 'true');
+         |                                                                       ^
+      95 |     await page.getByRole('tab', { name: 'Brew', exact: true }).click();
+      96 |     await expect(page.getByRole('region', { name: region, exact: true })).toBeVisible();
+      97 |     await expect(page.getByRole('tabpanel', { name: 'Brew', exact: true }).locator('input')).toHaveCount(0);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\crafting.spec.ts:94:71
+
+    Error Context: test-results\crafting-C1-Hospital-and-D-d1210-eserve-the-default-Buy-path-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\crafting-C1-Hospital-and-D-d1210-eserve-the-default-Buy-path-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\crafting-C1-Hospital-and-D-d1210-eserve-the-default-Buy-path-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests\e2e\crafting.spec.ts:103:1 › C1 queue holds inputs/Gold, shows ready outputs, and failed cancel stays atomic with a panel error 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('region', { name: 'Smithy workshop', exact: true })
+    Expected substring: "Ready outputs · Waiting for room"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toContainText" getByRole('region', { name: 'Smithy workshop', exact: true }) with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Smithy workshop', exact: true })
+
+
+      107 |   items.workshops!['spec-2'].ready = [{ item: { id: items.nextItemId++, defId: 'rare-ring-player' } }, { material: 'silver', count: 1 }];
+      108 |   await importLife(page, s); await selectPlot(page, 'spec-2');
+    > 109 |   await expect(smithy(page)).toContainText('Ready outputs · Waiting for room');
+          |                              ^
+      110 |   await expect(smithy(page).getByTestId('workshop-ready')).toContainText(ITEM_CATALOG['rare-ring-player'].name);
+      111 |   await expect(smithy(page).getByTestId('workshop-ready')).toContainText('1 Silver');
+      112 |   await expect(smithy(page)).toContainText('Held fee: 3 Gold');
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\crafting.spec.ts:109:30
+
+    Error Context: test-results\crafting-C1-queue-holds-in-e0e7a-s-atomic-with-a-panel-error-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\crafting-C1-queue-holds-in-e0e7a-s-atomic-with-a-panel-error-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\crafting-C1-queue-holds-in-e0e7a-s-atomic-with-a-panel-error-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [chromium] › tests\e2e\crafting.spec.ts:31:1 › C1 1280 builds a Smithy, refines 2 Iron, upgrades a Player ring, cancels, brews and receives outputs 
+    [chromium] › tests\e2e\crafting.spec.ts:73:1 › C1 keyboard Place and Cancel keep surviving focus, and hidden Brew never enters Characters tab order 
+    [chromium] › tests\e2e\crafting.spec.ts:89:1 › C1 Hospital and Drug Store Brew tabs permit unstaffed orders and preserve the default Buy path 
+    [chromium] › tests\e2e\crafting.spec.ts:103:1 › C1 queue holds inputs/Gold, shows ready outputs, and failed cancel stays atomic with a panel error 
+
+UTC_END: 2026-11-15T12:56:51.594Z
+SECONDS: 38.991
+EXIT: 1

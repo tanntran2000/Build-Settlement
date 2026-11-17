@@ -1,0 +1,26 @@
+UTC_START: 2026-11-17T02:26:07.899Z
+HEAD: 060baa24d44d6a61c2b184a77ab161ae6f62d610
+TREE: 77cbeae3332cfaf26ba23e08ae67300d49d8c69d
+STATUS: CLEAN
+COMMAND: node C:/Users/Admin/.t3/local-drafts/p6b-prC/verify-edit-inventory.mjs --mode final --approval C:/Users/Admin/.t3/local-drafts/p6b-prC/owner-approval.json --round2-approval C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/owner-approval.json --timeout-approval C:/Users/Admin/.t3/local-drafts/p6b-prC/fix-round2/timeout-owner-approval.json
+CI=
+
+CORRECTION_7: P4 packages/simulation/src/__tests__/society-renewable-support.test.ts:170 (test starts at 160):  }); ->  }, 15000);
+CORRECTION_6: Share it now (Recommended); simulation allocator/week/index export scope approved
+UTC: 2026-11-17T02:27:05.178Z
+MODE: final
+HEAD: 060baa24d44d6a61c2b184a77ab161ae6f62d610
+TREE: 77cbeae3332cfaf26ba23e08ae67300d49d8c69d
+BASE: 43fcb9b856c66606230d6d7ba49140ae94cfaa00
+PROPOSAL_SHA256: ff0bf9a602286768e96c007e27c679e67660d92ec6b152a3746a021f5773014b
+EXISTING_TEST_FILES: 155; plus edited helper; total checked 156
+EXACT_EXISTING_TEST_EDITS: 4 (applied exactly)
+EXACT_OUTSIDE_ALLOWLIST_LINES: 3 in 2 files (applied exactly)
+IMMUTABLE_FILES: 86; changed paths []
+CHANGED_PATHS: ["packages/simulation/src/__tests__/society-renewable-support.test.ts","packages/simulation/src/index.ts","packages/simulation/src/tile-trial-week.ts","packages/simulation/src/workshop-operation.ts","packages/ui/src/CharacterLifeCity.svelte","packages/ui/src/InsideCity.svelte","packages/ui/src/ItemCard.svelte","packages/ui/src/PotionPanel.svelte","packages/ui/src/SoloWeekReport.svelte","packages/ui/src/TileManagement.svelte","packages/ui/src/WorkshopPanel.svelte","packages/ui/src/__tests__/crafting-view.test.ts","packages/ui/src/items-view.ts","tests/e2e/character-life-navigation.helpers.ts","tests/e2e/crafting.spec.ts"]
+STATUS: CLEAN
+RESULT: PASS (inventory and immutable bytes only; runtime gates are separate)
+
+UTC_END: 2026-11-17T02:27:05.281Z
+SECONDS: 57.382
+EXIT: 0

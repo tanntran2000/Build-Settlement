@@ -1,0 +1,60 @@
+HEAD: ed4105f9aa0054396bf0da7b21cb6a27ddbdaa37
+COMMITTED_TREE: a164cb535cb914ee19f6e027b97013479c08e786
+STATUS: uncommitted round-2 extraction; exact patch preserved in evidence
+CPU AT START:
+
+Name                                     LoadPercentage NumberOfLogicalProcessors
+----                                     -------------- -------------------------
+Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz             10                         8
+
+
+
+TOP PROCESSES:
+
+Name                  IDProcess PercentProcessorTime WorkingSet
+----                  --------- -------------------- ----------
+T3 Code (Nightly)#3       41404                   77  224518144
+WmiPrvSE#2                78552                   24   16982016
+T3 Code (Nightly)#4       72784                   14  204275712
+codebase-memory-mcp#6     50936                    9    8122368
+codebase-memory-mcp#7     75400                    4    9334784
+codebase-memory-mcp#2     35588                    4    2326528
+codebase-memory-mcp#1     57552                    4    9146368
+node#18                   72480                    0    7102464
+node#19                   50596                    0     405504
+node#16                   19760                    0     937984
+
+
+
+COMPETING TEST/BUILD JOBS: none detected
+UTC_START: 2026-11-17T01:12:28.9555141Z
+COMMAND: npx vitest run packages/simulation/src/__tests__/society-renewable-support.test.ts -t preserves complete gameplay and assignments through sixty weeks of snapshot restores --reporter=verbose
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ↓ packages/simulation/src/__tests__/society-renewable-support.test.ts > society renewable support and transaction ports > two funded Farms retain independent recipe caps with 1 funded Processor(s)
+ ↓ packages/simulation/src/__tests__/society-renewable-support.test.ts > society renewable support and transaction ports > two funded Farms retain independent recipe caps with 2 funded Processor(s)
+ ↓ packages/simulation/src/__tests__/society-renewable-support.test.ts > society renewable support and transaction ports > does not mistake capped stored Wheat liquidation for renewable Food over thirty weeks
+ ↓ packages/simulation/src/__tests__/society-renewable-support.test.ts > society renewable support and transaction ports > settles the opening population before applying society arrivals without changing assignments
+ ↓ packages/simulation/src/__tests__/society-renewable-support.test.ts > society renewable support and transaction ports > starter reserves and stored Wheat liquidation do not create renewable support
+ ↓ packages/simulation/src/__tests__/society-renewable-support.test.ts > society renewable support and transaction ports > duplicate idle Processor cannot reuse the same Wheat capacity
+ ↓ packages/simulation/src/__tests__/society-renewable-support.test.ts > society renewable support and transaction ports > one funded Farm shares its five supply slots across two funded Processors
+ ↓ packages/simulation/src/__tests__/society-renewable-support.test.ts > society renewable support and transaction ports > duplicate idle Workshop cannot reuse Market distribution capacity
+ ↓ packages/simulation/src/__tests__/society-renewable-support.test.ts > society renewable support and transaction ports > never revives a zero city or introduces departures when support is below population
+ ↓ packages/simulation/src/__tests__/society-renewable-support.test.ts > society renewable support and transaction ports > does not admit during shortage, unpaid upkeep or tight liquidity
+ ↓ packages/simulation/src/__tests__/society-renewable-support.test.ts > society renewable support and transaction ports > rejects stale or repeated End Week and overflow atomically
+ ✓ packages/simulation/src/__tests__/society-renewable-support.test.ts > society renewable support and transaction ports > preserves complete gameplay and assignments through sixty weeks of snapshot restores 1467ms
+ ↓ packages/simulation/src/__tests__/society-renewable-support.test.ts > society renewable support and transaction ports > stops and resumes immigration over forty-five weeks when renewable support changes
+ ↓ packages/simulation/src/__tests__/society-renewable-support.test.ts > retains the live immigration refusal branch: food-shortage
+ ↓ packages/simulation/src/__tests__/society-renewable-support.test.ts > retains the live immigration refusal branch: upkeep-unpaid
+ ↓ packages/simulation/src/__tests__/society-renewable-support.test.ts > retains the live immigration refusal branch: target-unfunded
+ ↓ packages/simulation/src/__tests__/society-renewable-support.test.ts > retains the live immigration refusal branch: liquidity
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 16 skipped (17)
+   Start at  08:12:33
+   Duration  3.53s (transform 1.21s, setup 0ms, import 1.55s, tests 1.47s, environment 0ms)
+
+UTC_END: 2026-11-17T01:12:36.6940499Z
+WALL_SECONDS: 7.7385358
+EXIT: 0

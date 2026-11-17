@@ -1,0 +1,29 @@
+{
+  "base": "43fcb9b856c66606230d6d7ba49140ae94cfaa00",
+  "hashes": [
+    {
+      "seed": 0,
+      "reports": "9bb24301f4ede325b0e0e116b03add674eb0c692dfa80fe16bddf0da61a66bc4",
+      "items": "cddabceee23c2746d4dd3408d05e71ee624dd800d8a0f761cb88f130122deb65",
+      "city": "7b013be31e647b47e1abe80ffead9e80d30bfa280c2c9269b649fe8d31b132ae"
+    },
+    {
+      "seed": 42,
+      "reports": "04aa55b35d7e8551323fbc2c66c6bf286fb06658b9163fd4a9e3aa327d705ea2",
+      "items": "283da6a1e4fed8fdc3a419e72e00827020ab1ace63f68277db0c1d7cee5616e8",
+      "city": "4054962deb8c4502aab86723b505f7e7d7913a87073c2b29ad19c077003d9cdb"
+    },
+    {
+      "seed": 20261028,
+      "reports": "a32127339cab716bfa6ccab522d0da3a455a75eca6b455ae0e7adb508e781940",
+      "items": "3ad4de4ea7c6a0687ac6d8481778a2513e841dd061e1712429d8bb2dacc31515",
+      "city": "198e769da35a411d3f9cdebdb6195ad545e9e9392e94030ae637bc654beb8803"
+    }
+  ],
+  "sourceFile": "packages/simulation/src/__tests__/craft-week.test.ts",
+  "sourceUnchanged": true,
+  "runtime": "All nine exact no-order hash assertions pass in the final full 2935-test suite; the source file and all nine expected hashes are unchanged from base.",
+  "head": "060baa24d44d6a61c2b184a77ab161ae6f62d610",
+  "tree": "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+  "historicalHoldRuntime": "All nine exact hash assertions pass in the 303-test targeted GREEN. The full unit suite has only the snapshot-restore timeout failure."
+}

@@ -1,0 +1,266 @@
+{
+  "viewport": 1600,
+  "texts": [
+    {
+      "text": "Items this week",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 24
+    },
+    {
+      "text": "Materials this week",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Plot",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Material",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Outcome",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "No materials found.",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Item found",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Item",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Outcome",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "No item found.",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Expired items",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Item",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "No items expired.",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Workshop output",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Plot",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Work",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Output",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Destination",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "service-1",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Brewed",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Heal Potion I",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Potion inventory",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "spec-2",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Refined",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Silver",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Material stack",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "spec-2",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Crafted",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Lord's Fine Ring",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Inventory",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "spec-2",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Refined",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Wool",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Waiting for room",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Idle workshops",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Plot",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Status",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "slum-1",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "No orders completed. Check workers, supplies and upkeep.",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Hospital operated",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Yes",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "Regeneration",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    },
+    {
+      "text": "+2",
+      "ratio": 9.762563058847864,
+      "required": 4.5,
+      "size": 19
+    }
+  ],
+  "clipped": [],
+  "controls": [],
+  "overflow": false
+}
