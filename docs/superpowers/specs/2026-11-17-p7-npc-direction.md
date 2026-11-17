@@ -1,6 +1,6 @@
-# P7 — NPC direction: structure, mechanisms, interactions (v0.3)
+# P7 — NPC direction: structure, mechanisms, interactions (v0.4)
 
-**Status:** the split in §9 is **approved** by the owner, 2026-11-17, verbatim: "Approve v0.2 split (Recommended)". v0.2 rewrote the NTR route (§5.5, §6, §7) after the owner's second direction below. v0.3 adds the owner's answers of 2026-11-17 (§7.2, §7.5, §7.10, §11); §10 lists what is still open. Sections 1–8 are the direction for P7-C, D and E; each of those specs repeats its §10 questions for G1. Base `main` `753e450`. It does not authorise code, a push or a PR.
+**Status:** the split in §9 is **approved** by the owner, 2026-11-17, verbatim: "Approve v0.2 split (Recommended)". v0.2 rewrote the NTR route (§5.5, §6, §7) after the owner's second direction below. v0.3 adds the owner's answers of 2026-11-17 (§7.2, §7.5, §7.10, §11). v0.4 adds NPC housing, slave and servant status, obedience and the city expansion (§12); §10 and §12.6 list what is still open. Sections 1–8 are the direction for P7-C, D and E; each of those specs repeats its §10 questions for G1. Base `main` `753e450`. It does not authorise code, a push or a PR.
 
 **Owner direction 1 (Tân, 2026-11-17), verbatim:** "vậy trước mắt cứ làm P7 trước đi. Nhớ ghi rõ kết cấu, cách thức và hướng nủa NPC. Tập trung mạnh vào việc tương tác giữa NPC - Player, NPC-NPC, NPC với người dân trong thành (NTR Route)".
 
@@ -137,7 +137,7 @@ A sparse list of bonds: `{ a, b, closeness 0–100, rivalry 0–100, lovers: boo
 ## 7. Axis 3 — NPC ↔ city men (NTR route)
 
 ### 7.1 Who is at risk
-Only an NPC **with a bond to the Player** (§5.5) enters the NTR route. The deeper the bond, the faster neglect starts it, and the heavier the loss. Later, the Mansion stages (Maid → Concubine → Wife) raise the weight further: a Wife who strays is the biggest event in the game.
+Only an NPC who **lives outside the Mansion** (in NPC housing, §12.1) **and has a bond to the Player** (§5.5) enters the NTR route. Mansion residents are never at risk (owner, 2026-11-17). The deeper the bond, the faster neglect starts it, and the heavier the loss. Later, the Mansion stages (Maid → Concubine → Wife) raise the weight further: a Wife who strays is the biggest event in the game.
 
 ### 7.2 Stages (one arc per NPC, TRIAL)
 | # | Stage | Enters when | What the Player can see |
@@ -236,3 +236,58 @@ Owner, verbatim: "Khả năng cao Khi Player có các event như đi dạo,mua s
 - **Relationship > 80:** each persuade attempt has a **30 %** chance (TRIAL from the owner) that she leaves her husband and comes to work for the Player as a **servant**, not a slave.
 - This is the mirror of §7: the Player becomes the rival, and her husband is the one who loses. It is also a fourth way to acquire an NPC, beside the Auction House, the Guild and the Slave Market.
 - Open details for its spec: how many wandering women at once (cap), how her husband reacts (gossip, Standing, a city event), and whether a wandering woman can herself be lost to another man.
+
+## 12. Housing, status and obedience (owner, 2026-11-17)
+
+Owner direction, verbatim: "NTR chỉ diễn ra đối với các NPC nằm ngoài mainson. Có nghĩa là dựa trên số ô đất đã quy định trong thành nên mở rộng ra thêm vì sẽ có một số building mới. Trước mắt cần xây apartment (hoặc tên khác tùy bạn lựa chọn) cho NPC. ( Xem kỹ lại số ô trong city) / NPC nên có thêm tỉ số vâng lời và khả năng suy nghĩ theo ý thích (Giống free cities) Điều này tạo nên mức độ đa dạng trong việc xây Quality of Life (QOL) để việc tạo ra các event sẽ đa dạng và thu hút hơn (Bạn hãy đối chiếu và suy nghĩ có hợp lý ko?) / Tương tự mainson nơi Player sống thì Aparment là nơi các Player sống. Player sẽ có 2 dạng là Slave (các nô lệ mua từ slave market, bắt được trong lúc thám hiểm, ngăn chặn cuộc tấn công của cướp,...). Đối với dạng slave thì mức sống ko cần quá sang trọng / Loại thứ 2 là servant khác với slave. NPC loại này cần điều kiện làm việc tối thiểu và căn phòng tối thiểu để hoạt động và sinh hoạt. Ngoài ra cũng có thời gian cố định là Player thuê họ. Nếu hết thời gian sẽ có event thuê loại. Nếu như servant đó có độ relationship với Player cao thì ko cần chờ đến hết thời hạn NPC đó sẽ ngỏ lời mong muốn phục vụ trọn đời đối với Player".
+
+Owner answers, verbatim: "1. nơi các NPC sống. Aparment ko chứa dân trong city. Apartment chỉ chứa tối đa 25 NPC ở cấp 1 và thêm 25 NPC nữa ở cấp 2. Nếu muốn đạt 100 NPC chỉ có cách xây 2 apartment / 2. nên có thêm expansion / 3. servant vẫn có thể trở thành concubine/wife và đảm nhận các công việc như mọi NPC khác về các đầu mục công việc trong game. Servant trọn đời ko cần lương / 4. Hợp lý cách này ổn".
+
+### 12.1 Two homes
+| Home | Holds | NTR | Notes |
+|---|---|---|---|
+| **Mansion** (the Player's home) | 10 → 20 → 30 named NPCs (Mansion notes, 2026-11-11) | **never** | safe, but Mansion staff do not work city posts |
+| **Apartment** (NPC housing; Claude proposes the in-game name **Retainers' Hall**, matching the "Retainer's" item prefix) | **25 NPCs at level 1, 50 at level 2**; no city residents | yes (§7) | reaching 100 NPCs needs **2 Apartments** |
+
+Choosing who lives where is a strategic choice: the Mansion protects, the Apartment lets her work the city.
+
+### 12.2 Room grades inside the Apartment (proposal, TRIAL)
+| Grade | For | Effect |
+|---|---|---|
+| **Bunk** | slaves | cheap; low living standard is enough (owner) |
+| **Room** | servants (minimum) | meets the servant's minimum room |
+| **Suite** | anyone | affection + and faster Stress recovery |
+
+A servant below her minimum room or work conditions loses affection each week and is likely to refuse renewal.
+
+### 12.3 Status: slave and servant
+| | Slave | Servant | Lifelong servant |
+|---|---|---|---|
+| Source | Slave Market, captured on expeditions, captured when a bandit attack is beaten (the existing raid event) | Guild, wandering women (§11) | a servant who offers it |
+| Wage | none | weekly wage | **none** (owner) |
+| Term | none | **20 weeks** (TRIAL, owner: "Hợp lý cách này ổn"); a renewal event at the end | none |
+| Minimums | none | a Room and acceptable work conditions | a Room |
+| Jobs and Mansion roles | all | all, including **Concubine and Wife** (owner) | all |
+
+- **Lifelong offer:** a servant with a high relationship to the Player asks to serve for life before her term ends (owner). Accepting removes her wage and her term.
+
+### 12.4 Obedience and own will (proposal; the owner asked whether it is sound)
+- **Obedience 0–100** becomes the second axis next to **affection**. Together they give four kinds of NPC, each with its own event set:
+
+| | Low obedience | High obedience |
+|---|---|---|
+| **High affection** | Willful lover: loves him, argues | Devoted |
+| **Low affection** | Rebellious | Submissive out of fear |
+
+- Obedience decides whether she follows orders: job changes, the Faithful rule (§7.6), accepting actions (§5.2). Mind no longer carries that role.
+- **Own will** = slider traits 0–100 with thresholds that drift weekly: her 2 hobbies (P7-A), one **18+ preference** and one **flaw** (for example jealous, lazy, greedy). Each one maps to a Player lever (gifts, wage, room, partner choice), so events and requests differ per NPC.
+
+### 12.5 City expansion
+Today the city has 33 plots in 3 rings: housing 11, service 6, specialist 10, slum 6. P7 adds the Apartment, Guild, Auction House and Slave Market, and unlocks the Brothel and Black Market; the Slum is already full of building types. The owner chose an expansion ("nên có thêm expansion"). Proposal: a **4th ring** unlocked by a wall upgrade, with about housing +3, service +2, specialist +2, slum +3 (TRIAL), and the Mansion on its own fixed plot. This changes the map, the ruleset, the golden and the tile art, so it is its own WP at the start of P7-B.
+
+### 12.6 Still open
+1. Move a **Mansion core** (the building and its slots, no staff roles yet) into P7-B, because NTR needs to know who is safe? Otherwise P7-E waits for the Mansion sub-project.
+2. Accept the **obedience + affection** model and the own-will traits (§12.4)?
+3. The name **Retainers' Hall**?
+4. Does the **100 NPC cap** count Mansion residents (30 + 100 = 130)?
+5. Expansion as a 4th ring (§12.5), or more plots in the existing rings?
