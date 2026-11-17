@@ -1,6 +1,6 @@
-# P7 — NPC direction: structure, mechanisms, interactions (v0.2)
+# P7 — NPC direction: structure, mechanisms, interactions (v0.3)
 
-**Status:** the split in §9 is **approved** by the owner, 2026-11-17, verbatim: "Approve v0.2 split (Recommended)". v0.2 rewrites the NTR route (§5.5, §6, §7) after the owner's second direction below; §10 lists what is still open. Sections 1–8 are the direction for P7-C, D and E; each of those specs repeats its §10 questions for G1. Base `main` `753e450`. It does not authorise code, a push or a PR.
+**Status:** the split in §9 is **approved** by the owner, 2026-11-17, verbatim: "Approve v0.2 split (Recommended)". v0.2 rewrote the NTR route (§5.5, §6, §7) after the owner's second direction below. v0.3 adds the owner's answers of 2026-11-17 (§7.2, §7.5, §7.10, §11); §10 lists what is still open. Sections 1–8 are the direction for P7-C, D and E; each of those specs repeats its §10 questions for G1. Base `main` `753e450`. It does not authorise code, a push or a PR.
 
 **Owner direction 1 (Tân, 2026-11-17), verbatim:** "vậy trước mắt cứ làm P7 trước đi. Nhớ ghi rõ kết cấu, cách thức và hướng nủa NPC. Tập trung mạnh vào việc tương tác giữa NPC - Player, NPC-NPC, NPC với người dân trong thành (NTR Route)".
 
@@ -147,7 +147,7 @@ Only an NPC **with a bond to the Player** (§5.5) enters the NTR route. The deep
 | 2 | **Temptation** | 2 more neglected weeks, or Arousal 100 while Longing | a **rival** appears (§7.3); "A man from the Merchants keeps her company at the Tavern." |
 | 3 | **Secret affair** | a seeded weekly roll while Tempted; Light Mind and `shame` lower the chance | outsider counters rise; clues: late returns, gifts that are not his, lower acceptance |
 | 4 | **Open** | 4 weeks in Secret affair without discovery | she no longer hides; affection to the Player −, Mind → Dark each week |
-| 5 | **Lost** | 4 weeks Open, or a failed win-back | she leaves with her rival (or the arc feeds the P7-G crime chain) — point of no return |
+| 5 | **Lost** | 4 weeks Open, or a failed win-back | she defects to the bandits with her rival (§7.10) — point of no return for the Player's bond |
 
 Each stage is one stored field per NPC plus the rival id; the roll uses the seeded stream.
 
@@ -165,9 +165,9 @@ At Temptation a **named male resident** is drawn by seed from the city's classes
 | Temptation | a date or intimacy → back to Longing; rival removed | — |
 | Secret affair (discovered) | **Win back:** attention over several weeks lowers the rival's hold; at 0 she returns (Content) | **Confront:** fast but trust −, resentment +; **Forbid** (house rule Faithful); **Punish** (Dark push) |
 | Open | Win back at double cost | **Accept it:** switches the arc to netorase (§7.7) |
-| Lost | — | only through later events |
+| Lost | — | capture her back with soldiers, or sell her (§7.10) |
 
-### 7.6 House rule per NPC (proposal)
+### 7.6 House rule per NPC (owner: "Keep Free/Faithful (Recommended)")
 | Rule | Effect |
 |---|---|
 | **Free** | outsider time is allowed: no betrayal, no stage clues; counts as netorase (§7.7) |
@@ -186,6 +186,15 @@ At Temptation a **named male resident** is drawn by seed from the city's classes
 ### 7.9 Paired event line
 Every Player–NPC intimacy event has an NTR counterpart in the same event catalog: the same NPC, same venue type, the rival in place of the Player. Both lines share one data file, one report format and later the same illustration slots (P7-ART). Report lines stay short and non-graphic.
 
+### 7.10 Lost: defection to the bandits (owner, 2026-11-17)
+Owner, verbatim: "trong quá trình NPC bị bắt cóc bởi tụi cướp. Nếu về relationship với Player thấp thì khả năng NTR và quay theo phe cướp cao hơn. Lúc đó NPC sẽ đối đầu và buff sức mạnh và tỉ lệ thành công trong các vụ ám sát. Nếu Player cử quân bắt về thì phải gây dựng lại relationship từ đầu và độ tin tưởng với Player thấp. Cách khác đơn giản hơn là bán cho slave market".
+- **Two roads to the same end:** the neglect arc reaching Lost (§7.2), or a **kidnap** by bandits (P7-G). During captivity, the **lower her relationship with the Player, the higher the weekly chance** that she turns (TRIAL: chance falls as affection + trust rise).
+- **Defected NPC:** she joins the bandits and works against the Player: the gang's **strength** and its **assassination success chance** rise while she is with them (TRIAL bonus per defected NPC).
+- **Player options:**
+  1. **Capture her back** with soldiers (rescue mission). She returns with her relationship to the Player **reset to the start** and **low trust**; the NTR stage is reset to Content.
+  2. **Sell her** to the Slave Market (the simpler way).
+- No NPC Health: she never dies from this; she is lost only by sale or a written life-or-death event (owner, 2026-11-12).
+
 ## 8. Data, save and checks
 - New state per NPC: intent + 3 reason ids, `weeksNeglected`, NTR stage, rival `{ name, class, hold }` or null, house rule, ≤ 5 bonds. The 1 MiB save cap holds at 100 NPCs.
 - Weights, thresholds, venue class mixes and event lines live in data files with validators (DATA-01 pattern).
@@ -203,10 +212,27 @@ Every Player–NPC intimacy event has an NTR counterpart in the same event catal
 | **P7-F** | Work slots + Barracks | 2–3 NPC slots per building, soldier training | A |
 | **P7-G** | Crime chain | kidnap, rescue, defection, Black Market sale | B, E, F, Expedition |
 | **P7-ART** | Appearance | paper-doll layers, palette swaps | art track (Codex draws) |
+| *P7-H (proposed, not yet approved)* | Wandering women and netori (§11) | city outings, wandering married NPCs, persuade to servant | C, E |
 
-## 10. Questions for the owner (asked again in the P7-C/D/E specs)
-1. **NTR setting:** always on, or a setting (Off / Netorase only / Full NTR) because many players avoid NTR?
-2. **Stages and Lost:** keep the 6 stages in §7.2? At Lost, does she leave the city with her rival, or stay but belong to him?
-3. **Free / Faithful** house rule per NPC: keep?
-4. **Netori** (the Player taking a resident's wife) as a later idea, or not at all?
-5. **Force on refusal** (slaves only, Dark push): allow?
+## 10. Owner answers and open questions
+
+**Answered (2026-11-17):**
+- NTR setting: "Always on". There is no off switch.
+- Lost: defection to the bandits (§7.10).
+- House rule: "Keep Free/Faithful (Recommended)".
+- Netori: wandering married women (§11).
+
+**Still open (asked in the P7-C/E/G specs):**
+1. Keep the 6 NTR stages and their TRIAL timings (§7.2)?
+2. **Force on refusal** (slaves only, Dark push): allow?
+3. Placement of §11 (proposed P7-H, after P7-E).
+
+## 11. Wandering women and netori (owner, 2026-11-17)
+Owner, verbatim: "Khả năng cao Khi Player có các event như đi dạo,mua sắm,vui chơi,... trong city sẽ gặp các Phụ nữ có chồng (Mature) nếu như thấy hứng thú Player sẽ xây dựng relationship các NPC đó nếu vượt 80 point thì sẽ có 30% Player thuyết phục thành công NPC đó về làm việc lúc này NPC sẽ ko tính là slave mà là servant. Trước lúc đó ( khoảng thời gian xây dựng quan hệ ) NPC đó sẽ là 1 NPC wandering trong city và Player có thể bắt gặp và trò chuyện, đi date. Nếu Relatioship trên 50 point sẽ mở khóa tính năng 18+".
+
+- **City outings:** new Player actions (walk, shopping, leisure…) can produce an encounter with a **married woman** of Mature age (30–49) living in the city.
+- **Wandering NPC:** if the Player shows interest, she becomes a **wandering NPC**: a named woman who lives in the city, is not owned and holds no post. The Player can meet her again, talk and date her with normal actions (§5.1).
+- **Relationship > 50:** 18+ actions unlock with her.
+- **Relationship > 80:** each persuade attempt has a **30 %** chance (TRIAL from the owner) that she leaves her husband and comes to work for the Player as a **servant**, not a slave.
+- This is the mirror of §7: the Player becomes the rival, and her husband is the one who loses. It is also a fourth way to acquire an NPC, beside the Auction House, the Guild and the Slave Market.
+- Open details for its spec: how many wandering women at once (cap), how her husband reacts (gossip, Standing, a city event), and whether a wandering woman can herself be lost to another man.
