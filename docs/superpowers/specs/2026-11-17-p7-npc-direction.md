@@ -285,9 +285,10 @@ A servant below her minimum room or work conditions loses affection each week an
 ### 12.5 City expansion
 Today the city has 33 plots in 3 rings: housing 11, service 6, specialist 10, slum 6. P7 adds the Apartment, Guild, Auction House and Slave Market, and unlocks the Brothel and Black Market; the Slum is already full of building types. The owner chose an expansion ("nên có thêm expansion"). Proposal: a **4th ring** unlocked by a wall upgrade, with about housing +3, service +2, specialist +2, slum +3 (TRIAL), and the Mansion on its own fixed plot. This changes the map, the ruleset, the golden and the tile art, so it is its own WP at the start of P7-B.
 
-### 12.6 Still open
-1. Move a **Mansion core** (the building and its slots, no staff roles yet) into P7-B, because NTR needs to know who is safe? Otherwise P7-E waits for the Mansion sub-project.
-2. Accept the **obedience + affection** model and the own-will traits (§12.4)?
-3. The name **Retainers' Hall**?
-4. Does the **100 NPC cap** count Mansion residents (30 + 100 = 130)?
-5. Expansion as a 4th ring (§12.5), or more plots in the existing rings?
+### 12.6 Owner decisions (2026-11-17, verbatim dialog answers)
+1. "Mansion core into P7-B (Recommended)": P7-B builds the Mansion building and its 10/20/30 slots; staff roles (Maid, Guard, Accountant, Fucktoy, Concubine, Wife) stay in the later Mansion sub-project.
+2. "Accept both (Recommended)": obedience + affection model and the own-will traits (§12.4).
+3. "Retainers' Hall (Recommended)": the in-game name of the Apartment.
+4. "100 total, Mansion included (Recommended)": the hard cap is 100 named NPCs across the Mansion and every Retainers' Hall.
+
+Still open: the expansion shape (4th ring, §12.5, or more plots in the existing rings), asked in the P7-B spec.
