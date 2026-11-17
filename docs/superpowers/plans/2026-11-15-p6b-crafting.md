@@ -36,6 +36,8 @@
 
 **Plan correction 6 (PR C, Astra round 2 at `ed4105f`: shared operating logic).** The weekly capacity forecast was correct but copied End Week's operating allocation (income timing, tile-order upkeep funding, Farm debits, same-week Herb output, Hospital Herb consumption) into `packages/ui/src/items-view.ts`. PR C now extracts that allocation into one pure function in `packages/simulation` (new file or an export from `tile-trial-week.ts`), used by both `runTileTrialWeek` and the panel; the UI copy is removed. `packages/simulation/src/tile-trial-week.ts`, the new simulation file and `packages/simulation/src/index.ts` (export only) join PR C's allowlist for this. End Week behaviour must not change: golden, fixtures, pins and the 9 no-order regression hashes stay byte-identical, and the existing parity tests keep passing. **Owner (Tân), 2026-11-17, dialog choice, verbatim:** "Share it now (Recommended)".
 
+**Plan correction 7 (PR C, fix round 2 timeout HOLD).** `packages/simulation/src/__tests__/society-renewable-support.test.ts:160` (60 weeks of snapshot restores) timed out at 5000 ms in the full suite; alone it takes 1220–1467 ms (three runs), the same as before PR C. PR C may give **only that test** a 15000 ms per-test timeout, recorded as existing-test edit P4, with no other change to it. **Owner (Tân), 2026-11-17, dialog choice, verbatim:** "Set this test to 15 s (Recommended)".
+
 **Base:** `main` `e859177` (P6-A complete).
 
 ---
