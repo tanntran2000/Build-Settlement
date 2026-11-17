@@ -1,0 +1,25 @@
+HEAD=753e4503673df86830fba2ef2c9ef1e64a843729
+TREE=77cbeae3332cfaf26ba23e08ae67300d49d8c69d
+UTC_START=2026-11-17T06:25:31.228599+00:00
+COMMAND=["npm.cmd", "run", "typecheck:core"]
+WORKING_STATUS:
+ M packages/core/src/__tests__/catalog-data.test.ts
+ M packages/core/src/data/validate.ts
+ M packages/core/src/index.ts
+ M packages/core/src/world/__tests__/npc.test.ts
+ M packages/core/src/world/npc-content.ts
+ M packages/core/src/world/npc.ts
+?? packages/core/src/data/npc-life.json
+?? packages/core/src/world/__tests__/npc-life.test.ts
+?? packages/core/src/world/npc-life.ts
+?? packages/persistence/src/__tests__/npc-life-records.test.ts
+
+OUTPUT:
+
+> build-settlement@0.1.0 typecheck:core
+> tsc -p packages/core/tsconfig.json --noEmit
+
+
+EXIT_CODE=0
+SECONDS=10.777
+UTC_END=2026-11-17T06:25:42.006086+00:00

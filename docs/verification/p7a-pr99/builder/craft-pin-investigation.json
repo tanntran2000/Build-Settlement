@@ -1,0 +1,34 @@
+{
+  "utc": "2026-11-17T06:35:51.656Z",
+  "head": "927f5be7bb0de8b3fff884daa3da89e98ae03e9e",
+  "candidateTree": "d34090999dec94488eabd92f799a61fd2a4c257f",
+  "results": [
+    {
+      "seed": 0,
+      "before": "7b013be31e647b47e1abe80ffead9e80d30bfa280c2c9269b649fe8d31b132ae",
+      "after": "cb611be6c8b7540c4c83f844a566272c0b2dba394609f4ec12b0208011139c54",
+      "normalizedCity": "7b013be31e647b47e1abe80ffead9e80d30bfa280c2c9269b649fe8d31b132ae",
+      "reportsUnchanged": true,
+      "itemsUnchanged": true,
+      "week": 61
+    },
+    {
+      "seed": 42,
+      "before": "4054962deb8c4502aab86723b505f7e7d7913a87073c2b29ad19c077003d9cdb",
+      "after": "2c7e1a942c7bf05d2b462bb67aa0c05145107cfb0bce714ec3d8c2ba1b2d5e01",
+      "normalizedCity": "4054962deb8c4502aab86723b505f7e7d7913a87073c2b29ad19c077003d9cdb",
+      "reportsUnchanged": true,
+      "itemsUnchanged": true,
+      "week": 61
+    },
+    {
+      "seed": 20261028,
+      "before": "198e769da35a411d3f9cdebdb6195ad545e9e9392e94030ae637bc654beb8803",
+      "after": "73863ad6709a288163077c5d3167d857685ecc92b1f54593f50caf8313f49e04",
+      "normalizedCity": "198e769da35a411d3f9cdebdb6195ad545e9e9392e94030ae637bc654beb8803",
+      "reportsUnchanged": true,
+      "itemsUnchanged": true,
+      "week": 61
+    }
+  ]
+}

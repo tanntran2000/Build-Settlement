@@ -1,0 +1,13 @@
+{
+  "utc": "2026-11-17T12:27:41.111289+00:00",
+  "head": "56124513aef2d85de128fe76bf3001654290c1c0",
+  "tree": "d2f31706d77d308a310b61857a8b293a898280e7",
+  "branch": "feat/p7a-npc-life-data",
+  "gitStatus": "",
+  "portsFree": true,
+  "listeners": [],
+  "portSnapshot": "full-smoke-rerun/final-machine.json",
+  "featureBranchUnchanged": true,
+  "pushPrMerge": "not performed",
+  "gitAndPortCommandsExitCode": 0
+}

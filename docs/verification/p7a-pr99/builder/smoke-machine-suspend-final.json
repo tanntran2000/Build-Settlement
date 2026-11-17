@@ -1,0 +1,20 @@
+﻿[
+    {
+        "Utc":  "2026-11-17T08:36:47.7598100Z",
+        "Provider":  "Microsoft-Windows-Power-Troubleshooter",
+        "Id":  1,
+        "Times":  {
+                      "SleepTime":  "2026-11-17T07:53:50.6140946Z",
+                      "WakeTime":  "2026-11-17T08:36:45.8100589Z"
+                  }
+    },
+    {
+        "Utc":  "2026-11-17T09:09:05.5699845Z",
+        "Provider":  "Microsoft-Windows-Power-Troubleshooter",
+        "Id":  1,
+        "Times":  {
+                      "SleepTime":  "2026-11-17T09:08:48.9249846Z",
+                      "WakeTime":  "2026-11-17T09:09:04.4640204Z"
+                  }
+    }
+]

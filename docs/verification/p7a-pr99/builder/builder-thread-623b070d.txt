@@ -1,0 +1,711 @@
+P7 Builder (npc, xhigh)
+mcp:623b070d-e763-444a-af62-4cd08ade2dc6  completed  codex/gpt-6.1-sol
+
+[user]
+P7-A PR A Builder (NPC life data and state: npc-life.json, NpcLife, validation, ruleset 10, fixtures, golden)
+
+You are the P7 Builder (new thread for the P7 phase) in Haven (repo tanntran2000/Build-Settlement). Claude is Orchestrator and Tester. Astra reviews. Only dot or the owner merges. P6-B is complete: main = 753e4503673df86830fba2ef2c9ef1e64a843729.
+
+Owner (Tân), 2026-11-17, verbatim: "Duyệt P7-A" (spec G1) and "Duyệt, giao Builder A" (plan approval, start PR A).
+
+Worktree: C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01 (reuse it; create no other worktree or clone). Run `git fetch origin`, check `git status` is clean and ports 4173/4174 are free, then create `feat/p7a-npc-life-data` from `origin/main` = 753e450.
+
+Binding documents (read fully before any code):
+- Plan: C:/Users/Admin/.t3/local-drafts/p7a-prA/binding-plan-2761d05.md (approved). PR A = Tasks A0–A3. Apply Global Constraints, Decisions 1–4, the PR A file allowlist plus each task's **Files** line, and Review Focus 5.
+- Spec: C:/Users/Admin/.t3/local-drafts/p7a-prA/binding-spec-2761d05.md (v0.1); split overview: binding-overview-2761d05.md.
+- AGENTS.md in the repo (Hard Laws, §4 anti-loop, §6 evidence).
+You may use the executing-plans approach (task by task, in this thread, no subagents).
+
+Content rules: every NPC is a female adult (18+); adult stats are numbers and labels only; data-file text is English; never name another game anywhere.
+
+**Task A0 — Step 0 preflight, before any RED or product edit.** Search the whole repo (unit and e2e) for every existing test, fixture, pin or literal PR A changes, for example: WorldNpc key lists and `isWorldNpcList`; starter NPC literals and snapshots; every `tile-society-09` literal and every test treating v9 as current; `catalog-golden.json` and its consumers; catalog pins (`SOCIETY_TRIAL`, new `NPC_ORIGINS`, `NPC_HOBBIES`, `P7A_TRIAL`); persistence record tests for `kind: 'npc'`. For each: file:line, current assertion, why PR A changes it, exact proposed after-text. List any file outside the allowlist and why, and the expected golden/fixture path set. Then **HOLD once with the full list**; the owner decides. Do not edit any existing test before that answer.
+
+Key rules (HOLD if anything conflicts and name the line):
+- **A1:** `npc-life.json` exactly as Decision 1 (about 6 origins, 8 hobbies, the P7A_TRIAL block); `validateNpcLife` with `npc-life.json#<id>.<field>: <rule>` errors; JSON imports `with { type: 'json' }`; `NpcLife` exactly as Decision 2 as the last key of `WorldNpc`; `createNpcLife(seed, npcId, age)` deterministic via `npcLifeRandom`, distinct hobbies; `isNpcLife` rejects every Review Focus 5 case; `npcAge` / `npcAgeTitle` (18–29 Young Adult, 30–49 Mature, 50+ Granny, 40 weeks per year); the 3 starter NPCs get `life` with unchanged shown ages; `character.health` untouched.
+- **A2:** ruleset 09 → 10 (`SOCIETY_RULESET`, tuning.json, the validate.ts literals); v9 refused unchanged like v8; new `fixtures/society-v10/` with the v9 scenarios; golden regenerated ONCE with the existing generator; commit `p7a-path-diff.ts` and its `.txt`; allowed paths `city.society.rulesetId` and `npcs.*.life.*` (and report fields under `npcLife` if any); any other path is a HOLD.
+- No weekly rule or UI code in PR A (PR B and PR C).
+- **Tests and order:** each task's full RED list before any product edit; existing-test edits only as approved after Step 0; nothing loosened; no new per-test timeout (measure alone three times and HOLD). `lord-health.test.ts:73` and `society-renewable-support.test.ts:160` already have owner-approved 15 s.
+- **A3 gates**, sequentially at the clean final head, on a quiet machine (record CPU load and top processes first; start only when no other test, build or review job runs): `git diff --check origin/main...HEAD`, lint, typecheck, `check:architecture`, `test:architecture`, `npm test`, build; then in the same shell `echo "CI=$CI"` and `CI=1 npm run test:smoke`. If the smoke fails, rerun each failed test alone once, report both, and HOLD.
+- **Ports:** 4173/4174 free before the smoke; if held, report and HOLD; kill nothing.
+- **Evidence:** C:/Users/Admin/.t3/local-drafts/p7a-prA/: Step 0, RED/GREEN per task, edit inventory + verifier with a clear final-mode argument, hash-pin changes, golden path-diff output, gate logs with HEAD/tree/UTC/exit/CPU, smoke log with CI=1, bundle vs main (JS 137.41 kB, CSS 7.15 kB gzip) with script and raw artifact, README, SHA256SUMS.txt (every file except the top manifest, nested manifests included). UTF-8 only. No `docs/` files on the product branch. Keep Playwright traces out of the evidence folder or list them in a LOCAL-ONLY manifest.
+- **Commits:** one per task (A1, A2), with the plan's commit messages, each ending `Co-authored-by: Codex <noreply@openai.com>`. Do not push, open a PR or merge. Leave ports free.
+- **Anti-loop:** a failure still failing after 2 attempts is a HOLD. A queued message never overrides a HOLD.
+
+After the Step 0 HOLD is answered and the work is done, reply with: HEAD and tree, empty git status; the commits; RED and GREEN per task; the edit inventory count; the hash-pin changes; the golden path-diff result; CPU at gate start; the gate table and smoke total with CI=1; the bundle; the evidence paths.
+
+
+[assistant]
+Read the three binding documents and finish A0 preflight first. The required stopping point is one HOLD with every affected test, pin, fixture, and proposed replacement; no code or test edits happen before the owner answers.
+
+
+[assistant]
+A0 is in progress. The binding documents confirm PR A stops at data, state, validation, ruleset, and fixtures. I’m using the installed `codebase-memory` skill for structural checks, with repository-wide text searches to catch test literals and snapshots.
+
+
+[assistant]
+A0 environment checks passed: the reused worktree is clean, ports 4173/4174 are free, and `feat/p7a-npc-life-data` now starts at `753e450`. This worktree has no usable graph index, so the inventory is using direct source checks; no tests or product files have changed.
+
+
+[assistant]
+A0 found two issues that need owner decisions: strict `life` validation would break historical NPC record reconstruction, and golden saves must change the outer `cityRulesetId` as well as `city.society.rulesetId`. The inventory will include both conflicts alongside every proposed test edit.
+
+
+[assistant]
+A0 has identified 50 proposed line edits across 34 existing test files, plus the 10 new v10 fixtures. The full before/after inventory is written outside the worktree. I’m checking its hashes and UTF-8 encoding, then stopping at the required HOLD with no RED runs or implementation edits.
+
+
+[assistant]
+Review the [full Step 0 inventory](C:/Users/Admin/.t3/local-drafts/p7a-prA/STEP0-HOLD.md). **A0 is complete; HOLD is active before A1.**
+
+The reused worktree is on `feat/p7a-npc-life-data`, created from the fetched `origin/main`.
+
+```text
+HEAD: 753e4503673df86830fba2ef2c9ef1e64a843729
+Tree: 77cbeae3332cfaf26ba23e08ae67300d49d8c69d
+git status --porcelain=v1: empty
+Ports 4173/4174: free
+```
+
+No existing tests or product files have been edited. No RED/GREEN runs, generators, gates, builds, smoke tests, commits, pushes, PRs, or merges have occurred.
+
+The repository scan covered **478 tracked paths**, including unit tests, e2e, fixtures, tools, and docs. The report contains **50 exact proposed line edits**, with file:line, current text, reason, and replacement text. The expected branch inventory contains **59 paths**:
+
+| Category | Paths |
+|---|---:|
+| Named product files, including two new files | 9 |
+| Existing test files requiring approved edits | 34 |
+| New test files | 3 |
+| New `society-v10` fixtures | 10 |
+| Existing golden plus new path-diff script/output | 3 |
+
+The single owner decision at this HOLD needs to cover four items:
+
+1. **Approve the exact edit inventory and test paths.** This includes current-fixture references in simulation tests, UI unit tests, and e2e under the plan’s Step 0 approval provision. Every replacement is recorded in the [before/after list](C:/Users/Admin/.t3/local-drafts/p7a-prA/STEP0-HOLD.md:24).
+
+2. **Allow historical NPC validation in persistence.** The [plan’s file restriction](C:/Users/Admin/.t3/local-drafts/p7a-prA/binding-plan-2761d05.md:65) says `session-records.ts` is for “v9 historical only.” Its [current NPC reconstruction branch](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/session-records.ts:169) calls `isWorldNpcList`, so requiring `life` would reject historical v1–v9 NPC records. The proposed remedy preserves the prior three-key validator **only for historical records**; v10 requires `life`. The report includes the concrete replacement without migration or assertion removal.
+
+3. **Allow a separate, exact envelope check in the path-diff script.** The [allowed paths](C:/Users/Admin/.t3/local-drafts/p7a-prA/binding-plan-2761d05.md:48) cover state changes, while the [serializer](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/persistence/src/character-life-save.ts:18) also changes outer `cityRulesetId`. The recommendation keeps the state whitelist intact and separately permits only the envelope’s `09 → 10` change.
+
+4. **Confirm A1/A2 validation staging and per-task scope.** A1 introduces required `life`; A2 introduces ruleset 10 and v10 fixtures. The recommendation is A1 GREEN for its complete acceptance suite and directly affected factory checks, followed by fixture integration GREEN in A2. The report also requests the A1 persistence test path and the necessary session-seeded initialization inside the already named NPC file.
+
+The [evidence README](C:/Users/Admin/.t3/local-drafts/p7a-prA/README.md) links the scan, proposed pins, fixture hashes, and verification records. All **15 evidence files** passed UTF-8 decoding and [SHA-256 manifest verification](C:/Users/Admin/.t3/local-drafts/p7a-prA/SHA256SUMS.txt).
+
+This stop is required by the [approved plan’s Step 0 rule](C:/Users/Admin/.t3/local-drafts/p7a-prA/binding-plan-2761d05.md:31) and your instruction to “HOLD once with the full list”; the existing G1 and Builder approvals remain recorded.
+
+**Next: owner replies “Approve Step 0 with recommendations 1–4,” or specifies the corrections.**
+
+[user]
+Step 0 answer from the owner (Tân), 2026-11-17, verbatim: "Approve all 4 (Recommended)".
+
+Recorded as Plan correction 1 in the plan on docs/p7-npc-design at 32c8598. New binding copy: C:/Users/Admin/.t3/local-drafts/p7a-prA/binding-plan-32c8598.md (read "## Plan corrections" at the end; it now overrides the 2761d05 copy).
+
+Approved, exactly as in your STEP0-HOLD.md:
+1. E01–E50 as written and the listed new test paths. No other existing-test edit.
+2. session-records.ts: rulesets 01–09 keep the old three-key NPC validator (isHistoricalNpcList); v10 always requires life. No migration, no missing-life tolerance on v10.
+3. p7a-path-diff.ts: the state whitelist stays; separately assert that the envelope differs only by cityRulesetId (tile: rulesetId) 09 → 10.
+4. A1 GREEN on its own suite plus the directly affected factory checks; full fixture GREEN in A2; no temporary missing-life acceptance. New files npc-life-records.test.ts (A1, extended in A2) and society-v9-fixture.test.ts (A2) are allowed. createNpcWorldSession seeds life with the independent NPC life stream.
+
+Continue with A1 → A2 → A3, following your brief (RED before product edits, one commit per task, quiet-machine gates, CI=1 smoke, evidence in local-drafts/p7a-prA). Anything new outside this list is a new HOLD. Do not push, open a PR or merge. Reply with the final report the brief lists.
+
+[assistant]
+Read Plan correction 1, then resume A1 → A2 → A3. The owner’s “Approve all 4 (Recommended)” resolves the Step 0 HOLD; only E01–E50 and the approved scope corrections may proceed.
+
+
+[assistant]
+A1 is in progress using `executing-plans`, test-driven development, and verification-before-completion. The first test run will cover the full A1 acceptance list before any product edit; fixture integration remains scheduled for A2 as approved.
+
+
+[assistant]
+A1 RED is recorded: **73 failed, 213 passed**, exit 1. The failures cover the missing catalog/API, missing starter `life`, and absent life validation. The directly affected existing factory checks passed; product implementation can now begin.
+
+
+[assistant]
+A1’s acceptance suite passed **286/286**. Core typecheck found a symbol-index typing error in the new hostile-input test; the corrected test now typechecks. The remaining A1 step is a final acceptance run and the required commit.
+
+
+[assistant]
+A1 is committed as `927f5be`. A2 RED is recorded: **82 failed, 88 passed**, exit 1. The ruleset and historical-record changes are in place, and the existing generators are producing the v10 scenarios. The golden has not been regenerated yet.
+
+
+[assistant]
+The golden was regenerated **once** with the unchanged generator; its four tests passed. The v10 fixture diff also passed: **631 allowed state leaves**, no forbidden paths, and all 63 historical fixtures unchanged. The combined golden/fixture diff and persistence typecheck are running next.
+
+
+[assistant]
+A2 is on HOLD. The full suite finished with **3 failures and 3,028 passes**: `craft-week.test.ts` has three full-city hash pins affected by the ruleset change. I missed those opaque pins in A0; the file is outside E01–E50, so I have not edited it. Read-only evidence will identify the exact replacements for owner review.
+
+
+[assistant]
+The read-only check isolated the cause: changing only the in-memory city ruleset back to `09` restores all three original city hashes. Report and item hashes remain identical. The new HOLD will request only those three hash replacements; the test’s assertions stay unchanged.
+
+
+[assistant]
+**Approve E51–E53 in the [new A2 HOLD report](C:/Users/Admin/.t3/local-drafts/p7a-prA/A2-HOLD.md) to resume. A1 is committed; A2 is on HOLD; A3 has not started.**
+
+The full A2 suite returned **3,028 passed / 3 failed**, exit **1**. All three failures are full-city hash pins in [craft-week.test.ts](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/__tests__/craft-week.test.ts:13). I missed these opaque pins in A0, so they are outside the approved E01–E50 inventory. **That file remains unchanged.**
+
+The proposed additional edits replace only these three `city` hash strings:
+
+| Edit | Source line / seed | Proposed hash |
+|---|---|---|
+| E51 | Line 13 / `0` | `cb611be6c8b7540c4c83f844a566272c0b2dba394609f4ec12b0208011139c54` |
+| E52 | Line 14 / `42` | `2c7e1a942c7bf05d2b462bb67aa0c05145107cfb0bce714ec3d8c2ba1b2d5e01` |
+| E53 | Line 15 / `20261028` | `73863ad6709a288163077c5d3167d857685ecc92b1f54593f50caf8313f49e04` |
+
+The report contains the **full exact before/after lines**. The proposed edits retain the report/item pins, seed set, 60-week loop, exact assertions, and timeouts.
+
+A [read-only replay](C:/Users/Admin/.t3/local-drafts/p7a-prA/A2-HOLD-investigation.txt) confirmed the cause: changing only the final city’s in-memory ruleset from `10` back to `09` restores **every original city hash**. Report and item hashes remain identical for all three seeds. Raw results are saved in [craft-pin-investigation.json](C:/Users/Admin/.t3/local-drafts/p7a-prA/craft-pin-investigation.json).
+
+The preserved implementation state is:
+
+```text
+Branch:       feat/p7a-npc-life-data
+HEAD:         927f5be7bb0de8b3fff884daa3da89e98ae03e9e
+HEAD tree:    1403e7c099cda27cb123fa36b95342efcdb47c20
+Staged tree:  d34090999dec94488eabd92f799a61fd2a4c257f
+
+52 A2 paths staged; no unstaged or untracked source changes.
+Ports 4173/4174 free.
+```
+
+| Work | Actual result |
+|---|---|
+| A1 RED → GREEN | **73 failed / 213 passed → 286/286 passed**; final exit 0 |
+| A1 commit | `927f5be` — `feat(core): npc life sheet state and catalog`, with the required coauthor trailer |
+| A2 RED | **82 failed / 88 passed**, exit 1 |
+| A2 fixture/golden generation | **55/55 fixture tests; 4/4 golden tests passed**; golden regenerated **once** |
+| A2 full suite | **3,028 passed / 3 failed**; A2 remains uncommitted |
+
+The combined path diff passed with **3 golden seeds, 10 v10 scenarios, 841 allowed state leaves, and zero forbidden paths**. All **63 historical fixtures** and **9 generator/evidence blobs** remain unchanged. The candidate verifier confirms **59 approved paths** and exact approved transformations in all **34 existing test files**.
+
+A3 gates 1–7, CPU-at-gate-start recording, `CI=1` smoke, and bundle measurement **have not run**. The [evidence README](C:/Users/Admin/.t3/local-drafts/p7a-prA/README.md) is current; [SHA256SUMS.txt](C:/Users/Admin/.t3/local-drafts/p7a-prA/SHA256SUMS.txt) verified all **47 evidence files**, with UTF-8 markers intact. No push, PR, or merge occurred.
+
+This new HOLD follows your instruction: **“Anything new outside this list is a new HOLD.”**
+
+**Next: owner replies “Approve E51–E53” or specifies another decision.**
+
+[user]
+A2 HOLD answer from the owner (Tân), 2026-11-17, verbatim: "Approve E51–E53".
+
+Recorded as Plan correction 2 at 13cb618. New binding copy: C:/Users/Admin/.t3/local-drafts/p7a-prA/binding-plan-13cb618.md (it overrides the earlier copies).
+
+Approved: craft-week.test.ts:13–15, replace only the three `city` hash strings with the values in your A2-HOLD.md (E51 seed 0, E52 seed 42, E53 seed 20261028). Nothing else in that file changes.
+
+Continue: apply E51–E53, rerun the full suite, commit A2 with the plan's message and trailer, then A3 exactly as your brief says (quiet machine, CPU sample first, gates 1–7 sequentially at the clean final head, then `echo "CI=$CI"` and `CI=1 npm run test:smoke`, bundle vs main, evidence + SHA256SUMS). Anything else new is a HOLD. Do not push, open a PR or merge. Reply with the final report the brief lists.
+
+[assistant]
+Read correction 2, apply only E51–E53, then rerun the full suite. A1 is committed; A2 can resume under the owner’s approval. The golden stays at one regeneration.
+
+
+[assistant]
+A2’s full suite is GREEN: **3,031/3,031 tests across 130 files**, exit 0. The inventory verifier confirms 60 approved paths and exact approved edits in 35 existing test files. Next is the A2 commit, followed by the clean-head machine check and sequential gates.
+
+
+[assistant]
+A2 is committed as `5612451`; the worktree is clean. Gate-start sampling recorded **34% CPU**, no competing test/build/review commands, and both ports free. Diff check, lint, and full typecheck have passed; typecheck reported zero errors and warnings.
+
+
+[assistant]
+The architecture check passed with **no violations, cycles, or errors**. Architecture tests are running next; the same shell will then run the full unit suite, build, and `CI=1` smoke against the unchanged head.
+
+
+[assistant]
+Architecture tests passed **154/154**, exit 0. The gate’s full unit suite is now running. Build and smoke will follow in order at `5612451`.
+
+
+[assistant]
+The gate’s unit suite passed **3,031/3,031**. Six of seven gates are complete. Build is running now; afterward, the shell will capture the production bundle, check both ports, and print `CI=1` before smoke.
+
+
+[assistant]
+All **seven gates passed** at `5612451`. The build measured **JS 139.26 kB gzip** and **CSS 7.15 kB gzip**. The shell printed `CI=1`, and the full smoke run has started.
+
+
+[assistant]
+The smoke process is still running; no result is available yet. All seven gate results are saved, and the head remains `5612451`. The final evidence package will include the approved pin changes and the earlier HOLD logs.
+
+
+[assistant]
+Smoke has been running for about **six minutes** with `CI=1`; the full result is still pending. Git status remains empty. No second test run or golden generation has started.
+
+
+[assistant]
+Smoke is still running, roughly **11 minutes elapsed**. The runner saves its full output on exit, so the test total is still pending. All seven gates remain passed; source files and the tested head have not changed.
+
+
+[assistant]
+The smoke result is still pending. The evidence formatter and final hash checks are ready; they will run after smoke finishes. No source edits or test reruns have occurred during this run.
+
+
+[assistant]
+A3 status: smoke is running; all seven gates are complete. The remaining work is to read the smoke result, verify ports and git status, and finalize the evidence manifest.
+
+
+[assistant]
+The last status wait returned after an unexpected **42-minute tool delay**, still without a smoke result. I’m checking the live runner and saved outputs. The seven gate results remain recorded; I won’t report smoke as passed without its exit result.
+
+
+[assistant]
+A smoke failure artifact is now available: the shell accessibility baseline timed out at its existing **300-second** limit while auditing the “Previous” button. The full run is still active. After it finishes, each failed test will be rerun alone once, followed by the required HOLD; no code or timeout edits will be made.
+
+
+[assistant]
+Windows recorded a sleep interval from **07:53:50 to 08:36:45 UTC** during smoke—about **43 minutes**. That overlaps the tool delay and accessibility timeout. The run is active again. I’m retaining this evidence for the required HOLD and will rerun each failed case alone once after the full run finishes.
+
+
+[assistant]
+The full smoke run is still active after resume. No isolated rerun has started; those must run one at a time after the full run ends. The system sleep/resume timestamps are saved in the evidence folder.
+
+
+[assistant]
+Keep the machine awake through the remaining smoke run and isolated retry. The recorded sleep interval interrupted the verification window. Product files remain unchanged, and the golden has still been generated only once.
+
+
+[assistant]
+The interrupted full smoke run is still active. The recorded failure is the accessibility timeout; the final failure list is pending. No source or timeout changes are being made.
+
+
+[assistant]
+Smoke is progressing through the **375px weekly-turn keyboard flow**, beyond the interrupted accessibility case. For isolated retries, separate output folders will preserve the full run’s failure trace.
+
+
+[assistant]
+Smoke has reached **crafting accessibility at 1600px**, so it is progressing through later files. The shell accessibility timeout remains recorded. Source files and per-test timeouts are unchanged.
+
+
+[assistant]
+Smoke has reached **equipment accessibility at 1600px** in the item tests. The full result is still pending. After it exits, each failed case will be rerun once in isolation.
+
+
+[assistant]
+The full smoke run is still finishing. I’ll use its final failure list for the one-at-a-time retries, then report both outcomes and the required HOLD.
+
+
+[assistant]
+Smoke has reached the **320px tile-feedback precision tests**. The head is still `5612451`, and all seven gate results are unchanged. The isolated rerun will follow the full run’s exit.
+
+
+[assistant]
+Smoke is still active; final counts are not available yet. The required isolated retry has not started.
+
+
+[assistant]
+Smoke has reached **workforce error handling at 1280px**. Once it exits, I’ll preserve the failure trace and run the failed accessibility case alone with its existing timeout.
+
+
+[assistant]
+The smoke command remains active. Its final exit result is still pending, so no retry or completion claim has been made.
+
+
+[assistant]
+Full smoke finished: **384 passed, 3 failed**, exit 1. The failures are the 375px accessibility baseline, fulfillment/report consistency, and the U9 save/restore flow. I’m preserving their traces and rerunning each test alone once with `CI=1` and unchanged timeouts.
+
+
+[assistant]
+The first isolation command collected **no tests**: the PowerShell wrapper passed the three-case list as one item. I’m correcting only that evidence wrapper and preserving the error log. None of the three test bodies has been rerun yet.
+
+
+[assistant]
+The **375px accessibility baseline** is running alone with `CI=1` and its existing 300-second limit. The other two failed cases are queued for one isolated run each.
+
+
+[assistant]
+The isolated **375px accessibility baseline failed again** at its existing 300-second limit. Sleep therefore does not explain away that failure. No timeout or source change was made. The fulfillment and U9 cases are now running once each before the required HOLD.
+
+
+[assistant]
+The isolated fulfillment/report case also failed at **60 seconds**, while waiting for “Quartermaster item details.” U9 is the final isolated case now running. The two repeated failures require investigation; no code or timeout edits are authorized at this HOLD.
+
+
+[assistant]
+All required isolated reruns are complete: **accessibility failed, fulfillment/report failed, U9 passed**. A3 is now on the required **HOLD**. I’m stopping test execution and assembling the report, trace hashes, final git status, and port check; no source or timeout changes will be made.
+
+
+[assistant]
+A3 is on HOLD: the seven gates passed, but two smoke tests failed again in their single isolated reruns. Test execution is stopped. The remaining work is to verify the evidence package and checksum manifest, then hand over the final report.
+
+
+[assistant]
+The evidence checks confirm 60 approved changed paths, 35 existing test files matching E01–E53, and zero forbidden golden paths. The HOLD report includes both the full-smoke and isolated results. Windows sleep interrupted the full run, but it does not explain the two repeated failures; their causes remain unresolved.
+
+
+[assistant]
+Review [A3-HOLD.md](C:/Users/Admin/.t3/local-drafts/p7a-prA/A3-HOLD.md). **A1 and A2 are committed; A3 is on HOLD because two smoke tests failed again in their required single isolated reruns.**
+
+The seven prescribed gates passed at the clean final head. No source, assertion, timeout or configuration changes were made after the smoke failures. No push, PR or merge was performed.
+
+**Final product state**
+
+```text
+Branch: feat/p7a-npc-life-data
+HEAD:   56124513aef2d85de128fe76bf3001654290c1c0
+Tree:   d2f31706d77d308a310b61857a8b293a898280e7
+Base:   753e4503673df86830fba2ef2c9ef1e64a843729
+git status --porcelain=v1: empty
+Ports 4173 / 4174: free
+```
+
+The final state and port check are recorded in [final-state.txt](C:/Users/Admin/.t3/local-drafts/p7a-prA/final-state.txt).
+
+**Commits and RED → GREEN**
+
+| Task | Commit and message | Recorded verification |
+|---|---|---|
+| A1 | `927f5be7bb0de8b3fff884daa3da89e98ae03e9e` — `feat(core): npc life sheet state and catalog` | RED: **73 failed / 213 passed**, exit 1. GREEN: **286/286**, six files, exit 0. |
+| A2 | `56124513aef2d85de128fe76bf3001654290c1c0` — `feat(core): ruleset 10 with npc life` | RED: **82 failed / 88 passed**, exit 1. After approved E51–E53: full GREEN **3031/3031**, 130 files, exit 0. |
+
+Both commits end with `Co-authored-by: Codex <noreply@openai.com>`.
+
+Logs: [A1 RED](C:/Users/Admin/.t3/local-drafts/p7a-prA/A1-RED.txt), [A1 GREEN](C:/Users/Admin/.t3/local-drafts/p7a-prA/A1-GREEN-final.txt), [A2 RED](C:/Users/Admin/.t3/local-drafts/p7a-prA/A2-RED.txt), [A2 final GREEN](C:/Users/Admin/.t3/local-drafts/p7a-prA/A2-GREEN-correction2.txt). The earlier full-suite result of 3028 passed / three city-pin failures is retained with the approved A2 HOLD evidence.
+
+**A3 gates**
+
+Gate-start CPU was **34% across eight logical processors**. The snapshot found no competing test, build or review commands; both required ports were free. CPU and top processes are retained in [gate-start-machine.json](C:/Users/Admin/.t3/local-drafts/p7a-prA/gate-start-machine.json).
+
+All gates ran sequentially at the HEAD and tree above:
+
+| Gate | Command | Exit | Result |
+|---|---|---:|---|
+| 1 | `git diff --check origin/main...HEAD` | 0 | Passed |
+| 2 | `npm run lint` | 0 | Passed |
+| 3 | `npm run typecheck` | 0 | Passed |
+| 4 | `npm run check:architecture` | 0 | Passed |
+| 5 | `npm run test:architecture` | 0 | **154 passed** |
+| 6 | `npm test` | 0 | **3031 passed**, 130 files |
+| 7 | `npm run build` | 0 | Passed |
+
+Full commands, output, HEAD/tree, UTC times and exit codes are in [gates-1-7.txt](C:/Users/Admin/.t3/local-drafts/p7a-prA/gates-1-7.txt).
+
+**CI=1 smoke — HOLD**
+
+The same shell recorded `CI=1` before the full smoke. Result: **384 passed, three failed, zero skipped; exit 1**.
+
+| Failed case | Full smoke | Single isolated rerun |
+|---|---|---|
+| Accessibility at 375px — life shell baseline | 300000 ms timeout | **Failed**, same timeout |
+| Fulfillment states match strip and report | 60000 ms timeout | **Failed**, same timeout; Quartermaster visibility wait / closed browser session |
+| U9 local and portable saves | 60000 ms timeout | **Passed**, test took 59.8 seconds |
+
+Evidence: [full smoke](C:/Users/Admin/.t3/local-drafts/p7a-prA/smoke-CI1.txt), [isolated accessibility](C:/Users/Admin/.t3/local-drafts/p7a-prA/smoke-isolated-1.txt), [isolated fulfillment](C:/Users/Admin/.t3/local-drafts/p7a-prA/smoke-isolated-2.txt), [isolated U9](C:/Users/Admin/.t3/local-drafts/p7a-prA/smoke-isolated-3.txt).
+
+Windows sleep interrupted the full run, including a roughly 43-minute interval. **That does not establish the causes of the repeated failures**: accessibility and fulfillment also failed in isolation outside the recorded sleep intervals. An initial selector-wrapper error ran zero test bodies; its output is preserved separately. Each actual isolated rerun selected exactly one test and one worker.
+
+**Inventory, pins and golden**
+
+The [final-mode inventory](C:/Users/Admin/.t3/local-drafts/p7a-prA/edit-inventory-final.json) passed: **60 changed paths**, with **35 existing test files matching only approved E01–E53**.
+
+The following digest prefixes are abbreviated; [hash-pin-changes.json](C:/Users/Admin/.t3/local-drafts/p7a-prA/hash-pin-changes.json) contains every full old/new digest.
+
+| Catalog pin | Change |
+|---|---|
+| `SOCIETY_TRIAL` | `49add1753fd6…` → `69779e596f2a…` |
+| `NPC_ORIGINS` | New: `c252b2c5d31d…` |
+| `NPC_HOBBIES` | New: `8a4c0e75fca9…` |
+| `P7A_TRIAL` | New: `b1429bf557d9…` |
+
+Approved city-pin changes: seed **0** `7b013be31e64…` → `cb611be6c8b7…`; seed **42** `4054962deb8c…` → `2c7e1a942c7b…`; seed **20261028** `198e769da35a…` → `73863ad6709a…`. Report and item pins are unchanged.
+
+Golden generation count is **one**. The [final path-diff output](C:/Users/Admin/.t3/local-drafts/p7a-prA/A3-final-path-diff.txt) verifies **three golden seeds, ten v10 scenarios, 841 allowed changed state leaves and zero forbidden paths**, plus the exact envelope ruleset change 09 → 10. All **63 historical fixtures and nine protected generator/evidence blobs** remain unchanged.
+
+**Evidence package**
+
+The package contains **95 files**, including the top manifest. [SHA256SUMS.txt](C:/Users/Admin/.t3/local-drafts/p7a-prA/SHA256SUMS.txt) covers the other **94 files**; final checksum verification exited 0. UTF-8 owner quotes remain intact.
+
+- [README and handoff index](C:/Users/Admin/.t3/local-drafts/p7a-prA/README.md) and [machine-readable results](C:/Users/Admin/.t3/local-drafts/p7a-prA/results-summary.json).
+- Bundle [measurement script](C:/Users/Admin/.t3/local-drafts/p7a-prA/measure-bundle.mjs), [raw results](C:/Users/Admin/.t3/local-drafts/p7a-prA/bundle-results.json), and raw [JS](C:/Users/Admin/.t3/local-drafts/p7a-prA/bundle-index-mINwSZb0.js.gz) / [CSS](C:/Users/Admin/.t3/local-drafts/p7a-prA/bundle-index-DLT9rNeI.css.gz) gzip artifacts.
+- [Product archive verification](C:/Users/Admin/.t3/local-drafts/p7a-prA/archive-verification.txt), confirming all 60 changed files match their committed Git blobs.
+- [LOCAL-ONLY.txt](C:/Users/Admin/.t3/local-drafts/p7a-prA/LOCAL-ONLY.txt), listing retained trace locations and hashes outside the evidence folder.
+
+The assigned worktree is retained for handoff. No other worktree or clone was created; storage reclaimed is **0 bytes**. Claude’s independent testing and Astra’s review remain pending. Evidence remains local as instructed; no `docs/` files were added to the product branch.
+
+**Next owner action:** reply **“Approve baseline comparison”** to authorize a bounded comparison of these three smoke cases at base `753e450` in the same worktree, preserving the final feature branch.
+
+This decision is required by your brief’s explicit instruction: **“If the smoke fails, rerun each failed test alone once, report both, and HOLD.”** No further tests or fixes have been run.
+
+[user]
+A3 HOLD answer from the owner (Tân), 2026-11-17, verbatim: "Approve baseline comparison (Recommended)".
+
+Scope (diagnostic only, no code, test, timeout or config change):
+1. Record CPU load and top processes first; start only when no other test, build or review job runs and ports 4173/4174 are free. Also record Windows sleep/resume events for the whole window (as you did before).
+2. In the same worktree, check out base 753e450 detached (the feature branch stays at 56124513, untouched), run `npm ci` only if the lockfile differs (it should not), build exactly as the smoke does, then run each of the 3 cases alone, one worker, `CI=1`: the 375 px life-shell accessibility baseline, "fulfillment states match strip and report", and "U9 local and portable saves".
+3. Switch back to feat/p7a-npc-life-data at 56124513 and run the same 3 cases alone again, same way.
+4. Table: case × (base, HEAD) → pass/fail, duration, error line. Keep logs and traces in local-drafts (traces in the LOCAL-ONLY folder), update README and SHA256SUMS.
+5. HOLD with the table. If a case fails on base too, say so plainly; if it passes on base and fails on HEAD, name the likely PR A cause from the trace, without fixing it.
+
+Do not push, open a PR or merge. Leave the worktree on the feature branch, clean, ports free.
+
+[assistant]
+The approved diagnostic compares the same three isolated smoke cases on base and HEAD. It starts with CPU, process, port and sleep-event checks, and ends on the clean feature branch with a six-result table and HOLD. No source, test, timeout or config changes are authorized.
+
+
+[assistant]
+The base and feature lockfile hashes are identical, so `npm ci` is unnecessary. I’m using the systematic-debugging skill for this comparison. Each case will use the existing smoke command and build hook, with `CI=1`, one worker and a separate output folder.
+
+Allow about 15 minutes if the cases reach their existing timeouts. Keep Windows awake during the run; the prior full smoke was interrupted by sleep.
+
+
+[assistant]
+The 375 px accessibility case failed on base too. It failed earlier than the prior HEAD timeout: the imported checkpoint never showed the life shell (`character-life-navigation.helpers.ts:101`). The other two base cases are still pending.
+
+
+[assistant]
+The base attempts exposed a setup error: the smoke hook rebuilds the regression app on 4174, while the main app on 4173 still had the previous HEAD build. That explains the “older checkpoint” import rejection, so those attempts are excluded as baseline evidence.
+
+The current batch will finish, then the comparison will run with the normal production build before smoke at each revision. This changes generated build output only; all preliminary logs will be retained.
+
+
+[assistant]
+The preliminary HEAD accessibility run passed in 2.4 minutes. The traces also confirm that all three excluded base attempts loaded the HEAD JavaScript asset on port 4173. The corrected comparison will record the production asset hashes at each revision so the served build can be checked.
+
+
+[assistant]
+The preliminary HEAD runs all passed: accessibility 2.4 minutes, fulfillment 47.9 seconds, and U9 24.6 seconds. The corrected comparison now starts from base again, with a fresh production build at each revision and the same isolated smoke commands. The preliminary runs remain in the evidence.
+
+
+[assistant]
+The corrected base production build passed and produced the expected base asset. Its preflight recorded 2% CPU, no competing test/build/review commands and both ports free. The base accessibility case is running against that build; the preliminary window recorded no sleep/resume events.
+
+
+[assistant]
+The corrected base accessibility case is still running under its existing 300-second limit. No result has been reported yet. No timeout changes are being made; the script will continue through the three base and three HEAD cases, then stop on HOLD.
+
+
+[assistant]
+Base accessibility has not returned yet, so there is no corrected result to report. The comparison script will restore the feature branch in its final step and record sleep/resume events for the full run window.
+
+
+[assistant]
+I misread the wrapper’s progress: the corrected base test had not started. The base build passed, but the evidence helper stalled while serializing build-asset metadata. No Playwright test or preview server is running.
+
+I’m stopping only that stuck helper and correcting its metadata write. The incomplete attempt will be retained and excluded from the comparison.
+
+
+[assistant]
+The metadata correction passed its check: serialization took 64 ms and produced a 992-character JSON record. The base production build has passed, its asset hashes are saved, and the first corrected base test has now started. Both setup issues and the stopped helper’s metadata are retained in the evidence.
+
+
+[assistant]
+Corrected result 1 of 6: base accessibility passed in 2.2 minutes, with no error line. Base fulfillment is now running. The six matched results will determine the comparison; the earlier attempts remain separate.
+
+
+[assistant]
+All three corrected base cases passed: accessibility 2.2 minutes, fulfillment 46.5 seconds, and U9 26.0 seconds. The worktree is back on the feature branch, the HEAD production build passed, and HEAD accessibility is now running.
+
+
+[assistant]
+Corrected result 4 of 6: HEAD accessibility passed in 2.3 minutes. It has now passed on both revisions in the matched comparison. HEAD fulfillment and U9 remain.
+
+
+[assistant]
+All six matched runs passed. No HEAD-only failure was observed, so this comparison provides no trace-supported PR A cause for the earlier timeouts.
+
+Test execution is stopped on the requested HOLD. The remaining work is to refresh the table, whole-window sleep record, README, trace manifest and checksums.
+
+
+[assistant]
+The whole diagnostic window recorded zero sleep/resume events. Final checks confirm the unchanged feature HEAD and tree, empty git status, free ports, and the same 60 approved paths with 35 exact existing-test edits. README now includes the matched table and both excluded setup attempts. Checksum verification is the last step.
+
+
+[assistant]
+Review [BASELINE-COMPARISON-HOLD.md](C:/Users/Admin/.t3/local-drafts/p7a-prA/BASELINE-COMPARISON-HOLD.md). **The approved diagnostic is complete; A3 remains on HOLD.**
+
+The earlier timeouts were not reproduced with matching production builds at both revisions. **No PR A cause was established.** The original full smoke result remains **384 passed, three failed, exit 1**; this isolated comparison does not replace that gate.
+
+Initial diagnostic CPU was **13%**; the matched restart recorded **9%**, across eight logical processors. CPU and top processes were captured before builds and cases, with no detected competing test/build/review commands and both required ports free. The [whole-window sleep record](C:/Users/Admin/.t3/local-drafts/p7a-prA/baseline-comparison-matched/whole-window-sleep-resume.json) contains **zero sleep/resume events**, covering **10:33:48–11:03:50 UTC**.
+
+Two setup errors are preserved separately from the matched results:
+
+1. The preliminary base attempts served a retained HEAD production asset on port 4173. Their checkpoint-import failures are excluded from baseline conclusions; network traces confirm the mismatched asset.
+2. A subsequent evidence wrapper stalled while writing build metadata, before any test started. Only that verified owned helper was stopped, after confirming no child processes or occupied required ports. Its metadata write was corrected before the matched restart.
+
+The matched comparison ran the normal production build at each revision, followed by the unchanged smoke build hook for each case. Lockfile blobs were identical, so **no `npm ci` was run**.
+
+**Final worktree state**
+
+```text
+Branch: feat/p7a-npc-life-data
+HEAD:   56124513aef2d85de128fe76bf3001654290c1c0
+Tree:   d2f31706d77d308a310b61857a8b293a898280e7
+
+git status --porcelain=v1: empty
+Ports 4173 / 4174: free
+```
+
+The feature branch stayed at its original SHA throughout. Product code, tests, timeouts and configuration are unchanged. No push, PR or merge was performed.
+
+**Updated evidence**
+
+- [README](C:/Users/Admin/.t3/local-drafts/p7a-prA/README.md) and [comparison results JSON](C:/Users/Admin/.t3/local-drafts/p7a-prA/baseline-comparison-matched/comparison-results.json): case matrix, durations, error fields, revisions and per-case log paths.
+- [LOCAL-ONLY.txt](C:/Users/Admin/.t3/local-drafts/p7a-prA/LOCAL-ONLY.txt): paths and hashes for **11 retained trace ZIPs**, all outside the evidence folder. The passing matched runs retained no ZIPs under the unchanged `retain-on-failure` setting.
+- [Final state](C:/Users/Admin/.t3/local-drafts/p7a-prA/final-state.txt): clean branch and port verification.
+- [SHA256SUMS.txt](C:/Users/Admin/.t3/local-drafts/p7a-prA/SHA256SUMS.txt): **159 files verified, exit 0**, including three prior manifest snapshots. There are **160 files including the excluded top manifest**; UTF-8 owner quotes are intact.
+
+Your step 5 explicitly requires **“HOLD with the table.”** No further test or fix has started. **Next owner action: reply “Approve full smoke rerun” to authorize a separate full `CI=1` smoke on an awake, quiet machine.**
+
+[user]
+Owner (Tân), 2026-11-17, verbatim: "Approve full smoke rerun (Recommended)".
+
+Scope: one full `CI=1 npm run test:smoke` at HEAD 56124513 (tree d2f31706), same shell recording `echo "CI=$CI"` first. Before it: CPU + top processes, ports 4173/4174 free, no other test/build/review job, and make sure the served build is the fresh HEAD production build (the stale-asset issue you found). Record sleep/resume events for the whole window. No code, test, timeout or config change.
+
+If it passes: update README, results summary and SHA256SUMS (keep the first failed smoke and the comparison as history), and reply with the final report the brief lists. If anything fails: rerun each failed case alone once, report both, HOLD.
+Do not push, open a PR or merge. Leave the branch clean and ports free.
+
+[assistant]
+The approved scope is one full smoke rerun at the pinned HEAD. It starts with CPU, process and port checks, then a fresh production build and asset verification before `CI=1` is echoed in the smoke shell. The first failed smoke and baseline comparison will remain in the evidence.
+
+
+[assistant]
+This rerun will also record the JavaScript bytes served on ports 4173 and 4174 and compare their hashes with the fresh HEAD build. That checks the stale-asset issue directly. Allow roughly 45–60 minutes based on the first full run excluding its sleep interval; progress will be logged as tests finish.
+
+
+[assistant]
+The full smoke is running: 387 tests, one worker, with `CI=1` recorded. CPU was 5% before the production build and 6% immediately before smoke; both checks found free ports and no detected competing jobs.
+
+HTTP checks confirm that both ports are serving the expected HEAD JavaScript hash.
+
+
+[assistant]
+Eight tests have completed with no failures reported so far. The suite is in its longer accessibility cases. The streaming log records results as they finish.
+
+
+[assistant]
+Fourteen tests have completed with no failures reported. The 1600 px and 1280 px life-shell accessibility baselines passed. The suite is now running the 375 px baseline that timed out in the first full smoke.
+
+
+[assistant]
+The 375 px life-shell accessibility baseline passed in 2.3 minutes. Seventeen tests have completed with no failures reported. The suite has moved to the 320 px accessibility cases.
+
+
+[assistant]
+Thirty tests have completed with no failures reported. All four life-shell accessibility baselines passed, including 375 px and 320 px. The suite is now approaching the fulfillment/report case that also timed out in the first full smoke.
+
+
+[assistant]
+Sixty-three tests have completed with no failures reported. The fulfillment/report case passed in 45.7 seconds, so both previously failing navigation cases have passed in this full rerun. U9 remains later in the suite.
+
+
+[assistant]
+125 of 387 tests have completed with no failures reported. The suite has passed the navigation and character-life flows and is now in crafting coverage.
+
+
+[assistant]
+170 of 387 tests have completed with no failures reported. Goods-stock and item flows have passed, including the posted-NPC equipment/report check.
+
+
+[assistant]
+264 of 387 tests have completed with no failures reported. Storage and save/load race checks passed, along with the check that the regression build cannot overwrite or enter the production artifact. The remaining coverage includes tile UI, weekly reports and world sessions.
+
+
+[assistant]
+309 of 387 tests have completed; the log shows zero failures so far. Local checkpoint and population round-trip checks passed. World-session tests, including U9, are still ahead.
+
+
+[assistant]
+367 of 387 tests have completed with no failures reported. Twenty cases remain, including the world-session checks. No additional full run has been started.
+
+
+[assistant]
+The approved full smoke passed: **387 passed, zero failed, zero skipped, exit 0, CI=1**. U9 passed in 23.9 seconds, so all three previously failing cases passed in this full run.
+
+No isolated reruns are needed. The remaining work is to verify the sleep record, archive the prior handoff documents, refresh the evidence and checksums, and report the final state.
+
+
+[assistant]
+The smoke window recorded **zero sleep/resume events**. Final checks confirm the pinned HEAD/tree, empty git status and free ports. The final-mode inventory still passes with 60 approved paths and 35 existing test files matching E01–E53 exactly.
+
+README and results summary now record the passing rerun. The first failed smoke, isolated results, baseline comparison and prior handoff documents remain preserved.
+
+
+[assistant]
+Evidence validation is complete: 17 historical logs/documents match their pre-rerun hashes, all text passes UTF-8 checks, and the manifest lists 182 files, including four prior manifests. The branch is still clean and both ports are free. Only the final checksum verification remains before handoff.
+
+
+[assistant]
+Review the [handoff README](C:/Users/Admin/.t3/local-drafts/p7a-prA/README.md). **A0–A3 are complete locally: all seven gates and the owner-approved full `CI=1` smoke rerun passed.** Independent testing and review remain pending.
+
+**Final product state**
+
+```text
+Branch: feat/p7a-npc-life-data
+HEAD:   56124513aef2d85de128fe76bf3001654290c1c0
+Tree:   d2f31706d77d308a310b61857a8b293a898280e7
+Base:   753e4503673df86830fba2ef2c9ef1e64a843729
+
+git status --porcelain=v1: empty
+Ports 4173 / 4174: free
+```
+
+No product code, test, timeout or configuration changed during the diagnostic and smoke reruns. No push, PR or merge was performed. The [final-state record](C:/Users/Admin/.t3/local-drafts/p7a-prA/final-state.txt) contains the final checks.
+
+**Commits**
+
+- A1 — `927f5be7bb0de8b3fff884daa3da89e98ae03e9e`  
+  `feat(core): npc life sheet state and catalog`
+- A2 — `56124513aef2d85de128fe76bf3001654290c1c0`  
+  `feat(core): ruleset 10 with npc life`
+
+Both commits end with `Co-authored-by: Codex <noreply@openai.com>`.
+
+**RED → GREEN**
+
+| Task | RED before product edits | Final GREEN |
+|---|---|---|
+| A1 | [73 failed / 213 passed](C:/Users/Admin/.t3/local-drafts/p7a-prA/A1-RED.txt), exit 1 | [286/286 across six files](C:/Users/Admin/.t3/local-drafts/p7a-prA/A1-GREEN-final.txt), exit 0 |
+| A2 | [82 failed / 88 passed](C:/Users/Admin/.t3/local-drafts/p7a-prA/A2-RED.txt), exit 1 | [3031/3031 across 130 files](C:/Users/Admin/.t3/local-drafts/p7a-prA/A2-GREEN-correction2.txt), exit 0, after approved E51–E53 |
+
+The final-mode [edit inventory](C:/Users/Admin/.t3/local-drafts/p7a-prA/edit-inventory-final.json) verifies **60 approved changed paths**, including **35 existing test files matching only E01–E53**. No other existing-test edits were made.
+
+**Hash pins and golden**
+
+Digest prefixes are abbreviated here; [hash-pin-changes.json](C:/Users/Admin/.t3/local-drafts/p7a-prA/hash-pin-changes.json) contains every full before/after value and the approved city-pin lines.
+
+| Catalog pin | Change |
+|---|---|
+| `SOCIETY_TRIAL` | `49add1753fd6…` → `69779e596f2a…` |
+| `NPC_ORIGINS` | New: `c252b2c5d31d…` |
+| `NPC_HOBBIES` | New: `8a4c0e75fca9…` |
+| `P7A_TRIAL` | New: `b1429bf557d9…` |
+
+Approved city pins changed for seed **0**: `7b013be31e64…` → `cb611be6c8b7…`; seed **42**: `4054962deb8c…` → `2c7e1a942c7b…`; seed **20261028**: `198e769da35a…` → `73863ad6709a…`. Report and item pins remain unchanged.
+
+Golden generation count is **one**, using the unchanged generator. The [final path-diff output](C:/Users/Admin/.t3/local-drafts/p7a-prA/A3-final-path-diff.txt) verifies:
+
+- **Three golden seeds, ten v10 scenarios, 841 allowed changed state leaves and zero forbidden paths.**
+- Exact envelope-only ruleset changes **09 → 10**.
+- **63 historical fixtures and nine protected generator/evidence blobs unchanged.**
+
+**Exact-head gates**
+
+The recorded gates ran sequentially at the unchanged final HEAD/tree. CPU at gate start was **34%**, with eight logical processors; CPU and top processes are retained in [gate-start-machine.json](C:/Users/Admin/.t3/local-drafts/p7a-prA/gate-start-machine.json).
+
+| Gate | Command | Exit | Result |
+|---|---|---:|---|
+| 1 | `git diff --check origin/main...HEAD` | 0 | Passed |
+| 2 | `npm run lint` | 0 | Passed |
+| 3 | `npm run typecheck` | 0 | Passed |
+| 4 | `npm run check:architecture` | 0 | Passed |
+| 5 | `npm run test:architecture` | 0 | **154 passed** |
+| 6 | `npm test` | 0 | **3031 passed**, 130 files |
+| 7 | `npm run build` | 0 | Passed |
+
+[gates-1-7.txt](C:/Users/Admin/.t3/local-drafts/p7a-prA/gates-1-7.txt) contains full commands, output, HEAD/tree, UTC times and exit codes.
+
+**Approved full smoke**
+
+The sole approved rerun finished with **387 passed, zero failed, zero skipped, exit 0, `CI=1`**. It used one worker, zero retries and unchanged timeouts. The command took **2219.749 seconds**, approximately 37 minutes. No isolated reruns were needed.
+
+CPU was **5% before the fresh production build** and **6% immediately before smoke**. Both preflights recorded free ports and no detected competing test/build/review commands. HTTP response bytes from **both 4173 and 4174 matched the pinned HEAD JavaScript hash**, directly checking the served-build issue.
+
+The [CI echo](C:/Users/Admin/.t3/local-drafts/p7a-prA/full-smoke-rerun/ci-echo.txt) was recorded in the same PowerShell shell as the [full smoke](C:/Users/Admin/.t3/local-drafts/p7a-prA/full-smoke-rerun/full-smoke.txt). The [whole-window sleep record](C:/Users/Admin/.t3/local-drafts/p7a-prA/full-smoke-rerun/sleep-resume-events.json) contains **zero events** for **11:39:18–12:17:11 UTC**. [Served-asset proof](C:/Users/Admin/.t3/local-drafts/p7a-prA/full-smoke-rerun/served-assets.json) is retained separately.
+
+The first failed smoke—**384 passed / three failed**—its isolated results, and the six passing matched base/HEAD comparison runs remain preserved. [History verification](C:/Users/Admin/.t3/local-drafts/p7a-prA/full-smoke-rerun/history-integrity.json) confirms **17 historical logs/documents match their pre-rerun hashes**.
+
+**Bundle and evidence**
+
+The bundle remains within the 200 kB gzip budget. Measurement evidence includes the [script](C:/Users/Admin/.t3/local-drafts/p7a-prA/measure-bundle.mjs), [raw results](C:/Users/Admin/.t3/local-drafts/p7a-prA/bundle-results.json), and raw [JavaScript](C:/Users/Admin/.t3/local-drafts/p7a-prA/bundle-index-mINwSZb0.js.gz) and [CSS](C:/Users/Admin/.t3/local-drafts/p7a-prA/bundle-index-DLT9rNeI.css.gz) gzip artifacts.
+
+The evidence package contains **183 files including the top manifest**. [SHA256SUMS.txt](C:/Users/Admin/.t3/local-drafts/p7a-prA/SHA256SUMS.txt) covers the other **182 files**, including four prior manifest snapshots; final verification exited **0**. UTF-8 owner quotes are intact. Trace ZIPs remain outside the evidence folder, with paths and hashes in [LOCAL-ONLY.txt](C:/Users/Admin/.t3/local-drafts/p7a-prA/LOCAL-ONLY.txt).
+
+The assigned worktree is retained for handoff. No worktree or clone was created or removed; storage reclaimed is **0 bytes**. Evidence remains in local drafts as instructed, with no `docs/` files added to the product branch; the Orchestrator/Tester must later commit it on the WP docs branch before G5.
+
+**Next: hand the [README](C:/Users/Admin/.t3/local-drafts/p7a-prA/README.md) to Claude and Astra for independent testing and review.**

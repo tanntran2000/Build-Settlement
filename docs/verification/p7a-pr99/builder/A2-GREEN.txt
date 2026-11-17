@@ -1,0 +1,153 @@
+HEAD=927f5be7bb0de8b3fff884daa3da89e98ae03e9e
+TREE=1403e7c099cda27cb123fa36b95342efcdb47c20
+INDEX_TREE=d34090999dec94488eabd92f799a61fd2a4c257f
+UTC_START=2026-11-17T06:32:12.505374+00:00
+COMMAND=["npm.cmd", "test"]
+WORKING_STATUS:
+M  packages/core/src/__tests__/catalog-data.test.ts
+M  packages/core/src/data/tuning.json
+M  packages/core/src/data/validate.ts
+M  packages/core/src/trial/__tests__/crime.test.ts
+M  packages/core/src/trial/__tests__/crisis.test.ts
+M  packages/core/src/trial/__tests__/items.test.ts
+M  packages/core/src/trial/__tests__/law.test.ts
+M  packages/core/src/trial/__tests__/order.test.ts
+M  packages/core/src/trial/__tests__/outside.test.ts
+M  packages/core/src/trial/__tests__/society.test.ts
+M  packages/core/src/trial/society.ts
+M  packages/core/src/world/__tests__/session.test.ts
+M  packages/persistence/src/__tests__/character-life-save.test.ts
+A  packages/persistence/src/__tests__/fixtures/society-v10/life-5-weeks.json
+A  packages/persistence/src/__tests__/fixtures/society-v10/life-crime-death.json
+A  packages/persistence/src/__tests__/fixtures/society-v10/life-crime-raid.json
+A  packages/persistence/src/__tests__/fixtures/society-v10/life-crime-robbery.json
+A  packages/persistence/src/__tests__/fixtures/society-v10/life-crime-wound.json
+A  packages/persistence/src/__tests__/fixtures/society-v10/life-demand-card.json
+A  packages/persistence/src/__tests__/fixtures/society-v10/life-laws.json
+A  packages/persistence/src/__tests__/fixtures/society-v10/life-new-game.json
+A  packages/persistence/src/__tests__/fixtures/society-v10/life-rebellion-last-week.json
+A  packages/persistence/src/__tests__/fixtures/society-v10/new-game.json
+M  packages/persistence/src/__tests__/item-records.test.ts
+M  packages/persistence/src/__tests__/items-rebuild-order.test.ts
+M  packages/persistence/src/__tests__/npc-life-records.test.ts
+M  packages/persistence/src/__tests__/session-records.test.ts
+M  packages/persistence/src/__tests__/society-new-game-fixture.test.ts
+A  packages/persistence/src/__tests__/society-v9-fixture.test.ts
+M  packages/persistence/src/session-records.ts
+M  packages/simulation/src/__tests__/crime-fixtures.test.ts
+M  packages/simulation/src/__tests__/crisis-fixtures.test.ts
+M  packages/simulation/src/__tests__/fixtures/catalog-golden.json
+A  packages/simulation/src/__tests__/fixtures/p7a-path-diff.ts
+A  packages/simulation/src/__tests__/fixtures/p7a-path-diff.txt
+M  packages/simulation/src/__tests__/law-fixture.test.ts
+M  packages/simulation/src/__tests__/law-week.test.ts
+M  packages/simulation/src/__tests__/lord-health.test.ts
+M  packages/simulation/src/__tests__/smithy-data.test.ts
+M  packages/ui/src/__tests__/character-life-session.test.ts
+M  packages/ui/src/__tests__/world-session.test.ts
+M  tests/e2e/crime.spec.ts
+M  tests/e2e/crisis.spec.ts
+M  tests/e2e/garrison.spec.ts
+M  tests/e2e/items.spec.ts
+M  tests/e2e/laws.spec.ts
+M  tests/e2e/ledger.spec.ts
+M  tests/e2e/society.spec.ts
+M  tests/e2e/storage.spec.ts
+M  tests/e2e/tile-save.spec.ts
+M  tests/e2e/title.spec.ts
+M  tests/e2e/world-session.spec.ts
+
+OUTPUT:
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts (82 tests | 3 failed) 3530ms
+   × preserves all no-order reports and item states for sixty weeks at seed 0 683ms
+   × preserves all no-order reports and item states for sixty weeks at seed 42 1275ms
+   × preserves all no-order reports and item states for sixty weeks at seed 20261028 584ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > preserves all no-order reports and item states for sixty weeks at seed 0
+AssertionError: expected { …(3) } to deeply equal { …(3) }
+
+- Expected
++ Received
+
+  {
+-   "city": "7b013be31e647b47e1abe80ffead9e80d30bfa280c2c9269b649fe8d31b132ae",
++   "city": "cb611be6c8b7540c4c83f844a566272c0b2dba394609f4ec12b0208011139c54",
+    "items": "cddabceee23c2746d4dd3408d05e71ee624dd800d8a0f761cb88f130122deb65",
+    "reports": "9bb24301f4ede325b0e0e116b03add674eb0c692dfa80fe16bddf0da61a66bc4",
+  }
+
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:29:76
+     27|     city.phase = 'planning';
+     28|   }
+     29|   expect({ reports:hash(reports),items:hash(itemStates),city:hash(city…
+       |                                                                            ^
+     30|   expect(city.world.week).toBe(61);
+     31|   expect(isItemsState(city.society!.items, ['player'])).toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > preserves all no-order reports and item states for sixty weeks at seed 42
+AssertionError: expected { …(3) } to deeply equal { …(3) }
+
+- Expected
++ Received
+
+  {
+-   "city": "4054962deb8c4502aab86723b505f7e7d7913a87073c2b29ad19c077003d9cdb",
++   "city": "2c7e1a942c7bf05d2b462bb67aa0c05145107cfb0bce714ec3d8c2ba1b2d5e01",
+    "items": "283da6a1e4fed8fdc3a419e72e00827020ab1ace63f68277db0c1d7cee5616e8",
+    "reports": "04aa55b35d7e8551323fbc2c66c6bf286fb06658b9163fd4a9e3aa327d705ea2",
+  }
+
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:29:76
+     27|     city.phase = 'planning';
+     28|   }
+     29|   expect({ reports:hash(reports),items:hash(itemStates),city:hash(city…
+       |                                                                            ^
+     30|   expect(city.world.week).toBe(61);
+     31|   expect(isItemsState(city.society!.items, ['player'])).toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > preserves all no-order reports and item states for sixty weeks at seed 20261028
+AssertionError: expected { …(3) } to deeply equal { …(3) }
+
+- Expected
++ Received
+
+  {
+-   "city": "198e769da35a411d3f9cdebdb6195ad545e9e9392e94030ae637bc654beb8803",
++   "city": "73863ad6709a288163077c5d3167d857685ecc92b1f54593f50caf8313f49e04",
+    "items": "3ad4de4ea7c6a0687ac6d8481778a2513e841dd061e1712429d8bb2dacc31515",
+    "reports": "a32127339cab716bfa6ccab522d0da3a455a75eca6b455ae0e7adb508e781940",
+  }
+
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:29:76
+     27|     city.phase = 'planning';
+     28|   }
+     29|   expect({ reports:hash(reports),items:hash(itemStates),city:hash(city…
+       |                                                                            ^
+     30|   expect(city.world.week).toBe(61);
+     31|   expect(isItemsState(city.society!.items, ['player'])).toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed | 129 passed (130)
+      Tests  3 failed | 3028 passed (3031)
+   Start at  13:32:14
+   Duration  94.77s (transform 14.83s, setup 0ms, import 66.20s, tests 334.69s, environment 93ms)
+
+
+EXIT_CODE=1
+SECONDS=96.848
+UTC_END=2026-11-17T06:33:49.353707+00:00

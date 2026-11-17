@@ -1,0 +1,66 @@
+﻿{
+    "windowStartUtc":  "2026-11-17T10:52:56.8496947Z",
+    "windowEndUtc":  "2026-11-17T11:03:09.0969372Z",
+    "runs":  [
+                 {
+                     "stage":  "base",
+                     "index":  1,
+                     "case":  "accessibility at 375px / life shell accessibility baseline",
+                     "head":  "753e4503673df86830fba2ef2c9ef1e64a843729",
+                     "exitCode":  0,
+                     "log":  "baseline-comparison-matched/base-1.txt",
+                     "traceOutput":  "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prA-local-only\\baseline-comparison-matched\\base-1"
+                 },
+                 {
+                     "stage":  "base",
+                     "index":  2,
+                     "case":  "fulfillment states match strip and report",
+                     "head":  "753e4503673df86830fba2ef2c9ef1e64a843729",
+                     "exitCode":  0,
+                     "log":  "baseline-comparison-matched/base-2.txt",
+                     "traceOutput":  "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prA-local-only\\baseline-comparison-matched\\base-2"
+                 },
+                 {
+                     "stage":  "base",
+                     "index":  3,
+                     "case":  "U9: local and portable saves restore the whole populated session and uninterrupted next week",
+                     "head":  "753e4503673df86830fba2ef2c9ef1e64a843729",
+                     "exitCode":  0,
+                     "log":  "baseline-comparison-matched/base-3.txt",
+                     "traceOutput":  "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prA-local-only\\baseline-comparison-matched\\base-3"
+                 },
+                 {
+                     "stage":  "head",
+                     "index":  1,
+                     "case":  "accessibility at 375px / life shell accessibility baseline",
+                     "head":  "56124513aef2d85de128fe76bf3001654290c1c0",
+                     "exitCode":  0,
+                     "log":  "baseline-comparison-matched/head-1.txt",
+                     "traceOutput":  "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prA-local-only\\baseline-comparison-matched\\head-1"
+                 },
+                 {
+                     "stage":  "head",
+                     "index":  2,
+                     "case":  "fulfillment states match strip and report",
+                     "head":  "56124513aef2d85de128fe76bf3001654290c1c0",
+                     "exitCode":  0,
+                     "log":  "baseline-comparison-matched/head-2.txt",
+                     "traceOutput":  "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prA-local-only\\baseline-comparison-matched\\head-2"
+                 },
+                 {
+                     "stage":  "head",
+                     "index":  3,
+                     "case":  "U9: local and portable saves restore the whole populated session and uninterrupted next week",
+                     "head":  "56124513aef2d85de128fe76bf3001654290c1c0",
+                     "exitCode":  0,
+                     "log":  "baseline-comparison-matched/head-3.txt",
+                     "traceOutput":  "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prA-local-only\\baseline-comparison-matched\\head-3"
+                 }
+             ],
+    "operationalExitCode":  0,
+    "failure":  null,
+    "finalHead":  "56124513aef2d85de128fe76bf3001654290c1c0",
+    "finalBranch":  "feat/p7a-npc-life-data",
+    "gitStatus":  "",
+    "state":  "HOLD after diagnostic comparison; no fixes"
+}

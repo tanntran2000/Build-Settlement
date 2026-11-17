@@ -1,0 +1,23 @@
+﻿{
+    "utc":  "2026-11-17T10:12:13.6323626Z",
+    "head":  "56124513aef2d85de128fe76bf3001654290c1c0",
+    "case":  {
+                 "index":  3,
+                 "selector":  "tests/e2e/world-session.spec.ts:43",
+                 "grep":  "U9: local and portable saves restore the whole populated session and uninterrupted next week",
+                 "title":  "U9: local and portable saves restore the whole populated session and uninterrupted next week",
+                 "existingTimeoutMs":  60000
+             },
+    "cpu":  [
+                {
+                    "LoadPercentage":  20,
+                    "NumberOfLogicalProcessors":  8
+                }
+            ],
+    "competingJobs":  [
+
+                      ],
+    "portListeners":  [
+
+                      ]
+}

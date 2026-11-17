@@ -1,0 +1,70 @@
+﻿{
+    "utc":  "2026-11-17T10:34:45.9504660Z",
+    "head":  "753e4503673df86830fba2ef2c9ef1e64a843729",
+    "tree":  "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+    "branch":  "",
+    "cpu":  [
+                {
+                    "LoadPercentage":  100,
+                    "NumberOfLogicalProcessors":  8
+                }
+            ],
+    "topProcesses":  [
+                         {
+                             "IDProcess":  4272,
+                             "Name":  "MsMpEng",
+                             "PercentProcessorTime":  231
+                         },
+                         {
+                             "IDProcess":  81900,
+                             "Name":  "node#45",
+                             "PercentProcessorTime":  57
+                         },
+                         {
+                             "IDProcess":  84936,
+                             "Name":  "node#46",
+                             "PercentProcessorTime":  54
+                         },
+                         {
+                             "IDProcess":  83924,
+                             "Name":  "node#47",
+                             "PercentProcessorTime":  50
+                         },
+                         {
+                             "IDProcess":  84384,
+                             "Name":  "WmiPrvSE#2",
+                             "PercentProcessorTime":  38
+                         },
+                         {
+                             "IDProcess":  4,
+                             "Name":  "System",
+                             "PercentProcessorTime":  23
+                         },
+                         {
+                             "IDProcess":  84740,
+                             "Name":  "bash#19",
+                             "PercentProcessorTime":  19
+                         },
+                         {
+                             "IDProcess":  82032,
+                             "Name":  "bash#20",
+                             "PercentProcessorTime":  11
+                         },
+                         {
+                             "IDProcess":  78176,
+                             "Name":  "bash#11",
+                             "PercentProcessorTime":  7
+                         },
+                         {
+                             "IDProcess":  74916,
+                             "Name":  "du",
+                             "PercentProcessorTime":  7
+                         }
+                     ],
+    "competingJobs":  [
+
+                      ],
+    "portListeners":  [
+
+                      ]
+}

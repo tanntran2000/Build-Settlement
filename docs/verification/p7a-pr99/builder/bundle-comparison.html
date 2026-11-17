@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body { margin:0; color:var(--foreground); font:14px/1.5 var(--font-sans,system-ui,sans-serif); }
+figure { margin:0; }
+figcaption { font-size:16px; font-weight:650; margin-bottom:14px; }
+.row { margin-bottom:18px; }
+.label { display:flex; flex-wrap:wrap; justify-content:space-between; gap:4px 18px; margin-bottom:6px; }
+.label strong { font-weight:600; }
+.value { font-variant-numeric:tabular-nums; }
+.track { height:24px; background:var(--muted); border-radius:4px; overflow:hidden; display:flex; }
+.js { background:var(--chart-1); height:24px; }
+.css { background:var(--chart-2); height:24px; }
+.legend { display:flex; flex-wrap:wrap; gap:8px 18px; font-size:13px; color:var(--muted-foreground); }
+.key { display:inline-block; width:10px; height:10px; margin-right:5px; border-radius:2px; }
+.note { font-size:12px; color:var(--muted-foreground); margin:10px 0 0; }
+table { width:100%; border-collapse:collapse; margin:12px 0 0; font-size:13px; }
+th,td { padding:5px 0; text-align:right; border-bottom:1px solid var(--border); font-variant-numeric:tabular-nums; }
+th:first-child,td:first-child { text-align:left; }
+</style>
+<figure aria-label="Production gzip bundle comparison, main versus final P7-A head, on a 200 kilobyte scale">
+<figcaption>Production bundle · gzip kB</figcaption>
+<div class="row">
+ <div class="label"><strong>Main · 753e450</strong><span class="value">144.56 kB total</span></div>
+ <div class="track"><span class="js" style="width:68.705%"></span><span class="css" style="width:3.575%"></span></div>
+</div>
+<div class="row">
+ <div class="label"><strong>P7-A · 5612451</strong><span class="value">146.41 kB total</span></div>
+ <div class="track"><span class="js" style="width:69.6285%"></span><span class="css" style="width:3.576%"></span></div>
+</div>
+<div class="legend"><span><i class="key" style="background:var(--chart-1)"></i>JavaScript</span><span><i class="key" style="background:var(--chart-2)"></i>CSS</span><span>Scale: 0–200 kB</span></div>
+<table><thead><tr><th>Asset</th><th>Main</th><th>P7-A</th><th>Change</th></tr></thead><tbody>
+<tr><td>JavaScript</td><td>137.41</td><td>139.26</td><td>+1.85</td></tr>
+<tr><td>CSS</td><td>7.15</td><td>7.15</td><td>0.00*</td></tr>
+</tbody></table>
+<p class="note">Decimal kB. Main is the supplied rounded baseline; *CSS is unchanged at that precision. Current raw gzip sizes: JS 139257 bytes, CSS 7152 bytes. Measurement concerns bundle size. Final approved full smoke: 387 passed, CI=1, exit 0.</p>
+</figure>
+</html>

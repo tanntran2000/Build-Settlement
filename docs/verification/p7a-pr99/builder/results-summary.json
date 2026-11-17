@@ -1,0 +1,185 @@
+{
+  "taskState": "A0-A3 complete locally; independent testing/review pending",
+  "head": "56124513aef2d85de128fe76bf3001654290c1c0",
+  "tree": "d2f31706d77d308a310b61857a8b293a898280e7",
+  "base": "753e4503673df86830fba2ef2c9ef1e64a843729",
+  "utc": "2026-11-17T12:22:43.024301+00:00",
+  "gitStatus": "",
+  "gates": [
+    {
+      "gate": 1,
+      "file": "gate-1-diff.txt",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "origin/main...HEAD"
+      ],
+      "exitCode": 0,
+      "seconds": 0.067,
+      "utcStart": "2026-11-17T07:34:50.693069+00:00",
+      "utcEnd": "2026-11-17T07:34:50.760618+00:00"
+    },
+    {
+      "gate": 2,
+      "file": "gate-2-lint.txt",
+      "command": [
+        "npm.cmd",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0,
+      "seconds": 20.743,
+      "utcStart": "2026-11-17T07:34:51.280919+00:00",
+      "utcEnd": "2026-11-17T07:35:12.024312+00:00"
+    },
+    {
+      "gate": 3,
+      "file": "gate-3-typecheck.txt",
+      "command": [
+        "npm.cmd",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "seconds": 70.885,
+      "utcStart": "2026-11-17T07:35:12.543606+00:00",
+      "utcEnd": "2026-11-17T07:36:23.429001+00:00"
+    },
+    {
+      "gate": 4,
+      "file": "gate-4-architecture.txt",
+      "command": [
+        "npm.cmd",
+        "run",
+        "check:architecture"
+      ],
+      "exitCode": 0,
+      "seconds": 15.253,
+      "utcStart": "2026-11-17T07:36:24.741910+00:00",
+      "utcEnd": "2026-11-17T07:36:39.995074+00:00"
+    },
+    {
+      "gate": 5,
+      "file": "gate-5-architecture-tests.txt",
+      "command": [
+        "npm.cmd",
+        "run",
+        "test:architecture"
+      ],
+      "exitCode": 0,
+      "seconds": 100.055,
+      "utcStart": "2026-11-17T07:36:40.941267+00:00",
+      "utcEnd": "2026-11-17T07:38:20.996784+00:00"
+    },
+    {
+      "gate": 6,
+      "file": "gate-6-unit.txt",
+      "command": [
+        "npm.cmd",
+        "test"
+      ],
+      "exitCode": 0,
+      "seconds": 74.775,
+      "utcStart": "2026-11-17T07:38:22.151986+00:00",
+      "utcEnd": "2026-11-17T07:39:36.927621+00:00"
+    },
+    {
+      "gate": 7,
+      "file": "gate-7-build.txt",
+      "command": [
+        "npm.cmd",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "seconds": 38.514,
+      "utcStart": "2026-11-17T07:39:37.873823+00:00",
+      "utcEnd": "2026-11-17T07:40:16.388457+00:00"
+    }
+  ],
+  "cpuAtGateStartPercent": 34,
+  "architectureTestsPassed": 154,
+  "unitPassed": 3031,
+  "smoke": {
+    "ci": "1",
+    "passed": 387,
+    "failed": 0,
+    "skipped": 0,
+    "exitCode": 0,
+    "log": "full-smoke-rerun/full-smoke.txt",
+    "seconds": 2219.749,
+    "utcStart": "2026-11-17T11:40:01.188672+00:00",
+    "utcEnd": "2026-11-17T12:17:01.021818+00:00",
+    "isolatedReruns": [],
+    "ownerDecisionVerbatim": "Approve full smoke rerun (Recommended)",
+    "cpuBeforeProductionBuildPercent": 5,
+    "cpuBeforeSmokePercent": 6,
+    "sleepResumeEventCount": 0,
+    "servedHeadAssetsVerified": true
+  },
+  "bundle": {
+    "jsGzipBytes": 139257,
+    "cssGzipBytes": 7152,
+    "jsGzipKB": 139.257,
+    "cssGzipKB": 7.152
+  },
+  "editInventoryPaths": 60,
+  "existingTestFilesExact": 35,
+  "approvedLineEditsTotal": 53,
+  "goldenGeneratorInvocations": 1,
+  "goldenSeeds": 3,
+  "v10Fixtures": 10,
+  "allowedChangedLeaves": 841,
+  "forbiddenChangedPaths": 0,
+  "historicalFixturesUnchanged": 63,
+  "protectedGeneratorEvidenceBlobsUnchanged": 9,
+  "independentTester": "Claude (pending handoff)",
+  "independentReviewer": "Astra (pending handoff)",
+  "pushPrMerge": "not performed",
+  "storageReclaimedBytes": 0,
+  "baselineComparison": {
+    "report": "BASELINE-COMPARISON-HOLD.md",
+    "results": "baseline-comparison-matched/comparison-results.json",
+    "matchedRunsPassed": 6,
+    "matchedRuns": 6,
+    "headOnlyFailures": 0,
+    "sleepResumeEventCount": 0,
+    "state": "HOLD"
+  },
+  "baselineEvidenceRefreshedUtc": "2026-11-17T11:05:44.403248+00:00",
+  "smokeHistory": [
+    {
+      "ci": "1",
+      "passed": 384,
+      "failed": 3,
+      "skipped": 0,
+      "exitCode": 1,
+      "isolatedReruns": [
+        {
+          "file": "smoke-isolated-1.txt",
+          "exitCode": 1
+        },
+        {
+          "file": "smoke-isolated-2.txt",
+          "exitCode": 1
+        },
+        {
+          "file": "smoke-isolated-3.txt",
+          "exitCode": 0
+        }
+      ],
+      "log": "smoke-CI1.txt",
+      "state": "first full smoke failed; required isolated reruns retained"
+    },
+    {
+      "report": "BASELINE-COMPARISON-HOLD.md",
+      "results": "baseline-comparison-matched/comparison-results.json",
+      "matchedRunsPassed": 6,
+      "matchedRuns": 6,
+      "headOnlyFailures": 0,
+      "sleepResumeEventCount": 0,
+      "state": "matched diagnostic complete; all six passed"
+    }
+  ]
+}

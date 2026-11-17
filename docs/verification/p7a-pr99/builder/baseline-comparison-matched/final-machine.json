@@ -1,0 +1,70 @@
+﻿{
+    "utc":  "2026-11-17T11:03:08.9409362Z",
+    "head":  "56124513aef2d85de128fe76bf3001654290c1c0",
+    "tree":  "d2f31706d77d308a310b61857a8b293a898280e7",
+    "branch":  "feat/p7a-npc-life-data",
+    "cpu":  [
+                {
+                    "LoadPercentage":  21,
+                    "NumberOfLogicalProcessors":  8
+                }
+            ],
+    "topProcesses":  [
+                         {
+                             "IDProcess":  59568,
+                             "Name":  "codex#3",
+                             "PercentProcessorTime":  155
+                         },
+                         {
+                             "IDProcess":  55676,
+                             "Name":  "codex#1",
+                             "PercentProcessorTime":  70
+                         },
+                         {
+                             "IDProcess":  4272,
+                             "Name":  "MsMpEng",
+                             "PercentProcessorTime":  57
+                         },
+                         {
+                             "IDProcess":  4,
+                             "Name":  "System",
+                             "PercentProcessorTime":  57
+                         },
+                         {
+                             "IDProcess":  76368,
+                             "Name":  "WmiPrvSE#2",
+                             "PercentProcessorTime":  31
+                         },
+                         {
+                             "IDProcess":  46776,
+                             "Name":  "SearchIndexer",
+                             "PercentProcessorTime":  31
+                         },
+                         {
+                             "IDProcess":  29600,
+                             "Name":  "dwm",
+                             "PercentProcessorTime":  13
+                         },
+                         {
+                             "IDProcess":  584,
+                             "Name":  "lsass",
+                             "PercentProcessorTime":  8
+                         },
+                         {
+                             "IDProcess":  65000,
+                             "Name":  "csrss#1",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  72784,
+                             "Name":  "T3 Code (Nightly)#4",
+                             "PercentProcessorTime":  4
+                         }
+                     ],
+    "competingJobs":  [
+
+                      ],
+    "portListeners":  [
+
+                      ]
+}

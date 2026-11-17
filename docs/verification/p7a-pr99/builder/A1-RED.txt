@@ -1,0 +1,393 @@
+HEAD=753e4503673df86830fba2ef2c9ef1e64a843729
+TREE=77cbeae3332cfaf26ba23e08ae67300d49d8c69d
+UTC_START=2026-11-17T06:23:26.749573+00:00
+COMMAND=["npm.cmd", "test", "--", "packages/core/src/world/__tests__/npc-life.test.ts", "packages/persistence/src/__tests__/npc-life-records.test.ts", "packages/core/src/__tests__/catalog-data.test.ts", "packages/core/src/world/__tests__/npc.test.ts", "packages/core/src/character/__tests__/session.test.ts", "packages/core/src/character/__tests__/validate.test.ts"]
+WORKING_STATUS:
+ M packages/core/src/__tests__/catalog-data.test.ts
+ M packages/core/src/world/__tests__/npc.test.ts
+?? packages/core/src/world/__tests__/npc-life.test.ts
+?? packages/persistence/src/__tests__/npc-life-records.test.ts
+
+OUTPUT:
+
+> build-settlement@0.1.0 test
+> vitest run packages/core/src/world/__tests__/npc-life.test.ts packages/persistence/src/__tests__/npc-life-records.test.ts packages/core/src/__tests__/catalog-data.test.ts packages/core/src/world/__tests__/npc.test.ts packages/core/src/character/__tests__/session.test.ts packages/core/src/character/__tests__/validate.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/core/src/world/__tests__/npc-life.test.ts (58 tests | 58 failed) 151ms
+     × validates the English catalog into six origins, eight hobbies and the exact TRIAL values 20ms
+     × rejects malformed origins.frontier.name with an exact catalog error 2ms
+     × rejects malformed origins.frontier.summary with an exact catalog error 1ms
+     × rejects malformed hobbies.reading.name with an exact catalog error 2ms
+     × rejects malformed P7A_TRIAL.marker with an exact catalog error 2ms
+     × rejects malformed P7A_TRIAL.lustBase with an exact catalog error 3ms
+     × rejects malformed P7A_TRIAL.beauty with an exact catalog error 3ms
+     × rejects malformed P7A_TRIAL.stressWork with an exact catalog error 1ms
+     × rejects malformed P7A_TRIAL.stressResume with an exact catalog error 1ms
+     × rejects malformed P7A_TRIAL.arousalDivisor with an exact catalog error 2ms
+     × rejects malformed P7A_TRIAL.weeksPerYear with an exact catalog error 1ms
+     × rejects malformed P7A_TRIAL.recentCap with an exact catalog error 1ms
+     × rejects malformed P7A_TRIAL.sexExpCaps.novice with an exact catalog error 1ms
+     × rejects missing catalogs, insufficient hobbies and unexpected fields 1ms
+     × uses a repeatable independent stream per seed and NPC id without ambient randomness 8ms
+     × draws inclusive ranges, known origins and distinct hobbies while preserving fixed starts 1ms
+     × derives age 18 and title Young Adult at 40-week boundaries 2ms
+     × derives age 29 and title Young Adult at 40-week boundaries 1ms
+     × derives age 30 and title Mature at 40-week boundaries 1ms
+     × derives age 49 and title Mature at 40-week boundaries 1ms
+     × derives age 50 and title Granny at 40-week boundaries 1ms
+     × initializes the three starter lives last, preserves ages/health and isolates all nested state 24ms
+     × accepts the exact record, legal boundaries, capped levels and extensible history 1ms
+     × rejects unknown origin without mutating input or reading accessors 2ms
+     × rejects unknown hobby without mutating input or reading accessors 1ms
+     × rejects duplicate hobbies without mutating input or reading accessors 1ms
+     × rejects one hobby without mutating input or reading accessors 1ms
+     × rejects three hobbies without mutating input or reading accessors 1ms
+     × rejects missing life field without mutating input or reading accessors 1ms
+     × rejects extra life field without mutating input or reading accessors 1ms
+     × rejects nonboolean working without mutating input or reading accessors 1ms
+     × rejects fractional birth week without mutating input or reading accessors 1ms
+     × rejects unsafe birth week without mutating input or reading accessors 1ms
+     × rejects unknown level without mutating input or reading accessors 1ms
+     × rejects missing part without mutating input or reading accessors 1ms
+     × rejects extra part without mutating input or reading accessors 1ms
+     × rejects negative exp without mutating input or reading accessors 1ms
+     × rejects fractional exp without mutating input or reading accessors 1ms
+     × rejects 21 recent events without mutating input or reading accessors 2ms
+     × rejects negative counter without mutating input or reading accessors 3ms
+     × rejects fractional counter without mutating input or reading accessors 1ms
+     × rejects invalid event week without mutating input or reading accessors 1ms
+     × rejects empty event kind without mutating input or reading accessors 1ms
+     × rejects sparse hobbies without mutating input or reading accessors 2ms
+     × rejects sparse history without mutating input or reading accessors 1ms
+     × rejects accessor without mutating input or reading accessors 1ms
+     × rejects symbol key without mutating input or reading accessors 2ms
+     × rejects inherited record without mutating input or reading accessors 3ms
+     × rejects every invalid mind stat 1ms
+     × rejects every invalid lust stat 1ms
+     × rejects every invalid lustBase stat 1ms
+     × rejects every invalid arousal stat 1ms
+     × rejects every invalid stress stat 1ms
+     × rejects every invalid beauty stat 2ms
+     × rejects exp over the novice cap 3ms
+     × rejects exp over the professional cap 1ms
+     × rejects exp over the expert cap 1ms
+     × rejects missing life and nonadult/nonfemale NPCs at the WorldNpc boundary 22ms
+ ❯ packages/core/src/__tests__/catalog-data.test.ts (47 tests | 6 failed) 1477ms
+   × 'npc-life.json' validates to the unchanged typed views 16ms
+   × 'npc-life.json' rejects one wrong field with the exact CatalogError message 6ms
+   × 'npc-life.json' rejects a missing root entry 3ms
+   × 'NPC_ORIGINS' keeps the P7-A canonical JSON hash 1ms
+   × 'NPC_HOBBIES' keeps the P7-A canonical JSON hash 1ms
+   × 'P7A_TRIAL' keeps the P7-A canonical JSON hash 0ms
+ ❯ packages/persistence/src/__tests__/npc-life-records.test.ts (9 tests | 9 failed) 86ms
+   × refuses imported unknown origin with the NPC StoreRecordError and leaves stored bytes intact 30ms
+   × refuses imported unknown hobby with the NPC StoreRecordError and leaves stored bytes intact 6ms
+   × refuses imported duplicate hobbies with the NPC StoreRecordError and leaves stored bytes intact 8ms
+   × refuses imported stat 101 with the NPC StoreRecordError and leaves stored bytes intact 5ms
+   × refuses imported novice exp 101 with the NPC StoreRecordError and leaves stored bytes intact 5ms
+   × refuses imported professional exp 201 with the NPC StoreRecordError and leaves stored bytes intact 4ms
+   × refuses imported expert exp 301 with the NPC StoreRecordError and leaves stored bytes intact 5ms
+   × refuses imported 21 events with the NPC StoreRecordError and leaves stored bytes intact 4ms
+   × requires life in every current NPC record and retains the last valid stored session 15ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 73 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/core/src/__tests__/catalog-data.test.ts > 'npc-life.json' validates to the unchanged typed views
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\core\src\data\npc-life.json'
+ ❯ data packages/core/src/__tests__/catalog-data.test.ts:27:21
+     25|
+     26| function data(file: string): unknown {
+     27|   return JSON.parse(readFileSync(new URL(`../data/${file}`, import.met…
+       |                     ^
+     28| }
+     29| async function validators() {
+ ❯ packages/core/src/__tests__/catalog-data.test.ts:36:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/73]⎯
+
+ FAIL  packages/core/src/__tests__/catalog-data.test.ts > 'npc-life.json' rejects one wrong field with the exact CatalogError message
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\core\src\data\npc-life.json'
+ ❯ data packages/core/src/__tests__/catalog-data.test.ts:27:21
+     25|
+     26| function data(file: string): unknown {
+     27|   return JSON.parse(readFileSync(new URL(`../data/${file}`, import.met…
+       |                     ^
+     28| }
+     29| async function validators() {
+ ❯ packages/core/src/__tests__/catalog-data.test.ts:41:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/73]⎯
+
+ FAIL  packages/core/src/__tests__/catalog-data.test.ts > 'npc-life.json' rejects a missing root entry
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\core\src\data\npc-life.json'
+ ❯ data packages/core/src/__tests__/catalog-data.test.ts:27:21
+     25|
+     26| function data(file: string): unknown {
+     27|   return JSON.parse(readFileSync(new URL(`../data/${file}`, import.met…
+       |                     ^
+     28| }
+     29| async function validators() {
+ ❯ packages/core/src/__tests__/catalog-data.test.ts:53:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/73]⎯
+
+ FAIL  packages/core/src/__tests__/catalog-data.test.ts > 'NPC_ORIGINS' keeps the P7-A canonical JSON hash
+ FAIL  packages/core/src/__tests__/catalog-data.test.ts > 'NPC_HOBBIES' keeps the P7-A canonical JSON hash
+ FAIL  packages/core/src/__tests__/catalog-data.test.ts > 'P7A_TRIAL' keeps the P7-A canonical JSON hash
+TypeError: The "data" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received undefined
+ ❯ catalogHash packages/core/src/__tests__/catalog-data.test.ts:95:69
+     93|   { name: 'OUTSIDE_TRIAL', value: OUTSIDE_TRIAL, hash: 'e4d5ed7cc9056c…
+     94| ] as const;
+     95| const catalogHash = (value: object): string => createHash('sha256').up…
+       |                                                                     ^
+     96|
+     97| it.each(pinnedCatalogs)('$name keeps the canonical JSON hash from base…
+ ❯ packages/core/src/__tests__/catalog-data.test.ts:120:10
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/73]⎯
+
+ FAIL  packages/persistence/src/__tests__/npc-life-records.test.ts > refuses imported unknown origin with the NPC StoreRecordError and leaves stored bytes intact
+ FAIL  packages/persistence/src/__tests__/npc-life-records.test.ts > refuses imported unknown hobby with the NPC StoreRecordError and leaves stored bytes intact
+ FAIL  packages/persistence/src/__tests__/npc-life-records.test.ts > refuses imported duplicate hobbies with the NPC StoreRecordError and leaves stored bytes intact
+ FAIL  packages/persistence/src/__tests__/npc-life-records.test.ts > refuses imported stat 101 with the NPC StoreRecordError and leaves stored bytes intact
+ FAIL  packages/persistence/src/__tests__/npc-life-records.test.ts > refuses imported novice exp 101 with the NPC StoreRecordError and leaves stored bytes intact
+ FAIL  packages/persistence/src/__tests__/npc-life-records.test.ts > refuses imported professional exp 201 with the NPC StoreRecordError and leaves stored bytes intact
+ FAIL  packages/persistence/src/__tests__/npc-life-records.test.ts > refuses imported expert exp 301 with the NPC StoreRecordError and leaves stored bytes intact
+ FAIL  packages/persistence/src/__tests__/npc-life-records.test.ts > refuses imported 21 events with the NPC StoreRecordError and leaves stored bytes intact
+AssertionError: expected undefined to be defined
+ ❯ packages/persistence/src/__tests__/npc-life-records.test.ts:21:30
+     19| it.each(invalid)('refuses imported %s with the NPC StoreRecordError an…
+     20|   const state = life(), store = createMemoryGameStore();
+     21|   expect(state.npcs[0].life).toBeDefined();
+       |                              ^
+     22|   const encoded = serializeCharacterLifeSave(state); expect(encoded.su…
+     23|   await store.replaceSlot('main', sessionToRecords('main', state));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/73]⎯
+
+ FAIL  packages/persistence/src/__tests__/npc-life-records.test.ts > requires life in every current NPC record and retains the last valid stored session
+AssertionError: expected function to throw an error, but it didn't
+ ❯ packages/persistence/src/__tests__/npc-life-records.test.ts:48:40
+     46|   const npc = rows.find(r => r.id === 'npc_starter_1')!.value as { npc…
+     47|   delete npc.npc.life;
+     48|   expect(() => recordsToSession(rows)).toThrow(StoreRecordError);
+       |                                        ^
+     49|   expect(JSON.stringify(await store.read('main'))).toBe(before);
+     50| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/73]⎯
+
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > NPC life catalog > validates the English catalog into six origins, eight hobbies and the exact TRIAL values
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\core\src\data\npc-life.json'
+ ❯ load packages/core/src/world/__tests__/npc-life.test.ts:8:31
+      6|
+      7| const parts = ['hand', 'mouth', 'breast', 'vagina', 'ass'] as const;
+      8| const load = () => JSON.parse(readFileSync(new URL('../../data/npc-lif…
+       |                               ^
+      9| const valid = (): NpcLife => ({ mind: 50, lust: 30, lustBase: 30, arou…
+     10|   birthWeek: -1079, origin: 'frontier', hobbies: ['reading', 'gardenin…
+ ❯ packages/core/src/world/__tests__/npc-life.test.ts:17:39
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/73]⎯
+
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > NPC life catalog > rejects malformed origins.frontier.name with an exact catalog error
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > NPC life catalog > rejects malformed origins.frontier.summary with an exact catalog error
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > NPC life catalog > rejects malformed hobbies.reading.name with an exact catalog error
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > NPC life catalog > rejects malformed P7A_TRIAL.marker with an exact catalog error
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > NPC life catalog > rejects malformed P7A_TRIAL.lustBase with an exact catalog error
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > NPC life catalog > rejects malformed P7A_TRIAL.beauty with an exact catalog error
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > NPC life catalog > rejects malformed P7A_TRIAL.stressWork with an exact catalog error
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > NPC life catalog > rejects malformed P7A_TRIAL.stressResume with an exact catalog error
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > NPC life catalog > rejects malformed P7A_TRIAL.arousalDivisor with an exact catalog error
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > NPC life catalog > rejects malformed P7A_TRIAL.weeksPerYear with an exact catalog error
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > NPC life catalog > rejects malformed P7A_TRIAL.recentCap with an exact catalog error
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > NPC life catalog > rejects malformed P7A_TRIAL.sexExpCaps.novice with an exact catalog error
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\core\src\data\npc-life.json'
+ ❯ load packages/core/src/world/__tests__/npc-life.test.ts:8:31
+      6|
+      7| const parts = ['hand', 'mouth', 'breast', 'vagina', 'ass'] as const;
+      8| const load = () => JSON.parse(readFileSync(new URL('../../data/npc-lif…
+       |                               ^
+      9| const valid = (): NpcLife => ({ mind: 50, lust: 30, lustBase: 30, arou…
+     10|   birthWeek: -1079, origin: 'frontier', hobbies: ['reading', 'gardenin…
+ ❯ packages/core/src/world/__tests__/npc-life.test.ts:37:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/73]⎯
+
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > NPC life catalog > rejects missing catalogs, insufficient hobbies and unexpected fields
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\core\src\data\npc-life.json'
+ ❯ load packages/core/src/world/__tests__/npc-life.test.ts:8:31
+      6|
+      7| const parts = ['hand', 'mouth', 'breast', 'vagina', 'ass'] as const;
+      8| const load = () => JSON.parse(readFileSync(new URL('../../data/npc-lif…
+       |                               ^
+      9| const valid = (): NpcLife => ({ mind: 50, lust: 30, lustBase: 30, arou…
+     10|   birthWeek: -1079, origin: 'frontier', hobbies: ['reading', 'gardenin…
+ ❯ packages/core/src/world/__tests__/npc-life.test.ts:44:75
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/73]⎯
+
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > seeded life and ages > uses a repeatable independent stream per seed and NPC id without ambient randomness
+TypeError: npcLifeRandom is not a function
+ ❯ packages/core/src/world/__tests__/npc-life.test.ts:56:21
+     54|     const ambient = vi.spyOn(Math, 'random').mockImplementation(() => …
+     55|     try {
+     56|       const a = api.npcLifeRandom(42, 'one'), b = api.npcLifeRandom(42…
+       |                     ^
+     57|       expect(Array.from({ length: 8 }, () => a())).toEqual(Array.from(…
+     58|       expect(api.createNpcLife(42, 'one', 27)).toEqual(api.createNpcLi…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/73]⎯
+
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > seeded life and ages > draws inclusive ranges, known origins and distinct hobbies while preserving fixed starts
+TypeError: createNpcLife is not a function
+ ❯ packages/core/src/world/__tests__/npc-life.test.ts:66:24
+     64|     const bases = new Set<number>(), beauties = new Set<number>();
+     65|     for (let seed = 0; seed < 500; seed++) {
+     66|       const life = api.createNpcLife(seed, 'npc', 27); bases.add(life.…
+       |                        ^
+     67|       expect(api.isNpcLife(life)).toBe(true);
+     68|       expect(life.lustBase).toBeGreaterThanOrEqual(20); expect(life.lu…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/73]⎯
+
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > seeded life and ages > derives age 18 and title Young Adult at 40-week boundaries
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > seeded life and ages > derives age 29 and title Young Adult at 40-week boundaries
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > seeded life and ages > derives age 30 and title Mature at 40-week boundaries
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > seeded life and ages > derives age 49 and title Mature at 40-week boundaries
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > seeded life and ages > derives age 50 and title Granny at 40-week boundaries
+TypeError: createNpcLife is not a function
+ ❯ packages/core/src/world/__tests__/npc-life.test.ts:81:22
+     79|   });
+     80|   it.each([[18, 'Young Adult'], [29, 'Young Adult'], [30, 'Mature'], […
+     81|     const life = api.createNpcLife(0, 'npc', age);
+       |                      ^
+     82|     expect(api.npcAge(life, 1)).toBe(age); expect(api.npcAge(life, 40)…
+     83|     expect(api.npcAgeTitle(age)).toBe(title);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/73]⎯
+
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > seeded life and ages > initializes the three starter lives last, preserves ages/health and isolates all nested state
+TypeError: npcAge is not a function
+ ❯ packages/core/src/world/__tests__/npc-life.test.ts:88:41
+     86|     const made = api.createNpcWorldSession(42), again = api.createNpcW…
+     87|     if (!made.success || !again.success) throw Error('factory');
+     88|     expect(made.value.npcs.map(n => api.npcAge(n.life, 1))).toEqual([2…
+       |                                         ^
+     89|     expect(made.value.npcs.map(n => n.character.health)).toEqual([100,…
+     90|     for (const npc of made.value.npcs) {
+ ❯ packages/core/src/world/__tests__/npc-life.test.ts:88:28
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/73]⎯
+
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > accepts the exact record, legal boundaries, capped levels and extensible history
+TypeError: isNpcLife is not a function
+ ❯ packages/core/src/world/__tests__/npc-life.test.ts:104:16
+    102|   it('accepts the exact record, legal boundaries, capped levels and ex…
+    103|     const life = valid();
+    104|     expect(api.isNpcLife(life)).toBe(true);
+       |                ^
+    105|     for (const [level, cap] of [['novice', 100], ['professional', 200]…
+    106|       for (const part of parts) life.sexExp[part] = { level, exp: cap …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/73]⎯
+
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects unknown origin without mutating input or reading accessors
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects unknown hobby without mutating input or reading accessors
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects duplicate hobbies without mutating input or reading accessors
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects one hobby without mutating input or reading accessors
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects three hobbies without mutating input or reading accessors
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects missing life field without mutating input or reading accessors
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects extra life field without mutating input or reading accessors
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects nonboolean working without mutating input or reading accessors
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects fractional birth week without mutating input or reading accessors
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects unsafe birth week without mutating input or reading accessors
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects unknown level without mutating input or reading accessors
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects missing part without mutating input or reading accessors
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects extra part without mutating input or reading accessors
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects negative exp without mutating input or reading accessors
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects fractional exp without mutating input or reading accessors
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects 21 recent events without mutating input or reading accessors
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects negative counter without mutating input or reading accessors
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects fractional counter without mutating input or reading accessors
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects invalid event week without mutating input or reading accessors
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects empty event kind without mutating input or reading accessors
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects sparse hobbies without mutating input or reading accessors
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects sparse history without mutating input or reading accessors
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects accessor without mutating input or reading accessors
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects symbol key without mutating input or reading accessors
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects inherited record without mutating input or reading accessors
+TypeError: isNpcLife is not a function
+ ❯ packages/core/src/world/__tests__/npc-life.test.ts:140:16
+    138|   ] as const)('rejects %s without mutating input or reading accessors'…
+    139|     const life = valid(); mutate(life); const before = Object.getOwnPr…
+    140|     expect(api.isNpcLife(life)).toBe(false); expect(Object.getOwnPrope…
+       |                ^
+    141|   });
+    142|   it.each(['mind', 'lust', 'lustBase', 'arousal', 'stress', 'beauty'] …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/73]⎯
+
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects every invalid mind stat
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects every invalid lust stat
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects every invalid lustBase stat
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects every invalid arousal stat
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects every invalid stress stat
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects every invalid beauty stat
+TypeError: isNpcLife is not a function
+ ❯ packages/core/src/world/__tests__/npc-life.test.ts:144:83
+    142|   it.each(['mind', 'lust', 'lustBase', 'arousal', 'stress', 'beauty'] …
+    143|     for (const value of [-1, 101, 0.5, NaN, Infinity, '50', null]) {
+    144|       const life = valid() as unknown as Mutable; life[field] = value;…
+       |                                                                                   ^
+    145|     }
+    146|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/73]⎯
+
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects exp over the novice cap
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects exp over the professional cap
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects exp over the expert cap
+TypeError: isNpcLife is not a function
+ ❯ packages/core/src/world/__tests__/npc-life.test.ts:148:73
+    146|   });
+    147|   it.each([['novice', 101], ['professional', 201], ['expert', 301]] as…
+    148|     const life = valid(); life.sexExp.hand = { level, exp }; expect(ap…
+       |                                                                         ^
+    149|   });
+    150|   it('rejects missing life and nonadult/nonfemale NPCs at the WorldNpc…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/73]⎯
+
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects missing life and nonadult/nonfemale NPCs at the WorldNpc boundary
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ packages/core/src/world/__tests__/npc-life.test.ts:156:121
+    154|       (n: Mutable) => { n.character.gender = 'male'; }, (n: Mutable) =…
+    155|     ]) {
+    156|       const npcs = structuredClone(made.value.npcs); mutate(npcs[0]); …
+       |                                                                                                                         ^
+    157|     }
+    158|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/73]⎯
+
+
+ Test Files  3 failed | 3 passed (6)
+      Tests  73 failed | 213 passed (286)
+   Start at  13:23:29
+   Duration  3.88s (transform 5.13s, setup 0ms, import 7.38s, tests 4.23s, environment 2ms)
+
+
+EXIT_CODE=1
+SECONDS=6.994
+UTC_END=2026-11-17T06:23:33.749302+00:00

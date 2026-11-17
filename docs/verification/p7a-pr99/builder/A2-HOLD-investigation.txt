@@ -1,0 +1,101 @@
+HEAD=927f5be7bb0de8b3fff884daa3da89e98ae03e9e
+TREE=1403e7c099cda27cb123fa36b95342efcdb47c20
+INDEX_TREE=d34090999dec94488eabd92f799a61fd2a4c257f
+UTC_START=2026-11-17T06:35:48.981655+00:00
+COMMAND=["node", "C:/Users/Admin/.t3/local-drafts/p7a-prA/investigate-craft-pins.mjs"]
+CI=
+CPU_AT_GATE_START=not a gate run
+WORKING_STATUS:
+M  packages/core/src/__tests__/catalog-data.test.ts
+M  packages/core/src/data/tuning.json
+M  packages/core/src/data/validate.ts
+M  packages/core/src/trial/__tests__/crime.test.ts
+M  packages/core/src/trial/__tests__/crisis.test.ts
+M  packages/core/src/trial/__tests__/items.test.ts
+M  packages/core/src/trial/__tests__/law.test.ts
+M  packages/core/src/trial/__tests__/order.test.ts
+M  packages/core/src/trial/__tests__/outside.test.ts
+M  packages/core/src/trial/__tests__/society.test.ts
+M  packages/core/src/trial/society.ts
+M  packages/core/src/world/__tests__/session.test.ts
+M  packages/persistence/src/__tests__/character-life-save.test.ts
+A  packages/persistence/src/__tests__/fixtures/society-v10/life-5-weeks.json
+A  packages/persistence/src/__tests__/fixtures/society-v10/life-crime-death.json
+A  packages/persistence/src/__tests__/fixtures/society-v10/life-crime-raid.json
+A  packages/persistence/src/__tests__/fixtures/society-v10/life-crime-robbery.json
+A  packages/persistence/src/__tests__/fixtures/society-v10/life-crime-wound.json
+A  packages/persistence/src/__tests__/fixtures/society-v10/life-demand-card.json
+A  packages/persistence/src/__tests__/fixtures/society-v10/life-laws.json
+A  packages/persistence/src/__tests__/fixtures/society-v10/life-new-game.json
+A  packages/persistence/src/__tests__/fixtures/society-v10/life-rebellion-last-week.json
+A  packages/persistence/src/__tests__/fixtures/society-v10/new-game.json
+M  packages/persistence/src/__tests__/item-records.test.ts
+M  packages/persistence/src/__tests__/items-rebuild-order.test.ts
+M  packages/persistence/src/__tests__/npc-life-records.test.ts
+M  packages/persistence/src/__tests__/session-records.test.ts
+M  packages/persistence/src/__tests__/society-new-game-fixture.test.ts
+A  packages/persistence/src/__tests__/society-v9-fixture.test.ts
+M  packages/persistence/src/session-records.ts
+M  packages/simulation/src/__tests__/crime-fixtures.test.ts
+M  packages/simulation/src/__tests__/crisis-fixtures.test.ts
+M  packages/simulation/src/__tests__/fixtures/catalog-golden.json
+A  packages/simulation/src/__tests__/fixtures/p7a-path-diff.ts
+A  packages/simulation/src/__tests__/fixtures/p7a-path-diff.txt
+M  packages/simulation/src/__tests__/law-fixture.test.ts
+M  packages/simulation/src/__tests__/law-week.test.ts
+M  packages/simulation/src/__tests__/lord-health.test.ts
+M  packages/simulation/src/__tests__/smithy-data.test.ts
+M  packages/ui/src/__tests__/character-life-session.test.ts
+M  packages/ui/src/__tests__/world-session.test.ts
+M  tests/e2e/crime.spec.ts
+M  tests/e2e/crisis.spec.ts
+M  tests/e2e/garrison.spec.ts
+M  tests/e2e/items.spec.ts
+M  tests/e2e/laws.spec.ts
+M  tests/e2e/ledger.spec.ts
+M  tests/e2e/society.spec.ts
+M  tests/e2e/storage.spec.ts
+M  tests/e2e/tile-save.spec.ts
+M  tests/e2e/title.spec.ts
+M  tests/e2e/world-session.spec.ts
+
+OUTPUT:
+{
+  "utc": "2026-11-17T06:35:51.656Z",
+  "head": "927f5be7bb0de8b3fff884daa3da89e98ae03e9e",
+  "candidateTree": "d34090999dec94488eabd92f799a61fd2a4c257f",
+  "results": [
+    {
+      "seed": 0,
+      "before": "7b013be31e647b47e1abe80ffead9e80d30bfa280c2c9269b649fe8d31b132ae",
+      "after": "cb611be6c8b7540c4c83f844a566272c0b2dba394609f4ec12b0208011139c54",
+      "normalizedCity": "7b013be31e647b47e1abe80ffead9e80d30bfa280c2c9269b649fe8d31b132ae",
+      "reportsUnchanged": true,
+      "itemsUnchanged": true,
+      "week": 61
+    },
+    {
+      "seed": 42,
+      "before": "4054962deb8c4502aab86723b505f7e7d7913a87073c2b29ad19c077003d9cdb",
+      "after": "2c7e1a942c7bf05d2b462bb67aa0c05145107cfb0bce714ec3d8c2ba1b2d5e01",
+      "normalizedCity": "4054962deb8c4502aab86723b505f7e7d7913a87073c2b29ad19c077003d9cdb",
+      "reportsUnchanged": true,
+      "itemsUnchanged": true,
+      "week": 61
+    },
+    {
+      "seed": 20261028,
+      "before": "198e769da35a411d3f9cdebdb6195ad545e9e9392e94030ae637bc654beb8803",
+      "after": "73863ad6709a288163077c5d3167d857685ecc92b1f54593f50caf8313f49e04",
+      "normalizedCity": "198e769da35a411d3f9cdebdb6195ad545e9e9392e94030ae637bc654beb8803",
+      "reportsUnchanged": true,
+      "itemsUnchanged": true,
+      "week": 61
+    }
+  ]
+}
+PASS: changing only the in-memory final city ruleset back to 09 restores all three original city pins; reports/items hashes are unchanged. No source or test edit made.
+
+EXIT_CODE=0
+SECONDS=2.842
+UTC_END=2026-11-17T06:35:51.824055+00:00

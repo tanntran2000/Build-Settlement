@@ -1,0 +1,96 @@
+{
+  "verifiedHistoricalArtifacts": 17,
+  "checks": [
+    {
+      "path": "smoke-CI1.txt",
+      "sha256": "cc3f0aef2dccc071eb972ca2ae0c8d34d6ccda0e9019375c04828dc7375a5e00",
+      "matchesPreRerunManifest": true
+    },
+    {
+      "path": "smoke-isolated-1.txt",
+      "sha256": "6d6cd57d60379e2e65564b622867e83c7a313e71e69d132bf6729cd859b60a65",
+      "matchesPreRerunManifest": true
+    },
+    {
+      "path": "smoke-isolated-2.txt",
+      "sha256": "c16963b53f6fb0187bd277da03223b1d7f533979d66f5734d9c5d289709d4c5d",
+      "matchesPreRerunManifest": true
+    },
+    {
+      "path": "smoke-isolated-3.txt",
+      "sha256": "99fad95bcb103d1a96f1b4c0191c7112647536df6cf69f4f1bd8f9dfd52e4476",
+      "matchesPreRerunManifest": true
+    },
+    {
+      "path": "baseline-comparison-matched/base-1.txt",
+      "sha256": "725c9817643bd5bcc3b5a649d21310d8c0ff40b04c9b93d169822ea0ad73c1f6",
+      "matchesPreRerunManifest": true
+    },
+    {
+      "path": "baseline-comparison-matched/base-2.txt",
+      "sha256": "ec4f7335df537538c3b0d488bc1a4a37ac9567e1c03002f3f72d51dcba45ef91",
+      "matchesPreRerunManifest": true
+    },
+    {
+      "path": "baseline-comparison-matched/base-3.txt",
+      "sha256": "6b35bffcc0ecf1871c73dcac9cf2e24036182667114bdb7e91d0d4a282c4ff8a",
+      "matchesPreRerunManifest": true
+    },
+    {
+      "path": "baseline-comparison-matched/head-1.txt",
+      "sha256": "dc140faadff1ad769d3123825ace224714e659417b44df6b0717977ef97b7fdc",
+      "matchesPreRerunManifest": true
+    },
+    {
+      "path": "baseline-comparison-matched/head-2.txt",
+      "sha256": "f879478168ac341c51c03d7cd076b471733029a995d36a5773dcae9cec3818fe",
+      "matchesPreRerunManifest": true
+    },
+    {
+      "path": "baseline-comparison-matched/head-3.txt",
+      "sha256": "67b3f667bcbddc9b121f7c44259e3e750a6cd1eac6a27a4dbcd615a84b77487d",
+      "matchesPreRerunManifest": true
+    },
+    {
+      "path": "baseline-comparison-matched/comparison-results.json",
+      "sha256": "3282b516a8f8f406be66f78d9a32af707216db67a27d5b9e99e602045e21284f",
+      "matchesPreRerunManifest": true
+    },
+    {
+      "path": "full-smoke-rerun/history-before-update/README.md",
+      "originalPath": "README.md",
+      "sha256": "738bf04407383a7681c41aa9faba327ba053c6ea300ebbcbc73482c9417ca860",
+      "matchesPreRerunManifest": true
+    },
+    {
+      "path": "full-smoke-rerun/history-before-update/results-summary.json",
+      "originalPath": "results-summary.json",
+      "sha256": "524ad7484fb55b32b9ba3bcddd04bed2a10667d3e86fd65277875b5e60e1c62d",
+      "matchesPreRerunManifest": true
+    },
+    {
+      "path": "full-smoke-rerun/history-before-update/builder-author-review.md",
+      "originalPath": "builder-author-review.md",
+      "sha256": "02403a31f9aa93bbff200a5f6659acb4f865339f2d9966613081dcc9c303d3a7",
+      "matchesPreRerunManifest": true
+    },
+    {
+      "path": "full-smoke-rerun/history-before-update/A3-HOLD.md",
+      "originalPath": "A3-HOLD.md",
+      "sha256": "20d24223be353d37164664a71937b039a78469589dc822968d1fe4d7b0b794bf",
+      "matchesPreRerunManifest": true
+    },
+    {
+      "path": "full-smoke-rerun/history-before-update/BASELINE-COMPARISON-HOLD.md",
+      "originalPath": "BASELINE-COMPARISON-HOLD.md",
+      "sha256": "37a145212c1f75abe971bbb250ed6cf8f8450e94b6fd9c00871360bb6df44ffa",
+      "matchesPreRerunManifest": true
+    },
+    {
+      "path": "full-smoke-rerun/history-before-update/bundle-comparison.html",
+      "originalPath": "bundle-comparison.html",
+      "sha256": "8ad203a3a78ad4aecdc0852a1bb508e2a7a302be6b3f7cfd75ba40d8c1432a93",
+      "matchesPreRerunManifest": true
+    }
+  ]
+}

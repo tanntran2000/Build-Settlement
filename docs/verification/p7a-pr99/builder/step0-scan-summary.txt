@@ -1,0 +1,37 @@
+{
+  "trackedPaths": 478,
+  "textFiles": 476,
+  "matchedLines": 699,
+  "proposedLineEdits": 50,
+  "existingTestFiles": 34,
+  "expectedPaths": 59,
+  "fixtureCount": 10,
+  "goldenSessionLines": [
+    8,
+    16,
+    24
+  ],
+  "pins": {
+    "SOCIETY_TRIAL": {
+      "before": "49add1753fd6d630e3cf7f4f7395f2bd7b844936086ef0b9f06fb6cb595090e6",
+      "after": "69779e596f2abca5afe88b5858be9d850a6a062dd772ea093bbfebf3ec983acc",
+      "task": "A2"
+    },
+    "NPC_ORIGINS": {
+      "before": null,
+      "after": "c252b2c5d31d302c307df967c94b43714f4e3debd527299819f60117f0378f09",
+      "task": "A1"
+    },
+    "NPC_HOBBIES": {
+      "before": null,
+      "after": "8a4c0e75fca9aa9b8fd5e26a5bfac38aa161864e02b97832c77955089d7205c2",
+      "task": "A1"
+    },
+    "P7A_TRIAL": {
+      "before": null,
+      "after": "b1429bf557d9a96e825a2d9a6d788524ee1e57db1572d35a6c405f2924797013",
+      "task": "A1"
+    }
+  },
+  "status": ""
+}

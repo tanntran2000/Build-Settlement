@@ -1,0 +1,70 @@
+﻿{
+    "utc":  "2026-11-17T10:53:06.1115136Z",
+    "head":  "56124513aef2d85de128fe76bf3001654290c1c0",
+    "tree":  "d2f31706d77d308a310b61857a8b293a898280e7",
+    "branch":  "feat/p7a-npc-life-data",
+    "cpu":  [
+                {
+                    "LoadPercentage":  9,
+                    "NumberOfLogicalProcessors":  8
+                }
+            ],
+    "topProcesses":  [
+                         {
+                             "IDProcess":  64728,
+                             "Name":  "msedgewebview2#5",
+                             "PercentProcessorTime":  10
+                         },
+                         {
+                             "IDProcess":  81512,
+                             "Name":  "WmiPrvSE#2",
+                             "PercentProcessorTime":  10
+                         },
+                         {
+                             "IDProcess":  65896,
+                             "Name":  "SmartAudio",
+                             "PercentProcessorTime":  10
+                         },
+                         {
+                             "IDProcess":  50936,
+                             "Name":  "codebase-memory-mcp#2",
+                             "PercentProcessorTime":  5
+                         },
+                         {
+                             "IDProcess":  71368,
+                             "Name":  "ChatGPT",
+                             "PercentProcessorTime":  5
+                         },
+                         {
+                             "IDProcess":  56200,
+                             "Name":  "msedgewebview2",
+                             "PercentProcessorTime":  5
+                         },
+                         {
+                             "IDProcess":  81404,
+                             "Name":  "node#23",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  64344,
+                             "Name":  "node#24",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  38448,
+                             "Name":  "node#25",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  60108,
+                             "Name":  "node#29",
+                             "PercentProcessorTime":  0
+                         }
+                     ],
+    "competingJobs":  [
+
+                      ],
+    "portListeners":  [
+
+                      ]
+}

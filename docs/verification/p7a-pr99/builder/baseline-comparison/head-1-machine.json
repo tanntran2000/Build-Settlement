@@ -1,0 +1,70 @@
+﻿{
+    "utc":  "2026-11-17T10:36:01.0176514Z",
+    "head":  "56124513aef2d85de128fe76bf3001654290c1c0",
+    "tree":  "d2f31706d77d308a310b61857a8b293a898280e7",
+    "branch":  "feat/p7a-npc-life-data",
+    "cpu":  [
+                {
+                    "LoadPercentage":  53,
+                    "NumberOfLogicalProcessors":  8
+                }
+            ],
+    "topProcesses":  [
+                         {
+                             "IDProcess":  13700,
+                             "Name":  "claude#5",
+                             "PercentProcessorTime":  62
+                         },
+                         {
+                             "IDProcess":  3736,
+                             "Name":  "svchost#36",
+                             "PercentProcessorTime":  57
+                         },
+                         {
+                             "IDProcess":  81408,
+                             "Name":  "SearchFilterHost",
+                             "PercentProcessorTime":  53
+                         },
+                         {
+                             "IDProcess":  72784,
+                             "Name":  "T3 Code (Nightly)#4",
+                             "PercentProcessorTime":  31
+                         },
+                         {
+                             "IDProcess":  4272,
+                             "Name":  "MsMpEng",
+                             "PercentProcessorTime":  31
+                         },
+                         {
+                             "IDProcess":  616,
+                             "Name":  "svchost",
+                             "PercentProcessorTime":  26
+                         },
+                         {
+                             "IDProcess":  84384,
+                             "Name":  "WmiPrvSE#2",
+                             "PercentProcessorTime":  22
+                         },
+                         {
+                             "IDProcess":  52040,
+                             "Name":  "SearchProtocolHost",
+                             "PercentProcessorTime":  22
+                         },
+                         {
+                             "IDProcess":  70192,
+                             "Name":  "claude#12",
+                             "PercentProcessorTime":  17
+                         },
+                         {
+                             "IDProcess":  16728,
+                             "Name":  "claude#2",
+                             "PercentProcessorTime":  13
+                         }
+                     ],
+    "competingJobs":  [
+
+                      ],
+    "portListeners":  [
+
+                      ]
+}

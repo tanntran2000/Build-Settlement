@@ -1,0 +1,8 @@
+﻿{
+    "base":  "753e4503673df86830fba2ef2c9ef1e64a843729",
+    "head":  "56124513aef2d85de128fe76bf3001654290c1c0",
+    "baseLockBlob":  "a15436be23b23df81e93c1ade6397766951360e9",
+    "headLockBlob":  "a15436be23b23df81e93c1ade6397766951360e9",
+    "identical":  true,
+    "npmCiRun":  false
+}

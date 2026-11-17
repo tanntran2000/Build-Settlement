@@ -1,0 +1,39 @@
+{
+  "head": "56124513aef2d85de128fe76bf3001654290c1c0",
+  "tree": "d2f31706d77d308a310b61857a8b293a898280e7",
+  "utc": "2026-11-17T07:40:16.669Z",
+  "baseline": {
+    "head": "753e4503673df86830fba2ef2c9ef1e64a843729",
+    "source": "Owner-provided main production bundle, decimal kB gzip",
+    "jsGzipKB": 137.41,
+    "cssGzipKB": 7.15
+  },
+  "current": {
+    "jsGzipBytes": 139257,
+    "cssGzipBytes": 7152,
+    "jsGzipKB": 139.257,
+    "cssGzipKB": 7.152
+  },
+  "deltaKB": {
+    "js": 1.8470000000000084,
+    "css": 0.0019999999999997797
+  },
+  "files": [
+    {
+      "file": "assets/index-DLT9rNeI.css",
+      "entry": true,
+      "bytes": 35427,
+      "gzipBytes": 7152,
+      "sha256": "48220c778ce4ca3a2cc8b36a4d4692a4358db576c8683c31c7e22afe8b8919c8",
+      "gzipSha256": "585763018b5a4101119dc38e18d354b1e8ef5935e131c02c87ffc444a97d05ea"
+    },
+    {
+      "file": "assets/index-mINwSZb0.js",
+      "entry": true,
+      "bytes": 447324,
+      "gzipBytes": 139257,
+      "sha256": "7013ff433ef7c8f2880b23ee4d92adfb749c2d0a1deba5af41267243857fd820",
+      "gzipSha256": "304fb29606b4d4dbdefc4626727c00b53db57cddf6206019a70ed7190ff7eb90"
+    }
+  ]
+}

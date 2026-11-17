@@ -1,0 +1,13 @@
+﻿{
+    "utc":  "2026-11-17T10:51:55.7925512Z",
+    "ownedHelperId":  71472,
+    "command":  "\"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -NoProfile -File C:/Users/Admin/.t3/local-drafts/p7a-prA/run-baseline-comparison-validated.ps1",
+    "cpuSeconds":  600.515625,
+    "workingSetBytes":  3456827392,
+    "portsFree":  true,
+    "childProcesses":  [
+
+                       ],
+    "stalledAfter":  "base production build; before base case 1",
+    "action":  "stop only this owned evidence helper; no test/server or user process stopped"
+}

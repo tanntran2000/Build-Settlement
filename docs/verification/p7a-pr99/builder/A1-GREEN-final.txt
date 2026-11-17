@@ -1,0 +1,35 @@
+HEAD=753e4503673df86830fba2ef2c9ef1e64a843729
+TREE=77cbeae3332cfaf26ba23e08ae67300d49d8c69d
+INDEX_TREE=1403e7c099cda27cb123fa36b95342efcdb47c20
+UTC_START=2026-11-17T06:26:11.688757+00:00
+COMMAND=["npm.cmd", "test", "--", "packages/core/src/world/__tests__/npc-life.test.ts", "packages/persistence/src/__tests__/npc-life-records.test.ts", "packages/core/src/__tests__/catalog-data.test.ts", "packages/core/src/world/__tests__/npc.test.ts", "packages/core/src/character/__tests__/session.test.ts", "packages/core/src/character/__tests__/validate.test.ts"]
+WORKING_STATUS:
+M  packages/core/src/__tests__/catalog-data.test.ts
+A  packages/core/src/data/npc-life.json
+M  packages/core/src/data/validate.ts
+M  packages/core/src/index.ts
+A  packages/core/src/world/__tests__/npc-life.test.ts
+M  packages/core/src/world/__tests__/npc.test.ts
+M  packages/core/src/world/npc-content.ts
+A  packages/core/src/world/npc-life.ts
+M  packages/core/src/world/npc.ts
+A  packages/persistence/src/__tests__/npc-life-records.test.ts
+
+OUTPUT:
+
+> build-settlement@0.1.0 test
+> vitest run packages/core/src/world/__tests__/npc-life.test.ts packages/persistence/src/__tests__/npc-life-records.test.ts packages/core/src/__tests__/catalog-data.test.ts packages/core/src/world/__tests__/npc.test.ts packages/core/src/character/__tests__/session.test.ts packages/core/src/character/__tests__/validate.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  6 passed (6)
+      Tests  286 passed (286)
+   Start at  13:26:15
+   Duration  4.49s (transform 5.42s, setup 0ms, import 8.81s, tests 5.40s, environment 3ms)
+
+
+EXIT_CODE=0
+SECONDS=8.094
+UTC_END=2026-11-17T06:26:19.782417+00:00

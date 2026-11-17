@@ -1,0 +1,138 @@
+{
+  "state": "HOLD after owner-approved diagnostic comparison",
+  "owner": "Tân",
+  "ownerDecisionDate": "2026-11-17",
+  "ownerDecisionVerbatim": "Approve baseline comparison (Recommended)",
+  "base": "753e4503673df86830fba2ef2c9ef1e64a843729",
+  "head": "56124513aef2d85de128fe76bf3001654290c1c0",
+  "tree": "d2f31706d77d308a310b61857a8b293a898280e7",
+  "rows": [
+    {
+      "index": 1,
+      "case": "accessibility at 375px / life shell accessibility baseline",
+      "selector": "tests/e2e/character-life-navigation-accessibility.spec.ts:250",
+      "base": {
+        "status": "PASS",
+        "testDurationReported": "2.2m",
+        "commandSeconds": 148.899,
+        "exitCode": 0,
+        "error": null,
+        "errorSource": null,
+        "utcStart": "2026-11-17T10:53:38.535051+00:00",
+        "utcEnd": "2026-11-17T10:56:07.433928+00:00",
+        "log": "baseline-comparison-matched/base-1.txt",
+        "machine": "baseline-comparison-matched/base-1-machine.json",
+        "traces": []
+      },
+      "head": {
+        "status": "PASS",
+        "testDurationReported": "2.3m",
+        "commandSeconds": 156.291,
+        "exitCode": 0,
+        "error": null,
+        "errorSource": null,
+        "utcStart": "2026-11-17T10:58:30.869497+00:00",
+        "utcEnd": "2026-11-17T11:01:07.160442+00:00",
+        "log": "baseline-comparison-matched/head-1.txt",
+        "machine": "baseline-comparison-matched/head-1-machine.json",
+        "traces": []
+      },
+      "baseAlsoFails": false,
+      "headOnlyFailure": false
+    },
+    {
+      "index": 2,
+      "case": "fulfillment states match strip and report",
+      "selector": "tests/e2e/character-life-navigation.spec.ts:225",
+      "base": {
+        "status": "PASS",
+        "testDurationReported": "46.5s",
+        "commandSeconds": 64.181,
+        "exitCode": 0,
+        "error": null,
+        "errorSource": null,
+        "utcStart": "2026-11-17T10:56:10.166161+00:00",
+        "utcEnd": "2026-11-17T10:57:14.347564+00:00",
+        "log": "baseline-comparison-matched/base-2.txt",
+        "machine": "baseline-comparison-matched/base-2-machine.json",
+        "traces": []
+      },
+      "head": {
+        "status": "PASS",
+        "testDurationReported": "47.0s",
+        "commandSeconds": 67.924,
+        "exitCode": 0,
+        "error": null,
+        "errorSource": null,
+        "utcStart": "2026-11-17T11:01:10.774873+00:00",
+        "utcEnd": "2026-11-17T11:02:18.698791+00:00",
+        "log": "baseline-comparison-matched/head-2.txt",
+        "machine": "baseline-comparison-matched/head-2-machine.json",
+        "traces": []
+      },
+      "baseAlsoFails": false,
+      "headOnlyFailure": false
+    },
+    {
+      "index": 3,
+      "case": "U9: local and portable saves restore the whole populated session and uninterrupted next week",
+      "selector": "tests/e2e/world-session.spec.ts:43",
+      "base": {
+        "status": "PASS",
+        "testDurationReported": "26.0s",
+        "commandSeconds": 44.187,
+        "exitCode": 0,
+        "error": null,
+        "errorSource": null,
+        "utcStart": "2026-11-17T10:57:17.055490+00:00",
+        "utcEnd": "2026-11-17T10:58:01.242683+00:00",
+        "log": "baseline-comparison-matched/base-3.txt",
+        "machine": "baseline-comparison-matched/base-3-machine.json",
+        "traces": []
+      },
+      "head": {
+        "status": "PASS",
+        "testDurationReported": "26.0s",
+        "commandSeconds": 45.101,
+        "exitCode": 0,
+        "error": null,
+        "errorSource": null,
+        "utcStart": "2026-11-17T11:02:21.492145+00:00",
+        "utcEnd": "2026-11-17T11:03:06.593531+00:00",
+        "log": "baseline-comparison-matched/head-3.txt",
+        "machine": "baseline-comparison-matched/head-3-machine.json",
+        "traces": []
+      },
+      "baseAlsoFails": false,
+      "headOnlyFailure": false
+    }
+  ],
+  "productionBuilds": "npm run build at each revision, followed by unchanged npm pretest:smoke on each isolated run",
+  "npmCiRun": false,
+  "lockfileBlob": "a15436be23b23df81e93c1ade6397766951360e9",
+  "validWindow": {
+    "windowStartUtc": "2026-11-17T10:52:56.8496947Z",
+    "windowEndUtc": "2026-11-17T11:03:09.0969372Z",
+    "events": [],
+    "eventCount": 0
+  },
+  "setupCorrection": "Preliminary base attempts served a retained HEAD production asset at port 4173. They are excluded; all preliminary logs and trace asset proof are retained under baseline-comparison/.",
+  "finalGitStatus": "",
+  "featureBranchUnchanged": true,
+  "generatedAtUtc": "2026-11-17T11:03:52.144172+00:00",
+  "wholeDiagnosticWindow": {
+    "windowStartUtc": "2026-11-17T10:33:48.1242064Z",
+    "windowEndUtc": "2026-11-17T11:03:50.9896446Z",
+    "scope": "entire approved diagnostic window, including preliminary attempts, stopped helper and matched runs",
+    "eventCount": 0,
+    "events": []
+  },
+  "initialCpuPercent": 13,
+  "matchedCpuPercent": 9,
+  "matchedRunsPassed": 6,
+  "headOnlyFailures": 0,
+  "setupNotes": [
+    "Preliminary base tests loaded retained HEAD production JavaScript. The three import failures are excluded as baseline evidence; all six preliminary logs and three failure traces are retained.",
+    "The next wrapper stalled during build-asset JSON serialization, before any test started. Only the verified owned helper was stopped, with no child processes or occupied ports. Plain-file text serialization was verified in 64 ms before the matched restart. No product files changed."
+  ]
+}

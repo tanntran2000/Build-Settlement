@@ -1,0 +1,19 @@
+{
+  "head": "56124513aef2d85de128fe76bf3001654290c1c0",
+  "tree": "d2f31706d77d308a310b61857a8b293a898280e7",
+  "ci": "1",
+  "command": [
+    "npm.cmd",
+    "run",
+    "test:smoke",
+    "--",
+    "--output",
+    "C:/Users/Admin/.t3/local-drafts/p7a-prA-local-only/full-smoke-rerun/full"
+  ],
+  "utcStart": "2026-11-17T11:40:01.188672+00:00",
+  "utcEnd": "2026-11-17T12:17:01.021818+00:00",
+  "seconds": 2219.749,
+  "smokeExitCode": 0,
+  "servedAssetsMatched": true,
+  "gitStatusAfter": ""
+}

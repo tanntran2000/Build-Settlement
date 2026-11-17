@@ -1,0 +1,23 @@
+﻿{
+    "utc":  "2026-11-17T10:10:20.5495664Z",
+    "head":  "56124513aef2d85de128fe76bf3001654290c1c0",
+    "case":  {
+                 "index":  2,
+                 "selector":  "tests/e2e/character-life-navigation.spec.ts:225",
+                 "grep":  "fulfillment states match strip and report",
+                 "title":  "fulfillment states match strip and report",
+                 "existingTimeoutMs":  60000
+             },
+    "cpu":  [
+                {
+                    "LoadPercentage":  12,
+                    "NumberOfLogicalProcessors":  8
+                }
+            ],
+    "competingJobs":  [
+
+                      ],
+    "portListeners":  [
+
+                      ]
+}

@@ -1,0 +1,13 @@
+﻿{
+    "method":  "System.IO.File.ReadAllText; plain string serialization",
+    "elapsedMs":  64.437300000000008,
+    "jsonChars":  992,
+    "getContentNoteProperties":  [
+                                     "PSPath",
+                                     "PSParentPath",
+                                     "PSChildName",
+                                     "PSDrive",
+                                     "PSProvider",
+                                     "ReadCount"
+                                 ]
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "original": "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\test-results\\character-life-navigation--4dea7-ates-match-strip-and-report-chromium\\trace.zip",
+    "preserved": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prA-local-only\\full-smoke\\character-life-navigation--4dea7-ates-match-strip-and-report-chromium\\trace.zip",
+    "sha256": "3d311feb6c7390269d16e9dbe0d7656de8053dc6b98c6e33eb1c563252ee81a4",
+    "bytes": 11144094
+  },
+  {
+    "original": "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\test-results\\character-life-navigation--c0613-hell-accessibility-baseline-chromium\\trace.zip",
+    "preserved": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prA-local-only\\full-smoke\\character-life-navigation--c0613-hell-accessibility-baseline-chromium\\trace.zip",
+    "sha256": "0d62d421a581edd193232cf21d20741f43d0a25b52b7526bd7acf731915a64f5",
+    "bytes": 17822356
+  },
+  {
+    "original": "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\test-results\\world-session-U9-local-and-39144-and-uninterrupted-next-week-chromium\\trace.zip",
+    "preserved": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prA-local-only\\full-smoke\\world-session-U9-local-and-39144-and-uninterrupted-next-week-chromium\\trace.zip",
+    "sha256": "4b7353698852599f2ca4bfbd1441425ec366066a9617d5cb1414a3986f05dcc0",
+    "bytes": 7999507
+  }
+]

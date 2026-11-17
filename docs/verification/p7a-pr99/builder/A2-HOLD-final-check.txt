@@ -1,0 +1,13 @@
+{
+  "utc": "2026-11-17T06:37:44.097006+00:00",
+  "head": "927f5be7bb0de8b3fff884daa3da89e98ae03e9e",
+  "headTree": "1403e7c099cda27cb123fa36b95342efcdb47c20",
+  "stagedTree": "d34090999dec94488eabd92f799a61fd2a4c257f",
+  "craftWeekTestUnchanged": true,
+  "craftWeekGitBlob": "4ad72d28494a898aa35fb54d9aeb7ab374b38480",
+  "unstagedSourceChanges": false,
+  "untrackedSourceFiles": false,
+  "portsCheck": "PORTS_4173_4174_FREE",
+  "portsExitCode": 0,
+  "taskState": "A2 HOLD; A3 not started"
+}

@@ -1,0 +1,56 @@
+﻿[
+    {
+        "stage":  "base",
+        "index":  1,
+        "case":  "accessibility at 375px / life shell accessibility baseline",
+        "head":  "753e4503673df86830fba2ef2c9ef1e64a843729",
+        "exitCode":  1,
+        "log":  "baseline-comparison/base-1.txt",
+        "traceOutput":  "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prA-local-only\\baseline-comparison\\base-1"
+    },
+    {
+        "stage":  "base",
+        "index":  2,
+        "case":  "fulfillment states match strip and report",
+        "head":  "753e4503673df86830fba2ef2c9ef1e64a843729",
+        "exitCode":  1,
+        "log":  "baseline-comparison/base-2.txt",
+        "traceOutput":  "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prA-local-only\\baseline-comparison\\base-2"
+    },
+    {
+        "stage":  "base",
+        "index":  3,
+        "case":  "U9: local and portable saves restore the whole populated session and uninterrupted next week",
+        "head":  "753e4503673df86830fba2ef2c9ef1e64a843729",
+        "exitCode":  1,
+        "log":  "baseline-comparison/base-3.txt",
+        "traceOutput":  "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prA-local-only\\baseline-comparison\\base-3"
+    },
+    {
+        "stage":  "head",
+        "index":  1,
+        "case":  "accessibility at 375px / life shell accessibility baseline",
+        "head":  "56124513aef2d85de128fe76bf3001654290c1c0",
+        "exitCode":  0,
+        "log":  "baseline-comparison/head-1.txt",
+        "traceOutput":  "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prA-local-only\\baseline-comparison\\head-1"
+    },
+    {
+        "stage":  "head",
+        "index":  2,
+        "case":  "fulfillment states match strip and report",
+        "head":  "56124513aef2d85de128fe76bf3001654290c1c0",
+        "exitCode":  0,
+        "log":  "baseline-comparison/head-2.txt",
+        "traceOutput":  "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prA-local-only\\baseline-comparison\\head-2"
+    },
+    {
+        "stage":  "head",
+        "index":  3,
+        "case":  "U9: local and portable saves restore the whole populated session and uninterrupted next week",
+        "head":  "56124513aef2d85de128fe76bf3001654290c1c0",
+        "exitCode":  0,
+        "log":  "baseline-comparison/head-3.txt",
+        "traceOutput":  "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prA-local-only\\baseline-comparison\\head-3"
+    }
+]

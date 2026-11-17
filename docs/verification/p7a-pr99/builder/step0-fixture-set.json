@@ -1,0 +1,344 @@
+[
+  {
+    "source": "packages/persistence/src/__tests__/fixtures/society-v9/life-5-weeks.json",
+    "target": "packages/persistence/src/__tests__/fixtures/society-v10/life-5-weeks.json",
+    "sourceLine": 1,
+    "sourceSha256": "127c75ae30f0588194c3adcb3d60c80b7f55622f35422f080d83f395c5fb877e",
+    "envelopeKey": "cityRulesetId",
+    "stateRulesetPath": "city.society.rulesetId",
+    "npcs": [
+      {
+        "id": "npc_starter_1",
+        "age": 27,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      },
+      {
+        "id": "npc_starter_2",
+        "age": 31,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      },
+      {
+        "id": "npc_starter_3",
+        "age": 24,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      }
+    ]
+  },
+  {
+    "source": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-death.json",
+    "target": "packages/persistence/src/__tests__/fixtures/society-v10/life-crime-death.json",
+    "sourceLine": 1,
+    "sourceSha256": "63be0f806c715809517744a8d249e05fbe09e68ebfb8ad19293e3f508156234b",
+    "envelopeKey": "cityRulesetId",
+    "stateRulesetPath": "city.society.rulesetId",
+    "npcs": [
+      {
+        "id": "npc_starter_1",
+        "age": 27,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      },
+      {
+        "id": "npc_starter_2",
+        "age": 31,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      },
+      {
+        "id": "npc_starter_3",
+        "age": 24,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      }
+    ]
+  },
+  {
+    "source": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-raid.json",
+    "target": "packages/persistence/src/__tests__/fixtures/society-v10/life-crime-raid.json",
+    "sourceLine": 1,
+    "sourceSha256": "2c0a968e164d1e3518c1b17812b8c61d8aa8788270a4049fbb9d7334dcef58da",
+    "envelopeKey": "cityRulesetId",
+    "stateRulesetPath": "city.society.rulesetId",
+    "npcs": [
+      {
+        "id": "npc_starter_1",
+        "age": 27,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      },
+      {
+        "id": "npc_starter_2",
+        "age": 31,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      },
+      {
+        "id": "npc_starter_3",
+        "age": 24,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      }
+    ]
+  },
+  {
+    "source": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-robbery.json",
+    "target": "packages/persistence/src/__tests__/fixtures/society-v10/life-crime-robbery.json",
+    "sourceLine": 1,
+    "sourceSha256": "c1cc74255ed39333fbba6362a9b7f25dce9ef194c73a74c05884e76f7b8cca67",
+    "envelopeKey": "cityRulesetId",
+    "stateRulesetPath": "city.society.rulesetId",
+    "npcs": [
+      {
+        "id": "npc_starter_1",
+        "age": 27,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      },
+      {
+        "id": "npc_starter_2",
+        "age": 31,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      },
+      {
+        "id": "npc_starter_3",
+        "age": 24,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      }
+    ]
+  },
+  {
+    "source": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-wound.json",
+    "target": "packages/persistence/src/__tests__/fixtures/society-v10/life-crime-wound.json",
+    "sourceLine": 1,
+    "sourceSha256": "36f36c603cba9b1e5f03a9c481d86acc131090741f39c017f1cd0ade195523e2",
+    "envelopeKey": "cityRulesetId",
+    "stateRulesetPath": "city.society.rulesetId",
+    "npcs": [
+      {
+        "id": "npc_starter_1",
+        "age": 27,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      },
+      {
+        "id": "npc_starter_2",
+        "age": 31,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      },
+      {
+        "id": "npc_starter_3",
+        "age": 24,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      }
+    ]
+  },
+  {
+    "source": "packages/persistence/src/__tests__/fixtures/society-v9/life-demand-card.json",
+    "target": "packages/persistence/src/__tests__/fixtures/society-v10/life-demand-card.json",
+    "sourceLine": 1,
+    "sourceSha256": "71ef9061c44fadf551f474cd888f924e7976a9a8a368a9def9a8706905d31ab0",
+    "envelopeKey": "cityRulesetId",
+    "stateRulesetPath": "city.society.rulesetId",
+    "npcs": [
+      {
+        "id": "npc_starter_1",
+        "age": 27,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      },
+      {
+        "id": "npc_starter_2",
+        "age": 31,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      },
+      {
+        "id": "npc_starter_3",
+        "age": 24,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      }
+    ]
+  },
+  {
+    "source": "packages/persistence/src/__tests__/fixtures/society-v9/life-laws.json",
+    "target": "packages/persistence/src/__tests__/fixtures/society-v10/life-laws.json",
+    "sourceLine": 1,
+    "sourceSha256": "8daf63999e0d13e5956584f68ddf0adff53e423c832a3e73f86138fd9739c910",
+    "envelopeKey": "cityRulesetId",
+    "stateRulesetPath": "city.society.rulesetId",
+    "npcs": [
+      {
+        "id": "npc_starter_1",
+        "age": 27,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      },
+      {
+        "id": "npc_starter_2",
+        "age": 31,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      },
+      {
+        "id": "npc_starter_3",
+        "age": 24,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      }
+    ]
+  },
+  {
+    "source": "packages/persistence/src/__tests__/fixtures/society-v9/life-new-game.json",
+    "target": "packages/persistence/src/__tests__/fixtures/society-v10/life-new-game.json",
+    "sourceLine": 1,
+    "sourceSha256": "695d8bd3ab198209ee2793d7c521caec6f2a9df167cb9c7826e8470ca64f24a7",
+    "envelopeKey": "cityRulesetId",
+    "stateRulesetPath": "city.society.rulesetId",
+    "npcs": [
+      {
+        "id": "npc_starter_1",
+        "age": 27,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      },
+      {
+        "id": "npc_starter_2",
+        "age": 31,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      },
+      {
+        "id": "npc_starter_3",
+        "age": 24,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      }
+    ]
+  },
+  {
+    "source": "packages/persistence/src/__tests__/fixtures/society-v9/life-rebellion-last-week.json",
+    "target": "packages/persistence/src/__tests__/fixtures/society-v10/life-rebellion-last-week.json",
+    "sourceLine": 1,
+    "sourceSha256": "fe87d1ed940e7ac748b43acb04f292b7de81390c710d620a790074e309e13729",
+    "envelopeKey": "cityRulesetId",
+    "stateRulesetPath": "city.society.rulesetId",
+    "npcs": [
+      {
+        "id": "npc_starter_1",
+        "age": 27,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      },
+      {
+        "id": "npc_starter_2",
+        "age": 31,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      },
+      {
+        "id": "npc_starter_3",
+        "age": 24,
+        "keys": [
+          "character",
+          "traits",
+          "postTileId"
+        ]
+      }
+    ]
+  },
+  {
+    "source": "packages/persistence/src/__tests__/fixtures/society-v9/new-game.json",
+    "target": "packages/persistence/src/__tests__/fixtures/society-v10/new-game.json",
+    "sourceLine": 1,
+    "sourceSha256": "d3892eb83325414c24d3399f2042c1e2afcf852cde525ab6b57bb6f6740761fb",
+    "envelopeKey": "rulesetId",
+    "stateRulesetPath": "society.rulesetId",
+    "npcs": []
+  }
+]

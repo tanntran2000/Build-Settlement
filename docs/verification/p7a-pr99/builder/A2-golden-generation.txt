@@ -1,0 +1,67 @@
+HEAD=927f5be7bb0de8b3fff884daa3da89e98ae03e9e
+TREE=1403e7c099cda27cb123fa36b95342efcdb47c20
+INDEX_TREE=1403e7c099cda27cb123fa36b95342efcdb47c20
+UTC_START=2026-11-17T06:30:29.592636+00:00
+COMMAND=["npm.cmd", "test", "--", "packages/simulation/src/__tests__/catalog-golden.test.ts"]
+WORKING_STATUS:
+ M packages/core/src/__tests__/catalog-data.test.ts
+ M packages/core/src/data/tuning.json
+ M packages/core/src/data/validate.ts
+ M packages/core/src/trial/__tests__/crime.test.ts
+ M packages/core/src/trial/__tests__/crisis.test.ts
+ M packages/core/src/trial/__tests__/items.test.ts
+ M packages/core/src/trial/__tests__/law.test.ts
+ M packages/core/src/trial/__tests__/order.test.ts
+ M packages/core/src/trial/__tests__/outside.test.ts
+ M packages/core/src/trial/__tests__/society.test.ts
+ M packages/core/src/trial/society.ts
+ M packages/core/src/world/__tests__/session.test.ts
+ M packages/persistence/src/__tests__/character-life-save.test.ts
+ M packages/persistence/src/__tests__/item-records.test.ts
+ M packages/persistence/src/__tests__/items-rebuild-order.test.ts
+ M packages/persistence/src/__tests__/npc-life-records.test.ts
+ M packages/persistence/src/__tests__/session-records.test.ts
+ M packages/persistence/src/__tests__/society-new-game-fixture.test.ts
+ M packages/persistence/src/session-records.ts
+ M packages/simulation/src/__tests__/crime-fixtures.test.ts
+ M packages/simulation/src/__tests__/crisis-fixtures.test.ts
+ D packages/simulation/src/__tests__/fixtures/catalog-golden.json
+ M packages/simulation/src/__tests__/law-fixture.test.ts
+ M packages/simulation/src/__tests__/law-week.test.ts
+ M packages/simulation/src/__tests__/lord-health.test.ts
+ M packages/simulation/src/__tests__/smithy-data.test.ts
+ M packages/ui/src/__tests__/character-life-session.test.ts
+ M packages/ui/src/__tests__/world-session.test.ts
+ M tests/e2e/crime.spec.ts
+ M tests/e2e/crisis.spec.ts
+ M tests/e2e/garrison.spec.ts
+ M tests/e2e/items.spec.ts
+ M tests/e2e/laws.spec.ts
+ M tests/e2e/ledger.spec.ts
+ M tests/e2e/society.spec.ts
+ M tests/e2e/storage.spec.ts
+ M tests/e2e/tile-save.spec.ts
+ M tests/e2e/title.spec.ts
+ M tests/e2e/world-session.spec.ts
+?? packages/persistence/src/__tests__/fixtures/society-v10/
+?? packages/persistence/src/__tests__/society-v9-fixture.test.ts
+?? packages/simulation/src/__tests__/fixtures/p7a-path-diff.ts
+
+OUTPUT:
+
+> build-settlement@0.1.0 test
+> vitest run packages/simulation/src/__tests__/catalog-golden.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  13:30:32
+   Duration  12.57s (transform 1.11s, setup 0ms, import 6.03s, tests 5.95s, environment 0ms)
+
+
+EXIT_CODE=0
+SECONDS=15.588
+UTC_END=2026-11-17T06:30:45.180706+00:00

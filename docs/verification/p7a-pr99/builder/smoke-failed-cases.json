@@ -1,0 +1,23 @@
+[
+  {
+    "index": 1,
+    "selector": "tests/e2e/character-life-navigation-accessibility.spec.ts:250",
+    "grep": "accessibility at 375px.*life shell accessibility baseline",
+    "title": "accessibility at 375px / life shell accessibility baseline",
+    "existingTimeoutMs": 300000
+  },
+  {
+    "index": 2,
+    "selector": "tests/e2e/character-life-navigation.spec.ts:225",
+    "grep": "fulfillment states match strip and report",
+    "title": "fulfillment states match strip and report",
+    "existingTimeoutMs": 60000
+  },
+  {
+    "index": 3,
+    "selector": "tests/e2e/world-session.spec.ts:43",
+    "grep": "U9: local and portable saves restore the whole populated session and uninterrupted next week",
+    "title": "U9: local and portable saves restore the whole populated session and uninterrupted next week",
+    "existingTimeoutMs": 60000
+  }
+]

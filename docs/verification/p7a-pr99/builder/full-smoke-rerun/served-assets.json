@@ -1,0 +1,31 @@
+{
+  "head": "56124513aef2d85de128fe76bf3001654290c1c0",
+  "tree": "d2f31706d77d308a310b61857a8b293a898280e7",
+  "ports": {
+    "4173": {
+      "utc": "2026-11-17T11:40:18.424473+00:00",
+      "htmlUrl": "http://localhost:4173/",
+      "httpStatus": 200,
+      "scriptUrl": "http://localhost:4173/assets/index-mINwSZb0.js",
+      "bytes": 447324,
+      "sha256": "7013ff433ef7c8f2880b23ee4d92adfb749c2d0a1deba5af41267243857fd820",
+      "expectedHeadJsSha256": "7013ff433ef7c8f2880b23ee4d92adfb749c2d0a1deba5af41267243857fd820",
+      "matchesFreshHead": true
+    },
+    "4174": {
+      "utc": "2026-11-17T11:40:18.449967+00:00",
+      "htmlUrl": "http://localhost:4174/",
+      "httpStatus": 200,
+      "scriptUrl": "http://localhost:4174/assets/index-mINwSZb0.js",
+      "bytes": 447324,
+      "sha256": "7013ff433ef7c8f2880b23ee4d92adfb749c2d0a1deba5af41267243857fd820",
+      "expectedHeadJsSha256": "7013ff433ef7c8f2880b23ee4d92adfb749c2d0a1deba5af41267243857fd820",
+      "matchesFreshHead": true
+    }
+  },
+  "allObservedAndMatched": true,
+  "lastConnectionErrors": {
+    "4173": "<urlopen error timed out>",
+    "4174": "<urlopen error timed out>"
+  }
+}

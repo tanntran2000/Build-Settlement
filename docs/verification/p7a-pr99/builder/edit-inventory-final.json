@@ -1,0 +1,494 @@
+{
+  "mode": "final",
+  "base": "753e4503673df86830fba2ef2c9ef1e64a843729",
+  "head": "56124513aef2d85de128fe76bf3001654290c1c0",
+  "tree": "d2f31706d77d308a310b61857a8b293a898280e7",
+  "utc": "2026-11-17T12:18:50.024996+00:00",
+  "pathCount": 60,
+  "existingTestFilesVerifiedExactly": 35,
+  "approvedTestLineEdits": 49,
+  "unexpectedPaths": [],
+  "unapprovedExistingTestEdits": [],
+  "files": [
+    {
+      "path": "packages/core/src/__tests__/catalog-data.test.ts",
+      "change": "modified",
+      "baseGitBlob": "e05d77c950985cb58762f283c2df96b64bb74e3b",
+      "finalGitBlob": "a444ba2d811b0950ddefd4a8ef34a7b156908e79",
+      "workingFileSha256": "8cb867ee4f9a9f5f6d1a34c2af0811333800e5d03d31d20154762da377a80676",
+      "bytes": 7745
+    },
+    {
+      "path": "packages/core/src/data/npc-life.json",
+      "change": "added",
+      "baseGitBlob": null,
+      "finalGitBlob": "9559ab86a3460364d264b582a33a6b15a1706abc",
+      "workingFileSha256": "1f2fd586130e67952fe2a41bfa7932f1728af6f2c10e63bba82956493c8593be",
+      "bytes": 1611
+    },
+    {
+      "path": "packages/core/src/data/tuning.json",
+      "change": "modified",
+      "baseGitBlob": "85e59ab989cedb395cebaa011172466f83e9db54",
+      "finalGitBlob": "8269dde4a518317aecd7eb8dad5fe50116a42df2",
+      "workingFileSha256": "7fe7eebd27ec1d85a3462494cede11e888f661c2039241575bbafe21e1facf88",
+      "bytes": 13925
+    },
+    {
+      "path": "packages/core/src/data/validate.ts",
+      "change": "modified",
+      "baseGitBlob": "41b22986da9e5d6f89aa98d83540a6eaca5bced3",
+      "finalGitBlob": "8a54aaafd9a154a52d9d573689e7cc89c19692e3",
+      "workingFileSha256": "613ba95f64709b3467b759ba331e5506cbfe780801d23c0d8dd0f0fb94a0ecdd",
+      "bytes": 48756
+    },
+    {
+      "path": "packages/core/src/index.ts",
+      "change": "modified",
+      "baseGitBlob": "af751c9c9fcb2cc8e55a170e9c6c5e67207efabe",
+      "finalGitBlob": "0fd5a7a52e424a1bcbfb1d9bbc9a83f118633045",
+      "workingFileSha256": "d937a753f4d7215a4a9598f4c035790c98cb543fa2fd44c3944fef54f0239650",
+      "bytes": 1300
+    },
+    {
+      "path": "packages/core/src/trial/__tests__/crime.test.ts",
+      "change": "modified",
+      "baseGitBlob": "e2f24e05e6297edddee86fd03f45c40d7c3c69d7",
+      "finalGitBlob": "ae65a7143ceedd5a31753f634fd9ab1d541ea938",
+      "workingFileSha256": "87c871cd840a6ca3ff551a32fad0de0a893256c2ac83760ab1027262efa444ab",
+      "bytes": 1929
+    },
+    {
+      "path": "packages/core/src/trial/__tests__/crisis.test.ts",
+      "change": "modified",
+      "baseGitBlob": "5455034a56d7ac7bc8b63323a446c9287a2170b4",
+      "finalGitBlob": "c64ca86b52c066331fc80edc72d664df3b4b371a",
+      "workingFileSha256": "3841f3b87e0ef09a1789d4acf70d138c9f76239d55d924540b099fda21448b00",
+      "bytes": 2756
+    },
+    {
+      "path": "packages/core/src/trial/__tests__/items.test.ts",
+      "change": "modified",
+      "baseGitBlob": "ca134bf48dc16b4be1fb4cffed0789d159bbf335",
+      "finalGitBlob": "e34d0589344b8d693f98d9528f3eb93a700e9006",
+      "workingFileSha256": "6856920d761f2563c60604da68d1a071b51b6a8d07cf5ec89d084603ba2d3d2e",
+      "bytes": 4605
+    },
+    {
+      "path": "packages/core/src/trial/__tests__/law.test.ts",
+      "change": "modified",
+      "baseGitBlob": "529052b5e521e26d760592a9137ae2db514fdb7a",
+      "finalGitBlob": "aa5da4f99bcf5595c05c510c63c39240e9f921c0",
+      "workingFileSha256": "6990cf18a5207e266aa73220d5ab05466436923c285f277cf906252b8d66dc2a",
+      "bytes": 8830
+    },
+    {
+      "path": "packages/core/src/trial/__tests__/order.test.ts",
+      "change": "modified",
+      "baseGitBlob": "f629f1b88b41922245336706a34f3950b3fd6377",
+      "finalGitBlob": "73ef7cfd1e5cdeac856a7daa3aebc6c50248a117",
+      "workingFileSha256": "897aa2049266fa54716547006f247103973a799e12092ec9a911b112b194d90c",
+      "bytes": 5876
+    },
+    {
+      "path": "packages/core/src/trial/__tests__/outside.test.ts",
+      "change": "modified",
+      "baseGitBlob": "a4a1b65389093bf26c29ddbbe3a87538c8140899",
+      "finalGitBlob": "aa0f4986d3a7a303539e72b8a1d6d708dc06c89c",
+      "workingFileSha256": "d0bad9d39c58119226a5500df8ed386c85ee48caf86230b32d0cf8a2189825b9",
+      "bytes": 9305
+    },
+    {
+      "path": "packages/core/src/trial/__tests__/society.test.ts",
+      "change": "modified",
+      "baseGitBlob": "0119f1c93a4185811d813d707db0c0a6957dc6df",
+      "finalGitBlob": "42e8d8e4df255ffbac64442cae0a08dc858c64a8",
+      "workingFileSha256": "a038135ca2148d0d8aa2b4189fb71682cae2161fdebacb2f206f2ef07b7cf643",
+      "bytes": 6174
+    },
+    {
+      "path": "packages/core/src/trial/society.ts",
+      "change": "modified",
+      "baseGitBlob": "865954c011c20b7a96f56f8eaddd85ee495ea870",
+      "finalGitBlob": "d3d3e04b125b2f8db374239b681e248a0258e704",
+      "workingFileSha256": "83f654ac138d3b13c069511de7cb4831fe5fe3b660df423eda6475266c2aa28f",
+      "bytes": 8592
+    },
+    {
+      "path": "packages/core/src/world/__tests__/npc-life.test.ts",
+      "change": "added",
+      "baseGitBlob": null,
+      "finalGitBlob": "20cd038ff53e47a364edcd4c0c108cff4fd37fc3",
+      "workingFileSha256": "83cdfae2c613ae5141f91af6196716f85fdc0872b000a527f9745ad06f7efbf1",
+      "bytes": 11617
+    },
+    {
+      "path": "packages/core/src/world/__tests__/npc.test.ts",
+      "change": "modified",
+      "baseGitBlob": "c8ba411045d98cd2a52fcbff6a17111a422e5218",
+      "finalGitBlob": "2d118c4648a395a675be7106012a0d7cc6950866",
+      "workingFileSha256": "faa007e86a39354b89cf5655521ee58e16000b7d9ab930e3177d9a50383ab605",
+      "bytes": 9498
+    },
+    {
+      "path": "packages/core/src/world/__tests__/session.test.ts",
+      "change": "modified",
+      "baseGitBlob": "01532c50088d1780bc729b89b37cb7021f7216a1",
+      "finalGitBlob": "2e3368f940dbb97bcd8ab2e75a12a7cc8ef748b3",
+      "workingFileSha256": "ee77fc2746d56d6f809e966fc198ecfd941f976e40f6678eafd88129b20c982f",
+      "bytes": 6404
+    },
+    {
+      "path": "packages/core/src/world/npc-content.ts",
+      "change": "modified",
+      "baseGitBlob": "dad32874c96b3b2f5e31d09dfd59eca8f8ac7b20",
+      "finalGitBlob": "bea3b113d449919fe69ff7ab8d4f433ea969de8d",
+      "workingFileSha256": "8b83a82734e541db28c2efb31ef9ab0cb0d18f1beb75cd01f9c0362ca6eae7da",
+      "bytes": 3365
+    },
+    {
+      "path": "packages/core/src/world/npc-life.ts",
+      "change": "added",
+      "baseGitBlob": null,
+      "finalGitBlob": "7861c4bdfee374a60da715a4cdfa600910a6b692",
+      "workingFileSha256": "40006412a59013d91394b495bd8e63baf0482bf52f6c7acd153265001dfb6500",
+      "bytes": 4777
+    },
+    {
+      "path": "packages/core/src/world/npc.ts",
+      "change": "modified",
+      "baseGitBlob": "0b39c5b63463baa564ae85fee8d7f5b60f646c05",
+      "finalGitBlob": "8072ba29e5eb79bcd1603a97f0b98a7294fc8493",
+      "workingFileSha256": "4b2cbe932de32c66b89c527cc79d4adcfe30d7f50f6165ed88c2ca3ab0dca15e",
+      "bytes": 5424
+    },
+    {
+      "path": "packages/persistence/src/__tests__/character-life-save.test.ts",
+      "change": "modified",
+      "baseGitBlob": "2459e721e55e0cb0c3423924e18c773ec6a22ecd",
+      "finalGitBlob": "bce64c35498ccf6f52f1b42570e262d643268cba",
+      "workingFileSha256": "fa5fdf1c3a74eb33520146fdaad9e321e28bb4f57a44b47b44cea669f39f6949",
+      "bytes": 7562
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-5-weeks.json",
+      "change": "added",
+      "baseGitBlob": null,
+      "finalGitBlob": "312c5b01a9e9415eb9a18eab791466dd0d184150",
+      "workingFileSha256": "c1ef46c3e81facc2b642e6800f71123662307988e5159de08a10617b19f1b954",
+      "bytes": 21459
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-crime-death.json",
+      "change": "added",
+      "baseGitBlob": null,
+      "finalGitBlob": "555ea49cb0dc58de0f8dd766a68cafadba7bd31f",
+      "workingFileSha256": "c81a0ec620b1e4884036bd14ca127c4295070d9cf7379fbfe4a57aed06fa970c",
+      "bytes": 21424
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-crime-raid.json",
+      "change": "added",
+      "baseGitBlob": null,
+      "finalGitBlob": "77a65242e22e842062b7cfad6e8af66cb6d2cfdc",
+      "workingFileSha256": "12070cf85f2107e2257eb4577638443a2c91cb0d6eaaae1b1f5f352288a17b67",
+      "bytes": 21482
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-crime-robbery.json",
+      "change": "added",
+      "baseGitBlob": null,
+      "finalGitBlob": "0cf916f05ba53e463f87b49cd5e509a754881d7d",
+      "workingFileSha256": "e5c7222544248c8c071697b6fbb7c4628d5fcfa315b777a06419aeacb17ad076",
+      "bytes": 21422
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-crime-wound.json",
+      "change": "added",
+      "baseGitBlob": null,
+      "finalGitBlob": "76e70fd4d40d663e2472c5c4643364aaee4058fc",
+      "workingFileSha256": "9cc1c8144415ce271d39ead18aa0b6afe0bbe4b4e7fbec41f0592067f074cd98",
+      "bytes": 21423
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-demand-card.json",
+      "change": "added",
+      "baseGitBlob": null,
+      "finalGitBlob": "2c8ab957c09d05758f248761ee6625b0a45db344",
+      "workingFileSha256": "a83051f822bef0ec821eac62f1549c8aed0344efaca27021e22365240daf6117",
+      "bytes": 21497
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-laws.json",
+      "change": "added",
+      "baseGitBlob": null,
+      "finalGitBlob": "58371d0c16f7a29286459c58a413d3a739f89f31",
+      "workingFileSha256": "057ad50b43f1e121ec915d9d1989ee2c5a28620b054ccf130371e2f0b34018cb",
+      "bytes": 21639
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-new-game.json",
+      "change": "added",
+      "baseGitBlob": null,
+      "finalGitBlob": "ec2952d90ea07894359831e465d08acc85322546",
+      "workingFileSha256": "e3f5df5caba890e7e0388f6910e5bc7522e4525ad4da4ba52ddc76bb49f7156b",
+      "bytes": 21430
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-rebellion-last-week.json",
+      "change": "added",
+      "baseGitBlob": null,
+      "finalGitBlob": "c476f66816076dafb2a7aa913af41e3de9f2b022",
+      "workingFileSha256": "b28de9c4b7c6dea90a42f7af02b88e1c6164d8965c15fc388d18166830b40923",
+      "bytes": 21440
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/new-game.json",
+      "change": "added",
+      "baseGitBlob": null,
+      "finalGitBlob": "9fade24ad04da278c173e446989f4514e2aa3b00",
+      "workingFileSha256": "2f47650177e24abdd31f70e30a88171ca786ac85666c5ac84a9d6ca6b6254919",
+      "bytes": 9814
+    },
+    {
+      "path": "packages/persistence/src/__tests__/item-records.test.ts",
+      "change": "modified",
+      "baseGitBlob": "7c61289c767bceafe606684e6b07afda698bc82a",
+      "finalGitBlob": "fd63d4e088d28e528936bc581b227c62f2e43618",
+      "workingFileSha256": "b310fb992555a89aa04a238ef1b39d559880baea5ee8e8167f4c08856512bf9f",
+      "bytes": 4839
+    },
+    {
+      "path": "packages/persistence/src/__tests__/items-rebuild-order.test.ts",
+      "change": "modified",
+      "baseGitBlob": "8bfa35d2818e4ceb8f9b3da1e709aaf8c472a2d0",
+      "finalGitBlob": "5580e83f45de4b868f6933495b18e3c2fef40b61",
+      "workingFileSha256": "96bb207b047b5c09f5d21cec228c4779a5edf9e6f214eb22cc1d64a499022592",
+      "bytes": 5073
+    },
+    {
+      "path": "packages/persistence/src/__tests__/npc-life-records.test.ts",
+      "change": "added",
+      "baseGitBlob": null,
+      "finalGitBlob": "cac92c55de83ec49f3402b36d1ac18b2521a8466",
+      "workingFileSha256": "5dd2aae174e338bcf2bc2158595f7588366fc40ec3a87cbba410a33f91e27c78",
+      "bytes": 5632
+    },
+    {
+      "path": "packages/persistence/src/__tests__/session-records.test.ts",
+      "change": "modified",
+      "baseGitBlob": "8eed874f6508dd7c093dbd049ab0c08a93655725",
+      "finalGitBlob": "4d3f2b90444106cb53edb2c5830e6c785ce9b350",
+      "workingFileSha256": "2ebef38c32dbd9d2f1ab6e4ac42f477a01ee65d04bc652ec5f1438236f6ee328",
+      "bytes": 4377
+    },
+    {
+      "path": "packages/persistence/src/__tests__/society-new-game-fixture.test.ts",
+      "change": "modified",
+      "baseGitBlob": "3b6ec89e6a9739723031581d127b97801e9bf3ab",
+      "finalGitBlob": "3ddbacab79ea2cc7974fd25acc4d306b46920f0e",
+      "workingFileSha256": "c6ba1d76ec22657ec8a8e263040a0e375d60d91e0eaa72414ba30c8b0c30acda",
+      "bytes": 3440
+    },
+    {
+      "path": "packages/persistence/src/__tests__/society-v9-fixture.test.ts",
+      "change": "added",
+      "baseGitBlob": null,
+      "finalGitBlob": "1b814bd34737568702105e83e1aea0e604b5fb98",
+      "workingFileSha256": "d37117ae395ee441ef561febb51834a10b4f729d68f908155c63f657e47f1300",
+      "bytes": 2338
+    },
+    {
+      "path": "packages/persistence/src/session-records.ts",
+      "change": "modified",
+      "baseGitBlob": "c198cf10b8b5512352cde7b4e2b90307031c2ef3",
+      "finalGitBlob": "8d2f1cadd744e661ea346330729381851a2f84f3",
+      "workingFileSha256": "04a52f01cd54b2563fa756068f417be634d2068c45753a3e8dc140518593d7ae",
+      "bytes": 16541
+    },
+    {
+      "path": "packages/simulation/src/__tests__/craft-week.test.ts",
+      "change": "modified",
+      "baseGitBlob": "4ad72d28494a898aa35fb54d9aeb7ab374b38480",
+      "finalGitBlob": "3e13bfc817e2c905aae6a6407c35b618484c7f5f",
+      "workingFileSha256": "f7bf01f71024e6189bf23c5af4a0a9d8061f6456ec55c854238292e6de63ccc4",
+      "bytes": 15427
+    },
+    {
+      "path": "packages/simulation/src/__tests__/crime-fixtures.test.ts",
+      "change": "modified",
+      "baseGitBlob": "fae491d0455e4b7956d28be17f38fb3e1d7e8e30",
+      "finalGitBlob": "3fb9852c99b9eb1496571ccfc21026010be514ff",
+      "workingFileSha256": "570f858dad4280b560c7b25dfc411b569513fae9e22700127d4d6196cdcd5468",
+      "bytes": 5447
+    },
+    {
+      "path": "packages/simulation/src/__tests__/crisis-fixtures.test.ts",
+      "change": "modified",
+      "baseGitBlob": "ef82295b254660974aeeea9ded3cf2c8ddd8b819",
+      "finalGitBlob": "fc5dcef647554afee80d1222999cab24aa03aa8a",
+      "workingFileSha256": "07fa52a4fc2336000d96d8c30d5a9215469f29f0047dfa58a336042cdcfa839a",
+      "bytes": 1656
+    },
+    {
+      "path": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+      "change": "modified",
+      "baseGitBlob": "19ec3e29cc181bad35b8f2aa3818ef05ec700aa2",
+      "finalGitBlob": "fe26e76834248270bec0dd4bc75b23896be72674",
+      "workingFileSha256": "7feab5f870a5d02e659138744640750b1039c72f94334337afadeb1edcd26f9c",
+      "bytes": 80103
+    },
+    {
+      "path": "packages/simulation/src/__tests__/fixtures/p7a-path-diff.ts",
+      "change": "added",
+      "baseGitBlob": null,
+      "finalGitBlob": "9109d6fc5dc680a52ac31ea690367bf77ee6e100",
+      "workingFileSha256": "4a55798c885d079820d055210cc27abf6f01e510047c686fdad900e678a53577",
+      "bytes": 5482
+    },
+    {
+      "path": "packages/simulation/src/__tests__/fixtures/p7a-path-diff.txt",
+      "change": "added",
+      "baseGitBlob": null,
+      "finalGitBlob": "11e409bd3ca7c75e24c4f41f21c6247547cef0ab",
+      "workingFileSha256": "75858e3cd64ed266b6ed247a2595b052e7574645827b72aea75f7ef187e68513",
+      "bytes": 24757
+    },
+    {
+      "path": "packages/simulation/src/__tests__/law-fixture.test.ts",
+      "change": "modified",
+      "baseGitBlob": "493d34e7174f591ae1538e2a979150af4a81f274",
+      "finalGitBlob": "42991c5f32d8176b6442a1047781d2bb6f08d209",
+      "workingFileSha256": "bcc4edfeed752fcb13a320f44d6acf7707a2bfac5041a6d8b96b4ed4499644ec",
+      "bytes": 3479
+    },
+    {
+      "path": "packages/simulation/src/__tests__/law-week.test.ts",
+      "change": "modified",
+      "baseGitBlob": "e3b16c6d288875d3ff7af248adc046fc08f2eb20",
+      "finalGitBlob": "f0b9ccf2980e6aa2da63278ba0ce87c52b577bba",
+      "workingFileSha256": "9ecd694748268f62577120226aab5f8440ff24e33e140e10d56b5c556d0c85b2",
+      "bytes": 7702
+    },
+    {
+      "path": "packages/simulation/src/__tests__/lord-health.test.ts",
+      "change": "modified",
+      "baseGitBlob": "e1ff6ed8b1eefafc2d2baa6e88d6ac97be269348",
+      "finalGitBlob": "fa027e79b25c88ce7aab7a6ea91f6ad9d5d93631",
+      "workingFileSha256": "0659cd8755a0b48ec423a81d422fc37f38a6bfd49ece5e2f9cb573b840993a88",
+      "bytes": 7057
+    },
+    {
+      "path": "packages/simulation/src/__tests__/smithy-data.test.ts",
+      "change": "modified",
+      "baseGitBlob": "e1cfff30d856d17af2af8d01dfd8a93b9798a715",
+      "finalGitBlob": "219ce87f63a8658b9924a68c88bac3ddb2284396",
+      "workingFileSha256": "50470058005ff8a30be3b6a66487c46ed57ff5583ef87ae280e50c507b3542c4",
+      "bytes": 3741
+    },
+    {
+      "path": "packages/ui/src/__tests__/character-life-session.test.ts",
+      "change": "modified",
+      "baseGitBlob": "1b495563e41d268abcfa6183b3e9411521d63056",
+      "finalGitBlob": "690f3ad95b1a291b5586002203bea9b48e4e71fd",
+      "workingFileSha256": "2b0718f0ef25c74c4866b6afa27ab2baabb009bb8ef5e9a5db2676dd723fa34b",
+      "bytes": 70904
+    },
+    {
+      "path": "packages/ui/src/__tests__/world-session.test.ts",
+      "change": "modified",
+      "baseGitBlob": "9880e0270dacf73644264a8948b6236825fb48d7",
+      "finalGitBlob": "2a3ebd0e7af885925aef3b5288f958fc8c7dcf2d",
+      "workingFileSha256": "7ba3677e90a15b0ebf27a2dbb8fcc25c5f2bfb593d1142146422248a349e74ef",
+      "bytes": 8312
+    },
+    {
+      "path": "tests/e2e/crime.spec.ts",
+      "change": "modified",
+      "baseGitBlob": "35ffcdba0d7c21791f4c4798d67c7fdc916b16fb",
+      "finalGitBlob": "23c41ff930027c339b1bd4dc6b3dd9dfdbfb377f",
+      "workingFileSha256": "fd8edb4ccd25e7be4529096927bf13d61d542a23d61c720e7cdc086d2c2add45",
+      "bytes": 5435
+    },
+    {
+      "path": "tests/e2e/crisis.spec.ts",
+      "change": "modified",
+      "baseGitBlob": "3f7cbb81be088dd62c5f0b9c23fa15cdc44c8446",
+      "finalGitBlob": "a3d659c3ae0a103103e4088753e453aaaaf26454",
+      "workingFileSha256": "1f091b4b3bc308e8e71322d1294e1c6a8dcbbac41aa06371d81d29bddc77f527",
+      "bytes": 9024
+    },
+    {
+      "path": "tests/e2e/garrison.spec.ts",
+      "change": "modified",
+      "baseGitBlob": "f73034d2460df552da093c92c17e09e95c313206",
+      "finalGitBlob": "2844f9aa6305989f9af35ead30a4e2869d3d45ed",
+      "workingFileSha256": "d58cd1181e390aa7a514748cf43161f2d1f647372a5b855f195c501a5dba70f0",
+      "bytes": 4271
+    },
+    {
+      "path": "tests/e2e/items.spec.ts",
+      "change": "modified",
+      "baseGitBlob": "61a477554cf53e2566d177c5ed00fcdff99b0c4d",
+      "finalGitBlob": "c92a4a0d8a9ddc9ac6a427e0b26603e043e7b2bf",
+      "workingFileSha256": "1aa3711da27ca4a1a5b90464ffdc3a163b9edfb5e9dbf76d6820877a1342280e",
+      "bytes": 23313
+    },
+    {
+      "path": "tests/e2e/laws.spec.ts",
+      "change": "modified",
+      "baseGitBlob": "e4962b543e67cb7296f52030a45395cd10553f5a",
+      "finalGitBlob": "64430db9567a9b1595f175ae33514b49667d7ebd",
+      "workingFileSha256": "99af0588b5e48467633a480a60a5d240ad3db4c8bfe034de135b8beee156379d",
+      "bytes": 6239
+    },
+    {
+      "path": "tests/e2e/ledger.spec.ts",
+      "change": "modified",
+      "baseGitBlob": "c2adcc07051bc60110a278888dfbed3cf65aa21b",
+      "finalGitBlob": "1a5fbef13c36b0a5fb21f6094226c89a106ea7f1",
+      "workingFileSha256": "a799d05cfb7b49a6571cc11714b032da4abac467f336a5bba0c6f9f19435e745",
+      "bytes": 12489
+    },
+    {
+      "path": "tests/e2e/society.spec.ts",
+      "change": "modified",
+      "baseGitBlob": "0b21caf35cd4053e97f474fe5307771e3e885d12",
+      "finalGitBlob": "d68d9baca3c5862c6557d73bd908a289f2756562",
+      "workingFileSha256": "44648a25a312eddd0db092be8d1f028dc17c51a43ee195b8998cd3a11578b257",
+      "bytes": 39222
+    },
+    {
+      "path": "tests/e2e/storage.spec.ts",
+      "change": "modified",
+      "baseGitBlob": "1722f7f7e6e815c8d24fa49e3ae1a65272eb0966",
+      "finalGitBlob": "d9c241b346a89b06671b7b3fea6a0d380c48d63f",
+      "workingFileSha256": "fee7b3a6b96b48fc61c85c269ada27c311fac4c8c22ad7104f4fb7822c603f9c",
+      "bytes": 21514
+    },
+    {
+      "path": "tests/e2e/tile-save.spec.ts",
+      "change": "modified",
+      "baseGitBlob": "546de741edad71062312db9d5d43c4dc423ddaac",
+      "finalGitBlob": "32b21fc2bc7613e24b32eff356cca10863b31a38",
+      "workingFileSha256": "8b4ee0d0f29e9d30348bcb253fc152cac31ba2b554d08943f975fdd9ce16c358",
+      "bytes": 7260
+    },
+    {
+      "path": "tests/e2e/title.spec.ts",
+      "change": "modified",
+      "baseGitBlob": "a252f29046a91a7079d4d911b7516e11e2113ae3",
+      "finalGitBlob": "06ece1bd3a3d45b331bb8483ab7aa75087bd26d0",
+      "workingFileSha256": "7d024184bf52faba9c5a336f51625c7af66e5e55a7ed7322df140ff5974fa8d4",
+      "bytes": 22883
+    },
+    {
+      "path": "tests/e2e/world-session.spec.ts",
+      "change": "modified",
+      "baseGitBlob": "9002f9f080d939ef73efe2e632f89c3a22542613",
+      "finalGitBlob": "a2c425dc30c4344b8367dd448a1c68c3d743e707",
+      "workingFileSha256": "74869202333516a9b8e239c277bc1b53d8453f72c28dcaa3bad1570955ef1c0b",
+      "bytes": 41979
+    }
+  ]
+}

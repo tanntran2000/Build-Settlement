@@ -1,0 +1,5 @@
+The incomplete metadata wrapper ran zero test cases.
+The first cancellation guard used a path regex which matched no owned helper; it refused the action and stopped no process.
+The helper command line was then read by its known PID, and a literal command-line identity check was used.
+Before stopping that owned helper, the guard confirmed no child process and no listener on 4173/4174.
+No test, preview server or user process was stopped. The feature branch was restored before the matched restart.

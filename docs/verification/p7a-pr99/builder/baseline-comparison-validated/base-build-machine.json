@@ -1,0 +1,70 @@
+﻿{
+    "utc":  "2026-11-17T10:41:16.0537509Z",
+    "head":  "753e4503673df86830fba2ef2c9ef1e64a843729",
+    "tree":  "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+    "branch":  "",
+    "cpu":  [
+                {
+                    "LoadPercentage":  34,
+                    "NumberOfLogicalProcessors":  8
+                }
+            ],
+    "topProcesses":  [
+                         {
+                             "IDProcess":  65764,
+                             "Name":  "SearchFilterHost",
+                             "PercentProcessorTime":  40
+                         },
+                         {
+                             "IDProcess":  83620,
+                             "Name":  "WmiPrvSE#2",
+                             "PercentProcessorTime":  15
+                         },
+                         {
+                             "IDProcess":  4,
+                             "Name":  "System",
+                             "PercentProcessorTime":  15
+                         },
+                         {
+                             "IDProcess":  52040,
+                             "Name":  "SearchProtocolHost",
+                             "PercentProcessorTime":  15
+                         },
+                         {
+                             "IDProcess":  1084,
+                             "Name":  "svchost#1",
+                             "PercentProcessorTime":  10
+                         },
+                         {
+                             "IDProcess":  16728,
+                             "Name":  "claude#2",
+                             "PercentProcessorTime":  5
+                         },
+                         {
+                             "IDProcess":  74404,
+                             "Name":  "explorer",
+                             "PercentProcessorTime":  5
+                         },
+                         {
+                             "IDProcess":  81404,
+                             "Name":  "node#23",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  81488,
+                             "Name":  "node#22",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  59928,
+                             "Name":  "node#31",
+                             "PercentProcessorTime":  0
+                         }
+                     ],
+    "competingJobs":  [
+
+                      ],
+    "portListeners":  [
+
+                      ]
+}

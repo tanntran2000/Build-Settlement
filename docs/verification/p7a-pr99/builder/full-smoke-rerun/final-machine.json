@@ -1,0 +1,70 @@
+﻿{
+    "utc":  "2026-11-17T12:17:11.0086884Z",
+    "head":  "56124513aef2d85de128fe76bf3001654290c1c0",
+    "tree":  "d2f31706d77d308a310b61857a8b293a898280e7",
+    "branch":  "feat/p7a-npc-life-data",
+    "cpu":  [
+                {
+                    "LoadPercentage":  36,
+                    "NumberOfLogicalProcessors":  8
+                }
+            ],
+    "topProcesses":  [
+                         {
+                             "IDProcess":  4,
+                             "Name":  "System",
+                             "PercentProcessorTime":  29
+                         },
+                         {
+                             "IDProcess":  64668,
+                             "Name":  "WmiPrvSE#2",
+                             "PercentProcessorTime":  19
+                         },
+                         {
+                             "IDProcess":  73252,
+                             "Name":  "git#3",
+                             "PercentProcessorTime":  19
+                         },
+                         {
+                             "IDProcess":  75588,
+                             "Name":  "git-remote-https",
+                             "PercentProcessorTime":  9
+                         },
+                         {
+                             "IDProcess":  29600,
+                             "Name":  "dwm",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  47380,
+                             "Name":  "Zalo#6",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  74272,
+                             "Name":  "codebase-memory-mcp#3",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  19732,
+                             "Name":  "node#21",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  81488,
+                             "Name":  "node#22",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  38448,
+                             "Name":  "node#25",
+                             "PercentProcessorTime":  0
+                         }
+                     ],
+    "competingJobs":  [
+
+                      ],
+    "portListeners":  [
+
+                      ]
+}

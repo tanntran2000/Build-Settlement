@@ -1,0 +1,103 @@
+MODE=preflight
+HEAD=753e4503673df86830fba2ef2c9ef1e64a843729
+TREE=77cbeae3332cfaf26ba23e08ae67300d49d8c69d
+UTC=2026-11-17T06:15:07.525759+00:00
+
+UTC=2026-11-17T06:15:05.140228+00:00
+COMMAND=["git", "rev-parse", "HEAD"]
+STDOUT:
+753e4503673df86830fba2ef2c9ef1e64a843729
+
+STDERR:
+
+EXIT_CODE=0
+
+UTC=2026-11-17T06:15:05.196202+00:00
+COMMAND=["git", "rev-parse", "HEAD^{tree}"]
+STDOUT:
+77cbeae3332cfaf26ba23e08ae67300d49d8c69d
+
+STDERR:
+
+EXIT_CODE=0
+
+UTC=2026-11-17T06:15:05.258773+00:00
+COMMAND=["git", "status", "--porcelain=v1"]
+STDOUT:
+
+STDERR:
+
+EXIT_CODE=0
+
+UTC=2026-11-17T06:15:05.341417+00:00
+COMMAND=["git", "rev-parse", "origin/main"]
+STDOUT:
+753e4503673df86830fba2ef2c9ef1e64a843729
+
+STDERR:
+
+EXIT_CODE=0
+
+UTC=2026-11-17T06:15:05.397516+00:00
+COMMAND=["git", "branch", "--show-current"]
+STDOUT:
+feat/p7a-npc-life-data
+
+STDERR:
+
+EXIT_CODE=0
+
+UTC=2026-11-17T06:15:05.454800+00:00
+COMMAND=["git", "worktree", "list", "--porcelain"]
+STDOUT:
+worktree D:/NghienCuuTiemNang/Build-Settlement
+HEAD 2761d05770fd875617ace3cff621e6c9c5402cf1
+branch refs/heads/docs/p7-npc-design
+
+worktree C:/Users/Admin/.t3/worktrees/Build-Settlement/benchmark-arch-gate-a-01
+HEAD 2a2bb72323a44285733e4c62a7c613093f37139c
+branch refs/heads/benchmark/arch-gate-a-01
+
+worktree C:/Users/Admin/.t3/worktrees/Build-Settlement/benchmark-test-a-01
+HEAD 2a2bb72323a44285733e4c62a7c613093f37139c
+detached
+
+worktree C:/Users/Admin/.t3/worktrees/Build-Settlement/integrate-windows-smoke-main-01
+HEAD 8a7548bd8403814655729b94856d0ca80bee3f0c
+branch refs/heads/integrate/windows-smoke-main-01
+
+worktree C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+HEAD 753e4503673df86830fba2ef2c9ef1e64a843729
+branch refs/heads/feat/p7a-npc-life-data
+
+worktree C:/Users/Admin/.t3/worktrees/Build-Settlement/verify-windows-smoke-main-01
+HEAD 8a7548bd8403814655729b94856d0ca80bee3f0c
+branch refs/heads/verify/windows-smoke-main-01
+
+
+STDERR:
+
+EXIT_CODE=0
+
+UTC=2026-11-17T06:15:05.538322+00:00
+COMMAND=["powershell", "-NoProfile", "-Command", "$taskListeners = @(Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue | Where-Object { $_.LocalPort -in @(4173,4174) }); if ($taskListeners.Count) { $taskListeners | Select-Object LocalAddress,LocalPort,OwningProcess | ConvertTo-Json -Compress; exit 1 } else { 'PORTS_4173_4174_FREE'; exit 0 }"]
+STDOUT:
+PORTS_4173_4174_FREE
+
+STDERR:
+
+EXIT_CODE=0
+
+UTC=2026-11-17T06:15:07.395469+00:00
+COMMAND=["node", "--input-type=module", "-e", "\nimport fs from 'node:fs';\nimport crypto from 'node:crypto';\nconst out='C:/Users/Admin/.t3/local-drafts/p7a-prA/';\nconst proposed=JSON.parse(fs.readFileSync(out+'step0-proposed-npc-life.json','utf8'));\nconst tuning=JSON.parse(fs.readFileSync('packages/core/src/data/tuning.json','utf8'));\nconst hashes={};\nfor(const [name,value] of Object.entries({NPC_ORIGINS:proposed.origins,NPC_HOBBIES:proposed.hobbies,P7A_TRIAL:proposed.P7A_TRIAL,SOCIETY_TRIAL:{...tuning.SOCIETY_TRIAL,rulesetId:'tile-society-10'}})) hashes[name]=crypto.createHash('sha256').update(JSON.stringify(value),'utf8').digest('hex');\nconsole.log(JSON.stringify(hashes,null,2));\n"]
+STDOUT:
+{
+  "NPC_ORIGINS": "c252b2c5d31d302c307df967c94b43714f4e3debd527299819f60117f0378f09",
+  "NPC_HOBBIES": "8a4c0e75fca9aa9b8fd5e26a5bfac38aa161864e02b97832c77955089d7205c2",
+  "P7A_TRIAL": "b1429bf557d9a96e825a2d9a6d788524ee1e57db1572d35a6c405f2924797013",
+  "SOCIETY_TRIAL": "69779e596f2abca5afe88b5858be9d850a6a062dd772ea093bbfebf3ec983acc"
+}
+
+STDERR:
+
+EXIT_CODE=0

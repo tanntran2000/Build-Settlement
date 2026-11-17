@@ -1,0 +1,17 @@
+{
+  "mode": "preflight",
+  "head": "753e4503673df86830fba2ef2c9ef1e64a843729",
+  "tree": "77cbeae3332cfaf26ba23e08ae67300d49d8c69d",
+  "utc": "2026-11-17T06:15:07.524786+00:00",
+  "exitCode": 0,
+  "checks": {
+    "baseSourceLines": 50,
+    "historicalFixtureHashes": 10,
+    "expectedCandidatePaths": 59,
+    "utf8Markers": true,
+    "nodeCanonicalPinsMatch": true,
+    "gitStatusEmpty": true,
+    "ports4173And4174Free": true
+  },
+  "taskState": "A0 HOLD; A1/A2/A3 not run"
+}

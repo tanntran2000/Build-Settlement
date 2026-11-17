@@ -1,0 +1,50 @@
+{
+  "playwrightTracesInEvidenceFolder": false,
+  "retainedOutsideEvidence": [
+    {
+      "path": "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\test-results\\character-life-navigation--4dea7-ates-match-strip-and-report-chromium\\trace.zip",
+      "sha256": "3d311feb6c7390269d16e9dbe0d7656de8053dc6b98c6e33eb1c563252ee81a4"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\test-results\\character-life-navigation--c0613-hell-accessibility-baseline-chromium\\trace.zip",
+      "sha256": "0d62d421a581edd193232cf21d20741f43d0a25b52b7526bd7acf731915a64f5"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\test-results\\world-session-U9-local-and-39144-and-uninterrupted-next-week-chromium\\trace.zip",
+      "sha256": "4b7353698852599f2ca4bfbd1441425ec366066a9617d5cb1414a3986f05dcc0"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prA-local-only\\baseline-comparison\\base-1\\character-life-navigation--c0613-hell-accessibility-baseline-chromium\\trace.zip",
+      "sha256": "f272338dbc6978e28b96a7fdea98f9bb891524be68ea1c23d29c9491520145d8"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prA-local-only\\baseline-comparison\\base-2\\character-life-navigation--4dea7-ates-match-strip-and-report-chromium\\trace.zip",
+      "sha256": "ee73c27caaa05a56885733c279ab94ba0bcb59068910b213598eb485a594f851"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prA-local-only\\baseline-comparison\\base-3\\world-session-U9-local-and-39144-and-uninterrupted-next-week-chromium\\trace.zip",
+      "sha256": "3942b9d269a55490b35aa583745404fe00d9b7fca955c8af5f3db7a62c526d17"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prA-local-only\\full-smoke\\character-life-navigation--4dea7-ates-match-strip-and-report-chromium\\trace.zip",
+      "sha256": "3d311feb6c7390269d16e9dbe0d7656de8053dc6b98c6e33eb1c563252ee81a4"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prA-local-only\\full-smoke\\character-life-navigation--c0613-hell-accessibility-baseline-chromium\\trace.zip",
+      "sha256": "0d62d421a581edd193232cf21d20741f43d0a25b52b7526bd7acf731915a64f5"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prA-local-only\\full-smoke\\world-session-U9-local-and-39144-and-uninterrupted-next-week-chromium\\trace.zip",
+      "sha256": "4b7353698852599f2ca4bfbd1441425ec366066a9617d5cb1414a3986f05dcc0"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prA-local-only\\isolated-1\\character-life-navigation--c0613-hell-accessibility-baseline-chromium\\trace.zip",
+      "sha256": "d0e8ae89ab1ca680fb04c1d7cb1d309b6208707f9ab51a25c17b6335f78034da"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prA-local-only\\isolated-2\\character-life-navigation--4dea7-ates-match-strip-and-report-chromium\\trace.zip",
+      "sha256": "5754821dcda77088ac9ca34006fff21856c6c16ae3ed40f23887e0fff4117f10"
+    }
+  ],
+  "note": "Default retain-on-failure preserved. Historical trace ZIPs stay outside this evidence folder; passing full rerun retained none."
+}

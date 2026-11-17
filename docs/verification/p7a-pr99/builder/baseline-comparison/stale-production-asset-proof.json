@@ -1,0 +1,23 @@
+{
+  "finding": "base test source and regression app were v9, but port 4173 served the retained HEAD production asset index-mINwSZb0.js; all three import rejections are excluded as baseline results",
+  "traces": [
+    {
+      "trace": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prA-local-only\\baseline-comparison\\base-1\\character-life-navigation--c0613-hell-accessibility-baseline-chromium\\trace.zip",
+      "servedScripts": [
+        "http://localhost:4173/assets/index-mINwSZb0.js"
+      ]
+    },
+    {
+      "trace": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prA-local-only\\baseline-comparison\\base-2\\character-life-navigation--4dea7-ates-match-strip-and-report-chromium\\trace.zip",
+      "servedScripts": [
+        "http://localhost:4173/assets/index-mINwSZb0.js"
+      ]
+    },
+    {
+      "trace": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prA-local-only\\baseline-comparison\\base-3\\world-session-U9-local-and-39144-and-uninterrupted-next-week-chromium\\trace.zip",
+      "servedScripts": [
+        "http://localhost:4173/assets/index-mINwSZb0.js"
+      ]
+    }
+  ]
+}
