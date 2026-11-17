@@ -5,7 +5,7 @@ import { createSocietyState,isSocietyState,SOCIETY_TRIAL,societyPopulation } fro
 it('creates the spec section 3 new game', () => {
   const s = createSocietyState();
   expect(s.society).toEqual({
-    rulesetId: 'tile-society-09', standing:50,
+    rulesetId: 'tile-society-10', standing:50,
     items: {
       nextItemId: 1, inventory: [], consumables: [], materials: {}, storage: [], equipped: {},
       market: [

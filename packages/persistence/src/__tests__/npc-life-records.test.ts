@@ -1,4 +1,5 @@
 import { expect, it } from 'vitest';
+import { readFileSync, readdirSync } from 'node:fs';
 import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, type NpcLife } from '@haven/core';
 import { createMemoryGameStore } from '../memory-store.js';
 import { recordsToSession, sessionToRecords, StoreRecordError } from '../session-records.js';
@@ -47,4 +48,32 @@ it('requires life in every current NPC record and retains the last valid stored 
   delete npc.npc.life;
   expect(() => recordsToSession(rows)).toThrow(StoreRecordError);
   expect(JSON.stringify(await store.read('main'))).toBe(before);
+});
+
+it('loads all ten v10 scenarios and round-trips every current life checkpoint byte-identically', () => {
+  const current = new URL('./fixtures/society-v10/', import.meta.url), historical = new URL('./fixtures/society-v9/', import.meta.url);
+  const files = readdirSync(current).sort(); expect(files).toEqual(readdirSync(historical).sort()); expect(files).toHaveLength(10);
+  for (const file of files.filter(name => name.startsWith('life-'))) {
+    const bytes = readFileSync(new URL(file, current), 'utf8'), decoded = deserializeCharacterLifeSave(bytes);
+    expect(decoded.success).toBe(true); if (!decoded.success) throw Error(decoded.error.message);
+    expect(decoded.state.city.society!.rulesetId).toBe('tile-society-10');
+    expect(decoded.state.npcs.every(npc => Object.hasOwn(npc, 'life'))).toBe(true);
+    const rows = sessionToRecords('main', decoded.state), before = JSON.stringify(rows);
+    expect(serializeCharacterLifeSave(recordsToSession(rows))).toEqual({ success: true, text: bytes });
+    expect(JSON.stringify(rows)).toBe(before);
+  }
+});
+
+it('round-trips exhausted life, levels and full history without resetting state before PR B', () => {
+  const state = life(), npc = state.npcs[0];
+  expect(state.city.society!.rulesetId).toBe('tile-society-10');
+  npc.life.working = false; npc.life.stress = 95;
+  npc.life.sexExp.hand = { level: 'professional', exp: 200 }; npc.life.sexExp.ass = { level: 'expert', exp: 300 };
+  npc.life.history = { counters: { exhausted: 2, birthday: 20 }, recent: Array.from({ length: 20 }, (_, i) => ({ week: i + 1, kind: 'birthday' })) };
+  const before = serializeCharacterLifeSave(state); expect(before.success).toBe(true);
+  if (!before.success) throw Error(before.error.message);
+  const decoded = deserializeCharacterLifeSave(before.text); expect(decoded.success).toBe(true);
+  if (!decoded.success) throw Error(decoded.error.message);
+  expect(recordsToSession(sessionToRecords('main', decoded.state))).toEqual(state);
+  expect(serializeCharacterLifeSave(recordsToSession(sessionToRecords('main', decoded.state)))).toEqual(before);
 });

@@ -11,7 +11,7 @@ import { GOODS_STOCK_RULESET,GOODS_STOCK_TRIAL } from './goods-stock.js';
 import type { TileTrialState } from './types.js';
 import { createItemsState, isItemsState, type ItemsState } from './items.js';
 
-export const SOCIETY_RULESET = 'tile-society-09';
+export const SOCIETY_RULESET = 'tile-society-10';
 export type SocietyGroupKey = 'makers' | 'luminaries' | 'merchants';
 export type SocietyClassKey = 'free' | SocietyGroupKey;
 export interface SocietyState {
