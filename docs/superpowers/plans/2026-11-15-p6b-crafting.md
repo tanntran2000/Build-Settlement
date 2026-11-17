@@ -34,6 +34,8 @@
 - **Product lines outside the allowlist:** X1 `packages/ui/src/CharacterLifeCity.svelte:45` passes `{npcs}` to `InsideCity`; X2 `packages/ui/src/TileManagement.svelte:80` adds the 6 crafting error codes; X3 `TileManagement.svelte:88` routes `PLACE_CRAFT_ORDER` and `CANCEL_CRAFT_ORDER` errors to the panel. Nothing else in those files changes.
 - **Owner (Tân), 2026-11-15, dialog choice, verbatim:** "Approve P1–P3 and X1–X3 (Recommended)".
 
+**Plan correction 6 (PR C, Astra round 2 at `ed4105f`: shared operating logic).** The weekly capacity forecast was correct but copied End Week's operating allocation (income timing, tile-order upkeep funding, Farm debits, same-week Herb output, Hospital Herb consumption) into `packages/ui/src/items-view.ts`. PR C now extracts that allocation into one pure function in `packages/simulation` (new file or an export from `tile-trial-week.ts`), used by both `runTileTrialWeek` and the panel; the UI copy is removed. `packages/simulation/src/tile-trial-week.ts`, the new simulation file and `packages/simulation/src/index.ts` (export only) join PR C's allowlist for this. End Week behaviour must not change: golden, fixtures, pins and the 9 no-order regression hashes stay byte-identical, and the existing parity tests keep passing. **Owner (Tân), 2026-11-17, dialog choice, verbatim:** "Share it now (Recommended)".
+
 **Base:** `main` `e859177` (P6-A complete).
 
 ---
