@@ -1,5 +1,28 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## P7-A PR A (NPC life data and state) — PR #99 G6 (2026-11-17 UTC)
+
+**G6 PASS (Claude, Orchestrator/Tester).** P7-A PR A of 3 is merged; PR B (weekly rules) and PR C (NPC sheet UI) follow.
+
+- **Merge.** PR #99 (`P7-A PR A: NPC life data and state`) was merged under G5 at 2026-11-17T13:50:27Z (GitHub account `tanntran2000`; dot or the owner per AGENTS.md G5).
+  - Merge/main commit: `dac604054d7cbbf14a0a42209a3ff560380f2956` (parents `753e450`, `5612451`).
+  - Accepted head: `56124513aef2d85de128fe76bf3001654290c1c0`. Base: `753e450`.
+- **Trees.** The merge tree `d2f31706d77d308a310b61857a8b293a898280e7` is identical to the accepted head tree. Claude checked this locally.
+- **Main CI.** Quality Gate run [44096764229](https://github.com/tanntran2000/Build-Settlement/actions/runs/44096764229), job 134085813040 (push, exact merge SHA), SUCCESS at 2026-11-17T14:10:20Z: 3,031 unit tests (130 files) and 387/387 Chromium smoke (18.2 min). The dependency audit reports 0 vulnerabilities.
+- **Pre-merge, at `5612451`:**
+  - Claude Tester gates 1–7 exit 0, and full smoke 387/387 with `CI=1`.
+  - CI 44083910462 success.
+  - Astra (thread `mcp:423260a6`): round 1 FAIL (P1 an unapproved final newline in `society.test.ts:107`), owner approved it as E54, round 2 PASS, no P0–P3.
+  - Builder (thread `mcp:623b070d`): Step 0 HOLD (E01–E50); A2 HOLD (E51–E53 city hashes); A3 HOLD (first smoke 384/387 during a 43-minute Windows sleep; matched base/head comparison all PASS; approved full rerun 387/387).
+- **Evidence.** [`docs/verification/p7a-pr99/`](https://github.com/tanntran2000/Build-Settlement/tree/9fddc48bdb6cd957b9770f21aa27cbc922ee44e9/docs/verification/p7a-pr99) on branch `docs/p7-npc-design`, at `9fddc48`.
+- **Owner instructions** (verbatim; full table in `owner-approval-record.md`):
+  - "Duyệt P7-A"; "Duyệt, giao Builder A";
+  - Plan corrections: 1 "Approve all 4 (Recommended)"; 2 "Approve E51–E53"; 3 "Approve it as E54 (Recommended)";
+  - Smoke: "Approve baseline comparison (Recommended)"; "Approve full smoke rerun (Recommended)".
+- **Disclosed.**
+  - The first full smoke failed 3 cases while the PC slept; the root cause of the two isolated failures was not established, and the matched comparison and full rerun at the same head pass.
+  - Astra round 1 failed before the PASS.
+
 ## P6-B PR C (crafting UI and shared forecast) — PR #98 G6 (2026-11-17 UTC)
 
 **G6 PASS (Claude, Orchestrator/Tester).** P6-B is complete: PR A #96 (crafting data), PR B #97 (craft orders), PR C #98 (crafting UI and shared workshop forecast).
