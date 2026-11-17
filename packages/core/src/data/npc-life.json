@@ -1,0 +1,78 @@
+{
+  "origins": {
+    "frontier": {
+      "name": "Frontier",
+      "summary": "Raised in a frontier settlement."
+    },
+    "port_town": {
+      "name": "Port Town",
+      "summary": "Raised in a coastal trading town."
+    },
+    "farming_village": {
+      "name": "Farming Village",
+      "summary": "Raised in a farming community."
+    },
+    "workshop_district": {
+      "name": "Workshop District",
+      "summary": "Raised among craft workshops."
+    },
+    "scholar_district": {
+      "name": "Scholar District",
+      "summary": "Raised in a community of scholars."
+    },
+    "caravan": {
+      "name": "Caravan",
+      "summary": "Raised along established trade routes."
+    }
+  },
+  "hobbies": {
+    "reading": {
+      "name": "Reading"
+    },
+    "gardening": {
+      "name": "Gardening"
+    },
+    "cooking": {
+      "name": "Cooking"
+    },
+    "music": {
+      "name": "Music"
+    },
+    "walking": {
+      "name": "Walking"
+    },
+    "sewing": {
+      "name": "Sewing"
+    },
+    "board_games": {
+      "name": "Board Games"
+    },
+    "stargazing": {
+      "name": "Stargazing"
+    }
+  },
+  "P7A_TRIAL": {
+    "marker": "TRIAL",
+    "lustBase": [
+      20,
+      40
+    ],
+    "beauty": [
+      40,
+      80
+    ],
+    "stressWork": 4,
+    "stressRest": 5,
+    "stressHalveAuthority": 70,
+    "stressHalveAffection": 70,
+    "stressResume": 80,
+    "arousalDivisor": 10,
+    "weeksPerYear": 40,
+    "recentCap": 20,
+    "sexExpCaps": {
+      "novice": 100,
+      "professional": 200,
+      "expert": 300
+    }
+  }
+}

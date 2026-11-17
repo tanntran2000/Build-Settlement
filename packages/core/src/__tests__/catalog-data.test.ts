@@ -5,6 +5,7 @@ import {
   TRIAL_BUILDINGS, SOCIETY_BUILDINGS, LAW_CATALOG, LAW_TRIAL, LAW_MESSAGES, RESEARCH_TOPICS,
   OUTSIDE_PLOTS, ORDER_TRIAL, GARRISON_TRIAL, CRIME_TRIAL, CRISIS_TRIAL, SOCIETY_TRIAL,
   GOODS_STOCK_TRIAL, TILE_TRIAL_BALANCE, IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL,
+  NPC_ORIGINS, NPC_HOBBIES, P7A_TRIAL,
 } from '../index.js';
 
 const cases = [
@@ -18,6 +19,8 @@ const cases = [
     path: ['0', 'ring'], wrong: 0, message: 'outside-plots.json#field-1.ring: expected 1 | 2 | 3' },
   { file: 'tuning.json', validator: 'validateTuning', view: () => ({ ORDER_TRIAL, GARRISON_TRIAL, CRIME_TRIAL, CRISIS_TRIAL, SOCIETY_TRIAL, GOODS_STOCK_TRIAL, TILE_TRIAL_BALANCE, IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL }),
     path: ['ORDER_TRIAL', 'newGame', 'security'], wrong: -1, message: 'tuning.json#ORDER_TRIAL.newGame.security: expected integer >= 0' },
+  { file: 'npc-life.json', validator: 'validateNpcLife', view: () => ({ origins: NPC_ORIGINS, hobbies: NPC_HOBBIES, P7A_TRIAL }),
+    path: ['origins', 'frontier', 'name'], wrong: 7, message: 'npc-life.json#frontier.name: expected nonempty string' },
 ] as const;
 
 function data(file: string): unknown {
@@ -108,4 +111,11 @@ it('pins ITEM_CATALOG for P6-A', async () => {
 it('pins ITEM_TRIAL for P6-A', async () => {
   const { ITEM_TRIAL }=await import('../trial/items.js');
   expect(catalogHash(ITEM_TRIAL)).toBe('fcdbbc87ed52f6df25246e044b25e3c6acbd56de98360f31b7a16ec4a3b5e198');
+});
+it.each([
+  { name: 'NPC_ORIGINS', value: NPC_ORIGINS, hash: 'c252b2c5d31d302c307df967c94b43714f4e3debd527299819f60117f0378f09' },
+  { name: 'NPC_HOBBIES', value: NPC_HOBBIES, hash: '8a4c0e75fca9aa9b8fd5e26a5bfac38aa161864e02b97832c77955089d7205c2' },
+  { name: 'P7A_TRIAL', value: P7A_TRIAL, hash: 'b1429bf557d9a96e825a2d9a6d788524ee1e57db1572d35a6c405f2924797013' },
+])('$name keeps the P7-A canonical JSON hash', ({ value, hash }) => {
+  expect(catalogHash(value)).toBe(hash);
 });

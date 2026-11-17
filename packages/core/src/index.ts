@@ -12,6 +12,7 @@ export * from "./trial/state.js";
 export * from "./world/types.js";
 export * from "./world/session.js";
 export * from "./world/npc.js";
+export * from "./world/npc-life.js";
 export * from "./world/npc-content.js";
 export * from "./character/types.js";
 export * from "./character/catalog.js";

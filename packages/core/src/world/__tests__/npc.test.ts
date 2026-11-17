@@ -59,7 +59,8 @@ describe('createNpcWorldSession', () => {
     const a = session(1), b = session(2);
     expect(names(1)).not.toEqual(names(2));
     expect(a.npcs.map(n => n.character.id)).toEqual(['npc_starter_1', 'npc_starter_2', 'npc_starter_3']);
-    expect(unnamed(a.npcs)).toEqual(unnamed(b.npcs));
+    expect(a.npcs.map(({ character, traits, postTileId }) => ({ character: { ...character, name: '' }, traits, postTileId })))
+      .toEqual(b.npcs.map(({ character, traits, postTileId }) => ({ character: { ...character, name: '' }, traits, postTileId })));
     expect(isNpcWorldSessionState(mutated(n => { n[0].character.name = 'Any Hand Edited Name'; }))).toBe(true);
   });
   it('has a small original English name pool and no fixed provisional names', () => {

@@ -911,3 +911,44 @@ export function validateRecipes(json: unknown): {recipes:Record<string,RecipeDef
     }
     return root as unknown as {recipes:Record<string,RecipeDefinition>;CRAFT_TRIAL:CraftTrial};
 }
+
+
+export interface NpcLifeCatalog {
+    origins: Readonly<Record<string, Readonly<{ name: string; summary: string }>>>;
+    hobbies: Readonly<Record<string, Readonly<{ name: string }>>>;
+    P7A_TRIAL: Readonly<{
+        marker: 'TRIAL'; lustBase: readonly [number, number]; beauty: readonly [number, number];
+        stressWork: number; stressRest: number; stressHalveAuthority: number; stressHalveAffection: number;
+        stressResume: number; arousalDivisor: number; weeksPerYear: number; recentCap: number;
+        sexExpCaps: Readonly<{ novice: number; professional: number; expert: number }>;
+    }>;
+}
+export function validateNpcLife(json: unknown): NpcLifeCatalog {
+    const root = record(json, 'npc-life.json#catalog', 'entries');
+    object({ origins: () => {}, hobbies: () => {}, P7A_TRIAL: () => {} })(root, 'npc-life.json#catalog', '');
+    for (const [key, minimum, schema] of [
+        ['origins', 1, object({ name: text, summary: text })],
+        ['hobbies', 2, object({ name: text })],
+    ] as const) {
+        const entries = record(root[key], 'npc-life.json#catalog', key);
+        if (Object.keys(entries).length < minimum) fail('npc-life.json#catalog', key, `expected at least ${minimum} entries`);
+        for (const [id, value] of Object.entries(entries)) {
+            const ref = `npc-life.json#${id}`;
+            if (!/^[a-z][a-z0-9_]*$/.test(id)) fail(ref, 'id', 'expected stable lowercase id');
+            schema(value, ref, '');
+        }
+    }
+    const stat: Rule = (value, ref, field) => {
+        if (!Number.isSafeInteger(value) || (value as number) < 0 || (value as number) > 100)
+            fail(ref, field, 'expected integer in [0, 100]');
+    };
+    const range: Rule = (value, ref, field) => {
+        if (!Array.isArray(value) || value.length !== 2 || !value.every(n => Number.isSafeInteger(n) && n >= 0 && n <= 100) || value[0] > value[1])
+            fail(ref, field, 'expected ascending integer range in [0, 100]');
+    };
+    object({ marker: literal('TRIAL'), lustBase: range, beauty: range, stressWork: nonnegative, stressRest: nonnegative,
+        stressHalveAuthority: stat, stressHalveAffection: stat, stressResume: stat, arousalDivisor: positive,
+        weeksPerYear: positive, recentCap: positive, sexExpCaps: object({ novice: positive, professional: positive, expert: positive })
+    })(root.P7A_TRIAL, 'npc-life.json#P7A_TRIAL', '');
+    return root as unknown as NpcLifeCatalog;
+}
