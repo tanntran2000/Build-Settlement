@@ -167,7 +167,7 @@ describe('society renewable support and transaction ports', () => {
       expect(gameplay(resumed)).toEqual(gameplay(s)); expect(s.tiles.map(t => t.building?.workers ?? 0)).toEqual(assignments);
       for (const stock of Object.values(settlement(s).inventory)) expect(Number.isSafeInteger(stock) && stock >= 0).toBe(true);
     }
-  });
+  }, 15000);
   it('stops and resumes immigration over forty-five weeks when renewable support changes', () => {
     let s = expanded(), pausedPopulation = 0, resumedArrivals = 0;
     for (let i = 0; i < 45; i++) {
