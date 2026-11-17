@@ -10,13 +10,17 @@ The owner's P7 notes (2026-11-03 to 2026-11-13) describe at least seven independ
 
 ## Proposed order
 
+**Revision v0.2 (2026-11-17, draft for owner G1):** the owner asked P7 to focus on interactions: "Tập trung mạnh vào việc tương tác giữa NPC - Player, NPC-NPC, NPC với người dân trong thành (NTR Route)". The old P7-C is split into three interaction sub-projects. NPC structure, mechanisms and the three interaction axes are written in `2026-11-17-p7-npc-direction.md`; until the owner approves v0.2, the v0.1 order (A, B, C, D, E) stands.
+
 | # | Sub-project | What the player gets | Depends on |
 |---|---|---|---|
 | **P7-A** | **NPC core sheet** | Mind (Light ↔ Dark), Lust, Arousal, Stress, Beauty, age and age titles, hobbies, Sex-exp per part, keyed history; Stress stops work at 100; the 4-tab NPC sheet | — |
 | **P7-B** | **Acquisition** | No starter NPCs; Auction House (legal slaves, Light half), Guild (hired servants, wages), Slave Market (Slum, Dark half); seeded NPC generation; NPC cap | P7-A |
-| **P7-C** | **Player actions and interactions** | 5 actions per week (max 12), 1 action = 1 turn for temporary effects; dates, intimacy, rest; Mind/Lust/Stress changes from actions; Arousal-driven partner seeking and the NTR route; utility scoring for NPC choices | P7-A, P7-B |
-| **P7-D** | **NPC work slots** | 2–3 NPC slots per building with a stacking bonus; Barracks NPC unlocks soldier training and weekly volunteers; Barracks NPCs immune to crime kidnap/assassination | P7-A |
-| **P7-E** | **NPC crime chain** | Kidnap, rescue missions, defection after captivity, imprison/persuade/sell back (needs the Black Market) | P7-B, P7-C, P7-D, Expedition |
+| **P7-C** | **NPC ↔ Player** | 5 actions per week (max 12), 1 action = 1 turn for temporary effects; talk, gift, dates, intimacy, praise, discipline, rest; acceptance and refusal; her requests; jealousy | P7-A, P7-B |
+| **P7-D** | **Intent engine + NPC ↔ NPC** | weekly utility intents with readable reasons; bond graph (closeness, rivalry, lovers); Mind pull between close NPCs | P7-C |
+| **P7-E** | **NPC ↔ residents (NTR route)** | outsider seeking, Tavern/Brothel venues, named regulars, city Corruption, per-NPC house rules | P7-D |
+| **P7-F** | **NPC work slots** | 2–3 NPC slots per building with a stacking bonus; Barracks NPC unlocks soldier training and weekly volunteers; Barracks NPCs immune to crime kidnap/assassination | P7-A |
+| **P7-G** | **NPC crime chain** | Kidnap, rescue missions, defection after captivity, imprison/persuade/sell back (needs the Black Market) | P7-B, P7-E, P7-F, Expedition |
 | **P7-ART** | **NPC appearance** | Layered paper-doll (body, face, hair, outfit), palette swaps by seed, mapping the owner's existing art library | separate art track (Codex draws; Claude orchestrates) |
 
 The Mansion (staff roles, household climate) and P6-C (18+ items, Rose Quartz / Maiden Pearl, the owner's 18+ recipes) come after P7, as already decided.
