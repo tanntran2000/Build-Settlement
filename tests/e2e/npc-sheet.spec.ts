@@ -200,6 +200,10 @@ for (const viewport of desktops) test.describe('NPC sheet at ' + viewport.width 
     await tabTo(page, outer);
     await page.keyboard.press('Tab');
     await expect(tab(page, 'Profile')).toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(panel(page, 'Profile').locator('summary').filter({ hasText: /^Attributes$/ })).toBeFocused();
+    await page.keyboard.press('Shift+Tab');
+    await expect(tab(page, 'Profile')).toBeFocused();
     await expect(tablist(page).getByRole('tab')).toHaveText([...names]);
     for (const name of names) {
       const current = tab(page, name), currentPanel = panel(page, name);
@@ -211,10 +215,7 @@ for (const viewport of desktops) test.describe('NPC sheet at ' + viewport.width 
       await expect(sheet(page).locator('[role="tab"][tabindex="0"]')).toHaveCount(1);
       await expect(sheet(page).getByRole('tabpanel')).toHaveCount(1);
       await expect(sheet(page).locator('[role="tabpanel"][hidden]')).toHaveCount(3);
-      await page.keyboard.press('Tab');
-      await expect(currentPanel).toBeFocused();
-      await page.keyboard.press('Shift+Tab');
-      await expect(current).toBeFocused();
+      expect(await currentPanel.getAttribute('tabindex')).toBeNull();
       await page.keyboard.press('ArrowRight');
     }
     await expect(tab(page, 'Profile')).toBeFocused();

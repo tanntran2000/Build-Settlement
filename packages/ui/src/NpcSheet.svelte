@@ -56,7 +56,6 @@
       id={`${id}-panel-${index}`}
       role="tabpanel"
       aria-labelledby={`${id}-tab-${index}`}
-      tabindex="0"
       hidden={selected !== index}
     >
       {#if selected === index}
