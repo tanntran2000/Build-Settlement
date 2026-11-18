@@ -14,7 +14,7 @@ export function recordNpcLifeEvent(life: NpcLife, week: number, kind: EventKind)
 }
 
 export function runNpcLifeWeek(npcs: WorldNpc[], input: { week: number; authority: number }): { npcs: WorldNpc[]; report: NpcLifeWeekReport } {
-  const next = structuredClone(npcs);
+  const next = npcs.map(npc => ({ ...npc, life: structuredClone(npc.life) }));
   const report: NpcLifeWeekReport = { exhausted: [], recovered: [], birthdays: [] };
   for (const npc of next) {
     const life = npc.life, wasWorking = life.working;
