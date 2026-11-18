@@ -63,3 +63,44 @@ The bot runner is a dev-only tool under `tools/` or `tests/`: no new dependency,
 | R-023 | Laws (P8-C) | Pay costs 0.2 Gold a vote (11 Gold to flip the Free at New Game) and has no side effect, so with plenty of Gold it may always beat Promise and Force. | Count lobby options chosen by the best-scoring bot; is Pay almost always chosen? | P8-C spec §10 | open |
 | R-024 | Laws (P8-C) | War Tithe (+10 % tax) and Licensed Vice (+1.5 Gold, paid before upkeep) earn Gold every week, while Watch Levy and Poor Relief cost Gold; three slots may always hold the two earners. Licensed Vice also pushes Corruption +10 toward Dark. | Which three laws does the Greedy bot keep? Gold and Corruption after 20 weeks with and without the earners. | P8-C spec §10; plan Decision 10 amendment | open |
 | R-025 | Test stability | e2e tests that start a New Game get a random world seed, so weekly crime events (robbery, raid) can change stocks they rely on. `laws.spec.ts` built the Town Hall with exactly 5 Iron and failed when week 1 robbed Iron (found 2026-11-06; fixed in SOLDIER-01 PR B by staffing the Mine with 2 workers). Other New Game e2e flows with thin margins may flake the same way. | Not a play risk; watch for e2e failures with "Not enough … for this action." after New Game, and give such tests a margin or a pinned seed. | SOLDIER-01 PR B smoke | open |
+| R-026 | Performance (P7-A PR B) | The first End Week after a load takes about 57–58 ms (median) with 100 NPCs, over the 50 ms tick budget, on main and on PR B alike. Later weeks average about 28–47 ms, so the headroom is small. Details and reasons to optimise: "Perf follow-up: End Week cold start" below. | Does the first End Week after New Game, Continue or Import feel slow on a low-end laptop? Time it in the v0.1 simulation pass. | PR #100 Astra 6.2 round 2 P2; clean cold-start check 2026-11-18 | open (accepted for PR B; separate perf WP later) |
+
+## Perf follow-up: End Week cold start (R-026)
+
+Owner decision (Tân, 2026-11-18), verbatim: "chấp nhận làm tối ưu sau nhưng trước khi đó hãy nên lưu lại thông tin các lỗi và lý do cần tối ưu". PR #100 (P7-A PR B) is accepted with this budget breach; the fix is a separate perf work package after P7-A.
+
+**Budget:** every End Week tick with 100 NPCs must finish in under 50 ms (AGENTS.md §2 item 3; P7-A plan Task B1).
+
+**What was found**
+1. First PR B measurement (head cf94804): 5 of 60 End Week ticks over 50 ms (max 96.1 ms). Astra round 1 raised it as a P2.
+2. Base-vs-head profile: the weekly NPC life step cloned all NPC records a second time (`npc-life-week.ts`, after `world-npc.ts` had already cloned them). Plan correction 5 removed it in b94d308; the life step fell from 3.0 ms to 1.6 ms mean, with outputs byte-identical.
+3. Astra 6.2 round 2 (b94d308): the first tick after load was still 70–73 ms in three runs, so P2 stayed open.
+4. Clean cold-start check (b94d308 vs main dac6040; 10 alternating pairs of fresh processes; seed 42; 100 adult NPCs; 60 weeks; timing from outside the product code only):
+
+| Revision | Tick 1 median | Tick 1 mean | Tick 1 max | Tick 1 over 50 ms | All ticks over 50 ms |
+|---|---:|---:|---:|---:|---:|
+| main dac6040 | 57.03 ms | 59.98 ms | 84.06 ms | 6/10 | 19/600 |
+| PR B b94d308 | 58.16 ms | 64.84 ms | 98.31 ms | 9/10 | 43/600 |
+
+   - Paired tick-1 difference (PR B − main): median +2.70 ms; PR B slower in 6 of 10 pairs; range −31.15 to +43.29 ms. This is within run-to-run noise.
+   - Three PR B processes (runs 10, 14 and 18) stayed slow for several weeks (up to 87 ms at tick 2) while CPU load was low. Cause not found.
+   - No machine sleep/resume, no competing jobs; final saves matched earlier runs byte for byte.
+
+**Where the time goes (CPU profiles of tick 1)**
+- Full session validation on every command (`packages/core/src/character/validate.ts`, from line 91) is the largest cost on both revisions: 21 of 31 dispatcher samples on main, 20 of 34 on PR B.
+- Whole-state cloning showed up twice per profile; the NPC life step once.
+
+**Why optimise (before P7-B to P7-G add more weekly work)**
+1. The budget is already missed on the first End Week on main, so this is an existing cost, not a PR B regression.
+2. Warm weeks run at about 28–47 ms, leaving little room under 50 ms.
+3. P7-B to P7-G add weekly NPC work (acquisition, Mansion and Retainers' Hall, intents, NPC-to-NPC bonds, the 6-stage NTR route, work slots, the crime chain) with up to 100 NPCs, so each week will cost more.
+4. Validation and cloning grow with the size of the save, and saves grow as NPC history and bonds build up.
+5. Haven targets a light HTML/EXE build that must stay smooth on low-end laptops.
+
+**What the perf work package should measure first (ideas, not approved)**
+- Cost of full session validation per command versus save size; whether some checks can run only on load and import (the trust boundaries) while each command keeps cheap invariant checks. LAW-04 and LAW-06 still apply: no partial updates, no negative stocks, no weaker import checks.
+- Cost of whole-state cloning per command, and whether only the changed parts need copying.
+- Why some processes stay slow for several weeks (garbage collection, JIT, machine noise).
+- Tick 1 versus warm ticks at 100 NPCs after P7-B grows the weekly step.
+
+Evidence: `docs/verification/p7a-pr100/` (PR #100) holds the profile, the cold-start check, the gate logs and both Astra reviews.
