@@ -2,7 +2,7 @@ import { describe, expect, expectTypeOf, it } from 'vitest';
 import type { CrisisStage, TileTrialReport } from '@haven/core';
 import type { LifeDestination, LifeWindow } from '../character-life-navigation.js';
 import { CLASS_LABELS, crimeReportLine, crisisReportLines, garrisonReportLine, lawReportLines, orderReportLines, type ClassId } from '../society-view.js';
-import { reportLetters, reportStamps, type LetterId, type LetterRow, type ReportLetterView, type Seal } from '../report-letters.js';
+import { npcLifeReportRows, reportLetters, reportStamps, type LetterId, type LetterRow, type ReportLetterView, type Seal } from '../report-letters.js';
 
 function report(overrides: Partial<TileTrialReport> = {}): TileTrialReport {
   return {
@@ -78,6 +78,37 @@ function society(tensionAfter = 0): NonNullable<TileTrialReport['society']> {
 function expectHeadline(input: Readonly<TileTrialReport>, id: LetterId, headline: string, seal: Seal): void {
   expect(reportLetters(input).find(letter => letter.id === id)).toMatchObject({ id, headline, seal });
 }
+
+describe('NPC life report rows', () => {
+  const npcs = [
+    { character: { id: 'npc_a', name: 'Lydia' } },
+    { character: { id: 'npc_b', name: 'Tessa' } },
+    { character: { id: 'npc_c', name: 'Wendy' } },
+  ];
+
+  it('keeps every event in category and NPC order and leaves the report and letters intact', () => {
+    const input = report({ npcLife: { exhausted: ['npc_b', 'npc_a'], recovered: ['npc_c'], birthdays: ['npc_a'] } });
+    const before = structuredClone(input);
+    expect(npcLifeReportRows(input, npcs)).toEqual([
+      { kind: 'exhausted', label: 'Exhausted', npcId: 'npc_b', name: 'Tessa' },
+      { kind: 'exhausted', label: 'Exhausted', npcId: 'npc_a', name: 'Lydia' },
+      { kind: 'recovered', label: 'Recovered', npcId: 'npc_c', name: 'Wendy' },
+      { kind: 'birthdays', label: 'Birthday', npcId: 'npc_a', name: 'Lydia' },
+    ]);
+    expect(input).toEqual(before);
+    expect(reportLetters(input)).toEqual(reportLetters(report()));
+    expect(reportStamps(input)).toEqual(reportStamps(report()));
+  });
+
+  it('omits absent and empty notes and keeps the event id when a name is unresolved', () => {
+    expect(npcLifeReportRows(report(), npcs)).toEqual([]);
+    expect(npcLifeReportRows(report({ npcLife: { exhausted: [], recovered: [], birthdays: [] } }), npcs)).toEqual([]);
+    const input = report({ npcLife: { exhausted: [], recovered: [], birthdays: ['npc_unknown'] } });
+    expect(npcLifeReportRows(input, npcs)).toEqual([
+      { kind: 'birthdays', label: 'Birthday', npcId: 'npc_unknown', name: 'Unknown NPC' },
+    ]);
+  });
+});
 
 describe('approved letter contracts and ordering', () => {
   it('exposes the Decision 8 types', () => {

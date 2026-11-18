@@ -3,7 +3,7 @@ import {createNpcWorldSession} from '../../packages/core/src/index.ts';
 import { test, expect, type Page } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
 import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
-import { characterWindow, charactersView, expectCheckpointRejectionPreservesUi, expectOneCharacterWindow, exportLife, go, importLife, lifeUiSnapshot, makeLife, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
+import { characterWindow, charactersView, expectCheckpointRejectionPreservesUi, expectOneCharacterWindow, exportLife, go, importLife, lifeUiSnapshot, makeLife, selectArea, selectNpcSheetTab, selectPerson } from './character-life-navigation.helpers.ts';
 
 const KEY = 'haven.character-life-session-society.checkpoint.v1';
 const creation = (page: Page) => page.getByRole('region', { name: 'Character Creation', exact: true });
@@ -26,7 +26,7 @@ test('start screen shows Character Life with New Game, Continue locally, Import'
   await expect(button(page, 'New Game')).toBeVisible();
   await expect(button(page, 'Continue')).toBeVisible();
   await expect(page.getByLabel('Import checkpoint', { exact: true })).toHaveAttribute('type', 'file');
-  await expect(page.getByText('Character profiles are TRIAL content. Weekly life events and Player interactions are not available yet.', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('Balance and building policies are TRIAL. Character profiles are TRIAL content. NPC life events appear in History when they occur. Player interactions are not available yet.', { exact: true })).toHaveCount(0);
   await expect(creation(page)).toHaveCount(0);
 });
 
@@ -229,9 +229,8 @@ test('after creation the Player window shows the entered name and short line; 3 
   await selectArea(page, 'Relations');
   await expect(characterWindow(page).getByRole('tabpanel')).toContainText('Trust');
   await selectArea(page, 'Description');
-  const history = characterWindow(page).locator('details').filter({ has: page.getByText('History', { exact: true }) });
-  await history.locator('summary').click();
-  await expect(history.locator('p')).toHaveText('No memories yet.');
+  const history = await selectNpcSheetTab(page, 'History');
+  await expect(history.getByText('No events recorded.', { exact: true })).toBeVisible();
 });
 
 test('assigning starter 1 to field-1 changes its long text to "currently manages the Farm."', async ({ page }) => {

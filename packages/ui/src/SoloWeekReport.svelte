@@ -1,14 +1,15 @@
 <script lang="ts">
-  import { WEEKLY_RESOURCE_KEYS, ITEM_CATALOG, type TileTrialReport } from '@haven/core';
+  import { WEEKLY_RESOURCE_KEYS, ITEM_CATALOG, type TileTrialReport, type WorldNpc } from '@haven/core';
   import { ITEM_GOAL_LABELS, craftWork, craftDestination, WORKSHOP_IDLE_COPY } from './items-view.js';
   import { garrisonReportLine, lawReportLines, crimeReportLine, crisisReportLines, outsideReportLines, orderReportLines, ORDER_GOODS } from './society-view.js';
   import ReportLetter from './ReportLetter.svelte';
-  import { reportLetters, reportStamps } from './report-letters.js';
+  import { npcLifeReportRows, reportLetters, reportStamps } from './report-letters.js';
   import SocietyReport from './SocietyReport.svelte';
   import { formatFulfillment, formatMilli } from './milli-format.js';
   import { formatLifeWeek } from './life-calendar.js';
 
   export let report: Readonly<TileTrialReport> | null;
+  export let npcs: readonly WorldNpc[];
   export let planningWeek: number;
   export let locked: boolean;
   export let onnextweek: () => void;
@@ -18,6 +19,7 @@
 <section class="card weekly-report" class:crafting-report={!!report?.items.crafted?.length||!!report?.items.workshopsIdle?.length} aria-label="Weekly city report">
   {#if report}
     {@const letters = reportLetters(report)}
+    {@const npcRows = npcLifeReportRows(report, npcs)}
     {#snippet lawsDetails()}
     {#if report.laws}<section aria-label="Laws" data-laws-in-force={JSON.stringify(report.laws.inForce)} data-laws-costs={JSON.stringify(report.laws.costs)} data-laws-unfunded={JSON.stringify(report.laws.unfunded)} data-laws-income-milli={report.laws.incomeMilli} data-laws-promise={JSON.stringify(report.laws.promise)}><h3>Laws</h3>{#each lawReportLines(report) as line}<p>{line}</p>{/each}</section>{/if}
     {/snippet}
@@ -125,6 +127,16 @@
         </ReportLetter>
       {/each}
     </div>
+    {#if npcRows.length}
+      <section class="ledger-parchment npc-life-notes" aria-labelledby="npc-life-report-title">
+        <h3 id="npc-life-report-title">NPC life</h3>
+        <ul>
+          {#each npcRows as row}
+            <li data-npc-life-kind={row.kind} data-npc-id={row.npcId}><span>{row.label}</span> · <strong>{row.name}</strong></li>
+          {/each}
+        </ul>
+      </section>
+    {/if}
     <p aria-hidden="true" class="signature">Your steward</p>
   {:else}
     <p>No resolved week yet</p>
@@ -156,6 +168,9 @@
   .report-stamps span { border: calc(2 * var(--px)) solid var(--brass-edge); padding: 8px; }
   .letters-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 16px; margin-block: 16px; }
   .crafting-report .letters-grid { grid-template-columns: minmax(0, 1fr); }
+  .npc-life-notes { margin-block: 16px; padding: 12px; }
+  .npc-life-notes h3 { margin-top: 0; }
+  .npc-life-notes li { overflow-wrap: anywhere; }
   .signature { text-align: right; }
   @media (max-width: 750px) { .letters-grid { grid-template-columns: minmax(0, 1fr); } .report-heading { display: block; } }
 </style>

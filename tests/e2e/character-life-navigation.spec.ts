@@ -3,9 +3,9 @@ import { expect, test, type Page, type Locator } from '@playwright/test';
 import { serializeCharacterLifeSave } from '../../packages/persistence/src/character-life-save.ts';
 import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
 import { writeFile } from 'node:fs/promises';
-import { observeCharacterLife } from '../../packages/simulation/src/character-life-observation.ts';
+import { npcAgeTitle } from '../../packages/core/src/index.ts';
 import { keyActivate, keyGo, keyPost, keyText, tabTo, turnStatuses, watchTurnStatus } from './character-life-navigation.helpers.ts';
-import { characterWindow, charactersView, expectCheckpointRejectionPreservesUi, expectOneCharacterWindow, openReportDetails,expectReport, expectRequirements, exportLife, go, importLife, lifeUiSnapshot, makeLife, reportFixture, reportRegion, reportUnits, reportMilli, reportWeek, requirementsRegion, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
+import { characterPanel, characterTabs, characterWindow, charactersView, expectCheckpointRejectionPreservesUi, expectOneCharacterWindow, openReportDetails,expectReport, expectRequirements, exportLife, go, importLife, lifeUiSnapshot, makeLife, observeSheetLife, reportFixture, reportRegion, reportUnits, reportMilli, reportWeek, requirementsRegion, selectArea, selectNpcSheetTab, selectPerson } from './character-life-navigation.helpers.ts';
 test.beforeEach(async ({ page }) => { await page.addInitScript(() => localStorage.setItem('haven.options.v1', JSON.stringify({ textSize: 'normal', reduceMotion: null, autosave: false }))); });
 
 async function tokenColour(shell: Locator, token: string): Promise<string> {
@@ -361,7 +361,7 @@ for (const width of [375, 1280]) {
       await expect(placeholder).toHaveText('Character artwork unavailable.');
       await expect(page.getByText('Character artwork unavailable.', { exact: true })).toHaveCount(1);
       expect(await placeholder.evaluate(el => !!el.closest('[role="tabpanel"]'))).toBe(false);
-      await expect(win.getByRole('tabpanel').getByText('Character artwork unavailable.', { exact: true })).toHaveCount(0);
+      await expect(characterPanel(page).getByText('Character artwork unavailable.', { exact: true })).toHaveCount(0);
       await expect(win.locator('img,svg,canvas,[role="img"],[data-slot]')).toHaveCount(0);
       await expect(placeholder.locator('button,input,select,a,[tabindex]')).toHaveCount(0);
       const markup = await placeholder.evaluate(el => el.outerHTML);
@@ -462,7 +462,7 @@ test('one character window remembers areas and closes new-person disclosures', a
     await expectOneCharacterWindow(page);
     await selectArea(page, 'Description');
     const details = window.locator('details');
-    await expect(details.locator('summary')).toHaveText(['Attributes', 'Skills', 'History', 'Private (adult)']);
+    await expect(details.locator('summary')).toHaveText(id === 'player' ? ['Attributes', 'Skills', 'History', 'Private (adult)'] : ['Attributes', 'Private (adult)']);
     for (const disclosure of await details.all()) await expect(disclosure).not.toHaveAttribute('open', /.*/);
     await window.getByText('Private (adult)', { exact: true }).click();
     for (const destination of ['city', 'reports', 'session', 'help', 'characters'] as const) await go(page, destination);
@@ -487,7 +487,7 @@ test('one character window remembers areas and closes new-person disclosures', a
   await expect(window.getByRole('tab', { name: 'Relations', exact: true })).toHaveAttribute('tabindex', '0');
   await expect(description).toHaveAttribute('tabindex', '-1');
   await page.keyboard.press('Home'); await expect(description).toBeFocused();
-  await expect(window.locator('[role="tab"][tabindex="0"]')).toHaveCount(1);
+  await expect(characterTabs(page).locator('[role="tab"][tabindex="0"]')).toHaveCount(1);
   expect(await exportLife(page)).toEqual(before);
 });
 
@@ -1264,7 +1264,7 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 812 
       const win = characterWindow(page), chars = charactersView(page);
       const person = async (id: string) => { await keyGo(page, 'characters'); await keyActivate(page, chars.getByTestId(`character-${id}`)); };
       const work = async () => {
-        await tabTo(page, win.locator('[role="tab"][tabindex="0"]'));
+        await tabTo(page, characterTabs(page).locator('[role="tab"][tabindex="0"]'));
         await page.keyboard.press('Home'); await page.keyboard.press('ArrowRight'); await page.keyboard.press('ArrowRight');
         await expect(win.getByRole('tab', { name: 'Work', exact: true })).toBeFocused();
       };
@@ -1298,36 +1298,52 @@ for (const viewport of [{ width: 1280, height: 900 }, { width: 375, height: 812 
 
     test('F3 read people', async ({ page }) => {
       const session = makeLife();
-      for (const npc of session.npcs) npc.character.age = 30;
+      for (const npc of session.npcs) {
+        npc.character.age = 30;
+        npc.life.birthWeek = session.city.world.week - 30 * 40;
+      }
       session.profiles[1].appearance.measurements = { chestCm: 63, waistCm: 47, hipsCm: 169, disclosure: 'unknown' };
       session.profiles[1].private = { intimateHistory: { value: 'some', disclosure: 'unknown' } };
       await page.goto('/?mode=world-life'); await importLife(page, session); await go(page, 'characters');
-      const win = characterWindow(page), o = observeCharacterLife(session, null);
+      const win = characterWindow(page), o = observeSheetLife(session, null);
       await expect(win).toHaveAttribute('data-character-id', 'player');
       const title = (key: string) => key[0].toUpperCase() + key.slice(1);
       const numbers = (values: Record<string, number>) => Object.entries(values).map(([k, v]) => `${title(k)} ${v}`).join(' · ');
       for (const c of [o.player, ...o.npcs]) {
         await selectPerson(page, c.id); await expectOneCharacterWindow(page); await selectArea(page, 'Description');
-        const panel = win.getByRole('tabpanel');
+        const panel = characterPanel(page), identity = panel.locator('[data-character-identity]');
         await expect(win.getByTestId(`profile-${c.id}-short`)).toHaveText(c.shortDescription);
         await expect(win.getByTestId(`profile-${c.id}-long`)).toHaveText(c.longDescription);
-        await expect(panel.locator('dt')).toHaveText([...c.profileRows.map(r => r.label), ...c.traits.map(t => t.name)]);
-        await expect(panel.locator('dd')).toHaveText([...c.profileRows.map(r => r.value), ...c.traits.map(t => t.summary)]);
+        await expect(identity.locator('dt')).toHaveText([...c.profileRows.map(r => r.label), ...c.traits.map(t => t.name)]);
+        await expect(identity.locator('dd')).toHaveText([...c.profileRows.map(r => r.value), ...c.traits.map(t => t.summary)]);
         await expect(panel.locator('details details')).toHaveCount(0);
         await expect(panel.locator('details[open]')).toHaveCount(0);
         for (const disclosure of await panel.locator('details').all()) await disclosure.locator('summary').click();
-        await expect(panel.getByText(`Health ${c.stats.health}`, { exact: true })).toBeVisible();
-        for (const [label, values] of [['Needs', c.stats.needs], ['Emotions', c.stats.emotions], ['Skills', c.stats.skills]] as const) await expect(panel.getByText(`${label}: ${numbers(values)}`, { exact: true })).toBeVisible();
-        await expect(panel.getByText('No memories yet.', { exact: true })).toBeVisible();
+        const emotions = Object.fromEntries(Object.entries(c.stats.emotions).filter(([key]) => !('occupation' in c) || key !== 'stress'));
+        for (const [label, values] of [['Needs', c.stats.needs], ['Emotions', emotions]] as const) await expect(panel.getByText(`${label}: ${numbers(values)}`, { exact: true })).toBeVisible();
         if (c.adult) {
           await expect(panel.getByText(`Intimacy Knowledge: ${c.adult.intimacyKnowledge ?? 'Not recorded'}`, { exact: true })).toBeVisible();
           await expect(panel.getByText(`Intimate history: ${c.adult.intimateHistory}`, { exact: true })).toBeVisible();
         }
-        if ('occupation' in c) await expect(panel.getByText(/^Age /)).toHaveText(`Age ${c.age} · Background: ${c.occupation} · ${c.socialClass} · ${c.legalStatus.replace('_', ' ')}`);
+        if ('occupation' in c) {
+          await expect(panel.getByText(/^Health \d/)).toHaveCount(0);
+          await expect(panel.getByText(/^Age /)).toHaveText(`Age ${c.age} · ${npcAgeTitle(c.age)} · Background: ${c.occupation} · ${c.socialClass} · ${c.legalStatus.replace('_', ' ')}`);
+        } else {
+          await expect(panel.getByText(`Health ${c.stats.health}`, { exact: true })).toBeVisible();
+          await expect(panel.getByText(`Skills: ${numbers(c.stats.skills)}`, { exact: true })).toBeVisible();
+          await expect(panel.getByText('No memories yet.', { exact: true })).toBeVisible();
+        }
         expect(await page.content()).not.toContain('63 / 47 / 169');
         if (c.id === 'npc_starter_2') {
           expect(await panel.evaluate(el => el.outerHTML)).not.toMatch(/\b(?:63|47|169)\b/);
           await expect(panel.getByText(/Intimate history: (Some|None)/)).toHaveCount(0);
+        }
+        if ('occupation' in c) {
+          const skills = await selectNpcSheetTab(page, 'Skills');
+          await expect(skills.locator('dt')).toHaveText(Object.keys(c.stats.skills).map(title));
+          await expect(skills.locator('dd')).toHaveText(Object.values(c.stats.skills).map(String));
+          const history = await selectNpcSheetTab(page, 'History');
+          await expect(history.getByText('No events recorded.', { exact: true })).toBeVisible();
         }
         await selectArea(page, 'Relations');
         if (c.relationship) {

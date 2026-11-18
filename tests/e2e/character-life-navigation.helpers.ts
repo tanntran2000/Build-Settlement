@@ -2,6 +2,7 @@ import { expect,type Locator,type Page } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
 import { createCharacterLifeSession,DEFAULT_PLAYER_DRAFT,ITEM_CATALOG,RECIPES,isCharacterLifeSessionState,TRIAL_BUILDINGS,WEEKLY_RESOURCE_KEYS,type CharacterLifeSessionState,type TileTrialReport } from '../../packages/core/src/index.ts';
 import { serializeCharacterLifeSave } from '../../packages/persistence/src/character-life-save.ts';
+import { observeCharacterLife } from '../../packages/simulation/src/character-life-observation.ts';
 import type { LifeDestination } from '../../packages/ui/src/character-life-navigation.ts';
 
 export function makeLife(seed = 12345): CharacterLifeSessionState {
@@ -14,6 +15,18 @@ export function makeLife(seed = 12345): CharacterLifeSessionState {
 
 export const charactersView = (page: Page) => page.locator('[data-life-view="characters"]');
 export const characterWindow = (page: Page) => charactersView(page).getByRole('region', { name: 'Character window', exact: true });
+export const characterTabs = (page: Page) => characterWindow(page).locator('.profile > [role="tablist"]');
+export const characterPanel = (page: Page) => characterWindow(page).locator('.profile > [role="tabpanel"]');
+export const npcSheetTabs = (page: Page) => characterPanel(page).getByRole('tablist', { name: 'NPC sheet', exact: true });
+
+export function observeSheetLife(session: CharacterLifeSessionState, report: Readonly<TileTrialReport> | null) {
+  const week = session.city.world.week;
+  const npcs = session.npcs.map(npc => ({
+    ...npc,
+    character: { ...npc.character, age: Math.floor((week - npc.life.birthWeek) / 40) },
+  }));
+  return observeCharacterLife({ ...session, npcs }, report);
+}
 
 // Traverse the real tab order; never manufacture focus or skip hidden-view checks.
 export async function tabTo(page: Page, target: Locator) {
@@ -71,18 +84,34 @@ export async function selectPerson(page: Page, id: string) {
 }
 
 export async function selectArea(page: Page, name: string) {
-  const tab = characterWindow(page).getByRole('tab', { name, exact: true });
+  const tab = characterTabs(page).getByRole('tab', { name, exact: true });
   await tab.click();
   await expect(tab).toHaveAttribute('aria-selected', 'true');
-  return characterWindow(page).getByRole('tabpanel');
+  return characterPanel(page);
+}
+
+export async function selectNpcSheetTab(page: Page, name: string) {
+  const tab = npcSheetTabs(page).getByRole('tab', { name, exact: true });
+  await tab.click();
+  await expect(tab).toHaveAttribute('aria-selected', 'true');
+  const panel = characterPanel(page).getByRole('tabpanel', { name, exact: true });
+  await expect(panel).toBeVisible();
+  return panel;
 }
 
 export async function expectOneCharacterWindow(page: Page) {
-  const characters = charactersView(page);
-  await expect(characters.getByRole('tablist')).toHaveCount(1);
-  await expect(characters.getByRole('tab')).toHaveText(['Description', 'Inventory', 'Work', 'Relations']);
-  await expect(characters.getByRole('tabpanel')).toHaveCount(1);
-  expect(await characters.locator('[role=tabpanel]').count()).toBe(1);
+  const characters = charactersView(page), window = characterWindow(page);
+  const tabs = characterTabs(page), panel = characterPanel(page);
+  await expect(window).toHaveCount(1);
+  await expect(tabs).toHaveCount(1);
+  await expect(tabs.getByRole('tab')).toHaveText(['Description', 'Inventory', 'Work', 'Relations']);
+  await expect(panel).toHaveCount(1);
+  const hasSheet = await window.getAttribute('data-character-id') !== 'player' &&
+    await tabs.getByRole('tab', { name: 'Description', exact: true, selected: true }).count() === 1;
+  await expect(characters.getByRole('tablist')).toHaveCount(hasSheet ? 2 : 1);
+  await expect(characters.getByRole('tabpanel')).toHaveCount(hasSheet ? 2 : 1);
+  expect(await characters.locator('[role=tabpanel]').count()).toBe(hasSheet ? 5 : 1);
+  if (hasSheet) await expect(npcSheetTabs(page).getByRole('tab')).toHaveText(['Profile', 'Skills', '18+', 'History']);
 }
 
 export async function go(page: Page, destination: LifeDestination): Promise<void> {
@@ -302,7 +331,7 @@ async function readItemReport(panel: Locator): Promise<TileTrialReport['items']>
   return result;
 }
 
-// Read every currently rendered report field; NPC life notes are rendered in PR C.
+// Read every rendered report field, including the NPC life rows.
 export async function expectReport(page: Page, expected: Readonly<TileTrialReport>): Promise<TileTrialReport> {
   const panel = reportRegion(page), u = reportUnits;
   // Open base letters for visible text/table assertions; read other parity attributes while closed.
@@ -464,9 +493,29 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
   }
   const laws=panel.getByRole('region',{name:'Laws',exact:true,includeHidden:true});
   if(await laws.count()) actual.laws=await laws.evaluate(node=>({inForce:JSON.parse(node.getAttribute('data-laws-in-force')!),costs:JSON.parse(node.getAttribute('data-laws-costs')!),unfunded:JSON.parse(node.getAttribute('data-laws-unfunded')!),incomeMilli:Number(node.getAttribute('data-laws-income-milli')),promise:JSON.parse(node.getAttribute('data-laws-promise')!)}));
+  const notes = panel.getByRole('region', { name: 'NPC life', exact: true, includeHidden: true });
+  if (await notes.count()) {
+    await expect(notes).toBeVisible();
+    const npcLife: NonNullable<TileTrialReport['npcLife']> = { exhausted: [], recovered: [], birthdays: [] };
+    const labels = { exhausted: 'Exhausted', recovered: 'Recovered', birthdays: 'Birthday' };
+    const rows = notes.getByRole('listitem', { includeHidden: true });
+    await expect(rows).not.toHaveCount(0);
+    for (const row of await rows.all()) {
+      const kind = await row.getAttribute('data-npc-life-kind');
+      const id = await row.getAttribute('data-npc-id');
+      if ((kind !== 'exhausted' && kind !== 'recovered' && kind !== 'birthdays') || !id) {
+        throw Error('Invalid NPC life report row.');
+      }
+      const name = row.locator('strong');
+      await expect(row).toBeVisible();
+      await expect(name).toBeVisible();
+      await expect(name).toHaveText(/\S/);
+      await expect(row).toHaveText(`${labels[kind]} · ${(await name.innerText()).trim()}`);
+      npcLife[kind].push(id);
+    }
+    actual.npcLife = npcLife;
+  }
   const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
-  // PR B adds simulation-only NPC life notes; retain parity for every existing rendered field.
-  delete baseReport.npcLife;
   expect(actual).toEqual(baseReport);
   if (society) {
     const labels = { free: 'Free residents', makers: 'Makers', luminaries: 'Luminaries', merchants: 'Merchants', bound: 'The Bound' };

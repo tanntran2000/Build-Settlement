@@ -1,6 +1,6 @@
 <script lang="ts">
   import EquipmentView from './EquipmentView.svelte';
-  import { managerSlotTileIds, PLAYER_CHARACTER_ID, TRIAL_BUILDINGS, type CharacterLifeSessionState, type CharacterView } from '@haven/core';
+  import { managerSlotTileIds, npcAge, PLAYER_CHARACTER_ID, TRIAL_BUILDINGS, type CharacterLifeSessionState, type CharacterView } from '@haven/core';
   import { executeCharacterLifeCommand } from '@haven/simulation';
   import CharacterProfile from './CharacterProfile.svelte';
   import type { CharacterArea, PostDraftEntry } from './character-life-navigation.js';
@@ -23,7 +23,8 @@
   $: selectedIndex = roster.findIndex(person => person.id === selectedCharacterId);
   $: npc = session.npcs.find(person => person.character.id === selectedCharacterId);
   $: view = (npc ? {
-    character: npc.character, profile: session.profiles.find(profile => profile.id === npc.character.id)!,
+    character: { ...npc.character, age: npcAge(npc.life, session.city.world.week) },
+    profile: session.profiles.find(profile => profile.id === npc.character.id)!,
     role: 'npc', postBuildingName: npc.postTileId ? buildingName(npc.postTileId) : null,
   } : { character: session.player.character, profile: session.player.profile, role: 'player', postBuildingName: null }) satisfies CharacterView;
   $: displayedPost = drafts[selectedCharacterId] ?? freeSlots[0] ?? '';
@@ -64,13 +65,17 @@
     <button disabled={selectedIndex === roster.length - 1} onclick={() => { selectedCharacterId = roster[selectedIndex + 1].id; }}>Next</button>
   </header>
   {#key selectedCharacterId}
-    <CharacterProfile {view} traitIds={npc?.traits ?? []} relationship={npc?.character.relationshipToPlayer ?? null}
+    <CharacterProfile {view} {npc} traitIds={npc?.traits ?? []} relationship={npc?.character.relationshipToPlayer ?? null}
       area={areas[selectedCharacterId] ?? 'description'} onarea={area => { areas[selectedCharacterId] = area; }}>
       {#snippet inventory()}<EquipmentView {session} characterId={selectedCharacterId} {locked} {onapply} />{/snippet}
       {#snippet work()}
         {#if npc}
           <p data-testid={`npc-post-${npc.character.id}`}>Post: {postLabel(npc.postTileId)}</p>
-    <p>NPC post skills apply at End Week.</p>
+          {#if npc.life.working}
+            <p>NPC post skills apply at End Week.</p>
+          {:else}
+            <p>Not working{npc.postTileId ? ' · Post inactive at End Week.' : ''}</p>
+          {/if}
           {#if assignError?.npcId === npc.character.id}<p id="life-assign-error" role="alert">{assignError.message}</p>{/if}
           {#if npc.postTileId}
             <button disabled={locked} aria-describedby={assignError?.npcId === npc.character.id ? 'life-assign-error' : undefined}

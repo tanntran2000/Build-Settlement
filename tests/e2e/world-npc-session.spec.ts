@@ -3,7 +3,7 @@ import {createNpcWorldSession,createWorldSession} from '../../packages/core/src/
 import {serializeWorldSessionSave} from '../../packages/persistence/src/world-session-save.ts';
 import {executeCharacterLifeCommand} from '../../packages/simulation/src/character-life-command.ts';
 import {act,boot,encoded,put} from './society-command.helpers.ts';
-import {characterWindow,charactersView,exportLife,go,selectArea,selectPerson} from './character-life-navigation.helpers.ts';
+import {characterWindow,charactersView,exportLife,go,selectArea,selectNpcSheetTab,selectPerson} from './character-life-navigation.helpers.ts';
 const IDS=['npc_starter_1','npc_starter_2','npc_starter_3'];
 async function names(page:Page){const result=[];for(const id of IDS){await selectPerson(page,id);result.push(await characterWindow(page).getByRole('heading').first().innerText());}return result;}
 async function assign(page:Page,id:string,tileId:string){await selectPerson(page,id);await selectArea(page,'Work');await characterWindow(page).getByLabel('Manager post',{exact:false}).selectOption(tileId);await characterWindow(page).getByRole('button',{name:'Assign',exact:true}).click();}
@@ -11,7 +11,14 @@ async function post(page:Page,id:string){await selectPerson(page,id);await selec
 async function fresh(page:Page){await page.goto('/?mode=world-npc');await page.getByRole('button',{name:'New Game',exact:true}).click();await page.getByLabel('Name',{exact:true}).fill('Synthetic Keeper');await page.getByRole('tab',{name:'Review',exact:true}).click();await page.getByRole('button',{name:'Create character',exact:true}).click();}
 test('New Game lists 3 named starters, all unassigned, with stats, traits and post-skill status',async({page})=>{
  await boot(page);const n=await names(page);expect(new Set(n).size).toBe(3);for(const name of n)expect(name).toMatch(/^[A-Z][a-z]+$/);await expect(charactersView(page).getByRole('navigation',{name:'Character roster',exact:true}).getByRole('button')).toHaveCount(4);for(const id of IDS){await expect(await post(page,id)).toHaveText('Post: Unassigned');await expect(characterWindow(page)).toContainText('NPC post skills apply at End Week.');}
- await selectPerson(page,IDS[0]);await selectArea(page,'Description');await expect(characterWindow(page).getByText('Frugal',{exact:true})).toBeVisible();await expect(characterWindow(page)).toContainText('effect not active yet');await characterWindow(page).getByText('Skills',{exact:true}).click();await expect(characterWindow(page)).toContainText('Technical 65');await selectPerson(page,IDS[1]);await selectArea(page,'Description');await characterWindow(page).getByText('Attributes',{exact:true}).click();await expect(characterWindow(page)).toContainText('Health 85');await selectArea(page,'Relations');await expect(characterWindow(page).locator('dl > div').filter({has:page.getByText('Trust',{exact:true})}).locator('dd')).toHaveText('30');await expect(characterWindow(page).getByRole('meter')).toHaveCount(0);
+ await selectPerson(page,IDS[0]);await selectArea(page,'Description');await expect(characterWindow(page).getByText('Frugal',{exact:true})).toBeVisible();await expect(characterWindow(page)).toContainText('effect not active yet');
+ const skills=await selectNpcSheetTab(page,'Skills');
+ await expect(skills.locator('dl > div').filter({has:page.getByText('Technical',{exact:true})}).locator('dd')).toHaveText('65');
+ await selectPerson(page,IDS[1]);const profile=await selectArea(page,'Description');
+ await characterWindow(page).getByText('Attributes',{exact:true}).click();
+ await expect(profile.getByText(/^Needs:/)).toBeVisible();await expect(profile.getByText(/^Emotions:/)).toBeVisible();
+ await expect(profile.getByText(/^Health \d/)).toHaveCount(0);
+ await selectArea(page,'Relations');await expect(characterWindow(page).locator('dl > div').filter({has:page.getByText('Trust',{exact:true})}).locator('dd')).toHaveText('30');await expect(characterWindow(page).getByRole('meter')).toHaveCount(0);
 });
 test('same pinned seed reproduces names; clicks never reroll them',async({page})=>{
  await page.addInitScript(()=>{Object.defineProperty(crypto,'getRandomValues',{value:(array:Uint32Array)=>{array[0]=12345;return array;}});});await fresh(page);const first=await names(page);await page.reload();await fresh(page);expect(await names(page)).toEqual(first);await assign(page,IDS[0],'field-1');await characterWindow(page).getByRole('button',{name:'Unassign',exact:true}).click();await go(page,'city');await page.getByTestId('trial-tile-plain-1').click();expect(await names(page)).toEqual(first);

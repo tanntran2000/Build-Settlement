@@ -2,7 +2,7 @@ import { expect, test, type Locator, type Page } from '@playwright/test';
 import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
 import { writeFile } from 'node:fs/promises';
 import { SOCIETY_RULESET } from '../../packages/core/src/index.ts';
-import { characterWindow, charactersView, expectReport, go, importLife, keyActivate, keyGo, makeLife, reportFixture, reportRegion, selectArea, selectPerson, tabTo, turnStatuses, watchTurnStatus } from './character-life-navigation.helpers.ts';
+import { characterPanel, characterTabs, characterWindow, charactersView, expectReport, go, importLife, keyActivate, keyGo, makeLife, reportFixture, reportRegion, selectArea, selectPerson, tabTo, turnStatuses, watchTurnStatus } from './character-life-navigation.helpers.ts';
 
 for (const viewport of [{ width: 375, height: 812 }, { width: 1280, height: 900 }]) {
   test(`Goods stock accessibility at ${viewport.width}px`, async ({ page }, info) => {
@@ -289,27 +289,27 @@ for (const viewport of [{ width: 1600, height: 1000 }, { width: 1280, height: 90
           for (const summary of await help.locator('summary').all()) await keyActivate(page, summary);
           await expect(help.locator('details').nth(0).locator('p')).toHaveText("Your 100 residents are Free residents, Makers, Luminaries and Merchants, each with their own housing. Farm and Food Processor start with 2 WF each; the Market on spec-1 distributes stored Goods. Build inside the walls on plots of the matching tier, and extend the wall to open more plots.");
           await expect(help.locator('details').nth(1).locator('p')).toHaveText("TRIAL: each class eats and uses Goods separately; the Bound eat last. Missing Food, Goods or housing lowers that class's satisfaction and stops its arrivals. Each class supplies 1 WF per 10 residents; Elites do not work.");
-          await expect(help.locator('details').nth(2).locator('p')).toHaveText('Balance and building policies are TRIAL. Character profiles are TRIAL content. Weekly life events and Player interactions are not available yet.');
+          await expect(help.locator('details').nth(2).locator('p')).toHaveText('Balance and building policies are TRIAL. Character profiles are TRIAL content. NPC life events appear in History when they occur. Player interactions are not available yet.');
           await expect(help.getByRole('link')).toHaveCount(0);
         }
         await capture();
         if (dest === 'characters') {
           for (const id of ['player', 'npc_starter_1']) {
             await keyActivate(page, charactersView(page).getByTestId(`character-${id}`));
-            const win = characterWindow(page), tabs = win.getByRole('tab');
-            await expect(tabs).toHaveText(['Description', 'Inventory', 'Work', 'Relations']);
-            await tabTo(page, win.locator('[role="tab"][tabindex="0"]')); await page.keyboard.press('Home');
+            const win = characterWindow(page), tabs = characterTabs(page), panel = characterPanel(page);
+            await expect(tabs.getByRole('tab')).toHaveText(['Description', 'Inventory', 'Work', 'Relations']);
+            await tabTo(page, tabs.locator('[role="tab"][tabindex="0"]')); await page.keyboard.press('Home');
             for (const name of ['Description', 'Inventory', 'Work', 'Relations']) {
-              const tab = win.getByRole('tab', { name, exact: true });
+              const tab = tabs.getByRole('tab', { name, exact: true });
               await expect(tab).toBeFocused(); await expect(tab).toHaveAttribute('aria-selected', 'true');
-              await expect(win.getByRole('tabpanel')).toHaveAttribute('aria-labelledby', (await tab.getAttribute('id'))!);
-              await expect(win.getByRole('tabpanel')).toHaveCount(1);
+              await expect(panel).toHaveAttribute('aria-labelledby', (await tab.getAttribute('id'))!);
+              await expect(panel).toHaveCount(1);
               if (name === 'Description') for (const summary of await win.locator('summary').all()) await keyActivate(page, summary);
               await capture();
-              await tabTo(page, win.locator('[role="tab"][tabindex="0"]')); await page.keyboard.press('ArrowRight');
+              await tabTo(page, tabs.locator('[role="tab"][tabindex="0"]')); await page.keyboard.press('ArrowRight');
             }
-            await page.keyboard.press('End'); await expect(win.getByRole('tab', { name: 'Relations', exact: true })).toBeFocused();
-            await page.keyboard.press('Home'); await page.keyboard.press('ArrowLeft'); await expect(win.getByRole('tab', { name: 'Relations', exact: true })).toBeFocused();
+            await page.keyboard.press('End'); await expect(tabs.getByRole('tab', { name: 'Relations', exact: true })).toBeFocused();
+            await page.keyboard.press('Home'); await page.keyboard.press('ArrowLeft'); await expect(tabs.getByRole('tab', { name: 'Relations', exact: true })).toBeFocused();
           }
         }
       }
