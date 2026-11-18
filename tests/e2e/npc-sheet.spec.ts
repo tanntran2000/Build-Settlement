@@ -89,8 +89,9 @@ for (const viewport of desktops) test.describe('NPC sheet at ' + viewport.width 
     await expect(rowValue(profile, 'Hobbies')).toHaveText('Reading · Gardening');
     await expect(rowValue(profile, 'Affection')).toHaveText('73');
     await expect(profile.getByText('Frugal', { exact: true })).toBeVisible();
-    await expect(profile).toContainText('effect not active yet');
-    await expect(profile.getByText(/^Age 49 · Mature · Background:/)).toBeVisible();
+    await expect(rowValue(profile, 'Frugal'))
+      .toHaveText('Careful with materials. Intended: less waste where she manages. (effect not active yet)');
+    await expect(profile.getByText('Age 49 · Mature · Background: technician · skilled · citizen', { exact: true })).toBeVisible();
     await profile.getByText('Attributes', { exact: true }).click();
     await expect(profile.getByText(/^Health \d/)).toHaveCount(0);
     await expect(profile.getByText(/^Emotions:/)).not.toContainText('Stress');
@@ -102,7 +103,7 @@ for (const viewport of desktops) test.describe('NPC sheet at ' + viewport.width 
     await go(page, 'city');
     await page.getByTestId('life-end-week').click();
     await openSheet(page, npc.character.id);
-    await expect(profile.getByText(/^Age 50 · Granny · Background:/)).toBeVisible();
+    await expect(profile.getByText('Age 50 · Granny · Background: technician · skilled · citizen', { exact: true })).toBeVisible();
     await go(page, 'reports');
     await page.getByRole('button', { name: 'Plan next week', exact: true }).click();
     expect((await exportLife(page)).npcs[0].character.age).toBe(npc.character.age);
@@ -161,9 +162,12 @@ for (const viewport of desktops) test.describe('NPC sheet at ' + viewport.width 
     await expect(adult.locator('label')).toHaveText(parts.map(([name]) => name));
     for (const [name, level, value, cap] of parts) {
       const progress = adult.getByRole('progressbar', { name, exact: true });
+      const levelText = `${level} · ${value} / ${cap}`;
       await expect(progress).toHaveAttribute('max', String(cap));
       await expect(progress).toHaveAttribute('value', String(value));
-      await expect(adult.getByText(level + ' · ' + value + ' / ' + cap, { exact: true }).first()).toBeVisible();
+      await expect(progress).toHaveAccessibleDescription(levelText);
+      const row = adult.locator('.experience').filter({ has: page.getByRole('progressbar', { name, exact: true }) });
+      await expect(row.getByText(levelText, { exact: true })).toBeVisible();
     }
     await expect(adult.locator('button, a, details, input, img, svg, canvas')).toHaveCount(0);
     await expect(adult).not.toContainText(/Intimate history|Intimacy Knowledge|Health|Not working/);

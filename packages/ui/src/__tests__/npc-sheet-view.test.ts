@@ -22,7 +22,8 @@ describe('NPC sheet projection', () => {
     npc.life.hobbies = ['reading', 'gardening'];
     npc.character.relationshipToPlayer.affection = 73;
     const before = JSON.stringify(npc);
-    expect(project()(npc)).toMatchObject({
+    const { origin, hobbies, affection, skills } = project()(npc);
+    expect({ origin, hobbies, affection, skills }).toStrictEqual({
       origin: 'Frontier',
       hobbies: ['Reading', 'Gardening'],
       affection: 73,
