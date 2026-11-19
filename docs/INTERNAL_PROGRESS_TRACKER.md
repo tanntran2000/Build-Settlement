@@ -1,5 +1,29 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## P7-A PR B (NPC weekly rules) — PR #100 G6 (2026-11-19 UTC)
+
+**G6 PASS (Claude, Orchestrator/Tester).** P7-A PR B of 3 is merged; PR C (NPC sheet UI, built and reviewed on `feat/p7a-npc-sheet`) follows after moving onto this main.
+
+- **Merge.** PR #100 (`P7-A PR B: NPC weekly rules`) was merged under G5 at 2026-11-19T01:32:55Z (GitHub account `tanntran2000`; dot or the owner per AGENTS.md G5).
+  - Merge/main commit: `305d9eac53e7843a95c9cea89c6e63d381fc0851` (parents `dac6040`, `b94d308`).
+  - Accepted head: `b94d3083dd71722f329b1bf444fa9dec9b0fd309`. Base: `dac6040`.
+- **Trees.** The merge tree `947f604e17427d916e1ef0e21083dbc2f72920b6` is identical to the accepted head tree. Claude checked this locally.
+- **Main CI.** Quality Gate run [44437730332](https://github.com/tanntran2000/Build-Settlement/actions/runs/44437730332), job 135270687177 (push, exact merge SHA), SUCCESS at 2026-11-19T01:52:19Z: 3,074 unit tests (131 files) and 387/387 Chromium smoke (17.7 min). The dependency audit passed.
+- **Pre-merge, at `b94d308`:**
+  - Claude Tester gates 1–7 exit 0, and full smoke 387/387 with `CI=1`.
+  - CI 44219449060: attempt 1 failed only at npm audit (picomatch GHSA-fc5q-39xc-vjpf, then unpatched); the advisory was withdrawn at 2026-11-18T15:38:56Z; attempt 2 success. No code, lockfile or CI change.
+  - Astra: round 1 (`mcp:423260a6`, `cf94804`) FAIL, P2 END_WEEK budget; round 2 (`mcp:eae84223`, Astra 6.2) FAIL, P2 cold first tick; round 3 PASS after correction 6.
+  - Builder: Step 0 HOLD (E01–E09, W01; correction 4); perf profile; fix round 1 `b94d308` (correction 5, redundant clone removed); clean cold-start check (Sol 6.2, `mcp:53f8c535`).
+- **Evidence.** [`docs/verification/p7a-pr100/`](https://github.com/tanntran2000/Build-Settlement/tree/38e475ece11c7a59686bf71da419b5c7a126e15d/docs/verification/p7a-pr100) on branch `docs/p7-npc-design`, at `38e475e`.
+- **Owner instructions** (verbatim; full table in `owner-approval-record.md`):
+  - "Giao Builder B";
+  - Plan corrections: 4 "Approve D1–D4 as written (Recommended)"; 5 "Remove the extra clone (Recommended)"; 6 "chấp nhận làm tối ưu sau nhưng trước khi đó hãy nên lưu lại thông tin các lỗi và lý do cần tối ưu";
+  - Perf: "Profile base vs head (Recommended)"; "Clean cold-start check (Recommended)";
+  - CI: "Wait a few days, then decide (Recommended)"; "bạn có thể tự kiểm tra và vá lỗi này ko?".
+- **Disclosed.**
+  - The cold first END_WEEK tick after a load misses the 50 ms budget on main too (median 57.03 ms main vs 58.16 ms head). Accepted for PR B, not fixed: R-026 in the playtest risk register (`dd382ea`, branch `docs/playtest-risk-register`); separate perf work package after P7-A.
+  - Astra rounds 1 and 2 failed before the PASS; CI attempt 1 failed on the since-withdrawn advisory.
+
 ## P7-A PR A (NPC life data and state) — PR #99 G6 (2026-11-17 UTC)
 
 **G6 PASS (Claude, Orchestrator/Tester).** P7-A PR A of 3 is merged; PR B (weekly rules) and PR C (NPC sheet UI) follow.
