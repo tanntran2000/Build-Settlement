@@ -1,5 +1,31 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## P7-A PR C (NPC sheet UI) — PR #101 G6 (2026-11-19 UTC)
+
+**G6 PASS (Claude, Orchestrator/Tester).** P7-A PR C of 3 is merged. **P7-A (NPC core) is complete:** PR A #99, PR B #100, PR C #101.
+
+- **Merge.** PR #101 (`P7-A PR C: NPC sheet UI (Profile, Skills, 18+, History) and NPC life report rows`) was merged under G5 at 2026-11-19T03:47:18Z (GitHub account `tanntran2000`; dot or the owner per AGENTS.md G5).
+  - Merge/main commit: `27f4dc2e0ea6ed4f12e79fab6366d11fb555551b` (parents `305d9ea`, `952985c`).
+  - Accepted head: `952985c4fafaffeee44a4eb8932c178858659a40`. Base: `305d9ea` (PR B merge).
+- **Trees.** The merge tree `a0ea6329441e75df363b356052528f1426233281` is identical to the accepted head tree. Claude checked this locally.
+- **Main CI.** Quality Gate run [44453862422](https://github.com/tanntran2000/Build-Settlement/actions/runs/44453862422), job 135324047965 (push, exact merge SHA), SUCCESS at 2026-11-19T04:07:42Z: 3,081 unit tests (132 files) and 403/403 Chromium smoke (18.6 min). The dependency audit passed.
+- **Pre-merge, at `952985c`:**
+  - Claude Tester gates 1–7 exit 0, and full smoke 403/403 with `CI=1` (2026-11-19T02:07:07Z–02:51:25Z); also 403/403 at `8138051` and `f1dc182`.
+  - CI 44441824332: success (audit pass, 3,081 unit, 403 smoke).
+  - Astra: round 1 (Astra 6.2 max, `mcp:eae84223`, `8138051`) FAIL, P1 ×2 partial matchers, P3 ×1; round 2 (Astra 6.2 high, `mcp:0ecfac15`, `f1dc182`) PASS; round 3 (same thread, `952985c`) PASS, rebased commits match their originals patch for patch.
+  - Builder: Step 0 HOLD (E01–E46, correction 8); C1 HOLD at E46 (correction 9); C2 smoke 399/403, focus ring (correction 10); fix round 1 403/403 (Sol 6.2 max, `mcp:53f8c535`); fix round 2 exact assertions, 14/14 mutation probes caught (Sol 6.2 xhigh, `mcp:a8572ca6`).
+  - Rebase onto main (correction 12): `133d1f0`, `8138051`, `f1dc182` became `240b32b`, `1993213`, `952985c`; tree unchanged.
+- **Evidence.** [`docs/verification/p7a-pr101/`](https://github.com/tanntran2000/Build-Settlement/tree/8d6c0d9d18b83c107da824cad9d783e12048e1f5/docs/verification/p7a-pr101) on branch `docs/p7-npc-design`, at `8d6c0d9`.
+- **Owner instructions** (verbatim; full table in `owner-approval-record.md`):
+  - "trong lúc chờ thì bắt đầu chuẩn bị PR C đi";
+  - Plan corrections: 7 "As written (Recommended)"; 8 "Approve D1 as listed (Recommended)", "Approve D2 as proposed (Recommended)", "Stack on PR B now (Recommended)"; 9 "Approve E46 fix (Recommended)"; 10 "Panel not a tab stop (Recommended)"; 11 "Open PR C as is (Recommended)" (replaced); 12 "Rebase PR C onto main";
+  - Models: "sau đợt này đổi model lại Builder: Sol 6.2 extra high fast Reviewer: Astra 6.2 high fast";
+  - Merge report: "đã merg và xanh".
+- **Disclosed.**
+  - Correction 11 (open without rebase) was Claude's mistake: main's branch protection is strict, so the PR showed BEHIND; replaced by correction 12.
+  - Astra round 1 failed before the PASS. Smoke runs on Chromium only.
+  - R-026 (cold first END_WEEK tick over 50 ms, also on main) is still open; perf work package not started.
+
 ## P7-A PR B (NPC weekly rules) — PR #100 G6 (2026-11-19 UTC)
 
 **G6 PASS (Claude, Orchestrator/Tester).** P7-A PR B of 3 is merged; PR C (NPC sheet UI, built and reviewed on `feat/p7a-npc-sheet`) follows after moving onto this main.
