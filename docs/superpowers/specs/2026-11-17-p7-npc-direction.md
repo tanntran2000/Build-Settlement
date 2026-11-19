@@ -1,6 +1,6 @@
-# P7 — NPC direction: structure, mechanisms, interactions (v0.4)
+# P7 — NPC direction: structure, mechanisms, interactions (v0.5)
 
-**Status:** the split in §9 is **approved** by the owner, 2026-11-17, verbatim: "Approve v0.2 split (Recommended)". v0.2 rewrote the NTR route (§5.5, §6, §7) after the owner's second direction below. v0.3 adds the owner's answers of 2026-11-17 (§7.2, §7.5, §7.10, §11). v0.4 adds NPC housing, slave and servant status, obedience and the city expansion (§12); §10 and §12.6 list what is still open. Sections 1–8 are the direction for P7-C, D and E; each of those specs repeats its §10 questions for G1. Base `main` `753e450`. It does not authorise code, a push or a PR.
+**Status:** the split in §9 is **approved** by the owner, 2026-11-17, verbatim: "Approve v0.2 split (Recommended)". v0.2 rewrote the NTR route (§5.5, §6, §7) after the owner's second direction below. v0.3 adds the owner's answers of 2026-11-17 (§7.2, §7.5, §7.10, §11). v0.4 adds NPC housing, slave and servant status, obedience and the city expansion (§12); §10 and §12.6 list what is still open. v0.5 (2026-11-19) records the expansion answer (§12.6) and the proposed P7-DESC row (§9); the P7-B spec is `2026-11-19-p7b-acquisition-design.md`. Sections 1–8 are the direction for P7-C, D and E; each of those specs repeats its §10 questions for G1. Base `main` `753e450`. It does not authorise code, a push or a PR.
 
 **Owner direction 1 (Tân, 2026-11-17), verbatim:** "vậy trước mắt cứ làm P7 trước đi. Nhớ ghi rõ kết cấu, cách thức và hướng nủa NPC. Tập trung mạnh vào việc tương tác giữa NPC - Player, NPC-NPC, NPC với người dân trong thành (NTR Route)".
 
@@ -212,6 +212,7 @@ Owner, verbatim: "trong quá trình NPC bị bắt cóc bởi tụi cướp. N�
 | **P7-F** | Work slots + Barracks | 2–3 NPC slots per building, soldier training | A |
 | **P7-G** | Crime chain | kidnap, rescue, defection, Black Market sale | B, E, F, Expedition |
 | **P7-ART** | Appearance | paper-doll layers, palette swaps | art track (Codex draws) |
+| *P7-DESC (proposed 2026-11-19, placement to confirm)* | Descriptions and outfits | per-section description scripts, outfits with coverage, body condition, Hospital surgery (P7-B spec §12) | C |
 | *P7-H (proposed, not yet approved)* | Wandering women and netori (§11) | city outings, wandering married NPCs, persuade to servant | C, E |
 
 ## 10. Owner answers and open questions
@@ -291,4 +292,4 @@ Today the city has 33 plots in 3 rings: housing 11, service 6, specialist 10, sl
 3. "Retainers' Hall (Recommended)": the in-game name of the Apartment.
 4. "100 total, Mansion included (Recommended)": the hard cap is 100 named NPCs across the Mansion and every Retainers' Hall.
 
-Still open: the expansion shape (4th ring, §12.5, or more plots in the existing rings), asked in the P7-B spec.
+Answered in the P7-B brainstorm (2026-11-19): "Vòng 4 qua tường" — a 4th ring opened by extending the wall. P7-B spec: `2026-11-19-p7b-acquisition-design.md`.
