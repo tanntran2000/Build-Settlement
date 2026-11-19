@@ -1,0 +1,54 @@
+HEAD=b94d3083dd71722f329b1bf444fa9dec9b0fd309
+TREE=947f604e17427d916e1ef0e21083dbc2f72920b6
+BRANCH=feat/p7a-npc-sheet
+UTC_START=2026-11-18T10:37:45.729909+00:00
+COMMAND=["npm.cmd", "run", "build"]
+CI=
+STATUS:
+M packages/ui/src/CharacterLifeCharacters.svelte
+ M packages/ui/src/CharacterProfile.svelte
+ M packages/ui/src/SoloWeekReport.svelte
+ M packages/ui/src/TileManagement.svelte
+ M packages/ui/src/__tests__/report-letters.test.ts
+ M packages/ui/src/report-letters.ts
+ M tests/e2e/character-life-boundary.spec.ts
+ M tests/e2e/character-life-navigation-accessibility.spec.ts
+ M tests/e2e/character-life-navigation.helpers.ts
+ M tests/e2e/character-life-navigation.spec.ts
+ M tests/e2e/character-life.spec.ts
+ M tests/e2e/world-npc-session.spec.ts
+?? packages/ui/src/NpcSheet.svelte
+?? packages/ui/src/__tests__/npc-sheet-view.test.ts
+?? packages/ui/src/npc-sheet-view.ts
+?? tests/e2e/npc-sheet.spec.ts
+OUTPUT:
+
+> build-settlement@0.1.0 build
+> npm run build --workspace=@haven/core && npm run build --workspace=@haven/simulation && npm run build --workspace=@haven/ui
+
+
+> @haven/core@0.1.0 build
+> tsc
+
+
+> @haven/simulation@0.1.0 build
+> tsc
+
+
+> @haven/ui@0.1.0 build
+> vite build
+
+vite v6.4.5 building for production...
+transforming...
+✓ 258 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.71 kB │ gzip:   0.41 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-D94IJs5c.css                   37.31 kB │ gzip:   7.53 kB
+dist/assets/index-a1mN7iR2.js                   458.24 kB │ gzip: 143.00 kB
+✓ built in 3.80s
+
+EXIT_CODE=0
+SECONDS=21.967
+UTC_END=2026-11-18T10:38:07.595832+00:00

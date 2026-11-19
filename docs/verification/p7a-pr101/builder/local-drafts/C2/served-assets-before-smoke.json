@@ -1,0 +1,86 @@
+{
+  "head": "133d1f0e996ef85826fb6ef63fdffeef64de2572",
+  "tree": "897e330b088442cfd421e892c7c11c79d103aa0d",
+  "utc": "2026-11-18T10:45:06.113472+00:00",
+  "matched": true,
+  "ports": {
+    "4174": {
+      "utc": "2026-11-18T10:45:05.508428+00:00",
+      "htmlUrl": "http://localhost:4174/",
+      "htmlSha256": "dca7c4306d50d9fa7c1c963cbd3ad3113501c7e276db6a285550aa0820dd70d3",
+      "matched": true,
+      "assets": [
+        {
+          "url": "http://localhost:4174/assets/index-DBkaOuSN.js",
+          "bytes": 458241,
+          "expectedSha256": "1a34f5f6614da77e35b66eceec437df568b7949f930f31b3c400dc5b482a24c7",
+          "servedSha256": "1a34f5f6614da77e35b66eceec437df568b7949f930f31b3c400dc5b482a24c7",
+          "diskSha256": "1a34f5f6614da77e35b66eceec437df568b7949f930f31b3c400dc5b482a24c7"
+        },
+        {
+          "url": "http://localhost:4174/assets/index-D94IJs5c.css",
+          "bytes": 37312,
+          "expectedSha256": "da3d5e95ed95e7033a8d972ddc7d01b36086c01586d073876873b485f38dc447",
+          "servedSha256": "da3d5e95ed95e7033a8d972ddc7d01b36086c01586d073876873b485f38dc447",
+          "diskSha256": "da3d5e95ed95e7033a8d972ddc7d01b36086c01586d073876873b485f38dc447"
+        }
+      ]
+    },
+    "4173": {
+      "utc": "2026-11-18T10:45:06.075541+00:00",
+      "htmlUrl": "http://localhost:4173/",
+      "htmlSha256": "d987b288ae89797a70c7fed7aeaee56c4303963e2dff2ef5719735988643221a",
+      "matched": true,
+      "assets": [
+        {
+          "url": "http://localhost:4173/assets/index-DBkaOuSN.js",
+          "bytes": 458241,
+          "expectedSha256": "1a34f5f6614da77e35b66eceec437df568b7949f930f31b3c400dc5b482a24c7",
+          "servedSha256": "1a34f5f6614da77e35b66eceec437df568b7949f930f31b3c400dc5b482a24c7",
+          "diskSha256": "1a34f5f6614da77e35b66eceec437df568b7949f930f31b3c400dc5b482a24c7"
+        },
+        {
+          "url": "http://localhost:4173/assets/index-D94IJs5c.css",
+          "bytes": 37312,
+          "expectedSha256": "da3d5e95ed95e7033a8d972ddc7d01b36086c01586d073876873b485f38dc447",
+          "servedSha256": "da3d5e95ed95e7033a8d972ddc7d01b36086c01586d073876873b485f38dc447",
+          "diskSha256": "da3d5e95ed95e7033a8d972ddc7d01b36086c01586d073876873b485f38dc447"
+        }
+      ]
+    }
+  },
+  "previewProcesses": [
+    {
+      "port": 4173,
+      "pid": 18560,
+      "args": [
+        "node",
+        "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\packages\\ui\\node_modules\\vite\\bin\\vite.js",
+        "preview",
+        "--port",
+        "4173",
+        "--strictPort"
+      ],
+      "terminated": true
+    },
+    {
+      "port": 4174,
+      "pid": 25204,
+      "args": [
+        "node",
+        "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\packages\\ui\\node_modules\\vite\\bin\\vite.js",
+        "preview",
+        "regression",
+        "--config",
+        "vite.config.ts",
+        "--outDir",
+        "dist",
+        "--port",
+        "4174",
+        "--strictPort"
+      ],
+      "terminated": true
+    }
+  ],
+  "lastErrors": {}
+}

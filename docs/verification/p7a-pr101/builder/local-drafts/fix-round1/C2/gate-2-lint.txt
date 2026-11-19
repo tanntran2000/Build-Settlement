@@ -1,0 +1,17 @@
+HEAD=813805178ce4fe9e93c0c39ddee9143c19ea7286
+TREE=bb414ff2825ea37bd5c41a579de7dac82acbaf22
+BRANCH=feat/p7a-npc-sheet
+UTC_START=2026-11-18T12:12:41.852438+00:00
+COMMAND=["npm.cmd", "run", "lint"]
+CI=
+STATUS:
+
+OUTPUT:
+
+> build-settlement@0.1.0 lint
+> eslint . --max-warnings=0
+
+
+EXIT_CODE=0
+SECONDS=12.063
+UTC_END=2026-11-18T12:12:53.815119+00:00

@@ -1,0 +1,510 @@
+HEAD=813805178ce4fe9e93c0c39ddee9143c19ea7286
+TREE=bb414ff2825ea37bd5c41a579de7dac82acbaf22
+BRANCH=feat/p7a-npc-sheet
+UTC_START=2026-11-18T13:45:47.283086+00:00
+COMMAND=["node", "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\node_modules\\@playwright\\test\\cli.js", "test", "--config", "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prC-local-only\\fix-round2\\probes\\browser\\playwright.config.ts", "--project", "chromium", "--reporter", "list,json", "--output", "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prC-local-only\\fix-round2\\probes\\browser-failures"]
+CI=1
+STATUS:
+M packages/ui/src/__tests__/npc-sheet-view.test.ts
+ M tests/e2e/npc-sheet.spec.ts
+OUTPUT:
+[WebServer] (node:1380) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:21592) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 13 tests using 1 worker
+
+(node:5428) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   1 [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:83:3 › mutation: Frugal description (1.0m)
+(node:25104) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   2 [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:119:3 › mutation: Age 49 background (5.9s)
+(node:22296) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   3 [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:153:3 › mutation: Age 50 background (6.1s)
+(node:18668) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   4 [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:187:3 › mutation: Hand accessible description (6.2s)
+(node:3760) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   5 [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:233:3 › mutation: Hand visible row level (6.3s)
+(node:3716) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   6 [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:279:3 › mutation: Mouth accessible description (6.3s)
+(node:4328) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   7 [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:325:3 › mutation: Mouth visible row level (6.4s)
+(node:21092) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   8 [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:371:3 › mutation: Breast accessible description (6.3s)
+(node:4372) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   9 [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:417:3 › mutation: Breast visible row level (6.5s)
+(node:24368) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  10 [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:463:3 › mutation: Vagina accessible description (6.3s)
+(node:14024) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  11 [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:509:3 › mutation: Vagina visible row level (6.5s)
+(node:25000) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  12 [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:555:3 › mutation: Ass accessible description (6.4s)
+(node:9600) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  13 [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:601:3 › mutation: Ass visible row level (6.4s)
+
+
+  1) [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:83:3 › mutation: Frugal description 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.textContent: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: 'Profile', exact: true }).locator('[data-character-identity]').locator('dl > div').filter({ has: getByText('Restless', { exact: true }) }).locator('dd')
+
+
+      93 |
+      94 |     const identity = profile.locator('[data-character-identity]');
+    > 95 |     const restlessSummary = await rowValue(identity, 'Restless').textContent();
+         |                                                                  ^
+      96 |     await rowValue(identity, 'Frugal').evaluate((node, summary) => {
+      97 |       node.textContent = summary;
+      98 |     }, restlessSummary);
+        at C:\Users\Admin\.t3\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:95:66
+
+    Error Context: ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Frugal-description-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Frugal-description-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Frugal-description-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:119:3 › mutation: Age 49 background 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: 'Profile', exact: true }).locator('[data-character-identity]').locator('dl > div').filter({ has: getByText('Frugal', { exact: true }) }).locator('dd')
+    Expected: "Careful with materials. Intended: less waste where she manages. (effect not active yet)"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveText" locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: 'Profile', exact: true }).locator('[data-character-identity]').locator('dl > div').filter({ has: getByText('Frugal', { exact: true }) }).locator('dd') with timeout 5000ms
+      - waiting for locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: 'Profile', exact: true }).locator('[data-character-identity]').locator('dl > div').filter({ has: getByText('Frugal', { exact: true }) }).locator('dd')
+
+
+      128 |     await expect(profile.getByText('Frugal', { exact: true })).toBeVisible();
+      129 |     await expect(rowValue(profile.locator('[data-character-identity]'), 'Frugal'))
+    > 130 |       .toHaveText('Careful with materials. Intended: less waste where she manages. (effect not active yet)');
+          |        ^
+      131 |
+      132 |     await profile.getByText(/^Age 49 · Mature · Background:/).evaluate(node => {
+      133 |       node.textContent += ' [mutation probe]';
+        at C:\Users\Admin\.t3\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:130:8
+
+    Error Context: ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Age-49-background-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Age-49-background-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Age-49-background-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:153:3 › mutation: Age 50 background 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: 'Profile', exact: true }).locator('[data-character-identity]').locator('dl > div').filter({ has: getByText('Frugal', { exact: true }) }).locator('dd')
+    Expected: "Careful with materials. Intended: less waste where she manages. (effect not active yet)"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveText" locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: 'Profile', exact: true }).locator('[data-character-identity]').locator('dl > div').filter({ has: getByText('Frugal', { exact: true }) }).locator('dd') with timeout 5000ms
+      - waiting for locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: 'Profile', exact: true }).locator('[data-character-identity]').locator('dl > div').filter({ has: getByText('Frugal', { exact: true }) }).locator('dd')
+
+
+      162 |     await expect(profile.getByText('Frugal', { exact: true })).toBeVisible();
+      163 |     await expect(rowValue(profile.locator('[data-character-identity]'), 'Frugal'))
+    > 164 |       .toHaveText('Careful with materials. Intended: less waste where she manages. (effect not active yet)');
+          |        ^
+      165 |     await expect(profile.getByText('Age 49 · Mature · Background: technician · skilled · citizen', { exact: true })).toBeVisible();
+      166 |     await profile.getByText('Attributes', { exact: true }).click();
+      167 |     await expect(profile.getByText(/^Health \d/)).toHaveCount(0);
+        at C:\Users\Admin\.t3\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:164:8
+
+    Error Context: ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Age-50-background-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Age-50-background-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Age-50-background-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:187:3 › mutation: Hand accessible description 
+
+    Error: expect(locator).toHaveAccessibleDescription(expected) failed
+
+    Locator:  locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).getByRole('progressbar', { name: 'Hand', exact: true })
+    Expected: "Novice · 17 / 100"
+    Received: "Wrong accessible description [mutation probe]"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAccessibleDescription" locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).getByRole('progressbar', { name: 'Hand', exact: true }) with timeout 5000ms
+      - waiting for locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).getByRole('progressbar', { name: 'Hand', exact: true })
+        14 × locator resolved to <progress max="100" value="17" id="c1-exp-0" class="svelte-g8hst5" aria-describedby="probe-description"></progress>
+           - unexpected value "Wrong accessible description [mutation probe]"
+
+
+      223 |       await expect(progress).toHaveAttribute('max', String(cap));
+      224 |       await expect(progress).toHaveAttribute('value', String(value));
+    > 225 |       await expect(progress).toHaveAccessibleDescription(levelText);
+          |                              ^
+      226 |       const row = adult.locator('.experience').filter({ has: page.getByRole('progressbar', { name, exact: true }) });
+      227 |       await expect(row.getByText(levelText, { exact: true })).toBeVisible();
+      228 |     }
+        at C:\Users\Admin\.t3\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:225:30
+
+    Error Context: ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Hand-accessible-description-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Hand-accessible-description-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Hand-accessible-description-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:233:3 › mutation: Hand visible row level 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).locator('.experience').filter({ has: getByRole('progressbar', { name: 'Hand', exact: true }) }).getByText('Novice · 17 / 100', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).locator('.experience').filter({ has: getByRole('progressbar', { name: 'Hand', exact: true }) }).getByText('Novice · 17 / 100', { exact: true }) with timeout 5000ms
+      - waiting for locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).locator('.experience').filter({ has: getByRole('progressbar', { name: 'Hand', exact: true }) }).getByText('Novice · 17 / 100', { exact: true })
+
+
+      271 |       await expect(progress).toHaveAccessibleDescription(levelText);
+      272 |       const row = adult.locator('.experience').filter({ has: page.getByRole('progressbar', { name, exact: true }) });
+    > 273 |       await expect(row.getByText(levelText, { exact: true })).toBeVisible();
+          |                                                               ^
+      274 |     }
+      275 |     await expect(adult.locator('button, a, details, input, img, svg, canvas')).toHaveCount(0);
+      276 |     await expect(adult).not.toContainText(/Intimate history|Intimacy Knowledge|Health|Not working/);
+        at C:\Users\Admin\.t3\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:273:63
+
+    Error Context: ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Hand-visible-row-level-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Hand-visible-row-level-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Hand-visible-row-level-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:279:3 › mutation: Mouth accessible description 
+
+    Error: expect(locator).toHaveAccessibleDescription(expected) failed
+
+    Locator:  locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).getByRole('progressbar', { name: 'Mouth', exact: true })
+    Expected: "Professional · 110 / 200"
+    Received: "Wrong accessible description [mutation probe]"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAccessibleDescription" locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).getByRole('progressbar', { name: 'Mouth', exact: true }) with timeout 5000ms
+      - waiting for locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).getByRole('progressbar', { name: 'Mouth', exact: true })
+        14 × locator resolved to <progress max="200" value="110" id="c1-exp-1" class="svelte-g8hst5" aria-describedby="probe-description"></progress>
+           - unexpected value "Wrong accessible description [mutation probe]"
+
+
+      315 |       await expect(progress).toHaveAttribute('max', String(cap));
+      316 |       await expect(progress).toHaveAttribute('value', String(value));
+    > 317 |       await expect(progress).toHaveAccessibleDescription(levelText);
+          |                              ^
+      318 |       const row = adult.locator('.experience').filter({ has: page.getByRole('progressbar', { name, exact: true }) });
+      319 |       await expect(row.getByText(levelText, { exact: true })).toBeVisible();
+      320 |     }
+        at C:\Users\Admin\.t3\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:317:30
+
+    Error Context: ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Mouth-accessible-description-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Mouth-accessible-description-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Mouth-accessible-description-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:325:3 › mutation: Mouth visible row level 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).locator('.experience').filter({ has: getByRole('progressbar', { name: 'Mouth', exact: true }) }).getByText('Professional · 110 / 200', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).locator('.experience').filter({ has: getByRole('progressbar', { name: 'Mouth', exact: true }) }).getByText('Professional · 110 / 200', { exact: true }) with timeout 5000ms
+      - waiting for locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).locator('.experience').filter({ has: getByRole('progressbar', { name: 'Mouth', exact: true }) }).getByText('Professional · 110 / 200', { exact: true })
+
+
+      363 |       await expect(progress).toHaveAccessibleDescription(levelText);
+      364 |       const row = adult.locator('.experience').filter({ has: page.getByRole('progressbar', { name, exact: true }) });
+    > 365 |       await expect(row.getByText(levelText, { exact: true })).toBeVisible();
+          |                                                               ^
+      366 |     }
+      367 |     await expect(adult.locator('button, a, details, input, img, svg, canvas')).toHaveCount(0);
+      368 |     await expect(adult).not.toContainText(/Intimate history|Intimacy Knowledge|Health|Not working/);
+        at C:\Users\Admin\.t3\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:365:63
+
+    Error Context: ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Mouth-visible-row-level-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Mouth-visible-row-level-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Mouth-visible-row-level-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:371:3 › mutation: Breast accessible description 
+
+    Error: expect(locator).toHaveAccessibleDescription(expected) failed
+
+    Locator:  locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).getByRole('progressbar', { name: 'Breast', exact: true })
+    Expected: "Expert · 300 / 300"
+    Received: "Wrong accessible description [mutation probe]"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAccessibleDescription" locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).getByRole('progressbar', { name: 'Breast', exact: true }) with timeout 5000ms
+      - waiting for locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).getByRole('progressbar', { name: 'Breast', exact: true })
+        14 × locator resolved to <progress max="300" value="300" id="c1-exp-2" class="svelte-g8hst5" aria-describedby="probe-description"></progress>
+           - unexpected value "Wrong accessible description [mutation probe]"
+
+
+      407 |       await expect(progress).toHaveAttribute('max', String(cap));
+      408 |       await expect(progress).toHaveAttribute('value', String(value));
+    > 409 |       await expect(progress).toHaveAccessibleDescription(levelText);
+          |                              ^
+      410 |       const row = adult.locator('.experience').filter({ has: page.getByRole('progressbar', { name, exact: true }) });
+      411 |       await expect(row.getByText(levelText, { exact: true })).toBeVisible();
+      412 |     }
+        at C:\Users\Admin\.t3\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:409:30
+
+    Error Context: ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Breast-accessible-description-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Breast-accessible-description-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Breast-accessible-description-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9) [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:417:3 › mutation: Breast visible row level 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).locator('.experience').filter({ has: getByRole('progressbar', { name: 'Breast', exact: true }) }).getByText('Expert · 300 / 300', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).locator('.experience').filter({ has: getByRole('progressbar', { name: 'Breast', exact: true }) }).getByText('Expert · 300 / 300', { exact: true }) with timeout 5000ms
+      - waiting for locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).locator('.experience').filter({ has: getByRole('progressbar', { name: 'Breast', exact: true }) }).getByText('Expert · 300 / 300', { exact: true })
+
+
+      455 |       await expect(progress).toHaveAccessibleDescription(levelText);
+      456 |       const row = adult.locator('.experience').filter({ has: page.getByRole('progressbar', { name, exact: true }) });
+    > 457 |       await expect(row.getByText(levelText, { exact: true })).toBeVisible();
+          |                                                               ^
+      458 |     }
+      459 |     await expect(adult.locator('button, a, details, input, img, svg, canvas')).toHaveCount(0);
+      460 |     await expect(adult).not.toContainText(/Intimate history|Intimacy Knowledge|Health|Not working/);
+        at C:\Users\Admin\.t3\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:457:63
+
+    Error Context: ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Breast-visible-row-level-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Breast-visible-row-level-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Breast-visible-row-level-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  10) [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:463:3 › mutation: Vagina accessible description 
+
+    Error: expect(locator).toHaveAccessibleDescription(expected) failed
+
+    Locator:  locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).getByRole('progressbar', { name: 'Vagina', exact: true })
+    Expected: "Novice · 0 / 100"
+    Received: "Wrong accessible description [mutation probe]"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAccessibleDescription" locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).getByRole('progressbar', { name: 'Vagina', exact: true }) with timeout 5000ms
+      - waiting for locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).getByRole('progressbar', { name: 'Vagina', exact: true })
+        14 × locator resolved to <progress value="0" max="100" id="c1-exp-3" class="svelte-g8hst5" aria-describedby="probe-description"></progress>
+           - unexpected value "Wrong accessible description [mutation probe]"
+
+
+      499 |       await expect(progress).toHaveAttribute('max', String(cap));
+      500 |       await expect(progress).toHaveAttribute('value', String(value));
+    > 501 |       await expect(progress).toHaveAccessibleDescription(levelText);
+          |                              ^
+      502 |       const row = adult.locator('.experience').filter({ has: page.getByRole('progressbar', { name, exact: true }) });
+      503 |       await expect(row.getByText(levelText, { exact: true })).toBeVisible();
+      504 |     }
+        at C:\Users\Admin\.t3\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:501:30
+
+    Error Context: ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Vagina-accessible-description-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Vagina-accessible-description-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Vagina-accessible-description-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  11) [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:509:3 › mutation: Vagina visible row level 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).locator('.experience').filter({ has: getByRole('progressbar', { name: 'Vagina', exact: true }) }).getByText('Novice · 0 / 100', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).locator('.experience').filter({ has: getByRole('progressbar', { name: 'Vagina', exact: true }) }).getByText('Novice · 0 / 100', { exact: true }) with timeout 5000ms
+      - waiting for locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).locator('.experience').filter({ has: getByRole('progressbar', { name: 'Vagina', exact: true }) }).getByText('Novice · 0 / 100', { exact: true })
+
+
+      547 |       await expect(progress).toHaveAccessibleDescription(levelText);
+      548 |       const row = adult.locator('.experience').filter({ has: page.getByRole('progressbar', { name, exact: true }) });
+    > 549 |       await expect(row.getByText(levelText, { exact: true })).toBeVisible();
+          |                                                               ^
+      550 |     }
+      551 |     await expect(adult.locator('button, a, details, input, img, svg, canvas')).toHaveCount(0);
+      552 |     await expect(adult).not.toContainText(/Intimate history|Intimacy Knowledge|Health|Not working/);
+        at C:\Users\Admin\.t3\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:549:63
+
+    Error Context: ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Vagina-visible-row-level-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Vagina-visible-row-level-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Vagina-visible-row-level-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  12) [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:555:3 › mutation: Ass accessible description 
+
+    Error: expect(locator).toHaveAccessibleDescription(expected) failed
+
+    Locator:  locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).getByRole('progressbar', { name: 'Ass', exact: true })
+    Expected: "Novice · 0 / 100"
+    Received: "Wrong accessible description [mutation probe]"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAccessibleDescription" locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).getByRole('progressbar', { name: 'Ass', exact: true }) with timeout 5000ms
+      - waiting for locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).getByRole('progressbar', { name: 'Ass', exact: true })
+        14 × locator resolved to <progress value="0" max="100" id="c1-exp-4" class="svelte-g8hst5" aria-describedby="probe-description"></progress>
+           - unexpected value "Wrong accessible description [mutation probe]"
+
+
+      591 |       await expect(progress).toHaveAttribute('max', String(cap));
+      592 |       await expect(progress).toHaveAttribute('value', String(value));
+    > 593 |       await expect(progress).toHaveAccessibleDescription(levelText);
+          |                              ^
+      594 |       const row = adult.locator('.experience').filter({ has: page.getByRole('progressbar', { name, exact: true }) });
+      595 |       await expect(row.getByText(levelText, { exact: true })).toBeVisible();
+      596 |     }
+        at C:\Users\Admin\.t3\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:593:30
+
+    Error Context: ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Ass-accessible-description-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Ass-accessible-description-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Ass-accessible-description-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  13) [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:601:3 › mutation: Ass visible row level 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).locator('.experience').filter({ has: getByRole('progressbar', { name: 'Ass', exact: true }) }).getByText('Novice · 0 / 100', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).locator('.experience').filter({ has: getByRole('progressbar', { name: 'Ass', exact: true }) }).getByText('Novice · 0 / 100', { exact: true }) with timeout 5000ms
+      - waiting for locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: '18+', exact: true }).locator('.experience').filter({ has: getByRole('progressbar', { name: 'Ass', exact: true }) }).getByText('Novice · 0 / 100', { exact: true })
+
+
+      639 |       await expect(progress).toHaveAccessibleDescription(levelText);
+      640 |       const row = adult.locator('.experience').filter({ has: page.getByRole('progressbar', { name, exact: true }) });
+    > 641 |       await expect(row.getByText(levelText, { exact: true })).toBeVisible();
+          |                                                               ^
+      642 |     }
+      643 |     await expect(adult.locator('button, a, details, input, img, svg, canvas')).toHaveCount(0);
+      644 |     await expect(adult).not.toContainText(/Intimate history|Intimacy Knowledge|Health|Not working/);
+        at C:\Users\Admin\.t3\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:641:63
+
+    Error Context: ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Ass-visible-row-level-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Ass-visible-row-level-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser-failures\npc-sheet-probes-mutation-Ass-visible-row-level-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  13 failed
+    [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:83:3 › mutation: Frugal description 
+    [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:119:3 › mutation: Age 49 background 
+    [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:153:3 › mutation: Age 50 background 
+    [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:187:3 › mutation: Hand accessible description 
+    [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:233:3 › mutation: Hand visible row level 
+    [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:279:3 › mutation: Mouth accessible description 
+    [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:325:3 › mutation: Mouth visible row level 
+    [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:371:3 › mutation: Breast accessible description 
+    [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:417:3 › mutation: Breast visible row level 
+    [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:463:3 › mutation: Vagina accessible description 
+    [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:509:3 › mutation: Vagina visible row level 
+    [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:555:3 › mutation: Ass accessible description 
+    [chromium] › ..\..\..\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:601:3 › mutation: Ass visible row level 
+
+EXIT_CODE=1
+SECONDS=165.450
+UTC_END=2026-11-18T13:48:32.632454+00:00

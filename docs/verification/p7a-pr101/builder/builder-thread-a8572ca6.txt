@@ -1,0 +1,64 @@
+P7 Builder 6.2 xhigh
+mcp:a8572ca6-6435-45ad-9484-5dfcfb31a28a  completed  codex/gpt-6.2-sol
+
+[assistant]
+Bước 2/5. HEAD và cây Git khớp, worktree sạch, hai cổng đang trống. Hai README và báo cáo Astra đã được đọc. Tôi dùng skill `executing-plans` để chạy C2 theo đúng thứ tự. Lần smoke vòng 1 mất khoảng 34 phút.
+
+[assistant]
+Bước 2/5. Probe Vitest đã bắt đúng thuộc tính thừa ở dòng Management. Trace Playwright cho thấy bộ chọn Frugal đi thêm một cấp `dl` bên trong danh sách. Tôi đã sửa bộ chọn và đang xác minh lại từng lỗi hiển thị.
+
+[assistant]
+Bước 3/5. Cả 14 mutation probe đều thất bại đúng ở assertion cần kiểm tra. Bản thật qua 5/5 unit test và 16/16 browser test với `CI=1`. Tôi sẽ tạo một commit rồi chạy C2 tại HEAD mới.
+
+[assistant]
+Bước 4/5. Cả 7 gate tại `f1dc182` đã thoát mã 0. Bundle gzip đo được 150.532 kB. Full smoke đang chạy với `CI=1`, dự kiến khoảng 34 phút theo lần chạy trước.
+
+[assistant]
+Bước 4/5. Smoke đã qua baseline accessibility ở 1600 px và 1280 px, hai trong bốn ca từng lỗi ở C2 ban đầu. Suite vẫn đang chạy.
+
+[assistant]
+Bước 4/5. Cả bốn baseline accessibility từng lỗi, ở 320, 375, 1280 và 1600 px, đã qua trong full smoke. Kiểm tra trước smoke ghi CPU 9% và không phát hiện job kiểm thử hay build khác.
+
+[assistant]
+Bước 4/5. Smoke đã ghi nhận 114/403 ca qua, chưa có ca lỗi sau 18 phút. Tôi tiếp tục theo dõi đến khi có tổng kết và exit code.
+
+[assistant]
+Bước 4/5. Smoke đã qua 319/403 ca, gồm đủ 16 ca NPC sheet tại HEAD mới. Chưa ghi nhận ca lỗi.
+
+[assistant]
+Bước 5/5. Full smoke kết thúc với 403/403 ca qua, exit 0. Hash của JS và CSS phục vụ trên cả hai cổng đều khớp. Tôi đang kiểm tra các manifest và trạng thái cổng sau khi suite dừng.
+
+[assistant]
+**PR C fix round 2 passed C2.** All seven gates exited `0`, and full smoke passed **403/403** with `CI=1`. [Round 2 evidence](C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round2/README.md)
+
+| Revision | Value |
+| --- | --- |
+| HEAD | `f1dc182de37f64165526def0d64272ff701d716b` |
+| Tree | `a0ea6329441e75df363b356052528f1426233281` |
+| Local commit | `test(ui): exact npc sheet assertions` |
+
+### Diff, mutation probes, and GREEN
+
+The commit changes only the two tests introduced in PR C, with **10 insertions and 5 deletions**. It compares the projected profile and skills with `toStrictEqual` and retains the input-byte check. The browser tests now pin the complete Frugal description in its own row, the complete age and title text at 49 and 50, and each named progress bar’s accessible description and visible level text. [Exact diff](C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round2/assertions.diff)
+
+**14/14 deliberate mutations failed at the intended assertion**, including independent visible-text and accessible-description probes for Vagina and Ass. The real product then passed **5/5 focused unit tests** and **16/16 focused browser tests** with `CI=1`. The evidence retains the initial Windows module-loading attempts and the run that exposed the Frugal selector issue. [Mutation results](C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round2/probes/mutation-results.json) · [Unit GREEN](C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round2/probes/green-unit-CI1.txt) · [Browser GREEN](C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round2/probes/green-browser-CI1.txt)
+
+### C2 gates
+
+| Gate | Check | Exit | Result |
+| --- | --- | ---: | --- |
+| 1 | `git diff --check` against `origin/main` and `b94d308` | 0 / 0 | Both passed |
+| 2 | `npm run lint` | 0 | Passed |
+| 3 | `npm run typecheck` | 0 | Passed |
+| 4 | `npm run check:architecture` | 0 | 0 violations |
+| 5 | `npm run test:architecture` | 0 | 154 passed |
+| 6 | `npm test` | 0 | 3,081 passed |
+| 7 | `npm run build` | 0 | Production build created |
+
+[Full gate transcripts](C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round2/C2/gates-1-7.txt)
+
+**Smoke** ran in the shell that echoed `CI=1`. It finished in **33m 49s** with exit `0`, zero failed, and zero skipped. Served JS and CSS hashes matched the production build on both ports before and during smoke. CPU sampled 5% before the gates and 9% before smoke, with zero competing jobs detected in the snapshots and zero Windows sleep or resume events. [Smoke transcript](C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round2/C2/smoke-CI1.txt) · [Served-build hashes](C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round2/C2/served-assets-during-smoke.json) · [Machine and sleep records](C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round2/README.md)
+
+**Bundle gzip** measured **150,532 B** total, with **143,004 B JS**, **7,528 B CSS**, and **49,468 B** of headroom under the 200,000 B limit. The assigned worktree is clean and ports **4173 and 4174 are free**. [Bundle measurement](C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round2/C2/bundle-results.json) · [Final checkout](C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round2/final-checkout.json)
+
+The parent README and SHA-256 manifest are updated. `sha256sum -c` verified all 11 manifests, including the nested manifests. [Parent README](C:/Users/Admin/.t3/local-drafts/p7a-prC/README.md) · [Parent manifest](C:/Users/Admin/.t3/local-drafts/p7a-prC/SHA256SUMS.txt) · [Round 2 manifest](C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round2/SHA256SUMS.txt)

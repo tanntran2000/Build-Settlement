@@ -1,0 +1,57 @@
+HEAD=813805178ce4fe9e93c0c39ddee9143c19ea7286
+TREE=bb414ff2825ea37bd5c41a579de7dac82acbaf22
+BRANCH=feat/p7a-npc-sheet
+UTC_START=2026-11-18T13:45:10.229141+00:00
+COMMAND=["node", "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\node_modules\\vitest\\vitest.mjs", "run", "--config", "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prC-local-only\\fix-round2\\probes\\unit\\vitest.config.mjs", "-t", "projects the NPC profile and five skills"]
+CI=1
+STATUS:
+M packages/ui/src/__tests__/npc-sheet-view.test.ts
+ M tests/e2e/npc-sheet.spec.ts
+OUTPUT:
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/local-drafts/p7a-prC-local-only/fix-round2/probes/unit
+
+ ❯ __tests__/npc-sheet-view.test.ts (5 tests | 1 failed | 4 skipped) 23ms
+     × projects the NPC profile and five skills from life and character data 21ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  __tests__/npc-sheet-view.test.ts > NPC sheet projection > projects the NPC profile and five skills from life and character data
+AssertionError: expected { origin: 'Frontier', …(3) } to strictly equal { origin: 'Frontier', …(3) }
+
+- Expected
++ Received
+
+@@ -7,10 +7,11 @@
+    "origin": "Frontier",
+    "skills": [
+      {
+        "label": "Management",
+        "score": 40,
++       "unexpected": "mutation probe",
+      },
+      {
+        "label": "Technical",
+        "score": 65,
+      },
+
+ ❯ __tests__/npc-sheet-view.test.ts:28:52
+     26|     Object.assign(projected.skills[0], { unexpected: 'mutation probe' …
+     27|     const { origin, hobbies, affection, skills } = projected;
+     28|     expect({ origin, hobbies, affection, skills }).toStrictEqual({
+       |                                                    ^
+     29|       origin: 'Frontier',
+     30|       hobbies: ['Reading', 'Gardening'],
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 skipped (5)
+   Start at  20:45:11
+   Duration  945ms (transform 467ms, setup 0ms, import 612ms, tests 23ms, environment 0ms)
+
+
+EXIT_CODE=1
+SECONDS=1.909
+UTC_END=2026-11-18T13:45:12.034720+00:00

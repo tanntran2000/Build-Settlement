@@ -1,0 +1,37 @@
+{
+  "head": "f1dc182de37f64165526def0d64272ff701d716b",
+  "tree": "a0ea6329441e75df363b356052528f1426233281",
+  "ci": "1",
+  "command": [
+    "npm.cmd",
+    "run",
+    "test:smoke",
+    "--",
+    "--output",
+    "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prC-local-only\\fix-round2\\C2\\full"
+  ],
+  "shellCommand": [
+    "powershell.exe",
+    "-NoProfile",
+    "-NonInteractive",
+    "-File",
+    "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prC\\fix-round2\\C2\\invoke-full-smoke.ps1",
+    "-Artifacts",
+    "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prC-local-only\\fix-round2\\C2\\full"
+  ],
+  "utcStart": "2026-11-18T13:55:08.500956+00:00",
+  "utcEnd": "2026-11-18T14:28:57.025017+00:00",
+  "seconds": 2028.56,
+  "exitCode": 0,
+  "totals": {
+    "scheduled": 403,
+    "passed": 403,
+    "failed": 0,
+    "skipped": 0,
+    "did_not_run": 0,
+    "interrupted": 0,
+    "flaky": 0
+  },
+  "servedAssetsMatched": true,
+  "fullSuitePassed": true
+}

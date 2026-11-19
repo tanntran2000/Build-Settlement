@@ -1,0 +1,9 @@
+{
+  "path": "tests/e2e/world-npc-session.spec.ts",
+  "workingLine": 16,
+  "hunk": "E46",
+  "approvedCheckoutLine": " await expect(skills.locator('dl > div').filter({has:skills.getByText('Technical',{exact:true})}).locator('dd')).toHaveText('65');\r\n",
+  "proposedCheckoutLine": " await expect(skills.locator('dl > div').filter({has:page.getByText('Technical',{exact:true})}).locator('dd')).toHaveText('65');\r\n",
+  "applied": false,
+  "scoreAndLabelAssertionPreserved": true
+}

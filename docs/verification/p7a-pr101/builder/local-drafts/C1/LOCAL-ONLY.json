@@ -1,0 +1,270 @@
+{
+  "root": "C:/Users/Admin/.t3/local-drafts/p7a-prC-local-only",
+  "files": [
+    {
+      "path": "C1-compat/.last-run.json",
+      "bytes": 96,
+      "sha256": "ea7b5a7181d53dfdf15ef2e332675c6a143464f316d3b58b8bcfe629eb33edf1"
+    },
+    {
+      "path": "C1-compat/world-npc-session-New-Game-947d4-raits-and-post-skill-status-chromium/error-context.md",
+      "bytes": 23307,
+      "sha256": "0bb50056a9861e1d2b3499567222946379f5c52e5aff2c9f0bf6ac723e6a12f0"
+    },
+    {
+      "path": "C1-compat/world-npc-session-New-Game-947d4-raits-and-post-skill-status-chromium/trace.zip",
+      "bytes": 801187,
+      "sha256": "5ece80b9dd40c8f7518db9065cf5c9259c283d348f2df78c715663d7a4dd9bcd"
+    },
+    {
+      "path": "GREEN/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    {
+      "path": "GREEN/npc-sheet-NPC-sheet-access-57ae5-red-accessibility-at-1280px-chromium/attachments/18plus-44e6c141586d6b4fca14630726395d23492dc9b7.png",
+      "bytes": 50556,
+      "sha256": "bf241d3306aa9b5f75fc9048edfd5a1bacebac74dbc2c569f648b16afb555e3b"
+    },
+    {
+      "path": "GREEN/npc-sheet-NPC-sheet-access-57ae5-red-accessibility-at-1280px-chromium/attachments/history-9fee3156487678726a66c63f4b0ca7fc2780f294.png",
+      "bytes": 53706,
+      "sha256": "a751f231668117d5fec76e034bea1cdab7590f3db1ce122de69cf6e8b2986f0e"
+    },
+    {
+      "path": "GREEN/npc-sheet-NPC-sheet-access-57ae5-red-accessibility-at-1280px-chromium/attachments/npc-sheet-accessibility-1280-json-9f1b6c9cfe362846922a99ff4c559eb7253b96c8.json",
+      "bytes": 37172,
+      "sha256": "79e0792bcb9b1174c0de8d02f18da48c789914d03568762cf0d6945fbba58333"
+    },
+    {
+      "path": "GREEN/npc-sheet-NPC-sheet-access-57ae5-red-accessibility-at-1280px-chromium/attachments/profile-f344ae3439d213a1a466706a0ffa14c9db3f97eb.png",
+      "bytes": 85112,
+      "sha256": "b63eeeefcb42a1a1913d3c120997da0ea75d3761ec6a5351d3956af015900c1d"
+    },
+    {
+      "path": "GREEN/npc-sheet-NPC-sheet-access-57ae5-red-accessibility-at-1280px-chromium/attachments/skills-5020cae60357aabdc26530fbe785a1c02d9613c6.png",
+      "bytes": 44530,
+      "sha256": "839b8a7a46df623ee62fe3249fb716deec67dd757ab5b82364b7a88a6a291bce"
+    },
+    {
+      "path": "GREEN/npc-sheet-NPC-sheet-access-57ae5-red-accessibility-at-1280px-chromium/npc-sheet-18plus-1280.png",
+      "bytes": 50556,
+      "sha256": "bf241d3306aa9b5f75fc9048edfd5a1bacebac74dbc2c569f648b16afb555e3b"
+    },
+    {
+      "path": "GREEN/npc-sheet-NPC-sheet-access-57ae5-red-accessibility-at-1280px-chromium/npc-sheet-accessibility-1280.json",
+      "bytes": 37172,
+      "sha256": "79e0792bcb9b1174c0de8d02f18da48c789914d03568762cf0d6945fbba58333"
+    },
+    {
+      "path": "GREEN/npc-sheet-NPC-sheet-access-57ae5-red-accessibility-at-1280px-chromium/npc-sheet-history-1280.png",
+      "bytes": 53706,
+      "sha256": "a751f231668117d5fec76e034bea1cdab7590f3db1ce122de69cf6e8b2986f0e"
+    },
+    {
+      "path": "GREEN/npc-sheet-NPC-sheet-access-57ae5-red-accessibility-at-1280px-chromium/npc-sheet-profile-1280.png",
+      "bytes": 85112,
+      "sha256": "b63eeeefcb42a1a1913d3c120997da0ea75d3761ec6a5351d3956af015900c1d"
+    },
+    {
+      "path": "GREEN/npc-sheet-NPC-sheet-access-57ae5-red-accessibility-at-1280px-chromium/npc-sheet-skills-1280.png",
+      "bytes": 44530,
+      "sha256": "839b8a7a46df623ee62fe3249fb716deec67dd757ab5b82364b7a88a6a291bce"
+    },
+    {
+      "path": "GREEN/npc-sheet-NPC-sheet-access-97b0d-red-accessibility-at-1600px-chromium/attachments/npc-sheet-accessibility-1600-json-6b498544ced985f7ba82d7ca5a49f97153331bab.json",
+      "bytes": 37218,
+      "sha256": "4cf2e66a767b41fb8095d6e1f2ef8093b82f7e70afbece162ad9660d16f49019"
+    },
+    {
+      "path": "GREEN/npc-sheet-NPC-sheet-access-97b0d-red-accessibility-at-1600px-chromium/npc-sheet-accessibility-1600.json",
+      "bytes": 37218,
+      "sha256": "4cf2e66a767b41fb8095d6e1f2ef8093b82f7e70afbece162ad9660d16f49019"
+    },
+    {
+      "path": "GREEN/npc-sheet-NPC-sheet-reflow-c2e06-life-report-reflow-at-375px-chromium/attachments/npc-sheet-reflow-375-json-fda00cc5d90ecc868df680f00beb0c430aa17a84.json",
+      "bytes": 44848,
+      "sha256": "5c7152d41491ba42a277e5674f806900fd0785cc645c4754be6613b8111fb81d"
+    },
+    {
+      "path": "GREEN/npc-sheet-NPC-sheet-reflow-c2e06-life-report-reflow-at-375px-chromium/npc-sheet-reflow-375.json",
+      "bytes": 44848,
+      "sha256": "5c7152d41491ba42a277e5674f806900fd0785cc645c4754be6613b8111fb81d"
+    },
+    {
+      "path": "GREEN/npc-sheet-NPC-sheet-reflow-e2345-life-report-reflow-at-320px-chromium/attachments/npc-sheet-reflow-320-json-59ac9c6efe5013fbb6d207f90f59259e3f2cc9ad.json",
+      "bytes": 44596,
+      "sha256": "a413093d788a349532158a2022e6760808cbc51382cbd9ebfc750d0f373f25b5"
+    },
+    {
+      "path": "GREEN/npc-sheet-NPC-sheet-reflow-e2345-life-report-reflow-at-320px-chromium/npc-sheet-reflow-320.json",
+      "bytes": 44596,
+      "sha256": "a413093d788a349532158a2022e6760808cbc51382cbd9ebfc750d0f373f25b5"
+    },
+    {
+      "path": "RED/.last-run.json",
+      "bytes": 831,
+      "sha256": "e870f6c9f2f7fcf2aeeb7bcfb91b7f05b7217c831b901877ce7a4ea2b726f563"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-access-57ae5-red-accessibility-at-1280px-chromium/error-context.md",
+      "bytes": 11394,
+      "sha256": "cf20e410fb97d19a8e4dd5cfbb2781dcaeb8fc017e7c806c370c10914a1ddfec"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-access-57ae5-red-accessibility-at-1280px-chromium/trace.zip",
+      "bytes": 336531,
+      "sha256": "4783acaab3335ae095452cbb9cd5a6a8d3da0904405a80291a691115207b64f7"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-access-97b0d-red-accessibility-at-1600px-chromium/error-context.md",
+      "bytes": 11394,
+      "sha256": "5eb483605a92f03a758fb0f21c9c4769c6f583bc60e46381ac37441970e21df6"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-access-97b0d-red-accessibility-at-1600px-chromium/trace.zip",
+      "bytes": 315617,
+      "sha256": "ee5a69897eb2a44c731beb4706280ad7a8374044c0457db6c2d8fccc41f21d14"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-at-128-26391-comes-and-keeps-full-parity-chromium/error-context.md",
+      "bytes": 16980,
+      "sha256": "e1a80bd6ee4bf5ee432a45b9b78f9ca4164d2ddb6acbc02fbd5358348435d585"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-at-128-26391-comes-and-keeps-full-parity-chromium/trace.zip",
+      "bytes": 238102,
+      "sha256": "57d8591012175f819aeb3991b410830adbeb545f3b485d065f2f64e18863af54"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-at-128-34361-obbies-traits-and-affection-chromium/error-context.md",
+      "bytes": 11401,
+      "sha256": "72fc993ba8fccdfbe5133febe61b0b3414656c114453d5f99ea5490cb8a576a7"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-at-128-34361-obbies-traits-and-affection-chromium/trace.zip",
+      "bytes": 349580,
+      "sha256": "6f39cee59f19a604ce0f20eb5a40784e969af5890c1e30a66119f72080d1526f"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-at-128-3d0e3-r-and-approved-numeric-rows-chromium/error-context.md",
+      "bytes": 11389,
+      "sha256": "94fbd3744fe6341f5b51da41229b5f0b47c63381633008b246139fa32cd7b2cc"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-at-128-3d0e3-r-and-approved-numeric-rows-chromium/trace.zip",
+      "bytes": 349538,
+      "sha256": "078e24f631fff8f2184d21db082df106ea7985900147efc970c4777aa9d63720"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-at-128-3f576--and-linked-keyboard-panels-chromium/error-context.md",
+      "bytes": 11391,
+      "sha256": "868a3d49b00ef8cd2f8adf7fcf1e8787c29cba506e7d109e777f5a834370b8d6"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-at-128-3f576--and-linked-keyboard-panels-chromium/trace.zip",
+      "bytes": 349539,
+      "sha256": "38d88f8cdadaf91cd26fbc8199851ce0bc5749275b7e87d5a8740210b7b5ad06"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-at-128-c5aac-ependent-Not-working-status-chromium/error-context.md",
+      "bytes": 11432,
+      "sha256": "511c8ac8a7139fe9d8f3c10de214c1d90df3396c290895e50f1fdeaf6d3ea2f8"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-at-128-c5aac-ependent-Not-working-status-chromium/trace.zip",
+      "bytes": 351656,
+      "sha256": "261338fb0f98c2feeb198c9af6f53348edb6896a75bcc9c28f2ead5165dc23e8"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-at-128-cd692-nd-all-twenty-recent-events-chromium/error-context.md",
+      "bytes": 11397,
+      "sha256": "5418955d44020d70460521e0604d5d2b7341f9108fb78cbd9b793fae0bb25b0b"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-at-128-cd692-nd-all-twenty-recent-events-chromium/trace.zip",
+      "bytes": 349541,
+      "sha256": "630d20cd54c9daa343255057f0f731b852b4ec74c0b768a1963bbb9d8ef0aace"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-at-160-1418b-comes-and-keeps-full-parity-chromium/error-context.md",
+      "bytes": 16980,
+      "sha256": "2d64b026904973831ff782049cb70331d14c6b79af7642cf15099787adfb7c13"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-at-160-1418b-comes-and-keeps-full-parity-chromium/trace.zip",
+      "bytes": 236555,
+      "sha256": "190e2609ecea798a2f276af2494e9fed42ebc771c50b816d2c043a32d3ce8a32"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-at-160-20326-ependent-Not-working-status-chromium/error-context.md",
+      "bytes": 11432,
+      "sha256": "7457d2e4d6c1fcbf46d4db7d8c2d2a9d8069f2da0eaddf82527ebef73152bf7e"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-at-160-20326-ependent-Not-working-status-chromium/trace.zip",
+      "bytes": 318117,
+      "sha256": "3291a40da26b1cc6d2da79e63b05e6e9f7e7db819fe7556f79d2f3fd5e3c6b8d"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-at-160-4473f-r-and-approved-numeric-rows-chromium/error-context.md",
+      "bytes": 11389,
+      "sha256": "78e31eeca10a20c4c413465e6397995c939710fd4350714fe9292bf9773b6415"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-at-160-4473f-r-and-approved-numeric-rows-chromium/trace.zip",
+      "bytes": 305869,
+      "sha256": "e7d75314b773b14c53cc8251df00eb7dc9a44c1297e0050eda95d5c0a80b8614"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-at-160-60d72--and-linked-keyboard-panels-chromium/error-context.md",
+      "bytes": 11391,
+      "sha256": "0aace32996ac92903e99d73db03a55c206cdf796196108fd20d6d93d7f404f68"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-at-160-60d72--and-linked-keyboard-panels-chromium/trace.zip",
+      "bytes": 315602,
+      "sha256": "8aea71f3fbe35a63b38b196b08b410b086bc32cfed3c93a19ea97ae10e2c2eb8"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-at-160-7b2de-obbies-traits-and-affection-chromium/error-context.md",
+      "bytes": 11401,
+      "sha256": "0ebf208df80bcf1e93d7ed183dadc538f4c8894bdd3001486bcf60befb7fc331"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-at-160-7b2de-obbies-traits-and-affection-chromium/trace.zip",
+      "bytes": 315599,
+      "sha256": "afe364d1beffc1621508960c20a76f4f239e6dc8ebd969948251c6637e7643f0"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-at-160-eb888-nd-all-twenty-recent-events-chromium/error-context.md",
+      "bytes": 11397,
+      "sha256": "4d8625f613aa9cf8242371df990e81b4bd4e597b6f08013cf5ae04b0c46b44f9"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-at-160-eb888-nd-all-twenty-recent-events-chromium/trace.zip",
+      "bytes": 315644,
+      "sha256": "1585fd42833ac4583a90e3bc955f00f7ea164ad0a01fcf1de29e79ee1c212ef3"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-reflow-c2e06-life-report-reflow-at-375px-chromium/error-context.md",
+      "bytes": 12775,
+      "sha256": "3cad40973f58947b5b86646bcf887a1e27a6350dbc40bcd0c95ef8d0bc39f97a"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-reflow-c2e06-life-report-reflow-at-375px-chromium/trace.zip",
+      "bytes": 306121,
+      "sha256": "76c2ee6c1ce1b2703a3f0d0f215ae339a10ce4423c76ecdf051ab48f3a6df531"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-reflow-e2345-life-report-reflow-at-320px-chromium/error-context.md",
+      "bytes": 12775,
+      "sha256": "64f5bdaf31a727e9b42afc10778962cc04adb15980c75d2ed874c6241934099d"
+    },
+    {
+      "path": "RED/npc-sheet-NPC-sheet-reflow-e2345-life-report-reflow-at-320px-chromium/trace.zip",
+      "bytes": 293517,
+      "sha256": "4fa46a5987f2b43c5281ce439ed9ef5d842293606c0b4774547e40027c0ab871"
+    }
+  ]
+}

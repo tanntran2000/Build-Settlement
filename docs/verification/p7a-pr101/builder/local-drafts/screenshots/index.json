@@ -1,0 +1,46 @@
+[
+  {
+    "tab": "Profile",
+    "file": "screenshots/npc-sheet-profile-1280.png",
+    "sha256": "b63eeeefcb42a1a1913d3c120997da0ea75d3761ec6a5351d3956af015900c1d",
+    "width": 1280,
+    "height": 900,
+    "source": "C:/Users/Admin/.t3/local-drafts/p7a-prC-local-only/C2/full/npc-sheet-NPC-sheet-access-57ae5-red-accessibility-at-1280px-chromium/attachments/profile-533caf79695aa8f832b15e4c4dfa46e68217038e.png",
+    "head": "133d1f0e996ef85826fb6ef63fdffeef64de2572",
+    "tree": "897e330b088442cfd421e892c7c11c79d103aa0d",
+    "matchesOriginalC1": true
+  },
+  {
+    "tab": "Skills",
+    "file": "screenshots/npc-sheet-skills-1280.png",
+    "sha256": "839b8a7a46df623ee62fe3249fb716deec67dd757ab5b82364b7a88a6a291bce",
+    "width": 1280,
+    "height": 900,
+    "source": "C:/Users/Admin/.t3/local-drafts/p7a-prC-local-only/C2/full/npc-sheet-NPC-sheet-access-57ae5-red-accessibility-at-1280px-chromium/attachments/skills-b6bdb3ad82c3c1be75accbb4fd194b9445ad1a82.png",
+    "head": "133d1f0e996ef85826fb6ef63fdffeef64de2572",
+    "tree": "897e330b088442cfd421e892c7c11c79d103aa0d",
+    "matchesOriginalC1": true
+  },
+  {
+    "tab": "18+",
+    "file": "screenshots/npc-sheet-18plus-1280.png",
+    "sha256": "bf241d3306aa9b5f75fc9048edfd5a1bacebac74dbc2c569f648b16afb555e3b",
+    "width": 1280,
+    "height": 900,
+    "source": "C:/Users/Admin/.t3/local-drafts/p7a-prC-local-only/C2/full/npc-sheet-NPC-sheet-access-57ae5-red-accessibility-at-1280px-chromium/attachments/18plus-78ccb04c70026a10ea2728f5488e971376fffa1f.png",
+    "head": "133d1f0e996ef85826fb6ef63fdffeef64de2572",
+    "tree": "897e330b088442cfd421e892c7c11c79d103aa0d",
+    "matchesOriginalC1": true
+  },
+  {
+    "tab": "History",
+    "file": "screenshots/npc-sheet-history-1280.png",
+    "sha256": "a751f231668117d5fec76e034bea1cdab7590f3db1ce122de69cf6e8b2986f0e",
+    "width": 1280,
+    "height": 900,
+    "source": "C:/Users/Admin/.t3/local-drafts/p7a-prC-local-only/C2/full/npc-sheet-NPC-sheet-access-57ae5-red-accessibility-at-1280px-chromium/attachments/history-7a3e8f0e77e2558699354125005df1d7ccf6aa2a.png",
+    "head": "133d1f0e996ef85826fb6ef63fdffeef64de2572",
+    "tree": "897e330b088442cfd421e892c7c11c79d103aa0d",
+    "matchesOriginalC1": true
+  }
+]

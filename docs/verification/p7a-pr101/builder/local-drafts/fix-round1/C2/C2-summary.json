@@ -1,0 +1,130 @@
+{
+    "head":  "813805178ce4fe9e93c0c39ddee9143c19ea7286",
+    "tree":  "bb414ff2825ea37bd5c41a579de7dac82acbaf22",
+    "base":  "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+    "originMain":  "dac604054d7cbbf14a0a42209a3ff560380f2956",
+    "utcStart":  "2026-11-18T12:12:37.5654355Z",
+    "utcEnd":  "2026-11-18T12:50:34.0125927Z",
+    "checks":  [
+                   {
+                       "name":  "gate-1-main",
+                       "command":  [
+                                       "git",
+                                       "diff",
+                                       "--check",
+                                       "origin/main...HEAD"
+                                   ],
+                       "exitCode":  0,
+                       "log":  "gate-1-main.txt"
+                   },
+                   {
+                       "name":  "gate-1-prb",
+                       "command":  [
+                                       "git",
+                                       "diff",
+                                       "--check",
+                                       "b94d3083dd71722f329b1bf444fa9dec9b0fd309...HEAD"
+                                   ],
+                       "exitCode":  0,
+                       "log":  "gate-1-prb.txt"
+                   },
+                   {
+                       "name":  "gate-2-lint",
+                       "command":  [
+                                       "npm.cmd",
+                                       "run",
+                                       "lint"
+                                   ],
+                       "exitCode":  0,
+                       "log":  "gate-2-lint.txt"
+                   },
+                   {
+                       "name":  "gate-3-typecheck",
+                       "command":  [
+                                       "npm.cmd",
+                                       "run",
+                                       "typecheck"
+                                   ],
+                       "exitCode":  0,
+                       "log":  "gate-3-typecheck.txt"
+                   },
+                   {
+                       "name":  "gate-4-architecture",
+                       "command":  [
+                                       "npm.cmd",
+                                       "run",
+                                       "check:architecture"
+                                   ],
+                       "exitCode":  0,
+                       "log":  "gate-4-architecture.txt"
+                   },
+                   {
+                       "name":  "gate-5-architecture-tests",
+                       "command":  [
+                                       "npm.cmd",
+                                       "run",
+                                       "test:architecture"
+                                   ],
+                       "exitCode":  0,
+                       "log":  "gate-5-architecture-tests.txt"
+                   },
+                   {
+                       "name":  "gate-6-unit",
+                       "command":  [
+                                       "npm.cmd",
+                                       "test"
+                                   ],
+                       "exitCode":  0,
+                       "log":  "gate-6-unit.txt"
+                   },
+                   {
+                       "name":  "gate-7-build",
+                       "command":  [
+                                       "npm.cmd",
+                                       "run",
+                                       "build"
+                                   ],
+                       "exitCode":  0,
+                       "log":  "gate-7-build.txt"
+                   },
+                   {
+                       "name":  "bundle-measurement",
+                       "command":  [
+                                       "node",
+                                       "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prC\\fix-round1\\C2/measure-bundle.mjs"
+                                   ],
+                       "exitCode":  0,
+                       "log":  "bundle-measurement.txt"
+                   },
+                   {
+                       "name":  "pre-smoke-regression-build",
+                       "command":  [
+                                       "npm.cmd",
+                                       "run",
+                                       "build:regression",
+                                       "--workspace=@haven/ui"
+                                   ],
+                       "exitCode":  0,
+                       "log":  "pre-smoke-regression-build.txt"
+                   },
+                   {
+                       "name":  "pre-smoke-preview-verification",
+                       "command":  [
+                                       "python",
+                                       "-B",
+                                       "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prC\\fix-round1\\C2/preview_proof.py"
+                                   ],
+                       "exitCode":  0,
+                       "log":  "pre-smoke-preview-verification.txt"
+                   }
+               ],
+    "fullSmokeStarted":  true,
+    "exitCode":  0,
+    "problem":  null,
+    "finalProblem":  null,
+    "sleepAuditExitCode":  0,
+    "gitStatus":  [
+
+                  ],
+    "portsFree":  true
+}

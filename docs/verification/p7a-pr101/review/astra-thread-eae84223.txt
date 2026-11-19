@@ -1,0 +1,81 @@
+P7 Astra 6.2 (PR #100 review)
+mcp:eae84223-a598-4b5d-82c4-ac2ffd533c5e  completed  codex/gpt-6.2-astra
+
+[user]
+Round 3 for PR #100 (same head b94d3083dd71722f329b1bf444fa9dec9b0fd309, tree 947f604e17427d916e1ef0e21083dbc2f72920b6; no code change since your round 2). Review only, same limits as before.
+
+Since your round 2:
+1. Builder (Sol 6.2) ran a clean cold-start check, diagnostic only: C:/Users/Admin/.t3/local-drafts/p7a-prB/cold-start/README.md (10 alternating fresh-process pairs main dac6040 / b94d308, external END_WEEK timing only, no hooks). Tick 1 median 57.03 ms main vs 58.16 ms head; paired median +2.70 ms, head slower in 6/10; full session validation is the largest sampled cost on both.
+2. Owner (Tân), verbatim: "chấp nhận làm tối ưu sau nhưng trước khi đó hãy nên lưu lại thông tin các lỗi và lý do cần tối ưu". Recorded as Plan correction 6 at 18c17d9; binding plan C:/Users/Admin/.t3/local-drafts/p7a-prB/binding-plan-18c17d9.md (read "### Correction 6"). The risk and the reasons to optimise are R-026 in docs/verification/PLAYTEST-RISK-REGISTER.md on branch docs/playtest-risk-register (dd382ea).
+
+Check:
+1. HEAD and tree unchanged; no new commit on feat/p7a-npc-life-week.
+2. The cold-start evidence supports the numbers quoted in Correction 6 and R-026 (recompute from the raw JSON; SHA256SUMS verifies).
+3. Whether your P2 is resolved by the owner's acceptance under Correction 6, and whether any other P0–P2 remains at this head.
+
+Write C:/Users/Admin/.t3/local-drafts/p7a-prB/astra-review/astra-round3.md (UTF-8) ending with `VERDICT: PASS` or `VERDICT: FAIL`, and reply with a short summary.
+
+[assistant]
+I’m checking the feature ref first, then I’ll compare the raw timings with Correction 6 and R-026 to determine whether the owner’s decision closes the round-two P2.
+
+[assistant]
+All 113 files in the cold-start manifest verified. The raw timestamps reproduce the published medians and breach counts, and the Git risk register records Tân’s decision to defer optimization. That closes the round-two P2 for PR #100 while keeping R-026 open.
+
+[assistant]
+**VERDICT: PASS** for PR #100 at unchanged head `b94d308`. Open findings: **P0 0 · P1 0 · P2 0 · P3 0**. [Round 3 review](C:/Users/Admin/.t3/local-drafts/p7a-prB/astra-review/astra-round3.md)
+
+The raw data reproduced the cold first-tick medians of **57.03 ms on main** and **58.16 ms on PR B**. The paired median difference was **+2.70 ms**, with PR B slower in 6 of 10 pairs. All **113/113** cold-start manifest entries verified.
+
+Correction 6 closes the round-two P2 for this PR. Tân accepted the measured budget miss and deferred optimization. The **under-50 ms target** remains in force, and R-026 records the measurements and reasons for follow-up. [Committed R-026 entry](https://github.com/tanntran2000/Build-Settlement/blob/dd382eaf1458a504e376fd91043214899c04a060/docs/verification/PLAYTEST-RISK-REGISTER.md#L66-L104)
+
+[user]
+P7 Astra 6.2: independent review of P7-A PR C (NPC sheet UI). Review only: do not edit product files, commit, push, comment on GitHub or merge. Do not run the full smoke or start servers; single vitest files or single Playwright specs are allowed only if you need proof, and only after confirming ports 4173/4174 are free.
+
+Target
+- Branch feat/p7a-npc-sheet (pushed, no PR yet), head 813805178ce4fe9e93c0c39ddee9143c19ea7286, tree bb414ff2825ea37bd5c41a579de7dac82acbaf22. Stacked on PR B head b94d3083dd71722f329b1bf444fa9dec9b0fd309 (PR #100, held at G5 for the picomatch npm-audit advisory); main is dac604054d7cbbf14a0a42209a3ff560380f2956. Review the PR C range b94d308..8138051 (2 commits: 133d1f0 `feat(ui): npc sheet`, 8138051 `fix(ui): npc sheet panel is not a tab stop`).
+- Worktree (read only): C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01. Confirm HEAD and tree first.
+
+Binding documents (read fully)
+- Plan with corrections 1–10: C:/Users/Admin/.t3/local-drafts/p7a-prC/binding-plan-21c4efa.md. PR C = Tasks C0–C2; Global Constraints; Decisions 2, 5, 7; PR C allowlist; Corrections 7 (18+ labels as written), 8 (Step 0: D1 scope E01–E46 + 4 new files + TileManagement.svelte + 7 test files; D2 UI; D3 base), 9 (E46 locator bytes), 10 (panel not a tab stop).
+- Spec v0.1: C:/Users/Admin/.t3/local-drafts/p7a-prC/binding-spec-910f169.md (§6 UI).
+- Builder Step 0 packet pinned by Correction 8: C:/Users/Admin/.t3/local-drafts/p7a-prC/STEP0-HOLD.md (SHA-256 6bdd83f921811ea8d95408b015ec6e093ff8ade9baccffc1a600dd57f412e096) and C0-edit-inventory.json (SHA-256 c54c0538f72331511baada892f409352edcce4d7ad5bbef28968f5e219247353). Builder evidence: C:/Users/Admin/.t3/local-drafts/p7a-prC/README.md, C1/, C2/HOLD.md, fix-round1/README.md.
+- AGENTS.md.
+
+Owner decisions (Tân, verbatim): "trong lúc chờ thì bắt đầu chuẩn bị PR C đi", "As written (Recommended)", "Approve D1 as listed (Recommended)", "Approve D2 as proposed (Recommended)", "Stack on PR B now (Recommended)", "Approve E46 fix (Recommended)", "Panel not a tab stop (Recommended)".
+
+Check, at minimum
+1. Per-file ledger for every path changed in b94d308..8138051 against Correction 8's set (4 allowlisted product files, TileManagement.svelte, 4 new files, 7 existing test/helper files); anything else is a finding.
+2. Byte-exact reconstruction of E01–E46 against C0-edit-inventory.json, with E46 per Correction 9; the only later change is Correction 10 (NpcSheet.svelte panel tabindex removed, and the npc-sheet.spec.ts keyboard case). Any loosened or removed assertion in an existing test, partial matcher, new timeout or skip is P1. Where an existing assertion moved to the new sheet, confirm the same fact is still asserted.
+3. UI behaviour vs Correction 8 D2: Profile (Life origin, life-derived age/title, hobbies, traits, affection; no NPC Health; Stress moved to Skills), Skills (five skills, Stress bands Calm 0–49 / Tired 50–79 / Exhausted 80–100, "Not working"), 18+ (Mind Light 0–33 / Balanced 34–66 / Dark 67–100 with white/pink ends, marker and text; Lust, Arousal, Beauty; labels exactly Hand, Mouth, Breast, Vagina, Ass with levels and caps 100/200/300; numbers, levels, bars and band labels only), History (Posts, Wellbeing, Milestones, Other; newest first; 20 cap), weekly report "NPC life" rows with names and "Unknown NPC", omitted when empty; E20 ends the D4 exclusion and the reader rebuilds `npcLife` from visible rows.
+4. Accessibility: WAI-ARIA tabs (one tab stop, Left/Right wrap, Home/End, aria links), panel not a tab stop, bands never colour-only, contrast/focus checks at 1280/1600, reflow at 320/375.
+5. LAW-02 (UI reads state and dispatches only; no write path), no change in core/simulation/persistence, no new dependency, no docs/ or .github/ change, English text, no other game named, bundle 150.534 kB gzip under 200 kB.
+6. Screenshots: C:/Users/Admin/.t3/local-drafts/p7a-prC/screenshots/*.png match the described UI.
+
+Results already recorded (verify they are about this head; do not rerun the smoke)
+- Builder at 8138051: gates 1–7 exit 0 (3,081 unit), CI=1 smoke 403/403, evidence fix-round1/.
+- Claude (Tester) at 8138051: gates 1–7 and CI=1 smoke, log D:/QI Technology/Temp/claude/22ffac96722a05a9/e7d04773-dfa7-4a71-9bc5-09bb6a13d94b/scratchpad/p7a-prC/claude-gates-1-7-and-smoke-8138051.txt.
+
+Output
+- Write C:/Users/Admin/.t3/local-drafts/p7a-prC/astra-review/astra-round1.md (UTF-8; create the folder): head/tree checked, per-file ledger, E01–E46 reconstruction table, findings P0–P3 with file:line and why, final line `VERDICT: PASS` or `VERDICT: FAIL` (PASS = no P0–P2).
+- Reply in this thread with a short summary: verdict, finding counts, file path.
+
+[assistant]
+I’m checking HEAD and tree first. Then I’ll compare the two PR C commits with the approved edits and trace the UI behavior against the tests, screenshots and gate logs.
+
+[assistant]
+HEAD and tree match the target. I’m using the accessibility skill for the keyboard and contrast checks alongside the code-review and codebase-memory skills.
+
+[assistant]
+All 46 approved edits match byte for byte, including the corrected E46 locator. I found a partial matcher in the new projection test, which the review instructions classify as P1. I’m checking the screenshots and recorded results before writing the verdict.
+
+[assistant]
+Both gate logs identify the requested head and record 3,081 unit tests and 403 smoke tests passing. All four published screenshots match the captures from that head. I also found that the new Profile browser test accepts Frugal’s description when another trait’s text appears in its place.
+
+[assistant]
+**VERDICT: FAIL** at `8138051`. **P0 0 · P1 2 · P2 0 · P3 1.**
+
+Two partial matchers block approval. The projection test accepts extra fields in a skill row, and the Profile test accepts another trait’s description for Frugal. The P3 concerns two 18+ rows whose checks can both pass with only one visible level label.
+
+All 16 changed paths were authorized, and all 46 approved edits matched byte for byte. Builder and Tester each recorded 3,081/3,081 unit tests and 403/403 smoke tests passing at the reviewed head.
+
+[Full review with file locations and reconstruction table](C:/Users/Admin/.t3/local-drafts/p7a-prC/astra-review/astra-round1.md)

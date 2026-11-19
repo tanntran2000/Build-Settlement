@@ -1,0 +1,55 @@
+{
+  "kind": "C2 clean production build at exact HEAD",
+  "utc": "2026-11-18T12:15:47.807Z",
+  "head": "813805178ce4fe9e93c0c39ddee9143c19ea7286",
+  "tree": "bb414ff2825ea37bd5c41a579de7dac82acbaf22",
+  "status": "",
+  "node": "v24.19.0",
+  "compression": "zlib gzipSync default, same as PR B",
+  "baseline": {
+    "jsGzipBytes": 139905,
+    "cssGzipBytes": 7152,
+    "combinedGzipBytes": 147057
+  },
+  "current": {
+    "jsGzipBytes": 143006,
+    "cssGzipBytes": 7528,
+    "combinedGzipBytes": 150534
+  },
+  "deltaBytes": {
+    "js": 3101,
+    "css": 376,
+    "combined": 3477
+  },
+  "previousPrC": {
+    "head": "133d1f0e996ef85826fb6ef63fdffeef64de2572",
+    "jsGzipBytes": 143003,
+    "cssGzipBytes": 7528,
+    "combinedGzipBytes": 150531
+  },
+  "deltaFromPreviousBytes": {
+    "js": 3,
+    "css": 0,
+    "combined": 3
+  },
+  "budgetBytes": 200000,
+  "remainingBudgetBytes": 49466,
+  "files": [
+    {
+      "path": "assets/index-D94IJs5c.css",
+      "entry": true,
+      "bytes": 37312,
+      "gzipBytes": 7528,
+      "sha256": "da3d5e95ed95e7033a8d972ddc7d01b36086c01586d073876873b485f38dc447",
+      "gzipSha256": "a0429b688ae46dd35f34ed48ada31c944b40898fd1b4eecb1c58f4df13adfa15"
+    },
+    {
+      "path": "assets/index-D_SHidwJ.js",
+      "entry": true,
+      "bytes": 458228,
+      "gzipBytes": 143006,
+      "sha256": "d3bb04f520d7c2b590337981c1bae2d466c67c9ed89f9bf16980d97b9dcae812",
+      "gzipSha256": "5f1cf6b3327cb62d69d849b06783821de6aae8fbdc2754151163a03f125f4774"
+    }
+  ]
+}

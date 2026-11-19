@@ -1,0 +1,101 @@
+HEAD=b94d3083dd71722f329b1bf444fa9dec9b0fd309
+TREE=947f604e17427d916e1ef0e21083dbc2f72920b6
+BRANCH=feat/p7a-npc-sheet
+UTC_START=2026-11-18T08:51:26.249012+00:00
+COMMAND=["npm.cmd", "test", "--", "packages/ui/src/__tests__/npc-sheet-view.test.ts"]
+CI=
+STATUS:
+?? packages/ui/src/__tests__/npc-sheet-view.test.ts
+?? tests/e2e/npc-sheet.spec.ts
+OUTPUT:
+
+> build-settlement@0.1.0 test
+> vitest run packages/ui/src/__tests__/npc-sheet-view.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/npc-sheet-view.test.ts (5 tests | 5 failed) 33ms
+     × projects the NPC profile and five skills from life and character data 16ms
+     × assigns the exact Stress bands and reads working independently 5ms
+     × assigns the exact Mind bands and meter value 3ms
+     × keeps the approved Sex-exp part order, labels and level caps 4ms
+     × groups History counters and keeps the newest twenty in display order 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/npc-sheet-view.test.ts > NPC sheet projection > projects the NPC profile and five skills from life and character data
+AssertionError: NPC sheet projection is required: expected undefined to be defined
+ ❯ project packages/ui/src/__tests__/npc-sheet-view.test.ts:8:54
+      6| function project() {
+      7|   const module = modules['../npc-sheet-view.ts'];
+      8|   expect(module, 'NPC sheet projection is required').toBeDefined();
+       |                                                      ^
+      9|   return module.buildNpcSheetView;
+     10| }
+ ❯ packages/ui/src/__tests__/npc-sheet-view.test.ts:25:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  packages/ui/src/__tests__/npc-sheet-view.test.ts > NPC sheet projection > assigns the exact Stress bands and reads working independently
+AssertionError: NPC sheet projection is required: expected undefined to be defined
+ ❯ project packages/ui/src/__tests__/npc-sheet-view.test.ts:8:54
+      6| function project() {
+      7|   const module = modules['../npc-sheet-view.ts'];
+      8|   expect(module, 'NPC sheet projection is required').toBeDefined();
+       |                                                      ^
+      9|   return module.buildNpcSheetView;
+     10| }
+ ❯ packages/ui/src/__tests__/npc-sheet-view.test.ts:38:36
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  packages/ui/src/__tests__/npc-sheet-view.test.ts > NPC sheet projection > assigns the exact Mind bands and meter value
+AssertionError: NPC sheet projection is required: expected undefined to be defined
+ ❯ project packages/ui/src/__tests__/npc-sheet-view.test.ts:8:54
+      6| function project() {
+      7|   const module = modules['../npc-sheet-view.ts'];
+      8|   expect(module, 'NPC sheet projection is required').toBeDefined();
+       |                                                      ^
+      9|   return module.buildNpcSheetView;
+     10| }
+ ❯ packages/ui/src/__tests__/npc-sheet-view.test.ts:49:36
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  packages/ui/src/__tests__/npc-sheet-view.test.ts > NPC sheet projection > keeps the approved Sex-exp part order, labels and level caps
+AssertionError: NPC sheet projection is required: expected undefined to be defined
+ ❯ project packages/ui/src/__tests__/npc-sheet-view.test.ts:8:54
+      6| function project() {
+      7|   const module = modules['../npc-sheet-view.ts'];
+      8|   expect(module, 'NPC sheet projection is required').toBeDefined();
+       |                                                      ^
+      9|   return module.buildNpcSheetView;
+     10| }
+ ❯ packages/ui/src/__tests__/npc-sheet-view.test.ts:61:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  packages/ui/src/__tests__/npc-sheet-view.test.ts > NPC sheet projection > groups History counters and keeps the newest twenty in display order
+AssertionError: NPC sheet projection is required: expected undefined to be defined
+ ❯ project packages/ui/src/__tests__/npc-sheet-view.test.ts:8:54
+      6| function project() {
+      7|   const module = modules['../npc-sheet-view.ts'];
+      8|   expect(module, 'NPC sheet projection is required').toBeDefined();
+       |                                                      ^
+      9|   return module.buildNpcSheetView;
+     10| }
+ ❯ packages/ui/src/__tests__/npc-sheet-view.test.ts:71:36
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed (5)
+   Start at  15:51:28
+   Duration  1.23s (transform 439ms, setup 0ms, import 588ms, tests 33ms, environment 0ms)
+
+
+EXIT_CODE=1
+SECONDS=3.669
+UTC_END=2026-11-18T08:51:29.813949+00:00

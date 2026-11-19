@@ -1,0 +1,33 @@
+HEAD=813805178ce4fe9e93c0c39ddee9143c19ea7286
+TREE=bb414ff2825ea37bd5c41a579de7dac82acbaf22
+BRANCH=feat/p7a-npc-sheet
+UTC_START=2026-11-18T13:45:31.452360+00:00
+COMMAND=["node", "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\node_modules\\@playwright\\test\\cli.js", "test", "--config", "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prC-local-only\\fix-round2\\probes\\browser\\playwright.config.ts", "--project", "chromium", "--reporter", "list,json", "--output", "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prC-local-only\\fix-round2\\probes\\browser-failures"]
+CI=1
+STATUS:
+M packages/ui/src/__tests__/npc-sheet-view.test.ts
+ M tests/e2e/npc-sheet.spec.ts
+OUTPUT:
+file:///C:/Users/Admin/.t3/local-drafts/p7a-prC-local-only/fix-round2/probes/browser/playwright.config.ts:1
+import { defineConfig, devices } from '../../../../../worktrees/Build-Settlement/qa-g6-closeout-01/node_modules/@playwright/test/index.js';
+         ^^^^^^^^^^^^
+SyntaxError: Named export 'defineConfig' not found. The requested module '../../../../../worktrees/Build-Settlement/qa-g6-closeout-01/node_modules/@playwright/test/index.js' is a CommonJS module, which may not support all module.exports as named exports.
+CommonJS modules can always be imported via the default export, for example using:
+
+import pkg from '../../../../../worktrees/Build-Settlement/qa-g6-closeout-01/node_modules/@playwright/test/index.js';
+const { defineConfig, devices } = pkg;
+
+    at ModuleJob.#asyncInstantiate (node:internal/modules/esm/module_job:327:21)
+    at processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at ModuleJob.run (node:internal/modules/esm/module_job:431:5)
+    at node:internal/modules/esm/loader:643:26
+    at requireOrImport (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\node_modules\playwright\lib\common\index.js:1081:12)
+    at loadUserConfig (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\node_modules\playwright\lib\common\index.js:1268:46)
+    at loadConfig (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\node_modules\playwright\lib\common\index.js:1275:22)
+    at Object.loadConfigFromFile (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\node_modules\playwright\lib\common\index.js:1490:10)
+    at runTests (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\node_modules\playwright\lib\cli\testActions.js:46:18)
+    at _Command.<anonymous> (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\node_modules\playwright\lib\program.js:55:7)
+
+EXIT_CODE=1
+SECONDS=0.986
+UTC_END=2026-11-18T13:45:32.337501+00:00

@@ -1,0 +1,7 @@
+{
+  "finding": "P1 projection",
+  "exitCode": 1,
+  "log": "unit-extra-skill-property.txt",
+  "matcher": "toStrictEqual",
+  "mutation": "Add unexpected: 'mutation probe' to the projected Management row"
+}

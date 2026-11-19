@@ -1,0 +1,29 @@
+{
+  "mode": "apply-test",
+  "utc": "2026-11-18T12:00:25.031615+00:00",
+  "head": "133d1f0e996ef85826fb6ef63fdffeef64de2572",
+  "tree": "897e330b088442cfd421e892c7c11c79d103aa0d",
+  "parentUnderTest": "133d1f0e996ef85826fb6ef63fdffeef64de2572",
+  "approval": "21c4efa28ff2e5b3cc3721df2f71af1dd5e21f14",
+  "approvalSha256": "bad1849ffbcf3bb6b508b51a16c5d4ad2198f1457c7864ab3cf245df1ee30e4c",
+  "statusBeforeAction": [],
+  "allowedPaths": [
+    "packages/ui/src/NpcSheet.svelte",
+    "tests/e2e/npc-sheet.spec.ts"
+  ],
+  "products": {
+    "packages/ui/src/NpcSheet.svelte": {
+      "parentSha256": "11eb48afc088b44867ccbb72bc9df6300459786d302e7ba00cd032a98575ff8b",
+      "verifiedCheckoutSha256": "11eb48afc088b44867ccbb72bc9df6300459786d302e7ba00cd032a98575ff8b",
+      "approvedResultSha256": "797653e5ff8c5a60830665260e4c32f2b3e142cec2b2c87734ac8c7026234d6b"
+    },
+    "tests/e2e/npc-sheet.spec.ts": {
+      "parentSha256": "6cd3bcacecdc1b2ae49e6e9bab6ae64b4605c2f81cb0c66fd61840efe3ef27b4",
+      "verifiedCheckoutSha256": "6cd3bcacecdc1b2ae49e6e9bab6ae64b4605c2f81cb0c66fd61840efe3ef27b4",
+      "approvedResultSha256": "55652dd7f98aed51b04df2c2d83ab24e3b5e214cc752c0dbd301686a24c5e1ff"
+    }
+  },
+  "removedProductLine": "      tabindex=\"0\"\n",
+  "changedTest": "NPC sheet has one tab stop and linked keyboard panels",
+  "keyboardPath": "Profile tab -> Attributes summary -> Profile tab. Check all four panels for absent tabindex."
+}

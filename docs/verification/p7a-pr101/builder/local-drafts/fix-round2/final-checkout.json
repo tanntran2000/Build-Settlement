@@ -1,0 +1,15 @@
+{
+  "head": "f1dc182de37f64165526def0d64272ff701d716b",
+  "tree": "a0ea6329441e75df363b356052528f1426233281",
+  "parent": "813805178ce4fe9e93c0c39ddee9143c19ea7286",
+  "branch": "feat/p7a-npc-sheet",
+  "clean": true,
+  "ports4173And4174Free": true,
+  "listeners": "[]",
+  "trackedChangeScope": [
+    "packages/ui/src/__tests__/npc-sheet-view.test.ts",
+    "tests/e2e/npc-sheet.spec.ts"
+  ],
+  "temporaryWorktreesCreated": 0,
+  "priorStorageReclaimedBytes": 0
+}

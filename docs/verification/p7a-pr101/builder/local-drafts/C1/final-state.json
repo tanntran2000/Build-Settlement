@@ -1,0 +1,30 @@
+{
+    "utc":  "2026-11-18T08:59:43.2298527Z",
+    "branch":  "feat/p7a-npc-sheet",
+    "head":  "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+    "tree":  "947f604e17427d916e1ef0e21083dbc2f72920b6",
+    "sourceBranch":  "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+    "status":  [
+                   " M packages/ui/src/CharacterLifeCharacters.svelte",
+                   " M packages/ui/src/CharacterProfile.svelte",
+                   " M packages/ui/src/SoloWeekReport.svelte",
+                   " M packages/ui/src/TileManagement.svelte",
+                   " M packages/ui/src/__tests__/report-letters.test.ts",
+                   " M packages/ui/src/report-letters.ts",
+                   " M tests/e2e/character-life-boundary.spec.ts",
+                   " M tests/e2e/character-life-navigation-accessibility.spec.ts",
+                   " M tests/e2e/character-life-navigation.helpers.ts",
+                   " M tests/e2e/character-life-navigation.spec.ts",
+                   " M tests/e2e/character-life.spec.ts",
+                   " M tests/e2e/world-npc-session.spec.ts",
+                   "?? packages/ui/src/NpcSheet.svelte",
+                   "?? packages/ui/src/__tests__/npc-sheet-view.test.ts",
+                   "?? packages/ui/src/npc-sheet-view.ts",
+                   "?? tests/e2e/npc-sheet.spec.ts"
+               ],
+    "portsFree":  true,
+    "checkedPorts":  [
+                         4173,
+                         4174
+                     ]
+}

@@ -1,0 +1,82 @@
+{
+    "captureStartUtc":  "2026-11-18T12:12:38.0458164Z",
+    "utc":  "2026-11-18T12:12:40.2404346Z",
+    "cpu":  [
+                {
+                    "LoadPercentage":  5,
+                    "NumberOfLogicalProcessors":  8
+                }
+            ],
+    "topProcesses":  [
+                         {
+                             "IDProcess":  9968,
+                             "Name":  "WmiPrvSE#2",
+                             "PercentProcessorTime":  10
+                         },
+                         {
+                             "IDProcess":  17608,
+                             "Name":  "node#3",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  3948,
+                             "Name":  "node#4",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  18260,
+                             "Name":  "node#2",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  7144,
+                             "Name":  "node#1",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  17272,
+                             "Name":  "node",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  20868,
+                             "Name":  "node#8",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  24616,
+                             "Name":  "node#9",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  5056,
+                             "Name":  "node#7",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  3472,
+                             "Name":  "node#5",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  14436,
+                             "Name":  "node#6",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  14332,
+                             "Name":  "msedgewebview2#6",
+                             "PercentProcessorTime":  0
+                         }
+                     ],
+    "processCpuUnit":  "PercentProcessorTime, 100 per fully busy logical CPU",
+    "processScanCount":  341,
+    "commandLineReadableCount":  50,
+    "candidateJobProcessCount":  50,
+    "competingJobs":  [
+
+                      ],
+    "portListeners":  [
+
+                      ]
+}

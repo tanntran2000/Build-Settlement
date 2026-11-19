@@ -1,0 +1,14 @@
+{
+  "utc": "2026-11-18T10:37:04.992825+00:00",
+  "approvalCommit": "ba0c883bd238590b604636eb965072b7513bcc52",
+  "bindingPlanSha256": "e06c4ec726b7b6783ce3fb7097c414bda36c9921ae16eb02ae4d887d42f5c77e",
+  "proposalSha256": "b3f36810b531ab754612a6c6a359e3219b69b0444540a355dac483c8c207047f",
+  "hunk": "E46",
+  "path": "tests/e2e/world-npc-session.spec.ts",
+  "workingLine": 16,
+  "checkoutBeforeSha256": "8e6e67f84919991ac7c580e4c01ec4ed02f9d5382018d6a0ea95870550d8f3ae",
+  "checkoutAfterSha256": "98eefbe7410f424e4385379f048c58dfd7f5953a5be269414796e5f0cd8b9364",
+  "gitAfterSha256": "2d5a8fd689d472f2c78858dc56cde4d6433d18a814a4ee2e461066996c69893b",
+  "lineEnding": "CRLF",
+  "eofUnchanged": true
+}

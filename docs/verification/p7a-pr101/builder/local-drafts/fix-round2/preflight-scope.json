@@ -1,0 +1,20 @@
+{
+  "utc": "2026-11-18T13:46:35.891717+00:00",
+  "branch": "feat/p7a-npc-sheet",
+  "head": "813805178ce4fe9e93c0c39ddee9143c19ea7286",
+  "tree": "bb414ff2825ea37bd5c41a579de7dac82acbaf22",
+  "originMain": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+  "prB": "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+  "initialStatus": "clean",
+  "initialPorts4173And4174": "free",
+  "scope": [
+    "A\tpackages/ui/src/__tests__/npc-sheet-view.test.ts",
+    "A\ttests/e2e/npc-sheet.spec.ts"
+  ],
+  "bindingPlanGitObject": "21c4efa:docs/superpowers/plans/2026-11-17-p7a-npc-core.md",
+  "bindingPlanSha256": "bad1849ffbcf3bb6b508b51a16c5d4ad2198f1457c7864ab3cf245df1ee30e4c",
+  "remoteRefs": {
+    "refs/heads/main": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+    "refs/heads/feat/p7a-npc-life-week": "b94d3083dd71722f329b1bf444fa9dec9b0fd309"
+  }
+}

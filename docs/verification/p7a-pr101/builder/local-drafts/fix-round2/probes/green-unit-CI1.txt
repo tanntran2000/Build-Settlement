@@ -1,0 +1,27 @@
+HEAD=813805178ce4fe9e93c0c39ddee9143c19ea7286
+TREE=bb414ff2825ea37bd5c41a579de7dac82acbaf22
+BRANCH=feat/p7a-npc-sheet
+UTC_START=2026-11-18T13:50:40.590770+00:00
+COMMAND=["npm.cmd", "test", "--", "packages/ui/src/__tests__/npc-sheet-view.test.ts"]
+CI=1
+STATUS:
+M packages/ui/src/__tests__/npc-sheet-view.test.ts
+ M tests/e2e/npc-sheet.spec.ts
+OUTPUT:
+
+> build-settlement@0.1.0 test
+> vitest run packages/ui/src/__tests__/npc-sheet-view.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  20:50:41
+   Duration  878ms (transform 432ms, setup 0ms, import 568ms, tests 31ms, environment 0ms)
+
+
+EXIT_CODE=0
+SECONDS=2.219
+UTC_END=2026-11-18T13:50:42.709163+00:00

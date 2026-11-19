@@ -1,0 +1,44 @@
+{
+  "kind": "C1 uncommitted production build, provisional",
+  "utc": "2026-11-18T08:57:30.158Z",
+  "base": "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+  "baseTree": "947f604e17427d916e1ef0e21083dbc2f72920b6",
+  "status": "M packages/ui/src/CharacterLifeCharacters.svelte\n M packages/ui/src/CharacterProfile.svelte\n M packages/ui/src/SoloWeekReport.svelte\n M packages/ui/src/TileManagement.svelte\n M packages/ui/src/__tests__/report-letters.test.ts\n M packages/ui/src/report-letters.ts\n M tests/e2e/character-life-boundary.spec.ts\n M tests/e2e/character-life-navigation-accessibility.spec.ts\n M tests/e2e/character-life-navigation.helpers.ts\n M tests/e2e/character-life-navigation.spec.ts\n M tests/e2e/character-life.spec.ts\n M tests/e2e/world-npc-session.spec.ts\n?? packages/ui/src/NpcSheet.svelte\n?? packages/ui/src/__tests__/npc-sheet-view.test.ts\n?? packages/ui/src/npc-sheet-view.ts\n?? tests/e2e/npc-sheet.spec.ts",
+  "node": "v24.19.0",
+  "compression": "zlib gzipSync default, same as PR B",
+  "baseline": {
+    "jsGzipBytes": 139905,
+    "cssGzipBytes": 7152,
+    "combinedGzipBytes": 147057
+  },
+  "current": {
+    "jsGzipBytes": 143004,
+    "cssGzipBytes": 7528,
+    "combinedGzipBytes": 150532
+  },
+  "deltaBytes": {
+    "js": 3099,
+    "css": 376,
+    "combined": 3475
+  },
+  "budgetBytes": 200000,
+  "remainingBudgetBytes": 49468,
+  "files": [
+    {
+      "path": "assets/index-D94IJs5c.css",
+      "entry": true,
+      "bytes": 37312,
+      "gzipBytes": 7528,
+      "sha256": "da3d5e95ed95e7033a8d972ddc7d01b36086c01586d073876873b485f38dc447",
+      "gzipSha256": "a0429b688ae46dd35f34ed48ada31c944b40898fd1b4eecb1c58f4df13adfa15"
+    },
+    {
+      "path": "assets/index-a1mN7iR2.js",
+      "entry": true,
+      "bytes": 458241,
+      "gzipBytes": 143004,
+      "sha256": "71684f1da1e2239e9bbdad39ab3b454c0508917dbe5e72141795687073e012ba",
+      "gzipSha256": "49d26b42e34d474ea72e5e95d10b0c32368adac06562a1de376e86b91a42754d"
+    }
+  ]
+}

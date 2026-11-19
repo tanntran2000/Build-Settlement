@@ -1,0 +1,41 @@
+HEAD=133d1f0e996ef85826fb6ef63fdffeef64de2572
+TREE=897e330b088442cfd421e892c7c11c79d103aa0d
+BRANCH=feat/p7a-npc-sheet
+UTC_START=2026-11-18T12:11:25.781440+00:00
+COMMAND=["node", "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/node_modules/@playwright/test/cli.js", "test", "tests/e2e/npc-sheet.spec.ts", "--project", "chromium", "--output", "C:\\Users\\Admin\\.t3\\local-drafts/p7a-prC-local-only/fix-round1/GREEN"]
+CI=1
+STATUS:
+M packages/ui/src/NpcSheet.svelte
+ M tests/e2e/npc-sheet.spec.ts
+OUTPUT:
+[WebServer] (node:16364) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:10392) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 16 tests using 1 worker
+
+(node:23884) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [chromium] › tests\e2e\npc-sheet.spec.ts:82:3 › NPC sheet at 1280px › Profile shows life origin, ageing, hobbies, traits and affection (2.7s)
+  ok  2 [chromium] › tests\e2e\npc-sheet.spec.ts:111:3 › NPC sheet at 1280px › Skills shows the five scores and independent Not working status (1.6s)
+  ok  3 [chromium] › tests\e2e\npc-sheet.spec.ts:138:3 › NPC sheet at 1280px › 18+ shows the Mind marker and approved numeric rows (1.3s)
+  ok  4 [chromium] › tests\e2e\npc-sheet.spec.ts:172:3 › NPC sheet at 1280px › History shows grouped counters and all twenty recent events (1.3s)
+  ok  5 [chromium] › tests\e2e\npc-sheet.spec.ts:195:3 › NPC sheet at 1280px › NPC sheet has one tab stop and linked keyboard panels (2.1s)
+  ok  6 [chromium] › tests\e2e\npc-sheet.spec.ts:233:3 › NPC sheet at 1280px › Weekly report renders the three NPC life outcomes and keeps full parity (5.0s)
+  ok  7 [chromium] › tests\e2e\npc-sheet.spec.ts:82:3 › NPC sheet at 1600px › Profile shows life origin, ageing, hobbies, traits and affection (2.4s)
+  ok  8 [chromium] › tests\e2e\npc-sheet.spec.ts:111:3 › NPC sheet at 1600px › Skills shows the five scores and independent Not working status (1.7s)
+  ok  9 [chromium] › tests\e2e\npc-sheet.spec.ts:138:3 › NPC sheet at 1600px › 18+ shows the Mind marker and approved numeric rows (1.3s)
+  ok 10 [chromium] › tests\e2e\npc-sheet.spec.ts:172:3 › NPC sheet at 1600px › History shows grouped counters and all twenty recent events (1.3s)
+  ok 11 [chromium] › tests\e2e\npc-sheet.spec.ts:195:3 › NPC sheet at 1600px › NPC sheet has one tab stop and linked keyboard panels (2.1s)
+  ok 12 [chromium] › tests\e2e\npc-sheet.spec.ts:233:3 › NPC sheet at 1600px › Weekly report renders the three NPC life outcomes and keeps full parity (5.1s)
+  ok 13 [chromium] › tests\e2e\npc-sheet.spec.ts:322:3 › NPC sheet accessibility at 1280px › NPC sheet measured accessibility at 1280px (1.7s)
+  ok 14 [chromium] › tests\e2e\npc-sheet.spec.ts:322:3 › NPC sheet accessibility at 1600px › NPC sheet measured accessibility at 1600px (1.3s)
+  ok 15 [chromium] › tests\e2e\npc-sheet.spec.ts:365:3 › NPC sheet reflow at 320px › NPC sheet and NPC life report reflow at 320px (1.8s)
+  ok 16 [chromium] › tests\e2e\npc-sheet.spec.ts:365:3 › NPC sheet reflow at 375px › NPC sheet and NPC life report reflow at 375px (1.9s)
+
+  16 passed (44.5s)
+
+EXIT_CODE=0
+SECONDS=45.612
+UTC_END=2026-11-18T12:12:11.268250+00:00

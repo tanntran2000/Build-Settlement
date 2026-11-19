@@ -1,0 +1,82 @@
+{
+    "captureStartUtc":  "2026-11-18T10:44:57.8455521Z",
+    "utc":  "2026-11-18T10:45:00.4680463Z",
+    "cpu":  [
+                {
+                    "LoadPercentage":  15,
+                    "NumberOfLogicalProcessors":  8
+                }
+            ],
+    "topProcesses":  [
+                         {
+                             "IDProcess":  17232,
+                             "Name":  "browser",
+                             "PercentProcessorTime":  26
+                         },
+                         {
+                             "IDProcess":  20940,
+                             "Name":  "browser#9",
+                             "PercentProcessorTime":  26
+                         },
+                         {
+                             "IDProcess":  5140,
+                             "Name":  "browser#3",
+                             "PercentProcessorTime":  15
+                         },
+                         {
+                             "IDProcess":  4084,
+                             "Name":  "MsMpEng",
+                             "PercentProcessorTime":  15
+                         },
+                         {
+                             "IDProcess":  15420,
+                             "Name":  "WmiPrvSE#2",
+                             "PercentProcessorTime":  10
+                         },
+                         {
+                             "IDProcess":  6276,
+                             "Name":  "codebase-memory-mcp",
+                             "PercentProcessorTime":  5
+                         },
+                         {
+                             "IDProcess":  20868,
+                             "Name":  "node#8",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  24616,
+                             "Name":  "node#9",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  5056,
+                             "Name":  "node#7",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  3472,
+                             "Name":  "node#5",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  14436,
+                             "Name":  "node#6",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  11720,
+                             "Name":  "node#12",
+                             "PercentProcessorTime":  0
+                         }
+                     ],
+    "processCpuUnit":  "PercentProcessorTime, 100 per fully busy logical CPU",
+    "processScanCount":  349,
+    "commandLineReadableCount":  50,
+    "candidateJobProcessCount":  50,
+    "competingJobs":  [
+
+                      ],
+    "portListeners":  [
+
+                      ]
+}

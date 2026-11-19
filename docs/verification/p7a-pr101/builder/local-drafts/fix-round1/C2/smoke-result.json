@@ -1,0 +1,28 @@
+{
+  "head": "813805178ce4fe9e93c0c39ddee9143c19ea7286",
+  "tree": "bb414ff2825ea37bd5c41a579de7dac82acbaf22",
+  "ci": "1",
+  "command": [
+    "npm.cmd",
+    "run",
+    "test:smoke",
+    "--",
+    "--output",
+    "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prC-local-only\\fix-round1\\C2\\full"
+  ],
+  "utcStart": "2026-11-18T12:16:05.859452+00:00",
+  "utcEnd": "2026-11-18T12:50:23.686750+00:00",
+  "seconds": 2057.718,
+  "exitCode": 0,
+  "totals": {
+    "scheduled": 403,
+    "passed": 403,
+    "failed": 0,
+    "skipped": 0,
+    "did_not_run": 0,
+    "interrupted": 0,
+    "flaky": 0
+  },
+  "servedAssetsMatched": true,
+  "fullSuitePassed": true
+}

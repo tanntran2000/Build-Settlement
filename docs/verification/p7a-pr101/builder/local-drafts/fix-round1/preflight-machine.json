@@ -1,0 +1,82 @@
+{
+    "captureStartUtc":  "2026-11-18T12:00:06.4046274Z",
+    "utc":  "2026-11-18T12:00:14.6879290Z",
+    "cpu":  [
+                {
+                    "LoadPercentage":  9,
+                    "NumberOfLogicalProcessors":  8
+                }
+            ],
+    "topProcesses":  [
+                         {
+                             "IDProcess":  4,
+                             "Name":  "System",
+                             "PercentProcessorTime":  15
+                         },
+                         {
+                             "IDProcess":  5996,
+                             "Name":  "ms-teams",
+                             "PercentProcessorTime":  15
+                         },
+                         {
+                             "IDProcess":  7164,
+                             "Name":  "POWERPNT",
+                             "PercentProcessorTime":  10
+                         },
+                         {
+                             "IDProcess":  9272,
+                             "Name":  "msedgewebview2",
+                             "PercentProcessorTime":  10
+                         },
+                         {
+                             "IDProcess":  11524,
+                             "Name":  "WmiPrvSE#2",
+                             "PercentProcessorTime":  10
+                         },
+                         {
+                             "IDProcess":  2592,
+                             "Name":  "Memory Compression",
+                             "PercentProcessorTime":  5
+                         },
+                         {
+                             "IDProcess":  17232,
+                             "Name":  "browser",
+                             "PercentProcessorTime":  5
+                         },
+                         {
+                             "IDProcess":  22696,
+                             "Name":  "EXCEL",
+                             "PercentProcessorTime":  5
+                         },
+                         {
+                             "IDProcess":  13088,
+                             "Name":  "msedgewebview2#5",
+                             "PercentProcessorTime":  5
+                         },
+                         {
+                             "IDProcess":  1200,
+                             "Name":  "msedgewebview2#3",
+                             "PercentProcessorTime":  5
+                         },
+                         {
+                             "IDProcess":  14436,
+                             "Name":  "node#6",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  3472,
+                             "Name":  "node#5",
+                             "PercentProcessorTime":  0
+                         }
+                     ],
+    "processCpuUnit":  "PercentProcessorTime, 100 per fully busy logical CPU",
+    "processScanCount":  343,
+    "commandLineReadableCount":  50,
+    "candidateJobProcessCount":  50,
+    "competingJobs":  [
+
+                      ],
+    "portListeners":  [
+
+                      ]
+}

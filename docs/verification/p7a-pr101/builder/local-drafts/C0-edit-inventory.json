@@ -1,0 +1,1102 @@
+{
+  "scope": "Proposal only. The existing hunks and four new paths await the Step 0 owner decision.",
+  "baseCommit": "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+  "baseTree": "947f604e17427d916e1ef0e21083dbc2f72920b6",
+  "existingFiles": 12,
+  "exactHunks": 46,
+  "newAllowlistedFiles": [
+    "packages/ui/src/NpcSheet.svelte",
+    "packages/ui/src/npc-sheet-view.ts",
+    "packages/ui/src/__tests__/npc-sheet-view.test.ts",
+    "tests/e2e/npc-sheet.spec.ts"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/CharacterLifeCharacters.svelte",
+      "scope": "explicit product allowlist",
+      "gitBlob": "879a566de0f716cb9dfaa688d2f584031e00f8a3",
+      "git": {
+        "beforeSha256": "b23c35daa8fe71d541f2ce6dd95615cd85544f1d46ce4748bc44667dbcf05453",
+        "afterSha256": "e93e8a69f9c2c181c026c1114297dbf56ecae47d665bfc400e189ad5bc1d5f7e",
+        "beforeBytes": 6772,
+        "afterBytes": 7007,
+        "beforeEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "3370783b207d0a3c2f7374796c653e0a",
+          "lfLineCount": 108,
+          "crlfLineCount": 0
+        },
+        "afterEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "3370783b207d0a3c2f7374796c653e0a",
+          "lfLineCount": 113,
+          "crlfLineCount": 0
+        }
+      },
+      "checkout": {
+        "beforeSha256": "5e829c20682600ef7ad8b72bf48da85afdad2298e3485fa60d14f9c117fdb7bb",
+        "afterSha256": "f38f280d468ed1483112bc7e699b21bc3b807206e4279f72078ca8b9715e1f36",
+        "beforeBytes": 6880,
+        "afterBytes": 7120,
+        "beforeEof": {
+          "lastLineEnding": "CRLF",
+          "last16Hex": "783b207d0d0a3c2f7374796c653e0d0a",
+          "lfLineCount": 0,
+          "crlfLineCount": 108
+        },
+        "afterEof": {
+          "lastLineEnding": "CRLF",
+          "last16Hex": "783b207d0d0a3c2f7374796c653e0d0a",
+          "lfLineCount": 0,
+          "crlfLineCount": 113
+        }
+      },
+      "edits": [
+        {
+          "path": "packages/ui/src/CharacterLifeCharacters.svelte",
+          "start": 3,
+          "end": 3,
+          "why": "Use the approved age calculation when projecting the NPC view.",
+          "id": "E01",
+          "gitBefore": "  import { managerSlotTileIds, PLAYER_CHARACTER_ID, TRIAL_BUILDINGS, type CharacterLifeSessionState, type CharacterView } from '@haven/core';\n",
+          "gitAfter": "  import { managerSlotTileIds, npcAge, PLAYER_CHARACTER_ID, TRIAL_BUILDINGS, type CharacterLifeSessionState, type CharacterView } from '@haven/core';\n",
+          "checkoutBefore": "  import { managerSlotTileIds, PLAYER_CHARACTER_ID, TRIAL_BUILDINGS, type CharacterLifeSessionState, type CharacterView } from '@haven/core';\r\n",
+          "checkoutAfter": "  import { managerSlotTileIds, npcAge, PLAYER_CHARACTER_ID, TRIAL_BUILDINGS, type CharacterLifeSessionState, type CharacterView } from '@haven/core';\r\n",
+          "checkoutNewLineStyle": "CRLF"
+        },
+        {
+          "path": "packages/ui/src/CharacterLifeCharacters.svelte",
+          "start": 26,
+          "end": 26,
+          "why": "Use the life-derived age in both existing descriptions and the new sheet without changing the saved character.",
+          "id": "E02",
+          "gitBefore": "    character: npc.character, profile: session.profiles.find(profile => profile.id === npc.character.id)!,\n",
+          "gitAfter": "    character: { ...npc.character, age: npcAge(npc.life, session.city.world.week) },\n    profile: session.profiles.find(profile => profile.id === npc.character.id)!,\n",
+          "checkoutBefore": "    character: npc.character, profile: session.profiles.find(profile => profile.id === npc.character.id)!,\r\n",
+          "checkoutAfter": "    character: { ...npc.character, age: npcAge(npc.life, session.city.world.week) },\r\n    profile: session.profiles.find(profile => profile.id === npc.character.id)!,\r\n",
+          "checkoutNewLineStyle": "CRLF"
+        },
+        {
+          "path": "packages/ui/src/CharacterLifeCharacters.svelte",
+          "start": 67,
+          "end": 67,
+          "why": "Send the selected WorldNpc to the existing keyed detail window. The Player still opens the legacy profile.",
+          "id": "E03",
+          "gitBefore": "    <CharacterProfile {view} traitIds={npc?.traits ?? []} relationship={npc?.character.relationshipToPlayer ?? null}\n",
+          "gitAfter": "    <CharacterProfile {view} {npc} traitIds={npc?.traits ?? []} relationship={npc?.character.relationshipToPlayer ?? null}\n",
+          "checkoutBefore": "    <CharacterProfile {view} traitIds={npc?.traits ?? []} relationship={npc?.character.relationshipToPlayer ?? null}\r\n",
+          "checkoutAfter": "    <CharacterProfile {view} {npc} traitIds={npc?.traits ?? []} relationship={npc?.character.relationshipToPlayer ?? null}\r\n",
+          "checkoutNewLineStyle": "CRLF"
+        },
+        {
+          "path": "packages/ui/src/CharacterLifeCharacters.svelte",
+          "start": 73,
+          "end": 73,
+          "why": "Keep the existing Work note for working NPCs. Show the actual inactive post effect while exhausted, with the post controls and assignment intact.",
+          "id": "E04",
+          "gitBefore": "    <p>NPC post skills apply at End Week.</p>\n",
+          "gitAfter": "          {#if npc.life.working}\n            <p>NPC post skills apply at End Week.</p>\n          {:else}\n            <p>Not working{npc.postTileId ? ' · Post inactive at End Week.' : ''}</p>\n          {/if}\n",
+          "checkoutBefore": "    <p>NPC post skills apply at End Week.</p>\r\n",
+          "checkoutAfter": "          {#if npc.life.working}\r\n            <p>NPC post skills apply at End Week.</p>\r\n          {:else}\r\n            <p>Not working{npc.postTileId ? ' · Post inactive at End Week.' : ''}</p>\r\n          {/if}\r\n",
+          "checkoutNewLineStyle": "CRLF"
+        }
+      ]
+    },
+    {
+      "path": "packages/ui/src/CharacterProfile.svelte",
+      "scope": "explicit product allowlist",
+      "gitBlob": "b470ebe64179054cb7bfe61cb4a5cc4be9653618",
+      "git": {
+        "beforeSha256": "6fafefd551eac0cffd8d678d0acbdfd1477eceee4fc69800cd56709b55af1d93",
+        "afterSha256": "ea920ed79f5e9ec478db2f4e1c94c74f4ee0df2e05b50451eed01a330e1415e3",
+        "beforeBytes": 5694,
+        "afterBytes": 6125,
+        "beforeEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "3025293b207d0a3c2f7374796c653e0a",
+          "lfLineCount": 101,
+          "crlfLineCount": 0
+        },
+        "afterEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "3025293b207d0a3c2f7374796c653e0a",
+          "lfLineCount": 108,
+          "crlfLineCount": 0
+        }
+      },
+      "checkout": {
+        "beforeSha256": "9e76a2b8f04e7adb85be24c1898d1ec643c844e52afc8b56765ad919e5ddc883",
+        "afterSha256": "a9c9d1ca344319a88d4b4231c6c2b7e951fb57a99036e9d2dd304f3ae41ecf6d",
+        "beforeBytes": 5795,
+        "afterBytes": 6233,
+        "beforeEof": {
+          "lastLineEnding": "CRLF",
+          "last16Hex": "293b207d0d0a3c2f7374796c653e0d0a",
+          "lfLineCount": 0,
+          "crlfLineCount": 101
+        },
+        "afterEof": {
+          "lastLineEnding": "CRLF",
+          "last16Hex": "293b207d0d0a3c2f7374796c653e0d0a",
+          "lfLineCount": 0,
+          "crlfLineCount": 108
+        }
+      },
+      "edits": [
+        {
+          "path": "packages/ui/src/CharacterProfile.svelte",
+          "start": 3,
+          "end": 10,
+          "why": "Import the four-tab sheet and accept the selected NPC while preserving the Player and existing action tabs.",
+          "id": "E05",
+          "gitBefore": "  import type { CharacterArea } from './character-life-navigation.js';\n  import {\n    describeLong, describeShort, profileRows, REQUIRED_EMOTIONS, REQUIRED_NEEDS, REQUIRED_RELATIONSHIP, REQUIRED_SKILLS, WORLD_TRAITS,\n    type CharacterView, type Relationship8D,\n  } from '@haven/core';\n\n  export let view: CharacterView;\n  export let traitIds: string[] = [];\n",
+          "gitAfter": "  import NpcSheet from './NpcSheet.svelte';\n  import type { CharacterArea } from './character-life-navigation.js';\n  import {\n    describeLong, describeShort, npcAgeTitle, profileRows, REQUIRED_EMOTIONS, REQUIRED_NEEDS, REQUIRED_RELATIONSHIP, REQUIRED_SKILLS, WORLD_TRAITS,\n    type CharacterView, type Relationship8D, type WorldNpc,\n  } from '@haven/core';\n\n  export let view: CharacterView;\n  export let npc: WorldNpc | undefined = undefined;\n  export let traitIds: string[] = [];\n",
+          "checkoutBefore": "  import type { CharacterArea } from './character-life-navigation.js';\r\n  import {\r\n    describeLong, describeShort, profileRows, REQUIRED_EMOTIONS, REQUIRED_NEEDS, REQUIRED_RELATIONSHIP, REQUIRED_SKILLS, WORLD_TRAITS,\r\n    type CharacterView, type Relationship8D,\r\n  } from '@haven/core';\r\n\r\n  export let view: CharacterView;\r\n  export let traitIds: string[] = [];\r\n",
+          "checkoutAfter": "  import NpcSheet from './NpcSheet.svelte';\r\n  import type { CharacterArea } from './character-life-navigation.js';\r\n  import {\r\n    describeLong, describeShort, npcAgeTitle, profileRows, REQUIRED_EMOTIONS, REQUIRED_NEEDS, REQUIRED_RELATIONSHIP, REQUIRED_SKILLS, WORLD_TRAITS,\r\n    type CharacterView, type Relationship8D, type WorldNpc,\r\n  } from '@haven/core';\r\n\r\n  export let view: CharacterView;\r\n  export let npc: WorldNpc | undefined = undefined;\r\n  export let traitIds: string[] = [];\r\n",
+          "checkoutNewLineStyle": "CRLF"
+        },
+        {
+          "path": "packages/ui/src/CharacterProfile.svelte",
+          "start": 51,
+          "end": 73,
+          "why": "Mount the sheet under NPC Description. Keep the legacy descriptions, identity, traits, needs, non-Stress emotions and private disclosure inside Profile. The NPC displays the derived age title, omits Health, and uses the sheet for Skills, its sole Stress display, and History. The Player keeps the original content.",
+          "id": "E06",
+          "gitBefore": "    {#if area === 'description'}\n      <p data-testid={`${id}-short`}><strong>{describeShort(view)}</strong></p>\n      <p data-testid={`${id}-long`}>{describeLong(view)}</p>\n      <h4>Identity and appearance</h4>\n      {#if view.role === 'npc'}<p>Age {c.age} · Background: {c.occupation} · {c.socialClass} · {c.legalStatus.replace('_', ' ')}</p>{/if}\n      <dl>\n        {#each profileRows(view) as row}<div><dt>{row.label}</dt><dd>{row.value}</dd></div>{/each}\n        {#each traits as trait, i}<div><dt>{trait?.name ?? traitIds[i]}</dt><dd>{trait?.summary ?? ''}</dd></div>{/each}\n      </dl>\n      <details><summary>Attributes</summary>\n        <p>Health {c.health}</p>\n        <p>Needs: {REQUIRED_NEEDS.map(k => `${title(k)} ${c.needs[k]}`).join(' · ')}</p>\n        <p>Emotions: {REQUIRED_EMOTIONS.map(k => `${title(k)} ${c.emotions[k]}`).join(' · ')}</p>\n      </details>\n      <details><summary>Skills</summary><p>Skills: {REQUIRED_SKILLS.map(k => `${title(k)} ${c.skills[k]}`).join(' · ')}</p></details>\n      <details><summary>History</summary><p>No memories yet.</p></details>\n      {#if c.age >= 18}\n        <details>\n          <summary>Private (adult)</summary>\n          <p>Intimacy Knowledge: {view.profile.traits.intimacyKnowledge ?? 'Not recorded'}</p>\n          <p>Intimate history: {!history ? 'Not recorded' : history.disclosure === 'unknown' ? 'Unknown' : title(history.value)}</p>\n        </details>\n      {/if}\n",
+          "gitAfter": "    {#if area === 'description'}\n      {#snippet description()}\n        <p data-testid={`${id}-short`}><strong>{describeShort(view)}</strong></p>\n        <p data-testid={`${id}-long`}>{describeLong(view)}</p>\n        <h4>Identity and appearance</h4>\n        {#if npc}<p>Age {c.age} · {npcAgeTitle(c.age)} · Background: {c.occupation} · {c.socialClass} · {c.legalStatus.replace('_', ' ')}</p>{/if}\n        <dl data-character-identity>\n          {#each profileRows(view) as row}<div><dt>{row.label}</dt><dd>{row.value}</dd></div>{/each}\n          {#each traits as trait, i}<div><dt>{trait?.name ?? traitIds[i]}</dt><dd>{trait?.summary ?? ''}</dd></div>{/each}\n        </dl>\n        <details><summary>Attributes</summary>\n          {#if !npc}<p>Health {c.health}</p>{/if}\n          <p>Needs: {REQUIRED_NEEDS.map(k => `${title(k)} ${c.needs[k]}`).join(' · ')}</p>\n          <p>Emotions: {REQUIRED_EMOTIONS.filter(k => !npc || k !== 'stress').map(k => `${title(k)} ${c.emotions[k]}`).join(' · ')}</p>\n        </details>\n        {#if !npc}\n          <details><summary>Skills</summary><p>Skills: {REQUIRED_SKILLS.map(k => `${title(k)} ${c.skills[k]}`).join(' · ')}</p></details>\n          <details><summary>History</summary><p>No memories yet.</p></details>\n        {/if}\n        {#if c.age >= 18}\n          <details>\n            <summary>Private (adult)</summary>\n            <p>Intimacy Knowledge: {view.profile.traits.intimacyKnowledge ?? 'Not recorded'}</p>\n            <p>Intimate history: {!history ? 'Not recorded' : history.disclosure === 'unknown' ? 'Unknown' : title(history.value)}</p>\n          </details>\n        {/if}\n      {/snippet}\n      {#if npc}<NpcSheet {npc} age={c.age} {description} />{:else}{@render description()}{/if}\n",
+          "checkoutBefore": "    {#if area === 'description'}\r\n      <p data-testid={`${id}-short`}><strong>{describeShort(view)}</strong></p>\r\n      <p data-testid={`${id}-long`}>{describeLong(view)}</p>\r\n      <h4>Identity and appearance</h4>\r\n      {#if view.role === 'npc'}<p>Age {c.age} · Background: {c.occupation} · {c.socialClass} · {c.legalStatus.replace('_', ' ')}</p>{/if}\r\n      <dl>\r\n        {#each profileRows(view) as row}<div><dt>{row.label}</dt><dd>{row.value}</dd></div>{/each}\r\n        {#each traits as trait, i}<div><dt>{trait?.name ?? traitIds[i]}</dt><dd>{trait?.summary ?? ''}</dd></div>{/each}\r\n      </dl>\r\n      <details><summary>Attributes</summary>\r\n        <p>Health {c.health}</p>\r\n        <p>Needs: {REQUIRED_NEEDS.map(k => `${title(k)} ${c.needs[k]}`).join(' · ')}</p>\r\n        <p>Emotions: {REQUIRED_EMOTIONS.map(k => `${title(k)} ${c.emotions[k]}`).join(' · ')}</p>\r\n      </details>\r\n      <details><summary>Skills</summary><p>Skills: {REQUIRED_SKILLS.map(k => `${title(k)} ${c.skills[k]}`).join(' · ')}</p></details>\r\n      <details><summary>History</summary><p>No memories yet.</p></details>\r\n      {#if c.age >= 18}\r\n        <details>\r\n          <summary>Private (adult)</summary>\r\n          <p>Intimacy Knowledge: {view.profile.traits.intimacyKnowledge ?? 'Not recorded'}</p>\r\n          <p>Intimate history: {!history ? 'Not recorded' : history.disclosure === 'unknown' ? 'Unknown' : title(history.value)}</p>\r\n        </details>\r\n      {/if}\r\n",
+          "checkoutAfter": "    {#if area === 'description'}\r\n      {#snippet description()}\r\n        <p data-testid={`${id}-short`}><strong>{describeShort(view)}</strong></p>\r\n        <p data-testid={`${id}-long`}>{describeLong(view)}</p>\r\n        <h4>Identity and appearance</h4>\r\n        {#if npc}<p>Age {c.age} · {npcAgeTitle(c.age)} · Background: {c.occupation} · {c.socialClass} · {c.legalStatus.replace('_', ' ')}</p>{/if}\r\n        <dl data-character-identity>\r\n          {#each profileRows(view) as row}<div><dt>{row.label}</dt><dd>{row.value}</dd></div>{/each}\r\n          {#each traits as trait, i}<div><dt>{trait?.name ?? traitIds[i]}</dt><dd>{trait?.summary ?? ''}</dd></div>{/each}\r\n        </dl>\r\n        <details><summary>Attributes</summary>\r\n          {#if !npc}<p>Health {c.health}</p>{/if}\r\n          <p>Needs: {REQUIRED_NEEDS.map(k => `${title(k)} ${c.needs[k]}`).join(' · ')}</p>\r\n          <p>Emotions: {REQUIRED_EMOTIONS.filter(k => !npc || k !== 'stress').map(k => `${title(k)} ${c.emotions[k]}`).join(' · ')}</p>\r\n        </details>\r\n        {#if !npc}\r\n          <details><summary>Skills</summary><p>Skills: {REQUIRED_SKILLS.map(k => `${title(k)} ${c.skills[k]}`).join(' · ')}</p></details>\r\n          <details><summary>History</summary><p>No memories yet.</p></details>\r\n        {/if}\r\n        {#if c.age >= 18}\r\n          <details>\r\n            <summary>Private (adult)</summary>\r\n            <p>Intimacy Knowledge: {view.profile.traits.intimacyKnowledge ?? 'Not recorded'}</p>\r\n            <p>Intimate history: {!history ? 'Not recorded' : history.disclosure === 'unknown' ? 'Unknown' : title(history.value)}</p>\r\n          </details>\r\n        {/if}\r\n      {/snippet}\r\n      {#if npc}<NpcSheet {npc} age={c.age} {description} />{:else}{@render description()}{/if}\r\n",
+          "checkoutNewLineStyle": "CRLF"
+        }
+      ]
+    },
+    {
+      "path": "packages/ui/src/report-letters.ts",
+      "scope": "explicit product allowlist",
+      "gitBlob": "995ccd2d49b99db4ca122ae952ebc13056fb609d",
+      "git": {
+        "beforeSha256": "964fd4510ae01e53aeb9f96f7887c35d430fc9828b22994249f606b4db5da7c5",
+        "afterSha256": "cb5a2758ff1d47be732b9bb11b933a8b45b3a15106c65a2e2b7c13a72a731335",
+        "beforeBytes": 12323,
+        "afterBytes": 12856,
+        "beforeEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "6974656d732d766965772e6a73273b0a",
+          "lfLineCount": 215,
+          "crlfLineCount": 0
+        },
+        "afterEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "6974656d732d766965772e6a73273b0a",
+          "lfLineCount": 227,
+          "crlfLineCount": 0
+        }
+      },
+      "checkout": {
+        "beforeSha256": "964fd4510ae01e53aeb9f96f7887c35d430fc9828b22994249f606b4db5da7c5",
+        "afterSha256": "cb5a2758ff1d47be732b9bb11b933a8b45b3a15106c65a2e2b7c13a72a731335",
+        "beforeBytes": 12323,
+        "afterBytes": 12856,
+        "beforeEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "6974656d732d766965772e6a73273b0a",
+          "lfLineCount": 215,
+          "crlfLineCount": 0
+        },
+        "afterEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "6974656d732d766965772e6a73273b0a",
+          "lfLineCount": 227,
+          "crlfLineCount": 0
+        }
+      },
+      "edits": [
+        {
+          "path": "packages/ui/src/report-letters.ts",
+          "start": 207,
+          "end": 206,
+          "why": "Project the optional report into one row per event in category and NPC order. Keep the existing compact letter enum, headline, four-row cap, and stamps.",
+          "id": "E07",
+          "gitBefore": "",
+          "gitAfter": "export function npcLifeReportRows(\n  report: Readonly<TileTrialReport>,\n  npcs: readonly { character: { id: string; name: string } }[],\n) {\n  const life = report.npcLife;\n  if (!life) return [];\n  const names = new Map(npcs.map(({ character }) => [character.id, character.name]));\n  const kinds = [['exhausted', 'Exhausted'], ['recovered', 'Recovered'], ['birthdays', 'Birthday']] as const;\n  return kinds.flatMap(([kind, label]) =>\n    life[kind].map(npcId => ({ kind, label, npcId, name: names.get(npcId) ?? 'Unknown NPC' })));\n}\n\n",
+          "checkoutBefore": "",
+          "checkoutAfter": "export function npcLifeReportRows(\n  report: Readonly<TileTrialReport>,\n  npcs: readonly { character: { id: string; name: string } }[],\n) {\n  const life = report.npcLife;\n  if (!life) return [];\n  const names = new Map(npcs.map(({ character }) => [character.id, character.name]));\n  const kinds = [['exhausted', 'Exhausted'], ['recovered', 'Recovered'], ['birthdays', 'Birthday']] as const;\n  return kinds.flatMap(([kind, label]) =>\n    life[kind].map(npcId => ({ kind, label, npcId, name: names.get(npcId) ?? 'Unknown NPC' })));\n}\n\n",
+          "checkoutNewLineStyle": "LF",
+          "insertionBeforeUnchangedGitLine": "export function reportStamps(report: Readonly<TileTrialReport>): { label: 'Food' | 'Goods' | 'Happiness'; value: string }[] {\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/ui/src/SoloWeekReport.svelte",
+      "scope": "explicit product allowlist",
+      "gitBlob": "cd172d58c90df26a37c85a6f65b5e748cda11997",
+      "git": {
+        "beforeSha256": "ab36adfc4296a8e1e6a268581c441d2c94385ab334148803724f1a3a3d98c3f4",
+        "afterSha256": "61f34e050ce8f340341dfc2ce89769478d5a538ede19ca8e9f6df79951d13183",
+        "beforeBytes": 15436,
+        "afterBytes": 16122,
+        "beforeEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "6b3b207d207d0a3c2f7374796c653e0a",
+          "lfLineCount": 161,
+          "crlfLineCount": 0
+        },
+        "afterEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "6b3b207d207d0a3c2f7374796c653e0a",
+          "lfLineCount": 176,
+          "crlfLineCount": 0
+        }
+      },
+      "checkout": {
+        "beforeSha256": "ab36adfc4296a8e1e6a268581c441d2c94385ab334148803724f1a3a3d98c3f4",
+        "afterSha256": "61f34e050ce8f340341dfc2ce89769478d5a538ede19ca8e9f6df79951d13183",
+        "beforeBytes": 15436,
+        "afterBytes": 16122,
+        "beforeEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "6b3b207d207d0a3c2f7374796c653e0a",
+          "lfLineCount": 161,
+          "crlfLineCount": 0
+        },
+        "afterEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "6b3b207d207d0a3c2f7374796c653e0a",
+          "lfLineCount": 176,
+          "crlfLineCount": 0
+        }
+      },
+      "edits": [
+        {
+          "path": "packages/ui/src/SoloWeekReport.svelte",
+          "start": 2,
+          "end": 2,
+          "why": "Type the roster passed from the Character Life report mount.",
+          "id": "E08",
+          "gitBefore": "  import { WEEKLY_RESOURCE_KEYS, ITEM_CATALOG, type TileTrialReport } from '@haven/core';\n",
+          "gitAfter": "  import { WEEKLY_RESOURCE_KEYS, ITEM_CATALOG, type TileTrialReport, type WorldNpc } from '@haven/core';\n",
+          "checkoutBefore": "  import { WEEKLY_RESOURCE_KEYS, ITEM_CATALOG, type TileTrialReport } from '@haven/core';\n",
+          "checkoutAfter": "  import { WEEKLY_RESOURCE_KEYS, ITEM_CATALOG, type TileTrialReport, type WorldNpc } from '@haven/core';\n",
+          "checkoutNewLineStyle": "LF"
+        },
+        {
+          "path": "packages/ui/src/SoloWeekReport.svelte",
+          "start": 6,
+          "end": 6,
+          "why": "Use the separate NPC life row projection.",
+          "id": "E09",
+          "gitBefore": "  import { reportLetters, reportStamps } from './report-letters.js';\n",
+          "gitAfter": "  import { npcLifeReportRows, reportLetters, reportStamps } from './report-letters.js';\n",
+          "checkoutBefore": "  import { reportLetters, reportStamps } from './report-letters.js';\n",
+          "checkoutAfter": "  import { npcLifeReportRows, reportLetters, reportStamps } from './report-letters.js';\n",
+          "checkoutNewLineStyle": "LF"
+        },
+        {
+          "path": "packages/ui/src/SoloWeekReport.svelte",
+          "start": 11,
+          "end": 11,
+          "why": "Use read-only roster records for human-facing names.",
+          "id": "E10",
+          "gitBefore": "  export let report: Readonly<TileTrialReport> | null;\n",
+          "gitAfter": "  export let report: Readonly<TileTrialReport> | null;\n  export let npcs: readonly WorldNpc[];\n",
+          "checkoutBefore": "  export let report: Readonly<TileTrialReport> | null;\n",
+          "checkoutAfter": "  export let report: Readonly<TileTrialReport> | null;\n  export let npcs: readonly WorldNpc[];\n",
+          "checkoutNewLineStyle": "LF"
+        },
+        {
+          "path": "packages/ui/src/SoloWeekReport.svelte",
+          "start": 20,
+          "end": 20,
+          "why": "Project NPC rows only for a resolved report.",
+          "id": "E11",
+          "gitBefore": "    {@const letters = reportLetters(report)}\n",
+          "gitAfter": "    {@const letters = reportLetters(report)}\n    {@const npcRows = npcLifeReportRows(report, npcs)}\n",
+          "checkoutBefore": "    {@const letters = reportLetters(report)}\n",
+          "checkoutAfter": "    {@const letters = reportLetters(report)}\n    {@const npcRows = npcLifeReportRows(report, npcs)}\n",
+          "checkoutNewLineStyle": "LF"
+        },
+        {
+          "path": "packages/ui/src/SoloWeekReport.svelte",
+          "start": 128,
+          "end": 128,
+          "why": "Render every named event in a visible semantic list. Stable row data attributes let tests reconstruct IDs from the visible UI while keeping names readable.",
+          "id": "E12",
+          "gitBefore": "    <p aria-hidden=\"true\" class=\"signature\">Your steward</p>\n",
+          "gitAfter": "    {#if npcRows.length}\n      <section class=\"ledger-parchment npc-life-notes\" aria-labelledby=\"npc-life-report-title\">\n        <h3 id=\"npc-life-report-title\">NPC life</h3>\n        <ul>\n          {#each npcRows as row}\n            <li data-npc-life-kind={row.kind} data-npc-id={row.npcId}><span>{row.label}</span> · <strong>{row.name}</strong></li>\n          {/each}\n        </ul>\n      </section>\n    {/if}\n    <p aria-hidden=\"true\" class=\"signature\">Your steward</p>\n",
+          "checkoutBefore": "    <p aria-hidden=\"true\" class=\"signature\">Your steward</p>\n",
+          "checkoutAfter": "    {#if npcRows.length}\n      <section class=\"ledger-parchment npc-life-notes\" aria-labelledby=\"npc-life-report-title\">\n        <h3 id=\"npc-life-report-title\">NPC life</h3>\n        <ul>\n          {#each npcRows as row}\n            <li data-npc-life-kind={row.kind} data-npc-id={row.npcId}><span>{row.label}</span> · <strong>{row.name}</strong></li>\n          {/each}\n        </ul>\n      </section>\n    {/if}\n    <p aria-hidden=\"true\" class=\"signature\">Your steward</p>\n",
+          "checkoutNewLineStyle": "LF"
+        },
+        {
+          "path": "packages/ui/src/SoloWeekReport.svelte",
+          "start": 159,
+          "end": 159,
+          "why": "Give the new report list ledger spacing and let long names wrap inside it.",
+          "id": "E13",
+          "gitBefore": "  .signature { text-align: right; }\n",
+          "gitAfter": "  .npc-life-notes { margin-block: 16px; padding: 12px; }\n  .npc-life-notes h3 { margin-top: 0; }\n  .npc-life-notes li { overflow-wrap: anywhere; }\n  .signature { text-align: right; }\n",
+          "checkoutBefore": "  .signature { text-align: right; }\n",
+          "checkoutAfter": "  .npc-life-notes { margin-block: 16px; padding: 12px; }\n  .npc-life-notes h3 { margin-top: 0; }\n  .npc-life-notes li { overflow-wrap: anywhere; }\n  .signature { text-align: right; }\n",
+          "checkoutNewLineStyle": "LF"
+        }
+      ]
+    },
+    {
+      "path": "packages/ui/src/TileManagement.svelte",
+      "scope": "outside product allowlist; owner approval required",
+      "gitBlob": "16904b0e653b8006eaeaf3df8762a9de44416a76",
+      "git": {
+        "beforeSha256": "a5199db93ee54f512eec3954dfb0925d6c9fb6afcc7aa461e76b14461cdb2461",
+        "afterSha256": "ea61a79870c5310b20fd4afcdab8285a0977f9754d9f1060eab07b136169dcbf",
+        "beforeBytes": 19762,
+        "afterBytes": 19808,
+        "beforeEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "316672297d7d0a3c2f7374796c653e0a",
+          "lfLineCount": 306,
+          "crlfLineCount": 0
+        },
+        "afterEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "316672297d7d0a3c2f7374796c653e0a",
+          "lfLineCount": 306,
+          "crlfLineCount": 0
+        }
+      },
+      "checkout": {
+        "beforeSha256": "a5199db93ee54f512eec3954dfb0925d6c9fb6afcc7aa461e76b14461cdb2461",
+        "afterSha256": "ea61a79870c5310b20fd4afcdab8285a0977f9754d9f1060eab07b136169dcbf",
+        "beforeBytes": 19762,
+        "afterBytes": 19808,
+        "beforeEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "316672297d7d0a3c2f7374796c653e0a",
+          "lfLineCount": 306,
+          "crlfLineCount": 0
+        },
+        "afterEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "316672297d7d0a3c2f7374796c653e0a",
+          "lfLineCount": 306,
+          "crlfLineCount": 0
+        }
+      },
+      "edits": [
+        {
+          "path": "packages/ui/src/TileManagement.svelte",
+          "start": 277,
+          "end": 277,
+          "why": "Outside the product allowlist. The sole report mount already owns the roster. Passing it through enables visible NPC names while keeping the payload and store schema intact.",
+          "id": "E14",
+          "gitBefore": "      <SoloWeekReport {report} planningWeek={state.world.week} {locked} onnextweek={nextLifeWeek} />\n",
+          "gitAfter": "      <SoloWeekReport {report} npcs={npcs ?? []} planningWeek={state.world.week} {locked} onnextweek={nextLifeWeek} />\n",
+          "checkoutBefore": "      <SoloWeekReport {report} planningWeek={state.world.week} {locked} onnextweek={nextLifeWeek} />\n",
+          "checkoutAfter": "      <SoloWeekReport {report} npcs={npcs ?? []} planningWeek={state.world.week} {locked} onnextweek={nextLifeWeek} />\n",
+          "checkoutNewLineStyle": "LF"
+        },
+        {
+          "path": "packages/ui/src/TileManagement.svelte",
+          "start": 299,
+          "end": 299,
+          "why": "Outside the product allowlist. Correct the Help sentence that would contradict the newly visible NPC life events, and retain the stated Player interaction scope.",
+          "id": "E15",
+          "gitBefore": "<details class=\"card\"><summary>About this build</summary><p>Balance and building policies are TRIAL. Character profiles are TRIAL content. Weekly life events and Player interactions are not available yet.</p></details>\n",
+          "gitAfter": "<details class=\"card\"><summary>About this build</summary><p>Balance and building policies are TRIAL. Character profiles are TRIAL content. NPC life events appear in History when they occur. Player interactions are not available yet.</p></details>\n",
+          "checkoutBefore": "<details class=\"card\"><summary>About this build</summary><p>Balance and building policies are TRIAL. Character profiles are TRIAL content. Weekly life events and Player interactions are not available yet.</p></details>\n",
+          "checkoutAfter": "<details class=\"card\"><summary>About this build</summary><p>Balance and building policies are TRIAL. Character profiles are TRIAL content. NPC life events appear in History when they occur. Player interactions are not available yet.</p></details>\n",
+          "checkoutNewLineStyle": "LF"
+        }
+      ]
+    },
+    {
+      "path": "tests/e2e/character-life-navigation.helpers.ts",
+      "scope": "existing test/helper; exact Step 0 approval required",
+      "gitBlob": "e4e3ee4f51fe0f3d401807de92f7736d99b83c5c",
+      "git": {
+        "beforeSha256": "9189a748146fe64cba51f9a7f8c6452cf03a70b87d38d7d4d94c903519d26546",
+        "afterSha256": "887eec4c63a2e700898657c30f270a3c7e45eb1df0400c58f811bf377516dbfe",
+        "beforeBytes": 41644,
+        "afterBytes": 44325,
+        "beforeEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "7175616c286265666f7265293b0a7d0a",
+          "lfLineCount": 573,
+          "crlfLineCount": 0
+        },
+        "afterEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "7175616c286265666f7265293b0a7d0a",
+          "lfLineCount": 622,
+          "crlfLineCount": 0
+        }
+      },
+      "checkout": {
+        "beforeSha256": "9189a748146fe64cba51f9a7f8c6452cf03a70b87d38d7d4d94c903519d26546",
+        "afterSha256": "887eec4c63a2e700898657c30f270a3c7e45eb1df0400c58f811bf377516dbfe",
+        "beforeBytes": 41644,
+        "afterBytes": 44325,
+        "beforeEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "7175616c286265666f7265293b0a7d0a",
+          "lfLineCount": 573,
+          "crlfLineCount": 0
+        },
+        "afterEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "7175616c286265666f7265293b0a7d0a",
+          "lfLineCount": 622,
+          "crlfLineCount": 0
+        }
+      },
+      "edits": [
+        {
+          "path": "tests/e2e/character-life-navigation.helpers.ts",
+          "start": 5,
+          "end": 5,
+          "why": "Use the existing simulation observation in a test-only, read-only age projection.",
+          "id": "E16",
+          "gitBefore": "import type { LifeDestination } from '../../packages/ui/src/character-life-navigation.ts';\n",
+          "gitAfter": "import { observeCharacterLife } from '../../packages/simulation/src/character-life-observation.ts';\nimport type { LifeDestination } from '../../packages/ui/src/character-life-navigation.ts';\n",
+          "checkoutBefore": "import type { LifeDestination } from '../../packages/ui/src/character-life-navigation.ts';\n",
+          "checkoutAfter": "import { observeCharacterLife } from '../../packages/simulation/src/character-life-observation.ts';\nimport type { LifeDestination } from '../../packages/ui/src/character-life-navigation.ts';\n",
+          "checkoutNewLineStyle": "LF"
+        },
+        {
+          "path": "tests/e2e/character-life-navigation.helpers.ts",
+          "start": 16,
+          "end": 16,
+          "why": "Provide selectors scoped to the existing outer action tabs and panel. Add the independent NPC age oracle for the tests that pin legacy prose and identity rows.",
+          "id": "E17",
+          "gitBefore": "export const characterWindow = (page: Page) => charactersView(page).getByRole('region', { name: 'Character window', exact: true });\n",
+          "gitAfter": "export const characterWindow = (page: Page) => charactersView(page).getByRole('region', { name: 'Character window', exact: true });\nexport const characterTabs = (page: Page) => characterWindow(page).locator('.profile > [role=\"tablist\"]');\nexport const characterPanel = (page: Page) => characterWindow(page).locator('.profile > [role=\"tabpanel\"]');\nexport const npcSheetTabs = (page: Page) => characterPanel(page).getByRole('tablist', { name: 'NPC sheet', exact: true });\n\nexport function observeSheetLife(session: CharacterLifeSessionState, report: Readonly<TileTrialReport> | null) {\n  const week = session.city.world.week;\n  const npcs = session.npcs.map(npc => ({\n    ...npc,\n    character: { ...npc.character, age: Math.floor((week - npc.life.birthWeek) / 40) },\n  }));\n  return observeCharacterLife({ ...session, npcs }, report);\n}\n",
+          "checkoutBefore": "export const characterWindow = (page: Page) => charactersView(page).getByRole('region', { name: 'Character window', exact: true });\n",
+          "checkoutAfter": "export const characterWindow = (page: Page) => charactersView(page).getByRole('region', { name: 'Character window', exact: true });\nexport const characterTabs = (page: Page) => characterWindow(page).locator('.profile > [role=\"tablist\"]');\nexport const characterPanel = (page: Page) => characterWindow(page).locator('.profile > [role=\"tabpanel\"]');\nexport const npcSheetTabs = (page: Page) => characterPanel(page).getByRole('tablist', { name: 'NPC sheet', exact: true });\n\nexport function observeSheetLife(session: CharacterLifeSessionState, report: Readonly<TileTrialReport> | null) {\n  const week = session.city.world.week;\n  const npcs = session.npcs.map(npc => ({\n    ...npc,\n    character: { ...npc.character, age: Math.floor((week - npc.life.birthWeek) / 40) },\n  }));\n  return observeCharacterLife({ ...session, npcs }, report);\n}\n",
+          "checkoutNewLineStyle": "LF"
+        },
+        {
+          "path": "tests/e2e/character-life-navigation.helpers.ts",
+          "start": 73,
+          "end": 86,
+          "why": "Keep every existing outer area assertion and pin exactly one outer window. Assert exactly one nested sheet only for NPC Description, four inner tab and panel shells, and one accessible inner panel.",
+          "id": "E18",
+          "gitBefore": "export async function selectArea(page: Page, name: string) {\n  const tab = characterWindow(page).getByRole('tab', { name, exact: true });\n  await tab.click();\n  await expect(tab).toHaveAttribute('aria-selected', 'true');\n  return characterWindow(page).getByRole('tabpanel');\n}\n\nexport async function expectOneCharacterWindow(page: Page) {\n  const characters = charactersView(page);\n  await expect(characters.getByRole('tablist')).toHaveCount(1);\n  await expect(characters.getByRole('tab')).toHaveText(['Description', 'Inventory', 'Work', 'Relations']);\n  await expect(characters.getByRole('tabpanel')).toHaveCount(1);\n  expect(await characters.locator('[role=tabpanel]').count()).toBe(1);\n}\n",
+          "gitAfter": "export async function selectArea(page: Page, name: string) {\n  const tab = characterTabs(page).getByRole('tab', { name, exact: true });\n  await tab.click();\n  await expect(tab).toHaveAttribute('aria-selected', 'true');\n  return characterPanel(page);\n}\n\nexport async function selectNpcSheetTab(page: Page, name: string) {\n  const tab = npcSheetTabs(page).getByRole('tab', { name, exact: true });\n  await tab.click();\n  await expect(tab).toHaveAttribute('aria-selected', 'true');\n  const panel = characterPanel(page).getByRole('tabpanel', { name, exact: true });\n  await expect(panel).toBeVisible();\n  return panel;\n}\n\nexport async function expectOneCharacterWindow(page: Page) {\n  const characters = charactersView(page), window = characterWindow(page);\n  const tabs = characterTabs(page), panel = characterPanel(page);\n  await expect(window).toHaveCount(1);\n  await expect(tabs).toHaveCount(1);\n  await expect(tabs.getByRole('tab')).toHaveText(['Description', 'Inventory', 'Work', 'Relations']);\n  await expect(panel).toHaveCount(1);\n  const hasSheet = await window.getAttribute('data-character-id') !== 'player' &&\n    await tabs.getByRole('tab', { name: 'Description', exact: true, selected: true }).count() === 1;\n  await expect(characters.getByRole('tablist')).toHaveCount(hasSheet ? 2 : 1);\n  await expect(characters.getByRole('tabpanel')).toHaveCount(hasSheet ? 2 : 1);\n  expect(await characters.locator('[role=tabpanel]').count()).toBe(hasSheet ? 5 : 1);\n  if (hasSheet) await expect(npcSheetTabs(page).getByRole('tab')).toHaveText(['Profile', 'Skills', '18+', 'History']);\n}\n",
+          "checkoutBefore": "export async function selectArea(page: Page, name: string) {\n  const tab = characterWindow(page).getByRole('tab', { name, exact: true });\n  await tab.click();\n  await expect(tab).toHaveAttribute('aria-selected', 'true');\n  return characterWindow(page).getByRole('tabpanel');\n}\n\nexport async function expectOneCharacterWindow(page: Page) {\n  const characters = charactersView(page);\n  await expect(characters.getByRole('tablist')).toHaveCount(1);\n  await expect(characters.getByRole('tab')).toHaveText(['Description', 'Inventory', 'Work', 'Relations']);\n  await expect(characters.getByRole('tabpanel')).toHaveCount(1);\n  expect(await characters.locator('[role=tabpanel]').count()).toBe(1);\n}\n",
+          "checkoutAfter": "export async function selectArea(page: Page, name: string) {\n  const tab = characterTabs(page).getByRole('tab', { name, exact: true });\n  await tab.click();\n  await expect(tab).toHaveAttribute('aria-selected', 'true');\n  return characterPanel(page);\n}\n\nexport async function selectNpcSheetTab(page: Page, name: string) {\n  const tab = npcSheetTabs(page).getByRole('tab', { name, exact: true });\n  await tab.click();\n  await expect(tab).toHaveAttribute('aria-selected', 'true');\n  const panel = characterPanel(page).getByRole('tabpanel', { name, exact: true });\n  await expect(panel).toBeVisible();\n  return panel;\n}\n\nexport async function expectOneCharacterWindow(page: Page) {\n  const characters = charactersView(page), window = characterWindow(page);\n  const tabs = characterTabs(page), panel = characterPanel(page);\n  await expect(window).toHaveCount(1);\n  await expect(tabs).toHaveCount(1);\n  await expect(tabs.getByRole('tab')).toHaveText(['Description', 'Inventory', 'Work', 'Relations']);\n  await expect(panel).toHaveCount(1);\n  const hasSheet = await window.getAttribute('data-character-id') !== 'player' &&\n    await tabs.getByRole('tab', { name: 'Description', exact: true, selected: true }).count() === 1;\n  await expect(characters.getByRole('tablist')).toHaveCount(hasSheet ? 2 : 1);\n  await expect(characters.getByRole('tabpanel')).toHaveCount(hasSheet ? 2 : 1);\n  expect(await characters.locator('[role=tabpanel]').count()).toBe(hasSheet ? 5 : 1);\n  if (hasSheet) await expect(npcSheetTabs(page).getByRole('tab')).toHaveText(['Profile', 'Skills', '18+', 'History']);\n}\n",
+          "checkoutNewLineStyle": "LF"
+        },
+        {
+          "path": "tests/e2e/character-life-navigation.helpers.ts",
+          "start": 305,
+          "end": 305,
+          "why": "Close the Correction 4 D4 staging note when the report renders NPC life.",
+          "id": "E19",
+          "gitBefore": "// Read every currently rendered report field; NPC life notes are rendered in PR C.\n",
+          "gitAfter": "// Read every rendered report field, including the NPC life rows.\n",
+          "checkoutBefore": "// Read every currently rendered report field; NPC life notes are rendered in PR C.\n",
+          "checkoutAfter": "// Read every rendered report field, including the NPC life rows.\n",
+          "checkoutNewLineStyle": "LF"
+        },
+        {
+          "path": "tests/e2e/character-life-navigation.helpers.ts",
+          "start": 467,
+          "end": 470,
+          "why": "Reconstruct all three NPC-id arrays from the actual visible list, validate visible labels and nonempty names, omit the property when the region is absent, and restore full exact equality for npcLife. Preserve the other report exceptions and assertions.",
+          "id": "E20",
+          "gitBefore": "  const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;\n  // PR B adds simulation-only NPC life notes; retain parity for every existing rendered field.\n  delete baseReport.npcLife;\n  expect(actual).toEqual(baseReport);\n",
+          "gitAfter": "  const notes = panel.getByRole('region', { name: 'NPC life', exact: true, includeHidden: true });\n  if (await notes.count()) {\n    await expect(notes).toBeVisible();\n    const npcLife: NonNullable<TileTrialReport['npcLife']> = { exhausted: [], recovered: [], birthdays: [] };\n    const labels = { exhausted: 'Exhausted', recovered: 'Recovered', birthdays: 'Birthday' };\n    const rows = notes.getByRole('listitem', { includeHidden: true });\n    await expect(rows).not.toHaveCount(0);\n    for (const row of await rows.all()) {\n      const kind = await row.getAttribute('data-npc-life-kind');\n      const id = await row.getAttribute('data-npc-id');\n      if ((kind !== 'exhausted' && kind !== 'recovered' && kind !== 'birthdays') || !id) {\n        throw Error('Invalid NPC life report row.');\n      }\n      const name = row.locator('strong');\n      await expect(row).toBeVisible();\n      await expect(name).toBeVisible();\n      await expect(name).toHaveText(/\\S/);\n      await expect(row).toHaveText(`${labels[kind]} · ${(await name.innerText()).trim()}`);\n      npcLife[kind].push(id);\n    }\n    actual.npcLife = npcLife;\n  }\n  const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;\n  expect(actual).toEqual(baseReport);\n",
+          "checkoutBefore": "  const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;\n  // PR B adds simulation-only NPC life notes; retain parity for every existing rendered field.\n  delete baseReport.npcLife;\n  expect(actual).toEqual(baseReport);\n",
+          "checkoutAfter": "  const notes = panel.getByRole('region', { name: 'NPC life', exact: true, includeHidden: true });\n  if (await notes.count()) {\n    await expect(notes).toBeVisible();\n    const npcLife: NonNullable<TileTrialReport['npcLife']> = { exhausted: [], recovered: [], birthdays: [] };\n    const labels = { exhausted: 'Exhausted', recovered: 'Recovered', birthdays: 'Birthday' };\n    const rows = notes.getByRole('listitem', { includeHidden: true });\n    await expect(rows).not.toHaveCount(0);\n    for (const row of await rows.all()) {\n      const kind = await row.getAttribute('data-npc-life-kind');\n      const id = await row.getAttribute('data-npc-id');\n      if ((kind !== 'exhausted' && kind !== 'recovered' && kind !== 'birthdays') || !id) {\n        throw Error('Invalid NPC life report row.');\n      }\n      const name = row.locator('strong');\n      await expect(row).toBeVisible();\n      await expect(name).toBeVisible();\n      await expect(name).toHaveText(/\\S/);\n      await expect(row).toHaveText(`${labels[kind]} · ${(await name.innerText()).trim()}`);\n      npcLife[kind].push(id);\n    }\n    actual.npcLife = npcLife;\n  }\n  const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;\n  expect(actual).toEqual(baseReport);\n",
+          "checkoutNewLineStyle": "LF"
+        }
+      ]
+    },
+    {
+      "path": "packages/ui/src/__tests__/report-letters.test.ts",
+      "scope": "existing test/helper; exact Step 0 approval required",
+      "gitBlob": "b8267d1ff3bee324b4634c6ceedb7aba4b2a554b",
+      "git": {
+        "beforeSha256": "ac70e4cd2d7cfaa00515d53b0c7112ca40697abad5b9f4ed5982f202ee3c7336",
+        "afterSha256": "a5cd9ff313bec97243eeba63cf73083ddeb98751bb27e48a23df24e5e6388071",
+        "beforeBytes": 34094,
+        "afterBytes": 35682,
+        "beforeEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "65706f727473273e28293b0a7d293b0a",
+          "lfLineCount": 523,
+          "crlfLineCount": 0
+        },
+        "afterEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "65706f727473273e28293b0a7d293b0a",
+          "lfLineCount": 554,
+          "crlfLineCount": 0
+        }
+      },
+      "checkout": {
+        "beforeSha256": "a750fcaffd89a22aa1981c9aa4f15b3273b332fc180623d8904d311abd259798",
+        "afterSha256": "1a963ba20bc421654313120c09aa944b898de8150536e2aba0364f5da61d580f",
+        "beforeBytes": 34096,
+        "afterBytes": 35684,
+        "beforeEof": {
+          "lastLineEnding": "CRLF",
+          "last16Hex": "706f727473273e28293b0a7d293b0d0a",
+          "lfLineCount": 521,
+          "crlfLineCount": 2
+        },
+        "afterEof": {
+          "lastLineEnding": "CRLF",
+          "last16Hex": "706f727473273e28293b0a7d293b0d0a",
+          "lfLineCount": 552,
+          "crlfLineCount": 2
+        }
+      },
+      "edits": [
+        {
+          "path": "packages/ui/src/__tests__/report-letters.test.ts",
+          "start": 5,
+          "end": 5,
+          "why": "Import the new view projection while preserving the existing letter/stamp API assertions.",
+          "id": "E21",
+          "gitBefore": "import { reportLetters, reportStamps, type LetterId, type LetterRow, type ReportLetterView, type Seal } from '../report-letters.js';\n",
+          "gitAfter": "import { npcLifeReportRows, reportLetters, reportStamps, type LetterId, type LetterRow, type ReportLetterView, type Seal } from '../report-letters.js';\n",
+          "checkoutBefore": "import { reportLetters, reportStamps, type LetterId, type LetterRow, type ReportLetterView, type Seal } from '../report-letters.js';\n",
+          "checkoutAfter": "import { npcLifeReportRows, reportLetters, reportStamps, type LetterId, type LetterRow, type ReportLetterView, type Seal } from '../report-letters.js';\n",
+          "checkoutNewLineStyle": "LF"
+        },
+        {
+          "path": "packages/ui/src/__tests__/report-letters.test.ts",
+          "start": 82,
+          "end": 81,
+          "why": "Add RED coverage for full event order, names, omission, an unresolved id, and independence from the compact letter contract. Keep every current assertion and fixture.",
+          "id": "E22",
+          "gitBefore": "",
+          "gitAfter": "describe('NPC life report rows', () => {\n  const npcs = [\n    { character: { id: 'npc_a', name: 'Lydia' } },\n    { character: { id: 'npc_b', name: 'Tessa' } },\n    { character: { id: 'npc_c', name: 'Wendy' } },\n  ];\n\n  it('keeps every event in category and NPC order and leaves the report and letters intact', () => {\n    const input = report({ npcLife: { exhausted: ['npc_b', 'npc_a'], recovered: ['npc_c'], birthdays: ['npc_a'] } });\n    const before = structuredClone(input);\n    expect(npcLifeReportRows(input, npcs)).toEqual([\n      { kind: 'exhausted', label: 'Exhausted', npcId: 'npc_b', name: 'Tessa' },\n      { kind: 'exhausted', label: 'Exhausted', npcId: 'npc_a', name: 'Lydia' },\n      { kind: 'recovered', label: 'Recovered', npcId: 'npc_c', name: 'Wendy' },\n      { kind: 'birthdays', label: 'Birthday', npcId: 'npc_a', name: 'Lydia' },\n    ]);\n    expect(input).toEqual(before);\n    expect(reportLetters(input)).toEqual(reportLetters(report()));\n    expect(reportStamps(input)).toEqual(reportStamps(report()));\n  });\n\n  it('omits absent and empty notes and keeps the event id when a name is unresolved', () => {\n    expect(npcLifeReportRows(report(), npcs)).toEqual([]);\n    expect(npcLifeReportRows(report({ npcLife: { exhausted: [], recovered: [], birthdays: [] } }), npcs)).toEqual([]);\n    const input = report({ npcLife: { exhausted: [], recovered: [], birthdays: ['npc_unknown'] } });\n    expect(npcLifeReportRows(input, npcs)).toEqual([\n      { kind: 'birthdays', label: 'Birthday', npcId: 'npc_unknown', name: 'Unknown NPC' },\n    ]);\n  });\n});\n\n",
+          "checkoutBefore": "",
+          "checkoutAfter": "describe('NPC life report rows', () => {\n  const npcs = [\n    { character: { id: 'npc_a', name: 'Lydia' } },\n    { character: { id: 'npc_b', name: 'Tessa' } },\n    { character: { id: 'npc_c', name: 'Wendy' } },\n  ];\n\n  it('keeps every event in category and NPC order and leaves the report and letters intact', () => {\n    const input = report({ npcLife: { exhausted: ['npc_b', 'npc_a'], recovered: ['npc_c'], birthdays: ['npc_a'] } });\n    const before = structuredClone(input);\n    expect(npcLifeReportRows(input, npcs)).toEqual([\n      { kind: 'exhausted', label: 'Exhausted', npcId: 'npc_b', name: 'Tessa' },\n      { kind: 'exhausted', label: 'Exhausted', npcId: 'npc_a', name: 'Lydia' },\n      { kind: 'recovered', label: 'Recovered', npcId: 'npc_c', name: 'Wendy' },\n      { kind: 'birthdays', label: 'Birthday', npcId: 'npc_a', name: 'Lydia' },\n    ]);\n    expect(input).toEqual(before);\n    expect(reportLetters(input)).toEqual(reportLetters(report()));\n    expect(reportStamps(input)).toEqual(reportStamps(report()));\n  });\n\n  it('omits absent and empty notes and keeps the event id when a name is unresolved', () => {\n    expect(npcLifeReportRows(report(), npcs)).toEqual([]);\n    expect(npcLifeReportRows(report({ npcLife: { exhausted: [], recovered: [], birthdays: [] } }), npcs)).toEqual([]);\n    const input = report({ npcLife: { exhausted: [], recovered: [], birthdays: ['npc_unknown'] } });\n    expect(npcLifeReportRows(input, npcs)).toEqual([\n      { kind: 'birthdays', label: 'Birthday', npcId: 'npc_unknown', name: 'Unknown NPC' },\n    ]);\n  });\n});\n\n",
+          "checkoutNewLineStyle": "LF",
+          "insertionBeforeUnchangedGitLine": "describe('approved letter contracts and ordering', () => {\n"
+        }
+      ]
+    },
+    {
+      "path": "tests/e2e/character-life-boundary.spec.ts",
+      "scope": "existing test/helper; exact Step 0 approval required",
+      "gitBlob": "eae97691195d7f8f105b9427895574c56c5cab46",
+      "git": {
+        "beforeSha256": "3a68dafddab2c66f201dd6cdbd9875aa06b5e3ed3bdff7ecc0724b288d7386ad",
+        "afterSha256": "c7d21c467b76f9cb825c1d7638b94bdc751f3534b4edc49cc500693d416b82de",
+        "beforeBytes": 22964,
+        "afterBytes": 24582,
+        "beforeEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "20636f6d7061726528293b0a7d293b0a",
+          "lfLineCount": 310,
+          "crlfLineCount": 0
+        },
+        "afterEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "20636f6d7061726528293b0a7d293b0a",
+          "lfLineCount": 329,
+          "crlfLineCount": 0
+        }
+      },
+      "checkout": {
+        "beforeSha256": "3a68dafddab2c66f201dd6cdbd9875aa06b5e3ed3bdff7ecc0724b288d7386ad",
+        "afterSha256": "c7d21c467b76f9cb825c1d7638b94bdc751f3534b4edc49cc500693d416b82de",
+        "beforeBytes": 22964,
+        "afterBytes": 24582,
+        "beforeEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "20636f6d7061726528293b0a7d293b0a",
+          "lfLineCount": 310,
+          "crlfLineCount": 0
+        },
+        "afterEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "20636f6d7061726528293b0a7d293b0a",
+          "lfLineCount": 329,
+          "crlfLineCount": 0
+        }
+      },
+      "edits": [
+        {
+          "path": "tests/e2e/character-life-boundary.spec.ts",
+          "start": 7,
+          "end": 9,
+          "why": "Add the age-title helper and NPC life type. The existing expected session remains the source of history and work status.",
+          "id": "E23",
+          "gitBefore": "WEEKLY_RESOURCE_KEYS,\ntype CharacterLifeSessionState,\ntype TileTrialReport\n",
+          "gitAfter": "WEEKLY_RESOURCE_KEYS,npcAgeTitle,\ntype CharacterLifeSessionState,\ntype NpcLife,\ntype TileTrialReport\n",
+          "checkoutBefore": "WEEKLY_RESOURCE_KEYS,\ntype CharacterLifeSessionState,\ntype TileTrialReport\n",
+          "checkoutAfter": "WEEKLY_RESOURCE_KEYS,npcAgeTitle,\ntype CharacterLifeSessionState,\ntype NpcLife,\ntype TileTrialReport\n",
+          "checkoutNewLineStyle": "LF"
+        },
+        {
+          "path": "tests/e2e/character-life-boundary.spec.ts",
+          "start": 13,
+          "end": 17,
+          "why": "Use the outer-panel locator, independent read-model age and inner-tab helper for UI parity. Keep the simulation observation types.",
+          "id": "E24",
+          "gitBefore": "import {\nobserveCharacterLife,type Observation,type VisibleCharacter,\n} from '../../packages/simulation/src/character-life-observation.ts';\nimport { formatMilli } from '../../packages/ui/src/milli-format.ts';\nimport {openReportDetails, charactersView,characterWindow,expectOneCharacterWindow,expectReport,go,reportFulfillment,reportRegion,selectArea,selectPerson } from './character-life-navigation.helpers.ts';\n",
+          "gitAfter": "import type { Observation, VisibleCharacter } from '../../packages/simulation/src/character-life-observation.ts';\nimport { formatMilli } from '../../packages/ui/src/milli-format.ts';\nimport {openReportDetails, characterPanel,charactersView,characterWindow,expectOneCharacterWindow,expectReport,go,observeSheetLife,reportFulfillment,reportRegion,selectArea,selectNpcSheetTab,selectPerson } from './character-life-navigation.helpers.ts';\n",
+          "checkoutBefore": "import {\nobserveCharacterLife,type Observation,type VisibleCharacter,\n} from '../../packages/simulation/src/character-life-observation.ts';\nimport { formatMilli } from '../../packages/ui/src/milli-format.ts';\nimport {openReportDetails, charactersView,characterWindow,expectOneCharacterWindow,expectReport,go,reportFulfillment,reportRegion,selectArea,selectPerson } from './character-life-navigation.helpers.ts';\n",
+          "checkoutAfter": "import type { Observation, VisibleCharacter } from '../../packages/simulation/src/character-life-observation.ts';\nimport { formatMilli } from '../../packages/ui/src/milli-format.ts';\nimport {openReportDetails, characterPanel,charactersView,characterWindow,expectOneCharacterWindow,expectReport,go,observeSheetLife,reportFulfillment,reportRegion,selectArea,selectNpcSheetTab,selectPerson } from './character-life-navigation.helpers.ts';\n",
+          "checkoutNewLineStyle": "LF"
+        },
+        {
+          "path": "tests/e2e/character-life-boundary.spec.ts",
+          "start": 49,
+          "end": 57,
+          "why": "Assert the original identity rows and trait pairs exactly, within their own list. Keep the outer panel lookup stable when the nested sheet mounts.",
+          "id": "E25",
+          "gitBefore": "async function profileParity(page: Page, scope: Locator, c: VisibleCharacter) {\n  const panel = scope.getByRole('tabpanel');\n  await expectOneCharacterWindow(page);\n  await selectArea(page, 'Description');\n  await expect(scope.getByTestId(`profile-${c.id}-short`)).toHaveText(c.shortDescription);\n  await expect(scope.getByTestId(`profile-${c.id}-long`)).toHaveText(c.longDescription);\n  await expect(panel.getByRole('heading', { name: 'Identity and appearance', exact: true })).toBeVisible();\n  await expect(panel.locator('dt')).toHaveText([...c.profileRows.map(r => r.label), ...c.traits.map(t => t.name)]);\n  await expect(panel.locator('dd')).toHaveText([...c.profileRows.map(r => r.value), ...c.traits.map(t => t.summary)]);\n",
+          "gitAfter": "async function profileParity(page: Page, scope: Locator, c: VisibleCharacter, life?: NpcLife) {\n  const panel = characterPanel(page);\n  await expectOneCharacterWindow(page);\n  await selectArea(page, 'Description');\n  if (life) await selectNpcSheetTab(page, 'Profile');\n  await expect(scope.getByTestId(`profile-${c.id}-short`)).toHaveText(c.shortDescription);\n  await expect(scope.getByTestId(`profile-${c.id}-long`)).toHaveText(c.longDescription);\n  await expect(panel.getByRole('heading', { name: 'Identity and appearance', exact: true })).toBeVisible();\n  const identity = panel.locator('[data-character-identity]');\n  await expect(identity.locator('dt')).toHaveText([...c.profileRows.map(r => r.label), ...c.traits.map(t => t.name)]);\n  await expect(identity.locator('dd')).toHaveText([...c.profileRows.map(r => r.value), ...c.traits.map(t => t.summary)]);\n",
+          "checkoutBefore": "async function profileParity(page: Page, scope: Locator, c: VisibleCharacter) {\n  const panel = scope.getByRole('tabpanel');\n  await expectOneCharacterWindow(page);\n  await selectArea(page, 'Description');\n  await expect(scope.getByTestId(`profile-${c.id}-short`)).toHaveText(c.shortDescription);\n  await expect(scope.getByTestId(`profile-${c.id}-long`)).toHaveText(c.longDescription);\n  await expect(panel.getByRole('heading', { name: 'Identity and appearance', exact: true })).toBeVisible();\n  await expect(panel.locator('dt')).toHaveText([...c.profileRows.map(r => r.label), ...c.traits.map(t => t.name)]);\n  await expect(panel.locator('dd')).toHaveText([...c.profileRows.map(r => r.value), ...c.traits.map(t => t.summary)]);\n",
+          "checkoutAfter": "async function profileParity(page: Page, scope: Locator, c: VisibleCharacter, life?: NpcLife) {\n  const panel = characterPanel(page);\n  await expectOneCharacterWindow(page);\n  await selectArea(page, 'Description');\n  if (life) await selectNpcSheetTab(page, 'Profile');\n  await expect(scope.getByTestId(`profile-${c.id}-short`)).toHaveText(c.shortDescription);\n  await expect(scope.getByTestId(`profile-${c.id}-long`)).toHaveText(c.longDescription);\n  await expect(panel.getByRole('heading', { name: 'Identity and appearance', exact: true })).toBeVisible();\n  const identity = panel.locator('[data-character-identity]');\n  await expect(identity.locator('dt')).toHaveText([...c.profileRows.map(r => r.label), ...c.traits.map(t => t.name)]);\n  await expect(identity.locator('dd')).toHaveText([...c.profileRows.map(r => r.value), ...c.traits.map(t => t.summary)]);\n",
+          "checkoutNewLineStyle": "LF"
+        },
+        {
+          "path": "tests/e2e/character-life-boundary.spec.ts",
+          "start": 88,
+          "end": 94,
+          "why": "Preserve Player Health, needs, emotions, skills and empty memory checks. For NPCs assert Health is absent, the legacy Emotions line has the other seven values, all five Skills values match and the new History lists actual events in reverse append order.",
+          "id": "E26",
+          "gitBefore": "  await expect(attributes.locator('p')).toHaveText([`Health ${c.stats.health}`, `Needs: ${numbers(c.stats.needs)}`, `Emotions: ${numbers(c.stats.emotions)}`]);\n  const skills = panel.locator('details').filter({ hasText: 'Skills' });\n  await skills.locator('summary').click();\n  await expect(skills.locator('p')).toHaveText(`Skills: ${numbers(c.stats.skills)}`);\n  const memories = panel.locator('details').filter({ has: page.getByText('History', { exact: true }) });\n  await memories.locator('summary').click();\n  await expect(memories.locator('p')).toHaveText('No memories yet.');\n",
+          "gitAfter": "  const emotions = Object.entries(c.stats.emotions).filter(([key]) => !life || key !== 'stress');\n  await expect(attributes.locator('p')).toHaveText([...(life ? [] : [`Health ${c.stats.health}`]), `Needs: ${numbers(c.stats.needs)}`, `Emotions: ${emotions.map(([key, value]) => `${title(key)} ${value}`).join(' · ')}`]);\n  if (life) {\n    await expect(panel.getByText(/^Health \\d/)).toHaveCount(0);\n    const skills = await selectNpcSheetTab(page, 'Skills');\n    await expect(skills.locator('dt')).toHaveText(Object.keys(c.stats.skills).map(title));\n    await expect(skills.locator('dd')).toHaveText(Object.values(c.stats.skills).map(String));\n    const history = await selectNpcSheetTab(page, 'History');\n    if (life.history.recent.length) {\n      const labels: Record<string, string> = { 'post-assigned': 'Post assigned', 'post-cleared': 'Post cleared', exhausted: 'Exhausted', recovered: 'Recovered', birthday: 'Birthday' };\n      const events = life.history.recent.slice().reverse().map(({ week, kind }) =>\n        `Week ${(week - 1) % 40 + 1} · Year ${Math.floor((week - 1) / 40) + 1} · ${labels[kind]}`);\n      await expect(history.getByRole('list', { name: 'Recent events', exact: true }).getByRole('listitem')).toHaveText(events);\n    } else await expect(history.getByText('No events recorded.', { exact: true })).toBeVisible();\n  } else {\n    const skills = panel.locator('details').filter({ hasText: 'Skills' });\n    await skills.locator('summary').click();\n    await expect(skills.locator('p')).toHaveText(`Skills: ${numbers(c.stats.skills)}`);\n    const memories = panel.locator('details').filter({ has: page.getByText('History', { exact: true }) });\n    await memories.locator('summary').click();\n    await expect(memories.locator('p')).toHaveText('No memories yet.');\n  }\n",
+          "checkoutBefore": "  await expect(attributes.locator('p')).toHaveText([`Health ${c.stats.health}`, `Needs: ${numbers(c.stats.needs)}`, `Emotions: ${numbers(c.stats.emotions)}`]);\n  const skills = panel.locator('details').filter({ hasText: 'Skills' });\n  await skills.locator('summary').click();\n  await expect(skills.locator('p')).toHaveText(`Skills: ${numbers(c.stats.skills)}`);\n  const memories = panel.locator('details').filter({ has: page.getByText('History', { exact: true }) });\n  await memories.locator('summary').click();\n  await expect(memories.locator('p')).toHaveText('No memories yet.');\n",
+          "checkoutAfter": "  const emotions = Object.entries(c.stats.emotions).filter(([key]) => !life || key !== 'stress');\n  await expect(attributes.locator('p')).toHaveText([...(life ? [] : [`Health ${c.stats.health}`]), `Needs: ${numbers(c.stats.needs)}`, `Emotions: ${emotions.map(([key, value]) => `${title(key)} ${value}`).join(' · ')}`]);\n  if (life) {\n    await expect(panel.getByText(/^Health \\d/)).toHaveCount(0);\n    const skills = await selectNpcSheetTab(page, 'Skills');\n    await expect(skills.locator('dt')).toHaveText(Object.keys(c.stats.skills).map(title));\n    await expect(skills.locator('dd')).toHaveText(Object.values(c.stats.skills).map(String));\n    const history = await selectNpcSheetTab(page, 'History');\n    if (life.history.recent.length) {\n      const labels: Record<string, string> = { 'post-assigned': 'Post assigned', 'post-cleared': 'Post cleared', exhausted: 'Exhausted', recovered: 'Recovered', birthday: 'Birthday' };\n      const events = life.history.recent.slice().reverse().map(({ week, kind }) =>\n        `Week ${(week - 1) % 40 + 1} · Year ${Math.floor((week - 1) / 40) + 1} · ${labels[kind]}`);\n      await expect(history.getByRole('list', { name: 'Recent events', exact: true }).getByRole('listitem')).toHaveText(events);\n    } else await expect(history.getByText('No events recorded.', { exact: true })).toBeVisible();\n  } else {\n    const skills = panel.locator('details').filter({ hasText: 'Skills' });\n    await skills.locator('summary').click();\n    await expect(skills.locator('p')).toHaveText(`Skills: ${numbers(c.stats.skills)}`);\n    const memories = panel.locator('details').filter({ has: page.getByText('History', { exact: true }) });\n    await memories.locator('summary').click();\n    await expect(memories.locator('p')).toHaveText('No memories yet.');\n  }\n",
+          "checkoutNewLineStyle": "LF"
+        },
+        {
+          "path": "tests/e2e/character-life-boundary.spec.ts",
+          "start": 231,
+          "end": 232,
+          "why": "Pin the displayed age and title on the NPC detail and provide the authoritative expected history to the parity helper.",
+          "id": "E27",
+          "gitBefore": "    await expect(card.getByRole('tabpanel').getByText(/^Age /)).toHaveText(`Age ${npc.age} · Background: ${npc.occupation} · ${npc.socialClass} · ${npc.legalStatus.replace('_', ' ')}`);\n    await profileParity(page, card, npc);\n",
+          "gitAfter": "    await expect(characterPanel(page).getByText(/^Age /)).toHaveText(`Age ${npc.age} · ${npcAgeTitle(npc.age)} · Background: ${npc.occupation} · ${npc.socialClass} · ${npc.legalStatus.replace('_', ' ')}`);\n    const life = expected.npcs.find(entry => entry.character.id === npc.id)!.life;\n    await profileParity(page, card, npc, life);\n",
+          "checkoutBefore": "    await expect(card.getByRole('tabpanel').getByText(/^Age /)).toHaveText(`Age ${npc.age} · Background: ${npc.occupation} · ${npc.socialClass} · ${npc.legalStatus.replace('_', ' ')}`);\n    await profileParity(page, card, npc);\n",
+          "checkoutAfter": "    await expect(characterPanel(page).getByText(/^Age /)).toHaveText(`Age ${npc.age} · ${npcAgeTitle(npc.age)} · Background: ${npc.occupation} · ${npc.socialClass} · ${npc.legalStatus.replace('_', ' ')}`);\n    const life = expected.npcs.find(entry => entry.character.id === npc.id)!.life;\n    await profileParity(page, card, npc, life);\n",
+          "checkoutNewLineStyle": "LF"
+        },
+        {
+          "path": "tests/e2e/character-life-boundary.spec.ts",
+          "start": 236,
+          "end": 236,
+          "why": "Keep exact Work text parity for both working and exhausted states.",
+          "id": "E28",
+          "gitBefore": "    await expect(card.getByText('NPC post skills apply at End Week.', { exact: true })).toBeVisible();\n",
+          "gitAfter": "    const note = life.working ? 'NPC post skills apply at End Week.' :\n      npc.postTileId ? 'Not working · Post inactive at End Week.' : 'Not working';\n    await expect(card.getByText(note, { exact: true })).toBeVisible();\n",
+          "checkoutBefore": "    await expect(card.getByText('NPC post skills apply at End Week.', { exact: true })).toBeVisible();\n",
+          "checkoutAfter": "    const note = life.working ? 'NPC post skills apply at End Week.' :\n      npc.postTileId ? 'Not working · Post inactive at End Week.' : 'Not working';\n    await expect(card.getByText(note, { exact: true })).toBeVisible();\n",
+          "checkoutNewLineStyle": "LF"
+        },
+        {
+          "path": "tests/e2e/character-life-boundary.spec.ts",
+          "start": 270,
+          "end": 270,
+          "why": "Calculate age only for the observation passed to UI assertions. Save/import and dispatcher checks still use the untouched expected state.",
+          "id": "E29",
+          "gitBefore": "  const compare = () => uiParity(page, observeCharacterLife(expectedSession, expectedReport), expectedReport, expectedSession);\n",
+          "gitAfter": "  const compare = () => uiParity(page, observeSheetLife(expectedSession, expectedReport), expectedReport, expectedSession);\n",
+          "checkoutBefore": "  const compare = () => uiParity(page, observeCharacterLife(expectedSession, expectedReport), expectedReport, expectedSession);\n",
+          "checkoutAfter": "  const compare = () => uiParity(page, observeSheetLife(expectedSession, expectedReport), expectedReport, expectedSession);\n",
+          "checkoutNewLineStyle": "LF"
+        }
+      ]
+    },
+    {
+      "path": "tests/e2e/character-life-navigation.spec.ts",
+      "scope": "existing test/helper; exact Step 0 approval required",
+      "gitBlob": "28e028adc0e2c68606eb53a76d78052402016687",
+      "git": {
+        "beforeSha256": "05833fb0e262f31b988b44de320afa7060688063133beb6d39f49ef75af2607c",
+        "afterSha256": "86879b8779704f59e965c5260d5149f539d4c9e88926c1811ad3edabf550da6a",
+        "beforeBytes": 105898,
+        "afterBytes": 106964,
+        "beforeEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "64732870616765293b207d0a7d293b0a",
+          "lfLineCount": 1472,
+          "crlfLineCount": 0
+        },
+        "afterEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "64732870616765293b207d0a7d293b0a",
+          "lfLineCount": 1488,
+          "crlfLineCount": 0
+        }
+      },
+      "checkout": {
+        "beforeSha256": "cc1d3ea8895f2d8d7cc6530c0619753dc8f1a44db4bb347eaca1acd9e8558c80",
+        "afterSha256": "bdd1b7e1dc99f3353f28a5aee4e8baa20634c5e4cd1cea7d11fcb34cc59fe951",
+        "beforeBytes": 107370,
+        "afterBytes": 108452,
+        "beforeEof": {
+          "lastLineEnding": "CRLF",
+          "last16Hex": "2870616765293b207d0d0a7d293b0d0a",
+          "lfLineCount": 0,
+          "crlfLineCount": 1472
+        },
+        "afterEof": {
+          "lastLineEnding": "CRLF",
+          "last16Hex": "2870616765293b207d0d0a7d293b0d0a",
+          "lfLineCount": 0,
+          "crlfLineCount": 1488
+        }
+      },
+      "edits": [
+        {
+          "path": "tests/e2e/character-life-navigation.spec.ts",
+          "start": 6,
+          "end": 8,
+          "why": "Use age-title labeling and outer/inner tab helpers in the existing read-people and keyboard suites.",
+          "id": "E30",
+          "gitBefore": "import { observeCharacterLife } from '../../packages/simulation/src/character-life-observation.ts';\nimport { keyActivate, keyGo, keyPost, keyText, tabTo, turnStatuses, watchTurnStatus } from './character-life-navigation.helpers.ts';\nimport { characterWindow, charactersView, expectCheckpointRejectionPreservesUi, expectOneCharacterWindow, openReportDetails,expectReport, expectRequirements, exportLife, go, importLife, lifeUiSnapshot, makeLife, reportFixture, reportRegion, reportUnits, reportMilli, reportWeek, requirementsRegion, selectArea, selectPerson } from './character-life-navigation.helpers.ts';\n",
+          "gitAfter": "import { npcAgeTitle } from '../../packages/core/src/index.ts';\nimport { keyActivate, keyGo, keyPost, keyText, tabTo, turnStatuses, watchTurnStatus } from './character-life-navigation.helpers.ts';\nimport { characterPanel, characterTabs, characterWindow, charactersView, expectCheckpointRejectionPreservesUi, expectOneCharacterWindow, openReportDetails,expectReport, expectRequirements, exportLife, go, importLife, lifeUiSnapshot, makeLife, observeSheetLife, reportFixture, reportRegion, reportUnits, reportMilli, reportWeek, requirementsRegion, selectArea, selectNpcSheetTab, selectPerson } from './character-life-navigation.helpers.ts';\n",
+          "checkoutBefore": "import { observeCharacterLife } from '../../packages/simulation/src/character-life-observation.ts';\r\nimport { keyActivate, keyGo, keyPost, keyText, tabTo, turnStatuses, watchTurnStatus } from './character-life-navigation.helpers.ts';\r\nimport { characterWindow, charactersView, expectCheckpointRejectionPreservesUi, expectOneCharacterWindow, openReportDetails,expectReport, expectRequirements, exportLife, go, importLife, lifeUiSnapshot, makeLife, reportFixture, reportRegion, reportUnits, reportMilli, reportWeek, requirementsRegion, selectArea, selectPerson } from './character-life-navigation.helpers.ts';\r\n",
+          "checkoutAfter": "import { npcAgeTitle } from '../../packages/core/src/index.ts';\r\nimport { keyActivate, keyGo, keyPost, keyText, tabTo, turnStatuses, watchTurnStatus } from './character-life-navigation.helpers.ts';\r\nimport { characterPanel, characterTabs, characterWindow, charactersView, expectCheckpointRejectionPreservesUi, expectOneCharacterWindow, openReportDetails,expectReport, expectRequirements, exportLife, go, importLife, lifeUiSnapshot, makeLife, observeSheetLife, reportFixture, reportRegion, reportUnits, reportMilli, reportWeek, requirementsRegion, selectArea, selectNpcSheetTab, selectPerson } from './character-life-navigation.helpers.ts';\r\n",
+          "checkoutNewLineStyle": "CRLF"
+        },
+        {
+          "path": "tests/e2e/character-life-navigation.spec.ts",
+          "start": 364,
+          "end": 364,
+          "why": "Keep the artwork-outside-the-panel assertion scoped to the existing outer profile panel that must contain the entire sheet.",
+          "id": "E31",
+          "gitBefore": "      await expect(win.getByRole('tabpanel').getByText('Character artwork unavailable.', { exact: true })).toHaveCount(0);\n",
+          "gitAfter": "      await expect(characterPanel(page).getByText('Character artwork unavailable.', { exact: true })).toHaveCount(0);\n",
+          "checkoutBefore": "      await expect(win.getByRole('tabpanel').getByText('Character artwork unavailable.', { exact: true })).toHaveCount(0);\r\n",
+          "checkoutAfter": "      await expect(characterPanel(page).getByText('Character artwork unavailable.', { exact: true })).toHaveCount(0);\r\n",
+          "checkoutNewLineStyle": "CRLF"
+        },
+        {
+          "path": "tests/e2e/character-life-navigation.spec.ts",
+          "start": 465,
+          "end": 465,
+          "why": "Pin both legacy Player disclosure names and the NPC's retained Profile disclosures. The one-window helper also pins all four new NPC tab names.",
+          "id": "E32",
+          "gitBefore": "    await expect(details.locator('summary')).toHaveText(['Attributes', 'Skills', 'History', 'Private (adult)']);\n",
+          "gitAfter": "    await expect(details.locator('summary')).toHaveText(id === 'player' ? ['Attributes', 'Skills', 'History', 'Private (adult)'] : ['Attributes', 'Private (adult)']);\n",
+          "checkoutBefore": "    await expect(details.locator('summary')).toHaveText(['Attributes', 'Skills', 'History', 'Private (adult)']);\r\n",
+          "checkoutAfter": "    await expect(details.locator('summary')).toHaveText(id === 'player' ? ['Attributes', 'Skills', 'History', 'Private (adult)'] : ['Attributes', 'Private (adult)']);\r\n",
+          "checkoutNewLineStyle": "CRLF"
+        },
+        {
+          "path": "tests/e2e/character-life-navigation.spec.ts",
+          "start": 490,
+          "end": 490,
+          "why": "Keep exactly one outer roving focus stop while the nested sheet has its own stop.",
+          "id": "E33",
+          "gitBefore": "  await expect(window.locator('[role=\"tab\"][tabindex=\"0\"]')).toHaveCount(1);\n",
+          "gitAfter": "  await expect(characterTabs(page).locator('[role=\"tab\"][tabindex=\"0\"]')).toHaveCount(1);\n",
+          "checkoutBefore": "  await expect(window.locator('[role=\"tab\"][tabindex=\"0\"]')).toHaveCount(1);\r\n",
+          "checkoutAfter": "  await expect(characterTabs(page).locator('[role=\"tab\"][tabindex=\"0\"]')).toHaveCount(1);\r\n",
+          "checkoutNewLineStyle": "CRLF"
+        },
+        {
+          "path": "tests/e2e/character-life-navigation.spec.ts",
+          "start": 1267,
+          "end": 1267,
+          "why": "Make F2 traverse the actual outer selected tab before sending two arrows to Work.",
+          "id": "E34",
+          "gitBefore": "        await tabTo(page, win.locator('[role=\"tab\"][tabindex=\"0\"]'));\n",
+          "gitAfter": "        await tabTo(page, characterTabs(page).locator('[role=\"tab\"][tabindex=\"0\"]'));\n",
+          "checkoutBefore": "        await tabTo(page, win.locator('[role=\"tab\"][tabindex=\"0\"]'));\r\n",
+          "checkoutAfter": "        await tabTo(page, characterTabs(page).locator('[role=\"tab\"][tabindex=\"0\"]'));\r\n",
+          "checkoutNewLineStyle": "CRLF"
+        },
+        {
+          "path": "tests/e2e/character-life-navigation.spec.ts",
+          "start": 1301,
+          "end": 1301,
+          "why": "Keep the intended age-30 F3 fixture under the life-derived age projection. The validated saved character age remains 30 in this fixture.",
+          "id": "E35",
+          "gitBefore": "      for (const npc of session.npcs) npc.character.age = 30;\n",
+          "gitAfter": "      for (const npc of session.npcs) {\n        npc.character.age = 30;\n        npc.life.birthWeek = session.city.world.week - 30 * 40;\n      }\n",
+          "checkoutBefore": "      for (const npc of session.npcs) npc.character.age = 30;\r\n",
+          "checkoutAfter": "      for (const npc of session.npcs) {\r\n        npc.character.age = 30;\r\n        npc.life.birthWeek = session.city.world.week - 30 * 40;\r\n      }\r\n",
+          "checkoutNewLineStyle": "CRLF"
+        },
+        {
+          "path": "tests/e2e/character-life-navigation.spec.ts",
+          "start": 1305,
+          "end": 1305,
+          "why": "Use the independent UI-age observation for F3 while retaining every other observation field.",
+          "id": "E36",
+          "gitBefore": "      const win = characterWindow(page), o = observeCharacterLife(session, null);\n",
+          "gitAfter": "      const win = characterWindow(page), o = observeSheetLife(session, null);\n",
+          "checkoutBefore": "      const win = characterWindow(page), o = observeCharacterLife(session, null);\r\n",
+          "checkoutAfter": "      const win = characterWindow(page), o = observeSheetLife(session, null);\r\n",
+          "checkoutNewLineStyle": "CRLF"
+        },
+        {
+          "path": "tests/e2e/character-life-navigation.spec.ts",
+          "start": 1311,
+          "end": 1326,
+          "why": "Keep exact visible profile, identity, disclosure and stat coverage for Player and NPC. Change the NPC-specific Skill, history, age-title, Health and legacy Stress assertions to the new UI contract.",
+          "id": "E37",
+          "gitBefore": "        const panel = win.getByRole('tabpanel');\n        await expect(win.getByTestId(`profile-${c.id}-short`)).toHaveText(c.shortDescription);\n        await expect(win.getByTestId(`profile-${c.id}-long`)).toHaveText(c.longDescription);\n        await expect(panel.locator('dt')).toHaveText([...c.profileRows.map(r => r.label), ...c.traits.map(t => t.name)]);\n        await expect(panel.locator('dd')).toHaveText([...c.profileRows.map(r => r.value), ...c.traits.map(t => t.summary)]);\n        await expect(panel.locator('details details')).toHaveCount(0);\n        await expect(panel.locator('details[open]')).toHaveCount(0);\n        for (const disclosure of await panel.locator('details').all()) await disclosure.locator('summary').click();\n        await expect(panel.getByText(`Health ${c.stats.health}`, { exact: true })).toBeVisible();\n        for (const [label, values] of [['Needs', c.stats.needs], ['Emotions', c.stats.emotions], ['Skills', c.stats.skills]] as const) await expect(panel.getByText(`${label}: ${numbers(values)}`, { exact: true })).toBeVisible();\n        await expect(panel.getByText('No memories yet.', { exact: true })).toBeVisible();\n        if (c.adult) {\n          await expect(panel.getByText(`Intimacy Knowledge: ${c.adult.intimacyKnowledge ?? 'Not recorded'}`, { exact: true })).toBeVisible();\n          await expect(panel.getByText(`Intimate history: ${c.adult.intimateHistory}`, { exact: true })).toBeVisible();\n        }\n        if ('occupation' in c) await expect(panel.getByText(/^Age /)).toHaveText(`Age ${c.age} · Background: ${c.occupation} · ${c.socialClass} · ${c.legalStatus.replace('_', ' ')}`);\n",
+          "gitAfter": "        const panel = characterPanel(page), identity = panel.locator('[data-character-identity]');\n        await expect(win.getByTestId(`profile-${c.id}-short`)).toHaveText(c.shortDescription);\n        await expect(win.getByTestId(`profile-${c.id}-long`)).toHaveText(c.longDescription);\n        await expect(identity.locator('dt')).toHaveText([...c.profileRows.map(r => r.label), ...c.traits.map(t => t.name)]);\n        await expect(identity.locator('dd')).toHaveText([...c.profileRows.map(r => r.value), ...c.traits.map(t => t.summary)]);\n        await expect(panel.locator('details details')).toHaveCount(0);\n        await expect(panel.locator('details[open]')).toHaveCount(0);\n        for (const disclosure of await panel.locator('details').all()) await disclosure.locator('summary').click();\n        const emotions = Object.fromEntries(Object.entries(c.stats.emotions).filter(([key]) => !('occupation' in c) || key !== 'stress'));\n        for (const [label, values] of [['Needs', c.stats.needs], ['Emotions', emotions]] as const) await expect(panel.getByText(`${label}: ${numbers(values)}`, { exact: true })).toBeVisible();\n        if (c.adult) {\n          await expect(panel.getByText(`Intimacy Knowledge: ${c.adult.intimacyKnowledge ?? 'Not recorded'}`, { exact: true })).toBeVisible();\n          await expect(panel.getByText(`Intimate history: ${c.adult.intimateHistory}`, { exact: true })).toBeVisible();\n        }\n        if ('occupation' in c) {\n          await expect(panel.getByText(/^Health \\d/)).toHaveCount(0);\n          await expect(panel.getByText(/^Age /)).toHaveText(`Age ${c.age} · ${npcAgeTitle(c.age)} · Background: ${c.occupation} · ${c.socialClass} · ${c.legalStatus.replace('_', ' ')}`);\n        } else {\n          await expect(panel.getByText(`Health ${c.stats.health}`, { exact: true })).toBeVisible();\n          await expect(panel.getByText(`Skills: ${numbers(c.stats.skills)}`, { exact: true })).toBeVisible();\n          await expect(panel.getByText('No memories yet.', { exact: true })).toBeVisible();\n        }\n",
+          "checkoutBefore": "        const panel = win.getByRole('tabpanel');\r\n        await expect(win.getByTestId(`profile-${c.id}-short`)).toHaveText(c.shortDescription);\r\n        await expect(win.getByTestId(`profile-${c.id}-long`)).toHaveText(c.longDescription);\r\n        await expect(panel.locator('dt')).toHaveText([...c.profileRows.map(r => r.label), ...c.traits.map(t => t.name)]);\r\n        await expect(panel.locator('dd')).toHaveText([...c.profileRows.map(r => r.value), ...c.traits.map(t => t.summary)]);\r\n        await expect(panel.locator('details details')).toHaveCount(0);\r\n        await expect(panel.locator('details[open]')).toHaveCount(0);\r\n        for (const disclosure of await panel.locator('details').all()) await disclosure.locator('summary').click();\r\n        await expect(panel.getByText(`Health ${c.stats.health}`, { exact: true })).toBeVisible();\r\n        for (const [label, values] of [['Needs', c.stats.needs], ['Emotions', c.stats.emotions], ['Skills', c.stats.skills]] as const) await expect(panel.getByText(`${label}: ${numbers(values)}`, { exact: true })).toBeVisible();\r\n        await expect(panel.getByText('No memories yet.', { exact: true })).toBeVisible();\r\n        if (c.adult) {\r\n          await expect(panel.getByText(`Intimacy Knowledge: ${c.adult.intimacyKnowledge ?? 'Not recorded'}`, { exact: true })).toBeVisible();\r\n          await expect(panel.getByText(`Intimate history: ${c.adult.intimateHistory}`, { exact: true })).toBeVisible();\r\n        }\r\n        if ('occupation' in c) await expect(panel.getByText(/^Age /)).toHaveText(`Age ${c.age} · Background: ${c.occupation} · ${c.socialClass} · ${c.legalStatus.replace('_', ' ')}`);\r\n",
+          "checkoutAfter": "        const panel = characterPanel(page), identity = panel.locator('[data-character-identity]');\r\n        await expect(win.getByTestId(`profile-${c.id}-short`)).toHaveText(c.shortDescription);\r\n        await expect(win.getByTestId(`profile-${c.id}-long`)).toHaveText(c.longDescription);\r\n        await expect(identity.locator('dt')).toHaveText([...c.profileRows.map(r => r.label), ...c.traits.map(t => t.name)]);\r\n        await expect(identity.locator('dd')).toHaveText([...c.profileRows.map(r => r.value), ...c.traits.map(t => t.summary)]);\r\n        await expect(panel.locator('details details')).toHaveCount(0);\r\n        await expect(panel.locator('details[open]')).toHaveCount(0);\r\n        for (const disclosure of await panel.locator('details').all()) await disclosure.locator('summary').click();\r\n        const emotions = Object.fromEntries(Object.entries(c.stats.emotions).filter(([key]) => !('occupation' in c) || key !== 'stress'));\r\n        for (const [label, values] of [['Needs', c.stats.needs], ['Emotions', emotions]] as const) await expect(panel.getByText(`${label}: ${numbers(values)}`, { exact: true })).toBeVisible();\r\n        if (c.adult) {\r\n          await expect(panel.getByText(`Intimacy Knowledge: ${c.adult.intimacyKnowledge ?? 'Not recorded'}`, { exact: true })).toBeVisible();\r\n          await expect(panel.getByText(`Intimate history: ${c.adult.intimateHistory}`, { exact: true })).toBeVisible();\r\n        }\r\n        if ('occupation' in c) {\r\n          await expect(panel.getByText(/^Health \\d/)).toHaveCount(0);\r\n          await expect(panel.getByText(/^Age /)).toHaveText(`Age ${c.age} · ${npcAgeTitle(c.age)} · Background: ${c.occupation} · ${c.socialClass} · ${c.legalStatus.replace('_', ' ')}`);\r\n        } else {\r\n          await expect(panel.getByText(`Health ${c.stats.health}`, { exact: true })).toBeVisible();\r\n          await expect(panel.getByText(`Skills: ${numbers(c.stats.skills)}`, { exact: true })).toBeVisible();\r\n          await expect(panel.getByText('No memories yet.', { exact: true })).toBeVisible();\r\n        }\r\n",
+          "checkoutNewLineStyle": "CRLF"
+        },
+        {
+          "path": "tests/e2e/character-life-navigation.spec.ts",
+          "start": 1332,
+          "end": 1331,
+          "why": "Verify the exact five new Skills values and the empty History view after the existing Profile privacy checks. Keep the remaining Relations and Inventory parity intact.",
+          "id": "E38",
+          "gitBefore": "",
+          "gitAfter": "        if ('occupation' in c) {\n          const skills = await selectNpcSheetTab(page, 'Skills');\n          await expect(skills.locator('dt')).toHaveText(Object.keys(c.stats.skills).map(title));\n          await expect(skills.locator('dd')).toHaveText(Object.values(c.stats.skills).map(String));\n          const history = await selectNpcSheetTab(page, 'History');\n          await expect(history.getByText('No events recorded.', { exact: true })).toBeVisible();\n        }\n",
+          "checkoutBefore": "",
+          "checkoutAfter": "        if ('occupation' in c) {\r\n          const skills = await selectNpcSheetTab(page, 'Skills');\r\n          await expect(skills.locator('dt')).toHaveText(Object.keys(c.stats.skills).map(title));\r\n          await expect(skills.locator('dd')).toHaveText(Object.values(c.stats.skills).map(String));\r\n          const history = await selectNpcSheetTab(page, 'History');\r\n          await expect(history.getByText('No events recorded.', { exact: true })).toBeVisible();\r\n        }\r\n",
+          "checkoutNewLineStyle": "CRLF",
+          "insertionBeforeUnchangedGitLine": "        await selectArea(page, 'Relations');\n"
+        }
+      ]
+    },
+    {
+      "path": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+      "scope": "existing test/helper; exact Step 0 approval required",
+      "gitBlob": "bd8f3a686dd4bf8e985f1e4aeab7e16a4cd7bc1b",
+      "git": {
+        "beforeSha256": "27469bfdce2d87527523d3403a2db7b6b47753c62002df2e78e7995e4ad298f2",
+        "afterSha256": "7741493a6a3e1f8b3d4ec7bc05f07bd7ed5bae9245d8ff21e5b203db99423be9",
+        "beforeBytes": 30938,
+        "afterBytes": 31008,
+        "beforeEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "616c283434293b0a20207d0a7d293b0a",
+          "lfLineCount": 416,
+          "crlfLineCount": 0
+        },
+        "afterEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "616c283434293b0a20207d0a7d293b0a",
+          "lfLineCount": 416,
+          "crlfLineCount": 0
+        }
+      },
+      "checkout": {
+        "beforeSha256": "588cc6dd3eb3a1598a8a9c3983c28abf63c5485a0bc9f31319d6021c7cfd6c4f",
+        "afterSha256": "387be981556b177703b18474adcab47c247ec4c37bd59611ed4e3feda6649cf6",
+        "beforeBytes": 31354,
+        "afterBytes": 31424,
+        "beforeEof": {
+          "lastLineEnding": "CRLF",
+          "last16Hex": "3434293b0d0a20207d0d0a7d293b0d0a",
+          "lfLineCount": 0,
+          "crlfLineCount": 416
+        },
+        "afterEof": {
+          "lastLineEnding": "CRLF",
+          "last16Hex": "3434293b0d0a20207d0d0a7d293b0d0a",
+          "lfLineCount": 0,
+          "crlfLineCount": 416
+        }
+      },
+      "edits": [
+        {
+          "path": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+          "start": 5,
+          "end": 5,
+          "why": "Scope the existing accessibility baseline to the outer profile tabs while retaining all other accessibility helpers.",
+          "id": "E39",
+          "gitBefore": "import { characterWindow, charactersView, expectReport, go, importLife, keyActivate, keyGo, makeLife, reportFixture, reportRegion, selectArea, selectPerson, tabTo, turnStatuses, watchTurnStatus } from './character-life-navigation.helpers.ts';\n",
+          "gitAfter": "import { characterPanel, characterTabs, characterWindow, charactersView, expectReport, go, importLife, keyActivate, keyGo, makeLife, reportFixture, reportRegion, selectArea, selectPerson, tabTo, turnStatuses, watchTurnStatus } from './character-life-navigation.helpers.ts';\n",
+          "checkoutBefore": "import { characterWindow, charactersView, expectReport, go, importLife, keyActivate, keyGo, makeLife, reportFixture, reportRegion, selectArea, selectPerson, tabTo, turnStatuses, watchTurnStatus } from './character-life-navigation.helpers.ts';\r\n",
+          "checkoutAfter": "import { characterPanel, characterTabs, characterWindow, charactersView, expectReport, go, importLife, keyActivate, keyGo, makeLife, reportFixture, reportRegion, selectArea, selectPerson, tabTo, turnStatuses, watchTurnStatus } from './character-life-navigation.helpers.ts';\r\n",
+          "checkoutNewLineStyle": "CRLF"
+        },
+        {
+          "path": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+          "start": 292,
+          "end": 292,
+          "why": "Keep the exact Help disclosure baseline aligned with the newly exposed NPC History.",
+          "id": "E40",
+          "gitBefore": "          await expect(help.locator('details').nth(2).locator('p')).toHaveText('Balance and building policies are TRIAL. Character profiles are TRIAL content. Weekly life events and Player interactions are not available yet.');\n",
+          "gitAfter": "          await expect(help.locator('details').nth(2).locator('p')).toHaveText('Balance and building policies are TRIAL. Character profiles are TRIAL content. NPC life events appear in History when they occur. Player interactions are not available yet.');\n",
+          "checkoutBefore": "          await expect(help.locator('details').nth(2).locator('p')).toHaveText('Balance and building policies are TRIAL. Character profiles are TRIAL content. Weekly life events and Player interactions are not available yet.');\r\n",
+          "checkoutAfter": "          await expect(help.locator('details').nth(2).locator('p')).toHaveText('Balance and building policies are TRIAL. Character profiles are TRIAL content. NPC life events appear in History when they occur. Player interactions are not available yet.');\r\n",
+          "checkoutNewLineStyle": "CRLF"
+        },
+        {
+          "path": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+          "start": 299,
+          "end": 312,
+          "why": "Keep the existing outer tab names, single panel, labelled-by and focus navigation assertions at all four widths. Separate dedicated C1 cases audit every inner tab.",
+          "id": "E41",
+          "gitBefore": "            const win = characterWindow(page), tabs = win.getByRole('tab');\n            await expect(tabs).toHaveText(['Description', 'Inventory', 'Work', 'Relations']);\n            await tabTo(page, win.locator('[role=\"tab\"][tabindex=\"0\"]')); await page.keyboard.press('Home');\n            for (const name of ['Description', 'Inventory', 'Work', 'Relations']) {\n              const tab = win.getByRole('tab', { name, exact: true });\n              await expect(tab).toBeFocused(); await expect(tab).toHaveAttribute('aria-selected', 'true');\n              await expect(win.getByRole('tabpanel')).toHaveAttribute('aria-labelledby', (await tab.getAttribute('id'))!);\n              await expect(win.getByRole('tabpanel')).toHaveCount(1);\n              if (name === 'Description') for (const summary of await win.locator('summary').all()) await keyActivate(page, summary);\n              await capture();\n              await tabTo(page, win.locator('[role=\"tab\"][tabindex=\"0\"]')); await page.keyboard.press('ArrowRight');\n            }\n            await page.keyboard.press('End'); await expect(win.getByRole('tab', { name: 'Relations', exact: true })).toBeFocused();\n            await page.keyboard.press('Home'); await page.keyboard.press('ArrowLeft'); await expect(win.getByRole('tab', { name: 'Relations', exact: true })).toBeFocused();\n",
+          "gitAfter": "            const win = characterWindow(page), tabs = characterTabs(page), panel = characterPanel(page);\n            await expect(tabs.getByRole('tab')).toHaveText(['Description', 'Inventory', 'Work', 'Relations']);\n            await tabTo(page, tabs.locator('[role=\"tab\"][tabindex=\"0\"]')); await page.keyboard.press('Home');\n            for (const name of ['Description', 'Inventory', 'Work', 'Relations']) {\n              const tab = tabs.getByRole('tab', { name, exact: true });\n              await expect(tab).toBeFocused(); await expect(tab).toHaveAttribute('aria-selected', 'true');\n              await expect(panel).toHaveAttribute('aria-labelledby', (await tab.getAttribute('id'))!);\n              await expect(panel).toHaveCount(1);\n              if (name === 'Description') for (const summary of await win.locator('summary').all()) await keyActivate(page, summary);\n              await capture();\n              await tabTo(page, tabs.locator('[role=\"tab\"][tabindex=\"0\"]')); await page.keyboard.press('ArrowRight');\n            }\n            await page.keyboard.press('End'); await expect(tabs.getByRole('tab', { name: 'Relations', exact: true })).toBeFocused();\n            await page.keyboard.press('Home'); await page.keyboard.press('ArrowLeft'); await expect(tabs.getByRole('tab', { name: 'Relations', exact: true })).toBeFocused();\n",
+          "checkoutBefore": "            const win = characterWindow(page), tabs = win.getByRole('tab');\r\n            await expect(tabs).toHaveText(['Description', 'Inventory', 'Work', 'Relations']);\r\n            await tabTo(page, win.locator('[role=\"tab\"][tabindex=\"0\"]')); await page.keyboard.press('Home');\r\n            for (const name of ['Description', 'Inventory', 'Work', 'Relations']) {\r\n              const tab = win.getByRole('tab', { name, exact: true });\r\n              await expect(tab).toBeFocused(); await expect(tab).toHaveAttribute('aria-selected', 'true');\r\n              await expect(win.getByRole('tabpanel')).toHaveAttribute('aria-labelledby', (await tab.getAttribute('id'))!);\r\n              await expect(win.getByRole('tabpanel')).toHaveCount(1);\r\n              if (name === 'Description') for (const summary of await win.locator('summary').all()) await keyActivate(page, summary);\r\n              await capture();\r\n              await tabTo(page, win.locator('[role=\"tab\"][tabindex=\"0\"]')); await page.keyboard.press('ArrowRight');\r\n            }\r\n            await page.keyboard.press('End'); await expect(win.getByRole('tab', { name: 'Relations', exact: true })).toBeFocused();\r\n            await page.keyboard.press('Home'); await page.keyboard.press('ArrowLeft'); await expect(win.getByRole('tab', { name: 'Relations', exact: true })).toBeFocused();\r\n",
+          "checkoutAfter": "            const win = characterWindow(page), tabs = characterTabs(page), panel = characterPanel(page);\r\n            await expect(tabs.getByRole('tab')).toHaveText(['Description', 'Inventory', 'Work', 'Relations']);\r\n            await tabTo(page, tabs.locator('[role=\"tab\"][tabindex=\"0\"]')); await page.keyboard.press('Home');\r\n            for (const name of ['Description', 'Inventory', 'Work', 'Relations']) {\r\n              const tab = tabs.getByRole('tab', { name, exact: true });\r\n              await expect(tab).toBeFocused(); await expect(tab).toHaveAttribute('aria-selected', 'true');\r\n              await expect(panel).toHaveAttribute('aria-labelledby', (await tab.getAttribute('id'))!);\r\n              await expect(panel).toHaveCount(1);\r\n              if (name === 'Description') for (const summary of await win.locator('summary').all()) await keyActivate(page, summary);\r\n              await capture();\r\n              await tabTo(page, tabs.locator('[role=\"tab\"][tabindex=\"0\"]')); await page.keyboard.press('ArrowRight');\r\n            }\r\n            await page.keyboard.press('End'); await expect(tabs.getByRole('tab', { name: 'Relations', exact: true })).toBeFocused();\r\n            await page.keyboard.press('Home'); await page.keyboard.press('ArrowLeft'); await expect(tabs.getByRole('tab', { name: 'Relations', exact: true })).toBeFocused();\r\n",
+          "checkoutNewLineStyle": "CRLF"
+        }
+      ]
+    },
+    {
+      "path": "tests/e2e/character-life.spec.ts",
+      "scope": "existing test/helper; exact Step 0 approval required",
+      "gitBlob": "a8d288fa81c9c6da1e114ae93a50ea105ad32491",
+      "git": {
+        "beforeSha256": "bc7807a9ac35ea2882dfa8b224a00ed88d28b042e3be24ff3de0ea4f7f9f78f5",
+        "afterSha256": "83f95432885e98a70369c5d3394da3903c1ec730ec849ff056cd708561e12c27",
+        "beforeBytes": 35066,
+        "afterBytes": 35070,
+        "beforeEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "47616d652870616765293b0a7d293b0a",
+          "lfLineCount": 414,
+          "crlfLineCount": 0
+        },
+        "afterEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "47616d652870616765293b0a7d293b0a",
+          "lfLineCount": 413,
+          "crlfLineCount": 0
+        }
+      },
+      "checkout": {
+        "beforeSha256": "a0bd5edc9b06c8e6054cb72e41d39da866e6e54f029abb8aabd6491a195105ca",
+        "afterSha256": "a2a6f02e12769982bdfeac28b0ccc47d1cee98b33ab28e1d87c498d0dc301298",
+        "beforeBytes": 35479,
+        "afterBytes": 35482,
+        "beforeEof": {
+          "lastLineEnding": "CRLF",
+          "last16Hex": "6d652870616765293b0d0a7d293b0d0a",
+          "lfLineCount": 1,
+          "crlfLineCount": 413
+        },
+        "afterEof": {
+          "lastLineEnding": "CRLF",
+          "last16Hex": "6d652870616765293b0d0a7d293b0d0a",
+          "lfLineCount": 1,
+          "crlfLineCount": 412
+        }
+      },
+      "edits": [
+        {
+          "path": "tests/e2e/character-life.spec.ts",
+          "start": 6,
+          "end": 6,
+          "why": "Use the same named inner History tab helper for the starter profile check.",
+          "id": "E42",
+          "gitBefore": "import { characterWindow, charactersView, expectCheckpointRejectionPreservesUi, expectOneCharacterWindow, exportLife, go, importLife, lifeUiSnapshot, makeLife, selectArea, selectPerson } from './character-life-navigation.helpers.ts';\n",
+          "gitAfter": "import { characterWindow, charactersView, expectCheckpointRejectionPreservesUi, expectOneCharacterWindow, exportLife, go, importLife, lifeUiSnapshot, makeLife, selectArea, selectNpcSheetTab, selectPerson } from './character-life-navigation.helpers.ts';\n",
+          "checkoutBefore": "import { characterWindow, charactersView, expectCheckpointRejectionPreservesUi, expectOneCharacterWindow, exportLife, go, importLife, lifeUiSnapshot, makeLife, selectArea, selectPerson } from './character-life-navigation.helpers.ts';\r\n",
+          "checkoutAfter": "import { characterWindow, charactersView, expectCheckpointRejectionPreservesUi, expectOneCharacterWindow, exportLife, go, importLife, lifeUiSnapshot, makeLife, selectArea, selectNpcSheetTab, selectPerson } from './character-life-navigation.helpers.ts';\r\n",
+          "checkoutNewLineStyle": "CRLF"
+        },
+        {
+          "path": "tests/e2e/character-life.spec.ts",
+          "start": 29,
+          "end": 29,
+          "why": "Keep the start-screen negative Help-copy assertion meaningful by checking the complete current proposed Help sentence.",
+          "id": "E43",
+          "gitBefore": "  await expect(page.getByText('Character profiles are TRIAL content. Weekly life events and Player interactions are not available yet.', { exact: true })).toHaveCount(0);\n",
+          "gitAfter": "  await expect(page.getByText('Balance and building policies are TRIAL. Character profiles are TRIAL content. NPC life events appear in History when they occur. Player interactions are not available yet.', { exact: true })).toHaveCount(0);\n",
+          "checkoutBefore": "  await expect(page.getByText('Character profiles are TRIAL content. Weekly life events and Player interactions are not available yet.', { exact: true })).toHaveCount(0);\r\n",
+          "checkoutAfter": "  await expect(page.getByText('Balance and building policies are TRIAL. Character profiles are TRIAL content. NPC life events appear in History when they occur. Player interactions are not available yet.', { exact: true })).toHaveCount(0);\r\n",
+          "checkoutNewLineStyle": "CRLF"
+        },
+        {
+          "path": "tests/e2e/character-life.spec.ts",
+          "start": 232,
+          "end": 234,
+          "why": "Check the empty NPC History tab with the same starter fixture. Existing Player history is covered separately.",
+          "id": "E44",
+          "gitBefore": "  const history = characterWindow(page).locator('details').filter({ has: page.getByText('History', { exact: true }) });\n  await history.locator('summary').click();\n  await expect(history.locator('p')).toHaveText('No memories yet.');\n",
+          "gitAfter": "  const history = await selectNpcSheetTab(page, 'History');\n  await expect(history.getByText('No events recorded.', { exact: true })).toBeVisible();\n",
+          "checkoutBefore": "  const history = characterWindow(page).locator('details').filter({ has: page.getByText('History', { exact: true }) });\r\n  await history.locator('summary').click();\r\n  await expect(history.locator('p')).toHaveText('No memories yet.');\r\n",
+          "checkoutAfter": "  const history = await selectNpcSheetTab(page, 'History');\r\n  await expect(history.getByText('No events recorded.', { exact: true })).toBeVisible();\r\n",
+          "checkoutNewLineStyle": "CRLF"
+        }
+      ]
+    },
+    {
+      "path": "tests/e2e/world-npc-session.spec.ts",
+      "scope": "existing test/helper; exact Step 0 approval required",
+      "gitBlob": "dea688845a8c3592f82d00d9d83f2c13798222c4",
+      "git": {
+        "beforeSha256": "68492ed6bd294503f2c1456aa5098fe74f46b91b9c78ab3ea891429593481e88",
+        "afterSha256": "9b1991ef5841b6e0de6707d404b387da6fae7c89f1ded3965073eba8cc384ee9",
+        "beforeBytes": 18724,
+        "afterBytes": 18931,
+        "beforeEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "2c622e746578745d293b7d0a7d293b0a",
+          "lfLineCount": 35,
+          "crlfLineCount": 0
+        },
+        "afterEof": {
+          "lastLineEnding": "LF",
+          "last16Hex": "2c622e746578745d293b7d0a7d293b0a",
+          "lfLineCount": 42,
+          "crlfLineCount": 0
+        }
+      },
+      "checkout": {
+        "beforeSha256": "bda786f1ddadb5eed65271e8d657d8b2f5d73256aa99a705c67972bb96239494",
+        "afterSha256": "8e6e67f84919991ac7c580e4c01ec4ed02f9d5382018d6a0ea95870550d8f3ae",
+        "beforeBytes": 18759,
+        "afterBytes": 18973,
+        "beforeEof": {
+          "lastLineEnding": "CRLF",
+          "last16Hex": "2e746578745d293b7d0d0a7d293b0d0a",
+          "lfLineCount": 0,
+          "crlfLineCount": 35
+        },
+        "afterEof": {
+          "lastLineEnding": "CRLF",
+          "last16Hex": "2e746578745d293b7d0d0a7d293b0d0a",
+          "lfLineCount": 0,
+          "crlfLineCount": 42
+        }
+      },
+      "edits": [
+        {
+          "path": "tests/e2e/world-npc-session.spec.ts",
+          "start": 6,
+          "end": 6,
+          "why": "Open the real Skills tab through the shared helper while keeping existing Characters and post selectors.",
+          "id": "E45",
+          "gitBefore": "import {characterWindow,charactersView,exportLife,go,selectArea,selectPerson} from './character-life-navigation.helpers.ts';\n",
+          "gitAfter": "import {characterWindow,charactersView,exportLife,go,selectArea,selectNpcSheetTab,selectPerson} from './character-life-navigation.helpers.ts';\n",
+          "checkoutBefore": "import {characterWindow,charactersView,exportLife,go,selectArea,selectPerson} from './character-life-navigation.helpers.ts';\r\n",
+          "checkoutAfter": "import {characterWindow,charactersView,exportLife,go,selectArea,selectNpcSheetTab,selectPerson} from './character-life-navigation.helpers.ts';\r\n",
+          "checkoutNewLineStyle": "CRLF"
+        },
+        {
+          "path": "tests/e2e/world-npc-session.spec.ts",
+          "start": 14,
+          "end": 14,
+          "why": "Preserve Frugal, its disclosed description, Technical 65 and the exact Relations assertions. Assert Health is absent from the NPC Attributes while asserting the Attributes still render.",
+          "id": "E46",
+          "gitBefore": " await selectPerson(page,IDS[0]);await selectArea(page,'Description');await expect(characterWindow(page).getByText('Frugal',{exact:true})).toBeVisible();await expect(characterWindow(page)).toContainText('effect not active yet');await characterWindow(page).getByText('Skills',{exact:true}).click();await expect(characterWindow(page)).toContainText('Technical 65');await selectPerson(page,IDS[1]);await selectArea(page,'Description');await characterWindow(page).getByText('Attributes',{exact:true}).click();await expect(characterWindow(page)).toContainText('Health 85');await selectArea(page,'Relations');await expect(characterWindow(page).locator('dl > div').filter({has:page.getByText('Trust',{exact:true})}).locator('dd')).toHaveText('30');await expect(characterWindow(page).getByRole('meter')).toHaveCount(0);\n",
+          "gitAfter": " await selectPerson(page,IDS[0]);await selectArea(page,'Description');await expect(characterWindow(page).getByText('Frugal',{exact:true})).toBeVisible();await expect(characterWindow(page)).toContainText('effect not active yet');\n const skills=await selectNpcSheetTab(page,'Skills');\n await expect(skills.locator('dl > div').filter({has:skills.getByText('Technical',{exact:true})}).locator('dd')).toHaveText('65');\n await selectPerson(page,IDS[1]);const profile=await selectArea(page,'Description');\n await characterWindow(page).getByText('Attributes',{exact:true}).click();\n await expect(profile.getByText(/^Needs:/)).toBeVisible();await expect(profile.getByText(/^Emotions:/)).toBeVisible();\n await expect(profile.getByText(/^Health \\d/)).toHaveCount(0);\n await selectArea(page,'Relations');await expect(characterWindow(page).locator('dl > div').filter({has:page.getByText('Trust',{exact:true})}).locator('dd')).toHaveText('30');await expect(characterWindow(page).getByRole('meter')).toHaveCount(0);\n",
+          "checkoutBefore": " await selectPerson(page,IDS[0]);await selectArea(page,'Description');await expect(characterWindow(page).getByText('Frugal',{exact:true})).toBeVisible();await expect(characterWindow(page)).toContainText('effect not active yet');await characterWindow(page).getByText('Skills',{exact:true}).click();await expect(characterWindow(page)).toContainText('Technical 65');await selectPerson(page,IDS[1]);await selectArea(page,'Description');await characterWindow(page).getByText('Attributes',{exact:true}).click();await expect(characterWindow(page)).toContainText('Health 85');await selectArea(page,'Relations');await expect(characterWindow(page).locator('dl > div').filter({has:page.getByText('Trust',{exact:true})}).locator('dd')).toHaveText('30');await expect(characterWindow(page).getByRole('meter')).toHaveCount(0);\r\n",
+          "checkoutAfter": " await selectPerson(page,IDS[0]);await selectArea(page,'Description');await expect(characterWindow(page).getByText('Frugal',{exact:true})).toBeVisible();await expect(characterWindow(page)).toContainText('effect not active yet');\r\n const skills=await selectNpcSheetTab(page,'Skills');\r\n await expect(skills.locator('dl > div').filter({has:skills.getByText('Technical',{exact:true})}).locator('dd')).toHaveText('65');\r\n await selectPerson(page,IDS[1]);const profile=await selectArea(page,'Description');\r\n await characterWindow(page).getByText('Attributes',{exact:true}).click();\r\n await expect(profile.getByText(/^Needs:/)).toBeVisible();await expect(profile.getByText(/^Emotions:/)).toBeVisible();\r\n await expect(profile.getByText(/^Health \\d/)).toHaveCount(0);\r\n await selectArea(page,'Relations');await expect(characterWindow(page).locator('dl > div').filter({has:page.getByText('Trust',{exact:true})}).locator('dd')).toHaveText('30');await expect(characterWindow(page).getByRole('meter')).toHaveCount(0);\r\n",
+          "checkoutNewLineStyle": "CRLF"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "utc": "2026-11-18T08:34:42.612475+00:00",
+    "command": [
+      "git",
+      "apply",
+      "--check",
+      "--cached",
+      "--whitespace=error",
+      "-"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "",
+    "patchSha256": "1a628321e23c76ccda79e53424a47405aff1474a7c3bdaaf8ffcf89c4dd3fc9d",
+    "worktreeCleanAfterCheck": true
+  }
+}

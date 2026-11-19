@@ -1,0 +1,34 @@
+HEAD=813805178ce4fe9e93c0c39ddee9143c19ea7286
+TREE=bb414ff2825ea37bd5c41a579de7dac82acbaf22
+BRANCH=feat/p7a-npc-sheet
+UTC_START=2026-11-18T13:45:12.260990+00:00
+COMMAND=["node", "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\node_modules\\@playwright\\test\\cli.js", "test", "--config", "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prC-local-only\\fix-round2\\probes\\browser\\playwright.config.ts", "--project", "chromium", "--reporter", "list,json", "--output", "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prC-local-only\\fix-round2\\probes\\browser-failures"]
+CI=1
+STATUS:
+M packages/ui/src/__tests__/npc-sheet-view.test.ts
+ M tests/e2e/npc-sheet.spec.ts
+OUTPUT:
+[WebServer] (node:10116) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:20696) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+(node:23436) Warning: Failed to load the ES module: C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+(Use `node --trace-warnings ...` to show where the warning was created)
+SyntaxError: Cannot use 'import.meta' outside a module
+
+   at npc-sheet-probes.spec.ts:4
+
+  2 | import { expect, test, type Locator, type Page, type TestInfo } from '../../../../../../worktrees/Build-Settlement/qa-g6-closeout-01/node_modules/@playwright/test/index.js';
+  3 | import { executeCharacterLifeCommand } from '../../../../../../worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/character-life-command.ts';
+> 4 | import {
+    | ^
+  5 |   characterWindow, expectReport, exportLife, go, importLife, makeLife, reportRegion, selectArea, selectPerson, tabTo,
+  6 | } from '../../../../../../worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/character-life-navigation.helpers.ts';
+  7 |
+    at Object.<anonymous> (C:\Users\Admin\.t3\local-drafts\p7a-prC-local-only\fix-round2\probes\browser\tests\npc-sheet-probes.spec.ts:4:1)
+Error: No tests found
+
+
+EXIT_CODE=1
+SECONDS=7.577
+UTC_END=2026-11-18T13:45:19.725920+00:00

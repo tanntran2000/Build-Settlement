@@ -1,0 +1,16 @@
+HEAD=133d1f0e996ef85826fb6ef63fdffeef64de2572
+TREE=897e330b088442cfd421e892c7c11c79d103aa0d
+BRANCH=feat/p7a-npc-sheet
+UTC_START=2026-11-18T12:12:19.366867+00:00
+COMMAND=["git", "commit", "-m", "fix(ui): npc sheet panel is not a tab stop", "-m", "Co-authored-by: Codex <noreply@openai.com>"]
+CI=
+STATUS:
+M  packages/ui/src/NpcSheet.svelte
+M  tests/e2e/npc-sheet.spec.ts
+OUTPUT:
+[feat/p7a-npc-sheet 8138051] fix(ui): npc sheet panel is not a tab stop
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+EXIT_CODE=0
+SECONDS=0.270
+UTC_END=2026-11-18T12:12:19.536939+00:00

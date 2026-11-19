@@ -1,0 +1,101 @@
+HEAD=133d1f0e996ef85826fb6ef63fdffeef64de2572
+TREE=897e330b088442cfd421e892c7c11c79d103aa0d
+BRANCH=feat/p7a-npc-sheet
+UTC_START=2026-11-18T12:00:59.299259+00:00
+COMMAND=["node", "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/node_modules/@playwright/test/cli.js", "test", "tests/e2e/npc-sheet.spec.ts", "--project", "chromium", "--grep", "NPC sheet has one tab stop and linked keyboard panels$", "--output", "C:\\Users\\Admin\\.t3\\local-drafts/p7a-prC-local-only/fix-round1/RED"]
+CI=1
+STATUS:
+M tests/e2e/npc-sheet.spec.ts
+OUTPUT:
+[WebServer] (node:24684) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:15268) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:20396) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\npc-sheet.spec.ts:195:3 › NPC sheet at 1280px › NPC sheet has one tab stop and linked keyboard panels (8.6s)
+(node:17088) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [chromium] › tests\e2e\npc-sheet.spec.ts:195:3 › NPC sheet at 1600px › NPC sheet has one tab stop and linked keyboard panels (6.0s)
+
+
+  1) [chromium] › tests\e2e\npc-sheet.spec.ts:195:3 › NPC sheet at 1280px › NPC sheet has one tab stop and linked keyboard panels 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: 'Profile', exact: true }).locator('summary').filter({ hasText: /^Attributes$/ })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: 'Profile', exact: true }).locator('summary').filter({ hasText: /^Attributes$/ }) with timeout 5000ms
+      - waiting for locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: 'Profile', exact: true }).locator('summary').filter({ hasText: /^Attributes$/ })
+        14 × locator resolved to <summary class="svelte-1h3unv">Attributes</summary>
+           - unexpected value "inactive"
+
+
+      202 |     await expect(tab(page, 'Profile')).toBeFocused();
+      203 |     await page.keyboard.press('Tab');
+    > 204 |     await expect(panel(page, 'Profile').locator('summary').filter({ hasText: /^Attributes$/ })).toBeFocused();
+          |                                                                                                 ^
+      205 |     await page.keyboard.press('Shift+Tab');
+      206 |     await expect(tab(page, 'Profile')).toBeFocused();
+      207 |     await expect(tablist(page).getByRole('tab')).toHaveText([...names]);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\npc-sheet.spec.ts:204:97
+
+    Error Context: ..\..\..\local-drafts\p7a-prC-local-only\fix-round1\RED\npc-sheet-NPC-sheet-at-128-3f576--and-linked-keyboard-panels-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7a-prC-local-only\fix-round1\RED\npc-sheet-NPC-sheet-at-128-3f576--and-linked-keyboard-panels-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7a-prC-local-only\fix-round1\RED\npc-sheet-NPC-sheet-at-128-3f576--and-linked-keyboard-panels-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\npc-sheet.spec.ts:195:3 › NPC sheet at 1600px › NPC sheet has one tab stop and linked keyboard panels 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: 'Profile', exact: true }).locator('summary').filter({ hasText: /^Attributes$/ })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: 'Profile', exact: true }).locator('summary').filter({ hasText: /^Attributes$/ }) with timeout 5000ms
+      - waiting for locator('[data-life-view="characters"]').getByRole('region', { name: 'Character window', exact: true }).getByTestId('npc-sheet').getByRole('tabpanel', { name: 'Profile', exact: true }).locator('summary').filter({ hasText: /^Attributes$/ })
+        14 × locator resolved to <summary class="svelte-1h3unv">Attributes</summary>
+           - unexpected value "inactive"
+
+
+      202 |     await expect(tab(page, 'Profile')).toBeFocused();
+      203 |     await page.keyboard.press('Tab');
+    > 204 |     await expect(panel(page, 'Profile').locator('summary').filter({ hasText: /^Attributes$/ })).toBeFocused();
+          |                                                                                                 ^
+      205 |     await page.keyboard.press('Shift+Tab');
+      206 |     await expect(tab(page, 'Profile')).toBeFocused();
+      207 |     await expect(tablist(page).getByRole('tab')).toHaveText([...names]);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\npc-sheet.spec.ts:204:97
+
+    Error Context: ..\..\..\local-drafts\p7a-prC-local-only\fix-round1\RED\npc-sheet-NPC-sheet-at-160-60d72--and-linked-keyboard-panels-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7a-prC-local-only\fix-round1\RED\npc-sheet-NPC-sheet-at-160-60d72--and-linked-keyboard-panels-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7a-prC-local-only\fix-round1\RED\npc-sheet-NPC-sheet-at-160-60d72--and-linked-keyboard-panels-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests\e2e\npc-sheet.spec.ts:195:3 › NPC sheet at 1280px › NPC sheet has one tab stop and linked keyboard panels 
+    [chromium] › tests\e2e\npc-sheet.spec.ts:195:3 › NPC sheet at 1600px › NPC sheet has one tab stop and linked keyboard panels 
+
+EXIT_CODE=1
+SECONDS=27.148
+UTC_END=2026-11-18T12:01:26.317365+00:00

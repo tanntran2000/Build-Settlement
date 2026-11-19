@@ -1,0 +1,5 @@
+E46 HOLD answer from the owner (Tân), verbatim choice: "Approve E46 fix (Recommended)".
+
+Recorded as Plan correction 9 at ba0c883; binding copy C:/Users/Admin/.t3/local-drafts/p7a-prC/binding-plan-ba0c883.md (read "### Correction 9"). Apply exactly the proposed bytes from C1/E46-correction-proposal.json (inner skills.getByText → page.getByText; line ending and EOF preserved), refresh the verifier pin for E46 only, re-run the focused GREEN, then continue as briefed: the C1 commit `feat(ui): npc sheet` ending `Co-authored-by: Codex <noreply@openai.com>`, and C2 (gates 1–7 with both diff checks, served-build hash check, `echo "CI=$CI"` + `CI=1 npm run test:smoke`, bundle, evidence, SHA256SUMS with nested manifests). Same HOLD rules: anything outside Corrections 8–9 is a HOLD. Do not push, open a PR or merge.
+
+Reply with: HEAD and tree, empty git status, the commit, focused GREEN, the verifier result, gate table and smoke total with CI=1, bundle, screenshot paths (re-capture if the UI changed), evidence paths.

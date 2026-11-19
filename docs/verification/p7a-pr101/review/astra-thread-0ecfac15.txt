@@ -1,0 +1,76 @@
+P7 Astra 6.2 high (PR C review)
+mcp:0ecfac15-3d54-4b10-a90b-ef88f5689e5c  completed  codex/gpt-6.2-astra
+
+[user]
+P7 Astra 6.2 (high): round 2 review of P7-A PR C (NPC sheet UI). You are a new independent reviewer thread (the owner moved the Reviewer to Astra 6.2 high). Round 1 was done by an earlier Astra thread; read it first: C:/Users/Admin/.t3/local-drafts/p7a-prC/astra-review/astra-round1.md. Review only: do not edit product files, commit, push, comment on GitHub or merge. Do not run the full smoke or start servers; single vitest files or single Playwright specs are allowed only if you need proof, after confirming ports 4173/4174 are free.
+
+Target
+- Branch feat/p7a-npc-sheet (pushed, no PR yet), head f1dc182de37f64165526def0d64272ff701d716b, tree a0ea6329441e75df363b356052528f1426233281 (round 1 head 8138051 + one commit `test(ui): exact npc sheet assertions`). Stacked on PR B head b94d3083dd71722f329b1bf444fa9dec9b0fd309 (PR #100, held at G5 for the picomatch npm-audit advisory). Worktree (read only): C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01. Confirm HEAD and tree first.
+
+Binding documents
+- Plan with corrections 1–10: C:/Users/Admin/.t3/local-drafts/p7a-prC/binding-plan-21c4efa.md (PR C; Global Constraints; Corrections 7–10).
+- Round 1 findings: P1 npc-sheet-view.test.ts:25 partial `toMatchObject`; P1 npc-sheet.spec.ts:92 panel-wide Frugal substring and prefix-only age/title at :93/:105; P3 npc-sheet.spec.ts:166 level text not tied to its own bar.
+- Builder fix round 2 evidence: C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round2/README.md (diff, 14 mutation probes, GREEN, gates, smoke, bundle).
+
+Owner decisions (Tân, verbatim): "trong lúc chờ thì bắt đầu chuẩn bị PR C đi", "As written (Recommended)", "Approve D1 as listed (Recommended)", "Approve D2 as proposed (Recommended)", "Stack on PR B now (Recommended)", "Approve E46 fix (Recommended)", "Panel not a tab stop (Recommended)", "sau đợt này đổi model lại Builder: Sol 6.2 extra high fast Reviewer: Astra 6.2 high fast".
+
+Check, at minimum
+1. Diff 8138051..f1dc182 touches only the two new PR C test files; no product, pre-PR C test, timeout, skip or threshold change.
+2. Each round 1 finding is fixed with exact assertions (no remaining partial matcher, substring or prefix check for these facts), and the mutation probes really exercise the new assertions.
+3. Your round 1 ledger, E01–E46 reconstruction and UI/accessibility conclusions still hold at the new head (only test files changed).
+4. Any other P0–P2 at this head.
+
+Results already recorded (verify they are about this head; do not rerun the smoke)
+- Builder at f1dc182: gates 1–7 exit 0 (3,081 unit), CI=1 smoke 403/403.
+- Claude (Tester) at f1dc182: gates 1–7 and CI=1 smoke, log D:/QI Technology/Temp/claude/22ffac96722a05a9/e7d04773-dfa7-4a71-9bc5-09bb6a13d94b/scratchpad/p7a-prC/claude-gates-1-7-and-smoke-f1dc182.txt.
+
+Output
+- Write C:/Users/Admin/.t3/local-drafts/p7a-prC/astra-review/astra-round2.md (UTF-8): head/tree checked, diff ledger, per-finding assessment, findings P0–P3 with file:line and why, final line `VERDICT: PASS` or `VERDICT: FAIL` (PASS = no P0–P2).
+- Reply in this thread with a short summary: verdict, finding counts, file path.
+
+
+[assistant]
+Tôi sẽ đối chiếu HEAD và tree trước, rồi đọc báo cáo vòng 1 để kiểm tra từng phát hiện với diff và bằng chứng vòng 2.
+
+[assistant]
+The diff changes only the two tests introduced by PR C. The mutation logs were recorded before the fix commit, so I’m checking their test-file hashes against the reviewed checkout and matching each failure to its assertion.
+
+[assistant]
+**VERDICT: PASS** at `f1dc182`. Open findings: **P0 0 · P1 0 · P2 0 · P3 0**.
+
+All three round 1 findings are closed. Only the two PR C test files changed, and all 14 mutation probes failed at the intended assertions. Builder and Claude independently recorded passing gates, 3,081 unit tests and 403 smoke tests at the reviewed head and tree.
+
+[Open the round 2 review](<C:/Users/Admin/.t3/local-drafts/p7a-prC/astra-review/astra-round2.md>)
+
+[user]
+Round 3 for PR C, now PR #101 (https://github.com/tanntran2000/Build-Settlement/pull/101). Review only, same limits as before.
+
+What changed: PR #100 merged as main 305d9eac53e7843a95c9cea89c6e63d381fc0851 (tree 947f604e = PR B head tree). main's branch protection is strict, so the owner chose, verbatim, "Rebase PR C onto main" (Plan correction 12 at b606d29 on docs/p7-npc-design; it replaces correction 11 "Open PR C as is (Recommended)"). The three PR C commits were rebased from b94d308 onto 305d9ea and force-pushed with a lease on f1dc182:
+- 133d1f0 → 240b32b `feat(ui): npc sheet`
+- 8138051 → 1993213 `fix(ui): npc sheet panel is not a tab stop`
+- f1dc182 → 952985c4fafaffeee44a4eb8932c178858659a40 `test(ui): exact npc sheet assertions` (new head)
+New head tree must equal a0ea6329441e75df363b356052528f1426233281, the tree you passed in round 2.
+
+Check:
+1. HEAD and tree in the worktree; origin/main..HEAD is exactly these three commits; each rebased commit has the same tree-diff (patch-id) and message as its original; the head tree equals a0ea632.
+2. Nothing else changed (no new file, no content change), so your round 2 verdict carries to the new head.
+3. Any other P0–P2.
+
+Results recorded at the new head: Claude gates 1–7 and CI=1 smoke, log D:/QI Technology/Temp/claude/22ffac96722a05a9/e7d04773-dfa7-4a71-9bc5-09bb6a13d94b/scratchpad/p7a-prC/claude-gates-1-7-and-smoke-952985c.txt; required CI on PR #101.
+
+Write C:/Users/Admin/.t3/local-drafts/p7a-prC/astra-review/astra-round3.md (UTF-8) ending with `VERDICT: PASS` or `VERDICT: FAIL`, and reply with a short summary.
+
+[assistant]
+I’m checking the three commit pairs against Git, then verifying the local gate log and PR #101’s required CI at `952985c`.
+
+[assistant]
+All three rebased commits match their originals in patch bytes, full message and resulting tree. Claude’s log and the required `quality-gate` both show 3,081 unit tests and 403 smoke tests passed. I’m recording the verdict with the commit pairs and CI link.
+
+[assistant]
+**VERDICT: PASS** for PR #101 at `952985c`. **Open findings: P0 0 · P1 0 · P2 0 · P3 0.**
+
+The rebase contains exactly the three approved commits. Each matches its original patch byte for byte and preserves the full commit message. The final tree is identical to the tree approved in round 2, so that verdict carries forward.
+
+Claude’s gates 1–7 all exited 0. Both Claude’s run and GitHub’s required `quality-gate` passed all 3,081 unit tests and 403 smoke tests. [Required CI run](https://github.com/tanntran2000/Build-Settlement/actions/runs/44441824332/job/135284375240)
+
+[Open the round 3 review](<C:/Users/Admin/.t3/local-drafts/p7a-prC/astra-review/astra-round3.md>)

@@ -1,0 +1,42 @@
+{
+  "head": "813805178ce4fe9e93c0c39ddee9143c19ea7286",
+  "tree": "bb414ff2825ea37bd5c41a579de7dac82acbaf22",
+  "screenshots": [
+    {
+      "tab": "Profile",
+      "capture": "C:/Users/Admin/.t3/local-drafts/p7a-prC-local-only/fix-round1/C2/full/npc-sheet-NPC-sheet-access-57ae5-red-accessibility-at-1280px-chromium/attachments/profile-85a8b8dce3a1fc0cbdf21451bc7985f9282d4a76.png",
+      "published": "C:/Users/Admin/.t3/local-drafts/p7a-prC/screenshots/npc-sheet-profile-1280.png",
+      "width": 1280,
+      "height": 900,
+      "sha256": "b63eeeefcb42a1a1913d3c120997da0ea75d3761ec6a5351d3956af015900c1d",
+      "matchesInitial": true
+    },
+    {
+      "tab": "Skills",
+      "capture": "C:/Users/Admin/.t3/local-drafts/p7a-prC-local-only/fix-round1/C2/full/npc-sheet-NPC-sheet-access-57ae5-red-accessibility-at-1280px-chromium/attachments/skills-0c2069aa704a0577dec942f688d8c8467962c15a.png",
+      "published": "C:/Users/Admin/.t3/local-drafts/p7a-prC/screenshots/npc-sheet-skills-1280.png",
+      "width": 1280,
+      "height": 900,
+      "sha256": "839b8a7a46df623ee62fe3249fb716deec67dd757ab5b82364b7a88a6a291bce",
+      "matchesInitial": true
+    },
+    {
+      "tab": "18+",
+      "capture": "C:/Users/Admin/.t3/local-drafts/p7a-prC-local-only/fix-round1/C2/full/npc-sheet-NPC-sheet-access-57ae5-red-accessibility-at-1280px-chromium/attachments/18plus-32d637d0a0715db5b28a55bd31cb443914f63542.png",
+      "published": "C:/Users/Admin/.t3/local-drafts/p7a-prC/screenshots/npc-sheet-18plus-1280.png",
+      "width": 1280,
+      "height": 900,
+      "sha256": "bf241d3306aa9b5f75fc9048edfd5a1bacebac74dbc2c569f648b16afb555e3b",
+      "matchesInitial": true
+    },
+    {
+      "tab": "History",
+      "capture": "C:/Users/Admin/.t3/local-drafts/p7a-prC-local-only/fix-round1/C2/full/npc-sheet-NPC-sheet-access-57ae5-red-accessibility-at-1280px-chromium/attachments/history-9d99189b3517fc6018e8d497392f62d6a494e74b.png",
+      "published": "C:/Users/Admin/.t3/local-drafts/p7a-prC/screenshots/npc-sheet-history-1280.png",
+      "width": 1280,
+      "height": 900,
+      "sha256": "a751f231668117d5fec76e034bea1cdab7590f3db1ce122de69cf6e8b2986f0e",
+      "matchesInitial": true
+    }
+  ]
+}

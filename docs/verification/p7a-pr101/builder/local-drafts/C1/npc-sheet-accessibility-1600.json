@@ -1,0 +1,1413 @@
+[
+  {
+    "name": "Profile",
+    "viewport": {
+      "width": 1600,
+      "height": 1000
+    },
+    "text": [
+      {
+        "label": "Profile",
+        "foreground": "rgb(43, 26, 11)",
+        "backdrop": "rgb(201, 163, 107)",
+        "ratio": 7.117522397283716,
+        "left": 492.25,
+        "right": 552.75
+      },
+      {
+        "label": "Skills",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 788.65625,
+        "right": 834.34375
+      },
+      {
+        "label": "18+",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1085.390625,
+        "right": 1115.609375
+      },
+      {
+        "label": "History",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1353.59375,
+        "right": 1425.40625
+      },
+      {
+        "label": "Life origin",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 475.734375
+      },
+      {
+        "label": "Frontier",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1447.71875,
+        "right": 1528
+      },
+      {
+        "label": "Hobbies",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 454.265625
+      },
+      {
+        "label": "Reading · Gardening",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1351.828125,
+        "right": 1528
+      },
+      {
+        "label": "Affection",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 473.453125
+      },
+      {
+        "label": "73",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1505.71875,
+        "right": 1528
+      },
+      {
+        "label": "Alice · 49 · Technician from Northreach · average height, slim · light olive skin · shoulder-length brown hair · grey eyes · attractive · quick learner · reserved",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 1478.234375
+      },
+      {
+        "label": "Alice, 49, grew up on the frontier in Northreach. She is of average height with a slim build, light olive skin and shoulder-length brown hair tied back. Her oval face is lightly freckled; she wears a canvas work jacket and heavy trousers. She is attractive, a quick learner and reserved with strangers. Trained as a technician, she currently holds no post.",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 1522.8125
+      },
+      {
+        "label": "Identity and appearance",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 691.59375
+      },
+      {
+        "label": "Age 49 · Mature · Background: technician · skilled · citizen",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 899.078125
+      },
+      {
+        "label": "Name",
+        "foreground": "rgb(107, 79, 46)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 5.365435785687814,
+        "left": 384,
+        "right": 432.578125
+      },
+      {
+        "label": "Alice",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 536,
+        "right": 576.890625
+      },
+      {
+        "label": "Age",
+        "foreground": "rgb(107, 79, 46)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 5.365435785687814,
+        "left": 384,
+        "right": 416.84375
+      },
+      {
+        "label": "49",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 536,
+        "right": 558.28125
+      },
+      {
+        "label": "Profession",
+        "foreground": "rgb(107, 79, 46)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 5.365435785687814,
+        "left": 384,
+        "right": 484.625
+      },
+      {
+        "label": "Technician",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 536,
+        "right": 631.640625
+      },
+      {
+        "label": "Current post",
+        "foreground": "rgb(107, 79, 46)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 5.365435785687814,
+        "left": 384,
+        "right": 511.65625
+      },
+      {
+        "label": "None",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 536,
+        "right": 579.59375
+      },
+      {
+        "label": "Birthplace",
+        "foreground": "rgb(107, 79, 46)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 5.365435785687814,
+        "left": 384,
+        "right": 482.6875
+      },
+      {
+        "label": "Kestrel Ford",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 536,
+        "right": 653.109375
+      },
+      {
+        "label": "Origin",
+        "foreground": "rgb(107, 79, 46)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 5.365435785687814,
+        "left": 384,
+        "right": 436.21875
+      },
+      {
+        "label": "Northreach (frontier)",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 536,
+        "right": 746.25
+      },
+      {
+        "label": "Current location",
+        "foreground": "rgb(107, 79, 46)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 5.365435785687814,
+        "left": 384,
+        "right": 540.65625
+      },
+      {
+        "label": "Haven",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 548.65625,
+        "right": 603.015625
+      },
+      {
+        "label": "Height",
+        "foreground": "rgb(107, 79, 46)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 5.365435785687814,
+        "left": 384,
+        "right": 443.71875
+      },
+      {
+        "label": "168 cm",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 536,
+        "right": 595.453125
+      },
+      {
+        "label": "Weight",
+        "foreground": "rgb(107, 79, 46)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 5.365435785687814,
+        "left": 384,
+        "right": 446.96875
+      },
+      {
+        "label": "58 kg",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 536,
+        "right": 584.15625
+      },
+      {
+        "label": "Build",
+        "foreground": "rgb(107, 79, 46)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 5.365435785687814,
+        "left": 384,
+        "right": 425.84375
+      },
+      {
+        "label": "slim",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 536,
+        "right": 569.765625
+      },
+      {
+        "label": "Skin",
+        "foreground": "rgb(107, 79, 46)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 5.365435785687814,
+        "left": 384,
+        "right": 421.25
+      },
+      {
+        "label": "light olive",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 536,
+        "right": 622.75
+      },
+      {
+        "label": "Hair",
+        "foreground": "rgb(107, 79, 46)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 5.365435785687814,
+        "left": 384,
+        "right": 422.40625
+      },
+      {
+        "label": "shoulder-length brown, tied back",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 536,
+        "right": 841.609375
+      },
+      {
+        "label": "Eyes",
+        "foreground": "rgb(107, 79, 46)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 5.365435785687814,
+        "left": 384,
+        "right": 428.546875
+      },
+      {
+        "label": "grey",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 536,
+        "right": 579.96875
+      },
+      {
+        "label": "Face",
+        "foreground": "rgb(107, 79, 46)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 5.365435785687814,
+        "left": 384,
+        "right": 426.859375
+      },
+      {
+        "label": "oval, freckles",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 536,
+        "right": 661.0625
+      },
+      {
+        "label": "Measurements",
+        "foreground": "rgb(107, 79, 46)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 5.365435785687814,
+        "left": 384,
+        "right": 525.296875
+      },
+      {
+        "label": "Unknown",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 536,
+        "right": 616.0625
+      },
+      {
+        "label": "Attractiveness",
+        "foreground": "rgb(107, 79, 46)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 5.365435785687814,
+        "left": 384,
+        "right": 533.796875
+      },
+      {
+        "label": "66 (attractive)",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 541.796875,
+        "right": 688.3125
+      },
+      {
+        "label": "Learning Aptitude",
+        "foreground": "rgb(107, 79, 46)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 5.365435785687814,
+        "left": 384,
+        "right": 553.703125
+      },
+      {
+        "label": "72 (quick learner)",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 561.703125,
+        "right": 724.640625
+      },
+      {
+        "label": "Warmth",
+        "foreground": "rgb(107, 79, 46)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 5.365435785687814,
+        "left": 384,
+        "right": 458.875
+      },
+      {
+        "label": "34 (reserved)",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 536,
+        "right": 663.078125
+      },
+      {
+        "label": "Frugal",
+        "foreground": "rgb(107, 79, 46)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 5.365435785687814,
+        "left": 384,
+        "right": 442.015625
+      },
+      {
+        "label": "Careful with materials. Intended: less waste where she manages. (effect not active yet)",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 536,
+        "right": 1361.078125
+      },
+      {
+        "label": "Restless",
+        "foreground": "rgb(107, 79, 46)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 5.365435785687814,
+        "left": 384,
+        "right": 466.75
+      },
+      {
+        "label": "Dislikes staying on one post for long. Intended: stress builds on long single-post duty. (effect not active yet)",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 1390.890625
+      },
+      {
+        "label": "Attributes",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 404.125,
+        "right": 510.515625
+      },
+      {
+        "label": "Needs: Safety 70 · Nutrition 80 · Autonomy 60 · Recognition 50 · Intimacy 40 · Purpose 50",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 1177.375
+      },
+      {
+        "label": "Emotions: Joy 50 · Fear 10 · Anger 0 · Sadness 10 · Shame 0 · Jealousy 0 · Hope 70",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 1086.984375
+      },
+      {
+        "label": "Private (adult)",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 404.125,
+        "right": 542.75
+      },
+      {
+        "label": "Intimacy Knowledge: Not recorded",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 698.171875
+      },
+      {
+        "label": "Intimate history: Not recorded",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 675.921875
+      }
+    ],
+    "buttons": [
+      {
+        "label": "Profile",
+        "left": 382,
+        "right": 663,
+        "top": 743.15625,
+        "bottom": 787.75,
+        "width": 281,
+        "height": 44.59375,
+        "scrollWidth": 279,
+        "clientWidth": 279,
+        "fontWeight": 700,
+        "boundary": 9.858727167074766,
+        "selected": true,
+        "borderWidth": 1
+      },
+      {
+        "label": "Skills",
+        "left": 671,
+        "right": 952,
+        "top": 743.15625,
+        "bottom": 787.75,
+        "width": 281,
+        "height": 44.59375,
+        "scrollWidth": 279,
+        "clientWidth": 279,
+        "fontWeight": 400,
+        "boundary": 5.365435785687814,
+        "selected": false,
+        "borderWidth": 1
+      },
+      {
+        "label": "18+",
+        "left": 960,
+        "right": 1241,
+        "top": 743.15625,
+        "bottom": 787.75,
+        "width": 281,
+        "height": 44.59375,
+        "scrollWidth": 279,
+        "clientWidth": 279,
+        "fontWeight": 400,
+        "boundary": 5.365435785687814,
+        "selected": false,
+        "borderWidth": 1
+      },
+      {
+        "label": "History",
+        "left": 1249,
+        "right": 1530,
+        "top": 743.15625,
+        "bottom": 787.75,
+        "width": 281,
+        "height": 44.59375,
+        "scrollWidth": 279,
+        "clientWidth": 279,
+        "fontWeight": 400,
+        "boundary": 5.365435785687814,
+        "selected": false,
+        "borderWidth": 1
+      }
+    ],
+    "focus": {
+      "left": 382,
+      "right": 663,
+      "top": 743.15625,
+      "bottom": 787.75,
+      "width": 281,
+      "height": 44.59375,
+      "scrollWidth": 279,
+      "clientWidth": 279,
+      "outline": 3,
+      "offset": 3,
+      "ratio": 3.1935518827914526
+    },
+    "markerContrast": [],
+    "sheet": {
+      "left": 364,
+      "right": 1548,
+      "top": 725.15625,
+      "bottom": 1874.34375,
+      "width": 1184,
+      "height": 1149.1875,
+      "scrollWidth": 1176,
+      "clientWidth": 1176
+    },
+    "documentScrollWidth": 1600
+  },
+  {
+    "name": "Skills",
+    "viewport": {
+      "width": 1600,
+      "height": 1000
+    },
+    "text": [
+      {
+        "label": "Profile",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 493.3125,
+        "right": 551.6875
+      },
+      {
+        "label": "Skills",
+        "foreground": "rgb(43, 26, 11)",
+        "backdrop": "rgb(201, 163, 107)",
+        "ratio": 7.117522397283716,
+        "left": 787.40625,
+        "right": 835.59375
+      },
+      {
+        "label": "18+",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1085.390625,
+        "right": 1115.609375
+      },
+      {
+        "label": "History",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1353.59375,
+        "right": 1425.40625
+      },
+      {
+        "label": "Management",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 503.796875
+      },
+      {
+        "label": "40",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1505.71875,
+        "right": 1528
+      },
+      {
+        "label": "Technical",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 468.3125
+      },
+      {
+        "label": "65",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1505.71875,
+        "right": 1528
+      },
+      {
+        "label": "Medical",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 451.765625
+      },
+      {
+        "label": "15",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1509.1875,
+        "right": 1528
+      },
+      {
+        "label": "Combat",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 454.859375
+      },
+      {
+        "label": "30",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1505.71875,
+        "right": 1528
+      },
+      {
+        "label": "Negotiation",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 494.03125
+      },
+      {
+        "label": "25",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1505.71875,
+        "right": 1528
+      },
+      {
+        "label": "Stress",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 470.8125
+      },
+      {
+        "label": "82 / 100 · Exhausted",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 566.875
+      },
+      {
+        "label": "Not working",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 495.3125
+      }
+    ],
+    "buttons": [
+      {
+        "label": "Profile",
+        "left": 382,
+        "right": 663,
+        "top": 743.15625,
+        "bottom": 787.75,
+        "width": 281,
+        "height": 44.59375,
+        "scrollWidth": 279,
+        "clientWidth": 279,
+        "fontWeight": 400,
+        "boundary": 5.365435785687814,
+        "selected": false,
+        "borderWidth": 1
+      },
+      {
+        "label": "Skills",
+        "left": 671,
+        "right": 952,
+        "top": 743.15625,
+        "bottom": 787.75,
+        "width": 281,
+        "height": 44.59375,
+        "scrollWidth": 279,
+        "clientWidth": 279,
+        "fontWeight": 700,
+        "boundary": 9.858727167074766,
+        "selected": true,
+        "borderWidth": 1
+      },
+      {
+        "label": "18+",
+        "left": 960,
+        "right": 1241,
+        "top": 743.15625,
+        "bottom": 787.75,
+        "width": 281,
+        "height": 44.59375,
+        "scrollWidth": 279,
+        "clientWidth": 279,
+        "fontWeight": 400,
+        "boundary": 5.365435785687814,
+        "selected": false,
+        "borderWidth": 1
+      },
+      {
+        "label": "History",
+        "left": 1249,
+        "right": 1530,
+        "top": 743.15625,
+        "bottom": 787.75,
+        "width": 281,
+        "height": 44.59375,
+        "scrollWidth": 279,
+        "clientWidth": 279,
+        "fontWeight": 400,
+        "boundary": 5.365435785687814,
+        "selected": false,
+        "borderWidth": 1
+      }
+    ],
+    "focus": {
+      "left": 671,
+      "right": 952,
+      "top": 743.15625,
+      "bottom": 787.75,
+      "width": 281,
+      "height": 44.59375,
+      "scrollWidth": 279,
+      "clientWidth": 279,
+      "outline": 3,
+      "offset": 3,
+      "ratio": 3.1935518827914526
+    },
+    "markerContrast": [],
+    "sheet": {
+      "left": 364,
+      "right": 1548,
+      "top": 725.15625,
+      "bottom": 1125.5,
+      "width": 1184,
+      "height": 400.34375,
+      "scrollWidth": 1176,
+      "clientWidth": 1176
+    },
+    "documentScrollWidth": 1600
+  },
+  {
+    "name": "18+",
+    "viewport": {
+      "width": 1600,
+      "height": 1000
+    },
+    "text": [
+      {
+        "label": "Profile",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 493.3125,
+        "right": 551.6875
+      },
+      {
+        "label": "Skills",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 788.65625,
+        "right": 834.34375
+      },
+      {
+        "label": "18+",
+        "foreground": "rgb(43, 26, 11)",
+        "backdrop": "rgb(201, 163, 107)",
+        "ratio": 7.117522397283716,
+        "left": 1085.015625,
+        "right": 1115.96875
+      },
+      {
+        "label": "History",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1353.59375,
+        "right": 1425.40625
+      },
+      {
+        "label": "Mind",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 436.65625
+      },
+      {
+        "label": "50 / 100 · Balanced",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 548.453125
+      },
+      {
+        "label": "Light",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 432.96875
+      },
+      {
+        "label": "Dark",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1482.109375,
+        "right": 1528
+      },
+      {
+        "label": "Lust",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 430.078125
+      },
+      {
+        "label": "42",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1505.71875,
+        "right": 1528
+      },
+      {
+        "label": "Arousal",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 455.046875
+      },
+      {
+        "label": "19",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1509.1875,
+        "right": 1528
+      },
+      {
+        "label": "Beauty",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 452.375
+      },
+      {
+        "label": "76",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1505.71875,
+        "right": 1528
+      },
+      {
+        "label": "Sex-exp",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 478.921875
+      },
+      {
+        "label": "Hand",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 428.9375
+      },
+      {
+        "label": "Novice · 17 / 100",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1391.78125,
+        "right": 1528
+      },
+      {
+        "label": "Mouth",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 443.703125
+      },
+      {
+        "label": "Professional · 110 / 200",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1322.078125,
+        "right": 1528
+      },
+      {
+        "label": "Breast",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 453.125
+      },
+      {
+        "label": "Expert · 300 / 300",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1363.1875,
+        "right": 1528
+      },
+      {
+        "label": "Vagina",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 444.6875
+      },
+      {
+        "label": "Novice · 0 / 100",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1399.453125,
+        "right": 1528
+      },
+      {
+        "label": "Ass",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 417.03125
+      },
+      {
+        "label": "Novice · 0 / 100",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1399.453125,
+        "right": 1528
+      }
+    ],
+    "buttons": [
+      {
+        "label": "Profile",
+        "left": 382,
+        "right": 663,
+        "top": 743.15625,
+        "bottom": 787.75,
+        "width": 281,
+        "height": 44.59375,
+        "scrollWidth": 279,
+        "clientWidth": 279,
+        "fontWeight": 400,
+        "boundary": 5.365435785687814,
+        "selected": false,
+        "borderWidth": 1
+      },
+      {
+        "label": "Skills",
+        "left": 671,
+        "right": 952,
+        "top": 743.15625,
+        "bottom": 787.75,
+        "width": 281,
+        "height": 44.59375,
+        "scrollWidth": 279,
+        "clientWidth": 279,
+        "fontWeight": 400,
+        "boundary": 5.365435785687814,
+        "selected": false,
+        "borderWidth": 1
+      },
+      {
+        "label": "18+",
+        "left": 960,
+        "right": 1241,
+        "top": 743.15625,
+        "bottom": 787.75,
+        "width": 281,
+        "height": 44.59375,
+        "scrollWidth": 279,
+        "clientWidth": 279,
+        "fontWeight": 700,
+        "boundary": 9.858727167074766,
+        "selected": true,
+        "borderWidth": 1
+      },
+      {
+        "label": "History",
+        "left": 1249,
+        "right": 1530,
+        "top": 743.15625,
+        "bottom": 787.75,
+        "width": 281,
+        "height": 44.59375,
+        "scrollWidth": 279,
+        "clientWidth": 279,
+        "fontWeight": 400,
+        "boundary": 5.365435785687814,
+        "selected": false,
+        "borderWidth": 1
+      }
+    ],
+    "focus": {
+      "left": 960,
+      "right": 1241,
+      "top": 743.15625,
+      "bottom": 787.75,
+      "width": 281,
+      "height": 44.59375,
+      "scrollWidth": 279,
+      "clientWidth": 279,
+      "outline": 3,
+      "offset": 3,
+      "ratio": 3.1935518827914526
+    },
+    "markerContrast": [
+      13.72980236262383,
+      7.866963551632624
+    ],
+    "sheet": {
+      "left": 364,
+      "right": 1548,
+      "top": 725.15625,
+      "bottom": 1346.875,
+      "width": 1184,
+      "height": 621.71875,
+      "scrollWidth": 1176,
+      "clientWidth": 1176
+    },
+    "documentScrollWidth": 1600
+  },
+  {
+    "name": "History",
+    "viewport": {
+      "width": 1600,
+      "height": 1000
+    },
+    "text": [
+      {
+        "label": "Profile",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 493.3125,
+        "right": 551.6875
+      },
+      {
+        "label": "Skills",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 788.65625,
+        "right": 834.34375
+      },
+      {
+        "label": "18+",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1085.390625,
+        "right": 1115.609375
+      },
+      {
+        "label": "History",
+        "foreground": "rgb(43, 26, 11)",
+        "backdrop": "rgb(201, 163, 107)",
+        "ratio": 7.117522397283716,
+        "left": 1352.390625,
+        "right": 1426.609375
+      },
+      {
+        "label": "Posts",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 457.296875
+      },
+      {
+        "label": "Post assigned",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 515.484375
+      },
+      {
+        "label": "8",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 652.859375,
+        "right": 664
+      },
+      {
+        "label": "Post cleared",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 504.921875
+      },
+      {
+        "label": "2",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 652.859375,
+        "right": 664
+      },
+      {
+        "label": "Wellbeing",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 672,
+        "right": 778.828125
+      },
+      {
+        "label": "Exhausted",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 672,
+        "right": 773.203125
+      },
+      {
+        "label": "4",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 940.859375,
+        "right": 952
+      },
+      {
+        "label": "Recovered",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 672,
+        "right": 770.125
+      },
+      {
+        "label": "3",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 940.859375,
+        "right": 952
+      },
+      {
+        "label": "Milestones",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 960,
+        "right": 1092.171875
+      },
+      {
+        "label": "Birthday",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 960,
+        "right": 1043.15625
+      },
+      {
+        "label": "5",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1228.859375,
+        "right": 1240
+      },
+      {
+        "label": "Other",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1248,
+        "right": 1321.546875
+      },
+      {
+        "label": "Travel note",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1248,
+        "right": 1353.421875
+      },
+      {
+        "label": "1",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 1520.3125,
+        "right": 1528
+      },
+      {
+        "label": "Recent events",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 384,
+        "right": 562.421875
+      },
+      {
+        "label": "Week 1 · Year 1 · Post assigned",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 408,
+        "right": 678.421875
+      },
+      {
+        "label": "Week 1 · Year 1 · Birthday",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 408,
+        "right": 630.078125
+      },
+      {
+        "label": "Week 1 · Year 1 · Post assigned",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 408,
+        "right": 678.421875
+      },
+      {
+        "label": "Week 1 · Year 1 · Birthday",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 408,
+        "right": 630.078125
+      },
+      {
+        "label": "Week 1 · Year 1 · Post assigned",
+        "foreground": "rgb(59, 42, 23)",
+        "backdrop": "rgb(234, 216, 174)",
+        "ratio": 9.762563058847864,
+        "left": 408,
+        "right": 678.421875
+      }
+    ],
+    "buttons": [
+      {
+        "label": "Profile",
+        "left": 382,
+        "right": 663,
+        "top": 743.15625,
+        "bottom": 787.75,
+        "width": 281,
+        "height": 44.59375,
+        "scrollWidth": 279,
+        "clientWidth": 279,
+        "fontWeight": 400,
+        "boundary": 5.365435785687814,
+        "selected": false,
+        "borderWidth": 1
+      },
+      {
+        "label": "Skills",
+        "left": 671,
+        "right": 952,
+        "top": 743.15625,
+        "bottom": 787.75,
+        "width": 281,
+        "height": 44.59375,
+        "scrollWidth": 279,
+        "clientWidth": 279,
+        "fontWeight": 400,
+        "boundary": 5.365435785687814,
+        "selected": false,
+        "borderWidth": 1
+      },
+      {
+        "label": "18+",
+        "left": 960,
+        "right": 1241,
+        "top": 743.15625,
+        "bottom": 787.75,
+        "width": 281,
+        "height": 44.59375,
+        "scrollWidth": 279,
+        "clientWidth": 279,
+        "fontWeight": 400,
+        "boundary": 5.365435785687814,
+        "selected": false,
+        "borderWidth": 1
+      },
+      {
+        "label": "History",
+        "left": 1249,
+        "right": 1530,
+        "top": 743.15625,
+        "bottom": 787.75,
+        "width": 281,
+        "height": 44.59375,
+        "scrollWidth": 279,
+        "clientWidth": 279,
+        "fontWeight": 700,
+        "boundary": 9.858727167074766,
+        "selected": true,
+        "borderWidth": 1
+      }
+    ],
+    "focus": {
+      "left": 1249,
+      "right": 1530,
+      "top": 743.15625,
+      "bottom": 787.75,
+      "width": 281,
+      "height": 44.59375,
+      "scrollWidth": 279,
+      "clientWidth": 279,
+      "outline": 3,
+      "offset": 3,
+      "ratio": 3.1935518827914526
+    },
+    "markerContrast": [],
+    "sheet": {
+      "left": 364,
+      "right": 1548,
+      "top": 725.15625,
+      "bottom": 1139.09375,
+      "width": 1184,
+      "height": 413.9375,
+      "scrollWidth": 1176,
+      "clientWidth": 1176
+    },
+    "documentScrollWidth": 1600
+  }
+]

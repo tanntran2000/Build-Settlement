@@ -1,0 +1,77 @@
+P7 Builder 6.2
+mcp:53f8c535-7746-416d-9905-f01204d05a21  completed  codex/gpt-6.2-sol
+
+[assistant]
+The 1600 px and 1280 px life-shell baselines passed in isolation. The 375 px case is running now, followed by 320 px. After those, the 16-case NPC-sheet suite will run.
+
+[assistant]
+All four life-shell baselines passed alone. The focused suite then passed all 16 cases, including both revised keyboard variants. I’ll commit the verified two-file diff and run C2 from the clean new head.
+
+[assistant]
+Both diff checks and all seven gates passed at `8138051`. The served build matched on both ports, and all 403 smoke cases are running with `CI=1`. The previous full run took about 35 minutes.
+
+[assistant]
+The 1600 px baseline passed inside the full smoke. The exact-head bundle measured 150.534 kB gzip, three bytes above the prior PR C head and 49.466 kB under budget.
+
+[assistant]
+All four previously failing life-shell cases have now passed inside the full smoke as well as in isolation. The run has reported 30 of 403 cases.
+
+[assistant]
+The smoke has passed 87 cases so far, including the existing report-parity group. At the previous run’s pace, about 17 minutes remain.
+
+[assistant]
+All 16 NPC-sheet cases passed inside the full smoke, including both keyboard variants. The four 1280×900 captures from this head match the approved screenshots byte-for-byte.
+
+[assistant]
+The full smoke has passed 325 of 403 cases. About five minutes remain at the pace of the previous run, then I’ll verify the evidence manifests and final checkout.
+
+[assistant]
+Full smoke passed **403 of 403** with `CI=1`, zero failures and zero skips. The live smoke servers matched the build hashes. I’ll now check the final Git status, ports, and evidence manifests.
+
+[assistant]
+[Fix round 1 evidence](/C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round1/README.md) — **Correction 10 passed full C2.**
+
+| Item | Result |
+|---|---|
+| Branch | `feat/p7a-npc-sheet` |
+| HEAD | `813805178ce4fe9e93c0c39ddee9143c19ea7286` |
+| Tree | `bb414ff2825ea37bd5c41a579de7dac82acbaf22` |
+| Commit | `fix(ui): npc sheet panel is not a tab stop`, ending with `Co-authored-by: Codex <noreply@openai.com>` |
+| Final state | Empty `git status --porcelain`. Ports 4173 and 4174 free. |
+
+### Diff and focused tests
+
+The two-file diff is **+5/−5**. `NpcSheet.svelte` loses the panel’s `tabindex="0"` line. The keyboard case checks that Tab moves from Profile to the Attributes disclosure, Shift+Tab returns to Profile, and all four panels have no `tabindex`. The existing tab navigation and ARIA assertions are preserved. [Exact diff](/C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round1/correction10.diff) · [Scope verification](/C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round1/scope-final.json)
+
+**RED** reproduced at 1280 and 1600 px on the original `133d1f0` product bytes. Both cases failed because Attributes stayed unfocused after Tab. **GREEN** passed both variants and all 16 focused cases after the four isolated baselines below. [RED log](/C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round1/red-keyboard.txt) · [GREEN log](/C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round1/green-focused-CI1.txt)
+
+| Isolated life-shell baseline | Result with `CI=1` |
+|---|---|
+| 1600 px | [1 passed, 139.0 s](/C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round1/baseline-1600-CI1.txt) |
+| 1280 px | [1 passed, 135.4 s](/C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round1/baseline-1280-CI1.txt) |
+| 375 px | [1 passed, 143.3 s](/C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round1/baseline-375-CI1.txt) |
+| 320 px | [1 passed, 136.4 s](/C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round1/baseline-320-CI1.txt) |
+
+### C2 gates at the clean head
+
+| Gate | Check | Result |
+|---|---|---|
+| 1 | `git diff --check` against `origin/main...HEAD` and `b94d308...HEAD` | Both exit 0 |
+| 2 | `npm run lint` | Exit 0 |
+| 3 | `npm run typecheck` | Exit 0 |
+| 4 | `npm run check:architecture` | Exit 0 |
+| 5 | `npm run test:architecture` | 154 passed, exit 0 |
+| 6 | `npm test` | 3,081 passed, exit 0 |
+| 7 | `npm run build` | Exit 0 |
+
+**Full smoke passed 403/403 in 34m 18s**, with zero failures, zero skips, and exit 0. The same shell echoed `CI=1` before launch. Served JS and CSS matched the clean build on both ports before and during smoke. CPU was 5% before the gates and 3% before smoke, with zero competing jobs detected and zero Windows sleep or resume events during C2. [Gate logs](/C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round1/C2/gates-1-7.txt) · [CI echo](/C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round1/C2/smoke-ci.txt) · [Smoke log](/C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round1/C2/smoke-CI1.txt) · [Served-build check](/C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round1/C2/served-assets-before-smoke.json)
+
+### Bundle and evidence
+
+| Gzip | PR B | `133d1f0` | `8138051` |
+|---|---:|---:|---:|
+| JS | 139.905 kB | 143.003 kB | 143.006 kB |
+| CSS | 7.152 kB | 7.528 kB | 7.528 kB |
+| **Combined** | **147.057 kB** | **150.531 kB** | **150.534 kB** |
+
+The bundle is **49.466 kB under the 200 kB budget**. All four 1280×900 captures from the new head matched the original PNGs byte-for-byte. The parent manifest verified all 184 entries, and all six nested manifests passed. [Bundle measurement and raw artifacts](/C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round1/README.md#bundle-and-browser-artifacts) · [Screenshot index](/C:/Users/Admin/.t3/local-drafts/p7a-prC/fix-round1/screenshots/index.json) · [Parent README](/C:/Users/Admin/.t3/local-drafts/p7a-prC/README.md) · [SHA256SUMS](/C:/Users/Admin/.t3/local-drafts/p7a-prC/SHA256SUMS.txt)

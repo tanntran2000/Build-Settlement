@@ -1,0 +1,116 @@
+{
+  "head": "133d1f0e996ef85826fb6ef63fdffeef64de2572",
+  "tree": "897e330b088442cfd421e892c7c11c79d103aa0d",
+  "cases": [
+    {
+      "width": 320,
+      "height": 812,
+      "focus": {
+        "clips": [],
+        "box": {
+          "left": 44,
+          "right": 276,
+          "top": 8.484375,
+          "bottom": 2198.125
+        },
+        "outline": 3,
+        "color": [
+          121,
+          113,
+          159
+        ],
+        "bg": [
+          234,
+          216,
+          174
+        ],
+        "inViewport": false
+      },
+      "errorContext": "C:/Users/Admin/.t3/local-drafts/p7a-prC-local-only/C2/full/character-life-navigation--0585a-hell-accessibility-baseline-chromium/error-context.md"
+    },
+    {
+      "width": 375,
+      "height": 812,
+      "focus": {
+        "clips": [],
+        "box": {
+          "left": 44,
+          "right": 331,
+          "top": 8.09375,
+          "bottom": 1763.484375
+        },
+        "outline": 3,
+        "color": [
+          121,
+          113,
+          159
+        ],
+        "bg": [
+          234,
+          216,
+          174
+        ],
+        "inViewport": false
+      },
+      "errorContext": "C:/Users/Admin/.t3/local-drafts/p7a-prC-local-only/C2/full/character-life-navigation--c0613-hell-accessibility-baseline-chromium/error-context.md"
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "focus": {
+        "clips": [
+          "focus clipped vertically by DIV: 0..900",
+          "focus clipped vertically by BODY: 0..900"
+        ],
+        "box": {
+          "left": 336,
+          "right": 1224,
+          "top": 16.171875,
+          "bottom": 1104.625
+        },
+        "outline": 3,
+        "color": [
+          121,
+          113,
+          159
+        ],
+        "bg": [
+          234,
+          216,
+          174
+        ],
+        "inViewport": false
+      },
+      "errorContext": "C:/Users/Admin/.t3/local-drafts/p7a-prC-local-only/C2/full/character-life-navigation--e57a3-hell-accessibility-baseline-chromium/error-context.md"
+    },
+    {
+      "width": 1600,
+      "height": 1000,
+      "focus": {
+        "clips": [
+          "focus clipped vertically by DIV: 0..1000",
+          "focus clipped vertically by BODY: 0..1000"
+        ],
+        "box": {
+          "left": 376,
+          "right": 1536,
+          "top": 15.75,
+          "bottom": 1238.71875
+        },
+        "outline": 3,
+        "color": [
+          121,
+          113,
+          159
+        ],
+        "bg": [
+          234,
+          216,
+          174
+        ],
+        "inViewport": false
+      },
+      "errorContext": "C:/Users/Admin/.t3/local-drafts/p7a-prC-local-only/C2/full/character-life-navigation--f621c-hell-accessibility-baseline-chromium/error-context.md"
+    }
+  ]
+}

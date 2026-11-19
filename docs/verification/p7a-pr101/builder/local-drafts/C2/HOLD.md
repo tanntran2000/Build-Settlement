@@ -1,0 +1,14 @@
+# P7-A PR C — C2 HOLD
+
+**The full smoke failed.** C1 is committed at `133d1f0e996ef85826fb6ef63fdffeef64de2572`, tree `897e330b088442cfd421e892c7c11c79d103aa0d`. 399/403 passed, 4 failed, 0 skipped. Exit 1 in 34.7 minutes. [CI=1 echo](C:/Users/Admin/.t3/local-drafts/p7a-prC/C2/smoke-ci.txt) · [Full smoke log](C:/Users/Admin/.t3/local-drafts/p7a-prC/C2/smoke-CI1.txt) · [Smoke result](C:/Users/Admin/.t3/local-drafts/p7a-prC/C2/smoke-result.json)
+
+| Case from the full smoke | Full result | One isolated run at CI=1 |
+| --- | --- | --- |
+| [accessibility at 1600px / life shell accessibility baseline](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/character-life-navigation-accessibility.spec.ts:250) | Failed | [Failed, exit 1](C:/Users/Admin/.t3/local-drafts/p7a-prC/C2/isolate-01-CI1.txt) |
+| [accessibility at 1280px / life shell accessibility baseline](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/character-life-navigation-accessibility.spec.ts:250) | Failed | [Failed, exit 1](C:/Users/Admin/.t3/local-drafts/p7a-prC/C2/isolate-02-CI1.txt) |
+| [accessibility at 375px / life shell accessibility baseline](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/character-life-navigation-accessibility.spec.ts:250) | Failed | [Failed, exit 1](C:/Users/Admin/.t3/local-drafts/p7a-prC/C2/isolate-03-CI1.txt) |
+| [accessibility at 320px / life shell accessibility baseline](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/character-life-navigation-accessibility.spec.ts:250) | Failed | [Failed, exit 1](C:/Users/Admin/.t3/local-drafts/p7a-prC/C2/isolate-04-CI1.txt) |
+
+The existing life-shell check reports that the focused Characters panel extends below the viewport. At desktop widths it also reports clipping by the scroll container and body. The default Profile tabpanel is a tab stop under the approved D2 keyboard path. The existing browser check measures the full focus outline box. [Measured focus bounds](C:/Users/Admin/.t3/local-drafts/p7a-prC/C2/focus-baseline-observations.json) · [Tab stop](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/NpcSheet.svelte:57) · [Existing focus check](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/character-life-navigation-accessibility.spec.ts:127)
+
+The 4 failed cases ran alone once each with `CI=1`. 0 passed on isolation and 4 failed. The checkout is clean at the tested commit and both preview ports are free. Any repair requires owner approval for scope beyond Corrections 8–9. [Machine and run summary](C:/Users/Admin/.t3/local-drafts/p7a-prC/C2/C2-summary.json) · [Isolation inventory](C:/Users/Admin/.t3/local-drafts/p7a-prC/C2/smoke-isolated-summary.json) · [Raw trace inventory](C:/Users/Admin/.t3/local-drafts/p7a-prC/C2/LOCAL-ONLY.json)

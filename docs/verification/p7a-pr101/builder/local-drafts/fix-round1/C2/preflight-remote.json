@@ -1,0 +1,15 @@
+{
+  "utc": "2026-11-18T12:12:36.122704+00:00",
+  "command": [
+    "git",
+    "ls-remote",
+    "--heads",
+    "origin",
+    "refs/heads/main",
+    "refs/heads/feat/p7a-npc-life-week"
+  ],
+  "refs": {
+    "refs/heads/feat/p7a-npc-life-week": "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+    "refs/heads/main": "dac604054d7cbbf14a0a42209a3ff560380f2956"
+  }
+}

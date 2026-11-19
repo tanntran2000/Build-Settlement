@@ -1,0 +1,11 @@
+Playwright actual failure context for E46, lines 73?81
+
+        - tabpanel "Skills":
+          - term: Management
+          - definition: "40"
+          - term: Technical
+          - definition: "65"
+          - term: Medical
+          - definition: "15"
+          - term: Combat
+          - definition: "30"

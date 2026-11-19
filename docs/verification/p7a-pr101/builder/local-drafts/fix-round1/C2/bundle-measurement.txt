@@ -1,0 +1,14 @@
+HEAD=813805178ce4fe9e93c0c39ddee9143c19ea7286
+TREE=bb414ff2825ea37bd5c41a579de7dac82acbaf22
+BRANCH=feat/p7a-npc-sheet
+UTC_START=2026-11-18T12:15:47.413643+00:00
+COMMAND=["node", "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prC\\fix-round1\\C2/measure-bundle.mjs"]
+CI=
+STATUS:
+
+OUTPUT:
+{"jsGzipBytes":143006,"cssGzipBytes":7528,"combinedGzipBytes":150534,"remainingBudgetBytes":49466}
+
+EXIT_CODE=0
+SECONDS=0.637
+UTC_END=2026-11-18T12:15:47.889461+00:00

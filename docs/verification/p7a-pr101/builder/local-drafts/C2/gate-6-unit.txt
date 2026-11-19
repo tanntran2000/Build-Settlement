@@ -1,0 +1,26 @@
+HEAD=133d1f0e996ef85826fb6ef63fdffeef64de2572
+TREE=897e330b088442cfd421e892c7c11c79d103aa0d
+BRANCH=feat/p7a-npc-sheet
+UTC_START=2026-11-18T10:43:24.170980+00:00
+COMMAND=["npm.cmd", "test"]
+CI=
+STATUS:
+
+OUTPUT:
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  132 passed (132)
+      Tests  3081 passed (3081)
+   Start at  17:43:25
+   Duration  62.13s (transform 10.98s, setup 0ms, import 56.41s, tests 220.29s, environment 78ms)
+
+
+EXIT_CODE=0
+SECONDS=63.747
+UTC_END=2026-11-18T10:44:27.797094+00:00

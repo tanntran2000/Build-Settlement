@@ -1,0 +1,44 @@
+{
+  "utc": "2026-11-18T08:56:11.132374+00:00",
+  "mode": "apply",
+  "base": "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+  "baseTree": "947f604e17427d916e1ef0e21083dbc2f72920b6",
+  "head": "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+  "tree": "947f604e17427d916e1ef0e21083dbc2f72920b6",
+  "verifiedHunks": 46,
+  "verifiedProjectedHunks": 46,
+  "existingFiles": 12,
+  "otherBaseFilesVerified": 486,
+  "approvedInventorySha256": "c54c0538f72331511baada892f409352edcce4d7ad5bbef28968f5e219247353",
+  "step0Sha256": "6bdd83f921811ea8d95408b015ec6e093ff8ade9baccffc1a600dd57f412e096",
+  "newPaths": [
+    "packages/ui/src/NpcSheet.svelte",
+    "packages/ui/src/__tests__/npc-sheet-view.test.ts",
+    "packages/ui/src/npc-sheet-view.ts",
+    "tests/e2e/npc-sheet.spec.ts"
+  ],
+  "worktreePorcelain": {
+    "packages/ui/src/CharacterLifeCharacters.svelte": " M",
+    "packages/ui/src/CharacterProfile.svelte": " M",
+    "packages/ui/src/SoloWeekReport.svelte": " M",
+    "packages/ui/src/TileManagement.svelte": " M",
+    "packages/ui/src/__tests__/report-letters.test.ts": " M",
+    "packages/ui/src/report-letters.ts": " M",
+    "tests/e2e/character-life-boundary.spec.ts": " M",
+    "tests/e2e/character-life-navigation-accessibility.spec.ts": " M",
+    "tests/e2e/character-life-navigation.helpers.ts": " M",
+    "tests/e2e/character-life-navigation.spec.ts": " M",
+    "tests/e2e/character-life.spec.ts": " M",
+    "tests/e2e/world-npc-session.spec.ts": " M",
+    "packages/ui/src/NpcSheet.svelte": "??",
+    "packages/ui/src/__tests__/npc-sheet-view.test.ts": "??",
+    "packages/ui/src/npc-sheet-view.ts": "??",
+    "tests/e2e/npc-sheet.spec.ts": "??"
+  },
+  "newFileHashes": {
+    "packages/ui/src/NpcSheet.svelte": "11eb48afc088b44867ccbb72bc9df6300459786d302e7ba00cd032a98575ff8b",
+    "packages/ui/src/__tests__/npc-sheet-view.test.ts": "d6cc29fbef9c0056cfd5d366e563934ae54667bd03b9dfa7d88ef9c6e5dcaf62",
+    "packages/ui/src/npc-sheet-view.ts": "1ee770165aa1ec2cb4b87565faaba9602c802433ec63ab1d731e3a7c01b745bd",
+    "tests/e2e/npc-sheet.spec.ts": "6cd3bcacecdc1b2ae49e6e9bab6ae64b4605c2f81cb0c66fd61840efe3ef27b4"
+  }
+}

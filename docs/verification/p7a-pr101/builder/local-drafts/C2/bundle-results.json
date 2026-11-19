@@ -1,0 +1,44 @@
+{
+  "kind": "C2 clean production build at exact HEAD",
+  "utc": "2026-11-18T10:44:50.315Z",
+  "head": "133d1f0e996ef85826fb6ef63fdffeef64de2572",
+  "tree": "897e330b088442cfd421e892c7c11c79d103aa0d",
+  "status": "",
+  "node": "v24.19.0",
+  "compression": "zlib gzipSync default, same as PR B",
+  "baseline": {
+    "jsGzipBytes": 139905,
+    "cssGzipBytes": 7152,
+    "combinedGzipBytes": 147057
+  },
+  "current": {
+    "jsGzipBytes": 143003,
+    "cssGzipBytes": 7528,
+    "combinedGzipBytes": 150531
+  },
+  "deltaBytes": {
+    "js": 3098,
+    "css": 376,
+    "combined": 3474
+  },
+  "budgetBytes": 200000,
+  "remainingBudgetBytes": 49469,
+  "files": [
+    {
+      "path": "assets/index-D94IJs5c.css",
+      "entry": true,
+      "bytes": 37312,
+      "gzipBytes": 7528,
+      "sha256": "da3d5e95ed95e7033a8d972ddc7d01b36086c01586d073876873b485f38dc447",
+      "gzipSha256": "a0429b688ae46dd35f34ed48ada31c944b40898fd1b4eecb1c58f4df13adfa15"
+    },
+    {
+      "path": "assets/index-DBkaOuSN.js",
+      "entry": true,
+      "bytes": 458241,
+      "gzipBytes": 143003,
+      "sha256": "1a34f5f6614da77e35b66eceec437df568b7949f930f31b3c400dc5b482a24c7",
+      "gzipSha256": "a87bae73d267b6235b7d9c3c1c68a9f81861d6286bfe3f55fc22a5dbf56842e1"
+    }
+  ]
+}

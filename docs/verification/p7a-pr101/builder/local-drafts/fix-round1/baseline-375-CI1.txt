@@ -1,0 +1,26 @@
+HEAD=133d1f0e996ef85826fb6ef63fdffeef64de2572
+TREE=897e330b088442cfd421e892c7c11c79d103aa0d
+BRANCH=feat/p7a-npc-sheet
+UTC_START=2026-11-18T12:06:45.786481+00:00
+COMMAND=["node", "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/node_modules/@playwright/test/cli.js", "test", "tests/e2e/character-life-navigation-accessibility.spec.ts:250", "--project", "chromium", "--grep", "accessibility at 375px life shell accessibility baseline$", "--output", "C:\\Users\\Admin\\.t3\\local-drafts/p7a-prC-local-only/fix-round1/baseline-375"]
+CI=1
+STATUS:
+M packages/ui/src/NpcSheet.svelte
+ M tests/e2e/npc-sheet.spec.ts
+OUTPUT:
+[WebServer] (node:7356) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:16080) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:16176) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:250:5 › accessibility at 375px › life shell accessibility baseline (2.2m)
+
+  1 passed (2.4m)
+
+EXIT_CODE=0
+SECONDS=143.273
+UTC_END=2026-11-18T12:09:08.932685+00:00

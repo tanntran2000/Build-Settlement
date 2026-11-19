@@ -1,0 +1,58 @@
+HEAD=b94d3083dd71722f329b1bf444fa9dec9b0fd309
+TREE=947f604e17427d916e1ef0e21083dbc2f72920b6
+BRANCH=feat/p7a-npc-sheet
+UTC_START=2026-11-18T08:55:04.591734+00:00
+COMMAND=["npm.cmd", "test", "--", "packages/ui/src/__tests__/report-letters.test.ts", "-t", "NPC life report rows"]
+CI=
+STATUS:
+M packages/ui/src/__tests__/report-letters.test.ts
+?? packages/ui/src/__tests__/npc-sheet-view.test.ts
+?? tests/e2e/npc-sheet.spec.ts
+OUTPUT:
+
+> build-settlement@0.1.0 test
+> vitest run packages/ui/src/__tests__/report-letters.test.ts -t NPC life report rows
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/report-letters.test.ts (158 tests | 2 failed | 156 skipped) 11ms
+     × keeps every event in category and NPC order and leaves the report and letters intact 7ms
+     × omits absent and empty notes and keeps the event id when a name is unresolved 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/report-letters.test.ts > NPC life report rows > keeps every event in category and NPC order and leaves the report and letters intact
+TypeError: npcLifeReportRows is not a function
+ ❯ packages/ui/src/__tests__/report-letters.test.ts:92:12
+     90|     const input = report({ npcLife: { exhausted: ['npc_b', 'npc_a'], r…
+     91|     const before = structuredClone(input);
+     92|     expect(npcLifeReportRows(input, npcs)).toEqual([
+       |            ^
+     93|       { kind: 'exhausted', label: 'Exhausted', npcId: 'npc_b', name: '…
+     94|       { kind: 'exhausted', label: 'Exhausted', npcId: 'npc_a', name: '…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  packages/ui/src/__tests__/report-letters.test.ts > NPC life report rows > omits absent and empty notes and keeps the event id when a name is unresolved
+TypeError: npcLifeReportRows is not a function
+ ❯ packages/ui/src/__tests__/report-letters.test.ts:104:12
+    102|
+    103|   it('omits absent and empty notes and keeps the event id when a name …
+    104|     expect(npcLifeReportRows(report(), npcs)).toEqual([]);
+       |            ^
+    105|     expect(npcLifeReportRows(report({ npcLife: { exhausted: [], recove…
+    106|     const input = report({ npcLife: { exhausted: [], recovered: [], bi…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 156 skipped (158)
+   Start at  15:55:05
+   Duration  1.18s (transform 650ms, setup 0ms, import 845ms, tests 11ms, environment 0ms)
+
+
+EXIT_CODE=1
+SECONDS=2.498
+UTC_END=2026-11-18T08:55:06.990331+00:00
