@@ -1,0 +1,4052 @@
+[
+  {
+    "seed": 0,
+    "beforeHashes": {
+      "reports": "9bb24301f4ede325b0e0e116b03add674eb0c692dfa80fe16bddf0da61a66bc4",
+      "items": "cddabceee23c2746d4dd3408d05e71ee624dd800d8a0f761cb88f130122deb65",
+      "city": "cb611be6c8b7540c4c83f844a566272c0b2dba394609f4ec12b0208011139c54",
+      "reduced": "4ba36423f0b05c8c696bedf7195101a669184ce344227c5573be7b229ea75b7a"
+    },
+    "afterHashes": {
+      "reports": "9393b71033175e5dc6c1da65ed116a574521672d2c1a3631141ba57e654d8a45",
+      "items": "cddabceee23c2746d4dd3408d05e71ee624dd800d8a0f761cb88f130122deb65",
+      "city": "62d1c4d082564eb463a01b1a4cf90e8d0b34ec206701440c3590436d180163bc",
+      "reduced": "54a944aa5e3008d1a4837de1d04654b89a137a5bf44bd004c543f4f7b6b9a848"
+    },
+    "changes": [
+      {
+        "path": "reports.0.after.gold",
+        "before": 1001450,
+        "after": 998450,
+        "allowed": true
+      },
+      {
+        "path": "reports.0.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.1.before.gold",
+        "before": 1001450,
+        "after": 998450,
+        "allowed": true
+      },
+      {
+        "path": "reports.1.after.gold",
+        "before": 1002864,
+        "after": 996864,
+        "allowed": true
+      },
+      {
+        "path": "reports.1.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.2.before.gold",
+        "before": 1002864,
+        "after": 996864,
+        "allowed": true
+      },
+      {
+        "path": "reports.2.after.gold",
+        "before": 1004242,
+        "after": 995242,
+        "allowed": true
+      },
+      {
+        "path": "reports.2.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.3.before.gold",
+        "before": 1004242,
+        "after": 995242,
+        "allowed": true
+      },
+      {
+        "path": "reports.3.after.gold",
+        "before": 1005584,
+        "after": 993584,
+        "allowed": true
+      },
+      {
+        "path": "reports.3.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.4.before.gold",
+        "before": 1005584,
+        "after": 993584,
+        "allowed": true
+      },
+      {
+        "path": "reports.4.after.gold",
+        "before": 1006890,
+        "after": 991890,
+        "allowed": true
+      },
+      {
+        "path": "reports.4.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.5.before.gold",
+        "before": 1006890,
+        "after": 991890,
+        "allowed": true
+      },
+      {
+        "path": "reports.5.after.gold",
+        "before": 1008208,
+        "after": 990208,
+        "allowed": true
+      },
+      {
+        "path": "reports.5.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.6.before.gold",
+        "before": 1008208,
+        "after": 990208,
+        "allowed": true
+      },
+      {
+        "path": "reports.6.after.gold",
+        "before": 1009538,
+        "after": 988538,
+        "allowed": true
+      },
+      {
+        "path": "reports.6.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.7.before.gold",
+        "before": 1009538,
+        "after": 988538,
+        "allowed": true
+      },
+      {
+        "path": "reports.7.after.gold",
+        "before": 1010868,
+        "after": 986868,
+        "allowed": true
+      },
+      {
+        "path": "reports.7.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.8.before.gold",
+        "before": 1010868,
+        "after": 986868,
+        "allowed": true
+      },
+      {
+        "path": "reports.8.after.gold",
+        "before": 1012210,
+        "after": 985210,
+        "allowed": true
+      },
+      {
+        "path": "reports.8.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.9.before.gold",
+        "before": 1012210,
+        "after": 985210,
+        "allowed": true
+      },
+      {
+        "path": "reports.9.after.gold",
+        "before": 1013552,
+        "after": 983552,
+        "allowed": true
+      },
+      {
+        "path": "reports.9.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.10.before.gold",
+        "before": 1013552,
+        "after": 983552,
+        "allowed": true
+      },
+      {
+        "path": "reports.10.after.gold",
+        "before": 1014906,
+        "after": 981906,
+        "allowed": true
+      },
+      {
+        "path": "reports.10.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.11.before.gold",
+        "before": 1014906,
+        "after": 981906,
+        "allowed": true
+      },
+      {
+        "path": "reports.11.after.gold",
+        "before": 1016260,
+        "after": 980260,
+        "allowed": true
+      },
+      {
+        "path": "reports.11.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.12.before.gold",
+        "before": 1016260,
+        "after": 980260,
+        "allowed": true
+      },
+      {
+        "path": "reports.12.after.gold",
+        "before": 1017614,
+        "after": 978614,
+        "allowed": true
+      },
+      {
+        "path": "reports.12.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.13.before.gold",
+        "before": 1017614,
+        "after": 978614,
+        "allowed": true
+      },
+      {
+        "path": "reports.13.after.gold",
+        "before": 1018968,
+        "after": 976968,
+        "allowed": true
+      },
+      {
+        "path": "reports.13.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.14.before.gold",
+        "before": 1018968,
+        "after": 976968,
+        "allowed": true
+      },
+      {
+        "path": "reports.14.after.gold",
+        "before": 1020322,
+        "after": 975322,
+        "allowed": true
+      },
+      {
+        "path": "reports.14.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.15.before.gold",
+        "before": 1020322,
+        "after": 975322,
+        "allowed": true
+      },
+      {
+        "path": "reports.15.after.gold",
+        "before": 1021676,
+        "after": 973676,
+        "allowed": true
+      },
+      {
+        "path": "reports.15.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.16.before.gold",
+        "before": 1021676,
+        "after": 973676,
+        "allowed": true
+      },
+      {
+        "path": "reports.16.after.gold",
+        "before": 1023030,
+        "after": 972030,
+        "allowed": true
+      },
+      {
+        "path": "reports.16.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.17.before.gold",
+        "before": 1023030,
+        "after": 972030,
+        "allowed": true
+      },
+      {
+        "path": "reports.17.after.gold",
+        "before": 1024384,
+        "after": 970384,
+        "allowed": true
+      },
+      {
+        "path": "reports.17.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.18.before.gold",
+        "before": 1024384,
+        "after": 970384,
+        "allowed": true
+      },
+      {
+        "path": "reports.18.after.gold",
+        "before": 1025738,
+        "after": 968738,
+        "allowed": true
+      },
+      {
+        "path": "reports.18.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.19.before.gold",
+        "before": 1025738,
+        "after": 968738,
+        "allowed": true
+      },
+      {
+        "path": "reports.19.after.gold",
+        "before": 1027092,
+        "after": 967092,
+        "allowed": true
+      },
+      {
+        "path": "reports.19.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.20.before.gold",
+        "before": 1027092,
+        "after": 967092,
+        "allowed": true
+      },
+      {
+        "path": "reports.20.after.gold",
+        "before": 1028446,
+        "after": 965446,
+        "allowed": true
+      },
+      {
+        "path": "reports.20.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.21.before.gold",
+        "before": 1028446,
+        "after": 965446,
+        "allowed": true
+      },
+      {
+        "path": "reports.21.after.gold",
+        "before": 1029800,
+        "after": 963800,
+        "allowed": true
+      },
+      {
+        "path": "reports.21.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.22.before.gold",
+        "before": 1029800,
+        "after": 963800,
+        "allowed": true
+      },
+      {
+        "path": "reports.22.after.gold",
+        "before": 1031154,
+        "after": 962154,
+        "allowed": true
+      },
+      {
+        "path": "reports.22.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.23.before.gold",
+        "before": 1031154,
+        "after": 962154,
+        "allowed": true
+      },
+      {
+        "path": "reports.23.after.gold",
+        "before": 1032508,
+        "after": 960508,
+        "allowed": true
+      },
+      {
+        "path": "reports.23.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.24.before.gold",
+        "before": 1032508,
+        "after": 960508,
+        "allowed": true
+      },
+      {
+        "path": "reports.24.after.gold",
+        "before": 1033862,
+        "after": 958862,
+        "allowed": true
+      },
+      {
+        "path": "reports.24.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.25.before.gold",
+        "before": 1033862,
+        "after": 958862,
+        "allowed": true
+      },
+      {
+        "path": "reports.25.after.gold",
+        "before": 1035216,
+        "after": 957216,
+        "allowed": true
+      },
+      {
+        "path": "reports.25.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.26.before.gold",
+        "before": 1035216,
+        "after": 957216,
+        "allowed": true
+      },
+      {
+        "path": "reports.26.after.gold",
+        "before": 1036570,
+        "after": 955570,
+        "allowed": true
+      },
+      {
+        "path": "reports.26.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.27.before.gold",
+        "before": 1036570,
+        "after": 955570,
+        "allowed": true
+      },
+      {
+        "path": "reports.27.after.gold",
+        "before": 1037924,
+        "after": 953924,
+        "allowed": true
+      },
+      {
+        "path": "reports.27.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.28.before.gold",
+        "before": 1037924,
+        "after": 953924,
+        "allowed": true
+      },
+      {
+        "path": "reports.28.after.gold",
+        "before": 1038678,
+        "after": 951678,
+        "allowed": true
+      },
+      {
+        "path": "reports.28.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.29.before.gold",
+        "before": 1038678,
+        "after": 951678,
+        "allowed": true
+      },
+      {
+        "path": "reports.29.after.gold",
+        "before": 1038582,
+        "after": 948582,
+        "allowed": true
+      },
+      {
+        "path": "reports.29.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.30.before.gold",
+        "before": 1038582,
+        "after": 948582,
+        "allowed": true
+      },
+      {
+        "path": "reports.30.after.gold",
+        "before": 1038486,
+        "after": 945486,
+        "allowed": true
+      },
+      {
+        "path": "reports.30.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.31.before.gold",
+        "before": 1038486,
+        "after": 945486,
+        "allowed": true
+      },
+      {
+        "path": "reports.31.after.gold",
+        "before": 1038390,
+        "after": 942390,
+        "allowed": true
+      },
+      {
+        "path": "reports.31.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.32.before.gold",
+        "before": 1038390,
+        "after": 942390,
+        "allowed": true
+      },
+      {
+        "path": "reports.32.after.gold",
+        "before": 1038294,
+        "after": 939294,
+        "allowed": true
+      },
+      {
+        "path": "reports.32.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.33.before.gold",
+        "before": 1038294,
+        "after": 939294,
+        "allowed": true
+      },
+      {
+        "path": "reports.33.after.gold",
+        "before": 1038198,
+        "after": 936198,
+        "allowed": true
+      },
+      {
+        "path": "reports.33.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.34.before.gold",
+        "before": 1038198,
+        "after": 936198,
+        "allowed": true
+      },
+      {
+        "path": "reports.34.after.gold",
+        "before": 1038102,
+        "after": 933102,
+        "allowed": true
+      },
+      {
+        "path": "reports.34.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.35.before.gold",
+        "before": 1038102,
+        "after": 933102,
+        "allowed": true
+      },
+      {
+        "path": "reports.35.after.gold",
+        "before": 1038006,
+        "after": 930006,
+        "allowed": true
+      },
+      {
+        "path": "reports.35.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.36.before.gold",
+        "before": 1038006,
+        "after": 930006,
+        "allowed": true
+      },
+      {
+        "path": "reports.36.after.gold",
+        "before": 1037910,
+        "after": 926910,
+        "allowed": true
+      },
+      {
+        "path": "reports.36.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.37.before.gold",
+        "before": 1037910,
+        "after": 926910,
+        "allowed": true
+      },
+      {
+        "path": "reports.37.after.gold",
+        "before": 1037814,
+        "after": 923814,
+        "allowed": true
+      },
+      {
+        "path": "reports.37.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.38.before.gold",
+        "before": 1037814,
+        "after": 923814,
+        "allowed": true
+      },
+      {
+        "path": "reports.38.after.gold",
+        "before": 1037718,
+        "after": 920718,
+        "allowed": true
+      },
+      {
+        "path": "reports.38.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.39.before.gold",
+        "before": 1037718,
+        "after": 920718,
+        "allowed": true
+      },
+      {
+        "path": "reports.39.after.gold",
+        "before": 1037622,
+        "after": 917622,
+        "allowed": true
+      },
+      {
+        "path": "reports.39.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.40.before.gold",
+        "before": 1037622,
+        "after": 917622,
+        "allowed": true
+      },
+      {
+        "path": "reports.40.after.gold",
+        "before": 1037526,
+        "after": 914526,
+        "allowed": true
+      },
+      {
+        "path": "reports.40.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.41.before.gold",
+        "before": 1037526,
+        "after": 914526,
+        "allowed": true
+      },
+      {
+        "path": "reports.41.after.gold",
+        "before": 1037430,
+        "after": 911430,
+        "allowed": true
+      },
+      {
+        "path": "reports.41.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.42.before.gold",
+        "before": 1037430,
+        "after": 911430,
+        "allowed": true
+      },
+      {
+        "path": "reports.42.after.gold",
+        "before": 1037334,
+        "after": 908334,
+        "allowed": true
+      },
+      {
+        "path": "reports.42.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.43.before.gold",
+        "before": 1037334,
+        "after": 908334,
+        "allowed": true
+      },
+      {
+        "path": "reports.43.after.gold",
+        "before": 1037238,
+        "after": 905238,
+        "allowed": true
+      },
+      {
+        "path": "reports.43.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.44.before.gold",
+        "before": 1037238,
+        "after": 905238,
+        "allowed": true
+      },
+      {
+        "path": "reports.44.after.gold",
+        "before": 1037142,
+        "after": 902142,
+        "allowed": true
+      },
+      {
+        "path": "reports.44.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.45.before.gold",
+        "before": 1037142,
+        "after": 902142,
+        "allowed": true
+      },
+      {
+        "path": "reports.45.after.gold",
+        "before": 1037046,
+        "after": 899046,
+        "allowed": true
+      },
+      {
+        "path": "reports.45.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.46.before.gold",
+        "before": 1037046,
+        "after": 899046,
+        "allowed": true
+      },
+      {
+        "path": "reports.46.after.gold",
+        "before": 1036950,
+        "after": 895950,
+        "allowed": true
+      },
+      {
+        "path": "reports.46.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.47.before.gold",
+        "before": 1036950,
+        "after": 895950,
+        "allowed": true
+      },
+      {
+        "path": "reports.47.after.gold",
+        "before": 1036854,
+        "after": 892854,
+        "allowed": true
+      },
+      {
+        "path": "reports.47.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.48.crimeEvent.event.lossMilli",
+        "before": 51837,
+        "after": 44637,
+        "allowed": true
+      },
+      {
+        "path": "reports.48.before.gold",
+        "before": 1036854,
+        "after": 892854,
+        "allowed": true
+      },
+      {
+        "path": "reports.48.after.gold",
+        "before": 984921,
+        "after": 845121,
+        "allowed": true
+      },
+      {
+        "path": "reports.48.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.49.before.gold",
+        "before": 984921,
+        "after": 845121,
+        "allowed": true
+      },
+      {
+        "path": "reports.49.after.gold",
+        "before": 984825,
+        "after": 842025,
+        "allowed": true
+      },
+      {
+        "path": "reports.49.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.50.before.gold",
+        "before": 984825,
+        "after": 842025,
+        "allowed": true
+      },
+      {
+        "path": "reports.50.after.gold",
+        "before": 984729,
+        "after": 838929,
+        "allowed": true
+      },
+      {
+        "path": "reports.50.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.51.before.gold",
+        "before": 984729,
+        "after": 838929,
+        "allowed": true
+      },
+      {
+        "path": "reports.51.after.gold",
+        "before": 984633,
+        "after": 835833,
+        "allowed": true
+      },
+      {
+        "path": "reports.51.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.52.before.gold",
+        "before": 984633,
+        "after": 835833,
+        "allowed": true
+      },
+      {
+        "path": "reports.52.after.gold",
+        "before": 984537,
+        "after": 832737,
+        "allowed": true
+      },
+      {
+        "path": "reports.52.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.53.before.gold",
+        "before": 984537,
+        "after": 832737,
+        "allowed": true
+      },
+      {
+        "path": "reports.53.after.gold",
+        "before": 984441,
+        "after": 829641,
+        "allowed": true
+      },
+      {
+        "path": "reports.53.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.54.before.gold",
+        "before": 984441,
+        "after": 829641,
+        "allowed": true
+      },
+      {
+        "path": "reports.54.after.gold",
+        "before": 984345,
+        "after": 826545,
+        "allowed": true
+      },
+      {
+        "path": "reports.54.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.55.before.gold",
+        "before": 984345,
+        "after": 826545,
+        "allowed": true
+      },
+      {
+        "path": "reports.55.after.gold",
+        "before": 984249,
+        "after": 823449,
+        "allowed": true
+      },
+      {
+        "path": "reports.55.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.56.before.gold",
+        "before": 984249,
+        "after": 823449,
+        "allowed": true
+      },
+      {
+        "path": "reports.56.after.gold",
+        "before": 984153,
+        "after": 820353,
+        "allowed": true
+      },
+      {
+        "path": "reports.56.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.57.before.gold",
+        "before": 984153,
+        "after": 820353,
+        "allowed": true
+      },
+      {
+        "path": "reports.57.after.gold",
+        "before": 984057,
+        "after": 817257,
+        "allowed": true
+      },
+      {
+        "path": "reports.57.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.58.before.gold",
+        "before": 984057,
+        "after": 817257,
+        "allowed": true
+      },
+      {
+        "path": "reports.58.after.gold",
+        "before": 983961,
+        "after": 814161,
+        "allowed": true
+      },
+      {
+        "path": "reports.58.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.59.before.gold",
+        "before": 983961,
+        "after": 814161,
+        "allowed": true
+      },
+      {
+        "path": "reports.59.after.gold",
+        "before": 983865,
+        "after": 811065,
+        "allowed": true
+      },
+      {
+        "path": "reports.59.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.world.settlements.settlement_haven_01.inventory.gold",
+        "before": 983865,
+        "after": 811065,
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.63",
+        "after": {
+          "id": "house-12",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.64",
+        "after": {
+          "id": "house-13",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.65",
+        "after": {
+          "id": "house-14",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.66",
+        "after": {
+          "id": "service-7",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.67",
+        "after": {
+          "id": "service-8",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.68",
+        "after": {
+          "id": "spec-11",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.69",
+        "after": {
+          "id": "spec-12",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.70",
+        "after": {
+          "id": "slum-7",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.71",
+        "after": {
+          "id": "slum-8",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.72",
+        "after": {
+          "id": "slum-9",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.73",
+        "after": {
+          "id": "estate-1",
+          "terrain": "town",
+          "building": {
+            "typeId": "mansion",
+            "level": 1,
+            "workers": 0,
+            "enabled": true
+          }
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.74",
+        "after": {
+          "id": "estate-2",
+          "terrain": "town",
+          "building": {
+            "typeId": "retainers-hall",
+            "level": 1,
+            "workers": 0,
+            "enabled": true
+          }
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.society.rulesetId",
+        "before": "tile-society-10",
+        "after": "tile-society-11",
+        "allowed": true
+      },
+      {
+        "path": "reduced.48.crime.event.lossMilli",
+        "before": 51837,
+        "after": 44637,
+        "allowed": true
+      }
+    ],
+    "forbidden": []
+  },
+  {
+    "seed": 42,
+    "beforeHashes": {
+      "reports": "04aa55b35d7e8551323fbc2c66c6bf286fb06658b9163fd4a9e3aa327d705ea2",
+      "items": "283da6a1e4fed8fdc3a419e72e00827020ab1ace63f68277db0c1d7cee5616e8",
+      "city": "2c7e1a942c7bf05d2b462bb67aa0c05145107cfb0bce714ec3d8c2ba1b2d5e01",
+      "reduced": "dcdce3552130d92971b254f1c4fb15bfb41da44b7946293c57d099949fd6be14"
+    },
+    "afterHashes": {
+      "reports": "6238af7420c55fcf75acef911011bb4b50138231397853150d5433cf76fbb319",
+      "items": "283da6a1e4fed8fdc3a419e72e00827020ab1ace63f68277db0c1d7cee5616e8",
+      "city": "4b135951d8fc02959e62fcde8e24d367b430d2de62e1db23656d40eff95b108b",
+      "reduced": "eb453bfed2e46c2580cb69cc9747794ed2bf9e84a91f322e0e23e7c705e67926"
+    },
+    "changes": [
+      {
+        "path": "reports.0.after.gold",
+        "before": 1001450,
+        "after": 998450,
+        "allowed": true
+      },
+      {
+        "path": "reports.0.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.1.before.gold",
+        "before": 1001450,
+        "after": 998450,
+        "allowed": true
+      },
+      {
+        "path": "reports.1.after.gold",
+        "before": 1002864,
+        "after": 996864,
+        "allowed": true
+      },
+      {
+        "path": "reports.1.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.2.before.gold",
+        "before": 1002864,
+        "after": 996864,
+        "allowed": true
+      },
+      {
+        "path": "reports.2.after.gold",
+        "before": 1004242,
+        "after": 995242,
+        "allowed": true
+      },
+      {
+        "path": "reports.2.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.3.before.gold",
+        "before": 1004242,
+        "after": 995242,
+        "allowed": true
+      },
+      {
+        "path": "reports.3.after.gold",
+        "before": 1005584,
+        "after": 993584,
+        "allowed": true
+      },
+      {
+        "path": "reports.3.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.4.before.gold",
+        "before": 1005584,
+        "after": 993584,
+        "allowed": true
+      },
+      {
+        "path": "reports.4.after.gold",
+        "before": 1006890,
+        "after": 991890,
+        "allowed": true
+      },
+      {
+        "path": "reports.4.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.5.crimeEvent.event.lossMilli",
+        "before": 50410,
+        "after": 49660,
+        "allowed": true
+      },
+      {
+        "path": "reports.5.before.gold",
+        "before": 1006890,
+        "after": 991890,
+        "allowed": true
+      },
+      {
+        "path": "reports.5.after.gold",
+        "before": 957798,
+        "after": 940548,
+        "allowed": true
+      },
+      {
+        "path": "reports.5.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.6.before.gold",
+        "before": 957798,
+        "after": 940548,
+        "allowed": true
+      },
+      {
+        "path": "reports.6.after.gold",
+        "before": 959128,
+        "after": 938878,
+        "allowed": true
+      },
+      {
+        "path": "reports.6.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.7.before.gold",
+        "before": 959128,
+        "after": 938878,
+        "allowed": true
+      },
+      {
+        "path": "reports.7.after.gold",
+        "before": 960458,
+        "after": 937208,
+        "allowed": true
+      },
+      {
+        "path": "reports.7.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.8.before.gold",
+        "before": 960458,
+        "after": 937208,
+        "allowed": true
+      },
+      {
+        "path": "reports.8.after.gold",
+        "before": 961800,
+        "after": 935550,
+        "allowed": true
+      },
+      {
+        "path": "reports.8.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.9.before.gold",
+        "before": 961800,
+        "after": 935550,
+        "allowed": true
+      },
+      {
+        "path": "reports.9.after.gold",
+        "before": 963142,
+        "after": 933892,
+        "allowed": true
+      },
+      {
+        "path": "reports.9.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.10.before.gold",
+        "before": 963142,
+        "after": 933892,
+        "allowed": true
+      },
+      {
+        "path": "reports.10.after.gold",
+        "before": 964496,
+        "after": 932246,
+        "allowed": true
+      },
+      {
+        "path": "reports.10.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.11.before.gold",
+        "before": 964496,
+        "after": 932246,
+        "allowed": true
+      },
+      {
+        "path": "reports.11.after.gold",
+        "before": 965850,
+        "after": 930600,
+        "allowed": true
+      },
+      {
+        "path": "reports.11.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.12.before.gold",
+        "before": 965850,
+        "after": 930600,
+        "allowed": true
+      },
+      {
+        "path": "reports.12.after.gold",
+        "before": 967204,
+        "after": 928954,
+        "allowed": true
+      },
+      {
+        "path": "reports.12.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.13.before.gold",
+        "before": 967204,
+        "after": 928954,
+        "allowed": true
+      },
+      {
+        "path": "reports.13.after.gold",
+        "before": 968558,
+        "after": 927308,
+        "allowed": true
+      },
+      {
+        "path": "reports.13.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.14.before.gold",
+        "before": 968558,
+        "after": 927308,
+        "allowed": true
+      },
+      {
+        "path": "reports.14.after.gold",
+        "before": 969912,
+        "after": 925662,
+        "allowed": true
+      },
+      {
+        "path": "reports.14.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.15.before.gold",
+        "before": 969912,
+        "after": 925662,
+        "allowed": true
+      },
+      {
+        "path": "reports.15.after.gold",
+        "before": 971266,
+        "after": 924016,
+        "allowed": true
+      },
+      {
+        "path": "reports.15.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.16.before.gold",
+        "before": 971266,
+        "after": 924016,
+        "allowed": true
+      },
+      {
+        "path": "reports.16.after.gold",
+        "before": 972620,
+        "after": 922370,
+        "allowed": true
+      },
+      {
+        "path": "reports.16.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.17.before.gold",
+        "before": 972620,
+        "after": 922370,
+        "allowed": true
+      },
+      {
+        "path": "reports.17.after.gold",
+        "before": 973974,
+        "after": 920724,
+        "allowed": true
+      },
+      {
+        "path": "reports.17.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.18.before.gold",
+        "before": 973974,
+        "after": 920724,
+        "allowed": true
+      },
+      {
+        "path": "reports.18.after.gold",
+        "before": 975328,
+        "after": 919078,
+        "allowed": true
+      },
+      {
+        "path": "reports.18.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.19.before.gold",
+        "before": 975328,
+        "after": 919078,
+        "allowed": true
+      },
+      {
+        "path": "reports.19.after.gold",
+        "before": 976682,
+        "after": 917432,
+        "allowed": true
+      },
+      {
+        "path": "reports.19.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.20.before.gold",
+        "before": 976682,
+        "after": 917432,
+        "allowed": true
+      },
+      {
+        "path": "reports.20.after.gold",
+        "before": 978036,
+        "after": 915786,
+        "allowed": true
+      },
+      {
+        "path": "reports.20.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.21.before.gold",
+        "before": 978036,
+        "after": 915786,
+        "allowed": true
+      },
+      {
+        "path": "reports.21.after.gold",
+        "before": 979390,
+        "after": 914140,
+        "allowed": true
+      },
+      {
+        "path": "reports.21.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.22.before.gold",
+        "before": 979390,
+        "after": 914140,
+        "allowed": true
+      },
+      {
+        "path": "reports.22.after.gold",
+        "before": 980744,
+        "after": 912494,
+        "allowed": true
+      },
+      {
+        "path": "reports.22.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.23.before.gold",
+        "before": 980744,
+        "after": 912494,
+        "allowed": true
+      },
+      {
+        "path": "reports.23.after.gold",
+        "before": 982098,
+        "after": 910848,
+        "allowed": true
+      },
+      {
+        "path": "reports.23.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.24.before.gold",
+        "before": 982098,
+        "after": 910848,
+        "allowed": true
+      },
+      {
+        "path": "reports.24.after.gold",
+        "before": 983452,
+        "after": 909202,
+        "allowed": true
+      },
+      {
+        "path": "reports.24.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.25.before.gold",
+        "before": 983452,
+        "after": 909202,
+        "allowed": true
+      },
+      {
+        "path": "reports.25.after.gold",
+        "before": 984806,
+        "after": 907556,
+        "allowed": true
+      },
+      {
+        "path": "reports.25.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.26.before.gold",
+        "before": 984806,
+        "after": 907556,
+        "allowed": true
+      },
+      {
+        "path": "reports.26.after.gold",
+        "before": 986160,
+        "after": 905910,
+        "allowed": true
+      },
+      {
+        "path": "reports.26.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.27.before.gold",
+        "before": 986160,
+        "after": 905910,
+        "allowed": true
+      },
+      {
+        "path": "reports.27.after.gold",
+        "before": 986582,
+        "after": 903332,
+        "allowed": true
+      },
+      {
+        "path": "reports.27.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.28.before.gold",
+        "before": 986582,
+        "after": 903332,
+        "allowed": true
+      },
+      {
+        "path": "reports.28.after.gold",
+        "before": 986486,
+        "after": 900236,
+        "allowed": true
+      },
+      {
+        "path": "reports.28.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.29.before.gold",
+        "before": 986486,
+        "after": 900236,
+        "allowed": true
+      },
+      {
+        "path": "reports.29.after.gold",
+        "before": 986390,
+        "after": 897140,
+        "allowed": true
+      },
+      {
+        "path": "reports.29.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.30.before.gold",
+        "before": 986390,
+        "after": 897140,
+        "allowed": true
+      },
+      {
+        "path": "reports.30.after.gold",
+        "before": 986294,
+        "after": 894044,
+        "allowed": true
+      },
+      {
+        "path": "reports.30.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.31.before.gold",
+        "before": 986294,
+        "after": 894044,
+        "allowed": true
+      },
+      {
+        "path": "reports.31.after.gold",
+        "before": 986198,
+        "after": 890948,
+        "allowed": true
+      },
+      {
+        "path": "reports.31.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.32.before.gold",
+        "before": 986198,
+        "after": 890948,
+        "allowed": true
+      },
+      {
+        "path": "reports.32.after.gold",
+        "before": 986102,
+        "after": 887852,
+        "allowed": true
+      },
+      {
+        "path": "reports.32.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.33.before.gold",
+        "before": 986102,
+        "after": 887852,
+        "allowed": true
+      },
+      {
+        "path": "reports.33.after.gold",
+        "before": 986006,
+        "after": 884756,
+        "allowed": true
+      },
+      {
+        "path": "reports.33.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.34.before.gold",
+        "before": 986006,
+        "after": 884756,
+        "allowed": true
+      },
+      {
+        "path": "reports.34.after.gold",
+        "before": 985910,
+        "after": 881660,
+        "allowed": true
+      },
+      {
+        "path": "reports.34.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.35.before.gold",
+        "before": 985910,
+        "after": 881660,
+        "allowed": true
+      },
+      {
+        "path": "reports.35.after.gold",
+        "before": 985814,
+        "after": 878564,
+        "allowed": true
+      },
+      {
+        "path": "reports.35.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.36.before.gold",
+        "before": 985814,
+        "after": 878564,
+        "allowed": true
+      },
+      {
+        "path": "reports.36.after.gold",
+        "before": 985718,
+        "after": 875468,
+        "allowed": true
+      },
+      {
+        "path": "reports.36.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.37.before.gold",
+        "before": 985718,
+        "after": 875468,
+        "allowed": true
+      },
+      {
+        "path": "reports.37.after.gold",
+        "before": 985622,
+        "after": 872372,
+        "allowed": true
+      },
+      {
+        "path": "reports.37.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.38.before.gold",
+        "before": 985622,
+        "after": 872372,
+        "allowed": true
+      },
+      {
+        "path": "reports.38.after.gold",
+        "before": 985526,
+        "after": 869276,
+        "allowed": true
+      },
+      {
+        "path": "reports.38.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.39.before.gold",
+        "before": 985526,
+        "after": 869276,
+        "allowed": true
+      },
+      {
+        "path": "reports.39.after.gold",
+        "before": 985430,
+        "after": 866180,
+        "allowed": true
+      },
+      {
+        "path": "reports.39.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.40.before.gold",
+        "before": 985430,
+        "after": 866180,
+        "allowed": true
+      },
+      {
+        "path": "reports.40.after.gold",
+        "before": 985334,
+        "after": 863084,
+        "allowed": true
+      },
+      {
+        "path": "reports.40.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.41.before.gold",
+        "before": 985334,
+        "after": 863084,
+        "allowed": true
+      },
+      {
+        "path": "reports.41.after.gold",
+        "before": 985238,
+        "after": 859988,
+        "allowed": true
+      },
+      {
+        "path": "reports.41.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.42.before.gold",
+        "before": 985238,
+        "after": 859988,
+        "allowed": true
+      },
+      {
+        "path": "reports.42.after.gold",
+        "before": 985142,
+        "after": 856892,
+        "allowed": true
+      },
+      {
+        "path": "reports.42.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.43.before.gold",
+        "before": 985142,
+        "after": 856892,
+        "allowed": true
+      },
+      {
+        "path": "reports.43.after.gold",
+        "before": 985046,
+        "after": 853796,
+        "allowed": true
+      },
+      {
+        "path": "reports.43.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.44.before.gold",
+        "before": 985046,
+        "after": 853796,
+        "allowed": true
+      },
+      {
+        "path": "reports.44.after.gold",
+        "before": 984950,
+        "after": 850700,
+        "allowed": true
+      },
+      {
+        "path": "reports.44.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.45.before.gold",
+        "before": 984950,
+        "after": 850700,
+        "allowed": true
+      },
+      {
+        "path": "reports.45.after.gold",
+        "before": 984854,
+        "after": 847604,
+        "allowed": true
+      },
+      {
+        "path": "reports.45.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.46.before.gold",
+        "before": 984854,
+        "after": 847604,
+        "allowed": true
+      },
+      {
+        "path": "reports.46.after.gold",
+        "before": 984758,
+        "after": 844508,
+        "allowed": true
+      },
+      {
+        "path": "reports.46.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.47.before.gold",
+        "before": 984758,
+        "after": 844508,
+        "allowed": true
+      },
+      {
+        "path": "reports.47.after.gold",
+        "before": 984662,
+        "after": 841412,
+        "allowed": true
+      },
+      {
+        "path": "reports.47.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.48.before.gold",
+        "before": 984662,
+        "after": 841412,
+        "allowed": true
+      },
+      {
+        "path": "reports.48.after.gold",
+        "before": 984566,
+        "after": 838316,
+        "allowed": true
+      },
+      {
+        "path": "reports.48.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.49.before.gold",
+        "before": 984566,
+        "after": 838316,
+        "allowed": true
+      },
+      {
+        "path": "reports.49.after.gold",
+        "before": 984470,
+        "after": 835220,
+        "allowed": true
+      },
+      {
+        "path": "reports.49.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.50.before.gold",
+        "before": 984470,
+        "after": 835220,
+        "allowed": true
+      },
+      {
+        "path": "reports.50.after.gold",
+        "before": 984374,
+        "after": 832124,
+        "allowed": true
+      },
+      {
+        "path": "reports.50.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.51.before.gold",
+        "before": 984374,
+        "after": 832124,
+        "allowed": true
+      },
+      {
+        "path": "reports.51.after.gold",
+        "before": 984278,
+        "after": 829028,
+        "allowed": true
+      },
+      {
+        "path": "reports.51.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.52.before.gold",
+        "before": 984278,
+        "after": 829028,
+        "allowed": true
+      },
+      {
+        "path": "reports.52.after.gold",
+        "before": 984182,
+        "after": 825932,
+        "allowed": true
+      },
+      {
+        "path": "reports.52.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.53.before.gold",
+        "before": 984182,
+        "after": 825932,
+        "allowed": true
+      },
+      {
+        "path": "reports.53.after.gold",
+        "before": 984086,
+        "after": 822836,
+        "allowed": true
+      },
+      {
+        "path": "reports.53.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.54.before.gold",
+        "before": 984086,
+        "after": 822836,
+        "allowed": true
+      },
+      {
+        "path": "reports.54.after.gold",
+        "before": 983990,
+        "after": 819740,
+        "allowed": true
+      },
+      {
+        "path": "reports.54.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.55.before.gold",
+        "before": 983990,
+        "after": 819740,
+        "allowed": true
+      },
+      {
+        "path": "reports.55.after.gold",
+        "before": 983894,
+        "after": 816644,
+        "allowed": true
+      },
+      {
+        "path": "reports.55.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.56.before.gold",
+        "before": 983894,
+        "after": 816644,
+        "allowed": true
+      },
+      {
+        "path": "reports.56.after.gold",
+        "before": 983798,
+        "after": 813548,
+        "allowed": true
+      },
+      {
+        "path": "reports.56.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.57.before.gold",
+        "before": 983798,
+        "after": 813548,
+        "allowed": true
+      },
+      {
+        "path": "reports.57.after.gold",
+        "before": 983702,
+        "after": 810452,
+        "allowed": true
+      },
+      {
+        "path": "reports.57.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.58.before.gold",
+        "before": 983702,
+        "after": 810452,
+        "allowed": true
+      },
+      {
+        "path": "reports.58.after.gold",
+        "before": 983606,
+        "after": 807356,
+        "allowed": true
+      },
+      {
+        "path": "reports.58.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.59.before.gold",
+        "before": 983606,
+        "after": 807356,
+        "allowed": true
+      },
+      {
+        "path": "reports.59.after.gold",
+        "before": 983510,
+        "after": 804260,
+        "allowed": true
+      },
+      {
+        "path": "reports.59.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.world.settlements.settlement_haven_01.inventory.gold",
+        "before": 983510,
+        "after": 804260,
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.63",
+        "after": {
+          "id": "house-12",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.64",
+        "after": {
+          "id": "house-13",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.65",
+        "after": {
+          "id": "house-14",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.66",
+        "after": {
+          "id": "service-7",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.67",
+        "after": {
+          "id": "service-8",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.68",
+        "after": {
+          "id": "spec-11",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.69",
+        "after": {
+          "id": "spec-12",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.70",
+        "after": {
+          "id": "slum-7",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.71",
+        "after": {
+          "id": "slum-8",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.72",
+        "after": {
+          "id": "slum-9",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.73",
+        "after": {
+          "id": "estate-1",
+          "terrain": "town",
+          "building": {
+            "typeId": "mansion",
+            "level": 1,
+            "workers": 0,
+            "enabled": true
+          }
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.74",
+        "after": {
+          "id": "estate-2",
+          "terrain": "town",
+          "building": {
+            "typeId": "retainers-hall",
+            "level": 1,
+            "workers": 0,
+            "enabled": true
+          }
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.society.rulesetId",
+        "before": "tile-society-10",
+        "after": "tile-society-11",
+        "allowed": true
+      },
+      {
+        "path": "reduced.5.crime.event.lossMilli",
+        "before": 50410,
+        "after": 49660,
+        "allowed": true
+      }
+    ],
+    "forbidden": []
+  },
+  {
+    "seed": 20261028,
+    "beforeHashes": {
+      "reports": "a32127339cab716bfa6ccab522d0da3a455a75eca6b455ae0e7adb508e781940",
+      "items": "3ad4de4ea7c6a0687ac6d8481778a2513e841dd061e1712429d8bb2dacc31515",
+      "city": "73863ad6709a288163077c5d3167d857685ecc92b1f54593f50caf8313f49e04",
+      "reduced": "8145e422ca8691852501facec33098d76bf33061b8196536b73fc64aa8522177"
+    },
+    "afterHashes": {
+      "reports": "e7c96f5378373cc7108072dbda1dbb123d60dfd623c49c8a1f0f69368da7275d",
+      "items": "3ad4de4ea7c6a0687ac6d8481778a2513e841dd061e1712429d8bb2dacc31515",
+      "city": "05c634769d92db96a5f98266b0c0b5275e3606bcf2660e90b04fe014015d9ff9",
+      "reduced": "8145e422ca8691852501facec33098d76bf33061b8196536b73fc64aa8522177"
+    },
+    "changes": [
+      {
+        "path": "reports.0.after.gold",
+        "before": 1001450,
+        "after": 998450,
+        "allowed": true
+      },
+      {
+        "path": "reports.0.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.1.before.gold",
+        "before": 1001450,
+        "after": 998450,
+        "allowed": true
+      },
+      {
+        "path": "reports.1.after.gold",
+        "before": 1002864,
+        "after": 996864,
+        "allowed": true
+      },
+      {
+        "path": "reports.1.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.2.before.gold",
+        "before": 1002864,
+        "after": 996864,
+        "allowed": true
+      },
+      {
+        "path": "reports.2.after.gold",
+        "before": 1004242,
+        "after": 995242,
+        "allowed": true
+      },
+      {
+        "path": "reports.2.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.3.before.gold",
+        "before": 1004242,
+        "after": 995242,
+        "allowed": true
+      },
+      {
+        "path": "reports.3.after.gold",
+        "before": 1005584,
+        "after": 993584,
+        "allowed": true
+      },
+      {
+        "path": "reports.3.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.4.before.gold",
+        "before": 1005584,
+        "after": 993584,
+        "allowed": true
+      },
+      {
+        "path": "reports.4.after.gold",
+        "before": 1006890,
+        "after": 991890,
+        "allowed": true
+      },
+      {
+        "path": "reports.4.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.5.before.gold",
+        "before": 1006890,
+        "after": 991890,
+        "allowed": true
+      },
+      {
+        "path": "reports.5.after.gold",
+        "before": 1008208,
+        "after": 990208,
+        "allowed": true
+      },
+      {
+        "path": "reports.5.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.6.before.gold",
+        "before": 1008208,
+        "after": 990208,
+        "allowed": true
+      },
+      {
+        "path": "reports.6.after.gold",
+        "before": 1009538,
+        "after": 988538,
+        "allowed": true
+      },
+      {
+        "path": "reports.6.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.7.before.gold",
+        "before": 1009538,
+        "after": 988538,
+        "allowed": true
+      },
+      {
+        "path": "reports.7.after.gold",
+        "before": 1010868,
+        "after": 986868,
+        "allowed": true
+      },
+      {
+        "path": "reports.7.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.8.before.gold",
+        "before": 1010868,
+        "after": 986868,
+        "allowed": true
+      },
+      {
+        "path": "reports.8.after.gold",
+        "before": 1012210,
+        "after": 985210,
+        "allowed": true
+      },
+      {
+        "path": "reports.8.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.9.before.gold",
+        "before": 1012210,
+        "after": 985210,
+        "allowed": true
+      },
+      {
+        "path": "reports.9.after.gold",
+        "before": 1013552,
+        "after": 983552,
+        "allowed": true
+      },
+      {
+        "path": "reports.9.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.10.before.gold",
+        "before": 1013552,
+        "after": 983552,
+        "allowed": true
+      },
+      {
+        "path": "reports.10.after.gold",
+        "before": 1014906,
+        "after": 981906,
+        "allowed": true
+      },
+      {
+        "path": "reports.10.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.11.before.gold",
+        "before": 1014906,
+        "after": 981906,
+        "allowed": true
+      },
+      {
+        "path": "reports.11.after.gold",
+        "before": 1016260,
+        "after": 980260,
+        "allowed": true
+      },
+      {
+        "path": "reports.11.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.12.before.gold",
+        "before": 1016260,
+        "after": 980260,
+        "allowed": true
+      },
+      {
+        "path": "reports.12.after.gold",
+        "before": 1017614,
+        "after": 978614,
+        "allowed": true
+      },
+      {
+        "path": "reports.12.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.13.before.gold",
+        "before": 1017614,
+        "after": 978614,
+        "allowed": true
+      },
+      {
+        "path": "reports.13.after.gold",
+        "before": 1018968,
+        "after": 976968,
+        "allowed": true
+      },
+      {
+        "path": "reports.13.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.14.before.gold",
+        "before": 1018968,
+        "after": 976968,
+        "allowed": true
+      },
+      {
+        "path": "reports.14.after.gold",
+        "before": 1020322,
+        "after": 975322,
+        "allowed": true
+      },
+      {
+        "path": "reports.14.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.15.before.gold",
+        "before": 1020322,
+        "after": 975322,
+        "allowed": true
+      },
+      {
+        "path": "reports.15.after.gold",
+        "before": 1021676,
+        "after": 973676,
+        "allowed": true
+      },
+      {
+        "path": "reports.15.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.16.before.gold",
+        "before": 1021676,
+        "after": 973676,
+        "allowed": true
+      },
+      {
+        "path": "reports.16.after.gold",
+        "before": 1023030,
+        "after": 972030,
+        "allowed": true
+      },
+      {
+        "path": "reports.16.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.17.before.gold",
+        "before": 1023030,
+        "after": 972030,
+        "allowed": true
+      },
+      {
+        "path": "reports.17.after.gold",
+        "before": 1024384,
+        "after": 970384,
+        "allowed": true
+      },
+      {
+        "path": "reports.17.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.18.before.gold",
+        "before": 1024384,
+        "after": 970384,
+        "allowed": true
+      },
+      {
+        "path": "reports.18.after.gold",
+        "before": 1025738,
+        "after": 968738,
+        "allowed": true
+      },
+      {
+        "path": "reports.18.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.19.before.gold",
+        "before": 1025738,
+        "after": 968738,
+        "allowed": true
+      },
+      {
+        "path": "reports.19.after.gold",
+        "before": 1027092,
+        "after": 967092,
+        "allowed": true
+      },
+      {
+        "path": "reports.19.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.20.before.gold",
+        "before": 1027092,
+        "after": 967092,
+        "allowed": true
+      },
+      {
+        "path": "reports.20.after.gold",
+        "before": 1028446,
+        "after": 965446,
+        "allowed": true
+      },
+      {
+        "path": "reports.20.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.21.before.gold",
+        "before": 1028446,
+        "after": 965446,
+        "allowed": true
+      },
+      {
+        "path": "reports.21.after.gold",
+        "before": 1029800,
+        "after": 963800,
+        "allowed": true
+      },
+      {
+        "path": "reports.21.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.22.before.gold",
+        "before": 1029800,
+        "after": 963800,
+        "allowed": true
+      },
+      {
+        "path": "reports.22.after.gold",
+        "before": 1031154,
+        "after": 962154,
+        "allowed": true
+      },
+      {
+        "path": "reports.22.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.23.before.gold",
+        "before": 1031154,
+        "after": 962154,
+        "allowed": true
+      },
+      {
+        "path": "reports.23.after.gold",
+        "before": 1032508,
+        "after": 960508,
+        "allowed": true
+      },
+      {
+        "path": "reports.23.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.24.before.gold",
+        "before": 1032508,
+        "after": 960508,
+        "allowed": true
+      },
+      {
+        "path": "reports.24.after.gold",
+        "before": 1033862,
+        "after": 958862,
+        "allowed": true
+      },
+      {
+        "path": "reports.24.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.25.before.gold",
+        "before": 1033862,
+        "after": 958862,
+        "allowed": true
+      },
+      {
+        "path": "reports.25.after.gold",
+        "before": 1035216,
+        "after": 957216,
+        "allowed": true
+      },
+      {
+        "path": "reports.25.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.26.before.gold",
+        "before": 1035216,
+        "after": 957216,
+        "allowed": true
+      },
+      {
+        "path": "reports.26.after.gold",
+        "before": 1036570,
+        "after": 955570,
+        "allowed": true
+      },
+      {
+        "path": "reports.26.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.27.before.gold",
+        "before": 1036570,
+        "after": 955570,
+        "allowed": true
+      },
+      {
+        "path": "reports.27.after.gold",
+        "before": 1037572,
+        "after": 953572,
+        "allowed": true
+      },
+      {
+        "path": "reports.27.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.28.before.gold",
+        "before": 1037572,
+        "after": 953572,
+        "allowed": true
+      },
+      {
+        "path": "reports.28.after.gold",
+        "before": 1037476,
+        "after": 950476,
+        "allowed": true
+      },
+      {
+        "path": "reports.28.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.29.before.gold",
+        "before": 1037476,
+        "after": 950476,
+        "allowed": true
+      },
+      {
+        "path": "reports.29.after.gold",
+        "before": 1037380,
+        "after": 947380,
+        "allowed": true
+      },
+      {
+        "path": "reports.29.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.30.before.gold",
+        "before": 1037380,
+        "after": 947380,
+        "allowed": true
+      },
+      {
+        "path": "reports.30.after.gold",
+        "before": 1037284,
+        "after": 944284,
+        "allowed": true
+      },
+      {
+        "path": "reports.30.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.31.before.gold",
+        "before": 1037284,
+        "after": 944284,
+        "allowed": true
+      },
+      {
+        "path": "reports.31.after.gold",
+        "before": 1037188,
+        "after": 941188,
+        "allowed": true
+      },
+      {
+        "path": "reports.31.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.32.before.gold",
+        "before": 1037188,
+        "after": 941188,
+        "allowed": true
+      },
+      {
+        "path": "reports.32.after.gold",
+        "before": 1037092,
+        "after": 938092,
+        "allowed": true
+      },
+      {
+        "path": "reports.32.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.33.before.gold",
+        "before": 1037092,
+        "after": 938092,
+        "allowed": true
+      },
+      {
+        "path": "reports.33.after.gold",
+        "before": 1036996,
+        "after": 934996,
+        "allowed": true
+      },
+      {
+        "path": "reports.33.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.34.before.gold",
+        "before": 1036996,
+        "after": 934996,
+        "allowed": true
+      },
+      {
+        "path": "reports.34.after.gold",
+        "before": 1036900,
+        "after": 931900,
+        "allowed": true
+      },
+      {
+        "path": "reports.34.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.35.before.gold",
+        "before": 1036900,
+        "after": 931900,
+        "allowed": true
+      },
+      {
+        "path": "reports.35.after.gold",
+        "before": 1036804,
+        "after": 928804,
+        "allowed": true
+      },
+      {
+        "path": "reports.35.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.36.before.gold",
+        "before": 1036804,
+        "after": 928804,
+        "allowed": true
+      },
+      {
+        "path": "reports.36.after.gold",
+        "before": 1036708,
+        "after": 925708,
+        "allowed": true
+      },
+      {
+        "path": "reports.36.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.37.before.gold",
+        "before": 1036708,
+        "after": 925708,
+        "allowed": true
+      },
+      {
+        "path": "reports.37.after.gold",
+        "before": 1036612,
+        "after": 922612,
+        "allowed": true
+      },
+      {
+        "path": "reports.37.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.38.before.gold",
+        "before": 1036612,
+        "after": 922612,
+        "allowed": true
+      },
+      {
+        "path": "reports.38.after.gold",
+        "before": 1036516,
+        "after": 919516,
+        "allowed": true
+      },
+      {
+        "path": "reports.38.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.39.before.gold",
+        "before": 1036516,
+        "after": 919516,
+        "allowed": true
+      },
+      {
+        "path": "reports.39.after.gold",
+        "before": 1036420,
+        "after": 916420,
+        "allowed": true
+      },
+      {
+        "path": "reports.39.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.40.before.gold",
+        "before": 1036420,
+        "after": 916420,
+        "allowed": true
+      },
+      {
+        "path": "reports.40.after.gold",
+        "before": 1036324,
+        "after": 913324,
+        "allowed": true
+      },
+      {
+        "path": "reports.40.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.41.before.gold",
+        "before": 1036324,
+        "after": 913324,
+        "allowed": true
+      },
+      {
+        "path": "reports.41.after.gold",
+        "before": 1036228,
+        "after": 910228,
+        "allowed": true
+      },
+      {
+        "path": "reports.41.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.42.before.gold",
+        "before": 1036228,
+        "after": 910228,
+        "allowed": true
+      },
+      {
+        "path": "reports.42.after.gold",
+        "before": 1036132,
+        "after": 907132,
+        "allowed": true
+      },
+      {
+        "path": "reports.42.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.43.before.gold",
+        "before": 1036132,
+        "after": 907132,
+        "allowed": true
+      },
+      {
+        "path": "reports.43.after.gold",
+        "before": 1036036,
+        "after": 904036,
+        "allowed": true
+      },
+      {
+        "path": "reports.43.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.44.before.gold",
+        "before": 1036036,
+        "after": 904036,
+        "allowed": true
+      },
+      {
+        "path": "reports.44.after.gold",
+        "before": 1035940,
+        "after": 900940,
+        "allowed": true
+      },
+      {
+        "path": "reports.44.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.45.before.gold",
+        "before": 1035940,
+        "after": 900940,
+        "allowed": true
+      },
+      {
+        "path": "reports.45.after.gold",
+        "before": 1035844,
+        "after": 897844,
+        "allowed": true
+      },
+      {
+        "path": "reports.45.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.46.before.gold",
+        "before": 1035844,
+        "after": 897844,
+        "allowed": true
+      },
+      {
+        "path": "reports.46.after.gold",
+        "before": 1035748,
+        "after": 894748,
+        "allowed": true
+      },
+      {
+        "path": "reports.46.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.47.before.gold",
+        "before": 1035748,
+        "after": 894748,
+        "allowed": true
+      },
+      {
+        "path": "reports.47.after.gold",
+        "before": 1035652,
+        "after": 891652,
+        "allowed": true
+      },
+      {
+        "path": "reports.47.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.48.before.gold",
+        "before": 1035652,
+        "after": 891652,
+        "allowed": true
+      },
+      {
+        "path": "reports.48.after.gold",
+        "before": 1035556,
+        "after": 888556,
+        "allowed": true
+      },
+      {
+        "path": "reports.48.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.49.before.gold",
+        "before": 1035556,
+        "after": 888556,
+        "allowed": true
+      },
+      {
+        "path": "reports.49.after.gold",
+        "before": 1035460,
+        "after": 885460,
+        "allowed": true
+      },
+      {
+        "path": "reports.49.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.50.before.gold",
+        "before": 1035460,
+        "after": 885460,
+        "allowed": true
+      },
+      {
+        "path": "reports.50.after.gold",
+        "before": 1035364,
+        "after": 882364,
+        "allowed": true
+      },
+      {
+        "path": "reports.50.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.51.before.gold",
+        "before": 1035364,
+        "after": 882364,
+        "allowed": true
+      },
+      {
+        "path": "reports.51.after.gold",
+        "before": 1035268,
+        "after": 879268,
+        "allowed": true
+      },
+      {
+        "path": "reports.51.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.52.before.gold",
+        "before": 1035268,
+        "after": 879268,
+        "allowed": true
+      },
+      {
+        "path": "reports.52.after.gold",
+        "before": 1035172,
+        "after": 876172,
+        "allowed": true
+      },
+      {
+        "path": "reports.52.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.53.before.gold",
+        "before": 1035172,
+        "after": 876172,
+        "allowed": true
+      },
+      {
+        "path": "reports.53.after.gold",
+        "before": 1035076,
+        "after": 873076,
+        "allowed": true
+      },
+      {
+        "path": "reports.53.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.54.before.gold",
+        "before": 1035076,
+        "after": 873076,
+        "allowed": true
+      },
+      {
+        "path": "reports.54.after.gold",
+        "before": 1034980,
+        "after": 869980,
+        "allowed": true
+      },
+      {
+        "path": "reports.54.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.55.before.gold",
+        "before": 1034980,
+        "after": 869980,
+        "allowed": true
+      },
+      {
+        "path": "reports.55.after.gold",
+        "before": 1034884,
+        "after": 866884,
+        "allowed": true
+      },
+      {
+        "path": "reports.55.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.56.before.gold",
+        "before": 1034884,
+        "after": 866884,
+        "allowed": true
+      },
+      {
+        "path": "reports.56.after.gold",
+        "before": 1034788,
+        "after": 863788,
+        "allowed": true
+      },
+      {
+        "path": "reports.56.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.57.before.gold",
+        "before": 1034788,
+        "after": 863788,
+        "allowed": true
+      },
+      {
+        "path": "reports.57.after.gold",
+        "before": 1034692,
+        "after": 860692,
+        "allowed": true
+      },
+      {
+        "path": "reports.57.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.58.before.gold",
+        "before": 1034692,
+        "after": 860692,
+        "allowed": true
+      },
+      {
+        "path": "reports.58.after.gold",
+        "before": 1034596,
+        "after": 857596,
+        "allowed": true
+      },
+      {
+        "path": "reports.58.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "reports.59.before.gold",
+        "before": 1034596,
+        "after": 857596,
+        "allowed": true
+      },
+      {
+        "path": "reports.59.after.gold",
+        "before": 1034500,
+        "after": 854500,
+        "allowed": true
+      },
+      {
+        "path": "reports.59.householdUpkeep",
+        "after": {
+          "paidMilli": 3000,
+          "unpaidMilli": 0
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.world.settlements.settlement_haven_01.inventory.gold",
+        "before": 1034500,
+        "after": 854500,
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.63",
+        "after": {
+          "id": "house-12",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.64",
+        "after": {
+          "id": "house-13",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.65",
+        "after": {
+          "id": "house-14",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.66",
+        "after": {
+          "id": "service-7",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.67",
+        "after": {
+          "id": "service-8",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.68",
+        "after": {
+          "id": "spec-11",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.69",
+        "after": {
+          "id": "spec-12",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.70",
+        "after": {
+          "id": "slum-7",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.71",
+        "after": {
+          "id": "slum-8",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.72",
+        "after": {
+          "id": "slum-9",
+          "terrain": "town",
+          "building": null
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.73",
+        "after": {
+          "id": "estate-1",
+          "terrain": "town",
+          "building": {
+            "typeId": "mansion",
+            "level": 1,
+            "workers": 0,
+            "enabled": true
+          }
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.tiles.74",
+        "after": {
+          "id": "estate-2",
+          "terrain": "town",
+          "building": {
+            "typeId": "retainers-hall",
+            "level": 1,
+            "workers": 0,
+            "enabled": true
+          }
+        },
+        "allowed": true
+      },
+      {
+        "path": "city.society.rulesetId",
+        "before": "tile-society-10",
+        "after": "tile-society-11",
+        "allowed": true
+      }
+    ],
+    "forbidden": []
+  }
+]

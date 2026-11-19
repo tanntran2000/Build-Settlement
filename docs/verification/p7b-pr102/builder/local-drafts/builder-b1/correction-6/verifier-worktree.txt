@@ -1,0 +1,420 @@
+﻿warning: in the working copy of 'packages/core/src/trial/__tests__/society-p7b.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/core/src/trial/state.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/core/src/trial/state.ts', LF will be replaced by CRLF the next time Git touches it
+{
+  "ok": true,
+  "mode": "verify",
+  "base": "27f4dc2e0ea6ed4f12e79fab6366d11fb555551b",
+  "approvedSourceFiles": 66,
+  "approvedHunks": 157,
+  "correction3Paths": 11,
+  "correction4Hunks": 9,
+  "correction5Approvals": 2,
+  "correction5Delta": [
+    "packages/ui/src/CharacterLifeCity.svelte",
+    "tests/e2e/character-life-navigation.helpers.ts",
+    "tests/e2e/society.spec.ts"
+  ],
+  "correction6Approvals": 2,
+  "correction6Delta": [
+    "packages/core/src/__tests__/catalog-data.test.ts",
+    "packages/core/src/data/tuning.json",
+    "packages/core/src/data/validate.ts",
+    "packages/core/src/trial/__tests__/society-p7b.test.ts",
+    "packages/core/src/trial/catalog.ts",
+    "packages/core/src/trial/state.ts",
+    "packages/persistence/src/__tests__/npc-life-records.test.ts",
+    "packages/simulation/src/tile-trial.ts",
+    "packages/ui/src/society-view.ts"
+  ],
+  "generatedFiles": 11,
+  "listedNewFiles": [
+    "packages/core/src/trial/__tests__/society-p7b.test.ts",
+    "packages/simulation/src/__tests__/tile-trial-p7b.test.ts",
+    "packages/ui/src/__tests__/p7b-checkpoint.test.ts",
+    "packages/simulation/src/__tests__/fixtures/p7b-path-diff.ts",
+    "packages/simulation/src/__tests__/fixtures/p7b-path-diff.txt"
+  ],
+  "additions": [
+    {
+      "scope": "Correction 1 exact new assertions",
+      "path": "tests/e2e/society.spec.ts",
+      "before": "toMatchObject({gold:100000,wood:40000,iron:20000})",
+      "after": "toStrictEqual({gold:100000,wheat:0,food:20000,wood:40000,iron:20000})"
+    },
+    {
+      "scope": "Correction 1 exact new assertions",
+      "path": "tests/e2e/society.spec.ts",
+      "before": ".getByTestId('trial-tile-estate-1')).toContainText('Mansion')",
+      "after": ".locator('#trial-building-name-estate-1')).toHaveText('Mansion')"
+    },
+    {
+      "scope": "Correction 1 exact new assertions",
+      "path": "tests/e2e/society.spec.ts",
+      "before": ".getByTestId('trial-tile-estate-2')).toContainText(\"Retainers' Hall\")",
+      "after": ".locator('#trial-building-name-estate-2')).toHaveText(\"Retainers' Hall\")"
+    },
+    {
+      "scope": "Correction 2 keyboard helper",
+      "path": "tests/e2e/society.spec.ts",
+      "before": "import {openReportDetails,makeLife,importLife,exportLife,go,selectPerson,selectArea,characterWindow} from './character-life-navigation.helpers.ts';",
+      "after": "import {openReportDetails,makeLife,importLife,exportLife,go,selectPerson,selectArea,characterWindow,keyActivate} from './character-life-navigation.helpers.ts';"
+    },
+    {
+      "scope": "Correction 1 Hall limit",
+      "path": "packages/simulation/src/tile-trial.ts",
+      "before": "        const level = c.type === \"UPGRADE\" ? tile.building!.level + 1 : 1;",
+      "after": "        if (c.type !== 'UPGRADE' && typeId === 'retainers-hall' && tile.building?.typeId !== typeId &&\n            next.tiles.filter(other=>other.building?.typeId===typeId).length>=2)\n          return fail('HALL_LIMIT',\"Only two Retainers' Halls may be built per city.\");\n        const level = c.type === \"UPGRADE\" ? tile.building!.level + 1 : 1;"
+    },
+    {
+      "scope": "Correction 1 Hall limit",
+      "path": "packages/core/src/trial/state.ts",
+      "before": "    return isTileTrialState(raw);",
+      "after": "    if (tiles.filter(tile=>tile.building?.typeId==='retainers-hall').length>2) return false;\n    return isTileTrialState(raw);"
+    },
+    {
+      "scope": "Correction 1 Hall limit",
+      "path": "packages/ui/src/TileManagement.svelte",
+      "before": "'FIXED_BUILDING', 'HOME_OCCUPIED', 'ONE_PER_CITY'];",
+      "after": "'FIXED_BUILDING', 'HOME_OCCUPIED', 'ONE_PER_CITY', 'HALL_LIMIT'];"
+    },
+    {
+      "scope": "Correction 1 Hall limit",
+      "path": "packages/ui/src/society-view.ts",
+      "before": "   return {typeId,label:alreadyBuilt?`${label} — One per city`:label,available:!v.reserved&&!alreadyBuilt};",
+      "after": "   const hallLimit=typeId==='retainers-hall'&&city.tiles.filter(t=>t.building?.typeId===typeId).length>=2&&\n    city.tiles.find(t=>t.id===tileId)?.building?.typeId!==typeId;\n   return {typeId,label:alreadyBuilt?`${label} — One per city`:hallLimit?\"Retainers' Hall — Two per city\":label,available:!v.reserved&&!alreadyBuilt&&!hallLimit};"
+    },
+    {
+      "scope": "Correction 2 flat home construction",
+      "path": "packages/simulation/src/tile-trial.ts",
+      "before": "        const homeUpgrade = c.type === 'UPGRADE' && npcBeds(typeId, level) > 0;\n        const discount = homeUpgrade ? 0 : constructionDiscount(state);\n        const costLevel = homeUpgrade ? 1 : level;\n",
+      "after": "        const homeConstruction = npcBeds(typeId, level) > 0;\n        const discount = homeConstruction ? 0 : constructionDiscount(state);\n        const costLevel = homeConstruction ? 1 : level;\n"
+    },
+    {
+      "scope": "Correction 2 flat home construction",
+      "path": "packages/simulation/src/tile-trial.ts",
+      "before": "level===3&&!homeUpgrade?",
+      "after": "level===3&&!homeConstruction?"
+    },
+    {
+      "scope": "Correction 3 report contract",
+      "path": "packages/core/src/trial/types.ts",
+      "before": "  unpaidUpkeepMilli: number;\n",
+      "after": "  unpaidUpkeepMilli: number;\n  householdUpkeep?: { paidMilli: number; unpaidMilli: number };\n"
+    },
+    {
+      "scope": "Correction 3 household classification",
+      "path": "packages/simulation/src/workshop-operation.ts",
+      "before": "  TILE_TRIAL_BALANCE as B, OUTSIDE_TRIAL as O, buildingWorkerCap, trialBuilding,",
+      "after": "  TILE_TRIAL_BALANCE as B, OUTSIDE_TRIAL as O, buildingWorkerCap, npcBeds, trialBuilding,"
+    },
+    {
+      "scope": "Correction 3 exclude homes from city upkeep and debit",
+      "path": "packages/simulation/src/workshop-operation.ts",
+      "before": "    const b = tile.building; if (!b || !b.enabled) continue;",
+      "after": "    const b = tile.building; if (!b || !b.enabled || npcBeds(b.typeId,b.level)>0) continue;"
+    },
+    {
+      "scope": "Correction 3 omit homes from city funding state",
+      "path": "packages/simulation/src/workshop-operation.ts",
+      "before": "    const b=tile.building;\n    byTile[tile.id]=",
+      "after": "    const b=tile.building;\n    if(b&&npcBeds(b.typeId,b.level)>0) continue;\n    byTile[tile.id]="
+    },
+    {
+      "scope": "Correction 3 identify homes by beds",
+      "path": "packages/simulation/src/tile-trial-week.ts",
+      "before": "societyPopulation,buildingWorkerCap,trialBuilding,type TileTrialReport",
+      "after": "societyPopulation,buildingWorkerCap,npcBeds,trialBuilding,type TileTrialReport"
+    },
+    {
+      "scope": "Correction 3 pay each home after city accounting and skip unaffordable charges",
+      "path": "packages/simulation/src/tile-trial-week.ts",
+      "before": "  outside.stocksAfter={...s.society.stocksMilli};\n  const goods =",
+      "after": "  outside.stocksAfter={...s.society.stocksMilli};\n  let householdUpkeep: TileTrialReport['householdUpkeep'];\n  for (const { building } of s.tiles) {\n    if (!building || npcBeds(building.typeId,building.level) === 0) continue;\n    householdUpkeep ??= { paidMilli: 0, unpaidMilli: 0 };\n    const due = scaled(trialBuilding(building.typeId)!.upkeepMilli,building.level);\n    if (stocks.gold < due) {\n      householdUpkeep.unpaidMilli = trialSafe(householdUpkeep.unpaidMilli + due);\n      continue;\n    }\n    stocks.gold -= due;\n    householdUpkeep.paidMilli = trialSafe(householdUpkeep.paidMilli + due);\n  }\n  const goods ="
+    },
+    {
+      "scope": "Correction 3 include household report only when a home exists",
+      "path": "packages/simulation/src/tile-trial-week.ts",
+      "before": "activities: Object.freeze(activities), ...(immigration ? { immigration } : {}) });",
+      "after": "activities: Object.freeze(activities), ...(immigration ? { immigration } : {}), ...(householdUpkeep ? { householdUpkeep: Object.freeze(householdUpkeep) } : {}) });"
+    },
+    {
+      "scope": "Correction 3 exclude homes from the Warehouse funding preview",
+      "path": "packages/ui/src/society-view.ts",
+      "before": "for(const tile of city.tiles){const b=tile.building;if(!b?.enabled)continue;const d=TRIAL_BUILDINGS[b.typeId];",
+      "after": "for(const tile of city.tiles){const b=tile.building;if(!b?.enabled||npcBeds(b.typeId,b.level)>0)continue;const d=TRIAL_BUILDINGS[b.typeId];"
+    },
+    {
+      "scope": "Correction 3 render one household ledger line",
+      "path": "packages/ui/src/report-letters.ts",
+      "before": "      if (report.unpaidUpkeepMilli > 0) value('Unpaid upkeep', formatMilli(report.unpaidUpkeepMilli), 'loss');",
+      "after": "      if (report.unpaidUpkeepMilli > 0) value('Unpaid upkeep', formatMilli(report.unpaidUpkeepMilli), 'loss');\n      if (report.householdUpkeep) {\n        const { paidMilli, unpaidMilli } = report.householdUpkeep;\n        const unpaid = unpaidMilli > 0 ? ` · ${formatMilli(unpaidMilli)} Gold unpaid` : '';\n        value('Household upkeep', `${formatMilli(paidMilli)} Gold paid${unpaid}`, paidMilli || unpaidMilli ? 'loss' : 'muted');\n      }"
+    },
+    {
+      "scope": "Correction 3 keep that line visible within the four-row Steward limit",
+      "path": "packages/ui/src/report-letters.ts",
+      "before": "    if (item.id === 'captain' && report.crimeEvent?.event) selected.add(report.order ? 4 : 0);",
+      "after": "    if (item.id === 'captain' && report.crimeEvent?.event) selected.add(report.order ? 4 : 0);\n    if (item.id === 'steward' && report.householdUpkeep) {\n      selected.add(candidates.findIndex(row => row.label === 'Household upkeep'));\n    }"
+    },
+    {
+      "scope": "Correction 3 exact tuning view sources",
+      "path": "packages/core/src/__tests__/catalog-data.test.ts",
+      "before": "  GOODS_STOCK_TRIAL, TILE_TRIAL_BALANCE, IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL,\n",
+      "after": "  GOODS_STOCK_TRIAL, TILE_TRIAL_BALANCE, IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL,\n  RING4_TRIAL, SOCIETY_PLOT_IDS, societyPlot,\n"
+    },
+    {
+      "scope": "Correction 3 exact tuning view gains both keys",
+      "path": "packages/core/src/__tests__/catalog-data.test.ts",
+      "before": "view: () => ({ ORDER_TRIAL, GARRISON_TRIAL, CRIME_TRIAL, CRISIS_TRIAL, SOCIETY_TRIAL, GOODS_STOCK_TRIAL, TILE_TRIAL_BALANCE, IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL }),",
+      "after": "view: () => ({\n      ORDER_TRIAL, GARRISON_TRIAL, CRIME_TRIAL, CRISIS_TRIAL, SOCIETY_TRIAL, GOODS_STOCK_TRIAL, TILE_TRIAL_BALANCE,\n      IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL, RING4_TRIAL,\n      SOCIETY_RING4_PLOTS: Object.fromEntries(['housing', 'service', 'specialist', 'slum'].map(tier => [\n        tier, SOCIETY_PLOT_IDS.filter(id => societyPlot(id)?.ring === 4 && societyPlot(id)?.tier === tier),\n      ])),\n    }),"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/tile-trial-p7b.test.ts",
+      "before": "  expect(report.upkeepPaidMilli - withoutHomes.upkeepPaidMilli).toBe(3000);",
+      "after": "  expect(report.upkeepPaidMilli).toBe(withoutHomes.upkeepPaidMilli);\n  expect(report.householdUpkeep).toStrictEqual({ paidMilli: 3000, unpaidMilli: 0 });\n  expect(withoutHomes.householdUpkeep).toBe(undefined);\n  expect(withoutHomes.after.gold - report.after.gold).toBe(3000);",
+      "scope": "Correction 3 retain exactly 3000 debit in the new B1 test"
+    },
+    {
+      "path": "packages/ui/src/__tests__/report-letters.test.ts",
+      "mode": "append",
+      "before": "",
+      "after": "\nit('renders one Household upkeep row with paid and optional unpaid amounts', () => {\n  const charges = (paidMilli: number, unpaidMilli: number) =>\n    rows(report({ householdUpkeep: { paidMilli, unpaidMilli } }), 'steward')\n      .filter(row => row.label === 'Household upkeep');\n  expect(charges(3000, 0)).toStrictEqual([{ label: 'Household upkeep', value: '3 Gold paid', tone: 'loss' }]);\n  expect(charges(1000, 2000)).toStrictEqual([{ label: 'Household upkeep', value: '1 Gold paid · 2 Gold unpaid', tone: 'loss' }]);\n  expect(charges(0, 3000)).toStrictEqual([{ label: 'Household upkeep', value: '0 Gold paid · 3 Gold unpaid', tone: 'loss' }]);\n  expect(rows(report(), 'steward').filter(row => row.label === 'Household upkeep')).toStrictEqual([]);\n});\n",
+      "scope": "Correction 3 new household ledger test"
+    },
+    {
+      "scope": "Correction 3 expose the actual frozen ring-4 runtime view to catalog validation",
+      "path": "packages/core/src/trial/society-map.ts",
+      "before": "const ring4Plots = validateTuning(tuningJson).SOCIETY_RING4_PLOTS;",
+      "after": "export const SOCIETY_RING4_PLOTS = deepFreeze(validateTuning(tuningJson).SOCIETY_RING4_PLOTS);"
+    },
+    {
+      "scope": "Correction 3 keep the same ring-4 plot runtime source",
+      "path": "packages/core/src/trial/society-map.ts",
+      "before": "of ring4Plots[tier]",
+      "after": "of SOCIETY_RING4_PLOTS[tier]"
+    },
+    {
+      "scope": "Correction 3 compare the real frozen tuning view",
+      "path": "packages/core/src/__tests__/catalog-data.test.ts",
+      "before": "  RING4_TRIAL, SOCIETY_PLOT_IDS, societyPlot,",
+      "after": "  RING4_TRIAL, SOCIETY_RING4_PLOTS,"
+    },
+    {
+      "scope": "Correction 3 retain the original frozen-view check with real catalog values",
+      "path": "packages/core/src/__tests__/catalog-data.test.ts",
+      "before": "      IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL, RING4_TRIAL,\n      SOCIETY_RING4_PLOTS: Object.fromEntries(['housing', 'service', 'specialist', 'slum'].map(tier => [\n        tier, SOCIETY_PLOT_IDS.filter(id => societyPlot(id)?.ring === 4 && societyPlot(id)?.tier === tier),\n      ])),",
+      "after": "      IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL, RING4_TRIAL, SOCIETY_RING4_PLOTS,"
+    },
+    {
+      "scope": "Correction 3 exact 60-week hash after permitted leaf diff",
+      "path": "packages/simulation/src/__tests__/craft-week.test.ts",
+      "before": "9bb24301f4ede325b0e0e116b03add674eb0c692dfa80fe16bddf0da61a66bc4",
+      "after": "9393b71033175e5dc6c1da65ed116a574521672d2c1a3631141ba57e654d8a45"
+    },
+    {
+      "scope": "Correction 3 exact 60-week hash after permitted leaf diff",
+      "path": "packages/simulation/src/__tests__/craft-week.test.ts",
+      "before": "cb611be6c8b7540c4c83f844a566272c0b2dba394609f4ec12b0208011139c54",
+      "after": "62d1c4d082564eb463a01b1a4cf90e8d0b34ec206701440c3590436d180163bc"
+    },
+    {
+      "scope": "Correction 3 exact 60-week hash after permitted leaf diff",
+      "path": "packages/simulation/src/__tests__/craft-week.test.ts",
+      "before": "04aa55b35d7e8551323fbc2c66c6bf286fb06658b9163fd4a9e3aa327d705ea2",
+      "after": "6238af7420c55fcf75acef911011bb4b50138231397853150d5433cf76fbb319"
+    },
+    {
+      "scope": "Correction 3 exact 60-week hash after permitted leaf diff",
+      "path": "packages/simulation/src/__tests__/craft-week.test.ts",
+      "before": "2c7e1a942c7bf05d2b462bb67aa0c05145107cfb0bce714ec3d8c2ba1b2d5e01",
+      "after": "4b135951d8fc02959e62fcde8e24d367b430d2de62e1db23656d40eff95b108b"
+    },
+    {
+      "scope": "Correction 3 exact 60-week hash after permitted leaf diff",
+      "path": "packages/simulation/src/__tests__/craft-week.test.ts",
+      "before": "a32127339cab716bfa6ccab522d0da3a455a75eca6b455ae0e7adb508e781940",
+      "after": "e7c96f5378373cc7108072dbda1dbb123d60dfd623c49c8a1f0f69368da7275d"
+    },
+    {
+      "scope": "Correction 3 exact 60-week hash after permitted leaf diff",
+      "path": "packages/simulation/src/__tests__/craft-week.test.ts",
+      "before": "73863ad6709a288163077c5d3167d857685ecc92b1f54593f50caf8313f49e04",
+      "after": "05c634769d92db96a5f98266b0c0b5275e3606bcf2660e90b04fe014015d9ff9"
+    },
+    {
+      "scope": "Correction 3 exact 60-week hash after permitted leaf diff",
+      "path": "packages/simulation/src/__tests__/items-week.test.ts",
+      "before": "4ba36423f0b05c8c696bedf7195101a669184ce344227c5573be7b229ea75b7a",
+      "after": "54a944aa5e3008d1a4837de1d04654b89a137a5bf44bd004c543f4f7b6b9a848"
+    },
+    {
+      "scope": "Correction 3 exact 60-week hash after permitted leaf diff",
+      "path": "packages/simulation/src/__tests__/items-week.test.ts",
+      "before": "dcdce3552130d92971b254f1c4fb15bfb41da44b7946293c57d099949fd6be14",
+      "after": "eb453bfed2e46c2580cb69cc9747794ed2bf9e84a91f322e0e23e7c705e67926"
+    },
+    {
+      "scope": "Correction 4 exact locked test hunk",
+      "path": "packages/simulation/src/__tests__/law-week.test.ts",
+      "before": "inventory.gold=3100;",
+      "after": "inventory.gold=100;"
+    },
+    {
+      "scope": "Correction 4 exact locked test hunk",
+      "path": "packages/simulation/src/__tests__/law-week.test.ts",
+      "before": " // 3100 opening + 2400 lower bound + 1500 Vice covers exactly 7000 operating debit.\n expect(r.upkeepPaidMilli).toBe(6000);expect(r.unpaidUpkeepMilli).toBe(0);\n expect(r.taxMilli).toBe(2640);expect(r.laws!.incomeMilli).toBe(1500);\n expect(r.after.gold).toBe(1760);",
+      "after": " // 100 opening + 2400 lower bound + 1500 Vice covers exactly 4000 operating debit.\n expect(r.upkeepPaidMilli).toBe(3000);expect(r.unpaidUpkeepMilli).toBe(0);\n expect(r.taxMilli).toBe(2640);expect(r.laws!.incomeMilli).toBe(1500);\n expect(r.householdUpkeep).toStrictEqual({paidMilli:1000,unpaidMilli:2000});\n expect(r.after.gold).toBe(760);\n expect(r.after.gold+r.householdUpkeep!.paidMilli).toBe(1760);"
+    },
+    {
+      "scope": "Correction 4 exact locked test hunk",
+      "path": "packages/simulation/src/__tests__/order-tax-week.test.ts",
+      "before": "inventory.gold=4600;",
+      "after": "inventory.gold=1600;"
+    },
+    {
+      "scope": "Correction 4 exact locked test hunk",
+      "path": "packages/simulation/src/__tests__/order-tax-week.test.ts",
+      "before": " // 4600 opening + 2400 guaranteed tax funds all 7000 operating debits, leaving 0.",
+      "after": " // 1600 opening + 2400 guaranteed tax funds all 4000 operating debits, leaving 0."
+    },
+    {
+      "scope": "Correction 4 exact locked test hunk",
+      "path": "packages/simulation/src/__tests__/order-tax-week.test.ts",
+      "before": " expect(r.report!.upkeepPaidMilli).toBe(6000);expect(r.report!.unpaidUpkeepMilli).toBe(0);\n expect(r.report!.after.gold).toBe(1760);",
+      "after": " expect(r.report!.upkeepPaidMilli).toBe(3000);expect(r.report!.unpaidUpkeepMilli).toBe(0);\n expect(r.report!.householdUpkeep).toStrictEqual({paidMilli:1000,unpaidMilli:2000});\n expect(r.report!.after.gold).toBe(760);\n expect(r.report!.after.gold+r.report!.householdUpkeep!.paidMilli).toBe(1760);"
+    },
+    {
+      "scope": "Correction 4 exact locked test hunk",
+      "path": "packages/simulation/src/__tests__/order-tax-week.test.ts",
+      "before": "  expect(report.upkeepPaidMilli).toBe(5000+1000*levels);expect(report.unpaidUpkeepMilli).toBe(0);",
+      "after": "  expect(report.upkeepPaidMilli).toBe(2000+1000*levels);expect(report.unpaidUpkeepMilli).toBe(0);\n  expect(report.householdUpkeep).toStrictEqual({paidMilli:3000,unpaidMilli:0});"
+    },
+    {
+      "scope": "Correction 4 exact locked test hunk",
+      "path": "packages/simulation/src/__tests__/order-week.test.ts",
+      "before": " expect(result.report!.upkeepPaidMilli).toBe(1000);expect(result.report!.unpaidUpkeepMilli).toBe(4000);",
+      "after": " expect(result.report!.upkeepPaidMilli).toBe(1000);expect(result.report!.unpaidUpkeepMilli).toBe(1000);\n expect(result.report!.householdUpkeep).toStrictEqual({paidMilli:0,unpaidMilli:3000});"
+    },
+    {
+      "scope": "Correction 4 exact locked test hunk",
+      "path": "packages/simulation/src/__tests__/society-renewable-support.test.ts",
+      "before": "    const tight = expanded(); settlement(tight).inventory.gold = 5500;\n    const r = week(tight); expect(r.report!.unpaidUpkeepMilli).toBe(0); expect(count(r.nextState)).toBe(100);",
+      "after": "    const tight = expanded(); settlement(tight).inventory.gold = 2500;\n    const r = week(tight); expect(r.report!.unpaidUpkeepMilli).toBe(0); expect(count(r.nextState)).toBe(100);\n    expect(r.report!.immigration!.reason).toBe('liquidity');"
+    },
+    {
+      "scope": "Correction 4 exact locked test hunk",
+      "path": "packages/simulation/src/__tests__/society-stock-integrity.test.ts",
+      "before": "  expect(recovery.upkeepPaidMilli).toBe(3000); expect(recovery.unpaidUpkeepMilli).toBe(0);\n  expect(recovery.after.gold).toBe(1414);\n  expect(recovery.after.gold + recovery.upkeepPaidMilli).toBeGreaterThanOrEqual(3000);",
+      "after": "  expect(recovery.upkeepPaidMilli).toBe(0); expect(recovery.unpaidUpkeepMilli).toBe(0);\n  expect(recovery.householdUpkeep).toStrictEqual({paidMilli:3000,unpaidMilli:0});\n  expect(recovery.after.gold).toBe(414);\n  expect(recovery.after.gold + recovery.householdUpkeep!.paidMilli).toBeGreaterThanOrEqual(3000);"
+    },
+    {
+      "scope": "Correction 5 reconstruct actual Household upkeep from the UI",
+      "path": "tests/e2e/character-life-navigation.helpers.ts",
+      "before": "  const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;\n",
+      "after": "  const householdUpkeep = panel.locator('[data-letter=\"steward\"] .letter-rows dt:text-is(\"Household upkeep\") + dd');\n  if (await householdUpkeep.count()) {\n    const amounts = (await householdUpkeep.textContent())?.match(/^([\\d,.]+) Gold paid(?: · ([\\d,.]+) Gold unpaid)?$/);\n    if (!amounts) throw Error('Invalid Household upkeep ledger value.');\n    const [, paid, unpaid] = amounts;\n    actual.householdUpkeep = { paidMilli: milli(paid), unpaidMilli: unpaid === undefined ? 0 : milli(unpaid) };\n  }\n  const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;\n"
+    },
+    {
+      "scope": "Correction 5 Household upkeep wording and exact Mansion assertion",
+      "path": "packages/ui/src/CharacterLifeCity.svelte",
+      "before": "        <p>Upkeep: {units(definition.upkeepMilli * selected.building.level)} Gold/week. Farm batch Gold credits this Farm's upkeep.</p>\n",
+      "after": "        {#if home}\n          <p>Household upkeep: {units(definition.upkeepMilli * selected.building.level)} Gold/week, paid after city operations. Skipped when Gold runs short.</p>\n        {:else}\n        <p>Upkeep: {units(definition.upkeepMilli * selected.building.level)} Gold/week. Farm batch Gold credits this Farm's upkeep.</p>\n        {/if}\n"
+    },
+    {
+      "scope": "Correction 5 Household upkeep wording and exact Mansion assertion",
+      "path": "tests/e2e/society.spec.ts",
+      "before": " const manage=page.getByRole('region',{name:'Manage tile',exact:true});\n",
+      "after": " const manage=page.getByRole('region',{name:'Manage tile',exact:true});\n await expect(manage.getByText('Household upkeep: 2 Gold/week, paid after city operations. Skipped when Gold runs short.',{exact:true})).toBeVisible();\n"
+    },
+    {
+      "scope": "Correction 6 validated Retainers’ Hall cap including the validator test and tuning-view pin",
+      "path": "packages/core/src/trial/__tests__/society-p7b.test.ts",
+      "before": "import { validateBuildings } from '../../data/validate.js';\nimport buildings from '../../data/buildings.json' with { type: 'json' };\n",
+      "after": "import { validateBuildings, validateTuning } from '../../data/validate.js';\nimport buildings from '../../data/buildings.json' with { type: 'json' };\nimport tuning from '../../data/tuning.json' with { type: 'json' };\n"
+    },
+    {
+      "scope": "Correction 6 validated Retainers’ Hall cap including the validator test and tuning-view pin",
+      "path": "packages/core/src/trial/__tests__/society-p7b.test.ts",
+      "before": "it('uses the v11 ruleset and refuses the v10 checkpoint unchanged', () => {\n",
+      "after": "it(\"rejects missing and non-integer Retainers' Hall caps\", () => {\n  const failures = [{}, { maxPerCity: 1.5 }].map(RETAINERS_HALL_TRIAL => {\n    try {\n      validateTuning({ ...tuning, RETAINERS_HALL_TRIAL });\n      return null;\n    } catch (error) {\n      return error instanceof Error ? error.message : null;\n    }\n  });\n  const message = 'tuning.json#RETAINERS_HALL_TRIAL.maxPerCity: expected integer > 0';\n  expect(failures).toStrictEqual([message, message]);\n});\n\nit('uses the v11 ruleset and refuses the v10 checkpoint unchanged', () => {\n"
+    },
+    {
+      "scope": "Correction 6 validated Retainers’ Hall cap including the validator test and tuning-view pin",
+      "path": "packages/core/src/data/tuning.json",
+      "before": "  \"SOCIETY_RING4_PLOTS\": {\n",
+      "after": "  \"RETAINERS_HALL_TRIAL\": {\n    \"maxPerCity\": 2\n  },\n  \"SOCIETY_RING4_PLOTS\": {\n"
+    },
+    {
+      "scope": "Correction 6 validated Retainers’ Hall cap including the validator test and tuning-view pin",
+      "path": "packages/core/src/data/validate.ts",
+      "before": "    SOCIETY_RING4_PLOTS: Readonly<Record<'housing' | 'service' | 'specialist' | 'slum', readonly string[]>>;\n",
+      "after": "    RETAINERS_HALL_TRIAL: Readonly<{ maxPerCity: number }>;\n    SOCIETY_RING4_PLOTS: Readonly<Record<'housing' | 'service' | 'specialist' | 'slum', readonly string[]>>;\n"
+    },
+    {
+      "scope": "Correction 6 validated Retainers’ Hall cap including the validator test and tuning-view pin",
+      "path": "packages/core/src/data/validate.ts",
+      "before": "    SOCIETY_RING4_PLOTS: object({\n",
+      "after": "    RETAINERS_HALL_TRIAL: object({ maxPerCity: positive }),\n    SOCIETY_RING4_PLOTS: object({\n"
+    },
+    {
+      "scope": "Correction 6 validated Retainers’ Hall cap including the validator test and tuning-view pin",
+      "path": "packages/core/src/trial/catalog.ts",
+      "before": "export const RING4_TRIAL = deepFreeze(tuning.RING4_TRIAL);\n",
+      "after": "export const RING4_TRIAL = deepFreeze(tuning.RING4_TRIAL);\nexport const RETAINERS_HALL_TRIAL = deepFreeze(tuning.RETAINERS_HALL_TRIAL);\n"
+    },
+    {
+      "scope": "Correction 6 validated Retainers’ Hall cap including the validator test and tuning-view pin",
+      "path": "packages/core/src/trial/state.ts",
+      "before": "import { buildingWorkerCap } from \"./catalog.js\";\n",
+      "after": "import { buildingWorkerCap, RETAINERS_HALL_TRIAL } from \"./catalog.js\";\n"
+    },
+    {
+      "scope": "Correction 6 validated Retainers’ Hall cap including the validator test and tuning-view pin",
+      "path": "packages/core/src/trial/state.ts",
+      "before": "if (tiles.filter(tile=>tile.building?.typeId==='retainers-hall').length>2) return false;",
+      "after": "if (tiles.filter(tile=>tile.building?.typeId==='retainers-hall').length>RETAINERS_HALL_TRIAL.maxPerCity) return false;"
+    },
+    {
+      "scope": "Correction 6 validated Retainers’ Hall cap including the validator test and tuning-view pin",
+      "path": "packages/simulation/src/tile-trial.ts",
+      "before": "OUTSIDE_TRIAL,RING4_TRIAL,outsidePlot",
+      "after": "OUTSIDE_TRIAL,RING4_TRIAL,RETAINERS_HALL_TRIAL,outsidePlot"
+    },
+    {
+      "scope": "Correction 6 validated Retainers’ Hall cap including the validator test and tuning-view pin",
+      "path": "packages/simulation/src/tile-trial.ts",
+      "before": "next.tiles.filter(other=>other.building?.typeId===typeId).length>=2)",
+      "after": "next.tiles.filter(other=>other.building?.typeId===typeId).length>=RETAINERS_HALL_TRIAL.maxPerCity)"
+    },
+    {
+      "scope": "Correction 6 validated Retainers’ Hall cap including the validator test and tuning-view pin",
+      "path": "packages/ui/src/society-view.ts",
+      "before": "RING4_TRIAL, npcBeds,",
+      "after": "RING4_TRIAL, RETAINERS_HALL_TRIAL, npcBeds,"
+    },
+    {
+      "scope": "Correction 6 validated Retainers’ Hall cap including the validator test and tuning-view pin",
+      "path": "packages/ui/src/society-view.ts",
+      "before": "city.tiles.filter(t=>t.building?.typeId===typeId).length>=2&&",
+      "after": "city.tiles.filter(t=>t.building?.typeId===typeId).length>=RETAINERS_HALL_TRIAL.maxPerCity&&"
+    },
+    {
+      "scope": "Correction 6 validated Retainers’ Hall cap including the validator test and tuning-view pin",
+      "path": "packages/core/src/__tests__/catalog-data.test.ts",
+      "before": "  RING4_TRIAL, SOCIETY_RING4_PLOTS,\n",
+      "after": "  RING4_TRIAL, RETAINERS_HALL_TRIAL, SOCIETY_RING4_PLOTS,\n"
+    },
+    {
+      "scope": "Correction 6 validated Retainers’ Hall cap including the validator test and tuning-view pin",
+      "path": "packages/core/src/__tests__/catalog-data.test.ts",
+      "before": "      IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL, RING4_TRIAL, SOCIETY_RING4_PLOTS,\n",
+      "after": "      IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL, RING4_TRIAL, RETAINERS_HALL_TRIAL, SOCIETY_RING4_PLOTS,\n"
+    },
+    {
+      "scope": "Correction 6 checkpoint test name only",
+      "path": "packages/persistence/src/__tests__/npc-life-records.test.ts",
+      "before": "it('loads all ten v10 scenarios and round-trips every current life checkpoint byte-identically', () => {\n",
+      "after": "it('matches v10 and v11 checkpoint filenames and round-trips every current life checkpoint byte-identically', () => {\n"
+    }
+  ]
+}
+Exit code: 0

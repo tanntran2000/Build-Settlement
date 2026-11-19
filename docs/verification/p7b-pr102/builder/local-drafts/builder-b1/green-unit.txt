@@ -1,0 +1,20 @@
+﻿UTC 2026-11-19T10:51:56.3926557Z
+HEAD 27f4dc2e0ea6ed4f12e79fab6366d11fb555551b
+Tree a0ea6329441e75df363b356052528f1426233281
+CI=1
+Command: 
+npm.cmd test -- packages/core/src/trial/__tests__/society-p7b.test.ts packages/simulation/src/__tests__/tile-trial-p7b.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/core/src/trial/__tests__/society-p7b.test.ts packages/simulation/src/__tests__/tile-trial-p7b.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  2 passed (2)
+      Tests  40 passed (40)
+   Start at  17:51:58
+   Duration  4.33s (transform 3.53s, setup 0ms, import 4.60s, tests 783ms, environment 1ms)
+
+Exit code: 0

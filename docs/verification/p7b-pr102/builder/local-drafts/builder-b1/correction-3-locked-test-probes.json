@@ -1,0 +1,176 @@
+{
+  "restorationOnlyProbes": true,
+  "viceApprovedOpening3100": {
+    "gold": 1760,
+    "paid": 3000,
+    "unpaid": 0,
+    "household": {
+      "paidMilli": 3000,
+      "unpaidMilli": 0
+    },
+    "tax": 2640,
+    "immigration": {
+      "populationBefore": 100,
+      "arrivals": 0,
+      "populationAfter": 100,
+      "target": 90,
+      "usefulWorkerSlots": 10,
+      "renewableFoodMilli": 4000,
+      "reason": "no-capacity"
+    }
+  },
+  "viceOriginalOpening100": {
+    "gold": 760,
+    "paid": 3000,
+    "unpaid": 0,
+    "household": {
+      "paidMilli": 1000,
+      "unpaidMilli": 2000
+    },
+    "tax": 2640,
+    "immigration": {
+      "populationBefore": 100,
+      "arrivals": 0,
+      "populationAfter": 100,
+      "target": 90,
+      "usefulWorkerSlots": 10,
+      "renewableFoodMilli": 4000,
+      "reason": "no-capacity"
+    }
+  },
+  "taxApprovedOpening4600": {
+    "gold": 1760,
+    "paid": 3000,
+    "unpaid": 0,
+    "household": {
+      "paidMilli": 3000,
+      "unpaidMilli": 0
+    },
+    "tax": 2640,
+    "immigration": {
+      "populationBefore": 100,
+      "arrivals": 0,
+      "populationAfter": 100,
+      "target": 90,
+      "usefulWorkerSlots": 10,
+      "renewableFoodMilli": 4000,
+      "reason": "no-capacity"
+    }
+  },
+  "taxOriginalOpening1600": {
+    "gold": 760,
+    "paid": 3000,
+    "unpaid": 0,
+    "household": {
+      "paidMilli": 1000,
+      "unpaidMilli": 2000
+    },
+    "tax": 2640,
+    "immigration": {
+      "populationBefore": 100,
+      "arrivals": 0,
+      "populationAfter": 100,
+      "target": 90,
+      "usefulWorkerSlots": 10,
+      "renewableFoodMilli": 4000,
+      "reason": "no-capacity"
+    }
+  },
+  "originalLiquidityOpening2500": {
+    "gold": 450,
+    "paid": 3500,
+    "unpaid": 0,
+    "household": {
+      "paidMilli": 1000,
+      "unpaidMilli": 2000
+    },
+    "tax": 3000,
+    "immigration": {
+      "populationBefore": 100,
+      "arrivals": 0,
+      "populationAfter": 100,
+      "target": 136,
+      "usefulWorkerSlots": 15,
+      "renewableFoodMilli": 6000,
+      "reason": "liquidity"
+    }
+  },
+  "previousApprovedOpening5500": {
+    "gold": 1450,
+    "paid": 3500,
+    "unpaid": 0,
+    "household": {
+      "paidMilli": 3000,
+      "unpaidMilli": 0
+    },
+    "tax": 3000,
+    "immigration": {
+      "populationBefore": 100,
+      "arrivals": 2,
+      "populationAfter": 102,
+      "target": 136,
+      "usefulWorkerSlots": 15,
+      "renewableFoodMilli": 6000,
+      "reason": "arrivals"
+    }
+  },
+  "recovery": {
+    "first": {
+      "gold": 450,
+      "paid": 2000,
+      "unpaid": 1500,
+      "household": {
+        "paidMilli": 1000,
+        "unpaidMilli": 2000
+      },
+      "tax": 3000,
+      "immigration": {
+        "populationBefore": 100,
+        "arrivals": 0,
+        "populationAfter": 100,
+        "target": 90,
+        "usefulWorkerSlots": 10,
+        "renewableFoodMilli": 4000,
+        "reason": "no-capacity"
+      }
+    },
+    "recovery": {
+      "gold": 414,
+      "paid": 0,
+      "unpaid": 0,
+      "household": {
+        "paidMilli": 3000,
+        "unpaidMilli": 0
+      },
+      "tax": 2964,
+      "immigration": {
+        "populationBefore": 100,
+        "arrivals": 0,
+        "populationAfter": 100,
+        "target": 0,
+        "usefulWorkerSlots": 0,
+        "renewableFoodMilli": 0,
+        "reason": "no-capacity"
+      }
+    }
+  },
+  "noGold": {
+    "gold": 400,
+    "paid": 1000,
+    "unpaid": 1000,
+    "household": {
+      "paidMilli": 0,
+      "unpaidMilli": 3000
+    },
+    "tax": 2400,
+    "immigration": {
+      "populationBefore": 100,
+      "arrivals": 0,
+      "populationAfter": 100,
+      "target": 0,
+      "usefulWorkerSlots": 5,
+      "renewableFoodMilli": 0,
+      "reason": "no-capacity"
+    }
+  }
+}

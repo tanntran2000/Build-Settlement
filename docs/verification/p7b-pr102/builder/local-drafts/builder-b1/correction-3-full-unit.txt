@@ -1,0 +1,458 @@
+﻿UTC 2026-11-19T11:06:11.0566016Z
+HEAD 27f4dc2e0ea6ed4f12e79fab6366d11fb555551b
+Tree a0ea6329441e75df363b356052528f1426233281
+CI=1
+Command: npm test on the approved worktree before commit
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/order-week.test.ts (41 tests | 1 failed) 472ms
+   × advances a valid New Game with Authority 0 and zero Gold without negative stocks 104ms
+ ❯ packages/simulation/src/__tests__/order-tax-week.test.ts (105 tests | 102 failed) 1278ms
+   × funds Counting House upkeep from the guaranteed credit before adding the nonnegative tax remainder 72ms
+   × matches the spec and has a nonnegative tax top-up at Authority 0 13ms
+   × matches the spec and has a nonnegative tax top-up at Authority 1 11ms
+   × matches the spec and has a nonnegative tax top-up at Authority 2 11ms
+   × matches the spec and has a nonnegative tax top-up at Authority 3 13ms
+   × matches the spec and has a nonnegative tax top-up at Authority 4 15ms
+   × matches the spec and has a nonnegative tax top-up at Authority 5 15ms
+   × matches the spec and has a nonnegative tax top-up at Authority 6 20ms
+   × matches the spec and has a nonnegative tax top-up at Authority 7 16ms
+   × matches the spec and has a nonnegative tax top-up at Authority 8 12ms
+   × matches the spec and has a nonnegative tax top-up at Authority 9 8ms
+   × matches the spec and has a nonnegative tax top-up at Authority 10 24ms
+   × matches the spec and has a nonnegative tax top-up at Authority 11 7ms
+   × matches the spec and has a nonnegative tax top-up at Authority 12 9ms
+   × matches the spec and has a nonnegative tax top-up at Authority 13 9ms
+   × matches the spec and has a nonnegative tax top-up at Authority 14 13ms
+   × matches the spec and has a nonnegative tax top-up at Authority 15 11ms
+   × matches the spec and has a nonnegative tax top-up at Authority 16 9ms
+   × matches the spec and has a nonnegative tax top-up at Authority 17 9ms
+   × matches the spec and has a nonnegative tax top-up at Authority 18 8ms
+   × matches the spec and has a nonnegative tax top-up at Authority 19 9ms
+   × matches the spec and has a nonnegative tax top-up at Authority 20 11ms
+   × matches the spec and has a nonnegative tax top-up at Authority 21 11ms
+   × matches the spec and has a nonnegative tax top-up at Authority 22 8ms
+   × matches the spec and has a nonnegative tax top-up at Authority 23 12ms
+   × matches the spec and has a nonnegative tax top-up at Authority 24 12ms
+   × matches the spec and has a nonnegative tax top-up at Authority 25 15ms
+   × matches the spec and has a nonnegative tax top-up at Authority 26 8ms
+   × matches the spec and has a nonnegative tax top-up at Authority 27 8ms
+   × matches the spec and has a nonnegative tax top-up at Authority 28 9ms
+   × matches the spec and has a nonnegative tax top-up at Authority 29 12ms
+   × matches the spec and has a nonnegative tax top-up at Authority 30 8ms
+   × matches the spec and has a nonnegative tax top-up at Authority 31 7ms
+   × matches the spec and has a nonnegative tax top-up at Authority 32 7ms
+   × matches the spec and has a nonnegative tax top-up at Authority 33 7ms
+   × matches the spec and has a nonnegative tax top-up at Authority 34 18ms
+   × matches the spec and has a nonnegative tax top-up at Authority 35 15ms
+   × matches the spec and has a nonnegative tax top-up at Authority 36 8ms
+   × matches the spec and has a nonnegative tax top-up at Authority 37 66ms
+   × matches the spec and has a nonnegative tax top-up at Authority 38 8ms
+   × matches the spec and has a nonnegative tax top-up at Authority 39 7ms
+   × matches the spec and has a nonnegative tax top-up at Authority 40 7ms
+   × matches the spec and has a nonnegative tax top-up at Authority 41 7ms
+   × matches the spec and has a nonnegative tax top-up at Authority 42 15ms
+   × matches the spec and has a nonnegative tax top-up at Authority 43 6ms
+   × matches the spec and has a nonnegative tax top-up at Authority 44 9ms
+   × matches the spec and has a nonnegative tax top-up at Authority 45 8ms
+   × matches the spec and has a nonnegative tax top-up at Authority 46 7ms
+   × matches the spec and has a nonnegative tax top-up at Authority 47 13ms
+   × matches the spec and has a nonnegative tax top-up at Authority 48 8ms
+   × matches the spec and has a nonnegative tax top-up at Authority 49 8ms
+   × matches the spec and has a nonnegative tax top-up at Authority 50 8ms
+   × matches the spec and has a nonnegative tax top-up at Authority 51 30ms
+   × matches the spec and has a nonnegative tax top-up at Authority 52 6ms
+   × matches the spec and has a nonnegative tax top-up at Authority 53 7ms
+   × matches the spec and has a nonnegative tax top-up at Authority 54 6ms
+   × matches the spec and has a nonnegative tax top-up at Authority 55 9ms
+   × matches the spec and has a nonnegative tax top-up at Authority 56 13ms
+   × matches the spec and has a nonnegative tax top-up at Authority 57 15ms
+   × matches the spec and has a nonnegative tax top-up at Authority 58 11ms
+   × matches the spec and has a nonnegative tax top-up at Authority 59 17ms
+   × matches the spec and has a nonnegative tax top-up at Authority 60 18ms
+   × matches the spec and has a nonnegative tax top-up at Authority 61 8ms
+   × matches the spec and has a nonnegative tax top-up at Authority 62 7ms
+   × matches the spec and has a nonnegative tax top-up at Authority 63 6ms
+   × matches the spec and has a nonnegative tax top-up at Authority 64 13ms
+   × matches the spec and has a nonnegative tax top-up at Authority 65 12ms
+   × matches the spec and has a nonnegative tax top-up at Authority 66 9ms
+   × matches the spec and has a nonnegative tax top-up at Authority 67 7ms
+   × matches the spec and has a nonnegative tax top-up at Authority 68 11ms
+   × matches the spec and has a nonnegative tax top-up at Authority 69 8ms
+   × matches the spec and has a nonnegative tax top-up at Authority 70 8ms
+   × matches the spec and has a nonnegative tax top-up at Authority 71 8ms
+   × matches the spec and has a nonnegative tax top-up at Authority 72 7ms
+   × matches the spec and has a nonnegative tax top-up at Authority 73 9ms
+   × matches the spec and has a nonnegative tax top-up at Authority 74 7ms
+   × matches the spec and has a nonnegative tax top-up at Authority 75 12ms
+   × matches the spec and has a nonnegative tax top-up at Authority 76 7ms
+   × matches the spec and has a nonnegative tax top-up at Authority 77 7ms
+   × matches the spec and has a nonnegative tax top-up at Authority 78 7ms
+   × matches the spec and has a nonnegative tax top-up at Authority 79 9ms
+   × matches the spec and has a nonnegative tax top-up at Authority 80 8ms
+   × matches the spec and has a nonnegative tax top-up at Authority 81 6ms
+   × matches the spec and has a nonnegative tax top-up at Authority 82 8ms
+   × matches the spec and has a nonnegative tax top-up at Authority 83 10ms
+   × matches the spec and has a nonnegative tax top-up at Authority 84 8ms
+   × matches the spec and has a nonnegative tax top-up at Authority 85 8ms
+   × matches the spec and has a nonnegative tax top-up at Authority 86 8ms
+   × matches the spec and has a nonnegative tax top-up at Authority 87 8ms
+   × matches the spec and has a nonnegative tax top-up at Authority 88 7ms
+   × matches the spec and has a nonnegative tax top-up at Authority 89 7ms
+   × matches the spec and has a nonnegative tax top-up at Authority 90 7ms
+   × matches the spec and has a nonnegative tax top-up at Authority 91 7ms
+   × matches the spec and has a nonnegative tax top-up at Authority 92 7ms
+   × matches the spec and has a nonnegative tax top-up at Authority 93 7ms
+   × matches the spec and has a nonnegative tax top-up at Authority 94 9ms
+   × matches the spec and has a nonnegative tax top-up at Authority 95 11ms
+   × matches the spec and has a nonnegative tax top-up at Authority 96 7ms
+   × matches the spec and has a nonnegative tax top-up at Authority 97 7ms
+   × matches the spec and has a nonnegative tax top-up at Authority 98 12ms
+   × matches the spec and has a nonnegative tax top-up at Authority 99 7ms
+   × matches the spec and has a nonnegative tax top-up at Authority 100 7ms
+ ❯ packages/simulation/src/__tests__/society-renewable-support.test.ts (17 tests | 1 failed) 8098ms
+     × does not admit during shortage, unpaid upkeep or tight liquidity 355ms
+ ❯ packages/simulation/src/__tests__/law-week.test.ts (21 tests | 1 failed) 1280ms
+   × credits unscaled Licensed Vice before building upkeep 32ms
+ ❯ packages/simulation/src/__tests__/society-stock-integrity.test.ts (20 tests | 1 failed) 1000ms
+   × reports unfunded buildings without negative stocks and recovers by pausing 108ms
+cmd.exe : 
+At line:5 char:1
++ cmd.exe /d /c 'npm.cmd test' 2>&1 | Out-File -Append -Encoding utf8 - ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯ Failed Tests 106 ⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/law-week.test.ts > credits unscaled Licensed Vice before building upkeep
+AssertionError: expected 3000 to be 6000 // Object.is equality
+
+- Expected
++ Received
+
+- 6000
++ 3000
+
+ ❯ packages/simulation/src/__tests__/law-week.test.ts:48:28
+     46|  const r=runTileTrialWeek(s);
+     47|  // 3100 opening + 2400 lower bound + 1500 Vice covers exactly 7000 op…
+     48|  expect(r.upkeepPaidMilli).toBe(6000);expect(r.unpaidUpkeepMilli).toBe…
+       |                            ^
+     49|  expect(r.taxMilli).toBe(2640);expect(r.laws!.incomeMilli).toBe(1500);
+     50|  expect(r.after.gold).toBe(1760);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/106]⎯
+
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > funds Counting House upkeep from the guaranteed 
+credit before adding the nonnegative tax remainder
+AssertionError: expected 3000 to be 6000 // Object.is equality
+
+- Expected
++ Received
+
+- 6000
++ 3000
+
+ ❯ packages/simulation/src/__tests__/order-tax-week.test.ts:24:36
+     22|  // Final tax floor(3300*8000/10000)=2640 adds 240; Goods revenue adds…
+     23|  expect(r.report!.taxMilli).toBe(2640);expect(r.report!.order!.taxDelt…
+     24|  expect(r.report!.upkeepPaidMilli).toBe(6000);expect(r.report!.unpaidU…
+       |                                    ^
+     25|  expect(r.report!.after.gold).toBe(1760);
+     26|  expect(Object.values(r.nextState.world.settlements[s.world.activeSett…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/106]⎯
+
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 0
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 1
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 2
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 3
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 4
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 5
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 6
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 7
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 8
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 9
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 10
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 11
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 12
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 13
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 14
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 15
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 16
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 17
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 18
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 19
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 20
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 21
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 22
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 23
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 24
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 25
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 26
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 27
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 28
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 29
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 30
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 31
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 32
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 33
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 34
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 35
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 36
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 37
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 38
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 39
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 40
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 41
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 42
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 43
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 44
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 45
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 46
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 47
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 48
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 49
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 50
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 51
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 52
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 53
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 54
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 55
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 56
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 57
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 58
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 59
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 60
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 61
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 62
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 63
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 64
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 65
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 66
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 67
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 68
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 69
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 70
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 71
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 72
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 73
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 74
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 75
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 76
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 77
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 78
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 79
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 80
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 81
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 82
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 83
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 84
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 85
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 86
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 87
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 88
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 89
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 90
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 91
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 92
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 93
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 94
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 95
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 96
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 97
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 98
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 99
+ FAIL  packages/simulation/src/__tests__/order-tax-week.test.ts > matches the spec and has a nonnegative tax top-up at 
+Authority 100
+AssertionError: expected 2000 to be 5000 // Object.is equality
+
+- Expected
++ Received
+
+- 5000
++ 2000
+
+ ❯ packages/simulation/src/__tests__/order-tax-week.test.ts:50:34
+     48|   expect(report.taxMilli).toBe(Number(final));
+     49|   expect(report.order!.taxDeltaMilli).toBe(Number(final-withCH));
+     50|   expect(report.upkeepPaidMilli).toBe(5000+1000*levels);expect(report.…
+       |                                  ^
+     51|  }
+     52| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/106]⎯
+
+ FAIL  packages/simulation/src/__tests__/order-week.test.ts > advances a valid New Game with Authority 0 and zero Gold 
+without negative stocks
+AssertionError: expected 1000 to be 4000 // Object.is equality
+
+- Expected
++ Received
+
+- 4000
++ 1000
+
+ ❯ packages/simulation/src/__tests__/order-week.test.ts:132:93
+    130|  expect(result.report!.taxMilli).toBe(2400);
+    131|  expect(result.report!.order).toMatchObject({taxModifierBps:-2000,taxD…
+
+    132|  expect(result.report!.upkeepPaidMilli).toBe(1000);expect(result.repor…
+       |                                                                                             ^
+    133|  expect(result.report!.after.gold).toBe(400);
+    134|  expect(Object.values(result.nextState.world.settlements[s.world.activ…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/106]⎯
+
+ FAIL  packages/simulation/src/__tests__/society-renewable-support.test.ts > society renewable support and transaction 
+ports > does not admit during shortage, unpaid upkeep or tight liquidity
+AssertionError: expected 102 to be 100 // Object.is equality
+
+- Expected
++ Received
+
+- 100
++ 102
+
+ ❯ packages/simulation/src/__tests__/society-renewable-support.test.ts:149:100
+    147|     expect(count(week(poor).nextState)).toBe(100);
+    148|     const tight = expanded(); settlement(tight).inventory.gold = 5500;
+    149|     const r = week(tight); expect(r.report!.unpaidUpkeepMilli).toBe(0)…
+       |                                                                                                    ^
+    150|   });
+    151|   it('rejects stale or repeated End Week and overflow atomically', () …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/106]⎯
+
+ FAIL  packages/simulation/src/__tests__/society-stock-integrity.test.ts > reports unfunded buildings without negative 
+stocks and recovers by pausing
+AssertionError: expected +0 to be 3000 // Object.is equality
+
+- Expected
++ Received
+
+- 3000
++ 0
+
+ ❯ packages/simulation/src/__tests__/society-stock-integrity.test.ts:159:36
+    157|   for (const t of s.tiles) if (t.building && !t.id.startsWith('estate-…
+    158|   const recovery = end(s).report!;
+    159|   expect(recovery.upkeepPaidMilli).toBe(3000); expect(recovery.unpaidU…
+       |                                    ^
+    160|   expect(recovery.after.gold).toBe(1414);
+    161|   expect(recovery.after.gold + recovery.upkeepPaidMilli).toBeGreaterTh…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/106]⎯
+
+ Test Files  5 failed | 130 passed (135)
+      Tests  106 failed | 3029 passed (3135)
+   Start at  18:06:12
+   Duration  81.92s (transform 15.80s, setup 0ms, import 72.62s, tests 258.95s, environment 67ms)
+
+Exit code: 1

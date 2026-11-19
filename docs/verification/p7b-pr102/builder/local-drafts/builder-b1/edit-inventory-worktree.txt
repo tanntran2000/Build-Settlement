@@ -1,0 +1,98 @@
+﻿node : warning: in the working copy of 'packages/core/src/data/buildings.json', LF will be replaced by CRLF the next 
+time Git touches it
+At line:3 char:1
++ node 'C:/Users/Admin/.t3/local-drafts/p7b-prB1/builder-b1/verify-edit ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (warning: in the... Git touches it:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+warning: in the working copy of 'packages/core/src/trial/__tests__/society-map.test.ts', LF will be replaced by CRLF 
+the next time Git touches it
+warning: in the working copy of 'packages/core/src/trial/state.ts', LF will be replaced by CRLF the next time Git 
+touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/character-life-observation.test.ts', LF will be 
+replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/fixtures/catalog-golden.json', LF will be replaced 
+by CRLF the next time Git touches it
+warning: in the working copy of 'packages/ui/src/CharacterLifeCity.svelte', LF will be replaced by CRLF the next time 
+Git touches it
+warning: in the working copy of 'tests/e2e/goods-stock.spec.ts', LF will be replaced by CRLF the next time Git touches 
+it
+{
+  "ok": true,
+  "mode": "verify",
+  "base": "27f4dc2e0ea6ed4f12e79fab6366d11fb555551b",
+  "approvedSourceFiles": 66,
+  "approvedHunks": 157,
+  "generatedFiles": 11,
+  "listedNewFiles": [
+    "packages/core/src/trial/__tests__/society-p7b.test.ts",
+    "packages/simulation/src/__tests__/tile-trial-p7b.test.ts",
+    "packages/ui/src/__tests__/p7b-checkpoint.test.ts",
+    "packages/simulation/src/__tests__/fixtures/p7b-path-diff.ts",
+    "packages/simulation/src/__tests__/fixtures/p7b-path-diff.txt"
+  ],
+  "additions": [
+    {
+      "scope": "Correction 1 exact new assertions",
+      "path": "tests/e2e/society.spec.ts",
+      "before": "toMatchObject({gold:100000,wood:40000,iron:20000})",
+      "after": "toStrictEqual({gold:100000,wheat:0,food:20000,wood:40000,iron:20000})"
+    },
+    {
+      "scope": "Correction 1 exact new assertions",
+      "path": "tests/e2e/society.spec.ts",
+      "before": ".getByTestId('trial-tile-estate-1')).toContainText('Mansion')",
+      "after": ".locator('#trial-building-name-estate-1')).toHaveText('Mansion')"
+    },
+    {
+      "scope": "Correction 1 exact new assertions",
+      "path": "tests/e2e/society.spec.ts",
+      "before": ".getByTestId('trial-tile-estate-2')).toContainText(\"Retainers' Hall\")",
+      "after": ".locator('#trial-building-name-estate-2')).toHaveText(\"Retainers' Hall\")"
+    },
+    {
+      "scope": "Correction 2 keyboard helper",
+      "path": "tests/e2e/society.spec.ts",
+      "before": "import {openReportDetails,makeLife,importLife,exportLife,go,selectPerson,selectArea,characterWindow} from './character-life-navigation.helpers.ts';",
+      "after": "import {openReportDetails,makeLife,importLife,exportLife,go,selectPerson,selectArea,characterWindow,keyActivate} from './character-life-navigation.helpers.ts';"
+    },
+    {
+      "scope": "Correction 1 Hall limit",
+      "path": "packages/simulation/src/tile-trial.ts",
+      "before": "        const level = c.type === \"UPGRADE\" ? tile.building!.level + 1 : 1;",
+      "after": "        if (c.type !== 'UPGRADE' && typeId === 'retainers-hall' && tile.building?.typeId !== typeId &&\n            next.tiles.filter(other=>other.building?.typeId===typeId).length>=2)\n          return fail('HALL_LIMIT',\"Only two Retainers' Halls may be built per city.\");\n        const level = c.type === \"UPGRADE\" ? tile.building!.level + 1 : 1;"
+    },
+    {
+      "scope": "Correction 1 Hall limit",
+      "path": "packages/core/src/trial/state.ts",
+      "before": "    return isTileTrialState(raw);",
+      "after": "    if (tiles.filter(tile=>tile.building?.typeId==='retainers-hall').length>2) return false;\n    return isTileTrialState(raw);"
+    },
+    {
+      "scope": "Correction 1 Hall limit",
+      "path": "packages/ui/src/TileManagement.svelte",
+      "before": "'FIXED_BUILDING', 'HOME_OCCUPIED', 'ONE_PER_CITY'];",
+      "after": "'FIXED_BUILDING', 'HOME_OCCUPIED', 'ONE_PER_CITY', 'HALL_LIMIT'];"
+    },
+    {
+      "scope": "Correction 1 Hall limit",
+      "path": "packages/ui/src/society-view.ts",
+      "before": "   return {typeId,label:alreadyBuilt?`${label} — One per city`:label,available:!v.reserved&&!alreadyBuilt};",
+      "after": "   const hallLimit=typeId==='retainers-hall'&&city.tiles.filter(t=>t.building?.typeId===typeId).length>=2&&\n    city.tiles.find(t=>t.id===tileId)?.building?.typeId!==typeId;\n   return {typeId,label:alreadyBuilt?`${label} — One per city`:hallLimit?\"Retainers' Hall — Two per city\":label,available:!v.reserved&&!alreadyBuilt&&!hallLimit};"
+    },
+    {
+      "scope": "Correction 2 flat home construction",
+      "path": "packages/simulation/src/tile-trial.ts",
+      "before": "        const homeUpgrade = c.type === 'UPGRADE' && npcBeds(typeId, level) > 0;\n        const discount = homeUpgrade ? 0 : constructionDiscount(state);\n        const costLevel = homeUpgrade ? 1 : level;\n",
+      "after": "        const homeConstruction = npcBeds(typeId, level) > 0;\n        const discount = homeConstruction ? 0 : constructionDiscount(state);\n        const costLevel = homeConstruction ? 1 : level;\n"
+    },
+    {
+      "scope": "Correction 2 flat home construction",
+      "path": "packages/simulation/src/tile-trial.ts",
+      "before": "level===3&&!homeUpgrade?",
+      "after": "level===3&&!homeConstruction?"
+    }
+  ]
+}
+Exit code: 0

@@ -1,0 +1,427 @@
+﻿
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/society-renewable-support.test.ts (17 tests | 6 failed) 9997ms
+     × two funded Farms retain independent recipe caps with 1 funded Processor(s) 297ms
+     × two funded Farms retain independent recipe caps with 2 funded Processor(s) 270ms
+     × settles the opening population before applying society arrivals without changing assignments 121ms
+     × one funded Farm shares its five supply slots across two funded Processors 100ms
+     × duplicate idle Workshop cannot reuse Market distribution capacity 120ms
+     × stops and resumes immigration over forty-five weeks when renewable support changes 1601ms
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts (82 tests | 3 failed) 2197ms
+   × preserves all no-order reports and item states for sixty weeks at seed 0 772ms
+   × preserves all no-order reports and item states for sixty weeks at seed 42 362ms
+   × preserves all no-order reports and item states for sixty weeks at seed 20261028 490ms
+stdout | packages/simulation/src/__tests__/items-week.test.ts > preserves PR A crime, crisis, order and law reports for 60 weeks at seed 0
+PR_A_REPORT_BASELINE 0 e9fc8653e307ee1bf46528035862bbfc081e9f376537533ad2de993816e66153
+
+stdout | packages/simulation/src/__tests__/items-week.test.ts > preserves PR A crime, crisis, order and law reports for 60 weeks at seed 42
+PR_A_REPORT_BASELINE 42 14f132ed3160caf3e9925f1f1fe18df2696b3edbef33570c126c1c12cdb8debc
+
+ ❯ packages/simulation/src/__tests__/items-week.test.ts (24 tests | 2 failed) 1431ms
+   × preserves PR A crime, crisis, order and law reports for 60 weeks at seed 0 324ms
+   × preserves PR A crime, crisis, order and law reports for 60 weeks at seed 42 364ms
+ ❯ packages/simulation/src/__tests__/order-week.test.ts (41 tests | 3 failed) 546ms
+   × passes Authority 29 adjusted budget through society arrivals 46ms
+   × passes Authority 50 adjusted budget through society arrivals 7ms
+   × passes Authority 70 adjusted budget through society arrivals 11ms
+ ❯ packages/simulation/src/__tests__/society-end-week.test.ts (8 tests | 1 failed) 279ms
+   × reports resolved immigration with Elite Manor=false 58ms
+ ❯ packages/simulation/src/__tests__/authority-refusals.test.ts (7 tests | 1 failed) 388ms
+   × preserves liquidity refusal at Authority 70 without admitting a bonus resident 118ms
+ ❯ packages/core/src/__tests__/catalog-data.test.ts (47 tests | 1 failed) 263ms
+   × 'tuning.json' validates to the unchanged typed views 78ms
+cmd.exe : 
+At line:3 char:1
++ cmd.exe /d /c 'npm.cmd test' 2>&1 | Out-File -Encoding utf8 -LiteralP ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯ Failed Tests 17 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/core/src/__tests__/catalog-data.test.ts > 'tuning.json' validates to the unchanged typed views
+AssertionError: expected { ORDER_TRIAL: { …(11) }, …(10) } to deeply equal { ORDER_TRIAL: { …(11) }, …(8) }
+
+- Expected
++ Received
+
+@@ -249,10 +249,36 @@
+      "workshopClothRecipe": {
+        "clothMilli": 1000,
+        "woodMilli": 1000,
+      },
+    },
++   "RING4_TRIAL": {
++     "goldMilli": 100000,
++     "ironMilli": 30000,
++     "stoneFactor": 1.5,
++     "woodMilli": 60000,
++   },
++   "SOCIETY_RING4_PLOTS": {
++     "housing": [
++       "house-12",
++       "house-13",
++       "house-14",
++     ],
++     "service": [
++       "service-7",
++       "service-8",
++     ],
++     "slum": [
++       "slum-7",
++       "slum-8",
++       "slum-9",
++     ],
++     "specialist": [
++       "spec-11",
++       "spec-12",
++     ],
++   },
+    "SOCIETY_TRIAL": {
+      "classes": {
+        "bound": {
+          "free": 0,
+          "luminaries": 0,
+
+ ❯ packages/core/src/__tests__/catalog-data.test.ts:36:50
+     34| it.each(cases)('$file validates to the unchanged typed views', async e…
+     35|   const api = await validators();
+     36|   expect(api[entry.validator](data(entry.file))).toEqual(entry.view());
+       |                                                  ^
+     37| });
+     38|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/17]⎯
+
+ FAIL  packages/simulation/src/__tests__/authority-refusals.test.ts > preserves liquidity refusal at Authority 70 
+without admitting a bonus resident
+AssertionError: expected { populationBefore: 100, …(6) } to match object { reason: 'liquidity', …(3) }
+(3 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+    "arrivals": 0,
+    "populationAfter": 100,
+    "populationBefore": 100,
+-   "reason": "liquidity",
++   "reason": "upkeep-unpaid",
+  }
+
+ ❯ packages/simulation/src/__tests__/authority-refusals.test.ts:43:32
+     41|  const r=executeTileTrialCommand(s,{type:'END_WEEK',expectedRevision:s…
+     42|  expect(s).toEqual(before);expect(r.success).toBe(true);if(!r.success)…
+     43|  expect(r.report!.immigration).toMatchObject({reason,arrivals:0,popula…
+       |                                ^
+     44|  expect(r.report!.order).toMatchObject({arrivalsBudgetBefore:0,arrival…
+     45|  expect(societyPopulation(r.nextState.society!)).toBe(population);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/17]⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > preserves all no-order reports and item states for sixty 
+weeks at seed 0
+AssertionError: expected { …(3) } to deeply equal { …(3) }
+
+- Expected
++ Received
+
+  {
+-   "city": "cb611be6c8b7540c4c83f844a566272c0b2dba394609f4ec12b0208011139c54",
++   "city": "3a9f84c661158a51db2a899c4cfe99cde32c2e24c8fff014028a236b7868f592",
+    "items": "cddabceee23c2746d4dd3408d05e71ee624dd800d8a0f761cb88f130122deb65",
+-   "reports": "9bb24301f4ede325b0e0e116b03add674eb0c692dfa80fe16bddf0da61a66bc4",
++   "reports": "3d0c9f874c4a0e9b7df12f8c3984c0a49d38485d369a60c9bcc6ce906ffdca49",
+  }
+
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:29:76
+     27|     city.phase = 'planning';
+     28|   }
+     29|   expect({ reports:hash(reports),items:hash(itemStates),city:hash(city…
+       |                                                                            ^
+     30|   expect(city.world.week).toBe(61);
+     31|   expect(isItemsState(city.society!.items, ['player'])).toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/17]⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > preserves all no-order reports and item states for sixty 
+weeks at seed 42
+AssertionError: expected { …(3) } to deeply equal { …(3) }
+
+- Expected
++ Received
+
+  {
+-   "city": "2c7e1a942c7bf05d2b462bb67aa0c05145107cfb0bce714ec3d8c2ba1b2d5e01",
++   "city": "efa632b973cdea126a6eb12e225d5c214ec1a4866c3bc4ad4637647e5457b16c",
+    "items": "283da6a1e4fed8fdc3a419e72e00827020ab1ace63f68277db0c1d7cee5616e8",
+-   "reports": "04aa55b35d7e8551323fbc2c66c6bf286fb06658b9163fd4a9e3aa327d705ea2",
++   "reports": "0b4430c57f4dd84445a5e9a1e81712d7e356796d539800ae5a1d94c73b3cf130",
+  }
+
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:29:76
+     27|     city.phase = 'planning';
+     28|   }
+     29|   expect({ reports:hash(reports),items:hash(itemStates),city:hash(city…
+       |                                                                            ^
+     30|   expect(city.world.week).toBe(61);
+     31|   expect(isItemsState(city.society!.items, ['player'])).toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/17]⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > preserves all no-order reports and item states for sixty 
+weeks at seed 20261028
+AssertionError: expected { …(3) } to deeply equal { …(3) }
+
+- Expected
++ Received
+
+  {
+-   "city": "73863ad6709a288163077c5d3167d857685ecc92b1f54593f50caf8313f49e04",
++   "city": "05c634769d92db96a5f98266b0c0b5275e3606bcf2660e90b04fe014015d9ff9",
+    "items": "3ad4de4ea7c6a0687ac6d8481778a2513e841dd061e1712429d8bb2dacc31515",
+-   "reports": "a32127339cab716bfa6ccab522d0da3a455a75eca6b455ae0e7adb508e781940",
++   "reports": "07dac2c528c7d84f569babfc4d70e01fff8c715722a08513f3468758124a204e",
+  }
+
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:29:76
+     27|     city.phase = 'planning';
+     28|   }
+     29|   expect({ reports:hash(reports),items:hash(itemStates),city:hash(city…
+       |                                                                            ^
+     30|   expect(city.world.week).toBe(61);
+     31|   expect(isItemsState(city.society!.items, ['player'])).toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/17]⎯
+
+ FAIL  packages/simulation/src/__tests__/items-week.test.ts > preserves PR A crime, crisis, order and law reports for 
+60 weeks at seed 0
+AssertionError: expected 'e9fc8653e307ee1bf46528035862bbfc081e9…' to be '4ba36423f0b05c8c696bedf7195101a669184…' // 
+Object.is equality
+
+Expected: "4ba36423f0b05c8c696bedf7195101a669184ce344227c5573be7b229ea75b7a"
+Received: "e9fc8653e307ee1bf46528035862bbfc081e9f376537533ad2de993816e66153"
+
+ ❯ packages/simulation/src/__tests__/items-week.test.ts:148:16
+    146|   const hash = createHash('sha256').update(JSON.stringify(reports)).di…
+    147|   console.log('PR_A_REPORT_BASELINE', seed, hash);
+    148|   expect(hash).toBe(baseline[seed]);
+       |                ^
+    149| });
+    150|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/17]⎯
+
+ FAIL  packages/simulation/src/__tests__/items-week.test.ts > preserves PR A crime, crisis, order and law reports for 
+60 weeks at seed 42
+AssertionError: expected '14f132ed3160caf3e9925f1f1fe18df2696b3…' to be 'dcdce3552130d92971b254f1c4fb15bfb41da…' // 
+Object.is equality
+
+Expected: "dcdce3552130d92971b254f1c4fb15bfb41da44b7946293c57d099949fd6be14"
+Received: "14f132ed3160caf3e9925f1f1fe18df2696b3edbef33570c126c1c12cdb8debc"
+
+ ❯ packages/simulation/src/__tests__/items-week.test.ts:148:16
+    146|   const hash = createHash('sha256').update(JSON.stringify(reports)).di…
+    147|   console.log('PR_A_REPORT_BASELINE', seed, hash);
+    148|   expect(hash).toBe(baseline[seed]);
+       |                ^
+    149| });
+    150|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/17]⎯
+
+ FAIL  packages/simulation/src/__tests__/order-week.test.ts > passes Authority 29 adjusted budget through society 
+arrivals
+ FAIL  packages/simulation/src/__tests__/order-week.test.ts > passes Authority 50 adjusted budget through society 
+arrivals
+ FAIL  packages/simulation/src/__tests__/order-week.test.ts > passes Authority 70 adjusted budget through society 
+arrivals
+AssertionError: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ packages/simulation/src/__tests__/order-week.test.ts:114:40
+    112|  tile(s,'spec-1').building!.enabled=false;
+    113|  const r=runTileTrialWeek(s);
+    114|  expect(r.order!.arrivalsBudgetBefore).toBe(1);expect(r.order!.arrival…
+       |                                        ^
+    115|  expect(r.immigration!.arrivals).toBe(arrivals);expect(r.immigration!.…
+    116| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/17]⎯
+
+ FAIL  packages/simulation/src/__tests__/society-end-week.test.ts > reports resolved immigration with Elite Manor=false
+AssertionError: expected 'target-unfunded' to be 'arrivals' // Object.is equality
+
+Expected: "arrivals"
+Received: "target-unfunded"
+
+ ❯ packages/simulation/src/__tests__/society-end-week.test.ts:112:91
+    110|  }
+    111|  const result=endSociety(city), immigration=result.report!.immigration…
+    112|  if(!elite) { expect(immigration.target).toBeGreaterThan(100); expect(…
+       |                                                                                           ^
+    113|  expect(immigration.arrivals).toBe(elite?1:0);
+    114|  expect(immigration.populationAfter).toBe(elite?101:100);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/17]⎯
+
+ FAIL  packages/simulation/src/__tests__/society-renewable-support.test.ts > society renewable support and transaction 
+ports > two funded Farms retain independent recipe caps with 1 funded Processor(s)
+AssertionError: expected { populationBefore: 136, …(6) } to deeply equal { populationBefore: 136, …(6) }
+
+- Expected
++ Received
+
+  {
+-   "arrivals": 2,
+-   "populationAfter": 138,
++   "arrivals": 0,
++   "populationAfter": 136,
+    "populationBefore": 136,
+-   "reason": "arrivals",
++   "reason": "target-unfunded",
+    "renewableFoodMilli": 10000,
+    "target": 200,
+    "usefulWorkerSlots": 20,
+  }
+
+ ❯ packages/simulation/src/__tests__/society-renewable-support.test.ts:51:32
+     49|     if (processors === 2) s = act(s, { type: 'BUILD', tileId: 'plain-4…
+     50|     const before = structuredClone(s), r = week(s), report = r.report!;
+     51|     expect(report.immigration).toEqual({ populationBefore: 136, arriva…
+       |                                ^
+     52|       usefulWorkerSlots, renewableFoodMilli: 10000, target, reason: 'a…
+     53|     expect(report).toMatchObject({ taxMilli: 4080, foodDemandMilli: 54…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/17]⎯
+
+
+ FAIL  packages/simulation/src/__tests__/society-renewable-support.test.ts > society renewable support and transaction 
+ports > two funded Farms retain independent recipe caps with 2 funded Processor(s)
+AssertionError: expected { populationBefore: 136, …(6) } to deeply equal { populationBefore: 136, …(6) }
+
+- Expected
++ Received
+
+  {
+-   "arrivals": 2,
+-   "populationAfter": 138,
++   "arrivals": 0,
++   "populationAfter": 136,
+    "populationBefore": 136,
+-   "reason": "arrivals",
++   "reason": "target-unfunded",
+    "renewableFoodMilli": 10000,
+    "target": 227,
+    "usefulWorkerSlots": 25,
+  }
+
+ ❯ packages/simulation/src/__tests__/society-renewable-support.test.ts:51:32
+     49|     if (processors === 2) s = act(s, { type: 'BUILD', tileId: 'plain-4…
+     50|     const before = structuredClone(s), r = week(s), report = r.report!;
+     51|     expect(report.immigration).toEqual({ populationBefore: 136, arriva…
+       |                                ^
+     52|       usefulWorkerSlots, renewableFoodMilli: 10000, target, reason: 'a…
+     53|     expect(report).toMatchObject({ taxMilli: 4080, foodDemandMilli: 54…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/17]⎯
+
+ FAIL  packages/simulation/src/__tests__/society-renewable-support.test.ts > society renewable support and transaction 
+ports > settles the opening population before applying society arrivals without changing assignments
+AssertionError: expected 100 to be 102 // Object.is equality
+
+- Expected
++ Received
+
+- 102
++ 100
+
+ ❯ packages/simulation/src/__tests__/society-renewable-support.test.ts:90:32
+     88|   it('settles the opening population before applying society arrivals …
+     89|     const s = expanded(), before = structuredClone(s), r = week(s);
+     90|     expect(count(r.nextState)).toBe(102);
+       |                                ^
+     91|     expect(r.report!.immigration).toMatchObject({ populationBefore: 10…
+     92|     expect(r.report!.taxMilli).toBe(3000); expect(r.report!.foodDemand…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/17]⎯
+
+ FAIL  packages/simulation/src/__tests__/society-renewable-support.test.ts > society renewable support and transaction 
+ports > one funded Farm shares its five supply slots across two funded Processors
+AssertionError: expected { populationBefore: 100, …(6) } to deeply equal { populationBefore: 100, …(6) }
+
+- Expected
++ Received
+
+  {
+-   "arrivals": 2,
+-   "populationAfter": 102,
++   "arrivals": 0,
++   "populationAfter": 100,
+    "populationBefore": 100,
+-   "reason": "arrivals",
++   "reason": "target-unfunded",
+    "renewableFoodMilli": 6000,
+    "target": 136,
+    "usefulWorkerSlots": 15,
+  }
+
+ ❯ packages/simulation/src/__tests__/society-renewable-support.test.ts:118:35
+    116|     const before = structuredClone(s), r = week(s);
+    117|     expect(r.report!.unpaidUpkeepMilli).toBe(0);
+    118|     expect(r.report!.immigration).toEqual({ populationBefore: 100, arr…
+       |                                   ^
+    119|       usefulWorkerSlots: 15, renewableFoodMilli: 6000, target: 136, re…
+    120|     expect(count(r.nextState)).toBe(102); expect(r.nextState.tiles).to…
+
+ Test Files  7 failed | 128 passed (135)
+      Tests  17 failed | 3115 passed (3132)
+   Start at  17:53:40
+   Duration  101.27s (transform 19.73s, setup 0ms, import 75.50s, tests 358.87s, environment 88ms)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/17]⎯
+
+ FAIL  packages/simulation/src/__tests__/society-renewable-support.test.ts > society renewable support and transaction 
+ports > duplicate idle Workshop cannot reuse Market distribution capacity
+AssertionError: expected 100 to be 102 // Object.is equality
+
+- Expected
++ Received
+
+- 102
++ 100
+
+ ❯ packages/simulation/src/__tests__/society-renewable-support.test.ts:127:82
+    125|     expect(b.report!.immigration!.usefulWorkerSlots).toBe(15);
+    126|     expect(b.report!.immigration!.target).toBe(a.report!.immigration!.…
+    127|     expect(b.report!.goods).toEqual(a.report!.goods); expect(count(b.n…
+       |                                                                                  ^
+    128|   });
+    129|   it('never revives a zero city or introduces departures when support …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/17]⎯
+
+ FAIL  packages/simulation/src/__tests__/society-renewable-support.test.ts > society renewable support and transaction 
+ports > stops and resumes immigration over forty-five weeks when renewable support changes
+AssertionError: expected 0 to be greater than 0
+ ❯ packages/simulation/src/__tests__/society-renewable-support.test.ts:186:29
+    184|       for (const stock of Object.values(settlement(s).inventory)) expe…
+    185|     }
+    186|     expect(resumedArrivals).toBeGreaterThan(0);
+       |                             ^
+    187|   });
+    188| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/17]⎯
+
+Exit code: 1

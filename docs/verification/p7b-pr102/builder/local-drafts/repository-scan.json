@@ -1,0 +1,3585 @@
+{
+  "base": "27f4dc2e0ea6ed4f12e79fab6366d11fb555551b",
+  "tree": "a0ea6329441e75df363b356052528f1426233281",
+  "trackedFiles": 502,
+  "qualifyingMatches": 424,
+  "matchCounts": {
+    "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes": 173,
+    "historical, example, or generation evidence; leave in place": 145,
+    "covered by source replacement": 93,
+    "unchanged historical input with a proposed v11 sibling": 10,
+    "existing golden tracked through generated-byte proposals": 3
+  },
+  "fixtureCounts": {
+    "society-v1": 3,
+    "society-v10": 10,
+    "society-v2": 3,
+    "society-v3": 3,
+    "society-v4": 5,
+    "society-v5": 9,
+    "society-v6": 10,
+    "society-v7": 10,
+    "society-v8": 10,
+    "society-v9": 10
+  },
+  "method": "Enumerated the pinned checkout tracked paths; reviewed rg searches for ring/tier semantics, ruleset/fixture consumers, seeded generators, catalog hashes/lengths, accessible title/navigation layouts, upkeep thresholds and e2e helpers. Matches mark files for disposition; nominal labels do not make the files active callers.",
+  "unchangedScopeNotes": [
+    {
+      "file": "packages/core/src/trial/outside.ts",
+      "why": "Three physical outside rings; spec adds no outside plots."
+    },
+    {
+      "file": "packages/core/src/data/validate.ts",
+      "lines": [
+        84,
+        87,
+        785,
+        793
+      ],
+      "why": "Outside ring type and parser stay on 1–3. SOCIETY_TRIAL initial wall is still ring 1."
+    },
+    {
+      "file": "packages/ui/src/society-view.ts",
+      "lines": [
+        71,
+        79
+      ],
+      "why": "Outside ring grouping remains 1–3 and reads the expanded wall only as a threshold."
+    },
+    {
+      "file": "packages/core/src/trial/state.ts",
+      "lines": [
+        37,
+        62,
+        83,
+        95
+      ],
+      "why": "Existing generic lock, tier and dynamic ordered-map validations continue with the factory data; explicit checkpoint integrity guard is separately proposed."
+    },
+    {
+      "file": "packages/simulation/src/society-facilities.ts",
+      "lines": [
+        14,
+        35
+      ],
+      "why": "Housing only counts the catalog housing property. Both named homes have npcBeds and no housing field."
+    },
+    {
+      "file": "packages/simulation/src/__tests__/catalog-golden.test.ts",
+      "lines": [
+        7,
+        31
+      ],
+      "why": "Production scenario, byte equality, Hospital fault injection and existing timeout stay pinned."
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts",
+      "lines": [
+        7,
+        62
+      ],
+      "why": "Reuse the scenario and exact output format. Write a prospective copy through the new approved path-diff tool and retain the original generator."
+    },
+    {
+      "file": "tests/e2e/character-life-boundary.spec.ts",
+      "lines": [
+        169,
+        188,
+        208,
+        216
+      ],
+      "why": "Its counting and picker helpers derive from observed maps rather than literal 7/33/63 pins. The separate locked-card exact check is proposed."
+    },
+    {
+      "file": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+      "lines": [
+        209,
+        290,
+        329,
+        369,
+        406,
+        411
+      ],
+      "why": "The four-width reflow, existing help copy and fallback-font controls keep the same exact assertions and breakpoints."
+    },
+    {
+      "file": "tests/e2e/outside.spec.ts",
+      "lines": [
+        22,
+        58
+      ],
+      "why": "Ring 3 stays the last outside ring. Existing narrow and desktop overflow checks continue."
+    },
+    {
+      "file": "tests/e2e/title.spec.ts",
+      "lines": [
+        89,
+        97,
+        148,
+        162
+      ],
+      "why": "Four-width title and 320px ledger layout thresholds stay in force; only paths to playable v11 fixtures change."
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-end-week.test.ts",
+      "lines": [
+        24,
+        62
+      ],
+      "why": "Direct weekly test fixture clears all buildings and isolates unrelated arithmetic, so the exact values stay."
+    },
+    {
+      "file": "packages/persistence/src/__tests__/society-v9-fixture.test.ts",
+      "lines": [
+        7,
+        7
+      ],
+      "why": "Secondary test pins its current-ruleset literal. Its historical v9 refusal remains unchanged."
+    },
+    {
+      "file": "packages/ui/src/data-inspector.ts",
+      "lines": [
+        24,
+        39
+      ],
+      "why": "The building catalog union naturally grows from 32 to 37. The inspector explicitly enumerates nine tuning entries. B1 retains that curated list and the tuning row-count pin."
+    }
+  ],
+  "candidates": [
+    {
+      "file": "HANDOFF.md",
+      "line": 171,
+      "matches": [
+        "uild-Settlement/actions/runs/375"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "docs/INTERNAL_PROGRESS_TRACKER.md",
+      "line": 67,
+      "matches": [
+        "uild-Settlement/pull/36): head `a2049db71ec23375"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/INTERNAL_PROGRESS_TRACKER.md",
+      "line": 365,
+      "matches": [
+        "uild-Settlement/actions/runs/375"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/INTERNAL_PROGRESS_TRACKER.md",
+      "line": 448,
+      "matches": [
+        "uild-Settlement/actions/runs/375"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/design/CITY-SOCIETY-DECISIONS-02.md",
+      "line": 67,
+      "matches": [
+        "plots open"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-21-tile-feedback-precision-fixes.md",
+      "line": 20,
+      "matches": [
+        "building rejection at1280/390/320"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-25-character-foundation-s1.md",
+      "line": 413,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-26-player-first-navigation.md",
+      "line": 84,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-26-solo-mcp-stage0.md",
+      "line": 233,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-26-solo-mcp-stage0.md",
+      "line": 237,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-30-p2a-society-state.md",
+      "line": 20,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-30-p2a-society-state.md",
+      "line": 85,
+      "matches": [
+        "SOCIETY_TRIAL"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-30-p2a-society-state.md",
+      "line": 86,
+      "matches": [
+        "SOCIETY_TRIAL"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-30-p2a-society-state.md",
+      "line": 87,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-30-p2a-society-state.md",
+      "line": 104,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-30-p2a-society-state.md",
+      "line": 114,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-30-p2c-inside-plots-and-week.md",
+      "line": 79,
+      "matches": [
+        "SocietyTier"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-30-p2c-inside-plots-and-week.md",
+      "line": 81,
+      "matches": [
+        "SOCIETY_PLOT_IDS"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-30-p2c-inside-plots-and-week.md",
+      "line": 82,
+      "matches": [
+        "SocietyTier",
+        "societyPlot("
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-30-p2c-inside-plots-and-week.md",
+      "line": 83,
+      "matches": [
+        "SocietyTier"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-30-p2c-inside-plots-and-week.md",
+      "line": 85,
+      "matches": [
+        "SOCIETY_BUILDINGS"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-30-p2c-inside-plots-and-week.md",
+      "line": 88,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-30-p2c-inside-plots-and-week.md",
+      "line": 91,
+      "matches": [
+        "SOCIETY_PLOT_IDS",
+        "societyPlot("
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-30-p2c-inside-plots-and-week.md",
+      "line": 117,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-30-p2c-inside-plots-and-week.md",
+      "line": 118,
+      "matches": [
+        "WALL_COMPLETE"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-31-p2d-society-ui.md",
+      "line": 65,
+      "matches": [
+        "SOCIETY_BUILDINGS"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-31-p2d-society-ui.md",
+      "line": 69,
+      "matches": [
+        "SOCIETY_BUILDINGS"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-31-p2d-society-ui.md",
+      "line": 71,
+      "matches": [
+        "Locked · opens with Ring",
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-31-p2d-society-ui.md",
+      "line": 125,
+      "matches": [
+        "plots open"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-31-p2d-society-ui.md",
+      "line": 178,
+      "matches": [
+        "SOCIETY_BUILDINGS",
+        "SOCIETY_PLOT_IDS",
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-31-p2d-society-ui.md",
+      "line": 186,
+      "matches": [
+        "insideTiers"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-31-p2d-society-ui.md",
+      "line": 195,
+      "matches": [
+        "insideTiers"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-31-p2d-society-ui.md",
+      "line": 202,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-31-p2d-society-ui.md",
+      "line": 213,
+      "matches": [
+        "SOCIETY_BUILDINGS"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-31-p2d-society-ui.md",
+      "line": 244,
+      "matches": [
+        "InsideCity"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-31-p2d-society-ui.md",
+      "line": 249,
+      "matches": [
+        "InsideCity"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-31-p2d-society-ui.md",
+      "line": 286,
+      "matches": [
+        "InsideCity"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-31-p2d-society-ui.md",
+      "line": 333,
+      "matches": [
+        "plots open"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-31-p3-outside-city.md",
+      "line": 65,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-31-p3-outside-city.md",
+      "line": 105,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-31-p3-outside-city.md",
+      "line": 132,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-31-p3-outside-city.md",
+      "line": 174,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-31-p3-outside-city.md",
+      "line": 192,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/plans/2026-10-31-p3-outside-city.md",
+      "line": 321,
+      "matches": [
+        "Locked · opens with Ring"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/specs/2026-10-30-p2-inside-city-society-design.md",
+      "line": 54,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/specs/2026-10-30-p2-inside-city-society-design.md",
+      "line": 62,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/specs/2026-10-31-p3-outside-city-design.md",
+      "line": 184,
+      "matches": [
+        "Locked · opens with Ring"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/superpowers/specs/2026-10-31-p3-outside-city-design.md",
+      "line": 274,
+      "matches": [
+        "plots plus Deep Shafts give 320"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/verification/FOUNDATION-STATE-BOUNDARIES-01.md",
+      "line": 105,
+      "matches": [
+        "uild-Settlement/actions/runs/375"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/verification/P2D-TEST-LEDGER.md",
+      "line": 28,
+      "matches": [
+        "city windows preserve state and return focus at 375"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/verification/P2D-TEST-LEDGER.md",
+      "line": 147,
+      "matches": [
+        "uild rejection stays contextual at 320"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/verification/P2D-TEST-LEDGER.md",
+      "line": 148,
+      "matches": [
+        "uild rejection stays contextual at 320"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/verification/P2D-TEST-LEDGER.md",
+      "line": 149,
+      "matches": [
+        "uild rejection stays contextual at 320"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/verification/P2D-TEST-LEDGER.md",
+      "line": 150,
+      "matches": [
+        "uild rejection stays contextual at 320"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "docs/verification/P2E-ENGINE-AUDIT.md",
+      "line": 210,
+      "matches": [
+        "SOCIETY_TRIAL",
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/core/src/__tests__/catalog-data.test.ts",
+      "line": 5,
+      "matches": [
+        "SOCIETY_BUILDINGS",
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/__tests__/catalog-data.test.ts",
+      "line": 6,
+      "matches": [
+        "SOCIETY_TRIAL"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/__tests__/catalog-data.test.ts",
+      "line": 12,
+      "matches": [
+        "SOCIETY_BUILDINGS",
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/__tests__/catalog-data.test.ts",
+      "line": 20,
+      "matches": [
+        "SOCIETY_TRIAL"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/__tests__/catalog-data.test.ts",
+      "line": 78,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/__tests__/catalog-data.test.ts",
+      "line": 79,
+      "matches": [
+        "SOCIETY_BUILDINGS"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/__tests__/catalog-data.test.ts",
+      "line": 89,
+      "matches": [
+        "SOCIETY_TRIAL"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/__tests__/catalog-data.test.ts",
+      "line": 102,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/character/describe.ts",
+      "line": 2,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/character/describe.ts",
+      "line": 56,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/data/tuning.json",
+      "line": 180,
+      "matches": [
+        "SOCIETY_TRIAL"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/data/tuning.json",
+      "line": 181,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/data/tuning.json",
+      "line": 534,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/data/tuning.json",
+      "line": 618,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/data/validate.ts",
+      "line": 9,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/data/validate.ts",
+      "line": 146,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/data/validate.ts",
+      "line": 307,
+      "matches": [
+        "SOCIETY_TRIAL"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/data/validate.ts",
+      "line": 308,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/data/validate.ts",
+      "line": 390,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/data/validate.ts",
+      "line": 392,
+      "matches": [
+        "SOCIETY_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/data/validate.ts",
+      "line": 394,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/data/validate.ts",
+      "line": 395,
+      "matches": [
+        "SOCIETY_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/data/validate.ts",
+      "line": 407,
+      "matches": [
+        "SOCIETY_TRIAL"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/data/validate.ts",
+      "line": 627,
+      "matches": [
+        "SOCIETY_TRIAL"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/data/validate.ts",
+      "line": 628,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/data/validate.ts",
+      "line": 718,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/data/validate.ts",
+      "line": 748,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/crime.test.ts",
+      "line": 7,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/crisis.test.ts",
+      "line": 6,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/items.test.ts",
+      "line": 8,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/law.test.ts",
+      "line": 12,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/order.test.ts",
+      "line": 2,
+      "matches": [
+        "SOCIETY_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/order.test.ts",
+      "line": 4,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/order.test.ts",
+      "line": 11,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/order.test.ts",
+      "line": 33,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/order.test.ts",
+      "line": 64,
+      "matches": [
+        "SOCIETY_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/outside.test.ts",
+      "line": 19,
+      "matches": [
+        "toHaveLength(63)"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/outside.test.ts",
+      "line": 21,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/outside.test.ts",
+      "line": 34,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/outside.test.ts",
+      "line": 37,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/outside.test.ts",
+      "line": 127,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/society-map.test.ts",
+      "line": 3,
+      "matches": [
+        "SOCIETY_PLOT_IDS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/society-map.test.ts",
+      "line": 5,
+      "matches": [
+        "SOCIETY_PLOT_IDS",
+        "toHaveLength(33)"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/society-map.test.ts",
+      "line": 6,
+      "matches": [
+        "societyPlot("
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/society-map.test.ts",
+      "line": 7,
+      "matches": [
+        "societyPlot("
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/society-map.test.ts",
+      "line": 8,
+      "matches": [
+        "societyPlot("
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/society-map.test.ts",
+      "line": 9,
+      "matches": [
+        "societyPlot("
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/society-map.test.ts",
+      "line": 10,
+      "matches": [
+        "societyPlot("
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/society-map.test.ts",
+      "line": 12,
+      "matches": [
+        "toHaveLength(63)"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/society-map.test.ts",
+      "line": 23,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/society-map.test.ts",
+      "line": 46,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/society-map.test.ts",
+      "line": 51,
+      "matches": [
+        "SOCIETY_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/society-map.test.ts",
+      "line": 53,
+      "matches": [
+        "SOCIETY_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/society.test.ts",
+      "line": 3,
+      "matches": [
+        "SOCIETY_TRIAL"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/society.test.ts",
+      "line": 8,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/society.test.ts",
+      "line": 33,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/society.test.ts",
+      "line": 40,
+      "matches": [
+        "SOCIETY_TRIAL"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/__tests__/society.test.ts",
+      "line": 57,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/trial/catalog.ts",
+      "line": 13,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/catalog.ts",
+      "line": 17,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/order.ts",
+      "line": 11,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/trial/order.ts",
+      "line": 20,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/society-map.ts",
+      "line": 3,
+      "matches": [
+        "SocietyTier"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/trial/society-map.ts",
+      "line": 5,
+      "matches": [
+        "SocietyTier"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/trial/society-map.ts",
+      "line": 6,
+      "matches": [
+        "SocietyTier"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/trial/society-map.ts",
+      "line": 10,
+      "matches": [
+        "SOCIETY_PLOT_IDS"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/trial/society-map.ts",
+      "line": 11,
+      "matches": [
+        "SocietyTier",
+        "societyPlot("
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/trial/society-map.ts",
+      "line": 12,
+      "matches": [
+        "SOCIETY_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/society-map.ts",
+      "line": 14,
+      "matches": [
+        "SOCIETY_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/society.ts",
+      "line": 14,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/trial/society.ts",
+      "line": 33,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/trial/society.ts",
+      "line": 39,
+      "matches": [
+        "SOCIETY_TRIAL"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/society.ts",
+      "line": 52,
+      "matches": [
+        "SOCIETY_TRIAL"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/society.ts",
+      "line": 59,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/society.ts",
+      "line": 75,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/trial/state.ts",
+      "line": 7,
+      "matches": [
+        "SOCIETY_BUILDINGS"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/core/src/trial/state.ts",
+      "line": 37,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/state.ts",
+      "line": 60,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/state.ts",
+      "line": 61,
+      "matches": [
+        "SOCIETY_BUILDINGS",
+        "societyPlot("
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/trial/state.ts",
+      "line": 62,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/core/src/world/__tests__/session.test.ts",
+      "line": 32,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/character-life-save.test.ts",
+      "line": 18,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/character-life-save.test.ts",
+      "line": 91,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v1/life-5-weeks.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v1/life-new-game.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v1/new-game.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v10/life-5-weeks.json",
+      "line": 1,
+      "matches": [
+        "tile-society-10",
+        "wallRing"
+      ],
+      "disposition": "unchanged historical input with a proposed v11 sibling"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v10/life-crime-death.json",
+      "line": 1,
+      "matches": [
+        "tile-society-10",
+        "wallRing"
+      ],
+      "disposition": "unchanged historical input with a proposed v11 sibling"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v10/life-crime-raid.json",
+      "line": 1,
+      "matches": [
+        "tile-society-10",
+        "wallRing"
+      ],
+      "disposition": "unchanged historical input with a proposed v11 sibling"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v10/life-crime-robbery.json",
+      "line": 1,
+      "matches": [
+        "tile-society-10",
+        "wallRing"
+      ],
+      "disposition": "unchanged historical input with a proposed v11 sibling"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v10/life-crime-wound.json",
+      "line": 1,
+      "matches": [
+        "tile-society-10",
+        "wallRing"
+      ],
+      "disposition": "unchanged historical input with a proposed v11 sibling"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v10/life-demand-card.json",
+      "line": 1,
+      "matches": [
+        "tile-society-10",
+        "wallRing"
+      ],
+      "disposition": "unchanged historical input with a proposed v11 sibling"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v10/life-laws.json",
+      "line": 1,
+      "matches": [
+        "tile-society-10",
+        "wallRing"
+      ],
+      "disposition": "unchanged historical input with a proposed v11 sibling"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v10/life-new-game.json",
+      "line": 1,
+      "matches": [
+        "tile-society-10",
+        "wallRing"
+      ],
+      "disposition": "unchanged historical input with a proposed v11 sibling"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v10/life-rebellion-last-week.json",
+      "line": 1,
+      "matches": [
+        "tile-society-10",
+        "wallRing"
+      ],
+      "disposition": "unchanged historical input with a proposed v11 sibling"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v10/new-game.json",
+      "line": 1,
+      "matches": [
+        "tile-society-10",
+        "wallRing"
+      ],
+      "disposition": "unchanged historical input with a proposed v11 sibling"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v2/life-5-weeks.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v2/life-new-game.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v2/new-game.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v3/life-5-weeks.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v3/life-new-game.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v3/new-game.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v4/life-5-weeks.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v4/life-demand-card.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v4/life-new-game.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v4/life-rebellion-last-week.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v4/new-game.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v5/life-5-weeks.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v5/life-crime-death.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v5/life-crime-raid.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v5/life-crime-robbery.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v5/life-crime-wound.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v5/life-demand-card.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v5/life-new-game.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v5/life-rebellion-last-week.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v5/new-game.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-5-weeks.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-crime-death.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-crime-raid.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-crime-robbery.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-crime-wound.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-demand-card.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-laws.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-new-game.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-rebellion-last-week.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v6/new-game.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-5-weeks.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-crime-death.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-crime-raid.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-crime-robbery.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-crime-wound.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-demand-card.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-laws.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-new-game.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-rebellion-last-week.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v7/new-game.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-5-weeks.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-crime-death.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-crime-raid.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-crime-robbery.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-crime-wound.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-demand-card.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-laws.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-new-game.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-rebellion-last-week.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v8/new-game.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-5-weeks.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-death.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-raid.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-robbery.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-wound.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-demand-card.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-laws.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-new-game.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-rebellion-last-week.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/fixtures/society-v9/new-game.json",
+      "line": 1,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/item-records.test.ts",
+      "line": 33,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/items-rebuild-order.test.ts",
+      "line": 58,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/npc-life-records.test.ts",
+      "line": 54,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/npc-life-records.test.ts",
+      "line": 59,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/npc-life-records.test.ts",
+      "line": 69,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/session-records.test.ts",
+      "line": 14,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/society-new-game-fixture.test.ts",
+      "line": 8,
+      "matches": [
+        "society-v10",
+        "tile-society-10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/society-new-game-fixture.test.ts",
+      "line": 9,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/society-new-game-fixture.test.ts",
+      "line": 12,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/society-new-game-fixture.test.ts",
+      "line": 25,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/society-new-game-fixture.test.ts",
+      "line": 26,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/society-new-game-fixture.test.ts",
+      "line": 31,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/society-new-game-fixture.test.ts",
+      "line": 38,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/persistence/src/__tests__/society-v9-fixture.test.ts",
+      "line": 7,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/persistence/src/session-records.ts",
+      "line": 25,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/persistence/src/session-records.ts",
+      "line": 26,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/catalog-golden.test.ts",
+      "line": 3,
+      "matches": [
+        "catalog-golden"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/catalog-golden.test.ts",
+      "line": 5,
+      "matches": [
+        "catalog-golden"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/catalog-golden.test.ts",
+      "line": 19,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/catalog-golden.test.ts",
+      "line": 21,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/catalog-golden.test.ts",
+      "line": 24,
+      "matches": [
+        "catalog-golden"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+      "line": 4,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+      "line": 224,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+      "line": 226,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+      "line": 345,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+      "line": 361,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/crime-fixtures.test.ts",
+      "line": 9,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/crisis-fixtures.test.ts",
+      "line": 7,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/exhausted-materials.test.ts",
+      "line": 17,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/catalog-golden-path-diff.txt",
+      "line": 5,
+      "matches": [
+        "catalog-golden"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/catalog-golden-path-diff.txt",
+      "line": 9,
+      "matches": [
+        "catalog-golden"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/catalog-golden-path-diff.txt",
+      "line": 10,
+      "matches": [
+        "catalog-golden"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+      "line": 8,
+      "matches": [
+        "tile-society-10",
+        "wallRing"
+      ],
+      "disposition": "existing golden tracked through generated-byte proposals"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+      "line": 16,
+      "matches": [
+        "tile-society-10",
+        "wallRing"
+      ],
+      "disposition": "existing golden tracked through generated-byte proposals"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+      "line": 24,
+      "matches": [
+        "tile-society-10",
+        "wallRing"
+      ],
+      "disposition": "existing golden tracked through generated-byte proposals"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts",
+      "line": 1,
+      "matches": [
+        "catalog-golden"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts",
+      "line": 20,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts",
+      "line": 61,
+      "matches": [
+        "catalog-golden"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/p6b-crafting-path-diff.ts",
+      "line": 8,
+      "matches": [
+        "catalog-golden"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/p6b-crafting-path-diff.ts",
+      "line": 52,
+      "matches": [
+        "catalog-golden"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/p6b-path-diff.ts",
+      "line": 8,
+      "matches": [
+        "catalog-golden"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/p6b-path-diff.txt",
+      "line": 7,
+      "matches": [
+        "catalog-golden"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/p6b-path-diff.txt",
+      "line": 11,
+      "matches": [
+        "catalog-golden"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/p7a-path-diff.ts",
+      "line": 9,
+      "matches": [
+        "catalog-golden"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/p7a-path-diff.ts",
+      "line": 31,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/p7a-path-diff.ts",
+      "line": 32,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/p7a-path-diff.ts",
+      "line": 59,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/p7a-path-diff.ts",
+      "line": 62,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/p7a-week-path-diff.ts",
+      "line": 9,
+      "matches": [
+        "catalog-golden"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/p7a-week-path-diff.ts",
+      "line": 10,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/p7a-week-path-diff.ts",
+      "line": 33,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/p7a-week-path-diff.ts",
+      "line": 55,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/p7a-week-path-diff.ts",
+      "line": 73,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/p7a-week-path-diff.txt",
+      "line": 2,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/p7a-week-path-diff.txt",
+      "line": 3,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/p7a-week-path-diff.txt",
+      "line": 4,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/p7a-week-path-diff.txt",
+      "line": 5,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/p7a-week-path-diff.txt",
+      "line": 12,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/review-fix1-path-diff.ts",
+      "line": 9,
+      "matches": [
+        "catalog-golden"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/fixtures/review-fix1-path-diff.txt",
+      "line": 3,
+      "matches": [
+        "catalog-golden"
+      ],
+      "disposition": "historical, example, or generation evidence; leave in place"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/law-fixture.test.ts",
+      "line": 27,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/law-week.test.ts",
+      "line": 48,
+      "matches": [
+        "unpaidUpkeepMilli).toBe(",
+        "upkeepPaidMilli).toBe("
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/law-week.test.ts",
+      "line": 80,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/lord-health.test.ts",
+      "line": 3,
+      "matches": [
+        "SOCIETY_BUILDINGS",
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/lord-health.test.ts",
+      "line": 26,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/lord-health.test.ts",
+      "line": 90,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/lord-health.test.ts",
+      "line": 91,
+      "matches": [
+        "SOCIETY_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/order-commands.test.ts",
+      "line": 37,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/order-tax-week.test.ts",
+      "line": 24,
+      "matches": [
+        "unpaidUpkeepMilli).toBe(",
+        "upkeepPaidMilli).toBe("
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/order-tax-week.test.ts",
+      "line": 50,
+      "matches": [
+        "unpaidUpkeepMilli).toBe(",
+        "upkeepPaidMilli).toBe("
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/order-week.test.ts",
+      "line": 20,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/order-week.test.ts",
+      "line": 132,
+      "matches": [
+        "unpaidUpkeepMilli).toBe(",
+        "upkeepPaidMilli).toBe("
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/outside-commands.test.ts",
+      "line": 12,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/outside-commands.test.ts",
+      "line": 19,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/outside-commands.test.ts",
+      "line": 25,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/outside-commands.test.ts",
+      "line": 26,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/outside-commands.test.ts",
+      "line": 29,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/outside-commands.test.ts",
+      "line": 30,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/outside-commands.test.ts",
+      "line": 31,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/outside-commands.test.ts",
+      "line": 36,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/outside-commands.test.ts",
+      "line": 38,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/outside-commands.test.ts",
+      "line": 42,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/outside-commands.test.ts",
+      "line": 44,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/outside-commands.test.ts",
+      "line": 46,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/outside-commands.test.ts",
+      "line": 65,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/outside-commands.test.ts",
+      "line": 72,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/outside-commands.test.ts",
+      "line": 78,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/outside-commands.test.ts",
+      "line": 89,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/outside-session.test.ts",
+      "line": 7,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/outside-week.test.ts",
+      "line": 12,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/smithy-data.test.ts",
+      "line": 1,
+      "matches": [
+        "SOCIETY_BUILDINGS",
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/smithy-data.test.ts",
+      "line": 22,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/smithy-data.test.ts",
+      "line": 23,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/smithy-data.test.ts",
+      "line": 24,
+      "matches": [
+        "SOCIETY_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-end-week.test.ts",
+      "line": 35,
+      "matches": [
+        "upkeepPaidMilli).toBe("
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-end-week.test.ts",
+      "line": 54,
+      "matches": [
+        "upkeepPaidMilli).toBe("
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-end-week.test.ts",
+      "line": 55,
+      "matches": [
+        "unpaidUpkeepMilli).toBe("
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-life.test.ts",
+      "line": 27,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-life.test.ts",
+      "line": 46,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-plots.test.ts",
+      "line": 10,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-plots.test.ts",
+      "line": 11,
+      "matches": [
+        "WALL_COMPLETE",
+        "wallRing"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-plots.test.ts",
+      "line": 65,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-plots.test.ts",
+      "line": 74,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-renewable-support.test.ts",
+      "line": 117,
+      "matches": [
+        "unpaidUpkeepMilli).toBe("
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-renewable-support.test.ts",
+      "line": 149,
+      "matches": [
+        "unpaidUpkeepMilli).toBe("
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-stock-integrity.test.ts",
+      "line": 47,
+      "matches": [
+        "unpaidUpkeepMilli).toBe("
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/tile-trial.test.ts",
+      "line": 2,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/tile-trial.test.ts",
+      "line": 39,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/tile-trial.test.ts",
+      "line": 40,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/tile-trial.test.ts",
+      "line": 41,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/character-life-observation.ts",
+      "line": 3,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/character-life-observation.ts",
+      "line": 94,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/character-life-observation.ts",
+      "line": 116,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/order-week.ts",
+      "line": 1,
+      "matches": [
+        "SOCIETY_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/order-week.ts",
+      "line": 6,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/order-week.ts",
+      "line": 12,
+      "matches": [
+        "societyPlot("
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/order-week.ts",
+      "line": 14,
+      "matches": [
+        "SOCIETY_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/society-facilities.ts",
+      "line": 1,
+      "matches": [
+        "SOCIETY_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/society-facilities.ts",
+      "line": 17,
+      "matches": [
+        "SOCIETY_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/tile-trial.ts",
+      "line": 3,
+      "matches": [
+        "SOCIETY_BUILDINGS"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/simulation/src/tile-trial.ts",
+      "line": 87,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/tile-trial.ts",
+      "line": 88,
+      "matches": [
+        "WALL_COMPLETE"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/simulation/src/tile-trial.ts",
+      "line": 94,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/simulation/src/tile-trial.ts",
+      "line": 98,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/simulation/src/tile-trial.ts",
+      "line": 114,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/simulation/src/tile-trial.ts",
+      "line": 143,
+      "matches": [
+        "SOCIETY_BUILDINGS",
+        "societyPlot("
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/simulation/src/tile-trial.ts",
+      "line": 144,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/CharacterLifeCharacters.svelte",
+      "line": 3,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/CharacterLifeCharacters.svelte",
+      "line": 35,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/CharacterLifeCity.svelte",
+      "line": 2,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/ui/src/CharacterLifeCity.svelte",
+      "line": 7,
+      "matches": [
+        "InsideCity"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/CharacterLifeCity.svelte",
+      "line": 25,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/CharacterLifeCity.svelte",
+      "line": 28,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/CharacterLifeCity.svelte",
+      "line": 45,
+      "matches": [
+        "InsideCity"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/InsideCity.svelte",
+      "line": 5,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/InsideCity.svelte",
+      "line": 6,
+      "matches": [
+        "insideTiers"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/ui/src/InsideCity.svelte",
+      "line": 20,
+      "matches": [
+        "plots open"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/ui/src/InsideCity.svelte",
+      "line": 30,
+      "matches": [
+        "insideTiers"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/InsideCity.svelte",
+      "line": 34,
+      "matches": [
+        "Locked · opens with Ring"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/ui/src/InsideCity.svelte",
+      "line": 40,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/ui/src/OutsideCity.svelte",
+      "line": 2,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/OutsideCity.svelte",
+      "line": 21,
+      "matches": [
+        "Locked · opens with Ring"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/OutsideCity.svelte",
+      "line": 25,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/TileManagement.svelte",
+      "line": 80,
+      "matches": [
+        "WALL_COMPLETE"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/ui/src/WorkshopPanel.svelte",
+      "line": 3,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/WorkshopPanel.svelte",
+      "line": 18,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/__tests__/character-life-session.test.ts",
+      "line": 13,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/ui/src/__tests__/crafting-view.test.ts",
+      "line": 249,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/__tests__/crafting-view.test.ts",
+      "line": 282,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/__tests__/data-inspector.test.ts",
+      "line": 41,
+      "matches": [
+        "buildings.json', 32"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/ui/src/__tests__/data-inspector.test.ts",
+      "line": 42,
+      "matches": [
+        "tuning.json', 9"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/__tests__/society-view.test.ts",
+      "line": 3,
+      "matches": [
+        "insideTiers"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/__tests__/society-view.test.ts",
+      "line": 5,
+      "matches": [
+        "insideTiers"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/__tests__/society-view.test.ts",
+      "line": 32,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/ui/src/__tests__/world-session.test.ts",
+      "line": 95,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/ui/src/data-inspector.ts",
+      "line": 2,
+      "matches": [
+        "SOCIETY_BUILDINGS",
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/data-inspector.ts",
+      "line": 3,
+      "matches": [
+        "SOCIETY_TRIAL"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/data-inspector.ts",
+      "line": 24,
+      "matches": [
+        "SOCIETY_BUILDINGS",
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/data-inspector.ts",
+      "line": 26,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/data-inspector.ts",
+      "line": 27,
+      "matches": [
+        "SOCIETY_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/data-inspector.ts",
+      "line": 39,
+      "matches": [
+        "SOCIETY_TRIAL"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/items-view.ts",
+      "line": 1,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/items-view.ts",
+      "line": 48,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/society-view.ts",
+      "line": 1,
+      "matches": [
+        "SOCIETY_BUILDINGS",
+        "SOCIETY_PLOT_IDS",
+        "SocietyTier",
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/ui/src/society-view.ts",
+      "line": 9,
+      "matches": [
+        "SOCIETY_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/society-view.ts",
+      "line": 27,
+      "matches": [
+        "insideTiers"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/society-view.ts",
+      "line": 28,
+      "matches": [
+        "SocietyTier"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/ui/src/society-view.ts",
+      "line": 29,
+      "matches": [
+        "SOCIETY_PLOT_IDS",
+        "SocietyTier",
+        "societyPlot(",
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/society-view.ts",
+      "line": 32,
+      "matches": [
+        "societyPlot("
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/society-view.ts",
+      "line": 34,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/ui/src/society-view.ts",
+      "line": 35,
+      "matches": [
+        "SOCIETY_BUILDINGS",
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/ui/src/society-view.ts",
+      "line": 38,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/society-view.ts",
+      "line": 40,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/society-view.ts",
+      "line": 52,
+      "matches": [
+        "SOCIETY_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/society-view.ts",
+      "line": 56,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/ui/src/society-view.ts",
+      "line": 57,
+      "matches": [
+        "SOCIETY_PLOT_IDS",
+        "societyPlot("
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "packages/ui/src/society-view.ts",
+      "line": 72,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/society-view.ts",
+      "line": 77,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/society-view.ts",
+      "line": 84,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "packages/ui/src/society-view.ts",
+      "line": 95,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "tests/e2e/character-life-boundary.spec.ts",
+      "line": 6,
+      "matches": [
+        "SOCIETY_PLOT_IDS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "tests/e2e/character-life-boundary.spec.ts",
+      "line": 180,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "tests/e2e/character-life-boundary.spec.ts",
+      "line": 208,
+      "matches": [
+        "SOCIETY_PLOT_IDS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "tests/e2e/character-life-boundary.spec.ts",
+      "line": 209,
+      "matches": [
+        "societyPlot("
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "tests/e2e/character-life-boundary.spec.ts",
+      "line": 210,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "tests/e2e/character-life-navigation.helpers.ts",
+      "line": 3,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "tests/e2e/character-life-navigation.helpers.ts",
+      "line": 228,
+      "matches": [
+        "TRIAL_BUILDINGS"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "tests/e2e/crime.spec.ts",
+      "line": 9,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "tests/e2e/crisis.spec.ts",
+      "line": 9,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "tests/e2e/garrison.spec.ts",
+      "line": 22,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "tests/e2e/goods-stock.spec.ts",
+      "line": 26,
+      "matches": [
+        "unpaidUpkeepMilli).toBe("
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "tests/e2e/items.spec.ts",
+      "line": 133,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "tests/e2e/laws.spec.ts",
+      "line": 24,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "tests/e2e/ledger.spec.ts",
+      "line": 11,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "tests/e2e/outside.spec.ts",
+      "line": 15,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "tests/e2e/outside.spec.ts",
+      "line": 22,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "tests/e2e/outside.spec.ts",
+      "line": 24,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "tests/e2e/outside.spec.ts",
+      "line": 29,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "tests/e2e/outside.spec.ts",
+      "line": 34,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "tests/e2e/outside.spec.ts",
+      "line": 44,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "tests/e2e/outside.spec.ts",
+      "line": 58,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "tests/e2e/society.spec.ts",
+      "line": 17,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "tests/e2e/society.spec.ts",
+      "line": 25,
+      "matches": [
+        "Locked · opens with Ring"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "tests/e2e/society.spec.ts",
+      "line": 29,
+      "matches": [
+        "plots open"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "tests/e2e/society.spec.ts",
+      "line": 48,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "tests/e2e/storage.spec.ts",
+      "line": 14,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "tests/e2e/tile-local-checkpoint.spec.ts",
+      "line": 69,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "tests/e2e/tile-population.spec.ts",
+      "line": 8,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    },
+    {
+      "file": "tests/e2e/tile-save.spec.ts",
+      "line": 12,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "tests/e2e/title.spec.ts",
+      "line": 149,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "tests/e2e/title.spec.ts",
+      "line": 185,
+      "matches": [
+        "society-v10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "tests/e2e/world-session.spec.ts",
+      "line": 23,
+      "matches": [
+        "tile-society-10"
+      ],
+      "disposition": "covered by source replacement"
+    },
+    {
+      "file": "tests/e2e/world-session.spec.ts",
+      "line": 44,
+      "matches": [
+        "wallRing"
+      ],
+      "disposition": "dynamic, unchanged smaller-ring check, or existing threshold; see scope notes"
+    }
+  ]
+}

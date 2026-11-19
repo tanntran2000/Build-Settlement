@@ -1,0 +1,9 @@
+﻿
+> build-settlement@0.1.0 typecheck:simulation
+> tsc -p packages/simulation/tsconfig.json --noEmit
+
+packages/simulation/src/__tests__/tile-trial-p7b.test.ts(5,40): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/character-life-session.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src'. 'rootDir' is expected to contain all source files.
+packages/ui/src/character-life-session.ts(3,42): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/indexeddb-store.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src'. 'rootDir' is expected to contain all source files.
+packages/ui/src/character-life-session.ts(4,44): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/world-npc-session.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src'. 'rootDir' is expected to contain all source files.
+packages/ui/src/world-npc-session.ts(3,41): error TS6059: File 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/world-session.ts' is not under 'rootDir' 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src'. 'rootDir' is expected to contain all source files.
+Exit code: 2

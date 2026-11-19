@@ -1,0 +1,56 @@
+{
+  "utcRecorded": "2026-11-19T10:43:43+00:00",
+  "base": "27f4dc2e0ea6ed4f12e79fab6366d11fb555551b",
+  "tree": "a0ea6329441e75df363b356052528f1426233281",
+  "branch": "feat/p7b-map-estates",
+  "gitStatusPorcelain": "",
+  "approvedSha256": {
+    "binding-plan-e1911e6.md": "c403a371c6fe305faf56f3c25b63c74b5d81dd386bf38bd3058f7956b914116e",
+    "STEP0-HOLD.md": "466bf295c326e0b1453addc0167677a54f5269fdf41f48b2d875f858f7aced6a",
+    "source-replacements.json": "df05c5f3344c11dce410a1529f16afd1f9e89653345de094001b2c380a5ee686",
+    "generated-byte-proposals.json": "a496533bd933f73a00fc81df77bc2d516ccba6052a60fd6d22bc5e101d15397e"
+  },
+  "approvedPacketBaselineHunksMatched": 157,
+  "scope": "Read-only byte overlays of the pinned approval. Source was loaded in memory. The worktree has no prospective B1 product or test bytes.",
+  "compilerCommandExit": 0,
+  "compilerCommandMeaning": "The diagnostic driver finished. Its reported diagnostics are probe findings, not a clean typecheck gate.",
+  "compilerDiagnostics": {
+    "core": [],
+    "simulation": [],
+    "persistence": [],
+    "e2e": [
+      {
+        "file": "tests/e2e/society.spec.ts",
+        "line": 63,
+        "code": 2304,
+        "message": "Cannot find name 'keyActivate'."
+      },
+      {
+        "file": "tests/e2e/society.spec.ts",
+        "line": 70,
+        "code": 2304,
+        "message": "Cannot find name 'keyActivate'."
+      },
+      {
+        "file": "tests/e2e/society.spec.ts",
+        "line": 73,
+        "code": 2304,
+        "message": "Cannot find name 'keyActivate'."
+      }
+    ]
+  },
+  "firstHallBuild": {
+    "command": {
+      "type": "BUILD",
+      "tileId": "house-5",
+      "typeId": "retainers-hall",
+      "expectedRevision": 0
+    },
+    "context": "Ring 2. Estate Hall exists. An enabled L1 Builders’ Yard has exactly 2 workers. All required stocks are present.",
+    "initialGoldMilli": 45000,
+    "observedGoldMilli": 31500,
+    "expectedChargeMilli": 15000,
+    "observedChargeMilli": 13500,
+    "observedSuccess": true
+  }
+}

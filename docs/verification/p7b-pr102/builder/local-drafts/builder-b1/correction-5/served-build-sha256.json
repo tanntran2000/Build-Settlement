@@ -1,0 +1,63 @@
+{
+  "checkedAt": "2026-11-19T12:36:35.448Z",
+  "services": [
+    {
+      "port": 4173,
+      "script": "preview",
+      "dist": "packages/ui/dist",
+      "command": "npm run preview --workspace=@haven/ui -- --port 4173 --strictPort",
+      "pid": 13772,
+      "assets": [
+        {
+          "path": "assets/PixelifySans-Variable-lrcDQVzA.ttf",
+          "localSha256": "9ba86cd010a4de309d263ceff8e8044092c9db7efda869620cb9ff1c4389e8a5",
+          "servedSha256": "9ba86cd010a4de309d263ceff8e8044092c9db7efda869620cb9ff1c4389e8a5"
+        },
+        {
+          "path": "assets/index-BSrswIrG.js",
+          "localSha256": "88235edda359759467e8dcafdc5346fb3bafe509ee017cb119e4edae64f4e120",
+          "servedSha256": "88235edda359759467e8dcafdc5346fb3bafe509ee017cb119e4edae64f4e120"
+        },
+        {
+          "path": "assets/index-D94IJs5c.css",
+          "localSha256": "da3d5e95ed95e7033a8d972ddc7d01b36086c01586d073876873b485f38dc447",
+          "servedSha256": "da3d5e95ed95e7033a8d972ddc7d01b36086c01586d073876873b485f38dc447"
+        },
+        {
+          "path": "index.html",
+          "localSha256": "9ba92dff17f55a1d6fbbea1ae9909662d78d9f0ead088d4bdf67eb4665376aab",
+          "servedSha256": "9ba92dff17f55a1d6fbbea1ae9909662d78d9f0ead088d4bdf67eb4665376aab"
+        }
+      ]
+    },
+    {
+      "port": 4174,
+      "script": "preview:regression",
+      "dist": "packages/ui/regression/dist",
+      "command": "npm run preview:regression --workspace=@haven/ui -- --port 4174 --strictPort",
+      "pid": 26988,
+      "assets": [
+        {
+          "path": "assets/PixelifySans-Variable-lrcDQVzA.ttf",
+          "localSha256": "9ba86cd010a4de309d263ceff8e8044092c9db7efda869620cb9ff1c4389e8a5",
+          "servedSha256": "9ba86cd010a4de309d263ceff8e8044092c9db7efda869620cb9ff1c4389e8a5"
+        },
+        {
+          "path": "assets/index-BSrswIrG.js",
+          "localSha256": "88235edda359759467e8dcafdc5346fb3bafe509ee017cb119e4edae64f4e120",
+          "servedSha256": "88235edda359759467e8dcafdc5346fb3bafe509ee017cb119e4edae64f4e120"
+        },
+        {
+          "path": "assets/index-D94IJs5c.css",
+          "localSha256": "da3d5e95ed95e7033a8d972ddc7d01b36086c01586d073876873b485f38dc447",
+          "servedSha256": "da3d5e95ed95e7033a8d972ddc7d01b36086c01586d073876873b485f38dc447"
+        },
+        {
+          "path": "index.html",
+          "localSha256": "0ca0ab77e093470580ef8b334dd3035f02e77aa296ec8dc21ad5e96d77bddab6",
+          "servedSha256": "0ca0ab77e093470580ef8b334dd3035f02e77aa296ec8dc21ad5e96d77bddab6"
+        }
+      ]
+    }
+  ]
+}

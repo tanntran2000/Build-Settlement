@@ -1,0 +1,63 @@
+{
+  "checkedAt": "2026-11-19T11:21:53.406Z",
+  "services": [
+    {
+      "port": 4173,
+      "script": "preview",
+      "dist": "packages/ui/dist",
+      "command": "npm run preview --workspace=@haven/ui -- --port 4173 --strictPort",
+      "pid": 27444,
+      "assets": [
+        {
+          "path": "assets/PixelifySans-Variable-lrcDQVzA.ttf",
+          "localSha256": "9ba86cd010a4de309d263ceff8e8044092c9db7efda869620cb9ff1c4389e8a5",
+          "servedSha256": "9ba86cd010a4de309d263ceff8e8044092c9db7efda869620cb9ff1c4389e8a5"
+        },
+        {
+          "path": "assets/index-D94IJs5c.css",
+          "localSha256": "da3d5e95ed95e7033a8d972ddc7d01b36086c01586d073876873b485f38dc447",
+          "servedSha256": "da3d5e95ed95e7033a8d972ddc7d01b36086c01586d073876873b485f38dc447"
+        },
+        {
+          "path": "assets/index-DUc10Bsf.js",
+          "localSha256": "298ca35d98f955f5b9f0155367daecb8700a52f8fb082cde59f9ed43a5a5ca27",
+          "servedSha256": "298ca35d98f955f5b9f0155367daecb8700a52f8fb082cde59f9ed43a5a5ca27"
+        },
+        {
+          "path": "index.html",
+          "localSha256": "d56d16d3b528bf3aed5a736ca47b789d5619d93fd6ddd08a850acae693b7da70",
+          "servedSha256": "d56d16d3b528bf3aed5a736ca47b789d5619d93fd6ddd08a850acae693b7da70"
+        }
+      ]
+    },
+    {
+      "port": 4174,
+      "script": "preview:regression",
+      "dist": "packages/ui/regression/dist",
+      "command": "npm run preview:regression --workspace=@haven/ui -- --port 4174 --strictPort",
+      "pid": 28300,
+      "assets": [
+        {
+          "path": "assets/PixelifySans-Variable-lrcDQVzA.ttf",
+          "localSha256": "9ba86cd010a4de309d263ceff8e8044092c9db7efda869620cb9ff1c4389e8a5",
+          "servedSha256": "9ba86cd010a4de309d263ceff8e8044092c9db7efda869620cb9ff1c4389e8a5"
+        },
+        {
+          "path": "assets/index-D94IJs5c.css",
+          "localSha256": "da3d5e95ed95e7033a8d972ddc7d01b36086c01586d073876873b485f38dc447",
+          "servedSha256": "da3d5e95ed95e7033a8d972ddc7d01b36086c01586d073876873b485f38dc447"
+        },
+        {
+          "path": "assets/index-DUc10Bsf.js",
+          "localSha256": "298ca35d98f955f5b9f0155367daecb8700a52f8fb082cde59f9ed43a5a5ca27",
+          "servedSha256": "298ca35d98f955f5b9f0155367daecb8700a52f8fb082cde59f9ed43a5a5ca27"
+        },
+        {
+          "path": "index.html",
+          "localSha256": "bc3b539dd605c46a9cdfcce70b0a52f384924c8e124d02a5188bc53a31616717",
+          "servedSha256": "bc3b539dd605c46a9cdfcce70b0a52f384924c8e124d02a5188bc53a31616717"
+        }
+      ]
+    }
+  ]
+}

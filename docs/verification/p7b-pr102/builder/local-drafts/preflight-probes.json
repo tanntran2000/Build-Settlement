@@ -1,0 +1,153 @@
+{
+  "transactions": [
+    {
+      "gold": 5500,
+      "paid": 4500,
+      "unpaid": 0,
+      "immigration": {
+        "populationBefore": 100,
+        "arrivals": 0,
+        "populationAfter": 100,
+        "target": 100,
+        "usefulWorkerSlots": 10,
+        "renewableFoodMilli": 8000,
+        "reason": "no-capacity"
+      }
+    },
+    {
+      "gold": 0,
+      "paid": 1500,
+      "unpaid": 3000,
+      "immigration": {
+        "populationBefore": 100,
+        "arrivals": 0,
+        "populationAfter": 100,
+        "target": 100,
+        "usefulWorkerSlots": 10,
+        "renewableFoodMilli": 8000,
+        "reason": "no-capacity"
+      }
+    },
+    {
+      "gold": 499,
+      "paid": 1500,
+      "unpaid": 3000,
+      "immigration": {
+        "populationBefore": 100,
+        "arrivals": 0,
+        "populationAfter": 100,
+        "target": 100,
+        "usefulWorkerSlots": 10,
+        "renewableFoodMilli": 6000,
+        "reason": "no-capacity"
+      }
+    },
+    {
+      "gold": 8500,
+      "paid": 4500,
+      "unpaid": 0,
+      "immigration": {
+        "populationBefore": 100,
+        "arrivals": 0,
+        "populationAfter": 100,
+        "target": 0,
+        "usefulWorkerSlots": 10,
+        "renewableFoodMilli": 0,
+        "reason": "no-capacity"
+      }
+    },
+    {
+      "gold": 5500,
+      "paid": 4500,
+      "unpaid": 0,
+      "immigration": {
+        "populationBefore": 100,
+        "arrivals": 0,
+        "populationAfter": 100,
+        "target": 0,
+        "usefulWorkerSlots": 10,
+        "renewableFoodMilli": 0,
+        "reason": "no-capacity"
+      }
+    }
+  ],
+  "recover": {
+    "first": {
+      "gold": 1450,
+      "paid": 2000,
+      "unpaid": 4500,
+      "immigration": {
+        "populationBefore": 100,
+        "arrivals": 0,
+        "populationAfter": 100,
+        "target": 90,
+        "usefulWorkerSlots": 10,
+        "renewableFoodMilli": 4000,
+        "reason": "no-capacity"
+      }
+    },
+    "opening": 1450,
+    "without": {
+      "gold": 1414,
+      "paid": 3000,
+      "unpaid": 0,
+      "immigration": {
+        "populationBefore": 100,
+        "arrivals": 0,
+        "populationAfter": 100,
+        "target": 0,
+        "usefulWorkerSlots": 0,
+        "renewableFoodMilli": 0,
+        "reason": "no-capacity"
+      }
+    },
+    "with": {
+      "gold": 4414,
+      "paid": 3000,
+      "unpaid": 0,
+      "immigration": {
+        "populationBefore": 100,
+        "arrivals": 0,
+        "populationAfter": 100,
+        "target": 0,
+        "usefulWorkerSlots": 0,
+        "renewableFoodMilli": 0,
+        "reason": "no-capacity"
+      }
+    },
+    "withMinimum": 3000
+  },
+  "tight": {
+    "gold": 1450,
+    "paid": 6500,
+    "unpaid": 0,
+    "immigration": {
+      "populationBefore": 100,
+      "arrivals": 0,
+      "populationAfter": 100,
+      "target": 136,
+      "usefulWorkerSlots": 15,
+      "renewableFoodMilli": 6000,
+      "reason": "target-unfunded"
+    }
+  },
+  "noGold": {
+    "gold": 400,
+    "paid": 1000,
+    "unpaid": 4000,
+    "immigration": {
+      "populationBefore": 100,
+      "arrivals": 0,
+      "populationAfter": 100,
+      "target": 0,
+      "usefulWorkerSlots": 5,
+      "renewableFoodMilli": 0,
+      "reason": "no-capacity"
+    }
+  },
+  "goldenBaselineExit": 0,
+  "baselineGoldenReproduced": true,
+  "prospectiveGoldenExit": 0,
+  "prospectiveFixtureInputs": 10,
+  "scope": "In-memory checkout source reading and projected data only. Exit status is for the diagnostic command, without a B1 test or build claim."
+}

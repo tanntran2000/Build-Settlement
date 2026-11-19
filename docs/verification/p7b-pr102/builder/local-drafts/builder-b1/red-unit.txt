@@ -1,0 +1,2469 @@
+﻿UTC 2026-11-19T10:50:14.9091723Z
+HEAD 27f4dc2e0ea6ed4f12e79fab6366d11fb555551b
+Tree a0ea6329441e75df363b356052528f1426233281
+CI=1
+Command: 
+npm.cmd test -- packages/core/src/trial/__tests__/society-p7b.test.ts packages/simulation/src/__tests__/tile-trial-p7b.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/core/src/trial/__tests__/society-p7b.test.ts packages/simulation/src/__tests__/tile-trial-p7b.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/core/src/trial/__tests__/society-p7b.test.ts (12 tests | 12 failed) 87ms
+   × starts with both fixed level-one estates and 43 town plots 19ms
+   × reads NPC beds by type and level and pins the five catalog rows 6ms
+   × rejects a malformed mansion NPC bed table [10,20] 3ms
+   × rejects a malformed mansion NPC bed table [10,10,30] 3ms
+   × rejects a malformed retainers-hall NPC bed table [25,-1] 2ms
+   × uses the v11 ruleset and refuses the v10 checkpoint unchanged 40ms
+   × rejects a v11 planning save with empty 2ms
+   × rejects a v11 planning save with swapped 2ms
+   × rejects a v11 planning save with paused 2ms
+   × rejects a v11 planning save with staffed 2ms
+   × rejects a v11 planning save with duplicate acquisition 1ms
+   × rejects a v11 planning save with third Hall 1ms
+ ❯ packages/simulation/src/__tests__/tile-trial-p7b.test.ts (28 tests | 28 failed) 430ms
+   × refuses Ring 4 with a absent Counting House 49ms
+   × refuses Ring 4 with a paused Counting House 17ms
+   × refuses Ring 4 with a understaffed Counting House 15ms
+   × refuses Ring 4 with only gold 99999 14ms
+   × refuses Ring 4 with only wood 59999 13ms
+   × refuses Ring 4 with only iron 29999 14ms
+   × refuses Ring 4 with only stone 44999 14ms
+   × charges the exact Ring 4 cost with no Yard discount and then reports completion 6ms
+   × locks house-12 until Ring 4 16ms
+   × locks house-13 until Ring 4 16ms
+   × locks house-14 until Ring 4 12ms
+   × locks service-7 until Ring 4 13ms
+   × locks service-8 until Ring 4 13ms
+   × locks spec-11 until Ring 4 15ms
+   × locks spec-12 until Ring 4 14ms
+   × locks slum-7 until Ring 4 12ms
+   × locks slum-8 until Ring 4 17ms
+   × locks slum-9 until Ring 4 12ms
+   × allows only UPGRADE on estate-1 16ms
+   × allows only UPGRADE on estate-2 13ms
+   × protects an occupied housing Hall through trusted occupancy and can replace an empty one 12ms
+   × caps guild at one per city across BUILD and REPLACE 2ms
+   × caps auction-house at one per city across BUILD and REPLACE 2ms
+   × caps slave-market at one per city across BUILD and REPLACE 2ms
+   × caps Retainers Hall at two with atomic refusal on BUILD and REPLACE 3ms
+   × charges exactly 15000 Gold milli for a housing Hall with an operating Builders Yard 2ms
+   × keeps named beds outside resident housing and funds fixed upkeep 27ms
+   × decodes normalized v10 rows only to refuse the old checkpoint unchanged 65ms
+cmd.exe : 
+At line:7 char:1
++ cmd.exe /d /s /c @'
++ ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯ Failed Tests 40 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > refuses Ring 4 with a absent Counting House
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > refuses Ring 4 with a paused Counting House
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > refuses Ring 4 with a understaffed Counting House
+AssertionError: expected { success: false, …(2) } to strictly equal { success: false, …(2) }
+
+- Expected
++ Received
+
+@@ -1,9 +1,9 @@
+  {
+    "error": {
+-     "code": "PREREQUISITE_MISSING",
+-     "message": "An operating prerequisite building is required.",
++     "code": "WALL_COMPLETE",
++     "message": "All wall rings are open.",
+    },
+    "state": {
+      "goodsStock": {
+        "amountMilli": 10000,
+        "rulesetId": "tile-population-goods-01",
+
+ ❯ refuse packages/simulation/src/__tests__/tile-trial-p7b.test.ts:24:18
+     22|   const before = structuredClone(city);
+     23|   const result = run(city, command, occupied);
+     24|   expect(result).toStrictEqual({ success: false, state: before, error:…
+       |                  ^
+     25|   expect(city).toStrictEqual(before);
+     26|   if (!result.success) expect(result.state).toBe(city);
+ ❯ packages/simulation/src/__tests__/tile-trial-p7b.test.ts:55:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/40]⎯
+
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > refuses Ring 4 with only gold 99999
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > refuses Ring 4 with only wood 59999
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > refuses Ring 4 with only iron 29999
+AssertionError: expected { success: false, …(2) } to strictly equal { success: false, …(2) }
+
+- Expected
++ Received
+
+@@ -1,9 +1,9 @@
+  {
+    "error": {
+-     "code": "INSUFFICIENT_RESOURCES",
+-     "message": "Not enough resources to extend the wall.",
++     "code": "WALL_COMPLETE",
++     "message": "All wall rings are open.",
+    },
+    "state": {
+      "goodsStock": {
+        "amountMilli": 10000,
+        "rulesetId": "tile-population-goods-01",
+
+ ❯ refuse packages/simulation/src/__tests__/tile-trial-p7b.test.ts:24:18
+     22|   const before = structuredClone(city);
+     23|   const result = run(city, command, occupied);
+     24|   expect(result).toStrictEqual({ success: false, state: before, error:…
+       |                  ^
+     25|   expect(city).toStrictEqual(before);
+     26|   if (!result.success) expect(result.state).toBe(city);
+ ❯ packages/simulation/src/__tests__/tile-trial-p7b.test.ts:65:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/40]⎯
+
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > refuses Ring 4 with only stone 44999
+AssertionError: expected { success: false, …(2) } to strictly equal { success: false, …(2) }
+
+- Expected
++ Received
+
+@@ -1,9 +1,9 @@
+  {
+    "error": {
+-     "code": "INSUFFICIENT_RESOURCES",
+-     "message": "Not enough Stone to extend the wall.",
++     "code": "WALL_COMPLETE",
++     "message": "All wall rings are open.",
+    },
+    "state": {
+      "goodsStock": {
+        "amountMilli": 10000,
+        "rulesetId": "tile-population-goods-01",
+
+ ❯ refuse packages/simulation/src/__tests__/tile-trial-p7b.test.ts:24:18
+     22|   const before = structuredClone(city);
+     23|   const result = run(city, command, occupied);
+     24|   expect(result).toStrictEqual({ success: false, state: before, error:…
+       |                  ^
+     25|   expect(city).toStrictEqual(before);
+     26|   if (!result.success) expect(result.state).toBe(city);
+ ❯ packages/simulation/src/__tests__/tile-trial-p7b.test.ts:65:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/40]⎯
+
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > charges the exact Ring 4 cost with no Yard discount 
+and then reports completion
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ success packages/simulation/src/__tests__/tile-trial-p7b.test.ts:17:26
+     15| function success(city: TileTrialState, command: Record<string, unknown…
+     16|   const result = run(city, command);
+     17|   expect(result.success).toBe(true);
+       |                          ^
+     18|   if (!result.success) throw Error(result.error.message);
+     19|   return result;
+ ❯ packages/simulation/src/__tests__/tile-trial-p7b.test.ts:73:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/40]⎯
+
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > locks house-12 until Ring 4
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > locks house-13 until Ring 4
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > locks house-14 until Ring 4
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > locks service-7 until Ring 4
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > locks service-8 until Ring 4
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > locks spec-11 until Ring 4
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > locks spec-12 until Ring 4
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > locks slum-7 until Ring 4
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > locks slum-8 until Ring 4
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > locks slum-9 until Ring 4
+AssertionError: expected { success: false, …(2) } to strictly equal { success: false, …(2) }
+
+- Expected
++ Received
+
+@@ -1,9 +1,9 @@
+  {
+    "error": {
+-     "code": "LOCKED_PLOT",
+-     "message": "Extend the wall first.",
++     "code": "INVALID_TILE",
++     "message": "Select a valid tile.",
+    },
+    "state": {
+      "goodsStock": {
+        "amountMilli": 10000,
+        "rulesetId": "tile-population-goods-01",
+
+ ❯ refuse packages/simulation/src/__tests__/tile-trial-p7b.test.ts:24:18
+     22|   const before = structuredClone(city);
+     23|   const result = run(city, command, occupied);
+     24|   expect(result).toStrictEqual({ success: false, state: before, error:…
+       |                  ^
+     25|   expect(city).toStrictEqual(before);
+     26|   if (!result.success) expect(result.state).toBe(city);
+ ❯ packages/simulation/src/__tests__/tile-trial-p7b.test.ts:89:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/40]⎯
+
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > allows only UPGRADE on estate-1
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > allows only UPGRADE on estate-2
+AssertionError: expected { success: false, …(2) } to strictly equal { success: false, …(2) }
+
+- Expected
++ Received
+
+@@ -1,9 +1,9 @@
+  {
+    "error": {
+-     "code": "FIXED_BUILDING",
+-     "message": "This estate is fixed. You can only upgrade its building.",
++     "code": "INVALID_TILE",
++     "message": "Select a valid tile.",
+    },
+    "state": {
+      "goodsStock": {
+        "amountMilli": 10000,
+        "rulesetId": "tile-population-goods-01",
+
+ ❯ refuse packages/simulation/src/__tests__/tile-trial-p7b.test.ts:24:18
+     22|   const before = structuredClone(city);
+     23|   const result = run(city, command, occupied);
+     24|   expect(result).toStrictEqual({ success: false, state: before, error:…
+       |                  ^
+     25|   expect(city).toStrictEqual(before);
+     26|   if (!result.success) expect(result.state).toBe(city);
+ ❯ packages/simulation/src/__tests__/tile-trial-p7b.test.ts:99:6
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/40]⎯
+
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > protects an occupied housing Hall through trusted 
+occupancy and can replace an empty one
+AssertionError: expected { success: false, …(2) } to strictly equal { success: false, …(2) }
+
+- Expected
++ Received
+
+@@ -1,9 +1,9 @@
+  {
+    "error": {
+-     "code": "HOME_OCCUPIED",
+-     "message": "Move all residents out before replacing this home.",
++     "code": "INVALID_STATE",
++     "message": "Trial state is invalid; nothing was changed.",
+    },
+    "state": {
+      "goodsStock": {
+        "amountMilli": 10000,
+        "rulesetId": "tile-population-goods-01",
+
+ ❯ refuse packages/simulation/src/__tests__/tile-trial-p7b.test.ts:24:18
+     22|   const before = structuredClone(city);
+     23|   const result = run(city, command, occupied);
+     24|   expect(result).toStrictEqual({ success: false, state: before, error:…
+       |                  ^
+     25|   expect(city).toStrictEqual(before);
+     26|   if (!result.success) expect(result.state).toBe(city);
+ ❯ packages/simulation/src/__tests__/tile-trial-p7b.test.ts:119:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/40]⎯
+
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > caps guild at one per city across BUILD and REPLACE
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > caps auction-house at one per city across BUILD and 
+REPLACE
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > caps slave-market at one per city across BUILD and 
+REPLACE
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ success packages/simulation/src/__tests__/tile-trial-p7b.test.ts:17:26
+     15| function success(city: TileTrialState, command: Record<string, unknown…
+     16|   const result = run(city, command);
+     17|   expect(result.success).toBe(true);
+       |                          ^
+     18|   if (!result.success) throw Error(result.error.message);
+     19|   return result;
+ ❯ packages/simulation/src/__tests__/tile-trial-p7b.test.ts:132:10
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/40]⎯
+
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > caps Retainers Hall at two with atomic refusal on 
+BUILD and REPLACE
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ success packages/simulation/src/__tests__/tile-trial-p7b.test.ts:17:26
+     15| function success(city: TileTrialState, command: Record<string, unknown…
+     16|   const result = run(city, command);
+     17|   expect(result.success).toBe(true);
+       |                          ^
+     18|   if (!result.success) throw Error(result.error.message);
+     19|   return result;
+ ❯ packages/simulation/src/__tests__/tile-trial-p7b.test.ts:145:10
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/40]⎯
+
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > charges exactly 15000 Gold milli for a housing Hall 
+with an operating Builders Yard
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ success packages/simulation/src/__tests__/tile-trial-p7b.test.ts:17:26
+     15| function success(city: TileTrialState, command: Record<string, unknown…
+     16|   const result = run(city, command);
+     17|   expect(result.success).toBe(true);
+       |                          ^
+     18|   if (!result.success) throw Error(result.error.message);
+     19|   return result;
+ ❯ packages/simulation/src/__tests__/tile-trial-p7b.test.ts:159:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/40]⎯
+
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > keeps named beds outside resident housing and funds 
+fixed upkeep
+AssertionError: expected +0 to be 3000 // Object.is equality
+
+- Expected
++ Received
+
+- 3000
++ 0
+
+ ❯ packages/simulation/src/__tests__/tile-trial-p7b.test.ts:178:65
+    176|   const report = success(city, { type: 'END_WEEK', expectedWeek: 1 }).…
+    177|   const withoutHomes = success(absent, { type: 'END_WEEK', expectedWee…
+    178|   expect(report.upkeepPaidMilli - withoutHomes.upkeepPaidMilli).toBe(3…
+       |                                                                 ^
+    179| });
+    180|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/40]⎯
+
+ FAIL  packages/simulation/src/__tests__/tile-trial-p7b.test.ts > decodes normalized v10 rows only to refuse the old 
+checkpoint unchanged
+AssertionError: expected { success: true, state: { …(5) } } to strictly equal { success: false, …(1) }
+
+- Expected
++ Received
+
+  {
+-   "message": "Local checkpoint not loaded; it was left unchanged. This checkpoint is from an older version of Haven 
+and can no longer be played. Start a New Game.",
+-   "success": false,
++   "state": {
++     "city": {
++       "goodsStock": {
++         "amountMilli": 2750,
++         "rulesetId": "tile-population-goods-01",
++       },
++       "happiness": 90,
++       "phase": "planning",
++       "revision": 10,
++       "society": {
++         "classes": {
++           "bound": {
++             "free": 0,
++             "luminaries": 0,
++             "makers": 0,
++             "merchants": 0,
++           },
++           "free": 55,
++           "luminaries": {
++             "common": 12,
++             "elite": 0,
++           },
++           "makers": {
++             "common": 20,
++             "elite": 0,
++           },
++           "merchants": {
++             "common": 13,
++             "elite": 0,
++           },
++         },
++         "corruption": 40,
++         "crisis": {
++           "calmStreak": 5,
++           "fallCause": null,
++           "hungerStreak": 0,
++           "lastChoice": null,
++           "promise": null,
++           "stage": "none",
++           "weeksInStage": 5,
++         },
++         "debtPressure": {
++           "free": 60,
++           "luminaries": 100,
++           "makers": 0,
++           "merchants": 100,
++         },
++         "desperation": 0,
++         "items": {
++           "consumables": [],
++           "equipped": {},
++           "goals": {
++             "authority": false,
++             "authorityStreak": 0,
++             "calm": false,
++             "rebellionSeen": false,
++             "research": false,
++             "week52": false,
++           },
++           "inventory": [
++             {
++               "defId": "common-top",
++               "id": 1,
++             },
++           ],
++           "market": [
++             {
++               "defId": "common-earrings-npc",
++               "priceMilli": 5000,
++             },
++             {
++               "defId": "common-ring",
++               "priceMilli": 5000,
++             },
++             {
++               "defId": "common-shoes",
++               "priceMilli": 5000,
++             },
++             {
++               "defId": "common-bottom-npc",
++               "priceMilli": 5000,
++             },
++             {
++               "defId": "rare-shoes-player",
++               "priceMilli": 15000,
++             },
++             {
++               "defId": "rare-shoes",
++               "priceMilli": 15000,
++             },
++             {
++               "defId": "epic-ring-player",
++               "priceMilli": 40000,
++             },
++             {
++               "defId": "epic-ring-npc",
++               "priceMilli": 40000,
++             },
++           ],
++           "materials": {},
++           "nextItemId": 2,
++           "storage": [],
++         },
++         "laws": {
++           "active": [],
++           "promise": null,
++           "repealedUntil": {},
++           "votedWeek": null,
++         },
++         "luxuryStockMilli": 0,
++         "order": {
++           "authority": 39,
++           "crime": 5,
++           "security": 10,
++         },
++         "outside": {
++           "field-1": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": false,
++           },
++           "field-2": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": false,
++           },
++           "field-3": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "field-4": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "field-5": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "forest-1": {
++             "capMilli": 60000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 60000,
++             "wild": false,
++           },
++           "forest-2": {
++             "capMilli": 60000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 60000,
++             "wild": false,
++           },
++           "forest-3": {
++             "capMilli": 60000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 60000,
++             "wild": true,
++           },
++           "forest-4": {
++             "capMilli": 60000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 60000,
++             "wild": true,
++           },
++           "forest-5": {
++             "capMilli": 60000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 60000,
++             "wild": true,
++           },
++           "meadow-1": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "meadow-2": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "meadow-3": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "ore-1": {
++             "capMilli": 80000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 80000,
++             "wild": false,
++           },
++           "ore-2": {
++             "capMilli": 80000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 80000,
++             "wild": false,
++           },
++           "ore-3": {
++             "capMilli": 80000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 80000,
++             "wild": true,
++           },
++           "ore-4": {
++             "capMilli": 80000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 80000,
++             "wild": true,
++           },
++           "pasture-1": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "pasture-2": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "pasture-3": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "plain-1": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": false,
++           },
++           "plain-2": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": false,
++           },
++           "plain-3": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": false,
++           },
++           "plain-4": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": false,
++           },
++           "plain-5": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "plain-6": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "plain-7": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "rock-1": {
++             "capMilli": 100000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 100000,
++             "wild": true,
++           },
++           "rock-2": {
++             "capMilli": 100000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 100000,
++             "wild": true,
++           },
++           "rock-3": {
++             "capMilli": 100000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 100000,
++             "wild": true,
++           },
++         },
++         "pendingCard": null,
++         "research": {
++           "completed": [],
++           "paid": [],
++           "progressMilli": {
++             "barracks-drill": 0,
++             "deep-mining": 0,
++             "watch-patrols": 0,
++           },
++           "topic": null,
++         },
++         "rulesetId": "tile-society-10",
++         "satisfaction": {
++           "bound": 80,
++           "free": 90,
++           "luminaries": 90,
++           "makers": 90,
++           "merchants": 90,
++         },
++         "standing": 50,
++         "stocksMilli": {
++           "cloth": 0,
++           "herbs": 0,
++           "stone": 0,
++           "wool": 0,
++         },
++         "tension": 0,
++         "training": {
++           "progressMilli": 0,
++           "target": null,
++         },
++         "wallRing": 1,
++       },
++       "tiles": [
++         {
++           "building": {
++             "enabled": true,
++             "level": 1,
++             "typeId": "farm",
++             "workers": 2,
++           },
++           "id": "field-1",
++           "terrain": "fertile",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 1,
++             "typeId": "processor",
++             "workers": 2,
++           },
++           "id": "plain-1",
++           "terrain": "plain",
++         },
++         {
++           "building": null,
++           "id": "forest-1",
++           "terrain": "forest",
++         },
++         {
++           "building": null,
++           "id": "ore-1",
++           "terrain": "ore",
++         },
++         {
++           "building": null,
++           "id": "plain-2",
++           "terrain": "plain",
++         },
++         {
++           "building": null,
++           "id": "plain-3",
++           "terrain": "plain",
++         },
++         {
++           "building": null,
++           "id": "forest-2",
++           "terrain": "forest",
++         },
++         {
++           "building": null,
++           "id": "ore-2",
++           "terrain": "ore",
++         },
++         {
++           "building": null,
++           "id": "field-2",
++           "terrain": "fertile",
++         },
++         {
++           "building": null,
++           "id": "plain-4",
++           "terrain": "plain",
++         },
++         {
++           "building": null,
++           "id": "field-3",
++           "terrain": "fertile",
++         },
++         {
++           "building": null,
++           "id": "field-4",
++           "terrain": "fertile",
++         },
++         {
++           "building": null,
++           "id": "pasture-1",
++           "terrain": "pasture",
++         },
++         {
++           "building": null,
++           "id": "pasture-2",
++           "terrain": "pasture",
++         },
++         {
++           "building": null,
++           "id": "meadow-1",
++           "terrain": "meadow",
++         },
++         {
++           "building": null,
++           "id": "meadow-2",
++           "terrain": "meadow",
++         },
++         {
++           "building": null,
++           "id": "forest-3",
++           "terrain": "forest",
++         },
++         {
++           "building": null,
++           "id": "rock-1",
++           "terrain": "rock",
++         },
++         {
++           "building": null,
++           "id": "rock-2",
++           "terrain": "rock",
++         },
++         {
++           "building": null,
++           "id": "plain-5",
++           "terrain": "plain",
++         },
++         {
++           "building": null,
++           "id": "field-5",
++           "terrain": "fertile",
++         },
++         {
++           "building": null,
++           "id": "pasture-3",
++           "terrain": "pasture",
++         },
++         {
++           "building": null,
++           "id": "meadow-3",
++           "terrain": "meadow",
++         },
++         {
++           "building": null,
++           "id": "forest-4",
++           "terrain": "forest",
++         },
++         {
++           "building": null,
++           "id": "forest-5",
++           "terrain": "forest",
++         },
++         {
++           "building": null,
++           "id": "ore-3",
++           "terrain": "ore",
++         },
++         {
++           "building": null,
++           "id": "ore-4",
++           "terrain": "ore",
++         },
++         {
++           "building": null,
++           "id": "rock-3",
++           "terrain": "rock",
++         },
++         {
++           "building": null,
++           "id": "plain-6",
++           "terrain": "plain",
++         },
++         {
++           "building": null,
++           "id": "plain-7",
++           "terrain": "plain",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 3,
++             "typeId": "common-housing",
++             "workers": 0,
++           },
++           "id": "house-1",
++           "terrain": "town",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 2,
++             "typeId": "makers-rowhouses",
++             "workers": 0,
++           },
++           "id": "house-2",
++           "terrain": "town",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 2,
++             "typeId": "scholars-quarters",
++             "workers": 0,
++           },
++           "id": "house-3",
++           "terrain": "town",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 1,
++             "typeId": "merchant-townhouses",
++             "workers": 0,
++           },
++           "id": "house-4",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-5",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-6",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-7",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-8",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-9",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-10",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-11",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-1",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-2",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-3",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-4",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-5",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-6",
++           "terrain": "town",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 1,
++             "typeId": "town-market",
++             "workers": 0,
++           },
++           "id": "spec-1",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-2",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-3",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-4",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-5",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-6",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-7",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-8",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-9",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-10",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-1",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-2",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-3",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-4",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-5",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-6",
++           "terrain": "town",
++         },
++       ],
++       "world": {
++         "activeSettlementId": "settlement_haven_01",
++         "settlements": {
++           "settlement_haven_01": {
++             "cohorts": [
++               {
++                 "averageHealth": 80,
++                 "count": 100,
++                 "id": "weekly_middle",
++                 "legalStatus": "citizen",
++                 "livingStandard": "decent",
++                 "loyalty": 80,
++                 "morale": 80,
++                 "occupation": "worker",
++                 "productivity": 80,
++                 "resentment": 0,
++                 "socialClass": "common",
++               },
++             ],
++             "foodProcessorOperational": true,
++             "id": "settlement_haven_01",
++             "inventory": {
++               "food": 20000,
++               "gold": 51890,
++               "iron": 4000,
++               "wheat": 0,
++               "wood": 8000,
++             },
++             "name": "Haven",
++             "status": "active",
++           },
++         },
++         "week": 6,
++         "worldMetadata": {
++           "gameVersion": "0.1.0",
++           "worldSeed": 20261028,
++         },
++       },
++     },
++     "npcs": [
++       {
++         "character": {
++           "age": 27,
++           "emotions": {
++             "anger": 0,
++             "fear": 10,
++             "hope": 70,
++             "jealousy": 0,
++             "joy": 50,
++             "sadness": 10,
++             "shame": 0,
++             "stress": 20,
++           },
++           "gender": "female",
++           "health": 100,
++           "id": "npc_starter_1",
++           "legalStatus": "citizen",
++           "memories": [],
++           "name": "Lydia",
++           "needs": {
++             "autonomy": 60,
++             "intimacy": 40,
++             "nutrition": 80,
++             "purpose": 50,
++             "recognition": 50,
++             "safety": 70,
++           },
++           "occupation": "technician",
++           "relationshipToPlayer": {
++             "affection": 20,
++             "attraction": 10,
++             "dependency": 20,
++             "familiarity": 10,
++             "fear": 10,
++             "resentment": 0,
++             "respect": 30,
++             "trust": 30,
++           },
++           "skills": {
++             "combat": 30,
++             "management": 40,
++             "medical": 15,
++             "negotiation": 25,
++             "technical": 65,
++           },
++           "socialClass": "skilled",
++         },
++         "life": {
++           "arousal": 10,
++           "beauty": 60,
++           "birthWeek": -1079,
++           "history": {
++             "counters": {},
++             "recent": [],
++           },
++           "hobbies": [
++             "cooking",
++             "reading",
++           ],
++           "lust": 25,
++           "lustBase": 25,
++           "mind": 50,
++           "origin": "scholar_district",
++           "sexExp": {
++             "ass": {
++               "exp": 0,
++               "level": "novice",
++             },
++             "breast": {
++               "exp": 0,
++               "level": "novice",
++             },
++             "hand": {
++               "exp": 0,
++               "level": "novice",
++             },
++             "mouth": {
++               "exp": 0,
++               "level": "novice",
++             },
++             "vagina": {
++               "exp": 0,
++               "level": "novice",
++             },
++           },
++           "stress": 0,
++           "working": true,
++         },
++         "postTileId": null,
++         "traits": [
++           "frugal",
++           "restless",
++         ],
++       },
++       {
++         "character": {
++           "age": 31,
++           "emotions": {
++             "anger": 0,
++             "fear": 10,
++             "hope": 70,
++             "jealousy": 0,
++             "joy": 50,
++             "sadness": 10,
++             "shame": 0,
++             "stress": 20,
++           },
++           "gender": "female",
++           "health": 85,
++           "id": "npc_starter_2",
++           "legalStatus": "free_resident",
++           "memories": [],
++           "name": "Tessa",
++           "needs": {
++             "autonomy": 60,
++             "intimacy": 40,
++             "nutrition": 80,
++             "purpose": 50,
++             "recognition": 50,
++             "safety": 70,
++           },
++           "occupation": "doctor",
++           "relationshipToPlayer": {
++             "affection": 20,
++             "attraction": 10,
++             "dependency": 20,
++             "familiarity": 10,
++             "fear": 10,
++             "resentment": 0,
++             "respect": 30,
++             "trust": 30,
++           },
++           "skills": {
++             "combat": 10,
++             "management": 35,
++             "medical": 65,
++             "negotiation": 45,
++             "technical": 20,
++           },
++           "socialClass": "skilled",
++         },
++         "life": {
++           "arousal": 15,
++           "beauty": 46,
++           "birthWeek": -1239,
++           "history": {
++             "counters": {},
++             "recent": [],
++           },
++           "hobbies": [
++             "stargazing",
++             "music",
++           ],
++           "lust": 33,
++           "lustBase": 33,
++           "mind": 50,
++           "origin": "farming_village",
++           "sexExp": {
++             "ass": {
++               "exp": 0,
++               "level": "novice",
++             },
++             "breast": {
++               "exp": 0,
++               "level": "novice",
++             },
++             "hand": {
++               "exp": 0,
++               "level": "novice",
++             },
++             "mouth": {
++               "exp": 0,
++               "level": "novice",
++             },
++             "vagina": {
++               "exp": 0,
++               "level": "novice",
++             },
++           },
++           "stress": 0,
++           "working": true,
++         },
++         "postTileId": null,
++         "traits": [
++           "steady_hands",
++         ],
++       },
++       {
++         "character": {
++           "age": 24,
++           "emotions": {
++             "anger": 0,
++             "fear": 10,
++             "hope": 70,
++             "jealousy": 0,
++             "joy": 50,
++             "sadness": 10,
++             "shame": 0,
++             "stress": 20,
++           },
++           "gender": "female",
++           "health": 100,
++           "id": "npc_starter_3",
++           "legalStatus": "contract_bound",
++           "memories": [],
++           "name": "Wendy",
++           "needs": {
++             "autonomy": 60,
++             "intimacy": 40,
++             "nutrition": 80,
++             "purpose": 50,
++             "recognition": 50,
++             "safety": 70,
++           },
++           "occupation": "trader",
++           "relationshipToPlayer": {
++             "affection": 20,
++             "attraction": 10,
++             "dependency": 20,
++             "familiarity": 10,
++             "fear": 10,
++             "resentment": 0,
++             "respect": 30,
++             "trust": 30,
++           },
++           "skills": {
++             "combat": 35,
++             "management": 50,
++             "medical": 20,
++             "negotiation": 60,
++             "technical": 15,
++           },
++           "socialClass": "common",
++         },
++         "life": {
++           "arousal": 10,
++           "beauty": 43,
++           "birthWeek": -959,
++           "history": {
++             "counters": {},
++             "recent": [],
++           },
++           "hobbies": [
++             "sewing",
++             "gardening",
++           ],
++           "lust": 25,
++           "lustBase": 25,
++           "mind": 50,
++           "origin": "frontier",
++           "sexExp": {
++             "ass": {
++               "exp": 0,
++               "level": "novice",
++             },
++             "breast": {
++               "exp": 0,
++               "level": "novice",
++             },
++             "hand": {
++               "exp": 0,
++               "level": "novice",
++             },
++             "mouth": {
++               "exp": 0,
++               "level": "novice",
++             },
++             "vagina": {
++               "exp": 0,
++               "level": "novice",
++             },
++           },
++           "stress": 0,
++           "working": true,
++         },
++         "postTileId": null,
++         "traits": [
++           "blunt",
++         ],
++       },
++     ],
++     "outside": {
++       "actors": [
++         "player",
++         "ai-1",
++         "ai-2",
++       ],
++       "generator": "outside-gen-01",
++       "scenarioId": "outside-trial-01",
++       "seed": 20261028,
++       "tiles": [
++         {
++           "feature": null,
++           "id": "o01",
++           "knownBy": [
++             "ai-1",
++           ],
++           "owner": "ai-1",
++         },
++         {
++           "feature": null,
++           "id": "o02",
++           "knownBy": [
++             "ai-1",
++           ],
++           "owner": "ai-1",
++         },
++         {
++           "feature": null,
++           "id": "o03",
++           "knownBy": [
++             "ai-1",
++           ],
++           "owner": "ai-1",
++         },
++         {
++           "feature": null,
++           "id": "o04",
++           "knownBy": [
++             "ai-1",
++           ],
++           "owner": "ai-1",
++         },
++         {
++           "feature": null,
++           "id": "o05",
++           "knownBy": [
++             "ai-1",
++           ],
++           "owner": "ai-1",
++         },
++         {
++           "feature": null,
++           "id": "o06",
++           "knownBy": [
++             "ai-2",
++           ],
++           "owner": "ai-2",
++         },
++         {
++           "feature": null,
++           "id": "o07",
++           "knownBy": [
++             "ai-2",
++           ],
++           "owner": "ai-2",
++         },
++         {
++           "feature": null,
++           "id": "o08",
++           "knownBy": [
++             "ai-2",
++           ],
++           "owner": "ai-2",
++         },
++         {
++           "feature": null,
++           "id": "o09",
++           "knownBy": [
++             "ai-2",
++           ],
++           "owner": "ai-2",
++         },
++         {
++           "feature": null,
++           "id": "o10",
++           "knownBy": [
++             "ai-2",
++           ],
++           "owner": "ai-2",
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o11",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o12",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o13",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o14",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o15",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o16",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o17",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o18",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "kind": "deposit",
++             "resource": "wood",
++           },
++           "id": "o19",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o20",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o21",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o22",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o23",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o24",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o25",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o26",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "kind": "deposit",
++             "resource": "wood",
++           },
++           "id": "o27",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o28",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o29",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o30",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o31",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o32",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o33",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o34",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o35",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o36",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o37",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "kind": "deposit",
++             "resource": "iron",
++           },
++           "id": "o38",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o39",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o40",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o41",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o42",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o43",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "kind": "deposit",
++             "resource": "iron",
++           },
++           "id": "o44",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o45",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o46",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o47",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o48",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o49",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o50",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o51",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o52",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o53",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o54",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o55",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o56",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o57",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o58",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "kind": "deposit",
++             "resource": "iron",
++           },
++           "id": "o59",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o60",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o61",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o62",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o63",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o64",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o65",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o66",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o67",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o68",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o69",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o70",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o71",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o72",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o73",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o74",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o75",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o76",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o77",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o78",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o79",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o80",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o81",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o82",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o83",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o84",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o85",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o86",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "kind": "deposit",
++             "resource": "wood",
++           },
++           "id": "o87",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o88",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o89",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o90",
++           "knownBy": [],
++           "owner": null,
++         },
++       ],
++     },
++     "player": {
++       "character": {
++         "age": 25,
++         "emotions": {
++           "anger": 0,
++           "fear": 10,
++           "hope": 70,
++           "jealousy": 0,
++           "joy": 50,
++           "sadness": 10,
++           "shame": 0,
++           "stress": 20,
++         },
++         "gender": "other",
++         "health": 100,
++         "id": "player",
++         "legalStatus": "citizen",
++         "memories": [],
++         "name": "Synthetic Keeper",
++         "needs": {
++           "autonomy": 60,
++           "intimacy": 40,
++           "nutrition": 80,
++           "purpose": 50,
++           "recognition": 50,
++           "safety": 70,
++         },
++         "occupation": "worker",
++         "relationshipToPlayer": {
++           "affection": 20,
++           "attraction": 10,
++           "dependency": 20,
++           "familiarity": 10,
++           "fear": 10,
++           "resentment": 0,
++           "respect": 30,
++           "trust": 30,
++         },
++         "skills": {
++           "combat": 20,
++           "management": 30,
++           "medical": 20,
++           "negotiation": 30,
++           "technical": 30,
++         },
++         "socialClass": "common",
++       },
++       "profile": {
++         "appearance": {
++           "build": "average",
++           "eyeColor": "brown",
++           "face": {
++             "features": [],
++             "shape": "oval",
++           },
++           "hair": {
++             "color": "dark_brown",
++             "length": "short",
++             "style": "loose",
++             "texture": "straight",
++           },
++           "heightCm": 170,
++           "outfit": "role_default",
++           "presentation": "androgynous",
++           "skinTone": "olive",
++           "weightKg": 68,
++         },
++         "id": "player",
++         "identity": {
++           "biography": null,
++           "birthName": null,
++           "birthplaceId": "kestrel_ford",
++           "currentLocationId": "haven",
++           "label": null,
++           "origin": {
++             "regionId": "northreach",
++             "upbringing": "frontier",
++           },
++           "pronouns": "they",
++         },
++         "traits": {
++           "attractiveness": 50,
++           "learningAptitude": 50,
++           "warmth": 50,
++         },
++       },
++     },
++     "profiles": [
++       {
++         "appearance": {
++           "build": "slim",
++           "eyeColor": "grey",
++           "face": {
++             "features": [
++               "freckles",
++             ],
++             "shape": "oval",
++           },
++           "hair": {
++             "color": "brown",
++             "length": "shoulder_length",
++             "style": "tied_back",
++             "texture": "straight",
++           },
++           "heightCm": 168,
++           "outfit": "role_default",
++           "presentation": "feminine",
++           "skinTone": "light_olive",
++           "weightKg": 58,
++         },
++         "id": "npc_starter_1",
++         "identity": {
++           "biography": null,
++           "birthName": null,
++           "birthplaceId": "kestrel_ford",
++           "currentLocationId": "haven",
++           "label": null,
++           "origin": {
++             "regionId": "northreach",
++             "upbringing": "frontier",
++           },
++           "pronouns": "she",
++         },
++         "traits": {
++           "attractiveness": 66,
++           "learningAptitude": 72,
++           "warmth": 34,
++         },
++       },
++       {
++         "appearance": {
++           "build": "average",
++           "eyeColor": "brown",
++           "face": {
++             "features": [
++               "glasses",
++             ],
++             "shape": "heart_shaped",
++           },
++           "hair": {
++             "color": "black",
++             "length": "short",
++             "style": "loose",
++             "texture": "straight",
++           },
++           "heightCm": 174,
++           "outfit": "role_default",
++           "presentation": "feminine",
++           "skinTone": "deep_brown",
++           "weightKg": 70,
++         },
++         "id": "npc_starter_2",
++         "identity": {
++           "biography": null,
++           "birthName": null,
++           "birthplaceId": "tidewall",
++           "currentLocationId": "haven",
++           "label": null,
++           "origin": {
++             "regionId": "saltmere",
++             "upbringing": "port_town",
++           },
++           "pronouns": "she",
++         },
++         "traits": {
++           "attractiveness": 50,
++           "learningAptitude": 55,
++           "warmth": 78,
++         },
++       },
++       {
++         "appearance": {
++           "build": "slim",
++           "eyeColor": "green",
++           "face": {
++             "features": [
++               "high_cheekbones",
++             ],
++             "shape": "round",
++           },
++           "hair": {
++             "color": "red",
++             "length": "long",
++             "style": "braided",
++             "texture": "wavy",
++           },
++           "heightCm": 162,
++           "outfit": "role_default",
++           "presentation": "feminine",
++           "skinTone": "fair",
++           "weightKg": 55,
++         },
++         "id": "npc_starter_3",
++         "identity": {
++           "biography": null,
++           "birthName": null,
++           "birthplaceId": "cinder_hollow",
++           "currentLocationId": "haven",
++           "label": null,
++           "origin": {
++             "regionId": "ashfield",
++             "upbringing": "city",
++           },
++           "pronouns": "she",
++         },
++         "traits": {
++           "attractiveness": 72,
++           "learningAptitude": 48,
++           "warmth": 45,
++         },
++       },
++     ],
++   },
++   "success": true,
+  }
+
+ ❯ packages/simulation/src/__tests__/tile-trial-p7b.test.ts:197:65
+    195|   await store.replaceSlot('main', rows);
+    196|   const stored = await store.read('main');
+    197|   expect(await readLocalCharacterLife({ store, legacy: null })).toStri…
+       |                                                                 ^
+    198|     success: false, message: 'Local checkpoint not loaded; it was left…
+    199|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/40]⎯
+
+ FAIL  packages/core/src/trial/__tests__/society-p7b.test.ts > starts with both fixed level-one estates and 43 town 
+plots
+AssertionError: expected [ { id: 'field-1', …(2) }, …(62) ] to have a length of 75 but got 63
+
+- Expected
++ Received
+
+- 75
++ 63
+
+ ❯ packages/core/src/trial/__tests__/society-p7b.test.ts:19:22
+     17| it('starts with both fixed level-one estates and 43 town plots', () =>…
+     18|   const city = core.createSocietyState();
+     19|   expect(city.tiles).toHaveLength(75);
+       |                      ^
+     20|   expect(city.tiles.filter(t => t.terrain !== 'town')).toHaveLength(30…
+     21|   expect(city.tiles.filter(t => core.societyPlot(t.id)?.tier !== 'esta…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/40]⎯
+
+ FAIL  packages/core/src/trial/__tests__/society-p7b.test.ts > reads NPC beds by type and level and pins the five 
+catalog rows
+AssertionError: expected 'undefined' to be 'function' // Object.is equality
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ packages/core/src/trial/__tests__/society-p7b.test.ts:37:25
+     35| it('reads NPC beds by type and level and pins the five catalog rows', …
+     36|   const lookup = (core as typeof core & { npcBeds?: (id: string, level…
+     37|   expect(typeof lookup).toBe('function');
+       |                         ^
+     38|   if (!lookup) throw Error('NPC bed lookup is missing');
+     39|   expect([1, 2, 3].map(level => lookup('mansion', level))).toStrictEqu…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/40]⎯
+
+ FAIL  packages/core/src/trial/__tests__/society-p7b.test.ts > rejects a malformed mansion NPC bed table [10,20]
+AssertionError: expected 'buildings.json#mansion.id: unknown id' to be 'buildings.json#mansion.npcBeds: expec…' // 
+Object.is equality
+
+Expected: "buildings.json#mansion.npcBeds: expected array of length 3"
+Received: "buildings.json#mansion.id: unknown id"
+
+ ❯ packages/core/src/trial/__tests__/society-p7b.test.ts:68:61
+     66|   let failure: unknown;
+     67|   try { validateBuildings(bad); } catch (error) { failure = error; }
+     68|   expect(failure instanceof Error ? failure.message : null).toBe(messa…
+       |                                                             ^
+     69| });
+     70|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/40]⎯
+
+ FAIL  packages/core/src/trial/__tests__/society-p7b.test.ts > rejects a malformed mansion NPC bed table [10,10,30]
+
+ Test Files  2 failed (2)
+      Tests  40 failed (40)
+   Start at  17:50:18
+   Duration  3.18s (transform 2.06s, setup 0ms, import 2.71s, tests 517ms, environment 0ms)
+
+AssertionError: expected 'buildings.json#mansion.id: unknown id' to be 'buildings.json#mansion.npcBeds.1: exp…' // 
+Object.is equality
+
+Expected: "buildings.json#mansion.npcBeds.1: expected greater than previous level"
+Received: "buildings.json#mansion.id: unknown id"
+
+ ❯ packages/core/src/trial/__tests__/society-p7b.test.ts:68:61
+     66|   let failure: unknown;
+     67|   try { validateBuildings(bad); } catch (error) { failure = error; }
+     68|   expect(failure instanceof Error ? failure.message : null).toBe(messa…
+       |                                                             ^
+     69| });
+     70|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/40]⎯
+
+ FAIL  packages/core/src/trial/__tests__/society-p7b.test.ts > rejects a malformed retainers-hall NPC bed table [25,-1]
+AssertionError: expected 'buildings.json#retainers-hall.id: unk…' to be 'buildings.json#retainers-hall.npcBeds…' // 
+Object.is equality
+
+Expected: "buildings.json#retainers-hall.npcBeds.1: expected integer > 0"
+Received: "buildings.json#retainers-hall.id: unknown id"
+
+ ❯ packages/core/src/trial/__tests__/society-p7b.test.ts:68:61
+     66|   let failure: unknown;
+     67|   try { validateBuildings(bad); } catch (error) { failure = error; }
+     68|   expect(failure instanceof Error ? failure.message : null).toBe(messa…
+       |                                                             ^
+     69| });
+     70|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/40]⎯
+
+ FAIL  packages/core/src/trial/__tests__/society-p7b.test.ts > uses the v11 ruleset and refuses the v10 checkpoint 
+unchanged
+AssertionError: expected [ Array(2) ] to strictly equal [ Array(2) ]
+
+- Expected
++ Received
+
+  [
+-   "tile-society-11",
+-   "tile-society-11",
++   "tile-society-10",
++   "tile-society-10",
+  ]
+
+ ❯ packages/core/src/trial/__tests__/society-p7b.test.ts:78:75
+     76|   if (!encoded.success) throw Error(encoded.error.message);
+     77|   const envelope = JSON.parse(encoded.text);
+     78|   expect([envelope.cityRulesetId, envelope.state.city.society.rulesetI…
+       |                                                                           ^
+     79|   const source = readFileSync(oldSave, 'utf8');
+     80|   expect(deserializeCharacterLifeSave(source)).toStrictEqual({
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/40]⎯
+
+ FAIL  packages/core/src/trial/__tests__/society-p7b.test.ts > rejects a v11 planning save with empty
+ FAIL  packages/core/src/trial/__tests__/society-p7b.test.ts > rejects a v11 planning save with swapped
+ FAIL  packages/core/src/trial/__tests__/society-p7b.test.ts > rejects a v11 planning save with paused
+ FAIL  packages/core/src/trial/__tests__/society-p7b.test.ts > rejects a v11 planning save with staffed
+ FAIL  packages/core/src/trial/__tests__/society-p7b.test.ts > rejects a v11 planning save with duplicate acquisition
+ FAIL  packages/core/src/trial/__tests__/society-p7b.test.ts > rejects a v11 planning save with third Hall
+AssertionError: expected [ undefined, undefined ] to strictly equal [ 'estate-1', 'estate-2' ]
+
+- Expected
++ Received
+
+  [
+-   "estate-1",
+-   "estate-2",
++   undefined,
++   undefined,
+  ]
+
+ ❯ packages/core/src/trial/__tests__/society-p7b.test.ts:92:41
+     90|   const mansion = city.tiles.find(t => t.id === 'estate-1');
+     91|   const estateHall = city.tiles.find(t => t.id === 'estate-2');
+     92|   expect([mansion?.id, estateHall?.id]).toStrictEqual(['estate-1', 'es…
+       |                                         ^
+     93|   if (!mansion?.building || !estateHall?.building) throw Error('Fixed …
+     94|   if (problem === 'empty') mansion.building = null;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/40]⎯
+
+Exit code: 1

@@ -1,0 +1,49 @@
+﻿UTC 2026-11-19T12:32:42.5903689Z
+HEAD ced2f88a67daffb8f9fe01fff67f966e82474fc1
+Tree eeda3008213c9a7fe983a6d07781157a9d29a628
+Ports 4173 and 4174 free.
+CPU samples:
+
+Timestamp                  CookedValue
+---------                  -----------
+11/19/2026 7:32:44 PM 38.0181998399446
+11/19/2026 7:32:45 PM 21.7577837188423
+11/19/2026 7:32:46 PM 8.23787604889505
+
+
+Top processes by total CPU seconds:
+
+ProcessName            Id        CPU
+-----------            --        ---
+browser             13404 2372.09375
+browser               612 1910.71875
+T3 Code (Nightly)    3428 1206.03125
+codebase-memory-mcp 10780 814.515625
+claude              11740 742.828125
+claude              16904   663.3125
+msedgewebview2       9924    605.625
+ChatGPT              9760 587.859375
+T3 Code (Nightly)   22244 551.296875
+Zalo                13544 503.515625
+claude              16292 468.140625
+ChatGPT             24544 396.359375
+
+
+Last wake:
+Wake History Count - 1
+Wake History [0]
+  Wake Source Count - 1
+  Wake Source [0]
+    Type: Fixed Feature
+    Power Button
+Sleep/resume record for the preceding 12 hours:
+
+Utc                           Id ProviderName                          
+---                           -- ------------                          
+2026-11-19T10:32:25.6393184Z   1 Microsoft-Windows-Power-Troubleshooter
+2026-11-19T09:06:09.4999105Z 107 Microsoft-Windows-Kernel-Power        
+2026-11-19T09:06:07.1690956Z  42 Microsoft-Windows-Kernel-Power        
+2026-11-19T00:37:46.7473200Z   1 Microsoft-Windows-Power-Troubleshooter
+
+
+Sleep/resume during this run:

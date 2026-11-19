@@ -1,0 +1,14 @@
+100
+
+Name                        CPU
+----                        ---
+T3 Code (Nightly)   1334.609375
+codebase-memory-mcp  903.421875
+claude               783.078125
+claude                 729.1875
+msedgewebview2        648.71875
+T3 Code (Nightly)    620.953125
+
+
+
+CPU samples before gates (10 s apart): 9, 5, 6 (first one-off sample 100 while starting PowerShell)

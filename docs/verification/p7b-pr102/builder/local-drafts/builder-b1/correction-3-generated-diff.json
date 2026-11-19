@@ -1,0 +1,18 @@
+{
+  "packages/simulation/src/__tests__/fixtures/catalog-golden.json": {
+    "correction2Sha256": "da4235bdc6e385d5530b90d72adcdb95d148a3602c48912a3a54436332ff4e6b",
+    "correction3Sha256": "13bf75f2fe65376da0334db11ebd0530d9db32fc700ae72f0f7528652c5d0ec4",
+    "changes": [
+      {
+        "path": "0.session.state.city.world.settlements.settlement_haven_01.inventory.gold",
+        "before": 420339,
+        "after": 420189
+      },
+      {
+        "path": "1.session.state.city.world.settlements.settlement_haven_01.inventory.gold",
+        "before": 402569,
+        "after": 402419
+      }
+    ]
+  }
+}

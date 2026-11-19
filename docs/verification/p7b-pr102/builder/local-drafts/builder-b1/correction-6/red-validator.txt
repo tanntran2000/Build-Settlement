@@ -1,0 +1,47 @@
+﻿HEAD ced2f88a67daffb8f9fe01fff67f966e82474fc1
+Tree eeda3008213c9a7fe983a6d07781157a9d29a628
+Start UTC 2026-11-19T14:12:51.0701979Z
+Command: npm test -- packages/core/src/trial/__tests__/society-p7b.test.ts -t "rejects missing and non-integer Retainers' Hall caps"
+
+> build-settlement@0.1.0 test
+> vitest run packages/core/src/trial/__tests__/society-p7b.test.ts -t rejects missing and non-integer Retainers' Hall caps
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/core/src/trial/__tests__/society-p7b.test.ts (13 tests | 1 failed | 12 skipped) 12ms
+   × rejects missing and non-integer Retainers' Hall caps 10ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/core/src/trial/__tests__/society-p7b.test.ts > rejects missing and non-integer Retainers' Hall caps
+AssertionError: expected [ …(2) ] to strictly equal [ …(2) ]
+
+- Expected
++ Received
+
+  [
+-   "tuning.json#RETAINERS_HALL_TRIAL.maxPerCity: expected integer > 0",
+-   "tuning.json#RETAINERS_HALL_TRIAL.maxPerCity: expected integer > 0",
++   "tuning.json#RETAINERS_HALL_TRIAL.id: unknown id",
++   "tuning.json#RETAINERS_HALL_TRIAL.id: unknown id",
+  ]
+
+ ❯ packages/core/src/trial/__tests__/society-p7b.test.ts:82:20
+     80|   });
+     81|   const message = 'tuning.json#RETAINERS_HALL_TRIAL.maxPerCity: expect…
+     82|   expect(failures).toStrictEqual([message, message]);
+       |                    ^
+     83| });
+     84|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 12 skipped (13)
+   Start at  21:12:52
+   Duration  1.01s (transform 525ms, setup 0ms, import 681ms, tests 12ms, environment 0ms)
+
+End UTC 2026-11-19T14:12:53.6710189Z
+Exit code: 1

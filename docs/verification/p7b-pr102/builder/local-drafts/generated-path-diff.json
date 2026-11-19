@@ -1,0 +1,593 @@
+{
+  "goldAnalysis": [
+    {
+      "seed": 0,
+      "changedOuter": [],
+      "changedSession": [
+        {
+          "path": "cityRulesetId",
+          "before": "tile-society-10",
+          "after": "tile-society-11"
+        },
+        {
+          "path": "state.city.world.settlements.settlement_haven_01.inventory.gold",
+          "before": 592989,
+          "after": 420339
+        },
+        {
+          "path": "state.city.tiles.63",
+          "after": {
+            "id": "house-12",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.64",
+          "after": {
+            "id": "house-13",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.65",
+          "after": {
+            "id": "house-14",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.66",
+          "after": {
+            "id": "service-7",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.67",
+          "after": {
+            "id": "service-8",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.68",
+          "after": {
+            "id": "spec-11",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.69",
+          "after": {
+            "id": "spec-12",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.70",
+          "after": {
+            "id": "slum-7",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.71",
+          "after": {
+            "id": "slum-8",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.72",
+          "after": {
+            "id": "slum-9",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.73",
+          "after": {
+            "id": "estate-1",
+            "terrain": "town",
+            "building": {
+              "typeId": "mansion",
+              "level": 1,
+              "workers": 0,
+              "enabled": true
+            }
+          }
+        },
+        {
+          "path": "state.city.tiles.74",
+          "after": {
+            "id": "estate-2",
+            "terrain": "town",
+            "building": {
+              "typeId": "retainers-hall",
+              "level": 1,
+              "workers": 0,
+              "enabled": true
+            }
+          }
+        },
+        {
+          "path": "state.city.society.rulesetId",
+          "before": "tile-society-10",
+          "after": "tile-society-11"
+        }
+      ]
+    },
+    {
+      "seed": 42,
+      "changedOuter": [],
+      "changedSession": [
+        {
+          "path": "cityRulesetId",
+          "before": "tile-society-10",
+          "after": "tile-society-11"
+        },
+        {
+          "path": "state.city.world.settlements.settlement_haven_01.inventory.gold",
+          "before": 581669,
+          "after": 402569
+        },
+        {
+          "path": "state.city.tiles.63",
+          "after": {
+            "id": "house-12",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.64",
+          "after": {
+            "id": "house-13",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.65",
+          "after": {
+            "id": "house-14",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.66",
+          "after": {
+            "id": "service-7",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.67",
+          "after": {
+            "id": "service-8",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.68",
+          "after": {
+            "id": "spec-11",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.69",
+          "after": {
+            "id": "spec-12",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.70",
+          "after": {
+            "id": "slum-7",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.71",
+          "after": {
+            "id": "slum-8",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.72",
+          "after": {
+            "id": "slum-9",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.73",
+          "after": {
+            "id": "estate-1",
+            "terrain": "town",
+            "building": {
+              "typeId": "mansion",
+              "level": 1,
+              "workers": 0,
+              "enabled": true
+            }
+          }
+        },
+        {
+          "path": "state.city.tiles.74",
+          "after": {
+            "id": "estate-2",
+            "terrain": "town",
+            "building": {
+              "typeId": "retainers-hall",
+              "level": 1,
+              "workers": 0,
+              "enabled": true
+            }
+          }
+        },
+        {
+          "path": "state.city.society.rulesetId",
+          "before": "tile-society-10",
+          "after": "tile-society-11"
+        }
+      ]
+    },
+    {
+      "seed": 20261028,
+      "changedOuter": [],
+      "changedSession": [
+        {
+          "path": "cityRulesetId",
+          "before": "tile-society-10",
+          "after": "tile-society-11"
+        },
+        {
+          "path": "state.city.world.settlements.settlement_haven_01.inventory.gold",
+          "before": 626484,
+          "after": 446484
+        },
+        {
+          "path": "state.city.tiles.63",
+          "after": {
+            "id": "house-12",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.64",
+          "after": {
+            "id": "house-13",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.65",
+          "after": {
+            "id": "house-14",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.66",
+          "after": {
+            "id": "service-7",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.67",
+          "after": {
+            "id": "service-8",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.68",
+          "after": {
+            "id": "spec-11",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.69",
+          "after": {
+            "id": "spec-12",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.70",
+          "after": {
+            "id": "slum-7",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.71",
+          "after": {
+            "id": "slum-8",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.72",
+          "after": {
+            "id": "slum-9",
+            "terrain": "town",
+            "building": null
+          }
+        },
+        {
+          "path": "state.city.tiles.73",
+          "after": {
+            "id": "estate-1",
+            "terrain": "town",
+            "building": {
+              "typeId": "mansion",
+              "level": 1,
+              "workers": 0,
+              "enabled": true
+            }
+          }
+        },
+        {
+          "path": "state.city.tiles.74",
+          "after": {
+            "id": "estate-2",
+            "terrain": "town",
+            "building": {
+              "typeId": "retainers-hall",
+              "level": 1,
+              "workers": 0,
+              "enabled": true
+            }
+          }
+        },
+        {
+          "path": "state.city.society.rulesetId",
+          "before": "tile-society-10",
+          "after": "tile-society-11"
+        }
+      ]
+    }
+  ],
+  "fixtureAnalysis": {
+    "life-5-weeks.json": {
+      "afterHash": "ec9af45029416d09d2f2c216e7eb4e50c8643442199dd8ce1ab1a139b1c570e2",
+      "pathDiff": [
+        {
+          "path": "cityRulesetId",
+          "before": "tile-society-10",
+          "after": "tile-society-11"
+        },
+        {
+          "path": "state.city.world.settlements.settlement_haven_01.inventory.gold",
+          "before": 51890,
+          "after": 36890
+        },
+        {
+          "path": "state.city.society.rulesetId",
+          "before": "tile-society-10",
+          "after": "tile-society-11"
+        }
+      ]
+    },
+    "life-demand-card.json": {
+      "afterHash": "236b349f54a0dba98cdcb78e186a334e5297a90c6908cacba2ddef385029e95e",
+      "pathDiff": [
+        {
+          "path": "cityRulesetId",
+          "before": "tile-society-10",
+          "after": "tile-society-11"
+        },
+        {
+          "path": "state.city.society.rulesetId",
+          "before": "tile-society-10",
+          "after": "tile-society-11"
+        }
+      ]
+    },
+    "life-rebellion-last-week.json": {
+      "afterHash": "fbe641a19a2c8a3ea2eb5884a7e333b11a339da9ee245823614592fd4b7c1726",
+      "pathDiff": [
+        {
+          "path": "cityRulesetId",
+          "before": "tile-society-10",
+          "after": "tile-society-11"
+        },
+        {
+          "path": "state.city.society.rulesetId",
+          "before": "tile-society-10",
+          "after": "tile-society-11"
+        }
+      ]
+    },
+    "new-game.json": {
+      "afterHash": "02fcf303655983bdb4c73a1ce9dd4474fc59292a755065b401f24ba68518abf1",
+      "pathDiff": [
+        {
+          "path": "rulesetId",
+          "before": "tile-society-10",
+          "after": "tile-society-11"
+        },
+        {
+          "path": "state.society.rulesetId",
+          "before": "tile-society-10",
+          "after": "tile-society-11"
+        }
+      ]
+    },
+    "life-new-game.json": {
+      "afterHash": "4a54eeecd1a6e78dd9b99ffcfbb509cb2c77a5634ce2c60013d2fec0d8473ac0",
+      "pathDiff": [
+        {
+          "path": "cityRulesetId",
+          "before": "tile-society-10",
+          "after": "tile-society-11"
+        },
+        {
+          "path": "state.city.society.rulesetId",
+          "before": "tile-society-10",
+          "after": "tile-society-11"
+        }
+      ]
+    },
+    "life-laws.json": {
+      "afterHash": "3924aa12526fa78ced40ae362bae9190a8e312331fb9d0160b63f2f6abcdb1bf",
+      "pathDiff": [
+        {
+          "path": "cityRulesetId",
+          "before": "tile-society-10",
+          "after": "tile-society-11"
+        },
+        {
+          "path": "state.city.world.settlements.settlement_haven_01.inventory.gold",
+          "before": 971862,
+          "after": 962862
+        },
+        {
+          "path": "state.city.society.rulesetId",
+          "before": "tile-society-10",
+          "after": "tile-society-11"
+        }
+      ]
+    },
+    "life-crime-robbery.json": {
+      "afterHash": "8ccfe2b8b436fff0d4e0f8bdc7fc65c575bc765414aecc9791d6eb13c465505b",
+      "pathDiff": [
+        {
+          "path": "cityRulesetId",
+          "before": "tile-society-10",
+          "after": "tile-society-11"
+        },
+        {
+          "path": "state.city.society.rulesetId",
+          "before": "tile-society-10",
+          "after": "tile-society-11"
+        }
+      ]
+    },
+    "life-crime-raid.json": {
+      "afterHash": "6ed95b342a9af8ace0bed92993b10587deab966fc7dc6158e8a508df1f27ac15",
+      "pathDiff": [
+        {
+          "path": "cityRulesetId",
+          "before": "tile-society-10",
+          "after": "tile-society-11"
+        },
+        {
+          "path": "state.city.society.rulesetId",
+          "before": "tile-society-10",
+          "after": "tile-society-11"
+        }
+      ]
+    },
+    "life-crime-wound.json": {
+      "afterHash": "ae500e2a3a2a902528a7269a9791f543254279bf2158116f4e329b340fbd860d",
+      "pathDiff": [
+        {
+          "path": "cityRulesetId",
+          "before": "tile-society-10",
+          "after": "tile-society-11"
+        },
+        {
+          "path": "state.city.society.rulesetId",
+          "before": "tile-society-10",
+          "after": "tile-society-11"
+        }
+      ]
+    },
+    "life-crime-death.json": {
+      "afterHash": "eb1f9d5fe92f25dec4f161158b6e5dc728f718097ee1c84cec957c02212c69e4",
+      "pathDiff": [
+        {
+          "path": "cityRulesetId",
+          "before": "tile-society-10",
+          "after": "tile-society-11"
+        },
+        {
+          "path": "state.city.society.rulesetId",
+          "before": "tile-society-10",
+          "after": "tile-society-11"
+        }
+      ]
+    }
+  },
+  "crime": [
+    {
+      "name": "robbery",
+      "seed": 5,
+      "event": {
+        "kind": "robbery",
+        "severity": "serious",
+        "target": "gold",
+        "lossMilli": 4193
+      }
+    },
+    {
+      "name": "raid",
+      "seed": 3,
+      "event": {
+        "kind": "raid",
+        "severity": "serious",
+        "soldiersKilled": 2
+      }
+    },
+    {
+      "name": "wound",
+      "seed": 20,
+      "event": {
+        "kind": "assassination",
+        "severity": "severe",
+        "outcome": "wounded",
+        "standingLoss": 5,
+        "authorityLoss": 5
+      }
+    },
+    {
+      "name": "death",
+      "seed": 20,
+      "event": {
+        "kind": "assassination",
+        "severity": "severe",
+        "outcome": "killed"
+      }
+    }
+  ],
+  "pins": {
+    "TRIAL_BUILDINGS": "11eabe3f7b69f2b87e06936bd57934e3ed27c80138dda99793a5347d399de941",
+    "SOCIETY_BUILDINGS": "ff8b32c50fbe6112bb65f87c1fcc2b80ad402b131b965faec0188b9b79764565",
+    "SOCIETY_TRIAL": "fa7594d47d8299056c5340b130592ff2c93d04131eeaf78596e5deb1956fce25"
+  }
+}

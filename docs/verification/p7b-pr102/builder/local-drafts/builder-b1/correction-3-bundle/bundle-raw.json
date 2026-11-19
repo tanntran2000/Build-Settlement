@@ -1,0 +1,39 @@
+{
+  "status": "approved worktree preview, before commit and final gate",
+  "node": "v24.19.0",
+  "method": "entry JS and CSS from dist/index.html, gzipSync defaults",
+  "baseline": {
+    "js": 143004,
+    "css": 7528
+  },
+  "assets": [
+    {
+      "filename": "index-B9Yhp3Gb.js",
+      "kind": "js",
+      "bytes": 466204,
+      "gzipBytes": 145489,
+      "sha256": "4d9300320c3bb44e1d6398964c42c2d9e5c78fa458b51e28778fdc5e8fc3b3b5",
+      "gzipSha256": "5bfc271bdf916368065511c22bd216b10fbd292be66c3836079d91d4f7fe9751"
+    },
+    {
+      "filename": "index-D94IJs5c.css",
+      "kind": "css",
+      "bytes": 37312,
+      "gzipBytes": 7528,
+      "sha256": "da3d5e95ed95e7033a8d972ddc7d01b36086c01586d073876873b485f38dc447",
+      "gzipSha256": "a0429b688ae46dd35f34ed48ada31c944b40898fd1b4eecb1c58f4df13adfa15"
+    }
+  ],
+  "gzipBytes": {
+    "js": 145489,
+    "css": 7528,
+    "total": 153017
+  },
+  "deltaBytes": {
+    "js": 2485,
+    "css": 0,
+    "total": 2485
+  },
+  "budgetBytes": 200000,
+  "headroomBytes": 46983
+}

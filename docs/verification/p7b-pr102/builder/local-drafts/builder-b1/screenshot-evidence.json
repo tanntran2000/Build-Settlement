@@ -1,0 +1,23 @@
+{
+  "head": "8fd333807147d07e21695d4f156f917d5c1379d2",
+  "tree": "c56c5cf49a9150eb79d5c2c66e6e72e3d67cf1ee",
+  "previewCommand": "npm run preview --workspace=@haven/ui -- --port 4173 --strictPort",
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "fixtureSha256": "b0a0658004306a76dadf2cddc0e96999c082a46419cf0eaf92058bbb23f97fbd",
+  "screenshots": [
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB1\\builder-b1\\city-estates-ring4-1280x900.png",
+      "bytes": 70889,
+      "sha256": "d137e05fead9e88fb18a24ee35ba8aba58d22334a9cbded17b074f550c5b6eb8"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB1\\builder-b1\\estate-management-1280x900.png",
+      "bytes": 59313,
+      "sha256": "33fed83d281c5a7efa1099f08bd2ccef8a7519e389cded15d15077bdb02793d6"
+    }
+  ],
+  "servedIndexSha256": "d56d16d3b528bf3aed5a736ca47b789d5619d93fd6ddd08a850acae693b7da70"
+}

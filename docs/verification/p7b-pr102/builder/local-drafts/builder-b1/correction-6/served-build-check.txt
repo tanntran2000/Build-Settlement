@@ -1,0 +1,19 @@
+﻿HEAD 7e1aca45e35be17772ff770c3a4595c8213b0d3b
+Tree fd04e1f2d7f6f47270a2e7ac82d18b68729a6372
+Start UTC 2026-11-19T14:19:31.6066910Z
+Command: node "C:\Users\Admin\.t3\local-drafts\p7b-prB1\builder-b1\correction-6\verify-served-build.mjs" "C:\Users\Admin\.t3\local-drafts\p7b-prB1\builder-b1\correction-6\served-build-sha256.json"
+
+> @haven/ui@0.1.0 preview
+> vite preview --port 4173 --strictPort
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m4173[22m/[39m
+[2m  [32m➜[39m  [1mNetwork[22m[2m: use [22m[1m--host[22m[2m to expose[22m
+
+> @haven/ui@0.1.0 preview:regression
+> vite preview regression --config vite.config.ts --outDir dist --port 4174 --strictPort
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m4174[22m/[39m
+[2m  [32m➜[39m  [1mNetwork[22m[2m: use [22m[1m--host[22m[2m to expose[22m
+Verified 8 served file hashes across both normal preview scripts.
+End UTC 2026-11-19T14:19:39.2544205Z
+Exit code: 0

@@ -1,0 +1,18 @@
+﻿UTC 2026-11-19T11:05:31.1567142Z
+HEAD 27f4dc2e0ea6ed4f12e79fab6366d11fb555551b
+CI=1
+Command: npm test -- tile-trial-p7b, report-letters, catalog-data
+
+> build-settlement@0.1.0 test
+> vitest run packages/simulation/src/__tests__/tile-trial-p7b.test.ts packages/ui/src/__tests__/report-letters.test.ts packages/core/src/__tests__/catalog-data.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  3 passed (3)
+      Tests  235 passed (235)
+   Start at  18:05:33
+   Duration  3.40s (transform 3.73s, setup 0ms, import 5.23s, tests 700ms, environment 2ms)
+
+Exit code: 0

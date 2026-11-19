@@ -1,0 +1,15 @@
+﻿warning: in the working copy of 'packages/core/src/data/buildings.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/core/src/trial/__tests__/society-map.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/core/src/trial/state.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/character-life-observation.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/fixtures/catalog-golden.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/items-week.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/tile-trial-week.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/workshop-operation.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/ui/src/CharacterLifeCity.svelte', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/e2e/goods-stock.spec.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/core/src/trial/__tests__/society-p7b.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/fixtures/p7b-path-diff.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/fixtures/p7b-path-diff.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/tile-trial-p7b.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/ui/src/__tests__/p7b-checkpoint.test.ts', LF will be replaced by CRLF the next time Git touches it

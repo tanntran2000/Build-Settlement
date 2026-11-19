@@ -1,0 +1,208 @@
+{
+  "approval": "436ed8e",
+  "changes": [
+    {
+      "path": "packages/core/src/trial/types.ts",
+      "before": "  unpaidUpkeepMilli: number;\n",
+      "after": "  unpaidUpkeepMilli: number;\n  householdUpkeep?: { paidMilli: number; unpaidMilli: number };\n",
+      "scope": "Correction 3 report contract"
+    },
+    {
+      "path": "packages/simulation/src/workshop-operation.ts",
+      "before": "  TILE_TRIAL_BALANCE as B, OUTSIDE_TRIAL as O, buildingWorkerCap, trialBuilding,",
+      "after": "  TILE_TRIAL_BALANCE as B, OUTSIDE_TRIAL as O, buildingWorkerCap, npcBeds, trialBuilding,",
+      "scope": "Correction 3 household classification"
+    },
+    {
+      "path": "packages/simulation/src/workshop-operation.ts",
+      "before": "    const b = tile.building; if (!b || !b.enabled) continue;",
+      "after": "    const b = tile.building; if (!b || !b.enabled || npcBeds(b.typeId,b.level)>0) continue;",
+      "scope": "Correction 3 exclude homes from city upkeep and debit"
+    },
+    {
+      "path": "packages/simulation/src/workshop-operation.ts",
+      "before": "    const b=tile.building;\n    byTile[tile.id]=",
+      "after": "    const b=tile.building;\n    if(b&&npcBeds(b.typeId,b.level)>0) continue;\n    byTile[tile.id]=",
+      "scope": "Correction 3 omit homes from city funding state"
+    },
+    {
+      "path": "packages/simulation/src/tile-trial-week.ts",
+      "before": "societyPopulation,buildingWorkerCap,trialBuilding,type TileTrialReport",
+      "after": "societyPopulation,buildingWorkerCap,npcBeds,trialBuilding,type TileTrialReport",
+      "scope": "Correction 3 identify homes by beds"
+    },
+    {
+      "path": "packages/simulation/src/tile-trial-week.ts",
+      "before": "  outside.stocksAfter={...s.society.stocksMilli};\n  const goods =",
+      "after": "  outside.stocksAfter={...s.society.stocksMilli};\n  let householdUpkeep: TileTrialReport['householdUpkeep'];\n  for (const { building } of s.tiles) {\n    if (!building || npcBeds(building.typeId,building.level) === 0) continue;\n    householdUpkeep ??= { paidMilli: 0, unpaidMilli: 0 };\n    const due = scaled(trialBuilding(building.typeId)!.upkeepMilli,building.level);\n    if (stocks.gold < due) {\n      householdUpkeep.unpaidMilli = trialSafe(householdUpkeep.unpaidMilli + due);\n      continue;\n    }\n    stocks.gold -= due;\n    householdUpkeep.paidMilli = trialSafe(householdUpkeep.paidMilli + due);\n  }\n  const goods =",
+      "scope": "Correction 3 pay each home after city accounting and skip unaffordable charges"
+    },
+    {
+      "path": "packages/simulation/src/tile-trial-week.ts",
+      "before": "activities: Object.freeze(activities), ...(immigration ? { immigration } : {}) });",
+      "after": "activities: Object.freeze(activities), ...(immigration ? { immigration } : {}), ...(householdUpkeep ? { householdUpkeep: Object.freeze(householdUpkeep) } : {}) });",
+      "scope": "Correction 3 include household report only when a home exists"
+    },
+    {
+      "path": "packages/ui/src/society-view.ts",
+      "before": "for(const tile of city.tiles){const b=tile.building;if(!b?.enabled)continue;const d=TRIAL_BUILDINGS[b.typeId];",
+      "after": "for(const tile of city.tiles){const b=tile.building;if(!b?.enabled||npcBeds(b.typeId,b.level)>0)continue;const d=TRIAL_BUILDINGS[b.typeId];",
+      "scope": "Correction 3 exclude homes from the Warehouse funding preview"
+    },
+    {
+      "path": "packages/ui/src/report-letters.ts",
+      "before": "      if (report.unpaidUpkeepMilli > 0) value('Unpaid upkeep', formatMilli(report.unpaidUpkeepMilli), 'loss');",
+      "after": "      if (report.unpaidUpkeepMilli > 0) value('Unpaid upkeep', formatMilli(report.unpaidUpkeepMilli), 'loss');\n      if (report.householdUpkeep) {\n        const { paidMilli, unpaidMilli } = report.householdUpkeep;\n        const unpaid = unpaidMilli > 0 ? ` · ${formatMilli(unpaidMilli)} Gold unpaid` : '';\n        value('Household upkeep', `${formatMilli(paidMilli)} Gold paid${unpaid}`, paidMilli || unpaidMilli ? 'loss' : 'muted');\n      }",
+      "scope": "Correction 3 render one household ledger line"
+    },
+    {
+      "path": "packages/ui/src/report-letters.ts",
+      "before": "    if (item.id === 'captain' && report.crimeEvent?.event) selected.add(report.order ? 4 : 0);",
+      "after": "    if (item.id === 'captain' && report.crimeEvent?.event) selected.add(report.order ? 4 : 0);\n    if (item.id === 'steward' && report.householdUpkeep) {\n      selected.add(candidates.findIndex(row => row.label === 'Household upkeep'));\n    }",
+      "scope": "Correction 3 keep that line visible within the four-row Steward limit"
+    },
+    {
+      "path": "packages/core/src/__tests__/catalog-data.test.ts",
+      "before": "  GOODS_STOCK_TRIAL, TILE_TRIAL_BALANCE, IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL,\n",
+      "after": "  GOODS_STOCK_TRIAL, TILE_TRIAL_BALANCE, IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL,\n  RING4_TRIAL, SOCIETY_PLOT_IDS, societyPlot,\n",
+      "scope": "Correction 3 exact tuning view sources"
+    },
+    {
+      "path": "packages/core/src/__tests__/catalog-data.test.ts",
+      "before": "view: () => ({ ORDER_TRIAL, GARRISON_TRIAL, CRIME_TRIAL, CRISIS_TRIAL, SOCIETY_TRIAL, GOODS_STOCK_TRIAL, TILE_TRIAL_BALANCE, IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL }),",
+      "after": "view: () => ({\n      ORDER_TRIAL, GARRISON_TRIAL, CRIME_TRIAL, CRISIS_TRIAL, SOCIETY_TRIAL, GOODS_STOCK_TRIAL, TILE_TRIAL_BALANCE,\n      IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL, RING4_TRIAL,\n      SOCIETY_RING4_PLOTS: Object.fromEntries(['housing', 'service', 'specialist', 'slum'].map(tier => [\n        tier, SOCIETY_PLOT_IDS.filter(id => societyPlot(id)?.ring === 4 && societyPlot(id)?.tier === tier),\n      ])),\n    }),",
+      "scope": "Correction 3 exact tuning view gains both keys"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/tile-trial-p7b.test.ts",
+      "before": "  expect(report.upkeepPaidMilli - withoutHomes.upkeepPaidMilli).toBe(3000);",
+      "after": "  expect(report.upkeepPaidMilli).toBe(withoutHomes.upkeepPaidMilli);\n  expect(report.householdUpkeep).toStrictEqual({ paidMilli: 3000, unpaidMilli: 0 });\n  expect(withoutHomes.householdUpkeep).toBe(undefined);\n  expect(withoutHomes.after.gold - report.after.gold).toBe(3000);",
+      "scope": "Correction 3 retain exactly 3000 debit in the new B1 test"
+    },
+    {
+      "path": "packages/ui/src/__tests__/report-letters.test.ts",
+      "mode": "append",
+      "before": "",
+      "after": "\nit('renders one Household upkeep row with paid and optional unpaid amounts', () => {\n  const charges = (paidMilli: number, unpaidMilli: number) =>\n    rows(report({ householdUpkeep: { paidMilli, unpaidMilli } }), 'steward')\n      .filter(row => row.label === 'Household upkeep');\n  expect(charges(3000, 0)).toStrictEqual([{ label: 'Household upkeep', value: '3 Gold paid', tone: 'loss' }]);\n  expect(charges(1000, 2000)).toStrictEqual([{ label: 'Household upkeep', value: '1 Gold paid · 2 Gold unpaid', tone: 'loss' }]);\n  expect(charges(0, 3000)).toStrictEqual([{ label: 'Household upkeep', value: '0 Gold paid · 3 Gold unpaid', tone: 'loss' }]);\n  expect(rows(report(), 'steward').filter(row => row.label === 'Household upkeep')).toStrictEqual([]);\n});\n",
+      "scope": "Correction 3 new household ledger test"
+    },
+    {
+      "path": "packages/core/src/trial/society-map.ts",
+      "before": "const ring4Plots = validateTuning(tuningJson).SOCIETY_RING4_PLOTS;",
+      "after": "export const SOCIETY_RING4_PLOTS = deepFreeze(validateTuning(tuningJson).SOCIETY_RING4_PLOTS);",
+      "scope": "Correction 3 expose the actual frozen ring-4 runtime view to catalog validation"
+    },
+    {
+      "path": "packages/core/src/trial/society-map.ts",
+      "before": "of ring4Plots[tier]",
+      "after": "of SOCIETY_RING4_PLOTS[tier]",
+      "scope": "Correction 3 keep the same ring-4 plot runtime source"
+    },
+    {
+      "path": "packages/core/src/__tests__/catalog-data.test.ts",
+      "before": "  RING4_TRIAL, SOCIETY_PLOT_IDS, societyPlot,",
+      "after": "  RING4_TRIAL, SOCIETY_RING4_PLOTS,",
+      "scope": "Correction 3 compare the real frozen tuning view"
+    },
+    {
+      "path": "packages/core/src/__tests__/catalog-data.test.ts",
+      "before": "      IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL, RING4_TRIAL,\n      SOCIETY_RING4_PLOTS: Object.fromEntries(['housing', 'service', 'specialist', 'slum'].map(tier => [\n        tier, SOCIETY_PLOT_IDS.filter(id => societyPlot(id)?.ring === 4 && societyPlot(id)?.tier === tier),\n      ])),",
+      "after": "      IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL, RING4_TRIAL, SOCIETY_RING4_PLOTS,",
+      "scope": "Correction 3 retain the original frozen-view check with real catalog values"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/craft-week.test.ts",
+      "before": "9bb24301f4ede325b0e0e116b03add674eb0c692dfa80fe16bddf0da61a66bc4",
+      "after": "9393b71033175e5dc6c1da65ed116a574521672d2c1a3631141ba57e654d8a45",
+      "scope": "Correction 3 exact 60-week hash after permitted leaf diff"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/craft-week.test.ts",
+      "before": "cb611be6c8b7540c4c83f844a566272c0b2dba394609f4ec12b0208011139c54",
+      "after": "62d1c4d082564eb463a01b1a4cf90e8d0b34ec206701440c3590436d180163bc",
+      "scope": "Correction 3 exact 60-week hash after permitted leaf diff"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/craft-week.test.ts",
+      "before": "04aa55b35d7e8551323fbc2c66c6bf286fb06658b9163fd4a9e3aa327d705ea2",
+      "after": "6238af7420c55fcf75acef911011bb4b50138231397853150d5433cf76fbb319",
+      "scope": "Correction 3 exact 60-week hash after permitted leaf diff"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/craft-week.test.ts",
+      "before": "2c7e1a942c7bf05d2b462bb67aa0c05145107cfb0bce714ec3d8c2ba1b2d5e01",
+      "after": "4b135951d8fc02959e62fcde8e24d367b430d2de62e1db23656d40eff95b108b",
+      "scope": "Correction 3 exact 60-week hash after permitted leaf diff"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/craft-week.test.ts",
+      "before": "a32127339cab716bfa6ccab522d0da3a455a75eca6b455ae0e7adb508e781940",
+      "after": "e7c96f5378373cc7108072dbda1dbb123d60dfd623c49c8a1f0f69368da7275d",
+      "scope": "Correction 3 exact 60-week hash after permitted leaf diff"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/craft-week.test.ts",
+      "before": "73863ad6709a288163077c5d3167d857685ecc92b1f54593f50caf8313f49e04",
+      "after": "05c634769d92db96a5f98266b0c0b5275e3606bcf2660e90b04fe014015d9ff9",
+      "scope": "Correction 3 exact 60-week hash after permitted leaf diff"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/items-week.test.ts",
+      "before": "4ba36423f0b05c8c696bedf7195101a669184ce344227c5573be7b229ea75b7a",
+      "after": "54a944aa5e3008d1a4837de1d04654b89a137a5bf44bd004c543f4f7b6b9a848",
+      "scope": "Correction 3 exact 60-week hash after permitted leaf diff"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/items-week.test.ts",
+      "before": "dcdce3552130d92971b254f1c4fb15bfb41da44b7946293c57d099949fd6be14",
+      "after": "eb453bfed2e46c2580cb69cc9747794ed2bf9e84a91f322e0e23e7c705e67926",
+      "scope": "Correction 3 exact 60-week hash after permitted leaf diff"
+    }
+  ],
+  "files": {
+    "packages/core/src/trial/types.ts": {
+      "normalizedBeforeSha256": "1caf0b0045adeb13da5f3b5523766143a8f6d1588a59c2d59ada54dd7697cb29",
+      "normalizedAfterSha256": "a3039bc45e9490f16a1d7a2403a093dbc24e5d41a1122737cc44c670ad8bf605"
+    },
+    "packages/simulation/src/workshop-operation.ts": {
+      "normalizedBeforeSha256": "a4e16ebaeb6fcf819ff79e9058e08f24ed70134cd1d3a1e315dd7cb4233e0990",
+      "normalizedAfterSha256": "a9a4f08f8e1a1b4bbc6af99aaf6e652aa301142f41f0c116dbe96f0c522f1a00"
+    },
+    "packages/simulation/src/tile-trial-week.ts": {
+      "normalizedBeforeSha256": "c3b8437e2afb88928e04801198d0045d55e004ccd11d41078036ba2ae7d7d62c",
+      "normalizedAfterSha256": "bb34b3ae9c59e7529ce4d9b7a98f5fe5615b3b9717e77dfa6a766ac900f85828"
+    },
+    "packages/ui/src/society-view.ts": {
+      "normalizedBeforeSha256": "a1dd9d4526c8404ed6f7b5ca4d1535772c069ad6e83d1f7f3ba1c357f9eb78e4",
+      "normalizedAfterSha256": "4e6392669cdb53d627a70be04c541299e7e33808db23f9b883b0e5763c7a1f4a"
+    },
+    "packages/ui/src/report-letters.ts": {
+      "normalizedBeforeSha256": "cb5a2758ff1d47be732b9bb11b933a8b45b3a15106c65a2e2b7c13a72a731335",
+      "normalizedAfterSha256": "ddda4dcb54411ffc0f80d1f5e9d8ff3a9b7aaca5b5c13ed13c4f3e7fa39dbd50"
+    },
+    "packages/core/src/__tests__/catalog-data.test.ts": {
+      "normalizedBeforeSha256": "266fba8cf163526a5b705767690bf5a121c429eac83b789e9e6388be1a36ca49",
+      "normalizedAfterSha256": "4eeec3a198df3ef132edf4cff75550b0910bb414c37b8d32995202996a2f0322"
+    },
+    "packages/simulation/src/__tests__/tile-trial-p7b.test.ts": {
+      "normalizedBeforeSha256": "b6f08703492de2dc03a9ff016024a2f14f3423698b514adc133c3dc1ddf526da",
+      "normalizedAfterSha256": "ecd0e9d1c0177e9f9cb75c536d4affa53c7064feb32b78d705c44f3eab8fc2ac"
+    },
+    "packages/ui/src/__tests__/report-letters.test.ts": {
+      "normalizedBeforeSha256": "a5cd9ff313bec97243eeba63cf73083ddeb98751bb27e48a23df24e5e6388071",
+      "normalizedAfterSha256": "1c464b4712e43a36940625e3706ff636757a21e92cc741733bf2cd141977c5d3"
+    },
+    "packages/core/src/trial/society-map.ts": {
+      "normalizedBeforeSha256": "18fb179fc444868a1d85a5545ff1969d5ea2baa91ff611beeef26b38e9c91d11",
+      "normalizedAfterSha256": "8b7693825194b36389844646a5fa13e4fd359bf6891d8b4ba7a5613cccebbbcd"
+    },
+    "packages/simulation/src/__tests__/craft-week.test.ts": {
+      "normalizedBeforeSha256": "3fddbc6e055ff67badce1e1e4183dcd1fe577aaf4e9bac2030aef0fee67653ab",
+      "normalizedAfterSha256": "aec4106e7a167a339d3b635ac92babda2ad92a4726d95e41a60dba2870db5e40"
+    },
+    "packages/simulation/src/__tests__/items-week.test.ts": {
+      "normalizedBeforeSha256": "211dd4b3bd214b3e4c6d33bbd62b856604d3a662c8168dcc534640fcf2875f1b",
+      "normalizedAfterSha256": "7f550415d98228bf6b4d68349809a03dd452204a9bf42e8ad888fe22e994e97c"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "error": {
+      "_tag": "PreviewAutomationTimeoutError",
+      "operation": "snapshot",
+      "failureCount": 1,
+      "message": "Preview automation snapshot timed out after 15000ms."
+    }
+  },
+  {
+    "error": {
+      "_tag": "PreviewAutomationTimeoutError",
+      "operation": "snapshot",
+      "failureCount": 1,
+      "message": "Preview automation snapshot timed out after 15000ms."
+    }
+  }
+]

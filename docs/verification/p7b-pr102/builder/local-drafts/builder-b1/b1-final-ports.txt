@@ -1,0 +1,15 @@
+UTC 2026-11-19T12:17:27.8265621Z
+HEAD 8fd333807147d07e21695d4f156f917d5c1379d2
+Tree c56c5cf49a9150eb79d5c2c66e6e72e3d67cf1ee
+Branch feat/p7b-map-estates
+Parent 27f4dc2e0ea6ed4f12e79fab6366d11fb555551b
+origin/main 27f4dc2e0ea6ed4f12e79fab6366d11fb555551b
+feat/p7a-npc-sheet 952985c4fafaffeee44a4eb8932c178858659a40
+git rev-list --count origin/main..HEAD: 1
+git status --porcelain=v1: empty
+No tracked docs/ differences from the base.
+Ports 4173 and 4174 free after full smoke and all 56 individual reruns.
+Commit:
+feat(core): ring 4, estates and acquisition buildings
+
+Co-authored-by: Codex <noreply@openai.com>

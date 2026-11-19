@@ -1,0 +1,114 @@
+{
+  "correction": 6,
+  "bindingCommit": "3162247",
+  "previousHead": "ced2f88a67daffb8f9fe01fff67f966e82474fc1",
+  "previousTree": "eeda3008213c9a7fe983a6d07781157a9d29a628",
+  "redTest": "packages/core/src/trial/__tests__/society-p7b.test.ts",
+  "hunks": [
+    {
+      "approval": "P2",
+      "path": "packages/core/src/trial/__tests__/society-p7b.test.ts",
+      "checkoutEol": "LF",
+      "before": "import { validateBuildings } from '../../data/validate.js';\nimport buildings from '../../data/buildings.json' with { type: 'json' };\n",
+      "after": "import { validateBuildings, validateTuning } from '../../data/validate.js';\nimport buildings from '../../data/buildings.json' with { type: 'json' };\nimport tuning from '../../data/tuning.json' with { type: 'json' };\n"
+    },
+    {
+      "approval": "P2",
+      "path": "packages/core/src/trial/__tests__/society-p7b.test.ts",
+      "checkoutEol": "LF",
+      "before": "it('uses the v11 ruleset and refuses the v10 checkpoint unchanged', () => {\n",
+      "after": "it(\"rejects missing and non-integer Retainers' Hall caps\", () => {\n  const failures = [{}, { maxPerCity: 1.5 }].map(RETAINERS_HALL_TRIAL => {\n    try {\n      validateTuning({ ...tuning, RETAINERS_HALL_TRIAL });\n      return null;\n    } catch (error) {\n      return error instanceof Error ? error.message : null;\n    }\n  });\n  const message = 'tuning.json#RETAINERS_HALL_TRIAL.maxPerCity: expected integer > 0';\n  expect(failures).toStrictEqual([message, message]);\n});\n\nit('uses the v11 ruleset and refuses the v10 checkpoint unchanged', () => {\n"
+    },
+    {
+      "approval": "P2",
+      "path": "packages/core/src/data/tuning.json",
+      "checkoutEol": "CRLF",
+      "before": "  \"SOCIETY_RING4_PLOTS\": {\n",
+      "after": "  \"RETAINERS_HALL_TRIAL\": {\n    \"maxPerCity\": 2\n  },\n  \"SOCIETY_RING4_PLOTS\": {\n"
+    },
+    {
+      "approval": "P2",
+      "path": "packages/core/src/data/validate.ts",
+      "checkoutEol": "CRLF",
+      "before": "    SOCIETY_RING4_PLOTS: Readonly<Record<'housing' | 'service' | 'specialist' | 'slum', readonly string[]>>;\n",
+      "after": "    RETAINERS_HALL_TRIAL: Readonly<{ maxPerCity: number }>;\n    SOCIETY_RING4_PLOTS: Readonly<Record<'housing' | 'service' | 'specialist' | 'slum', readonly string[]>>;\n"
+    },
+    {
+      "approval": "P2",
+      "path": "packages/core/src/data/validate.ts",
+      "checkoutEol": "CRLF",
+      "before": "    SOCIETY_RING4_PLOTS: object({\n",
+      "after": "    RETAINERS_HALL_TRIAL: object({ maxPerCity: positive }),\n    SOCIETY_RING4_PLOTS: object({\n"
+    },
+    {
+      "approval": "P2",
+      "path": "packages/core/src/trial/catalog.ts",
+      "checkoutEol": "CRLF",
+      "before": "export const RING4_TRIAL = deepFreeze(tuning.RING4_TRIAL);\n",
+      "after": "export const RING4_TRIAL = deepFreeze(tuning.RING4_TRIAL);\nexport const RETAINERS_HALL_TRIAL = deepFreeze(tuning.RETAINERS_HALL_TRIAL);\n"
+    },
+    {
+      "approval": "P2",
+      "path": "packages/core/src/trial/state.ts",
+      "checkoutEol": "LF",
+      "before": "import { buildingWorkerCap } from \"./catalog.js\";\n",
+      "after": "import { buildingWorkerCap, RETAINERS_HALL_TRIAL } from \"./catalog.js\";\n"
+    },
+    {
+      "approval": "P2",
+      "path": "packages/core/src/trial/state.ts",
+      "checkoutEol": "LF",
+      "before": "if (tiles.filter(tile=>tile.building?.typeId==='retainers-hall').length>2) return false;",
+      "after": "if (tiles.filter(tile=>tile.building?.typeId==='retainers-hall').length>RETAINERS_HALL_TRIAL.maxPerCity) return false;"
+    },
+    {
+      "approval": "P2",
+      "path": "packages/simulation/src/tile-trial.ts",
+      "checkoutEol": "CRLF",
+      "before": "OUTSIDE_TRIAL,RING4_TRIAL,outsidePlot",
+      "after": "OUTSIDE_TRIAL,RING4_TRIAL,RETAINERS_HALL_TRIAL,outsidePlot"
+    },
+    {
+      "approval": "P2",
+      "path": "packages/simulation/src/tile-trial.ts",
+      "checkoutEol": "CRLF",
+      "before": "next.tiles.filter(other=>other.building?.typeId===typeId).length>=2)",
+      "after": "next.tiles.filter(other=>other.building?.typeId===typeId).length>=RETAINERS_HALL_TRIAL.maxPerCity)"
+    },
+    {
+      "approval": "P2",
+      "path": "packages/ui/src/society-view.ts",
+      "checkoutEol": "CRLF",
+      "before": "RING4_TRIAL, npcBeds,",
+      "after": "RING4_TRIAL, RETAINERS_HALL_TRIAL, npcBeds,"
+    },
+    {
+      "approval": "P2",
+      "path": "packages/ui/src/society-view.ts",
+      "checkoutEol": "CRLF",
+      "before": "city.tiles.filter(t=>t.building?.typeId===typeId).length>=2&&",
+      "after": "city.tiles.filter(t=>t.building?.typeId===typeId).length>=RETAINERS_HALL_TRIAL.maxPerCity&&"
+    },
+    {
+      "approval": "P2",
+      "path": "packages/core/src/__tests__/catalog-data.test.ts",
+      "checkoutEol": "CRLF",
+      "before": "  RING4_TRIAL, SOCIETY_RING4_PLOTS,\n",
+      "after": "  RING4_TRIAL, RETAINERS_HALL_TRIAL, SOCIETY_RING4_PLOTS,\n"
+    },
+    {
+      "approval": "P2",
+      "path": "packages/core/src/__tests__/catalog-data.test.ts",
+      "checkoutEol": "CRLF",
+      "before": "      IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL, RING4_TRIAL, SOCIETY_RING4_PLOTS,\n",
+      "after": "      IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL, RING4_TRIAL, RETAINERS_HALL_TRIAL, SOCIETY_RING4_PLOTS,\n"
+    },
+    {
+      "approval": "P3",
+      "path": "packages/persistence/src/__tests__/npc-life-records.test.ts",
+      "checkoutEol": "CRLF",
+      "before": "it('loads all ten v10 scenarios and round-trips every current life checkpoint byte-identically', () => {\n",
+      "after": "it('matches v10 and v11 checkpoint filenames and round-trips every current life checkpoint byte-identically', () => {\n"
+    }
+  ]
+}

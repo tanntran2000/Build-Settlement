@@ -1,0 +1,409 @@
+{
+  "head": "7e1aca45e35be17772ff770c3a4595c8213b0d3b",
+  "tree": "fd04e1f2d7f6f47270a2e7ac82d18b68729a6372",
+  "CI": 1,
+  "cases": 407,
+  "totals": {
+    "passed": 407,
+    "failed": 0,
+    "skipped": 0
+  },
+  "elapsedMs": 2201910,
+  "priorFailuresAtCorrection4": 56,
+  "nowPassed": 56,
+  "priorCasesOnThisHead": [
+    {
+      "result": "passed",
+      "position": 5,
+      "file": "tests/e2e/character-life-boundary.spec.ts",
+      "line": 280,
+      "title": "same-session UI projection through assignment and full week"
+    },
+    {
+      "result": "passed",
+      "position": 10,
+      "file": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+      "line": 329,
+      "title": "accessibility at 1600px › long character and report content reflows"
+    },
+    {
+      "result": "passed",
+      "position": 13,
+      "file": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+      "line": 329,
+      "title": "accessibility at 1280px › long character and report content reflows"
+    },
+    {
+      "result": "passed",
+      "position": 16,
+      "file": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+      "line": 329,
+      "title": "accessibility at 375px › long character and report content reflows"
+    },
+    {
+      "result": "passed",
+      "position": 19,
+      "file": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+      "line": 329,
+      "title": "accessibility at 320px › long character and report content reflows"
+    },
+    {
+      "result": "passed",
+      "position": 31,
+      "file": "tests/e2e/character-life-navigation.spec.ts",
+      "line": 225,
+      "title": "fulfillment states match strip and report"
+    },
+    {
+      "result": "passed",
+      "position": 33,
+      "file": "tests/e2e/character-life-navigation.spec.ts",
+      "line": 265,
+      "title": "all Life calendar surfaces cross year boundaries"
+    },
+    {
+      "result": "passed",
+      "position": 53,
+      "file": "tests/e2e/character-life-navigation.spec.ts",
+      "line": 820,
+      "title": "unapplied drafts survive navigation with committed-only resolution"
+    },
+    {
+      "result": "passed",
+      "position": 71,
+      "file": "tests/e2e/character-life-navigation.spec.ts",
+      "line": 1106,
+      "title": "report matches complete executor projection: shortage"
+    },
+    {
+      "result": "passed",
+      "position": 72,
+      "file": "tests/e2e/character-life-navigation.spec.ts",
+      "line": 1106,
+      "title": "report matches complete executor projection: zero"
+    },
+    {
+      "result": "passed",
+      "position": 73,
+      "file": "tests/e2e/character-life-navigation.spec.ts",
+      "line": 1106,
+      "title": "report matches complete executor projection: precision"
+    },
+    {
+      "result": "passed",
+      "position": 74,
+      "file": "tests/e2e/character-life-navigation.spec.ts",
+      "line": 1106,
+      "title": "report matches complete executor projection: service"
+    },
+    {
+      "result": "passed",
+      "position": 75,
+      "file": "tests/e2e/character-life-navigation.spec.ts",
+      "line": 1106,
+      "title": "report matches complete executor projection: empty"
+    },
+    {
+      "result": "passed",
+      "position": 76,
+      "file": "tests/e2e/character-life-navigation.spec.ts",
+      "line": 1157,
+      "title": "player flows at 1280px › F1 weekly turn — keyboard"
+    },
+    {
+      "result": "passed",
+      "position": 81,
+      "file": "tests/e2e/character-life-navigation.spec.ts",
+      "line": 1157,
+      "title": "player flows at 375px › F1 weekly turn — keyboard"
+    },
+    {
+      "result": "passed",
+      "position": 113,
+      "file": "tests/e2e/crafting.spec.ts",
+      "line": 121,
+      "title": "F1 no-Herbs Hospital forecast agrees with End Week and explains why the queue waits"
+    },
+    {
+      "result": "passed",
+      "position": 115,
+      "file": "tests/e2e/crafting.spec.ts",
+      "line": 166,
+      "title": "C2 Quartermaster visible tables reconstruct every craft event, waiting output and idle workshop"
+    },
+    {
+      "result": "passed",
+      "position": 119,
+      "file": "tests/e2e/crafting.spec.ts",
+      "line": 218,
+      "title": "C2 accessibility quartermaster-rows at 1280"
+    },
+    {
+      "result": "passed",
+      "position": 123,
+      "file": "tests/e2e/crafting.spec.ts",
+      "line": 218,
+      "title": "C2 accessibility quartermaster-rows at 1600"
+    },
+    {
+      "result": "passed",
+      "position": 124,
+      "file": "tests/e2e/crafting.spec.ts",
+      "line": 236,
+      "title": "C2 new workshops and report reflow at 320"
+    },
+    {
+      "result": "passed",
+      "position": 125,
+      "file": "tests/e2e/crafting.spec.ts",
+      "line": 236,
+      "title": "C2 new workshops and report reflow at 375"
+    },
+    {
+      "result": "passed",
+      "position": 126,
+      "file": "tests/e2e/crime.spec.ts",
+      "line": 11,
+      "title": "robbery report and resulting state match the crafted save"
+    },
+    {
+      "result": "passed",
+      "position": 127,
+      "file": "tests/e2e/crime.spec.ts",
+      "line": 11,
+      "title": "raid report and resulting state match the crafted save"
+    },
+    {
+      "result": "passed",
+      "position": 128,
+      "file": "tests/e2e/crime.spec.ts",
+      "line": 11,
+      "title": "wound report and resulting state match the crafted save"
+    },
+    {
+      "result": "passed",
+      "position": 130,
+      "file": "tests/e2e/crisis.spec.ts",
+      "line": 11,
+      "title": "Demand card locks End Week; Pay applies once and appears in the next report"
+    },
+    {
+      "result": "passed",
+      "position": 148,
+      "file": "tests/e2e/garrison.spec.ts",
+      "line": 12,
+      "title": "Watch House staffing, level-two capacity and three-worker refusal"
+    },
+    {
+      "result": "passed",
+      "position": 149,
+      "file": "tests/e2e/garrison.spec.ts",
+      "line": 21,
+      "title": "crafted raid reports garrison deaths with complete Order parity"
+    },
+    {
+      "result": "passed",
+      "position": 150,
+      "file": "tests/e2e/goods-stock.spec.ts",
+      "line": 5,
+      "title": "Society five-week report and navigation parity at 375px"
+    },
+    {
+      "result": "passed",
+      "position": 151,
+      "file": "tests/e2e/goods-stock.spec.ts",
+      "line": 5,
+      "title": "Society five-week report and navigation parity at 1280px"
+    },
+    {
+      "result": "passed",
+      "position": 155,
+      "file": "tests/e2e/items.spec.ts",
+      "line": 73,
+      "title": "C2 UI buy, keyboard equip and next Farm report show the post effect"
+    },
+    {
+      "result": "passed",
+      "position": 159,
+      "file": "tests/e2e/items.spec.ts",
+      "line": 124,
+      "title": "C2 visible item letters include stack loss, storage-full loss, expiry, delivered and waiting Legendary rewards"
+    },
+    {
+      "result": "passed",
+      "position": 172,
+      "file": "tests/e2e/laws.spec.ts",
+      "line": 9,
+      "title": "New Game builds and staffs the Council, votes and reports Poor Relief"
+    },
+    {
+      "result": "passed",
+      "position": 173,
+      "file": "tests/e2e/laws.spec.ts",
+      "line": 23,
+      "title": "crafted laws show full slots, repeal cooldown and resolve the promise after four weeks"
+    },
+    {
+      "result": "passed",
+      "position": 175,
+      "file": "tests/e2e/ledger.spec.ts",
+      "line": 77,
+      "title": "B3 new-game letters preserve rows, Details and complete report parity"
+    },
+    {
+      "result": "passed",
+      "position": 176,
+      "file": "tests/e2e/ledger.spec.ts",
+      "line": 77,
+      "title": "B3 crime-raid letters preserve rows, Details and complete report parity"
+    },
+    {
+      "result": "passed",
+      "position": 177,
+      "file": "tests/e2e/ledger.spec.ts",
+      "line": 77,
+      "title": "B3 crime-wound letters preserve rows, Details and complete report parity"
+    },
+    {
+      "result": "passed",
+      "position": 178,
+      "file": "tests/e2e/ledger.spec.ts",
+      "line": 77,
+      "title": "B3 laws letters preserve rows, Details and complete report parity"
+    },
+    {
+      "result": "passed",
+      "position": 179,
+      "file": "tests/e2e/ledger.spec.ts",
+      "line": 124,
+      "title": "B3 urgent letter precedes reports and keeps crisis command behavior"
+    },
+    {
+      "result": "passed",
+      "position": 187,
+      "file": "tests/e2e/npc-sheet.spec.ts",
+      "line": 237,
+      "title": "NPC sheet at 1280px › Weekly report renders the three NPC life outcomes and keeps full parity"
+    },
+    {
+      "result": "passed",
+      "position": 193,
+      "file": "tests/e2e/npc-sheet.spec.ts",
+      "line": 237,
+      "title": "NPC sheet at 1600px › Weekly report renders the three NPC life outcomes and keeps full parity"
+    },
+    {
+      "result": "passed",
+      "position": 199,
+      "file": "tests/e2e/order.spec.ts",
+      "line": 13,
+      "title": "Slum Watch House is staffed and Order report matches engine"
+    },
+    {
+      "result": "passed",
+      "position": 290,
+      "file": "tests/e2e/tile-local-checkpoint.spec.ts",
+      "line": 23,
+      "title": "saves a multiweek plan locally, continues after reload and resumes the same economics"
+    },
+    {
+      "result": "passed",
+      "position": 327,
+      "file": "tests/e2e/tile-local-checkpoint.spec.ts",
+      "line": 68,
+      "title": "population local checkpoint restores grown cohorts and next-week parity at 1280px"
+    },
+    {
+      "result": "passed",
+      "position": 328,
+      "file": "tests/e2e/tile-local-checkpoint.spec.ts",
+      "line": 68,
+      "title": "population local checkpoint restores grown cohorts and next-week parity at 390px"
+    },
+    {
+      "result": "passed",
+      "position": 329,
+      "file": "tests/e2e/tile-population.spec.ts",
+      "line": 7,
+      "title": "society population grows once, preserves workforce and roundtrips at 1280px"
+    },
+    {
+      "result": "passed",
+      "position": 330,
+      "file": "tests/e2e/tile-population.spec.ts",
+      "line": 7,
+      "title": "society population grows once, preserves workforce and roundtrips at 390px"
+    },
+    {
+      "result": "passed",
+      "position": 332,
+      "file": "tests/e2e/tile-save.spec.ts",
+      "line": 8,
+      "title": "exports a real file, restores a multiweek plan and resumes the same economics"
+    },
+    {
+      "result": "passed",
+      "position": 337,
+      "file": "tests/e2e/tile-save.spec.ts",
+      "line": 30,
+      "title": "the previous report is UI-only and survives cancel or invalid import until a valid load clears it"
+    },
+    {
+      "result": "passed",
+      "position": 339,
+      "file": "tests/e2e/tile-trial.spec.ts",
+      "line": 8,
+      "title": "builds production and inside Market, serves Goods once, then upgrades and replaces"
+    },
+    {
+      "result": "passed",
+      "position": 341,
+      "file": "tests/e2e/tile-trial.spec.ts",
+      "line": 22,
+      "title": "double-click Plan next week preserves the new plan at 1280px"
+    },
+    {
+      "result": "passed",
+      "position": 342,
+      "file": "tests/e2e/tile-trial.spec.ts",
+      "line": 22,
+      "title": "double-click Plan next week preserves the new plan at 390px"
+    },
+    {
+      "result": "passed",
+      "position": 343,
+      "file": "tests/e2e/tile-trial.spec.ts",
+      "line": 25,
+      "title": "repeated keyboard activation cannot turn planning into another End Week"
+    },
+    {
+      "result": "passed",
+      "position": 400,
+      "file": "tests/e2e/world-session.spec.ts",
+      "line": 28,
+      "title": "U3: successful Continue invalidates pending success and its feedback"
+    },
+    {
+      "result": "passed",
+      "position": 401,
+      "file": "tests/e2e/world-session.spec.ts",
+      "line": 28,
+      "title": "U3: successful Continue invalidates pending invalid JSON and its feedback"
+    },
+    {
+      "result": "passed",
+      "position": 402,
+      "file": "tests/e2e/world-session.spec.ts",
+      "line": 28,
+      "title": "U3: successful Continue invalidates pending read rejection and its feedback"
+    },
+    {
+      "result": "passed",
+      "position": 407,
+      "file": "tests/e2e/world-session.spec.ts",
+      "line": 43,
+      "title": "U9: local and portable saves restore the whole populated session and uninterrupted next week"
+    }
+  ],
+  "failed": []
+}

@@ -1,0 +1,30 @@
+﻿UTC 2026-11-19T14:15:30.8329235Z
+Prior HEAD ced2f88a67daffb8f9fe01fff67f966e82474fc1
+Command: git commit --amend --no-edit
+[feat/p7b-map-estates 7e1aca4] feat(core): ring 4, estates and acquisition buildings
+ Date: Thu Nov 19 18:15:10 2026 +0700
+ 88 files changed, 970 insertions(+), 168 deletions(-)
+ create mode 100644 packages/core/src/trial/__tests__/society-p7b.test.ts
+ create mode 100644 packages/persistence/src/__tests__/fixtures/society-v11/life-5-weeks.json
+ create mode 100644 packages/persistence/src/__tests__/fixtures/society-v11/life-crime-death.json
+ create mode 100644 packages/persistence/src/__tests__/fixtures/society-v11/life-crime-raid.json
+ create mode 100644 packages/persistence/src/__tests__/fixtures/society-v11/life-crime-robbery.json
+ create mode 100644 packages/persistence/src/__tests__/fixtures/society-v11/life-crime-wound.json
+ create mode 100644 packages/persistence/src/__tests__/fixtures/society-v11/life-demand-card.json
+ create mode 100644 packages/persistence/src/__tests__/fixtures/society-v11/life-laws.json
+ create mode 100644 packages/persistence/src/__tests__/fixtures/society-v11/life-new-game.json
+ create mode 100644 packages/persistence/src/__tests__/fixtures/society-v11/life-rebellion-last-week.json
+ create mode 100644 packages/persistence/src/__tests__/fixtures/society-v11/new-game.json
+ create mode 100644 packages/simulation/src/__tests__/fixtures/p7b-path-diff.ts
+ create mode 100644 packages/simulation/src/__tests__/fixtures/p7b-path-diff.txt
+ create mode 100644 packages/simulation/src/__tests__/tile-trial-p7b.test.ts
+ create mode 100644 packages/ui/src/__tests__/p7b-checkpoint.test.ts
+Exit code: 0
+Amended HEAD 7e1aca45e35be17772ff770c3a4595c8213b0d3b
+Tree fd04e1f2d7f6f47270a2e7ac82d18b68729a6372
+Git status empty.
+feat(core): ring 4, estates and acquisition buildings
+
+Co-authored-by: Codex <noreply@openai.com>
+
+

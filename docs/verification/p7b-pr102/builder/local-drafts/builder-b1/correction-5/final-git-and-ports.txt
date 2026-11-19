@@ -1,0 +1,15 @@
+﻿UTC 2026-11-19T13:15:58.4278567Z
+HEAD ced2f88a67daffb8f9fe01fff67f966e82474fc1
+Tree eeda3008213c9a7fe983a6d07781157a9d29a628
+Branch feat/p7b-map-estates
+Parent and origin/main 27f4dc2e0ea6ed4f12e79fab6366d11fb555551b
+git rev-list --count origin/main..HEAD: 1
+git status --porcelain=v1: empty
+No tracked docs/ changes
+Ports 4173 and 4174 free
+Screenshot SHA-256 6881baaa59715ba05e6821d48d92e92583cef0d4a7ff79a6e38b4ad5e342ac9b
+Screenshot served index verified against the exact-head smoke served-build hash.
+Commit:
+feat(core): ring 4, estates and acquisition buildings
+
+Co-authored-by: Codex <noreply@openai.com>

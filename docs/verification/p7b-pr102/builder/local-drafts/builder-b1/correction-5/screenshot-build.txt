@@ -1,0 +1,19 @@
+﻿HEAD ced2f88a67daffb8f9fe01fff67f966e82474fc1
+Tree eeda3008213c9a7fe983a6d07781157a9d29a628
+UTC 2026-11-19T12:31:20.5527255Z
+Command: npm run build --workspace=@haven/ui
+
+> @haven/ui@0.1.0 build
+> vite build
+
+vite v6.4.5 building for production...
+transforming...
+✓ 258 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.71 kB │ gzip:   0.41 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-D94IJs5c.css                   37.31 kB │ gzip:   7.53 kB
+dist/assets/index-BSrswIrG.js                   466.47 kB │ gzip: 145.64 kB
+✓ built in 3.44s
+Exit code: 0

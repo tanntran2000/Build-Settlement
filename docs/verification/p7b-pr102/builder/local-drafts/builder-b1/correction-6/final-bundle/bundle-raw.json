@@ -1,0 +1,43 @@
+{
+  "head": "7e1aca45e35be17772ff770c3a4595c8213b0d3b",
+  "tree": "fd04e1f2d7f6f47270a2e7ac82d18b68729a6372",
+  "node": "v24.19.0",
+  "indexSha256": "b5bdc680f84c29f22712aa32fd09b16710a4f0a43fe408de31a7edbcac339f28",
+  "matchedServedBuild": true,
+  "assets": [
+    {
+      "path": "assets/index-B20tRJ9F.js",
+      "kind": "js",
+      "bytes": 466621,
+      "gzipBytes": 145737,
+      "sha256": "fefe000ac54e20e2999310836cec8a184af7365a6a68c86d63c2a2d669515b16",
+      "gzipSha256": "8e8f5a6339546871bda2042a9f743ca25dde429db483bc47c230beea8a7d3d06"
+    },
+    {
+      "path": "assets/index-D94IJs5c.css",
+      "kind": "css",
+      "bytes": 37312,
+      "gzipBytes": 7528,
+      "sha256": "da3d5e95ed95e7033a8d972ddc7d01b36086c01586d073876873b485f38dc447",
+      "gzipSha256": "a0429b688ae46dd35f34ed48ada31c944b40898fd1b4eecb1c58f4df13adfa15"
+    }
+  ],
+  "method": "Gate 7 entry assets from dist/index.html, Node gzipSync defaults",
+  "baseline": {
+    "js": 143004,
+    "css": 7528,
+    "total": 150532
+  },
+  "gzipBytes": {
+    "js": 145737,
+    "css": 7528,
+    "total": 153265
+  },
+  "deltaBytes": {
+    "js": 2733,
+    "css": 0,
+    "total": 2733
+  },
+  "budgetBytes": 200000,
+  "headroomBytes": 46735
+}

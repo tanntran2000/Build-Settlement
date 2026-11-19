@@ -1,0 +1,95 @@
+﻿UTC 2026-11-19T11:09:46.6271633Z
+HEAD 27f4dc2e0ea6ed4f12e79fab6366d11fb555551b
+Tree a0ea6329441e75df363b356052528f1426233281
+Branch feat/p7b-map-estates
+origin/main 27f4dc2e0ea6ed4f12e79fab6366d11fb555551b
+feat/p7a-npc-sheet 952985c4fafaffeee44a4eb8932c178858659a40
+ M packages/core/src/__tests__/catalog-data.test.ts
+ M packages/core/src/data/buildings.json
+ M packages/core/src/data/tuning.json
+ M packages/core/src/data/validate.ts
+ M packages/core/src/trial/__tests__/crime.test.ts
+ M packages/core/src/trial/__tests__/crisis.test.ts
+ M packages/core/src/trial/__tests__/items.test.ts
+ M packages/core/src/trial/__tests__/law.test.ts
+ M packages/core/src/trial/__tests__/order.test.ts
+ M packages/core/src/trial/__tests__/outside.test.ts
+ M packages/core/src/trial/__tests__/society-map.test.ts
+ M packages/core/src/trial/__tests__/society.test.ts
+ M packages/core/src/trial/catalog.ts
+ M packages/core/src/trial/order.ts
+ M packages/core/src/trial/society-map.ts
+ M packages/core/src/trial/society.ts
+ M packages/core/src/trial/state.ts
+ M packages/core/src/trial/types.ts
+ M packages/core/src/world/__tests__/session.test.ts
+ M packages/persistence/src/__tests__/character-life-save.test.ts
+ M packages/persistence/src/__tests__/item-records.test.ts
+ M packages/persistence/src/__tests__/items-rebuild-order.test.ts
+ M packages/persistence/src/__tests__/npc-life-records.test.ts
+ M packages/persistence/src/__tests__/session-records.test.ts
+ M packages/persistence/src/__tests__/society-new-game-fixture.test.ts
+ M packages/persistence/src/__tests__/society-v9-fixture.test.ts
+ M packages/persistence/src/session-records.ts
+ M packages/simulation/src/__tests__/character-life-observation.test.ts
+ M packages/simulation/src/__tests__/craft-week.test.ts
+ M packages/simulation/src/__tests__/crime-fixtures.test.ts
+ M packages/simulation/src/__tests__/crisis-fixture-helper.ts
+ M packages/simulation/src/__tests__/crisis-fixtures.test.ts
+ M packages/simulation/src/__tests__/fixtures/catalog-golden.json
+ M packages/simulation/src/__tests__/items-week.test.ts
+ M packages/simulation/src/__tests__/law-fixture.test.ts
+ M packages/simulation/src/__tests__/law-week.test.ts
+ M packages/simulation/src/__tests__/lord-health.test.ts
+ M packages/simulation/src/__tests__/order-tax-week.test.ts
+ M packages/simulation/src/__tests__/order-week.test.ts
+ M packages/simulation/src/__tests__/smithy-data.test.ts
+ M packages/simulation/src/__tests__/society-command-transaction.test.ts
+ M packages/simulation/src/__tests__/society-plots.test.ts
+ M packages/simulation/src/__tests__/society-renewable-support.test.ts
+ M packages/simulation/src/__tests__/society-stock-integrity.test.ts
+ M packages/simulation/src/__tests__/society-stock-policy-ports.test.ts
+ M packages/simulation/src/tile-trial-week.ts
+ M packages/simulation/src/tile-trial.ts
+ M packages/simulation/src/workshop-operation.ts
+ M packages/ui/src/CharacterLifeCity.svelte
+ M packages/ui/src/InsideCity.svelte
+ M packages/ui/src/TileManagement.svelte
+ M packages/ui/src/__tests__/character-life-session.test.ts
+ M packages/ui/src/__tests__/data-inspector.test.ts
+ M packages/ui/src/__tests__/report-letters.test.ts
+ M packages/ui/src/__tests__/society-view.test.ts
+ M packages/ui/src/__tests__/world-session.test.ts
+ M packages/ui/src/report-letters.ts
+ M packages/ui/src/society-view.ts
+ M tests/e2e/character-life-boundary.spec.ts
+ M tests/e2e/character-life-navigation.helpers.ts
+ M tests/e2e/character-life-navigation.spec.ts
+ M tests/e2e/crime.spec.ts
+ M tests/e2e/crisis.spec.ts
+ M tests/e2e/garrison.spec.ts
+ M tests/e2e/goods-stock.spec.ts
+ M tests/e2e/items.spec.ts
+ M tests/e2e/laws.spec.ts
+ M tests/e2e/ledger.spec.ts
+ M tests/e2e/society.spec.ts
+ M tests/e2e/storage.spec.ts
+ M tests/e2e/tile-save.spec.ts
+ M tests/e2e/title.spec.ts
+ M tests/e2e/world-session.spec.ts
+?? packages/core/src/trial/__tests__/society-p7b.test.ts
+?? packages/persistence/src/__tests__/fixtures/society-v11/life-5-weeks.json
+?? packages/persistence/src/__tests__/fixtures/society-v11/life-crime-death.json
+?? packages/persistence/src/__tests__/fixtures/society-v11/life-crime-raid.json
+?? packages/persistence/src/__tests__/fixtures/society-v11/life-crime-robbery.json
+?? packages/persistence/src/__tests__/fixtures/society-v11/life-crime-wound.json
+?? packages/persistence/src/__tests__/fixtures/society-v11/life-demand-card.json
+?? packages/persistence/src/__tests__/fixtures/society-v11/life-laws.json
+?? packages/persistence/src/__tests__/fixtures/society-v11/life-new-game.json
+?? packages/persistence/src/__tests__/fixtures/society-v11/life-rebellion-last-week.json
+?? packages/persistence/src/__tests__/fixtures/society-v11/new-game.json
+?? packages/simulation/src/__tests__/fixtures/p7b-path-diff.ts
+?? packages/simulation/src/__tests__/fixtures/p7b-path-diff.txt
+?? packages/simulation/src/__tests__/tile-trial-p7b.test.ts
+?? packages/ui/src/__tests__/p7b-checkpoint.test.ts
+Ports 4173 and 4174 free.

@@ -1,0 +1,7 @@
+Seed 0: cityRulesetId, state.city.society.rulesetId, state.city.tiles[63..74], state.city.world.settlements.settlement_haven_01.inventory.gold 592989 → 420339
+Seed 42: cityRulesetId, state.city.society.rulesetId, state.city.tiles[63..74], state.city.world.settlements.settlement_haven_01.inventory.gold 581669 → 402569
+Seed 20261028: cityRulesetId, state.city.society.rulesetId, state.city.tiles[63..74], state.city.world.settlements.settlement_haven_01.inventory.gold 626484 → 446484
+Base 27f4dc2e0ea6ed4f12e79fab6366d11fb555551b
+Golden SHA-256 before 042c9dc71a36fff42b74c7b6d8a621d412adcabe7556935bfc7f0f64c312f95a
+Golden SHA-256 after  da4235bdc6e385d5530b90d72adcdb95d148a3602c48912a3a54436332ff4e6b
+PASS: 3 golden seeds, exactly 5 additions to each catalog, 73 preserved historical fixtures, 10 v11 siblings. Forbidden paths: 0.

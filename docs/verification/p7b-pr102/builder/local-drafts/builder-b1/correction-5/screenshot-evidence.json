@@ -1,0 +1,14 @@
+{
+  "head": "ced2f88a67daffb8f9fe01fff67f966e82474fc1",
+  "tree": "eeda3008213c9a7fe983a6d07781157a9d29a628",
+  "command": "npm run preview --workspace=@haven/ui -- --port 4173 --strictPort",
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "fixtureSha256": "b0a0658004306a76dadf2cddc0e96999c082a46419cf0eaf92058bbb23f97fbd",
+  "servedIndexSha256": "9ba92dff17f55a1d6fbbea1ae9909662d78d9f0ead088d4bdf67eb4665376aab",
+  "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB1\\builder-b1\\correction-5\\mansion-panel-1280x900.png",
+  "upkeepText": "Household upkeep: 2 Gold/week, paid after city operations. Skipped when Gold runs short.",
+  "pngSha256": "6881baaa59715ba05e6821d48d92e92583cef0d4a7ff79a6e38b4ad5e342ac9b"
+}

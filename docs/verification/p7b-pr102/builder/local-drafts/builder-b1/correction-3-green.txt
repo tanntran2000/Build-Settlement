@@ -1,0 +1,50 @@
+﻿UTC 2026-11-19T11:03:45.5872338Z
+HEAD 27f4dc2e0ea6ed4f12e79fab6366d11fb555551b
+CI=1
+Command: 
+npm.cmd test -- packages/simulation/src/__tests__/tile-trial-p7b.test.ts packages/ui/src/__tests__/report-letters.test.ts packages/core/src/__tests__/catalog-data.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/simulation/src/__tests__/tile-trial-p7b.test.ts packages/ui/src/__tests__/report-letters.test.ts packages/core/src/__tests__/catalog-data.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/core/src/__tests__/catalog-data.test.ts (47 tests | 1 failed) 319ms
+   × 'tuning.json' has recursively frozen typed views 48ms
+cmd.exe : 
+At line:8 char:1
++ cmd.exe /d /s /c @'
++ ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/core/src/__tests__/catalog-data.test.ts > 'tuning.json' has recursively frozen typed views
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ frozen packages/core/src/__tests__/catalog-data.test.ts:68:38
+     66|   function frozen(value: unknown) {
+     67|     if (value && typeof value === 'object') {
+     68|       expect(Object.isFrozen(value)).toBe(true);
+       |                                      ^
+     69|       Object.values(value).forEach(frozen);
+     70|     }
+ ❯ packages/core/src/__tests__/catalog-data.test.ts:75:28
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 234 passed (235)
+   Start at  18:03:48
+   Duration  5.14s (transform 5.60s, setup 0ms, import 7.80s, tests 1.21s, environment 2ms)
+
+Exit code: 1

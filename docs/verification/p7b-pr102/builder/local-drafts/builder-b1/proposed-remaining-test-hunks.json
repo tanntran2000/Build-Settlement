@@ -1,0 +1,119 @@
+{
+  "status": "Owner proposal only. Existing files remain exactly as previously approved.",
+  "worktreeBefore": "feat/p7b-map-estates, Correction 3 changes are uncommitted",
+  "probe": "correction-3-locked-test-probes.json",
+  "hunks": [
+    {
+      "file": "packages/simulation/src/__tests__/law-week.test.ts",
+      "before": "inventory.gold=3100;",
+      "after": "inventory.gold=100;",
+      "why": "Restore the original boundary so Licensed Vice income is required to fund the city.",
+      "startLine": 45,
+      "endLine": 45,
+      "eofBefore": "CRLF",
+      "eofAfter": "CRLF"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/law-week.test.ts",
+      "before": " // 3100 opening + 2400 lower bound + 1500 Vice covers exactly 7000 operating debit.\n expect(r.upkeepPaidMilli).toBe(6000);expect(r.unpaidUpkeepMilli).toBe(0);\n expect(r.taxMilli).toBe(2640);expect(r.laws!.incomeMilli).toBe(1500);\n expect(r.after.gold).toBe(1760);",
+      "after": " // 100 opening + 2400 lower bound + 1500 Vice covers exactly 4000 operating debit.\n expect(r.upkeepPaidMilli).toBe(3000);expect(r.unpaidUpkeepMilli).toBe(0);\n expect(r.taxMilli).toBe(2640);expect(r.laws!.incomeMilli).toBe(1500);\n expect(r.householdUpkeep).toStrictEqual({paidMilli:1000,unpaidMilli:2000});\n expect(r.after.gold).toBe(760);\n expect(r.after.gold+r.householdUpkeep!.paidMilli).toBe(1760);",
+      "why": "Pin city funding and the separate late Hall payment. Preserve the old city-only balance assertion.",
+      "startLine": 47,
+      "endLine": 50,
+      "eofBefore": "CRLF",
+      "eofAfter": "CRLF"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/order-tax-week.test.ts",
+      "before": "inventory.gold=4600;",
+      "after": "inventory.gold=1600;",
+      "why": "Restore the guaranteed-tax funding boundary for the Counting House.",
+      "startLine": 15,
+      "endLine": 15,
+      "eofBefore": "CRLF",
+      "eofAfter": "CRLF"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/order-tax-week.test.ts",
+      "before": " // 4600 opening + 2400 guaranteed tax funds all 7000 operating debits, leaving 0.",
+      "after": " // 1600 opening + 2400 guaranteed tax funds all 4000 operating debits, leaving 0.",
+      "why": "The city budget covers exactly its own operations.",
+      "startLine": 21,
+      "endLine": 21,
+      "eofBefore": "CRLF",
+      "eofAfter": "CRLF"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/order-tax-week.test.ts",
+      "before": " expect(r.report!.upkeepPaidMilli).toBe(6000);expect(r.report!.unpaidUpkeepMilli).toBe(0);\n expect(r.report!.after.gold).toBe(1760);",
+      "after": " expect(r.report!.upkeepPaidMilli).toBe(3000);expect(r.report!.unpaidUpkeepMilli).toBe(0);\n expect(r.report!.householdUpkeep).toStrictEqual({paidMilli:1000,unpaidMilli:2000});\n expect(r.report!.after.gold).toBe(760);\n expect(r.report!.after.gold+r.report!.householdUpkeep!.paidMilli).toBe(1760);",
+      "why": "Keep the exact nonnegative tax top-up and city-only balance. Pin the household charge and final Gold.",
+      "startLine": 24,
+      "endLine": 25,
+      "eofBefore": "CRLF",
+      "eofAfter": "CRLF"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/order-tax-week.test.ts",
+      "before": "  expect(report.upkeepPaidMilli).toBe(5000+1000*levels);expect(report.unpaidUpkeepMilli).toBe(0);",
+      "after": "  expect(report.upkeepPaidMilli).toBe(2000+1000*levels);expect(report.unpaidUpkeepMilli).toBe(0);\n  expect(report.householdUpkeep).toStrictEqual({paidMilli:3000,unpaidMilli:0});",
+      "why": "Keep every Authority, population and law input and test the two costs separately.",
+      "startLine": 50,
+      "endLine": 50,
+      "eofBefore": "CRLF",
+      "eofAfter": "CRLF"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/order-week.test.ts",
+      "before": " expect(result.report!.upkeepPaidMilli).toBe(1000);expect(result.report!.unpaidUpkeepMilli).toBe(4000);",
+      "after": " expect(result.report!.upkeepPaidMilli).toBe(1000);expect(result.report!.unpaidUpkeepMilli).toBe(1000);\n expect(result.report!.householdUpkeep).toStrictEqual({paidMilli:0,unpaidMilli:3000});",
+      "why": "Preserve all tax, inventory and atomicity checks. Keep both city and household arrears individually pinned.",
+      "startLine": 132,
+      "endLine": 132,
+      "eofBefore": "CRLF",
+      "eofAfter": "CRLF"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-renewable-support.test.ts",
+      "before": "    const tight = expanded(); settlement(tight).inventory.gold = 5500;\n    const r = week(tight); expect(r.report!.unpaidUpkeepMilli).toBe(0); expect(count(r.nextState)).toBe(100);",
+      "after": "    const tight = expanded(); settlement(tight).inventory.gold = 2500;\n    const r = week(tight); expect(r.report!.unpaidUpkeepMilli).toBe(0); expect(count(r.nextState)).toBe(100);\n    expect(r.report!.immigration!.reason).toBe('liquidity');",
+      "why": "Restore the original Gold input and prove that the explicit liquidity branch still blocks arrivals.",
+      "startLine": 148,
+      "endLine": 149,
+      "eofBefore": "CRLF",
+      "eofAfter": "CRLF"
+    },
+    {
+      "file": "packages/simulation/src/__tests__/society-stock-integrity.test.ts",
+      "before": "  expect(recovery.upkeepPaidMilli).toBe(3000); expect(recovery.unpaidUpkeepMilli).toBe(0);\n  expect(recovery.after.gold).toBe(1414);\n  expect(recovery.after.gold + recovery.upkeepPaidMilli).toBeGreaterThanOrEqual(3000);",
+      "after": "  expect(recovery.upkeepPaidMilli).toBe(0); expect(recovery.unpaidUpkeepMilli).toBe(0);\n  expect(recovery.householdUpkeep).toStrictEqual({paidMilli:3000,unpaidMilli:0});\n  expect(recovery.after.gold).toBe(414);\n  expect(recovery.after.gold + recovery.householdUpkeep!.paidMilli).toBeGreaterThanOrEqual(3000);",
+      "why": "Retain the original threshold before fixed household charges. The previous week now pays the Hall from late revenue, reducing the second week's opening and closing Gold by 1000.",
+      "startLine": 159,
+      "endLine": 161,
+      "eofBefore": "CRLF",
+      "eofAfter": "CRLF"
+    }
+  ],
+  "files": {
+    "packages/simulation/src/__tests__/law-week.test.ts": {
+      "beforeSha256Canonical": "07d572e938f8d9cc986d97b1fce98d42a2d73272ea435dccc3bbb52d60eb68af",
+      "proposedSha256Canonical": "2d14baed085093d194b50c9e361b7428a87289cc6cf69a2d45b2ce57c98a0302"
+    },
+    "packages/simulation/src/__tests__/order-tax-week.test.ts": {
+      "beforeSha256Canonical": "1bac61ff8bac6d039984b42a2f5b81f194b37636518a38241cdbb3fb2d18e129",
+      "proposedSha256Canonical": "422851350e7a0383c8c206dbb158bbc7753ab2ad5f3e310979cb2598dd4c0e0c"
+    },
+    "packages/simulation/src/__tests__/order-week.test.ts": {
+      "beforeSha256Canonical": "5902fe022b928fde8b67d57d113eff5129745e706ead90cb3f6a8bad68324872",
+      "proposedSha256Canonical": "ea39490999e57c4649d37ecdb497fd2d023dc3422c8a9ebd80494a1764985d30"
+    },
+    "packages/simulation/src/__tests__/society-renewable-support.test.ts": {
+      "beforeSha256Canonical": "2a6322bf6784e9510cc4a76cbfb409e266c48b0d04a73aee33edda8fa8059ec6",
+      "proposedSha256Canonical": "6da8032bb4253e42fcbfcbab43a8008a73e19f138215061e31deadb101365b6d"
+    },
+    "packages/simulation/src/__tests__/society-stock-integrity.test.ts": {
+      "beforeSha256Canonical": "fd236997b1228b4f9d57c5d275df76ac94b4dd5c898ff008032b641566a809d3",
+      "proposedSha256Canonical": "8112c29fc0f0fe97e81c87c8a2d1aeaad2c56f1eba2e9719390252cf7201796d"
+    }
+  }
+}

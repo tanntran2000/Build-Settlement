@@ -1,0 +1,87 @@
+{
+    "head":  "ced2f88a67daffb8f9fe01fff67f966e82474fc1",
+    "tree":  "eeda3008213c9a7fe983a6d07781157a9d29a628",
+    "startedUtc":  "2026-11-19T12:32:40.7300586Z",
+    "gates":  [
+                  {
+                      "id":  "gate-1-diff",
+                      "command":  "git diff --check origin/main...HEAD",
+                      "exitCode":  0,
+                      "startUtc":  "2026-11-19T12:32:49.8314735Z",
+                      "endUtc":  "2026-11-19T12:32:50.0154777Z",
+                      "log":  "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB1\\builder-b1\\correction-5\\gate-1-diff.txt"
+                  },
+                  {
+                      "id":  "gate-2-lint",
+                      "command":  "npm run lint",
+                      "exitCode":  0,
+                      "startUtc":  "2026-11-19T12:32:50.4565792Z",
+                      "endUtc":  "2026-11-19T12:33:05.4008437Z",
+                      "log":  "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB1\\builder-b1\\correction-5\\gate-2-lint.txt"
+                  },
+                  {
+                      "id":  "gate-3-typecheck",
+                      "command":  "npm run typecheck",
+                      "exitCode":  0,
+                      "startUtc":  "2026-11-19T12:33:05.5546372Z",
+                      "endUtc":  "2026-11-19T12:33:43.0098629Z",
+                      "log":  "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB1\\builder-b1\\correction-5\\gate-3-typecheck.txt"
+                  },
+                  {
+                      "id":  "gate-4-architecture",
+                      "command":  "npm run check:architecture",
+                      "exitCode":  0,
+                      "startUtc":  "2026-11-19T12:33:43.1995595Z",
+                      "endUtc":  "2026-11-19T12:33:49.8361575Z",
+                      "log":  "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB1\\builder-b1\\correction-5\\gate-4-architecture.txt"
+                  },
+                  {
+                      "id":  "gate-5-architecture-tests",
+                      "command":  "npm run test:architecture",
+                      "exitCode":  0,
+                      "startUtc":  "2026-11-19T12:33:49.9981576Z",
+                      "endUtc":  "2026-11-19T12:34:40.6687315Z",
+                      "log":  "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB1\\builder-b1\\correction-5\\gate-5-architecture-tests.txt"
+                  },
+                  {
+                      "id":  "gate-6-unit",
+                      "command":  "npm test",
+                      "exitCode":  0,
+                      "startUtc":  "2026-11-19T12:34:40.8213595Z",
+                      "endUtc":  "2026-11-19T12:35:52.5017703Z",
+                      "log":  "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB1\\builder-b1\\correction-5\\gate-6-unit.txt"
+                  },
+                  {
+                      "id":  "gate-7-build",
+                      "command":  "npm run build",
+                      "exitCode":  0,
+                      "startUtc":  "2026-11-19T12:35:52.6688709Z",
+                      "endUtc":  "2026-11-19T12:36:18.9392155Z",
+                      "log":  "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB1\\builder-b1\\correction-5\\gate-7-build.txt"
+                  },
+                  {
+                      "id":  "smoke-build-regression",
+                      "command":  "npm run build:regression --workspace=@haven/ui",
+                      "exitCode":  0,
+                      "startUtc":  "2026-11-19T12:36:19.1153349Z",
+                      "endUtc":  "2026-11-19T12:36:28.3958482Z",
+                      "log":  "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB1\\builder-b1\\correction-5\\smoke-build-regression.txt"
+                  },
+                  {
+                      "id":  "served-build-check",
+                      "command":  "node \"C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB1\\builder-b1\\correction-5\\verify-served-build.mjs\" \"C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB1\\builder-b1\\correction-5\\served-build-sha256.json\"",
+                      "exitCode":  0,
+                      "startUtc":  "2026-11-19T12:36:28.7718538Z",
+                      "endUtc":  "2026-11-19T12:36:35.8027890Z",
+                      "log":  "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB1\\builder-b1\\correction-5\\served-build-check.txt"
+                  },
+                  {
+                      "id":  "smoke-full",
+                      "command":  "npm run test:smoke",
+                      "exitCode":  0,
+                      "startUtc":  "2026-11-19T12:36:36.1349118Z",
+                      "endUtc":  "2026-11-19T13:15:35.5170417Z",
+                      "log":  "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB1\\builder-b1\\correction-5\\smoke-full.txt"
+                  }
+              ]
+}

@@ -1,0 +1,82 @@
+﻿HEAD 8fd333807147d07e21695d4f156f917d5c1379d2
+Tree c56c5cf49a9150eb79d5c2c66e6e72e3d67cf1ee
+Start UTC 2026-11-19T12:27:27.8755904Z
+CI=1
+Command: npm run test:smoke -- tests/e2e/character-life-navigation.spec.ts:1106 --grep "report matches complete executor projection: zero$" --output "C:\Users\Admin\.t3\local-drafts\p7b-prB1\builder-b1\correction-5\red-report-artifacts"
+
+> build-settlement@0.1.0 pretest:smoke
+> npm run build:regression --workspace=@haven/ui
+
+
+> @haven/ui@0.1.0 build:regression
+> vite build regression --config vite.config.ts --outDir dist
+
+[36mvite v6.4.5 [32mbuilding for production...[36m[39m
+transforming...
+[32m✓[39m 259 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mdist/[22m[32mindex.html                                 [39m[1m[2m  0.45 kB[22m[1m[22m[2m │ gzip:   0.31 kB[22m
+[2mdist/[22m[32massets/PixelifySans-Variable-lrcDQVzA.ttf  [39m[1m[2m 79.16 kB[22m[1m[22m
+[2mdist/[22m[35massets/index-D94IJs5c.css                  [39m[1m[2m 37.31 kB[22m[1m[22m[2m │ gzip:   7.53 kB[22m
+[2mdist/[22m[36massets/index-DUc10Bsf.js                   [39m[1m[2m466.20 kB[22m[1m[22m[2m │ gzip: 145.49 kB[22m
+[32m✓ built in 4.47s[39m
+
+> build-settlement@0.1.0 test:smoke
+> playwright test tests/e2e/character-life-navigation.spec.ts:1106 --grep report matches complete executor projection: zero$ --output C:\Users\Admin\.t3\local-drafts\p7b-prB1\builder-b1\correction-5\red-report-artifacts
+
+
+Running 1 test using 1 worker
+
+  x  1 [chromium] › tests\e2e\character-life-navigation.spec.ts:1106:3 › report matches complete executor projection: zero (5.7s)
+
+
+  1) [chromium] › tests\e2e\character-life-navigation.spec.ts:1106:3 › report matches complete executor projection: zero 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 4
+    + Received  + 0
+
+    @@ -60,14 +60,10 @@
+          "producedMilli": 0,
+          "unmetMilli": 0,
+        },
+        "happinessAfter": 0,
+        "happinessBefore": 80,
+    -   "householdUpkeep": Object {
+    -     "paidMilli": 0,
+    -     "unpaidMilli": 3000,
+    -   },
+        "immigration": Object {
+          "arrivals": 0,
+          "populationAfter": 0,
+          "populationBefore": 0,
+          "reason": "zero-population",
+
+       at character-life-navigation.helpers.ts:519
+
+      517 |   }
+      518 |   const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
+    > 519 |   expect(actual).toEqual(baseReport);
+          |                  ^
+      520 |   if (society) {
+      521 |     const labels = { free: 'Free residents', makers: 'Makers', luminaries: 'Luminaries', merchants: 'Merchants', bound: 'The Bound' };
+      522 |     const classes = panel.getByRole('table', { name: 'Classes this week', exact: true });
+        at expectReport (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:519:18)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.spec.ts:1113:5
+
+    Error Context: ..\..\..\local-drafts\p7b-prB1\builder-b1\correction-5\red-report-artifacts\character-life-navigation--ec0d0-te-executor-projection-zero-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7b-prB1\builder-b1\correction-5\red-report-artifacts\character-life-navigation--ec0d0-te-executor-projection-zero-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7b-prB1\builder-b1\correction-5\red-report-artifacts\character-life-navigation--ec0d0-te-executor-projection-zero-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\character-life-navigation.spec.ts:1106:3 › report matches complete executor projection: zero 
+End UTC 2026-11-19T12:27:54.3535487Z
+Exit code: 1

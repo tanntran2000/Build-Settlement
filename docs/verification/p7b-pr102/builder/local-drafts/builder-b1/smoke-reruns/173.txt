@@ -1,0 +1,67 @@
+HEAD 8fd333807147d07e21695d4f156f917d5c1379d2
+Tree c56c5cf49a9150eb79d5c2c66e6e72e3d67cf1ee
+CI=1
+UTC 2026-11-19T12:09:33.066Z
+Arguments: ["C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\node_modules\\@playwright\\test\\cli.js","test","tests/e2e/laws.spec.ts:23","--grep","crafted laws show full slots, repeal cooldown and resolve the promise after four weeks$","--output","C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB1\\builder-b1\\smoke-reruns\\173"]
+[WebServer] (node:1692) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:26160) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:21784) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\laws.spec.ts:23:1 › crafted laws show full slots, repeal cooldown and resolve the promise after four weeks (5.1s)
+
+
+  1) [chromium] › tests\e2e\laws.spec.ts:23:1 › crafted laws show full slots, repeal cooldown and resolve the promise after four weeks 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 4
+    + Received  + 0
+
+    @@ -59,14 +59,10 @@
+          "producedMilli": 0,
+          "unmetMilli": 0,
+        },
+        "happinessAfter": 92.54,
+        "happinessBefore": 89.3,
+    -   "householdUpkeep": Object {
+    -     "paidMilli": 3000,
+    -     "unpaidMilli": 0,
+    -   },
+        "immigration": Object {
+          "arrivals": 0,
+          "populationAfter": 100,
+          "populationBefore": 100,
+          "reason": "no-capacity",
+
+       at character-life-navigation.helpers.ts:519
+
+      517 |   }
+      518 |   const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
+    > 519 |   expect(actual).toEqual(baseReport);
+          |                  ^
+      520 |   if (society) {
+      521 |     const labels = { free: 'Free residents', makers: 'Makers', luminaries: 'Luminaries', merchants: 'Merchants', bound: 'The Bound' };
+      522 |     const classes = panel.getByRole('table', { name: 'Classes this week', exact: true });
+        at expectReport (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:519:18)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\laws.spec.ts:25:462
+
+    Error Context: ..\..\..\local-drafts\p7b-prB1\builder-b1\smoke-reruns\173\laws-crafted-laws-show-ful-6a255-he-promise-after-four-weeks-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7b-prB1\builder-b1\smoke-reruns\173\laws-crafted-laws-show-ful-6a255-he-promise-after-four-weeks-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7b-prB1\builder-b1\smoke-reruns\173\laws-crafted-laws-show-ful-6a255-he-promise-after-four-weeks-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\laws.spec.ts:23:1 › crafted laws show full slots, repeal cooldown and resolve the promise after four weeks 
+
+End UTC 2026-11-19T12:09:50.541Z
+Exit code: 1

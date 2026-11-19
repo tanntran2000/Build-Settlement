@@ -1,0 +1,29 @@
+{
+  "correction": 5,
+  "bindingCommit": "dbc0db7",
+  "previousHead": "8fd333807147d07e21695d4f156f917d5c1379d2",
+  "previousTree": "c56c5cf49a9150eb79d5c2c66e6e72e3d67cf1ee",
+  "hunks": [
+    {
+      "approval": 1,
+      "path": "tests/e2e/character-life-navigation.helpers.ts",
+      "checkoutEol": "CRLF",
+      "before": "  const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;\n",
+      "after": "  const householdUpkeep = panel.locator('[data-letter=\"steward\"] .letter-rows dt:text-is(\"Household upkeep\") + dd');\n  if (await householdUpkeep.count()) {\n    const amounts = (await householdUpkeep.textContent())?.match(/^([\\d,.]+) Gold paid(?: · ([\\d,.]+) Gold unpaid)?$/);\n    if (!amounts) throw Error('Invalid Household upkeep ledger value.');\n    const [, paid, unpaid] = amounts;\n    actual.householdUpkeep = { paidMilli: milli(paid), unpaidMilli: unpaid === undefined ? 0 : milli(unpaid) };\n  }\n  const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;\n"
+    },
+    {
+      "approval": 2,
+      "path": "packages/ui/src/CharacterLifeCity.svelte",
+      "checkoutEol": "LF",
+      "before": "        <p>Upkeep: {units(definition.upkeepMilli * selected.building.level)} Gold/week. Farm batch Gold credits this Farm's upkeep.</p>\n",
+      "after": "        {#if home}\n          <p>Household upkeep: {units(definition.upkeepMilli * selected.building.level)} Gold/week, paid after city operations. Skipped when Gold runs short.</p>\n        {:else}\n        <p>Upkeep: {units(definition.upkeepMilli * selected.building.level)} Gold/week. Farm batch Gold credits this Farm's upkeep.</p>\n        {/if}\n"
+    },
+    {
+      "approval": 2,
+      "path": "tests/e2e/society.spec.ts",
+      "checkoutEol": "CRLF",
+      "before": " const manage=page.getByRole('region',{name:'Manage tile',exact:true});\n",
+      "after": " const manage=page.getByRole('region',{name:'Manage tile',exact:true});\n await expect(manage.getByText('Household upkeep: 2 Gold/week, paid after city operations. Skipped when Gold runs short.',{exact:true})).toBeVisible();\n"
+    }
+  ]
+}
