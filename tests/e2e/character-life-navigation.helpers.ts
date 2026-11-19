@@ -229,7 +229,7 @@ export function reportFixture(kind: 'shortage' | 'zero' | 'precision' | 'service
       s.city.tiles.find(t => t.id === id)!.building = { typeId, level: 1, workers, enabled: true };
     }
   } else {
-    for (const tile of s.city.tiles) if (tile.building) Object.assign(tile.building, { enabled: false, workers: 0 });
+    for (const tile of s.city.tiles) if (tile.building && !tile.id.startsWith('estate-')) Object.assign(tile.building, { enabled: false, workers: 0 });
   }
   expect(isCharacterLifeSessionState(s)).toBe(true);
   return s;
@@ -514,6 +514,13 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
       npcLife[kind].push(id);
     }
     actual.npcLife = npcLife;
+  }
+  const householdUpkeep = panel.locator('[data-letter="steward"] .letter-rows dt:text-is("Household upkeep") + dd');
+  if (await householdUpkeep.count()) {
+    const amounts = (await householdUpkeep.textContent())?.match(/^([\d,.]+) Gold paid(?: · ([\d,.]+) Gold unpaid)?$/);
+    if (!amounts) throw Error('Invalid Household upkeep ledger value.');
+    const [, paid, unpaid] = amounts;
+    actual.householdUpkeep = { paidMilli: milli(paid), unpaidMilli: unpaid === undefined ? 0 : milli(unpaid) };
   }
   const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
   expect(actual).toEqual(baseReport);

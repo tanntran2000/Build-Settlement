@@ -3,17 +3,25 @@ import { createSocietyState } from '@haven/core';
 import { insideTiers, buildOptions, staffPools, plannedHousing, wallStatus, effectLine, noteSentence, buildingColour, workforceSummary } from '../society-view.js';
 it('groups all plots by tier and locks later rings', () => {
  const tiers=insideTiers(createSocietyState());
- expect(tiers.map(t=>t.plots.length)).toEqual([11,6,10,6]);
- expect(tiers.map(t=>t.plots.filter(p=>!p.locked).length)).toEqual([4,2,3,1]);
- for(const id of ['house-5','slum-2']) expect(tiers.flatMap(t=>t.plots).find(p=>p.tileId===id)).toEqual({tileId:id,ring:2,locked:true});
+ expect(tiers.map(t=>[t.tier,t.label])).toEqual([['estate','Estates'],['housing','Housing'],['service','Services'],['specialist','Specialist'],['slum','Slum']]);
+ expect(tiers.map(t=>t.plots.length)).toEqual([2,14,8,12,9]);
+ expect(tiers.map(t=>t.plots.filter(p=>!p.locked).length)).toEqual([2,4,2,3,1]);
+ const plots=tiers.flatMap(t=>t.plots);
+ for(const id of ['house-5','slum-2']) expect(plots.find(p=>p.tileId===id)).toEqual({tileId:id,ring:2,locked:true});
+ for(const id of ['house-12','house-13','house-14','service-7','service-8','spec-11','spec-12','slum-7','slum-8','slum-9']) {
+  expect(plots.find(p=>p.tileId===id)).toEqual({tileId:id,ring:4,locked:true});
+ }
 });
 it('offers tier-matching active buildings then disabled reserved entries',()=>{
  const city=createSocietyState();
- expect(buildOptions(city,'service-1')).toEqual([{typeId:'tavern',label:'Tavern',available:true},{typeId:'hospital',label:'Hospital',available:true},{typeId:'town-hall',label:'Town Hall',available:true},{typeId:'military-barracks',label:'Military Barracks',available:true},{typeId:'watch-house',label:'Watch House',available:true}]);
+ expect(buildOptions(city,'service-1')).toEqual([{typeId:'tavern',label:'Tavern',available:true},{typeId:'hospital',label:'Hospital',available:true},{typeId:'town-hall',label:'Town Hall',available:true},{typeId:'military-barracks',label:'Military Barracks',available:true},{typeId:'watch-house',label:'Watch House',available:true},{typeId:'guild',label:'Guild',available:true}]);
  expect(buildOptions(city,'house-1').map(x=>x.typeId)).not.toContain('market');
  expect(buildOptions(city,'house-1').map(x=>x.typeId)).not.toContain('tavern');
  expect(buildOptions(city,'plain-2').map(x=>x.typeId)).toEqual(['sheep-pasture','herb-garden','quarry','weaver','farm','processor','logging','mine','workshop']);
  expect(buildOptions(city,'house-5')).toEqual([]);
+ expect(buildOptions(city,'estate-1')).toEqual([]);
+ expect(buildOptions(city,'estate-2')).toEqual([]);
+ expect(buildOptions(city,'house-12')).toEqual([]);
 });
 it('reports the four starting staff pools',()=>{
  const city=createSocietyState();
@@ -29,7 +37,8 @@ it('sums enabled planned housing from catalogue levels',()=>{
 it('describes the next wall and completed wall',()=>{
  const city=createSocietyState();
  expect(wallStatus(city)).toEqual({ring:1,openPlots:10,next:{ring:2,text:"Needs an operating Builders' Yard. Cost: 30 Gold, 20 Wood, 10 Iron."}});
- city.society!.wallRing=3;expect(wallStatus(city)).toEqual({ring:3,openPlots:33,next:null});
+ city.society!.wallRing=3;expect(wallStatus(city)).toEqual({ring:3,openPlots:33,next:{ring:4,text:'Needs an operating Counting House. Cost: 100 Gold, 60 Wood, 30 Iron, 45 Stone.'}});
+ city.society!.wallRing=4;expect(wallStatus(city)).toEqual({ring:4,openPlots:43,next:null});
 });
 it('uses exact effect, note and colour copy',()=>{
  expect(effectLine('makers-rowhouses',2)).toBe('Houses 25 Makers');
@@ -39,6 +48,9 @@ it('uses exact effect, note and colour copy',()=>{
  expect(noteSentence('bound','food-short',0)).toBe('The Bound went short of Food.');
  expect(noteSentence('free','debt-enslavement',2)).toBe('2 Free residents fell into debt slavery.');
  expect(buildingColour('hospital')).toBe('luminaries');expect(buildingColour('tavern')).toBe('none');expect(buildingColour('processor')).toBe('makers');
+ expect(['mansion','retainers-hall','guild','auction-house','slave-market'].map(buildingColour)).toEqual(['merchants','luminaries','makers','free','bound']);
+ expect(effectLine('mansion',1)).toBe('10 NPC beds');
+ expect(effectLine('retainers-hall',2)).toBe('50 NPC beds');
 });
 import {orderRows,orderReportLines,RESEARCH_LABELS} from '../society-view.js';
 it('offers Slum Watch House and previews new city order',()=>{

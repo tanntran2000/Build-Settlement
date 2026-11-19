@@ -1,13 +1,15 @@
-import { buildingWorkerCap, societySoldiers, garrisonSecurity, idleWatchHouse, SOCIETY_BUILDINGS, SOCIETY_PLOT_IDS, societyPlot, societyStaff, TRIAL_BUILDINGS, GOODS_STOCK_TRIAL, type TileTrialState, type SocietyTier } from '@haven/core';
+import { buildingWorkerCap, societySoldiers, garrisonSecurity, idleWatchHouse, SOCIETY_BUILDINGS, SOCIETY_PLOT_IDS, societyPlot, societyStaff, TRIAL_BUILDINGS, GOODS_STOCK_TRIAL, type TileTrialState, RING4_TRIAL, RETAINERS_HALL_TRIAL, npcBeds, type SocietyTier, type SocietyWallRing } from '@haven/core';
 import { societyWorkforce, SOCIETY_WEEK_TRIAL as T, type SocietyNote } from '@haven/simulation';
 export type ClassId = 'free' | 'makers' | 'luminaries' | 'merchants' | 'bound';
 export type ColourKey = ClassId | 'none';
 export const CLASS_LABELS: Record<ClassId,string> = {free:'Free residents',makers:'Makers',luminaries:'Luminaries',merchants:'Merchants',bound:'The Bound'};
-const colours: Record<string,ColourKey> = {'common-housing':'free','makers-rowhouses':'makers','scholars-quarters':'luminaries','merchant-townhouses':'merchants','slave-quarters':'bound',hospital:'luminaries','town-hall':'merchants','builders-yard':'makers',academy:'luminaries','town-market':'merchants','trading-post':'merchants','counting-house':'merchants',warehouse:'makers',smithy:'makers',library:'luminaries',processor:'makers',workshop:'makers',weaver:'makers'};
+const colours: Record<string,ColourKey> = {'common-housing':'free','makers-rowhouses':'makers','scholars-quarters':'luminaries','merchant-townhouses':'merchants','slave-quarters':'bound',hospital:'luminaries','town-hall':'merchants','builders-yard':'makers',academy:'luminaries','town-market':'merchants','trading-post':'merchants','counting-house':'merchants',warehouse:'makers',smithy:'makers',library:'luminaries',processor:'makers',workshop:'makers',weaver:'makers','mansion':'merchants','retainers-hall':'luminaries','guild':'makers','auction-house':'free','slave-market':'bound'};
 export function buildingColour(typeId:string):ColourKey { return colours[typeId] ?? 'none'; }
 export function effectLine(typeId:string,level:number):string {
  const info=SOCIETY_BUILDINGS[typeId];
  if(info?.reserved) return 'Not available yet';
+ const beds=npcBeds(typeId,level);
+ if(beds) return `${beds} NPC beds`;
  if(info?.housing) {
   const names={...CLASS_LABELS,elite:'Elites of any group',bound:'Bound'};
   return `Houses ${info.housing.byLevel[level-1]} ${names[info.housing.class]}`;
@@ -20,19 +22,26 @@ export function effectLine(typeId:string,level:number):string {
  case 'academy':return `Trains up to ${T.trainingPerLevel*level} Free residents per week`;
  case 'town-market':return `Distributes up to ${GOODS_STOCK_TRIAL.capacityPerLevelMilli*level/1000} Goods per week`;
  case 'trading-post':return `Imports ${2*level} Luxury per week for ${3*level} Gold`;
- case 'counting-house':return `+${10*level}% tax`;
+ case 'counting-house':return `+${10*level}% tax; opens Ring 4 when operating`;
  default:return '';
  }
 }
 export function insideTiers(city:TileTrialState) {
- const labels:Record<SocietyTier,string>={housing:'Housing',service:'Services',specialist:'Specialist',slum:'Slum'};
+ const labels:Record<SocietyTier,string>={estate:'Estates',housing:'Housing',service:'Services',specialist:'Specialist',slum:'Slum'};
  return (Object.keys(labels) as SocietyTier[]).map(tier=>({tier,label:labels[tier],plots:SOCIETY_PLOT_IDS.filter(id=>societyPlot(id)!.tier===tier).map(tileId=>{const {ring}=societyPlot(tileId)!;return {tileId,ring,locked:ring>(city.society?.wallRing??1)};})}));
 }
 export function buildOptions(city:TileTrialState,tileId:string):{typeId:string;label:string;available:boolean}[] {
  const plot=societyPlot(tileId);
  if(plot) {
-  if(plot.ring>(city.society?.wallRing??1)) return [];
-  return Object.entries(SOCIETY_BUILDINGS).filter(([,v])=>(v.tier===plot.tier||v.alsoTier===plot.tier)).sort((a,b)=>Number(a[1].reserved)-Number(b[1].reserved)).map(([typeId,v])=>({typeId,label:typeId==='watch-house'&&plot.tier==='slum'?'Watch House · +5 Security in the Slum':v.reserved?`${reservedNames[typeId]} — Not available yet`:TRIAL_BUILDINGS[typeId].name,available:!v.reserved}));
+  if(plot.tier==='estate'||plot.ring>(city.society?.wallRing??1)) return [];
+  return Object.entries(SOCIETY_BUILDINGS).filter(([,v])=>(v.tier===plot.tier||v.alsoTier===plot.tier)).sort((a,b)=>Number(a[1].reserved)-Number(b[1].reserved)).map(([typeId,v])=>{
+   const single=['guild','auction-house','slave-market'].includes(typeId);
+   const alreadyBuilt=single&&city.tiles.some(t=>t.id!==tileId&&t.building?.typeId===typeId);
+   const label=typeId==='watch-house'&&plot.tier==='slum'?'Watch House · +5 Security in the Slum':v.reserved?`${reservedNames[typeId]} — Not available yet`:TRIAL_BUILDINGS[typeId].name;
+   const hallLimit=typeId==='retainers-hall'&&city.tiles.filter(t=>t.building?.typeId===typeId).length>=RETAINERS_HALL_TRIAL.maxPerCity&&
+    city.tiles.find(t=>t.id===tileId)?.building?.typeId!==typeId;
+   return {typeId,label:alreadyBuilt?`${label} — One per city`:hallLimit?"Retainers' Hall — Two per city":label,available:!v.reserved&&!alreadyBuilt&&!hallLimit};
+  });
  }
  const outside=outsidePlot(tileId);
  if(outside&&(outside.ring>city.society!.wallRing||city.society!.outside[tileId].wild))return [];
@@ -52,9 +61,17 @@ export function plannedHousing(city:TileTrialState) {
  for(const {building:b} of city.tiles) if(b?.enabled) {const housing=SOCIETY_BUILDINGS[b.typeId]?.housing;if(housing) totals[housing.class]+=housing.byLevel[b.level-1];}
  return totals;
 }
-export function wallStatus(city:TileTrialState):{ring:1|2|3;openPlots:number;next:null|{ring:2|3;text:string}} {
+const townPlotIds = SOCIETY_PLOT_IDS.filter(id=>societyPlot(id)!.tier!=='estate');
+export const TOWN_PLOT_COUNT = townPlotIds.length;
+export function wallStatus(city:TileTrialState):{ring:SocietyWallRing;openPlots:number;next:null|{ring:2|3|4;text:string}} {
  const ring=city.society!.wallRing;
- return {ring,openPlots:SOCIETY_PLOT_IDS.filter(id=>societyPlot(id)!.ring<=ring).length,next:ring===3?null:{ring:ring===1?2:3,text:ring===1?"Needs an operating Builders' Yard. Cost: 30 Gold, 20 Wood, 10 Iron.":'Needs an operating Town Hall. Cost: 60 Gold, 40 Wood, 20 Iron, 30 Stone.'}};
+ const openPlots=townPlotIds.filter(id=>societyPlot(id)!.ring<=ring).length;
+ if(ring===4) return {ring,openPlots,next:null};
+ if(ring===3) {
+  const {goldMilli,woodMilli,ironMilli,stoneFactor}=RING4_TRIAL;
+  return {ring,openPlots,next:{ring:4,text:`Needs an operating Counting House. Cost: ${formatMilli(goldMilli)} Gold, ${formatMilli(woodMilli)} Wood, ${formatMilli(ironMilli)} Iron, ${formatMilli(O.wallRing3StoneMilli*stoneFactor)} Stone.`}};
+ }
+ return {ring,openPlots,next:{ring:ring===1?2:3,text:ring===1?"Needs an operating Builders' Yard. Cost: 30 Gold, 20 Wood, 10 Iron.":'Needs an operating Town Hall. Cost: 60 Gold, 40 Wood, 20 Iron, 30 Stone.'}};
 }
 export function noteSentence(id:ClassId,note:SocietyNote,enslaved:number):string {
  const label=CLASS_LABELS[id];
@@ -81,7 +98,7 @@ export function storageView(city:TileTrialState) {
  const society=city.society!,settlement=city.world.settlements[city.world.activeSettlementId!],stocks=settlement.inventory;
  let gold=stocks.gold+settlement.cohorts.reduce((n,c)=>n+c.count,0)*TILE_TRIAL_BALANCE.taxGoldPerResident;
  let capacity:number=O.storage.baseMilli;
- for(const tile of city.tiles){const b=tile.building;if(!b?.enabled)continue;const d=TRIAL_BUILDINGS[b.typeId];
+ for(const tile of city.tiles){const b=tile.building;if(!b?.enabled||npcBeds(b.typeId,b.level)>0)continue;const d=TRIAL_BUILDINGS[b.typeId];
  const batches=d.operation==='farm'?Math.min(b.workers,FARM_MAX_BATCHES,Math.floor(gold/FARM_GOLD_PER_BATCH_MILLI)):0;
  const debit=Math.max(d.upkeepMilli*b.level,batches*FARM_GOLD_PER_BATCH_MILLI);if(gold<debit)continue;gold-=debit;
  if(b.typeId==='warehouse'&&b.workers===buildingWorkerCap(b.typeId,b.level))capacity+=O.storage.warehousePerLevelMilli*b.level;

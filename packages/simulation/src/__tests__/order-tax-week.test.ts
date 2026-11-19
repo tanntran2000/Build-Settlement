@@ -22,7 +22,9 @@ it('funds Counting House upkeep from the guaranteed credit before adding the non
  // Final tax floor(3300*8000/10000)=2640 adds 240; Goods revenue adds 1520.
  expect(r.report!.taxMilli).toBe(2640);expect(r.report!.order!.taxDeltaMilli).toBe(-660);
  expect(r.report!.upkeepPaidMilli).toBe(3000);expect(r.report!.unpaidUpkeepMilli).toBe(0);
- expect(r.report!.after.gold).toBe(1760);
+ expect(r.report!.householdUpkeep).toStrictEqual({paidMilli:1000,unpaidMilli:2000});
+ expect(r.report!.after.gold).toBe(760);
+ expect(r.report!.after.gold+r.report!.householdUpkeep!.paidMilli).toBe(1760);
  expect(Object.values(r.nextState.world.settlements[s.world.activeSettlementId!].inventory).every(n=>n>=0)).toBe(true);
 });
 it.each(Array.from({length:101},(_,authority)=>authority))('matches the spec and has a nonnegative tax top-up at Authority %i',authority=>{
@@ -48,5 +50,6 @@ it.each(Array.from({length:101},(_,authority)=>authority))('matches the spec and
   expect(report.taxMilli).toBe(Number(final));
   expect(report.order!.taxDeltaMilli).toBe(Number(final-withCH));
   expect(report.upkeepPaidMilli).toBe(2000+1000*levels);expect(report.unpaidUpkeepMilli).toBe(0);
+  expect(report.householdUpkeep).toStrictEqual({paidMilli:3000,unpaidMilli:0});
  }
 });

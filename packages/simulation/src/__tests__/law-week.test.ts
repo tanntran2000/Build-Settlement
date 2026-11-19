@@ -47,7 +47,9 @@ it('credits unscaled Licensed Vice before building upkeep',()=>{
  // 100 opening + 2400 lower bound + 1500 Vice covers exactly 4000 operating debit.
  expect(r.upkeepPaidMilli).toBe(3000);expect(r.unpaidUpkeepMilli).toBe(0);
  expect(r.taxMilli).toBe(2640);expect(r.laws!.incomeMilli).toBe(1500);
- expect(r.after.gold).toBe(1760);
+ expect(r.householdUpkeep).toStrictEqual({paidMilli:1000,unpaidMilli:2000});
+ expect(r.after.gold).toBe(760);
+ expect(r.after.gold+r.householdUpkeep!.paidMilli).toBe(1760);
 });
 it('moves the corruption target by each Dark and Light tag',()=>{
  expect(resolveCorruption(30,0,lawTerms(['licensed-vice']).corruptionTarget)).toBe(32);
@@ -77,7 +79,7 @@ it('decrements a pending promise once each week',()=>{
  expect(resolveLawPromiseWeek(s)).toBeNull();expect(s.society!.laws.promise!.weeksLeft).toBe(3);
 });
 it('preserves the law-free five-week gameplay pin and determinism',()=>{
- const bytes=readFileSync(new URL('../../../persistence/src/__tests__/fixtures/society-v10/life-new-game.json',import.meta.url),'utf8');
+ const bytes=readFileSync(new URL('../../../persistence/src/__tests__/fixtures/society-v11/life-new-game.json',import.meta.url),'utf8');
  const decoded=deserializeCharacterLifeSave(bytes);if(!decoded.success)throw Error(decoded.error.message);
  let s=decoded.state,other=structuredClone(s);
  for(let i=0;i<5;i++){
@@ -142,7 +144,9 @@ it('preserves the law-free five-week gameplay pin and determinism',()=>{
     "authorityStreak": 0
   }
 }});
- expect(s.city.world.settlements).toEqual(old.city.world.settlements);
+ const expectedSettlements=structuredClone(old.city.world.settlements) as typeof s.city.world.settlements;
+ expectedSettlements[s.city.world.activeSettlementId!].inventory.gold-=15000;
+ expect(s.city.world.settlements).toEqual(expectedSettlements);
 });
 it('is deterministic with three laws over five weeks',()=>{
  function run(){const s=createSocietyState();s.society!.laws.active=['poor-relief','watch-levy','licensed-vice'] as LawId[];for(let i=0;i<5;i++){runTileTrialWeek(s);s.phase='planning';}return s;}

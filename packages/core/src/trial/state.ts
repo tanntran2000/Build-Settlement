@@ -1,10 +1,10 @@
-import { buildingWorkerCap } from "./catalog.js";
+import { buildingWorkerCap, RETAINERS_HALL_TRIAL } from "./catalog.js";
 import { readDenseArray } from '../world/arrays.js';
 import { OUTSIDE_PLOTS, outsidePlot } from './outside.js';
 import { hasWeeklyKeys,isCanonicalGameState } from "../domain/canonical-state.js";
 import { trialBuilding } from "./catalog.js";
 import { GOODS_STOCK_RULESET } from './goods-stock.js';
-import { SOCIETY_BUILDINGS,societyPlot,societyStaff,type StaffClass } from './society-map.js';
+import { ESTATE_BUILDINGS,SOCIETY_BUILDINGS,societyPlot,societyStaff,type StaffClass } from './society-map.js';
 import { createSocietyState,isSocietyState,societyPopulation } from './society.js';
 import type { TileTrialState } from "./types.js";
 
@@ -92,6 +92,14 @@ export function isTileTrialPlanningState(raw: unknown): raw is TileTrialState {
       const exhausted=p&&(p.terrain==='ore'||p.terrain==='rock')&&society?.outside?.[expected[i].id]?.depositMilli===0;
       if(tiles[i].terrain!==(exhausted?'plain':expected[i].terrain))return false;
     }
+    for (const [id, typeId] of Object.entries(ESTATE_BUILDINGS)) {
+      const building = tiles.find(tile=>tile.id===id)?.building;
+      if (!building || building.typeId!==typeId || !building.enabled || building.workers!==0) return false;
+    }
+    for (const typeId of ['guild','auction-house','slave-market']) {
+      if (tiles.filter(tile=>tile.building?.typeId===typeId).length>1) return false;
+    }
+    if (tiles.filter(tile=>tile.building?.typeId==='retainers-hall').length>RETAINERS_HALL_TRIAL.maxPerCity) return false;
     return isTileTrialState(raw);
   } catch { return false; }
 }

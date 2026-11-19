@@ -1,6 +1,7 @@
 import tuningJson from '../data/tuning.json' with { type: 'json' };
 import buildingsJson from '../data/buildings.json' with { type: 'json' };
 import { deepFreeze, validateTuning, validateBuildings } from '../data/validate.js';
+import { SOCIETY_BUILDINGS } from './society-map.js';
 // Adjustable IMPLEMENTATION TRIAL values, not user-approved economic balance.
 export type TrialOperation = "farm" | "processor" | "logging" | "mine" | "goods" | "market" | "society" | "wool" | "herbs" | "stone" | "cloth";
 // Provisional adaptation, not validated balance or imported reference-game rates.
@@ -12,7 +13,15 @@ export interface TrialBuildingDefinition {
 }
 export const TRIAL_BUILDINGS: Readonly<Record<string, TrialBuildingDefinition>> = deepFreeze(validateBuildings(buildingsJson).trial);
 
-export const TILE_TRIAL_BALANCE = deepFreeze(validateTuning(tuningJson).TILE_TRIAL_BALANCE);
+const tuning = validateTuning(tuningJson);
+export const TILE_TRIAL_BALANCE = deepFreeze(tuning.TILE_TRIAL_BALANCE);
+export const RING4_TRIAL = deepFreeze(tuning.RING4_TRIAL);
+export const RETAINERS_HALL_TRIAL = deepFreeze(tuning.RETAINERS_HALL_TRIAL);
+
+export function npcBeds(typeId: string, level: number): number {
+  if (!Number.isSafeInteger(level) || level < 1 || !Object.hasOwn(SOCIETY_BUILDINGS, typeId)) return 0;
+  return SOCIETY_BUILDINGS[typeId].npcBeds?.[level - 1] ?? 0;
+}
 export function trialBuilding(typeId: string): TrialBuildingDefinition | undefined {
   return Object.hasOwn(TRIAL_BUILDINGS, typeId) ? TRIAL_BUILDINGS[typeId] : undefined;
 }

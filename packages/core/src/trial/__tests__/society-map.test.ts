@@ -2,14 +2,15 @@ import { expect,it } from 'vitest';
 import { createSocietyState,isTileTrialPlanningState,managerSlotTileIds } from '../../index.js';
 import { SOCIETY_PLOT_IDS,societyPlot } from '../society-map.js';
 it('pins the society map and ring boundaries', () => {
- expect(SOCIETY_PLOT_IDS).toHaveLength(33);
+ expect(SOCIETY_PLOT_IDS).toHaveLength(45);
+ expect(SOCIETY_PLOT_IDS.filter(id=>societyPlot(id)!.tier!=='estate')).toHaveLength(43);
  expect(societyPlot('house-4')).toEqual({tier:'housing',ring:1});
  expect(societyPlot('house-5')).toEqual({tier:'housing',ring:2});
  expect(societyPlot('slum-1')).toEqual({tier:'slum',ring:1});
  expect(societyPlot('slum-4')).toEqual({tier:'slum',ring:3});
  expect(societyPlot('field-1')).toBeNull();
  const city = createSocietyState();
- expect(city.tiles).toHaveLength(63);
+ expect(city.tiles).toHaveLength(75);
  expect(isTileTrialPlanningState(city)).toBe(true);
 });
 
@@ -21,7 +22,7 @@ it('preserves Market manager posts in both economies and adds Town Hall', () => 
 });
 
 import { TRIAL_BUILDINGS } from '../../index.js';
-it('pins all twenty active town building names to the approved catalog', () => {
+it('pins all twenty-five active town building names to the approved catalog', () => {
   const names = {
     "watch-house": "Watch House", "military-barracks": "Military Barracks",
     'common-housing': 'Common Housing',
@@ -42,6 +43,11 @@ it('pins all twenty active town building names to the approved catalog', () => {
     'slave-quarters': 'Slave Quarters',
     'drug-store': 'Drug Store',
     smithy: 'Smithy',
+    mansion: 'Mansion',
+    'retainers-hall': "Retainers' Hall",
+    guild: 'Guild',
+    'auction-house': 'Auction House',
+    'slave-market': 'Slave Market',
   };
   expect(Object.fromEntries(Object.entries(TRIAL_BUILDINGS)
     .filter(([, definition]) => definition.terrain.includes('town'))

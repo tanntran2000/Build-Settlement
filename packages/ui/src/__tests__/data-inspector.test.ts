@@ -38,7 +38,7 @@ it('finds ids case-insensitively by substring and leaves the input unchanged', a
 it('lists five catalog files with all entry counts and searchable stable ids', async () => {
   const { listCatalogs, findById } = await inspector(), catalogs = listCatalogs();
   expect(catalogs.map(catalog => [catalog.file, catalog.count])).toEqual([
-    ['buildings.json', 32], ['laws.json', 10], ['research.json', 3],
+    ['buildings.json', 37], ['laws.json', 10], ['research.json', 3],
     ['outside-plots.json', 30], ['tuning.json', 9],
   ]);
   for (const catalog of catalogs) {

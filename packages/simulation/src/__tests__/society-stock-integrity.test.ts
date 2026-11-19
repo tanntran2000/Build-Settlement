@@ -33,11 +33,11 @@ describe('retained society Goods stock flow', () => {
       expect(s).toEqual(before); expect(end(s)).toEqual(r);
       expect(report.goodsStock).toEqual({ openingMilli: 10000 - 1450 * (week - 1), producedMilli: 0, distributedMilli: 1450, closingMilli: 10000 - 1450 * week, demandMilli: 1450, unmetMilli: 0, capacityMilli: 2000, limitedBy: 'none' });
       expect(report).toMatchObject({ unpaidUpkeepMilli: 0, farmBatchGoldMilli: 2000, farmExtraUpkeepMilli: 0, taxMilli: 3000 - 36 * (week - 1), foodDemandMilli: 4000, foodConsumedMilli: 4000, goods: { servedMilli: 1450, revenueMilli: 1450, ironUsed: 0 }, immigration: { populationBefore: 100, populationAfter: 100, target: 90, reason: 'no-capacity' } });
-      expect(stocks(r.nextState)).toMatchObject({ food: 20000, gold: 45000 + 1450 * week - 18 * week * (week - 1) });
+      expect(stocks(r.nextState)).toMatchObject({ food: 20000, gold: 45000 + (1450 - 3000) * week - 18 * week * (week - 1) });
       debit += report.before.gold + report.taxMilli + report.goods.revenueMilli - report.after.gold;
       s = command(r.nextState, 'NEXT_WEEK').nextState;
     }
-    expect(debit).toBe(15000); expect(s.goodsStock!.amountMilli).toBe(2750);
+    expect(debit).toBe(30000); expect(s.goodsStock!.amountMilli).toBe(2750);
   });
   it('consumes reserves without production for five weeks and reports the sixth-week Food shortage', () => {
     let s = createSocietyState(), debit = 0;
@@ -50,7 +50,7 @@ describe('retained society Goods stock flow', () => {
       expect(r.nextState.goodsStock!.amountMilli).toBe(10000 - 1450 * week);
       s = command(r.nextState, 'NEXT_WEEK').nextState;
     }
-    expect(debit).toBe(10000); expect(debit).toBeLessThanOrEqual(15000);
+    expect(debit).toBe(25000); expect(debit - 15000).toBeLessThanOrEqual(15000);
     expect(end(s).report).toMatchObject({ foodConsumedMilli: 0, goods: { servedMilli: 1450 }, goodsStock: { closingMilli: 1300 } });
   });
   it.each(['missing', 'disabled', 'unfunded'])('produces and carries stock without a %s Market; no production revenue', kind => {
@@ -76,7 +76,7 @@ describe('retained society Goods stock flow', () => {
     const r = end(s), report = r.report!;
     expect(report.goodsStock).toMatchObject({ distributedMilli: served, closingMilli: amount - served, unmetMilli: population * 20 - served, limitedBy: limit });
     expect(report.goods.revenueMilli).toBe(served);
-    expect(report.after.gold).toBe(report.before.gold + report.taxMilli + served - 2000);
+    expect(report.after.gold).toBe(report.before.gold + report.taxMilli + served - 5000);
   });
   it('keeps production independent of demand and capacity, bounded by Wood and whole workers', () => {
     const s = workshop(); const b = s.tiles.find(t => t.id === 'plain-3')!.building!; b.level = 3; b.workers = 3;
@@ -154,8 +154,12 @@ it('reports unfunded buildings without negative stocks and recovers by pausing',
   expect(r.report!.unpaidUpkeepMilli).toBeGreaterThan(0);
   expect(r.report!.after.gold).toBeGreaterThanOrEqual(0);
   s = command(r.nextState, 'NEXT_WEEK').nextState;
-  for (const t of s.tiles) if (t.building) s = command(s, 'SET_ENABLED', { tileId: t.id, enabled: false }).nextState;
-  expect(end(s).report!.after.gold).toBeGreaterThanOrEqual(3000);
+  for (const t of s.tiles) if (t.building && !t.id.startsWith('estate-')) s = command(s, 'SET_ENABLED', { tileId: t.id, enabled: false }).nextState;
+  const recovery = end(s).report!;
+  expect(recovery.upkeepPaidMilli).toBe(0); expect(recovery.unpaidUpkeepMilli).toBe(0);
+  expect(recovery.householdUpkeep).toStrictEqual({paidMilli:3000,unpaidMilli:0});
+  expect(recovery.after.gold).toBe(414);
+  expect(recovery.after.gold + recovery.householdUpkeep!.paidMilli).toBeGreaterThanOrEqual(3000);
 });
 
 it('Market upgrades do not change demand or double multiply revenue', () => {
