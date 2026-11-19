@@ -229,3 +229,8 @@ Owner (Tân), verbatim dialog answer: "Duyệt, Hall tối đa 2". Builder Step 
 4. **Hall cap:** at most 2 Retainers' Halls per city, the estate Hall plus one on a housing plot. A third fails `HALL_LIMIT` with "Only two Retainers' Halls may be built per city." in BUILD and REPLACE, with a RED case.
 5. **`HOME_OCCUPIED`:** B1 adds the guard through a trusted optional occupancy set on `executeTileTrialCommand`; B2 wires real occupancy from NPC households.
 6. **New tests use exact matchers** (for example `toStrictEqual` on the whole inventory in `tests/e2e/society.spec.ts`), not partial ones.
+
+### Correction 2 — PR B1, two packet defects (owner, 2026-11-19)
+Owner (Tân), verbatim dialog answer: "Duyệt 2 chỗ sửa". Builder HOLD: `C:/Users/Admin/.t3/local-drafts/p7b-prB1/builder-b1/README.md` (SHA-256 `13dee23e6dbeadab049a7870a9ee14899c9b6678f9900f958b2970b2e36a584d`). Two hunks are added to the Correction 1 inventory:
+1. `tests/e2e/society.spec.ts:7`: the import from `./character-life-navigation.helpers.ts` also imports the existing `keyActivate` helper, which the new desktop case calls three times.
+2. `packages/simulation/src/tile-trial.ts` (approved hunk at 157–162): the flat home price applies to BUILD, REPLACE and UPGRADE of any building with NPC beds (`const homeConstruction = npcBeds(typeId, level) > 0;` in place of `homeUpgrade`), so a Retainers' Hall costs exactly 15,000 Gold milli even with an operating Builders' Yard: no Yard discount, no level multiplier, no Stone. A RED case pins the 15,000 charge beside an operating Yard.
