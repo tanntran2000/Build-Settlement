@@ -4,6 +4,7 @@
 
 - **Base:** `main` `27f4dc2` (P7-A complete: #99, #100, #101).
 - **Not authorised by this document:** no code, push or PR.
+- **Plan:** `docs/superpowers/plans/2026-11-19-p7b-acquisition.md`.
 
 All NPCs are female adults (18+). Adult stats are mechanics only. UI and data text is English. Public text never names other games. Every number marked TRIAL is a starting value for balance and may change at G1 or in playtest.
 
