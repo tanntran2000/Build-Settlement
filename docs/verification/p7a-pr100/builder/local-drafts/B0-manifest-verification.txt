@@ -1,0 +1,47 @@
+B0 evidence verification
+UTC=2026-11-17T14:42:43.202446+00:00
+HEAD=dac604054d7cbbf14a0a42209a3ff560380f2956
+TREE=d2f31706d77d308a310b61857a8b293a898280e7
+COMMAND=sha256sum.exe -c SHA256SUMS.txt
+EXIT_CODE=0
+This log is rehashed into the manifest and every file is checked again afterward.
+
+.gitattributes: OK
+B0-all-matches.json: OK
+B0-byte-inventory.json: OK
+B0-fetch.txt: OK
+B0-final-state.json: OK
+B0-fixture-protection.json: OK
+B0-graph-coverage.json: OK
+B0-matched-files.json: OK
+B0-planned-paths.json: OK
+B0-preflight.json: OK
+B0-projected-data-paths.json: OK
+B0-proposed-edits.json: OK
+B0-proposed-files.json: OK
+B0-tooling-note.txt: OK
+B0-verification.json: OK
+README.md: OK
+STEP0-HOLD.md: OK
+b0-scan.py: OK
+binding-overview-2761d05.md: OK
+binding-plan-a770dc0.md: OK
+binding-spec-2761d05.md: OK
+build-b0-proposals.py: OK
+manifest-verification.txt: OK
+progress.md: OK
+proposals/after/packages/persistence/src/__tests__/fixtures/society-v10/life-5-weeks.json: OK
+proposals/after/packages/persistence/src/__tests__/fixtures/society-v10/life-laws.json: OK
+proposals/after/packages/simulation/src/__tests__/character-life-command.test.ts: OK
+proposals/after/packages/simulation/src/__tests__/fixtures/catalog-golden.json: OK
+proposals/after/packages/simulation/src/__tests__/society-stock-integrity.test.ts: OK
+proposals/after/tests/e2e/character-life-navigation.helpers.ts: OK
+proposals/before/packages/persistence/src/__tests__/fixtures/society-v10/life-5-weeks.json: OK
+proposals/before/packages/persistence/src/__tests__/fixtures/society-v10/life-laws.json: OK
+proposals/before/packages/simulation/src/__tests__/character-life-command.test.ts: OK
+proposals/before/packages/simulation/src/__tests__/fixtures/catalog-golden.json: OK
+proposals/before/packages/simulation/src/__tests__/society-stock-integrity.test.ts: OK
+proposals/before/tests/e2e/character-life-navigation.helpers.ts: OK
+verify-edit-inventory.py: OK
+verify-evidence-manifest.py: OK
+write-b0-hold.py: OK

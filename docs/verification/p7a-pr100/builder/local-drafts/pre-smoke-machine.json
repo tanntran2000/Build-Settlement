@@ -1,0 +1,69 @@
+﻿{
+    "head":  "cf94804876ef2d02835112e06c355314bbcc16cd",
+    "tree":  "3ee007bb2818beddbe87f1dce042b6820e8a2ad2",
+    "utc":  "2026-11-17T15:10:18.0230232Z",
+    "cpu":  [
+                {
+                    "LoadPercentage":  35,
+                    "NumberOfLogicalProcessors":  8
+                }
+            ],
+    "topProcesses":  [
+                         {
+                             "IDProcess":  82744,
+                             "Name":  "git#3",
+                             "PercentProcessorTime":  33
+                         },
+                         {
+                             "IDProcess":  75668,
+                             "Name":  "git-remote-https",
+                             "PercentProcessorTime":  19
+                         },
+                         {
+                             "IDProcess":  68264,
+                             "Name":  "WmiPrvSE#2",
+                             "PercentProcessorTime":  19
+                         },
+                         {
+                             "IDProcess":  29600,
+                             "Name":  "dwm",
+                             "PercentProcessorTime":  9
+                         },
+                         {
+                             "IDProcess":  4,
+                             "Name":  "System",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  76572,
+                             "Name":  "node#15",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  80276,
+                             "Name":  "node#13",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  75064,
+                             "Name":  "node#14",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  2172,
+                             "Name":  "node#16",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  74040,
+                             "Name":  "node#19",
+                             "PercentProcessorTime":  0
+                         }
+                     ],
+    "competingJobs":  [
+
+                      ],
+    "portListeners":  [
+
+                      ]
+}

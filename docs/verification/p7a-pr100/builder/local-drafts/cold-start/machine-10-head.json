@@ -1,0 +1,82 @@
+{
+    "captureStartUtc":  "2026-11-18T04:05:23.5082012Z",
+    "utc":  "2026-11-18T04:05:25.6718834Z",
+    "cpu":  [
+                {
+                    "LoadPercentage":  9,
+                    "NumberOfLogicalProcessors":  8
+                }
+            ],
+    "topProcesses":  [
+                         {
+                             "IDProcess":  89688,
+                             "Name":  "POWERPNT",
+                             "PercentProcessorTime":  23
+                         },
+                         {
+                             "IDProcess":  87496,
+                             "Name":  "WmiPrvSE#2",
+                             "PercentProcessorTime":  23
+                         },
+                         {
+                             "IDProcess":  50936,
+                             "Name":  "codebase-memory-mcp#2",
+                             "PercentProcessorTime":  9
+                         },
+                         {
+                             "IDProcess":  72556,
+                             "Name":  "codebase-memory-mcp#7",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  87812,
+                             "Name":  "codebase-memory-mcp#6",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  79092,
+                             "Name":  "codebase-memory-mcp#4",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  62560,
+                             "Name":  "browser",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  29600,
+                             "Name":  "dwm",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  74272,
+                             "Name":  "codebase-memory-mcp#3",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  70192,
+                             "Name":  "claude#12",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  57552,
+                             "Name":  "codebase-memory-mcp#1",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  79548,
+                             "Name":  "codebase-memory-mcp#8",
+                             "PercentProcessorTime":  4
+                         }
+                     ],
+    "processCpuUnit":  "PercentProcessorTime, 100 per fully busy logical CPU",
+    "processScanCount":  488,
+    "commandLineReadableCount":  122,
+    "candidateJobProcessCount":  122,
+    "competingJobs":  [
+
+                      ],
+    "portListeners":  [
+
+                      ]
+}

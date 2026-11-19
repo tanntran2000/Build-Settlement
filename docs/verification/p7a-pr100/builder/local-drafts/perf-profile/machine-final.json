@@ -1,0 +1,77 @@
+﻿{
+    "utc":  "2026-11-18T00:40:05.3012523Z",
+    "cpu":  [
+                {
+                    "LoadPercentage":  2,
+                    "NumberOfLogicalProcessors":  8
+                }
+            ],
+    "topProcesses":  [
+                         {
+                             "IDProcess":  4272,
+                             "Name":  "MsMpEng",
+                             "PercentProcessorTime":  90
+                         },
+                         {
+                             "IDProcess":  4,
+                             "Name":  "System",
+                             "PercentProcessorTime":  33
+                         },
+                         {
+                             "IDProcess":  16760,
+                             "Name":  "WmiPrvSE#2",
+                             "PercentProcessorTime":  28
+                         },
+                         {
+                             "IDProcess":  65416,
+                             "Name":  "git#3",
+                             "PercentProcessorTime":  24
+                         },
+                         {
+                             "IDProcess":  70244,
+                             "Name":  "node#38",
+                             "PercentProcessorTime":  16
+                         },
+                         {
+                             "IDProcess":  67880,
+                             "Name":  "claude#6",
+                             "PercentProcessorTime":  16
+                         },
+                         {
+                             "IDProcess":  65000,
+                             "Name":  "csrss#1",
+                             "PercentProcessorTime":  12
+                         },
+                         {
+                             "IDProcess":  50936,
+                             "Name":  "codebase-memory-mcp#2",
+                             "PercentProcessorTime":  8
+                         },
+                         {
+                             "IDProcess":  3324,
+                             "Name":  "gamingservices",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  47380,
+                             "Name":  "Zalo#6",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  2348,
+                             "Name":  "svchost#18",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  78632,
+                             "Name":  "codebase-memory-mcp#4",
+                             "PercentProcessorTime":  4
+                         }
+                     ],
+    "competingJobs":  [
+
+                      ],
+    "portListeners":  [
+
+                      ]
+}

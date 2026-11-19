@@ -1,0 +1,19 @@
+{
+  "mode": "preflight",
+  "head": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+  "tree": "d2f31706d77d308a310b61857a8b293a898280e7",
+  "base": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+  "utc": "2026-11-17T14:41:04.940565+00:00",
+  "gitStatus": "",
+  "trackedBaselineFiles": 494,
+  "pathCount": 0,
+  "plannedPaths": 13,
+  "proposedTransformations": 9,
+  "existingTestFilesVerifiedExactly": 0,
+  "projectedDataLeavesVerified": 42,
+  "unexpectedPaths": [],
+  "unapprovedExistingTestEdits": [],
+  "unchangedPrABranch": "56124513aef2d85de128fe76bf3001654290c1c0",
+  "exitCode": 0,
+  "scope": "source/proposal inventory only; not a product test or gate result"
+}

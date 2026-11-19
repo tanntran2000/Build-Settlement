@@ -1,0 +1,26 @@
+{
+  "owner": "Tân",
+  "verbatim": "Approve D1–D4 as written (Recommended)",
+  "source": "Owner reply to the B0 approval question in this thread",
+  "utcRecorded": "2026-11-17T14:55:20.398494+00:00",
+  "approvedEdits": [
+    "E01",
+    "E02",
+    "E03",
+    "E04",
+    "E05",
+    "E06",
+    "E07",
+    "E08",
+    "E09"
+  ],
+  "approvedDecisions": [
+    "D1",
+    "D2",
+    "D3",
+    "D4"
+  ],
+  "whitespaceDelta": "W01",
+  "proposedEditsSha256": "03cd669242438f0ab716a76064adf213660e04a2241907a399700e11a32c5569",
+  "proposedFilesSha256": "2f53d83c65cc030de29f5d97b5abef3f016e098fbeaf44f796d544a6f0662376"
+}

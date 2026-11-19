@@ -1,0 +1,67 @@
+[
+  {
+    "path": "packages/simulation/src/npc-life-week.ts",
+    "status": "new",
+    "authorization": "Task B1 direct product allowlist; weekly step, report type and reusable existing-history append helper"
+  },
+  {
+    "path": "packages/simulation/src/character-life-command.ts",
+    "status": "existing",
+    "authorization": "Task B1 direct product allowlist; post-transition history and post-tile END_WEEK call/report attachment"
+  },
+  {
+    "path": "packages/core/src/trial/items.ts",
+    "status": "existing",
+    "authorization": "Task B1 direct product allowlist; skip exhausted NPC post skills and item traits"
+  },
+  {
+    "path": "packages/core/src/trial/types.ts",
+    "status": "existing",
+    "authorization": "Task B1 direct product allowlist; optional npcLife report property"
+  },
+  {
+    "path": "packages/simulation/src/__tests__/npc-life-week.test.ts",
+    "status": "new",
+    "authorization": "Task B1 explicit new test path; full acceptance RED matrix below"
+  },
+  {
+    "path": "packages/simulation/src/__tests__/character-life-command.test.ts",
+    "status": "existing",
+    "authorization": "Step 0 approval requested for E01-E02 only"
+  },
+  {
+    "path": "packages/simulation/src/__tests__/society-stock-integrity.test.ts",
+    "status": "existing",
+    "authorization": "Step 0 approval requested for E03-E04 only"
+  },
+  {
+    "path": "tests/e2e/character-life-navigation.helpers.ts",
+    "status": "existing",
+    "authorization": "Step 0 approval requested for E05-E06 only; test helper, no UI product edit"
+  },
+  {
+    "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-5-weeks.json",
+    "status": "existing",
+    "authorization": "B1 fixture clause; Step 0 approval requested for E07 only"
+  },
+  {
+    "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-laws.json",
+    "status": "existing",
+    "authorization": "B1 fixture clause; Step 0 approval requested for E08 only"
+  },
+  {
+    "path": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "status": "existing",
+    "authorization": "B1 golden clause; Step 0 approval requested for E09 and its W01 formatting delta"
+  },
+  {
+    "path": "packages/simulation/src/__tests__/fixtures/p7a-week-path-diff.ts",
+    "status": "new",
+    "authorization": "User brief explicitly requires this path-diff script when golden changes"
+  },
+  {
+    "path": "packages/simulation/src/__tests__/fixtures/p7a-week-path-diff.txt",
+    "status": "new",
+    "authorization": "User brief explicitly requires committed path-diff output when golden changes"
+  }
+]

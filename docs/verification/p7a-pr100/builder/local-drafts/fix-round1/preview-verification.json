@@ -1,0 +1,17 @@
+{
+  "path": "comparison.html",
+  "previews": [
+    {
+      "width": 728,
+      "contentHeight": 1033,
+      "consoleMessages": []
+    },
+    {
+      "width": 390,
+      "contentHeight": 1147,
+      "consoleMessages": []
+    }
+  ],
+  "visuallyInspected": true,
+  "notes": "Legible at both widths; no console errors. Raw tick traces retain every sample."
+}

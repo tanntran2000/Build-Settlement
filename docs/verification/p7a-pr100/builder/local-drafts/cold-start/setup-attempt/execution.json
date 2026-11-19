@@ -1,0 +1,12 @@
+{
+  "utcSetupStart": "2026-11-18T04:02:59.042518Z",
+  "processes": [],
+  "error": "AssertionError((WindowsPath('D:/QI Technology/Temp/p7a-prB-cold-start-diril_zh/base'), '.github/workflows/ci.yml'))",
+  "utcWindowEnd": "2026-11-18T04:02:59.805399Z",
+  "temporarySourceBytesRemoved": 7407562,
+  "worktreePreserved": true,
+  "finalMachine": "machine-window-final.json",
+  "finalMachineExitCode": 0,
+  "finalPortsFree": true,
+  "utcFinish": "2026-11-18T04:03:11.114712Z"
+}

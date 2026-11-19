@@ -1,0 +1,14 @@
+﻿{
+    "windowStartUtc":  "2026-11-17T14:59:24.8608161Z",
+    "windowEndUtc":  "2026-11-17T15:02:18.4074542Z",
+    "queryMode":  "Explicit UTC SystemTime XPath; independent XML timestamp bounds check",
+    "queries":  [
+                    "*[System[Provider[@Name=\u0027Microsoft-Windows-Power-Troubleshooter\u0027] and EventID=1 and TimeCreated[@SystemTime \u003e= \u00272026-11-17T14:59:24.8608161Z\u0027 and @SystemTime \u003c= \u00272026-11-17T15:02:18.4074542Z\u0027]]]",
+                    "*[System[Provider[@Name=\u0027Microsoft-Windows-Kernel-Power\u0027] and (EventID=42 or EventID=107 or EventID=506 or EventID=507) and TimeCreated[@SystemTime \u003e= \u00272026-11-17T14:59:24.8608161Z\u0027 and @SystemTime \u003c= \u00272026-11-17T15:02:18.4074542Z\u0027]]]"
+                ],
+    "events":  [
+
+               ],
+    "eventCount":  0,
+    "queryUtc":  "2026-11-17T15:48:27.0852050Z"
+}

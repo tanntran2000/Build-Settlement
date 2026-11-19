@@ -1,0 +1,53 @@
+{
+  "tier": "Verify with exact source fallback",
+  "project": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01",
+  "codegraphDirectory": false,
+  "result": "Project not indexed; no other worktree index used and none created",
+  "queries": {
+    "status": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"error\":\"project not found or not indexed\",\"hint\":\"Use list_projects and pass the name whose root_path contains your working directory (or that absolute directory) as the \\\"project\\\" argument; never a repo or folder name.\",\"available_projects\":[\"C-Users-Admin-.t3-worktrees-Build-Settlement-qa-tile-local-checkpoint-01\",\"C-Users-Admin-.t3-worktrees-Build-Settlement-review-population-pr36-final-01\",\"review-tile-world-foundation-01\"],\"count\":3}"
+        }
+      ],
+      "structuredContent": {
+        "error": "project not found or not indexed",
+        "hint": "Use list_projects and pass the name whose root_path contains your working directory (or that absolute directory) as the \"project\" argument; never a repo or folder name.",
+        "available_projects": [
+          "C-Users-Admin-.t3-worktrees-Build-Settlement-qa-tile-local-checkpoint-01",
+          "C-Users-Admin-.t3-worktrees-Build-Settlement-review-population-pr36-final-01",
+          "review-tile-world-foundation-01"
+        ],
+        "count": 3
+      },
+      "isError": true
+    },
+    "coverage": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"error\":\"project not found or not indexed\",\"hint\":\"Use list_projects and pass the name whose root_path contains your working directory (or that absolute directory) as the \\\"project\\\" argument; never a repo or folder name.\",\"available_projects\":[\"C-Users-Admin-.t3-worktrees-Build-Settlement-qa-tile-local-checkpoint-01\",\"C-Users-Admin-.t3-worktrees-Build-Settlement-review-population-pr36-final-01\",\"review-tile-world-foundation-01\"],\"count\":3}"
+        }
+      ],
+      "structuredContent": {
+        "error": "project not found or not indexed",
+        "hint": "Use list_projects and pass the name whose root_path contains your working directory (or that absolute directory) as the \"project\" argument; never a repo or folder name.",
+        "available_projects": [
+          "C-Users-Admin-.t3-worktrees-Build-Settlement-qa-tile-local-checkpoint-01",
+          "C-Users-Admin-.t3-worktrees-Build-Settlement-review-population-pr36-final-01",
+          "review-tile-world-foundation-01"
+        ],
+        "count": 3
+      },
+      "isError": true
+    }
+  },
+  "fallbackFiles": [
+    "packages/simulation/src/npc-life-week.ts",
+    "packages/simulation/src/character-life-command.ts",
+    "packages/simulation/src/world-npc.ts",
+    "packages/core/src/world/npc-life.ts",
+    "packages/core/src/domain/canonical-state.ts"
+  ]
+}

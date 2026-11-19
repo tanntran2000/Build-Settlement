@@ -1,0 +1,18 @@
+{
+  "utc": "2026-11-17T14:17:41.056110+00:00",
+  "main": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+  "mainTree": "d2f31706d77d308a310b61857a8b293a898280e7",
+  "startingBranch": "feat/p7a-npc-life-data",
+  "startingHead": "56124513aef2d85de128fe76bf3001654290c1c0",
+  "gitStatusBefore": "",
+  "portsBefore": [],
+  "dataBranchBefore": "56124513aef2d85de128fe76bf3001654290c1c0",
+  "codegraphDirectoryExists": false,
+  "worktrees": "worktree D:/NghienCuuTiemNang/Build-Settlement\nHEAD 9fddc48bdb6cd957b9770f21aa27cbc922ee44e9\nbranch refs/heads/docs/p7-npc-design\n\nworktree C:/Users/Admin/.t3/worktrees/Build-Settlement/benchmark-arch-gate-a-01\nHEAD 2a2bb72323a44285733e4c62a7c613093f37139c\nbranch refs/heads/benchmark/arch-gate-a-01\n\nworktree C:/Users/Admin/.t3/worktrees/Build-Settlement/benchmark-test-a-01\nHEAD 2a2bb72323a44285733e4c62a7c613093f37139c\ndetached\n\nworktree C:/Users/Admin/.t3/worktrees/Build-Settlement/integrate-windows-smoke-main-01\nHEAD 8a7548bd8403814655729b94856d0ca80bee3f0c\nbranch refs/heads/integrate/windows-smoke-main-01\n\nworktree C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01\nHEAD 56124513aef2d85de128fe76bf3001654290c1c0\nbranch refs/heads/feat/p7a-npc-life-data\n\nworktree C:/Users/Admin/.t3/worktrees/Build-Settlement/verify-windows-smoke-main-01\nHEAD 8a7548bd8403814655729b94856d0ca80bee3f0c\nbranch refs/heads/verify/windows-smoke-main-01",
+  "branch": "feat/p7a-npc-life-week",
+  "head": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+  "tree": "d2f31706d77d308a310b61857a8b293a898280e7",
+  "gitStatusAfter": "",
+  "dataBranchAfter": "56124513aef2d85de128fe76bf3001654290c1c0",
+  "branchCommandExitCode": 0
+}

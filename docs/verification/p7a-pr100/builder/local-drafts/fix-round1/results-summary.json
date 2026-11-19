@@ -1,0 +1,345 @@
+{
+  "status": "HOLD: strict cold-tick performance budget remains breached",
+  "head": "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+  "tree": "947f604e17427d916e1ef0e21083dbc2f72920b6",
+  "previousHead": "cf94804876ef2d02835112e06c355314bbcc16cd",
+  "base": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+  "branch": "feat/p7a-npc-life-week",
+  "gitStatus": "",
+  "commitMessage": "perf(simulation): drop redundant npc clone in weekly life step\n\nCo-authored-by: Codex <noreply@openai.com>",
+  "commitCountOnPreviousHead": 1,
+  "diff": "diff.patch",
+  "productFilesChanged": 1,
+  "productLinesChanged": 1,
+  "testFilesChanged": 0,
+  "allOther497RawFilesUnchanged": true,
+  "beforeTests": 43,
+  "afterTargetedTests": 82,
+  "unitPassed": 3074,
+  "unitFiles": 131,
+  "gates": [
+    {
+      "gate": 1,
+      "command": "git diff --check origin/main...HEAD",
+      "exitCode": 0,
+      "seconds": 0.049,
+      "log": "gate-1-diff.txt"
+    },
+    {
+      "gate": 2,
+      "command": "npm run lint",
+      "exitCode": 0,
+      "seconds": 20.915,
+      "log": "gate-2-lint.txt"
+    },
+    {
+      "gate": 3,
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "seconds": 40.956,
+      "log": "gate-3-typecheck.txt"
+    },
+    {
+      "gate": 4,
+      "command": "npm run check:architecture",
+      "exitCode": 0,
+      "seconds": 7.076,
+      "log": "gate-4-architecture.txt"
+    },
+    {
+      "gate": 5,
+      "command": "npm run test:architecture",
+      "exitCode": 0,
+      "seconds": 75.987,
+      "log": "gate-5-architecture-tests.txt"
+    },
+    {
+      "gate": 6,
+      "command": "npm test",
+      "exitCode": 0,
+      "seconds": 96.69,
+      "log": "gate-6-unit.txt"
+    },
+    {
+      "gate": 7,
+      "command": "npm run build",
+      "exitCode": 0,
+      "seconds": 36.182,
+      "log": "gate-7-build.txt"
+    }
+  ],
+  "gateStartCpu": [
+    {
+      "LoadPercentage": 5,
+      "NumberOfLogicalProcessors": 8
+    }
+  ],
+  "gateStartTopProcesses": [
+    {
+      "IDProcess": 4,
+      "Name": "System",
+      "PercentProcessorTime": 25
+    },
+    {
+      "IDProcess": 80344,
+      "Name": "WmiPrvSE#2",
+      "PercentProcessorTime": 20
+    },
+    {
+      "IDProcess": 57552,
+      "Name": "codebase-memory-mcp#1",
+      "PercentProcessorTime": 5
+    },
+    {
+      "IDProcess": 2172,
+      "Name": "node#15",
+      "PercentProcessorTime": 0
+    },
+    {
+      "IDProcess": 76572,
+      "Name": "node#14",
+      "PercentProcessorTime": 0
+    },
+    {
+      "IDProcess": 75064,
+      "Name": "node#13",
+      "PercentProcessorTime": 0
+    },
+    {
+      "IDProcess": 37900,
+      "Name": "node#11",
+      "PercentProcessorTime": 0
+    },
+    {
+      "IDProcess": 80276,
+      "Name": "node#12",
+      "PercentProcessorTime": 0
+    },
+    {
+      "IDProcess": 74040,
+      "Name": "node#18",
+      "PercentProcessorTime": 0
+    },
+    {
+      "IDProcess": 69964,
+      "Name": "node#19",
+      "PercentProcessorTime": 0
+    }
+  ],
+  "gateSleepResumeEvents": 0,
+  "gateWindowStartUtc": "2026-11-18T00:59:16.5382871Z",
+  "gateWindowEndUtc": "2026-11-18T01:51:26.2577646Z",
+  "smoke": {
+    "head": "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+    "tree": "947f604e17427d916e1ef0e21083dbc2f72920b6",
+    "ci": "1",
+    "command": [
+      "npm.cmd",
+      "run",
+      "test:smoke",
+      "--",
+      "--output",
+      "C:/Users/Admin/.t3/local-drafts/p7a-prB-local-only/fix-round1/full"
+    ],
+    "utcStart": "2026-11-18T01:04:08.656940+00:00",
+    "utcEnd": "2026-11-18T01:51:14.294381+00:00",
+    "seconds": 2825.473,
+    "smokeExitCode": 0,
+    "servedAssetsMatched": true,
+    "gitStatusAfter": ""
+  },
+  "smokePassed": 387,
+  "smokeSkipped": 0,
+  "smokeFailed": false,
+  "profile": "profile/summary.json",
+  "profileHeadMinusBase": {
+    "all": {
+      "mean": 3.8043377777777962,
+      "max": 16.6108999999999
+    },
+    "warm": {
+      "mean": 3.216887878787908,
+      "max": -8.325099999999793
+    }
+  },
+  "changeFromPreviousHead": {
+    "status": "HOLD: strict 50 ms raw-tick acceptance still breached at new-head tick 1 in each run",
+    "previousHead": "cf94804876ef2d02835112e06c355314bbcc16cd",
+    "newHead": "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+    "headChangeFromPrevious": {
+      "all": {
+        "mean": -4.05834999999999,
+        "max": -33.7471000000005,
+        "p95": -39.76039999999966,
+        "over50": -20
+      },
+      "warm": {
+        "mean": -4.787701212121192,
+        "max": -64.66370000000006,
+        "p95": -44.1237000000001,
+        "over50": -20
+      }
+    },
+    "baseAdjustedChange": {
+      "all": {
+        "mean": -5.222713888888848,
+        "max": -19.95110000000045
+      },
+      "warm": {
+        "mean": -6.4388606060605404,
+        "max": -70.41399999999999
+      }
+    },
+    "ordinalChanges": [
+      {
+        "run": "02-head",
+        "allMeanDelta": -15.438141666666674,
+        "allMaxDelta": -33.7471000000005,
+        "warmMeanDelta": -17.078509090909108,
+        "warmMaxDelta": -67.28810000000021,
+        "lifeMeanDelta": -2.383681666666621
+      },
+      {
+        "run": "04-head",
+        "allMeanDelta": 0.5234949999999898,
+        "allMaxDelta": 11.337099999999964,
+        "warmMeanDelta": 0.08374545454544702,
+        "warmMaxDelta": 2.9632000000005974,
+        "lifeMeanDelta": -0.962114999999987
+      },
+      {
+        "run": "06-head",
+        "allMeanDelta": 2.7395966666667277,
+        "allMaxDelta": 8.52949999999987,
+        "warmMeanDelta": 2.6316600000000747,
+        "warmMaxDelta": 6.020000000000437,
+        "lifeMeanDelta": -0.8716616666666404
+      }
+    ],
+    "stateEquality": [
+      {
+        "run": "02-head",
+        "previousHead": "cf94804876ef2d02835112e06c355314bbcc16cd",
+        "newHead": "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+        "finalSessionSha256": "7d99241469c2f8819015c8f798168d18e715462606df1a75923f98266e31909d",
+        "serializedFinalStateIdentical": true
+      },
+      {
+        "run": "04-head",
+        "previousHead": "cf94804876ef2d02835112e06c355314bbcc16cd",
+        "newHead": "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+        "finalSessionSha256": "7d99241469c2f8819015c8f798168d18e715462606df1a75923f98266e31909d",
+        "serializedFinalStateIdentical": true
+      },
+      {
+        "run": "06-head",
+        "previousHead": "cf94804876ef2d02835112e06c355314bbcc16cd",
+        "newHead": "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+        "finalSessionSha256": "7d99241469c2f8819015c8f798168d18e715462606df1a75923f98266e31909d",
+        "serializedFinalStateIdentical": true
+      }
+    ],
+    "lifeMean": {
+      "previous": 3.0221916666666324,
+      "new": 1.6163722222222165,
+      "delta": -1.4058194444444159,
+      "percent": -46.51655485487404
+    },
+    "copyPreparationMean": {
+      "previous": 2.9430272222222005,
+      "new": 1.545946111111099,
+      "delta": -1.3970811111111014,
+      "percent": -47.470886458746484
+    },
+    "limitations": [
+      "Previous and new heads were measured in different batches; absolute changes are descriptive, not a controlled contemporaneous old/new causal estimate.",
+      "The old outlier run drives much of the pooled improvement.",
+      "The reused timing hook recognizes the changed initializer; legacy lifeCloneMs now measures shallow NPC plus deep life copy preparation. Workload, sampling and timing boundaries are unchanged."
+    ]
+  },
+  "bundle": {
+    "head": "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+    "tree": "947f604e17427d916e1ef0e21083dbc2f72920b6",
+    "utc": "2026-11-18T01:04:04.463Z",
+    "baseline": {
+      "head": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+      "source": "Owner-provided main production bundle, decimal kB gzip",
+      "jsGzipKB": 139.26,
+      "cssGzipKB": 7.15
+    },
+    "current": {
+      "jsGzipBytes": 139905,
+      "cssGzipBytes": 7152,
+      "jsGzipKB": 139.905,
+      "cssGzipKB": 7.152
+    },
+    "deltaKB": {
+      "js": 0.6450000000000102,
+      "css": 0.0019999999999997797
+    },
+    "files": [
+      {
+        "file": "assets/index-CyubGS6a.js",
+        "entry": true,
+        "bytes": 449094,
+        "gzipBytes": 139905,
+        "sha256": "94d25b5a02ce0a14ac09c6c80b419aeeec0de057c1c0586898ca23721a8bb043",
+        "gzipSha256": "c9932db8ff5e919f3b1de4476e1ad880b6361be94f443a0d750996c599b04df5"
+      },
+      {
+        "file": "assets/index-DLT9rNeI.css",
+        "entry": true,
+        "bytes": 35427,
+        "gzipBytes": 7152,
+        "sha256": "48220c778ce4ca3a2cc8b36a4d4692a4358db576c8683c31c7e22afe8b8919c8",
+        "gzipSha256": "585763018b5a4101119dc38e18d354b1e8ef5935e131c02c87ffc444a97d05ea"
+      }
+    ]
+  },
+  "previousHeadBundle": {
+    "head": "cf94804876ef2d02835112e06c355314bbcc16cd",
+    "tree": "3ee007bb2818beddbe87f1dce042b6820e8a2ad2",
+    "utc": "2026-11-17T15:10:15.617Z",
+    "baseline": {
+      "head": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+      "source": "Owner-provided main production bundle, decimal kB gzip",
+      "jsGzipKB": 139.26,
+      "cssGzipKB": 7.15
+    },
+    "current": {
+      "jsGzipBytes": 139893,
+      "cssGzipBytes": 7152,
+      "jsGzipKB": 139.893,
+      "cssGzipKB": 7.152
+    },
+    "deltaKB": {
+      "js": 0.6330000000000098,
+      "css": 0.0019999999999997797
+    },
+    "files": [
+      {
+        "file": "assets/index-DLT9rNeI.css",
+        "entry": true,
+        "bytes": 35427,
+        "gzipBytes": 7152,
+        "sha256": "48220c778ce4ca3a2cc8b36a4d4692a4358db576c8683c31c7e22afe8b8919c8",
+        "gzipSha256": "585763018b5a4101119dc38e18d354b1e8ef5935e131c02c87ffc444a97d05ea"
+      },
+      {
+        "file": "assets/index-uPxBksq4.js",
+        "entry": true,
+        "bytes": 449065,
+        "gzipBytes": 139893,
+        "sha256": "3a072e235065c9c42ee13b1f4bec14dcb05e02d4f7ed6031baff6a740b9d8b5e",
+        "gzipSha256": "158a9e2591b25a9e1015ead1127e8791f5a8fdb45b968b953e95ad429cf2c1aa"
+      }
+    ]
+  },
+  "bundleDeltaVsPreviousHeadBytes": {
+    "jsGzipBytes": 12,
+    "cssGzipBytes": 0
+  },
+  "portsFree": true,
+  "noPushPrMerge": true,
+  "utc": "2026-11-18T01:51:43.745289+00:00"
+}

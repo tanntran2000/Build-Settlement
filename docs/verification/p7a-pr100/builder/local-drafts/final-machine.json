@@ -1,0 +1,69 @@
+﻿{
+    "head":  "cf94804876ef2d02835112e06c355314bbcc16cd",
+    "tree":  "3ee007bb2818beddbe87f1dce042b6820e8a2ad2",
+    "utc":  "2026-11-17T15:47:17.5396388Z",
+    "cpu":  [
+                {
+                    "LoadPercentage":  31,
+                    "NumberOfLogicalProcessors":  8
+                }
+            ],
+    "topProcesses":  [
+                         {
+                             "IDProcess":  76804,
+                             "Name":  "WmiPrvSE#2",
+                             "PercentProcessorTime":  20
+                         },
+                         {
+                             "IDProcess":  57552,
+                             "Name":  "codebase-memory-mcp#1",
+                             "PercentProcessorTime":  10
+                         },
+                         {
+                             "IDProcess":  4272,
+                             "Name":  "MsMpEng",
+                             "PercentProcessorTime":  10
+                         },
+                         {
+                             "IDProcess":  78488,
+                             "Name":  "codebase-memory-mcp#6",
+                             "PercentProcessorTime":  5
+                         },
+                         {
+                             "IDProcess":  78632,
+                             "Name":  "codebase-memory-mcp#4",
+                             "PercentProcessorTime":  5
+                         },
+                         {
+                             "IDProcess":  50936,
+                             "Name":  "codebase-memory-mcp#2",
+                             "PercentProcessorTime":  5
+                         },
+                         {
+                             "IDProcess":  46776,
+                             "Name":  "SearchIndexer",
+                             "PercentProcessorTime":  5
+                         },
+                         {
+                             "IDProcess":  71368,
+                             "Name":  "ChatGPT",
+                             "PercentProcessorTime":  5
+                         },
+                         {
+                             "IDProcess":  74272,
+                             "Name":  "codebase-memory-mcp#3",
+                             "PercentProcessorTime":  5
+                         },
+                         {
+                             "IDProcess":  69964,
+                             "Name":  "node#20",
+                             "PercentProcessorTime":  0
+                         }
+                     ],
+    "competingJobs":  [
+
+                      ],
+    "portListeners":  [
+
+                      ]
+}

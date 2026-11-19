@@ -1,0 +1,8 @@
+Original 498 tracked raw byte hashes matched before refreshing the index stat cache. git diff and git diff --cached had no content changes. After the checkout/CRLF cycle git status still marked seven original LF files modified. git add was restricted to the 13 byte-verified original paths to refresh file-stat entries; index tree remained 3ee007bb2818beddbe87f1dce042b6820e8a2ad2. No content change or commit. Final git status empty.
+warning: in the working copy of 'packages/core/src/trial/items.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/fixtures/catalog-golden.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/fixtures/p7a-week-path-diff.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/fixtures/p7a-week-path-diff.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/npc-life-week.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/npc-life-week.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/e2e/character-life-navigation.helpers.ts', LF will be replaced by CRLF the next time Git touches it

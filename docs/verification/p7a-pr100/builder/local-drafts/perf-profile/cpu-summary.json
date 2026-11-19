@@ -1,0 +1,3185 @@
+[
+  {
+    "run": "01-base",
+    "scope": "CPU samples across all END_WEEK and NEXT_WEEK calls; inclusive values may overlap and are not additive. CPU sampling is approximate, not an allocation trace.",
+    "sampledMs": 3052.494,
+    "topSelf": [
+      {
+        "function": "structuredClone",
+        "url": "node:internal/worker/js_transferable",
+        "line": 113,
+        "selfMs": 428.028,
+        "inclusiveMs": 431.33299999999997,
+        "nodes": [
+          26,
+          110,
+          37,
+          117,
+          184,
+          265,
+          104,
+          54,
+          77,
+          105
+        ]
+      },
+      {
+        "function": "isDataRecord",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts",
+        "line": 8,
+        "selfMs": 330.1749999999999,
+        "inclusiveMs": 434.404,
+        "nodes": [
+          14,
+          261,
+          282,
+          166,
+          241,
+          59,
+          177,
+          18,
+          81,
+          63,
+          71,
+          24,
+          61,
+          74,
+          305,
+          353,
+          243,
+          118,
+          32,
+          115,
+          223,
+          263,
+          191,
+          218,
+          359,
+          371,
+          165,
+          308,
+          376,
+          49,
+          134,
+          286,
+          369,
+          200
+        ]
+      },
+      {
+        "function": "hasWeeklyKeys",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts",
+        "line": 16,
+        "selfMs": 252.413,
+        "inclusiveMs": 692.727,
+        "nodes": [
+          13,
+          154,
+          216,
+          58,
+          17,
+          274,
+          23,
+          84,
+          193,
+          68,
+          213,
+          222,
+          48
+        ]
+      },
+      {
+        "function": "isDataRecord",
+        "url": "",
+        "line": 8,
+        "selfMs": 220.16500000000002,
+        "inclusiveMs": 312.608,
+        "nodes": [
+          235,
+          147,
+          194,
+          226,
+          80,
+          123,
+          299,
+          325,
+          281,
+          244,
+          207,
+          204,
+          112,
+          357,
+          162,
+          269,
+          379,
+          355,
+          173,
+          311,
+          361,
+          163,
+          266,
+          231,
+          179,
+          383,
+          91,
+          302,
+          363,
+          102,
+          328,
+          350,
+          141,
+          255,
+          271,
+          290,
+          189,
+          284
+        ]
+      },
+      {
+        "function": "",
+        "url": "",
+        "line": 11,
+        "selfMs": 194.61799999999997,
+        "inclusiveMs": 194.61799999999997,
+        "nodes": [
+          249,
+          148,
+          195,
+          227,
+          300,
+          245,
+          233,
+          185,
+          228,
+          106,
+          332,
+          113,
+          136,
+          93,
+          158,
+          356,
+          159,
+          362,
+          164,
+          306,
+          293,
+          180,
+          384,
+          92,
+          364,
+          103,
+          329,
+          351,
+          256,
+          347,
+          291,
+          190
+        ]
+      },
+      {
+        "function": "readDenseArray",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/arrays.ts",
+        "line": 4,
+        "selfMs": 184.19100000000003,
+        "inclusiveMs": 184.19100000000003,
+        "nodes": [
+          352,
+          330,
+          272,
+          108,
+          111,
+          28,
+          198,
+          114,
+          240,
+          312,
+          257,
+          170,
+          137,
+          98,
+          292,
+          120,
+          309,
+          346,
+          382
+        ]
+      },
+      {
+        "function": "post",
+        "url": "node:inspector",
+        "line": 115,
+        "selfMs": 167.522,
+        "inclusiveMs": 169.749,
+        "nodes": [
+          5
+        ]
+      },
+      {
+        "function": "",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts",
+        "line": 18,
+        "selfMs": 116.81200000000003,
+        "inclusiveMs": 116.81200000000003,
+        "nodes": [
+          219,
+          142,
+          197,
+          73,
+          229,
+          127,
+          212,
+          124,
+          135,
+          345,
+          175,
+          278,
+          85,
+          208,
+          326,
+          168,
+          331,
+          287,
+          119,
+          133,
+          183,
+          225,
+          296,
+          86
+        ]
+      },
+      {
+        "function": "hasWeeklyKeys",
+        "url": "",
+        "line": 16,
+        "selfMs": 104.16099999999997,
+        "inclusiveMs": 318.634,
+        "nodes": [
+          234,
+          79,
+          122,
+          280,
+          279,
+          206,
+          203,
+          161,
+          268,
+          378,
+          277,
+          172,
+          310,
+          375,
+          90,
+          301,
+          316,
+          101,
+          327,
+          246,
+          140,
+          254,
+          270,
+          295,
+          321,
+          297,
+          283
+        ]
+      },
+      {
+        "function": "isTileTrialState",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/state.ts",
+        "line": 14,
+        "selfMs": 86.416,
+        "inclusiveMs": 454.1719999999999,
+        "nodes": [
+          87,
+          55,
+          69,
+          39,
+          128
+        ]
+      },
+      {
+        "function": "(garbage collector)",
+        "url": "",
+        "line": 0,
+        "selfMs": 80.951,
+        "inclusiveMs": 80.951,
+        "nodes": [
+          60
+        ]
+      },
+      {
+        "function": "outsidePlot",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/outside.ts",
+        "line": 17,
+        "selfMs": 76.643,
+        "inclusiveMs": 87.702,
+        "nodes": [
+          88,
+          72,
+          70,
+          52
+        ]
+      },
+      {
+        "function": "isNamedCharacterRecord",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc.ts",
+        "line": 27,
+        "selfMs": 75.377,
+        "inclusiveMs": 421.89699999999993,
+        "nodes": [
+          27,
+          174,
+          97
+        ]
+      },
+      {
+        "function": "isNpcLife",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc-life.ts",
+        "line": 54,
+        "selfMs": 67.881,
+        "inclusiveMs": 486.161,
+        "nodes": [
+          16,
+          31
+        ]
+      },
+      {
+        "function": "isWorldNpcList",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc.ts",
+        "line": 35,
+        "selfMs": 65.03399999999999,
+        "inclusiveMs": 1031.835,
+        "nodes": [
+          15,
+          30
+        ]
+      },
+      {
+        "function": "isCharacterProfile",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/character/validate.ts",
+        "line": 40,
+        "selfMs": 61.331,
+        "inclusiveMs": 431.37800000000004,
+        "nodes": [
+          21,
+          156
+        ]
+      },
+      {
+        "function": "isTileTrialPlanningState",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/state.ts",
+        "line": 83,
+        "selfMs": 53.249,
+        "inclusiveMs": 352.46500000000003,
+        "nodes": [
+          10,
+          35
+        ]
+      },
+      {
+        "function": "createSocietyState",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/society.ts",
+        "line": 24,
+        "selfMs": 44.89099999999999,
+        "inclusiveMs": 130.381,
+        "nodes": [
+          25,
+          94,
+          36,
+          76
+        ]
+      }
+    ],
+    "importantFrames": [
+      {
+        "function": "hasWeeklyKeys",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts",
+        "line": 16,
+        "selfMs": 252.413,
+        "inclusiveMs": 692.727,
+        "nodes": [
+          13,
+          154,
+          216,
+          58,
+          17,
+          274,
+          23,
+          84,
+          193,
+          68,
+          213,
+          222,
+          48
+        ]
+      },
+      {
+        "function": "isNpcLife",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc-life.ts",
+        "line": 54,
+        "selfMs": 67.881,
+        "inclusiveMs": 486.161,
+        "nodes": [
+          16,
+          31
+        ]
+      },
+      {
+        "function": "structuredClone",
+        "url": "node:internal/worker/js_transferable",
+        "line": 113,
+        "selfMs": 428.028,
+        "inclusiveMs": 431.33299999999997,
+        "nodes": [
+          26,
+          110,
+          37,
+          117,
+          184,
+          265,
+          104,
+          54,
+          77,
+          105
+        ]
+      },
+      {
+        "function": "hasWeeklyKeys",
+        "url": "",
+        "line": 16,
+        "selfMs": 104.16099999999997,
+        "inclusiveMs": 318.634,
+        "nodes": [
+          234,
+          79,
+          122,
+          280,
+          279,
+          206,
+          203,
+          161,
+          268,
+          378,
+          277,
+          172,
+          310,
+          375,
+          90,
+          301,
+          316,
+          101,
+          327,
+          246,
+          140,
+          254,
+          270,
+          295,
+          321,
+          297,
+          283
+        ]
+      },
+      {
+        "function": "(garbage collector)",
+        "url": "",
+        "line": 0,
+        "selfMs": 80.951,
+        "inclusiveMs": 80.951,
+        "nodes": [
+          60
+        ]
+      },
+      {
+        "function": "structuredClone",
+        "url": "",
+        "line": 0,
+        "selfMs": 5.295,
+        "inclusiveMs": 5.295,
+        "nodes": [
+          373,
+          298,
+          196
+        ]
+      }
+    ]
+  },
+  {
+    "run": "02-head",
+    "scope": "CPU samples across all END_WEEK and NEXT_WEEK calls; inclusive values may overlap and are not additive. CPU sampling is approximate, not an allocation trace.",
+    "sampledMs": 5548.069,
+    "topSelf": [
+      {
+        "function": "structuredClone",
+        "url": "node:internal/worker/js_transferable",
+        "line": 113,
+        "selfMs": 981.219,
+        "inclusiveMs": 995.81,
+        "nodes": [
+          75,
+          92,
+          188,
+          103,
+          133,
+          204,
+          71,
+          56,
+          262,
+          57,
+          60
+        ]
+      },
+      {
+        "function": "isDataRecord",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts",
+        "line": 8,
+        "selfMs": 580.0709999999999,
+        "inclusiveMs": 734.1600000000001,
+        "nodes": [
+          11,
+          287,
+          210,
+          270,
+          164,
+          335,
+          454,
+          108,
+          381,
+          453,
+          374,
+          223,
+          433,
+          322,
+          449,
+          142,
+          202,
+          23,
+          72,
+          34,
+          90,
+          365,
+          148,
+          29,
+          95,
+          40,
+          81,
+          116,
+          143,
+          402,
+          396,
+          213,
+          341,
+          425,
+          383,
+          346,
+          351,
+          250,
+          339,
+          94
+        ]
+      },
+      {
+        "function": "hasWeeklyKeys",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts",
+        "line": 16,
+        "selfMs": 548.714,
+        "inclusiveMs": 1333.713,
+        "nodes": [
+          10,
+          88,
+          17,
+          123,
+          121,
+          139,
+          79,
+          22,
+          237,
+          33,
+          291,
+          28,
+          360,
+          226,
+          178
+        ]
+      },
+      {
+        "function": "readDenseArray",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/arrays.ts",
+        "line": 4,
+        "selfMs": 372.186,
+        "inclusiveMs": 372.186,
+        "nodes": [
+          264,
+          236,
+          350,
+          218,
+          463,
+          105,
+          130,
+          65,
+          109,
+          115,
+          98,
+          419,
+          39,
+          147,
+          211,
+          297,
+          276,
+          290,
+          272,
+          131,
+          203
+        ]
+      },
+      {
+        "function": "isDataRecord",
+        "url": "",
+        "line": 8,
+        "selfMs": 369.71500000000003,
+        "inclusiveMs": 565.276,
+        "nodes": [
+          424,
+          153,
+          215,
+          241,
+          252,
+          310,
+          183,
+          99,
+          285,
+          97,
+          146,
+          442,
+          303,
+          134,
+          193,
+          367,
+          417,
+          271,
+          224,
+          246,
+          357,
+          450,
+          169,
+          232,
+          316,
+          69,
+          410,
+          238,
+          235,
+          289,
+          429,
+          306,
+          393,
+          330,
+          435,
+          267,
+          414,
+          159,
+          309,
+          256,
+          199,
+          459,
+          278,
+          227,
+          371,
+          325,
+          428
+        ]
+      },
+      {
+        "function": "",
+        "url": "",
+        "line": 11,
+        "selfMs": 305.356,
+        "inclusiveMs": 305.356,
+        "nodes": [
+          403,
+          216,
+          242,
+          253,
+          311,
+          184,
+          439,
+          100,
+          460,
+          149,
+          390,
+          368,
+          437,
+          343,
+          243,
+          135,
+          273,
+          66,
+          104,
+          391,
+          313,
+          452,
+          170,
+          233,
+          317,
+          358,
+          70,
+          411,
+          245,
+          261,
+          394,
+          331,
+          268,
+          415,
+          462,
+          160,
+          257,
+          200,
+          279,
+          228,
+          408,
+          326
+        ]
+      },
+      {
+        "function": "outsidePlot",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/outside.ts",
+        "line": 17,
+        "selfMs": 180.698,
+        "inclusiveMs": 192.554,
+        "nodes": [
+          61,
+          64,
+          31,
+          43,
+          54
+        ]
+      },
+      {
+        "function": "",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts",
+        "line": 18,
+        "selfMs": 164.258,
+        "inclusiveMs": 164.258,
+        "nodes": [
+          400,
+          336,
+          364,
+          18,
+          384,
+          165,
+          338,
+          375,
+          300,
+          446,
+          201,
+          229,
+          77,
+          282,
+          186,
+          129,
+          385,
+          380,
+          35,
+          328,
+          447,
+          332,
+          259,
+          443,
+          173,
+          220,
+          265,
+          155
+        ]
+      },
+      {
+        "function": "isNpcLife",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc-life.ts",
+        "line": 54,
+        "selfMs": 152.424,
+        "inclusiveMs": 963.223,
+        "nodes": [
+          32,
+          38
+        ]
+      },
+      {
+        "function": "isWorldNpcList",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc.ts",
+        "line": 35,
+        "selfMs": 144.407,
+        "inclusiveMs": 1988.924,
+        "nodes": [
+          19,
+          37
+        ]
+      },
+      {
+        "function": "hasWeeklyKeys",
+        "url": "",
+        "line": 16,
+        "selfMs": 132.94600000000003,
+        "inclusiveMs": 425.09599999999995,
+        "nodes": [
+          423,
+          251,
+          182,
+          96,
+          145,
+          441,
+          274,
+          192,
+          281,
+          401,
+          356,
+          231,
+          315,
+          68,
+          234,
+          288,
+          407,
+          305,
+          392,
+          431,
+          412,
+          266,
+          413,
+          308,
+          255,
+          458,
+          370,
+          324,
+          427
+        ]
+      },
+      {
+        "function": "isCharacterProfile",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/character/validate.ts",
+        "line": 40,
+        "selfMs": 130.023,
+        "inclusiveMs": 721.348,
+        "nodes": [
+          26,
+          280
+        ]
+      },
+      {
+        "function": "isNamedCharacterRecord",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc.ts",
+        "line": 27,
+        "selfMs": 122.99799999999999,
+        "inclusiveMs": 739.2109999999999,
+        "nodes": [
+          20,
+          168,
+          67
+        ]
+      },
+      {
+        "function": "isTileTrialState",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/state.ts",
+        "line": 14,
+        "selfMs": 122.265,
+        "inclusiveMs": 771.156,
+        "nodes": [
+          9,
+          14,
+          101,
+          53,
+          162
+        ]
+      },
+      {
+        "function": "(garbage collector)",
+        "url": "",
+        "line": 0,
+        "selfMs": 108.954,
+        "inclusiveMs": 108.954,
+        "nodes": [
+          44
+        ]
+      },
+      {
+        "function": "createSocietyState",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/society.ts",
+        "line": 24,
+        "selfMs": 107.92499999999998,
+        "inclusiveMs": 221.531,
+        "nodes": [
+          74,
+          91,
+          187,
+          117
+        ]
+      },
+      {
+        "function": "post",
+        "url": "node:inspector",
+        "line": 115,
+        "selfMs": 78.164,
+        "inclusiveMs": 80.248,
+        "nodes": [
+          5
+        ]
+      },
+      {
+        "function": "isTileTrialPlanningState",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/state.ts",
+        "line": 83,
+        "selfMs": 74.993,
+        "inclusiveMs": 619.748,
+        "nodes": [
+          13,
+          42
+        ]
+      }
+    ],
+    "importantFrames": [
+      {
+        "function": "hasWeeklyKeys",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts",
+        "line": 16,
+        "selfMs": 548.714,
+        "inclusiveMs": 1333.713,
+        "nodes": [
+          10,
+          88,
+          17,
+          123,
+          121,
+          139,
+          79,
+          22,
+          237,
+          33,
+          291,
+          28,
+          360,
+          226,
+          178
+        ]
+      },
+      {
+        "function": "structuredClone",
+        "url": "node:internal/worker/js_transferable",
+        "line": 113,
+        "selfMs": 981.219,
+        "inclusiveMs": 995.81,
+        "nodes": [
+          75,
+          92,
+          188,
+          103,
+          133,
+          204,
+          71,
+          56,
+          262,
+          57,
+          60
+        ]
+      },
+      {
+        "function": "isNpcLife",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc-life.ts",
+        "line": 54,
+        "selfMs": 152.424,
+        "inclusiveMs": 963.223,
+        "nodes": [
+          32,
+          38
+        ]
+      },
+      {
+        "function": "hasWeeklyKeys",
+        "url": "",
+        "line": 16,
+        "selfMs": 132.94600000000003,
+        "inclusiveMs": 425.09599999999995,
+        "nodes": [
+          423,
+          251,
+          182,
+          96,
+          145,
+          441,
+          274,
+          192,
+          281,
+          401,
+          356,
+          231,
+          315,
+          68,
+          234,
+          288,
+          407,
+          305,
+          392,
+          431,
+          412,
+          266,
+          413,
+          308,
+          255,
+          458,
+          370,
+          324,
+          427
+        ]
+      },
+      {
+        "function": "runNpcLifeWeek",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/npc-life-week.ts",
+        "line": 40,
+        "selfMs": 1.993,
+        "inclusiveMs": 225.666,
+        "nodes": [
+          58
+        ]
+      },
+      {
+        "function": "__p7OriginalNpcLifeWeek",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/npc-life-week.ts",
+        "line": 13,
+        "selfMs": 3.373,
+        "inclusiveMs": 223.673,
+        "nodes": [
+          59
+        ]
+      },
+      {
+        "function": "(garbage collector)",
+        "url": "",
+        "line": 0,
+        "selfMs": 108.954,
+        "inclusiveMs": 108.954,
+        "nodes": [
+          44
+        ]
+      },
+      {
+        "function": "structuredClone",
+        "url": "",
+        "line": 0,
+        "selfMs": 23.907,
+        "inclusiveMs": 23.907,
+        "nodes": [
+          76,
+          344,
+          93,
+          333,
+          347,
+          179,
+          312,
+          421
+        ]
+      }
+    ]
+  },
+  {
+    "run": "03-base",
+    "scope": "CPU samples across all END_WEEK and NEXT_WEEK calls; inclusive values may overlap and are not additive. CPU sampling is approximate, not an allocation trace.",
+    "sampledMs": 3716.534,
+    "topSelf": [
+      {
+        "function": "structuredClone",
+        "url": "node:internal/worker/js_transferable",
+        "line": 113,
+        "selfMs": 577.415,
+        "inclusiveMs": 581.45,
+        "nodes": [
+          107,
+          135,
+          194,
+          42,
+          274,
+          191,
+          221,
+          52,
+          238,
+          53
+        ]
+      },
+      {
+        "function": "hasWeeklyKeys",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts",
+        "line": 16,
+        "selfMs": 416.33799999999997,
+        "inclusiveMs": 915.724,
+        "nodes": [
+          13,
+          110,
+          111,
+          28,
+          257,
+          63,
+          22,
+          365,
+          116,
+          266,
+          148
+        ]
+      },
+      {
+        "function": "isDataRecord",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts",
+        "line": 8,
+        "selfMs": 352.052,
+        "inclusiveMs": 484.333,
+        "nodes": [
+          14,
+          118,
+          167,
+          319,
+          258,
+          372,
+          356,
+          228,
+          29,
+          120,
+          58,
+          93,
+          152,
+          23,
+          134,
+          90,
+          330,
+          367,
+          268,
+          229,
+          371,
+          360,
+          200,
+          252,
+          181,
+          321,
+          172,
+          311,
+          149
+        ]
+      },
+      {
+        "function": "readDenseArray",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/arrays.ts",
+        "line": 4,
+        "selfMs": 255.177,
+        "inclusiveMs": 255.177,
+        "nodes": [
+          166,
+          323,
+          119,
+          62,
+          92,
+          20,
+          225,
+          359,
+          328,
+          240,
+          332,
+          183,
+          79,
+          124,
+          353,
+          162,
+          374,
+          239,
+          139
+        ]
+      },
+      {
+        "function": "isDataRecord",
+        "url": "",
+        "line": 8,
+        "selfMs": 251.72199999999998,
+        "inclusiveMs": 387.1209999999999,
+        "nodes": [
+          174,
+          236,
+          73,
+          144,
+          185,
+          233,
+          301,
+          326,
+          401,
+          153,
+          282,
+          264,
+          64,
+          76,
+          94,
+          287,
+          226,
+          408,
+          151,
+          198,
+          292,
+          205,
+          305,
+          404,
+          313,
+          80,
+          262,
+          273,
+          122,
+          211,
+          98,
+          247,
+          217,
+          380,
+          299,
+          170,
+          160,
+          393,
+          126,
+          308,
+          383,
+          339,
+          241,
+          375
+        ]
+      },
+      {
+        "function": "",
+        "url": "",
+        "line": 11,
+        "selfMs": 215.416,
+        "inclusiveMs": 215.416,
+        "nodes": [
+          142,
+          175,
+          237,
+          74,
+          186,
+          302,
+          327,
+          402,
+          154,
+          288,
+          182,
+          267,
+          65,
+          112,
+          306,
+          176,
+          95,
+          320,
+          227,
+          293,
+          394,
+          243,
+          405,
+          81,
+          263,
+          279,
+          123,
+          275,
+          248,
+          218,
+          361,
+          171,
+          161,
+          127,
+          309,
+          340,
+          242
+        ]
+      },
+      {
+        "function": "outsidePlot",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/outside.ts",
+        "line": 17,
+        "selfMs": 115.98,
+        "inclusiveMs": 127.642,
+        "nodes": [
+          61,
+          91,
+          55,
+          121,
+          40,
+          83,
+          86
+        ]
+      },
+      {
+        "function": "isTileTrialState",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/state.ts",
+        "line": 14,
+        "selfMs": 106.91499999999999,
+        "inclusiveMs": 501.792,
+        "nodes": [
+          69,
+          54,
+          33,
+          82,
+          49
+        ]
+      },
+      {
+        "function": "(garbage collector)",
+        "url": "",
+        "line": 0,
+        "selfMs": 99.755,
+        "inclusiveMs": 99.755,
+        "nodes": [
+          45
+        ]
+      },
+      {
+        "function": "hasWeeklyKeys",
+        "url": "",
+        "line": 16,
+        "selfMs": 99.084,
+        "inclusiveMs": 285.03599999999994,
+        "nodes": [
+          173,
+          235,
+          72,
+          143,
+          232,
+          400,
+          281,
+          75,
+          354,
+          286,
+          407,
+          150,
+          197,
+          204,
+          304,
+          346,
+          312,
+          261,
+          207,
+          97,
+          333,
+          298,
+          169,
+          392,
+          341,
+          307,
+          382,
+          338,
+          349
+        ]
+      },
+      {
+        "function": "isNamedCharacterRecord",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc.ts",
+        "line": 27,
+        "selfMs": 98.72200000000001,
+        "inclusiveMs": 545.614,
+        "nodes": [
+          56,
+          35,
+          168
+        ]
+      },
+      {
+        "function": "",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts",
+        "line": 18,
+        "selfMs": 92.574,
+        "inclusiveMs": 92.574,
+        "nodes": [
+          384,
+          251,
+          259,
+          96,
+          270,
+          278,
+          136,
+          351,
+          31,
+          113,
+          376,
+          117,
+          399,
+          223,
+          409,
+          337,
+          201,
+          222,
+          271,
+          387,
+          396,
+          297,
+          379,
+          202,
+          352,
+          289,
+          350
+        ]
+      },
+      {
+        "function": "post",
+        "url": "node:inspector",
+        "line": 115,
+        "selfMs": 86.463,
+        "inclusiveMs": 88.414,
+        "nodes": [
+          5
+        ]
+      },
+      {
+        "function": "isWorldNpcList",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc.ts",
+        "line": 35,
+        "selfMs": 84.223,
+        "inclusiveMs": 1308.899,
+        "nodes": [
+          16,
+          34
+        ]
+      },
+      {
+        "function": "isTileTrialPlanningState",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/state.ts",
+        "line": 83,
+        "selfMs": 76.482,
+        "inclusiveMs": 453.203,
+        "nodes": [
+          10,
+          39
+        ]
+      },
+      {
+        "function": "isCharacterProfile",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/character/validate.ts",
+        "line": 40,
+        "selfMs": 68.65899999999999,
+        "inclusiveMs": 527.224,
+        "nodes": [
+          19,
+          132
+        ]
+      },
+      {
+        "function": "isNpcLife",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc-life.ts",
+        "line": 54,
+        "selfMs": 66.95400000000001,
+        "inclusiveMs": 569.5319999999999,
+        "nodes": [
+          27,
+          37
+        ]
+      },
+      {
+        "function": "createSocietyState",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/society.ts",
+        "line": 24,
+        "selfMs": 54.243,
+        "inclusiveMs": 164.555,
+        "nodes": [
+          106,
+          67,
+          193,
+          155
+        ]
+      }
+    ],
+    "importantFrames": [
+      {
+        "function": "hasWeeklyKeys",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts",
+        "line": 16,
+        "selfMs": 416.33799999999997,
+        "inclusiveMs": 915.724,
+        "nodes": [
+          13,
+          110,
+          111,
+          28,
+          257,
+          63,
+          22,
+          365,
+          116,
+          266,
+          148
+        ]
+      },
+      {
+        "function": "structuredClone",
+        "url": "node:internal/worker/js_transferable",
+        "line": 113,
+        "selfMs": 577.415,
+        "inclusiveMs": 581.45,
+        "nodes": [
+          107,
+          135,
+          194,
+          42,
+          274,
+          191,
+          221,
+          52,
+          238,
+          53
+        ]
+      },
+      {
+        "function": "isNpcLife",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc-life.ts",
+        "line": 54,
+        "selfMs": 66.95400000000001,
+        "inclusiveMs": 569.5319999999999,
+        "nodes": [
+          27,
+          37
+        ]
+      },
+      {
+        "function": "hasWeeklyKeys",
+        "url": "",
+        "line": 16,
+        "selfMs": 99.084,
+        "inclusiveMs": 285.03599999999994,
+        "nodes": [
+          173,
+          235,
+          72,
+          143,
+          232,
+          400,
+          281,
+          75,
+          354,
+          286,
+          407,
+          150,
+          197,
+          204,
+          304,
+          346,
+          312,
+          261,
+          207,
+          97,
+          333,
+          298,
+          169,
+          392,
+          341,
+          307,
+          382,
+          338,
+          349
+        ]
+      },
+      {
+        "function": "(garbage collector)",
+        "url": "",
+        "line": 0,
+        "selfMs": 99.755,
+        "inclusiveMs": 99.755,
+        "nodes": [
+          45
+        ]
+      },
+      {
+        "function": "structuredClone",
+        "url": "",
+        "line": 0,
+        "selfMs": 4.035,
+        "inclusiveMs": 4.035,
+        "nodes": [
+          362,
+          285
+        ]
+      }
+    ]
+  },
+  {
+    "run": "04-head",
+    "scope": "CPU samples across all END_WEEK and NEXT_WEEK calls; inclusive values may overlap and are not additive. CPU sampling is approximate, not an allocation trace.",
+    "sampledMs": 3704.204,
+    "topSelf": [
+      {
+        "function": "structuredClone",
+        "url": "node:internal/worker/js_transferable",
+        "line": 113,
+        "selfMs": 657.489,
+        "inclusiveMs": 659.0420000000001,
+        "nodes": [
+          96,
+          86,
+          42,
+          84,
+          150,
+          166,
+          49,
+          79,
+          159,
+          50,
+          53
+        ]
+      },
+      {
+        "function": "isDataRecord",
+        "url": "",
+        "line": 8,
+        "selfMs": 467.4520000000001,
+        "inclusiveMs": 636.14,
+        "nodes": [
+          56,
+          269,
+          403,
+          192,
+          349,
+          147,
+          313,
+          205,
+          361,
+          92,
+          130,
+          262,
+          369,
+          267,
+          398,
+          161,
+          68,
+          246,
+          72,
+          388,
+          109,
+          299,
+          123,
+          169,
+          173,
+          371,
+          185,
+          383,
+          241,
+          260,
+          148,
+          386,
+          290,
+          413,
+          320,
+          319,
+          120,
+          272,
+          250,
+          323,
+          211,
+          281
+        ]
+      },
+      {
+        "function": "hasWeeklyKeys",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts",
+        "line": 16,
+        "selfMs": 297.65999999999997,
+        "inclusiveMs": 713.462,
+        "nodes": [
+          10,
+          55,
+          62,
+          76,
+          18,
+          207,
+          23,
+          229,
+          26,
+          405,
+          178,
+          239,
+          233,
+          107,
+          202,
+          364
+        ]
+      },
+      {
+        "function": "readDenseArray",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/arrays.ts",
+        "line": 4,
+        "selfMs": 227.506,
+        "inclusiveMs": 227.506,
+        "nodes": [
+          399,
+          162,
+          265,
+          219,
+          170,
+          122,
+          87,
+          138,
+          163,
+          30,
+          336,
+          315,
+          248,
+          93,
+          222,
+          201,
+          356,
+          353,
+          297,
+          223,
+          304,
+          409
+        ]
+      },
+      {
+        "function": "",
+        "url": "",
+        "line": 11,
+        "selfMs": 217.156,
+        "inclusiveMs": 217.156,
+        "nodes": [
+          57,
+          340,
+          193,
+          350,
+          284,
+          314,
+          206,
+          395,
+          343,
+          131,
+          263,
+          268,
+          177,
+          67,
+          69,
+          247,
+          181,
+          124,
+          389,
+          110,
+          392,
+          70,
+          143,
+          127,
+          287,
+          335,
+          101,
+          310,
+          149,
+          306,
+          393,
+          321,
+          406,
+          251,
+          212
+        ]
+      },
+      {
+        "function": "isDataRecord",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts",
+        "line": 8,
+        "selfMs": 149.153,
+        "inclusiveMs": 198.23199999999997,
+        "nodes": [
+          11,
+          98,
+          311,
+          288,
+          157,
+          176,
+          275,
+          380,
+          208,
+          19,
+          195,
+          259,
+          137,
+          200,
+          221,
+          24,
+          113,
+          65,
+          337,
+          252,
+          38,
+          71,
+          292,
+          278,
+          296,
+          220,
+          341,
+          226,
+          257,
+          224
+        ]
+      },
+      {
+        "function": "hasWeeklyKeys",
+        "url": "",
+        "line": 16,
+        "selfMs": 145.98000000000005,
+        "inclusiveMs": 414.745,
+        "nodes": [
+          402,
+          191,
+          146,
+          293,
+          91,
+          261,
+          368,
+          377,
+          160,
+          387,
+          298,
+          121,
+          168,
+          172,
+          302,
+          344,
+          382,
+          385,
+          342,
+          289,
+          412,
+          316,
+          318,
+          119,
+          271,
+          322,
+          365,
+          280
+        ]
+      },
+      {
+        "function": "isTileTrialState",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/state.ts",
+        "line": 14,
+        "selfMs": 130.373,
+        "inclusiveMs": 525.46,
+        "nodes": [
+          9,
+          15,
+          34,
+          46,
+          115
+        ]
+      },
+      {
+        "function": "",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts",
+        "line": 18,
+        "selfMs": 108.71300000000002,
+        "inclusiveMs": 108.71300000000002,
+        "nodes": [
+          63,
+          294,
+          282,
+          325,
+          133,
+          230,
+          189,
+          97,
+          394,
+          354,
+          300,
+          303,
+          363,
+          345,
+          330,
+          352,
+          213,
+          235,
+          266,
+          355,
+          347,
+          203,
+          338,
+          234,
+          372,
+          414,
+          231
+        ]
+      },
+      {
+        "function": "(garbage collector)",
+        "url": "",
+        "line": 0,
+        "selfMs": 100.266,
+        "inclusiveMs": 100.266,
+        "nodes": [
+          20
+        ]
+      },
+      {
+        "function": "post",
+        "url": "node:inspector",
+        "line": 115,
+        "selfMs": 91.639,
+        "inclusiveMs": 93.8,
+        "nodes": [
+          5
+        ]
+      },
+      {
+        "function": "isCharacterProfile",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/character/validate.ts",
+        "line": 40,
+        "selfMs": 86.9,
+        "inclusiveMs": 438.406,
+        "nodes": [
+          29,
+          60
+        ]
+      },
+      {
+        "function": "isWorldNpcList",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc.ts",
+        "line": 35,
+        "selfMs": 86.696,
+        "inclusiveMs": 1293.051,
+        "nodes": [
+          21,
+          36
+        ]
+      },
+      {
+        "function": "isNpcLife",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc-life.ts",
+        "line": 54,
+        "selfMs": 83.413,
+        "inclusiveMs": 536.522,
+        "nodes": [
+          25,
+          37
+        ]
+      },
+      {
+        "function": "isNamedCharacterRecord",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc.ts",
+        "line": 27,
+        "selfMs": 76.406,
+        "inclusiveMs": 568.0600000000001,
+        "nodes": [
+          22,
+          111,
+          39
+        ]
+      },
+      {
+        "function": "outsidePlot",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/outside.ts",
+        "line": 17,
+        "selfMs": 74.022,
+        "inclusiveMs": 77.012,
+        "nodes": [
+          58,
+          66,
+          35,
+          47
+        ]
+      },
+      {
+        "function": "isTileTrialPlanningState",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/state.ts",
+        "line": 83,
+        "selfMs": 68.584,
+        "inclusiveMs": 414.182,
+        "nodes": [
+          14,
+          103
+        ]
+      },
+      {
+        "function": "createSocietyState",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/society.ts",
+        "line": 24,
+        "selfMs": 60.646,
+        "inclusiveMs": 163.623,
+        "nodes": [
+          95,
+          85,
+          78,
+          158
+        ]
+      }
+    ],
+    "importantFrames": [
+      {
+        "function": "hasWeeklyKeys",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts",
+        "line": 16,
+        "selfMs": 297.65999999999997,
+        "inclusiveMs": 713.462,
+        "nodes": [
+          10,
+          55,
+          62,
+          76,
+          18,
+          207,
+          23,
+          229,
+          26,
+          405,
+          178,
+          239,
+          233,
+          107,
+          202,
+          364
+        ]
+      },
+      {
+        "function": "structuredClone",
+        "url": "node:internal/worker/js_transferable",
+        "line": 113,
+        "selfMs": 657.489,
+        "inclusiveMs": 659.0420000000001,
+        "nodes": [
+          96,
+          86,
+          42,
+          84,
+          150,
+          166,
+          49,
+          79,
+          159,
+          50,
+          53
+        ]
+      },
+      {
+        "function": "isNpcLife",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc-life.ts",
+        "line": 54,
+        "selfMs": 83.413,
+        "inclusiveMs": 536.522,
+        "nodes": [
+          25,
+          37
+        ]
+      },
+      {
+        "function": "hasWeeklyKeys",
+        "url": "",
+        "line": 16,
+        "selfMs": 145.98000000000005,
+        "inclusiveMs": 414.745,
+        "nodes": [
+          402,
+          191,
+          146,
+          293,
+          91,
+          261,
+          368,
+          377,
+          160,
+          387,
+          298,
+          121,
+          168,
+          172,
+          302,
+          344,
+          382,
+          385,
+          342,
+          289,
+          412,
+          316,
+          318,
+          119,
+          271,
+          322,
+          365,
+          280
+        ]
+      },
+      {
+        "function": "runNpcLifeWeek",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/npc-life-week.ts",
+        "line": 40,
+        "selfMs": 0.0,
+        "inclusiveMs": 148.459,
+        "nodes": [
+          51
+        ]
+      },
+      {
+        "function": "__p7OriginalNpcLifeWeek",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/npc-life-week.ts",
+        "line": 13,
+        "selfMs": 5.538,
+        "inclusiveMs": 148.459,
+        "nodes": [
+          52
+        ]
+      },
+      {
+        "function": "(garbage collector)",
+        "url": "",
+        "line": 0,
+        "selfMs": 100.266,
+        "inclusiveMs": 100.266,
+        "nodes": [
+          20
+        ]
+      },
+      {
+        "function": "structuredClone",
+        "url": "",
+        "line": 0,
+        "selfMs": 3.566,
+        "inclusiveMs": 3.566,
+        "nodes": [
+          391,
+          139
+        ]
+      }
+    ]
+  },
+  {
+    "run": "05-base",
+    "scope": "CPU samples across all END_WEEK and NEXT_WEEK calls; inclusive values may overlap and are not additive. CPU sampling is approximate, not an allocation trace.",
+    "sampledMs": 3657.832,
+    "topSelf": [
+      {
+        "function": "structuredClone",
+        "url": "node:internal/worker/js_transferable",
+        "line": 113,
+        "selfMs": 556.96,
+        "inclusiveMs": 562.1679999999999,
+        "nodes": [
+          90,
+          95,
+          133,
+          85,
+          189,
+          227,
+          167,
+          58,
+          172,
+          59
+        ]
+      },
+      {
+        "function": "isDataRecord",
+        "url": "",
+        "line": 8,
+        "selfMs": 443.702,
+        "inclusiveMs": 647.8590000000002,
+        "nodes": [
+          125,
+          63,
+          79,
+          136,
+          195,
+          292,
+          196,
+          88,
+          261,
+          270,
+          130,
+          317,
+          348,
+          269,
+          121,
+          247,
+          92,
+          69,
+          396,
+          126,
+          112,
+          304,
+          363,
+          295,
+          344,
+          228,
+          114,
+          290,
+          174,
+          285,
+          287,
+          370,
+          211,
+          352,
+          379,
+          259,
+          306
+        ]
+      },
+      {
+        "function": "hasWeeklyKeys",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts",
+        "line": 16,
+        "selfMs": 420.42699999999996,
+        "inclusiveMs": 992.0370000000001,
+        "nodes": [
+          62,
+          81,
+          145,
+          16,
+          68,
+          20,
+          27,
+          239,
+          103,
+          221,
+          250,
+          40,
+          46,
+          106,
+          153
+        ]
+      },
+      {
+        "function": "readDenseArray",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/arrays.ts",
+        "line": 4,
+        "selfMs": 247.17000000000002,
+        "inclusiveMs": 247.17000000000002,
+        "nodes": [
+          322,
+          220,
+          65,
+          164,
+          157,
+          96,
+          97,
+          166,
+          205,
+          138,
+          158,
+          72,
+          84,
+          335,
+          225,
+          362,
+          397
+        ]
+      },
+      {
+        "function": "",
+        "url": "",
+        "line": 11,
+        "selfMs": 230.43499999999997,
+        "inclusiveMs": 230.43499999999997,
+        "nodes": [
+          64,
+          216,
+          80,
+          197,
+          374,
+          219,
+          262,
+          271,
+          131,
+          349,
+          213,
+          314,
+          238,
+          387,
+          191,
+          328,
+          93,
+          70,
+          101,
+          232,
+          127,
+          113,
+          305,
+          364,
+          345,
+          243,
+          115,
+          296,
+          187,
+          327,
+          286,
+          288,
+          244,
+          371,
+          332,
+          212,
+          353,
+          384,
+          175,
+          380,
+          260,
+          307
+        ]
+      },
+      {
+        "function": "isDataRecord",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts",
+        "line": 8,
+        "selfMs": 194.13199999999992,
+        "inclusiveMs": 244.23699999999994,
+        "nodes": [
+          146,
+          109,
+          276,
+          340,
+          229,
+          341,
+          176,
+          300,
+          325,
+          208,
+          284,
+          160,
+          161,
+          17,
+          24,
+          82,
+          100,
+          71,
+          315,
+          186,
+          233,
+          41,
+          141,
+          202,
+          312,
+          192,
+          149,
+          383,
+          267,
+          47,
+          86,
+          237,
+          165,
+          346
+        ]
+      },
+      {
+        "function": "isTileTrialState",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/state.ts",
+        "line": 14,
+        "selfMs": 113.203,
+        "inclusiveMs": 572.471,
+        "nodes": [
+          9,
+          110,
+          29,
+          39,
+          43
+        ]
+      },
+      {
+        "function": "",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts",
+        "line": 18,
+        "selfMs": 97.53100000000002,
+        "inclusiveMs": 97.53100000000002,
+        "nodes": [
+          319,
+          395,
+          282,
+          224,
+          289,
+          210,
+          234,
+          253,
+          159,
+          223,
+          279,
+          386,
+          217,
+          104,
+          199,
+          392,
+          35,
+          252,
+          151,
+          298,
+          275,
+          222
+        ]
+      },
+      {
+        "function": "post",
+        "url": "node:inspector",
+        "line": 115,
+        "selfMs": 96.55,
+        "inclusiveMs": 98.67,
+        "nodes": [
+          5
+        ]
+      },
+      {
+        "function": "hasWeeklyKeys",
+        "url": "",
+        "line": 16,
+        "selfMs": 94.878,
+        "inclusiveMs": 243.905,
+        "nodes": [
+          124,
+          78,
+          135,
+          194,
+          87,
+          393,
+          251,
+          316,
+          268,
+          120,
+          385,
+          303,
+          264,
+          294,
+          173,
+          283,
+          373,
+          366,
+          342,
+          291,
+          258
+        ]
+      },
+      {
+        "function": "isWorldNpcList",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc.ts",
+        "line": 35,
+        "selfMs": 90.743,
+        "inclusiveMs": 1289.2939999999999,
+        "nodes": [
+          13,
+          32
+        ]
+      },
+      {
+        "function": "outsidePlot",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/outside.ts",
+        "line": 17,
+        "selfMs": 83.22,
+        "inclusiveMs": 92.132,
+        "nodes": [
+          10,
+          83,
+          56
+        ]
+      },
+      {
+        "function": "isNamedCharacterRecord",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc.ts",
+        "line": 27,
+        "selfMs": 82.15899999999999,
+        "inclusiveMs": 553.072,
+        "nodes": [
+          14,
+          111,
+          33
+        ]
+      },
+      {
+        "function": "isCharacterProfile",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/character/validate.ts",
+        "line": 40,
+        "selfMs": 79.294,
+        "inclusiveMs": 505.815,
+        "nodes": [
+          23,
+          338
+        ]
+      },
+      {
+        "function": "(garbage collector)",
+        "url": "",
+        "line": 0,
+        "selfMs": 76.109,
+        "inclusiveMs": 76.109,
+        "nodes": [
+          12
+        ]
+      },
+      {
+        "function": "isNpcLife",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc-life.ts",
+        "line": 54,
+        "selfMs": 74.435,
+        "inclusiveMs": 558.656,
+        "nodes": [
+          19,
+          36
+        ]
+      },
+      {
+        "function": "isTileTrialPlanningState",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/state.ts",
+        "line": 83,
+        "selfMs": 57.992999999999995,
+        "inclusiveMs": 435.829,
+        "nodes": [
+          67,
+          38
+        ]
+      },
+      {
+        "function": "outsidePlot",
+        "url": "",
+        "line": 17,
+        "selfMs": 45.656000000000006,
+        "inclusiveMs": 47.666000000000004,
+        "nodes": [
+          277,
+          356,
+          273
+        ]
+      }
+    ],
+    "importantFrames": [
+      {
+        "function": "hasWeeklyKeys",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts",
+        "line": 16,
+        "selfMs": 420.42699999999996,
+        "inclusiveMs": 992.0370000000001,
+        "nodes": [
+          62,
+          81,
+          145,
+          16,
+          68,
+          20,
+          27,
+          239,
+          103,
+          221,
+          250,
+          40,
+          46,
+          106,
+          153
+        ]
+      },
+      {
+        "function": "structuredClone",
+        "url": "node:internal/worker/js_transferable",
+        "line": 113,
+        "selfMs": 556.96,
+        "inclusiveMs": 562.1679999999999,
+        "nodes": [
+          90,
+          95,
+          133,
+          85,
+          189,
+          227,
+          167,
+          58,
+          172,
+          59
+        ]
+      },
+      {
+        "function": "isNpcLife",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc-life.ts",
+        "line": 54,
+        "selfMs": 74.435,
+        "inclusiveMs": 558.656,
+        "nodes": [
+          19,
+          36
+        ]
+      },
+      {
+        "function": "hasWeeklyKeys",
+        "url": "",
+        "line": 16,
+        "selfMs": 94.878,
+        "inclusiveMs": 243.905,
+        "nodes": [
+          124,
+          78,
+          135,
+          194,
+          87,
+          393,
+          251,
+          316,
+          268,
+          120,
+          385,
+          303,
+          264,
+          294,
+          173,
+          283,
+          373,
+          366,
+          342,
+          291,
+          258
+        ]
+      },
+      {
+        "function": "(garbage collector)",
+        "url": "",
+        "line": 0,
+        "selfMs": 76.109,
+        "inclusiveMs": 76.109,
+        "nodes": [
+          12
+        ]
+      },
+      {
+        "function": "structuredClone",
+        "url": "",
+        "line": 0,
+        "selfMs": 7.219,
+        "inclusiveMs": 7.219,
+        "nodes": [
+          134,
+          190,
+          376,
+          241
+        ]
+      }
+    ]
+  },
+  {
+    "run": "06-head",
+    "scope": "CPU samples across all END_WEEK and NEXT_WEEK calls; inclusive values may overlap and are not additive. CPU sampling is approximate, not an allocation trace.",
+    "sampledMs": 3754.534,
+    "topSelf": [
+      {
+        "function": "structuredClone",
+        "url": "node:internal/worker/js_transferable",
+        "line": 113,
+        "selfMs": 715.456,
+        "inclusiveMs": 716.9630000000001,
+        "nodes": [
+          121,
+          93,
+          117,
+          85,
+          164,
+          224,
+          83,
+          51,
+          90,
+          54,
+          76
+        ]
+      },
+      {
+        "function": "isDataRecord",
+        "url": "",
+        "line": 8,
+        "selfMs": 342.37800000000004,
+        "inclusiveMs": 485.39199999999994,
+        "nodes": [
+          172,
+          272,
+          422,
+          124,
+          188,
+          57,
+          409,
+          170,
+          274,
+          78,
+          276,
+          344,
+          377,
+          331,
+          384,
+          129,
+          305,
+          255,
+          61,
+          231,
+          373,
+          69,
+          114,
+          253,
+          315,
+          74,
+          413,
+          247,
+          288,
+          258,
+          328,
+          380,
+          192,
+          297,
+          318,
+          366,
+          248,
+          322,
+          151,
+          279,
+          361,
+          367,
+          251,
+          408,
+          199,
+          99,
+          277,
+          308,
+          412
+        ]
+      },
+      {
+        "function": "hasWeeklyKeys",
+        "url": "",
+        "line": 16,
+        "selfMs": 296.919,
+        "inclusiveMs": 717.3829999999998,
+        "nodes": [
+          171,
+          271,
+          421,
+          187,
+          169,
+          273,
+          77,
+          264,
+          286,
+          269,
+          230,
+          372,
+          68,
+          113,
+          157,
+          73,
+          327,
+          191,
+          296,
+          317,
+          365,
+          321,
+          150,
+          360,
+          407,
+          198,
+          98,
+          270,
+          307,
+          320
+        ]
+      },
+      {
+        "function": "isDataRecord",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts",
+        "line": 8,
+        "selfMs": 260.80999999999995,
+        "inclusiveMs": 361.8899999999999,
+        "nodes": [
+          11,
+          144,
+          236,
+          324,
+          243,
+          285,
+          261,
+          398,
+          330,
+          405,
+          237,
+          103,
+          79,
+          59,
+          123,
+          145,
+          64,
+          107,
+          88,
+          353,
+          131,
+          390,
+          197,
+          268,
+          260,
+          225,
+          102,
+          284,
+          181,
+          394
+        ]
+      },
+      {
+        "function": "",
+        "url": "",
+        "line": 11,
+        "selfMs": 243.533,
+        "inclusiveMs": 243.533,
+        "nodes": [
+          246,
+          303,
+          125,
+          58,
+          410,
+          275,
+          363,
+          281,
+          345,
+          378,
+          332,
+          385,
+          112,
+          130,
+          391,
+          256,
+          62,
+          238,
+          87,
+          185,
+          156,
+          162,
+          70,
+          138,
+          254,
+          189,
+          326,
+          349,
+          259,
+          381,
+          298,
+          249,
+          280,
+          362,
+          368,
+          252,
+          278,
+          143,
+          355
+        ]
+      },
+      {
+        "function": "readDenseArray",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/arrays.ts",
+        "line": 4,
+        "selfMs": 221.02699999999996,
+        "inclusiveMs": 221.02699999999996,
+        "nodes": [
+          184,
+          348,
+          221,
+          213,
+          86,
+          122,
+          24,
+          215,
+          340,
+          140,
+          222,
+          72,
+          283,
+          204,
+          388,
+          357,
+          119,
+          202,
+          210
+        ]
+      },
+      {
+        "function": "hasWeeklyKeys",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts",
+        "line": 16,
+        "selfMs": 191.13299999999998,
+        "inclusiveMs": 428.30999999999995,
+        "nodes": [
+          10,
+          205,
+          56,
+          134,
+          18,
+          25,
+          229,
+          310,
+          411,
+          240,
+          232,
+          282,
+          173,
+          166,
+          290
+        ]
+      },
+      {
+        "function": "isTileTrialState",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/state.ts",
+        "line": 14,
+        "selfMs": 108.74300000000001,
+        "inclusiveMs": 509.494,
+        "nodes": [
+          9,
+          80,
+          108,
+          48,
+          139
+        ]
+      },
+      {
+        "function": "isNpcLife",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc-life.ts",
+        "line": 54,
+        "selfMs": 102.712,
+        "inclusiveMs": 607.308,
+        "nodes": [
+          19,
+          29
+        ]
+      },
+      {
+        "function": "outsidePlot",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/outside.ts",
+        "line": 17,
+        "selfMs": 100.96400000000001,
+        "inclusiveMs": 106.24900000000001,
+        "nodes": [
+          67,
+          15,
+          81,
+          34,
+          49
+        ]
+      },
+      {
+        "function": "",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts",
+        "line": 18,
+        "selfMs": 92.53899999999999,
+        "inclusiveMs": 92.53899999999999,
+        "nodes": [
+          176,
+          400,
+          369,
+          265,
+          329,
+          314,
+          379,
+          306,
+          135,
+          339,
+          94,
+          309,
+          71,
+          152,
+          158,
+          311,
+          208,
+          241,
+          200,
+          233,
+          174,
+          175,
+          132,
+          416,
+          382
+        ]
+      },
+      {
+        "function": "post",
+        "url": "node:inspector",
+        "line": 115,
+        "selfMs": 88.503,
+        "inclusiveMs": 90.246,
+        "nodes": [
+          5
+        ]
+      },
+      {
+        "function": "isNamedCharacterRecord",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc.ts",
+        "line": 27,
+        "selfMs": 83.72099999999999,
+        "inclusiveMs": 489.623,
+        "nodes": [
+          17,
+          30
+        ]
+      },
+      {
+        "function": "isWorldNpcList",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc.ts",
+        "line": 35,
+        "selfMs": 81.838,
+        "inclusiveMs": 1278.197,
+        "nodes": [
+          16,
+          28
+        ]
+      },
+      {
+        "function": "(garbage collector)",
+        "url": "",
+        "line": 0,
+        "selfMs": 81.355,
+        "inclusiveMs": 81.355,
+        "nodes": [
+          65
+        ]
+      },
+      {
+        "function": "isCharacterProfile",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/character/validate.ts",
+        "line": 40,
+        "selfMs": 78.74199999999999,
+        "inclusiveMs": 516.988,
+        "nodes": [
+          23,
+          105
+        ]
+      },
+      {
+        "function": "createSocietyState",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/society.ts",
+        "line": 24,
+        "selfMs": 62.434,
+        "inclusiveMs": 153.50500000000002,
+        "nodes": [
+          120,
+          92,
+          116,
+          89
+        ]
+      },
+      {
+        "function": "isTileTrialPlanningState",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/trial/state.ts",
+        "line": 83,
+        "selfMs": 60.620999999999995,
+        "inclusiveMs": 443.123,
+        "nodes": [
+          14,
+          33
+        ]
+      }
+    ],
+    "importantFrames": [
+      {
+        "function": "hasWeeklyKeys",
+        "url": "",
+        "line": 16,
+        "selfMs": 296.919,
+        "inclusiveMs": 717.3829999999998,
+        "nodes": [
+          171,
+          271,
+          421,
+          187,
+          169,
+          273,
+          77,
+          264,
+          286,
+          269,
+          230,
+          372,
+          68,
+          113,
+          157,
+          73,
+          327,
+          191,
+          296,
+          317,
+          365,
+          321,
+          150,
+          360,
+          407,
+          198,
+          98,
+          270,
+          307,
+          320
+        ]
+      },
+      {
+        "function": "structuredClone",
+        "url": "node:internal/worker/js_transferable",
+        "line": 113,
+        "selfMs": 715.456,
+        "inclusiveMs": 716.9630000000001,
+        "nodes": [
+          121,
+          93,
+          117,
+          85,
+          164,
+          224,
+          83,
+          51,
+          90,
+          54,
+          76
+        ]
+      },
+      {
+        "function": "isNpcLife",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/world/npc-life.ts",
+        "line": 54,
+        "selfMs": 102.712,
+        "inclusiveMs": 607.308,
+        "nodes": [
+          19,
+          29
+        ]
+      },
+      {
+        "function": "hasWeeklyKeys",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/core/src/domain/canonical-state.ts",
+        "line": 16,
+        "selfMs": 191.13299999999998,
+        "inclusiveMs": 428.30999999999995,
+        "nodes": [
+          10,
+          205,
+          56,
+          134,
+          18,
+          25,
+          229,
+          310,
+          411,
+          240,
+          232,
+          282,
+          173,
+          166,
+          290
+        ]
+      },
+      {
+        "function": "runNpcLifeWeek",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/npc-life-week.ts",
+        "line": 40,
+        "selfMs": 4.26,
+        "inclusiveMs": 160.072,
+        "nodes": [
+          52
+        ]
+      },
+      {
+        "function": "__p7OriginalNpcLifeWeek",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/npc-life-week.ts",
+        "line": 13,
+        "selfMs": 1.712,
+        "inclusiveMs": 155.812,
+        "nodes": [
+          53
+        ]
+      },
+      {
+        "function": "(garbage collector)",
+        "url": "",
+        "line": 0,
+        "selfMs": 81.355,
+        "inclusiveMs": 81.355,
+        "nodes": [
+          65
+        ]
+      },
+      {
+        "function": "structuredClone",
+        "url": "",
+        "line": 0,
+        "selfMs": 5.019,
+        "inclusiveMs": 5.019,
+        "nodes": [
+          118,
+          419,
+          323
+        ]
+      }
+    ]
+  }
+]

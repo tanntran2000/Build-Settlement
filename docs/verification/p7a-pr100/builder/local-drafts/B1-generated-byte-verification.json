@@ -1,0 +1,32 @@
+[
+  {
+    "path": "packages/simulation/src/__tests__/character-life-command.test.ts",
+    "approvedBytesMatch": true,
+    "sha256": "6d552041a94536d83a52c4a2323d321e16005e5114cfdde1028984cc9cc20e44"
+  },
+  {
+    "path": "packages/simulation/src/__tests__/society-stock-integrity.test.ts",
+    "approvedBytesMatch": true,
+    "sha256": "bfee9cd0418ec9627a169aacf2a4b02ecbb52f1a4017186534ef673d068e1e2a"
+  },
+  {
+    "path": "tests/e2e/character-life-navigation.helpers.ts",
+    "approvedBytesMatch": true,
+    "sha256": "9189a748146fe64cba51f9a7f8c6452cf03a70b87d38d7d4d94c903519d26546"
+  },
+  {
+    "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-5-weeks.json",
+    "approvedBytesMatch": true,
+    "sha256": "8a8b23a3969a963882663fb47585925e5b0d9f8d9f6cfae4bb75d1eb46d31c19"
+  },
+  {
+    "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-laws.json",
+    "approvedBytesMatch": true,
+    "sha256": "9307ddfcce17f2ab48f26b4e586def7d8a7661b93eee503f58e9497970d34db9"
+  },
+  {
+    "path": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "approvedBytesMatch": true,
+    "sha256": "042c9dc71a36fff42b74c7b6d8a621d412adcabe7556935bfc7f0f64c312f95a"
+  }
+]

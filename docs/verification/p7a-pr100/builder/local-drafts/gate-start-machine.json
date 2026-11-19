@@ -1,0 +1,69 @@
+﻿{
+    "head":  "cf94804876ef2d02835112e06c355314bbcc16cd",
+    "tree":  "3ee007bb2818beddbe87f1dce042b6820e8a2ad2",
+    "utc":  "2026-11-17T15:06:52.2020068Z",
+    "cpu":  [
+                {
+                    "LoadPercentage":  38,
+                    "NumberOfLogicalProcessors":  8
+                }
+            ],
+    "topProcesses":  [
+                         {
+                             "IDProcess":  56200,
+                             "Name":  "msedgewebview2",
+                             "PercentProcessorTime":  20
+                         },
+                         {
+                             "IDProcess":  85472,
+                             "Name":  "WmiPrvSE#2",
+                             "PercentProcessorTime":  15
+                         },
+                         {
+                             "IDProcess":  47380,
+                             "Name":  "Zalo#6",
+                             "PercentProcessorTime":  5
+                         },
+                         {
+                             "IDProcess":  4,
+                             "Name":  "System",
+                             "PercentProcessorTime":  5
+                         },
+                         {
+                             "IDProcess":  2172,
+                             "Name":  "node#16",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  78500,
+                             "Name":  "node#23",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  75064,
+                             "Name":  "node#14",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  76572,
+                             "Name":  "node#15",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  69964,
+                             "Name":  "node#20",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  19732,
+                             "Name":  "node#21",
+                             "PercentProcessorTime":  0
+                         }
+                     ],
+    "competingJobs":  [
+
+                      ],
+    "portListeners":  [
+
+                      ]
+}

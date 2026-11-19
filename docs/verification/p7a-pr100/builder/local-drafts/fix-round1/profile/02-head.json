@@ -1,0 +1,802 @@
+{
+  "run": "02-head",
+  "revision": "head",
+  "head": "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+  "tree": "947f604e17427d916e1ef0e21083dbc2f72920b6",
+  "utcStart": "2026-11-18T00:55:32.621Z",
+  "pid": 86784,
+  "node": "v24.19.0",
+  "v8": "13.6.233.17-node.51",
+  "execArgv": [],
+  "seed": 42,
+  "npcs": 100,
+  "weeks": 60,
+  "budgetMs": 50,
+  "diagnosticOnly": true,
+  "p95Method": "nearest rank ceil(0.95*n)",
+  "warmView": "ticks 6-60; all raw ticks 1-60 retained",
+  "cpuSamplingUs": 1000,
+  "instrumentation": "Read-only Vite transforms: head in-call life, life full-NPC clone, post-transition map/scan. Inspector CPU sampling covers END_WEEK plus intervening NEXT_WEEK on both revisions. Timers and sampling may perturb absolute duration; configuration is identical across the six processes.",
+  "sourceHashes": {
+    "packages/simulation/src/character-life-command.ts": "fc121d2ee0639295539bdaa99689f73b75e7e54be59382fb0a823b5fb248e1d0",
+    "packages/core/src/trial/items.ts": "e472777e775d535175374ab4b337235869628a8bbbc9b163e2b36227ba2c918b",
+    "packages/core/src/trial/types.ts": "e142594cec1d3c5c13d33ea9c28c8b76dd508172b3a2bb04a9fe5a1a5844458c",
+    "packages/simulation/src/npc-life-week.ts": "76386307caf892e3fb6daf0088dbe40dc54a82eb6fa5cb8d3787508e06017771"
+  },
+  "ticks": [
+    {
+      "tick": 1,
+      "weekBefore": 1,
+      "weekAfter": 2,
+      "startMs": 1591.268,
+      "endMs": 1664.1209,
+      "endWeekMs": 72.85289999999986,
+      "lifeMs": 2.8665000000000873,
+      "lifeCloneMs": 2.122000000000071,
+      "postTransitionsMs": 0.22730000000001382
+    },
+    {
+      "tick": 2,
+      "weekBefore": 2,
+      "weekAfter": 3,
+      "startMs": 1708.0444,
+      "endMs": 1749.7431,
+      "endWeekMs": 41.69869999999992,
+      "lifeMs": 2.4259000000001834,
+      "lifeCloneMs": 2.2842000000000553,
+      "postTransitionsMs": 0.061399999999821375
+    },
+    {
+      "tick": 3,
+      "weekBefore": 3,
+      "weekAfter": 4,
+      "startMs": 1783.0716,
+      "endMs": 1820.5372,
+      "endWeekMs": 37.465599999999995,
+      "lifeMs": 1.7065999999999804,
+      "lifeCloneMs": 1.6371999999998934,
+      "postTransitionsMs": 0.0442000000000462
+    },
+    {
+      "tick": 4,
+      "weekBefore": 4,
+      "weekAfter": 5,
+      "startMs": 1855.4957,
+      "endMs": 1893.1528,
+      "endWeekMs": 37.65710000000013,
+      "lifeMs": 1.6362000000001444,
+      "lifeCloneMs": 1.568899999999985,
+      "postTransitionsMs": 0.03559999999993124
+    },
+    {
+      "tick": 5,
+      "weekBefore": 5,
+      "weekAfter": 6,
+      "startMs": 1925.4231,
+      "endMs": 1961.2995,
+      "endWeekMs": 35.8764000000001,
+      "lifeMs": 1.6617000000001099,
+      "lifeCloneMs": 1.5942999999999756,
+      "postTransitionsMs": 0.03739999999993415
+    },
+    {
+      "tick": 6,
+      "weekBefore": 6,
+      "weekAfter": 7,
+      "startMs": 1992.2697,
+      "endMs": 2027.8238,
+      "endWeekMs": 35.554099999999835,
+      "lifeMs": 1.595600000000104,
+      "lifeCloneMs": 1.5265000000001692,
+      "postTransitionsMs": 0.04120000000011714
+    },
+    {
+      "tick": 7,
+      "weekBefore": 7,
+      "weekAfter": 8,
+      "startMs": 2059.034,
+      "endMs": 2093.6006,
+      "endWeekMs": 34.56660000000011,
+      "lifeMs": 1.6889999999998508,
+      "lifeCloneMs": 1.5264000000001943,
+      "postTransitionsMs": 0.03960000000006403
+    },
+    {
+      "tick": 8,
+      "weekBefore": 8,
+      "weekAfter": 9,
+      "startMs": 2128.3043,
+      "endMs": 2163.5797,
+      "endWeekMs": 35.27539999999999,
+      "lifeMs": 1.5753999999997177,
+      "lifeCloneMs": 1.5050999999998567,
+      "postTransitionsMs": 0.03999999999996362
+    },
+    {
+      "tick": 9,
+      "weekBefore": 9,
+      "weekAfter": 10,
+      "startMs": 2196.7721,
+      "endMs": 2231.9666,
+      "endWeekMs": 35.19450000000006,
+      "lifeMs": 1.7568999999998596,
+      "lifeCloneMs": 1.6466999999997824,
+      "postTransitionsMs": 0.04239999999981592
+    },
+    {
+      "tick": 10,
+      "weekBefore": 10,
+      "weekAfter": 11,
+      "startMs": 2262.7762,
+      "endMs": 2297.1571,
+      "endWeekMs": 34.38090000000011,
+      "lifeMs": 1.5608000000001994,
+      "lifeCloneMs": 1.5130999999996675,
+      "postTransitionsMs": 0.04350000000022192
+    },
+    {
+      "tick": 11,
+      "weekBefore": 11,
+      "weekAfter": 12,
+      "startMs": 2328.0425,
+      "endMs": 2360.839,
+      "endWeekMs": 32.796499999999924,
+      "lifeMs": 1.409900000000107,
+      "lifeCloneMs": 1.374699999999848,
+      "postTransitionsMs": 0.03300000000035652
+    },
+    {
+      "tick": 12,
+      "weekBefore": 12,
+      "weekAfter": 13,
+      "startMs": 2390.5438,
+      "endMs": 2423.5288,
+      "endWeekMs": 32.98500000000013,
+      "lifeMs": 1.4924999999998363,
+      "lifeCloneMs": 1.4607999999998356,
+      "postTransitionsMs": 0.03600000000005821
+    },
+    {
+      "tick": 13,
+      "weekBefore": 13,
+      "weekAfter": 14,
+      "startMs": 2453.2358,
+      "endMs": 2486.1495,
+      "endWeekMs": 32.91370000000006,
+      "lifeMs": 1.5158999999998741,
+      "lifeCloneMs": 1.4840999999996711,
+      "postTransitionsMs": 0.039800000000013824
+    },
+    {
+      "tick": 14,
+      "weekBefore": 14,
+      "weekAfter": 15,
+      "startMs": 2516.5916,
+      "endMs": 2549.4917,
+      "endWeekMs": 32.90009999999984,
+      "lifeMs": 1.517500000000382,
+      "lifeCloneMs": 1.4834999999998217,
+      "postTransitionsMs": 0.04500000000007276
+    },
+    {
+      "tick": 15,
+      "weekBefore": 15,
+      "weekAfter": 16,
+      "startMs": 2579.781,
+      "endMs": 2619.0929,
+      "endWeekMs": 39.31190000000015,
+      "lifeMs": 1.4376999999999498,
+      "lifeCloneMs": 1.362300000000232,
+      "postTransitionsMs": 0.04820000000017899
+    },
+    {
+      "tick": 16,
+      "weekBefore": 16,
+      "weekAfter": 17,
+      "startMs": 2647.9843,
+      "endMs": 2681.0078,
+      "endWeekMs": 33.023499999999785,
+      "lifeMs": 1.4426000000003114,
+      "lifeCloneMs": 1.4128000000000611,
+      "postTransitionsMs": 0.0375000000003638
+    },
+    {
+      "tick": 17,
+      "weekBefore": 17,
+      "weekAfter": 18,
+      "startMs": 2714.8414,
+      "endMs": 2748.3136,
+      "endWeekMs": 33.47220000000016,
+      "lifeMs": 1.522399999999834,
+      "lifeCloneMs": 1.4915000000000873,
+      "postTransitionsMs": 0.03580000000010841
+    },
+    {
+      "tick": 18,
+      "weekBefore": 18,
+      "weekAfter": 19,
+      "startMs": 2777.5709,
+      "endMs": 2809.3585,
+      "endWeekMs": 31.787599999999657,
+      "lifeMs": 1.4639000000001943,
+      "lifeCloneMs": 1.4339999999997417,
+      "postTransitionsMs": 0.03110000000015134
+    },
+    {
+      "tick": 19,
+      "weekBefore": 19,
+      "weekAfter": 20,
+      "startMs": 2839.9738,
+      "endMs": 2871.5478,
+      "endWeekMs": 31.573999999999614,
+      "lifeMs": 1.4440999999997075,
+      "lifeCloneMs": 1.4135000000001128,
+      "postTransitionsMs": 0.03860000000031505
+    },
+    {
+      "tick": 20,
+      "weekBefore": 20,
+      "weekAfter": 21,
+      "startMs": 2900.7061,
+      "endMs": 2932.576,
+      "endWeekMs": 31.869900000000143,
+      "lifeMs": 1.4365999999999985,
+      "lifeCloneMs": 1.4075000000002547,
+      "postTransitionsMs": 0.08310000000028595
+    },
+    {
+      "tick": 21,
+      "weekBefore": 21,
+      "weekAfter": 22,
+      "startMs": 2962.0885,
+      "endMs": 2995.6819,
+      "endWeekMs": 33.5934000000002,
+      "lifeMs": 1.4558999999999287,
+      "lifeCloneMs": 1.4175000000000182,
+      "postTransitionsMs": 0.04659999999967113
+    },
+    {
+      "tick": 22,
+      "weekBefore": 22,
+      "weekAfter": 23,
+      "startMs": 3024.4014,
+      "endMs": 3056.7209,
+      "endWeekMs": 32.31949999999961,
+      "lifeMs": 1.4827000000000226,
+      "lifeCloneMs": 1.4522999999999229,
+      "postTransitionsMs": 0.03490000000010696
+    },
+    {
+      "tick": 23,
+      "weekBefore": 23,
+      "weekAfter": 24,
+      "startMs": 3085.7414,
+      "endMs": 3117.0019,
+      "endWeekMs": 31.26050000000032,
+      "lifeMs": 1.4474999999997635,
+      "lifeCloneMs": 1.4153000000001157,
+      "postTransitionsMs": 0.03610000000026048
+    },
+    {
+      "tick": 24,
+      "weekBefore": 24,
+      "weekAfter": 25,
+      "startMs": 3145.1028,
+      "endMs": 3175.587,
+      "endWeekMs": 30.484199999999873,
+      "lifeMs": 1.438799999999901,
+      "lifeCloneMs": 1.4054999999998472,
+      "postTransitionsMs": 0.039099999999962165
+    },
+    {
+      "tick": 25,
+      "weekBefore": 25,
+      "weekAfter": 26,
+      "startMs": 3206.6405,
+      "endMs": 3238.4312,
+      "endWeekMs": 31.790700000000015,
+      "lifeMs": 1.4259999999999309,
+      "lifeCloneMs": 1.393000000000029,
+      "postTransitionsMs": 0.03749999999990905
+    },
+    {
+      "tick": 26,
+      "weekBefore": 26,
+      "weekAfter": 27,
+      "startMs": 3266.1055,
+      "endMs": 3295.3155,
+      "endWeekMs": 29.210000000000036,
+      "lifeMs": 1.4079999999999018,
+      "lifeCloneMs": 1.3510999999998603,
+      "postTransitionsMs": 0.03170000000000073
+    },
+    {
+      "tick": 27,
+      "weekBefore": 27,
+      "weekAfter": 28,
+      "startMs": 3322.0027,
+      "endMs": 3349.6677,
+      "endWeekMs": 27.664999999999964,
+      "lifeMs": 1.3476999999998043,
+      "lifeCloneMs": 1.3168000000000575,
+      "postTransitionsMs": 0.029499999999643478
+    },
+    {
+      "tick": 28,
+      "weekBefore": 28,
+      "weekAfter": 29,
+      "startMs": 3377.1249,
+      "endMs": 3405.3864,
+      "endWeekMs": 28.26150000000007,
+      "lifeMs": 1.334899999999834,
+      "lifeCloneMs": 1.3027000000001863,
+      "postTransitionsMs": 0.035499999999956344
+    },
+    {
+      "tick": 29,
+      "weekBefore": 29,
+      "weekAfter": 30,
+      "startMs": 3433.4114,
+      "endMs": 3462.9322,
+      "endWeekMs": 29.520800000000236,
+      "lifeMs": 1.3283000000001266,
+      "lifeCloneMs": 1.299800000000232,
+      "postTransitionsMs": 0.037599999999656575
+    },
+    {
+      "tick": 30,
+      "weekBefore": 30,
+      "weekAfter": 31,
+      "startMs": 3489.2655,
+      "endMs": 3519.8297,
+      "endWeekMs": 30.5641999999998,
+      "lifeMs": 1.3209999999999127,
+      "lifeCloneMs": 1.292699999999968,
+      "postTransitionsMs": 0.030799999999999272
+    },
+    {
+      "tick": 31,
+      "weekBefore": 31,
+      "weekAfter": 32,
+      "startMs": 3545.7461,
+      "endMs": 3576.0447,
+      "endWeekMs": 30.29860000000008,
+      "lifeMs": 1.4192000000002736,
+      "lifeCloneMs": 1.3854000000001179,
+      "postTransitionsMs": 0.04640000000017608
+    },
+    {
+      "tick": 32,
+      "weekBefore": 32,
+      "weekAfter": 33,
+      "startMs": 3602.8185,
+      "endMs": 3631.3258,
+      "endWeekMs": 28.507300000000214,
+      "lifeMs": 1.3187000000002627,
+      "lifeCloneMs": 1.2900999999997111,
+      "postTransitionsMs": 0.029799999999795546
+    },
+    {
+      "tick": 33,
+      "weekBefore": 33,
+      "weekAfter": 34,
+      "startMs": 3658.4285,
+      "endMs": 3687.5034,
+      "endWeekMs": 29.07490000000007,
+      "lifeMs": 1.3808999999996558,
+      "lifeCloneMs": 1.349399999999605,
+      "postTransitionsMs": 0.038000000000010914
+    },
+    {
+      "tick": 34,
+      "weekBefore": 34,
+      "weekAfter": 35,
+      "startMs": 3715.4833,
+      "endMs": 3746.802,
+      "endWeekMs": 31.318700000000263,
+      "lifeMs": 1.8615999999997257,
+      "lifeCloneMs": 1.813300000000254,
+      "postTransitionsMs": 0.05160000000023501
+    },
+    {
+      "tick": 35,
+      "weekBefore": 35,
+      "weekAfter": 36,
+      "startMs": 3774.2124,
+      "endMs": 3804.9464,
+      "endWeekMs": 30.733999999999924,
+      "lifeMs": 1.4796000000001186,
+      "lifeCloneMs": 1.401299999999992,
+      "postTransitionsMs": 0.028700000000299042
+    },
+    {
+      "tick": 36,
+      "weekBefore": 36,
+      "weekAfter": 37,
+      "startMs": 3832.0472,
+      "endMs": 3861.4846,
+      "endWeekMs": 29.437399999999798,
+      "lifeMs": 1.31670000000031,
+      "lifeCloneMs": 1.2872000000002117,
+      "postTransitionsMs": 0.0316000000002532
+    },
+    {
+      "tick": 37,
+      "weekBefore": 37,
+      "weekAfter": 38,
+      "startMs": 3888.2054,
+      "endMs": 3917.1057,
+      "endWeekMs": 28.900300000000243,
+      "lifeMs": 1.4806000000003223,
+      "lifeCloneMs": 1.4272000000000844,
+      "postTransitionsMs": 0.043400000000019645
+    },
+    {
+      "tick": 38,
+      "weekBefore": 38,
+      "weekAfter": 39,
+      "startMs": 3944.7136,
+      "endMs": 3974.6699,
+      "endWeekMs": 29.95629999999983,
+      "lifeMs": 1.3253999999997177,
+      "lifeCloneMs": 1.2962999999999738,
+      "postTransitionsMs": 0.039099999999962165
+    },
+    {
+      "tick": 39,
+      "weekBefore": 39,
+      "weekAfter": 40,
+      "startMs": 4000.4285,
+      "endMs": 4029.4919,
+      "endWeekMs": 29.0634,
+      "lifeMs": 1.3782000000001062,
+      "lifeCloneMs": 1.3481999999999061,
+      "postTransitionsMs": 0.030099999999947613
+    },
+    {
+      "tick": 40,
+      "weekBefore": 40,
+      "weekAfter": 41,
+      "startMs": 4055.8796,
+      "endMs": 4086.6463,
+      "endWeekMs": 30.766699999999673,
+      "lifeMs": 1.801300000000083,
+      "lifeCloneMs": 1.3861000000001695,
+      "postTransitionsMs": 0.044800000000122964
+    },
+    {
+      "tick": 41,
+      "weekBefore": 41,
+      "weekAfter": 42,
+      "startMs": 4116.1857,
+      "endMs": 4146.4488,
+      "endWeekMs": 30.263100000000122,
+      "lifeMs": 1.7829000000001543,
+      "lifeCloneMs": 1.7241999999996551,
+      "postTransitionsMs": 0.030399999999644933
+    },
+    {
+      "tick": 42,
+      "weekBefore": 42,
+      "weekAfter": 43,
+      "startMs": 4174.515,
+      "endMs": 4207.7042,
+      "endWeekMs": 33.1891999999998,
+      "lifeMs": 1.5911999999998443,
+      "lifeCloneMs": 1.5313000000005559,
+      "postTransitionsMs": 0.03899999999975989
+    },
+    {
+      "tick": 43,
+      "weekBefore": 43,
+      "weekAfter": 44,
+      "startMs": 4235.2163,
+      "endMs": 4267.2476,
+      "endWeekMs": 32.031299999999646,
+      "lifeMs": 1.675000000000182,
+      "lifeCloneMs": 1.6147000000000844,
+      "postTransitionsMs": 0.042999999999665306
+    },
+    {
+      "tick": 44,
+      "weekBefore": 44,
+      "weekAfter": 45,
+      "startMs": 4294.9685,
+      "endMs": 4328.4715,
+      "endWeekMs": 33.5029999999997,
+      "lifeMs": 1.5450000000000728,
+      "lifeCloneMs": 1.4814000000005763,
+      "postTransitionsMs": 0.06379999999990105
+    },
+    {
+      "tick": 45,
+      "weekBefore": 45,
+      "weekAfter": 46,
+      "startMs": 4358.0885,
+      "endMs": 4390.472,
+      "endWeekMs": 32.38349999999991,
+      "lifeMs": 1.8325999999997293,
+      "lifeCloneMs": 1.773099999999431,
+      "postTransitionsMs": 0.04159999999956199
+    },
+    {
+      "tick": 46,
+      "weekBefore": 46,
+      "weekAfter": 47,
+      "startMs": 4420.3763,
+      "endMs": 4453.7483,
+      "endWeekMs": 33.3720000000003,
+      "lifeMs": 1.7219000000004598,
+      "lifeCloneMs": 1.6489999999994325,
+      "postTransitionsMs": 0.042999999999665306
+    },
+    {
+      "tick": 47,
+      "weekBefore": 47,
+      "weekAfter": 48,
+      "startMs": 4485.2635,
+      "endMs": 4518.6982,
+      "endWeekMs": 33.43469999999979,
+      "lifeMs": 1.6811999999999898,
+      "lifeCloneMs": 1.5936999999994441,
+      "postTransitionsMs": 0.04219999999986612
+    },
+    {
+      "tick": 48,
+      "weekBefore": 48,
+      "weekAfter": 49,
+      "startMs": 4548.469,
+      "endMs": 4580.4928,
+      "endWeekMs": 32.02379999999994,
+      "lifeMs": 1.6048000000000684,
+      "lifeCloneMs": 1.5735999999997148,
+      "postTransitionsMs": 0.042899999999463034
+    },
+    {
+      "tick": 49,
+      "weekBefore": 49,
+      "weekAfter": 50,
+      "startMs": 4610.4117,
+      "endMs": 4642.8425,
+      "endWeekMs": 32.43080000000009,
+      "lifeMs": 1.643000000000029,
+      "lifeCloneMs": 1.6109999999998763,
+      "postTransitionsMs": 0.03849999999965803
+    },
+    {
+      "tick": 50,
+      "weekBefore": 50,
+      "weekAfter": 51,
+      "startMs": 4670.187,
+      "endMs": 4702.2276,
+      "endWeekMs": 32.04060000000027,
+      "lifeMs": 1.631600000000617,
+      "lifeCloneMs": 1.5991999999996551,
+      "postTransitionsMs": 0.042999999999665306
+    },
+    {
+      "tick": 51,
+      "weekBefore": 51,
+      "weekAfter": 52,
+      "startMs": 4731.9339,
+      "endMs": 4762.8821,
+      "endWeekMs": 30.948199999999815,
+      "lifeMs": 1.7527000000000044,
+      "lifeCloneMs": 1.7082000000000335,
+      "postTransitionsMs": 0.0319999999992433
+    },
+    {
+      "tick": 52,
+      "weekBefore": 52,
+      "weekAfter": 53,
+      "startMs": 4796.4457,
+      "endMs": 4830.8529,
+      "endWeekMs": 34.40719999999965,
+      "lifeMs": 1.7479999999995925,
+      "lifeCloneMs": 1.7067999999999302,
+      "postTransitionsMs": 0.048299999999471765
+    },
+    {
+      "tick": 53,
+      "weekBefore": 53,
+      "weekAfter": 54,
+      "startMs": 4863.6065,
+      "endMs": 4899.6082,
+      "endWeekMs": 36.0016999999998,
+      "lifeMs": 1.6914999999999054,
+      "lifeCloneMs": 1.6541999999999462,
+      "postTransitionsMs": 0.03950000000077125
+    },
+    {
+      "tick": 54,
+      "weekBefore": 54,
+      "weekAfter": 55,
+      "startMs": 4928.2414,
+      "endMs": 4962.6619,
+      "endWeekMs": 34.420500000000175,
+      "lifeMs": 1.585599999999431,
+      "lifeCloneMs": 1.5430000000005748,
+      "postTransitionsMs": 0.049200000000382715
+    },
+    {
+      "tick": 55,
+      "weekBefore": 55,
+      "weekAfter": 56,
+      "startMs": 4996.0939,
+      "endMs": 5027.3728,
+      "endWeekMs": 31.27890000000025,
+      "lifeMs": 1.707100000000537,
+      "lifeCloneMs": 1.674300000000585,
+      "postTransitionsMs": 0.04140000000006694
+    },
+    {
+      "tick": 56,
+      "weekBefore": 56,
+      "weekAfter": 57,
+      "startMs": 5055.738,
+      "endMs": 5087.8612,
+      "endWeekMs": 32.1232,
+      "lifeMs": 1.545799999999872,
+      "lifeCloneMs": 1.516700000000128,
+      "postTransitionsMs": 0.03830000000016298
+    },
+    {
+      "tick": 57,
+      "weekBefore": 57,
+      "weekAfter": 58,
+      "startMs": 5117.389,
+      "endMs": 5148.3851,
+      "endWeekMs": 30.996100000000297,
+      "lifeMs": 1.686200000000099,
+      "lifeCloneMs": 1.6168000000006941,
+      "postTransitionsMs": 0.03600000000005821
+    },
+    {
+      "tick": 58,
+      "weekBefore": 58,
+      "weekAfter": 59,
+      "startMs": 5176.2365,
+      "endMs": 5209.826,
+      "endWeekMs": 33.589500000000044,
+      "lifeMs": 1.7703000000001339,
+      "lifeCloneMs": 1.6914999999999054,
+      "postTransitionsMs": 0.04219999999986612
+    },
+    {
+      "tick": 59,
+      "weekBefore": 59,
+      "weekAfter": 60,
+      "startMs": 5240.9421,
+      "endMs": 5274.2566,
+      "endWeekMs": 33.3144999999995,
+      "lifeMs": 1.6633999999994558,
+      "lifeCloneMs": 1.6337000000003172,
+      "postTransitionsMs": 0.03810000000066793
+    },
+    {
+      "tick": 60,
+      "weekBefore": 60,
+      "weekAfter": 61,
+      "startMs": 5302.9727,
+      "endMs": 5334.3693,
+      "endWeekMs": 31.396600000000035,
+      "lifeMs": 1.6157000000002881,
+      "lifeCloneMs": 1.5794000000005326,
+      "postTransitionsMs": 0.04539999999997235
+    }
+  ],
+  "vite": "6.4.5",
+  "initialSessionSha256": "f8cc77c0f67a60a847b6c21e5f343f73fca7f2da7f6b2d453d8f11155643bc59",
+  "endWeek": {
+    "all": {
+      "n": 60,
+      "max": 72.85289999999986,
+      "p95": 37.65710000000013,
+      "mean": 33.150539999999985,
+      "over50": 1
+    },
+    "warm": {
+      "n": 55,
+      "max": 39.31190000000015,
+      "p95": 35.554099999999835,
+      "mean": 32.063303636363614,
+      "over50": 0
+    },
+    "firstFive": {
+      "n": 5,
+      "max": 72.85289999999986,
+      "p95": 72.85289999999986,
+      "mean": 45.11014,
+      "over50": 1
+    }
+  },
+  "life": {
+    "all": {
+      "n": 60,
+      "max": 2.8665000000000873,
+      "p95": 1.8325999999997293,
+      "mean": 1.58977000000001,
+      "over50": 0
+    },
+    "warm": {
+      "n": 55,
+      "max": 1.8615999999997257,
+      "p95": 1.801300000000083,
+      "mean": 1.5470781818181836,
+      "over50": 0
+    },
+    "firstFive": {
+      "n": 5,
+      "max": 2.8665000000000873,
+      "p95": 2.8665000000000873,
+      "mean": 2.0593800000001012,
+      "over50": 0
+    }
+  },
+  "lifeClone": {
+    "all": {
+      "n": 60,
+      "max": 2.2842000000000553,
+      "p95": 1.773099999999431,
+      "mean": 1.5226016666666775,
+      "over50": 0
+    },
+    "warm": {
+      "n": 55,
+      "max": 1.813300000000254,
+      "p95": 1.7241999999996551,
+      "mean": 1.493627272727285,
+      "over50": 0
+    },
+    "firstFive": {
+      "n": 5,
+      "max": 2.2842000000000553,
+      "p95": 2.2842000000000553,
+      "mean": 1.841319999999996,
+      "over50": 0
+    }
+  },
+  "postTransitions": {
+    "all": {
+      "n": 60,
+      "max": 0.22730000000001382,
+      "p95": 0.061399999999821375,
+      "mean": 0.04368833333332229,
+      "over50": 0
+    },
+    "warm": {
+      "n": 55,
+      "max": 0.08310000000028595,
+      "p95": 0.05160000000023501,
+      "mean": 0.04027999999999255,
+      "over50": 0
+    },
+    "firstFive": {
+      "n": 5,
+      "max": 0.22730000000001382,
+      "p95": 0.22730000000001382,
+      "mean": 0.08117999999994936,
+      "over50": 0
+    }
+  },
+  "maxTick": 1,
+  "overBudgetTicks": [
+    1
+  ],
+  "finalSessionSha256": "7d99241469c2f8819015c8f798168d18e715462606df1a75923f98266e31909d",
+  "exitCode": 0,
+  "transforms": [
+    {
+      "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/character-life-command.ts",
+      "originalSha256": "fc121d2ee0639295539bdaa99689f73b75e7e54be59382fb0a823b5fb248e1d0",
+      "transformedSha256": "5d4c57e45eb3d697b6d1dc82ebcd5ab2996bfa2fec076849145275b79d9578ec"
+    },
+    {
+      "file": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/npc-life-week.ts",
+      "originalSha256": "76386307caf892e3fb6daf0088dbe40dc54a82eb6fa5cb8d3787508e06017771",
+      "transformedSha256": "fd1dcbc18eaf2be7ead2eeba8803af0ee502132c0ac7f5092f28b07d3a2b6683"
+    }
+  ],
+  "harnessSha256": "dad1f13d017fff18db0c024995b283e940c9f2488e4530192ea89f2093aa7ff5",
+  "utcEnd": "2026-11-18T00:55:37.761Z"
+}

@@ -1,0 +1,332 @@
+[
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v10/life-5-weeks.json",
+    "line": 1,
+    "path": "npcs.0.life.arousal",
+    "before": 0,
+    "after": 10
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v10/life-5-weeks.json",
+    "line": 1,
+    "path": "npcs.1.life.arousal",
+    "before": 0,
+    "after": 15
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v10/life-5-weeks.json",
+    "line": 1,
+    "path": "npcs.2.life.arousal",
+    "before": 0,
+    "after": 10
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v10/life-laws.json",
+    "line": 1,
+    "path": "npcs.0.life.arousal",
+    "before": 0,
+    "after": 6
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v10/life-laws.json",
+    "line": 1,
+    "path": "npcs.1.life.arousal",
+    "before": 0,
+    "after": 9
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v10/life-laws.json",
+    "line": 1,
+    "path": "npcs.2.life.arousal",
+    "before": 0,
+    "after": 6
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 8,
+    "seed": 0,
+    "path": "npcs.0.life.arousal",
+    "before": 0,
+    "after": 100
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 8,
+    "seed": 0,
+    "path": "npcs.0.life.history.counters.birthday",
+    "beforeAbsent": true,
+    "after": 1
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 8,
+    "seed": 0,
+    "path": "npcs.0.life.history.recent.0.week",
+    "beforeAbsent": true,
+    "after": 41
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 8,
+    "seed": 0,
+    "path": "npcs.0.life.history.recent.0.kind",
+    "beforeAbsent": true,
+    "after": "birthday"
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 8,
+    "seed": 0,
+    "path": "npcs.1.life.arousal",
+    "before": 0,
+    "after": 100
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 8,
+    "seed": 0,
+    "path": "npcs.1.life.history.counters.birthday",
+    "beforeAbsent": true,
+    "after": 1
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 8,
+    "seed": 0,
+    "path": "npcs.1.life.history.recent.0.week",
+    "beforeAbsent": true,
+    "after": 41
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 8,
+    "seed": 0,
+    "path": "npcs.1.life.history.recent.0.kind",
+    "beforeAbsent": true,
+    "after": "birthday"
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 8,
+    "seed": 0,
+    "path": "npcs.2.life.arousal",
+    "before": 0,
+    "after": 100
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 8,
+    "seed": 0,
+    "path": "npcs.2.life.history.counters.birthday",
+    "beforeAbsent": true,
+    "after": 1
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 8,
+    "seed": 0,
+    "path": "npcs.2.life.history.recent.0.week",
+    "beforeAbsent": true,
+    "after": 41
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 8,
+    "seed": 0,
+    "path": "npcs.2.life.history.recent.0.kind",
+    "beforeAbsent": true,
+    "after": "birthday"
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 16,
+    "seed": 42,
+    "path": "npcs.0.life.arousal",
+    "before": 0,
+    "after": 100
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 16,
+    "seed": 42,
+    "path": "npcs.0.life.history.counters.birthday",
+    "beforeAbsent": true,
+    "after": 1
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 16,
+    "seed": 42,
+    "path": "npcs.0.life.history.recent.0.week",
+    "beforeAbsent": true,
+    "after": 41
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 16,
+    "seed": 42,
+    "path": "npcs.0.life.history.recent.0.kind",
+    "beforeAbsent": true,
+    "after": "birthday"
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 16,
+    "seed": 42,
+    "path": "npcs.1.life.arousal",
+    "before": 0,
+    "after": 100
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 16,
+    "seed": 42,
+    "path": "npcs.1.life.history.counters.birthday",
+    "beforeAbsent": true,
+    "after": 1
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 16,
+    "seed": 42,
+    "path": "npcs.1.life.history.recent.0.week",
+    "beforeAbsent": true,
+    "after": 41
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 16,
+    "seed": 42,
+    "path": "npcs.1.life.history.recent.0.kind",
+    "beforeAbsent": true,
+    "after": "birthday"
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 16,
+    "seed": 42,
+    "path": "npcs.2.life.arousal",
+    "before": 0,
+    "after": 100
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 16,
+    "seed": 42,
+    "path": "npcs.2.life.history.counters.birthday",
+    "beforeAbsent": true,
+    "after": 1
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 16,
+    "seed": 42,
+    "path": "npcs.2.life.history.recent.0.week",
+    "beforeAbsent": true,
+    "after": 41
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 16,
+    "seed": 42,
+    "path": "npcs.2.life.history.recent.0.kind",
+    "beforeAbsent": true,
+    "after": "birthday"
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 24,
+    "seed": 20261028,
+    "path": "npcs.0.life.arousal",
+    "before": 0,
+    "after": 100
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 24,
+    "seed": 20261028,
+    "path": "npcs.0.life.history.counters.birthday",
+    "beforeAbsent": true,
+    "after": 1
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 24,
+    "seed": 20261028,
+    "path": "npcs.0.life.history.recent.0.week",
+    "beforeAbsent": true,
+    "after": 41
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 24,
+    "seed": 20261028,
+    "path": "npcs.0.life.history.recent.0.kind",
+    "beforeAbsent": true,
+    "after": "birthday"
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 24,
+    "seed": 20261028,
+    "path": "npcs.1.life.arousal",
+    "before": 0,
+    "after": 100
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 24,
+    "seed": 20261028,
+    "path": "npcs.1.life.history.counters.birthday",
+    "beforeAbsent": true,
+    "after": 1
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 24,
+    "seed": 20261028,
+    "path": "npcs.1.life.history.recent.0.week",
+    "beforeAbsent": true,
+    "after": 41
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 24,
+    "seed": 20261028,
+    "path": "npcs.1.life.history.recent.0.kind",
+    "beforeAbsent": true,
+    "after": "birthday"
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 24,
+    "seed": 20261028,
+    "path": "npcs.2.life.arousal",
+    "before": 0,
+    "after": 100
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 24,
+    "seed": 20261028,
+    "path": "npcs.2.life.history.counters.birthday",
+    "beforeAbsent": true,
+    "after": 1
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 24,
+    "seed": 20261028,
+    "path": "npcs.2.life.history.recent.0.week",
+    "beforeAbsent": true,
+    "after": 41
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "line": 24,
+    "seed": 20261028,
+    "path": "npcs.2.life.history.recent.0.kind",
+    "beforeAbsent": true,
+    "after": "birthday"
+  }
+]

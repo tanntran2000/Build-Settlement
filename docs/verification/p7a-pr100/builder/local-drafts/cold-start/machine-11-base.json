@@ -1,0 +1,82 @@
+{
+    "captureStartUtc":  "2026-11-18T04:05:32.9074182Z",
+    "utc":  "2026-11-18T04:05:35.1139607Z",
+    "cpu":  [
+                {
+                    "LoadPercentage":  9,
+                    "NumberOfLogicalProcessors":  8
+                }
+            ],
+    "topProcesses":  [
+                         {
+                             "IDProcess":  29600,
+                             "Name":  "dwm",
+                             "PercentProcessorTime":  23
+                         },
+                         {
+                             "IDProcess":  87496,
+                             "Name":  "WmiPrvSE#2",
+                             "PercentProcessorTime":  23
+                         },
+                         {
+                             "IDProcess":  4,
+                             "Name":  "System",
+                             "PercentProcessorTime":  18
+                         },
+                         {
+                             "IDProcess":  62560,
+                             "Name":  "browser",
+                             "PercentProcessorTime":  14
+                         },
+                         {
+                             "IDProcess":  89688,
+                             "Name":  "POWERPNT",
+                             "PercentProcessorTime":  9
+                         },
+                         {
+                             "IDProcess":  50936,
+                             "Name":  "codebase-memory-mcp#2",
+                             "PercentProcessorTime":  9
+                         },
+                         {
+                             "IDProcess":  87812,
+                             "Name":  "codebase-memory-mcp#6",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  72556,
+                             "Name":  "codebase-memory-mcp#7",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  77424,
+                             "Name":  "WINWORD",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  82244,
+                             "Name":  "browser#6",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  57552,
+                             "Name":  "codebase-memory-mcp#1",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  3808,
+                             "Name":  "FoxitPDFReaderUpdateService",
+                             "PercentProcessorTime":  4
+                         }
+                     ],
+    "processCpuUnit":  "PercentProcessorTime, 100 per fully busy logical CPU",
+    "processScanCount":  488,
+    "commandLineReadableCount":  122,
+    "candidateJobProcessCount":  122,
+    "competingJobs":  [
+
+                      ],
+    "portListeners":  [
+
+                      ]
+}

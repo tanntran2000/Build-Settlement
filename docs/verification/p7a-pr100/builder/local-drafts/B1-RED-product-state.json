@@ -1,0 +1,16 @@
+{
+  "productFilesUnchanged": [
+    "packages/simulation/src/character-life-command.ts",
+    "packages/core/src/trial/items.ts",
+    "packages/core/src/trial/types.ts"
+  ],
+  "newModuleExists": false,
+  "approvedTestEdits": [
+    "E01",
+    "E02",
+    "E03",
+    "E04",
+    "E05",
+    "E06"
+  ]
+}

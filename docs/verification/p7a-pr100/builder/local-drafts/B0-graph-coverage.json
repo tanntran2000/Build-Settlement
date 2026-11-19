@@ -1,0 +1,43 @@
+{
+  "codegraphDirectory": false,
+  "project": "C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01",
+  "search": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"error\":\"project not found or not indexed\",\"hint\":\"Use list_projects and pass the name whose root_path contains your working directory (or that absolute directory) as the \\\"project\\\" argument; never a repo or folder name.\",\"available_projects\":[\"C-Users-Admin-.t3-worktrees-Build-Settlement-qa-tile-local-checkpoint-01\",\"C-Users-Admin-.t3-worktrees-Build-Settlement-review-population-pr36-final-01\",\"review-tile-world-foundation-01\"],\"count\":3}"
+      }
+    ],
+    "structuredContent": {
+      "error": "project not found or not indexed",
+      "hint": "Use list_projects and pass the name whose root_path contains your working directory (or that absolute directory) as the \"project\" argument; never a repo or folder name.",
+      "available_projects": [
+        "C-Users-Admin-.t3-worktrees-Build-Settlement-qa-tile-local-checkpoint-01",
+        "C-Users-Admin-.t3-worktrees-Build-Settlement-review-population-pr36-final-01",
+        "review-tile-world-foundation-01"
+      ],
+      "count": 3
+    },
+    "isError": true
+  },
+  "coverage": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"error\":\"project not found or not indexed\",\"hint\":\"Use list_projects and pass the name whose root_path contains your working directory (or that absolute directory) as the \\\"project\\\" argument; never a repo or folder name.\",\"available_projects\":[\"C-Users-Admin-.t3-worktrees-Build-Settlement-qa-tile-local-checkpoint-01\",\"C-Users-Admin-.t3-worktrees-Build-Settlement-review-population-pr36-final-01\",\"review-tile-world-foundation-01\"],\"count\":3}"
+      }
+    ],
+    "structuredContent": {
+      "error": "project not found or not indexed",
+      "hint": "Use list_projects and pass the name whose root_path contains your working directory (or that absolute directory) as the \"project\" argument; never a repo or folder name.",
+      "available_projects": [
+        "C-Users-Admin-.t3-worktrees-Build-Settlement-qa-tile-local-checkpoint-01",
+        "C-Users-Admin-.t3-worktrees-Build-Settlement-review-population-pr36-final-01",
+        "review-tile-world-foundation-01"
+      ],
+      "count": 3
+    },
+    "isError": true
+  },
+  "fallback": "No project index; direct tracked source scan and byte inventory of all 494 files. No index created and no other worktree index used."
+}

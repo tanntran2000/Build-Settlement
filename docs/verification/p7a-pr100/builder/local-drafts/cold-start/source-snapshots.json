@@ -1,0 +1,26 @@
+{
+  "initialSessionFileSha256": "5d36595e95eb2a63f5266e0a511c683e0eb69770423a7a88a9baf3f79ac2b823",
+  "vitePackage": "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\packages\\ui\\node_modules\\vite",
+  "revisions": {
+    "base": {
+      "commit": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+      "tree": "d2f31706d77d308a310b61857a8b293a898280e7",
+      "directory": "D:\\QI Technology\\Temp\\p7a-prB-cold-start-7n5pzj_v\\base",
+      "verifiedGitBlobs": 494,
+      "gitBlobInventorySha256": "8dcadd3d12d88074480675afb5c4027d7f2dd7b056127197be02c218a03049cb",
+      "workspacePackageJunction": "D:\\QI Technology\\Temp\\p7a-prB-cold-start-7n5pzj_v\\base\\node_modules\\@haven\\core",
+      "workspacePackageTarget": "D:\\QI Technology\\Temp\\p7a-prB-cold-start-7n5pzj_v\\base\\packages\\core"
+    },
+    "head": {
+      "commit": "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+      "tree": "947f604e17427d916e1ef0e21083dbc2f72920b6",
+      "directory": "D:\\QI Technology\\Temp\\p7a-prB-cold-start-7n5pzj_v\\head",
+      "verifiedGitBlobs": 498,
+      "gitBlobInventorySha256": "9c671bf99cee4735ea95668e77c756ec539e2ad9845958d6b733247d80f4b19b",
+      "workspacePackageJunction": "D:\\QI Technology\\Temp\\p7a-prB-cold-start-7n5pzj_v\\head\\node_modules\\@haven\\core",
+      "workspacePackageTarget": "D:\\QI Technology\\Temp\\p7a-prB-cold-start-7n5pzj_v\\head\\packages\\core"
+    }
+  },
+  "nodeEnvOverridesRemoved": [],
+  "method": "Verified raw Git blobs from git cat-file --batch; stock Vite SSR from one installed package"
+}

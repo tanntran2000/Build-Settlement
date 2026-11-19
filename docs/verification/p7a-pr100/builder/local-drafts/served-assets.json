@@ -1,0 +1,33 @@
+{
+  "head": "cf94804876ef2d02835112e06c355314bbcc16cd",
+  "tree": "3ee007bb2818beddbe87f1dce042b6820e8a2ad2",
+  "ports": {
+    "4173": {
+      "utc": "2026-11-17T15:10:37.362559+00:00",
+      "htmlUrl": "http://localhost:4173/",
+      "httpStatus": 200,
+      "scriptUrl": "http://localhost:4173/assets/index-uPxBksq4.js",
+      "bytes": 449065,
+      "sha256": "3a072e235065c9c42ee13b1f4bec14dcb05e02d4f7ed6031baff6a740b9d8b5e",
+      "expectedHeadJsSha256": "3a072e235065c9c42ee13b1f4bec14dcb05e02d4f7ed6031baff6a740b9d8b5e",
+      "diskSha256": "3a072e235065c9c42ee13b1f4bec14dcb05e02d4f7ed6031baff6a740b9d8b5e",
+      "matchesFreshHead": true
+    },
+    "4174": {
+      "utc": "2026-11-17T15:10:41.921231+00:00",
+      "htmlUrl": "http://localhost:4174/",
+      "httpStatus": 200,
+      "scriptUrl": "http://localhost:4174/assets/index-uPxBksq4.js",
+      "bytes": 449065,
+      "sha256": "3a072e235065c9c42ee13b1f4bec14dcb05e02d4f7ed6031baff6a740b9d8b5e",
+      "expectedHeadJsSha256": "3a072e235065c9c42ee13b1f4bec14dcb05e02d4f7ed6031baff6a740b9d8b5e",
+      "diskSha256": "3a072e235065c9c42ee13b1f4bec14dcb05e02d4f7ed6031baff6a740b9d8b5e",
+      "matchesFreshHead": true
+    }
+  },
+  "allObservedAndMatched": true,
+  "lastConnectionErrors": {
+    "4173": "<urlopen error timed out>",
+    "4174": "<urlopen error timed out>"
+  }
+}

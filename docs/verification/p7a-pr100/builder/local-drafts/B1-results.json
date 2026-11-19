@@ -1,0 +1,40 @@
+{
+  "head": "cf94804876ef2d02835112e06c355314bbcc16cd",
+  "tree": "3ee007bb2818beddbe87f1dce042b6820e8a2ad2",
+  "RED": {
+    "failed": 46,
+    "passed": 156,
+    "files": 10,
+    "exitCode": 1,
+    "newAcceptanceFailures": 43,
+    "perfExitCode": 1,
+    "perfError": "weekly API absent"
+  },
+  "GREEN": {
+    "targetedPassed": 151,
+    "targetedFiles": 6,
+    "fullPassed": 3074,
+    "fullFiles": 131,
+    "exitCode": 0
+  },
+  "goldenInvocations": 1,
+  "allowedLeaves": 42,
+  "forbiddenLeaves": 0,
+  "perfAttempts": [
+    {
+      "cpuPercent": 6,
+      "endWeekMaxMs": 96.1324,
+      "lifeMaxMs": 12.3143,
+      "exitCode": 1
+    },
+    {
+      "cpuPercent": 2,
+      "endWeekMaxMs": 40.3991,
+      "lifeMaxMs": 3.3316,
+      "exitCode": 0
+    }
+  ],
+  "perfSourceUnchangedAcrossAttempts": true,
+  "newTimeouts": 0,
+  "unapprovedExistingTestEdits": 0
+}

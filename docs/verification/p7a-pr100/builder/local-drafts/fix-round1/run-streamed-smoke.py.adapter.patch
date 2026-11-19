@@ -1,0 +1,11 @@
+--- C:\Users\Admin\.t3\local-drafts\p7a-prB\run-streamed-smoke.py
++++ C:\Users\Admin\.t3\local-drafts\p7a-prB\fix-round1\run-streamed-smoke.py
+@@ -73,7 +73,7 @@
+ 
+ 
+ command = ['npm.cmd', 'run', 'test:smoke', '--', '--output',
+-           'C:/Users/Admin/.t3/local-drafts/p7a-prB-local-only/full']
++           'C:/Users/Admin/.t3/local-drafts/p7a-prB-local-only/fix-round1/full']
+ start_utc = dt.datetime.now(dt.timezone.utc).isoformat()
+ started = time.monotonic()
+ observer = threading.Thread(target=observe_assets, daemon=True)

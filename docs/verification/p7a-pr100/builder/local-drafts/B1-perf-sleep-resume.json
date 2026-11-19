@@ -1,0 +1,11 @@
+﻿{
+    "endUtc":  "2026-11-17T15:02:18.4074542Z",
+    "startUtc":  "2026-11-17T14:59:24.8608161Z",
+    "measurementExit":  0,
+    "events":  [
+
+               ],
+    "queryErrors":  [
+                        "No events were found that match the specified selection criteria."
+                    ]
+}

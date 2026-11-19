@@ -1,0 +1,508 @@
+{
+  "fixtures": [
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v1/life-5-weeks.json",
+      "sha256": "e70b5bb137846b4b3accc2020d52daabe0d78746934945d7079ff33831f9d921",
+      "gitBlob": "67b58450eee89fb42871140475540e637db09c37",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v1/life-new-game.json",
+      "sha256": "e30b0c8cc7906d4df134633c07286e3c411bc035a43a245f3668b3914920e333",
+      "gitBlob": "21faa1b5046d5f3dd1765e9a6f3415492db53abc",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v1/new-game.json",
+      "sha256": "ca370a78f79ec75430e415f5a5007f866801c55a1c28ca79ef845713b6a35f9a",
+      "gitBlob": "2aff7e08db9afc3d51b366914674e989df2bbf60",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-5-weeks.json",
+      "sha256": "c1ef46c3e81facc2b642e6800f71123662307988e5159de08a10617b19f1b954",
+      "gitBlob": "312c5b01a9e9415eb9a18eab791466dd0d184150",
+      "classification": "proposed E07/E08"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-crime-death.json",
+      "sha256": "c81a0ec620b1e4884036bd14ca127c4295070d9cf7379fbfe4a57aed06fa970c",
+      "gitBlob": "555ea49cb0dc58de0f8dd766a68cafadba7bd31f",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-crime-raid.json",
+      "sha256": "12070cf85f2107e2257eb4577638443a2c91cb0d6eaaae1b1f5f352288a17b67",
+      "gitBlob": "77a65242e22e842062b7cfad6e8af66cb6d2cfdc",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-crime-robbery.json",
+      "sha256": "e5c7222544248c8c071697b6fbb7c4628d5fcfa315b777a06419aeacb17ad076",
+      "gitBlob": "0cf916f05ba53e463f87b49cd5e509a754881d7d",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-crime-wound.json",
+      "sha256": "9cc1c8144415ce271d39ead18aa0b6afe0bbe4b4e7fbec41f0592067f074cd98",
+      "gitBlob": "76e70fd4d40d663e2472c5c4643364aaee4058fc",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-demand-card.json",
+      "sha256": "a83051f822bef0ec821eac62f1549c8aed0344efaca27021e22365240daf6117",
+      "gitBlob": "2c8ab957c09d05758f248761ee6625b0a45db344",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-laws.json",
+      "sha256": "057ad50b43f1e121ec915d9d1989ee2c5a28620b054ccf130371e2f0b34018cb",
+      "gitBlob": "58371d0c16f7a29286459c58a413d3a739f89f31",
+      "classification": "proposed E07/E08"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-new-game.json",
+      "sha256": "e3f5df5caba890e7e0388f6910e5bc7522e4525ad4da4ba52ddc76bb49f7156b",
+      "gitBlob": "ec2952d90ea07894359831e465d08acc85322546",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-rebellion-last-week.json",
+      "sha256": "b28de9c4b7c6dea90a42f7af02b88e1c6164d8965c15fc388d18166830b40923",
+      "gitBlob": "c476f66816076dafb2a7aa913af41e3de9f2b022",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/new-game.json",
+      "sha256": "2f47650177e24abdd31f70e30a88171ca786ac85666c5ac84a9d6ca6b6254919",
+      "gitBlob": "9fade24ad04da278c173e446989f4514e2aa3b00",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v2/life-5-weeks.json",
+      "sha256": "18a14dd3bc702ebb6e23a1313f18ee933a6dafd10f3c1d72f8a450171ca4f5d7",
+      "gitBlob": "369e15aff936fc2220ced0e863c9c57561609b55",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v2/life-new-game.json",
+      "sha256": "d3600023571e5073447c2921d75d78b4a9fdc7f2f46f8f59c7ddec54718cca29",
+      "gitBlob": "60a30e846897a2031601d1bccd583b2cbe9eb906",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v2/new-game.json",
+      "sha256": "b058599f7d1b9caa2a33259ae94dd0123c7f6d1012132447e9a675c64801ab21",
+      "gitBlob": "195a81d7d678f3a92b0bdeb387ddc47071ab33bf",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v3/life-5-weeks.json",
+      "sha256": "e956e2a52632b94bc3424f1f6bf97a11c27fa5874bb09038f2f6d0e8bad95b66",
+      "gitBlob": "c0582afb50bfc4485176bae11e5c0003de8ff20b",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v3/life-new-game.json",
+      "sha256": "90012ab645fea566584dcdebccc9c238381d005f0c59c0a11aad2d16d6ff09f0",
+      "gitBlob": "f843ec152a2c6a7b4ad1faec65e6968823f39e92",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v3/new-game.json",
+      "sha256": "9bc7d7dc0d7613b1ca8b3f291841307bb941537b6a19aef76a5f121b2fa7e5c3",
+      "gitBlob": "d9c3ffa7c5f02acdfa644dfb1e9608a2765b2877",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v4/life-5-weeks.json",
+      "sha256": "71ebc03892b807101874610951d92c6186c88509496b896cb776650ce109fb8e",
+      "gitBlob": "5dacddca287f3f4b91dc5b194f5d3a95ccf65b77",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v4/life-demand-card.json",
+      "sha256": "ad671d6fe321f9fa4f4155c6d5b8b88ebe2aa983d07d23f33c1babc01239c0e9",
+      "gitBlob": "13b952894dfdb3e4bed54f4e797ca391beba3f84",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v4/life-new-game.json",
+      "sha256": "34a34c214bec38e6f8fa2d2e696432bd3d8387850370477b5d4d3b917e8f3772",
+      "gitBlob": "d3fbc53ac2c4794869a730759db4ddd8c3e7c7e0",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v4/life-rebellion-last-week.json",
+      "sha256": "2ea365ffbfbafd0cfb0f3cfdddea96a41c456e7b2da04b9776a4c1244e01302e",
+      "gitBlob": "1624585c8e01adb37ddffd4a536b92acff6c4ce6",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v4/new-game.json",
+      "sha256": "d4070e55a9faa4b27754d3a6177a2e89d2a97cf8423222e1d53818fcf8498945",
+      "gitBlob": "a745fc5eaff16413ea5a58b34b8541075bb7e0c8",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v5/life-5-weeks.json",
+      "sha256": "a9e2312b7fc305cd7cbf62a0ae5f5fb13dce74626cd6936085b57167ffaa5312",
+      "gitBlob": "e4662fb1f95a0c5089ebd47be5ac440a7639385f",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v5/life-crime-death.json",
+      "sha256": "8d2afc1d5d52057ab456050399cb7565f696194093840b2dbfeefdf1d2b82a27",
+      "gitBlob": "2984204033394c6ba48a32ca27d522ef584b2ab6",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v5/life-crime-raid.json",
+      "sha256": "e999318d66e60d11c219410e8ac90e115f383a7cd875ae85340eddd2dc5b126d",
+      "gitBlob": "2526f86eec2333dbc31d3601400f404b9751ca37",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v5/life-crime-robbery.json",
+      "sha256": "f12cace0b43db46aa89bb728c5e0d367a44ee9c815b85906b653b0280e292695",
+      "gitBlob": "d807b68b40109b7e7268b71e9e0cafe4e162b1e1",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v5/life-crime-wound.json",
+      "sha256": "3f8d44a4298f0162d9317bfe14f4f8d9ef43725404cea9ad7980e322fb306cb1",
+      "gitBlob": "e771edaf93872964700cb534807b200757bba99a",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v5/life-demand-card.json",
+      "sha256": "d3f4916be5d2608a9939d153c28f0efb4dd63debc9788d03a52af92758e7d356",
+      "gitBlob": "7881f7b714e2b74ec9f93d097b9b4202d92594dc",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v5/life-new-game.json",
+      "sha256": "22b612309cb6559549be84b9fba11d6a132362b6f4bf0c07507a6d5691f95d5c",
+      "gitBlob": "35a170c5cb1c5a81febe7f04f3ca42be2e343fc7",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v5/life-rebellion-last-week.json",
+      "sha256": "c4baf215c2186e57c66f503e9168b5a89bb8383d00554187fc2f8c8b80853893",
+      "gitBlob": "569fe4ab0ca31a6890fa604c0b352410b679f0b1",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v5/new-game.json",
+      "sha256": "84180362b3376ee3b7bab05ab27821a8b9c701064f1887b64be8c07689751fd4",
+      "gitBlob": "15e1f94cd554eb75d5e9fd88d2c5a75d24c56c71",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v6/life-5-weeks.json",
+      "sha256": "ab1cd918f6627fd2ec315d3fb6c14ecbfbf5c272d63beb953c6fc00d44248ec3",
+      "gitBlob": "2f424d97856488e6f9fa4f12c72d4d86ecbd679e",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v6/life-crime-death.json",
+      "sha256": "cda6ac17a309ea9d5b726672218dcc7a99f399406a9c67c7d989361409a38a6e",
+      "gitBlob": "2281381184032e0dc97d13fef01056b8a1b88cea",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v6/life-crime-raid.json",
+      "sha256": "6319a60e2c89c5fe6aced78606bcd33277ca3674a972af426e829af04b738169",
+      "gitBlob": "d71394da39c75d723a54a412411dbf6de1a196ca",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v6/life-crime-robbery.json",
+      "sha256": "4e800727152a69105e55b6961dacaa60c4aec5c844eddc21e9f7ac43a00c8346",
+      "gitBlob": "5f10c7cd084a94e188da384691d2250a00f1c3b2",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v6/life-crime-wound.json",
+      "sha256": "649c99969ce3d11c55b582ecb62bd5e7edfdb12d7a25938eeee625c42185859f",
+      "gitBlob": "2b64fbfa107c7c1894085a5a0c498fa12339182d",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v6/life-demand-card.json",
+      "sha256": "5f6cf57321ede5ab4784b9259e13fc5366c8db69402e64fa0381a1892a17a07a",
+      "gitBlob": "10ef5baacc90f992ba319ddf292dacd03072b60f",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v6/life-laws.json",
+      "sha256": "890936db4ad74c61740335cba0318ff4b2f1a34812a7bfe1a3648c2e9e438da0",
+      "gitBlob": "1f696d3dd2e62fd205912b9ebe4bf98a24d213ab",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v6/life-new-game.json",
+      "sha256": "c6ea8ddfa68ddf4bdc0399bcbef297fecca594ef3647010f8304badb5ae48e17",
+      "gitBlob": "182bc7ff7e2a558f9216e483344cdc43c3ec24de",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v6/life-rebellion-last-week.json",
+      "sha256": "d12ebf1247eb33e258c8e1dc185decfce4fc18620044f005a1fd3f9f9a87db42",
+      "gitBlob": "b0e838866b3cc650d67648f9e895360ff2ba2b2c",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v6/new-game.json",
+      "sha256": "95af9ed81e251471629f8cc31be22984d35a90fa3d3d32bdc2f455a04ccb457a",
+      "gitBlob": "9ae0a5ce87cf3a1a6d50d37d097683dad90f0cef",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v7/life-5-weeks.json",
+      "sha256": "c2417b06c6c65919790a5527c8999a5c5c21baa7caef7310f622568d1db00268",
+      "gitBlob": "2c906e5ac02746171632d24c4b00f3350fe72f20",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v7/life-crime-death.json",
+      "sha256": "e3a3c0a7f1653b8e91da3918b5aca6d1f07dd6d9f23cf360d94d722485a1441b",
+      "gitBlob": "8a846b1ca32bea6361c9c4c08d3c492c477ee9d8",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v7/life-crime-raid.json",
+      "sha256": "cca73d949b19912efe34bf321b487e83a42a20df06d45d548a5a2110069609c2",
+      "gitBlob": "909c1223822f1183b6d43fdd827ce9f8d13139ca",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v7/life-crime-robbery.json",
+      "sha256": "b2bac5b3b0dc97ee77070a5ab8f783d4d80f983759be20fe820f1a3ea9d8d3c6",
+      "gitBlob": "125b6252f7a381b684539cdefb79958ad8b60b0a",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v7/life-crime-wound.json",
+      "sha256": "74d581b92bdcf4f628463bf0abeea10954d3c8ada3614712fcf2e4f058309bde",
+      "gitBlob": "386cce62be5aac6f198fb1a270ed736844ada75f",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v7/life-demand-card.json",
+      "sha256": "b407a7adb81e65d3da918f1166d0d1e7b0a99b97158093fde8b5c8368cc905be",
+      "gitBlob": "252fc7c8f697555149450970273a30766496b619",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v7/life-laws.json",
+      "sha256": "6ac7754314bdde02ec86d301d9261bc78efe2e136da66dc9e56318e7dea0a98f",
+      "gitBlob": "9fc01e425929b7660253f781e2cae9bc266018ce",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v7/life-new-game.json",
+      "sha256": "dc3809f5ef80672611b06795ac5b1c630737f536f95c4709b4eb24d65e14962f",
+      "gitBlob": "ed5a672c10099c27f91e733d8b71b34df25c66df",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v7/life-rebellion-last-week.json",
+      "sha256": "0972d6e6847b943a36a35f8b30a1e4d6eb3157749e326c97fb8062819b2c70ed",
+      "gitBlob": "d174830e3ff285d7ab00716a28f1613bd8ae3d17",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v7/new-game.json",
+      "sha256": "b7206e038ef1ca31abaae9a445067718adbd90591bbf283b11093091a6a080c4",
+      "gitBlob": "4ad52f6f4dab85d6801f63855e21d44655758763",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v8/life-5-weeks.json",
+      "sha256": "fc1085270a8627604ac467988a9b5f414d29cebfc0b49a04f59b642be908b546",
+      "gitBlob": "7fc62f313fe825d57280d8648f483386f0ce1bfd",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v8/life-crime-death.json",
+      "sha256": "f3e6c6faea46ab7d9e0976c94bede189cd72566091c831112444a9d89e133c97",
+      "gitBlob": "1628d205ce20f59b93477eccd453430184c62409",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v8/life-crime-raid.json",
+      "sha256": "00849b1a7295cc2c842f6c870cda22294807d7f66515bf12b88a2c489a53da27",
+      "gitBlob": "8130786fe5934d8ffe95be47ab5462a001ff1bbb",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v8/life-crime-robbery.json",
+      "sha256": "e7c800b3e8472a2f79a47ab1eb835608ae2f44bfee2a029fb63f695e8af48a38",
+      "gitBlob": "700ee73357a3b390d0defa7ecc5e05c085d9d8a2",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v8/life-crime-wound.json",
+      "sha256": "191f1f45ad029b9502fe60fe8d65bdf3e42d8f4b156b6ad61f01b5e5bd24a56b",
+      "gitBlob": "2bb1d05e0e4b8b9e4e985b07977cf4c3b8591b99",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v8/life-demand-card.json",
+      "sha256": "7a5b3327ab45124201057524f78c3b54610a65b1b2a2f037c44b587f88d249d7",
+      "gitBlob": "e7258579510f2af4bb1f4f7d8d79b79c0d9c2d0d",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v8/life-laws.json",
+      "sha256": "e6ece2312fd7f77d492a31deb683ebe28559f3b65c9939697d7ed67b3fa9b9e6",
+      "gitBlob": "c4d0621c6950d5b9305c70976cd78962d3ba7c18",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v8/life-new-game.json",
+      "sha256": "05e8a903f40fc71b3b8a62b62d80fbe642965abc8299941cfec2db9386be057c",
+      "gitBlob": "cfe754881a05f4950af9cc357bd18c5cea567287",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v8/life-rebellion-last-week.json",
+      "sha256": "066bfd260b25f7a07a15aafdef89c87a52cb2363de7b43cf39a48ab74f5908a8",
+      "gitBlob": "36b7015406c3664579c96a5f8343bd60381b6b95",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v8/new-game.json",
+      "sha256": "3542e2e0c70ce5d74eb7228926913f1ff9d6e9772f0eb5dd0296ca4de343b4f3",
+      "gitBlob": "412fc65cca52621afb7e1a083096e8e72e712ec1",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-5-weeks.json",
+      "sha256": "127c75ae30f0588194c3adcb3d60c80b7f55622f35422f080d83f395c5fb877e",
+      "gitBlob": "3e91f6eb696f407db2d716fb8098f27e5d8d6e67",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-death.json",
+      "sha256": "63be0f806c715809517744a8d249e05fbe09e68ebfb8ad19293e3f508156234b",
+      "gitBlob": "6d0ea2283082d17ba6fca58959a40d5f9eb54377",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-raid.json",
+      "sha256": "2c0a968e164d1e3518c1b17812b8c61d8aa8788270a4049fbb9d7334dcef58da",
+      "gitBlob": "376b002179f19aba4501ff7ebc68bb2be72a0d22",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-robbery.json",
+      "sha256": "c1cc74255ed39333fbba6362a9b7f25dce9ef194c73a74c05884e76f7b8cca67",
+      "gitBlob": "60dfb3747afc6e4a81b76be5e73df52ac9c2d921",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-wound.json",
+      "sha256": "36f36c603cba9b1e5f03a9c481d86acc131090741f39c017f1cd0ade195523e2",
+      "gitBlob": "09a043eecbfb06cc303d654d9cde0b1bfcc85527",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-demand-card.json",
+      "sha256": "71ef9061c44fadf551f474cd888f924e7976a9a8a368a9def9a8706905d31ab0",
+      "gitBlob": "3a9c8bfc12c934442a18b670344452d13f5aa64e",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-laws.json",
+      "sha256": "8daf63999e0d13e5956584f68ddf0adff53e423c832a3e73f86138fd9739c910",
+      "gitBlob": "27db6eabe1d783e78d7f584e616b1e65b197fbb1",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-new-game.json",
+      "sha256": "695d8bd3ab198209ee2793d7c521caec6f2a9df167cb9c7826e8470ca64f24a7",
+      "gitBlob": "7837fbe5f468c54d3507fbff122e25e910304ce1",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-rebellion-last-week.json",
+      "sha256": "fe87d1ed940e7ac748b43acb04f292b7de81390c710d620a790074e309e13729",
+      "gitBlob": "67aa3080ccddd00c5a07f54073eb6a4f2739be41",
+      "classification": "protected unchanged"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v9/new-game.json",
+      "sha256": "d3892eb83325414c24d3399f2042c1e2afcf852cde525ab6b57bb6f6740761fb",
+      "gitBlob": "2790804da97483f17549279b314ad2299291e4cd",
+      "classification": "protected unchanged"
+    }
+  ],
+  "protectedGeneratorsAndEarlierEvidence": [
+    {
+      "path": "packages/simulation/src/__tests__/fixtures/catalog-golden-path-diff.txt",
+      "sha256": "f31c45a2591acb1239eafb7d3fcca8563a6c8490eb2edb492d4ee46cfefdacad",
+      "gitBlob": "e7ac5c3f2a95827c13bd9fbd14eeb57a97bccbe5"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/fixtures/golden-path-diff.ts",
+      "sha256": "1fd8617b71dbf12eb7e36e0cb04583af31cd7e5781aa3e572c2c49c684936d0e",
+      "gitBlob": "5441ec65127e80e5649447b2ac9335ef354656aa"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts",
+      "sha256": "3d9f4a5987770afe1a8deefdc963b0b5ebe5203fe11edc6a1b0d1e5d06754d2e",
+      "gitBlob": "ce1e0c9ed76489eb0bcc2871a2377dbc40e50576"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/fixtures/p6b-crafting-path-diff.ts",
+      "sha256": "0f053f00e0584901d92cb6b0c952e1ad32bdf43907404c22a81c5535751c1a36",
+      "gitBlob": "b2fe2a37278f7ba60866e971e6cac2ff4dfbd0ea"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/fixtures/p6b-crafting-path-diff.txt",
+      "sha256": "2f9b6ca7286c52218b3ef85f00cc2d8b5cbe489a4e3ea1614ab981fc93f5ba37",
+      "gitBlob": "6165faabbdf9955696b59c01529d791d5ad79529"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/fixtures/p6b-path-diff.ts",
+      "sha256": "fbdf6107f23042f2a3f066be0b8f18fd18e14477e07db79f9d00f0206b9c64e6",
+      "gitBlob": "478a92187da64e56205c3301ef11f68f57ec908a"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/fixtures/p6b-path-diff.txt",
+      "sha256": "c4e4e2b3cb007e60f6f91bdeb05e77c882a255f719681651f29319f92993e366",
+      "gitBlob": "f2354483c413900b414e0bfb57841a01cc6c6e6a"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/fixtures/p7a-path-diff.ts",
+      "sha256": "4a55798c885d079820d055210cc27abf6f01e510047c686fdad900e678a53577",
+      "gitBlob": "9109d6fc5dc680a52ac31ea690367bf77ee6e100"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/fixtures/p7a-path-diff.txt",
+      "sha256": "75858e3cd64ed266b6ed247a2595b052e7574645827b72aea75f7ef187e68513",
+      "gitBlob": "11e409bd3ca7c75e24c4f41f21c6247547cef0ab"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/fixtures/review-fix1-path-diff.ts",
+      "sha256": "f90f14c789d24aeb34f49bd3e497a78522146a5f243ad7a0579519e07d615e14",
+      "gitBlob": "58fe782dba34fa986178eb2705b9a40862f75210"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/fixtures/review-fix1-path-diff.txt",
+      "sha256": "6a0553ef555db195183f7f51eb73c7b3c797734839d572bfee0ec0ee9eaaa3a8",
+      "gitBlob": "e9151151c5a4ae3c4b90b7f4cb91cd964c4e5e8c"
+    }
+  ],
+  "mutableDataPaths": [
+    "packages/persistence/src/__tests__/fixtures/society-v10/life-5-weeks.json",
+    "packages/persistence/src/__tests__/fixtures/society-v10/life-laws.json",
+    "packages/simulation/src/__tests__/fixtures/catalog-golden.json"
+  ],
+  "newCommittedDiffPaths": [
+    "packages/simulation/src/__tests__/fixtures/p7a-week-path-diff.ts",
+    "packages/simulation/src/__tests__/fixtures/p7a-week-path-diff.txt"
+  ]
+}

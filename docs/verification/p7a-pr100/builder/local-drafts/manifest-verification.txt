@@ -1,0 +1,16 @@
+{
+  "verifiedFiles": 337,
+  "topManifestExcluded": true,
+  "nestedManifestsIncluded": [
+    "fix-round1/SHA256SUMS.txt",
+    "fix-round1/prior-parent-SHA256SUMS.txt",
+    "fix-round1/profile/SHA256SUMS.txt",
+    "perf-profile/SHA256SUMS.txt",
+    "perf-profile/prior-parent-SHA256SUMS.txt",
+    "pre-correction4-SHA256SUMS.txt",
+    "step0-SHA256SUMS.txt"
+  ],
+  "utf8Checked": true,
+  "ownerQuoteIntact": true,
+  "rawBeforeAfterBytesPreserved": true
+}

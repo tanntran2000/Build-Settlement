@@ -1,0 +1,77 @@
+﻿{
+    "utc":  "2026-11-18T00:56:09.4800316Z",
+    "cpu":  [
+                {
+                    "LoadPercentage":  46,
+                    "NumberOfLogicalProcessors":  8
+                }
+            ],
+    "topProcesses":  [
+                         {
+                             "IDProcess":  4272,
+                             "Name":  "MsMpEng",
+                             "PercentProcessorTime":  110
+                         },
+                         {
+                             "IDProcess":  4,
+                             "Name":  "System",
+                             "PercentProcessorTime":  30
+                         },
+                         {
+                             "IDProcess":  82072,
+                             "Name":  "WmiPrvSE#2",
+                             "PercentProcessorTime":  22
+                         },
+                         {
+                             "IDProcess":  72784,
+                             "Name":  "T3 Code (Nightly)#4",
+                             "PercentProcessorTime":  17
+                         },
+                         {
+                             "IDProcess":  74560,
+                             "Name":  "POWERPNT",
+                             "PercentProcessorTime":  8
+                         },
+                         {
+                             "IDProcess":  29600,
+                             "Name":  "dwm",
+                             "PercentProcessorTime":  8
+                         },
+                         {
+                             "IDProcess":  74272,
+                             "Name":  "codebase-memory-mcp#3",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  65000,
+                             "Name":  "csrss#1",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  50936,
+                             "Name":  "codebase-memory-mcp#2",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  1564,
+                             "Name":  "svchost#57",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  83496,
+                             "Name":  "node#22",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  79364,
+                             "Name":  "node#17",
+                             "PercentProcessorTime":  0
+                         }
+                     ],
+    "competingJobs":  [
+
+                      ],
+    "portListeners":  [
+
+                      ]
+}

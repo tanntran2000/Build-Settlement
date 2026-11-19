@@ -1,0 +1,633 @@
+{
+  "diagnosticStatus": "MEASURED; acceptance assessed with fix evidence",
+  "source": "All six fresh-process runs, no warm-up or raw tick discarded",
+  "p95Method": "nearest rank ceil(0.95*n)",
+  "initialSessionSha256": "f8cc77c0f67a60a847b6c21e5f343f73fca7f2da7f6b2d453d8f11155643bc59",
+  "harnessSha256": "dad1f13d017fff18db0c024995b283e940c9f2488e4530192ea89f2093aa7ff5",
+  "allInitialSessionsIdentical": true,
+  "finalSessionsDeterministicWithinRevision": true,
+  "sixDistinctPids": true,
+  "runtime": {
+    "node": "v24.19.0",
+    "v8": "13.6.233.17-node.51",
+    "vite": "6.4.5"
+  },
+  "rows": [
+    {
+      "run": "01-base",
+      "revision": "base",
+      "cpuStart": [
+        {
+          "LoadPercentage": 19,
+          "NumberOfLogicalProcessors": 8
+        }
+      ],
+      "endWeek": {
+        "all": {
+          "n": 60,
+          "max": 43.265699999999924,
+          "p95": 33.158800000000156,
+          "mean": 27.467699999999997,
+          "over50": 0
+        },
+        "warm": {
+          "n": 55,
+          "max": 36.517800000000534,
+          "p95": 33.158800000000156,
+          "mean": 27.298498181818186,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 43.265699999999924,
+          "p95": 43.265699999999924,
+          "mean": 29.328919999999925,
+          "over50": 0
+        }
+      },
+      "life": null,
+      "lifeClone": null,
+      "postTransitions": null,
+      "maxTick": 1,
+      "overBudgetTicks": [],
+      "firstFiveOver50": 0,
+      "warmOver50": 0,
+      "beforeBirthdayMean": 26.44036764705886,
+      "birthdayAndAfterMean": 28.687852380952336,
+      "slowTickComponents": []
+    },
+    {
+      "run": "02-head",
+      "revision": "head",
+      "cpuStart": [
+        {
+          "LoadPercentage": 54,
+          "NumberOfLogicalProcessors": 8
+        }
+      ],
+      "endWeek": {
+        "all": {
+          "n": 60,
+          "max": 72.85289999999986,
+          "p95": 37.65710000000013,
+          "mean": 33.150539999999985,
+          "over50": 1
+        },
+        "warm": {
+          "n": 55,
+          "max": 39.31190000000015,
+          "p95": 35.554099999999835,
+          "mean": 32.063303636363614,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 72.85289999999986,
+          "p95": 72.85289999999986,
+          "mean": 45.11014,
+          "over50": 1
+        }
+      },
+      "life": {
+        "all": {
+          "n": 60,
+          "max": 2.8665000000000873,
+          "p95": 1.8325999999997293,
+          "mean": 1.58977000000001,
+          "over50": 0
+        },
+        "warm": {
+          "n": 55,
+          "max": 1.8615999999997257,
+          "p95": 1.801300000000083,
+          "mean": 1.5470781818181836,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 2.8665000000000873,
+          "p95": 2.8665000000000873,
+          "mean": 2.0593800000001012,
+          "over50": 0
+        }
+      },
+      "lifeClone": {
+        "all": {
+          "n": 60,
+          "max": 2.2842000000000553,
+          "p95": 1.773099999999431,
+          "mean": 1.5226016666666775,
+          "over50": 0
+        },
+        "warm": {
+          "n": 55,
+          "max": 1.813300000000254,
+          "p95": 1.7241999999996551,
+          "mean": 1.493627272727285,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 2.2842000000000553,
+          "p95": 2.2842000000000553,
+          "mean": 1.841319999999996,
+          "over50": 0
+        }
+      },
+      "postTransitions": {
+        "all": {
+          "n": 60,
+          "max": 0.22730000000001382,
+          "p95": 0.061399999999821375,
+          "mean": 0.04368833333332229,
+          "over50": 0
+        },
+        "warm": {
+          "n": 55,
+          "max": 0.08310000000028595,
+          "p95": 0.05160000000023501,
+          "mean": 0.04027999999999255,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 0.22730000000001382,
+          "p95": 0.22730000000001382,
+          "mean": 0.08117999999994936,
+          "over50": 0
+        }
+      },
+      "maxTick": 1,
+      "overBudgetTicks": [
+        1
+      ],
+      "firstFiveOver50": 1,
+      "warmOver50": 0,
+      "beforeBirthdayMean": 31.751958823529414,
+      "birthdayAndAfterMean": 32.567385714285656,
+      "slowTickComponents": [
+        {
+          "tick": 1,
+          "weekBefore": 1,
+          "weekAfter": 2,
+          "startMs": 1591.268,
+          "endMs": 1664.1209,
+          "endWeekMs": 72.85289999999986,
+          "lifeMs": 2.8665000000000873,
+          "lifeCloneMs": 2.122000000000071,
+          "postTransitionsMs": 0.22730000000001382
+        }
+      ]
+    },
+    {
+      "run": "03-base",
+      "revision": "base",
+      "cpuStart": [
+        {
+          "LoadPercentage": 31,
+          "NumberOfLogicalProcessors": 8
+        }
+      ],
+      "endWeek": {
+        "all": {
+          "n": 60,
+          "max": 56.24199999999996,
+          "p95": 35.904999999999745,
+          "mean": 30.90966833333338,
+          "over50": 2
+        },
+        "warm": {
+          "n": 55,
+          "max": 50.261400000000094,
+          "p95": 35.904999999999745,
+          "mean": 30.336738181818227,
+          "over50": 1
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 56.24199999999996,
+          "p95": 56.24199999999996,
+          "mean": 37.211900000000014,
+          "over50": 1
+        }
+      },
+      "life": null,
+      "lifeClone": null,
+      "postTransitions": null,
+      "maxTick": 1,
+      "overBudgetTicks": [
+        1,
+        10
+      ],
+      "firstFiveOver50": 1,
+      "warmOver50": 1,
+      "beforeBirthdayMean": 31.216170588235332,
+      "birthdayAndAfterMean": 28.912895238095295,
+      "slowTickComponents": [
+        {
+          "tick": 1,
+          "weekBefore": 1,
+          "weekAfter": 2,
+          "startMs": 1368.0924,
+          "endMs": 1424.3344,
+          "endWeekMs": 56.24199999999996,
+          "lifeMs": null,
+          "lifeCloneMs": null,
+          "postTransitionsMs": null
+        },
+        {
+          "tick": 10,
+          "weekBefore": 10,
+          "weekAfter": 11,
+          "startMs": 1953.2294,
+          "endMs": 2003.4908,
+          "endWeekMs": 50.261400000000094,
+          "lifeMs": null,
+          "lifeCloneMs": null,
+          "postTransitionsMs": null
+        }
+      ]
+    },
+    {
+      "run": "04-head",
+      "revision": "head",
+      "cpuStart": [
+        {
+          "LoadPercentage": 14,
+          "NumberOfLogicalProcessors": 8
+        }
+      ],
+      "endWeek": {
+        "all": {
+          "n": 60,
+          "max": 71.01080000000002,
+          "p95": 39.652700000000095,
+          "mean": 32.84450166666666,
+          "over50": 1
+        },
+        "warm": {
+          "n": 55,
+          "max": 39.652700000000095,
+          "p95": 36.0034999999998,
+          "mean": 31.622056363636364,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 71.01080000000002,
+          "p95": 71.01080000000002,
+          "mean": 46.29139999999988,
+          "over50": 1
+        }
+      },
+      "life": {
+        "all": {
+          "n": 60,
+          "max": 2.444300000000112,
+          "p95": 1.8065000000001419,
+          "mean": 1.5627083333333265,
+          "over50": 0
+        },
+        "warm": {
+          "n": 55,
+          "max": 1.829200000000128,
+          "p95": 1.7454999999999927,
+          "mean": 1.5278581818181753,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 2.444300000000112,
+          "p95": 2.444300000000112,
+          "mean": 1.9460599999999886,
+          "over50": 0
+        }
+      },
+      "lifeClone": {
+        "all": {
+          "n": 60,
+          "max": 1.9013999999997395,
+          "p95": 1.7071999999998297,
+          "mean": 1.4931800000000066,
+          "over50": 0
+        },
+        "warm": {
+          "n": 55,
+          "max": 1.7222999999999047,
+          "p95": 1.6829999999999927,
+          "mean": 1.4702345454545636,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 1.9013999999997395,
+          "p95": 1.9013999999997395,
+          "mean": 1.7455799999998818,
+          "over50": 0
+        }
+      },
+      "postTransitions": {
+        "all": {
+          "n": 60,
+          "max": 0.1752000000001317,
+          "p95": 0.05629999999973734,
+          "mean": 0.04297833333333377,
+          "over50": 0
+        },
+        "warm": {
+          "n": 55,
+          "max": 0.07639999999992142,
+          "p95": 0.051899999999932334,
+          "mean": 0.04017272727273435,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 0.1752000000001317,
+          "p95": 0.1752000000001317,
+          "mean": 0.07383999999992738,
+          "over50": 0
+        }
+      },
+      "maxTick": 1,
+      "overBudgetTicks": [
+        1
+      ],
+      "firstFiveOver50": 1,
+      "warmOver50": 0,
+      "beforeBirthdayMean": 31.71845882352944,
+      "birthdayAndAfterMean": 31.465976190476145,
+      "slowTickComponents": [
+        {
+          "tick": 1,
+          "weekBefore": 1,
+          "weekAfter": 2,
+          "startMs": 1868.4483,
+          "endMs": 1939.4591,
+          "endWeekMs": 71.01080000000002,
+          "lifeMs": 2.444300000000112,
+          "lifeCloneMs": 1.8870999999999185,
+          "postTransitionsMs": 0.1752000000001317
+        }
+      ]
+    },
+    {
+      "run": "05-base",
+      "revision": "base",
+      "cpuStart": [
+        {
+          "LoadPercentage": 51,
+          "NumberOfLogicalProcessors": 8
+        }
+      ],
+      "endWeek": {
+        "all": {
+          "n": 60,
+          "max": 51.71990000000005,
+          "p95": 39.22910000000047,
+          "mean": 31.70002333333325,
+          "over50": 1
+        },
+        "warm": {
+          "n": 55,
+          "max": 48.63299999999981,
+          "p95": 39.22910000000047,
+          "mean": 31.078638181818086,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 51.71990000000005,
+          "p95": 51.71990000000005,
+          "mean": 38.535260000000015,
+          "over50": 1
+        }
+      },
+      "life": null,
+      "lifeClone": null,
+      "postTransitions": null,
+      "maxTick": 1,
+      "overBudgetTicks": [
+        1
+      ],
+      "firstFiveOver50": 1,
+      "warmOver50": 0,
+      "beforeBirthdayMean": 30.138217647058735,
+      "birthdayAndAfterMean": 32.6012238095237,
+      "slowTickComponents": [
+        {
+          "tick": 1,
+          "weekBefore": 1,
+          "weekAfter": 2,
+          "startMs": 1494.3416,
+          "endMs": 1546.0615,
+          "endWeekMs": 51.71990000000005,
+          "lifeMs": null,
+          "lifeCloneMs": null,
+          "postTransitionsMs": null
+        }
+      ]
+    },
+    {
+      "run": "06-head",
+      "revision": "head",
+      "cpuStart": [
+        {
+          "LoadPercentage": 46,
+          "NumberOfLogicalProcessors": 8
+        }
+      ],
+      "endWeek": {
+        "all": {
+          "n": 60,
+          "max": 70.16199999999981,
+          "p95": 39.258800000000065,
+          "mean": 35.49536333333338,
+          "over50": 1
+        },
+        "warm": {
+          "n": 55,
+          "max": 41.9363000000003,
+          "p95": 38.26920000000018,
+          "mean": 34.679178181818244,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 70.16199999999981,
+          "p95": 70.16199999999981,
+          "mean": 44.47339999999999,
+          "over50": 1
+        }
+      },
+      "life": {
+        "all": {
+          "n": 60,
+          "max": 2.479599999999664,
+          "p95": 2.244999999999891,
+          "mean": 1.6966383333333133,
+          "over50": 0
+        },
+        "warm": {
+          "n": 55,
+          "max": 2.479599999999664,
+          "p95": 2.244999999999891,
+          "mean": 1.6828490909090679,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 2.408100000000104,
+          "p95": 2.408100000000104,
+          "mean": 1.8483200000000124,
+          "over50": 0
+        }
+      },
+      "lifeClone": {
+        "all": {
+          "n": 60,
+          "max": 2.442599999999402,
+          "p95": 1.9439000000002125,
+          "mean": 1.6220566666666134,
+          "over50": 0
+        },
+        "warm": {
+          "n": 55,
+          "max": 2.442599999999402,
+          "p95": 2.081499999999778,
+          "mean": 1.620405454545405,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 1.802199999999857,
+          "p95": 1.802199999999857,
+          "mean": 1.6402199999999083,
+          "over50": 0
+        }
+      },
+      "postTransitions": {
+        "all": {
+          "n": 60,
+          "max": 0.16789999999991778,
+          "p95": 0.07259999999951106,
+          "mean": 0.047284999999976665,
+          "over50": 0
+        },
+        "warm": {
+          "n": 55,
+          "max": 0.08580000000029031,
+          "p95": 0.07250000000021828,
+          "mean": 0.04378181818179159,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 0.16789999999991778,
+          "p95": 0.16789999999991778,
+          "mean": 0.08582000000001244,
+          "over50": 0
+        }
+      },
+      "maxTick": 1,
+      "overBudgetTicks": [
+        1
+      ],
+      "firstFiveOver50": 1,
+      "warmOver50": 0,
+      "beforeBirthdayMean": 35.26178235294122,
+      "birthdayAndAfterMean": 33.73591428571438,
+      "slowTickComponents": [
+        {
+          "tick": 1,
+          "weekBefore": 1,
+          "weekAfter": 2,
+          "startMs": 1661.1454,
+          "endMs": 1731.3074,
+          "endWeekMs": 70.16199999999981,
+          "lifeMs": 2.408100000000104,
+          "lifeCloneMs": 1.7292999999999665,
+          "postTransitionsMs": 0.16789999999991778
+        }
+      ]
+    }
+  ],
+  "pairs": [
+    {
+      "base": "01-base",
+      "head": "02-head",
+      "allMeanDelta": 5.682839999999988,
+      "allMaxDelta": 29.58719999999994,
+      "warmMeanDelta": 4.764805454545428,
+      "warmMaxDelta": 2.7940999999996166
+    },
+    {
+      "base": "03-base",
+      "head": "04-head",
+      "allMeanDelta": 1.9348333333332803,
+      "allMaxDelta": 14.768800000000056,
+      "warmMeanDelta": 1.2853181818181376,
+      "warmMaxDelta": -10.608699999999999
+    },
+    {
+      "base": "05-base",
+      "head": "06-head",
+      "allMeanDelta": 3.795340000000131,
+      "allMaxDelta": 18.442099999999755,
+      "warmMeanDelta": 3.6005400000001586,
+      "warmMaxDelta": -6.69669999999951
+    }
+  ],
+  "pooled": {
+    "base": {
+      "all": {
+        "n": 180,
+        "max": 56.24199999999996,
+        "p95": 37.2534999999998,
+        "mean": 30.02579722222221,
+        "over50": 3
+      },
+      "warm": {
+        "n": 165,
+        "max": 50.261400000000094,
+        "p95": 35.904999999999745,
+        "mean": 29.5712915151515,
+        "over50": 1
+      }
+    },
+    "head": {
+      "all": {
+        "n": 180,
+        "max": 72.85289999999986,
+        "p95": 39.31190000000015,
+        "mean": 33.830135000000006,
+        "over50": 3
+      },
+      "warm": {
+        "n": 165,
+        "max": 41.9363000000003,
+        "p95": 37.39300000000003,
+        "mean": 32.78817939393941,
+        "over50": 0
+      }
+    }
+  },
+  "headMinusBase": {
+    "all": {
+      "mean": 3.8043377777777962,
+      "max": 16.6108999999999
+    },
+    "warm": {
+      "mean": 3.216887878787908,
+      "max": -8.325099999999793
+    }
+  },
+  "limitations": [
+    "SSR source execution and inspector CPU sampling, matching the earlier harness engine; not a production bundle benchmark.",
+    "Head-only in-memory timers and wrapper allocations are included in head timings; no numerical overhead correction is applied.",
+    "In-call life/clone timing does not attribute later garbage collection or all external CPU variability.",
+    "Three alternating pairs provide descriptive evidence, not a confidence interval or proof of a universal production slowdown."
+  ],
+  "acceptanceStatus": "HOLD: strict 50 ms raw-tick acceptance still breached at new-head tick 1 in each run",
+  "previousHeadComparison": "../previous-head-comparison.json"
+}

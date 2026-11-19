@@ -1,0 +1,15 @@
+{
+  "utc": "2026-11-17T14:42:42.794189+00:00",
+  "state": "B0 HOLD pending D1-D4",
+  "branch": "feat/p7a-npc-life-week",
+  "head": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+  "tree": "d2f31706d77d308a310b61857a8b293a898280e7",
+  "gitStatus": "",
+  "portListeners": [],
+  "prABranch": "56124513aef2d85de128fe76bf3001654290c1c0",
+  "productOrTestEdits": 0,
+  "testsOrBuildsRun": 0,
+  "generatorsRun": 0,
+  "pushPrMerge": "not performed",
+  "worktreesOrClonesCreated": 0
+}

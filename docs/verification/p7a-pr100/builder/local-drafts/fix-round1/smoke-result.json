@@ -1,0 +1,19 @@
+{
+  "head": "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+  "tree": "947f604e17427d916e1ef0e21083dbc2f72920b6",
+  "ci": "1",
+  "command": [
+    "npm.cmd",
+    "run",
+    "test:smoke",
+    "--",
+    "--output",
+    "C:/Users/Admin/.t3/local-drafts/p7a-prB-local-only/fix-round1/full"
+  ],
+  "utcStart": "2026-11-18T01:04:08.656940+00:00",
+  "utcEnd": "2026-11-18T01:51:14.294381+00:00",
+  "seconds": 2825.473,
+  "smokeExitCode": 0,
+  "servedAssetsMatched": true,
+  "gitStatusAfter": ""
+}

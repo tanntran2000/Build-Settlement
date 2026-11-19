@@ -1,0 +1,12 @@
+{
+  "mobile": {
+    "width": 390,
+    "contentHeight": 883,
+    "consoleMessages": []
+  },
+  "desktop": {
+    "width": 728,
+    "consoleMessages": []
+  },
+  "source": "comparison.html; charts read all 360 original full-tick samples and run no gameplay"
+}

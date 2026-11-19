@@ -1,0 +1,11 @@
+{
+  "branch": "feat/p7a-npc-life-week",
+  "head": "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+  "tree": "947f604e17427d916e1ef0e21083dbc2f72920b6",
+  "originMain": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+  "porcelain": [],
+  "trackedFileCount": 498,
+  "trackedCheckoutByteInventorySha256": "4c58975204febc0f8484e2861c0e4f25afed55ced84c71ad7b14412e215e984b",
+  "branchRefsSha256": "ebff22396442d2cd9dfa39f6152b5dd0bd170ac8af0b678aa57ec77a01a66938",
+  "worktreeList": "worktree D:/NghienCuuTiemNang/Build-Settlement\nHEAD 25b82acb94bbd4484938652b1a1434a0ece563bb\nbranch refs/heads/docs/p7-npc-design\n\nworktree C:/Users/Admin/.t3/worktrees/Build-Settlement/benchmark-arch-gate-a-01\nHEAD 2a2bb72323a44285733e4c62a7c613093f37139c\nbranch refs/heads/benchmark/arch-gate-a-01\n\nworktree C:/Users/Admin/.t3/worktrees/Build-Settlement/benchmark-test-a-01\nHEAD 2a2bb72323a44285733e4c62a7c613093f37139c\ndetached\n\nworktree C:/Users/Admin/.t3/worktrees/Build-Settlement/integrate-windows-smoke-main-01\nHEAD 8a7548bd8403814655729b94856d0ca80bee3f0c\nbranch refs/heads/integrate/windows-smoke-main-01\n\nworktree C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01\nHEAD b94d3083dd71722f329b1bf444fa9dec9b0fd309\nbranch refs/heads/feat/p7a-npc-life-week\n\nworktree C:/Users/Admin/.t3/worktrees/Build-Settlement/verify-windows-smoke-main-01\nHEAD 8a7548bd8403814655729b94856d0ca80bee3f0c\nbranch refs/heads/verify/windows-smoke-main-01\n\n"
+}

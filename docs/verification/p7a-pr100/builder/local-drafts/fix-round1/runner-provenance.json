@@ -1,0 +1,44 @@
+[
+  {
+    "source": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB\\perf-profile\\profile-harness.mjs",
+    "target": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB\\fix-round1\\profile\\profile-harness.mjs",
+    "sourceSha256": "db7dda09f2be3b6dfb5296d2630bf37cfd6c2ec46f4f116a211e6eace091895b",
+    "targetSha256": "dad1f13d017fff18db0c024995b283e940c9f2488e4530192ea89f2093aa7ff5",
+    "reason": "Only recognize the new one-line initializer in the existing in-memory timing hook. Workload, seed, timings, CPU sampling, raw retention and summary definitions unchanged. lifeCloneMs now times the targeted copy preparation, not a full NPC clone."
+  },
+  {
+    "source": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB\\perf-profile\\run-profile.py",
+    "target": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB\\fix-round1\\profile\\run-profile.py",
+    "sourceSha256": "4ef052ffb31e1c3c7852d78bb22e02f4317152c64453a7f4f615b0709665ec58",
+    "targetSha256": "f96dd7de381cdd0803dc8752337c399cc1ff633ff80ae7935ae0ca31b8e9c4da",
+    "reason": "Pin the approved new head and owner decision; refresh stat-cache entries only after raw-byte/index-tree verification to handle checkout CRLF. No measurement change."
+  },
+  {
+    "source": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB\\perf-profile\\analyze-profile.py",
+    "target": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB\\fix-round1\\profile\\analyze-profile.py",
+    "sourceSha256": "5e49705656836c480050be75c835a079cc792056f462ecc3fbe52625e9bff64f",
+    "targetSha256": "fc10e0234e124382793373191106367641575d2f0ab576c6b2350d8facf64d1a",
+    "reason": "Reuse identical statistics/CPU summarization; status label is assessment pending, not an automatic HOLD or PASS."
+  },
+  {
+    "source": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB\\run-gates.ps1",
+    "target": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB\\fix-round1\\run-gates.ps1",
+    "sourceSha256": "176fdae6abb852f45c72658e8ae623d367e713b43fd6d1b85d20a91ff109de4b",
+    "targetSha256": "a4f9643d8772a53667b5f571395d4f3c77baa3597a41942606201201a29345d4",
+    "reason": "Route evidence to fix-round1; reuse the corrected explicit UTC XPath sleep audit. Seven gates, CI echo and smoke unchanged."
+  },
+  {
+    "source": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB\\run-streamed-smoke.py",
+    "target": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB\\fix-round1\\run-streamed-smoke.py",
+    "sourceSha256": "5fb05c35b62be4f6728b24f08a78cf092dcee16bffae7637a63d3d543c5f0d16",
+    "targetSha256": "0e3e2b42ba68a6c228eff9ed52506df5de38dfeeb75599341c55d9713ea7d96a",
+    "reason": "Preserve prior Playwright artifacts by using a separate local-only output folder. Same full smoke command and asset proof."
+  },
+  {
+    "source": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB\\measure-bundle.mjs",
+    "target": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB\\fix-round1\\measure-bundle.mjs",
+    "sourceSha256": "63906f7bf4773772ad6c329cf65172952f45443419a53e8d9514282b077ab164",
+    "targetSha256": "f5dfe7681a36ada85915620377a602cf7e66ae2600ad4ab5f7a2a5a2a13371a6",
+    "reason": "Separate output folder; identical production gzip measurement and main baseline."
+  }
+]

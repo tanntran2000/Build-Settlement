@@ -1,0 +1,461 @@
+{
+  "root": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only",
+  "reason": "Playwright output remains outside the UTF-8 evidence folder. Do not publish traces without independent review.",
+  "files": [
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--0585a-hell-accessibility-baseline-chromium\\attachments\\measurements-31faeecd2f20616a8a8ce5524085d9c10174bbc2.json",
+      "bytes": 2395408,
+      "sha256": "b1fccd64c9c891748b66f481c7b9968a7b72c44815172d126bf0df16de751422"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--0585a-hell-accessibility-baseline-chromium\\measurements.json",
+      "bytes": 2395408,
+      "sha256": "b1fccd64c9c891748b66f481c7b9968a7b72c44815172d126bf0df16de751422"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--111d9-nter-repeats-remain-guarded-chromium\\attachments\\pointer-repeat-geometry-d695a6fc55e3846c487d7a54225c782050b75000.json",
+      "bytes": 361,
+      "sha256": "97748b577b84c95bbadd85e02b0f360d2e5e3a6fdff789e7a06408476205bf1f"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--111d9-nter-repeats-remain-guarded-chromium\\pointer-repeat-geometry.json",
+      "bytes": 361,
+      "sha256": "97748b577b84c95bbadd85e02b0f360d2e5e3a6fdff789e7a06408476205bf1f"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--6dbc9-ctive-and-inactive-contrast-chromium\\attachments\\native-controls-daf564486acdc35a09ead6acd1399f4f31c8791f.json",
+      "bytes": 15948,
+      "sha256": "9cfc692a7d13ebe85d966dfc0425563347d3940f0a5a18f8573a364e0ae88c30"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--6dbc9-ctive-and-inactive-contrast-chromium\\native-controls.json",
+      "bytes": 15948,
+      "sha256": "9cfc692a7d13ebe85d966dfc0425563347d3940f0a5a18f8573a364e0ae88c30"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--7657e-tock-accessibility-at-375px-chromium\\attachments\\goods-accessibility-bb45a907de0a5db572e3a970754c9f1e912f8d96.json",
+      "bytes": 539142,
+      "sha256": "4961dd693ae4c80969fde564c03f2dda13f5e3a392979db12860d26d86e66ba4"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--7657e-tock-accessibility-at-375px-chromium\\goods-accessibility.json",
+      "bytes": 539142,
+      "sha256": "4961dd693ae4c80969fde564c03f2dda13f5e3a392979db12860d26d86e66ba4"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--77412--and-report-content-reflows-chromium\\attachments\\reflow-8428873009a9d0841953f9507225e8eb6dc43080.json",
+      "bytes": 2023431,
+      "sha256": "660012754f77e786d15ddbbd43f63f8ebf85ef1ecec3ca5989c856e1c1955413"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--77412--and-report-content-reflows-chromium\\reflow.json",
+      "bytes": 2023431,
+      "sha256": "660012754f77e786d15ddbbd43f63f8ebf85ef1ecec3ca5989c856e1c1955413"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--7a157-ctive-and-inactive-contrast-chromium\\attachments\\native-controls-af3a9a2d54aa758b1e64774a4bee33b8155f2fa5.json",
+      "bytes": 15940,
+      "sha256": "c265907ae84195f8d84e69899076f550378d49550faf2b575695f0f0d453563a"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--7a157-ctive-and-inactive-contrast-chromium\\native-controls.json",
+      "bytes": 15940,
+      "sha256": "c265907ae84195f8d84e69899076f550378d49550faf2b575695f0f0d453563a"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--89cf1--and-report-content-reflows-chromium\\attachments\\reflow-3538cab389feb22cc2640dd2802479097b87d003.json",
+      "bytes": 1995935,
+      "sha256": "d890e708e3bca91f9f84b89fb9f478c2e603d61b10ceb56da0719dbbc8996aa7"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--89cf1--and-report-content-reflows-chromium\\reflow.json",
+      "bytes": 1995935,
+      "sha256": "d890e708e3bca91f9f84b89fb9f478c2e603d61b10ceb56da0719dbbc8996aa7"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--9fc2b-ctive-and-inactive-contrast-chromium\\attachments\\native-controls-d05ac8e45d9f8297930b0c5f607a80c394cf0fd3.json",
+      "bytes": 15940,
+      "sha256": "b76718a8fd0ec0e53173635b3f1edab02dd7fdad85f8e1c56fa71648225220a7"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--9fc2b-ctive-and-inactive-contrast-chromium\\native-controls.json",
+      "bytes": 15940,
+      "sha256": "b76718a8fd0ec0e53173635b3f1edab02dd7fdad85f8e1c56fa71648225220a7"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--afde0-ock-accessibility-at-1280px-chromium\\attachments\\goods-accessibility-c610a69efc5e952ee9584bf1c24569316727f0c0.json",
+      "bytes": 541410,
+      "sha256": "ec2967c2b6c6442c039984423f5e7b998969ea0e733f16cb848202575a949f41"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--afde0-ock-accessibility-at-1280px-chromium\\goods-accessibility.json",
+      "bytes": 541410,
+      "sha256": "ec2967c2b6c6442c039984423f5e7b998969ea0e733f16cb848202575a949f41"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--b8ed3-nter-repeats-remain-guarded-chromium\\attachments\\pointer-repeat-geometry-a09be6197d66fa7b957b0be61bec549e79556333.json",
+      "bytes": 358,
+      "sha256": "8164107833a0c14897c5c4146226dc3f815bfb7e4e853d07603ff4d11fc757a4"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--b8ed3-nter-repeats-remain-guarded-chromium\\pointer-repeat-geometry.json",
+      "bytes": 358,
+      "sha256": "8164107833a0c14897c5c4146226dc3f815bfb7e4e853d07603ff4d11fc757a4"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--c0613-hell-accessibility-baseline-chromium\\attachments\\measurements-933e97ddada25e217b0324cf869d01c5fe6ac11b.json",
+      "bytes": 2370488,
+      "sha256": "cd1b81310e750672b19c8c3f4dc4e0eb49d2f00438ae526191b7a1aaf28a41c7"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--c0613-hell-accessibility-baseline-chromium\\measurements.json",
+      "bytes": 2370488,
+      "sha256": "cd1b81310e750672b19c8c3f4dc4e0eb49d2f00438ae526191b7a1aaf28a41c7"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--ca2f8--and-report-content-reflows-chromium\\attachments\\reflow-3405a3bc6d07f36606f0b1ce921b370c6b5f8fb8.json",
+      "bytes": 1963237,
+      "sha256": "68ad9a6aca94616542fa85bbf832bdb536dfa1484ae326ed4e0a92de88b6a63e"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--ca2f8--and-report-content-reflows-chromium\\reflow.json",
+      "bytes": 1963237,
+      "sha256": "68ad9a6aca94616542fa85bbf832bdb536dfa1484ae326ed4e0a92de88b6a63e"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--d9965--and-report-content-reflows-chromium\\attachments\\reflow-a1ea59db991592fe754b1b962a551e563831f37a.json",
+      "bytes": 1960459,
+      "sha256": "20f6d02a47c82479948c3624586c063e3a4e165f6df890550fea983e6918dd19"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--d9965--and-report-content-reflows-chromium\\reflow.json",
+      "bytes": 1960459,
+      "sha256": "20f6d02a47c82479948c3624586c063e3a4e165f6df890550fea983e6918dd19"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--dd3e5-ctive-and-inactive-contrast-chromium\\attachments\\native-controls-a9cf111f9f1046b66c00432d68aa096dafb6833f.json",
+      "bytes": 15947,
+      "sha256": "a401000ab23ac2c635b80a7edae49b56d6fc4a7d4459d491e26a02d77e1d39c4"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--dd3e5-ctive-and-inactive-contrast-chromium\\native-controls.json",
+      "bytes": 15947,
+      "sha256": "a401000ab23ac2c635b80a7edae49b56d6fc4a7d4459d491e26a02d77e1d39c4"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--e57a3-hell-accessibility-baseline-chromium\\attachments\\measurements-5ac50c984f4c7e57ec76d36e00ef6093da5d1324.json",
+      "bytes": 2375985,
+      "sha256": "7006fd4a732c70993f9eef08283b0b31a27fcce7f8e59829c17ab0b15ad65d45"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--e57a3-hell-accessibility-baseline-chromium\\measurements.json",
+      "bytes": 2375985,
+      "sha256": "7006fd4a732c70993f9eef08283b0b31a27fcce7f8e59829c17ab0b15ad65d45"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--f621c-hell-accessibility-baseline-chromium\\attachments\\measurements-11dbf903dcd718fe1e7215c78468690c73580ba7.json",
+      "bytes": 2378047,
+      "sha256": "9dee74f540c407a598323fc2060238c14406ad795470bf7dd8af77ded0f422a5"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\character-life-navigation--f621c-hell-accessibility-baseline-chromium\\measurements.json",
+      "bytes": 2378047,
+      "sha256": "9dee74f540c407a598323fc2060238c14406ad795470bf7dd8af77ded0f422a5"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\goods-stock-Society-five-w-be7af-navigation-parity-at-1280px-chromium\\goods-week5-city.png",
+      "bytes": 74947,
+      "sha256": "85a2f9e4d666cd45d612b507a01cc540d939e5e87aa25ad162e40ead74fce89f"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\goods-stock-Society-five-w-be7af-navigation-parity-at-1280px-chromium\\goods-week5-report.png",
+      "bytes": 72163,
+      "sha256": "66fd6c0ea704b65560829c50b97732f9df790837f05291e39306e6eac5ee5035"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\goods-stock-Society-five-w-fbc68--navigation-parity-at-375px-chromium\\goods-week5-city.png",
+      "bytes": 289484,
+      "sha256": "3e00b9d746f73db528ddb0436f1b51b7a880370b90a57ba0e4f1fa996909d0df"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\goods-stock-Society-five-w-fbc68--navigation-parity-at-375px-chromium\\goods-week5-report.png",
+      "bytes": 21920,
+      "sha256": "ee7237a63c3bfeefacd07b176482dc4bf2a40b2fe70adfb277caa4527a5c0b9f"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\storage-three-started-save-9c305-arker-without-record-growth-chromium\\attachments\\three-game-record-counts-d486a0d4c85e1d074270766490fbc2164b5c0672.json",
+      "bytes": 668,
+      "sha256": "3137578ef5d18cce90b9eca3c275d4751e161148e01ca0cdd7d74d8ff223f757"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\storage-three-started-save-9c305-arker-without-record-growth-chromium\\three-game-record-counts.json",
+      "bytes": 668,
+      "sha256": "3137578ef5d18cce90b9eca3c275d4751e161148e01ca0cdd7d74d8ff223f757"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-Large-report-at-320p-a1c00-tock-ledger-inside-the-page-chromium\\attachments\\report-large-320-16bb4e30a3a19e58aeaac73e34e813491cff9f00.png",
+      "bytes": 156233,
+      "sha256": "fa846bea1825ebad448bf017ddaea516f0dbaed44e2e8b2e2280cb72ebb01f79"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-Large-report-at-320p-a1c00-tock-ledger-inside-the-page-chromium\\attachments\\report-layout-metrics-455daae59635ffaf0b94493615697522ec9f08fc.json",
+      "bytes": 825,
+      "sha256": "81d0571a26123390c29b7f4d7dd1b86a485c8ce928e3a987a79f16a764ad9b7a"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-Large-report-at-320p-a1c00-tock-ledger-inside-the-page-chromium\\metrics.json",
+      "bytes": 825,
+      "sha256": "81d0571a26123390c29b7f4d7dd1b86a485c8ce928e3a987a79f16a764ad9b7a"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-Large-report-at-320p-a1c00-tock-ledger-inside-the-page-chromium\\report-large-320.png",
+      "bytes": 156233,
+      "sha256": "fa846bea1825ebad448bf017ddaea516f0dbaed44e2e8b2e2280cb72ebb01f79"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-1280-large-chromium\\attachments\\layout-metrics-7b049bf8b25bdc63fc20f28e94cbf93cbece21e2.json",
+      "bytes": 48,
+      "sha256": "806807a36022f60ed1dec1b96c901a7daa4fd16f932d6746ab7b6906013b4833"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-1280-large-chromium\\attachments\\options-layout-d99d6c8083f656308a043730b328d040005104e8.png",
+      "bytes": 39995,
+      "sha256": "88a62a263203b1c78977856bc3ea5651c279573b5223db1c185c0a007670b139"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-1280-large-chromium\\attachments\\title-layout-c3ae37c37ac2649dba129833612b6bb9b7f6408d.png",
+      "bytes": 17713,
+      "sha256": "cc40de986ac0c3efb244d9ea6a898c999e6f91cd1f0e69a2e4e84e9e568288f2"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-1280-large-chromium\\metrics.json",
+      "bytes": 48,
+      "sha256": "806807a36022f60ed1dec1b96c901a7daa4fd16f932d6746ab7b6906013b4833"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-1280-large-chromium\\options-layout.png",
+      "bytes": 39995,
+      "sha256": "88a62a263203b1c78977856bc3ea5651c279573b5223db1c185c0a007670b139"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-1280-large-chromium\\title-layout.png",
+      "bytes": 17713,
+      "sha256": "cc40de986ac0c3efb244d9ea6a898c999e6f91cd1f0e69a2e4e84e9e568288f2"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-1280-normal-chromium\\attachments\\layout-metrics-74b1f7262dcc203c8d47f9afa01eaae1e2892e02.json",
+      "bytes": 49,
+      "sha256": "d63076c0f6caffe09457b554cc9cdf7430a06e66d0c434282ae660568f32cc4c"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-1280-normal-chromium\\attachments\\options-layout-937d421223ea0b592393a99ead2078d459ecc872.png",
+      "bytes": 32698,
+      "sha256": "23c558fc2bb0b7be2367a9df97b74d20f565a652ea7aded3235f305b97c2dbfd"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-1280-normal-chromium\\attachments\\title-layout-187eb42bf9f74874ae756ade35e6b23ffbb9cbac.png",
+      "bytes": 15369,
+      "sha256": "7457db355a3fcd50fa315fc28589cc0b91741005598707b23372546c13ca5645"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-1280-normal-chromium\\metrics.json",
+      "bytes": 49,
+      "sha256": "d63076c0f6caffe09457b554cc9cdf7430a06e66d0c434282ae660568f32cc4c"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-1280-normal-chromium\\options-layout.png",
+      "bytes": 32698,
+      "sha256": "23c558fc2bb0b7be2367a9df97b74d20f565a652ea7aded3235f305b97c2dbfd"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-1280-normal-chromium\\title-layout.png",
+      "bytes": 15369,
+      "sha256": "7457db355a3fcd50fa315fc28589cc0b91741005598707b23372546c13ca5645"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-1600-large-chromium\\attachments\\layout-metrics-f6907359c2fc242a46451e6cf6f4060dad6ec097.json",
+      "bytes": 48,
+      "sha256": "22c3c317b4e6d8877e1b1157297542851a96cbb2de1e2f55ca09d12545b812d6"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-1600-large-chromium\\attachments\\options-layout-a8369bbca1884322ebe7a9b174a82cc64cc763f4.png",
+      "bytes": 41337,
+      "sha256": "8fd538425fd85c4b449fd403da4e96e487af772ddd8d98a337f0de149a75bbfc"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-1600-large-chromium\\attachments\\title-layout-29458ed00fce5deb7a9b056e4b8252f1b5b13093.png",
+      "bytes": 18758,
+      "sha256": "5c5a8feafdaa43c8f04a78b66eb2285ed8c79ada6d962797771f0eaf278a9e4b"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-1600-large-chromium\\metrics.json",
+      "bytes": 48,
+      "sha256": "22c3c317b4e6d8877e1b1157297542851a96cbb2de1e2f55ca09d12545b812d6"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-1600-large-chromium\\options-layout.png",
+      "bytes": 41337,
+      "sha256": "8fd538425fd85c4b449fd403da4e96e487af772ddd8d98a337f0de149a75bbfc"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-1600-large-chromium\\title-layout.png",
+      "bytes": 18758,
+      "sha256": "5c5a8feafdaa43c8f04a78b66eb2285ed8c79ada6d962797771f0eaf278a9e4b"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-1600-normal-chromium\\attachments\\layout-metrics-7747a9e3e6dab76e670c63587f1475713b85774e.json",
+      "bytes": 49,
+      "sha256": "74e69d987be95e946499dcf8bf5de2e66544e99737779884289bdd0d1d230291"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-1600-normal-chromium\\attachments\\options-layout-93224babddb09684a79f4425803868ffac3b206d.png",
+      "bytes": 34098,
+      "sha256": "10c9871a93933a5e2515a2b268b6f44c46ea1830f77475374efb614d466bc806"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-1600-normal-chromium\\attachments\\title-layout-e1d405c8496076630174dce423f5bfacf49d564e.png",
+      "bytes": 16591,
+      "sha256": "356a987f504492aa51ee372b66a190b1a38a6d97dbfa497e4752fabcec27bde7"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-1600-normal-chromium\\metrics.json",
+      "bytes": 49,
+      "sha256": "74e69d987be95e946499dcf8bf5de2e66544e99737779884289bdd0d1d230291"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-1600-normal-chromium\\options-layout.png",
+      "bytes": 34098,
+      "sha256": "10c9871a93933a5e2515a2b268b6f44c46ea1830f77475374efb614d466bc806"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-1600-normal-chromium\\title-layout.png",
+      "bytes": 16591,
+      "sha256": "356a987f504492aa51ee372b66a190b1a38a6d97dbfa497e4752fabcec27bde7"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-320-large-chromium\\attachments\\layout-metrics-e121665ccb258272bde09b1065de48d27199b874.json",
+      "bytes": 46,
+      "sha256": "6cf8e901a9f4e149749c31c8666c2632acfd5d11c5f295fba3a111b83ac8cd88"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-320-large-chromium\\attachments\\options-layout-b8c3b940fac90437998a2cc2cedf7dcb5f076b4a.png",
+      "bytes": 27990,
+      "sha256": "e5f10ffa44af785cec5667377f83d712cf4c0664391ff166d1f974d739922249"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-320-large-chromium\\attachments\\title-layout-1e7c3e725c745f5655ebf41862687bc78fdceb5a.png",
+      "bytes": 13962,
+      "sha256": "7b36c424a6b24e8ad829c22c8686e113a29ed6d9887a239a09a44cf2efc96514"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-320-large-chromium\\metrics.json",
+      "bytes": 46,
+      "sha256": "6cf8e901a9f4e149749c31c8666c2632acfd5d11c5f295fba3a111b83ac8cd88"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-320-large-chromium\\options-layout.png",
+      "bytes": 27990,
+      "sha256": "e5f10ffa44af785cec5667377f83d712cf4c0664391ff166d1f974d739922249"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-320-large-chromium\\title-layout.png",
+      "bytes": 13962,
+      "sha256": "7b36c424a6b24e8ad829c22c8686e113a29ed6d9887a239a09a44cf2efc96514"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-320-normal-chromium\\attachments\\layout-metrics-531d27606753f884a2d2b8d0d1da165fa02db693.json",
+      "bytes": 47,
+      "sha256": "0cec964d0f146254888c337c487b40e2527ceb4ad78c2d291359ec97f17bd9d6"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-320-normal-chromium\\attachments\\options-layout-d67d8e36c5fee571cbd84fdf0ba21932a3cf5001.png",
+      "bytes": 26383,
+      "sha256": "5670b294a3a943182ba0ef575c1ff3ed8ef65cb2cbd37415c7c90bb19119ab52"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-320-normal-chromium\\attachments\\title-layout-b85299dc96981fa72a90990cab06094abb95f6d1.png",
+      "bytes": 12921,
+      "sha256": "9ac08f2080a9d152977f826b7e7de65587aa4647b098bd745133a3ece644bcc0"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-320-normal-chromium\\metrics.json",
+      "bytes": 47,
+      "sha256": "0cec964d0f146254888c337c487b40e2527ceb4ad78c2d291359ec97f17bd9d6"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-320-normal-chromium\\options-layout.png",
+      "bytes": 26383,
+      "sha256": "5670b294a3a943182ba0ef575c1ff3ed8ef65cb2cbd37415c7c90bb19119ab52"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-320-normal-chromium\\title-layout.png",
+      "bytes": 12921,
+      "sha256": "9ac08f2080a9d152977f826b7e7de65587aa4647b098bd745133a3ece644bcc0"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-375-large-chromium\\attachments\\layout-metrics-71cb4cc0d69e6f2b85428e2163424d9f5c8da209.json",
+      "bytes": 46,
+      "sha256": "f9f79e830008a4d3cdf00861ae3997dab1e6f58be265d69b25b97fdde684999f"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-375-large-chromium\\attachments\\options-layout-40c6149f3fbcb0c20e9078825bd63f5e995bae9f.png",
+      "bytes": 29773,
+      "sha256": "c7251475777b8dfb8b07828e0814890a8b42242e21dd9716a4824135724abfeb"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-375-large-chromium\\attachments\\title-layout-d3a42f87c691dc31cfb137b3f0feb6271d272094.png",
+      "bytes": 14439,
+      "sha256": "a3340c4151cc6eb81be0247170b6bb58355f2fe2bdedbc8fc9d8a1e2609ded62"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-375-large-chromium\\metrics.json",
+      "bytes": 46,
+      "sha256": "f9f79e830008a4d3cdf00861ae3997dab1e6f58be265d69b25b97fdde684999f"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-375-large-chromium\\options-layout.png",
+      "bytes": 29773,
+      "sha256": "c7251475777b8dfb8b07828e0814890a8b42242e21dd9716a4824135724abfeb"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-375-large-chromium\\title-layout.png",
+      "bytes": 14439,
+      "sha256": "a3340c4151cc6eb81be0247170b6bb58355f2fe2bdedbc8fc9d8a1e2609ded62"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-375-normal-chromium\\attachments\\layout-metrics-9bc47a9c6dbaee7517add4521e5d05d0e839acf8.json",
+      "bytes": 47,
+      "sha256": "c21abc23316567fffeb310e08acd5b070f7d2d4616dfdc241b8f5ed31cd13558"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-375-normal-chromium\\attachments\\options-layout-63ccdefe75bd67bb9534daf9daed24825092201b.png",
+      "bytes": 27425,
+      "sha256": "f94af7d21a4c87221afc43cec77d0b323b054a7effbca0ab86ed18579f7ae313"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-375-normal-chromium\\attachments\\title-layout-532f95fdf49b7c570c817ff5eb977567b3e2f186.png",
+      "bytes": 13425,
+      "sha256": "0f48df35dd4565f8c7eed822ba0f4eeef09bf62f442e2b3099cc1378315831da"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-375-normal-chromium\\metrics.json",
+      "bytes": 47,
+      "sha256": "c21abc23316567fffeb310e08acd5b070f7d2d4616dfdc241b8f5ed31cd13558"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-375-normal-chromium\\options-layout.png",
+      "bytes": 27425,
+      "sha256": "f94af7d21a4c87221afc43cec77d0b323b054a7effbca0ab86ed18579f7ae313"
+    },
+    {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB-local-only\\full\\title-layout-375-normal-chromium\\title-layout.png",
+      "bytes": 13425,
+      "sha256": "0f48df35dd4565f8c7eed822ba0f4eeef09bf62f442e2b3099cc1378315831da"
+    }
+  ]
+}

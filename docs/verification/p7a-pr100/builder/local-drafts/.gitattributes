@@ -1,0 +1,2 @@
+# Preserve exact UTF-8 evidence bytes, including before/after CRLF snapshots.
+* -text

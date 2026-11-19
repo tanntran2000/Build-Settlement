@@ -1,0 +1,192 @@
+{
+  "head": "cf94804876ef2d02835112e06c355314bbcc16cd",
+  "tree": "3ee007bb2818beddbe87f1dce042b6820e8a2ad2",
+  "base": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+  "branch": "feat/p7a-npc-life-week",
+  "gitStatus": "",
+  "commit": "feat(simulation): npc stress, exhaustion, ageing and history\n\nCo-authored-by: Codex <noreply@openai.com>",
+  "utc": "2026-11-17T15:48:57.237649+00:00",
+  "gates": [
+    {
+      "gate": 1,
+      "command": "git diff --check origin/main...HEAD",
+      "exitCode": 0,
+      "seconds": 0.061,
+      "log": "gate-1-diff.txt"
+    },
+    {
+      "gate": 2,
+      "command": "npm run lint",
+      "exitCode": 0,
+      "seconds": 18.28,
+      "log": "gate-2-lint.txt"
+    },
+    {
+      "gate": 3,
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "seconds": 34.565,
+      "log": "gate-3-typecheck.txt"
+    },
+    {
+      "gate": 4,
+      "command": "npm run check:architecture",
+      "exitCode": 0,
+      "seconds": 6.142,
+      "log": "gate-4-architecture.txt"
+    },
+    {
+      "gate": 5,
+      "command": "npm run test:architecture",
+      "exitCode": 0,
+      "seconds": 47.874,
+      "log": "gate-5-architecture-tests.txt"
+    },
+    {
+      "gate": 6,
+      "command": "npm test",
+      "exitCode": 0,
+      "seconds": 67.994,
+      "log": "gate-6-unit.txt"
+    },
+    {
+      "gate": 7,
+      "command": "npm run build",
+      "exitCode": 0,
+      "seconds": 23.525,
+      "log": "gate-7-build.txt"
+    }
+  ],
+  "gateStartCpu": [
+    {
+      "LoadPercentage": 38,
+      "NumberOfLogicalProcessors": 8
+    }
+  ],
+  "gateStartTopProcesses": [
+    {
+      "IDProcess": 56200,
+      "Name": "msedgewebview2",
+      "PercentProcessorTime": 20
+    },
+    {
+      "IDProcess": 85472,
+      "Name": "WmiPrvSE#2",
+      "PercentProcessorTime": 15
+    },
+    {
+      "IDProcess": 47380,
+      "Name": "Zalo#6",
+      "PercentProcessorTime": 5
+    },
+    {
+      "IDProcess": 4,
+      "Name": "System",
+      "PercentProcessorTime": 5
+    },
+    {
+      "IDProcess": 2172,
+      "Name": "node#16",
+      "PercentProcessorTime": 0
+    },
+    {
+      "IDProcess": 78500,
+      "Name": "node#23",
+      "PercentProcessorTime": 0
+    },
+    {
+      "IDProcess": 75064,
+      "Name": "node#14",
+      "PercentProcessorTime": 0
+    },
+    {
+      "IDProcess": 76572,
+      "Name": "node#15",
+      "PercentProcessorTime": 0
+    },
+    {
+      "IDProcess": 69964,
+      "Name": "node#20",
+      "PercentProcessorTime": 0
+    },
+    {
+      "IDProcess": 19732,
+      "Name": "node#21",
+      "PercentProcessorTime": 0
+    }
+  ],
+  "competingJobsAtStart": [],
+  "portsAtStart": [],
+  "portsAtEnd": [],
+  "unitPassed": 3074,
+  "unitFiles": 131,
+  "smokePassed": 387,
+  "smokeSkipped": 0,
+  "smokeCI": "1",
+  "smokeSeconds": 2207.863,
+  "servedAssetsMatched": true,
+  "sleepResumeEvents": 0,
+  "editInventoryCount": 13,
+  "approvedExistingTransformations": 9,
+  "approvedWhitespaceDelta": "W01",
+  "newTests": 43,
+  "hashPinChanges": [],
+  "goldenGenerationCount": 1,
+  "goldenAllowedLeaves": 42,
+  "goldenForbiddenLeaves": 0,
+  "perfMaxMs": {
+    "firstEndWeek": 96.13239999999996,
+    "confirmationEndWeek": 40.39909999999986,
+    "confirmationLife": 3.3316000000002077
+  },
+  "bundle": {
+    "head": "cf94804876ef2d02835112e06c355314bbcc16cd",
+    "tree": "3ee007bb2818beddbe87f1dce042b6820e8a2ad2",
+    "utc": "2026-11-17T15:10:15.617Z",
+    "baseline": {
+      "head": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+      "source": "Owner-provided main production bundle, decimal kB gzip",
+      "jsGzipKB": 139.26,
+      "cssGzipKB": 7.15
+    },
+    "current": {
+      "jsGzipBytes": 139893,
+      "cssGzipBytes": 7152,
+      "jsGzipKB": 139.893,
+      "cssGzipKB": 7.152
+    },
+    "deltaKB": {
+      "js": 0.6330000000000098,
+      "css": 0.0019999999999997797
+    },
+    "files": [
+      {
+        "file": "assets/index-DLT9rNeI.css",
+        "entry": true,
+        "bytes": 35427,
+        "gzipBytes": 7152,
+        "sha256": "48220c778ce4ca3a2cc8b36a4d4692a4358db576c8683c31c7e22afe8b8919c8",
+        "gzipSha256": "585763018b5a4101119dc38e18d354b1e8ef5935e131c02c87ffc444a97d05ea"
+      },
+      {
+        "file": "assets/index-uPxBksq4.js",
+        "entry": true,
+        "bytes": 449065,
+        "gzipBytes": 139893,
+        "sha256": "3a072e235065c9c42ee13b1f4bec14dcb05e02d4f7ed6031baff6a740b9d8b5e",
+        "gzipSha256": "158a9e2591b25a9e1015ead1127e8791f5a8fdb45b968b953e95ad429cf2c1aa"
+      }
+    ]
+  },
+  "noPushPrOrMerge": true,
+  "independentReview": "Owned by Orchestrator; not claimed by Builder",
+  "bindingPlan": {
+    "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB\\binding-plan-4739ffc.md",
+    "sourceCommit": "4739ffc",
+    "correction": 4,
+    "sha256": "e144cfea5de3e4c4bf2a06c3926cd011b559840c42be43554cbe1aeb8fa43ec0",
+    "supersedes": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB\\binding-plan-a770dc0.md",
+    "reviewUtc": "2026-11-17T16:01:19.506780+00:00"
+  },
+  "correction4Reconciliation": "correction4-reconciliation.json"
+}

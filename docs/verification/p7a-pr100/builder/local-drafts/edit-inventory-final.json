@@ -1,0 +1,151 @@
+{
+  "mode": "final",
+  "head": "cf94804876ef2d02835112e06c355314bbcc16cd",
+  "tree": "3ee007bb2818beddbe87f1dce042b6820e8a2ad2",
+  "base": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+  "utc": "2026-11-17T16:01:20.247032+00:00",
+  "gitStatus": "",
+  "trackedBaselineFiles": 494,
+  "pathCount": 13,
+  "plannedPaths": 13,
+  "proposedTransformations": 9,
+  "existingTestFilesVerifiedExactly": 3,
+  "projectedDataLeavesVerified": 42,
+  "unexpectedPaths": [],
+  "unapprovedExistingTestEdits": [],
+  "unchangedPrABranch": "56124513aef2d85de128fe76bf3001654290c1c0",
+  "exitCode": 0,
+  "scope": "source/proposal inventory only; not a product test or gate result",
+  "files": [
+    {
+      "path": "packages/simulation/src/npc-life-week.ts",
+      "status": "new",
+      "sha256": "0bb81ecddc78ab15b6cc4f2cf508765a82bfdec9bd53b808937b9b2fc7dd9da9",
+      "gitBlob": "2d6f4ae302257143c31061edd09858dc91577238",
+      "bytes": 2369,
+      "crlf": 0,
+      "loneLf": 41,
+      "trailingNewlineBytes": 1
+    },
+    {
+      "path": "packages/simulation/src/character-life-command.ts",
+      "status": "existing",
+      "sha256": "fc121d2ee0639295539bdaa99689f73b75e7e54be59382fb0a823b5fb248e1d0",
+      "gitBlob": "605508e8a1859fa51e2a45cc3a91ef18c8cefe2f",
+      "bytes": 5309,
+      "crlf": 74,
+      "loneLf": 0,
+      "trailingNewlineBytes": 2
+    },
+    {
+      "path": "packages/core/src/trial/items.ts",
+      "status": "existing",
+      "sha256": "03e5acda1b47d665e3780b2419eacd441e92d25bd23f2fab8ef9c008ac5434c3",
+      "gitBlob": "0ad932f89c04747a3f0088f1d9a38b9bf54bbb05",
+      "bytes": 13674,
+      "crlf": 0,
+      "loneLf": 186,
+      "trailingNewlineBytes": 1
+    },
+    {
+      "path": "packages/core/src/trial/types.ts",
+      "status": "existing",
+      "sha256": "e142594cec1d3c5c13d33ea9c28c8b76dd508172b3a2bb04a9fe5a1a5844458c",
+      "gitBlob": "9a284ccbc3a1c64232698d7d91fd13f7fb6346b3",
+      "bytes": 5513,
+      "crlf": 103,
+      "loneLf": 0,
+      "trailingNewlineBytes": 2
+    },
+    {
+      "path": "packages/simulation/src/__tests__/npc-life-week.test.ts",
+      "status": "new",
+      "sha256": "11b8fed5b773e0a1f64065fe68e215da9ddd2d38f4b08682fac794e91a2f0be0",
+      "gitBlob": "a5a9c91d0678e7d8690c5fcc32cfac289e65732f",
+      "bytes": 16191,
+      "crlf": 0,
+      "loneLf": 239,
+      "trailingNewlineBytes": 1
+    },
+    {
+      "path": "packages/simulation/src/__tests__/character-life-command.test.ts",
+      "status": "existing",
+      "sha256": "6d552041a94536d83a52c4a2323d321e16005e5114cfdde1028984cc9cc20e44",
+      "gitBlob": "e7fe9bbd0124d4097d99720f69d802e6d3980930",
+      "bytes": 23184,
+      "crlf": 372,
+      "loneLf": 0,
+      "trailingNewlineBytes": 2
+    },
+    {
+      "path": "packages/simulation/src/__tests__/society-stock-integrity.test.ts",
+      "status": "existing",
+      "sha256": "bfee9cd0418ec9627a169aacf2a4b02ecbb52f1a4017186534ef673d068e1e2a",
+      "gitBlob": "1ce03f93319ee6ccf0457fa98d62473bc2be3450",
+      "bytes": 12915,
+      "crlf": 183,
+      "loneLf": 0,
+      "trailingNewlineBytes": 2
+    },
+    {
+      "path": "tests/e2e/character-life-navigation.helpers.ts",
+      "status": "existing",
+      "sha256": "9189a748146fe64cba51f9a7f8c6452cf03a70b87d38d7d4d94c903519d26546",
+      "gitBlob": "e4e3ee4f51fe0f3d401807de92f7736d99b83c5c",
+      "bytes": 41644,
+      "crlf": 0,
+      "loneLf": 573,
+      "trailingNewlineBytes": 1
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-5-weeks.json",
+      "status": "existing",
+      "sha256": "8a8b23a3969a963882663fb47585925e5b0d9f8d9f6cfae4bb75d1eb46d31c19",
+      "gitBlob": "fa95429b511dbac30c68c53f202aa7c5465435b9",
+      "bytes": 21462,
+      "crlf": 0,
+      "loneLf": 0,
+      "trailingNewlineBytes": 0
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-laws.json",
+      "status": "existing",
+      "sha256": "9307ddfcce17f2ab48f26b4e586def7d8a7661b93eee503f58e9497970d34db9",
+      "gitBlob": "534ca388234b8dd8edb692202c82022dc0fb3e2b",
+      "bytes": 21639,
+      "crlf": 0,
+      "loneLf": 0,
+      "trailingNewlineBytes": 0
+    },
+    {
+      "path": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+      "status": "existing",
+      "sha256": "042c9dc71a36fff42b74c7b6d8a621d412adcabe7556935bfc7f0f64c312f95a",
+      "gitBlob": "fbac63225199f9818e023d7f8d31074a1eb0de1e",
+      "bytes": 80536,
+      "crlf": 0,
+      "loneLf": 26,
+      "trailingNewlineBytes": 1
+    },
+    {
+      "path": "packages/simulation/src/__tests__/fixtures/p7a-week-path-diff.ts",
+      "status": "new",
+      "sha256": "f26b1cda127fff78b8e6f5425d5f6c0e04bb47898488fbf1231d2d5e5852d4c1",
+      "gitBlob": "bd4b1ff52b161867bd2134f33f1c846f608cc57a",
+      "bytes": 4472,
+      "crlf": 0,
+      "loneLf": 73,
+      "trailingNewlineBytes": 1
+    },
+    {
+      "path": "packages/simulation/src/__tests__/fixtures/p7a-week-path-diff.txt",
+      "status": "new",
+      "sha256": "acff3d65af094c867a2e90be2440f016fcd879426c314d07f7e0a8975e6d63c9",
+      "gitBlob": "87e6077581376fc9594aaaf4ecd2fb1f9c5c5cf5",
+      "bytes": 2792,
+      "crlf": 0,
+      "loneLf": 12,
+      "trailingNewlineBytes": 1
+    }
+  ]
+}

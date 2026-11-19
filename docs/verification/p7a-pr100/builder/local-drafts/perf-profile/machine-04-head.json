@@ -1,0 +1,77 @@
+﻿{
+    "utc":  "2026-11-17T23:04:48.4209497Z",
+    "cpu":  [
+                {
+                    "LoadPercentage":  45,
+                    "NumberOfLogicalProcessors":  8
+                }
+            ],
+    "topProcesses":  [
+                         {
+                             "IDProcess":  4272,
+                             "Name":  "MsMpEng",
+                             "PercentProcessorTime":  49
+                         },
+                         {
+                             "IDProcess":  54632,
+                             "Name":  "WmiPrvSE#2",
+                             "PercentProcessorTime":  26
+                         },
+                         {
+                             "IDProcess":  72784,
+                             "Name":  "T3 Code (Nightly)#4",
+                             "PercentProcessorTime":  17
+                         },
+                         {
+                             "IDProcess":  74272,
+                             "Name":  "codebase-memory-mcp#3",
+                             "PercentProcessorTime":  8
+                         },
+                         {
+                             "IDProcess":  46532,
+                             "Name":  "taskhostw",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  79228,
+                             "Name":  "conhost#52",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  4,
+                             "Name":  "System",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  50936,
+                             "Name":  "codebase-memory-mcp#2",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  75064,
+                             "Name":  "node#14",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  2172,
+                             "Name":  "node#16",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  76572,
+                             "Name":  "node#15",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  69964,
+                             "Name":  "node#20",
+                             "PercentProcessorTime":  0
+                         }
+                     ],
+    "competingJobs":  [
+
+                      ],
+    "portListeners":  [
+
+                      ]
+}

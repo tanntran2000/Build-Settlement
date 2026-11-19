@@ -1,0 +1,39 @@
+{
+  "head": "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+  "tree": "947f604e17427d916e1ef0e21083dbc2f72920b6",
+  "utc": "2026-11-18T01:04:04.463Z",
+  "baseline": {
+    "head": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+    "source": "Owner-provided main production bundle, decimal kB gzip",
+    "jsGzipKB": 139.26,
+    "cssGzipKB": 7.15
+  },
+  "current": {
+    "jsGzipBytes": 139905,
+    "cssGzipBytes": 7152,
+    "jsGzipKB": 139.905,
+    "cssGzipKB": 7.152
+  },
+  "deltaKB": {
+    "js": 0.6450000000000102,
+    "css": 0.0019999999999997797
+  },
+  "files": [
+    {
+      "file": "assets/index-CyubGS6a.js",
+      "entry": true,
+      "bytes": 449094,
+      "gzipBytes": 139905,
+      "sha256": "94d25b5a02ce0a14ac09c6c80b419aeeec0de057c1c0586898ca23721a8bb043",
+      "gzipSha256": "c9932db8ff5e919f3b1de4476e1ad880b6361be94f443a0d750996c599b04df5"
+    },
+    {
+      "file": "assets/index-DLT9rNeI.css",
+      "entry": true,
+      "bytes": 35427,
+      "gzipBytes": 7152,
+      "sha256": "48220c778ce4ca3a2cc8b36a4d4692a4358db576c8683c31c7e22afe8b8919c8",
+      "gzipSha256": "585763018b5a4101119dc38e18d354b1e8ef5935e131c02c87ffc444a97d05ea"
+    }
+  ]
+}

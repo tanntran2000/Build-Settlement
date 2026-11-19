@@ -1,0 +1,69 @@
+﻿{
+    "head":  "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+    "tree":  "947f604e17427d916e1ef0e21083dbc2f72920b6",
+    "utc":  "2026-11-18T01:51:26.2207639Z",
+    "cpu":  [
+                {
+                    "LoadPercentage":  61,
+                    "NumberOfLogicalProcessors":  8
+                }
+            ],
+    "topProcesses":  [
+                         {
+                             "IDProcess":  80752,
+                             "Name":  "browser#13",
+                             "PercentProcessorTime":  135
+                         },
+                         {
+                             "IDProcess":  46776,
+                             "Name":  "SearchIndexer",
+                             "PercentProcessorTime":  50
+                         },
+                         {
+                             "IDProcess":  47304,
+                             "Name":  "WmiPrvSE#2",
+                             "PercentProcessorTime":  29
+                         },
+                         {
+                             "IDProcess":  62560,
+                             "Name":  "browser",
+                             "PercentProcessorTime":  25
+                         },
+                         {
+                             "IDProcess":  4,
+                             "Name":  "System",
+                             "PercentProcessorTime":  25
+                         },
+                         {
+                             "IDProcess":  85064,
+                             "Name":  "browser#2",
+                             "PercentProcessorTime":  16
+                         },
+                         {
+                             "IDProcess":  65000,
+                             "Name":  "csrss#1",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  50936,
+                             "Name":  "codebase-memory-mcp#2",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  74272,
+                             "Name":  "codebase-memory-mcp#3",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  79044,
+                             "Name":  "audiodg",
+                             "PercentProcessorTime":  4
+                         }
+                     ],
+    "competingJobs":  [
+
+                      ],
+    "portListeners":  [
+
+                      ]
+}

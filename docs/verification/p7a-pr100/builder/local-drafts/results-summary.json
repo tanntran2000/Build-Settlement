@@ -1,0 +1,17 @@
+{
+  "status": "HOLD: strict cold-tick performance budget remains breached",
+  "head": "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+  "tree": "947f604e17427d916e1ef0e21083dbc2f72920b6",
+  "previousHead": "cf94804876ef2d02835112e06c355314bbcc16cd",
+  "base": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+  "branch": "feat/p7a-npc-life-week",
+  "gitStatus": "",
+  "bindingPlan": "binding-plan-25b82ac.md",
+  "latestEvidence": "fix-round1/results-summary.json",
+  "historicalSummary": "fix-round1/prior-parent-results-summary.json",
+  "unitPassed": 3074,
+  "smokePassed": 387,
+  "smokeCI": "1",
+  "performanceAcceptance": "HOLD; raw cold tick breaches retained",
+  "noPushPrMerge": true
+}

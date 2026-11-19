@@ -1,0 +1,27 @@
+HEAD=b94d3083dd71722f329b1bf444fa9dec9b0fd309
+TREE=947f604e17427d916e1ef0e21083dbc2f72920b6
+INDEX_TREE=947f604e17427d916e1ef0e21083dbc2f72920b6
+UTC_START=2026-11-18T01:01:49.889711+00:00
+COMMAND=["npm.cmd", "test"]
+CI=
+CPU_AT_GATE_START={"LoadPercentage":5,"NumberOfLogicalProcessors":8}
+WORKING_STATUS:
+
+OUTPUT:
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  131 passed (131)
+      Tests  3074 passed (3074)
+   Start at  08:01:52
+   Duration  93.77s (transform 14.84s, setup 0ms, import 69.77s, tests 323.57s, environment 82ms)
+
+
+EXIT_CODE=0
+SECONDS=96.690
+UTC_END=2026-11-18T01:03:26.579919+00:00

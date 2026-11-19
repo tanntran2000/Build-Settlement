@@ -1,0 +1,77 @@
+﻿{
+    "utc":  "2026-11-18T00:55:32.1541184Z",
+    "cpu":  [
+                {
+                    "LoadPercentage":  54,
+                    "NumberOfLogicalProcessors":  8
+                }
+            ],
+    "topProcesses":  [
+                         {
+                             "IDProcess":  4272,
+                             "Name":  "MsMpEng",
+                             "PercentProcessorTime":  68
+                         },
+                         {
+                             "IDProcess":  82072,
+                             "Name":  "WmiPrvSE#2",
+                             "PercentProcessorTime":  25
+                         },
+                         {
+                             "IDProcess":  72784,
+                             "Name":  "T3 Code (Nightly)#4",
+                             "PercentProcessorTime":  25
+                         },
+                         {
+                             "IDProcess":  4,
+                             "Name":  "System",
+                             "PercentProcessorTime":  17
+                         },
+                         {
+                             "IDProcess":  62560,
+                             "Name":  "browser",
+                             "PercentProcessorTime":  17
+                         },
+                         {
+                             "IDProcess":  65000,
+                             "Name":  "csrss#1",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  74404,
+                             "Name":  "explorer",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  584,
+                             "Name":  "lsass",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  3324,
+                             "Name":  "gamingservices",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  25548,
+                             "Name":  "browser#10",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  69964,
+                             "Name":  "node#19",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  43976,
+                             "Name":  "node#25",
+                             "PercentProcessorTime":  0
+                         }
+                     ],
+    "competingJobs":  [
+
+                      ],
+    "portListeners":  [
+
+                      ]
+}

@@ -1,0 +1,10 @@
+{
+  "scope": "fix",
+  "filesVerified": 132,
+  "utf8Checked": true,
+  "ownManifestExcluded": true,
+  "nestedManifestsIncluded": [
+    "prior-parent-SHA256SUMS.txt",
+    "profile/SHA256SUMS.txt"
+  ]
+}

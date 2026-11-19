@@ -1,0 +1,43 @@
+{
+  "head": "cf94804876ef2d02835112e06c355314bbcc16cd",
+  "base": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+  "assertionHashPinChanges": [],
+  "catalogPinsChanged": [],
+  "ruleset": "tile-society-10 unchanged",
+  "protectedFiles": [
+    "packages/core/src/__tests__/catalog-data.test.ts",
+    "packages/simulation/src/__tests__/craft-week.test.ts",
+    "packages/core/src/data/npc-life.json",
+    "packages/core/src/data/tuning.json",
+    "packages/core/src/trial/society.ts",
+    "packages/core/src/world/npc-life.ts",
+    "package-lock.json",
+    "playwright.config.ts"
+  ],
+  "changedGeneratedDataArtifacts": [
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-5-weeks.json",
+      "beforeBlob": "312c5b01a9e9415eb9a18eab791466dd0d184150",
+      "afterBlob": "fa95429b511dbac30c68c53f202aa7c5465435b9",
+      "beforeRawSha256": "c1ef46c3e81facc2b642e6800f71123662307988e5159de08a10617b19f1b954",
+      "afterRawSha256": "8a8b23a3969a963882663fb47585925e5b0d9f8d9f6cfae4bb75d1eb46d31c19",
+      "authority": "E07"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-laws.json",
+      "beforeBlob": "58371d0c16f7a29286459c58a413d3a739f89f31",
+      "afterBlob": "534ca388234b8dd8edb692202c82022dc0fb3e2b",
+      "beforeRawSha256": "057ad50b43f1e121ec915d9d1989ee2c5a28620b054ccf130371e2f0b34018cb",
+      "afterRawSha256": "9307ddfcce17f2ab48f26b4e586def7d8a7661b93eee503f58e9497970d34db9",
+      "authority": "E08"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+      "beforeBlob": "fe26e76834248270bec0dd4bc75b23896be72674",
+      "afterBlob": "fbac63225199f9818e023d7f8d31074a1eb0de1e",
+      "beforeRawSha256": "7feab5f870a5d02e659138744640750b1039c72f94334337afadeb1edcd26f9c",
+      "afterRawSha256": "042c9dc71a36fff42b74c7b6d8a621d412adcabe7556935bfc7f0f64c312f95a",
+      "authority": "E09/W01"
+    }
+  ]
+}

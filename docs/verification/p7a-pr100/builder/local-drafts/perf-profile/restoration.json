@@ -1,0 +1,20 @@
+{
+  "status": "HOLD",
+  "head": "cf94804876ef2d02835112e06c355314bbcc16cd",
+  "tree": "3ee007bb2818beddbe87f1dce042b6820e8a2ad2",
+  "branch": "feat/p7a-npc-life-week",
+  "gitStatus": "",
+  "rawTrackedFilesVerified": 498,
+  "rawTrackedBytesIdentical": true,
+  "localBranchRefsIdentical": true,
+  "indexTreeUnchanged": true,
+  "portsFree": true,
+  "measurementsComplete": true,
+  "allSixMeasurementExits": 0,
+  "originalControllerExit": 1,
+  "controllerIncident": "Its final clean-status assertion saw Git stat-cache dirt after raw LF/CRLF byte restoration. Full raw hashes already matched and content/index diffs were empty. Restricted re-add of the 13 byte-identical original paths refreshed stat entries without changing the index tree. See restoration-stat-cache.txt. No measurement was repeated.",
+  "windowStartUtc": "2026-11-17T23:03:58.447870+00:00",
+  "windowEndUtc": "2026-11-18T00:40:05.546944+00:00",
+  "sleepResumeEvents": 3,
+  "restorationExitCode": 0
+}

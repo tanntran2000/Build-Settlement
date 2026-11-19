@@ -1,0 +1,19 @@
+HEAD=cf94804876ef2d02835112e06c355314bbcc16cd
+TREE=3ee007bb2818beddbe87f1dce042b6820e8a2ad2
+INDEX_TREE=3ee007bb2818beddbe87f1dce042b6820e8a2ad2
+UTC_START=2026-11-18T00:52:53.559995+00:00
+COMMAND=["npm.cmd", "run", "typecheck:simulation"]
+CI=
+CPU_AT_GATE_START=not a gate run
+WORKING_STATUS:
+ M packages/simulation/src/npc-life-week.ts
+
+OUTPUT:
+
+> build-settlement@0.1.0 typecheck:simulation
+> tsc -p packages/simulation/tsconfig.json --noEmit
+
+
+EXIT_CODE=0
+SECONDS=4.579
+UTC_END=2026-11-18T00:52:58.138701+00:00

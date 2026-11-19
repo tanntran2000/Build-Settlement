@@ -1,0 +1,19 @@
+{
+  "head": "cf94804876ef2d02835112e06c355314bbcc16cd",
+  "tree": "3ee007bb2818beddbe87f1dce042b6820e8a2ad2",
+  "ci": "1",
+  "command": [
+    "npm.cmd",
+    "run",
+    "test:smoke",
+    "--",
+    "--output",
+    "C:/Users/Admin/.t3/local-drafts/p7a-prB-local-only/full"
+  ],
+  "utcStart": "2026-11-17T15:10:18.475835+00:00",
+  "utcEnd": "2026-11-17T15:47:06.338442+00:00",
+  "seconds": 2207.863,
+  "smokeExitCode": 0,
+  "servedAssetsMatched": true,
+  "gitStatusAfter": ""
+}

@@ -1,0 +1,1097 @@
+{
+  "nodes": [
+    {
+      "id": 1,
+      "callFrame": {
+        "functionName": "(root)",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 0,
+      "children": [
+        2,
+        11,
+        24
+      ]
+    },
+    {
+      "id": 2,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "89",
+        "url": "file:///C:/Users/Admin/.t3/local-drafts/p7a-prB/cold-start/harness.mjs",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 0,
+      "children": [
+        3,
+        6
+      ]
+    },
+    {
+      "id": 3,
+      "callFrame": {
+        "functionName": "fn",
+        "scriptId": "13",
+        "url": "node:internal/util",
+        "lineNumber": 476,
+        "columnNumber": 13
+      },
+      "hitCount": 0,
+      "children": [
+        4
+      ]
+    },
+    {
+      "id": 4,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "13",
+        "url": "node:internal/util",
+        "lineNumber": 477,
+        "columnNumber": 23
+      },
+      "hitCount": 0,
+      "children": [
+        5
+      ]
+    },
+    {
+      "id": 5,
+      "callFrame": {
+        "functionName": "post",
+        "scriptId": "441",
+        "url": "node:inspector",
+        "lineNumber": 114,
+        "columnNumber": 6
+      },
+      "hitCount": 0,
+      "children": [
+        63
+      ]
+    },
+    {
+      "id": 63,
+      "callFrame": {
+        "functionName": "dispatch",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 139,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "callFrame": {
+        "functionName": "executeCharacterLifeCommand",
+        "scriptId": "404",
+        "url": "",
+        "lineNumber": 8,
+        "columnNumber": 36
+      },
+      "hitCount": 0,
+      "children": [
+        7,
+        29,
+        54,
+        55
+      ]
+    },
+    {
+      "id": 7,
+      "callFrame": {
+        "functionName": "isLiveCharacterLifeSessionState",
+        "scriptId": "391",
+        "url": "",
+        "lineNumber": 86,
+        "columnNumber": 40
+      },
+      "hitCount": 0,
+      "children": [
+        8,
+        9,
+        12,
+        16,
+        22
+      ]
+    },
+    {
+      "id": 8,
+      "callFrame": {
+        "functionName": "keysOf",
+        "scriptId": "391",
+        "url": "",
+        "lineNumber": 35,
+        "columnNumber": 15
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 9,
+      "callFrame": {
+        "functionName": "isTileTrialState",
+        "scriptId": "319",
+        "url": "",
+        "lineNumber": 13,
+        "columnNumber": 25
+      },
+      "hitCount": 0,
+      "children": [
+        10,
+        56
+      ]
+    },
+    {
+      "id": 10,
+      "callFrame": {
+        "functionName": "outsidePlot",
+        "scriptId": "326",
+        "url": "",
+        "lineNumber": 16,
+        "columnNumber": 20
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 18,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "callFrame": {
+        "functionName": "isSocietyState",
+        "scriptId": "339",
+        "url": "",
+        "lineNumber": 36,
+        "columnNumber": 23
+      },
+      "hitCount": 0,
+      "children": [
+        57
+      ]
+    },
+    {
+      "id": 57,
+      "callFrame": {
+        "functionName": "isOutsideState",
+        "scriptId": "326",
+        "url": "",
+        "lineNumber": 28,
+        "columnNumber": 23
+      },
+      "hitCount": 0,
+      "children": [
+        58
+      ]
+    },
+    {
+      "id": 58,
+      "callFrame": {
+        "functionName": "hasWeeklyKeys",
+        "scriptId": "300",
+        "url": "",
+        "lineNumber": 15,
+        "columnNumber": 22
+      },
+      "hitCount": 0,
+      "children": [
+        59
+      ]
+    },
+    {
+      "id": 59,
+      "callFrame": {
+        "functionName": "isDataRecord",
+        "scriptId": "300",
+        "url": "",
+        "lineNumber": 7,
+        "columnNumber": 21
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 11,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "callFrame": {
+        "functionName": "isWorldSessionState",
+        "scriptId": "368",
+        "url": "",
+        "lineNumber": 38,
+        "columnNumber": 28
+      },
+      "hitCount": 0,
+      "children": [
+        13
+      ]
+    },
+    {
+      "id": 13,
+      "callFrame": {
+        "functionName": "isTileTrialPlanningState",
+        "scriptId": "319",
+        "url": "",
+        "lineNumber": 82,
+        "columnNumber": 33
+      },
+      "hitCount": 0,
+      "children": [
+        14
+      ]
+    },
+    {
+      "id": 14,
+      "callFrame": {
+        "functionName": "isTileTrialState",
+        "scriptId": "319",
+        "url": "",
+        "lineNumber": 13,
+        "columnNumber": 25
+      },
+      "hitCount": 0,
+      "children": [
+        15,
+        25
+      ]
+    },
+    {
+      "id": 15,
+      "callFrame": {
+        "functionName": "isCanonicalGameState",
+        "scriptId": "300",
+        "url": "",
+        "lineNumber": 25,
+        "columnNumber": 29
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 49,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "callFrame": {
+        "functionName": "outsidePlot",
+        "scriptId": "326",
+        "url": "",
+        "lineNumber": 16,
+        "columnNumber": 20
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 17,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "callFrame": {
+        "functionName": "isWorldNpcList",
+        "scriptId": "379",
+        "url": "",
+        "lineNumber": 34,
+        "columnNumber": 23
+      },
+      "hitCount": 1,
+      "children": [
+        17,
+        20
+      ],
+      "positionTicks": [
+        {
+          "line": 41,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "callFrame": {
+        "functionName": "isNamedCharacterRecord",
+        "scriptId": "379",
+        "url": "",
+        "lineNumber": 26,
+        "columnNumber": 31
+      },
+      "hitCount": 0,
+      "children": [
+        18,
+        26
+      ]
+    },
+    {
+      "id": 18,
+      "callFrame": {
+        "functionName": "hasWeeklyKeys",
+        "scriptId": "300",
+        "url": "",
+        "lineNumber": 15,
+        "columnNumber": 22
+      },
+      "hitCount": 0,
+      "children": [
+        19
+      ]
+    },
+    {
+      "id": 19,
+      "callFrame": {
+        "functionName": "isDataRecord",
+        "scriptId": "300",
+        "url": "",
+        "lineNumber": 7,
+        "columnNumber": 21
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 8,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "callFrame": {
+        "functionName": "stats",
+        "scriptId": "379",
+        "url": "",
+        "lineNumber": 21,
+        "columnNumber": 14
+      },
+      "hitCount": 1,
+      "children": [
+        61
+      ],
+      "positionTicks": [
+        {
+          "line": 22,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "callFrame": {
+        "functionName": "isDataRecord",
+        "scriptId": "300",
+        "url": "",
+        "lineNumber": 7,
+        "columnNumber": 21
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 11,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "callFrame": {
+        "functionName": "isNpcLife",
+        "scriptId": "384",
+        "url": "",
+        "lineNumber": 53,
+        "columnNumber": 18
+      },
+      "hitCount": 0,
+      "children": [
+        21,
+        60
+      ]
+    },
+    {
+      "id": 21,
+      "callFrame": {
+        "functionName": "readDenseArray",
+        "scriptId": "320",
+        "url": "",
+        "lineNumber": 3,
+        "columnNumber": 23
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 4,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "callFrame": {
+        "functionName": "hasWeeklyKeys",
+        "scriptId": "300",
+        "url": "",
+        "lineNumber": 15,
+        "columnNumber": 22
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 16,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "callFrame": {
+        "functionName": "hasCharacterLifeProfiles",
+        "scriptId": "391",
+        "url": "",
+        "lineNumber": 96,
+        "columnNumber": 33
+      },
+      "hitCount": 0,
+      "children": [
+        23
+      ]
+    },
+    {
+      "id": 23,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "391",
+        "url": "",
+        "lineNumber": 99,
+        "columnNumber": 69
+      },
+      "hitCount": 1,
+      "children": [
+        27
+      ],
+      "positionTicks": [
+        {
+          "line": 100,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "callFrame": {
+        "functionName": "isCharacterProfile",
+        "scriptId": "391",
+        "url": "",
+        "lineNumber": 39,
+        "columnNumber": 27
+      },
+      "hitCount": 0,
+      "children": [
+        28,
+        62
+      ]
+    },
+    {
+      "id": 28,
+      "callFrame": {
+        "functionName": "ids",
+        "scriptId": "391",
+        "url": "",
+        "lineNumber": 30,
+        "columnNumber": 12
+      },
+      "hitCount": 2,
+      "positionTicks": [
+        {
+          "line": 31,
+          "ticks": 2
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "callFrame": {
+        "functionName": "keysOf",
+        "scriptId": "391",
+        "url": "",
+        "lineNumber": 35,
+        "columnNumber": 15
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 36,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "callFrame": {
+        "functionName": "executeWorldNpcCityCommand",
+        "scriptId": "408",
+        "url": "",
+        "lineNumber": 34,
+        "columnNumber": 35
+      },
+      "hitCount": 1,
+      "children": [
+        30,
+        33,
+        37,
+        38,
+        53
+      ],
+      "positionTicks": [
+        {
+          "line": 42,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "callFrame": {
+        "functionName": "isTileTrialState",
+        "scriptId": "319",
+        "url": "",
+        "lineNumber": 13,
+        "columnNumber": 25
+      },
+      "hitCount": 0,
+      "children": [
+        31
+      ]
+    },
+    {
+      "id": 31,
+      "callFrame": {
+        "functionName": "isSocietyState",
+        "scriptId": "339",
+        "url": "",
+        "lineNumber": 36,
+        "columnNumber": 23
+      },
+      "hitCount": 0,
+      "children": [
+        32
+      ]
+    },
+    {
+      "id": 32,
+      "callFrame": {
+        "functionName": "isOrderState",
+        "scriptId": "348",
+        "url": "",
+        "lineNumber": 46,
+        "columnNumber": 21
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 48,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "callFrame": {
+        "functionName": "isWorldNpcList",
+        "scriptId": "379",
+        "url": "",
+        "lineNumber": 34,
+        "columnNumber": 23
+      },
+      "hitCount": 0,
+      "children": [
+        34
+      ]
+    },
+    {
+      "id": 34,
+      "callFrame": {
+        "functionName": "isNpcLife",
+        "scriptId": "384",
+        "url": "",
+        "lineNumber": 53,
+        "columnNumber": 18
+      },
+      "hitCount": 0,
+      "children": [
+        35
+      ]
+    },
+    {
+      "id": 35,
+      "callFrame": {
+        "functionName": "isDataRecord",
+        "scriptId": "300",
+        "url": "",
+        "lineNumber": 7,
+        "columnNumber": 21
+      },
+      "hitCount": 0,
+      "children": [
+        36
+      ]
+    },
+    {
+      "id": 36,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "300",
+        "url": "",
+        "lineNumber": 10,
+        "columnNumber": 96
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 12,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "callFrame": {
+        "functionName": "createSocietyState",
+        "scriptId": "339",
+        "url": "",
+        "lineNumber": 23,
+        "columnNumber": 27
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 25,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "callFrame": {
+        "functionName": "executeTileTrialCommand",
+        "scriptId": "437",
+        "url": "",
+        "lineNumber": 7,
+        "columnNumber": 32
+      },
+      "hitCount": 0,
+      "children": [
+        39,
+        41
+      ]
+    },
+    {
+      "id": 39,
+      "callFrame": {
+        "functionName": "isTileTrialState",
+        "scriptId": "319",
+        "url": "",
+        "lineNumber": 13,
+        "columnNumber": 25
+      },
+      "hitCount": 0,
+      "children": [
+        40,
+        51
+      ]
+    },
+    {
+      "id": 40,
+      "callFrame": {
+        "functionName": "outsidePlot",
+        "scriptId": "326",
+        "url": "",
+        "lineNumber": 16,
+        "columnNumber": 20
+      },
+      "hitCount": 1,
+      "children": [
+        52
+      ],
+      "positionTicks": [
+        {
+          "line": 17,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "326",
+        "url": "",
+        "lineNumber": 17,
+        "columnNumber": 34
+      },
+      "hitCount": 0
+    },
+    {
+      "id": 51,
+      "callFrame": {
+        "functionName": "isCanonicalGameState",
+        "scriptId": "300",
+        "url": "",
+        "lineNumber": 25,
+        "columnNumber": 29
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 35,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "callFrame": {
+        "functionName": "runTileTrialWeek",
+        "scriptId": "421",
+        "url": "",
+        "lineNumber": 18,
+        "columnNumber": 25
+      },
+      "hitCount": 2,
+      "children": [
+        42,
+        44,
+        46,
+        48,
+        50
+      ],
+      "positionTicks": [
+        {
+          "line": 58,
+          "ticks": 1
+        },
+        {
+          "line": 144,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "callFrame": {
+        "functionName": "resolveWorkshopOperation",
+        "scriptId": "423",
+        "url": "",
+        "lineNumber": 48,
+        "columnNumber": 33
+      },
+      "hitCount": 0,
+      "children": [
+        43
+      ]
+    },
+    {
+      "id": 43,
+      "callFrame": {
+        "functionName": "",
+        "scriptId": "423",
+        "url": "",
+        "lineNumber": 53,
+        "columnNumber": 74
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 54,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "callFrame": {
+        "functionName": "resolveTrialImmigration",
+        "scriptId": "436",
+        "url": "",
+        "lineNumber": 15,
+        "columnNumber": 32
+      },
+      "hitCount": 0,
+      "children": [
+        45
+      ]
+    },
+    {
+      "id": 45,
+      "callFrame": {
+        "functionName": "weeklyWorkforceMilli",
+        "scriptId": "291",
+        "url": "",
+        "lineNumber": 6,
+        "columnNumber": 29
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 8,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "callFrame": {
+        "functionName": "resolveSocietyWeek",
+        "scriptId": "430",
+        "url": "",
+        "lineNumber": 240,
+        "columnNumber": 27
+      },
+      "hitCount": 1,
+      "children": [
+        47
+      ],
+      "positionTicks": [
+        {
+          "line": 288,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "callFrame": {
+        "functionName": "distributeArrivals",
+        "scriptId": "430",
+        "url": "",
+        "lineNumber": 150,
+        "columnNumber": 27
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 152,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "callFrame": {
+        "functionName": "resolveOrderWeek",
+        "scriptId": "424",
+        "url": "",
+        "lineNumber": 54,
+        "columnNumber": 25
+      },
+      "hitCount": 0,
+      "children": [
+        49
+      ]
+    },
+    {
+      "id": 49,
+      "callFrame": {
+        "functionName": "get",
+        "scriptId": "221",
+        "url": "file:///C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/node_modules/vite/dist/node/module-runner.js",
+        "lineNumber": 1294,
+        "columnNumber": 17
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 1295,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "callFrame": {
+        "functionName": "resolveCrisisWeek",
+        "scriptId": "434",
+        "url": "",
+        "lineNumber": 6,
+        "columnNumber": 26
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 61,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "callFrame": {
+        "functionName": "structuredClone",
+        "scriptId": "28",
+        "url": "node:internal/worker/js_transferable",
+        "lineNumber": 112,
+        "columnNumber": 24
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 127,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "callFrame": {
+        "functionName": "structuredClone",
+        "scriptId": "28",
+        "url": "node:internal/worker/js_transferable",
+        "lineNumber": 112,
+        "columnNumber": 24
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 127,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "callFrame": {
+        "functionName": "runNpcLifeWeek",
+        "scriptId": "439",
+        "url": "",
+        "lineNumber": 12,
+        "columnNumber": 23
+      },
+      "hitCount": 1,
+      "positionTicks": [
+        {
+          "line": 14,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "callFrame": {
+        "functionName": "(garbage collector)",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 2
+    },
+    {
+      "id": 24,
+      "callFrame": {
+        "functionName": "(program)",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      "hitCount": 1
+    }
+  ],
+  "startTime": 1218633131066,
+  "endTime": 1218633291744,
+  "samples": [
+    5,
+    8,
+    10,
+    11,
+    15,
+    19,
+    21,
+    23,
+    25,
+    16,
+    26,
+    28,
+    32,
+    36,
+    37,
+    29,
+    40,
+    43,
+    41,
+    45,
+    41,
+    47,
+    46,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    59,
+    11,
+    20,
+    60,
+    61,
+    62,
+    28,
+    63
+  ],
+  "timeDeltas": [
+    98934,
+    903,
+    887,
+    1427,
+    2037,
+    1510,
+    2018,
+    1539,
+    3475,
+    2005,
+    1520,
+    2021,
+    1547,
+    2022,
+    1517,
+    1992,
+    1571,
+    1973,
+    1515,
+    2058,
+    1480,
+    1526,
+    1549,
+    2015,
+    1502,
+    2052,
+    116,
+    1406,
+    1984,
+    1513,
+    2016,
+    1523,
+    1689,
+    285,
+    1592,
+    1971,
+    1523,
+    2143
+  ]
+}

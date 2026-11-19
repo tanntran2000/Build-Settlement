@@ -1,0 +1,2058 @@
+[
+  {
+    "file": "docs/INTERNAL_PROGRESS_TRACKER.md",
+    "lines": 488,
+    "matches": 15,
+    "eofNewline": true,
+    "crlf": 488,
+    "loneLf": 0
+  },
+  {
+    "file": "docs/MASTER_ROADMAP.md",
+    "lines": 283,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 283,
+    "loneLf": 0
+  },
+  {
+    "file": "docs/research/playtest/2026-10-26-solo-mcp-adapter-options.md",
+    "lines": 107,
+    "matches": 7,
+    "eofNewline": true,
+    "crlf": 107,
+    "loneLf": 0
+  },
+  {
+    "file": "docs/research/playtest/2026-10-30-free-cities-30-week-study.md",
+    "lines": 62,
+    "matches": 1,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 62
+  },
+  {
+    "file": "docs/research/playtest/2026-10-30-free-cities-evidence/SHA256SUMS",
+    "lines": 91,
+    "matches": 91,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 91
+  },
+  {
+    "file": "docs/superpowers/plans/2026-10-24-population-local-checkpoint.md",
+    "lines": 186,
+    "matches": 4,
+    "eofNewline": true,
+    "crlf": 186,
+    "loneLf": 0
+  },
+  {
+    "file": "docs/superpowers/plans/2026-10-25-character-foundation-s1.md",
+    "lines": 450,
+    "matches": 9,
+    "eofNewline": true,
+    "crlf": 450,
+    "loneLf": 0
+  },
+  {
+    "file": "docs/superpowers/plans/2026-10-26-player-first-navigation.md",
+    "lines": 269,
+    "matches": 17,
+    "eofNewline": true,
+    "crlf": 269,
+    "loneLf": 0
+  },
+  {
+    "file": "docs/superpowers/plans/2026-10-26-solo-mcp-stage0.md",
+    "lines": 341,
+    "matches": 35,
+    "eofNewline": true,
+    "crlf": 341,
+    "loneLf": 0
+  },
+  {
+    "file": "docs/superpowers/plans/2026-10-27-city-navigation.md",
+    "lines": 175,
+    "matches": 6,
+    "eofNewline": true,
+    "crlf": 175,
+    "loneLf": 0
+  },
+  {
+    "file": "docs/superpowers/plans/2026-10-28-city-navigation-visual-addendum.md",
+    "lines": 82,
+    "matches": 3,
+    "eofNewline": true,
+    "crlf": 82,
+    "loneLf": 0
+  },
+  {
+    "file": "docs/superpowers/plans/2026-10-28-goods-stock-buffer.md",
+    "lines": 58,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 58,
+    "loneLf": 0
+  },
+  {
+    "file": "docs/superpowers/plans/2026-10-30-p2a-society-state.md",
+    "lines": 227,
+    "matches": 7,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 227
+  },
+  {
+    "file": "docs/superpowers/plans/2026-10-30-p2c-inside-plots-and-week.md",
+    "lines": 181,
+    "matches": 4,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 181
+  },
+  {
+    "file": "docs/superpowers/plans/2026-10-31-p2d-society-ui.md",
+    "lines": 366,
+    "matches": 5,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 366
+  },
+  {
+    "file": "docs/superpowers/plans/2026-10-31-p2e-engine-cleanup.md",
+    "lines": 191,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 191
+  },
+  {
+    "file": "docs/superpowers/plans/2026-10-31-p3-outside-city.md",
+    "lines": 341,
+    "matches": 3,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 341
+  },
+  {
+    "file": "docs/superpowers/specs/2026-10-20-qa-report-transition-fixes.md",
+    "lines": 15,
+    "matches": 1,
+    "eofNewline": true,
+    "crlf": 15,
+    "loneLf": 0
+  },
+  {
+    "file": "docs/superpowers/specs/2026-10-20-weekly-tile-buildings-trial.md",
+    "lines": 112,
+    "matches": 1,
+    "eofNewline": true,
+    "crlf": 112,
+    "loneLf": 0
+  },
+  {
+    "file": "docs/superpowers/specs/2026-10-25-character-life-design.md",
+    "lines": 536,
+    "matches": 3,
+    "eofNewline": true,
+    "crlf": 536,
+    "loneLf": 0
+  },
+  {
+    "file": "docs/superpowers/specs/2026-10-26-player-first-navigation-design.md",
+    "lines": 304,
+    "matches": 8,
+    "eofNewline": true,
+    "crlf": 304,
+    "loneLf": 0
+  },
+  {
+    "file": "docs/superpowers/specs/2026-10-26-solo-mcp-playtesting-design.md",
+    "lines": 388,
+    "matches": 17,
+    "eofNewline": true,
+    "crlf": 388,
+    "loneLf": 0
+  },
+  {
+    "file": "docs/superpowers/specs/2026-10-27-city-navigation-design.md",
+    "lines": 108,
+    "matches": 4,
+    "eofNewline": true,
+    "crlf": 108,
+    "loneLf": 0
+  },
+  {
+    "file": "docs/verification/DEPENDENCY-TRIAGE-2026-10-16.md",
+    "lines": 56,
+    "matches": 1,
+    "eofNewline": true,
+    "crlf": 56,
+    "loneLf": 0
+  },
+  {
+    "file": "docs/verification/P2D-TEST-LEDGER.md",
+    "lines": 474,
+    "matches": 6,
+    "eofNewline": true,
+    "crlf": 2,
+    "loneLf": 472
+  },
+  {
+    "file": "docs/verification/P2E-ENGINE-AUDIT.md",
+    "lines": 262,
+    "matches": 1,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 262
+  },
+  {
+    "file": "docs/verification/P2E-TEST-LEDGER.md",
+    "lines": 659,
+    "matches": 13,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 659
+  },
+  {
+    "file": "docs/verification/SUPPORTED-LINT-HISTORICAL-FORMAT-01.md",
+    "lines": 106,
+    "matches": 6,
+    "eofNewline": true,
+    "crlf": 106,
+    "loneLf": 0
+  },
+  {
+    "file": "docs/verification/VALIDATION-GUARDS-01.md",
+    "lines": 240,
+    "matches": 24,
+    "eofNewline": true,
+    "crlf": 240,
+    "loneLf": 0
+  },
+  {
+    "file": "docs/work_packages/WP-FOUNDATION-PREPUBLICATION-01.md",
+    "lines": 99,
+    "matches": 1,
+    "eofNewline": true,
+    "crlf": 99,
+    "loneLf": 0
+  },
+  {
+    "file": "docs/work_packages/WP-SUPPORTED-LINT-HISTORICAL-FORMAT-01.md",
+    "lines": 83,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 83,
+    "loneLf": 0
+  },
+  {
+    "file": "docs/work_packages/WP-WHEAT-FOOD-CHAIN-01_v0.1.md",
+    "lines": 207,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 207,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/core/src/__tests__/catalog-data.test.ts",
+    "lines": 121,
+    "matches": 27,
+    "eofNewline": true,
+    "crlf": 121,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/core/src/__tests__/recipes-catalog.test.ts",
+    "lines": 151,
+    "matches": 5,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 151
+  },
+  {
+    "file": "packages/core/src/character/__tests__/session.test.ts",
+    "lines": 206,
+    "matches": 11,
+    "eofNewline": true,
+    "crlf": 206,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/core/src/character/__tests__/validate.test.ts",
+    "lines": 369,
+    "matches": 18,
+    "eofNewline": true,
+    "crlf": 369,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/core/src/character/session.ts",
+    "lines": 105,
+    "matches": 1,
+    "eofNewline": true,
+    "crlf": 93,
+    "loneLf": 12
+  },
+  {
+    "file": "packages/core/src/character/validate.ts",
+    "lines": 109,
+    "matches": 11,
+    "eofNewline": true,
+    "crlf": 90,
+    "loneLf": 19
+  },
+  {
+    "file": "packages/core/src/data/npc-life.json",
+    "lines": 78,
+    "matches": 1,
+    "eofNewline": true,
+    "crlf": 78,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/core/src/data/tuning.json",
+    "lines": 621,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 621,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/core/src/data/validate.ts",
+    "lines": 954,
+    "matches": 8,
+    "eofNewline": true,
+    "crlf": 954,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/core/src/trial/__tests__/crime.test.ts",
+    "lines": 13,
+    "matches": 1,
+    "eofNewline": true,
+    "crlf": 13,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/core/src/trial/__tests__/crisis.test.ts",
+    "lines": 38,
+    "matches": 1,
+    "eofNewline": true,
+    "crlf": 38,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/core/src/trial/__tests__/items.test.ts",
+    "lines": 52,
+    "matches": 8,
+    "eofNewline": true,
+    "crlf": 52,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/core/src/trial/__tests__/law.test.ts",
+    "lines": 125,
+    "matches": 1,
+    "eofNewline": true,
+    "crlf": 125,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/core/src/trial/__tests__/order.test.ts",
+    "lines": 67,
+    "matches": 1,
+    "eofNewline": true,
+    "crlf": 67,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/core/src/trial/__tests__/outside.test.ts",
+    "lines": 131,
+    "matches": 1,
+    "eofNewline": true,
+    "crlf": 131,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/core/src/trial/__tests__/society-stock-integrity.test.ts",
+    "lines": 67,
+    "matches": 3,
+    "eofNewline": true,
+    "crlf": 67,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/core/src/trial/__tests__/society.test.ts",
+    "lines": 107,
+    "matches": 5,
+    "eofNewline": true,
+    "crlf": 107,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/core/src/trial/items.ts",
+    "lines": 186,
+    "matches": 3,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 186
+  },
+  {
+    "file": "packages/core/src/trial/society.ts",
+    "lines": 86,
+    "matches": 3,
+    "eofNewline": true,
+    "crlf": 86,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/core/src/trial/types.ts",
+    "lines": 102,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 102,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/core/src/world/__tests__/item-market-seed.test.ts",
+    "lines": 27,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 27
+  },
+  {
+    "file": "packages/core/src/world/__tests__/npc-life.test.ts",
+    "lines": 159,
+    "matches": 29,
+    "eofNewline": true,
+    "crlf": 159,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/core/src/world/__tests__/npc.test.ts",
+    "lines": 141,
+    "matches": 20,
+    "eofNewline": true,
+    "crlf": 141,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/core/src/world/__tests__/session.test.ts",
+    "lines": 88,
+    "matches": 1,
+    "eofNewline": true,
+    "crlf": 88,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/core/src/world/npc-content.ts",
+    "lines": 38,
+    "matches": 3,
+    "eofNewline": true,
+    "crlf": 38,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/core/src/world/npc-life.ts",
+    "lines": 75,
+    "matches": 20,
+    "eofNewline": true,
+    "crlf": 75,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/core/src/world/npc.ts",
+    "lines": 82,
+    "matches": 11,
+    "eofNewline": true,
+    "crlf": 82,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/character-life-save.test.ts",
+    "lines": 93,
+    "matches": 5,
+    "eofNewline": true,
+    "crlf": 93,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/craft-records.test.ts",
+    "lines": 73,
+    "matches": 6,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 73
+  },
+  {
+    "file": "packages/persistence/src/__tests__/crisis-save.test.ts",
+    "lines": 27,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 27,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v1/life-5-weeks.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v1/life-new-game.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v10/life-5-weeks.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v10/life-crime-death.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v10/life-crime-raid.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v10/life-crime-robbery.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v10/life-crime-wound.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v10/life-demand-card.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v10/life-laws.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v10/life-new-game.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v10/life-rebellion-last-week.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v10/new-game.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v2/life-5-weeks.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v2/life-new-game.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v3/life-5-weeks.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v3/life-new-game.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v4/life-5-weeks.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v4/life-demand-card.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v4/life-new-game.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v4/life-rebellion-last-week.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v5/life-5-weeks.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v5/life-crime-death.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v5/life-crime-raid.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v5/life-crime-robbery.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v5/life-crime-wound.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v5/life-demand-card.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v5/life-new-game.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v5/life-rebellion-last-week.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-5-weeks.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-crime-death.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-crime-raid.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-crime-robbery.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-crime-wound.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-demand-card.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-laws.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-new-game.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v6/life-rebellion-last-week.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-5-weeks.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-crime-death.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-crime-raid.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-crime-robbery.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-crime-wound.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-demand-card.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-laws.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-new-game.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v7/life-rebellion-last-week.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-5-weeks.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-crime-death.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-crime-raid.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-crime-robbery.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-crime-wound.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-demand-card.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-laws.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-new-game.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v8/life-rebellion-last-week.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-5-weeks.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-death.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-raid.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-robbery.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-wound.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-demand-card.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-laws.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-new-game.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/fixtures/society-v9/life-rebellion-last-week.json",
+    "lines": 1,
+    "matches": 1,
+    "eofNewline": false,
+    "crlf": 0,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/item-owner-import.test.ts",
+    "lines": 36,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 36
+  },
+  {
+    "file": "packages/persistence/src/__tests__/item-records.test.ts",
+    "lines": 48,
+    "matches": 6,
+    "eofNewline": true,
+    "crlf": 48,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/items-canonical.test.ts",
+    "lines": 48,
+    "matches": 5,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 48
+  },
+  {
+    "file": "packages/persistence/src/__tests__/items-rebuild-order.test.ts",
+    "lines": 82,
+    "matches": 7,
+    "eofNewline": true,
+    "crlf": 82,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/law-save.test.ts",
+    "lines": 51,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 51
+  },
+  {
+    "file": "packages/persistence/src/__tests__/npc-life-records.test.ts",
+    "lines": 79,
+    "matches": 21,
+    "eofNewline": true,
+    "crlf": 79,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/session-records.test.ts",
+    "lines": 64,
+    "matches": 3,
+    "eofNewline": true,
+    "crlf": 64,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/society-new-game-fixture.test.ts",
+    "lines": 52,
+    "matches": 9,
+    "eofNewline": true,
+    "crlf": 52,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/__tests__/society-only-save.test.ts",
+    "lines": 3739,
+    "matches": 8,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 3739
+  },
+  {
+    "file": "packages/persistence/src/__tests__/society-save.test.ts",
+    "lines": 40,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 40
+  },
+  {
+    "file": "packages/persistence/src/__tests__/society-v9-fixture.test.ts",
+    "lines": 29,
+    "matches": 1,
+    "eofNewline": true,
+    "crlf": 29,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/persistence/src/session-records.ts",
+    "lines": 204,
+    "matches": 6,
+    "eofNewline": true,
+    "crlf": 204,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/authority-refusals.test.ts",
+    "lines": 54,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 54,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/catalog-golden.test.ts",
+    "lines": 31,
+    "matches": 3,
+    "eofNewline": true,
+    "crlf": 31,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/character-life-command.test.ts",
+    "lines": 355,
+    "matches": 71,
+    "eofNewline": true,
+    "crlf": 355,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+    "lines": 367,
+    "matches": 41,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 367
+  },
+  {
+    "file": "packages/simulation/src/__tests__/craft-command.test.ts",
+    "lines": 175,
+    "matches": 7,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 175
+  },
+  {
+    "file": "packages/simulation/src/__tests__/craft-week.test.ts",
+    "lines": 188,
+    "matches": 15,
+    "eofNewline": true,
+    "crlf": 188,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/crime-fixtures.test.ts",
+    "lines": 65,
+    "matches": 8,
+    "eofNewline": true,
+    "crlf": 65,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/crisis-commands.test.ts",
+    "lines": 61,
+    "matches": 10,
+    "eofNewline": true,
+    "crlf": 61,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/crisis-fixture-helper.ts",
+    "lines": 41,
+    "matches": 7,
+    "eofNewline": true,
+    "crlf": 41,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/crisis-fixtures.test.ts",
+    "lines": 22,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 22,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/exhausted-materials.test.ts",
+    "lines": 47,
+    "matches": 7,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 47
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden-path-diff.txt",
+    "lines": 14,
+    "matches": 3,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 14
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "lines": 26,
+    "matches": 3,
+    "eofNewline": true,
+    "crlf": 26,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/golden-path-diff.ts",
+    "lines": 33,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 33
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts",
+    "lines": 63,
+    "matches": 8,
+    "eofNewline": true,
+    "crlf": 63,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/p6b-crafting-path-diff.ts",
+    "lines": 58,
+    "matches": 4,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 58
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/p6b-crafting-path-diff.txt",
+    "lines": 213,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 213
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/p6b-path-diff.ts",
+    "lines": 49,
+    "matches": 3,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 49
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/p6b-path-diff.txt",
+    "lines": 178,
+    "matches": 110,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 178
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/p7a-path-diff.ts",
+    "lines": 79,
+    "matches": 14,
+    "eofNewline": true,
+    "crlf": 79,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/p7a-path-diff.txt",
+    "lines": 30,
+    "matches": 25,
+    "eofNewline": true,
+    "crlf": 30,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/review-fix1-path-diff.ts",
+    "lines": 53,
+    "matches": 3,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 53
+  },
+  {
+    "file": "packages/simulation/src/__tests__/fixtures/review-fix1-path-diff.txt",
+    "lines": 49,
+    "matches": 23,
+    "eofNewline": true,
+    "crlf": 49,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/item-command.test.ts",
+    "lines": 81,
+    "matches": 7,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 81
+  },
+  {
+    "file": "packages/simulation/src/__tests__/item-effects.test.ts",
+    "lines": 155,
+    "matches": 20,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 155
+  },
+  {
+    "file": "packages/simulation/src/__tests__/items-week.test.ts",
+    "lines": 149,
+    "matches": 5,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 149
+  },
+  {
+    "file": "packages/simulation/src/__tests__/law-command.test.ts",
+    "lines": 97,
+    "matches": 4,
+    "eofNewline": true,
+    "crlf": 97,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/law-fixture.test.ts",
+    "lines": 50,
+    "matches": 6,
+    "eofNewline": true,
+    "crlf": 50,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/law-week.test.ts",
+    "lines": 150,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 150,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/legendary-pending.test.ts",
+    "lines": 106,
+    "matches": 7,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 106
+  },
+  {
+    "file": "packages/simulation/src/__tests__/lord-health.test.ts",
+    "lines": 99,
+    "matches": 16,
+    "eofNewline": true,
+    "crlf": 99,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/order-commands.test.ts",
+    "lines": 183,
+    "matches": 12,
+    "eofNewline": true,
+    "crlf": 183,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/order-tax-week.test.ts",
+    "lines": 52,
+    "matches": 1,
+    "eofNewline": true,
+    "crlf": 52,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/order-week.test.ts",
+    "lines": 179,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 179,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/outside-commands.test.ts",
+    "lines": 96,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 96,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/outside-session.test.ts",
+    "lines": 19,
+    "matches": 6,
+    "eofNewline": true,
+    "crlf": 19,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/smithy-data.test.ts",
+    "lines": 53,
+    "matches": 1,
+    "eofNewline": true,
+    "crlf": 53,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/society-command-transaction.test.ts",
+    "lines": 192,
+    "matches": 4,
+    "eofNewline": true,
+    "crlf": 192,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/society-end-week.test.ts",
+    "lines": 116,
+    "matches": 1,
+    "eofNewline": true,
+    "crlf": 111,
+    "loneLf": 5
+  },
+  {
+    "file": "packages/simulation/src/__tests__/society-factory-determinism.test.ts",
+    "lines": 21,
+    "matches": 5,
+    "eofNewline": true,
+    "crlf": 1,
+    "loneLf": 20
+  },
+  {
+    "file": "packages/simulation/src/__tests__/society-guard.test.ts",
+    "lines": 37,
+    "matches": 7,
+    "eofNewline": true,
+    "crlf": 32,
+    "loneLf": 5
+  },
+  {
+    "file": "packages/simulation/src/__tests__/society-life.test.ts",
+    "lines": 49,
+    "matches": 6,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 49
+  },
+  {
+    "file": "packages/simulation/src/__tests__/society-renewable-support.test.ts",
+    "lines": 199,
+    "matches": 4,
+    "eofNewline": true,
+    "crlf": 199,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/society-restore-integrity.test.ts",
+    "lines": 43,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 43
+  },
+  {
+    "file": "packages/simulation/src/__tests__/society-run-fixture.test.ts",
+    "lines": 24,
+    "matches": 6,
+    "eofNewline": true,
+    "crlf": 24,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/society-stock-integrity.test.ts",
+    "lines": 182,
+    "matches": 12,
+    "eofNewline": true,
+    "crlf": 182,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/society-stock-policy-ports.test.ts",
+    "lines": 143,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 143,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/tile-trial.test.ts",
+    "lines": 52,
+    "matches": 4,
+    "eofNewline": true,
+    "crlf": 52,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/__tests__/world-npc.test.ts",
+    "lines": 172,
+    "matches": 47,
+    "eofNewline": true,
+    "crlf": 169,
+    "loneLf": 3
+  },
+  {
+    "file": "packages/simulation/src/character-life-command.ts",
+    "lines": 59,
+    "matches": 12,
+    "eofNewline": true,
+    "crlf": 59,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/character-life-observation.ts",
+    "lines": 131,
+    "matches": 14,
+    "eofNewline": true,
+    "crlf": 130,
+    "loneLf": 1
+  },
+  {
+    "file": "packages/simulation/src/item-command.ts",
+    "lines": 134,
+    "matches": 1,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 134
+  },
+  {
+    "file": "packages/simulation/src/outside-week.ts",
+    "lines": 53,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 53,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/tile-trial-week.ts",
+    "lines": 194,
+    "matches": 4,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 194
+  },
+  {
+    "file": "packages/simulation/src/tile-trial.ts",
+    "lines": 189,
+    "matches": 6,
+    "eofNewline": true,
+    "crlf": 189,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/simulation/src/workshop-operation.ts",
+    "lines": 123,
+    "matches": 5,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 123
+  },
+  {
+    "file": "packages/simulation/src/world-npc.ts",
+    "lines": 56,
+    "matches": 16,
+    "eofNewline": true,
+    "crlf": 51,
+    "loneLf": 5
+  },
+  {
+    "file": "packages/ui/src/CharacterLifeApp.svelte",
+    "lines": 76,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 76,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/ui/src/CharacterLifeCharacters.svelte",
+    "lines": 108,
+    "matches": 16,
+    "eofNewline": true,
+    "crlf": 108,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/ui/src/CharacterLifeCity.svelte",
+    "lines": 113,
+    "matches": 3,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 113
+  },
+  {
+    "file": "packages/ui/src/CharacterLifeShell.svelte",
+    "lines": 254,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 254,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/ui/src/EquipmentView.svelte",
+    "lines": 78,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 78
+  },
+  {
+    "file": "packages/ui/src/InsideCity.svelte",
+    "lines": 56,
+    "matches": 3,
+    "eofNewline": true,
+    "crlf": 56,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/ui/src/OutsideCity.svelte",
+    "lines": 39,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 39,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/ui/src/PotionPanel.svelte",
+    "lines": 42,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 42
+  },
+  {
+    "file": "packages/ui/src/SocietyReport.svelte",
+    "lines": 20,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 20,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/ui/src/SoloWeekReport.svelte",
+    "lines": 161,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 161
+  },
+  {
+    "file": "packages/ui/src/TileManagement.svelte",
+    "lines": 306,
+    "matches": 29,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 306
+  },
+  {
+    "file": "packages/ui/src/WorkshopPanel.svelte",
+    "lines": 91,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 91
+  },
+  {
+    "file": "packages/ui/src/__tests__/character-life-session.test.ts",
+    "lines": 341,
+    "matches": 9,
+    "eofNewline": true,
+    "crlf": 341,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/ui/src/__tests__/crafting-view.test.ts",
+    "lines": 295,
+    "matches": 21,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 295
+  },
+  {
+    "file": "packages/ui/src/__tests__/crime-view.test.ts",
+    "lines": 14,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 14,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/ui/src/__tests__/crisis-checkpoint.test.ts",
+    "lines": 12,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 12
+  },
+  {
+    "file": "packages/ui/src/__tests__/crisis-view.test.ts",
+    "lines": 11,
+    "matches": 3,
+    "eofNewline": true,
+    "crlf": 1,
+    "loneLf": 10
+  },
+  {
+    "file": "packages/ui/src/__tests__/data-inspector.test.ts",
+    "lines": 173,
+    "matches": 8,
+    "eofNewline": true,
+    "crlf": 173,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/ui/src/__tests__/error-log.test.ts",
+    "lines": 130,
+    "matches": 11,
+    "eofNewline": true,
+    "crlf": 130,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/ui/src/__tests__/garrison-view.test.ts",
+    "lines": 23,
+    "matches": 3,
+    "eofNewline": true,
+    "crlf": 23,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/ui/src/__tests__/items-view.test.ts",
+    "lines": 106,
+    "matches": 4,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 106
+  },
+  {
+    "file": "packages/ui/src/__tests__/law-view.test.ts",
+    "lines": 20,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 20,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/ui/src/__tests__/outside-view.test.ts",
+    "lines": 8,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 8,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/ui/src/__tests__/report-letters.test.ts",
+    "lines": 523,
+    "matches": 13,
+    "eofNewline": true,
+    "crlf": 2,
+    "loneLf": 521
+  },
+  {
+    "file": "packages/ui/src/__tests__/society-view.test.ts",
+    "lines": 57,
+    "matches": 1,
+    "eofNewline": true,
+    "crlf": 43,
+    "loneLf": 14
+  },
+  {
+    "file": "packages/ui/src/__tests__/world-npc-session.test.ts",
+    "lines": 36,
+    "matches": 6,
+    "eofNewline": false,
+    "crlf": 32,
+    "loneLf": 3
+  },
+  {
+    "file": "packages/ui/src/__tests__/world-session.test.ts",
+    "lines": 105,
+    "matches": 1,
+    "eofNewline": true,
+    "crlf": 105,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/ui/src/character-life-session.ts",
+    "lines": 98,
+    "matches": 1,
+    "eofNewline": true,
+    "crlf": 92,
+    "loneLf": 6
+  },
+  {
+    "file": "packages/ui/src/data-inspector.ts",
+    "lines": 43,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 43
+  },
+  {
+    "file": "packages/ui/src/error-log.ts",
+    "lines": 172,
+    "matches": 4,
+    "eofNewline": true,
+    "crlf": 172,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/ui/src/items-view.ts",
+    "lines": 121,
+    "matches": 7,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 121
+  },
+  {
+    "file": "packages/ui/src/report-letters.ts",
+    "lines": 215,
+    "matches": 9,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 215
+  },
+  {
+    "file": "packages/ui/src/society-view.ts",
+    "lines": 190,
+    "matches": 7,
+    "eofNewline": true,
+    "crlf": 190,
+    "loneLf": 0
+  },
+  {
+    "file": "packages/ui/src/world-npc-session.ts",
+    "lines": 18,
+    "matches": 3,
+    "eofNewline": true,
+    "crlf": 18,
+    "loneLf": 0
+  },
+  {
+    "file": "tests/e2e/character-life-boundary.spec.ts",
+    "lines": 310,
+    "matches": 20,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 310
+  },
+  {
+    "file": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+    "lines": 416,
+    "matches": 4,
+    "eofNewline": true,
+    "crlf": 416,
+    "loneLf": 0
+  },
+  {
+    "file": "tests/e2e/character-life-navigation.helpers.ts",
+    "lines": 571,
+    "matches": 14,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 571
+  },
+  {
+    "file": "tests/e2e/character-life-navigation.spec.ts",
+    "lines": 1472,
+    "matches": 33,
+    "eofNewline": true,
+    "crlf": 1472,
+    "loneLf": 0
+  },
+  {
+    "file": "tests/e2e/character-life.spec.ts",
+    "lines": 414,
+    "matches": 3,
+    "eofNewline": true,
+    "crlf": 413,
+    "loneLf": 1
+  },
+  {
+    "file": "tests/e2e/crafting.spec.ts",
+    "lines": 243,
+    "matches": 13,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 243
+  },
+  {
+    "file": "tests/e2e/crime.spec.ts",
+    "lines": 29,
+    "matches": 4,
+    "eofNewline": true,
+    "crlf": 29,
+    "loneLf": 0
+  },
+  {
+    "file": "tests/e2e/crisis.spec.ts",
+    "lines": 60,
+    "matches": 6,
+    "eofNewline": true,
+    "crlf": 60,
+    "loneLf": 0
+  },
+  {
+    "file": "tests/e2e/error-log.spec.ts",
+    "lines": 211,
+    "matches": 3,
+    "eofNewline": true,
+    "crlf": 211,
+    "loneLf": 0
+  },
+  {
+    "file": "tests/e2e/garrison.spec.ts",
+    "lines": 26,
+    "matches": 4,
+    "eofNewline": true,
+    "crlf": 26,
+    "loneLf": 0
+  },
+  {
+    "file": "tests/e2e/goods-stock.spec.ts",
+    "lines": 40,
+    "matches": 3,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 40
+  },
+  {
+    "file": "tests/e2e/items.spec.ts",
+    "lines": 247,
+    "matches": 19,
+    "eofNewline": true,
+    "crlf": 247,
+    "loneLf": 0
+  },
+  {
+    "file": "tests/e2e/laws.spec.ts",
+    "lines": 29,
+    "matches": 7,
+    "eofNewline": true,
+    "crlf": 29,
+    "loneLf": 0
+  },
+  {
+    "file": "tests/e2e/ledger.spec.ts",
+    "lines": 164,
+    "matches": 5,
+    "eofNewline": true,
+    "crlf": 164,
+    "loneLf": 0
+  },
+  {
+    "file": "tests/e2e/order.spec.ts",
+    "lines": 30,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 30
+  },
+  {
+    "file": "tests/e2e/outside.spec.ts",
+    "lines": 64,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 64
+  },
+  {
+    "file": "tests/e2e/smoke.spec.ts",
+    "lines": 45,
+    "matches": 5,
+    "eofNewline": true,
+    "crlf": 1,
+    "loneLf": 44
+  },
+  {
+    "file": "tests/e2e/society-command.helpers.ts",
+    "lines": 27,
+    "matches": 5,
+    "eofNewline": true,
+    "crlf": 1,
+    "loneLf": 26
+  },
+  {
+    "file": "tests/e2e/society.spec.ts",
+    "lines": 54,
+    "matches": 5,
+    "eofNewline": true,
+    "crlf": 54,
+    "loneLf": 0
+  },
+  {
+    "file": "tests/e2e/storage.spec.ts",
+    "lines": 191,
+    "matches": 1,
+    "eofNewline": true,
+    "crlf": 191,
+    "loneLf": 0
+  },
+  {
+    "file": "tests/e2e/tile-feedback-precision.spec.ts",
+    "lines": 148,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 0,
+    "loneLf": 148
+  },
+  {
+    "file": "tests/e2e/tile-local-checkpoint.spec.ts",
+    "lines": 72,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 63,
+    "loneLf": 9
+  },
+  {
+    "file": "tests/e2e/tile-population.spec.ts",
+    "lines": 18,
+    "matches": 3,
+    "eofNewline": true,
+    "crlf": 1,
+    "loneLf": 17
+  },
+  {
+    "file": "tests/e2e/tile-save.spec.ts",
+    "lines": 37,
+    "matches": 4,
+    "eofNewline": true,
+    "crlf": 37,
+    "loneLf": 0
+  },
+  {
+    "file": "tests/e2e/tile-trial.spec.ts",
+    "lines": 30,
+    "matches": 6,
+    "eofNewline": true,
+    "crlf": 30,
+    "loneLf": 0
+  },
+  {
+    "file": "tests/e2e/title.spec.ts",
+    "lines": 248,
+    "matches": 2,
+    "eofNewline": true,
+    "crlf": 248,
+    "loneLf": 0
+  },
+  {
+    "file": "tests/e2e/world-npc-session.spec.ts",
+    "lines": 35,
+    "matches": 3,
+    "eofNewline": true,
+    "crlf": 35,
+    "loneLf": 0
+  },
+  {
+    "file": "tests/e2e/world-session.spec.ts",
+    "lines": 47,
+    "matches": 5,
+    "eofNewline": true,
+    "crlf": 47,
+    "loneLf": 0
+  }
+]

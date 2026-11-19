@@ -1,0 +1,67 @@
+﻿{
+    "topProcesses":  [
+                         {
+                             "IDProcess":  81156,
+                             "Name":  "WmiPrvSE#2",
+                             "PercentProcessorTime":  19
+                         },
+                         {
+                             "IDProcess":  47992,
+                             "Name":  "cloudflared",
+                             "PercentProcessorTime":  9
+                         },
+                         {
+                             "IDProcess":  47388,
+                             "Name":  "codebase-memory-mcp#4",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  70192,
+                             "Name":  "claude#12",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  2892,
+                             "Name":  "svchost#26",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  29600,
+                             "Name":  "dwm",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  4272,
+                             "Name":  "MsMpEng",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  41404,
+                             "Name":  "T3 Code (Nightly)#3",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  50936,
+                             "Name":  "codebase-memory-mcp#2",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  74272,
+                             "Name":  "codebase-memory-mcp#3",
+                             "PercentProcessorTime":  4
+                         }
+                     ],
+    "utc":  "2026-11-17T15:02:13.9560576Z",
+    "portListeners":  [
+
+                      ],
+    "competingJobs":  [
+
+                      ],
+    "cpu":  [
+                {
+                    "LoadPercentage":  2,
+                    "NumberOfLogicalProcessors":  8
+                }
+            ]
+}

@@ -1,0 +1,76 @@
+import { hasWeeklyKeys, isLiveCharacterLifeSessionState, buildItemWeekContext, type CharacterLifeSessionState, type TileTrialReport } from '@haven/core';
+import { executeWorldNpcCityCommand, executeWorldNpcCommand } from './world-npc.js';
+import { executeItemCommand, ITEM_COMMAND_TYPES, type ItemCommandType } from './item-command.js';
+import { recordNpcLifeEvent, runNpcLifeWeek } from './npc-life-week.js';
+
+export type CharacterLifeActionType = 'BUILD' | 'REPLACE' | 'UPGRADE'
+  | 'SET_WORKERS' | 'SET_ENABLED' | 'END_WEEK' | 'NEXT_WEEK'
+  | 'ENACT_LAW' | 'REPEAL_LAW' | 'CHOOSE_CARD_OPTION' | 'ASSIGN_NPC' | 'UNASSIGN_NPC' | 'EXTEND_WALL' | 'SET_TRAINING' | 'CLEAR' | 'SET_RESEARCH' | 'BUILD_DEEP_SHAFT' | ItemCommandType;
+export type CharacterLifeCommandResult =
+  | { success: true; next: CharacterLifeSessionState; report?: Readonly<TileTrialReport> }
+  | { success: false; error: { code: string; message: string } };
+
+const fail = (code: string, message: string): CharacterLifeCommandResult => ({ success: false, error: { code, message } });
+
+export function executeCharacterLifeCommand(session: unknown, raw: unknown): CharacterLifeCommandResult {
+  if (isLiveCharacterLifeSessionState(session) && session.city.society?.crisis.stage === 'fallen') return fail('CITY_FALLEN','The city has fallen. Start a New Game.');
+  let type: unknown;
+  try {
+    if (!raw || typeof raw !== 'object' || !hasWeeklyKeys(raw, Object.keys(raw))) {
+      return fail('INVALID_COMMAND', 'Command must contain plain data fields.');
+    }
+    type = Object.getOwnPropertyDescriptor(raw, 'type')?.value;
+  } catch { return fail('INVALID_COMMAND', 'Command must contain plain data fields.'); }
+  if (typeof type !== 'string') return fail('INVALID_COMMAND', 'Command must contain plain data fields.');
+  if (type === 'LOAD_TRIAL') return fail('INVALID_COMMAND', 'Load an NPC world checkpoint through Continue or Import.');
+  if (ITEM_COMMAND_TYPES.includes(type as ItemCommandType)) {
+    if (!isLiveCharacterLifeSessionState(session)) return fail('INVALID_STATE', 'World session is invalid; nothing was changed.');
+    return executeItemCommand(session,raw);
+  }
+  const societyAction = ['ENACT_LAW', 'REPEAL_LAW', 'CHOOSE_CARD_OPTION', 'EXTEND_WALL', 'SET_TRAINING', 'CLEAR', 'SET_RESEARCH', 'BUILD_DEEP_SHAFT'].includes(type) &&
+    isLiveCharacterLifeSessionState(session) && !!session.city.society;
+  if (!['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED', 'END_WEEK', 'NEXT_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC'].includes(type) && !societyAction) {
+    return fail('UNSUPPORTED_ACTION', 'This action is not supported in Character Life.');
+  }
+  if (!isLiveCharacterLifeSessionState(session)) return fail('INVALID_STATE', 'World session is invalid; nothing was changed.');
+
+  const world = { city: session.city, outside: session.outside, npcs: session.npcs };
+  const result = type === 'ASSIGN_NPC' || type === 'UNASSIGN_NPC'
+    ? executeWorldNpcCommand(world, raw)
+    : type==='END_WEEK'?executeWorldNpcCityCommand(world,raw,buildItemWeekContext(session)):executeWorldNpcCityCommand(world,raw);
+  if (!result.success) return result;
+
+  try {
+    const next = { city: result.next.city, outside: result.next.outside, npcs: result.next.npcs,
+      player: structuredClone(session.player), profiles: structuredClone(session.profiles) };
+    const __p7PostStart = performance.now();
+    const posts = new Map(session.npcs.map(npc => [npc.character.id, npc.postTileId]));
+    for (const npc of next.npcs) {
+      const previous = posts.get(npc.character.id);
+      if (previous !== undefined && previous !== npc.postTileId) {
+        if (previous !== null) recordNpcLifeEvent(npc.life, next.city.world.week, 'post-cleared');
+        if (npc.postTileId !== null) recordNpcLifeEvent(npc.life, next.city.world.week, 'post-assigned');
+      }
+    }
+    if (globalThis.__p7Diagnostic.phase === "END_WEEK") globalThis.__p7Diagnostic.current.postTransitionsMs = performance.now() - __p7PostStart;
+    let report=(result as {report?:Readonly<TileTrialReport>}).report;
+    const lordHealthLoss=report?.crimeEvent?.lordHealthLoss??0;
+    if(type==='END_WEEK'){
+      if(!report)throw Error('End Week did not produce a report.');
+      const health=next.player.character.health-lordHealthLoss;
+      if(health<=0){
+        next.player.character.health=0;
+        next.city.society!.crisis.stage='fallen';next.city.society!.crisis.fallCause='wounds';next.city.society!.pendingCard=null;
+        report.items.regen=0;
+      }else next.player.character.health=Math.min(100,health+report.items.regen);
+      const lifeWeek = runNpcLifeWeek(next.npcs, { week: next.city.world.week, authority: next.city.society!.order.authority });
+      next.npcs = lifeWeek.npcs;
+      if (lifeWeek.report.exhausted.length || lifeWeek.report.recovered.length || lifeWeek.report.birthdays.length) {
+        Object.freeze(lifeWeek.report.exhausted); Object.freeze(lifeWeek.report.recovered); Object.freeze(lifeWeek.report.birthdays);
+        report = Object.freeze({ ...report, npcLife: Object.freeze(lifeWeek.report) });
+      }
+    }
+    if (isLiveCharacterLifeSessionState(next)) return { ...result, next, ...(report ? { report } : {}) };
+  } catch { return fail('EXECUTION_ERROR', 'The action failed validation; the original session was preserved.'); }
+  return fail('EXECUTION_ERROR', 'The action failed validation; the original session was preserved.');
+}

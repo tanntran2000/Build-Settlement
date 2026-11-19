@@ -1,0 +1,29 @@
+--- C:\Users\Admin\.t3\local-drafts\p7a-prB\run-gates.ps1
++++ C:\Users\Admin\.t3\local-drafts\p7a-prB\fix-round1\run-gates.ps1
+@@ -1,6 +1,6 @@
+ $ErrorActionPreference = 'Stop'
+ $taskRoot = 'C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01'
+-$taskEvidence = 'C:/Users/Admin/.t3/local-drafts/p7a-prB'
++$taskEvidence = 'C:/Users/Admin/.t3/local-drafts/p7a-prB/fix-round1'
+ Set-Location -LiteralPath $taskRoot
+ $pin = Get-Content -LiteralPath "$taskEvidence/B2-head.json" -Raw -Encoding UTF8 | ConvertFrom-Json
+ $windowStart = [DateTime]::UtcNow
+@@ -25,16 +25,8 @@
+ }
+ 
+ function Save-SleepEvents([datetime]$StartUtc, [datetime]$EndUtc, [string]$Name) {
+-    $events = @()
+-    foreach ($query in @(
+-        @{LogName='System';ProviderName='Microsoft-Windows-Power-Troubleshooter';Id=1;StartTime=$StartUtc;EndTime=$EndUtc},
+-        @{LogName='System';ProviderName='Microsoft-Windows-Kernel-Power';Id=@(42,107,506,507);StartTime=$StartUtc;EndTime=$EndUtc}
+-    )) {
+-        try { $matches = @(Get-WinEvent -FilterHashtable $query -ErrorAction Stop) }
+-        catch { if ($_.FullyQualifiedErrorId -match 'NoMatchingEventsFound') { $matches=@() } else { throw } }
+-        $events += @($matches | ForEach-Object { [ordered]@{utc=$_.TimeCreated.ToUniversalTime().ToString('o');id=$_.Id;provider=$_.ProviderName;recordId=$_.RecordId;xml=$_.ToXml()} })
+-    }
+-    [ordered]@{windowStartUtc=$StartUtc.ToString('o');windowEndUtc=$EndUtc.ToString('o');events=$events;eventCount=$events.Count} | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath "$taskEvidence/$Name" -Encoding UTF8
++    & powershell.exe -NoProfile -File "$taskEvidence/capture-sleep.ps1" -StartUtc $StartUtc.ToUniversalTime().ToString('o') -EndUtc $EndUtc.ToUniversalTime().ToString('o') -Destination "$taskEvidence/$Name"
++    if ($LASTEXITCODE -ne 0) { throw 'HOLD: UTC sleep/resume query failed.' }
+ }
+ 
+ try {

@@ -1,0 +1,15 @@
+{
+  "head": "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+  "tree": "947f604e17427d916e1ef0e21083dbc2f72920b6",
+  "parent": "cf94804876ef2d02835112e06c355314bbcc16cd",
+  "changedProductPaths": [
+    "packages/simulation/src/npc-life-week.ts"
+  ],
+  "changedLines": 1,
+  "allOther497TrackedRawFilesUnchanged": true,
+  "testEdits": 0,
+  "goldenOrFixtureEdits": 0,
+  "timeoutThresholdConfigEdits": 0,
+  "gitStatus": "",
+  "exitCode": 0
+}

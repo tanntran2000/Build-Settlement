@@ -1,0 +1,43 @@
+HEAD=dac604054d7cbbf14a0a42209a3ff560380f2956
+TREE=d2f31706d77d308a310b61857a8b293a898280e7
+UTC_START=2026-11-17T23:04:18.798067+00:00
+COMMAND=["C:\\Program Files\\nodejs\\node.EXE", "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB\\perf-profile\\profile-harness.mjs", "01-base", "base", "dac604054d7cbbf14a0a42209a3ff560380f2956"]
+OUTPUT:
+6:04:19 AM [vite] (client) Re-optimizing dependencies because vite config has changed
+{
+  "run": "01-base",
+  "head": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+  "exitCode": 0,
+  "endWeek": {
+    "all": {
+      "n": 60,
+      "max": 47.23079999999982,
+      "p95": 27.452799999999797,
+      "mean": 24.96135166666668,
+      "over50": 0
+    },
+    "warm": {
+      "n": 55,
+      "max": 36.90599999999995,
+      "p95": 26.839500000000044,
+      "mean": 24.396069090909112,
+      "over50": 0
+    },
+    "firstFive": {
+      "n": 5,
+      "max": 47.23079999999982,
+      "p95": 47.23079999999982,
+      "mean": 31.179459999999928,
+      "over50": 0
+    }
+  },
+  "life": null,
+  "lifeClone": null,
+  "postTransitions": null,
+  "maxTick": 1,
+  "overBudgetTicks": []
+}
+
+EXIT_CODE=0
+SECONDS=4.896
+UTC_END=2026-11-17T23:04:23.694554+00:00

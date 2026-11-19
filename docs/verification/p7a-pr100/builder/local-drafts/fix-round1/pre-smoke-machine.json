@@ -1,0 +1,69 @@
+﻿{
+    "head":  "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+    "tree":  "947f604e17427d916e1ef0e21083dbc2f72920b6",
+    "utc":  "2026-11-18T01:04:07.9210931Z",
+    "cpu":  [
+                {
+                    "LoadPercentage":  34,
+                    "NumberOfLogicalProcessors":  8
+                }
+            ],
+    "topProcesses":  [
+                         {
+                             "IDProcess":  72784,
+                             "Name":  "T3 Code (Nightly)#4",
+                             "PercentProcessorTime":  234
+                         },
+                         {
+                             "IDProcess":  57908,
+                             "Name":  "claude#14",
+                             "PercentProcessorTime":  175
+                         },
+                         {
+                             "IDProcess":  77460,
+                             "Name":  "SearchFilterHost",
+                             "PercentProcessorTime":  37
+                         },
+                         {
+                             "IDProcess":  4,
+                             "Name":  "System",
+                             "PercentProcessorTime":  33
+                         },
+                         {
+                             "IDProcess":  85064,
+                             "Name":  "browser#2",
+                             "PercentProcessorTime":  33
+                         },
+                         {
+                             "IDProcess":  82212,
+                             "Name":  "WmiPrvSE#2",
+                             "PercentProcessorTime":  25
+                         },
+                         {
+                             "IDProcess":  62560,
+                             "Name":  "browser",
+                             "PercentProcessorTime":  25
+                         },
+                         {
+                             "IDProcess":  2704,
+                             "Name":  "svchost#24",
+                             "PercentProcessorTime":  12
+                         },
+                         {
+                             "IDProcess":  29600,
+                             "Name":  "dwm",
+                             "PercentProcessorTime":  12
+                         },
+                         {
+                             "IDProcess":  77876,
+                             "Name":  "browser#16",
+                             "PercentProcessorTime":  12
+                         }
+                     ],
+    "competingJobs":  [
+
+                      ],
+    "portListeners":  [
+
+                      ]
+}

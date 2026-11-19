@@ -1,0 +1,54 @@
+{
+  "bindingPlan": {
+    "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB\\binding-plan-4739ffc.md",
+    "sourceCommit": "4739ffc",
+    "correction": 4,
+    "sha256": "e144cfea5de3e4c4bf2a06c3926cd011b559840c42be43554cbe1aeb8fa43ec0",
+    "supersedes": "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB\\binding-plan-a770dc0.md",
+    "reviewUtc": "2026-11-17T16:01:19.506780+00:00"
+  },
+  "head": "cf94804876ef2d02835112e06c355314bbcc16cd",
+  "tree": "3ee007bb2818beddbe87f1dce042b6820e8a2ad2",
+  "gitStatus": "",
+  "planBodyBeforeCorrection4Unchanged": true,
+  "existingApprovalVerbatimUnchanged": true,
+  "approvedPaths": 13,
+  "exactFilesVerified": [
+    {
+      "path": "packages/simulation/src/__tests__/character-life-command.test.ts",
+      "sha256": "6d552041a94536d83a52c4a2323d321e16005e5114cfdde1028984cc9cc20e44",
+      "approvedBytesMatch": true
+    },
+    {
+      "path": "packages/simulation/src/__tests__/society-stock-integrity.test.ts",
+      "sha256": "bfee9cd0418ec9627a169aacf2a4b02ecbb52f1a4017186534ef673d068e1e2a",
+      "approvedBytesMatch": true
+    },
+    {
+      "path": "tests/e2e/character-life-navigation.helpers.ts",
+      "sha256": "9189a748146fe64cba51f9a7f8c6452cf03a70b87d38d7d4d94c903519d26546",
+      "approvedBytesMatch": true
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-5-weeks.json",
+      "sha256": "8a8b23a3969a963882663fb47585925e5b0d9f8d9f6cfae4bb75d1eb46d31c19",
+      "approvedBytesMatch": true
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-laws.json",
+      "sha256": "9307ddfcce17f2ab48f26b4e586def7d8a7661b93eee503f58e9497970d34db9",
+      "approvedBytesMatch": true
+    },
+    {
+      "path": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+      "sha256": "042c9dc71a36fff42b74c7b6d8a621d412adcabe7556935bfc7f0f64c312f95a",
+      "approvedBytesMatch": true
+    }
+  ],
+  "generatedProjectionFilesVerified": 3,
+  "productEdits": 0,
+  "testEdits": 0,
+  "testReruns": 0,
+  "reason": "Recorded Correction 4 matches the prior in-thread approval and completed exact-head implementation. Existing gate, smoke and performance logs remain unchanged.",
+  "exitCode": 0
+}

@@ -1,0 +1,27 @@
+HEAD=cf94804876ef2d02835112e06c355314bbcc16cd
+TREE=3ee007bb2818beddbe87f1dce042b6820e8a2ad2
+INDEX_TREE=3ee007bb2818beddbe87f1dce042b6820e8a2ad2
+UTC_START=2026-11-18T00:50:40.257353+00:00
+COMMAND=["npm.cmd", "test", "--", "packages/simulation/src/__tests__/npc-life-week.test.ts"]
+CI=
+CPU_AT_GATE_START=not a gate run
+WORKING_STATUS:
+
+OUTPUT:
+
+> build-settlement@0.1.0 test
+> vitest run packages/simulation/src/__tests__/npc-life-week.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  1 passed (1)
+      Tests  43 passed (43)
+   Start at  07:50:42
+   Duration  2.14s (transform 670ms, setup 0ms, import 882ms, tests 653ms, environment 0ms)
+
+
+EXIT_CODE=0
+SECONDS=4.599
+UTC_END=2026-11-18T00:50:44.858344+00:00

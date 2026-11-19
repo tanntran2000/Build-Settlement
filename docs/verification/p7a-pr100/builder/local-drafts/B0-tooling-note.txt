@@ -1,0 +1,5 @@
+Read-only tooling notes:
+The first proposal builder used guessed golden session line positions and stopped at an assertion before writing proposal files. It was corrected to discover actual session lines 8,16,24 and then completed.
+No product/test/fixture file was edited in either attempt; no RED test was run.
+Initial source reads guessed two generator paths; the tracked-file scan located the existing generator under __tests__/fixtures/. No files were created at the guessed paths.
+The protection-set writer caught a stale expected count of 9 generator/diff artifacts. PR B has 11 after PR A added its two artifacts; direct enumeration corrected the count. No proposal or product source changed.

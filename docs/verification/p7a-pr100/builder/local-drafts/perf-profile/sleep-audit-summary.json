@@ -1,0 +1,28 @@
+{
+  "windowStartUtc": "2026-11-17T23:03:58.4478700Z",
+  "windowEndUtc": "2026-11-18T00:40:05.5469440Z",
+  "eventCount": 3,
+  "events": [
+    {
+      "utc": "2026-11-17T23:10:42.9912797Z",
+      "id": 42,
+      "provider": "Microsoft-Windows-Kernel-Power"
+    },
+    {
+      "utc": "2026-11-17T23:10:45.1268292Z",
+      "id": 107,
+      "provider": "Microsoft-Windows-Kernel-Power"
+    },
+    {
+      "utc": "2026-11-18T00:31:31.7141529Z",
+      "id": 1,
+      "provider": "Microsoft-Windows-Power-Troubleshooter",
+      "sleepTime": "2026-11-17T23:10:38.7282707Z",
+      "wakeTime": "2026-11-18T00:31:30.3498965Z"
+    }
+  ],
+  "measurementRunOverlap": [],
+  "allEventsAfterLastMeasurement": true,
+  "allSleepIntervalsAfterLastMeasurement": true,
+  "lastMeasurementEndUtc": "2026-11-17T23:05:11.969985+00:00"
+}

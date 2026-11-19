@@ -1,0 +1,81 @@
+{
+  "owner": "Tân",
+  "verbatim": "Profile base vs head (Recommended)",
+  "base": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+  "head": "cf94804876ef2d02835112e06c355314bbcc16cd",
+  "branch": "feat/p7a-npc-life-week",
+  "utcStart": "2026-11-17T23:03:58.447870+00:00",
+  "nodeExecutable": "C:\\Program Files\\nodejs\\node.EXE",
+  "harnessSha256": "db7dda09f2be3b6dfb5296d2630bf37cfd6c2ec46f4f116a211e6eace091895b",
+  "sequence": [
+    "base",
+    "head",
+    "base",
+    "head",
+    "base",
+    "head"
+  ],
+  "runs": [
+    {
+      "run": "01-base",
+      "revision": "base",
+      "head": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+      "exitCode": 0,
+      "seconds": 4.896490299841389,
+      "utcStart": "2026-11-17T23:04:18.798067+00:00",
+      "utcEnd": "2026-11-17T23:04:23.694554+00:00"
+    },
+    {
+      "run": "02-head",
+      "revision": "head",
+      "head": "cf94804876ef2d02835112e06c355314bbcc16cd",
+      "exitCode": 0,
+      "seconds": 7.436558699933812,
+      "utcStart": "2026-11-17T23:04:27.496547+00:00",
+      "utcEnd": "2026-11-17T23:04:34.933102+00:00"
+    },
+    {
+      "run": "03-base",
+      "revision": "base",
+      "head": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+      "exitCode": 0,
+      "seconds": 5.321917100111023,
+      "utcStart": "2026-11-17T23:04:39.273165+00:00",
+      "utcEnd": "2026-11-17T23:04:44.595079+00:00"
+    },
+    {
+      "run": "04-head",
+      "revision": "head",
+      "head": "cf94804876ef2d02835112e06c355314bbcc16cd",
+      "exitCode": 0,
+      "seconds": 5.237499400041997,
+      "utcStart": "2026-11-17T23:04:48.562698+00:00",
+      "utcEnd": "2026-11-17T23:04:53.800198+00:00"
+    },
+    {
+      "run": "05-base",
+      "revision": "base",
+      "head": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+      "exitCode": 0,
+      "seconds": 5.217091500060633,
+      "utcStart": "2026-11-17T23:04:57.485764+00:00",
+      "utcEnd": "2026-11-17T23:05:02.702859+00:00"
+    },
+    {
+      "run": "06-head",
+      "revision": "head",
+      "head": "cf94804876ef2d02835112e06c355314bbcc16cd",
+      "exitCode": 0,
+      "seconds": 5.279187300009653,
+      "utcStart": "2026-11-17T23:05:06.690797+00:00",
+      "utcEnd": "2026-11-17T23:05:11.969985+00:00"
+    }
+  ],
+  "status": "HOLD",
+  "lockfileSame": true,
+  "dependencyInstall": false,
+  "noWarmupDiscarded": true,
+  "utcEnd": "2026-11-17T23:05:12.854742+00:00",
+  "executionComplete": false,
+  "failure": "RESTORATION: "
+}

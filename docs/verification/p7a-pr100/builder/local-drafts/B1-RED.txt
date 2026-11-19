@@ -1,0 +1,940 @@
+HEAD=dac604054d7cbbf14a0a42209a3ff560380f2956
+TREE=d2f31706d77d308a310b61857a8b293a898280e7
+INDEX_TREE=d2f31706d77d308a310b61857a8b293a898280e7
+UTC_START=2026-11-17T14:56:26.911356+00:00
+COMMAND=["npm.cmd", "test", "--", "packages/simulation/src/__tests__/npc-life-week.test.ts", "packages/simulation/src/__tests__/character-life-command.test.ts", "packages/simulation/src/__tests__/society-stock-integrity.test.ts", "packages/simulation/src/__tests__/catalog-golden.test.ts", "packages/simulation/src/__tests__/crisis-fixtures.test.ts", "packages/simulation/src/__tests__/law-fixture.test.ts", "packages/core/src/trial/__tests__/items.test.ts", "packages/simulation/src/__tests__/lord-health.test.ts", "packages/simulation/src/__tests__/world-npc.test.ts", "packages/persistence/src/__tests__/npc-life-records.test.ts"]
+CI=
+CPU_AT_GATE_START=not a gate run
+WORKING_STATUS:
+ M packages/simulation/src/__tests__/character-life-command.test.ts
+ M packages/simulation/src/__tests__/society-stock-integrity.test.ts
+ M tests/e2e/character-life-navigation.helpers.ts
+?? packages/simulation/src/__tests__/npc-life-week.test.ts
+
+OUTPUT:
+
+> build-settlement@0.1.0 test
+> vitest run packages/simulation/src/__tests__/npc-life-week.test.ts packages/simulation/src/__tests__/character-life-command.test.ts packages/simulation/src/__tests__/society-stock-integrity.test.ts packages/simulation/src/__tests__/catalog-golden.test.ts packages/simulation/src/__tests__/crisis-fixtures.test.ts packages/simulation/src/__tests__/law-fixture.test.ts packages/core/src/trial/__tests__/items.test.ts packages/simulation/src/__tests__/lord-health.test.ts packages/simulation/src/__tests__/world-npc.test.ts packages/persistence/src/__tests__/npc-life-records.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts (43 tests | 43 failed) 1823ms
+     × stress 0 posted false becomes 0 56ms
+     × stress 3 posted false becomes 0 17ms
+     × stress 10 posted false becomes 5 19ms
+     × stress 0 posted true becomes 4 18ms
+     × stress 96 posted true becomes 100 20ms
+     × stress 99 posted true becomes 100 15ms
+     × Authority 69 and affection 69 add 4 9ms
+     × Authority 69 and affection 70 add 4 42ms
+     × Authority 70 and affection 69 add 4 9ms
+     × Authority 70 and affection 70 add 2 10ms
+     × Authority 100 and affection 100 add 2 22ms
+     × exhausts at 100 once and keeps the post assigned 8ms
+     × exhausted stress 86 posted false ends at 81 working false 9ms
+     × exhausted stress 85 posted false ends at 80 working true 20ms
+     × exhausted stress 77 posted true ends at 81 working false 14ms
+     × exhausted stress 76 posted true ends at 80 working true 13ms
+     × does not turn a still-posted exhausted NPC into a resting NPC 9ms
+     × lust 9 at arousal 0 becomes 0 10ms
+     × lust 10 at arousal 0 becomes 1 15ms
+     × lust 39 at arousal 0 becomes 3 16ms
+     × lust 40 at arousal 98 becomes 100 12ms
+     × lust 100 at arousal 100 becomes 100 16ms
+     × birthday boundary week 40 is false 11ms
+     × birthday boundary week 41 is true 11ms
+     × birthday boundary week 42 is false 8ms
+     × age 29 becomes 30 with title Mature 8ms
+     × age 49 becomes 50 with title Granny 9ms
+     × retains the newest 20 events while counters keep counting 15ms
+     × keeps NPC order and exhaustion before birthday history on the same tick 21ms
+     × does not mutate frozen inputs or unrelated character/life fields and draws no random value 14ms
+     × refuses history counter overflow without modifying the input 19ms
+     × excludes exhausted post skills and worn traits, preserving Player context and the assigned post 53ms
+     × records real assignment, unassignment and replacement clears, but no no-op or rejected history 51ms
+     × trims actual post history after 21 commands and retains the event counters 603ms
+     × uses post-tile Authority after starting at 70 99ms
+     × uses post-tile Authority after starting at 100 64ms
+     × updates a disabled assigned post and preserves NPC health 97ms
+     × reloads pre-B v10 false/95, rests only after clearing the post, and resumes at 80 41ms
+     × birthdays use the new clock, are frozen, and do not repeat after save/load 60ms
+     × omits npcLife on an ordinary week even while Arousal moves 69ms
+     × keeps every no-NPC result byte-identical to the old delegated path 63ms
+     × history overflow preserves the complete original command input 47ms
+     × advances 100 adult NPCs deterministically across 60 weekly steps 32ms
+ ❯ packages/simulation/src/__tests__/society-stock-integrity.test.ts (20 tests | 1 failed) 742ms
+     × projects detached stock flow without assigning manager buffs 118ms
+ ❯ packages/simulation/src/__tests__/character-life-command.test.ts (35 tests | 2 failed) 6952ms
+   × full-session parity through two week cycles 518ms
+     × accepts null-prototype command data with identical complete results 91ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 46 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/character-life-command.test.ts > full-session parity through two week cycles
+AssertionError: expected { success: true, next: { …(5) } } to deeply equal { success: true, next: { …(5) } }
+
+- Expected
++ Received
+
+@@ -861,19 +861,12 @@
+          "life": {
+            "arousal": 0,
+            "beauty": 66,
+            "birthWeek": -1079,
+            "history": {
+-             "counters": {
+-               "post-assigned": 1,
+-             },
+-             "recent": [
+-               {
+-                 "kind": "post-assigned",
+-                 "week": 1,
+-               },
+-             ],
++             "counters": {},
++             "recent": [],
+            },
+            "hobbies": [
+              "stargazing",
+              "walking",
+            ],
+
+ ❯ packages/simulation/src/__tests__/character-life-command.test.ts:98:15
+     96|       ...(action.type === 'END_WEEK' ? { expectedWeek: s.city.world.we…
+     97|     const expected = success(legacy(old, raw)), r = success(executeCha…
+     98|     expect(r).toEqual(expected);
+       |               ^
+     99|     expect(Object.keys(r.next).sort()).toEqual(['city', 'npcs', 'outsi…
+    100|     expect(r.next.city.revision).toBe(s.city.revision + 1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/character-life-command.test.ts > own data and prototype taxonomy precedes session and revision > accepts null-prototype command data with identical complete results
+AssertionError: expected { success: true, next: { …(5) } } to deeply equal { success: true, next: { …(5) } }
+
+- Expected
++ Received
+
+@@ -856,19 +856,12 @@
+          "life": {
+            "arousal": 0,
+            "beauty": 66,
+            "birthWeek": -1079,
+            "history": {
+-             "counters": {
+-               "post-assigned": 1,
+-             },
+-             "recent": [
+-               {
+-                 "kind": "post-assigned",
+-                 "week": 1,
+-               },
+-             ],
++             "counters": {},
++             "recent": [],
+            },
+            "hobbies": [
+              "stargazing",
+              "walking",
+            ],
+
+ ❯ packages/simulation/src/__tests__/character-life-command.test.ts:259:21
+    257|       const expected = legacy(s, raw), plain = executeCharacterLifeCom…
+    258|       const nullRaw = Object.assign(Object.create(null), raw), rawBefo…
+    259|       expect(plain).toEqual(expected);
+       |                     ^
+    260|       expect(executeCharacterLifeCommand(s, nullRaw)).toEqual(expected…
+    261|       expect(Object.getOwnPropertyDescriptors(nullRaw)).toEqual(rawBef…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Stress, halving and recovery boundaries > stress 0 posted false becomes 0
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Stress, halving and recovery boundaries > stress 3 posted false becomes 0
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Stress, halving and recovery boundaries > stress 10 posted false becomes 5
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Stress, halving and recovery boundaries > stress 0 posted true becomes 4
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Stress, halving and recovery boundaries > stress 96 posted true becomes 100
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Stress, halving and recovery boundaries > stress 99 posted true becomes 100
+AssertionError: The NPC weekly API must exist: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ run packages/simulation/src/__tests__/npc-life-week.test.ts:18:51
+     16| });
+     17| function run(npcs: WorldNpc[], week = 2, authority = 0) {
+     18|   expect(weekly, 'The NPC weekly API must exist').toBeTypeOf('function…
+       |                                                   ^
+     19|   return weekly!(npcs, { week, authority });
+     20| }
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts:50:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Stress, halving and recovery boundaries > Authority 69 and affection 69 add 4
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Stress, halving and recovery boundaries > Authority 69 and affection 70 add 4
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Stress, halving and recovery boundaries > Authority 70 and affection 69 add 4
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Stress, halving and recovery boundaries > Authority 70 and affection 70 add 2
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Stress, halving and recovery boundaries > Authority 100 and affection 100 add 2
+AssertionError: The NPC weekly API must exist: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ run packages/simulation/src/__tests__/npc-life-week.test.ts:18:51
+     16| });
+     17| function run(npcs: WorldNpc[], week = 2, authority = 0) {
+     18|   expect(weekly, 'The NPC weekly API must exist').toBeTypeOf('function…
+       |                                                   ^
+     19|   return weekly!(npcs, { week, authority });
+     20| }
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts:55:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Stress, halving and recovery boundaries > exhausts at 100 once and keeps the post assigned
+AssertionError: The NPC weekly API must exist: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ run packages/simulation/src/__tests__/npc-life-week.test.ts:18:51
+     16| });
+     17| function run(npcs: WorldNpc[], week = 2, authority = 0) {
+     18|   expect(weekly, 'The NPC weekly API must exist').toBeTypeOf('function…
+       |                                                   ^
+     19|   return weekly!(npcs, { week, authority });
+     20| }
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts:58:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Stress, halving and recovery boundaries > exhausted stress 86 posted false ends at 81 working false
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Stress, halving and recovery boundaries > exhausted stress 85 posted false ends at 80 working true
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Stress, halving and recovery boundaries > exhausted stress 77 posted true ends at 81 working false
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Stress, halving and recovery boundaries > exhausted stress 76 posted true ends at 80 working true
+AssertionError: The NPC weekly API must exist: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ run packages/simulation/src/__tests__/npc-life-week.test.ts:18:51
+     16| });
+     17| function run(npcs: WorldNpc[], week = 2, authority = 0) {
+     18|   expect(weekly, 'The NPC weekly API must exist').toBeTypeOf('function…
+       |                                                   ^
+     19|   return weekly!(npcs, { week, authority });
+     20| }
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts:68:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Stress, halving and recovery boundaries > does not turn a still-posted exhausted NPC into a resting NPC
+AssertionError: The NPC weekly API must exist: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ run packages/simulation/src/__tests__/npc-life-week.test.ts:18:51
+     16| });
+     17| function run(npcs: WorldNpc[], week = 2, authority = 0) {
+     18|   expect(weekly, 'The NPC weekly API must exist').toBeTypeOf('function…
+       |                                                   ^
+     19|   return weekly!(npcs, { week, authority });
+     20| }
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts:74:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Arousal, birthdays and bounded history > lust 9 at arousal 0 becomes 0
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Arousal, birthdays and bounded history > lust 10 at arousal 0 becomes 1
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Arousal, birthdays and bounded history > lust 39 at arousal 0 becomes 3
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Arousal, birthdays and bounded history > lust 40 at arousal 98 becomes 100
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Arousal, birthdays and bounded history > lust 100 at arousal 100 becomes 100
+AssertionError: The NPC weekly API must exist: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ run packages/simulation/src/__tests__/npc-life-week.test.ts:18:51
+     16| });
+     17| function run(npcs: WorldNpc[], week = 2, authority = 0) {
+     18|   expect(weekly, 'The NPC weekly API must exist').toBeTypeOf('function…
+       |                                                   ^
+     19|   return weekly!(npcs, { week, authority });
+     20| }
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts:83:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Arousal, birthdays and bounded history > birthday boundary week 40 is false
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Arousal, birthdays and bounded history > birthday boundary week 41 is true
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Arousal, birthdays and bounded history > birthday boundary week 42 is false
+AssertionError: The NPC weekly API must exist: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ run packages/simulation/src/__tests__/npc-life-week.test.ts:18:51
+     16| });
+     17| function run(npcs: WorldNpc[], week = 2, authority = 0) {
+     18|   expect(weekly, 'The NPC weekly API must exist').toBeTypeOf('function…
+       |                                                   ^
+     19|   return weekly!(npcs, { week, authority });
+     20| }
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts:87:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Arousal, birthdays and bounded history > age 29 becomes 30 with title Mature
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Arousal, birthdays and bounded history > age 49 becomes 50 with title Granny
+AssertionError: The NPC weekly API must exist: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ run packages/simulation/src/__tests__/npc-life-week.test.ts:18:51
+     16| });
+     17| function run(npcs: WorldNpc[], week = 2, authority = 0) {
+     18|   expect(weekly, 'The NPC weekly API must exist').toBeTypeOf('function…
+       |                                                   ^
+     19|   return weekly!(npcs, { week, authority });
+     20| }
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts:93:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Arousal, birthdays and bounded history > retains the newest 20 events while counters keep counting
+AssertionError: The NPC weekly API must exist: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ run packages/simulation/src/__tests__/npc-life-week.test.ts:18:51
+     16| });
+     17| function run(npcs: WorldNpc[], week = 2, authority = 0) {
+     18|   expect(weekly, 'The NPC weekly API must exist').toBeTypeOf('function…
+       |                                                   ^
+     19|   return weekly!(npcs, { week, authority });
+     20| }
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts:100:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Arousal, birthdays and bounded history > keeps NPC order and exhaustion before birthday history on the same tick
+AssertionError: The NPC weekly API must exist: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ run packages/simulation/src/__tests__/npc-life-week.test.ts:18:51
+     16| });
+     17| function run(npcs: WorldNpc[], week = 2, authority = 0) {
+     18|   expect(weekly, 'The NPC weekly API must exist').toBeTypeOf('function…
+       |                                                   ^
+     19|   return weekly!(npcs, { week, authority });
+     20| }
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts:106:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Arousal, birthdays and bounded history > does not mutate frozen inputs or unrelated character/life fields and draws no random value
+AssertionError: The NPC weekly API must exist: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ run packages/simulation/src/__tests__/npc-life-week.test.ts:18:51
+     16| });
+     17| function run(npcs: WorldNpc[], week = 2, authority = 0) {
+     18|   expect(weekly, 'The NPC weekly API must exist').toBeTypeOf('function…
+       |                                                   ^
+     19|   return weekly!(npcs, { week, authority });
+     20| }
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts:115:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > Arousal, birthdays and bounded history > refuses history counter overflow without modifying the input
+AssertionError: expected [Function] to throw error matching /overflow/i but got 'The NPC weekly API must exist: expect…'
+
+- Expected:
+/overflow/i
+
++ Received:
+"The NPC weekly API must exist: expected undefined to be type of 'function'"
+
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts:125:32
+    123|     const value = npc(96, true); value.life.history.counters.exhausted…
+    124|     const before = structuredClone(value);
+    125|     expect(() => run([value])).toThrow(/overflow/i); expect(value).toE…
+       |                                ^
+    126|   });
+    127| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > item context and Character Life integration > excludes exhausted post skills and worn traits, preserving Player context and the assigned post
+AssertionError: expected { 'field-1': { management: 44, …(4) } } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "field-1": {
++     "combat": 42,
++     "management": 44,
++     "medical": 15,
++     "negotiation": 25,
++     "technical": 65,
++   },
++ }
+
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts:137:34
+    135|     s.npcs[0].life.working = false;
+    136|     const before = structuredClone(s), exhausted = buildItemWeekContex…
+    137|     expect(exhausted.postSkills).toEqual({}); expect(exhausted.postTra…
+       |                                  ^
+    138|     expect(exhausted.playerSkills).toEqual(active.playerSkills); expec…
+    139|     expect(exhausted.playerRegen).toBe(active.playerRegen); expect(s).…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > item context and Character Life integration > records real assignment, unassignment and replacement clears, but no no-op or rejected history
+AssertionError: expected { counters: {}, recent: [] } to deeply equal { …(2) }
+
+- Expected
++ Received
+
+  {
+-   "counters": {
+-     "post-assigned": 1,
+-   },
+-   "recent": [
+-     {
+-       "kind": "post-assigned",
+-       "week": 1,
+-     },
+-   ],
++   "counters": {},
++   "recent": [],
+  }
+
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts:143:36
+    141|   it('records real assignment, unassignment and replacement clears, bu…
+    142|     let s = session(); s = action(s, 'ASSIGN_NPC', { npcId: 'npc_start…
+    143|     expect(s.npcs[0].life.history).toEqual({ counters: { 'post-assigne…
+       |                                    ^
+    144|     s = action(s, 'ASSIGN_NPC', { npcId: 'npc_starter_1', tileId: 'fie…
+    145|     const before = structuredClone(s);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > item context and Character Life integration > trims actual post history after 21 commands and retains the event counters
+AssertionError: expected {} to deeply equal { 'post-assigned': 11, …(1) }
+
+- Expected
++ Received
+
+- {
+-   "post-assigned": 11,
+-   "post-cleared": 10,
+- }
++ {}
+
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts:159:45
+    157|     let s = session();
+    158|     for (let i = 0; i < 21; i++) s = action(s, i % 2 ? 'UNASSIGN_NPC' …
+    159|     expect(s.npcs[0].life.history.counters).toEqual({ 'post-assigned':…
+       |                                             ^
+    160|     expect(s.npcs[0].life.history.recent).toHaveLength(20);
+    161|     expect(s.npcs[0].life.history.recent[0].kind).toBe('post-cleared');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > item context and Character Life integration > uses post-tile Authority after starting at 70
+AssertionError: expected +0 to be 4 // Object.is equality
+
+- Expected
++ Received
+
+- 4
++ 0
+
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts:169:40
+    167|     const r = end(s);
+    168|     expect(r.next.city.society!.order.authority >= 70).toBe(authority …
+    169|     expect(r.next.npcs[0].life.stress).toBe(want);
+       |                                        ^
+    170|   });
+    171|   it('updates a disabled assigned post and preserves NPC health', () =…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > item context and Character Life integration > uses post-tile Authority after starting at 100
+AssertionError: expected +0 to be 2 // Object.is equality
+
+- Expected
++ Received
+
+- 2
++ 0
+
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts:169:40
+    167|     const r = end(s);
+    168|     expect(r.next.city.society!.order.authority >= 70).toBe(authority …
+    169|     expect(r.next.npcs[0].life.stress).toBe(want);
+       |                                        ^
+    170|   });
+    171|   it('updates a disabled assigned post and preserves NPC health', () =…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > item context and Character Life integration > updates a disabled assigned post and preserves NPC health
+AssertionError: expected { mind: 50, lust: 40, …(10) } to match object { stress: 100, working: false }
+(17 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "stress": 100,
+-   "working": false,
++   "stress": 96,
++   "working": true,
+  }
+
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts:175:33
+    173|     s = action(s, 'SET_ENABLED', { tileId: 'field-1', enabled: false }…
+    174|     const health = s.npcs.map(n => n.character.health), r = end(s);
+    175|     expect(r.next.npcs[0].life).toMatchObject({ stress: 100, working: …
+       |                                 ^
+    176|     expect(r.next.npcs.map(n => n.character.health)).toEqual(health);
+    177|     expect(r.report).toMatchObject({ npcLife: { exhausted: ['npc_start…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > item context and Character Life integration > reloads pre-B v10 false/95, rests only after clearing the post, and resumes at 80
+AssertionError: expected { 'field-1': { management: 40, …(4) } } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "field-1": {
++     "combat": 30,
++     "management": 40,
++     "medical": 15,
++     "negotiation": 25,
++     "technical": 65,
++   },
++ }
+
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts:184:59
+    182|     const loaded = deserializeCharacterLifeSave(encoded.text); if (!lo…
+    183|     expect(loaded.state.npcs[0].life).toMatchObject({ stress: 95, work…
+    184|     expect(buildItemWeekContext(loaded.state).postSkills).toEqual({});
+       |                                                           ^
+    185|     s = action(loaded.state, 'UNASSIGN_NPC', { npcId: 'npc_starter_1' …
+    186|     for (const [stress, working] of [[90, false], [85, false], [80, tr…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > item context and Character Life integration > birthdays use the new clock, are frozen, and do not repeat after save/load
+AssertionError: expected { …(25) } to match object { npcLife: { exhausted: [], …(2) } }
+(110 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "npcLife": {
+-     "birthdays": [
+-       "npc_starter_1",
+-       "npc_starter_2",
+-       "npc_starter_3",
++   "activities": [
++     "field-1: Farm 2 batches; batch Gold credited against this Farm upkeep.",
++     "plain-1: Food Processor 2 batches.",
+    ],
++   "after": {
++     "food": 20000,
++     "gold": 46450,
++     "iron": 4000,
++     "wheat": 0,
++     "wood": 8000,
++   },
++   "before": {
++     "food": 20000,
++     "gold": 45000,
++     "iron": 4000,
++     "wheat": 0,
++     "wood": 8000,
++   },
++   "crimeEvent": {
++     "chancePercent": 7,
++     "event": null,
++     "lordHealthLoss": 0,
++     "standingAfter": 50,
++     "standingBefore": 50,
++   },
++   "crisis": {
++     "calmStreak": 1,
++     "cardOpened": null,
++     "hungerStreak": 0,
++     "hungry": false,
++     "lastChoice": null,
++     "promise": null,
++     "stageAfter": "none",
++     "stageBefore": "none",
++     "tensionAfter": 0,
++     "tensionBefore": 0,
++     "weeksInStage": 1,
++   },
++   "farmBatchGoldMilli": 2000,
++   "farmExtraUpkeepMilli": 0,
++   "foodConsumedMilli": 4000,
++   "foodDemandMilli": 4000,
++   "goods": {
++     "demandMilli": 1450,
++     "fulfillmentBps": 10000,
++     "ironUsed": 0,
++     "revenueMilli": 1450,
++     "servedMilli": 1450,
++     "woodUsed": 0,
++   },
++   "goodsStock": {
++     "capacityMilli": 2000,
++     "closingMilli": 8550,
++     "demandMilli": 1450,
++     "distributedMilli": 1450,
++     "limitedBy": "none",
++     "openingMilli": 10000,
++     "producedMilli": 0,
++     "unmetMilli": 0,
++   },
++   "happinessAfter": 82,
++   "happinessBefore": 80,
++   "immigration": {
++     "arrivals": 0,
++     "populationAfter": 100,
++     "populationBefore": 100,
++     "reason": "no-capacity",
++     "renewableFoodMilli": 4000,
++     "target": 90,
++     "usefulWorkerSlots": 10,
++   },
++   "items": {
++     "expired": [],
++     "found": null,
++     "hospitalOperated": false,
++     "legendary": null,
++     "materials": [],
++     "regen": 1,
++   },
++   "laws": {
++     "costs": [],
++     "inForce": [],
++     "incomeMilli": 0,
++     "promise": null,
++     "unfunded": [],
++   },
++   "luxuryImportedMilli": 0,
++   "order": {
++     "after": {
++       "authority": 47,
++       "crime": 5,
++       "security": 25,
++     },
++     "arrivalsBudgetAfter": 0,
++     "arrivalsBudgetBefore": 0,
++     "before": {
++       "authority": 50,
++       "crime": 10,
++       "security": 30,
++     },
++     "garrisonSecurity": 0,
++     "satisfactionLost": 0,
++     "soldiers": 0,
++     "targets": {
++       "authority": 40,
++       "crime": 0,
++       "security": 10,
++     },
++     "taxDeltaMilli": 0,
++     "taxModifierBps": 0,
++     "tensionAdded": 0,
++     "theftMilli": {},
++   },
++   "outside": {
++     "cleared": [],
+      "exhausted": [],
+-     "recovered": [],
++     "hospitalsIdle": [],
++     "producedMilli": {
++       "cloth": 0,
++       "herbs": 0,
++       "iron": 0,
++       "stone": 0,
++       "wood": 0,
++       "wool": 0,
++     },
++     "researchCompleted": [],
++     "spoiledMilli": {},
++     "stocksAfter": {
++       "cloth": 0,
++       "herbs": 0,
++       "stone": 0,
++       "wool": 0,
++     },
++     "stocksBefore": {
++       "cloth": 0,
++       "herbs": 0,
++       "stone": 0,
++       "wool": 0,
++     },
++   },
++   "society": {
++     "classes": {
++       "bound": {
++         "arrivals": 0,
++         "debtAfter": null,
++         "debtBefore": null,
++         "enslaved": 0,
++         "foodBps": 10000,
++         "goodsBps": 10000,
++         "luxuryBps": null,
++         "notes": [],
++         "satisfactionAfter": 80,
++         "satisfactionBefore": 80,
++         "trained": 0,
++       },
++       "free": {
++         "arrivals": 0,
++         "debtAfter": 12,
++         "debtBefore": 0,
++         "enslaved": 0,
++         "foodBps": 10000,
++         "goodsBps": 10000,
++         "luxuryBps": null,
++         "notes": [
++           "unemployed",
++         ],
++         "satisfactionAfter": 82,
++         "satisfactionBefore": 80,
++         "trained": 0,
+        },
++       "luminaries": {
++         "arrivals": 0,
++         "debtAfter": 20,
++         "debtBefore": 0,
++         "enslaved": 0,
++         "foodBps": 10000,
++         "goodsBps": 10000,
++         "luxuryBps": null,
++         "notes": [
++           "unemployed",
++         ],
++         "satisfactionAfter": 82,
++         "satisfactionBefore": 80,
++         "trained": 0,
++       },
++       "makers": {
++         "arrivals": 0,
++         "debtAfter": 0,
++         "debtBefore": 0,
++         "enslaved": 0,
++         "foodBps": 10000,
++         "goodsBps": 10000,
++         "luxuryBps": null,
++         "notes": [],
++         "satisfactionAfter": 82,
++         "satisfactionBefore": 80,
++         "trained": 0,
++       },
++       "merchants": {
++         "arrivals": 0,
++         "debtAfter": 20,
++         "debtBefore": 0,
++         "enslaved": 0,
++         "foodBps": 10000,
++         "goodsBps": 10000,
++         "luxuryBps": null,
++         "notes": [
++           "unemployed",
++         ],
++         "satisfactionAfter": 82,
++         "satisfactionBefore": 80,
++         "trained": 0,
++       },
++     },
++     "corruptionAfter": 48,
++     "desperationAfter": 0,
++     "desperationBefore": 0,
++     "eliteArrived": null,
++     "tensionAfter": 0,
++     "tensionBefore": 0,
++   },
++   "taxMilli": 3000,
++   "trainingGoldMilli": 0,
++   "unpaidUpkeepMilli": 0,
++   "upkeepPaidMilli": 2000,
++   "week": 40,
+  }
+
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts:198:22
+    196|     const r = end(s);
+    197|     expect(r.report?.week).toBe(40); expect(r.next.city.world.week).to…
+    198|     expect(r.report).toMatchObject({ npcLife: { exhausted: [], recover…
+       |                      ^
+    199|     const notes = (r.report as unknown as { npcLife: Notes }).npcLife;
+    200|     expect(Object.isFrozen(r.report)).toBe(true); expect(Object.isFroz…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > item context and Character Life integration > omits npcLife on an ordinary week even while Arousal moves
+AssertionError: expected +0 to be 3 // Object.is equality
+
+- Expected
++ Received
+
+- 3
++ 0
+
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts:211:59
+    209|   it('omits npcLife on an ordinary week even while Arousal moves', () …
+    210|     const s = session(); s.npcs[0].life.lust = 30;
+    211|     const r = end(s); expect(r.next.npcs[0].life.arousal).toBe(3); exp…
+       |                                                           ^
+    212|   });
+    213|   it('keeps every no-NPC result byte-identical to the old delegated pa…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > item context and Character Life integration > keeps every no-NPC result byte-identical to the old delegated path
+AssertionError: The NPC weekly API must exist: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ run packages/simulation/src/__tests__/npc-life-week.test.ts:18:51
+     16| });
+     17| function run(npcs: WorldNpc[], week = 2, authority = 0) {
+     18|   expect(weekly, 'The NPC weekly API must exist').toBeTypeOf('function…
+       |                                                   ^
+     19|   return weekly!(npcs, { week, authority });
+     20| }
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts:223:75
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > item context and Character Life integration > history overflow preserves the complete original command input
+AssertionError: expected { success: true, next: { …(5) }, …(1) } to match object { success: false, …(1) }
+(32 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "error": {
+-     "code": "EXECUTION_ERROR",
+-   },
+-   "success": false,
++   "success": true,
+  }
+
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts:229:15
+    227|     s.npcs[0].life.history.counters.exhausted = Number.MAX_SAFE_INTEGE…
+    228|     const before = structuredClone(s), r = executeCharacterLifeCommand…
+    229|     expect(r).toMatchObject({ success: false, error: { code: 'EXECUTIO…
+       |               ^
+    230|   });
+    231|   it('advances 100 adult NPCs deterministically across 60 weekly steps…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-life-week.test.ts > item context and Character Life integration > advances 100 adult NPCs deterministically across 60 weekly steps
+AssertionError: The NPC weekly API must exist: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ run packages/simulation/src/__tests__/npc-life-week.test.ts:18:51
+     16| });
+     17| function run(npcs: WorldNpc[], week = 2, authority = 0) {
+     18|   expect(weekly, 'The NPC weekly API must exist').toBeTypeOf('function…
+       |                                                   ^
+     19|   return weekly!(npcs, { week, authority });
+     20| }
+ ❯ packages/simulation/src/__tests__/npc-life-week.test.ts:235:53
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/46]⎯
+
+ FAIL  packages/simulation/src/__tests__/society-stock-integrity.test.ts > retained society Goods stock flow > projects detached stock flow without assigning manager buffs
+AssertionError: expected [ Array(3) ] to deeply equal [ Array(3) ]
+
+- Expected
++ Received
+
+@@ -45,11 +45,11 @@
+          "technical": 65,
+        },
+        "socialClass": "skilled",
+      },
+      "life": {
+-       "arousal": 4,
++       "arousal": 0,
+        "beauty": 78,
+        "birthWeek": -1079,
+        "history": {
+          "counters": {},
+          "recent": [],
+@@ -139,11 +139,11 @@
+          "technical": 20,
+        },
+        "socialClass": "skilled",
+      },
+      "life": {
+-       "arousal": 3,
++       "arousal": 0,
+        "beauty": 59,
+        "birthWeek": -1239,
+        "history": {
+          "counters": {},
+          "recent": [],
+@@ -232,11 +232,11 @@
+          "technical": 15,
+        },
+        "socialClass": "common",
+      },
+      "life": {
+-       "arousal": 3,
++       "arousal": 0,
+        "beauty": 55,
+        "birthWeek": -959,
+        "history": {
+          "counters": {},
+          "recent": [],
+
+ ❯ packages/simulation/src/__tests__/society-stock-integrity.test.ts:122:28
+    120|     expect(observation.lastReport!.goodsStock).not.toBe(next.report!.g…
+    121|     expect(r.value.npcs.map(npc => npc.life.arousal)).toEqual([0, 0, 0…
+    122|     expect(next.next.npcs).toEqual(r.value.npcs.map(npc => ({ ...npc, …
+       |                            ^
+    123|   });
+    124| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/46]⎯
+
+
+ Test Files  3 failed | 7 passed (10)
+      Tests  46 failed | 156 passed (202)
+   Start at  21:56:30
+   Duration  32.07s (transform 8.47s, setup 0ms, import 14.43s, tests 62.70s, environment 6ms)
+
+
+EXIT_CODE=1
+SECONDS=35.584
+UTC_END=2026-11-17T14:57:02.496130+00:00

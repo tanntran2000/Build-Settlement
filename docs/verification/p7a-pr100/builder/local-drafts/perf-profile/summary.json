@@ -1,0 +1,908 @@
+{
+  "diagnosticStatus": "HOLD",
+  "source": "All six fresh-process runs, no warm-up or raw tick discarded",
+  "p95Method": "nearest rank ceil(0.95*n)",
+  "initialSessionSha256": "f8cc77c0f67a60a847b6c21e5f343f73fca7f2da7f6b2d453d8f11155643bc59",
+  "harnessSha256": "db7dda09f2be3b6dfb5296d2630bf37cfd6c2ec46f4f116a211e6eace091895b",
+  "allInitialSessionsIdentical": true,
+  "finalSessionsDeterministicWithinRevision": true,
+  "sixDistinctPids": true,
+  "runtime": {
+    "node": "v24.19.0",
+    "v8": "13.6.233.17-node.51",
+    "vite": "6.4.5"
+  },
+  "rows": [
+    {
+      "run": "01-base",
+      "revision": "base",
+      "cpuStart": [
+        {
+          "LoadPercentage": 18,
+          "NumberOfLogicalProcessors": 8
+        }
+      ],
+      "endWeek": {
+        "all": {
+          "n": 60,
+          "max": 47.23079999999982,
+          "p95": 27.452799999999797,
+          "mean": 24.96135166666668,
+          "over50": 0
+        },
+        "warm": {
+          "n": 55,
+          "max": 36.90599999999995,
+          "p95": 26.839500000000044,
+          "mean": 24.396069090909112,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 47.23079999999982,
+          "p95": 47.23079999999982,
+          "mean": 31.179459999999928,
+          "over50": 0
+        }
+      },
+      "life": null,
+      "lifeClone": null,
+      "postTransitions": null,
+      "maxTick": 1,
+      "overBudgetTicks": [],
+      "firstFiveOver50": 0,
+      "warmOver50": 0,
+      "beforeBirthdayMean": 24.20533529411765,
+      "birthdayAndAfterMean": 24.704876190476234,
+      "slowTickComponents": []
+    },
+    {
+      "run": "02-head",
+      "revision": "head",
+      "cpuStart": [
+        {
+          "LoadPercentage": 17,
+          "NumberOfLogicalProcessors": 8
+        }
+      ],
+      "endWeek": {
+        "all": {
+          "n": 60,
+          "max": 106.60000000000036,
+          "p95": 90.03150000000005,
+          "mean": 48.58868166666666,
+          "over50": 21
+        },
+        "warm": {
+          "n": 55,
+          "max": 106.60000000000036,
+          "p95": 90.95020000000022,
+          "mean": 49.14181272727272,
+          "over50": 20
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 63.50610000000006,
+          "p95": 63.50610000000006,
+          "mean": 42.50423999999998,
+          "over50": 1
+        }
+      },
+      "life": {
+        "all": {
+          "n": 60,
+          "max": 9.472899999999754,
+          "p95": 7.617999999999483,
+          "mean": 3.973451666666631,
+          "over50": 0
+        },
+        "warm": {
+          "n": 55,
+          "max": 9.472899999999754,
+          "p95": 7.688900000000103,
+          "mean": 4.06635272727269,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 3.691899999999805,
+          "p95": 3.691899999999805,
+          "mean": 2.9515399999999774,
+          "over50": 0
+        }
+      },
+      "lifeClone": {
+        "all": {
+          "n": 60,
+          "max": 9.31959999999981,
+          "p95": 7.456299999999828,
+          "mean": 3.868484999999964,
+          "over50": 0
+        },
+        "warm": {
+          "n": 55,
+          "max": 9.31959999999981,
+          "p95": 7.5677999999998065,
+          "mean": 3.967761818181779,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 3.5680999999999585,
+          "p95": 3.5680999999999585,
+          "mean": 2.7764400000000022,
+          "over50": 0
+        }
+      },
+      "postTransitions": {
+        "all": {
+          "n": 60,
+          "max": 0.2546999999995023,
+          "p95": 0.11159999999927095,
+          "mean": 0.06131333333328257,
+          "over50": 0
+        },
+        "warm": {
+          "n": 55,
+          "max": 0.2546999999995023,
+          "p95": 0.11159999999927095,
+          "mean": 0.060272727272678656,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 0.1873000000000502,
+          "p95": 0.1873000000000502,
+          "mean": 0.07275999999992563,
+          "over50": 0
+        }
+      },
+      "maxTick": 45,
+      "overBudgetTicks": [
+        1,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59
+      ],
+      "firstFiveOver50": 1,
+      "warmOver50": 20,
+      "beforeBirthdayMean": 34.30687941176476,
+      "birthdayAndAfterMean": 73.16027619047608,
+      "slowTickComponents": [
+        {
+          "tick": 1,
+          "weekBefore": 1,
+          "weekAfter": 2,
+          "startMs": 1780.1122,
+          "endMs": 1843.6183,
+          "endWeekMs": 63.50610000000006,
+          "lifeMs": 3.5445000000001983,
+          "lifeCloneMs": 3.0304000000000997,
+          "postTransitionsMs": 0.1873000000000502
+        },
+        {
+          "tick": 40,
+          "weekBefore": 40,
+          "weekAfter": 41,
+          "startMs": 4366.6605,
+          "endMs": 4439.5638,
+          "endWeekMs": 72.90329999999994,
+          "lifeMs": 6.49159999999938,
+          "lifeCloneMs": 5.469199999999546,
+          "postTransitionsMs": 0.05050000000028376
+        },
+        {
+          "tick": 41,
+          "weekBefore": 41,
+          "weekAfter": 42,
+          "startMs": 4510.4152,
+          "endMs": 4589.2283,
+          "endWeekMs": 78.8130999999994,
+          "lifeMs": 6.868800000000192,
+          "lifeCloneMs": 6.683100000000195,
+          "postTransitionsMs": 0.08520000000044092
+        },
+        {
+          "tick": 42,
+          "weekBefore": 42,
+          "weekAfter": 43,
+          "startMs": 4648.85,
+          "endMs": 4719.0277,
+          "endWeekMs": 70.17769999999928,
+          "lifeMs": 7.045000000000073,
+          "lifeCloneMs": 6.9483000000000175,
+          "postTransitionsMs": 0.10849999999936699
+        },
+        {
+          "tick": 43,
+          "weekBefore": 43,
+          "weekAfter": 44,
+          "startMs": 4784.8929,
+          "endMs": 4841.0362,
+          "endWeekMs": 56.143299999999726,
+          "lifeMs": 3.8635000000003856,
+          "lifeCloneMs": 3.735200000000077,
+          "postTransitionsMs": 0.0555000000003929
+        },
+        {
+          "tick": 44,
+          "weekBefore": 44,
+          "weekAfter": 45,
+          "startMs": 4916.854,
+          "endMs": 5000.2947,
+          "endWeekMs": 83.4407000000001,
+          "lifeMs": 7.594700000000557,
+          "lifeCloneMs": 7.456299999999828,
+          "postTransitionsMs": 0.0867999999991298
+        },
+        {
+          "tick": 45,
+          "weekBefore": 45,
+          "weekAfter": 46,
+          "startMs": 5087.4496,
+          "endMs": 5194.0496,
+          "endWeekMs": 106.60000000000036,
+          "lifeMs": 8.596199999999953,
+          "lifeCloneMs": 8.356700000000274,
+          "postTransitionsMs": 0.11159999999927095
+        },
+        {
+          "tick": 46,
+          "weekBefore": 46,
+          "weekAfter": 47,
+          "startMs": 5271.5189,
+          "endMs": 5362.4691,
+          "endWeekMs": 90.95020000000022,
+          "lifeMs": 7.26929999999993,
+          "lifeCloneMs": 7.0417999999999665,
+          "postTransitionsMs": 0.10750000000007276
+        },
+        {
+          "tick": 47,
+          "weekBefore": 47,
+          "weekAfter": 48,
+          "startMs": 5433.2403,
+          "endMs": 5523.2718,
+          "endWeekMs": 90.03150000000005,
+          "lifeMs": 7.266500000000633,
+          "lifeCloneMs": 7.107199999999466,
+          "postTransitionsMs": 0.08829999999943539
+        },
+        {
+          "tick": 48,
+          "weekBefore": 48,
+          "weekAfter": 49,
+          "startMs": 5603.5278,
+          "endMs": 5691.7802,
+          "endWeekMs": 88.2524000000003,
+          "lifeMs": 7.186399999999594,
+          "lifeCloneMs": 7.071399999999812,
+          "postTransitionsMs": 0.09959999999955471
+        },
+        {
+          "tick": 49,
+          "weekBefore": 49,
+          "weekAfter": 50,
+          "startMs": 5783.1394,
+          "endMs": 5877.2448,
+          "endWeekMs": 94.10540000000037,
+          "lifeMs": 7.617999999999483,
+          "lifeCloneMs": 7.4507000000003245,
+          "postTransitionsMs": 0.12219999999979336
+        },
+        {
+          "tick": 50,
+          "weekBefore": 50,
+          "weekAfter": 51,
+          "startMs": 5940.7167,
+          "endMs": 6022.2334,
+          "endWeekMs": 81.51670000000013,
+          "lifeMs": 7.032000000000153,
+          "lifeCloneMs": 6.917399999999361,
+          "postTransitionsMs": 0.07840000000032887
+        },
+        {
+          "tick": 51,
+          "weekBefore": 51,
+          "weekAfter": 52,
+          "startMs": 6078.033,
+          "endMs": 6131.8157,
+          "endWeekMs": 53.78269999999975,
+          "lifeMs": 3.9786999999996624,
+          "lifeCloneMs": 3.9255999999995765,
+          "postTransitionsMs": 0.056599999999889405
+        },
+        {
+          "tick": 52,
+          "weekBefore": 52,
+          "weekAfter": 53,
+          "startMs": 6201.2632,
+          "endMs": 6287.7108,
+          "endWeekMs": 86.44759999999951,
+          "lifeMs": 9.472899999999754,
+          "lifeCloneMs": 9.31959999999981,
+          "postTransitionsMs": 0.09899999999925058
+        },
+        {
+          "tick": 53,
+          "weekBefore": 53,
+          "weekAfter": 54,
+          "startMs": 6335.9532,
+          "endMs": 6389.5902,
+          "endWeekMs": 53.636999999999716,
+          "lifeMs": 3.9373999999997977,
+          "lifeCloneMs": 3.8828000000003158,
+          "postTransitionsMs": 0.05940000000009604
+        },
+        {
+          "tick": 54,
+          "weekBefore": 54,
+          "weekAfter": 55,
+          "startMs": 6463.8174,
+          "endMs": 6542.8897,
+          "endWeekMs": 79.07229999999981,
+          "lifeMs": 4.518299999999726,
+          "lifeCloneMs": 4.407000000000153,
+          "postTransitionsMs": 0.1081000000003769
+        },
+        {
+          "tick": 55,
+          "weekBefore": 55,
+          "weekAfter": 56,
+          "startMs": 6596.9075,
+          "endMs": 6651.6145,
+          "endWeekMs": 54.706999999999425,
+          "lifeMs": 5.854999999999563,
+          "lifeCloneMs": 5.792300000000068,
+          "postTransitionsMs": 0.061300000000301225
+        },
+        {
+          "tick": 56,
+          "weekBefore": 56,
+          "weekAfter": 57,
+          "startMs": 6720.7343,
+          "endMs": 6805.887,
+          "endWeekMs": 85.15269999999964,
+          "lifeMs": 7.688900000000103,
+          "lifeCloneMs": 7.5677999999998065,
+          "postTransitionsMs": 0.11049999999977445
+        },
+        {
+          "tick": 57,
+          "weekBefore": 57,
+          "weekAfter": 58,
+          "startMs": 6865.3701,
+          "endMs": 6918.5412,
+          "endWeekMs": 53.17109999999957,
+          "lifeMs": 4.472099999999955,
+          "lifeCloneMs": 4.395499999999629,
+          "postTransitionsMs": 0.05900000000019645
+        },
+        {
+          "tick": 58,
+          "weekBefore": 58,
+          "weekAfter": 59,
+          "startMs": 6960.4693,
+          "endMs": 7013.4921,
+          "endWeekMs": 53.02280000000064,
+          "lifeMs": 3.827299999999923,
+          "lifeCloneMs": 3.777100000000246,
+          "postTransitionsMs": 0.06639999999970314
+        },
+        {
+          "tick": 59,
+          "weekBefore": 59,
+          "weekAfter": 60,
+          "startMs": 7055.911,
+          "endMs": 7111.2404,
+          "endWeekMs": 55.32939999999962,
+          "lifeMs": 5.703799999999319,
+          "lifeCloneMs": 5.645199999999932,
+          "postTransitionsMs": 0.2546999999995023
+        }
+      ]
+    },
+    {
+      "run": "03-base",
+      "revision": "base",
+      "cpuStart": [
+        {
+          "LoadPercentage": 43,
+          "NumberOfLogicalProcessors": 8
+        }
+      ],
+      "endWeek": {
+        "all": {
+          "n": 60,
+          "max": 70.03800000000001,
+          "p95": 42.36389999999983,
+          "mean": 31.152311666666666,
+          "over50": 2
+        },
+        "warm": {
+          "n": 55,
+          "max": 35.966699999999946,
+          "p95": 35.071500000000015,
+          "mean": 29.515234545454554,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 70.03800000000001,
+          "p95": 70.03800000000001,
+          "mean": 49.160159999999905,
+          "over50": 2
+        }
+      },
+      "life": null,
+      "lifeClone": null,
+      "postTransitions": null,
+      "maxTick": 1,
+      "overBudgetTicks": [
+        1,
+        2
+      ],
+      "firstFiveOver50": 2,
+      "warmOver50": 0,
+      "beforeBirthdayMean": 30.353214705882344,
+      "birthdayAndAfterMean": 28.158504761904798,
+      "slowTickComponents": [
+        {
+          "tick": 1,
+          "weekBefore": 1,
+          "weekAfter": 2,
+          "startMs": 1564.8596,
+          "endMs": 1634.8976,
+          "endWeekMs": 70.03800000000001,
+          "lifeMs": null,
+          "lifeCloneMs": null,
+          "postTransitionsMs": null
+        },
+        {
+          "tick": 2,
+          "weekBefore": 2,
+          "weekAfter": 3,
+          "startMs": 1678.449,
+          "endMs": 1729.8011,
+          "endWeekMs": 51.35209999999984,
+          "lifeMs": null,
+          "lifeCloneMs": null,
+          "postTransitionsMs": null
+        }
+      ]
+    },
+    {
+      "run": "04-head",
+      "revision": "head",
+      "cpuStart": [
+        {
+          "LoadPercentage": 45,
+          "NumberOfLogicalProcessors": 8
+        }
+      ],
+      "endWeek": {
+        "all": {
+          "n": 60,
+          "max": 59.67370000000005,
+          "p95": 36.51599999999985,
+          "mean": 32.32100666666667,
+          "over50": 1
+        },
+        "warm": {
+          "n": 55,
+          "max": 36.6894999999995,
+          "p95": 36.021000000000186,
+          "mean": 31.538310909090917,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 59.67370000000005,
+          "p95": 59.67370000000005,
+          "mean": 40.93065999999999,
+          "over50": 1
+        }
+      },
+      "life": {
+        "all": {
+          "n": 60,
+          "max": 3.648400000000038,
+          "p95": 3.3555999999998676,
+          "mean": 2.5248233333333134,
+          "over50": 0
+        },
+        "warm": {
+          "n": 55,
+          "max": 3.648400000000038,
+          "p95": 3.4488000000001193,
+          "mean": 2.52170545454543,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 2.83179999999993,
+          "p95": 2.83179999999993,
+          "mean": 2.55912000000003,
+          "over50": 0
+        }
+      },
+      "lifeClone": {
+        "all": {
+          "n": 60,
+          "max": 3.587800000000243,
+          "p95": 3.3121000000001004,
+          "mean": 2.4597983333333446,
+          "over50": 0
+        },
+        "warm": {
+          "n": 55,
+          "max": 3.587800000000243,
+          "p95": 3.4029999999997926,
+          "mean": 2.463636363636376,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 2.498100000000022,
+          "p95": 2.498100000000022,
+          "mean": 2.4175799999999983,
+          "over50": 0
+        }
+      },
+      "postTransitions": {
+        "all": {
+          "n": 60,
+          "max": 1.0916000000001986,
+          "p95": 0.08629999999993743,
+          "mean": 0.06180333333332631,
+          "over50": 0
+        },
+        "warm": {
+          "n": 55,
+          "max": 1.0916000000001986,
+          "p95": 0.08629999999993743,
+          "mean": 0.06193999999999588,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 0.143100000000004,
+          "p95": 0.143100000000004,
+          "mean": 0.06029999999996107,
+          "over50": 0
+        }
+      },
+      "maxTick": 1,
+      "overBudgetTicks": [
+        1
+      ],
+      "firstFiveOver50": 1,
+      "warmOver50": 0,
+      "beforeBirthdayMean": 31.490999999999964,
+      "birthdayAndAfterMean": 31.614909523809597,
+      "slowTickComponents": [
+        {
+          "tick": 1,
+          "weekBefore": 1,
+          "weekAfter": 2,
+          "startMs": 1496.4722,
+          "endMs": 1556.1459,
+          "endWeekMs": 59.67370000000005,
+          "lifeMs": 2.83179999999993,
+          "lifeCloneMs": 2.4279999999998836,
+          "postTransitionsMs": 0.143100000000004
+        }
+      ]
+    },
+    {
+      "run": "05-base",
+      "revision": "base",
+      "cpuStart": [
+        {
+          "LoadPercentage": 38,
+          "NumberOfLogicalProcessors": 8
+        }
+      ],
+      "endWeek": {
+        "all": {
+          "n": 60,
+          "max": 59.308100000000195,
+          "p95": 34.79189999999994,
+          "mean": 30.47063666666672,
+          "over50": 1
+        },
+        "warm": {
+          "n": 55,
+          "max": 44.51110000000017,
+          "p95": 34.4653000000003,
+          "mean": 29.849092727272787,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 59.308100000000195,
+          "p95": 59.308100000000195,
+          "mean": 37.30762,
+          "over50": 1
+        }
+      },
+      "life": null,
+      "lifeClone": null,
+      "postTransitions": null,
+      "maxTick": 1,
+      "overBudgetTicks": [
+        1
+      ],
+      "firstFiveOver50": 1,
+      "warmOver50": 0,
+      "beforeBirthdayMean": 30.734188235294155,
+      "birthdayAndAfterMean": 28.416080952381044,
+      "slowTickComponents": [
+        {
+          "tick": 1,
+          "weekBefore": 1,
+          "weekAfter": 2,
+          "startMs": 1517.6906,
+          "endMs": 1576.9987,
+          "endWeekMs": 59.308100000000195,
+          "lifeMs": null,
+          "lifeCloneMs": null,
+          "postTransitionsMs": null
+        }
+      ]
+    },
+    {
+      "run": "06-head",
+      "revision": "head",
+      "cpuStart": [
+        {
+          "LoadPercentage": 36,
+          "NumberOfLogicalProcessors": 8
+        }
+      ],
+      "endWeek": {
+        "all": {
+          "n": 60,
+          "max": 61.632499999999936,
+          "p95": 35.50459999999998,
+          "mean": 32.75576666666665,
+          "over50": 1
+        },
+        "warm": {
+          "n": 55,
+          "max": 35.916299999999865,
+          "p95": 34.929699999999684,
+          "mean": 32.04751818181817,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 61.632499999999936,
+          "p95": 61.632499999999936,
+          "mean": 40.546499999999966,
+          "over50": 1
+        }
+      },
+      "life": {
+        "all": {
+          "n": 60,
+          "max": 4.43139999999994,
+          "p95": 2.9767000000001644,
+          "mean": 2.5682999999999536,
+          "over50": 0
+        },
+        "warm": {
+          "n": 55,
+          "max": 4.43139999999994,
+          "p95": 2.9767000000001644,
+          "mean": 2.5587545454544975,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 3.0144000000000233,
+          "p95": 3.0144000000000233,
+          "mean": 2.673299999999972,
+          "over50": 0
+        }
+      },
+      "lifeClone": {
+        "all": {
+          "n": 60,
+          "max": 4.374599999999646,
+          "p95": 2.7882999999992535,
+          "mean": 2.500798333333292,
+          "over50": 0
+        },
+        "warm": {
+          "n": 55,
+          "max": 4.374599999999646,
+          "p95": 2.8895999999995183,
+          "mean": 2.501136363636318,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 2.6878999999998996,
+          "p95": 2.6878999999998996,
+          "mean": 2.4970800000000053,
+          "over50": 0
+        }
+      },
+      "postTransitions": {
+        "all": {
+          "n": 60,
+          "max": 0.14670000000000982,
+          "p95": 0.05249999999978172,
+          "mean": 0.04114333333330554,
+          "over50": 0
+        },
+        "warm": {
+          "n": 55,
+          "max": 0.07130000000006476,
+          "p95": 0.05249999999978172,
+          "mean": 0.03906909090906497,
+          "over50": 0
+        },
+        "firstFive": {
+          "n": 5,
+          "max": 0.14670000000000982,
+          "p95": 0.14670000000000982,
+          "mean": 0.06395999999995183,
+          "over50": 0
+        }
+      },
+      "maxTick": 1,
+      "overBudgetTicks": [
+        1
+      ],
+      "firstFiveOver50": 1,
+      "warmOver50": 0,
+      "beforeBirthdayMean": 31.985126470588238,
+      "birthdayAndAfterMean": 32.1485333333333,
+      "slowTickComponents": [
+        {
+          "tick": 1,
+          "weekBefore": 1,
+          "weekAfter": 2,
+          "startMs": 1477.5144,
+          "endMs": 1539.1469,
+          "endWeekMs": 61.632499999999936,
+          "lifeMs": 3.0144000000000233,
+          "lifeCloneMs": 2.5105000000000928,
+          "postTransitionsMs": 0.14670000000000982
+        }
+      ]
+    }
+  ],
+  "pairs": [
+    {
+      "base": "01-base",
+      "head": "02-head",
+      "allMeanDelta": 23.62732999999998,
+      "allMaxDelta": 59.369200000000546,
+      "warmMeanDelta": 24.74574363636361,
+      "warmMaxDelta": 69.69400000000041
+    },
+    {
+      "base": "03-base",
+      "head": "04-head",
+      "allMeanDelta": 1.1686950000000031,
+      "allMaxDelta": -10.364299999999957,
+      "warmMeanDelta": 2.0230763636363633,
+      "warmMaxDelta": 0.7227999999995518
+    },
+    {
+      "base": "05-base",
+      "head": "06-head",
+      "allMeanDelta": 2.2851299999999313,
+      "allMaxDelta": 2.3243999999997413,
+      "warmMeanDelta": 2.198425454545383,
+      "warmMaxDelta": -8.594800000000305
+    }
+  ],
+  "pooled": {
+    "base": {
+      "all": {
+        "n": 180,
+        "max": 70.03800000000001,
+        "p95": 36.90599999999995,
+        "mean": 28.861433333333352,
+        "over50": 3
+      },
+      "warm": {
+        "n": 165,
+        "max": 44.51110000000017,
+        "p95": 33.51540000000023,
+        "mean": 27.920132121212152,
+        "over50": 0
+      }
+    },
+    "head": {
+      "all": {
+        "n": 180,
+        "max": 106.60000000000036,
+        "p95": 79.07229999999981,
+        "mean": 37.888484999999996,
+        "over50": 23
+      },
+      "warm": {
+        "n": 165,
+        "max": 106.60000000000036,
+        "p95": 81.51670000000013,
+        "mean": 37.5758806060606,
+        "over50": 20
+      }
+    }
+  },
+  "headMinusBase": {
+    "all": {
+      "mean": 9.027051666666644,
+      "max": 36.56200000000035
+    },
+    "warm": {
+      "mean": 9.655748484848448,
+      "max": 62.088900000000194
+    }
+  },
+  "limitations": [
+    "SSR source execution and inspector CPU sampling, matching the earlier harness engine; not a production bundle benchmark.",
+    "Head-only in-memory timers and wrapper allocations are included in head timings; no numerical overhead correction is applied.",
+    "In-call life/clone timing does not attribute later garbage collection or all external CPU variability.",
+    "Three alternating pairs provide descriptive evidence, not a confidence interval or proof of a universal production slowdown."
+  ],
+  "conclusion": {
+    "status": "HOLD",
+    "headBehavesSameAsBase": false,
+    "observedPooledMeanDeltaOver5Ms": true,
+    "headOnlyWarmBreaches": 20,
+    "likelyAddedCost": "Additional full-NPC structuredClone in npc-life-week.ts:17 after world-npc.ts:52 already clones NPCs",
+    "lateOutlierUniquelyAttributed": false,
+    "noFixPerformed": true
+  },
+  "environmentAudit": {
+    "windowStartUtc": "2026-11-17T23:03:58.4478700Z",
+    "windowEndUtc": "2026-11-18T00:40:05.5469440Z",
+    "eventCount": 3,
+    "events": [
+      {
+        "utc": "2026-11-17T23:10:42.9912797Z",
+        "id": 42,
+        "provider": "Microsoft-Windows-Kernel-Power"
+      },
+      {
+        "utc": "2026-11-17T23:10:45.1268292Z",
+        "id": 107,
+        "provider": "Microsoft-Windows-Kernel-Power"
+      },
+      {
+        "utc": "2026-11-18T00:31:31.7141529Z",
+        "id": 1,
+        "provider": "Microsoft-Windows-Power-Troubleshooter",
+        "sleepTime": "2026-11-17T23:10:38.7282707Z",
+        "wakeTime": "2026-11-18T00:31:30.3498965Z"
+      }
+    ],
+    "measurementRunOverlap": [],
+    "allEventsAfterLastMeasurement": true,
+    "allSleepIntervalsAfterLastMeasurement": true,
+    "lastMeasurementEndUtc": "2026-11-17T23:05:11.969985+00:00"
+  }
+}

@@ -1,0 +1,11 @@
+--- C:\Users\Admin\.t3\local-drafts\p7a-prB\perf-profile\profile-harness.mjs
++++ C:\Users\Admin\.t3\local-drafts\p7a-prB\fix-round1\profile\profile-harness.mjs
+@@ -32,7 +32,7 @@
+     const declaration='export function runNpcLifeWeek(';
+     assert.equal(code.split(declaration).length,2);
+     code=code.replace(declaration,'function __p7OriginalNpcLifeWeek(');
+-    const clone='  const next = structuredClone(npcs);';
++    const clone=code.includes('  const next = structuredClone(npcs);') ? '  const next = structuredClone(npcs);' : '  const next = npcs.map(npc => ({ ...npc, life: structuredClone(npc.life) }));';
+     assert.equal(code.split(clone).length,2);
+     code=code.replace(clone,'  const __p7CloneStart = performance.now();\n'+clone+'\n  globalThis.__p7Diagnostic.current.lifeCloneMs = performance.now() - __p7CloneStart;');
+     code+='\nexport function runNpcLifeWeek(...args) {\n  const start = performance.now();\n  try { return __p7OriginalNpcLifeWeek(...args); }\n  finally { globalThis.__p7Diagnostic.current.lifeMs = performance.now() - start; }\n}\n';

@@ -1,0 +1,3 @@
+GENERATOR_INVOCATIONS=1
+GENERATOR=packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts
+FLAG=GENERATE_CATALOG_GOLDEN=1

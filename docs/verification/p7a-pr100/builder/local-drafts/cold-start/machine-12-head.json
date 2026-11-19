@@ -1,0 +1,82 @@
+{
+    "captureStartUtc":  "2026-11-18T04:05:40.4199733Z",
+    "utc":  "2026-11-18T04:05:42.8267838Z",
+    "cpu":  [
+                {
+                    "LoadPercentage":  17,
+                    "NumberOfLogicalProcessors":  8
+                }
+            ],
+    "topProcesses":  [
+                         {
+                             "IDProcess":  4272,
+                             "Name":  "MsMpEng",
+                             "PercentProcessorTime":  64
+                         },
+                         {
+                             "IDProcess":  69204,
+                             "Name":  "claude",
+                             "PercentProcessorTime":  50
+                         },
+                         {
+                             "IDProcess":  87496,
+                             "Name":  "WmiPrvSE#2",
+                             "PercentProcessorTime":  18
+                         },
+                         {
+                             "IDProcess":  13700,
+                             "Name":  "claude#5",
+                             "PercentProcessorTime":  9
+                         },
+                         {
+                             "IDProcess":  67880,
+                             "Name":  "claude#6",
+                             "PercentProcessorTime":  9
+                         },
+                         {
+                             "IDProcess":  4,
+                             "Name":  "System",
+                             "PercentProcessorTime":  9
+                         },
+                         {
+                             "IDProcess":  37492,
+                             "Name":  "git-remote-https",
+                             "PercentProcessorTime":  9
+                         },
+                         {
+                             "IDProcess":  51768,
+                             "Name":  "claude#3",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  41908,
+                             "Name":  "node#21",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  74040,
+                             "Name":  "node#18",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  19732,
+                             "Name":  "node#20",
+                             "PercentProcessorTime":  0
+                         },
+                         {
+                             "IDProcess":  79364,
+                             "Name":  "node#17",
+                             "PercentProcessorTime":  0
+                         }
+                     ],
+    "processCpuUnit":  "PercentProcessorTime, 100 per fully busy logical CPU",
+    "processScanCount":  488,
+    "commandLineReadableCount":  122,
+    "candidateJobProcessCount":  122,
+    "competingJobs":  [
+
+                      ],
+    "portListeners":  [
+
+                      ]
+}

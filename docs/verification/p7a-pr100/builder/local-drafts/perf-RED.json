@@ -1,0 +1,12 @@
+{
+  "phase": "RED",
+  "utc": "2026-11-17T14:57:22.147Z",
+  "head": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+  "budgetMs": 50,
+  "npcs": 100,
+  "weeks": 60,
+  "lifeSamplesMs": [],
+  "endWeekSamplesMs": [],
+  "exitCode": 1,
+  "error": "Error: Failed to load url /packages/simulation/src/npc-life-week.ts (resolved id: /packages/simulation/src/npc-life-week.ts). Does the file exist?"
+}

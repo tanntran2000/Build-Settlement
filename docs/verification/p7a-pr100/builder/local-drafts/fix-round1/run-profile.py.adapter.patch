@@ -1,0 +1,41 @@
+--- C:\Users\Admin\.t3\local-drafts\p7a-prB\perf-profile\run-profile.py
++++ C:\Users\Admin\.t3\local-drafts\p7a-prB\fix-round1\profile\run-profile.py
+@@ -14,7 +14,7 @@
+ ROOT=Path('C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01')
+ OUT=Path(__file__).resolve().parent
+ BASE='dac604054d7cbbf14a0a42209a3ff560380f2956'
+-HEAD='cf94804876ef2d02835112e06c355314bbcc16cd'
++HEAD='b94d3083dd71722f329b1bf444fa9dec9b0fd309'
+ BRANCH='feat/p7a-npc-life-week'
+ FLAGS=subprocess.CREATE_NO_WINDOW if os.name=='nt' else 0
+ utc=lambda:dt.datetime.now(dt.timezone.utc).isoformat()
+@@ -45,7 +45,7 @@
+ save('restore-bytes.json',raw)
+ refs=git('for-each-ref','--format=%(refname) %(objectname)','refs/heads')
+ save('branch-refs-before.json',refs)
+-sequence={'owner':'Tân','verbatim':'Profile base vs head (Recommended)','base':BASE,'head':HEAD,'branch':BRANCH,'utcStart':window_start,'nodeExecutable':node,'harnessSha256':sha((OUT/'profile-harness.mjs').read_bytes()),'sequence':['base','head','base','head','base','head'],'runs':[],'status':'RUNNING','lockfileSame':True,'dependencyInstall':False,'noWarmupDiscarded':True}
++sequence={'owner':'Tân','verbatim':'Remove the extra clone (Recommended)','base':BASE,'head':HEAD,'branch':BRANCH,'utcStart':window_start,'nodeExecutable':node,'harnessSha256':sha((OUT/'profile-harness.mjs').read_bytes()),'sequence':['base','head','base','head','base','head'],'runs':[],'status':'RUNNING','lockfileSame':True,'dependencyInstall':False,'noWarmupDiscarded':True}
+ save('sequence.json',sequence)
+ failure=None
+ try:
+@@ -80,6 +80,10 @@
+         after=files();save('tracked-after.json',after)
+         assert before==after,'HOLD: raw tracked bytes changed'
+         assert refs==git('for-each-ref','--format=%(refname) %(objectname)','refs/heads'),'HOLD: local branch ref moved'
++        index_tree=git('write-tree')
++        assert index_tree==git('rev-parse','HEAD^{tree}')
++        subprocess.run(['git','add','--',*changed],cwd=ROOT,check=True,capture_output=True)
++        assert git('write-tree')==index_tree
+         assert git('status','--porcelain=v1')==''
+         machine('machine-final.json')
+         save('restoration.json',{'head':git('rev-parse','HEAD'),'tree':git('rev-parse','HEAD^{tree}'),'branch':git('branch','--show-current'),'gitStatus':'','trackedFilesVerified':len(before),'rawTrackedBytesIdentical':True,'localBranchRefsIdentical':True,'portsFree':True,'utc':utc(),'exitCode':0})
+@@ -87,7 +91,7 @@
+     ended=utc()
+     try:ps('capture-sleep.ps1','-StartUtc',window_start,'-EndUtc',ended,'-Destination',OUT/'sleep-resume-events.json')
+     except Exception as error:failure=(failure+'; ' if failure else '')+'SLEEP AUDIT: '+str(error)
+-    sequence.update(utcEnd=ended,status='HOLD',executionComplete=failure is None and len(sequence['runs'])==6,failure=failure)
++    sequence.update(utcEnd=ended,status='HOLD' if failure else 'MEASURED',executionComplete=failure is None and len(sequence['runs'])==6,failure=failure)
+     save('sequence.json',sequence)
+-    print(json.dumps({'status':'HOLD','executionComplete':sequence['executionComplete'],'failure':failure,'utcEnd':ended}),flush=True)
++    print(json.dumps({'status':sequence['status'],'executionComplete':sequence['executionComplete'],'failure':failure,'utcEnd':ended}),flush=True)
+ sys.exit(1 if failure else 0)

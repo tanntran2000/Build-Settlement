@@ -1,0 +1,5 @@
+Read-only tooling notes after B0 release:
+- A resumed source search passed wildcard paths directly to rg on Windows; corrected by searching the actual directories/files. No source mutation.
+- Two guessed persistence test paths and one guessed make-crisis-fixtures path did not exist; rg --files identified the actual simulation tests and their inline/helper generators.
+- eslint.config.js was a guessed read path; npm run lint used the repository's actual configuration and passed.
+- These were read/navigation errors, not product test or gate failures. They caused no additional product/test edit, timeout, configuration change or generator invocation.

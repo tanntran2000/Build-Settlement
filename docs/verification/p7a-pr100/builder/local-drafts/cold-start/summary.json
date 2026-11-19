@@ -1,0 +1,1818 @@
+{
+  "ownerDecision": "Clean cold-start check (Recommended)",
+  "status": "HOLD",
+  "budgetMs": 50,
+  "measurementRuntime": {
+    "node": "v24.19.0",
+    "v8": "13.6.233.17-node.51",
+    "arch": "x64",
+    "vite": "6.4.5",
+    "execArgv": []
+  },
+  "measurementProcessCount": 20,
+  "measurementSampleCount": 1200,
+  "byRevision": {
+    "base": {
+      "commit": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+      "tree": "d2f31706d77d308a310b61857a8b293a898280e7",
+      "count": 10,
+      "medianMs": 57.02760000000001,
+      "meanMs": 59.980329999999995,
+      "minMs": 45.93690000000004,
+      "maxMs": 84.05700000000002,
+      "tick1Over50": 6,
+      "allTicksOver50": 19,
+      "allTicksExactly50": 0,
+      "meanOfWarmMeansMs": 31.109514909090887,
+      "cpuBeforePctMin": 3,
+      "cpuBeforePctMax": 12,
+      "finalSession": {
+        "fileSha256": "13c7131594d6e94a8b0fecbeeabd1300dfe7bfb08de7cce3a6c06ae50cb68a44",
+        "compactSha256": "791e9d031f149f96f5b8490f7cc8e7cdf23e8b5db44648416a08149cc989f59f",
+        "bytes": 335147,
+        "previousFiles": [
+          "fix-round1/profile/01-base-final-session.json",
+          "fix-round1/profile/03-base-final-session.json",
+          "fix-round1/profile/05-base-final-session.json",
+          "perf-profile/01-base-final-session.json",
+          "perf-profile/03-base-final-session.json",
+          "perf-profile/05-base-final-session.json"
+        ]
+      }
+    },
+    "head": {
+      "commit": "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+      "tree": "947f604e17427d916e1ef0e21083dbc2f72920b6",
+      "count": 10,
+      "medianMs": 58.16165000000001,
+      "meanMs": 64.84316999999997,
+      "minMs": 47.86629999999991,
+      "maxMs": 98.3092999999999,
+      "tick1Over50": 9,
+      "allTicksOver50": 43,
+      "allTicksExactly50": 0,
+      "meanOfWarmMeansMs": 34.56131381818183,
+      "cpuBeforePctMin": 4,
+      "cpuBeforePctMax": 23,
+      "finalSession": {
+        "fileSha256": "400c5b61bd835511a0d8f56b8eb8eed76ddea32b5a667472d9e9442536671d48",
+        "compactSha256": "7d99241469c2f8819015c8f798168d18e715462606df1a75923f98266e31909d",
+        "bytes": 348847,
+        "previousFiles": [
+          "fix-round1/profile/02-head-final-session.json",
+          "fix-round1/profile/04-head-final-session.json",
+          "fix-round1/profile/06-head-final-session.json"
+        ]
+      }
+    }
+  },
+  "pairs": [
+    {
+      "pair": 1,
+      "base": "01-base",
+      "head": "02-head",
+      "deltaMs": 3.038400000000138,
+      "warmMeanDeltaMs": -1.187403636363591
+    },
+    {
+      "pair": 2,
+      "base": "03-base",
+      "head": "04-head",
+      "deltaMs": -0.9638999999999669,
+      "warmMeanDeltaMs": 1.5718490909091116
+    },
+    {
+      "pair": 3,
+      "base": "05-base",
+      "head": "06-head",
+      "deltaMs": -31.14520000000016,
+      "warmMeanDeltaMs": -6.5087127272726875
+    },
+    {
+      "pair": 4,
+      "base": "07-base",
+      "head": "08-head",
+      "deltaMs": 10.727300000000128,
+      "warmMeanDeltaMs": 1.3322636363636065
+    },
+    {
+      "pair": 5,
+      "base": "09-base",
+      "head": "10-head",
+      "deltaMs": 39.53939999999989,
+      "warmMeanDeltaMs": 17.658221818181847
+    },
+    {
+      "pair": 6,
+      "base": "11-base",
+      "head": "12-head",
+      "deltaMs": 2.3548000000000684,
+      "warmMeanDeltaMs": 4.898789090909137
+    },
+    {
+      "pair": 7,
+      "base": "13-base",
+      "head": "14-head",
+      "deltaMs": -17.683599999999956,
+      "warmMeanDeltaMs": 10.793243636363684
+    },
+    {
+      "pair": 8,
+      "base": "15-base",
+      "head": "16-head",
+      "deltaMs": -12.589200000000119,
+      "warmMeanDeltaMs": 1.1617836363636869
+    },
+    {
+      "pair": 9,
+      "base": "17-base",
+      "head": "18-head",
+      "deltaMs": 43.28769999999997,
+      "warmMeanDeltaMs": 2.4972418181818377
+    },
+    {
+      "pair": 10,
+      "base": "19-base",
+      "head": "20-head",
+      "deltaMs": 12.062699999999836,
+      "warmMeanDeltaMs": 2.300712727272739
+    }
+  ],
+  "paired": {
+    "medianDeltaMs": 2.696600000000103,
+    "minDeltaMs": -31.14520000000016,
+    "maxDeltaMs": 43.28769999999997,
+    "headSlower": 6,
+    "baseSlower": 4,
+    "ties": 0
+  },
+  "rows": [
+    {
+      "run": "01-base",
+      "revision": "base",
+      "pid": 85432,
+      "raw": "01-base.json",
+      "cpuBeforePct": 4,
+      "machine": "machine-01-base.json",
+      "firstFiveMs": [
+        55.28530000000001,
+        31.681499999999915,
+        30.910900000000083,
+        30.211700000000064,
+        29.88020000000006
+      ],
+      "warmMeanMs": 32.3434036363636,
+      "over50Ticks": [
+        1,
+        15,
+        43
+      ],
+      "exact50Ticks": [],
+      "initialSession": {
+        "fileSha256": "5d36595e95eb2a63f5266e0a511c683e0eb69770423a7a88a9baf3f79ac2b823",
+        "compactSha256": "f8cc77c0f67a60a847b6c21e5f343f73fca7f2da7f6b2d453d8f11155643bc59",
+        "bytes": 332500,
+        "previousFiles": [
+          "fix-round1/profile/01-base-initial-session.json",
+          "fix-round1/profile/02-head-initial-session.json",
+          "fix-round1/profile/03-base-initial-session.json",
+          "fix-round1/profile/04-head-initial-session.json",
+          "fix-round1/profile/05-base-initial-session.json",
+          "fix-round1/profile/06-head-initial-session.json",
+          "perf-profile/01-base-initial-session.json",
+          "perf-profile/02-head-initial-session.json",
+          "perf-profile/03-base-initial-session.json",
+          "perf-profile/04-head-initial-session.json",
+          "perf-profile/05-base-initial-session.json",
+          "perf-profile/06-head-initial-session.json"
+        ]
+      },
+      "finalSession": {
+        "fileSha256": "13c7131594d6e94a8b0fecbeeabd1300dfe7bfb08de7cce3a6c06ae50cb68a44",
+        "compactSha256": "791e9d031f149f96f5b8490f7cc8e7cdf23e8b5db44648416a08149cc989f59f",
+        "bytes": 335147,
+        "previousFiles": [
+          "fix-round1/profile/01-base-final-session.json",
+          "fix-round1/profile/03-base-final-session.json",
+          "fix-round1/profile/05-base-final-session.json",
+          "perf-profile/01-base-final-session.json",
+          "perf-profile/03-base-final-session.json",
+          "perf-profile/05-base-final-session.json"
+        ]
+      }
+    },
+    {
+      "run": "02-head",
+      "revision": "head",
+      "pid": 80216,
+      "raw": "02-head.json",
+      "cpuBeforePct": 23,
+      "machine": "machine-02-head.json",
+      "firstFiveMs": [
+        58.323700000000144,
+        37.206699999999955,
+        36.40259999999989,
+        35.601900000000114,
+        35.77469999999994
+      ],
+      "warmMeanMs": 31.156000000000006,
+      "over50Ticks": [
+        1
+      ],
+      "exact50Ticks": [],
+      "initialSession": {
+        "fileSha256": "5d36595e95eb2a63f5266e0a511c683e0eb69770423a7a88a9baf3f79ac2b823",
+        "compactSha256": "f8cc77c0f67a60a847b6c21e5f343f73fca7f2da7f6b2d453d8f11155643bc59",
+        "bytes": 332500,
+        "previousFiles": [
+          "fix-round1/profile/01-base-initial-session.json",
+          "fix-round1/profile/02-head-initial-session.json",
+          "fix-round1/profile/03-base-initial-session.json",
+          "fix-round1/profile/04-head-initial-session.json",
+          "fix-round1/profile/05-base-initial-session.json",
+          "fix-round1/profile/06-head-initial-session.json",
+          "perf-profile/01-base-initial-session.json",
+          "perf-profile/02-head-initial-session.json",
+          "perf-profile/03-base-initial-session.json",
+          "perf-profile/04-head-initial-session.json",
+          "perf-profile/05-base-initial-session.json",
+          "perf-profile/06-head-initial-session.json"
+        ]
+      },
+      "finalSession": {
+        "fileSha256": "400c5b61bd835511a0d8f56b8eb8eed76ddea32b5a667472d9e9442536671d48",
+        "compactSha256": "7d99241469c2f8819015c8f798168d18e715462606df1a75923f98266e31909d",
+        "bytes": 348847,
+        "previousFiles": [
+          "fix-round1/profile/02-head-final-session.json",
+          "fix-round1/profile/04-head-final-session.json",
+          "fix-round1/profile/06-head-final-session.json"
+        ]
+      }
+    },
+    {
+      "run": "03-base",
+      "revision": "base",
+      "pid": 91480,
+      "raw": "03-base.json",
+      "cpuBeforePct": 3,
+      "machine": "machine-03-base.json",
+      "firstFiveMs": [
+        48.83019999999988,
+        31.549099999999953,
+        31.561699999999973,
+        29.127500000000055,
+        33.70679999999993
+      ],
+      "warmMeanMs": 28.93196909090907,
+      "over50Ticks": [],
+      "exact50Ticks": [],
+      "initialSession": {
+        "fileSha256": "5d36595e95eb2a63f5266e0a511c683e0eb69770423a7a88a9baf3f79ac2b823",
+        "compactSha256": "f8cc77c0f67a60a847b6c21e5f343f73fca7f2da7f6b2d453d8f11155643bc59",
+        "bytes": 332500,
+        "previousFiles": [
+          "fix-round1/profile/01-base-initial-session.json",
+          "fix-round1/profile/02-head-initial-session.json",
+          "fix-round1/profile/03-base-initial-session.json",
+          "fix-round1/profile/04-head-initial-session.json",
+          "fix-round1/profile/05-base-initial-session.json",
+          "fix-round1/profile/06-head-initial-session.json",
+          "perf-profile/01-base-initial-session.json",
+          "perf-profile/02-head-initial-session.json",
+          "perf-profile/03-base-initial-session.json",
+          "perf-profile/04-head-initial-session.json",
+          "perf-profile/05-base-initial-session.json",
+          "perf-profile/06-head-initial-session.json"
+        ]
+      },
+      "finalSession": {
+        "fileSha256": "13c7131594d6e94a8b0fecbeeabd1300dfe7bfb08de7cce3a6c06ae50cb68a44",
+        "compactSha256": "791e9d031f149f96f5b8490f7cc8e7cdf23e8b5db44648416a08149cc989f59f",
+        "bytes": 335147,
+        "previousFiles": [
+          "fix-round1/profile/01-base-final-session.json",
+          "fix-round1/profile/03-base-final-session.json",
+          "fix-round1/profile/05-base-final-session.json",
+          "perf-profile/01-base-final-session.json",
+          "perf-profile/03-base-final-session.json",
+          "perf-profile/05-base-final-session.json"
+        ]
+      }
+    },
+    {
+      "run": "04-head",
+      "revision": "head",
+      "pid": 84716,
+      "raw": "04-head.json",
+      "cpuBeforePct": 10,
+      "machine": "machine-04-head.json",
+      "firstFiveMs": [
+        47.86629999999991,
+        30.320600000000013,
+        28.917000000000144,
+        28.694099999999935,
+        29.375
+      ],
+      "warmMeanMs": 30.503818181818183,
+      "over50Ticks": [],
+      "exact50Ticks": [],
+      "initialSession": {
+        "fileSha256": "5d36595e95eb2a63f5266e0a511c683e0eb69770423a7a88a9baf3f79ac2b823",
+        "compactSha256": "f8cc77c0f67a60a847b6c21e5f343f73fca7f2da7f6b2d453d8f11155643bc59",
+        "bytes": 332500,
+        "previousFiles": [
+          "fix-round1/profile/01-base-initial-session.json",
+          "fix-round1/profile/02-head-initial-session.json",
+          "fix-round1/profile/03-base-initial-session.json",
+          "fix-round1/profile/04-head-initial-session.json",
+          "fix-round1/profile/05-base-initial-session.json",
+          "fix-round1/profile/06-head-initial-session.json",
+          "perf-profile/01-base-initial-session.json",
+          "perf-profile/02-head-initial-session.json",
+          "perf-profile/03-base-initial-session.json",
+          "perf-profile/04-head-initial-session.json",
+          "perf-profile/05-base-initial-session.json",
+          "perf-profile/06-head-initial-session.json"
+        ]
+      },
+      "finalSession": {
+        "fileSha256": "400c5b61bd835511a0d8f56b8eb8eed76ddea32b5a667472d9e9442536671d48",
+        "compactSha256": "7d99241469c2f8819015c8f798168d18e715462606df1a75923f98266e31909d",
+        "bytes": 348847,
+        "previousFiles": [
+          "fix-round1/profile/02-head-final-session.json",
+          "fix-round1/profile/04-head-final-session.json",
+          "fix-round1/profile/06-head-final-session.json"
+        ]
+      }
+    },
+    {
+      "run": "05-base",
+      "revision": "base",
+      "pid": 87596,
+      "raw": "05-base.json",
+      "cpuBeforePct": 6,
+      "machine": "machine-05-base.json",
+      "firstFiveMs": [
+        84.05700000000002,
+        37.059099999999944,
+        35.49189999999999,
+        35.873600000000124,
+        43.38090000000011
+      ],
+      "warmMeanMs": 37.73122909090904,
+      "over50Ticks": [
+        1,
+        13,
+        14,
+        30,
+        31,
+        35,
+        37
+      ],
+      "exact50Ticks": [],
+      "initialSession": {
+        "fileSha256": "5d36595e95eb2a63f5266e0a511c683e0eb69770423a7a88a9baf3f79ac2b823",
+        "compactSha256": "f8cc77c0f67a60a847b6c21e5f343f73fca7f2da7f6b2d453d8f11155643bc59",
+        "bytes": 332500,
+        "previousFiles": [
+          "fix-round1/profile/01-base-initial-session.json",
+          "fix-round1/profile/02-head-initial-session.json",
+          "fix-round1/profile/03-base-initial-session.json",
+          "fix-round1/profile/04-head-initial-session.json",
+          "fix-round1/profile/05-base-initial-session.json",
+          "fix-round1/profile/06-head-initial-session.json",
+          "perf-profile/01-base-initial-session.json",
+          "perf-profile/02-head-initial-session.json",
+          "perf-profile/03-base-initial-session.json",
+          "perf-profile/04-head-initial-session.json",
+          "perf-profile/05-base-initial-session.json",
+          "perf-profile/06-head-initial-session.json"
+        ]
+      },
+      "finalSession": {
+        "fileSha256": "13c7131594d6e94a8b0fecbeeabd1300dfe7bfb08de7cce3a6c06ae50cb68a44",
+        "compactSha256": "791e9d031f149f96f5b8490f7cc8e7cdf23e8b5db44648416a08149cc989f59f",
+        "bytes": 335147,
+        "previousFiles": [
+          "fix-round1/profile/01-base-final-session.json",
+          "fix-round1/profile/03-base-final-session.json",
+          "fix-round1/profile/05-base-final-session.json",
+          "perf-profile/01-base-final-session.json",
+          "perf-profile/03-base-final-session.json",
+          "perf-profile/05-base-final-session.json"
+        ]
+      }
+    },
+    {
+      "run": "06-head",
+      "revision": "head",
+      "pid": 85328,
+      "raw": "06-head.json",
+      "cpuBeforePct": 11,
+      "machine": "machine-06-head.json",
+      "firstFiveMs": [
+        52.91179999999986,
+        33.94550000000004,
+        32.63559999999984,
+        35.68170000000009,
+        32.67990000000009
+      ],
+      "warmMeanMs": 31.222516363636352,
+      "over50Ticks": [
+        1,
+        51
+      ],
+      "exact50Ticks": [],
+      "initialSession": {
+        "fileSha256": "5d36595e95eb2a63f5266e0a511c683e0eb69770423a7a88a9baf3f79ac2b823",
+        "compactSha256": "f8cc77c0f67a60a847b6c21e5f343f73fca7f2da7f6b2d453d8f11155643bc59",
+        "bytes": 332500,
+        "previousFiles": [
+          "fix-round1/profile/01-base-initial-session.json",
+          "fix-round1/profile/02-head-initial-session.json",
+          "fix-round1/profile/03-base-initial-session.json",
+          "fix-round1/profile/04-head-initial-session.json",
+          "fix-round1/profile/05-base-initial-session.json",
+          "fix-round1/profile/06-head-initial-session.json",
+          "perf-profile/01-base-initial-session.json",
+          "perf-profile/02-head-initial-session.json",
+          "perf-profile/03-base-initial-session.json",
+          "perf-profile/04-head-initial-session.json",
+          "perf-profile/05-base-initial-session.json",
+          "perf-profile/06-head-initial-session.json"
+        ]
+      },
+      "finalSession": {
+        "fileSha256": "400c5b61bd835511a0d8f56b8eb8eed76ddea32b5a667472d9e9442536671d48",
+        "compactSha256": "7d99241469c2f8819015c8f798168d18e715462606df1a75923f98266e31909d",
+        "bytes": 348847,
+        "previousFiles": [
+          "fix-round1/profile/02-head-final-session.json",
+          "fix-round1/profile/04-head-final-session.json",
+          "fix-round1/profile/06-head-final-session.json"
+        ]
+      }
+    },
+    {
+      "run": "07-base",
+      "revision": "base",
+      "pid": 5648,
+      "raw": "07-base.json",
+      "cpuBeforePct": 6,
+      "machine": "machine-07-base.json",
+      "firstFiveMs": [
+        46.12479999999994,
+        33.05219999999986,
+        29.827999999999975,
+        28.93619999999987,
+        28.20990000000006
+      ],
+      "warmMeanMs": 31.98218181818182,
+      "over50Ticks": [],
+      "exact50Ticks": [],
+      "initialSession": {
+        "fileSha256": "5d36595e95eb2a63f5266e0a511c683e0eb69770423a7a88a9baf3f79ac2b823",
+        "compactSha256": "f8cc77c0f67a60a847b6c21e5f343f73fca7f2da7f6b2d453d8f11155643bc59",
+        "bytes": 332500,
+        "previousFiles": [
+          "fix-round1/profile/01-base-initial-session.json",
+          "fix-round1/profile/02-head-initial-session.json",
+          "fix-round1/profile/03-base-initial-session.json",
+          "fix-round1/profile/04-head-initial-session.json",
+          "fix-round1/profile/05-base-initial-session.json",
+          "fix-round1/profile/06-head-initial-session.json",
+          "perf-profile/01-base-initial-session.json",
+          "perf-profile/02-head-initial-session.json",
+          "perf-profile/03-base-initial-session.json",
+          "perf-profile/04-head-initial-session.json",
+          "perf-profile/05-base-initial-session.json",
+          "perf-profile/06-head-initial-session.json"
+        ]
+      },
+      "finalSession": {
+        "fileSha256": "13c7131594d6e94a8b0fecbeeabd1300dfe7bfb08de7cce3a6c06ae50cb68a44",
+        "compactSha256": "791e9d031f149f96f5b8490f7cc8e7cdf23e8b5db44648416a08149cc989f59f",
+        "bytes": 335147,
+        "previousFiles": [
+          "fix-round1/profile/01-base-final-session.json",
+          "fix-round1/profile/03-base-final-session.json",
+          "fix-round1/profile/05-base-final-session.json",
+          "perf-profile/01-base-final-session.json",
+          "perf-profile/03-base-final-session.json",
+          "perf-profile/05-base-final-session.json"
+        ]
+      }
+    },
+    {
+      "run": "08-head",
+      "revision": "head",
+      "pid": 86644,
+      "raw": "08-head.json",
+      "cpuBeforePct": 7,
+      "machine": "machine-08-head.json",
+      "firstFiveMs": [
+        56.852100000000064,
+        35.54359999999997,
+        37.079099999999926,
+        43.20730000000003,
+        35.80670000000009
+      ],
+      "warmMeanMs": 33.31444545454543,
+      "over50Ticks": [
+        1
+      ],
+      "exact50Ticks": [],
+      "initialSession": {
+        "fileSha256": "5d36595e95eb2a63f5266e0a511c683e0eb69770423a7a88a9baf3f79ac2b823",
+        "compactSha256": "f8cc77c0f67a60a847b6c21e5f343f73fca7f2da7f6b2d453d8f11155643bc59",
+        "bytes": 332500,
+        "previousFiles": [
+          "fix-round1/profile/01-base-initial-session.json",
+          "fix-round1/profile/02-head-initial-session.json",
+          "fix-round1/profile/03-base-initial-session.json",
+          "fix-round1/profile/04-head-initial-session.json",
+          "fix-round1/profile/05-base-initial-session.json",
+          "fix-round1/profile/06-head-initial-session.json",
+          "perf-profile/01-base-initial-session.json",
+          "perf-profile/02-head-initial-session.json",
+          "perf-profile/03-base-initial-session.json",
+          "perf-profile/04-head-initial-session.json",
+          "perf-profile/05-base-initial-session.json",
+          "perf-profile/06-head-initial-session.json"
+        ]
+      },
+      "finalSession": {
+        "fileSha256": "400c5b61bd835511a0d8f56b8eb8eed76ddea32b5a667472d9e9442536671d48",
+        "compactSha256": "7d99241469c2f8819015c8f798168d18e715462606df1a75923f98266e31909d",
+        "bytes": 348847,
+        "previousFiles": [
+          "fix-round1/profile/02-head-final-session.json",
+          "fix-round1/profile/04-head-final-session.json",
+          "fix-round1/profile/06-head-final-session.json"
+        ]
+      }
+    },
+    {
+      "run": "09-base",
+      "revision": "base",
+      "pid": 54864,
+      "raw": "09-base.json",
+      "cpuBeforePct": 8,
+      "machine": "machine-09-base.json",
+      "firstFiveMs": [
+        58.76990000000001,
+        38.28469999999993,
+        34.2331999999999,
+        34.61460000000011,
+        33.781200000000126
+      ],
+      "warmMeanMs": 29.87263454545452,
+      "over50Ticks": [
+        1
+      ],
+      "exact50Ticks": [],
+      "initialSession": {
+        "fileSha256": "5d36595e95eb2a63f5266e0a511c683e0eb69770423a7a88a9baf3f79ac2b823",
+        "compactSha256": "f8cc77c0f67a60a847b6c21e5f343f73fca7f2da7f6b2d453d8f11155643bc59",
+        "bytes": 332500,
+        "previousFiles": [
+          "fix-round1/profile/01-base-initial-session.json",
+          "fix-round1/profile/02-head-initial-session.json",
+          "fix-round1/profile/03-base-initial-session.json",
+          "fix-round1/profile/04-head-initial-session.json",
+          "fix-round1/profile/05-base-initial-session.json",
+          "fix-round1/profile/06-head-initial-session.json",
+          "perf-profile/01-base-initial-session.json",
+          "perf-profile/02-head-initial-session.json",
+          "perf-profile/03-base-initial-session.json",
+          "perf-profile/04-head-initial-session.json",
+          "perf-profile/05-base-initial-session.json",
+          "perf-profile/06-head-initial-session.json"
+        ]
+      },
+      "finalSession": {
+        "fileSha256": "13c7131594d6e94a8b0fecbeeabd1300dfe7bfb08de7cce3a6c06ae50cb68a44",
+        "compactSha256": "791e9d031f149f96f5b8490f7cc8e7cdf23e8b5db44648416a08149cc989f59f",
+        "bytes": 335147,
+        "previousFiles": [
+          "fix-round1/profile/01-base-final-session.json",
+          "fix-round1/profile/03-base-final-session.json",
+          "fix-round1/profile/05-base-final-session.json",
+          "perf-profile/01-base-final-session.json",
+          "perf-profile/03-base-final-session.json",
+          "perf-profile/05-base-final-session.json"
+        ]
+      }
+    },
+    {
+      "run": "10-head",
+      "revision": "head",
+      "pid": 91384,
+      "raw": "10-head.json",
+      "cpuBeforePct": 9,
+      "machine": "machine-10-head.json",
+      "firstFiveMs": [
+        98.3092999999999,
+        87.26389999999992,
+        86.07729999999992,
+        74.596,
+        57.037500000000136
+      ],
+      "warmMeanMs": 47.53085636363637,
+      "over50Ticks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        21
+      ],
+      "exact50Ticks": [],
+      "initialSession": {
+        "fileSha256": "5d36595e95eb2a63f5266e0a511c683e0eb69770423a7a88a9baf3f79ac2b823",
+        "compactSha256": "f8cc77c0f67a60a847b6c21e5f343f73fca7f2da7f6b2d453d8f11155643bc59",
+        "bytes": 332500,
+        "previousFiles": [
+          "fix-round1/profile/01-base-initial-session.json",
+          "fix-round1/profile/02-head-initial-session.json",
+          "fix-round1/profile/03-base-initial-session.json",
+          "fix-round1/profile/04-head-initial-session.json",
+          "fix-round1/profile/05-base-initial-session.json",
+          "fix-round1/profile/06-head-initial-session.json",
+          "perf-profile/01-base-initial-session.json",
+          "perf-profile/02-head-initial-session.json",
+          "perf-profile/03-base-initial-session.json",
+          "perf-profile/04-head-initial-session.json",
+          "perf-profile/05-base-initial-session.json",
+          "perf-profile/06-head-initial-session.json"
+        ]
+      },
+      "finalSession": {
+        "fileSha256": "400c5b61bd835511a0d8f56b8eb8eed76ddea32b5a667472d9e9442536671d48",
+        "compactSha256": "7d99241469c2f8819015c8f798168d18e715462606df1a75923f98266e31909d",
+        "bytes": 348847,
+        "previousFiles": [
+          "fix-round1/profile/02-head-final-session.json",
+          "fix-round1/profile/04-head-final-session.json",
+          "fix-round1/profile/06-head-final-session.json"
+        ]
+      }
+    },
+    {
+      "run": "11-base",
+      "revision": "base",
+      "pid": 37008,
+      "raw": "11-base.json",
+      "cpuBeforePct": 9,
+      "machine": "machine-11-base.json",
+      "firstFiveMs": [
+        71.74929999999995,
+        36.75460000000021,
+        32.95759999999996,
+        34.43379999999979,
+        34.56960000000004
+      ],
+      "warmMeanMs": 30.615218181818168,
+      "over50Ticks": [
+        1
+      ],
+      "exact50Ticks": [],
+      "initialSession": {
+        "fileSha256": "5d36595e95eb2a63f5266e0a511c683e0eb69770423a7a88a9baf3f79ac2b823",
+        "compactSha256": "f8cc77c0f67a60a847b6c21e5f343f73fca7f2da7f6b2d453d8f11155643bc59",
+        "bytes": 332500,
+        "previousFiles": [
+          "fix-round1/profile/01-base-initial-session.json",
+          "fix-round1/profile/02-head-initial-session.json",
+          "fix-round1/profile/03-base-initial-session.json",
+          "fix-round1/profile/04-head-initial-session.json",
+          "fix-round1/profile/05-base-initial-session.json",
+          "fix-round1/profile/06-head-initial-session.json",
+          "perf-profile/01-base-initial-session.json",
+          "perf-profile/02-head-initial-session.json",
+          "perf-profile/03-base-initial-session.json",
+          "perf-profile/04-head-initial-session.json",
+          "perf-profile/05-base-initial-session.json",
+          "perf-profile/06-head-initial-session.json"
+        ]
+      },
+      "finalSession": {
+        "fileSha256": "13c7131594d6e94a8b0fecbeeabd1300dfe7bfb08de7cce3a6c06ae50cb68a44",
+        "compactSha256": "791e9d031f149f96f5b8490f7cc8e7cdf23e8b5db44648416a08149cc989f59f",
+        "bytes": 335147,
+        "previousFiles": [
+          "fix-round1/profile/01-base-final-session.json",
+          "fix-round1/profile/03-base-final-session.json",
+          "fix-round1/profile/05-base-final-session.json",
+          "perf-profile/01-base-final-session.json",
+          "perf-profile/03-base-final-session.json",
+          "perf-profile/05-base-final-session.json"
+        ]
+      }
+    },
+    {
+      "run": "12-head",
+      "revision": "head",
+      "pid": 91332,
+      "raw": "12-head.json",
+      "cpuBeforePct": 17,
+      "machine": "machine-12-head.json",
+      "firstFiveMs": [
+        74.10410000000002,
+        42.13139999999976,
+        48.77169999999978,
+        41.3449999999998,
+        47.697799999999916
+      ],
+      "warmMeanMs": 35.514007272727305,
+      "over50Ticks": [
+        1,
+        53
+      ],
+      "exact50Ticks": [],
+      "initialSession": {
+        "fileSha256": "5d36595e95eb2a63f5266e0a511c683e0eb69770423a7a88a9baf3f79ac2b823",
+        "compactSha256": "f8cc77c0f67a60a847b6c21e5f343f73fca7f2da7f6b2d453d8f11155643bc59",
+        "bytes": 332500,
+        "previousFiles": [
+          "fix-round1/profile/01-base-initial-session.json",
+          "fix-round1/profile/02-head-initial-session.json",
+          "fix-round1/profile/03-base-initial-session.json",
+          "fix-round1/profile/04-head-initial-session.json",
+          "fix-round1/profile/05-base-initial-session.json",
+          "fix-round1/profile/06-head-initial-session.json",
+          "perf-profile/01-base-initial-session.json",
+          "perf-profile/02-head-initial-session.json",
+          "perf-profile/03-base-initial-session.json",
+          "perf-profile/04-head-initial-session.json",
+          "perf-profile/05-base-initial-session.json",
+          "perf-profile/06-head-initial-session.json"
+        ]
+      },
+      "finalSession": {
+        "fileSha256": "400c5b61bd835511a0d8f56b8eb8eed76ddea32b5a667472d9e9442536671d48",
+        "compactSha256": "7d99241469c2f8819015c8f798168d18e715462606df1a75923f98266e31909d",
+        "bytes": 348847,
+        "previousFiles": [
+          "fix-round1/profile/02-head-final-session.json",
+          "fix-round1/profile/04-head-final-session.json",
+          "fix-round1/profile/06-head-final-session.json"
+        ]
+      }
+    },
+    {
+      "run": "13-base",
+      "revision": "base",
+      "pid": 58884,
+      "raw": "13-base.json",
+      "cpuBeforePct": 10,
+      "machine": "machine-13-base.json",
+      "firstFiveMs": [
+        78.0353,
+        41.19769999999994,
+        39.25829999999996,
+        35.509000000000015,
+        43.5172
+      ],
+      "warmMeanMs": 34.434541818181785,
+      "over50Ticks": [
+        1,
+        9,
+        10,
+        12,
+        13,
+        14
+      ],
+      "exact50Ticks": [],
+      "initialSession": {
+        "fileSha256": "5d36595e95eb2a63f5266e0a511c683e0eb69770423a7a88a9baf3f79ac2b823",
+        "compactSha256": "f8cc77c0f67a60a847b6c21e5f343f73fca7f2da7f6b2d453d8f11155643bc59",
+        "bytes": 332500,
+        "previousFiles": [
+          "fix-round1/profile/01-base-initial-session.json",
+          "fix-round1/profile/02-head-initial-session.json",
+          "fix-round1/profile/03-base-initial-session.json",
+          "fix-round1/profile/04-head-initial-session.json",
+          "fix-round1/profile/05-base-initial-session.json",
+          "fix-round1/profile/06-head-initial-session.json",
+          "perf-profile/01-base-initial-session.json",
+          "perf-profile/02-head-initial-session.json",
+          "perf-profile/03-base-initial-session.json",
+          "perf-profile/04-head-initial-session.json",
+          "perf-profile/05-base-initial-session.json",
+          "perf-profile/06-head-initial-session.json"
+        ]
+      },
+      "finalSession": {
+        "fileSha256": "13c7131594d6e94a8b0fecbeeabd1300dfe7bfb08de7cce3a6c06ae50cb68a44",
+        "compactSha256": "791e9d031f149f96f5b8490f7cc8e7cdf23e8b5db44648416a08149cc989f59f",
+        "bytes": 335147,
+        "previousFiles": [
+          "fix-round1/profile/01-base-final-session.json",
+          "fix-round1/profile/03-base-final-session.json",
+          "fix-round1/profile/05-base-final-session.json",
+          "perf-profile/01-base-final-session.json",
+          "perf-profile/03-base-final-session.json",
+          "perf-profile/05-base-final-session.json"
+        ]
+      }
+    },
+    {
+      "run": "14-head",
+      "revision": "head",
+      "pid": 64712,
+      "raw": "14-head.json",
+      "cpuBeforePct": 6,
+      "machine": "machine-14-head.json",
+      "firstFiveMs": [
+        60.35170000000005,
+        40.6742999999999,
+        45.42969999999991,
+        44.60609999999997,
+        51.3442
+      ],
+      "warmMeanMs": 45.22778545454547,
+      "over50Ticks": [
+        1,
+        5,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        23
+      ],
+      "exact50Ticks": [],
+      "initialSession": {
+        "fileSha256": "5d36595e95eb2a63f5266e0a511c683e0eb69770423a7a88a9baf3f79ac2b823",
+        "compactSha256": "f8cc77c0f67a60a847b6c21e5f343f73fca7f2da7f6b2d453d8f11155643bc59",
+        "bytes": 332500,
+        "previousFiles": [
+          "fix-round1/profile/01-base-initial-session.json",
+          "fix-round1/profile/02-head-initial-session.json",
+          "fix-round1/profile/03-base-initial-session.json",
+          "fix-round1/profile/04-head-initial-session.json",
+          "fix-round1/profile/05-base-initial-session.json",
+          "fix-round1/profile/06-head-initial-session.json",
+          "perf-profile/01-base-initial-session.json",
+          "perf-profile/02-head-initial-session.json",
+          "perf-profile/03-base-initial-session.json",
+          "perf-profile/04-head-initial-session.json",
+          "perf-profile/05-base-initial-session.json",
+          "perf-profile/06-head-initial-session.json"
+        ]
+      },
+      "finalSession": {
+        "fileSha256": "400c5b61bd835511a0d8f56b8eb8eed76ddea32b5a667472d9e9442536671d48",
+        "compactSha256": "7d99241469c2f8819015c8f798168d18e715462606df1a75923f98266e31909d",
+        "bytes": 348847,
+        "previousFiles": [
+          "fix-round1/profile/02-head-final-session.json",
+          "fix-round1/profile/04-head-final-session.json",
+          "fix-round1/profile/06-head-final-session.json"
+        ]
+      }
+    },
+    {
+      "run": "15-base",
+      "revision": "base",
+      "pid": 84224,
+      "raw": "15-base.json",
+      "cpuBeforePct": 6,
+      "machine": "machine-15-base.json",
+      "firstFiveMs": [
+        62.96330000000012,
+        42.11779999999999,
+        42.50440000000003,
+        36.4507000000001,
+        36.041800000000194
+      ],
+      "warmMeanMs": 28.626429090909006,
+      "over50Ticks": [
+        1
+      ],
+      "exact50Ticks": [],
+      "initialSession": {
+        "fileSha256": "5d36595e95eb2a63f5266e0a511c683e0eb69770423a7a88a9baf3f79ac2b823",
+        "compactSha256": "f8cc77c0f67a60a847b6c21e5f343f73fca7f2da7f6b2d453d8f11155643bc59",
+        "bytes": 332500,
+        "previousFiles": [
+          "fix-round1/profile/01-base-initial-session.json",
+          "fix-round1/profile/02-head-initial-session.json",
+          "fix-round1/profile/03-base-initial-session.json",
+          "fix-round1/profile/04-head-initial-session.json",
+          "fix-round1/profile/05-base-initial-session.json",
+          "fix-round1/profile/06-head-initial-session.json",
+          "perf-profile/01-base-initial-session.json",
+          "perf-profile/02-head-initial-session.json",
+          "perf-profile/03-base-initial-session.json",
+          "perf-profile/04-head-initial-session.json",
+          "perf-profile/05-base-initial-session.json",
+          "perf-profile/06-head-initial-session.json"
+        ]
+      },
+      "finalSession": {
+        "fileSha256": "13c7131594d6e94a8b0fecbeeabd1300dfe7bfb08de7cce3a6c06ae50cb68a44",
+        "compactSha256": "791e9d031f149f96f5b8490f7cc8e7cdf23e8b5db44648416a08149cc989f59f",
+        "bytes": 335147,
+        "previousFiles": [
+          "fix-round1/profile/01-base-final-session.json",
+          "fix-round1/profile/03-base-final-session.json",
+          "fix-round1/profile/05-base-final-session.json",
+          "perf-profile/01-base-final-session.json",
+          "perf-profile/03-base-final-session.json",
+          "perf-profile/05-base-final-session.json"
+        ]
+      }
+    },
+    {
+      "run": "16-head",
+      "revision": "head",
+      "pid": 91252,
+      "raw": "16-head.json",
+      "cpuBeforePct": 4,
+      "machine": "machine-16-head.json",
+      "firstFiveMs": [
+        50.3741,
+        33.62869999999998,
+        35.05420000000004,
+        31.50720000000001,
+        33.115400000000136
+      ],
+      "warmMeanMs": 29.788212727272693,
+      "over50Ticks": [
+        1
+      ],
+      "exact50Ticks": [],
+      "initialSession": {
+        "fileSha256": "5d36595e95eb2a63f5266e0a511c683e0eb69770423a7a88a9baf3f79ac2b823",
+        "compactSha256": "f8cc77c0f67a60a847b6c21e5f343f73fca7f2da7f6b2d453d8f11155643bc59",
+        "bytes": 332500,
+        "previousFiles": [
+          "fix-round1/profile/01-base-initial-session.json",
+          "fix-round1/profile/02-head-initial-session.json",
+          "fix-round1/profile/03-base-initial-session.json",
+          "fix-round1/profile/04-head-initial-session.json",
+          "fix-round1/profile/05-base-initial-session.json",
+          "fix-round1/profile/06-head-initial-session.json",
+          "perf-profile/01-base-initial-session.json",
+          "perf-profile/02-head-initial-session.json",
+          "perf-profile/03-base-initial-session.json",
+          "perf-profile/04-head-initial-session.json",
+          "perf-profile/05-base-initial-session.json",
+          "perf-profile/06-head-initial-session.json"
+        ]
+      },
+      "finalSession": {
+        "fileSha256": "400c5b61bd835511a0d8f56b8eb8eed76ddea32b5a667472d9e9442536671d48",
+        "compactSha256": "7d99241469c2f8819015c8f798168d18e715462606df1a75923f98266e31909d",
+        "bytes": 348847,
+        "previousFiles": [
+          "fix-round1/profile/02-head-final-session.json",
+          "fix-round1/profile/04-head-final-session.json",
+          "fix-round1/profile/06-head-final-session.json"
+        ]
+      }
+    },
+    {
+      "run": "17-base",
+      "revision": "base",
+      "pid": 90512,
+      "raw": "17-base.json",
+      "cpuBeforePct": 11,
+      "machine": "machine-17-base.json",
+      "firstFiveMs": [
+        48.05129999999997,
+        34.553499999999985,
+        29.50389999999993,
+        31.791600000000017,
+        29.19920000000002
+      ],
+      "warmMeanMs": 28.747405454545465,
+      "over50Ticks": [],
+      "exact50Ticks": [],
+      "initialSession": {
+        "fileSha256": "5d36595e95eb2a63f5266e0a511c683e0eb69770423a7a88a9baf3f79ac2b823",
+        "compactSha256": "f8cc77c0f67a60a847b6c21e5f343f73fca7f2da7f6b2d453d8f11155643bc59",
+        "bytes": 332500,
+        "previousFiles": [
+          "fix-round1/profile/01-base-initial-session.json",
+          "fix-round1/profile/02-head-initial-session.json",
+          "fix-round1/profile/03-base-initial-session.json",
+          "fix-round1/profile/04-head-initial-session.json",
+          "fix-round1/profile/05-base-initial-session.json",
+          "fix-round1/profile/06-head-initial-session.json",
+          "perf-profile/01-base-initial-session.json",
+          "perf-profile/02-head-initial-session.json",
+          "perf-profile/03-base-initial-session.json",
+          "perf-profile/04-head-initial-session.json",
+          "perf-profile/05-base-initial-session.json",
+          "perf-profile/06-head-initial-session.json"
+        ]
+      },
+      "finalSession": {
+        "fileSha256": "13c7131594d6e94a8b0fecbeeabd1300dfe7bfb08de7cce3a6c06ae50cb68a44",
+        "compactSha256": "791e9d031f149f96f5b8490f7cc8e7cdf23e8b5db44648416a08149cc989f59f",
+        "bytes": 335147,
+        "previousFiles": [
+          "fix-round1/profile/01-base-final-session.json",
+          "fix-round1/profile/03-base-final-session.json",
+          "fix-round1/profile/05-base-final-session.json",
+          "perf-profile/01-base-final-session.json",
+          "perf-profile/03-base-final-session.json",
+          "perf-profile/05-base-final-session.json"
+        ]
+      }
+    },
+    {
+      "run": "18-head",
+      "revision": "head",
+      "pid": 88168,
+      "raw": "18-head.json",
+      "cpuBeforePct": 4,
+      "machine": "machine-18-head.json",
+      "firstFiveMs": [
+        91.33899999999994,
+        64.23709999999983,
+        46.79040000000032,
+        44.45589999999993,
+        47.39760000000024
+      ],
+      "warmMeanMs": 31.244647272727303,
+      "over50Ticks": [
+        1,
+        2
+      ],
+      "exact50Ticks": [],
+      "initialSession": {
+        "fileSha256": "5d36595e95eb2a63f5266e0a511c683e0eb69770423a7a88a9baf3f79ac2b823",
+        "compactSha256": "f8cc77c0f67a60a847b6c21e5f343f73fca7f2da7f6b2d453d8f11155643bc59",
+        "bytes": 332500,
+        "previousFiles": [
+          "fix-round1/profile/01-base-initial-session.json",
+          "fix-round1/profile/02-head-initial-session.json",
+          "fix-round1/profile/03-base-initial-session.json",
+          "fix-round1/profile/04-head-initial-session.json",
+          "fix-round1/profile/05-base-initial-session.json",
+          "fix-round1/profile/06-head-initial-session.json",
+          "perf-profile/01-base-initial-session.json",
+          "perf-profile/02-head-initial-session.json",
+          "perf-profile/03-base-initial-session.json",
+          "perf-profile/04-head-initial-session.json",
+          "perf-profile/05-base-initial-session.json",
+          "perf-profile/06-head-initial-session.json"
+        ]
+      },
+      "finalSession": {
+        "fileSha256": "400c5b61bd835511a0d8f56b8eb8eed76ddea32b5a667472d9e9442536671d48",
+        "compactSha256": "7d99241469c2f8819015c8f798168d18e715462606df1a75923f98266e31909d",
+        "bytes": 348847,
+        "previousFiles": [
+          "fix-round1/profile/02-head-final-session.json",
+          "fix-round1/profile/04-head-final-session.json",
+          "fix-round1/profile/06-head-final-session.json"
+        ]
+      }
+    },
+    {
+      "run": "19-base",
+      "revision": "base",
+      "pid": 76532,
+      "raw": "19-base.json",
+      "cpuBeforePct": 12,
+      "machine": "machine-19-base.json",
+      "firstFiveMs": [
+        45.93690000000004,
+        27.783300000000054,
+        28.81600000000003,
+        27.61200000000008,
+        28.544299999999794
+      ],
+      "warmMeanMs": 27.8101363636364,
+      "over50Ticks": [],
+      "exact50Ticks": [],
+      "initialSession": {
+        "fileSha256": "5d36595e95eb2a63f5266e0a511c683e0eb69770423a7a88a9baf3f79ac2b823",
+        "compactSha256": "f8cc77c0f67a60a847b6c21e5f343f73fca7f2da7f6b2d453d8f11155643bc59",
+        "bytes": 332500,
+        "previousFiles": [
+          "fix-round1/profile/01-base-initial-session.json",
+          "fix-round1/profile/02-head-initial-session.json",
+          "fix-round1/profile/03-base-initial-session.json",
+          "fix-round1/profile/04-head-initial-session.json",
+          "fix-round1/profile/05-base-initial-session.json",
+          "fix-round1/profile/06-head-initial-session.json",
+          "perf-profile/01-base-initial-session.json",
+          "perf-profile/02-head-initial-session.json",
+          "perf-profile/03-base-initial-session.json",
+          "perf-profile/04-head-initial-session.json",
+          "perf-profile/05-base-initial-session.json",
+          "perf-profile/06-head-initial-session.json"
+        ]
+      },
+      "finalSession": {
+        "fileSha256": "13c7131594d6e94a8b0fecbeeabd1300dfe7bfb08de7cce3a6c06ae50cb68a44",
+        "compactSha256": "791e9d031f149f96f5b8490f7cc8e7cdf23e8b5db44648416a08149cc989f59f",
+        "bytes": 335147,
+        "previousFiles": [
+          "fix-round1/profile/01-base-final-session.json",
+          "fix-round1/profile/03-base-final-session.json",
+          "fix-round1/profile/05-base-final-session.json",
+          "perf-profile/01-base-final-session.json",
+          "perf-profile/03-base-final-session.json",
+          "perf-profile/05-base-final-session.json"
+        ]
+      }
+    },
+    {
+      "run": "20-head",
+      "revision": "head",
+      "pid": 92152,
+      "raw": "20-head.json",
+      "cpuBeforePct": 11,
+      "machine": "machine-20-head.json",
+      "firstFiveMs": [
+        57.99959999999987,
+        33.22610000000009,
+        32.97180000000003,
+        32.194999999999936,
+        36.406799999999976
+      ],
+      "warmMeanMs": 30.110849090909138,
+      "over50Ticks": [
+        1
+      ],
+      "exact50Ticks": [],
+      "initialSession": {
+        "fileSha256": "5d36595e95eb2a63f5266e0a511c683e0eb69770423a7a88a9baf3f79ac2b823",
+        "compactSha256": "f8cc77c0f67a60a847b6c21e5f343f73fca7f2da7f6b2d453d8f11155643bc59",
+        "bytes": 332500,
+        "previousFiles": [
+          "fix-round1/profile/01-base-initial-session.json",
+          "fix-round1/profile/02-head-initial-session.json",
+          "fix-round1/profile/03-base-initial-session.json",
+          "fix-round1/profile/04-head-initial-session.json",
+          "fix-round1/profile/05-base-initial-session.json",
+          "fix-round1/profile/06-head-initial-session.json",
+          "perf-profile/01-base-initial-session.json",
+          "perf-profile/02-head-initial-session.json",
+          "perf-profile/03-base-initial-session.json",
+          "perf-profile/04-head-initial-session.json",
+          "perf-profile/05-base-initial-session.json",
+          "perf-profile/06-head-initial-session.json"
+        ]
+      },
+      "finalSession": {
+        "fileSha256": "400c5b61bd835511a0d8f56b8eb8eed76ddea32b5a667472d9e9442536671d48",
+        "compactSha256": "7d99241469c2f8819015c8f798168d18e715462606df1a75923f98266e31909d",
+        "bytes": 348847,
+        "previousFiles": [
+          "fix-round1/profile/02-head-final-session.json",
+          "fix-round1/profile/04-head-final-session.json",
+          "fix-round1/profile/06-head-final-session.json"
+        ]
+      }
+    }
+  ],
+  "profiles": [
+    {
+      "raw": "profile-base.cpuprofile",
+      "run": "profile-base",
+      "tick1Ms": 54.6271999999999,
+      "cpuBeforePct": 9,
+      "allSamples": 34,
+      "startTimeUs": 1218624150058,
+      "endTimeUs": 1218624340759,
+      "sumTimeDeltasUs": 190383,
+      "dispatcherStackSamples": 31,
+      "inclusiveCategorySamples": {
+        "dispatcher": 31,
+        "structuredClone": 2,
+        "npcLifeStep": 0,
+        "cloneInLifeStep": 0,
+        "namedReport": 0,
+        "stateValidation": 21,
+        "explicitCompiler": 0
+      },
+      "dispatcherFrameUrls": [
+        ""
+      ],
+      "categoryFrameNames": {
+        "structuredClone": [
+          "structuredClone"
+        ],
+        "npcLifeStep": [],
+        "cloneInLifeStep": [],
+        "namedReport": [],
+        "stateValidation": [
+          "isLawsState",
+          "isLiveCharacterLifeSessionState",
+          "isOutsideState",
+          "isSocietyState",
+          "isTileTrialPlanningState",
+          "isTileTrialState",
+          "isWorldSessionState"
+        ],
+        "explicitCompiler": []
+      },
+      "topInclusiveFrames": [
+        {
+          "function": "(anonymous)",
+          "source": "file:///C:/Users/Admin/.t3/local-drafts/p7a-prB/cold-start/harness.mjs",
+          "samples": 31
+        },
+        {
+          "function": "(root)",
+          "source": "",
+          "samples": 31
+        },
+        {
+          "function": "executeCharacterLifeCommand",
+          "source": "",
+          "samples": 31
+        },
+        {
+          "function": "isLiveCharacterLifeSessionState",
+          "source": "",
+          "samples": 17
+        },
+        {
+          "function": "executeWorldNpcCityCommand",
+          "source": "",
+          "samples": 13
+        },
+        {
+          "function": "executeTileTrialCommand",
+          "source": "",
+          "samples": 9
+        },
+        {
+          "function": "isWorldNpcList",
+          "source": "",
+          "samples": 9
+        },
+        {
+          "function": "(anonymous)",
+          "source": "",
+          "samples": 8
+        },
+        {
+          "function": "hasWeeklyKeys",
+          "source": "",
+          "samples": 8
+        },
+        {
+          "function": "isTileTrialState",
+          "source": "",
+          "samples": 8
+        },
+        {
+          "function": "isNpcLife",
+          "source": "",
+          "samples": 6
+        },
+        {
+          "function": "runTileTrialWeek",
+          "source": "",
+          "samples": 6
+        },
+        {
+          "function": "isDataRecord",
+          "source": "",
+          "samples": 5
+        },
+        {
+          "function": "hasCharacterLifeProfiles",
+          "source": "",
+          "samples": 4
+        },
+        {
+          "function": "isWorldSessionState",
+          "source": "",
+          "samples": 4
+        },
+        {
+          "function": "isNamedCharacterRecord",
+          "source": "",
+          "samples": 3
+        },
+        {
+          "function": "isSocietyState",
+          "source": "",
+          "samples": 3
+        },
+        {
+          "function": "isTileTrialPlanningState",
+          "source": "",
+          "samples": 3
+        }
+      ],
+      "topLeaves": [
+        {
+          "function": "(anonymous)",
+          "source": "",
+          "samples": 7
+        },
+        {
+          "function": "hasWeeklyKeys",
+          "source": "",
+          "samples": 4
+        },
+        {
+          "function": "isDataRecord",
+          "source": "",
+          "samples": 2
+        },
+        {
+          "function": "isNpcLife",
+          "source": "",
+          "samples": 2
+        },
+        {
+          "function": "outsidePlot",
+          "source": "",
+          "samples": 2
+        },
+        {
+          "function": "readDenseArray",
+          "source": "",
+          "samples": 2
+        },
+        {
+          "function": "structuredClone",
+          "source": "node:internal/worker/js_transferable",
+          "samples": 2
+        },
+        {
+          "function": "executeCharacterLifeCommand",
+          "source": "",
+          "samples": 1
+        },
+        {
+          "function": "isLawsState",
+          "source": "",
+          "samples": 1
+        },
+        {
+          "function": "isTileTrialState",
+          "source": "",
+          "samples": 1
+        },
+        {
+          "function": "keysOf",
+          "source": "",
+          "samples": 1
+        },
+        {
+          "function": "resolveCrisisWeek",
+          "source": "",
+          "samples": 1
+        },
+        {
+          "function": "resolveOrderWeek",
+          "source": "",
+          "samples": 1
+        },
+        {
+          "function": "resolveWorkshopOperation",
+          "source": "",
+          "samples": 1
+        },
+        {
+          "function": "runTileTrialWeek",
+          "source": "",
+          "samples": 1
+        },
+        {
+          "function": "stats",
+          "source": "",
+          "samples": 1
+        },
+        {
+          "function": "weeklyWorkforceMilli",
+          "source": "",
+          "samples": 1
+        }
+      ],
+      "outsideDispatcherLeaves": [
+        {
+          "function": "(garbage collector)",
+          "source": "",
+          "samples": 1
+        },
+        {
+          "function": "dispatch",
+          "source": "",
+          "samples": 1
+        },
+        {
+          "function": "post",
+          "source": "node:inspector",
+          "samples": 1
+        }
+      ]
+    },
+    {
+      "raw": "profile-head.cpuprofile",
+      "run": "profile-head",
+      "tick1Ms": 59.163299999999936,
+      "cpuBeforePct": 13,
+      "allSamples": 38,
+      "startTimeUs": 1218633131066,
+      "endTimeUs": 1218633291744,
+      "sumTimeDeltasUs": 160356,
+      "dispatcherStackSamples": 34,
+      "inclusiveCategorySamples": {
+        "dispatcher": 34,
+        "structuredClone": 2,
+        "npcLifeStep": 1,
+        "cloneInLifeStep": 0,
+        "namedReport": 0,
+        "stateValidation": 20,
+        "explicitCompiler": 0
+      },
+      "dispatcherFrameUrls": [
+        ""
+      ],
+      "categoryFrameNames": {
+        "structuredClone": [
+          "structuredClone"
+        ],
+        "npcLifeStep": [
+          "runNpcLifeWeek"
+        ],
+        "cloneInLifeStep": [],
+        "namedReport": [],
+        "stateValidation": [
+          "isCanonicalGameState",
+          "isLiveCharacterLifeSessionState",
+          "isOrderState",
+          "isOutsideState",
+          "isSocietyState",
+          "isTileTrialPlanningState",
+          "isTileTrialState",
+          "isWorldSessionState"
+        ],
+        "explicitCompiler": []
+      },
+      "topInclusiveFrames": [
+        {
+          "function": "(anonymous)",
+          "source": "file:///C:/Users/Admin/.t3/local-drafts/p7a-prB/cold-start/harness.mjs",
+          "samples": 34
+        },
+        {
+          "function": "(root)",
+          "source": "",
+          "samples": 34
+        },
+        {
+          "function": "executeCharacterLifeCommand",
+          "source": "",
+          "samples": 34
+        },
+        {
+          "function": "executeWorldNpcCityCommand",
+          "source": "",
+          "samples": 16
+        },
+        {
+          "function": "isLiveCharacterLifeSessionState",
+          "source": "",
+          "samples": 16
+        },
+        {
+          "function": "executeTileTrialCommand",
+          "source": "",
+          "samples": 11
+        },
+        {
+          "function": "isTileTrialState",
+          "source": "",
+          "samples": 8
+        },
+        {
+          "function": "isWorldNpcList",
+          "source": "",
+          "samples": 8
+        },
+        {
+          "function": "runTileTrialWeek",
+          "source": "",
+          "samples": 8
+        },
+        {
+          "function": "(anonymous)",
+          "source": "",
+          "samples": 7
+        },
+        {
+          "function": "hasCharacterLifeProfiles",
+          "source": "",
+          "samples": 4
+        },
+        {
+          "function": "isDataRecord",
+          "source": "",
+          "samples": 4
+        },
+        {
+          "function": "isNpcLife",
+          "source": "",
+          "samples": 4
+        },
+        {
+          "function": "outsidePlot",
+          "source": "",
+          "samples": 4
+        },
+        {
+          "function": "hasWeeklyKeys",
+          "source": "",
+          "samples": 3
+        },
+        {
+          "function": "isCharacterProfile",
+          "source": "",
+          "samples": 3
+        },
+        {
+          "function": "isNamedCharacterRecord",
+          "source": "",
+          "samples": 3
+        },
+        {
+          "function": "ids",
+          "source": "",
+          "samples": 2
+        }
+      ],
+      "topLeaves": [
+        {
+          "function": "(anonymous)",
+          "source": "",
+          "samples": 4
+        },
+        {
+          "function": "isDataRecord",
+          "source": "",
+          "samples": 3
+        },
+        {
+          "function": "outsidePlot",
+          "source": "",
+          "samples": 3
+        },
+        {
+          "function": "ids",
+          "source": "",
+          "samples": 2
+        },
+        {
+          "function": "isCanonicalGameState",
+          "source": "",
+          "samples": 2
+        },
+        {
+          "function": "keysOf",
+          "source": "",
+          "samples": 2
+        },
+        {
+          "function": "runTileTrialWeek",
+          "source": "",
+          "samples": 2
+        },
+        {
+          "function": "structuredClone",
+          "source": "node:internal/worker/js_transferable",
+          "samples": 2
+        },
+        {
+          "function": "createSocietyState",
+          "source": "",
+          "samples": 1
+        },
+        {
+          "function": "distributeArrivals",
+          "source": "",
+          "samples": 1
+        },
+        {
+          "function": "executeWorldNpcCityCommand",
+          "source": "",
+          "samples": 1
+        },
+        {
+          "function": "get",
+          "source": "packages/ui/node_modules/vite/dist/node/module-runner.js",
+          "samples": 1
+        },
+        {
+          "function": "hasWeeklyKeys",
+          "source": "",
+          "samples": 1
+        },
+        {
+          "function": "isNpcLife",
+          "source": "",
+          "samples": 1
+        },
+        {
+          "function": "isOrderState",
+          "source": "",
+          "samples": 1
+        },
+        {
+          "function": "isWorldNpcList",
+          "source": "",
+          "samples": 1
+        },
+        {
+          "function": "readDenseArray",
+          "source": "",
+          "samples": 1
+        },
+        {
+          "function": "resolveCrisisWeek",
+          "source": "",
+          "samples": 1
+        }
+      ],
+      "outsideDispatcherLeaves": [
+        {
+          "function": "(garbage collector)",
+          "source": "",
+          "samples": 2
+        },
+        {
+          "function": "dispatch",
+          "source": "",
+          "samples": 1
+        },
+        {
+          "function": "post",
+          "source": "node:inspector",
+          "samples": 1
+        }
+      ]
+    }
+  ],
+  "profileRuns": [
+    {
+      "run": "profile-base",
+      "revision": "base",
+      "pid": 90772,
+      "raw": "profile-base.json",
+      "cpuBeforePct": 9,
+      "machine": "machine-profile-base.json",
+      "firstFiveMs": [
+        54.6271999999999,
+        39.68329999999992,
+        32.44699999999989,
+        32.150300000000016,
+        30.96810000000005
+      ],
+      "warmMeanMs": 40.526854545454626,
+      "over50Ticks": [
+        1,
+        34,
+        49,
+        50,
+        51,
+        52,
+        54,
+        55,
+        58,
+        59
+      ],
+      "exact50Ticks": [],
+      "initialSession": {
+        "fileSha256": "5d36595e95eb2a63f5266e0a511c683e0eb69770423a7a88a9baf3f79ac2b823",
+        "compactSha256": "f8cc77c0f67a60a847b6c21e5f343f73fca7f2da7f6b2d453d8f11155643bc59",
+        "bytes": 332500,
+        "previousFiles": [
+          "fix-round1/profile/01-base-initial-session.json",
+          "fix-round1/profile/02-head-initial-session.json",
+          "fix-round1/profile/03-base-initial-session.json",
+          "fix-round1/profile/04-head-initial-session.json",
+          "fix-round1/profile/05-base-initial-session.json",
+          "fix-round1/profile/06-head-initial-session.json",
+          "perf-profile/01-base-initial-session.json",
+          "perf-profile/02-head-initial-session.json",
+          "perf-profile/03-base-initial-session.json",
+          "perf-profile/04-head-initial-session.json",
+          "perf-profile/05-base-initial-session.json",
+          "perf-profile/06-head-initial-session.json"
+        ]
+      },
+      "finalSession": {
+        "fileSha256": "13c7131594d6e94a8b0fecbeeabd1300dfe7bfb08de7cce3a6c06ae50cb68a44",
+        "compactSha256": "791e9d031f149f96f5b8490f7cc8e7cdf23e8b5db44648416a08149cc989f59f",
+        "bytes": 335147,
+        "previousFiles": [
+          "fix-round1/profile/01-base-final-session.json",
+          "fix-round1/profile/03-base-final-session.json",
+          "fix-round1/profile/05-base-final-session.json",
+          "perf-profile/01-base-final-session.json",
+          "perf-profile/03-base-final-session.json",
+          "perf-profile/05-base-final-session.json"
+        ]
+      }
+    },
+    {
+      "run": "profile-head",
+      "revision": "head",
+      "pid": 72924,
+      "raw": "profile-head.json",
+      "cpuBeforePct": 13,
+      "machine": "machine-profile-head.json",
+      "firstFiveMs": [
+        59.163299999999936,
+        33.21100000000001,
+        39.516200000000026,
+        32.23579999999993,
+        33.71620000000007
+      ],
+      "warmMeanMs": 29.61661818181813,
+      "over50Ticks": [
+        1
+      ],
+      "exact50Ticks": [],
+      "initialSession": {
+        "fileSha256": "5d36595e95eb2a63f5266e0a511c683e0eb69770423a7a88a9baf3f79ac2b823",
+        "compactSha256": "f8cc77c0f67a60a847b6c21e5f343f73fca7f2da7f6b2d453d8f11155643bc59",
+        "bytes": 332500,
+        "previousFiles": [
+          "fix-round1/profile/01-base-initial-session.json",
+          "fix-round1/profile/02-head-initial-session.json",
+          "fix-round1/profile/03-base-initial-session.json",
+          "fix-round1/profile/04-head-initial-session.json",
+          "fix-round1/profile/05-base-initial-session.json",
+          "fix-round1/profile/06-head-initial-session.json",
+          "perf-profile/01-base-initial-session.json",
+          "perf-profile/02-head-initial-session.json",
+          "perf-profile/03-base-initial-session.json",
+          "perf-profile/04-head-initial-session.json",
+          "perf-profile/05-base-initial-session.json",
+          "perf-profile/06-head-initial-session.json"
+        ]
+      },
+      "finalSession": {
+        "fileSha256": "400c5b61bd835511a0d8f56b8eb8eed76ddea32b5a667472d9e9442536671d48",
+        "compactSha256": "7d99241469c2f8819015c8f798168d18e715462606df1a75923f98266e31909d",
+        "bytes": 348847,
+        "previousFiles": [
+          "fix-round1/profile/02-head-final-session.json",
+          "fix-round1/profile/04-head-final-session.json",
+          "fix-round1/profile/06-head-final-session.json"
+        ]
+      }
+    }
+  ],
+  "sleepResume": {
+    "windowStartUtc": "2026-11-18T04:04:13.0179390Z",
+    "windowEndUtc": "2026-11-18T04:07:06.7642050Z",
+    "queryMode": "System event log with explicit UTC SystemTime XPath and XML timestamp verification",
+    "queries": [
+      "*[System[Provider[@Name='Microsoft-Windows-Power-Troubleshooter'] and EventID=1 and TimeCreated[@SystemTime >= '2026-11-18T04:04:13.0179390Z' and @SystemTime <= '2026-11-18T04:07:06.7642050Z']]]",
+      "*[System[Provider[@Name='Microsoft-Windows-Kernel-Power'] and (EventID=42 or EventID=107 or EventID=506 or EventID=507) and TimeCreated[@SystemTime >= '2026-11-18T04:04:13.0179390Z' and @SystemTime <= '2026-11-18T04:07:06.7642050Z']]]"
+    ],
+    "eventCount": 0,
+    "events": [],
+    "eventsDuringProcesses": []
+  },
+  "worktree": {
+    "branch": "feat/p7a-npc-life-week",
+    "head": "b94d3083dd71722f329b1bf444fa9dec9b0fd309",
+    "tree": "947f604e17427d916e1ef0e21083dbc2f72920b6",
+    "originMain": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+    "porcelain": [],
+    "trackedFileCount": 498,
+    "trackedCheckoutByteInventorySha256": "4c58975204febc0f8484e2861c0e4f25afed55ced84c71ad7b14412e215e984b",
+    "branchRefsSha256": "ebff22396442d2cd9dfa39f6152b5dd0bd170ac8af0b678aa57ec77a01a66938",
+    "worktreeList": "worktree D:/NghienCuuTiemNang/Build-Settlement\nHEAD 25b82acb94bbd4484938652b1a1434a0ece563bb\nbranch refs/heads/docs/p7-npc-design\n\nworktree C:/Users/Admin/.t3/worktrees/Build-Settlement/benchmark-arch-gate-a-01\nHEAD 2a2bb72323a44285733e4c62a7c613093f37139c\nbranch refs/heads/benchmark/arch-gate-a-01\n\nworktree C:/Users/Admin/.t3/worktrees/Build-Settlement/benchmark-test-a-01\nHEAD 2a2bb72323a44285733e4c62a7c613093f37139c\ndetached\n\nworktree C:/Users/Admin/.t3/worktrees/Build-Settlement/integrate-windows-smoke-main-01\nHEAD 8a7548bd8403814655729b94856d0ca80bee3f0c\nbranch refs/heads/integrate/windows-smoke-main-01\n\nworktree C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01\nHEAD b94d3083dd71722f329b1bf444fa9dec9b0fd309\nbranch refs/heads/feat/p7a-npc-life-week\n\nworktree C:/Users/Admin/.t3/worktrees/Build-Settlement/verify-windows-smoke-main-01\nHEAD 8a7548bd8403814655729b94856d0ca80bee3f0c\nbranch refs/heads/verify/windows-smoke-main-01\n\n"
+  },
+  "temporarySourceBytesRemoved": 11489978
+}

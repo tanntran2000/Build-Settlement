@@ -1,0 +1,44 @@
+HEAD=dac604054d7cbbf14a0a42209a3ff560380f2956
+TREE=d2f31706d77d308a310b61857a8b293a898280e7
+UTC_START=2026-11-18T00:55:59.836495+00:00
+COMMAND=["C:\\Program Files\\nodejs\\node.EXE", "C:\\Users\\Admin\\.t3\\local-drafts\\p7a-prB\\fix-round1\\profile\\profile-harness.mjs", "05-base", "base", "dac604054d7cbbf14a0a42209a3ff560380f2956"]
+OUTPUT:
+{
+  "run": "05-base",
+  "head": "dac604054d7cbbf14a0a42209a3ff560380f2956",
+  "exitCode": 0,
+  "endWeek": {
+    "all": {
+      "n": 60,
+      "max": 51.71990000000005,
+      "p95": 39.22910000000047,
+      "mean": 31.70002333333325,
+      "over50": 1
+    },
+    "warm": {
+      "n": 55,
+      "max": 48.63299999999981,
+      "p95": 39.22910000000047,
+      "mean": 31.078638181818086,
+      "over50": 0
+    },
+    "firstFive": {
+      "n": 5,
+      "max": 51.71990000000005,
+      "p95": 51.71990000000005,
+      "mean": 38.535260000000015,
+      "over50": 1
+    }
+  },
+  "life": null,
+  "lifeClone": null,
+  "postTransitions": null,
+  "maxTick": 1,
+  "overBudgetTicks": [
+    1
+  ]
+}
+
+EXIT_CODE=0
+SECONDS=5.347
+UTC_END=2026-11-18T00:56:05.183155+00:00

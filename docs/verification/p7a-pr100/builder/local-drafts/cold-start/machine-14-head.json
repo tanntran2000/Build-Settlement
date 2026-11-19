@@ -1,0 +1,82 @@
+{
+    "captureStartUtc":  "2026-11-18T04:05:58.1786255Z",
+    "utc":  "2026-11-18T04:06:00.3104239Z",
+    "cpu":  [
+                {
+                    "LoadPercentage":  6,
+                    "NumberOfLogicalProcessors":  8
+                }
+            ],
+    "topProcesses":  [
+                         {
+                             "IDProcess":  3736,
+                             "Name":  "svchost#36",
+                             "PercentProcessorTime":  42
+                         },
+                         {
+                             "IDProcess":  87496,
+                             "Name":  "WmiPrvSE#2",
+                             "PercentProcessorTime":  23
+                         },
+                         {
+                             "IDProcess":  4,
+                             "Name":  "System",
+                             "PercentProcessorTime":  14
+                         },
+                         {
+                             "IDProcess":  616,
+                             "Name":  "svchost",
+                             "PercentProcessorTime":  14
+                         },
+                         {
+                             "IDProcess":  4272,
+                             "Name":  "MsMpEng",
+                             "PercentProcessorTime":  9
+                         },
+                         {
+                             "IDProcess":  50936,
+                             "Name":  "codebase-memory-mcp#2",
+                             "PercentProcessorTime":  9
+                         },
+                         {
+                             "IDProcess":  87812,
+                             "Name":  "codebase-memory-mcp#6",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  72556,
+                             "Name":  "codebase-memory-mcp#7",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  79548,
+                             "Name":  "codebase-memory-mcp#8",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  74272,
+                             "Name":  "codebase-memory-mcp#3",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  79092,
+                             "Name":  "codebase-memory-mcp#4",
+                             "PercentProcessorTime":  4
+                         },
+                         {
+                             "IDProcess":  57552,
+                             "Name":  "codebase-memory-mcp#1",
+                             "PercentProcessorTime":  4
+                         }
+                     ],
+    "processCpuUnit":  "PercentProcessorTime, 100 per fully busy logical CPU",
+    "processScanCount":  488,
+    "commandLineReadableCount":  122,
+    "candidateJobProcessCount":  122,
+    "competingJobs":  [
+
+                      ],
+    "portListeners":  [
+
+                      ]
+}
