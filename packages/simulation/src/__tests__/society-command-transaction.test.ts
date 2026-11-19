@@ -34,12 +34,12 @@ function success(s: TileTrialState) {
 
 describe('retained society command and production branches', () => {
   it.each([
-    [10000, 0, 4, 4, 8500, 0, 8000, 4000],
-    [1500, 0, 4, 4, 0, 0, 8000, 4000],
-    [999, 0, 4, 4, 499, 0, 6000, 3000],
-    [10000, 3000, 0, 2, 11500, 1000, 2000, 0],
-    [10000, 0, 4, 0, 8500, 8000, 0, 4000],
-  ])('whole batches conserve Gold/Wheat/Food for G%s W%s and %s/%s workers', (gold, wheat, farm, processor, g, w, food, batchGold) => {
+    [10000, 0, 4, 4, 5500, 0, 8000, 4000, 3500],
+    [1500, 0, 4, 4, 0, 0, 8000, 4000, 500],
+    [999, 0, 4, 4, 499, 0, 6000, 3000, 500],
+    [10000, 3000, 0, 2, 8500, 1000, 2000, 0, 3500],
+    [10000, 0, 4, 0, 5500, 8000, 0, 4000, 3500],
+  ])('whole batches conserve Gold/Wheat/Food for G%s W%s and %s/%s workers', (gold, wheat, farm, processor, g, w, food, batchGold, otherDebit) => {
     const s = city(); Object.assign(stocks(s), { gold, wheat });
     s.tiles[0].building!.workers = farm; s.tiles[1].building!.workers = processor;
     const r = success(freeze(s)), report = r.report!;
@@ -50,7 +50,7 @@ describe('retained society command and production branches', () => {
     expect(Number.isInteger(processed)).toBe(true);
     expect(food).toBe(4000 + processed * 2000 - report.foodConsumedMilli);
     expect(report.before.gold + report.taxMilli - report.after.gold)
-      .toBe(report.farmBatchGoldMilli + report.farmExtraUpkeepMilli + (report.unpaidUpkeepMilli === 0 ? 500 : 0));
+      .toBe(report.farmBatchGoldMilli + report.farmExtraUpkeepMilli + otherDebit);
     expect(report.goods.revenueMilli).toBe(0); expect(report.goods.woodUsed).toBe(0);
     expect(executeTileTrialCommand(s, raw(s))).toEqual(r);
   });

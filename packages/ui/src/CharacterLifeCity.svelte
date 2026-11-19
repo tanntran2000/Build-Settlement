@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { buildingWorkerCap, managerSlotTileIds, summarizeOutside, TRIAL_BUILDINGS, type TileTrialState, type WorldNpc, type OutsideWorldState } from '@haven/core';
+  import { buildingWorkerCap, managerSlotTileIds, summarizeOutside, societyPlot, npcBeds, TRIAL_BUILDINGS, type TileTrialState, type WorldNpc, type OutsideWorldState } from '@haven/core';
   import {workerDigits,assignBuildingWorkers} from './clearing-workers.js';
   import OutsideCity from './OutsideCity.svelte';
   import CouncilPanel from './CouncilPanel.svelte';
@@ -22,6 +22,8 @@
   export let oncommand: (type: string, fields?: Record<string, unknown>) => boolean;
   let managementHeading: HTMLHeadingElement | undefined;
   $: selected = state.tiles.find(tile => tile.id === selectedId)!;
+  $: fixedEstate = societyPlot(selectedId)?.tier === 'estate';
+  $: home = selected.building ? npcBeds(selected.building.typeId, selected.building.level) > 0 : false;
   $: definition = selected.building ? TRIAL_BUILDINGS[selected.building.typeId] : null;
   $: options = buildOptions(state,selectedId);
   $: if (!options.some(o=>o.typeId===typeId&&o.available)) typeId=options.find(o=>o.available)?.typeId??'';
@@ -51,7 +53,14 @@
       <h3 bind:this={managementHeading} tabindex="-1">{selected.id} · {selected.terrain}</h3>
       {#if selected.building && definition}
         <h3>{definition.name} · Level {selected.building.level}</h3>
+        {#if home}
+          <p>Household upkeep: {units(definition.upkeepMilli * selected.building.level)} Gold/week, paid after city operations. Skipped when Gold runs short.</p>
+        {:else}
         <p>Upkeep: {units(definition.upkeepMilli * selected.building.level)} Gold/week. Farm batch Gold credits this Farm's upkeep.</p>
+        {/if}
+        {#if fixedEstate}
+          <p>This estate is fixed. You can only upgrade its building.</p>
+        {:else}
         <p id="trial-workers-confirmed">Assigned: <strong>{selected.building.workers} WF</strong>. Kept for future weeks until changed.</p>
         <label for="trial-workers">Assigned workers (WF)</label>
         <input id="trial-workers" type="text" inputmode="numeric" pattern="[0-9]*" bind:value={workers} oninput={event=>{workers=workerDigits(event.currentTarget.value);event.currentTarget.value=workers;workforceError='';onworkersinput();}} disabled={locked || !selected.building.enabled}
@@ -65,15 +74,22 @@
         <button disabled={locked} aria-describedby={managementError?.action === 'SET_ENABLED' ? 'trial-management-error' : undefined}
           onclick={() => oncommand('SET_ENABLED', { tileId: selectedId, enabled: !selected.building!.enabled })}>{selected.building.enabled ? 'Pause' : 'Resume'}</button>
         {#if managementError?.action === 'SET_ENABLED'}<p id="trial-management-error" role="alert" use:revealManagementError={managementError}>{managementError.message}</p>{/if}
+        {/if}
         {#if selected.building.level < definition.maxLevel}
-          <p>Upgrade cost: {units(definition.cost.gold * (selected.building.level + 1))} Gold, {units(definition.cost.wood * (selected.building.level + 1))} Wood, {units(definition.cost.iron * (selected.building.level + 1))} Iron.</p>
-          <button disabled={locked} aria-describedby={managementError?.action === 'UPGRADE' ? 'trial-management-error' : undefined}
+          {#if home}
+            <p>Upgrade cost: {units(definition.cost.gold)} Gold.</p>
+          {:else}
+            <p>Upgrade cost: {units(definition.cost.gold * (selected.building.level + 1))} Gold, {units(definition.cost.wood * (selected.building.level + 1))} Wood, {units(definition.cost.iron * (selected.building.level + 1))} Iron.</p>
+          {/if}
+          {#if fixedEstate && locked}<p id="trial-estate-upgrade-lock">Plan next week to upgrade this estate.</p>{/if}
+          <button disabled={locked} aria-describedby={managementError?.action === 'UPGRADE' ? 'trial-management-error' : fixedEstate && locked ? 'trial-estate-upgrade-lock' : undefined}
             onclick={() => oncommand('UPGRADE', { tileId: selectedId })}>Upgrade</button>
           {#if managementError?.action === 'UPGRADE'}<p id="trial-management-error" role="alert" use:revealManagementError={managementError}>{managementError.message}</p>{/if}
         {:else}<p>Maximum trial level.</p>{/if}
       {:else}<p>Empty tile. Choose a compatible building.</p>{/if}
 
       {#if selected.building?.typeId === 'town-hall'}<CouncilPanel {state} {locked} {oncommand} {managementError} />{/if}
+      {#if !fixedEstate}
       <p>Replace pays full cost and resets level and workers; no refund</p>
       <label for="trial-type">Building type</label>
       <select id="trial-type" bind:value={typeId} disabled={locked}>
@@ -82,6 +98,7 @@
       {#if chosen}<p>Requires {chosen.terrain.join(' or ')} terrain. Cost: {units(chosen.cost.gold)} Gold, {units(chosen.cost.wood)} Wood, {units(chosen.cost.iron)} Iron. Upkeep: {units(chosen.upkeepMilli)} Gold/week at level 1.</p>{/if}
       <button disabled={locked || !chosen || !options.some(o=>o.typeId===typeId&&o.available)} aria-describedby={managementError?.action === 'BUILD' || managementError?.action === 'REPLACE' ? 'trial-management-error' : undefined}
         onclick={() => oncommand(selected.building ? 'REPLACE' : 'BUILD', { tileId: selectedId, typeId })}>{selected.building ? 'Replace' : 'Build'}</button>
+      {/if}
       {#if managementError?.action === 'BUILD' || managementError?.action === 'REPLACE'}<p id="trial-management-error" role="alert" use:revealManagementError={managementError}>{managementError.message}</p>{/if}
     </section>
   </div>

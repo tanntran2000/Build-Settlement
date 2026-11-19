@@ -178,7 +178,7 @@
     }
   },
   "SOCIETY_TRIAL": {
-    "rulesetId": "tile-society-10",
+    "rulesetId": "tile-society-11",
     "standing": 50,
     "laws": {
       "active": [],
@@ -617,5 +617,20 @@
     },
     "wallRing3StoneMilli": 30000,
     "level3StoneMilli": 5000
+  },
+  "RING4_TRIAL": {
+    "goldMilli": 100000,
+    "woodMilli": 60000,
+    "ironMilli": 30000,
+    "stoneFactor": 1.5
+  },
+  "RETAINERS_HALL_TRIAL": {
+    "maxPerCity": 2
+  },
+  "SOCIETY_RING4_PLOTS": {
+    "housing": ["house-12", "house-13", "house-14"],
+    "service": ["service-7", "service-8"],
+    "specialist": ["spec-11", "spec-12"],
+    "slum": ["slum-7", "slum-8", "slum-9"]
   }
 }

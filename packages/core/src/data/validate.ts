@@ -305,7 +305,7 @@ type GOODS_STOCK_TRIALData = Readonly<{
     goldPerGoodsMilli: 1000;
 }>;
 type SOCIETY_TRIALData = Readonly<{
-    readonly rulesetId: "tile-society-10";
+    readonly rulesetId: "tile-society-11";
     readonly standing: 50;
     readonly laws: Readonly<{
         active: never[];
@@ -409,6 +409,9 @@ export interface TuningCatalog {
     TILE_TRIAL_BALANCE: TILE_TRIAL_BALANCEData;
     IMMIGRATION_TRIAL_DEFAULTS: IMMIGRATION_TRIAL_DEFAULTSData;
     OUTSIDE_TRIAL: OUTSIDE_TRIALData;
+    RING4_TRIAL: Readonly<{ goldMilli: number; woodMilli: number; ironMilli: number; stoneFactor: number }>;
+    RETAINERS_HALL_TRIAL: Readonly<{ maxPerCity: number }>;
+    SOCIETY_RING4_PLOTS: Readonly<Record<'housing' | 'service' | 'specialist' | 'slum', readonly string[]>>;
 }
 // Core's existing deepFreeze helpers are module-private outside this WP's allowlist.
 // Reuse their implementation here without changing those modules' public surface.
@@ -504,9 +507,10 @@ const buildingSchema = object({
         gold: nonnegative, wood: nonnegative, iron: nonnegative
     }), upkeepMilli: nonnegative,
 });
-const tier = oneOf('housing', 'service', 'specialist', 'slum');
+const tier = oneOf('housing', 'service', 'specialist', 'slum', 'estate');
 const societyBuildingSchema = object({
     tier, alsoTier: optional(tier), staff: oneOf('basic', 'makers', 'luminaries', 'merchants', null), reserved: boolean,
+    npcBeds: optional(list(positive)),
     housing: optional(object({
         class: oneOf('free', 'makers', 'luminaries', 'merchants', 'elite', 'bound'), byLevel: list(nonnegative)
     })),
@@ -526,10 +530,10 @@ const lawSchema = object({
     }),
 });
 const BUILDING_IDS = [
-    "sheep-pasture", "herb-garden", "quarry", "weaver", "watch-house", "military-barracks", "library", "warehouse", "farm", "processor", "logging", "mine", "workshop", "common-housing", "makers-rowhouses", "scholars-quarters", "merchant-townhouses", "elite-manor", "tavern", "hospital", "town-hall", "builders-yard", "academy", "town-market", "trading-post", "counting-house", "slave-quarters", "drug-store", "smithy"
+    "sheep-pasture", "herb-garden", "quarry", "weaver", "watch-house", "military-barracks", "library", "warehouse", "farm", "processor", "logging", "mine", "workshop", "common-housing", "makers-rowhouses", "scholars-quarters", "merchant-townhouses", "elite-manor", "tavern", "hospital", "town-hall", "builders-yard", "academy", "town-market", "trading-post", "counting-house", "slave-quarters", "drug-store", "smithy", "mansion", "retainers-hall", "guild", "auction-house", "slave-market"
 ];
 const SOCIETY_IDS = [
-    "common-housing", "makers-rowhouses", "scholars-quarters", "merchant-townhouses", "elite-manor", "tavern", "hospital", "town-hall", "builders-yard", "academy", "town-market", "trading-post", "counting-house", "slave-quarters", "military-barracks", "watch-house", "warehouse", "smithy", "library", "brothel", "black-market", "arena", "drug-store"
+    "common-housing", "makers-rowhouses", "scholars-quarters", "merchant-townhouses", "elite-manor", "tavern", "hospital", "town-hall", "builders-yard", "academy", "town-market", "trading-post", "counting-house", "slave-quarters", "military-barracks", "watch-house", "warehouse", "smithy", "library", "brothel", "black-market", "arena", "drug-store", "mansion", "retainers-hall", "guild", "auction-house", "slave-market"
 ];
 const LAW_IDS = [
     "curfew", "watch-levy", "guild-charters", "war-tithe", "poor-relief", "free-assembly", "public-punishments", "licensed-vice"
@@ -625,7 +629,7 @@ const tuningSchemas: Record<string, Rule> = {
             "tension": nonnegative
         })
     }), "SOCIETY_TRIAL": object({
-        "rulesetId": literal("tile-society-10"), "standing": nonnegative, "laws": object({
+        "rulesetId": literal("tile-society-11"), "standing": nonnegative, "laws": object({
             "active": tuple([]), "votedWeek": literal(null), "repealedUntil": object({}), "promise": literal(null)
         }), "order": object({
             "security": nonnegative, "crime": nonnegative, "authority": nonnegative
@@ -746,6 +750,20 @@ const tuningSchemas: Record<string, Rule> = {
         }), "deepShaft": object({
             "stoneMilli": nonnegative, "woodMilli": nonnegative, "goldMilli": nonnegative, "depositBonusMilli": nonnegative, "outputBps": nonnegative
         }), "wallRing3StoneMilli": nonnegative, "level3StoneMilli": nonnegative
+    }),
+    RING4_TRIAL: object({
+        goldMilli: nonnegative, woodMilli: nonnegative, ironMilli: nonnegative,
+        stoneFactor: (value, ref, field) => {
+            if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0)
+                fail(ref, field, 'expected finite number > 0');
+        }
+    }),
+    RETAINERS_HALL_TRIAL: object({ maxPerCity: positive }),
+    SOCIETY_RING4_PLOTS: object({
+        housing: tuple(['house-12', 'house-13', 'house-14'].map(literal)),
+        service: tuple(['service-7', 'service-8'].map(literal)),
+        specialist: tuple(['spec-11', 'spec-12'].map(literal)),
+        slum: tuple(['slum-7', 'slum-8', 'slum-9'].map(literal))
     })
 };
 export function validateBuildings(json: unknown): BuildingCatalog {
@@ -755,7 +773,19 @@ export function validateBuildings(json: unknown): BuildingCatalog {
     })(data, 'buildings.json#catalog', '');
     catalog(data.trial, 'buildings.json', BUILDING_IDS, buildingSchema);
     catalog(data.society, 'buildings.json', SOCIETY_IDS, societyBuildingSchema);
-    return data as unknown as BuildingCatalog;
+    const validated = data as unknown as BuildingCatalog;
+    for (const [id, info] of Object.entries(validated.society)) {
+        if (!info.npcBeds) continue;
+        const maxLevel = validated.trial[id]?.maxLevel;
+        if (info.npcBeds.length !== maxLevel)
+            fail(`buildings.json#${id}`, 'npcBeds', `expected array of length ${maxLevel}`);
+        for (const [index, beds] of info.npcBeds.entries()) {
+            positive(beds, `buildings.json#${id}`, `npcBeds.${index}`);
+            if (index > 0 && beds <= info.npcBeds[index - 1])
+                fail(`buildings.json#${id}`, `npcBeds.${index}`, 'expected greater than previous level');
+        }
+    }
+    return validated;
 }
 export function validateLaws(json: unknown): LawCatalog {
     const data = record(json, 'laws.json#catalog', 'entries');
@@ -800,7 +830,10 @@ export function validateTuning(json: unknown): TuningCatalog {
             fail(`tuning.json#${id}`, 'id', 'unknown id');
     for (const [id, rule] of Object.entries(tuningSchemas))
         rule(data[id], `tuning.json#${id}`, '');
-    return data as unknown as TuningCatalog;
+    const tuning = data as unknown as TuningCatalog;
+    if (!Number.isSafeInteger(tuning.OUTSIDE_TRIAL.wallRing3StoneMilli * tuning.RING4_TRIAL.stoneFactor))
+        fail('tuning.json#RING4_TRIAL', 'stoneFactor', 'expected a safe integer Stone cost');
+    return tuning;
 }
 
 export function validateItems(json: unknown): {definitions:Record<string,ItemDefinition>;ITEM_TRIAL:ItemTrial} {

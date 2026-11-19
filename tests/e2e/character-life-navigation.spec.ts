@@ -253,7 +253,7 @@ test('near-full requirement track retains 99.99 percent exactly', async ({ page 
   settlement.cohorts.forEach((cohort, index) => { cohort.count = index === 0 ? 250 : 0; });
   Object.assign(session.city.society!.classes,{free:250,makers:{common:0,elite:0},luminaries:{common:0,elite:0},merchants:{common:0,elite:0}});
   settlement.inventory.food = 9999;
-  for (const tile of session.city.tiles) if (tile.building) Object.assign(tile.building, { enabled: false, workers: 0 });
+  for (const tile of session.city.tiles) if (tile.building && !tile.id.startsWith('estate-')) Object.assign(tile.building, { enabled: false, workers: 0 });
   await page.goto('/?mode=world-life'); await importLife(page, session);
   await page.getByTestId('life-end-week').click(); await go(page, 'city');
   await expect(page.getByTestId('life-requirement-food')).toHaveText('9.999 / 10 · 99.99%');

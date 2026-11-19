@@ -29,7 +29,7 @@ it.each([
     { defId: 'rare-set', priceMilli: 15000 },
     { defId: 'epic-ring-npc', priceMilli: 40000 },
     { defId: 'epic-shoes-npc', priceMilli: 40000 },
-  ] } } }); expect(WORLD_SESSION_CITY_RULESET).toBe('tile-society-10');
+  ] } } }); expect(WORLD_SESSION_CITY_RULESET).toBe('tile-society-11');
   expect(s.outside.actors).toEqual(['player', 'ai-1', 'ai-2']);
   const lootIds = loot.split(' ');
   expect(s.outside.tiles).toHaveLength(90);

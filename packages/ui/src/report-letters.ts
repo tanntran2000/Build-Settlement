@@ -101,6 +101,11 @@ function letterRows(report: Readonly<TileTrialReport>, id: LetterId): LetterRow[
       value('Tax', signedMilli(report.taxMilli), report.taxMilli > 0 ? 'gain' : 'muted');
       value('Upkeep paid', signedMilli(-report.upkeepPaidMilli), report.upkeepPaidMilli > 0 ? 'loss' : 'muted');
       if (report.unpaidUpkeepMilli > 0) value('Unpaid upkeep', formatMilli(report.unpaidUpkeepMilli), 'loss');
+      if (report.householdUpkeep) {
+        const { paidMilli, unpaidMilli } = report.householdUpkeep;
+        const unpaid = unpaidMilli > 0 ? ` · ${formatMilli(unpaidMilli)} Gold unpaid` : '';
+        value('Household upkeep', `${formatMilli(paidMilli)} Gold paid${unpaid}`, paidMilli || unpaidMilli ? 'loss' : 'muted');
+      }
       const stolen = report.order?.theftMilli.gold;
       if (stolen !== undefined && stolen > 0) value('Gold stolen', signedMilli(-stolen), 'loss');
       break;
@@ -195,6 +200,9 @@ export function reportLetters(report: Readonly<TileTrialReport>): ReportLetterVi
     // Spec §6.1 four-row amendment: reserve actual crime events, then prioritise city-relative tone.
     const selected = new Set<number>();
     if (item.id === 'captain' && report.crimeEvent?.event) selected.add(report.order ? 4 : 0);
+    if (item.id === 'steward' && report.householdUpkeep) {
+      selected.add(candidates.findIndex(row => row.label === 'Household upkeep'));
+    }
     for (const tone of ['loss', 'gain', 'muted'] as const) {
       candidates.forEach((row, index) => {
         if (selected.size < 4 && row.tone === tone) selected.add(index);

@@ -33,7 +33,7 @@ for (const viewport of [{ width: 375, height: 812 }, { width: 1280, height: 900 
     if (!next.success) throw Error(next.error.message); session = next.next;
     expect(await exportLife(page)).toEqual(session);
   }
-  expect(debit).toBe(15000);
+  expect(debit).toBe(30000);
   await go(page, 'city'); await expect(page.getByTestId('trial-stock-goods')).toHaveText('2.75');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.screenshot({ path: info.outputPath('goods-week5-city.png'), fullPage: true });

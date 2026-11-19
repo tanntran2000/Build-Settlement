@@ -38,8 +38,8 @@ function expanded(free = 55, makers = 40, luminaries = 0, merchants = 5) {
 
 describe('society renewable support and transaction ports', () => {
   it.each([
-    { processors: 1, usefulWorkerSlots: 20, target: 200, debit: 7500 },
-    { processors: 2, usefulWorkerSlots: 25, target: 227, debit: 8000 },
+    { processors: 1, usefulWorkerSlots: 20, target: 200, debit: 10500 },
+    { processors: 2, usefulWorkerSlots: 25, target: 227, debit: 11000 },
   ])('two funded Farms retain independent recipe caps with $processors funded Processor(s)', ({ processors, usefulWorkerSlots, target, debit }) => {
     // Seed the old 136-person checkpoint directly with valid class pools: 7 basic and 6 Makers WF.
     let s = expanded(76, 60, 0, 0);
@@ -147,6 +147,7 @@ describe('society renewable support and transaction ports', () => {
     expect(count(week(poor).nextState)).toBe(100);
     const tight = expanded(); settlement(tight).inventory.gold = 2500;
     const r = week(tight); expect(r.report!.unpaidUpkeepMilli).toBe(0); expect(count(r.nextState)).toBe(100);
+    expect(r.report!.immigration!.reason).toBe('liquidity');
   });
   it('rejects stale or repeated End Week and overflow atomically', () => {
     const s = expanded(), command = { type: 'END_WEEK', expectedWeek: s.world.week, expectedRevision: s.revision };

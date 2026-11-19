@@ -552,3 +552,13 @@ it('B2 keeps Report as a destination and excludes it from modal windows', () => 
   expectTypeOf<LifeWindow>().toEqualTypeOf<'information' | 'player' | 'population' | null>();
   expectTypeOf<Extract<LifeDestination, 'reports'>>().toEqualTypeOf<'reports'>();
 });
+
+it('renders one Household upkeep row with paid and optional unpaid amounts', () => {
+  const charges = (paidMilli: number, unpaidMilli: number) =>
+    rows(report({ householdUpkeep: { paidMilli, unpaidMilli } }), 'steward')
+      .filter(row => row.label === 'Household upkeep');
+  expect(charges(3000, 0)).toStrictEqual([{ label: 'Household upkeep', value: '3 Gold paid', tone: 'loss' }]);
+  expect(charges(1000, 2000)).toStrictEqual([{ label: 'Household upkeep', value: '1 Gold paid · 2 Gold unpaid', tone: 'loss' }]);
+  expect(charges(0, 3000)).toStrictEqual([{ label: 'Household upkeep', value: '0 Gold paid · 3 Gold unpaid', tone: 'loss' }]);
+  expect(rows(report(), 'steward').filter(row => row.label === 'Household upkeep')).toStrictEqual([]);
+});

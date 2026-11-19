@@ -1,9 +1,9 @@
 import { LAW_IDS, LAW_MESSAGES, LAW_TRIAL, previewLawVote, type LawId, CARD_OPTIONS, CRISIS_TRIAL, crisisOptions, societyPopulation, type CardOption, type ItemWeekContext } from '@haven/core';
 import { cityHappiness, societyCounts } from './society-week.js';
-import { RESEARCH_TOPICS,type ResearchTopic,OUTSIDE_TRIAL,outsidePlot,hasWeeklyKeys,isTileTrialPlanningState,isTileTrialState,SOCIETY_BUILDINGS,societyPlot,buildingWorkerCap,trialBuilding,type TileTrialResult,type TileTrialState } from '@haven/core';
+import { RESEARCH_TOPICS,type ResearchTopic,OUTSIDE_TRIAL,RING4_TRIAL,RETAINERS_HALL_TRIAL,outsidePlot,hasWeeklyKeys,isTileTrialPlanningState,isTileTrialState,SOCIETY_BUILDINGS,societyPlot,buildingWorkerCap,trialBuilding,npcBeds,type TileTrialResult,type TileTrialState } from '@haven/core';
 import { runTileTrialWeek,trialSafe } from "./tile-trial-week.js";
 
-export function executeTileTrialCommand(state: unknown, raw: unknown,ctx?:ItemWeekContext): TileTrialResult {
+export function executeTileTrialCommand(state: unknown, raw: unknown, ctx?: ItemWeekContext, occupiedHomeTileIds?: ReadonlySet<string>): TileTrialResult {
   const fail = (code: string, message: string): TileTrialResult => ({ success: false, state, error: { code, message } });
   try {
     if (!isTileTrialState(state) || !state.society || !state.goodsStock) return fail("INVALID_STATE", "Trial state is invalid; nothing was changed.");
@@ -85,17 +85,17 @@ export function executeTileTrialCommand(state: unknown, raw: unknown,ctx?:ItemWe
       next.society!.training.target = c.target as 'makers' | 'luminaries' | 'merchants' | null;
     } else if (c.type === 'EXTEND_WALL') {
       const ring = next.society!.wallRing;
-      if (ring === 3) return fail('WALL_COMPLETE','All wall rings are open.');
-      const prerequisite = ring === 1 ? 'builders-yard' : 'town-hall';
+      if (ring === 4) return fail('WALL_COMPLETE','All wall rings are open.');
+      const prerequisite = ring === 1 ? 'builders-yard' : ring === 2 ? 'town-hall' : 'counting-house';
       if (!next.tiles.some(t=>t.building?.typeId === prerequisite && t.building.enabled && t.building.workers === buildingWorkerCap(prerequisite,t.building.level))) return fail('PREREQUISITE_MISSING','An operating prerequisite building is required.');
       const inventory = next.world.settlements[next.world.activeSettlementId!].inventory;
-      const costs = ring === 1 ? {gold:30000,wood:20000,iron:10000} : {gold:60000,wood:40000,iron:20000};
+      const costs = ring === 1 ? {gold:30000,wood:20000,iron:10000} : ring === 2 ? {gold:60000,wood:40000,iron:20000} : {gold:RING4_TRIAL.goldMilli,wood:RING4_TRIAL.woodMilli,iron:RING4_TRIAL.ironMilli};
       for (const key of ['gold','wood','iron'] as const) if (inventory[key]<costs[key]) return fail('INSUFFICIENT_RESOURCES','Not enough resources to extend the wall.');
-      const stone=ring===2?OUTSIDE_TRIAL.wallRing3StoneMilli:0;
+      const stone = ring === 3 ? OUTSIDE_TRIAL.wallRing3StoneMilli * RING4_TRIAL.stoneFactor : ring === 2 ? OUTSIDE_TRIAL.wallRing3StoneMilli : 0;
       if(next.society!.stocksMilli.stone<stone)return fail('INSUFFICIENT_RESOURCES','Not enough Stone to extend the wall.');
       for (const key of ['gold','wood','iron'] as const) inventory[key]-=costs[key];
       next.society!.stocksMilli.stone-=stone;
-      next.society!.wallRing = ring === 1 ? 2 : 3;
+      next.society!.wallRing = ring === 1 ? 2 : ring === 2 ? 3 : 4;
     } else if (c.type === "LOAD_TRIAL") {
       if (c.snapshot && typeof c.snapshot === 'object' && !Object.hasOwn(c.snapshot, 'society')) return fail('INVALID_STATE', 'Checkpoint economy is incompatible with this society city.');
       if (!isTileTrialPlanningState(c.snapshot) || !c.snapshot.society) return fail("INVALID_SAVE_STATE", "Checkpoint must contain a valid society Planning state.");
@@ -108,6 +108,9 @@ export function executeTileTrialCommand(state: unknown, raw: unknown,ctx?:ItemWe
     else {
       const tile = next.tiles.find(t => t.id === c.tileId);
       if (!tile) return fail("INVALID_TILE", "Select a valid tile.");
+      const plot = societyPlot(tile.id);
+      if (plot?.tier === 'estate' && c.type !== 'UPGRADE') return fail('FIXED_BUILDING','This estate is fixed. You can only upgrade its building.');
+      if (c.type === 'REPLACE' && occupiedHomeTileIds?.has(tile.id)) return fail('HOME_OCCUPIED','Move all residents out before replacing this home.');
       if(c.type==='REPLACE'&&next.society!.items.workshops&&Object.hasOwn(next.society!.items.workshops,tile.id))return fail('WORKSHOP_BUSY','Cancel workshop orders and make room for ready outputs before replacing this building.');
       const outside=outsidePlot(tile.id), plotState=next.society!.outside[tile.id];
       if(['CLEAR','BUILD','REPLACE','UPGRADE','BUILD_DEEP_SHAFT'].includes(c.type) && outside){
@@ -140,7 +143,7 @@ export function executeTileTrialCommand(state: unknown, raw: unknown,ctx?:ItemWe
       } else if (["BUILD", "REPLACE", "UPGRADE"].includes(c.type)) {
         const typeId = c.type === "UPGRADE" ? tile.building?.typeId : c.typeId;
         if (state.society) {
-          const plot = societyPlot(tile.id), info = typeof typeId === 'string' && Object.hasOwn(SOCIETY_BUILDINGS,typeId) ? SOCIETY_BUILDINGS[typeId] : undefined;
+          const info = typeof typeId === 'string' && Object.hasOwn(SOCIETY_BUILDINGS,typeId) ? SOCIETY_BUILDINGS[typeId] : undefined;
           if (plot && plot.ring > state.society.wallRing) return fail('LOCKED_PLOT','Extend the wall first.');
           if (info?.reserved) return fail('NOT_AVAILABLE','This building is reserved.');
           if (plot && info && plot.tier !== info.tier && plot.tier !== info.alsoTier) return fail('WRONG_TIER','Choose the matching plot tier.');
@@ -151,15 +154,23 @@ export function executeTileTrialCommand(state: unknown, raw: unknown,ctx?:ItemWe
         if (!d.terrain.includes(tile.terrain)) return fail("INVALID_PLACEMENT", `${d.name} requires ${d.terrain.join(" or ")} terrain.`);
         if (c.type === "BUILD" && tile.building) return fail("OCCUPIED", "This tile is occupied; use Replace or Upgrade.");
         if (c.type !== "BUILD" && !tile.building) return fail("EMPTY_TILE", "Build a building on this tile first.");
+        if (c.type !== 'UPGRADE' && ['guild','auction-house','slave-market'].includes(typeId) &&
+            next.tiles.some(other=>other.id!==tile.id&&other.building?.typeId===typeId))
+          return fail('ONE_PER_CITY',`Only one ${d.name} may be built per city.`);
+        if (c.type !== 'UPGRADE' && typeId === 'retainers-hall' && tile.building?.typeId !== typeId &&
+            next.tiles.filter(other=>other.building?.typeId===typeId).length>=RETAINERS_HALL_TRIAL.maxPerCity)
+          return fail('HALL_LIMIT',"Only two Retainers' Halls may be built per city.");
         const level = c.type === "UPGRADE" ? tile.building!.level + 1 : 1;
         if (level > d.maxLevel) return fail("MAX_LEVEL", "This building is at its trial maximum level.");
         const inventory = next.world.settlements[next.world.activeSettlementId!].inventory;
-        const discount=constructionDiscount(state);
-        const costs = { gold: trialSafe(d.cost.gold * level), wood: trialSafe(d.cost.wood * level), iron: trialSafe(d.cost.iron * level) };
+        const homeConstruction = npcBeds(typeId, level) > 0;
+        const discount = homeConstruction ? 0 : constructionDiscount(state);
+        const costLevel = homeConstruction ? 1 : level;
+        const costs = { gold: trialSafe(d.cost.gold * costLevel), wood: trialSafe(d.cost.wood * costLevel), iron: trialSafe(d.cost.iron * costLevel) };
         for (const key of ['gold','wood','iron'] as const) costs[key] = discounted(costs[key],discount);
         for (const key of ["gold", "wood", "iron"] as const) if (inventory[key] < costs[key]) return fail("INSUFFICIENT_RESOURCES", `Not enough ${key} for this action.`);
         for (const key of ["gold", "wood", "iron"] as const) inventory[key] -= costs[key];
-        const stone=level===3?discounted(OUTSIDE_TRIAL.level3StoneMilli,discount):0;
+        const stone=level===3&&!homeConstruction?discounted(OUTSIDE_TRIAL.level3StoneMilli,discount):0;
         if(next.society!.stocksMilli.stone<stone)return fail('INSUFFICIENT_RESOURCES','Not enough Stone for level three.');
         next.society!.stocksMilli.stone-=stone;
         tile.building = { typeId, level, workers: c.type === "UPGRADE" ? tile.building!.workers : 0, enabled: c.type === "UPGRADE" ? tile.building!.enabled : true };

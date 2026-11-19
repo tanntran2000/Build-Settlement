@@ -434,6 +434,81 @@
         "iron": 6000
       },
       "upkeepMilli": 1000
+    },
+    "mansion": {
+      "name": "Mansion",
+      "operation": "society",
+      "terrain": [
+        "town"
+      ],
+      "maxLevel": 3,
+      "maxWorkers": 0,
+      "cost": {
+        "gold": 20000,
+        "wood": 0,
+        "iron": 0
+      },
+      "upkeepMilli": 2000
+    },
+    "retainers-hall": {
+      "name": "Retainers' Hall",
+      "operation": "society",
+      "terrain": [
+        "town"
+      ],
+      "maxLevel": 2,
+      "maxWorkers": 0,
+      "cost": {
+        "gold": 15000,
+        "wood": 0,
+        "iron": 0
+      },
+      "upkeepMilli": 1000
+    },
+    "guild": {
+      "name": "Guild",
+      "operation": "society",
+      "terrain": [
+        "town"
+      ],
+      "maxLevel": 1,
+      "maxWorkers": 0,
+      "cost": {
+        "gold": 8000,
+        "wood": 0,
+        "iron": 0
+      },
+      "upkeepMilli": 1000
+    },
+    "auction-house": {
+      "name": "Auction House",
+      "operation": "society",
+      "terrain": [
+        "town"
+      ],
+      "maxLevel": 1,
+      "maxWorkers": 0,
+      "cost": {
+        "gold": 12000,
+        "wood": 0,
+        "iron": 0
+      },
+      "upkeepMilli": 1000
+    },
+    "slave-market": {
+      "name": "Slave Market",
+      "operation": "society",
+      "terrain": [
+        "town"
+      ],
+      "maxLevel": 1,
+      "maxWorkers": 0,
+      "cost": {
+        "gold": 6000,
+        "wood": 0,
+        "iron": 0
+      },
+      "upkeepMilli": 1000
     }
   },
   "society": {
@@ -596,6 +671,41 @@
       "reserved": true
     },
     "drug-store": {
+      "tier": "slum",
+      "staff": null,
+      "reserved": false
+    },
+    "mansion": {
+      "tier": "estate",
+      "staff": null,
+      "reserved": false,
+      "npcBeds": [
+        10,
+        20,
+        30
+      ]
+    },
+    "retainers-hall": {
+      "tier": "estate",
+      "alsoTier": "housing",
+      "staff": null,
+      "reserved": false,
+      "npcBeds": [
+        25,
+        50
+      ]
+    },
+    "guild": {
+      "tier": "service",
+      "staff": null,
+      "reserved": false
+    },
+    "auction-house": {
+      "tier": "specialist",
+      "staff": null,
+      "reserved": false
+    },
+    "slave-market": {
       "tier": "slum",
       "staff": null,
       "reserved": false
