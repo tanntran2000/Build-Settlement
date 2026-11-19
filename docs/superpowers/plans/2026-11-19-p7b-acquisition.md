@@ -14,7 +14,7 @@
 
 **Spec:** `docs/superpowers/specs/2026-11-19-p7b-acquisition-design.md` v0.1, G1 approved by Tân, 2026-11-19, verbatim: "Duyệt P7-B". Direction: `2026-11-17-p7-npc-direction.md` v0.5.
 
-**Plan approval:** pending (owner review of this file).
+**Plan approval:** the owner (Tân) approved this plan on 2026-11-19, verbatim: "Duyệt, giao Builder B1" (dialog answer "Duyệt, giao B1"). This includes Decision 16 (two ruleset bumps, 11 in B1 and 12 in B2).
 
 **Base:** `main` `27f4dc2` (P7-A complete).
 
