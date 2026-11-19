@@ -40,6 +40,7 @@ export interface CrimeEventReport {
 }
 export interface TileTrialReport {
   items: ItemWeekReport;
+  npcLife?: { exhausted: string[]; recovered: string[]; birthdays: string[] };
   laws?: LawWeekReport;
   crimeEvent?: CrimeEventReport;
   crisis?: CrisisReport;

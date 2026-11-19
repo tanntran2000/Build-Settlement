@@ -1,6 +1,6 @@
 import {
 createCharacterLifeSession,DEFAULT_PLAYER_DRAFT,isCharacterLifeSessionState,
-isLiveCharacterLifeSessionState,type CharacterLifeSessionState
+isLiveCharacterLifeSessionState,P7A_TRIAL,type CharacterLifeSessionState
 } from '@haven/core';
 import { deserializeCharacterLifeSave,serializeCharacterLifeSave } from '@haven/persistence';
 import { afterEach,describe,expect,it,vi } from 'vitest';
@@ -17,7 +17,24 @@ function legacy(s: CharacterLifeSessionState, raw: Record<string, unknown>): Cha
   const world = { city: s.city, outside: s.outside, npcs: s.npcs };
   const r = raw.type === 'ASSIGN_NPC' || raw.type === 'UNASSIGN_NPC'
     ? delegates.executeWorldNpcCommand(world, raw) : delegates.executeWorldNpcCityCommand(world, raw);
-  return r.success ? { ...r, next: { ...r.next, player: structuredClone(s.player), profiles: structuredClone(s.profiles) } } : r;
+  if (!r.success) return r;
+  const next = { ...r.next, player: structuredClone(s.player), profiles: structuredClone(s.profiles) };
+  for (const [index, npc] of next.npcs.entries()) {
+    if (s.npcs[index].postTileId !== npc.postTileId) {
+      const kind = npc.postTileId === null ? 'post-cleared' : 'post-assigned';
+      npc.life.history.counters[kind] = (npc.life.history.counters[kind] ?? 0) + 1;
+      npc.life.history.recent = [...npc.life.history.recent, { week: next.city.world.week, kind }].slice(-P7A_TRIAL.recentCap);
+    }
+    if (raw.type === 'END_WEEK') {
+      // These legacy fixtures contain only rested, unposted NPCs away from a birthday.
+      expect(npc.postTileId).toBeNull();
+      expect(npc.life.stress).toBe(0);
+      expect(npc.life.working).toBe(true);
+      expect((next.city.world.week - npc.life.birthWeek) % P7A_TRIAL.weeksPerYear).not.toBe(0);
+      npc.life.arousal = Math.min(100, npc.life.arousal + Math.floor(npc.life.lust / P7A_TRIAL.arousalDivisor));
+    }
+  }
+  return { ...r, next };
 }
 
 function freeze<T>(value: T): T {

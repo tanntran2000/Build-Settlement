@@ -1,5 +1,5 @@
 ﻿import { describe, expect, it } from 'vitest';
-import { createCharacterLifeSession, createSocietyState, DEFAULT_PLAYER_DRAFT, GOODS_STOCK_RULESET, type TileTrialState } from '@haven/core';
+import { createCharacterLifeSession, createSocietyState, DEFAULT_PLAYER_DRAFT, GOODS_STOCK_RULESET, P7A_TRIAL, type TileTrialState } from '@haven/core';
 import { executeTileTrialCommand } from '../tile-trial.js';
 import { executeCharacterLifeCommand } from '../character-life-command.js';
 import { observeCharacterLife } from '../character-life-observation.js';
@@ -118,7 +118,8 @@ describe('retained society Goods stock flow', () => {
     expect(observation.lastReport!.goodsStock).toEqual(next.report!.goodsStock);
     expect(observation.settlement.goodsStock).toEqual({ rulesetId: GOODS_STOCK_RULESET, amountMilli: 8550 });
     expect(observation.lastReport!.goodsStock).not.toBe(next.report!.goodsStock);
-    expect(next.next.npcs).toEqual(r.value.npcs);
+    expect(r.value.npcs.map(npc => npc.life.arousal)).toEqual([0, 0, 0]);
+    expect(next.next.npcs).toEqual(r.value.npcs.map(npc => ({ ...npc, life: { ...npc.life, arousal: Math.floor(npc.life.lust / P7A_TRIAL.arousalDivisor) } })));
   });
 });
 
