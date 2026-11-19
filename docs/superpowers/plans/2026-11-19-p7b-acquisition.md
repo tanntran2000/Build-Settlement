@@ -220,3 +220,12 @@ List every test, helper, fixture and UI test that uses `npc_starter_*`, `WORLD_S
 ### Task B4.3: B4 gates and evidence.
 
 ## Plan corrections
+
+### Correction 1 — PR B1 Step 0 (owner, 2026-11-19)
+Owner (Tân), verbatim dialog answer: "Duyệt, Hall tối đa 2". Builder Step 0 packet: `C:/Users/Admin/.t3/local-drafts/p7b-prB1/STEP0-HOLD.md` (SHA-256 `466bf295c326e0b1453addc0167677a54f5269fdf41f48b2d875f858f7aced6a`) with byte inventory `source-replacements.json` (SHA-256 `df05c5f3344c11dce410a1529f16afd1f9e89653345de094001b2c380a5ee686`) and `generated-byte-proposals.json` (SHA-256 `a496533bd933f73a00fc81df77bc2d516ccba6052a60fd6d22bc5e101d15397e`).
+1. **Scope:** the 157 exact replacements in 66 existing files and the generated golden and `society-v11/` bytes, implemented byte-exact. Added to the B1 allowlist: `packages/core/src/trial/state.ts` (v11 planning-save check: each fixed home on its own enabled zero-worker estate; no duplicate acquisition building), `packages/core/src/trial/order.ts` (ring 4 in `OrderFacts`), `packages/ui/src/CharacterLifeCity.svelte` (Upgrade-only estate controls and reason), `packages/ui/src/TileManagement.svelte` (the new error codes reach the existing alert), and the v10 row-reconstruction hunks in `session-records.ts`.
+2. **Golden:** two extra allowed paths, `cityRulesetId` and `state.city.world.settlements.settlement_haven_01.inventory.gold` (estate upkeep, 3,000 Gold milli per week at L1).
+3. **Estates:** BUILD, REPLACE, SET_ENABLED and SET_WORKERS on an estate fail `FIXED_BUILDING`; only UPGRADE works. Home prices are flat (TRIAL): Mansion 20,000 Gold milli per upgrade, Retainers' Hall 15,000 per build or upgrade; no level multiplier, Yard discount or Stone.
+4. **Hall cap:** at most 2 Retainers' Halls per city, the estate Hall plus one on a housing plot. A third fails `HALL_LIMIT` with "Only two Retainers' Halls may be built per city." in BUILD and REPLACE, with a RED case.
+5. **`HOME_OCCUPIED`:** B1 adds the guard through a trusted optional occupancy set on `executeTileTrialCommand`; B2 wires real occupancy from NPC households.
+6. **New tests use exact matchers** (for example `toStrictEqual` on the whole inventory in `tests/e2e/society.spec.ts`), not partial ones.
