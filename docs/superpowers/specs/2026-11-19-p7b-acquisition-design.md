@@ -1,6 +1,6 @@
 # P7-B — NPC acquisition, homes and status (design spec v0.1)
 
-**Status:** v0.1 draft for G1. Part of P7 (`2026-11-17-p7-npc-direction.md`, split §9: "P7-B Acquisition", with the Mansion core, the Retainers' Hall, slave/servant status, obedience and the city expansion moved in by §12.6).
+**Status:** v0.1 **G1 approved** by the owner (Tân), 2026-11-19, verbatim: "Duyệt P7-B". The calls in §16 and the TRIAL numbers stand as written. Part of P7 (`2026-11-17-p7-npc-direction.md`, split §9: "P7-B Acquisition", with the Mansion core, the Retainers' Hall, slave/servant status, obedience and the city expansion moved in by §12.6).
 
 - **Base:** `main` `27f4dc2` (P7-A complete: #99, #100, #101).
 - **Not authorised by this document:** no code, push or PR.
