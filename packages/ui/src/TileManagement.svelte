@@ -274,7 +274,7 @@
       {/if}
     {/snippet}
     {#snippet reports()}
-      <SoloWeekReport {report} planningWeek={state.world.week} {locked} onnextweek={nextLifeWeek} />
+      <SoloWeekReport {report} npcs={npcs ?? []} planningWeek={state.world.week} {locked} onnextweek={nextLifeWeek} />
     {/snippet}
     {#snippet session()}
   <section class="card" aria-label="Planning checkpoints">
@@ -296,7 +296,7 @@
     {#snippet help()}
 <details class="card"><summary>Getting started</summary><p>Your 100 residents are Free residents, Makers, Luminaries and Merchants, each with their own housing. Farm and Food Processor start with 2 WF each; the Market on spec-1 distributes stored Goods. Build inside the walls on plots of the matching tier, and extend the wall to open more plots.</p></details>
 <details class="card"><summary>Weekly rules</summary><p>TRIAL: each class eats and uses Goods separately; the Bound eat last. Missing Food, Goods or housing lowers that class's satisfaction and stops its arrivals. Each class supplies 1 WF per 10 residents; Elites do not work.</p></details>
-<details class="card"><summary>About this build</summary><p>Balance and building policies are TRIAL. Character profiles are TRIAL content. Weekly life events and Player interactions are not available yet.</p></details>
+<details class="card"><summary>About this build</summary><p>Balance and building policies are TRIAL. Character profiles are TRIAL content. NPC life events appear in History when they occur. Player interactions are not available yet.</p></details>
     {/snippet}
   </CharacterLifeShell>
 {/if}

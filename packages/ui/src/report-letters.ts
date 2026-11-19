@@ -204,6 +204,18 @@ export function reportLetters(report: Readonly<TileTrialReport>): ReportLetterVi
   });
 }
 
+export function npcLifeReportRows(
+  report: Readonly<TileTrialReport>,
+  npcs: readonly { character: { id: string; name: string } }[],
+) {
+  const life = report.npcLife;
+  if (!life) return [];
+  const names = new Map(npcs.map(({ character }) => [character.id, character.name]));
+  const kinds = [['exhausted', 'Exhausted'], ['recovered', 'Recovered'], ['birthdays', 'Birthday']] as const;
+  return kinds.flatMap(([kind, label]) =>
+    life[kind].map(npcId => ({ kind, label, npcId, name: names.get(npcId) ?? 'Unknown NPC' })));
+}
+
 export function reportStamps(report: Readonly<TileTrialReport>): { label: 'Food' | 'Goods' | 'Happiness'; value: string }[] {
   const happinessDelta = report.happinessAfter - report.happinessBefore;
   return [

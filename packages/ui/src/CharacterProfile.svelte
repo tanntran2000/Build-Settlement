@@ -1,12 +1,14 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
+  import NpcSheet from './NpcSheet.svelte';
   import type { CharacterArea } from './character-life-navigation.js';
   import {
-    describeLong, describeShort, profileRows, REQUIRED_EMOTIONS, REQUIRED_NEEDS, REQUIRED_RELATIONSHIP, REQUIRED_SKILLS, WORLD_TRAITS,
-    type CharacterView, type Relationship8D,
+    describeLong, describeShort, npcAgeTitle, profileRows, REQUIRED_EMOTIONS, REQUIRED_NEEDS, REQUIRED_RELATIONSHIP, REQUIRED_SKILLS, WORLD_TRAITS,
+    type CharacterView, type Relationship8D, type WorldNpc,
   } from '@haven/core';
 
   export let view: CharacterView;
+  export let npc: WorldNpc | undefined = undefined;
   export let traitIds: string[] = [];
   export let relationship: Relationship8D | null = null;
   export let area: CharacterArea = 'description';
@@ -49,28 +51,33 @@
   </div>
   <div id={`${id}-panel`} role="tabpanel" aria-labelledby={`${id}-tab-${area}`}>
     {#if area === 'description'}
-      <p data-testid={`${id}-short`}><strong>{describeShort(view)}</strong></p>
-      <p data-testid={`${id}-long`}>{describeLong(view)}</p>
-      <h4>Identity and appearance</h4>
-      {#if view.role === 'npc'}<p>Age {c.age} · Background: {c.occupation} · {c.socialClass} · {c.legalStatus.replace('_', ' ')}</p>{/if}
-      <dl>
-        {#each profileRows(view) as row}<div><dt>{row.label}</dt><dd>{row.value}</dd></div>{/each}
-        {#each traits as trait, i}<div><dt>{trait?.name ?? traitIds[i]}</dt><dd>{trait?.summary ?? ''}</dd></div>{/each}
-      </dl>
-      <details><summary>Attributes</summary>
-        <p>Health {c.health}</p>
-        <p>Needs: {REQUIRED_NEEDS.map(k => `${title(k)} ${c.needs[k]}`).join(' · ')}</p>
-        <p>Emotions: {REQUIRED_EMOTIONS.map(k => `${title(k)} ${c.emotions[k]}`).join(' · ')}</p>
-      </details>
-      <details><summary>Skills</summary><p>Skills: {REQUIRED_SKILLS.map(k => `${title(k)} ${c.skills[k]}`).join(' · ')}</p></details>
-      <details><summary>History</summary><p>No memories yet.</p></details>
-      {#if c.age >= 18}
-        <details>
-          <summary>Private (adult)</summary>
-          <p>Intimacy Knowledge: {view.profile.traits.intimacyKnowledge ?? 'Not recorded'}</p>
-          <p>Intimate history: {!history ? 'Not recorded' : history.disclosure === 'unknown' ? 'Unknown' : title(history.value)}</p>
+      {#snippet description()}
+        <p data-testid={`${id}-short`}><strong>{describeShort(view)}</strong></p>
+        <p data-testid={`${id}-long`}>{describeLong(view)}</p>
+        <h4>Identity and appearance</h4>
+        {#if npc}<p>Age {c.age} · {npcAgeTitle(c.age)} · Background: {c.occupation} · {c.socialClass} · {c.legalStatus.replace('_', ' ')}</p>{/if}
+        <dl data-character-identity>
+          {#each profileRows(view) as row}<div><dt>{row.label}</dt><dd>{row.value}</dd></div>{/each}
+          {#each traits as trait, i}<div><dt>{trait?.name ?? traitIds[i]}</dt><dd>{trait?.summary ?? ''}</dd></div>{/each}
+        </dl>
+        <details><summary>Attributes</summary>
+          {#if !npc}<p>Health {c.health}</p>{/if}
+          <p>Needs: {REQUIRED_NEEDS.map(k => `${title(k)} ${c.needs[k]}`).join(' · ')}</p>
+          <p>Emotions: {REQUIRED_EMOTIONS.filter(k => !npc || k !== 'stress').map(k => `${title(k)} ${c.emotions[k]}`).join(' · ')}</p>
         </details>
-      {/if}
+        {#if !npc}
+          <details><summary>Skills</summary><p>Skills: {REQUIRED_SKILLS.map(k => `${title(k)} ${c.skills[k]}`).join(' · ')}</p></details>
+          <details><summary>History</summary><p>No memories yet.</p></details>
+        {/if}
+        {#if c.age >= 18}
+          <details>
+            <summary>Private (adult)</summary>
+            <p>Intimacy Knowledge: {view.profile.traits.intimacyKnowledge ?? 'Not recorded'}</p>
+            <p>Intimate history: {!history ? 'Not recorded' : history.disclosure === 'unknown' ? 'Unknown' : title(history.value)}</p>
+          </details>
+        {/if}
+      {/snippet}
+      {#if npc}<NpcSheet {npc} age={c.age} {description} />{:else}{@render description()}{/if}
     {:else if area === 'inventory'}
       {#if inventory}{@render inventory()}{/if}
     {:else if area === 'work'}

@@ -4,17 +4,16 @@ createCharacterLifeSession,
 DEFAULT_PLAYER_DRAFT,
 isCharacterLifeSessionState,
 SOCIETY_PLOT_IDS,societyPlot,societyStaff,outsidePlot,
-WEEKLY_RESOURCE_KEYS,
+WEEKLY_RESOURCE_KEYS,npcAgeTitle,
 type CharacterLifeSessionState,
+type NpcLife,
 type TileTrialReport
 } from '../../packages/core/src/index.ts';
 import { serializeCharacterLifeSave } from '../../packages/persistence/src/character-life-save.ts';
 import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
-import {
-observeCharacterLife,type Observation,type VisibleCharacter,
-} from '../../packages/simulation/src/character-life-observation.ts';
+import type { Observation, VisibleCharacter } from '../../packages/simulation/src/character-life-observation.ts';
 import { formatMilli } from '../../packages/ui/src/milli-format.ts';
-import {openReportDetails, charactersView,characterWindow,expectOneCharacterWindow,expectReport,go,reportFulfillment,reportRegion,selectArea,selectPerson } from './character-life-navigation.helpers.ts';
+import {openReportDetails, characterPanel,charactersView,characterWindow,expectOneCharacterWindow,expectReport,go,observeSheetLife,reportFulfillment,reportRegion,selectArea,selectNpcSheetTab,selectPerson } from './character-life-navigation.helpers.ts';
 
 const button = (scope: Page | Locator, name: string) => scope.getByRole('button', { name, exact: true });
 const region = (page: Page, name: string) => page.getByRole('region', { name, exact: true });
@@ -46,15 +45,17 @@ function fixture() {
   return session;
 }
 
-async function profileParity(page: Page, scope: Locator, c: VisibleCharacter) {
-  const panel = scope.getByRole('tabpanel');
+async function profileParity(page: Page, scope: Locator, c: VisibleCharacter, life?: NpcLife) {
+  const panel = characterPanel(page);
   await expectOneCharacterWindow(page);
   await selectArea(page, 'Description');
+  if (life) await selectNpcSheetTab(page, 'Profile');
   await expect(scope.getByTestId(`profile-${c.id}-short`)).toHaveText(c.shortDescription);
   await expect(scope.getByTestId(`profile-${c.id}-long`)).toHaveText(c.longDescription);
   await expect(panel.getByRole('heading', { name: 'Identity and appearance', exact: true })).toBeVisible();
-  await expect(panel.locator('dt')).toHaveText([...c.profileRows.map(r => r.label), ...c.traits.map(t => t.name)]);
-  await expect(panel.locator('dd')).toHaveText([...c.profileRows.map(r => r.value), ...c.traits.map(t => t.summary)]);
+  const identity = panel.locator('[data-character-identity]');
+  await expect(identity.locator('dt')).toHaveText([...c.profileRows.map(r => r.label), ...c.traits.map(t => t.name)]);
+  await expect(identity.locator('dd')).toHaveText([...c.profileRows.map(r => r.value), ...c.traits.map(t => t.summary)]);
   for (const trait of c.traits) {
     await expect(panel.getByText(trait.name, { exact: true })).toHaveCount(1);
     await expect(panel.getByText(trait.summary, { exact: true })).toHaveCount(1);
@@ -85,13 +86,28 @@ async function profileParity(page: Page, scope: Locator, c: VisibleCharacter) {
   }
   const attributes = panel.locator('details').filter({ hasText: 'Attributes' });
   await attributes.locator('summary').click();
-  await expect(attributes.locator('p')).toHaveText([`Health ${c.stats.health}`, `Needs: ${numbers(c.stats.needs)}`, `Emotions: ${numbers(c.stats.emotions)}`]);
-  const skills = panel.locator('details').filter({ hasText: 'Skills' });
-  await skills.locator('summary').click();
-  await expect(skills.locator('p')).toHaveText(`Skills: ${numbers(c.stats.skills)}`);
-  const memories = panel.locator('details').filter({ has: page.getByText('History', { exact: true }) });
-  await memories.locator('summary').click();
-  await expect(memories.locator('p')).toHaveText('No memories yet.');
+  const emotions = Object.entries(c.stats.emotions).filter(([key]) => !life || key !== 'stress');
+  await expect(attributes.locator('p')).toHaveText([...(life ? [] : [`Health ${c.stats.health}`]), `Needs: ${numbers(c.stats.needs)}`, `Emotions: ${emotions.map(([key, value]) => `${title(key)} ${value}`).join(' · ')}`]);
+  if (life) {
+    await expect(panel.getByText(/^Health \d/)).toHaveCount(0);
+    const skills = await selectNpcSheetTab(page, 'Skills');
+    await expect(skills.locator('dt')).toHaveText(Object.keys(c.stats.skills).map(title));
+    await expect(skills.locator('dd')).toHaveText(Object.values(c.stats.skills).map(String));
+    const history = await selectNpcSheetTab(page, 'History');
+    if (life.history.recent.length) {
+      const labels: Record<string, string> = { 'post-assigned': 'Post assigned', 'post-cleared': 'Post cleared', exhausted: 'Exhausted', recovered: 'Recovered', birthday: 'Birthday' };
+      const events = life.history.recent.slice().reverse().map(({ week, kind }) =>
+        `Week ${(week - 1) % 40 + 1} · Year ${Math.floor((week - 1) / 40) + 1} · ${labels[kind]}`);
+      await expect(history.getByRole('list', { name: 'Recent events', exact: true }).getByRole('listitem')).toHaveText(events);
+    } else await expect(history.getByText('No events recorded.', { exact: true })).toBeVisible();
+  } else {
+    const skills = panel.locator('details').filter({ hasText: 'Skills' });
+    await skills.locator('summary').click();
+    await expect(skills.locator('p')).toHaveText(`Skills: ${numbers(c.stats.skills)}`);
+    const memories = panel.locator('details').filter({ has: page.getByText('History', { exact: true }) });
+    await memories.locator('summary').click();
+    await expect(memories.locator('p')).toHaveText('No memories yet.');
+  }
   await selectArea(page, 'Relations');
   if (c.relationship) {
     await expect(panel.getByText('Toward you:', { exact: true })).toBeVisible();
@@ -228,12 +244,15 @@ async function uiParity(page: Page, o: Observation, fullReport: Readonly<TileTri
     const card = await selectPerson(page, npc.id);
     await selectArea(page, 'Description');
     await expect(card.getByRole('heading', { name: npc.name, exact: true })).toBeVisible();
-    await expect(card.getByRole('tabpanel').getByText(/^Age /)).toHaveText(`Age ${npc.age} · Background: ${npc.occupation} · ${npc.socialClass} · ${npc.legalStatus.replace('_', ' ')}`);
-    await profileParity(page, card, npc);
+    await expect(characterPanel(page).getByText(/^Age /)).toHaveText(`Age ${npc.age} · ${npcAgeTitle(npc.age)} · Background: ${npc.occupation} · ${npc.socialClass} · ${npc.legalStatus.replace('_', ' ')}`);
+    const life = expected.npcs.find(entry => entry.character.id === npc.id)!.life;
+    await profileParity(page, card, npc, life);
     await selectArea(page, 'Work');
     await expect(card.getByTestId(`npc-post-${npc.id}`)).toHaveText(`Post: ${npc.postLabel}`);
     await expect(card.locator('header > p')).toHaveText(npc.postLabel);
-    await expect(card.getByText('NPC post skills apply at End Week.', { exact: true })).toBeVisible();
+    const note = life.working ? 'NPC post skills apply at End Week.' :
+      npc.postTileId ? 'Not working · Post inactive at End Week.' : 'Not working';
+    await expect(card.getByText(note, { exact: true })).toBeVisible();
     if (npc.postTileId) {
       await expect(button(card, 'Unassign')).toBeEnabled({ enabled: !locked });
       await expect(card.getByRole('combobox')).toHaveCount(0);
@@ -267,7 +286,7 @@ test('same-session UI projection through assignment and full week', async ({ pag
     expectedSession = result.next;
     if (result.report) expectedReport = result.report;
   };
-  const compare = () => uiParity(page, observeCharacterLife(expectedSession, expectedReport), expectedReport, expectedSession);
+  const compare = () => uiParity(page, observeSheetLife(expectedSession, expectedReport), expectedReport, expectedSession);
   const importInitial = async () => {
     if (await page.getByTestId('life-shell').count()) await go(page, 'session');
     await page.getByLabel('Import checkpoint', { exact: true }).setInputFiles({
