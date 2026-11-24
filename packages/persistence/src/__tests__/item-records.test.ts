@@ -1,7 +1,7 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';
 import { expect, it } from 'vitest';
-import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT } from '@haven/core';
+import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, emptyAcquisition } from '@haven/core';
 import { serializeCharacterLifeSave, deserializeCharacterLifeSave } from '../character-life-save.js';
 import { recordsToSession, sessionToRecords, StoreRecordError } from '../session-records.js';
 import { executeCharacterLifeCommand } from '@haven/simulation';
@@ -37,6 +37,7 @@ it('loads every v13 Character Life fixture as current and round-trips exact byte
 });
 it('round-trips equipped character ids containing a colon',()=>{
  const s=stocked();s.npcs[0].character.id='npc:one';s.profiles[0].id='npc:one';
+ s.city.society!.acquisition=emptyAcquisition();
  s.city.society!.items.equipped['npc:one']=s.city.society!.items.equipped.npc_w1_guild_0;delete s.city.society!.items.equipped.npc_w1_guild_0;
  expect(recordsToSession(sessionToRecords('main',s))).toEqual(s);
 });

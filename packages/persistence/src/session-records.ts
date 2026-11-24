@@ -186,10 +186,7 @@ export function recordsToSession(records: StoredRecord[]): CharacterLifeSessionS
   }
   if (!player) throw new StoreRecordError('characters:player');
   if (meta.rulesetId === SOCIETY_RULESET && city.phase === 'planning') {
-    const acquisition = city.society!.acquisition;
-    const { worldSeed } = city.world.worldMetadata;
-    if (!isAcquisitionReplay(city) ||
-        !hasAcquisitionRosterProof(acquisition, worldSeed, npcs.map(entry => entry.npc))) {
+    if (!isAcquisitionReplay(city) || !hasAcquisitionRosterProof(city, npcs.map(entry => entry.npc))) {
       throw new StoreRecordError('city:city');
     }
   }

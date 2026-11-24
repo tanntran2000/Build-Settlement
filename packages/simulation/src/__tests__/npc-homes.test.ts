@@ -40,7 +40,8 @@ function populate(homes: readonly string[], maxBeds = false): Populated {
   const start = newGame();
   const session: Populated = { ...start, npcs: [], profiles: [] };
   session.city.society!.wallRing = 2;
-  session.city.world.week = 8;
+  // All residents in this no-market fixture already lived here before the current week.
+  session.city.world.week = 9;
   for (const [id, contents] of [
     ['estate-1', building('mansion', maxBeds ? 3 : 1)],
     ['estate-2', building('retainers-hall', maxBeds ? 2 : 1)],

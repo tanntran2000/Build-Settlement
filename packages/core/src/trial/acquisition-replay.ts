@@ -51,8 +51,6 @@ export function isAcquisitionReplay(city: TileTrialState): boolean {
       if (!offer || offer.source !== current || offer.slot !== slot) return false;
     }
   }
-  if (city.tiles.some(({ building }) =>
-    building?.enabled && isAcquisitionSource(building.typeId) && !sources.includes(building.typeId))) return false;
   const auctions = sources.filter(isAuctionSource);
   return state.lots.length === auctions.length && state.lots.every((lot, index) =>
     lot.source === auctions[index] && replaysLot(worldSeed, week, lot));
@@ -60,22 +58,33 @@ export function isAcquisitionReplay(city: TileTrialState): boolean {
 
 type Departure = AcquisitionState['departures'][number];
 
-function matchesEarlierDeparture({ id, name, kind }: Departure, seed: number, week: number): boolean {
+function acquisitionKey(id: string): { boughtWeek: number; source: AcquisitionSource; slot: number | 'lot' } | undefined {
   const match = /^npc_w([1-9][0-9]*)_([a-z-]+)_(lot|0|[1-9][0-9]*)$/.exec(id);
-  if (!match) return false;
+  if (!match) return;
   const [, weekText, source, slotText] = match;
-  const boughtWeek = Number(weekText), slot = slotText === 'lot' ? slotText : Number(slotText);
-  if (!Number.isSafeInteger(boughtWeek) || boughtWeek >= week || !isAcquisitionSource(source) ||
-      (slot === 'lot' ? !isAuctionSource(source) : slot >= P7B_TRIAL.stockSize) ||
-      (kind === 'sold' && source === 'guild')) return false;
+  const boughtWeek = Number(weekText);
+  const slot = slotText === 'lot' ? 'lot' : Number(slotText);
+  if (!Number.isSafeInteger(boughtWeek) || !isAcquisitionSource(source) ||
+      (slot === 'lot' ? !isAuctionSource(source) : slot >= P7B_TRIAL.stockSize)) return;
+  return { boughtWeek, source, slot };
+}
+
+function matchesEarlierDeparture({ id, name, kind }: Departure, seed: number, week: number): boolean {
+  const key = acquisitionKey(id);
+  if (!key || key.boughtWeek >= week || (kind === 'sold' && key.source === 'guild')) return false;
+  const { boughtWeek, source, slot } = key;
   for (let salt = 0; salt <= ACQUISITION_NAME_SALT_MAX; salt += 1) {
     if (marketNpcName(seed, boughtWeek, source, slot, salt).name === name) return true;
   }
   return false;
 }
 
-export function hasAcquisitionRosterProof(state: AcquisitionState, seed: number, npcs: readonly WorldNpc[]): boolean {
-  if (!state.week) return true;
+export function hasAcquisitionRosterProof(city: TileTrialState, npcs: readonly WorldNpc[]): boolean {
+  const state = city.society!.acquisition;
+  const { week, worldMetadata: { worldSeed: seed } } = city.world;
+  // Only Character Life draws stock for enabled buildings and tracks who took each offer.
+  if (city.tiles.some(({ building }) => building?.enabled && isAcquisitionSource(building.typeId) &&
+    !state.stock.some(offer => offer.source === building.typeId))) return false;
   const offers = state.stock.flatMap(offer => {
     const entry = { source: offer.source, slot: offer.slot as number | 'lot', nameSalt: offer.nameSalt, taken: offer.status === 'bought' };
     if (offer.slot !== P7B_TRIAL.stockSize - 1) return [entry];
@@ -95,9 +104,13 @@ export function hasAcquisitionRosterProof(state: AcquisitionState, seed: number,
     const { id, name } = npc.character;
     occupiedIds.add(id);
     const offer = byId.get(id);
+    if (id.startsWith('npc_w')) {
+      const key = acquisitionKey(id);
+      if (!key || npc.household.source !== key.source || npc.household.boughtWeek !== key.boughtWeek ||
+          (key.boughtWeek === week && !offer)) return false;
+    }
     if (offer) {
-      if (!offer.taken || offer.name !== name ||
-          npc.household.source !== offer.source || npc.household.boughtWeek !== state.week) return false;
+      if (!offer.taken || offer.name !== name) return false;
       taken.add(id);
     } else reserved.add(name);
   }
@@ -125,5 +138,6 @@ export function hasAcquisitionRosterProof(state: AcquisitionState, seed: number,
     if (reserved.has(offer.name)) return false;
     reserved.add(offer.name);
   }
-  return true;
+  const openingCount = npcs.length + state.departures.length - taken.size;
+  return openingCount >= 0 && openingCount <= P7B_TRIAL.npcCap;
 }
