@@ -1089,8 +1089,12 @@ export function validateNpcAcquisition(json: unknown): AcquisitionCatalog {
         auction.steadyBps < auction.keenBps && auction.keenBps <= auction.ceilingBps[1]))
         fail(ref, 'ceilingBps', 'expected opening <= floor < steady < keen <= ceiling');
     if (auction.playerRaisesMilli[0] === auction.playerRaisesMilli[1]) fail(ref, 'playerRaisesMilli', 'expected two distinct raises');
-    if ([auction.openingStepMilli, ...auction.playerRaisesMilli, auction.rivalStepMilli].some(amount => amount % SOCIAL_RESOURCE_SCALE))
-        fail(ref, 'playerRaisesMilli', 'expected whole Gold steps');
+    for (const field of ['openingStepMilli', 'rivalStepMilli'] as const) {
+        if (auction[field] % SOCIAL_RESOURCE_SCALE) fail(ref, field, 'expected whole Gold steps');
+    }
+    for (const [index, amount] of auction.playerRaisesMilli.entries()) {
+        if (amount % SOCIAL_RESOURCE_SCALE) fail(ref, 'playerRaisesMilli[' + index + ']', 'expected whole Gold steps');
+    }
     return data;
 }
 

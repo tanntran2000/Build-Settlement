@@ -14,6 +14,7 @@ export const { AUCTION_TRIAL, CARD_TRIAL } = catalog;
 const BPS = 10_000;
 const possibleRecruits = ACQUISITION_SOURCES.length * P7B_TRIAL.stockSize + ACQUISITION_SOURCES.filter(isAuctionSource).length;
 const departureCap = P7B_TRIAL.npcCap + possibleRecruits;
+export const ACQUISITION_NAME_SALT_MAX = departureCap + P7B_TRIAL.npcCap + possibleRecruits;
 
 export interface StockOffer {
   source: AcquisitionSource;
@@ -28,13 +29,13 @@ export interface AuctionLot {
   leader: 'player' | number | null;
   out: boolean[];
   status: 'open' | 'won' | 'lost' | 'sold';
-  raises: number[];
+  raises: (number | 'withdraw')[];
 }
 export interface AcquisitionState {
   week: number;
   stock: StockOffer[];
   lots: AuctionLot[];
-  departures: { kind: 'sold' | 'released'; name: string }[];
+  departures: { kind: 'sold' | 'released'; name: string; id: string }[];
 }
 
 export const emptyAcquisition = (): AcquisitionState => ({ week: 0, stock: [], lots: [], departures: [] });
@@ -43,7 +44,7 @@ export const emptyHouseholdReport = (): HouseholdReport => ({
 });
 const count = (value: unknown): value is number => Number.isSafeInteger(value) && (value as number) >= 0;
 const positive = (value: unknown): value is number => count(value) && value > 0;
-const salt = (value: unknown): value is number => count(value) && value <= departureCap + P7B_TRIAL.npcCap + possibleRecruits;
+const salt = (value: unknown): value is number => count(value) && value <= ACQUISITION_NAME_SALT_MAX;
 export const isAcquisitionSource = (value: unknown): value is AcquisitionSource =>
   ACQUISITION_SOURCES.some(source => source === value);
 export function isAuctionSource(value: unknown): value is AuctionSource {
@@ -87,7 +88,7 @@ function isAuctionLot(raw: unknown): raw is AuctionLot {
   const out = readDenseArray(raw.out), raises = readDenseArray(raw.raises);
   const [min, max] = AUCTION_TRIAL.rivalCount;
   if (!out || out.length < min || out.length > max || !out.every(entry => typeof entry === 'boolean') ||
-      !raises || raises.length > raw.priceMilli / AUCTION_TRIAL.playerRaisesMilli[0] || !raises.every(playerRaise)) return false;
+      !raises || raises.length > raw.priceMilli / AUCTION_TRIAL.playerRaisesMilli[0] || !raises.every(action => action === 'withdraw' || playerRaise(action))) return false;
   if (raw.status === 'won') return raw.leader === 'player' && raises.length > 0 && out.every(Boolean);
   const rivalLeads = count(raw.leader) && raw.leader < out.length && out[raw.leader] === false;
   if (raw.status === 'lost' || raw.status === 'sold') return rivalLeads;
@@ -99,7 +100,7 @@ export function isAcquisitionState(raw: unknown): raw is AcquisitionState {
     const stock = readDenseArray(raw.stock), lots = readDenseArray(raw.lots), departures = readDenseArray(raw.departures);
     if (!stock || !lots || !departures || stock.length + lots.length > possibleRecruits || departures.length > departureCap ||
         !stock.every(isStockOffer) || !lots.every(isAuctionLot) || !departures.every(entry =>
-          hasWeeklyKeys(entry, ['kind', 'name']) && (entry.kind === 'sold' || entry.kind === 'released') &&
+          hasWeeklyKeys(entry, ['kind', 'name', 'id']) && typeof entry.id === 'string' && (entry.kind === 'sold' || entry.kind === 'released') &&
           typeof entry.name === 'string' && !!entry.name && entry.name.trim() === entry.name)) return false;
     if (raw.week === 0) return !stock.length && !lots.length && !departures.length;
     return new Set(stock.map(offer => `${offer.source}:${offer.slot}`)).size === stock.length &&

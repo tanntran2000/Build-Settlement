@@ -7,12 +7,14 @@ export function closeAuctionLot(lot: AuctionLot, rivals: readonly AuctionRival[]
   if (winner === null) throw Error('Auction has no remaining rival.');
   lot.leader = winner;
   lot.status = status;
+  if (status === 'lost') lot.raises.push('withdraw');
 }
 
 export function auctionTranscript(openingMilli: number, lot: AuctionLot, rivals: readonly AuctionRival[]): AuctionRound[] {
   let price = openingMilli, out = rivals.map(() => false);
   const rounds: AuctionRound[] = [];
   for (const raise of lot.raises) {
+    if (raise === 'withdraw') break;
     const round = auctionRound(price, raise, out, rivals);
     rounds.push(round);
     price = round.priceMilli;

@@ -1,9 +1,9 @@
 import { expect, it } from 'vitest';
-import { acquisitionNpc, auctionOpeningMilli, auctionRivals, marketNpcName, generateNpc, npcValueMilli,
+import { acquisitionNpc, auctionOpeningMilli, auctionRivals, emptyAcquisition, marketNpcName, generateNpc, npcValueMilli,
   type CharacterLifeSessionState } from '@haven/core';
 import { deserializeCharacterLifeSave, recordsToSession, serializeCharacterLifeSave,
   sessionToRecords, StoreRecordError } from '@haven/persistence';
-import { stock, succeeded, town } from './acquisition-fixture.js';
+import { market, populate, stock, succeeded, town } from './acquisition-fixture.js';
 
 const source = 'auction-house';
 const homeTileId = 'estate-1';
@@ -46,7 +46,11 @@ function assertRefused(session: CharacterLifeSessionState, mutate: (draft: Chara
   const forged = JSON.stringify(envelope);
   const rows = sessionToRecords('main', envelope.state), before = structuredClone(rows);
   expect(deserializeCharacterLifeSave(forged)).toStrictEqual(invalid);
-  expect(() => recordsToSession(rows)).toThrow(StoreRecordError);
+  let rowError: unknown;
+  try { recordsToSession(rows); } catch (caught) { rowError = caught; }
+  expect(rowError).toBeInstanceOf(StoreRecordError);
+  expect((rowError as StoreRecordError).ref).toBe('city:city');
+  expect((rowError as Error).message).toBe('Invalid store record: city:city');
   expect(rows).toStrictEqual(before);
   expect(JSON.stringify(envelope)).toBe(forged);
   expect(serializeCharacterLifeSave(session)).toStrictEqual(source);
@@ -98,6 +102,71 @@ it('accepts a four-raise transcript and reproduces the original checkpoint bytes
   expect(recordsToSession(sessionToRecords('main', result.state))).toStrictEqual(session);
 });
 
+it.each(['missing group', 'empty sentinel'])('refuses the %s when a market is enabled', problem => {
+  assertRefused(market(), draft => {
+    const society = draft.city.society!;
+    if (problem === 'missing group') society.acquisition.stock = society.acquisition.stock.filter(offer => offer.source !== 'guild');
+    else society.acquisition = emptyAcquisition();
+  });
+});
+
+it('refuses a removed retained group that could draw a sold ID again', () => {
+  const bought = succeeded(market(), 'BUY_NPC', { source: 'slave-market', slot: 0, homeTileId }).next;
+  const sold = succeeded(bought, 'SELL_NPC', { npcId: bought.npcs[0].character.id }).next;
+  const paused = succeeded(sold, 'SET_ENABLED', { tileId: 'slum-1', enabled: false }).next;
+  assertRefused(paused, draft => {
+    const { acquisition } = draft.city.society!;
+    acquisition.stock = acquisition.stock.filter(offer => offer.source !== 'slave-market');
+    acquisition.lots = acquisition.lots.filter(lot => lot.source !== 'slave-market');
+  });
+});
+
+it('accepts the complete retained group after pausing its building', () => {
+  const paused = succeeded(market(), 'SET_ENABLED', { tileId: 'service-1', enabled: false }).next;
+  expect(paused.city.society!.acquisition.stock.filter(offer => offer.source === 'guild')).toHaveLength(4);
+  const encoded = serializeCharacterLifeSave(paused);
+  if (!encoded.success) throw Error(encoded.error.message);
+  expect(deserializeCharacterLifeSave(encoded.text)).toStrictEqual({ success: true, state: paused });
+  expect(recordsToSession(sessionToRecords('main', paused))).toStrictEqual(paused);
+});
+
+it('refuses a status-only edit that reopens a withdrawn lot', () => {
+  const withdrawn = succeeded(auctionFixture(1, 2), 'WITHDRAW_BID', { source }).next;
+  assertRefused(withdrawn, draft => { lotAt(draft).status = 'open'; });
+  expect(lotAt(withdrawn).raises).toStrictEqual([5000, 'withdraw']);
+});
+
+it.each(['source', 'week'])('refuses an acquired NPC with changed household %s', field => {
+  const start = town();
+  populate(start, []);
+  start.city.world.week = 2;
+  const stocked = succeeded(start, 'BUILD', { tileId: 'spec-2', typeId: source }).next;
+  const bought = succeeded(stocked, 'BUY_NPC', { source, slot: 0, homeTileId }).next;
+  assertRefused(bought, draft => {
+    const { household } = draft.npcs[0];
+    if (field === 'source') household.source = 'slave-market';
+    else household.boughtWeek = 1;
+  });
+});
+
+it.each(['sold', 'unknown name', 'reoffered'])('refuses an impossible earlier departure: %s', problem => {
+  const start = town();
+  if (problem !== 'reoffered') populate(start, [homeTileId]);
+  const stocked = succeeded(start, 'BUILD', { tileId: 'service-1', typeId: 'guild' }).next;
+  const ready = problem === 'reoffered' ?
+    succeeded(stocked, 'BUY_NPC', { source: 'guild', slot: 0, homeTileId }).next : stocked;
+  const released = succeeded(ready, 'RELEASE_NPC', { npcId: ready.npcs[0].character.id }).next;
+  assertRefused(released, draft => {
+    const acquisition = draft.city.society!.acquisition;
+    if (problem === 'sold') acquisition.departures[0].kind = 'sold';
+    else if (problem === 'unknown name') acquisition.departures[0].name = 'Unknown Person';
+    else {
+      acquisition.stock[0].status = 'open';
+      acquisition.departures[0].name = 'Unknown Person';
+    }
+  });
+});
+
 it('round-trips a withdrawn lot and a winning lot whose recruit was released', () => {
   const started = auctionFixture(1, 2);
   const withdrawn = succeeded(started, 'WITHDRAW_BID', { source }).next;
@@ -112,7 +181,7 @@ it('round-trips a withdrawn lot and a winning lot whose recruit was released', (
   const { id: npcId, name } = state.npcs[0].character;
   const gold = stock(state).gold;
   state = succeeded(state, 'RELEASE_NPC', { npcId }).next;
-  expect(state.city.society!.acquisition.departures).toStrictEqual([{ kind: 'released', name }]);
+  expect(state.city.society!.acquisition.departures).toStrictEqual([{ kind: 'released', name, id: npcId }]);
   expect(stock(state).gold).toBe(gold);
   const won = serializeCharacterLifeSave(state);
   if (!won.success) throw Error(won.error.message);

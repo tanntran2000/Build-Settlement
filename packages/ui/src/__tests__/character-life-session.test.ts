@@ -9,7 +9,7 @@ const WORLD_SESSION_CHECKPOINT_KEY = 'haven.world-session.checkpoint.v1';
 
 const session = (seed = 0, currentName = 'Ana') => { const r = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName }); if (!r.success) throw Error(r.error.message); return r.value; };
 
-it('loads live and pinned v12 cities into a detached complete Life session without conversion or grants', () => {
+it('loads live and pinned v13 cities into a detached complete Life session without conversion or grants', () => {
   const oldSession = () => session();
   const decoded=deserializeCharacterLifeSave(readFileSync('packages/persistence/src/__tests__/fixtures/society-v13/life-new-game.json','utf8'));
   if(!decoded.success)throw Error(decoded.error.message);

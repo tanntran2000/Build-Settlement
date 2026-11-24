@@ -149,6 +149,7 @@
   .acquisition, article { min-width: 0; overflow-wrap: anywhere; }
   .listings { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 1rem; }
   article { padding: 0.75rem; border: 1px solid currentColor; }
+  article ul, article ol { list-style-position: inside; }
   label, select { display: block; max-width: 100%; }
   .bid-controls, [role="tablist"] { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-block: 0.5rem; }
   button[aria-selected="true"] { text-decoration: underline; text-underline-offset: 0.2em; }

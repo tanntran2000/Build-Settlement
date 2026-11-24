@@ -1,5 +1,6 @@
 import { expect, it } from 'vitest';
 import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';
+import { createHash } from 'node:crypto';
 import { readFileSync, readdirSync } from 'node:fs';
 import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, type NpcLife } from '@haven/core';
 import { createMemoryGameStore } from '../memory-store.js';
@@ -49,6 +50,15 @@ it('requires life in every current NPC record and retains the last valid stored 
   delete npc.npc.life;
   expect(() => recordsToSession(rows)).toThrow(StoreRecordError);
   expect(JSON.stringify(await store.read('main'))).toBe(before);
+});
+
+it('pins the original bytes of all ten historical v12 checkpoints', () => {
+  const historical = new URL('./fixtures/society-v12/', import.meta.url);
+  const files = readdirSync(historical).sort();
+  expect(files).toHaveLength(10);
+  const hash = createHash('sha256');
+  for (const file of files) hash.update(file).update('\0').update(readFileSync(new URL(file, historical))).update('\0');
+  expect(hash.digest('hex')).toBe('f21b183ab20596596c19357e620213b295bebd539e0ae19fa1f96652c78b8255');
 });
 
 it('matches v12 and v13 checkpoint filenames and round-trips every current life checkpoint byte-identically', () => {

@@ -98,7 +98,7 @@ function roundTrip(session: CharacterLifeSessionState) {
   return { state: loaded.state, text: saved.text };
 }
 
-describe('NPC homes and v12 saves', () => {
+describe('NPC homes and v13 saves', () => {
   it('starts New Game with no NPCs or profiles, 120 Gold, and both fixed L1 homes', () => {
     const session = newGame();
     const world = createNpcWorldSession(2026);
@@ -153,7 +153,7 @@ describe('NPC homes and v12 saves', () => {
     }
   });
 
-  it('rejects a v12 checkpoint with fractional NPC affection', () => {
+  it('rejects a v13 checkpoint with fractional NPC affection', () => {
     const { text } = roundTrip(populate(['estate-2']));
     const checkpoint = JSON.parse(text) as { state: CharacterLifeSessionState };
     checkpoint.state.npcs[0].character.relationshipToPlayer.affection = 20.5;

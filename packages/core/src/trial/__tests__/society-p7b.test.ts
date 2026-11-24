@@ -82,7 +82,7 @@ it("rejects missing and non-integer Retainers' Hall caps", () => {
   expect(failures).toStrictEqual([message, message]);
 });
 
-it.each([10, 11])('uses the v12 ruleset and refuses the v%i checkpoint unchanged', version => {
+it.each([10, 11])('uses the v13 ruleset and refuses the v%i checkpoint unchanged', version => {
   const fresh = core.createCharacterLifeSession(42, { ...core.DEFAULT_PLAYER_DRAFT, currentName: 'Synthetic Keeper' });
   if (!fresh.success) throw Error(fresh.error.message);
   const before = structuredClone(fresh.value);
@@ -99,7 +99,7 @@ it.each([10, 11])('uses the v12 ruleset and refuses the v%i checkpoint unchanged
   expect(serializeCharacterLifeSave(fresh.value)).toStrictEqual(encoded);
 });
 
-it.each(['empty', 'swapped', 'paused', 'staffed', 'duplicate acquisition', 'third Hall'])('rejects a v12 planning save with %s', problem => {
+it.each(['empty', 'swapped', 'paused', 'staffed', 'duplicate acquisition', 'third Hall'])('rejects a v13 planning save with %s', problem => {
   const city = core.createSocietyState();
   const mansion = city.tiles.find(t => t.id === 'estate-1');
   const estateHall = city.tiles.find(t => t.id === 'estate-2');

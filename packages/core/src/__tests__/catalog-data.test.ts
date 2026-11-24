@@ -84,6 +84,25 @@ it('validates the acquisition TRIAL data and pins malformed bands with a named e
   expect((thrown as Error).message).toBe('npc-acquisition.json#AUCTION_TRIAL.ceilingBps: expected opening <= floor < steady < keen <= ceiling');
 });
 
+it.each([
+  ['openingStepMilli', 0],
+  ['rivalStepMilli', 0],
+  ['playerRaisesMilli', 0],
+  ['playerRaisesMilli', 1],
+] as const)('names the malformed whole-Gold step %s at index %i', async (field, index) => {
+  const api = await validators();
+  const bad = data('npc-acquisition.json') as {
+    AUCTION_TRIAL: Record<'openingStepMilli' | 'rivalStepMilli', number> & { playerRaisesMilli: number[] };
+  };
+  if (field === 'playerRaisesMilli') bad.AUCTION_TRIAL[field][index] += 1;
+  else bad.AUCTION_TRIAL[field] += 1;
+  let thrown: unknown;
+  try { api.validateNpcAcquisition(bad); } catch (error) { thrown = error; }
+  const path = field === 'playerRaisesMilli' ? field + '[' + index + ']' : field;
+  expect(thrown).toBeInstanceOf(api.CatalogError);
+  expect((thrown as Error).message).toBe('npc-acquisition.json#AUCTION_TRIAL.' + path + ': expected whole Gold steps');
+});
+
 it('preserves the original vote message literal type', () => {
   expectTypeOf(LAW_MESSAGES.VOTE_SHORT).toEqualTypeOf<'The vote would fail: For {F} · Against {A}.'>();
 });

@@ -132,11 +132,17 @@ describe('P7-B weekly acquisition', () => {
     expect(serializeCharacterLifeSave(decoded.state)).toStrictEqual(encoded);
     expect(recordsToSession(sessionToRecords('main', next))).toStrictEqual(next);
     if (process.env.P7B_STEP0_MEASURE === '1') {
-      const withoutWeek = structuredClone(next);
-      withoutWeek.city.society!.acquisition = emptyAcquisition();
-      const emptyWeek = serializeCharacterLifeSave(withoutWeek);
-      if (!emptyWeek.success) throw Error(emptyWeek.error.message);
-      const full = Buffer.byteLength(encoded.text, 'utf8'), empty = Buffer.byteLength(emptyWeek.text, 'utf8');
+      const value = JSON.parse(encoded.text);
+      value.state.city.society.acquisition = emptyAcquisition();
+      const control = JSON.stringify(value);
+      expect(deserializeCharacterLifeSave(control)).toStrictEqual({
+        success: false,
+        error: {
+          code: 'INVALID_SAVE_STATE',
+          message: 'Checkpoint must contain a valid complete Character Life session in Planning.',
+        },
+      });
+      const full = Buffer.byteLength(encoded.text, 'utf8'), empty = Buffer.byteLength(control, 'utf8');
       console.info(JSON.stringify({ npcCount: 100, stock: 12, lots: 2, saveBytes: full, emptyWeekBytes: empty, acquisitionDeltaBytes: full - empty }));
     }
   });
@@ -151,7 +157,13 @@ describe('P7-B weekly acquisition', () => {
     const bad = JSON.parse(encoded.text);
     delete bad.state.city.society.acquisition;
     const refused = deserializeCharacterLifeSave(JSON.stringify(bad));
-    expect(refused.success).toBe(false);
+    expect(refused).toStrictEqual({
+      success: false,
+      error: {
+        code: 'INVALID_SAVE_STATE',
+        message: 'Checkpoint must contain a valid complete Character Life session in Planning.',
+      },
+    });
     expect(serializeCharacterLifeSave(s)).toStrictEqual(encoded);
   });
 });

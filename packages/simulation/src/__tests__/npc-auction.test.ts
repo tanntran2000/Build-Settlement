@@ -80,7 +80,7 @@ it('withdraws to the leader, and an unentered lot closes to the first maximum-ce
   const s = setup(42), lot = lotOf(s), rivals = auctionRivals(42, 1, source);
   const winner = rivals.findIndex(rival => rival.ceilingMilli === Math.max(...rivals.map(entry => entry.ceilingMilli)));
   const withdrawn = succeeded(s, 'WITHDRAW_BID', { source }).next;
-  expect(lotOf(withdrawn)).toStrictEqual({ ...lot, leader: winner, status: 'lost' });
+  expect(lotOf(withdrawn)).toStrictEqual({ ...lot, leader: winner, status: 'lost', raises: [...lot.raises, 'withdraw'] });
   expect(stock(withdrawn).gold).toBe(stock(s).gold);
   const closed = structuredClone(lot);
   closeAuctionLot(closed, rivals, 'sold');

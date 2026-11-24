@@ -27,14 +27,14 @@ it('pins the society new-game Character Life save bytes', () => {
  expect(encoded.text).toBe(bytes);
 });
 
-it('round-trips the pinned v12 Character Life checkpoint',()=>{
+it('round-trips the pinned v13 Character Life checkpoint',()=>{
  const bytes=readFileSync(new URL('./fixtures/society-v13/life-new-game.json',import.meta.url),'utf8');
  const decoded=deserializeCharacterLifeSave(bytes);expect(decoded.success).toBe(true);
  if(!decoded.success)throw Error(decoded.error.message);
  expect(serializeCharacterLifeSave(decoded.state)).toEqual({success:true,text:bytes});
 });
 
-it.each(['high','negative','fractional','missing score','extra score','missing research','unknown completed'])('refuses edited v12 %s without changing the checkpoint', kind => {
+it.each(['high','negative','fractional','missing score','extra score','missing research','unknown completed'])('refuses edited v13 %s without changing the checkpoint', kind => {
  const bytes = readFileSync(new URL('./fixtures/society-v13/life-new-game.json',import.meta.url),'utf8');
  const envelope = JSON.parse(bytes), society = envelope.state.city.society;
  if (kind === 'high') society.order.security = 101;

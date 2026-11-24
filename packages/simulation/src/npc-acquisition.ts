@@ -125,7 +125,7 @@ export function executeAcquisitionCommand(session: CharacterLifeSessionState, ty
       society.items = items;
       if (type === 'SELL_NPC') gold.gold = trialSafe(gold.gold + npcSellMilli(npc));
       if (society.acquisition.week !== week) society.acquisition = { ...emptyAcquisition(), week };
-      society.acquisition.departures.push({ kind: type === 'SELL_NPC' ? 'sold' : 'released', name: npc.character.name });
+      society.acquisition.departures.push({ kind: type === 'SELL_NPC' ? 'sold' : 'released', name: npc.character.name, id: npc.character.id });
       next.npcs.splice(index, 1);
       next.profiles.splice(index, 1);
     } else {

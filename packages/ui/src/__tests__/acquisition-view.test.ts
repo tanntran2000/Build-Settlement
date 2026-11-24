@@ -7,9 +7,9 @@ it('renders age, origin, source, status, skills, Beauty, Mind, obedience and pri
   const { npc } = acquisitionNpc(42, 1, 'guild', 0, 0);
   const price = npcValueMilli(npc, 'guild', false), view = cardFor(npc, price);
   expect(view).toStrictEqual({
-    name: npc.character.name, age: npc.character.age, title: view.title, origin: view.origin, source: 'Guild', status: 'Servant',
-    skills: view.skills, beauty: npc.life.beauty, mind: npc.life.mind, obedience: npc.household.obedience,
-    priceMilli: price, wageMilli: npc.household.contract!.wageMilli,
+    name: 'Ardis Frostmere', age: 34, title: 'Mature', origin: 'Frontier', source: 'Guild', status: 'Servant',
+    skills: [{ label: 'Medical', value: 39 }, { label: 'Management', value: 36 }],
+    beauty: 62, mind: 70, obedience: 63, priceMilli: 8000, wageMilli: 2000,
   });
   expect(view.skills).toHaveLength(2);
   expect(view.skills.map(skill => skill.value)).toStrictEqual(Object.values(npc.character.skills).sort((a, b) => b - a).slice(0, 2));

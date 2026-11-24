@@ -102,9 +102,7 @@ export function isTileTrialPlanningState(raw: unknown): raw is TileTrialState {
       if (tiles.filter(tile=>tile.building?.typeId===typeId).length>1) return false;
     }
     if (tiles.filter(tile=>tile.building?.typeId==='retainers-hall').length>RETAINERS_HALL_TRIAL.maxPerCity) return false;
-    return isTileTrialState(raw) && (raw.society.acquisition.week === 0 ||
-      (raw.society.acquisition.week === raw.world.week &&
-        isAcquisitionReplay(raw.society.acquisition, raw.world.worldMetadata.worldSeed)));
+    return isTileTrialState(raw) && isAcquisitionReplay(raw);
   } catch { return false; }
 }
 
