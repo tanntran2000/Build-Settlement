@@ -1,7 +1,7 @@
 import { test,expect,type Page } from '@playwright/test';
 import { readFile,writeFile } from 'node:fs/promises';
 import { deserializeCharacterLifeSave,serializeCharacterLifeSave,GAME_DB } from '../../packages/persistence/src/index.ts';
-import { makeLife,importLife,exportLife,go } from './character-life-navigation.helpers.ts';
+import { makeLife,makeLifeWithNpcs,importLife,exportLife,go } from './character-life-navigation.helpers.ts';
 import { readStoredRecords,storedSaveText,storeMarks,injectWriteAbort,writeRecords,holdStoreCompletion,waitStoreCompletion,releaseStoreCompletion,writeStoredSaveText } from './storage.helpers.ts';
 import { act } from './society-command.helpers.ts';
 const KEY='haven.character-life-session-society.checkpoint.v1';
@@ -103,7 +103,7 @@ test('fix1 F3: temporarily blocked localStorage retries legacy migration without
 });
 
 test('fix2 F1: recovered legacy A cannot replace B saved while migration was blocked',async({page})=>{
- const legacy=bytes(),b=makeLife(54321);await page.addInitScript(({key,legacy})=>{
+ const legacy=bytes(),b=makeLifeWithNpcs(54321);await page.addInitScript(({key,legacy})=>{
   const storage=localStorage;storage.setItem(key,legacy);
   Object.defineProperty(window,'localStorage',{configurable:true,get(){throw Error('temporarily blocked');}});
   Object.assign(window,{restoreLegacyStorage:()=>Object.defineProperty(window,'localStorage',{configurable:true,get:()=>storage})});
