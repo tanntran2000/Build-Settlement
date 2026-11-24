@@ -4,7 +4,7 @@ import { createNamedCharacter } from '../domain/character.js';
 import { SOCIAL_RESOURCE_SCALE } from '../social/profile.js';
 import type { CharacterProfile } from '../character/types.js';
 import { WORLD_TRAITS } from './npc-content.js';
-import { createNpcLife, NPC_HOBBIES, NPC_ORIGINS, npcLifeRandom, P7A_TRIAL, type SexPart } from './npc-life.js';
+import { createNpcLifeFromDraws, NPC_HOBBIES, NPC_ORIGINS, npcLifeRandom, P7A_TRIAL, type SexPart } from './npc-life.js';
 import type { NpcHousehold } from './npc-household.js';
 import type { WorldNpc } from './npc.js';
 
@@ -66,7 +66,8 @@ function rollPast(life: WorldNpc['life'], random: Random, range: readonly [numbe
 
 export function generateNpc(seed: number, week: number, source: AcquisitionSource, slot: number | 'lot', nameSalt = 0):
   { npc: WorldNpc; profile: CharacterProfile } {
-  if (!Number.isSafeInteger(week) || week <= 0 || !Number.isSafeInteger(nameSalt) || nameSalt < 0 ||
+  if (!Number.isSafeInteger(seed) || seed < 0 || seed > 4294967295 ||
+      !Number.isSafeInteger(week) || week <= 0 || !Number.isSafeInteger(nameSalt) || nameSalt < 0 ||
       (source !== 'guild' && source !== 'auction-house' && source !== 'slave-market') ||
       (slot === 'lot' ? source === 'guild' : !Number.isSafeInteger(slot) || slot < 0 || slot >= P7B_TRIAL.stockSize))
     throw new RangeError('Invalid NPC generator key.');
@@ -81,7 +82,6 @@ export function generateNpc(seed: number, week: number, source: AcquisitionSourc
   if (nameSalt >= culture.epithets.length) throw new RangeError('No more epithets are available for this NPC key.');
   const name = given + ' ' + drawEpithet(seed, id, culture.epithets, first, nameSalt);
   const age = drawRange(random, random() < P7B_TRIAL.ageWeightYoung ? P7B_TRIAL.youngAge : P7B_TRIAL.olderAge);
-  const life = createNpcLife(seed, id, age);
   const skills = {
     management: drawRange(random, row.skills), technical: drawRange(random, row.skills), medical: drawRange(random, row.skills),
     combat: drawRange(random, row.skills), negotiation: drawRange(random, row.skills),
@@ -90,13 +90,12 @@ export function generateNpc(seed: number, week: number, source: AcquisitionSourc
   const background = catalog.originProfile[origin];
   const allowedClasses = row.socialClass.filter(id => source !== 'guild' || id === background.guildClass);
   const socialClass = drawOne(random, allowedClasses);
-  life.mind = drawRange(random, row.mind);
-  life.lust = life.lustBase = drawRange(random, P7A_TRIAL.lustBase);
-  life.beauty = drawRange(random, row.beauty);
-  life.origin = origin;
-  life.birthWeek = week - age * P7A_TRIAL.weeksPerYear;
-  const [firstHobby, secondHobby] = drawDistinct(random, Object.keys(NPC_HOBBIES), life.hobbies.length);
-  life.hobbies = [firstHobby, secondHobby];
+  const mind = drawRange(random, row.mind);
+  const lustBase = drawRange(random, P7A_TRIAL.lustBase);
+  const beauty = drawRange(random, row.beauty);
+  const [firstHobby, secondHobby] = drawDistinct(random, Object.keys(NPC_HOBBIES), 2);
+  const life = createNpcLifeFromDraws({ mind, lustBase, beauty, birthWeek: week - age * P7A_TRIAL.weeksPerYear,
+    origin, hobbies: [firstHobby, secondHobby] });
   const obedience = drawRange(random, row.obedience);
   const affection = drawRange(random, row.affection);
   const preference = { id: drawOne(random, catalog.preferences), strength: drawRange(random, P7B_TRIAL.statRange) };

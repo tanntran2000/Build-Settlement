@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { NPC_TEST_KEYS, withNpcs } from '../../__tests__/helpers/npcs.js';
 import { createNpcWorldSession } from '../../world/npc.js';
+import { describeShort } from '../describe.js';
 import { createCharacterLifeSession, createPlayerCharacter, DEFAULT_PLAYER_DRAFT, PLAYER_APPEARANCE_PRESETS, validatePlayerDraft, type PlayerDraft } from '../session.js';
 import { isCharacterLifeSessionState, isCharacterProfile, isPlayerCharacter } from '../validate.js';
 
@@ -188,5 +189,8 @@ describe('createCharacterLifeSession', () => {
     expect(s.npcs).toEqual(withNpcs(npc.value, NPC_TEST_KEYS).npcs);
     expect(s.npcs.map(n => n.postTileId)).toEqual([null, null, null]);
     expect(s.profiles.map(p => p.id)).toEqual(s.npcs.map(n => n.character.id));
+    expect(s.npcs[0].character.id).toBe('npc_w1_guild_0');
+    expect(describeShort({ character: s.npcs[0].character, profile: s.profiles[0], role: 'npc', postBuildingName: null }))
+      .toBe('Idrel Emberloom · 47 · Technician from Ashfield · average height, slim · deep brown skin · shoulder-length wavy black hair · green eyes · steady learner');
   });
 });

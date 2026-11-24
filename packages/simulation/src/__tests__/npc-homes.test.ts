@@ -116,7 +116,11 @@ describe('NPC homes and v12 saves', () => {
 
   it('rejects 45000 in generator data once the live tuning is 120000', () => {
     const data = { ...NPC_GENERATOR_CATALOG, P7B_TRIAL: { ...NPC_GENERATOR_CATALOG.P7B_TRIAL, startGoldMilli: 45000 } };
-    expect(() => validateNpcGenerator(data)).toThrow('npc-generator.json#P7B_TRIAL.startGoldMilli: expected 120000');
+    let error: unknown;
+    try { validateNpcGenerator(data); } catch (caught) { error = caught; }
+    expect(error).toBeInstanceOf(Error);
+    expect((error as Error).name).toBe('CatalogError');
+    expect((error as Error).message).toBe('npc-generator.json#P7B_TRIAL.startGoldMilli: expected 120000');
   });
 
   it('accepts 100 residents and refuses 31 in the Mansion or 101 in legal homes', () => {
@@ -147,6 +151,17 @@ describe('NPC homes and v12 saves', () => {
       mutate(session);
       expect([isCharacterLifeSessionState(session), isLiveCharacterLifeSessionState(session)]).toStrictEqual([false, false]);
     }
+  });
+
+  it('rejects a v12 checkpoint with fractional NPC affection', () => {
+    const { text } = roundTrip(populate(['estate-2']));
+    const checkpoint = JSON.parse(text) as { state: CharacterLifeSessionState };
+    checkpoint.state.npcs[0].character.relationshipToPlayer.affection = 20.5;
+    expect(deserializeCharacterLifeSave(JSON.stringify(checkpoint))).toStrictEqual({
+      success: false,
+      error: { code: 'INVALID_SAVE_STATE', message: 'Checkpoint must contain a valid complete Character Life session in Planning.' },
+    });
+    expect([isCharacterLifeSessionState(checkpoint.state), isLiveCharacterLifeSessionState(checkpoint.state)]).toStrictEqual([false, false]);
   });
 
   it('keeps Hall posts through a move and reload, and clears the post on entering the Mansion', () => {
@@ -193,7 +208,10 @@ describe('NPC homes and v12 saves', () => {
     expect(deserializeCharacterLifeSave(bytes.toString('utf-8'))).toStrictEqual(incompatible);
     expect(bytes).toStrictEqual(before);
     expect(session).toStrictEqual(current);
-    expect(deserializeCharacterLifeSave('{')).toMatchObject({ success: false });
+    expect(deserializeCharacterLifeSave('{')).toStrictEqual({
+      success: false,
+      error: { code: 'INVALID_SAVE', message: 'Could not read a valid checkpoint JSON. Your game was preserved.' },
+    });
   });
 
   it('round trips a 100-NPC full-history save byte for byte under 1 MiB', () => {

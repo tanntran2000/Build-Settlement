@@ -2,6 +2,7 @@ import { describe,expect,it,vi } from 'vitest';
 import { NPC_TEST_KEYS, withNpcs } from '../../__tests__/helpers/npcs.js';
 import { createSocietyState } from '../../trial/society.js';
 import { NPC_MANAGER_BUILDING_TYPES,WORLD_TRAITS } from '../npc-content.js';
+import { NPC_GENERATOR_CATALOG } from '../npc-generator.js';
 import { createNpcWorldSession,isNpcWorldSessionState,isWorldNpcList,managerSlotTileIds } from '../npc.js';
 import { createWorldSession,isWorldSessionState } from '../session.js';
 
@@ -43,9 +44,17 @@ describe('createNpcWorldSession', () => {
     expect(again).toEqual(before);
   });
   it('resolves three distinct English full names from the seeded fixture keys', () => {
+    const { cultures, originCulture } = NPC_GENERATOR_CATALOG;
     for (let seed = 0; seed < 200; seed++) {
-      const n = names(seed);
-      expect(new Set(n).size).toBe(3); n.forEach(name => expect(name).toMatch(/^[A-Z][a-z]+ [A-Z][a-z]+$/));
+      const { npcs } = session(seed);
+      expect(new Set(npcs.map(npc => npc.character.name)).size).toBe(3);
+      for (const npc of npcs) {
+        expect(npc.character.name).toMatch(/^[A-Z][a-z]+ [A-Z][a-z]+$/);
+        const [given, epithet] = npc.character.name.split(' ');
+        const culture = cultures[originCulture[npc.life.origin]];
+        expect(culture.given).toContain(given);
+        expect(culture.epithets).toContain(epithet);
+      }
     }
     expect(names(42)).toEqual(names(42)); expect(names(4294967295)).toEqual(names(4294967295));
     expect(new Set(Array.from({ length: 50 }, (_, seed) => names(seed).join())).size).toBeGreaterThan(1);

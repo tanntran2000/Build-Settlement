@@ -54,7 +54,8 @@ export function isWorldNpcList(raw: unknown, city: TileTrialState): raw is World
       if (!hasWeeklyKeys(npc, ['character', 'traits', 'postTileId', 'life', 'household']) || !isNpcLife(npc.life) || !isNpcHousehold(npc.household)) return false;
       const c = npc.character, traits = readDenseArray(npc.traits), household = npc.household;
       if (!isNamedCharacterRecord(c) || c.gender !== 'female' || c.age < CHARACTER_LIMITS.ageMin ||
-          npcAge(npc.life, city.world.week) < CHARACTER_LIMITS.ageMin || ids.has(c.id) || names.has(c.name)) return false;
+          npcAge(npc.life, city.world.week) < CHARACTER_LIMITS.ageMin || !Number.isInteger(c.relationshipToPlayer.affection) ||
+          ids.has(c.id) || names.has(c.name)) return false;
       if (c.legalStatus !== (household.status === 'slave' ? 'enslaved' : 'contract_bound') || household.boughtWeek > city.world.week) return false;
       if (!traits || !traits.every(t => oneOf(t, traitIds)) || new Set(traits).size !== traits.length) return false;
       const capacity = homeBeds(city, household.home);

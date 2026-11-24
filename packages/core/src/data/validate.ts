@@ -14,6 +14,7 @@ import {
 import type { CharacterAppearance } from '../character/types.js';
 import type { Occupation } from '../domain/character.js';
 import { readDenseArray } from '../world/arrays.js';
+import { WORLD_TRAITS } from '../world/npc-content.js';
 import { SOCIAL_RESOURCE_SCALE } from '../social/profile.js';
 type IMMIGRATION_TRIAL_DEFAULTSData = Readonly<ImmigrationTrialConfig>;
 type TRIAL_BUILDINGSData = Readonly<Record<string, TrialBuildingDefinition>>;
@@ -1067,13 +1068,16 @@ const npcWordIds = (entries: readonly { readonly id: string }[]) => oneOf(...ent
 export function validateNpcGenerator(json: unknown): NpcGeneratorCatalog {
     const ref = `${npcGeneratorFile}#catalog`;
     const root = record(json, ref, 'entries');
-    object({ cultures: () => {}, originCulture: () => {}, originProfile: () => {}, sources: () => {},
-        appearance: () => {}, preferences: denseChoices(npcDataKey), flaws: denseChoices(npcDataKey), price: () => {}, P7B_TRIAL: () => {},
+    object({ cultures: () => {}, originCulture: record, originProfile: record, sources: () => {},
+        appearance: record, preferences: denseChoices(npcDataKey), flaws: denseChoices(npcDataKey), price: record, P7B_TRIAL: record,
     })(root, ref, '');
     const cultures = record(root.cultures, ref, 'cultures');
     const cultureIds = Object.keys(cultures);
     if (!cultureIds.length) fail(ref, 'cultures', 'expected at least one culture');
-    for (const id of cultureIds) npcDataKey(id, `${npcGeneratorFile}#${id}`, 'id');
+    for (const id of cultureIds) {
+        npcDataKey(id, `${npcGeneratorFile}#${id}`, 'id');
+        record(cultures[id], `${npcGeneratorFile}#cultures`, id);
+    }
     catalog(cultures, npcGeneratorFile, cultureIds, object({ name: text, given: denseChoices(nameWord), epithets: denseChoices(nameWord) }));
     const originIds = Object.keys(npcLifeJson.origins);
     object(Object.fromEntries(originIds.map(id => [id, oneOf(...cultureIds)])))(root.originCulture, `${npcGeneratorFile}#originCulture`, '');
@@ -1092,6 +1096,8 @@ export function validateNpcGenerator(json: unknown): NpcGeneratorCatalog {
         professionalAtCount: positive, expertAtCount: positive,
     })(root.P7B_TRIAL, trialRef, '');
     const trial = root.P7B_TRIAL as NpcGeneratorCatalog['P7B_TRIAL'];
+    if (trial.traitCount[1] > WORLD_TRAITS.length)
+        fail(trialRef, 'traitCount', `expected at most ${WORLD_TRAITS.length} available traits`);
     if (trial.youngAge[0] !== trial.age[0] || trial.youngAge[1] + 1 !== trial.olderAge[0] || trial.olderAge[1] !== trial.age[1])
         fail(trialRef, 'age', 'expected young and older ranges to partition the adult age range');
     if (trial.professionalAtCount >= trial.expertAtCount)
@@ -1105,6 +1111,7 @@ export function validateNpcGenerator(json: unknown): NpcGeneratorCatalog {
     }
     for (const id of npcSourceIds) {
         const guild = id === 'guild';
+        record(sources[id], `${npcGeneratorFile}#sources`, id);
         object({
             status: literal(guild ? 'servant' : 'slave'), mind: sourceRange, skills: sourceRange, beauty: sourceRange,
             obedience: sourceRange, affection: sourceRange, past: ascending(nonnegative),

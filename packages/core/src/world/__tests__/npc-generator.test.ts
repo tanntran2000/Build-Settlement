@@ -1,12 +1,19 @@
 import { createHash } from 'node:crypto';
 import { describe, expect, it } from 'vitest';
 import * as core from '../../index.js';
-import type { NpcGeneratorCatalog } from '../../data/validate.js';
+import { CatalogError, type NpcGeneratorCatalog } from '../../data/validate.js';
 import type { AcquisitionSource } from '../npc-generator.js';
 
 const api = core as typeof core & Pick<typeof import('../../index.js'),
   'generateNpc' | 'isNpcHousehold' | 'npcValueMilli' | 'npcSellMilli' | 'validateNpcGenerator' | 'NPC_GENERATOR_CATALOG' | 'P7B_TRIAL'>;
 const sha = (value: unknown) => createHash('sha256').update(JSON.stringify(value), 'utf8').digest('hex');
+
+function expectExactError(run: () => unknown, type: typeof CatalogError | typeof RangeError, message: string) {
+  let error: unknown;
+  try { run(); } catch (caught) { error = caught; }
+  expect(error).toBeInstanceOf(type);
+  expect((error as Error).message).toBe(message);
+}
 
 function generator() {
   expect(api.generateNpc).toBeTypeOf('function');
@@ -65,11 +72,22 @@ describe('seeded NPC generation', () => {
       draw.npc.character.name = first.npc.character.name;
       expect(draw).toStrictEqual(first);
     }
-    expect(() => generate(112, 1, 'guild', 0, 8)).toThrow('No more epithets are available for this NPC key.');
+    expectExactError(() => generate(112, 1, 'guild', 0, 8), RangeError, 'No more epithets are available for this NPC key.');
     for (const [week, source, slot, salt] of [
       [0, 'guild', 0, 0], [1, 'guild', -1, 0], [1, 'guild', 4, 0],
       [1, 'guild', 'lot', 0], [1, 'other' as AcquisitionSource, 0, 0], [1, 'guild', 0, -1],
-    ] as const) expect(() => generate(0, week, source, slot, salt)).toThrow('Invalid NPC generator key.');
+    ] as const) expectExactError(() => generate(0, week, source, slot, salt), RangeError, 'Invalid NPC generator key.');
+  });
+
+  it.each([0, 4294967295])('generates deterministically at unsigned seed endpoint %i', seed => {
+    const generate = generator();
+    const first = generate(seed, 1, 'guild', 0);
+    expect(first.npc.character.id).toBe('npc_w1_guild_0');
+    expect(generate(seed, 1, 'guild', 0)).toStrictEqual(first);
+  });
+
+  it.each([NaN, 4294967296, -1, 0.5, Infinity])('refuses invalid unsigned seed %s', seed => {
+    expectExactError(() => generator()(seed, 1, 'guild', 0), RangeError, 'Invalid NPC generator key.');
   });
 
   it('generates fourteen distinct names across one week of basic and lot keys', () => {
@@ -199,6 +217,30 @@ describe('NPC generator catalog', () => {
     expect([api.P7B_TRIAL.npcCap, api.P7B_TRIAL.startGoldMilli, api.P7B_TRIAL.stockSize]).toStrictEqual([100, 120000, 4]);
   });
 
+  it('caps the generator trait range at the four available traits', () => {
+    const data = api.NPC_GENERATOR_CATALOG;
+    const atLimit = change(data, ['P7B_TRIAL', 'traitCount'], [4, 4]);
+    expect(api.validateNpcGenerator(atLimit).P7B_TRIAL.traitCount).toStrictEqual([4, 4]);
+    expectExactError(() => api.validateNpcGenerator(change(data, ['P7B_TRIAL', 'traitCount'], [5, 5])),
+      CatalogError, 'npc-generator.json#P7B_TRIAL.traitCount: expected at most 4 available traits');
+  });
+
+  const invalidRows = [
+    [['sources', 'guild'], undefined, 'sources.guild'],
+    [['sources', 'guild'], [], 'sources.guild'],
+    [['price'], undefined, 'catalog.price'],
+    [['price'], false, 'catalog.price'],
+    [['originCulture'], undefined, 'catalog.originCulture'],
+    [['originProfile'], null, 'catalog.originProfile'],
+    [['appearance'], [], 'catalog.appearance'],
+    [['P7B_TRIAL'], undefined, 'catalog.P7B_TRIAL'],
+    [['cultures', 'northreach'], false, 'cultures.northreach'],
+  ] as const;
+  it.each(invalidRows)('names the parent field for invalid generator row %j with value %j', (keys, value, field) => {
+    expectExactError(() => api.validateNpcGenerator(change(api.NPC_GENERATOR_CATALOG, [...keys], value)),
+      CatalogError, `npc-generator.json#${field}: expected object`);
+  });
+
   const rejected = [
     [['originCulture', 'frontier'], undefined, 'originCulture.frontier: expected northreach | saltmere | greywater | ashfield | sunroad'],
     [['originCulture', 'frontier'], 'unknown', 'originCulture.frontier: expected northreach | saltmere | greywater | ashfield | sunroad'],
@@ -219,7 +261,7 @@ describe('NPC generator catalog', () => {
   ] as const;
   it.each(rejected)('rejects malformed generator data at %j', (keys, value, message) => {
     expect(api.validateNpcGenerator).toBeTypeOf('function');
-    expect(() => api.validateNpcGenerator(change(api.NPC_GENERATOR_CATALOG, [...keys], value)))
-      .toThrow(`npc-generator.json#${message}`);
+    expectExactError(() => api.validateNpcGenerator(change(api.NPC_GENERATOR_CATALOG, [...keys], value)),
+      CatalogError, `npc-generator.json#${message}`);
   });
 });
