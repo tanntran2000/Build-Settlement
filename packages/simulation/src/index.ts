@@ -2,6 +2,8 @@ export * from "./weekly.js";
 export * from "./tile-trial.js";
 export * from "./world-npc.js";
 export * from "./character-life-command.js";
+export { ACQUISITION_MESSAGES, isAcquisitionCommand } from './npc-acquisition.js';
+export { auctionTranscript } from './npc-auction.js';
 export * from "./character-life-observation.js";
 export * from "./society-week.js";
 export * from "./order-week.js";

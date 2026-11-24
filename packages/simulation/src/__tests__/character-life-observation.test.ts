@@ -56,7 +56,8 @@ function characterContract(c: VisibleCharacter) {
 }
 
 function reportContract(r: VisibleReport) {
-  keys(r, [...reportKeys, ...(r.goodsStock ? ['goodsStock'] : []), ...(r.immigration ? ['immigration'] : [])]);
+  keys(r, [...reportKeys, ...(r.goodsStock ? ['goodsStock'] : []), ...(r.immigration ? ['immigration'] : []), ...(r.household ? ['household'] : [])]);
+  if (r.household) keys(r.household, ['bought', 'sold', 'released', 'left', 'lotsToRivals', 'wagesPaidMilli', 'unpaid', 'notices']);
   keys(r.before, stockKeys); keys(r.after, stockKeys);
   keys(r.goods, ['demandMilli', 'servedMilli', 'fulfillmentBps', 'woodUsed', 'ironUsed', 'revenueMilli']);
   if (r.immigration) keys(r.immigration, ['populationBefore', 'arrivals', 'populationAfter']);
@@ -109,7 +110,7 @@ function rendered(c: VisibleCharacter, view: CharacterView) {
 
 const noPost = 'No free manager post. Build a Farm, Processor, Logging Camp, Mine, Workshop or Market.';
 const checkpointLock = 'Choose Plan next week before saving, continuing, exporting or importing.';
-const planningActions = ['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED', 'END_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC', 'EXTEND_WALL', 'SET_TRAINING'];
+const planningActions = ['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED', 'END_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC', 'EXTEND_WALL', 'SET_TRAINING', 'RELEASE_NPC'];
 
 describe('explicit nested allowlist and disclosure', () => {
   it('exports the projector and exposes only rendered character fields and exact nested keys', () => {

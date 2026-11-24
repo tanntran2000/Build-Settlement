@@ -3,7 +3,7 @@
   import { ITEM_GOAL_LABELS, craftWork, craftDestination, WORKSHOP_IDLE_COPY } from './items-view.js';
   import { garrisonReportLine, lawReportLines, crimeReportLine, crisisReportLines, outsideReportLines, orderReportLines, ORDER_GOODS } from './society-view.js';
   import ReportLetter from './ReportLetter.svelte';
-  import { npcLifeReportRows, reportLetters, reportStamps } from './report-letters.js';
+  import { householdReportRows, npcLifeReportRows, reportLetters, reportStamps } from './report-letters.js';
   import SocietyReport from './SocietyReport.svelte';
   import { formatFulfillment, formatMilli } from './milli-format.js';
   import { formatLifeWeek } from './life-calendar.js';
@@ -20,6 +20,7 @@
   {#if report}
     {@const letters = reportLetters(report)}
     {@const npcRows = npcLifeReportRows(report, npcs)}
+    {@const householdRows = householdReportRows(report)}
     {#snippet lawsDetails()}
     {#if report.laws}<section aria-label="Laws" data-laws-in-force={JSON.stringify(report.laws.inForce)} data-laws-costs={JSON.stringify(report.laws.costs)} data-laws-unfunded={JSON.stringify(report.laws.unfunded)} data-laws-income-milli={report.laws.incomeMilli} data-laws-promise={JSON.stringify(report.laws.promise)}><h3>Laws</h3>{#each lawReportLines(report) as line}<p>{line}</p>{/each}</section>{/if}
     {/snippet}
@@ -127,6 +128,16 @@
         </ReportLetter>
       {/each}
     </div>
+    {#if householdRows.length}
+      <section aria-label="Household activity">
+        <h3>Household activity</h3>
+        <ul>
+          {#each householdRows as row}
+            <li data-household-kind={row.kind}><span>{row.label}</span> · <strong>{row.value}</strong></li>
+          {/each}
+        </ul>
+      </section>
+    {/if}
     {#if npcRows.length}
       <section class="ledger-parchment npc-life-notes" aria-labelledby="npc-life-report-title">
         <h3 id="npc-life-report-title">NPC life</h3>

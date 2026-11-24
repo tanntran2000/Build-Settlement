@@ -212,6 +212,20 @@ export function reportLetters(report: Readonly<TileTrialReport>): ReportLetterVi
   });
 }
 
+export function householdReportRows(report: Readonly<Pick<TileTrialReport, 'household'>>) {
+  const household = report.household;
+  if (!household) return [];
+  return [
+    ...household.bought.map(value => ({ kind: 'bought', label: 'Recruited', value })),
+    ...household.sold.map(value => ({ kind: 'sold', label: 'Sold', value })),
+    ...household.released.map(value => ({ kind: 'released', label: 'Released', value })),
+    ...household.lotsToRivals.map(({ source, priceMilli }) => ({
+      kind: 'lotsToRivals', label: 'Lot sold to a rival',
+      value: `${source === 'auction-house' ? 'Auction House' : 'Slave Market'} · ${formatMilli(priceMilli)} Gold`,
+    })),
+  ];
+}
+
 export function npcLifeReportRows(
   report: Readonly<TileTrialReport>,
   npcs: readonly { character: { id: string; name: string } }[],

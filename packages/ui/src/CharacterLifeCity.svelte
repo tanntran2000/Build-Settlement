@@ -57,7 +57,10 @@
     const message=assignBuildingWorkers(workers,selectedId,oncommand);
     if(message){workforceError=message;onworkersinvalid();}
   }
-  export function focusManage(): void { managementHeading?.focus(); }
+  export function focusManage(fromTile = false): void {
+    const acquisitionHeading = fromTile ? document.getElementById(`acquisition-panel-${selectedId}`) : null;
+    (acquisitionHeading ?? managementHeading)?.focus();
+  }
   async function moveResident(npcId: string, homeTileId: string): Promise<void> {
     if (!oncommand('MOVE_NPC_HOME', { npcId, homeTileId })) return;
     const nextDrafts = { ...moveDrafts };
@@ -73,7 +76,7 @@
   }
 </script>
 
-  <InsideCity {state} {npcs} {selectedId} {locked} {managementError} {onselect} {oncommand} />
+  <InsideCity {state} {npcs} {selectedId} {uiEpoch} {locked} {managementError} {onselect} {oncommand} />
   <LibraryPanel {state} {locked} {managementError} {oncommand} />
   <div class="layout">
     <OutsideCity {state} {npcs} {selectedId} {locked} {managementError} {onselect} {oncommand} />

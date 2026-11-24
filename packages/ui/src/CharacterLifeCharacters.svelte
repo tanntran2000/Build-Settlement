@@ -1,5 +1,7 @@
 <script lang="ts">
   import EquipmentView from './EquipmentView.svelte';
+  import { tick } from 'svelte';
+  import { departureReason } from './acquisition-view.js';
   import { homeBeds, managerSlotTileIds, npcAge, PLAYER_CHARACTER_ID, TRIAL_BUILDINGS, type CharacterLifeSessionState, type CharacterView } from '@haven/core';
   import { executeCharacterLifeCommand } from '@haven/simulation';
   import CharacterProfile from './CharacterProfile.svelte';
@@ -48,6 +50,17 @@
     selectedCharacterId = npcId;
     areas[npcId] = 'work';
   }
+  let playerButton: HTMLButtonElement;
+  async function release(npcId: string, reason: string) {
+    if (reason) return;
+    const result = executeCharacterLifeCommand(session, { type: 'RELEASE_NPC', expectedRevision: session.city.revision, npcId });
+    if (!result.success) { assignError = { npcId, message: result.error.message }; return; }
+    assignError = null;
+    selectedCharacterId = PLAYER_CHARACTER_ID;
+    onapply(result.next);
+    await tick();
+    playerButton.focus();
+  }
   function run(type: 'ASSIGN_NPC' | 'UNASSIGN_NPC', npcId: string) {
     const fields = type === 'ASSIGN_NPC' ? { tileId: displayedPost } : {};
     const result = executeCharacterLifeCommand(session, { type, expectedRevision: session.city.revision, npcId, ...fields });
@@ -60,8 +73,13 @@
 
 <nav class="roster" aria-label="Character roster">
   {#each roster as person (person.id)}
-    <button data-testid={`character-${person.id}`} aria-pressed={selectedCharacterId === person.id}
-      onclick={() => { selectedCharacterId = person.id; }}>{person.name} · {person.role}</button>
+    {#if person.id === PLAYER_CHARACTER_ID}
+      <button bind:this={playerButton} data-testid={`character-${person.id}`} aria-pressed={selectedCharacterId === person.id}
+        onclick={() => { selectedCharacterId = person.id; }}>{person.name} · {person.role}</button>
+    {:else}
+      <button data-testid={`character-${person.id}`} aria-pressed={selectedCharacterId === person.id}
+        onclick={() => { selectedCharacterId = person.id; }}>{person.name} · {person.role}</button>
+    {/if}
   {/each}
 </nav>
 {#if session.npcs.length === 0}<p>No NPCs yet. Find recruits at the Guild, Auction House or Slave Market.</p>{/if}
@@ -105,6 +123,11 @@
               onclick={() => run('ASSIGN_NPC', npc.character.id)}>Assign</button>
           {/if}
           {#if inHall && !npc.postTileId && !freeSlots.length}<p>No free manager post. Build a Farm, Processor, Logging Camp, Mine, Workshop or Market.</p>{/if}
+          {@const reason = departureReason(session.city, npc, locked, false)}
+          <button type="button" data-acquisition-action="RELEASE_NPC" aria-disabled={!!reason}
+            aria-describedby={reason ? 'npc-release-reason' : undefined}
+            onclick={() => release(npc!.character.id, reason)}>Release</button>
+          {#if reason}<p id="npc-release-reason">{reason}</p>{/if}
         {/if}
       {/snippet}
     </CharacterProfile>
