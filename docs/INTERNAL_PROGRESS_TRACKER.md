@@ -1,5 +1,30 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## P7-B PR B2 (seeded NPC generator, homes, no starter NPCs) — PR #103 G6 (2026-11-24 UTC)
+
+**G6 PASS (Claude, Orchestrator/Tester).** P7-B PR B2 of 4 is merged; B3 (buy, hire, auction, sell) is next.
+
+- **Merge.** PR #103 (`feat(core): P7-B B2 seeded npc generator, homes and no starter npcs`) was merged under G5 at 2026-11-24T08:14:30Z (GitHub account `tanntran2000`; the owner reported "dot dã merg và xanh").
+  - Merge/main commit: `b184357d235d164478584e36b96d063551124e66` (parents `f73595b`, `7ac9ad0`).
+  - Accepted head: `7ac9ad0a15d9d0247879b718d464f0813de149dc`. Base: `f73595b` (B1 #102 merged).
+- **Trees.** The merge tree `961567de7ef638861a55a42589be203037e123c9` is identical to the accepted head tree. Claude checked this locally.
+- **Main CI.** Quality Gate run [45354399138](https://github.com/tanntran2000/Build-Settlement/actions/runs/45354399138), job 138308503462 (push, exact merge SHA), SUCCESS at 2026-11-24T08:35:13Z: 3,204 unit tests and 409/409 Chromium smoke (19.0 min). The dependency audit passed.
+- **Pre-merge, at `7ac9ad0`:**
+  - Claude Tester gates 1–7 exit 0 (3,204 unit, 137 files), full smoke 409/409 with `CI=1` (2026-11-24T07:05:16Z–07:42:08Z); also 409/409 at `63cbdca`.
+  - Astra 6.2 high, thread `mcp:20b35a4a`: round 1 at `63cbdca` FAIL (4 P1, 3 P2, 2 P3; 112/112 paths match the approved bytes); round 2 at `7ac9ad0` PASS, P0–P3 all 0.
+  - Builder (Sol 6.2 xhigh, `mcp:e5c3149a`): Step 0 HOLD (457 replacements in 90 files); HOLDs answered by corrections 8–10; 7/7 mutation probes caught in correction 11; smoke 409/409.
+  - Performance: 100-NPC End Week misses 50 ms on main and B2 alike; B2's added warm cost is within noise (paired +1.21 ms vs 4.68 ms); recorded under R-026 (risk register `3016302`).
+- **Evidence.** [`docs/verification/p7b-pr103/`](https://github.com/tanntran2000/Build-Settlement/tree/5d20146a79dcf2221633ab4e75c19d7d3f11ec11/docs/verification/p7b-pr103) on branch `docs/p7-npc-design`, at `5d20146`.
+- **Owner instructions** (verbatim; full table in `owner-approval-record.md`):
+  - "Start B2 Step 0";
+  - Plan corrections: 7 "Duyệt, đổi Briala (Recommended)", "Tạo lại chỗ cũ (Recommended)", "Cho chạy npm ci (Recommended)"; 8 "Duyệt 3 chỗ sửa (Recommended)"; 9 "Duyệt 23 chỗ (Recommended)"; 10 "Sửa test + đo so sánh (Recommended)"; 11 "Sửa cả 9 (Recommended)";
+  - Merge report: "dot dã merg và xanh bạn có thể kiểm tra".
+- **Disclosed.**
+  - The assigned worktree and four other T3 worktrees were removed externally during Step 0; recreated from main with one `npm ci` (owner-approved).
+  - Step 0 missed three packet defects and 23 cross-package/test fixes (corrections 8–9); Astra round 1 failed before the PASS. Smoke runs on Chromium only.
+  - Playwright artifact folders stay local (Windows path length), listed by SHA-256 in the evidence.
+  - R-026 (End Week over 50 ms at 100 NPCs, cold and some warm ticks) is still open.
+
 ## P7-B PR B1 (ring 4, estates and acquisition buildings) — PR #102 G6 (2026-11-24 UTC)
 
 **G6 PASS (Claude, Orchestrator/Tester).** P7-B PR B1 of 4 is merged; B2 (generator, homes, no starter NPCs) is at Step 0.
