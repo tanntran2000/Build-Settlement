@@ -1,5 +1,6 @@
 import { writeFile } from 'node:fs/promises';
 import { expect, test, type Locator, type Page, type TestInfo } from '@playwright/test';
+import { emptyAcquisition } from '../../packages/core/src/index.ts';
 import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
 import {
   characterWindow, expectReport, exportLife, go, importLife, makeLifeWithNpcs, reportRegion, selectArea, selectPerson, tabTo,
@@ -375,6 +376,8 @@ for (const viewport of narrow) test.describe('NPC sheet reflow at ' + viewport.w
   test.use({ viewport });
   test('NPC sheet and NPC life report reflow at ' + viewport.width + 'px', async ({ page }, info) => {
     const state = reportFixture(), npc = state.npcs[0];
+    state.city.world.week += 1;
+    state.city.society!.acquisition = emptyAcquisition();
     npc.character.name = 'W'.repeat(64);
     state.profiles[0].identity.biography = 'B'.repeat(1000);
     historyFixture(state, 20);

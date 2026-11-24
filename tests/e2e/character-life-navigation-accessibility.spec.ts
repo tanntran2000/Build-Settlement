@@ -1,7 +1,7 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
 import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
 import { writeFile } from 'node:fs/promises';
-import { SOCIETY_RULESET } from '../../packages/core/src/index.ts';
+import { emptyAcquisition, SOCIETY_RULESET } from '../../packages/core/src/index.ts';
 import { BROWSER_NPC_IDS, makeLifeWithNpcs, characterPanel, characterTabs, characterWindow, charactersView, expectReport, go, importLife, keyActivate, keyGo, makeLife, reportFixture, reportRegion, selectArea, selectPerson, tabTo, turnStatuses, watchTurnStatus } from './character-life-navigation.helpers.ts';
 
 for (const viewport of [{ width: 375, height: 812 }, { width: 1280, height: 900 }]) {
@@ -331,6 +331,8 @@ for (const viewport of [{ width: 1600, height: 1000 }, { width: 1280, height: 90
     test('long character and report content reflows', async ({ page }, info) => {
       test.setTimeout(180000);
       const session = reportFixture('precision');
+      session.city.world.week += 1;
+      session.city.society!.acquisition = emptyAcquisition();
       session.player.character.name = 'W'.repeat(64); session.npcs[0].character.name = 'M'.repeat(64);
       for (const profile of [session.player.profile, ...session.profiles]) {
         profile.identity.label = 'L'.repeat(40); profile.identity.biography = 'B'.repeat(1000);
@@ -361,7 +363,7 @@ for (const viewport of [{ width: 1600, height: 1000 }, { width: 1280, height: 90
         }
       }
       await page.getByTestId('life-end-week').click();
-      const result = executeCharacterLifeCommand(session, { type: 'END_WEEK', expectedRevision: session.city.revision, expectedWeek: 1 });
+      const result = executeCharacterLifeCommand(session, { type: 'END_WEEK', expectedRevision: session.city.revision, expectedWeek: session.city.world.week });
       if (!result.success || !result.report) throw Error('Long report oracle failed');
       await expectReport(page, result.report);
       for (const summary of await reportRegion(page).locator('summary').all()) await summary.click();
