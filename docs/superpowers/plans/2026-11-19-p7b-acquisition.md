@@ -328,3 +328,9 @@ Owner (Tân), verbatim dialog answer: "Duyệt sửa kiểu + fixture (Recommend
 1. **Type fix:** reapply the held candidate byte-exact and type the id parser's returned slot as `number | 'lot'` (narrowing in the parser, no cast that hides a wrong value); list the bytes.
 2. **Fixture changes approved as listed in the candidate:** `withNpcs` records Guild offers as bought for injected current-week Character Life recruits; the existing tests that end the week with such recruits expect the matching "bought" household rows; two persistence id-rename tests reset acquisition to the empty state; `npc-homes.test.ts` moves its no-market fixture from week 8 to week 9. No assertion is loosened or removed.
 3. Then the commit, gates 1–7, `CI=1` smoke, bundle, largest save and §9 timings as in Correction 16 item 6; Astra round 3. Any other change is a HOLD.
+
+### Correction 18 — PR B3, fixture result type and type-only fixes (owner, 2026-11-24)
+Owner (Tân), verbatim dialog answer: "Duyệt + cho sửa kiểu nhỏ (Recommended)". Builder HOLD at `8aa7dc4` (clean): `C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c17/README.md` (SHA-256 `69fc6116cce95aebc138fd75565faffa6cb67ac4518083c2d038d069f001f0f3`). The Correction 17 annotation cleared TS2345; typecheck then reported three TS2339 at `packages/simulation/src/__tests__/character-life-command.test.ts:38,42` where the approved fixture reads `r.report`.
+1. **Fixture type:** type that fixture's result with the existing `WorldNpcCityResult`, which exposes the optional `report`.
+2. **Standing rule for the rest of PR B3:** the Builder may fix further type-only errors without a HOLD when the fix changes no emitted runtime code, uses no `as` cast, `any`, `@ts-ignore` or `@ts-expect-error`, changes no assertion, and every byte is listed in the evidence for Astra to check. Anything else is a HOLD.
+3. Then the commit, gates 1–7, `CI=1` smoke, bundle, largest save and §9 timings; Astra round 3.
