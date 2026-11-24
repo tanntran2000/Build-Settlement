@@ -63,7 +63,7 @@ The bot runner is a dev-only tool under `tools/` or `tests/`: no new dependency,
 | R-023 | Laws (P8-C) | Pay costs 0.2 Gold a vote (11 Gold to flip the Free at New Game) and has no side effect, so with plenty of Gold it may always beat Promise and Force. | Count lobby options chosen by the best-scoring bot; is Pay almost always chosen? | P8-C spec §10 | open |
 | R-024 | Laws (P8-C) | War Tithe (+10 % tax) and Licensed Vice (+1.5 Gold, paid before upkeep) earn Gold every week, while Watch Levy and Poor Relief cost Gold; three slots may always hold the two earners. Licensed Vice also pushes Corruption +10 toward Dark. | Which three laws does the Greedy bot keep? Gold and Corruption after 20 weeks with and without the earners. | P8-C spec §10; plan Decision 10 amendment | open |
 | R-025 | Test stability | e2e tests that start a New Game get a random world seed, so weekly crime events (robbery, raid) can change stocks they rely on. `laws.spec.ts` built the Town Hall with exactly 5 Iron and failed when week 1 robbed Iron (found 2026-11-06; fixed in SOLDIER-01 PR B by staffing the Mine with 2 workers). Other New Game e2e flows with thin margins may flake the same way. | Not a play risk; watch for e2e failures with "Not enough … for this action." after New Game, and give such tests a margin or a pinned seed. | SOLDIER-01 PR B smoke | open |
-| R-026 | Performance (P7-A PR B) | The first End Week after a load takes about 57–58 ms (median) with 100 NPCs, over the 50 ms tick budget, on main and on PR B alike. Later weeks average about 28–47 ms, so the headroom is small. Details and reasons to optimise: "Perf follow-up: End Week cold start" below. | Does the first End Week after New Game, Continue or Import feel slow on a low-end laptop? Time it in the v0.1 simulation pass. | PR #100 Astra 6.2 round 2 P2; clean cold-start check 2026-11-18 | open (accepted for PR B; separate perf WP later) |
+| R-026 | Performance (P7-A PR B) | The first End Week after a load takes about 57–58 ms (median) with 100 NPCs, over the 50 ms tick budget, on main and on PR B alike. Later weeks average about 28–47 ms, so the headroom is small. Details and reasons to optimise: "Perf follow-up: End Week cold start" below. | Does the first End Week after New Game, Continue or Import feel slow on a low-end laptop? Time it in the v0.1 simulation pass. | PR #100 Astra 6.2 round 2 P2; clean cold-start check 2026-11-18 | open (accepted for PR B; P7-B B2 warm ticks also over 50 ms, B2 cost within noise, addendum 2026-11-24; separate perf WP later) |
 
 ## Perf follow-up: End Week cold start (R-026)
 
@@ -104,3 +104,16 @@ Owner decision (Tân, 2026-11-18), verbatim: "chấp nhận làm tối ưu sau n
 - Tick 1 versus warm ticks at 100 NPCs after P7-B grows the weekly step.
 
 Evidence: `docs/verification/p7a-pr100/` (PR #100) holds the profile, the cold-start check, the gate logs and both Astra reviews.
+
+### R-026 addendum — P7-B B2 at 100 NPCs, 2026-11-24
+
+Owner decision (Tân), verbatim: “Sửa test + đo so sánh (Recommended)”. Plan correction 10 authorizes a measurement-only comparison of main `f73595b` against B2 product head `f31310c`.
+
+On the i5-8250U Windows machine with Node 24.19.0, 12 alternating fresh-process pairs each ran one first End Week and 20 warm End Week commands. Each command used the same week-8 state with 100 NPCs and 120,000 Gold milli. The main input used ruleset 11 and omitted B2's per-NPC `household` field to satisfy main's exact validator. B2 used ruleset 12. All remaining state matched. Wall-clock timing ran in the external harness. CPU load snapshots were 25% before and 18% after, and the event log showed no sleep/resume during the run. Main pair 7 reached a 96.16 ms warm median and is retained in the analysis.
+
+| Revision | First tick median | First ticks ≥50 ms | Median warm process median | Warm ticks ≥50 ms | Warm maximum |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| main `f73595b` | 85.95 ms | 12/12 | 46.57 ms | 93/240 | 157.11 ms |
+| B2 `f31310c` | 91.54 ms | 12/12 | 47.77 ms | 94/240 | 93.21 ms |
+
+The median paired warm difference (B2 minus main) was +1.21 ms. It ranged from −46.31 to +7.28 ms, with an exact 96.14% median interval of −2.56 to +3.19 ms. The pooled median absolute change between consecutive same-revision warm medians was 4.68 ms. The added warm cost was within the observed run-to-run noise. Both revisions exceeded 50 ms on first and warm ticks, so R-026 now covers the observed warm misses as well. The under-50-ms target stays in force. The comparison measured total command time and did not attribute the slow processes to a particular code path.
