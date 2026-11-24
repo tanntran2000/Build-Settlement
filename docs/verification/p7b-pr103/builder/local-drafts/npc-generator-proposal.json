@@ -1,0 +1,519 @@
+{
+  "cultures": {
+    "northreach": {
+      "name": "Northreach",
+      "given": [
+        "Aelwen",
+        "Ardis",
+        "Belva",
+        "Brinna",
+        "Caldra",
+        "Dagna",
+        "Eirwyn",
+        "Elvara",
+        "Halla",
+        "Iseld",
+        "Jorva",
+        "Kaelin",
+        "Nerys",
+        "Ragna",
+        "Selka",
+        "Ysra"
+      ],
+      "epithets": [
+        "Ashbrow",
+        "Dawnford",
+        "Fircrest",
+        "Flintvale",
+        "Frostmere",
+        "Ironbrook",
+        "Pineward",
+        "Stonewake"
+      ]
+    },
+    "saltmere": {
+      "name": "Saltmere",
+      "given": [
+        "Avelis",
+        "Briala",
+        "Caedra",
+        "Celyne",
+        "Delyra",
+        "Elvessa",
+        "Fara",
+        "Ilyne",
+        "Inessa",
+        "Jessa",
+        "Lethra",
+        "Marisel",
+        "Nerelle",
+        "Orielle",
+        "Serrin",
+        "Velora"
+      ],
+      "epithets": [
+        "Brighttide",
+        "Gullhaven",
+        "Netmender",
+        "Pearlreach",
+        "Reedquay",
+        "Saltglass",
+        "Seawick",
+        "Ternwatch"
+      ]
+    },
+    "greywater": {
+      "name": "Greywater",
+      "given": [
+        "Alwen",
+        "Bressa",
+        "Catril",
+        "Delyn",
+        "Elira",
+        "Fennel",
+        "Gressa",
+        "Henna",
+        "Ilwen",
+        "Janna",
+        "Kella",
+        "Linet",
+        "Merna",
+        "Olyra",
+        "Rilla",
+        "Vessa"
+      ],
+      "epithets": [
+        "Barleyfold",
+        "Birchmead",
+        "Harvestmere",
+        "Hearthbank",
+        "Millstream",
+        "Mossweir",
+        "Oatbridge",
+        "Willowfen"
+      ]
+    },
+    "ashfield": {
+      "name": "Ashfield",
+      "given": [
+        "Adrel",
+        "Anvara",
+        "Berdine",
+        "Carwen",
+        "Delva",
+        "Elsara",
+        "Ferra",
+        "Galdra",
+        "Idrel",
+        "Janelle",
+        "Keldra",
+        "Levara",
+        "Merva",
+        "Nelda",
+        "Orlisse",
+        "Tesrin"
+      ],
+      "epithets": [
+        "Anvilrow",
+        "Brassmark",
+        "Cinderlane",
+        "Copperwell",
+        "Emberloom",
+        "Flintpress",
+        "Inkstone",
+        "Spindlewick"
+      ]
+    },
+    "sunroad": {
+      "name": "Sunroad",
+      "given": [
+        "Aderin",
+        "Anelis",
+        "Basira",
+        "Celara",
+        "Dariel",
+        "Esrine",
+        "Ferya",
+        "Galira",
+        "Ilara",
+        "Jasira",
+        "Karessa",
+        "Luriel",
+        "Maysel",
+        "Neraya",
+        "Orissa",
+        "Savel"
+      ],
+      "epithets": [
+        "Ambertrail",
+        "Dustlark",
+        "Flintgate",
+        "Glassroad",
+        "Longwater",
+        "Rosecairn",
+        "Saffronpath",
+        "Waylark"
+      ]
+    }
+  },
+  "originCulture": {
+    "frontier": "northreach",
+    "port_town": "saltmere",
+    "farming_village": "greywater",
+    "workshop_district": "ashfield",
+    "scholar_district": "ashfield",
+    "caravan": "sunroad"
+  },
+  "sources": {
+    "guild": {
+      "status": "servant",
+      "mind": [
+        30,
+        70
+      ],
+      "skills": [
+        20,
+        45
+      ],
+      "beauty": [
+        40,
+        70
+      ],
+      "obedience": [
+        50,
+        70
+      ],
+      "affection": [
+        20,
+        60
+      ],
+      "past": [
+        0,
+        3
+      ],
+      "socialClass": [
+        "common",
+        "skilled"
+      ]
+    },
+    "auction-house": {
+      "status": "slave",
+      "mind": [
+        5,
+        45
+      ],
+      "skills": [
+        10,
+        30
+      ],
+      "beauty": [
+        45,
+        75
+      ],
+      "obedience": [
+        45,
+        65
+      ],
+      "affection": [
+        10,
+        30
+      ],
+      "past": [
+        0,
+        2
+      ],
+      "socialClass": [
+        "lower"
+      ]
+    },
+    "slave-market": {
+      "status": "slave",
+      "mind": [
+        55,
+        95
+      ],
+      "skills": [
+        8,
+        28
+      ],
+      "beauty": [
+        30,
+        65
+      ],
+      "obedience": [
+        20,
+        45
+      ],
+      "affection": [
+        10,
+        30
+      ],
+      "past": [
+        5,
+        12
+      ],
+      "socialClass": [
+        "lower"
+      ]
+    },
+    "auction-house-lot": {
+      "status": "slave",
+      "mind": [
+        5,
+        45
+      ],
+      "skills": [
+        55,
+        85
+      ],
+      "beauty": [
+        70,
+        95
+      ],
+      "obedience": [
+        45,
+        65
+      ],
+      "affection": [
+        10,
+        30
+      ],
+      "past": [
+        0,
+        3
+      ],
+      "socialClass": [
+        "lower"
+      ]
+    },
+    "slave-market-lot": {
+      "status": "slave",
+      "mind": [
+        55,
+        95
+      ],
+      "skills": [
+        55,
+        85
+      ],
+      "beauty": [
+        70,
+        95
+      ],
+      "obedience": [
+        20,
+        45
+      ],
+      "affection": [
+        10,
+        30
+      ],
+      "past": [
+        10,
+        20
+      ],
+      "socialClass": [
+        "lower"
+      ]
+    }
+  },
+  "appearance": {
+    "presentation": [
+      "feminine"
+    ],
+    "skinTone": [
+      "light_olive",
+      "deep_brown",
+      "fair"
+    ],
+    "eyeColor": [
+      "grey",
+      "brown",
+      "green"
+    ],
+    "hair": {
+      "color": [
+        "brown",
+        "black",
+        "red"
+      ],
+      "length": [
+        "shoulder_length",
+        "short",
+        "long"
+      ],
+      "texture": [
+        "straight",
+        "wavy"
+      ],
+      "style": [
+        "tied_back",
+        "loose",
+        "braided"
+      ]
+    },
+    "face": {
+      "shape": [
+        "oval",
+        "heart_shaped",
+        "round"
+      ],
+      "features": [
+        [
+          "freckles"
+        ],
+        [
+          "glasses"
+        ],
+        [
+          "high_cheekbones"
+        ]
+      ]
+    },
+    "build": [
+      "slim",
+      "average"
+    ],
+    "heightCm": [
+      168,
+      174,
+      162
+    ],
+    "weightKg": [
+      58,
+      70,
+      55
+    ],
+    "measurements": [
+      null,
+      {
+        "chestCm": 88,
+        "waistCm": 67,
+        "hipsCm": 96,
+        "disclosure": "unknown"
+      },
+      {
+        "chestCm": 92,
+        "waistCm": 72,
+        "hipsCm": 99,
+        "disclosure": "unknown"
+      }
+    ],
+    "outfit": [
+      "role_default"
+    ]
+  },
+  "originProfile": {
+    "frontier": {
+      "birthplaceId": "kestrel_ford",
+      "regionId": "northreach",
+      "upbringing": "frontier",
+      "occupation": "worker",
+      "guildClass": "common"
+    },
+    "port_town": {
+      "birthplaceId": "tidewall",
+      "regionId": "saltmere",
+      "upbringing": "port_town",
+      "occupation": "trader",
+      "guildClass": "common"
+    },
+    "farming_village": {
+      "birthplaceId": "millbrook",
+      "regionId": "greywater",
+      "upbringing": "farmstead",
+      "occupation": "farmer",
+      "guildClass": "common"
+    },
+    "workshop_district": {
+      "birthplaceId": "cinder_hollow",
+      "regionId": "ashfield",
+      "upbringing": "city",
+      "occupation": "technician",
+      "guildClass": "skilled"
+    },
+    "scholar_district": {
+      "birthplaceId": "cinder_hollow",
+      "regionId": "ashfield",
+      "upbringing": "city",
+      "occupation": "advisor",
+      "guildClass": "skilled"
+    },
+    "caravan": {
+      "birthplaceId": "kestrel_ford",
+      "regionId": "northreach",
+      "upbringing": "frontier",
+      "occupation": "trader",
+      "guildClass": "common"
+    }
+  },
+  "preferences": [
+    "privacy",
+    "tenderness",
+    "novelty",
+    "roleplay"
+  ],
+  "flaws": [
+    "jealous",
+    "lazy",
+    "greedy",
+    "impatient",
+    "proud"
+  ],
+  "price": {
+    "baseMilli": {
+      "guild": 6000,
+      "auction-house": 12000,
+      "slave-market": 10000,
+      "lot": 40000
+    },
+    "skillPointBps": 8,
+    "beautyPointBps": 30,
+    "sexExpLevelBps": 100,
+    "levelValue": {
+      "novice": 0,
+      "professional": 1,
+      "expert": 2
+    },
+    "conditionFactor": 1,
+    "sellShare": 0.6
+  },
+  "P7B_TRIAL": {
+    "marker": "TRIAL",
+    "age": [
+      18,
+      55
+    ],
+    "ageWeightYoung": 0.7,
+    "youngAge": [
+      18,
+      35
+    ],
+    "olderAge": [
+      36,
+      55
+    ],
+    "stockSize": 4,
+    "startGoldMilli": 120000,
+    "npcCap": 100,
+    "traitCount": [
+      1,
+      2
+    ],
+    "statRange": [
+      0,
+      100
+    ],
+    "profileAxisRange": [
+      30,
+      70
+    ],
+    "contractWeeks": 20,
+    "wageMilli": [
+      1000,
+      2000
+    ],
+    "professionalAtCount": 4,
+    "expertAtCount": 12
+  }
+}

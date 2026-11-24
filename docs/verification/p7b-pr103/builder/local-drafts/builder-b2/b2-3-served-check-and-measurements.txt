@@ -1,0 +1,115 @@
+UTC start 2026-11-24T03:44:36.591587+00:00
+HEAD f31310cb791f549a7672be47219c7578678b7058
+Tree 43ab9e682912eeadc3d4a4d2ef8ca1a7e3aba54d
+Command: node C:/Users/Admin/.t3/local-drafts/p7b-prB2/builder-b2/measure-final.mjs C:/Users/Admin/.t3/local-drafts/p7b-prB2/builder-b2
+CI=
+
+  ➜  Local:   http://localhost:4173/
+  ➜  Network: use --host to expose
+  ➜  Local:   http://localhost:4174/
+  ➜  Network: use --host to expose
+{
+  "scope": "Clean final head",
+  "head": "f31310cb791f549a7672be47219c7578678b7058",
+  "tree": "43ab9e682912eeadc3d4a4d2ef8ca1a7e3aba54d",
+  "save": {
+    "npcCount": 100,
+    "bytes": 300168,
+    "sha256": "6512ceb7562231ed216a0a258e90d825e9bc39c778a860fc6618a9a2359887f2",
+    "identical": true
+  },
+  "endWeek": {
+    "cold": 72.4185,
+    "warm": [
+      57.99279999999999,
+      53.82359999999994,
+      50.1880000000001,
+      50.047199999999975,
+      48.95859999999993,
+      47.98610000000008,
+      50.38090000000011,
+      47.10030000000006,
+      47.21679999999992,
+      48.18439999999987,
+      45.99619999999982,
+      45.28690000000006,
+      45.75579999999991,
+      62.52709999999979,
+      43.34140000000025,
+      45.72220000000016,
+      57.001700000000255,
+      47.07109999999966,
+      46.97220000000016,
+      44.554099999999835
+    ]
+  },
+  "bundle": {
+    "assets": [
+      {
+        "file": "index-xNyhfJ1L.js",
+        "rawBytes": 478305,
+        "gzipBytes": 150866,
+        "sha256": "a31d565447f546f4c9977bb3a2597692c8a1b214364ace913ccf6730c9e4b444",
+        "servedIdentical": true
+      },
+      {
+        "file": "index-BJ9v1KVg.css",
+        "rawBytes": 37476,
+        "gzipBytes": 7567,
+        "sha256": "de7e58850e59dd2afffa2ef7bc8ce32d248a2ff6f73265f4cd4bc460656c8e82",
+        "servedIdentical": true
+      }
+    ],
+    "totalGzipBytes": 158433,
+    "mainJsGzipKB": 145.737,
+    "mainCssGzipKB": 7.528
+  },
+  "servedBuilds": [
+    {
+      "name": "production",
+      "port": 4173,
+      "htmlSha256": "e40c9bd76a32cb62750832c2ef080d9f08ada7c251727b082243753c8c2ebef7",
+      "assets": [
+        {
+          "file": "index-xNyhfJ1L.js",
+          "rawBytes": 478305,
+          "gzipBytes": 150866,
+          "sha256": "a31d565447f546f4c9977bb3a2597692c8a1b214364ace913ccf6730c9e4b444",
+          "servedIdentical": true
+        },
+        {
+          "file": "index-BJ9v1KVg.css",
+          "rawBytes": 37476,
+          "gzipBytes": 7567,
+          "sha256": "de7e58850e59dd2afffa2ef7bc8ce32d248a2ff6f73265f4cd4bc460656c8e82",
+          "servedIdentical": true
+        }
+      ]
+    },
+    {
+      "name": "regression",
+      "port": 4174,
+      "htmlSha256": "bceb415516680d2048ee97d05bc8444878020bd5a1bff36df98695ee7b618ac0",
+      "assets": [
+        {
+          "file": "index-xNyhfJ1L.js",
+          "rawBytes": 478305,
+          "gzipBytes": 150866,
+          "sha256": "a31d565447f546f4c9977bb3a2597692c8a1b214364ace913ccf6730c9e4b444",
+          "servedIdentical": true
+        },
+        {
+          "file": "index-BJ9v1KVg.css",
+          "rawBytes": 37476,
+          "gzipBytes": 7567,
+          "sha256": "de7e58850e59dd2afffa2ef7bc8ce32d248a2ff6f73265f4cd4bc460656c8e82",
+          "servedIdentical": true
+        }
+      ]
+    }
+  ],
+  "screenshotAssetsIdenticalToCandidate": false
+}
+
+UTC end 2026-11-24T03:44:42.914715+00:00
+Exit 0

@@ -1,0 +1,56 @@
+UTC 2026-11-24T05:17:29.3738370Z
+HEAD 63cbdca96fc7a326d2d1204c0b0871dc34a6d14e
+Tree 312797f184f6414064e5ecf81eb1fba7a7bc55d0
+Branch feat/p7b-npc-generator
+origin/main f73595b449db84b988d44a44cd33620efca9ecad
+Git status --porcelain=v1 --untracked-files=all output
+<empty>
+Ports 4173 and 4174 free
+CPU and current load
+
+Name                                     NumberOfCores NumberOfLogicalProcessors LoadPercentage
+----                                     ------------- ------------------------- --------------
+Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz             4                         8             24
+
+
+
+Top processes by cumulative CPU
+
+Name                   Id        CPU
+----                   --        ---
+T3 Code (Nightly)   11624 539.421875
+claude              10512 365.546875
+T3 Code (Nightly)   26908 352.078125
+msedgewebview2      23688   320.6875
+cloudflared         24628   296.4375
+ChatGPT              1348     279.25
+ChatGPT             28224   257.9375
+codebase-memory-mcp  5980  248.15625
+codebase-memory-mcp 20436 239.671875
+claude               6972 236.515625
+claude              15308  184.21875
+ChatGPT             19100 113.296875
+
+
+
+OS last boot
+
+LastBootUpTime        
+--------------        
+11/18/2026 12:48:40 PM
+
+
+
+Sleep/resume System events since pre-gates environment capture (2026-11-24T11:39:45.2160493+07:00 local time)
+No matching events
+Commits
+63cbdca96fc7a326d2d1204c0b0871dc34a6d14e 312797f184f6414064e5ecf81eb1fba7a7bc55d0 test(e2e): seed npcs in the storage migration case
+Co-authored-by: Codex <noreply@openai.com>
+
+f31310cb791f549a7672be47219c7578678b7058 43ab9e682912eeadc3d4a4d2ef8ca1a7e3aba54d feat(core): npc homes, cap and no starter npcs
+Co-authored-by: Codex <noreply@openai.com>
+
+58b4f2d59b1dddff5841db67970b561f3679bfbd 95e2bac1a748b98b7be52ef09f3795c5516baa18 feat(core): seeded npc generator and price
+Co-authored-by: Codex <noreply@openai.com>
+
+

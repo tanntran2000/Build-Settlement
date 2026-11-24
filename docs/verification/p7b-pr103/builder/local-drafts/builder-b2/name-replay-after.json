@@ -1,0 +1,94 @@
+﻿{
+  "status": "In-process draft overlay projection, no gate or test run",
+  "openingGold": 120000,
+  "samples": [
+    {
+      "seed": 0,
+      "week": 1,
+      "source": "guild",
+      "slot": 0,
+      "id": "npc_w1_guild_0",
+      "name": "Adrel Brassmark",
+      "age": 40,
+      "origin": "workshop_district",
+      "sha256": "5711b25078588298643a4884eec2c417783ef09c45e2a4bab69b7311c0bfa71f",
+      "valueMilli": 8000
+    },
+    {
+      "seed": 42,
+      "week": 3,
+      "source": "auction-house",
+      "slot": 2,
+      "id": "npc_w3_auction-house_2",
+      "name": "Neraya Dustlark",
+      "age": 19,
+      "origin": "caravan",
+      "sha256": "db94789a78e6ca07288524a07ac42ca6d67eca53dbaf3ed027d7c22f00931e5a",
+      "valueMilli": 15000
+    },
+    {
+      "seed": 2026,
+      "week": 4,
+      "source": "slave-market",
+      "slot": "lot",
+      "id": "npc_w4_slave-market_lot",
+      "name": "Halla Ironbrook",
+      "age": 32,
+      "origin": "frontier",
+      "sha256": "1e25d57b31365e1d20678bdc20483efb7ed74cc6c60e8e93d0513b8215ebd63b",
+      "valueMilli": 63000
+    },
+    {
+      "seed": 2026,
+      "week": 1,
+      "source": "auction-house",
+      "slot": "lot",
+      "id": "npc_w1_auction-house_lot",
+      "name": "Orielle Seawick",
+      "age": 29,
+      "origin": "port_town",
+      "sha256": "b0cca7a583a112c302575a4dc686de04976151f8a8db3bf2bf09eed7a0a8eeed",
+      "valueMilli": 60000
+    }
+  ],
+  "correction7": {
+    "selectedName": "Veylathenne",
+    "specificDraw": "Veylathenne Ternwatch",
+    "weekly14": [],
+    "draws500": [
+      {
+        "id": "npc_w38_guild_0",
+        "name": "Veylathenne Gullhaven"
+      },
+      {
+        "id": "npc_w60_guild_0",
+        "name": "Veylathenne Netmender"
+      },
+      {
+        "id": "npc_w101_guild_0",
+        "name": "Veylathenne Gullhaven"
+      },
+      {
+        "id": "npc_w428_guild_0",
+        "name": "Veylathenne Seawick"
+      },
+      {
+        "id": "npc_w446_guild_0",
+        "name": "Veylathenne Netmender"
+      }
+    ],
+    "roundTrip": [],
+    "catalogCanonicalSha256": "b3e0727560c279fb973545ff65753b3e953dc182c27d2f433bfdc55496e9e028"
+  },
+  "weekOneUnique": 14,
+  "granniesIn500": 46,
+  "meanOutsiderPartnersOver200": {
+    "auctionHouse": 4.87,
+    "slaveMarket": 42.085
+  },
+  "roundTripBytes": 300207,
+  "roundTripSha256": "4e7746efee458315b9d343221e276a7c5d06333a743099dae3d28283ab55d16e",
+  "roundTripByteIdentical": true,
+  "compactDataBytes": 4611,
+  "compactDataGzipBytes": 1864
+}

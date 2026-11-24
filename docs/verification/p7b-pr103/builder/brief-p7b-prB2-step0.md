@@ -1,0 +1,25 @@
+P7-B PR B2 Builder: Task B2.0 Step 0 preflight only (generator, homes and no starter NPCs). No product or test edit, no commit, push, PR or merge in this turn.
+
+Context: you are the P7-B Builder (Sol 6.2). Claude is Orchestrator and Tester; Astra 6.2 reviews; only dot or the owner merges. P7-B PR B1 is PR #102 (head 7e1aca45e35be17772ff770c3a4595c8213b0d3b, CI green, Astra PASS), waiting for merge on main 27f4dc2. B2 stacks on B1.
+
+Owner (Tân), verbatim: spec G1 "Duyệt P7-B"; plan approval "Duyệt, giao B1"; start of this step (dialog answer) "Start B2 Step 0".
+
+Worktree: C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01, on feat/p7b-map-estates at 7e1aca4 (clean). Read only for Step 0: do not switch branch, create a branch or worktree, install, build or start servers. `git fetch origin` is fine.
+
+Binding documents (read fully):
+- Plan with Corrections 1–6: C:/Users/Admin/.t3/local-drafts/p7b-prB2/binding-plan-3162247.md (SHA-256 7953de3a9ba5ad64dc57ecfba4bc84019e299900de177add0525239acaa21c3d). PR B2 = Tasks B2.0–B2.3; Global Constraints; Decisions 4–9 and 16; PR B2 file allowlist; Review Focus 4. Corrections 1–6 describe what B1 already does (estates, flat home prices, Hall cap in data, household upkeep as a household cost, report row "Household upkeep").
+- Spec v0.1: C:/Users/Admin/.t3/local-drafts/p7b-prB2/binding-spec-9dace86.md (SHA-256 0460f26205b8804ca39b0b87c889279ed568c29791556d3690927994dc3428b5): §4 generator, §6 homes, §7 status, §8.1 price, §11 UI, §13 data and save.
+- AGENTS.md (Hard Laws, §4 anti-loop, §6 evidence). English UI text only; never name another game; all NPCs are adult women 18+, adult content is numbers, levels and labels only.
+
+Task B2.0 — Step 0 preflight. Search the whole repo (unit, e2e, accessibility, fixtures, golden, pins, scripts) and list, each with file:line, current text, why B2 changes it, and the exact proposed after-text (including whitespace and end-of-file newlines):
+1. Every use of `npc_starter_*`, `WORLD_STARTER_NPCS`, `STARTER_PROFILES`, `starter-profiles.ts`, starter names or counts, and every test, helper, fixture, e2e flow and UI test that depends on starter NPCs existing at New Game (posts, NPC sheet, NPC life week, report rows, items equipped to an NPC, crafting, Characters window). For each: its replacement (`withNpcs(session, keys)` from `packages/core/src/__tests__/helpers/npcs.ts` with exact generator keys, an e2e setup path, or removal) and proof the same fact is still asserted.
+2. Gold 45 → 120 at New Game (`initialGoldMilli`, `P7B_TRIAL.startGoldMilli`): every test, pin, golden leaf, fixture and e2e expectation that reads starting Gold, and every downstream value it shifts (immigration funding test, liquidity, upkeep funded/unfunded, crisis triggers, report rows, 60-week hash pins in craft-week/items-week tests). Lesson from B1: list these before RED, with the leaf diff you expect.
+3. Ruleset `tile-society-11` → `tile-society-12`: literals, regexes (`session-records.ts:18,169`), current-folder pins, `society-v12/` fixture generation, the historical fixture set kept byte-identical, golden allowed paths.
+4. Every e2e helper that rebuilds state or reports from the screen (for example `expectReport`, `reportFixture`, `lifeUiSnapshot` in `tests/e2e/character-life-navigation.helpers.ts`) and how it must change once NPCs are generated and carry `household`. Lesson from B1: a new state or report field the helper does not read fails the whole smoke.
+5. Any file outside the PR B2 allowlist and why. Any number that would land in code instead of `npc-generator.json` / `tuning.json` (Global Constraints: every number TRIAL and in data; B1's Hall cap was an Astra P2 for this).
+6. Your design for the open details, marked as proposals for the owner where the plan does not fix them: the `npc-generator.json` contents (5 cultures, ~80 given names, ~40 epithets from historical or invented sources, none from a game; appearance lists moved from starter-profiles.ts; preferences, flaws, price block); how `withNpcs` keys tests; the Characters window empty-state line and the Mansion/Hall resident list with Move action (text, keyboard path, disabled reasons); validation error texts.
+7. The RED test list for B2.1 and B2.2 (names and assertions with the plan's exact values), the golden path-diff allowed paths, and how you will generate `society-v12/`.
+8. Save size: 100 generated NPCs round trip ≤ 1 MiB — estimate. Bundle risk vs the 200 KB gzip budget (B1 head JS 145.737 kB, CSS 7.528 kB).
+9. Branch: propose `feat/p7b-npc-generator` from feat/p7b-map-estates 7e1aca4 (stacked on PR #102), and how it rebases onto main once #102 merges.
+
+Then HOLD once with the full list in C:/Users/Admin/.t3/local-drafts/p7b-prB2/STEP0-HOLD.md (UTF-8) plus JSON byte inventories (existing-file replacements and generated-byte proposals), README and SHA256SUMS.txt. Reply with a short summary and the path. Anti-loop: anything still failing after 2 attempts is a HOLD; a queued message never overrides a HOLD.

@@ -1,0 +1,298 @@
+[
+  {
+    "finding": "P1-1",
+    "mutation": "malformed-json-as-old-version",
+    "productPath": "packages/persistence/src/character-life-save.ts",
+    "before": "  } catch { return fail('INVALID_SAVE', 'Could not read a valid checkpoint JSON. Your game was preserved.'); }",
+    "after": "  } catch { return fail('INCOMPATIBLE_SAVE', 'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.'); }",
+    "original": {
+      "command": [
+        "node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "--reporter=json",
+        "-t",
+        "refuses the v11 portable checkpoint",
+        "packages/simulation/src/__tests__/npc-homes.test.ts"
+      ],
+      "utcStart": "2026-11-24T06:20:25.687779+00:00",
+      "utcEnd": "2026-11-24T06:20:27.648056+00:00",
+      "exit": 0,
+      "passed": 1,
+      "failed": 0,
+      "raw": "P1-1-malformed-json-as-old-version-original.json"
+    },
+    "tightened": {
+      "command": [
+        "node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "--reporter=json",
+        "-t",
+        "refuses the v11 portable checkpoint",
+        "packages/simulation/src/__tests__/npc-homes.test.ts"
+      ],
+      "utcStart": "2026-11-24T06:20:27.648536+00:00",
+      "utcEnd": "2026-11-24T06:20:29.553166+00:00",
+      "exit": 1,
+      "passed": 0,
+      "failed": 1,
+      "raw": "P1-1-malformed-json-as-old-version-tight.json"
+    },
+    "restoredProductSha256": "58f8344a59b8ffd2618463f0930906d30cc65ab77385ee44ae7345d3c1056a24"
+  },
+  {
+    "finding": "P1-2",
+    "mutation": "catalog-extra-suffix",
+    "productPath": "packages/core/src/data/validate.ts",
+    "before": "        super(`${ref}.${field}: ${rule}`);",
+    "after": "        super(`${ref}.${field}: ${rule} [probe suffix]`);",
+    "original": {
+      "command": [
+        "node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "--reporter=json",
+        "-t",
+        "rejects malformed generator data at|rejects 45000 in generator data",
+        "packages/core/src/world/__tests__/npc-generator.test.ts",
+        "packages/simulation/src/__tests__/npc-homes.test.ts"
+      ],
+      "utcStart": "2026-11-24T06:20:29.696359+00:00",
+      "utcEnd": "2026-11-24T06:20:31.564726+00:00",
+      "exit": 0,
+      "passed": 17,
+      "failed": 0,
+      "raw": "P1-2-catalog-extra-suffix-original.json"
+    },
+    "tightened": {
+      "command": [
+        "node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "--reporter=json",
+        "-t",
+        "rejects malformed generator data at|rejects 45000 in generator data",
+        "packages/core/src/world/__tests__/npc-generator.test.ts",
+        "packages/simulation/src/__tests__/npc-homes.test.ts"
+      ],
+      "utcStart": "2026-11-24T06:20:31.565782+00:00",
+      "utcEnd": "2026-11-24T06:20:33.598598+00:00",
+      "exit": 1,
+      "passed": 0,
+      "failed": 17,
+      "raw": "P1-2-catalog-extra-suffix-tight.json"
+    },
+    "restoredProductSha256": "c266e789aa749257d73f7c8a3194ba5ab2bb7ede3b4d11fcd1299154fea6dc70"
+  },
+  {
+    "finding": "P1-2",
+    "mutation": "malformed-key-extra-suffix",
+    "productPath": "packages/core/src/world/npc-generator.ts",
+    "before": "throw new RangeError('Invalid NPC generator key.');",
+    "after": "throw new RangeError('Invalid NPC generator key. [probe suffix]');",
+    "original": {
+      "command": [
+        "node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "--reporter=json",
+        "-t",
+        "changes only the epithet with salt and exhausts the eight candidates",
+        "packages/core/src/world/__tests__/npc-generator.test.ts"
+      ],
+      "utcStart": "2026-11-24T06:20:33.703813+00:00",
+      "utcEnd": "2026-11-24T06:20:35.286212+00:00",
+      "exit": 0,
+      "passed": 1,
+      "failed": 0,
+      "raw": "P1-2-malformed-key-extra-suffix-original.json"
+    },
+    "tightened": {
+      "command": [
+        "node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "--reporter=json",
+        "-t",
+        "changes only the epithet with salt and exhausts the eight candidates",
+        "packages/core/src/world/__tests__/npc-generator.test.ts"
+      ],
+      "utcStart": "2026-11-24T06:20:35.286686+00:00",
+      "utcEnd": "2026-11-24T06:20:36.896906+00:00",
+      "exit": 1,
+      "passed": 0,
+      "failed": 1,
+      "raw": "P1-2-malformed-key-extra-suffix-tight.json"
+    },
+    "restoredProductSha256": "097d32c5f1936e2874e6c64222d428c7e0b9773f899caeb46d9018685dd079a0"
+  },
+  {
+    "finding": "P1-2",
+    "mutation": "salt-exhaustion-extra-suffix",
+    "productPath": "packages/core/src/world/npc-generator.ts",
+    "before": "throw new RangeError('No more epithets are available for this NPC key.');",
+    "after": "throw new RangeError('No more epithets are available for this NPC key. [probe suffix]');",
+    "original": {
+      "command": [
+        "node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "--reporter=json",
+        "-t",
+        "changes only the epithet with salt and exhausts the eight candidates",
+        "packages/core/src/world/__tests__/npc-generator.test.ts"
+      ],
+      "utcStart": "2026-11-24T06:20:37.002515+00:00",
+      "utcEnd": "2026-11-24T06:20:38.553687+00:00",
+      "exit": 0,
+      "passed": 1,
+      "failed": 0,
+      "raw": "P1-2-salt-exhaustion-extra-suffix-original.json"
+    },
+    "tightened": {
+      "command": [
+        "node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "--reporter=json",
+        "-t",
+        "changes only the epithet with salt and exhausts the eight candidates",
+        "packages/core/src/world/__tests__/npc-generator.test.ts"
+      ],
+      "utcStart": "2026-11-24T06:20:38.554140+00:00",
+      "utcEnd": "2026-11-24T06:20:40.113346+00:00",
+      "exit": 1,
+      "passed": 0,
+      "failed": 1,
+      "raw": "P1-2-salt-exhaustion-extra-suffix-tight.json"
+    },
+    "restoredProductSha256": "097d32c5f1936e2874e6c64222d428c7e0b9773f899caeb46d9018685dd079a0"
+  },
+  {
+    "finding": "P1-3",
+    "mutation": "out-of-culture-given",
+    "productPath": "packages/core/src/world/npc-generator.ts",
+    "before": "  const name = given + ' ' + drawEpithet(seed, id, culture.epithets, first, nameSalt);",
+    "after": "  const name = (seed === 7 && id === 'npc_w1_guild_0' ? 'Outside' : given) + ' ' + drawEpithet(seed, id, culture.epithets, first, nameSalt);",
+    "original": {
+      "command": [
+        "node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "--reporter=json",
+        "-t",
+        "resolves three distinct English full names",
+        "packages/core/src/world/__tests__/npc.test.ts"
+      ],
+      "utcStart": "2026-11-24T06:20:40.204745+00:00",
+      "utcEnd": "2026-11-24T06:20:42.176284+00:00",
+      "exit": 0,
+      "passed": 1,
+      "failed": 0,
+      "raw": "P1-3-out-of-culture-given-original.json"
+    },
+    "tightened": {
+      "command": [
+        "node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "--reporter=json",
+        "-t",
+        "resolves three distinct English full names",
+        "packages/core/src/world/__tests__/npc.test.ts"
+      ],
+      "utcStart": "2026-11-24T06:20:42.176736+00:00",
+      "utcEnd": "2026-11-24T06:20:43.801529+00:00",
+      "exit": 1,
+      "passed": 0,
+      "failed": 1,
+      "raw": "P1-3-out-of-culture-given-tight.json"
+    },
+    "restoredProductSha256": "097d32c5f1936e2874e6c64222d428c7e0b9773f899caeb46d9018685dd079a0"
+  },
+  {
+    "finding": "P1-3",
+    "mutation": "out-of-culture-epithet",
+    "productPath": "packages/core/src/world/npc-generator.ts",
+    "before": "  const name = given + ' ' + drawEpithet(seed, id, culture.epithets, first, nameSalt);",
+    "after": "  const name = given + ' ' + (seed === 7 && id === 'npc_w1_guild_0' ? 'Outsider' : drawEpithet(seed, id, culture.epithets, first, nameSalt));",
+    "original": {
+      "command": [
+        "node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "--reporter=json",
+        "-t",
+        "resolves three distinct English full names",
+        "packages/core/src/world/__tests__/npc.test.ts"
+      ],
+      "utcStart": "2026-11-24T06:20:43.908185+00:00",
+      "utcEnd": "2026-11-24T06:20:46.275118+00:00",
+      "exit": 0,
+      "passed": 1,
+      "failed": 0,
+      "raw": "P1-3-out-of-culture-epithet-original.json"
+    },
+    "tightened": {
+      "command": [
+        "node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "--reporter=json",
+        "-t",
+        "resolves three distinct English full names",
+        "packages/core/src/world/__tests__/npc.test.ts"
+      ],
+      "utcStart": "2026-11-24T06:20:46.275656+00:00",
+      "utcEnd": "2026-11-24T06:20:48.020394+00:00",
+      "exit": 1,
+      "passed": 0,
+      "failed": 1,
+      "raw": "P1-3-out-of-culture-epithet-tight.json"
+    },
+    "restoredProductSha256": "097d32c5f1936e2874e6c64222d428c7e0b9773f899caeb46d9018685dd079a0"
+  },
+  {
+    "finding": "P1-4",
+    "mutation": "short-description-missing-traits",
+    "productPath": "packages/core/src/character/describe.ts",
+    "before": "    ...AXES.map(axis => axisBand(axis, profile.traits[axis])?.short ?? ''),",
+    "after": "    ...AXES.map(axis => profile.id === 'npc_w1_guild_0' ? '' : axisBand(axis, profile.traits[axis])?.short ?? ''),",
+    "original": {
+      "command": [
+        "node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "--reporter=json",
+        "-t",
+        "keeps generated names, ids, stats and posts across world and life fixture hydration",
+        "packages/core/src/character/__tests__/session.test.ts"
+      ],
+      "utcStart": "2026-11-24T06:20:48.131761+00:00",
+      "utcEnd": "2026-11-24T06:20:49.857327+00:00",
+      "exit": 0,
+      "passed": 1,
+      "failed": 0,
+      "raw": "P1-4-short-description-missing-traits-original.json"
+    },
+    "tightened": {
+      "command": [
+        "node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "--reporter=json",
+        "-t",
+        "keeps generated names, ids, stats and posts across world and life fixture hydration",
+        "packages/core/src/character/__tests__/session.test.ts"
+      ],
+      "utcStart": "2026-11-24T06:20:49.857893+00:00",
+      "utcEnd": "2026-11-24T06:20:51.672597+00:00",
+      "exit": 1,
+      "passed": 0,
+      "failed": 1,
+      "raw": "P1-4-short-description-missing-traits-tight.json"
+    },
+    "restoredProductSha256": "7eddee0ac0d2c308fd9c458e17d6d2c23c620748fd297741300332853d4ab8db"
+  }
+]

@@ -1,0 +1,13 @@
+UTC start 2026-11-24T02:02:18.918427+00:00
+HEAD f73595b449db84b988d44a44cd33620efca9ecad
+Tree fd04e1f2d7f6f47270a2e7ac82d18b68729a6372
+Command: npm run typecheck:core
+CI=
+
+
+> build-settlement@0.1.0 typecheck:core
+> tsc -p packages/core/tsconfig.json --noEmit
+
+
+UTC end 2026-11-24T02:02:22.459933+00:00
+Exit 0

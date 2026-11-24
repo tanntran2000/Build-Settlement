@@ -1,0 +1,32 @@
+UTC 2026-11-24T04:33:42.0600135Z
+Main worktree C:\Users\Admin\.t3\worktrees\Build-Settlement\b2-c10-benchmark-main (detached)
+Node executable C:\Program Files\nodejs\node.exe
+Node v24.19.0
+Ports 4173 and 4174 free: True
+
+Name                                     NumberOfCores NumberOfLogicalProcessors LoadPercentage
+----                                     ------------- ------------------------- --------------
+Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz             4                         8             18
+
+
+
+Top processes by cumulative CPU
+
+Name                   Id        CPU
+----                   --        ---
+T3 Code (Nightly)   11624  475.15625
+claude              10512   344.6875
+T3 Code (Nightly)   26908 311.484375
+ChatGPT              1348   279.1875
+msedgewebview2      23688   264.6875
+ChatGPT             28224 245.203125
+cloudflared         24628 240.640625
+claude               6972 225.265625
+codebase-memory-mcp  5980 203.609375
+codebase-memory-mcp 20436 194.171875
+claude              15308        168
+ChatGPT             19100 113.296875
+
+
+
+OS last boot 11/18/2026 12:48:40

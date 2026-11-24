@@ -1,0 +1,22 @@
+{
+    "exits":  [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+              ],
+    "tree":  "312797f184f6414064e5ecf81eb1fba7a7bc55d0",
+    "head":  "63cbdca96fc7a326d2d1204c0b0871dc34a6d14e",
+    "commands":  [
+                     "git diff --check origin/main...HEAD",
+                     "npm run lint",
+                     "npm run typecheck",
+                     "npm run check:architecture",
+                     "npm run test:architecture",
+                     "npm test",
+                     "npm run build"
+                 ]
+}

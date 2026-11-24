@@ -1,0 +1,13 @@
+UTC start 2026-11-24T06:23:09.387293+00:00
+HEAD 63cbdca96fc7a326d2d1204c0b0871dc34a6d14e
+Tree 312797f184f6414064e5ecf81eb1fba7a7bc55d0
+Command: npm run lint
+CI=
+
+
+> build-settlement@0.1.0 lint
+> eslint . --max-warnings=0
+
+
+UTC end 2026-11-24T06:23:21.328739+00:00
+Exit 0

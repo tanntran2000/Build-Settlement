@@ -1,0 +1,22 @@
+UTC start 2026-11-24T02:06:23.980640+00:00
+HEAD 58b4f2d59b1dddff5841db67970b561f3679bfbd
+Tree 95e2bac1a748b98b7be52ef09f3795c5516baa18
+Command: npm test -- packages/core/src/world/__tests__/npc-generator.test.ts packages/simulation/src/__tests__/npc-homes.test.ts
+CI=
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/core/src/world/__tests__/npc-generator.test.ts packages/simulation/src/__tests__/npc-homes.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  2 passed (2)
+      Tests  41 passed (41)
+   Start at  09:06:27
+   Duration  6.19s (transform 3.41s, setup 0ms, import 4.47s, tests 3.90s, environment 1ms)
+
+
+UTC end 2026-11-24T02:06:34.144202+00:00
+Exit 0

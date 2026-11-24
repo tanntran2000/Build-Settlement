@@ -1,0 +1,531 @@
+{
+  "originMain": "f73595b449db84b988d44a44cd33620efca9ecad",
+  "b2_1": "58b4f2d59b1dddff5841db67970b561f3679bfbd",
+  "candidateTree": "62c34cb35c597b26f936f938f924d6449e0094ad",
+  "verifiedTree": "312797f184f6414064e5ecf81eb1fba7a7bc55d0",
+  "verificationRevision": "312797f184f6414064e5ecf81eb1fba7a7bc55d0",
+  "totalPathsCompared": 112,
+  "correction9Files": 22,
+  "correction9Hunks": 23,
+  "correction7": {
+    "status": "Correction 7 read-only comparison, candidate data not applied to the worktree.",
+    "replacementWasOriginalCoinage": true,
+    "exactPublicWebSearch": [
+      "\"Veylathenne\"",
+      "\"Veylathenne\" video game character location"
+    ],
+    "exactIndexedMatches": 0,
+    "changed": [
+      {
+        "path": "packages/core/src/data/npc-generator.json",
+        "jsonPath": "cultures.saltmere.given[1]",
+        "before": "Briala",
+        "after": "Veylathenne",
+        "beforeSha256": "b5c8c04dc61b8a22738c95b08eaa52685ea383ede00396128e1c8ddc431e8fca",
+        "afterSha256": "03ee6792af7b5195f01ca8cfbd90311749f36a036df35017a46b5743c395895a",
+        "beforeBytes": 8568,
+        "afterBytes": 8573
+      },
+      {
+        "probe": "catalogCanonicalSha256",
+        "before": "54f099f2bd626a6c88e185805c57bef19299f9ecddb9d8084b3ea115befe86dc",
+        "after": "b3e0727560c279fb973545ff65753b3e953dc182c27d2f433bfdc55496e9e028"
+      },
+      {
+        "probe": "specificDraw",
+        "before": "Briala Ternwatch",
+        "after": "Veylathenne Ternwatch"
+      },
+      {
+        "probe": "500-draw cohort name",
+        "id": "npc_w38_guild_0",
+        "before": "Briala Gullhaven",
+        "after": "Veylathenne Gullhaven"
+      },
+      {
+        "probe": "500-draw cohort name",
+        "id": "npc_w60_guild_0",
+        "before": "Briala Netmender",
+        "after": "Veylathenne Netmender"
+      },
+      {
+        "probe": "500-draw cohort name",
+        "id": "npc_w101_guild_0",
+        "before": "Briala Gullhaven",
+        "after": "Veylathenne Gullhaven"
+      },
+      {
+        "probe": "500-draw cohort name",
+        "id": "npc_w428_guild_0",
+        "before": "Briala Seawick",
+        "after": "Veylathenne Seawick"
+      },
+      {
+        "probe": "500-draw cohort name",
+        "id": "npc_w446_guild_0",
+        "before": "Briala Netmender",
+        "after": "Veylathenne Netmender"
+      },
+      {
+        "probe": "compactDataBytes",
+        "before": 4606,
+        "after": 4611
+      },
+      {
+        "probe": "compactDataGzipBytes",
+        "before": 1860,
+        "after": 1864
+      }
+    ],
+    "stable": [
+      "all four original NPC sample pins",
+      "14-name one-week set",
+      "500-draw age total",
+      "200-draw source means",
+      "100-NPC save size and SHA-256",
+      "all v12 fixture and catalog golden bytes"
+    ],
+    "additionsToArchivedRedTest": [
+      "catalog canonical SHA-256 after rename",
+      "seed 112, week 1, Guild slot 0, Veylathenne Ternwatch",
+      "all eight salts retain Veylathenne as the given name"
+    ],
+    "candidateFilesContainingTheOldName": [
+      "packages/core/src/data/npc-generator.json"
+    ]
+  },
+  "correction8": {
+    "status": "Proposal for owner approval. None applied to the product branch.",
+    "finalByteChanges": [
+      {
+        "path": "packages/core/src/world/npc-generator.ts",
+        "proposedLine": 76,
+        "before": "  const row = catalog.sources[slot === 'lot' && source !== 'guild' ? `${source}-lot` : source];\n",
+        "after": "  const sourceId: keyof typeof catalog.sources = slot === 'lot' && source !== 'guild' ? `${source}-lot` : source;\n  const row = catalog.sources[sourceId];\n",
+        "why": "Preserve the same runtime key and recover the contextual finite union."
+      },
+      {
+        "path": "packages/simulation/src/__tests__/character-life-command.test.ts",
+        "before": "import {\nimport { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+        "after": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\nimport {\n",
+        "why": "Place the new statement outside the existing multiline import. Existing test assertions are untouched."
+      },
+      {
+        "path": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+        "before": "import {\nimport { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+        "after": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\nimport {\n",
+        "why": "Place the new statement outside the existing multiline import. Existing test assertions are untouched."
+      }
+    ],
+    "stagingProposal": [
+      {
+        "stage": "B2.1",
+        "rule": "In the generator validator use startGoldMilli: positive and omit its new tuning import. Keep the exact 120000 catalog pin. The B1 New Game Gold remains 45000 in this commit."
+      },
+      {
+        "stage": "B2.1",
+        "rule": "Keep B1 WorldNpc unchanged. In generator, pricing and household helpers accept/return an explicitly intersected generated NPC type for the fields that access household."
+      },
+      {
+        "stage": "B2.2 RED",
+        "rule": "Run the strict wrong-value 45000 case with its original expected message and the New Game Gold assertion before changing the tuning. The RED test must still include every current case."
+      },
+      {
+        "stage": "B2.2 GREEN",
+        "rule": "Apply the approved shared WorldNpc field with starter removal and return the validator, generator and household type signatures to their final approved bytes, except for the typed sourceId correction above."
+      }
+    ]
+  },
+  "correction9": [
+    {
+      "path": "packages/core/package.json",
+      "candidateSha256": "98d6e19e9f139009d31b8993da5f849dd6fc3e492d1406c80d9633fd3b951136",
+      "finalSha256": "9b7b2ed3bcdd361ef3f86a73206fc7c69627f95719fa38e9f20769d72aa15b2d",
+      "beforeBytes": 241,
+      "afterBytes": 298,
+      "amendments": [
+        {
+          "path": "packages/core/package.json",
+          "candidateLine": 12,
+          "before": "    \".\": \"./src/index.ts\"\n",
+          "after": "    \".\": \"./src/index.ts\",\n    \"./testing/npcs\": \"./src/__tests__/helpers/npcs.ts\"\n",
+          "reason": "Expose one dedicated test-helper subpath so consumers resolve the core source through the existing workspace package boundary."
+        }
+      ]
+    },
+    {
+      "path": "packages/core/src/world/__tests__/npc-life.test.ts",
+      "candidateSha256": "9cd625a48f7811c8843eebaec68f6cf03d8a3543280dfcacdbd6d7a4dc04b1ea",
+      "finalSha256": "4336c2272c02452dda9598007171d58c2380ec141f6339f78905a7c22ce8fa36",
+      "beforeBytes": 11516,
+      "afterBytes": 11536,
+      "amendments": [
+        {
+          "path": "packages/core/src/world/__tests__/npc-life.test.ts",
+          "candidateLine": 158,
+          "before": "      const npcs = structuredClone(made.value.npcs); mutate(npcs[0]); expect(api.isWorldNpcList(npcs, made.value.city)).toBe(false);\n",
+          "after": "      const npcs = withNpcs(made.value, NPC_TEST_KEYS.slice(0, 1)).npcs; mutate(npcs[0]); expect(api.isWorldNpcList(npcs, made.value.city)).toBe(false);\n",
+          "reason": "Seed a valid owned NPC before each negative check so the same missing-life, age and gender mutations still execute."
+        }
+      ]
+    },
+    {
+      "path": "packages/persistence/src/__tests__/character-life-save.test.ts",
+      "candidateSha256": "4ebe8ff425670b49ea8512760fe50132e32fc4be0b026f55b3021211a10c29c6",
+      "finalSha256": "a47f1f97d192294467244f09007a1caa9fce09fe0f76c72f04b719ba31307d0e",
+      "beforeBytes": 7647,
+      "afterBytes": 7628,
+      "amendments": [
+        {
+          "path": "packages/persistence/src/__tests__/character-life-save.test.ts",
+          "candidateLine": 2,
+          "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+          "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+          "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+        }
+      ]
+    },
+    {
+      "path": "packages/persistence/src/__tests__/item-owner-import.test.ts",
+      "candidateSha256": "b2a5104b0ed02de67e5ec9e89a43087dbd653270f107ecd0f45081add28c1f41",
+      "finalSha256": "b151123de09474703da6ddcce33b259fb4dd068760f56df67bbb6d8a634658ac",
+      "beforeBytes": 2244,
+      "afterBytes": 2225,
+      "amendments": [
+        {
+          "path": "packages/persistence/src/__tests__/item-owner-import.test.ts",
+          "candidateLine": 2,
+          "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+          "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+          "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+        }
+      ]
+    },
+    {
+      "path": "packages/persistence/src/__tests__/item-records.test.ts",
+      "candidateSha256": "dab2d4e139c550ac021b6af5a8414d0a46d68b5d2f682ae736792a9c5dde5bd8",
+      "finalSha256": "89df718eb62124c3b0c8b57e5cf35a375919a1991dca85b000db34adf435b095",
+      "beforeBytes": 4914,
+      "afterBytes": 4895,
+      "amendments": [
+        {
+          "path": "packages/persistence/src/__tests__/item-records.test.ts",
+          "candidateLine": 2,
+          "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+          "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+          "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+        }
+      ]
+    },
+    {
+      "path": "packages/persistence/src/__tests__/items-canonical.test.ts",
+      "candidateSha256": "48c7ae761eef8e80da80b0df31153df858c20fa395bd4ba6f05394d85f448e36",
+      "finalSha256": "346bf4cad3c3b117ed4c4e81da1c8e7c49f6c3af5005396b3ad4438744880e29",
+      "beforeBytes": 2843,
+      "afterBytes": 2824,
+      "amendments": [
+        {
+          "path": "packages/persistence/src/__tests__/items-canonical.test.ts",
+          "candidateLine": 2,
+          "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+          "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+          "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+        }
+      ]
+    },
+    {
+      "path": "packages/persistence/src/__tests__/items-rebuild-order.test.ts",
+      "candidateSha256": "c5bec828a370d1d620e29e4740bd516e42cbf824f21fa13af01707578bfc6ab4",
+      "finalSha256": "58f3f9b959acbddc4a5ab66612451343e4523b14171c9e56862bfb084d7c0ace",
+      "beforeBytes": 5109,
+      "afterBytes": 5090,
+      "amendments": [
+        {
+          "path": "packages/persistence/src/__tests__/items-rebuild-order.test.ts",
+          "candidateLine": 2,
+          "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+          "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+          "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+        }
+      ]
+    },
+    {
+      "path": "packages/persistence/src/__tests__/npc-life-records.test.ts",
+      "candidateSha256": "4ba360941859087b8cc7c14801d7ae4828dfac3160a43c61cca1b10fc7f3e4cb",
+      "finalSha256": "e17842ab6ca3b5cd28d0eb49b6f434722a9776e0fbba9e1c44d8137e58720217",
+      "beforeBytes": 5965,
+      "afterBytes": 5946,
+      "amendments": [
+        {
+          "path": "packages/persistence/src/__tests__/npc-life-records.test.ts",
+          "candidateLine": 2,
+          "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+          "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+          "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+        }
+      ]
+    },
+    {
+      "path": "packages/persistence/src/__tests__/session-records.test.ts",
+      "candidateSha256": "319a5f12e4851b665680ded71edda81597b5c811bcb7ebf9cbe267b5f5caefe8",
+      "finalSha256": "d6bff697cef091b089320a1dfe56cb345cb015b265753e05c003a5823c29b7b9",
+      "beforeBytes": 6201,
+      "afterBytes": 6182,
+      "amendments": [
+        {
+          "path": "packages/persistence/src/__tests__/session-records.test.ts",
+          "candidateLine": 2,
+          "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+          "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+          "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+        }
+      ]
+    },
+    {
+      "path": "packages/simulation/src/__tests__/character-life-command.test.ts",
+      "candidateSha256": "a3b78f3de68f379cfab3214cd0dee96133d4b5d7db9c4079844b3ee2b0f5b1e1",
+      "finalSha256": "a8149336c5047519ffddd8f6c2135c998e355cf1730155511100b7d626ed32d1",
+      "beforeBytes": 22937,
+      "afterBytes": 22918,
+      "amendments": [
+        {
+          "path": "packages/simulation/src/__tests__/character-life-command.test.ts",
+          "candidateLine": 1,
+          "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+          "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+          "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+        }
+      ]
+    },
+    {
+      "path": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+      "candidateSha256": "358ca2b4702ab911db82d07e1fc8e66d532865b70957bd6b39538e9a7df0046f",
+      "finalSha256": "0ec1b5dba38cd2385237d62e65149d88646aea31aa1f0b23290a5c504c8939ce",
+      "beforeBytes": 23568,
+      "afterBytes": 23582,
+      "amendments": [
+        {
+          "path": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+          "candidateLine": 1,
+          "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+          "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+          "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+        },
+        {
+          "path": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+          "candidateLine": 280,
+          "before": "    none.city.tiles.forEach(t => { t.building = null; });\n",
+          "after": "    none.city.tiles.forEach(t => { if (!t.id.startsWith('estate-')) t.building = null; });\n",
+          "reason": "Retain the new mandatory homes while preserving the zero-manager-slot fixture and the same reasons."
+        }
+      ]
+    },
+    {
+      "path": "packages/simulation/src/__tests__/craft-command.test.ts",
+      "candidateSha256": "36c1bed78e59d8b7e0102404857178a43576f0d852d2ed5c5642fe8091c1c142",
+      "finalSha256": "5d83941ef5a46b7a5aa63a84c2fa89befe5597da0e5e2e0a2d9113f9b987a6cf",
+      "beforeBytes": 13652,
+      "afterBytes": 13633,
+      "amendments": [
+        {
+          "path": "packages/simulation/src/__tests__/craft-command.test.ts",
+          "candidateLine": 2,
+          "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+          "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+          "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+        }
+      ]
+    },
+    {
+      "path": "packages/simulation/src/__tests__/craft-week.test.ts",
+      "candidateSha256": "6b1572e87efacc33907dd5c835aba09668b515cc2226dd4fbbda7a00e41dce14",
+      "finalSha256": "1666ba8c7cadc95f976b1c5ec64ee576b69163aebee1f53c8f0b912b940ab1ad",
+      "beforeBytes": 15362,
+      "afterBytes": 15343,
+      "amendments": [
+        {
+          "path": "packages/simulation/src/__tests__/craft-week.test.ts",
+          "candidateLine": 2,
+          "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+          "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+          "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+        }
+      ]
+    },
+    {
+      "path": "packages/simulation/src/__tests__/exhausted-materials.test.ts",
+      "candidateSha256": "2bc3df7c3d82a42b87a69c61bea203eef088f57d22600a7e4ffc5adef90ec43c",
+      "finalSha256": "c508b0569d7ccc30c9758411694744c6970ca9080dec690d6acbc3ff964490c6",
+      "beforeBytes": 3241,
+      "afterBytes": 3222,
+      "amendments": [
+        {
+          "path": "packages/simulation/src/__tests__/exhausted-materials.test.ts",
+          "candidateLine": 2,
+          "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+          "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+          "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+        }
+      ]
+    },
+    {
+      "path": "packages/simulation/src/__tests__/item-command.test.ts",
+      "candidateSha256": "51205f91b6353c579736d80f522f5e16b9c41096b1f65409406ad07a29a0638d",
+      "finalSha256": "11efa74a565ef26c4ced67dc680f9f1d815366bdb387c94fae8e3dcaf42d50a0",
+      "beforeBytes": 8325,
+      "afterBytes": 8306,
+      "amendments": [
+        {
+          "path": "packages/simulation/src/__tests__/item-command.test.ts",
+          "candidateLine": 2,
+          "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+          "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+          "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+        }
+      ]
+    },
+    {
+      "path": "packages/simulation/src/__tests__/item-effects.test.ts",
+      "candidateSha256": "f0c8613dd542e4bd27ed978999b58dd9fa6d906326b07abebaaf4af357b47d97",
+      "finalSha256": "1c09cbf2f8a4f80c0528613d8a3bdb45fbfd36c3a868ecfea18b03593fdaecd9",
+      "beforeBytes": 10738,
+      "afterBytes": 10719,
+      "amendments": [
+        {
+          "path": "packages/simulation/src/__tests__/item-effects.test.ts",
+          "candidateLine": 2,
+          "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+          "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+          "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+        }
+      ]
+    },
+    {
+      "path": "packages/simulation/src/__tests__/law-week.test.ts",
+      "candidateSha256": "fd6612051668bef010eec690d36567fcb5a0b08fdf87e47468f9e3a00d17fc94",
+      "finalSha256": "414e39f6510a952914c6044bf90e7dfa8c4b94d06dc7e84eac4edaf18d3662d9",
+      "beforeBytes": 7869,
+      "afterBytes": 7890,
+      "amendments": [
+        {
+          "path": "packages/simulation/src/__tests__/law-week.test.ts",
+          "candidateLine": 148,
+          "before": " expectedSettlements[s.city.world.activeSettlementId!].inventory.gold-=15000;\n",
+          "after": " expectedSettlements[s.city.world.activeSettlementId!].inventory.gold += (120000 - 45000) - 15000;\n",
+          "reason": "Carry the approved opening grant difference into the old settlement pin and retain the 15000 estate-upkeep debit."
+        }
+      ]
+    },
+    {
+      "path": "packages/simulation/src/__tests__/npc-life-week.test.ts",
+      "candidateSha256": "e0267bf018d509aceabf9efc1bb304bac241f9ee5cf25f8e13e5b8d1b874d99c",
+      "finalSha256": "2a3fce7bb2f851d92ac14762dfeab7f8f15d28740d7175ba7e09f44d5849cc64",
+      "beforeBytes": 16574,
+      "afterBytes": 16555,
+      "amendments": [
+        {
+          "path": "packages/simulation/src/__tests__/npc-life-week.test.ts",
+          "candidateLine": 2,
+          "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+          "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+          "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+        }
+      ]
+    },
+    {
+      "path": "packages/simulation/src/__tests__/society-stock-integrity.test.ts",
+      "candidateSha256": "d009fd3b62c311c11f22c9b170a9bc340fdbca06ce2820b2ab174232702b6b2e",
+      "finalSha256": "c33509c71e8ca864d9d6fda84b03ccad3ef96634b0a15825b8c8745cb5b32edd",
+      "beforeBytes": 13170,
+      "afterBytes": 13151,
+      "amendments": [
+        {
+          "path": "packages/simulation/src/__tests__/society-stock-integrity.test.ts",
+          "candidateLine": 2,
+          "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+          "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+          "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+        }
+      ]
+    },
+    {
+      "path": "packages/simulation/src/__tests__/world-npc.test.ts",
+      "candidateSha256": "3e0042fd0bdb0c2b774191f8cb3c4b4fbbad920f8f31af0db6360f73eba1d08d",
+      "finalSha256": "e3b32f152a9ed07e267b8dc633924c5306357119d1bc562b28c7311043bbd89e",
+      "beforeBytes": 11918,
+      "afterBytes": 11899,
+      "amendments": [
+        {
+          "path": "packages/simulation/src/__tests__/world-npc.test.ts",
+          "candidateLine": 2,
+          "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+          "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+          "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+        }
+      ]
+    },
+    {
+      "path": "packages/ui/src/__tests__/character-life-session.test.ts",
+      "candidateSha256": "42f19a4e5e22a324cd7b587dc2f721fe212531834a782d70fb1d56844409a6d1",
+      "finalSha256": "274017530d1a1804fa4e7b7b8c9ce6caaf7d5600aeb1a48f4e2a8a20192d72e2",
+      "beforeBytes": 70862,
+      "afterBytes": 70866,
+      "amendments": [
+        {
+          "path": "packages/ui/src/__tests__/character-life-session.test.ts",
+          "candidateLine": 302,
+          "before": " const a=session(11),b=session(22),encoded=serializeCharacterLifeSave(a);if(!encoded.success)throw Error(encoded.error.message);\n",
+          "after": " const a=populated(11),b=populated(22),encoded=serializeCharacterLifeSave(a);if(!encoded.success)throw Error(encoded.error.message);\n",
+          "reason": "Use the existing three-NPC fixture helper to retain the seven-record saved-B assertion in both pending migration cases."
+        }
+      ]
+    },
+    {
+      "path": "packages/ui/src/__tests__/data-inspector.test.ts",
+      "candidateSha256": "d39c7c7e3c569226f91101209ff0614ab77170d516c613cb41319cb785520846",
+      "finalSha256": "32c03b857de9e2c0f23bab2cbe52419495ebafe42771b407a48355774869d93d",
+      "beforeBytes": 8990,
+      "afterBytes": 8991,
+      "amendments": [
+        {
+          "path": "packages/ui/src/__tests__/data-inspector.test.ts",
+          "candidateLine": 31,
+          "before": "  expect(findById(rows, '  nPc_StArTeR  ')).toEqual(rows.slice(1));\n",
+          "after": "  expect(findById(rows, '  nPc_W1_GuIlD  ')).toEqual(rows.slice(1));\n",
+          "reason": "Keep the case-insensitive, trimmed substring search over the approved generator-shaped record ids."
+        }
+      ]
+    }
+  ],
+  "previousProductUiByteChanges": [
+    "packages/ui/src/__tests__/character-life-session.test.ts",
+    "packages/ui/src/__tests__/data-inspector.test.ts"
+  ],
+  "pinnedInputs": {
+    "binding-plan-607c087.md": "bc8fae1125e1a439064bc9f55e8ad1f7dc062520ab0c1235f4a2100415020e06",
+    "B2-2-HOLD.md": "c6af8d3af9683cbdba4a5fd514be531d81f5848848df34c50fadcab716aec215",
+    "b2-2-amendment-proposal.json": "d9b77a0da0ac0905317c00b855269abf463e1717849d5a4691c7a9a350f851e1",
+    "b2-2-candidate.patch": "0617e0f9b68b1c9f0eaa40f57c6b250fab907df50c8f297e56178fcf3fcf5c08"
+  },
+  "head": "f31310cb791f549a7672be47219c7578678b7058",
+  "correction10": {
+    "path": "tests/e2e/storage.spec.ts",
+    "edits": [
+      {
+        "before": "import { makeLife,importLife,exportLife,go }",
+        "after": "import { makeLife,makeLifeWithNpcs,importLife,exportLife,go }"
+      },
+      {
+        "before": " const legacy=bytes(),b=makeLife(54321);await page.addInitScript",
+        "after": " const legacy=bytes(),b=makeLifeWithNpcs(54321);await page.addInitScript"
+      }
+    ],
+    "baseHead": "f31310cb791f549a7672be47219c7578678b7058",
+    "baseTree": "43ab9e682912eeadc3d4a4d2ef8ca1a7e3aba54d",
+    "beforeSha256": "eda8470b6cc76a33259eb33212c3ae2f325f49b7a8717265b658a69079bdf14a",
+    "afterSha256": "6dbc514f3748d44344af20ca5bc3dcee37f873292b45f027271e4332bdd2fc1d",
+    "planSha256": "ae6b5ceea46f630c4694f48f84193884a6a7c572809a997aa78609f92b8010d9",
+    "holdSha256": "9b72a274a3af7d60d7129af4c8e79969c9a6e4a0b35a03588bf1efe923fb460c",
+    "assertionsByteIdentical": true
+  }
+}

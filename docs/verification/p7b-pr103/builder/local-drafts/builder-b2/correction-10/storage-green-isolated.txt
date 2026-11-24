@@ -1,0 +1,22 @@
+UTC start 2026-11-24T04:29:47.676309+00:00
+HEAD f31310cb791f549a7672be47219c7578678b7058
+Tree 43ab9e682912eeadc3d4a4d2ef8ca1a7e3aba54d
+Command: node node_modules/playwright/cli.js test tests/e2e/storage.spec.ts:105 --project=chromium "--grep=fix2 F1: recovered legacy A cannot replace B saved while migration was blocked$" --reporter=list,json --output=C:/Users/Admin/.t3/local-drafts/p7b-prB2/builder-b2/correction-10/storage-green-isolated-artifacts
+CI=1
+
+[WebServer] (node:13536) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:4780) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 409 tests using 1 worker
+
+(node:1488) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok   1 [chromium] › tests\e2e\autosave.spec.ts:28:1 › On by default: Plan next week writes one checkpoint equal to the real export (1.5s)
+  ok   2 [chromium] › tests\e2e\autosave.spec.ts:38:1 › Off: End Week and Plan next week leave the slot and checkpoint IO unchanged (1.2s)
+  ok   3 [chromium] › tests\e2e\autosave.spec.ts:45:1 › Write failure: the exact autosave status appears and previous bytes survive (1.5s)
+  ok   4 [chromium] › tests\e2e\autosave.spec.ts:53:1 › Never: creating a New Game and importing a checkpoint do not autosave (1.0s)
+
+UTC end 2026-11-24T04:30:46.095221+00:00
+Exit 1

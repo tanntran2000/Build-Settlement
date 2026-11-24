@@ -1,0 +1,26 @@
+{
+  "checkouts": {
+    "main": {
+      "head": "f73595b449db84b988d44a44cd33620efca9ecad",
+      "tree": "fd04e1f2d7f6f47270a2e7ac82d18b68729a6372",
+      "checkout": "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\b2-c10-benchmark-main",
+      "inputSha256": "c91de147d3f427784e3a83598000bfa5adde0854e6858d48e2463f7c34e00a14"
+    },
+    "b2": {
+      "head": "f31310cb791f549a7672be47219c7578678b7058",
+      "tree": "43ab9e682912eeadc3d4a4d2ef8ca1a7e3aba54d",
+      "checkout": "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01",
+      "inputSha256": "6512ceb7562231ed216a0a258e90d825e9bc39c778a860fc6618a9a2359887f2"
+    }
+  },
+  "commonStateSha256": "a897cd60932252a638d4dc26adead84b18144565ac821817bc444f88e13aff75",
+  "sharedNpcCount": 100,
+  "inputDifferences": [
+    "cityRulesetId",
+    "state.city.society.rulesetId",
+    "state.npcs[*].household"
+  ],
+  "sharedGoldMilli": 120000,
+  "sharedWeek": 8,
+  "sharedWorldSeed": 2026
+}

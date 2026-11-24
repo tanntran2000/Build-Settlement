@@ -1,0 +1,190 @@
+{
+  "phase": "red",
+  "head": "63cbdca96fc7a326d2d1204c0b0871dc34a6d14e",
+  "command": [
+    "node",
+    "node_modules/vitest/vitest.mjs",
+    "run",
+    "--reporter=json",
+    "packages/core/src/character/__tests__/session.test.ts",
+    "packages/core/src/world/__tests__/npc-generator.test.ts",
+    "packages/core/src/world/__tests__/npc.test.ts",
+    "packages/simulation/src/__tests__/npc-homes.test.ts"
+  ],
+  "utcStart": "2026-11-24T06:19:45.187667+00:00",
+  "utcEnd": "2026-11-24T06:19:48.313931+00:00",
+  "exit": 1,
+  "total": 123,
+  "failures": [
+    {
+      "file": "npc-homes.test.ts",
+      "name": "rejects a v12 checkpoint with fractional NPC affection",
+      "status": "failed"
+    },
+    {
+      "file": "npc-generator.test.ts",
+      "name": "refuses invalid unsigned seed NaN",
+      "status": "failed"
+    },
+    {
+      "file": "npc-generator.test.ts",
+      "name": "refuses invalid unsigned seed 4294967296",
+      "status": "failed"
+    },
+    {
+      "file": "npc-generator.test.ts",
+      "name": "refuses invalid unsigned seed -1",
+      "status": "failed"
+    },
+    {
+      "file": "npc-generator.test.ts",
+      "name": "refuses invalid unsigned seed 0.5",
+      "status": "failed"
+    },
+    {
+      "file": "npc-generator.test.ts",
+      "name": "refuses invalid unsigned seed Infinity",
+      "status": "failed"
+    },
+    {
+      "file": "npc-generator.test.ts",
+      "name": "caps the generator trait range at the four available traits",
+      "status": "failed"
+    },
+    {
+      "file": "npc-generator.test.ts",
+      "name": "names the parent field for invalid generator row [\"sources\",\"guild\"] with value undefined",
+      "status": "failed"
+    },
+    {
+      "file": "npc-generator.test.ts",
+      "name": "names the parent field for invalid generator row [\"sources\",\"guild\"] with value []",
+      "status": "failed"
+    },
+    {
+      "file": "npc-generator.test.ts",
+      "name": "names the parent field for invalid generator row [\"price\"] with value undefined",
+      "status": "failed"
+    },
+    {
+      "file": "npc-generator.test.ts",
+      "name": "names the parent field for invalid generator row [\"price\"] with value false",
+      "status": "failed"
+    },
+    {
+      "file": "npc-generator.test.ts",
+      "name": "names the parent field for invalid generator row [\"originCulture\"] with value undefined",
+      "status": "failed"
+    },
+    {
+      "file": "npc-generator.test.ts",
+      "name": "names the parent field for invalid generator row [\"originProfile\"] with value null",
+      "status": "failed"
+    },
+    {
+      "file": "npc-generator.test.ts",
+      "name": "names the parent field for invalid generator row [\"appearance\"] with value []",
+      "status": "failed"
+    },
+    {
+      "file": "npc-generator.test.ts",
+      "name": "names the parent field for invalid generator row [\"P7B_TRIAL\"] with value undefined",
+      "status": "failed"
+    },
+    {
+      "file": "npc-generator.test.ts",
+      "name": "names the parent field for invalid generator row [\"cultures\",\"northreach\"] with value false",
+      "status": "failed"
+    }
+  ],
+  "findings": {
+    "P2-1": [
+      {
+        "file": "npc-homes.test.ts",
+        "name": "rejects a v12 checkpoint with fractional NPC affection",
+        "status": "failed"
+      }
+    ],
+    "P2-2": [
+      {
+        "file": "npc-generator.test.ts",
+        "name": "caps the generator trait range at the four available traits",
+        "status": "failed"
+      }
+    ],
+    "P2-3": [
+      {
+        "file": "npc-generator.test.ts",
+        "name": "names the parent field for invalid generator row [\"sources\",\"guild\"] with value undefined",
+        "status": "failed"
+      },
+      {
+        "file": "npc-generator.test.ts",
+        "name": "names the parent field for invalid generator row [\"sources\",\"guild\"] with value []",
+        "status": "failed"
+      },
+      {
+        "file": "npc-generator.test.ts",
+        "name": "names the parent field for invalid generator row [\"price\"] with value undefined",
+        "status": "failed"
+      },
+      {
+        "file": "npc-generator.test.ts",
+        "name": "names the parent field for invalid generator row [\"price\"] with value false",
+        "status": "failed"
+      },
+      {
+        "file": "npc-generator.test.ts",
+        "name": "names the parent field for invalid generator row [\"originCulture\"] with value undefined",
+        "status": "failed"
+      },
+      {
+        "file": "npc-generator.test.ts",
+        "name": "names the parent field for invalid generator row [\"originProfile\"] with value null",
+        "status": "failed"
+      },
+      {
+        "file": "npc-generator.test.ts",
+        "name": "names the parent field for invalid generator row [\"appearance\"] with value []",
+        "status": "failed"
+      },
+      {
+        "file": "npc-generator.test.ts",
+        "name": "names the parent field for invalid generator row [\"P7B_TRIAL\"] with value undefined",
+        "status": "failed"
+      },
+      {
+        "file": "npc-generator.test.ts",
+        "name": "names the parent field for invalid generator row [\"cultures\",\"northreach\"] with value false",
+        "status": "failed"
+      }
+    ],
+    "P3-2": [
+      {
+        "file": "npc-generator.test.ts",
+        "name": "refuses invalid unsigned seed NaN",
+        "status": "failed"
+      },
+      {
+        "file": "npc-generator.test.ts",
+        "name": "refuses invalid unsigned seed 4294967296",
+        "status": "failed"
+      },
+      {
+        "file": "npc-generator.test.ts",
+        "name": "refuses invalid unsigned seed -1",
+        "status": "failed"
+      },
+      {
+        "file": "npc-generator.test.ts",
+        "name": "refuses invalid unsigned seed 0.5",
+        "status": "failed"
+      },
+      {
+        "file": "npc-generator.test.ts",
+        "name": "refuses invalid unsigned seed Infinity",
+        "status": "failed"
+      }
+    ]
+  }
+}

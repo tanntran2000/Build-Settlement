@@ -1,0 +1,42 @@
+{
+  "status": "Proposal for owner approval. None applied to the product branch.",
+  "finalByteChanges": [
+    {
+      "path": "packages/core/src/world/npc-generator.ts",
+      "proposedLine": 76,
+      "before": "  const row = catalog.sources[slot === 'lot' && source !== 'guild' ? `${source}-lot` : source];\n",
+      "after": "  const sourceId: keyof typeof catalog.sources = slot === 'lot' && source !== 'guild' ? `${source}-lot` : source;\n  const row = catalog.sources[sourceId];\n",
+      "why": "Preserve the same runtime key and recover the contextual finite union."
+    },
+    {
+      "path": "packages/simulation/src/__tests__/character-life-command.test.ts",
+      "before": "import {\nimport { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+      "after": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\nimport {\n",
+      "why": "Place the new statement outside the existing multiline import. Existing test assertions are untouched."
+    },
+    {
+      "path": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+      "before": "import {\nimport { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+      "after": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\nimport {\n",
+      "why": "Place the new statement outside the existing multiline import. Existing test assertions are untouched."
+    }
+  ],
+  "stagingProposal": [
+    {
+      "stage": "B2.1",
+      "rule": "In the generator validator use startGoldMilli: positive and omit its new tuning import. Keep the exact 120000 catalog pin. The B1 New Game Gold remains 45000 in this commit."
+    },
+    {
+      "stage": "B2.1",
+      "rule": "Keep B1 WorldNpc unchanged. In generator, pricing and household helpers accept/return an explicitly intersected generated NPC type for the fields that access household."
+    },
+    {
+      "stage": "B2.2 RED",
+      "rule": "Run the strict wrong-value 45000 case with its original expected message and the New Game Gold assertion before changing the tuning. The RED test must still include every current case."
+    },
+    {
+      "stage": "B2.2 GREEN",
+      "rule": "Apply the approved shared WorldNpc field with starter removal and return the validator, generator and household type signatures to their final approved bytes, except for the typed sourceId correction above."
+    }
+  ]
+}

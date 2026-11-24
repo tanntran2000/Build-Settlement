@@ -1,0 +1,56 @@
+{
+  "main": {
+    "side": "main",
+    "utcStart": "2026-11-24T04:32:40.745436+00:00",
+    "utcEnd": "2026-11-24T04:32:41.997234+00:00",
+    "command": [
+      "node",
+      "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB2\\builder-b2\\correction-10\\end-week-child.mjs",
+      "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\b2-c10-benchmark-main",
+      "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01",
+      "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB2\\builder-b2\\correction-10\\main-100npc-input.json",
+      "probe"
+    ],
+    "node": "v24.19.0",
+    "pid": 9740,
+    "inputSha256": "c91de147d3f427784e3a83598000bfa5adde0854e6858d48e2463f7c34e00a14",
+    "stateSha256": "d9a81f19beb1d97bff016b26aa7ac00f0e6fc47e6ec383b97801f61bd1560ce5",
+    "outputSha256": "a9d4525fc2312275460abccc27eb009e848242fbdbb8bc3424d90be5062579bb",
+    "ticksMs": [
+      63.6214
+    ],
+    "save": {
+      "bytes": 273788,
+      "sha256": "c91de147d3f427784e3a83598000bfa5adde0854e6858d48e2463f7c34e00a14",
+      "byteIdentical": true,
+      "inputByteIdentical": true
+    }
+  },
+  "b2": {
+    "side": "b2",
+    "utcStart": "2026-11-24T04:32:41.997250+00:00",
+    "utcEnd": "2026-11-24T04:32:43.269927+00:00",
+    "command": [
+      "node",
+      "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB2\\builder-b2\\correction-10\\end-week-child.mjs",
+      "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01",
+      "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01",
+      "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB2\\builder-b2\\correction-10\\b2-100npc-input.json",
+      "probe"
+    ],
+    "node": "v24.19.0",
+    "pid": 25452,
+    "inputSha256": "6512ceb7562231ed216a0a258e90d825e9bc39c778a860fc6618a9a2359887f2",
+    "stateSha256": "143707fce3eae9d5ff2932e9c7e610a9dcaf0bb707bca76aeac77e7d5881fc0d",
+    "outputSha256": "0f2bd111cecd777071ebeb1c076413f7bb6fa5b5b75f4aec5c11471eb3f03d2f",
+    "ticksMs": [
+      65.6689
+    ],
+    "save": {
+      "bytes": 300168,
+      "sha256": "6512ceb7562231ed216a0a258e90d825e9bc39c778a860fc6618a9a2359887f2",
+      "byteIdentical": true,
+      "inputByteIdentical": true
+    }
+  }
+}

@@ -1,0 +1,11 @@
+UTC start 2026-11-24T02:07:31.475387+00:00
+HEAD 58b4f2d59b1dddff5841db67970b561f3679bfbd
+Tree 95e2bac1a748b98b7be52ef09f3795c5516baa18
+Command: node C:/Users/Admin/.t3/local-drafts/p7b-prB2/builder-b2/test-helper-overlay-check.mjs
+CI=
+
+{"project":"simulation","revisedTestImports":["packages/simulation/src/__tests__/character-life-command.test.ts","packages/simulation/src/__tests__/character-life-observation.test.ts","packages/simulation/src/__tests__/craft-command.test.ts","packages/simulation/src/__tests__/craft-week.test.ts","packages/simulation/src/__tests__/exhausted-materials.test.ts","packages/simulation/src/__tests__/item-command.test.ts","packages/simulation/src/__tests__/item-effects.test.ts","packages/simulation/src/__tests__/npc-life-week.test.ts","packages/simulation/src/__tests__/society-stock-integrity.test.ts","packages/simulation/src/__tests__/world-npc.test.ts"],"diagnostics":0}
+{"project":"persistence","revisedTestImports":["packages/persistence/src/__tests__/character-life-save.test.ts","packages/persistence/src/__tests__/item-owner-import.test.ts","packages/persistence/src/__tests__/item-records.test.ts","packages/persistence/src/__tests__/items-canonical.test.ts","packages/persistence/src/__tests__/items-rebuild-order.test.ts","packages/persistence/src/__tests__/npc-life-records.test.ts","packages/persistence/src/__tests__/session-records.test.ts"],"diagnostics":0}
+
+UTC end 2026-11-24T02:08:07.825996+00:00
+Exit 0

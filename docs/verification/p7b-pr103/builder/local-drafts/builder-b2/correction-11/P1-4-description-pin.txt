@@ -1,0 +1,19 @@
+UTC start 2026-11-24T06:18:14.957420+00:00
+HEAD 63cbdca96fc7a326d2d1204c0b0871dc34a6d14e
+Tree 312797f184f6414064e5ecf81eb1fba7a7bc55d0
+Command: node C:/Users/Admin/.t3/local-drafts/p7b-prB2/builder-b2/correction-11/probe-description.mjs C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01 C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+CI=
+
+{
+  "seed": 3,
+  "key": {
+    "week": 1,
+    "source": "guild",
+    "slot": 0
+  },
+  "id": "npc_w1_guild_0",
+  "text": "Idrel Emberloom · 47 · Technician from Ashfield · average height, slim · deep brown skin · shoulder-length wavy black hair · green eyes · steady learner"
+}
+
+UTC end 2026-11-24T06:18:15.860343+00:00
+Exit 0

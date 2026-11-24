@@ -1,0 +1,115 @@
+[
+  {
+    "path": "packages/simulation/src/__tests__/npc-homes.test.ts",
+    "findings": [
+      "P1-1"
+    ],
+    "before": "    expect(deserializeCharacterLifeSave('{')).toMatchObject({ success: false });\n",
+    "after": "    expect(deserializeCharacterLifeSave('{')).toStrictEqual({\n      success: false,\n      error: { code: 'INVALID_SAVE', message: 'Could not read a valid checkpoint JSON. Your game was preserved.' },\n    });\n"
+  },
+  {
+    "path": "packages/simulation/src/__tests__/npc-homes.test.ts",
+    "findings": [
+      "P1-2"
+    ],
+    "before": "    expect(() => validateNpcGenerator(data)).toThrow('npc-generator.json#P7B_TRIAL.startGoldMilli: expected 120000');\n",
+    "after": "    let error: unknown;\n    try { validateNpcGenerator(data); } catch (caught) { error = caught; }\n    expect(error).toBeInstanceOf(Error);\n    expect((error as Error).name).toBe('CatalogError');\n    expect((error as Error).message).toBe('npc-generator.json#P7B_TRIAL.startGoldMilli: expected 120000');\n"
+  },
+  {
+    "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+    "findings": [
+      "P1-2"
+    ],
+    "before": "import type { NpcGeneratorCatalog } from '../../data/validate.js';\n",
+    "after": "import { CatalogError, type NpcGeneratorCatalog } from '../../data/validate.js';\n"
+  },
+  {
+    "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+    "findings": [
+      "P1-2"
+    ],
+    "before": "const sha = (value: unknown) => createHash('sha256').update(JSON.stringify(value), 'utf8').digest('hex');\n",
+    "after": "const sha = (value: unknown) => createHash('sha256').update(JSON.stringify(value), 'utf8').digest('hex');\n\nfunction expectExactError(run: () => unknown, type: typeof CatalogError | typeof RangeError, message: string) {\n  let error: unknown;\n  try { run(); } catch (caught) { error = caught; }\n  expect(error).toBeInstanceOf(type);\n  expect((error as Error).message).toBe(message);\n}\n"
+  },
+  {
+    "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+    "findings": [
+      "P1-2"
+    ],
+    "before": "    expect(() => generate(112, 1, 'guild', 0, 8)).toThrow('No more epithets are available for this NPC key.');\n",
+    "after": "    expectExactError(() => generate(112, 1, 'guild', 0, 8), RangeError, 'No more epithets are available for this NPC key.');\n"
+  },
+  {
+    "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+    "findings": [
+      "P1-2"
+    ],
+    "before": "    ] as const) expect(() => generate(0, week, source, slot, salt)).toThrow('Invalid NPC generator key.');\n",
+    "after": "    ] as const) expectExactError(() => generate(0, week, source, slot, salt), RangeError, 'Invalid NPC generator key.');\n"
+  },
+  {
+    "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+    "findings": [
+      "P1-2"
+    ],
+    "before": "    expect(() => api.validateNpcGenerator(change(api.NPC_GENERATOR_CATALOG, [...keys], value)))\n      .toThrow(`npc-generator.json#${message}`);\n",
+    "after": "    expectExactError(() => api.validateNpcGenerator(change(api.NPC_GENERATOR_CATALOG, [...keys], value)),\n      CatalogError, `npc-generator.json#${message}`);\n"
+  },
+  {
+    "path": "packages/core/src/world/__tests__/npc.test.ts",
+    "findings": [
+      "P1-3"
+    ],
+    "before": "import { NPC_MANAGER_BUILDING_TYPES,WORLD_TRAITS } from '../npc-content.js';\n",
+    "after": "import { NPC_MANAGER_BUILDING_TYPES,WORLD_TRAITS } from '../npc-content.js';\nimport { NPC_GENERATOR_CATALOG } from '../npc-generator.js';\n"
+  },
+  {
+    "path": "packages/core/src/world/__tests__/npc.test.ts",
+    "findings": [
+      "P1-3"
+    ],
+    "before": "    for (let seed = 0; seed < 200; seed++) {\n      const n = names(seed);\n      expect(new Set(n).size).toBe(3); n.forEach(name => expect(name).toMatch(/^[A-Z][a-z]+ [A-Z][a-z]+$/));\n    }\n",
+    "after": "    const { cultures, originCulture } = NPC_GENERATOR_CATALOG;\n    for (let seed = 0; seed < 200; seed++) {\n      const { npcs } = session(seed);\n      expect(new Set(npcs.map(npc => npc.character.name)).size).toBe(3);\n      for (const npc of npcs) {\n        expect(npc.character.name).toMatch(/^[A-Z][a-z]+ [A-Z][a-z]+$/);\n        const [given, epithet] = npc.character.name.split(' ');\n        const culture = cultures[originCulture[npc.life.origin]];\n        expect(culture.given).toContain(given);\n        expect(culture.epithets).toContain(epithet);\n      }\n    }\n"
+  },
+  {
+    "path": "packages/core/src/character/__tests__/session.test.ts",
+    "findings": [
+      "P1-4"
+    ],
+    "before": "import { createNpcWorldSession } from '../../world/npc.js';\n",
+    "after": "import { createNpcWorldSession } from '../../world/npc.js';\nimport { describeShort } from '../describe.js';\n"
+  },
+  {
+    "path": "packages/core/src/character/__tests__/session.test.ts",
+    "findings": [
+      "P1-4"
+    ],
+    "before": "    expect(s.npcs.map(n => n.postTileId)).toEqual([null, null, null]);\n    expect(s.profiles.map(p => p.id)).toEqual(s.npcs.map(n => n.character.id));\n",
+    "after": "    expect(s.npcs.map(n => n.postTileId)).toEqual([null, null, null]);\n    expect(s.profiles.map(p => p.id)).toEqual(s.npcs.map(n => n.character.id));\n    expect(s.npcs[0].character.id).toBe('npc_w1_guild_0');\n    expect(describeShort({ character: s.npcs[0].character, profile: s.profiles[0], role: 'npc', postBuildingName: null }))\n      .toBe('Idrel Emberloom · 47 · Technician from Ashfield · average height, slim · deep brown skin · shoulder-length wavy black hair · green eyes · steady learner');\n"
+  },
+  {
+    "path": "packages/simulation/src/__tests__/npc-homes.test.ts",
+    "findings": [
+      "P2-1"
+    ],
+    "before": "  it('keeps Hall posts through a move and reload, and clears the post on entering the Mansion', () => {\n",
+    "after": "  it('rejects a v12 checkpoint with fractional NPC affection', () => {\n    const { text } = roundTrip(populate(['estate-2']));\n    const checkpoint = JSON.parse(text) as { state: CharacterLifeSessionState };\n    checkpoint.state.npcs[0].character.relationshipToPlayer.affection = 20.5;\n    expect(deserializeCharacterLifeSave(JSON.stringify(checkpoint))).toStrictEqual({\n      success: false,\n      error: { code: 'INVALID_SAVE_STATE', message: 'Checkpoint must contain a valid complete Character Life session in Planning.' },\n    });\n    expect([isCharacterLifeSessionState(checkpoint.state), isLiveCharacterLifeSessionState(checkpoint.state)]).toStrictEqual([false, false]);\n  });\n\n  it('keeps Hall posts through a move and reload, and clears the post on entering the Mansion', () => {\n"
+  },
+  {
+    "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+    "findings": [
+      "P2-2",
+      "P2-3"
+    ],
+    "before": "  const rejected = [\n",
+    "after": "  it('caps the generator trait range at the four available traits', () => {\n    const data = api.NPC_GENERATOR_CATALOG;\n    const atLimit = change(data, ['P7B_TRIAL', 'traitCount'], [4, 4]);\n    expect(api.validateNpcGenerator(atLimit).P7B_TRIAL.traitCount).toStrictEqual([4, 4]);\n    expectExactError(() => api.validateNpcGenerator(change(data, ['P7B_TRIAL', 'traitCount'], [5, 5])),\n      CatalogError, 'npc-generator.json#P7B_TRIAL.traitCount: expected at most 4 available traits');\n  });\n\n  const invalidRows = [\n    [['sources', 'guild'], undefined, 'sources.guild'],\n    [['sources', 'guild'], [], 'sources.guild'],\n    [['price'], undefined, 'catalog.price'],\n    [['price'], false, 'catalog.price'],\n    [['originCulture'], undefined, 'catalog.originCulture'],\n    [['originProfile'], null, 'catalog.originProfile'],\n    [['appearance'], [], 'catalog.appearance'],\n    [['P7B_TRIAL'], undefined, 'catalog.P7B_TRIAL'],\n    [['cultures', 'northreach'], false, 'cultures.northreach'],\n  ] as const;\n  it.each(invalidRows)('names the parent field for invalid generator row %j with value %j', (keys, value, field) => {\n    expectExactError(() => api.validateNpcGenerator(change(api.NPC_GENERATOR_CATALOG, [...keys], value)),\n      CatalogError, `npc-generator.json#${field}: expected object`);\n  });\n\n  const rejected = [\n"
+  },
+  {
+    "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+    "findings": [
+      "P3-2"
+    ],
+    "before": "  it('generates fourteen distinct names across one week of basic and lot keys', () => {\n",
+    "after": "  it.each([0, 4294967295])('generates deterministically at unsigned seed endpoint %i', seed => {\n    const generate = generator();\n    const first = generate(seed, 1, 'guild', 0);\n    expect(first.npc.character.id).toBe('npc_w1_guild_0');\n    expect(generate(seed, 1, 'guild', 0)).toStrictEqual(first);\n  });\n\n  it.each([NaN, 4294967296, -1, 0.5, Infinity])('refuses invalid unsigned seed %s', seed => {\n    expectExactError(() => generator()(seed, 1, 'guild', 0), RangeError, 'Invalid NPC generator key.');\n  });\n\n  it('generates fourteen distinct names across one week of basic and lot keys', () => {\n"
+  }
+]

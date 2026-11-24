@@ -1,0 +1,61 @@
+UTC 2026-11-24T03:40:32.8010445Z
+HEAD f31310cb791f549a7672be47219c7578678b7058
+Tree 43ab9e682912eeadc3d4a4d2ef8ca1a7e3aba54d
+origin/main f73595b449db84b988d44a44cd33620efca9ecad
+Node v24.19.0
+Ports 4173 and 4174 free
+CPU and current load
+
+Name                                     NumberOfCores NumberOfLogicalProcessors LoadPercentage
+----                                     ------------- ------------------------- --------------
+Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz             4                         8              7
+
+
+
+Top processes by cumulative CPU
+
+Name                   Id        CPU
+----                   --        ---
+T3 Code (Nightly)   11624 328.453125
+claude              10512 312.765625
+ChatGPT              1348  278.28125
+msedgewebview2      23688    213.125
+ChatGPT             28224 206.609375
+claude               6972   204.4375
+T3 Code (Nightly)   26908  193.96875
+cloudflared         24628 178.140625
+codebase-memory-mcp  5980 148.421875
+claude              15308  147.59375
+codebase-memory-mcp 20436 138.109375
+ChatGPT             19100 112.953125
+
+
+
+OS last boot
+
+LastBootUpTime        
+--------------        
+11/18/2026 12:48:40 PM
+
+
+
+Recent sleep/resume records
+
+TimeCreated           Id ProviderName                          
+-----------           -- ------------                          
+11/24/2026 7:47:42 AM  1 Microsoft-Windows-Power-Troubleshooter
+11/19/2026 5:32:25 PM  1 Microsoft-Windows-Power-Troubleshooter
+11/19/2026 7:37:46 AM  1 Microsoft-Windows-Power-Troubleshooter
+
+
+
+
+TimeCreated             Id ProviderName                  
+-----------             -- ------------                  
+11/19/2026 11:12:36 PM 107 Microsoft-Windows-Kernel-Power
+11/19/2026 11:12:33 PM  42 Microsoft-Windows-Kernel-Power
+11/19/2026 4:06:09 PM  107 Microsoft-Windows-Kernel-Power
+11/19/2026 4:06:07 PM   42 Microsoft-Windows-Kernel-Power
+
+
+

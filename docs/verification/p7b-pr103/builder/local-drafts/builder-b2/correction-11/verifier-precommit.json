@@ -1,0 +1,277 @@
+{
+  "verifiedHead": "63cbdca96fc7a326d2d1204c0b0871dc34a6d14e",
+  "verifiedTree": "961567de7ef638861a55a42589be203037e123c9",
+  "verificationMode": "index",
+  "relativeToHead": "63cbdca96fc7a326d2d1204c0b0871dc34a6d14e",
+  "relativeToTree": "312797f184f6414064e5ecf81eb1fba7a7bc55d0",
+  "originMain": "f73595b449db84b988d44a44cd33620efca9ecad",
+  "priorVerifierSha256": "006570e39f12dc1b32b7766320e5a118c110ad7aa59424d8c2f4d566da9f3503",
+  "pinnedInputs": {
+    "binding-plan-befe6e8.md": "e0613ce89b9881b933ad93698b46af7f542f76862e51bfb924bb6d36be2f05cf",
+    "astra-round1.md": "ab265db6c1a40fd28f3602f7ebffa0ef7d2827d888fe4e6b03b33565779e91bd"
+  },
+  "baseTrackedBlobs": 536,
+  "changedFiles": [
+    {
+      "path": "packages/core/src/character/__tests__/session.test.ts",
+      "beforeSha256": "360d9822b4114279cddf7f6efdedd58e1c6ff958f5e63a6fdc24663727dcebfd",
+      "afterSha256": "c7a647c595c728b0161353d1092beebaa72ce3e48e368704199f411bca3aaaaf",
+      "edits": [
+        {
+          "path": "packages/core/src/character/__tests__/session.test.ts",
+          "findings": [
+            "P1-4"
+          ],
+          "before": "import { createNpcWorldSession } from '../../world/npc.js';\n",
+          "after": "import { createNpcWorldSession } from '../../world/npc.js';\nimport { describeShort } from '../describe.js';\n"
+        },
+        {
+          "path": "packages/core/src/character/__tests__/session.test.ts",
+          "findings": [
+            "P1-4"
+          ],
+          "before": "    expect(s.npcs.map(n => n.postTileId)).toEqual([null, null, null]);\n    expect(s.profiles.map(p => p.id)).toEqual(s.npcs.map(n => n.character.id));\n",
+          "after": "    expect(s.npcs.map(n => n.postTileId)).toEqual([null, null, null]);\n    expect(s.profiles.map(p => p.id)).toEqual(s.npcs.map(n => n.character.id));\n    expect(s.npcs[0].character.id).toBe('npc_w1_guild_0');\n    expect(describeShort({ character: s.npcs[0].character, profile: s.profiles[0], role: 'npc', postBuildingName: null }))\n      .toBe('Idrel Emberloom · 47 · Technician from Ashfield · average height, slim · deep brown skin · shoulder-length wavy black hair · green eyes · steady learner');\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/core/src/data/validate.ts",
+      "beforeSha256": "c266e789aa749257d73f7c8a3194ba5ab2bb7ede3b4d11fcd1299154fea6dc70",
+      "afterSha256": "d4380d630d37feed8943359a762e801d4d0cd88f18ffee9318ca61d57f3bfa39",
+      "edits": [
+        {
+          "path": "packages/core/src/data/validate.ts",
+          "findings": [
+            "P2-2"
+          ],
+          "before": "import { readDenseArray } from '../world/arrays.js';\n",
+          "after": "import { readDenseArray } from '../world/arrays.js';\nimport { WORLD_TRAITS } from '../world/npc-content.js';\n"
+        },
+        {
+          "path": "packages/core/src/data/validate.ts",
+          "findings": [
+            "P2-2"
+          ],
+          "before": "    const trial = root.P7B_TRIAL as NpcGeneratorCatalog['P7B_TRIAL'];\n",
+          "after": "    const trial = root.P7B_TRIAL as NpcGeneratorCatalog['P7B_TRIAL'];\n    if (trial.traitCount[1] > WORLD_TRAITS.length)\n        fail(trialRef, 'traitCount', `expected at most ${WORLD_TRAITS.length} available traits`);\n"
+        },
+        {
+          "path": "packages/core/src/data/validate.ts",
+          "findings": [
+            "P2-3"
+          ],
+          "before": "    object({ cultures: () => {}, originCulture: () => {}, originProfile: () => {}, sources: () => {},\n        appearance: () => {}, preferences: denseChoices(npcDataKey), flaws: denseChoices(npcDataKey), price: () => {}, P7B_TRIAL: () => {},\n",
+          "after": "    object({ cultures: () => {}, originCulture: record, originProfile: record, sources: () => {},\n        appearance: record, preferences: denseChoices(npcDataKey), flaws: denseChoices(npcDataKey), price: record, P7B_TRIAL: record,\n"
+        },
+        {
+          "path": "packages/core/src/data/validate.ts",
+          "findings": [
+            "P2-3"
+          ],
+          "before": "    for (const id of cultureIds) npcDataKey(id, `${npcGeneratorFile}#${id}`, 'id');\n",
+          "after": "    for (const id of cultureIds) {\n        npcDataKey(id, `${npcGeneratorFile}#${id}`, 'id');\n        record(cultures[id], `${npcGeneratorFile}#cultures`, id);\n    }\n"
+        },
+        {
+          "path": "packages/core/src/data/validate.ts",
+          "findings": [
+            "P2-3"
+          ],
+          "before": "    for (const id of npcSourceIds) {\n        const guild = id === 'guild';\n",
+          "after": "    for (const id of npcSourceIds) {\n        const guild = id === 'guild';\n        record(sources[id], `${npcGeneratorFile}#sources`, id);\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+      "beforeSha256": "8094699a2f27585d80a5525c32b6cc727a60bb50c7a241a92ca13cf4f871f425",
+      "afterSha256": "c032633003267bba02d40c0c58fd76c663cdd8477d9c9fcd6f5377676c1d669c",
+      "edits": [
+        {
+          "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+          "findings": [
+            "P1-2"
+          ],
+          "before": "import type { NpcGeneratorCatalog } from '../../data/validate.js';\n",
+          "after": "import { CatalogError, type NpcGeneratorCatalog } from '../../data/validate.js';\n"
+        },
+        {
+          "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+          "findings": [
+            "P1-2"
+          ],
+          "before": "const sha = (value: unknown) => createHash('sha256').update(JSON.stringify(value), 'utf8').digest('hex');\n",
+          "after": "const sha = (value: unknown) => createHash('sha256').update(JSON.stringify(value), 'utf8').digest('hex');\n\nfunction expectExactError(run: () => unknown, type: typeof CatalogError | typeof RangeError, message: string) {\n  let error: unknown;\n  try { run(); } catch (caught) { error = caught; }\n  expect(error).toBeInstanceOf(type);\n  expect((error as Error).message).toBe(message);\n}\n"
+        },
+        {
+          "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+          "findings": [
+            "P1-2"
+          ],
+          "before": "    expect(() => generate(112, 1, 'guild', 0, 8)).toThrow('No more epithets are available for this NPC key.');\n",
+          "after": "    expectExactError(() => generate(112, 1, 'guild', 0, 8), RangeError, 'No more epithets are available for this NPC key.');\n"
+        },
+        {
+          "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+          "findings": [
+            "P1-2"
+          ],
+          "before": "    ] as const) expect(() => generate(0, week, source, slot, salt)).toThrow('Invalid NPC generator key.');\n",
+          "after": "    ] as const) expectExactError(() => generate(0, week, source, slot, salt), RangeError, 'Invalid NPC generator key.');\n"
+        },
+        {
+          "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+          "findings": [
+            "P1-2"
+          ],
+          "before": "    expect(() => api.validateNpcGenerator(change(api.NPC_GENERATOR_CATALOG, [...keys], value)))\n      .toThrow(`npc-generator.json#${message}`);\n",
+          "after": "    expectExactError(() => api.validateNpcGenerator(change(api.NPC_GENERATOR_CATALOG, [...keys], value)),\n      CatalogError, `npc-generator.json#${message}`);\n"
+        },
+        {
+          "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+          "findings": [
+            "P2-2",
+            "P2-3"
+          ],
+          "before": "  const rejected = [\n",
+          "after": "  it('caps the generator trait range at the four available traits', () => {\n    const data = api.NPC_GENERATOR_CATALOG;\n    const atLimit = change(data, ['P7B_TRIAL', 'traitCount'], [4, 4]);\n    expect(api.validateNpcGenerator(atLimit).P7B_TRIAL.traitCount).toStrictEqual([4, 4]);\n    expectExactError(() => api.validateNpcGenerator(change(data, ['P7B_TRIAL', 'traitCount'], [5, 5])),\n      CatalogError, 'npc-generator.json#P7B_TRIAL.traitCount: expected at most 4 available traits');\n  });\n\n  const invalidRows = [\n    [['sources', 'guild'], undefined, 'sources.guild'],\n    [['sources', 'guild'], [], 'sources.guild'],\n    [['price'], undefined, 'catalog.price'],\n    [['price'], false, 'catalog.price'],\n    [['originCulture'], undefined, 'catalog.originCulture'],\n    [['originProfile'], null, 'catalog.originProfile'],\n    [['appearance'], [], 'catalog.appearance'],\n    [['P7B_TRIAL'], undefined, 'catalog.P7B_TRIAL'],\n    [['cultures', 'northreach'], false, 'cultures.northreach'],\n  ] as const;\n  it.each(invalidRows)('names the parent field for invalid generator row %j with value %j', (keys, value, field) => {\n    expectExactError(() => api.validateNpcGenerator(change(api.NPC_GENERATOR_CATALOG, [...keys], value)),\n      CatalogError, `npc-generator.json#${field}: expected object`);\n  });\n\n  const rejected = [\n"
+        },
+        {
+          "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+          "findings": [
+            "P3-2"
+          ],
+          "before": "  it('generates fourteen distinct names across one week of basic and lot keys', () => {\n",
+          "after": "  it.each([0, 4294967295])('generates deterministically at unsigned seed endpoint %i', seed => {\n    const generate = generator();\n    const first = generate(seed, 1, 'guild', 0);\n    expect(first.npc.character.id).toBe('npc_w1_guild_0');\n    expect(generate(seed, 1, 'guild', 0)).toStrictEqual(first);\n  });\n\n  it.each([NaN, 4294967296, -1, 0.5, Infinity])('refuses invalid unsigned seed %s', seed => {\n    expectExactError(() => generator()(seed, 1, 'guild', 0), RangeError, 'Invalid NPC generator key.');\n  });\n\n  it('generates fourteen distinct names across one week of basic and lot keys', () => {\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/core/src/world/__tests__/npc.test.ts",
+      "beforeSha256": "f8b176f9aed51f57c64dce7c6efbc4c7c64452b76b9ef21e89f605339bb7f025",
+      "afterSha256": "e1fae79a6f7b0b326efa424976df0c0411bb1b8f5cc231d65d625cd101c0a14e",
+      "edits": [
+        {
+          "path": "packages/core/src/world/__tests__/npc.test.ts",
+          "findings": [
+            "P1-3"
+          ],
+          "before": "import { NPC_MANAGER_BUILDING_TYPES,WORLD_TRAITS } from '../npc-content.js';\n",
+          "after": "import { NPC_MANAGER_BUILDING_TYPES,WORLD_TRAITS } from '../npc-content.js';\nimport { NPC_GENERATOR_CATALOG } from '../npc-generator.js';\n"
+        },
+        {
+          "path": "packages/core/src/world/__tests__/npc.test.ts",
+          "findings": [
+            "P1-3"
+          ],
+          "before": "    for (let seed = 0; seed < 200; seed++) {\n      const n = names(seed);\n      expect(new Set(n).size).toBe(3); n.forEach(name => expect(name).toMatch(/^[A-Z][a-z]+ [A-Z][a-z]+$/));\n    }\n",
+          "after": "    const { cultures, originCulture } = NPC_GENERATOR_CATALOG;\n    for (let seed = 0; seed < 200; seed++) {\n      const { npcs } = session(seed);\n      expect(new Set(npcs.map(npc => npc.character.name)).size).toBe(3);\n      for (const npc of npcs) {\n        expect(npc.character.name).toMatch(/^[A-Z][a-z]+ [A-Z][a-z]+$/);\n        const [given, epithet] = npc.character.name.split(' ');\n        const culture = cultures[originCulture[npc.life.origin]];\n        expect(culture.given).toContain(given);\n        expect(culture.epithets).toContain(epithet);\n      }\n    }\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/core/src/world/npc-generator.ts",
+      "beforeSha256": "097d32c5f1936e2874e6c64222d428c7e0b9773f899caeb46d9018685dd079a0",
+      "afterSha256": "06419517a7797d6828211e894bc74dabd03625e431e2cf43721c8296d6f5b28c",
+      "edits": [
+        {
+          "path": "packages/core/src/world/npc-generator.ts",
+          "findings": [
+            "P3-1"
+          ],
+          "before": "import { createNpcLife, NPC_HOBBIES, NPC_ORIGINS, npcLifeRandom, P7A_TRIAL, type SexPart }",
+          "after": "import { createNpcLifeFromDraws, NPC_HOBBIES, NPC_ORIGINS, npcLifeRandom, P7A_TRIAL, type SexPart }"
+        },
+        {
+          "path": "packages/core/src/world/npc-generator.ts",
+          "findings": [
+            "P3-1"
+          ],
+          "before": "  const life = createNpcLife(seed, id, age);\n",
+          "after": ""
+        },
+        {
+          "path": "packages/core/src/world/npc-generator.ts",
+          "findings": [
+            "P3-1"
+          ],
+          "before": "  life.mind = drawRange(random, row.mind);\n  life.lust = life.lustBase = drawRange(random, P7A_TRIAL.lustBase);\n  life.beauty = drawRange(random, row.beauty);\n  life.origin = origin;\n  life.birthWeek = week - age * P7A_TRIAL.weeksPerYear;\n  const [firstHobby, secondHobby] = drawDistinct(random, Object.keys(NPC_HOBBIES), life.hobbies.length);\n  life.hobbies = [firstHobby, secondHobby];\n",
+          "after": "  const mind = drawRange(random, row.mind);\n  const lustBase = drawRange(random, P7A_TRIAL.lustBase);\n  const beauty = drawRange(random, row.beauty);\n  const [firstHobby, secondHobby] = drawDistinct(random, Object.keys(NPC_HOBBIES), 2);\n  const life = createNpcLifeFromDraws({ mind, lustBase, beauty, birthWeek: week - age * P7A_TRIAL.weeksPerYear,\n    origin, hobbies: [firstHobby, secondHobby] });\n"
+        },
+        {
+          "path": "packages/core/src/world/npc-generator.ts",
+          "findings": [
+            "P3-2"
+          ],
+          "before": "  if (!Number.isSafeInteger(week) || week <= 0 || !Number.isSafeInteger(nameSalt) || nameSalt < 0 ||\n",
+          "after": "  if (!Number.isSafeInteger(seed) || seed < 0 || seed > 4294967295 ||\n      !Number.isSafeInteger(week) || week <= 0 || !Number.isSafeInteger(nameSalt) || nameSalt < 0 ||\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/core/src/world/npc-life.ts",
+      "beforeSha256": "42e8c46783df0aa861e0726428c417b64f9562ae4c5167d219d4320d666743d7",
+      "afterSha256": "a49aff7dc87f7275b98289e88d91518e36fd1eb554c4569c7ae4638c8f50b8db",
+      "edits": [
+        {
+          "path": "packages/core/src/world/npc-life.ts",
+          "findings": [
+            "P3-1"
+          ],
+          "before": "  return { mind: 50, lust: lustBase, lustBase, arousal: 0, stress: 0, beauty,\n    birthWeek: 1 - age * P7A_TRIAL.weeksPerYear, origin, hobbies: [first, second], working: true,\n",
+          "after": "  return createNpcLifeFromDraws({ mind: 50, lustBase, beauty, birthWeek: 1 - age * P7A_TRIAL.weeksPerYear,\n    origin, hobbies: [first, second] });\n}\n\nexport function createNpcLifeFromDraws({ mind, lustBase, beauty, birthWeek, origin, hobbies }:\n  Pick<NpcLife, 'mind' | 'lustBase' | 'beauty' | 'birthWeek' | 'origin' | 'hobbies'>): NpcLife {\n  return { mind, lust: lustBase, lustBase, arousal: 0, stress: 0, beauty, birthWeek, origin, hobbies, working: true,\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/core/src/world/npc.ts",
+      "beforeSha256": "23a64d1741ccabee8d763f8dcf02f0c94cf095e191b19d717be47bc1a50f3516",
+      "afterSha256": "a55719679af62f729690260fb954fbfeeda7afd532c8d41560a2ca3863cb850c",
+      "edits": [
+        {
+          "path": "packages/core/src/world/npc.ts",
+          "findings": [
+            "P2-1"
+          ],
+          "before": "          npcAge(npc.life, city.world.week) < CHARACTER_LIMITS.ageMin || ids.has(c.id) || names.has(c.name)) return false;\n",
+          "after": "          npcAge(npc.life, city.world.week) < CHARACTER_LIMITS.ageMin || !Number.isInteger(c.relationshipToPlayer.affection) ||\n          ids.has(c.id) || names.has(c.name)) return false;\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/simulation/src/__tests__/npc-homes.test.ts",
+      "beforeSha256": "35e2eb078c5a6950dd7045f912fd0443856b253e4a85bd172948db6d52009c4b",
+      "afterSha256": "625f371c9663dfff374ff15e1ef3f629ad0f588802ec43c9f94aa6b93d10eb41",
+      "edits": [
+        {
+          "path": "packages/simulation/src/__tests__/npc-homes.test.ts",
+          "findings": [
+            "P1-1"
+          ],
+          "before": "    expect(deserializeCharacterLifeSave('{')).toMatchObject({ success: false });\n",
+          "after": "    expect(deserializeCharacterLifeSave('{')).toStrictEqual({\n      success: false,\n      error: { code: 'INVALID_SAVE', message: 'Could not read a valid checkpoint JSON. Your game was preserved.' },\n    });\n"
+        },
+        {
+          "path": "packages/simulation/src/__tests__/npc-homes.test.ts",
+          "findings": [
+            "P1-2"
+          ],
+          "before": "    expect(() => validateNpcGenerator(data)).toThrow('npc-generator.json#P7B_TRIAL.startGoldMilli: expected 120000');\n",
+          "after": "    let error: unknown;\n    try { validateNpcGenerator(data); } catch (caught) { error = caught; }\n    expect(error).toBeInstanceOf(Error);\n    expect((error as Error).name).toBe('CatalogError');\n    expect((error as Error).message).toBe('npc-generator.json#P7B_TRIAL.startGoldMilli: expected 120000');\n"
+        },
+        {
+          "path": "packages/simulation/src/__tests__/npc-homes.test.ts",
+          "findings": [
+            "P2-1"
+          ],
+          "before": "  it('keeps Hall posts through a move and reload, and clears the post on entering the Mansion', () => {\n",
+          "after": "  it('rejects a v12 checkpoint with fractional NPC affection', () => {\n    const { text } = roundTrip(populate(['estate-2']));\n    const checkpoint = JSON.parse(text) as { state: CharacterLifeSessionState };\n    checkpoint.state.npcs[0].character.relationshipToPlayer.affection = 20.5;\n    expect(deserializeCharacterLifeSave(JSON.stringify(checkpoint))).toStrictEqual({\n      success: false,\n      error: { code: 'INVALID_SAVE_STATE', message: 'Checkpoint must contain a valid complete Character Life session in Planning.' },\n    });\n    expect([isCharacterLifeSessionState(checkpoint.state), isLiveCharacterLifeSessionState(checkpoint.state)]).toStrictEqual([false, false]);\n  });\n\n  it('keeps Hall posts through a move and reload, and clears the post on entering the Mansion', () => {\n"
+        }
+      ]
+    }
+  ],
+  "otherTreeEntriesByteIdentical": true,
+  "samplePinsByteIdentical": true,
+  "samplePinsSha256": "3f9efbc945f9a7bf336923396bd55a123ec5a5f277608155e5780de927128da3",
+  "totalPathsComparedToMain": 113
+}

@@ -1,0 +1,15 @@
+﻿UTC 2026-11-24T04:35:58.6402995Z
+HEAD f31310cb791f549a7672be47219c7578678b7058
+Tree 43ab9e682912eeadc3d4a4d2ef8ca1a7e3aba54d
+origin/main f73595b449db84b988d44a44cd33620efca9ecad
+Branch feat/p7b-npc-generator
+Porcelain output: <empty>
+Ports 4173 and 4174 free
+Detached benchmark checkout removed
+f31310cb791f549a7672be47219c7578678b7058 43ab9e682912eeadc3d4a4d2ef8ca1a7e3aba54d feat(core): npc homes, cap and no starter npcs
+Co-authored-by: Codex <noreply@openai.com>
+
+58b4f2d59b1dddff5841db67970b561f3679bfbd 95e2bac1a748b98b7be52ef09f3795c5516baa18 feat(core): seeded npc generator and price
+Co-authored-by: Codex <noreply@openai.com>
+
+

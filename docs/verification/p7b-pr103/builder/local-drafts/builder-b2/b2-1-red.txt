@@ -1,0 +1,247 @@
+B2.1 RED
+UTC 
+HEAD f73595b449db84b988d44a44cd33620efca9ecad
+Tree fd04e1f2d7f6f47270a2e7ac82d18b68729a6372
+npm test -- packages/core/src/world/__tests__/npc-generator.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/core/src/world/__tests__/npc-generator.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/core/src/world/__tests__/npc-generator.test.ts (33 tests | 33 failed) 56ms
+     × generates detached byte-identical records and separates seed, week, source and slot 18ms
+     × pins seed 0 week 1 from guild slot 0 2ms
+     × pins seed 42 week 3 from auction-house slot 2 1ms
+     × pins seed 2026 week 4 from slave-market slot lot 1ms
+     × pins seed 2026 week 1 from auction-house slot lot 1ms
+     × changes only the epithet with salt and exhausts the eight candidates 1ms
+     × generates fourteen distinct names across one week of basic and lot keys 1ms
+     × keeps 500 draws adult and valid with titles and culture matching origin 1ms
+     × generates the approved guild / 0 source bands and status 1ms
+     × generates the approved auction-house / 0 source bands and status 1ms
+     × generates the approved slave-market / 0 source bands and status 1ms
+     × generates the approved auction-house / lot source bands and status 1ms
+     × generates the approved slave-market / lot source bands and status 1ms
+     × records only the approved starting-past keys and separates source averages over 200 draws 1ms
+     × prices skills, Beauty and experience monotonically with whole-Gold rounding and 60 percent sale 1ms
+     × pins the complete frozen data including all 80 globally distinct given names 1ms
+     × rejects malformed generator data at ["originCulture","frontier"] 1ms
+     × rejects malformed generator data at ["originCulture","frontier"] 1ms
+     × rejects malformed generator data at ["cultures","northreach","given"] 1ms
+     × rejects malformed generator data at ["cultures","northreach","epithets"] 1ms
+     × rejects malformed generator data at ["appearance","presentation"] 1ms
+     × rejects malformed generator data at ["appearance","measurements","1","chestCm"] 1ms
+     × rejects malformed generator data at ["P7B_TRIAL","age","0"] 1ms
+     × rejects malformed generator data at ["sources","guild","mind"] 1ms
+     × rejects malformed generator data at ["sources","guild","mind"] 1ms
+     × rejects malformed generator data at ["P7B_TRIAL","startGoldMilli"] 1ms
+     × rejects malformed generator data at ["P7B_TRIAL","wageMilli"] 1ms
+     × rejects malformed generator data at ["P7B_TRIAL","wageMilli"] 1ms
+     × rejects malformed generator data at ["sources","guild","socialClass"] 1ms
+     × rejects malformed generator data at ["price","skillPointBps"] 1ms
+     × rejects malformed generator data at ["price","conditionFactor"] 1ms
+     × rejects malformed generator data at ["P7B_TRIAL","npcCap"] 1ms
+     × rejects malformed generator data at ["sources","guild","skills"] 1ms
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯ Failed Tests 33 ⎯⎯⎯⎯⎯⎯⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > seeded NPC generation > generates detached byte-identical records and separates seed, week, source and slot
+AssertionError: expected undefined to be type of 'function'
+System.Management.Automation.RemoteException
+Expected: "function"
+Received: "undefined"
+System.Management.Automation.RemoteException
+ ❯ generator packages/core/src/world/__tests__/npc-generator.test.ts:12:27
+     10|
+     11| function generator() {
+     12|   expect(api.generateNpc).toBeTypeOf('function');
+       |                           ^
+     13|   return api.generateNpc;
+     14| }
+ ❯ packages/core/src/world/__tests__/npc-generator.test.ts:38:22
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/33]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > seeded NPC generation > pins seed 0 week 1 from guild slot 0
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > seeded NPC generation > pins seed 42 week 3 from auction-house slot 2
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > seeded NPC generation > pins seed 2026 week 4 from slave-market slot lot
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > seeded NPC generation > pins seed 2026 week 1 from auction-house slot lot
+AssertionError: expected undefined to be type of 'function'
+System.Management.Automation.RemoteException
+Expected: "function"
+Received: "undefined"
+System.Management.Automation.RemoteException
+ ❯ generator packages/core/src/world/__tests__/npc-generator.test.ts:12:27
+     10|
+     11| function generator() {
+     12|   expect(api.generateNpc).toBeTypeOf('function');
+       |                           ^
+     13|   return api.generateNpc;
+     14| }
+ ❯ packages/core/src/world/__tests__/npc-generator.test.ts:50:23
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/33]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > seeded NPC generation > changes only the epithet with salt and exhausts the eight candidates
+AssertionError: expected undefined to be type of 'function'
+System.Management.Automation.RemoteException
+Expected: "function"
+Received: "undefined"
+System.Management.Automation.RemoteException
+ ❯ generator packages/core/src/world/__tests__/npc-generator.test.ts:12:27
+     10|
+     11| function generator() {
+     12|   expect(api.generateNpc).toBeTypeOf('function');
+       |                           ^
+     13|   return api.generateNpc;
+     14| }
+ ❯ packages/core/src/world/__tests__/npc-generator.test.ts:58:22
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/33]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > seeded NPC generation > generates fourteen distinct names across one week of basic and lot keys
+AssertionError: expected undefined to be type of 'function'
+System.Management.Automation.RemoteException
+Expected: "function"
+Received: "undefined"
+System.Management.Automation.RemoteException
+ ❯ generator packages/core/src/world/__tests__/npc-generator.test.ts:12:27
+     10|
+     11| function generator() {
+     12|   expect(api.generateNpc).toBeTypeOf('function');
+       |                           ^
+     13|   return api.generateNpc;
+     14| }
+ ❯ packages/core/src/world/__tests__/npc-generator.test.ts:76:22
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/33]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > seeded NPC generation > keeps 500 draws adult and valid with titles and culture matching origin
+AssertionError: expected undefined to be type of 'function'
+System.Management.Automation.RemoteException
+Expected: "function"
+Received: "undefined"
+System.Management.Automation.RemoteException
+ ❯ generator packages/core/src/world/__tests__/npc-generator.test.ts:12:27
+     10|
+     11| function generator() {
+     12|   expect(api.generateNpc).toBeTypeOf('function');
+       |                           ^
+     13|   return api.generateNpc;
+     14| }
+ ❯ packages/core/src/world/__tests__/npc-generator.test.ts:84:22
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/33]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > seeded NPC generation > generates the approved guild / 0 source bands and status
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > seeded NPC generation > generates the approved auction-house / 0 source bands and status
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > seeded NPC generation > generates the approved slave-market / 0 source bands and status
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > seeded NPC generation > generates the approved auction-house / lot source bands and status
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > seeded NPC generation > generates the approved slave-market / lot source bands and status
+AssertionError: expected undefined to be type of 'function'
+System.Management.Automation.RemoteException
+Expected: "function"
+Received: "undefined"
+System.Management.Automation.RemoteException
+ ❯ generator packages/core/src/world/__tests__/npc-generator.test.ts:12:27
+     10|
+     11| function generator() {
+     12|   expect(api.generateNpc).toBeTypeOf('function');
+       |                           ^
+     13|   return api.generateNpc;
+     14| }
+ ❯ packages/core/src/world/__tests__/npc-generator.test.ts:117:22
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/33]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > seeded NPC generation > records only the approved starting-past keys and separates source averages over 200 draws
+AssertionError: expected undefined to be type of 'function'
+System.Management.Automation.RemoteException
+Expected: "function"
+Received: "undefined"
+System.Management.Automation.RemoteException
+ ❯ generator packages/core/src/world/__tests__/npc-generator.test.ts:12:27
+     10|
+     11| function generator() {
+     12|   expect(api.generateNpc).toBeTypeOf('function');
+       |                           ^
+     13|   return api.generateNpc;
+     14| }
+ ❯ packages/core/src/world/__tests__/npc-generator.test.ts:137:22
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/33]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > seeded NPC generation > prices skills, Beauty and experience monotonically with whole-Gold rounding and 60 percent sale
+AssertionError: expected undefined to be type of 'function'
+System.Management.Automation.RemoteException
+Expected: "function"
+Received: "undefined"
+System.Management.Automation.RemoteException
+ ❯ generator packages/core/src/world/__tests__/npc-generator.test.ts:12:27
+     10|
+     11| function generator() {
+     12|   expect(api.generateNpc).toBeTypeOf('function');
+       |                           ^
+     13|   return api.generateNpc;
+
+ Test Files  1 failed (1)
+      Tests  33 failed (33)
+   Start at  08:38:46
+   Duration  2.37s (transform 873ms, setup 0ms, import 1.16s, tests 56ms, environment 0ms)
+
+     14| }
+ ❯ packages/core/src/world/__tests__/npc-generator.test.ts:152:21
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/33]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > NPC generator catalog > pins the complete frozen data including all 80 globally distinct given names
+AssertionError: expected undefined to be type of 'function'
+System.Management.Automation.RemoteException
+Expected: "function"
+Received: "undefined"
+System.Management.Automation.RemoteException
+ ❯ packages/core/src/world/__tests__/npc-generator.test.ts:190:38
+    188| describe('NPC generator catalog', () => {
+    189|   it('pins the complete frozen data including all 80 globally distinct…
+    190|     expect(api.validateNpcGenerator).toBeTypeOf('function');
+       |                                      ^
+    191|     const data = api.NPC_GENERATOR_CATALOG;
+    192|     expect(api.validateNpcGenerator(structuredClone(data))).toStrictEq…
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/33]⎯
+System.Management.Automation.RemoteException
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > NPC generator catalog > rejects malformed generator data at ["originCulture","frontier"]
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > NPC generator catalog > rejects malformed generator data at ["originCulture","frontier"]
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > NPC generator catalog > rejects malformed generator data at ["cultures","northreach","given"]
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > NPC generator catalog > rejects malformed generator data at ["cultures","northreach","epithets"]
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > NPC generator catalog > rejects malformed generator data at ["appearance","presentation"]
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > NPC generator catalog > rejects malformed generator data at ["appearance","measurements","1","chestCm"]
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > NPC generator catalog > rejects malformed generator data at ["P7B_TRIAL","age","0"]
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > NPC generator catalog > rejects malformed generator data at ["sources","guild","mind"]
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > NPC generator catalog > rejects malformed generator data at ["sources","guild","mind"]
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > NPC generator catalog > rejects malformed generator data at ["P7B_TRIAL","startGoldMilli"]
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > NPC generator catalog > rejects malformed generator data at ["P7B_TRIAL","wageMilli"]
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > NPC generator catalog > rejects malformed generator data at ["P7B_TRIAL","wageMilli"]
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > NPC generator catalog > rejects malformed generator data at ["sources","guild","socialClass"]
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > NPC generator catalog > rejects malformed generator data at ["price","skillPointBps"]
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > NPC generator catalog > rejects malformed generator data at ["price","conditionFactor"]
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > NPC generator catalog > rejects malformed generator data at ["P7B_TRIAL","npcCap"]
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > NPC generator catalog > rejects malformed generator data at ["sources","guild","skills"]
+AssertionError: expected undefined to be type of 'function'
+System.Management.Automation.RemoteException
+Expected: "function"
+Received: "undefined"
+System.Management.Automation.RemoteException
+ ❯ packages/core/src/world/__tests__/npc-generator.test.ts:222:38
+    220|   ] as const;
+    221|   it.each(rejected)('rejects malformed generator data at %j', (keys, v…
+    222|     expect(api.validateNpcGenerator).toBeTypeOf('function');
+       |                                      ^
+    223|     expect(() => api.validateNpcGenerator(change(api.NPC_GENERATOR_CAT…
+    224|       .toThrow(`npc-generator.json#${message}`);
+System.Management.Automation.RemoteException
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/33]⎯
+System.Management.Automation.RemoteException
+Exit 1

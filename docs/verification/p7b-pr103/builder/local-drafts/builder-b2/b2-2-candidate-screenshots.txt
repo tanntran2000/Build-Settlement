@@ -1,0 +1,11 @@
+UTC start 2026-11-24T02:13:09.522370+00:00
+HEAD 58b4f2d59b1dddff5841db67970b561f3679bfbd
+Tree 95e2bac1a748b98b7be52ef09f3795c5516baa18
+Command: node C:/Users/Admin/.t3/local-drafts/p7b-prB2/builder-b2/capture-candidate.mjs C:/Users/Admin/.t3/local-drafts/p7b-prB2/builder-b2
+CI=
+
+  ➜  Local:   http://localhost:4173/
+  ➜  Network: use --host to expose
+
+UTC end 2026-11-24T02:13:13.654350+00:00
+Exit 0

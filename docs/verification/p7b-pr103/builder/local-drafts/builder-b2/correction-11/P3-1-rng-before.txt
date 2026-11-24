@@ -1,0 +1,11 @@
+UTC start 2026-11-24T06:21:52.014503+00:00
+HEAD 63cbdca96fc7a326d2d1204c0b0871dc34a6d14e
+Tree 312797f184f6414064e5ecf81eb1fba7a7bc55d0
+Command: node C:/Users/Admin/.t3/local-drafts/p7b-prB2/builder-b2/correction-11/probe-rng-stream.mjs C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01 C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01 before
+CI=
+
+{"phase":"before","salt":0,"streams":[{"salt":"npc_w1_guild_0","draws":49},{"salt":"npc_w1_guild_0","draws":5}],"name":"Adrel Brassmark","sampleSha256":"5711b25078588298643a4884eec2c417783ef09c45e2a4bab69b7311c0bfa71f"}
+{"phase":"before","salt":1,"streams":[{"salt":"npc_w1_guild_0","draws":49},{"salt":"npc_w1_guild_0:name:1","draws":1},{"salt":"npc_w1_guild_0","draws":5}],"name":"Adrel Copperwell","sampleSha256":"d87946e5fafda0effb3265d24e42bfd52d2d4f9ee251d01fb2a21e9adf066f59"}
+
+UTC end 2026-11-24T06:21:52.595483+00:00
+Exit 0

@@ -1,0 +1,170 @@
+{
+  "status": "Proposed for owner approval. None applied.",
+  "candidateTree": "62c34cb35c597b26f936f938f924d6449e0094ad",
+  "typecheckProof": "b2-2-test-helper-overlay.txt",
+  "candidateUnitFailures": "b2-2-candidate-unit.txt",
+  "newAllowlistPath": "packages/core/package.json",
+  "amendments": [
+    {
+      "path": "packages/core/package.json",
+      "candidateLine": 12,
+      "before": "    \".\": \"./src/index.ts\"\n",
+      "after": "    \".\": \"./src/index.ts\",\n    \"./testing/npcs\": \"./src/__tests__/helpers/npcs.ts\"\n",
+      "reason": "Expose one dedicated test-helper subpath so consumers resolve the core source through the existing workspace package boundary."
+    },
+    {
+      "path": "packages/simulation/src/__tests__/character-life-command.test.ts",
+      "candidateLine": 1,
+      "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+      "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+      "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+    },
+    {
+      "path": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+      "candidateLine": 1,
+      "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+      "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+      "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+    },
+    {
+      "path": "packages/simulation/src/__tests__/craft-command.test.ts",
+      "candidateLine": 2,
+      "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+      "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+      "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+    },
+    {
+      "path": "packages/simulation/src/__tests__/craft-week.test.ts",
+      "candidateLine": 2,
+      "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+      "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+      "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+    },
+    {
+      "path": "packages/simulation/src/__tests__/exhausted-materials.test.ts",
+      "candidateLine": 2,
+      "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+      "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+      "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+    },
+    {
+      "path": "packages/simulation/src/__tests__/item-command.test.ts",
+      "candidateLine": 2,
+      "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+      "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+      "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+    },
+    {
+      "path": "packages/simulation/src/__tests__/item-effects.test.ts",
+      "candidateLine": 2,
+      "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+      "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+      "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+    },
+    {
+      "path": "packages/simulation/src/__tests__/npc-life-week.test.ts",
+      "candidateLine": 2,
+      "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+      "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+      "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+    },
+    {
+      "path": "packages/simulation/src/__tests__/society-stock-integrity.test.ts",
+      "candidateLine": 2,
+      "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+      "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+      "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+    },
+    {
+      "path": "packages/simulation/src/__tests__/world-npc.test.ts",
+      "candidateLine": 2,
+      "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+      "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+      "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+    },
+    {
+      "path": "packages/persistence/src/__tests__/character-life-save.test.ts",
+      "candidateLine": 2,
+      "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+      "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+      "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+    },
+    {
+      "path": "packages/persistence/src/__tests__/item-owner-import.test.ts",
+      "candidateLine": 2,
+      "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+      "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+      "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+    },
+    {
+      "path": "packages/persistence/src/__tests__/item-records.test.ts",
+      "candidateLine": 2,
+      "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+      "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+      "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+    },
+    {
+      "path": "packages/persistence/src/__tests__/items-canonical.test.ts",
+      "candidateLine": 2,
+      "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+      "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+      "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+    },
+    {
+      "path": "packages/persistence/src/__tests__/items-rebuild-order.test.ts",
+      "candidateLine": 2,
+      "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+      "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+      "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+    },
+    {
+      "path": "packages/persistence/src/__tests__/npc-life-records.test.ts",
+      "candidateLine": 2,
+      "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+      "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+      "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+    },
+    {
+      "path": "packages/persistence/src/__tests__/session-records.test.ts",
+      "candidateLine": 2,
+      "before": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+      "after": "import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\n",
+      "reason": "Make the existing test-helper import a package lookup. Preserve imported names and all assertions."
+    },
+    {
+      "path": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+      "candidateLine": 280,
+      "before": "    none.city.tiles.forEach(t => { t.building = null; });\n",
+      "after": "    none.city.tiles.forEach(t => { if (!t.id.startsWith('estate-')) t.building = null; });\n",
+      "reason": "Retain the new mandatory homes while preserving the zero-manager-slot fixture and the same reasons."
+    },
+    {
+      "path": "packages/simulation/src/__tests__/law-week.test.ts",
+      "candidateLine": 148,
+      "before": " expectedSettlements[s.city.world.activeSettlementId!].inventory.gold-=15000;\n",
+      "after": " expectedSettlements[s.city.world.activeSettlementId!].inventory.gold += (120000 - 45000) - 15000;\n",
+      "reason": "Carry the approved opening grant difference into the old settlement pin and retain the 15000 estate-upkeep debit."
+    },
+    {
+      "path": "packages/ui/src/__tests__/character-life-session.test.ts",
+      "candidateLine": 302,
+      "before": " const a=session(11),b=session(22),encoded=serializeCharacterLifeSave(a);if(!encoded.success)throw Error(encoded.error.message);\n",
+      "after": " const a=populated(11),b=populated(22),encoded=serializeCharacterLifeSave(a);if(!encoded.success)throw Error(encoded.error.message);\n",
+      "reason": "Use the existing three-NPC fixture helper to retain the seven-record saved-B assertion in both pending migration cases."
+    },
+    {
+      "path": "packages/ui/src/__tests__/data-inspector.test.ts",
+      "candidateLine": 31,
+      "before": "  expect(findById(rows, '  nPc_StArTeR  ')).toEqual(rows.slice(1));\n",
+      "after": "  expect(findById(rows, '  nPc_W1_GuIlD  ')).toEqual(rows.slice(1));\n",
+      "reason": "Keep the case-insensitive, trimmed substring search over the approved generator-shaped record ids."
+    },
+    {
+      "path": "packages/core/src/world/__tests__/npc-life.test.ts",
+      "candidateLine": 158,
+      "before": "      const npcs = structuredClone(made.value.npcs); mutate(npcs[0]); expect(api.isWorldNpcList(npcs, made.value.city)).toBe(false);\n",
+      "after": "      const npcs = withNpcs(made.value, NPC_TEST_KEYS.slice(0, 1)).npcs; mutate(npcs[0]); expect(api.isWorldNpcList(npcs, made.value.city)).toBe(false);\n",
+      "reason": "Seed a valid owned NPC before each negative check so the same missing-life, age and gender mutations still execute."
+    }
+  ]
+}

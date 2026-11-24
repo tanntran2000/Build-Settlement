@@ -1,0 +1,79 @@
+{
+  "scope": "Clean final head",
+  "head": "63cbdca96fc7a326d2d1204c0b0871dc34a6d14e",
+  "tree": "312797f184f6414064e5ecf81eb1fba7a7bc55d0",
+  "previousHead": "f31310cb791f549a7672be47219c7578678b7058",
+  "bundle": {
+    "assets": [
+      {
+        "file": "index-CEFG8Xfl.js",
+        "rawBytes": 478305,
+        "gzipBytes": 150865,
+        "sha256": "adc85ffa478021dca7347c0acbf0370ce57c249d5bee425257af7b4c8577cc86",
+        "servedIdentical": true
+      },
+      {
+        "file": "index-BJ9v1KVg.css",
+        "rawBytes": 37476,
+        "gzipBytes": 7567,
+        "sha256": "de7e58850e59dd2afffa2ef7bc8ce32d248a2ff6f73265f4cd4bc460656c8e82",
+        "servedIdentical": true
+      }
+    ],
+    "totalGzipBytes": 158432,
+    "mainJsGzipKB": 145.737,
+    "mainCssGzipKB": 7.528
+  },
+  "servedBuilds": [
+    {
+      "name": "production",
+      "port": 4173,
+      "htmlSha256": "045a76bd679415aafc83868621f827441d6d3818665f761071748eab0ed1e78f",
+      "assets": [
+        {
+          "file": "index-CEFG8Xfl.js",
+          "rawBytes": 478305,
+          "gzipBytes": 150865,
+          "sha256": "adc85ffa478021dca7347c0acbf0370ce57c249d5bee425257af7b4c8577cc86",
+          "servedIdentical": true
+        },
+        {
+          "file": "index-BJ9v1KVg.css",
+          "rawBytes": 37476,
+          "gzipBytes": 7567,
+          "sha256": "de7e58850e59dd2afffa2ef7bc8ce32d248a2ff6f73265f4cd4bc460656c8e82",
+          "servedIdentical": true
+        }
+      ]
+    },
+    {
+      "name": "regression",
+      "port": 4174,
+      "htmlSha256": "9785a7ee1477789a9ce1cd9e8b68126dd52a4d1414297eaf060d9bde2231bb46",
+      "assets": [
+        {
+          "file": "index-CEFG8Xfl.js",
+          "rawBytes": 478305,
+          "gzipBytes": 150865,
+          "sha256": "adc85ffa478021dca7347c0acbf0370ce57c249d5bee425257af7b4c8577cc86",
+          "servedIdentical": true
+        },
+        {
+          "file": "index-BJ9v1KVg.css",
+          "rawBytes": 37476,
+          "gzipBytes": 7567,
+          "sha256": "de7e58850e59dd2afffa2ef7bc8ce32d248a2ff6f73265f4cd4bc460656c8e82",
+          "servedIdentical": true
+        }
+      ]
+    }
+  ],
+  "screenshotAssetBytesChanged": true,
+  "buildStamp": {
+    "previous": "f31310c",
+    "current": "63cbdca"
+  },
+  "sourceDiffFromPrevious": [
+    "tests/e2e/storage.spec.ts"
+  ]
+}

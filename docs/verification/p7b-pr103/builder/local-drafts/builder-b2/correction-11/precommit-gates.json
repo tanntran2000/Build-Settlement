@@ -1,0 +1,13 @@
+﻿{
+    "commands":  [
+                     "npm run typecheck",
+                     "npm run lint",
+                     "npm test"
+                 ],
+    "tree":  "961567de7ef638861a55a42589be203037e123c9",
+    "exits":  [
+                  0,
+                  0,
+                  0
+              ]
+}

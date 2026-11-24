@@ -1,0 +1,174 @@
+{
+  "base": "f73595b449db84b988d44a44cd33620efca9ecad",
+  "baseTree": "fd04e1f2d7f6f47270a2e7ac82d18b68729a6372",
+  "testHead": "58b4f2d59b1dddff5841db67970b561f3679bfbd",
+  "testTree": "95e2bac1a748b98b7be52ef09f3795c5516baa18",
+  "sourceReplacements": "fc81f8e7888eef743ef2f9614a53dfb357810eef89db34163913f6131b853235",
+  "generatedProposals": "a0e97ebed23b4b6f33fa490b4b0d748499fb221c8618863428b696b25518d3b8",
+  "correction7": {
+    "status": "Correction 7 read-only comparison, candidate data not applied to the worktree.",
+    "replacementWasOriginalCoinage": true,
+    "exactPublicWebSearch": [
+      "\"Veylathenne\"",
+      "\"Veylathenne\" video game character location"
+    ],
+    "exactIndexedMatches": 0,
+    "changed": [
+      {
+        "path": "packages/core/src/data/npc-generator.json",
+        "jsonPath": "cultures.saltmere.given[1]",
+        "before": "Briala",
+        "after": "Veylathenne",
+        "beforeSha256": "b5c8c04dc61b8a22738c95b08eaa52685ea383ede00396128e1c8ddc431e8fca",
+        "afterSha256": "03ee6792af7b5195f01ca8cfbd90311749f36a036df35017a46b5743c395895a",
+        "beforeBytes": 8568,
+        "afterBytes": 8573
+      },
+      {
+        "probe": "catalogCanonicalSha256",
+        "before": "54f099f2bd626a6c88e185805c57bef19299f9ecddb9d8084b3ea115befe86dc",
+        "after": "b3e0727560c279fb973545ff65753b3e953dc182c27d2f433bfdc55496e9e028"
+      },
+      {
+        "probe": "specificDraw",
+        "before": "Briala Ternwatch",
+        "after": "Veylathenne Ternwatch"
+      },
+      {
+        "probe": "500-draw cohort name",
+        "id": "npc_w38_guild_0",
+        "before": "Briala Gullhaven",
+        "after": "Veylathenne Gullhaven"
+      },
+      {
+        "probe": "500-draw cohort name",
+        "id": "npc_w60_guild_0",
+        "before": "Briala Netmender",
+        "after": "Veylathenne Netmender"
+      },
+      {
+        "probe": "500-draw cohort name",
+        "id": "npc_w101_guild_0",
+        "before": "Briala Gullhaven",
+        "after": "Veylathenne Gullhaven"
+      },
+      {
+        "probe": "500-draw cohort name",
+        "id": "npc_w428_guild_0",
+        "before": "Briala Seawick",
+        "after": "Veylathenne Seawick"
+      },
+      {
+        "probe": "500-draw cohort name",
+        "id": "npc_w446_guild_0",
+        "before": "Briala Netmender",
+        "after": "Veylathenne Netmender"
+      },
+      {
+        "probe": "compactDataBytes",
+        "before": 4606,
+        "after": 4611
+      },
+      {
+        "probe": "compactDataGzipBytes",
+        "before": 1860,
+        "after": 1864
+      }
+    ],
+    "stable": [
+      "all four original NPC sample pins",
+      "14-name one-week set",
+      "500-draw age total",
+      "200-draw source means",
+      "100-NPC save size and SHA-256",
+      "all v12 fixture and catalog golden bytes"
+    ],
+    "additionsToArchivedRedTest": [
+      "catalog canonical SHA-256 after rename",
+      "seed 112, week 1, Guild slot 0, Veylathenne Ternwatch",
+      "all eight salts retain Veylathenne as the given name"
+    ],
+    "candidateFilesContainingTheOldName": [
+      "packages/core/src/data/npc-generator.json"
+    ]
+  },
+  "correction8": {
+    "status": "Proposal for owner approval. None applied to the product branch.",
+    "finalByteChanges": [
+      {
+        "path": "packages/core/src/world/npc-generator.ts",
+        "proposedLine": 76,
+        "before": "  const row = catalog.sources[slot === 'lot' && source !== 'guild' ? `${source}-lot` : source];\n",
+        "after": "  const sourceId: keyof typeof catalog.sources = slot === 'lot' && source !== 'guild' ? `${source}-lot` : source;\n  const row = catalog.sources[sourceId];\n",
+        "why": "Preserve the same runtime key and recover the contextual finite union."
+      },
+      {
+        "path": "packages/simulation/src/__tests__/character-life-command.test.ts",
+        "before": "import {\nimport { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+        "after": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\nimport {\n",
+        "why": "Place the new statement outside the existing multiline import. Existing test assertions are untouched."
+      },
+      {
+        "path": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+        "before": "import {\nimport { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+        "after": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\nimport {\n",
+        "why": "Place the new statement outside the existing multiline import. Existing test assertions are untouched."
+      }
+    ],
+    "stagingProposal": [
+      {
+        "stage": "B2.1",
+        "rule": "In the generator validator use startGoldMilli: positive and omit its new tuning import. Keep the exact 120000 catalog pin. The B1 New Game Gold remains 45000 in this commit."
+      },
+      {
+        "stage": "B2.1",
+        "rule": "Keep B1 WorldNpc unchanged. In generator, pricing and household helpers accept/return an explicitly intersected generated NPC type for the fields that access household."
+      },
+      {
+        "stage": "B2.2 RED",
+        "rule": "Run the strict wrong-value 45000 case with its original expected message and the New Game Gold assertion before changing the tuning. The RED test must still include every current case."
+      },
+      {
+        "stage": "B2.2 GREEN",
+        "rule": "Apply the approved shared WorldNpc field with starter removal and return the validator, generator and household type signatures to their final approved bytes, except for the typed sourceId correction above."
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "packages/core/src/data/npc-generator.json",
+      "sha256": "03ee6792af7b5195f01ca8cfbd90311749f36a036df35017a46b5743c395895a",
+      "bytes": 8573
+    },
+    {
+      "path": "packages/core/src/data/validate.ts",
+      "sha256": "91be039b54af85c421090a0ef51fac460759ae047638856fb670a7ae35dee855",
+      "bytes": 59524
+    },
+    {
+      "path": "packages/core/src/index.ts",
+      "sha256": "ff57e98d23b4aa6d6586875dc46a4a9432b36948a1c7f8994d31f075d08d3bf5",
+      "bytes": 1444
+    },
+    {
+      "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+      "sha256": "8094699a2f27585d80a5525c32b6cc727a60bb50c7a241a92ca13cf4f871f425",
+      "bytes": 13435
+    },
+    {
+      "path": "packages/core/src/world/npc-generator.ts",
+      "sha256": "4c6da36366e72fe0e3f5d882e5a18867c747dc534c949da92f7a9008c7a613d0",
+      "bytes": 7522
+    },
+    {
+      "path": "packages/core/src/world/npc-household.ts",
+      "sha256": "2db5e1a6773c2fe9ff9f63d5e3420d13dbc0fe97692eced5c5bc4e90a2b497b3",
+      "bytes": 3175
+    },
+    {
+      "path": "packages/core/src/world/npc-price.ts",
+      "sha256": "b966c794c0ab8061c55bb63202cde00c393ed7c62819dd55bc30b399f9a1d8d8",
+      "bytes": 1196
+    }
+  ]
+}

@@ -1,0 +1,338 @@
+{
+  "status": "proposed",
+  "hunks": [
+    {
+      "path": "packages/core/src/trial/society.ts",
+      "from": 14,
+      "to": 14,
+      "after": "export const SOCIETY_RULESET = 'tile-society-12';",
+      "why": "Routes the new saved shape and also updates the world and scenario ruleset through existing references.",
+      "approval": "Owner approval for B2 allowlist addition"
+    },
+    {
+      "path": "packages/core/src/data/validate.ts",
+      "from": 301,
+      "to": 301,
+      "after": "    initialGoldMilli: number;",
+      "why": "Keep the configurable Gold amount in tuning.json and assert the exact grant in the catalog and New Game tests.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/core/src/data/validate.ts",
+      "from": 308,
+      "to": 308,
+      "after": "    readonly rulesetId: \"tile-society-12\";",
+      "why": "Typed society tuning accepts the current version.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/core/src/data/validate.ts",
+      "from": 632,
+      "to": 632,
+      "after": "        \"rulesetId\": literal(\"tile-society-12\"), \"standing\": nonnegative, \"laws\": object({",
+      "why": "Runtime tuning accepts the current ruleset and rejects a wrong literal.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/core/src/data/tuning.json",
+      "from": 181,
+      "to": 181,
+      "after": "    \"rulesetId\": \"tile-society-12\",",
+      "why": "Aligns canonical JSON with the new saved shape.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/core/src/data/tuning.json",
+      "from": 539,
+      "to": 539,
+      "after": "    \"initialGoldMilli\": 120000,",
+      "why": "Supply 120 Gold from the same New Game factory.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/core/src/world/npc-content.ts",
+      "from": 1,
+      "to": 6,
+      "after": "import type { TraitDefinition } from './npc.js';\n\n// Existing trait and post content remains available to generated NPCs.",
+      "why": "Remove imports and comment unique to the starter templates.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/core/src/world/npc-content.ts",
+      "from": 18,
+      "to": 34,
+      "after": "",
+      "why": "Remove starter records and the old first-name draw pool. The trait and post table remain represented by the original existing exports.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/core/src/character/starter-profiles.ts",
+      "from": 1,
+      "to": 53,
+      "after": "",
+      "why": "Delete file. Relocate PlayerDraft, Player presets, and default Player draft. NPC appearance subsets are in the new JSON proposal.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/core/src/character/session.ts",
+      "from": 10,
+      "to": 11,
+      "after": "import { deepFreeze } from '../data/validate.js';\nimport type { CharacterAppearance, CharacterLifeSessionState, PlayerCharacter, Pronouns } from './types.js';",
+      "why": "Continue exporting identical Player draft and preset behavior from an already-allowed module.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/core/src/character/session.ts",
+      "from": 13,
+      "to": 13,
+      "after": {
+        "copyPath": "packages/core/src/character/starter-profiles.ts",
+        "copyFrom": 2,
+        "copyTo": 32,
+        "trimLeadingAndTrailingBlankLines": false
+      },
+      "why": "Move PlayerDraft, PLAYER_APPEARANCE_PRESETS and DEFAULT_PLAYER_DRAFT to session.ts. Reuse the existing identical catalog deepFreeze.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/core/src/character/session.ts",
+      "from": 96,
+      "to": 96,
+      "after": "// The life session adds the Player to the empty NPC world session.",
+      "why": "Describe the actual empty initial roster without referring to the retired content.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/core/src/character/session.ts",
+      "from": 102,
+      "to": 102,
+      "after": "  const value = { ...world.value, player: player.value, profiles: [] };",
+      "why": "Start with zero NPC profiles, keeping the saved key and order.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/core/src/index.ts",
+      "from": 15,
+      "to": 16,
+      "after": "export * from \"./world/npc-life.js\";\nexport * from \"./world/npc-content.js\";\nexport * from \"./world/npc-generator.js\";\nexport * from \"./world/npc-household.js\";\nexport * from \"./world/npc-price.js\";\nexport { validateNpcGenerator } from \"./data/validate.js\";",
+      "why": "Expose the plan's generator, household, validation, and value APIs.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/core/src/index.ts",
+      "from": 21,
+      "to": 21,
+      "after": "",
+      "why": "Remove deleted starter profile module export. The Player draft exports come from session.ts line 22.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/core/src/world/npc.ts",
+      "from": 6,
+      "to": 8,
+      "after": "import { NPC_MANAGER_BUILDING_TYPES,WORLD_TRAITS } from './npc-content.js';\nimport { isNpcLife, npcAge, type NpcLife } from './npc-life.js';\nimport { homeBeds, isNpcHousehold, type NpcHousehold } from './npc-household.js';\nimport { P7B_TRIAL } from './npc-generator.js';\nimport { CHARACTER_LIMITS } from '../character/catalog.js';",
+      "why": "Remove starter assembly and wire strict household and data-driven cap validation.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/core/src/world/npc.ts",
+      "from": 14,
+      "to": 14,
+      "after": "export interface WorldNpc { character: NamedCharacter; traits: string[]; postTileId: string | null; life: NpcLife; household: NpcHousehold }",
+      "why": "Append the required saved household field in the binding order.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/core/src/world/npc.ts",
+      "from": 48,
+      "to": 57,
+      "after": "    if (!list || list.length > P7B_TRIAL.npcCap) return false;\n    const slots = managerSlotTileIds(city), traitIds = WORLD_TRAITS.map(t => t.id), ids = new Set<string>(), posts = new Set<string>();\n    const names = new Set<string>(), residents = new Map<string, number>();\n    for (const npc of list) {\n      if (!hasWeeklyKeys(npc, ['character', 'traits', 'postTileId', 'life', 'household']) || !isNpcLife(npc.life) || !isNpcHousehold(npc.household)) return false;\n      const c = npc.character, traits = readDenseArray(npc.traits), household = npc.household;\n      if (!isNamedCharacterRecord(c) || c.gender !== 'female' || c.age < CHARACTER_LIMITS.ageMin ||\n          npcAge(npc.life, city.world.week) < CHARACTER_LIMITS.ageMin || ids.has(c.id) || names.has(c.name)) return false;\n      if (c.legalStatus !== (household.status === 'slave' ? 'enslaved' : 'contract_bound') || household.boughtWeek > city.world.week) return false;\n      if (!traits || !traits.every(t => oneOf(t, traitIds)) || new Set(traits).size !== traits.length) return false;\n      const capacity = homeBeds(city, household.home);\n      const used = (residents.get(household.home) ?? 0) + 1;\n      if (used > capacity) return false;\n      residents.set(household.home, used);\n      const post = npc.postTileId;\n      if (post !== null && (household.home === 'estate-1' || typeof post !== 'string' || !slots.includes(post) || posts.has(post))) return false;\n      ids.add(c.id); names.add(c.name); if (post !== null) posts.add(post);",
+      "why": "Validate home existence, capacity, city cap, uniqueness, valid adult, compatible legal status and Hall-only posts. Test-only overrides must keep names unique and use an eligible legal status.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/core/src/world/npc.ts",
+      "from": 70,
+      "to": 81,
+      "after": "// New Game owns no NPCs.\nexport function createNpcWorldSession(seed: unknown): WorldResult<NpcWorldSessionState> {\n  const base = createWorldSession(seed);\n  if (!base.success) return base;\n  return { success: true, value: { ...base.value, npcs: [] } };",
+      "why": "Stop generating owned NPCs in all New Game flows.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/simulation/src/world-npc.ts",
+      "from": 1,
+      "to": 1,
+      "after": "import { createSocietyState,hasWeeklyKeys,homeBeds,homeResidents,isNpcWorldSessionState,isTileTrialState,isWorldNpcList,isWorldSessionState,managerSlotTileIds,type NpcWorldSessionState,type TileTrialReport,type TileTrialState,type ItemWeekContext } from \"@haven/core\";",
+      "why": "Reuse the household capacity selectors in the pure command dispatcher.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/simulation/src/world-npc.ts",
+      "from": 5,
+      "to": 5,
+      "after": "export type WorldNpcErrorCode = \"INVALID_STATE\" | \"INVALID_COMMAND\" | \"STALE_COMMAND\" | \"FORBIDDEN\" | \"UNKNOWN_NPC\" | \"LOCKED_POST\" | \"POST_OCCUPIED\" | \"ALREADY_ASSIGNED\" | \"UNSUPPORTED_RULESET\" | \"NO_BED\" | \"NOT_A_HOME\" | \"NOT_IN_HALL\" | \"NPC_CAP\";",
+      "why": "Add the exact plan error-code surface.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/simulation/src/world-npc.ts",
+      "from": 14,
+      "to": 18,
+      "after": "    const keys: Record<string, string[]> = { ASSIGN_NPC: [\"npcId\", \"tileId\"], UNASSIGN_NPC: [\"npcId\"], MOVE_NPC_HOME: [\"npcId\", \"homeTileId\"] };\n    if (!raw || typeof raw !== \"object\" || !hasWeeklyKeys(raw, Object.keys(raw)) || typeof raw.type !== \"string\" || !Object.hasOwn(keys, raw.type) ||\n        !hasWeeklyKeys(raw, [\"type\", \"expectedRevision\", ...keys[raw.type]]) || typeof raw.npcId !== \"string\" ||\n        (raw.type === \"ASSIGN_NPC\" && typeof raw.tileId !== \"string\") ||\n        (raw.type === \"MOVE_NPC_HOME\" && typeof raw.homeTileId !== \"string\")) return fail(\"INVALID_COMMAND\", \"Unknown NPC command or fields.\");\n    const c = { ...raw } as { type: string; npcId: string; tileId?: string; homeTileId?: string };",
+      "why": "Validate all command data fields before validating caller authority or mutating any state.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/simulation/src/world-npc.ts",
+      "from": 25,
+      "to": 25,
+      "after": "    if (c.type === \"MOVE_NPC_HOME\") {\n      const home = c.homeTileId!, capacity = homeBeds(next.city, home);\n      if (!capacity) return fail(\"NOT_A_HOME\", \"Select the Mansion or a Retainers' Hall.\");\n      if (home !== npc.household.home) {\n        if (homeResidents(next.npcs, home) >= capacity) return fail(\"NO_BED\", \"That home has no free bed.\");\n        npc.household.home = home;\n        if (home === \"estate-1\") npc.postTileId = null;\n      }\n    } else if (c.type === \"ASSIGN_NPC\") {\n      if (npc.household.home === \"estate-1\") return fail(\"NOT_IN_HALL\", \"Only Retainers' Hall residents can hold a city post.\");",
+      "why": "One copied transaction changes home and clears the Mansion post. Current-home move reuses existing idempotent same-assignment revision behavior.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/simulation/src/world-npc.ts",
+      "from": 48,
+      "to": 48,
+      "after": "    const occupiedHomes = new Set((session.npcs as NpcWorldSessionState[\"npcs\"]).map(npc => npc.household.home));\n    const result = executeTileTrialCommand(session.city, raw,ctx,occupiedHomes);",
+      "why": "Connect B1 occupied-Hall guard to actual validated households before any REPLACE write.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/simulation/src/character-life-command.ts",
+      "from": 8,
+      "to": 8,
+      "after": "  | 'ENACT_LAW' | 'REPEAL_LAW' | 'CHOOSE_CARD_OPTION' | 'ASSIGN_NPC' | 'UNASSIGN_NPC' | 'MOVE_NPC_HOME' | 'EXTEND_WALL' | 'SET_TRAINING' | 'CLEAR' | 'SET_RESEARCH' | 'BUILD_DEEP_SHAFT' | ItemCommandType;",
+      "why": "Advertise MOVE in the command type union.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/simulation/src/character-life-command.ts",
+      "from": 32,
+      "to": 32,
+      "after": "  if (!['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED', 'END_WEEK', 'NEXT_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC', 'MOVE_NPC_HOME'].includes(type) && !societyAction) {",
+      "why": "Allow MOVE through the existing invalid-state and phase checks.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/simulation/src/character-life-command.ts",
+      "from": 38,
+      "to": 38,
+      "after": "  const result = type === 'ASSIGN_NPC' || type === 'UNASSIGN_NPC' || type === 'MOVE_NPC_HOME'",
+      "why": "Route through NPC commands. Existing post history hook records clearing when applicable.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/core/src/data/validate.ts",
+      "from": 8,
+      "to": 7,
+      "after": "import npcLifeJson from './npc-life.json' with { type: 'json' };\nimport tuningJson from './tuning.json' with { type: 'json' };\nimport {\n    BUILDS, CHARACTER_LIMITS, EYE_COLORS, FACE_FEATURES, FACE_SHAPES, HAIR_COLORS, HAIR_LENGTHS, HAIR_STYLES, HAIR_TEXTURES,\n    OUTFITS, PLACES, PLAYER_PROFESSIONS, REGIONS, SKIN_TONES, UPBRINGINGS,\n} from '../character/catalog.js';\nimport type { CharacterAppearance } from '../character/types.js';\nimport type { Occupation } from '../domain/character.js';\nimport { readDenseArray } from '../world/arrays.js';\nimport { SOCIAL_RESOURCE_SCALE } from '../social/profile.js';",
+      "why": "Resolve allowed origins, existing appearance IDs/Profile bounds and opening Gold from their canonical sources without inventing duplicate tables.",
+      "approval": "Owner approval for proposed validator details"
+    },
+    {
+      "path": "packages/core/src/data/validate.ts",
+      "from": 988,
+      "to": 987,
+      "after": "\ntype NpcRange = readonly [number, number];\ntype NpcSourceId = 'guild' | 'auction-house' | 'slave-market' | 'auction-house-lot' | 'slave-market-lot';\ntype NpcSourceProfile = Readonly<{\n    status: 'slave' | 'servant';\n    mind: NpcRange;\n    skills: NpcRange;\n    beauty: NpcRange;\n    obedience: NpcRange;\n    affection: NpcRange;\n    past: NpcRange;\n    socialClass: readonly ('lower' | 'common' | 'skilled')[];\n}>;\ntype NpcChoices<T> = Readonly<{ [K in keyof T]-?: readonly T[K][] }>;\ntype NpcAppearanceChoices = NpcChoices<Omit<CharacterAppearance, 'hair' | 'face' | 'measurements'>> & Readonly<{\n    hair: NpcChoices<CharacterAppearance['hair']>;\n    face: NpcChoices<CharacterAppearance['face']>;\n    measurements: readonly (NonNullable<CharacterAppearance['measurements']> | null)[];\n}>;\nexport interface NpcGeneratorCatalog {\n    cultures: Readonly<Record<string, Readonly<{ name: string; given: readonly string[]; epithets: readonly string[] }>>>;\n    originCulture: Readonly<Record<string, string>>;\n    originProfile: Readonly<Record<string, Readonly<{\n        birthplaceId: string; regionId: string; upbringing: string; occupation: Occupation; guildClass: 'common' | 'skilled';\n    }>>>;\n    sources: Readonly<Record<NpcSourceId, NpcSourceProfile>>;\n    appearance: NpcAppearanceChoices;\n    preferences: readonly string[];\n    flaws: readonly string[];\n    price: Readonly<{\n        baseMilli: Readonly<Record<'guild' | 'auction-house' | 'slave-market' | 'lot', number>>;\n        skillPointBps: number; beautyPointBps: number; sexExpLevelBps: number;\n        levelValue: Readonly<Record<'novice' | 'professional' | 'expert', number>>;\n        conditionFactor: number; sellShare: number;\n    }>;\n    P7B_TRIAL: Readonly<{\n        marker: 'TRIAL'; age: NpcRange; ageWeightYoung: number; youngAge: NpcRange; olderAge: NpcRange;\n        stockSize: number; startGoldMilli: number; npcCap: number; traitCount: NpcRange; statRange: NpcRange;\n        profileAxisRange: NpcRange; contractWeeks: number; wageMilli: NpcRange;\n        professionalAtCount: number; expertAtCount: number;\n    }>;\n}\nconst npcSourceIds: readonly NpcSourceId[] = ['guild', 'auction-house', 'slave-market', 'auction-house-lot', 'slave-market-lot'];\nconst npcGeneratorFile = 'npc-generator.json';\nconst npcDataKey: Rule = (value, ref, field) => {\n    if (typeof value !== 'string' || !/^[a-z][a-z0-9_]*$/.test(value)) fail(ref, field, 'expected stable lowercase id');\n};\nconst nameWord: Rule = (value, ref, field) => {\n    if (typeof value !== 'string' || !/^[A-Z][a-z]+$/.test(value)) fail(ref, field, 'expected one capitalized English word');\n};\nconst within = ([minimum, maximum]: NpcRange): Rule => (value, ref, field) => {\n    if (!Number.isSafeInteger(value) || (value as number) < minimum || (value as number) > maximum)\n        fail(ref, field, `expected integer in [${minimum}, ${maximum}]`);\n};\nconst ascending = (item: Rule): Rule => (value, ref, field) => {\n    tuple([item, item])(value, ref, field);\n    const [min, max] = value as NpcRange;\n    if (min > max) fail(ref, field, 'expected an ascending inclusive range');\n};\nconst denseChoices = (item: Rule, allowEmpty = false): Rule => (value, ref, field) => {\n    const entries = readDenseArray(value);\n    if (entries === null || (!allowEmpty && !entries.length)) fail(ref, field, allowEmpty ? 'expected dense array' : 'expected nonempty dense array');\n    const checked = entries!;\n    const keys = checked.map(entry => JSON.stringify(entry));\n    if (new Set(keys).size !== keys.length) fail(ref, field, 'expected unique entries');\n    checked.forEach((entry, index) => item(entry, ref, child(field, String(index))));\n};\nconst npcWordIds = (entries: readonly { readonly id: string }[]) => oneOf(...entries.map(entry => entry.id));\n\nexport function validateNpcGenerator(json: unknown): NpcGeneratorCatalog {\n    const ref = `${npcGeneratorFile}#catalog`;\n    const root = record(json, ref, 'entries');\n    object({ cultures: () => {}, originCulture: () => {}, originProfile: () => {}, sources: () => {},\n        appearance: () => {}, preferences: denseChoices(npcDataKey), flaws: denseChoices(npcDataKey), price: () => {}, P7B_TRIAL: () => {},\n    })(root, ref, '');\n    const cultures = record(root.cultures, ref, 'cultures');\n    const cultureIds = Object.keys(cultures);\n    if (!cultureIds.length) fail(ref, 'cultures', 'expected at least one culture');\n    for (const id of cultureIds) npcDataKey(id, `${npcGeneratorFile}#${id}`, 'id');\n    catalog(cultures, npcGeneratorFile, cultureIds, object({ name: text, given: denseChoices(nameWord), epithets: denseChoices(nameWord) }));\n    const originIds = Object.keys(npcLifeJson.origins);\n    object(Object.fromEntries(originIds.map(id => [id, oneOf(...cultureIds)])))(root.originCulture, `${npcGeneratorFile}#originCulture`, '');\n    const originRule = object({\n        birthplaceId: npcWordIds(PLACES.filter(place => place.regionId !== null)), regionId: npcWordIds(REGIONS),\n        upbringing: npcWordIds(UPBRINGINGS), occupation: oneOf(...PLAYER_PROFESSIONS), guildClass: oneOf('common', 'skilled'),\n    });\n    object(Object.fromEntries(originIds.map(id => [id, originRule])))(root.originProfile, `${npcGeneratorFile}#originProfile`, '');\n    const trialRef = `${npcGeneratorFile}#P7B_TRIAL`;\n    const age = ascending(within([CHARACTER_LIMITS.ageMin, CHARACTER_LIMITS.ageMax]));\n    const stats = within([0, 100]);\n    object({\n        marker: literal('TRIAL'), age, ageWeightYoung: probability, youngAge: age, olderAge: age, stockSize: positive,\n        startGoldMilli: literal(tuningJson.GOODS_STOCK_TRIAL.initialGoldMilli), npcCap: positive, traitCount: ascending(positive),\n        statRange: ascending(stats), profileAxisRange: ascending(stats), contractWeeks: positive, wageMilli: ascending(positive),\n        professionalAtCount: positive, expertAtCount: positive,\n    })(root.P7B_TRIAL, trialRef, '');\n    const trial = root.P7B_TRIAL as NpcGeneratorCatalog['P7B_TRIAL'];\n    if (trial.youngAge[0] !== trial.age[0] || trial.youngAge[1] + 1 !== trial.olderAge[0] || trial.olderAge[1] !== trial.age[1])\n        fail(trialRef, 'age', 'expected young and older ranges to partition the adult age range');\n    if (trial.professionalAtCount >= trial.expertAtCount)\n        fail(trialRef, 'expertAtCount', 'expected greater than professionalAtCount');\n    if (trial.wageMilli.some(wage => wage % SOCIAL_RESOURCE_SCALE !== 0))\n        fail(trialRef, 'wageMilli', 'expected whole Gold amounts in milli');\n    const sourceRange = ascending(stats);\n    const sources = record(root.sources, ref, 'sources');\n    for (const id of Object.keys(sources)) {\n        if (!npcSourceIds.includes(id as NpcSourceId)) fail(`${npcGeneratorFile}#${id}`, 'id', 'unknown id');\n    }\n    for (const id of npcSourceIds) {\n        const guild = id === 'guild';\n        object({\n            status: literal(guild ? 'servant' : 'slave'), mind: sourceRange, skills: sourceRange, beauty: sourceRange,\n            obedience: sourceRange, affection: sourceRange, past: ascending(nonnegative),\n            socialClass: denseChoices(guild ? oneOf('common', 'skilled') : literal('lower')),\n        })(sources[id], `${npcGeneratorFile}#${id}`, '');\n        const classes = (sources[id] as NpcSourceProfile).socialClass;\n        if (guild && (!classes.includes('common') || !classes.includes('skilled')))\n            fail(`${npcGeneratorFile}#${id}`, 'socialClass', 'expected common and skilled');\n    }\n    const measurements: Rule = (value, rowRef, field) => {\n        if (value === null) return;\n        object({ chestCm: within(CHARACTER_LIMITS.chestCm), waistCm: within(CHARACTER_LIMITS.waistCm),\n            hipsCm: within(CHARACTER_LIMITS.hipsCm), disclosure: oneOf('known', 'unknown'),\n        })(value, rowRef, field);\n    };\n    object({\n        presentation: denseChoices(literal('feminine')), skinTone: denseChoices(npcWordIds(SKIN_TONES)), eyeColor: denseChoices(npcWordIds(EYE_COLORS)),\n        hair: object({ color: denseChoices(npcWordIds(HAIR_COLORS)), length: denseChoices(npcWordIds(HAIR_LENGTHS)),\n            texture: denseChoices(npcWordIds(HAIR_TEXTURES)), style: denseChoices(npcWordIds(HAIR_STYLES)) }),\n        face: object({ shape: denseChoices(npcWordIds(FACE_SHAPES)), features: denseChoices(denseChoices(npcWordIds(FACE_FEATURES), true)) }),\n        build: denseChoices(npcWordIds(BUILDS)), heightCm: denseChoices(within(CHARACTER_LIMITS.heightCm)),\n        weightKg: denseChoices(within(CHARACTER_LIMITS.weightKg)), measurements: denseChoices(measurements),\n        outfit: denseChoices(oneOf('role_default', ...OUTFITS.map(outfit => outfit.id))),\n    })(root.appearance, `${npcGeneratorFile}#appearance`, '');\n    object({\n        baseMilli: object({ guild: positive, 'auction-house': positive, 'slave-market': positive, lot: positive }),\n        skillPointBps: positive, beautyPointBps: positive, sexExpLevelBps: positive,\n        levelValue: object({ novice: nonnegative, professional: positive, expert: positive }),\n        conditionFactor: literal(1), sellShare: probability,\n    })(root.price, `${npcGeneratorFile}#price`, '');\n    return root as unknown as NpcGeneratorCatalog;\n}",
+      "why": "Validate generator data at import and pin exact CatalogError strings. Source ranges are configurable as TRIAL.",
+      "approval": "Owner approval for proposed validator details"
+    },
+    {
+      "path": "packages/simulation/src/world-npc.ts",
+      "from": 9,
+      "to": 9,
+      "after": "// Assignment uses the NPC's home and post eligibility. Character stats and traits remain outside the assignment check.",
+      "why": "Describe the new household precondition alongside the existing post rules.",
+      "approval": "B2 allowlist"
+    },
+    {
+      "path": "packages/core/src/__tests__/society-world-integrity.test.ts",
+      "from": 14,
+      "old": "gold: 45000",
+      "after": "gold: 120000",
+      "why": "Pins exact fresh settlement inventory and every prior non-Gold field.",
+      "approval": "Existing test edit for owner approval"
+    },
+    {
+      "path": "packages/core/src/trial/__tests__/society-stock-integrity.test.ts",
+      "from": 26,
+      "old": "gold: 45000",
+      "after": "gold: 120000",
+      "why": "Pins stocked city inventory and the remaining base resources.",
+      "approval": "Existing test edit for owner approval"
+    },
+    {
+      "path": "packages/core/src/trial/__tests__/society-p7b.test.ts",
+      "from": 33,
+      "old": "toBe(45000)",
+      "after": "toBe(120000)",
+      "why": "B1 map and estate pins keep their exact opening inventory check at B2's value.",
+      "approval": "Existing test edit for owner approval"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/society-stock-integrity.test.ts",
+      "from": 36,
+      "old": "gold: 45000 +",
+      "after": "gold: 120000 +",
+      "why": "Independent five-week arithmetic retains every tax, upkeep, goods, and population assertion.",
+      "approval": "Existing test edit for owner approval"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/society-plots.test.ts",
+      "from": 6,
+      "old": "i.gold).toBe(41000)",
+      "after": "i.gold).toBe(116000)",
+      "why": "Default opening Gold pays the same 4000 tavern fee, and Wood remains 5000.",
+      "approval": "Existing test edit for owner approval"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/tile-trial-p7b.test.ts",
+      "from": 131,
+      "old": "gold: 45000 - cost",
+      "after": "gold: 120000 - cost",
+      "why": "The three acquisition construction costs stay the exact B1 prices.",
+      "approval": "Existing test edit for owner approval"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/tile-trial-p7b.test.ts",
+      "from": 149,
+      "old": "gold: 15000",
+      "after": "gold: 90000",
+      "why": "Two flat Hall charges of 15000 from 120000. All other inventory values stay pinned.",
+      "approval": "Existing test edit for owner approval"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/tile-trial-p7b.test.ts",
+      "from": 158,
+      "old": "gold: 30000",
+      "after": "gold: 105000",
+      "why": "First flat Hall build costs 15000 with operating Yard.",
+      "approval": "Existing test edit for owner approval"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/tile-trial-p7b.test.ts",
+      "from": 160,
+      "old": "gold: 15000",
+      "after": "gold: 90000",
+      "why": "Second exact Hall REPLACE costs the same 15000 with an operating Yard.",
+      "approval": "Existing test edit for owner approval"
+    },
+    {
+      "path": "packages/core/src/__tests__/catalog-data.test.ts",
+      "from": 93,
+      "old": "fa7594d47d8299056c5340b130592ff2c93d04131eeaf78596e5deb1956fce25",
+      "after": "ca0be2865a31944b2e11e32aa0f3af64486a67fdf5743e42a263dbd81c0088d3",
+      "why": "B1 canonical hash reproduced before changing just SOCIETY_TRIAL.rulesetId.",
+      "approval": "Existing test edit for owner approval"
+    },
+    {
+      "path": "packages/core/src/__tests__/catalog-data.test.ts",
+      "from": 94,
+      "old": "6e46090f98a4db0231da0659fc6a1788e743dc365de21e4ced5f142b5c7771f2",
+      "after": "d92145743557d8c74bf6f91af7645e7fa7553d6839e4ae0c8d2a441a1079fe65",
+      "why": "B1 canonical hash reproduced before changing just GOODS_STOCK_TRIAL.initialGoldMilli.",
+      "approval": "Existing test edit for owner approval"
+    }
+  ]
+}

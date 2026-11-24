@@ -1,0 +1,93 @@
+{
+  "pairs": 12,
+  "thresholdMs": 50,
+  "checkouts": {
+    "main": {
+      "head": "f73595b449db84b988d44a44cd33620efca9ecad",
+      "tree": "fd04e1f2d7f6f47270a2e7ac82d18b68729a6372",
+      "checkout": "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\b2-c10-benchmark-main",
+      "inputSha256": "c91de147d3f427784e3a83598000bfa5adde0854e6858d48e2463f7c34e00a14"
+    },
+    "b2": {
+      "head": "f31310cb791f549a7672be47219c7578678b7058",
+      "tree": "43ab9e682912eeadc3d4a4d2ef8ca1a7e3aba54d",
+      "checkout": "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01",
+      "inputSha256": "6512ceb7562231ed216a0a258e90d825e9bc39c778a860fc6618a9a2359887f2"
+    }
+  },
+  "variants": {
+    "main": {
+      "coldMedianMs": 85.9529,
+      "coldRangeMs": [
+        65.8138,
+        132.1054
+      ],
+      "coldAtOrAbove50ms": 12,
+      "coldSampleCount": 12,
+      "medianWarmProcessMedianMs": 46.567899999999995,
+      "warmProcessMedianRangeMs": [
+        35.64435,
+        96.1623
+      ],
+      "warmProcessMedianAtOrAbove50ms": 4,
+      "pooledWarmMedianMs": 47.55035,
+      "warmTickRangeMs": [
+        33.759,
+        157.1076
+      ],
+      "warmAtOrAbove50ms": 93,
+      "warmSampleCount": 240
+    },
+    "b2": {
+      "coldMedianMs": 91.53935,
+      "coldRangeMs": [
+        70.907,
+        103.5632
+      ],
+      "coldAtOrAbove50ms": 12,
+      "coldSampleCount": 12,
+      "medianWarmProcessMedianMs": 47.767375,
+      "warmProcessMedianRangeMs": [
+        38.83795,
+        56.48585
+      ],
+      "warmProcessMedianAtOrAbove50ms": 2,
+      "pooledWarmMedianMs": 47.711349999999996,
+      "warmTickRangeMs": [
+        36.4545,
+        93.2058
+      ],
+      "warmAtOrAbove50ms": 94,
+      "warmSampleCount": 240
+    }
+  },
+  "input": {
+    "commonStateSha256": "a897cd60932252a638d4dc26adead84b18144565ac821817bc444f88e13aff75",
+    "sharedNpcCount": 100,
+    "inputDifferences": [
+      "cityRulesetId",
+      "state.city.society.rulesetId",
+      "state.npcs[*].household"
+    ],
+    "sharedGoldMilli": 120000,
+    "sharedWeek": 8,
+    "sharedWorldSeed": 2026
+  },
+  "b2Save": {
+    "bytes": 300168,
+    "sha256": "6512ceb7562231ed216a0a258e90d825e9bc39c778a860fc6618a9a2359887f2",
+    "byteIdentical": true,
+    "inputByteIdentical": true
+  },
+  "pairedWarmMedianDeltaMs": 1.208275000000004,
+  "pairedDeltaRangeMs": [
+    -46.313500000000005,
+    7.276049999999998
+  ],
+  "exactMedianInterval96_14Ms": [
+    -2.5587499999999963,
+    3.1935999999999964
+  ],
+  "sameRevisionAdjacentChangeMedianMs": 4.6818250000000035,
+  "conclusion": "no warm cost distinguishable from run-to-run noise"
+}

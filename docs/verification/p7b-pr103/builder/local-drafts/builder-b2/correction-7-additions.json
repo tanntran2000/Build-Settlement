@@ -1,0 +1,87 @@
+{
+  "status": "Correction 7 read-only comparison, candidate data not applied to the worktree.",
+  "replacementWasOriginalCoinage": true,
+  "exactPublicWebSearch": [
+    "\"Veylathenne\"",
+    "\"Veylathenne\" video game character location"
+  ],
+  "exactIndexedMatches": 0,
+  "changed": [
+    {
+      "path": "packages/core/src/data/npc-generator.json",
+      "jsonPath": "cultures.saltmere.given[1]",
+      "before": "Briala",
+      "after": "Veylathenne",
+      "beforeSha256": "b5c8c04dc61b8a22738c95b08eaa52685ea383ede00396128e1c8ddc431e8fca",
+      "afterSha256": "03ee6792af7b5195f01ca8cfbd90311749f36a036df35017a46b5743c395895a",
+      "beforeBytes": 8568,
+      "afterBytes": 8573
+    },
+    {
+      "probe": "catalogCanonicalSha256",
+      "before": "54f099f2bd626a6c88e185805c57bef19299f9ecddb9d8084b3ea115befe86dc",
+      "after": "b3e0727560c279fb973545ff65753b3e953dc182c27d2f433bfdc55496e9e028"
+    },
+    {
+      "probe": "specificDraw",
+      "before": "Briala Ternwatch",
+      "after": "Veylathenne Ternwatch"
+    },
+    {
+      "probe": "500-draw cohort name",
+      "id": "npc_w38_guild_0",
+      "before": "Briala Gullhaven",
+      "after": "Veylathenne Gullhaven"
+    },
+    {
+      "probe": "500-draw cohort name",
+      "id": "npc_w60_guild_0",
+      "before": "Briala Netmender",
+      "after": "Veylathenne Netmender"
+    },
+    {
+      "probe": "500-draw cohort name",
+      "id": "npc_w101_guild_0",
+      "before": "Briala Gullhaven",
+      "after": "Veylathenne Gullhaven"
+    },
+    {
+      "probe": "500-draw cohort name",
+      "id": "npc_w428_guild_0",
+      "before": "Briala Seawick",
+      "after": "Veylathenne Seawick"
+    },
+    {
+      "probe": "500-draw cohort name",
+      "id": "npc_w446_guild_0",
+      "before": "Briala Netmender",
+      "after": "Veylathenne Netmender"
+    },
+    {
+      "probe": "compactDataBytes",
+      "before": 4606,
+      "after": 4611
+    },
+    {
+      "probe": "compactDataGzipBytes",
+      "before": 1860,
+      "after": 1864
+    }
+  ],
+  "stable": [
+    "all four original NPC sample pins",
+    "14-name one-week set",
+    "500-draw age total",
+    "200-draw source means",
+    "100-NPC save size and SHA-256",
+    "all v12 fixture and catalog golden bytes"
+  ],
+  "additionsToArchivedRedTest": [
+    "catalog canonical SHA-256 after rename",
+    "seed 112, week 1, Guild slot 0, Veylathenne Ternwatch",
+    "all eight salts retain Veylathenne as the given name"
+  ],
+  "candidateFilesContainingTheOldName": [
+    "packages/core/src/data/npc-generator.json"
+  ]
+}

@@ -1,0 +1,152 @@
+UTC start 2026-11-24T02:07:00.836889+00:00
+HEAD 58b4f2d59b1dddff5841db67970b561f3679bfbd
+Tree 95e2bac1a748b98b7be52ef09f3795c5516baa18
+Command: npm test
+CI=
+
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/character-life-session.test.ts (63 tests | 2 failed) 2507ms
+   × fix2 F1: pending migration keeps saved B when legacy A is readable 71ms
+   × fix2 F1: pending migration keeps saved B when legacy A is still blocked 42ms
+ ❯ packages/simulation/src/__tests__/character-life-observation.test.ts (14 tests | 1 failed) 3308ms
+     × zero free posts gives no reason when all NPCs are assigned, but explains an unassigned card once 393ms
+ ❯ packages/core/src/world/__tests__/npc-life.test.ts (58 tests | 1 failed) 939ms
+     × rejects missing life and nonadult/nonfemale NPCs at the WorldNpc boundary 34ms
+ ❯ packages/ui/src/__tests__/data-inspector.test.ts (23 tests | 1 failed) 235ms
+   × finds ids case-insensitively by substring and leaves the input unchanged 36ms
+ ❯ packages/simulation/src/__tests__/law-week.test.ts (21 tests | 1 failed) 1158ms
+   × preserves the law-free five-week gameplay pin and determinism 892ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/character-life-observation.test.ts > actionable catalogues and phase controls > zero free posts gives no reason when all NPCs are assigned, but explains an unassigned card once
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ packages/simulation/src/__tests__/character-life-observation.test.ts:281:51
+    279|     const none = life();
+    280|     none.city.tiles.forEach(t => { t.building = null; });
+    281|     expect(isLiveCharacterLifeSessionState(none)).toBe(true);
+       |                                                   ^
+    282|     expect(observeCharacterLife(none, null).disabledReasons).toEqual([…
+    283|     const report = act(none, { type: 'END_WEEK', expectedWeek: 1 });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  packages/simulation/src/__tests__/law-week.test.ts > preserves the law-free five-week gameplay pin and determinism
+AssertionError: expected { settlement_haven_01: { …(6) } } to deeply equal { settlement_haven_01: { …(6) } }
+
+- Expected
++ Received
+
+@@ -17,11 +17,11 @@
+      ],
+      "foodProcessorOperational": true,
+      "id": "settlement_haven_01",
+      "inventory": {
+        "food": 20000,
+-       "gold": 36890,
++       "gold": 111890,
+        "iron": 4000,
+        "wheat": 0,
+        "wood": 8000,
+      },
+      "name": "Haven",
+
+ ❯ packages/simulation/src/__tests__/law-week.test.ts:149:35
+    147|  const expectedSettlements=structuredClone(old.city.world.settlements)…
+    148|  expectedSettlements[s.city.world.activeSettlementId!].inventory.gold-…
+    149|  expect(s.city.world.settlements).toEqual(expectedSettlements);
+       |                                   ^
+    150| });
+    151| it('is deterministic with three laws over five weeks',()=>{
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > fix2 F1: pending migration keeps saved B when legacy A is readable
+ FAIL  packages/ui/src/__tests__/character-life-session.test.ts > fix2 F1: pending migration keeps saved B when legacy A is still blocked
+AssertionError: expected [ { slotId: 'main', …(4) }, …(3) ] to have a length of 7 but got 4
+
+- Expected
++ Received
+
+- 7
++ 4
+
+ ❯ packages/ui/src/__tests__/character-life-session.test.ts:308:57
+    306|  expect(await readLocalCharacterLife(d)).toEqual({success:false,messag…
+    307|  expect(await d.store.getSystem(MARKER)).toBeNull();expect(await saveL…
+    308|  const before=await d.store.read('main');expect(before).toHaveLength(7…
+       |                                                         ^
+    309|  const migrate=vi.fn(d.store.migrateSlot?.bind(d.store));Object.assign…
+    310|  blocked=availability==='still blocked';
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  packages/ui/src/__tests__/data-inspector.test.ts > finds ids case-insensitively by substring and leaves the input unchanged
+AssertionError: expected [] to deeply equal [ { slotId: 'main', …(4) }, …(1) ]
+
+- Expected
++ Received
+
+- [
+-   {
+-     "id": "NPC_w1_guild_0",
+-     "schemaVersion": 1,
+-     "slotId": "main",
+-     "table": "characters",
+-     "value": {},
+-   },
+-   {
+-     "id": "npc_w1_guild_1",
+-     "schemaVersion": 1,
+-     "slotId": "main",
+-     "table": "characters",
+-     "value": {},
+-   },
+- ]
++ []
+
+ ❯ packages/ui/src/__tests__/data-inspector.test.ts:31:45
+     29| it('finds ids case-insensitively by substring and leaves the input unc…
+     30|   const { findById } = await inspector(), before = structuredClone(row…
+     31|   expect(findById(rows, '  nPc_StArTeR  ')).toEqual(rows.slice(1));
+       |                                             ^
+     32|   expect(findById(rows, 'SESSION')).toEqual([rows[0]]);
+     33|   expect(findById(rows, '')).toEqual(rows);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  packages/core/src/world/__tests__/npc-life.test.ts > untrusted life validation > rejects missing life and nonadult/nonfemale NPCs at the WorldNpc boundary
+TypeError: Cannot convert undefined or null to object
+ ❯ n.character.age packages/core/src/world/__tests__/npc-life.test.ts:155:25
+    153|     const made = api.createNpcWorldSession(0); if (!made.success) thro…
+    154|     for (const mutate of [
+    155|       (n: Mutable) => { delete n.life; }, (n: Mutable) => { n.characte…
+       |                         ^
+    156|       (n: Mutable) => { n.character.gender = 'male'; }, (n: Mutable) =…
+    157|     ]) {
+ ❯ packages/core/src/world/__tests__/npc-life.test.ts:158:54
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+
+ Test Files  5 failed | 132 passed (137)
+      Tests  6 failed | 3180 passed (3186)
+   Start at  09:07:02
+   Duration  82.66s (transform 10.34s, setup 0ms, import 59.79s, tests 239.28s, environment 74ms)
+
+
+UTC end 2026-11-24T02:08:24.913154+00:00
+Exit 1

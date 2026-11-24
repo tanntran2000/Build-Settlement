@@ -1,0 +1,29 @@
+b2.1-exact: validator expected opening Gold 45000; generator data 120000
+
+b2.1-exact: 5 TypeScript diagnostics
+packages/core/src/world/npc-content.ts:26 TS2322 Type '{ character: NamedCharacter; traits: string[]; postTileId: null; life: NpcLife; }[]' is not assignable to type 'readonly WorldNpc[]'.   Property 'household' is missing in type '{ character: NamedCharacter; traits: string[]; postTileId: null; life: NpcLife; }' but required in type 'WorldNpc'.
+packages/core/src/world/npc-generator.ts:76 TS7053 Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Readonly<Record<NpcSourceId, Readonly<{ status: "slave" | "servant"; mind: NpcRange; skills: NpcRange; beauty: NpcRange; obedience: NpcRange; affection: NpcRange; past: NpcRange; socialClass: readonly ("lower" | ... 1 more ... | "skilled")[]; }>>>'.   No index signature with a parameter of type 'string' was found on type 'Readonly<Record<NpcSourceId, Readonly<{ status: "slave" | "servant"; mind: NpcRange; skills: NpcRange; beauty: NpcRange; obedience: NpcRange; affection: NpcRange; past: NpcRange; socialClass: readonly ("lower" | ... 1 more ... | "skilled")[]; }>>>'.
+packages/core/src/world/npc-generator.ts:90 TS7006 Parameter 'id' implicitly has an 'any' type.
+packages/core/src/world/npc-generator.ts:111 TS2322 Type 'unknown' is not assignable to type 'SocialClass | undefined'.
+packages/core/src/world/npc.ts:14 TS2304 Cannot find name 'NpcHousehold'.
+b2.1-with-gold: validator expected opening Gold 120000; generator data 120000
+
+b2.1-with-gold: 5 TypeScript diagnostics
+packages/core/src/world/npc-content.ts:26 TS2322 Type '{ character: NamedCharacter; traits: string[]; postTileId: null; life: NpcLife; }[]' is not assignable to type 'readonly WorldNpc[]'.   Property 'household' is missing in type '{ character: NamedCharacter; traits: string[]; postTileId: null; life: NpcLife; }' but required in type 'WorldNpc'.
+packages/core/src/world/npc-generator.ts:76 TS7053 Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Readonly<Record<NpcSourceId, Readonly<{ status: "slave" | "servant"; mind: NpcRange; skills: NpcRange; beauty: NpcRange; obedience: NpcRange; affection: NpcRange; past: NpcRange; socialClass: readonly ("lower" | ... 1 more ... | "skilled")[]; }>>>'.   No index signature with a parameter of type 'string' was found on type 'Readonly<Record<NpcSourceId, Readonly<{ status: "slave" | "servant"; mind: NpcRange; skills: NpcRange; beauty: NpcRange; obedience: NpcRange; affection: NpcRange; past: NpcRange; socialClass: readonly ("lower" | ... 1 more ... | "skilled")[]; }>>>'.
+packages/core/src/world/npc-generator.ts:90 TS7006 Parameter 'id' implicitly has an 'any' type.
+packages/core/src/world/npc-generator.ts:111 TS2322 Type 'unknown' is not assignable to type 'SocialClass | undefined'.
+packages/core/src/world/npc.ts:14 TS2304 Cannot find name 'NpcHousehold'.
+final: validator expected opening Gold 120000; generator data 120000
+
+final: 3 TypeScript diagnostics
+packages/core/src/world/npc-generator.ts:76 TS7053 Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Readonly<Record<NpcSourceId, Readonly<{ status: "servant" | "slave"; mind: NpcRange; skills: NpcRange; beauty: NpcRange; obedience: NpcRange; affection: NpcRange; past: NpcRange; socialClass: readonly ("lower" | ... 1 more ... | "skilled")[]; }>>>'.   No index signature with a parameter of type 'string' was found on type 'Readonly<Record<NpcSourceId, Readonly<{ status: "servant" | "slave"; mind: NpcRange; skills: NpcRange; beauty: NpcRange; obedience: NpcRange; affection: NpcRange; past: NpcRange; socialClass: readonly ("lower" | ... 1 more ... | "skilled")[]; }>>>'.
+packages/core/src/world/npc-generator.ts:90 TS7006 Parameter 'id' implicitly has an 'any' type.
+packages/core/src/world/npc-generator.ts:111 TS2322 Type 'unknown' is not assignable to type 'SocialClass | undefined'.
+LINT packages/simulation/src/__tests__/character-life-command.test.ts:2  Parsing error: Identifier expected.
+LINT packages/simulation/src/__tests__/character-life-observation.test.ts:2  Parsing error: Identifier expected.
+Lint diagnostics: 2
+
+Start UTC 2026-11-24T01:40:50.5420575Z
+End UTC 2026-11-24T01:41:28.9309030Z
+Exit 1

@@ -1,0 +1,2906 @@
+UTC start 2026-11-24T02:04:03.467276+00:00
+HEAD 58b4f2d59b1dddff5841db67970b561f3679bfbd
+Tree 95e2bac1a748b98b7be52ef09f3795c5516baa18
+Command: npm test -- packages/simulation/src/__tests__/npc-homes.test.ts
+CI=
+
+
+> build-settlement@0.1.0 test
+> vitest run packages/simulation/src/__tests__/npc-homes.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/npc-homes.test.ts (9 tests | 9 failed) 136ms
+     × starts New Game with no NPCs or profiles, 120 Gold, and both fixed L1 homes 34ms
+     × rejects 45000 in generator data once the live tuning is 120000 2ms
+     × accepts 100 residents and refuses 31 in the Mansion or 101 in legal homes 18ms
+     × rejects household mutations while preserving an otherwise valid roster 5ms
+     × keeps Hall posts through a move and reload, and clears the post on entering the Mansion 7ms
+     × refuses full or wrong homes, stale revisions and moves in Report 5ms
+     × protects fixed estates and occupied second Halls until residents move 9ms
+     × refuses the v11 portable checkpoint without mutating its bytes or the current state 26ms
+     × round trips a 100-NPC full-history save byte for byte under 1 MiB 26ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 9 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-homes.test.ts > NPC homes and v12 saves > starts New Game with no NPCs or profiles, 120 Gold, and both fixed L1 homes
+AssertionError: expected [ …(4) ] to strictly equal [ [], [], [], 120000 ]
+
+- Expected
++ Received
+
+  [
+-   [],
+-   [],
+-   [],
+-   120000,
++   [
++     {
++       "character": {
++         "age": 27,
++         "emotions": {
++           "anger": 0,
++           "fear": 10,
++           "hope": 70,
++           "jealousy": 0,
++           "joy": 50,
++           "sadness": 10,
++           "shame": 0,
++           "stress": 20,
++         },
++         "gender": "female",
++         "health": 100,
++         "id": "npc_starter_1",
++         "legalStatus": "citizen",
++         "memories": [],
++         "name": "Lydia",
++         "needs": {
++           "autonomy": 60,
++           "intimacy": 40,
++           "nutrition": 80,
++           "purpose": 50,
++           "recognition": 50,
++           "safety": 70,
++         },
++         "occupation": "technician",
++         "relationshipToPlayer": {
++           "affection": 20,
++           "attraction": 10,
++           "dependency": 20,
++           "familiarity": 10,
++           "fear": 10,
++           "resentment": 0,
++           "respect": 30,
++           "trust": 30,
++         },
++         "skills": {
++           "combat": 30,
++           "management": 40,
++           "medical": 15,
++           "negotiation": 25,
++           "technical": 65,
++         },
++         "socialClass": "skilled",
++       },
++       "life": {
++         "arousal": 0,
++         "beauty": 63,
++         "birthWeek": -1079,
++         "history": {
++           "counters": {},
++           "recent": [],
++         },
++         "hobbies": [
++           "music",
++           "cooking",
++         ],
++         "lust": 30,
++         "lustBase": 30,
++         "mind": 50,
++         "origin": "farming_village",
++         "sexExp": {
++           "ass": {
++             "exp": 0,
++             "level": "novice",
++           },
++           "breast": {
++             "exp": 0,
++             "level": "novice",
++           },
++           "hand": {
++             "exp": 0,
++             "level": "novice",
++           },
++           "mouth": {
++             "exp": 0,
++             "level": "novice",
++           },
++           "vagina": {
++             "exp": 0,
++             "level": "novice",
++           },
++         },
++         "stress": 0,
++         "working": true,
++       },
++       "postTileId": null,
++       "traits": [
++         "frugal",
++         "restless",
++       ],
++     },
++     {
++       "character": {
++         "age": 31,
++         "emotions": {
++           "anger": 0,
++           "fear": 10,
++           "hope": 70,
++           "jealousy": 0,
++           "joy": 50,
++           "sadness": 10,
++           "shame": 0,
++           "stress": 20,
++         },
++         "gender": "female",
++         "health": 85,
++         "id": "npc_starter_2",
++         "legalStatus": "free_resident",
++         "memories": [],
++         "name": "Ruth",
++         "needs": {
++           "autonomy": 60,
++           "intimacy": 40,
++           "nutrition": 80,
++           "purpose": 50,
++           "recognition": 50,
++           "safety": 70,
++         },
++         "occupation": "doctor",
++         "relationshipToPlayer": {
++           "affection": 20,
++           "attraction": 10,
++           "dependency": 20,
++           "familiarity": 10,
++           "fear": 10,
++           "resentment": 0,
++           "respect": 30,
++           "trust": 30,
++         },
++         "skills": {
++           "combat": 10,
++           "management": 35,
++           "medical": 65,
++           "negotiation": 45,
++           "technical": 20,
++         },
++         "socialClass": "skilled",
++       },
++       "life": {
++         "arousal": 0,
++         "beauty": 44,
++         "birthWeek": -1239,
++         "history": {
++           "counters": {},
++           "recent": [],
++         },
++         "hobbies": [
++           "gardening",
++           "music",
++         ],
++         "lust": 22,
++         "lustBase": 22,
++         "mind": 50,
++         "origin": "frontier",
++         "sexExp": {
++           "ass": {
++             "exp": 0,
++             "level": "novice",
++           },
++           "breast": {
++             "exp": 0,
++             "level": "novice",
++           },
++           "hand": {
++             "exp": 0,
++             "level": "novice",
++           },
++           "mouth": {
++             "exp": 0,
++             "level": "novice",
++           },
++           "vagina": {
++             "exp": 0,
++             "level": "novice",
++           },
++         },
++         "stress": 0,
++         "working": true,
++       },
++       "postTileId": null,
++       "traits": [
++         "steady_hands",
++       ],
++     },
++     {
++       "character": {
++         "age": 24,
++         "emotions": {
++           "anger": 0,
++           "fear": 10,
++           "hope": 70,
++           "jealousy": 0,
++           "joy": 50,
++           "sadness": 10,
++           "shame": 0,
++           "stress": 20,
++         },
++         "gender": "female",
++         "health": 100,
++         "id": "npc_starter_3",
++         "legalStatus": "contract_bound",
++         "memories": [],
++         "name": "Iris",
++         "needs": {
++           "autonomy": 60,
++           "intimacy": 40,
++           "nutrition": 80,
++           "purpose": 50,
++           "recognition": 50,
++           "safety": 70,
++         },
++         "occupation": "trader",
++         "relationshipToPlayer": {
++           "affection": 20,
++           "attraction": 10,
++           "dependency": 20,
++           "familiarity": 10,
++           "fear": 10,
++           "resentment": 0,
++           "respect": 30,
++           "trust": 30,
++         },
++         "skills": {
++           "combat": 35,
++           "management": 50,
++           "medical": 20,
++           "negotiation": 60,
++           "technical": 15,
++         },
++         "socialClass": "common",
++       },
++       "life": {
++         "arousal": 0,
++         "beauty": 66,
++         "birthWeek": -959,
++         "history": {
++           "counters": {},
++           "recent": [],
++         },
++         "hobbies": [
++           "gardening",
++           "walking",
++         ],
++         "lust": 23,
++         "lustBase": 23,
++         "mind": 50,
++         "origin": "caravan",
++         "sexExp": {
++           "ass": {
++             "exp": 0,
++             "level": "novice",
++           },
++           "breast": {
++             "exp": 0,
++             "level": "novice",
++           },
++           "hand": {
++             "exp": 0,
++             "level": "novice",
++           },
++           "mouth": {
++             "exp": 0,
++             "level": "novice",
++           },
++           "vagina": {
++             "exp": 0,
++             "level": "novice",
++           },
++         },
++         "stress": 0,
++         "working": true,
++       },
++       "postTileId": null,
++       "traits": [
++         "blunt",
++       ],
++     },
++   ],
++   [
++     {
++       "character": {
++         "age": 27,
++         "emotions": {
++           "anger": 0,
++           "fear": 10,
++           "hope": 70,
++           "jealousy": 0,
++           "joy": 50,
++           "sadness": 10,
++           "shame": 0,
++           "stress": 20,
++         },
++         "gender": "female",
++         "health": 100,
++         "id": "npc_starter_1",
++         "legalStatus": "citizen",
++         "memories": [],
++         "name": "Lydia",
++         "needs": {
++           "autonomy": 60,
++           "intimacy": 40,
++           "nutrition": 80,
++           "purpose": 50,
++           "recognition": 50,
++           "safety": 70,
++         },
++         "occupation": "technician",
++         "relationshipToPlayer": {
++           "affection": 20,
++           "attraction": 10,
++           "dependency": 20,
++           "familiarity": 10,
++           "fear": 10,
++           "resentment": 0,
++           "respect": 30,
++           "trust": 30,
++         },
++         "skills": {
++           "combat": 30,
++           "management": 40,
++           "medical": 15,
++           "negotiation": 25,
++           "technical": 65,
++         },
++         "socialClass": "skilled",
++       },
++       "life": {
++         "arousal": 0,
++         "beauty": 63,
++         "birthWeek": -1079,
++         "history": {
++           "counters": {},
++           "recent": [],
++         },
++         "hobbies": [
++           "music",
++           "cooking",
++         ],
++         "lust": 30,
++         "lustBase": 30,
++         "mind": 50,
++         "origin": "farming_village",
++         "sexExp": {
++           "ass": {
++             "exp": 0,
++             "level": "novice",
++           },
++           "breast": {
++             "exp": 0,
++             "level": "novice",
++           },
++           "hand": {
++             "exp": 0,
++             "level": "novice",
++           },
++           "mouth": {
++             "exp": 0,
++             "level": "novice",
++           },
++           "vagina": {
++             "exp": 0,
++             "level": "novice",
++           },
++         },
++         "stress": 0,
++         "working": true,
++       },
++       "postTileId": null,
++       "traits": [
++         "frugal",
++         "restless",
++       ],
++     },
++     {
++       "character": {
++         "age": 31,
++         "emotions": {
++           "anger": 0,
++           "fear": 10,
++           "hope": 70,
++           "jealousy": 0,
++           "joy": 50,
++           "sadness": 10,
++           "shame": 0,
++           "stress": 20,
++         },
++         "gender": "female",
++         "health": 85,
++         "id": "npc_starter_2",
++         "legalStatus": "free_resident",
++         "memories": [],
++         "name": "Ruth",
++         "needs": {
++           "autonomy": 60,
++           "intimacy": 40,
++           "nutrition": 80,
++           "purpose": 50,
++           "recognition": 50,
++           "safety": 70,
++         },
++         "occupation": "doctor",
++         "relationshipToPlayer": {
++           "affection": 20,
++           "attraction": 10,
++           "dependency": 20,
++           "familiarity": 10,
++           "fear": 10,
++           "resentment": 0,
++           "respect": 30,
++           "trust": 30,
++         },
++         "skills": {
++           "combat": 10,
++           "management": 35,
++           "medical": 65,
++           "negotiation": 45,
++           "technical": 20,
++         },
++         "socialClass": "skilled",
++       },
++       "life": {
++         "arousal": 0,
++         "beauty": 44,
++         "birthWeek": -1239,
++         "history": {
++           "counters": {},
++           "recent": [],
++         },
++         "hobbies": [
++           "gardening",
++           "music",
++         ],
++         "lust": 22,
++         "lustBase": 22,
++         "mind": 50,
++         "origin": "frontier",
++         "sexExp": {
++           "ass": {
++             "exp": 0,
++             "level": "novice",
++           },
++           "breast": {
++             "exp": 0,
++             "level": "novice",
++           },
++           "hand": {
++             "exp": 0,
++             "level": "novice",
++           },
++           "mouth": {
++             "exp": 0,
++             "level": "novice",
++           },
++           "vagina": {
++             "exp": 0,
++             "level": "novice",
++           },
++         },
++         "stress": 0,
++         "working": true,
++       },
++       "postTileId": null,
++       "traits": [
++         "steady_hands",
++       ],
++     },
++     {
++       "character": {
++         "age": 24,
++         "emotions": {
++           "anger": 0,
++           "fear": 10,
++           "hope": 70,
++           "jealousy": 0,
++           "joy": 50,
++           "sadness": 10,
++           "shame": 0,
++           "stress": 20,
++         },
++         "gender": "female",
++         "health": 100,
++         "id": "npc_starter_3",
++         "legalStatus": "contract_bound",
++         "memories": [],
++         "name": "Iris",
++         "needs": {
++           "autonomy": 60,
++           "intimacy": 40,
++           "nutrition": 80,
++           "purpose": 50,
++           "recognition": 50,
++           "safety": 70,
++         },
++         "occupation": "trader",
++         "relationshipToPlayer": {
++           "affection": 20,
++           "attraction": 10,
++           "dependency": 20,
++           "familiarity": 10,
++           "fear": 10,
++           "resentment": 0,
++           "respect": 30,
++           "trust": 30,
++         },
++         "skills": {
++           "combat": 35,
++           "management": 50,
++           "medical": 20,
++           "negotiation": 60,
++           "technical": 15,
++         },
++         "socialClass": "common",
++       },
++       "life": {
++         "arousal": 0,
++         "beauty": 66,
++         "birthWeek": -959,
++         "history": {
++           "counters": {},
++           "recent": [],
++         },
++         "hobbies": [
++           "gardening",
++           "walking",
++         ],
++         "lust": 23,
++         "lustBase": 23,
++         "mind": 50,
++         "origin": "caravan",
++         "sexExp": {
++           "ass": {
++             "exp": 0,
++             "level": "novice",
++           },
++           "breast": {
++             "exp": 0,
++             "level": "novice",
++           },
++           "hand": {
++             "exp": 0,
++             "level": "novice",
++           },
++           "mouth": {
++             "exp": 0,
++             "level": "novice",
++           },
++           "vagina": {
++             "exp": 0,
++             "level": "novice",
++           },
++         },
++         "stress": 0,
++         "working": true,
++       },
++       "postTileId": null,
++       "traits": [
++         "blunt",
++       ],
++     },
++   ],
++   [
++     {
++       "appearance": {
++         "build": "slim",
++         "eyeColor": "grey",
++         "face": {
++           "features": [
++             "freckles",
++           ],
++           "shape": "oval",
++         },
++         "hair": {
++           "color": "brown",
++           "length": "shoulder_length",
++           "style": "tied_back",
++           "texture": "straight",
++         },
++         "heightCm": 168,
++         "outfit": "role_default",
++         "presentation": "feminine",
++         "skinTone": "light_olive",
++         "weightKg": 58,
++       },
++       "id": "npc_starter_1",
++       "identity": {
++         "biography": null,
++         "birthName": null,
++         "birthplaceId": "kestrel_ford",
++         "currentLocationId": "haven",
++         "label": null,
++         "origin": {
++           "regionId": "northreach",
++           "upbringing": "frontier",
++         },
++         "pronouns": "she",
++       },
++       "traits": {
++         "attractiveness": 66,
++         "learningAptitude": 72,
++         "warmth": 34,
++       },
++     },
++     {
++       "appearance": {
++         "build": "average",
++         "eyeColor": "brown",
++         "face": {
++           "features": [
++             "glasses",
++           ],
++           "shape": "heart_shaped",
++         },
++         "hair": {
++           "color": "black",
++           "length": "short",
++           "style": "loose",
++           "texture": "straight",
++         },
++         "heightCm": 174,
++         "outfit": "role_default",
++         "presentation": "feminine",
++         "skinTone": "deep_brown",
++         "weightKg": 70,
++       },
++       "id": "npc_starter_2",
++       "identity": {
++         "biography": null,
++         "birthName": null,
++         "birthplaceId": "tidewall",
++         "currentLocationId": "haven",
++         "label": null,
++         "origin": {
++           "regionId": "saltmere",
++           "upbringing": "port_town",
++         },
++         "pronouns": "she",
++       },
++       "traits": {
++         "attractiveness": 50,
++         "learningAptitude": 55,
++         "warmth": 78,
++       },
++     },
++     {
++       "appearance": {
++         "build": "slim",
++         "eyeColor": "green",
++         "face": {
++           "features": [
++             "high_cheekbones",
++           ],
++           "shape": "round",
++         },
++         "hair": {
++           "color": "red",
++           "length": "long",
++           "style": "braided",
++           "texture": "wavy",
++         },
++         "heightCm": 162,
++         "outfit": "role_default",
++         "presentation": "feminine",
++         "skinTone": "fair",
++         "weightKg": 55,
++       },
++       "id": "npc_starter_3",
++       "identity": {
++         "biography": null,
++         "birthName": null,
++         "birthplaceId": "cinder_hollow",
++         "currentLocationId": "haven",
++         "label": null,
++         "origin": {
++           "regionId": "ashfield",
++           "upbringing": "city",
++         },
++         "pronouns": "she",
++       },
++       "traits": {
++         "attractiveness": 72,
++         "learningAptitude": 48,
++         "warmth": 45,
++       },
++     },
++   ],
++   45000,
+  ]
+
+ ❯ packages/simulation/src/__tests__/npc-homes.test.ts:107:70
+    105|     if (!world.success) throw Error(world.error.message);
+    106|     const gold = session.city.world.settlements.settlement_haven_01.in…
+    107|     expect([world.value.npcs, session.npcs, session.profiles, gold]).t…
+       |                                                                      ^
+    108|     expect(session.player.character.name).toBe('Synthetic Keeper');
+    109|     for (const [tile, expected] of [['estate-1', building('mansion', 1…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/9]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-homes.test.ts > NPC homes and v12 saves > rejects 45000 in generator data once the live tuning is 120000
+AssertionError: expected [Function] to throw an error
+
+- Expected:
+null
+
++ Received:
+undefined
+
+ ❯ packages/simulation/src/__tests__/npc-homes.test.ts:119:46
+    117|   it('rejects 45000 in generator data once the live tuning is 120000',…
+    118|     const data = { ...NPC_GENERATOR_CATALOG, P7B_TRIAL: { ...NPC_GENER…
+    119|     expect(() => validateNpcGenerator(data)).toThrow('npc-generator.js…
+       |                                              ^
+    120|   });
+    121|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/9]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-homes.test.ts > NPC homes and v12 saves > accepts 100 residents and refuses 31 in the Mansion or 101 in legal homes
+AssertionError: expected [ false, false ] to strictly equal [ true, true ]
+
+- Expected
++ Received
+
+  [
+-   true,
+-   true,
++   false,
++   false,
+  ]
+
+ ❯ packages/simulation/src/__tests__/npc-homes.test.ts:128:90
+    126|     expect(['estate-1', 'estate-2', 'house-5'].map(id => homeBeds(vali…
+    127|     expect(['estate-1', 'estate-2', 'house-5'].map(id => homeResidents…
+    128|     expect([isCharacterLifeSessionState(valid), isLiveCharacterLifeSes…
+       |                                                                                          ^
+    129|     for (const invalid of [populate(homes(31, 49, 20), true), populate…
+    130|       const before = structuredClone(invalid);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/9]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-homes.test.ts > NPC homes and v12 saves > rejects household mutations while preserving an otherwise valid roster
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ packages/simulation/src/__tests__/npc-homes.test.ts:138:48
+    136|   it('rejects household mutations while preserving an otherwise valid …
+    137|     const valid = populate(['estate-2', 'estate-2']);
+    138|     expect(isCharacterLifeSessionState(valid)).toBe(true);
+       |                                                ^
+    139|     for (const mutate of [
+    140|       (session: Populated) => { session.npcs[0].household.home = 'fiel…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/9]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-homes.test.ts > NPC homes and v12 saves > keeps Hall posts through a move and reload, and clears the post on entering the Mansion
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ success packages/simulation/src/__tests__/npc-homes.test.ts:73:26
+     71| function success(session: CharacterLifeSessionState, type: string, fie…
+     72|   const result = command(session, type, fields);
+     73|   expect(result.success).toBe(true);
+       |                          ^
+     74|   if (!result.success) throw Error(result.error.message);
+     75|   expect(result.next.city.revision).toBe(session.city.revision + 1);
+ ❯ packages/simulation/src/__tests__/npc-homes.test.ts:156:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/9]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-homes.test.ts > NPC homes and v12 saves > refuses full or wrong homes, stale revisions and moves in Report
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ packages/simulation/src/__tests__/npc-homes.test.ts:171:50
+    169|   it('refuses full or wrong homes, stale revisions and moves in Report…
+    170|     const session = populate(['estate-2', ...Array<string>(10).fill('e…
+    171|     expect(isCharacterLifeSessionState(session)).toBe(true);
+       |                                                  ^
+    172|     failure(session, 'MOVE_NPC_HOME', { npcId, homeTileId: 'estate-1' …
+    173|     failure(session, 'MOVE_NPC_HOME', { npcId, homeTileId: 'field-1' }…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/9]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-homes.test.ts > NPC homes and v12 saves > protects fixed estates and occupied second Halls until residents move
+AssertionError: expected 'INVALID_STATE' to be 'FIXED_BUILDING' // Object.is equality
+
+Expected: "FIXED_BUILDING"
+Received: "INVALID_STATE"
+
+ ❯ failure packages/simulation/src/__tests__/npc-homes.test.ts:84:29
+     82|   expect(result.success).toBe(false);
+     83|   if (result.success) throw Error('Expected command refusal.');
+     84|   expect(result.error.code).toBe(code);
+       |                             ^
+     85|   if (message !== undefined) expect(result.error.message).toBe(message…
+     86|   expect(session).toStrictEqual(original);
+ ❯ packages/simulation/src/__tests__/npc-homes.test.ts:181:52
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/9]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-homes.test.ts > NPC homes and v12 saves > refuses the v11 portable checkpoint without mutating its bytes or the current state
+AssertionError: expected { success: true, state: { …(5) } } to strictly equal { success: false, error: { …(2) } }
+
+- Expected
++ Received
+
+  {
+-   "error": {
+-     "code": "INCOMPATIBLE_SAVE",
+-     "message": "This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.",
++   "state": {
++     "city": {
++       "goodsStock": {
++         "amountMilli": 10000,
++         "rulesetId": "tile-population-goods-01",
++       },
++       "happiness": 80,
++       "phase": "planning",
++       "revision": 0,
++       "society": {
++         "classes": {
++           "bound": {
++             "free": 0,
++             "luminaries": 0,
++             "makers": 0,
++             "merchants": 0,
++           },
++           "free": 55,
++           "luminaries": {
++             "common": 12,
++             "elite": 0,
++           },
++           "makers": {
++             "common": 20,
++             "elite": 0,
++           },
++           "merchants": {
++             "common": 13,
++             "elite": 0,
++           },
++         },
++         "corruption": 50,
++         "crisis": {
++           "calmStreak": 0,
++           "fallCause": null,
++           "hungerStreak": 0,
++           "lastChoice": null,
++           "promise": null,
++           "stage": "none",
++           "weeksInStage": 0,
++         },
++         "debtPressure": {
++           "free": 0,
++           "luminaries": 0,
++           "makers": 0,
++           "merchants": 0,
++         },
++         "desperation": 0,
++         "items": {
++           "consumables": [],
++           "equipped": {},
++           "goals": {
++             "authority": false,
++             "authorityStreak": 0,
++             "calm": false,
++             "rebellionSeen": false,
++             "research": false,
++             "week52": false,
++           },
++           "inventory": [],
++           "market": [
++             {
++               "defId": "common-top-npc",
++               "priceMilli": 5000,
++             },
++             {
++               "defId": "common-top",
++               "priceMilli": 5000,
++             },
++             {
++               "defId": "common-earrings-npc",
++               "priceMilli": 5000,
++             },
++             {
++               "defId": "common-shoes",
++               "priceMilli": 5000,
++             },
++             {
++               "defId": "rare-bottom-player",
++               "priceMilli": 15000,
++             },
++             {
++               "defId": "rare-necklace",
++               "priceMilli": 15000,
++             },
++             {
++               "defId": "epic-ring-player",
++               "priceMilli": 40000,
++             },
++             {
++               "defId": "epic-earrings-npc",
++               "priceMilli": 40000,
++             },
++           ],
++           "materials": {},
++           "nextItemId": 1,
++           "storage": [],
++         },
++         "laws": {
++           "active": [],
++           "promise": null,
++           "repealedUntil": {},
++           "votedWeek": null,
++         },
++         "luxuryStockMilli": 0,
++         "order": {
++           "authority": 50,
++           "crime": 10,
++           "security": 30,
++         },
++         "outside": {
++           "field-1": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": false,
++           },
++           "field-2": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": false,
++           },
++           "field-3": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "field-4": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "field-5": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "forest-1": {
++             "capMilli": 60000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 60000,
++             "wild": false,
++           },
++           "forest-2": {
++             "capMilli": 60000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 60000,
++             "wild": false,
++           },
++           "forest-3": {
++             "capMilli": 60000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 60000,
++             "wild": true,
++           },
++           "forest-4": {
++             "capMilli": 60000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 60000,
++             "wild": true,
++           },
++           "forest-5": {
++             "capMilli": 60000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 60000,
++             "wild": true,
++           },
++           "meadow-1": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "meadow-2": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "meadow-3": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "ore-1": {
++             "capMilli": 80000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 80000,
++             "wild": false,
++           },
++           "ore-2": {
++             "capMilli": 80000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 80000,
++             "wild": false,
++           },
++           "ore-3": {
++             "capMilli": 80000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 80000,
++             "wild": true,
++           },
++           "ore-4": {
++             "capMilli": 80000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 80000,
++             "wild": true,
++           },
++           "pasture-1": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "pasture-2": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "pasture-3": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "plain-1": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": false,
++           },
++           "plain-2": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": false,
++           },
++           "plain-3": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": false,
++           },
++           "plain-4": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": false,
++           },
++           "plain-5": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "plain-6": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "plain-7": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "rock-1": {
++             "capMilli": 100000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 100000,
++             "wild": true,
++           },
++           "rock-2": {
++             "capMilli": 100000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 100000,
++             "wild": true,
++           },
++           "rock-3": {
++             "capMilli": 100000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 100000,
++             "wild": true,
++           },
++         },
++         "pendingCard": null,
++         "research": {
++           "completed": [],
++           "paid": [],
++           "progressMilli": {
++             "barracks-drill": 0,
++             "deep-mining": 0,
++             "watch-patrols": 0,
++           },
++           "topic": null,
++         },
++         "rulesetId": "tile-society-11",
++         "satisfaction": {
++           "bound": 80,
++           "free": 80,
++           "luminaries": 80,
++           "makers": 80,
++           "merchants": 80,
++         },
++         "standing": 50,
++         "stocksMilli": {
++           "cloth": 0,
++           "herbs": 0,
++           "stone": 0,
++           "wool": 0,
++         },
++         "tension": 0,
++         "training": {
++           "progressMilli": 0,
++           "target": null,
++         },
++         "wallRing": 1,
++       },
++       "tiles": [
++         {
++           "building": {
++             "enabled": true,
++             "level": 1,
++             "typeId": "farm",
++             "workers": 2,
++           },
++           "id": "field-1",
++           "terrain": "fertile",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 1,
++             "typeId": "processor",
++             "workers": 2,
++           },
++           "id": "plain-1",
++           "terrain": "plain",
++         },
++         {
++           "building": null,
++           "id": "forest-1",
++           "terrain": "forest",
++         },
++         {
++           "building": null,
++           "id": "ore-1",
++           "terrain": "ore",
++         },
++         {
++           "building": null,
++           "id": "plain-2",
++           "terrain": "plain",
++         },
++         {
++           "building": null,
++           "id": "plain-3",
++           "terrain": "plain",
++         },
++         {
++           "building": null,
++           "id": "forest-2",
++           "terrain": "forest",
++         },
++         {
++           "building": null,
++           "id": "ore-2",
++           "terrain": "ore",
++         },
++         {
++           "building": null,
++           "id": "field-2",
++           "terrain": "fertile",
++         },
++         {
++           "building": null,
++           "id": "plain-4",
++           "terrain": "plain",
++         },
++         {
++           "building": null,
++           "id": "field-3",
++           "terrain": "fertile",
++         },
++         {
++           "building": null,
++           "id": "field-4",
++           "terrain": "fertile",
++         },
++         {
++           "building": null,
++           "id": "pasture-1",
++           "terrain": "pasture",
++         },
++         {
++           "building": null,
++           "id": "pasture-2",
++           "terrain": "pasture",
++         },
++         {
++           "building": null,
++           "id": "meadow-1",
++           "terrain": "meadow",
++         },
++         {
++           "building": null,
++           "id": "meadow-2",
++           "terrain": "meadow",
++         },
++         {
++           "building": null,
++           "id": "forest-3",
++           "terrain": "forest",
++         },
++         {
++           "building": null,
++           "id": "rock-1",
++           "terrain": "rock",
++         },
++         {
++           "building": null,
++           "id": "rock-2",
++           "terrain": "rock",
++         },
++         {
++           "building": null,
++           "id": "plain-5",
++           "terrain": "plain",
++         },
++         {
++           "building": null,
++           "id": "field-5",
++           "terrain": "fertile",
++         },
++         {
++           "building": null,
++           "id": "pasture-3",
++           "terrain": "pasture",
++         },
++         {
++           "building": null,
++           "id": "meadow-3",
++           "terrain": "meadow",
++         },
++         {
++           "building": null,
++           "id": "forest-4",
++           "terrain": "forest",
++         },
++         {
++           "building": null,
++           "id": "forest-5",
++           "terrain": "forest",
++         },
++         {
++           "building": null,
++           "id": "ore-3",
++           "terrain": "ore",
++         },
++         {
++           "building": null,
++           "id": "ore-4",
++           "terrain": "ore",
++         },
++         {
++           "building": null,
++           "id": "rock-3",
++           "terrain": "rock",
++         },
++         {
++           "building": null,
++           "id": "plain-6",
++           "terrain": "plain",
++         },
++         {
++           "building": null,
++           "id": "plain-7",
++           "terrain": "plain",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 3,
++             "typeId": "common-housing",
++             "workers": 0,
++           },
++           "id": "house-1",
++           "terrain": "town",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 2,
++             "typeId": "makers-rowhouses",
++             "workers": 0,
++           },
++           "id": "house-2",
++           "terrain": "town",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 2,
++             "typeId": "scholars-quarters",
++             "workers": 0,
++           },
++           "id": "house-3",
++           "terrain": "town",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 1,
++             "typeId": "merchant-townhouses",
++             "workers": 0,
++           },
++           "id": "house-4",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-5",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-6",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-7",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-8",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-9",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-10",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-11",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-1",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-2",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-3",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-4",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-5",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-6",
++           "terrain": "town",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 1,
++             "typeId": "town-market",
++             "workers": 0,
++           },
++           "id": "spec-1",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-2",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-3",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-4",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-5",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-6",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-7",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-8",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-9",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-10",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-1",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-2",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-3",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-4",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-5",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-6",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-12",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-13",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-14",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-7",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-8",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-11",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-12",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-7",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-8",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-9",
++           "terrain": "town",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 1,
++             "typeId": "mansion",
++             "workers": 0,
++           },
++           "id": "estate-1",
++           "terrain": "town",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 1,
++             "typeId": "retainers-hall",
++             "workers": 0,
++           },
++           "id": "estate-2",
++           "terrain": "town",
++         },
++       ],
++       "world": {
++         "activeSettlementId": "settlement_haven_01",
++         "settlements": {
++           "settlement_haven_01": {
++             "cohorts": [
++               {
++                 "averageHealth": 80,
++                 "count": 100,
++                 "id": "weekly_middle",
++                 "legalStatus": "citizen",
++                 "livingStandard": "decent",
++                 "loyalty": 80,
++                 "morale": 80,
++                 "occupation": "worker",
++                 "productivity": 80,
++                 "resentment": 0,
++                 "socialClass": "common",
++               },
++             ],
++             "foodProcessorOperational": true,
++             "id": "settlement_haven_01",
++             "inventory": {
++               "food": 20000,
++               "gold": 45000,
++               "iron": 4000,
++               "wheat": 0,
++               "wood": 8000,
++             },
++             "name": "Haven",
++             "status": "active",
++           },
++         },
++         "week": 1,
++         "worldMetadata": {
++           "gameVersion": "0.1.0",
++           "worldSeed": 20261028,
++         },
++       },
++     },
++     "npcs": [
++       {
++         "character": {
++           "age": 27,
++           "emotions": {
++             "anger": 0,
++             "fear": 10,
++             "hope": 70,
++             "jealousy": 0,
++             "joy": 50,
++             "sadness": 10,
++             "shame": 0,
++             "stress": 20,
++           },
++           "gender": "female",
++           "health": 100,
++           "id": "npc_starter_1",
++           "legalStatus": "citizen",
++           "memories": [],
++           "name": "Lydia",
++           "needs": {
++             "autonomy": 60,
++             "intimacy": 40,
++             "nutrition": 80,
++             "purpose": 50,
++             "recognition": 50,
++             "safety": 70,
++           },
++           "occupation": "technician",
++           "relationshipToPlayer": {
++             "affection": 20,
++             "attraction": 10,
++             "dependency": 20,
++             "familiarity": 10,
++             "fear": 10,
++             "resentment": 0,
++             "respect": 30,
++             "trust": 30,
++           },
++           "skills": {
++             "combat": 30,
++             "management": 40,
++             "medical": 15,
++             "negotiation": 25,
++             "technical": 65,
++           },
++           "socialClass": "skilled",
++         },
++         "life": {
++           "arousal": 0,
++           "beauty": 60,
++           "birthWeek": -1079,
++           "history": {
++             "counters": {},
++             "recent": [],
++           },
++           "hobbies": [
++             "cooking",
++             "reading",
++           ],
++           "lust": 25,
++           "lustBase": 25,
++           "mind": 50,
++           "origin": "scholar_district",
++           "sexExp": {
++             "ass": {
++               "exp": 0,
++               "level": "novice",
++             },
++             "breast": {
++               "exp": 0,
++               "level": "novice",
++             },
++             "hand": {
++               "exp": 0,
++               "level": "novice",
++             },
++             "mouth": {
++               "exp": 0,
++               "level": "novice",
++             },
++             "vagina": {
++               "exp": 0,
++               "level": "novice",
++             },
++           },
++           "stress": 0,
++           "working": true,
++         },
++         "postTileId": null,
++         "traits": [
++           "frugal",
++           "restless",
++         ],
++       },
++       {
++         "character": {
++           "age": 31,
++           "emotions": {
++             "anger": 0,
++             "fear": 10,
++             "hope": 70,
++             "jealousy": 0,
++             "joy": 50,
++             "sadness": 10,
++             "shame": 0,
++             "stress": 20,
++           },
++           "gender": "female",
++           "health": 85,
++           "id": "npc_starter_2",
++           "legalStatus": "free_resident",
++           "memories": [],
++           "name": "Tessa",
++           "needs": {
++             "autonomy": 60,
++             "intimacy": 40,
++             "nutrition": 80,
++             "purpose": 50,
++             "recognition": 50,
++             "safety": 70,
++           },
++           "occupation": "doctor",
++           "relationshipToPlayer": {
++             "affection": 20,
++             "attraction": 10,
++             "dependency": 20,
++             "familiarity": 10,
++             "fear": 10,
++             "resentment": 0,
++             "respect": 30,
++             "trust": 30,
++           },
++           "skills": {
++             "combat": 10,
++             "management": 35,
++             "medical": 65,
++             "negotiation": 45,
++             "technical": 20,
++           },
++           "socialClass": "skilled",
++         },
++         "life": {
++           "arousal": 0,
++           "beauty": 46,
++           "birthWeek": -1239,
++           "history": {
++             "counters": {},
++             "recent": [],
++           },
++           "hobbies": [
++             "stargazing",
++             "music",
++           ],
++           "lust": 33,
++           "lustBase": 33,
++           "mind": 50,
++           "origin": "farming_village",
++           "sexExp": {
++             "ass": {
++               "exp": 0,
++               "level": "novice",
++             },
++             "breast": {
++               "exp": 0,
++               "level": "novice",
++             },
++             "hand": {
++               "exp": 0,
++               "level": "novice",
++             },
++             "mouth": {
++               "exp": 0,
++               "level": "novice",
++             },
++             "vagina": {
++               "exp": 0,
++               "level": "novice",
++             },
++           },
++           "stress": 0,
++           "working": true,
++         },
++         "postTileId": null,
++         "traits": [
++           "steady_hands",
++         ],
++       },
++       {
++         "character": {
++           "age": 24,
++           "emotions": {
++             "anger": 0,
++             "fear": 10,
++             "hope": 70,
++             "jealousy": 0,
++             "joy": 50,
++             "sadness": 10,
++             "shame": 0,
++             "stress": 20,
++           },
++           "gender": "female",
++           "health": 100,
++           "id": "npc_starter_3",
++           "legalStatus": "contract_bound",
++           "memories": [],
++           "name": "Wendy",
++           "needs": {
++             "autonomy": 60,
++             "intimacy": 40,
++             "nutrition": 80,
++             "purpose": 50,
++             "recognition": 50,
++             "safety": 70,
+            },
+-   "success": false,
++           "occupation": "trader",
++           "relationshipToPlayer": {
++             "affection": 20,
++             "attraction": 10,
++             "dependency": 20,
++             "familiarity": 10,
++             "fear": 10,
++             "resentment": 0,
++             "respect": 30,
++             "trust": 30,
++           },
++           "skills": {
++             "combat": 35,
++             "management": 50,
++             "medical": 20,
++             "negotiation": 60,
++             "technical": 15,
++           },
++           "socialClass": "common",
++         },
++         "life": {
++           "arousal": 0,
++           "beauty": 43,
++           "birthWeek": -959,
++           "history": {
++             "counters": {},
++             "recent": [],
++           },
++           "hobbies": [
++             "sewing",
++             "gardening",
++           ],
++           "lust": 25,
++           "lustBase": 25,
++           "mind": 50,
++           "origin": "frontier",
++           "sexExp": {
++             "ass": {
++               "exp": 0,
++               "level": "novice",
++             },
++             "breast": {
++               "exp": 0,
++               "level": "novice",
++             },
++             "hand": {
++               "exp": 0,
++               "level": "novice",
++             },
++             "mouth": {
++               "exp": 0,
++               "level": "novice",
++             },
++             "vagina": {
++               "exp": 0,
++               "level": "novice",
++             },
++           },
++           "stress": 0,
++           "working": true,
++         },
++         "postTileId": null,
++         "traits": [
++           "blunt",
++         ],
++       },
++     ],
++     "outside": {
++       "actors": [
++         "player",
++         "ai-1",
++         "ai-2",
++       ],
++       "generator": "outside-gen-01",
++       "scenarioId": "outside-trial-01",
++       "seed": 20261028,
++       "tiles": [
++         {
++           "feature": null,
++           "id": "o01",
++           "knownBy": [
++             "ai-1",
++           ],
++           "owner": "ai-1",
++         },
++         {
++           "feature": null,
++           "id": "o02",
++           "knownBy": [
++             "ai-1",
++           ],
++           "owner": "ai-1",
++         },
++         {
++           "feature": null,
++           "id": "o03",
++           "knownBy": [
++             "ai-1",
++           ],
++           "owner": "ai-1",
++         },
++         {
++           "feature": null,
++           "id": "o04",
++           "knownBy": [
++             "ai-1",
++           ],
++           "owner": "ai-1",
++         },
++         {
++           "feature": null,
++           "id": "o05",
++           "knownBy": [
++             "ai-1",
++           ],
++           "owner": "ai-1",
++         },
++         {
++           "feature": null,
++           "id": "o06",
++           "knownBy": [
++             "ai-2",
++           ],
++           "owner": "ai-2",
++         },
++         {
++           "feature": null,
++           "id": "o07",
++           "knownBy": [
++             "ai-2",
++           ],
++           "owner": "ai-2",
++         },
++         {
++           "feature": null,
++           "id": "o08",
++           "knownBy": [
++             "ai-2",
++           ],
++           "owner": "ai-2",
++         },
++         {
++           "feature": null,
++           "id": "o09",
++           "knownBy": [
++             "ai-2",
++           ],
++           "owner": "ai-2",
++         },
++         {
++           "feature": null,
++           "id": "o10",
++           "knownBy": [
++             "ai-2",
++           ],
++           "owner": "ai-2",
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o11",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o12",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o13",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o14",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o15",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o16",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o17",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o18",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "kind": "deposit",
++             "resource": "wood",
++           },
++           "id": "o19",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o20",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o21",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o22",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o23",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o24",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o25",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o26",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "kind": "deposit",
++             "resource": "wood",
++           },
++           "id": "o27",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o28",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o29",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o30",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o31",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o32",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o33",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o34",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o35",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o36",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o37",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "kind": "deposit",
++             "resource": "iron",
++           },
++           "id": "o38",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o39",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o40",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o41",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o42",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o43",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "kind": "deposit",
++             "resource": "iron",
++           },
++           "id": "o44",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o45",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o46",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o47",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o48",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o49",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o50",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o51",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o52",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o53",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o54",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o55",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o56",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o57",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o58",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "kind": "deposit",
++             "resource": "iron",
++           },
++           "id": "o59",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o60",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o61",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o62",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o63",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o64",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o65",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o66",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o67",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o68",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o69",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o70",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o71",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o72",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o73",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o74",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o75",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o76",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o77",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o78",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o79",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o80",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o81",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o82",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o83",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o84",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o85",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o86",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "kind": "deposit",
++             "resource": "wood",
++           },
++           "id": "o87",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o88",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o89",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o90",
++           "knownBy": [],
++           "owner": null,
++         },
++       ],
++     },
++     "player": {
++       "character": {
++         "age": 25,
++         "emotions": {
++           "anger": 0,
++           "fear": 10,
++           "hope": 70,
++           "jealousy": 0,
++           "joy": 50,
++           "sadness": 10,
++           "shame": 0,
++           "stress": 20,
++         },
++         "gender": "other",
++         "health": 100,
++         "id": "player",
++         "legalStatus": "citizen",
++         "memories": [],
++         "name": "Synthetic Keeper",
++         "needs": {
++           "autonomy": 60,
++           "intimacy": 40,
++           "nutrition": 80,
++           "purpose": 50,
++           "recognition": 50,
++           "safety": 70,
++         },
++         "occupation": "worker",
++         "relationshipToPlayer": {
++           "affection": 20,
++           "attraction": 10,
++           "dependency": 20,
++           "familiarity": 10,
++           "fear": 10,
++           "resentment": 0,
++           "respect": 30,
++           "trust": 30,
++         },
++         "skills": {
++           "combat": 20,
++           "management": 30,
++           "medical": 20,
++           "negotiation": 30,
++           "technical": 30,
++         },
++         "socialClass": "common",
++       },
++       "profile": {
++         "appearance": {
++           "build": "average",
++           "eyeColor": "brown",
++           "face": {
++             "features": [],
++             "shape": "oval",
++           },
++           "hair": {
++             "color": "dark_brown",
++             "length": "short",
++             "style": "loose",
++             "texture": "straight",
++           },
++           "heightCm": 170,
++           "outfit": "role_default",
++           "presentation": "androgynous",
++           "skinTone": "olive",
++           "weightKg": 68,
++         },
++         "id": "player",
++         "identity": {
++           "biography": null,
++           "birthName": null,
++           "birthplaceId": "kestrel_ford",
++           "currentLocationId": "haven",
++           "label": null,
++           "origin": {
++             "regionId": "northreach",
++             "upbringing": "frontier",
++           },
++           "pronouns": "they",
++         },
++         "traits": {
++           "attractiveness": 50,
++           "learningAptitude": 50,
++           "warmth": 50,
++         },
++       },
++     },
++     "profiles": [
++       {
++         "appearance": {
++           "build": "slim",
++           "eyeColor": "grey",
++           "face": {
++             "features": [
++               "freckles",
++             ],
++             "shape": "oval",
++           },
++           "hair": {
++             "color": "brown",
++             "length": "shoulder_length",
++             "style": "tied_back",
++             "texture": "straight",
++           },
++           "heightCm": 168,
++           "outfit": "role_default",
++           "presentation": "feminine",
++           "skinTone": "light_olive",
++           "weightKg": 58,
++         },
++         "id": "npc_starter_1",
++         "identity": {
++           "biography": null,
++           "birthName": null,
++           "birthplaceId": "kestrel_ford",
++           "currentLocationId": "haven",
++           "label": null,
++           "origin": {
++             "regionId": "northreach",
++             "upbringing": "frontier",
++           },
++           "pronouns": "she",
++         },
++         "traits": {
++           "attractiveness": 66,
++           "learningAptitude": 72,
++           "warmth": 34,
++         },
++       },
++       {
++         "appearance": {
++           "build": "average",
++           "eyeColor": "brown",
++           "face": {
++             "features": [
++               "glasses",
++             ],
++             "shape": "heart_shaped",
++           },
++           "hair": {
++             "color": "black",
++             "length": "short",
++             "style": "loose",
++             "texture": "straight",
++           },
++           "heightCm": 174,
++           "outfit": "role_default",
++           "presentation": "feminine",
++           "skinTone": "deep_brown",
++           "weightKg": 70,
++         },
++         "id": "npc_starter_2",
++         "identity": {
++           "biography": null,
++           "birthName": null,
++           "birthplaceId": "tidewall",
++           "currentLocationId": "haven",
++           "label": null,
++           "origin": {
++             "regionId": "saltmere",
++             "upbringing": "port_town",
++           },
++           "pronouns": "she",
++         },
++         "traits": {
++           "attractiveness": 50,
++           "learningAptitude": 55,
++           "warmth": 78,
++         },
++       },
++       {
++         "appearance": {
++           "build": "slim",
++           "eyeColor": "green",
++           "face": {
++             "features": [
++               "high_cheekbones",
++             ],
++             "shape": "round",
++           },
++           "hair": {
++             "color": "red",
++             "length": "long",
++             "style": "braided",
++             "texture": "wavy",
++           },
++           "heightCm": 162,
++           "outfit": "role_default",
++           "presentation": "feminine",
++           "skinTone": "fair",
++           "weightKg": 55,
++         },
++         "id": "npc_starter_3",
++         "identity": {
++           "biography": null,
++           "birthName": null,
++           "birthplaceId": "cinder_hollow",
++           "currentLocationId": "haven",
++           "label": null,
++           "origin": {
++             "regionId": "ashfield",
++             "upbringing": "city",
++           },
++           "pronouns": "she",
++         },
++         "traits": {
++           "attractiveness": 72,
++           "learningAptitude": 48,
++           "warmth": 45,
++         },
++       },
++     ],
++   },
++   "success": true,
+  }
+
+ ❯ packages/simulation/src/__tests__/npc-homes.test.ts:193:67
+    191|     const session = newGame();
+    192|     const current = structuredClone(session);
+    193|     expect(deserializeCharacterLifeSave(bytes.toString('utf-8'))).toSt…
+       |                                                                   ^
+    194|     expect(bytes).toStrictEqual(before);
+    195|     expect(session).toStrictEqual(current);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/9]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-homes.test.ts > NPC homes and v12 saves > round trips a 100-NPC full-history save byte for byte under 1 MiB
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ roundTrip packages/simulation/src/__tests__/npc-homes.test.ts:91:25
+     89| function roundTrip(session: CharacterLifeSessionState) {
+     90|   const saved = serializeCharacterLifeSave(session);
+     91|   expect(saved.success).toBe(true);
+       |                         ^
+     92|   if (!saved.success) throw Error(saved.error.message);
+     93|   const loaded = deserializeCharacterLifeSave(saved.text);
+ ❯ packages/simulation/src/__tests__/npc-homes.test.ts:207:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/9]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  9 failed (9)
+   Start at  09:04:04
+   Duration  1.46s (transform 764ms, setup 0ms, import 964ms, tests 136ms, environment 0ms)
+
+
+UTC end 2026-11-24T02:04:06.108304+00:00
+Exit 1

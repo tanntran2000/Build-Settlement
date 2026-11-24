@@ -1,0 +1,83 @@
+P7-B B2 Builder 6.2 xhigh
+mcp:e5c3149a-80c6-41ee-af47-d45d924f7fa7  completed  codex/gpt-6.2-sol
+
+[assistant]
+Precommit typecheck, lint, and all 3,204 unit tests passed. The verifier reconstructed the eight changed files and confirmed the other 528 tracked blobs match `63cbdca`. I’ll commit this tree and run the final gates.
+
+[assistant]
+All seven gates passed at `7ac9ad0`, including 154 architecture tests and 3,204 unit tests. Next are the served-build hash check and the full `CI=1` smoke. The previous smoke took about 34 minutes.
+
+[assistant]
+The served hashes matched, and smoke is running with `CI=1`. The bundle measured 158.425 kB gzip. The 100-NPC save round-tripped at 300,168 bytes and matched the prior save byte for byte.
+
+[assistant]
+The first 14 smoke cases passed, including the 1280px and 1600px accessibility baselines. The narrow-width accessibility cases are next.
+
+[assistant]
+All accessibility widths completed, and smoke has passed 45 cases. The navigation suite is now checking actions and checkpoint behavior.
+
+[assistant]
+Smoke has passed 114 cases. The report checks against the simulation output are complete, and the suite has moved into crafting.
+
+[assistant]
+Smoke has passed 200 cases, including both Hall Move cases and the NPC sheet reflow checks at 320px and 375px.
+
+[assistant]
+Smoke has passed 321 cases, including the storage migration case from Correction 10. The suite is now checking invalid checkpoints and persistence across reloads.
+
+[assistant]
+The full `CI=1` smoke passed all 409 cases in 34.1 minutes. I’ll retake the two screenshots from the new build and verify the evidence manifests and final workspace state.
+
+[assistant]
+**Correction 11 passed Builder verification at `7ac9ad0`.** All nine findings are addressed in the fourth local commit. Gates 1–7 passed, and the full `CI=1` smoke passed **409/409** in 34.1 minutes. [Correction 11 evidence](C:/Users/Admin/.t3/local-drafts/p7b-prB2/builder-b2/correction-11/README.md)
+
+### Final branch
+
+| Commit | Subject |
+| --- | --- |
+| `58b4f2d59b1dddff5841db67970b561f3679bfbd` | `feat(core): seeded npc generator and price` |
+| `f31310cb791f549a7672be47219c7578678b7058` | `feat(core): npc homes, cap and no starter npcs` |
+| `63cbdca96fc7a326d2d1204c0b0871dc34a6d14e` | `test(e2e): seed npcs in the storage migration case` |
+| `7ac9ad0a15d9d0247879b718d464f0813de149dc` **HEAD** | `fix(core): astra round 1 for npc generator and homes` |
+
+Final tree **`961567de7ef638861a55a42589be203037e123c9`**. Git status is empty, ports 4173 and 4174 are free, and all four commits carry the Codex trailer. [Final workspace record](C:/Users/Admin/.t3/local-drafts/p7b-prB2/builder-b2/correction-11/final/b2-3-environment-after.txt)
+
+### RED and GREEN by finding
+
+| Finding | RED or mutation result | GREEN |
+| --- | --- | --- |
+| P1-1 | The original assertion accepted the wrong old-version response. The tightened assertion caught it. | Full `INVALID_SAVE` result and exact message pinned. |
+| P1-2 | Three suffix mutations passed the original checks and failed all 19 tightened test selections. | Exact catalog, malformed-key, and salt-exhaustion messages and error types checked. |
+| P1-3 | Separate invalid given-name and epithet mutations passed the original sweep and failed the tightened sweep. | Both words checked against each NPC’s culture over 200 seeds. |
+| P1-4 | Removing the trait phrase passed the original session test and failed the new pin. | Complete generated `describeShort` string pinned. |
+| P2-1 | The fractional-affection checkpoint loaded. | Import and both Character Life state guards reject it. |
+| P2-2 | The catalog accepted `[5, 5]` with four available traits. | `[4, 4]` passes and `[5, 5]` is refused. |
+| P2-3 | Nine malformed whole-row cases failed the named-field assertions. | All nine exact diagnostics match. |
+| P3-1 | The RNG probe observed a second base-key stream consuming five discarded draws. | One base-key stream remains. The exact sample pins are byte-identical. |
+| P3-2 | Five invalid seeds generated NPCs. | All five are refused. Both unsigned endpoints generate deterministically. |
+
+All **16 expected product RED cases** failed at `63cbdca`, all **seven mutation probes** caught the intended defects, and **123/123 targeted cases** passed after the fixes. The verifier reconstructed 25 exact replacements across eight files and confirmed that the other **528 tracked blobs** match `63cbdca` byte for byte. [RED](C:/Users/Admin/.t3/local-drafts/p7b-prB2/builder-b2/correction-11/targeted-red-summary.json) · [Mutation probes](C:/Users/Admin/.t3/local-drafts/p7b-prB2/builder-b2/correction-11/mutation-summary.json) · [GREEN](C:/Users/Admin/.t3/local-drafts/p7b-prB2/builder-b2/correction-11/targeted-green-summary.json) · [Verifier](C:/Users/Admin/.t3/local-drafts/p7b-prB2/builder-b2/correction-11/verifier-final.json)
+
+### Exact-head gates
+
+| Gate | Result |
+| --- | --- |
+| 1 · Diff check | Pass |
+| 2 · Lint | Pass |
+| 3 · Workspace typecheck | Pass |
+| 4 · Architecture check | Pass |
+| 5 · Architecture tests | **154/154 passed** |
+| 6 · Unit tests | **3,204/3,204 passed** |
+| 7 · Build | Pass |
+| Served-build hashes | Production and regression matched disk |
+| Full `CI=1` smoke | **409/409 passed**, zero failures, skips, or flaky cases |
+
+Workspace typecheck, lint, and all 3,204 unit tests also passed on the staged tree before commit. Git Bash printed `CI=1` before launching the full smoke in the same shell. [Precommit and gate logs](C:/Users/Admin/.t3/local-drafts/p7b-prB2/builder-b2/correction-11/README.md#precommit-and-exact-head-gates) · [Smoke log](C:/Users/Admin/.t3/local-drafts/p7b-prB2/builder-b2/correction-11/final/b2-3-smoke.txt)
+
+### Bundle and artifacts
+
+- **Bundle** — **158.425 kB gzip**, comprising 150.858 kB JS and 7.567 kB CSS. Headroom is **41.575 kB** under the 200 kB budget. [Measurements](C:/Users/Admin/.t3/local-drafts/p7b-prB2/builder-b2/correction-11/final/b2-3-measurements.json)
+- **Save** — The 100-NPC save round-tripped at **300,168 bytes** and matched the prior save byte for byte. [Raw save](C:/Users/Admin/.t3/local-drafts/p7b-prB2/builder-b2/correction-11/final/b2-3-100npc-roundtrip.json)
+- **Screenshots** — Both 1280×900 PNGs were retaken from the new build and matched the prior captures byte for byte. [Characters](C:/Users/Admin/.t3/local-drafts/p7b-prB2/builder-b2/correction-11/final/b2-3-characters-empty-1280x900.png) · [Hall Move](C:/Users/Admin/.t3/local-drafts/p7b-prB2/builder-b2/correction-11/final/b2-3-hall-move-1280x900.png)
+
+The builder checksum manifest verified **968 entries**, including the nested Correction 11 manifests. [Correction 11 SHA256SUMS](C:/Users/Admin/.t3/local-drafts/p7b-prB2/builder-b2/correction-11/SHA256SUMS.txt)

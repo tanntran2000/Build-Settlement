@@ -1,0 +1,22 @@
+UTC start 2026-11-24T02:08:42.264059+00:00
+HEAD 58b4f2d59b1dddff5841db67970b561f3679bfbd
+Tree 95e2bac1a748b98b7be52ef09f3795c5516baa18
+Command: node node_modules/playwright/cli.js test tests/e2e/npc-homes.spec.ts
+CI=1
+
+[WebServer] (node:11884) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:17924) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:27064) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\npc-homes.spec.ts:6:35 › homes show capacity and a keyboard Move clears the city post at 1280px (5.2s)
+  ok 2 [chromium] › tests\e2e\npc-homes.spec.ts:6:35 › homes show capacity and a keyboard Move clears the city post at 1600px (5.2s)
+
+  2 passed (18.1s)
+
+UTC end 2026-11-24T02:09:01.512369+00:00
+Exit 0

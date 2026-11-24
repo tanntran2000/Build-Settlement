@@ -1,0 +1,90 @@
+[
+  {
+    "path": "packages/core/src/world/npc.ts",
+    "findings": [
+      "P2-1"
+    ],
+    "before": "          npcAge(npc.life, city.world.week) < CHARACTER_LIMITS.ageMin || ids.has(c.id) || names.has(c.name)) return false;\n",
+    "after": "          npcAge(npc.life, city.world.week) < CHARACTER_LIMITS.ageMin || !Number.isInteger(c.relationshipToPlayer.affection) ||\n          ids.has(c.id) || names.has(c.name)) return false;\n"
+  },
+  {
+    "path": "packages/core/src/data/validate.ts",
+    "findings": [
+      "P2-2"
+    ],
+    "before": "import { readDenseArray } from '../world/arrays.js';\n",
+    "after": "import { readDenseArray } from '../world/arrays.js';\nimport { WORLD_TRAITS } from '../world/npc-content.js';\n"
+  },
+  {
+    "path": "packages/core/src/data/validate.ts",
+    "findings": [
+      "P2-2"
+    ],
+    "before": "    const trial = root.P7B_TRIAL as NpcGeneratorCatalog['P7B_TRIAL'];\n",
+    "after": "    const trial = root.P7B_TRIAL as NpcGeneratorCatalog['P7B_TRIAL'];\n    if (trial.traitCount[1] > WORLD_TRAITS.length)\n        fail(trialRef, 'traitCount', `expected at most ${WORLD_TRAITS.length} available traits`);\n"
+  },
+  {
+    "path": "packages/core/src/data/validate.ts",
+    "findings": [
+      "P2-3"
+    ],
+    "before": "    object({ cultures: () => {}, originCulture: () => {}, originProfile: () => {}, sources: () => {},\n        appearance: () => {}, preferences: denseChoices(npcDataKey), flaws: denseChoices(npcDataKey), price: () => {}, P7B_TRIAL: () => {},\n",
+    "after": "    object({ cultures: () => {}, originCulture: record, originProfile: record, sources: () => {},\n        appearance: record, preferences: denseChoices(npcDataKey), flaws: denseChoices(npcDataKey), price: record, P7B_TRIAL: record,\n"
+  },
+  {
+    "path": "packages/core/src/data/validate.ts",
+    "findings": [
+      "P2-3"
+    ],
+    "before": "    for (const id of cultureIds) npcDataKey(id, `${npcGeneratorFile}#${id}`, 'id');\n",
+    "after": "    for (const id of cultureIds) {\n        npcDataKey(id, `${npcGeneratorFile}#${id}`, 'id');\n        record(cultures[id], `${npcGeneratorFile}#cultures`, id);\n    }\n"
+  },
+  {
+    "path": "packages/core/src/data/validate.ts",
+    "findings": [
+      "P2-3"
+    ],
+    "before": "    for (const id of npcSourceIds) {\n        const guild = id === 'guild';\n",
+    "after": "    for (const id of npcSourceIds) {\n        const guild = id === 'guild';\n        record(sources[id], `${npcGeneratorFile}#sources`, id);\n"
+  },
+  {
+    "path": "packages/core/src/world/npc-life.ts",
+    "findings": [
+      "P3-1"
+    ],
+    "before": "  return { mind: 50, lust: lustBase, lustBase, arousal: 0, stress: 0, beauty,\n    birthWeek: 1 - age * P7A_TRIAL.weeksPerYear, origin, hobbies: [first, second], working: true,\n",
+    "after": "  return createNpcLifeFromDraws({ mind: 50, lustBase, beauty, birthWeek: 1 - age * P7A_TRIAL.weeksPerYear,\n    origin, hobbies: [first, second] });\n}\n\nexport function createNpcLifeFromDraws({ mind, lustBase, beauty, birthWeek, origin, hobbies }:\n  Pick<NpcLife, 'mind' | 'lustBase' | 'beauty' | 'birthWeek' | 'origin' | 'hobbies'>): NpcLife {\n  return { mind, lust: lustBase, lustBase, arousal: 0, stress: 0, beauty, birthWeek, origin, hobbies, working: true,\n"
+  },
+  {
+    "path": "packages/core/src/world/npc-generator.ts",
+    "findings": [
+      "P3-1"
+    ],
+    "before": "import { createNpcLife, NPC_HOBBIES, NPC_ORIGINS, npcLifeRandom, P7A_TRIAL, type SexPart }",
+    "after": "import { createNpcLifeFromDraws, NPC_HOBBIES, NPC_ORIGINS, npcLifeRandom, P7A_TRIAL, type SexPart }"
+  },
+  {
+    "path": "packages/core/src/world/npc-generator.ts",
+    "findings": [
+      "P3-1"
+    ],
+    "before": "  const life = createNpcLife(seed, id, age);\n",
+    "after": ""
+  },
+  {
+    "path": "packages/core/src/world/npc-generator.ts",
+    "findings": [
+      "P3-1"
+    ],
+    "before": "  life.mind = drawRange(random, row.mind);\n  life.lust = life.lustBase = drawRange(random, P7A_TRIAL.lustBase);\n  life.beauty = drawRange(random, row.beauty);\n  life.origin = origin;\n  life.birthWeek = week - age * P7A_TRIAL.weeksPerYear;\n  const [firstHobby, secondHobby] = drawDistinct(random, Object.keys(NPC_HOBBIES), life.hobbies.length);\n  life.hobbies = [firstHobby, secondHobby];\n",
+    "after": "  const mind = drawRange(random, row.mind);\n  const lustBase = drawRange(random, P7A_TRIAL.lustBase);\n  const beauty = drawRange(random, row.beauty);\n  const [firstHobby, secondHobby] = drawDistinct(random, Object.keys(NPC_HOBBIES), 2);\n  const life = createNpcLifeFromDraws({ mind, lustBase, beauty, birthWeek: week - age * P7A_TRIAL.weeksPerYear,\n    origin, hobbies: [firstHobby, secondHobby] });\n"
+  },
+  {
+    "path": "packages/core/src/world/npc-generator.ts",
+    "findings": [
+      "P3-2"
+    ],
+    "before": "  if (!Number.isSafeInteger(week) || week <= 0 || !Number.isSafeInteger(nameSalt) || nameSalt < 0 ||\n",
+    "after": "  if (!Number.isSafeInteger(seed) || seed < 0 || seed > 4294967295 ||\n      !Number.isSafeInteger(week) || week <= 0 || !Number.isSafeInteger(nameSalt) || nameSalt < 0 ||\n"
+  }
+]

@@ -1,0 +1,803 @@
+{
+  "head": "58b4f2d59b1dddff5841db67970b561f3679bfbd",
+  "baseTree": "fd04e1f2d7f6f47270a2e7ac82d18b68729a6372",
+  "candidateTree": "62c34cb35c597b26f936f938f924d6449e0094ad",
+  "patchSha256": "0617e0f9b68b1c9f0eaa40f57c6b250fab907df50c8f297e56178fcf3fcf5c08",
+  "workspacePathsCompared": 111,
+  "stage2Paths": [
+    "packages/core/src/__tests__/catalog-data.test.ts",
+    "packages/core/src/__tests__/helpers/npcs.ts",
+    "packages/core/src/__tests__/society-world-integrity.test.ts",
+    "packages/core/src/character/__tests__/describe.test.ts",
+    "packages/core/src/character/__tests__/session.test.ts",
+    "packages/core/src/character/__tests__/validate.test.ts",
+    "packages/core/src/character/session.ts",
+    "packages/core/src/character/starter-profiles.ts",
+    "packages/core/src/data/tuning.json",
+    "packages/core/src/data/validate.ts",
+    "packages/core/src/index.ts",
+    "packages/core/src/trial/__tests__/crime.test.ts",
+    "packages/core/src/trial/__tests__/crisis.test.ts",
+    "packages/core/src/trial/__tests__/items-canonical.test.ts",
+    "packages/core/src/trial/__tests__/items.test.ts",
+    "packages/core/src/trial/__tests__/law.test.ts",
+    "packages/core/src/trial/__tests__/order.test.ts",
+    "packages/core/src/trial/__tests__/outside.test.ts",
+    "packages/core/src/trial/__tests__/society-p7b.test.ts",
+    "packages/core/src/trial/__tests__/society-stock-integrity.test.ts",
+    "packages/core/src/trial/__tests__/society.test.ts",
+    "packages/core/src/trial/society.ts",
+    "packages/core/src/world/__tests__/npc-life.test.ts",
+    "packages/core/src/world/__tests__/npc.test.ts",
+    "packages/core/src/world/__tests__/session.test.ts",
+    "packages/core/src/world/npc-content.ts",
+    "packages/core/src/world/npc-generator.ts",
+    "packages/core/src/world/npc-household.ts",
+    "packages/core/src/world/npc-price.ts",
+    "packages/core/src/world/npc.ts",
+    "packages/persistence/src/__tests__/character-life-save.test.ts",
+    "packages/persistence/src/__tests__/fixtures/society-v12/life-5-weeks.json",
+    "packages/persistence/src/__tests__/fixtures/society-v12/life-crime-death.json",
+    "packages/persistence/src/__tests__/fixtures/society-v12/life-crime-raid.json",
+    "packages/persistence/src/__tests__/fixtures/society-v12/life-crime-robbery.json",
+    "packages/persistence/src/__tests__/fixtures/society-v12/life-crime-wound.json",
+    "packages/persistence/src/__tests__/fixtures/society-v12/life-demand-card.json",
+    "packages/persistence/src/__tests__/fixtures/society-v12/life-laws.json",
+    "packages/persistence/src/__tests__/fixtures/society-v12/life-new-game.json",
+    "packages/persistence/src/__tests__/fixtures/society-v12/life-rebellion-last-week.json",
+    "packages/persistence/src/__tests__/fixtures/society-v12/new-game.json",
+    "packages/persistence/src/__tests__/game-store-suite.ts",
+    "packages/persistence/src/__tests__/item-owner-import.test.ts",
+    "packages/persistence/src/__tests__/item-records.test.ts",
+    "packages/persistence/src/__tests__/items-canonical.test.ts",
+    "packages/persistence/src/__tests__/items-rebuild-order.test.ts",
+    "packages/persistence/src/__tests__/npc-life-records.test.ts",
+    "packages/persistence/src/__tests__/session-records.test.ts",
+    "packages/persistence/src/__tests__/society-new-game-fixture.test.ts",
+    "packages/persistence/src/__tests__/society-v9-fixture.test.ts",
+    "packages/persistence/src/session-records.ts",
+    "packages/simulation/src/__tests__/character-life-command.test.ts",
+    "packages/simulation/src/__tests__/character-life-observation.test.ts",
+    "packages/simulation/src/__tests__/craft-command.test.ts",
+    "packages/simulation/src/__tests__/craft-week.test.ts",
+    "packages/simulation/src/__tests__/crime-fixtures.test.ts",
+    "packages/simulation/src/__tests__/crisis-fixtures.test.ts",
+    "packages/simulation/src/__tests__/exhausted-materials.test.ts",
+    "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+    "packages/simulation/src/__tests__/fixtures/p7b-b2-path-diff.ts",
+    "packages/simulation/src/__tests__/fixtures/p7b-b2-path-diff.txt",
+    "packages/simulation/src/__tests__/item-command.test.ts",
+    "packages/simulation/src/__tests__/item-effects.test.ts",
+    "packages/simulation/src/__tests__/law-fixture.test.ts",
+    "packages/simulation/src/__tests__/law-week.test.ts",
+    "packages/simulation/src/__tests__/lord-health.test.ts",
+    "packages/simulation/src/__tests__/npc-homes.test.ts",
+    "packages/simulation/src/__tests__/npc-life-week.test.ts",
+    "packages/simulation/src/__tests__/smithy-data.test.ts",
+    "packages/simulation/src/__tests__/society-plots.test.ts",
+    "packages/simulation/src/__tests__/society-stock-integrity.test.ts",
+    "packages/simulation/src/__tests__/tile-trial-p7b.test.ts",
+    "packages/simulation/src/__tests__/world-npc.test.ts",
+    "packages/simulation/src/character-life-command.ts",
+    "packages/simulation/src/world-npc.ts",
+    "packages/ui/src/CharacterLifeCharacters.svelte",
+    "packages/ui/src/CharacterLifeCity.svelte",
+    "packages/ui/src/TileManagement.svelte",
+    "packages/ui/src/__tests__/character-life-session.test.ts",
+    "packages/ui/src/__tests__/crafting-view.test.ts",
+    "packages/ui/src/__tests__/data-inspector.test.ts",
+    "packages/ui/src/__tests__/items-view.test.ts",
+    "packages/ui/src/__tests__/npc-sheet-view.test.ts",
+    "packages/ui/src/__tests__/report-letters.test.ts",
+    "packages/ui/src/__tests__/world-npc-session.test.ts",
+    "packages/ui/src/__tests__/world-session.test.ts",
+    "tests/e2e/character-life-boundary.spec.ts",
+    "tests/e2e/character-life-navigation-accessibility.spec.ts",
+    "tests/e2e/character-life-navigation.helpers.ts",
+    "tests/e2e/character-life-navigation.spec.ts",
+    "tests/e2e/character-life.spec.ts",
+    "tests/e2e/crafting.spec.ts",
+    "tests/e2e/crime.spec.ts",
+    "tests/e2e/crisis.spec.ts",
+    "tests/e2e/error-log.spec.ts",
+    "tests/e2e/garrison.spec.ts",
+    "tests/e2e/goods-stock.spec.ts",
+    "tests/e2e/items.spec.ts",
+    "tests/e2e/laws.spec.ts",
+    "tests/e2e/ledger.spec.ts",
+    "tests/e2e/npc-homes.spec.ts",
+    "tests/e2e/npc-sheet.spec.ts",
+    "tests/e2e/society.spec.ts",
+    "tests/e2e/storage.spec.ts",
+    "tests/e2e/tile-local-checkpoint.spec.ts",
+    "tests/e2e/tile-save.spec.ts",
+    "tests/e2e/title.spec.ts",
+    "tests/e2e/world-npc-session.spec.ts",
+    "tests/e2e/world-session.spec.ts"
+  ],
+  "correction7": {
+    "status": "Correction 7 read-only comparison, candidate data not applied to the worktree.",
+    "replacementWasOriginalCoinage": true,
+    "exactPublicWebSearch": [
+      "\"Veylathenne\"",
+      "\"Veylathenne\" video game character location"
+    ],
+    "exactIndexedMatches": 0,
+    "changed": [
+      {
+        "path": "packages/core/src/data/npc-generator.json",
+        "jsonPath": "cultures.saltmere.given[1]",
+        "before": "Briala",
+        "after": "Veylathenne",
+        "beforeSha256": "b5c8c04dc61b8a22738c95b08eaa52685ea383ede00396128e1c8ddc431e8fca",
+        "afterSha256": "03ee6792af7b5195f01ca8cfbd90311749f36a036df35017a46b5743c395895a",
+        "beforeBytes": 8568,
+        "afterBytes": 8573
+      },
+      {
+        "probe": "catalogCanonicalSha256",
+        "before": "54f099f2bd626a6c88e185805c57bef19299f9ecddb9d8084b3ea115befe86dc",
+        "after": "b3e0727560c279fb973545ff65753b3e953dc182c27d2f433bfdc55496e9e028"
+      },
+      {
+        "probe": "specificDraw",
+        "before": "Briala Ternwatch",
+        "after": "Veylathenne Ternwatch"
+      },
+      {
+        "probe": "500-draw cohort name",
+        "id": "npc_w38_guild_0",
+        "before": "Briala Gullhaven",
+        "after": "Veylathenne Gullhaven"
+      },
+      {
+        "probe": "500-draw cohort name",
+        "id": "npc_w60_guild_0",
+        "before": "Briala Netmender",
+        "after": "Veylathenne Netmender"
+      },
+      {
+        "probe": "500-draw cohort name",
+        "id": "npc_w101_guild_0",
+        "before": "Briala Gullhaven",
+        "after": "Veylathenne Gullhaven"
+      },
+      {
+        "probe": "500-draw cohort name",
+        "id": "npc_w428_guild_0",
+        "before": "Briala Seawick",
+        "after": "Veylathenne Seawick"
+      },
+      {
+        "probe": "500-draw cohort name",
+        "id": "npc_w446_guild_0",
+        "before": "Briala Netmender",
+        "after": "Veylathenne Netmender"
+      },
+      {
+        "probe": "compactDataBytes",
+        "before": 4606,
+        "after": 4611
+      },
+      {
+        "probe": "compactDataGzipBytes",
+        "before": 1860,
+        "after": 1864
+      }
+    ],
+    "stable": [
+      "all four original NPC sample pins",
+      "14-name one-week set",
+      "500-draw age total",
+      "200-draw source means",
+      "100-NPC save size and SHA-256",
+      "all v12 fixture and catalog golden bytes"
+    ],
+    "additionsToArchivedRedTest": [
+      "catalog canonical SHA-256 after rename",
+      "seed 112, week 1, Guild slot 0, Veylathenne Ternwatch",
+      "all eight salts retain Veylathenne as the given name"
+    ],
+    "candidateFilesContainingTheOldName": [
+      "packages/core/src/data/npc-generator.json"
+    ]
+  },
+  "correction8": {
+    "status": "Proposal for owner approval. None applied to the product branch.",
+    "finalByteChanges": [
+      {
+        "path": "packages/core/src/world/npc-generator.ts",
+        "proposedLine": 76,
+        "before": "  const row = catalog.sources[slot === 'lot' && source !== 'guild' ? `${source}-lot` : source];\n",
+        "after": "  const sourceId: keyof typeof catalog.sources = slot === 'lot' && source !== 'guild' ? `${source}-lot` : source;\n  const row = catalog.sources[sourceId];\n",
+        "why": "Preserve the same runtime key and recover the contextual finite union."
+      },
+      {
+        "path": "packages/simulation/src/__tests__/character-life-command.test.ts",
+        "before": "import {\nimport { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+        "after": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\nimport {\n",
+        "why": "Place the new statement outside the existing multiline import. Existing test assertions are untouched."
+      },
+      {
+        "path": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+        "before": "import {\nimport { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\n",
+        "after": "import { NPC_TEST_KEYS, withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';\nimport {\n",
+        "why": "Place the new statement outside the existing multiline import. Existing test assertions are untouched."
+      }
+    ],
+    "stagingProposal": [
+      {
+        "stage": "B2.1",
+        "rule": "In the generator validator use startGoldMilli: positive and omit its new tuning import. Keep the exact 120000 catalog pin. The B1 New Game Gold remains 45000 in this commit."
+      },
+      {
+        "stage": "B2.1",
+        "rule": "Keep B1 WorldNpc unchanged. In generator, pricing and household helpers accept/return an explicitly intersected generated NPC type for the fields that access household."
+      },
+      {
+        "stage": "B2.2 RED",
+        "rule": "Run the strict wrong-value 45000 case with its original expected message and the New Game Gold assertion before changing the tuning. The RED test must still include every current case."
+      },
+      {
+        "stage": "B2.2 GREEN",
+        "rule": "Apply the approved shared WorldNpc field with starter removal and return the validator, generator and household type signatures to their final approved bytes, except for the typed sourceId correction above."
+      }
+    ]
+  },
+  "verifiedFiles": [
+    {
+      "path": "packages/core/src/__tests__/catalog-data.test.ts",
+      "sha256": "2fa4314307557e0c7828b4a7b70d719443fb30be5be86156575b3caca97eee92",
+      "bytes": 7741
+    },
+    {
+      "path": "packages/core/src/__tests__/helpers/npcs.ts",
+      "sha256": "0fafc0b97b85ee1c7dce3165258d9ff191189925f52fc88f6384bc7803dd71f2",
+      "bytes": 1933
+    },
+    {
+      "path": "packages/core/src/__tests__/society-world-integrity.test.ts",
+      "sha256": "215f7c7bc751f00f2744a8d0a43b2bf67cd673abf5b23be49af0865c5b87f12b",
+      "bytes": 1785
+    },
+    {
+      "path": "packages/core/src/character/__tests__/describe.test.ts",
+      "sha256": "864bc640dcf5fa4dc591d78f3c434514e9cd9f88c81a58f902c15759a864f653",
+      "bytes": 14707
+    },
+    {
+      "path": "packages/core/src/character/__tests__/session.test.ts",
+      "sha256": "360d9822b4114279cddf7f6efdedd58e1c6ff958f5e63a6fdc24663727dcebfd",
+      "bytes": 13541
+    },
+    {
+      "path": "packages/core/src/character/__tests__/validate.test.ts",
+      "sha256": "a2e3bea4e536a85439360ac971c993b2e7af8b5f60f4d44d40429f23119ce723",
+      "bytes": 23793
+    },
+    {
+      "path": "packages/core/src/character/session.ts",
+      "sha256": "f1c0271bd18e848f1245372782c279a4639a3bf1f52469772c8724a11de38d76",
+      "bytes": 10890
+    },
+    {
+      "path": "packages/core/src/character/starter-profiles.ts",
+      "deleted": true
+    },
+    {
+      "path": "packages/core/src/data/npc-generator.json",
+      "sha256": "03ee6792af7b5195f01ca8cfbd90311749f36a036df35017a46b5743c395895a",
+      "bytes": 8573
+    },
+    {
+      "path": "packages/core/src/data/tuning.json",
+      "sha256": "e8f269cd2ccd5768671a6a9e7b4ac9c0cfa6b6e01ef7a7e8e8dc823b26692a17",
+      "bytes": 13691
+    },
+    {
+      "path": "packages/core/src/data/validate.ts",
+      "sha256": "c266e789aa749257d73f7c8a3194ba5ab2bb7ede3b4d11fcd1299154fea6dc70",
+      "bytes": 59633
+    },
+    {
+      "path": "packages/core/src/index.ts",
+      "sha256": "80f4ebd2bb5e524f9fec0b893adb5e5c8961409620e39e6c518b868d4dd4428a",
+      "bytes": 1395
+    },
+    {
+      "path": "packages/core/src/trial/__tests__/crime.test.ts",
+      "sha256": "9deefff90c97faa36bd9c5af6f507efd53e19a90a17aa59a34e9e4b582098f36",
+      "bytes": 1916
+    },
+    {
+      "path": "packages/core/src/trial/__tests__/crisis.test.ts",
+      "sha256": "78dff49049d1a75c5045f974e4d41b5e131dcf0846800062cfa2403d6e6db997",
+      "bytes": 2718
+    },
+    {
+      "path": "packages/core/src/trial/__tests__/items-canonical.test.ts",
+      "sha256": "228b66ece6e39211ea6e23c3b29dcea80a31768cd36a22117762f995da936804",
+      "bytes": 1677
+    },
+    {
+      "path": "packages/core/src/trial/__tests__/items.test.ts",
+      "sha256": "7cac5dc82a3f7dbbf0cf0cae98496df2010b83367c7695b1c39d168a434348df",
+      "bytes": 4705
+    },
+    {
+      "path": "packages/core/src/trial/__tests__/law.test.ts",
+      "sha256": "426ff78fe5a2979eea1ab9b2eea1ca3d1c002a47fef04b44625c56e5fefc24c5",
+      "bytes": 8705
+    },
+    {
+      "path": "packages/core/src/trial/__tests__/order.test.ts",
+      "sha256": "25571cd0b62aa74902130c99d5556be3a15399831d6333444d592d0c59632515",
+      "bytes": 5832
+    },
+    {
+      "path": "packages/core/src/trial/__tests__/outside.test.ts",
+      "sha256": "dcbfa7cd3a9f41eec848174993181d6dc8854e6fdd4350347287f5fa27ee4bf9",
+      "bytes": 9174
+    },
+    {
+      "path": "packages/core/src/trial/__tests__/society-p7b.test.ts",
+      "sha256": "34eda68b6d2ab36dae23741d8584021505efcc358c45feba7707f896f7bc592c",
+      "bytes": 6790
+    },
+    {
+      "path": "packages/core/src/trial/__tests__/society-stock-integrity.test.ts",
+      "sha256": "ba9e4444c06ab6be20fa89046960068e77e8ad0613a21e763b4a6c78f80f8733",
+      "bytes": 3897
+    },
+    {
+      "path": "packages/core/src/trial/__tests__/society.test.ts",
+      "sha256": "fa55155d76951569b0e26d00a73a4e9ed5bc35e6642847e51daea00e3645e270",
+      "bytes": 6067
+    },
+    {
+      "path": "packages/core/src/trial/society.ts",
+      "sha256": "dbf551e0af1b44220a6bd89a7b1257c6977291c8bb0e3327b30c279b204358f8",
+      "bytes": 9270
+    },
+    {
+      "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+      "sha256": "8094699a2f27585d80a5525c32b6cc727a60bb50c7a241a92ca13cf4f871f425",
+      "bytes": 13435
+    },
+    {
+      "path": "packages/core/src/world/__tests__/npc-life.test.ts",
+      "sha256": "9cd625a48f7811c8843eebaec68f6cf03d8a3543280dfcacdbd6d7a4dc04b1ea",
+      "bytes": 11516
+    },
+    {
+      "path": "packages/core/src/world/__tests__/npc.test.ts",
+      "sha256": "f8b176f9aed51f57c64dce7c6efbc4c7c64452b76b9ef21e89f605339bb7f025",
+      "bytes": 8635
+    },
+    {
+      "path": "packages/core/src/world/__tests__/session.test.ts",
+      "sha256": "b15dfb4adf0f708badafdec4678074de1366aceb298e0318bbdf1484918d763b",
+      "bytes": 6316
+    },
+    {
+      "path": "packages/core/src/world/npc-content.ts",
+      "sha256": "de78b4f3e46b038681acc88e586bbadd0af623b241b151e1bd4b5d9630dd330e",
+      "bytes": 1379
+    },
+    {
+      "path": "packages/core/src/world/npc-generator.ts",
+      "sha256": "097d32c5f1936e2874e6c64222d428c7e0b9773f899caeb46d9018685dd079a0",
+      "bytes": 7496
+    },
+    {
+      "path": "packages/core/src/world/npc-household.ts",
+      "sha256": "af1151ca8a710cbdcc3fc645bb45a8aa777bab47e1b69d1b5f5d2b99de97abf2",
+      "bytes": 3095
+    },
+    {
+      "path": "packages/core/src/world/npc-price.ts",
+      "sha256": "946fa58211165ca59d10b5f82d00ec9921011a08934f8f7dd814f45f91e9cb9d",
+      "bytes": 1128
+    },
+    {
+      "path": "packages/core/src/world/npc.ts",
+      "sha256": "23a64d1741ccabee8d763f8dcf02f0c94cf095e191b19d717be47bc1a50f3516",
+      "bytes": 5570
+    },
+    {
+      "path": "packages/persistence/src/__tests__/character-life-save.test.ts",
+      "sha256": "4ebe8ff425670b49ea8512760fe50132e32fc4be0b026f55b3021211a10c29c6",
+      "bytes": 7647
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v12/life-5-weeks.json",
+      "sha256": "1b3d5c41867cb4035f6490b4b7faf0af7ebde99207d21e8d975e521778b87c91",
+      "bytes": 17389
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v12/life-crime-death.json",
+      "sha256": "6d5f95e9f230d9f8b60a48fc4fe6610de44d85e5ded3c2f0b3b785d3079c7c70",
+      "bytes": 17354
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v12/life-crime-raid.json",
+      "sha256": "3e38f65177a4510b1ad83a889f01d78fa16704463730caf417cfff69afee9b01",
+      "bytes": 17412
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v12/life-crime-robbery.json",
+      "sha256": "f8e87bd7756bf74f0e1a85024b75b4e02ae4931cf26df0b90645bbc9dd3cb141",
+      "bytes": 17352
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v12/life-crime-wound.json",
+      "sha256": "82b134804d1939585bc34c487f0c50fa9cbea08b0428e55a6733c1d0436397e4",
+      "bytes": 17353
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v12/life-demand-card.json",
+      "sha256": "64a7238810c3b15c75d501998486a204426d30101fa3a853441bccab56f96e74",
+      "bytes": 17427
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v12/life-laws.json",
+      "sha256": "aac802441ea780600bb1e83a34d54afe9aec358855c132a204f00bf999e965a5",
+      "bytes": 17568
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v12/life-new-game.json",
+      "sha256": "b0ee4aab91df2168ab86bc10c49d8aad6411ed3fc71f51b4216d1c97bb7e9732",
+      "bytes": 17360
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v12/life-rebellion-last-week.json",
+      "sha256": "e5d63b08c4b1e7c737d90546a7fcf34a347ba11a0b2c72e6d481a3787cb1a06f",
+      "bytes": 17370
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v12/new-game.json",
+      "sha256": "e215b1e6b8f4e871443986cb5d80000339e4c221e372a0e068c8fb3f50a24f83",
+      "bytes": 10534
+    },
+    {
+      "path": "packages/persistence/src/__tests__/game-store-suite.ts",
+      "sha256": "1f6023bd5ed1f2d413ae6c2dbf178d355f5f6e79ca5c5ac16c874f4c873f8934",
+      "bytes": 2698
+    },
+    {
+      "path": "packages/persistence/src/__tests__/item-owner-import.test.ts",
+      "sha256": "b2a5104b0ed02de67e5ec9e89a43087dbd653270f107ecd0f45081add28c1f41",
+      "bytes": 2244
+    },
+    {
+      "path": "packages/persistence/src/__tests__/item-records.test.ts",
+      "sha256": "dab2d4e139c550ac021b6af5a8414d0a46d68b5d2f682ae736792a9c5dde5bd8",
+      "bytes": 4914
+    },
+    {
+      "path": "packages/persistence/src/__tests__/items-canonical.test.ts",
+      "sha256": "48c7ae761eef8e80da80b0df31153df858c20fa395bd4ba6f05394d85f448e36",
+      "bytes": 2843
+    },
+    {
+      "path": "packages/persistence/src/__tests__/items-rebuild-order.test.ts",
+      "sha256": "c5bec828a370d1d620e29e4740bd516e42cbf824f21fa13af01707578bfc6ab4",
+      "bytes": 5109
+    },
+    {
+      "path": "packages/persistence/src/__tests__/npc-life-records.test.ts",
+      "sha256": "4ba360941859087b8cc7c14801d7ae4828dfac3160a43c61cca1b10fc7f3e4cb",
+      "bytes": 5965
+    },
+    {
+      "path": "packages/persistence/src/__tests__/session-records.test.ts",
+      "sha256": "319a5f12e4851b665680ded71edda81597b5c811bcb7ebf9cbe267b5f5caefe8",
+      "bytes": 6201
+    },
+    {
+      "path": "packages/persistence/src/__tests__/society-new-game-fixture.test.ts",
+      "sha256": "821fa0ec7c0203a915d40d5cfb64047788e65f1ab3945cec77234ee54b310ef8",
+      "bytes": 3390
+    },
+    {
+      "path": "packages/persistence/src/__tests__/society-v9-fixture.test.ts",
+      "sha256": "0a76b1ae4d0903ee9e4044d4986ffe6fbb638962fa61243bba143093029f41b1",
+      "bytes": 2309
+    },
+    {
+      "path": "packages/persistence/src/session-records.ts",
+      "sha256": "8159f84620209ca54b67f0734e09c9c57b0a47485c29e9ad6d417328521aa5fb",
+      "bytes": 17084
+    },
+    {
+      "path": "packages/simulation/src/__tests__/character-life-command.test.ts",
+      "sha256": "a3b78f3de68f379cfab3214cd0dee96133d4b5d7db9c4079844b3ee2b0f5b1e1",
+      "bytes": 22937
+    },
+    {
+      "path": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+      "sha256": "358ca2b4702ab911db82d07e1fc8e66d532865b70957bd6b39538e9a7df0046f",
+      "bytes": 23568
+    },
+    {
+      "path": "packages/simulation/src/__tests__/craft-command.test.ts",
+      "sha256": "36c1bed78e59d8b7e0102404857178a43576f0d852d2ed5c5642fe8091c1c142",
+      "bytes": 13652
+    },
+    {
+      "path": "packages/simulation/src/__tests__/craft-week.test.ts",
+      "sha256": "6b1572e87efacc33907dd5c835aba09668b515cc2226dd4fbbda7a00e41dce14",
+      "bytes": 15362
+    },
+    {
+      "path": "packages/simulation/src/__tests__/crime-fixtures.test.ts",
+      "sha256": "95d70d99fbc68540603f80e6015061963818a641457cdfbb99a80e95137a67e4",
+      "bytes": 5382
+    },
+    {
+      "path": "packages/simulation/src/__tests__/crisis-fixtures.test.ts",
+      "sha256": "d5a914e23795fe791ba8eb062d0aefd530e85a262526f8f3505f919b0fbccf7c",
+      "bytes": 1634
+    },
+    {
+      "path": "packages/simulation/src/__tests__/exhausted-materials.test.ts",
+      "sha256": "2bc3df7c3d82a42b87a69c61bea203eef088f57d22600a7e4ffc5adef90ec43c",
+      "bytes": 3241
+    },
+    {
+      "path": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+      "sha256": "8ca5ec1422f6731a6482b930ee073ee5555b6b97fe6d5ad7635436655faca61e",
+      "bytes": 65811
+    },
+    {
+      "path": "packages/simulation/src/__tests__/fixtures/p7b-b2-path-diff.ts",
+      "sha256": "388e0263e2ad1c0e7a6bb2cbb48b7dbc4f652cc114d201d83f90aa963deb9458",
+      "bytes": 2992
+    },
+    {
+      "path": "packages/simulation/src/__tests__/fixtures/p7b-b2-path-diff.txt",
+      "sha256": "fa0224ba231617a1921e76fac1eaaaa9b437b90eb235e3713972dfb439825837",
+      "bytes": 566
+    },
+    {
+      "path": "packages/simulation/src/__tests__/item-command.test.ts",
+      "sha256": "51205f91b6353c579736d80f522f5e16b9c41096b1f65409406ad07a29a0638d",
+      "bytes": 8325
+    },
+    {
+      "path": "packages/simulation/src/__tests__/item-effects.test.ts",
+      "sha256": "f0c8613dd542e4bd27ed978999b58dd9fa6d906326b07abebaaf4af357b47d97",
+      "bytes": 10738
+    },
+    {
+      "path": "packages/simulation/src/__tests__/law-fixture.test.ts",
+      "sha256": "6268293619d3f604650f2c211a5dd7a91b158109ce184348914a8cf85f790101",
+      "bytes": 3429
+    },
+    {
+      "path": "packages/simulation/src/__tests__/law-week.test.ts",
+      "sha256": "fd6612051668bef010eec690d36567fcb5a0b08fdf87e47468f9e3a00d17fc94",
+      "bytes": 7869
+    },
+    {
+      "path": "packages/simulation/src/__tests__/lord-health.test.ts",
+      "sha256": "59014d0dbebbb0ac8fd309b3d98627ad5d16569b2520b003883f9580248c4706",
+      "bytes": 6958
+    },
+    {
+      "path": "packages/simulation/src/__tests__/npc-homes.test.ts",
+      "sha256": "35e2eb078c5a6950dd7045f912fd0443856b253e4a85bd172948db6d52009c4b",
+      "bytes": 12171
+    },
+    {
+      "path": "packages/simulation/src/__tests__/npc-life-week.test.ts",
+      "sha256": "e0267bf018d509aceabf9efc1bb304bac241f9ee5cf25f8e13e5b8d1b874d99c",
+      "bytes": 16574
+    },
+    {
+      "path": "packages/simulation/src/__tests__/smithy-data.test.ts",
+      "sha256": "0827b317a50c4cc6c8e4543d1dc77cd6a2668a88ee77a7f537acdd90c8596cf4",
+      "bytes": 3688
+    },
+    {
+      "path": "packages/simulation/src/__tests__/society-plots.test.ts",
+      "sha256": "649d15a1edeaa7d82aaa521b1ce06f3890f708aa009b232ca4223c5bc28c12b5",
+      "bytes": 8592
+    },
+    {
+      "path": "packages/simulation/src/__tests__/society-stock-integrity.test.ts",
+      "sha256": "d009fd3b62c311c11f22c9b170a9bc340fdbca06ce2820b2ab174232702b6b2e",
+      "bytes": 13170
+    },
+    {
+      "path": "packages/simulation/src/__tests__/tile-trial-p7b.test.ts",
+      "sha256": "4ddc6da2796e599814c8c378f8dcef585127ed38e7f2a116f83a2dc9ea23e0c4",
+      "bytes": 11702
+    },
+    {
+      "path": "packages/simulation/src/__tests__/world-npc.test.ts",
+      "sha256": "3e0042fd0bdb0c2b774191f8cb3c4b4fbbad920f8f31af0db6360f73eba1d08d",
+      "bytes": 11918
+    },
+    {
+      "path": "packages/simulation/src/character-life-command.ts",
+      "sha256": "cf27b681530075c04f287f05214fbf1c3629bfed4aeb16aaaec30501e072c040",
+      "bytes": 5298
+    },
+    {
+      "path": "packages/simulation/src/world-npc.ts",
+      "sha256": "eb3c594ebd1670ad255634beef92b723583108d4b7834dca5a72137ea4ee9c72",
+      "bytes": 6322
+    },
+    {
+      "path": "packages/ui/src/CharacterLifeCharacters.svelte",
+      "sha256": "8ba0c1a062549005ae11aa1aa8ceb596c8277ca1071859ab248be0ef05a40b37",
+      "bytes": 7974
+    },
+    {
+      "path": "packages/ui/src/CharacterLifeCity.svelte",
+      "sha256": "78fb2a18fdf91e64ec5ddb32c4aed66cb80278dec2b59a6915bf440b362db28d",
+      "bytes": 12910
+    },
+    {
+      "path": "packages/ui/src/TileManagement.svelte",
+      "sha256": "b9704503bec97ca6937de19dcd02c5d29078f44fe8200fdd1f758a48c414d5d9",
+      "bytes": 19939
+    },
+    {
+      "path": "packages/ui/src/__tests__/character-life-session.test.ts",
+      "sha256": "42f19a4e5e22a324cd7b587dc2f721fe212531834a782d70fb1d56844409a6d1",
+      "bytes": 70862
+    },
+    {
+      "path": "packages/ui/src/__tests__/crafting-view.test.ts",
+      "sha256": "11fa5e986dc7fc8d3f1049ccf9c90dc58d6ca88e6a01e2f19d79ee0aa60c3716",
+      "bytes": 20781
+    },
+    {
+      "path": "packages/ui/src/__tests__/data-inspector.test.ts",
+      "sha256": "d39c7c7e3c569226f91101209ff0614ab77170d516c613cb41319cb785520846",
+      "bytes": 8990
+    },
+    {
+      "path": "packages/ui/src/__tests__/items-view.test.ts",
+      "sha256": "4ad26a7d3b5cd9ec4510bbd12e81139ad4544daf670bc82903805a98e3ba13a7",
+      "bytes": 8067
+    },
+    {
+      "path": "packages/ui/src/__tests__/npc-sheet-view.test.ts",
+      "sha256": "a1e8e063182366d3dd2e16ade76d1fc381863c4c4f35292c544298c72b9c6785",
+      "bytes": 4592
+    },
+    {
+      "path": "packages/ui/src/__tests__/report-letters.test.ts",
+      "sha256": "c51e5898e807d43ba9ce49e97ea204c6bf53bb29868fd6fe9f86663070bd4436",
+      "bytes": 36493
+    },
+    {
+      "path": "packages/ui/src/__tests__/world-npc-session.test.ts",
+      "sha256": "9cd464c4f2fb5dc55dd3d38f042f16ef7dd70bd39d079135e1a4e8a3b911153c",
+      "bytes": 2958
+    },
+    {
+      "path": "packages/ui/src/__tests__/world-session.test.ts",
+      "sha256": "d5a609ab0e200386a593c78bbad313f06b2d70f1c2595131de7941cc034b7dde",
+      "bytes": 8207
+    },
+    {
+      "path": "tests/e2e/character-life-boundary.spec.ts",
+      "sha256": "aeb952b1ea239fd1fca0c2d3e9efec52a08cd6b07b10e589159c52b972a3f77c",
+      "bytes": 24740
+    },
+    {
+      "path": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+      "sha256": "e9de9e2712c5f43509c99a6c82f2cdf62fb3d25312b3d8bb32d9c8617cab68d9",
+      "bytes": 31202
+    },
+    {
+      "path": "tests/e2e/character-life-navigation.helpers.ts",
+      "sha256": "990d7b27dfb97b76ff625c69aaa76adfc95bdd778ee2c1616a17c405a91050f0",
+      "bytes": 45766
+    },
+    {
+      "path": "tests/e2e/character-life-navigation.spec.ts",
+      "sha256": "e4cbc4b172b485a382bb4fdda5085c65a2a5b43d5bf5a17d9a51885130bebfec",
+      "bytes": 107758
+    },
+    {
+      "path": "tests/e2e/character-life.spec.ts",
+      "sha256": "08a6f3e39c0177dabf83d14ce149a563147b6c3255278d4c51b53d95eb636f30",
+      "bytes": 36135
+    },
+    {
+      "path": "tests/e2e/crafting.spec.ts",
+      "sha256": "7e8670a5b73aa248dd29caf814c178a3dbb7c03e04b4c0121a2d33bd2bdd54ca",
+      "bytes": 20856
+    },
+    {
+      "path": "tests/e2e/crime.spec.ts",
+      "sha256": "b9fee8ea02b299aa11c447b82d1c56c56a0167b1af874c0603394cae25c8a2d2",
+      "bytes": 5406
+    },
+    {
+      "path": "tests/e2e/crisis.spec.ts",
+      "sha256": "b2e5d2b15ef142ed1694d782c517b4e67b75ab198ad87e3d14af8527d4e7001e",
+      "bytes": 8964
+    },
+    {
+      "path": "tests/e2e/error-log.spec.ts",
+      "sha256": "ed445ed8971043c710aeda4d3981ef722be1113f3033c7211dca4bb7765a3b65",
+      "bytes": 16805
+    },
+    {
+      "path": "tests/e2e/garrison.spec.ts",
+      "sha256": "7193a6fae4e68e04afc3de39b6d53ed724afdce78161443d0c39dbfc04f7f606",
+      "bytes": 4245
+    },
+    {
+      "path": "tests/e2e/goods-stock.spec.ts",
+      "sha256": "33d0840162e2616499cce4e38be0166ae9cd8add942e1a74cf84a725c353405d",
+      "bytes": 3074
+    },
+    {
+      "path": "tests/e2e/items.spec.ts",
+      "sha256": "d3735fe0550bee0ae2cc76644183cba147e415d8fd64437deafdc4298564955f",
+      "bytes": 23160
+    },
+    {
+      "path": "tests/e2e/laws.spec.ts",
+      "sha256": "34e3ca8d12e7219b5776687338d42e18a66424b27cc62d65fb6f7d7435a38c3d",
+      "bytes": 6210
+    },
+    {
+      "path": "tests/e2e/ledger.spec.ts",
+      "sha256": "7fb284f2cb3840c74f6aeb40ca82b7171bce64e2175b806bf3f7655e461f05e8",
+      "bytes": 12325
+    },
+    {
+      "path": "tests/e2e/npc-homes.spec.ts",
+      "sha256": "a7d18c949f531a16c405c8bf770a5a78c83314181cb05b24a448e355030ab93d",
+      "bytes": 3602
+    },
+    {
+      "path": "tests/e2e/npc-sheet.spec.ts",
+      "sha256": "6ca5b3fb6c7e0da00aea75ea4de6cb859861cb0a2f5cf7091628630d5cf7fcae",
+      "bytes": 22512
+    },
+    {
+      "path": "tests/e2e/society.spec.ts",
+      "sha256": "cffebfd98103cda647f902ec9700a5e6973bc0ba15e4f40eeded9933d3e753f0",
+      "bytes": 42122
+    },
+    {
+      "path": "tests/e2e/storage.spec.ts",
+      "sha256": "eda8470b6cc76a33259eb33212c3ae2f325f49b7a8717265b658a69079bdf14a",
+      "bytes": 21323
+    },
+    {
+      "path": "tests/e2e/tile-local-checkpoint.spec.ts",
+      "sha256": "33942cd476684505c1db6e140ac4c9a071f7bfe98105b6a34ff1e76185086595",
+      "bytes": 14416
+    },
+    {
+      "path": "tests/e2e/tile-save.spec.ts",
+      "sha256": "899220b3f62a5bb00f7689b26d775eaca843373466a686b0dbd96f4f3025eedf",
+      "bytes": 7223
+    },
+    {
+      "path": "tests/e2e/title.spec.ts",
+      "sha256": "57d709ba58196f57b21dc2616da3bb5e434ea87aa6fe59d6683da710adbd0630",
+      "bytes": 22635
+    },
+    {
+      "path": "tests/e2e/world-npc-session.spec.ts",
+      "sha256": "410bdb5c3a1303a7dfe800997094f14aba09d3917cfaa2256b91084043f15b99",
+      "bytes": 19449
+    },
+    {
+      "path": "tests/e2e/world-session.spec.ts",
+      "sha256": "939f86f1adbd965ae6515f8feaed5be7b71f63ed5d54724467378cdecf95b3a3",
+      "bytes": 41966
+    }
+  ]
+}
