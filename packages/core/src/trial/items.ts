@@ -69,6 +69,17 @@ export function createItemsState(seed:number):ItemsState {
   return {nextItemId:1,inventory:[],consumables:[],materials:{},storage:[],equipped:{},market:drawItemMarket(seed,1),
     goals:{calm:false,authority:false,week52:false,research:false,rebellionSeen:false,authorityStreak:0}};
 }
+export function returnEquippedToStorage(items: ItemsState, characterId: string, week: number): ItemsState | null {
+  const worn = Object.hasOwn(items.equipped, characterId) ? Object.values(items.equipped[characterId]) : [];
+  if (!worn.length) return items;
+  const expiresWeek = week + ITEM_TRIAL.storageWeeks;
+  if (items.storage.length + worn.length > ITEM_TRIAL.storageCap || !Number.isSafeInteger(expiresWeek)) return null;
+  const next = structuredClone(items);
+  next.storage.push(...worn.map(item => ({ item: { ...item }, expiresWeek })));
+  next.storage.sort((a, b) => a.item.id - b.item.id);
+  delete next.equipped[characterId];
+  return next;
+}
 export const isWearable=(d:ItemDefinition):boolean=>['equipment','accessory','outfit'].includes(d.category);
 export const isOpenItemSlot=(slot:unknown):slot is Slot=>['weapon','earrings','necklace','ring','hand','top','bottom','shoes','set'].includes(slot as string);
 const count=(v:unknown):v is number=>Number.isSafeInteger(v)&&(v as number)>=0;

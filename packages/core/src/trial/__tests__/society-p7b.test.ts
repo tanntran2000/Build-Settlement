@@ -89,7 +89,7 @@ it.each([10, 11])('uses the v12 ruleset and refuses the v%i checkpoint unchanged
   const encoded = serializeCharacterLifeSave(fresh.value);
   if (!encoded.success) throw Error(encoded.error.message);
   const envelope = JSON.parse(encoded.text);
-  expect([envelope.cityRulesetId, envelope.state.city.society.rulesetId]).toStrictEqual(['tile-society-12', 'tile-society-12']);
+  expect([envelope.cityRulesetId, envelope.state.city.society.rulesetId]).toStrictEqual(['tile-society-13', 'tile-society-13']);
   const source = readFileSync(oldSave(version), 'utf8');
   expect(deserializeCharacterLifeSave(source)).toStrictEqual({
     success: false, error: { code: 'INCOMPATIBLE_SAVE', message: 'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.' },

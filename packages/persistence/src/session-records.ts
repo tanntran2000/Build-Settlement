@@ -7,8 +7,9 @@ export class StoreRecordError extends Error {
   constructor(public readonly ref: string) { super(`Invalid store record: ${ref}`); this.name = 'StoreRecordError'; }
 }
 const count = (n: unknown): n is number => Number.isSafeInteger(n) && (n as number) >= 0;
-const historicalSocietyRuleset = /^tile-society-(0[1-9]|1[01])$/;
-const historicalNpcLifeRuleset = /^tile-society-1[01]$/;
+const historicalSocietyRuleset = /^tile-society-(0[1-9]|1[0-2])$/;
+const historicalNpcLifeRuleset = /^tile-society-1[0-2]$/;
+const historicalHouseholdRuleset = "tile-society-12";
 // Historical records remain readable for the caller's existing old-ruleset refusal.
 // Validate their original shape without migrating or returning a current-ruleset view.
 function isStoredCity(raw: unknown): raw is CharacterLifeSessionState['city'] {
@@ -171,7 +172,7 @@ export function recordsToSession(records: StoredRecord[]): CharacterLifeSessionS
     if (v.kind === 'player') { if (player || !isPlayerCharacter(v.player) || v.player.character.id !== r.id || !isCharacterProfile(v.profile,v.player.character)) bad(r); player = v.player; }
     else if (v.kind === 'npc') {
       const candidate = [...npcs.map(n => n.npc), v.npc];
-      const validNpcList = meta.rulesetId === SOCIETY_RULESET
+      const validNpcList = meta.rulesetId === SOCIETY_RULESET || meta.rulesetId === historicalHouseholdRuleset
         ? isWorldNpcList(candidate, city)
         : historicalSocietyRuleset.test(meta.rulesetId) &&
           isHistoricalNpcList(candidate, city, historicalNpcLifeRuleset.test(meta.rulesetId));

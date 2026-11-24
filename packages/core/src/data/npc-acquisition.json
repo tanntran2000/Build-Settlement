@@ -1,0 +1,34 @@
+{
+  "AUCTION_TRIAL": {
+    "marker": "TRIAL",
+    "rivalCount": [
+      2,
+      4
+    ],
+    "ceilingBps": [
+      8000,
+      13000
+    ],
+    "steadyBps": 9500,
+    "keenBps": 11500,
+    "openingBps": 7000,
+    "openingStepMilli": 5000,
+    "playerRaisesMilli": [
+      5000,
+      25000
+    ],
+    "rivalStepMilli": 5000
+  },
+  "CARD_TRIAL": {
+    "marker": "TRIAL",
+    "topSkillCount": 2
+  },
+  "rivalNames": [
+    "Maevreth Dunfen",
+    "Edris Thornwold",
+    "Caelvessa Grenmoor",
+    "Neralde Siltmere",
+    "Ivrayne Copperfen",
+    "Thesara Reedmark"
+  ]
+}

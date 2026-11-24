@@ -2,10 +2,11 @@ import { hasWeeklyKeys, isLiveCharacterLifeSessionState, buildItemWeekContext, t
 import { executeWorldNpcCityCommand, executeWorldNpcCommand } from './world-npc.js';
 import { executeItemCommand, ITEM_COMMAND_TYPES, type ItemCommandType } from './item-command.js';
 import { recordNpcLifeEvent, runNpcLifeWeek } from './npc-life-week.js';
+import { acquisitionWeekReport, drawAcquisition, executeAcquisitionCommand, isAcquisitionCommand, type AcquisitionCommandType } from './npc-acquisition.js';
 
 export type CharacterLifeActionType = 'BUILD' | 'REPLACE' | 'UPGRADE'
   | 'SET_WORKERS' | 'SET_ENABLED' | 'END_WEEK' | 'NEXT_WEEK'
-  | 'ENACT_LAW' | 'REPEAL_LAW' | 'CHOOSE_CARD_OPTION' | 'ASSIGN_NPC' | 'UNASSIGN_NPC' | 'MOVE_NPC_HOME' | 'EXTEND_WALL' | 'SET_TRAINING' | 'CLEAR' | 'SET_RESEARCH' | 'BUILD_DEEP_SHAFT' | ItemCommandType;
+  | 'ENACT_LAW' | 'REPEAL_LAW' | 'CHOOSE_CARD_OPTION' | 'ASSIGN_NPC' | 'UNASSIGN_NPC' | 'MOVE_NPC_HOME' | 'EXTEND_WALL' | 'SET_TRAINING' | 'CLEAR' | 'SET_RESEARCH' | 'BUILD_DEEP_SHAFT' | ItemCommandType | AcquisitionCommandType;
 export type CharacterLifeCommandResult =
   | { success: true; next: CharacterLifeSessionState; report?: Readonly<TileTrialReport> }
   | { success: false; error: { code: string; message: string } };
@@ -26,6 +27,10 @@ export function executeCharacterLifeCommand(session: unknown, raw: unknown): Cha
   if (ITEM_COMMAND_TYPES.includes(type as ItemCommandType)) {
     if (!isLiveCharacterLifeSessionState(session)) return fail('INVALID_STATE', 'World session is invalid; nothing was changed.');
     return executeItemCommand(session,raw);
+  }
+  if (isAcquisitionCommand(type)) {
+    if (!isLiveCharacterLifeSessionState(session)) return fail('INVALID_STATE', 'World session is invalid; nothing was changed.');
+    return executeAcquisitionCommand(session, type, raw);
   }
   const societyAction = ['ENACT_LAW', 'REPEAL_LAW', 'CHOOSE_CARD_OPTION', 'EXTEND_WALL', 'SET_TRAINING', 'CLEAR', 'SET_RESEARCH', 'BUILD_DEEP_SHAFT'].includes(type) &&
     isLiveCharacterLifeSessionState(session) && !!session.city.society;
@@ -67,6 +72,13 @@ export function executeCharacterLifeCommand(session: unknown, raw: unknown): Cha
         Object.freeze(lifeWeek.report.exhausted); Object.freeze(lifeWeek.report.recovered); Object.freeze(lifeWeek.report.birthdays);
         report = Object.freeze({ ...report, npcLife: Object.freeze(lifeWeek.report) });
       }
+      const { week, worldMetadata: { worldSeed } } = next.city.world;
+      const household = acquisitionWeekReport(worldSeed, session.city.society!.acquisition, report.week);
+      if (household) report = Object.freeze({ ...report, household });
+      next.city.society!.acquisition = drawAcquisition(worldSeed, week, next.city, next.npcs);
+    } else if (type === 'BUILD' || type === 'REPLACE' || type === 'SET_ENABLED') {
+      const { week, worldMetadata: { worldSeed } } = next.city.world;
+      next.city.society!.acquisition = drawAcquisition(worldSeed, week, next.city, next.npcs);
     }
     if (isLiveCharacterLifeSessionState(next)) return { ...result, next, ...(report ? { report } : {}) };
   } catch { return fail('EXECUTION_ERROR', 'The action failed validation; the original session was preserved.'); }

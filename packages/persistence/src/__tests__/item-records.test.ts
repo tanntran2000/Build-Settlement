@@ -31,7 +31,7 @@ it('reads historical v7 records without changing bytes and refuses checkpoint im
  expect(readFileSync(new URL('./fixtures/society-v7/life-new-game.json',import.meta.url),'utf8')).toBe(bytes);
 });
 it('loads every v12 Character Life fixture as current and round-trips exact bytes',()=>{
- const root=new URL('./fixtures/society-v12/',import.meta.url),files=readdirSync(root).filter(f=>f.startsWith('life-'));
+ const root=new URL('./fixtures/society-v13/',import.meta.url),files=readdirSync(root).filter(f=>f.startsWith('life-'));
  expect(files).toHaveLength(9);
  for(const file of files){const bytes=readFileSync(new URL(file,root),'utf8'),loaded=deserializeCharacterLifeSave(bytes);expect(loaded.success).toBe(true);if(!loaded.success)throw Error(loaded.error.message);expect(serializeCharacterLifeSave(recordsToSession(sessionToRecords('main',loaded.state)))).toEqual({success:true,text:bytes});}
 });

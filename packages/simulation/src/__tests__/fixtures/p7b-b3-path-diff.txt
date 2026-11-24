@@ -1,0 +1,7 @@
+Seed 0: cityRulesetId, state.city.society.rulesetId, state.city.society.acquisition
+Seed 42: cityRulesetId, state.city.society.rulesetId, state.city.society.acquisition
+Seed 20261028: cityRulesetId, state.city.society.rulesetId, state.city.society.acquisition
+Base b184357d235d164478584e36b96d063551124e66
+Golden SHA-256 before 8ca5ec1422f6731a6482b930ee073ee5555b6b97fe6d5ad7635436655faca61e
+Golden SHA-256 after  2bf740f9c010e71747c1dcbe5af39387b1a37f4d81c4ba35cdef33feb821ff3e
+PASS: 3 golden seeds, 93 byte-identical historical fixtures, 10 v13 siblings. Forbidden paths: 0.

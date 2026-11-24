@@ -111,7 +111,7 @@ describe('NPC homes and v12 saves', () => {
     }
     expect([homeBeds(session.city, 'estate-1'), homeBeds(session.city, 'estate-2')]).toStrictEqual([10, 25]);
     const loaded = roundTrip(session);
-    expect([JSON.parse(loaded.text).cityRulesetId, loaded.state.city.society!.rulesetId]).toStrictEqual(['tile-society-12', 'tile-society-12']);
+    expect([JSON.parse(loaded.text).cityRulesetId, loaded.state.city.society!.rulesetId]).toStrictEqual(['tile-society-13', 'tile-society-13']);
   });
 
   it('rejects 45000 in generator data once the live tuning is 120000', () => {

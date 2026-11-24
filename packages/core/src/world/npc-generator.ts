@@ -27,6 +27,21 @@ function drawEpithet(seed: number, id: string, epithets: readonly string[], firs
   return epithet;
 }
 
+// Resolve market display names without generating a full NPC or consuming her stat stream.
+export function marketNpcName(seed: number, week: number, source: AcquisitionSource, slot: number | 'lot', nameSalt: number):
+  { name: string; generatorSalt: number } {
+  const id = `npc_w${week}_${source}_${slot}`;
+  const random = npcLifeRandom(seed, id);
+  const catalog = NPC_GENERATOR_CATALOG;
+  const origin = drawOne(random, Object.keys(NPC_ORIGINS));
+  const culture = catalog.cultures[catalog.originCulture[origin]];
+  const given = drawOne(random, culture.given), first = drawOne(random, culture.epithets);
+  const generatorSalt = nameSalt % culture.epithets.length;
+  const epithet = drawEpithet(seed, id, culture.epithets, first, generatorSalt);
+  const suffix = nameSalt === generatorSalt ? '' : '-' + nameSalt.toString(36);
+  return { name: given + ' ' + epithet + suffix, generatorSalt };
+}
+
 function drawDistinct<T>(random: Random, values: readonly T[], count: number): T[] {
   const remaining = [...values];
   return Array.from({ length: count }, () => remaining.splice(Math.floor(random() * remaining.length), 1)[0]);
