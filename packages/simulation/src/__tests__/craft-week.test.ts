@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import * as core from '@haven/core';
 import { createSocietyState, createItemsState, isItemsState, RECIPES, ITEM_CATALOG, buildItemWeekContext,
@@ -10,9 +11,9 @@ import { completeCraftOrders as complete } from '../craft-week.js';
 const hash = (value: unknown) => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 // Captured from untouched 0de2d1f before the first PR B product edit.
 const noOrderBaseline: Record<number, {reports:string;items:string;city:string}> = {
-  0: {reports:'9393b71033175e5dc6c1da65ed116a574521672d2c1a3631141ba57e654d8a45',items:'cddabceee23c2746d4dd3408d05e71ee624dd800d8a0f761cb88f130122deb65',city:'62d1c4d082564eb463a01b1a4cf90e8d0b34ec206701440c3590436d180163bc'},
-  42: {reports:'6238af7420c55fcf75acef911011bb4b50138231397853150d5433cf76fbb319',items:'283da6a1e4fed8fdc3a419e72e00827020ab1ace63f68277db0c1d7cee5616e8',city:'4b135951d8fc02959e62fcde8e24d367b430d2de62e1db23656d40eff95b108b'},
-  20261028: {reports:'e7c96f5378373cc7108072dbda1dbb123d60dfd623c49c8a1f0f69368da7275d',items:'3ad4de4ea7c6a0687ac6d8481778a2513e841dd061e1712429d8bb2dacc31515',city:'05c634769d92db96a5f98266b0c0b5275e3606bcf2660e90b04fe014015d9ff9'},
+  0: {reports:'9393b71033175e5dc6c1da65ed116a574521672d2c1a3631141ba57e654d8a45',items:'cddabceee23c2746d4dd3408d05e71ee624dd800d8a0f761cb88f130122deb65',city:'cb607d6b5265d7785f66cc110ef489bf616c242efac0b965be55a09b75708693'},
+  42: {reports:'6238af7420c55fcf75acef911011bb4b50138231397853150d5433cf76fbb319',items:'283da6a1e4fed8fdc3a419e72e00827020ab1ace63f68277db0c1d7cee5616e8',city:'e648285ab2b75d05498b2a3fb6bf72c362a0c8a63b5beeef0ced78b4360e0577'},
+  20261028: {reports:'e7c96f5378373cc7108072dbda1dbb123d60dfd623c49c8a1f0f69368da7275d',items:'3ad4de4ea7c6a0687ac6d8481778a2513e841dd061e1712429d8bb2dacc31515',city:'a2bf676b0d60745f0350eb54ce1884b35151d541bf30d54b6deb3f2fb4e28af5'},
 };
 it.each([0, 42, 20261028])('preserves all no-order reports and item states for sixty weeks at seed %i', seed => {
   const city = createSocietyState();
@@ -163,9 +164,9 @@ function session(){
   return s;
 }
 it('End Week integrates crafted rows after the old item steps using effective posted skill',()=>{
-  const s=session(),items=s.city.society!.items;
+  const s=withNpcs(session(),NPC_TEST_KEYS.slice(0,1)),items=s.city.society!.items;
   s.npcs[0].postTileId='spec-2';s.npcs[0].character.skills.technical=59;
-  const gear=add(items,'rare-hand');items.inventory=[];items.equipped.npc_starter_1={hand:gear};
+  const gear=add(items,'rare-hand');items.inventory=[];items.equipped.npc_w1_guild_0={hand:gear};
   items.workshops={'spec-2':{orders:Array.from({length:6},()=>order(items,'refine-silver')),ready:[]}};
   const effective=buildItemWeekContext(s).postSkills['spec-2'].technical;expect(effective).toBeGreaterThanOrEqual(60);expect(effective).toBeLessThan(80);
   const r=executeCharacterLifeCommand(s,{type:'END_WEEK',expectedRevision:0,expectedWeek:1});expect(r.success).toBe(true);if(!r.success)throw Error(r.error.code);

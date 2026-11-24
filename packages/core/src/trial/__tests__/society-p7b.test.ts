@@ -13,7 +13,7 @@ const plots = [
   ['specialist', ['spec-11', 'spec-12']],
   ['slum', ['slum-7', 'slum-8', 'slum-9']],
 ] as const;
-const oldSave = new URL('../../../../persistence/src/__tests__/fixtures/society-v10/life-new-game.json', import.meta.url);
+const oldSave = (version: number) => new URL(`../../../../persistence/src/__tests__/fixtures/society-v${version}/life-new-game.json`, import.meta.url);
 
 it('starts with both fixed level-one estates and 43 town plots', () => {
   const city = core.createSocietyState();
@@ -30,7 +30,7 @@ it('starts with both fixed level-one estates and 43 town plots', () => {
     expect(city.tiles.find(t => t.id === id)).toStrictEqual({ id, terrain: 'town', building: null });
   }
   expect(city.society!.wallRing).toBe(1);
-  expect(city.world.settlements[city.world.activeSettlementId!].inventory.gold).toBe(45000);
+  expect(city.world.settlements[city.world.activeSettlementId!].inventory.gold).toBe(120000);
 });
 
 it('reads NPC beds by type and level and pins the five catalog rows', () => {
@@ -82,24 +82,24 @@ it("rejects missing and non-integer Retainers' Hall caps", () => {
   expect(failures).toStrictEqual([message, message]);
 });
 
-it('uses the v11 ruleset and refuses the v10 checkpoint unchanged', () => {
+it.each([10, 11])('uses the v12 ruleset and refuses the v%i checkpoint unchanged', version => {
   const fresh = core.createCharacterLifeSession(42, { ...core.DEFAULT_PLAYER_DRAFT, currentName: 'Synthetic Keeper' });
   if (!fresh.success) throw Error(fresh.error.message);
   const before = structuredClone(fresh.value);
   const encoded = serializeCharacterLifeSave(fresh.value);
   if (!encoded.success) throw Error(encoded.error.message);
   const envelope = JSON.parse(encoded.text);
-  expect([envelope.cityRulesetId, envelope.state.city.society.rulesetId]).toStrictEqual(['tile-society-11', 'tile-society-11']);
-  const source = readFileSync(oldSave, 'utf8');
+  expect([envelope.cityRulesetId, envelope.state.city.society.rulesetId]).toStrictEqual(['tile-society-12', 'tile-society-12']);
+  const source = readFileSync(oldSave(version), 'utf8');
   expect(deserializeCharacterLifeSave(source)).toStrictEqual({
     success: false, error: { code: 'INCOMPATIBLE_SAVE', message: 'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.' },
   });
-  expect(readFileSync(oldSave, 'utf8')).toBe(source);
+  expect(readFileSync(oldSave(version), 'utf8')).toBe(source);
   expect(fresh.value).toStrictEqual(before);
   expect(serializeCharacterLifeSave(fresh.value)).toStrictEqual(encoded);
 });
 
-it.each(['empty', 'swapped', 'paused', 'staffed', 'duplicate acquisition', 'third Hall'])('rejects a v11 planning save with %s', problem => {
+it.each(['empty', 'swapped', 'paused', 'staffed', 'duplicate acquisition', 'third Hall'])('rejects a v12 planning save with %s', problem => {
   const city = core.createSocietyState();
   const mansion = city.tiles.find(t => t.id === 'estate-1');
   const estateHall = city.tiles.find(t => t.id === 'estate-2');

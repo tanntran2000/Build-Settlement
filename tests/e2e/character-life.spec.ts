@@ -3,7 +3,7 @@ import {createNpcWorldSession} from '../../packages/core/src/index.ts';
 import { test, expect, type Page } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
 import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
-import { characterWindow, charactersView, expectCheckpointRejectionPreservesUi, expectOneCharacterWindow, exportLife, go, importLife, lifeUiSnapshot, makeLife, selectArea, selectNpcSheetTab, selectPerson } from './character-life-navigation.helpers.ts';
+import { BROWSER_NPC_IDS, seedBrowserNpcs, characterWindow, charactersView, expectCheckpointRejectionPreservesUi, expectOneCharacterWindow, exportLife, go, importLife, lifeUiSnapshot, makeLife, selectArea, selectNpcSheetTab, selectPerson } from './character-life-navigation.helpers.ts';
 
 const KEY = 'haven.character-life-session-society.checkpoint.v1';
 const creation = (page: Page) => page.getByRole('region', { name: 'Character Creation', exact: true });
@@ -180,7 +180,7 @@ test('importing a foreign file shows the Character Life message and stays on sta
 });
 
 // ---- Game integration (Task 6) ----
-const NPC_IDS = ['npc_starter_1', 'npc_starter_2', 'npc_starter_3'];
+const NPC_IDS = BROWSER_NPC_IDS;
 const NPC_KEY = 'haven.world-npc-session.checkpoint.v1';
 const WORLD_KEY = 'haven.world-session.checkpoint.v1';
 const playerRegion = characterWindow;
@@ -210,22 +210,36 @@ async function assignFarm(page: Page, id: string) {
   await person.getByRole('button', { name: 'Assign', exact: true }).click();
 }
 
-test('after creation the Player window shows the entered name and short line; 3 NPC roster rows open one profile', async ({ page }) => {
+test('after creation the Player window is alone; importing 3 generated NPCs opens one profile at a time', async ({ page }) => {
   await startGame(page);
   await expect(page.getByRole('heading', { level: 1, name: 'Character Life', exact: true })).toBeVisible();
   await expect(playerRegion(page)).toContainText('Ana · 25 · Worker from Northreach');
   await expect(playerRegion(page)).toContainText('trained as a worker and now lead Haven.');
   await selectArea(page, 'Relations');
   await expect(playerRegion(page).getByRole('tabpanel')).toHaveText('Your own relationships are not tracked yet. Open a person to see how they regard you.');
-  await expect(charactersView(page).getByRole('navigation', { name: 'Character roster', exact: true }).getByRole('button')).toHaveCount(4);
+  const roster = charactersView(page).getByRole('navigation', { name: 'Character roster', exact: true });
+  await expect(roster.getByRole('button')).toHaveText(['You · Leader of Haven']);
+  await expect(charactersView(page).getByText('No NPCs yet. Find recruits at the Guild, Auction House or Slave Market.', { exact: true })).toBeVisible();
+  const empty = await exportLife(page);
+  expect(empty.npcs).toStrictEqual([]);
+  expect(empty.profiles).toStrictEqual([]);
+  expect(empty.city.world.settlements[empty.city.world.activeSettlementId!].inventory.gold).toBe(120000);
+  await seedBrowserNpcs(page, state => {
+    state.npcs[0].character.occupation = 'technician';
+    state.profiles[0].identity.origin.regionId = 'northreach';
+    state.profiles[0].identity.birthplaceId = 'kestrel_ford';
+    state.profiles[0].identity.origin.upbringing = 'frontier';
+  });
+  await go(page, 'characters');
+  await expect(roster.getByRole('button')).toHaveCount(4);
   for (const id of NPC_IDS) {
     await selectPerson(page, id);
     await expectOneCharacterWindow(page);
     await expect(characterWindow(page).getByTestId(`profile-${id}-short`)).toBeVisible();
   }
-  await selectPerson(page, 'npc_starter_1');
-  await expect(characterWindow(page).getByTestId('profile-npc_starter_1-short')).toContainText('Technician from Northreach');
-  await selectPerson(page, 'npc_starter_2');
+  await selectPerson(page, BROWSER_NPC_IDS[0]);
+  await expect(characterWindow(page).getByTestId(`profile-${BROWSER_NPC_IDS[0]}-short`)).toContainText('Technician from Northreach');
+  await selectPerson(page, BROWSER_NPC_IDS[1]);
   await selectArea(page, 'Relations');
   await expect(characterWindow(page).getByRole('tabpanel')).toContainText('Trust');
   await selectArea(page, 'Description');
@@ -233,12 +247,13 @@ test('after creation the Player window shows the entered name and short line; 3 
   await expect(history.getByText('No events recorded.', { exact: true })).toBeVisible();
 });
 
-test('assigning starter 1 to field-1 changes its long text to "currently manages the Farm."', async ({ page }) => {
+test('assigning a Hall resident to field-1 changes its long text to "currently manages the Farm."', async ({ page }) => {
   await startGame(page);
-  await selectPerson(page, 'npc_starter_1');
-  const long = characterWindow(page).getByTestId('profile-npc_starter_1-long');
+  await seedBrowserNpcs(page, state => { state.profiles[0].appearance.outfit = 'role_default'; });
+  await selectPerson(page, BROWSER_NPC_IDS[0]);
+  const long = characterWindow(page).getByTestId(`profile-${BROWSER_NPC_IDS[0]}-long`);
   await expect(long).toContainText('currently holds no post.');
-  await assignFarm(page, 'npc_starter_1');
+  await assignFarm(page, BROWSER_NPC_IDS[0]);
   await selectArea(page, 'Description');
   await expect(long).toContainText('currently manages the Farm.');
   await expect(long).toContainText('wide-brimmed hat and work clothes');
@@ -258,7 +273,8 @@ test('Private section is collapsed by default', async ({ page }) => {
 
 test('Save locally, reload, Continue locally restores player name, profiles and posts', async ({ page }) => {
   await startGame(page, 'Mira');
-  await assignFarm(page, 'npc_starter_1');
+  await seedBrowserNpcs(page);
+  await assignFarm(page, BROWSER_NPC_IDS[0]);
   const npcName = await characterWindow(page).getByRole('heading').first().innerText();
   await go(page, 'session');
   await button(page, 'Save locally').click();
@@ -267,16 +283,17 @@ test('Save locally, reload, Continue locally restores player name, profiles and 
   await button(page, 'Continue').click();
   await go(page, 'characters');
   await expect(playerRegion(page).getByRole('heading', { name: 'Mira', exact: true })).toBeVisible();
-  await selectPerson(page, 'npc_starter_1'); await selectArea(page, 'Work');
+  await selectPerson(page, BROWSER_NPC_IDS[0]); await selectArea(page, 'Work');
   await expect(characterWindow(page).getByRole('heading').first()).toHaveText(npcName);
-  await expect(page.getByTestId('npc-post-npc_starter_1')).toHaveText('Post: Manager — Farm (field-1)');
+  await expect(page.getByTestId(`npc-post-${BROWSER_NPC_IDS[0]}`)).toHaveText('Post: Manager — Farm (field-1)');
   await selectArea(page, 'Description');
-  await expect(characterWindow(page).getByTestId('profile-npc_starter_1-long')).toContainText('currently manages the Farm.');
+  await expect(characterWindow(page).getByTestId(`profile-${BROWSER_NPC_IDS[0]}-long`)).toContainText('currently manages the Farm.');
 });
 
 test('Export then Import in a new game restores the session; file name matches the life pattern', async ({ page }) => {
   await startGame(page, 'Mira');
-  await assignFarm(page, 'npc_starter_1');
+  await seedBrowserNpcs(page);
+  await assignFarm(page, BROWSER_NPC_IDS[0]);
   const text = await exportText(page, /^haven-world-life-week-\d+\.json$/);
   await page.reload();
   await startGame(page, 'Other');
@@ -284,8 +301,8 @@ test('Export then Import in a new game restores the session; file name matches t
   await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toHaveText('Checkpoint imported. Planning restored.');
   await go(page, 'characters');
   await expect(playerRegion(page).getByRole('heading', { name: 'Mira', exact: true })).toBeVisible();
-  await selectPerson(page, 'npc_starter_1'); await selectArea(page, 'Work');
-  await expect(page.getByTestId('npc-post-npc_starter_1')).toHaveText('Post: Manager — Farm (field-1)');
+  await selectPerson(page, BROWSER_NPC_IDS[0]); await selectArea(page, 'Work');
+  await expect(page.getByTestId(`npc-post-${BROWSER_NPC_IDS[0]}`)).toHaveText('Post: Manager — Farm (field-1)');
   await page.reload();
   await importFile(page, text);
   await go(page, 'characters');
@@ -295,6 +312,7 @@ test('Export then Import in a new game restores the session; file name matches t
 test('importing an NPC-world export into world-life is rejected with the Character Life incompatible message and nothing changes', async ({ page }) => {
   const npc=createNpcWorldSession(1);if(!npc.success)throw Error();const encoded=({ success: true, text: "{\"format\":\"haven.world-npc-session.save\",\"schemaVersion\":1,\"cityRulesetId\":\"tile-population-01\",\"state\":{\"city\":{\"world\":{\"week\":1,\"worldMetadata\":{\"worldSeed\":2026,\"gameVersion\":\"0.1.0\"},\"activeSettlementId\":\"settlement_haven_01\",\"settlements\":{\"settlement_haven_01\":{\"id\":\"settlement_haven_01\",\"name\":\"Haven\",\"status\":\"active\",\"foodProcessorOperational\":true,\"inventory\":{\"gold\":30000,\"wheat\":0,\"food\":4000,\"wood\":8000,\"iron\":4000},\"cohorts\":[{\"id\":\"weekly_middle\",\"occupation\":\"worker\",\"socialClass\":\"common\",\"legalStatus\":\"citizen\",\"count\":100,\"averageHealth\":80,\"morale\":80,\"productivity\":80,\"resentment\":0,\"loyalty\":80,\"livingStandard\":\"decent\"}]}}},\"revision\":0,\"phase\":\"planning\",\"tiles\":[{\"id\":\"field-1\",\"terrain\":\"fertile\",\"building\":{\"typeId\":\"farm\",\"level\":1,\"workers\":2,\"enabled\":true}},{\"id\":\"plain-1\",\"terrain\":\"plain\",\"building\":{\"typeId\":\"processor\",\"level\":1,\"workers\":2,\"enabled\":true}},{\"id\":\"forest-1\",\"terrain\":\"forest\",\"building\":null},{\"id\":\"ore-1\",\"terrain\":\"ore\",\"building\":null},{\"id\":\"plain-2\",\"terrain\":\"plain\",\"building\":null},{\"id\":\"plain-3\",\"terrain\":\"plain\",\"building\":null},{\"id\":\"forest-2\",\"terrain\":\"forest\",\"building\":null},{\"id\":\"ore-2\",\"terrain\":\"ore\",\"building\":null},{\"id\":\"field-2\",\"terrain\":\"fertile\",\"building\":null},{\"id\":\"plain-4\",\"terrain\":\"plain\",\"building\":null}],\"happiness\":80},\"outside\":{\"scenarioId\":\"outside-trial-01\",\"generator\":\"outside-gen-01\",\"seed\":1,\"actors\":[\"player\",\"ai-1\",\"ai-2\"],\"tiles\":[{\"id\":\"o01\",\"owner\":\"ai-1\",\"knownBy\":[\"ai-1\"],\"feature\":null},{\"id\":\"o02\",\"owner\":\"ai-1\",\"knownBy\":[\"ai-1\"],\"feature\":null},{\"id\":\"o03\",\"owner\":\"ai-1\",\"knownBy\":[\"ai-1\"],\"feature\":null},{\"id\":\"o04\",\"owner\":\"ai-1\",\"knownBy\":[\"ai-1\"],\"feature\":null},{\"id\":\"o05\",\"owner\":\"ai-1\",\"knownBy\":[\"ai-1\"],\"feature\":null},{\"id\":\"o06\",\"owner\":\"ai-2\",\"knownBy\":[\"ai-2\"],\"feature\":null},{\"id\":\"o07\",\"owner\":\"ai-2\",\"knownBy\":[\"ai-2\"],\"feature\":null},{\"id\":\"o08\",\"owner\":\"ai-2\",\"knownBy\":[\"ai-2\"],\"feature\":null},{\"id\":\"o09\",\"owner\":\"ai-2\",\"knownBy\":[\"ai-2\"],\"feature\":null},{\"id\":\"o10\",\"owner\":\"ai-2\",\"knownBy\":[\"ai-2\"],\"feature\":null},{\"id\":\"o11\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o12\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o13\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o14\",\"owner\":null,\"knownBy\":[],\"feature\":{\"kind\":\"deposit\",\"resource\":\"wheat\"}},{\"id\":\"o15\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o16\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o17\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o18\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o19\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o20\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o21\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o22\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o23\",\"owner\":null,\"knownBy\":[],\"feature\":{\"kind\":\"loot\",\"claimedBy\":null}},{\"id\":\"o24\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o25\",\"owner\":null,\"knownBy\":[],\"feature\":{\"kind\":\"deposit\",\"resource\":\"wood\"}},{\"id\":\"o26\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o27\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o28\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o29\",\"owner\":null,\"knownBy\":[],\"feature\":{\"kind\":\"deposit\",\"resource\":\"wood\"}},{\"id\":\"o30\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o31\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o32\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o33\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o34\",\"owner\":null,\"knownBy\":[],\"feature\":{\"kind\":\"loot\",\"claimedBy\":null}},{\"id\":\"o35\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o36\",\"owner\":null,\"knownBy\":[],\"feature\":{\"kind\":\"loot\",\"claimedBy\":null}},{\"id\":\"o37\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o38\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o39\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o40\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o41\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o42\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o43\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o44\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o45\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o46\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o47\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o48\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o49\",\"owner\":null,\"knownBy\":[],\"feature\":{\"kind\":\"deposit\",\"resource\":\"wood\"}},{\"id\":\"o50\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o51\",\"owner\":null,\"knownBy\":[],\"feature\":{\"kind\":\"loot\",\"claimedBy\":null}},{\"id\":\"o52\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o53\",\"owner\":null,\"knownBy\":[],\"feature\":{\"kind\":\"loot\",\"claimedBy\":null}},{\"id\":\"o54\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o55\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o56\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o57\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o58\",\"owner\":null,\"knownBy\":[],\"feature\":{\"kind\":\"loot\",\"claimedBy\":null}},{\"id\":\"o59\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o60\",\"owner\":null,\"knownBy\":[],\"feature\":{\"kind\":\"deposit\",\"resource\":\"iron\"}},{\"id\":\"o61\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o62\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o63\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o64\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o65\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o66\",\"owner\":null,\"knownBy\":[],\"feature\":{\"kind\":\"deposit\",\"resource\":\"wheat\"}},{\"id\":\"o67\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o68\",\"owner\":null,\"knownBy\":[],\"feature\":{\"kind\":\"loot\",\"claimedBy\":null}},{\"id\":\"o69\",\"owner\":null,\"knownBy\":[],\"feature\":{\"kind\":\"loot\",\"claimedBy\":null}},{\"id\":\"o70\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o71\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o72\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o73\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o74\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o75\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o76\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o77\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o78\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o79\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o80\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o81\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o82\",\"owner\":null,\"knownBy\":[],\"feature\":{\"kind\":\"loot\",\"claimedBy\":null}},{\"id\":\"o83\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o84\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o85\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o86\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o87\",\"owner\":null,\"knownBy\":[],\"feature\":null},{\"id\":\"o88\",\"owner\":null,\"knownBy\":[],\"feature\":{\"kind\":\"loot\",\"claimedBy\":null}},{\"id\":\"o89\",\"owner\":null,\"knownBy\":[],\"feature\":{\"kind\":\"loot\",\"claimedBy\":null}},{\"id\":\"o90\",\"owner\":null,\"knownBy\":[],\"feature\":{\"kind\":\"loot\",\"claimedBy\":null}}]},\"npcs\":[{\"character\":{\"id\":\"npc_starter_1\",\"name\":\"Iris\",\"gender\":\"female\",\"age\":27,\"occupation\":\"technician\",\"socialClass\":\"skilled\",\"legalStatus\":\"citizen\",\"needs\":{\"safety\":70,\"nutrition\":80,\"autonomy\":60,\"recognition\":50,\"intimacy\":40,\"purpose\":50},\"emotions\":{\"joy\":50,\"fear\":10,\"anger\":0,\"sadness\":10,\"shame\":0,\"jealousy\":0,\"hope\":70,\"stress\":20},\"relationshipToPlayer\":{\"trust\":30,\"affection\":20,\"attraction\":10,\"respect\":30,\"fear\":10,\"resentment\":0,\"dependency\":20,\"familiarity\":10},\"memories\":[],\"skills\":{\"management\":40,\"technical\":65,\"medical\":15,\"combat\":30,\"negotiation\":25},\"health\":100},\"traits\":[\"frugal\",\"restless\"],\"postTileId\":null},{\"character\":{\"id\":\"npc_starter_2\",\"name\":\"Clara\",\"gender\":\"female\",\"age\":31,\"occupation\":\"doctor\",\"socialClass\":\"skilled\",\"legalStatus\":\"free_resident\",\"needs\":{\"safety\":70,\"nutrition\":80,\"autonomy\":60,\"recognition\":50,\"intimacy\":40,\"purpose\":50},\"emotions\":{\"joy\":50,\"fear\":10,\"anger\":0,\"sadness\":10,\"shame\":0,\"jealousy\":0,\"hope\":70,\"stress\":20},\"relationshipToPlayer\":{\"trust\":30,\"affection\":20,\"attraction\":10,\"respect\":30,\"fear\":10,\"resentment\":0,\"dependency\":20,\"familiarity\":10},\"memories\":[],\"skills\":{\"management\":35,\"technical\":20,\"medical\":65,\"combat\":10,\"negotiation\":45},\"health\":85},\"traits\":[\"steady_hands\"],\"postTileId\":null},{\"character\":{\"id\":\"npc_starter_3\",\"name\":\"Alice\",\"gender\":\"female\",\"age\":24,\"occupation\":\"trader\",\"socialClass\":\"common\",\"legalStatus\":\"contract_bound\",\"needs\":{\"safety\":70,\"nutrition\":80,\"autonomy\":60,\"recognition\":50,\"intimacy\":40,\"purpose\":50},\"emotions\":{\"joy\":50,\"fear\":10,\"anger\":0,\"sadness\":10,\"shame\":0,\"jealousy\":0,\"hope\":70,\"stress\":20},\"relationshipToPlayer\":{\"trust\":30,\"affection\":20,\"attraction\":10,\"respect\":30,\"fear\":10,\"resentment\":0,\"dependency\":20,\"familiarity\":10},\"memories\":[],\"skills\":{\"management\":50,\"technical\":15,\"medical\":20,\"combat\":35,\"negotiation\":60},\"health\":100},\"traits\":[\"blunt\"],\"postTileId\":null}]}}" } as { success: true; text: string } | { success: false; error: { message: string } });if(!encoded.success)throw Error();const npcText=encoded.text;
   await startGame(page, 'Mira');
+  await seedBrowserNpcs(page);
   await importFile(page, npcText);
   await expect(page.getByRole('alert')).toHaveText('This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.');
   await go(page, 'characters');

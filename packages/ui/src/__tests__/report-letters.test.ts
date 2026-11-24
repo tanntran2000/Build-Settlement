@@ -81,19 +81,19 @@ function expectHeadline(input: Readonly<TileTrialReport>, id: LetterId, headline
 
 describe('NPC life report rows', () => {
   const npcs = [
-    { character: { id: 'npc_a', name: 'Lydia' } },
-    { character: { id: 'npc_b', name: 'Tessa' } },
-    { character: { id: 'npc_c', name: 'Wendy' } },
+    { character: { id: 'npc_a', name: 'Varen Ashfen' } },
+    { character: { id: 'npc_b', name: 'Sela Greyfen' } },
+    { character: { id: 'npc_c', name: 'Tamar Reedholt' } },
   ];
 
   it('keeps every event in category and NPC order and leaves the report and letters intact', () => {
     const input = report({ npcLife: { exhausted: ['npc_b', 'npc_a'], recovered: ['npc_c'], birthdays: ['npc_a'] } });
     const before = structuredClone(input);
     expect(npcLifeReportRows(input, npcs)).toEqual([
-      { kind: 'exhausted', label: 'Exhausted', npcId: 'npc_b', name: 'Tessa' },
-      { kind: 'exhausted', label: 'Exhausted', npcId: 'npc_a', name: 'Lydia' },
-      { kind: 'recovered', label: 'Recovered', npcId: 'npc_c', name: 'Wendy' },
-      { kind: 'birthdays', label: 'Birthday', npcId: 'npc_a', name: 'Lydia' },
+      { kind: 'exhausted', label: 'Exhausted', npcId: 'npc_b', name: 'Sela Greyfen' },
+      { kind: 'exhausted', label: 'Exhausted', npcId: 'npc_a', name: 'Varen Ashfen' },
+      { kind: 'recovered', label: 'Recovered', npcId: 'npc_c', name: 'Tamar Reedholt' },
+      { kind: 'birthdays', label: 'Birthday', npcId: 'npc_a', name: 'Varen Ashfen' },
     ]);
     expect(input).toEqual(before);
     expect(reportLetters(input)).toEqual(reportLetters(report()));

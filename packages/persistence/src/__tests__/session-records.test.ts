@@ -1,4 +1,5 @@
 ﻿import { readFileSync, readdirSync } from 'node:fs';
+import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';
 import { expect, it } from 'vitest';
 import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT } from '@haven/core';
 import { serializeCharacterLifeSave } from '../character-life-save.js';
@@ -11,7 +12,7 @@ for (const version of readdirSync(root)) {
       const before = serializeCharacterLifeSave(s);
       const decoded = recordsToSession(sessionToRecords('main', s));
       const after = serializeCharacterLifeSave(decoded);
-      if (version === 'society-v11') {
+      if (version === 'society-v12') {
         expect(before.success).toBe(true); expect(after.success).toBe(true);
         if (!before.success || !after.success) throw Error('Current fixture must serialize successfully');
         expect(after.text).toBe(before.text);
@@ -23,11 +24,39 @@ for (const version of readdirSync(root)) {
     });
   }
 }
-const session = () => { const r = createCharacterLifeSession(0, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' }); if (!r.success) throw Error(r.error.message); return r.value; };
-it('Player and 3 NPCs give 4 character records', () => expect(sessionToRecords('main', session()).filter(r => r.table === 'characters')).toHaveLength(4));
+
+it('rebuilds detached v11 item rows for refusal while preserving every stored row', () => {
+  const bytes = readFileSync(new URL('society-v11/life-new-game.json', root), 'utf8');
+  const state = JSON.parse(bytes).state;
+  const npcId = state.npcs[0].character.id;
+  state.city.society.items.nextItemId = 2;
+  state.city.society.items.equipped[npcId] = { necklace: { id: 1, defId: 'rare-necklace' } };
+  const staged = structuredClone(state);
+  staged.city.society.rulesetId = 'tile-society-12';
+  const rows = sessionToRecords('main', staged);
+  const meta = rows.find(row => row.table === 'meta')!.value as { rulesetId: string };
+  const city = rows.find(row => row.table === 'city')!.value as { society: { rulesetId: string } };
+  meta.rulesetId = state.city.society.rulesetId;
+  city.society.rulesetId = state.city.society.rulesetId;
+  const before = structuredClone(rows);
+  expect(rows.filter(row => row.table === 'items')).toStrictEqual([
+    { slotId: 'main', id: 'item:1', table: 'items', schemaVersion: 1, value: { defId: 'rare-necklace', place: 'equipped:' + npcId + ':necklace' } },
+  ]);
+  const decoded = recordsToSession(rows);
+  expect(decoded).toStrictEqual(state);
+  expect(serializeCharacterLifeSave(decoded)).toStrictEqual({
+    success: false, error: { code: 'INCOMPATIBLE_SAVE', message: 'This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.' },
+  });
+  expect(rows).toStrictEqual(before);
+  expect(readFileSync(new URL('society-v11/life-new-game.json', root), 'utf8')).toBe(bytes);
+});
+const newGame = () => { const r = createCharacterLifeSession(0, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' }); if (!r.success) throw Error(r.error.message); return r.value; };
+const session = () => withNpcs(newGame(), NPC_TEST_KEYS);
+it('New Game writes only the Player character record', () => expect(sessionToRecords('main', newGame()).filter(r => r.table === 'characters').map(r => r.id)).toEqual(['player']));
+it('Player and 3 owned NPCs give 4 character records', () => expect(sessionToRecords('main', session()).filter(r => r.table === 'characters')).toHaveLength(4));
 it('corrupt character identifies the offending record', () => {
-  const rows = sessionToRecords('main', session()); const npc = rows.find(r => r.id === 'npc_starter_1')!; npc.value = null;
-  try { recordsToSession(rows); throw Error('Expected invalid record rejection'); } catch (e) { expect(e).toBeInstanceOf(StoreRecordError); expect((e as StoreRecordError).ref).toBe('characters:npc_starter_1'); }
+  const rows = sessionToRecords('main', session()); const npc = rows.find(r => r.id === 'npc_w1_guild_0')!; npc.value = null;
+  try { recordsToSession(rows); throw Error('Expected invalid record rejection'); } catch (e) { expect(e).toBeInstanceOf(StoreRecordError); expect((e as StoreRecordError).ref).toBe('characters:npc_w1_guild_0'); }
 });
 
 function expectRecordRef(rows: ReturnType<typeof sessionToRecords>,ref: string) {
@@ -54,11 +83,11 @@ it.each(['object shape','invalid actors'] as const)('fix1 F4: malformed world %s
 });
 
 it.each(['npc','player','npc profile','player record profile','player embedded profile'] as const)('fix2 F2: malformed %s identifies its character record',kind=>{
- const rows=sessionToRecords('main',session()),npc=kind==='npc'||kind==='npc profile',id=npc?'npc_starter_1':'player';
+ const rows=sessionToRecords('main',session()),npc=kind==='npc'||kind==='npc profile',id=npc?'npc_w1_guild_0':'player';
  const value=rows.find(r=>r.table==='characters'&&r.id===id)!.value as Record<string,unknown>;
  if(kind==='npc')value.npc={character:{id}};
  else if(kind==='player')value.player={character:{id}};
  else if(kind==='player embedded profile')(value.player as {profile:unknown}).profile={id};
  else value.profile={id};
- expectRecordRef(rows,npc?'characters:npc_starter_1':'characters:player');
+ expectRecordRef(rows,npc?'characters:npc_w1_guild_0':'characters:player');
 });

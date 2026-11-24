@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+import { NPC_TEST_KEYS, withNpcs } from '../../__tests__/helpers/npcs.js';
 import { createNamedCharacter, type NamedCharacter } from '../../domain/character.js';
 import { createNpcWorldSession, isNamedCharacterRecord, isWorldNpcList } from '../../world/npc.js';
 import * as catalog from '../catalog.js';
@@ -7,7 +8,7 @@ import type { CharacterProfile } from '../types.js';
 import { isCharacterLifeSessionState, isCharacterProfile, isLiveCharacterLifeSessionState, isPlayerCharacter } from '../validate.js';
 
 type Mutable = Record<string, any>;
-const npcSession = () => { const r = createNpcWorldSession(0); if (!r.success) throw Error(r.error.message); return r.value; };
+const npcSession = () => { const r = createNpcWorldSession(0); if (!r.success) throw Error(r.error.message); return withNpcs(r.value, NPC_TEST_KEYS); };
 const base = (id: string): CharacterProfile => ({
   id,
   identity: { birthName: null, label: null, pronouns: 'she', birthplaceId: 'kestrel_ford', origin: { regionId: 'northreach', upbringing: 'frontier' }, currentLocationId: 'haven', biography: null },
@@ -15,19 +16,6 @@ const base = (id: string): CharacterProfile => ({
   appearance: { presentation: 'feminine', skinTone: 'light_olive', eyeColor: 'grey', hair: { color: 'brown', length: 'shoulder_length', texture: 'straight', style: 'tied_back' },
     face: { shape: 'oval', features: ['freckles'] }, build: 'slim', heightCm: 168, weightKg: 58, outfit: 'role_default' },
 });
-const starterProfiles = (): CharacterProfile[] => {
-  const ruth = base('npc_starter_2');
-  ruth.identity = { ...ruth.identity, birthplaceId: 'tidewall', origin: { regionId: 'saltmere', upbringing: 'port_town' } };
-  ruth.appearance = { ...ruth.appearance, skinTone: 'deep_brown', eyeColor: 'brown', hair: { color: 'black', length: 'short', texture: 'straight', style: 'loose' },
-    face: { shape: 'heart_shaped', features: ['glasses'] }, build: 'average', heightCm: 174, weightKg: 70 };
-  ruth.traits = { attractiveness: 50, learningAptitude: 55, warmth: 78 };
-  const third = base('npc_starter_3');
-  third.identity = { ...third.identity, birthplaceId: 'cinder_hollow', origin: { regionId: 'ashfield', upbringing: 'city' } };
-  third.appearance = { ...third.appearance, skinTone: 'fair', eyeColor: 'green', hair: { color: 'red', length: 'long', texture: 'wavy', style: 'braided' },
-    face: { shape: 'round', features: ['high_cheekbones'] }, heightCm: 162, weightKg: 55 };
-  third.traits = { attractiveness: 72, learningAptitude: 48, warmth: 45 };
-  return [base('npc_starter_1'), ruth, third];
-};
 const playerCharacter = (over: Partial<NamedCharacter> = {}) => createNamedCharacter({ id: PLAYER_CHARACTER_ID, name: 'Ana', gender: 'other', age: 25, occupation: 'advisor', socialClass: 'common', legalStatus: 'citizen', ...over });
 const player = () => {
   const profile = base(PLAYER_CHARACTER_ID);
@@ -37,14 +25,14 @@ const player = () => {
   profile.private = { intimateHistory: { value: 'some', disclosure: 'known' } };
   return { character: playerCharacter(), profile };
 };
-const lifeSession = () => ({ ...npcSession(), player: player(), profiles: starterProfiles() });
+const lifeSession = () => { const r = createNpcWorldSession(0); if (!r.success) throw Error(r.error.message); return withNpcs({ ...r.value, player: player(), profiles: [] as CharacterProfile[] }, NPC_TEST_KEYS); };
 const character = (age = 27) => ({ ...npcSession().npcs[0].character, age });
-const profileWith = (mutate: (p: Mutable) => void, id = 'npc_starter_1') => { const p = structuredClone(base(id)) as Mutable; mutate(p); return p; };
+const profileWith = (mutate: (p: Mutable) => void, id = 'npc_w1_guild_0') => { const p = structuredClone(base(id)) as Mutable; mutate(p); return p; };
 const valid = (mutate: (p: Mutable) => void) => isCharacterProfile(profileWith(mutate), character());
 
 describe('isCharacterProfile', () => {
-  it('accepts a valid profile for each starter', () => {
-    const npcs = npcSession().npcs, profiles = starterProfiles();
+  it('accepts a valid profile for each generated NPC', () => {
+    const { npcs, profiles } = lifeSession();
     npcs.forEach((npc, i) => expect(isCharacterProfile(profiles[i], npc.character)).toBe(true));
   });
   it('accepts optional adult fields, measurements and texts on an adult', () => {
@@ -52,7 +40,7 @@ describe('isCharacterProfile', () => {
     expect(valid(p => { p.appearance.measurements = { chestCm: 86, waistCm: 68, hipsCm: 92, disclosure: 'unknown' }; })).toBe(true);
   });
   it('rejects profile id mismatch', () => {
-    expect(isCharacterProfile(base('npc_starter_2'), character())).toBe(false);
+    expect(isCharacterProfile(base('npc_w1_guild_1'), character())).toBe(false);
   });
   it('rejects axis -0.1, 100.1, NaN, Infinity', () => {
     for (const v of [-0.1, 100.1, NaN, Infinity, -Infinity, '50', null])
@@ -108,7 +96,7 @@ describe('isCharacterProfile', () => {
   });
   it('rejects intimacyKnowledge or private when character.age is 17', () => {
     const minor = character(17);
-    expect(isCharacterProfile(base('npc_starter_1'), minor)).toBe(true);
+    expect(isCharacterProfile(base('npc_w1_guild_0'), minor)).toBe(true);
     expect(isCharacterProfile(profileWith(p => { p.traits.intimacyKnowledge = 0; }), minor)).toBe(false);
     expect(isCharacterProfile(profileWith(p => { p.private = { intimateHistory: { value: 'none', disclosure: 'unknown' } }; }), minor)).toBe(false);
     expect(isCharacterProfile(profileWith(p => { p.traits.intimacyKnowledge = 0; p.private = { intimateHistory: { value: 'none', disclosure: 'unknown' } }; }), character(18))).toBe(true);
@@ -147,9 +135,9 @@ describe('isPlayerCharacter', () => {
     expect(isPlayerCharacter(q)).toBe(false);
   });
   it('rejects wrong id, extra keys and a mismatched profile', () => {
-    expect(isPlayerCharacter({ ...player(), character: playerCharacter({ id: 'npc_starter_1' }) })).toBe(false);
+    expect(isPlayerCharacter({ ...player(), character: playerCharacter({ id: 'npc_w1_guild_0' }) })).toBe(false);
     expect(isPlayerCharacter({ ...player(), extra: 1 })).toBe(false);
-    expect(isPlayerCharacter({ ...player(), profile: base('npc_starter_1') })).toBe(false);
+    expect(isPlayerCharacter({ ...player(), profile: base('npc_w1_guild_0') })).toBe(false);
     expect(isPlayerCharacter({ character: { ...playerCharacter(), memories: [{ id: 'm' }] }, profile: player().profile })).toBe(false);
   });
 });
@@ -160,7 +148,7 @@ describe('isCharacterLifeSessionState', () => {
     const s = lifeSession();
     expect(isCharacterLifeSessionState({ ...s, profiles: [s.profiles[1], s.profiles[0], s.profiles[2]] })).toBe(false);
     expect(isCharacterLifeSessionState({ ...s, profiles: s.profiles.slice(0, 2) })).toBe(false);
-    expect(isCharacterLifeSessionState({ ...s, profiles: [...s.profiles, base('npc_starter_4')] })).toBe(false);
+    expect(isCharacterLifeSessionState({ ...s, profiles: [...s.profiles, base('npc_extra_profile')] })).toBe(false);
     expect(isCharacterLifeSessionState({ ...s, extra: 1 })).toBe(false);
     const { player: _p, ...noPlayer } = s;
     expect(isCharacterLifeSessionState(noPlayer)).toBe(false);
@@ -295,7 +283,7 @@ describe('live Character Life validation', () => {
 });
 
 describe('isNamedCharacterRecord', () => {
-  it('accepts every starter character and the player character', () => {
+  it('accepts every generated NPC character and the player character', () => {
     npcSession().npcs.forEach(n => expect(isNamedCharacterRecord(n.character)).toBe(true));
     expect(isNamedCharacterRecord(playerCharacter())).toBe(true);
   });
@@ -327,7 +315,7 @@ describe('catalogue immutability', () => {
   it('mutation attempts throw and leave validation unchanged', () => {
     const adultPlayer = (over: Partial<NamedCharacter>) => ({ ...player(), character: playerCharacter(over) });
     const before = [valid(p => { p.appearance.skinTone = 'green'; }), valid(p => { p.identity.birthplaceId = 'haven'; }), valid(() => {}),
-      isPlayerCharacter(adultPlayer({ occupation: 'governor' })), isCharacterProfile(base('npc_starter_1'), character(17))];
+      isPlayerCharacter(adultPlayer({ occupation: 'governor' })), isCharacterProfile(base('npc_w1_guild_0'), character(17))];
     const attempts: (() => void)[] = [
       () => { (SKIN_TONES[0] as Mutable).id = 'green'; },
       () => { (PLACES.find(p => p.id === 'haven') as Mutable).regionId = 'northreach'; },
@@ -341,7 +329,7 @@ describe('catalogue immutability', () => {
     ];
     attempts.forEach(a => expect(a).toThrow(TypeError));
     expect([valid(p => { p.appearance.skinTone = 'green'; }), valid(p => { p.identity.birthplaceId = 'haven'; }), valid(() => {}),
-      isPlayerCharacter(adultPlayer({ occupation: 'governor' })), isCharacterProfile(base('npc_starter_1'), character(17))]).toEqual(before);
+      isPlayerCharacter(adultPlayer({ occupation: 'governor' })), isCharacterProfile(base('npc_w1_guild_0'), character(17))]).toEqual(before);
     expect(before).toEqual([false, false, true, false, true]);
     expect(isPlayerCharacter({ ...player(), character: playerCharacter({ age: 17 }) })).toBe(false);
     expect(SKIN_TONES[0].id).toBe('porcelain');

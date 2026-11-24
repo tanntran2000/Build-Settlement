@@ -5,9 +5,9 @@ import { axisBand, describeLong, describeShort, heightBand, profileRows, type Ax
 import type { CharacterProfile } from '../types.js';
 
 const clara = (): CharacterView => ({
-  character: createNamedCharacter({ id: 'npc_starter_1', name: 'Clara', gender: 'female', age: 27, occupation: 'technician', socialClass: 'skilled', legalStatus: 'citizen' }),
+  character: createNamedCharacter({ id: 'npc_description_a', name: 'Clara', gender: 'female', age: 27, occupation: 'technician', socialClass: 'skilled', legalStatus: 'citizen' }),
   profile: {
-    id: 'npc_starter_1',
+    id: 'npc_description_a',
     identity: { birthName: null, label: null, pronouns: 'she', birthplaceId: 'kestrel_ford', origin: { regionId: 'northreach', upbringing: 'frontier' }, currentLocationId: 'haven', biography: null },
     traits: { attractiveness: 66, learningAptitude: 72, warmth: 34 },
     appearance: { presentation: 'feminine', skinTone: 'light_olive', eyeColor: 'grey', hair: { color: 'brown', length: 'shoulder_length', texture: 'straight', style: 'tied_back' },
@@ -16,9 +16,9 @@ const clara = (): CharacterView => ({
   role: 'npc', postBuildingName: 'Food Processor',
 });
 const ruth = (): CharacterView => ({
-  character: createNamedCharacter({ id: 'npc_starter_2', name: 'Ruth', gender: 'female', age: 31, occupation: 'doctor', socialClass: 'skilled', legalStatus: 'free_resident' }),
+  character: createNamedCharacter({ id: 'npc_description_b', name: 'Ruth', gender: 'female', age: 31, occupation: 'doctor', socialClass: 'skilled', legalStatus: 'free_resident' }),
   profile: {
-    id: 'npc_starter_2',
+    id: 'npc_description_b',
     identity: { birthName: null, label: null, pronouns: 'she', birthplaceId: 'tidewall', origin: { regionId: 'saltmere', upbringing: 'port_town' }, currentLocationId: 'haven', biography: null },
     traits: { attractiveness: 50, learningAptitude: 55, warmth: 78 },
     appearance: { presentation: 'feminine', skinTone: 'deep_brown', eyeColor: 'brown', hair: { color: 'black', length: 'short', texture: 'straight', style: 'loose' },

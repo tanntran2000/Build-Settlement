@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';
 import { ITEM_CATALOG, createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, type ItemWeekReport, type TileTrialReport } from '@haven/core';
 import { reportLetters } from '../report-letters.js';
 
@@ -10,7 +11,7 @@ async function view() {
 function session() {
   const made = createCharacterLifeSession(12345, {...structuredClone(DEFAULT_PLAYER_DRAFT),currentName:'Ana'});
   if (!made.success) throw Error(made.error.message);
-  return made.value;
+  return withNpcs(made.value, [{ week: 1, source: 'guild', slot: 0 }]);
 }
 describe('C1 item views', () => {
   it('has eight everyday slots and three NPC-only locked slots', async () => {

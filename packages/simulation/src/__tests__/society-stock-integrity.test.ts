@@ -1,4 +1,5 @@
 ﻿import { describe, expect, it } from 'vitest';
+import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';
 import { createCharacterLifeSession, createSocietyState, DEFAULT_PLAYER_DRAFT, GOODS_STOCK_RULESET, P7A_TRIAL, type TileTrialState } from '@haven/core';
 import { executeTileTrialCommand } from '../tile-trial.js';
 import { executeCharacterLifeCommand } from '../character-life-command.js';
@@ -33,7 +34,7 @@ describe('retained society Goods stock flow', () => {
       expect(s).toEqual(before); expect(end(s)).toEqual(r);
       expect(report.goodsStock).toEqual({ openingMilli: 10000 - 1450 * (week - 1), producedMilli: 0, distributedMilli: 1450, closingMilli: 10000 - 1450 * week, demandMilli: 1450, unmetMilli: 0, capacityMilli: 2000, limitedBy: 'none' });
       expect(report).toMatchObject({ unpaidUpkeepMilli: 0, farmBatchGoldMilli: 2000, farmExtraUpkeepMilli: 0, taxMilli: 3000 - 36 * (week - 1), foodDemandMilli: 4000, foodConsumedMilli: 4000, goods: { servedMilli: 1450, revenueMilli: 1450, ironUsed: 0 }, immigration: { populationBefore: 100, populationAfter: 100, target: 90, reason: 'no-capacity' } });
-      expect(stocks(r.nextState)).toMatchObject({ food: 20000, gold: 45000 + (1450 - 3000) * week - 18 * week * (week - 1) });
+      expect(stocks(r.nextState)).toMatchObject({ food: 20000, gold: 120000 + (1450 - 3000) * week - 18 * week * (week - 1) });
       debit += report.before.gold + report.taxMilli + report.goods.revenueMilli - report.after.gold;
       s = command(r.nextState, 'NEXT_WEEK').nextState;
     }
@@ -111,15 +112,16 @@ describe('retained society Goods stock flow', () => {
   it('projects detached stock flow without assigning manager buffs', () => {
     const r = createCharacterLifeSession(42, { ...DEFAULT_PLAYER_DRAFT, currentName: 'Synthetic Keeper' });
     if (!r.success) throw Error('Factory failed');
-    expect(observeCharacterLife(r.value, null).freeManagerSlots).toHaveLength(3);
-    const next = executeCharacterLifeCommand(r.value, { type: 'END_WEEK', expectedRevision: 0, expectedWeek: 1 });
+    const s = withNpcs(r.value, NPC_TEST_KEYS);
+    expect(observeCharacterLife(s, null).freeManagerSlots).toHaveLength(3);
+    const next = executeCharacterLifeCommand(s, { type: 'END_WEEK', expectedRevision: 0, expectedWeek: 1 });
     if (!next.success) throw Error(next.error.message);
     const observation = observeCharacterLife(next.next, next.report!);
     expect(observation.lastReport!.goodsStock).toEqual(next.report!.goodsStock);
     expect(observation.settlement.goodsStock).toEqual({ rulesetId: GOODS_STOCK_RULESET, amountMilli: 8550 });
     expect(observation.lastReport!.goodsStock).not.toBe(next.report!.goodsStock);
-    expect(r.value.npcs.map(npc => npc.life.arousal)).toEqual([0, 0, 0]);
-    expect(next.next.npcs).toEqual(r.value.npcs.map(npc => ({ ...npc, life: { ...npc.life, arousal: Math.floor(npc.life.lust / P7A_TRIAL.arousalDivisor) } })));
+    expect(s.npcs.map(npc => npc.life.arousal)).toEqual([0, 0, 0]);
+    expect(next.next.npcs).toEqual(s.npcs.map(npc => ({ ...npc, life: { ...npc.life, arousal: Math.floor(npc.life.lust / P7A_TRIAL.arousalDivisor) } })));
   });
 });
 

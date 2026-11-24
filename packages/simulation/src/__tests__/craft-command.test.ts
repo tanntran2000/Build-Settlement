@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';
 import {
   createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, ITEM_CATALOG, RECIPES,
   isItemsState, isLiveCharacterLifeSessionState, type CharacterLifeSessionState, type CraftOrder,
@@ -171,5 +172,5 @@ describe('canonical workshop state',()=>{
 });
 
 it.each([['spec-2','smithy'],['service-1','hospital'],['slum-1','drug-store']])('ASSIGN_NPC accepts %s (%s)',(tileId)=>{
-  const next=act(life(),'ASSIGN_NPC',{npcId:'npc_starter_1',tileId});expect(next.npcs[0].postTileId).toBe(tileId);
+  const next=act(withNpcs(life(),NPC_TEST_KEYS.slice(0,1)),'ASSIGN_NPC',{npcId:'npc_w1_guild_0',tileId});expect(next.npcs[0].postTileId).toBe(tileId);
 });

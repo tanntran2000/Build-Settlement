@@ -2,7 +2,7 @@ import { test, expect, type Page } from '@playwright/test';
 import { ITEM_CATALOG, ITEM_TRIAL, type CharacterLifeSessionState } from '../../packages/core/src/index.ts';
 import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
 import { mkdir, writeFile } from 'node:fs/promises';
-import { makeLife, importLife, exportLife, go, selectPerson, selectArea, keyActivate, tabTo, expectOneCharacterWindow, expectReport, openReportDetails, reportRegion } from './character-life-navigation.helpers.ts';
+import { makeLifeWithNpcs, importLife, exportLife, go, selectPerson, selectArea, keyActivate, tabTo, expectOneCharacterWindow, expectReport, openReportDetails, reportRegion } from './character-life-navigation.helpers.ts';
 
 function act(s: CharacterLifeSessionState, type: string, fields: Record<string, unknown> = {}) {
   const r = executeCharacterLifeCommand(s, { type, expectedRevision: s.city.revision, ...fields });
@@ -10,7 +10,7 @@ function act(s: CharacterLifeSessionState, type: string, fields: Record<string, 
   return r.next;
 }
 function supplied(buildSmithy = true) {
-  const s = makeLife(42), stock = s.city.world.settlements[s.city.world.activeSettlementId!].inventory;
+  const s = makeLifeWithNpcs(42), stock = s.city.world.settlements[s.city.world.activeSettlementId!].inventory;
   Object.assign(stock, { gold: 1000000, food: 1000000, wood: 1000000, iron: 1000000 });
   s.city.society!.classes.free = 37; s.city.society!.classes.makers.common = 30; s.city.society!.classes.luminaries.common = 20;
   s.city.society!.stocksMilli.herbs = 10000;

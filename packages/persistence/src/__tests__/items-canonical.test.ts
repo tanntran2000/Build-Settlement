@@ -1,4 +1,5 @@
 import { expect, it } from 'vitest';
+import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';
 import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, isItemsState } from '@haven/core';
 import { executeCharacterLifeCommand } from '@haven/simulation';
 import { serializeCharacterLifeSave } from '../character-life-save.js';
@@ -7,13 +8,13 @@ import { recordsToSession, sessionToRecords } from '../session-records.js';
 function stocked() {
   const result = createCharacterLifeSession(42, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' });
   if (!result.success) throw Error(result.error.message);
-  const session = result.value;
+  const session = withNpcs(result.value, NPC_TEST_KEYS.slice(0, 1));
   Object.assign(session.city.society!.items, {
     nextItemId: 11,
     inventory: [{ id: 2, defId: 'common-weapon' }, { id: 7, defId: 'common-ring' }],
     consumables: [{ id: 3, defId: 'heal-potion-1' }, { id: 8, defId: 'heal-potion-2' }],
     storage: [{ item: { id: 1, defId: 'common-set' }, expiresWeek: 4 }, { item: { id: 9, defId: 'heal-potion-3' }, expiresWeek: 5 }],
-    equipped: { player: { top: { id: 4, defId: 'common-top' }, weapon: { id: 5, defId: 'common-weapon' } }, npc_starter_1: { weapon: { id: 6, defId: 'rare-weapon' } } },
+    equipped: { player: { top: { id: 4, defId: 'common-top' }, weapon: { id: 5, defId: 'common-weapon' } }, npc_w1_guild_0: { weapon: { id: 6, defId: 'rare-weapon' } } },
   });
   return session;
 }

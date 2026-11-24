@@ -1,7 +1,7 @@
 import { test,expect,type Page } from '@playwright/test';
 import { readFile,writeFile } from 'node:fs/promises';
 import { deserializeCharacterLifeSave,serializeCharacterLifeSave,GAME_DB } from '../../packages/persistence/src/index.ts';
-import { makeLife,importLife,exportLife,go } from './character-life-navigation.helpers.ts';
+import { makeLife,makeLifeWithNpcs,importLife,exportLife,go } from './character-life-navigation.helpers.ts';
 import { readStoredRecords,storedSaveText,storeMarks,injectWriteAbort,writeRecords,holdStoreCompletion,waitStoreCompletion,releaseStoreCompletion,writeStoredSaveText } from './storage.helpers.ts';
 import { act } from './society-command.helpers.ts';
 const KEY='haven.character-life-session-society.checkpoint.v1';
@@ -11,7 +11,7 @@ const button=(page:Page,name:string)=>page.getByRole('button',{name,exact:true})
 function bytes(session=makeLife()){const r=serializeCharacterLifeSave(session);if(!r.success)throw Error(r.error.message);return r.text;}
 async function save(page:Page){await go(page,'session');await button(page,'Save locally').click();await expect(page.locator('[aria-label="Planning checkpoints"] [role="status"]')).toContainText('Saved in this browser.');}
 async function start(page:Page){await page.goto('/');await expect(page.getByRole('heading',{name:'HAVEN',exact:true})).toBeVisible();await importLife(page,makeLife());}
-async function fallenFixture(){const r=deserializeCharacterLifeSave(await readFile(new URL('../../packages/persistence/src/__tests__/fixtures/society-v11/life-rebellion-last-week.json',import.meta.url),'utf8'));if(!r.success)throw Error(r.error.message);return r.state;}
+async function fallenFixture(){const r=deserializeCharacterLifeSave(await readFile(new URL('../../packages/persistence/src/__tests__/fixtures/society-v12/life-rebellion-last-week.json',import.meta.url),'utf8'));if(!r.success)throw Error(r.error.message);return r.state;}
 async function expectCleared(page:Page){
  await expect.poll(()=>readStoredRecords(page)).toEqual([marker]);
  const rows=await readStoredRecords(page);for(const table of GAME_DB.stores.filter(t=>t!=='system'))expect(rows.filter(r=>r.slotId==='main'&&r.table===table)).toHaveLength(0);
@@ -103,7 +103,7 @@ test('fix1 F3: temporarily blocked localStorage retries legacy migration without
 });
 
 test('fix2 F1: recovered legacy A cannot replace B saved while migration was blocked',async({page})=>{
- const legacy=bytes(),b=makeLife(54321);await page.addInitScript(({key,legacy})=>{
+ const legacy=bytes(),b=makeLifeWithNpcs(54321);await page.addInitScript(({key,legacy})=>{
   const storage=localStorage;storage.setItem(key,legacy);
   Object.defineProperty(window,'localStorage',{configurable:true,get(){throw Error('temporarily blocked');}});
   Object.assign(window,{restoreLegacyStorage:()=>Object.defineProperty(window,'localStorage',{configurable:true,get:()=>storage})});

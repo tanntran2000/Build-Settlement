@@ -1,4 +1,5 @@
 import { expect, it } from 'vitest';
+import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';
 import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, ITEM_CATALOG, ITEM_TRIAL, itemRandom, type CharacterLifeSessionState } from '@haven/core';
 import { executeCharacterLifeCommand } from '../character-life-command.js';
 
@@ -12,7 +13,7 @@ const seed = (() => {
 function life(typeId: string,tileId: string) {
   const made = createCharacterLifeSession(seed,{...structuredClone(DEFAULT_PLAYER_DRAFT),currentName:'Keeper'});
   if (!made.success) throw Error(made.error.message);
-  const s = made.value, stocks = s.city.world.settlements[s.city.world.activeSettlementId!].inventory;
+  const s = withNpcs(made.value, NPC_TEST_KEYS.slice(0, 2)), stocks = s.city.world.settlements[s.city.world.activeSettlementId!].inventory;
   for (const key of ['gold','food','wood','iron'] as const) stocks[key] = 1_000_000;
   s.city.goodsStock!.amountMilli = 1_000_000; s.city.society!.wallRing = 3;
   for (const id of ['field-1','plain-1']) s.city.tiles.find(t=>t.id===id)!.building!.workers = 0;

@@ -5,6 +5,17 @@ import type { OutsideTerrain, OutsidePlotState } from '../trial/outside.js';
 import type { ItemDefinition, ItemTrial } from '../trial/items.js';
 import type { CraftTrial, RecipeDefinition } from '../trial/recipes.js';
 import itemJson from './items.json' with { type: 'json' };
+import npcLifeJson from './npc-life.json' with { type: 'json' };
+import tuningJson from './tuning.json' with { type: 'json' };
+import {
+    BUILDS, CHARACTER_LIMITS, EYE_COLORS, FACE_FEATURES, FACE_SHAPES, HAIR_COLORS, HAIR_LENGTHS, HAIR_STYLES, HAIR_TEXTURES,
+    OUTFITS, PLACES, PLAYER_PROFESSIONS, REGIONS, SKIN_TONES, UPBRINGINGS,
+} from '../character/catalog.js';
+import type { CharacterAppearance } from '../character/types.js';
+import type { Occupation } from '../domain/character.js';
+import { readDenseArray } from '../world/arrays.js';
+import { WORLD_TRAITS } from '../world/npc-content.js';
+import { SOCIAL_RESOURCE_SCALE } from '../social/profile.js';
 type IMMIGRATION_TRIAL_DEFAULTSData = Readonly<ImmigrationTrialConfig>;
 type TRIAL_BUILDINGSData = Readonly<Record<string, TrialBuildingDefinition>>;
 type TILE_TRIAL_BALANCEData = Readonly<{
@@ -298,14 +309,14 @@ type LAW_MESSAGESData = Readonly<{
 type GOODS_STOCK_TRIALData = Readonly<{
     initialFoodMilli: 20000;
     initialGoodsMilli: 10000;
-    initialGoldMilli: 45000;
+    initialGoldMilli: number;
     woodPerBatchMilli: 2000;
     goodsPerBatchMilli: 2000;
     capacityPerLevelMilli: 2000;
     goldPerGoodsMilli: 1000;
 }>;
 type SOCIETY_TRIALData = Readonly<{
-    readonly rulesetId: "tile-society-11";
+    readonly rulesetId: "tile-society-12";
     readonly standing: 50;
     readonly laws: Readonly<{
         active: never[];
@@ -629,7 +640,7 @@ const tuningSchemas: Record<string, Rule> = {
             "tension": nonnegative
         })
     }), "SOCIETY_TRIAL": object({
-        "rulesetId": literal("tile-society-11"), "standing": nonnegative, "laws": object({
+        "rulesetId": literal("tile-society-12"), "standing": nonnegative, "laws": object({
             "active": tuple([]), "votedWeek": literal(null), "repealedUntil": object({}), "promise": literal(null)
         }), "order": object({
             "security": nonnegative, "crime": nonnegative, "authority": nonnegative
@@ -984,4 +995,152 @@ export function validateNpcLife(json: unknown): NpcLifeCatalog {
         weeksPerYear: positive, recentCap: positive, sexExpCaps: object({ novice: positive, professional: positive, expert: positive })
     })(root.P7A_TRIAL, 'npc-life.json#P7A_TRIAL', '');
     return root as unknown as NpcLifeCatalog;
+}
+
+type NpcRange = readonly [number, number];
+type NpcSourceId = 'guild' | 'auction-house' | 'slave-market' | 'auction-house-lot' | 'slave-market-lot';
+type NpcSourceProfile = Readonly<{
+    status: 'slave' | 'servant';
+    mind: NpcRange;
+    skills: NpcRange;
+    beauty: NpcRange;
+    obedience: NpcRange;
+    affection: NpcRange;
+    past: NpcRange;
+    socialClass: readonly ('lower' | 'common' | 'skilled')[];
+}>;
+type NpcChoices<T> = Readonly<{ [K in keyof T]-?: readonly T[K][] }>;
+type NpcAppearanceChoices = NpcChoices<Omit<CharacterAppearance, 'hair' | 'face' | 'measurements'>> & Readonly<{
+    hair: NpcChoices<CharacterAppearance['hair']>;
+    face: NpcChoices<CharacterAppearance['face']>;
+    measurements: readonly (NonNullable<CharacterAppearance['measurements']> | null)[];
+}>;
+export interface NpcGeneratorCatalog {
+    cultures: Readonly<Record<string, Readonly<{ name: string; given: readonly string[]; epithets: readonly string[] }>>>;
+    originCulture: Readonly<Record<string, string>>;
+    originProfile: Readonly<Record<string, Readonly<{
+        birthplaceId: string; regionId: string; upbringing: string; occupation: Occupation; guildClass: 'common' | 'skilled';
+    }>>>;
+    sources: Readonly<Record<NpcSourceId, NpcSourceProfile>>;
+    appearance: NpcAppearanceChoices;
+    preferences: readonly string[];
+    flaws: readonly string[];
+    price: Readonly<{
+        baseMilli: Readonly<Record<'guild' | 'auction-house' | 'slave-market' | 'lot', number>>;
+        skillPointBps: number; beautyPointBps: number; sexExpLevelBps: number;
+        levelValue: Readonly<Record<'novice' | 'professional' | 'expert', number>>;
+        conditionFactor: number; sellShare: number;
+    }>;
+    P7B_TRIAL: Readonly<{
+        marker: 'TRIAL'; age: NpcRange; ageWeightYoung: number; youngAge: NpcRange; olderAge: NpcRange;
+        stockSize: number; startGoldMilli: number; npcCap: number; traitCount: NpcRange; statRange: NpcRange;
+        profileAxisRange: NpcRange; contractWeeks: number; wageMilli: NpcRange;
+        professionalAtCount: number; expertAtCount: number;
+    }>;
+}
+const npcSourceIds: readonly NpcSourceId[] = ['guild', 'auction-house', 'slave-market', 'auction-house-lot', 'slave-market-lot'];
+const npcGeneratorFile = 'npc-generator.json';
+const npcDataKey: Rule = (value, ref, field) => {
+    if (typeof value !== 'string' || !/^[a-z][a-z0-9_]*$/.test(value)) fail(ref, field, 'expected stable lowercase id');
+};
+const nameWord: Rule = (value, ref, field) => {
+    if (typeof value !== 'string' || !/^[A-Z][a-z]+$/.test(value)) fail(ref, field, 'expected one capitalized English word');
+};
+const within = ([minimum, maximum]: NpcRange): Rule => (value, ref, field) => {
+    if (!Number.isSafeInteger(value) || (value as number) < minimum || (value as number) > maximum)
+        fail(ref, field, `expected integer in [${minimum}, ${maximum}]`);
+};
+const ascending = (item: Rule): Rule => (value, ref, field) => {
+    tuple([item, item])(value, ref, field);
+    const [min, max] = value as NpcRange;
+    if (min > max) fail(ref, field, 'expected an ascending inclusive range');
+};
+const denseChoices = (item: Rule, allowEmpty = false): Rule => (value, ref, field) => {
+    const entries = readDenseArray(value);
+    if (entries === null || (!allowEmpty && !entries.length)) fail(ref, field, allowEmpty ? 'expected dense array' : 'expected nonempty dense array');
+    const checked = entries!;
+    const keys = checked.map(entry => JSON.stringify(entry));
+    if (new Set(keys).size !== keys.length) fail(ref, field, 'expected unique entries');
+    checked.forEach((entry, index) => item(entry, ref, child(field, String(index))));
+};
+const npcWordIds = (entries: readonly { readonly id: string }[]) => oneOf(...entries.map(entry => entry.id));
+
+export function validateNpcGenerator(json: unknown): NpcGeneratorCatalog {
+    const ref = `${npcGeneratorFile}#catalog`;
+    const root = record(json, ref, 'entries');
+    object({ cultures: () => {}, originCulture: record, originProfile: record, sources: () => {},
+        appearance: record, preferences: denseChoices(npcDataKey), flaws: denseChoices(npcDataKey), price: record, P7B_TRIAL: record,
+    })(root, ref, '');
+    const cultures = record(root.cultures, ref, 'cultures');
+    const cultureIds = Object.keys(cultures);
+    if (!cultureIds.length) fail(ref, 'cultures', 'expected at least one culture');
+    for (const id of cultureIds) {
+        npcDataKey(id, `${npcGeneratorFile}#${id}`, 'id');
+        record(cultures[id], `${npcGeneratorFile}#cultures`, id);
+    }
+    catalog(cultures, npcGeneratorFile, cultureIds, object({ name: text, given: denseChoices(nameWord), epithets: denseChoices(nameWord) }));
+    const originIds = Object.keys(npcLifeJson.origins);
+    object(Object.fromEntries(originIds.map(id => [id, oneOf(...cultureIds)])))(root.originCulture, `${npcGeneratorFile}#originCulture`, '');
+    const originRule = object({
+        birthplaceId: npcWordIds(PLACES.filter(place => place.regionId !== null)), regionId: npcWordIds(REGIONS),
+        upbringing: npcWordIds(UPBRINGINGS), occupation: oneOf(...PLAYER_PROFESSIONS), guildClass: oneOf('common', 'skilled'),
+    });
+    object(Object.fromEntries(originIds.map(id => [id, originRule])))(root.originProfile, `${npcGeneratorFile}#originProfile`, '');
+    const trialRef = `${npcGeneratorFile}#P7B_TRIAL`;
+    const age = ascending(within([CHARACTER_LIMITS.ageMin, CHARACTER_LIMITS.ageMax]));
+    const stats = within([0, 100]);
+    object({
+        marker: literal('TRIAL'), age, ageWeightYoung: probability, youngAge: age, olderAge: age, stockSize: positive,
+        startGoldMilli: literal(tuningJson.GOODS_STOCK_TRIAL.initialGoldMilli), npcCap: positive, traitCount: ascending(positive),
+        statRange: ascending(stats), profileAxisRange: ascending(stats), contractWeeks: positive, wageMilli: ascending(positive),
+        professionalAtCount: positive, expertAtCount: positive,
+    })(root.P7B_TRIAL, trialRef, '');
+    const trial = root.P7B_TRIAL as NpcGeneratorCatalog['P7B_TRIAL'];
+    if (trial.traitCount[1] > WORLD_TRAITS.length)
+        fail(trialRef, 'traitCount', `expected at most ${WORLD_TRAITS.length} available traits`);
+    if (trial.youngAge[0] !== trial.age[0] || trial.youngAge[1] + 1 !== trial.olderAge[0] || trial.olderAge[1] !== trial.age[1])
+        fail(trialRef, 'age', 'expected young and older ranges to partition the adult age range');
+    if (trial.professionalAtCount >= trial.expertAtCount)
+        fail(trialRef, 'expertAtCount', 'expected greater than professionalAtCount');
+    if (trial.wageMilli.some(wage => wage % SOCIAL_RESOURCE_SCALE !== 0))
+        fail(trialRef, 'wageMilli', 'expected whole Gold amounts in milli');
+    const sourceRange = ascending(stats);
+    const sources = record(root.sources, ref, 'sources');
+    for (const id of Object.keys(sources)) {
+        if (!npcSourceIds.includes(id as NpcSourceId)) fail(`${npcGeneratorFile}#${id}`, 'id', 'unknown id');
+    }
+    for (const id of npcSourceIds) {
+        const guild = id === 'guild';
+        record(sources[id], `${npcGeneratorFile}#sources`, id);
+        object({
+            status: literal(guild ? 'servant' : 'slave'), mind: sourceRange, skills: sourceRange, beauty: sourceRange,
+            obedience: sourceRange, affection: sourceRange, past: ascending(nonnegative),
+            socialClass: denseChoices(guild ? oneOf('common', 'skilled') : literal('lower')),
+        })(sources[id], `${npcGeneratorFile}#${id}`, '');
+        const classes = (sources[id] as NpcSourceProfile).socialClass;
+        if (guild && (!classes.includes('common') || !classes.includes('skilled')))
+            fail(`${npcGeneratorFile}#${id}`, 'socialClass', 'expected common and skilled');
+    }
+    const measurements: Rule = (value, rowRef, field) => {
+        if (value === null) return;
+        object({ chestCm: within(CHARACTER_LIMITS.chestCm), waistCm: within(CHARACTER_LIMITS.waistCm),
+            hipsCm: within(CHARACTER_LIMITS.hipsCm), disclosure: oneOf('known', 'unknown'),
+        })(value, rowRef, field);
+    };
+    object({
+        presentation: denseChoices(literal('feminine')), skinTone: denseChoices(npcWordIds(SKIN_TONES)), eyeColor: denseChoices(npcWordIds(EYE_COLORS)),
+        hair: object({ color: denseChoices(npcWordIds(HAIR_COLORS)), length: denseChoices(npcWordIds(HAIR_LENGTHS)),
+            texture: denseChoices(npcWordIds(HAIR_TEXTURES)), style: denseChoices(npcWordIds(HAIR_STYLES)) }),
+        face: object({ shape: denseChoices(npcWordIds(FACE_SHAPES)), features: denseChoices(denseChoices(npcWordIds(FACE_FEATURES), true)) }),
+        build: denseChoices(npcWordIds(BUILDS)), heightCm: denseChoices(within(CHARACTER_LIMITS.heightCm)),
+        weightKg: denseChoices(within(CHARACTER_LIMITS.weightKg)), measurements: denseChoices(measurements),
+        outfit: denseChoices(oneOf('role_default', ...OUTFITS.map(outfit => outfit.id))),
+    })(root.appearance, `${npcGeneratorFile}#appearance`, '');
+    object({
+        baseMilli: object({ guild: positive, 'auction-house': positive, 'slave-market': positive, lot: positive }),
+        skillPointBps: positive, beautyPointBps: positive, sexExpLevelBps: positive,
+        levelValue: object({ novice: nonnegative, professional: positive, expert: positive }),
+        conditionFactor: literal(1), sellShare: probability,
+    })(root.price, `${npcGeneratorFile}#price`, '');
+    return root as unknown as NpcGeneratorCatalog;
 }

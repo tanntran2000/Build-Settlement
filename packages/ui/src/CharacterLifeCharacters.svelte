@@ -1,6 +1,6 @@
 <script lang="ts">
   import EquipmentView from './EquipmentView.svelte';
-  import { managerSlotTileIds, npcAge, PLAYER_CHARACTER_ID, TRIAL_BUILDINGS, type CharacterLifeSessionState, type CharacterView } from '@haven/core';
+  import { homeBeds, managerSlotTileIds, npcAge, PLAYER_CHARACTER_ID, TRIAL_BUILDINGS, type CharacterLifeSessionState, type CharacterView } from '@haven/core';
   import { executeCharacterLifeCommand } from '@haven/simulation';
   import CharacterProfile from './CharacterProfile.svelte';
   import type { CharacterArea, PostDraftEntry } from './character-life-navigation.js';
@@ -28,8 +28,15 @@
     role: 'npc', postBuildingName: npc.postTileId ? buildingName(npc.postTileId) : null,
   } : { character: session.player.character, profile: session.player.profile, role: 'player', postBuildingName: null }) satisfies CharacterView;
   $: displayedPost = drafts[selectedCharacterId] ?? freeSlots[0] ?? '';
-  $: onpostdrafts(session.npcs.filter(npc => Object.hasOwn(drafts, npc.character.id))
-    .map(npc => ({ npcId: npc.character.id, name: npc.character.name })));
+  $: npcHome = npc ? session.city.tiles.find(tile => tile.id === npc.household.home) : undefined;
+  $: inHall = npcHome?.building?.typeId === 'retainers-hall';
+  $: hallIds = new Set(session.npcs.filter(person => session.city.tiles.some(tile =>
+    tile.id === person.household.home && tile.building?.typeId === 'retainers-hall')).map(person => person.character.id));
+  $: if (Object.keys(drafts).some(id => !hallIds.has(id))) {
+    drafts = Object.fromEntries(Object.entries(drafts).filter(([id]) => hallIds.has(id)));
+  }
+  $: onpostdrafts(session.npcs.filter(person => hallIds.has(person.character.id) && Object.hasOwn(drafts, person.character.id))
+    .map(person => ({ npcId: person.character.id, name: person.character.name })));
 
   function buildingName(tileId: string) {
     return TRIAL_BUILDINGS[session.city.tiles.find(tile => tile.id === tileId)?.building?.typeId ?? '']?.name ?? 'Locked';
@@ -57,6 +64,7 @@
       onclick={() => { selectedCharacterId = person.id; }}>{person.name} · {person.role}</button>
   {/each}
 </nav>
+{#if session.npcs.length === 0}<p>No NPCs yet. Find recruits at the Guild, Auction House or Slave Market.</p>{/if}
 <section class="card" aria-label="Character window" data-character-id={selectedCharacterId}>
   <header>
     <h3>{view.character.name}</h3>
@@ -71,13 +79,18 @@
       {#snippet work()}
         {#if npc}
           <p data-testid={`npc-post-${npc.character.id}`}>Post: {postLabel(npc.postTileId)}</p>
+          {#if npcHome?.building && homeBeds(session.city, npcHome.id)}
+            <p>Home: {buildingName(npcHome.id)} ({npcHome.id}).</p>
+          {/if}
           {#if npc.life.working}
             <p>NPC post skills apply at End Week.</p>
           {:else}
             <p>Not working{npc.postTileId ? ' · Post inactive at End Week.' : ''}</p>
           {/if}
           {#if assignError?.npcId === npc.character.id}<p id="life-assign-error" role="alert">{assignError.message}</p>{/if}
-          {#if npc.postTileId}
+          {#if !inHall}
+            <p>Only Retainers' Hall residents can hold a city post.</p>
+          {:else if npc.postTileId}
             <button disabled={locked} aria-describedby={assignError?.npcId === npc.character.id ? 'life-assign-error' : undefined}
               onclick={() => run('UNASSIGN_NPC', npc.character.id)}>Unassign</button>
           {:else if freeSlots.length || Object.hasOwn(drafts, npc.character.id)}
@@ -91,7 +104,7 @@
             <button disabled={locked} aria-describedby={assignError?.npcId === npc.character.id ? 'life-assign-error' : undefined}
               onclick={() => run('ASSIGN_NPC', npc.character.id)}>Assign</button>
           {/if}
-          {#if !npc.postTileId && !freeSlots.length}<p>No free manager post. Build a Farm, Processor, Logging Camp, Mine, Workshop or Market.</p>{/if}
+          {#if inHall && !npc.postTileId && !freeSlots.length}<p>No free manager post. Build a Farm, Processor, Logging Camp, Mine, Workshop or Market.</p>{/if}
         {/if}
       {/snippet}
     </CharacterProfile>

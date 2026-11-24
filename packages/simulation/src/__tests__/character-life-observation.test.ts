@@ -1,3 +1,4 @@
+import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';
 import {
 createCharacterLifeSession,DEFAULT_PLAYER_DRAFT,describeLong,describeShort,
 isLiveCharacterLifeSessionState,managerSlotTileIds,profileRows,summarizeOutside,
@@ -12,7 +13,8 @@ import * as simulation from '../index.js';
 function life(): CharacterLifeSessionState {
   const r = createCharacterLifeSession(0, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' });
   if (!r.success) throw Error(r.error.message);
-  const s = r.value;
+  const s = withNpcs(r.value, NPC_TEST_KEYS);
+  s.npcs[0].traits = ['frugal'];
   s.city.tiles.find(t => t.id === 'spec-1')!.building = null;
   s.profiles[0].appearance.measurements = { chestCm: 63, waistCm: 47, hipsCm: 169, disclosure: 'unknown' };
   s.profiles[0].private = { intimateHistory: { value: 'some', disclosure: 'unknown' } };
@@ -242,7 +244,7 @@ describe('actionable catalogues and phase controls', () => {
 
   it('ASSIGN removes the occupied slot; REPLACE clears the post and restores its new label', () => {
     let s = life();
-    s = act(s, { type: 'ASSIGN_NPC', npcId: 'npc_starter_1', tileId: 'plain-1' }).next;
+    s = act(s, { type: 'ASSIGN_NPC', npcId: 'npc_w1_guild_0', tileId: 'plain-1' }).next;
     const assigned = observeCharacterLife(s, null);
     expect(assigned.freeManagerSlots).toEqual([{ tileId: 'field-1', label: 'Manager — Farm (field-1)' }]);
     expect(assigned.npcs[0].postLabel).toBe('Manager — Food Processor (plain-1)');
@@ -264,18 +266,18 @@ describe('actionable catalogues and phase controls', () => {
   it('zero free posts gives no reason when all NPCs are assigned, but explains an unassigned card once', () => {
     let all = act(life(), { type: 'BUILD', tileId: 'forest-1', typeId: 'logging' }).next;
     for (const [i, tileId] of ['field-1', 'plain-1', 'forest-1'].entries()) {
-      all = act(all, { type: 'ASSIGN_NPC', npcId: `npc_starter_${i + 1}`, tileId }).next;
+      all = act(all, { type: 'ASSIGN_NPC', npcId: all.npcs[i].character.id, tileId }).next;
     }
     expect(observeCharacterLife(all, null).freeManagerSlots).toEqual([]);
     expect(observeCharacterLife(all, null).disabledReasons).toEqual([]);
     let one = life();
     for (const [i, tileId] of ['field-1', 'plain-1'].entries()) {
-      one = act(one, { type: 'ASSIGN_NPC', npcId: `npc_starter_${i + 1}`, tileId }).next;
+      one = act(one, { type: 'ASSIGN_NPC', npcId: one.npcs[i].character.id, tileId }).next;
     }
     expect(observeCharacterLife(one, null).freeManagerSlots).toEqual([]);
     expect(observeCharacterLife(one, null).disabledReasons).toEqual([noPost]);
     const none = life();
-    none.city.tiles.forEach(t => { t.building = null; });
+    none.city.tiles.forEach(t => { if (!t.id.startsWith('estate-')) t.building = null; });
     expect(isLiveCharacterLifeSessionState(none)).toBe(true);
     expect(observeCharacterLife(none, null).disabledReasons).toEqual([noPost]);
     const report = act(none, { type: 'END_WEEK', expectedWeek: 1 });

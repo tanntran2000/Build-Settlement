@@ -178,7 +178,7 @@
     }
   },
   "SOCIETY_TRIAL": {
-    "rulesetId": "tile-society-11",
+    "rulesetId": "tile-society-12",
     "standing": 50,
     "laws": {
       "active": [],
@@ -536,7 +536,7 @@
   "GOODS_STOCK_TRIAL": {
     "initialFoodMilli": 20000,
     "initialGoodsMilli": 10000,
-    "initialGoldMilli": 45000,
+    "initialGoldMilli": 120000,
     "woodPerBatchMilli": 2000,
     "goodsPerBatchMilli": 2000,
     "capacityPerLevelMilli": 2000,

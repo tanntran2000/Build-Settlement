@@ -2,7 +2,7 @@ import { writeFile } from 'node:fs/promises';
 import { expect, test, type Locator, type Page, type TestInfo } from '@playwright/test';
 import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
 import {
-  characterWindow, expectReport, exportLife, go, importLife, makeLife, reportRegion, selectArea, selectPerson, tabTo,
+  characterWindow, expectReport, exportLife, go, importLife, makeLifeWithNpcs, reportRegion, selectArea, selectPerson, tabTo,
 } from './character-life-navigation.helpers.ts';
 
 const names = ['Profile', 'Skills', '18+', 'History'] as const;
@@ -14,7 +14,7 @@ const tablist = (page: Page) => sheet(page).getByRole('tablist', { name: 'NPC sh
 const tab = (page: Page, name: SheetTab) => tablist(page).getByRole('tab', { name, exact: true });
 const panel = (page: Page, name: SheetTab) => sheet(page).getByRole('tabpanel', { name, exact: true });
 
-async function boot(page: Page, state: ReturnType<typeof makeLife>) {
+async function boot(page: Page, state: ReturnType<typeof makeLifeWithNpcs>) {
   await page.goto('/?mode=world-life');
   await importLife(page, state);
 }
@@ -33,8 +33,11 @@ async function show(page: Page, name: SheetTab) {
 }
 
 function profileFixture() {
-  const state = makeLife();
+  const state = makeLifeWithNpcs();
   const npc = state.npcs[0];
+  npc.character.occupation = 'technician';
+  npc.character.socialClass = 'skilled';
+  npc.traits = ['frugal', 'restless'];
   npc.life.origin = 'frontier';
   npc.life.hobbies = ['reading', 'gardening'];
   npc.character.relationshipToPlayer.affection = 73;
@@ -55,14 +58,14 @@ function reportFixture() {
   return state;
 }
 
-function historyFixture(state: ReturnType<typeof makeLife>, recentCount: number) {
+function historyFixture(state: ReturnType<typeof makeLifeWithNpcs>, recentCount: number) {
   state.npcs[0].life.history = {
     counters: { 'post-assigned': 8, 'post-cleared': 2, exhausted: 4, recovered: 3, birthday: 5, 'travel-note': 1 },
     recent: Array.from({ length: recentCount }, (_, i) => ({ week: 1, kind: i % 2 ? 'birthday' : 'post-assigned' })),
   };
 }
 
-function adultFixture(state: ReturnType<typeof makeLife>) {
+function adultFixture(state: ReturnType<typeof makeLifeWithNpcs>) {
   const { life } = state.npcs[0];
   life.lust = 42;
   life.arousal = 19;
@@ -70,6 +73,8 @@ function adultFixture(state: ReturnType<typeof makeLife>) {
   life.sexExp.hand = { level: 'novice', exp: 17 };
   life.sexExp.mouth = { level: 'professional', exp: 110 };
   life.sexExp.breast = { level: 'expert', exp: 300 };
+  life.sexExp.vagina = { level: 'novice', exp: 0 };
+  life.sexExp.ass = { level: 'novice', exp: 0 };
 }
 
 function rowValue(scope: Locator, name: string) {
@@ -91,7 +96,7 @@ for (const viewport of desktops) test.describe('NPC sheet at ' + viewport.width 
     await expect(profile.getByText('Frugal', { exact: true })).toBeVisible();
     await expect(rowValue(profile, 'Frugal'))
       .toHaveText('Careful with materials. Intended: less waste where she manages. (effect not active yet)');
-    await expect(profile.getByText('Age 49 · Mature · Background: technician · skilled · citizen', { exact: true })).toBeVisible();
+    await expect(profile.getByText('Age 49 · Mature · Background: technician · skilled · contract bound', { exact: true })).toBeVisible();
     await profile.getByText('Attributes', { exact: true }).click();
     await expect(profile.getByText(/^Health \d/)).toHaveCount(0);
     await expect(profile.getByText(/^Emotions:/)).not.toContainText('Stress');
@@ -103,18 +108,20 @@ for (const viewport of desktops) test.describe('NPC sheet at ' + viewport.width 
     await go(page, 'city');
     await page.getByTestId('life-end-week').click();
     await openSheet(page, npc.character.id);
-    await expect(profile.getByText('Age 50 · Granny · Background: technician · skilled · citizen', { exact: true })).toBeVisible();
+    await expect(profile.getByText('Age 50 · Granny · Background: technician · skilled · contract bound', { exact: true })).toBeVisible();
     await go(page, 'reports');
     await page.getByRole('button', { name: 'Plan next week', exact: true }).click();
     expect((await exportLife(page)).npcs[0].character.age).toBe(npc.character.age);
   });
 
   test('Skills shows the five scores and independent Not working status', async ({ page }) => {
-    const state = makeLife();
+    const state = makeLifeWithNpcs();
     state.npcs[0].postTileId = 'field-1';
+    state.npcs[0].character.skills = { management: 40, technical: 65, medical: 15, combat: 30, negotiation: 25 };
     state.npcs[0].life.stress = 80;
     state.npcs[0].life.working = false;
     state.npcs[1].life.stress = 80;
+    state.npcs[1].life.working = true;
     state.npcs[2].life.stress = 49;
     await boot(page, state);
     await openSheet(page, state.npcs[0].character.id);
@@ -137,7 +144,7 @@ for (const viewport of desktops) test.describe('NPC sheet at ' + viewport.width 
   });
 
   test('18+ shows the Mind marker and approved numeric rows', async ({ page }) => {
-    const state = makeLife();
+    const state = makeLifeWithNpcs();
     adultFixture(state);
     state.npcs[0].life.mind = 67;
     await boot(page, state);
@@ -174,7 +181,7 @@ for (const viewport of desktops) test.describe('NPC sheet at ' + viewport.width 
   });
 
   test('History shows grouped counters and all twenty recent events', async ({ page }) => {
-    const state = makeLife();
+    const state = makeLifeWithNpcs();
     historyFixture(state, 20);
     await boot(page, state);
     await openSheet(page, state.npcs[0].character.id);
@@ -197,7 +204,7 @@ for (const viewport of desktops) test.describe('NPC sheet at ' + viewport.width 
   });
 
   test('NPC sheet has one tab stop and linked keyboard panels', async ({ page }) => {
-    const state = makeLife();
+    const state = makeLifeWithNpcs();
     await boot(page, state);
     await openSheet(page, state.npcs[0].character.id);
     const outer = characterWindow(page).getByRole('tab', { name: 'Description', exact: true });

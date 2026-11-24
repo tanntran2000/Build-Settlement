@@ -1,19 +1,20 @@
 import { expect, it } from 'vitest';
+import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';
 import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, type CharacterLifeSessionState } from '@haven/core';
 import { executeCharacterLifeCommand } from '../character-life-command.js';
 
-function life(){const r=createCharacterLifeSession(0,{...structuredClone(DEFAULT_PLAYER_DRAFT),currentName:'Ana'});if(!r.success)throw Error(r.error.message);return r.value;}
+function life(){const r=createCharacterLifeSession(0,{...structuredClone(DEFAULT_PLAYER_DRAFT),currentName:'Ana'});if(!r.success)throw Error(r.error.message);return withNpcs(r.value,NPC_TEST_KEYS);}
 const items=(s:CharacterLifeSessionState)=>s.city.society!.items;
 function add(s:CharacterLifeSessionState,defId:string,consumable=false){const i={id:items(s).nextItemId++,defId};(consumable?items(s).consumables:items(s).inventory).push(i);return i.id;}
 const gold=(s:CharacterLifeSessionState)=>s.city.world.settlements[s.city.world.activeSettlementId!].inventory;
 function action(s:CharacterLifeSessionState,type:string,fields:Record<string,unknown>={}){return executeCharacterLifeCommand(s,{type,expectedRevision:s.city.revision,...fields});}
 function ok(s:CharacterLifeSessionState,type:string,fields:Record<string,unknown>={}){const before=structuredClone(s);const r=action(s,type,fields);expect(s).toEqual(before);expect(r.success).toBe(true);if(!r.success)throw Error(r.error.code);expect(r.next.city.revision).toBe(s.city.revision+1);return r.next;}
 function reject(s:CharacterLifeSessionState,type:string,fields:Record<string,unknown>,code:string){const before=structuredClone(s);expect(action(s,type,fields)).toMatchObject({success:false,error:{code}});expect(s).toEqual(before);}
-it.each([['common-weapon','player'],['rare-weapon','npc_starter_1']])('equips and unequips %s', (defId,characterId)=>{
+it.each([['common-weapon','player'],['rare-weapon','npc_w1_guild_0']])('equips and unequips %s', (defId,characterId)=>{
  let s=life();const itemId=add(s,defId);s=ok(s,'EQUIP_ITEM',{itemId,characterId});expect(items(s).equipped[characterId].weapon?.id).toBe(itemId);expect(items(s).inventory).toHaveLength(0);
  s=ok(s,'UNEQUIP_ITEM',{characterId,slot:'weapon'});expect(items(s).inventory).toEqual([{id:itemId,defId}]);expect(items(s).equipped[characterId]?.weapon).toBeUndefined();
 });
-it('rejects KIND_MISMATCH atomically',()=>{const s=life();reject(s,'EQUIP_ITEM',{itemId:add(s,'common-weapon'),characterId:'npc_starter_1'},'KIND_MISMATCH');});
+it('rejects KIND_MISMATCH atomically',()=>{const s=life();reject(s,'EQUIP_ITEM',{itemId:add(s,'common-weapon'),characterId:'npc_w1_guild_0'},'KIND_MISMATCH');});
 it('rejects SLOT_MISMATCH for accessory into top and material equipped',()=>{
  const s=life();reject(s,'EQUIP_ITEM',{itemId:add(s,'common-ring'),characterId:'player',slot:'top'},'SLOT_MISMATCH');
  items(s).materials.iron=1;reject(s,'EQUIP_ITEM',{itemId:'iron',characterId:'player'},'SLOT_MISMATCH');
@@ -52,7 +53,7 @@ it.each([[1,5],[2,10],[3,15]])('potion %i heals %i, clamps at 100, costs no acti
  const s=life();s.player.character.health=50;const itemId=add(s,`heal-potion-${potion}`,true);const npcHealth=s.npcs.map(n=>n.character.health);
  const next=ok(s,'USE_CONSUMABLE',{itemId});expect(next.player.character.health).toBe(50+heal);expect(next.npcs.map(n=>n.character.health)).toEqual(npcHealth);expect(items(next).consumables).toHaveLength(0);
  s.player.character.health=99;expect(ok(s,'USE_CONSUMABLE',{itemId}).player.character.health).toBe(100);
- reject(s,'USE_CONSUMABLE',{itemId,characterId:'npc_starter_1'},'FORBIDDEN');
+ reject(s,'USE_CONSUMABLE',{itemId,characterId:'npc_w1_guild_0'},'FORBIDDEN');
 });
 it('buys potions at an operating Hospital and rejects absent or idle shops',()=>{
  const s=life();reject(s,'BUY_POTION',{tileId:'service-1',potion:1},'NO_SHOP');

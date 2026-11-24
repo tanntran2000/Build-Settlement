@@ -79,7 +79,7 @@ it('decrements a pending promise once each week',()=>{
  expect(resolveLawPromiseWeek(s)).toBeNull();expect(s.society!.laws.promise!.weeksLeft).toBe(3);
 });
 it('preserves the law-free five-week gameplay pin and determinism',()=>{
- const bytes=readFileSync(new URL('../../../persistence/src/__tests__/fixtures/society-v11/life-new-game.json',import.meta.url),'utf8');
+ const bytes=readFileSync(new URL('../../../persistence/src/__tests__/fixtures/society-v12/life-new-game.json',import.meta.url),'utf8');
  const decoded=deserializeCharacterLifeSave(bytes);if(!decoded.success)throw Error(decoded.error.message);
  let s=decoded.state,other=structuredClone(s);
  for(let i=0;i<5;i++){
@@ -145,7 +145,7 @@ it('preserves the law-free five-week gameplay pin and determinism',()=>{
   }
 }});
  const expectedSettlements=structuredClone(old.city.world.settlements) as typeof s.city.world.settlements;
- expectedSettlements[s.city.world.activeSettlementId!].inventory.gold-=15000;
+ expectedSettlements[s.city.world.activeSettlementId!].inventory.gold += (120000 - 45000) - 15000;
  expect(s.city.world.settlements).toEqual(expectedSettlements);
 });
 it('is deterministic with three laws over five weeks',()=>{

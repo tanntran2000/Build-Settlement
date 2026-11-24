@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs';
+import { NPC_TEST_KEYS, withNpcs } from '../../__tests__/helpers/npcs.js';
 import { describe, expect, it, vi } from 'vitest';
 import * as api from '../../index.js';
 import * as validation from '../../data/validate.js';
@@ -82,19 +83,20 @@ describe('seeded life and ages', () => {
     expect(api.npcAge(life, 1)).toBe(age); expect(api.npcAge(life, 40)).toBe(age); expect(api.npcAge(life, 41)).toBe(age + 1);
     expect(api.npcAgeTitle(age)).toBe(title);
   });
-  it('initializes the three starter lives last, preserves ages/health and isolates all nested state', () => {
+  it('initializes generated live NPC records with household last and isolates nested state', () => {
     const made = api.createNpcWorldSession(42), again = api.createNpcWorldSession(42);
     if (!made.success || !again.success) throw Error('factory');
-    expect(made.value.npcs.map(n => api.npcAge(n.life, 1))).toEqual([27, 31, 24]);
-    expect(made.value.npcs.map(n => n.character.health)).toEqual([100, 85, 100]);
-    for (const npc of made.value.npcs) {
-      expect(Object.keys(npc)).toEqual(['character', 'traits', 'postTileId', 'life']);
-      expect(npc.life).toEqual(api.createNpcLife(42, npc.character.id, npc.character.age));
+    const first = withNpcs(made.value, NPC_TEST_KEYS), second = withNpcs(again.value, NPC_TEST_KEYS);
+    const before = structuredClone(second.npcs);
+    expect(first.npcs).toEqual(before);
+    expect(first.npcs.map(n => api.npcAge(n.life, 1))).toEqual(first.npcs.map(n => n.character.age));
+    for (const npc of first.npcs) {
+      expect(Object.keys(npc)).toEqual(['character', 'traits', 'postTileId', 'life', 'household']);
+      expect(api.isNpcLife(npc.life)).toBe(true);
+      expect(api.isNpcHousehold(npc.household)).toBe(true);
     }
-    made.value.npcs[0].life.sexExp.hand.exp = 1; made.value.npcs[0].life.hobbies[0] = 'walking';
-    expect(again.value.npcs[0].life.sexExp.hand.exp).toBe(0);
-    expect(api.WORLD_STARTER_NPCS[0].life.sexExp.hand.exp).toBe(0);
-    expect(Object.isFrozen(api.WORLD_STARTER_NPCS[0].life.sexExp.hand)).toBe(true);
+    first.npcs[0].life.sexExp.hand.exp += 1; first.npcs[0].life.hobbies[0] = first.npcs[0].life.hobbies[1];
+    expect(second.npcs).toEqual(before);
   });
 });
 
@@ -153,7 +155,7 @@ describe('untrusted life validation', () => {
       (n: Mutable) => { delete n.life; }, (n: Mutable) => { n.character.age = 17; },
       (n: Mutable) => { n.character.gender = 'male'; }, (n: Mutable) => { n.life.birthWeek = 1; },
     ]) {
-      const npcs = structuredClone(made.value.npcs); mutate(npcs[0]); expect(api.isWorldNpcList(npcs, made.value.city)).toBe(false);
+      const npcs = withNpcs(made.value, NPC_TEST_KEYS.slice(0, 1)).npcs; mutate(npcs[0]); expect(api.isWorldNpcList(npcs, made.value.city)).toBe(false);
     }
   });
 });

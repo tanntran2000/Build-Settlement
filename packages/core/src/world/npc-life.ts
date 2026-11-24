@@ -39,8 +39,13 @@ export function createNpcLife(seed: number, npcId: string, age: number): NpcLife
   const origin = origins[Math.floor(random() * origins.length)];
   const first = hobbies.splice(Math.floor(random() * hobbies.length), 1)[0];
   const second = hobbies[Math.floor(random() * hobbies.length)];
-  return { mind: 50, lust: lustBase, lustBase, arousal: 0, stress: 0, beauty,
-    birthWeek: 1 - age * P7A_TRIAL.weeksPerYear, origin, hobbies: [first, second], working: true,
+  return createNpcLifeFromDraws({ mind: 50, lustBase, beauty, birthWeek: 1 - age * P7A_TRIAL.weeksPerYear,
+    origin, hobbies: [first, second] });
+}
+
+export function createNpcLifeFromDraws({ mind, lustBase, beauty, birthWeek, origin, hobbies }:
+  Pick<NpcLife, 'mind' | 'lustBase' | 'beauty' | 'birthWeek' | 'origin' | 'hobbies'>): NpcLife {
+  return { mind, lust: lustBase, lustBase, arousal: 0, stress: 0, beauty, birthWeek, origin, hobbies, working: true,
     sexExp: { hand: { level: 'novice', exp: 0 }, mouth: { level: 'novice', exp: 0 }, breast: { level: 'novice', exp: 0 }, vagina: { level: 'novice', exp: 0 }, ass: { level: 'novice', exp: 0 } },
     history: { counters: {}, recent: [] } };
 }

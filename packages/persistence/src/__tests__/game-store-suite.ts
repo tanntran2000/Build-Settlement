@@ -4,7 +4,7 @@ import { diffRecords, type GameStore, type StoredRecord } from '../game-store.js
 const row = (id: string, table: StoredRecord['table'] = 'characters', slotId = 'main'): StoredRecord => ({ slotId, id, table, schemaVersion: 1, value: { id } });
 export function runGameStoreSuite(name: string, make: () => GameStore) {
   describe(name, () => {
-    const records = () => [row('session', 'meta'), row('npc_starter_1')];
+    const records = () => [row('session', 'meta'), row('npc_test_owner')];
     it('write then read', async () => { const s = make(); await s.replaceSlot('main', records()); expect(await s.read('main')).toEqual(records()); });
     it('unchanged records are not rewritten', async () => { const s = make(); await s.replaceSlot('main', records()); expect(await s.replaceSlot('main', records())).toEqual({ put: 0, deleted: 0, unchanged: 2 }); });
     it('a removed NPC record is deleted', async () => { const s = make(); await s.replaceSlot('main', records()); expect(await s.replaceSlot('main', records().slice(0, 1))).toEqual({ put: 0, deleted: 1, unchanged: 1 }); expect(await s.read('main')).toEqual(records().slice(0, 1)); });
