@@ -1,5 +1,29 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## P7-B PR B1 (ring 4, estates and acquisition buildings) — PR #102 G6 (2026-11-24 UTC)
+
+**G6 PASS (Claude, Orchestrator/Tester).** P7-B PR B1 of 4 is merged; B2 (generator, homes, no starter NPCs) is at Step 0.
+
+- **Merge.** PR #102 (`feat(core): P7-B B1 ring 4, estates and acquisition buildings`) was merged under G5 at 2026-11-24T01:06:12Z (GitHub account `tanntran2000`; dot reported the merge in T3 thread `mcp:f972da44`).
+  - Merge/main commit: `f73595b449db84b988d44a44cd33620efca9ecad` (parents `27f4dc2`, `7e1aca4`).
+  - Accepted head: `7e1aca45e35be17772ff770c3a4595c8213b0d3b`. Base: `27f4dc2` (P7-A complete).
+- **Trees.** The merge tree `fd04e1f2d7f6f47270a2e7ac82d18b68729a6372` is identical to the accepted head tree. Claude checked this locally.
+- **Main CI.** Quality Gate run [45302456754](https://github.com/tanntran2000/Build-Settlement/actions/runs/45302456754), job 138138070115 (push, exact merge SHA), SUCCESS at 2026-11-24T01:27:46Z: 3,136 unit tests and 407/407 Chromium smoke (19.8 min). The dependency audit passed (0 vulnerabilities).
+- **Pre-merge, at `7e1aca4`:**
+  - Claude Tester gates 1–7 exit 0 (3,136 unit, 135 files), full smoke 407/407 with `CI=1` (2026-11-19T14:58:43Z–15:36:52Z); also 407/407 at `ced2f88`.
+  - PR CI: quality-gate run 44557388223 success; claude-review success (its one comment flagged the evidence-link placeholder, fixed in the PR body before merge).
+  - Astra 6.2 high, thread `mcp:52dcab3f`: round 1 at `ced2f88` FAIL (P2 Hall cap literal in code ×3, P3 test name); round 2 at `7e1aca4` PASS, P0–P3 all 0.
+  - Builder (Sol 6.2 xhigh, `mcp:81ca277a`): Step 0 HOLD (157 replacements); HOLDs answered by corrections 2–4; first full smoke 351/407 (report helper missed `householdUpkeep`, correction 5); then 407/407 at `ced2f88` and `7e1aca4`.
+- **Evidence.** [`docs/verification/p7b-pr102/`](https://github.com/tanntran2000/Build-Settlement/tree/5b6ae7b2e7c2c808d0f5124d3c2ef551b3f6bb96/docs/verification/p7b-pr102) on branch `docs/p7-npc-design`, at `5b6ae7b`.
+- **Owner instructions** (verbatim; full table in `owner-approval-record.md`):
+  - "Duyệt P7-B"; "Duyệt, giao B1";
+  - Plan corrections: 1 "Duyệt, Hall tối đa 2"; 2 "Duyệt 2 chỗ sửa"; 3 "Chi phí riêng"; 4 "Duyệt 9 chỗ"; 5 "Duyệt sửa helper (Recommended)", "Sửa trong B1 (Recommended)"; 6 "Sửa cả 2 (Recommended)";
+  - Merge report: "Dot đã merg đang theo doi CI hậu kiểm".
+- **Disclosed.**
+  - Six plan corrections were needed during B1; Step 0 missed the immigration/liquidity effect of new upkeep and the e2e report helper (lessons carried into the B2 Step 0 brief).
+  - Astra round 1 failed before the PASS. Smoke runs on Chromium only.
+  - R-026 (cold first END_WEEK tick over 50 ms) is still open.
+
 ## P7-A PR C (NPC sheet UI) — PR #101 G6 (2026-11-19 UTC)
 
 **G6 PASS (Claude, Orchestrator/Tester).** P7-A PR C of 3 is merged. **P7-A (NPC core) is complete:** PR A #99, PR B #100, PR C #101.
