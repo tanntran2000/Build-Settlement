@@ -17,8 +17,6 @@ export interface NpcHousehold {
   boughtWeek: number;
 }
 
-export type NpcWithHousehold = WorldNpc & { household: NpcHousehold };
-
 const keys = ['home', 'status', 'obedience', 'contract', 'will', 'notice', 'lifelongAskWeek', 'source', 'boughtWeek'];
 const [statMinimum, statMaximum] = P7B_TRIAL.statRange;
 const count = (value: unknown): value is number => Number.isSafeInteger(value) && (value as number) >= 0;
@@ -48,6 +46,6 @@ export function homeBeds(city: TileTrialState, tileId: string): number {
   return building ? npcBeds(building.typeId, building.level) : 0;
 }
 
-export function homeResidents(npcs: readonly NpcWithHousehold[], tileId: string): number {
+export function homeResidents(npcs: readonly WorldNpc[], tileId: string): number {
   return npcs.filter(npc => npc.household.home === tileId).length;
 }

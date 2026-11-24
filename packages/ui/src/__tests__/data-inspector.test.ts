@@ -14,8 +14,8 @@ async function inspector() {
 }
 const rows: StoredRecord[] = [
   { slotId: 'main', id: 'session', table: 'meta', schemaVersion: 1, value: {} },
-  { slotId: 'main', id: 'NPC_starter_1', table: 'characters', schemaVersion: 1, value: {} },
-  { slotId: 'main', id: 'npc_starter_2', table: 'characters', schemaVersion: 1, value: {} },
+  { slotId: 'main', id: 'NPC_w1_guild_0', table: 'characters', schemaVersion: 1, value: {} },
+  { slotId: 'main', id: 'npc_w1_guild_1', table: 'characters', schemaVersion: 1, value: {} },
 ];
 
 it('counts every database table, including empty tables, without changing records', async () => {
@@ -28,7 +28,7 @@ it('counts every database table, including empty tables, without changing record
 
 it('finds ids case-insensitively by substring and leaves the input unchanged', async () => {
   const { findById } = await inspector(), before = structuredClone(rows);
-  expect(findById(rows, '  nPc_StArTeR  ')).toEqual(rows.slice(1));
+  expect(findById(rows, '  nPc_W1_GuIlD  ')).toEqual(rows.slice(1));
   expect(findById(rows, 'SESSION')).toEqual([rows[0]]);
   expect(findById(rows, '')).toEqual(rows);
   expect(findById(rows, 'missing')).toEqual([]);
@@ -64,13 +64,13 @@ function logger() {
   const log = createErrorLog(); log.initialize('weekly'); log.setContext('weekly', { week: 1 }); return log;
 }
 
-it.each(['characters:npc_starter_1', 'catalog:buildings.json#hospital'])('keeps a valid reference %s', ref => {
+it.each(['characters:npc_w1_guild_0', 'catalog:buildings.json#hospital'])('keeps a valid reference %s', ref => {
   const log = logger(); log.record('END_WEEK', 'INVALID_STATE', ref);
   expect(get(log).entries[0]).toHaveProperty('ref', ref);
 });
 
 it.each([
-  'Jane Doe', 'buildings.json#hospital', 'Characters:npc_starter_1', 'characters:',
+  'Jane Doe', 'buildings.json#hospital', 'Characters:npc_w1_guild_0', 'characters:',
   'characters:Jane Doe', 'characters:npc?token=value', 'characters:npc\n',
   `characters:${'a'.repeat(65)}`, null, {}, 7,
 ])('drops non-matching references without logging raw values: %j', ref => {
@@ -102,16 +102,16 @@ it('still loads an old stored entry without an optional reference', () => {
 
 it('keeps different references in separate adjacent error groups', () => {
   const log = logger();
-  log.record('END_WEEK', 'INVALID_STATE', 'characters:npc_starter_1');
-  log.record('END_WEEK', 'INVALID_STATE', 'characters:npc_starter_2');
-  log.record('END_WEEK', 'INVALID_STATE', 'characters:npc_starter_2');
+  log.record('END_WEEK', 'INVALID_STATE', 'characters:npc_w1_guild_0');
+  log.record('END_WEEK', 'INVALID_STATE', 'characters:npc_w1_guild_1');
+  log.record('END_WEEK', 'INVALID_STATE', 'characters:npc_w1_guild_1');
   expect(get(log).entries.map(entry => [entry.ref, entry.occurrences])).toEqual([
-    ['characters:npc_starter_1', 1], ['characters:npc_starter_2', 2],
+    ['characters:npc_w1_guild_0', 1], ['characters:npc_w1_guild_1', 2],
   ]);
 });
 
 it('loads an otherwise valid stored entry while dropping a malformed stored reference', () => {
-  const log = logger(); log.record('END_WEEK', 'INVALID_STATE', 'characters:npc_starter_1'); log.flush();
+  const log = logger(); log.record('END_WEEK', 'INVALID_STATE', 'characters:npc_w1_guild_0'); log.flush();
   const saved = JSON.parse(stored.get(ERROR_LOG_KEY)!);
   saved.entries[0].ref = 'Jane Doe'; stored.set(ERROR_LOG_KEY, JSON.stringify(saved));
   const reloaded = logger();

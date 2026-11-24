@@ -5,7 +5,7 @@ import { recordNpcLifeEvent, runNpcLifeWeek } from './npc-life-week.js';
 
 export type CharacterLifeActionType = 'BUILD' | 'REPLACE' | 'UPGRADE'
   | 'SET_WORKERS' | 'SET_ENABLED' | 'END_WEEK' | 'NEXT_WEEK'
-  | 'ENACT_LAW' | 'REPEAL_LAW' | 'CHOOSE_CARD_OPTION' | 'ASSIGN_NPC' | 'UNASSIGN_NPC' | 'EXTEND_WALL' | 'SET_TRAINING' | 'CLEAR' | 'SET_RESEARCH' | 'BUILD_DEEP_SHAFT' | ItemCommandType;
+  | 'ENACT_LAW' | 'REPEAL_LAW' | 'CHOOSE_CARD_OPTION' | 'ASSIGN_NPC' | 'UNASSIGN_NPC' | 'MOVE_NPC_HOME' | 'EXTEND_WALL' | 'SET_TRAINING' | 'CLEAR' | 'SET_RESEARCH' | 'BUILD_DEEP_SHAFT' | ItemCommandType;
 export type CharacterLifeCommandResult =
   | { success: true; next: CharacterLifeSessionState; report?: Readonly<TileTrialReport> }
   | { success: false; error: { code: string; message: string } };
@@ -29,13 +29,13 @@ export function executeCharacterLifeCommand(session: unknown, raw: unknown): Cha
   }
   const societyAction = ['ENACT_LAW', 'REPEAL_LAW', 'CHOOSE_CARD_OPTION', 'EXTEND_WALL', 'SET_TRAINING', 'CLEAR', 'SET_RESEARCH', 'BUILD_DEEP_SHAFT'].includes(type) &&
     isLiveCharacterLifeSessionState(session) && !!session.city.society;
-  if (!['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED', 'END_WEEK', 'NEXT_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC'].includes(type) && !societyAction) {
+  if (!['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED', 'END_WEEK', 'NEXT_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC', 'MOVE_NPC_HOME'].includes(type) && !societyAction) {
     return fail('UNSUPPORTED_ACTION', 'This action is not supported in Character Life.');
   }
   if (!isLiveCharacterLifeSessionState(session)) return fail('INVALID_STATE', 'World session is invalid; nothing was changed.');
 
   const world = { city: session.city, outside: session.outside, npcs: session.npcs };
-  const result = type === 'ASSIGN_NPC' || type === 'UNASSIGN_NPC'
+  const result = type === 'ASSIGN_NPC' || type === 'UNASSIGN_NPC' || type === 'MOVE_NPC_HOME'
     ? executeWorldNpcCommand(world, raw)
     : type==='END_WEEK'?executeWorldNpcCityCommand(world,raw,buildItemWeekContext(session)):executeWorldNpcCityCommand(world,raw);
   if (!result.success) return result;

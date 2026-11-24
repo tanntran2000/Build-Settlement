@@ -22,7 +22,6 @@ export * from "./character/types.js";
 export * from "./character/catalog.js";
 export * from "./character/validate.js";
 export * from "./character/describe.js";
-export * from "./character/starter-profiles.js";
 export * from "./character/session.js";
 export * from './trial/goods-stock.js';
 export * from './trial/society.js';

@@ -9,6 +9,7 @@
     "test": "vitest run"
   },
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./testing/npcs": "./src/__tests__/helpers/npcs.ts"
   }
 }

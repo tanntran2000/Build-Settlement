@@ -1,4 +1,5 @@
 import { expect, it } from 'vitest';
+import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';
 import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, isCharacterLifeSessionState, SOCIETY_RULESET } from '@haven/core';
 import { deserializeCharacterLifeSave, serializeCharacterLifeSave } from '../character-life-save.js';
 import { recordsToSession, sessionToRecords } from '../session-records.js';
@@ -6,7 +7,7 @@ import { recordsToSession, sessionToRecords } from '../session-records.js';
 function checkpoint(owner: string) {
   const result = createCharacterLifeSession(0, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' });
   if (!result.success) throw Error(result.error.message);
-  const state = result.value;
+  const state = withNpcs(result.value, NPC_TEST_KEYS.slice(0, 1));
   state.city.society!.items.nextItemId = 2;
   state.city.society!.items.equipped = { [owner]: { weapon: { id: 1, defId: owner === 'player' ? 'common-weapon' : 'rare-weapon' } } };
   const text = JSON.stringify({ format: 'haven.character-life-session.save', schemaVersion: 1, cityRulesetId: SOCIETY_RULESET, state });
@@ -26,7 +27,7 @@ it.each(['missing_npc', 'missing_player'])('refuses unknown owner %s through the
   } });
 });
 
-it.each(['player', 'npc_starter_1'])('accepts real equipment owner %s through validation, import and byte-identical records', owner => {
+it.each(['player', 'npc_w1_guild_0'])('accepts real equipment owner %s through validation, import and byte-identical records', owner => {
   const { state, text } = checkpoint(owner);
   expect(isCharacterLifeSessionState(state)).toBe(true);
   const loaded = deserializeCharacterLifeSave(text);

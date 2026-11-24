@@ -6,6 +6,7 @@ import type { ItemDefinition, ItemTrial } from '../trial/items.js';
 import type { CraftTrial, RecipeDefinition } from '../trial/recipes.js';
 import itemJson from './items.json' with { type: 'json' };
 import npcLifeJson from './npc-life.json' with { type: 'json' };
+import tuningJson from './tuning.json' with { type: 'json' };
 import {
     BUILDS, CHARACTER_LIMITS, EYE_COLORS, FACE_FEATURES, FACE_SHAPES, HAIR_COLORS, HAIR_LENGTHS, HAIR_STYLES, HAIR_TEXTURES,
     OUTFITS, PLACES, PLAYER_PROFESSIONS, REGIONS, SKIN_TONES, UPBRINGINGS,
@@ -307,14 +308,14 @@ type LAW_MESSAGESData = Readonly<{
 type GOODS_STOCK_TRIALData = Readonly<{
     initialFoodMilli: 20000;
     initialGoodsMilli: 10000;
-    initialGoldMilli: 45000;
+    initialGoldMilli: number;
     woodPerBatchMilli: 2000;
     goodsPerBatchMilli: 2000;
     capacityPerLevelMilli: 2000;
     goldPerGoodsMilli: 1000;
 }>;
 type SOCIETY_TRIALData = Readonly<{
-    readonly rulesetId: "tile-society-11";
+    readonly rulesetId: "tile-society-12";
     readonly standing: 50;
     readonly laws: Readonly<{
         active: never[];
@@ -638,7 +639,7 @@ const tuningSchemas: Record<string, Rule> = {
             "tension": nonnegative
         })
     }), "SOCIETY_TRIAL": object({
-        "rulesetId": literal("tile-society-11"), "standing": nonnegative, "laws": object({
+        "rulesetId": literal("tile-society-12"), "standing": nonnegative, "laws": object({
             "active": tuple([]), "votedWeek": literal(null), "repealedUntil": object({}), "promise": literal(null)
         }), "order": object({
             "security": nonnegative, "crime": nonnegative, "authority": nonnegative
@@ -1086,7 +1087,7 @@ export function validateNpcGenerator(json: unknown): NpcGeneratorCatalog {
     const stats = within([0, 100]);
     object({
         marker: literal('TRIAL'), age, ageWeightYoung: probability, youngAge: age, olderAge: age, stockSize: positive,
-        startGoldMilli: positive, npcCap: positive, traitCount: ascending(positive),
+        startGoldMilli: literal(tuningJson.GOODS_STOCK_TRIAL.initialGoldMilli), npcCap: positive, traitCount: ascending(positive),
         statRange: ascending(stats), profileAxisRange: ascending(stats), contractWeeks: positive, wageMilli: ascending(positive),
         professionalAtCount: positive, expertAtCount: positive,
     })(root.P7B_TRIAL, trialRef, '');

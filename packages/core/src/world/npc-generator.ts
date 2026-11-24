@@ -5,7 +5,7 @@ import { SOCIAL_RESOURCE_SCALE } from '../social/profile.js';
 import type { CharacterProfile } from '../character/types.js';
 import { WORLD_TRAITS } from './npc-content.js';
 import { createNpcLife, NPC_HOBBIES, NPC_ORIGINS, npcLifeRandom, P7A_TRIAL, type SexPart } from './npc-life.js';
-import type { NpcHousehold, NpcWithHousehold } from './npc-household.js';
+import type { NpcHousehold } from './npc-household.js';
 import type { WorldNpc } from './npc.js';
 
 export type AcquisitionSource = 'guild' | 'auction-house' | 'slave-market';
@@ -65,7 +65,7 @@ function rollPast(life: WorldNpc['life'], random: Random, range: readonly [numbe
 }
 
 export function generateNpc(seed: number, week: number, source: AcquisitionSource, slot: number | 'lot', nameSalt = 0):
-  { npc: NpcWithHousehold; profile: CharacterProfile } {
+  { npc: WorldNpc; profile: CharacterProfile } {
   if (!Number.isSafeInteger(week) || week <= 0 || !Number.isSafeInteger(nameSalt) || nameSalt < 0 ||
       (source !== 'guild' && source !== 'auction-house' && source !== 'slave-market') ||
       (slot === 'lot' ? source === 'guild' : !Number.isSafeInteger(slot) || slot < 0 || slot >= P7B_TRIAL.stockSize))

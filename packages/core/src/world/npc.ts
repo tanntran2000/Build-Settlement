@@ -3,15 +3,17 @@ import type { NamedCharacter } from '../domain/character.js';
 import { REQUIRED_EMOTIONS,REQUIRED_NEEDS,REQUIRED_RELATIONSHIP,REQUIRED_SKILLS } from '../domain/gamestate.js';
 import type { TileTrialState } from '../trial/types.js';
 import { readDenseArray } from './arrays.js';
-import { NPC_MANAGER_BUILDING_TYPES,WORLD_NPC_GIVEN_NAMES,WORLD_STARTER_NPCS,WORLD_TRAITS } from './npc-content.js';
-import { createSeededRandom } from './random.js';
-import { createNpcLife, isNpcLife, npcAge, type NpcLife } from './npc-life.js';
+import { NPC_MANAGER_BUILDING_TYPES,WORLD_TRAITS } from './npc-content.js';
+import { isNpcLife, npcAge, type NpcLife } from './npc-life.js';
+import { homeBeds, isNpcHousehold, type NpcHousehold } from './npc-household.js';
+import { P7B_TRIAL } from './npc-generator.js';
+import { CHARACTER_LIMITS } from '../character/catalog.js';
 import { createWorldSession,isWorldSessionState } from './session.js';
 import type { WorldResult,WorldSessionState } from './types.js';
 
 export interface TraitDefinition { id: string; name: string; summary: string }
 // `character.occupation` is background only; the current post is `postTileId`.
-export interface WorldNpc { character: NamedCharacter; traits: string[]; postTileId: string | null; life: NpcLife }
+export interface WorldNpc { character: NamedCharacter; traits: string[]; postTileId: string | null; life: NpcLife; household: NpcHousehold }
 export interface NpcWorldSessionState extends WorldSessionState { npcs: WorldNpc[] }
 
 const CHARACTER_KEYS = ['id', 'name', 'gender', 'age', 'occupation', 'socialClass', 'legalStatus', 'needs', 'emotions', 'relationshipToPlayer', 'memories', 'skills', 'health'];
@@ -45,16 +47,23 @@ export function isNamedCharacterRecord(c: unknown): c is NamedCharacter {
 export function isWorldNpcList(raw: unknown, city: TileTrialState): raw is WorldNpc[] {
   try {
     const list = readDenseArray(raw);
-    if (!list) return false;
+    if (!list || list.length > P7B_TRIAL.npcCap) return false;
     const slots = managerSlotTileIds(city), traitIds = WORLD_TRAITS.map(t => t.id), ids = new Set<string>(), posts = new Set<string>();
+    const names = new Set<string>(), residents = new Map<string, number>();
     for (const npc of list) {
-      if (!hasWeeklyKeys(npc, ['character', 'traits', 'postTileId', 'life']) || !isNpcLife(npc.life)) return false;
-      const c = npc.character, traits = readDenseArray(npc.traits);
-      if (!isNamedCharacterRecord(c) || c.gender !== 'female' || c.age < 18 || npcAge(npc.life, city.world.week) < 18 || ids.has(c.id)) return false;
+      if (!hasWeeklyKeys(npc, ['character', 'traits', 'postTileId', 'life', 'household']) || !isNpcLife(npc.life) || !isNpcHousehold(npc.household)) return false;
+      const c = npc.character, traits = readDenseArray(npc.traits), household = npc.household;
+      if (!isNamedCharacterRecord(c) || c.gender !== 'female' || c.age < CHARACTER_LIMITS.ageMin ||
+          npcAge(npc.life, city.world.week) < CHARACTER_LIMITS.ageMin || ids.has(c.id) || names.has(c.name)) return false;
+      if (c.legalStatus !== (household.status === 'slave' ? 'enslaved' : 'contract_bound') || household.boughtWeek > city.world.week) return false;
       if (!traits || !traits.every(t => oneOf(t, traitIds)) || new Set(traits).size !== traits.length) return false;
+      const capacity = homeBeds(city, household.home);
+      const used = (residents.get(household.home) ?? 0) + 1;
+      if (used > capacity) return false;
+      residents.set(household.home, used);
       const post = npc.postTileId;
-      if (post !== null && (typeof post !== 'string' || !slots.includes(post) || posts.has(post))) return false;
-      ids.add(c.id); if (post !== null) posts.add(post);
+      if (post !== null && (household.home === 'estate-1' || typeof post !== 'string' || !slots.includes(post) || posts.has(post))) return false;
+      ids.add(c.id); names.add(c.name); if (post !== null) posts.add(post);
     }
     return true;
   } catch { return false; }
@@ -67,16 +76,9 @@ export function isNpcWorldSessionState(raw: unknown): raw is NpcWorldSessionStat
   } catch { return false; }
 }
 
-// Names are drawn once here from the validated session seed (salted so the outside stream is
-// independent) and then persisted; nothing else rerolls them. Same seed, same names.
+// New Game owns no NPCs.
 export function createNpcWorldSession(seed: unknown): WorldResult<NpcWorldSessionState> {
   const base = createWorldSession(seed);
   if (!base.success) return base;
-  const random = createSeededRandom((base.value.outside.seed ^ 0x4e504331) >>> 0), pool = [...WORLD_NPC_GIVEN_NAMES];
-  const npcs = structuredClone(WORLD_STARTER_NPCS) as WorldNpc[];
-  for (const npc of npcs) {
-    npc.character.name = pool.splice(Math.floor(random() * pool.length), 1)[0];
-    npc.life = createNpcLife(base.value.outside.seed, npc.character.id, npc.character.age);
-  }
-  return { success: true, value: { ...base.value, npcs } };
+  return { success: true, value: { ...base.value, npcs: [] } };
 }

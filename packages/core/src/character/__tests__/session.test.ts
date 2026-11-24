@@ -1,9 +1,7 @@
 import { describe, expect, it } from 'vitest';
+import { NPC_TEST_KEYS, withNpcs } from '../../__tests__/helpers/npcs.js';
 import { createNpcWorldSession } from '../../world/npc.js';
-import { WORLD_STARTER_NPCS } from '../../world/npc-content.js';
-import { describeShort } from '../describe.js';
-import { createCharacterLifeSession, createPlayerCharacter, validatePlayerDraft } from '../session.js';
-import { DEFAULT_PLAYER_DRAFT, PLAYER_APPEARANCE_PRESETS, STARTER_PROFILES, type PlayerDraft } from '../starter-profiles.js';
+import { createCharacterLifeSession, createPlayerCharacter, DEFAULT_PLAYER_DRAFT, PLAYER_APPEARANCE_PRESETS, validatePlayerDraft, type PlayerDraft } from '../session.js';
 import { isCharacterLifeSessionState, isCharacterProfile, isPlayerCharacter } from '../validate.js';
 
 const NAME_MSG = 'Enter a name of 1–64 characters without leading or trailing spaces.';
@@ -127,23 +125,15 @@ describe('createPlayerCharacter', () => {
   });
 });
 
-describe('starter content', () => {
-  it('starter profiles validate against their characters', () => {
-    expect(STARTER_PROFILES.map(p => p.id)).toEqual(WORLD_STARTER_NPCS.map(n => n.character.id));
-    STARTER_PROFILES.forEach((p, i) => expect(isCharacterProfile(p, WORLD_STARTER_NPCS[i].character)).toBe(true));
-    for (const p of STARTER_PROFILES) {
+describe('player presets and generated profiles', () => {
+  it('pairs generated profiles with their characters and omits unset private identity fields', () => {
+    const s = withNpcs(session(0, draft()), NPC_TEST_KEYS);
+    expect(s.profiles.map(p => p.id)).toEqual(s.npcs.map(n => n.character.id));
+    s.profiles.forEach((p, i) => expect(isCharacterProfile(p, s.npcs[i].character)).toBe(true));
+    for (const p of s.profiles) {
       expect(p.identity).toMatchObject({ birthName: null, label: null, biography: null, currentLocationId: 'haven' });
-      expect([Object.hasOwn(p, 'private'), Object.hasOwn(p.traits, 'intimacyKnowledge'), Object.hasOwn(p.appearance, 'measurements')]).toEqual([false, false, false]);
+      expect([Object.hasOwn(p, 'private'), Object.hasOwn(p.traits, 'intimacyKnowledge')]).toEqual([false, false]);
     }
-  });
-  it('npc_starter_3 uses the plan values', () => {
-    expect(STARTER_PROFILES[2]).toEqual({
-      id: 'npc_starter_3',
-      identity: { birthName: null, label: null, pronouns: 'she', birthplaceId: 'cinder_hollow', origin: { regionId: 'ashfield', upbringing: 'city' }, currentLocationId: 'haven', biography: null },
-      traits: { attractiveness: 72, learningAptitude: 48, warmth: 45 },
-      appearance: { presentation: 'feminine', skinTone: 'fair', eyeColor: 'green', hair: { color: 'red', length: 'long', texture: 'wavy', style: 'braided' },
-        face: { shape: 'round', features: ['high_cheekbones'] }, build: 'slim', heightCm: 162, weightKg: 55, outfit: 'role_default' },
-    });
   });
   it('every preset is a valid draft appearance with its own id', () => {
     expect(PLAYER_APPEARANCE_PRESETS.map(p => p.id)).toEqual(['practical', 'scholarly', 'rugged']);
@@ -151,21 +141,19 @@ describe('starter content', () => {
     expect(DEFAULT_PLAYER_DRAFT.appearance).toEqual(PLAYER_APPEARANCE_PRESETS[0].appearance);
     expect(DEFAULT_PLAYER_DRAFT).toMatchObject({ currentName: '', age: '25', pronouns: 'they', gender: 'other', appearance: { presentation: 'androgynous' } });
   });
-  it('default draft, presets and starter profiles are deep-frozen', () => {
+  it('default draft and presets are deep-frozen', () => {
     expect(deepFrozen(DEFAULT_PLAYER_DRAFT)).toBe(true);
     expect(deepFrozen(PLAYER_APPEARANCE_PRESETS)).toBe(true);
-    expect(deepFrozen(STARTER_PROFILES)).toBe(true);
     expect(() => { (DEFAULT_PLAYER_DRAFT.appearance.face.features as string[]).push('scar'); }).toThrow();
-    expect(() => { (STARTER_PROFILES[0].traits as { warmth: number }).warmth = 1; }).toThrow();
   });
 });
 
 describe('createCharacterLifeSession', () => {
-  it('createCharacterLifeSession(0, valid) equals createNpcWorldSession(0) plus player and STARTER_PROFILES, passes isCharacterLifeSessionState', () => {
+  it('createCharacterLifeSession(0, valid) equals createNpcWorldSession(0) plus player and empty profiles, passes isCharacterLifeSessionState', () => {
     const npc = createNpcWorldSession(0);
     if (!npc.success) throw Error(npc.error.message);
     const s = session(0, full());
-    expect(s).toEqual({ ...npc.value, player: player(full()), profiles: STARTER_PROFILES });
+    expect(s).toEqual({ ...npc.value, player: player(full()), profiles: [] });
     expect(isCharacterLifeSessionState(s)).toBe(true);
   });
   it('same seed and draft give deep-equal sessions', () => {
@@ -180,27 +168,25 @@ describe('createCharacterLifeSession', () => {
     expect(world.success).toBe(false);
     expect(createCharacterLifeSession('bad', draft())).toEqual(world);
   });
-  it('editing one session cannot leak into templates or the next New Game', () => {
-    const d = draft(), first = session(0, d);
+  it('editing one session cannot leak into the next New Game or another generated fixture', () => {
+    const d = draft(), first = withNpcs(session(0, d), NPC_TEST_KEYS);
+    const before = structuredClone(first);
     first.profiles[0].traits.warmth = 1; first.profiles[0].appearance.face.features.push('scar');
     first.player.profile.appearance.face.features.push('scar'); first.npcs[0].character.name = 'Changed';
     d.appearance.hair.color = 'white';
     const second = session(0, draft());
-    expect(second.profiles).toEqual(STARTER_PROFILES);
+    expect(second.npcs).toEqual([]); expect(second.profiles).toEqual([]);
     expect(second.player).toEqual(player(draft()));
-    expect(second.npcs[0].character.name).not.toBe('Changed');
-    expect(first.profiles[0]).not.toBe(STARTER_PROFILES[0]);
+    const generated = withNpcs(second, NPC_TEST_KEYS);
+    expect(generated).toEqual(before);
+    expect(first.profiles[0]).not.toBe(generated.profiles[0]);
   });
-  it('keeps the seeded NPC names, ids, stats and assignment; profiles are separate', () => {
+  it('keeps generated names, ids, stats and posts across world and life fixture hydration', () => {
     const npc = createNpcWorldSession(3);
     if (!npc.success) throw Error(npc.error.message);
-    const s = session(3, draft());
-    expect(s.npcs).toEqual(npc.value.npcs);
-    expect(s.npcs.map(n => n.postTileId)).toEqual(WORLD_STARTER_NPCS.map(n => n.postTileId));
-  });
-  it('describeShort for npc_starter_1 equals spec Example A short line except the drawn name', () => {
-    const s = session(0, draft()), npc = s.npcs[0];
-    expect(describeShort({ character: npc.character, profile: s.profiles[0], role: 'npc', postBuildingName: null }))
-      .toBe(`${npc.character.name} · 27 · Technician from Northreach · average height, slim · light olive skin · shoulder-length brown hair · grey eyes · attractive · quick learner · reserved`);
+    const s = withNpcs(session(3, draft()), NPC_TEST_KEYS);
+    expect(s.npcs).toEqual(withNpcs(npc.value, NPC_TEST_KEYS).npcs);
+    expect(s.npcs.map(n => n.postTileId)).toEqual([null, null, null]);
+    expect(s.profiles.map(p => p.id)).toEqual(s.npcs.map(n => n.character.id));
   });
 });

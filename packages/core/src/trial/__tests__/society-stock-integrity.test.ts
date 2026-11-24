@@ -1,4 +1,5 @@
 ﻿import { expect, it } from 'vitest';
+import { NPC_TEST_KEYS, withNpcs } from '../../__tests__/helpers/npcs.js';
 import {
   createCharacterLifeSession, createSocietyState, DEFAULT_PLAYER_DRAFT, GOODS_STOCK_RULESET,
   isCharacterLifeSessionState, isLiveCharacterLifeSessionState, isTileTrialPlanningState,
@@ -23,7 +24,7 @@ it.each(['goodsStock getter', 'amountMilli getter', 'hidden amountMilli', 'extra
 it('keeps the retained starting stocks while the Market is inside', () => {
   const state = createSocietyState();
   expect(state.world.settlements[state.world.activeSettlementId!].inventory)
-    .toMatchObject({ food: 20000, gold: 45000, wood: 8000, iron: 4000, wheat: 0 });
+    .toMatchObject({ food: 20000, gold: 120000, wood: 8000, iron: 4000, wheat: 0 });
   expect(state).toHaveProperty('goodsStock', { rulesetId: GOODS_STOCK_RULESET, amountMilli: 10000 });
   expect(state.tiles.find(t => t.id === 'spec-1')!.building)
     .toEqual({ typeId: 'town-market', level: 1, workers: 0, enabled: true });
@@ -53,15 +54,16 @@ it.each([0, 20261028, 4294967295])('preserves seeded outside, NPC and Player dat
   const a = createCharacterLifeSession(seed, draft), b = createCharacterLifeSession(seed, draft);
   expect(a.success && b.success).toBe(true);
   if (!a.success || !b.success) throw Error('Factory failed');
-  expect({ ...b.value, city: a.value.city }).toEqual(a.value);
-  expect(isCharacterLifeSessionState(b.value)).toBe(true);
-  expect(isLiveCharacterLifeSessionState(b.value)).toBe(true);
-  expect(managerSlotTileIds(a.value.city)).toEqual(['field-1', 'plain-1', 'spec-1']);
-  expect(managerSlotTileIds(b.value.city)).toEqual(['field-1', 'plain-1', 'spec-1']);
-  const before = structuredClone(a.value);
-  b.value.city.goodsStock!.amountMilli = 0;
-  b.value.outside.tiles[0].knownBy.length = 0;
-  b.value.npcs[0].character.name = 'Changed';
-  b.value.player.character.name = 'Changed';
-  expect(a.value).toEqual(before);
+  const first = withNpcs(a.value, NPC_TEST_KEYS), second = withNpcs(b.value, NPC_TEST_KEYS);
+  expect({ ...second, city: first.city }).toEqual(first);
+  expect(isCharacterLifeSessionState(second)).toBe(true);
+  expect(isLiveCharacterLifeSessionState(second)).toBe(true);
+  expect(managerSlotTileIds(first.city)).toEqual(['field-1', 'plain-1', 'spec-1']);
+  expect(managerSlotTileIds(second.city)).toEqual(['field-1', 'plain-1', 'spec-1']);
+  const before = structuredClone(first);
+  second.city.goodsStock!.amountMilli = 0;
+  second.outside.tiles[0].knownBy.length = 0;
+  second.npcs[0].character.name = 'Changed';
+  second.player.character.name = 'Changed';
+  expect(first).toEqual(before);
 });

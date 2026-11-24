@@ -1,11 +1,12 @@
 import { expect, it } from 'vitest';
+import { NPC_TEST_KEYS, withNpcs } from '../../__tests__/helpers/npcs.js';
 import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT } from '../../index.js';
 import { createSocietyState } from '../society.js';
 import * as api from '../items.js';
 import { crimeRandom } from '../crime.js';
 const base={management:50,technical:50,medical:50,combat:50,negotiation:50};
 it('starts society v9 with a deterministic 4/2/2 market and an empty inventory',()=>{
- expect(createSocietyState().society!.rulesetId).toBe('tile-society-11');
+ expect(createSocietyState().society!.rulesetId).toBe('tile-society-12');
  const s=api.createItemsState(42);expect(s).toEqual(api.createItemsState(42));expect(s.inventory).toEqual([]);expect(api.isItemsState(s,['player'])).toBe(true);
  for(const [r,n] of Object.entries({common:4,rare:2,epic:2}))expect(s.market.filter(o=>api.ITEM_CATALOG[o.defId].rarity===r)).toHaveLength(n);
 });
@@ -25,10 +26,11 @@ it('multiplies set main, secondary and Player regen by three',()=>{
  const ctx=api.buildItemWeekContext(s);expect(ctx.playerRegen).toBe(3);expect(ctx.playerSkills.management).toBe(s.player.character.skills.management+6);
 });
 it('builds current post skills/traits and Player context without mutating the session',()=>{
- const r=createCharacterLifeSession(0,{...structuredClone(DEFAULT_PLAYER_DRAFT),currentName:'Ana'});if(!r.success)throw Error();const s=r.value;
- s.npcs[0].postTileId='field-1';s.city.society!.items.equipped.npc_starter_1={weapon:{id:1,defId:'wardens-oath'}};s.city.society!.items.nextItemId=2;
+ const r=createCharacterLifeSession(0,{...structuredClone(DEFAULT_PLAYER_DRAFT),currentName:'Ana'});if(!r.success)throw Error();const s=withNpcs(r.value,NPC_TEST_KEYS.slice(0,1));
+ s.npcs[0].character.skills.combat=30;
+ s.npcs[0].postTileId='field-1';s.city.society!.items.equipped.npc_w1_guild_0={weapon:{id:1,defId:'wardens-oath'}};s.city.society!.items.nextItemId=2;
  const before=structuredClone(s),ctx=api.buildItemWeekContext(s);expect(ctx.postSkills['field-1'].combat).toBe(s.npcs[0].character.skills.combat+12);expect(ctx.postTraits['field-1']).toEqual(['warden']);expect(s).toEqual(before);
- s.npcs[0].postTileId=null;expect(api.buildItemWeekContext(s).postSkills).toEqual({});expect(s.city.society!.items.equipped.npc_starter_1.weapon).toBeDefined();
+ s.npcs[0].postTileId=null;expect(api.buildItemWeekContext(s).postSkills).toEqual({});expect(s.city.society!.items.equipped.npc_w1_guild_0.weapon).toBeDefined();
 });
 it('keeps item streams deterministic and independent of crime draws',()=>{
  const crime=crimeRandom(42,1),expected=crimeRandom(42,1);expect(crime()).toBe(expected());
@@ -48,5 +50,5 @@ it.each(['duplicate','unknown definition','bad slot','kind','set conflict','cap'
  if(kind==='unknown character')s.equipped.unknown={};
  if(kind==='accessor')Object.defineProperty(s,'inventory',{enumerable:true,get(){throw Error('getter read');}});
  if(kind==='sparse')s.inventory=new Array(1);
- expect(api.isItemsState(s,['player','npc_starter_1'])).toBe(false);
+ expect(api.isItemsState(s,['player','npc_test_owner'])).toBe(false);
 });

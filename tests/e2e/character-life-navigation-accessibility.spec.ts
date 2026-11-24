@@ -2,7 +2,7 @@ import { expect, test, type Locator, type Page } from '@playwright/test';
 import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
 import { writeFile } from 'node:fs/promises';
 import { SOCIETY_RULESET } from '../../packages/core/src/index.ts';
-import { characterPanel, characterTabs, characterWindow, charactersView, expectReport, go, importLife, keyActivate, keyGo, makeLife, reportFixture, reportRegion, selectArea, selectPerson, tabTo, turnStatuses, watchTurnStatus } from './character-life-navigation.helpers.ts';
+import { BROWSER_NPC_IDS, makeLifeWithNpcs, characterPanel, characterTabs, characterWindow, charactersView, expectReport, go, importLife, keyActivate, keyGo, makeLife, reportFixture, reportRegion, selectArea, selectPerson, tabTo, turnStatuses, watchTurnStatus } from './character-life-navigation.helpers.ts';
 
 for (const viewport of [{ width: 375, height: 812 }, { width: 1280, height: 900 }]) {
   test(`Goods stock accessibility at ${viewport.width}px`, async ({ page }, info) => {
@@ -211,12 +211,14 @@ for (const viewport of [{ width: 1600, height: 1000 }, { width: 1280, height: 90
     test.use({ viewport });
     test('native control text preserves active and inactive contrast', async ({ page }, info) => {
       expect(contrast([0, 0, 0], [255, 255, 255])).toBe(21);
-      await page.goto('/?mode=world-life'); await importLife(page, makeLife());
+      await page.goto('/?mode=world-life'); await importLife(page, makeLifeWithNpcs());
       const samples: Awaited<ReturnType<typeof measureNativeControls>>[] = [];
       const visit = async (phase: string) => {
         await go(page, 'city'); await page.getByTestId('trial-tile-field-1').click();
         samples.push(await measureNativeControls(page, phase + '/city'));
-        await selectPerson(page, 'npc_starter_1'); await selectArea(page, 'Work');
+        await page.getByTestId('trial-tile-estate-2').click();
+        samples.push(await measureNativeControls(page, phase + '/home'));
+        await selectPerson(page, BROWSER_NPC_IDS[0]); await selectArea(page, 'Work');
         samples.push(await measureNativeControls(page, phase + '/work'));
         await go(page, 'session'); samples.push(await measureNativeControls(page, phase + '/session'));
       };
@@ -251,7 +253,7 @@ for (const viewport of [{ width: 1600, height: 1000 }, { width: 1280, height: 90
       test.setTimeout(300000);
       expect(contrast([0, 0, 0], [255, 255, 255])).toBe(21);
       expect(contrast([42, 42, 42], [42, 42, 42])).toBe(1);
-      await page.goto('/?mode=world-life'); await importLife(page, makeLife());
+      await page.goto('/?mode=world-life'); await importLife(page, makeLifeWithNpcs());
       const failures: string[] = [], measurements: Measurement[] = [], tabCounts: number[] = [], focus: unknown[] = [];
       const capture = async () => { const m = await measure(page.getByTestId('life-shell')); measurements.push(m); audit(m, failures); tabCounts.push(await auditTabOrder(page, failures, focus)); };
       await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
@@ -294,7 +296,7 @@ for (const viewport of [{ width: 1600, height: 1000 }, { width: 1280, height: 90
         }
         await capture();
         if (dest === 'characters') {
-          for (const id of ['player', 'npc_starter_1']) {
+          for (const id of ['player', BROWSER_NPC_IDS[0]]) {
             await keyActivate(page, charactersView(page).getByTestId(`character-${id}`));
             const win = characterWindow(page), tabs = characterTabs(page), panel = characterPanel(page);
             await expect(tabs.getByRole('tab')).toHaveText(['Description', 'Inventory', 'Work', 'Relations']);

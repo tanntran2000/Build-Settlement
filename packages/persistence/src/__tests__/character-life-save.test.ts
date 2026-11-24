@@ -1,10 +1,11 @@
 import { createCharacterLifeSession,createNpcWorldSession,createSocietyState,createWorldSession,DEFAULT_PLAYER_DRAFT } from '@haven/core';
+import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';
 import { expect,it } from 'vitest';
 import { CHARACTER_LIFE_SAVE_FORMAT,deserializeCharacterLifeSave,serializeCharacterLifeSave } from '../character-life-save.js';
 import { TILE_SAVE_MAX_BYTES } from '../tile-trial-save.js';
 import { serializeWorldSessionSave } from '../world-session-save.js';
 
-const session = (seed = 0) => { const r = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' }); if (!r.success) throw Error(r.error.message); return r.value; };
+const session = (seed = 0) => { const r = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' }); if (!r.success) throw Error(r.error.message); return withNpcs(r.value, NPC_TEST_KEYS); };
 const encode = (s: unknown = session()) => { const r = serializeCharacterLifeSave(s); if (!r.success) throw Error(r.error.message); return r.text; };
 const envelope = () => JSON.parse(encode());
 const code = (r: ReturnType<typeof deserializeCharacterLifeSave>) => r.success ? 'SUCCESS' : r.error.code;
@@ -15,7 +16,7 @@ it('round-trips a valid session as detached data in its own format', () => {
   const s = session(); s.npcs[0].postTileId = 'field-1';
   const before = structuredClone(s), text = encode(s);
   expect(CHARACTER_LIFE_SAVE_FORMAT).toBe('haven.character-life-session.save');
-  expect(JSON.parse(text)).toMatchObject({ format: CHARACTER_LIFE_SAVE_FORMAT, schemaVersion: 1, cityRulesetId: 'tile-society-11' });
+  expect(JSON.parse(text)).toMatchObject({ format: CHARACTER_LIFE_SAVE_FORMAT, schemaVersion: 1, cityRulesetId: 'tile-society-12' });
   expect(Object.keys(JSON.parse(text))).toEqual(['format', 'schemaVersion', 'cityRulesetId', 'state']);
   const loaded = deserializeCharacterLifeSave(text);
   expect(loaded).toEqual({ success: true, state: before });
@@ -48,7 +49,8 @@ it.each([
   const e = envelope(); mutate(e); expect(code(deserializeCharacterLifeSave(JSON.stringify(e)))).toBe(expected);
 });
 it('rejects a non-finite axis from JSON 1e999', () => {
-  const text = encode().replace('"attractiveness":50', '"attractiveness":1e999');
+  const s = session(); s.profiles[1].traits.attractiveness = 50;
+  const text = encode(s).replace('"attractiveness":50', '"attractiveness":1e999');
   expect(text).toContain('1e999');
   expect(deserializeCharacterLifeSave(text)).toEqual({ success: false, error: { code: 'INVALID_SAVE_STATE', message: INVALID_STATE } });
 });
@@ -88,6 +90,6 @@ it('gives identical results on repeated operations', () => {
 
 it('keeps the generic incompatible message for a v3 envelope with the wrong format', () => {
  const value=envelope();value.format='wrong.format';
- expect(value.cityRulesetId).toBe('tile-society-11');
+ expect(value.cityRulesetId).toBe('tile-society-12');
  expect(deserializeCharacterLifeSave(JSON.stringify(value))).toEqual({success:false,error:{code:'INCOMPATIBLE_SAVE',message:INCOMPATIBLE}});
 });

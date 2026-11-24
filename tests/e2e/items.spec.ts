@@ -3,14 +3,14 @@ import { ITEM_CATALOG, ITEM_TRIAL, buildItemWeekContext, itemRandom, drawItemRar
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { deserializeCharacterLifeSave } from '../../packages/persistence/src/index.ts';
 import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
-import { makeLife, importLife, exportLife, selectPerson, selectArea, go, reportRegion, openReportDetails, reportUnits, expectReport, tabTo } from './character-life-navigation.helpers.ts';
+import { makeLifeWithNpcs, importLife, exportLife, selectPerson, selectArea, go, reportRegion, openReportDetails, reportUnits, expectReport, tabTo } from './character-life-navigation.helpers.ts';
 
 function act(s: CharacterLifeSessionState, type: string, fields: Record<string,unknown> = {}) {
   const r=executeCharacterLifeCommand(s,{type,expectedRevision:s.city.revision,...fields});
   if(!r.success)throw Error(`${type}: ${r.error.message}`); return r.next;
 }
 function funded(seed=82) {
-  const s=makeLife(seed); const stock=s.city.world.settlements[s.city.world.activeSettlementId!].inventory;
+  const s=makeLifeWithNpcs(seed); const stock=s.city.world.settlements[s.city.world.activeSettlementId!].inventory;
   stock.gold=1000000;stock.wood=1000000;stock.iron=1000000;stock.food=1000000;
   return s;
 }
@@ -118,7 +118,7 @@ test('C2 operating Hospital and worker-free Drug Store sell potions; inventory U
 });
 function crowdedReport(){
   let seed=1;while(seed<200&&(!drawItemRarity(ITEM_TRIAL.materialOddsBps,itemRandom(seed,1,'material'))||!drawItemRarity(ITEM_TRIAL.findOddsBps,itemRandom(seed,1,'find'))))seed++;
-  if(seed===200)throw Error('No seeded item report');let s=funded(seed);s=act(s,'BUILD',{tileId:'ore-1',typeId:'mine'});s=act(s,'ASSIGN_NPC',{npcId:s.npcs[0].character.id,tileId:'ore-1'});
+  if(seed===200)throw Error('No seeded item report');let s=funded(seed);s.npcs[0].character.skills.management=40;s.npcs[0].character.skills.combat=30;s=act(s,'BUILD',{tileId:'ore-1',typeId:'mine'});s=act(s,'ASSIGN_NPC',{npcId:s.npcs[0].character.id,tileId:'ore-1'});
   const i=s.city.society!.items;i.inventory=Array.from({length:50},(_,k)=>({id:k+1,defId:'common-ring'}));i.storage=Array.from({length:10},(_,k)=>({item:{id:k+51,defId:'rare-ring'},expiresWeek:k===0?1:99}));i.nextItemId=61;i.materials={iron:999,silver:999,gold:999,ruby:999};i.goals.rebellionSeen=true;i.goals.authorityStreak=3;s.city.society!.order.authority=100;return s;
 }
 test('C2 visible item letters include stack loss, storage-full loss, expiry, delivered and waiting Legendary rewards',async({page})=>{
@@ -130,7 +130,7 @@ test('C2 visible item letters include stack loss, storage-full loss, expiry, del
 test('C2 health line and wounds death letter use the exact approved copy',async({page})=>{
   const s=clinic(funded());s.player.character.health=63;s.city.society!.items.equipped.player={weapon:{id:1,defId:'common-weapon'},ring:{id:2,defId:'common-ring'}};s.city.society!.items.nextItemId=3;
   await importLife(page,s);await expect(page.getByText('Health 63 / 100 · Regen +4/week',{exact:true})).toBeVisible();
-  const decoded=deserializeCharacterLifeSave(await readFile('packages/persistence/src/__tests__/fixtures/society-v11/life-crime-wound.json','utf8'));if(!decoded.success)throw Error('wound fixture');decoded.state.player.character.health=20;
+  const decoded=deserializeCharacterLifeSave(await readFile('packages/persistence/src/__tests__/fixtures/society-v12/life-crime-wound.json','utf8'));if(!decoded.success)throw Error('wound fixture');decoded.state.player.character.health=20;
   await importLife(page,decoded.state);await page.getByTestId('life-end-week').click();await expect(page.getByRole('heading',{name:'Your Lord Has Died',exact:true})).toBeVisible();await expect(page.getByText(/^Your wounds proved fatal\./)).toBeVisible();
   await mkdir(`${evidence}/screenshots`,{recursive:true});await page.screenshot({path:`${evidence}/screenshots/death-letter-1280.png`,fullPage:true});
 });

@@ -1,4 +1,5 @@
 import { expect, it } from 'vitest';
+import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';
 import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, isItemsState, type ItemsState } from '@haven/core';
 import { executeCharacterLifeCommand } from '@haven/simulation';
 import { deserializeCharacterLifeSave, serializeCharacterLifeSave } from '../character-life-save.js';
@@ -7,7 +8,7 @@ import { recordsToSession, sessionToRecords } from '../session-records.js';
 function stocked() {
   const result = createCharacterLifeSession(42, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' });
   if (!result.success) throw Error(result.error.message);
-  const s = result.value;
+  const s = withNpcs(result.value, NPC_TEST_KEYS);
   Object.assign(s.city.society!.items, {
     nextItemId: 8,
     inventory: [{ id: 1, defId: 'common-top' }],
@@ -15,8 +16,8 @@ function stocked() {
     storage: [{ item: { id: 3, defId: 'common-set' }, expiresWeek: 4 }],
     equipped: {
       player: { ring: { id: 4, defId: 'common-ring' }, weapon: { id: 5, defId: 'common-weapon' } },
-      npc_starter_1: { weapon: { id: 6, defId: 'rare-weapon' } },
-      npc_starter_2: { weapon: { id: 7, defId: 'rare-weapon' } },
+      npc_w1_guild_0: { weapon: { id: 6, defId: 'rare-weapon' } },
+      npc_w1_guild_1: { weapon: { id: 7, defId: 'rare-weapon' } },
     },
   });
   return s;
@@ -35,7 +36,7 @@ function assertExactBytes(s: ReturnType<typeof stocked>) {
 
 const mutations: [string, (items: ItemsState) => ItemsState][] = [
   ['equipment slot order', items => { const p = items.equipped.player; items.equipped.player = { weapon: p.weapon, ring: p.ring }; return items; }],
-  ['equipment character order', items => { const e = items.equipped; items.equipped = { npc_starter_2: e.npc_starter_2, player: e.player, npc_starter_1: e.npc_starter_1 }; return items; }],
+  ['equipment character order', items => { const e = items.equipped; items.equipped = { npc_w1_guild_1: e.npc_w1_guild_1, player: e.player, npc_w1_guild_0: e.npc_w1_guild_0 }; return items; }],
   ['inventory instance key order', items => { const i = items.inventory[0]; items.inventory[0] = { defId: i.defId, id: i.id }; return items; }],
   ['consumable instance key order', items => { const i = items.consumables[0]; items.consumables[0] = { defId: i.defId, id: i.id }; return items; }],
   ['stored instance key order', items => { const i = items.storage[0].item; items.storage[0].item = { defId: i.defId, id: i.id }; return items; }],
@@ -55,7 +56,7 @@ it.each(mutations)('refuses byte-changing %s while its canonical counterpart rou
   if (exported.success) assertExactBytes(s);
   expect(isItemsState(s.city.society!.items, ['player', ...s.npcs.map(n => n.character.id)])).toBe(false);
   expect(exported).toMatchObject({ success: false, error: { code: 'INVALID_SAVE_STATE' } });
-  const checkpoint = JSON.stringify({ format: 'haven.character-life-session.save', schemaVersion: 1, cityRulesetId: 'tile-society-11', state: s });
+  const checkpoint = JSON.stringify({ format: 'haven.character-life-session.save', schemaVersion: 1, cityRulesetId: 'tile-society-12', state: s });
   expect(deserializeCharacterLifeSave(checkpoint)).toMatchObject({ success: false, error: { code: 'INVALID_SAVE_STATE' } });
   expect(JSON.stringify(s)).toBe(unchanged);
 });

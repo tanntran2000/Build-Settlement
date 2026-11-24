@@ -128,7 +128,7 @@ it.each([
   city.society!.wallRing = 2;
   const before = { ...inventory(city) };
   city = success(city, { type: 'BUILD', tileId: first, typeId }).nextState;
-  expect(inventory(city)).toStrictEqual({ ...before, gold: 45000 - cost });
+  expect(inventory(city)).toStrictEqual({ ...before, gold: 120000 - cost });
   expect(tile(success(city, { type: 'REPLACE', tileId: first, typeId }).nextState, first).building).toStrictEqual({ ...hall, typeId });
   tile(city, first).building!.enabled = false;
   const message = `Only one ${name} may be built per city.`;
@@ -146,7 +146,7 @@ it('caps Retainers Hall at two with atomic refusal on BUILD and REPLACE', () => 
   refuse(city, { type: 'REPLACE', tileId: 'house-1', typeId: 'retainers-hall' }, 'HALL_LIMIT', message);
   const own = success(city, { type: 'REPLACE', tileId: 'house-5', typeId: 'retainers-hall' }).nextState;
   expect(tile(own, 'house-5').building).toStrictEqual(hall);
-  expect(inventory(own)).toStrictEqual({ gold: 15000, wheat: 0, food: 20000, wood: 8000, iron: 4000 });
+  expect(inventory(own)).toStrictEqual({ gold: 90000, wheat: 0, food: 20000, wood: 8000, iron: 4000 });
 });
 
 it('charges exactly 15000 Gold milli for a housing Hall with an operating Builders Yard', () => {
@@ -155,9 +155,9 @@ it('charges exactly 15000 Gold milli for a housing Hall with an operating Builde
   setYard(city);
   const target = { tileId: 'house-5', typeId: 'retainers-hall' };
   const pending = success(city, { type: 'BUILD', ...target }).nextState;
-  expect(inventory(pending)).toStrictEqual({ gold: 30000, wheat: 0, food: 20000, wood: 8000, iron: 4000 });
+  expect(inventory(pending)).toStrictEqual({ gold: 105000, wheat: 0, food: 20000, wood: 8000, iron: 4000 });
   const replaced = success(pending, { type: 'REPLACE', ...target }).nextState;
-  expect(inventory(replaced)).toStrictEqual({ gold: 15000, wheat: 0, food: 20000, wood: 8000, iron: 4000 });
+  expect(inventory(replaced)).toStrictEqual({ gold: 90000, wheat: 0, food: 20000, wood: 8000, iron: 4000 });
 });
 
 it('keeps named beds outside resident housing and funds fixed upkeep', () => {

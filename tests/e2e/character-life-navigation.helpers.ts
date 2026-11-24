@@ -1,6 +1,7 @@
 import { expect,type Locator,type Page } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
 import { createCharacterLifeSession,DEFAULT_PLAYER_DRAFT,ITEM_CATALOG,RECIPES,isCharacterLifeSessionState,TRIAL_BUILDINGS,WEEKLY_RESOURCE_KEYS,type CharacterLifeSessionState,type TileTrialReport } from '../../packages/core/src/index.ts';
+import { withNpcs } from '../../packages/core/src/__tests__/helpers/npcs.ts';
 import { serializeCharacterLifeSave } from '../../packages/persistence/src/character-life-save.ts';
 import { observeCharacterLife } from '../../packages/simulation/src/character-life-observation.ts';
 import type { LifeDestination } from '../../packages/ui/src/character-life-navigation.ts';
@@ -11,6 +12,28 @@ export function makeLife(seed = 12345): CharacterLifeSessionState {
   if (!result.success) throw new Error(result.error.message);
   expect(isCharacterLifeSessionState(result.value)).toBe(true);
   return result.value;
+}
+
+export const BROWSER_NPC_KEYS = [
+  { week: 1, source: 'guild', slot: 0 },
+  { week: 1, source: 'guild', slot: 1 },
+  { week: 1, source: 'guild', slot: 2 },
+] as const;
+export const BROWSER_NPC_IDS = ['npc_w1_guild_0', 'npc_w1_guild_1', 'npc_w1_guild_2'] as const;
+
+export function withBrowserNpcs(session: CharacterLifeSessionState): CharacterLifeSessionState {
+  return withNpcs(session, BROWSER_NPC_KEYS);
+}
+
+export function makeLifeWithNpcs(seed = 12345): CharacterLifeSessionState {
+  return withBrowserNpcs(makeLife(seed));
+}
+
+export async function seedBrowserNpcs(page: Page, prepare: (session: CharacterLifeSessionState) => void = () => {}): Promise<void> {
+  const before = await exportLife(page);
+  const session = withBrowserNpcs(before);
+  prepare(session);
+  await importLife(page, session);
 }
 
 export const charactersView = (page: Page) => page.locator('[data-life-view="characters"]');
@@ -207,7 +230,7 @@ export async function expectRequirements(page: Page, report: Readonly<TileTrialR
 
 // Selectively adapted from QOL 8c8505f: fixture data only, no historical verdicts.
 export function reportFixture(kind: 'shortage' | 'zero' | 'precision' | 'service' | 'empty'): CharacterLifeSessionState {
-  const s = makeLife(), settlement = s.city.world.settlements[s.city.world.activeSettlementId!];
+  const s = makeLifeWithNpcs(), settlement = s.city.world.settlements[s.city.world.activeSettlementId!];
   if (kind === 'shortage') {
     settlement.inventory.food = 0; settlement.inventory.wheat = 0;
     for (const tile of s.city.tiles) if (tile.building) tile.building.workers = 0;
@@ -550,7 +573,9 @@ export async function lifeUiSnapshot(page: Page) {
     copy.querySelectorAll('[data-life-error], [aria-label="Planning checkpoints"] [role="status"]').forEach(node => node.remove());
     return {
       markup: copy.outerHTML,
-      controls: [...shell.querySelectorAll('input:not([type="file"]),select')].map(node => ({ id: node.id, value: (node as HTMLInputElement).value, disabled: (node as HTMLInputElement).disabled })),
+      controls: [...shell.querySelectorAll<HTMLInputElement | HTMLSelectElement>('input:not([type="file"]),select')].map(node => ({
+        id: node.id, value: node.value, disabled: node.disabled,
+      })),
     };
   });
 }

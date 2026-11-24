@@ -78,7 +78,7 @@ test('real guard failures and alternating global errors retain only the last fiv
   const data = await download(page);
   expect(data.entries.map((entry: { code: string }) => entry.code)).toEqual(['INVALID_COMMAND','UNCAUGHT_ERROR','UNHANDLED_REJECTION','INVALID_WORKFORCE_INPUT','INVALID_COMMAND']);
   expect(data.entries[0]).toMatchObject({ kind: 'validation', action: 'RUNTIME', clock: { week: 1 }, occurrences: 1 });
-  await expect(page.locator('aside')).toContainText('Week 1'); await go(page,'city');await page.locator('#life-nav-information').click();await expect(page.getByTestId('trial-stock-gold')).toHaveText('45');await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click();
+  await expect(page.locator('aside')).toContainText('Week 1'); await go(page,'city');await page.locator('#life-nav-information').click();await expect(page.getByTestId('trial-stock-gold')).toHaveText('120');await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click();
 });
 
 for (const mode of ['weekly'] as const) {
@@ -94,7 +94,7 @@ for (const mode of ['weekly'] as const) {
       expect(consoleMessages.join('\n')).not.toContain('TOKEN-SYNTHETIC');
       const data = await download(page);
       expect(data.entries[0]).toMatchObject({ mode, code, clock: mode === 'weekly' ? { week: 1 } : { day: 1, week: 1, year: 1 } });
-      if (mode === 'weekly') { await expect(page.locator('aside')).toContainText('Week 1'); await go(page,'city');await page.locator('#life-nav-information').click();await expect(page.getByTestId('trial-stock-gold')).toHaveText('45');await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click(); }
+      if (mode === 'weekly') { await expect(page.locator('aside')).toContainText('Week 1'); await go(page,'city');await page.locator('#life-nav-information').click();await expect(page.getByTestId('trial-stock-gold')).toHaveText('120');await go(page,'session');await page.getByRole('button',{name:'Options',exact:true}).click(); }
       else { await expect(page.locator('aside')).toContainText('Week 1'); await expect(page.locator('#resource-food')).toHaveText('100'); }
     });
   }

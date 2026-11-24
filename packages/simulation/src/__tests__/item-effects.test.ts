@@ -1,4 +1,5 @@
 import { expect, it } from 'vitest';
+import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';
 import { buildingWorkerCap, createCharacterLifeSession, createSocietyState, DEFAULT_PLAYER_DRAFT, ITEM_TRIAL, lawTerms, type CharacterLifeSessionState, type ItemWeekContext, type TileTrialState } from '@haven/core';
 import { runTileTrialWeek } from '../tile-trial-week.js';
 import { resolveOrderWeek } from '../order-week.js';
@@ -115,7 +116,7 @@ it('preserves existing quantities with ctx absent and with skills at or below 50
   expect(assassination(undefined,0.51).lordHealthLoss).toBe(20);
 });
 
-function life() { const r = createCharacterLifeSession(0,{ ...structuredClone(DEFAULT_PLAYER_DRAFT),currentName:'Keeper' }); if (!r.success) throw Error(r.error.message); return r.value; }
+function life() { const r = createCharacterLifeSession(0,{ ...structuredClone(DEFAULT_PLAYER_DRAFT),currentName:'Keeper' }); if (!r.success) throw Error(r.error.message); return withNpcs(r.value, NPC_TEST_KEYS.slice(0, 1)); }
 function command(s: CharacterLifeSessionState, type: string, fields: Record<string,unknown> = {}) {
   const r = executeCharacterLifeCommand(s,{ type,expectedRevision:s.city.revision,...fields });
   expect(r.success).toBe(true); if (!r.success) throw Error(r.error.code); return r;

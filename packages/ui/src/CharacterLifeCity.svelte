@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { buildingWorkerCap, managerSlotTileIds, summarizeOutside, societyPlot, npcBeds, TRIAL_BUILDINGS, type TileTrialState, type WorldNpc, type OutsideWorldState } from '@haven/core';
+  import { tick } from 'svelte';
+  import { buildingWorkerCap, homeBeds, homeResidents, managerSlotTileIds, summarizeOutside, societyPlot, TRIAL_BUILDINGS, type TileTrialState, type WorldNpc, type OutsideWorldState } from '@haven/core';
   import {workerDigits,assignBuildingWorkers} from './clearing-workers.js';
   import OutsideCity from './OutsideCity.svelte';
   import CouncilPanel from './CouncilPanel.svelte';
@@ -11,6 +12,7 @@
   export let state: TileTrialState;
   export let npcs: WorldNpc[];
   export let selectedId: string;
+  export let uiEpoch: number;
   export let typeId: string;
   export let workers: string;
   export let workforceError: string;
@@ -21,9 +23,28 @@
   export let onworkersinvalid: () => void = () => {};
   export let oncommand: (type: string, fields?: Record<string, unknown>) => boolean;
   let managementHeading: HTMLHeadingElement | undefined;
+  let moveDrafts: Record<string, string> = {};
+  let moveContext = '';
+  $: {
+    const context = `${selectedId}:${uiEpoch}`;
+    if (context !== moveContext) {
+      moveContext = context;
+      moveDrafts = {};
+    }
+  }
   $: selected = state.tiles.find(tile => tile.id === selectedId)!;
   $: fixedEstate = societyPlot(selectedId)?.tier === 'estate';
-  $: home = selected.building ? npcBeds(selected.building.typeId, selected.building.level) > 0 : false;
+  $: bedCount = homeBeds(state, selectedId);
+  $: home = bedCount > 0;
+  $: residents = npcs.filter(npc => npc.household.home === selectedId);
+  $: destinations = state.tiles
+    .filter(tile => tile.id !== selectedId && homeBeds(state, tile.id) > 0)
+    .map(tile => ({
+      id: tile.id,
+      label: `${TRIAL_BUILDINGS[tile.building!.typeId].name} (${tile.id})`,
+      free: homeResidents(npcs, tile.id) < homeBeds(state, tile.id),
+    }));
+  $: hasDestination = destinations.some(destination => destination.free);
   $: definition = selected.building ? TRIAL_BUILDINGS[selected.building.typeId] : null;
   $: options = buildOptions(state,selectedId);
   $: if (!options.some(o=>o.typeId===typeId&&o.available)) typeId=options.find(o=>o.available)?.typeId??'';
@@ -37,6 +58,14 @@
     if(message){workforceError=message;onworkersinvalid();}
   }
   export function focusManage(): void { managementHeading?.focus(); }
+  async function moveResident(npcId: string, homeTileId: string): Promise<void> {
+    if (!oncommand('MOVE_NPC_HOME', { npcId, homeTileId })) return;
+    const nextDrafts = { ...moveDrafts };
+    delete nextDrafts[npcId];
+    moveDrafts = nextDrafts;
+    await tick();
+    focusManage();
+  }
   function revealManagementError(node: HTMLParagraphElement, failure: typeof managementError) {
     const reveal = (current: typeof failure) => { if (current) node.scrollIntoView({ block: 'nearest' }); };
     reveal(failure);
@@ -55,6 +84,42 @@
         <h3>{definition.name} · Level {selected.building.level}</h3>
         {#if home}
           <p>Household upkeep: {units(definition.upkeepMilli * selected.building.level)} Gold/week, paid after city operations. Skipped when Gold runs short.</p>
+          <section aria-label="Home residents">
+            <p>Beds used: {residents.length} / {bedCount}</p>
+            {#if residents.length === 0}
+              <p>No residents.</p>
+            {:else}
+              <ul class="home-residents">
+                {#each residents as resident (resident.character.id)}
+                  {@const id = resident.character.id}
+                  {@const destination = moveDrafts[id] ?? ''}
+                  {@const reason = locked ? 'Plan next week to move residents.'
+                    : !hasDestination ? 'No other home has a free bed.'
+                    : !destination ? 'Choose a destination home.'
+                    : !destinations.some(option => option.id === destination && option.free) ? 'That home has no free bed.'
+                    : ''}
+                  <li>
+                    <strong>{resident.character.name}</strong>
+                    <label for={`npc-home-destination-${id}`}>Destination for {resident.character.name}</label>
+                    <select id={`npc-home-destination-${id}`} value={destination} disabled={locked || !hasDestination}
+                      aria-describedby={reason ? `npc-home-reason-${id}` : undefined}
+                      onchange={event => { moveDrafts = { ...moveDrafts, [id]: event.currentTarget.value }; }}>
+                      <option value="" disabled>Choose a destination home</option>
+                      {#each destinations as option (option.id)}
+                        <option value={option.id} disabled={!option.free}>{option.label}{option.free ? '' : ' — No free bed'}</option>
+                      {/each}
+                    </select>
+                    {#if reason}<p id={`npc-home-reason-${id}`}>{reason}</p>{/if}
+                    <button disabled={!!reason} aria-describedby={reason ? `npc-home-reason-${id}` : undefined}
+                      onclick={() => void moveResident(id, destination)}>Move</button>
+                  </li>
+                {/each}
+              </ul>
+            {/if}
+            {#if managementError?.action === 'MOVE_NPC_HOME'}
+              <p id="trial-management-error" role="alert" use:revealManagementError={managementError}>{managementError.message}</p>
+            {/if}
+          </section>
         {:else}
         <p>Upkeep: {units(definition.upkeepMilli * selected.building.level)} Gold/week. Farm batch Gold credits this Farm's upkeep.</p>
         {/if}
@@ -121,6 +186,8 @@
   label { display: block; margin: 12px 0 8px; } input, select, button { font: inherit; border-radius: 8px; padding: 10px; border: 1px solid var(--life-control-border); }
   input, select { color: var(--text-main); background: transparent; max-width: 100%; } input { width: 7rem; }
   button { background: transparent; color: var(--text-main); cursor: pointer; margin: 4px 4px 4px 0; } button:disabled { cursor: default; }
+  .home-residents { padding-inline-start: 20px; }
+  .home-residents li + li { margin-block-start: 12px; }
   .planning-notes { margin: 4px 0 16px; }
   :focus-visible { outline: 3px solid var(--accent-blue); outline-offset: 3px; } [role='alert'] { padding: 12px; border-left: 3px solid var(--accent-red); }
   #trial-management-error { scroll-margin-block: 1px; }

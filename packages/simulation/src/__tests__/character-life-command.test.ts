@@ -1,3 +1,4 @@
+import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';
 import {
 createCharacterLifeSession,DEFAULT_PLAYER_DRAFT,isCharacterLifeSessionState,
 isLiveCharacterLifeSessionState,P7A_TRIAL,type CharacterLifeSessionState
@@ -10,7 +11,7 @@ import * as delegates from '../world-npc.js';
 function life(seed = 0): CharacterLifeSessionState {
   const r = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' });
   if (!r.success) throw Error(r.error.message);
-  return r.value;
+  return withNpcs(r.value, NPC_TEST_KEYS);
 }
 
 function legacy(s: CharacterLifeSessionState, raw: Record<string, unknown>): CharacterLifeCommandResult {
@@ -80,11 +81,11 @@ it('full-session parity through two week cycles', () => {
     { type: 'BUILD', tileId: 'forest-1', typeId: 'logging' },
     { type: 'UPGRADE', tileId: 'forest-1' },
     { type: 'SET_WORKERS', tileId: 'forest-1', workers: 2 },
-    { type: 'ASSIGN_NPC', npcId: 'npc_starter_1', tileId: 'forest-1' },
+    { type: 'ASSIGN_NPC', npcId: 'npc_w1_guild_0', tileId: 'forest-1' },
     { type: 'SET_ENABLED', tileId: 'forest-1', enabled: false },
     { type: 'SET_ENABLED', tileId: 'forest-1', enabled: true },
-    { type: 'UNASSIGN_NPC', npcId: 'npc_starter_1' },
-    { type: 'ASSIGN_NPC', npcId: 'npc_starter_2', tileId: 'plain-1' },
+    { type: 'UNASSIGN_NPC', npcId: 'npc_w1_guild_0' },
+    { type: 'ASSIGN_NPC', npcId: 'npc_w1_guild_1', tileId: 'plain-1' },
     { type: 'REPLACE', tileId: 'plain-1', typeId: 'processor' },
     { type: 'SET_WORKERS', tileId: 'plain-1', workers: 2 },
     { type: 'END_WEEK' }, { type: 'NEXT_WEEK' }, { type: 'END_WEEK' }, { type: 'NEXT_WEEK' },
@@ -127,8 +128,8 @@ describe('supported rejection parity and first-match taxonomy', () => {
     { type: 'SET_ENABLED', fields: { tileId: 'plain-1', enabled: true }, bad: { enabled: 1 }, code: 'INVALID_COMMAND' },
     { type: 'END_WEEK', fields: { expectedWeek: 1 }, bad: { expectedWeek: 0 }, code: 'WEEK_MISMATCH' },
     { type: 'NEXT_WEEK', fields: {}, bad: { extra: true }, code: 'INVALID_COMMAND' },
-    { type: 'ASSIGN_NPC', fields: { npcId: 'npc_starter_1', tileId: 'field-1' }, bad: { npcId: 7 }, code: 'INVALID_COMMAND' },
-    { type: 'UNASSIGN_NPC', fields: { npcId: 'npc_starter_1' }, bad: { npcId: 7 }, code: 'INVALID_COMMAND' },
+    { type: 'ASSIGN_NPC', fields: { npcId: 'npc_w1_guild_0', tileId: 'field-1' }, bad: { npcId: 7 }, code: 'INVALID_COMMAND' },
+    { type: 'UNASSIGN_NPC', fields: { npcId: 'npc_w1_guild_0' }, bad: { npcId: 7 }, code: 'INVALID_COMMAND' },
   ];
   it.each(commands)('$type preserves fields/revision/phase ordering', ({ type, fields, bad, code }) => {
     const planning = life(), report = oldAction(life(), { type: 'END_WEEK', expectedWeek: 1 });
@@ -155,7 +156,7 @@ describe('supported rejection parity and first-match taxonomy', () => {
     const built = oldAction(life(), { type: 'BUILD', tileId: 'forest-1', typeId: 'logging' });
     built.city.society!.stocksMilli.stone=5000;
     const max = oldAction(oldAction(built, { type: 'UPGRADE', tileId: 'forest-1' }), { type: 'UPGRADE', tileId: 'forest-1' });
-    const assigned = oldAction(life(), { type: 'ASSIGN_NPC', npcId: 'npc_starter_1', tileId: 'field-1' });
+    const assigned = oldAction(life(), { type: 'ASSIGN_NPC', npcId: 'npc_w1_guild_0', tileId: 'field-1' });
     const zeroStock = life(); zeroStock.city.world.settlements.settlement_haven_01.inventory.gold = 0;
     const noCapacity = life(); noCapacity.city.society!.classes.free = 0; noCapacity.city.world.settlements.settlement_haven_01.cohorts[0].count -= 55;
     for (const tile of noCapacity.city.tiles) if (tile.building) tile.building.workers = 0;
@@ -173,9 +174,9 @@ describe('supported rejection parity and first-match taxonomy', () => {
       [noCapacity, { type: 'SET_WORKERS', tileId: 'field-1', workers: 1 }, 'INVALID_PLAN'],
       [life(), { type: 'ASSIGN_NPC', npcId: 'missing', tileId: 'field-1' }, 'UNKNOWN_NPC'],
       [life(), { type: 'UNASSIGN_NPC', npcId: 'missing' }, 'UNKNOWN_NPC'],
-      [life(), { type: 'ASSIGN_NPC', npcId: 'npc_starter_1', tileId: 'plain-2' }, 'LOCKED_POST'],
-      [assigned, { type: 'ASSIGN_NPC', npcId: 'npc_starter_2', tileId: 'field-1' }, 'POST_OCCUPIED'],
-      [assigned, { type: 'ASSIGN_NPC', npcId: 'npc_starter_1', tileId: 'plain-1' }, 'ALREADY_ASSIGNED'],
+      [life(), { type: 'ASSIGN_NPC', npcId: 'npc_w1_guild_0', tileId: 'plain-2' }, 'LOCKED_POST'],
+      [assigned, { type: 'ASSIGN_NPC', npcId: 'npc_w1_guild_1', tileId: 'field-1' }, 'POST_OCCUPIED'],
+      [assigned, { type: 'ASSIGN_NPC', npcId: 'npc_w1_guild_0', tileId: 'plain-1' }, 'ALREADY_ASSIGNED'],
     ];
     for (const [s, raw, code] of cases) rejection(s, raw, code);
   });
@@ -249,9 +250,9 @@ describe('own data and prototype taxonomy precedes session and revision', () => 
     const s = freeze(life()), before = structuredClone(s);
     for (const raw of [
       { type: 'BUILD', expectedRevision: 0, tileId: 'forest-1', typeId: 'logging' },
-      { type: 'ASSIGN_NPC', expectedRevision: 0, npcId: 'npc_starter_1', tileId: 'field-1' },
+      { type: 'ASSIGN_NPC', expectedRevision: 0, npcId: 'npc_w1_guild_0', tileId: 'field-1' },
       { type: 'END_WEEK', expectedRevision: 0, expectedWeek: 1 },
-      { type: 'UNASSIGN_NPC', expectedRevision: -1, npcId: 'npc_starter_1' },
+      { type: 'UNASSIGN_NPC', expectedRevision: -1, npcId: 'npc_w1_guild_0' },
       { type: 'SET_ENABLED', expectedRevision: 0, tileId: 'plain-1', enabled: 7 },
     ]) {
       const expected = legacy(s, raw), plain = executeCharacterLifeCommand(s, raw);
@@ -290,7 +291,7 @@ it.each(['planning', 'report'] as const)('hostile live tile indices preserve bot
 describe('success detaches all five parts', () => {
   it.each([
     { type: 'BUILD', tileId: 'forest-1', typeId: 'logging' },
-    { type: 'ASSIGN_NPC', npcId: 'npc_starter_1', tileId: 'field-1' },
+    { type: 'ASSIGN_NPC', npcId: 'npc_w1_guild_0', tileId: 'field-1' },
   ])('$type detaches nested mutable session data', action => {
     const s = freeze(life()), before = structuredClone(s);
     const spy = vi.spyOn(delegates, action.type === 'ASSIGN_NPC' ? 'executeWorldNpcCommand' : 'executeWorldNpcCityCommand');
@@ -326,7 +327,7 @@ describe('success detaches all five parts', () => {
     vi.spyOn(delegates, handler).mockReturnValueOnce({ success: true,
       next: { city: invalid.city, outside: invalid.outside, npcs: invalid.npcs } });
     const raw = handler === 'executeWorldNpcCommand'
-      ? { type: 'ASSIGN_NPC', expectedRevision: s.city.revision, npcId: 'npc_starter_1', tileId: 'field-1' }
+      ? { type: 'ASSIGN_NPC', expectedRevision: s.city.revision, npcId: 'npc_w1_guild_0', tileId: 'field-1' }
       : { type: 'BUILD', expectedRevision: s.city.revision, tileId: 'forest-1', typeId: 'logging' };
     expect(executeCharacterLifeCommand(s, raw)).toEqual(executionError);
     expect(s).toEqual(before);

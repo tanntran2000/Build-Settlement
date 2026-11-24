@@ -1,6 +1,5 @@
 import { SOCIAL_RESOURCE_SCALE } from '../social/profile.js';
 import { NPC_GENERATOR_CATALOG, type AcquisitionSource } from './npc-generator.js';
-import type { NpcWithHousehold } from './npc-household.js';
 import type { WorldNpc } from './npc.js';
 
 const { price } = NPC_GENERATOR_CATALOG;
@@ -15,7 +14,7 @@ export function npcValueMilli(npc: WorldNpc, source: AcquisitionSource, lot: boo
   return Math.round(valueMilli / SOCIAL_RESOURCE_SCALE) * SOCIAL_RESOURCE_SCALE;
 }
 
-export function npcSellMilli(npc: NpcWithHousehold): number {
+export function npcSellMilli(npc: WorldNpc): number {
   const value = npcValueMilli(npc, npc.household.source, npc.character.id.endsWith('_lot'));
   return Math.round(value * price.sellShare);
 }

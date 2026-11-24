@@ -6,7 +6,7 @@ const mutations: [string, (items: ItemsState) => void][] = [
   ['consumable ids', items => { items.consumables = [{ id: 2, defId: 'heal-potion-2' }, { id: 1, defId: 'heal-potion-1' }]; }],
   ['storage ids', items => { items.storage = [{ item: { id: 2, defId: 'common-ring' }, expiresWeek: 4 }, { item: { id: 1, defId: 'heal-potion-1' }, expiresWeek: 5 }]; }],
   ['empty player equipment', items => { items.equipped = { player: {} }; }],
-  ['empty NPC equipment', items => { items.equipped = { npc_starter_1: {} }; }],
+  ['empty NPC equipment', items => { items.equipped = { npc_test_owner: {} }; }],
 ];
 
 it.each(mutations)('rejects non-canonical %s without changing the input', (_name, mutate) => {
@@ -14,7 +14,7 @@ it.each(mutations)('rejects non-canonical %s without changing the input', (_name
   items.nextItemId = 3;
   mutate(items);
   const before = structuredClone(items);
-  expect(isItemsState(items, ['player', 'npc_starter_1'])).toBe(false);
+  expect(isItemsState(items, ['player', 'npc_test_owner'])).toBe(false);
   expect(items).toEqual(before);
 });
 

@@ -1,28 +1,38 @@
-import { createSocietyState,hasWeeklyKeys,isNpcWorldSessionState,isTileTrialState,isWorldNpcList,isWorldSessionState,managerSlotTileIds,type NpcWorldSessionState,type TileTrialReport,type TileTrialState,type ItemWeekContext } from "@haven/core";
+import { createSocietyState,hasWeeklyKeys,homeBeds,homeResidents,isNpcWorldSessionState,isTileTrialState,isWorldNpcList,isWorldSessionState,managerSlotTileIds,type NpcWorldSessionState,type TileTrialReport,type TileTrialState,type ItemWeekContext } from "@haven/core";
 import { trialSafe } from "./tile-trial-week.js";
 import { executeTileTrialCommand } from "./tile-trial.js";
 
-export type WorldNpcErrorCode = "INVALID_STATE" | "INVALID_COMMAND" | "STALE_COMMAND" | "FORBIDDEN" | "UNKNOWN_NPC" | "LOCKED_POST" | "POST_OCCUPIED" | "ALREADY_ASSIGNED" | "UNSUPPORTED_RULESET";
+export type WorldNpcErrorCode = "INVALID_STATE" | "INVALID_COMMAND" | "STALE_COMMAND" | "FORBIDDEN" | "UNKNOWN_NPC" | "LOCKED_POST" | "POST_OCCUPIED" | "ALREADY_ASSIGNED" | "UNSUPPORTED_RULESET" | "NO_BED" | "NOT_A_HOME" | "NOT_IN_HALL" | "NPC_CAP";
 export type WorldNpcResult = { success: true; next: NpcWorldSessionState } | { success: false; error: { code: WorldNpcErrorCode; message: string } };
 export type WorldNpcCityResult = { success: true; next: NpcWorldSessionState; report?: Readonly<TileTrialReport> } | { success: false; error: { code: string; message: string } };
 
-// Assignment reads only ids and posts, never stats or traits.
+// Assignment uses the NPC's home and post eligibility. Character stats and traits remain outside the assignment check.
 export function executeWorldNpcCommand(session: unknown, raw: unknown): WorldNpcResult {
   const fail = (code: WorldNpcErrorCode, message: string): WorldNpcResult => ({ success: false, error: { code, message } });
   try {
     if (!hasWeeklyKeys(session, ["city", "outside", "npcs"]) || !isTileTrialState(session.city)) return fail("INVALID_STATE", "World session is invalid; nothing was changed.");
-    const keys: Record<string, string[]> = { ASSIGN_NPC: ["npcId", "tileId"], UNASSIGN_NPC: ["npcId"] };
+    const keys: Record<string, string[]> = { ASSIGN_NPC: ["npcId", "tileId"], UNASSIGN_NPC: ["npcId"], MOVE_NPC_HOME: ["npcId", "homeTileId"] };
     if (!raw || typeof raw !== "object" || !hasWeeklyKeys(raw, Object.keys(raw)) || typeof raw.type !== "string" || !Object.hasOwn(keys, raw.type) ||
         !hasWeeklyKeys(raw, ["type", "expectedRevision", ...keys[raw.type]]) || typeof raw.npcId !== "string" ||
-        (raw.type === "ASSIGN_NPC" && typeof raw.tileId !== "string")) return fail("INVALID_COMMAND", "Unknown NPC command or fields.");
-    const c = { ...raw } as { type: string; npcId: string; tileId?: string };
+        (raw.type === "ASSIGN_NPC" && typeof raw.tileId !== "string") ||
+        (raw.type === "MOVE_NPC_HOME" && typeof raw.homeTileId !== "string")) return fail("INVALID_COMMAND", "Unknown NPC command or fields.");
+    const c = { ...raw } as { type: string; npcId: string; tileId?: string; homeTileId?: string };
     if (raw.expectedRevision !== session.city.revision) return fail("STALE_COMMAND", "The plan changed. Refresh the action before retrying.");
     if (session.city.phase === "report") return fail("FORBIDDEN", "Read the report, then choose Plan next week.");
     if (!isNpcWorldSessionState(session)) return fail("INVALID_STATE", "World session is invalid; nothing was changed.");
     const next = structuredClone(session) as NpcWorldSessionState;
     const npc = next.npcs.find(n => n.character.id === c.npcId);
     if (!npc) return fail("UNKNOWN_NPC", "Select a known NPC.");
-    if (c.type === "ASSIGN_NPC") {
+    if (c.type === "MOVE_NPC_HOME") {
+      const home = c.homeTileId!, capacity = homeBeds(next.city, home);
+      if (!capacity) return fail("NOT_A_HOME", "Select the Mansion or a Retainers' Hall.");
+      if (home !== npc.household.home) {
+        if (homeResidents(next.npcs, home) >= capacity) return fail("NO_BED", "That home has no free bed.");
+        npc.household.home = home;
+        if (home === "estate-1") npc.postTileId = null;
+      }
+    } else if (c.type === "ASSIGN_NPC") {
+      if (npc.household.home === "estate-1") return fail("NOT_IN_HALL", "Only Retainers' Hall residents can hold a city post.");
       if (!managerSlotTileIds(next.city).includes(c.tileId!)) return fail("LOCKED_POST", "That post is not unlocked. Build a supported building there first.");
       if (npc.postTileId !== c.tileId) {
         if (npc.postTileId !== null) return fail("ALREADY_ASSIGNED", `${npc.character.name} already holds a post. Unassign her first.`);
@@ -45,7 +55,8 @@ export function executeWorldNpcCityCommand(session: unknown, raw: unknown,ctx?:I
     if (!isWorldSessionState({ city: createSocietyState(), outside: session.outside })) return fail("INVALID_STATE", "World session is invalid; nothing was changed.");
     const type = raw && typeof raw === "object" ? Object.getOwnPropertyDescriptor(raw, "type")?.value : undefined;
     if (type === "LOAD_TRIAL") return fail("INVALID_COMMAND", "Load an NPC world checkpoint through Continue or Import.");
-    const result = executeTileTrialCommand(session.city, raw,ctx);
+    const occupiedHomes = new Set((session.npcs as NpcWorldSessionState["npcs"]).map(npc => npc.household.home));
+    const result = executeTileTrialCommand(session.city, raw,ctx,occupiedHomes);
     if (!result.success) return fail(result.error.code, result.error.message);
     const city: TileTrialState = result.nextState, slots = managerSlotTileIds(city);
     const replaced = type === "REPLACE" ? Object.getOwnPropertyDescriptor(raw, "tileId")?.value : undefined;

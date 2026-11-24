@@ -1,9 +1,18 @@
-import { createNpcWorldSession } from '@haven/core';
+import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT } from '@haven/core';
+import { withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';
 import { afterEach,beforeEach,expect,it,vi } from 'vitest';
 import { prepareNpcWorldSessionLoad } from '../world-npc-session.js';
 const WORLD_SESSION_CHECKPOINT_KEY = 'haven.world-session.checkpoint.v1';
 
-const session = (seed = 0) => { const r = createNpcWorldSession(seed); if (!r.success) throw Error(); return r.value; };
+const session = (seed = 0) => {
+  const made = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' });
+  if (!made.success) throw Error(made.error.message);
+  const { city, outside, npcs } = withNpcs(made.value, [
+    { week: 1, source: 'guild', slot: 0 }, { week: 1, source: 'guild', slot: 1 },
+    { week: 1, source: 'guild', slot: 2 },
+  ]);
+  return { city, outside, npcs };
+};
 const otherKeys = [WORLD_SESSION_CHECKPOINT_KEY, 'haven.tile-trial.checkpoint.v1', 'haven.tile-population.checkpoint.v1'];
 let values: Map<string, string>;
 let storage: { getItem: ReturnType<typeof vi.fn>; setItem: ReturnType<typeof vi.fn> };

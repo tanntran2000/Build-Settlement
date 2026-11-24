@@ -1,7 +1,5 @@
 import { expect,test,type Locator,type Page } from '@playwright/test';
 import {
-createCharacterLifeSession,
-DEFAULT_PLAYER_DRAFT,
 isCharacterLifeSessionState,
 SOCIETY_PLOT_IDS,societyPlot,societyStaff,outsidePlot,
 WEEKLY_RESOURCE_KEYS,npcAgeTitle,
@@ -13,7 +11,7 @@ import { serializeCharacterLifeSave } from '../../packages/persistence/src/chara
 import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
 import type { Observation, VisibleCharacter } from '../../packages/simulation/src/character-life-observation.ts';
 import { formatMilli } from '../../packages/ui/src/milli-format.ts';
-import {openReportDetails, characterPanel,charactersView,characterWindow,expectOneCharacterWindow,expectReport,go,observeSheetLife,reportFulfillment,reportRegion,selectArea,selectNpcSheetTab,selectPerson } from './character-life-navigation.helpers.ts';
+import { BROWSER_NPC_IDS, makeLifeWithNpcs,openReportDetails, characterPanel,charactersView,characterWindow,expectOneCharacterWindow,expectReport,go,observeSheetLife,reportFulfillment,reportRegion,selectArea,selectNpcSheetTab,selectPerson } from './character-life-navigation.helpers.ts';
 
 const button = (scope: Page | Locator, name: string) => scope.getByRole('button', { name, exact: true });
 const region = (page: Page, name: string) => page.getByRole('region', { name, exact: true });
@@ -21,23 +19,27 @@ const title = (key: string) => key[0].toUpperCase() + key.slice(1);
 const numbers = (values: VisibleCharacter['stats']['skills' | 'needs' | 'emotions']) => Object.entries(values).map(([key, n]) => `${title(key)} ${n}`).join(' · ');
 
 function fixture() {
-  const created = createCharacterLifeSession(12345, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' });
-  expect(created.success).toBe(true);
-  if (!created.success) throw new Error(created.error.message);
-  const session = created.value;
+  const session = makeLifeWithNpcs();
+  expect(isCharacterLifeSessionState(session)).toBe(true);
   session.player.character.age = 25;
   session.player.profile.appearance.measurements = { chestCm: 94, waistCm: 76, hipsCm: 101, disclosure: 'known' };
   session.player.profile.private = { intimateHistory: { value: 'none', disclosure: 'known' } };
   session.player.profile.traits.intimacyKnowledge = 42;
-  for (const [i, age] of [27, 31, 24].entries()) session.npcs[i].character.age = age;
+  for (const [i, age] of [27, 31, 24].entries()) {
+    session.npcs[i].character.age = age;
+    session.npcs[i].life.birthWeek = session.city.world.week - age * 40;
+  }
   const [known, unknown, absent] = session.profiles;
-  expect(session.profiles.map(p => p.id)).toEqual(['npc_starter_1', 'npc_starter_2', 'npc_starter_3']);
+  expect(session.profiles.map(p => p.id)).toEqual(BROWSER_NPC_IDS);
   known.appearance.measurements = { chestCm: 88, waistCm: 67, hipsCm: 96, disclosure: 'known' };
   known.private = { intimateHistory: { value: 'some', disclosure: 'known' } };
   known.traits.intimacyKnowledge = 63;
   unknown.appearance.measurements = { chestCm: 63, waistCm: 47, hipsCm: 169, disclosure: 'unknown' };
   unknown.private = { intimateHistory: { value: 'some', disclosure: 'unknown' } };
   unknown.traits.intimacyKnowledge = 71;
+  unknown.traits.attractiveness = 50;
+  unknown.traits.learningAptitude = 55;
+  unknown.traits.warmth = 78;
   delete absent.appearance.measurements;
   delete absent.private;
   delete absent.traits.intimacyKnowledge;
@@ -66,9 +68,9 @@ async function profileParity(page: Page, scope: Locator, c: VisibleCharacter, li
   await panel.getByText('Private (adult)', { exact: true }).click();
   const disclosure = {
     player: ['94 / 76 / 101 cm', 'None', 42],
-    npc_starter_1: ['88 / 67 / 96 cm', 'Some', 63],
-    npc_starter_2: ['Unknown', 'Unknown', 71],
-    npc_starter_3: ['Unknown', 'Not recorded', null],
+    [BROWSER_NPC_IDS[0]]: ['88 / 67 / 96 cm', 'Some', 63],
+    [BROWSER_NPC_IDS[1]]: ['Unknown', 'Unknown', 71],
+    [BROWSER_NPC_IDS[2]]: ['Unknown', 'Not recorded', null],
   } as const;
   const [measurements, history, knowledge] = disclosure[c.id as keyof typeof disclosure];
   expect(c.profileRows.find(r => r.label === 'Measurements')?.value).toBe(measurements);
@@ -78,7 +80,7 @@ async function profileParity(page: Page, scope: Locator, c: VisibleCharacter, li
   await expect(panel.getByText(`Intimate history: ${c.adult.intimateHistory}`, { exact: true })).toBeVisible();
   await expect(panel.getByText(`Intimacy Knowledge: ${c.adult.intimacyKnowledge ?? 'Not recorded'}`, { exact: true })).toBeVisible();
   expect(await page.content()).not.toContain('63 / 47 / 169');
-  if (c.id === 'npc_starter_2') {
+  if (c.id === BROWSER_NPC_IDS[1]) {
     expect(await panel.evaluate(el => el.outerHTML)).not.toMatch(/\b(?:63|47|169)\b/);
     await expect(panel.getByText('Intimate history: Some', { exact: true })).toHaveCount(0);
     await expect(panel.getByText('Intimate history: None', { exact: true })).toHaveCount(0);
@@ -300,15 +302,15 @@ test('same-session UI projection through assignment and full week', async ({ pag
   await page.goto('/?mode=world-life');
   await importInitial();
   await compare();
-  const npc = await selectPerson(page, 'npc_starter_1');
+  const npc = await selectPerson(page, BROWSER_NPC_IDS[0]);
   await selectArea(page, 'Work');
   await npc.getByLabel('Manager post', { exact: false }).selectOption('field-1');
   await button(npc, 'Assign').click();
-  act('ASSIGN_NPC', { npcId: 'npc_starter_1', tileId: 'field-1' });
+  act('ASSIGN_NPC', { npcId: BROWSER_NPC_IDS[0], tileId: 'field-1' });
   await compare();
-  await selectPerson(page, 'npc_starter_1'); await selectArea(page, 'Work');
+  await selectPerson(page, BROWSER_NPC_IDS[0]); await selectArea(page, 'Work');
   await button(npc, 'Unassign').click();
-  act('UNASSIGN_NPC', { npcId: 'npc_starter_1' });
+  act('UNASSIGN_NPC', { npcId: BROWSER_NPC_IDS[0] });
   await compare();
   await go(page, 'city');
   await page.getByTestId('trial-tile-forest-1').click();

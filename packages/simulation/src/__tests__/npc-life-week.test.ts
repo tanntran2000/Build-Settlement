@@ -1,4 +1,5 @@
 import { beforeAll, describe, expect, it, vi } from 'vitest';
+import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';
 import {
   buildItemWeekContext, createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, isCharacterLifeSessionState,
   npcAge, npcAgeTitle, type CharacterLifeSessionState, type WorldNpc,
@@ -21,7 +22,9 @@ function run(npcs: WorldNpc[], week = 2, authority = 0) {
 function session() {
   const made = createCharacterLifeSession(42, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Synthetic Keeper' });
   if (!made.success) throw Error(made.error.message);
-  return made.value;
+  const s = withNpcs(made.value, NPC_TEST_KEYS);
+  for (const npc of s.npcs) npc.life.history = { counters: {}, recent: [] };
+  return s;
 }
 function npc(stress = 0, posted = false, working = true) {
   const value = session().npcs[0];
@@ -57,7 +60,7 @@ describe('Stress, halving and recovery boundaries', () => {
   it('exhausts at 100 once and keeps the post assigned', () => {
     const first = run([npc(96, true)]);
     expect(first.npcs[0].postTileId).toBe('field-1'); expect(first.npcs[0].life.working).toBe(false);
-    expect(first.report).toEqual({ ...empty, exhausted: ['npc_starter_1'] });
+    expect(first.report).toEqual({ ...empty, exhausted: ['npc_w1_guild_0'] });
     expect(first.npcs[0].life.history).toEqual({ counters: { exhausted: 1 }, recent: [{ week: 2, kind: 'exhausted' }] });
     const again = run(first.npcs, 3);
     expect(again.npcs[0].life.stress).toBe(100); expect(again.report).toEqual(empty);
@@ -67,7 +70,7 @@ describe('Stress, halving and recovery boundaries', () => {
   ('exhausted stress %i posted %s ends at %i working %s', (stress, posted, want, working) => {
     const result = run([npc(stress, posted, false)]);
     expect(result.npcs[0].life.stress).toBe(want); expect(result.npcs[0].life.working).toBe(working);
-    expect(result.report.recovered).toEqual(working ? ['npc_starter_1'] : []);
+    expect(result.report.recovered).toEqual(working ? ['npc_w1_guild_0'] : []);
     expect(result.npcs[0].life.history.counters.recovered).toBe(working ? 1 : undefined);
   });
   it('does not turn a still-posted exhausted NPC into a resting NPC', () => {
@@ -85,7 +88,7 @@ describe('Arousal, birthdays and bounded history', () => {
   it.each([[40, false], [41, true], [42, false]] as const)('birthday boundary week %i is %s', (week, birthday) => {
     const value = npc(); value.life.birthWeek = -1079;
     const result = run([value], week);
-    expect(result.report.birthdays).toEqual(birthday ? ['npc_starter_1'] : []);
+    expect(result.report.birthdays).toEqual(birthday ? ['npc_w1_guild_0'] : []);
     expect(result.npcs[0].life.history.counters.birthday).toBe(birthday ? 1 : undefined);
   });
   it.each([[29, 30, 'Mature'], [49, 50, 'Granny']] as const)('age %i becomes %i with title %s', (age, want, title) => {
@@ -104,8 +107,8 @@ describe('Arousal, birthdays and bounded history', () => {
   it('keeps NPC order and exhaustion before birthday history on the same tick', () => {
     const a = npc(96, true), b = npc(85, false, false); b.character.id = 'second';
     const result = run([b, a], 41);
-    expect(result.npcs.map(n => n.character.id)).toEqual(['second', 'npc_starter_1']);
-    expect(result.report).toEqual({ exhausted: ['npc_starter_1'], recovered: ['second'], birthdays: ['second', 'npc_starter_1'] });
+    expect(result.npcs.map(n => n.character.id)).toEqual(['second', 'npc_w1_guild_0']);
+    expect(result.report).toEqual({ exhausted: ['npc_w1_guild_0'], recovered: ['second'], birthdays: ['second', 'npc_w1_guild_0'] });
     expect(result.npcs[1].life.history.recent).toEqual([{ week: 41, kind: 'exhausted' }, { week: 41, kind: 'birthday' }]);
   });
   it('does not mutate frozen inputs or unrelated character/life fields and draws no random value', () => {
@@ -129,7 +132,7 @@ describe('Arousal, birthdays and bounded history', () => {
 describe('item context and Character Life integration', () => {
   it('excludes exhausted post skills and worn traits, preserving Player context and the assigned post', () => {
     const s = session(); s.npcs[0].postTileId = 'field-1';
-    s.city.society!.items.equipped.npc_starter_1 = { weapon: { id: 1, defId: 'wardens-oath' } };
+    s.city.society!.items.equipped.npc_w1_guild_0 = { weapon: { id: 1, defId: 'wardens-oath' } };
     s.city.society!.items.nextItemId = 2;
     const active = buildItemWeekContext(s); expect(active.postTraits['field-1']).toEqual(['warden']);
     s.npcs[0].life.working = false;
@@ -139,23 +142,23 @@ describe('item context and Character Life integration', () => {
     expect(exhausted.playerRegen).toBe(active.playerRegen); expect(s).toEqual(before);
   });
   it('records real assignment, unassignment and replacement clears, but no no-op or rejected history', () => {
-    let s = session(); s = action(s, 'ASSIGN_NPC', { npcId: 'npc_starter_1', tileId: 'field-1' }).next;
+    let s = session(); s = action(s, 'ASSIGN_NPC', { npcId: 'npc_w1_guild_0', tileId: 'field-1' }).next;
     expect(s.npcs[0].life.history).toEqual({ counters: { 'post-assigned': 1 }, recent: [{ week: 1, kind: 'post-assigned' }] });
-    s = action(s, 'ASSIGN_NPC', { npcId: 'npc_starter_1', tileId: 'field-1' }).next;
+    s = action(s, 'ASSIGN_NPC', { npcId: 'npc_w1_guild_0', tileId: 'field-1' }).next;
     const before = structuredClone(s);
-    expect(executeCharacterLifeCommand(s, { type: 'UNASSIGN_NPC', expectedRevision: -1, npcId: 'npc_starter_1' }).success).toBe(false);
+    expect(executeCharacterLifeCommand(s, { type: 'UNASSIGN_NPC', expectedRevision: -1, npcId: 'npc_w1_guild_0' }).success).toBe(false);
     expect(s).toEqual(before);
-    s = action(s, 'UNASSIGN_NPC', { npcId: 'npc_starter_1' }).next;
-    s = action(s, 'UNASSIGN_NPC', { npcId: 'npc_starter_1' }).next;
+    s = action(s, 'UNASSIGN_NPC', { npcId: 'npc_w1_guild_0' }).next;
+    s = action(s, 'UNASSIGN_NPC', { npcId: 'npc_w1_guild_0' }).next;
     expect(s.npcs[0].life.history.counters).toEqual({ 'post-assigned': 1, 'post-cleared': 1 });
-    s = action(s, 'ASSIGN_NPC', { npcId: 'npc_starter_1', tileId: 'field-1' }).next;
+    s = action(s, 'ASSIGN_NPC', { npcId: 'npc_w1_guild_0', tileId: 'field-1' }).next;
     const stocks = s.city.world.settlements[s.city.world.activeSettlementId!].inventory; stocks.gold = 100000;
     s = action(s, 'REPLACE', { tileId: 'field-1', typeId: 'farm' }).next;
     expect(s.npcs[0].postTileId).toBeNull(); expect(s.npcs[0].life.history.counters).toEqual({ 'post-assigned': 2, 'post-cleared': 2 });
   });
   it('trims actual post history after 21 commands and retains the event counters', () => {
     let s = session();
-    for (let i = 0; i < 21; i++) s = action(s, i % 2 ? 'UNASSIGN_NPC' : 'ASSIGN_NPC', { npcId: 'npc_starter_1', ...(i % 2 ? {} : { tileId: 'field-1' }) }).next;
+    for (let i = 0; i < 21; i++) s = action(s, i % 2 ? 'UNASSIGN_NPC' : 'ASSIGN_NPC', { npcId: 'npc_w1_guild_0', ...(i % 2 ? {} : { tileId: 'field-1' }) }).next;
     expect(s.npcs[0].life.history.counters).toEqual({ 'post-assigned': 11, 'post-cleared': 10 });
     expect(s.npcs[0].life.history.recent).toHaveLength(20);
     expect(s.npcs[0].life.history.recent[0].kind).toBe('post-cleared');
@@ -174,28 +177,28 @@ describe('item context and Character Life integration', () => {
     const health = s.npcs.map(n => n.character.health), r = end(s);
     expect(r.next.npcs[0].life).toMatchObject({ stress: 100, working: false }); expect(r.next.npcs[0].postTileId).toBe('field-1');
     expect(r.next.npcs.map(n => n.character.health)).toEqual(health);
-    expect(r.report).toMatchObject({ npcLife: { exhausted: ['npc_starter_1'], recovered: [], birthdays: [] } });
+    expect(r.report).toMatchObject({ npcLife: { exhausted: ['npc_w1_guild_0'], recovered: [], birthdays: [] } });
   });
-  it('reloads pre-B v10 false/95, rests only after clearing the post, and resumes at 80', () => {
+  it('reloads a v12 NPC at false/95, rests only after clearing the post, and resumes at 80', () => {
     let s = session(); s.npcs[0].life.working = false; s.npcs[0].life.stress = 95; s.npcs[0].postTileId = 'field-1';
     const encoded = serializeCharacterLifeSave(s); if (!encoded.success) throw Error(encoded.error.message);
     const loaded = deserializeCharacterLifeSave(encoded.text); if (!loaded.success) throw Error(loaded.error.message);
     expect(loaded.state.npcs[0].life).toMatchObject({ stress: 95, working: false });
     expect(buildItemWeekContext(loaded.state).postSkills).toEqual({});
-    s = action(loaded.state, 'UNASSIGN_NPC', { npcId: 'npc_starter_1' }).next;
+    s = action(loaded.state, 'UNASSIGN_NPC', { npcId: 'npc_w1_guild_0' }).next;
     for (const [stress, working] of [[90, false], [85, false], [80, true]] as const) {
       const r = end(s); expect(r.next.npcs[0].life).toMatchObject({ stress, working });
-      expect(r.report).toMatchObject(working ? { npcLife: { exhausted: [], recovered: ['npc_starter_1'], birthdays: [] } } : {});
+      expect(r.report).toMatchObject(working ? { npcLife: { exhausted: [], recovered: ['npc_w1_guild_0'], birthdays: [] } } : {});
       s = action(r.next, 'NEXT_WEEK').next;
     }
-    s = action(s, 'ASSIGN_NPC', { npcId: 'npc_starter_1', tileId: 'field-1' }).next;
+    s = action(s, 'ASSIGN_NPC', { npcId: 'npc_w1_guild_0', tileId: 'field-1' }).next;
     expect(buildItemWeekContext(s).postSkills['field-1']).toBeDefined();
   });
   it('birthdays use the new clock, are frozen, and do not repeat after save/load', () => {
     const s = session(); s.city.world.week = 40;
     const r = end(s);
     expect(r.report?.week).toBe(40); expect(r.next.city.world.week).toBe(41);
-    expect(r.report).toMatchObject({ npcLife: { exhausted: [], recovered: [], birthdays: ['npc_starter_1', 'npc_starter_2', 'npc_starter_3'] } });
+    expect(r.report).toMatchObject({ npcLife: { exhausted: [], recovered: [], birthdays: ['npc_w1_guild_0', 'npc_w1_guild_1', 'npc_w1_guild_2'] } });
     const notes = (r.report as unknown as { npcLife: Notes }).npcLife;
     expect(Object.isFrozen(r.report)).toBe(true); expect(Object.isFrozen(notes)).toBe(true); expect(Object.isFrozen(notes.birthdays)).toBe(true);
     expect(r.next.npcs[0].life.history.recent).toEqual([{ week: 41, kind: 'birthday' }]);
@@ -211,7 +214,9 @@ describe('item context and Character Life integration', () => {
     const r = end(s); expect(r.next.npcs[0].life.arousal).toBe(3); expect(Object.hasOwn(r.report!, 'npcLife')).toBe(false);
   });
   it('keeps every no-NPC result byte-identical to the old delegated path', () => {
-    const s = session(); s.npcs = []; s.profiles = [];
+    const made = createCharacterLifeSession(42, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Synthetic Keeper' });
+    if (!made.success) throw Error(made.error.message);
+    const s = made.value;
     const equipped = s.city.society!.items.equipped;
     for (const id of Object.keys(equipped)) if (id !== 'player') delete equipped[id];
     expect(isCharacterLifeSessionState(s)).toBe(true);

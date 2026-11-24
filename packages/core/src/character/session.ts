@@ -7,9 +7,39 @@ EYE_COLORS,FACE_FEATURES,FACE_SHAPES,HAIR_COLORS,HAIR_LENGTHS,HAIR_STYLES,HAIR_T
 CHARACTER_LIMITS as L,
 OUTFITS,PLACES,PLAYER_CHARACTER_ID,PLAYER_PROFESSIONS,REGIONS,SKIN_TONES,UPBRINGINGS,
 } from './catalog.js';
-import { STARTER_PROFILES,type PlayerDraft } from './starter-profiles.js';
-import type { CharacterLifeSessionState,PlayerCharacter } from './types.js';
+import { deepFreeze } from '../data/validate.js';
+import type { CharacterAppearance, CharacterLifeSessionState, PlayerCharacter, Pronouns } from './types.js';
 import { isCharacterLifeSessionState,isPlayerCharacter } from './validate.js';
+
+// Character Creation form state: numbers stay strings until validatePlayerDraft accepts them.
+export interface PlayerDraft {
+  currentName: string; birthName: string; label: string; pronouns: Pronouns; gender: 'female' | 'male' | 'other';
+  age: string; profession: string; birthplaceId: string; regionId: string; upbringing: string; biography: string;
+  traits: { attractiveness: string; learningAptitude: string; warmth: string; intimacyKnowledge: string | null };
+  appearance: Omit<CharacterAppearance, 'heightCm' | 'weightKg' | 'measurements'> & {
+    heightCm: string; weightKg: string; measurements: { chestCm: string; waistCm: string; hipsCm: string } | null };
+  intimateHistory: 'none' | 'some' | null;
+}
+
+// PROVISIONAL trial content (plan Global Constraints): appearance values are not balance, the UI says so.
+export const PLAYER_APPEARANCE_PRESETS: readonly { id: 'practical' | 'scholarly' | 'rugged'; label: string; appearance: PlayerDraft['appearance'] }[] = deepFreeze([
+  { id: 'practical', label: 'Practical', appearance: { presentation: 'androgynous', skinTone: 'olive', eyeColor: 'brown',
+    hair: { color: 'dark_brown', length: 'short', texture: 'straight', style: 'loose' }, face: { shape: 'oval', features: [] },
+    build: 'average', heightCm: '170', weightKg: '68', measurements: null, outfit: 'role_default' } },
+  { id: 'scholarly', label: 'Scholarly', appearance: { presentation: 'androgynous', skinTone: 'fair', eyeColor: 'blue',
+    hair: { color: 'auburn', length: 'shoulder_length', texture: 'wavy', style: 'tied_back' }, face: { shape: 'long', features: ['glasses'] },
+    build: 'slim', heightCm: '165', weightKg: '56', measurements: null, outfit: 'buttoned_coat' } },
+  { id: 'rugged', label: 'Rugged', appearance: { presentation: 'androgynous', skinTone: 'tan', eyeColor: 'hazel',
+    hair: { color: 'black', length: 'cropped', texture: 'curly', style: 'loose' }, face: { shape: 'square', features: ['scar'] },
+    build: 'broad', heightCm: '180', weightKg: '82', measurements: null, outfit: 'padded_vest' } },
+]);
+
+export const DEFAULT_PLAYER_DRAFT: PlayerDraft = deepFreeze({
+  currentName: '', birthName: '', label: '', pronouns: 'they', gender: 'other', age: '25', profession: 'worker',
+  birthplaceId: 'kestrel_ford', regionId: 'northreach', upbringing: 'frontier', biography: '',
+  traits: { attractiveness: '50', learningAptitude: '50', warmth: '50', intimacyKnowledge: null },
+  appearance: structuredClone(PLAYER_APPEARANCE_PRESETS[0].appearance), intimateHistory: null,
+});
 
 export type DraftErrors = Partial<Record<string, string>>;
 
@@ -93,13 +123,13 @@ export function createPlayerCharacter(draft: PlayerDraft): { success: true; valu
   return isPlayerCharacter(value) ? { success: true, value } : invalid('The player character could not be created.');
 }
 
-// The life session composes the NPC world session unchanged (seeded names, stats, posts) and adds the Player and starter profiles.
+// The life session adds the Player to the empty NPC world session.
 export function createCharacterLifeSession(seed: unknown, draft: PlayerDraft): { success: true; value: CharacterLifeSessionState } | { success: false; error: { code: string; message: string } } {
   const world = createNpcWorldSession(seed);
   if (!world.success) return world;
   const player = createPlayerCharacter(draft);
   if (!player.success) return player;
-  const value = { ...world.value, player: player.value, profiles: STARTER_PROFILES.map(p => structuredClone(p)) };
+  const value = { ...world.value, player: player.value, profiles: [] };
   return isCharacterLifeSessionState(value) ? { success: true, value }
     : { success: false, error: { code: 'INVALID_SESSION', message: 'Could not create the character life session.' } };
 }

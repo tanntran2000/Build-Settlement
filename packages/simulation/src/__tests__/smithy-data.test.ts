@@ -19,7 +19,7 @@ function refused(state:TileTrialState,command:Record<string,unknown>,code:string
 }
 // Catches reserved Smithy, wrong tier/cost, and caps that do not follow level.
 it('starts ruleset 09 with the exact active Specialist Smithy staffed by Makers',()=>{
-  expect(createSocietyState().society!.rulesetId).toBe('tile-society-11');
+  expect(createSocietyState().society!.rulesetId).toBe('tile-society-12');
   expect(TRIAL_BUILDINGS.smithy).toEqual({name:'Smithy',operation:'society',terrain:['town'],maxLevel:2,maxWorkers:1,cost:{gold:10000,wood:6000,iron:6000},upkeepMilli:1000});
   expect(SOCIETY_BUILDINGS.smithy).toEqual({tier:'specialist',staff:'makers',reserved:false});
 });

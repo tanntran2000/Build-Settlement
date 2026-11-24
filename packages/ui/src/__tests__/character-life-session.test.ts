@@ -1,6 +1,7 @@
 import { createCharacterLifeSession,createNpcWorldSession,DEFAULT_PLAYER_DRAFT } from '@haven/core';
 import { createMemoryGameStore,recordsToSession,sessionToRecords,GAME_DB,type GameStore,type StoredRecord,deserializeCharacterLifeSave,serializeCharacterLifeSave } from '@haven/persistence';
 import { readFileSync } from 'node:fs';
+import { withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';
 import { afterEach,beforeEach,expect,it,vi } from 'vitest';
 import { createCheckpointDeps,clearFallenCharacterLifeCheckpoint,OLD_CHECKPOINT_MESSAGE,CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY,isPlayableCheckpoint,prepareCharacterLifeLoad,readLocalCharacterLife,saveLocalCharacterLife } from '../character-life-session.js';
 const WORLD_NPC_CHECKPOINT_KEY = 'haven.world-npc-session.checkpoint.v1';
@@ -8,9 +9,9 @@ const WORLD_SESSION_CHECKPOINT_KEY = 'haven.world-session.checkpoint.v1';
 
 const session = (seed = 0, currentName = 'Ana') => { const r = createCharacterLifeSession(seed, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName }); if (!r.success) throw Error(r.error.message); return r.value; };
 
-it('loads live and pinned v3 cities into a detached complete Life session without conversion or grants', () => {
+it('loads live and pinned v12 cities into a detached complete Life session without conversion or grants', () => {
   const oldSession = () => session();
-  const decoded=deserializeCharacterLifeSave(readFileSync('packages/persistence/src/__tests__/fixtures/society-v11/life-new-game.json','utf8'));
+  const decoded=deserializeCharacterLifeSave(readFileSync('packages/persistence/src/__tests__/fixtures/society-v12/life-new-game.json','utf8'));
   if(!decoded.success)throw Error(decoded.error.message);
   const fresh={success:true,value:decoded.state};
   fresh.value.city.goodsStock!.amountMilli = 321;
@@ -24,6 +25,10 @@ it('loads live and pinned v3 cities into a detached complete Life session withou
     expect(live).toEqual(liveBefore); expect(loaded).toEqual(loadedBefore);
   }
 });
+const populated = (seed = 0, currentName = 'Ana') => withNpcs(session(seed, currentName), [
+  { week: 1, source: 'guild', slot: 0 }, { week: 1, source: 'guild', slot: 1 }, { week: 1, source: 'guild', slot: 2 },
+]);
+
 const otherKeys = [WORLD_NPC_CHECKPOINT_KEY, WORLD_SESSION_CHECKPOINT_KEY, 'haven.tile-trial.checkpoint.v1', 'haven.tile-population.checkpoint.v1'];
 let values: Map<string, string>;
 let store: GameStore;
@@ -45,7 +50,7 @@ it('uses its own slot key', () => {
   expect(otherKeys).not.toContain(CHARACTER_LIFE_CHECKPOINT_SOCIETY_KEY);
 });
 it('save writes only its key and reads back the same session; other keys keep "protected-bytes"', async () => {
-  const s = session(); s.npcs[2].postTileId = 'plain-1';
+  const s = populated(); s.npcs[2].postTileId = 'plain-1';
   const encoded = serializeCharacterLifeSave(s); if (!encoded.success) throw Error();
   expect((await saveLocalCharacterLife(s,checkpointDeps))).toEqual({ success: true, replaced: false });
   expect(serializeCharacterLifeSave(recordsToSession((await store.read('main'))!))).toEqual(encoded);
@@ -76,7 +81,7 @@ it('contains storage failures and never saves an invalid session', async () => {
   expect(storage.getItem).not.toHaveBeenCalled();expect(store.read).not.toHaveBeenCalled(); expect(store.replaceSlot).not.toHaveBeenCalled();
 });
 it('prepare rebases revision and carries player/profiles; live unchanged', () => {
-  const live = session(), loaded = session(7, 'Bea'); live.city.revision = 5; loaded.city.revision = 2; loaded.npcs[1].postTileId = 'field-1';
+  const live = populated(), loaded = populated(7, 'Bea'); live.city.revision = 5; loaded.city.revision = 2; loaded.npcs[1].postTileId = 'field-1';
   loaded.profiles[0].traits.warmth = 12;
   const before = structuredClone(live), result = prepareCharacterLifeLoad(live, loaded, 5);
   expect(result.success).toBe(true); if (!result.success) return;
@@ -87,7 +92,7 @@ it('prepare rebases revision and carries player/profiles; live unchanged', () =>
   expect(live).toEqual(before);
 });
 it.each(['stale', 'NPC-world session', 'invalid player', 'invalid profiles', 'report phase', 'original get'])('prepare rejects %s; nothing changes', kind => {
-  const live = session(), loaded = session(3, 'Bea'); let expected = live.city.revision;
+  const live = populated(), loaded = populated(3, 'Bea'); let expected = live.city.revision;
   if (kind === 'stale') expected--;
   if (kind === 'invalid player') loaded.player.character.age = 17;
   if (kind === 'invalid profiles') loaded.profiles.reverse();
@@ -294,7 +299,7 @@ it('fix1 F3: unavailable legacy is distinct from an absent key and can recover',
 });
 
 it.each(['readable','still blocked'] as const)('fix2 F1: pending migration keeps saved B when legacy A is %s',async availability=>{
- const a=session(11),b=session(22),encoded=serializeCharacterLifeSave(a);if(!encoded.success)throw Error(encoded.error.message);
+ const a=populated(11),b=populated(22),encoded=serializeCharacterLifeSave(a);if(!encoded.success)throw Error(encoded.error.message);
  const dataWrites=watchNextMemoryMapWrites();
  const d=deps(encoded.text),original=d.legacy.getItem.getMockImplementation()!;let blocked=true;
  d.legacy.getItem.mockImplementation(()=>{if(blocked)throw Error('temporarily blocked');return original();});

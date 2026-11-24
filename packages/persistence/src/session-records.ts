@@ -1,14 +1,14 @@
 ﻿import type { CharacterLifeSessionState, CharacterProfile, WorldNpc, PlayerCharacter, TileTrialState } from '@haven/core';
 import { CHARACTER_LIFE_SAVE_FORMAT } from './character-life-save.js';
-import { createSocietyState, isNamedCharacterRecord, managerSlotTileIds, WORLD_TRAITS, GOODS_STOCK_RULESET, hasWeeklyKeys, isCanonicalGameState, isCharacterProfile, isPlayerCharacter, isSocietyState, isTileTrialState, isWorldNpcList, isWorldSessionState, SOCIETY_RULESET } from '@haven/core';
+import { createSocietyState, isNamedCharacterRecord, isNpcLife, managerSlotTileIds, npcAge, WORLD_TRAITS, GOODS_STOCK_RULESET, hasWeeklyKeys, isCanonicalGameState, isCharacterProfile, isPlayerCharacter, isSocietyState, isTileTrialState, isWorldNpcList, isWorldSessionState, SOCIETY_RULESET } from '@haven/core';
 import type { StoredRecord, TableName } from './game-store.js';
 import { ITEM_CATALOG, RECIPES, isItemsState, isOpenItemSlot, isWearable, type ItemsState, type ItemInstance } from '@haven/core';
 export class StoreRecordError extends Error {
   constructor(public readonly ref: string) { super(`Invalid store record: ${ref}`); this.name = 'StoreRecordError'; }
 }
 const count = (n: unknown): n is number => Number.isSafeInteger(n) && (n as number) >= 0;
-const historicalSocietyRuleset = /^tile-society-(0[1-9]|10)$/;
-const NPC_LIFE_RULESET = 'tile-society-10';
+const historicalSocietyRuleset = /^tile-society-(0[1-9]|1[01])$/;
+const historicalNpcLifeRuleset = /^tile-society-1[01]$/;
 // Historical records remain readable for the caller's existing old-ruleset refusal.
 // Validate their original shape without migrating or returning a current-ruleset view.
 function isStoredCity(raw: unknown): raw is CharacterLifeSessionState['city'] {
@@ -106,7 +106,7 @@ export function recordsToSession(records: StoredRecord[]): CharacterLifeSessionS
   const itemRows=records.filter(r=>r.table==='items');
   const storedItems = storedSociety && typeof storedSociety === 'object' ? Object.getOwnPropertyDescriptor(storedSociety,'items')?.value : undefined;
   const detachedItems = hasWeeklyKeys(storedItems,['nextItemId','materials','market','goals']) || hasWeeklyKeys(storedItems,['nextItemId','materials','market','goals','workshops']);
-  if (meta.rulesetId === SOCIETY_RULESET || (meta.rulesetId === NPC_LIFE_RULESET && detachedItems)) {
+  if (meta.rulesetId === SOCIETY_RULESET || (historicalNpcLifeRuleset.test(meta.rulesetId) && detachedItems)) {
     const society=Object.getOwnPropertyDescriptor(city,'society')?.value;
     if(!society||typeof society!=='object'||!detachedItems)throw new StoreRecordError('city:city');
     const rest=storedItems as Record<string, unknown>;
@@ -169,7 +169,16 @@ export function recordsToSession(records: StoredRecord[]): CharacterLifeSessionS
     const v = r.value as { kind: string; player: PlayerCharacter; npc: WorldNpc; order: number; profile: CharacterProfile; profileOrder: number };
     if (!v || !v.profile || v.profile.id !== r.id) bad(r);
     if (v.kind === 'player') { if (player || !isPlayerCharacter(v.player) || v.player.character.id !== r.id || !isCharacterProfile(v.profile,v.player.character)) bad(r); player = v.player; }
-    else if (v.kind === 'npc') { if (!(meta.rulesetId === SOCIETY_RULESET || meta.rulesetId === NPC_LIFE_RULESET ? isWorldNpcList([...npcs.map(n => n.npc),v.npc],city) : historicalSocietyRuleset.test(meta.rulesetId) && isHistoricalNpcList([...npcs.map(n => n.npc),v.npc],city)) || v.npc.character.id !== r.id || !isCharacterProfile(v.profile,v.npc.character) || !Number.isInteger(v.order) || v.order < 0 || !Number.isInteger(v.profileOrder) || v.profileOrder < 0) bad(r); npcs.push({ npc: v.npc,order: v.order }); }
+    else if (v.kind === 'npc') {
+      const candidate = [...npcs.map(n => n.npc), v.npc];
+      const validNpcList = meta.rulesetId === SOCIETY_RULESET
+        ? isWorldNpcList(candidate, city)
+        : historicalSocietyRuleset.test(meta.rulesetId) &&
+          isHistoricalNpcList(candidate, city, historicalNpcLifeRuleset.test(meta.rulesetId));
+      if (!validNpcList || v.npc.character.id !== r.id || !isCharacterProfile(v.profile, v.npc.character) ||
+          !Number.isInteger(v.order) || v.order < 0 || !Number.isInteger(v.profileOrder) || v.profileOrder < 0) bad(r);
+      npcs.push({ npc: v.npc, order: v.order });
+    }
     else bad(r);
     if (v.kind === 'npc') profiles.push({ profile: v.profile,order: v.profileOrder });
   }
@@ -177,7 +186,7 @@ export function recordsToSession(records: StoredRecord[]): CharacterLifeSessionS
   return structuredClone({ city,outside,npcs: npcs.sort((a,b) => a.order-b.order).map(v => v.npc),player,profiles: profiles.sort((a,b) => a.order-b.order).map(v => v.profile) }) as CharacterLifeSessionState;
 }
 
-function isHistoricalNpcList(raw: unknown, city: TileTrialState): boolean {
+function isHistoricalNpcList(raw: unknown, city: TileTrialState, hasLife: boolean): boolean {
   try {
     if (!Array.isArray(raw) || Object.getPrototypeOf(raw) !== Array.prototype ||
         Reflect.ownKeys(raw).length !== raw.length + 1) return false;
@@ -187,10 +196,12 @@ function isHistoricalNpcList(raw: unknown, city: TileTrialState): boolean {
       const entry = Object.getOwnPropertyDescriptor(raw, String(i));
       if (!entry?.enumerable || !('value' in entry)) return false;
       const npc = entry.value;
-      if (!hasWeeklyKeys(npc, ['character', 'traits', 'postTileId'])) return false;
+      const keys = hasLife ? ['character', 'traits', 'postTileId', 'life'] : ['character', 'traits', 'postTileId'];
+      if (!hasWeeklyKeys(npc, keys)) return false;
       const c = npc.character, traits = npc.traits;
       if (!isNamedCharacterRecord(c) || ids.has(c.id) || !Array.isArray(traits) ||
           Object.getPrototypeOf(traits) !== Array.prototype || Reflect.ownKeys(traits).length !== traits.length + 1) return false;
+      if (hasLife && (!isNpcLife(npc.life) || c.gender !== 'female' || c.age < 18 || npcAge(npc.life, city.world.week) < 18)) return false;
       const seenTraits = new Set<string>();
       for (let j = 0; j < traits.length; j++) {
         const trait = Object.getOwnPropertyDescriptor(traits, String(j));

@@ -3,11 +3,12 @@ import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, ITEM_CATALOG, RECIPES
 import * as view from '../items-view.js';
 import { reportLetters } from '../report-letters.js';
 import { executeCharacterLifeCommand, resolveWorkshopOperation } from '@haven/simulation';
+import { withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';
 
 function life() {
   const made = createCharacterLifeSession(42, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' });
   if (!made.success) throw Error(made.error.message);
-  const s = made.value;
+  const s = withNpcs(made.value, [{ week: 1, source: 'guild', slot: 0 }]);
   stock(s).gold = 100000;
   s.city.society!.stocksMilli.herbs = 10000;
   for (const [id, typeId, workers] of [['spec-2', 'smithy', 1], ['service-1', 'hospital', 2], ['slum-1', 'drug-store', 0]] as const) {
