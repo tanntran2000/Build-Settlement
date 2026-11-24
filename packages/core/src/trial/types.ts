@@ -8,6 +8,8 @@ import type { LawId } from './law.js';
 import type { SocietyClassKey } from './society.js';
 import type { ItemGoal } from './items.js';
 
+export type SocietyWallRing = 1 | 2 | 3 | 4;
+
 export interface LawWeekReport {
  inForce: LawId[];
  costs: {lawId:LawId;goldMilli:number}[];
@@ -69,6 +71,7 @@ export interface TileTrialReport {
   farmExtraUpkeepMilli: number;
   upkeepPaidMilli: number;
   unpaidUpkeepMilli: number;
+  householdUpkeep?: { paidMilli: number; unpaidMilli: number };
   foodDemandMilli: number;
   foodConsumedMilli: number;
   happinessBefore: number;

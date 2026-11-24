@@ -7,6 +7,8 @@ export class StoreRecordError extends Error {
   constructor(public readonly ref: string) { super(`Invalid store record: ${ref}`); this.name = 'StoreRecordError'; }
 }
 const count = (n: unknown): n is number => Number.isSafeInteger(n) && (n as number) >= 0;
+const historicalSocietyRuleset = /^tile-society-(0[1-9]|10)$/;
+const NPC_LIFE_RULESET = 'tile-society-10';
 // Historical records remain readable for the caller's existing old-ruleset refusal.
 // Validate their original shape without migrating or returning a current-ruleset view.
 function isStoredCity(raw: unknown): raw is CharacterLifeSessionState['city'] {
@@ -15,7 +17,7 @@ function isStoredCity(raw: unknown): raw is CharacterLifeSessionState['city'] {
         !raw.society || typeof raw.society !== 'object') return false;
     const ruleset = Object.getOwnPropertyDescriptor(raw.society, 'rulesetId')?.value;
     if (ruleset === SOCIETY_RULESET) return isTileTrialState(raw);
-    const version = typeof ruleset === 'string' ? /^tile-society-0([1-9])$/.exec(ruleset) : null;
+    const version = typeof ruleset === 'string' ? historicalSocietyRuleset.exec(ruleset) : null;
     if (!version || !isCanonicalGameState(raw.world) || !raw.world.activeSettlementId || !count(raw.revision) ||
         !['planning','report'].includes(raw.phase as string) || typeof raw.happiness !== 'number' ||
         !Number.isFinite(raw.happiness) || raw.happiness < 0 || raw.happiness > 100 ||
@@ -102,11 +104,12 @@ export function recordsToSession(records: StoredRecord[]): CharacterLifeSessionS
   const storedRuleset=storedSociety&&typeof storedSociety==='object'?Object.getOwnPropertyDescriptor(storedSociety,'rulesetId')?.value:undefined;
   if(typeof storedRuleset==='string'&&storedRuleset!==meta.rulesetId)throw new StoreRecordError('meta:session');
   const itemRows=records.filter(r=>r.table==='items');
-  if (meta.rulesetId === SOCIETY_RULESET) {
+  const storedItems = storedSociety && typeof storedSociety === 'object' ? Object.getOwnPropertyDescriptor(storedSociety,'items')?.value : undefined;
+  const detachedItems = hasWeeklyKeys(storedItems,['nextItemId','materials','market','goals']) || hasWeeklyKeys(storedItems,['nextItemId','materials','market','goals','workshops']);
+  if (meta.rulesetId === SOCIETY_RULESET || (meta.rulesetId === NPC_LIFE_RULESET && detachedItems)) {
     const society=Object.getOwnPropertyDescriptor(city,'society')?.value;
-    if(!society||typeof society!=='object')throw new StoreRecordError('city:city');
-    const rest=Object.getOwnPropertyDescriptor(society,'items')?.value;
-    if(!hasWeeklyKeys(rest,['nextItemId','materials','market','goals'])&&!hasWeeklyKeys(rest,['nextItemId','materials','market','goals','workshops']))throw new StoreRecordError('city:city');
+    if(!society||typeof society!=='object'||!detachedItems)throw new StoreRecordError('city:city');
+    const rest=storedItems as Record<string, unknown>;
     const items:ItemsState={nextItemId:rest.nextItemId as number,inventory:[],consumables:[],materials:rest.materials as ItemsState['materials'],storage:[],equipped:{},market:rest.market as ItemsState['market'],goals:rest.goals as ItemsState['goals']};
     if(Object.hasOwn(rest,'workshops')){
       const workshops=rest.workshops;
@@ -166,7 +169,7 @@ export function recordsToSession(records: StoredRecord[]): CharacterLifeSessionS
     const v = r.value as { kind: string; player: PlayerCharacter; npc: WorldNpc; order: number; profile: CharacterProfile; profileOrder: number };
     if (!v || !v.profile || v.profile.id !== r.id) bad(r);
     if (v.kind === 'player') { if (player || !isPlayerCharacter(v.player) || v.player.character.id !== r.id || !isCharacterProfile(v.profile,v.player.character)) bad(r); player = v.player; }
-    else if (v.kind === 'npc') { if (!(meta.rulesetId === SOCIETY_RULESET ? isWorldNpcList([...npcs.map(n => n.npc),v.npc],city) : /^tile-society-0[1-9]$/.test(meta.rulesetId) && isHistoricalNpcList([...npcs.map(n => n.npc),v.npc],city)) || v.npc.character.id !== r.id || !isCharacterProfile(v.profile,v.npc.character) || !Number.isInteger(v.order) || v.order < 0 || !Number.isInteger(v.profileOrder) || v.profileOrder < 0) bad(r); npcs.push({ npc: v.npc,order: v.order }); }
+    else if (v.kind === 'npc') { if (!(meta.rulesetId === SOCIETY_RULESET || meta.rulesetId === NPC_LIFE_RULESET ? isWorldNpcList([...npcs.map(n => n.npc),v.npc],city) : historicalSocietyRuleset.test(meta.rulesetId) && isHistoricalNpcList([...npcs.map(n => n.npc),v.npc],city)) || v.npc.character.id !== r.id || !isCharacterProfile(v.profile,v.npc.character) || !Number.isInteger(v.order) || v.order < 0 || !Number.isInteger(v.profileOrder) || v.profileOrder < 0) bad(r); npcs.push({ npc: v.npc,order: v.order }); }
     else bad(r);
     if (v.kind === 'npc') profiles.push({ profile: v.profile,order: v.profileOrder });
   }

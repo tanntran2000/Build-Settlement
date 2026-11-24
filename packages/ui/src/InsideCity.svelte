@@ -3,7 +3,7 @@
  import PotionPanel from './PotionPanel.svelte';
  import WorkshopPanel from './WorkshopPanel.svelte';
  import { TRIAL_BUILDINGS, societyStaff, type TileTrialState, type SocietyGroupKey, type WorldNpc } from '@haven/core';
- import { insideTiers, wallStatus, buildingColour, effectLine, CLASS_LABELS } from './society-view.js';
+ import { insideTiers, wallStatus, TOWN_PLOT_COUNT, buildingColour, effectLine, CLASS_LABELS } from './society-view.js';
  export let state:TileTrialState;
  export let npcs:WorldNpc[]=[];
  export let selectedId:string;
@@ -17,9 +17,11 @@
 </script>
 <section aria-label="Inside City">
  <h3>Inside City</h3>
- <p>Wall: Ring {wall.ring} of 3 · {wall.openPlots} / 33 plots open</p>
+ <p>Wall: Ring {wall.ring} of 4 · {wall.openPlots} / {TOWN_PLOT_COUNT} plots open</p>
  {#if wall.next}
-  <button disabled={locked} onclick={()=>oncommand('EXTEND_WALL')}>Extend wall to Ring {wall.next.ring}</button><p>{wall.next.text}</p>
+  <button disabled={locked} aria-describedby={locked?'trial-wall-report-lock':'trial-wall-prerequisite'} onclick={()=>oncommand('EXTEND_WALL')}>Extend wall to Ring {wall.next.ring}</button>
+  <p id="trial-wall-prerequisite">{wall.next.text}</p>
+  {#if locked}<p id="trial-wall-report-lock">Plan next week to extend the wall.</p>{/if}
  {:else}<p>All wall rings are open.</p>{/if}
  {#if managementError?.action==='EXTEND_WALL'}<p role="alert">{managementError.message}</p>{/if}
  <label for="training-target">Training target</label>
@@ -31,13 +33,13 @@
   <section aria-label={tier.label}><h4>{tier.label}</h4><div class="plots">
   {#each tier.plots as plot}
    {@const b=state.tiles.find(t=>t.id===plot.tileId)?.building}
-   {#if plot.locked}<div class="card"><strong>{plot.tileId}</strong><p>Locked · opens with Ring {plot.ring}</p></div>
+   {#if plot.locked}<div class="card" data-inside-plot={plot.tileId}><strong>{plot.tileId}</strong><p>Locked · opens with Ring {plot.ring}</p></div>
    {:else}
-    <button class="class-mark" class:selected={selectedId===plot.tileId} style={`--class-colour:var(--class-${b?buildingColour(b.typeId):'none'})`} data-testid={`trial-tile-${plot.tileId}`} aria-label={`Select ${plot.tileId}`} aria-pressed={selectedId===plot.tileId} onclick={()=>onselect(plot.tileId)}>
+    <button class="class-mark" class:selected={selectedId===plot.tileId} style={`--class-colour:var(--class-${b?buildingColour(b.typeId):'none'})`} data-testid={`trial-tile-${plot.tileId}`} aria-label={`Select ${plot.tileId}`} aria-pressed={selectedId===plot.tileId} aria-describedby={b?`trial-building-name-${plot.tileId}`:undefined} onclick={()=>onselect(plot.tileId)}>
      <strong>{plot.tileId}</strong>
      {#if b}
       {@const staff=societyStaff(b.typeId)}
-      <span><span class="class-swatch" aria-hidden="true"></span>{TRIAL_BUILDINGS[b.typeId].name}</span>
+      <span id={`trial-building-name-${plot.tileId}`}><span class="class-swatch" aria-hidden="true"></span>{TRIAL_BUILDINGS[b.typeId].name}</span>
       <span>Level {b.level} · {b.workers} WF · {staff==='basic'?'Basic':staff?CLASS_LABELS[staff]:'No staff'}</span>
       <span>{b.enabled?'Enabled':'Paused'}</span><span>{effectLine(b.typeId,b.level)}</span>
      {:else}<span>Empty</span>{/if}

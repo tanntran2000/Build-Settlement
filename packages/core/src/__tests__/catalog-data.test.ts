@@ -5,6 +5,7 @@ import {
   TRIAL_BUILDINGS, SOCIETY_BUILDINGS, LAW_CATALOG, LAW_TRIAL, LAW_MESSAGES, RESEARCH_TOPICS,
   OUTSIDE_PLOTS, ORDER_TRIAL, GARRISON_TRIAL, CRIME_TRIAL, CRISIS_TRIAL, SOCIETY_TRIAL,
   GOODS_STOCK_TRIAL, TILE_TRIAL_BALANCE, IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL,
+  RING4_TRIAL, RETAINERS_HALL_TRIAL, SOCIETY_RING4_PLOTS,
   NPC_ORIGINS, NPC_HOBBIES, P7A_TRIAL,
 } from '../index.js';
 
@@ -17,7 +18,10 @@ const cases = [
     path: ['0', 'id'], wrong: 'unknown', message: 'research.json#unknown.id: expected deep-mining' },
   { file: 'outside-plots.json', validator: 'validateOutsidePlots', view: () => OUTSIDE_PLOTS,
     path: ['0', 'ring'], wrong: 0, message: 'outside-plots.json#field-1.ring: expected 1 | 2 | 3' },
-  { file: 'tuning.json', validator: 'validateTuning', view: () => ({ ORDER_TRIAL, GARRISON_TRIAL, CRIME_TRIAL, CRISIS_TRIAL, SOCIETY_TRIAL, GOODS_STOCK_TRIAL, TILE_TRIAL_BALANCE, IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL }),
+  { file: 'tuning.json', validator: 'validateTuning', view: () => ({
+      ORDER_TRIAL, GARRISON_TRIAL, CRIME_TRIAL, CRISIS_TRIAL, SOCIETY_TRIAL, GOODS_STOCK_TRIAL, TILE_TRIAL_BALANCE,
+      IMMIGRATION_TRIAL_DEFAULTS, OUTSIDE_TRIAL, RING4_TRIAL, RETAINERS_HALL_TRIAL, SOCIETY_RING4_PLOTS,
+    }),
     path: ['ORDER_TRIAL', 'newGame', 'security'], wrong: -1, message: 'tuning.json#ORDER_TRIAL.newGame.security: expected integer >= 0' },
   { file: 'npc-life.json', validator: 'validateNpcLife', view: () => ({ origins: NPC_ORIGINS, hobbies: NPC_HOBBIES, P7A_TRIAL }),
     path: ['origins', 'frontier', 'name'], wrong: 7, message: 'npc-life.json#frontier.name: expected nonempty string' },
@@ -72,11 +76,11 @@ it('preserves the original vote message literal type', () => {
   expectTypeOf(LAW_MESSAGES.VOTE_SHORT).toEqualTypeOf<'The vote would fail: For {F} · Against {A}.'>();
 });
 
-// SHA-256 of JSON.stringify(original constant), read directly from the pinned Git
-// source at 5cc2522f27e01b49baaa6e44bba01904edcea5c0 before catalog extraction.
+// SHA-256 of JSON.stringify for each approved catalog value.
+// Unchanged catalog entries keep their hashes from 5cc2522f27e01b49baaa6e44bba01904edcea5c0.
 const pinnedCatalogs = [
-  { name: 'TRIAL_BUILDINGS', value: TRIAL_BUILDINGS, hash: '5f27eec1560b3aef1a61312497eb82be8970a28317e09078f76956ea8ed88219' },
-  { name: 'SOCIETY_BUILDINGS', value: SOCIETY_BUILDINGS, hash: 'e23c932be89d5d3fd561d44ac863bed90fc73d27a9795d65d588e813889e2a3b' },
+  { name: 'TRIAL_BUILDINGS', value: TRIAL_BUILDINGS, hash: '11eabe3f7b69f2b87e06936bd57934e3ed27c80138dda99793a5347d399de941' },
+  { name: 'SOCIETY_BUILDINGS', value: SOCIETY_BUILDINGS, hash: 'ff8b32c50fbe6112bb65f87c1fcc2b80ad402b131b965faec0188b9b79764565' },
   { name: 'LAW_CATALOG', value: LAW_CATALOG, hash: '349c5a8109867abfd74ca3a7f2eddfedfe1ea3383744609a30e7d81b98a42783' },
   { name: 'LAW_TRIAL', value: LAW_TRIAL, hash: 'eb531c3aa1fad89b2d4c918b13a040f4c6940f48295bccda8feb01b5b76ad5d9' },
   { name: 'LAW_MESSAGES', value: LAW_MESSAGES, hash: 'b1604af8f5ef88797692d5889c97e05683d90c5e40ae73be5194fe2d4359d35d' },
@@ -86,7 +90,7 @@ const pinnedCatalogs = [
   { name: 'GARRISON_TRIAL', value: GARRISON_TRIAL, hash: '4143c1462f581114f45b89afa976c6917d984ea1550601205c4eb7655602c5ef' },
   { name: 'CRIME_TRIAL', value: CRIME_TRIAL, hash: 'f0870b86f87072a009bef7a53511704f6b0ddb5b2e5d9c1de6a7b6dbb44ce1d1' },
   { name: 'CRISIS_TRIAL', value: CRISIS_TRIAL, hash: 'e84e3064f8941cfbf4187fb6708577d62ada085696047d19dc52d62e16e528d6' },
-  { name: 'SOCIETY_TRIAL', value: SOCIETY_TRIAL, hash: '69779e596f2abca5afe88b5858be9d850a6a062dd772ea093bbfebf3ec983acc' },
+  { name: 'SOCIETY_TRIAL', value: SOCIETY_TRIAL, hash: 'fa7594d47d8299056c5340b130592ff2c93d04131eeaf78596e5deb1956fce25' },
   { name: 'GOODS_STOCK_TRIAL', value: GOODS_STOCK_TRIAL, hash: '6e46090f98a4db0231da0659fc6a1788e743dc365de21e4ced5f142b5c7771f2' },
   { name: 'TILE_TRIAL_BALANCE', value: TILE_TRIAL_BALANCE, hash: '8c6f563db7d15d0e01ca16852bd5700d2c8504a279f63d14ffcd7e01999b6075' },
   { name: 'IMMIGRATION_TRIAL_DEFAULTS', value: IMMIGRATION_TRIAL_DEFAULTS, hash: '9a3a102558fc1ac452d330d72d162a21793b674002acf3026b9f2b5a6e9bdcef' },
@@ -94,11 +98,11 @@ const pinnedCatalogs = [
 ] as const;
 const catalogHash = (value: object): string => createHash('sha256').update(JSON.stringify(value), 'utf8').digest('hex');
 
-it.each(pinnedCatalogs)('$name keeps the canonical JSON hash from base 5cc2522', ({ value, hash }) => {
+it.each(pinnedCatalogs)('$name keeps its approved canonical JSON hash', ({ value, hash }) => {
   expect(catalogHash(value)).toBe(hash);
 });
 
-it('detects a changed value in a cloned catalog using the pinned base hash', () => {
+it('detects a changed value in a cloned catalog using the pinned catalog hash', () => {
   const changed = structuredClone(TRIAL_BUILDINGS);
   changed.hospital.upkeepMilli += 1;
   expect(catalogHash(changed)).not.toBe(pinnedCatalogs[0].hash);

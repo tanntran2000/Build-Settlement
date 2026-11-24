@@ -207,7 +207,11 @@ async function uiParity(page: Page, o: Observation, fullReport: Readonly<TileTri
   }
   for(const id of SOCIETY_PLOT_IDS){
     const plot=societyPlot(id)!;
-    if(plot.ring>expected.city.society!.wallRing){await expect(page.getByTestId(`trial-tile-${id}`)).toHaveCount(0);continue;}
+    if(plot.ring>expected.city.society!.wallRing){
+      await expect(page.getByTestId(`trial-tile-${id}`)).toHaveCount(0);
+      await expect(page.locator(`[data-inside-plot="${id}"]`)).toContainText(`Locked · opens with Ring ${plot.ring}`);
+      continue;
+    }
     const card=page.getByTestId(`trial-tile-${id}`);await expect(card).toHaveAttribute('aria-label',`Select ${id}`);await expect(card.locator('strong')).toHaveText(id);
   }
   const outsideBuildings=o.buildings.filter(b=>!b.terrain.includes('town')&&b.typeId!=='market');

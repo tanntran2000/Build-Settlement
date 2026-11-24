@@ -55,7 +55,7 @@ it.each(mutations)('refuses byte-changing %s while its canonical counterpart rou
   if (exported.success) assertExactBytes(s);
   expect(isItemsState(s.city.society!.items, ['player', ...s.npcs.map(n => n.character.id)])).toBe(false);
   expect(exported).toMatchObject({ success: false, error: { code: 'INVALID_SAVE_STATE' } });
-  const checkpoint = JSON.stringify({ format: 'haven.character-life-session.save', schemaVersion: 1, cityRulesetId: 'tile-society-10', state: s });
+  const checkpoint = JSON.stringify({ format: 'haven.character-life-session.save', schemaVersion: 1, cityRulesetId: 'tile-society-11', state: s });
   expect(deserializeCharacterLifeSave(checkpoint)).toMatchObject({ success: false, error: { code: 'INVALID_SAVE_STATE' } });
   expect(JSON.stringify(s)).toBe(unchanged);
 });

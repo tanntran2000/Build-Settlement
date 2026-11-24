@@ -1,5 +1,5 @@
 import { LAW_CATALOG, lawTerms, ITEM_CATALOG, ITEM_TRIAL, effectiveSkills, isWearable, isOpenItemSlot,
-  TILE_TRIAL_BALANCE as B, OUTSIDE_TRIAL as O, buildingWorkerCap, trialBuilding,
+  TILE_TRIAL_BALANCE as B, OUTSIDE_TRIAL as O, buildingWorkerCap, npcBeds, trialBuilding,
   type ItemWeekContext, type TileTrialReport, type TileTrialState, type WeeklyResource, type WorldNpc } from '@haven/core';
 import { authorityTaxBps } from './order-week.js';
 import { FARM_GOLD_PER_BATCH_MILLI, FARM_MAX_BATCHES, FARM_WHEAT_PER_BATCH_MILLI } from './weekly.js';
@@ -61,7 +61,7 @@ export function resolveWorkshopOperation(input:TileTrialState,context?:ItemWeekC
   const fundedTileIds: string[] = [];
   let farmBatches = 0, woodProducedMilli = 0, ironProducedMilli = 0, operatingDebitMilli = 0;
   for (const tile of s.tiles) {
-    const b = tile.building; if (!b || !b.enabled) continue;
+    const b = tile.building; if (!b || !b.enabled || npcBeds(b.typeId,b.level)>0) continue;
     const d = trialBuilding(b.typeId)!; const due = scaled(d.upkeepMilli, b.level);
     const batches = d.operation === "farm" ? Math.min(b.workers, FARM_MAX_BATCHES, Math.floor(stocks.gold / FARM_GOLD_PER_BATCH_MILLI)) : 0;
     const batchGold = batches * FARM_GOLD_PER_BATCH_MILLI;
@@ -109,6 +109,7 @@ export function resolveWorkshopOperation(input:TileTrialState,context?:ItemWeekC
   const byTile:Record<string,WorkshopTileOperation>={};
   for(const tile of s.tiles){
     const b=tile.building;
+    if(b&&npcBeds(b.typeId,b.level)>0) continue;
     byTile[tile.id]=!b?.enabled?{operating:false,reason:'disabled'}:
       !fundedTileIds.includes(tile.id)?{operating:false,reason:'upkeep'}:
       (b.typeId==='hospital'&&b.workers!==buildingWorkerCap(b.typeId,b.level))||(b.typeId==='smithy'&&b.workers===0)?{operating:false,reason:'staff'}:

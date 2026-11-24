@@ -16,7 +16,7 @@ export function crisisFixture(name:'life-5-weeks'|'life-demand-card'|'life-rebel
  }else{
   if(name==='life-rebellion-last-week'){
    for(const tile of s.city.tiles){
-    if(!tile.building)continue;
+    if(!tile.building || tile.id.startsWith('estate-'))continue;
     for(const command of [{type:'SET_WORKERS',tileId:tile.id,workers:0},{type:'SET_ENABLED',tileId:tile.id,enabled:false}]){
      const r=executeCharacterLifeCommand(s,{...command,expectedRevision:s.city.revision});
      if(!r.success)throw Error(r.error.message);s=r.next;

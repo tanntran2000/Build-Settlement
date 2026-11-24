@@ -130,6 +130,7 @@ it('advances a valid New Game with Authority 0 and zero Gold without negative st
  expect(result.report!.taxMilli).toBe(2400);
  expect(result.report!.order).toMatchObject({taxModifierBps:-2000,taxDeltaMilli:-600});
  expect(result.report!.upkeepPaidMilli).toBe(1000);expect(result.report!.unpaidUpkeepMilli).toBe(1000);
+ expect(result.report!.householdUpkeep).toStrictEqual({paidMilli:0,unpaidMilli:3000});
  expect(result.report!.after.gold).toBe(400);
  expect(Object.values(result.nextState.world.settlements[s.world.activeSettlementId!].inventory).every(n=>n>=0)).toBe(true);
 });

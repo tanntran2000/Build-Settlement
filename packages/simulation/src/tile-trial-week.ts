@@ -6,7 +6,7 @@ import { resolveLawGold, resolveLawPromiseWeek } from './law-week.js';
 import { resolveCrimeWeek } from './crime-week.js';
 import { resolveCrisisWeek } from './crisis-week.js';
 import { authorityArrivals, resolveOrderWeek } from './order-week.js';
-import { crimeRandom,GOODS_STOCK_TRIAL as G,OUTSIDE_TRIAL as O,societyPopulation,buildingWorkerCap,trialBuilding,type TileTrialReport,type TileTrialState,type WeeklyResource } from '@haven/core';
+import { crimeRandom,GOODS_STOCK_TRIAL as G,OUTSIDE_TRIAL as O,societyPopulation,buildingWorkerCap,npcBeds,trialBuilding,type TileTrialReport,type TileTrialState,type WeeklyResource } from '@haven/core';
 import { releaseSocietyWorkers,societyEmployment,societyFacilities } from './society-facilities.js';
 import { allocateRequirements,resolveSocietyWeek,cityHappiness,societyCounts } from './society-week.js';
 import { finishOutsideLand,spoilOutsideStocks } from './outside-week.js';
@@ -134,8 +134,20 @@ export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext): Readon
   spoilOutsideStocks(s,operatingIds,outside);
   if(goodsStock)goodsStock=Object.freeze({...goodsStock,closingMilli:s.goodsStock.amountMilli});
   outside.stocksAfter={...s.society.stocksMilli};
+  let householdUpkeep: TileTrialReport['householdUpkeep'];
+  for (const { building } of s.tiles) {
+    if (!building || npcBeds(building.typeId,building.level) === 0) continue;
+    householdUpkeep ??= { paidMilli: 0, unpaidMilli: 0 };
+    const due = scaled(trialBuilding(building.typeId)!.upkeepMilli,building.level);
+    if (stocks.gold < due) {
+      householdUpkeep.unpaidMilli = trialSafe(householdUpkeep.unpaidMilli + due);
+      continue;
+    }
+    stocks.gold -= due;
+    householdUpkeep.paidMilli = trialSafe(householdUpkeep.paidMilli + due);
+  }
   const goods = Object.freeze({ demandMilli, servedMilli, fulfillmentBps, woodUsed, ironUsed, revenueMilli });
-  return Object.freeze({ items, laws, crimeEvent, ...(crisis ? {crisis} : {}), order, outside, week: s.world.week - 1, before: Object.freeze(before), after: Object.freeze({ ...stocks }), taxMilli, farmBatchGoldMilli, farmExtraUpkeepMilli, upkeepPaidMilli, unpaidUpkeepMilli, foodDemandMilli, foodConsumedMilli, happinessBefore, happinessAfter: s.happiness, goods, ...(goodsStock ? { goodsStock } : {}), ...(societyReport ? { society:societyReport,luxuryImportedMilli,trainingGoldMilli } : {}), activities: Object.freeze(activities), ...(immigration ? { immigration } : {}) });
+  return Object.freeze({ items, laws, crimeEvent, ...(crisis ? {crisis} : {}), order, outside, week: s.world.week - 1, before: Object.freeze(before), after: Object.freeze({ ...stocks }), taxMilli, farmBatchGoldMilli, farmExtraUpkeepMilli, upkeepPaidMilli, unpaidUpkeepMilli, foodDemandMilli, foodConsumedMilli, happinessBefore, happinessAfter: s.happiness, goods, ...(goodsStock ? { goodsStock } : {}), ...(societyReport ? { society:societyReport,luxuryImportedMilli,trainingGoldMilli } : {}), activities: Object.freeze(activities), ...(immigration ? { immigration } : {}), ...(householdUpkeep ? { householdUpkeep: Object.freeze(householdUpkeep) } : {}) });
 }
 
 function resolveItemWeek(s:TileTrialState,ctx:ItemWeekContext|undefined,hospitalOperated:boolean,wasRebellion:boolean,materialPosts:readonly {tileId:string;typeId:string}[]):ItemWeekReport {

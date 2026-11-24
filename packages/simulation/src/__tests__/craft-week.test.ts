@@ -10,9 +10,9 @@ import { completeCraftOrders as complete } from '../craft-week.js';
 const hash = (value: unknown) => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 // Captured from untouched 0de2d1f before the first PR B product edit.
 const noOrderBaseline: Record<number, {reports:string;items:string;city:string}> = {
-  0: {reports:'9bb24301f4ede325b0e0e116b03add674eb0c692dfa80fe16bddf0da61a66bc4',items:'cddabceee23c2746d4dd3408d05e71ee624dd800d8a0f761cb88f130122deb65',city:'cb611be6c8b7540c4c83f844a566272c0b2dba394609f4ec12b0208011139c54'},
-  42: {reports:'04aa55b35d7e8551323fbc2c66c6bf286fb06658b9163fd4a9e3aa327d705ea2',items:'283da6a1e4fed8fdc3a419e72e00827020ab1ace63f68277db0c1d7cee5616e8',city:'2c7e1a942c7bf05d2b462bb67aa0c05145107cfb0bce714ec3d8c2ba1b2d5e01'},
-  20261028: {reports:'a32127339cab716bfa6ccab522d0da3a455a75eca6b455ae0e7adb508e781940',items:'3ad4de4ea7c6a0687ac6d8481778a2513e841dd061e1712429d8bb2dacc31515',city:'73863ad6709a288163077c5d3167d857685ecc92b1f54593f50caf8313f49e04'},
+  0: {reports:'9393b71033175e5dc6c1da65ed116a574521672d2c1a3631141ba57e654d8a45',items:'cddabceee23c2746d4dd3408d05e71ee624dd800d8a0f761cb88f130122deb65',city:'62d1c4d082564eb463a01b1a4cf90e8d0b34ec206701440c3590436d180163bc'},
+  42: {reports:'6238af7420c55fcf75acef911011bb4b50138231397853150d5433cf76fbb319',items:'283da6a1e4fed8fdc3a419e72e00827020ab1ace63f68277db0c1d7cee5616e8',city:'4b135951d8fc02959e62fcde8e24d367b430d2de62e1db23656d40eff95b108b'},
+  20261028: {reports:'e7c96f5378373cc7108072dbda1dbb123d60dfd623c49c8a1f0f69368da7275d',items:'3ad4de4ea7c6a0687ac6d8481778a2513e841dd061e1712429d8bb2dacc31515',city:'05c634769d92db96a5f98266b0c0b5275e3606bcf2660e90b04fe014015d9ff9'},
 };
 it.each([0, 42, 20261028])('preserves all no-order reports and item states for sixty weeks at seed %i', seed => {
   const city = createSocietyState();

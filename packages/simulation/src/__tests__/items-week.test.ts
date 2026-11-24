@@ -133,8 +133,8 @@ it('remembers rebellion and resets the Authority streak below 90', () => {
 
 // Captured from unmodified PR A head 5e9674e before the B1 implementation.
 const baseline: Record<number, string> = {
-  0: '4ba36423f0b05c8c696bedf7195101a669184ce344227c5573be7b229ea75b7a',
-  42: 'dcdce3552130d92971b254f1c4fb15bfb41da44b7946293c57d099949fd6be14',
+  0: '54a944aa5e3008d1a4837de1d04654b89a137a5bf44bd004c543f4f7b6b9a848',
+  42: 'eb453bfed2e46c2580cb69cc9747794ed2bf9e84a91f322e0e23e7c705e67926',
   20261028: '8145e422ca8691852501facec33098d76bf33061b8196536b73fc64aa8522177',
 };
 it.each([0,42,20261028])('preserves PR A crime, crisis, order and law reports for 60 weeks at seed %i', seed => {

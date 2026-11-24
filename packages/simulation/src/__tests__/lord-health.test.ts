@@ -23,7 +23,7 @@ function gear(s: CharacterLifeSessionState) {
   return command(s,'EQUIP_ITEM',{itemId:i.inventory.at(-1)!.id,characterId:'player'}).next;
 }
 function wound() {
-  const r = deserializeCharacterLifeSave(readFileSync(new URL('../../../persistence/src/__tests__/fixtures/society-v10/life-crime-wound.json',import.meta.url),'utf8'));
+  const r = deserializeCharacterLifeSave(readFileSync(new URL('../../../persistence/src/__tests__/fixtures/society-v11/life-crime-wound.json',import.meta.url),'utf8'));
   if (!r.success) throw Error(r.error.message); return r.state;
 }
 it.each([[false,false,1],[true,false,2],[false,true,2],[true,true,3]] as const)('regens with Hospital %s and gear %s by exactly %i', (withHospital,withGear,regen) => {

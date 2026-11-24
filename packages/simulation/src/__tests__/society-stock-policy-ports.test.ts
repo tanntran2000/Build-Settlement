@@ -33,7 +33,7 @@ describe('retained stock and needs branches in society', () => {
     expect(Object.keys(stocks(s))).toEqual(['gold', 'wheat', 'food', 'wood', 'iron']);
     expect(s.tiles[0].building).toEqual({ typeId: 'farm', level: 1, workers: 2, enabled: true });
     expect(s.tiles[1].building).toEqual({ typeId: 'processor', level: 1, workers: 2, enabled: true });
-    expect(s.tiles.filter(t => t.building)).toHaveLength(7);
+    expect(s.tiles.filter(t => t.building)).toHaveLength(9);
   });
   it('zero population consumes no materials or Food and mints no tax, revenue or class satisfaction', () => {
     const s = freeCity(); s.society!.classes.free = 0;

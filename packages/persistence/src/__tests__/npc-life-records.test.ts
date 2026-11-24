@@ -50,13 +50,13 @@ it('requires life in every current NPC record and retains the last valid stored 
   expect(JSON.stringify(await store.read('main'))).toBe(before);
 });
 
-it('loads all ten v10 scenarios and round-trips every current life checkpoint byte-identically', () => {
-  const current = new URL('./fixtures/society-v10/', import.meta.url), historical = new URL('./fixtures/society-v9/', import.meta.url);
+it('matches v10 and v11 checkpoint filenames and round-trips every current life checkpoint byte-identically', () => {
+  const current = new URL('./fixtures/society-v11/', import.meta.url), historical = new URL('./fixtures/society-v10/', import.meta.url);
   const files = readdirSync(current).sort(); expect(files).toEqual(readdirSync(historical).sort()); expect(files).toHaveLength(10);
   for (const file of files.filter(name => name.startsWith('life-'))) {
     const bytes = readFileSync(new URL(file, current), 'utf8'), decoded = deserializeCharacterLifeSave(bytes);
     expect(decoded.success).toBe(true); if (!decoded.success) throw Error(decoded.error.message);
-    expect(decoded.state.city.society!.rulesetId).toBe('tile-society-10');
+    expect(decoded.state.city.society!.rulesetId).toBe('tile-society-11');
     expect(decoded.state.npcs.every(npc => Object.hasOwn(npc, 'life'))).toBe(true);
     const rows = sessionToRecords('main', decoded.state), before = JSON.stringify(rows);
     expect(serializeCharacterLifeSave(recordsToSession(rows))).toEqual({ success: true, text: bytes });
@@ -66,7 +66,7 @@ it('loads all ten v10 scenarios and round-trips every current life checkpoint by
 
 it('round-trips exhausted life, levels and full history without resetting state before PR B', () => {
   const state = life(), npc = state.npcs[0];
-  expect(state.city.society!.rulesetId).toBe('tile-society-10');
+  expect(state.city.society!.rulesetId).toBe('tile-society-11');
   npc.life.working = false; npc.life.stress = 95;
   npc.life.sexExp.hand = { level: 'professional', exp: 200 }; npc.life.sexExp.ass = { level: 'expert', exp: 300 };
   npc.life.history = { counters: { exhausted: 2, birthday: 20 }, recent: Array.from({ length: 20 }, (_, i) => ({ week: i + 1, kind: 'birthday' })) };

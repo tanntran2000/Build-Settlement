@@ -1,6 +1,6 @@
 import tuningJson from '../data/tuning.json' with { type: 'json' };
 import { deepFreeze, validateTuning } from '../data/validate.js';
-import type { TileTrialState } from './types.js';
+import type { SocietyWallRing, TileTrialState } from './types.js';
 import { standingAuthorityTerm } from './crime.js';
 import { hasWeeklyKeys } from '../domain/canonical-state.js';
 
@@ -8,7 +8,7 @@ export interface OrderState { security: number; crime: number; authority: number
 export interface OrderFacts {
  lawSecurity: number; lawCrime: number; lawAuthority: number;
  standing: number; soldiers: number;
- wallRing: 1|2|3; watchHouses: { level: 1|2; slum: boolean; workers: number }[]; barracksWorkers: number;
+ wallRing: SocietyWallRing; watchHouses: { level: 1|2; slum: boolean; workers: number }[]; barracksWorkers: number;
  population: number; slumOther: number; corruption: number; desperation: number; tension: number;
  meanSatisfaction: number; townHallStaffed: boolean; patrols: boolean; drill: boolean;
 }

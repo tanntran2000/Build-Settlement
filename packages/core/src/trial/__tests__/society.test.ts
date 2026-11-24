@@ -5,7 +5,7 @@ import { createSocietyState,isSocietyState,SOCIETY_TRIAL,societyPopulation } fro
 it('creates the spec section 3 new game', () => {
   const s = createSocietyState();
   expect(s.society).toEqual({
-    rulesetId: 'tile-society-10', standing:50,
+    rulesetId: 'tile-society-11', standing:50,
     items: {
       nextItemId: 1, inventory: [], consumables: [], materials: {}, storage: [], equipped: {},
       market: [
@@ -54,7 +54,7 @@ const malformed: [string, (s: ReturnType<typeof createSocietyState>) => void][] 
   ['NaN corruption', s => { s.society!.corruption = NaN; }],
   ['invalid target', s => { Object.assign(s.society!.training, { target: 'free' }); }],
   ['extra training key', s => { Object.assign(s.society!.training, { extra: 0 }); }],
-  ['invalid wall', s => { Object.assign(s.society!, { wallRing: 4 }); }],
+  ['invalid wall', s => { Object.assign(s.society!, { wallRing: 5 }); }],
   ['future ruleset', s => { Object.assign(s.society!, { rulesetId: 'future' }); }],
 ];
 describe.each(malformed)('rejects malformed society: %s', (_name, mutate) => {
