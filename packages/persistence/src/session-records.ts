@@ -2,6 +2,7 @@
 import { CHARACTER_LIFE_SAVE_FORMAT } from './character-life-save.js';
 import { createSocietyState, isNamedCharacterRecord, isNpcLife, managerSlotTileIds, npcAge, WORLD_TRAITS, GOODS_STOCK_RULESET, hasWeeklyKeys, isCanonicalGameState, isCharacterProfile, isPlayerCharacter, isSocietyState, isTileTrialState, isWorldNpcList, isWorldSessionState, SOCIETY_RULESET } from '@haven/core';
 import type { StoredRecord, TableName } from './game-store.js';
+import { hasAcquisitionRosterProof, isAcquisitionReplay } from '@haven/core';
 import { ITEM_CATALOG, RECIPES, isItemsState, isOpenItemSlot, isWearable, type ItemsState, type ItemInstance } from '@haven/core';
 export class StoreRecordError extends Error {
   constructor(public readonly ref: string) { super(`Invalid store record: ${ref}`); this.name = 'StoreRecordError'; }
@@ -184,6 +185,14 @@ export function recordsToSession(records: StoredRecord[]): CharacterLifeSessionS
     if (v.kind === 'npc') profiles.push({ profile: v.profile,order: v.profileOrder });
   }
   if (!player) throw new StoreRecordError('characters:player');
+  if (meta.rulesetId === SOCIETY_RULESET && city.phase === 'planning') {
+    const acquisition = city.society!.acquisition;
+    const { week, worldMetadata: { worldSeed } } = city.world;
+    if (acquisition.week && (acquisition.week !== week || !isAcquisitionReplay(acquisition, worldSeed) ||
+        !hasAcquisitionRosterProof(acquisition, worldSeed, npcs.map(entry => entry.npc)))) {
+      throw new StoreRecordError('city:city');
+    }
+  }
   return structuredClone({ city,outside,npcs: npcs.sort((a,b) => a.order-b.order).map(v => v.npc),player,profiles: profiles.sort((a,b) => a.order-b.order).map(v => v.profile) }) as CharacterLifeSessionState;
 }
 

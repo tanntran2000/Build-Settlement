@@ -115,9 +115,36 @@ describe('P7-B weekly acquisition', () => {
     expect(Object.hasOwn(result.report!, 'household')).toBe(false);
   });
 
+  it('round trips a 100-NPC save with 12 offers, two lots and full histories under 1 MiB', () => {
+    const s = town();
+    populate(s, [...Array<string>(30).fill('estate-1'), ...Array<string>(50).fill('estate-2'), ...Array<string>(20).fill('house-5')]);
+    let next = s;
+    for (const [tileId, typeId] of [['service-1', 'guild'], ['spec-2', 'auction-house'], ['slum-1', 'slave-market']]) {
+      next = succeeded(next, 'BUILD', { tileId, typeId }).next;
+    }
+    expect([next.npcs.length, state(next).stock.length, state(next).lots.length]).toStrictEqual([100, 12, 2]);
+    const encoded = serializeCharacterLifeSave(next);
+    if (!encoded.success) throw Error(encoded.error.message);
+    expect(Buffer.byteLength(encoded.text, 'utf8')).toBeLessThanOrEqual(1_048_576);
+    const decoded = deserializeCharacterLifeSave(encoded.text);
+    expect(decoded).toStrictEqual({ success: true, state: next });
+    if (!decoded.success) throw Error(decoded.error.message);
+    expect(serializeCharacterLifeSave(decoded.state)).toStrictEqual(encoded);
+    expect(recordsToSession(sessionToRecords('main', next))).toStrictEqual(next);
+    if (process.env.P7B_STEP0_MEASURE === '1') {
+      const withoutWeek = structuredClone(next);
+      withoutWeek.city.society!.acquisition = emptyAcquisition();
+      const emptyWeek = serializeCharacterLifeSave(withoutWeek);
+      if (!emptyWeek.success) throw Error(emptyWeek.error.message);
+      const full = Buffer.byteLength(encoded.text, 'utf8'), empty = Buffer.byteLength(emptyWeek.text, 'utf8');
+      console.info(JSON.stringify({ npcCount: 100, stock: 12, lots: 2, saveBytes: full, emptyWeekBytes: empty, acquisitionDeltaBytes: full - empty }));
+    }
+  });
+
   it('rejects a malformed, missing or duplicate acquisition field without accepting a partial state', () => {
     const s = market(), a = state(s);
     expect(isAcquisitionState({ ...a, stock: [...a.stock, a.stock[0]] })).toBe(false);
+    expect(isAcquisitionState({ ...a, lots: a.lots.map(lot => ({ ...lot, out: [false] })) })).toBe(false);
     expect(isAcquisitionState({ ...a, week: 0 })).toBe(false);
     const encoded = serializeCharacterLifeSave(s);
     if (!encoded.success) throw Error(encoded.error.message);

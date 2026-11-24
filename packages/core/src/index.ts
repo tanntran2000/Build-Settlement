@@ -38,4 +38,5 @@ export * from './trial/crime.js';
 export * from './trial/law.js';
 export * from './trial/items.js';
 export * from './trial/acquisition.js';
+export { hasAcquisitionRosterProof, isAcquisitionReplay } from './trial/acquisition-replay.js';
 export * from './trial/recipes.js';

@@ -106,3 +106,32 @@ export function isAcquisitionState(raw: unknown): raw is AcquisitionState {
       new Set(lots.map(lot => lot.source)).size === lots.length;
   } catch { return false; }
 }
+
+export interface AuctionRound {
+  priceMilli: number;
+  leader: 'player' | number;
+  out: boolean[];
+  dropped: number[];
+  playerBidMilli: number;
+}
+export function bestRival(rivals: readonly AuctionRival[], out: readonly boolean[]): number | null {
+  let winner: number | null = null;
+  for (const [index, rival] of rivals.entries()) {
+    if (!out[index] && (winner === null || rival.ceilingMilli > rivals[winner].ceilingMilli)) winner = index;
+  }
+  return winner;
+}
+
+export function auctionRound(priceMilli: number, raise: number, out: readonly boolean[], rivals: readonly AuctionRival[]): AuctionRound {
+  const playerBidMilli = priceMilli + raise, counter = playerBidMilli + AUCTION_TRIAL.rivalStepMilli;
+  if (!Number.isSafeInteger(counter)) throw Error('Unsafe auction price.');
+  const dropped: number[] = [];
+  const flags = rivals.map((rival, index) => {
+    if (out[index]) return true;
+    if (rival.ceilingMilli >= counter) return false;
+    dropped.push(index);
+    return true;
+  });
+  const nextRival = bestRival(rivals, flags);
+  return { priceMilli: nextRival === null ? playerBidMilli : counter, leader: nextRival ?? 'player', out: flags, dropped, playerBidMilli };
+}

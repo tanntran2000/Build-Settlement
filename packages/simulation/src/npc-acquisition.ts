@@ -1,15 +1,18 @@
 import {
-  ACQUISITION_SOURCES, acquisitionEnabled, acquisitionNpc, emptyAcquisition,
-  emptyHouseholdReport, hasWeeklyKeys, homeBeds, homeResidents, isAcquisitionSource,
-  isLiveCharacterLifeSessionState, marketNpcName, npcSellMilli, npcValueMilli, P7B_TRIAL, returnEquippedToStorage,
-  type AcquisitionSource, type AcquisitionState, type CharacterLifeSessionState, type HouseholdReport,
+  ACQUISITION_SOURCES, acquisitionEnabled, acquisitionNpc, auctionOpeningMilli, auctionRivals, emptyAcquisition,
+  emptyHouseholdReport, generateNpc, hasWeeklyKeys, homeBeds, homeResidents, isAcquisitionSource, isAuctionSource,
+  isLiveCharacterLifeSessionState, marketNpcName, npcSellMilli, npcValueMilli, P7B_TRIAL, playerRaise, returnEquippedToStorage,
+  type AcquisitionSource, type AcquisitionState, type AuctionLot, type CharacterLifeSessionState, type HouseholdReport,
   type TileTrialState, type WorldNpc,
 } from '@haven/core';
 import type { CharacterLifeCommandResult } from './character-life-command.js';
+import { auctionRound, closeAuctionLot } from './npc-auction.js';
 import { trialSafe } from './tile-trial-week.js';
 
 const fields = {
   BUY_NPC: ['source', 'slot', 'homeTileId'],
+  BID_NPC: ['source', 'raise', 'homeTileId'],
+  WITHDRAW_BID: ['source'],
   SELL_NPC: ['npcId'],
   RELEASE_NPC: ['npcId'],
 } as const;
@@ -51,6 +54,11 @@ export function drawAcquisition(seed: number, week: number, city: TileTrialState
     for (let slot = 0; slot < P7B_TRIAL.stockSize; slot += 1) {
       next.stock.push({ source, slot, nameSalt: chooseName(seed, week, source, slot, used), status: 'open' });
     }
+    if (!isAuctionSource(source)) continue;
+    const nameSalt = chooseName(seed, week, source, 'lot', used);
+    const value = npcValueMilli(generateNpc(seed, week, source, 'lot').npc, source, true);
+    const out = auctionRivals(seed, week, source, value).map(() => false);
+    next.lots.push({ source, nameSalt, priceMilli: auctionOpeningMilli(value), leader: null, out, status: 'open', raises: [] });
   }
   return next;
 }
@@ -60,6 +68,15 @@ export function acquisitionWeekReport(seed: number, previous: AcquisitionState, 
   const result = emptyHouseholdReport();
   for (const offer of previous.stock) if (offer.status === 'bought') {
     result.bought.push(marketNpcName(seed, week, offer.source, offer.slot, offer.nameSalt).name);
+  }
+  for (const lot of previous.lots) {
+    const { source, nameSalt } = lot;
+    if (lot.status === 'won') result.bought.push(marketNpcName(seed, week, source, 'lot', nameSalt).name);
+    else {
+      const closed = structuredClone(lot);
+      if (closed.status === 'open') closeAuctionLot(closed, auctionRivals(seed, week, source), 'sold');
+      result.lotsToRivals.push({ source, priceMilli: closed.priceMilli });
+    }
   }
   for (const entry of previous.departures) result[entry.kind].push(entry.name);
   if (result.bought.length || result.sold.length || result.released.length || result.lotsToRivals.length) {
@@ -116,17 +133,39 @@ export function executeAcquisitionCommand(session: CharacterLifeSessionState, ty
       const source = raw.source, acquisition = society.acquisition;
       if (!acquisitionEnabled(city, source)) return refusal('NO_BUILDING');
       if (acquisition.week !== week) return refusal('OFFER_GONE');
-      if (!Number.isSafeInteger(raw.slot) || typeof raw.homeTileId !== 'string') return fail('INVALID_COMMAND', 'Select an offer and home.');
-      const offer = acquisition.stock.find(row => row.source === source && row.slot === raw.slot && row.status === 'open');
-      if (!offer) return refusal('OFFER_GONE');
-      const generated = acquisitionNpc(seed, week, source, offer.slot, offer.nameSalt);
-      const price = npcValueMilli(generated.npc, source, false);
-      const blocked = recruitCheck(next, raw.homeTileId, price);
-      if (blocked) return refusal(blocked);
-      gold.gold -= price;
-      admit(next, generated, raw.homeTileId);
-      offer.status = 'bought';
-
+      if (type === 'BUY_NPC') {
+        if (!Number.isSafeInteger(raw.slot) || typeof raw.homeTileId !== 'string') return fail('INVALID_COMMAND', 'Select an offer and home.');
+        const offer = acquisition.stock.find(row => row.source === source && row.slot === raw.slot && row.status === 'open');
+        if (!offer) return refusal('OFFER_GONE');
+        const generated = acquisitionNpc(seed, week, source, offer.slot, offer.nameSalt);
+        const price = npcValueMilli(generated.npc, source, false);
+        const blocked = recruitCheck(next, raw.homeTileId, price);
+        if (blocked) return refusal(blocked);
+        gold.gold -= price;
+        admit(next, generated, raw.homeTileId);
+        offer.status = 'bought';
+      } else {
+        if (!isAuctionSource(source)) return fail('INVALID_COMMAND', 'This building has no auction.');
+        const lot: AuctionLot | undefined = acquisition.lots.find(row => row.source === source && row.status === 'open');
+        if (!lot || lot.leader === 'player') return refusal('OFFER_GONE');
+        const rivals = auctionRivals(seed, week, source);
+        if (type === 'WITHDRAW_BID') closeAuctionLot(lot, rivals, 'lost');
+        else {
+          if (!playerRaise(raw.raise) || typeof raw.homeTileId !== 'string') return fail('INVALID_COMMAND', 'Select a bid and home.');
+          const round = auctionRound(lot.priceMilli, raw.raise, lot.out, rivals);
+          const blocked = recruitCheck(next, raw.homeTileId, round.playerBidMilli);
+          if (blocked) return refusal(blocked);
+          lot.raises.push(raw.raise);
+          lot.out = round.out;
+          lot.leader = round.leader;
+          lot.priceMilli = round.priceMilli;
+          if (round.leader === 'player') {
+            gold.gold -= round.playerBidMilli;
+            admit(next, acquisitionNpc(seed, week, source, 'lot', lot.nameSalt), raw.homeTileId);
+            lot.status = 'won';
+          }
+        }
+      }
     }
     city.revision = trialSafe(city.revision + 1);
     if (isLiveCharacterLifeSessionState(next)) return { success: true, next };
