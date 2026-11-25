@@ -1035,6 +1035,12 @@ export interface NpcGeneratorCatalog {
         marker: 'TRIAL'; age: NpcRange; ageWeightYoung: number; youngAge: NpcRange; olderAge: NpcRange;
         stockSize: number; startGoldMilli: number; npcCap: number; traitCount: NpcRange; statRange: NpcRange;
         profileAxisRange: NpcRange; contractWeeks: number; wageMilli: NpcRange;
+        household: {
+            unpaidAffectionLoss: number; unpaidObedienceLoss: number; mansionObedienceGain: number;
+            stressObedienceLoss: number; unpaidRefusalWeeks: number; stressRefusalHits: number;
+            lifelongAffectionMin: number; lifelongObedienceMin: number; lifelongAskGapWeeks: number;
+            renewalWageMultiplier: number; renewalWageStepMilli: number; quadrantSplit: number;
+        };
         professionalAtCount: number; expertAtCount: number;
     }>;
 }
@@ -1127,6 +1133,16 @@ export function validateNpcGenerator(json: unknown): NpcGeneratorCatalog {
         startGoldMilli: literal(tuningJson.GOODS_STOCK_TRIAL.initialGoldMilli), npcCap: positive, traitCount: ascending(positive),
         statRange: ascending(stats), profileAxisRange: ascending(stats), contractWeeks: positive, wageMilli: ascending(positive),
         professionalAtCount: positive, expertAtCount: positive,
+        household: object({
+            unpaidAffectionLoss: stats, unpaidObedienceLoss: stats, mansionObedienceGain: stats, stressObedienceLoss: stats,
+            unpaidRefusalWeeks: positive, stressRefusalHits: positive, lifelongAffectionMin: stats, lifelongObedienceMin: stats,
+            lifelongAskGapWeeks: positive,
+            renewalWageMultiplier: (value, ref, field) => {
+                if (typeof value !== 'number' || !Number.isFinite(value) || value < 1)
+                    fail(ref, field, 'expected finite number >= 1');
+            },
+            renewalWageStepMilli: literal(SOCIAL_RESOURCE_SCALE), quadrantSplit: stats,
+        }),
     })(root.P7B_TRIAL, trialRef, '');
     const trial = root.P7B_TRIAL as NpcGeneratorCatalog['P7B_TRIAL'];
     if (trial.traitCount[1] > WORLD_TRAITS.length)

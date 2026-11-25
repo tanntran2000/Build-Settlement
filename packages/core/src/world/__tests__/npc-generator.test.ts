@@ -208,7 +208,7 @@ describe('NPC generator catalog', () => {
     expect(api.validateNpcGenerator).toBeTypeOf('function');
     const data = api.NPC_GENERATOR_CATALOG;
     expect(api.validateNpcGenerator(structuredClone(data))).toStrictEqual(data);
-    expect(sha(data)).toBe('b3e0727560c279fb973545ff65753b3e953dc182c27d2f433bfdc55496e9e028');
+    expect(sha(data)).toBe('ad57befafbe267dd2d858310d530ac670c5eef8c4d90432be2f750803b37ca14');
     expect(Object.isFrozen(data.cultures.saltmere.given)).toBe(true);
     const cultures = Object.values(data.cultures);
     expect(cultures.map(c => [c.given.length, c.epithets.length])).toStrictEqual(Array.from({ length: 5 }, () => [16, 8]));
@@ -257,6 +257,9 @@ describe('NPC generator catalog', () => {
     [['price', 'skillPointBps'], -1, 'price.skillPointBps: expected integer > 0'],
     [['price', 'conditionFactor'], 2, 'price.conditionFactor: expected 1'],
     [['P7B_TRIAL', 'npcCap'], 0, 'P7B_TRIAL.npcCap: expected integer > 0'],
+    [['P7B_TRIAL', 'household', 'unpaidAffectionLoss'], -1, 'P7B_TRIAL.household.unpaidAffectionLoss: expected integer in [0, 100]'],
+    [['P7B_TRIAL', 'household', 'stressRefusalHits'], 0, 'P7B_TRIAL.household.stressRefusalHits: expected integer > 0'],
+    [['P7B_TRIAL', 'household', 'renewalWageMultiplier'], 0.75, 'P7B_TRIAL.household.renewalWageMultiplier: expected finite number >= 1'],
     [['sources', 'guild', 'skills'], undefined, 'guild.skills: expected array of length 2'],
   ] as const;
   it.each(rejected)('rejects malformed generator data at %j', (keys, value, message) => {

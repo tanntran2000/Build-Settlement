@@ -1,12 +1,14 @@
-import { hasWeeklyKeys, isLiveCharacterLifeSessionState, buildItemWeekContext, type CharacterLifeSessionState, type TileTrialReport } from '@haven/core';
+import { hasWeeklyKeys, isLiveCharacterLifeSessionState, buildItemWeekContext, emptyHouseholdReport, type CharacterLifeSessionState, type TileTrialReport } from '@haven/core';
 import { executeWorldNpcCityCommand, executeWorldNpcCommand } from './world-npc.js';
 import { executeItemCommand, ITEM_COMMAND_TYPES, type ItemCommandType } from './item-command.js';
 import { recordNpcLifeEvent, runNpcLifeWeek } from './npc-life-week.js';
 import { acquisitionWeekReport, drawAcquisition, executeAcquisitionCommand, isAcquisitionCommand, type AcquisitionCommandType } from './npc-acquisition.js';
 
+import { answerNotice, payNpcWages, runHouseholdWeek, settleDepartingEquipment } from './household-week.js';
+
 export type CharacterLifeActionType = 'BUILD' | 'REPLACE' | 'UPGRADE'
   | 'SET_WORKERS' | 'SET_ENABLED' | 'END_WEEK' | 'NEXT_WEEK'
-  | 'ENACT_LAW' | 'REPEAL_LAW' | 'CHOOSE_CARD_OPTION' | 'ASSIGN_NPC' | 'UNASSIGN_NPC' | 'MOVE_NPC_HOME' | 'EXTEND_WALL' | 'SET_TRAINING' | 'CLEAR' | 'SET_RESEARCH' | 'BUILD_DEEP_SHAFT' | ItemCommandType | AcquisitionCommandType;
+  | 'ENACT_LAW' | 'REPEAL_LAW' | 'CHOOSE_CARD_OPTION' | 'ASSIGN_NPC' | 'UNASSIGN_NPC' | 'MOVE_NPC_HOME' | 'ANSWER_NOTICE' | 'EXTEND_WALL' | 'SET_TRAINING' | 'CLEAR' | 'SET_RESEARCH' | 'BUILD_DEEP_SHAFT' | ItemCommandType | AcquisitionCommandType;
 export type CharacterLifeCommandResult =
   | { success: true; next: CharacterLifeSessionState; report?: Readonly<TileTrialReport> }
   | { success: false; error: { code: string; message: string } };
@@ -34,18 +36,23 @@ export function executeCharacterLifeCommand(session: unknown, raw: unknown): Cha
   }
   const societyAction = ['ENACT_LAW', 'REPEAL_LAW', 'CHOOSE_CARD_OPTION', 'EXTEND_WALL', 'SET_TRAINING', 'CLEAR', 'SET_RESEARCH', 'BUILD_DEEP_SHAFT'].includes(type) &&
     isLiveCharacterLifeSessionState(session) && !!session.city.society;
-  if (!['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED', 'END_WEEK', 'NEXT_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC', 'MOVE_NPC_HOME'].includes(type) && !societyAction) {
+  if (!['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED', 'END_WEEK', 'NEXT_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC', 'MOVE_NPC_HOME', 'ANSWER_NOTICE'].includes(type) && !societyAction) {
     return fail('UNSUPPORTED_ACTION', 'This action is not supported in Character Life.');
   }
   if (!isLiveCharacterLifeSessionState(session)) return fail('INVALID_STATE', 'World session is invalid; nothing was changed.');
 
-  const world = { city: session.city, outside: session.outside, npcs: session.npcs };
-  const result = type === 'ASSIGN_NPC' || type === 'UNASSIGN_NPC' || type === 'MOVE_NPC_HOME'
-    ? executeWorldNpcCommand(world, raw)
-    : type==='END_WEEK'?executeWorldNpcCityCommand(world,raw,buildItemWeekContext(session)):executeWorldNpcCityCommand(world,raw);
-  if (!result.success) return result;
+  if (type === 'ANSWER_NOTICE') return answerNotice(session, raw);
 
   try {
+    const wages = type === 'END_WEEK' && session.city.phase === 'planning' && !session.city.society?.pendingCard
+      ? payNpcWages(session) : undefined;
+    const opening = wages?.session ?? session;
+    const world = { city: opening.city, outside: opening.outside, npcs: opening.npcs };
+    const result = type === 'ASSIGN_NPC' || type === 'UNASSIGN_NPC' || type === 'MOVE_NPC_HOME'
+      ? executeWorldNpcCommand(world, raw)
+      : type === 'END_WEEK' ? executeWorldNpcCityCommand(world, raw, buildItemWeekContext(opening)) : executeWorldNpcCityCommand(world, raw);
+    if (!result.success) return result;
+
     const next = { city: result.next.city, outside: result.next.outside, npcs: result.next.npcs,
       player: structuredClone(session.player), profiles: structuredClone(session.profiles) };
     const posts = new Map(session.npcs.map(npc => [npc.character.id, npc.postTileId]));
@@ -73,8 +80,25 @@ export function executeCharacterLifeCommand(session: unknown, raw: unknown): Cha
         report = Object.freeze({ ...report, npcLife: Object.freeze(lifeWeek.report) });
       }
       const { week, worldMetadata: { worldSeed } } = next.city.world;
-      const household = acquisitionWeekReport(worldSeed, session.city.society!.acquisition, report.week);
-      if (household) report = Object.freeze({ ...report, household });
+      const householdWeek = runHouseholdWeek(next.npcs, { week, opening: session.npcs });
+      next.npcs = householdWeek.npcs;
+      if (householdWeek.leftIds.size) {
+        next.profiles = next.profiles.filter(profile => !householdWeek.leftIds.has(profile.id));
+        settleDepartingEquipment(next, householdWeek.leftIds);
+      }
+      const market = acquisitionWeekReport(worldSeed, session.city.society!.acquisition, report.week);
+      const { left, notices } = householdWeek.report;
+      const { wagesPaidMilli, unpaid } = wages!.report;
+      if (wagesPaidMilli || unpaid.length || notices.length || left.length) {
+        Object.freeze(left); Object.freeze(notices); Object.freeze(unpaid);
+        const before = wagesPaidMilli
+          ? Object.freeze({ ...report.before, gold: report.before.gold + wagesPaidMilli }) : report.before;
+        report = Object.freeze({ ...report, before, household: Object.freeze({
+          ...(market ?? emptyHouseholdReport()), left, wagesPaidMilli, unpaid, notices,
+        }) });
+        Object.freeze(report.household!.bought); Object.freeze(report.household!.sold);
+        Object.freeze(report.household!.released); Object.freeze(report.household!.lotsToRivals);
+      } else if (market) report = Object.freeze({ ...report, household: market });
       next.city.society!.acquisition = drawAcquisition(worldSeed, week, next.city, next.npcs);
     } else if (type === 'BUILD' || type === 'REPLACE' || type === 'SET_ENABLED') {
       const { week, worldMetadata: { worldSeed } } = next.city.world;

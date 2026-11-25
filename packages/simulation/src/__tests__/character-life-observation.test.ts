@@ -301,6 +301,14 @@ function reportFixture(): TileTrialReport {
   };
 }
 
+it('advertises ANSWER_NOTICE only for pending notices in Planning', () => {
+  const session = life();
+  session.npcs[0].household.notice = 'lifelong';
+  expect(observeCharacterLife(session, null).actionTypes).toStrictEqual([...planningActions, 'ANSWER_NOTICE']);
+  session.city.phase = 'report';
+  expect(observeCharacterLife(session, null).actionTypes).toStrictEqual(['NEXT_WEEK']);
+});
+
 describe('detached complete visible report', () => {
   it('selects every visible report field while omitting hidden immigration inputs and reason', () => {
     const report = freeze(reportFixture()), o = observeCharacterLife(freeze(life()), report);
@@ -336,7 +344,8 @@ describe('detached complete visible report', () => {
       foodDemandMilli: r.foodDemandMilli, foodConsumedMilli: r.foodConsumedMilli,
       happinessBefore: r.happinessBefore, happinessAfter: r.happinessAfter, goods: r.goods, goodsStock: r.goodsStock, activities: r.activities,
       immigration: { populationBefore: r.immigration!.populationBefore, arrivals: r.immigration!.arrivals, populationAfter: r.immigration!.populationAfter },
-      household: { ...emptyHouseholdReport(), bought: session.npcs.map(npc => npc.character.name) },
+      household: { ...emptyHouseholdReport(), bought: session.npcs.map(npc => npc.character.name),
+        wagesPaidMilli: session.npcs.reduce((sum, npc) => sum + npc.household.contract!.wageMilli, 0) },
     });
     const next = act(result.next, { type: 'NEXT_WEEK' }).next, retained = observeCharacterLife(next, r);
     expect(retained.actionTypes).toEqual(planningActions); expect(retained.disabledReasons).toEqual([]);
