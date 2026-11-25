@@ -21,5 +21,12 @@ export interface CharacterAppearance {
 export interface PrivateAdultMetadata { intimateHistory: { value: 'none' | 'some'; disclosure: Disclosure } }
 // `private` exists only when age >= 18.
 export interface CharacterProfile { id: string; identity: CharacterIdentity; traits: CharacterTraitAxes; appearance: CharacterAppearance; private?: PrivateAdultMetadata }
-export interface PlayerCharacter { character: NamedCharacter; profile: CharacterProfile }
+export interface HomeRobberyCard { id: string; week: number; excessMilli: number }
+export interface PlayerPurse {
+  moneyMilli: number;
+  levyPercent: number;
+  donatedThisWeekMilli: number;
+  robbery: HomeRobberyCard | null;
+}
+export interface PlayerCharacter { character: NamedCharacter; profile: CharacterProfile; purse: PlayerPurse }
 export interface CharacterLifeSessionState extends NpcWorldSessionState { player: PlayerCharacter; profiles: CharacterProfile[] }

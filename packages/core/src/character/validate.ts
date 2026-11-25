@@ -12,6 +12,8 @@ EYE_COLORS,FACE_FEATURES,FACE_SHAPES,HAIR_COLORS,HAIR_LENGTHS,HAIR_STYLES,HAIR_T
 CHARACTER_LIMITS as L,
 OUTFITS,PLACES,PLAYER_CHARACTER_ID,PLAYER_PROFESSIONS,REGIONS,SKIN_TONES,UPBRINGINGS,
 } from './catalog.js';
+import tuningJson from '../data/tuning.json' with { type: 'json' };
+import { deepFreeze, validateTuning } from '../data/validate.js';
 import type { CharacterLifeSessionState,CharacterProfile,PlayerCharacter } from './types.js';
 
 const ids = (list: readonly { id: string }[]) => list.map(w => w.id);
@@ -25,6 +27,9 @@ const keysOf = (v: unknown, required: string[], optional: string[] = []): v is R
   hasWeeklyKeys(v, [...required, ...optional.filter(k => typeof v === 'object' && v !== null && Object.hasOwn(v, k))]);
 const adult = (c: NamedCharacter) => c.age >= L.ageMin;
 const inAgeRange = (c: NamedCharacter) => c.age >= L.ageMin && c.age <= L.ageMax;
+export const PURSE_TRIAL = deepFreeze(validateTuning(tuningJson).PURSE_TRIAL);
+const { levyMaxPercent } = PURSE_TRIAL;
+const balanceRange = [0, Number.MAX_SAFE_INTEGER] as const;
 const DISCLOSURES = ['known', 'unknown'];
 
 // `character` must already be a valid NamedCharacter; `raw` is untrusted.
@@ -65,15 +70,32 @@ export function isCharacterProfile(raw: unknown, character: NamedCharacter): raw
   } catch { return false; }
 }
 
+function hasPlayerIdentity(raw: Record<string, unknown>): boolean {
+  const c = raw.character;
+  if (!isNamedCharacterRecord(c) || c.id !== PLAYER_CHARACTER_ID || !PLAYER_PROFESSIONS.includes(c.occupation) || !inAgeRange(c) ||
+      !isCharacterProfile(raw.profile, c)) return false;
+  const p = raw.profile;
+  return p.appearance.measurements?.disclosure !== 'unknown' && p.private?.intimateHistory.disclosure !== 'unknown';
+}
+
+// Used by the storage reader only to validate records before old-ruleset refusal.
+export function isHistoricalPlayerCharacter(raw: unknown): boolean {
+  try {
+    return keysOf(raw, ['character', 'profile']) && hasPlayerIdentity(raw);
+  } catch { return false; }
+}
+
 export function isPlayerCharacter(raw: unknown): raw is PlayerCharacter {
   try {
-    if (!keysOf(raw, ['character', 'profile'])) return false;
-    const c = raw.character;
-    if (!isNamedCharacterRecord(c) || c.id !== PLAYER_CHARACTER_ID || !PLAYER_PROFESSIONS.includes(c.occupation) || !inAgeRange(c) ||
-        !isCharacterProfile(raw.profile, c)) return false;
-    // The Player always knows their own measurements and history.
-    const p = raw.profile;
-    return p.appearance.measurements?.disclosure !== 'unknown' && p.private?.intimateHistory.disclosure !== 'unknown';
+    if (!keysOf(raw, ['character', 'profile', 'purse']) || !hasPlayerIdentity(raw)) return false;
+    const purse = raw.purse;
+    if (!keysOf(purse, ['moneyMilli', 'levyPercent', 'donatedThisWeekMilli', 'robbery']) ||
+        !int(purse.moneyMilli, balanceRange) || !int(purse.levyPercent, [0, levyMaxPercent]) ||
+        !int(purse.donatedThisWeekMilli, balanceRange)) return false;
+    const robbery = purse.robbery;
+    return robbery === null || (keysOf(robbery, ['id', 'week', 'excessMilli']) &&
+      typeof robbery.id === 'string' && robbery.id !== '' && robbery.id.trim() === robbery.id &&
+      int(robbery.week, balanceRange) && int(robbery.excessMilli, balanceRange));
   } catch { return false; }
 }
 

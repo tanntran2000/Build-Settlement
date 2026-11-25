@@ -1,3 +1,4 @@
+import type { DifficultyId } from '../trial/difficulty.js';
 import { createNamedCharacter,type Occupation } from '../domain/character.js';
 import { readDenseArray } from '../world/arrays.js';
 import { createNpcWorldSession } from '../world/npc.js';
@@ -119,13 +120,13 @@ export function createPlayerCharacter(draft: PlayerDraft): { success: true; valu
       ...(m && { measurements: { chestCm: Number(m.chestCm), waistCm: Number(m.waistCm), hipsCm: Number(m.hipsCm), disclosure: 'known' as const } }),
       outfit: a.outfit },
     ...(draft.intimateHistory && { private: { intimateHistory: { value: draft.intimateHistory, disclosure: 'known' as const } } }),
-  } };
+  }, purse: { moneyMilli: 0, levyPercent: 0, donatedThisWeekMilli: 0, robbery: null } };
   return isPlayerCharacter(value) ? { success: true, value } : invalid('The player character could not be created.');
 }
 
 // The life session adds the Player to the empty NPC world session.
-export function createCharacterLifeSession(seed: unknown, draft: PlayerDraft): { success: true; value: CharacterLifeSessionState } | { success: false; error: { code: string; message: string } } {
-  const world = createNpcWorldSession(seed);
+export function createCharacterLifeSession(seed: unknown, draft: PlayerDraft, difficulty: DifficultyId = 'normal'): { success: true; value: CharacterLifeSessionState } | { success: false; error: { code: string; message: string } } {
+  const world = createNpcWorldSession(seed, difficulty);
   if (!world.success) return world;
   const player = createPlayerCharacter(draft);
   if (!player.success) return player;

@@ -1,6 +1,6 @@
 ﻿import type { CharacterLifeSessionState, CharacterProfile, WorldNpc, PlayerCharacter, TileTrialState } from '@haven/core';
 import { CHARACTER_LIFE_SAVE_FORMAT } from './character-life-save.js';
-import { createSocietyState, isNamedCharacterRecord, isNpcLife, managerSlotTileIds, npcAge, WORLD_TRAITS, GOODS_STOCK_RULESET, hasWeeklyKeys, isCanonicalGameState, isCharacterProfile, isPlayerCharacter, isSocietyState, isTileTrialState, isWorldNpcList, isWorldSessionState, SOCIETY_RULESET } from '@haven/core';
+import { createSocietyState, isNamedCharacterRecord, isNpcLife, managerSlotTileIds, npcAge, WORLD_TRAITS, GOODS_STOCK_RULESET, hasWeeklyKeys, isCanonicalGameState, isCharacterProfile, isHistoricalPlayerCharacter, isPlayerCharacter, isSocietyState, isTileTrialState, isWorldNpcList, isWorldSessionState, SOCIETY_RULESET } from '@haven/core';
 import type { StoredRecord, TableName } from './game-store.js';
 import { hasAcquisitionRosterProof, isAcquisitionReplay } from '@haven/core';
 import { ITEM_CATALOG, RECIPES, isItemsState, isOpenItemSlot, isWearable, type ItemsState, type ItemInstance } from '@haven/core';
@@ -8,9 +8,9 @@ export class StoreRecordError extends Error {
   constructor(public readonly ref: string) { super(`Invalid store record: ${ref}`); this.name = 'StoreRecordError'; }
 }
 const count = (n: unknown): n is number => Number.isSafeInteger(n) && (n as number) >= 0;
-const historicalSocietyRuleset = /^tile-society-(0[1-9]|1[0-2])$/;
-const historicalNpcLifeRuleset = /^tile-society-1[0-2]$/;
-const historicalHouseholdRuleset = "tile-society-12";
+const historicalSocietyRuleset = /^tile-society-(0[1-9]|1[0-3])$/;
+const historicalNpcLifeRuleset = /^tile-society-1[0-3]$/;
+const historicalHouseholdRuleset = /^tile-society-1[23]$/;
 // Historical records remain readable for the caller's existing old-ruleset refusal.
 // Validate their original shape without migrating or returning a current-ruleset view.
 function isStoredCity(raw: unknown): raw is CharacterLifeSessionState['city'] {
@@ -36,6 +36,7 @@ function isStoredCity(raw: unknown): raw is CharacterLifeSessionState['city'] {
       if (v >= 6) keys.push('laws');
     }
     if (v >= 8) keys.push('items');
+    if (v >= 13) keys.push('acquisition');
     if (!hasWeeklyKeys(raw.society, keys)) return false;
     const defaults = createSocietyState().society!;
     const validation: Record<string, unknown> = { ...defaults, ...raw.society, rulesetId: SOCIETY_RULESET };
@@ -167,13 +168,14 @@ export function recordsToSession(records: StoredRecord[]): CharacterLifeSessionS
   if (!isWorldSessionState({ city: createSocietyState(), outside })) throw new StoreRecordError('world:outside');
   let player: PlayerCharacter | undefined;
   const npcs: { npc: WorldNpc; order: number }[] = [], profiles: { profile: CharacterProfile; order: number }[] = [];
+  const validPlayer = meta.rulesetId === SOCIETY_RULESET ? isPlayerCharacter : isHistoricalPlayerCharacter;
   for (const r of records.filter(r => r.table === 'characters')) {
     const v = r.value as { kind: string; player: PlayerCharacter; npc: WorldNpc; order: number; profile: CharacterProfile; profileOrder: number };
     if (!v || !v.profile || v.profile.id !== r.id) bad(r);
-    if (v.kind === 'player') { if (player || !isPlayerCharacter(v.player) || v.player.character.id !== r.id || !isCharacterProfile(v.profile,v.player.character)) bad(r); player = v.player; }
+    if (v.kind === 'player') { if (player || !validPlayer(v.player) || v.player.character.id !== r.id || !isCharacterProfile(v.profile,v.player.character)) bad(r); player = v.player; }
     else if (v.kind === 'npc') {
       const candidate = [...npcs.map(n => n.npc), v.npc];
-      const validNpcList = meta.rulesetId === SOCIETY_RULESET || meta.rulesetId === historicalHouseholdRuleset
+      const validNpcList = meta.rulesetId === SOCIETY_RULESET || historicalHouseholdRuleset.test(meta.rulesetId)
         ? isWorldNpcList(candidate, city)
         : historicalSocietyRuleset.test(meta.rulesetId) &&
           isHistoricalNpcList(candidate, city, historicalNpcLifeRuleset.test(meta.rulesetId));

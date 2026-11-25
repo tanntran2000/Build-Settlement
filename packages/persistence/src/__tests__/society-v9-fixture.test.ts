@@ -4,7 +4,7 @@ import { expect, it } from 'vitest';
 import { deserializeCharacterLifeSave, serializeCharacterLifeSave } from '../index.js';
 import { recordsToSession, sessionToRecords } from '../session-records.js';
 
-it('uses ruleset 13 for current factories', () => expect(SOCIETY_RULESET).toBe('tile-society-13'));
+it('uses ruleset 14 for current factories', () => expect(SOCIETY_RULESET).toBe('tile-society-14'));
 
 const older='This checkpoint is from an older version of Haven and can no longer be played. Start a New Game.';
 const files=['life-laws.json','life-new-game.json','life-5-weeks.json','life-demand-card.json','life-rebellion-last-week.json','life-crime-robbery.json','life-crime-raid.json','life-crime-wound.json','life-crime-death.json'];

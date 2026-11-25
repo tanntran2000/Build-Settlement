@@ -177,8 +177,16 @@
       "tension": 5
     }
   },
+  "DIFFICULTY_TRIAL": {
+    "marker": "TRIAL",
+    "profiles": {
+      "normal": { "taxBps": 10000, "goodsPriceBps": 10000, "lawPayBps": 10000, "upkeepBps": 10000 },
+      "easy": { "taxBps": 10000, "goodsPriceBps": 10000, "lawPayBps": 10000, "upkeepBps": 10000 }
+    }
+  },
+  "PURSE_TRIAL": { "marker": "TRIAL", "levyMaxPercent": 20 },
   "SOCIETY_TRIAL": {
-    "rulesetId": "tile-society-13",
+    "rulesetId": "tile-society-14",
     "standing": 50,
     "laws": {
       "active": [],

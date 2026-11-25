@@ -22,7 +22,7 @@ function roundTrip(s: CharacterLifeSessionState) {
   const encoded = serializeCharacterLifeSave(s);
   if (!encoded.success) throw Error(encoded.error.message);
   expect(deserializeCharacterLifeSave(encoded.text)).toStrictEqual({ success: true, state: s });
-  expect(JSON.parse(encoded.text).cityRulesetId).toBe('tile-society-13');
+  expect(JSON.parse(encoded.text).cityRulesetId).toBe('tile-society-14');
 }
 
 it('pays in NPC order before tile operations and home upkeep, clamps unpaid stats, and preserves input', () => {

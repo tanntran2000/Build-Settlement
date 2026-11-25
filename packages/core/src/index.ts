@@ -25,6 +25,7 @@ export * from "./character/describe.js";
 export * from "./character/session.js";
 export * from './trial/goods-stock.js';
 export * from './trial/society.js';
+export * from './trial/difficulty.js';
 
 export * from './trial/society-map.js';
 

@@ -12,13 +12,16 @@ import type { SocietyWallRing, TileTrialState } from './types.js';
 import { createItemsState, isItemsState, type ItemsState } from './items.js';
 import { emptyAcquisition, isAcquisitionState, type AcquisitionState } from './acquisition.js';
 
-export const SOCIETY_RULESET = 'tile-society-13';
+import type { DifficultyId } from './difficulty.js';
+
+export const SOCIETY_RULESET = 'tile-society-14';
 export type SocietyGroupKey = 'makers' | 'luminaries' | 'merchants';
 export type SocietyClassKey = 'free' | SocietyGroupKey;
 export interface SocietyState {
   items: ItemsState;
   acquisition: AcquisitionState;
   rulesetId: typeof SOCIETY_RULESET;
+  readonly difficulty: DifficultyId;
   standing: number;
   laws: LawsState;
   order: OrderState;
@@ -44,21 +47,21 @@ const classes = ['free', ...groups] as const;
 const count = (n: unknown): n is number => Number.isSafeInteger(n) && (n as number) >= 0;
 const score = (n: unknown): n is number => count(n) && n <= 100;
 
-export function createSocietyState(): TileTrialState {
+export function createSocietyState(difficulty: DifficultyId = 'normal'): TileTrialState {
   const state: TileTrialState = {
     world: {"week":1,"worldMetadata":{"worldSeed":2026,"gameVersion":"0.1.0"},"activeSettlementId":"settlement_haven_01","settlements":{"settlement_haven_01":{"id":"settlement_haven_01","name":"Haven","status":"active","foodProcessorOperational":true,"inventory":{"gold":GOODS_STOCK_TRIAL.initialGoldMilli,"wheat":0,"food":GOODS_STOCK_TRIAL.initialFoodMilli,"wood":B.initialWoodMilli,"iron":B.initialIronMilli},"cohorts":[{"id":"weekly_middle","occupation":"worker","socialClass":"common","legalStatus":"citizen","count":100,"averageHealth":80,"morale":80,"productivity":80,"resentment":0,"loyalty":80,"livingStandard":"decent"}]}}},
     revision: 0, phase: 'planning',
     tiles: [{"id":"field-1","terrain":"fertile","building":{"typeId":"farm","level":1,"workers":2,"enabled":true}},{"id":"plain-1","terrain":"plain","building":{"typeId":"processor","level":1,"workers":2,"enabled":true}},{"id":"forest-1","terrain":"forest","building":null},{"id":"ore-1","terrain":"ore","building":null},{"id":"plain-2","terrain":"plain","building":null},{"id":"plain-3","terrain":"plain","building":null},{"id":"forest-2","terrain":"forest","building":null},{"id":"ore-2","terrain":"ore","building":null},{"id":"field-2","terrain":"fertile","building":null},{"id":"plain-4","terrain":"plain","building":null},{"id":"house-1","terrain":"town","building":{"typeId":"common-housing","level":3,"workers":0,"enabled":true}},{"id":"house-2","terrain":"town","building":{"typeId":"makers-rowhouses","level":2,"workers":0,"enabled":true}},{"id":"house-3","terrain":"town","building":{"typeId":"scholars-quarters","level":2,"workers":0,"enabled":true}},{"id":"house-4","terrain":"town","building":{"typeId":"merchant-townhouses","level":1,"workers":0,"enabled":true}},{"id":"house-5","terrain":"town","building":null},{"id":"house-6","terrain":"town","building":null},{"id":"house-7","terrain":"town","building":null},{"id":"house-8","terrain":"town","building":null},{"id":"house-9","terrain":"town","building":null},{"id":"house-10","terrain":"town","building":null},{"id":"house-11","terrain":"town","building":null},{"id":"service-1","terrain":"town","building":null},{"id":"service-2","terrain":"town","building":null},{"id":"service-3","terrain":"town","building":null},{"id":"service-4","terrain":"town","building":null},{"id":"service-5","terrain":"town","building":null},{"id":"service-6","terrain":"town","building":null},{"id":"spec-1","terrain":"town","building":{"typeId":"town-market","level":1,"workers":0,"enabled":true}},{"id":"spec-2","terrain":"town","building":null},{"id":"spec-3","terrain":"town","building":null},{"id":"spec-4","terrain":"town","building":null},{"id":"spec-5","terrain":"town","building":null},{"id":"spec-6","terrain":"town","building":null},{"id":"spec-7","terrain":"town","building":null},{"id":"spec-8","terrain":"town","building":null},{"id":"spec-9","terrain":"town","building":null},{"id":"spec-10","terrain":"town","building":null},{"id":"slum-1","terrain":"town","building":null},{"id":"slum-2","terrain":"town","building":null},{"id":"slum-3","terrain":"town","building":null},{"id":"slum-4","terrain":"town","building":null},{"id":"slum-5","terrain":"town","building":null},{"id":"slum-6","terrain":"town","building":null},{"id":"house-12","terrain":"town","building":null},{"id":"house-13","terrain":"town","building":null},{"id":"house-14","terrain":"town","building":null},{"id":"service-7","terrain":"town","building":null},{"id":"service-8","terrain":"town","building":null},{"id":"spec-11","terrain":"town","building":null},{"id":"spec-12","terrain":"town","building":null},{"id":"slum-7","terrain":"town","building":null},{"id":"slum-8","terrain":"town","building":null},{"id":"slum-9","terrain":"town","building":null},{"id":"estate-1","terrain":"town","building":{"typeId":"mansion","level":1,"workers":0,"enabled":true}},{"id":"estate-2","terrain":"town","building":{"typeId":"retainers-hall","level":1,"workers":0,"enabled":true}}],
     happiness: B.initialHappiness,
     goodsStock: { rulesetId: GOODS_STOCK_RULESET, amountMilli: GOODS_STOCK_TRIAL.initialGoodsMilli },
-    society: { ...structuredClone(SOCIETY_TRIAL), items:createItemsState(2026), acquisition:emptyAcquisition() },
+    society: { ...structuredClone(SOCIETY_TRIAL), items:createItemsState(2026), acquisition:emptyAcquisition(), difficulty },
   };
   state.tiles.splice(10,0,...OUTSIDE_PLOTS.slice(10).map(p=>({id:p.id,terrain:p.terrain,building:null})));
   return state;
 }
 export function isSocietyState(raw: unknown): raw is SocietyState {
   try {
-    if (!hasWeeklyKeys(raw, ['rulesetId', 'standing', 'laws', 'crisis', 'pendingCard', 'order', 'classes', 'satisfaction', 'desperation', 'tension', 'debtPressure', 'corruption', 'luxuryStockMilli', 'training', 'wallRing', 'stocksMilli', 'outside', 'research','items','acquisition']) || !isAcquisitionState(raw.acquisition) || raw.rulesetId !== SOCIETY_RULESET || !isLawsState(raw.laws) ||
+    if (!hasWeeklyKeys(raw, ['rulesetId', 'difficulty', 'standing', 'laws', 'crisis', 'pendingCard', 'order', 'classes', 'satisfaction', 'desperation', 'tension', 'debtPressure', 'corruption', 'luxuryStockMilli', 'training', 'wallRing', 'stocksMilli', 'outside', 'research','items','acquisition']) || (raw.difficulty !== 'normal' && raw.difficulty !== 'easy') || !isAcquisitionState(raw.acquisition) || raw.rulesetId !== SOCIETY_RULESET || !isLawsState(raw.laws) ||
         !hasWeeklyKeys(raw.classes, [...classes, 'bound']) || !count(raw.classes.free) ||
         !hasWeeklyKeys(raw.classes.bound, classes) || !Object.values(raw.classes.bound).every(count)) return false;
     for (const group of groups) {
