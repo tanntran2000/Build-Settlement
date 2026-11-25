@@ -1,0 +1,153 @@
+HEAD and tree
+71ff95afdac14f4c81f00b9d83695ed205bf619f
+d7d604d96381e292cf079f8771aae99660880765
+Status before command
+ M packages/ui/src/__tests__/acquisition-view.test.ts
+ M packages/ui/src/__tests__/npc-sheet-view.test.ts
+ M tests/e2e/acquisition.spec.ts
+ M tests/e2e/character-life-navigation.helpers.ts
+?? tests/e2e/household.spec.ts
+CI=
+UTC start 2026-11-25T06:19:58+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ npm.cmd test -- packages/ui/src/__tests__/npc-sheet-view.test.ts packages/ui/src/__tests__/acquisition-view.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/ui/src/__tests__/npc-sheet-view.test.ts packages/ui/src/__tests__/acquisition-view.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/npc-sheet-view.test.ts (7 tests | 2 failed) 120ms
+     × projects contract, home and will and classifies the two split boundaries 25ms
+     × projects actual starting past as names and counts in approved order 19ms
+ ❯ packages/ui/src/__tests__/acquisition-view.test.ts (3 tests | 1 failed) 24ms
+   × renders named acquisition rows and a 55 Gold lot by source 13ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/acquisition-view.test.ts > renders named acquisition rows and a 55 Gold lot by source
+AssertionError: expected [] to strictly equal [ …(4) ]
+
+- Expected
++ Received
+
+- [
+-   {
+-     "kind": "wagesPaidMilli",
+-     "label": "Wages paid",
+-     "value": "2.5 Gold",
+-   },
+-   {
+-     "kind": "unpaid",
+-     "label": "Wage unpaid",
+-     "value": "D",
+-   },
+-   {
+-     "kind": "notices",
+-     "label": "Contract notice",
+-     "value": "E",
+-   },
+-   {
+-     "kind": "left",
+-     "label": "Left",
+-     "value": "F",
+-   },
+- ]
++ []
+
+ ❯ packages/ui/src/__tests__/acquisition-view.test.ts:38:55
+     36|   expect(householdReportRows({})).toStrictEqual([]);
+     37|   const household = { ...report.household, wagesPaidMilli: 2500, unpai…
+     38|   expect(householdReportRows({ household }).slice(4)).toStrictEqual([
+       |                                                       ^
+     39|     { kind: 'wagesPaidMilli', label: 'Wages paid', value: '2.5 Gold' },
+     40|     { kind: 'unpaid', label: 'Wage unpaid', value: 'D' },
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  packages/ui/src/__tests__/npc-sheet-view.test.ts > NPC sheet projection > projects contract, home and will and classifies the two split boundaries
+AssertionError: expected undefined to strictly equal { status: 'Servant', …(6) }
+
+- Expected:
+{
+  "contract": {
+    "wageMilli": 2000,
+    "weeksLeft": 19,
+  },
+  "flaw": {
+    "label": "Restless",
+    "strength": 42,
+  },
+  "home": "Retainers' Hall (estate-2)",
+  "obedience": 50,
+  "preference": {
+    "label": "Patient",
+    "strength": 64,
+  },
+  "quadrant": "Devoted",
+  "status": "Servant",
+}
+
++ Received:
+undefined
+
+ ❯ packages/ui/src/__tests__/npc-sheet-view.test.ts:46:38
+     44|     npc.character.relationshipToPlayer.affection = 50;
+     45|     npc.household.contract = { weeksLeft: 19, wageMilli: 2000, unpaidW…
+     46|     expect(project()(npc).household).toStrictEqual({
+       |                                      ^
+     47|       status: 'Servant', home: "Retainers' Hall (estate-2)", contract:…
+     48|       obedience: 50, quadrant: 'Devoted', preference: { label: 'Patien…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  packages/ui/src/__tests__/npc-sheet-view.test.ts > NPC sheet projection > projects actual starting past as names and counts in approved order
+AssertionError: expected { label: 'Other', counters: [ …(3) ] } to strictly equal { label: 'Starting past', …(1) }
+
+- Expected
++ Received
+
+  {
+    "counters": [
+      {
+-       "count": 4,
+-       "label": "Hand · Outsider encounters",
++       "count": 1,
++       "label": "Act.withNpc",
+      },
+      {
+        "count": 2,
+-       "label": "Outsider partners",
++       "label": "Partners.outsider",
+      },
+      {
+-       "count": 1,
+-       "label": "With another NPC",
++       "count": 4,
++       "label": "Sex.hand.outsider",
+      },
+    ],
+-   "label": "Starting past",
++   "label": "Other",
+  }
+
+ ❯ packages/ui/src/__tests__/npc-sheet-view.test.ts:63:50
+     61|     const npc = generated();
+     62|     npc.life.history.counters = { 'partners.outsider': 2, 'sex.hand.ou…
+     63|     expect(project()(npc).history.groups.at(-1)).toStrictEqual({ label…
+       |                                                  ^
+     64|       { label: 'Hand · Outsider encounters', count: 4 }, { label: 'Out…
+     65|       { label: 'With another NPC', count: 1 },
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  3 failed | 7 passed (10)
+   Start at  13:20:00
+   Duration  2.31s (transform 2.21s, setup 0ms, import 2.91s, tests 144ms, environment 1ms)
+
+
+UTC finish 2026-11-25T06:20:02+00:00
+Exit 1

@@ -1,0 +1,22 @@
+--- a/packages/simulation/src/character-life-command.ts
++++ b/packages/simulation/src/character-life-command.ts
+@@ -36,7 +36,7 @@
+   }
+   const societyAction = ['ENACT_LAW', 'REPEAL_LAW', 'CHOOSE_CARD_OPTION', 'EXTEND_WALL', 'SET_TRAINING', 'CLEAR', 'SET_RESEARCH', 'BUILD_DEEP_SHAFT'].includes(type) &&
+     isLiveCharacterLifeSessionState(session) && !!session.city.society;
+-  if (!['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED', 'END_WEEK', 'NEXT_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC', 'MOVE_NPC_HOME'].includes(type) && !societyAction) {
++  if (!['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED', 'END_WEEK', 'NEXT_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC', 'MOVE_NPC_HOME', 'ANSWER_NOTICE'].includes(type) && !societyAction) {
+     return fail('UNSUPPORTED_ACTION', 'This action is not supported in Character Life.');
+   }
+   if (!isLiveCharacterLifeSessionState(session)) return fail('INVALID_STATE', 'World session is invalid; nothing was changed.');
+--- a/packages/core/src/world/__tests__/npc-generator.test.ts
++++ b/packages/core/src/world/__tests__/npc-generator.test.ts
+@@ -208,7 +208,7 @@
+     expect(api.validateNpcGenerator).toBeTypeOf('function');
+     const data = api.NPC_GENERATOR_CATALOG;
+     expect(api.validateNpcGenerator(structuredClone(data))).toStrictEqual(data);
+-    expect(sha(data)).toBe('b3e0727560c279fb973545ff65753b3e953dc182c27d2f433bfdc55496e9e028');
++    expect(sha(data)).toBe('ad57befafbe267dd2d858310d530ac670c5eef8c4d90432be2f750803b37ca14');
+     expect(Object.isFrozen(data.cultures.saltmere.given)).toBe(true);
+     const cultures = Object.values(data.cultures);
+     expect(cultures.map(c => [c.given.length, c.epithets.length])).toStrictEqual(Array.from({ length: 5 }, () => [16, 8]));

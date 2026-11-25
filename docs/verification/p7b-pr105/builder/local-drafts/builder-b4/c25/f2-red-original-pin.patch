@@ -1,0 +1,12 @@
+diff --git a/tests/e2e/goods-stock.spec.ts b/tests/e2e/goods-stock.spec.ts
+--- a/tests/e2e/goods-stock.spec.ts
++++ b/tests/e2e/goods-stock.spec.ts
+@@ -33,7 +33,7 @@
+     if (!next.success) throw Error(next.error.message); session = next.next;
+     expect(await exportLife(page)).toEqual(session);
+   }
+-  expect(debit).toBe(30000 + 20000);
++  expect(debit).toBe(30000);
+   await go(page, 'city'); await expect(page.getByTestId('trial-stock-goods')).toHaveText('2.75');
+   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+   await page.screenshot({ path: info.outputPath('goods-week5-city.png'), fullPage: true });

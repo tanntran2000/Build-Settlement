@@ -1,0 +1,89 @@
+P7-B B4 Astra 6.2 high review
+mcp:f398fe81-5ab7-4b0c-bcc9-83ff14a9ee8d  completed  codex/gpt-6.2-astra
+
+[user]
+P7-B Astra 6.2: independent review of P7-B PR B4 (servant wages, contracts, obedience, notices; NPC sheet fields; road balance). Review only: do not edit product files, commit, push, comment on GitHub or merge. Do not run the full smoke or start servers; single vitest files or single Playwright specs are allowed only if you need proof, and only after confirming ports 4173/4174 are free.
+
+Target
+- Branch feat/p7b-servants-wages (pushed, no PR yet), head 15cfc2c71aba0799e4d936c09b77529a53724272, tree d9225177b6c416384112f6bf340a4b11b8302273, four commits on main 95821832a8c95988c3203b4c38f5f9ae665978e9 (tree 83c11b3a8362be1c1c69f632808c76a0c101caa8, PR #104 B3 merged): 71ff95a `feat(simulation): servant wages, contracts and obedience`, c9c3827 `feat(ui): servant status, obedience and notices`, e983fa9 `test(simulation): pin the B4 contract countdown in the stock integrity roster`, 15cfc2c `test(e2e): include servant wages in the five-week debit`. Review 9582183..15cfc2c (26 files).
+- Worktree (read only): C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01. Confirm HEAD and tree first. graphify-out/ there is a local code graph of 9582183 (excluded from git); you may use it for callers (`graphify affected "<symbol>"`), never as proof alone.
+
+Binding documents (read fully)
+- Plan with Corrections 1–24: C:/Users/Admin/.t3/local-drafts/p7b-prB4/binding-plan-0adb5c4.md (SHA-256 29d770401a926a35dd047955d36df33a7c9a1ba4a80d3f20bc82d54dd107bda9). PR B4 = Tasks B4.0–B4.3; Global Constraints; Decision 13 and every decision B4 touches; PR B4 allowlist; Review Focus 5; Corrections 21–24 (21 = Step 0 decisions incl. ceil renewal wage; 22 = ANSWER_NOTICE in the dispatcher list + catalog pin; 23 = `exact: true` locator; 24 = 19-week roster pin + standing rule for test-only expectation updates).
+- Spec v0.1: C:/Users/Admin/.t3/local-drafts/p7b-prB4/binding-spec-9dace86.md (0460f26205b8804ca39b0b87c889279ed568c29791556d3690927994dc3428b5): servants, wages, contracts, obedience, notices, UI, data/save sections.
+- Builder Step 0 packet pinned by Correction 21: C:/Users/Admin/.t3/local-drafts/p7b-prB4/STEP0-HOLD.md (dec67619983a39ec2a98c8a3a2d78dec891381eecd48e1596825ac75b2b905b1), source-replacements.json (1d4ac00048e5bb4a2ac0303afe5467142dfe80c3728cd93b3e32f6fe5dc19329), generated-byte-proposals.json (2cb27dda1668f6d8392b2979e76d1325a4045e2711fedbdb9e22975dca338f98), repo-impact.json (ba267cddeececd0a54662b46aa80a913f89585dc002dc31218f08896de29b6da). Approved patches in builder-b4/: proposed-hold-fixes.patch (Correction 22), proposed-b42-locator-fix.patch (Correction 23), proposed-gate6-contract-expectation.patch (Correction 24). Builder evidence: C:/Users/Admin/.t3/local-drafts/p7b-prB4/builder-b4/ (DELIVERY.md, README.md, HOLD files, exact-head-bytes-delivery.txt verifier, c24-goods-* files, road-balance.txt, timings/, bundle/, save-size/, SHA256SUMS.txt).
+- AGENTS.md.
+
+Owner decisions (Tân, verbatim): "Duyệt P7-B", "Duyệt, giao B1", "Start B4 Step 0", "Gold của city (Recommended)", "Cô ấy mang đồ đi (Recommended)", "Làm tròn lên 1 Gold (Recommended)", "Duyệt tất cả (Recommended)", "Duyệt 2 chỗ sửa (Recommended)", "Duyệt sửa locator (Recommended)", "Duyệt + cho sửa kỳ vọng nhỏ (Recommended)".
+
+Check, at minimum
+1. Per-file ledger for every changed path against the B4 allowlist, the Step 0 packet and Corrections 21–24; anything else is a finding.
+2. Byte-exact reconstruction of every change against the packet plus Correction 21 item 4 (ceil wage bytes), the three approved patches, and the second Correction 24 amendment at 15cfc2c (tests/e2e/goods-stock.spec.ts `30000 + 20000`). For that amendment decide whether it meets every condition of the Correction 24 standing rule (approved B4 effect only, nothing loosened or removed, no product or timeout change, bytes and failing→passing log listed) and whether 20,000 milli is exactly the servant wages over those five weeks (prove it from code and data, not from the log). Any loosened or removed assertion, partial matcher in a new test, new timeout or skip is P1.
+3. Decision 13 at its edges: unpaid 2 vs 3 weeks, stress hits 2 vs 3, affection 74/75, obedience 49/50, ask-again at week − 10, weeksLeft 1 → 0; renew raises the wage ×1.25 rounded UP to 1,000 milli (1,000→2,000, 2,000→3,000, 4,000→5,000) and resets counters; accept makes `lifelong` with no wage; Mansion +1 obedience; clamps [0, 100]; every value from P7B_TRIAL.household in data, none in behavior code.
+4. End Week (LAW-03/04): wages from city Gold in NPC order before the tile week, then city operations, then B1 home upkeep; Gold never negative, no partial wage; Review Focus 5 (two servants end their term in the same week as a crisis card: End Week not locked by notices, unanswered renewals leave next End Week, wages in NPC order when Gold covers only one); determinism (same seed and commands → same state).
+5. ANSWER_NOTICE and exits: all-or-nothing with NOTICE_MISSING / NOTICE_CHOICE; automatic exits are `left` report rows; with storage too full she leaves with her equipped items and End Week completes; explicit "Let her go" reuses RELEASE_NPC and keeps STORAGE_FULL; the renewal notice warns when storage is short; departed NPCs are not double counted (LAW-04).
+6. Save (Correction 21 item 2): ruleset stays tile-society-13, no fixture or golden regeneration. B4 adds household fields while the ruleset id is unchanged: does a B3-era v13 checkpoint (no B4 fields) still load to a correct state, or get refused cleanly with the input unchanged? Are new fields bounded, validated by both readers, and free of rendered strings? Check the 100-NPC / 86-notice checkpoint (294,186 bytes JSON) against the ≤ 1 MiB limit.
+7. UI (LAW-02): notices on the roster, the NPC sheet and the Home residents panel (HouseholdNotice.svelte); quadrant labels Devoted / Willful lover / Submissive out of fear / Rebellious split at 50; Profile shows status, home, contract (weeks left, wage), obedience, preference, flaw; History shows the starting past; report rows for wages, unpaid, notices, leavers; components dispatch commands only; keyboard path; 1280 and 1600; English only; NPCs adult women 18+, adult content as numbers and labels only; no game names.
+8. Performance and size: B4.1 Step 1 lists "100 NPCs End Week under 50 ms". Is there such a test, and what does it actually assert, given warm medians of about 52–56 ms in timings/comparison.json? Is "within noise" supported by raw-timings.json (four cases, five pairs, main-to-main gap)? R-026 stays open (50 ms budget unchanged). Bundle 173,844 B gzip vs main 169,863 B (+3,981 B): what makes up the increase?
+9. Evidence: the first exact-head smoke was interrupted by Windows sleep (416 pass + 1 timeout); the case passed alone after wake; then the full retry passed 417/417 on the same head. Check the logs show the same head and tree and that nothing changed between runs. Road balance (seed 2026, 40 weeks, three roads) is a measurement only: check the script is deterministic and ran at B4.2 bytes.
+
+Results already recorded (verify they are about this head; do not rerun the smoke)
+- Builder at 15cfc2c: gates 1–7 exit 0 (3,286 unit, 154 architecture), CI=1 smoke retry 417/417.
+- Claude (Tester) runs gates and smoke after your review, at the final head.
+
+Output
+- Write C:/Users/Admin/.t3/local-drafts/p7b-prB4/astra-review/astra-round1.md (UTF-8): head and tree checked, per-file ledger, reconstruction table, findings P0–P3 with file:line and why, final line `VERDICT: PASS` or `VERDICT: FAIL` (PASS = no P0–P2).
+- Reply in this thread with a short summary: verdict, finding counts, file path.
+
+
+[assistant]
+I’m checking the target commit and tree first, then using the codebase-memory skill and the approved packet to verify the changes and recorded results.
+
+[assistant]
+All 26 changed Git blobs match the reconstructed bytes. I found two issues that byte equality doesn’t catch. The new History test accepts `20` where it expects `2`, and Correction 24 covers whole-state or whole-report expectations while the five-week debit assertion checks a scalar. The 20,000-milli wage calculation itself is correct.
+
+[assistant]
+The builder’s first smoke run, isolated retry and full 417/417 retry all record the requested head and tree. The timing data leaves R-026 open: all four warm medians exceeded 50 ms, and the repository’s 100-NPC test has no timing assertion. I’m finishing the save-reader check and the report.
+
+[assistant]
+**VERDICT: FAIL** at `15cfc2c`. **0 P0 · 1 P1 · 1 P2 · 1 P3.** [Full review and 26-file ledger](C:/Users/Admin/.t3/local-drafts/p7b-prB4/astra-review/astra-round1.md)
+
+1. **P1 — The History test accepts the wrong count.** It expects `2`, but its substring matcher also passes for `20`. [household.spec.ts:38](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/household.spec.ts:38)
+2. **P2 — The five-week debit change needs owner approval.** The added **20,000 milli** is correct. Correction 24 covers whole-state or whole-report expectations, and this assertion checks one accumulated number. [goods-stock.spec.ts:36](C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/tests/e2e/goods-stock.spec.ts:36)
+3. **P3 — R-026 remains open.** No test asserts the 50 ms full End Week budget. All four B4 warm medians exceeded it, ranging from **52.29 to 55.94 ms**. [Timing comparison](C:/Users/Admin/.t3/local-drafts/p7b-prB4/builder-b4/timings/comparison.json)
+
+All **26 changed Git blobs** matched the reconstruction. The builder’s **417/417** smoke retry ran on the reviewed head and tree.
+
+[user]
+P7-B Astra 6.2: round 2 review of P7-B PR B4. Same rules as round 1 (review only; no full smoke, no servers; single specs only after ports 4173/4174 are free).
+
+New head 90519b682846de9ad336c30db53f4b0b07afb2a2, tree b138254d44b76e3b2c8c6eb853449608a3bbc094, branch feat/p7b-servants-wages (pushed). Two test-only commits on your round-1 head 15cfc2c:
+- 0bd1b24 `test(e2e): exact starting past count in the household sheet` (F1, Correction 25 item 1).
+- 90519b6 `test(e2e): pin goods debit and servant wages separately` (F2, Correction 26: builder-b4/c25/f2-proposal.patch SHA-256 c50a6a311ba3dfb962c87c0bea9531dc2cbbc37d319095c9d68bb10899a35caa replaces the unratified `30000 + 20000`).
+
+Binding plan with Corrections 25–26: C:/Users/Admin/.t3/local-drafts/p7b-prB4/binding-plan-a9d3c7c.md (SHA-256 b3502a24007ec02aaa7933b88595851d310ae3bfc31c3f56a8984b273db26ef8).
+
+Owner (Tân), verbatim: "Duyệt sửa test (Recommended)" (F1), "Không, giữ HOLD" (F2 ratification refused), "Duyệt patch P2 (Recommended)" (F2 replacement patch).
+
+Builder evidence: C:/Users/Admin/.t3/local-drafts/p7b-prB4/builder-b4/c25/ (F1 RED/GREEN, F2 RED/GREEN, HOLD.md) and builder-b4/c26/ (README.md, commit.txt, gates-1-7.txt, gate-8-smoke.txt 417/417, remote-head.txt, SHA256SUMS.txt).
+
+Check
+1. 15cfc2c..90519b6 touches only the two test files; F1 matches Correction 25 item 1 (exact term, sibling dd exact text `2`; the added `exact: true` on the region name is the only extra byte — rate it); F2 matches the approved patch byte-exact.
+2. F1 and F2 are not looser than what they replace: F1 fails on a rendered 20; F2 keeps the original 30000 Goods pin and pins wages 4000 each week. Check `report.household?.wagesPaidMilli ?? 0` cannot hide a missing field (it would then fail the 4000 pin), and that 4000 per week matches the data and the fixture's servants.
+3. Gates 1–7 and the 417/417 smoke logs name this head and tree; nothing else changed. Measurements carried from 15cfc2c are valid because no product byte changed (prove: 15cfc2c..90519b6 has no path outside tests/).
+4. Round 1 F3 (R-026) stays open; carry it as P3.
+
+Output: C:/Users/Admin/.t3/local-drafts/p7b-prB4/astra-review/astra-round2.md (UTF-8), findings P0–P3 with file:line, final line `VERDICT: PASS` or `VERDICT: FAIL` (PASS = no P0–P2). Reply here with verdict, counts and path.
+
+[assistant]
+I’m checking the new head and tree first, then comparing both test changes with the owner’s corrections and the builder’s RED/GREEN evidence.
+
+[assistant]
+Both test fixes close their round 1 findings. The History test rejected `20` at both desktop widths, and the goods test matches the approved patch byte for byte. All eight builder logs identify the new head and tree. Only R-026 remains open.
+
+[assistant]
+**VERDICT: PASS** at `90519b6`. **0 P0 · 0 P1 · 0 P2 · 1 P3.** [Round 2 review](C:/Users/Admin/.t3/local-drafts/p7b-prB4/astra-review/astra-round2.md)
+
+F1 and F2 are closed. The History assertion rejected `20` at both desktop widths. The wage test matches the owner-approved patch byte for byte and independently pins **4,000 milli per week** and **30,000 milli in remaining five-week debit**.
+
+Only the two test files changed. Gates 1–7 and the **417/417** smoke passed on the reviewed head and tree. **R-026** remains the sole P3 under the existing 50 ms End Week budget.

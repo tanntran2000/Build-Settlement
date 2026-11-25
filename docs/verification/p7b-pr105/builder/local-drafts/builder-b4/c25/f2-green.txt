@@ -1,0 +1,20 @@
+UTC start 2026-11-25T12:22:46+00:00
+Base 15cfc2c71aba0799e4d936c09b77529a53724272
+Tree d9225177b6c416384112f6bf340a4b11b8302273
+Scratch D:\QI Technology\Temp\p7b-b4-c25-nk04y_b2
+Spec tests/e2e/goods-stock.spec.ts
+Spec SHA-256 2601a456eb711058abc0631768f342f71c39f85c0f626e1e498b090ce647e821
+Config SHA-256 668971c42ad19cf855eb38e0f98f3ccb88f4781a4972465d3649977e769bc7b8
+$ CI=1 node node_modules/@playwright/test/cli.js test tests/e2e/goods-stock.spec.ts --output c25-artifacts/f2-green
+[WebServer] fatal: not a git repository (or any of the parent directories): .git
+[WebServer] fatal: not a git repository (or any of the parent directories): .git
+
+Running 2 tests using 1 worker
+
+  ok 1 [chromium] › tests\e2e\goods-stock.spec.ts:5:85 › Society five-week report and navigation parity at 375px (28.2s)
+  ok 2 [chromium] › tests\e2e\goods-stock.spec.ts:5:85 › Society five-week report and navigation parity at 1280px (24.1s)
+
+  2 passed (1.0m)
+
+UTC finish 2026-11-25T12:23:49+00:00
+Exit 0

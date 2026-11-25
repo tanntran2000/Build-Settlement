@@ -1,0 +1,20 @@
+UTC start 2026-11-25T12:20:33+00:00
+Base 15cfc2c71aba0799e4d936c09b77529a53724272
+Tree d9225177b6c416384112f6bf340a4b11b8302273
+Scratch D:\QI Technology\Temp\p7b-b4-c25-nk04y_b2
+Spec tests/e2e/household.spec.ts
+Spec SHA-256 f4e5c813a02cdc1755661476af9c80e087d3ada0673aaad25d3a35c8dfdeabd1
+Config SHA-256 668971c42ad19cf855eb38e0f98f3ccb88f4781a4972465d3649977e769bc7b8
+$ CI=1 node node_modules/@playwright/test/cli.js test tests/e2e/household.spec.ts --output c25-artifacts/f1-green
+[WebServer] fatal: not a git repository (or any of the parent directories): .git
+[WebServer] fatal: not a git repository (or any of the parent directories): .git
+
+Running 2 tests using 1 worker
+
+  ok 1 [chromium] › tests\e2e\household.spec.ts:23:3 › renewal renders in the ledger, roster, sheet and Homes with a keyboard path at 1280 (7.6s)
+  ok 2 [chromium] › tests\e2e\household.spec.ts:23:3 › renewal renders in the ledger, roster, sheet and Homes with a keyboard path at 1600 (8.9s)
+
+  2 passed (27.2s)
+
+UTC finish 2026-11-25T12:21:01+00:00
+Exit 0

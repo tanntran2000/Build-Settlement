@@ -1,0 +1,19 @@
+{
+  "correction24Item2": true,
+  "head": "e983fa9f826387bfa4a7ef7b0b54cff561687cb6",
+  "tree": "5d4fcf4e84884c337440c94488f5b5547ff73f1b",
+  "path": "tests/e2e/goods-stock.spec.ts",
+  "line": 36,
+  "startByte": 2786,
+  "endByte": 2814,
+  "before": "  expect(debit).toBe(30000);",
+  "after": "  expect(debit).toBe(30000 + 20000);",
+  "workingBeforeSHA256": "3c3e73e95390b48ad089fdf29e1a3012e35429cf609aec62acb9e4af24d46b4c",
+  "workingAfterSHA256": "4b02adbc9eb879f9dbef87753526f882ecf1d0fff108cb61fb6d9fd724ae4ebe",
+  "gitBeforeSHA256": "33d0840162e2616499cce4e38be0166ae9cd8add942e1a74cf84a725c353405d",
+  "gitAfterSHA256": "fa5c45b9f2023a363899d2a9de74694d126a6fdf4f1f1c0128600e1f7fbc6220",
+  "patchSHA256": "d31e0cf432296ed4efc1bef229f1cf3bdf68543ec156ff8a88ba449d3660ab1e",
+  "reason": "Five full weekly reports include 4,000 milli of approved B4 wages per week. Both viewport cases already match every full report and checkpoint; retain the original 30,000-milli debit and add the exact 20,000-milli wages to the final equality.",
+  "red": "gate-8-smoke-c24.txt",
+  "greenExpected": "c24-goods-stock-green.txt"
+}

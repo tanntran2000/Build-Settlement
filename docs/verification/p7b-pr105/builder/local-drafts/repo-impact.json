@@ -1,0 +1,3699 @@
+{
+  "base": "95821832a8c95988c3203b4c38f5f9ae665978e9",
+  "trackedPathsScanned": 562,
+  "searched": {
+    "order": "runNpcLifeWeek|runTileTrialWeek|(?:householdUpkeep|acquisitionWeekReport|drawAcquisition)|(?:60 weeks|byte-identical|full-session parity|frozen delegated report)",
+    "save": "tile-society-13|hasAcquisitionRosterProof|isAcquisitionReplay|isNpcHousehold|historicalSocietyRuleset|historicalNpcLifeRuleset|historicalHouseholdRuleset|\\.departures|releaseReason",
+    "commands": "ANSWER_NOTICE|RELEASE_NPC|WITHDRAW_BID|CharacterLifeActionType|CARD_PENDING|pendingCard.*lock|(?:actionTypes|planningActions)|switch\\s*\\(\\s*(?:type|command|c\\.type)",
+    "report": "(?:TileTrialReport\\W.{0,45})?household\\b|lotsToRivals|Household activity|expectReport\\(|lifeUiSnapshot\\(",
+    "ui": "NpcSheet|npc-sheet|CharacterLifeCharacters|Character roster|Home residents|data-character-id|data-household-kind|data-notice-choice",
+    "runner": "p7b-road-balance|node-version: 24|check:architecture|lint.*eslint|typecheck:(core|simulation|content|persistence|ui)"
+  },
+  "note": "Source verification index includes guard and historical references, which retain their exact current text unless listed in source-replacements.json. Excludes individual lines over 1,800 characters and indexes fixture blobs separately.",
+  "matches": {
+    "runner": [
+      {
+        "path": ".github/workflows/ci.yml",
+        "line": 30,
+        "current": "          node-version: 24"
+      },
+      {
+        "path": "AGENTS.md",
+        "line": 99,
+        "current": "     4. `npm run check:architecture`"
+      },
+      {
+        "path": "HANDOFF.md",
+        "line": 19,
+        "current": "**New Builder verification — Windows, Node 24.19.0 / npm 11.17.0:** `npm ci --no-audit` exit 0; `npm run lint` exit 0; `npm run typecheck` exit 0 on the unchanged-command rerun outside the sandbox (initial exit 1: esbuild parent-directory access denied); `npm test -- --no-cache` exit 0, **792 tests / 27 files**; `npm run check:architecture` exit 0, **53 files / 22 edges**, no violations/cycles/errors; `npm run test:architecture` exit 0, **154 passed**, none skipped; `git diff --check` exit 0. Allowlist/history checks confirm exactly three modified documents and all original non-heading lines preserved in order; added text contains no local-machine paths or common secret patterns. The eight public PR/Actions links were verified via GitHub CLI, exit 0, after the initial sandbox network denial. Logs and the final SHA/tree manifest stay ignored and uncommitted; candidate identity is supplied in the Builder handoff, not self-embedded in its commit."
+      },
+      {
+        "path": "HANDOFF.md",
+        "line": 42,
+        "current": "     - Thiết lập cấu hình phẳng `eslint.config.mjs` với 6 quy tắc an toàn cốt lõi; tạo script `\"lint\": \"eslint . --max-warnings=0\"`."
+      },
+      {
+        "path": "HANDOFF.md",
+        "line": 46,
+        "current": "     - Nâng cấp `eslint` lên `10.12.0` (bản Current được hỗ trợ, giải quyết nợ hỗ trợ ESLint 9 EOL); ghim cố định `@typescript-eslint/parser` `8.71.2`, `eslint-plugin-svelte` `3.23.1`; giữ nguyên `eslint.config.mjs` (SHA256 `29a843a7`)."
+      },
+      {
+        "path": "docs/INTERNAL_PROGRESS_TRACKER.md",
+        "line": 11,
+        "current": "**Release CI:** [premerge Quality Gate CI41000799458](https://github.com/tanntran2000/Build-Settlement/actions/runs/41000799458) completed SUCCESS at `167d602`; its job log records **1,386 unit tests / 47 files and 251 Chromium browser tests**. [Main-push Quality Gate CI41004487395](https://github.com/tanntran2000/Build-Settlement/actions/runs/41004487395) completed SUCCESS at the exact merge `51df2f5` with the same counts in its job log. PR55's own [CI40998988844](https://github.com/tanntran2000/Build-Settlement/actions/runs/40998988844) completed SUCCESS at `c0f149b`. CI does not execute `check:architecture` or `test:architecture`."
+      },
+      {
+        "path": "docs/INTERNAL_PROGRESS_TRACKER.md",
+        "line": 43,
+        "current": "**Release CI:** [premerge CI40399970863 / job121842875856](https://github.com/tanntran2000/Build-Settlement/actions/runs/40399970863/job/121842875856) and [main CI40402149268 / job121850500627](https://github.com/tanntran2000/Build-Settlement/actions/runs/40402149268/job/121850500627) completed SUCCESS. Live GitHub metadata/job logs confirm each ran **1,303 unit tests / 43 files and 219 Chromium browser tests, zero skipped/flaky/failed**. Retained Git manifests bind the PR head/base and synthetic checkout `9ecdccba0302e0a87f8e00f3f2775227ed6bf373` to the approved tree; the main checkout is the actual merge above with that same tree. CI does not execute `check:architecture` or `test:architecture`."
+      },
+      {
+        "path": "docs/INTERNAL_PROGRESS_TRACKER.md",
+        "line": 57,
+        "current": "**Release evidence:** [premerge CI40302479196](https://github.com/tanntran2000/Build-Settlement/actions/runs/40302479196) and [main CI40303804848 / job121507847080](https://github.com/tanntran2000/Build-Settlement/actions/runs/40303804848/job/121507847080) succeeded; the main job log confirms `e27763380b9235c4efc92db0e1be6620f4d3f425`, 1,303 unit tests and 164 Chromium browser tests. PR47 and the retained Stage0 ledger record independent per-task reviews/tests and Claude whole-branch audit `mcp:9dfdd427-fa8b-4fc4-a1ff-2bd71b701639` (2026-10-26 09:41:14 UTC): SpecCompliance PASS / Quality PASS. The independent Task 4 Tester report and raw logs at `qa-solo-mcp-task4-test/logs/task4-independent-20261026/` record the architecture scan and **154 architecture tests, exit 0, run locally at the reviewed head**. These are prior release results, not fresh product tests or approval of this documentation change. CI does not execute `check:architecture` or `test:architecture`; its PASS must not be credited with those local checks. Local evidence remains retained, not uploaded."
+      },
+      {
+        "path": "docs/INTERNAL_PROGRESS_TRACKER.md",
+        "line": 74,
+        "current": "`npm run check:architecture` and `npm run test:architecture` remain standalone: existing CI does **not** execute either command, even though its Vitest step name mentions architecture. Main CI PASS above must not be presented as standalone-gate execution evidence."
+      },
+      {
+        "path": "docs/INTERNAL_PROGRESS_TRACKER.md",
+        "line": 335,
+        "current": "    * Nâng cấp `eslint` lên `10.12.0` (thay thế bản EOL `9.39.5`), ghim cố định `@typescript-eslint/parser` `8.71.2`, `eslint-plugin-svelte` `3.23.1`; không đổi `eslint.config.mjs` (giữ nguyên SHA256 `29a843a7`)."
+      },
+      {
+        "path": "docs/MASTER_ROADMAP.md",
+        "line": 10,
+        "current": "- [PR41](https://github.com/tanntran2000/Build-Settlement/pull/41): standalone `check:architecture` / `test:architecture`, **not wired into existing CI**. Its dependency matrix was newly approved for that WP, not historical LAW-02. [Main CI39972699531](https://github.com/tanntran2000/Build-Settlement/actions/runs/39972699531): PASS for the existing workflow, not evidence of running the standalone commands. Exact scan exclusions, repaired F01, transitive-parser risk and untested POSIX checker execution are recorded in the tracker."
+      },
+      {
+        "path": "docs/handoff/2026-11-06-codex-orchestrator-handoff-addendum-a.md",
+        "line": 111,
+        "current": "git diff --check origin/main...HEAD; npm run lint; npm run typecheck; npm run check:architecture; npm run test:architecture; npm test; npm run build (JS/CSS gzip); then with ports 4173/4174 free CI=1 npm run test:smoke."
+      },
+      {
+        "path": "docs/handoff/2026-11-06-codex-orchestrator-handoff.md",
+        "line": 206,
+        "current": "In order: git diff --check origin/main...HEAD, npm run lint, npm run typecheck, npm run check:architecture, npm run test:architecture, npm test, npm run build, then with ports 4173/4174 free the full smoke CI=1 npm run test:smoke. Push only if all pass. Do not open a PR."
+      },
+      {
+        "path": "docs/handoff/2026-11-06-codex-orchestrator-handoff.md",
+        "line": 303,
+        "current": "npm run check:architecture"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-02-medal-core-loadout-foundation.md",
+        "line": 206,
+        "current": "npm run typecheck:core"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-02-medal-core-loadout-foundation.md",
+        "line": 290,
+        "current": "npm run typecheck:core"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-02-medal-core-loadout-foundation.md",
+        "line": 398,
+        "current": "npm run typecheck:core"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-02-medal-core-loadout-foundation.md",
+        "line": 489,
+        "current": "npm run typecheck:core"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-24-population-local-checkpoint.md",
+        "line": 30,
+        "current": "4. `npm run lint`: exit 1, `'eslint' is not recognized as an internal or external command`. `npm run typecheck`: exit 1 at its first `typecheck:core` command, `'tsc' is not recognized as an internal or external command`; later workspace checks did not run. Both root and UI `node_modules` are absent. These are missing-tool failures, not passing gates or diagnosed source failures."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-24-population-local-checkpoint.md",
+        "line": 139,
+        "current": "- [x] **2. Run standalone checks.** Run `npm run check:architecture`, `npm run test:architecture`, `npm audit --audit-level=moderate`, `git diff --check`. Architecture commands are not existing CI steps. No security/dependency fixes in this WP; report blockers."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-24-population-local-checkpoint.md",
+        "line": 170,
+        "current": "- Candidate gates so far: `npm run lint` exit 0; `npm run typecheck` exit 0 (Svelte 0 errors/0 warnings); `npm test -- --no-cache` exit 0 (844/844 tests, 27 files); `npm run build` exit 0 (production JS 39.28 kB gzip); `npm run check:architecture` exit 0 (53 files/22 edges, no violations/cycles/errors); `npm run test:architecture` exit 0 (154 passed, 0 skipped); `npm audit --audit-level=moderate` exit 0 (0 vulnerabilities). Full final browser suite is running; no candidate commit yet."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-24-population-local-checkpoint.md",
+        "line": 185,
+        "current": "- Fresh local gates: `npm run lint`, `npm run typecheck` (Svelte 0 errors/0 warnings), `npm test -- --no-cache` (844/844, 27 files), `npm run build` (unchanged runtime asset hash), `npm run check:architecture` (53 files/22 edges, no violations/cycles/errors), `npm run test:architecture` (154 passed/0 skipped), `npm audit --audit-level=moderate` (0 vulnerabilities), and whitespace/protected-path checks all exit 0. Full logs are preserved under ignored `logs/ci-pr43-40062882498/fix-gates/`; original failure evidence is untouched."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-24-tile-world-foundation.md",
+        "line": 87,
+        "current": "- [x] **Step 4:** PASS; `npm run typecheck:core` exit 0."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-24-tile-world-foundation.md",
+        "line": 111,
+        "current": "- [x] **Step 4:** PASS; `npm run typecheck:persistence` exit 0."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-24-tile-world-foundation.md",
+        "line": 150,
+        "current": "- [x] **Step 4:** both PASS; `npm run typecheck:ui` exit 0."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-24-tile-world-foundation.md",
+        "line": 155,
+        "current": "1. `npm run lint`, `npm run typecheck`, `npm test`, `npm run check:architecture`, `npm run test:architecture`, `npm run build`, `npm run test:smoke` each exit 0. Record the SHA, commands and exit codes."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-24-tile-world-foundation.md",
+        "line": 189,
+        "current": "- Task 1: complete ? 61/61 targeted core tests, typecheck:core exit 0. Independent literal vectors/goldens retained. Initial RED: three absent modules (exit 1); first GREEN attempt caught incorrect ruleset-module import (2 failed), corrected once; type narrowing corrected once after typecheck diagnostics. No repeated unresolved failure. Core task commit follows this ledger update."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-24-tile-world-foundation.md",
+        "line": 191,
+        "current": "- Task 2: complete ? codec RED missing module exit 1; 19 codec tests GREEN (33 combined codec/UI tests) exit 0; whole suite 938/938 exit 0; typecheck:persistence via full typecheck exit 0 after one literal fixture typing correction. Core commit `fff89c0c31975230f33fbaef286b5a800acba567`. No regeneration on load, capped envelope and cross-format isolation verified. Codec commit follows this ledger update."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-25-character-foundation-s1.md",
+        "line": 21,
+        "current": "- `packages/core` stays pure TypeScript: no DOM, no UI imports (LAW-02; `npm run check:architecture`)."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-25-character-foundation-s1.md",
+        "line": 194,
+        "current": "- [ ] **Step 5: Run** `npx vitest run packages/core && npm run typecheck:core && npm run check:architecture`. Expected: all PASS; `npc.test.ts` unchanged and passing."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-25-character-foundation-s1.md",
+        "line": 303,
+        "current": "- [ ] **Step 4: Run** `npx vitest run packages/core && npm run typecheck:core`. Expected: PASS."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-25-character-foundation-s1.md",
+        "line": 390,
+        "current": "- [ ] **Step 4: Run** `npm run test:smoke -- character-life && npm run typecheck:ui && npm run lint`. Expected: PASS."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-25-character-foundation-s1.md",
+        "line": 427,
+        "current": "- [ ] **Step 4: Run the full gate:** `npm run lint && npm run typecheck && npm test && npm run check:architecture && npm run test:architecture && npm run build && npm run test:smoke`. Expected: all PASS, and every pre-existing unit and e2e test passes unchanged."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-26-player-first-navigation.md",
+        "line": 224,
+        "current": "  npm.cmd run check:architecture"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-26-solo-mcp-stage0.md",
+        "line": 97,
+        "current": "- [ ] **Step 4: Run GREEN.** `npm test -- packages/core/src/character/__tests__/validate.test.ts packages/persistence/src/__tests__/character-life-save.test.ts packages/ui/src/__tests__/character-life-session.test.ts` and `npm run typecheck:core` must exit 0. Existing save/load assertions stay unchanged."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-26-solo-mcp-stage0.md",
+        "line": 166,
+        "current": "- [ ] **Step 4: Run GREEN.** `npm test -- packages/simulation/src/__tests__/character-life-command.test.ts packages/simulation/src/__tests__/world-npc.test.ts packages/simulation/src/__tests__/tile-trial.test.ts packages/persistence/src/__tests__/character-life-save.test.ts` and `npm run typecheck:simulation` exit 0. Assertions must prove full-session/report equality, not snapshots generated from the new implementation."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-26-solo-mcp-stage0.md",
+        "line": 258,
+        "current": "- [ ] **Step 4: Run GREEN.** `npm test -- packages/simulation/src/__tests__/character-life-observation.test.ts packages/simulation/src/__tests__/character-life-command.test.ts` and `npm run typecheck:simulation` exit 0. All positive visibility assertions and negative privacy assertions must pass together."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-26-solo-mcp-stage0.md",
+        "line": 275,
+        "current": "When `player !== null`, `WorldNpcPanel` passes `{ ...session, player, profiles }` to the shared boundary (the profiles guard remains inside it); otherwise use the unchanged NPC-world handler. `TileManagement` passes Player only when lifeMode is true, routes life city commands through the same boundary **before** the old fallback selection, and publishes all five returned parts on success. In panel onapply, narrow the declared union with the existing `isLiveCharacterLifeSessionState(next)` guard **before publication**; its life branch has typed Player/profiles and publishes all five parts, its NPC branch publishes city/outside/npcs. Import the relevant core type/guard only in these two allowlisted UI files. Do not assert unknown properties into life types or keep a callback that accepts only the base type. No local mutation of gameplay data; preserve panel draft/error clearing and city report/worker/error behavior. Other modes keep their three-key NPC or tile calls and ruleset. `npm run typecheck:ui` and existing world-npc plus life e2e consumers must compile/run unchanged at the GREEN gate."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-26-solo-mcp-stage0.md",
+        "line": 310,
+        "current": "- [ ] **Step 4: Run GREEN and final gates.** Run `npm run typecheck:ui`, `npm run build`, then `npm run test:smoke -- tests/e2e/character-life-boundary.spec.ts tests/e2e/character-life.spec.ts tests/e2e/world-npc-session.spec.ts tests/e2e/world-session.spec.ts`, plus all commands below. Expected exit 0 with nonzero discovered test counts and no skipped failures; both life and old NPC consumers must compile and retain behavior. Independent Tester/Reviewer run against the final exact commit; no Stage 0 test result waives separate manual accessibility gates."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-26-solo-mcp-stage0.md",
+        "line": 315,
+        "current": "1. **Local release checks:** On the final implementation commit run `npm run typecheck`, `npm run lint`, `npm test`, `npm run check:architecture`, `npm run test:architecture`, `npm run build`, `npm run test:smoke`. Existing scripts checked in root package.json; `test:smoke` invokes existing regression build/preview setup. Preserve command stdout/stderr, exit code, timestamp, HEAD and tree SHA, and acceptance case mapping T1–T6 in parent-owned evidence. No tests are authorized to run during this planning-only task."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-27-city-navigation.md",
+        "line": 162,
+        "current": "- [ ] **Builder local gates later:** inspect status/diff/allowlist and capture head SHA; run `git diff --check`, `npm run lint`, `npm run typecheck`, `npm run check:architecture`, `npm run test:architecture`, `npm test`, `npm run build`, `npm run test:smoke`. Expected exit 0 for every command, with complete logs under ignored `logs/city-navigation/<head-sha>/`. Review every added line for secrets before push; a supplemental PowerShell scan of `git diff --unified=0 BASE...HEAD` for private-key headers and credential assignments must have all hits resolved, with redacted findings only. There is no existing repository secret-scanner script; do not invent a PASS for one. Record bundle gzip sizes against the existing <200KB UI guidance; no artwork/network fetches added. No claim of <1s load or <50ms tick without measurement. Missing installed dependencies/browser or conflicting preview service is a blocker; no install/connection/cleanup workaround under HOLD."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-28-city-navigation-visual-addendum.md",
+        "line": 57,
+        "current": "- [ ] Record HEAD, clean tracked/index state, frozen originals and addendum hash. Run the original eight required gates once on the new candidate with terminal exit codes: `git diff --check`, `npm.cmd run lint`, `npm.cmd run typecheck`, `npm.cmd run check:architecture`, `npm.cmd run test:architecture`, `npm.cmd test`, `npm.cmd run build`, `npm.cmd run test:smoke`. Preserve full logs; do not reuse old234 results as new-code PASS. Avoid concurrent build/test writers and coordinate served production dist identity before visual observations."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-28-goods-stock-buffer.md",
+        "line": 55,
+        "current": "- [ ] After Builder terminal, independent Claude Tester runs the eight exact-commit commands sequentially: `git diff --check` (tree/index/base range), `npm.cmd run lint`, `npm.cmd run typecheck`, `npm.cmd run check:architecture`, `npm.cmd run test:architecture`, `npm.cmd test`, `npm.cmd run build`, `npm.cmd run test:smoke`. Exact-commit logs and exits required. No redundant suite repetition absent code changes/failure."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-30-p2a-society-state.md",
+        "line": 219,
+        "current": "Run, in order: `git diff --check origin/main...HEAD`, `npm run lint`, `npm run typecheck`, `npm run check:architecture`, `npm run test:architecture`, `npm test`, `npm run build`, `npm run test:smoke`."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-30-p2b-society-weekly-rules.md",
+        "line": 171,
+        "current": "- [ ] **Step 1:** Run in order: `git diff --check origin/main...HEAD`, `npm run lint`, `npm run typecheck`, `npm run check:architecture`, `npm run test:architecture`, `npm test`, `npm run build`, `npm run test:smoke`. Expected: all exit 0. Record the counts."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-31-p2d-society-ui.md",
+        "line": 301,
+        "current": "  2. Run `npm run check:architecture`. Expected: pass."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-31-p2d-society-ui.md",
+        "line": 361,
+        "current": "  4. `npm run check:architecture`"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-31-p2e-engine-cleanup.md",
+        "line": 94,
+        "current": "4. **A removed export that is still used** (by the UI, a test helper, the architecture checker or the `regression` entry) breaks the build. → Task 6 sweep, plus `npm run build` and `check:architecture`."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-31-p2e-engine-cleanup.md",
+        "line": 171,
+        "current": "- [ ] Run `npm run check:architecture`, `npm run test:architecture`, `npm test` and `npm run build`. Expect green."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-31-p2e-engine-cleanup.md",
+        "line": 186,
+        "current": "  4. `npm run check:architecture`"
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-26-player-first-navigation-design.md",
+        "line": 251,
+        "current": "**Automated gates:** `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, `npm run test:smoke`, plus `npm run check:architecture` and `npm run test:architecture`, run locally because CI does not run them. Existing old-mode e2e tests pass unchanged. The Character Life and Stage0 parity tests are migrated to navigate views; no assertion is removed or weakened, and every observation field is still compared."
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-26-solo-mcp-playtesting-design.md",
+        "line": 313,
+        "current": "Release gates per stage [PROPOSED], with existing scripts: `npm run typecheck`, `npm run lint`, `npm test`, `npm run check:architecture`, `npm run test:architecture`, `npm run test:smoke` where UI or e2e paths change; CI `quality-gate`; independent review; human merge (G5). Evidence: commit hash, command, exit code, log (LAW-07). GUI/accessibility gates are an independent track and are not satisfied by any test above."
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-30-p2-inside-city-society-design.md",
+        "line": 240,
+        "current": "Required gates on the exact commit: `git diff --check`, lint, typecheck, `check:architecture`, `test:architecture`, unit tests, build, browser suite."
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-31-p3-outside-city-design.md",
+        "line": 268,
+        "current": "**Required gates on the exact commit:** `git diff --check`, lint, typecheck, `check:architecture`, `test:architecture`, unit tests, build, browser suite."
+      },
+      {
+        "path": "docs/verification/DEPENDENCY-TRIAGE-2026-10-16.md",
+        "line": 38,
+        "current": "   - Bổ sung tooling Lint: `eslint` `^9.20.0`, `@typescript-eslint/parser` `^8.24.0`, `eslint-plugin-svelte` `^3.0.3`"
+      },
+      {
+        "path": "docs/work_packages/POP-01A_Implementation_Plan.md",
+        "line": 235,
+        "current": "  npm run typecheck:core"
+      },
+      {
+        "path": "docs/work_packages/WP-FOUNDATION-PREPUBLICATION-01.md",
+        "line": 26,
+        "current": "  - `package.json` — approved dev tooling versions (`vitest 4.1.11`, `yaml ^2.4.2`), lint script (`eslint . --max-warnings=0`), explicit workspace build scripts."
+      },
+      {
+        "path": "docs/work_packages/WP-FOUNDATION-PREPUBLICATION-01.md",
+        "line": 77,
+        "current": "- Script: `npm run lint` -> `eslint . --max-warnings=0`."
+      },
+      {
+        "path": "docs/work_packages/WP-SUPPORTED-LINT-HISTORICAL-FORMAT-01.md",
+        "line": 9,
+        "current": "**Tech Stack:** npm workspaces, Node 24.19.0/npm 11.17.0, TypeScript 5.9.3/Svelte 5.57.1; candidate ESLint 10.12.0, @typescript-eslint/parser 8.71.2, eslint-plugin-svelte 3.23.1, svelte-eslint-parser 1.9.0; installed Markdownlint 0.41.1 via VS Code extension 0.62.1."
+      },
+      {
+        "path": "docs/work_packages/WP-SUPPORTED-LINT-HISTORICAL-FORMAT-01.md",
+        "line": 33,
+        "current": "**Config/scripts to modify: none expected.** Freeze `eslint.config.mjs` (SHA256 `29a843a7e0e9f4a7d5006192bff4bfd5963b05d47d795ecbd57dd5e755cf08b0`), CI, UI package, TS/Svelte/Vite configs, all source/tests and every file outside the allowlist. If ESLint 10 needs a nontrivial config or additional package change, HOLD and report the exact failure instead of broadening scope. Existing `lint` remains `eslint . --max-warnings=0`."
+      },
+      {
+        "path": "docs/work_packages/WP-SUPPORTED-LINT-HISTORICAL-FORMAT-01.md",
+        "line": 44,
+        "current": "- [ ] In the coordinated isolated candidate, execute ordinary `npm install --save-dev --save-exact eslint@10.12.0 @typescript-eslint/parser@8.71.2 eslint-plugin-svelte@3.23.1`. Only ESLint's installed version changes; the other two pins bind already installed compatible versions. No new framework/config presets. Regenerated lock must keep unrelated direct versions, Vite/Vitest/YAML fixes and app sources intact. Builder then transfers only reviewed allowlisted diffs, never whole node_modules."
+      },
+      {
+        "path": "docs/work_packages/WP-SUPPORTED-LINT-HISTORICAL-FORMAT-01.md",
+        "line": 83,
+        "current": "[ESLint support policy](https://eslint.org/version-support/) identifies v10 Current and v9 EOL; [v10.12.0 official release](https://github.com/eslint/eslint/releases/tag/v10.12.0) and [package metadata](https://raw.githubusercontent.com/eslint/eslint/v10.12.0/package.json) bind the candidate; [v10 migration](https://eslint.org/docs/latest/use/migrate-to-10.0.0) covers Node/config/API changes. Exact peer evidence: [TS parser 8.71.2](https://raw.githubusercontent.com/typescript-eslint/typescript-eslint/v8.71.2/packages/parser/package.json), [Svelte plugin 3.23.1](https://raw.githubusercontent.com/sveltejs/eslint-plugin-svelte/eslint-plugin-svelte@3.23.1/packages/eslint-plugin-svelte/package.json), [Svelte parser 1.9.0](https://raw.githubusercontent.com/sveltejs/svelte-eslint-parser/v1.9.0/package.json); matches installed metadata/lock. The candidate is the checked stable supported major with these peers, not an unverified `latest` command. Direct registry metadata URLs were unavailable to the web tool; no permission bypass or CLI fallback was attempted. Builder must verify exact official npm publication before install as Task 1 states. No install/ESLint-10 execution or semantic-format PASS has occurred in this planning step."
+      },
+      {
+        "path": "package-lock.json",
+        "line": 49,
+        "current": "    \"node_modules/@eslint-community/eslint-utils\": {"
+      },
+      {
+        "path": "package-lock.json",
+        "line": 51,
+        "current": "      \"resolved\": \"https://registry.npmjs.org/@eslint-community/eslint-utils/-/eslint-utils-4.10.1.tgz\","
+      },
+      {
+        "path": "package-lock.json",
+        "line": 68,
+        "current": "    \"node_modules/@eslint-community/eslint-utils/node_modules/eslint-visitor-keys\": {"
+      },
+      {
+        "path": "package-lock.json",
+        "line": 70,
+        "current": "      \"resolved\": \"https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-3.4.3.tgz\","
+      },
+      {
+        "path": "package-lock.json",
+        "line": 1594,
+        "current": "      \"resolved\": \"https://registry.npmjs.org/eslint/-/eslint-10.12.0.tgz\","
+      },
+      {
+        "path": "package-lock.json",
+        "line": 1602,
+        "current": "        \"@eslint-community/eslint-utils\": \"^4.8.0\","
+      },
+      {
+        "path": "package-lock.json",
+        "line": 1634,
+        "current": "        \"eslint\": \"bin/eslint.js\""
+      },
+      {
+        "path": "package-lock.json",
+        "line": 1653,
+        "current": "      \"resolved\": \"https://registry.npmjs.org/eslint-plugin-svelte/-/eslint-plugin-svelte-3.23.1.tgz\","
+      },
+      {
+        "path": "package-lock.json",
+        "line": 1658,
+        "current": "        \"@eslint-community/eslint-utils\": \"^4.6.1\","
+      },
+      {
+        "path": "package-lock.json",
+        "line": 1700,
+        "current": "      \"resolved\": \"https://registry.npmjs.org/eslint-scope/-/eslint-scope-8.4.0.tgz\","
+      },
+      {
+        "path": "package-lock.json",
+        "line": 1717,
+        "current": "      \"resolved\": \"https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-5.0.1.tgz\","
+      },
+      {
+        "path": "package-lock.json",
+        "line": 1728,
+        "current": "    \"node_modules/eslint/node_modules/eslint-scope\": {"
+      },
+      {
+        "path": "package-lock.json",
+        "line": 1730,
+        "current": "      \"resolved\": \"https://registry.npmjs.org/eslint-scope/-/eslint-scope-9.1.2.tgz\","
+      },
+      {
+        "path": "package-lock.json",
+        "line": 1792,
+        "current": "      \"resolved\": \"https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-4.2.1.tgz\","
+      },
+      {
+        "path": "package-lock.json",
+        "line": 3056,
+        "current": "      \"resolved\": \"https://registry.npmjs.org/svelte-eslint-parser/-/svelte-eslint-parser-1.9.0.tgz\","
+      },
+      {
+        "path": "package-lock.json",
+        "line": 3085,
+        "current": "    \"node_modules/svelte-eslint-parser/node_modules/eslint-visitor-keys\": {"
+      },
+      {
+        "path": "package-lock.json",
+        "line": 3087,
+        "current": "      \"resolved\": \"https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-4.2.1.tgz\","
+      },
+      {
+        "path": "package.json",
+        "line": 12,
+        "current": "    \"typecheck:core\": \"tsc -p packages/core/tsconfig.json --noEmit\","
+      },
+      {
+        "path": "package.json",
+        "line": 13,
+        "current": "    \"typecheck:simulation\": \"tsc -p packages/simulation/tsconfig.json --noEmit\","
+      },
+      {
+        "path": "package.json",
+        "line": 14,
+        "current": "    \"typecheck:persistence\": \"tsc -p packages/persistence/tsconfig.json --noEmit\","
+      },
+      {
+        "path": "package.json",
+        "line": 15,
+        "current": "    \"typecheck:content\": \"tsc -p packages/content/tsconfig.json --noEmit\","
+      },
+      {
+        "path": "package.json",
+        "line": 16,
+        "current": "    \"typecheck:ui\": \"npm run check --workspace=@haven/ui\","
+      },
+      {
+        "path": "package.json",
+        "line": 17,
+        "current": "    \"typecheck\": \"npm run typecheck:core && npm run typecheck:simulation && npm run typecheck:persistence && npm run typecheck:content && npm run typecheck:ui\","
+      },
+      {
+        "path": "package.json",
+        "line": 19,
+        "current": "    \"lint\": \"eslint . --max-warnings=0\","
+      },
+      {
+        "path": "package.json",
+        "line": 24,
+        "current": "    \"check:architecture\": \"node tools/check-architecture.mjs\","
+      }
+    ],
+    "order": [
+      {
+        "path": "docs/INTERNAL_PROGRESS_TRACKER.md",
+        "line": 14,
+        "current": "- Codex `evidence/goods-167d602-codex-20261030-113401/` at `167d602`: architecture scan exit 0, **154/154 architecture regressions**, and a production build with Vite 6.4.5. The build's `index.html`, JS and CSS are byte-identical to the TUF build (SHA256 `1e43e24f…`, `f405e581…`, `07673090…`), and the loopback preview served the same bytes."
+      },
+      {
+        "path": "docs/INTERNAL_PROGRESS_TRACKER.md",
+        "line": 31,
+        "current": "**Independent local evidence at `0cd8233`:** preserved `visual-command-test-0cd8233-r2.md` and its `visual-command-0cd8233-r2` logs record all eight required command gates with exit 0: diff check, lint, typecheck, architecture scan, architecture regressions, unit tests, build and browser suite. Counts are **1,339 unit tests / 44 files, 154 architecture regressions and 242 Chromium browser tests**. `visual-ui-0cd8233-r1-report.md` and its manifest record six directly inspected City/Information PNGs at **1600x1000, 1280x900 and 375x812**, bounded navigation/modal/focus/weekly checks, and same-session pure-navigation export equality: **905 JSON values, byte-identical 11,748-byte exports**, SHA256 `f0416c5c66718dedeea00a5b387899fcc5b9f80a71410e2545ffecbadcba2d18`. These are retained product results, not tests freshly run by this documentation Builder. Images and exports remain preserved locally, not uploaded to GitHub; evidence names identify retained records without asserting that historical workspace paths remain live."
+      },
+      {
+        "path": "docs/handoff/2026-11-06-codex-orchestrator-handoff.md",
+        "line": 158,
+        "current": "- Name the exact fixtures that will change, and whether each is regenerated or kept byte-identical."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-21-player-readme-scope.md",
+        "line": 30,
+        "current": "The delta contains only this record and `docs/MASTER_ROADMAP.md`; all relative links resolve. README and every previously tracked file outside the roadmap remain byte-identical to the frozen candidate. Existing design/spec formulas remain untouched. Deliver an immutable patch and updated files for parent-owned review/testing; publication and merge remain with the parent coordinator."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-21-tile-needs-foundation.md",
+        "line": 36,
+        "current": "Pre-candidate local evidence: expected missing-module RED (exit1, not17 failed assertions); focused GREEN35tests/3files. Full gates exit0:700unit/22files,52browser, lint/typecheck/build/regression-build/audit0. Managed Chromium154 ran unchanged browser tests on canonical source previews; no offline file navigation was attempted. Production JS+CSS gzip37281bytes (<200KiB). Initial seven-file candidate `1d76661` passed scope/link/secret/whitespace checks; independent Tester compared833fixtures/9827assertions with byte-identical complete outputs and8direct helper checks; Reviewer numeric probes passed11034assertions. The later user deferral adds only documentation (eight-file scope), leaving the tested product code unchanged; the new immutable candidate requires fresh document/scope checks and independent exact-SHA reaffirmation. Publication gates remain pending. Logs and later immutable-SHA outcomes are retained in `/workspace/next-foundation-evidence/`; no release is claimed by these local checks."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-24-tile-world-foundation.md",
+        "line": 142,
+        "current": "    - U5: legacy, population and wrong-ruleset session bytes placed in the world slot, then Continue → rejected; all three slots byte-identical, no repair or fallback."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-26-solo-mcp-stage0.md",
+        "line": 59,
+        "current": "3. **Real week transition versus save strictness:** live Report and NEXT_WEEK work; strict save/export/import still reject Report and malformed/foreign-map/profile data. Owners: Task 1 `live phases preserve strict saves`; Task 2 `full-session parity through two week cycles`."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-26-solo-mcp-stage0.md",
+        "line": 120,
+        "current": "Test `full-session parity through two week cycles`: compare new result with the independent old composition after **each** action, including optional report, all five session parts and revision +1. Use this legal order, refreshing revision every action: BUILD logging on forest-1; UPGRADE forest-1; SET_WORKERS forest-1 to 2; ASSIGN_NPC npc_starter_1 to forest-1; pause/resume forest-1 (post retained, workers reset to 0); UNASSIGN_NPC; assign npc_starter_2 to plain-1; REPLACE plain-1 with processor (post cleared); SET_WORKERS plain-1 to 2; END_WEEK with current week; NEXT_WEEK; END_WEEK; NEXT_WEEK. Both week cycles must enter Report and return Planning; reports have the completed week and final state advances identically. Compare a frozen input with its pre-command snapshot after each call."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-28-city-navigation-visual-addendum.md",
+        "line": 25,
+        "current": "Old command/UI evidence remains historical for 1140c6e only. Preserve all 11 screenshots and the original byte-identical export pair. New code requires fresh exact-commit evidence. Generated evidence and machine-local configuration never enter Git publication; explicit staging only."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-30-p2a-society-state.md",
+        "line": 5,
+        "current": "**Goal:** Add the versioned `tile-society-01` city extension (five classes, satisfaction, desperation, debt pressure, corruption, tension, Luxury stock, training, wall ring) with exact-shape validation, new-game creation and save round-trips, while every existing ruleset and save stays byte-identical and society cities stay unplayable until P2-B."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-30-p2a-society-state.md",
+        "line": 15,
+        "current": "- Ruleset id is exactly `tile-society-01`. Old ids `tile-trial-01`, `tile-population-01`, `tile-population-goods-01` and their saves stay byte-identical."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-30-p2c-inside-plots-and-week.md",
+        "line": 7,
+        "current": "**Architecture:** **Two PRs.** **C1 (map and commands):** pure core data for plots and buildings, ruleset-aware placement and staffing in the existing validators and command path, the new commands and the new-game map. End Week stays guarded. **C2 (week):** `runTileTrialWeek` gains a society branch that builds the facility summary, keeps Goods/Food stock mechanics, calls `resolveSocietyWeek` and writes the result back. Then the guard is removed. No UI change (P2-D)."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-30-p2c-inside-plots-and-week.md",
+        "line": 25,
+        "current": "- Old rulesets (`tile-trial-01`, `tile-population-01`, `tile-population-goods-01`) and their saves stay byte-identical. `goods-v1` and `legacy-v1` fixture tests must keep passing untouched."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-30-p2c-inside-plots-and-week.md",
+        "line": 65,
+        "current": "3. **An old Goods save loading after this change:** byte-identical, same continuation (pinned fixtures). → C1 Task 1 and C2 Task 4."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-30-p2c-inside-plots-and-week.md",
+        "line": 143,
+        "current": "### C2 Task 2: Society branch of `runTileTrialWeek`"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-30-p2c-inside-plots-and-week.md",
+        "line": 160,
+        "current": "- [ ] **Step 1: Failing tests** (new game, End Week called through `runTileTrialWeek` directly, since the guard stays until Task 3):"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-31-p2d-society-ui.md",
+        "line": 84,
+        "current": "- Navigation without End Week leaves the exported save byte-identical (spec §12 browser 7)."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-31-p2d-society-ui.md",
+        "line": 164,
+        "current": "   - Opening Inside City, Population and Report without End Week leaves the export byte-identical."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-31-p2d-society-ui.md",
+        "line": 345,
+        "current": "     - Seed the old Life and Goods Life browser keys with the `legacy-v1` and `goods-v1` fixtures. Continue shows the existing \"No local checkpoint\" message. Import of those files and of a `world` export is refused with the exact older-version message. The society game and the old keys stay byte-identical."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-31-p2d-society-ui.md",
+        "line": 347,
+        "current": "  7. **Navigation.** Opening Inside City, Population, Information and Report without End Week leaves the export byte-identical."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-31-p2e-engine-cleanup.md",
+        "line": 12,
+        "current": "**Architecture:** The UI already plays only society (P2-D, PR #64). This WP walks the engine consumers-first: persistence → simulation → core → a reachability sweep. Two pinned fixtures prove the game is unchanged, and both must stay byte-identical from the first task to the last:"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-31-p2e-engine-cleanup.md",
+        "line": 32,
+        "current": "     - `cityEconomyRuleset`, and the `ruleset` parameters of `executeTileTrialCommand`, `runTileTrialWeek` and the save codecs. If a generation tag is still needed, it becomes a society-only check."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-31-p2e-engine-cleanup.md",
+        "line": 80,
+        "current": "- `society-v1/life-5-weeks.json` and the new Task 1 fixtures stay byte-identical. Their tests stay unedited after Task 1."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-31-p2e-engine-cleanup.md",
+        "line": 92,
+        "current": "2. **New Game is unchanged.** The same seed gives byte-identical new-game saves. → Task 1 fixtures, re-run in every task."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-31-p3-outside-city.md",
+        "line": 43,
+        "current": "   - PR A pins `society-v2/new-game.json` and `society-v2/life-new-game.json` (seed 20261028, \"Synthetic Keeper\"). PRs B and C keep them byte-identical."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-31-p3-outside-city.md",
+        "line": 338,
+        "current": "  7. Navigating without End Week leaves the export byte-identical."
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-28-goods-stock-buffer.md",
+        "line": 54,
+        "current": "1. Old fixtures: byte-identical round trip and same continued old-rule state/report across all supported formats and local slots; new and old coexist without writes to the other's slot. Malformed/hybrid/overflow/import/load failures preserve live state and stored bytes."
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-30-p2-inside-city-society-design.md",
+        "line": 228,
+        "current": "9. Old rulesets: pinned fixtures byte-identical; old saves continue with unchanged results."
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-30-p2-inside-city-society-design.md",
+        "line": 237,
+        "current": "7. Navigation without End Week leaves the exported save byte-identical."
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-31-p3-outside-city-design.md",
+        "line": 175,
+        "current": "  - `society-v2/new-game.json`, pinned at the end of PR A. It must stay byte-identical through PRs B and C."
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-31-p3-outside-city-design.md",
+        "line": 265,
+        "current": "- Navigation without End Week leaves the export byte-identical."
+      },
+      {
+        "path": "docs/verification/P2E-TEST-LEDGER.md",
+        "line": 285,
+        "current": "- packages/simulation/src/__tests__/tile-trial-population.test.ts ? reaches136 after27 arrivals and remains solvent through60 weeks with checkpoint parity ? ported: setup old → society"
+      },
+      {
+        "path": "docs/verification/P2E-TEST-LEDGER.md",
+        "line": 461,
+        "current": "- packages/simulation/src/__tests__/character-life-command.test.ts ? full-session parity through two week cycles ? changed: call shape/import only, or ported shared setup old ? society; assertion body unchanged."
+      },
+      {
+        "path": "docs/verification/P2E-TEST-LEDGER.md",
+        "line": 470,
+        "current": "- packages/simulation/src/__tests__/character-life-command.test.ts ? preserves the frozen delegated report contract ? changed: call shape/import only, or ported shared setup old ? society; assertion body unchanged."
+      },
+      {
+        "path": "docs/verification/handoff-2026-11/008-20261106-pr-body-ui-ledger-01-prA.md",
+        "line": 15,
+        "current": "- Pixelify Sans: the upstream variable TTF from google/fonts `8b0a1d0` shipped byte-identical (79,160 bytes, SHA-256 `9ba86cd0…e8a5`), with its OFL licence (one trailing space removed). One `@font-face`, applied to the shell only; `app.css` untouched."
+      },
+      {
+        "path": "docs/work_packages/WP-SOCIAL-CATALOG-PRESENTATION-01_v0.1.md",
+        "line": 93,
+        "current": "| Scope / integrity / bounded secret-pattern scan / `git diff --check` | Exit 0; 14-file scope = nine carried documents + five implementation files; 99 other tracked files byte-identical to base; existing tests retained; Weekly script unchanged except content import; no panel handlers, bindings or business-state reads |"
+      },
+      {
+        "path": "docs/work_packages/WP-WHEAT-FOOD-CHAIN-01_v0.1.md",
+        "line": 205,
+        "current": "Only the 13 listed implementation/document files changed; 101 other tracked files are byte-identical to base. Scope/link/diff checks and a bounded key/token/private-key pattern scan pass. No protection endpoint/credentials/settings changes or release actions were attempted. Logs, manifests and rulings live under `/tmp/wheat-food-chain-01/` in the saved environment, not a public archive."
+      },
+      {
+        "path": "packages/core/src/trial/types.ts",
+        "line": 74,
+        "current": "  householdUpkeep?: { paidMilli: number; unpaidMilli: number };"
+      },
+      {
+        "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+        "line": 44,
+        "current": "  it('generates detached byte-identical records and separates seed, week, source and slot', () => {"
+      },
+      {
+        "path": "packages/persistence/src/__tests__/craft-records.test.ts",
+        "line": 35,
+        "current": "it('round-trips held items, mixed ready indices and ready materials byte-identically in reversed record order',()=>{"
+      },
+      {
+        "path": "packages/persistence/src/__tests__/craft-records.test.ts",
+        "line": 69,
+        "current": "it('ready-only workshops keep the byte-identical save and busy replacement refusal after load',()=>{"
+      },
+      {
+        "path": "packages/persistence/src/__tests__/item-owner-import.test.ts",
+        "line": 30,
+        "current": "it.each(['player', 'npc_w1_guild_0'])('accepts real equipment owner %s through validation, import and byte-identical records', owner => {"
+      },
+      {
+        "path": "packages/persistence/src/__tests__/item-records.test.ts",
+        "line": 10,
+        "current": "it('stores all instance locations in items records and round-trips byte-identically in ascending id order',()=>{"
+      },
+      {
+        "path": "packages/persistence/src/__tests__/items-canonical.test.ts",
+        "line": 22,
+        "current": "it('round-trips canonical mixed-location item state byte-identically with reversed record order', () => {"
+      },
+      {
+        "path": "packages/persistence/src/__tests__/npc-life-records.test.ts",
+        "line": 64,
+        "current": "it('matches v12 and v13 checkpoint filenames and round-trips every current life checkpoint byte-identically', () => {"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/catalog-golden.test.ts",
+        "line": 7,
+        "current": "it.each(CATALOG_SEEDS)('keeps seed %i byte-identical through 60 weeks of catalog commands', seed => {"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/character-life-command.test.ts",
+        "line": 84,
+        "current": "it('full-session parity through two week cycles', () => {"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/character-life-command.test.ts",
+        "line": 316,
+        "current": "  it('preserves the frozen delegated report contract', () => {"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/craft-week.test.ts",
+        "line": 7,
+        "current": "import { runTileTrialWeek } from '../tile-trial-week.js';"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/craft-week.test.ts",
+        "line": 26,
+        "current": "    reports.push(runTileTrialWeek(city));"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/crime-week.test.ts",
+        "line": 5,
+        "current": "import { runTileTrialWeek } from '../tile-trial-week.js';"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/crime-week.test.ts",
+        "line": 18,
+        "current": " const r=runTileTrialWeek(s),copy=structuredClone(s);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/crime-week.test.ts",
+        "line": 60,
+        "current": " for(let i=0;i<5;i++){expect(runTileTrialWeek(a)).toEqual(runTileTrialWeek(b));expect(a).toEqual(b);}"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/crisis-week.test.ts",
+        "line": 53,
+        "current": "import { runTileTrialWeek } from '../tile-trial-week.js';"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/crisis-week.test.ts",
+        "line": 56,
+        "current": " const r=runTileTrialWeek(s);expect(r.crisis?.promise?.result).toBe('kept');"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/crisis-week.test.ts",
+        "line": 62,
+        "current": "  expect(runTileTrialWeek(a)).toEqual(runTileTrialWeek(b));expect(a).toEqual(b);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/fixtures/p6b-crafting-path-diff.ts",
+        "line": 58,
+        "current": "console.log(`PASS: ${before.length} golden seeds, ${newNames.length} new v9 scenarios; only ruleset/items state paths change; all ${historical.length} historical fixtures are byte-identical; original generator/P6-A path evidence Git blobs unchanged.`);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/fixtures/p6b-crafting-path-diff.txt",
+        "line": 213,
+        "current": "PASS: 3 golden seeds, 10 new v9 scenarios; only ruleset/items state paths change; all 53 historical fixtures are byte-identical; original generator/P6-A path evidence Git blobs unchanged."
+      },
+      {
+        "path": "packages/simulation/src/__tests__/fixtures/p6b-path-diff.ts",
+        "line": 49,
+        "current": "console.log(`PASS: 3 golden seeds satisfy the PR B path allowlist; exactly 2 v8 fixtures change only city.society.items.*; ${unchanged} other fixture files are byte-identical.`);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/fixtures/p6b-path-diff.txt",
+        "line": 178,
+        "current": "PASS: 3 golden seeds satisfy the PR B path allowlist; exactly 2 v8 fixtures change only city.society.items.*; 51 other fixture files are byte-identical."
+      },
+      {
+        "path": "packages/simulation/src/__tests__/fixtures/p7b-b2-path-diff.ts",
+        "line": 57,
+        "current": "console.log('PASS: 3 golden seeds, ' + historical.length + ' byte-identical historical fixtures, 10 v12 siblings. Forbidden paths: 0.');"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/fixtures/p7b-b2-path-diff.txt",
+        "line": 7,
+        "current": "PASS: 3 golden seeds, 83 byte-identical historical fixtures, 10 v12 siblings. Forbidden paths: 0."
+      },
+      {
+        "path": "packages/simulation/src/__tests__/fixtures/p7b-b3-path-diff.ts",
+        "line": 49,
+        "current": "console.log('PASS: ' + rows.length + ' golden seeds, ' + historical.length + ' byte-identical historical fixtures, ' +"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/fixtures/p7b-b3-path-diff.txt",
+        "line": 7,
+        "current": "PASS: 3 golden seeds, 93 byte-identical historical fixtures, 10 v13 siblings. Forbidden paths: 0."
+      },
+      {
+        "path": "packages/simulation/src/__tests__/garrison-week.test.ts",
+        "line": 5,
+        "current": "import { runTileTrialWeek } from '../tile-trial-week.js';"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/garrison-week.test.ts",
+        "line": 51,
+        "current": " const run=()=>{const s=city();for(let i=0;i<5;i++)runTileTrialWeek(s);return s;};expect(run()).toEqual(run());"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/item-effects.test.ts",
+        "line": 4,
+        "current": "import { runTileTrialWeek } from '../tile-trial-week.js';"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/item-effects.test.ts",
+        "line": 29,
+        "current": "  const r = runTileTrialWeek(s,ctx);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/item-effects.test.ts",
+        "line": 66,
+        "current": "  runTileTrialWeek(a); runTileTrialWeek(b,context('spec-1',skill));"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/item-effects.test.ts",
+        "line": 72,
+        "current": "  const control = structuredClone(s); runTileTrialWeek(control); runTileTrialWeek(s,ctx);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/item-effects.test.ts",
+        "line": 114,
+        "current": "  expect(runTileTrialWeek(b,ctx)).toEqual(runTileTrialWeek(a)); expect(b).toEqual(a);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/items-week.test.ts",
+        "line": 4,
+        "current": "import { runTileTrialWeek } from '../tile-trial-week.js';"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/items-week.test.ts",
+        "line": 35,
+        "current": "  const first = runTileTrialWeek(a, context(['field-1'])), second = runTileTrialWeek(b, context(['field-1']));"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/items-week.test.ts",
+        "line": 45,
+        "current": "  const s = city(seedFor('find', min, max)), r = runTileTrialWeek(s);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/items-week.test.ts",
+        "line": 58,
+        "current": "  const r = runTileTrialWeek(s, context([tileId]));"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/items-week.test.ts",
+        "line": 68,
+        "current": "  expect(runTileTrialWeek(s).items.materials).toEqual([]);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/items-week.test.ts",
+        "line": 71,
+        "current": "  expect(runTileTrialWeek(absent, context(['meadow-1', 'field-1'])).items.materials).toEqual([]);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/items-week.test.ts",
+        "line": 79,
+        "current": "  const control = structuredClone(s), r = runTileTrialWeek(s, context(['forest-1'])); runTileTrialWeek(control);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/items-week.test.ts",
+        "line": 86,
+        "current": "  const r = runTileTrialWeek(s);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/items-week.test.ts",
+        "line": 95,
+        "current": "  const r = runTileTrialWeek(s); runTileTrialWeek(control);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/items-week.test.ts",
+        "line": 104,
+        "current": "  expect(runTileTrialWeek(s).items.expired).toEqual([]);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/items-week.test.ts",
+        "line": 105,
+        "current": "  s.phase = 'planning'; expect(runTileTrialWeek(s).items.expired).toEqual(['common-ring']);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/items-week.test.ts",
+        "line": 115,
+        "current": "  let awarded: ReturnType<typeof runTileTrialWeek>['items']['legendary'] = null;"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/items-week.test.ts",
+        "line": 118,
+        "current": "    const r = runTileTrialWeek(s); s.phase = 'planning';"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/items-week.test.ts",
+        "line": 124,
+        "current": "  const next = runTileTrialWeek(s); expect(next.items.legendary).toBeNull();"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/items-week.test.ts",
+        "line": 129,
+        "current": "  const r = runTileTrialWeek(s);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/items-week.test.ts",
+        "line": 140,
+        "current": "it.each([0,42,20261028])('preserves PR A crime, crisis, order and law reports for 60 weeks at seed %i', seed => {"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/items-week.test.ts",
+        "line": 143,
+        "current": "    const r = runTileTrialWeek(s); s.phase = 'planning';"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/law-week.test.ts",
+        "line": 6,
+        "current": "import { runTileTrialWeek } from '../tile-trial-week.js';"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/law-week.test.ts",
+        "line": 13,
+        "current": " const baseline=runTileTrialWeek(control),r=runTileTrialWeek(s),terms=lawTerms([id]);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/law-week.test.ts",
+        "line": 46,
+        "current": " const r=runTileTrialWeek(s);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/law-week.test.ts",
+        "line": 50,
+        "current": " expect(r.householdUpkeep).toStrictEqual({paidMilli:1000,unpaidMilli:2000});"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/law-week.test.ts",
+        "line": 52,
+        "current": " expect(r.after.gold+r.householdUpkeep!.paidMilli).toBe(1760);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/law-week.test.ts",
+        "line": 71,
+        "current": " const r=runTileTrialWeek(s);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/law-week.test.ts",
+        "line": 152,
+        "current": " function run(){const s=createSocietyState();s.society!.laws.active=['poor-relief','watch-levy','licensed-vice'] as LawId[];for(let i=0;i<5;i++){runTileTrialWeek(s);s.phase='planning';}return s;}"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/legendary-pending.test.ts",
+        "line": 98,
+        "current": "it.each([0,2])('round-trips pending rewards byte-identically through records with %i instances', count => {"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/lord-health.test.ts",
+        "line": 73,
+        "current": "it('a Calm game below Crime 70 survives all 60 weeks from health one', () => {"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/npc-acquisition.test.ts",
+        "line": 5,
+        "current": "import { ACQUISITION_MESSAGES, drawAcquisition } from '../npc-acquisition.js';"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/npc-acquisition.test.ts",
+        "line": 35,
+        "current": "    expect(drawAcquisition(next.outside.seed, 1, forDraw.city)).toStrictEqual(state(next));"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/npc-acquisition.test.ts",
+        "line": 39,
+        "current": "    const drawn = drawAcquisition(next.outside.seed, 1, forDraw.city, [occupied]);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/npc-acquisition.test.ts",
+        "line": 109,
+        "current": "  it('keeps an empty no-market report byte-identical to the city week', () => {"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/npc-life-week.test.ts",
+        "line": 16,
+        "current": "  try { weekly = (await import(path)).runNpcLifeWeek; } catch { weekly = undefined; }"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/npc-life-week.test.ts",
+        "line": 216,
+        "current": "  it('keeps every no-NPC result byte-identical to the old delegated path', () => {"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/order-tax-week.test.ts",
+        "line": 3,
+        "current": "import { runTileTrialWeek } from '../tile-trial-week.js';"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/order-tax-week.test.ts",
+        "line": 9,
+        "current": " const r=runTileTrialWeek(s);expect(r.taxMilli).toBe(tax);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/order-tax-week.test.ts",
+        "line": 25,
+        "current": " expect(r.report!.householdUpkeep).toStrictEqual({paidMilli:1000,unpaidMilli:2000});"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/order-tax-week.test.ts",
+        "line": 27,
+        "current": " expect(r.report!.after.gold+r.report!.householdUpkeep!.paidMilli).toBe(1760);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/order-tax-week.test.ts",
+        "line": 47,
+        "current": "  const report=runTileTrialWeek(s);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/order-tax-week.test.ts",
+        "line": 53,
+        "current": "  expect(report.householdUpkeep).toStrictEqual({paidMilli:3000,unpaidMilli:0});"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/order-week.test.ts",
+        "line": 6,
+        "current": "import { runTileTrialWeek } from '../tile-trial-week.js';"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/order-week.test.ts",
+        "line": 42,
+        "current": " const s=createSocietyState(), r=runTileTrialWeek(s);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/order-week.test.ts",
+        "line": 51,
+        "current": " const r=runTileTrialWeek(s);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/order-week.test.ts",
+        "line": 96,
+        "current": " const r=runTileTrialWeek(s);expect(r.order!.after.crime).toBe(60);expect(r.order!.theftMilli.stone).toBe(4000);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/order-week.test.ts",
+        "line": 104,
+        "current": " const r=runTileTrialWeek(s),withCH=3333,expected=Math.floor(withCH*(10000+(authority-50)*40)/10000);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/order-week.test.ts",
+        "line": 113,
+        "current": " const r=runTileTrialWeek(s);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/order-week.test.ts",
+        "line": 133,
+        "current": " expect(result.report!.householdUpkeep).toStrictEqual({paidMilli:0,unpaidMilli:3000});"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/order-week.test.ts",
+        "line": 142,
+        "current": " const r=runTileTrialWeek(s);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/order-week.test.ts",
+        "line": 150,
+        "current": " const previous=s.happiness,r=runTileTrialWeek(s);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/order-week.test.ts",
+        "line": 163,
+        "current": " const baseline=runTileTrialWeek(control),r=runTileTrialWeek(s);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/order-week.test.ts",
+        "line": 179,
+        "current": " if(crime===24){const control=runTileTrialWeek(createSocietyState());expect(result.report!.society).toEqual(control.society);}"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/outside-week.test.ts",
+        "line": 4,
+        "current": "import { runTileTrialWeek } from '../tile-trial-week.js';"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/outside-week.test.ts",
+        "line": 24,
+        "current": "  const r=runTileTrialWeek(s);expect(inv(s).wood).toBe(11000);expect(r.outside?.producedMilli.wood).toBe(3000);expect(s.society!.outside['forest-1'].depositMilli).toBe(3000);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/outside-week.test.ts",
+        "line": 28,
+        "current": "  const r=runTileTrialWeek(s);expect(inv(s).iron).toBe(7000);expect(s.society!.outside['ore-1'].depositMilli).toBe(77000);expect(r.outside?.producedMilli.iron).toBe(3000);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/outside-week.test.ts",
+        "line": 31,
+        "current": "  const s=city();build(s,id,type,2);const r=runTileTrialWeek(s);expect(s.society!.stocksMilli[good]).toBe(amount);expect(r.outside?.producedMilli[good]).toBe(amount);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/outside-week.test.ts",
+        "line": 33,
+        "current": " it('weaves two Wool into one Cloth',()=>{const s=city();build(s,'plain-2','weaver',1);s.society!.stocksMilli.wool=2000;const r=runTileTrialWeek(s);expect(s.society!.stocksMilli).toMatchObject({wool:0,cloth:1000});expect(r.outside?.producedMilli.cloth).toBe(1000);});"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/outside-week.test.ts",
+        "line": 36,
+        "current": "  const r=runTileTrialWeek(s);expect(r.goodsStock?.producedMilli).toBe(2000);expect(inv(s).wood).toBe(0);expect(s.society!.stocksMilli.cloth).toBe(0);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/outside-week.test.ts",
+        "line": 40,
+        "current": "  const r=runTileTrialWeek(s);expect(r.goodsStock?.producedMilli).toBe(2000);expect(s.society!.stocksMilli).toMatchObject({wool:0,cloth:0});"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/outside-week.test.ts",
+        "line": 45,
+        "current": "  const a=runTileTrialWeek(dry),b=runTileTrialWeek(wet);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/outside-week.test.ts",
+        "line": 58,
+        "current": "  const s=city();inv(s).wheat=amount;const r=runTileTrialWeek(s);expect(inv(s).wheat).toBe(40000);expect(r.outside?.spoiledMilli.wheat).toBe(amount===40000?undefined:1);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/outside-week.test.ts",
+        "line": 64,
+        "current": "  inv(s).wheat=120001;const r=runTileTrialWeek(s);const cap=mode==='operating'?120000:40000;"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/outside-week.test.ts",
+        "line": 71,
+        "current": "  const r=runTileTrialWeek(s);expect(r.outside?.spoiledMilli).toEqual({food:56000,wheat:60000,wood:60000,iron:60000,goods:58550,luxury:60000,stone:60000,wool:60000,cloth:60000,herbs:60000});"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/outside-week.test.ts",
+        "line": 78,
+        "current": "  const r=runTileTrialWeek(s);expect(inv(s).wood).toBe(40000);expect(r.outside?.spoiledMilli.wood).toBe(4000);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/outside-week.test.ts",
+        "line": 85,
+        "current": "  expect(runTileTrialWeek(s).outside?.cleared).toEqual([]);expect(s.society!.outside['pasture-1'].clearMilli).toBe(2000);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/outside-week.test.ts",
+        "line": 86,
+        "current": "  const r=runTileTrialWeek(s);expect(r.outside?.cleared).toEqual(['pasture-1']);expect(s.society!.outside['pasture-1']).toMatchObject({wild:false,clearMilli:4000,clearWorkers:0});"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/outside-week.test.ts",
+        "line": 89,
+        "current": "  const s=city();s.society!.outside['pasture-1'].clearMilli=2000;runTileTrialWeek(s);expect(s.society!.outside['pasture-1'].clearMilli).toBe(2000);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/outside-week.test.ts",
+        "line": 90,
+        "current": "  s.society!.outside['pasture-1'].clearWorkers=2;expect(runTileTrialWeek(s).outside?.cleared).toEqual(['pasture-1']);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/outside-week.test.ts",
+        "line": 94,
+        "current": "  const a=runTileTrialWeek(s);expect(a.outside?.cleared).toEqual(['forest-3']);expect(inv(s).wood).toBe(13000);expect(s.society!.outside['forest-3'].clearMilli).toBe(6000);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/outside-week.test.ts",
+        "line": 95,
+        "current": "  runTileTrialWeek(s);expect(inv(s).wood).toBe(13000);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/outside-week.test.ts",
+        "line": 99,
+        "current": "  for(let i=0;i<7;i++){expect(runTileTrialWeek(s).outside?.researchCompleted).toEqual([]);expect(s.society!.research.progressMilli['deep-mining']).toBe((i+1)*1000);}"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/outside-week.test.ts",
+        "line": 100,
+        "current": "  expect(runTileTrialWeek(s).outside?.researchCompleted).toEqual(['deep-mining']);expect(s.society!.research).toMatchObject({topic:null,completed:['deep-mining']});"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/outside-week.test.ts",
+        "line": 101,
+        "current": "  expect(runTileTrialWeek(s).outside?.researchCompleted).toEqual([]);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/outside-week.test.ts",
+        "line": 106,
+        "current": "  s.society!.research.topic='deep-mining';runTileTrialWeek(s);expect(s.society!.research.progressMilli['deep-mining']).toBe(0);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/outside-week.test.ts",
+        "line": 108,
+        "current": " it('caps forest regrowth at its deposit cap',()=>{const s=city();s.society!.outside['forest-1'].depositMilli=58000;runTileTrialWeek(s);expect(s.society!.outside['forest-1'].depositMilli).toBe(60000);});"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/outside-week.test.ts",
+        "line": 111,
+        "current": "  const r=runTileTrialWeek(s);expect(r.outside?.exhausted).toEqual([id]);expect(tile(s,id)).toMatchObject({terrain:'plain',building:null});expect(isTileTrialState(s)).toBe(true);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/society-end-week.test.ts",
+        "line": 4,
+        "current": "import { runTileTrialWeek } from '../tile-trial-week.js';"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/society-end-week.test.ts",
+        "line": 8,
+        "current": " const report=runTileTrialWeek(a);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/society-end-week.test.ts",
+        "line": 22,
+        "current": " expect(runTileTrialWeek(b)).toEqual(report); expect(a).toEqual(b); expect(before).toEqual(createSocietyState());"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/society-end-week.test.ts",
+        "line": 33,
+        "current": " const report=runTileTrialWeek(city);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/society-end-week.test.ts",
+        "line": 50,
+        "current": " const report=runTileTrialWeek(city);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/society-stock-integrity.test.ts",
+        "line": 162,
+        "current": "  expect(recovery.householdUpkeep).toStrictEqual({paidMilli:3000,unpaidMilli:0});"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/society-stock-integrity.test.ts",
+        "line": 164,
+        "current": "  expect(recovery.after.gold + recovery.householdUpkeep!.paidMilli).toBeGreaterThanOrEqual(3000);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/tile-trial-p7b.test.ts",
+        "line": 177,
+        "current": "  expect(report.householdUpkeep).toStrictEqual({ paidMilli: 3000, unpaidMilli: 0 });"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/tile-trial-p7b.test.ts",
+        "line": 178,
+        "current": "  expect(withoutHomes.householdUpkeep).toBe(undefined);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/tile-trial-p7b.test.ts",
+        "line": 199,
+        "current": "  expect(report.householdUpkeep).toStrictEqual({ paidMilli: 3000, unpaidMilli: 0 });"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/tile-trial-p7b.test.ts",
+        "line": 213,
+        "current": "  expect(report.householdUpkeep).toStrictEqual({ paidMilli: 1000, unpaidMilli: 2000 });"
+      },
+      {
+        "path": "packages/simulation/src/character-life-command.ts",
+        "line": 4,
+        "current": "import { recordNpcLifeEvent, runNpcLifeWeek } from './npc-life-week.js';"
+      },
+      {
+        "path": "packages/simulation/src/character-life-command.ts",
+        "line": 5,
+        "current": "import { acquisitionWeekReport, drawAcquisition, executeAcquisitionCommand, isAcquisitionCommand, type AcquisitionCommandType } from './npc-acquisition.js';"
+      },
+      {
+        "path": "packages/simulation/src/character-life-command.ts",
+        "line": 69,
+        "current": "      const lifeWeek = runNpcLifeWeek(next.npcs, { week: next.city.world.week, authority: next.city.society!.order.authority });"
+      },
+      {
+        "path": "packages/simulation/src/character-life-command.ts",
+        "line": 76,
+        "current": "      const household = acquisitionWeekReport(worldSeed, session.city.society!.acquisition, report.week);"
+      },
+      {
+        "path": "packages/simulation/src/character-life-command.ts",
+        "line": 78,
+        "current": "      next.city.society!.acquisition = drawAcquisition(worldSeed, week, next.city, next.npcs);"
+      },
+      {
+        "path": "packages/simulation/src/character-life-command.ts",
+        "line": 81,
+        "current": "      next.city.society!.acquisition = drawAcquisition(worldSeed, week, next.city, next.npcs);"
+      },
+      {
+        "path": "packages/simulation/src/npc-acquisition.ts",
+        "line": 42,
+        "current": "export function drawAcquisition(seed: number, week: number, city: TileTrialState, npcs: readonly WorldNpc[] = []): AcquisitionState {"
+      },
+      {
+        "path": "packages/simulation/src/npc-acquisition.ts",
+        "line": 66,
+        "current": "export function acquisitionWeekReport(seed: number, previous: AcquisitionState, week: number): HouseholdReport | undefined {"
+      },
+      {
+        "path": "packages/simulation/src/npc-life-week.ts",
+        "line": 16,
+        "current": "export function runNpcLifeWeek(npcs: WorldNpc[], input: { week: number; authority: number }): { npcs: WorldNpc[]; report: NpcLifeWeekReport } {"
+      },
+      {
+        "path": "packages/simulation/src/tile-trial-week.ts",
+        "line": 16,
+        "current": "export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext): Readonly<TileTrialReport> {"
+      },
+      {
+        "path": "packages/simulation/src/tile-trial-week.ts",
+        "line": 137,
+        "current": "  let householdUpkeep: TileTrialReport['householdUpkeep'];"
+      },
+      {
+        "path": "packages/simulation/src/tile-trial-week.ts",
+        "line": 140,
+        "current": "    householdUpkeep ??= { paidMilli: 0, unpaidMilli: 0 };"
+      },
+      {
+        "path": "packages/simulation/src/tile-trial-week.ts",
+        "line": 143,
+        "current": "      householdUpkeep.unpaidMilli = trialSafe(householdUpkeep.unpaidMilli + due);"
+      },
+      {
+        "path": "packages/simulation/src/tile-trial-week.ts",
+        "line": 147,
+        "current": "    householdUpkeep.paidMilli = trialSafe(householdUpkeep.paidMilli + due);"
+      },
+      {
+        "path": "packages/simulation/src/tile-trial-week.ts",
+        "line": 150,
+        "current": "  return Object.freeze({ items, laws, crimeEvent, ...(crisis ? {crisis} : {}), order, outside, week: s.world.week - 1, before: Object.freeze(before), after: Object.freeze({ ...stocks }), taxMilli, farmBatchGoldMilli, farmExtraUpkeepMilli, upkeepPaidMilli, unpaidUpkeepMilli, foodDemandMilli, foodConsumedMilli, happinessBefore, happinessAfter: s.happiness, goods, ...(goodsStock ? { goodsStock } : {}), ...(societyReport ? { society:societyReport,luxuryImportedMilli,trainingGoldMilli } : {}), activities: Object.freeze(activities), ...(immigration ? { immigration } : {}), ...(householdUpkeep ? { householdUpkeep: Object.freeze(householdUpkeep) } : {}) });"
+      },
+      {
+        "path": "packages/simulation/src/tile-trial.ts",
+        "line": 4,
+        "current": "import { runTileTrialWeek,trialSafe } from \"./tile-trial-week.js\";"
+      },
+      {
+        "path": "packages/simulation/src/tile-trial.ts",
+        "line": 106,
+        "current": "      report = runTileTrialWeek(next,ctx);"
+      },
+      {
+        "path": "packages/ui/src/__tests__/report-letters.test.ts",
+        "line": 558,
+        "current": "    rows(report({ householdUpkeep: { paidMilli, unpaidMilli } }), 'steward')"
+      },
+      {
+        "path": "packages/ui/src/report-letters.ts",
+        "line": 104,
+        "current": "      if (report.householdUpkeep) {"
+      },
+      {
+        "path": "packages/ui/src/report-letters.ts",
+        "line": 105,
+        "current": "        const { paidMilli, unpaidMilli } = report.householdUpkeep;"
+      },
+      {
+        "path": "packages/ui/src/report-letters.ts",
+        "line": 203,
+        "current": "    if (item.id === 'steward' && report.householdUpkeep) {"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.helpers.ts",
+        "line": 541,
+        "current": "  const householdUpkeep = panel.locator('[data-letter=\"steward\"] .letter-rows dt:text-is(\"Household upkeep\") + dd');"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.helpers.ts",
+        "line": 542,
+        "current": "  if (await householdUpkeep.count()) {"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.helpers.ts",
+        "line": 543,
+        "current": "    const amounts = (await householdUpkeep.textContent())?.match(/^([\\d,.]+) Gold paid(?: · ([\\d,.]+) Gold unpaid)?$/);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.helpers.ts",
+        "line": 546,
+        "current": "    actual.householdUpkeep = { paidMilli: milli(paid), unpaidMilli: unpaid === undefined ? 0 : milli(unpaid) };"
+      }
+    ],
+    "ui": [
+      {
+        "path": "docs/superpowers/plans/2026-10-26-player-first-navigation.md",
+        "line": 62,
+        "current": "| `packages/ui/src/CharacterLifeCharacters.svelte` (new) | Tasks 2/3/4: roster, selected id, per-id areas/post drafts/targeted assign error, one keyed profile, existing assignment executor route. |"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-26-player-first-navigation.md",
+        "line": 149,
+        "current": "**Files:** Create `CharacterLifeCharacters.svelte`; modify Profile, UI types if needed for the declared types, owner's Characters snippet, navigation helper/spec and both existing Life specs. No `WorldNpcPanel.svelte` edits."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-27-city-navigation.md",
+        "line": 39,
+        "current": "**Read evidence:** CharacterLifeShell currently exposes all five stocks and Reports as a view. TileManagement owns report, phase, drafts, errors, async import tickets/revisions and atomic load publication; it already passes report via a snippet. SoloWeekReport is used by that Life snippet only. CharacterProfile is used by CharacterLifeCharacters, WorldNpcPanel and TileManagement; protect all callers. CITY_DESIGN is display-only and consumed by WeeklyManagement, whose preview currently assumes three groups and an unconditional name paragraph. Existing E2E helpers assume Reports is a view and parse a percentage even for zero demand; migrate those contracts without weakening complete ledger/command parity."
+      },
+      {
+        "path": "docs/verification/P2D-TEST-LEDGER.md",
+        "line": 41,
+        "current": "- tests/e2e/character-life-navigation.spec.ts › full-body placeholder preserves profile disclosure at 375px — changed: direct assertions unchanged: `expect(charactersView(page).getByRole('navigation', { name: 'Character roster', exact: true }).getByRole('button')).toHaveCount(4)`; `expect(placeholder).toBeVisible()`. Input factory default changes from legacy Life to SOCIETY_RULESET; the named scenario and its exact focus/state/report assertions remain."
+      },
+      {
+        "path": "docs/verification/P2D-TEST-LEDGER.md",
+        "line": 42,
+        "current": "- tests/e2e/character-life-navigation.spec.ts › full-body placeholder preserves profile disclosure at 1280px — changed: direct assertions unchanged: `expect(charactersView(page).getByRole('navigation', { name: 'Character roster', exact: true }).getByRole('button')).toHaveCount(4)`; `expect(placeholder).toBeVisible()`. Input factory default changes from legacy Life to SOCIETY_RULESET; the named scenario and its exact focus/state/report assertions remain."
+      },
+      {
+        "path": "docs/verification/P2D-TEST-LEDGER.md",
+        "line": 44,
+        "current": "- tests/e2e/character-life-navigation.spec.ts › one character window remembers areas and closes new-person disclosures — changed: direct assertions unchanged: `expect(roster.getByRole('button').first()).toHaveText('You · Leader of Haven')`; `expect(window).toHaveAttribute('data-character-id', 'player')`. Input factory default changes from legacy Life to SOCIETY_RULESET; the named scenario and its exact focus/state/report assertions remain."
+      },
+      {
+        "path": "docs/verification/P2D-TEST-LEDGER.md",
+        "line": 59,
+        "current": "- tests/e2e/character-life-navigation.spec.ts › same-ID Player private disclosure resets on successful Continue — changed: direct assertions unchanged: `expect(characterWindow(page)).toHaveAttribute('data-character-id', 'player')`; `expect(characterWindow(page).getByRole('tab', { name: 'Description', exact: true })).toHaveAttribute('aria-selected', 'true')`. Input factory default changes from legacy Life to SOCIETY_RULESET; the named scenario and its exact focus/state/report assertions remain."
+      },
+      {
+        "path": "docs/verification/P2D-TEST-LEDGER.md",
+        "line": 61,
+        "current": "- tests/e2e/character-life-navigation.spec.ts › same-ID Player private disclosure resets on successful Import — changed: direct assertions unchanged: `expect(characterWindow(page)).toHaveAttribute('data-character-id', 'player')`; `expect(characterWindow(page).getByRole('tab', { name: 'Description', exact: true })).toHaveAttribute('aria-selected', 'true')`. Input factory default changes from legacy Life to SOCIETY_RULESET; the named scenario and its exact focus/state/report assertions remain."
+      },
+      {
+        "path": "docs/verification/P2D-TEST-LEDGER.md",
+        "line": 82,
+        "current": "- tests/e2e/character-life-navigation.spec.ts › player flows at 1280px › F3 read people — changed: direct assertions unchanged: `expect(win).toHaveAttribute('data-character-id', 'player')`; `expect(win.getByTestId(\\`profile-${c.id}-short\\`)).toHaveText(c.shortDescription)`. Input factory default changes from legacy Life to SOCIETY_RULESET; the named scenario and its exact focus/state/report assertions remain."
+      },
+      {
+        "path": "docs/verification/P2D-TEST-LEDGER.md",
+        "line": 87,
+        "current": "- tests/e2e/character-life-navigation.spec.ts › player flows at 375px › F3 read people — changed: direct assertions unchanged: `expect(win).toHaveAttribute('data-character-id', 'player')`; `expect(win.getByTestId(\\`profile-${c.id}-short\\`)).toHaveText(c.shortDescription)`. Input factory default changes from legacy Life to SOCIETY_RULESET; the named scenario and its exact focus/state/report assertions remain."
+      },
+      {
+        "path": "packages/ui/src/CharacterLifeCharacters.svelte",
+        "line": 74,
+        "current": "<nav class=\"roster\" aria-label=\"Character roster\">"
+      },
+      {
+        "path": "packages/ui/src/CharacterLifeCharacters.svelte",
+        "line": 86,
+        "current": "<section class=\"card\" aria-label=\"Character window\" data-character-id={selectedCharacterId}>"
+      },
+      {
+        "path": "packages/ui/src/CharacterLifeCity.svelte",
+        "line": 90,
+        "current": "          <section aria-label=\"Home residents\">"
+      },
+      {
+        "path": "packages/ui/src/CharacterProfile.svelte",
+        "line": 3,
+        "current": "  import NpcSheet from './NpcSheet.svelte';"
+      },
+      {
+        "path": "packages/ui/src/CharacterProfile.svelte",
+        "line": 59,
+        "current": "        <dl data-character-identity>"
+      },
+      {
+        "path": "packages/ui/src/CharacterProfile.svelte",
+        "line": 80,
+        "current": "      {#if npc}<NpcSheet {npc} age={c.age} {description} />{:else}{@render description()}{/if}"
+      },
+      {
+        "path": "packages/ui/src/NpcSheet.svelte",
+        "line": 5,
+        "current": "  import { buildNpcSheetView } from './npc-sheet-view.js';"
+      },
+      {
+        "path": "packages/ui/src/NpcSheet.svelte",
+        "line": 18,
+        "current": "  const sheet = $derived(buildNpcSheetView(npc));"
+      },
+      {
+        "path": "packages/ui/src/NpcSheet.svelte",
+        "line": 35,
+        "current": "<div class=\"npc-sheet ledger-parchment\" data-testid=\"npc-sheet\">"
+      },
+      {
+        "path": "packages/ui/src/NpcSheet.svelte",
+        "line": 153,
+        "current": "  .npc-sheet { min-width: 0; overflow-wrap: anywhere; padding: 8px; }"
+      },
+      {
+        "path": "packages/ui/src/SoloWeekReport.svelte",
+        "line": 136,
+        "current": "            <li data-household-kind={row.kind}><span>{row.label}</span> · <strong>{row.value}</strong></li>"
+      },
+      {
+        "path": "packages/ui/src/TileManagement.svelte",
+        "line": 9,
+        "current": "  import CharacterLifeCharacters from './CharacterLifeCharacters.svelte';"
+      },
+      {
+        "path": "packages/ui/src/TileManagement.svelte",
+        "line": 36,
+        "current": "  let lifeCharacters: CharacterLifeCharacters;"
+      },
+      {
+        "path": "packages/ui/src/TileManagement.svelte",
+        "line": 271,
+        "current": "        <CharacterLifeCharacters bind:this={lifeCharacters} session={{ city: state, outside, npcs, player, profiles }} {locked} onpostdrafts={entries => { postDrafts = entries; }}"
+      },
+      {
+        "path": "packages/ui/src/__tests__/npc-sheet-view.test.ts",
+        "line": 5,
+        "current": "const modules = import.meta.glob<typeof import('../npc-sheet-view.js')>('../npc-sheet-view.ts', { eager: true });"
+      },
+      {
+        "path": "packages/ui/src/__tests__/npc-sheet-view.test.ts",
+        "line": 8,
+        "current": "  const module = modules['../npc-sheet-view.ts'];"
+      },
+      {
+        "path": "packages/ui/src/__tests__/npc-sheet-view.test.ts",
+        "line": 10,
+        "current": "  return module.buildNpcSheetView;"
+      },
+      {
+        "path": "packages/ui/src/npc-sheet-view.ts",
+        "line": 44,
+        "current": "export function buildNpcSheetView({ character, life }: WorldNpc) {"
+      },
+      {
+        "path": "tests/e2e/character-life-boundary.spec.ts",
+        "line": 14,
+        "current": "import { BROWSER_NPC_IDS, makeLifeWithNpcs,openReportDetails, characterPanel,charactersView,characterWindow,expectOneCharacterWindow,expectReport,go,observeSheetLife,reportFulfillment,reportRegion,selectArea,selectNpcSheetTab,selectPerson } from './character-life-navigation.helpers.ts';"
+      },
+      {
+        "path": "tests/e2e/character-life-boundary.spec.ts",
+        "line": 54,
+        "current": "  if (life) await selectNpcSheetTab(page, 'Profile');"
+      },
+      {
+        "path": "tests/e2e/character-life-boundary.spec.ts",
+        "line": 58,
+        "current": "  const identity = panel.locator('[data-character-identity]');"
+      },
+      {
+        "path": "tests/e2e/character-life-boundary.spec.ts",
+        "line": 95,
+        "current": "    const skills = await selectNpcSheetTab(page, 'Skills');"
+      },
+      {
+        "path": "tests/e2e/character-life-boundary.spec.ts",
+        "line": 98,
+        "current": "    const history = await selectNpcSheetTab(page, 'History');"
+      },
+      {
+        "path": "tests/e2e/character-life-boundary.spec.ts",
+        "line": 246,
+        "current": "  const roster = charactersView(page).getByRole('navigation', { name: 'Character roster', exact: true });"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.helpers.ts",
+        "line": 105,
+        "current": "  await expect(characterWindow(page)).toHaveAttribute('data-character-id', id);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.helpers.ts",
+        "line": 116,
+        "current": "export async function selectNpcSheetTab(page: Page, name: string) {"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.helpers.ts",
+        "line": 132,
+        "current": "  const hasSheet = await window.getAttribute('data-character-id') !== 'player' &&"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.helpers.ts",
+        "line": 548,
+        "current": "  const householdRows = panel.locator('[data-household-kind]');"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.helpers.ts",
+        "line": 554,
+        "current": "      const kind = await row.getAttribute('data-household-kind');"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.helpers.ts",
+        "line": 597,
+        "current": "    const acquisition = [...shell.querySelectorAll('[data-acquisition-action], [data-acquisition-panel] [role=\"tab\"], [data-household-kind]')].map(node => ({"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 8,
+        "current": "import { characterPanel, characterTabs, characterWindow, charactersView, expectCheckpointRejectionPreservesUi, expectOneCharacterWindow, openReportDetails,expectReport, expectRequirements, exportLife, go, importLife, lifeUiSnapshot, makeLife, observeSheetLife, reportFixture, reportRegion, reportUnits, reportMilli, reportWeek, requirementsRegion, selectArea, selectNpcSheetTab, selectPerson } from './character-life-navigation.helpers.ts';"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 148,
+        "current": "    await go(page, 'characters'); await expect(characterWindow(page)).toHaveAttribute('data-character-id', BROWSER_NPC_IDS[0]);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 360,
+        "current": "      await expect(charactersView(page).getByRole('navigation', { name: 'Character roster', exact: true }).getByRole('button')).toHaveCount(4);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 432,
+        "current": "    await expect(characterWindow(page)).toHaveAttribute('data-character-id', 'player');"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 446,
+        "current": "  const roster = characters.getByRole('navigation', { name: 'Character roster', exact: true });"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 448,
+        "current": "  await expect(window).toHaveAttribute('data-character-id', 'player');"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 453,
+        "current": "  await expect(window).toHaveAttribute('data-character-id', BROWSER_NPC_IDS[0]);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 483,
+        "current": "  await expect(window).toHaveAttribute('data-character-id', BROWSER_NPC_IDS[1]);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 953,
+        "current": "    await expect(characterWindow(page)).toHaveAttribute('data-character-id', 'player');"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 971,
+        "current": "    await expect(characterWindow(page)).toHaveAttribute('data-character-id', 'player');"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 984,
+        "current": "    await expect(characterWindow(page)).toHaveAttribute('data-character-id', 'player');"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 1073,
+        "current": "        await expect(characterWindow(page)).toHaveAttribute('data-character-id', BROWSER_NPC_IDS[0]);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 1314,
+        "current": "      await expect(win).toHaveAttribute('data-character-id', 'player');"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 1319,
+        "current": "        const panel = characterPanel(page), identity = panel.locator('[data-character-identity]');"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 1347,
+        "current": "          const skills = await selectNpcSheetTab(page, 'Skills');"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 1350,
+        "current": "          const history = await selectNpcSheetTab(page, 'History');"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 1399,
+        "current": "      await go(page, 'characters'); await expect(characterWindow(page)).toHaveAttribute('data-character-id', 'player');"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 1420,
+        "current": "      await go(page, 'characters'); await expect(characterWindow(page)).toHaveAttribute('data-character-id', 'player');"
+      },
+      {
+        "path": "tests/e2e/character-life.spec.ts",
+        "line": 6,
+        "current": "import { BROWSER_NPC_IDS, seedBrowserNpcs, characterWindow, charactersView, expectCheckpointRejectionPreservesUi, expectOneCharacterWindow, exportLife, go, importLife, lifeUiSnapshot, makeLife, selectArea, selectNpcSheetTab, selectPerson } from './character-life-navigation.helpers.ts';"
+      },
+      {
+        "path": "tests/e2e/character-life.spec.ts",
+        "line": 220,
+        "current": "  const roster = charactersView(page).getByRole('navigation', { name: 'Character roster', exact: true });"
+      },
+      {
+        "path": "tests/e2e/character-life.spec.ts",
+        "line": 246,
+        "current": "  const history = await selectNpcSheetTab(page, 'History');"
+      },
+      {
+        "path": "tests/e2e/npc-homes.spec.ts",
+        "line": 14,
+        "current": "  const home = manage.getByRole('region', { name: 'Home residents', exact: true });"
+      },
+      {
+        "path": "tests/e2e/npc-sheet.spec.ts",
+        "line": 13,
+        "current": "const sheet = (page: Page) => characterWindow(page).getByTestId('npc-sheet');"
+      },
+      {
+        "path": "tests/e2e/npc-sheet.spec.ts",
+        "line": 365,
+        "current": "        const path = info.outputPath('npc-sheet-' + captureNames[i] + '-1280.png');"
+      },
+      {
+        "path": "tests/e2e/npc-sheet.spec.ts",
+        "line": 371,
+        "current": "    await writeMetrics(info, 'npc-sheet-accessibility-' + viewport.width + '.json', measured);"
+      },
+      {
+        "path": "tests/e2e/npc-sheet.spec.ts",
+        "line": 418,
+        "current": "    await writeMetrics(info, 'npc-sheet-reflow-' + viewport.width + '.json', { measured, report });"
+      },
+      {
+        "path": "tests/e2e/world-npc-session.spec.ts",
+        "line": 6,
+        "current": "import { BROWSER_NPC_IDS, makeLifeWithNpcs, seedBrowserNpcs,characterWindow,charactersView,exportLife,go,selectArea,selectNpcSheetTab,selectPerson} from './character-life-navigation.helpers.ts';"
+      },
+      {
+        "path": "tests/e2e/world-npc-session.spec.ts",
+        "line": 14,
+        "current": " await boot(page,s);const n=await names(page);expect(new Set(n).size).toBe(3);expect(n).toStrictEqual(s.npcs.map(npc=>npc.character.name));for(const name of n)expect(name).toMatch(/^[A-Z][a-z]+ [A-Z][a-z]+$/);await expect(charactersView(page).getByRole('navigation',{name:'Character roster',exact:true}).getByRole('button')).toHaveCount(4);for(const id of IDS){await expect(await post(page,id)).toHaveText('Post: Unassigned');await expect(characterWindow(page)).toContainText('NPC post skills apply at End Week.');}"
+      },
+      {
+        "path": "tests/e2e/world-npc-session.spec.ts",
+        "line": 16,
+        "current": " const skills=await selectNpcSheetTab(page,'Skills');"
+      }
+    ],
+    "commands": [
+      {
+        "path": "docs/superpowers/plans/2026-10-26-player-first-navigation.md",
+        "line": 144,
+        "current": "- [ ] **Step 4: Run focused GREEN and migrate existing callers.** Run `npm.cmd run lint`, `npm.cmd run typecheck`, `npm.cmd test -- packages/ui/src/__tests__/character-life-session.test.ts`, `npm.cmd run build`, `npm.cmd run test:smoke -- tests/e2e/character-life-navigation.spec.ts tests/e2e/character-life.spec.ts tests/e2e/character-life-boundary.spec.ts tests/e2e/world-npc-session.spec.ts tests/e2e/workforce-draft-error.spec.ts`. Existing Life tests now navigate the appropriate destination before their unchanged content assertion; scope global versus Session statuses. In parity, use `aria-disabled` equality for the two turn controls instead of native `disabled`, preserving the same `actionTypes` oracle; checkpoint/Manage controls keep native disabled checks. Select the relevant view before checking every disabled reason. All selected tests must exit 0. Other modes remain unedited."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-26-player-first-navigation.md",
+        "line": 238,
+        "current": "| `o.week`, `phase`, `revision`; `settlement.stocks` for all `WEEKLY_RESOURCE_KEYS`, residents, assignedWorkers, workforceMilli, happiness | Shell: exact phase/week, public revision attr and every formatted stock/workforce/population/happiness value. End/Next availability equals `actionTypes` through `aria-disabled`, with genuine handler-guard tests. | 1 |"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-26-solo-mcp-stage0.md",
+        "line": 107,
+        "current": "export type CharacterLifeActionType = 'BUILD' | 'REPLACE' | 'UPGRADE'"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-26-solo-mcp-stage0.md",
+        "line": 173,
+        "current": "**Interfaces:** Consume Task 2's `CharacterLifeActionType`. Export `Observation`, `VisibleCharacter`, `VisibleReport` and this pure function through the existing simulation barrel:"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-26-solo-mcp-stage0.md",
+        "line": 208,
+        "current": "  actionTypes: CharacterLifeActionType[]; disabledReasons: string[];"
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-26-solo-mcp-stage0.md",
+        "line": 233,
+        "current": "Test `actionable catalogues and phase controls`: assert every tile id, terrain and building's four keys; six offered type ids equal `Object.keys(TRIAL_BUILDINGS)`; catalogue values equal individually selected source fields. Outside equals `summarizeOutside(s.outside, 'player')`; residents/cohort sum, workforce via `weeklyWorkforceMilli`, assigned worker sum and stocks equal rendered data. Free slots equal unlocked ids minus occupied posts, with exact `Manager — Farm (field-1)`/corresponding building labels. After ASSIGN and REPLACE compare occupied/free sets and cleared posts. Planning actionTypes are the eight supported literals excluding NEXT_WEEK, in Task 2 union order; Report is exactly `['NEXT_WEEK']`. Disabled reasons include only existing UI explanations: the Report checkpoint-lock text `Choose Plan next week before saving, continuing, exporting or importing.` and `No free manager post. Build a Farm, Processor, Logging Camp, Mine, Workshop or Market.` **only when freeManagerSlots is empty AND at least one NPC has postTileId null**. Emit the latter reason once, even if several unassigned cards display it. No resource/terrain/stale predictions."
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-26-solo-mcp-stage0.md",
+        "line": 243,
+        "current": "  'actionTypes', 'buildings', 'disabledReasons', 'freeManagerSlots', 'lastReport',"
+      },
+      {
+        "path": "packages/core/src/data/laws.json",
+        "line": 153,
+        "current": "    \"CARD_PENDING\": \"Answer the crisis first.\","
+      },
+      {
+        "path": "packages/core/src/data/validate.ts",
+        "line": 298,
+        "current": "    CARD_PENDING: \"Answer the crisis first.\";"
+      },
+      {
+        "path": "packages/core/src/data/validate.ts",
+        "line": 565,
+        "current": "    CARD_PENDING: text, UNKNOWN_LAW: text, TOWN_HALL_CLOSED: text, VOTE_USED: text, LAW_ACTIVE: text, LAW_SLOTS_FULL: text, LAW_COOLDOWN: text, LOBBY_INVALID: text, VOTE_SHORT: text, LAW_INACTIVE: text"
+      },
+      {
+        "path": "packages/core/src/trial/__tests__/law.test.ts",
+        "line": 88,
+        "current": "  check('unknown','CARD_PENDING','Answer the crisis first.');s.society!.pendingCard=null;"
+      },
+      {
+        "path": "packages/core/src/trial/law.ts",
+        "line": 75,
+        "current": "  if (society.pendingCard) return refuse('CARD_PENDING',LAW_MESSAGES.CARD_PENDING);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/character-life-command.test.ts",
+        "line": 8,
+        "current": "import { executeCharacterLifeCommand,type CharacterLifeActionType,type CharacterLifeCommandResult } from '../character-life-command.js';"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/character-life-command.test.ts",
+        "line": 129,
+        "current": "  const commands: { type: CharacterLifeActionType; fields: Record<string, unknown>; bad: Record<string, unknown>; code: string }[] = ["
+      },
+      {
+        "path": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+        "line": 68,
+        "current": "  keys(o, ['actionTypes', 'buildings', 'disabledReasons', 'freeManagerSlots', 'lastReport', 'npcs', 'outside',"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+        "line": 113,
+        "current": "const planningActions = ['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED', 'END_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC', 'EXTEND_WALL', 'SET_TRAINING', 'RELEASE_NPC'];"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+        "line": 238,
+        "current": "    expect(o.actionTypes).toEqual(planningActions); expect(o.disabledReasons).toEqual([]);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+        "line": 286,
+        "current": "    expect(observeCharacterLife(report.next, report.report!).actionTypes).toEqual(['NEXT_WEEK']);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+        "line": 332,
+        "current": "    expect(o.actionTypes).toEqual(['NEXT_WEEK']); expect(o.disabledReasons).toEqual([checkpointLock]);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+        "line": 342,
+        "current": "    expect(retained.actionTypes).toEqual(planningActions); expect(retained.disabledReasons).toEqual([]);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+        "line": 365,
+        "current": "    o.actionTypes.length = 0; o.disabledReasons.push('changed');"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/crisis-commands.test.ts",
+        "line": 37,
+        "current": " reject(s,{type:'END_WEEK',expectedRevision:0,expectedWeek:1},'CARD_PENDING','Answer the crisis first.');"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/lord-health.test.ts",
+        "line": 68,
+        "current": "  for (const type of ['BUILD','REPLACE','UPGRADE','SET_WORKERS','SET_ENABLED','END_WEEK','NEXT_WEEK','ENACT_LAW','REPEAL_LAW','CHOOSE_CARD_OPTION','ASSIGN_NPC','UNASSIGN_NPC','MOVE_NPC_HOME','BUY_NPC','BID_NPC','WITHDRAW_BID','SELL_NPC','RELEASE_NPC','EXTEND_WALL','SET_TRAINING','CLEAR','SET_RESEARCH','BUILD_DEEP_SHAFT',...ITEM_COMMAND_TYPES]) {"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/npc-acquisition.test.ts",
+        "line": 81,
+        "current": "    refuse(posted, 'RELEASE_NPC', { npcId }, 'STORAGE_FULL');"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/npc-acquisition.test.ts",
+        "line": 103,
+        "current": "    const released = succeeded(s, 'RELEASE_NPC', { npcId }).next;"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/npc-auction.test.ts",
+        "line": 82,
+        "current": "  const withdrawn = succeeded(s, 'WITHDRAW_BID', { source }).next;"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/replay-checkpoint.test.ts",
+        "line": 140,
+        "current": "  const withdrawn = succeeded(auctionFixture(1, 2), 'WITHDRAW_BID', { source }).next;"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/replay-checkpoint.test.ts",
+        "line": 164,
+        "current": "  const released = succeeded(ready, 'RELEASE_NPC', { npcId: ready.npcs[0].character.id }).next;"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/replay-checkpoint.test.ts",
+        "line": 178,
+        "current": "  const withdrawn = succeeded(started, 'WITHDRAW_BID', { source }).next;"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/replay-checkpoint.test.ts",
+        "line": 189,
+        "current": "  state = succeeded(state, 'RELEASE_NPC', { npcId }).next;"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/replay-checkpoint.test.ts",
+        "line": 242,
+        "current": "  const released = succeeded(start, 'RELEASE_NPC', { npcId: start.npcs[0].character.id }).next;"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/society-life.test.ts",
+        "line": 38,
+        "current": "  expect(observeCharacterLife(life(), null).actionTypes).toEqual(expect.arrayContaining(['EXTEND_WALL', 'SET_TRAINING']));"
+      },
+      {
+        "path": "packages/simulation/src/character-life-command.ts",
+        "line": 7,
+        "current": "export type CharacterLifeActionType = 'BUILD' | 'REPLACE' | 'UPGRADE'"
+      },
+      {
+        "path": "packages/simulation/src/character-life-observation.ts",
+        "line": 8,
+        "current": "import type { CharacterLifeActionType } from './character-life-command.js';"
+      },
+      {
+        "path": "packages/simulation/src/character-life-observation.ts",
+        "line": 35,
+        "current": "  actionTypes: CharacterLifeActionType[]; disabledReasons: string[];"
+      },
+      {
+        "path": "packages/simulation/src/character-life-observation.ts",
+        "line": 107,
+        "current": "    actionTypes: city.phase === 'report' ? ['NEXT_WEEK']"
+      },
+      {
+        "path": "packages/simulation/src/character-life-observation.ts",
+        "line": 111,
+        "current": "        ...(acquisitionEnabled(city, 'auction-house') || acquisitionEnabled(city, 'slave-market') ? ['BID_NPC', 'WITHDRAW_BID'] as const : []),"
+      },
+      {
+        "path": "packages/simulation/src/character-life-observation.ts",
+        "line": 113,
+        "current": "        ...(session.npcs.length ? ['RELEASE_NPC'] as const : [])],"
+      },
+      {
+        "path": "packages/simulation/src/npc-acquisition.ts",
+        "line": 15,
+        "current": "  WITHDRAW_BID: ['source'],"
+      },
+      {
+        "path": "packages/simulation/src/npc-acquisition.ts",
+        "line": 17,
+        "current": "  RELEASE_NPC: ['npcId'],"
+      },
+      {
+        "path": "packages/simulation/src/npc-acquisition.ts",
+        "line": 114,
+        "current": "    if (type === 'SELL_NPC' || type === 'RELEASE_NPC') {"
+      },
+      {
+        "path": "packages/simulation/src/npc-acquisition.ts",
+        "line": 152,
+        "current": "        if (type === 'WITHDRAW_BID') closeAuctionLot(lot, rivals, 'lost');"
+      },
+      {
+        "path": "packages/simulation/src/tile-trial.ts",
+        "line": 15,
+        "current": "    if (c.type === 'END_WEEK' && state.society.pendingCard) return fail('CARD_PENDING','Answer the crisis first.');"
+      },
+      {
+        "path": "packages/ui/src/AcquisitionPanel.svelte",
+        "line": 130,
+        "current": "              <button type=\"button\" data-acquisition-action=\"WITHDRAW_BID\" aria-disabled={!!withdrawReason}"
+      },
+      {
+        "path": "packages/ui/src/AcquisitionPanel.svelte",
+        "line": 132,
+        "current": "                onclick={() => { if (!withdrawReason) oncommand('WITHDRAW_BID', { source }); }}>Withdraw</button>"
+      },
+      {
+        "path": "packages/ui/src/CharacterLifeCharacters.svelte",
+        "line": 56,
+        "current": "    const result = executeCharacterLifeCommand(session, { type: 'RELEASE_NPC', expectedRevision: session.city.revision, npcId });"
+      },
+      {
+        "path": "packages/ui/src/CharacterLifeCharacters.svelte",
+        "line": 127,
+        "current": "          <button type=\"button\" data-acquisition-action=\"RELEASE_NPC\" aria-disabled={!!reason}"
+      },
+      {
+        "path": "packages/ui/src/CharacterLifeShell.svelte",
+        "line": 81,
+        "current": "    <button class=\"ledger-wax\" data-testid=\"life-end-week\" disabled={!!state.society?.pendingCard} aria-disabled={locked || !!state.society?.pendingCard} onmousedown={event => { if (locked) event.preventDefault(); }} onclick={event => { endWeekClickTime = event.timeStamp; onendweek(event.currentTarget); }}>{state.society?.pendingCard ? 'Answer the crisis first.' : locked ? 'Report open — Plan next week in Report' : 'End Week'}</button>"
+      },
+      {
+        "path": "packages/ui/src/TileManagement.svelte",
+        "line": 80,
+        "current": "      const known = ['INVALID_COMMAND', 'STALE_COMMAND', 'FORBIDDEN', 'UNSUPPORTED_RULESET', 'INVALID_STATE', 'INVALID_WORKFORCE', 'INVALID_PLAN', 'EXECUTION_ERROR', 'WEEK_MISMATCH', 'INVALID_TILE', 'INVALID_BUILDING', 'INVALID_PLACEMENT', 'OCCUPIED', 'EMPTY_TILE', 'MAX_LEVEL', 'INSUFFICIENT_RESOURCES', 'LOCKED_PLOT', 'NOT_AVAILABLE', 'WRONG_TIER', 'WALL_COMPLETE', 'PREREQUISITE_MISSING', 'UNSUPPORTED_ACTION', 'CARD_PENDING', 'CITY_FALLEN', 'UNKNOWN_CARD', 'UNKNOWN_OPTION', 'OPTION_UNAVAILABLE', 'SLOT_MISMATCH', 'KIND_MISMATCH', 'NOT_ENOUGH_GOLD', 'INVENTORY_FULL', 'NO_SHOP', 'ITEM_UNKNOWN', 'NOT_SELLABLE', 'RECIPE_UNKNOWN', 'NO_WORKSHOP', 'MISSING_INPUT', 'QUEUE_FULL', 'ORDER_UNKNOWN', 'WORKSHOP_BUSY', 'FIXED_BUILDING', 'HOME_OCCUPIED', 'ONE_PER_CITY', 'HALL_LIMIT', 'UNKNOWN_NPC', 'NO_BED', 'NOT_A_HOME', 'NO_BUILDING', 'OFFER_GONE', 'NPC_CAP', 'NOT_A_SLAVE', 'STORAGE_FULL'];"
+      },
+      {
+        "path": "packages/ui/src/TileManagement.svelte",
+        "line": 89,
+        "current": "      else if (['BUILD', 'REPLACE', 'UPGRADE', 'SET_ENABLED', 'EXTEND_WALL', 'SET_TRAINING', 'CLEAR', 'MOVE_NPC_HOME', 'BUY_NPC', 'BID_NPC', 'WITHDRAW_BID', 'SELL_NPC', 'RELEASE_NPC'].includes(type)) managementError = { action: type, message: result.error.message };"
+      },
+      {
+        "path": "packages/ui/src/society-view.ts",
+        "line": 17,
+        "current": " switch(typeId) {"
+      },
+      {
+        "path": "tests/e2e/acquisition.spec.ts",
+        "line": 116,
+        "current": "  const released = act(sold, 'RELEASE_NPC', { npcId: servant.character.id }).next;"
+      },
+      {
+        "path": "tests/e2e/acquisition.spec.ts",
+        "line": 140,
+        "current": "  for (const { id: npcId } of departing) state = act(state, 'RELEASE_NPC', { npcId }).next;"
+      },
+      {
+        "path": "tests/e2e/character-life-boundary.spec.ts",
+        "line": 131,
+        "current": "  await expect(button(page, 'Plan next week')).toHaveAttribute('aria-disabled', String(!o.actionTypes.includes('NEXT_WEEK')));"
+      },
+      {
+        "path": "tests/e2e/character-life-boundary.spec.ts",
+        "line": 231,
+        "current": "  await expect(page.getByTestId('life-end-week')).toHaveAttribute('aria-disabled', String(!o.actionTypes.includes('END_WEEK')));"
+      }
+    ],
+    "report": [
+      {
+        "path": "docs/superpowers/plans/2026-10-27-city-navigation.md",
+        "line": 140,
+        "current": "  Update `expectReport(page, expected)` to parse all quantities independently. For **positive Goods demand**, parse the displayed percentage into basis points and compare it to the executor's expected value; retain this independently parsed value in the reconstructed report. For **zero Goods demand**, assert visible `No demand`, no `%`, parsed served/demand both zero, then carry `expected.goods.fulfillmentBps` directly from the independent executor result into the reconstructed report. This field is not claimed to be observed from UI; the UI asserts truthful absence of a percentage while unchanged simulation tests cover its internal zero-demand convention (10000). Apply the same no-percent check to zero Food demand. Keep full numeric ledger/report equality for all UI-observable fields; do not invent a hidden percentage or read production state from DOM metadata."
+      },
+      {
+        "path": "packages/core/src/__tests__/helpers/npcs.ts",
+        "line": 47,
+        "current": "    generated.npc.household.home = homeTileId;"
+      },
+      {
+        "path": "packages/core/src/index.ts",
+        "line": 18,
+        "current": "export * from \"./world/npc-household.js\";"
+      },
+      {
+        "path": "packages/core/src/trial/acquisition-replay.ts",
+        "line": 109,
+        "current": "      if (!key || npc.household.source !== key.source || npc.household.boughtWeek !== key.boughtWeek ||"
+      },
+      {
+        "path": "packages/core/src/trial/acquisition.ts",
+        "line": 43,
+        "current": "  bought: [], sold: [], released: [], left: [], lotsToRivals: [], wagesPaidMilli: 0, unpaid: [], notices: [],"
+      },
+      {
+        "path": "packages/core/src/trial/types.ts",
+        "line": 75,
+        "current": "  household?: HouseholdReport;"
+      },
+      {
+        "path": "packages/core/src/trial/types.ts",
+        "line": 88,
+        "current": "  lotsToRivals: { source: 'auction-house' | 'slave-market'; priceMilli: number }[];"
+      },
+      {
+        "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+        "line": 113,
+        "current": "      expect(api.isNpcHousehold(npc.household)).toBe(true);"
+      },
+      {
+        "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+        "line": 141,
+        "current": "      expect(inRange(npc.household.obedience, obedience)).toBe(true);"
+      },
+      {
+        "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+        "line": 145,
+        "current": "        expect([npc.household.status, npc.character.legalStatus, npc.household.contract?.weeksLeft])"
+      },
+      {
+        "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+        "line": 147,
+        "current": "        expect([1000, 2000]).toContain(npc.household.contract?.wageMilli);"
+      },
+      {
+        "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+        "line": 149,
+        "current": "        expect([npc.household.status, npc.character.legalStatus, npc.household.contract]).toStrictEqual(['slave', 'enslaved', null]);"
+      },
+      {
+        "path": "packages/core/src/world/__tests__/npc-life.test.ts",
+        "line": 86,
+        "current": "  it('initializes generated live NPC records with household last and isolates nested state', () => {"
+      },
+      {
+        "path": "packages/core/src/world/__tests__/npc-life.test.ts",
+        "line": 94,
+        "current": "      expect(Object.keys(npc)).toEqual(['character', 'traits', 'postTileId', 'life', 'household']);"
+      },
+      {
+        "path": "packages/core/src/world/__tests__/npc-life.test.ts",
+        "line": 96,
+        "current": "      expect(api.isNpcHousehold(npc.household)).toBe(true);"
+      },
+      {
+        "path": "packages/core/src/world/npc-generator.ts",
+        "line": 8,
+        "current": "import type { NpcHousehold } from './npc-household.js';"
+      },
+      {
+        "path": "packages/core/src/world/npc-generator.ts",
+        "line": 129,
+        "current": "  const household: NpcHousehold = {"
+      },
+      {
+        "path": "packages/core/src/world/npc-generator.ts",
+        "line": 139,
+        "current": "  return { npc: { character, traits, postTileId: null, life, household }, profile };"
+      },
+      {
+        "path": "packages/core/src/world/npc-household.ts",
+        "line": 50,
+        "current": "  return npcs.filter(npc => npc.household.home === tileId).length;"
+      },
+      {
+        "path": "packages/core/src/world/npc-price.ts",
+        "line": 18,
+        "current": "  const value = npcValueMilli(npc, npc.household.source, npc.character.id.endsWith('_lot'));"
+      },
+      {
+        "path": "packages/core/src/world/npc.ts",
+        "line": 8,
+        "current": "import { homeBeds, isNpcHousehold, type NpcHousehold } from './npc-household.js';"
+      },
+      {
+        "path": "packages/core/src/world/npc.ts",
+        "line": 16,
+        "current": "export interface WorldNpc { character: NamedCharacter; traits: string[]; postTileId: string | null; life: NpcLife; household: NpcHousehold }"
+      },
+      {
+        "path": "packages/core/src/world/npc.ts",
+        "line": 54,
+        "current": "      if (!hasWeeklyKeys(npc, ['character', 'traits', 'postTileId', 'life', 'household']) || !isNpcLife(npc.life) || !isNpcHousehold(npc.household)) return false;"
+      },
+      {
+        "path": "packages/core/src/world/npc.ts",
+        "line": 55,
+        "current": "      const c = npc.character, traits = readDenseArray(npc.traits), household = npc.household;"
+      },
+      {
+        "path": "packages/core/src/world/npc.ts",
+        "line": 59,
+        "current": "      if (c.legalStatus !== (household.status === 'slave' ? 'enslaved' : 'contract_bound') || household.boughtWeek > city.world.week) return false;"
+      },
+      {
+        "path": "packages/core/src/world/npc.ts",
+        "line": 61,
+        "current": "      const capacity = homeBeds(city, household.home);"
+      },
+      {
+        "path": "packages/core/src/world/npc.ts",
+        "line": 62,
+        "current": "      const used = (residents.get(household.home) ?? 0) + 1;"
+      },
+      {
+        "path": "packages/core/src/world/npc.ts",
+        "line": 64,
+        "current": "      residents.set(household.home, used);"
+      },
+      {
+        "path": "packages/core/src/world/npc.ts",
+        "line": 66,
+        "current": "      if (post !== null && (household.home === 'estate-1' || typeof post !== 'string' || !slots.includes(post) || posts.has(post))) return false;"
+      },
+      {
+        "path": "packages/persistence/src/__tests__/npc-life-records.test.ts",
+        "line": 91,
+        "current": "  expect(Object.hasOwn(decoded.state.npcs[0], 'household')).toBe(true);"
+      },
+      {
+        "path": "packages/persistence/src/__tests__/session-records.test.ts",
+        "line": 53,
+        "current": "it('rebuilds v12 detached rows with household NPCs and refuses the checkpoint without altering rows', () => {"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/acquisition-fixture.ts",
+        "line": 37,
+        "current": "    npc.household.home = home;"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/character-life-command.test.ts",
+        "line": 41,
+        "current": "    const household = { ...emptyHouseholdReport(), bought: s.npcs.map(npc => npc.character.name) };"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/character-life-command.test.ts",
+        "line": 42,
+        "current": "    return { ...r, next, report: { ...r.report, household } };"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+        "line": 59,
+        "current": "  keys(r, [...reportKeys, ...(r.goodsStock ? ['goodsStock'] : []), ...(r.immigration ? ['immigration'] : []), ...(r.household ? ['household'] : [])]);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+        "line": 60,
+        "current": "  if (r.household) keys(r.household, ['bought', 'sold', 'released', 'left', 'lotsToRivals', 'wagesPaidMilli', 'unpaid', 'notices']);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+        "line": 339,
+        "current": "      household: { ...emptyHouseholdReport(), bought: session.npcs.map(npc => npc.character.name) },"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/npc-acquisition.test.ts",
+        "line": 48,
+        "current": "    npc.household.home = 'estate-1';"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/npc-acquisition.test.ts",
+        "line": 91,
+        "current": "    expect(ended.report!.household!.sold).toStrictEqual([posted.npcs[0].character.name]);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/npc-acquisition.test.ts",
+        "line": 106,
+        "current": "    expect(r.household!.bought).toStrictEqual([name]); expect(r.household!.released).toStrictEqual([name]);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/npc-acquisition.test.ts",
+        "line": 115,
+        "current": "    expect(Object.hasOwn(result.report!, 'household')).toBe(false);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/npc-auction.test.ts",
+        "line": 88,
+        "current": "  expect(succeeded(s, 'END_WEEK', { expectedWeek: 1 }).report!.household!.lotsToRivals).toStrictEqual([{ source, priceMilli: lot.priceMilli }]);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/npc-homes.test.ts",
+        "line": 12,
+        "current": "type Resident = WorldNpc & { household: NpcHousehold };"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/npc-homes.test.ts",
+        "line": 61,
+        "current": "    draw.npc.household.home = home;"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/npc-homes.test.ts",
+        "line": 141,
+        "current": "  it('rejects household mutations while preserving an otherwise valid roster', () => {"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/npc-homes.test.ts",
+        "line": 145,
+        "current": "      (session: Populated) => { session.npcs[0].household.home = 'field-1'; },"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/npc-homes.test.ts",
+        "line": 148,
+        "current": "      (session: Populated) => { session.npcs[0].household.obedience = -1; },"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/npc-homes.test.ts",
+        "line": 149,
+        "current": "      (session: Populated) => { session.npcs[0].household.home = 'estate-1'; session.npcs[0].postTileId = 'field-1'; },"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/npc-homes.test.ts",
+        "line": 174,
+        "current": "    expect([view(hall).household.home, view(hall).postTileId]).toStrictEqual(['house-5', 'field-1']);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/npc-homes.test.ts",
+        "line": 175,
+        "current": "    expect([view(posted).household.home, view(posted).postTileId]).toStrictEqual(['estate-2', 'field-1']);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/npc-homes.test.ts",
+        "line": 178,
+        "current": "    expect([view(mansion).household.home, view(mansion).postTileId]).toStrictEqual(['estate-1', null]);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/replay-checkpoint.test.ts",
+        "line": 98,
+        "current": "  npc.household.home = homeTileId;"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/replay-checkpoint.test.ts",
+        "line": 145,
+        "current": "it.each(['source', 'week'])('refuses an acquired NPC with changed household %s', field => {"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/replay-checkpoint.test.ts",
+        "line": 152,
+        "current": "    const { household } = draft.npcs[0];"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/replay-checkpoint.test.ts",
+        "line": 153,
+        "current": "    if (field === 'source') household.source = 'slave-market';"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/replay-checkpoint.test.ts",
+        "line": 154,
+        "current": "    else household.boughtWeek = 1;"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/replay-checkpoint.test.ts",
+        "line": 229,
+        "current": "    const { household } = draft.npcs[0];"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/replay-checkpoint.test.ts",
+        "line": 230,
+        "current": "    if (field === 'source') household.source = 'auction-house';"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/replay-checkpoint.test.ts",
+        "line": 231,
+        "current": "    else household.boughtWeek = 2;"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/tile-trial-p7b.test.ts",
+        "line": 182,
+        "current": "it('preserves break-even immigration after household upkeep', () => {"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/tile-trial-p7b.test.ts",
+        "line": 202,
+        "current": "it('pays city operations first and skips household upkeep without overdrawing Gold', () => {"
+      },
+      {
+        "path": "packages/simulation/src/character-life-command.ts",
+        "line": 76,
+        "current": "      const household = acquisitionWeekReport(worldSeed, session.city.society!.acquisition, report.week);"
+      },
+      {
+        "path": "packages/simulation/src/character-life-command.ts",
+        "line": 77,
+        "current": "      if (household) report = Object.freeze({ ...report, household });"
+      },
+      {
+        "path": "packages/simulation/src/character-life-observation.ts",
+        "line": 22,
+        "current": "  household?: TileTrialReport['household'];"
+      },
+      {
+        "path": "packages/simulation/src/character-life-observation.ts",
+        "line": 86,
+        "current": "  if (r.household) report.household = structuredClone(r.household);"
+      },
+      {
+        "path": "packages/simulation/src/npc-acquisition.ts",
+        "line": 78,
+        "current": "      result.lotsToRivals.push({ source, priceMilli: closed.priceMilli });"
+      },
+      {
+        "path": "packages/simulation/src/npc-acquisition.ts",
+        "line": 82,
+        "current": "  if (result.bought.length || result.sold.length || result.released.length || result.lotsToRivals.length) {"
+      },
+      {
+        "path": "packages/simulation/src/npc-acquisition.ts",
+        "line": 84,
+        "current": "    for (const row of result.lotsToRivals) Object.freeze(row);"
+      },
+      {
+        "path": "packages/simulation/src/npc-acquisition.ts",
+        "line": 85,
+        "current": "    Object.freeze(result.lotsToRivals); Object.freeze(result.unpaid); Object.freeze(result.notices);"
+      },
+      {
+        "path": "packages/simulation/src/npc-acquisition.ts",
+        "line": 101,
+        "current": "  generated.npc.household.home = home;"
+      },
+      {
+        "path": "packages/simulation/src/npc-acquisition.ts",
+        "line": 121,
+        "current": "        if (npc.household.status !== 'slave') return refusal('NOT_A_SLAVE');"
+      },
+      {
+        "path": "packages/simulation/src/world-npc.ts",
+        "line": 29,
+        "current": "      if (home !== npc.household.home) {"
+      },
+      {
+        "path": "packages/simulation/src/world-npc.ts",
+        "line": 31,
+        "current": "        npc.household.home = home;"
+      },
+      {
+        "path": "packages/simulation/src/world-npc.ts",
+        "line": 35,
+        "current": "      if (npc.household.home === \"estate-1\") return fail(\"NOT_IN_HALL\", \"Only Retainers' Hall residents can hold a city post.\");"
+      },
+      {
+        "path": "packages/simulation/src/world-npc.ts",
+        "line": 58,
+        "current": "    const occupiedHomes = new Set((session.npcs as NpcWorldSessionState[\"npcs\"]).map(npc => npc.household.home));"
+      },
+      {
+        "path": "packages/ui/src/AcquisitionPanel.svelte",
+        "line": 91,
+        "current": "            <li><span>{npc.character.name}{npc.household.status === 'slave' ? ` · ${saleGold(npc)}` : ''}</span>"
+      },
+      {
+        "path": "packages/ui/src/CharacterLifeCharacters.svelte",
+        "line": 33,
+        "current": "  $: npcHome = npc ? session.city.tiles.find(tile => tile.id === npc.household.home) : undefined;"
+      },
+      {
+        "path": "packages/ui/src/CharacterLifeCharacters.svelte",
+        "line": 36,
+        "current": "    tile.id === person.household.home && tile.building?.typeId === 'retainers-hall')).map(person => person.character.id));"
+      },
+      {
+        "path": "packages/ui/src/CharacterLifeCity.svelte",
+        "line": 39,
+        "current": "  $: residents = npcs.filter(npc => npc.household.home === selectedId);"
+      },
+      {
+        "path": "packages/ui/src/SoloWeekReport.svelte",
+        "line": 132,
+        "current": "      <section aria-label=\"Household activity\">"
+      },
+      {
+        "path": "packages/ui/src/SoloWeekReport.svelte",
+        "line": 133,
+        "current": "        <h3>Household activity</h3>"
+      },
+      {
+        "path": "packages/ui/src/SoloWeekReport.svelte",
+        "line": 136,
+        "current": "            <li data-household-kind={row.kind}><span>{row.label}</span> · <strong>{row.value}</strong></li>"
+      },
+      {
+        "path": "packages/ui/src/__tests__/acquisition-view.test.ts",
+        "line": 28,
+        "current": "  const report = { household: { bought: ['A'], sold: ['B'], released: ['C'], left: [], unpaid: [],"
+      },
+      {
+        "path": "packages/ui/src/__tests__/acquisition-view.test.ts",
+        "line": 29,
+        "current": "    notices: [], wagesPaidMilli: 0, lotsToRivals: [{ source: 'auction-house', priceMilli: 55000 }] } } satisfies Pick<TileTrialReport, 'household'>;"
+      },
+      {
+        "path": "packages/ui/src/__tests__/acquisition-view.test.ts",
+        "line": 34,
+        "current": "    { kind: 'lotsToRivals', label: 'Lot sold to a rival', value: 'Auction House · 55 Gold' },"
+      },
+      {
+        "path": "packages/ui/src/acquisition-view.ts",
+        "line": 13,
+        "current": "  const { character, life, household } = npc;"
+      },
+      {
+        "path": "packages/ui/src/acquisition-view.ts",
+        "line": 16,
+        "current": "    origin: NPC_ORIGINS[life.origin].name, source: sourceLabel(household.source),"
+      },
+      {
+        "path": "packages/ui/src/acquisition-view.ts",
+        "line": 17,
+        "current": "    status: household.status === 'slave' ? 'Slave' : household.status === 'servant' ? 'Servant' : 'Lifelong servant',"
+      },
+      {
+        "path": "packages/ui/src/acquisition-view.ts",
+        "line": 20,
+        "current": "    beauty: life.beauty, mind: life.mind, obedience: household.obedience, priceMilli,"
+      },
+      {
+        "path": "packages/ui/src/acquisition-view.ts",
+        "line": 21,
+        "current": "    wageMilli: household.contract?.wageMilli,"
+      },
+      {
+        "path": "packages/ui/src/acquisition-view.ts",
+        "line": 73,
+        "current": "  if (selling && npc.household.status !== 'slave') return ACQUISITION_MESSAGES.NOT_A_SLAVE;"
+      },
+      {
+        "path": "packages/ui/src/report-letters.ts",
+        "line": 215,
+        "current": "export function householdReportRows(report: Readonly<Pick<TileTrialReport, 'household'>>) {"
+      },
+      {
+        "path": "packages/ui/src/report-letters.ts",
+        "line": 216,
+        "current": "  const household = report.household;"
+      },
+      {
+        "path": "packages/ui/src/report-letters.ts",
+        "line": 217,
+        "current": "  if (!household) return [];"
+      },
+      {
+        "path": "packages/ui/src/report-letters.ts",
+        "line": 219,
+        "current": "    ...household.bought.map(value => ({ kind: 'bought', label: 'Recruited', value })),"
+      },
+      {
+        "path": "packages/ui/src/report-letters.ts",
+        "line": 220,
+        "current": "    ...household.sold.map(value => ({ kind: 'sold', label: 'Sold', value })),"
+      },
+      {
+        "path": "packages/ui/src/report-letters.ts",
+        "line": 221,
+        "current": "    ...household.released.map(value => ({ kind: 'released', label: 'Released', value })),"
+      },
+      {
+        "path": "packages/ui/src/report-letters.ts",
+        "line": 222,
+        "current": "    ...household.lotsToRivals.map(({ source, priceMilli }) => ({"
+      },
+      {
+        "path": "packages/ui/src/report-letters.ts",
+        "line": 223,
+        "current": "      kind: 'lotsToRivals', label: 'Lot sold to a rival',"
+      },
+      {
+        "path": "tests/e2e/acquisition.spec.ts",
+        "line": 91,
+        "current": "    await expectReport(page, result.report!);"
+      },
+      {
+        "path": "tests/e2e/acquisition.spec.ts",
+        "line": 92,
+        "current": "    await expect(page.getByRole('region', { name: 'Household activity' }).getByRole('listitem')).toHaveText(["
+      },
+      {
+        "path": "tests/e2e/acquisition.spec.ts",
+        "line": 121,
+        "current": "  await expectReport(page, result.report!);"
+      },
+      {
+        "path": "tests/e2e/acquisition.spec.ts",
+        "line": 122,
+        "current": "  const household = page.getByRole('region', { name: 'Household activity' });"
+      },
+      {
+        "path": "tests/e2e/acquisition.spec.ts",
+        "line": 123,
+        "current": "  await expect(household.getByText('Sold · ' + slave.character.name)).toBeVisible();"
+      },
+      {
+        "path": "tests/e2e/acquisition.spec.ts",
+        "line": 124,
+        "current": "  await expect(household.getByText('Released · ' + servant.character.name)).toBeVisible();"
+      },
+      {
+        "path": "tests/e2e/acquisition.spec.ts",
+        "line": 125,
+        "current": "  await expect(household.getByRole('listitem')).toHaveText(["
+      },
+      {
+        "path": "tests/e2e/acquisition.spec.ts",
+        "line": 154,
+        "current": "        week: Math.max(npc.household.boughtWeek, state.city.world.week - P7A_TRIAL.recentCap + index + 1),"
+      },
+      {
+        "path": "tests/e2e/character-life-boundary.spec.ts",
+        "line": 136,
+        "current": "  await expectReport(page, fullReport);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+        "line": 368,
+        "current": "      await expectReport(page, result.report);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.helpers.ts",
+        "line": 358,
+        "current": "export async function expectReport(page: Page, expected: Readonly<TileTrialReport>): Promise<TileTrialReport> {"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.helpers.ts",
+        "line": 548,
+        "current": "  const householdRows = panel.locator('[data-household-kind]');"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.helpers.ts",
+        "line": 550,
+        "current": "    const household: NonNullable<TileTrialReport['household']> = {"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.helpers.ts",
+        "line": 551,
+        "current": "      bought: [], sold: [], released: [], left: [], lotsToRivals: [], wagesPaidMilli: 0, unpaid: [], notices: [],"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.helpers.ts",
+        "line": 554,
+        "current": "      const kind = await row.getAttribute('data-household-kind');"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.helpers.ts",
+        "line": 557,
+        "current": "      if (kind === 'lotsToRivals') {"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.helpers.ts",
+        "line": 559,
+        "current": "        if (!match) throw Error('Invalid household auction row.');"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.helpers.ts",
+        "line": 561,
+        "current": "        household.lotsToRivals.push({ source: match[1] === 'Auction House' ? 'auction-house' : 'slave-market', priceMilli: milli(match[2]) });"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.helpers.ts",
+        "line": 564,
+        "current": "        if (!value) throw Error('Missing household row name.');"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.helpers.ts",
+        "line": 566,
+        "current": "        household[kind].push(value);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.helpers.ts",
+        "line": 567,
+        "current": "      } else throw Error('Unknown household row.');"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.helpers.ts",
+        "line": 569,
+        "current": "    actual.household = household;"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.helpers.ts",
+        "line": 592,
+        "current": "export async function lifeUiSnapshot(page: Page) {"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.helpers.ts",
+        "line": 597,
+        "current": "    const acquisition = [...shell.querySelectorAll('[data-acquisition-action], [data-acquisition-panel] [role=\"tab\"], [data-household-kind]')].map(node => ({"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.helpers.ts",
+        "line": 613,
+        "current": "  const after = await lifeUiSnapshot(page);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 237,
+        "current": "    await expectReport(page, resolved.report);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 240,
+        "current": "    await expectReport(page, resolved.report);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 277,
+        "current": "    await expectReport(page, resolved.report);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 305,
+        "current": "  const before = await lifeUiSnapshot(page);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 321,
+        "current": "      const before = await lifeUiSnapshot(page);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 425,
+        "current": "    await go(page, 'session'); const before = await lifeUiSnapshot(page);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 780,
+        "current": "  const before = await lifeUiSnapshot(page);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 784,
+        "current": "    expect(await lifeUiSnapshot(page)).not.toEqual(before);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 789,
+        "current": "  expect(await lifeUiSnapshot(page)).not.toEqual(before);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 799,
+        "current": "  const before = await lifeUiSnapshot(page);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 854,
+        "current": "  const actualReport = await expectReport(page, expected.report);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 1028,
+        "current": "    let before = await lifeUiSnapshot(page);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 1050,
+        "current": "        before = await lifeUiSnapshot(page);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 1062,
+        "current": "      if (kind === 'superseded reads' || kind === 'newer Import' || kind === 'later Continue') expect(await lifeUiSnapshot(page)).toEqual(before);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 1088,
+        "current": "  await go(page, 'session'); const before = await lifeUiSnapshot(page);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 1100,
+        "current": "  await go(page, 'session'); const before = await lifeUiSnapshot(page);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 1116,
+        "current": "    await expectReport(page, report);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 1150,
+        "current": "    await expectReport(page, report);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 1201,
+        "current": "      await expectReport(page, result.report);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 1378,
+        "current": "        const before = await lifeUiSnapshot(page); await putFile(page, payload);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 1386,
+        "current": "        const before = await lifeUiSnapshot(page); await releaseRead(page, 0, text);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 1387,
+        "current": "        expect(await lifeUiSnapshot(page)).toEqual(before);"
+      },
+      {
+        "path": "tests/e2e/character-life-navigation.spec.ts",
+        "line": 1430,
+        "current": "      const before = await lifeUiSnapshot(page); await putFile(page, text); await expectCheckpointRejectionPreservesUi(page, before, resolved.next.city.world.week);"
+      },
+      {
+        "path": "tests/e2e/character-life.spec.ts",
+        "line": 370,
+        "current": "  const before = await lifeUiSnapshot(page);"
+      },
+      {
+        "path": "tests/e2e/crafting.spec.ts",
+        "line": 133,
+        "current": "  await page.getByTestId('life-end-week').click(); await expectReport(page, result.report);"
+      },
+      {
+        "path": "tests/e2e/crafting.spec.ts",
+        "line": 174,
+        "current": "  await expectReport(page, report);"
+      },
+      {
+        "path": "tests/e2e/crafting.spec.ts",
+        "line": 222,
+        "current": "      const report = await resolveReport(page); await expectReport(page, report);"
+      },
+      {
+        "path": "tests/e2e/crafting.spec.ts",
+        "line": 241,
+        "current": "  const report = await resolveReport(page); await expectReport(page, report);"
+      },
+      {
+        "path": "tests/e2e/crime.spec.ts",
+        "line": 13,
+        "current": " await page.goto('/?mode=world-life');await importLife(page,s);await go(page,'city');await page.getByTestId('life-end-week').click();const actualReport=await expectReport(page,result.report);expect(actualReport.crimeEvent).toEqual(c);"
+      },
+      {
+        "path": "tests/e2e/crisis.spec.ts",
+        "line": 16,
+        "current": " const week=executeCharacterLifeCommand(result.next,{type:'END_WEEK',expectedRevision:result.next.city.revision,expectedWeek:result.next.city.world.week});if(!week.success||!week.report)throw Error('Week failed');await go(page,'city');await page.getByTestId('life-end-week').click();await expectReport(page,week.report);await openReportDetails(page,'streets');await expect(page.getByRole('region',{name:'Crisis',exact:true})).toContainText('Your answer last week: Pay (−2 Gold, Tension −10).');await fit(page);"
+      },
+      {
+        "path": "tests/e2e/garrison.spec.ts",
+        "line": 19,
+        "current": " const actual=await expectReport(page,result.report);expect(actual.order).toEqual(result.report.order);await openReportDetails(page,'captain');await expect(page.getByRole('region',{name:'Order',exact:true}).getByText(`Garrison: ${result.report.order!.soldiers} soldiers, Security +${result.report.order!.garrisonSecurity}.`,{exact:true})).toBeVisible();await fits(page);"
+      },
+      {
+        "path": "tests/e2e/garrison.spec.ts",
+        "line": 24,
+        "current": " await page.goto('/?mode=world-life');await importLife(page,s);await go(page,'city');await page.getByTestId('life-end-week').click();const actual=await expectReport(page,result.report);expect(actual.order).toEqual(result.report.order);"
+      },
+      {
+        "path": "tests/e2e/goods-stock.spec.ts",
+        "line": 24,
+        "current": "    const report = await expectReport(page, result.report!);"
+      },
+      {
+        "path": "tests/e2e/items.spec.ts",
+        "line": 86,
+        "current": "  await page.getByTestId('life-end-week').click();await expectReport(page,result.report);"
+      },
+      {
+        "path": "tests/e2e/items.spec.ts",
+        "line": 128,
+        "current": "  await expect(page.getByRole('region',{name:'Quartermaster item details',exact:true})).toBeVisible();await expectReport(page,r.report);"
+      },
+      {
+        "path": "tests/e2e/laws.spec.ts",
+        "line": 21,
+        "current": " await go(page,'city');await page.getByTestId('life-end-week').click();const report=await expectReport(page,week.report);expect(report.laws).toEqual(week.report.laws);await openReportDetails(page,'council');await expect(page.getByRole('region',{name:'Laws',exact:true}).getByText('Poor Relief cost 1.5 Gold.',{exact:true})).toBeVisible();await fit(page);"
+      },
+      {
+        "path": "tests/e2e/laws.spec.ts",
+        "line": 25,
+        "current": " await page.goto('/?mode=world-life');await importLife(page,state);const tile=state.city.tiles.find(t=>t.building?.typeId==='town-hall')!;await go(page,'city');await page.getByTestId(`trial-tile-${tile.id}`).click();await page.getByTestId('life-end-week').click();const first=executeCharacterLifeCommand(state,{type:'END_WEEK',expectedRevision:state.city.revision,expectedWeek:state.city.world.week});if(!first.success||!first.report)throw Error('Week failed');await expectReport(page,first.report);await button(page,'Plan next week').click();const planned=executeCharacterLifeCommand(first.next,{type:'NEXT_WEEK',expectedRevision:first.next.city.revision});if(!planned.success)throw Error(planned.error.message);state=planned.next;await go(page,'city');await page.getByTestId(`trial-tile-${tile.id}`).click();await page.getByTestId('council-law-curfew').click();await expect(page.getByText('Three laws are in force. Repeal one first.',{exact:true})).toBeVisible();await expect(page.getByTestId('council-call-vote')).toBeDisabled();"
+      },
+      {
+        "path": "tests/e2e/laws.spec.ts",
+        "line": 27,
+        "current": " for(let i=1;i<4;i++){const week=executeCharacterLifeCommand(state,{type:'END_WEEK',expectedRevision:state.city.revision,expectedWeek:state.city.world.week});if(!week.success||!week.report)throw Error('Week failed');await go(page,'city');await page.getByTestId('life-end-week').click();const report=await expectReport(page,week.report);expect(report.laws).toEqual(week.report.laws);if(i===3){expect(week.report.laws!.promise).not.toBeNull();await openReportDetails(page,'council');await expect(page.getByRole('region',{name:'Laws',exact:true})).toContainText(/You (kept|broke) your promise/);}await fit(page);await button(page,'Plan next week').click();const next=executeCharacterLifeCommand(week.next,{type:'NEXT_WEEK',expectedRevision:week.next.city.revision});if(!next.success)throw Error(next.error.message);state=next.next;}"
+      },
+      {
+        "path": "tests/e2e/ledger.spec.ts",
+        "line": 116,
+        "current": "    await expectReport(page, result.report);"
+      },
+      {
+        "path": "tests/e2e/ledger.spec.ts",
+        "line": 141,
+        "current": "  await page.getByTestId('life-end-week').click(); await expectReport(page, result.report);"
+      },
+      {
+        "path": "tests/e2e/npc-homes.spec.ts",
+        "line": 42,
+        "current": "  expect(moved.npcs[0].household.home).toBe('estate-1');"
+      },
+      {
+        "path": "tests/e2e/npc-sheet.spec.ts",
+        "line": 258,
+        "current": "    const actual = await expectReport(page, expected.report);"
+      },
+      {
+        "path": "tests/e2e/order.spec.ts",
+        "line": 17,
+        "current": " await go(page,'city');await button(page,'End Week').click();await expectReport(page,result.report);"
+      },
+      {
+        "path": "tests/e2e/society-command.helpers.ts",
+        "line": 24,
+        "current": " if(result.report){await expectReport(page,result.report);return result.next;}"
+      },
+      {
+        "path": "tests/e2e/tile-local-checkpoint.spec.ts",
+        "line": 24,
+        "current": " let s=await boot(page,withBrowserNpcs(fundedLife()));for(const [tileId,typeId,workers] of [['forest-1','logging',2],['ore-1','mine',1],['plain-2','workshop',1],['spec-2','town-market',0]] as const){s=await act(page,s,'BUILD',{tileId,typeId});if(workers)s=await act(page,s,'SET_WORKERS',{tileId,workers});}s=await week(page,s);s=await act(page,s,'UPGRADE',{tileId:'spec-2'});s=await week(page,s);s=await act(page,s,'REPLACE',{tileId:'spec-2',typeId:'counting-house'});s=await act(page,s,'SET_ENABLED',{tileId:'forest-1',enabled:false});await save(page);await expect(notice(page)).toHaveText('Saved in this browser.');const text=(await slot(page))!;expect(await encoded(page)).toBe(text);const result=executeCharacterLifeCommand(s,{type:'END_WEEK',expectedRevision:s.city.revision,expectedWeek:s.city.world.week});if(!result.success||!result.report)throw Error();await page.getByTestId('life-end-week').click();await expectReport(page,result.report);await go(page,'session');for(const name of ['Save locally','Continue locally'])await expect(page.getByRole('button',{name,exact:true})).toBeDisabled();await page.reload();expect(await slot(page)).toBe(text);await importLife(page,makeLife());await act(page,makeLife(),'BUILD',{tileId:'forest-1',typeId:'logging'});expect(await slot(page)).toBe(text);await resume(page);await expect(notice(page)).toContainText('Local checkpoint loaded');const restored=await exportLife(page);expect({...restored,city:{...restored.city,revision:s.city.revision}}).toEqual(s);await page.getByTestId('life-end-week').click();await expectReport(page,result.report);expect(await slot(page)).toBe(text);"
+      },
+      {
+        "path": "tests/e2e/tile-population.spec.ts",
+        "line": 11,
+        "current": " for(let i=0;i<2;i++){const resolved=executeCharacterLifeCommand(s,{type:'END_WEEK',expectedRevision:s.city.revision,expectedWeek:s.city.world.week});if(!resolved.success||!resolved.report)throw Error();expect(resolved.report.immigration!.arrivals).toBeGreaterThan(0);await page.getByTestId('life-end-week').click();await expectReport(page,resolved.report);await page.getByRole('button',{name:'Plan next week',exact:true}).dblclick();const next=executeCharacterLifeCommand(resolved.next,{type:'NEXT_WEEK',expectedRevision:resolved.next.city.revision});if(!next.success)throw Error();s=next.next;expect(await exportLife(page)).toEqual(s);expect(s.city.tiles).toEqual(before.city.tiles);const text=await encoded(page);await put(page,text);await expect(notice(page)).toContainText('Checkpoint imported');const restored=await exportLife(page);expect({...restored,city:{...restored.city,revision:s.city.revision}}).toEqual(s);s=restored;await go(page,'city');}"
+      },
+      {
+        "path": "tests/e2e/tile-save.spec.ts",
+        "line": 13,
+        "current": " const resolved=executeCharacterLifeCommand(s,{type:'END_WEEK',expectedRevision:s.city.revision,expectedWeek:3});if(!resolved.success||!resolved.report)throw Error();await page.getByTestId('life-end-week').click();await expectReport(page,resolved.report);await go(page,'session');await expect(page.getByRole('button',{name:'Export checkpoint',exact:true})).toBeDisabled();await expect(page.getByLabel('Import checkpoint',{exact:true})).toBeDisabled();await go(page,'reports');await page.getByRole('button',{name:'Plan next week',exact:true}).click();await put(page,text);await expect(notice(page)).toContainText('Checkpoint imported');await expect(page.getByTestId('trial-tile-forest-1')).toContainText('Paused');await expect(page.getByTestId('trial-tile-spec-2')).toContainText('Counting House');"
+      },
+      {
+        "path": "tests/e2e/tile-save.spec.ts",
+        "line": 14,
+        "current": " await page.getByTestId('life-end-week').click();await expectReport(page,resolved.report);await page.reload();await expect(page.getByRole('button',{name:'New Game',exact:true})).toBeVisible();await put(page,text);const restored=await exportLife(page);expect({...restored,city:{...restored.city,revision:s.city.revision}}).toEqual(s);"
+      },
+      {
+        "path": "tests/e2e/tile-save.spec.ts",
+        "line": 36,
+        "current": " await expectReport(page,resolved.report);"
+      },
+      {
+        "path": "tests/e2e/tile-trial.spec.ts",
+        "line": 26,
+        "current": " let s=await boot(page);s=await act(page,s,'END_WEEK',{expectedWeek:1});await page.getByRole('button',{name:'Plan next week',exact:true}).focus();for(const key of ['Enter','Enter','Space'])await page.keyboard.press(key);const next=executeCharacterLifeCommand(s,{type:'NEXT_WEEK',expectedRevision:s.city.revision});if(!next.success)throw Error();expect(await exportLife(page)).toEqual(next.next);await go(page,'city');await page.getByTestId('life-end-week').focus();await page.keyboard.press('Enter');await page.keyboard.press('Enter');const resolved=executeCharacterLifeCommand(next.next,{type:'END_WEEK',expectedRevision:next.next.city.revision,expectedWeek:2});if(!resolved.success||!resolved.report)throw Error();await expectReport(page,resolved.report);await expect(page.getByTestId('life-shell')).toHaveAttribute('data-revision',String(resolved.next.city.revision));"
+      },
+      {
+        "path": "tests/e2e/world-session.spec.ts",
+        "line": 44,
+        "current": " let s=withBrowserNpcs(fundedLife());s.city.society!.classes.makers.common=40;s.city.society!.wallRing=2;s.city.tiles.find(t=>t.id==='house-5')!.building={typeId:'makers-rowhouses',level:1,workers:0,enabled:true};for(const [id,typeId,workers] of [['forest-1','logging',1],['ore-1','mine',1],['plain-2','workshop',1]] as const)s.city.tiles.find(t=>t.id===id)!.building={typeId,level:1,workers,enabled:true};s.city.tiles.find(t=>t.id==='field-1')!.building!.workers=3;s.city.tiles.find(t=>t.id==='plain-1')!.building!.workers=3;s.city.world.settlements[s.city.world.activeSettlementId!].cohorts[0].count=societyPopulation(s.city.society!);await boot(page,s);await seedOld(page);const population=societyPopulation(s.city.society!);s=await week(page,s);expect(societyPopulation(s.city.society!)).toBeGreaterThan(population);s.outside.tiles[10].owner='player';s.outside.tiles[10].knownBy=['player'];await importLife(page,s);s=await exportLife(page);await save(page);const text=await encoded(page),bytes=await slots(page);const result=executeCharacterLifeCommand(s,{type:'END_WEEK',expectedRevision:s.city.revision,expectedWeek:s.city.world.week});if(!result.success||!result.report)throw Error();let changed=await week(page,s);changed=await week(page,changed);await resume(page);let restored=await exportLife(page);expect({...restored,city:{...restored.city,revision:s.city.revision}}).toEqual(s);await page.getByTestId('life-end-week').click();await expectReport(page,result.report);await page.reload();await put(page,text);restored=await exportLife(page);expect(restored).toEqual(s);await page.getByTestId('life-end-week').click();await expectReport(page,result.report);expect(await slots(page)).toEqual(bytes);"
+      }
+    ],
+    "save": [
+      {
+        "path": "packages/core/src/__tests__/helpers/npcs.ts",
+        "line": 64,
+        "current": "    for (const { name } of acquisition.departures) used.add(name);"
+      },
+      {
+        "path": "packages/core/src/character/validate.ts",
+        "line": 5,
+        "current": "import { hasAcquisitionRosterProof } from '../trial/acquisition-replay.js';"
+      },
+      {
+        "path": "packages/core/src/character/validate.ts",
+        "line": 87,
+        "current": "    if (city.society && !hasAcquisitionRosterProof(city, npcs)) return false;"
+      },
+      {
+        "path": "packages/core/src/data/tuning.json",
+        "line": 181,
+        "current": "    \"rulesetId\": \"tile-society-13\","
+      },
+      {
+        "path": "packages/core/src/data/validate.ts",
+        "line": 319,
+        "current": "    readonly rulesetId: \"tile-society-13\";"
+      },
+      {
+        "path": "packages/core/src/data/validate.ts",
+        "line": 643,
+        "current": "        \"rulesetId\": literal(\"tile-society-13\"), \"standing\": nonnegative, \"laws\": object({"
+      },
+      {
+        "path": "packages/core/src/index.ts",
+        "line": 41,
+        "current": "export { hasAcquisitionRosterProof, isAcquisitionReplay } from './trial/acquisition-replay.js';"
+      },
+      {
+        "path": "packages/core/src/trial/__tests__/crime.test.ts",
+        "line": 7,
+        "current": "it('starts v6 with neutral standing and no fall cause',()=>{expect(createSocietyState().society).toMatchObject({rulesetId:'tile-society-13',standing:50,crisis:{fallCause:null}});});"
+      },
+      {
+        "path": "packages/core/src/trial/__tests__/crisis.test.ts",
+        "line": 6,
+        "current": " expect(s.rulesetId).toBe('tile-society-13');"
+      },
+      {
+        "path": "packages/core/src/trial/__tests__/items.test.ts",
+        "line": 9,
+        "current": " expect(createSocietyState().society!.rulesetId).toBe('tile-society-13');"
+      },
+      {
+        "path": "packages/core/src/trial/__tests__/law.test.ts",
+        "line": 12,
+        "current": "  expect(society.rulesetId).toBe('tile-society-13');"
+      },
+      {
+        "path": "packages/core/src/trial/__tests__/order.test.ts",
+        "line": 33,
+        "current": " expect(s.society!.rulesetId).toBe('tile-society-13');"
+      },
+      {
+        "path": "packages/core/src/trial/__tests__/outside.test.ts",
+        "line": 21,
+        "current": " expect(s.rulesetId).toBe('tile-society-13');"
+      },
+      {
+        "path": "packages/core/src/trial/__tests__/society-p7b.test.ts",
+        "line": 92,
+        "current": "  expect([envelope.cityRulesetId, envelope.state.city.society.rulesetId]).toStrictEqual(['tile-society-13', 'tile-society-13']);"
+      },
+      {
+        "path": "packages/core/src/trial/__tests__/society.test.ts",
+        "line": 8,
+        "current": "    rulesetId: 'tile-society-13', standing:50,"
+      },
+      {
+        "path": "packages/core/src/trial/acquisition-replay.ts",
+        "line": 40,
+        "current": "export function isAcquisitionReplay(city: TileTrialState): boolean {"
+      },
+      {
+        "path": "packages/core/src/trial/acquisition-replay.ts",
+        "line": 82,
+        "current": "export function hasAcquisitionRosterProof(city: TileTrialState, npcs: readonly WorldNpc[]): boolean {"
+      },
+      {
+        "path": "packages/core/src/trial/acquisition-replay.ts",
+        "line": 118,
+        "current": "  for (const departure of state.departures) {"
+      },
+      {
+        "path": "packages/core/src/trial/acquisition-replay.ts",
+        "line": 141,
+        "current": "  const openingCount = npcs.length + state.departures.length - taken.size;"
+      },
+      {
+        "path": "packages/core/src/trial/acquisition.ts",
+        "line": 100,
+        "current": "    const stock = readDenseArray(raw.stock), lots = readDenseArray(raw.lots), departures = readDenseArray(raw.departures);"
+      },
+      {
+        "path": "packages/core/src/trial/society.ts",
+        "line": 15,
+        "current": "export const SOCIETY_RULESET = 'tile-society-13';"
+      },
+      {
+        "path": "packages/core/src/trial/state.ts",
+        "line": 10,
+        "current": "import { isAcquisitionReplay } from './acquisition-replay.js';"
+      },
+      {
+        "path": "packages/core/src/trial/state.ts",
+        "line": 105,
+        "current": "    return isTileTrialState(raw) && isAcquisitionReplay(raw);"
+      },
+      {
+        "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+        "line": 8,
+        "current": "  'generateNpc' | 'isNpcHousehold' | 'npcValueMilli' | 'npcSellMilli' | 'validateNpcGenerator' | 'NPC_GENERATOR_CATALOG' | 'P7B_TRIAL'>;"
+      },
+      {
+        "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+        "line": 113,
+        "current": "      expect(api.isNpcHousehold(npc.household)).toBe(true);"
+      },
+      {
+        "path": "packages/core/src/world/__tests__/npc-life.test.ts",
+        "line": 96,
+        "current": "      expect(api.isNpcHousehold(npc.household)).toBe(true);"
+      },
+      {
+        "path": "packages/core/src/world/__tests__/session.test.ts",
+        "line": 32,
+        "current": "  ] } } }); expect(WORLD_SESSION_CITY_RULESET).toBe('tile-society-13');"
+      },
+      {
+        "path": "packages/core/src/world/npc-household.ts",
+        "line": 28,
+        "current": "export function isNpcHousehold(raw: unknown): raw is NpcHousehold {"
+      },
+      {
+        "path": "packages/core/src/world/npc.ts",
+        "line": 8,
+        "current": "import { homeBeds, isNpcHousehold, type NpcHousehold } from './npc-household.js';"
+      },
+      {
+        "path": "packages/core/src/world/npc.ts",
+        "line": 54,
+        "current": "      if (!hasWeeklyKeys(npc, ['character', 'traits', 'postTileId', 'life', 'household']) || !isNpcLife(npc.life) || !isNpcHousehold(npc.household)) return false;"
+      },
+      {
+        "path": "packages/persistence/src/__tests__/character-life-save.test.ts",
+        "line": 19,
+        "current": "  expect(JSON.parse(text)).toMatchObject({ format: CHARACTER_LIFE_SAVE_FORMAT, schemaVersion: 1, cityRulesetId: 'tile-society-13' });"
+      },
+      {
+        "path": "packages/persistence/src/__tests__/character-life-save.test.ts",
+        "line": 93,
+        "current": " expect(value.cityRulesetId).toBe('tile-society-13');"
+      },
+      {
+        "path": "packages/persistence/src/__tests__/items-rebuild-order.test.ts",
+        "line": 59,
+        "current": "  const checkpoint = JSON.stringify({ format: 'haven.character-life-session.save', schemaVersion: 1, cityRulesetId: 'tile-society-13', state: s });"
+      },
+      {
+        "path": "packages/persistence/src/__tests__/npc-life-records.test.ts",
+        "line": 70,
+        "current": "    expect(decoded.state.city.society!.rulesetId).toBe('tile-society-13');"
+      },
+      {
+        "path": "packages/persistence/src/__tests__/npc-life-records.test.ts",
+        "line": 81,
+        "current": "  expect(state.city.society!.rulesetId).toBe('tile-society-13');"
+      },
+      {
+        "path": "packages/persistence/src/__tests__/session-records.test.ts",
+        "line": 35,
+        "current": "  staged.city.society.rulesetId = 'tile-society-13';"
+      },
+      {
+        "path": "packages/persistence/src/__tests__/society-new-game-fixture.test.ts",
+        "line": 8,
+        "current": " if(process.env.GENERATE_SOCIETY_FIXTURES==='1')writeFileSync(new URL('./fixtures/society-v13/new-game.json',import.meta.url),JSON.stringify({format:'haven.tile-trial.save',schemaVersion:1,rulesetId:'tile-society-13',state}),'utf8');"
+      },
+      {
+        "path": "packages/persistence/src/__tests__/society-new-game-fixture.test.ts",
+        "line": 12,
+        "current": " const encoded = ({ success: true, text: JSON.stringify({ format: 'haven.tile-trial.save', schemaVersion: 1, rulesetId: 'tile-society-13', state }) });"
+      },
+      {
+        "path": "packages/persistence/src/__tests__/society-v9-fixture.test.ts",
+        "line": 7,
+        "current": "it('uses ruleset 13 for current factories', () => expect(SOCIETY_RULESET).toBe('tile-society-13'));"
+      },
+      {
+        "path": "packages/persistence/src/session-records.ts",
+        "line": 5,
+        "current": "import { hasAcquisitionRosterProof, isAcquisitionReplay } from '@haven/core';"
+      },
+      {
+        "path": "packages/persistence/src/session-records.ts",
+        "line": 11,
+        "current": "const historicalSocietyRuleset = /^tile-society-(0[1-9]|1[0-2])$/;"
+      },
+      {
+        "path": "packages/persistence/src/session-records.ts",
+        "line": 12,
+        "current": "const historicalNpcLifeRuleset = /^tile-society-1[0-2]$/;"
+      },
+      {
+        "path": "packages/persistence/src/session-records.ts",
+        "line": 13,
+        "current": "const historicalHouseholdRuleset = \"tile-society-12\";"
+      },
+      {
+        "path": "packages/persistence/src/session-records.ts",
+        "line": 22,
+        "current": "    const version = typeof ruleset === 'string' ? historicalSocietyRuleset.exec(ruleset) : null;"
+      },
+      {
+        "path": "packages/persistence/src/session-records.ts",
+        "line": 111,
+        "current": "  if (meta.rulesetId === SOCIETY_RULESET || (historicalNpcLifeRuleset.test(meta.rulesetId) && detachedItems)) {"
+      },
+      {
+        "path": "packages/persistence/src/session-records.ts",
+        "line": 176,
+        "current": "      const validNpcList = meta.rulesetId === SOCIETY_RULESET || meta.rulesetId === historicalHouseholdRuleset"
+      },
+      {
+        "path": "packages/persistence/src/session-records.ts",
+        "line": 178,
+        "current": "        : historicalSocietyRuleset.test(meta.rulesetId) &&"
+      },
+      {
+        "path": "packages/persistence/src/session-records.ts",
+        "line": 179,
+        "current": "          isHistoricalNpcList(candidate, city, historicalNpcLifeRuleset.test(meta.rulesetId));"
+      },
+      {
+        "path": "packages/persistence/src/session-records.ts",
+        "line": 189,
+        "current": "    if (!isAcquisitionReplay(city) || !hasAcquisitionRosterProof(city, npcs.map(entry => entry.npc))) {"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/fixtures/p7b-b3-path-diff.ts",
+        "line": 9,
+        "current": "const versions = { before: 'tile-society-12', after: 'tile-society-13' };"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/npc-homes.test.ts",
+        "line": 115,
+        "current": "    expect([JSON.parse(loaded.text).cityRulesetId, loaded.state.city.society!.rulesetId]).toStrictEqual(['tile-society-13', 'tile-society-13']);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/replay-checkpoint.test.ts",
+        "line": 167,
+        "current": "    if (problem === 'sold') acquisition.departures[0].kind = 'sold';"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/replay-checkpoint.test.ts",
+        "line": 168,
+        "current": "    else if (problem === 'unknown name') acquisition.departures[0].name = 'Unknown Person';"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/replay-checkpoint.test.ts",
+        "line": 171,
+        "current": "      acquisition.departures[0].name = 'Unknown Person';"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/replay-checkpoint.test.ts",
+        "line": 190,
+        "current": "  expect(state.city.society!.acquisition.departures).toStrictEqual([{ kind: 'released', name, id: npcId }]);"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/replay-checkpoint.test.ts",
+        "line": 252,
+        "current": "    draft.city.society!.acquisition.departures.push({ kind: 'released', id, name });"
+      },
+      {
+        "path": "packages/simulation/src/__tests__/smithy-data.test.ts",
+        "line": 22,
+        "current": "  expect(createSocietyState().society!.rulesetId).toBe('tile-society-13');"
+      },
+      {
+        "path": "packages/simulation/src/npc-acquisition.ts",
+        "line": 50,
+        "current": "  for (const { name } of next.departures) used.add(name);"
+      },
+      {
+        "path": "packages/simulation/src/npc-acquisition.ts",
+        "line": 81,
+        "current": "  for (const entry of previous.departures) result[entry.kind].push(entry.name);"
+      },
+      {
+        "path": "packages/simulation/src/npc-acquisition.ts",
+        "line": 128,
+        "current": "      society.acquisition.departures.push({ kind: type === 'SELL_NPC' ? 'sold' : 'released', name: npc.character.name, id: npc.character.id });"
+      },
+      {
+        "path": "packages/ui/src/__tests__/world-session.test.ts",
+        "line": 95,
+        "current": "  const text = () => JSON.stringify({ format: 'haven.world-session.save', schemaVersion: 1, cityRulesetId: 'tile-society-13', state: loaded });"
+      },
+      {
+        "path": "tests/e2e/society.spec.ts",
+        "line": 17,
+        "current": "  const saved=await exportLife(page);expect(saved.city.society!.rulesetId).toBe('tile-society-13');"
+      },
+      {
+        "path": "tests/e2e/tile-save.spec.ts",
+        "line": 12,
+        "current": " const text=await encoded(page),saved=JSON.parse(text);expect(saved).toMatchObject({format:'haven.character-life-session.save',schemaVersion:1,cityRulesetId:'tile-society-13',state:{city:{phase:'planning',world:{week:3}}}});"
+      },
+      {
+        "path": "tests/e2e/world-session.spec.ts",
+        "line": 23,
+        "current": " await page.addInitScript(()=>{Object.defineProperty(crypto,'getRandomValues',{value:(array:Uint32Array)=>{const draw=Number(sessionStorage.getItem('test-world-seed-draw')??'0');sessionStorage.setItem('test-world-seed-draw',String(draw+1));array[0]=draw===0?0:4294967295;return array;}});});await fresh(page);const region=page.getByRole('region',{name:'Outside world',exact:true});const disclosure=region.locator('summary');await disclosure.click();const summary=await region.innerText(),a=await exportLife(page);expect(summary).toContain('90');expect(summary).toContain('80');expect(summary).toContain('Exploration is not available yet.');expect(a.city.society!.rulesetId).toBe('tile-society-13');expect(a.city.goodsStock!.amountMilli).toBe(10000);expect(a.outside.tiles.filter(t=>t.owner!==null)).toHaveLength(10);await go(page,'city');const metadata=await region.evaluate(root=>[root,...root.querySelectorAll('*')].flatMap(el=>[...el.attributes].filter(a=>a.name.startsWith('data-')||a.name.startsWith('aria-')||a.name==='title').map(a=>a.value)));expect(metadata.join(' ')).not.toMatch(/o\\d{2}|seed|loot|deposit|wheat|wood|iron/i);expect(metadata).not.toContain(String(a.outside.seed));expect(summary).not.toMatch(/o\\d{2}|seed|loot|deposit|wheat|wood|iron/i);await page.reload();await fresh(page);await page.getByRole('region',{name:'Outside world',exact:true}).locator('summary').click();expect(await region.innerText()).toBe(summary);const b=await exportLife(page);expect(b.outside.seed).not.toBe(a.outside.seed);"
+      }
+    ]
+  },
+  "fixtureBlobsIdenticalToGit": [
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v1/life-5-weeks.json",
+      "bytes": 14273,
+      "sha256": "e70b5bb137846b4b3accc2020d52daabe0d78746934945d7079ff33831f9d921"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v1/life-new-game.json",
+      "bytes": 14268,
+      "sha256": "e30b0c8cc7906d4df134633c07286e3c411bc035a43a245f3668b3914920e333"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v1/new-game.json",
+      "bytes": 3837,
+      "sha256": "ca370a78f79ec75430e415f5a5007f866801c55a1c28ca79ef845713b6a35f9a"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-5-weeks.json",
+      "bytes": 21462,
+      "sha256": "8a8b23a3969a963882663fb47585925e5b0d9f8d9f6cfae4bb75d1eb46d31c19"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-crime-death.json",
+      "bytes": 21424,
+      "sha256": "c81a0ec620b1e4884036bd14ca127c4295070d9cf7379fbfe4a57aed06fa970c"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-crime-raid.json",
+      "bytes": 21482,
+      "sha256": "12070cf85f2107e2257eb4577638443a2c91cb0d6eaaae1b1f5f352288a17b67"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-crime-robbery.json",
+      "bytes": 21422,
+      "sha256": "e5c7222544248c8c071697b6fbb7c4628d5fcfa315b777a06419aeacb17ad076"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-crime-wound.json",
+      "bytes": 21423,
+      "sha256": "9cc1c8144415ce271d39ead18aa0b6afe0bbe4b4e7fbec41f0592067f074cd98"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-demand-card.json",
+      "bytes": 21497,
+      "sha256": "a83051f822bef0ec821eac62f1549c8aed0344efaca27021e22365240daf6117"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-laws.json",
+      "bytes": 21639,
+      "sha256": "9307ddfcce17f2ab48f26b4e586def7d8a7661b93eee503f58e9497970d34db9"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-new-game.json",
+      "bytes": 21430,
+      "sha256": "e3f5df5caba890e7e0388f6910e5bc7522e4525ad4da4ba52ddc76bb49f7156b"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/life-rebellion-last-week.json",
+      "bytes": 21440,
+      "sha256": "b28de9c4b7c6dea90a42f7af02b88e1c6164d8965c15fc388d18166830b40923"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v10/new-game.json",
+      "bytes": 9814,
+      "sha256": "2f47650177e24abdd31f70e30a88171ca786ac85666c5ac84a9d6ca6b6254919"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v11/life-5-weeks.json",
+      "bytes": 22181,
+      "sha256": "ec9af45029416d09d2f2c216e7eb4e50c8643442199dd8ce1ab1a139b1c570e2"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v11/life-crime-death.json",
+      "bytes": 22143,
+      "sha256": "eb1f9d5fe92f25dec4f161158b6e5dc728f718097ee1c84cec957c02212c69e4"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v11/life-crime-raid.json",
+      "bytes": 22201,
+      "sha256": "6ed95b342a9af8ace0bed92993b10587deab966fc7dc6158e8a508df1f27ac15"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v11/life-crime-robbery.json",
+      "bytes": 22141,
+      "sha256": "8ccfe2b8b436fff0d4e0f8bdc7fc65c575bc765414aecc9791d6eb13c465505b"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v11/life-crime-wound.json",
+      "bytes": 22142,
+      "sha256": "ae500e2a3a2a902528a7269a9791f543254279bf2158116f4e329b340fbd860d"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v11/life-demand-card.json",
+      "bytes": 22216,
+      "sha256": "236b349f54a0dba98cdcb78e186a334e5297a90c6908cacba2ddef385029e95e"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v11/life-laws.json",
+      "bytes": 22358,
+      "sha256": "3924aa12526fa78ced40ae362bae9190a8e312331fb9d0160b63f2f6abcdb1bf"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v11/life-new-game.json",
+      "bytes": 22149,
+      "sha256": "4a54eeecd1a6e78dd9b99ffcfbb509cb2c77a5634ce2c60013d2fec0d8473ac0"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v11/life-rebellion-last-week.json",
+      "bytes": 22159,
+      "sha256": "fbe641a19a2c8a3ea2eb5884a7e333b11a339da9ee245823614592fd4b7c1726"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v11/new-game.json",
+      "bytes": 10533,
+      "sha256": "02fcf303655983bdb4c73a1ce9dd4474fc59292a755065b401f24ba68518abf1"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v12/life-5-weeks.json",
+      "bytes": 17389,
+      "sha256": "1b3d5c41867cb4035f6490b4b7faf0af7ebde99207d21e8d975e521778b87c91"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v12/life-crime-death.json",
+      "bytes": 17354,
+      "sha256": "6d5f95e9f230d9f8b60a48fc4fe6610de44d85e5ded3c2f0b3b785d3079c7c70"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v12/life-crime-raid.json",
+      "bytes": 17412,
+      "sha256": "3e38f65177a4510b1ad83a889f01d78fa16704463730caf417cfff69afee9b01"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v12/life-crime-robbery.json",
+      "bytes": 17352,
+      "sha256": "f8e87bd7756bf74f0e1a85024b75b4e02ae4931cf26df0b90645bbc9dd3cb141"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v12/life-crime-wound.json",
+      "bytes": 17353,
+      "sha256": "82b134804d1939585bc34c487f0c50fa9cbea08b0428e55a6733c1d0436397e4"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v12/life-demand-card.json",
+      "bytes": 17427,
+      "sha256": "64a7238810c3b15c75d501998486a204426d30101fa3a853441bccab56f96e74"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v12/life-laws.json",
+      "bytes": 17568,
+      "sha256": "aac802441ea780600bb1e83a34d54afe9aec358855c132a204f00bf999e965a5"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v12/life-new-game.json",
+      "bytes": 17360,
+      "sha256": "b0ee4aab91df2168ab86bc10c49d8aad6411ed3fc71f51b4216d1c97bb7e9732"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v12/life-rebellion-last-week.json",
+      "bytes": 17370,
+      "sha256": "e5d63b08c4b1e7c737d90546a7fcf34a347ba11a0b2c72e6d481a3787cb1a06f"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v12/new-game.json",
+      "bytes": 10534,
+      "sha256": "e215b1e6b8f4e871443986cb5d80000339e4c221e372a0e068c8fb3f50a24f83"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v13/life-5-weeks.json",
+      "bytes": 17451,
+      "sha256": "2439d49cdd26c5f1d6ab8c083d1cf484e64a500357453b1d5fde49ec34a8ce17"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v13/life-crime-death.json",
+      "bytes": 17416,
+      "sha256": "9e506a97a11da524b5d94579027bc86a92370880fc894ab556c4d6e7b7be58ea"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v13/life-crime-raid.json",
+      "bytes": 17474,
+      "sha256": "b9e5c9990e497815e9ce12ee583221802b8b20e7448446482a09b0172f12ea4c"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v13/life-crime-robbery.json",
+      "bytes": 17414,
+      "sha256": "c835e9ec6aaa38cc31f6116e84472f0fdf3651da621c3ee16e5597fc9299b147"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v13/life-crime-wound.json",
+      "bytes": 17415,
+      "sha256": "ec35d953173c43d43eae322b9315fd63b9a50b580ea96d2d93b7e080ee54b054"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v13/life-demand-card.json",
+      "bytes": 17489,
+      "sha256": "dc238fee659f3abcebb4c438c2fe91212762d804751bd7da3be2a25e5f959f40"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v13/life-laws.json",
+      "bytes": 17630,
+      "sha256": "59551d8f200c4bd3f29b89957cdc258ecda3524679a413eec9341b23753465d8"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v13/life-new-game.json",
+      "bytes": 17422,
+      "sha256": "835f61f3deb075a0542227e2810565a810fe18184b4fb8764c2913dd28149c97"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v13/life-rebellion-last-week.json",
+      "bytes": 17432,
+      "sha256": "be834d617fa1e958be1b62266a4ffbab7903829daa8e2178ba71f8d4eba7b090"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v13/new-game.json",
+      "bytes": 10596,
+      "sha256": "ada66902b8caf630839feccb40e643d59002724c76c3c5bcd968227f278fe54f"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v2/life-5-weeks.json",
+      "bytes": 19344,
+      "sha256": "18a14dd3bc702ebb6e23a1313f18ee933a6dafd10f3c1d72f8a450171ca4f5d7"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v2/life-new-game.json",
+      "bytes": 19339,
+      "sha256": "d3600023571e5073447c2921d75d78b4a9fdc7f2f46f8f59c7ddec54718cca29"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v2/new-game.json",
+      "bytes": 8908,
+      "sha256": "b058599f7d1b9caa2a33259ae94dd0123c7f6d1012132447e9a675c64801ab21"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v3/life-5-weeks.json",
+      "bytes": 19430,
+      "sha256": "e956e2a52632b94bc3424f1f6bf97a11c27fa5874bb09038f2f6d0e8bad95b66"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v3/life-new-game.json",
+      "bytes": 19426,
+      "sha256": "90012ab645fea566584dcdebccc9c238381d005f0c59c0a11aad2d16d6ff09f0"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v3/new-game.json",
+      "bytes": 8995,
+      "sha256": "9bc7d7dc0d7613b1ca8b3f291841307bb941537b6a19aef76a5f121b2fa7e5c3"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v4/life-5-weeks.json",
+      "bytes": 19557,
+      "sha256": "71ebc03892b807101874610951d92c6186c88509496b896cb776650ce109fb8e"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v4/life-demand-card.json",
+      "bytes": 19620,
+      "sha256": "ad671d6fe321f9fa4f4155c6d5b8b88ebe2aa983d07d23f33c1babc01239c0e9"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v4/life-new-game.json",
+      "bytes": 19553,
+      "sha256": "34a34c214bec38e6f8fa2d2e696432bd3d8387850370477b5d4d3b917e8f3772"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v4/life-rebellion-last-week.json",
+      "bytes": 19563,
+      "sha256": "2ea365ffbfbafd0cfb0f3cfdddea96a41c456e7b2da04b9776a4c1244e01302e"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v4/new-game.json",
+      "bytes": 9122,
+      "sha256": "d4070e55a9faa4b27754d3a6177a2e89d2a97cf8423222e1d53818fcf8498945"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v5/life-5-weeks.json",
+      "bytes": 19592,
+      "sha256": "a9e2312b7fc305cd7cbf62a0ae5f5fb13dce74626cd6936085b57167ffaa5312"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v5/life-crime-death.json",
+      "bytes": 19582,
+      "sha256": "8d2afc1d5d52057ab456050399cb7565f696194093840b2dbfeefdf1d2b82a27"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v5/life-crime-raid.json",
+      "bytes": 19640,
+      "sha256": "e999318d66e60d11c219410e8ac90e115f383a7cd875ae85340eddd2dc5b126d"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v5/life-crime-robbery.json",
+      "bytes": 19580,
+      "sha256": "f12cace0b43db46aa89bb728c5e0d367a44ee9c815b85906b653b0280e292695"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v5/life-crime-wound.json",
+      "bytes": 19581,
+      "sha256": "3f8d44a4298f0162d9317bfe14f4f8d9ef43725404cea9ad7980e322fb306cb1"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v5/life-demand-card.json",
+      "bytes": 19655,
+      "sha256": "d3f4916be5d2608a9939d153c28f0efb4dd63debc9788d03a52af92758e7d356"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v5/life-new-game.json",
+      "bytes": 19588,
+      "sha256": "22b612309cb6559549be84b9fba11d6a132362b6f4bf0c07507a6d5691f95d5c"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v5/life-rebellion-last-week.json",
+      "bytes": 19598,
+      "sha256": "c4baf215c2186e57c66f503e9168b5a89bb8383d00554187fc2f8c8b80853893"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v5/new-game.json",
+      "bytes": 9153,
+      "sha256": "84180362b3376ee3b7bab05ab27821a8b9c701064f1887b64be8c07689751fd4"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v6/life-5-weeks.json",
+      "bytes": 19664,
+      "sha256": "ab1cd918f6627fd2ec315d3fb6c14ecbfbf5c272d63beb953c6fc00d44248ec3"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v6/life-crime-death.json",
+      "bytes": 19654,
+      "sha256": "cda6ac17a309ea9d5b726672218dcc7a99f399406a9c67c7d989361409a38a6e"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v6/life-crime-raid.json",
+      "bytes": 19712,
+      "sha256": "6319a60e2c89c5fe6aced78606bcd33277ca3674a972af426e829af04b738169"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v6/life-crime-robbery.json",
+      "bytes": 19652,
+      "sha256": "4e800727152a69105e55b6961dacaa60c4aec5c844eddc21e9f7ac43a00c8346"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v6/life-crime-wound.json",
+      "bytes": 19653,
+      "sha256": "649c99969ce3d11c55b582ecb62bd5e7edfdb12d7a25938eeee625c42185859f"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v6/life-demand-card.json",
+      "bytes": 19727,
+      "sha256": "5f6cf57321ede5ab4784b9259e13fc5366c8db69402e64fa0381a1892a17a07a"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v6/life-laws.json",
+      "bytes": 19853,
+      "sha256": "890936db4ad74c61740335cba0318ff4b2f1a34812a7bfe1a3648c2e9e438da0"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v6/life-new-game.json",
+      "bytes": 19660,
+      "sha256": "c6ea8ddfa68ddf4bdc0399bcbef297fecca594ef3647010f8304badb5ae48e17"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v6/life-rebellion-last-week.json",
+      "bytes": 19670,
+      "sha256": "d12ebf1247eb33e258c8e1dc185decfce4fc18620044f005a1fd3f9f9a87db42"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v6/new-game.json",
+      "bytes": 9225,
+      "sha256": "95af9ed81e251471629f8cc31be22984d35a90fa3d3d32bdc2f455a04ccb457a"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v7/life-5-weeks.json",
+      "bytes": 19664,
+      "sha256": "c2417b06c6c65919790a5527c8999a5c5c21baa7caef7310f622568d1db00268"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v7/life-crime-death.json",
+      "bytes": 19654,
+      "sha256": "e3a3c0a7f1653b8e91da3918b5aca6d1f07dd6d9f23cf360d94d722485a1441b"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v7/life-crime-raid.json",
+      "bytes": 19712,
+      "sha256": "cca73d949b19912efe34bf321b487e83a42a20df06d45d548a5a2110069609c2"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v7/life-crime-robbery.json",
+      "bytes": 19652,
+      "sha256": "b2bac5b3b0dc97ee77070a5ab8f783d4d80f983759be20fe820f1a3ea9d8d3c6"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v7/life-crime-wound.json",
+      "bytes": 19653,
+      "sha256": "74d581b92bdcf4f628463bf0abeea10954d3c8ada3614712fcf2e4f058309bde"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v7/life-demand-card.json",
+      "bytes": 19727,
+      "sha256": "b407a7adb81e65d3da918f1166d0d1e7b0a99b97158093fde8b5c8368cc905be"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v7/life-laws.json",
+      "bytes": 19853,
+      "sha256": "6ac7754314bdde02ec86d301d9261bc78efe2e136da66dc9e56318e7dea0a98f"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v7/life-new-game.json",
+      "bytes": 19660,
+      "sha256": "dc3809f5ef80672611b06795ac5b1c630737f536f95c4709b4eb24d65e14962f"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v7/life-rebellion-last-week.json",
+      "bytes": 19670,
+      "sha256": "0972d6e6847b943a36a35f8b30a1e4d6eb3157749e326c97fb8062819b2c70ed"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v7/new-game.json",
+      "bytes": 9225,
+      "sha256": "b7206e038ef1ca31abaae9a445067718adbd90591bbf283b11093091a6a080c4"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v8/life-5-weeks.json",
+      "bytes": 20257,
+      "sha256": "fc1085270a8627604ac467988a9b5f414d29cebfc0b49a04f59b642be908b546"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v8/life-crime-death.json",
+      "bytes": 20218,
+      "sha256": "f3e6c6faea46ab7d9e0976c94bede189cd72566091c831112444a9d89e133c97"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v8/life-crime-raid.json",
+      "bytes": 20276,
+      "sha256": "00849b1a7295cc2c842f6c870cda22294807d7f66515bf12b88a2c489a53da27"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v8/life-crime-robbery.json",
+      "bytes": 20216,
+      "sha256": "e7c800b3e8472a2f79a47ab1eb835608ae2f44bfee2a029fb63f695e8af48a38"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v8/life-crime-wound.json",
+      "bytes": 20217,
+      "sha256": "191f1f45ad029b9502fe60fe8d65bdf3e42d8f4b156b6ad61f01b5e5bd24a56b"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v8/life-demand-card.json",
+      "bytes": 20291,
+      "sha256": "7a5b3327ab45124201057524f78c3b54610a65b1b2a2f037c44b587f88d249d7"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v8/life-laws.json",
+      "bytes": 20454,
+      "sha256": "e6ece2312fd7f77d492a31deb683ebe28559f3b65c9939697d7ed67b3fa9b9e6"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v8/life-new-game.json",
+      "bytes": 20224,
+      "sha256": "05e8a903f40fc71b3b8a62b62d80fbe642965abc8299941cfec2db9386be057c"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v8/life-rebellion-last-week.json",
+      "bytes": 20234,
+      "sha256": "066bfd260b25f7a07a15aafdef89c87a52cb2363de7b43cf39a48ab74f5908a8"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v8/new-game.json",
+      "bytes": 9788,
+      "sha256": "3542e2e0c70ce5d74eb7228926913f1ff9d6e9772f0eb5dd0296ca4de343b4f3"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-5-weeks.json",
+      "bytes": 20285,
+      "sha256": "127c75ae30f0588194c3adcb3d60c80b7f55622f35422f080d83f395c5fb877e"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-death.json",
+      "bytes": 20250,
+      "sha256": "63be0f806c715809517744a8d249e05fbe09e68ebfb8ad19293e3f508156234b"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-raid.json",
+      "bytes": 20308,
+      "sha256": "2c0a968e164d1e3518c1b17812b8c61d8aa8788270a4049fbb9d7334dcef58da"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-robbery.json",
+      "bytes": 20248,
+      "sha256": "c1cc74255ed39333fbba6362a9b7f25dce9ef194c73a74c05884e76f7b8cca67"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-crime-wound.json",
+      "bytes": 20249,
+      "sha256": "36f36c603cba9b1e5f03a9c481d86acc131090741f39c017f1cd0ade195523e2"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-demand-card.json",
+      "bytes": 20323,
+      "sha256": "71ef9061c44fadf551f474cd888f924e7976a9a8a368a9def9a8706905d31ab0"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-laws.json",
+      "bytes": 20465,
+      "sha256": "8daf63999e0d13e5956584f68ddf0adff53e423c832a3e73f86138fd9739c910"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-new-game.json",
+      "bytes": 20256,
+      "sha256": "695d8bd3ab198209ee2793d7c521caec6f2a9df167cb9c7826e8470ca64f24a7"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v9/life-rebellion-last-week.json",
+      "bytes": 20266,
+      "sha256": "fe87d1ed940e7ac748b43acb04f292b7de81390c710d620a790074e309e13729"
+    },
+    {
+      "path": "packages/persistence/src/__tests__/fixtures/society-v9/new-game.json",
+      "bytes": 9814,
+      "sha256": "d3892eb83325414c24d3399f2042c1e2afcf852cde525ab6b57bb6f6740761fb"
+    },
+    {
+      "path": "packages/simulation/src/__tests__/fixtures/catalog-golden.json",
+      "bytes": 66027,
+      "sha256": "2bf740f9c010e71747c1dcbe5af39387b1a37f4d81c4ba35cdef33feb821ff3e"
+    }
+  ]
+}

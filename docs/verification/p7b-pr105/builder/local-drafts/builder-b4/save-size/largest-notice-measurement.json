@@ -1,0 +1,21 @@
+{
+  "head": "15cfc2c71aba0799e4d936c09b77529a53724272",
+  "tree": "d9225177b6c416384112f6bf340a4b11b8302273",
+  "npcCount": 100,
+  "notices": 86,
+  "stock": 12,
+  "lots": 2,
+  "actionsPerLot": [
+    4,
+    4
+  ],
+  "departures": 14,
+  "historyRowsPerNpc": 20,
+  "noNoticeSaveBytes": 293842,
+  "saveBytes": 294186,
+  "indexedDbRowJsonBytes": 309847,
+  "rowCount": 104,
+  "limitBytes": 1048576,
+  "jsonSha256": "e1de0a491b472609289dd703e7e28d8c827ae06588f28b12aff388f61ca30b08",
+  "indexedDbSha256": "eb37457e190445bd4c5e269cd39ae9ce745db5d9bcd70ec499340bf18f443553"
+}

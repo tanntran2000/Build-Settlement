@@ -1,0 +1,21 @@
+HEAD and tree
+95821832a8c95988c3203b4c38f5f9ae665978e9
+83c11b3a8362be1c1c69f632808c76a0c101caa8
+Status before command
+ M packages/core/src/world/__tests__/npc-generator.test.ts
+ M packages/simulation/src/__tests__/character-life-command.test.ts
+ M packages/simulation/src/__tests__/character-life-observation.test.ts
+ M packages/simulation/src/__tests__/lord-health.test.ts
+?? packages/simulation/src/__tests__/household-week.test.ts
+CI=
+UTC start 2026-11-25T06:12:41+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ python C:/Users/Admin/.t3/local-drafts/p7b-prB4/builder-b4/apply-packet.py green41
+packages/core/src/data/npc-generator.json 4c632b98f9021d9d714eb5f48de225e9b5a2a7d83842479af6c955ae1436b1e5
+packages/core/src/data/validate.ts e6cf542972c96801657774d6260c1e994e012db295b1b2356c9ee9858e0fb620
+packages/simulation/src/character-life-command.ts 90de0e096f4f1260041c5e40ce28c3b196f0e51a023c734ae01cdd6fa52185e2
+packages/simulation/src/character-life-observation.ts 12de38cf1318199853f4aae5908c465b0cff160cd4b130bd9e63fb92454f1d5e
+packages/simulation/src/household-week.ts dbbbc1b9dd2d4a665bbd2c7d033cca811d6407cab373c02044d5b023b7a626e8
+
+UTC finish 2026-11-25T06:12:42+00:00
+Exit 0

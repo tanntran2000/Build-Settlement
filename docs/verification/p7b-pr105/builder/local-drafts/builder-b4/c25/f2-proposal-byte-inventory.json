@@ -1,0 +1,36 @@
+{
+  "base": "15cfc2c71aba0799e4d936c09b77529a53724272",
+  "tree": "d9225177b6c416384112f6bf340a4b11b8302273",
+  "file": "tests/e2e/goods-stock.spec.ts",
+  "encoding": "UTF-8",
+  "before": {
+    "bytes": 3082,
+    "sha256": "fa5c45b9f2023a363899d2a9de74694d126a6fdf4f1f1c0128600e1f7fbc6220",
+    "gitBlob": "c0f5330db094eedd9b29ec339fd0b9ee6732611f",
+    "endsWithNewline": true
+  },
+  "after": {
+    "bytes": 3196,
+    "sha256": "2601a456eb711058abc0631768f342f71c39f85c0f626e1e498b090ce647e821",
+    "gitBlob": "f842e967ea85fb980f44a5e92e092f8aa62a03c2",
+    "endsWithNewline": true
+  },
+  "replacements": [
+    {
+      "beforeLine": 25,
+      "afterLine": 25,
+      "startByte": 1930,
+      "endByteExclusive": 2029,
+      "before": "    debit += report.before.gold + report.taxMilli + report.goods.revenueMilli - report.after.gold;\n",
+      "after": "    const wagesPaidMilli = report.household?.wagesPaidMilli ?? 0;\n    expect(wagesPaidMilli).toBe(4000);\n    debit += report.before.gold + report.taxMilli + report.goods.revenueMilli - report.after.gold - wagesPaidMilli;\n"
+    },
+    {
+      "beforeLine": 36,
+      "afterLine": 38,
+      "startByte": 2751,
+      "endByteExclusive": 2788,
+      "before": "  expect(debit).toBe(30000 + 20000);\n",
+      "after": "  expect(debit).toBe(30000);\n"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "base": "15cfc2c71aba0799e4d936c09b77529a53724272",
+  "tree": "d9225177b6c416384112f6bf340a4b11b8302273",
+  "file": "tests/e2e/goods-stock.spec.ts",
+  "encoding": "UTF-8",
+  "before": {
+    "bytes": 3082,
+    "sha256": "fa5c45b9f2023a363899d2a9de74694d126a6fdf4f1f1c0128600e1f7fbc6220",
+    "gitBlob": "c0f5330db094eedd9b29ec339fd0b9ee6732611f",
+    "endsWithNewline": true
+  },
+  "after": {
+    "bytes": 3074,
+    "sha256": "33d0840162e2616499cce4e38be0166ae9cd8add942e1a74cf84a725c353405d",
+    "gitBlob": "0023c3764c44f7879f6c010ab2a6081da59864f3",
+    "endsWithNewline": true
+  },
+  "replacements": [
+    {
+      "beforeLine": 36,
+      "afterLine": 36,
+      "startByte": 2751,
+      "endByteExclusive": 2788,
+      "before": "  expect(debit).toBe(30000 + 20000);\n",
+      "after": "  expect(debit).toBe(30000);\n"
+    }
+  ]
+}

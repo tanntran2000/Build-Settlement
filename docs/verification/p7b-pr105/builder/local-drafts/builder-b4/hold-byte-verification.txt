@@ -1,0 +1,31 @@
+HEAD and tree
+95821832a8c95988c3203b4c38f5f9ae665978e9
+83c11b3a8362be1c1c69f632808c76a0c101caa8
+Status before command
+ M packages/core/src/data/npc-generator.json
+ M packages/core/src/data/validate.ts
+ M packages/core/src/world/__tests__/npc-generator.test.ts
+ M packages/simulation/src/__tests__/character-life-command.test.ts
+ M packages/simulation/src/__tests__/character-life-observation.test.ts
+ M packages/simulation/src/__tests__/lord-health.test.ts
+ M packages/simulation/src/character-life-command.ts
+ M packages/simulation/src/character-life-observation.ts
+?? packages/simulation/src/__tests__/household-week.test.ts
+?? packages/simulation/src/household-week.ts
+CI=
+UTC start 2026-11-25T06:14:08+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ python C:/Users/Admin/.t3/local-drafts/p7b-prB4/builder-b4/document-hold.py
+warning: in the working copy of 'packages/core/src/data/npc-generator.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/core/src/data/validate.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/core/src/world/__tests__/npc-generator.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/character-life-command.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/character-life-observation.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/lord-health.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/character-life-command.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/character-life-observation.ts', LF will be replaced by CRLF the next time Git touches it
+Verified 10 held files match the packet with only Correction 21. Repo patch proposed in evidence only.
+Catalog SHA b3e0727560c279fb973545ff65753b3e953dc182c27d2f433bfdc55496e9e028 → ad57befafbe267dd2d858310d530ac670c5eef8c4d90432be2f750803b37ca14
+
+UTC finish 2026-11-25T06:14:09+00:00
+Exit 0

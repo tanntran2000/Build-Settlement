@@ -1,0 +1,12 @@
+diff --git a/tests/e2e/household.spec.ts b/tests/e2e/household.spec.ts
+--- a/tests/e2e/household.spec.ts
++++ b/tests/e2e/household.spec.ts
+@@ -15,7 +15,7 @@
+   let state = act(made.value, 'BUILD', { tileId: 'service-1', typeId: 'guild' }).next;
+   state = act(state, 'BUY_NPC', { source: 'guild', slot: 0, homeTileId: 'estate-2' }).next;
+   state.npcs[0].household.contract!.weeksLeft = 1;
+-  state.npcs[0].life.history.counters['partners.outsider'] = 2;
++  state.npcs[0].life.history.counters['partners.outsider'] = 20;
+   return state;
+ }
+ 

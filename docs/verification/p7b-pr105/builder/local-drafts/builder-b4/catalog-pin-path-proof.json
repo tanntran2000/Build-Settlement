@@ -1,0 +1,19 @@
+{
+  "priorDigest": "b3e0727560c279fb973545ff65753b3e953dc182c27d2f433bfdc55496e9e028",
+  "candidateDigest": "ad57befafbe267dd2d858310d530ac670c5eef8c4d90432be2f750803b37ca14",
+  "withoutApprovedHousehold": "b3e0727560c279fb973545ff65753b3e953dc182c27d2f433bfdc55496e9e028",
+  "approvedHousehold": {
+    "unpaidAffectionLoss": 5,
+    "unpaidObedienceLoss": 5,
+    "mansionObedienceGain": 1,
+    "stressObedienceLoss": 2,
+    "unpaidRefusalWeeks": 3,
+    "stressRefusalHits": 3,
+    "lifelongAffectionMin": 75,
+    "lifelongObedienceMin": 50,
+    "lifelongAskGapWeeks": 10,
+    "renewalWageMultiplier": 1.25,
+    "renewalWageStepMilli": 1000,
+    "quadrantSplit": 50
+  }
+}

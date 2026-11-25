@@ -1,0 +1,12 @@
+UTC 2026-11-25T12:27:58.5817910Z
+Plan SHA-256 b3502a24007ec02aaa7933b88595851d310ae3bfc31c3f56a8984b273db26ef8
+Patch SHA-256 c50a6a311ba3dfb962c87c0bea9531dc2cbbc37d319095c9d68bb10899a35caa
+[feat/p7b-servants-wages 90519b6] test(e2e): pin goods debit and servant wages separately  1 file changed, 4 insertions(+), 2 deletions(-)
+HEAD 90519b682846de9ad336c30db53f4b0b07afb2a2 Tree b138254d44b76e3b2c8c6eb853449608a3bbc094 Parent 0bd1b245262e4801b052f7eabbebbe2beec7d884 Subject test(e2e): pin goods debit and servant wages separately
+Path tests/e2e/goods-stock.spec.ts
+Blob f842e967ea85fb980f44a5e92e092f8aa62a03c2
+SHA-256 2601a456eb711058abc0631768f342f71c39f85c0f626e1e498b090ce647e821
+Changes since measurement head 15cfc2c71aba0799e4d936c09b77529a53724272
+M	tests/e2e/goods-stock.spec.ts M	tests/e2e/household.spec.ts
+## feat/p7b-servants-wages...origin/feat/p7b-servants-wages [ahead 2]
+Exit 0

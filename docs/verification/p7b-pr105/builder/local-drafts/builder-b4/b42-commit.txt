@@ -1,0 +1,30 @@
+HEAD and tree
+71ff95afdac14f4c81f00b9d83695ed205bf619f
+d7d604d96381e292cf079f8771aae99660880765
+Status before command
+M  packages/ui/src/CharacterLifeCharacters.svelte
+M  packages/ui/src/CharacterLifeCity.svelte
+M  packages/ui/src/CharacterProfile.svelte
+A  packages/ui/src/HouseholdNotice.svelte
+M  packages/ui/src/NpcSheet.svelte
+M  packages/ui/src/TileManagement.svelte
+M  packages/ui/src/__tests__/acquisition-view.test.ts
+M  packages/ui/src/__tests__/npc-sheet-view.test.ts
+M  packages/ui/src/npc-sheet-view.ts
+M  packages/ui/src/report-letters.ts
+A  scripts/p7b-road-balance.ts
+M  tests/e2e/acquisition.spec.ts
+M  tests/e2e/character-life-navigation.helpers.ts
+A  tests/e2e/household.spec.ts
+CI=
+UTC start 2026-11-25T07:47:32+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ git commit -m "feat(ui): servant status, obedience and notices"
+[feat/p7b-servants-wages c9c3827] feat(ui): servant status, obedience and notices
+ 14 files changed, 359 insertions(+), 26 deletions(-)
+ create mode 100644 packages/ui/src/HouseholdNotice.svelte
+ create mode 100644 scripts/p7b-road-balance.ts
+ create mode 100644 tests/e2e/household.spec.ts
+
+UTC finish 2026-11-25T07:47:32+00:00
+Exit 0

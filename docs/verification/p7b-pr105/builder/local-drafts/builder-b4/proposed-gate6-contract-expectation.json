@@ -1,0 +1,16 @@
+{
+  "head": "c9c382750d0871f57c09a18e7beca454b62581ff",
+  "tree": "a40af360493b8fbb253a4cc5d79016c16a370920",
+  "path": "packages/simulation/src/__tests__/society-stock-integrity.test.ts",
+  "line": 124,
+  "startByte": 9178,
+  "endByte": 9333,
+  "before": "    expect(next.next.npcs).toEqual(s.npcs.map(npc => ({ ...npc, life: { ...npc.life, arousal: Math.floor(npc.life.lust / P7A_TRIAL.arousalDivisor) } })));\n",
+  "after": "    expect(next.next.npcs).toEqual(s.npcs.map(npc => ({\n      ...npc,\n      life: { ...npc.life, arousal: Math.floor(npc.life.lust / P7A_TRIAL.arousalDivisor) },\n      household: { ...npc.household, contract: { ...npc.household.contract!, weeksLeft: 19 } },\n    })));\n",
+  "patchSHA256": "c2ec85aa8f555a8b86c923cf3ef59cd4b7078841a533236a2f648b62dd204d39",
+  "heldWorkingSHA256": "c33509c71e8ca864d9d6fda84b03ccad3ef96634b0a15825b8c8745cb5b32edd",
+  "proposedWorkingSHA256": "d31015cde46018c320f9c6d590f78b93ab0ca615f9f37c9c59c4e0f51089f928",
+  "heldGitBlobSHA256": "c33509c71e8ca864d9d6fda84b03ccad3ef96634b0a15825b8c8745cb5b32edd",
+  "proposedGitBlobSHA256": "d31015cde46018c320f9c6d590f78b93ab0ca615f9f37c9c59c4e0f51089f928",
+  "reason": "Change the expected post-End Week contract term from 20 to 19 for three Guild servants, preserving complete NPC equality."
+}

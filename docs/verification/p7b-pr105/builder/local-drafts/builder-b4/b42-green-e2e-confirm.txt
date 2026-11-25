@@ -1,0 +1,115 @@
+HEAD and tree
+71ff95afdac14f4c81f00b9d83695ed205bf619f
+d7d604d96381e292cf079f8771aae99660880765
+Status before command
+ M packages/ui/src/CharacterLifeCharacters.svelte
+ M packages/ui/src/CharacterLifeCity.svelte
+ M packages/ui/src/CharacterProfile.svelte
+ M packages/ui/src/NpcSheet.svelte
+ M packages/ui/src/TileManagement.svelte
+ M packages/ui/src/__tests__/acquisition-view.test.ts
+ M packages/ui/src/__tests__/npc-sheet-view.test.ts
+ M packages/ui/src/npc-sheet-view.ts
+ M packages/ui/src/report-letters.ts
+ M tests/e2e/acquisition.spec.ts
+ M tests/e2e/character-life-navigation.helpers.ts
+?? packages/ui/src/HouseholdNotice.svelte
+?? scripts/
+?? tests/e2e/household.spec.ts
+CI=1
+UTC start 2026-11-25T06:23:00+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/@playwright/test/cli.js test household.spec.ts
+
+Running 2 tests using 1 worker
+
+(node:37724) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\household.spec.ts:23:3 › renewal renders in the ledger, roster, sheet and Homes with a keyboard path at 1280 (6.8s)
+(node:27080) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [chromium] › tests\e2e\household.spec.ts:23:3 › renewal renders in the ledger, roster, sheet and Homes with a keyboard path at 1600 (15.2s)
+
+
+  1) [chromium] › tests\e2e\household.spec.ts:23:3 › renewal renders in the ledger, roster, sheet and Homes with a keyboard path at 1280 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('button', { name: 'Plan next week' })
+    Expected: visible
+    Error: strict mode violation: getByRole('button', { name: 'Plan next week' }) resolved to 2 elements:
+        1) <button aria-disabled="true" data-testid="life-end-week" class="ledger-wax svelte-w9sbey">Report open — Plan next week in Report</button> aka getByTestId('life-end-week')
+        2) <button aria-disabled="false" class="ledger-wax svelte-mhubqa">Plan next week</button> aka getByRole('button', { name: 'Plan next week', exact: true })
+
+    Call log:
+      - Expect "toBeVisible" getByRole('button', { name: 'Plan next week' }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Plan next week' })
+
+
+       at character-life-navigation.helpers.ts:56
+
+      54 | // Traverse the real tab order; never manufacture focus or skip hidden-view checks.
+      55 | export async function tabTo(page: Page, target: Locator) {
+    > 56 |   await expect(target).toBeVisible();
+         |                        ^
+      57 |   for (let step = 0; step < 160; step++) {
+      58 |     if (await target.evaluate(node => node === document.activeElement)) return;
+      59 |     await page.keyboard.press('Tab');
+        at tabTo (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:56:24)
+        at keyActivate (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:66:9)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\household.spec.ts:49:11
+
+    Error Context: test-results\household-renewal-renders--9c848-ith-a-keyboard-path-at-1280-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\household-renewal-renders--9c848-ith-a-keyboard-path-at-1280-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\household-renewal-renders--9c848-ith-a-keyboard-path-at-1280-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\household.spec.ts:23:3 › renewal renders in the ledger, roster, sheet and Homes with a keyboard path at 1600 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('button', { name: 'Plan next week' })
+    Expected: visible
+    Error: strict mode violation: getByRole('button', { name: 'Plan next week' }) resolved to 2 elements:
+        1) <button aria-disabled="true" data-testid="life-end-week" class="ledger-wax svelte-w9sbey">Report open — Plan next week in Report</button> aka getByTestId('life-end-week')
+        2) <button aria-disabled="false" class="ledger-wax svelte-mhubqa">Plan next week</button> aka getByRole('button', { name: 'Plan next week', exact: true })
+
+    Call log:
+      - Expect "toBeVisible" getByRole('button', { name: 'Plan next week' }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Plan next week' })
+
+
+       at character-life-navigation.helpers.ts:56
+
+      54 | // Traverse the real tab order; never manufacture focus or skip hidden-view checks.
+      55 | export async function tabTo(page: Page, target: Locator) {
+    > 56 |   await expect(target).toBeVisible();
+         |                        ^
+      57 |   for (let step = 0; step < 160; step++) {
+      58 |     if (await target.evaluate(node => node === document.activeElement)) return;
+      59 |     await page.keyboard.press('Tab');
+        at tabTo (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:56:24)
+        at keyActivate (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:66:9)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\household.spec.ts:49:11
+
+    Error Context: test-results\household-renewal-renders--b3e27-ith-a-keyboard-path-at-1600-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\household-renewal-renders--b3e27-ith-a-keyboard-path-at-1600-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\household-renewal-renders--b3e27-ith-a-keyboard-path-at-1600-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests\e2e\household.spec.ts:23:3 › renewal renders in the ledger, roster, sheet and Homes with a keyboard path at 1280 
+    [chromium] › tests\e2e\household.spec.ts:23:3 › renewal renders in the ledger, roster, sheet and Homes with a keyboard path at 1600 
+
+UTC finish 2026-11-25T06:23:41+00:00
+Exit 1

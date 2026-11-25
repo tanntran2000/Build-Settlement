@@ -1,0 +1,32 @@
+HEAD and tree
+95821832a8c95988c3203b4c38f5f9ae665978e9
+83c11b3a8362be1c1c69f632808c76a0c101caa8
+Status before command
+M  packages/core/src/data/npc-generator.json
+M  packages/core/src/data/validate.ts
+M  packages/core/src/world/__tests__/npc-generator.test.ts
+M  packages/simulation/src/__tests__/character-life-command.test.ts
+M  packages/simulation/src/__tests__/character-life-observation.test.ts
+A  packages/simulation/src/__tests__/household-week.test.ts
+M  packages/simulation/src/__tests__/lord-health.test.ts
+M  packages/simulation/src/character-life-command.ts
+M  packages/simulation/src/character-life-observation.ts
+A  packages/simulation/src/household-week.ts
+CI=
+UTC start 2026-11-25T06:19:43+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ python C:/Users/Admin/.t3/local-drafts/p7b-prB4/builder-b4/verify-approved.py b41 index
+4c632b98f9021d9d714eb5f48de225e9b5a2a7d83842479af6c955ae1436b1e5 packages/core/src/data/npc-generator.json
+e6cf542972c96801657774d6260c1e994e012db295b1b2356c9ee9858e0fb620 packages/core/src/data/validate.ts
+6b42b118c3a0ee6dfa0a5e20d2b9246032b723225bb35a37c5078d871c3b5c31 packages/core/src/world/__tests__/npc-generator.test.ts
+cc19c25358faff04f23066c842e59cd7d54131dd796b1610c8ea917c82d1a1df packages/simulation/src/__tests__/character-life-command.test.ts
+e8bfb686f1b9f86df45e8c22206e7e60745b02137bda03d5e45903239743285e packages/simulation/src/__tests__/character-life-observation.test.ts
+744009dc1cb9a52e4d1be47bfca14f1d79efe9b05aa6a94602f39fcfee698352 packages/simulation/src/__tests__/household-week.test.ts
+c053de23c75d8f6ce73f9b8869e857c1e68e8b483a215aa89430ce2a1200a30d packages/simulation/src/__tests__/lord-health.test.ts
+65a39476531215d36cb5b8c4a28124a594a7d602b69fc04224ff85bc122d0277 packages/simulation/src/character-life-command.ts
+12de38cf1318199853f4aae5908c465b0cff160cd4b130bd9e63fb92454f1d5e packages/simulation/src/character-life-observation.ts
+dbbbc1b9dd2d4a665bbd2c7d033cca811d6407cab373c02044d5b023b7a626e8 packages/simulation/src/household-week.ts
+b41 index 10 files match approved packet + Corrections 21 and 22
+
+UTC finish 2026-11-25T06:19:44+00:00
+Exit 0

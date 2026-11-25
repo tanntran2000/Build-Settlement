@@ -1,0 +1,16 @@
+HEAD and tree
+71ff95afdac14f4c81f00b9d83695ed205bf619f
+d7d604d96381e292cf079f8771aae99660880765
+Status before command
+CI=
+UTC start 2026-11-25T06:19:56+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ python C:/Users/Admin/.t3/local-drafts/p7b-prB4/builder-b4/apply-packet.py red42
+packages/ui/src/__tests__/acquisition-view.test.ts a99efcb390360f6bca9ac0429d6209332790009fbdd8d48f695852661047a691
+packages/ui/src/__tests__/npc-sheet-view.test.ts 03f874ffe33a988198a58d8619ef8c8988a721fb2e4a04ac8401e49c6c38dff6
+tests/e2e/acquisition.spec.ts cad1b01602bd820afead43334658a2e04f8726eea6442c5e86749e3db16eef87
+tests/e2e/character-life-navigation.helpers.ts 032596d70b752f2f1778329832f209e132baf849b6a2acbb0ba1dca787722a2c
+tests/e2e/household.spec.ts 40259ff3add9ecffd07072f37dc8a8455cc27aaafc00fadd9e88c95940e2f450
+
+UTC finish 2026-11-25T06:19:57+00:00
+Exit 0

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>End Week with 100 NPCs</title>
+<style>
+  body{font:14px/1.35 var(--font-sans,system-ui,sans-serif);color:var(--foreground,#20242a)}
+  h1{font-size:19px;margin:0 0 4px}h2{font-size:14px;margin:0 0 6px}
+  section{margin-top:11px;border-top:1px solid var(--border,#d4d9df);padding:9px 0 0}
+  p{margin:4px 0;color:var(--muted-foreground,#55616f)}
+  .series{display:grid;grid-template-columns:3rem minmax(0,1fr) 5.4rem;align-items:center;gap:7px;margin:3px 0}
+  .track{height:8px;background:var(--muted,#e5e7eb);border-radius:4px;overflow:hidden}
+  .bar{height:8px;border-radius:4px}.main{background:var(--chart-1,#5282c9)}.branch{background:var(--chart-2,#278570)}
+  output{text-align:right;font-family:var(--font-mono,monospace);font-size:13px}
+</style></head><body>
+<h1>End Week with 100 NPCs</h1>
+<p>Warm medians in milliseconds across five paired runs per case.</p>
+<section>
+  <h2>No-market control</h2>
+  <div class="series"><span>Main</span><div class="track"><div class="bar main" style="width:95.9657%"></div></div><output>57.58 ms</output></div>
+  <div class="series"><span>B4</span><div class="track"><div class="bar branch" style="width:87.1569%"></div></div><output>52.29 ms</output></div>
+  <p>Median paired change <b>-5.74 ms</b> · largest main-to-main gap <b>20.60 ms</b></p>
+</section>
+<section>
+  <h2>Full market</h2>
+  <div class="series"><span>Main</span><div class="track"><div class="bar main" style="width:91.9220%"></div></div><output>55.15 ms</output></div>
+  <div class="series"><span>B4</span><div class="track"><div class="bar branch" style="width:92.6975%"></div></div><output>55.62 ms</output></div>
+  <p>Median paired change <b>-2.11 ms</b> · largest main-to-main gap <b>47.74 ms</b></p>
+</section>
+<section>
+  <h2>Short Gold</h2>
+  <div class="series"><span>Main</span><div class="track"><div class="bar main" style="width:95.7669%"></div></div><output>57.46 ms</output></div>
+  <div class="series"><span>B4</span><div class="track"><div class="bar branch" style="width:90.0821%"></div></div><output>54.05 ms</output></div>
+  <p>Median paired change <b>-1.10 ms</b> · largest main-to-main gap <b>25.45 ms</b></p>
+</section>
+<section>
+  <h2>Equipped departures</h2>
+  <div class="series"><span>Main</span><div class="track"><div class="bar main" style="width:91.6719%"></div></div><output>55.00 ms</output></div>
+  <div class="series"><span>B4</span><div class="track"><div class="bar branch" style="width:93.2410%"></div></div><output>55.94 ms</output></div>
+  <p>Median paired change <b>-0.23 ms</b> · largest main-to-main gap <b>26.01 ms</b></p>
+</section>
+</body></html>

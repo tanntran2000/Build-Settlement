@@ -1,0 +1,8 @@
+2026-11-25T12:21:12.8492602Z
+HEAD 0bd1b245262e4801b052f7eabbebbe2beec7d884 Tree dd8d71d2782b6fc48aaafd3fae863682e0e0283c Parent 15cfc2c71aba0799e4d936c09b77529a53724272 Subject test(e2e): exact starting past count in the household sheet
+Path tests/e2e/household.spec.ts
+Blob 64640f0f13442540b34af47ddcff369f68853342
+SHA-256 f4e5c813a02cdc1755661476af9c80e087d3ada0673aaad25d3a35c8dfdeabd1
+## feat/p7b-servants-wages...origin/feat/p7b-servants-wages [ahead 1]
+Remote tracking 15cfc2c71aba0799e4d936c09b77529a53724272
+Exit 0

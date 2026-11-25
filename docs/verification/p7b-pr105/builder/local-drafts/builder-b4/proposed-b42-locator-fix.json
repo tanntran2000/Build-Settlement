@@ -1,0 +1,14 @@
+{
+  "head": "71ff95afdac14f4c81f00b9d83695ed205bf619f",
+  "tree": "d7d604d96381e292cf079f8771aae99660880765",
+  "path": "tests/e2e/household.spec.ts",
+  "line": 49,
+  "startByte": 2867,
+  "endByte": 2950,
+  "before": "    await keyActivate(page, page.getByRole('button', { name: 'Plan next week' }));\n",
+  "after": "    await keyActivate(page, page.getByRole('button', { name: 'Plan next week', exact: true }));\n",
+  "heldSHA256": "40259ff3add9ecffd07072f37dc8a8455cc27aaafc00fadd9e88c95940e2f450",
+  "proposedSHA256": "b03341a1b279563cb2c2ccb6f8a76513c62139d7388303da947a0e3c9f3ce5ea",
+  "patchSHA256": "0d443aa0ad77475458d576f7defe750b47160e729071b48ac4b7a0554dd6cd55",
+  "reason": "Select the report’s exact Plan next week button. Keep the Tab/Enter and all assertions."
+}

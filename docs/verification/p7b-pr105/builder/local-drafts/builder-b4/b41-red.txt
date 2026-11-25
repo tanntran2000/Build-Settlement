@@ -1,0 +1,318 @@
+HEAD and tree
+95821832a8c95988c3203b4c38f5f9ae665978e9
+83c11b3a8362be1c1c69f632808c76a0c101caa8
+Status before command
+ M packages/core/src/world/__tests__/npc-generator.test.ts
+ M packages/simulation/src/__tests__/character-life-command.test.ts
+ M packages/simulation/src/__tests__/character-life-observation.test.ts
+ M packages/simulation/src/__tests__/lord-health.test.ts
+?? packages/simulation/src/__tests__/household-week.test.ts
+CI=
+UTC start 2026-11-25T06:12:16+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ npm.cmd test -- packages/core/src/world/__tests__/npc-generator.test.ts packages/simulation/src/__tests__/character-life-command.test.ts packages/simulation/src/__tests__/character-life-observation.test.ts packages/simulation/src/__tests__/household-week.test.ts packages/simulation/src/__tests__/lord-health.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/core/src/world/__tests__/npc-generator.test.ts packages/simulation/src/__tests__/character-life-command.test.ts packages/simulation/src/__tests__/character-life-observation.test.ts packages/simulation/src/__tests__/household-week.test.ts packages/simulation/src/__tests__/lord-health.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/household-week.test.ts (0 test)
+ ❯ packages/core/src/world/__tests__/npc-generator.test.ts (52 tests | 3 failed) 372ms
+     × rejects malformed generator data at ["P7B_TRIAL","household","unpaidAffectionLoss"] 9ms
+     × rejects malformed generator data at ["P7B_TRIAL","household","stressRefusalHits"] 1ms
+     × rejects malformed generator data at ["P7B_TRIAL","household","renewalWageMultiplier"] 1ms
+ ❯ packages/simulation/src/__tests__/character-life-observation.test.ts (15 tests | 2 failed) 1754ms
+   × advertises ANSWER_NOTICE only for pending notices in Planning 37ms
+     × keeps the real END_WEEK report after NEXT_WEEK and preserves frozen report inputs 43ms
+ ❯ packages/simulation/src/__tests__/character-life-command.test.ts (35 tests | 2 failed) 4270ms
+   × full-session parity through two week cycles 486ms
+     × accepts null-prototype command data with identical complete results 95ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/household-week.test.ts [ packages/simulation/src/__tests__/household-week.test.ts ]
+Error: Cannot find module '../household-week.js' imported from C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/__tests__/household-week.test.ts
+ ❯ packages/simulation/src/__tests__/household-week.test.ts:6:1
+      4| } from '@haven/core';
+      5| import { deserializeCharacterLifeSave, serializeCharacterLifeSave } fr…
+      6| import { payNpcWages, runHouseholdWeek } from '../household-week.js';
+       | ^
+      7| import { command, stock, succeeded, town } from './acquisition-fixture…
+      8|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/character-life-command.test.ts > full-session parity through two week cycles
+AssertionError: expected { success: true, next: { …(5) }, …(1) } to deeply equal { success: true, next: { …(5) }, …(1) }
+
+- Expected
++ Received
+
+@@ -873,11 +873,11 @@
+              ],
+              "foodProcessorOperational": true,
+              "id": "settlement_haven_01",
+              "inventory": {
+                "food": 20000,
+-               "gold": 102450,
++               "gold": 108450,
+                "iron": 3000,
+                "wheat": 0,
+                "wood": 6000,
+              },
+              "name": "Haven",
+@@ -943,11 +943,11 @@
+            "boughtWeek": 1,
+            "contract": {
+              "stressHits": 0,
+              "unpaidWeeks": 0,
+              "wageMilli": 2000,
+-             "weeksLeft": 19,
++             "weeksLeft": 20,
+            },
+            "home": "estate-2",
+            "lifelongAskWeek": null,
+            "notice": null,
+            "obedience": 66,
+@@ -1082,11 +1082,11 @@
+            "boughtWeek": 1,
+            "contract": {
+              "stressHits": 0,
+              "unpaidWeeks": 0,
+              "wageMilli": 2000,
+-             "weeksLeft": 19,
++             "weeksLeft": 20,
+            },
+            "home": "estate-2",
+            "lifelongAskWeek": null,
+            "notice": null,
+            "obedience": 63,
+@@ -1222,11 +1222,11 @@
+            "boughtWeek": 1,
+            "contract": {
+              "stressHits": 0,
+              "unpaidWeeks": 0,
+              "wageMilli": 2000,
+-             "weeksLeft": 19,
++             "weeksLeft": 20,
+            },
+            "home": "estate-2",
+            "lifelongAskWeek": null,
+            "notice": null,
+            "obedience": 68,
+@@ -2157,11 +2157,11 @@
+        "forest-1: extracted Wood.",
+        "plain-1: Food Processor 2 batches.",
+      ],
+      "after": {
+        "food": 20000,
+-       "gold": 102450,
++       "gold": 108450,
+        "iron": 3000,
+        "wheat": 0,
+        "wood": 6000,
+      },
+      "before": {
+@@ -2225,11 +2225,11 @@
+        "lotsToRivals": [],
+        "notices": [],
+        "released": [],
+        "sold": [],
+        "unpaid": [],
+-       "wagesPaidMilli": 6000,
++       "wagesPaidMilli": 0,
+      },
+      "householdUpkeep": {
+        "paidMilli": 3000,
+        "unpaidMilli": 0,
+      },
+
+ ❯ packages/simulation/src/__tests__/character-life-command.test.ts:119:15
+    117|       ...(action.type === 'END_WEEK' ? { expectedWeek: s.city.world.we…
+    118|     const expected = success(legacy(old, raw)), r = success(executeCha…
+    119|     expect(r).toEqual(expected);
+       |               ^
+    120|     expect(Object.keys(r.next).sort()).toEqual(['city', 'npcs', 'outsi…
+    121|     expect(r.next.city.revision).toBe(s.city.revision + 1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯
+
+ FAIL  packages/simulation/src/__tests__/character-life-command.test.ts > own data and prototype taxonomy precedes session and revision > accepts null-prototype command data with identical complete results
+AssertionError: expected { success: true, next: { …(5) }, …(1) } to deeply equal { success: true, next: { …(5) }, …(1) }
+
+- Expected
++ Received
+
+@@ -868,11 +868,11 @@
+              ],
+              "foodProcessorOperational": true,
+              "id": "settlement_haven_01",
+              "inventory": {
+                "food": 20000,
+-               "gold": 112450,
++               "gold": 118450,
+                "iron": 4000,
+                "wheat": 0,
+                "wood": 8000,
+              },
+              "name": "Haven",
+@@ -938,11 +938,11 @@
+            "boughtWeek": 1,
+            "contract": {
+              "stressHits": 0,
+              "unpaidWeeks": 0,
+              "wageMilli": 2000,
+-             "weeksLeft": 19,
++             "weeksLeft": 20,
+            },
+            "home": "estate-2",
+            "lifelongAskWeek": null,
+            "notice": null,
+            "obedience": 66,
+@@ -1066,11 +1066,11 @@
+            "boughtWeek": 1,
+            "contract": {
+              "stressHits": 0,
+              "unpaidWeeks": 0,
+              "wageMilli": 2000,
+-             "weeksLeft": 19,
++             "weeksLeft": 20,
+            },
+            "home": "estate-2",
+            "lifelongAskWeek": null,
+            "notice": null,
+            "obedience": 63,
+@@ -1195,11 +1195,11 @@
+            "boughtWeek": 1,
+            "contract": {
+              "stressHits": 0,
+              "unpaidWeeks": 0,
+              "wageMilli": 2000,
+-             "weeksLeft": 19,
++             "weeksLeft": 20,
+            },
+            "home": "estate-2",
+            "lifelongAskWeek": null,
+            "notice": null,
+            "obedience": 68,
+@@ -2129,11 +2129,11 @@
+        "field-1: Farm 2 batches; batch Gold credited against this Farm upkeep.",
+        "plain-1: Food Processor 2 batches.",
+      ],
+      "after": {
+        "food": 20000,
+-       "gold": 112450,
++       "gold": 118450,
+        "iron": 4000,
+        "wheat": 0,
+        "wood": 8000,
+      },
+      "before": {
+@@ -2197,11 +2197,11 @@
+        "lotsToRivals": [],
+        "notices": [],
+        "released": [],
+        "sold": [],
+        "unpaid": [],
+-       "wagesPaidMilli": 6000,
++       "wagesPaidMilli": 0,
+      },
+      "householdUpkeep": {
+        "paidMilli": 3000,
+        "unpaidMilli": 0,
+      },
+
+ ❯ packages/simulation/src/__tests__/character-life-command.test.ts:280:21
+    278|       const expected = legacy(s, raw), plain = executeCharacterLifeCom…
+    279|       const nullRaw = Object.assign(Object.create(null), raw), rawBefo…
+    280|       expect(plain).toEqual(expected);
+       |                     ^
+    281|       expect(executeCharacterLifeCommand(s, nullRaw)).toEqual(expected…
+    282|       expect(Object.getOwnPropertyDescriptors(nullRaw)).toEqual(rawBef…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/8]⎯
+
+ FAIL  packages/simulation/src/__tests__/character-life-observation.test.ts > advertises ANSWER_NOTICE only for pending notices in Planning
+AssertionError: expected [ 'BUILD', 'REPLACE', 'UPGRADE', …(8) ] to strictly equal [ 'BUILD', 'REPLACE', 'UPGRADE', …(9) ]
+
+- Expected
++ Received
+
+@@ -8,7 +8,6 @@
+    "ASSIGN_NPC",
+    "UNASSIGN_NPC",
+    "EXTEND_WALL",
+    "SET_TRAINING",
+    "RELEASE_NPC",
+-   "ANSWER_NOTICE",
+  ]
+
+ ❯ packages/simulation/src/__tests__/character-life-observation.test.ts:307:59
+    305|   const session = life();
+    306|   session.npcs[0].household.notice = 'lifelong';
+    307|   expect(observeCharacterLife(session, null).actionTypes).toStrictEqua…
+       |                                                           ^
+    308|   session.city.phase = 'report';
+    309|   expect(observeCharacterLife(session, null).actionTypes).toStrictEqua…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/8]⎯
+
+ FAIL  packages/simulation/src/__tests__/character-life-observation.test.ts > detached complete visible report > keeps the real END_WEEK report after NEXT_WEEK and preserves frozen report inputs
+AssertionError: expected { week: 1, before: { …(5) }, …(15) } to deeply equal { week: 1, before: { …(5) }, …(15) }
+
+- Expected
++ Received
+
+@@ -51,11 +51,11 @@
+      "lotsToRivals": [],
+      "notices": [],
+      "released": [],
+      "sold": [],
+      "unpaid": [],
+-     "wagesPaidMilli": 6000,
++     "wagesPaidMilli": 0,
+    },
+    "immigration": {
+      "arrivals": 0,
+      "populationAfter": 100,
+      "populationBefore": 100,
+
+ ❯ packages/simulation/src/__tests__/character-life-observation.test.ts:341:26
+    339|     expect([o.week, o.phase, o.revision]).toEqual([result.next.city.wo…
+    340|     expect(o.actionTypes).toEqual(['NEXT_WEEK']); expect(o.disabledRea…
+    341|     expect(o.lastReport).toEqual({ week: r.week, before: r.before, aft…
+       |                          ^
+    342|       taxMilli: r.taxMilli, farmBatchGoldMilli: r.farmBatchGoldMilli, …
+    343|       upkeepPaidMilli: r.upkeepPaidMilli, unpaidUpkeepMilli: r.unpaidU…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/8]⎯
+
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > NPC generator catalog > rejects malformed generator data at ["P7B_TRIAL","household","unpaidAffectionLoss"]
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > NPC generator catalog > rejects malformed generator data at ["P7B_TRIAL","household","stressRefusalHits"]
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > NPC generator catalog > rejects malformed generator data at ["P7B_TRIAL","household","renewalWageMultiplier"]
+AssertionError: expected TypeError: Cannot set properties of undef… to be an instance of CatalogError
+ ❯ expectExactError packages/core/src/world/__tests__/npc-generator.test.ts:14:17
+     12|   let error: unknown;
+     13|   try { run(); } catch (caught) { error = caught; }
+     14|   expect(error).toBeInstanceOf(type);
+       |                 ^
+     15|   expect((error as Error).message).toBe(message);
+     16| }
+ ❯ packages/core/src/world/__tests__/npc-generator.test.ts:267:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/8]⎯
+
+
+ Test Files  4 failed | 1 passed (5)
+      Tests  7 failed | 105 passed (112)
+   Start at  13:12:18
+   Duration  5.91s (transform 2.85s, setup 0ms, import 3.65s, tests 9.14s, environment 1ms)
+
+
+UTC finish 2026-11-25T06:12:24+00:00
+Exit 1

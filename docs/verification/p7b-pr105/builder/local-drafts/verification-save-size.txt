@@ -1,0 +1,2 @@
+Node scratch JSON round-trip, synthetic 100-NPC fixture, exit 0
+{"npcs":100,"notices":100,"stock":12,"lots":2,"recentEntriesPerNpc":20,"bytesWithoutNotices":294370,"bytesWithNotices":294770,"offBudgetBy":-753806}

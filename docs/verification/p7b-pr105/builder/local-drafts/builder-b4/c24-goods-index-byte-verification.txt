@@ -1,0 +1,41 @@
+HEAD and tree
+e983fa9f826387bfa4a7ef7b0b54cff561687cb6
+5d4fcf4e84884c337440c94488f5b5547ff73f1b
+Status before command
+M  tests/e2e/goods-stock.spec.ts
+CI=
+UTC start 2026-11-25T08:48:18+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ python C:/Users/Admin/.t3/local-drafts/p7b-prB4/builder-b4/verify-delivery.py b42 index
+4c632b98f9021d9d714eb5f48de225e9b5a2a7d83842479af6c955ae1436b1e5 packages/core/src/data/npc-generator.json
+e6cf542972c96801657774d6260c1e994e012db295b1b2356c9ee9858e0fb620 packages/core/src/data/validate.ts
+6b42b118c3a0ee6dfa0a5e20d2b9246032b723225bb35a37c5078d871c3b5c31 packages/core/src/world/__tests__/npc-generator.test.ts
+cc19c25358faff04f23066c842e59cd7d54131dd796b1610c8ea917c82d1a1df packages/simulation/src/__tests__/character-life-command.test.ts
+e8bfb686f1b9f86df45e8c22206e7e60745b02137bda03d5e45903239743285e packages/simulation/src/__tests__/character-life-observation.test.ts
+744009dc1cb9a52e4d1be47bfca14f1d79efe9b05aa6a94602f39fcfee698352 packages/simulation/src/__tests__/household-week.test.ts
+c053de23c75d8f6ce73f9b8869e857c1e68e8b483a215aa89430ce2a1200a30d packages/simulation/src/__tests__/lord-health.test.ts
+d31015cde46018c320f9c6d590f78b93ab0ca615f9f37c9c59c4e0f51089f928 packages/simulation/src/__tests__/society-stock-integrity.test.ts
+65a39476531215d36cb5b8c4a28124a594a7d602b69fc04224ff85bc122d0277 packages/simulation/src/character-life-command.ts
+12de38cf1318199853f4aae5908c465b0cff160cd4b130bd9e63fb92454f1d5e packages/simulation/src/character-life-observation.ts
+dbbbc1b9dd2d4a665bbd2c7d033cca811d6407cab373c02044d5b023b7a626e8 packages/simulation/src/household-week.ts
+4717f7a75226c4e3659025eb2c2feb500371651257634f7333bac4d183560f3a packages/ui/src/CharacterLifeCharacters.svelte
+5eb6af05e302fdd43cebb7feb596580bd45d779a2d60fe51c376160ac0880b96 packages/ui/src/CharacterLifeCity.svelte
+9ec1e625894cd8b0a860bb7e16557773d9f8014b3b630b759e322eb169216bf9 packages/ui/src/CharacterProfile.svelte
+9e6b4b614c745ca493f3232a9bba70c0efcaf12f0f153c76291d557c03d32a3e packages/ui/src/HouseholdNotice.svelte
+5bfb298c8305dfc98acea5ce866cedc14122f4e08359dd3e4fa10f190eac6220 packages/ui/src/NpcSheet.svelte
+4d289ddd1c6247f294ce9352094e9b9ff3745085f99f3acfa8174453437dceeb packages/ui/src/TileManagement.svelte
+a99efcb390360f6bca9ac0429d6209332790009fbdd8d48f695852661047a691 packages/ui/src/__tests__/acquisition-view.test.ts
+03f874ffe33a988198a58d8619ef8c8988a721fb2e4a04ac8401e49c6c38dff6 packages/ui/src/__tests__/npc-sheet-view.test.ts
+c64b135802fe4cc5b4b07f83ba3e408ca7b4e06e6f6818722ca20fa5e5e5d593 packages/ui/src/npc-sheet-view.ts
+f9e3c5e22b7ccba0c9a2187e860ccb99ad9851c582ed2c5d6c7ada68ef630568 packages/ui/src/report-letters.ts
+f530574a1b7b889eb1b4a4bb104842e301d2dcc39ee122f6c0e693baf4b31d1d scripts/p7b-road-balance.ts
+cad1b01602bd820afead43334658a2e04f8726eea6442c5e86749e3db16eef87 tests/e2e/acquisition.spec.ts
+032596d70b752f2f1778329832f209e132baf849b6a2acbb0ba1dca787722a2c tests/e2e/character-life-navigation.helpers.ts
+Traceback (most recent call last):
+  File "C:\Users\Admin\.t3\local-drafts\p7b-prB4\builder-b4\verify-delivery.py", line 63, in <module>
+    assert sha(work) == expected[path], path
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: tests/e2e/goods-stock.spec.ts
+
+UTC finish 2026-11-25T08:48:19+00:00
+Exit 1

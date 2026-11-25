@@ -1,0 +1,75 @@
+UTC start 2026-11-25T12:21:16+00:00
+Base 15cfc2c71aba0799e4d936c09b77529a53724272
+Tree d9225177b6c416384112f6bf340a4b11b8302273
+Scratch D:\QI Technology\Temp\p7b-b4-c25-nk04y_b2
+Spec tests/e2e/goods-stock.spec.ts
+Spec SHA-256 33d0840162e2616499cce4e38be0166ae9cd8add942e1a74cf84a725c353405d
+Config SHA-256 668971c42ad19cf855eb38e0f98f3ccb88f4781a4972465d3649977e769bc7b8
+$ CI=1 node node_modules/@playwright/test/cli.js test tests/e2e/goods-stock.spec.ts --output c25-artifacts/f2-red
+[WebServer] fatal: not a git repository (or any of the parent directories): .git
+[WebServer] fatal: not a git repository (or any of the parent directories): .git
+
+Running 2 tests using 1 worker
+
+  x  1 [chromium] › tests\e2e\goods-stock.spec.ts:5:85 › Society five-week report and navigation parity at 375px (25.7s)
+  x  2 [chromium] › tests\e2e\goods-stock.spec.ts:5:85 › Society five-week report and navigation parity at 1280px (26.1s)
+
+
+  1) [chromium] › tests\e2e\goods-stock.spec.ts:5:85 › Society five-week report and navigation parity at 375px 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 30000
+    Received: 50000
+
+      34 |     expect(await exportLife(page)).toEqual(session);
+      35 |   }
+    > 36 |   expect(debit).toBe(30000);
+         |                 ^
+      37 |   await go(page, 'city'); await expect(page.getByTestId('trial-stock-goods')).toHaveText('2.75');
+      38 |   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      39 |   await page.screenshot({ path: info.outputPath('goods-week5-city.png'), fullPage: true });
+        at D:\QI Technology\Temp\p7b-b4-c25-nk04y_b2\tests\e2e\goods-stock.spec.ts:36:17
+
+    Error Context: c25-artifacts\f2-red\goods-stock-Society-five-w-fbc68--navigation-parity-at-375px-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    c25-artifacts\f2-red\goods-stock-Society-five-w-fbc68--navigation-parity-at-375px-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace c25-artifacts\f2-red\goods-stock-Society-five-w-fbc68--navigation-parity-at-375px-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\goods-stock.spec.ts:5:85 › Society five-week report and navigation parity at 1280px 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 30000
+    Received: 50000
+
+      34 |     expect(await exportLife(page)).toEqual(session);
+      35 |   }
+    > 36 |   expect(debit).toBe(30000);
+         |                 ^
+      37 |   await go(page, 'city'); await expect(page.getByTestId('trial-stock-goods')).toHaveText('2.75');
+      38 |   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      39 |   await page.screenshot({ path: info.outputPath('goods-week5-city.png'), fullPage: true });
+        at D:\QI Technology\Temp\p7b-b4-c25-nk04y_b2\tests\e2e\goods-stock.spec.ts:36:17
+
+    Error Context: c25-artifacts\f2-red\goods-stock-Society-five-w-be7af-navigation-parity-at-1280px-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    c25-artifacts\f2-red\goods-stock-Society-five-w-be7af-navigation-parity-at-1280px-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace c25-artifacts\f2-red\goods-stock-Society-five-w-be7af-navigation-parity-at-1280px-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests\e2e\goods-stock.spec.ts:5:85 › Society five-week report and navigation parity at 375px 
+    [chromium] › tests\e2e\goods-stock.spec.ts:5:85 › Society five-week report and navigation parity at 1280px 
+
+UTC finish 2026-11-25T12:22:23+00:00
+Exit 1

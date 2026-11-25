@@ -1,0 +1,2 @@
+﻿Start UTC 2026-11-25T04:27:59.4652217Z | tsc --noEmit --strict --skipLibCheck --target ES2022 --module ESNext --moduleResolution bundler --resolveJsonModule --allowImportingTsExtensions --types node scripts/p7b-road-balance.ts tests/e2e/household.spec.ts tests/e2e/acquisition.spec.ts | scratch D:\QI Technology\Temp\p7b-b4-step0-_f7d224k
+End UTC 2026-11-25T04:28:10.7897296Z | exit 0

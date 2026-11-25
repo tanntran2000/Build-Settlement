@@ -1,0 +1,38 @@
+{
+  "correction": 21,
+  "base": "95821832a8c95988c3203b4c38f5f9ae665978e9",
+  "files": [
+    {
+      "path": "packages/simulation/src/household-week.ts",
+      "packetSHA256": "704721084f8bf5cf0e00e9f3e5215db58616e19a7c0fc3e9adb8326a489b3561",
+      "correctedSHA256": "dbbbc1b9dd2d4a665bbd2c7d033cca811d6407cab373c02044d5b023b7a626e8",
+      "changes": [
+        {
+          "before": "Math.round(household.contract!.wageMilli * rules.renewalWageMultiplier / step)",
+          "after": "Math.ceil(household.contract!.wageMilli * rules.renewalWageMultiplier / step)"
+        }
+      ],
+      "finalNewline": true
+    },
+    {
+      "path": "packages/simulation/src/__tests__/household-week.test.ts",
+      "packetSHA256": "dabc503cb17a7254792d05c007468b0e3881fedd7544edad1ae0419623b6c37a",
+      "correctedSHA256": "744009dc1cb9a52e4d1be47bfca14f1d79efe9b05aa6a94602f39fcfee698352",
+      "changes": [
+        {
+          "before": "it('renews 20 weeks (+25% rounded to whole Gold), clears notice and counters', () => {",
+          "after": "it.each([[1000, 2000], [2000, 3000]] as const)('renews 20 weeks at wage %s rounded up to %s, clears notice and counters', (previous, increased) => {"
+        },
+        {
+          "before": "household.contract = { weeksLeft: 0, wageMilli: 2000, unpaidWeeks: 2, stressHits: 2 };",
+          "after": "household.contract = { weeksLeft: 0, wageMilli: previous, unpaidWeeks: 2, stressHits: 2 };"
+        },
+        {
+          "before": "toStrictEqual({ weeksLeft: 20, wageMilli: 3000, unpaidWeeks: 0, stressHits: 0 });",
+          "after": "toStrictEqual({ weeksLeft: 20, wageMilli: increased, unpaidWeeks: 0, stressHits: 0 });"
+        }
+      ],
+      "finalNewline": true
+    }
+  ]
+}

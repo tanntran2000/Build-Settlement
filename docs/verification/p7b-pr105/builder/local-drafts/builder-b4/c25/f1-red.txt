@@ -1,0 +1,93 @@
+UTC start 2026-11-25T12:19:51+00:00
+Base 15cfc2c71aba0799e4d936c09b77529a53724272
+Tree d9225177b6c416384112f6bf340a4b11b8302273
+Scratch D:\QI Technology\Temp\p7b-b4-c25-nk04y_b2
+Spec tests/e2e/household.spec.ts
+Spec SHA-256 48b1bb4a1606442cf16c136f02cf11cef8d387374d90467d3c72a0738e5b907a
+Config SHA-256 668971c42ad19cf855eb38e0f98f3ccb88f4781a4972465d3649977e769bc7b8
+$ CI=1 node node_modules/@playwright/test/cli.js test tests/e2e/household.spec.ts --output c25-artifacts/f1-red
+[WebServer] fatal: not a git repository (or any of the parent directories): .git
+[WebServer] fatal: not a git repository (or any of the parent directories): .git
+
+Running 2 tests using 1 worker
+
+  x  1 [chromium] › tests\e2e\household.spec.ts:23:3 › renewal renders in the ledger, roster, sheet and Homes with a keyboard path at 1280 (9.1s)
+  x  2 [chromium] › tests\e2e\household.spec.ts:23:3 › renewal renders in the ledger, roster, sheet and Homes with a keyboard path at 1600 (6.4s)
+
+
+  1) [chromium] › tests\e2e\household.spec.ts:23:3 › renewal renders in the ledger, roster, sheet and Homes with a keyboard path at 1280 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('npc-sheet').getByRole('region', { name: 'Starting past', exact: true }).getByText('Outsider partners', { exact: true }).locator('xpath=following-sibling::dd')
+    Expected: "2"
+    Received: "20"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" getByTestId('npc-sheet').getByRole('region', { name: 'Starting past', exact: true }).getByText('Outsider partners', { exact: true }).locator('xpath=following-sibling::dd') with timeout 5000ms
+      - waiting for getByTestId('npc-sheet').getByRole('region', { name: 'Starting past', exact: true }).getByText('Outsider partners', { exact: true }).locator('xpath=following-sibling::dd')
+        14 × locator resolved to <dd class="svelte-g8hst5">20</dd>
+           - unexpected value "20"
+
+
+      38 |     const past = sheet.getByRole('region', { name: 'Starting past', exact: true });
+      39 |     const outsiderPartners = past.getByText('Outsider partners', { exact: true });
+    > 40 |     await expect(outsiderPartners.locator('xpath=following-sibling::dd')).toHaveText('2');
+         |                                                                           ^
+      41 |     const result = act(state, 'END_WEEK', { expectedWeek: 1 });
+      42 |     await keyActivate(page, page.getByTestId('life-end-week'));
+      43 |     await expectReport(page, result.report!);
+        at D:\QI Technology\Temp\p7b-b4-c25-nk04y_b2\tests\e2e\household.spec.ts:40:75
+
+    Error Context: c25-artifacts\f1-red\household-renewal-renders--9c848-ith-a-keyboard-path-at-1280-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    c25-artifacts\f1-red\household-renewal-renders--9c848-ith-a-keyboard-path-at-1280-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace c25-artifacts\f1-red\household-renewal-renders--9c848-ith-a-keyboard-path-at-1280-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\household.spec.ts:23:3 › renewal renders in the ledger, roster, sheet and Homes with a keyboard path at 1600 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('npc-sheet').getByRole('region', { name: 'Starting past', exact: true }).getByText('Outsider partners', { exact: true }).locator('xpath=following-sibling::dd')
+    Expected: "2"
+    Received: "20"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" getByTestId('npc-sheet').getByRole('region', { name: 'Starting past', exact: true }).getByText('Outsider partners', { exact: true }).locator('xpath=following-sibling::dd') with timeout 5000ms
+      - waiting for getByTestId('npc-sheet').getByRole('region', { name: 'Starting past', exact: true }).getByText('Outsider partners', { exact: true }).locator('xpath=following-sibling::dd')
+        14 × locator resolved to <dd class="svelte-g8hst5">20</dd>
+           - unexpected value "20"
+
+
+      38 |     const past = sheet.getByRole('region', { name: 'Starting past', exact: true });
+      39 |     const outsiderPartners = past.getByText('Outsider partners', { exact: true });
+    > 40 |     await expect(outsiderPartners.locator('xpath=following-sibling::dd')).toHaveText('2');
+         |                                                                           ^
+      41 |     const result = act(state, 'END_WEEK', { expectedWeek: 1 });
+      42 |     await keyActivate(page, page.getByTestId('life-end-week'));
+      43 |     await expectReport(page, result.report!);
+        at D:\QI Technology\Temp\p7b-b4-c25-nk04y_b2\tests\e2e\household.spec.ts:40:75
+
+    Error Context: c25-artifacts\f1-red\household-renewal-renders--b3e27-ith-a-keyboard-path-at-1600-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    c25-artifacts\f1-red\household-renewal-renders--b3e27-ith-a-keyboard-path-at-1600-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace c25-artifacts\f1-red\household-renewal-renders--b3e27-ith-a-keyboard-path-at-1600-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests\e2e\household.spec.ts:23:3 › renewal renders in the ledger, roster, sheet and Homes with a keyboard path at 1280 
+    [chromium] › tests\e2e\household.spec.ts:23:3 › renewal renders in the ledger, roster, sheet and Homes with a keyboard path at 1600 
+
+UTC finish 2026-11-25T12:20:21+00:00
+Exit 1

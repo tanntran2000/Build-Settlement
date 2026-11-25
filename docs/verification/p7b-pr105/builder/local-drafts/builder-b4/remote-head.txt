@@ -1,0 +1,12 @@
+HEAD and tree
+15cfc2c71aba0799e4d936c09b77529a53724272
+d9225177b6c416384112f6bf340a4b11b8302273
+Status before command
+CI=
+UTC start 2026-11-25T11:26:45+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ git ls-remote --exit-code origin refs/heads/feat/p7b-servants-wages
+15cfc2c71aba0799e4d936c09b77529a53724272	refs/heads/feat/p7b-servants-wages
+
+UTC finish 2026-11-25T11:26:46+00:00
+Exit 0

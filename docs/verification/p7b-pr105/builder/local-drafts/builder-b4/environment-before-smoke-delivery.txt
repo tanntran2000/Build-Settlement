@@ -1,0 +1,45 @@
+UTC 2026-11-25T08:52:40.4495999Z
+HEAD 15cfc2c71aba0799e4d936c09b77529a53724272
+Tree d9225177b6c416384112f6bf340a4b11b8302273
+Branch feat/p7b-servants-wages
+origin/main 95821832a8c95988c3203b4c38f5f9ae665978e9
+Node v24.19.0
+Git status empty
+Ports 4173 and 4174 free
+CPU current load
+
+Name                                     NumberOfCores NumberOfLogicalProcessors LoadPercentage
+----                                     ------------- ------------------------- --------------
+Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz             4                         8              5
+
+
+
+Top processes by sampled CPU seconds
+
+Name                   Id CPUSecondsOverSample
+----                   -- --------------------
+powershell          29852                1.406
+browser             23276                0.344
+browser             37136                0.266
+codebase-memory-mcp 22916                0.141
+codebase-memory-mcp 31272                0.141
+codebase-memory-mcp 35828                0.109
+codex               35956                0.109
+codebase-memory-mcp 22992                0.078
+codebase-memory-mcp 25876                0.078
+codebase-memory-mcp 31656                0.062
+SmartAudio          13592                0.047
+codebase-memory-mcp 22100                0.031
+
+
+
+System last boot
+
+LastBootUpTime        
+--------------        
+11/18/2026 12:48:43 PM
+
+
+
+Sleep/resume System records since 2026-11-25T15:48:58.6514048+07:00
+No matching events

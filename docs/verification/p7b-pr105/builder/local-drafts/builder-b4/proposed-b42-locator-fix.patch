@@ -1,0 +1,11 @@
+--- a/tests/e2e/household.spec.ts
++++ b/tests/e2e/household.spec.ts
+@@ -46,7 +46,7 @@
+     const roster = page.getByRole('navigation', { name: 'Character roster' });
+     await expect(roster.getByRole('button', { name: 'Renew contract' })).toHaveAccessibleDescription('Plan next week to answer notices.');
+     await go(page, 'reports');
+-    await keyActivate(page, page.getByRole('button', { name: 'Plan next week' }));
++    await keyActivate(page, page.getByRole('button', { name: 'Plan next week', exact: true }));
+     await go(page, 'city');
+     await keyActivate(page, page.getByTestId('trial-tile-estate-2'));
+     const homes = page.getByRole('region', { name: 'Home residents' });

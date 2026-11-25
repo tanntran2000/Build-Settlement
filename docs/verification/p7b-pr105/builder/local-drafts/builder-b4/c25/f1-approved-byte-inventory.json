@@ -1,0 +1,28 @@
+{
+  "base": "15cfc2c71aba0799e4d936c09b77529a53724272",
+  "tree": "d9225177b6c416384112f6bf340a4b11b8302273",
+  "file": "tests/e2e/household.spec.ts",
+  "encoding": "UTF-8",
+  "before": {
+    "bytes": 3795,
+    "sha256": "b03341a1b279563cb2c2ccb6f8a76513c62139d7388303da947a0e3c9f3ce5ea",
+    "gitBlob": "df8ae093eb128b94b3d2b77eff8fe996adb1b6b8",
+    "endsWithNewline": true
+  },
+  "after": {
+    "bytes": 3945,
+    "sha256": "f4e5c813a02cdc1755661476af9c80e087d3ada0673aaad25d3a35c8dfdeabd1",
+    "gitBlob": "64640f0f13442540b34af47ddcff369f68853342",
+    "endsWithNewline": true
+  },
+  "replacements": [
+    {
+      "beforeLine": 38,
+      "afterLine": 38,
+      "startByte": 2100,
+      "endByteExclusive": 2208,
+      "before": "    await expect(sheet.getByRole('region', { name: 'Starting past' })).toContainText('Outsider partners2');\n",
+      "after": "    const past = sheet.getByRole('region', { name: 'Starting past', exact: true });\n    const outsiderPartners = past.getByText('Outsider partners', { exact: true });\n    await expect(outsiderPartners.locator('xpath=following-sibling::dd')).toHaveText('2');\n"
+    }
+  ]
+}

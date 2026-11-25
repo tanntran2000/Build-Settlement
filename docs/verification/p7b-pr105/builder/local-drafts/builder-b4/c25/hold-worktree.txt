@@ -1,0 +1,11 @@
+UTC 2026-11-25T12:24:01+00:00
+HEAD 0bd1b245262e4801b052f7eabbebbe2beec7d884
+Tree dd8d71d2782b6fc48aaafd3fae863682e0e0283c
+$ git apply --cached --check f2-proposal.patch
+Exit 0
+Goods blob at HEAD c0f5330db094eedd9b29ec339fd0b9ee6732611f
+$ git status --short --branch
+## feat/p7b-servants-wages...origin/feat/p7b-servants-wages [ahead 1]
+$ git ls-remote --exit-code origin refs/heads/feat/p7b-servants-wages
+15cfc2c71aba0799e4d936c09b77529a53724272	refs/heads/feat/p7b-servants-wages
+Exit 0

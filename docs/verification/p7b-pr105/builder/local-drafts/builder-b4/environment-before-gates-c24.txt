@@ -1,0 +1,71 @@
+UTC 2026-11-25T08:02:23.8084010Z
+HEAD e983fa9f826387bfa4a7ef7b0b54cff561687cb6
+Tree 5d4fcf4e84884c337440c94488f5b5547ff73f1b
+Branch feat/p7b-servants-wages
+origin/main 95821832a8c95988c3203b4c38f5f9ae665978e9
+Node v24.19.0
+Git status empty
+Ports 4173 and 4174 free
+CPU current load
+
+Name                                     NumberOfCores NumberOfLogicalProcessors LoadPercentage
+----                                     ------------- ------------------------- --------------
+Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz             4                         8              7
+
+
+
+Top processes by sampled CPU seconds
+
+Name                   Id CPUSecondsOverSample
+----                   -- --------------------
+powershell          12520                  1.5
+browser             23276                  0.5
+browser             37136                0.375
+codebase-memory-mcp 31656                0.094
+codebase-memory-mcp 22916                0.094
+codebase-memory-mcp 22992                0.078
+codebase-memory-mcp 35828                0.078
+codebase-memory-mcp 25876                0.062
+codebase-memory-mcp 31272                0.062
+SmartAudio          13592                0.031
+CAudioFilterAgent64 25420                0.016
+T3 Code (Nightly)   11624                0.016
+
+
+
+System last boot
+
+LastBootUpTime        
+--------------        
+11/18/2026 12:48:43 PM
+
+
+
+Sleep/resume System records since 2026-11-18T15:02:18.3786118+07:00
+
+TimeCreated             Id ProviderName                          
+-----------             -- ------------                          
+11/25/2026 11:12:18 AM   1 Microsoft-Windows-Power-Troubleshooter
+11/25/2026 11:06:32 AM   1 Microsoft-Windows-Power-Troubleshooter
+11/25/2026 7:35:13 AM    1 Microsoft-Windows-Power-Troubleshooter
+11/24/2026 7:47:42 AM    1 Microsoft-Windows-Power-Troubleshooter
+11/19/2026 5:32:25 PM    1 Microsoft-Windows-Power-Troubleshooter
+11/19/2026 7:37:46 AM    1 Microsoft-Windows-Power-Troubleshooter
+11/18/2026 5:28:59 PM    1 Microsoft-Windows-Power-Troubleshooter
+11/25/2026 11:11:11 AM 107 Microsoft-Windows-Kernel-Power        
+11/25/2026 11:11:08 AM  42 Microsoft-Windows-Kernel-Power        
+11/25/2026 11:05:38 AM 107 Microsoft-Windows-Kernel-Power        
+11/25/2026 11:05:36 AM  42 Microsoft-Windows-Kernel-Power        
+11/25/2026 6:12:19 AM  107 Microsoft-Windows-Kernel-Power        
+11/25/2026 6:12:17 AM   42 Microsoft-Windows-Kernel-Power        
+11/19/2026 11:12:36 PM 107 Microsoft-Windows-Kernel-Power        
+11/19/2026 11:12:33 PM  42 Microsoft-Windows-Kernel-Power        
+11/19/2026 4:06:09 PM  107 Microsoft-Windows-Kernel-Power        
+11/19/2026 4:06:07 PM   42 Microsoft-Windows-Kernel-Power        
+11/18/2026 10:22:39 PM 107 Microsoft-Windows-Kernel-Power        
+11/18/2026 10:22:37 PM  42 Microsoft-Windows-Kernel-Power        
+11/18/2026 4:28:22 PM  107 Microsoft-Windows-Kernel-Power        
+11/18/2026 4:28:20 PM   42 Microsoft-Windows-Kernel-Power        
+
+
+

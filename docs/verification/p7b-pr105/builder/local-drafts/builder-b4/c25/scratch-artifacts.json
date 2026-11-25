@@ -1,0 +1,52 @@
+[
+  {
+    "path": "c25-artifacts/f1-red/household-renewal-renders--9c848-ith-a-keyboard-path-at-1280-chromium/trace.zip",
+    "bytes": 256862,
+    "sha256": "701bf262960fbfd7302257de3e96b3b6f9ae7f506f11b73c05d2c1c45d4d38fd"
+  },
+  {
+    "path": "c25-artifacts/f1-red/household-renewal-renders--b3e27-ith-a-keyboard-path-at-1600-chromium/trace.zip",
+    "bytes": 279937,
+    "sha256": "16ad5bbc5d4112daa3f7eb4e0cf0390e38aaf41347a26f654bb3009403cd285c"
+  },
+  {
+    "path": "c25-artifacts/f2-green/goods-stock-Society-five-w-be7af-navigation-parity-at-1280px-chromium/goods-week5-city.png",
+    "bytes": 63608,
+    "sha256": "0cddbd3ad0c380f85370e0bf9cbff5d80e1c8244e5294bfba859a4d7490ed7e4"
+  },
+  {
+    "path": "c25-artifacts/f2-green/goods-stock-Society-five-w-be7af-navigation-parity-at-1280px-chromium/goods-week5-report.png",
+    "bytes": 74082,
+    "sha256": "c85a4f7031e479b5737e090a1c8ee31e899a625bed4d2c550121cfb59944b74e"
+  },
+  {
+    "path": "c25-artifacts/f2-green/goods-stock-Society-five-w-fbc68--navigation-parity-at-375px-chromium/goods-week5-city.png",
+    "bytes": 330261,
+    "sha256": "fc69213df3c724ff5dd9c827249e55242391faf843ace49697856c13472e17f7"
+  },
+  {
+    "path": "c25-artifacts/f2-green/goods-stock-Society-five-w-fbc68--navigation-parity-at-375px-chromium/goods-week5-report.png",
+    "bytes": 21920,
+    "sha256": "ee7237a63c3bfeefacd07b176482dc4bf2a40b2fe70adfb277caa4527a5c0b9f"
+  },
+  {
+    "path": "c25-artifacts/f2-red/goods-stock-Society-five-w-be7af-navigation-parity-at-1280px-chromium/goods-week5-report.png",
+    "bytes": 74082,
+    "sha256": "c85a4f7031e479b5737e090a1c8ee31e899a625bed4d2c550121cfb59944b74e"
+  },
+  {
+    "path": "c25-artifacts/f2-red/goods-stock-Society-five-w-be7af-navigation-parity-at-1280px-chromium/trace.zip",
+    "bytes": 6536593,
+    "sha256": "7f14d3db79672ea291006edb9cae5125ba3435753d9c4fb4a5d1fe5345702b84"
+  },
+  {
+    "path": "c25-artifacts/f2-red/goods-stock-Society-five-w-fbc68--navigation-parity-at-375px-chromium/goods-week5-report.png",
+    "bytes": 21920,
+    "sha256": "ee7237a63c3bfeefacd07b176482dc4bf2a40b2fe70adfb277caa4527a5c0b9f"
+  },
+  {
+    "path": "c25-artifacts/f2-red/goods-stock-Society-five-w-fbc68--navigation-parity-at-375px-chromium/trace.zip",
+    "bytes": 3066322,
+    "sha256": "762d142621a5687e2b67bd24723442584e1af5589096a9e9850774c8c9682328"
+  }
+]

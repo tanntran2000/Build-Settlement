@@ -1,0 +1,28 @@
+{
+  "base": "15cfc2c71aba0799e4d936c09b77529a53724272",
+  "tree": "d9225177b6c416384112f6bf340a4b11b8302273",
+  "file": "tests/e2e/household.spec.ts",
+  "encoding": "UTF-8",
+  "before": {
+    "bytes": 3945,
+    "sha256": "f4e5c813a02cdc1755661476af9c80e087d3ada0673aaad25d3a35c8dfdeabd1",
+    "gitBlob": "64640f0f13442540b34af47ddcff369f68853342",
+    "endsWithNewline": true
+  },
+  "after": {
+    "bytes": 3946,
+    "sha256": "48b1bb4a1606442cf16c136f02cf11cef8d387374d90467d3c72a0738e5b907a",
+    "gitBlob": "1ecd72cc2f015898db99cadecc48f18f3b8b667d",
+    "endsWithNewline": true
+  },
+  "replacements": [
+    {
+      "beforeLine": 18,
+      "afterLine": 18,
+      "startByte": 1056,
+      "endByteExclusive": 1120,
+      "before": "  state.npcs[0].life.history.counters['partners.outsider'] = 2;\n",
+      "after": "  state.npcs[0].life.history.counters['partners.outsider'] = 20;\n"
+    }
+  ]
+}

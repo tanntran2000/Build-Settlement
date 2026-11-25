@@ -1,0 +1,29 @@
+Read-only Node 24 source probes. Baseline 95821832a8c95988c3203b4c38f5f9ae665978e9.
+Main and candidate report hashes from independent processes (no build).
+
+Main, exit 0
+Catalog golden: all 3 pinned 60-week values match; file SHA-256 abf942d07057a6630182cd3c8fea972be10c9c2a9aa8868dcc15dc580d23b13f
+Report SHA-256 [{"market":"none","npcs":0,"week":1,"sha256":"7c024a852551ed7c2bc64f0846fc0abf5ca2db2494e22009a34a688256485e8a"},{"market":"none","npcs":0,"week":2,"sha256":"b3db8d9ffc5ae853d3d6bba70a2e77bae260c20e09b21e0da3b06db8b749ba06"},{"market":"guild","npcs":0,"week":1,"sha256":"75e3f2669511da6fb334e3938ea0b78285ac1b6f643a03577ce4bd8e97fc5766"},{"market":"guild","npcs":0,"week":2,"sha256":"b3b675ad07a4b84ad83bf3c12e2a0931ca2ac32092e73ef57e8eb936c1f72752"},{"market":"slave-market","npcs":1,"week":1,"sha256":"ebee01af622abec8833257dca64da07de6ab3bf38ef939a96015f7bd98849929"},{"market":"slave-market","npcs":1,"week":2,"sha256":"0928d45f24b0fcb308be2aa12dce8b1458170a193a7369be831022002921c919"}]
+
+B4 scratch, exit 0
+Catalog golden: all 3 pinned 60-week values match; file SHA-256 2bf740f9c010e71747c1dcbe5af39387b1a37f4d81c4ba35cdef33feb821ff3e
+Report SHA-256 [{"market":"none","npcs":0,"week":1,"sha256":"7c024a852551ed7c2bc64f0846fc0abf5ca2db2494e22009a34a688256485e8a"},{"market":"none","npcs":0,"week":2,"sha256":"b3db8d9ffc5ae853d3d6bba70a2e77bae260c20e09b21e0da3b06db8b749ba06"},{"market":"guild","npcs":0,"week":1,"sha256":"75e3f2669511da6fb334e3938ea0b78285ac1b6f643a03577ce4bd8e97fc5766"},{"market":"guild","npcs":0,"week":2,"sha256":"b3b675ad07a4b84ad83bf3c12e2a0931ca2ac32092e73ef57e8eb936c1f72752"},{"market":"slave-market","npcs":1,"week":1,"sha256":"ebee01af622abec8833257dca64da07de6ab3bf38ef939a96015f7bd98849929"},{"market":"slave-market","npcs":1,"week":2,"sha256":"0928d45f24b0fcb308be2aa12dce8b1458170a193a7369be831022002921c919"}]
+
+The worktree checkout has core.autocrlf=true. Catalog file digests in source probes reflect checkout line endings. index-step0.py separately asserts exact scratch bytes against the committed Git blob (2bf740f9c010e71747c1dcbe5af39387b1a37f4d81c4ba35cdef33feb821ff3e).
+
+Legal command-only play, second run, exit 0
+Renewal pending after close 20 {"planningWeek":21,"roster":1,"admissions":0,"departures":0,"opening":1,"jsonBytes":20150,"sha256":"b8d6bdf644c6a278ba708ef859da3ccd3ddbe2dde7f34fde4586e90cf21f68ef"}
+First save after close 21: exit {"planningWeek":22,"roster":0,"admissions":0,"departures":0,"opening":0,"jsonBytes":17986,"sha256":"1ac86fa82ff88d66a35913082910c8a4c32f10b8d9b4f127a1509f5a366ccaf9"}
+Following save after close 22 {"planningWeek":23,"roster":0,"admissions":0,"departures":0,"opening":0,"jsonBytes":18016,"sha256":"554822a8113440e850df8500e03bdaa7bfd48013737a7218a5f98b7db8b5d92c"}
+First run reached and round-tripped the exit checkpoint. Optional immediate rehire refused NOT_ENOUGH_GOLD. The required following-week check was rerun without a purchase.
+
+Short Gold and Review Focus 5, second run, exit 0
+Scarce Gold order {"wages":{"bought":["Ardis Frostmere","Tesrin Emberloom"],"sold":[],"released":[],"left":[],"lotsToRivals":[],"wagesPaidMilli":2000,"unpaid":["Tesrin Emberloom"],"notices":[]},"upkeep":{"paidMilli":1000,"unpaidMilli":2000},"before":2000,"after":450}
+Focus 5 {"card":{"id":"crisis-demand-w2","source":"crisis","kind":"demand","week":2},"notices":["Ardis Frostmere","Tesrin Emberloom"],"automaticExits":["Ardis Frostmere","Tesrin Emberloom"]}
+First crisis fixture reached low food but happiness stayed above the crisis rule threshold. The repaired fixture uses the established low-satisfaction crisis baseline.
+
+Road runner, both probes exit 1
+1. New Game with blank default name refused with "Enter a name of 1–64 characters without leading or trailing spaces."
+2. Named New Game advanced to build-first close 1 setup; SET_WORKERS for the workshop refused INVALID_PLAN because the Food Processor already uses the available Maker staffing.
+The sealed proposal substitutes Iron Mine for Goods Workshop. That recipe was composed and typechecked/linted, and was held after two road executions. No 40-week road result exists in this packet.
+

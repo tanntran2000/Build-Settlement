@@ -1,0 +1,938 @@
+{
+  "base": "95821832a8c95988c3203b4c38f5f9ae665978e9",
+  "tree": "83c11b3a8362be1c1c69f632808c76a0c101caa8",
+  "source": "Git blob bytes",
+  "files": [
+    {
+      "path": "packages/core/src/data/npc-generator.json",
+      "reasons": [
+        "Decision 13 and spec §7 TRIAL data, reuse contractWeeks and wageMilli"
+      ],
+      "before": {
+        "bytes": 8573,
+        "sha256": "03ee6792af7b5195f01ca8cfbd90311749f36a036df35017a46b5743c395895a",
+        "finalNewline": true,
+        "bom": false
+      },
+      "after": {
+        "bytes": 8989,
+        "sha256": "4c632b98f9021d9d714eb5f48de225e9b5a2a7d83842479af6c955ae1436b1e5",
+        "finalNewline": true,
+        "bom": false
+      },
+      "replacements": [
+        {
+          "baselineLine": 512,
+          "baselineLineCount": 0,
+          "proposedLine": 512,
+          "startByte": 8464,
+          "endByte": 8464,
+          "before": "",
+          "after": "    \"household\": {\n      \"unpaidAffectionLoss\": 5,\n      \"unpaidObedienceLoss\": 5,\n      \"mansionObedienceGain\": 1,\n      \"stressObedienceLoss\": 2,\n      \"unpaidRefusalWeeks\": 3,\n      \"stressRefusalHits\": 3,\n      \"lifelongAffectionMin\": 75,\n      \"lifelongObedienceMin\": 50,\n      \"lifelongAskGapWeeks\": 10,\n      \"renewalWageMultiplier\": 1.25,\n      \"renewalWageStepMilli\": 1000,\n      \"quadrantSplit\": 50\n    },\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/core/src/data/validate.ts",
+      "reasons": [
+        "Expose validated household tuning through the existing catalog type",
+        "Reject missing/invalid tuning with field-specific catalog errors"
+      ],
+      "before": {
+        "bytes": 62159,
+        "sha256": "63f178dd1febff12828dc2b9934b5ad1d3117b4d2128f06eb6b967c5ddae03b5",
+        "finalNewline": true,
+        "bom": false
+      },
+      "after": {
+        "bytes": 63240,
+        "sha256": "e6cf542972c96801657774d6260c1e994e012db295b1b2356c9ee9858e0fb620",
+        "finalNewline": true,
+        "bom": false
+      },
+      "replacements": [
+        {
+          "baselineLine": 1038,
+          "baselineLineCount": 0,
+          "proposedLine": 1038,
+          "startByte": 52530,
+          "endByte": 52530,
+          "before": "",
+          "after": "        household: {\n            unpaidAffectionLoss: number; unpaidObedienceLoss: number; mansionObedienceGain: number;\n            stressObedienceLoss: number; unpaidRefusalWeeks: number; stressRefusalHits: number;\n            lifelongAffectionMin: number; lifelongObedienceMin: number; lifelongAskGapWeeks: number;\n            renewalWageMultiplier: number; renewalWageStepMilli: number; quadrantSplit: number;\n        };\n"
+        },
+        {
+          "baselineLine": 1130,
+          "baselineLineCount": 0,
+          "proposedLine": 1136,
+          "startByte": 58633,
+          "endByte": 58633,
+          "before": "",
+          "after": "        household: object({\n            unpaidAffectionLoss: stats, unpaidObedienceLoss: stats, mansionObedienceGain: stats, stressObedienceLoss: stats,\n            unpaidRefusalWeeks: positive, stressRefusalHits: positive, lifelongAffectionMin: stats, lifelongObedienceMin: stats,\n            lifelongAskGapWeeks: positive,\n            renewalWageMultiplier: (value, ref, field) => {\n                if (typeof value !== 'number' || !Number.isFinite(value) || value < 1)\n                    fail(ref, field, 'expected finite number >= 1');\n            },\n            renewalWageStepMilli: literal(SOCIAL_RESOURCE_SCALE), quadrantSplit: stats,\n        }),\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+      "reasons": [
+        "RED exact Decision 13 catalog diagnostics"
+      ],
+      "before": {
+        "bytes": 15588,
+        "sha256": "c032633003267bba02d40c0c58fd76c663cdd8477d9c9fcd6f5377676c1d669c",
+        "finalNewline": true,
+        "bom": false
+      },
+      "after": {
+        "bytes": 15982,
+        "sha256": "a89db77efcb2da897ad42e9bc67dcf3ccbdc34d5532925544d6c5fef3f8dc90c",
+        "finalNewline": true,
+        "bom": false
+      },
+      "replacements": [
+        {
+          "baselineLine": 260,
+          "baselineLineCount": 0,
+          "proposedLine": 260,
+          "startByte": 15160,
+          "endByte": 15160,
+          "before": "",
+          "after": "    [['P7B_TRIAL', 'household', 'unpaidAffectionLoss'], -1, 'P7B_TRIAL.household.unpaidAffectionLoss: expected integer in [0, 100]'],\n    [['P7B_TRIAL', 'household', 'stressRefusalHits'], 0, 'P7B_TRIAL.household.stressRefusalHits: expected integer > 0'],\n    [['P7B_TRIAL', 'household', 'renewalWageMultiplier'], 0.75, 'P7B_TRIAL.household.renewalWageMultiplier: expected finite number >= 1'],\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/simulation/src/__tests__/character-life-command.test.ts",
+      "reasons": [
+        "Preserve the exact whole report assertion for both weeks including wages and the opening treasury",
+        "Reference fixture independently debits its three affordable wages before delegate without mutating input",
+        "Retain full-state parity with the fixture’s independent rested Hall contract countdown"
+      ],
+      "before": {
+        "bytes": 23372,
+        "sha256": "89e5f2ec26b29df1477fb7064aabd54b0599d230c0f8a550bf0c3f60f60b0c56",
+        "finalNewline": true,
+        "bom": false
+      },
+      "after": {
+        "bytes": 24131,
+        "sha256": "cc19c25358faff04f23066c842e59cd7d54131dd796b1610c8ea917c82d1a1df",
+        "finalNewline": true,
+        "bom": false
+      },
+      "replacements": [
+        {
+          "baselineLine": 18,
+          "baselineLineCount": 1,
+          "proposedLine": 18,
+          "startByte": 988,
+          "endByte": 1056,
+          "before": "  const world = { city: s.city, outside: s.outside, npcs: s.npcs };\n",
+          "after": "  const city = raw.type === 'END_WEEK' ? structuredClone(s.city) : s.city;\n  const gold = city.world.settlements[city.world.activeSettlementId!].inventory;\n  const beforeGold = gold.gold;\n  const wagesPaidMilli = raw.type === 'END_WEEK'\n    ? s.npcs.reduce((sum, npc) => sum + npc.household.contract!.wageMilli, 0) : 0;\n  if (raw.type === 'END_WEEK') {\n    expect(gold.gold).toBeGreaterThanOrEqual(wagesPaidMilli);\n    gold.gold -= wagesPaidMilli;\n  }\n  const world = { city, outside: s.outside, npcs: s.npcs };\n"
+        },
+        {
+          "baselineLine": 36,
+          "baselineLineCount": 0,
+          "proposedLine": 45,
+          "startByte": 2249,
+          "endByte": 2249,
+          "before": "",
+          "after": "      expect(npc.household.home).toBe('estate-2');\n      expect(npc.household.notice).toBeNull();\n      expect(npc.household.contract!.weeksLeft).toBeGreaterThan(1);\n      npc.household.contract!.weeksLeft--;\n"
+        },
+        {
+          "baselineLine": 38,
+          "baselineLineCount": 5,
+          "proposedLine": 51,
+          "startByte": 2259,
+          "endByte": 2641,
+          "before": "  if (r.report && s.city.society!.acquisition.week === r.report.week) {\n    // These cases start with this week's Guild recruits and no enabled market next week.\n    next.city.society!.acquisition = emptyAcquisition();\n    const household = { ...emptyHouseholdReport(), bought: s.npcs.map(npc => npc.character.name) };\n    return { ...r, next, report: { ...r.report, household } };\n",
+          "after": "  if (r.report) {\n    // These cases start with Guild recruits and no enabled market next week.\n    const recruited = s.city.society!.acquisition.week === r.report.week;\n    if (recruited) next.city.society!.acquisition = emptyAcquisition();\n    const household = { ...emptyHouseholdReport(), bought: recruited ? s.npcs.map(npc => npc.character.name) : [], wagesPaidMilli };\n    return { ...r, next, report: { ...r.report, before: { ...r.report.before, gold: beforeGold }, household } };\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/simulation/src/__tests__/character-life-observation.test.ts",
+      "reasons": [
+        "Extend the detached full report assertion while keeping every B3 key",
+        "Pin conditional command enumeration without changing no-notice pins"
+      ],
+      "before": {
+        "bytes": 23920,
+        "sha256": "47101cc8d29d697ffb6f90feec59c6fd11f4bc94671f8f456ccbb3bcd3d8728c",
+        "finalNewline": true,
+        "bom": false
+      },
+      "after": {
+        "bytes": 24412,
+        "sha256": "e8bfb686f1b9f86df45e8c22206e7e60745b02137bda03d5e45903239743285e",
+        "finalNewline": true,
+        "bom": false
+      },
+      "replacements": [
+        {
+          "baselineLine": 304,
+          "baselineLineCount": 0,
+          "proposedLine": 304,
+          "startByte": 18851,
+          "endByte": 18851,
+          "before": "",
+          "after": "it('advertises ANSWER_NOTICE only for pending notices in Planning', () => {\n  const session = life();\n  session.npcs[0].household.notice = 'lifelong';\n  expect(observeCharacterLife(session, null).actionTypes).toStrictEqual([...planningActions, 'ANSWER_NOTICE']);\n  session.city.phase = 'report';\n  expect(observeCharacterLife(session, null).actionTypes).toStrictEqual(['NEXT_WEEK']);\n});\n\n"
+        },
+        {
+          "baselineLine": 339,
+          "baselineLineCount": 1,
+          "proposedLine": 347,
+          "startByte": 21570,
+          "endByte": 21671,
+          "before": "      household: { ...emptyHouseholdReport(), bought: session.npcs.map(npc => npc.character.name) },\n",
+          "after": "      household: { ...emptyHouseholdReport(), bought: session.npcs.map(npc => npc.character.name),\n        wagesPaidMilli: session.npcs.reduce((sum, npc) => sum + npc.household.contract!.wageMilli, 0) },\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/simulation/src/__tests__/lord-health.test.ts",
+      "reasons": [
+        "Fallen city must refuse ANSWER_NOTICE with the existing precedence"
+      ],
+      "before": {
+        "bytes": 7034,
+        "sha256": "879a26c7d381f1764f2cda0a71b60e87625707f7ee3d2a789c44e1becacda463",
+        "finalNewline": true,
+        "bom": false
+      },
+      "after": {
+        "bytes": 7050,
+        "sha256": "c053de23c75d8f6ce73f9b8869e857c1e68e8b483a215aa89430ce2a1200a30d",
+        "finalNewline": true,
+        "bom": false
+      },
+      "replacements": [
+        {
+          "baselineLine": 68,
+          "baselineLineCount": 1,
+          "proposedLine": 68,
+          "startByte": 4439,
+          "endByte": 4787,
+          "before": "  for (const type of ['BUILD','REPLACE','UPGRADE','SET_WORKERS','SET_ENABLED','END_WEEK','NEXT_WEEK','ENACT_LAW','REPEAL_LAW','CHOOSE_CARD_OPTION','ASSIGN_NPC','UNASSIGN_NPC','MOVE_NPC_HOME','BUY_NPC','BID_NPC','WITHDRAW_BID','SELL_NPC','RELEASE_NPC','EXTEND_WALL','SET_TRAINING','CLEAR','SET_RESEARCH','BUILD_DEEP_SHAFT',...ITEM_COMMAND_TYPES]) {\n",
+          "after": "  for (const type of ['BUILD','REPLACE','UPGRADE','SET_WORKERS','SET_ENABLED','END_WEEK','NEXT_WEEK','ENACT_LAW','REPEAL_LAW','CHOOSE_CARD_OPTION','ASSIGN_NPC','UNASSIGN_NPC','MOVE_NPC_HOME','BUY_NPC','BID_NPC','WITHDRAW_BID','SELL_NPC','RELEASE_NPC','ANSWER_NOTICE','EXTEND_WALL','SET_TRAINING','CLEAR','SET_RESEARCH','BUILD_DEEP_SHAFT',...ITEM_COMMAND_TYPES]) {\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/simulation/src/character-life-command.ts",
+      "reasons": [
+        "Advertise the planning-only answer action",
+        "Apply household transitions to detached NPCs before the new draw; merge ordered frozen report fields without an empty key",
+        "Connect the two household phases and notice command",
+        "Debit wages before city operations and B1 upkeep, within the refusal boundary",
+        "Preserve the B3 closing report before new stock draw",
+        "Reuse the report shape already shipped in B3",
+        "Run the household stage before the B3 closing report"
+      ],
+      "before": {
+        "bytes": 6299,
+        "sha256": "81bfbf99e63b4221be57a3a86a75093514185a2634ff5a7ea0363bb05a3a36ce",
+        "finalNewline": true,
+        "bom": false
+      },
+      "after": {
+        "bytes": 7861,
+        "sha256": "90de0e096f4f1260041c5e40ce28c3b196f0e51a023c734ae01cdd6fa52185e2",
+        "finalNewline": true,
+        "bom": false
+      },
+      "replacements": [
+        {
+          "baselineLine": 1,
+          "baselineLineCount": 1,
+          "proposedLine": 1,
+          "startByte": 0,
+          "endByte": 154,
+          "before": "import { hasWeeklyKeys, isLiveCharacterLifeSessionState, buildItemWeekContext, type CharacterLifeSessionState, type TileTrialReport } from '@haven/core';\n",
+          "after": "import { hasWeeklyKeys, isLiveCharacterLifeSessionState, buildItemWeekContext, emptyHouseholdReport, type CharacterLifeSessionState, type TileTrialReport } from '@haven/core';\n"
+        },
+        {
+          "baselineLine": 7,
+          "baselineLineCount": 0,
+          "proposedLine": 7,
+          "startByte": 568,
+          "endByte": 568,
+          "before": "",
+          "after": "import { answerNotice, payNpcWages, runHouseholdWeek, settleDepartingEquipment } from './household-week.js';\n\n"
+        },
+        {
+          "baselineLine": 9,
+          "baselineLineCount": 1,
+          "proposedLine": 11,
+          "startByte": 699,
+          "endByte": 928,
+          "before": "  | 'ENACT_LAW' | 'REPEAL_LAW' | 'CHOOSE_CARD_OPTION' | 'ASSIGN_NPC' | 'UNASSIGN_NPC' | 'MOVE_NPC_HOME' | 'EXTEND_WALL' | 'SET_TRAINING' | 'CLEAR' | 'SET_RESEARCH' | 'BUILD_DEEP_SHAFT' | ItemCommandType | AcquisitionCommandType;\n",
+          "after": "  | 'ENACT_LAW' | 'REPEAL_LAW' | 'CHOOSE_CARD_OPTION' | 'ASSIGN_NPC' | 'UNASSIGN_NPC' | 'MOVE_NPC_HOME' | 'ANSWER_NOTICE' | 'EXTEND_WALL' | 'SET_TRAINING' | 'CLEAR' | 'SET_RESEARCH' | 'BUILD_DEEP_SHAFT' | ItemCommandType | AcquisitionCommandType;\n"
+        },
+        {
+          "baselineLine": 42,
+          "baselineLineCount": 5,
+          "proposedLine": 44,
+          "startByte": 3218,
+          "endByte": 3608,
+          "before": "  const world = { city: session.city, outside: session.outside, npcs: session.npcs };\n  const result = type === 'ASSIGN_NPC' || type === 'UNASSIGN_NPC' || type === 'MOVE_NPC_HOME'\n    ? executeWorldNpcCommand(world, raw)\n    : type==='END_WEEK'?executeWorldNpcCityCommand(world,raw,buildItemWeekContext(session)):executeWorldNpcCityCommand(world,raw);\n  if (!result.success) return result;\n",
+          "after": "  if (type === 'ANSWER_NOTICE') return answerNotice(session, raw);\n"
+        },
+        {
+          "baselineLine": 49,
+          "baselineLineCount": 0,
+          "proposedLine": 47,
+          "startByte": 3617,
+          "endByte": 3617,
+          "before": "",
+          "after": "    const wages = type === 'END_WEEK' && session.city.phase === 'planning' && !session.city.society?.pendingCard\n      ? payNpcWages(session) : undefined;\n    const opening = wages?.session ?? session;\n    const world = { city: opening.city, outside: opening.outside, npcs: opening.npcs };\n    const result = type === 'ASSIGN_NPC' || type === 'UNASSIGN_NPC' || type === 'MOVE_NPC_HOME'\n      ? executeWorldNpcCommand(world, raw)\n      : type === 'END_WEEK' ? executeWorldNpcCityCommand(world, raw, buildItemWeekContext(opening)) : executeWorldNpcCityCommand(world, raw);\n    if (!result.success) return result;\n\n"
+        },
+        {
+          "baselineLine": 76,
+          "baselineLineCount": 2,
+          "proposedLine": 83,
+          "startByte": 5447,
+          "endByte": 5624,
+          "before": "      const household = acquisitionWeekReport(worldSeed, session.city.society!.acquisition, report.week);\n      if (household) report = Object.freeze({ ...report, household });\n",
+          "after": "      const householdWeek = runHouseholdWeek(next.npcs, { week, opening: session.npcs });\n      next.npcs = householdWeek.npcs;\n      if (householdWeek.leftIds.size) {\n        next.profiles = next.profiles.filter(profile => !householdWeek.leftIds.has(profile.id));\n        settleDepartingEquipment(next, householdWeek.leftIds);\n      }\n      const market = acquisitionWeekReport(worldSeed, session.city.society!.acquisition, report.week);\n      const { left, notices } = householdWeek.report;\n      const { wagesPaidMilli, unpaid } = wages!.report;\n      if (wagesPaidMilli || unpaid.length || notices.length || left.length) {\n        Object.freeze(left); Object.freeze(notices); Object.freeze(unpaid);\n        const before = wagesPaidMilli\n          ? Object.freeze({ ...report.before, gold: report.before.gold + wagesPaidMilli }) : report.before;\n        report = Object.freeze({ ...report, before, household: Object.freeze({\n          ...(market ?? emptyHouseholdReport()), left, wagesPaidMilli, unpaid, notices,\n        }) });\n        Object.freeze(report.household!.bought); Object.freeze(report.household!.sold);\n        Object.freeze(report.household!.released); Object.freeze(report.household!.lotsToRivals);\n      } else if (market) report = Object.freeze({ ...report, household: market });\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/simulation/src/character-life-observation.ts",
+      "reasons": [
+        "Advertise the new action in Planning only when a notice exists"
+      ],
+      "before": {
+        "bytes": 8821,
+        "sha256": "2281b694d836500fcee9149bb9159917a08bffb700ade22d439be8a1169796f7",
+        "finalNewline": true,
+        "bom": false
+      },
+      "after": {
+        "bytes": 8925,
+        "sha256": "12de38cf1318199853f4aae5908c465b0cff160cd4b130bd9e63fb92454f1d5e",
+        "finalNewline": true,
+        "bom": false
+      },
+      "replacements": [
+        {
+          "baselineLine": 113,
+          "baselineLineCount": 1,
+          "proposedLine": 113,
+          "startByte": 7028,
+          "endByte": 7095,
+          "before": "        ...(session.npcs.length ? ['RELEASE_NPC'] as const : [])],\n",
+          "after": "        ...(session.npcs.length ? ['RELEASE_NPC'] as const : []),\n        ...(session.npcs.some(npc => npc.household.notice !== null) ? ['ANSWER_NOTICE'] as const : [])],\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/ui/src/CharacterLifeCharacters.svelte",
+      "reasons": [
+        "Carry the NPC when projecting roster notices",
+        "Long labels wrap at existing narrow widths",
+        "Mount notices in the roster and sheet",
+        "Remember requested character separately from resolved roster selection",
+        "Resolve a removed resident to the Player without a reactive dependency cycle",
+        "Return to Player after explicit release",
+        "Roster badge and both actions with stable focus after the badge or resident disappears",
+        "Route notice actions through the existing character command bridge and handle a removed selection",
+        "Sheet uses identical choices and inactive reasons",
+        "Update requested selection from Previous and Next",
+        "Update the requested selection",
+        "Update the requested selection in roster controls",
+        "Use the roster-derived selection"
+      ],
+      "before": {
+        "bytes": 9246,
+        "sha256": "df08fb6b23d356b9709f372ba573b7d7c5dac987c917405187308fdff29b59c8",
+        "finalNewline": true,
+        "bom": false
+      },
+      "after": {
+        "bytes": 10852,
+        "sha256": "4717f7a75226c4e3659025eb2c2feb500371651257634f7333bac4d183560f3a",
+        "finalNewline": true,
+        "bom": false
+      },
+      "replacements": [
+        {
+          "baselineLine": 3,
+          "baselineLineCount": 0,
+          "proposedLine": 3,
+          "startByte": 73,
+          "endByte": 73,
+          "before": "",
+          "after": "  import HouseholdNotice from './HouseholdNotice.svelte';\n"
+        },
+        {
+          "baselineLine": 14,
+          "baselineLineCount": 1,
+          "proposedLine": 15,
+          "startByte": 748,
+          "endByte": 797,
+          "before": "  let selectedCharacterId = PLAYER_CHARACTER_ID;\n",
+          "after": "  let requestedCharacterId = PLAYER_CHARACTER_ID;\n"
+        },
+        {
+          "baselineLine": 22,
+          "baselineLineCount": 2,
+          "proposedLine": 23,
+          "startByte": 1135,
+          "endByte": 1325,
+          "before": "    { id: PLAYER_CHARACTER_ID, name: 'You', role: 'Leader of Haven' },\n    ...session.npcs.map(npc => ({ id: npc.character.id, name: npc.character.name, role: postLabel(npc.postTileId) })),\n",
+          "after": "    { id: PLAYER_CHARACTER_ID, name: 'You', role: 'Leader of Haven', npc: null },\n    ...session.npcs.map(npc => ({ id: npc.character.id, name: npc.character.name, role: postLabel(npc.postTileId), npc })),\n"
+        },
+        {
+          "baselineLine": 25,
+          "baselineLineCount": 0,
+          "proposedLine": 26,
+          "startByte": 1330,
+          "endByte": 1330,
+          "before": "",
+          "after": "  $: selectedCharacterId = roster.some(person => person.id === requestedCharacterId) ? requestedCharacterId : PLAYER_CHARACTER_ID;\n"
+        },
+        {
+          "baselineLine": 50,
+          "baselineLineCount": 1,
+          "proposedLine": 52,
+          "startByte": 3214,
+          "endByte": 3247,
+          "before": "    selectedCharacterId = npcId;\n",
+          "after": "    requestedCharacterId = npcId;\n"
+        },
+        {
+          "baselineLine": 54,
+          "baselineLineCount": 0,
+          "proposedLine": 56,
+          "startByte": 3317,
+          "endByte": 3317,
+          "before": "",
+          "after": "  const rosterButtons: Record<string, HTMLButtonElement> = {};\n  let noticeError: { npcId: string; message: string } | null = null;\n\n  function answer(npcId: string, choice: string): boolean {\n    const result = executeCharacterLifeCommand(session, {\n      type: 'ANSWER_NOTICE', expectedRevision: session.city.revision, npcId, choice,\n    });\n    noticeError = result.success ? null : { npcId, message: result.error.message };\n    if (!result.success) return false;\n    if (choice === 'release' && selectedCharacterId === npcId) requestedCharacterId = PLAYER_CHARACTER_ID;\n    onapply(result.next);\n    return true;\n  }\n"
+        },
+        {
+          "baselineLine": 59,
+          "baselineLineCount": 1,
+          "proposedLine": 74,
+          "startByte": 3646,
+          "endByte": 3693,
+          "before": "    selectedCharacterId = PLAYER_CHARACTER_ID;\n",
+          "after": "    requestedCharacterId = PLAYER_CHARACTER_ID;\n"
+        },
+        {
+          "baselineLine": 78,
+          "baselineLineCount": 1,
+          "proposedLine": 93,
+          "startByte": 4497,
+          "endByte": 4598,
+          "before": "        onclick={() => { selectedCharacterId = person.id; }}>{person.name} · {person.role}</button>\n",
+          "after": "        onclick={() => { requestedCharacterId = person.id; }}>{person.name} · {person.role}</button>\n"
+        },
+        {
+          "baselineLine": 80,
+          "baselineLineCount": 2,
+          "proposedLine": 95,
+          "startByte": 4610,
+          "endByte": 4813,
+          "before": "      <button data-testid={`character-${person.id}`} aria-pressed={selectedCharacterId === person.id}\n        onclick={() => { selectedCharacterId = person.id; }}>{person.name} · {person.role}</button>\n",
+          "after": "      <div class=\"roster-entry\">\n        <button bind:this={rosterButtons[person.id]} data-testid={`character-${person.id}`} aria-pressed={selectedCharacterId === person.id}\n          onclick={() => { requestedCharacterId = person.id; }}>{person.name} · {person.role}</button>\n        {#if person.npc?.household.notice}\n          <HouseholdNotice city={session.city} npc={person.npc} {locked}\n            onanswer={choice => answer(person.id, choice)} onanswered={() => (rosterButtons[person.id] ?? playerButton).focus()} />\n          {#if noticeError?.npcId === person.id}<p role=\"alert\">{noticeError.message}</p>{/if}\n        {/if}\n      </div>\n"
+        },
+        {
+          "baselineLine": 90,
+          "baselineLineCount": 2,
+          "proposedLine": 112,
+          "startByte": 5166,
+          "endByte": 5444,
+          "before": "    <button disabled={selectedIndex === 0} onclick={() => { selectedCharacterId = roster[selectedIndex - 1].id; }}>Previous</button>\n    <button disabled={selectedIndex === roster.length - 1} onclick={() => { selectedCharacterId = roster[selectedIndex + 1].id; }}>Next</button>\n",
+          "after": "    <button disabled={selectedIndex === 0} onclick={() => { requestedCharacterId = roster[selectedIndex - 1].id; }}>Previous</button>\n    <button disabled={selectedIndex === roster.length - 1} onclick={() => { requestedCharacterId = roster[selectedIndex + 1].id; }}>Next</button>\n"
+        },
+        {
+          "baselineLine": 96,
+          "baselineLineCount": 0,
+          "proposedLine": 118,
+          "startByte": 5722,
+          "endByte": 5722,
+          "before": "",
+          "after": "      {#snippet notice()}\n        {#if npc?.household.notice}\n          {@const id = npc.character.id}\n          <HouseholdNotice city={session.city} {npc} {locked}\n            onanswer={choice => answer(id, choice)} onanswered={() => (rosterButtons[id] ?? playerButton).focus()} />\n        {/if}\n      {/snippet}\n"
+        },
+        {
+          "baselineLine": 138,
+          "baselineLineCount": 1,
+          "proposedLine": 167,
+          "startByte": 8412,
+          "endByte": 8482,
+          "before": "  section, header, .roster { min-width: 0; overflow-wrap: anywhere; }\n",
+          "after": "  section, header, .roster, .roster-entry { min-width: 0; overflow-wrap: anywhere; }\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/ui/src/CharacterLifeCity.svelte",
+      "reasons": [
+        "Fulfill spec §7 in the Home residents panel too",
+        "Homes command bridge, keyboard path and focus restoration",
+        "Show exact notice refusal in the Homes panel"
+      ],
+      "before": {
+        "bytes": 13075,
+        "sha256": "1c6475aadd4b101e557826ef0cda9d8a2085da524a76f8209a6a9231f0c75f24",
+        "finalNewline": true,
+        "bom": false
+      },
+      "after": {
+        "bytes": 13481,
+        "sha256": "5eb6af05e302fdd43cebb7feb596580bd45d779a2d60fe51c376160ac0880b96",
+        "finalNewline": true,
+        "bom": false
+      },
+      "replacements": [
+        {
+          "baselineLine": 9,
+          "baselineLineCount": 0,
+          "proposedLine": 9,
+          "startByte": 534,
+          "endByte": 534,
+          "before": "",
+          "after": "  import HouseholdNotice from './HouseholdNotice.svelte';\n"
+        },
+        {
+          "baselineLine": 106,
+          "baselineLineCount": 0,
+          "proposedLine": 107,
+          "startByte": 5144,
+          "endByte": 5144,
+          "before": "",
+          "after": "                    {#if resident.household.notice}\n                      <HouseholdNotice city={state} npc={resident} {locked}\n                        onanswer={choice => oncommand('ANSWER_NOTICE', { npcId: id, choice })}\n                        onanswered={focusManage} />\n                    {/if}\n"
+        },
+        {
+          "baselineLine": 122,
+          "baselineLineCount": 1,
+          "proposedLine": 128,
+          "startByte": 6285,
+          "endByte": 6347,
+          "before": "            {#if managementError?.action === 'MOVE_NPC_HOME'}\n",
+          "after": "            {#if managementError?.action === 'MOVE_NPC_HOME' || managementError?.action === 'ANSWER_NOTICE'}\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/ui/src/CharacterProfile.svelte",
+      "reasons": [
+        "Pass the existing command-owner’s notice controls down to the NPC sheet",
+        "Wire the single NPC sheet call site"
+      ],
+      "before": {
+        "bytes": 6125,
+        "sha256": "ea920ed79f5e9ec478db2f4e1c94c74f4ee0df2e05b50451eed01a330e1415e3",
+        "finalNewline": true,
+        "bom": false
+      },
+      "after": {
+        "bytes": 6188,
+        "sha256": "9ec1e625894cd8b0a860bb7e16557773d9f8014b3b630b759e322eb169216bf9",
+        "finalNewline": true,
+        "bom": false
+      },
+      "replacements": [
+        {
+          "baselineLine": 18,
+          "baselineLineCount": 0,
+          "proposedLine": 18,
+          "startByte": 822,
+          "endByte": 822,
+          "before": "",
+          "after": "  export let notice: Snippet | undefined = undefined;\n"
+        },
+        {
+          "baselineLine": 80,
+          "baselineLineCount": 1,
+          "proposedLine": 81,
+          "startByte": 4123,
+          "endByte": 4218,
+          "before": "      {#if npc}<NpcSheet {npc} age={c.age} {description} />{:else}{@render description()}{/if}\n",
+          "after": "      {#if npc}<NpcSheet {npc} age={c.age} {description} {notice} />{:else}{@render description()}{/if}\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/ui/src/NpcSheet.svelte",
+      "reasons": [
+        "Add accessible text rows and no wage for slaves or lifelong servants",
+        "Display the weekly wage in Gold",
+        "Keep notices visible on every sheet tab",
+        "Receive notice controls from the command-owning parent",
+        "Render notice controls inside the sheet"
+      ],
+      "before": {
+        "bytes": 6803,
+        "sha256": "797653e5ff8c5a60830665260e4c32f2b3e142cec2b2c87734ac8c7026234d6b",
+        "finalNewline": true,
+        "bom": false
+      },
+      "after": {
+        "bytes": 7666,
+        "sha256": "5bfb298c8305dfc98acea5ce866cedc14122f4e08359dd3e4fa10f190eac6220",
+        "finalNewline": true,
+        "bom": false
+      },
+      "replacements": [
+        {
+          "baselineLine": 4,
+          "baselineLineCount": 0,
+          "proposedLine": 4,
+          "startByte": 107,
+          "endByte": 107,
+          "before": "",
+          "after": "  import { formatMilli } from './milli-format.js';\n"
+        },
+        {
+          "baselineLine": 11,
+          "baselineLineCount": 0,
+          "proposedLine": 12,
+          "startByte": 304,
+          "endByte": 304,
+          "before": "",
+          "after": "    notice?: Snippet;\n"
+        },
+        {
+          "baselineLine": 13,
+          "baselineLineCount": 1,
+          "proposedLine": 15,
+          "startByte": 309,
+          "endByte": 355,
+          "before": "  let { npc, description }: Props = $props();\n",
+          "after": "  let { npc, description, notice }: Props = $props();\n"
+        },
+        {
+          "baselineLine": 36,
+          "baselineLineCount": 0,
+          "proposedLine": 38,
+          "startByte": 1089,
+          "endByte": 1089,
+          "before": "",
+          "after": "  {#if notice}{@render notice()}{/if}\n"
+        },
+        {
+          "baselineLine": 67,
+          "baselineLineCount": 0,
+          "proposedLine": 70,
+          "startByte": 2134,
+          "endByte": 2134,
+          "before": "",
+          "after": "            <div><dt>Status</dt><dd>{sheet.household.status}</dd></div>\n            <div><dt>Home</dt><dd>{sheet.household.home}</dd></div>\n            {#if sheet.household.contract}\n              <div><dt>Weeks left</dt><dd>{sheet.household.contract.weeksLeft}</dd></div>\n              <div><dt>Weekly wage</dt><dd>{formatMilli(sheet.household.contract.wageMilli)} Gold</dd></div>\n            {/if}\n            <div><dt>Obedience</dt><dd>{sheet.household.obedience} · {sheet.household.quadrant}</dd></div>\n            <div><dt>Preference</dt><dd>{sheet.household.preference.label} · {sheet.household.preference.strength}</dd></div>\n            <div><dt>Flaw</dt><dd>{sheet.household.flaw.label} · {sheet.household.flaw.strength}</dd></div>\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/ui/src/TileManagement.svelte",
+      "reasons": [
+        "Keep the visible report names stable through NEXT_WEEK and later releases",
+        "Read report names from the opening roster even when a leaver exhausted or had a birthday",
+        "Remember names from the reported week when an NPC leaves",
+        "Send Home notice errors to its inline alert",
+        "Treat notice refusals as normal gameplay errors"
+      ],
+      "before": {
+        "bytes": 20103,
+        "sha256": "5ff3a54339376c49dba664b949f8d7a4b56b81d761f6d7835acdef71be4955c8",
+        "finalNewline": true,
+        "bom": false
+      },
+      "after": {
+        "bytes": 20257,
+        "sha256": "4d289ddd1c6247f294ce9352094e9b9ff3745085f99f3acfa8174453437dceeb",
+        "finalNewline": true,
+        "bom": false
+      },
+      "replacements": [
+        {
+          "baselineLine": 43,
+          "baselineLineCount": 0,
+          "proposedLine": 43,
+          "startByte": 2162,
+          "endByte": 2162,
+          "before": "",
+          "after": "  let reportNpcs: WorldNpc[] = [];\n"
+        },
+        {
+          "baselineLine": 80,
+          "baselineLineCount": 1,
+          "proposedLine": 81,
+          "startByte": 3917,
+          "endByte": 4806,
+          "before": "      const known = ['INVALID_COMMAND', 'STALE_COMMAND', 'FORBIDDEN', 'UNSUPPORTED_RULESET', 'INVALID_STATE', 'INVALID_WORKFORCE', 'INVALID_PLAN', 'EXECUTION_ERROR', 'WEEK_MISMATCH', 'INVALID_TILE', 'INVALID_BUILDING', 'INVALID_PLACEMENT', 'OCCUPIED', 'EMPTY_TILE', 'MAX_LEVEL', 'INSUFFICIENT_RESOURCES', 'LOCKED_PLOT', 'NOT_AVAILABLE', 'WRONG_TIER', 'WALL_COMPLETE', 'PREREQUISITE_MISSING', 'UNSUPPORTED_ACTION', 'CARD_PENDING', 'CITY_FALLEN', 'UNKNOWN_CARD', 'UNKNOWN_OPTION', 'OPTION_UNAVAILABLE', 'SLOT_MISMATCH', 'KIND_MISMATCH', 'NOT_ENOUGH_GOLD', 'INVENTORY_FULL', 'NO_SHOP', 'ITEM_UNKNOWN', 'NOT_SELLABLE', 'RECIPE_UNKNOWN', 'NO_WORKSHOP', 'MISSING_INPUT', 'QUEUE_FULL', 'ORDER_UNKNOWN', 'WORKSHOP_BUSY', 'FIXED_BUILDING', 'HOME_OCCUPIED', 'ONE_PER_CITY', 'HALL_LIMIT', 'UNKNOWN_NPC', 'NO_BED', 'NOT_A_HOME', 'NO_BUILDING', 'OFFER_GONE', 'NPC_CAP', 'NOT_A_SLAVE', 'STORAGE_FULL'];\n",
+          "after": "      const known = ['INVALID_COMMAND', 'STALE_COMMAND', 'FORBIDDEN', 'UNSUPPORTED_RULESET', 'INVALID_STATE', 'INVALID_WORKFORCE', 'INVALID_PLAN', 'EXECUTION_ERROR', 'WEEK_MISMATCH', 'INVALID_TILE', 'INVALID_BUILDING', 'INVALID_PLACEMENT', 'OCCUPIED', 'EMPTY_TILE', 'MAX_LEVEL', 'INSUFFICIENT_RESOURCES', 'LOCKED_PLOT', 'NOT_AVAILABLE', 'WRONG_TIER', 'WALL_COMPLETE', 'PREREQUISITE_MISSING', 'UNSUPPORTED_ACTION', 'CARD_PENDING', 'CITY_FALLEN', 'UNKNOWN_CARD', 'UNKNOWN_OPTION', 'OPTION_UNAVAILABLE', 'SLOT_MISMATCH', 'KIND_MISMATCH', 'NOT_ENOUGH_GOLD', 'INVENTORY_FULL', 'NO_SHOP', 'ITEM_UNKNOWN', 'NOT_SELLABLE', 'RECIPE_UNKNOWN', 'NO_WORKSHOP', 'MISSING_INPUT', 'QUEUE_FULL', 'ORDER_UNKNOWN', 'WORKSHOP_BUSY', 'FIXED_BUILDING', 'HOME_OCCUPIED', 'ONE_PER_CITY', 'HALL_LIMIT', 'UNKNOWN_NPC', 'NO_BED', 'NOT_A_HOME', 'NO_BUILDING', 'OFFER_GONE', 'NPC_CAP', 'NOT_A_SLAVE', 'STORAGE_FULL', 'NOTICE_MISSING', 'NOTICE_CHOICE'];\n"
+        },
+        {
+          "baselineLine": 89,
+          "baselineLineCount": 1,
+          "proposedLine": 90,
+          "startByte": 5422,
+          "endByte": 5689,
+          "before": "      else if (['BUILD', 'REPLACE', 'UPGRADE', 'SET_ENABLED', 'EXTEND_WALL', 'SET_TRAINING', 'CLEAR', 'MOVE_NPC_HOME', 'BUY_NPC', 'BID_NPC', 'WITHDRAW_BID', 'SELL_NPC', 'RELEASE_NPC'].includes(type)) managementError = { action: type, message: result.error.message };\n",
+          "after": "      else if (['BUILD', 'REPLACE', 'UPGRADE', 'SET_ENABLED', 'EXTEND_WALL', 'SET_TRAINING', 'CLEAR', 'MOVE_NPC_HOME', 'BUY_NPC', 'BID_NPC', 'WITHDRAW_BID', 'SELL_NPC', 'RELEASE_NPC', 'ANSWER_NOTICE'].includes(type)) managementError = { action: type, message: result.error.message };\n"
+        },
+        {
+          "baselineLine": 94,
+          "baselineLineCount": 0,
+          "proposedLine": 95,
+          "startByte": 5916,
+          "endByte": 5916,
+          "before": "",
+          "after": "    if (result.report) {\n      report = result.report;\n      reportNpcs = report.npcLife ? npcs ?? [] : [];\n    }\n"
+        },
+        {
+          "baselineLine": 95,
+          "baselineLineCount": 1,
+          "proposedLine": 100,
+          "startByte": 5986,
+          "endByte": 6033,
+          "before": "    if (result.report) report = result.report;\n",
+          "after": ""
+        },
+        {
+          "baselineLine": 277,
+          "baselineLineCount": 1,
+          "proposedLine": 281,
+          "startByte": 17003,
+          "endByte": 17122,
+          "before": "      <SoloWeekReport {report} npcs={npcs ?? []} planningWeek={state.world.week} {locked} onnextweek={nextLifeWeek} />\n",
+          "after": "      <SoloWeekReport {report} npcs={reportNpcs} planningWeek={state.world.week} {locked} onnextweek={nextLifeWeek} />\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/ui/src/__tests__/acquisition-view.test.ts",
+      "reasons": [
+        "RED all new row labels and values without weakening B3 row pin"
+      ],
+      "before": {
+        "bytes": 2328,
+        "sha256": "93e6a1d1d8632e2a9daba507c9ea17d4f4a9526ee1aa068a630db01ffcff7742",
+        "finalNewline": true,
+        "bom": false
+      },
+      "after": {
+        "bytes": 2757,
+        "sha256": "a99efcb390360f6bca9ac0429d6209332790009fbdd8d48f695852661047a691",
+        "finalNewline": true,
+        "bom": false
+      },
+      "replacements": [
+        {
+          "baselineLine": 37,
+          "baselineLineCount": 0,
+          "proposedLine": 37,
+          "startByte": 2324,
+          "endByte": 2324,
+          "before": "",
+          "after": "  const household = { ...report.household, wagesPaidMilli: 2500, unpaid: ['D'], notices: ['E'], left: ['F'] };\n  expect(householdReportRows({ household }).slice(4)).toStrictEqual([\n    { kind: 'wagesPaidMilli', label: 'Wages paid', value: '2.5 Gold' },\n    { kind: 'unpaid', label: 'Wage unpaid', value: 'D' },\n    { kind: 'notices', label: 'Contract notice', value: 'E' },\n    { kind: 'left', label: 'Left', value: 'F' },\n  ]);\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/ui/src/__tests__/npc-sheet-view.test.ts",
+      "reasons": [
+        "RED exact household projection, starting past and all quadrant boundaries"
+      ],
+      "before": {
+        "bytes": 4592,
+        "sha256": "a1e8e063182366d3dd2e16ade76d1fc381863c4c4f35292c544298c72b9c6785",
+        "finalNewline": true,
+        "bom": false
+      },
+      "after": {
+        "bytes": 6165,
+        "sha256": "03f874ffe33a988198a58d8619ef8c8988a721fb2e4a04ac8401e49c6c38dff6",
+        "finalNewline": true,
+        "bom": false
+      },
+      "replacements": [
+        {
+          "baselineLine": 38,
+          "baselineLineCount": 0,
+          "proposedLine": 38,
+          "startByte": 1708,
+          "endByte": 1708,
+          "before": "",
+          "after": "  });\n\n  it('projects contract, home and will and classifies the two split boundaries', () => {\n    const npc = generated();\n    npc.household.will = { preference: { id: 'patient', strength: 64 }, flaw: { id: 'restless', strength: 42 } };\n    npc.household.obedience = 50;\n    npc.character.relationshipToPlayer.affection = 50;\n    npc.household.contract = { weeksLeft: 19, wageMilli: 2000, unpaidWeeks: 1, stressHits: 2 };\n    expect(project()(npc).household).toStrictEqual({\n      status: 'Servant', home: \"Retainers' Hall (estate-2)\", contract: { weeksLeft: 19, wageMilli: 2000 },\n      obedience: 50, quadrant: 'Devoted', preference: { label: 'Patient', strength: 64 },\n      flaw: { label: 'Restless', strength: 42 },\n    });\n    for (const [affection, obedience, quadrant] of [\n      [50, 50, 'Devoted'], [50, 49, 'Willful lover'], [49, 50, 'Submissive out of fear'], [49, 49, 'Rebellious'],\n    ] as const) {\n      npc.character.relationshipToPlayer.affection = affection;\n      npc.household.obedience = obedience;\n      expect(project()(npc).household.quadrant).toBe(quadrant);\n    }\n  });\n\n  it('projects actual starting past as names and counts in approved order', () => {\n    const npc = generated();\n    npc.life.history.counters = { 'partners.outsider': 2, 'sex.hand.outsider': 4, 'act.withNpc': 1 };\n    expect(project()(npc).history.groups.at(-1)).toStrictEqual({ label: 'Starting past', counters: [\n      { label: 'Hand · Outsider encounters', count: 4 }, { label: 'Outsider partners', count: 2 },\n      { label: 'With another NPC', count: 1 },\n    ] });\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/ui/src/npc-sheet-view.ts",
+      "reasons": [
+        "Data-driven household stats and human-readable home",
+        "Keep Other exact for unrelated history counters",
+        "Preserve the numeric starting past with a labeled group",
+        "Project display-only household fields without exposing source, counters or timestamps",
+        "Use the same affection for display and quadrant"
+      ],
+      "before": {
+        "bytes": 2706,
+        "sha256": "1ee770165aa1ec2cb4b87565faaba9602c802433ec63ab1d731e3a7c01b745bd",
+        "finalNewline": true,
+        "bom": false
+      },
+      "after": {
+        "bytes": 4372,
+        "sha256": "c64b135802fe4cc5b4b07f83ba3e408ca7b4e06e6f6818722ca20fa5e5e5d593",
+        "finalNewline": true,
+        "bom": false
+      },
+      "replacements": [
+        {
+          "baselineLine": 1,
+          "baselineLineCount": 1,
+          "proposedLine": 1,
+          "startByte": 0,
+          "endByte": 113,
+          "before": "import { NPC_HOBBIES, NPC_ORIGINS, P7A_TRIAL, REQUIRED_SKILLS, type SexPart, type WorldNpc } from '@haven/core';\n",
+          "after": "import { NPC_HOBBIES, NPC_ORIGINS, P7A_TRIAL, P7B_TRIAL, REQUIRED_SKILLS, TRIAL_BUILDINGS, type SexPart, type WorldNpc } from '@haven/core';\n"
+        },
+        {
+          "baselineLine": 29,
+          "baselineLineCount": 0,
+          "proposedLine": 29,
+          "startByte": 1068,
+          "endByte": 1068,
+          "before": "",
+          "after": "const startingPast = [\n  ...parts.map(part => ({ key: 'sex.' + part + '.outsider', label: partLabels[part] + ' · Outsider encounters' })),\n  { key: 'partners.outsider', label: 'Outsider partners' },\n  { key: 'brothel.customers', label: 'Brothel customers' },\n  { key: 'act.threesome', label: 'Threesome' },\n  { key: 'act.withNpc', label: 'With another NPC' },\n];\nconst pastKeys = new Set(startingPast.map(row => row.key));\n\n"
+        },
+        {
+          "baselineLine": 36,
+          "baselineLineCount": 1,
+          "proposedLine": 45,
+          "startByte": 1442,
+          "endByte": 1538,
+          "before": "  const other = Object.keys(counters).filter(kind => !Object.hasOwn(eventLabels, kind)).sort();\n",
+          "after": "  const knownPast = startingPast.filter(row => Object.hasOwn(counters, row.key));\n  if (knownPast.length) categories.push({\n    label: 'Starting past', counters: knownPast.map(({ key, label }) => ({ label, count: counters[key] })),\n  });\n  const other = Object.keys(counters).filter(kind => !Object.hasOwn(eventLabels, kind) && !pastKeys.has(kind)).sort();\n"
+        },
+        {
+          "baselineLine": 44,
+          "baselineLineCount": 1,
+          "proposedLine": 57,
+          "startByte": 1787,
+          "endByte": 1854,
+          "before": "export function buildNpcSheetView({ character, life }: WorldNpc) {\n",
+          "after": "export function buildNpcSheetView({ character, life, household }: WorldNpc) {\n  const { quadrantSplit } = P7B_TRIAL.household;\n  const affection = character.relationshipToPlayer.affection;\n  const obedient = household.obedience >= quadrantSplit;\n  const quadrant = affection >= quadrantSplit\n    ? (obedient ? 'Devoted' : 'Willful lover')\n    : (obedient ? 'Submissive out of fear' : 'Rebellious');\n  const homeType = household.home === 'estate-1' ? 'mansion' : 'retainers-hall';\n  const will = ({ id, strength }: { id: string; strength: number }) => ({\n    label: title(id.replaceAll('-', ' ')), strength,\n  });\n"
+        },
+        {
+          "baselineLine": 46,
+          "baselineLineCount": 0,
+          "proposedLine": 69,
+          "startByte": 1865,
+          "endByte": 1865,
+          "before": "",
+          "after": "    household: {\n      status: { slave: 'Slave', servant: 'Servant', lifelong: 'Lifelong' }[household.status],\n      home: TRIAL_BUILDINGS[homeType].name + ' (' + household.home + ')',\n      contract: household.contract && { weeksLeft: household.contract.weeksLeft, wageMilli: household.contract.wageMilli },\n      obedience: household.obedience, quadrant,\n      preference: will(household.will.preference), flaw: will(household.will.flaw),\n    },\n"
+        },
+        {
+          "baselineLine": 48,
+          "baselineLineCount": 1,
+          "proposedLine": 78,
+          "startByte": 1967,
+          "endByte": 2024,
+          "before": "    affection: character.relationshipToPlayer.affection,\n",
+          "after": "    affection,\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/ui/src/report-letters.ts",
+      "reasons": [
+        "Display B4 household report rows only when nonempty"
+      ],
+      "before": {
+        "bytes": 14017,
+        "sha256": "4df0fe600adbd2330180ee117b6bf8ffafd48182a086eb92735c90aa310f7108",
+        "finalNewline": true,
+        "bom": false
+      },
+      "after": {
+        "bytes": 14427,
+        "sha256": "f9e3c5e22b7ccba0c9a2187e860ccb99ad9851c582ed2c5d6c7ada68ef630568",
+        "finalNewline": true,
+        "bom": false
+      },
+      "replacements": [
+        {
+          "baselineLine": 226,
+          "baselineLineCount": 0,
+          "proposedLine": 226,
+          "startByte": 12881,
+          "endByte": 12881,
+          "before": "",
+          "after": "    ...(household.wagesPaidMilli ? [{ kind: 'wagesPaidMilli', label: 'Wages paid', value: formatMilli(household.wagesPaidMilli) + ' Gold' }] : []),\n    ...household.unpaid.map(value => ({ kind: 'unpaid', label: 'Wage unpaid', value })),\n    ...household.notices.map(value => ({ kind: 'notices', label: 'Contract notice', value })),\n    ...household.left.map(value => ({ kind: 'left', label: 'Left', value })),\n"
+        }
+      ]
+    },
+    {
+      "path": "tests/e2e/acquisition.spec.ts",
+      "reasons": [
+        "B3 exact seed-42 ledger now includes Ardis’s known 2 Gold wage"
+      ],
+      "before": {
+        "bytes": 14019,
+        "sha256": "2703e3626f22a2ac81fb137165869cbcee1719e51a1e86a19bc6d24d2d8695d2",
+        "finalNewline": true,
+        "bom": false
+      },
+      "after": {
+        "bytes": 14043,
+        "sha256": "cad1b01602bd820afead43334658a2e04f8726eea6442c5e86749e3db16eef87",
+        "finalNewline": true,
+        "bom": false
+      },
+      "replacements": [
+        {
+          "baselineLine": 93,
+          "baselineLineCount": 1,
+          "proposedLine": 93,
+          "startByte": 6384,
+          "endByte": 6523,
+          "before": "      'Recruited · Ardis Frostmere', 'Lot sold to a rival · Auction House · 55 Gold', 'Lot sold to a rival · Slave Market · 45 Gold',\n",
+          "after": "      'Recruited · Ardis Frostmere', 'Lot sold to a rival · Auction House · 55 Gold', 'Lot sold to a rival · Slave Market · 45 Gold', 'Wages paid · 2 Gold',\n"
+        }
+      ]
+    },
+    {
+      "path": "tests/e2e/character-life-navigation.helpers.ts",
+      "reasons": [
+        "Capture notice controls and disabled reasons in rejection parity snapshots",
+        "Reconstruct all B4 fields while keeping the complete equality test"
+      ],
+      "before": {
+        "bytes": 47513,
+        "sha256": "3167eb2141f005f150b990bcb5c7e17e367103722bd2523c5f4f410f79ff14c3",
+        "finalNewline": true,
+        "bom": false
+      },
+      "after": {
+        "bytes": 47967,
+        "sha256": "032596d70b752f2f1778329832f209e132baf849b6a2acbb0ba1dca787722a2c",
+        "finalNewline": true,
+        "bom": false
+      },
+      "replacements": [
+        {
+          "baselineLine": 562,
+          "baselineLineCount": 2,
+          "proposedLine": 562,
+          "startByte": 38353,
+          "endByte": 38517,
+          "before": "      } else if (kind === 'bought' || kind === 'sold' || kind === 'released') {\n        const labels = { bought: 'Recruited', sold: 'Sold', released: 'Released' };\n",
+          "after": "      } else if (kind === 'wagesPaidMilli') {\n        const match = /^([\\d,.]+) Gold$/.exec(value);\n        if (!match) throw Error('Invalid household wage row.');\n        await expect(row).toHaveText('Wages paid · ' + value);\n        household.wagesPaidMilli = milli(match[1]);\n      } else if (kind === 'bought' || kind === 'sold' || kind === 'released' || kind === 'left' || kind === 'unpaid' || kind === 'notices') {\n        const labels = { bought: 'Recruited', sold: 'Sold', released: 'Released', left: 'Left', unpaid: 'Wage unpaid', notices: 'Contract notice' };\n"
+        },
+        {
+          "baselineLine": 597,
+          "baselineLineCount": 1,
+          "proposedLine": 602,
+          "startByte": 40750,
+          "endByte": 40908,
+          "before": "    const acquisition = [...shell.querySelectorAll('[data-acquisition-action], [data-acquisition-panel] [role=\"tab\"], [data-household-kind]')].map(node => ({\n",
+          "after": "    const acquisition = [...shell.querySelectorAll('[data-acquisition-action], [data-acquisition-panel] [role=\"tab\"], [data-household-kind], [data-household-notice], [data-notice-choice]')].map(node => ({\n"
+        }
+      ]
+    }
+  ]
+}

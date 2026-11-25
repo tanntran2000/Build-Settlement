@@ -1,0 +1,11 @@
+HEAD and tree
+c9c382750d0871f57c09a18e7beca454b62581ff
+a40af360493b8fbb253a4cc5d79016c16a370920
+Status before command
+CI=
+UTC start 2026-11-25T08:01:51+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ git -c core.autocrlf=false apply C:/Users/Admin/.t3/local-drafts/p7b-prB4/builder-b4/proposed-gate6-contract-expectation.patch
+
+UTC finish 2026-11-25T08:01:51+00:00
+Exit 0

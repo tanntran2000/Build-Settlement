@@ -1,0 +1,238 @@
+HEAD and tree
+15cfc2c71aba0799e4d936c09b77529a53724272
+d9225177b6c416384112f6bf340a4b11b8302273
+Status before command
+CI=
+UTC start 2026-11-25T11:23:07+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ python C:\Users\Admin\.t3\local-drafts\p7b-prB4\builder-b4/paired-b4-timings.py C:\Users\Admin\.t3\local-drafts\p7b-prB4\builder-b4\save-size\delivery-smoke\largest-save.json
+control round 1/5 recorded
+control round 2/5 recorded
+control round 3/5 recorded
+control round 4/5 recorded
+control round 5/5 recorded
+market round 1/5 recorded
+market round 2/5 recorded
+market round 3/5 recorded
+market round 4/5 recorded
+market round 5/5 recorded
+short-gold round 1/5 recorded
+short-gold round 2/5 recorded
+short-gold round 3/5 recorded
+short-gold round 4/5 recorded
+short-gold round 5/5 recorded
+departing-equipped round 1/5 recorded
+departing-equipped round 2/5 recorded
+departing-equipped round 3/5 recorded
+departing-equipped round 4/5 recorded
+departing-equipped round 5/5 recorded
+{
+  "base": "95821832a8c95988c3203b4c38f5f9ae665978e9",
+  "head": "15cfc2c71aba0799e4d936c09b77529a53724272",
+  "tree": "d9225177b6c416384112f6bf340a4b11b8302273",
+  "utcComplete": "2026-11-25T11:26:20.851+00:00",
+  "rounds": 5,
+  "warmTicksPerProcess": 20,
+  "method": "Fresh Node processes, same v13 input bytes in main and B4, one cold tick and 20 warm ticks. Delta is B4 warm median minus the midpoint of the two main warm medians. Noise is the absolute main/main warm median gap. Control has 100 residents and no market. Other inputs share full market provenance, with short Gold and equipped exits tested separately.",
+  "cases": {
+    "control": {
+      "mainWarmMs": {
+        "median": 57.57945,
+        "minimum": 46.4259,
+        "maximum": 156.5319,
+        "samples": 200
+      },
+      "b4WarmMs": {
+        "median": 52.29415,
+        "minimum": 46.2855,
+        "maximum": 84.3016,
+        "samples": 100
+      },
+      "pairedDeltasMs": [
+        -5.737125000000006,
+        -0.7763000000000062,
+        -4.962274999999998,
+        -11.927750000000003,
+        -9.905424999999994
+      ],
+      "medianPairedDeltaMs": -5.737125000000006,
+      "mainToMainNoiseMs": [
+        9.334450000000004,
+        1.444499999999998,
+        9.312849999999997,
+        8.087500000000006,
+        20.597249999999995
+      ],
+      "maxMainToMainNoiseMs": 20.597249999999995,
+      "mainColdMs": [
+        86.7551,
+        89.0985,
+        84.8407,
+        88.2749,
+        121.9202,
+        85.6816,
+        88.5045,
+        94.7137,
+        88.1921,
+        98.206
+      ],
+      "b4ColdMs": [
+        90.631,
+        89.5572,
+        89.3034,
+        88.8025,
+        87.5259
+      ]
+    },
+    "market": {
+      "mainWarmMs": {
+        "median": 55.1532,
+        "minimum": 47.8627,
+        "maximum": 175.7984,
+        "samples": 200
+      },
+      "b4WarmMs": {
+        "median": 55.6185,
+        "minimum": 47.3066,
+        "maximum": 90.7549,
+        "samples": 100
+      },
+      "pairedDeltasMs": [
+        -2.723974999999996,
+        -18.672624999999996,
+        10.523250000000004,
+        -2.105675000000005,
+        0.6465249999999969
+      ],
+      "medianPairedDeltaMs": -2.105675000000005,
+      "mainToMainNoiseMs": [
+        3.4130499999999913,
+        47.736149999999995,
+        0.0009000000000014552,
+        2.9958499999999972,
+        1.146250000000002
+      ],
+      "maxMainToMainNoiseMs": 47.736149999999995,
+      "mainColdMs": [
+        86.8987,
+        87.7892,
+        140.7781,
+        89.1301,
+        90.0477,
+        91.2402,
+        112.6867,
+        88.7699,
+        86.0756,
+        89.898
+      ],
+      "b4ColdMs": [
+        90.1994,
+        104.3341,
+        102.7862,
+        92.1258,
+        93.5448
+      ]
+    },
+    "short-gold": {
+      "mainWarmMs": {
+        "median": 57.46015,
+        "minimum": 47.858,
+        "maximum": 137.3232,
+        "samples": 200
+      },
+      "b4WarmMs": {
+        "median": 54.04925,
+        "minimum": 47.4006,
+        "maximum": 147.9422,
+        "samples": 100
+      },
+      "pairedDeltasMs": [
+        -20.39882500000001,
+        -12.241574999999983,
+        -1.0968000000000018,
+        32.99299999999999,
+        0.9843499999999992
+      ],
+      "medianPairedDeltaMs": -1.0968000000000018,
+      "mainToMainNoiseMs": [
+        25.453850000000003,
+        22.992049999999992,
+        0.30989999999999895,
+        19.8985,
+        0.5332000000000079
+      ],
+      "maxMainToMainNoiseMs": 25.453850000000003,
+      "mainColdMs": [
+        188.2166,
+        137.7846,
+        113.2962,
+        88.2802,
+        89.3379,
+        86.2915,
+        115.3983,
+        86.9219,
+        86.4239,
+        85.6208
+      ],
+      "b4ColdMs": [
+        98.9227,
+        89.5388,
+        89.997,
+        145.9846,
+        87.6068
+      ]
+    },
+    "departing-equipped": {
+      "mainWarmMs": {
+        "median": 55.003150000000005,
+        "minimum": 47.6441,
+        "maximum": 190.8607,
+        "samples": 200
+      },
+      "b4WarmMs": {
+        "median": 55.9446,
+        "minimum": 48.2946,
+        "maximum": 111.8068,
+        "samples": 100
+      },
+      "pairedDeltasMs": [
+        4.3123000000000005,
+        -0.9488250000000065,
+        5.249650000000003,
+        -0.23290000000000077,
+        -11.92280000000001
+      ],
+      "medianPairedDeltaMs": -0.23290000000000077,
+      "mainToMainNoiseMs": [
+        1.5320999999999998,
+        1.3656500000000023,
+        2.5601999999999947,
+        1.1229999999999905,
+        26.006700000000002
+      ],
+      "maxMainToMainNoiseMs": 26.006700000000002,
+      "mainColdMs": [
+        91.9012,
+        98.4991,
+        94.5589,
+        86.2072,
+        88.791,
+        94.2451,
+        96.2031,
+        89.8739,
+        97.5228,
+        162.6179
+      ],
+      "b4ColdMs": [
+        109.2914,
+        86.0498,
+        101.4885,
+        103.1945,
+        89.0839
+      ]
+    }
+  }
+}
+
+UTC finish 2026-11-25T11:26:20+00:00
+Exit 0

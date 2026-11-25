@@ -1,0 +1,112 @@
+HEAD and tree
+95821832a8c95988c3203b4c38f5f9ae665978e9
+83c11b3a8362be1c1c69f632808c76a0c101caa8
+Status before command
+ M packages/core/src/data/npc-generator.json
+ M packages/core/src/data/validate.ts
+ M packages/core/src/world/__tests__/npc-generator.test.ts
+ M packages/simulation/src/__tests__/character-life-command.test.ts
+ M packages/simulation/src/__tests__/character-life-observation.test.ts
+ M packages/simulation/src/__tests__/lord-health.test.ts
+ M packages/simulation/src/character-life-command.ts
+ M packages/simulation/src/character-life-observation.ts
+?? packages/simulation/src/__tests__/household-week.test.ts
+?? packages/simulation/src/household-week.ts
+CI=
+UTC start 2026-11-25T06:12:43+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ npm.cmd test -- packages/core/src/world/__tests__/npc-generator.test.ts packages/simulation/src/__tests__/character-life-command.test.ts packages/simulation/src/__tests__/character-life-observation.test.ts packages/simulation/src/__tests__/household-week.test.ts packages/simulation/src/__tests__/lord-health.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/core/src/world/__tests__/npc-generator.test.ts packages/simulation/src/__tests__/character-life-command.test.ts packages/simulation/src/__tests__/character-life-observation.test.ts packages/simulation/src/__tests__/household-week.test.ts packages/simulation/src/__tests__/lord-health.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/core/src/world/__tests__/npc-generator.test.ts (52 tests | 1 failed) 537ms
+     × pins the complete frozen data including all 80 globally distinct given names 24ms
+ ❯ packages/simulation/src/__tests__/household-week.test.ts (16 tests | 4 failed) 1403ms
+   × renews 20 weeks at wage 1000 rounded up to 2000, clears notice and counters 62ms
+   × renews 20 weeks at wage 2000 rounded up to 3000, clears notice and counters 54ms
+   × accepts lifelong with no wage or term and declines with a current-week cooldown 60ms
+   × reports notice refusals atomically and uses B3 released for an explicit let-go 59ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/household-week.test.ts > renews 20 weeks at wage 1000 rounded up to 2000, clears notice and counters
+ FAIL  packages/simulation/src/__tests__/household-week.test.ts > renews 20 weeks at wage 2000 rounded up to 3000, clears notice and counters
+Error: ANSWER_NOTICE: UNSUPPORTED_ACTION: This action is not supported in Character Life.
+ ❯ succeeded packages/simulation/src/__tests__/acquisition-fixture.ts:18:30
+     16| export function succeeded(s: CharacterLifeSessionState, type: string, …
+     17|   const result = command(s, type, fields);
+     18|   if (!result.success) throw Error(type + ': ' + result.error.code + '…
+       |                              ^
+     19|   return result;
+     20| }
+ ❯ packages/simulation/src/__tests__/household-week.test.ts:104:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  packages/simulation/src/__tests__/household-week.test.ts > accepts lifelong with no wage or term and declines with a current-week cooldown
+Error: Notice refusal.
+ ❯ packages/simulation/src/__tests__/household-week.test.ts:115:53
+    113|   household.notice = 'lifelong';
+    114|   const accepted = answer(s, 'accept'), declined = answer(s, 'decline'…
+    115|   if (!accepted.success || !declined.success) throw Error('Notice refu…
+       |                                                     ^
+    116|   const npc = accepted.next.npcs[0];
+    117|   expect([npc.household.status, npc.household.contract, npc.household.…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  packages/simulation/src/__tests__/household-week.test.ts > reports notice refusals atomically and uses B3 released for an explicit let-go
+AssertionError: expected { success: false, error: { …(2) } } to strictly equal { success: false, error: { …(2) } }
+
+- Expected
++ Received
+
+  {
+    "error": {
+-     "code": "NOTICE_MISSING",
+-     "message": "That NPC has no pending notice.",
++     "code": "UNSUPPORTED_ACTION",
++     "message": "This action is not supported in Character Life.",
+    },
+    "success": false,
+  }
+
+ ❯ packages/simulation/src/__tests__/household-week.test.ts:141:30
+    139| it('reports notice refusals atomically and uses B3 released for an exp…
+    140|   const s = recruit(), npcId = s.npcs[0].character.id;
+    141|   expect(answer(s, 'renew')).toStrictEqual({ success: false, error: { …
+       |                              ^
+    142|   s.npcs[0].household.notice = 'renewal';
+    143|   s.npcs[0].household.contract!.weeksLeft = 0;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  packages/core/src/world/__tests__/npc-generator.test.ts > NPC generator catalog > pins the complete frozen data including all 80 globally distinct given names
+AssertionError: expected 'ad57befafbe267dd2d858310d530ac670c5ee…' to be 'b3e0727560c279fb973545ff65753b3e953dc…' // Object.is equality
+
+Expected: "b3e0727560c279fb973545ff65753b3e953dc182c27d2f433bfdc55496e9e028"
+Received: "ad57befafbe267dd2d858310d530ac670c5eef8c4d90432be2f750803b37ca14"
+
+ ❯ packages/core/src/world/__tests__/npc-generator.test.ts:211:23
+    209|     const data = api.NPC_GENERATOR_CATALOG;
+    210|     expect(api.validateNpcGenerator(structuredClone(data))).toStrictEq…
+    211|     expect(sha(data)).toBe('b3e0727560c279fb973545ff65753b3e953dc182c2…
+       |                       ^
+    212|     expect(Object.isFrozen(data.cultures.saltmere.given)).toBe(true);
+    213|     const cultures = Object.values(data.cultures);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+
+ Test Files  2 failed | 3 passed (5)
+      Tests  5 failed | 123 passed (128)
+   Start at  13:12:44
+   Duration  6.59s (transform 4.30s, setup 0ms, import 6.57s, tests 12.17s, environment 1ms)
+
+
+UTC finish 2026-11-25T06:12:51+00:00
+Exit 1

@@ -1,0 +1,71 @@
+{
+  "inputs": {
+    "control": {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB4\\builder-b4\\timings\\inputs\\control.json",
+      "sha256": "e791d71022b5e2cd6f074af121052ccaa56cc8e430f7c1292f7120411da31906",
+      "bytes": 293089,
+      "npcCount": 100,
+      "goldMilli": 1000000,
+      "notices": 0,
+      "marketSizes": [
+        0,
+        0,
+        0
+      ]
+    },
+    "market": {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB4\\builder-b4\\timings\\inputs\\market.json",
+      "sha256": "fe61f7cd33761cde17fb445c4f0cf491db75ceab5b6aa055d949d5aa6ad6a453",
+      "bytes": 293842,
+      "npcCount": 100,
+      "goldMilli": 631000,
+      "notices": 0,
+      "marketSizes": [
+        12,
+        2,
+        14
+      ]
+    },
+    "short-gold": {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB4\\builder-b4\\timings\\inputs\\short-gold.json",
+      "sha256": "c4ac65e19b28a33af505841a8c12a3325c7c30bd1880f642d016c3a6c110879e",
+      "bytes": 293840,
+      "npcCount": 100,
+      "goldMilli": 1000,
+      "notices": 0,
+      "marketSizes": [
+        12,
+        2,
+        14
+      ]
+    },
+    "departing-equipped": {
+      "path": "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB4\\builder-b4\\timings\\inputs\\departing-equipped.json",
+      "sha256": "3c3f61a36d2868014dfb7f0a748efb3861e8943ee47cb01575ce385c821bf2f2",
+      "bytes": 294584,
+      "npcCount": 100,
+      "goldMilli": 631000,
+      "notices": 2,
+      "marketSizes": [
+        12,
+        2,
+        14
+      ]
+    }
+  },
+  "gearProof": {
+    "explicitRelease": "STORAGE_FULL",
+    "autoLeft": [
+      "Ilwen Harvestmere",
+      "Nerys Fircrest"
+    ],
+    "storageRestoredIds": [
+      12
+    ],
+    "equippedOwners": []
+  },
+  "utcStart": "2026-11-25T11:23:08.051+00:00",
+  "utcFinish": "2026-11-25T11:23:11.144+00:00",
+  "exit": 0,
+  "command": "node C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB4\\builder-b4\\tick-worker.mjs C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 prepare C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB4\\builder-b4\\timings\\inputs all C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB4\\builder-b4\\save-size\\delivery-smoke\\largest-save.json"
+}

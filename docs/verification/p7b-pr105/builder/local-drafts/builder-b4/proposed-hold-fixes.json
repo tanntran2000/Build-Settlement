@@ -1,0 +1,30 @@
+{
+  "base": "95821832a8c95988c3203b4c38f5f9ae665978e9",
+  "tree": "83c11b3a8362be1c1c69f632808c76a0c101caa8",
+  "files": [
+    {
+      "path": "packages/simulation/src/character-life-command.ts",
+      "lineOnHeldCandidate": 39,
+      "startByte": 3048,
+      "endByte": 3122,
+      "before": "'NEXT_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC', 'MOVE_NPC_HOME'].includes(type)",
+      "after": "'NEXT_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC', 'MOVE_NPC_HOME', 'ANSWER_NOTICE'].includes(type)",
+      "reason": "Add the command to the dispatcher’s supported list so the existing validated handler is reachable.",
+      "heldSHA256": "90de0e096f4f1260041c5e40ce28c3b196f0e51a023c734ae01cdd6fa52185e2",
+      "proposedSHA256": "65a39476531215d36cb5b8c4a28124a594a7d602b69fc04224ff85bc122d0277",
+      "finalNewline": true
+    },
+    {
+      "path": "packages/core/src/world/__tests__/npc-generator.test.ts",
+      "lineOnHeldCandidate": 211,
+      "startByte": 11710,
+      "endByte": 11774,
+      "before": "b3e0727560c279fb973545ff65753b3e953dc182c27d2f433bfdc55496e9e028",
+      "after": "ad57befafbe267dd2d858310d530ac670c5eef8c4d90432be2f750803b37ca14",
+      "reason": "Update the exact full-catalog SHA expectation for the owner-approved household key. Preserve all assertions.",
+      "heldSHA256": "a89db77efcb2da897ad42e9bc67dcf3ccbdc34d5532925544d6c5fef3f8dc90c",
+      "proposedSHA256": "6b42b118c3a0ee6dfa0a5e20d2b9246032b723225bb35a37c5078d871c3b5c31",
+      "finalNewline": true
+    }
+  ]
+}

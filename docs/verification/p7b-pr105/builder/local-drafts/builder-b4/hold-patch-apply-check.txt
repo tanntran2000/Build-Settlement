@@ -1,0 +1,21 @@
+HEAD and tree
+95821832a8c95988c3203b4c38f5f9ae665978e9
+83c11b3a8362be1c1c69f632808c76a0c101caa8
+Status before command
+ M packages/core/src/data/npc-generator.json
+ M packages/core/src/data/validate.ts
+ M packages/core/src/world/__tests__/npc-generator.test.ts
+ M packages/simulation/src/__tests__/character-life-command.test.ts
+ M packages/simulation/src/__tests__/character-life-observation.test.ts
+ M packages/simulation/src/__tests__/lord-health.test.ts
+ M packages/simulation/src/character-life-command.ts
+ M packages/simulation/src/character-life-observation.ts
+?? packages/simulation/src/__tests__/household-week.test.ts
+?? packages/simulation/src/household-week.ts
+CI=
+UTC start 2026-11-25T06:14:09+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ git -c core.autocrlf=false apply --check C:/Users/Admin/.t3/local-drafts/p7b-prB4/builder-b4/proposed-hold-fixes.patch
+
+UTC finish 2026-11-25T06:14:09+00:00
+Exit 0

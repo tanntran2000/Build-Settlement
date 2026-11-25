@@ -1,0 +1,23 @@
+diff --git a/tests/e2e/goods-stock.spec.ts b/tests/e2e/goods-stock.spec.ts
+--- a/tests/e2e/goods-stock.spec.ts
++++ b/tests/e2e/goods-stock.spec.ts
+@@ -22,7 +22,9 @@
+     if (!result.success) throw Error(result.error.message);
+     await keyActivate(page, page.getByTestId('life-end-week'));
+     const report = await expectReport(page, result.report!);
+-    debit += report.before.gold + report.taxMilli + report.goods.revenueMilli - report.after.gold;
++    const wagesPaidMilli = report.household?.wagesPaidMilli ?? 0;
++    expect(wagesPaidMilli).toBe(4000);
++    debit += report.before.gold + report.taxMilli + report.goods.revenueMilli - report.after.gold - wagesPaidMilli;
+     expect(report.unpaidUpkeepMilli).toBe(0); expect(report.goodsStock!.closingMilli).toBe(10000 - week * 1450);
+     if (week === 5) {
+       await page.locator('[data-life-view="reports"]').evaluate(node => { node.closest('.content')!.scrollTop = 0; window.scrollTo(0, 0); });
+@@ -33,7 +35,7 @@
+     if (!next.success) throw Error(next.error.message); session = next.next;
+     expect(await exportLife(page)).toEqual(session);
+   }
+-  expect(debit).toBe(30000 + 20000);
++  expect(debit).toBe(30000);
+   await go(page, 'city'); await expect(page.getByTestId('trial-stock-goods')).toHaveText('2.75');
+   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+   await page.screenshot({ path: info.outputPath('goods-week5-city.png'), fullPage: true });

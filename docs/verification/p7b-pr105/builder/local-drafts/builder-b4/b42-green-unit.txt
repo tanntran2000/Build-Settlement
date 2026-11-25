@@ -1,0 +1,38 @@
+HEAD and tree
+71ff95afdac14f4c81f00b9d83695ed205bf619f
+d7d604d96381e292cf079f8771aae99660880765
+Status before command
+ M packages/ui/src/CharacterLifeCharacters.svelte
+ M packages/ui/src/CharacterLifeCity.svelte
+ M packages/ui/src/CharacterProfile.svelte
+ M packages/ui/src/NpcSheet.svelte
+ M packages/ui/src/TileManagement.svelte
+ M packages/ui/src/__tests__/acquisition-view.test.ts
+ M packages/ui/src/__tests__/npc-sheet-view.test.ts
+ M packages/ui/src/npc-sheet-view.ts
+ M packages/ui/src/report-letters.ts
+ M tests/e2e/acquisition.spec.ts
+ M tests/e2e/character-life-navigation.helpers.ts
+?? packages/ui/src/HouseholdNotice.svelte
+?? scripts/
+?? tests/e2e/household.spec.ts
+CI=
+UTC start 2026-11-25T06:21:25+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ npm.cmd test -- packages/ui/src/__tests__/npc-sheet-view.test.ts packages/ui/src/__tests__/acquisition-view.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/ui/src/__tests__/npc-sheet-view.test.ts packages/ui/src/__tests__/acquisition-view.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  2 passed (2)
+      Tests  10 passed (10)
+   Start at  13:21:27
+   Duration  2.73s (transform 2.43s, setup 0ms, import 3.20s, tests 170ms, environment 1ms)
+
+
+UTC finish 2026-11-25T06:21:30+00:00
+Exit 0

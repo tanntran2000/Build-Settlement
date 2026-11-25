@@ -1,0 +1,46 @@
+P7-B B4 Builder 6.2 xhigh
+mcp:ba0fb2cd-8fc4-452f-a2b8-69d21c8777a3  completed  codex/gpt-6.2-sol
+
+[user]
+Claude (Orchestrator) → P7-B B4 Builder: F2 HOLD answered. Go.
+
+Owner (Tân), verbatim dialog answer: "Duyệt patch P2 (Recommended)".
+
+Binding plan with Correction 26: C:/Users/Admin/.t3/local-drafts/p7b-prB4/binding-plan-a9d3c7c.md (SHA-256 b3502a24007ec02aaa7933b88595851d310ae3bfc31c3f56a8984b273db26ef8). Apply builder-b4/c25/f2-proposal.patch (SHA-256 c50a6a311ba3dfb962c87c0bea9531dc2cbbc37d319095c9d68bb10899a35caa) byte-exact to tests/e2e/goods-stock.spec.ts on top of 0bd1b24; commit `test(e2e): pin goods debit and servant wages separately`.
+
+Then Correction 25 item 4: gates 1–7 from the new head on a quiet machine (record CPU and top processes; ports 4173/4174 free), the full CI=1 smoke, evidence manifest. No product bytes change, so do not redo bundle, save size or timings; state that and cite the 15cfc2c measurements. Push feat/p7b-servants-wages; no PR. Keep the machine awake during the smoke.
+
+Any other change, loosened assertion, removed case or new timeout is a HOLD. Anti-loop: anything still failing after 2 attempts is a HOLD; a queued message never overrides a HOLD.
+
+[assistant]
+The F2 HOLD is cleared. I’m verifying the approved patch against `0bd1b24`, then I’ll run the final gates and smoke on the new commit with the machine kept awake.
+
+[assistant]
+F2 is committed as `90519b6`. The preflight recorded 7% CPU load and both test ports free. Gates are running, and the previous full smoke took about 41 minutes.
+
+[assistant]
+All seven gates passed, including 3,286 unit tests and 154 architecture tests. Full smoke is running under `CI=1` with Windows sleep inhibition active. Both test ports were free and CPU load was 8% before launch.
+
+[assistant]
+Smoke is 7 minutes in with 17 passes and no failures recorded. It’s in the slower accessibility tests, which took about 12 minutes in the previous run.
+
+[assistant]
+Smoke has passed 40 cases with no failures recorded, including all four accessibility widths. The run is now working through the character navigation tests.
+
+[assistant]
+Smoke has passed 148 of 417 cases with no failures recorded. The run has cleared character navigation and is continuing through the remaining suite.
+
+[assistant]
+Smoke has passed 292 of 417 cases with no failures recorded. Both Goods cases passed at 375 and 1280, and both household History cases passed at 1280 and 1600.
+
+[assistant]
+Full smoke passed all 417 cases in 36.5 minutes. Windows recorded no sleep or resume events during verification. I’ll seal the logs and push the tested commit.
+
+[assistant]
+Open the [verification packet](C:/Users/Admin/.t3/local-drafts/p7b-prB4/builder-b4/c26/README.md) for Astra round 2. `feat/p7b-servants-wages` was pushed and the remote ref matches `90519b682846de9ad336c30db53f4b0b07afb2a2`. The worktree is clean and no PR was opened. [Remote verification](C:/Users/Admin/.t3/local-drafts/p7b-prB4/builder-b4/c26/remote-head.txt)
+
+1. **The approved F2 patch was committed byte-exact.** The test independently pins wages at **4,000 milli each week** and the five-week Goods debit after wages at **30,000 milli**. [Commit and byte proof](C:/Users/Admin/.t3/local-drafts/p7b-prB4/builder-b4/c26/commit.txt)
+2. **Gates 1–7 and full `CI=1` smoke passed on the pushed commit.** All 154 architecture tests, 3,286 unit tests and 417 smoke tests passed. CPU load was 7% before the gates and 8% before smoke, with ports 4173 and 4174 free at both checks. Smoke took 36.5 minutes with Windows sleep inhibition active and no sleep or resume events recorded. [Gate logs](C:/Users/Admin/.t3/local-drafts/p7b-prB4/builder-b4/c26/gates-1-7.txt) · [Smoke log](C:/Users/Admin/.t3/local-drafts/p7b-prB4/builder-b4/c26/gate-8-smoke.txt) · [Evidence manifest](C:/Users/Admin/.t3/local-drafts/p7b-prB4/builder-b4/c26/SHA256SUMS.txt)
+3. **The `15cfc2c` measurements carry forward.** Only tests changed, so the bundle, largest-save and paired End Week measurements were left as recorded. R-026 remains open. [Measurement evidence](C:/Users/Admin/.t3/local-drafts/p7b-prB4/builder-b4/DELIVERY.md:22)
+
+**Next action** — Send the verified SHA and manifest to Astra for round 2.

@@ -1,0 +1,25 @@
+HEAD and tree
+95821832a8c95988c3203b4c38f5f9ae665978e9
+83c11b3a8362be1c1c69f632808c76a0c101caa8
+Status before command
+M  packages/core/src/data/npc-generator.json
+M  packages/core/src/data/validate.ts
+M  packages/core/src/world/__tests__/npc-generator.test.ts
+M  packages/simulation/src/__tests__/character-life-command.test.ts
+M  packages/simulation/src/__tests__/character-life-observation.test.ts
+A  packages/simulation/src/__tests__/household-week.test.ts
+M  packages/simulation/src/__tests__/lord-health.test.ts
+M  packages/simulation/src/character-life-command.ts
+M  packages/simulation/src/character-life-observation.ts
+A  packages/simulation/src/household-week.ts
+CI=
+UTC start 2026-11-25T06:19:44+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ git commit -m "feat(simulation): servant wages, contracts and obedience"
+[feat/p7b-servants-wages 71ff95a] feat(simulation): servant wages, contracts and obedience
+ 10 files changed, 408 insertions(+), 20 deletions(-)
+ create mode 100644 packages/simulation/src/__tests__/household-week.test.ts
+ create mode 100644 packages/simulation/src/household-week.ts
+
+UTC finish 2026-11-25T06:19:44+00:00
+Exit 0

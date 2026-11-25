@@ -1,0 +1,25 @@
+HEAD and tree
+c9c382750d0871f57c09a18e7beca454b62581ff
+a40af360493b8fbb253a4cc5d79016c16a370920
+Status before command
+ M packages/simulation/src/__tests__/society-stock-integrity.test.ts
+CI=
+UTC start 2026-11-25T08:01:53+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ npm.cmd test -- packages/simulation/src/__tests__/society-stock-integrity.test.ts
+
+> build-settlement@0.1.0 test
+> vitest run packages/simulation/src/__tests__/society-stock-integrity.test.ts
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  1 passed (1)
+      Tests  20 passed (20)
+   Start at  15:01:56
+   Duration  2.43s (transform 1.12s, setup 0ms, import 1.50s, tests 295ms, environment 0ms)
+
+
+UTC finish 2026-11-25T08:01:59+00:00
+Exit 0
