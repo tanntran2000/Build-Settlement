@@ -1,5 +1,30 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## P7-B PR B4 (servant wages, contracts, obedience, notices) — PR #105 G6 (2026-11-25 UTC)
+
+**G6 PASS (Claude, Orchestrator/Tester).** P7-B PR B4 of 4 is merged; P7-B (B1–B4) is complete. Next in queue: the Player Money purse design (owner idea, 2026-11-25).
+
+- **Merge.** PR #105 (`feat: P7-B B4 servant wages, contracts, obedience and notices`) was merged under G5 at 2026-11-25T14:35:31Z (GitHub account `tanntran2000`; the owner reported "Dot đã merge và xanh, bạn kiểm tra G6").
+  - Merge/main commit: `ab83228df9ee1c70f97c634324c3202e2def0ea0` (parents `9582183`, `90519b6`).
+  - Accepted head: `90519b682846de9ad336c30db53f4b0b07afb2a2`. Base: `9582183` (B3 #104 merged).
+- **Trees.** The merge tree `b138254d44b76e3b2c8c6eb853449608a3bbc094` is identical to the accepted head tree. Claude checked this locally.
+- **Main CI.** Quality Gate run [45635752204](https://github.com/tanntran2000/Build-Settlement/actions/runs/45635752204), job 139280589815 (push, exact merge SHA), SUCCESS at 2026-11-25T14:59:34Z: 3,286 unit tests (143 files) and 417/417 Chromium smoke (22.1 min); the dependency audit step passed.
+- **Pre-merge, at `90519b6`:**
+  - Claude Tester gates 1–7 exit 0 (154 architecture, 3,286 unit), full smoke 417/417 with `CI=1` (2026-11-25T13:13:10Z–13:53:40Z).
+  - PR CI: quality-gate run 45628443809 SUCCESS (417 smoke, 20.5 min); claude-review pass.
+  - Astra 6.2 high, thread `mcp:f398fe81`: round 1 at `15cfc2c` FAIL (1 P1 loose History matcher, 1 P2 scalar expectation outside correction 24, 1 P3 R-026) → corrections 25–26; round 2 at `90519b6` PASS.
+  - Builder (Sol 6.2 xhigh, `mcp:ba0fb2cd`): Step 0 HOLD → correction 21; HOLDs answered by corrections 22, 23, 24 and 26; one smoke run cut by Windows sleep, retried 417/417 on the same head.
+  - Measurements at `15cfc2c` (later commits test-only): bundle 173.844 kB gzip (+3.98 kB vs main); largest save 294,186 bytes; no consistent added End Week cost.
+  - Road balance (seed 2026, 40 weeks): every road ends near 0 Gold (city about −2.6 Gold a week); servant-first 27 % above build-first.
+- **Evidence.** [`docs/verification/p7b-pr105/`](https://github.com/tanntran2000/Build-Settlement/tree/881402f74f46432d5075c089390fc30cde816ef5/docs/verification/p7b-pr105) on branch `docs/p7-npc-design`, at `881402f`.
+- **Owner instructions** (verbatim; full table in `owner-approval-record.md`):
+  - "Start B4 Step 0";
+  - Plan corrections: 21 "Gold của city (Recommended)", "Cô ấy mang đồ đi (Recommended)", "Làm tròn lên 1 Gold (Recommended)", "Duyệt tất cả (Recommended)"; 22 "Duyệt 2 chỗ sửa (Recommended)"; 23 "Duyệt sửa locator (Recommended)"; 24 "Duyệt + cho sửa kỳ vọng nhỏ (Recommended)"; 25 "Duyệt sửa test (Recommended)", "Không, giữ HOLD"; 26 "Duyệt patch P2 (Recommended)";
+  - Merge report: "Dot đã merge và xanh, bạn kiểm tra G6".
+- **Disclosed.**
+  - Astra round 1 failed before the PASS; the owner refused to ratify one Builder test change (correction 25) and approved a stricter replacement (correction 26).
+  - R-026 (End Week over 50 ms at 100 NPCs, main and B4) is still open. Smoke runs on Chromium only. Large files, Playwright artifact folders and long paths stay local, listed by SHA-256 in the evidence.
+
 ## P7-B PR B3 (buy, hire, live auction, sell, release) — PR #104 G6 (2026-11-25 UTC)
 
 **G6 PASS (Claude, Orchestrator/Tester).** P7-B PR B3 of 4 is merged; B4 (wages, contracts, obedience, notices) waits for the owner to start its Step 0.
