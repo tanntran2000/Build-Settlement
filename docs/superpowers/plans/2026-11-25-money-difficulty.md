@@ -14,6 +14,8 @@
 
 **Spec:** `docs/superpowers/specs/2026-11-25-money-difficulty-design.md` v0.1 (`51ab7d4`), G1 approved by Tân, 2026-11-25, verbatim: "Duyệt thiết kế".
 
+**Plan approval:** the owner (Tân) approved this plan on 2026-11-25, verbatim (dialog answer): "Duyệt, giao M1".
+
 **Base:** `main` `ab83228` (P7-B complete, ruleset `tile-society-13`).
 
 ---
