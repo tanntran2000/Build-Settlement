@@ -1,0 +1,3465 @@
+HEAD and tree
+825ca5c27cc3d440705dffb6b41699d1dcbd2e4e
+b935bbe742992eb4cd792c93fe2881e1e67ea5fb
+Status before command
+ M packages/core/src/__tests__/catalog-data.test.ts
+ M packages/persistence/src/__tests__/npc-life-records.test.ts
+ M packages/simulation/src/__tests__/npc-acquisition.test.ts
+ M packages/simulation/src/__tests__/npc-auction.test.ts
+ M packages/simulation/src/__tests__/replay-checkpoint.test.ts
+ M packages/ui/src/__tests__/acquisition-view.test.ts
+ M tests/e2e/acquisition.spec.ts
+CI=
+UTC start 2026-11-24T11:54:27+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/vitest/vitest.mjs run packages/simulation/src/__tests__/replay-checkpoint.test.ts packages/simulation/src/__tests__/npc-auction.test.ts -t "could draw a sold ID|withdraw"
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/npc-auction.test.ts (6 tests | 1 failed | 5 skipped) 64ms
+   × withdraws to the leader, and an unentered lot closes to the first maximum-ceiling rival at opening 62ms
+ ❯ packages/simulation/src/__tests__/replay-checkpoint.test.ts (16 tests | 3 failed | 13 skipped) 245ms
+   × refuses a removed retained group that could draw a sold ID again 133ms
+   × refuses a status-only edit that reopens a withdrawn lot 46ms
+   × round-trips a withdrawn lot and a winning lot whose recruit was released 65ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-auction.test.ts > withdraws to the leader, and an unentered lot closes to the first maximum-ceiling rival at opening
+AssertionError: expected { source: 'auction-house', …(6) } to strictly equal { source: 'auction-house', …(6) }
+
+- Expected
++ Received
+
+@@ -5,11 +5,9 @@
+      false,
+      false,
+      false,
+    ],
+    "priceMilli": 45000,
+-   "raises": [
+-     "withdraw",
+-   ],
++   "raises": [],
+    "source": "auction-house",
+    "status": "lost",
+  }
+
+ ❯ packages/simulation/src/__tests__/npc-auction.test.ts:83:28
+     81|   const winner = rivals.findIndex(rival => rival.ceilingMilli === Math…
+     82|   const withdrawn = succeeded(s, 'WITHDRAW_BID', { source }).next;
+     83|   expect(lotOf(withdrawn)).toStrictEqual({ ...lot, leader: winner, sta…
+       |                            ^
+     84|   expect(stock(withdrawn).gold).toBe(stock(s).gold);
+     85|   const closed = structuredClone(lot);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  packages/simulation/src/__tests__/replay-checkpoint.test.ts > refuses a removed retained group that could draw a sold ID again
+AssertionError: expected { success: true, state: { …(5) } } to strictly equal { success: false, error: { …(2) } }
+
+- Expected
++ Received
+
+  {
+-   "error": {
+-     "code": "INVALID_SAVE_STATE",
+-     "message": "Checkpoint must contain a valid complete Character Life session in Planning.",
++   "state": {
++     "city": {
++       "goodsStock": {
++         "amountMilli": 10000,
++         "rulesetId": "tile-population-goods-01",
++       },
++       "happiness": 80,
++       "phase": "planning",
++       "revision": 6,
++       "society": {
++         "acquisition": {
++           "departures": [
++             {
++               "kind": "sold",
++               "name": "Alwen Barleyfold",
++             },
++           ],
++           "lots": [
++             {
++               "leader": null,
++               "nameSalt": 0,
++               "out": [
++                 false,
++                 false,
++                 false,
++               ],
++               "priceMilli": 45000,
++               "raises": [],
++               "source": "auction-house",
++               "status": "open",
++             },
++           ],
++           "stock": [
++             {
++               "nameSalt": 0,
++               "slot": 0,
++               "source": "guild",
++               "status": "open",
++             },
++             {
++               "nameSalt": 0,
++               "slot": 1,
++               "source": "guild",
++               "status": "open",
++             },
++             {
++               "nameSalt": 0,
++               "slot": 2,
++               "source": "guild",
++               "status": "open",
++             },
++             {
++               "nameSalt": 0,
++               "slot": 3,
++               "source": "guild",
++               "status": "open",
++             },
++             {
++               "nameSalt": 0,
++               "slot": 0,
++               "source": "auction-house",
++               "status": "open",
++             },
++             {
++               "nameSalt": 0,
++               "slot": 1,
++               "source": "auction-house",
++               "status": "open",
++             },
++             {
++               "nameSalt": 0,
++               "slot": 2,
++               "source": "auction-house",
++               "status": "open",
++             },
++             {
++               "nameSalt": 0,
++               "slot": 3,
++               "source": "auction-house",
++               "status": "open",
++             },
++           ],
++           "week": 1,
++         },
++         "classes": {
++           "bound": {
++             "free": 0,
++             "luminaries": 0,
++             "makers": 0,
++             "merchants": 0,
++           },
++           "free": 55,
++           "luminaries": {
++             "common": 12,
++             "elite": 0,
++           },
++           "makers": {
++             "common": 20,
++             "elite": 0,
++           },
++           "merchants": {
++             "common": 13,
++             "elite": 0,
++           },
++         },
++         "corruption": 50,
++         "crisis": {
++           "calmStreak": 0,
++           "fallCause": null,
++           "hungerStreak": 0,
++           "lastChoice": null,
++           "promise": null,
++           "stage": "none",
++           "weeksInStage": 0,
++         },
++         "debtPressure": {
++           "free": 0,
++           "luminaries": 0,
++           "makers": 0,
++           "merchants": 0,
++         },
++         "desperation": 0,
++         "items": {
++           "consumables": [],
++           "equipped": {},
++           "goals": {
++             "authority": false,
++             "authorityStreak": 0,
++             "calm": false,
++             "rebellionSeen": false,
++             "research": false,
++             "week52": false,
++           },
++           "inventory": [],
++           "market": [
++             {
++               "defId": "common-hand",
++               "priceMilli": 5000,
++             },
++             {
++               "defId": "common-bottom",
++               "priceMilli": 5000,
++             },
++             {
++               "defId": "common-shoes-npc",
++               "priceMilli": 5000,
++             },
++             {
++               "defId": "common-earrings",
++               "priceMilli": 5000,
++             },
++             {
++               "defId": "rare-weapon",
++               "priceMilli": 15000,
++             },
++             {
++               "defId": "rare-earrings",
++               "priceMilli": 15000,
++             },
++             {
++               "defId": "epic-bottom-npc",
++               "priceMilli": 40000,
++             },
++             {
++               "defId": "epic-hand-player",
++               "priceMilli": 40000,
++             },
++           ],
++           "materials": {},
++           "nextItemId": 1,
++           "storage": [],
++         },
++         "laws": {
++           "active": [],
++           "promise": null,
++           "repealedUntil": {},
++           "votedWeek": null,
++         },
++         "luxuryStockMilli": 0,
++         "order": {
++           "authority": 50,
++           "crime": 10,
++           "security": 30,
++         },
++         "outside": {
++           "field-1": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": false,
++           },
++           "field-2": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": false,
++           },
++           "field-3": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "field-4": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "field-5": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "forest-1": {
++             "capMilli": 60000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 60000,
++             "wild": false,
++           },
++           "forest-2": {
++             "capMilli": 60000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 60000,
++             "wild": false,
++           },
++           "forest-3": {
++             "capMilli": 60000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 60000,
++             "wild": true,
++           },
++           "forest-4": {
++             "capMilli": 60000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 60000,
++             "wild": true,
++           },
++           "forest-5": {
++             "capMilli": 60000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 60000,
++             "wild": true,
++           },
++           "meadow-1": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "meadow-2": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "meadow-3": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "ore-1": {
++             "capMilli": 80000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 80000,
++             "wild": false,
++           },
++           "ore-2": {
++             "capMilli": 80000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 80000,
++             "wild": false,
++           },
++           "ore-3": {
++             "capMilli": 80000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 80000,
++             "wild": true,
++           },
++           "ore-4": {
++             "capMilli": 80000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 80000,
++             "wild": true,
++           },
++           "pasture-1": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "pasture-2": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "pasture-3": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "plain-1": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": false,
++           },
++           "plain-2": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": false,
++           },
++           "plain-3": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": false,
++           },
++           "plain-4": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": false,
++           },
++           "plain-5": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "plain-6": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "plain-7": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "rock-1": {
++             "capMilli": 100000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 100000,
++             "wild": true,
++           },
++           "rock-2": {
++             "capMilli": 100000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 100000,
++             "wild": true,
++           },
++           "rock-3": {
++             "capMilli": 100000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 100000,
++             "wild": true,
++           },
++         },
++         "pendingCard": null,
++         "research": {
++           "completed": [],
++           "paid": [],
++           "progressMilli": {
++             "barracks-drill": 0,
++             "deep-mining": 0,
++             "watch-patrols": 0,
++           },
++           "topic": null,
++         },
++         "rulesetId": "tile-society-13",
++         "satisfaction": {
++           "bound": 80,
++           "free": 80,
++           "luminaries": 80,
++           "makers": 80,
++           "merchants": 80,
++         },
++         "standing": 50,
++         "stocksMilli": {
++           "cloth": 0,
++           "herbs": 0,
++           "stone": 0,
++           "wool": 0,
++         },
++         "tension": 0,
++         "training": {
++           "progressMilli": 0,
++           "target": null,
++         },
++         "wallRing": 1,
++       },
++       "tiles": [
++         {
++           "building": {
++             "enabled": true,
++             "level": 1,
++             "typeId": "farm",
++             "workers": 2,
++           },
++           "id": "field-1",
++           "terrain": "fertile",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 1,
++             "typeId": "processor",
++             "workers": 2,
++           },
++           "id": "plain-1",
++           "terrain": "plain",
++         },
++         {
++           "building": null,
++           "id": "forest-1",
++           "terrain": "forest",
++         },
++         {
++           "building": null,
++           "id": "ore-1",
++           "terrain": "ore",
++         },
++         {
++           "building": null,
++           "id": "plain-2",
++           "terrain": "plain",
++         },
++         {
++           "building": null,
++           "id": "plain-3",
++           "terrain": "plain",
++         },
++         {
++           "building": null,
++           "id": "forest-2",
++           "terrain": "forest",
++         },
++         {
++           "building": null,
++           "id": "ore-2",
++           "terrain": "ore",
++         },
++         {
++           "building": null,
++           "id": "field-2",
++           "terrain": "fertile",
++         },
++         {
++           "building": null,
++           "id": "plain-4",
++           "terrain": "plain",
++         },
++         {
++           "building": null,
++           "id": "field-3",
++           "terrain": "fertile",
++         },
++         {
++           "building": null,
++           "id": "field-4",
++           "terrain": "fertile",
++         },
++         {
++           "building": null,
++           "id": "pasture-1",
++           "terrain": "pasture",
++         },
++         {
++           "building": null,
++           "id": "pasture-2",
++           "terrain": "pasture",
++         },
++         {
++           "building": null,
++           "id": "meadow-1",
++           "terrain": "meadow",
++         },
++         {
++           "building": null,
++           "id": "meadow-2",
++           "terrain": "meadow",
++         },
++         {
++           "building": null,
++           "id": "forest-3",
++           "terrain": "forest",
++         },
++         {
++           "building": null,
++           "id": "rock-1",
++           "terrain": "rock",
++         },
++         {
++           "building": null,
++           "id": "rock-2",
++           "terrain": "rock",
++         },
++         {
++           "building": null,
++           "id": "plain-5",
++           "terrain": "plain",
++         },
++         {
++           "building": null,
++           "id": "field-5",
++           "terrain": "fertile",
++         },
++         {
++           "building": null,
++           "id": "pasture-3",
++           "terrain": "pasture",
++         },
++         {
++           "building": null,
++           "id": "meadow-3",
++           "terrain": "meadow",
++         },
++         {
++           "building": null,
++           "id": "forest-4",
++           "terrain": "forest",
++         },
++         {
++           "building": null,
++           "id": "forest-5",
++           "terrain": "forest",
++         },
++         {
++           "building": null,
++           "id": "ore-3",
++           "terrain": "ore",
++         },
++         {
++           "building": null,
++           "id": "ore-4",
++           "terrain": "ore",
++         },
++         {
++           "building": null,
++           "id": "rock-3",
++           "terrain": "rock",
++         },
++         {
++           "building": null,
++           "id": "plain-6",
++           "terrain": "plain",
++         },
++         {
++           "building": null,
++           "id": "plain-7",
++           "terrain": "plain",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 3,
++             "typeId": "common-housing",
++             "workers": 0,
++           },
++           "id": "house-1",
++           "terrain": "town",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 2,
++             "typeId": "makers-rowhouses",
++             "workers": 0,
++           },
++           "id": "house-2",
++           "terrain": "town",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 2,
++             "typeId": "scholars-quarters",
++             "workers": 0,
++           },
++           "id": "house-3",
++           "terrain": "town",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 1,
++             "typeId": "merchant-townhouses",
++             "workers": 0,
++           },
++           "id": "house-4",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-5",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-6",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-7",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-8",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-9",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-10",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-11",
++           "terrain": "town",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 1,
++             "typeId": "guild",
++             "workers": 0,
++           },
++           "id": "service-1",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-2",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-3",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-4",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-5",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-6",
++           "terrain": "town",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 1,
++             "typeId": "town-market",
++             "workers": 0,
++           },
++           "id": "spec-1",
++           "terrain": "town",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 1,
++             "typeId": "auction-house",
++             "workers": 0,
++           },
++           "id": "spec-2",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-3",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-4",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-5",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-6",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-7",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-8",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-9",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-10",
++           "terrain": "town",
++         },
++         {
++           "building": {
++             "enabled": false,
++             "level": 1,
++             "typeId": "slave-market",
++             "workers": 0,
++           },
++           "id": "slum-1",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-2",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-3",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-4",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-5",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-6",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-12",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-13",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-14",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-7",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-8",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-11",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-12",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-7",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-8",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-9",
++           "terrain": "town",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 1,
++             "typeId": "mansion",
++             "workers": 0,
++           },
++           "id": "estate-1",
++           "terrain": "town",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 1,
++             "typeId": "retainers-hall",
++             "workers": 0,
++           },
++           "id": "estate-2",
++           "terrain": "town",
++         },
++       ],
++       "world": {
++         "activeSettlementId": "settlement_haven_01",
++         "settlements": {
++           "settlement_haven_01": {
++             "cohorts": [
++               {
++                 "averageHealth": 80,
++                 "count": 100,
++                 "id": "weekly_middle",
++                 "legalStatus": "citizen",
++                 "livingStandard": "decent",
++                 "loyalty": 80,
++                 "morale": 80,
++                 "occupation": "worker",
++                 "productivity": 80,
++                 "resentment": 0,
++                 "socialClass": "common",
++               },
++             ],
++             "foodProcessorOperational": true,
++             "id": "settlement_haven_01",
++             "inventory": {
++               "food": 20000,
++               "gold": 968800,
++               "iron": 4000,
++               "wheat": 0,
++               "wood": 8000,
++             },
++             "name": "Haven",
++             "status": "active",
++           },
++         },
++         "week": 1,
++         "worldMetadata": {
++           "gameVersion": "0.1.0",
++           "worldSeed": 42,
++         },
++       },
++     },
++     "npcs": [],
++     "outside": {
++       "actors": [
++         "player",
++         "ai-1",
++         "ai-2",
++       ],
++       "generator": "outside-gen-01",
++       "scenarioId": "outside-trial-01",
++       "seed": 42,
++       "tiles": [
++         {
++           "feature": null,
++           "id": "o01",
++           "knownBy": [
++             "ai-1",
++           ],
++           "owner": "ai-1",
++         },
++         {
++           "feature": null,
++           "id": "o02",
++           "knownBy": [
++             "ai-1",
++           ],
++           "owner": "ai-1",
++         },
++         {
++           "feature": null,
++           "id": "o03",
++           "knownBy": [
++             "ai-1",
++           ],
++           "owner": "ai-1",
++         },
++         {
++           "feature": null,
++           "id": "o04",
++           "knownBy": [
++             "ai-1",
++           ],
++           "owner": "ai-1",
++         },
++         {
++           "feature": null,
++           "id": "o05",
++           "knownBy": [
++             "ai-1",
++           ],
++           "owner": "ai-1",
++         },
++         {
++           "feature": null,
++           "id": "o06",
++           "knownBy": [
++             "ai-2",
++           ],
++           "owner": "ai-2",
++         },
++         {
++           "feature": null,
++           "id": "o07",
++           "knownBy": [
++             "ai-2",
++           ],
++           "owner": "ai-2",
++         },
++         {
++           "feature": null,
++           "id": "o08",
++           "knownBy": [
++             "ai-2",
++           ],
++           "owner": "ai-2",
++         },
++         {
++           "feature": null,
++           "id": "o09",
++           "knownBy": [
++             "ai-2",
++           ],
++           "owner": "ai-2",
++         },
++         {
++           "feature": null,
++           "id": "o10",
++           "knownBy": [
++             "ai-2",
++           ],
++           "owner": "ai-2",
++         },
++         {
++           "feature": null,
++           "id": "o11",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o12",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o13",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o14",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o15",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o16",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o17",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o18",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o19",
++           "knownBy": [],
++           "owner": null,
+          },
+-   "success": false,
++         {
++           "feature": null,
++           "id": "o20",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o21",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o22",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "kind": "deposit",
++             "resource": "iron",
++           },
++           "id": "o23",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o24",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o25",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o26",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "kind": "deposit",
++             "resource": "wood",
++           },
++           "id": "o27",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o28",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o29",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o30",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o31",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o32",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o33",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o34",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o35",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o36",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o37",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o38",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o39",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o40",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o41",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o42",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o43",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o44",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o45",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o46",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o47",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o48",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o49",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o50",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o51",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o52",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o53",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o54",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o55",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o56",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o57",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o58",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o59",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o60",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o61",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o62",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o63",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "kind": "deposit",
++             "resource": "wood",
++           },
++           "id": "o64",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o65",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o66",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o67",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o68",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o69",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o70",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o71",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o72",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o73",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o74",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o75",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o76",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o77",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o78",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o79",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o80",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "kind": "deposit",
++             "resource": "wood",
++           },
++           "id": "o81",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o82",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o83",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o84",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o85",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o86",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "kind": "deposit",
++             "resource": "wheat",
++           },
++           "id": "o87",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o88",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "kind": "deposit",
++             "resource": "wheat",
++           },
++           "id": "o89",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o90",
++           "knownBy": [],
++           "owner": null,
++         },
++       ],
++     },
++     "player": {
++       "character": {
++         "age": 25,
++         "emotions": {
++           "anger": 0,
++           "fear": 10,
++           "hope": 70,
++           "jealousy": 0,
++           "joy": 50,
++           "sadness": 10,
++           "shame": 0,
++           "stress": 20,
++         },
++         "gender": "other",
++         "health": 100,
++         "id": "player",
++         "legalStatus": "citizen",
++         "memories": [],
++         "name": "Market Keeper",
++         "needs": {
++           "autonomy": 60,
++           "intimacy": 40,
++           "nutrition": 80,
++           "purpose": 50,
++           "recognition": 50,
++           "safety": 70,
++         },
++         "occupation": "worker",
++         "relationshipToPlayer": {
++           "affection": 20,
++           "attraction": 10,
++           "dependency": 20,
++           "familiarity": 10,
++           "fear": 10,
++           "resentment": 0,
++           "respect": 30,
++           "trust": 30,
++         },
++         "skills": {
++           "combat": 20,
++           "management": 30,
++           "medical": 20,
++           "negotiation": 30,
++           "technical": 30,
++         },
++         "socialClass": "common",
++       },
++       "profile": {
++         "appearance": {
++           "build": "average",
++           "eyeColor": "brown",
++           "face": {
++             "features": [],
++             "shape": "oval",
++           },
++           "hair": {
++             "color": "dark_brown",
++             "length": "short",
++             "style": "loose",
++             "texture": "straight",
++           },
++           "heightCm": 170,
++           "outfit": "role_default",
++           "presentation": "androgynous",
++           "skinTone": "olive",
++           "weightKg": 68,
++         },
++         "id": "player",
++         "identity": {
++           "biography": null,
++           "birthName": null,
++           "birthplaceId": "kestrel_ford",
++           "currentLocationId": "haven",
++           "label": null,
++           "origin": {
++             "regionId": "northreach",
++             "upbringing": "frontier",
++           },
++           "pronouns": "they",
++         },
++         "traits": {
++           "attractiveness": 50,
++           "learningAptitude": 50,
++           "warmth": 50,
++         },
++       },
++     },
++     "profiles": [],
++   },
++   "success": true,
+  }
+
+ ❯ assertRefused packages/simulation/src/__tests__/replay-checkpoint.test.ts:48:48
+     46|   const forged = JSON.stringify(envelope);
+     47|   const rows = sessionToRecords('main', envelope.state), before = stru…
+     48|   expect(deserializeCharacterLifeSave(forged)).toStrictEqual(invalid);
+       |                                                ^
+     49|   let rowError: unknown;
+     50|   try { recordsToSession(rows); } catch (caught) { rowError = caught; }
+ ❯ packages/simulation/src/__tests__/replay-checkpoint.test.ts:117:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  packages/simulation/src/__tests__/replay-checkpoint.test.ts > refuses a status-only edit that reopens a withdrawn lot
+AssertionError: expected { success: true, state: { …(5) } } to strictly equal { success: false, error: { …(2) } }
+
+- Expected
++ Received
+
+  {
+-   "error": {
+-     "code": "INVALID_SAVE_STATE",
+-     "message": "Checkpoint must contain a valid complete Character Life session in Planning.",
++   "state": {
++     "city": {
++       "goodsStock": {
++         "amountMilli": 10000,
++         "rulesetId": "tile-population-goods-01",
++       },
++       "happiness": 80,
++       "phase": "planning",
++       "revision": 2,
++       "society": {
++         "acquisition": {
++           "departures": [],
++           "lots": [
++             {
++               "leader": 1,
++               "nameSalt": 0,
++               "out": [
++                 false,
++                 false,
++                 false,
++               ],
++               "priceMilli": 55000,
++               "raises": [
++                 5000,
++               ],
++               "source": "auction-house",
++               "status": "open",
++             },
++           ],
++           "stock": [
++             {
++               "nameSalt": 0,
++               "slot": 0,
++               "source": "auction-house",
++               "status": "open",
++             },
++             {
++               "nameSalt": 0,
++               "slot": 1,
++               "source": "auction-house",
++               "status": "open",
++             },
++             {
++               "nameSalt": 0,
++               "slot": 2,
++               "source": "auction-house",
++               "status": "open",
++             },
++             {
++               "nameSalt": 0,
++               "slot": 3,
++               "source": "auction-house",
++               "status": "open",
++             },
++           ],
++           "week": 1,
++         },
++         "classes": {
++           "bound": {
++             "free": 0,
++             "luminaries": 0,
++             "makers": 0,
++             "merchants": 0,
++           },
++           "free": 55,
++           "luminaries": {
++             "common": 12,
++             "elite": 0,
++           },
++           "makers": {
++             "common": 20,
++             "elite": 0,
++           },
++           "merchants": {
++             "common": 13,
++             "elite": 0,
++           },
++         },
++         "corruption": 50,
++         "crisis": {
++           "calmStreak": 0,
++           "fallCause": null,
++           "hungerStreak": 0,
++           "lastChoice": null,
++           "promise": null,
++           "stage": "none",
++           "weeksInStage": 0,
++         },
++         "debtPressure": {
++           "free": 0,
++           "luminaries": 0,
++           "makers": 0,
++           "merchants": 0,
+          },
+-   "success": false,
++         "desperation": 0,
++         "items": {
++           "consumables": [],
++           "equipped": {},
++           "goals": {
++             "authority": false,
++             "authorityStreak": 0,
++             "calm": false,
++             "rebellionSeen": false,
++             "research": false,
++             "week52": false,
++           },
++           "inventory": [],
++           "market": [
++             {
++               "defId": "common-bottom",
++               "priceMilli": 5000,
++             },
++             {
++               "defId": "common-hand-npc",
++               "priceMilli": 5000,
++             },
++             {
++               "defId": "common-hand",
++               "priceMilli": 5000,
++             },
++             {
++               "defId": "common-weapon-npc",
++               "priceMilli": 5000,
++             },
++             {
++               "defId": "rare-hand",
++               "priceMilli": 15000,
++             },
++             {
++               "defId": "rare-hand-player",
++               "priceMilli": 15000,
++             },
++             {
++               "defId": "epic-ring-npc",
++               "priceMilli": 40000,
++             },
++             {
++               "defId": "epic-shoes-npc",
++               "priceMilli": 40000,
++             },
++           ],
++           "materials": {},
++           "nextItemId": 1,
++           "storage": [],
++         },
++         "laws": {
++           "active": [],
++           "promise": null,
++           "repealedUntil": {},
++           "votedWeek": null,
++         },
++         "luxuryStockMilli": 0,
++         "order": {
++           "authority": 50,
++           "crime": 10,
++           "security": 30,
++         },
++         "outside": {
++           "field-1": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": false,
++           },
++           "field-2": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": false,
++           },
++           "field-3": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "field-4": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "field-5": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "forest-1": {
++             "capMilli": 60000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 60000,
++             "wild": false,
++           },
++           "forest-2": {
++             "capMilli": 60000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 60000,
++             "wild": false,
++           },
++           "forest-3": {
++             "capMilli": 60000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 60000,
++             "wild": true,
++           },
++           "forest-4": {
++             "capMilli": 60000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 60000,
++             "wild": true,
++           },
++           "forest-5": {
++             "capMilli": 60000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 60000,
++             "wild": true,
++           },
++           "meadow-1": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "meadow-2": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "meadow-3": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "ore-1": {
++             "capMilli": 80000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 80000,
++             "wild": false,
++           },
++           "ore-2": {
++             "capMilli": 80000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 80000,
++             "wild": false,
++           },
++           "ore-3": {
++             "capMilli": 80000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 80000,
++             "wild": true,
++           },
++           "ore-4": {
++             "capMilli": 80000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 80000,
++             "wild": true,
++           },
++           "pasture-1": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "pasture-2": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "pasture-3": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "plain-1": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": false,
++           },
++           "plain-2": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": false,
++           },
++           "plain-3": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": false,
++           },
++           "plain-4": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": false,
++           },
++           "plain-5": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "plain-6": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "plain-7": {
++             "capMilli": null,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": null,
++             "wild": true,
++           },
++           "rock-1": {
++             "capMilli": 100000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 100000,
++             "wild": true,
++           },
++           "rock-2": {
++             "capMilli": 100000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 100000,
++             "wild": true,
++           },
++           "rock-3": {
++             "capMilli": 100000,
++             "clearMilli": 0,
++             "clearPaid": false,
++             "clearWorkers": 0,
++             "deepShaft": false,
++             "depositMilli": 100000,
++             "wild": true,
++           },
++         },
++         "pendingCard": null,
++         "research": {
++           "completed": [],
++           "paid": [],
++           "progressMilli": {
++             "barracks-drill": 0,
++             "deep-mining": 0,
++             "watch-patrols": 0,
++           },
++           "topic": null,
++         },
++         "rulesetId": "tile-society-13",
++         "satisfaction": {
++           "bound": 80,
++           "free": 80,
++           "luminaries": 80,
++           "makers": 80,
++           "merchants": 80,
++         },
++         "standing": 50,
++         "stocksMilli": {
++           "cloth": 0,
++           "herbs": 0,
++           "stone": 0,
++           "wool": 0,
++         },
++         "tension": 0,
++         "training": {
++           "progressMilli": 0,
++           "target": null,
++         },
++         "wallRing": 1,
++       },
++       "tiles": [
++         {
++           "building": {
++             "enabled": true,
++             "level": 1,
++             "typeId": "farm",
++             "workers": 2,
++           },
++           "id": "field-1",
++           "terrain": "fertile",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 1,
++             "typeId": "processor",
++             "workers": 2,
++           },
++           "id": "plain-1",
++           "terrain": "plain",
++         },
++         {
++           "building": null,
++           "id": "forest-1",
++           "terrain": "forest",
++         },
++         {
++           "building": null,
++           "id": "ore-1",
++           "terrain": "ore",
++         },
++         {
++           "building": null,
++           "id": "plain-2",
++           "terrain": "plain",
++         },
++         {
++           "building": null,
++           "id": "plain-3",
++           "terrain": "plain",
++         },
++         {
++           "building": null,
++           "id": "forest-2",
++           "terrain": "forest",
++         },
++         {
++           "building": null,
++           "id": "ore-2",
++           "terrain": "ore",
++         },
++         {
++           "building": null,
++           "id": "field-2",
++           "terrain": "fertile",
++         },
++         {
++           "building": null,
++           "id": "plain-4",
++           "terrain": "plain",
++         },
++         {
++           "building": null,
++           "id": "field-3",
++           "terrain": "fertile",
++         },
++         {
++           "building": null,
++           "id": "field-4",
++           "terrain": "fertile",
++         },
++         {
++           "building": null,
++           "id": "pasture-1",
++           "terrain": "pasture",
++         },
++         {
++           "building": null,
++           "id": "pasture-2",
++           "terrain": "pasture",
++         },
++         {
++           "building": null,
++           "id": "meadow-1",
++           "terrain": "meadow",
++         },
++         {
++           "building": null,
++           "id": "meadow-2",
++           "terrain": "meadow",
++         },
++         {
++           "building": null,
++           "id": "forest-3",
++           "terrain": "forest",
++         },
++         {
++           "building": null,
++           "id": "rock-1",
++           "terrain": "rock",
++         },
++         {
++           "building": null,
++           "id": "rock-2",
++           "terrain": "rock",
++         },
++         {
++           "building": null,
++           "id": "plain-5",
++           "terrain": "plain",
++         },
++         {
++           "building": null,
++           "id": "field-5",
++           "terrain": "fertile",
++         },
++         {
++           "building": null,
++           "id": "pasture-3",
++           "terrain": "pasture",
++         },
++         {
++           "building": null,
++           "id": "meadow-3",
++           "terrain": "meadow",
++         },
++         {
++           "building": null,
++           "id": "forest-4",
++           "terrain": "forest",
++         },
++         {
++           "building": null,
++           "id": "forest-5",
++           "terrain": "forest",
++         },
++         {
++           "building": null,
++           "id": "ore-3",
++           "terrain": "ore",
++         },
++         {
++           "building": null,
++           "id": "ore-4",
++           "terrain": "ore",
++         },
++         {
++           "building": null,
++           "id": "rock-3",
++           "terrain": "rock",
++         },
++         {
++           "building": null,
++           "id": "plain-6",
++           "terrain": "plain",
++         },
++         {
++           "building": null,
++           "id": "plain-7",
++           "terrain": "plain",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 3,
++             "typeId": "common-housing",
++             "workers": 0,
++           },
++           "id": "house-1",
++           "terrain": "town",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 2,
++             "typeId": "makers-rowhouses",
++             "workers": 0,
++           },
++           "id": "house-2",
++           "terrain": "town",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 2,
++             "typeId": "scholars-quarters",
++             "workers": 0,
++           },
++           "id": "house-3",
++           "terrain": "town",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 1,
++             "typeId": "merchant-townhouses",
++             "workers": 0,
++           },
++           "id": "house-4",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-5",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-6",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-7",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-8",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-9",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-10",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-11",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-1",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-2",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-3",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-4",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-5",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-6",
++           "terrain": "town",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 1,
++             "typeId": "town-market",
++             "workers": 0,
++           },
++           "id": "spec-1",
++           "terrain": "town",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 1,
++             "typeId": "auction-house",
++             "workers": 0,
++           },
++           "id": "spec-2",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-3",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-4",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-5",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-6",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-7",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-8",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-9",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-10",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-1",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-2",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-3",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-4",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-5",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-6",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-12",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-13",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "house-14",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-7",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "service-8",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-11",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "spec-12",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-7",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-8",
++           "terrain": "town",
++         },
++         {
++           "building": null,
++           "id": "slum-9",
++           "terrain": "town",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 1,
++             "typeId": "mansion",
++             "workers": 0,
++           },
++           "id": "estate-1",
++           "terrain": "town",
++         },
++         {
++           "building": {
++             "enabled": true,
++             "level": 1,
++             "typeId": "retainers-hall",
++             "workers": 0,
++           },
++           "id": "estate-2",
++           "terrain": "town",
++         },
++       ],
++       "world": {
++         "activeSettlementId": "settlement_haven_01",
++         "settlements": {
++           "settlement_haven_01": {
++             "cohorts": [
++               {
++                 "averageHealth": 80,
++                 "count": 100,
++                 "id": "weekly_middle",
++                 "legalStatus": "citizen",
++                 "livingStandard": "decent",
++                 "loyalty": 80,
++                 "morale": 80,
++                 "occupation": "worker",
++                 "productivity": 80,
++                 "resentment": 0,
++                 "socialClass": "common",
++               },
++             ],
++             "foodProcessorOperational": true,
++             "id": "settlement_haven_01",
++             "inventory": {
++               "food": 20000,
++               "gold": 988000,
++               "iron": 4000,
++               "wheat": 0,
++               "wood": 8000,
++             },
++             "name": "Haven",
++             "status": "active",
++           },
++         },
++         "week": 1,
++         "worldMetadata": {
++           "gameVersion": "0.1.0",
++           "worldSeed": 0,
++         },
++       },
++     },
++     "npcs": [],
++     "outside": {
++       "actors": [
++         "player",
++         "ai-1",
++         "ai-2",
++       ],
++       "generator": "outside-gen-01",
++       "scenarioId": "outside-trial-01",
++       "seed": 0,
++       "tiles": [
++         {
++           "feature": null,
++           "id": "o01",
++           "knownBy": [
++             "ai-1",
++           ],
++           "owner": "ai-1",
++         },
++         {
++           "feature": null,
++           "id": "o02",
++           "knownBy": [
++             "ai-1",
++           ],
++           "owner": "ai-1",
++         },
++         {
++           "feature": null,
++           "id": "o03",
++           "knownBy": [
++             "ai-1",
++           ],
++           "owner": "ai-1",
++         },
++         {
++           "feature": null,
++           "id": "o04",
++           "knownBy": [
++             "ai-1",
++           ],
++           "owner": "ai-1",
++         },
++         {
++           "feature": null,
++           "id": "o05",
++           "knownBy": [
++             "ai-1",
++           ],
++           "owner": "ai-1",
++         },
++         {
++           "feature": null,
++           "id": "o06",
++           "knownBy": [
++             "ai-2",
++           ],
++           "owner": "ai-2",
++         },
++         {
++           "feature": null,
++           "id": "o07",
++           "knownBy": [
++             "ai-2",
++           ],
++           "owner": "ai-2",
++         },
++         {
++           "feature": null,
++           "id": "o08",
++           "knownBy": [
++             "ai-2",
++           ],
++           "owner": "ai-2",
++         },
++         {
++           "feature": null,
++           "id": "o09",
++           "knownBy": [
++             "ai-2",
++           ],
++           "owner": "ai-2",
++         },
++         {
++           "feature": null,
++           "id": "o10",
++           "knownBy": [
++             "ai-2",
++           ],
++           "owner": "ai-2",
++         },
++         {
++           "feature": null,
++           "id": "o11",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o12",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o13",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o14",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o15",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o16",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o17",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o18",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "kind": "deposit",
++             "resource": "iron",
++           },
++           "id": "o19",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o20",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o21",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o22",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o23",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o24",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o25",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o26",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o27",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o28",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o29",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o30",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o31",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o32",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "kind": "deposit",
++             "resource": "iron",
++           },
++           "id": "o33",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o34",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o35",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o36",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "kind": "deposit",
++             "resource": "wood",
++           },
++           "id": "o37",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o38",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o39",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o40",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o41",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o42",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o43",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o44",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o45",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o46",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o47",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o48",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "kind": "deposit",
++             "resource": "wood",
++           },
++           "id": "o49",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o50",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o51",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o52",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o53",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o54",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o55",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o56",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o57",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o58",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o59",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o60",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "kind": "deposit",
++             "resource": "iron",
++           },
++           "id": "o61",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o62",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o63",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o64",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o65",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o66",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "kind": "deposit",
++             "resource": "wheat",
++           },
++           "id": "o67",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o68",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o69",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o70",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o71",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o72",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o73",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o74",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o75",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o76",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o77",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o78",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o79",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o80",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o81",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o82",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o83",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o84",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": {
++             "claimedBy": null,
++             "kind": "loot",
++           },
++           "id": "o85",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o86",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o87",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o88",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o89",
++           "knownBy": [],
++           "owner": null,
++         },
++         {
++           "feature": null,
++           "id": "o90",
++           "knownBy": [],
++           "owner": null,
++         },
++       ],
++     },
++     "player": {
++       "character": {
++         "age": 25,
++         "emotions": {
++           "anger": 0,
++           "fear": 10,
++           "hope": 70,
++           "jealousy": 0,
++           "joy": 50,
++           "sadness": 10,
++           "shame": 0,
++           "stress": 20,
++         },
++         "gender": "other",
++         "health": 100,
++         "id": "player",
++         "legalStatus": "citizen",
++         "memories": [],
++         "name": "Market Keeper",
++         "needs": {
++           "autonomy": 60,
++           "intimacy": 40,
++           "nutrition": 80,
++           "purpose": 50,
++           "recognition": 50,
++           "safety": 70,
++         },
++         "occupation": "worker",
++         "relationshipToPlayer": {
++           "affection": 20,
++           "attraction": 10,
++           "dependency": 20,
++           "familiarity": 10,
++           "fear": 10,
++           "resentment": 0,
++           "respect": 30,
++           "trust": 30,
++         },
++         "skills": {
++           "combat": 20,
++           "management": 30,
++           "medical": 20,
++           "negotiation": 30,
++           "technical": 30,
++         },
++         "socialClass": "common",
++       },
++       "profile": {
++         "appearance": {
++           "build": "average",
++           "eyeColor": "brown",
++           "face": {
++             "features": [],
++             "shape": "oval",
++           },
++           "hair": {
++             "color": "dark_brown",
++             "length": "short",
++             "style": "loose",
++             "texture": "straight",
++           },
++           "heightCm": 170,
++           "outfit": "role_default",
++           "presentation": "androgynous",
++           "skinTone": "olive",
++           "weightKg": 68,
++         },
++         "id": "player",
++         "identity": {
++           "biography": null,
++           "birthName": null,
++           "birthplaceId": "kestrel_ford",
++           "currentLocationId": "haven",
++           "label": null,
++           "origin": {
++             "regionId": "northreach",
++             "upbringing": "frontier",
++           },
++           "pronouns": "they",
++         },
++         "traits": {
++           "attractiveness": 50,
++           "learningAptitude": 50,
++           "warmth": 50,
++         },
++       },
++     },
++     "profiles": [],
++   },
++   "success": true,
+  }
+
+ ❯ assertRefused packages/simulation/src/__tests__/replay-checkpoint.test.ts:48:48
+     46|   const forged = JSON.stringify(envelope);
+     47|   const rows = sessionToRecords('main', envelope.state), before = stru…
+     48|   expect(deserializeCharacterLifeSave(forged)).toStrictEqual(invalid);
+       |                                                ^
+     49|   let rowError: unknown;
+     50|   try { recordsToSession(rows); } catch (caught) { rowError = caught; }
+ ❯ packages/simulation/src/__tests__/replay-checkpoint.test.ts:135:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  packages/simulation/src/__tests__/replay-checkpoint.test.ts > round-trips a withdrawn lot and a winning lot whose recruit was released
+AssertionError: expected [ { kind: 'released', …(1) } ] to strictly equal [ { kind: 'released', …(2) } ]
+
+- Expected
++ Received
+
+  [
+    {
+-     "id": "npc_w1_auction-house_lot",
+      "kind": "released",
+      "name": "Anvara Copperwell",
+    },
+  ]
+
+ ❯ packages/simulation/src/__tests__/replay-checkpoint.test.ts:184:54
+    182|   const gold = stock(state).gold;
+    183|   state = succeeded(state, 'RELEASE_NPC', { npcId }).next;
+    184|   expect(state.city.society!.acquisition.departures).toStrictEqual([{ …
+       |                                                      ^
+    185|   expect(stock(state).gold).toBe(gold);
+    186|   const won = serializeCharacterLifeSave(state);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  4 failed | 18 skipped (22)
+   Start at  18:54:28
+   Duration  1.87s (transform 1.76s, setup 0ms, import 2.38s, tests 310ms, environment 0ms)
+
+
+UTC finish 2026-11-24T11:54:30+00:00
+Exit 1

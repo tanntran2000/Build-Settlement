@@ -1,0 +1,100 @@
+HEAD and tree
+b184357d235d164478584e36b96d063551124e66
+961567de7ef638861a55a42589be203037e123c9
+Status before command
+ M packages/core/src/__tests__/catalog-data.test.ts
+ M packages/core/src/data/tuning.json
+ M packages/core/src/data/validate.ts
+ M packages/core/src/index.ts
+ M packages/core/src/trial/__tests__/crime.test.ts
+ M packages/core/src/trial/__tests__/crisis.test.ts
+ M packages/core/src/trial/__tests__/items.test.ts
+ M packages/core/src/trial/__tests__/law.test.ts
+ M packages/core/src/trial/__tests__/order.test.ts
+ M packages/core/src/trial/__tests__/outside.test.ts
+ M packages/core/src/trial/__tests__/society-p7b.test.ts
+ M packages/core/src/trial/__tests__/society.test.ts
+ M packages/core/src/trial/items.ts
+ M packages/core/src/trial/society.ts
+ M packages/core/src/trial/state.ts
+ M packages/core/src/trial/types.ts
+ M packages/core/src/world/__tests__/session.test.ts
+ M packages/core/src/world/npc-generator.ts
+ M packages/persistence/src/__tests__/character-life-save.test.ts
+ M packages/persistence/src/__tests__/item-records.test.ts
+ M packages/persistence/src/__tests__/items-rebuild-order.test.ts
+ M packages/persistence/src/__tests__/npc-life-records.test.ts
+ M packages/persistence/src/__tests__/session-records.test.ts
+ M packages/persistence/src/__tests__/society-new-game-fixture.test.ts
+ M packages/persistence/src/__tests__/society-v9-fixture.test.ts
+ M packages/persistence/src/session-records.ts
+ M packages/simulation/src/__tests__/craft-week.test.ts
+ M packages/simulation/src/__tests__/crime-fixtures.test.ts
+ M packages/simulation/src/__tests__/crisis-fixtures.test.ts
+ M packages/simulation/src/__tests__/fixtures/catalog-golden.json
+ M packages/simulation/src/__tests__/law-fixture.test.ts
+ M packages/simulation/src/__tests__/law-week.test.ts
+ M packages/simulation/src/__tests__/npc-homes.test.ts
+ M packages/simulation/src/__tests__/smithy-data.test.ts
+ M packages/simulation/src/character-life-command.ts
+ M packages/ui/src/__tests__/character-life-session.test.ts
+ M packages/ui/src/__tests__/p7b-checkpoint.test.ts
+ M packages/ui/src/__tests__/world-session.test.ts
+ M tests/e2e/crime.spec.ts
+ M tests/e2e/crisis.spec.ts
+ M tests/e2e/garrison.spec.ts
+ M tests/e2e/items.spec.ts
+ M tests/e2e/laws.spec.ts
+ M tests/e2e/ledger.spec.ts
+ M tests/e2e/society.spec.ts
+ M tests/e2e/storage.spec.ts
+ M tests/e2e/tile-save.spec.ts
+ M tests/e2e/title.spec.ts
+ M tests/e2e/world-session.spec.ts
+?? packages/core/src/data/npc-acquisition.json
+?? packages/core/src/trial/acquisition.ts
+?? packages/persistence/src/__tests__/fixtures/society-v13/
+?? packages/simulation/src/__tests__/acquisition-fixture.ts
+?? packages/simulation/src/__tests__/fixtures/p7b-b3-path-diff.ts
+?? packages/simulation/src/__tests__/fixtures/p7b-b3-path-diff.txt
+?? packages/simulation/src/__tests__/npc-acquisition.test.ts
+?? packages/simulation/src/npc-acquisition.ts
+UTC start 2026-11-24T09:26:18+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/vitest/vitest.mjs run npc-acquisition.test.ts society.test.ts catalog-data.test.ts character-life-save.test.ts npc-life-records.test.ts law-week.test.ts craft-week.test.ts items-week.test.ts session-records.test.ts p7b-checkpoint.test.ts catalog-golden.test.ts --maxWorkers=4
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/npc-acquisition.test.ts (8 tests | 1 failed) 641ms
+     × rejects a malformed, missing or duplicate acquisition field without accepting a partial state 40ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-acquisition.test.ts > P7-B weekly acquisition > rejects a malformed, missing or duplicate acquisition field without accepting a partial state
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ packages/simulation/src/__tests__/npc-acquisition.test.ts:121:95
+    119|     const s = market(), a = state(s);
+    120|     expect(isAcquisitionState({ ...a, stock: [...a.stock, a.stock[0]] …
+    121|     expect(isAcquisitionState({ ...a, lots: a.lots.map(lot => ({ ...lo…
+       |                                                                                               ^
+    122|     expect(isAcquisitionState({ ...a, week: 0 })).toBe(false);
+    123|     const encoded = serializeCharacterLifeSave(s);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 10 passed (11)
+      Tests  1 failed | 348 passed (349)
+   Start at  16:26:19
+   Duration  7.01s (transform 2.05s, setup 0ms, import 4.49s, tests 8.41s, environment 2ms)
+
+
+UTC finish 2026-11-24T09:26:26+00:00
+Exit 1

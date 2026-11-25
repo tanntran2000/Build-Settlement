@@ -1,0 +1,34 @@
+HEAD and tree
+825ca5c27cc3d440705dffb6b41699d1dcbd2e4e
+b935bbe742992eb4cd792c93fe2881e1e67ea5fb
+Status before command
+ M packages/core/src/__tests__/catalog-data.test.ts
+ M packages/persistence/src/__tests__/npc-life-records.test.ts
+ M packages/simulation/src/__tests__/npc-acquisition.test.ts
+ M packages/simulation/src/__tests__/replay-checkpoint.test.ts
+ M packages/ui/src/__tests__/acquisition-view.test.ts
+ M tests/e2e/acquisition.spec.ts
+CI=
+UTC start 2026-11-24T11:54:04+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ python C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c14/mutate-browser.py
+red-probe-p1-3-browser: exit 1
+    Error Context: ..\..\..\local-drafts\p7b-prB3\builder-b3\c14\red-probe-browser-artifacts\acquisition-acquisition-pa-25f7c--real-report-rows-at-1280px-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7b-prB3\builder-b3\c14\red-probe-browser-artifacts\acquisition-acquisition-pa-25f7c--real-report-rows-at-1280px-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7b-prB3\builder-b3\c14\red-probe-browser-artifacts\acquisition-acquisition-pa-25f7c--real-report-rows-at-1280px-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\acquisition.spec.ts:23:3 › acquisition panels, keyboard bids and real report rows at 1280px 
+
+UTC finish 2026-11-24T11:54:48+00:00
+Exit 1
+All four seeded browser mutations caught. Original test bytes restored.
+
+UTC finish 2026-11-24T11:54:48+00:00
+Exit 0

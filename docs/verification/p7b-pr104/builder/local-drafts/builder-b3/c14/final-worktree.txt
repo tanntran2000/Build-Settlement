@@ -1,0 +1,22 @@
+HEAD and tree
+8aa7dc4cefbc759ce2a7d158937011c3afe71549
+a44d6bcd31a26f3519a39f5b71e481045a2b9318
+Status before command
+CI=
+UTC start 2026-11-24T12:40:18+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File C:\Users\Admin\.t3\local-drafts\p7b-prB3\builder-b3\c14/capture-final-worktree.ps1
+HEAD 8aa7dc4cefbc759ce2a7d158937011c3afe71549
+Tree a44d6bcd31a26f3519a39f5b71e481045a2b9318
+Main b184357d235d164478584e36b96d063551124e66 and branch feat/p7b-acquisition-market
+Git status empty
+Ports 4173 and 4174 free
+graphify-out/graph.json
+.graphifyignore
+fix(simulation): tighten acquisition replay and tests (Astra round 1)
+
+Co-authored-by: Codex <noreply@openai.com>
+
+
+UTC finish 2026-11-24T12:40:20+00:00
+Exit 0

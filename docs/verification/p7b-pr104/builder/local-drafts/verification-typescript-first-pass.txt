@@ -1,0 +1,51 @@
+Base HEAD b184357d235d164478584e36b96d063551124e66
+Base tree 961567de7ef638861a55a42589be203037e123c9
+Candidate D:\QI Technology\Temp\p7b-b3-step0-opxuuxoj (plain snapshot)
+Check group typescript
+
+UTC start 2026-11-24T09:09:26+00:00
+CWD D:\QI Technology\Temp\p7b-b3-step0-opxuuxoj
+$ node node_modules/typescript/bin/tsc -p packages/core/tsconfig.json --noEmit
+
+UTC finish 2026-11-24T09:09:30+00:00
+Exit 0
+
+UTC start 2026-11-24T09:09:30+00:00
+CWD D:\QI Technology\Temp\p7b-b3-step0-opxuuxoj
+$ node node_modules/typescript/bin/tsc -p packages/simulation/tsconfig.json --noEmit
+
+UTC finish 2026-11-24T09:09:40+00:00
+Exit 0
+
+UTC start 2026-11-24T09:09:40+00:00
+CWD D:\QI Technology\Temp\p7b-b3-step0-opxuuxoj
+$ node node_modules/typescript/bin/tsc -p packages/persistence/tsconfig.json --noEmit
+
+UTC finish 2026-11-24T09:09:49+00:00
+Exit 0
+
+UTC start 2026-11-24T09:09:49+00:00
+CWD D:\QI Technology\Temp\p7b-b3-step0-opxuuxoj
+$ node node_modules/typescript/bin/tsc -p packages/content/tsconfig.json --noEmit
+
+UTC finish 2026-11-24T09:09:52+00:00
+Exit 0
+
+UTC start 2026-11-24T09:09:52+00:00
+CWD D:\QI Technology\Temp\p7b-b3-step0-opxuuxoj\packages\ui
+$ node ../../node_modules/svelte-check/bin/svelte-check --tsconfig ./tsconfig.json
+Loading svelte-check in workspace: d:\QI Technology\Temp\p7b-b3-step0-opxuuxoj\packages\ui
+Getting Svelte diagnostics...
+
+d:\QI Technology\Temp\p7b-b3-step0-opxuuxoj\packages\ui\src\__tests__\acquisition-view.test.ts:28:18
+Error: Conversion of type '{ household: { bought: string[]; sold: string[]; released: string[]; left: never[]; unpaid: never[]; notices: never[]; wagesPaidMilli: number; lotsToRivals: { source: "auction-house"; priceMilli: number; }[]; }; }' to type 'TileTrialReport' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type '{ household: { bought: string[]; sold: string[]; released: string[]; left: never[]; unpaid: never[]; notices: never[]; wagesPaidMilli: number; lotsToRivals: { source: "auction-house"; priceMilli: number; }[]; }; }' is missing the following properties from type 'TileTrialReport': items, week, before, after, and 11 more. 
+it('renders named acquisition rows and a 55 Gold lot by source', () => {
+  const report = { household: { bought: ['A'], sold: ['B'], released: ['C'], left: [], unpaid: [],
+    notices: [], wagesPaidMilli: 0, lotsToRivals: [{ source: 'auction-house', priceMilli: 55000 }] } } as TileTrialReport;
+  expect(householdReportRows(report)).toStrictEqual([
+
+====================================
+svelte-check found 1 error and 0 warnings in 1 file
+UTC finish 2026-11-24T09:10:17+00:00
+Exit 1

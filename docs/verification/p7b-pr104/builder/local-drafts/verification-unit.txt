@@ -1,0 +1,41 @@
+Base HEAD b184357d235d164478584e36b96d063551124e66
+Base tree 961567de7ef638861a55a42589be203037e123c9
+Candidate D:\QI Technology\Temp\p7b-b3-step0-opxuuxoj (plain snapshot)
+Check group unit
+
+UTC start 2026-11-24T09:11:49+00:00
+CWD D:\QI Technology\Temp\p7b-b3-step0-opxuuxoj
+$ node node_modules/vitest/vitest.mjs run --maxWorkers=4 --disableConsoleIntercept
+
+ RUN  v4.1.12 D:/QI Technology/Temp/p7b-b3-step0-opxuuxoj
+
+INSPECTOR_PRODUCTION_NODE_ENV=production
+INSPECTOR_PRODUCTION_BUILD_MS=16470
+vite v6.4.5 building for production...
+transforming...
+✓ 268 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                   0.71 kB │ gzip:   0.41 kB
+dist/assets/PixelifySans-Variable-lrcDQVzA.ttf   79.16 kB
+dist/assets/index-Bjrr5xVb.css                   38.09 kB │ gzip:   7.68 kB
+dist/assets/index-Ba3qOg5F.js                   508.05 kB │ gzip: 160.92 kB
+✓ built in 9.05s
+
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+
+{"npcCount":100,"stock":12,"lots":2,"saveBytes":294795,"emptyWeekBytes":293786,"acquisitionDeltaBytes":1009}
+PR_A_REPORT_BASELINE 0 54a944aa5e3008d1a4837de1d04654b89a137a5bf44bd004c543f4f7b6b9a848
+PR_A_REPORT_BASELINE 42 eb453bfed2e46c2580cb69cc9747794ed2bf9e84a91f322e0e23e7c705e67926
+PR_A_REPORT_BASELINE 20261028 8145e422ca8691852501facec33098d76bf33061b8196536b73fc64aa8522177
+
+ Test Files  140 passed (140)
+      Tests  3234 passed (3234)
+   Start at  16:11:50
+   Duration  79.19s (transform 7.84s, setup 0ms, import 47.77s, tests 184.62s, environment 46ms)
+UTC finish 2026-11-24T09:13:10+00:00
+Exit 0

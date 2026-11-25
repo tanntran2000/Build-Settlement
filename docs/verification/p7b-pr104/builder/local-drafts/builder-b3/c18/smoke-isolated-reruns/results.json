@@ -1,0 +1,115 @@
+{
+  "utc": "2026-11-24T14:13:47.224936+00:00",
+  "smoke": "gate-8-smoke.txt",
+  "ci": 1,
+  "results": [
+    {
+      "file": "tests\\e2e\\character-life-navigation-accessibility.spec.ts",
+      "line": 331,
+      "title": "accessibility at 1600px › long character and report content reflows",
+      "command": [
+        "node",
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "tests/e2e/character-life-navigation-accessibility.spec.ts:331",
+        "--grep",
+        "accessibility at 1600px long character and report content reflows(?: @[^ ]+)*$",
+        "--output",
+        "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c18\\smoke-isolated-reruns\\01-artifacts"
+      ],
+      "exit": 1,
+      "exactlyOne": true,
+      "log": "smoke-isolated-01.txt"
+    },
+    {
+      "file": "tests\\e2e\\character-life-navigation-accessibility.spec.ts",
+      "line": 331,
+      "title": "accessibility at 1280px › long character and report content reflows",
+      "command": [
+        "node",
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "tests/e2e/character-life-navigation-accessibility.spec.ts:331",
+        "--grep",
+        "accessibility at 1280px long character and report content reflows(?: @[^ ]+)*$",
+        "--output",
+        "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c18\\smoke-isolated-reruns\\02-artifacts"
+      ],
+      "exit": 1,
+      "exactlyOne": true,
+      "log": "smoke-isolated-02.txt"
+    },
+    {
+      "file": "tests\\e2e\\character-life-navigation-accessibility.spec.ts",
+      "line": 331,
+      "title": "accessibility at 375px › long character and report content reflows",
+      "command": [
+        "node",
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "tests/e2e/character-life-navigation-accessibility.spec.ts:331",
+        "--grep",
+        "accessibility at 375px long character and report content reflows(?: @[^ ]+)*$",
+        "--output",
+        "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c18\\smoke-isolated-reruns\\03-artifacts"
+      ],
+      "exit": 1,
+      "exactlyOne": true,
+      "log": "smoke-isolated-03.txt"
+    },
+    {
+      "file": "tests\\e2e\\character-life-navigation-accessibility.spec.ts",
+      "line": 331,
+      "title": "accessibility at 320px › long character and report content reflows",
+      "command": [
+        "node",
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "tests/e2e/character-life-navigation-accessibility.spec.ts:331",
+        "--grep",
+        "accessibility at 320px long character and report content reflows(?: @[^ ]+)*$",
+        "--output",
+        "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c18\\smoke-isolated-reruns\\04-artifacts"
+      ],
+      "exit": 1,
+      "exactlyOne": true,
+      "log": "smoke-isolated-04.txt"
+    },
+    {
+      "file": "tests\\e2e\\npc-sheet.spec.ts",
+      "line": 376,
+      "title": "NPC sheet reflow at 320px › NPC sheet and NPC life report reflow at 320px",
+      "command": [
+        "node",
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "tests/e2e/npc-sheet.spec.ts:376",
+        "--grep",
+        "NPC sheet reflow at 320px NPC sheet and NPC life report reflow at 320px(?: @[^ ]+)*$",
+        "--output",
+        "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c18\\smoke-isolated-reruns\\05-artifacts"
+      ],
+      "exit": 1,
+      "exactlyOne": true,
+      "log": "smoke-isolated-05.txt"
+    },
+    {
+      "file": "tests\\e2e\\npc-sheet.spec.ts",
+      "line": 376,
+      "title": "NPC sheet reflow at 375px › NPC sheet and NPC life report reflow at 375px",
+      "command": [
+        "node",
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "tests/e2e/npc-sheet.spec.ts:376",
+        "--grep",
+        "NPC sheet reflow at 375px NPC sheet and NPC life report reflow at 375px(?: @[^ ]+)*$",
+        "--output",
+        "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c18\\smoke-isolated-reruns\\06-artifacts"
+      ],
+      "exit": 1,
+      "exactlyOne": true,
+      "log": "smoke-isolated-06.txt"
+    }
+  ]
+}

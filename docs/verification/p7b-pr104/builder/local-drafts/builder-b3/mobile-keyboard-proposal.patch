@@ -1,0 +1,24 @@
+--- approved/tests/e2e/acquisition.spec.ts
++++ proposed/tests/e2e/acquisition.spec.ts
+@@ -1,7 +1,7 @@
+ import { expect, test } from '@playwright/test';
+ import { executeCharacterLifeCommand } from '../../packages/simulation/src/character-life-command.ts';
+ import type { CharacterLifeSessionState } from '../../packages/core/src/index.ts';
+-import { expectReport, exportLife, go, importLife, keyActivate, makeLife, selectArea, selectPerson } from './character-life-navigation.helpers.ts';
++import { expectReport, exportLife, go, importLife, keyActivate, makeLife, selectArea, selectPerson, tabTo } from './character-life-navigation.helpers.ts';
+ 
+ function act(s: CharacterLifeSessionState, type: string, fields: Record<string, unknown>) {
+   const result = executeCharacterLifeCommand(s, { type, expectedRevision: s.city.revision, ...fields });
+@@ -97,7 +97,11 @@
+     await go(page, 'city');
+     await keyActivate(page, page.getByTestId('trial-tile-spec-2'));
+     const auction = page.getByRole('region', { name: 'Auction House acquisitions' });
+-    await keyActivate(page, auction.getByRole('tab', { name: 'Auction' }));
++    await tabTo(page, auction.getByRole('tab', { name: 'For sale', exact: true }));
++    await page.keyboard.press('ArrowRight');
++    const auctionTab = auction.getByRole('tab', { name: 'Auction', exact: true });
++    await expect(auctionTab).toBeFocused();
++    await expect(auctionTab).toHaveAttribute('aria-selected', 'true');
+     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+     await keyActivate(page, page.getByTestId('trial-tile-field-1'));
+     await expect(auction).toHaveCount(0);

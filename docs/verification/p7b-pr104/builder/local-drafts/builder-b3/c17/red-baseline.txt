@@ -1,0 +1,165 @@
+HEAD and tree
+8aa7dc4cefbc759ce2a7d158937011c3afe71549
+a44d6bcd31a26f3519a39f5b71e481045a2b9318
+Status before command
+ M packages/simulation/src/__tests__/replay-checkpoint.test.ts
+CI=
+UTC start 2026-11-24T13:04:14+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/vitest/vitest.mjs run packages/simulation/src/__tests__/replay-checkpoint.test.ts
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/replay-checkpoint.test.ts (24 tests | 8 failed) 1262ms
+   × R2-1 refuses an owned current-week recruit with removed group at a paused market 56ms
+   × R2-1 refuses an owned current-week recruit with empty sentinel at a paused market 33ms
+   × R2-2 refuses a changed active market resident acquisition source after rollover 49ms
+   × R2-2 refuses a changed active market resident acquisition week after rollover 42ms
+   × R2-2 refuses a changed empty sentinel resident acquisition source after rollover 50ms
+   × R2-2 refuses a changed empty sentinel resident acquisition week after rollover 49ms
+   × R2-3 refuses a seed-correct extra departure that implies 101 opening residents 421ms
+   × R2-4 saves and loads a seed-42 world with a Guild built through the tile dispatcher 8ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/replay-checkpoint.test.ts > R2-1 refuses an owned current-week recruit with removed group at a paused market
+ FAIL  packages/simulation/src/__tests__/replay-checkpoint.test.ts > R2-1 refuses an owned current-week recruit with empty sentinel at a paused market
+AssertionError: expected { json: 'accepted', row: 'accepted' } to strictly equal { Object (json, row) }
+
+- Expected
++ Received
+
+  {
+-   "json": {
+-     "error": {
+-       "code": "INVALID_SAVE_STATE",
+-       "message": "Checkpoint must contain a valid complete Character Life session in Planning.",
+-     },
+-     "success": false,
+-   },
+-   "row": {
+-     "message": "Invalid store record: city:city",
+-     "ref": "city:city",
+-   },
++   "json": "accepted",
++   "row": "accepted",
+  }
+
+ ❯ assertRefused packages/simulation/src/__tests__/replay-checkpoint.test.ts:55:6
+     53|     json: decoded.success ? 'accepted' : decoded,
+     54|     row: rowError instanceof StoreRecordError ? { ref: rowError.ref, m…
+     55|   }).toStrictEqual({
+       |      ^
+     56|     json: invalid,
+     57|     row: { ref: 'city:city', message: 'Invalid store record: city:city…
+ ❯ packages/simulation/src/__tests__/replay-checkpoint.test.ts:202:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+ FAIL  packages/simulation/src/__tests__/replay-checkpoint.test.ts > R2-2 refuses a changed active market resident acquisition source after rollover
+ FAIL  packages/simulation/src/__tests__/replay-checkpoint.test.ts > R2-2 refuses a changed active market resident acquisition week after rollover
+ FAIL  packages/simulation/src/__tests__/replay-checkpoint.test.ts > R2-2 refuses a changed empty sentinel resident acquisition source after rollover
+ FAIL  packages/simulation/src/__tests__/replay-checkpoint.test.ts > R2-2 refuses a changed empty sentinel resident acquisition week after rollover
+AssertionError: expected { json: 'accepted', row: 'accepted' } to strictly equal { Object (json, row) }
+
+- Expected
++ Received
+
+  {
+-   "json": {
+-     "error": {
+-       "code": "INVALID_SAVE_STATE",
+-       "message": "Checkpoint must contain a valid complete Character Life session in Planning.",
+-     },
+-     "success": false,
+-   },
+-   "row": {
+-     "message": "Invalid store record: city:city",
+-     "ref": "city:city",
+-   },
++   "json": "accepted",
++   "row": "accepted",
+  }
+
+ ❯ assertRefused packages/simulation/src/__tests__/replay-checkpoint.test.ts:55:6
+     53|     json: decoded.success ? 'accepted' : decoded,
+     54|     row: rowError instanceof StoreRecordError ? { ref: rowError.ref, m…
+     55|   }).toStrictEqual({
+       |      ^
+     56|     json: invalid,
+     57|     row: { ref: 'city:city', message: 'Invalid store record: city:city…
+ ❯ packages/simulation/src/__tests__/replay-checkpoint.test.ts:227:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯
+
+ FAIL  packages/simulation/src/__tests__/replay-checkpoint.test.ts > R2-3 refuses a seed-correct extra departure that implies 101 opening residents
+AssertionError: expected { json: 'accepted', row: 'accepted' } to strictly equal { Object (json, row) }
+
+- Expected
++ Received
+
+  {
+-   "json": {
+-     "error": {
+-       "code": "INVALID_SAVE_STATE",
+-       "message": "Checkpoint must contain a valid complete Character Life session in Planning.",
+-     },
+-     "success": false,
+-   },
+-   "row": {
+-     "message": "Invalid store record: city:city",
+-     "ref": "city:city",
+-   },
++   "json": "accepted",
++   "row": "accepted",
+  }
+
+ ❯ assertRefused packages/simulation/src/__tests__/replay-checkpoint.test.ts:55:6
+     53|     json: decoded.success ? 'accepted' : decoded,
+     54|     row: rowError instanceof StoreRecordError ? { ref: rowError.ref, m…
+     55|   }).toStrictEqual({
+       |      ^
+     56|     json: invalid,
+     57|     row: { ref: 'city:city', message: 'Invalid store record: city:city…
+ ❯ packages/simulation/src/__tests__/replay-checkpoint.test.ts:250:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/8]⎯
+
+ FAIL  packages/simulation/src/__tests__/replay-checkpoint.test.ts > R2-4 saves and loads a seed-42 world with a Guild built through the tile dispatcher
+AssertionError: expected { worldSave: { …(2) }, …(1) } to strictly equal { worldSave: 'accepted', …(1) }
+
+- Expected
++ Received
+
+  {
+-   "loadTrial": "accepted",
+-   "worldSave": "accepted",
++   "loadTrial": {
++     "code": "INVALID_SAVE_STATE",
++     "message": "Checkpoint must contain a valid society Planning state.",
++   },
++   "worldSave": {
++     "code": "INVALID_SAVE_STATE",
++     "message": "Export requires a valid world session in Planning.",
++   },
+  }
+
+ ❯ packages/simulation/src/__tests__/replay-checkpoint.test.ts:274:6
+    272|   expect(snapshot).toStrictEqual(before);
+    273|   expect({ worldSave: encoded.success ? 'accepted' : encoded.error, lo…
+    274|     .toStrictEqual({ worldSave: 'accepted', loadTrial: 'accepted' });
+       |      ^
+    275|   if (!encoded.success || !loaded.success) throw Error('World session …
+    276|   expect(deserializeWorldSessionSave(encoded.text)).toStrictEqual({ su…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/8]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  8 failed | 16 passed (24)
+   Start at  20:04:15
+   Duration  2.51s (transform 720ms, setup 0ms, import 931ms, tests 1.26s, environment 0ms)
+
+
+UTC finish 2026-11-24T13:04:17+00:00
+Exit 1

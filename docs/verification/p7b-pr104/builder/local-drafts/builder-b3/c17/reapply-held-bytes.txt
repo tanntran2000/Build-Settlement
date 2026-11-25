@@ -1,0 +1,23 @@
+HEAD and tree
+8aa7dc4cefbc759ce2a7d158937011c3afe71549
+a44d6bcd31a26f3519a39f5b71e481045a2b9318
+Status before command
+CI=
+UTC start 2026-11-24T13:16:47+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ python C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c17/verify-c17.py rehydrate
+warning: in the working copy of 'packages/core/src/__tests__/helpers/npcs.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/core/src/character/validate.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/core/src/trial/acquisition-replay.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/persistence/src/__tests__/item-records.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/persistence/src/__tests__/items-rebuild-order.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/persistence/src/session-records.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/character-life-command.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/character-life-observation.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/npc-homes.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/replay-checkpoint.test.ts', LF will be replaced by CRLF the next time Git touches it
+Approved packet + Corrections 12–14 verified for 86 paths at 8aa7dc4cefbc759ce2a7d158937011c3afe71549.
+PASS rehydrate: all 10 files and 30 Correction 16 byte spans matched before any type edit.
+
+UTC finish 2026-11-24T13:16:55+00:00
+Exit 0

@@ -1,0 +1,682 @@
+Source graph audit for b184357d235d164478584e36b96d063551124e66
+Graph SHA-256 ab012d87e7a44338948c2749b56aff85fb9db5c9b8e346f7b7d68ec2b5110831
+
+2026-11-24T09:10:45+00:00 C:\Users\Admin\.local\bin\graphify.exe --version
+graphify 0.9.118
+Exit 0
+
+2026-11-24T09:10:48+00:00 C:\Users\Admin\.local\bin\graphify.exe explain isTileTrialState --all
+Node: isTileTrialState()
+  ID:        packages_core_src_trial_state_istiletrialstate
+  Source:    packages/core/src/trial/state.ts L12
+  Type:      code
+  Community: executeTileTrialCommand
+  Degree:    48
+
+Connections (48):
+  <-- executeTileTrialCommand() [calls] [EXTRACTED] packages/simulation/src/tile-trial.ts:L9
+  <-- tile-trial.ts [imports] [EXTRACTED] packages/simulation/src/tile-trial.ts:L3
+  --> hasWeeklyKeys() [calls] [EXTRACTED] packages/core/src/trial/state.ts:L16
+  <-- character/validate.ts [imports] [EXTRACTED] packages/core/src/character/validate.ts:L4
+  <-- session-records.ts [imports] [EXTRACTED] packages/persistence/src/session-records.ts:L3
+  --> societyPopulation() [calls] [EXTRACTED] packages/core/src/trial/state.ts:L30
+  <-- state.ts [contains] [EXTRACTED] packages/core/src/trial/state.ts:L12
+  --> buildingWorkerCap() [calls] [EXTRACTED] packages/core/src/trial/state.ts:L57
+  <-- world-npc.ts [imports] [EXTRACTED] packages/simulation/src/world-npc.ts:L1
+  <-- isTileTrialPlanningState() [calls] [EXTRACTED] packages/core/src/trial/state.ts:L103
+  --> isSocietyState() [calls] [EXTRACTED] packages/core/src/trial/state.ts:L17
+  --> readDenseArray() [calls] [EXTRACTED] packages/core/src/trial/state.ts:L23
+  <-- isLiveCharacterLifeSessionState() [calls] [EXTRACTED] packages/core/src/character/validate.ts:L97
+  <-- order-week.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/order-week.test.ts:L1
+  --> trialBuilding() [calls] [EXTRACTED] packages/core/src/trial/state.ts:L55
+  <-- order-commands.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/order-commands.test.ts:L1
+  <-- outside-commands.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/outside-commands.test.ts:L2
+  <-- society-renewable-support.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/society-renewable-support.test.ts:L2
+  <-- outside-week.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/outside-week.test.ts:L2
+  --> societyPlot() [calls] [EXTRACTED] packages/core/src/trial/state.ts:L61
+  <-- executeWorldNpcCityCommand() [calls] [EXTRACTED] packages/simulation/src/world-npc.ts:L52
+  <-- executeWorldNpcCommand() [calls] [EXTRACTED] packages/simulation/src/world-npc.ts:L13
+  <-- outside.test.ts [imports] [EXTRACTED] packages/core/src/trial/__tests__/outside.test.ts:L2
+  <-- trial/__tests__/society-stock-integrity.test.ts [imports] [EXTRACTED] packages/core/src/trial/__tests__/society-stock-integrity.test.ts:L3
+  <-- society.test.ts [imports] [EXTRACTED] packages/core/src/trial/__tests__/society.test.ts:L2
+  <-- authority-refusals.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/authority-refusals.test.ts:L1
+  <-- society-command-transaction.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/society-command-transaction.test.ts:L3
+  <-- society-end-week.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/society-end-week.test.ts:L1
+  <-- society-stock-policy-ports.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/society-stock-policy-ports.test.ts:L2
+  --> isCanonicalGameState() [calls] [EXTRACTED] packages/core/src/trial/state.ts:L19
+  --> outsidePlot() [calls] [EXTRACTED] packages/core/src/trial/state.ts:L46
+  --> societyStaff() [calls] [EXTRACTED] packages/core/src/trial/state.ts:L63
+  <-- tile-trial.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/tile-trial.test.ts:L2
+  <-- isStoredCity() [calls] [EXTRACTED] packages/persistence/src/session-records.ts:L19
+  <-- act() [calls] [EXTRACTED] packages/simulation/src/__tests__/society-renewable-support.test.ts:L23
+  <-- order-tax-week.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/order-tax-week.test.ts:L1
+  <-- population() [calls] [EXTRACTED] packages/simulation/src/__tests__/society-renewable-support.test.ts:L15
+  --> hasTileKeys() [calls] [EXTRACTED] packages/core/src/trial/state.ts:L14
+  <-- city() [calls] [EXTRACTED] packages/simulation/src/__tests__/society-command-transaction.test.ts:L13
+  <-- success() [calls] [EXTRACTED] packages/simulation/src/__tests__/society-command-transaction.test.ts:L31
+  <-- freeCity() [calls] [EXTRACTED] packages/simulation/src/__tests__/society-stock-policy-ports.test.ts:L13
+  <-- next() [calls] [EXTRACTED] packages/simulation/src/__tests__/order-commands.test.ts:L19
+  <-- reject() [calls] [EXTRACTED] packages/simulation/src/__tests__/order-commands.test.ts:L24
+  <-- next() [calls] [EXTRACTED] packages/simulation/src/__tests__/outside-commands.test.ts:L10
+  <-- reject() [calls] [EXTRACTED] packages/simulation/src/__tests__/outside-commands.test.ts:L11
+  <-- endSociety() [calls] [EXTRACTED] packages/simulation/src/__tests__/society-end-week.test.ts:L66
+  <-- end() [calls] [EXTRACTED] packages/simulation/src/__tests__/society-stock-policy-ports.test.ts:L20
+  --> integer() [calls] [EXTRACTED] packages/core/src/trial/state.ts:L16
+Exit 0
+
+2026-11-24T09:10:50+00:00 C:\Users\Admin\.local\bin\graphify.exe explain isTileTrialPlanningState --all
+Node: isTileTrialPlanningState()
+  ID:        packages_core_src_trial_state_istiletrialplanningstate
+  Source:    packages/core/src/trial/state.ts L78
+  Type:      code
+  Community: core/src/index.ts
+  Degree:    27
+
+Connections (27):
+  --> createSocietyState() [calls] [EXTRACTED] packages/core/src/trial/state.ts:L83
+  <-- executeTileTrialCommand() [calls] [EXTRACTED] packages/simulation/src/tile-trial.ts:L101
+  <-- tile-trial.ts [imports] [EXTRACTED] packages/simulation/src/tile-trial.ts:L3
+  --> hasWeeklyKeys() [calls] [EXTRACTED] packages/core/src/trial/state.ts:L87
+  --> isTileTrialState() [calls] [EXTRACTED] packages/core/src/trial/state.ts:L103
+  <-- state.ts [contains] [EXTRACTED] packages/core/src/trial/state.ts:L78
+  <-- world/session.ts [imports] [EXTRACTED] packages/core/src/world/session.ts:L5
+  --> isSocietyState() [calls] [EXTRACTED] packages/core/src/trial/state.ts:L80
+  <-- isWorldSessionState() [calls] [EXTRACTED] packages/core/src/world/session.ts:L37
+  <-- society-p7b.test.ts [calls] [EXTRACTED] packages/core/src/trial/__tests__/society-p7b.test.ts:L119
+  <-- order.test.ts [imports] [EXTRACTED] packages/core/src/trial/__tests__/order.test.ts:L2
+  <-- outside-week.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/outside-week.test.ts:L2
+  <-- outside.test.ts [imports] [EXTRACTED] packages/core/src/trial/__tests__/outside.test.ts:L2
+  <-- trial/__tests__/society-stock-integrity.test.ts [imports] [EXTRACTED] packages/core/src/trial/__tests__/society-stock-integrity.test.ts:L3
+  <-- society.test.ts [imports] [EXTRACTED] packages/core/src/trial/__tests__/society.test.ts:L2
+  --> outsidePlot() [calls] [EXTRACTED] packages/core/src/trial/state.ts:L91
+  <-- society-v8-fixture.test.ts [imports] [EXTRACTED] packages/persistence/src/__tests__/society-v8-fixture.test.ts:L2
+  <-- society-v9-fixture.test.ts [imports] [EXTRACTED] packages/persistence/src/__tests__/society-v9-fixture.test.ts:L2
+  <-- society-map.test.ts [imports] [EXTRACTED] packages/core/src/trial/__tests__/society-map.test.ts:L2
+  <-- society-v1-fixture.test.ts [imports] [EXTRACTED] packages/persistence/src/__tests__/society-v1-fixture.test.ts:L1
+  <-- society-v2-fixture.test.ts [imports] [EXTRACTED] packages/persistence/src/__tests__/society-v2-fixture.test.ts:L2
+  <-- society-v3-fixture.test.ts [imports] [EXTRACTED] packages/persistence/src/__tests__/society-v3-fixture.test.ts:L2
+  <-- society-v4-fixture.test.ts [imports] [EXTRACTED] packages/persistence/src/__tests__/society-v4-fixture.test.ts:L2
+  <-- society-v5-fixture.test.ts [imports] [EXTRACTED] packages/persistence/src/__tests__/society-v5-fixture.test.ts:L2
+  <-- society-v6-fixture.test.ts [imports] [EXTRACTED] packages/persistence/src/__tests__/society-v6-fixture.test.ts:L2
+  <-- society-v7-fixture.test.ts [imports] [EXTRACTED] packages/persistence/src/__tests__/society-v7-fixture.test.ts:L2
+  --> hasTileKeys() [calls] [EXTRACTED] packages/core/src/trial/state.ts:L80
+Exit 0
+
+2026-11-24T09:10:53+00:00 C:\Users\Admin\.local\bin\graphify.exe explain isSocietyState --all
+Node: isSocietyState()
+  ID:        packages_core_src_trial_society_issocietystate
+  Source:    packages/core/src/trial/society.ts L57
+  Type:      code
+  Community: society.ts
+  Degree:    25
+
+Connections (25):
+  <-- society.ts [contains] [EXTRACTED] packages/core/src/trial/society.ts:L57
+  --> hasWeeklyKeys() [calls] [EXTRACTED] packages/core/src/trial/society.ts:L59
+  <-- society-week.ts [imports] [EXTRACTED] packages/simulation/src/society-week.ts:L1
+  <-- session-records.ts [imports] [EXTRACTED] packages/persistence/src/session-records.ts:L3
+  <-- isTileTrialState() [calls] [EXTRACTED] packages/core/src/trial/state.ts:L17
+  <-- state.ts [imports] [EXTRACTED] packages/core/src/trial/state.ts:L8
+  <-- isTileTrialPlanningState() [calls] [EXTRACTED] packages/core/src/trial/state.ts:L80
+  <-- society-week.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/society-week.test.ts:L111
+  <-- resolveSocietyWeek() [calls] [EXTRACTED] packages/simulation/src/society-week.ts:L214
+  --> isItemsState() [calls] [EXTRACTED] packages/core/src/trial/society.ts:L67
+  <-- order.test.ts [imports] [EXTRACTED] packages/core/src/trial/__tests__/order.test.ts:L2
+  <-- law.test.ts [imports] [EXTRACTED] packages/core/src/trial/__tests__/law.test.ts:L2
+  <-- outside.test.ts [imports] [EXTRACTED] packages/core/src/trial/__tests__/outside.test.ts:L2
+  <-- society.test.ts [imports] [EXTRACTED] packages/core/src/trial/__tests__/society.test.ts:L3
+  <-- crime.test.ts [imports] [EXTRACTED] packages/core/src/trial/__tests__/crime.test.ts:L2
+  --> isLawsState() [calls] [EXTRACTED] packages/core/src/trial/society.ts:L59
+  <-- isStoredCity() [calls] [EXTRACTED] packages/persistence/src/session-records.ts:L50
+  --> isCrisisState() [calls] [EXTRACTED] packages/core/src/trial/society.ts:L69
+  <-- crisis.test.ts [imports] [EXTRACTED] packages/core/src/trial/__tests__/crisis.test.ts:L2
+  --> isOrderState() [calls] [EXTRACTED] packages/core/src/trial/society.ts:L69
+  --> isOutsideResearch() [calls] [EXTRACTED] packages/core/src/trial/society.ts:L69
+  --> isOutsideState() [calls] [EXTRACTED] packages/core/src/trial/society.ts:L69
+  <-- validateInput() [calls] [EXTRACTED] packages/simulation/src/society-week.ts:L174
+  --> count() [calls] [EXTRACTED] packages/core/src/trial/society.ts:L60
+  --> score() [indirect_call] [INFERRED 0.85] packages/core/src/trial/society.ts:L70
+Exit 0
+
+2026-11-24T09:10:56+00:00 C:\Users\Admin\.local\bin\graphify.exe explain isStoredCity --all
+Node: isStoredCity()
+  ID:        packages_persistence_src_session_records_isstoredcity
+  Source:    packages/persistence/src/session-records.ts L14
+  Type:      code
+  Community: society.ts
+  Degree:    8
+
+Connections (8):
+  --> createSocietyState() [calls] [EXTRACTED] packages/persistence/src/session-records.ts:L38
+  --> hasWeeklyKeys() [calls] [EXTRACTED] packages/persistence/src/session-records.ts:L16
+  <-- session-records.ts [contains] [EXTRACTED] packages/persistence/src/session-records.ts:L14
+  --> isTileTrialState() [calls] [EXTRACTED] packages/persistence/src/session-records.ts:L19
+  <-- recordsToSession() [calls] [EXTRACTED] packages/persistence/src/session-records.ts:L162
+  --> isSocietyState() [calls] [EXTRACTED] packages/persistence/src/session-records.ts:L50
+  --> isCanonicalGameState() [calls] [EXTRACTED] packages/persistence/src/session-records.ts:L21
+  --> count() [calls] [EXTRACTED] packages/persistence/src/session-records.ts:L21
+Exit 0
+
+2026-11-24T09:10:58+00:00 C:\Users\Admin\.local\bin\graphify.exe explain TileTrialReport --all
+Node: TileTrialReport
+  ID:        packages_core_src_trial_types_tiletrialreport
+  Source:    packages/core/src/trial/types.ts L43
+  Type:      code
+  Community: buildingWorkerCap
+  Degree:    28
+
+Connections (28):
+  <-- society-view.ts [imports] [EXTRACTED] packages/ui/src/society-view.ts:L85
+  <-- character-life-navigation.helpers.ts [imports] [EXTRACTED] tests/e2e/character-life-navigation.helpers.ts:L3
+  <-- character-life-command.ts [imports] [EXTRACTED] packages/simulation/src/character-life-command.ts:L1
+  <-- tile-trial-week.ts [imports] [EXTRACTED] packages/simulation/src/tile-trial-week.ts:L9
+  <-- TileManagement.svelte [imports] [EXTRACTED] packages/ui/src/TileManagement.svelte:L12
+  <-- character-life-boundary.spec.ts [imports] [EXTRACTED] tests/e2e/character-life-boundary.spec.ts:L2
+  <-- report-letters.ts [imports] [EXTRACTED] packages/ui/src/report-letters.ts:L1
+  <-- character-life-observation.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/character-life-observation.test.ts:L2
+  <-- trial/types.ts [contains] [EXTRACTED] packages/core/src/trial/types.ts:L43
+  <-- character-life-observation.ts [imports] [EXTRACTED] packages/simulation/src/character-life-observation.ts:L1
+  <-- workshop-operation.ts [imports] [EXTRACTED] packages/simulation/src/workshop-operation.ts:L1
+  <-- report-letters.test.ts [imports] [EXTRACTED] packages/ui/src/__tests__/report-letters.test.ts:L2
+  <-- CharacterLifeShell.svelte [imports] [EXTRACTED] packages/ui/src/CharacterLifeShell.svelte:L4
+  <-- SoloWeekReport.svelte [imports] [EXTRACTED] packages/ui/src/SoloWeekReport.svelte:L2
+  <-- crafting-view.test.ts [imports] [EXTRACTED] packages/ui/src/__tests__/crafting-view.test.ts:L2
+  <-- world-npc.ts [imports] [EXTRACTED] packages/simulation/src/world-npc.ts:L1
+  <-- items-view.test.ts [imports] [EXTRACTED] packages/ui/src/__tests__/items-view.test.ts:L3
+  <-- outside-week.ts [imports] [EXTRACTED] packages/simulation/src/outside-week.ts:L1
+  <-- SocietyReport.svelte [imports] [EXTRACTED] packages/ui/src/SocietyReport.svelte:L2
+  <-- crime-view.test.ts [imports] [EXTRACTED] packages/ui/src/__tests__/crime-view.test.ts:L2
+  <-- crisis-view.test.ts [imports] [EXTRACTED] packages/ui/src/__tests__/crisis-view.test.ts:L2
+  <-- npc-life-week.ts [imports] [EXTRACTED] packages/simulation/src/npc-life-week.ts:L1
+  <-- law-view.test.ts [imports] [EXTRACTED] packages/ui/src/__tests__/law-view.test.ts:L2
+  <-- garrison-view.test.ts [imports] [EXTRACTED] packages/ui/src/__tests__/garrison-view.test.ts:L2
+  <-- outside-view.test.ts [imports] [EXTRACTED] packages/ui/src/__tests__/outside-view.test.ts:L2
+  --> ResearchTopic [references] [EXTRACTED] packages/core/src/trial/types.ts:L50
+  --> WeeklyStocks [references] [EXTRACTED] packages/core/src/trial/types.ts:L67
+  <-- VisibleReport [references] [EXTRACTED] packages/simulation/src/character-life-observation.ts:L21
+Exit 0
+
+2026-11-24T09:11:00+00:00 C:\Users\Admin\.local\bin\graphify.exe explain expectReport --all
+Node: expectReport()
+  ID:        tests_e2e_character_life_navigation_helpers_expectreport
+  Source:    tests/e2e/character-life-navigation.helpers.ts L358
+  Type:      code
+  Community: world-session.spec.ts
+  Degree:    28
+
+Connections (28):
+  <-- character-life-navigation.helpers.ts [contains] [EXTRACTED] tests/e2e/character-life-navigation.helpers.ts:L358
+  <-- character-life-navigation.spec.ts [imports] [EXTRACTED] tests/e2e/character-life-navigation.spec.ts:L8
+  <-- character-life-boundary.spec.ts [imports] [EXTRACTED] tests/e2e/character-life-boundary.spec.ts:L14
+  <-- world-session.spec.ts [imports] [EXTRACTED] tests/e2e/world-session.spec.ts:L6
+  <-- tile-local-checkpoint.spec.ts [imports] [EXTRACTED] tests/e2e/tile-local-checkpoint.spec.ts:L6
+  <-- npc-sheet.spec.ts [imports] [EXTRACTED] tests/e2e/npc-sheet.spec.ts:L4
+  <-- character-life-navigation-accessibility.spec.ts [imports] [EXTRACTED] tests/e2e/character-life-navigation-accessibility.spec.ts:L5
+  <-- items.spec.ts [imports] [EXTRACTED] tests/e2e/items.spec.ts:L6
+  <-- crafting.spec.ts [imports] [EXTRACTED] tests/e2e/crafting.spec.ts:L5
+  <-- crisis.spec.ts [imports] [EXTRACTED] tests/e2e/crisis.spec.ts:L7
+  <-- ledger.spec.ts [imports] [EXTRACTED] tests/e2e/ledger.spec.ts:L8
+  <-- crime.spec.ts [imports] [EXTRACTED] tests/e2e/crime.spec.ts:L7
+  <-- society-command.helpers.ts [imports] [EXTRACTED] tests/e2e/society-command.helpers.ts:L5
+  <-- tile-save.spec.ts [imports] [EXTRACTED] tests/e2e/tile-save.spec.ts:L3
+  --> openReportDetails() [calls] [EXTRACTED] tests/e2e/character-life-navigation.helpers.ts:L467
+  <-- tile-population.spec.ts [imports] [EXTRACTED] tests/e2e/tile-population.spec.ts:L6
+  --> reportRegion() [calls] [EXTRACTED] tests/e2e/character-life-navigation.helpers.ts:L359
+  <-- garrison.spec.ts [imports] [EXTRACTED] tests/e2e/garrison.spec.ts:L5
+  <-- goods-stock.spec.ts [imports] [EXTRACTED] tests/e2e/goods-stock.spec.ts:L4
+  <-- laws.spec.ts [imports] [EXTRACTED] tests/e2e/laws.spec.ts:L5
+  <-- order.spec.ts [imports] [EXTRACTED] tests/e2e/order.spec.ts:L4
+  <-- tile-trial.spec.ts [imports] [EXTRACTED] tests/e2e/tile-trial.spec.ts:L3
+  <-- act() [calls] [EXTRACTED] tests/e2e/society-command.helpers.ts:L24
+  <-- reportParity() [calls] [EXTRACTED] tests/e2e/character-life-boundary.spec.ts:L136
+  --> reportFulfillment() [calls] [EXTRACTED] tests/e2e/character-life-navigation.helpers.ts:L373
+  --> readItemReport() [calls] [EXTRACTED] tests/e2e/character-life-navigation.helpers.ts:L422
+  --> reportWeek() [calls] [EXTRACTED] tests/e2e/character-life-navigation.helpers.ts:L370
+  --> reportMilli() [calls] [EXTRACTED] tests/e2e/character-life-navigation.helpers.ts:L448
+Exit 0
+
+2026-11-24T09:11:02+00:00 C:\Users\Admin\.local\bin\graphify.exe explain lifeUiSnapshot --all
+Node: lifeUiSnapshot()
+  ID:        tests_e2e_character_life_navigation_helpers_lifeuisnapshot
+  Source:    tests/e2e/character-life-navigation.helpers.ts L569
+  Type:      code
+  Community: character-life-navigation.helpers.ts
+  Degree:    4
+
+Connections (4):
+  <-- character-life-navigation.helpers.ts [contains] [EXTRACTED] tests/e2e/character-life-navigation.helpers.ts:L569
+  <-- character-life-navigation.spec.ts [imports] [EXTRACTED] tests/e2e/character-life-navigation.spec.ts:L8
+  <-- character-life.spec.ts [imports] [EXTRACTED] tests/e2e/character-life.spec.ts:L6
+  <-- expectCheckpointRejectionPreservesUi() [calls] [EXTRACTED] tests/e2e/character-life-navigation.helpers.ts:L585
+Exit 0
+
+2026-11-24T09:11:03+00:00 C:\Users\Admin\.local\bin\graphify.exe explain returnEquippedToStorage --all
+No node matching 'returnEquippedToStorage' found.
+Exit 4
+
+2026-11-24T09:11:04+00:00 C:\Users\Admin\.local\bin\graphify.exe explain isItemsState --all
+Node: isItemsState()
+  ID:        packages_core_src_trial_items_isitemsstate
+  Source:    packages/core/src/trial/items.ts L77
+  Type:      code
+  Community: items.ts
+  Degree:    22
+
+Connections (22):
+  <-- society.ts [imports] [EXTRACTED] packages/core/src/trial/society.ts:L12
+  --> hasWeeklyKeys() [calls] [EXTRACTED] packages/core/src/trial/items.ts:L121
+  <-- items.ts [contains] [EXTRACTED] packages/core/src/trial/items.ts:L77
+  <-- session-records.ts [imports] [EXTRACTED] packages/persistence/src/session-records.ts:L5
+  <-- craft-week.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/craft-week.test.ts:L5
+  <-- recordsToSession() [calls] [EXTRACTED] packages/persistence/src/session-records.ts:L157
+  <-- craft-command.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/craft-command.test.ts:L3
+  <-- item-command.ts [imports] [EXTRACTED] packages/simulation/src/item-command.ts:L1
+  <-- isSocietyState() [calls] [EXTRACTED] packages/core/src/trial/society.ts:L67
+  --> readDenseArray() [calls] [EXTRACTED] packages/core/src/trial/items.ts:L89
+  <-- items-rebuild-order.test.ts [imports] [EXTRACTED] packages/persistence/src/__tests__/items-rebuild-order.test.ts:L3
+  <-- items-week.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/items-week.test.ts:L3
+  <-- legendary-pending.test.ts [imports] [EXTRACTED] packages/simulation/src/__tests__/legendary-pending.test.ts:L2
+  <-- items.test.ts [calls] [EXTRACTED] packages/core/src/trial/__tests__/items.test.ts:L10
+  <-- src/__tests__/items-canonical.test.ts [imports] [EXTRACTED] packages/persistence/src/__tests__/items-canonical.test.ts:L3
+  --> isWearable() [calls] [EXTRACTED] packages/core/src/trial/items.ts:L85
+  <-- executeItemCommand() [calls] [EXTRACTED] packages/simulation/src/item-command.ts:L19
+  --> isOpenItemSlot() [calls] [EXTRACTED] packages/core/src/trial/items.ts:L112
+  <-- trial/__tests__/items-canonical.test.ts [imports] [EXTRACTED] packages/core/src/trial/__tests__/items-canonical.test.ts:L2
+  --> plain() [calls] [EXTRACTED] packages/core/src/trial/items.ts:L80
+  --> orderedKeys() [calls] [EXTRACTED] packages/core/src/trial/items.ts:L81
+  --> count() [calls] [EXTRACTED] packages/core/src/trial/items.ts:L81
+Exit 0
+
+2026-11-24T09:11:06+00:00 C:\Users\Admin\.local\bin\graphify.exe explain InsideCity.svelte --all
+Node: InsideCity.svelte
+  ID:        packages_ui_src_insidecity
+  Source:    packages/ui/src/InsideCity.svelte L1
+  Type:      code
+  Community: society-view.ts
+  Degree:    19
+
+Connections (19):
+  --> core/src/index.ts [imports_from] [EXTRACTED] packages/ui/src/InsideCity.svelte:L5
+  --> society-view.ts [imports_from] [EXTRACTED] packages/ui/src/InsideCity.svelte:L6
+  --> TileTrialState [imports] [EXTRACTED] packages/ui/src/InsideCity.svelte:L5
+  <-- CharacterLifeCity.svelte [imports_from] [EXTRACTED] packages/ui/src/CharacterLifeCity.svelte:L8
+  --> WorldNpc [imports] [EXTRACTED] packages/ui/src/InsideCity.svelte:L5
+  --> @haven/core [imports_from] [EXTRACTED]
+  --> WorkshopPanel.svelte [imports_from] [EXTRACTED] packages/ui/src/InsideCity.svelte:L4
+  --> TRIAL_BUILDINGS [imports] [EXTRACTED] packages/ui/src/InsideCity.svelte:L5
+  --> MarketPanel.svelte [imports_from] [EXTRACTED] packages/ui/src/InsideCity.svelte:L2
+  --> PotionPanel.svelte [imports_from] [EXTRACTED] packages/ui/src/InsideCity.svelte:L3
+  --> societyStaff() [imports] [EXTRACTED] packages/ui/src/InsideCity.svelte:L5
+  --> CLASS_LABELS [imports] [EXTRACTED] packages/ui/src/InsideCity.svelte:L6
+  --> wallStatus() [imports] [EXTRACTED] packages/ui/src/InsideCity.svelte:L6
+  --> buildingColour() [imports] [EXTRACTED] packages/ui/src/InsideCity.svelte:L6
+  --> effectLine() [imports] [EXTRACTED] packages/ui/src/InsideCity.svelte:L6
+  --> insideTiers() [imports] [EXTRACTED] packages/ui/src/InsideCity.svelte:L6
+  --> SocietyGroupKey [imports] [EXTRACTED] packages/ui/src/InsideCity.svelte:L5
+  --> TOWN_PLOT_COUNT [imports] [EXTRACTED] packages/ui/src/InsideCity.svelte:L6
+  --> npcs [contains] [EXTRACTED] packages/ui/src/InsideCity.svelte:L8
+Exit 0
+
+2026-11-24T09:11:08+00:00 C:\Users\Admin\.local\bin\graphify.exe explain reportLetters --all
+Node: reportLetters()
+  ID:        packages_ui_src_report_letters_reportletters
+  Source:    packages/ui/src/report-letters.ts L185
+  Type:      code
+  Community: report-letters.ts
+  Degree:    16
+
+Connections (16):
+  <-- report-letters.ts [contains] [EXTRACTED] packages/ui/src/report-letters.ts:L185
+  <-- report-letters.test.ts [indirect_call] [INFERRED 0.85] packages/ui/src/__tests__/report-letters.test.ts:L118
+  <-- SoloWeekReport.svelte [imports] [EXTRACTED] packages/ui/src/SoloWeekReport.svelte:L6
+  <-- crafting-view.test.ts [imports] [EXTRACTED] packages/ui/src/__tests__/crafting-view.test.ts:L4
+  <-- ledger.spec.ts [imports] [EXTRACTED] tests/e2e/ledger.spec.ts:L6
+  <-- items-view.test.ts [imports] [EXTRACTED] packages/ui/src/__tests__/items-view.test.ts:L4
+  --> letterRows() [calls] [EXTRACTED] packages/ui/src/report-letters.ts:L199
+  --> letter() [calls] [EXTRACTED] packages/ui/src/report-letters.ts:L187
+  --> stewardHeadline() [calls] [EXTRACTED] packages/ui/src/report-letters.ts:L187
+  --> quartermasterHeadline() [calls] [EXTRACTED] packages/ui/src/report-letters.ts:L188
+  --> censusHeadline() [calls] [EXTRACTED] packages/ui/src/report-letters.ts:L190
+  --> captainHeadline() [calls] [EXTRACTED] packages/ui/src/report-letters.ts:L192
+  --> councilHeadline() [calls] [EXTRACTED] packages/ui/src/report-letters.ts:L195
+  --> streetsHeadline() [calls] [EXTRACTED] packages/ui/src/report-letters.ts:L197
+  <-- expectHeadline() [calls] [EXTRACTED] packages/ui/src/__tests__/report-letters.test.ts:L79
+  <-- rows() [calls] [EXTRACTED] packages/ui/src/__tests__/report-letters.test.ts:L346
+Exit 0
+
+2026-11-24T09:11:10+00:00 C:\Users\Admin\.local\bin\graphify.exe affected executeCharacterLifeCommand --depth 2
+Affected nodes for executeCharacterLifeCommand()
+Relations: calls, indirect_call, references, imports, imports_from, dynamic_import, re_exports, inherits, extends, implements, uses, mixes_in, embeds, defines, requires
+Depth: 2
+- act() [calls] packages/persistence/src/__tests__/craft-records.test.ts:L7
+- rejection() [calls] packages/simulation/src/__tests__/character-life-command.test.ts:L69
+- act() [calls] packages/simulation/src/__tests__/character-life-observation.test.ts:L26
+- act() [calls] packages/simulation/src/__tests__/craft-command.test.ts:L29
+- refuse() [calls] packages/simulation/src/__tests__/craft-command.test.ts:L35
+- end() [calls] packages/simulation/src/__tests__/crime-fixtures.test.ts:L10
+- findCrimeFixture() [calls] packages/simulation/src/__tests__/crime-fixtures.test.ts:L16
+- crisisFixture() [calls] packages/simulation/src/__tests__/crisis-fixture-helper.ts:L21
+- fixtureStep() [calls] packages/simulation/src/__tests__/crisis-fixture-helper.ts:L9
+- end() [calls] packages/simulation/src/__tests__/exhausted-materials.test.ts:L31
+- runCatalogScenario() [calls] packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts:L27
+- action() [calls] packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts:L27
+- action() [calls] packages/simulation/src/__tests__/item-command.test.ts:L10
+- command() [calls] packages/simulation/src/__tests__/item-effects.test.ts:L121
+- action() [calls] packages/simulation/src/__tests__/law-fixture.test.ts:L9
+- action() [calls] packages/simulation/src/__tests__/legendary-pending.test.ts:L22
+- command() [calls] packages/simulation/src/__tests__/lord-health.test.ts:L13
+- command() [calls] packages/simulation/src/__tests__/npc-homes.test.ts:L68
+- action() [calls] packages/simulation/src/__tests__/npc-life-week.test.ts:L42
+- step() [calls] packages/simulation/src/__tests__/society-run-fixture.test.ts:L9
+- run() [calls] packages/ui/src/CharacterLifeCharacters.svelte:L53
+- run() [calls] packages/ui/src/EquipmentView.svelte:L19
+- command() [calls] packages/ui/src/TileManagement.svelte:L73
+- act() [calls] tests/e2e/crafting.spec.ts:L8
+- resolveReport() [calls] tests/e2e/crafting.spec.ts:L149
+- act() [calls] tests/e2e/items.spec.ts:L9
+- act() [calls] tests/e2e/society-command.helpers.ts:L12
+- craft-records.test.ts [imports] packages/persistence/src/__tests__/craft-records.test.ts:L3
+- item-records.test.ts [imports] packages/persistence/src/__tests__/item-records.test.ts:L7
+- src/__tests__/items-canonical.test.ts [imports] packages/persistence/src/__tests__/items-canonical.test.ts:L4
+- items-rebuild-order.test.ts [imports] packages/persistence/src/__tests__/items-rebuild-order.test.ts:L4
+- character-life-command.test.ts [imports] packages/simulation/src/__tests__/character-life-command.test.ts:L8
+- craft-command.test.ts [imports] packages/simulation/src/__tests__/craft-command.test.ts:L7
+- craft-week.test.ts [imports] packages/simulation/src/__tests__/craft-week.test.ts:L8
+- crime-fixtures.test.ts [imports] packages/simulation/src/__tests__/crime-fixtures.test.ts:L6
+- crisis-commands.test.ts [imports] packages/simulation/src/__tests__/crisis-commands.test.ts:L4
+- crisis-fixture-helper.ts [imports] packages/simulation/src/__tests__/crisis-fixture-helper.ts:L3
+- exhausted-materials.test.ts [imports] packages/simulation/src/__tests__/exhausted-materials.test.ts:L4
+- make-catalog-golden.ts [imports] packages/simulation/src/__tests__/fixtures/make-catalog-golden.ts:L5
+- item-command.test.ts [imports] packages/simulation/src/__tests__/item-command.test.ts:L4
+- item-effects.test.ts [imports] packages/simulation/src/__tests__/item-effects.test.ts:L7
+- law-command.test.ts [imports] packages/simulation/src/__tests__/law-command.test.ts:L4
+- law-fixture.test.ts [imports] packages/simulation/src/__tests__/law-fixture.test.ts:L5
+- legendary-pending.test.ts [imports] packages/simulation/src/__tests__/legendary-pending.test.ts:L4
+- lord-health.test.ts [imports] packages/simulation/src/__tests__/lord-health.test.ts:L5
+- npc-homes.test.ts [imports] packages/simulation/src/__tests__/npc-homes.test.ts:L10
+- npc-life-week.test.ts [imports] packages/simulation/src/__tests__/npc-life-week.test.ts:L8
+- order-commands.test.ts [imports] packages/simulation/src/__tests__/order-commands.test.ts:L4
+- outside-session.test.ts [imports] packages/simulation/src/__tests__/outside-session.test.ts:L3
+- society-factory-determinism.test.ts [imports] packages/simulation/src/__tests__/society-factory-determinism.test.ts:L3
+- society-life.test.ts [imports] packages/simulation/src/__tests__/society-life.test.ts:L3
+- society-run-fixture.test.ts [imports] packages/simulation/src/__tests__/society-run-fixture.test.ts:L5
+- src/__tests__/society-stock-integrity.test.ts [imports] packages/simulation/src/__tests__/society-stock-integrity.test.ts:L5
+- CharacterLifeCharacters.svelte [imports] packages/ui/src/CharacterLifeCharacters.svelte:L4
+- EquipmentView.svelte [imports] packages/ui/src/EquipmentView.svelte:L4
+- crafting-view.test.ts [imports] packages/ui/src/__tests__/crafting-view.test.ts:L5
+- TileManagement.svelte [imports] packages/ui/src/TileManagement.svelte:L13
+- character-life-boundary.spec.ts [imports] tests/e2e/character-life-boundary.spec.ts:L11
+- character-life-navigation-accessibility.spec.ts [imports] tests/e2e/character-life-navigation-accessibility.spec.ts:L2
+- character-life-navigation.spec.ts [imports] tests/e2e/character-life-navigation.spec.ts:L4
+- character-life.spec.ts [imports] tests/e2e/character-life.spec.ts:L5
+- crafting.spec.ts [imports] tests/e2e/crafting.spec.ts:L3
+- crime.spec.ts [imports] tests/e2e/crime.spec.ts:L5
+- crisis.spec.ts [imports] tests/e2e/crisis.spec.ts:L5
+- error-log.spec.ts [imports] tests/e2e/error-log.spec.ts:L5
+- garrison.spec.ts [imports] tests/e2e/garrison.spec.ts:L4
+- goods-stock.spec.ts [imports] tests/e2e/goods-stock.spec.ts:L3
+- items.spec.ts [imports] tests/e2e/items.spec.ts:L5
+- laws.spec.ts [imports] tests/e2e/laws.spec.ts:L4
+- ledger.spec.ts [imports] tests/e2e/ledger.spec.ts:L5
+- npc-homes.spec.ts [imports] tests/e2e/npc-homes.spec.ts:L3
+- npc-sheet.spec.ts [imports] tests/e2e/npc-sheet.spec.ts:L3
+- order.spec.ts [imports] tests/e2e/order.spec.ts:L2
+- outside.spec.ts [imports] tests/e2e/outside.spec.ts:L1
+- smoke.spec.ts [imports] tests/e2e/smoke.spec.ts:L2
+- society-command.helpers.ts [imports] tests/e2e/society-command.helpers.ts:L3
+- society.spec.ts [imports] tests/e2e/society.spec.ts:L6
+- tile-feedback-precision.spec.ts [imports] tests/e2e/tile-feedback-precision.spec.ts:L4
+- tile-local-checkpoint.spec.ts [imports] tests/e2e/tile-local-checkpoint.spec.ts:L4
+- tile-population.spec.ts [imports] tests/e2e/tile-population.spec.ts:L4
+- tile-save.spec.ts [imports] tests/e2e/tile-save.spec.ts:L4
+- tile-trial.spec.ts [imports] tests/e2e/tile-trial.spec.ts:L4
+- world-npc-session.spec.ts [imports] tests/e2e/world-npc-session.spec.ts:L4
+- world-session.spec.ts [imports] tests/e2e/world-session.spec.ts:L4
+- character-life-observation.test.ts [indirect_call] packages/simulation/src/__tests__/character-life-observation.test.ts:L127
+- society-guard.test.ts [indirect_call] packages/simulation/src/__tests__/society-guard.test.ts:L19
+- heldAndReady() [calls] packages/persistence/src/__tests__/craft-records.test.ts:L17
+- matches() [calls] packages/simulation/src/__tests__/crime-fixtures.test.ts:L11
+- crisisFixtureBytes() [calls] packages/simulation/src/__tests__/crisis-fixture-helper.ts:L40
+- crisis-fixtures.test.ts [imports] packages/simulation/src/__tests__/crisis-fixtures.test.ts:L5
+- law-week.test.ts [imports] packages/simulation/src/__tests__/law-week.test.ts:L8
+- catalog-golden.test.ts [imports] packages/simulation/src/__tests__/catalog-golden.test.ts:L3
+- ok() [calls] packages/simulation/src/__tests__/item-command.test.ts:L11
+- reject() [calls] packages/simulation/src/__tests__/item-command.test.ts:L12
+- fixture() [calls] packages/simulation/src/__tests__/law-fixture.test.ts:L17
+- end() [calls] packages/simulation/src/__tests__/legendary-pending.test.ts:L25
+- gear() [calls] packages/simulation/src/__tests__/lord-health.test.ts:L23
+- failure() [calls] packages/simulation/src/__tests__/npc-homes.test.ts:L81
+- success() [calls] packages/simulation/src/__tests__/npc-homes.test.ts:L72
+- end() [calls] packages/simulation/src/__tests__/npc-life-week.test.ts:L47
+- endLifeWeek() [calls] packages/ui/src/TileManagement.svelte:L105
+- nextLifeWeek() [calls] packages/ui/src/TileManagement.svelte:L123
+- reportSession() [calls] tests/e2e/crafting.spec.ts:L142
+- crowdedReport() [calls] tests/e2e/items.spec.ts:L121
+- purchased() [calls] tests/e2e/items.spec.ts:L22
+- week() [calls] tests/e2e/society-command.helpers.ts:L27
+- storage.spec.ts [imports] tests/e2e/storage.spec.ts:L6
+- CharacterLifeApp.svelte [imports_from] packages/ui/src/CharacterLifeApp.svelte:L7
+Exit 0
+
+2026-11-24T09:11:11+00:00 C:\Users\Admin\.local\bin\graphify.exe affected createSocietyState --depth 2
+Affected nodes for createSocietyState()
+Relations: calls, indirect_call, references, imports, imports_from, dynamic_import, re_exports, inherits, extends, implements, uses, mixes_in, embeds, defines, requires
+Depth: 2
+- isLiveCharacterLifeSessionState() [calls] packages/core/src/character/validate.ts:L97
+- active() [calls] packages/core/src/__tests__/society-world-integrity.test.ts:L6
+- active() [calls] packages/core/src/__tests__/weekly.test.ts:L5
+- isTileTrialPlanningState() [calls] packages/core/src/trial/state.ts:L83
+- staffed() [calls] packages/core/src/trial/__tests__/law.test.ts:L6
+- society-p7b.test.ts [calls] packages/core/src/trial/__tests__/society-p7b.test.ts:L19
+- createWorldSession() [calls] packages/core/src/world/session.ts:L18
+- isStoredCity() [calls] packages/persistence/src/session-records.ts:L38
+- recordsToSession() [calls] packages/persistence/src/session-records.ts:L165
+- expanded() [calls] packages/simulation/src/__tests__/authority-refusals.test.ts:L9
+- refused() [calls] packages/simulation/src/__tests__/authority-refusals.test.ts:L23
+- city() [calls] packages/simulation/src/__tests__/crisis-commands.test.ts:L7
+- city() [calls] packages/simulation/src/__tests__/crisis-week.test.ts:L7
+- city() [calls] packages/simulation/src/__tests__/garrison-week.test.ts:L8
+- fundedCity() [calls] packages/simulation/src/__tests__/item-effects.test.ts:L14
+- city() [calls] packages/simulation/src/__tests__/items-week.test.ts:L11
+- city() [calls] packages/simulation/src/__tests__/law-command.test.ts:L7
+- run() [calls] packages/simulation/src/__tests__/law-week.test.ts:L152
+- city() [calls] packages/simulation/src/__tests__/order-commands.test.ts:L10
+- built() [calls] packages/simulation/src/__tests__/order-week.test.ts:L11
+- crimeCity() [calls] packages/simulation/src/__tests__/order-week.test.ts:L57
+- city() [calls] packages/simulation/src/__tests__/outside-commands.test.ts:L6
+- city() [calls] packages/simulation/src/__tests__/outside-week.test.ts:L10
+- funded() [calls] packages/simulation/src/__tests__/smithy-data.test.ts:L6
+- city() [calls] packages/simulation/src/__tests__/society-command-transaction.test.ts:L8
+- population() [calls] packages/simulation/src/__tests__/society-immigration-integrity.test.ts:L5
+- population() [calls] packages/simulation/src/__tests__/society-renewable-support.test.ts:L10
+- workshop() [calls] packages/simulation/src/__tests__/society-stock-integrity.test.ts:L18
+- freeCity() [calls] packages/simulation/src/__tests__/society-stock-policy-ports.test.ts:L8
+- society() [calls] packages/simulation/src/__tests__/society-week.test.ts:L5
+- forRing4() [calls] packages/simulation/src/__tests__/tile-trial-p7b.test.ts:L27
+- executeWorldNpcCityCommand() [calls] packages/simulation/src/world-npc.ts:L55
+- character/validate.ts [imports] packages/core/src/character/validate.ts:L3
+- society-world-integrity.test.ts [imports] packages/core/src/__tests__/society-world-integrity.test.ts:L3
+- weekly.test.ts [imports] packages/core/src/__tests__/weekly.test.ts:L2
+- state.ts [imports] packages/core/src/trial/state.ts:L8
+- crime.test.ts [imports] packages/core/src/trial/__tests__/crime.test.ts:L2
+- crisis.test.ts [imports] packages/core/src/trial/__tests__/crisis.test.ts:L2
+- items.test.ts [imports] packages/core/src/trial/__tests__/items.test.ts:L4
+- law.test.ts [imports] packages/core/src/trial/__tests__/law.test.ts:L2
+- order.test.ts [imports] packages/core/src/trial/__tests__/order.test.ts:L2
+- outside.test.ts [imports] packages/core/src/trial/__tests__/outside.test.ts:L2
+- society-map.test.ts [imports] packages/core/src/trial/__tests__/society-map.test.ts:L2
+- trial/__tests__/society-stock-integrity.test.ts [imports] packages/core/src/trial/__tests__/society-stock-integrity.test.ts:L3
+- society.test.ts [imports] packages/core/src/trial/__tests__/society.test.ts:L3
+- world/session.ts [imports] packages/core/src/world/session.ts:L3
+- npc.test.ts [imports] packages/core/src/world/__tests__/npc.test.ts:L3
+- world/__tests__/session.test.ts [imports] packages/core/src/world/__tests__/session.test.ts:L2
+- session-records.ts [imports] packages/persistence/src/session-records.ts:L3
+- character-life-save.test.ts [imports] packages/persistence/src/__tests__/character-life-save.test.ts:L1
+- society-new-game-fixture.test.ts [imports] packages/persistence/src/__tests__/society-new-game-fixture.test.ts:L3
+- society-save.test.ts [imports] packages/persistence/src/__tests__/society-save.test.ts:L1
+- authority-refusals.test.ts [imports] packages/simulation/src/__tests__/authority-refusals.test.ts:L1
+- craft-week.test.ts [imports] packages/simulation/src/__tests__/craft-week.test.ts:L5
+- crime-week.test.ts [imports] packages/simulation/src/__tests__/crime-week.test.ts:L3
+- crisis-commands.test.ts [imports] packages/simulation/src/__tests__/crisis-commands.test.ts:L2
+- crisis-week.test.ts [imports] packages/simulation/src/__tests__/crisis-week.test.ts:L2
+- garrison-week.test.ts [imports] packages/simulation/src/__tests__/garrison-week.test.ts:L2
+- item-effects.test.ts [imports] packages/simulation/src/__tests__/item-effects.test.ts:L3
+- items-week.test.ts [imports] packages/simulation/src/__tests__/items-week.test.ts:L3
+- law-command.test.ts [imports] packages/simulation/src/__tests__/law-command.test.ts:L1
+- law-week.test.ts [imports] packages/simulation/src/__tests__/law-week.test.ts:L2
+- order-commands.test.ts [imports] packages/simulation/src/__tests__/order-commands.test.ts:L1
+- order-tax-week.test.ts [imports] packages/simulation/src/__tests__/order-tax-week.test.ts:L1
+- order-week.test.ts [imports] packages/simulation/src/__tests__/order-week.test.ts:L1
+- outside-commands.test.ts [imports] packages/simulation/src/__tests__/outside-commands.test.ts:L2
+- outside-week.test.ts [imports] packages/simulation/src/__tests__/outside-week.test.ts:L2
+- smithy-data.test.ts [imports] packages/simulation/src/__tests__/smithy-data.test.ts:L1
+- society-command-transaction.test.ts [imports] packages/simulation/src/__tests__/society-command-transaction.test.ts:L3
+- society-end-week.test.ts [imports] packages/simulation/src/__tests__/society-end-week.test.ts:L1
+- society-facilities.test.ts [imports] packages/simulation/src/__tests__/society-facilities.test.ts:L2
+- society-guard.test.ts [imports] packages/simulation/src/__tests__/society-guard.test.ts:L1
+- society-immigration-integrity.test.ts [imports] packages/simulation/src/__tests__/society-immigration-integrity.test.ts:L2
+- society-plots.test.ts [imports] packages/simulation/src/__tests__/society-plots.test.ts:L1
+- society-renewable-support.test.ts [imports] packages/simulation/src/__tests__/society-renewable-support.test.ts:L2
+- society-restore-integrity.test.ts [imports] packages/simulation/src/__tests__/society-restore-integrity.test.ts:L2
+- src/__tests__/society-stock-integrity.test.ts [imports] packages/simulation/src/__tests__/society-stock-integrity.test.ts:L3
+- society-stock-policy-ports.test.ts [imports] packages/simulation/src/__tests__/society-stock-policy-ports.test.ts:L2
+- society-week.test.ts [imports] packages/simulation/src/__tests__/society-week.test.ts:L3
+- tile-trial-p7b.test.ts [imports] packages/simulation/src/__tests__/tile-trial-p7b.test.ts:L2
+- tile-trial.test.ts [imports] packages/simulation/src/__tests__/tile-trial.test.ts:L2
+- world-npc.ts [imports] packages/simulation/src/world-npc.ts:L1
+- crime-view.test.ts [imports] packages/ui/src/__tests__/crime-view.test.ts:L2
+- crisis-view.test.ts [imports] packages/ui/src/__tests__/crisis-view.test.ts:L2
+- garrison-view.test.ts [imports] packages/ui/src/__tests__/garrison-view.test.ts:L2
+- law-view.test.ts [imports] packages/ui/src/__tests__/law-view.test.ts:L2
+- outside-view.test.ts [imports] packages/ui/src/__tests__/outside-view.test.ts:L2
+- society-view.test.ts [imports] packages/ui/src/__tests__/society-view.test.ts:L2
+- executeCharacterLifeCommand() [calls] packages/simulation/src/character-life-command.ts:L16
+- executeItemCommand() [calls] packages/simulation/src/item-command.ts:L17
+- rejection() [calls] packages/simulation/src/__tests__/character-life-command.test.ts:L63
+- act() [calls] packages/simulation/src/__tests__/character-life-observation.test.ts:L29
+- life() [calls] packages/simulation/src/__tests__/character-life-observation.test.ts:L21
+- validate.test.ts [imports] packages/core/src/character/__tests__/validate.test.ts:L8
+- character-life-command.ts [imports] packages/simulation/src/character-life-command.ts:L1
+- item-command.ts [imports] packages/simulation/src/item-command.ts:L1
+- character-life-command.test.ts [imports] packages/simulation/src/__tests__/character-life-command.test.ts:L2
+- character-life-observation.test.ts [imports] packages/simulation/src/__tests__/character-life-observation.test.ts:L2
+- craft-command.test.ts [imports] packages/simulation/src/__tests__/craft-command.test.ts:L3
+- npc-homes.test.ts [imports] packages/simulation/src/__tests__/npc-homes.test.ts:L3
+- outside-session.test.ts [imports] packages/simulation/src/__tests__/outside-session.test.ts:L1
+- isWorldSessionState() [calls] packages/core/src/world/session.ts:L37
+- executeTileTrialCommand() [calls] packages/simulation/src/tile-trial.ts:L101
+- society-v1-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v1-fixture.test.ts:L1
+- society-v2-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v2-fixture.test.ts:L2
+- society-v3-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v3-fixture.test.ts:L2
+- society-v4-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v4-fixture.test.ts:L2
+- society-v5-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v5-fixture.test.ts:L2
+- society-v6-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v6-fixture.test.ts:L2
+- society-v7-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v7-fixture.test.ts:L2
+- society-v8-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v8-fixture.test.ts:L2
+- society-v9-fixture.test.ts [imports] packages/persistence/src/__tests__/society-v9-fixture.test.ts:L2
+- tile-trial.ts [imports] packages/simulation/src/tile-trial.ts:L3
+- createNpcWorldSession() [calls] packages/core/src/world/npc.ts:L82
+- world() [calls] packages/core/src/world/__tests__/item-market-seed.test.ts:L5
+- session() [calls] packages/core/src/world/__tests__/session.test.ts:L7
+- session() [calls] packages/persistence/src/__tests__/world-session-save.test.ts:L7
+- session() [calls] packages/ui/src/__tests__/world-session.test.ts:L6
+- npc.ts [imports] packages/core/src/world/npc.ts:L11
+- generate.test.ts [imports] packages/core/src/world/__tests__/generate.test.ts:L6
+- item-market-seed.test.ts [imports] packages/core/src/world/__tests__/item-market-seed.test.ts:L2
+- world-session-save.test.ts [imports] packages/persistence/src/__tests__/world-session-save.test.ts:L2
+- world-session.test.ts [imports] packages/ui/src/__tests__/world-session.test.ts:L1
+- society.spec.ts [imports] tests/e2e/society.spec.ts:L4
+- world-npc-session.spec.ts [imports] tests/e2e/world-npc-session.spec.ts:L2
+- assertExactBytes() [calls] packages/persistence/src/__tests__/items-rebuild-order.test.ts:L30
+- expectRecordRef() [calls] packages/persistence/src/__tests__/session-records.test.ts:L64
+- readLocalCharacterLife() [calls] packages/ui/src/character-life-session.ts:L86
+- storedSaveText() [calls] tests/e2e/storage.helpers.ts:L19
+- craft-records.test.ts [imports] packages/persistence/src/__tests__/craft-records.test.ts:L4
+- item-owner-import.test.ts [imports] packages/persistence/src/__tests__/item-owner-import.test.ts:L5
+- item-records.test.ts [imports] packages/persistence/src/__tests__/item-records.test.ts:L6
+- src/__tests__/items-canonical.test.ts [imports] packages/persistence/src/__tests__/items-canonical.test.ts:L6
+- items-rebuild-order.test.ts [imports] packages/persistence/src/__tests__/items-rebuild-order.test.ts:L6
+- npc-life-records.test.ts [imports] packages/persistence/src/__tests__/npc-life-records.test.ts:L6
+- session-records.test.ts [imports] packages/persistence/src/__tests__/session-records.test.ts:L6
+- legendary-pending.test.ts [imports] packages/simulation/src/__tests__/legendary-pending.test.ts:L3
+- character-life-session.ts [imports] packages/ui/src/character-life-session.ts:L2
+- character-life-session.test.ts [imports] packages/ui/src/__tests__/character-life-session.test.ts:L2
+- p7b-checkpoint.test.ts [imports] packages/ui/src/__tests__/p7b-checkpoint.test.ts:L4
+- storage.helpers.ts [imports] tests/e2e/storage.helpers.ts:L2
+- assassination() [calls] packages/simulation/src/__tests__/item-effects.test.ts:L77
+- output() [calls] packages/simulation/src/__tests__/item-effects.test.ts:L26
+- quarry() [calls] packages/simulation/src/__tests__/outside-commands.test.ts:L12
+- expanded() [calls] packages/simulation/src/__tests__/society-renewable-support.test.ts:L31
+- employment() [calls] packages/simulation/src/__tests__/society-week.test.ts:L89
+- input() [calls] packages/simulation/src/__tests__/society-week.test.ts:L113
+- legacy() [calls] packages/simulation/src/__tests__/character-life-command.test.ts:L20
+- city() [calls] packages/simulation/src/__tests__/world-npc.test.ts:L17
+- npc-life-week.test.ts [imports] packages/simulation/src/__tests__/npc-life-week.test.ts:L9
+- society-life.test.ts [imports] packages/simulation/src/__tests__/society-life.test.ts:L5
+- world-npc.test.ts [imports] packages/simulation/src/__tests__/world-npc.test.ts:L4
+- core/src/index.ts [re_exports] packages/core/src/index.ts:L23
+- character/session.ts [imports_from] packages/core/src/character/session.ts:L12
+- character/__tests__/session.test.ts [imports_from] packages/core/src/character/__tests__/session.test.ts:L6
+- npcs.ts [imports_from] packages/core/src/__tests__/helpers/npcs.ts:L1
+- persistence/src/index.ts [re_exports] packages/persistence/src/index.ts:L7
+- simulation/src/index.ts [re_exports] packages/simulation/src/index.ts:L3
+Exit 0
+
+2026-11-24T09:11:12+00:00 C:\Users\Admin\.local\bin\graphify.exe query reportLetters --depth 1 --budget 4500
+Graph: graphify-out/graph.json (2415 nodes) | Traversal: BFS depth=1 | Start: ['reportLetters()'] | 17 nodes found
+
+NODE reportLetters() [src=packages/ui/src/report-letters.ts loc=L185 community=report-letters.ts]
+NODE report-letters.ts [src=packages/ui/src/report-letters.ts loc=L1 community=report-letters.ts]
+NODE report-letters.test.ts [src=packages/ui/src/__tests__/report-letters.test.ts loc=L1 community=report-letters.ts]
+NODE SoloWeekReport.svelte [src=packages/ui/src/SoloWeekReport.svelte loc=L1 community=report-letters.ts]
+NODE crafting-view.test.ts [src=packages/ui/src/__tests__/crafting-view.test.ts loc=L1 community=items-view.ts]
+NODE ledger.spec.ts [src=tests/e2e/ledger.spec.ts loc=L1 community=tile-local-checkpoint.spec.ts]
+NODE items-view.test.ts [src=packages/ui/src/__tests__/items-view.test.ts loc=L1 community=createCharacterLifeSession]
+NODE letterRows() [src=packages/ui/src/report-letters.ts loc=L91 community=report-letters.ts]
+NODE captainHeadline() [src=packages/ui/src/report-letters.ts loc=L44 community=report-letters.ts]
+NODE censusHeadline() [src=packages/ui/src/report-letters.ts loc=L31 community=report-letters.ts]
+NODE councilHeadline() [src=packages/ui/src/report-letters.ts loc=L58 community=report-letters.ts]
+NODE letter() [src=packages/ui/src/report-letters.ts loc=L77 community=report-letters.ts]
+NODE quartermasterHeadline() [src=packages/ui/src/report-letters.ts loc=L24 community=report-letters.ts]
+NODE stewardHeadline() [src=packages/ui/src/report-letters.ts loc=L17 community=report-letters.ts]
+NODE streetsHeadline() [src=packages/ui/src/report-letters.ts loc=L65 community=report-letters.ts]
+NODE expectHeadline() [src=packages/ui/src/__tests__/report-letters.test.ts loc=L78 community=report-letters.ts]
+NODE rows() [src=packages/ui/src/__tests__/report-letters.test.ts loc=L345 community=report-letters.ts]
+EDGE reportLetters() --calls [EXTRACTED context=call]--> letter() at=packages/ui/src/report-letters.ts:L187
+EDGE reportLetters() --calls [EXTRACTED context=call]--> stewardHeadline() at=packages/ui/src/report-letters.ts:L187
+EDGE reportLetters() --calls [EXTRACTED context=call]--> quartermasterHeadline() at=packages/ui/src/report-letters.ts:L188
+EDGE reportLetters() --calls [EXTRACTED context=call]--> censusHeadline() at=packages/ui/src/report-letters.ts:L190
+EDGE reportLetters() --calls [EXTRACTED context=call]--> captainHeadline() at=packages/ui/src/report-letters.ts:L192
+EDGE reportLetters() --calls [EXTRACTED context=call]--> councilHeadline() at=packages/ui/src/report-letters.ts:L195
+EDGE reportLetters() --calls [EXTRACTED context=call]--> streetsHeadline() at=packages/ui/src/report-letters.ts:L197
+EDGE reportLetters() --calls [EXTRACTED context=call]--> letterRows() at=packages/ui/src/report-letters.ts:L199
+EDGE expectHeadline() --calls [EXTRACTED context=call]--> reportLetters() at=packages/ui/src/__tests__/report-letters.test.ts:L79
+EDGE rows() --calls [EXTRACTED context=call]--> reportLetters() at=packages/ui/src/__tests__/report-letters.test.ts:L346
+EDGE SoloWeekReport.svelte --imports [EXTRACTED context=import]--> reportLetters() at=packages/ui/src/SoloWeekReport.svelte:L6
+EDGE crafting-view.test.ts --imports [EXTRACTED context=import]--> reportLetters() at=packages/ui/src/__tests__/crafting-view.test.ts:L4
+EDGE items-view.test.ts --imports [EXTRACTED context=import]--> reportLetters() at=packages/ui/src/__tests__/items-view.test.ts:L4
+EDGE ledger.spec.ts --imports [EXTRACTED context=import]--> reportLetters() at=tests/e2e/ledger.spec.ts:L6
+EDGE report-letters.ts --contains [EXTRACTED]--> reportLetters() at=packages/ui/src/report-letters.ts:L185
+EDGE report-letters.test.ts --indirect_call [INFERRED context=argument]--> reportLetters() at=packages/ui/src/__tests__/report-letters.test.ts:L118
+EDGE SoloWeekReport.svelte --imports_from [EXTRACTED context=import]--> report-letters.ts at=packages/ui/src/SoloWeekReport.svelte:L6
+EDGE crafting-view.test.ts --imports_from [EXTRACTED context=import]--> report-letters.ts at=packages/ui/src/__tests__/crafting-view.test.ts:L4
+EDGE items-view.test.ts --imports_from [EXTRACTED context=import]--> report-letters.ts at=packages/ui/src/__tests__/items-view.test.ts:L4
+EDGE report-letters.test.ts --imports_from [EXTRACTED context=import]--> report-letters.ts at=packages/ui/src/__tests__/report-letters.test.ts:L5
+EDGE ledger.spec.ts --imports_from [EXTRACTED context=import]--> report-letters.ts at=tests/e2e/ledger.spec.ts:L6
+EDGE report-letters.ts --contains [EXTRACTED]--> stewardHeadline() at=packages/ui/src/report-letters.ts:L17
+EDGE report-letters.ts --contains [EXTRACTED]--> quartermasterHeadline() at=packages/ui/src/report-letters.ts:L24
+EDGE report-letters.ts --contains [EXTRACTED]--> censusHeadline() at=packages/ui/src/report-letters.ts:L31
+EDGE report-letters.ts --contains [EXTRACTED]--> captainHeadline() at=packages/ui/src/report-letters.ts:L44
+EDGE report-letters.ts --contains [EXTRACTED]--> councilHeadline() at=packages/ui/src/report-letters.ts:L58
+EDGE report-letters.ts --contains [EXTRACTED]--> streetsHeadline() at=packages/ui/src/report-letters.ts:L65
+EDGE report-letters.ts --contains [EXTRACTED]--> letter() at=packages/ui/src/report-letters.ts:L77
+EDGE report-letters.ts --contains [EXTRACTED]--> letterRows() at=packages/ui/src/report-letters.ts:L91
+EDGE report-letters.test.ts --contains [EXTRACTED context=call]--> rows() at=packages/ui/src/__tests__/report-letters.test.ts:L345
+EDGE report-letters.test.ts --contains [EXTRACTED context=call]--> expectHeadline() at=packages/ui/src/__tests__/report-letters.test.ts:L78
+Exit 0
+
+2026-11-24T09:11:13+00:00 C:\Users\Admin\.local\bin\graphify.exe path executeCharacterLifeCommand runNpcLifeWeek --directed
+Shortest path (1 hops):
+  executeCharacterLifeCommand() --calls [EXTRACTED]--> runNpcLifeWeek()
+Path confidence: EXTRACTED (weakest hop 1: calls)
+Exit 0

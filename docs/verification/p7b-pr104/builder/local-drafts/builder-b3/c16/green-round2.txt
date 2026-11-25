@@ -1,0 +1,25 @@
+HEAD and tree
+8aa7dc4cefbc759ce2a7d158937011c3afe71549
+a44d6bcd31a26f3519a39f5b71e481045a2b9318
+Status before command
+ M packages/core/src/__tests__/helpers/npcs.ts
+ M packages/core/src/character/validate.ts
+ M packages/core/src/trial/acquisition-replay.ts
+ M packages/persistence/src/session-records.ts
+ M packages/simulation/src/__tests__/replay-checkpoint.test.ts
+CI=
+UTC start 2026-11-24T13:05:58+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/vitest/vitest.mjs run packages/simulation/src/__tests__/replay-checkpoint.test.ts
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  1 passed (1)
+      Tests  24 passed (24)
+   Start at  20:05:59
+   Duration  6.35s (transform 1.13s, setup 0ms, import 1.48s, tests 4.52s, environment 0ms)
+
+
+UTC finish 2026-11-24T13:06:05+00:00
+Exit 0

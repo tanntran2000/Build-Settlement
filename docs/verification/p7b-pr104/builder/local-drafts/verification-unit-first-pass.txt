@@ -1,0 +1,53 @@
+Base HEAD b184357d235d164478584e36b96d063551124e66
+Base tree 961567de7ef638861a55a42589be203037e123c9
+Candidate D:\QI Technology\Temp\p7b-b3-step0-opxuuxoj (plain snapshot)
+Check group unit
+
+UTC start 2026-11-24T09:09:32+00:00
+CWD D:\QI Technology\Temp\p7b-b3-step0-opxuuxoj
+$ node node_modules/vitest/vitest.mjs run --maxWorkers=4
+
+ RUN  v4.1.12 D:/QI Technology/Temp/p7b-b3-step0-opxuuxoj
+
+ ❯ packages/simulation/src/__tests__/law-week.test.ts (21 tests | 1 failed) 901ms
+   × preserves the law-free five-week gameplay pin and determinism 704ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/law-week.test.ts > preserves the law-free five-week gameplay pin and determinism
+AssertionError: expected { Object (standing, order, ...) } to deeply equal { Object (standing, order, ...) }
+
+- Expected
++ Received
+
+@@ -1,6 +1,12 @@
+  {
++   "acquisition": {
++     "departures": [],
++     "lots": [],
++     "stock": [],
++     "week": 0,
++   },
+    "classes": {
+      "bound": {
+        "free": 0,
+        "luminaries": 0,
+        "makers": 0,
+
+ ❯ packages/simulation/src/__tests__/law-week.test.ts:92:18
+     90|  const {rulesetId:_ruleset,laws:_laws,...society}=s.city.society!;
+     91|  const {rulesetId:_oldRuleset,...oldSociety}=old.city.society;
+     92|  expect(society).toEqual({...oldSociety,items: {
+       |                  ^
+     93|   "nextItemId": 2,
+     94|   "inventory": [
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 139 passed (140)
+      Tests  1 failed | 3233 passed (3234)
+   Start at  16:09:34
+   Duration  92.18s (transform 8.69s, setup 0ms, import 55.04s, tests 186.93s, environment 55ms)
+UTC finish 2026-11-24T09:11:06+00:00
+Exit 1

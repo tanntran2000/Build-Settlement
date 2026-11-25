@@ -1,0 +1,406 @@
+diff --git a/packages/core/src/__tests__/helpers/npcs.ts b/packages/core/src/__tests__/helpers/npcs.ts
+index 21a485bbf1dddf490f5f0628b2c098b234f2d3de..9156a8dda41bb28714ece9988ae46959e0a5593a 100644
+--- a/packages/core/src/__tests__/helpers/npcs.ts
++++ b/packages/core/src/__tests__/helpers/npcs.ts
+@@ -1,6 +1,6 @@
+ import { isCharacterLifeSessionState } from '../../character/validate.js';
+ import type { CharacterLifeSessionState } from '../../character/types.js';
+-import { generateNpc, type AcquisitionSource } from '../../world/npc-generator.js';
++import { generateNpc, marketNpcName, P7B_TRIAL, type AcquisitionSource } from '../../world/npc-generator.js';
+ import { isNpcWorldSessionState, type NpcWorldSessionState } from '../../world/npc.js';
+ 
+ export interface NpcTestKey {
+@@ -24,6 +24,7 @@ export function withNpcs(
+ ): NpcWorldSessionState | CharacterLifeSessionState {
+   const next = structuredClone(session);
+   const names = new Set(next.npcs.map(npc => npc.character.name));
++  const guildPurchases = new Map<number, number>();
+   for (const { week, source, slot, nameSalt, homeTileId = 'estate-2' } of keys) {
+     const draw = (salt: number) => generateNpc(next.outside.seed, week, source, slot, salt);
+     let salt = nameSalt ?? 0;
+@@ -36,9 +37,38 @@ export function withNpcs(
+     names.add(generated.npc.character.name);
+     generated.npc.household.home = homeTileId;
+     next.npcs.push(generated.npc);
+-    if ('profiles' in next) next.profiles.push(generated.profile);
++    if ('profiles' in next) {
++      next.profiles.push(generated.profile);
++      if (week === next.city.world.week && source === 'guild' && slot !== 'lot') guildPurchases.set(slot, salt);
++    }
+   }
++  if ('profiles' in next && guildPurchases.size) recordGuildFixturePurchases(next, guildPurchases);
+   const valid = 'profiles' in next ? isCharacterLifeSessionState(next) : isNpcWorldSessionState(next);
+   if (!valid) throw new Error('Generated NPC fixture is invalid.');
+   return next;
+ }
++
++// Synthetic week-of-purchase Character Life fixtures retain the Guild offers
++// that admitted their injected residents, as a replaced Guild would.
++function recordGuildFixturePurchases(session: CharacterLifeSessionState, purchases: ReadonlyMap<number, number>): void {
++  const { city, npcs } = session;
++  const { week, worldMetadata: { worldSeed } } = city.world;
++  const acquisition = city.society!.acquisition;
++  acquisition.week = week;
++  const retained = acquisition.stock.filter(offer => offer.source === 'guild');
++  if (retained.length) {
++    for (const offer of retained) if (purchases.has(offer.slot)) offer.status = 'bought';
++    return;
++  }
++  const used = new Set(npcs.filter(npc => npc.household.source !== 'guild' || npc.household.boughtWeek !== week)
++    .map(npc => npc.character.name));
++  for (const { source, slot, nameSalt } of acquisition.stock) used.add(marketNpcName(worldSeed, week, source, slot, nameSalt).name);
++  for (const { source, nameSalt } of acquisition.lots) used.add(marketNpcName(worldSeed, week, source, 'lot', nameSalt).name);
++  for (let slot = 0; slot < P7B_TRIAL.stockSize; slot += 1) {
++    const purchased = purchases.has(slot);
++    let nameSalt = purchases.get(slot) ?? 0;
++    while (!purchased && used.has(marketNpcName(worldSeed, week, 'guild', slot, nameSalt).name)) nameSalt += 1;
++    used.add(marketNpcName(worldSeed, week, 'guild', slot, nameSalt).name);
++    acquisition.stock.push({ source: 'guild', slot, nameSalt, status: purchased ? 'bought' : 'open' });
++  }
++}
+diff --git a/packages/core/src/character/validate.ts b/packages/core/src/character/validate.ts
+index 32eb7105bea91fbc6e9a8e59b9967e52a49aa92a..18a552afaa9cef6061906122ede7dd7be3cde1bf 100644
+--- a/packages/core/src/character/validate.ts
++++ b/packages/core/src/character/validate.ts
+@@ -84,8 +84,7 @@ export function isCharacterLifeSessionState(raw: unknown): raw is CharacterLifeS
+     const npcs = raw.npcs as WorldNpc[];
+     if (!hasCharacterLifeProfiles(raw, npcs)) return false;
+     const city = raw.city as CharacterLifeSessionState['city'];
+-    if (city.society &&
+-        !hasAcquisitionRosterProof(city.society.acquisition, city.world.worldMetadata.worldSeed, npcs)) return false;
++    if (city.society && !hasAcquisitionRosterProof(city, npcs)) return false;
+     return !city.society || Object.keys(city.society.items.equipped).every(owner =>
+       owner === PLAYER_CHARACTER_ID || npcs.some(npc => npc.character.id === owner));
+   } catch { return false; }
+diff --git a/packages/core/src/trial/acquisition-replay.ts b/packages/core/src/trial/acquisition-replay.ts
+index d3e76a66e1f067aa8ea53c9781d03a531f74ad5f..87be6c0eedccc396f2a18361e734062a70e3295b 100644
+--- a/packages/core/src/trial/acquisition-replay.ts
++++ b/packages/core/src/trial/acquisition-replay.ts
+@@ -51,8 +51,6 @@ export function isAcquisitionReplay(city: TileTrialState): boolean {
+       if (!offer || offer.source !== current || offer.slot !== slot) return false;
+     }
+   }
+-  if (city.tiles.some(({ building }) =>
+-    building?.enabled && isAcquisitionSource(building.typeId) && !sources.includes(building.typeId))) return false;
+   const auctions = sources.filter(isAuctionSource);
+   return state.lots.length === auctions.length && state.lots.every((lot, index) =>
+     lot.source === auctions[index] && replaysLot(worldSeed, week, lot));
+@@ -60,22 +58,33 @@ export function isAcquisitionReplay(city: TileTrialState): boolean {
+ 
+ type Departure = AcquisitionState['departures'][number];
+ 
+-function matchesEarlierDeparture({ id, name, kind }: Departure, seed: number, week: number): boolean {
++function acquisitionKey(id: string): { boughtWeek: number; source: AcquisitionSource; slot: number | 'lot' } | undefined {
+   const match = /^npc_w([1-9][0-9]*)_([a-z-]+)_(lot|0|[1-9][0-9]*)$/.exec(id);
+-  if (!match) return false;
++  if (!match) return;
+   const [, weekText, source, slotText] = match;
+-  const boughtWeek = Number(weekText), slot = slotText === 'lot' ? slotText : Number(slotText);
+-  if (!Number.isSafeInteger(boughtWeek) || boughtWeek >= week || !isAcquisitionSource(source) ||
+-      (slot === 'lot' ? !isAuctionSource(source) : slot >= P7B_TRIAL.stockSize) ||
+-      (kind === 'sold' && source === 'guild')) return false;
++  const boughtWeek = Number(weekText);
++  const slot = slotText === 'lot' ? 'lot' : Number(slotText);
++  if (!Number.isSafeInteger(boughtWeek) || !isAcquisitionSource(source) ||
++      (slot === 'lot' ? !isAuctionSource(source) : slot >= P7B_TRIAL.stockSize)) return;
++  return { boughtWeek, source, slot };
++}
++
++function matchesEarlierDeparture({ id, name, kind }: Departure, seed: number, week: number): boolean {
++  const key = acquisitionKey(id);
++  if (!key || key.boughtWeek >= week || (kind === 'sold' && key.source === 'guild')) return false;
++  const { boughtWeek, source, slot } = key;
+   for (let salt = 0; salt <= ACQUISITION_NAME_SALT_MAX; salt += 1) {
+     if (marketNpcName(seed, boughtWeek, source, slot, salt).name === name) return true;
+   }
+   return false;
+ }
+ 
+-export function hasAcquisitionRosterProof(state: AcquisitionState, seed: number, npcs: readonly WorldNpc[]): boolean {
+-  if (!state.week) return true;
++export function hasAcquisitionRosterProof(city: TileTrialState, npcs: readonly WorldNpc[]): boolean {
++  const state = city.society!.acquisition;
++  const { week, worldMetadata: { worldSeed: seed } } = city.world;
++  // Only Character Life draws stock for enabled buildings and tracks who took each offer.
++  if (city.tiles.some(({ building }) => building?.enabled && isAcquisitionSource(building.typeId) &&
++    !state.stock.some(offer => offer.source === building.typeId))) return false;
+   const offers = state.stock.flatMap(offer => {
+     const entry = { source: offer.source, slot: offer.slot as number | 'lot', nameSalt: offer.nameSalt, taken: offer.status === 'bought' };
+     if (offer.slot !== P7B_TRIAL.stockSize - 1) return [entry];
+@@ -95,9 +104,13 @@ export function hasAcquisitionRosterProof(state: AcquisitionState, seed: number,
+     const { id, name } = npc.character;
+     occupiedIds.add(id);
+     const offer = byId.get(id);
++    if (id.startsWith('npc_w')) {
++      const key = acquisitionKey(id);
++      if (!key || npc.household.source !== key.source || npc.household.boughtWeek !== key.boughtWeek ||
++          (key.boughtWeek === week && !offer)) return false;
++    }
+     if (offer) {
+-      if (!offer.taken || offer.name !== name ||
+-          npc.household.source !== offer.source || npc.household.boughtWeek !== state.week) return false;
++      if (!offer.taken || offer.name !== name) return false;
+       taken.add(id);
+     } else reserved.add(name);
+   }
+@@ -125,5 +138,6 @@ export function hasAcquisitionRosterProof(state: AcquisitionState, seed: number,
+     if (reserved.has(offer.name)) return false;
+     reserved.add(offer.name);
+   }
+-  return true;
++  const openingCount = npcs.length + state.departures.length - taken.size;
++  return openingCount >= 0 && openingCount <= P7B_TRIAL.npcCap;
+ }
+diff --git a/packages/persistence/src/__tests__/item-records.test.ts b/packages/persistence/src/__tests__/item-records.test.ts
+index 5bfc7e75be60053bcaf43e702658c69246ca19b0..8b34ccf253e209ebe92e9276c6d20e1f7280a6e1 100644
+--- a/packages/persistence/src/__tests__/item-records.test.ts
++++ b/packages/persistence/src/__tests__/item-records.test.ts
+@@ -1,7 +1,7 @@
+ import { readFileSync, readdirSync } from 'node:fs';
+ import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';
+ import { expect, it } from 'vitest';
+-import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT } from '@haven/core';
++import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, emptyAcquisition } from '@haven/core';
+ import { serializeCharacterLifeSave, deserializeCharacterLifeSave } from '../character-life-save.js';
+ import { recordsToSession, sessionToRecords, StoreRecordError } from '../session-records.js';
+ import { executeCharacterLifeCommand } from '@haven/simulation';
+@@ -37,6 +37,7 @@ it('loads every v13 Character Life fixture as current and round-trips exact byte
+ });
+ it('round-trips equipped character ids containing a colon',()=>{
+  const s=stocked();s.npcs[0].character.id='npc:one';s.profiles[0].id='npc:one';
++ s.city.society!.acquisition=emptyAcquisition();
+  s.city.society!.items.equipped['npc:one']=s.city.society!.items.equipped.npc_w1_guild_0;delete s.city.society!.items.equipped.npc_w1_guild_0;
+  expect(recordsToSession(sessionToRecords('main',s))).toEqual(s);
+ });
+diff --git a/packages/persistence/src/__tests__/items-rebuild-order.test.ts b/packages/persistence/src/__tests__/items-rebuild-order.test.ts
+index d7b66700380a4e1c355c5abd49bfea99df278244..141ef9033e1c866f8574d7a2efc6e01d6ec9e00a 100644
+--- a/packages/persistence/src/__tests__/items-rebuild-order.test.ts
++++ b/packages/persistence/src/__tests__/items-rebuild-order.test.ts
+@@ -1,6 +1,6 @@
+ import { expect, it } from 'vitest';
+ import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';
+-import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, isItemsState, type ItemsState } from '@haven/core';
++import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, emptyAcquisition, isItemsState, type ItemsState } from '@haven/core';
+ import { executeCharacterLifeCommand } from '@haven/simulation';
+ import { deserializeCharacterLifeSave, serializeCharacterLifeSave } from '../character-life-save.js';
+ import { recordsToSession, sessionToRecords } from '../session-records.js';
+@@ -67,6 +67,7 @@ it('keeps commands and reconstruction valid for numeric and prototype-named equi
+     s.npcs[index].character.id = id;
+     s.profiles[index].id = id;
+   }
++  s.city.society!.acquisition = emptyAcquisition();
+   s.city.society!.items.equipped = {};
+   s.city.society!.items.inventory = [1, 2, 3].map(id => ({ id, defId: 'rare-weapon' }));
+   s.city.society!.items.consumables = [];
+diff --git a/packages/persistence/src/session-records.ts b/packages/persistence/src/session-records.ts
+index 11da4d17ae60e8720c95ab2c121ac6900363af8e..f8592512ad4cb8dd16dabd68cf2ab9c48d3bca77 100644
+--- a/packages/persistence/src/session-records.ts
++++ b/packages/persistence/src/session-records.ts
+@@ -186,10 +186,7 @@ export function recordsToSession(records: StoredRecord[]): CharacterLifeSessionS
+   }
+   if (!player) throw new StoreRecordError('characters:player');
+   if (meta.rulesetId === SOCIETY_RULESET && city.phase === 'planning') {
+-    const acquisition = city.society!.acquisition;
+-    const { worldSeed } = city.world.worldMetadata;
+-    if (!isAcquisitionReplay(city) ||
+-        !hasAcquisitionRosterProof(acquisition, worldSeed, npcs.map(entry => entry.npc))) {
++    if (!isAcquisitionReplay(city) || !hasAcquisitionRosterProof(city, npcs.map(entry => entry.npc))) {
+       throw new StoreRecordError('city:city');
+     }
+   }
+diff --git a/packages/simulation/src/__tests__/character-life-command.test.ts b/packages/simulation/src/__tests__/character-life-command.test.ts
+index 7fd4bcc5676424eccc66d98232f8f536dd783c76..4691740f43e4dbeff3a6af4b4fb8eb6aa1a53500 100644
+--- a/packages/simulation/src/__tests__/character-life-command.test.ts
++++ b/packages/simulation/src/__tests__/character-life-command.test.ts
+@@ -1,6 +1,6 @@
+ import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';
+ import {
+-createCharacterLifeSession,DEFAULT_PLAYER_DRAFT,isCharacterLifeSessionState,
++createCharacterLifeSession,DEFAULT_PLAYER_DRAFT,emptyAcquisition,emptyHouseholdReport,isCharacterLifeSessionState,
+ isLiveCharacterLifeSessionState,P7A_TRIAL,type CharacterLifeSessionState
+ } from '@haven/core';
+ import { deserializeCharacterLifeSave,serializeCharacterLifeSave } from '@haven/persistence';
+@@ -35,6 +35,12 @@ function legacy(s: CharacterLifeSessionState, raw: Record<string, unknown>): Cha
+       npc.life.arousal = Math.min(100, npc.life.arousal + Math.floor(npc.life.lust / P7A_TRIAL.arousalDivisor));
+     }
+   }
++  if (r.report && s.city.society!.acquisition.week === r.report.week) {
++    // These cases start with this week's Guild recruits and no enabled market next week.
++    next.city.society!.acquisition = emptyAcquisition();
++    const household = { ...emptyHouseholdReport(), bought: s.npcs.map(npc => npc.character.name) };
++    return { ...r, next, report: { ...r.report, household } };
++  }
+   return { ...r, next };
+ }
+ 
+diff --git a/packages/simulation/src/__tests__/character-life-observation.test.ts b/packages/simulation/src/__tests__/character-life-observation.test.ts
+index 459b46955769821daec621df0bfd60163364a7ed..0bab7a69ae05353bac11d6359c0a19c5b1452911 100644
+--- a/packages/simulation/src/__tests__/character-life-observation.test.ts
++++ b/packages/simulation/src/__tests__/character-life-observation.test.ts
+@@ -1,6 +1,6 @@
+ import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';
+ import {
+-createCharacterLifeSession,DEFAULT_PLAYER_DRAFT,describeLong,describeShort,
++createCharacterLifeSession,DEFAULT_PLAYER_DRAFT,describeLong,describeShort,emptyHouseholdReport,
+ isLiveCharacterLifeSessionState,managerSlotTileIds,profileRows,summarizeOutside,
+ TRIAL_BUILDINGS,weeklyWorkforceMilli,WORLD_TRAITS,
+ type CharacterLifeSessionState,type CharacterView,type TileTrialReport,
+@@ -324,7 +324,8 @@ describe('detached complete visible report', () => {
+   });
+ 
+   it('keeps the real END_WEEK report after NEXT_WEEK and preserves frozen report inputs', () => {
+-    const result = act(life(), { type: 'END_WEEK', expectedWeek: 1 }), r = result.report!;
++    const session = life();
++    const result = act(session, { type: 'END_WEEK', expectedWeek: 1 }), r = result.report!;
+     expect(r).toBeDefined(); expect(Object.isFrozen(r)).toBe(true);
+     const o = observeCharacterLife(result.next, r);
+     expect([o.week, o.phase, o.revision]).toEqual([result.next.city.world.week, 'report', result.next.city.revision]);
+@@ -335,6 +336,7 @@ describe('detached complete visible report', () => {
+       foodDemandMilli: r.foodDemandMilli, foodConsumedMilli: r.foodConsumedMilli,
+       happinessBefore: r.happinessBefore, happinessAfter: r.happinessAfter, goods: r.goods, goodsStock: r.goodsStock, activities: r.activities,
+       immigration: { populationBefore: r.immigration!.populationBefore, arrivals: r.immigration!.arrivals, populationAfter: r.immigration!.populationAfter },
++      household: { ...emptyHouseholdReport(), bought: session.npcs.map(npc => npc.character.name) },
+     });
+     const next = act(result.next, { type: 'NEXT_WEEK' }).next, retained = observeCharacterLife(next, r);
+     expect(retained.actionTypes).toEqual(planningActions); expect(retained.disabledReasons).toEqual([]);
+diff --git a/packages/simulation/src/__tests__/npc-homes.test.ts b/packages/simulation/src/__tests__/npc-homes.test.ts
+index 8d765129a75184feab037cec2b06044c09e70362..04c0a92a83ea3cf5767772b268349b522c96147b 100644
+--- a/packages/simulation/src/__tests__/npc-homes.test.ts
++++ b/packages/simulation/src/__tests__/npc-homes.test.ts
+@@ -40,7 +40,8 @@ function populate(homes: readonly string[], maxBeds = false): Populated {
+   const start = newGame();
+   const session: Populated = { ...start, npcs: [], profiles: [] };
+   session.city.society!.wallRing = 2;
+-  session.city.world.week = 8;
++  // All residents in this no-market fixture already lived here before the current week.
++  session.city.world.week = 9;
+   for (const [id, contents] of [
+     ['estate-1', building('mansion', maxBeds ? 3 : 1)],
+     ['estate-2', building('retainers-hall', maxBeds ? 2 : 1)],
+diff --git a/packages/simulation/src/__tests__/replay-checkpoint.test.ts b/packages/simulation/src/__tests__/replay-checkpoint.test.ts
+index 0299ee48b43838b58be7994c603789a5c41dce3b..e28c76b3388015f4daef981bf58403fba50c9efd 100644
+--- a/packages/simulation/src/__tests__/replay-checkpoint.test.ts
++++ b/packages/simulation/src/__tests__/replay-checkpoint.test.ts
+@@ -1,9 +1,10 @@
+ import { expect, it } from 'vitest';
+-import { acquisitionNpc, auctionOpeningMilli, auctionRivals, emptyAcquisition, marketNpcName, generateNpc, npcValueMilli,
++import { acquisitionNpc, auctionOpeningMilli, auctionRivals, createWorldSession, emptyAcquisition, marketNpcName, generateNpc, npcValueMilli,
+   type CharacterLifeSessionState } from '@haven/core';
+-import { deserializeCharacterLifeSave, recordsToSession, serializeCharacterLifeSave,
++import { deserializeCharacterLifeSave, deserializeWorldSessionSave, recordsToSession, serializeCharacterLifeSave, serializeWorldSessionSave,
+   sessionToRecords, StoreRecordError } from '@haven/persistence';
+ import { market, populate, stock, succeeded, town } from './acquisition-fixture.js';
++import { executeTileTrialCommand } from '../tile-trial.js';
+ 
+ const source = 'auction-house';
+ const homeTileId = 'estate-1';
+@@ -45,12 +46,17 @@ function assertRefused(session: CharacterLifeSessionState, mutate: (draft: Chara
+   mutate(envelope.state);
+   const forged = JSON.stringify(envelope);
+   const rows = sessionToRecords('main', envelope.state), before = structuredClone(rows);
+-  expect(deserializeCharacterLifeSave(forged)).toStrictEqual(invalid);
++  const decoded = deserializeCharacterLifeSave(forged);
+   let rowError: unknown;
+   try { recordsToSession(rows); } catch (caught) { rowError = caught; }
+-  expect(rowError).toBeInstanceOf(StoreRecordError);
+-  expect((rowError as StoreRecordError).ref).toBe('city:city');
+-  expect((rowError as Error).message).toBe('Invalid store record: city:city');
++  expect({
++    json: decoded.success ? 'accepted' : decoded,
++    row: rowError instanceof StoreRecordError ?
++      { isStoreRecordError: true, ref: rowError.ref, message: rowError.message } : { isStoreRecordError: false, outcome: rowError ?? 'accepted' },
++  }).toStrictEqual({
++    json: invalid,
++    row: { isStoreRecordError: true, ref: 'city:city', message: 'Invalid store record: city:city' },
++  });
+   expect(rows).toStrictEqual(before);
+   expect(JSON.stringify(envelope)).toBe(forged);
+   expect(serializeCharacterLifeSave(session)).toStrictEqual(source);
+@@ -187,3 +193,87 @@ it('round-trips a withdrawn lot and a winning lot whose recruit was released', (
+   if (!won.success) throw Error(won.error.message);
+   expect(deserializeCharacterLifeSave(won.text)).toStrictEqual({ success: true, state });
+ });
++
++it.each(['removed group', 'empty sentinel'])('R2-1 refuses an owned current-week recruit with %s at a paused market', problem => {
++  const stocked = problem === 'removed group' ? market() :
++    succeeded(town(), 'BUILD', { tileId: 'slum-1', typeId: 'slave-market' }).next;
++  const bought = succeeded(stocked, 'BUY_NPC', { source: 'slave-market', slot: 0, homeTileId }).next;
++  const paused = succeeded(bought, 'SET_ENABLED', { tileId: 'slum-1', enabled: false }).next;
++  expect(paused.npcs[0].character.id).toBe('npc_w1_slave-market_0');
++  assertRefused(paused, draft => {
++    const society = draft.city.society!;
++    if (problem === 'empty sentinel') society.acquisition = emptyAcquisition();
++    else {
++      society.acquisition.stock = society.acquisition.stock.filter(offer => offer.source !== 'slave-market');
++      society.acquisition.lots = society.acquisition.lots.filter(lot => lot.source !== 'slave-market');
++    }
++  });
++});
++
++it.each([
++  ['active market', 'source'],
++  ['active market', 'week'],
++  ['empty sentinel', 'source'],
++  ['empty sentinel', 'week'],
++])('R2-2 refuses a changed %s resident acquisition %s after rollover', (marketState, field) => {
++  const stocked = succeeded(town(), 'BUILD', { tileId: 'slum-1', typeId: 'slave-market' }).next;
++  const bought = succeeded(stocked, 'BUY_NPC', { source: 'slave-market', slot: 0, homeTileId }).next;
++  const ready = marketState === 'empty sentinel' ?
++    succeeded(bought, 'SET_ENABLED', { tileId: 'slum-1', enabled: false }).next : bought;
++  const reported = succeeded(ready, 'END_WEEK', { expectedWeek: 1 }).next;
++  const planned = succeeded(reported, 'NEXT_WEEK').next;
++  expect(planned.city.world.week).toBe(2);
++  expect(planned.city.society!.acquisition.week).toBe(marketState === 'empty sentinel' ? 0 : 2);
++  expect(planned.npcs[0].character.id).toBe('npc_w1_slave-market_0');
++  assertRefused(planned, draft => {
++    const { household } = draft.npcs[0];
++    if (field === 'source') household.source = 'auction-house';
++    else household.boughtWeek = 2;
++  });
++});
++
++it('R2-3 refuses a seed-correct extra departure that implies 101 opening residents', () => {
++  const start = town(7);
++  populate(start, [
++    ...Array<string>(30).fill(homeTileId),
++    ...Array<string>(50).fill('estate-2'),
++    ...Array<string>(20).fill('house-5'),
++  ]);
++  const released = succeeded(start, 'RELEASE_NPC', { npcId: start.npcs[0].character.id }).next;
++  const stocked = succeeded(released, 'BUILD', { tileId: 'service-1', typeId: 'guild' }).next;
++  const bought = succeeded(stocked, 'BUY_NPC', { source: 'guild', slot: 0, homeTileId }).next;
++  const { id, name } = acquisitionNpc(7, 1, 'guild', 1, 0).npc.character;
++  expect([id, name]).toStrictEqual(['npc_w1_guild_1', 'Janna Harvestmere']);
++  expect(bought.npcs.some(npc => npc.character.id === id || npc.character.name === name)).toBe(false);
++  const { departures, stock: offers, lots } = bought.city.society!.acquisition;
++  expect([bought.npcs.length, departures.length, offers.filter(offer => offer.status === 'bought').length, lots.length])
++    .toStrictEqual([100, 1, 1, 0]);
++  assertRefused(bought, draft => {
++    draft.city.society!.acquisition.departures.push({ kind: 'released', id, name });
++  });
++});
++
++it('R2-4 saves and loads a seed-42 world with a Guild built through the tile dispatcher', () => {
++  const world = createWorldSession(42);
++  if (!world.success) throw Error(world.error.message);
++  const original = structuredClone(world.value);
++  const build = executeTileTrialCommand(world.value.city, {
++    type: 'BUILD', tileId: 'service-1', typeId: 'guild', expectedRevision: world.value.city.revision,
++  });
++  if (!build.success) throw Error(build.error.message);
++  const snapshot = { ...world.value, city: build.nextState };
++  const before = structuredClone(snapshot);
++  expect(snapshot.city.tiles.find(tile => tile.id === 'service-1')!.building?.typeId).toBe('guild');
++  expect(snapshot.city.world.settlements[snapshot.city.world.activeSettlementId!].inventory.gold).toBe(112_000);
++  const encoded = serializeWorldSessionSave(snapshot);
++  const loaded = executeTileTrialCommand(world.value.city, {
++    type: 'LOAD_TRIAL', snapshot: snapshot.city, expectedRevision: world.value.city.revision,
++  });
++  expect(world.value).toStrictEqual(original);
++  expect(snapshot).toStrictEqual(before);
++  expect({ worldSave: encoded.success ? 'accepted' : encoded.error, loadTrial: loaded.success ? 'accepted' : loaded.error })
++    .toStrictEqual({ worldSave: 'accepted', loadTrial: 'accepted' });
++  if (!encoded.success || !loaded.success) throw Error('World session did not round-trip.');
++  expect(deserializeWorldSessionSave(encoded.text)).toStrictEqual({ success: true, state: snapshot });
++  expect(loaded.nextState).toStrictEqual({ ...snapshot.city, revision: snapshot.city.revision + 1 });
++});

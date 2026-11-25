@@ -1,0 +1,62 @@
+P7-B B3 Builder 6.2 xhigh
+mcp:20680f03-34c8-4567-8186-62fc1e268752  completed  codex/gpt-6.2-sol
+
+[assistant]
+Committed the helper fix as `15f8c02`. The exact-head verifier passed and Git status is empty. The seven gates and full `CI=1` smoke are starting on that commit.
+
+[assistant]
+All seven exact-head gates passed, including 154 architecture tests and 3,264 unit tests. The served production and regression hashes matched their build artifacts, and Chromium has started the 415-case run with `CI=1`.
+
+[assistant]
+All six acquisition browser cases passed at `15f8c02`. Smoke is now in the accessibility suite, with no failures reported so far.
+
+[assistant]
+The 1600 px and 1280 px long-name reflow cases passed in full smoke. Chromium is running the mobile accessibility cases next.
+
+[assistant]
+All four long-name reflow widths have passed. The accessibility block is complete, and the smoke run is now checking navigation and checkpoint behavior.
+
+[assistant]
+Smoke has completed 105 cases without a failure, including navigation and checkpoint handling. The full suite is still running.
+
+[assistant]
+Both NPC-sheet reflow widths passed. Smoke has completed 227 of 415 cases with no failures reported, including all six reflow cases repaired in Correction 19.
+
+[assistant]
+Smoke has reached case 316. The production bundle measured 169,863 gzip bytes, leaving 30,137 bytes under budget. The final bundle comparison will check the generated assets against both main and Correction 19.
+
+[assistant]
+Smoke finished with 414 passed and one timeout in the regression-build isolation case. Windows recorded a sleep/resume interval during that case. I’m running the required single isolated rerun with `CI=1`, then recording HOLD.
+
+[assistant]
+Open the [Correction 20 HOLD evidence](/C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c20/README.md). **Gates 1–7 passed.** The full `CI=1` smoke run recorded **414 passed and 1 timeout**. Windows slept for 1 hour 23 minutes during the regression-build isolation case. The required single isolated rerun passed in **6.4 seconds**. The full smoke result remains **HOLD**. [Full smoke](/C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c20/gate-8-smoke.txt) · [Isolated rerun](/C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c20/smoke-isolated-01.txt) · [Sleep record](/C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c20/smoke-sleep-events.txt)
+
+### Commit and verification
+
+| Field | Result |
+|---|---|
+| HEAD | `15f8c0224b4e398df3220c533bee404a08ca5fb3` |
+| Tree | `83c11b3a8362be1c1c69f632808c76a0c101caa8` |
+| New commit | `test(core): take fixture recruit names from their guild offer` with the requested co-author trailer |
+| Worktree | Empty `git status` on `feat/p7b-acquisition-market`. Ports 4173 and 4174 are free. [Final worktree check](/C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c20/final-worktree.txt) |
+
+- **RED at `2dc0a65`.** The real BUILD + BUY path returned Ragna Fircrest with name salt `1` for seed 25, Guild slot 2. `withNpcs` then rejected its generated fixture. [RED log](/C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c20/red-seed25.txt)
+- **GREEN.** The fixture matches the real purchase for both retained and reconstructed offers. The focused test and all **3,264** unit tests passed. [Focused GREEN](/C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c20/green-seed25.txt)
+- **Byte verifier passed.** It accounted for nine changed spans in the helper and the complete new test. All other files and existing assertions match the reviewed base. [Byte inventory](/C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c20/correction20-byte-inventory.json) · [Verifier log](/C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c20/final-head-verifier.txt)
+
+### Exact-head gates
+
+| Gate | Result |
+|---|---|
+| 1. Diff check | PASS |
+| 2. Lint | PASS |
+| 3. Typecheck | PASS |
+| 4. Architecture check | PASS |
+| 5. Architecture tests | PASS · 154 |
+| 6. Unit tests | PASS · 3,264 |
+| 7. Production build | PASS |
+| Full Chromium smoke, `CI=1` | **FAIL · 414 passed, 1 timed out** |
+
+**Production bundle** totaled **169,863 gzip bytes**. JS was 162,154 bytes vs 150,858 on main, and CSS was 7,709 vs 7,567. The total is 11,438 bytes above main and **30,137 bytes under budget**. [Per-file comparison](/C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c20/bundle/per-file-comparison.json) · [SHA-256 manifest](/C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c20/SHA256SUMS.txt)
+
+To clear HOLD, authorize a fresh full `CI=1` smoke run at this HEAD with the machine kept awake.

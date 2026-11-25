@@ -1,0 +1,17 @@
+Base HEAD b184357d235d164478584e36b96d063551124e66
+Base tree 961567de7ef638861a55a42589be203037e123c9
+Candidate D:\QI Technology\Temp\p7b-b3-step0-opxuuxoj (plain snapshot)
+Check group e2e-discovery
+
+UTC start 2026-11-24T09:11:46+00:00
+CWD D:\QI Technology\Temp\p7b-b3-step0-opxuuxoj
+$ node node_modules/@playwright/test/cli.js test tests/e2e/acquisition.spec.ts --list
+Listing tests:
+  [chromium] › acquisition.spec.ts:20:3 › acquisition panels, keyboard bids and real report rows at 1280px
+  [chromium] › acquisition.spec.ts:20:3 › acquisition panels, keyboard bids and real report rows at 1600px
+  [chromium] › acquisition.spec.ts:63:1 › sells a market slave and releases a servant from the roster with exact weekly rows
+  [chromium] › acquisition.spec.ts:93:3 › acquisition tabs fit 320px and selecting an ordinary tile restores management focus
+  [chromium] › acquisition.spec.ts:93:3 › acquisition tabs fit 375px and selecting an ordinary tile restores management focus
+Total: 5 tests in 1 file
+UTC finish 2026-11-24T09:11:49+00:00
+Exit 0

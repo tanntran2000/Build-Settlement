@@ -1,0 +1,19 @@
+HEAD and tree
+8aa7dc4cefbc759ce2a7d158937011c3afe71549
+a44d6bcd31a26f3519a39f5b71e481045a2b9318
+Status before command
+CI=
+UTC start 2026-11-24T13:10:06+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c16/prove-clean.ps1
+graphify-out/graph.json
+.graphifyignore
+HEAD 8aa7dc4cefbc759ce2a7d158937011c3afe71549
+Tree a44d6bcd31a26f3519a39f5b71e481045a2b9318
+Branch feat/p7b-acquisition-market
+Fetched main b184357d235d164478584e36b96d063551124e66
+All ten restored files match their original SHA-256. Patch forward check passed.
+Git status empty. Ports 4173 and 4174 free.
+
+UTC finish 2026-11-24T13:10:07+00:00
+Exit 0

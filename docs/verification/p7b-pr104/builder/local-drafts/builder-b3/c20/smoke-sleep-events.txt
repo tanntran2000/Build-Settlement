@@ -1,0 +1,19 @@
+HEAD and tree
+15f8c0224b4e398df3220c533bee404a08ca5fb3
+83c11b3a8362be1c1c69f632808c76a0c101caa8
+Status before command
+CI=
+UTC start 2026-11-25T00:45:25+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c20/sleep-events.ps1
+Event UTC 2026-11-25T00:35:13.1199135Z
+SleepTime 2026-11-24T23:12:11.2688218Z
+WakeTime 2026-11-25T00:35:11.8501650Z
+SleepDuration 6277
+WakeDuration 3355
+HiberWriteDuration 0
+TargetState 4
+EffectiveState 4
+
+UTC finish 2026-11-25T00:45:26+00:00
+Exit 0

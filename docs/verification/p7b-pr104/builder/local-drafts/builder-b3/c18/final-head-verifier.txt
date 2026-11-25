@@ -1,0 +1,27 @@
+HEAD and tree
+dfcc524b043ee3135746121f4384342a8dbf6e5e
+1bb1779f9e610d4ab3f83432625f52ba0eea45d1
+Status before command
+CI=
+UTC start 2026-11-24T13:34:46+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ python C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c18/verify-c18.py head
+Approved packet + Corrections 12–14 verified for 86 paths at 8aa7dc4cefbc759ce2a7d158937011c3afe71549.
+packages/core/src/__tests__/helpers/npcs.ts  0fafc0b97b85ee1c7dce3165258d9ff191189925f52fc88f6384bc7803dd71f2 -> eb6d93896e18bcd3c2a8d138cd7cf6fb261082ddfd9673120d388042959d356a  R2-1 current-week test fixture offer proof
+packages/core/src/character/validate.ts  9fa3fd77b0a5abc0e9475e0ce10a996e81b932dd2d2ef65d8b2da40a2c02e76d -> 1ca2f730407588eb88c4b277826b57ce2dc9d05d3d59132b0f3133bdb7912f5f  R2-1 through R2-4 Character Life JSON boundary
+packages/core/src/trial/acquisition-replay.ts  74243ce0bbaf1ab963bcdd489cdb350b5282176a4637deba162d048300c86ddf -> 4622bfd578d536a9f30c5df150f0b917e878e75d0cb19f804cb6c491778fee7c  R2-1 through R2-4 replay, continuity and world compatibility
+packages/persistence/src/__tests__/item-records.test.ts  54cf9837d6544fc73c22e649a3307b426ae515a1911d4459228085ad856fcd5e -> 65b4b2f69d6ef0d08166f2177581c401f7c1639b28b1428ef3d00a8563ce553c  R2-1 synthetic colon owner without a live purchase
+packages/persistence/src/__tests__/items-rebuild-order.test.ts  22fc10b2247571fc7f7fb38700e979d9fa99bf44f18e2ef107d5c72385cbf9b2 -> 3159ef53bfcb27686f11b8415189cc51f5f13b716451fdaaa8ca4d7c59332906  R2-1 synthetic numeric and prototype owners without live purchases
+packages/persistence/src/session-records.ts  110c1a9493d0abae613a243884f60fb552a32292948c5d4a4115e2987fcced0d -> 9f073021efd148644b9d2ff286ba4f208a7d11fa6a37a82bda459420b14168b1  R2-1 through R2-4 Character Life row boundary
+packages/simulation/src/__tests__/character-life-command.test.ts  a8149336c5047519ffddd8f6c2135c998e355cf1730155511100b7d626ed32d1 -> 89e5f2ec26b29df1477fb7064aabd54b0599d230c0f8a550bf0c3f60f60b0c56  R2-1 exact parity oracle for legal retained fixture purchases
+packages/simulation/src/__tests__/character-life-observation.test.ts  4c6957767c5a5287fc3b9e88908d1e6f5a244bafde27f851d6e54c256e0da0c6 -> 47101cc8d29d697ffb6f90feec59c6fd11f4bc94671f8f456ccbb3bcd3d8728c  R2-1 exact retained-purchase report for the legal fixture
+packages/simulation/src/__tests__/npc-homes.test.ts  52697c626a42a9c4e392d42bf5965cc2a957d2d70457684d7c4231a121544cdb -> e419103bd6f213be6316d08b7d349bc04859fbfb5a2fe56b067421046ca808a6  R2-1 earlier purchase dates for a market-free existing roster
+packages/simulation/src/__tests__/replay-checkpoint.test.ts  c894c57251ab86fcccae6828eadb11a0417a139862564aaf06d2845bfa015d50 -> bc4a181a8fc88194e17b1b5a08bac091549077503b378b1e1b773b31309aa2e7  R2-1 through R2-4 regression coverage
+packages/core/src/trial/acquisition-replay.ts identical emitted JavaScript SHA-256 5d5a8d356f8ca328cb098ab15809d8c197749dcb1bfd432288625d58c800c3fe
+packages/simulation/src/__tests__/character-life-command.test.ts identical emitted JavaScript SHA-256 f2e51ddd5028a4649d49f3aff1b849b40fd5a7d3e8c9b0a79a22cd70062a70d5
+Correction 17 inserted 85 UTF-8 bytes at offset 2802 of packages/core/src/trial/acquisition-replay.ts: : { boughtWeek: number; source: AcquisitionSource; slot: number | 'lot' } | undefined
+Correction 18 inserted 30 UTF-8 bytes at offset 1065 of packages/simulation/src/__tests__/character-life-command.test.ts: : delegates.WorldNpcCityResult
+PASS head: 10 scoped paths, 30 reconstructed Correction 16 spans and 2 type-only insertions. Extra paths: 0.
+
+UTC finish 2026-11-24T13:35:01+00:00
+Exit 0

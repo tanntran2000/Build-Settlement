@@ -1,0 +1,16 @@
+HEAD and tree
+2dc0a650b597e86df68673437add18e356723037
+aa7417db9948c096073681bde90423d93d85742f
+Status before command
+M  packages/core/src/__tests__/helpers/npcs.ts
+A  packages/simulation/src/__tests__/guild-fixture-names.test.ts
+CI=
+UTC start 2026-11-24T22:42:22+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ git commit -m "test(core): take fixture recruit names from their guild offer" -m "Co-authored-by: Codex <noreply@openai.com>"
+[feat/p7b-acquisition-market 15f8c02] test(core): take fixture recruit names from their guild offer
+ 2 files changed, 59 insertions(+), 28 deletions(-)
+ create mode 100644 packages/simulation/src/__tests__/guild-fixture-names.test.ts
+
+UTC finish 2026-11-24T22:42:22+00:00
+Exit 0

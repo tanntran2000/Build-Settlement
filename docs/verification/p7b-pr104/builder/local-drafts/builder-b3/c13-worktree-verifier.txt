@@ -1,0 +1,37 @@
+HEAD and tree
+822c695c2e59b7f2f1b5c5cd8a882f9f7f62a6f1
+3ebe68c4717b79a65667bdd658414f8e944654c5
+Status before command
+ M packages/simulation/src/__tests__/character-life-observation.test.ts
+ M packages/simulation/src/character-life-observation.ts
+ M packages/simulation/src/index.ts
+ M packages/ui/src/CharacterLifeCharacters.svelte
+ M packages/ui/src/CharacterLifeCity.svelte
+ M packages/ui/src/InsideCity.svelte
+ M packages/ui/src/SoloWeekReport.svelte
+ M packages/ui/src/TileManagement.svelte
+ M packages/ui/src/report-letters.ts
+ M tests/e2e/character-life-navigation.helpers.ts
+?? packages/ui/src/AcquisitionPanel.svelte
+?? packages/ui/src/__tests__/acquisition-view.test.ts
+?? packages/ui/src/acquisition-view.ts
+?? tests/e2e/acquisition.spec.ts
+CI=
+UTC start 2026-11-24T09:56:55+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ python C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/packet.py verify 3 --correction-13
+warning: in the working copy of 'packages/simulation/src/__tests__/character-life-observation.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/character-life-observation.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/index.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/ui/src/CharacterLifeCharacters.svelte', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/ui/src/CharacterLifeCity.svelte', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/ui/src/InsideCity.svelte', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/ui/src/SoloWeekReport.svelte', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/ui/src/TileManagement.svelte', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/ui/src/report-letters.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/e2e/character-life-navigation.helpers.ts', LF will be replaced by CRLF the next time Git touches it
+Correction 13: exact two-hunk approval matches 73b33d535fd6c31e070d65b3e327097fa4178138e68c03e9b20899cc4ee60c3b
+verify: 86 paths verified against approved bytes and stage projection
+
+UTC finish 2026-11-24T09:56:57+00:00
+Exit 0

@@ -1,0 +1,12 @@
+HEAD and tree
+15f8c0224b4e398df3220c533bee404a08ca5fb3
+83c11b3a8362be1c1c69f632808c76a0c101caa8
+Status before command
+CI=
+UTC start 2026-11-25T00:45:20+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ python C:\Users\Admin\.t3\local-drafts\p7b-prB3\builder-b3\c20/capture-smoke-failures.py
+Archived all 1 original failure traces and their captured errors.
+
+UTC finish 2026-11-25T00:45:20+00:00
+Exit 0

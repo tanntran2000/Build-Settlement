@@ -1,0 +1,60 @@
+{
+  "reviewedHead": "dfcc524b043ee3135746121f4384342a8dbf6e5e",
+  "planSha256": "7af6beafd85ef7102215e265aca3b28c2a07198a832ec8152bbb9de44af66fd9",
+  "encoding": "Zero-based original byte offsets. Payloads include line endings.",
+  "entries": [
+    {
+      "path": "tests/e2e/character-life-navigation-accessibility.spec.ts",
+      "oldSha256": "e9de9e2712c5f43509c99a6c82f2cdf62fb3d25312b3d8bb32d9c8617cab68d9",
+      "newSha256": "a95a4c61db0c58dfb0393c255e3849b05b7c488fa8fb8b4872fe304a1f40160a",
+      "oldBytes": 31202,
+      "newBytes": 31340,
+      "replacements": [
+        {
+          "offset": 223,
+          "removedBase64": "aW1wb3J0IHsgU09DSUVUWV9SVUxFU0VUIH0gZnJvbSAnLi4vLi4vcGFja2FnZXMvY29yZS9zcmMvaW5kZXgudHMnOwo=",
+          "insertedBase64": "aW1wb3J0IHsgZW1wdHlBY3F1aXNpdGlvbiwgU09DSUVUWV9SVUxFU0VUIH0gZnJvbSAnLi4vLi4vcGFja2FnZXMvY29yZS9zcmMvaW5kZXgudHMnOwo=",
+          "removedUtf8": "import { SOCIETY_RULESET } from '../../packages/core/src/index.ts';\n",
+          "insertedUtf8": "import { emptyAcquisition, SOCIETY_RULESET } from '../../packages/core/src/index.ts';\n"
+        },
+        {
+          "offset": 25762,
+          "removedBase64": "",
+          "insertedBase64": "ICAgICAgc2Vzc2lvbi5jaXR5LndvcmxkLndlZWsgKz0gMTsKICAgICAgc2Vzc2lvbi5jaXR5LnNvY2lldHkhLmFjcXVpc2l0aW9uID0gZW1wdHlBY3F1aXNpdGlvbigpOwo=",
+          "removedUtf8": "",
+          "insertedUtf8": "      session.city.world.week += 1;\n      session.city.society!.acquisition = emptyAcquisition();\n"
+        },
+        {
+          "offset": 27831,
+          "removedBase64": "ICAgICAgY29uc3QgcmVzdWx0ID0gZXhlY3V0ZUNoYXJhY3RlckxpZmVDb21tYW5kKHNlc3Npb24sIHsgdHlwZTogJ0VORF9XRUVLJywgZXhwZWN0ZWRSZXZpc2lvbjogc2Vzc2lvbi5jaXR5LnJldmlzaW9uLCBleHBlY3RlZFdlZWs6IDEgfSk7Cg==",
+          "insertedBase64": "ICAgICAgY29uc3QgcmVzdWx0ID0gZXhlY3V0ZUNoYXJhY3RlckxpZmVDb21tYW5kKHNlc3Npb24sIHsgdHlwZTogJ0VORF9XRUVLJywgZXhwZWN0ZWRSZXZpc2lvbjogc2Vzc2lvbi5jaXR5LnJldmlzaW9uLCBleHBlY3RlZFdlZWs6IHNlc3Npb24uY2l0eS53b3JsZC53ZWVrIH0pOwo=",
+          "removedUtf8": "      const result = executeCharacterLifeCommand(session, { type: 'END_WEEK', expectedRevision: session.city.revision, expectedWeek: 1 });\n",
+          "insertedUtf8": "      const result = executeCharacterLifeCommand(session, { type: 'END_WEEK', expectedRevision: session.city.revision, expectedWeek: session.city.world.week });\n"
+        }
+      ]
+    },
+    {
+      "path": "tests/e2e/npc-sheet.spec.ts",
+      "oldSha256": "6ca5b3fb6c7e0da00aea75ea4de6cb859861cb0a2f5cf7091628630d5cf7fcae",
+      "newSha256": "12499296d193eee86346cb2831113ad121bd4a4f1e107edd9ca81a6b22d1eb38",
+      "oldBytes": 22512,
+      "newBytes": 22671,
+      "replacements": [
+        {
+          "offset": 135,
+          "removedBase64": "",
+          "insertedBase64": "aW1wb3J0IHsgZW1wdHlBY3F1aXNpdGlvbiB9IGZyb20gJy4uLy4uL3BhY2thZ2VzL2NvcmUvc3JjL2luZGV4LnRzJzsK",
+          "removedUtf8": "",
+          "insertedUtf8": "import { emptyAcquisition } from '../../packages/core/src/index.ts';\n"
+        },
+        {
+          "offset": 20506,
+          "removedBase64": "",
+          "insertedBase64": "ICAgIHN0YXRlLmNpdHkud29ybGQud2VlayArPSAxOwogICAgc3RhdGUuY2l0eS5zb2NpZXR5IS5hY3F1aXNpdGlvbiA9IGVtcHR5QWNxdWlzaXRpb24oKTsK",
+          "removedUtf8": "",
+          "insertedUtf8": "    state.city.world.week += 1;\n    state.city.society!.acquisition = emptyAcquisition();\n"
+        }
+      ]
+    }
+  ]
+}

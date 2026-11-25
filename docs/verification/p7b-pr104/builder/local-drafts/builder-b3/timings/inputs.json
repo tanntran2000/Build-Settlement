@@ -1,0 +1,62 @@
+{
+  "control": {
+    "inputs": {
+      "main": {
+        "variant": "control",
+        "bytes": 300176,
+        "sha256": "a251995b3b63170f130e1f611056507f620f014a35b338d6b3873cde915e3960",
+        "comparableSha": "65d92f26b2ecf58ed28eceac80205f280d5761647eca0fa79c71719c99fd2c78",
+        "npcCount": 100,
+        "stock": 0,
+        "lots": 0,
+        "utcStart": "2026-11-24T10:37:33.818+00:00",
+        "utcFinish": "2026-11-24T10:37:35.175+00:00",
+        "command": "node C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\bench-worker.mjs \"D:\\QI Technology\\Temp\\p7b-b3-main-timing-b9hrugw4\" C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 prepare control C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\timings\\main-control.json",
+        "exit": 0
+      },
+      "head": {
+        "variant": "control",
+        "bytes": 300238,
+        "sha256": "312d28c38d324efee0c7db57ced1f626767ee0b902e052263d76191476b731a3",
+        "comparableSha": "65d92f26b2ecf58ed28eceac80205f280d5761647eca0fa79c71719c99fd2c78",
+        "npcCount": 100,
+        "stock": 0,
+        "lots": 0,
+        "utcStart": "2026-11-24T10:37:35.175+00:00",
+        "utcFinish": "2026-11-24T10:37:36.952+00:00",
+        "command": "node C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\bench-worker.mjs C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 prepare control C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\timings\\head-control.json",
+        "exit": 0
+      }
+    }
+  },
+  "market": {
+    "inputs": {
+      "main": {
+        "variant": "market",
+        "bytes": 300343,
+        "sha256": "f9ccf08c2a3fadd9b0e58322487b17f4683ed9007f64654e287ac9b7bba7526a",
+        "comparableSha": "a293233476bdb61cf3021b66a6e981f1ed5b6d7969db2a10ac08dfbc39290d4e",
+        "npcCount": 100,
+        "stock": 0,
+        "lots": 0,
+        "utcStart": "2026-11-24T10:37:36.953+00:00",
+        "utcFinish": "2026-11-24T10:37:38.884+00:00",
+        "command": "node C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\bench-worker.mjs \"D:\\QI Technology\\Temp\\p7b-b3-main-timing-b9hrugw4\" C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 prepare market C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\timings\\main-market.json",
+        "exit": 0
+      },
+      "head": {
+        "variant": "market",
+        "bytes": 301400,
+        "sha256": "7cee1216cbd0d0cf9adf3c91adbb4f43a9091e69fb9e4d0fc844cda78fbc433f",
+        "comparableSha": "a293233476bdb61cf3021b66a6e981f1ed5b6d7969db2a10ac08dfbc39290d4e",
+        "npcCount": 100,
+        "stock": 12,
+        "lots": 2,
+        "utcStart": "2026-11-24T10:37:38.885+00:00",
+        "utcFinish": "2026-11-24T10:37:41.613+00:00",
+        "command": "node C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\bench-worker.mjs C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 prepare market C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\timings\\head-market.json",
+        "exit": 0
+      }
+    }
+  }
+}

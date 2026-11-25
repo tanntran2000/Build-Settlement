@@ -1,0 +1,26 @@
+HEAD and tree
+822c695c2e59b7f2f1b5c5cd8a882f9f7f62a6f1
+3ebe68c4717b79a65667bdd658414f8e944654c5
+Status before command
+ M packages/simulation/src/__tests__/character-life-observation.test.ts
+ M packages/simulation/src/character-life-observation.ts
+ M packages/simulation/src/index.ts
+ M packages/ui/src/CharacterLifeCharacters.svelte
+ M packages/ui/src/CharacterLifeCity.svelte
+ M packages/ui/src/InsideCity.svelte
+ M packages/ui/src/SoloWeekReport.svelte
+ M packages/ui/src/TileManagement.svelte
+ M packages/ui/src/report-letters.ts
+ M tests/e2e/character-life-navigation.helpers.ts
+?? packages/ui/src/AcquisitionPanel.svelte
+?? packages/ui/src/__tests__/acquisition-view.test.ts
+?? packages/ui/src/acquisition-view.ts
+?? tests/e2e/acquisition.spec.ts
+CI=
+UTC start 2026-11-24T09:35:01+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/bench-worker.mjs C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01 C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01 prepare browser C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/screenshot-checkpoint.json
+{"variant":"browser","bytes":18567,"sha256":"a639496868946e15df4ac5ed1f9bfc3a10f3022ef6836fe8ed9c30b1f550cce7","comparableSha":"8a500f59e50f90ff0c217ca7be8fc00cf2b916e9bf99ae29af5c2caf0a1428f6","npcCount":0,"stock":12,"lots":2}
+
+UTC finish 2026-11-24T09:35:02+00:00
+Exit 0

@@ -1,0 +1,31 @@
+HEAD and tree
+822c695c2e59b7f2f1b5c5cd8a882f9f7f62a6f1
+3ebe68c4717b79a65667bdd658414f8e944654c5
+Status before command
+M  packages/simulation/src/__tests__/character-life-observation.test.ts
+M  packages/simulation/src/character-life-observation.ts
+M  packages/simulation/src/index.ts
+A  packages/ui/src/AcquisitionPanel.svelte
+M  packages/ui/src/CharacterLifeCharacters.svelte
+M  packages/ui/src/CharacterLifeCity.svelte
+M  packages/ui/src/InsideCity.svelte
+M  packages/ui/src/SoloWeekReport.svelte
+M  packages/ui/src/TileManagement.svelte
+A  packages/ui/src/__tests__/acquisition-view.test.ts
+A  packages/ui/src/acquisition-view.ts
+M  packages/ui/src/report-letters.ts
+A  tests/e2e/acquisition.spec.ts
+M  tests/e2e/character-life-navigation.helpers.ts
+CI=1
+UTC start 2026-11-24T09:58:01+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ git commit -m "feat(ui): acquisition panel" -m "Co-authored-by: Codex <noreply@openai.com>"
+[feat/p7b-acquisition-market 825ca5c] feat(ui): acquisition panel
+ 14 files changed, 493 insertions(+), 15 deletions(-)
+ create mode 100644 packages/ui/src/AcquisitionPanel.svelte
+ create mode 100644 packages/ui/src/__tests__/acquisition-view.test.ts
+ create mode 100644 packages/ui/src/acquisition-view.ts
+ create mode 100644 tests/e2e/acquisition.spec.ts
+
+UTC finish 2026-11-24T09:58:01+00:00
+Exit 0

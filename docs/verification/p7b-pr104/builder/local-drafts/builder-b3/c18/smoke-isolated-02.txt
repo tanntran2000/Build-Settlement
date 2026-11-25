@@ -1,0 +1,50 @@
+HEAD and tree
+dfcc524b043ee3135746121f4384342a8dbf6e5e
+1bb1779f9e610d4ab3f83432625f52ba0eea45d1
+Status before command
+CI=1
+UTC start 2026-11-24T14:12:51+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/@playwright/test/cli.js test tests/e2e/character-life-navigation-accessibility.spec.ts:331 --grep "accessibility at 1280px long character and report content reflows(?: @[^ ]+)*$" --output C:\Users\Admin\.t3\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\02-artifacts
+
+Running 1 test using 1 worker
+
+(node:22872) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:331:5 › accessibility at 1280px › long character and report content reflows (633ms)
+
+
+  1) [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:331:5 › accessibility at 1280px › long character and report content reflows 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+       at character-life-navigation.helpers.ts:148
+
+      146 | export async function importLife(page: Page, session: CharacterLifeSessionState): Promise<void> {
+      147 |   const encoded = serializeCharacterLifeSave(session);
+    > 148 |   expect(encoded.success).toBe(true);
+          |                           ^
+      149 |   if (!encoded.success) throw new Error(encoded.error.message);
+      150 |   const inGame = await page.getByTestId('life-shell').count() > 0;
+      151 |   if (inGame) await go(page, 'session');
+        at importLife (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:148:27)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation-accessibility.spec.ts:340:51
+
+    Error Context: ..\..\..\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\02-artifacts\character-life-navigation--ca2f8--and-report-content-reflows-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\02-artifacts\character-life-navigation--ca2f8--and-report-content-reflows-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\02-artifacts\character-life-navigation--ca2f8--and-report-content-reflows-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:331:5 › accessibility at 1280px › long character and report content reflows 
+
+UTC finish 2026-11-24T14:13:01+00:00
+Exit 1

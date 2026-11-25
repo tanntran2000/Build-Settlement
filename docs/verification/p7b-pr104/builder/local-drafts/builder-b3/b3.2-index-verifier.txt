@@ -1,0 +1,23 @@
+HEAD and tree
+67903d2170633055ef50c1c667857c66d92024bf
+ff499751d5c9266f75ebe63ef19a0ff59264ed1d
+Status before command
+ M packages/core/src/character/validate.ts
+ M packages/core/src/index.ts
+ M packages/core/src/trial/acquisition.ts
+ M packages/core/src/trial/state.ts
+ M packages/persistence/src/session-records.ts
+ M packages/simulation/src/__tests__/lord-health.test.ts
+ M packages/simulation/src/__tests__/npc-acquisition.test.ts
+ M packages/simulation/src/npc-acquisition.ts
+?? packages/core/src/trial/acquisition-replay.ts
+?? packages/simulation/src/__tests__/npc-auction.test.ts
+?? packages/simulation/src/__tests__/replay-checkpoint.test.ts
+?? packages/simulation/src/npc-auction.ts
+UTC start 2026-11-24T09:30:04+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ python C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/packet.py stage 2
+stage: 72 paths verified against approved bytes and stage projection
+
+UTC finish 2026-11-24T09:30:10+00:00
+Exit 0

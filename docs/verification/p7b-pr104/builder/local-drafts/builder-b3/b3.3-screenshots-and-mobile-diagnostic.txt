@@ -1,0 +1,34 @@
+HEAD and tree
+822c695c2e59b7f2f1b5c5cd8a882f9f7f62a6f1
+3ebe68c4717b79a65667bdd658414f8e944654c5
+Status before command
+ M packages/simulation/src/__tests__/character-life-observation.test.ts
+ M packages/simulation/src/character-life-observation.ts
+ M packages/simulation/src/index.ts
+ M packages/ui/src/CharacterLifeCharacters.svelte
+ M packages/ui/src/CharacterLifeCity.svelte
+ M packages/ui/src/InsideCity.svelte
+ M packages/ui/src/SoloWeekReport.svelte
+ M packages/ui/src/TileManagement.svelte
+ M packages/ui/src/report-letters.ts
+ M tests/e2e/character-life-navigation.helpers.ts
+?? packages/ui/src/AcquisitionPanel.svelte
+?? packages/ui/src/__tests__/acquisition-view.test.ts
+?? packages/ui/src/acquisition-view.ts
+?? tests/e2e/acquisition.spec.ts
+CI=
+UTC start 2026-11-24T09:35:02+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/capture-screenshots.mjs C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3
+{"head":"822c695c2e59b7f2f1b5c5cd8a882f9f7f62a6f1","tree":"3ebe68c4717b79a65667bdd658414f8e944654c5"}
+  ➜  Local:   http://localhost:4173/
+  ➜  Network: use --host to expose
+/assets/index-NU2TdnyX.js 320571ea06e86aea8ec425f7f6f8c1d458ce80e5f9d5b0d15f67c24a6f5ea82e
+/assets/index-Bjrr5xVb.css 2f861e0f485417217bcab208b97adf3ec5be22a846ce0964230465e47e4ba597
+1280×900 C:\Users\Admin\.t3\local-drafts\p7b-prB3\builder-b3\acquisition-for-sale-1280.png 9026e13625cc957d626b8b895f4ee7fe5da5eb167bcf1de8be11af671f623ea8
+1280×900 C:\Users\Admin\.t3\local-drafts\p7b-prB3\builder-b3\acquisition-auction-1280.png cf4e13fb33e5d84d99d88f6f0acb1792c00ad25e4bbf61c71a2f661051f18b5e
+{"diagnostic":"mobile keyboard path","width":320,"geometry":{"viewport":320,"scroll":320},"intoTabs":1,"toOrdinary":7,"focusedOrdinaryTile":true}
+{"diagnostic":"mobile keyboard path","width":375,"geometry":{"viewport":375,"scroll":375},"intoTabs":1,"toOrdinary":7,"focusedOrdinaryTile":true}
+
+UTC finish 2026-11-24T09:35:07+00:00
+Exit 0

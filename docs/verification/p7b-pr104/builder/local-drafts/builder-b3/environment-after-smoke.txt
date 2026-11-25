@@ -1,0 +1,45 @@
+UTC 2026-11-24T10:37:04.4086344Z
+HEAD 825ca5c27cc3d440705dffb6b41699d1dcbd2e4e
+Tree b935bbe742992eb4cd792c93fe2881e1e67ea5fb
+Branch feat/p7b-acquisition-market
+origin/main b184357d235d164478584e36b96d063551124e66
+Node v24.19.0
+Git status empty
+Ports 4173 and 4174 free
+CPU current load
+
+Name                                     NumberOfCores NumberOfLogicalProcessors LoadPercentage
+----                                     ------------- ------------------------- --------------
+Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz             4                         8             15
+
+
+
+Top processes by sampled CPU seconds
+
+Name                       Id CPUSecondsOverSample
+----                       -- --------------------
+powershell               8508                1.125
+cloudflared             24628                0.062
+T3 Code (Nightly)       26908                0.062
+browser                 19728                0.047
+T3 Code (Nightly)       26412                0.047
+browser                  6556                0.031
+claude                  28868                0.016
+codebase-memory-mcp     22916                0.016
+svchost                   604                    0
+svchost                  1304                    0
+StartMenuExperienceHost 19932                    0
+svchost                   828                    0
+
+
+
+System last boot
+
+LastBootUpTime        
+--------------        
+11/18/2026 12:48:41 PM
+
+
+
+Sleep/resume System records since 2026-11-24T16:58:25.0169631+07:00
+No matching events

@@ -1,0 +1,325 @@
+HEAD and tree
+8aa7dc4cefbc759ce2a7d158937011c3afe71549
+a44d6bcd31a26f3519a39f5b71e481045a2b9318
+Status before command
+ M packages/core/src/__tests__/helpers/npcs.ts
+ M packages/core/src/character/validate.ts
+ M packages/core/src/trial/acquisition-replay.ts
+ M packages/persistence/src/session-records.ts
+ M packages/simulation/src/__tests__/replay-checkpoint.test.ts
+CI=
+UTC start 2026-11-24T13:05:58+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ npm.cmd test
+
+> build-settlement@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/character-life-command.test.ts (35 tests | 2 failed) 12162ms
+   × full-session parity through two week cycles 641ms
+     × accepts null-prototype command data with identical complete results 348ms
+ ❯ packages/simulation/src/__tests__/character-life-observation.test.ts (14 tests | 1 failed) 3576ms
+     × keeps the real END_WEEK report after NEXT_WEEK and preserves frozen report inputs 117ms
+ ❯ packages/simulation/src/__tests__/npc-homes.test.ts (10 tests | 2 failed) 1565ms
+     × accepts 100 residents and refuses 31 in the Mansion or 101 in legal homes 177ms
+     × round trips a 100-NPC full-history save byte for byte under 1 MiB 136ms
+ ❯ packages/persistence/src/__tests__/items-rebuild-order.test.ts (9 tests | 1 failed) 807ms
+   × keeps commands and reconstruction valid for numeric and prototype-named equipment owners 94ms
+ ❯ packages/persistence/src/__tests__/item-records.test.ts (6 tests | 1 failed) 705ms
+   × round-trips equipped character ids containing a colon 50ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/persistence/src/__tests__/item-records.test.ts > round-trips equipped character ids containing a colon
+StoreRecordError: Invalid store record: city:city
+ ❯ recordsToSession packages/persistence/src/session-records.ts:190:13
+    188|   if (meta.rulesetId === SOCIETY_RULESET && city.phase === 'planning')…
+    189|     if (!isAcquisitionReplay(city) || !hasAcquisitionRosterProof(city,…
+    190|       throw new StoreRecordError('city:city');
+       |             ^
+    191|     }
+    192|   }
+ ❯ packages/persistence/src/__tests__/item-records.test.ts:41:9
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯
+
+ FAIL  packages/persistence/src/__tests__/items-rebuild-order.test.ts > keeps commands and reconstruction valid for numeric and prototype-named equipment owners
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ assertExactBytes packages/persistence/src/__tests__/items-rebuild-order.test.ts:28:26
+     26| function assertExactBytes(s: ReturnType<typeof stocked>) {
+     27|   const before = serializeCharacterLifeSave(s);
+     28|   expect(before.success).toBe(true);
+       |                          ^
+     29|   if (!before.success) throw Error(before.error.message);
+     30|   const rebuilt = recordsToSession(sessionToRecords('main', s).reverse…
+ ❯ packages/persistence/src/__tests__/items-rebuild-order.test.ts:80:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯
+
+ FAIL  packages/simulation/src/__tests__/character-life-command.test.ts > full-session parity through two week cycles
+AssertionError: expected { success: true, next: { …(5) }, …(1) } to deeply equal { success: true, next: { …(5) }, …(1) }
+
+- Expected
++ Received
+
+@@ -10,37 +10,12 @@
+        "revision": 11,
+        "society": {
+          "acquisition": {
+            "departures": [],
+            "lots": [],
+-           "stock": [
+-             {
+-               "nameSalt": 0,
+-               "slot": 0,
+-               "source": "guild",
+-               "status": "bought",
+-             },
+-             {
+-               "nameSalt": 0,
+-               "slot": 1,
+-               "source": "guild",
+-               "status": "bought",
+-             },
+-             {
+-               "nameSalt": 0,
+-               "slot": 2,
+-               "source": "guild",
+-               "status": "bought",
+-             },
+-             {
+-               "nameSalt": 0,
+-               "slot": 3,
+-               "source": "guild",
+-               "status": "open",
+-             },
+-           ],
+-           "week": 1,
++           "stock": [],
++           "week": 0,
+          },
+          "classes": {
+            "bound": {
+              "free": 0,
+              "luminaries": 0,
+@@ -2238,10 +2213,24 @@
+        "producedMilli": 0,
+        "unmetMilli": 0,
+      },
+      "happinessAfter": 82,
+      "happinessBefore": 80,
++     "household": {
++       "bought": [
++         "Adrel Brassmark",
++         "Aderin Longwater",
++         "Neraya Longwater",
++       ],
++       "left": [],
++       "lotsToRivals": [],
++       "notices": [],
++       "released": [],
++       "sold": [],
++       "unpaid": [],
++       "wagesPaidMilli": 0,
++     },
+      "householdUpkeep": {
+        "paidMilli": 3000,
+        "unpaidMilli": 0,
+      },
+      "immigration": {
+
+ ❯ packages/simulation/src/__tests__/character-life-command.test.ts:99:15
+     97|       ...(action.type === 'END_WEEK' ? { expectedWeek: s.city.world.we…
+     98|     const expected = success(legacy(old, raw)), r = success(executeCha…
+     99|     expect(r).toEqual(expected);
+       |               ^
+    100|     expect(Object.keys(r.next).sort()).toEqual(['city', 'npcs', 'outsi…
+    101|     expect(r.next.city.revision).toBe(s.city.revision + 1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+
+ FAIL  packages/simulation/src/__tests__/character-life-command.test.ts > own data and prototype taxonomy precedes session and revision > accepts null-prototype command data with identical complete results
+AssertionError: expected { success: true, next: { …(5) }, …(1) } to deeply equal { success: true, next: { …(5) }, …(1) }
+
+- Expected
++ Received
+
+@@ -10,37 +10,12 @@
+        "revision": 1,
+        "society": {
+          "acquisition": {
+            "departures": [],
+            "lots": [],
+-           "stock": [
+-             {
+-               "nameSalt": 0,
+-               "slot": 0,
+-               "source": "guild",
+-               "status": "bought",
+-             },
+-             {
+-               "nameSalt": 0,
+-               "slot": 1,
+-               "source": "guild",
+-               "status": "bought",
+-             },
+-             {
+-               "nameSalt": 0,
+-               "slot": 2,
+-               "source": "guild",
+-               "status": "bought",
+-             },
+-             {
+-               "nameSalt": 0,
+-               "slot": 3,
+-               "source": "guild",
+-               "status": "open",
+-             },
+-           ],
+-           "week": 1,
++           "stock": [],
++           "week": 0,
+          },
+          "classes": {
+            "bound": {
+              "free": 0,
+              "luminaries": 0,
+@@ -2210,10 +2185,24 @@
+        "producedMilli": 0,
+        "unmetMilli": 0,
+      },
+      "happinessAfter": 82,
+      "happinessBefore": 80,
++     "household": {
++       "bought": [
++         "Adrel Brassmark",
++         "Aderin Longwater",
++         "Neraya Longwater",
++       ],
++       "left": [],
++       "lotsToRivals": [],
++       "notices": [],
++       "released": [],
++       "sold": [],
++       "unpaid": [],
++       "wagesPaidMilli": 0,
++     },
+      "householdUpkeep": {
+        "paidMilli": 3000,
+        "unpaidMilli": 0,
+      },
+      "immigration": {
+
+ ❯ packages/simulation/src/__tests__/character-life-command.test.ts:260:21
+    258|       const expected = legacy(s, raw), plain = executeCharacterLifeCom…
+    259|       const nullRaw = Object.assign(Object.create(null), raw), rawBefo…
+    260|       expect(plain).toEqual(expected);
+       |                     ^
+    261|       expect(executeCharacterLifeCommand(s, nullRaw)).toEqual(expected…
+    262|       expect(Object.getOwnPropertyDescriptors(nullRaw)).toEqual(rawBef…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯
+
+ FAIL  packages/simulation/src/__tests__/character-life-observation.test.ts > detached complete visible report > keeps the real END_WEEK report after NEXT_WEEK and preserves frozen report inputs
+AssertionError: expected { week: 1, before: { …(5) }, …(15) } to deeply equal { week: 1, before: { …(5) }, …(14) }
+
+- Expected
++ Received
+
+@@ -39,10 +39,24 @@
+      "producedMilli": 0,
+      "unmetMilli": 1450,
+    },
+    "happinessAfter": 80,
+    "happinessBefore": 80,
++   "household": {
++     "bought": [
++       "Adrel Brassmark",
++       "Aderin Longwater",
++       "Neraya Longwater",
++     ],
++     "left": [],
++     "lotsToRivals": [],
++     "notices": [],
++     "released": [],
++     "sold": [],
++     "unpaid": [],
++     "wagesPaidMilli": 0,
++   },
+    "immigration": {
+      "arrivals": 0,
+      "populationAfter": 100,
+      "populationBefore": 100,
+    },
+
+ ❯ packages/simulation/src/__tests__/character-life-observation.test.ts:332:26
+    330|     expect([o.week, o.phase, o.revision]).toEqual([result.next.city.wo…
+    331|     expect(o.actionTypes).toEqual(['NEXT_WEEK']); expect(o.disabledRea…
+    332|     expect(o.lastReport).toEqual({ week: r.week, before: r.before, aft…
+       |                          ^
+    333|       taxMilli: r.taxMilli, farmBatchGoldMilli: r.farmBatchGoldMilli, …
+    334|       upkeepPaidMilli: r.upkeepPaidMilli, unpaidUpkeepMilli: r.unpaidU…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/7]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-homes.test.ts > NPC homes and v13 saves > accepts 100 residents and refuses 31 in the Mansion or 101 in legal homes
+AssertionError: expected [ false, true ] to strictly equal [ true, true ]
+
+- Expected
++ Received
+
+  [
+-   true,
++   false,
+    true,
+  ]
+
+ ❯ packages/simulation/src/__tests__/npc-homes.test.ts:132:90
+    130|     expect(['estate-1', 'estate-2', 'house-5'].map(id => homeBeds(vali…
+    131|     expect(['estate-1', 'estate-2', 'house-5'].map(id => homeResidents…
+    132|     expect([isCharacterLifeSessionState(valid), isLiveCharacterLifeSes…
+       |                                                                                          ^
+    133|     for (const invalid of [populate(homes(31, 49, 20), true), populate…
+    134|       const before = structuredClone(invalid);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/7]⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-homes.test.ts > NPC homes and v13 saves > round trips a 100-NPC full-history save byte for byte under 1 MiB
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ roundTrip packages/simulation/src/__tests__/npc-homes.test.ts:91:25
+     89| function roundTrip(session: CharacterLifeSessionState) {
+     90|   const saved = serializeCharacterLifeSave(session);
+     91|   expect(saved.success).toBe(true);
+       |                         ^
+     92|   if (!saved.success) throw Error(saved.error.message);
+     93|   const loaded = deserializeCharacterLifeSave(saved.text);
+ ❯ packages/simulation/src/__tests__/npc-homes.test.ts:225:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/7]⎯
+
+
+ Test Files  5 failed | 136 passed (141)
+      Tests  7 failed | 3256 passed (3263)
+   Start at  20:06:00
+   Duration  69.22s (transform 10.91s, setup 0ms, import 66.01s, tests 263.35s, environment 69ms)
+
+
+UTC finish 2026-11-24T13:07:09+00:00
+Exit 1

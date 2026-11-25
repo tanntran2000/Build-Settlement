@@ -1,0 +1,15 @@
+HEAD and tree
+8aa7dc4cefbc759ce2a7d158937011c3afe71549
+a44d6bcd31a26f3519a39f5b71e481045a2b9318
+Status before command
+CI=
+UTC start 2026-11-24T11:59:40+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ npm.cmd run lint
+
+> build-settlement@0.1.0 lint
+> eslint . --max-warnings=0
+
+
+UTC finish 2026-11-24T11:59:52+00:00
+Exit 0

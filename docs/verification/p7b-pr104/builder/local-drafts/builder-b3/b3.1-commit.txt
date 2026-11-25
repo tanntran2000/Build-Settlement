@@ -1,0 +1,95 @@
+HEAD and tree
+b184357d235d164478584e36b96d063551124e66
+961567de7ef638861a55a42589be203037e123c9
+Status before command
+M  packages/core/src/__tests__/catalog-data.test.ts
+A  packages/core/src/data/npc-acquisition.json
+M  packages/core/src/data/tuning.json
+M  packages/core/src/data/validate.ts
+M  packages/core/src/index.ts
+M  packages/core/src/trial/__tests__/crime.test.ts
+M  packages/core/src/trial/__tests__/crisis.test.ts
+M  packages/core/src/trial/__tests__/items.test.ts
+M  packages/core/src/trial/__tests__/law.test.ts
+M  packages/core/src/trial/__tests__/order.test.ts
+M  packages/core/src/trial/__tests__/outside.test.ts
+M  packages/core/src/trial/__tests__/society-p7b.test.ts
+M  packages/core/src/trial/__tests__/society.test.ts
+A  packages/core/src/trial/acquisition.ts
+M  packages/core/src/trial/items.ts
+M  packages/core/src/trial/society.ts
+M  packages/core/src/trial/state.ts
+M  packages/core/src/trial/types.ts
+M  packages/core/src/world/__tests__/session.test.ts
+M  packages/core/src/world/npc-generator.ts
+M  packages/persistence/src/__tests__/character-life-save.test.ts
+A  packages/persistence/src/__tests__/fixtures/society-v13/life-5-weeks.json
+A  packages/persistence/src/__tests__/fixtures/society-v13/life-crime-death.json
+A  packages/persistence/src/__tests__/fixtures/society-v13/life-crime-raid.json
+A  packages/persistence/src/__tests__/fixtures/society-v13/life-crime-robbery.json
+A  packages/persistence/src/__tests__/fixtures/society-v13/life-crime-wound.json
+A  packages/persistence/src/__tests__/fixtures/society-v13/life-demand-card.json
+A  packages/persistence/src/__tests__/fixtures/society-v13/life-laws.json
+A  packages/persistence/src/__tests__/fixtures/society-v13/life-new-game.json
+A  packages/persistence/src/__tests__/fixtures/society-v13/life-rebellion-last-week.json
+A  packages/persistence/src/__tests__/fixtures/society-v13/new-game.json
+M  packages/persistence/src/__tests__/item-records.test.ts
+M  packages/persistence/src/__tests__/items-rebuild-order.test.ts
+M  packages/persistence/src/__tests__/npc-life-records.test.ts
+M  packages/persistence/src/__tests__/session-records.test.ts
+M  packages/persistence/src/__tests__/society-new-game-fixture.test.ts
+M  packages/persistence/src/__tests__/society-v9-fixture.test.ts
+M  packages/persistence/src/session-records.ts
+A  packages/simulation/src/__tests__/acquisition-fixture.ts
+M  packages/simulation/src/__tests__/craft-week.test.ts
+M  packages/simulation/src/__tests__/crime-fixtures.test.ts
+M  packages/simulation/src/__tests__/crisis-fixtures.test.ts
+M  packages/simulation/src/__tests__/fixtures/catalog-golden.json
+A  packages/simulation/src/__tests__/fixtures/p7b-b3-path-diff.ts
+A  packages/simulation/src/__tests__/fixtures/p7b-b3-path-diff.txt
+M  packages/simulation/src/__tests__/law-fixture.test.ts
+M  packages/simulation/src/__tests__/law-week.test.ts
+A  packages/simulation/src/__tests__/npc-acquisition.test.ts
+M  packages/simulation/src/__tests__/npc-homes.test.ts
+M  packages/simulation/src/__tests__/smithy-data.test.ts
+M  packages/simulation/src/character-life-command.ts
+A  packages/simulation/src/npc-acquisition.ts
+M  packages/ui/src/__tests__/character-life-session.test.ts
+M  packages/ui/src/__tests__/p7b-checkpoint.test.ts
+M  packages/ui/src/__tests__/world-session.test.ts
+M  tests/e2e/crime.spec.ts
+M  tests/e2e/crisis.spec.ts
+M  tests/e2e/garrison.spec.ts
+M  tests/e2e/items.spec.ts
+M  tests/e2e/laws.spec.ts
+M  tests/e2e/ledger.spec.ts
+M  tests/e2e/society.spec.ts
+M  tests/e2e/storage.spec.ts
+M  tests/e2e/tile-save.spec.ts
+M  tests/e2e/title.spec.ts
+M  tests/e2e/world-session.spec.ts
+UTC start 2026-11-24T09:27:36+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ git commit -m "feat(simulation): npc stock, buy, hire, sell and release" -m "Co-authored-by: Codex <noreply@openai.com>"
+[feat/p7b-acquisition-market 67903d2] feat(simulation): npc stock, buy, hire, sell and release
+ 66 files changed, 706 insertions(+), 70 deletions(-)
+ create mode 100644 packages/core/src/data/npc-acquisition.json
+ create mode 100644 packages/core/src/trial/acquisition.ts
+ create mode 100644 packages/persistence/src/__tests__/fixtures/society-v13/life-5-weeks.json
+ create mode 100644 packages/persistence/src/__tests__/fixtures/society-v13/life-crime-death.json
+ create mode 100644 packages/persistence/src/__tests__/fixtures/society-v13/life-crime-raid.json
+ create mode 100644 packages/persistence/src/__tests__/fixtures/society-v13/life-crime-robbery.json
+ create mode 100644 packages/persistence/src/__tests__/fixtures/society-v13/life-crime-wound.json
+ create mode 100644 packages/persistence/src/__tests__/fixtures/society-v13/life-demand-card.json
+ create mode 100644 packages/persistence/src/__tests__/fixtures/society-v13/life-laws.json
+ create mode 100644 packages/persistence/src/__tests__/fixtures/society-v13/life-new-game.json
+ create mode 100644 packages/persistence/src/__tests__/fixtures/society-v13/life-rebellion-last-week.json
+ create mode 100644 packages/persistence/src/__tests__/fixtures/society-v13/new-game.json
+ create mode 100644 packages/simulation/src/__tests__/acquisition-fixture.ts
+ create mode 100644 packages/simulation/src/__tests__/fixtures/p7b-b3-path-diff.ts
+ create mode 100644 packages/simulation/src/__tests__/fixtures/p7b-b3-path-diff.txt
+ create mode 100644 packages/simulation/src/__tests__/npc-acquisition.test.ts
+ create mode 100644 packages/simulation/src/npc-acquisition.ts
+
+UTC finish 2026-11-24T09:27:36+00:00
+Exit 0

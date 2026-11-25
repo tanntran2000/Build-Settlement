@@ -1,0 +1,19 @@
+{
+  "unapplied": true,
+  "path": "tests/e2e/acquisition.spec.ts",
+  "reason": "Inactive roving tabs are reached with Arrow Right from the active tab.",
+  "before_sha256": "1b76ce644fb93cdd3b655613607421c87769741d610f9b1b0fe81ce24240e5be",
+  "after_sha256": "73b33d535fd6c31e070d65b3e327097fa4178138e68c03e9b20899cc4ee60c3b",
+  "replacements": [
+    {
+      "line": 4,
+      "before": "makeLife, selectArea, selectPerson }",
+      "after": "makeLife, selectArea, selectPerson, tabTo }"
+    },
+    {
+      "line": 100,
+      "before": "    await keyActivate(page, auction.getByRole('tab', { name: 'Auction' }));",
+      "after": "    await tabTo(page, auction.getByRole('tab', { name: 'For sale', exact: true }));\n    await page.keyboard.press('ArrowRight');\n    const auctionTab = auction.getByRole('tab', { name: 'Auction', exact: true });\n    await expect(auctionTab).toBeFocused();\n    await expect(auctionTab).toHaveAttribute('aria-selected', 'true');"
+    }
+  ]
+}

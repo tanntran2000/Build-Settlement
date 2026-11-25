@@ -1,0 +1,18 @@
+HEAD and tree
+8aa7dc4cefbc759ce2a7d158937011c3afe71549
+a44d6bcd31a26f3519a39f5b71e481045a2b9318
+Status before command
+CI=
+UTC start 2026-11-24T12:02:51+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node C:\Users\Admin\.t3\local-drafts\p7b-prB3\builder-b3\c14/served-and-bundle.mjs C:\Users\Admin\.t3\local-drafts\p7b-prB3\builder-b3\c14
+  ➜  Local:   http://localhost:4173/
+  ➜  Network: use --host to expose
+{"build":"production","port":4173,"indexSha256":"8ba90a4ec26401b88a8d02997deb5db14b31bdeceeb3881e765bc0ba75eb3b0d","assets":[{"file":"assets/index-C14BvVUb.js","bytes":511104,"sha256":"6ca33ec23adf4c1711f1e5fa166cbf9d82538cce1a8f04f6ed3af6ed09c7b8dd","gzipBytes":162058,"gzipSha256":"b3f0632ad7530ca8d23a59abcfcbdb4a53bf84d334212372f95064e4861e8e70"},{"file":"assets/index-CYiD5znu.css","bytes":38213,"sha256":"b3ddf8f1b768f62cad1252a51cb16d2d8aecd36207010de134528fece5866046","gzipBytes":7709,"gzipSha256":"7147de182abbbc1c55514e198c35872c09b35e2e91db74bec2eebf29143b4b81"}]}
+  ➜  Local:   http://localhost:4174/
+  ➜  Network: use --host to expose
+{"build":"regression","port":4174,"indexSha256":"006a9e624173cc1af1cf147a79499ca060330590b9a011cbb0cc7ea69bf480a4","assets":[{"file":"assets/index-C14BvVUb.js","bytes":511104,"sha256":"6ca33ec23adf4c1711f1e5fa166cbf9d82538cce1a8f04f6ed3af6ed09c7b8dd","gzipBytes":162058,"gzipSha256":"b3f0632ad7530ca8d23a59abcfcbdb4a53bf84d334212372f95064e4861e8e70"},{"file":"assets/index-CYiD5znu.css","bytes":38213,"sha256":"b3ddf8f1b768f62cad1252a51cb16d2d8aecd36207010de134528fece5866046","gzipBytes":7709,"gzipSha256":"7147de182abbbc1c55514e198c35872c09b35e2e91db74bec2eebf29143b4b81"}]}
+{"head":"8aa7dc4cefbc759ce2a7d158937011c3afe71549","tree":"a44d6bcd31a26f3519a39f5b71e481045a2b9318","baseline":{"main":"b184357d235d164478584e36b96d063551124e66","jsGzipBytes":150858,"cssGzipBytes":7567,"totalGzipBytes":158425},"jsGzipBytes":162058,"cssGzipBytes":7709,"totalGzipBytes":169767,"deltaGzipBytes":11342,"limitBytes":200000,"headroomBytes":30233,"manifest":[{"build":"production","port":4173,"indexSha256":"8ba90a4ec26401b88a8d02997deb5db14b31bdeceeb3881e765bc0ba75eb3b0d","assets":[{"file":"assets/index-C14BvVUb.js","bytes":511104,"sha256":"6ca33ec23adf4c1711f1e5fa166cbf9d82538cce1a8f04f6ed3af6ed09c7b8dd","gzipBytes":162058,"gzipSha256":"b3f0632ad7530ca8d23a59abcfcbdb4a53bf84d334212372f95064e4861e8e70"},{"file":"assets/index-CYiD5znu.css","bytes":38213,"sha256":"b3ddf8f1b768f62cad1252a51cb16d2d8aecd36207010de134528fece5866046","gzipBytes":7709,"gzipSha256":"7147de182abbbc1c55514e198c35872c09b35e2e91db74bec2eebf29143b4b81"}]},{"build":"regression","port":4174,"indexSha256":"006a9e624173cc1af1cf147a79499ca060330590b9a011cbb0cc7ea69bf480a4","assets":[{"file":"assets/index-C14BvVUb.js","bytes":511104,"sha256":"6ca33ec23adf4c1711f1e5fa166cbf9d82538cce1a8f04f6ed3af6ed09c7b8dd","gzipBytes":162058,"gzipSha256":"b3f0632ad7530ca8d23a59abcfcbdb4a53bf84d334212372f95064e4861e8e70"},{"file":"assets/index-CYiD5znu.css","bytes":38213,"sha256":"b3ddf8f1b768f62cad1252a51cb16d2d8aecd36207010de134528fece5866046","gzipBytes":7709,"gzipSha256":"7147de182abbbc1c55514e198c35872c09b35e2e91db74bec2eebf29143b4b81"}]}]}
+
+UTC finish 2026-11-24T12:02:56+00:00
+Exit 0

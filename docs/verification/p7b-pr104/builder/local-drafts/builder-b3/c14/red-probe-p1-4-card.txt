@@ -1,0 +1,75 @@
+HEAD and tree
+825ca5c27cc3d440705dffb6b41699d1dcbd2e4e
+b935bbe742992eb4cd792c93fe2881e1e67ea5fb
+Status before command
+ M packages/core/src/__tests__/catalog-data.test.ts
+ M packages/persistence/src/__tests__/npc-life-records.test.ts
+ M packages/simulation/src/__tests__/npc-acquisition.test.ts
+ M packages/simulation/src/__tests__/replay-checkpoint.test.ts
+ M packages/ui/src/__tests__/acquisition-view.test.ts
+ M tests/e2e/acquisition.spec.ts
+CI=
+UTC start 2026-11-24T11:52:51+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\node_modules\vitest\vitest.mjs run packages\ui\src\__tests__\acquisition-view.test.ts -t "renders age, origin"
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/acquisition-view.test.ts (3 tests | 1 failed | 2 skipped) 21ms
+   × renders age, origin, source, status, skills, Beauty, Mind, obedience and price from the seeded card 19ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/acquisition-view.test.ts > renders age, origin, source, status, skills, Beauty, Mind, obedience and price from the seeded card
+AssertionError: expected { name: 'Ardis Frostmere', …(11) } to strictly equal { name: 'Ardis Frostmere', …(11) }
+
+- Expected
++ Received
+
+@@ -2,22 +2,22 @@
+    "age": 34,
+    "beauty": 62,
+    "mind": 70,
+    "name": "Ardis Frostmere",
+    "obedience": 63,
+-   "origin": "Frontier",
++   "origin": "",
+    "priceMilli": 8000,
+    "skills": [
+      {
+-       "label": "Medical",
++       "label": "Incorrect",
+        "value": 39,
+      },
+      {
+-       "label": "Management",
++       "label": "Incorrect",
+        "value": 36,
+      },
+    ],
+    "source": "Guild",
+    "status": "Servant",
+-   "title": "Mature",
++   "title": "",
+    "wageMilli": 2000,
+  }
+
+ ❯ packages/ui/src/__tests__/acquisition-view.test.ts:10:16
+      8|   const price = npcValueMilli(npc, 'guild', false), view = cardFor(npc…
+      9|   Object.assign(view, { title: '', origin: '', skills: [{ label: 'Inco…
+     10|   expect(view).toStrictEqual({
+       |                ^
+     11|     name: 'Ardis Frostmere', age: 34, title: 'Mature', origin: 'Fronti…
+     12|     skills: [{ label: 'Medical', value: 39 }, { label: 'Management', v…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  18:52:52
+   Duration  1.81s (transform 1.01s, setup 0ms, import 1.31s, tests 21ms, environment 0ms)
+
+
+UTC finish 2026-11-24T11:52:54+00:00
+Exit 1

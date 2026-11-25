@@ -1,0 +1,21 @@
+HEAD and tree
+825ca5c27cc3d440705dffb6b41699d1dcbd2e4e
+b935bbe742992eb4cd792c93fe2881e1e67ea5fb
+Status before command
+CI=
+UTC start 2026-11-24T10:37:22+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/vitest/vitest.mjs run npc-acquisition.test.ts --maxWorkers=1 --disableConsoleIntercept
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+{"npcCount":100,"stock":12,"lots":2,"saveBytes":294795,"emptyWeekBytes":293786,"acquisitionDeltaBytes":1009}
+
+ Test Files  1 passed (1)
+      Tests  9 passed (9)
+   Start at  17:37:22
+   Duration  2.30s (transform 726ms, setup 0ms, import 934ms, tests 1.09s, environment 0ms)
+
+
+UTC finish 2026-11-24T10:37:25+00:00
+Exit 0

@@ -1,0 +1,96 @@
+HEAD and tree
+822c695c2e59b7f2f1b5c5cd8a882f9f7f62a6f1
+3ebe68c4717b79a65667bdd658414f8e944654c5
+Status before command
+ M packages/simulation/src/__tests__/character-life-observation.test.ts
+ M packages/simulation/src/character-life-observation.ts
+ M packages/simulation/src/index.ts
+ M packages/ui/src/CharacterLifeCharacters.svelte
+ M packages/ui/src/CharacterLifeCity.svelte
+ M packages/ui/src/InsideCity.svelte
+ M packages/ui/src/SoloWeekReport.svelte
+ M packages/ui/src/TileManagement.svelte
+ M packages/ui/src/report-letters.ts
+ M tests/e2e/character-life-navigation.helpers.ts
+?? packages/ui/src/AcquisitionPanel.svelte
+?? packages/ui/src/__tests__/acquisition-view.test.ts
+?? packages/ui/src/acquisition-view.ts
+?? tests/e2e/acquisition.spec.ts
+UTC start 2026-11-24T09:32:42+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/@playwright/test/cli.js test tests/e2e/acquisition.spec.ts --output C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/b3.3-browser-artifacts
+
+Running 5 tests using 1 worker
+
+(node:19888) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\acquisition.spec.ts:20:3 › acquisition panels, keyboard bids and real report rows at 1280px (13.1s)
+  ok 2 [chromium] › tests\e2e\acquisition.spec.ts:20:3 › acquisition panels, keyboard bids and real report rows at 1600px (12.4s)
+  ok 3 [chromium] › tests\e2e\acquisition.spec.ts:63:1 › sells a market slave and releases a servant from the roster with exact weekly rows (7.4s)
+  x  4 [chromium] › tests\e2e\acquisition.spec.ts:93:3 › acquisition tabs fit 320px and selecting an ordinary tile restores management focus (11.0s)
+(node:9600) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  5 [chromium] › tests\e2e\acquisition.spec.ts:93:3 › acquisition tabs fit 375px and selecting an ordinary tile restores management focus (11.1s)
+
+
+  1) [chromium] › tests\e2e\acquisition.spec.ts:93:3 › acquisition tabs fit 320px and selecting an ordinary tile restores management focus 
+
+    Error: Control unreachable after 160 Tabs: acq-spec-2-auction
+
+       at character-life-navigation.helpers.ts:62
+
+      60 |     expect(await page.evaluate(() => !!document.activeElement?.closest('[hidden], [aria-hidden="true"]'))).toBe(false);
+      61 |   }
+    > 62 |   throw Error(`Control unreachable after 160 Tabs: ${await target.getAttribute('id') ?? await target.textContent()}`);
+         |         ^
+      63 | }
+      64 |
+      65 | export async function keyActivate(page: Page, target: Locator) {
+        at tabTo (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:62:9)
+        at keyActivate (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:66:3)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\acquisition.spec.ts:100:5
+
+    Error Context: ..\..\..\local-drafts\p7b-prB3\builder-b3\b3.3-browser-artifacts\acquisition-acquisition-ta-c37a5-e-restores-management-focus-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7b-prB3\builder-b3\b3.3-browser-artifacts\acquisition-acquisition-ta-c37a5-e-restores-management-focus-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7b-prB3\builder-b3\b3.3-browser-artifacts\acquisition-acquisition-ta-c37a5-e-restores-management-focus-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\acquisition.spec.ts:93:3 › acquisition tabs fit 375px and selecting an ordinary tile restores management focus 
+
+    Error: Control unreachable after 160 Tabs: acq-spec-2-auction
+
+       at character-life-navigation.helpers.ts:62
+
+      60 |     expect(await page.evaluate(() => !!document.activeElement?.closest('[hidden], [aria-hidden="true"]'))).toBe(false);
+      61 |   }
+    > 62 |   throw Error(`Control unreachable after 160 Tabs: ${await target.getAttribute('id') ?? await target.textContent()}`);
+         |         ^
+      63 | }
+      64 |
+      65 | export async function keyActivate(page: Page, target: Locator) {
+        at tabTo (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:62:9)
+        at keyActivate (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:66:3)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\acquisition.spec.ts:100:5
+
+    Error Context: ..\..\..\local-drafts\p7b-prB3\builder-b3\b3.3-browser-artifacts\acquisition-acquisition-ta-b4f97-e-restores-management-focus-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7b-prB3\builder-b3\b3.3-browser-artifacts\acquisition-acquisition-ta-b4f97-e-restores-management-focus-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7b-prB3\builder-b3\b3.3-browser-artifacts\acquisition-acquisition-ta-b4f97-e-restores-management-focus-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests\e2e\acquisition.spec.ts:93:3 › acquisition tabs fit 320px and selecting an ordinary tile restores management focus 
+    [chromium] › tests\e2e\acquisition.spec.ts:93:3 › acquisition tabs fit 375px and selecting an ordinary tile restores management focus 
+  3 passed (1.1m)
+
+UTC finish 2026-11-24T09:33:50+00:00
+Exit 1

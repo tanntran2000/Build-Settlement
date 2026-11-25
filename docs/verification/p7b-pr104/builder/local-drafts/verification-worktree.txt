@@ -1,0 +1,14 @@
+UTC 2026-11-24T09:15:39+00:00
+git rev-parse HEAD HEAD^{tree} origin/main (exit 0)
+b184357d235d164478584e36b96d063551124e66
+961567de7ef638861a55a42589be203037e123c9
+b184357d235d164478584e36b96d063551124e66
+git branch --show-current (exit 0, empty means detached)
+git status --porcelain=v1 --untracked-files=all (exit 0, empty)
+git diff --exit-code (exit 0, empty)
+git diff --cached --exit-code (exit 0, empty)
+git worktree list (exit 0)
+D:/NghienCuuTiemNang/Build-Settlement                           5d20146 [docs/p7-npc-design]
+C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01 b184357 (detached HEAD)
+Reconstructed with original blob hashes and EOF bytes: 60 existing files, 23 generated files.
+Verified SHA-256 for 93 historical files in the external scratch snapshot.

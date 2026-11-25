@@ -1,0 +1,159 @@
+HEAD and tree
+825ca5c27cc3d440705dffb6b41699d1dcbd2e4e
+b935bbe742992eb4cd792c93fe2881e1e67ea5fb
+Status before command
+ M packages/core/src/__tests__/catalog-data.test.ts
+ M packages/persistence/src/__tests__/npc-life-records.test.ts
+ M packages/simulation/src/__tests__/npc-acquisition.test.ts
+ M packages/simulation/src/__tests__/replay-checkpoint.test.ts
+ M packages/ui/src/__tests__/acquisition-view.test.ts
+ M tests/e2e/acquisition.spec.ts
+CI=1
+UTC start 2026-11-24T11:54:04+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/@playwright/test/cli.js test tests/e2e/acquisition.spec.ts -g "at 1280px" --output C:\Users\Admin\.t3\local-drafts\p7b-prB3\builder-b3\c14\red-probe-browser-artifacts
+
+Running 1 test using 1 worker
+
+(node:26524) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\acquisition.spec.ts:23:3 › acquisition panels, keyboard bids and real report rows at 1280px (34.2s)
+
+
+  1) [chromium] › tests\e2e\acquisition.spec.ts:23:3 › acquisition panels, keyboard bids and real report rows at 1280px 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByRole('region', { name: 'Guild acquisitions' }).getByRole('article').locator('p')
+    Timeout: 5000ms
+    - Expected  - 1
+    + Received  + 1
+
+    @@ -1,10 +1,10 @@
+      Array [
+        "Age 34 · Mature · Frontier",
+        "Guild · Servant",
+        "Medical 39 · Management 36",
+    -   "Beauty 62 · Mind 70 · Obedience 63",
+    +   "Beauty 99 · Mind 70 · Obedience 63",
+        "8 Gold · 2 Gold/week",
+        "Age 26 · Young Adult · Scholar District",
+        "Guild · Servant",
+        "Combat 41 · Negotiation 32",
+        "Beauty 65 · Mind 47 · Obedience 59",
+
+    Call log:
+      - Expect "soft toHaveText" getByRole('region', { name: 'Guild acquisitions' }).getByRole('article').locator('p') with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Guild acquisitions' }).getByRole('article').locator('p')
+        14 × locator resolved to 20 elements
+
+
+      36 |     ]);
+      37 |     await first.locator('p').nth(3).evaluate(el => { el.textContent = 'Beauty 99 · Mind 70 · Obedience 63'; });
+    > 38 |     await expect.soft(guild.getByRole('article').locator('p')).toHaveText([
+         |                                                                ^
+      39 |       'Age 34 · Mature · Frontier', 'Guild · Servant', 'Medical 39 · Management 36',
+      40 |       'Beauty 62 · Mind 70 · Obedience 63', '8 Gold · 2 Gold/week',
+      41 |       'Age 26 · Young Adult · Scholar District', 'Guild · Servant', 'Combat 41 · Negotiation 32',
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\acquisition.spec.ts:38:64
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByRole('region', { name: 'Auction House acquisitions' }).getByRole('list', { name: 'Rival bidders' }).getByRole('listitem')
+    Timeout: 5000ms
+    - Expected  - 1
+    + Received  + 0
+
+      Array [
+        "Thesara Reedmark · Cautious · Out",
+        "Edris Thornwold · Keen · In",
+    -   "Ivrayne Copperfen · Steady · In",
+      ]
+
+    Call log:
+      - Expect "soft toHaveText" getByRole('region', { name: 'Auction House acquisitions' }).getByRole('list', { name: 'Rival bidders' }).getByRole('listitem') with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Auction House acquisitions' }).getByRole('list', { name: 'Rival bidders' }).getByRole('listitem')
+        14 × locator resolved to 2 elements
+
+
+      76 |     await expect(lot.getByText('Opening 45 Gold · Current 55 Gold · Leader Edris Thornwold', { exact: true })).toBeVisible();
+      77 |     await rivals.getByRole('listitem').last().evaluate(el => el.remove());
+    > 78 |     await expect.soft(rivals.getByRole('listitem')).toHaveText([
+         |                                                     ^
+      79 |       'Thesara Reedmark · Cautious · Out', 'Edris Thornwold · Keen · In', 'Ivrayne Copperfen · Steady · In',
+      80 |     ]);
+      81 |     const bidLog = auction.getByRole('list', { name: 'Bid log' });
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\acquisition.spec.ts:78:53
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByRole('region', { name: 'Auction House acquisitions' }).getByRole('list', { name: 'Bid log' }).getByRole('listitem')
+    Timeout: 5000ms
+    - Expected  - 2
+    + Received  + 0
+
+      Array [
+        "You bid 50 Gold.",
+    -   "Thesara Reedmark drops out at 50.",
+    -   "Edris Thornwold bids 55 Gold.",
+      ]
+
+    Call log:
+      - Expect "soft toHaveText" getByRole('region', { name: 'Auction House acquisitions' }).getByRole('list', { name: 'Bid log' }).getByRole('listitem') with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Auction House acquisitions' }).getByRole('list', { name: 'Bid log' }).getByRole('listitem')
+        14 × locator resolved to 1 element
+
+
+      82 |     await bidLog.getByRole('listitem').nth(2).evaluate(el => el.remove());
+      83 |     await bidLog.getByRole('listitem').nth(1).evaluate(el => el.remove());
+    > 84 |     await expect.soft(bidLog.getByRole('listitem')).toHaveText([
+         |                                                     ^
+      85 |       'You bid 50 Gold.', 'Thesara Reedmark drops out at 50.', 'Edris Thornwold bids 55 Gold.',
+      86 |     ]);
+      87 |     const markers = await Promise.all([rivals, bidLog].map(list =>
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\acquisition.spec.ts:84:53
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByRole('region', { name: 'Household activity' }).getByRole('listitem')
+    Timeout: 5000ms
+    - Expected  - 1
+    + Received  + 1
+
+      Array [
+        "Recruited · Ardis Frostmere",
+    -   "Lot sold to a rival · Auction House · 55 Gold",
+    +   "Lot sold to a rival · Auction House · 1 Gold",
+        "Lot sold to a rival · Slave Market · 45 Gold",
+      ]
+
+    Call log:
+      - Expect "soft toHaveText" getByRole('region', { name: 'Household activity' }).getByRole('listitem') with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Household activity' }).getByRole('listitem')
+        13 × locator resolved to 3 elements
+
+
+       95 |     const rows = page.getByRole('region', { name: 'Household activity' }).getByRole('listitem');
+       96 |     await rows.nth(1).evaluate(el => { el.textContent = 'Lot sold to a rival · Auction House · 1 Gold'; });
+    >  97 |     await expect.soft(rows).toHaveText([
+          |                             ^
+       98 |       'Recruited · Ardis Frostmere', 'Lot sold to a rival · Auction House · 55 Gold', 'Lot sold to a rival · Slave Market · 45 Gold',
+       99 |     ]);
+      100 |     void markers; // Separate P3-1 RED observed in the normal browser run.
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\acquisition.spec.ts:97:29
+
+    Error Context: ..\..\..\local-drafts\p7b-prB3\builder-b3\c14\red-probe-browser-artifacts\acquisition-acquisition-pa-25f7c--real-report-rows-at-1280px-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7b-prB3\builder-b3\c14\red-probe-browser-artifacts\acquisition-acquisition-pa-25f7c--real-report-rows-at-1280px-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7b-prB3\builder-b3\c14\red-probe-browser-artifacts\acquisition-acquisition-pa-25f7c--real-report-rows-at-1280px-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\acquisition.spec.ts:23:3 › acquisition panels, keyboard bids and real report rows at 1280px 
+
+UTC finish 2026-11-24T11:54:48+00:00
+Exit 1

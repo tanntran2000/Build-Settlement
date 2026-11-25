@@ -1,0 +1,152 @@
+[
+  {
+    "folder": "character-life-navigation--77412--and-report-content-reflows-chromium",
+    "traceSha256": "fc2633abf237cddcf0d0938e2773ef07c32bd4ac621ac014ede1b7f40aba1659",
+    "errors": [
+      {
+        "type": "error",
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+        "stack": [
+          {
+            "file": "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\tests\\e2e\\character-life-navigation.helpers.ts",
+            "line": 148,
+            "column": 27,
+            "function": "importLife"
+          },
+          {
+            "file": "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\tests\\e2e\\character-life-navigation-accessibility.spec.ts",
+            "line": 340,
+            "column": 51
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "folder": "character-life-navigation--89cf1--and-report-content-reflows-chromium",
+    "traceSha256": "827b4b6f32e5596be1cbdf90fea061ab21a8497f79e6586763c624d8c8c8fd82",
+    "errors": [
+      {
+        "type": "error",
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+        "stack": [
+          {
+            "file": "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\tests\\e2e\\character-life-navigation.helpers.ts",
+            "line": 148,
+            "column": 27,
+            "function": "importLife"
+          },
+          {
+            "file": "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\tests\\e2e\\character-life-navigation-accessibility.spec.ts",
+            "line": 340,
+            "column": 51
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "folder": "character-life-navigation--ca2f8--and-report-content-reflows-chromium",
+    "traceSha256": "67ec1fe7a53294d96ed53a4307f1d477be20a771737ec7a3d3d61bc9c0a110b6",
+    "errors": [
+      {
+        "type": "error",
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+        "stack": [
+          {
+            "file": "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\tests\\e2e\\character-life-navigation.helpers.ts",
+            "line": 148,
+            "column": 27,
+            "function": "importLife"
+          },
+          {
+            "file": "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\tests\\e2e\\character-life-navigation-accessibility.spec.ts",
+            "line": 340,
+            "column": 51
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "folder": "character-life-navigation--d9965--and-report-content-reflows-chromium",
+    "traceSha256": "22b32cb65126f98d70b695aedbb1614a2883993c19e4d24ca6bdc424d9c3a29a",
+    "errors": [
+      {
+        "type": "error",
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+        "stack": [
+          {
+            "file": "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\tests\\e2e\\character-life-navigation.helpers.ts",
+            "line": 148,
+            "column": 27,
+            "function": "importLife"
+          },
+          {
+            "file": "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\tests\\e2e\\character-life-navigation-accessibility.spec.ts",
+            "line": 340,
+            "column": 51
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "folder": "npc-sheet-NPC-sheet-reflow-c2e06-life-report-reflow-at-375px-chromium",
+    "traceSha256": "69543a618c09cf3147115c81ba7d3fe0cfc3ef04f452880a3a718642d66600b4",
+    "errors": [
+      {
+        "type": "error",
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+        "stack": [
+          {
+            "file": "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\tests\\e2e\\character-life-navigation.helpers.ts",
+            "line": 148,
+            "column": 27,
+            "function": "importLife"
+          },
+          {
+            "file": "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\tests\\e2e\\npc-sheet.spec.ts",
+            "line": 19,
+            "column": 9,
+            "function": "boot"
+          },
+          {
+            "file": "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\tests\\e2e\\npc-sheet.spec.ts",
+            "line": 382,
+            "column": 5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "folder": "npc-sheet-NPC-sheet-reflow-e2345-life-report-reflow-at-320px-chromium",
+    "traceSha256": "ea48c0ecab12ab3c2199fea3d384f5182caaad2020136d12b786632f537eeaf3",
+    "errors": [
+      {
+        "type": "error",
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+        "stack": [
+          {
+            "file": "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\tests\\e2e\\character-life-navigation.helpers.ts",
+            "line": 148,
+            "column": 27,
+            "function": "importLife"
+          },
+          {
+            "file": "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\tests\\e2e\\npc-sheet.spec.ts",
+            "line": 19,
+            "column": 9,
+            "function": "boot"
+          },
+          {
+            "file": "C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01\\tests\\e2e\\npc-sheet.spec.ts",
+            "line": 382,
+            "column": 5
+          }
+        ]
+      }
+    ]
+  }
+]

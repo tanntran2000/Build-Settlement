@@ -1,0 +1,26 @@
+HEAD and tree
+8aa7dc4cefbc759ce2a7d158937011c3afe71549
+a44d6bcd31a26f3519a39f5b71e481045a2b9318
+Status before command
+ M packages/core/src/__tests__/helpers/npcs.ts
+ M packages/core/src/character/validate.ts
+ M packages/core/src/trial/acquisition-replay.ts
+ M packages/persistence/src/session-records.ts
+ M packages/simulation/src/__tests__/replay-checkpoint.test.ts
+CI=
+UTC start 2026-11-24T13:05:58+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ npm.cmd run typecheck
+
+> build-settlement@0.1.0 typecheck
+> npm run typecheck:core && npm run typecheck:simulation && npm run typecheck:persistence && npm run typecheck:content && npm run typecheck:ui
+
+
+> build-settlement@0.1.0 typecheck:core
+> tsc -p packages/core/tsconfig.json --noEmit
+
+packages/core/src/trial/acquisition-replay.ts(76,49): error TS2345: Argument of type 'string | number' is not assignable to parameter of type 'number | "lot"'.
+  Type 'string' is not assignable to type 'number | "lot"'.
+
+UTC finish 2026-11-24T13:06:10+00:00
+Exit 2

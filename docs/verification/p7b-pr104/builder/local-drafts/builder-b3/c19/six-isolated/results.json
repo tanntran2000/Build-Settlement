@@ -1,0 +1,56 @@
+{
+  "head": "dfcc524b043ee3135746121f4384342a8dbf6e5e",
+  "tree": "1bb1779f9e610d4ab3f83432625f52ba0eea45d1",
+  "ci": 1,
+  "utc": "2026-11-24T14:28:50.143012+00:00",
+  "results": [
+    {
+      "file": "tests\\e2e\\character-life-navigation-accessibility.spec.ts",
+      "baselineLine": 331,
+      "title": "accessibility at 1600px › long character and report content reflows",
+      "exit": 0,
+      "exactlyOne": true,
+      "log": "green-isolated-01.txt"
+    },
+    {
+      "file": "tests\\e2e\\character-life-navigation-accessibility.spec.ts",
+      "baselineLine": 331,
+      "title": "accessibility at 1280px › long character and report content reflows",
+      "exit": 0,
+      "exactlyOne": true,
+      "log": "green-isolated-02.txt"
+    },
+    {
+      "file": "tests\\e2e\\character-life-navigation-accessibility.spec.ts",
+      "baselineLine": 331,
+      "title": "accessibility at 375px › long character and report content reflows",
+      "exit": 0,
+      "exactlyOne": true,
+      "log": "green-isolated-03.txt"
+    },
+    {
+      "file": "tests\\e2e\\character-life-navigation-accessibility.spec.ts",
+      "baselineLine": 331,
+      "title": "accessibility at 320px › long character and report content reflows",
+      "exit": 0,
+      "exactlyOne": true,
+      "log": "green-isolated-04.txt"
+    },
+    {
+      "file": "tests\\e2e\\npc-sheet.spec.ts",
+      "baselineLine": 376,
+      "title": "NPC sheet reflow at 320px › NPC sheet and NPC life report reflow at 320px",
+      "exit": 0,
+      "exactlyOne": true,
+      "log": "green-isolated-05.txt"
+    },
+    {
+      "file": "tests\\e2e\\npc-sheet.spec.ts",
+      "baselineLine": 376,
+      "title": "NPC sheet reflow at 375px › NPC sheet and NPC life report reflow at 375px",
+      "exit": 0,
+      "exactlyOne": true,
+      "log": "green-isolated-06.txt"
+    }
+  ]
+}

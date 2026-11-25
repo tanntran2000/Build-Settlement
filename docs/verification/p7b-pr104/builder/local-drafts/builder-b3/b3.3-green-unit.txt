@@ -1,0 +1,33 @@
+HEAD and tree
+822c695c2e59b7f2f1b5c5cd8a882f9f7f62a6f1
+3ebe68c4717b79a65667bdd658414f8e944654c5
+Status before command
+ M packages/simulation/src/__tests__/character-life-observation.test.ts
+ M packages/simulation/src/character-life-observation.ts
+ M packages/simulation/src/index.ts
+ M packages/ui/src/CharacterLifeCharacters.svelte
+ M packages/ui/src/CharacterLifeCity.svelte
+ M packages/ui/src/InsideCity.svelte
+ M packages/ui/src/SoloWeekReport.svelte
+ M packages/ui/src/TileManagement.svelte
+ M packages/ui/src/report-letters.ts
+ M tests/e2e/character-life-navigation.helpers.ts
+?? packages/ui/src/AcquisitionPanel.svelte
+?? packages/ui/src/__tests__/acquisition-view.test.ts
+?? packages/ui/src/acquisition-view.ts
+?? tests/e2e/acquisition.spec.ts
+UTC start 2026-11-24T09:32:23+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/vitest/vitest.mjs run acquisition-view.test.ts report-letters.test.ts character-life-observation.test.ts --maxWorkers=3
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  3 passed (3)
+      Tests  176 passed (176)
+   Start at  16:32:24
+   Duration  2.85s (transform 2.39s, setup 0ms, import 3.56s, tests 1.34s, environment 0ms)
+
+
+UTC finish 2026-11-24T09:32:27+00:00
+Exit 0

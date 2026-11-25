@@ -1,0 +1,22 @@
+HEAD and tree
+2dc0a650b597e86df68673437add18e356723037
+aa7417db9948c096073681bde90423d93d85742f
+Status before command
+ M packages/core/src/__tests__/helpers/npcs.ts
+?? packages/simulation/src/__tests__/guild-fixture-names.test.ts
+CI=
+UTC start 2026-11-24T22:40:45+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ python C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c20/verify-c20.py capture
+warning: in the working copy of 'packages/core/src/__tests__/helpers/npcs.ts', LF will be replaced by CRLF the next time Git touches it
+Approved packet + Corrections 12–14 verified for 86 paths at 8aa7dc4cefbc759ce2a7d158937011c3afe71549.
+packages/core/src/trial/acquisition-replay.ts identical emitted JavaScript SHA-256 5d5a8d356f8ca328cb098ab15809d8c197749dcb1bfd432288625d58c800c3fe
+packages/simulation/src/__tests__/character-life-command.test.ts identical emitted JavaScript SHA-256 f2e51ddd5028a4649d49f3aff1b849b40fd5a7d3e8c9b0a79a22cd70062a70d5
+Corrections 16–18 reconstructed against reviewed dfcc524: 10 paths, 30 earlier spans and 2 type-only insertions.
+Pinned base verified at 2dc0a65, including all approved Corrections 12–14 and 16–19.
+M packages/core/src/__tests__/helpers/npcs.ts: eb6d93896e18bcd3c2a8d138cd7cf6fb261082ddfd9673120d388042959d356a -> a76b58b4192486f0d89b9180a915b7f662baa37ea0c3beb6188d943503719ce3 (9 spans)
+A packages/simulation/src/__tests__/guild-fixture-names.test.ts: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 -> 0549a32342d5ae280a567c08efc4f24ad35ba0b87e2073cbe290e5b12f5fc706 (1 spans)
+PASS capture: 10 Correction 20 byte spans across the helper and the new test. Extra paths: 0.
+
+UTC finish 2026-11-24T22:41:38+00:00
+Exit 0

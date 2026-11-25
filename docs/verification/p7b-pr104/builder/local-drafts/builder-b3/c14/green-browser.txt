@@ -1,0 +1,45 @@
+HEAD and tree
+825ca5c27cc3d440705dffb6b41699d1dcbd2e4e
+b935bbe742992eb4cd792c93fe2881e1e67ea5fb
+Status before command
+ M packages/core/src/__tests__/catalog-data.test.ts
+ M packages/core/src/data/validate.ts
+ M packages/core/src/trial/__tests__/society-p7b.test.ts
+ M packages/core/src/trial/acquisition-replay.ts
+ M packages/core/src/trial/acquisition.ts
+ M packages/core/src/trial/state.ts
+ M packages/persistence/src/__tests__/item-records.test.ts
+ M packages/persistence/src/__tests__/npc-life-records.test.ts
+ M packages/persistence/src/__tests__/society-new-game-fixture.test.ts
+ M packages/persistence/src/session-records.ts
+ M packages/simulation/src/__tests__/npc-acquisition.test.ts
+ M packages/simulation/src/__tests__/npc-auction.test.ts
+ M packages/simulation/src/__tests__/npc-homes.test.ts
+ M packages/simulation/src/__tests__/replay-checkpoint.test.ts
+ M packages/simulation/src/npc-acquisition.ts
+ M packages/simulation/src/npc-auction.ts
+ M packages/ui/src/AcquisitionPanel.svelte
+ M packages/ui/src/__tests__/acquisition-view.test.ts
+ M packages/ui/src/__tests__/character-life-session.test.ts
+ M tests/e2e/acquisition.spec.ts
+CI=1
+UTC start 2026-11-24T11:56:31+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/@playwright/test/cli.js test tests/e2e/acquisition.spec.ts --output C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c14/green-browser-artifacts
+
+Running 6 tests using 1 worker
+
+(node:13460) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\acquisition.spec.ts:23:3 › acquisition panels, keyboard bids and real report rows at 1280px (12.7s)
+  ok 2 [chromium] › tests\e2e\acquisition.spec.ts:23:3 › acquisition panels, keyboard bids and real report rows at 1600px (11.8s)
+  ok 3 [chromium] › tests\e2e\acquisition.spec.ts:97:1 › sells a market slave and releases a servant from the roster with exact weekly rows (7.0s)
+Largest acquisition checkpoint {"saveBytes":277672,"indexedDbRowJsonBytes":293333,"rowCount":104,"npcCount":100,"stock":12,"lots":2,"actionsPerLot":[4,4],"departures":14,"recentEntriesPerNpc":20}
+  ok 4 [chromium] › tests\e2e\acquisition.spec.ts:130:1 › round-trips the largest representative 100-NPC market checkpoint through IndexedDB and JSON (4.0s)
+  ok 5 [chromium] › tests\e2e\acquisition.spec.ts:191:3 › acquisition tabs fit 320px and selecting an ordinary tile restores management focus (3.2s)
+  ok 6 [chromium] › tests\e2e\acquisition.spec.ts:191:3 › acquisition tabs fit 375px and selecting an ordinary tile restores management focus (2.8s)
+
+  6 passed (51.0s)
+
+UTC finish 2026-11-24T11:57:23+00:00
+Exit 0

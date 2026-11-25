@@ -1,0 +1,15 @@
+HEAD and tree
+dfcc524b043ee3135746121f4384342a8dbf6e5e
+1bb1779f9e610d4ab3f83432625f52ba0eea45d1
+Status before command
+M  tests/e2e/character-life-navigation-accessibility.spec.ts
+M  tests/e2e/npc-sheet.spec.ts
+CI=
+UTC start 2026-11-24T14:29:16+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ git commit -m "test(e2e): use earlier-week residents in long-name reflow fixtures" -m "Co-authored-by: Codex <noreply@openai.com>"
+[feat/p7b-acquisition-market 2dc0a65] test(e2e): use earlier-week residents in long-name reflow fixtures
+ 2 files changed, 7 insertions(+), 2 deletions(-)
+
+UTC finish 2026-11-24T14:29:16+00:00
+Exit 0

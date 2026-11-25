@@ -1,0 +1,40 @@
+HEAD and tree
+825ca5c27cc3d440705dffb6b41699d1dcbd2e4e
+b935bbe742992eb4cd792c93fe2881e1e67ea5fb
+Status before command
+ M packages/core/src/__tests__/catalog-data.test.ts
+ M packages/core/src/data/validate.ts
+ M packages/core/src/trial/__tests__/society-p7b.test.ts
+ M packages/core/src/trial/acquisition-replay.ts
+ M packages/core/src/trial/acquisition.ts
+ M packages/core/src/trial/state.ts
+ M packages/persistence/src/__tests__/item-records.test.ts
+ M packages/persistence/src/__tests__/npc-life-records.test.ts
+ M packages/persistence/src/__tests__/society-new-game-fixture.test.ts
+ M packages/persistence/src/session-records.ts
+ M packages/simulation/src/__tests__/npc-acquisition.test.ts
+ M packages/simulation/src/__tests__/npc-auction.test.ts
+ M packages/simulation/src/__tests__/npc-homes.test.ts
+ M packages/simulation/src/__tests__/replay-checkpoint.test.ts
+ M packages/simulation/src/npc-acquisition.ts
+ M packages/simulation/src/npc-auction.ts
+ M packages/ui/src/AcquisitionPanel.svelte
+ M packages/ui/src/__tests__/acquisition-view.test.ts
+ M packages/ui/src/__tests__/character-life-session.test.ts
+ M tests/e2e/acquisition.spec.ts
+CI=
+UTC start 2026-11-24T11:55:35+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/vitest/vitest.mjs run packages/simulation/src/__tests__/replay-checkpoint.test.ts packages/simulation/src/__tests__/npc-acquisition.test.ts packages/simulation/src/__tests__/npc-auction.test.ts packages/core/src/__tests__/catalog-data.test.ts packages/ui/src/__tests__/acquisition-view.test.ts packages/persistence/src/__tests__/npc-life-records.test.ts
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  6 passed (6)
+      Tests  98 passed (98)
+   Start at  18:55:36
+   Duration  2.93s (transform 3.45s, setup 0ms, import 5.69s, tests 3.94s, environment 2ms)
+
+
+UTC finish 2026-11-24T11:55:39+00:00
+Exit 0

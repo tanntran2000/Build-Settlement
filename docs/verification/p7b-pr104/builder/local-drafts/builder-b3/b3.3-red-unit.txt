@@ -1,0 +1,38 @@
+HEAD and tree
+822c695c2e59b7f2f1b5c5cd8a882f9f7f62a6f1
+3ebe68c4717b79a65667bdd658414f8e944654c5
+Status before command
+ M packages/simulation/src/__tests__/character-life-observation.test.ts
+?? packages/ui/src/__tests__/acquisition-view.test.ts
+?? tests/e2e/acquisition.spec.ts
+UTC start 2026-11-24T09:30:30+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/vitest/vitest.mjs run acquisition-view.test.ts --maxWorkers=1
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/ui/src/__tests__/acquisition-view.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/ui/src/__tests__/acquisition-view.test.ts [ packages/ui/src/__tests__/acquisition-view.test.ts ]
+Error: Cannot find module '../acquisition-view.js' imported from C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/ui/src/__tests__/acquisition-view.test.ts
+ ❯ packages/ui/src/__tests__/acquisition-view.test.ts:3:1
+      1| import { expect, it } from 'vitest';
+      2| import { acquisitionNpc, npcValueMilli, type TileTrialReport } from '@…
+      3| import { cardFor, recruitReason } from '../acquisition-view.js';
+       | ^
+      4| import { householdReportRows } from '../report-letters.js';
+      5|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  16:30:30
+   Duration  943ms (transform 491ms, setup 0ms, import 0ms, tests 0ms, environment 0ms)
+
+
+UTC finish 2026-11-24T09:30:31+00:00
+Exit 1

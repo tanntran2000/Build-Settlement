@@ -1,0 +1,13 @@
+Round 3. The owner (Tân) answered round 2 and the Builder's HOLDs with verbatim dialog answers: "Sửa cả 4 (Recommended)", "Ghi sổ rủi ro, không chặn B3 (Recommended)" (Correction 16), "Duyệt sửa kiểu + fixture (Recommended)" (Correction 17), "Duyệt + cho sửa kiểu nhỏ (Recommended)" (Correction 18), "Duyệt sửa 2 fixture (Recommended)" (Correction 19). Binding copy: C:/Users/Admin/.t3/local-drafts/p7b-prB3/binding-plan-bf63532.md (SHA-256 7af6beafd85ef7102215e265aca3b28c2a07198a832ec8152bbb9de44af66fd9; read Corrections 15–19).
+
+Target: feat/p7b-acquisition-market head 2dc0a650b597e86df68673437add18e356723037, two new commits on 8aa7dc4: dfcc524 `fix(simulation): close acquisition replay gaps (Astra round 2)` and 2dc0a65 `test(e2e): use earlier-week residents in long-name reflow fixtures`. Same worktree, read only; same rules (no edits, no servers unless ports 4173/4174 free, no full smoke).
+
+Builder evidence: C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c16/, c17/, c18/, c19/ (README, RED/GREEN logs, byte inventories, verifiers, smoke, bundle, save-size, timings, SHA256SUMS). Builder reports at 2dc0a65: gates 1–7 exit 0 (3,263 unit), CI=1 smoke 415/415.
+
+Check:
+1. R2-1..R2-4 closed: rerun your round-2 reproductions in both readers (and the world-session BUILD → serialize → LOAD_TRIAL path).
+2. Bytes since 8aa7dc4 equal the Correction 16 candidate, the two type-only insertions (Correction 17/18 rule: no runtime change, no as/any/ts-ignore) and the Correction 19 fixture spans, nothing else. The Correction 17 fixture changes (withNpcs records Guild offers as bought; existing tests expect "bought" rows; npc-homes week 8→9; acquisition reset in two persistence tests) and Correction 19 (earlier-week residents, retained week-1 market cleared, the long-report command oracle now reads the fixture week): confirm no assertion is loosened or removed and the 64-character/layout/focus assertions are unchanged.
+3. New issues in the new code. Apply the owner's stop rule (Correction 16 item 5): a forgery reachable only by hand-editing a save, not by legal play, is reported as P3 "risk-register" and does not fail the verdict; anything reachable by legal play, any regression and any test-strength problem keeps its normal severity.
+4. Timings in c19/timings/ look noisier than before (main-to-main noise up to 35 ms); say whether that run supports any conclusion. Correction 15 already accepted the ~1 ms full-market cost; do not decide performance.
+
+Output: C:/Users/Admin/.t3/local-drafts/p7b-prB3/astra-review/astra-round3.md (UTF-8): head/tree checked, per-finding status, new findings with file:line, final line `VERDICT: PASS` or `VERDICT: FAIL` (PASS = no P0–P2). Reply here with verdict, counts and path.

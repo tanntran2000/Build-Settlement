@@ -1,0 +1,22 @@
+HEAD and tree
+2dc0a650b597e86df68673437add18e356723037
+aa7417db9948c096073681bde90423d93d85742f
+Status before command
+ M packages/core/src/__tests__/helpers/npcs.ts
+?? packages/simulation/src/__tests__/guild-fixture-names.test.ts
+CI=
+UTC start 2026-11-24T22:39:45+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/vitest/vitest.mjs run packages/simulation/src/__tests__/guild-fixture-names.test.ts
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  05:39:46
+   Duration  1.18s (transform 660ms, setup 0ms, import 854ms, tests 53ms, environment 0ms)
+
+
+UTC finish 2026-11-24T22:39:47+00:00
+Exit 0

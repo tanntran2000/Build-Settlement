@@ -1,0 +1,85 @@
+HEAD and tree
+b184357d235d164478584e36b96d063551124e66
+961567de7ef638861a55a42589be203037e123c9
+Status before command
+ M packages/core/src/__tests__/catalog-data.test.ts
+ M packages/core/src/trial/__tests__/crime.test.ts
+ M packages/core/src/trial/__tests__/crisis.test.ts
+ M packages/core/src/trial/__tests__/items.test.ts
+ M packages/core/src/trial/__tests__/law.test.ts
+ M packages/core/src/trial/__tests__/order.test.ts
+ M packages/core/src/trial/__tests__/outside.test.ts
+ M packages/core/src/trial/__tests__/society-p7b.test.ts
+ M packages/core/src/trial/__tests__/society.test.ts
+ M packages/core/src/world/__tests__/session.test.ts
+ M packages/persistence/src/__tests__/character-life-save.test.ts
+ M packages/persistence/src/__tests__/item-records.test.ts
+ M packages/persistence/src/__tests__/items-rebuild-order.test.ts
+ M packages/persistence/src/__tests__/npc-life-records.test.ts
+ M packages/persistence/src/__tests__/session-records.test.ts
+ M packages/persistence/src/__tests__/society-new-game-fixture.test.ts
+ M packages/persistence/src/__tests__/society-v9-fixture.test.ts
+ M packages/simulation/src/__tests__/craft-week.test.ts
+ M packages/simulation/src/__tests__/crime-fixtures.test.ts
+ M packages/simulation/src/__tests__/crisis-fixtures.test.ts
+ M packages/simulation/src/__tests__/law-fixture.test.ts
+ M packages/simulation/src/__tests__/law-week.test.ts
+ M packages/simulation/src/__tests__/npc-homes.test.ts
+ M packages/simulation/src/__tests__/smithy-data.test.ts
+ M packages/ui/src/__tests__/character-life-session.test.ts
+ M packages/ui/src/__tests__/p7b-checkpoint.test.ts
+ M packages/ui/src/__tests__/world-session.test.ts
+ M tests/e2e/crime.spec.ts
+ M tests/e2e/crisis.spec.ts
+ M tests/e2e/garrison.spec.ts
+ M tests/e2e/items.spec.ts
+ M tests/e2e/laws.spec.ts
+ M tests/e2e/ledger.spec.ts
+ M tests/e2e/society.spec.ts
+ M tests/e2e/storage.spec.ts
+ M tests/e2e/tile-save.spec.ts
+ M tests/e2e/title.spec.ts
+ M tests/e2e/world-session.spec.ts
+?? packages/simulation/src/__tests__/acquisition-fixture.ts
+?? packages/simulation/src/__tests__/npc-acquisition.test.ts
+UTC start 2026-11-24T09:25:17+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/stock-red-probe.mjs
+FAIL expected RED: New Game has the v13 acquisition sentinel
+Expected values to be strictly deep-equal:
++ actual - expected
+
++ undefined
+- {
+-   departures: [],
+-   lots: [],
+-   stock: [],
+-   week: 0
+- }
+
+FAIL expected RED: Guild BUILD draws four offers
+Expected values to be strictly equal:
+
+undefined !== 4
+
+FAIL expected RED: BUY_NPC admits an NPC with profile
+Expected values to be strictly deep-equal:
++ actual - expected
+
++ 'UNSUPPORTED_ACTION'
+- [
+-   1,
+-   1
+- ]
+
+FAIL expected RED: SELL_NPC directs missing market to NO_BUILDING
+Expected values to be strictly equal:
++ actual - expected
+
++ 'UNSUPPORTED_ACTION'
+- 'NO_BUILDING'
+
+PASS control: No acquisition activity omits report household
+
+UTC finish 2026-11-24T09:25:18+00:00
+Exit 1

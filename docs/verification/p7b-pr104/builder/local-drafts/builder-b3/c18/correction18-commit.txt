@@ -1,0 +1,23 @@
+HEAD and tree
+8aa7dc4cefbc759ce2a7d158937011c3afe71549
+a44d6bcd31a26f3519a39f5b71e481045a2b9318
+Status before command
+M  packages/core/src/__tests__/helpers/npcs.ts
+M  packages/core/src/character/validate.ts
+M  packages/core/src/trial/acquisition-replay.ts
+M  packages/persistence/src/__tests__/item-records.test.ts
+M  packages/persistence/src/__tests__/items-rebuild-order.test.ts
+M  packages/persistence/src/session-records.ts
+M  packages/simulation/src/__tests__/character-life-command.test.ts
+M  packages/simulation/src/__tests__/character-life-observation.test.ts
+M  packages/simulation/src/__tests__/npc-homes.test.ts
+M  packages/simulation/src/__tests__/replay-checkpoint.test.ts
+CI=
+UTC start 2026-11-24T13:34:46+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ git commit -m "fix(simulation): close acquisition replay gaps (Astra round 2)" -m "Co-authored-by: Codex <noreply@openai.com>"
+[feat/p7b-acquisition-market dfcc524] fix(simulation): close acquisition replay gaps (Astra round 2)
+ 10 files changed, 175 insertions(+), 34 deletions(-)
+
+UTC finish 2026-11-24T13:34:46+00:00
+Exit 0

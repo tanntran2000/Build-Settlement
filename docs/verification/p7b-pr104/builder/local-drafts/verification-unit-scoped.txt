@@ -1,0 +1,22 @@
+Base HEAD b184357d235d164478584e36b96d063551124e66
+Base tree 961567de7ef638861a55a42589be203037e123c9
+Candidate D:\QI Technology\Temp\p7b-b3-step0-opxuuxoj (plain snapshot)
+Check group unit-scoped
+
+UTC start 2026-11-24T09:13:58+00:00
+CWD D:\QI Technology\Temp\p7b-b3-step0-opxuuxoj
+$ node node_modules/vitest/vitest.mjs run --maxWorkers=4 --disableConsoleIntercept npc-acquisition.test.ts npc-auction.test.ts acquisition-view.test.ts law-week.test.ts craft-week.test.ts items-week.test.ts session-records.test.ts p7b-checkpoint.test.ts catalog-golden.test.ts
+
+ RUN  v4.1.12 D:/QI Technology/Temp/p7b-b3-step0-opxuuxoj
+
+{"npcCount":100,"stock":12,"lots":2,"saveBytes":294795,"emptyWeekBytes":293786,"acquisitionDeltaBytes":1009}
+PR_A_REPORT_BASELINE 0 54a944aa5e3008d1a4837de1d04654b89a137a5bf44bd004c543f4f7b6b9a848
+PR_A_REPORT_BASELINE 42 eb453bfed2e46c2580cb69cc9747794ed2bf9e84a91f322e0e23e7c705e67926
+PR_A_REPORT_BASELINE 20261028 8145e422ca8691852501facec33098d76bf33061b8196536b73fc64aa8522177
+
+ Test Files  9 passed (9)
+      Tests  258 passed (258)
+   Start at  16:13:59
+   Duration  6.40s (transform 2.26s, setup 0ms, import 4.62s, tests 9.69s, environment 2ms)
+UTC finish 2026-11-24T09:14:05+00:00
+Exit 0

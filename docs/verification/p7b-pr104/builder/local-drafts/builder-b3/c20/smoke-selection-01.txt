@@ -1,0 +1,14 @@
+HEAD and tree
+15f8c0224b4e398df3220c533bee404a08ca5fb3
+83c11b3a8362be1c1c69f632808c76a0c101caa8
+Status before command
+CI=1
+UTC start 2026-11-25T00:45:03+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/@playwright/test/cli.js test tests/e2e/smoke.spec.ts:9 --grep "regression build cannot overwrite or enter the production artifact(?: @[^ ]+)*$" --output C:\Users\Admin\.t3\local-drafts\p7b-prB3\builder-b3\c20\smoke-isolated-reruns\01-artifacts --list
+Listing tests:
+  [chromium] › smoke.spec.ts:9:1 › regression build cannot overwrite or enter the production artifact
+Total: 1 test in 1 file
+
+UTC finish 2026-11-25T00:45:04+00:00
+Exit 0

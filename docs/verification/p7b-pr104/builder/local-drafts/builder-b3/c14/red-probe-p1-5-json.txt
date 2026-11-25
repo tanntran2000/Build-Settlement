@@ -1,0 +1,57 @@
+HEAD and tree
+825ca5c27cc3d440705dffb6b41699d1dcbd2e4e
+b935bbe742992eb4cd792c93fe2881e1e67ea5fb
+Status before command
+ M packages/core/src/__tests__/catalog-data.test.ts
+ M packages/persistence/src/__tests__/npc-life-records.test.ts
+ M packages/simulation/src/__tests__/npc-acquisition.test.ts
+ M packages/simulation/src/__tests__/replay-checkpoint.test.ts
+ M packages/ui/src/__tests__/acquisition-view.test.ts
+ M tests/e2e/acquisition.spec.ts
+CI=
+UTC start 2026-11-24T11:52:54+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\node_modules\vitest\vitest.mjs run packages\simulation\src\__tests__\npc-acquisition.test.ts -t "rejects a malformed, missing"
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/npc-acquisition.test.ts (9 tests | 1 failed | 8 skipped) 146ms
+     × rejects a malformed, missing or duplicate acquisition field without accepting a partial state 143ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-acquisition.test.ts > P7-B weekly acquisition > rejects a malformed, missing or duplicate acquisition field without accepting a partial state
+AssertionError: expected { success: false, error: { …(2) } } to strictly equal { success: false, error: { …(2) } }
+
+- Expected
++ Received
+
+  {
+    "error": {
+-     "code": "INVALID_SAVE_STATE",
+-     "message": "Checkpoint must contain a valid complete Character Life session in Planning.",
++     "code": "WRONG",
++     "message": "Unrelated refusal.",
+    },
+    "success": false,
+  }
+
+ ❯ packages/simulation/src/__tests__/npc-acquisition.test.ts:161:21
+    159|     const refused = deserializeCharacterLifeSave(JSON.stringify(bad));
+    160|     if (!refused.success) Object.assign(refused.error, { code: 'WRONG'…
+    161|     expect(refused).toStrictEqual({
+       |                     ^
+    162|       success: false,
+    163|       error: {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 8 skipped (9)
+   Start at  18:52:55
+   Duration  2.03s (transform 1.10s, setup 0ms, import 1.41s, tests 146ms, environment 0ms)
+
+
+UTC finish 2026-11-24T11:52:57+00:00
+Exit 1

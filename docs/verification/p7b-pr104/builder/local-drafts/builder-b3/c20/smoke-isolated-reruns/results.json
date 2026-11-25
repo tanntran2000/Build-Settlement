@@ -1,0 +1,25 @@
+{
+  "utc": "2026-11-25T00:45:20.499965+00:00",
+  "smoke": "gate-8-smoke.txt",
+  "ci": 1,
+  "results": [
+    {
+      "file": "tests\\e2e\\smoke.spec.ts",
+      "line": 9,
+      "title": "regression build cannot overwrite or enter the production artifact",
+      "command": [
+        "node",
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "tests/e2e/smoke.spec.ts:9",
+        "--grep",
+        "regression build cannot overwrite or enter the production artifact(?: @[^ ]+)*$",
+        "--output",
+        "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c20\\smoke-isolated-reruns\\01-artifacts"
+      ],
+      "exit": 0,
+      "exactlyOne": true,
+      "log": "smoke-isolated-01.txt"
+    }
+  ]
+}

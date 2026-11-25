@@ -1,0 +1,73 @@
+HEAD and tree
+825ca5c27cc3d440705dffb6b41699d1dcbd2e4e
+b935bbe742992eb4cd792c93fe2881e1e67ea5fb
+Status before command
+ M packages/core/src/__tests__/catalog-data.test.ts
+ M packages/core/src/data/validate.ts
+ M packages/core/src/trial/__tests__/society-p7b.test.ts
+ M packages/core/src/trial/acquisition-replay.ts
+ M packages/core/src/trial/acquisition.ts
+ M packages/core/src/trial/state.ts
+ M packages/persistence/src/__tests__/item-records.test.ts
+ M packages/persistence/src/__tests__/npc-life-records.test.ts
+ M packages/persistence/src/__tests__/society-new-game-fixture.test.ts
+ M packages/persistence/src/session-records.ts
+ M packages/simulation/src/__tests__/npc-acquisition.test.ts
+ M packages/simulation/src/__tests__/npc-auction.test.ts
+ M packages/simulation/src/__tests__/npc-homes.test.ts
+ M packages/simulation/src/__tests__/replay-checkpoint.test.ts
+ M packages/simulation/src/npc-acquisition.ts
+ M packages/simulation/src/npc-auction.ts
+ M packages/ui/src/AcquisitionPanel.svelte
+ M packages/ui/src/__tests__/acquisition-view.test.ts
+ M packages/ui/src/__tests__/character-life-session.test.ts
+ M tests/e2e/acquisition.spec.ts
+CI=
+UTC start 2026-11-24T11:57:20+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ python C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c14/verify-c14.py capture
+Approved 86-path packet plus Corrections 12–13 reverified at 825ca5c27cc3d440705dffb6b41699d1dcbd2e4e
+warning: in the working copy of 'packages/core/src/__tests__/catalog-data.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/core/src/data/validate.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/core/src/trial/__tests__/society-p7b.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/core/src/trial/acquisition-replay.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/core/src/trial/acquisition.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/core/src/trial/state.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/persistence/src/__tests__/item-records.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/persistence/src/__tests__/npc-life-records.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/persistence/src/__tests__/society-new-game-fixture.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/persistence/src/session-records.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/npc-acquisition.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/npc-auction.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/npc-homes.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/replay-checkpoint.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/npc-acquisition.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/npc-auction.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/ui/src/AcquisitionPanel.svelte', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/ui/src/__tests__/acquisition-view.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/ui/src/__tests__/character-life-session.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/e2e/acquisition.spec.ts', LF will be replaced by CRLF the next time Git touches it
+P2-3                      packages/core/src/__tests__/catalog-data.test.ts  7af2770a592737ce4811a769242fb96c046c680b6126cf285dd4d6a49582bb46 -> c0d4a7651b8caca3bda55372d4a5bb6d9937d68c4733dd7806b5b687058de071
+P2-3                      packages/core/src/data/validate.ts  79685f23a4b4a349d460e74eb22595a7446731798c6bec0b7c903175b686e0b6 -> 63f178dd1febff12828dc2b9934b5ad1d3117b4d2128f06eb6b967c5ddae03b5
+P3-2                      packages/core/src/trial/__tests__/society-p7b.test.ts  b74d0d10faf18111b8ca925331cd983db93a0d19379814ce6612eb759ad5ff57 -> d404cc2f92d7265e738276701acee67ed5c78e00d7e44c3a44256f9244ba2348
+P1-1 P1-2 P2-1 P2-2       packages/core/src/trial/acquisition-replay.ts  90ddaf5c7febe55ee4f996a016eb32b960f7b47757a01a435d53017e3eb1ec9a -> 74243ce0bbaf1ab963bcdd489cdb350b5282176a4637deba162d048300c86ddf
+P1-2 P2-2                 packages/core/src/trial/acquisition.ts  a1fe9551c9be5e8f3dbdf764eef84a1cccad68a48ac133abe0fbd8d3b75e185c -> 5183dd50a96c3db8756ab1dc4f14f312da42932a86d0a5f8a6a9c9fad3338cff
+P1-1                      packages/core/src/trial/state.ts  07c93a6d7532f263080e858c41a7e18952deb144186b11502e7619c48c9eb54e -> 626efa5d292aa3a939753ebc08ed171b133d5fc654930de761524f317d904292
+P3-2                      packages/persistence/src/__tests__/item-records.test.ts  a20de1e901a6390e30ee59d9d73444bec8a82affbf57ee6148a569b814cc5662 -> 54cf9837d6544fc73c22e649a3307b426ae515a1911d4459228085ad856fcd5e
+P1-6                      packages/persistence/src/__tests__/npc-life-records.test.ts  16ded575bf4d344e667c6bac36e101f49a0ced336b1fbb83e064f19a6391e14a -> 028572ea6fef5f7b975a1b2762636d530a05a7792fd432617fa2be5c3f1f0f1e
+P3-2                      packages/persistence/src/__tests__/society-new-game-fixture.test.ts  d5802b7e679005294c961facc39fbd884855b1db13bbd5a719b3f7b94c578a8e -> 21bba6e9e5de4f7bf154c519821004d07f42f635b371fb8d0fa3b86ead79f6c5
+P1-1                      packages/persistence/src/session-records.ts  1cf3948b51d815459b4ae84e3900ea50ee928f15d322ca5c8b13d4dd8036777f -> 110c1a9493d0abae613a243884f60fb552a32292948c5d4a4115e2987fcced0d
+P1-1 P1-5                 packages/simulation/src/__tests__/npc-acquisition.test.ts  4f81fb3a99c41631a5be9ad12dd32e855eebb802a2dfa685cb3a5cf562a0095c -> f51711760d634426e0c87d442bf71bb7f3babc420f3eed753d8b151b171d8d58
+P1-2                      packages/simulation/src/__tests__/npc-auction.test.ts  e05ce04c72353e86b1e6d78f3c922341219b202038c4033388fddab5752a894c -> 237259253df9d40318c5a8aa1d9f165fb490c0fea83bd724e0fb615804281412
+P3-2                      packages/simulation/src/__tests__/npc-homes.test.ts  a3f0f45ce12657a0260ee9a034207e5200b131187958cac9be911f05d6a605ca -> 52697c626a42a9c4e392d42bf5965cc2a957d2d70457684d7c4231a121544cdb
+P1-1 P1-2 P1-5 P2-1 P2-2  packages/simulation/src/__tests__/replay-checkpoint.test.ts  89b7abaeaa1332c1b9cb090d3aecbab0957732dec0cdb6944798093a767a39ad -> c894c57251ab86fcccae6828eadb11a0417a139862564aaf06d2845bfa015d50
+P2-2                      packages/simulation/src/npc-acquisition.ts  95735bc1292797a806042cdd4ba874e4b6e8da90f0f1c3e9cb06887bb1b9bd8e -> 5379433b5f6dbda633b134f708ac1a0f835d2c42ec780f14b624c34668e66426
+P1-2                      packages/simulation/src/npc-auction.ts  c4511cd9e62e58847fe1e93442f5ee84a9683dbd61fa77338d3a3ea5270dec80 -> 0ecb63f206ff524f2949a2c8e11f8763425e5cd61446bb7b5f2a85796fb72fc6
+P3-1                      packages/ui/src/AcquisitionPanel.svelte  c9ae90c17c5dbbbeb67d09248d908db6c0bcadd720e9e6fef48985a9e338c5d0 -> 13a013a48f05de874fbc8da12e1afde5e887dd0243b8cdba650c5d7fd3d0e496
+P1-4                      packages/ui/src/__tests__/acquisition-view.test.ts  6f4d18974b34576090dc4768109ff0a4d5f8c69718c23e547e944336d55b306e -> 93e6a1d1d8632e2a9daba507c9ea17d4f4a9526ee1aa068a630db01ffcff7742
+P3-2                      packages/ui/src/__tests__/character-life-session.test.ts  257429c493229fa93f73c728a901c240b5cb1c538f246520ff7c659af2f47cbb -> 305a77e0f711c784b6c4e377b607e66f83d63a131f2ba8828cc04ced1b2f2a4f
+P1-3 P2-4 P3-1            tests/e2e/acquisition.spec.ts  73b33d535fd6c31e070d65b3e327097fa4178138e68c03e9b20899cc4ee60c3b -> 8f36543d0e3ce4405c5e11959616e2183b66b32edbcbbb8b0eda90fc6d811e98
+PASS capture: 20 scoped paths, 52 exact byte spans. Extra paths: 0.
+
+UTC finish 2026-11-24T11:57:29+00:00
+Exit 0

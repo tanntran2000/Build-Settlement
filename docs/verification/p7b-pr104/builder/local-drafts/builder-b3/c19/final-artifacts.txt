@@ -1,0 +1,17 @@
+HEAD and tree
+2dc0a650b597e86df68673437add18e356723037
+aa7417db9948c096073681bde90423d93d85742f
+Status before command
+CI=
+UTC start 2026-11-24T15:09:04+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ python C:\Users\Admin\.t3\local-drafts\p7b-prB3\builder-b3\c19/archive-final-artifacts.py
+Both builds on disk still match the pre-smoke served hashes, including the regression rebuild.
+Recorded per-file main and head bundles. Main shares the verified B2 final tree.
+largest-save.json 293842 fe61f7cd33761cde17fb445c4f0cf491db75ceab5b6aa055d949d5aa6ad6a453
+largest-save-indexeddb-rows.json 309503 705fba8874dbc6eff022c8e17c40c03f5fa01574fd772413b200935dc9cab75a
+largest-save-measurement.json 218 3b07f64333850e800dd8ccfc67d1a37d284b1cba8a1d80248b520062ee8e4385
+Exact-head browser payloads match the previous representative sample byte for byte and their measured lengths.
+
+UTC finish 2026-11-24T15:09:04+00:00
+Exit 0

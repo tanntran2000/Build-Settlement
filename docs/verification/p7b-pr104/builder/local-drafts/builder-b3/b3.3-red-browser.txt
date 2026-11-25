@@ -1,0 +1,212 @@
+HEAD and tree
+822c695c2e59b7f2f1b5c5cd8a882f9f7f62a6f1
+3ebe68c4717b79a65667bdd658414f8e944654c5
+Status before command
+ M packages/simulation/src/__tests__/character-life-observation.test.ts
+?? packages/ui/src/__tests__/acquisition-view.test.ts
+?? tests/e2e/acquisition.spec.ts
+UTC start 2026-11-24T09:30:43+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/@playwright/test/cli.js test tests/e2e/acquisition.spec.ts
+
+Running 5 tests using 1 worker
+
+(node:20196) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\acquisition.spec.ts:20:3 › acquisition panels, keyboard bids and real report rows at 1280px (8.9s)
+(node:15052) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [chromium] › tests\e2e\acquisition.spec.ts:20:3 › acquisition panels, keyboard bids and real report rows at 1600px (6.7s)
+(node:16192) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 [chromium] › tests\e2e\acquisition.spec.ts:63:1 › sells a market slave and releases a servant from the roster with exact weekly rows (8.3s)
+(node:19180) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  4 [chromium] › tests\e2e\acquisition.spec.ts:93:3 › acquisition tabs fit 320px and selecting an ordinary tile restores management focus (6.8s)
+(node:25364) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  5 [chromium] › tests\e2e\acquisition.spec.ts:93:3 › acquisition tabs fit 375px and selecting an ordinary tile restores management focus (7.1s)
+
+
+  1) [chromium] › tests\e2e\acquisition.spec.ts:20:3 › acquisition panels, keyboard bids and real report rows at 1280px 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator: getByRole('region', { name: 'Guild acquisitions' }).getByRole('heading', { name: 'Guild acquisitions' })
+    Expected: focused
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeFocused" getByRole('region', { name: 'Guild acquisitions' }).getByRole('heading', { name: 'Guild acquisitions' }) with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Guild acquisitions' }).getByRole('heading', { name: 'Guild acquisitions' })
+
+
+      25 |     await keyActivate(page, page.getByTestId('trial-tile-service-1'));
+      26 |     const guild = page.getByRole('region', { name: 'Guild acquisitions' });
+    > 27 |     await expect(guild.getByRole('heading', { name: 'Guild acquisitions' })).toBeFocused();
+         |                                                                              ^
+      28 |     await expect(guild.getByRole('tab', { name: 'Auction' })).toHaveCount(0);
+      29 |     await expect(guild.getByRole('article')).toHaveCount(4);
+      30 |     const first = guild.getByRole('article').first();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\acquisition.spec.ts:27:78
+
+    Error Context: test-results\acquisition-acquisition-pa-25f7c--real-report-rows-at-1280px-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\acquisition-acquisition-pa-25f7c--real-report-rows-at-1280px-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\acquisition-acquisition-pa-25f7c--real-report-rows-at-1280px-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\acquisition.spec.ts:20:3 › acquisition panels, keyboard bids and real report rows at 1600px 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator: getByRole('region', { name: 'Guild acquisitions' }).getByRole('heading', { name: 'Guild acquisitions' })
+    Expected: focused
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeFocused" getByRole('region', { name: 'Guild acquisitions' }).getByRole('heading', { name: 'Guild acquisitions' }) with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Guild acquisitions' }).getByRole('heading', { name: 'Guild acquisitions' })
+
+
+      25 |     await keyActivate(page, page.getByTestId('trial-tile-service-1'));
+      26 |     const guild = page.getByRole('region', { name: 'Guild acquisitions' });
+    > 27 |     await expect(guild.getByRole('heading', { name: 'Guild acquisitions' })).toBeFocused();
+         |                                                                              ^
+      28 |     await expect(guild.getByRole('tab', { name: 'Auction' })).toHaveCount(0);
+      29 |     await expect(guild.getByRole('article')).toHaveCount(4);
+      30 |     const first = guild.getByRole('article').first();
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\acquisition.spec.ts:27:78
+
+    Error Context: test-results\acquisition-acquisition-pa-228a0--real-report-rows-at-1600px-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\acquisition-acquisition-pa-228a0--real-report-rows-at-1600px-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\acquisition-acquisition-pa-228a0--real-report-rows-at-1600px-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests\e2e\acquisition.spec.ts:63:1 › sells a market slave and releases a servant from the roster with exact weekly rows 
+
+    Error: expect(locator).toHaveAccessibleDescription(expected) failed
+
+    Locator: getByRole('region', { name: 'Slave Market acquisitions' }).getByRole('button', { name: 'Sell Ardis Frostmere' })
+    Expected: "Only slaves can be sold."
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveAccessibleDescription" getByRole('region', { name: 'Slave Market acquisitions' }).getByRole('button', { name: 'Sell Ardis Frostmere' }) with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Slave Market acquisitions' }).getByRole('button', { name: 'Sell Ardis Frostmere' })
+
+
+      71 |   await keyActivate(page, page.getByTestId('trial-tile-slum-1'));
+      72 |   const panel = page.getByRole('region', { name: 'Slave Market acquisitions' });
+    > 73 |   await expect(panel.getByRole('button', { name: 'Sell ' + servant.character.name })).toHaveAccessibleDescription('Only slaves can be sold.');
+         |                                                                                       ^
+      74 |   await keyActivate(page, panel.getByRole('button', { name: 'Sell ' + slave.character.name }));
+      75 |   const sold = act(hired, 'SELL_NPC', { npcId: slave.character.id }).next;
+      76 |   expect(await exportLife(page)).toStrictEqual(sold);
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\acquisition.spec.ts:73:87
+
+    Error Context: test-results\acquisition-sells-a-market-47589-ster-with-exact-weekly-rows-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\acquisition-sells-a-market-47589-ster-with-exact-weekly-rows-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\acquisition-sells-a-market-47589-ster-with-exact-weekly-rows-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests\e2e\acquisition.spec.ts:93:3 › acquisition tabs fit 320px and selecting an ordinary tile restores management focus 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('region', { name: 'Auction House acquisitions' }).getByRole('tab', { name: 'Auction' })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('region', { name: 'Auction House acquisitions' }).getByRole('tab', { name: 'Auction' }) with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Auction House acquisitions' }).getByRole('tab', { name: 'Auction' })
+
+
+       at character-life-navigation.helpers.ts:56
+
+      54 | // Traverse the real tab order; never manufacture focus or skip hidden-view checks.
+      55 | export async function tabTo(page: Page, target: Locator) {
+    > 56 |   await expect(target).toBeVisible();
+         |                        ^
+      57 |   for (let step = 0; step < 160; step++) {
+      58 |     if (await target.evaluate(node => node === document.activeElement)) return;
+      59 |     await page.keyboard.press('Tab');
+        at tabTo (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:56:24)
+        at keyActivate (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:66:9)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\acquisition.spec.ts:100:11
+
+    Error Context: test-results\acquisition-acquisition-ta-c37a5-e-restores-management-focus-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\acquisition-acquisition-ta-c37a5-e-restores-management-focus-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\acquisition-acquisition-ta-c37a5-e-restores-management-focus-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium] › tests\e2e\acquisition.spec.ts:93:3 › acquisition tabs fit 375px and selecting an ordinary tile restores management focus 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('region', { name: 'Auction House acquisitions' }).getByRole('tab', { name: 'Auction' })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('region', { name: 'Auction House acquisitions' }).getByRole('tab', { name: 'Auction' }) with timeout 5000ms
+      - waiting for getByRole('region', { name: 'Auction House acquisitions' }).getByRole('tab', { name: 'Auction' })
+
+
+       at character-life-navigation.helpers.ts:56
+
+      54 | // Traverse the real tab order; never manufacture focus or skip hidden-view checks.
+      55 | export async function tabTo(page: Page, target: Locator) {
+    > 56 |   await expect(target).toBeVisible();
+         |                        ^
+      57 |   for (let step = 0; step < 160; step++) {
+      58 |     if (await target.evaluate(node => node === document.activeElement)) return;
+      59 |     await page.keyboard.press('Tab');
+        at tabTo (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:56:24)
+        at keyActivate (C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\character-life-navigation.helpers.ts:66:9)
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\acquisition.spec.ts:100:11
+
+    Error Context: test-results\acquisition-acquisition-ta-b4f97-e-restores-management-focus-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\acquisition-acquisition-ta-b4f97-e-restores-management-focus-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\acquisition-acquisition-ta-b4f97-e-restores-management-focus-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5 failed
+    [chromium] › tests\e2e\acquisition.spec.ts:20:3 › acquisition panels, keyboard bids and real report rows at 1280px 
+    [chromium] › tests\e2e\acquisition.spec.ts:20:3 › acquisition panels, keyboard bids and real report rows at 1600px 
+    [chromium] › tests\e2e\acquisition.spec.ts:63:1 › sells a market slave and releases a servant from the roster with exact weekly rows 
+    [chromium] › tests\e2e\acquisition.spec.ts:93:3 › acquisition tabs fit 320px and selecting an ordinary tile restores management focus 
+    [chromium] › tests\e2e\acquisition.spec.ts:93:3 › acquisition tabs fit 375px and selecting an ordinary tile restores management focus 
+
+UTC finish 2026-11-24T09:31:42+00:00
+Exit 1

@@ -1,0 +1,26 @@
+HEAD and tree
+822c695c2e59b7f2f1b5c5cd8a882f9f7f62a6f1
+3ebe68c4717b79a65667bdd658414f8e944654c5
+Status before command
+ M packages/simulation/src/__tests__/character-life-observation.test.ts
+ M packages/simulation/src/character-life-observation.ts
+ M packages/simulation/src/index.ts
+ M packages/ui/src/CharacterLifeCharacters.svelte
+ M packages/ui/src/CharacterLifeCity.svelte
+ M packages/ui/src/InsideCity.svelte
+ M packages/ui/src/SoloWeekReport.svelte
+ M packages/ui/src/TileManagement.svelte
+ M packages/ui/src/report-letters.ts
+ M tests/e2e/character-life-navigation.helpers.ts
+?? packages/ui/src/AcquisitionPanel.svelte
+?? packages/ui/src/__tests__/acquisition-view.test.ts
+?? packages/ui/src/acquisition-view.ts
+?? tests/e2e/acquisition.spec.ts
+CI=
+UTC start 2026-11-24T09:36:45+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/candidate-bundle.mjs C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3
+{"scope":"B3.3 approved uncommitted candidate before HOLD","head":"822c695c2e59b7f2f1b5c5cd8a882f9f7f62a6f1","headTree":"3ebe68c4717b79a65667bdd658414f8e944654c5","baseline":{"head":"b184357d235d164478584e36b96d063551124e66","js":150858,"css":7567,"total":158425},"candidate":{"js":161710,"css":7682,"total":169392},"budgetBytes":200000,"budgetHeadroomBytes":30608,"deltaFromMainBytes":10967,"files":[{"name":"index-Bjrr5xVb.css","bytes":38088,"sha256":"2f861e0f485417217bcab208b97adf3ec5be22a846ce0964230465e47e4ba597","gzipBytes":7682,"gzipSha256":"dc650afa1c636f8d23dbd86c86997d197492a7b9394e999bfcc4de6c33720771","rawArtifact":"index-Bjrr5xVb.css.gz"},{"name":"index-NU2TdnyX.js","bytes":510207,"sha256":"320571ea06e86aea8ec425f7f6f8c1d458ce80e5f9d5b0d15f67c24a6f5ea82e","gzipBytes":161710,"gzipSha256":"f9f59acf5b6edb7257f7c2c2557e71f760cec2ab021bc298886c89ced04bb14f","rawArtifact":"index-NU2TdnyX.js.gz"}]}
+
+UTC finish 2026-11-24T09:36:46+00:00
+Exit 0

@@ -1,0 +1,48 @@
+HEAD and tree
+825ca5c27cc3d440705dffb6b41699d1dcbd2e4e
+b935bbe742992eb4cd792c93fe2881e1e67ea5fb
+Status before command
+ M packages/core/src/__tests__/catalog-data.test.ts
+ M packages/persistence/src/__tests__/npc-life-records.test.ts
+ M packages/simulation/src/__tests__/npc-acquisition.test.ts
+ M packages/simulation/src/__tests__/replay-checkpoint.test.ts
+ M packages/ui/src/__tests__/acquisition-view.test.ts
+ M tests/e2e/acquisition.spec.ts
+CI=
+UTC start 2026-11-24T11:52:58+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\node_modules\vitest\vitest.mjs run packages\simulation\src\__tests__\replay-checkpoint.test.ts -t "refuses an edited legal raise"
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/replay-checkpoint.test.ts (15 tests | 1 failed | 14 skipped) 120ms
+   × refuses an edited legal raise whose counter no longer matches the stored auction 115ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/replay-checkpoint.test.ts > refuses an edited legal raise whose counter no longer matches the stored auction
+AssertionError: expected 'world:outside' to be 'city:city' // Object.is equality
+
+Expected: "city:city"
+Received: "world:outside"
+
+ ❯ assertRefused packages/simulation/src/__tests__/replay-checkpoint.test.ts:52:46
+     50|   try { recordsToSession(rows); } catch (caught) { rowError = caught i…
+     51|   expect(rowError).toBeInstanceOf(StoreRecordError);
+     52|   expect((rowError as StoreRecordError).ref).toBe('city:city');
+       |                                              ^
+     53|   expect((rowError as Error).message).toBe('Invalid store record: city…
+     54|   expect(rows).toStrictEqual(before);
+ ❯ packages/simulation/src/__tests__/replay-checkpoint.test.ts:60:3
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 14 skipped (15)
+   Start at  18:52:59
+   Duration  2.22s (transform 1.19s, setup 0ms, import 1.56s, tests 120ms, environment 0ms)
+
+
+UTC finish 2026-11-24T11:53:01+00:00
+Exit 1

@@ -1,0 +1,48 @@
+HEAD and tree
+825ca5c27cc3d440705dffb6b41699d1dcbd2e4e
+b935bbe742992eb4cd792c93fe2881e1e67ea5fb
+Status before command
+ M packages/core/src/__tests__/catalog-data.test.ts
+ M packages/persistence/src/__tests__/fixtures/society-v12/life-laws.json
+ M packages/persistence/src/__tests__/npc-life-records.test.ts
+ M packages/simulation/src/__tests__/npc-acquisition.test.ts
+ M packages/simulation/src/__tests__/replay-checkpoint.test.ts
+ M packages/ui/src/__tests__/acquisition-view.test.ts
+ M tests/e2e/acquisition.spec.ts
+CI=
+UTC start 2026-11-24T11:53:01+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\node_modules\vitest\vitest.mjs run packages/persistence/src/__tests__/npc-life-records.test.ts -t "pins the original bytes"
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/persistence/src/__tests__/npc-life-records.test.ts (12 tests | 1 failed | 11 skipped) 50ms
+   × pins the original bytes of all ten historical v12 checkpoints 45ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/persistence/src/__tests__/npc-life-records.test.ts > pins the original bytes of all ten historical v12 checkpoints
+AssertionError: expected 'af48d22ff3eebca420b3f5377edd9491cd367…' to be 'f21b183ab20596596c19357e620213b295beb…' // Object.is equality
+
+Expected: "f21b183ab20596596c19357e620213b295bebd539e0ae19fa1f96652c78b8255"
+Received: "af48d22ff3eebca420b3f5377edd9491cd36788ecc9f5b6f8ce8a95842a6834f"
+
+ ❯ packages/persistence/src/__tests__/npc-life-records.test.ts:61:30
+     59|   const hash = createHash('sha256');
+     60|   for (const file of files) hash.update(file).update('\0').update(read…
+     61|   expect(hash.digest('hex')).toBe('f21b183ab20596596c19357e620213b295b…
+       |                              ^
+     62| });
+     63|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 11 skipped (12)
+   Start at  18:53:03
+   Duration  2.22s (transform 1.18s, setup 0ms, import 1.59s, tests 50ms, environment 0ms)
+
+
+UTC finish 2026-11-24T11:53:05+00:00
+Exit 1

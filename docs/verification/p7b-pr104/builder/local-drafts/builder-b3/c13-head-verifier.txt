@@ -1,0 +1,13 @@
+HEAD and tree
+825ca5c27cc3d440705dffb6b41699d1dcbd2e4e
+b935bbe742992eb4cd792c93fe2881e1e67ea5fb
+Status before command
+CI=1
+UTC start 2026-11-24T09:58:01+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ python C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/packet.py verify-head 3 --correction-13
+Correction 13: exact two-hunk approval matches 73b33d535fd6c31e070d65b3e327097fa4178138e68c03e9b20899cc4ee60c3b
+verify-head: 86 paths verified against approved bytes and stage projection
+
+UTC finish 2026-11-24T09:58:09+00:00
+Exit 0

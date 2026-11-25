@@ -1,0 +1,34 @@
+HEAD and tree
+8aa7dc4cefbc759ce2a7d158937011c3afe71549
+a44d6bcd31a26f3519a39f5b71e481045a2b9318
+Status before command
+ M packages/core/src/__tests__/helpers/npcs.ts
+ M packages/core/src/character/validate.ts
+ M packages/core/src/trial/acquisition-replay.ts
+ M packages/persistence/src/__tests__/item-records.test.ts
+ M packages/persistence/src/__tests__/items-rebuild-order.test.ts
+ M packages/persistence/src/session-records.ts
+ M packages/simulation/src/__tests__/character-life-command.test.ts
+ M packages/simulation/src/__tests__/character-life-observation.test.ts
+ M packages/simulation/src/__tests__/npc-homes.test.ts
+ M packages/simulation/src/__tests__/replay-checkpoint.test.ts
+CI=
+UTC start 2026-11-24T13:19:21+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ python C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c17/archive-hold.py
+warning: in the working copy of 'packages/core/src/__tests__/helpers/npcs.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/core/src/character/validate.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/core/src/trial/acquisition-replay.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/persistence/src/__tests__/item-records.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/persistence/src/__tests__/items-rebuild-order.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/persistence/src/session-records.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/character-life-command.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/character-life-observation.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/npc-homes.test.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/simulation/src/__tests__/replay-checkpoint.test.ts', LF will be replaced by CRLF the next time Git touches it
+Archived and reverse-checked all ten verified candidate files.
+Restored and hashed all original bytes. Status is empty and the saved patch passed the forward check.
+Patch SHA-256: 800a1f910530b04fa8380cf437724b1b6ac397f8aaf21f8d22152f5a8970e442
+
+UTC finish 2026-11-24T13:19:22+00:00
+Exit 0

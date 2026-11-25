@@ -1,0 +1,13 @@
+{
+  "path": "packages/core/src/trial/acquisition-replay.ts",
+  "heldSha256": "8302a6b0439ec82b3020b136520280ffcd81262be365add05b3e4317f5d4a917",
+  "offset": 2802,
+  "removedBase64": "",
+  "insertedUtf8": ": { boughtWeek: number; source: AcquisitionSource; slot: number | 'lot' } | undefined",
+  "insertedBase64": "OiB7IGJvdWdodFdlZWs6IG51bWJlcjsgc291cmNlOiBBY3F1aXNpdGlvblNvdXJjZTsgc2xvdDogbnVtYmVyIHwgJ2xvdCcgfSB8IHVuZGVmaW5lZA==",
+  "addedBytes": 85,
+  "finalSha256": "4622bfd578d536a9f30c5df150f0b917e878e75d0cb19f804cb6c491778fee7c",
+  "finalBytes": 6959,
+  "planSha256": "993347f6f03c076b968dd75af7bfecef6cbd7b35b4f8dde96d9c0a8c8a5d0d90",
+  "heldInventorySha256": "6f1de8483a6204fa0ea52d69b67d33e45e67dec3924a5e5072d18205bcca37b5"
+}

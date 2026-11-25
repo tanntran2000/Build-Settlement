@@ -1,0 +1,42 @@
+Base HEAD b184357d235d164478584e36b96d063551124e66
+Base tree 961567de7ef638861a55a42589be203037e123c9
+Candidate D:\QI Technology\Temp\p7b-b3-step0-opxuuxoj (plain snapshot)
+Check group typescript
+
+UTC start 2026-11-24T09:11:40+00:00
+CWD D:\QI Technology\Temp\p7b-b3-step0-opxuuxoj
+$ node node_modules/typescript/bin/tsc -p packages/core/tsconfig.json --noEmit
+
+UTC finish 2026-11-24T09:11:45+00:00
+Exit 0
+
+UTC start 2026-11-24T09:11:45+00:00
+CWD D:\QI Technology\Temp\p7b-b3-step0-opxuuxoj
+$ node node_modules/typescript/bin/tsc -p packages/simulation/tsconfig.json --noEmit
+
+UTC finish 2026-11-24T09:11:57+00:00
+Exit 0
+
+UTC start 2026-11-24T09:11:57+00:00
+CWD D:\QI Technology\Temp\p7b-b3-step0-opxuuxoj
+$ node node_modules/typescript/bin/tsc -p packages/persistence/tsconfig.json --noEmit
+
+UTC finish 2026-11-24T09:12:06+00:00
+Exit 0
+
+UTC start 2026-11-24T09:12:06+00:00
+CWD D:\QI Technology\Temp\p7b-b3-step0-opxuuxoj
+$ node node_modules/typescript/bin/tsc -p packages/content/tsconfig.json --noEmit
+
+UTC finish 2026-11-24T09:12:10+00:00
+Exit 0
+
+UTC start 2026-11-24T09:12:10+00:00
+CWD D:\QI Technology\Temp\p7b-b3-step0-opxuuxoj\packages\ui
+$ node ../../node_modules/svelte-check/bin/svelte-check --tsconfig ./tsconfig.json
+Loading svelte-check in workspace: d:\QI Technology\Temp\p7b-b3-step0-opxuuxoj\packages\ui
+Getting Svelte diagnostics...
+
+svelte-check found 0 errors and 0 warnings
+UTC finish 2026-11-24T09:12:33+00:00
+Exit 0

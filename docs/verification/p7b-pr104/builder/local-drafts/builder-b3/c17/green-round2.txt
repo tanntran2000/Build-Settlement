@@ -1,0 +1,30 @@
+HEAD and tree
+8aa7dc4cefbc759ce2a7d158937011c3afe71549
+a44d6bcd31a26f3519a39f5b71e481045a2b9318
+Status before command
+ M packages/core/src/__tests__/helpers/npcs.ts
+ M packages/core/src/character/validate.ts
+ M packages/core/src/trial/acquisition-replay.ts
+ M packages/persistence/src/__tests__/item-records.test.ts
+ M packages/persistence/src/__tests__/items-rebuild-order.test.ts
+ M packages/persistence/src/session-records.ts
+ M packages/simulation/src/__tests__/character-life-command.test.ts
+ M packages/simulation/src/__tests__/character-life-observation.test.ts
+ M packages/simulation/src/__tests__/npc-homes.test.ts
+ M packages/simulation/src/__tests__/replay-checkpoint.test.ts
+CI=
+UTC start 2026-11-24T13:17:48+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/vitest/vitest.mjs run packages/simulation/src/__tests__/replay-checkpoint.test.ts -t R2-[1-4]
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+
+ Test Files  1 passed (1)
+      Tests  8 passed | 16 skipped (24)
+   Start at  20:17:49
+   Duration  2.05s (transform 726ms, setup 0ms, import 944ms, tests 811ms, environment 0ms)
+
+
+UTC finish 2026-11-24T13:17:51+00:00
+Exit 0

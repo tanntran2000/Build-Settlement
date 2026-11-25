@@ -1,0 +1,70 @@
+P7-B B3 Astra review
+mcp:fd8900de-e662-4377-a0f9-56c25e0772ef  completed  codex/gpt-6.2-astra
+
+[assistant]
+**VERDICT: FAIL — 0 P0, 1 P1, 3 P2, 0 P3.** [Round‑2 review and per-finding status table](C:/Users/Admin/.t3/local-drafts/p7b-prB3/astra-review/astra-round2.md)
+
+Nine of the twelve round‑1 findings are closed at `8aa7dc4`. The remaining **P1** lets both checkpoint readers accept a paused market whose listing for a still-owned recruit has been removed. I reproduced releasing and buying that same NPC ID again. The three **P2s** cover altered purchase provenance after rollover, departures that imply 101 opening residents, and a new world-session regression where a successful Guild build prevents export.
+
+Full-market End Week showed a **median paired cost of +1.041 ms** against **0.978 ms** maximum measured noise. Four of five runs were slower, and three exceeded that noise. I read this as evidence of a small cost on the measured workload. **The timing HOLD decision remains with Tân** and is separate from the FAIL verdict.
+
+[user]
+Round 3. The owner (Tân) answered round 2 and the Builder's HOLDs with verbatim dialog answers: "Sửa cả 4 (Recommended)", "Ghi sổ rủi ro, không chặn B3 (Recommended)" (Correction 16), "Duyệt sửa kiểu + fixture (Recommended)" (Correction 17), "Duyệt + cho sửa kiểu nhỏ (Recommended)" (Correction 18), "Duyệt sửa 2 fixture (Recommended)" (Correction 19). Binding copy: C:/Users/Admin/.t3/local-drafts/p7b-prB3/binding-plan-bf63532.md (SHA-256 7af6beafd85ef7102215e265aca3b28c2a07198a832ec8152bbb9de44af66fd9; read Corrections 15–19).
+
+Target: feat/p7b-acquisition-market head 2dc0a650b597e86df68673437add18e356723037, two new commits on 8aa7dc4: dfcc524 `fix(simulation): close acquisition replay gaps (Astra round 2)` and 2dc0a65 `test(e2e): use earlier-week residents in long-name reflow fixtures`. Same worktree, read only; same rules (no edits, no servers unless ports 4173/4174 free, no full smoke).
+
+Builder evidence: C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c16/, c17/, c18/, c19/ (README, RED/GREEN logs, byte inventories, verifiers, smoke, bundle, save-size, timings, SHA256SUMS). Builder reports at 2dc0a65: gates 1–7 exit 0 (3,263 unit), CI=1 smoke 415/415.
+
+Check:
+1. R2-1..R2-4 closed: rerun your round-2 reproductions in both readers (and the world-session BUILD → serialize → LOAD_TRIAL path).
+2. Bytes since 8aa7dc4 equal the Correction 16 candidate, the two type-only insertions (Correction 17/18 rule: no runtime change, no as/any/ts-ignore) and the Correction 19 fixture spans, nothing else. The Correction 17 fixture changes (withNpcs records Guild offers as bought; existing tests expect "bought" rows; npc-homes week 8→9; acquisition reset in two persistence tests) and Correction 19 (earlier-week residents, retained week-1 market cleared, the long-report command oracle now reads the fixture week): confirm no assertion is loosened or removed and the 64-character/layout/focus assertions are unchanged.
+3. New issues in the new code. Apply the owner's stop rule (Correction 16 item 5): a forgery reachable only by hand-editing a save, not by legal play, is reported as P3 "risk-register" and does not fail the verdict; anything reachable by legal play, any regression and any test-strength problem keeps its normal severity.
+4. Timings in c19/timings/ look noisier than before (main-to-main noise up to 35 ms); say whether that run supports any conclusion. Correction 15 already accepted the ~1 ms full-market cost; do not decide performance.
+
+Output: C:/Users/Admin/.t3/local-drafts/p7b-prB3/astra-review/astra-round3.md (UTF-8): head/tree checked, per-finding status, new findings with file:line, final line `VERDICT: PASS` or `VERDICT: FAIL` (PASS = no P0–P2). Reply here with verdict, counts and path.
+
+[assistant]
+I’ll verify the head, tree, and binding corrections first, then rerun the four round‑2 reproductions. The report will distinguish regressions reachable through legal play from hand-edited checkpoints covered by Tân’s stop rule.
+
+[assistant]
+The byte verifier accounted for all 12 changed paths. Both type annotations produced identical JavaScript, and the browser specs retained their layout and focus assertions. I’m now checking the four earlier failures through the actual readers and dispatcher.
+
+[assistant]
+All four round‑2 reproductions now pass. I found a separate fixture regression at seed 25. Buying Guild slot 2 through the game succeeds and reloads in both readers, but the shared `withNpcs` helper throws for that same slot. I confirmed the helper accepted the key at the round‑2 head.
+
+[assistant]
+**VERDICT: FAIL** at `2dc0a65` · **0 P0, 0 P1, 1 P2, 1 P3**. All four round‑2 findings are closed.
+
+The **P2 blocker** is a shared test-fixture regression. At seed 25, buying Guild slot 2 succeeds in legal play and reloads through both readers, but `withNpcs` throws for that same slot because it misses a name already reserved by slot 0.
+
+The **P3** records a hand-edited resident ID that bypasses the provenance check. It falls under Tân’s risk-register rule. The C19 timings were too noisy to resolve a 1 ms change.
+
+[Open the round‑3 review](C:/Users/Admin/.t3/local-drafts/p7b-prB3/astra-review/astra-round3.md)
+
+[user]
+Round 4 (delta review). The owner (Tân) answered round 3 with verbatim dialog answer "Duyệt sửa helper (Recommended)", recorded as Plan correction 20 at 71a7839: C:/Users/Admin/.t3/local-drafts/p7b-prB3/binding-plan-71a7839.md (SHA-256 887164c35ffc07ba45ffef319159bf10d7266986b30686f8736e2d3ba0b8914b; read "### Correction 20"). R3-2 goes to the risk register (no code change).
+
+Target: feat/p7b-acquisition-market head 15f8c0224b4e398df3220c533bee404a08ca5fb3, tree 83c11b3a8362be1c1c69f632808c76a0c101caa8, one new commit on 2dc0a65: `test(core): take fixture recruit names from their guild offer`. Same worktree, read only; same rules.
+
+Builder evidence: C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c20/ (red-seed25.txt, green-seed25.txt, correction20-byte-inventory.json, final-head-verifier.txt, gate logs, smoke). Builder: gates 1–7 exit 0 (3,264 unit); full CI=1 smoke 414/415 with one timeout in the regression-build isolation case during a recorded 1 h 23 min Windows sleep, isolated rerun passed. Claude (Tester) runs a fresh full gates + CI=1 smoke at this head after your review.
+
+Check:
+1. R3-1 closed: rerun your seed-25 `withNpcs(session, [NPC_TEST_KEYS[2]])` probe and the real BUILD + BUY comparison; also a retained-offer case.
+2. Only packages/core/src/__tests__/helpers/npcs.ts and the new test changed since 2dc0a65; no product byte, no existing assertion changed; Correction 18 type-only rule respected.
+3. The helper change does not make other existing fixtures silently weaker (e.g. a test now gets a different resident name than its assertions assume but still passes).
+4. Whether the sleep-interrupted timeout plausibly relates to this commit.
+
+Output: C:/Users/Admin/.t3/local-drafts/p7b-prB3/astra-review/astra-round4.md (UTF-8): head/tree, R3-1 status, new findings with file:line, final line `VERDICT: PASS` or `VERDICT: FAIL` (PASS = no P0–P2). Reply here with verdict, counts and path.
+
+[assistant]
+I’ll check the two-file delta, reproduce seed 25 with fresh and retained Guild offers, and trace the timed-out smoke case before writing the verdict.
+
+[assistant]
+Both seed‑25 cases now produce Ragna Fircrest at salt 1 and round-trip through both readers. The timed-out smoke case rebuilds and hashes UI artifacts; it never calls the helper. Windows recorded 83 minutes asleep during that case.
+
+[assistant]
+**VERDICT: PASS** at `15f8c02`. **New findings: 0 P0, 0 P1, 0 P2, 0 P3.** [Round‑4 review](C:/Users/Admin/.t3/local-drafts/p7b-prB3/astra-review/astra-round4.md)
+
+**R3-1 is closed.** At seed 25, both reconstructed and retained Guild offers produced Ragna Fircrest at salt 1, matching the real purchase. All 636 comparisons of existing fixture outputs matched the parent. R3-2 remains recorded as a P3 risk.
+
+The builder’s full smoke remains **414/415**. The 83-minute Windows sleep plausibly explains the timeout, and the isolated case passed in 6.4 seconds. Claude’s fresh full run is pending.

@@ -1,0 +1,253 @@
+{
+  "status": "HOLD",
+  "reason": "Full CI=1 smoke recorded one regression-build timeout during Windows sleep. The required single isolated rerun passed.",
+  "sealedUTC": "2026-11-25T00:45:45+00:00",
+  "head": "15f8c0224b4e398df3220c533bee404a08ca5fb3",
+  "tree": "83c11b3a8362be1c1c69f632808c76a0c101caa8",
+  "base": "b184357d235d164478584e36b96d063551124e66",
+  "branch": "feat/p7b-acquisition-market",
+  "gitStatus": "",
+  "portsFree": true,
+  "commitMessage": "test(core): take fixture recruit names from their guild offer\n\nCo-authored-by: Codex <noreply@openai.com>",
+  "byteInventory": {
+    "reviewedHead": "2dc0a650b597e86df68673437add18e356723037",
+    "planSha256": "887164c35ffc07ba45ffef319159bf10d7266986b30686f8736e2d3ba0b8914b",
+    "reviewSha256": "6eff9a7f2e448b9c829b308e49ea10f96fd39d16b0bad32ea95b96a0a6276128",
+    "encoding": "Zero-based old byte offsets. Base64 and UTF-8 payloads preserve all line endings.",
+    "entries": [
+      {
+        "path": "packages/core/src/__tests__/helpers/npcs.ts",
+        "status": "M",
+        "oldSha256": "eb6d93896e18bcd3c2a8d138cd7cf6fb261082ddfd9673120d388042959d356a",
+        "newSha256": "a76b58b4192486f0d89b9180a915b7f662baa37ea0c3beb6188d943503719ce3",
+        "oldBytes": 3749,
+        "newBytes": 3947,
+        "replacements": [
+          {
+            "offset": 150,
+            "removedBase64": "",
+            "insertedBase64": "aW1wb3J0IHsgYWNxdWlzaXRpb25OcGMgfSBmcm9tICcuLi8uLi90cmlhbC9hY3F1aXNpdGlvbi5qcyc7Cg==",
+            "removedUtf8": "",
+            "insertedUtf8": "import { acquisitionNpc } from '../../trial/acquisition.js';\n"
+          },
+          {
+            "offset": 1131,
+            "removedBase64": "",
+            "insertedBase64": "ICBjb25zdCBsaWZlID0gJ3Byb2ZpbGVzJyBpbiBuZXh0ID8gbmV4dCA6IHVuZGVmaW5lZDsK",
+            "removedUtf8": "",
+            "insertedUtf8": "  const life = 'profiles' in next ? next : undefined;\n"
+          },
+          {
+            "offset": 1198,
+            "removedBase64": "ICBjb25zdCBndWlsZFB1cmNoYXNlcyA9IG5ldyBNYXA8bnVtYmVyLCBudW1iZXI+KCk7CiAgZm9yIChjb25zdCB7IHdlZWssIHNvdXJjZSwgc2xvdCwgbmFtZVNhbHQsIGhvbWVUaWxlSWQgPSAnZXN0YXRlLTInIH0gb2Yga2V5cykgewo=",
+            "insertedBase64": "ICAvLyBSZXNlcnZlIGVhcmxpZXIgcmVzaWRlbnRzIGJlZm9yZSBkcmF3aW5nIHN0b2NrLCB0aGVuIGFkZCByZWNydWl0cyBpbiBjYWxsZXIgb3JkZXIuCiAgY29uc3QgcmVjcnVpdHMgPSBrZXlzLm1hcCgoeyB3ZWVrLCBzb3VyY2UsIHNsb3QsIG5hbWVTYWx0LCBob21lVGlsZUlkID0gJ2VzdGF0ZS0yJyB9KSA9PiB7CiAgICBpZiAobGlmZSAmJiB3ZWVrID09PSBsaWZlLmNpdHkud29ybGQud2VlayAmJiBzb3VyY2UgPT09ICdndWlsZCcgJiYgc2xvdCAhPT0gJ2xvdCcpIHsKICAgICAgcmV0dXJuIHsgaG9tZVRpbGVJZCwgcmVjcnVpdDogKCkgPT4gYnV5R3VpbGRGaXh0dXJlTnBjKGxpZmUsIHNsb3QsIG5hbWVzKSB9OwogICAgfQo=",
+            "removedUtf8": "  const guildPurchases = new Map<number, number>();\n  for (const { week, source, slot, nameSalt, homeTileId = 'estate-2' } of keys) {\n",
+            "insertedUtf8": "  // Reserve earlier residents before drawing stock, then add recruits in caller order.\n  const recruits = keys.map(({ week, source, slot, nameSalt, homeTileId = 'estate-2' }) => {\n    if (life && week === life.city.world.week && source === 'guild' && slot !== 'lot') {\n      return { homeTileId, recruit: () => buyGuildFixtureNpc(life, slot, names) };\n    }\n"
+          },
+          {
+            "offset": 1670,
+            "removedBase64": "",
+            "insertedBase64": "ICAgIHJldHVybiB7IGhvbWVUaWxlSWQsIHJlY3J1aXQ6ICgpID0+IGdlbmVyYXRlZCB9OwogIH0pOwogIGZvciAoY29uc3QgeyBob21lVGlsZUlkLCByZWNydWl0IH0gb2YgcmVjcnVpdHMpIHsKICAgIGNvbnN0IGdlbmVyYXRlZCA9IHJlY3J1aXQoKTsK",
+            "removedUtf8": "",
+            "insertedUtf8": "    return { homeTileId, recruit: () => generated };\n  });\n  for (const { homeTileId, recruit } of recruits) {\n    const generated = recruit();\n"
+          },
+          {
+            "offset": 1752,
+            "removedBase64": "ICAgIGlmICgncHJvZmlsZXMnIGluIG5leHQpIHsKICAgICAgbmV4dC5wcm9maWxlcy5wdXNoKGdlbmVyYXRlZC5wcm9maWxlKTsKICAgICAgaWYgKHdlZWsgPT09IG5leHQuY2l0eS53b3JsZC53ZWVrICYmIHNvdXJjZSA9PT0gJ2d1aWxkJyAmJiBzbG90ICE9PSAnbG90JykgZ3VpbGRQdXJjaGFzZXMuc2V0KHNsb3QsIHNhbHQpOwogICAgfQo=",
+            "insertedBase64": "ICAgIGxpZmU/LnByb2ZpbGVzLnB1c2goZ2VuZXJhdGVkLnByb2ZpbGUpOwo=",
+            "removedUtf8": "    if ('profiles' in next) {\n      next.profiles.push(generated.profile);\n      if (week === next.city.world.week && source === 'guild' && slot !== 'lot') guildPurchases.set(slot, salt);\n    }\n",
+            "insertedUtf8": "    life?.profiles.push(generated.profile);\n"
+          },
+          {
+            "offset": 1950,
+            "removedBase64": "ICBpZiAoJ3Byb2ZpbGVzJyBpbiBuZXh0ICYmIGd1aWxkUHVyY2hhc2VzLnNpemUpIHJlY29yZEd1aWxkRml4dHVyZVB1cmNoYXNlcyhuZXh0LCBndWlsZFB1cmNoYXNlcyk7CiAgY29uc3QgdmFsaWQgPSAncHJvZmlsZXMnIGluIG5leHQgPyBpc0NoYXJhY3RlckxpZmVTZXNzaW9uU3RhdGUobmV4dCkgOiBpc05wY1dvcmxkU2Vzc2lvblN0YXRlKG5leHQpOwo=",
+            "insertedBase64": "ICBjb25zdCB2YWxpZCA9IGxpZmUgPyBpc0NoYXJhY3RlckxpZmVTZXNzaW9uU3RhdGUobGlmZSkgOiBpc05wY1dvcmxkU2Vzc2lvblN0YXRlKG5leHQpOwo=",
+            "removedUtf8": "  if ('profiles' in next && guildPurchases.size) recordGuildFixturePurchases(next, guildPurchases);\n  const valid = 'profiles' in next ? isCharacterLifeSessionState(next) : isNpcWorldSessionState(next);\n",
+            "insertedUtf8": "  const valid = life ? isCharacterLifeSessionState(life) : isNpcWorldSessionState(next);\n"
+          },
+          {
+            "offset": 2239,
+            "removedBase64": "Ly8gU3ludGhldGljIHdlZWstb2YtcHVyY2hhc2UgQ2hhcmFjdGVyIExpZmUgZml4dHVyZXMgcmV0YWluIHRoZSBHdWlsZCBvZmZlcnMKLy8gdGhhdCBhZG1pdHRlZCB0aGVpciBpbmplY3RlZCByZXNpZGVudHMsIGFzIGEgcmVwbGFjZWQgR3VpbGQgd291bGQuCmZ1bmN0aW9uIHJlY29yZEd1aWxkRml4dHVyZVB1cmNoYXNlcyhzZXNzaW9uOiBDaGFyYWN0ZXJMaWZlU2Vzc2lvblN0YXRlLCBwdXJjaGFzZXM6IFJlYWRvbmx5TWFwPG51bWJlciwgbnVtYmVyPik6IHZvaWQgewogIGNvbnN0IHsgY2l0eSwgbnBjcyB9ID0gc2Vzc2lvbjsK",
+            "insertedBase64": "Ly8gQSBzeW50aGV0aWMgcHVyY2hhc2UgY2FuIHJldGFpbiBpdHMgb2ZmZXJzIGV2ZW4gd2hlbiBubyBHdWlsZCBidWlsZGluZyByZW1haW5zLgpmdW5jdGlvbiBidXlHdWlsZEZpeHR1cmVOcGMoc2Vzc2lvbjogQ2hhcmFjdGVyTGlmZVNlc3Npb25TdGF0ZSwgc2xvdDogbnVtYmVyLCBuYW1lczogUmVhZG9ubHlTZXQ8c3RyaW5nPikgewogIGNvbnN0IHsgY2l0eSB9ID0gc2Vzc2lvbjsK",
+            "removedUtf8": "// Synthetic week-of-purchase Character Life fixtures retain the Guild offers\n// that admitted their injected residents, as a replaced Guild would.\nfunction recordGuildFixturePurchases(session: CharacterLifeSessionState, purchases: ReadonlyMap<number, number>): void {\n  const { city, npcs } = session;\n",
+            "insertedUtf8": "// A synthetic purchase can retain its offers even when no Guild building remains.\nfunction buyGuildFixtureNpc(session: CharacterLifeSessionState, slot: number, names: ReadonlySet<string>) {\n  const { city } = session;\n"
+          },
+          {
+            "offset": 2652,
+            "removedBase64": "ICBhY3F1aXNpdGlvbi53ZWVrID0gd2VlazsKICBjb25zdCByZXRhaW5lZCA9IGFjcXVpc2l0aW9uLnN0b2NrLmZpbHRlcihvZmZlciA9PiBvZmZlci5zb3VyY2UgPT09ICdndWlsZCcpOwogIGlmIChyZXRhaW5lZC5sZW5ndGgpIHsKICAgIGZvciAoY29uc3Qgb2ZmZXIgb2YgcmV0YWluZWQpIGlmIChwdXJjaGFzZXMuaGFzKG9mZmVyLnNsb3QpKSBvZmZlci5zdGF0dXMgPSAnYm91Z2h0JzsKICAgIHJldHVybjsK",
+            "insertedBase64": "ICBpZiAoIWFjcXVpc2l0aW9uLnN0b2NrLnNvbWUob2ZmZXIgPT4gb2ZmZXIuc291cmNlID09PSAnZ3VpbGQnKSkgewogICAgYWNxdWlzaXRpb24ud2VlayA9IHdlZWs7CiAgICBjb25zdCB1c2VkID0gbmV3IFNldChuYW1lcyk7CiAgICBmb3IgKGNvbnN0IHsgbmFtZSB9IG9mIGFjcXVpc2l0aW9uLmRlcGFydHVyZXMpIHVzZWQuYWRkKG5hbWUpOwogICAgZm9yIChjb25zdCB7IHNvdXJjZSwgc2xvdCwgbmFtZVNhbHQgfSBvZiBhY3F1aXNpdGlvbi5zdG9jaykgdXNlZC5hZGQobWFya2V0TnBjTmFtZSh3b3JsZFNlZWQsIHdlZWssIHNvdXJjZSwgc2xvdCwgbmFtZVNhbHQpLm5hbWUpOwogICAgZm9yIChjb25zdCB7IHNvdXJjZSwgbmFtZVNhbHQgfSBvZiBhY3F1aXNpdGlvbi5sb3RzKSB1c2VkLmFkZChtYXJrZXROcGNOYW1lKHdvcmxkU2VlZCwgd2Vlaywgc291cmNlLCAnbG90JywgbmFtZVNhbHQpLm5hbWUpOwogICAgZm9yIChsZXQgaW5kZXggPSAwOyBpbmRleCA8IFA3Ql9UUklBTC5zdG9ja1NpemU7IGluZGV4ICs9IDEpIHsKICAgICAgbGV0IG5hbWVTYWx0ID0gMDsKICAgICAgbGV0IHsgbmFtZSB9ID0gbWFya2V0TnBjTmFtZSh3b3JsZFNlZWQsIHdlZWssICdndWlsZCcsIGluZGV4LCBuYW1lU2FsdCk7CiAgICAgIHdoaWxlICh1c2VkLmhhcyhuYW1lKSkgKHsgbmFtZSB9ID0gbWFya2V0TnBjTmFtZSh3b3JsZFNlZWQsIHdlZWssICdndWlsZCcsIGluZGV4LCArK25hbWVTYWx0KSk7CiAgICAgIHVzZWQuYWRkKG5hbWUpOwogICAgICBhY3F1aXNpdGlvbi5zdG9jay5wdXNoKHsgc291cmNlOiAnZ3VpbGQnLCBzbG90OiBpbmRleCwgbmFtZVNhbHQsIHN0YXR1czogJ29wZW4nIH0pOwogICAgfQo=",
+            "removedUtf8": "  acquisition.week = week;\n  const retained = acquisition.stock.filter(offer => offer.source === 'guild');\n  if (retained.length) {\n    for (const offer of retained) if (purchases.has(offer.slot)) offer.status = 'bought';\n    return;\n",
+            "insertedUtf8": "  if (!acquisition.stock.some(offer => offer.source === 'guild')) {\n    acquisition.week = week;\n    const used = new Set(names);\n    for (const { name } of acquisition.departures) used.add(name);\n    for (const { source, slot, nameSalt } of acquisition.stock) used.add(marketNpcName(worldSeed, week, source, slot, nameSalt).name);\n    for (const { source, nameSalt } of acquisition.lots) used.add(marketNpcName(worldSeed, week, source, 'lot', nameSalt).name);\n    for (let index = 0; index < P7B_TRIAL.stockSize; index += 1) {\n      let nameSalt = 0;\n      let { name } = marketNpcName(worldSeed, week, 'guild', index, nameSalt);\n      while (used.has(name)) ({ name } = marketNpcName(worldSeed, week, 'guild', index, ++nameSalt));\n      used.add(name);\n      acquisition.stock.push({ source: 'guild', slot: index, nameSalt, status: 'open' });\n    }\n"
+          },
+          {
+            "offset": 2890,
+            "removedBase64": "ICBjb25zdCB1c2VkID0gbmV3IFNldChucGNzLmZpbHRlcihucGMgPT4gbnBjLmhvdXNlaG9sZC5zb3VyY2UgIT09ICdndWlsZCcgfHwgbnBjLmhvdXNlaG9sZC5ib3VnaHRXZWVrICE9PSB3ZWVrKQogICAgLm1hcChucGMgPT4gbnBjLmNoYXJhY3Rlci5uYW1lKSk7CiAgZm9yIChjb25zdCB7IHNvdXJjZSwgc2xvdCwgbmFtZVNhbHQgfSBvZiBhY3F1aXNpdGlvbi5zdG9jaykgdXNlZC5hZGQobWFya2V0TnBjTmFtZSh3b3JsZFNlZWQsIHdlZWssIHNvdXJjZSwgc2xvdCwgbmFtZVNhbHQpLm5hbWUpOwogIGZvciAoY29uc3QgeyBzb3VyY2UsIG5hbWVTYWx0IH0gb2YgYWNxdWlzaXRpb24ubG90cykgdXNlZC5hZGQobWFya2V0TnBjTmFtZSh3b3JsZFNlZWQsIHdlZWssIHNvdXJjZSwgJ2xvdCcsIG5hbWVTYWx0KS5uYW1lKTsKICBmb3IgKGxldCBzbG90ID0gMDsgc2xvdCA8IFA3Ql9UUklBTC5zdG9ja1NpemU7IHNsb3QgKz0gMSkgewogICAgY29uc3QgcHVyY2hhc2VkID0gcHVyY2hhc2VzLmhhcyhzbG90KTsKICAgIGxldCBuYW1lU2FsdCA9IHB1cmNoYXNlcy5nZXQoc2xvdCkgPz8gMDsKICAgIHdoaWxlICghcHVyY2hhc2VkICYmIHVzZWQuaGFzKG1hcmtldE5wY05hbWUod29ybGRTZWVkLCB3ZWVrLCAnZ3VpbGQnLCBzbG90LCBuYW1lU2FsdCkubmFtZSkpIG5hbWVTYWx0ICs9IDE7CiAgICB1c2VkLmFkZChtYXJrZXROcGNOYW1lKHdvcmxkU2VlZCwgd2VlaywgJ2d1aWxkJywgc2xvdCwgbmFtZVNhbHQpLm5hbWUpOwogICAgYWNxdWlzaXRpb24uc3RvY2sucHVzaCh7IHNvdXJjZTogJ2d1aWxkJywgc2xvdCwgbmFtZVNhbHQsIHN0YXR1czogcHVyY2hhc2VkID8gJ2JvdWdodCcgOiAnb3BlbicgfSk7CiAgfQo=",
+            "insertedBase64": "ICBjb25zdCBvZmZlciA9IGFjcXVpc2l0aW9uLnN0b2NrLmZpbmQocm93ID0+IHJvdy5zb3VyY2UgPT09ICdndWlsZCcgJiYgcm93LnNsb3QgPT09IHNsb3QpOwogIGlmICghb2ZmZXIgfHwgb2ZmZXIuc3RhdHVzICE9PSAnb3BlbicpIHRocm93IG5ldyBFcnJvcignTm8gb3BlbiBHdWlsZCBvZmZlciBmb3IgZml4dHVyZSBzbG90LicpOwogIG9mZmVyLnN0YXR1cyA9ICdib3VnaHQnOwogIHJldHVybiBhY3F1aXNpdGlvbk5wYyh3b3JsZFNlZWQsIHdlZWssIG9mZmVyLnNvdXJjZSwgb2ZmZXIuc2xvdCwgb2ZmZXIubmFtZVNhbHQpOwo=",
+            "removedUtf8": "  const used = new Set(npcs.filter(npc => npc.household.source !== 'guild' || npc.household.boughtWeek !== week)\n    .map(npc => npc.character.name));\n  for (const { source, slot, nameSalt } of acquisition.stock) used.add(marketNpcName(worldSeed, week, source, slot, nameSalt).name);\n  for (const { source, nameSalt } of acquisition.lots) used.add(marketNpcName(worldSeed, week, source, 'lot', nameSalt).name);\n  for (let slot = 0; slot < P7B_TRIAL.stockSize; slot += 1) {\n    const purchased = purchases.has(slot);\n    let nameSalt = purchases.get(slot) ?? 0;\n    while (!purchased && used.has(marketNpcName(worldSeed, week, 'guild', slot, nameSalt).name)) nameSalt += 1;\n    used.add(marketNpcName(worldSeed, week, 'guild', slot, nameSalt).name);\n    acquisition.stock.push({ source: 'guild', slot, nameSalt, status: purchased ? 'bought' : 'open' });\n  }\n",
+            "insertedUtf8": "  const offer = acquisition.stock.find(row => row.source === 'guild' && row.slot === slot);\n  if (!offer || offer.status !== 'open') throw new Error('No open Guild offer for fixture slot.');\n  offer.status = 'bought';\n  return acquisitionNpc(worldSeed, week, offer.source, offer.slot, offer.nameSalt);\n"
+          }
+        ]
+      },
+      {
+        "path": "packages/simulation/src/__tests__/guild-fixture-names.test.ts",
+        "status": "A",
+        "oldSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "newSha256": "0549a32342d5ae280a567c08efc4f24ad35ba0b87e2073cbe290e5b12f5fc706",
+        "oldBytes": 0,
+        "newBytes": 1598,
+        "replacements": [
+          {
+            "offset": 0,
+            "removedBase64": "",
+            "insertedBase64": "aW1wb3J0IHsgZXhwZWN0LCBpdCB9IGZyb20gJ3ZpdGVzdCc7CmltcG9ydCB7IGNyZWF0ZUNoYXJhY3RlckxpZmVTZXNzaW9uLCBERUZBVUxUX1BMQVlFUl9EUkFGVCwgaXNDaGFyYWN0ZXJMaWZlU2Vzc2lvblN0YXRlIH0gZnJvbSAnQGhhdmVuL2NvcmUnOwppbXBvcnQgeyBOUENfVEVTVF9LRVlTLCB3aXRoTnBjcyB9IGZyb20gJ0BoYXZlbi9jb3JlL3Rlc3RpbmcvbnBjcyc7CmltcG9ydCB7IHN1Y2NlZWRlZCB9IGZyb20gJy4vYWNxdWlzaXRpb24tZml4dHVyZS5qcyc7CgppdCgndXNlcyB0aGUgc2VlZC0yNSBHdWlsZCBzbG90IDIgbmFtZSBmcm9tIHJlY29uc3RydWN0ZWQgYW5kIHJldGFpbmVkIG9mZmVycycsICgpID0+IHsKICBjb25zdCBjcmVhdGVkID0gY3JlYXRlQ2hhcmFjdGVyTGlmZVNlc3Npb24oMjUsIHsgLi4uc3RydWN0dXJlZENsb25lKERFRkFVTFRfUExBWUVSX0RSQUZUKSwgY3VycmVudE5hbWU6ICdNYXJrZXQgS2VlcGVyJyB9KTsKICBpZiAoIWNyZWF0ZWQuc3VjY2VzcykgdGhyb3cgRXJyb3IoY3JlYXRlZC5lcnJvci5tZXNzYWdlKTsKICBjb25zdCBrZXkgPSBOUENfVEVTVF9LRVlTWzJdLCBob21lVGlsZUlkID0gJ2VzdGF0ZS0yJzsKICBjb25zdCBidWlsdCA9IHN1Y2NlZWRlZChjcmVhdGVkLnZhbHVlLCAnQlVJTEQnLCB7IHRpbGVJZDogJ3NlcnZpY2UtMScsIHR5cGVJZDoga2V5LnNvdXJjZSB9KS5uZXh0OwogIGNvbnN0IGJvdWdodCA9IHN1Y2NlZWRlZChidWlsdCwgJ0JVWV9OUEMnLCB7IHNvdXJjZToga2V5LnNvdXJjZSwgc2xvdDoga2V5LnNsb3QsIGhvbWVUaWxlSWQgfSkubmV4dDsKICBjb25zdCBhY3F1aXNpdGlvbiA9IGJvdWdodC5jaXR5LnNvY2lldHkhLmFjcXVpc2l0aW9uOwogIGV4cGVjdChib3VnaHQubnBjc1swXS5jaGFyYWN0ZXIubmFtZSkudG9CZSgnUmFnbmEgRmlyY3Jlc3QnKTsKICBleHBlY3QoYWNxdWlzaXRpb24uc3RvY2tba2V5LnNsb3RdKS50b1N0cmljdEVxdWFsKHsgc291cmNlOiBrZXkuc291cmNlLCBzbG90OiBrZXkuc2xvdCwgbmFtZVNhbHQ6IDEsIHN0YXR1czogJ2JvdWdodCcgfSk7CiAgZXhwZWN0KGFjcXVpc2l0aW9uLnN0b2NrWzBdKS50b1N0cmljdEVxdWFsKHsgc291cmNlOiBrZXkuc291cmNlLCBzbG90OiAwLCBuYW1lU2FsdDogMCwgc3RhdHVzOiAnb3BlbicgfSk7CgogIGZvciAoY29uc3QgaW5pdGlhbCBvZiBbY3JlYXRlZC52YWx1ZSwgYnVpbHRdKSB7CiAgICBjb25zdCBiZWZvcmUgPSBzdHJ1Y3R1cmVkQ2xvbmUoaW5pdGlhbCk7CiAgICBjb25zdCBmaXh0dXJlID0gd2l0aE5wY3MoaW5pdGlhbCwgW2tleV0pOwogICAgZXhwZWN0KGlzQ2hhcmFjdGVyTGlmZVNlc3Npb25TdGF0ZShmaXh0dXJlKSkudG9CZSh0cnVlKTsKICAgIGV4cGVjdChmaXh0dXJlLm5wY3MpLnRvU3RyaWN0RXF1YWwoYm91Z2h0Lm5wY3MpOwogICAgZXhwZWN0KGZpeHR1cmUucHJvZmlsZXMpLnRvU3RyaWN0RXF1YWwoYm91Z2h0LnByb2ZpbGVzKTsKICAgIGV4cGVjdChmaXh0dXJlLmNpdHkuc29jaWV0eSEuYWNxdWlzaXRpb24pLnRvU3RyaWN0RXF1YWwoYWNxdWlzaXRpb24pOwogICAgZXhwZWN0KGluaXRpYWwpLnRvU3RyaWN0RXF1YWwoYmVmb3JlKTsKICB9Cn0pOwo=",
+            "removedUtf8": "",
+            "insertedUtf8": "import { expect, it } from 'vitest';\nimport { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, isCharacterLifeSessionState } from '@haven/core';\nimport { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';\nimport { succeeded } from './acquisition-fixture.js';\n\nit('uses the seed-25 Guild slot 2 name from reconstructed and retained offers', () => {\n  const created = createCharacterLifeSession(25, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Market Keeper' });\n  if (!created.success) throw Error(created.error.message);\n  const key = NPC_TEST_KEYS[2], homeTileId = 'estate-2';\n  const built = succeeded(created.value, 'BUILD', { tileId: 'service-1', typeId: key.source }).next;\n  const bought = succeeded(built, 'BUY_NPC', { source: key.source, slot: key.slot, homeTileId }).next;\n  const acquisition = bought.city.society!.acquisition;\n  expect(bought.npcs[0].character.name).toBe('Ragna Fircrest');\n  expect(acquisition.stock[key.slot]).toStrictEqual({ source: key.source, slot: key.slot, nameSalt: 1, status: 'bought' });\n  expect(acquisition.stock[0]).toStrictEqual({ source: key.source, slot: 0, nameSalt: 0, status: 'open' });\n\n  for (const initial of [created.value, built]) {\n    const before = structuredClone(initial);\n    const fixture = withNpcs(initial, [key]);\n    expect(isCharacterLifeSessionState(fixture)).toBe(true);\n    expect(fixture.npcs).toStrictEqual(bought.npcs);\n    expect(fixture.profiles).toStrictEqual(bought.profiles);\n    expect(fixture.city.society!.acquisition).toStrictEqual(acquisition);\n    expect(initial).toStrictEqual(before);\n  }\n});\n"
+          }
+        ]
+      }
+    ]
+  },
+  "bundle": {
+    "head": "15f8c0224b4e398df3220c533bee404a08ca5fb3",
+    "tree": "83c11b3a8362be1c1c69f632808c76a0c101caa8",
+    "baseline": {
+      "main": "b184357d235d164478584e36b96d063551124e66",
+      "jsGzipBytes": 150858,
+      "cssGzipBytes": 7567,
+      "totalGzipBytes": 158425
+    },
+    "jsGzipBytes": 162154,
+    "cssGzipBytes": 7709,
+    "totalGzipBytes": 169863,
+    "deltaGzipBytes": 11438,
+    "limitBytes": 200000,
+    "headroomBytes": 30137,
+    "manifest": [
+      {
+        "build": "production",
+        "port": 4173,
+        "indexSha256": "b6054d5d442a259bdb2dea80d5913370b1c640d252dfbcdf40ee21c9b76b20d3",
+        "assets": [
+          {
+            "file": "assets/index-B-mebH_u.js",
+            "bytes": 511329,
+            "sha256": "85e449bef80e14a6c5b634139bea31948cc375e6aa646d1b49bc1001b079adde",
+            "gzipBytes": 162154,
+            "gzipSha256": "759884c3bd2cad45ce2cc61b68fe12e81d101164df5e4d8c4a3b8c52564359e5"
+          },
+          {
+            "file": "assets/index-CYiD5znu.css",
+            "bytes": 38213,
+            "sha256": "b3ddf8f1b768f62cad1252a51cb16d2d8aecd36207010de134528fece5866046",
+            "gzipBytes": 7709,
+            "gzipSha256": "7147de182abbbc1c55514e198c35872c09b35e2e91db74bec2eebf29143b4b81"
+          }
+        ]
+      },
+      {
+        "build": "regression",
+        "port": 4174,
+        "indexSha256": "b275fd9afafb32f145f97e40693b677555a557d64e50af3134d9575683eb7c75",
+        "assets": [
+          {
+            "file": "assets/index-B-mebH_u.js",
+            "bytes": 511329,
+            "sha256": "85e449bef80e14a6c5b634139bea31948cc375e6aa646d1b49bc1001b079adde",
+            "gzipBytes": 162154,
+            "gzipSha256": "759884c3bd2cad45ce2cc61b68fe12e81d101164df5e4d8c4a3b8c52564359e5"
+          },
+          {
+            "file": "assets/index-CYiD5znu.css",
+            "bytes": 38213,
+            "sha256": "b3ddf8f1b768f62cad1252a51cb16d2d8aecd36207010de134528fece5866046",
+            "gzipBytes": 7709,
+            "gzipSha256": "7147de182abbbc1c55514e198c35872c09b35e2e91db74bec2eebf29143b4b81"
+          }
+        ]
+      }
+    ]
+  },
+  "isolatedReruns": {
+    "utc": "2026-11-25T00:45:20.499965+00:00",
+    "smoke": "gate-8-smoke.txt",
+    "ci": 1,
+    "results": [
+      {
+        "file": "tests\\e2e\\smoke.spec.ts",
+        "line": 9,
+        "title": "regression build cannot overwrite or enter the production artifact",
+        "command": [
+          "node",
+          "node_modules/@playwright/test/cli.js",
+          "test",
+          "tests/e2e/smoke.spec.ts:9",
+          "--grep",
+          "regression build cannot overwrite or enter the production artifact(?: @[^ ]+)*$",
+          "--output",
+          "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c20\\smoke-isolated-reruns\\01-artifacts"
+        ],
+        "exit": 0,
+        "exactlyOne": true,
+        "log": "smoke-isolated-01.txt"
+      }
+    ]
+  },
+  "gates": [
+    {
+      "name": "Diff check",
+      "log": "gate-1-diff.txt",
+      "exit": 0,
+      "passed": null,
+      "result": "PASS"
+    },
+    {
+      "name": "Lint",
+      "log": "gate-2-lint.txt",
+      "exit": 0,
+      "passed": null,
+      "result": "PASS"
+    },
+    {
+      "name": "Typecheck",
+      "log": "gate-3-typecheck.txt",
+      "exit": 0,
+      "passed": null,
+      "result": "PASS"
+    },
+    {
+      "name": "Architecture",
+      "log": "gate-4-architecture.txt",
+      "exit": 0,
+      "passed": null,
+      "result": "PASS"
+    },
+    {
+      "name": "Architecture tests",
+      "log": "gate-5-architecture-tests.txt",
+      "exit": 0,
+      "passed": 154,
+      "result": "PASS, 154 passed"
+    },
+    {
+      "name": "Unit",
+      "log": "gate-6-unit.txt",
+      "exit": 0,
+      "passed": 3264,
+      "result": "PASS, 3264 passed"
+    },
+    {
+      "name": "Build",
+      "log": "gate-7-build.txt",
+      "exit": 0,
+      "passed": null,
+      "result": "PASS"
+    },
+    {
+      "name": "Chromium smoke with CI=1",
+      "log": "gate-8-smoke.txt",
+      "exit": 1,
+      "passed": 414,
+      "result": "FAIL, exit 1, 414 passed, 1 failed"
+    }
+  ]
+}

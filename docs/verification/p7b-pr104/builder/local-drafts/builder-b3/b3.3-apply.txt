@@ -1,0 +1,13 @@
+HEAD and tree
+822c695c2e59b7f2f1b5c5cd8a882f9f7f62a6f1
+3ebe68c4717b79a65667bdd658414f8e944654c5
+Status before command
+ M packages/simulation/src/__tests__/character-life-observation.test.ts
+?? packages/ui/src/__tests__/acquisition-view.test.ts
+?? tests/e2e/acquisition.spec.ts
+UTC start 2026-11-24T09:32:21+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ python C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/packet.py apply 3
+
+UTC finish 2026-11-24T09:32:23+00:00
+Exit 0

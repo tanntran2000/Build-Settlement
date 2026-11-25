@@ -1,0 +1,21 @@
+HEAD and tree
+dfcc524b043ee3135746121f4384342a8dbf6e5e
+1bb1779f9e610d4ab3f83432625f52ba0eea45d1
+Status before command
+ M tests/e2e/character-life-navigation-accessibility.spec.ts
+ M tests/e2e/npc-sheet.spec.ts
+CI=1
+UTC start 2026-11-24T14:27:33+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/@playwright/test/cli.js test tests/e2e/character-life-navigation-accessibility.spec.ts --grep "accessibility at 375px long character and report content reflows(?: @[^ ]+)*$" --output C:\Users\Admin\.t3\local-drafts\p7b-prB3\builder-b3\c19\six-isolated\03-artifacts
+
+Running 1 test using 1 worker
+
+(node:28932) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:331:5 › accessibility at 375px › long character and report content reflows (11.6s)
+
+  1 passed (23.3s)
+
+UTC finish 2026-11-24T14:27:57+00:00
+Exit 0

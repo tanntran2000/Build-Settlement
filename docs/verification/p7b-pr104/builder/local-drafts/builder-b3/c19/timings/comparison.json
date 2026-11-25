@@ -1,0 +1,287 @@
+{
+  "baseline": "b184357d235d164478584e36b96d063551124e66",
+  "head": "2dc0a650b597e86df68673437add18e356723037",
+  "tree": "aa7417db9948c096073681bde90423d93d85742f",
+  "startUTC": "2026-11-24T15:09:11.919+00:00",
+  "rounds": 5,
+  "warmTicksPerProcess": 20,
+  "method": "Five alternating triples on one machine. Each fresh process uses the same untouched checkpoint. The market checkpoint is the exact browser-measured save. Main uses the same shared state encoded via its v12 codec with the v13 acquisition subtree excluded. For each triple report the difference from the midpoint of the two main warm medians and the absolute main-to-main gap. Performance interpretation is the owner’s decision under Correction 15.",
+  "finishUTC": "2026-11-24T15:11:30.554+00:00",
+  "cases": {
+    "control": {
+      "inputs": {
+        "main": {
+          "variant": "control",
+          "bytes": 300176,
+          "sha256": "a251995b3b63170f130e1f611056507f620f014a35b338d6b3873cde915e3960",
+          "comparableSha": "65d92f26b2ecf58ed28eceac80205f280d5761647eca0fa79c71719c99fd2c78",
+          "npcCount": 100,
+          "stock": 0,
+          "lots": 0,
+          "actionsPerLot": [],
+          "departures": 0,
+          "utcStart": "2026-11-24T15:09:12.741+00:00",
+          "utcFinish": "2026-11-24T15:09:13.949+00:00",
+          "command": "node C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c19\\bench-worker.mjs \"D:\\QI Technology\\Temp\\p7b-b3-main-timing-e1yhz6zd\" C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 prepare control C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c19\\timings\\main-control.json C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c19\\save-size\\largest-save.json",
+          "exit": 0
+        },
+        "head": {
+          "variant": "control",
+          "bytes": 300238,
+          "sha256": "312d28c38d324efee0c7db57ced1f626767ee0b902e052263d76191476b731a3",
+          "comparableSha": "65d92f26b2ecf58ed28eceac80205f280d5761647eca0fa79c71719c99fd2c78",
+          "npcCount": 100,
+          "stock": 0,
+          "lots": 0,
+          "actionsPerLot": [],
+          "departures": 0,
+          "utcStart": "2026-11-24T15:09:13.949+00:00",
+          "utcFinish": "2026-11-24T15:09:15.216+00:00",
+          "command": "node C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c19\\bench-worker.mjs C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 prepare control C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c19\\timings\\head-control.json C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c19\\save-size\\largest-save.json",
+          "exit": 0
+        }
+      }
+    },
+    "market": {
+      "inputs": {
+        "main": {
+          "variant": "market",
+          "bytes": 291760,
+          "sha256": "d63a70463008cdc348d5a59c45bc6ce13c9d8f4dc4d1e90a295aaaa55ac12f89",
+          "comparableSha": "c8f376d95c86766a8a92e5e5103320fb09387d382b184f325198c20bc74d942c",
+          "npcCount": 100,
+          "stock": 0,
+          "lots": 0,
+          "actionsPerLot": [],
+          "departures": 0,
+          "utcStart": "2026-11-24T15:09:15.217+00:00",
+          "utcFinish": "2026-11-24T15:09:16.734+00:00",
+          "command": "node C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c19\\bench-worker.mjs \"D:\\QI Technology\\Temp\\p7b-b3-main-timing-e1yhz6zd\" C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 prepare market C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c19\\timings\\main-market.json C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c19\\save-size\\largest-save.json",
+          "exit": 0
+        },
+        "head": {
+          "variant": "market",
+          "bytes": 293842,
+          "sha256": "fe61f7cd33761cde17fb445c4f0cf491db75ceab5b6aa055d949d5aa6ad6a453",
+          "comparableSha": "c8f376d95c86766a8a92e5e5103320fb09387d382b184f325198c20bc74d942c",
+          "npcCount": 100,
+          "stock": 12,
+          "lots": 2,
+          "actionsPerLot": [
+            4,
+            4
+          ],
+          "departures": 14,
+          "utcStart": "2026-11-24T15:09:16.734+00:00",
+          "utcFinish": "2026-11-24T15:09:18.302+00:00",
+          "command": "node C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c19\\bench-worker.mjs C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 prepare market C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c19\\timings\\head-market.json C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c19\\save-size\\largest-save.json",
+          "exit": 0
+        }
+      }
+    }
+  },
+  "aggregate": {
+    "control-tick": {
+      "mainWarm": {
+        "median": 47.905550000000005,
+        "p95": 64.43739,
+        "max": 85.1673,
+        "over50": 76
+      },
+      "headWarm": {
+        "median": 48.403400000000005,
+        "p95": 85.11787999999999,
+        "max": 125.9957,
+        "over50": 41
+      },
+      "mainColdMs": [
+        95.065,
+        89.8126,
+        87.7087,
+        85.9486,
+        88.5122,
+        88.9337,
+        86.643,
+        95.4618,
+        94.096,
+        87.2627
+      ],
+      "headColdMs": [
+        94.0336,
+        96.4646,
+        105.8387,
+        89.7206,
+        168.0967
+      ],
+      "mainNoiseMs": [
+        2.80565,
+        0.7083499999999958,
+        15.0244,
+        1.0266500000000036,
+        10.177099999999996
+      ],
+      "maxMainNoiseMs": 15.0244,
+      "pairedDeltasMs": [
+        -0.1501750000000044,
+        0.4332250000000073,
+        16.74255,
+        0.5955750000000037,
+        -2.6935000000000002
+      ],
+      "medianDeltaMs": 0.4332250000000073
+    },
+    "control-load": {
+      "mainWarm": {
+        "median": 13.6189,
+        "p95": 21.488345,
+        "max": 30.7417,
+        "over50": 0
+      },
+      "headWarm": {
+        "median": 13.477350000000001,
+        "p95": 22.63429,
+        "max": 33.6678,
+        "over50": 0
+      },
+      "mainColdMs": [
+        22.2818,
+        22.7219,
+        23.485,
+        21.8673,
+        29.6605,
+        21.9063,
+        22.3543,
+        22.347,
+        21.8586,
+        23.2226
+      ],
+      "headColdMs": [
+        25.3485,
+        23.1172,
+        23.9117,
+        25.0737,
+        23.3569
+      ],
+      "mainNoiseMs": [
+        0.17110000000000092,
+        0.13155000000000072,
+        1.0317500000000006,
+        0.2814000000000014,
+        1.7781499999999983
+      ],
+      "maxMainNoiseMs": 1.7781499999999983,
+      "pairedDeltasMs": [
+        0.02505000000000024,
+        0.30692500000000145,
+        -0.4138750000000009,
+        -0.04910000000000103,
+        -0.8912750000000003
+      ],
+      "medianDeltaMs": -0.04910000000000103
+    },
+    "market-tick": {
+      "mainWarm": {
+        "median": 48.39325,
+        "p95": 83.244815,
+        "max": 135.3927,
+        "over50": 80
+      },
+      "headWarm": {
+        "median": 46.83435,
+        "p95": 63.66011999999999,
+        "max": 83.078,
+        "over50": 29
+      },
+      "mainColdMs": [
+        135.2662,
+        89.3313,
+        89.63,
+        87.4981,
+        128.6804,
+        86.9436,
+        88.4654,
+        102.8747,
+        95.4116,
+        87.4366
+      ],
+      "headColdMs": [
+        94.388,
+        95.1549,
+        94.3044,
+        103.6709,
+        105.1177
+      ],
+      "mainNoiseMs": [
+        6.485900000000001,
+        2.3557500000000005,
+        35.21435,
+        4.856550000000006,
+        3.9321000000000055
+      ],
+      "maxMainNoiseMs": 35.21435,
+      "pairedDeltasMs": [
+        -1.6187499999999986,
+        -0.1335250000000059,
+        -17.396925000000003,
+        -2.6734750000000034,
+        -0.1527499999999975
+      ],
+      "medianDeltaMs": -1.6187499999999986,
+      "drawAcquisitionMs": {
+        "median": 0.1318,
+        "p95": 0.18306,
+        "max": 0.294,
+        "over50": 0
+      }
+    },
+    "market-load": {
+      "mainWarm": {
+        "median": 13.71275,
+        "p95": 21.558370000000004,
+        "max": 31.8128,
+        "over50": 0
+      },
+      "headWarm": {
+        "median": 14.1998,
+        "p95": 18.983555,
+        "max": 23.8173,
+        "over50": 0
+      },
+      "mainColdMs": [
+        21.9163,
+        21.6482,
+        21.8767,
+        23.153,
+        32.0717,
+        21.8767,
+        24.9648,
+        21.7158,
+        22.1483,
+        25.5497
+      ],
+      "headColdMs": [
+        27.5974,
+        27.9345,
+        27.3785,
+        26.7928,
+        27.0346
+      ],
+      "mainNoiseMs": [
+        0.09165000000000134,
+        0.5344000000000015,
+        5.164899999999999,
+        0.9595500000000001,
+        1.1799999999999997
+      ],
+      "maxMainNoiseMs": 5.164899999999999,
+      "pairedDeltasMs": [
+        0.4469750000000001,
+        0.45059999999999967,
+        -2.0694,
+        0.3325749999999985,
+        0.1750000000000007
+      ],
+      "medianDeltaMs": 0.3325749999999985
+    }
+  }
+}

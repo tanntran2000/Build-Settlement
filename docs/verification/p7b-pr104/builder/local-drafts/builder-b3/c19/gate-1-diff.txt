@@ -1,0 +1,11 @@
+HEAD and tree
+2dc0a650b597e86df68673437add18e356723037
+aa7417db9948c096073681bde90423d93d85742f
+Status before command
+CI=
+UTC start 2026-11-24T14:29:52+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ git diff --check origin/main...HEAD
+
+UTC finish 2026-11-24T14:29:52+00:00
+Exit 0

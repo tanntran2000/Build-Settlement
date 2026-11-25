@@ -1,0 +1,275 @@
+{
+  "status": "HOLD",
+  "reason": "Six CI=1 smoke failures in the long-name reflow fixtures. All six reproduced in a single isolated rerun each.",
+  "sealedUTC": "2026-11-24T14:14:06+00:00",
+  "head": "dfcc524b043ee3135746121f4384342a8dbf6e5e",
+  "tree": "1bb1779f9e610d4ab3f83432625f52ba0eea45d1",
+  "base": "b184357d235d164478584e36b96d063551124e66",
+  "branch": "feat/p7b-acquisition-market",
+  "gitStatus": "",
+  "portsFree": true,
+  "commitMessage": "fix(simulation): close acquisition replay gaps (Astra round 2)\n\nCo-authored-by: Codex <noreply@openai.com>",
+  "typeInventory": {
+    "path": "packages/simulation/src/__tests__/character-life-command.test.ts",
+    "heldSha256": "028743a595baea6b569e5fcb75d9578750a210ccbeb2e2a101e886a78e36ccdb",
+    "offset": 1065,
+    "removedBase64": "",
+    "insertedUtf8": ": delegates.WorldNpcCityResult",
+    "insertedBase64": "OiBkZWxlZ2F0ZXMuV29ybGROcGNDaXR5UmVzdWx0",
+    "addedBytes": 30,
+    "finalSha256": "89e5f2ec26b29df1477fb7064aabd54b0599d230c0f8a550bf0c3f60f60b0c56",
+    "finalBytes": 23372,
+    "planSha256": "ff406413cbf3e00bcf2880b4a102fb2f912b9c308ef816a793f15d45ffb05d77",
+    "heldPatchSha256": "800a1f910530b04fa8380cf437724b1b6ac397f8aaf21f8d22152f5a8970e442"
+  },
+  "bundle": {
+    "head": "dfcc524b043ee3135746121f4384342a8dbf6e5e",
+    "tree": "1bb1779f9e610d4ab3f83432625f52ba0eea45d1",
+    "baseline": {
+      "main": "b184357d235d164478584e36b96d063551124e66",
+      "jsGzipBytes": 150858,
+      "cssGzipBytes": 7567,
+      "totalGzipBytes": 158425
+    },
+    "jsGzipBytes": 162154,
+    "cssGzipBytes": 7709,
+    "totalGzipBytes": 169863,
+    "deltaGzipBytes": 11438,
+    "limitBytes": 200000,
+    "headroomBytes": 30137,
+    "manifest": [
+      {
+        "build": "production",
+        "port": 4173,
+        "indexSha256": "a252d02a3309593e3f63efbe7ac33f1d7edb5c3924df8d57de33e469b901e972",
+        "assets": [
+          {
+            "file": "assets/index-CYSwQ0mg.js",
+            "bytes": 511329,
+            "sha256": "694d241481fe84c5eb8ee02bf94b33735bfc4bdfd87c6fde6beb00fd0c172923",
+            "gzipBytes": 162154,
+            "gzipSha256": "db6d20af651d8e78ba1775f80b132163a9b6085885079fb5ae5d24b921f06b39"
+          },
+          {
+            "file": "assets/index-CYiD5znu.css",
+            "bytes": 38213,
+            "sha256": "b3ddf8f1b768f62cad1252a51cb16d2d8aecd36207010de134528fece5866046",
+            "gzipBytes": 7709,
+            "gzipSha256": "7147de182abbbc1c55514e198c35872c09b35e2e91db74bec2eebf29143b4b81"
+          }
+        ]
+      },
+      {
+        "build": "regression",
+        "port": 4174,
+        "indexSha256": "62e53c8b1dfa711a3bf50499f53dc9aeaf275ab47a85c1ca00f35dce12d2b017",
+        "assets": [
+          {
+            "file": "assets/index-CYSwQ0mg.js",
+            "bytes": 511329,
+            "sha256": "694d241481fe84c5eb8ee02bf94b33735bfc4bdfd87c6fde6beb00fd0c172923",
+            "gzipBytes": 162154,
+            "gzipSha256": "db6d20af651d8e78ba1775f80b132163a9b6085885079fb5ae5d24b921f06b39"
+          },
+          {
+            "file": "assets/index-CYiD5znu.css",
+            "bytes": 38213,
+            "sha256": "b3ddf8f1b768f62cad1252a51cb16d2d8aecd36207010de134528fece5866046",
+            "gzipBytes": 7709,
+            "gzipSha256": "7147de182abbbc1c55514e198c35872c09b35e2e91db74bec2eebf29143b4b81"
+          }
+        ]
+      }
+    ]
+  },
+  "save": {
+    "saveBytes": 293842,
+    "emptyWeekBytes": 291822,
+    "acquisitionDeltaBytes": 2020,
+    "indexedDbRowJsonBytes": 309503,
+    "rowCount": 104,
+    "npcCount": 100,
+    "stock": 12,
+    "lots": 2,
+    "actionsPerLot": [
+      4,
+      4
+    ],
+    "departures": 14,
+    "recentEntriesPerNpc": 20
+  },
+  "timing": null,
+  "isolatedReruns": {
+    "utc": "2026-11-24T14:13:47.224936+00:00",
+    "smoke": "gate-8-smoke.txt",
+    "ci": 1,
+    "results": [
+      {
+        "file": "tests\\e2e\\character-life-navigation-accessibility.spec.ts",
+        "line": 331,
+        "title": "accessibility at 1600px › long character and report content reflows",
+        "command": [
+          "node",
+          "node_modules/@playwright/test/cli.js",
+          "test",
+          "tests/e2e/character-life-navigation-accessibility.spec.ts:331",
+          "--grep",
+          "accessibility at 1600px long character and report content reflows(?: @[^ ]+)*$",
+          "--output",
+          "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c18\\smoke-isolated-reruns\\01-artifacts"
+        ],
+        "exit": 1,
+        "exactlyOne": true,
+        "log": "smoke-isolated-01.txt"
+      },
+      {
+        "file": "tests\\e2e\\character-life-navigation-accessibility.spec.ts",
+        "line": 331,
+        "title": "accessibility at 1280px › long character and report content reflows",
+        "command": [
+          "node",
+          "node_modules/@playwright/test/cli.js",
+          "test",
+          "tests/e2e/character-life-navigation-accessibility.spec.ts:331",
+          "--grep",
+          "accessibility at 1280px long character and report content reflows(?: @[^ ]+)*$",
+          "--output",
+          "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c18\\smoke-isolated-reruns\\02-artifacts"
+        ],
+        "exit": 1,
+        "exactlyOne": true,
+        "log": "smoke-isolated-02.txt"
+      },
+      {
+        "file": "tests\\e2e\\character-life-navigation-accessibility.spec.ts",
+        "line": 331,
+        "title": "accessibility at 375px › long character and report content reflows",
+        "command": [
+          "node",
+          "node_modules/@playwright/test/cli.js",
+          "test",
+          "tests/e2e/character-life-navigation-accessibility.spec.ts:331",
+          "--grep",
+          "accessibility at 375px long character and report content reflows(?: @[^ ]+)*$",
+          "--output",
+          "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c18\\smoke-isolated-reruns\\03-artifacts"
+        ],
+        "exit": 1,
+        "exactlyOne": true,
+        "log": "smoke-isolated-03.txt"
+      },
+      {
+        "file": "tests\\e2e\\character-life-navigation-accessibility.spec.ts",
+        "line": 331,
+        "title": "accessibility at 320px › long character and report content reflows",
+        "command": [
+          "node",
+          "node_modules/@playwright/test/cli.js",
+          "test",
+          "tests/e2e/character-life-navigation-accessibility.spec.ts:331",
+          "--grep",
+          "accessibility at 320px long character and report content reflows(?: @[^ ]+)*$",
+          "--output",
+          "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c18\\smoke-isolated-reruns\\04-artifacts"
+        ],
+        "exit": 1,
+        "exactlyOne": true,
+        "log": "smoke-isolated-04.txt"
+      },
+      {
+        "file": "tests\\e2e\\npc-sheet.spec.ts",
+        "line": 376,
+        "title": "NPC sheet reflow at 320px › NPC sheet and NPC life report reflow at 320px",
+        "command": [
+          "node",
+          "node_modules/@playwright/test/cli.js",
+          "test",
+          "tests/e2e/npc-sheet.spec.ts:376",
+          "--grep",
+          "NPC sheet reflow at 320px NPC sheet and NPC life report reflow at 320px(?: @[^ ]+)*$",
+          "--output",
+          "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c18\\smoke-isolated-reruns\\05-artifacts"
+        ],
+        "exit": 1,
+        "exactlyOne": true,
+        "log": "smoke-isolated-05.txt"
+      },
+      {
+        "file": "tests\\e2e\\npc-sheet.spec.ts",
+        "line": 376,
+        "title": "NPC sheet reflow at 375px › NPC sheet and NPC life report reflow at 375px",
+        "command": [
+          "node",
+          "node_modules/@playwright/test/cli.js",
+          "test",
+          "tests/e2e/npc-sheet.spec.ts:376",
+          "--grep",
+          "NPC sheet reflow at 375px NPC sheet and NPC life report reflow at 375px(?: @[^ ]+)*$",
+          "--output",
+          "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c18\\smoke-isolated-reruns\\06-artifacts"
+        ],
+        "exit": 1,
+        "exactlyOne": true,
+        "log": "smoke-isolated-06.txt"
+      }
+    ]
+  },
+  "gates": [
+    {
+      "name": "Diff check",
+      "log": "gate-1-diff.txt",
+      "exit": 0,
+      "passed": null,
+      "result": "PASS"
+    },
+    {
+      "name": "Lint",
+      "log": "gate-2-lint.txt",
+      "exit": 0,
+      "passed": null,
+      "result": "PASS"
+    },
+    {
+      "name": "Typecheck",
+      "log": "gate-3-typecheck.txt",
+      "exit": 0,
+      "passed": null,
+      "result": "PASS"
+    },
+    {
+      "name": "Architecture",
+      "log": "gate-4-architecture.txt",
+      "exit": 0,
+      "passed": null,
+      "result": "PASS"
+    },
+    {
+      "name": "Architecture tests",
+      "log": "gate-5-architecture-tests.txt",
+      "exit": 0,
+      "passed": 154,
+      "result": "PASS, 154 passed"
+    },
+    {
+      "name": "Unit",
+      "log": "gate-6-unit.txt",
+      "exit": 0,
+      "passed": 3263,
+      "result": "PASS, 3263 passed"
+    },
+    {
+      "name": "Build",
+      "log": "gate-7-build.txt",
+      "exit": 0,
+      "passed": null,
+      "result": "PASS"
+    },
+    {
+      "name": "Chromium smoke with CI=1",
+      "log": "gate-8-smoke.txt",
+      "exit": 1,
+      "passed": 409,
+      "result": "FAIL, exit 1, 409 passed, 6 failed"
+    }
+  ]
+}

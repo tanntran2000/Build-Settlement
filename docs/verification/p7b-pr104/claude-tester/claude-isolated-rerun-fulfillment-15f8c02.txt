@@ -1,0 +1,5 @@
+
+Running 1 test using 1 worker
+
+[1/1] [chromium] › tests\e2e\character-life-navigation.spec.ts:225:1 › fulfillment states match strip and report
+  1 passed (57.6s)

@@ -1,0 +1,316 @@
+HEAD and tree
+b184357d235d164478584e36b96d063551124e66
+961567de7ef638861a55a42589be203037e123c9
+Status before command
+ M packages/core/src/__tests__/catalog-data.test.ts
+ M packages/core/src/trial/__tests__/crime.test.ts
+ M packages/core/src/trial/__tests__/crisis.test.ts
+ M packages/core/src/trial/__tests__/items.test.ts
+ M packages/core/src/trial/__tests__/law.test.ts
+ M packages/core/src/trial/__tests__/order.test.ts
+ M packages/core/src/trial/__tests__/outside.test.ts
+ M packages/core/src/trial/__tests__/society-p7b.test.ts
+ M packages/core/src/trial/__tests__/society.test.ts
+ M packages/core/src/world/__tests__/session.test.ts
+ M packages/persistence/src/__tests__/character-life-save.test.ts
+ M packages/persistence/src/__tests__/item-records.test.ts
+ M packages/persistence/src/__tests__/items-rebuild-order.test.ts
+ M packages/persistence/src/__tests__/npc-life-records.test.ts
+ M packages/persistence/src/__tests__/session-records.test.ts
+ M packages/persistence/src/__tests__/society-new-game-fixture.test.ts
+ M packages/persistence/src/__tests__/society-v9-fixture.test.ts
+ M packages/simulation/src/__tests__/craft-week.test.ts
+ M packages/simulation/src/__tests__/crime-fixtures.test.ts
+ M packages/simulation/src/__tests__/crisis-fixtures.test.ts
+ M packages/simulation/src/__tests__/law-fixture.test.ts
+ M packages/simulation/src/__tests__/law-week.test.ts
+ M packages/simulation/src/__tests__/npc-homes.test.ts
+ M packages/simulation/src/__tests__/smithy-data.test.ts
+ M packages/ui/src/__tests__/character-life-session.test.ts
+ M packages/ui/src/__tests__/p7b-checkpoint.test.ts
+ M packages/ui/src/__tests__/world-session.test.ts
+ M tests/e2e/crime.spec.ts
+ M tests/e2e/crisis.spec.ts
+ M tests/e2e/garrison.spec.ts
+ M tests/e2e/items.spec.ts
+ M tests/e2e/laws.spec.ts
+ M tests/e2e/ledger.spec.ts
+ M tests/e2e/society.spec.ts
+ M tests/e2e/storage.spec.ts
+ M tests/e2e/tile-save.spec.ts
+ M tests/e2e/title.spec.ts
+ M tests/e2e/world-session.spec.ts
+?? packages/simulation/src/__tests__/acquisition-fixture.ts
+?? packages/simulation/src/__tests__/npc-acquisition.test.ts
+UTC start 2026-11-24T09:24:30+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/vitest/vitest.mjs run npc-acquisition.test.ts society.test.ts catalog-data.test.ts character-life-save.test.ts npc-life-records.test.ts law-week.test.ts craft-week.test.ts --maxWorkers=3
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+ ❯ packages/simulation/src/__tests__/npc-acquisition.test.ts (0 test)
+ ❯ packages/persistence/src/__tests__/npc-life-records.test.ts (11 tests | 2 failed) 250ms
+   × matches v12 and v13 checkpoint filenames and round-trips every current life checkpoint byte-identically 7ms
+   × round-trips exhausted life, levels and full history without resetting state in the current checkpoint 8ms
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts (82 tests | 3 failed) 462ms
+   × preserves all no-order reports and item states for sixty weeks at seed 0 136ms
+   × preserves all no-order reports and item states for sixty weeks at seed 42 85ms
+   × preserves all no-order reports and item states for sixty weeks at seed 20261028 88ms
+ ❯ packages/simulation/src/__tests__/law-week.test.ts (21 tests | 1 failed) 98ms
+   × preserves the law-free five-week gameplay pin and determinism 5ms
+ ❯ packages/persistence/src/__tests__/character-life-save.test.ts (23 tests | 2 failed) 255ms
+   × round-trips a valid session as detached data in its own format 37ms
+   × keeps the generic incompatible message for a v3 envelope with the wrong format 10ms
+ ❯ packages/core/src/__tests__/catalog-data.test.ts (48 tests | 2 failed) 68ms
+   × validates the acquisition TRIAL data and pins malformed bands with a named error 5ms
+   × 'SOCIETY_TRIAL' keeps its approved canonical JSON hash 6ms
+ ❯ packages/core/src/trial/__tests__/society.test.ts (19 tests | 1 failed) 46ms
+   × creates the spec section 3 new game 19ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/simulation/src/__tests__/npc-acquisition.test.ts [ packages/simulation/src/__tests__/npc-acquisition.test.ts ]
+Error: Cannot find module '../npc-acquisition.js' imported from C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01/packages/simulation/src/__tests__/npc-acquisition.test.ts
+ ❯ packages/simulation/src/__tests__/npc-acquisition.test.ts:5:1
+      3|   ITEM_TRIAL, npcSellMilli, npcValueMilli, type CharacterLifeSessionSt…
+      4| import { deserializeCharacterLifeSave, recordsToSession, serializeChar…
+      5| import { ACQUISITION_MESSAGES, drawAcquisition } from '../npc-acquisit…
+       | ^
+      6| import { executeWorldNpcCityCommand } from '../world-npc.js';
+      7| import { command, market, populate, stock, succeeded, town } from './a…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/12]⎯
+
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 11 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/core/src/__tests__/catalog-data.test.ts > validates the acquisition TRIAL data and pins malformed bands with a named error
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\core\src\data\npc-acquisition.json'
+ ❯ data packages/core/src/__tests__/catalog-data.test.ts:31:21
+     29|
+     30| function data(file: string): unknown {
+     31|   return JSON.parse(readFileSync(new URL(`../data/${file}`, import.met…
+       |                     ^
+     32| }
+     33| async function validators() {
+ ❯ packages/core/src/__tests__/catalog-data.test.ts:77:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/12]⎯
+
+ FAIL  packages/core/src/__tests__/catalog-data.test.ts > 'SOCIETY_TRIAL' keeps its approved canonical JSON hash
+AssertionError: expected 'ca0be2865a31944b2e11e32aa0f3af64486a6…' to be '81e7d6d5713873814d0e46d88d4d19fde5f58…' // Object.is equality
+
+Expected: "81e7d6d5713873814d0e46d88d4d19fde5f584fd61e96e8af9b7883139a998ad"
+Received: "ca0be2865a31944b2e11e32aa0f3af64486a67fdf5743e42a263dbd81c0088d3"
+
+ ❯ packages/core/src/__tests__/catalog-data.test.ts:114:30
+    112|
+    113| it.each(pinnedCatalogs)('$name keeps its approved canonical JSON hash'…
+    114|   expect(catalogHash(value)).toBe(hash);
+       |                              ^
+    115| });
+    116|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/12]⎯
+
+ FAIL  packages/persistence/src/__tests__/character-life-save.test.ts > round-trips a valid session as detached data in its own format
+AssertionError: expected { …(4) } to match object { …(3) }
+(6 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "cityRulesetId": "tile-society-13",
++   "cityRulesetId": "tile-society-12",
+    "format": "haven.character-life-session.save",
+    "schemaVersion": 1,
+  }
+
+ ❯ packages/persistence/src/__tests__/character-life-save.test.ts:19:28
+     17|   const before = structuredClone(s), text = encode(s);
+     18|   expect(CHARACTER_LIFE_SAVE_FORMAT).toBe('haven.character-life-sessio…
+     19|   expect(JSON.parse(text)).toMatchObject({ format: CHARACTER_LIFE_SAVE…
+       |                            ^
+     20|   expect(Object.keys(JSON.parse(text))).toEqual(['format', 'schemaVers…
+     21|   const loaded = deserializeCharacterLifeSave(text);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/12]⎯
+
+ FAIL  packages/persistence/src/__tests__/character-life-save.test.ts > keeps the generic incompatible message for a v3 envelope with the wrong format
+AssertionError: expected 'tile-society-12' to be 'tile-society-13' // Object.is equality
+
+Expected: "tile-society-13"
+Received: "tile-society-12"
+
+ ❯ packages/persistence/src/__tests__/character-life-save.test.ts:93:30
+     91| it('keeps the generic incompatible message for a v3 envelope with the …
+     92|  const value=envelope();value.format='wrong.format';
+     93|  expect(value.cityRulesetId).toBe('tile-society-13');
+       |                              ^
+     94|  expect(deserializeCharacterLifeSave(JSON.stringify(value))).toEqual({…
+     95| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/12]⎯
+
+ FAIL  packages/persistence/src/__tests__/npc-life-records.test.ts > matches v12 and v13 checkpoint filenames and round-trips every current life checkpoint byte-identically
+Error: ENOENT: no such file or directory, scandir 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\persistence\src\__tests__\fixtures\society-v13\'
+ ❯ packages/persistence/src/__tests__/npc-life-records.test.ts:56:17
+     54| it('matches v12 and v13 checkpoint filenames and round-trips every cur…
+     55|   const current = new URL('./fixtures/society-v13/', import.meta.url),…
+     56|   const files = readdirSync(current).sort(); expect(files).toEqual(rea…
+       |                 ^
+     57|   for (const file of files.filter(name => name.startsWith('life-'))) {
+     58|     const bytes = readFileSync(new URL(file, current), 'utf8'), decode…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/12]⎯
+
+ FAIL  packages/persistence/src/__tests__/npc-life-records.test.ts > round-trips exhausted life, levels and full history without resetting state in the current checkpoint
+AssertionError: expected 'tile-society-12' to be 'tile-society-13' // Object.is equality
+
+Expected: "tile-society-13"
+Received: "tile-society-12"
+
+ ❯ packages/persistence/src/__tests__/npc-life-records.test.ts:71:41
+     69| it('round-trips exhausted life, levels and full history without resett…
+     70|   const state = life(), npc = state.npcs[0];
+     71|   expect(state.city.society!.rulesetId).toBe('tile-society-13');
+       |                                         ^
+     72|   npc.life.working = false; npc.life.stress = 95;
+     73|   npc.life.sexExp.hand = { level: 'professional', exp: 200 }; npc.life…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/12]⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > preserves all no-order reports and item states for sixty weeks at seed 0
+AssertionError: expected { …(3) } to deeply equal { …(3) }
+
+- Expected
++ Received
+
+  {
+-   "city": "11706d8ebd13aabbf0475e67a4eb697c733a451298f7a98d03313491bddc6615",
++   "city": "cb607d6b5265d7785f66cc110ef489bf616c242efac0b965be55a09b75708693",
+    "items": "cddabceee23c2746d4dd3408d05e71ee624dd800d8a0f761cb88f130122deb65",
+    "reports": "9393b71033175e5dc6c1da65ed116a574521672d2c1a3631141ba57e654d8a45",
+  }
+
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:31:76
+     29|   }
+     30|   const { priorCity, ...expected } = noOrderBaseline[seed];
+     31|   expect({ reports:hash(reports),items:hash(itemStates),city:hash(city…
+       |                                                                            ^
+     32|   expect(city.society!.acquisition).toStrictEqual({ week: 0, stock: []…
+     33|   const { acquisition, ...v12Society } = city.society!;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/12]⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > preserves all no-order reports and item states for sixty weeks at seed 42
+AssertionError: expected { …(3) } to deeply equal { …(3) }
+
+- Expected
++ Received
+
+  {
+-   "city": "06150fcf4a1e0ed0adfe70d81aa29a940fee0bd7f734054071fb76edf74e5b7e",
++   "city": "e648285ab2b75d05498b2a3fb6bf72c362a0c8a63b5beeef0ced78b4360e0577",
+    "items": "283da6a1e4fed8fdc3a419e72e00827020ab1ace63f68277db0c1d7cee5616e8",
+    "reports": "6238af7420c55fcf75acef911011bb4b50138231397853150d5433cf76fbb319",
+  }
+
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:31:76
+     29|   }
+     30|   const { priorCity, ...expected } = noOrderBaseline[seed];
+     31|   expect({ reports:hash(reports),items:hash(itemStates),city:hash(city…
+       |                                                                            ^
+     32|   expect(city.society!.acquisition).toStrictEqual({ week: 0, stock: []…
+     33|   const { acquisition, ...v12Society } = city.society!;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/12]⎯
+
+ FAIL  packages/simulation/src/__tests__/craft-week.test.ts > preserves all no-order reports and item states for sixty weeks at seed 20261028
+AssertionError: expected { …(3) } to deeply equal { …(3) }
+
+- Expected
++ Received
+
+  {
+-   "city": "30af762981aef72e4f3643b7e4d72de89b41414302f945b587370d99dd4ef9a8",
++   "city": "a2bf676b0d60745f0350eb54ce1884b35151d541bf30d54b6deb3f2fb4e28af5",
+    "items": "3ad4de4ea7c6a0687ac6d8481778a2513e841dd061e1712429d8bb2dacc31515",
+    "reports": "e7c96f5378373cc7108072dbda1dbb123d60dfd623c49c8a1f0f69368da7275d",
+  }
+
+ ❯ packages/simulation/src/__tests__/craft-week.test.ts:31:76
+     29|   }
+     30|   const { priorCity, ...expected } = noOrderBaseline[seed];
+     31|   expect({ reports:hash(reports),items:hash(itemStates),city:hash(city…
+       |                                                                            ^
+     32|   expect(city.society!.acquisition).toStrictEqual({ week: 0, stock: []…
+     33|   const { acquisition, ...v12Society } = city.society!;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/12]⎯
+
+ FAIL  packages/simulation/src/__tests__/law-week.test.ts > preserves the law-free five-week gameplay pin and determinism
+Error: ENOENT: no such file or directory, open 'C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\packages\persistence\src\__tests__\fixtures\society-v13\life-new-game.json'
+ ❯ packages/simulation/src/__tests__/law-week.test.ts:82:14
+     80| });
+     81| it('preserves the law-free five-week gameplay pin and determinism',()=…
+     82|  const bytes=readFileSync(new URL('../../../persistence/src/__tests__/…
+       |              ^
+     83|  const decoded=deserializeCharacterLifeSave(bytes);if(!decoded.success…
+     84|  let s=decoded.state,other=structuredClone(s);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/12]⎯
+
+ FAIL  packages/core/src/trial/__tests__/society.test.ts > creates the spec section 3 new game
+AssertionError: expected { rulesetId: 'tile-society-12', …(18) } to deeply equal { rulesetId: 'tile-society-13', …(19) }
+
+- Expected
++ Received
+
+@@ -1,12 +1,6 @@
+  {
+-   "acquisition": {
+-     "departures": [],
+-     "lots": [],
+-     "stock": [],
+-     "week": 0,
+-   },
+    "classes": {
+      "bound": {
+        "free": 0,
+        "luminaries": 0,
+        "makers": 0,
+@@ -386,11 +380,11 @@
+        "deep-mining": 0,
+        "watch-patrols": 0,
+      },
+      "topic": null,
+    },
+-   "rulesetId": "tile-society-13",
++   "rulesetId": "tile-society-12",
+    "satisfaction": {
+      "bound": 80,
+      "free": 80,
+      "luminaries": 80,
+      "makers": 80,
+
+ ❯ packages/core/src/trial/__tests__/society.test.ts:7:21
+      5| it('creates the spec section 3 new game', () => {
+      6|   const s = createSocietyState();
+      7|   expect(s.society).toEqual({
+       |                     ^
+      8|     rulesetId: 'tile-society-13', standing:50,
+      9|     acquisition: { week: 0, stock: [], lots: [], departures: [] },
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/12]⎯
+
+
+ Test Files  7 failed (7)
+      Tests  11 failed | 193 passed (204)
+   Start at  16:24:31
+   Duration  2.17s (transform 1.36s, setup 0ms, import 2.13s, tests 1.18s, environment 1ms)
+
+
+UTC finish 2026-11-24T09:24:33+00:00
+Exit 1

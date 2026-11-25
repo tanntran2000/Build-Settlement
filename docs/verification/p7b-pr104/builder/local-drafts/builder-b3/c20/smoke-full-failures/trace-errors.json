@@ -1,0 +1,13 @@
+[
+  {
+    "folder": "smoke-regression-build-can-8e260-ter-the-production-artifact-chromium",
+    "traceSha256": "f0a5e6b52836359aaf0ade3cad43db9e1dc84a0e3364bd04b2c683435a656e20",
+    "errors": [
+      {
+        "type": "error",
+        "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+        "stack": []
+      }
+    ]
+  }
+]

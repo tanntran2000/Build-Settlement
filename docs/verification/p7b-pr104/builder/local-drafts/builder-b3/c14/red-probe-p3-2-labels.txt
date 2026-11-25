@@ -1,0 +1,25 @@
+HEAD and tree
+825ca5c27cc3d440705dffb6b41699d1dcbd2e4e
+b935bbe742992eb4cd792c93fe2881e1e67ea5fb
+Status before command
+ M packages/core/src/__tests__/catalog-data.test.ts
+ M packages/persistence/src/__tests__/npc-life-records.test.ts
+ M packages/simulation/src/__tests__/npc-acquisition.test.ts
+ M packages/simulation/src/__tests__/replay-checkpoint.test.ts
+ M packages/ui/src/__tests__/acquisition-view.test.ts
+ M tests/e2e/acquisition.spec.ts
+CI=
+UTC start 2026-11-24T11:52:50+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ python C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c14/check-diagnostic-labels.py
+packages/persistence/src/__tests__/item-records.test.ts:33: loads every v12 Character Life fixture as current
+packages/persistence/src/__tests__/society-new-game-fixture.test.ts:30: pinned v12 Character Life checkpoint
+packages/persistence/src/__tests__/society-new-game-fixture.test.ts:37: refuses edited v12
+packages/core/src/trial/__tests__/society-p7b.test.ts:85: uses the v12 ruleset
+packages/core/src/trial/__tests__/society-p7b.test.ts:102: rejects a v12 planning save
+packages/simulation/src/__tests__/npc-homes.test.ts:101: NPC homes and v12 saves
+packages/simulation/src/__tests__/npc-homes.test.ts:156: rejects a v12 checkpoint with fractional NPC affection
+packages/ui/src/__tests__/character-life-session.test.ts:12: loads live and pinned v12 cities
+
+UTC finish 2026-11-24T11:52:50+00:00
+Exit 1

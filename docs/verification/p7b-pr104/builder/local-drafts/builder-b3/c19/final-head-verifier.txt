@@ -1,0 +1,18 @@
+HEAD and tree
+2dc0a650b597e86df68673437add18e356723037
+aa7417db9948c096073681bde90423d93d85742f
+Status before command
+CI=
+UTC start 2026-11-24T14:29:16+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ python C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c19/verify-c19.py head
+Approved packet + Corrections 12–14 verified for 86 paths at 8aa7dc4cefbc759ce2a7d158937011c3afe71549.
+packages/core/src/trial/acquisition-replay.ts identical emitted JavaScript SHA-256 5d5a8d356f8ca328cb098ab15809d8c197749dcb1bfd432288625d58c800c3fe
+packages/simulation/src/__tests__/character-life-command.test.ts identical emitted JavaScript SHA-256 f2e51ddd5028a4649d49f3aff1b849b40fd5a7d3e8c9b0a79a22cd70062a70d5
+Corrections 16–18 reconstructed against reviewed dfcc524: 10 paths, 30 earlier spans and 2 type-only insertions.
+tests/e2e/character-life-navigation-accessibility.spec.ts e9de9e2712c5f43509c99a6c82f2cdf62fb3d25312b3d8bb32d9c8617cab68d9 -> a95a4c61db0c58dfb0393c255e3849b05b7c488fa8fb8b4872fe304a1f40160a (3 spans)
+tests/e2e/npc-sheet.spec.ts 6ca5b3fb6c7e0da00aea75ea4de6cb859861cb0a2f5cf7091628630d5cf7fcae -> 12499296d193eee86346cb2831113ad121bd4a4f1e107edd9ca81a6b22d1eb38 (2 spans)
+PASS head: 5 Correction 19 byte spans across two scopes. Assertions and timeouts match the reviewed bytes. Extra paths: 0.
+
+UTC finish 2026-11-24T14:29:39+00:00
+Exit 0

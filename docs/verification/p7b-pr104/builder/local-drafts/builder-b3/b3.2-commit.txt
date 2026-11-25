@@ -1,0 +1,28 @@
+HEAD and tree
+67903d2170633055ef50c1c667857c66d92024bf
+ff499751d5c9266f75ebe63ef19a0ff59264ed1d
+Status before command
+M  packages/core/src/character/validate.ts
+M  packages/core/src/index.ts
+A  packages/core/src/trial/acquisition-replay.ts
+M  packages/core/src/trial/acquisition.ts
+M  packages/core/src/trial/state.ts
+M  packages/persistence/src/session-records.ts
+M  packages/simulation/src/__tests__/lord-health.test.ts
+M  packages/simulation/src/__tests__/npc-acquisition.test.ts
+A  packages/simulation/src/__tests__/npc-auction.test.ts
+A  packages/simulation/src/__tests__/replay-checkpoint.test.ts
+M  packages/simulation/src/npc-acquisition.ts
+A  packages/simulation/src/npc-auction.ts
+UTC start 2026-11-24T09:30:10+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ git commit -m "feat(simulation): live npc auction" -m "Co-authored-by: Codex <noreply@openai.com>"
+[feat/p7b-acquisition-market 822c695] feat(simulation): live npc auction
+ 12 files changed, 496 insertions(+), 18 deletions(-)
+ create mode 100644 packages/core/src/trial/acquisition-replay.ts
+ create mode 100644 packages/simulation/src/__tests__/npc-auction.test.ts
+ create mode 100644 packages/simulation/src/__tests__/replay-checkpoint.test.ts
+ create mode 100644 packages/simulation/src/npc-auction.ts
+
+UTC finish 2026-11-24T09:30:11+00:00
+Exit 0

@@ -1,0 +1,22 @@
+HEAD and tree
+15f8c0224b4e398df3220c533bee404a08ca5fb3
+83c11b3a8362be1c1c69f632808c76a0c101caa8
+Status before command
+CI=
+UTC start 2026-11-25T00:45:21+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File C:\Users\Admin\.t3\local-drafts\p7b-prB3\builder-b3\c20/capture-final-worktree.ps1
+HEAD 15f8c0224b4e398df3220c533bee404a08ca5fb3
+Tree 83c11b3a8362be1c1c69f632808c76a0c101caa8
+Main b184357d235d164478584e36b96d063551124e66 and branch feat/p7b-acquisition-market
+Git status empty
+Ports 4173 and 4174 free
+graphify-out/graph.json
+.graphifyignore
+test(core): take fixture recruit names from their guild offer
+
+Co-authored-by: Codex <noreply@openai.com>
+
+
+UTC finish 2026-11-25T00:45:23+00:00
+Exit 0

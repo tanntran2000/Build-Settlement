@@ -1,0 +1,32 @@
+HEAD and tree
+67903d2170633055ef50c1c667857c66d92024bf
+ff499751d5c9266f75ebe63ef19a0ff59264ed1d
+Status before command
+ M packages/core/src/character/validate.ts
+ M packages/core/src/index.ts
+ M packages/core/src/trial/acquisition.ts
+ M packages/core/src/trial/state.ts
+ M packages/persistence/src/session-records.ts
+ M packages/simulation/src/__tests__/lord-health.test.ts
+ M packages/simulation/src/__tests__/npc-acquisition.test.ts
+ M packages/simulation/src/npc-acquisition.ts
+?? packages/core/src/trial/acquisition-replay.ts
+?? packages/simulation/src/__tests__/npc-auction.test.ts
+?? packages/simulation/src/__tests__/replay-checkpoint.test.ts
+?? packages/simulation/src/npc-auction.ts
+UTC start 2026-11-24T09:29:26+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/vitest/vitest.mjs run npc-acquisition.test.ts npc-auction.test.ts replay-checkpoint.test.ts character-life-save.test.ts npc-life-records.test.ts session-records.test.ts p7b-checkpoint.test.ts lord-health.test.ts --maxWorkers=4 --disableConsoleIntercept
+
+ RUN  v4.1.12 C:/Users/Admin/.t3/worktrees/Build-Settlement/qa-g6-closeout-01
+
+{"npcCount":100,"stock":12,"lots":2,"saveBytes":294795,"emptyWeekBytes":293786,"acquisitionDeltaBytes":1009}
+
+ Test Files  8 passed (8)
+      Tests  174 passed (174)
+   Start at  16:29:27
+   Duration  3.41s (transform 2.01s, setup 0ms, import 4.00s, tests 6.06s, environment 1ms)
+
+
+UTC finish 2026-11-24T09:29:30+00:00
+Exit 0

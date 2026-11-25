@@ -1,0 +1,13 @@
+{
+  "path": "packages/simulation/src/__tests__/character-life-command.test.ts",
+  "heldSha256": "028743a595baea6b569e5fcb75d9578750a210ccbeb2e2a101e886a78e36ccdb",
+  "offset": 1065,
+  "removedBase64": "",
+  "insertedUtf8": ": delegates.WorldNpcCityResult",
+  "insertedBase64": "OiBkZWxlZ2F0ZXMuV29ybGROcGNDaXR5UmVzdWx0",
+  "addedBytes": 30,
+  "finalSha256": "89e5f2ec26b29df1477fb7064aabd54b0599d230c0f8a550bf0c3f60f60b0c56",
+  "finalBytes": 23372,
+  "planSha256": "ff406413cbf3e00bcf2880b4a102fb2f912b9c308ef816a793f15d45ffb05d77",
+  "heldPatchSha256": "800a1f910530b04fa8380cf437724b1b6ac397f8aaf21f8d22152f5a8970e442"
+}

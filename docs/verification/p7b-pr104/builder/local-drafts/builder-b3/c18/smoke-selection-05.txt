@@ -1,0 +1,14 @@
+HEAD and tree
+dfcc524b043ee3135746121f4384342a8dbf6e5e
+1bb1779f9e610d4ab3f83432625f52ba0eea45d1
+Status before command
+CI=1
+UTC start 2026-11-24T14:13:25+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/@playwright/test/cli.js test tests/e2e/npc-sheet.spec.ts:376 --grep "NPC sheet reflow at 320px NPC sheet and NPC life report reflow at 320px(?: @[^ ]+)*$" --output C:\Users\Admin\.t3\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\05-artifacts --list
+Listing tests:
+  [chromium] › npc-sheet.spec.ts:376:3 › NPC sheet reflow at 320px › NPC sheet and NPC life report reflow at 320px
+Total: 1 test in 1 file
+
+UTC finish 2026-11-24T14:13:26+00:00
+Exit 0

@@ -1,0 +1,16 @@
+UTC 2026-11-24T10:40:13+00:00
+HEAD 825ca5c27cc3d440705dffb6b41699d1dcbd2e4e
+Tree b935bbe742992eb4cd792c93fe2881e1e67ea5fb
+origin/main b184357d235d164478584e36b96d063551124e66
+git status --porcelain=v1 --untracked-files=all: empty
+4173 and 4174 free
+Commits
+825ca5c27cc3d440705dffb6b41699d1dcbd2e4e b935bbe742992eb4cd792c93fe2881e1e67ea5fb feat(ui): acquisition panel
+Co-authored-by: Codex <noreply@openai.com>
+
+822c695c2e59b7f2f1b5c5cd8a882f9f7f62a6f1 3ebe68c4717b79a65667bdd658414f8e944654c5 feat(simulation): live npc auction
+Co-authored-by: Codex <noreply@openai.com>
+
+67903d2170633055ef50c1c667857c66d92024bf ff499751d5c9266f75ebe63ef19a0ff59264ed1d feat(simulation): npc stock, buy, hire, sell and release
+Co-authored-by: Codex <noreply@openai.com>
+

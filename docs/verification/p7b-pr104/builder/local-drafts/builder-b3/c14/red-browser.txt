@@ -1,0 +1,206 @@
+HEAD and tree
+825ca5c27cc3d440705dffb6b41699d1dcbd2e4e
+b935bbe742992eb4cd792c93fe2881e1e67ea5fb
+Status before command
+ M packages/core/src/__tests__/catalog-data.test.ts
+ M packages/persistence/src/__tests__/npc-life-records.test.ts
+ M packages/simulation/src/__tests__/npc-acquisition.test.ts
+ M packages/simulation/src/__tests__/replay-checkpoint.test.ts
+ M packages/ui/src/__tests__/acquisition-view.test.ts
+ M tests/e2e/acquisition.spec.ts
+CI=1
+UTC start 2026-11-24T11:52:09+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/@playwright/test/cli.js test tests/e2e/acquisition.spec.ts --output C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c14/red-browser-artifacts
+
+Running 6 tests using 1 worker
+
+(node:8764) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\e2e\acquisition.spec.ts:23:3 › acquisition panels, keyboard bids and real report rows at 1280px (16.7s)
+(node:20404) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [chromium] › tests\e2e\acquisition.spec.ts:23:3 › acquisition panels, keyboard bids and real report rows at 1600px (15.6s)
+(node:10320) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [chromium] › tests\e2e\acquisition.spec.ts:97:1 › sells a market slave and releases a servant from the roster with exact weekly rows (11.9s)
+  x  4 [chromium] › tests\e2e\acquisition.spec.ts:130:1 › round-trips the largest representative 100-NPC market checkpoint through IndexedDB and JSON (3.9s)
+(node:16592) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 5 [chromium] › tests\e2e\acquisition.spec.ts:191:3 › acquisition tabs fit 320px and selecting an ordinary tile restores management focus (2.7s)
+  ok 6 [chromium] › tests\e2e\acquisition.spec.ts:191:3 › acquisition tabs fit 375px and selecting an ordinary tile restores management focus (2.7s)
+
+
+  1) [chromium] › tests\e2e\acquisition.spec.ts:23:3 › acquisition panels, keyboard bids and real report rows at 1280px 
+
+    Error: expect(received).toStrictEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 2
+
+      Array [
+    -   "inside",
+    -   "inside",
+    +   "outside",
+    +   "outside",
+      ]
+
+      92 |       'Recruited · Ardis Frostmere', 'Lot sold to a rival · Auction House · 55 Gold', 'Lot sold to a rival · Slave Market · 45 Gold',
+      93 |     ]);
+    > 94 |     expect(markers).toStrictEqual(['inside', 'inside']);
+         |                     ^
+      95 |   });
+      96 | }
+      97 | test('sells a market slave and releases a servant from the roster with exact weekly rows', async ({ page }) => {
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\acquisition.spec.ts:94:21
+
+    Error Context: ..\..\..\local-drafts\p7b-prB3\builder-b3\c14\red-browser-artifacts\acquisition-acquisition-pa-25f7c--real-report-rows-at-1280px-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7b-prB3\builder-b3\c14\red-browser-artifacts\acquisition-acquisition-pa-25f7c--real-report-rows-at-1280px-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7b-prB3\builder-b3\c14\red-browser-artifacts\acquisition-acquisition-pa-25f7c--real-report-rows-at-1280px-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\e2e\acquisition.spec.ts:23:3 › acquisition panels, keyboard bids and real report rows at 1600px 
+
+    Error: expect(received).toStrictEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 2
+
+      Array [
+    -   "inside",
+    -   "inside",
+    +   "outside",
+    +   "outside",
+      ]
+
+      92 |       'Recruited · Ardis Frostmere', 'Lot sold to a rival · Auction House · 55 Gold', 'Lot sold to a rival · Slave Market · 45 Gold',
+      93 |     ]);
+    > 94 |     expect(markers).toStrictEqual(['inside', 'inside']);
+         |                     ^
+      95 |   });
+      96 | }
+      97 | test('sells a market slave and releases a servant from the roster with exact weekly rows', async ({ page }) => {
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\acquisition.spec.ts:94:21
+
+    Error Context: ..\..\..\local-drafts\p7b-prB3\builder-b3\c14\red-browser-artifacts\acquisition-acquisition-pa-228a0--real-report-rows-at-1600px-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7b-prB3\builder-b3\c14\red-browser-artifacts\acquisition-acquisition-pa-228a0--real-report-rows-at-1600px-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7b-prB3\builder-b3\c14\red-browser-artifacts\acquisition-acquisition-pa-228a0--real-report-rows-at-1600px-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests\e2e\acquisition.spec.ts:130:1 › round-trips the largest representative 100-NPC market checkpoint through IndexedDB and JSON 
+
+    Error: expect(received).toStrictEqual(expected) // deep equality
+
+    - Expected  - 14
+    + Received  +  0
+
+      Array [
+        Object {
+    -     "id": "npc_w1_guild_0",
+          "kind": "released",
+          "name": "Idrel Copperwell",
+        },
+        Object {
+    -     "id": "npc_w2_guild_0",
+          "kind": "released",
+          "name": "Aderin Saffronpath",
+        },
+        Object {
+    -     "id": "npc_w3_guild_0",
+          "kind": "released",
+          "name": "Iseld Stonewake",
+        },
+        Object {
+    -     "id": "npc_w4_guild_0",
+          "kind": "released",
+          "name": "Jorva Frostmere",
+        },
+        Object {
+    -     "id": "npc_w5_guild_0",
+          "kind": "released",
+          "name": "Anvara Copperwell",
+        },
+        Object {
+    -     "id": "npc_w6_guild_0",
+          "kind": "released",
+          "name": "Avelis Seawick",
+        },
+        Object {
+    -     "id": "npc_w7_guild_0",
+          "kind": "released",
+          "name": "Merva Anvilrow",
+        },
+        Object {
+    -     "id": "npc_w8_guild_0",
+          "kind": "released",
+          "name": "Adrel Emberloom",
+        },
+        Object {
+    -     "id": "npc_w9_guild_0",
+          "kind": "released",
+          "name": "Delva Flintpress",
+        },
+        Object {
+    -     "id": "npc_w10_guild_0",
+          "kind": "released",
+          "name": "Delyra Reedquay",
+        },
+        Object {
+    -     "id": "npc_w11_guild_0",
+          "kind": "released",
+          "name": "Kaelin Pineward",
+        },
+        Object {
+    -     "id": "npc_w12_guild_0",
+          "kind": "released",
+          "name": "Berdine Cinderlane",
+        },
+        Object {
+    -     "id": "npc_w13_guild_0",
+          "kind": "released",
+          "name": "Merna Millstream",
+        },
+        Object {
+    -     "id": "npc_w14_guild_0",
+          "kind": "released",
+          "name": "Carwen Brassmark",
+        },
+      ]
+
+      178 |   await page.getByRole('button', { name: 'Continue', exact: true }).click();
+      179 |   expect(await exportLife(page)).toStrictEqual(state);
+    > 180 |   expect(departures).toStrictEqual(departing);
+          |                      ^
+      181 |   await testInfo.attach('largest-save', { body: encoded.text, contentType: 'application/json' });
+      182 |   await testInfo.attach('largest-save-indexeddb-rows', { body: indexedDbRows, contentType: 'application/json' });
+      183 |   const measurement = { saveBytes, indexedDbRowJsonBytes: Buffer.byteLength(indexedDbRows, 'utf8'), rowCount: rows.length,
+        at C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01\tests\e2e\acquisition.spec.ts:180:22
+
+    Error Context: ..\..\..\local-drafts\p7b-prB3\builder-b3\c14\red-browser-artifacts\acquisition-round-trips-th-06ffa--through-IndexedDB-and-JSON-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7b-prB3\builder-b3\c14\red-browser-artifacts\acquisition-round-trips-th-06ffa--through-IndexedDB-and-JSON-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7b-prB3\builder-b3\c14\red-browser-artifacts\acquisition-round-trips-th-06ffa--through-IndexedDB-and-JSON-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    [chromium] › tests\e2e\acquisition.spec.ts:23:3 › acquisition panels, keyboard bids and real report rows at 1280px 
+    [chromium] › tests\e2e\acquisition.spec.ts:23:3 › acquisition panels, keyboard bids and real report rows at 1600px 
+    [chromium] › tests\e2e\acquisition.spec.ts:130:1 › round-trips the largest representative 100-NPC market checkpoint through IndexedDB and JSON 
+  3 passed (1.2m)
+
+UTC finish 2026-11-24T11:53:20+00:00
+Exit 1

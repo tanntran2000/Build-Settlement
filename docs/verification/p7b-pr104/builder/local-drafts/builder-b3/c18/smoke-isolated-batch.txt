@@ -1,0 +1,198 @@
+HEAD and tree
+dfcc524b043ee3135746121f4384342a8dbf6e5e
+1bb1779f9e610d4ab3f83432625f52ba0eea45d1
+Status before command
+CI=
+UTC start 2026-11-24T14:12:38+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ python C:\Users\Admin\.t3\local-drafts\p7b-prB3\builder-b3\c18/rerun-smoke-failures.py
+smoke-selection-01: exit 0
+HEAD and tree
+dfcc524b043ee3135746121f4384342a8dbf6e5e
+1bb1779f9e610d4ab3f83432625f52ba0eea45d1
+Status before command
+CI=1
+UTC start 2026-11-24T14:12:39+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/@playwright/test/cli.js test tests/e2e/character-life-navigation-accessibility.spec.ts:331 --grep "accessibility at 1600px long character and report content reflows(?: @[^ ]+)*$" --output C:\Users\Admin\.t3\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\01-artifacts --list
+Listing tests:
+  [chromium] › character-life-navigation-accessibility.spec.ts:331:5 › accessibility at 1600px › long character and report content reflows
+Total: 1 test in 1 file
+
+UTC finish 2026-11-24T14:12:40+00:00
+Exit 0
+smoke-isolated-01: exit 1
+    Error Context: ..\..\..\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\01-artifacts\character-life-navigation--d9965--and-report-content-reflows-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\01-artifacts\character-life-navigation--d9965--and-report-content-reflows-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\01-artifacts\character-life-navigation--d9965--and-report-content-reflows-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:331:5 › accessibility at 1600px › long character and report content reflows 
+
+UTC finish 2026-11-24T14:12:49+00:00
+Exit 1
+smoke-selection-02: exit 0
+HEAD and tree
+dfcc524b043ee3135746121f4384342a8dbf6e5e
+1bb1779f9e610d4ab3f83432625f52ba0eea45d1
+Status before command
+CI=1
+UTC start 2026-11-24T14:12:49+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/@playwright/test/cli.js test tests/e2e/character-life-navigation-accessibility.spec.ts:331 --grep "accessibility at 1280px long character and report content reflows(?: @[^ ]+)*$" --output C:\Users\Admin\.t3\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\02-artifacts --list
+Listing tests:
+  [chromium] › character-life-navigation-accessibility.spec.ts:331:5 › accessibility at 1280px › long character and report content reflows
+Total: 1 test in 1 file
+
+UTC finish 2026-11-24T14:12:51+00:00
+Exit 0
+smoke-isolated-02: exit 1
+    Error Context: ..\..\..\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\02-artifacts\character-life-navigation--ca2f8--and-report-content-reflows-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\02-artifacts\character-life-navigation--ca2f8--and-report-content-reflows-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\02-artifacts\character-life-navigation--ca2f8--and-report-content-reflows-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:331:5 › accessibility at 1280px › long character and report content reflows 
+
+UTC finish 2026-11-24T14:13:01+00:00
+Exit 1
+smoke-selection-03: exit 0
+HEAD and tree
+dfcc524b043ee3135746121f4384342a8dbf6e5e
+1bb1779f9e610d4ab3f83432625f52ba0eea45d1
+Status before command
+CI=1
+UTC start 2026-11-24T14:13:01+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/@playwright/test/cli.js test tests/e2e/character-life-navigation-accessibility.spec.ts:331 --grep "accessibility at 375px long character and report content reflows(?: @[^ ]+)*$" --output C:\Users\Admin\.t3\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\03-artifacts --list
+Listing tests:
+  [chromium] › character-life-navigation-accessibility.spec.ts:331:5 › accessibility at 375px › long character and report content reflows
+Total: 1 test in 1 file
+
+UTC finish 2026-11-24T14:13:02+00:00
+Exit 0
+smoke-isolated-03: exit 1
+    Error Context: ..\..\..\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\03-artifacts\character-life-navigation--89cf1--and-report-content-reflows-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\03-artifacts\character-life-navigation--89cf1--and-report-content-reflows-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\03-artifacts\character-life-navigation--89cf1--and-report-content-reflows-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:331:5 › accessibility at 375px › long character and report content reflows 
+
+UTC finish 2026-11-24T14:13:13+00:00
+Exit 1
+smoke-selection-04: exit 0
+HEAD and tree
+dfcc524b043ee3135746121f4384342a8dbf6e5e
+1bb1779f9e610d4ab3f83432625f52ba0eea45d1
+Status before command
+CI=1
+UTC start 2026-11-24T14:13:13+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/@playwright/test/cli.js test tests/e2e/character-life-navigation-accessibility.spec.ts:331 --grep "accessibility at 320px long character and report content reflows(?: @[^ ]+)*$" --output C:\Users\Admin\.t3\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\04-artifacts --list
+Listing tests:
+  [chromium] › character-life-navigation-accessibility.spec.ts:331:5 › accessibility at 320px › long character and report content reflows
+Total: 1 test in 1 file
+
+UTC finish 2026-11-24T14:13:14+00:00
+Exit 0
+smoke-isolated-04: exit 1
+    Error Context: ..\..\..\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\04-artifacts\character-life-navigation--77412--and-report-content-reflows-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\04-artifacts\character-life-navigation--77412--and-report-content-reflows-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\04-artifacts\character-life-navigation--77412--and-report-content-reflows-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\character-life-navigation-accessibility.spec.ts:331:5 › accessibility at 320px › long character and report content reflows 
+
+UTC finish 2026-11-24T14:13:25+00:00
+Exit 1
+smoke-selection-05: exit 0
+HEAD and tree
+dfcc524b043ee3135746121f4384342a8dbf6e5e
+1bb1779f9e610d4ab3f83432625f52ba0eea45d1
+Status before command
+CI=1
+UTC start 2026-11-24T14:13:25+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/@playwright/test/cli.js test tests/e2e/npc-sheet.spec.ts:376 --grep "NPC sheet reflow at 320px NPC sheet and NPC life report reflow at 320px(?: @[^ ]+)*$" --output C:\Users\Admin\.t3\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\05-artifacts --list
+Listing tests:
+  [chromium] › npc-sheet.spec.ts:376:3 › NPC sheet reflow at 320px › NPC sheet and NPC life report reflow at 320px
+Total: 1 test in 1 file
+
+UTC finish 2026-11-24T14:13:26+00:00
+Exit 0
+smoke-isolated-05: exit 1
+    Error Context: ..\..\..\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\05-artifacts\npc-sheet-NPC-sheet-reflow-e2345-life-report-reflow-at-320px-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\05-artifacts\npc-sheet-NPC-sheet-reflow-e2345-life-report-reflow-at-320px-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\05-artifacts\npc-sheet-NPC-sheet-reflow-e2345-life-report-reflow-at-320px-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\npc-sheet.spec.ts:376:3 › NPC sheet reflow at 320px › NPC sheet and NPC life report reflow at 320px 
+
+UTC finish 2026-11-24T14:13:36+00:00
+Exit 1
+smoke-selection-06: exit 0
+HEAD and tree
+dfcc524b043ee3135746121f4384342a8dbf6e5e
+1bb1779f9e610d4ab3f83432625f52ba0eea45d1
+Status before command
+CI=1
+UTC start 2026-11-24T14:13:36+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node node_modules/@playwright/test/cli.js test tests/e2e/npc-sheet.spec.ts:376 --grep "NPC sheet reflow at 375px NPC sheet and NPC life report reflow at 375px(?: @[^ ]+)*$" --output C:\Users\Admin\.t3\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\06-artifacts --list
+Listing tests:
+  [chromium] › npc-sheet.spec.ts:376:3 › NPC sheet reflow at 375px › NPC sheet and NPC life report reflow at 375px
+Total: 1 test in 1 file
+
+UTC finish 2026-11-24T14:13:37+00:00
+Exit 0
+smoke-isolated-06: exit 1
+    Error Context: ..\..\..\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\06-artifacts\npc-sheet-NPC-sheet-reflow-c2e06-life-report-reflow-at-375px-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ..\..\..\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\06-artifacts\npc-sheet-NPC-sheet-reflow-c2e06-life-report-reflow-at-375px-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace ..\..\..\local-drafts\p7b-prB3\builder-b3\c18\smoke-isolated-reruns\06-artifacts\npc-sheet-NPC-sheet-reflow-c2e06-life-report-reflow-at-375px-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\e2e\npc-sheet.spec.ts:376:3 › NPC sheet reflow at 375px › NPC sheet and NPC life report reflow at 375px 
+
+UTC finish 2026-11-24T14:13:47+00:00
+Exit 1
+{"utc": "2026-11-24T14:13:47.224936+00:00", "smoke": "gate-8-smoke.txt", "ci": 1, "results": [{"file": "tests\\e2e\\character-life-navigation-accessibility.spec.ts", "line": 331, "title": "accessibility at 1600px \u203a long character and report content reflows", "command": ["node", "node_modules/@playwright/test/cli.js", "test", "tests/e2e/character-life-navigation-accessibility.spec.ts:331", "--grep", "accessibility at 1600px long character and report content reflows(?: @[^ ]+)*$", "--output", "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c18\\smoke-isolated-reruns\\01-artifacts"], "exit": 1, "exactlyOne": true, "log": "smoke-isolated-01.txt"}, {"file": "tests\\e2e\\character-life-navigation-accessibility.spec.ts", "line": 331, "title": "accessibility at 1280px \u203a long character and report content reflows", "command": ["node", "node_modules/@playwright/test/cli.js", "test", "tests/e2e/character-life-navigation-accessibility.spec.ts:331", "--grep", "accessibility at 1280px long character and report content reflows(?: @[^ ]+)*$", "--output", "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c18\\smoke-isolated-reruns\\02-artifacts"], "exit": 1, "exactlyOne": true, "log": "smoke-isolated-02.txt"}, {"file": "tests\\e2e\\character-life-navigation-accessibility.spec.ts", "line": 331, "title": "accessibility at 375px \u203a long character and report content reflows", "command": ["node", "node_modules/@playwright/test/cli.js", "test", "tests/e2e/character-life-navigation-accessibility.spec.ts:331", "--grep", "accessibility at 375px long character and report content reflows(?: @[^ ]+)*$", "--output", "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c18\\smoke-isolated-reruns\\03-artifacts"], "exit": 1, "exactlyOne": true, "log": "smoke-isolated-03.txt"}, {"file": "tests\\e2e\\character-life-navigation-accessibility.spec.ts", "line": 331, "title": "accessibility at 320px \u203a long character and report content reflows", "command": ["node", "node_modules/@playwright/test/cli.js", "test", "tests/e2e/character-life-navigation-accessibility.spec.ts:331", "--grep", "accessibility at 320px long character and report content reflows(?: @[^ ]+)*$", "--output", "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c18\\smoke-isolated-reruns\\04-artifacts"], "exit": 1, "exactlyOne": true, "log": "smoke-isolated-04.txt"}, {"file": "tests\\e2e\\npc-sheet.spec.ts", "line": 376, "title": "NPC sheet reflow at 320px \u203a NPC sheet and NPC life report reflow at 320px", "command": ["node", "node_modules/@playwright/test/cli.js", "test", "tests/e2e/npc-sheet.spec.ts:376", "--grep", "NPC sheet reflow at 320px NPC sheet and NPC life report reflow at 320px(?: @[^ ]+)*$", "--output", "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c18\\smoke-isolated-reruns\\05-artifacts"], "exit": 1, "exactlyOne": true, "log": "smoke-isolated-05.txt"}, {"file": "tests\\e2e\\npc-sheet.spec.ts", "line": 376, "title": "NPC sheet reflow at 375px \u203a NPC sheet and NPC life report reflow at 375px", "command": ["node", "node_modules/@playwright/test/cli.js", "test", "tests/e2e/npc-sheet.spec.ts:376", "--grep", "NPC sheet reflow at 375px NPC sheet and NPC life report reflow at 375px(?: @[^ ]+)*$", "--output", "C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c18\\smoke-isolated-reruns\\06-artifacts"], "exit": 1, "exactlyOne": true, "log": "smoke-isolated-06.txt"}]}
+
+UTC finish 2026-11-24T14:13:47+00:00
+Exit 0

@@ -1,0 +1,312 @@
+HEAD and tree
+825ca5c27cc3d440705dffb6b41699d1dcbd2e4e
+b935bbe742992eb4cd792c93fe2881e1e67ea5fb
+Status before command
+CI=
+UTC start 2026-11-24T10:37:32+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ python C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/paired-timings.py
+control-tick 1/5
+control-tick 2/5
+control-tick 3/5
+control-tick 4/5
+control-tick 5/5
+control-load 1/5
+control-load 2/5
+control-load 3/5
+control-load 4/5
+control-load 5/5
+market-tick 1/5
+market-tick 2/5
+market-tick 3/5
+market-tick 4/5
+market-tick 5/5
+market-load 1/5
+market-load 2/5
+market-load 3/5
+market-load 4/5
+market-load 5/5
+{
+  "baseline": "b184357d235d164478584e36b96d063551124e66",
+  "head": "825ca5c27cc3d440705dffb6b41699d1dcbd2e4e",
+  "tree": "b935bbe742992eb4cd792c93fe2881e1e67ea5fb",
+  "startUTC": "2026-11-24T10:37:32.985+00:00",
+  "rounds": 5,
+  "warmTicksPerProcess": 20,
+  "method": "Five alternating triples on the same machine. Each fresh process uses the same untouched checkpoint for all trials. Baseline noise is the maximum absolute main-A/main-B warm-median gap. Detect repeatable added End Week cost when at least four of five candidate deltas exceed that observed noise.",
+  "finishUTC": "2026-11-24T10:39:54.854+00:00",
+  "cases": {
+    "control": {
+      "inputs": {
+        "main": {
+          "variant": "control",
+          "bytes": 300176,
+          "sha256": "a251995b3b63170f130e1f611056507f620f014a35b338d6b3873cde915e3960",
+          "comparableSha": "65d92f26b2ecf58ed28eceac80205f280d5761647eca0fa79c71719c99fd2c78",
+          "npcCount": 100,
+          "stock": 0,
+          "lots": 0,
+          "utcStart": "2026-11-24T10:37:33.818+00:00",
+          "utcFinish": "2026-11-24T10:37:35.175+00:00",
+          "command": "node C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\bench-worker.mjs \"D:\\QI Technology\\Temp\\p7b-b3-main-timing-b9hrugw4\" C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 prepare control C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\timings\\main-control.json",
+          "exit": 0
+        },
+        "head": {
+          "variant": "control",
+          "bytes": 300238,
+          "sha256": "312d28c38d324efee0c7db57ced1f626767ee0b902e052263d76191476b731a3",
+          "comparableSha": "65d92f26b2ecf58ed28eceac80205f280d5761647eca0fa79c71719c99fd2c78",
+          "npcCount": 100,
+          "stock": 0,
+          "lots": 0,
+          "utcStart": "2026-11-24T10:37:35.175+00:00",
+          "utcFinish": "2026-11-24T10:37:36.952+00:00",
+          "command": "node C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\bench-worker.mjs C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 prepare control C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\timings\\head-control.json",
+          "exit": 0
+        }
+      }
+    },
+    "market": {
+      "inputs": {
+        "main": {
+          "variant": "market",
+          "bytes": 300343,
+          "sha256": "f9ccf08c2a3fadd9b0e58322487b17f4683ed9007f64654e287ac9b7bba7526a",
+          "comparableSha": "a293233476bdb61cf3021b66a6e981f1ed5b6d7969db2a10ac08dfbc39290d4e",
+          "npcCount": 100,
+          "stock": 0,
+          "lots": 0,
+          "utcStart": "2026-11-24T10:37:36.953+00:00",
+          "utcFinish": "2026-11-24T10:37:38.884+00:00",
+          "command": "node C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\bench-worker.mjs \"D:\\QI Technology\\Temp\\p7b-b3-main-timing-b9hrugw4\" C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 prepare market C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\timings\\main-market.json",
+          "exit": 0
+        },
+        "head": {
+          "variant": "market",
+          "bytes": 301400,
+          "sha256": "7cee1216cbd0d0cf9adf3c91adbb4f43a9091e69fb9e4d0fc844cda78fbc433f",
+          "comparableSha": "a293233476bdb61cf3021b66a6e981f1ed5b6d7969db2a10ac08dfbc39290d4e",
+          "npcCount": 100,
+          "stock": 12,
+          "lots": 2,
+          "utcStart": "2026-11-24T10:37:38.885+00:00",
+          "utcFinish": "2026-11-24T10:37:41.613+00:00",
+          "command": "node C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\bench-worker.mjs C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 prepare market C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\timings\\head-market.json",
+          "exit": 0
+        }
+      }
+    }
+  },
+  "aggregate": {
+    "control-tick": {
+      "mainWarm": {
+        "median": 47.484700000000004,
+        "p95": 63.48288,
+        "max": 104.1402,
+        "over50": 62
+      },
+      "headWarm": {
+        "median": 46.8623,
+        "p95": 66.3415,
+        "max": 107.9869,
+        "over50": 27
+      },
+      "mainColdMs": [
+        96.6475,
+        89.385,
+        87.016,
+        88.7882,
+        107.83,
+        101.7411,
+        92.8766,
+        92.1432,
+        89.3315,
+        86.2748
+      ],
+      "headColdMs": [
+        90.8529,
+        97.9096,
+        88.9635,
+        92.6976,
+        91.6058
+      ],
+      "mainNoiseMs": [
+        1.3534999999999968,
+        0.46035000000000537,
+        1.4502500000000111,
+        0.45129999999998915,
+        9.598550000000003
+      ],
+      "maxMainNoiseMs": 9.598550000000003,
+      "pairedDeltasMs": [
+        -0.6990000000000052,
+        1.3164249999999953,
+        -1.046324999999996,
+        -1.922550000000001,
+        -3.7073250000000044
+      ],
+      "medianDeltaMs": -1.046324999999996,
+      "warmCostAboveNoise": false
+    },
+    "control-load": {
+      "mainWarm": {
+        "median": 14.8739,
+        "p95": 26.521934999999996,
+        "max": 41.3167,
+        "over50": 0
+      },
+      "headWarm": {
+        "median": 13.6765,
+        "p95": 22.58831,
+        "max": 34.9745,
+        "over50": 0
+      },
+      "mainColdMs": [
+        22.0356,
+        23.6001,
+        21.848,
+        25.0636,
+        30.1461,
+        21.8591,
+        41.3236,
+        23.6767,
+        50.6356,
+        29.2068
+      ],
+      "headColdMs": [
+        24.3751,
+        23.7446,
+        22.4426,
+        33.4283,
+        23.6763
+      ],
+      "mainNoiseMs": [
+        0.46589999999999954,
+        1.9282000000000004,
+        2.7178499999999985,
+        7.902650000000001,
+        3.1991499999999995
+      ],
+      "maxMainNoiseMs": 7.902650000000001,
+      "pairedDeltasMs": [
+        0.2765499999999985,
+        -0.6756000000000011,
+        -1.408125,
+        -3.581174999999998,
+        -4.356075000000001
+      ],
+      "medianDeltaMs": -1.408125,
+      "warmCostAboveNoise": false
+    },
+    "market-tick": {
+      "mainWarm": {
+        "median": 47.4193,
+        "p95": 62.442510000000006,
+        "max": 80.2475,
+        "over50": 71
+      },
+      "headWarm": {
+        "median": 47.4178,
+        "p95": 61.189879999999995,
+        "max": 75.2244,
+        "over50": 33
+      },
+      "mainColdMs": [
+        86.4947,
+        89.8938,
+        92.2036,
+        91.8813,
+        134.3607,
+        90.4543,
+        87.7833,
+        94.7653,
+        90.2018,
+        87.1079
+      ],
+      "headColdMs": [
+        99.8574,
+        93.0888,
+        94.0903,
+        93.7202,
+        112.7105
+      ],
+      "mainNoiseMs": [
+        3.023299999999999,
+        3.148150000000001,
+        9.457999999999998,
+        1.5839499999999944,
+        4.024150000000006
+      ],
+      "maxMainNoiseMs": 9.457999999999998,
+      "pairedDeltasMs": [
+        -1.6415000000000077,
+        -0.3145250000000033,
+        0.09125000000000227,
+        1.2170749999999941,
+        -2.328825000000002
+      ],
+      "medianDeltaMs": -0.3145250000000033,
+      "warmCostAboveNoise": false,
+      "drawAcquisitionMs": {
+        "median": 0.1428,
+        "p95": 0.2552,
+        "max": 0.2809,
+        "over50": 0
+      }
+    },
+    "market-load": {
+      "mainWarm": {
+        "median": 14.304950000000002,
+        "p95": 23.852475000000002,
+        "max": 37.3013,
+        "over50": 0
+      },
+      "headWarm": {
+        "median": 14.21345,
+        "p95": 24.69967,
+        "max": 41.4403,
+        "over50": 0
+      },
+      "mainColdMs": [
+        22.0484,
+        24.7812,
+        22.2392,
+        22.7686,
+        26.6114,
+        26.5752,
+        38.2264,
+        24.2882,
+        22.1987,
+        40.3068
+      ],
+      "headColdMs": [
+        25.7256,
+        31.4082,
+        42.4765,
+        27.7555,
+        25.5372
+      ],
+      "mainNoiseMs": [
+        0.25009999999999977,
+        0.25869999999999926,
+        0.33264999999999745,
+        2.5174999999999983,
+        4.0584000000000024
+      ],
+      "maxMainNoiseMs": 4.0584000000000024,
+      "pairedDeltasMs": [
+        0.07254999999999967,
+        0.23910000000000053,
+        -1.3583749999999952,
+        2.3481500000000004,
+        -1.7673500000000004
+      ],
+      "medianDeltaMs": 0.07254999999999967,
+      "warmCostAboveNoise": false
+    }
+  },
+  "hold": false
+}
+
+UTC finish 2026-11-24T10:39:54+00:00
+Exit 0

@@ -1,0 +1,28 @@
+HEAD and tree
+8aa7dc4cefbc759ce2a7d158937011c3afe71549
+a44d6bcd31a26f3519a39f5b71e481045a2b9318
+Status before command
+ M packages/core/src/__tests__/helpers/npcs.ts
+ M packages/core/src/character/validate.ts
+ M packages/core/src/trial/acquisition-replay.ts
+ M packages/persistence/src/__tests__/item-records.test.ts
+ M packages/persistence/src/__tests__/items-rebuild-order.test.ts
+ M packages/persistence/src/session-records.ts
+ M packages/simulation/src/__tests__/character-life-command.test.ts
+ M packages/simulation/src/__tests__/character-life-observation.test.ts
+ M packages/simulation/src/__tests__/npc-homes.test.ts
+ M packages/simulation/src/__tests__/replay-checkpoint.test.ts
+CI=
+UTC start 2026-11-24T13:18:37+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node packages/simulation/src/__tests__/fixtures/p7b-b3-path-diff.ts
+Seed 0: cityRulesetId, state.city.society.rulesetId, state.city.society.acquisition
+Seed 42: cityRulesetId, state.city.society.rulesetId, state.city.society.acquisition
+Seed 20261028: cityRulesetId, state.city.society.rulesetId, state.city.society.acquisition
+Base b184357d235d164478584e36b96d063551124e66
+Golden SHA-256 before 8ca5ec1422f6731a6482b930ee073ee5555b6b97fe6d5ad7635436655faca61e
+Golden SHA-256 after  2bf740f9c010e71747c1dcbe5af39387b1a37f4d81c4ba35cdef33feb821ff3e
+PASS: 3 golden seeds, 93 byte-identical historical fixtures, 10 v13 siblings. Forbidden paths: 0.
+
+UTC finish 2026-11-24T13:18:57+00:00
+Exit 0

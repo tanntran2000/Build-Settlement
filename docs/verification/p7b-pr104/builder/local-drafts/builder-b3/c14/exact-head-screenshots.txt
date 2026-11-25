@@ -1,0 +1,20 @@
+HEAD and tree
+8aa7dc4cefbc759ce2a7d158937011c3afe71549
+a44d6bcd31a26f3519a39f5b71e481045a2b9318
+Status before command
+CI=
+UTC start 2026-11-24T12:37:41+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ node C:\Users\Admin\.t3\local-drafts\p7b-prB3\builder-b3\c14/capture-screenshots.mjs C:\Users\Admin\.t3\local-drafts\p7b-prB3\builder-b3\c14/screenshots
+{"head":"8aa7dc4cefbc759ce2a7d158937011c3afe71549","tree":"a44d6bcd31a26f3519a39f5b71e481045a2b9318"}
+  ➜  Local:   http://localhost:4173/
+  ➜  Network: use --host to expose
+/assets/index-C14BvVUb.js 6ca33ec23adf4c1711f1e5fa166cbf9d82538cce1a8f04f6ed3af6ed09c7b8dd
+/assets/index-CYiD5znu.css b3ddf8f1b768f62cad1252a51cb16d2d8aecd36207010de134528fece5866046
+1280×900 C:\Users\Admin\.t3\local-drafts\p7b-prB3\builder-b3\c14\screenshots\acquisition-for-sale-1280.png 9026e13625cc957d626b8b895f4ee7fe5da5eb167bcf1de8be11af671f623ea8
+1280×900 C:\Users\Admin\.t3\local-drafts\p7b-prB3\builder-b3\c14\screenshots\acquisition-auction-1280.png bd1ec62ebdf03a4ff1e64de316a473b98fc8779fc877e2c2cc23413fa703b062
+{"diagnostic":"mobile keyboard path","width":320,"geometry":{"viewport":320,"scroll":320},"intoTabs":1,"toOrdinary":7,"focusedOrdinaryTile":true}
+{"diagnostic":"mobile keyboard path","width":375,"geometry":{"viewport":375,"scroll":375},"intoTabs":1,"toOrdinary":7,"focusedOrdinaryTile":true}
+
+UTC finish 2026-11-24T12:37:46+00:00
+Exit 0

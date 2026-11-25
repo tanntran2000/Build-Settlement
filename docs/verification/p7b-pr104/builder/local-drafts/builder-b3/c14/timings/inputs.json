@@ -1,0 +1,73 @@
+{
+  "control": {
+    "inputs": {
+      "main": {
+        "variant": "control",
+        "bytes": 300176,
+        "sha256": "a251995b3b63170f130e1f611056507f620f014a35b338d6b3873cde915e3960",
+        "comparableSha": "65d92f26b2ecf58ed28eceac80205f280d5761647eca0fa79c71719c99fd2c78",
+        "npcCount": 100,
+        "stock": 0,
+        "lots": 0,
+        "actionsPerLot": [],
+        "departures": 0,
+        "utcStart": "2026-11-24T12:37:54.934+00:00",
+        "utcFinish": "2026-11-24T12:37:56.401+00:00",
+        "command": "node C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c14\\bench-worker.mjs \"D:\\QI Technology\\Temp\\p7b-b3-main-timing-96_hmgzn\" C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 prepare control C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c14\\timings\\main-control.json C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c14\\save-size\\largest-save.json",
+        "exit": 0
+      },
+      "head": {
+        "variant": "control",
+        "bytes": 300238,
+        "sha256": "312d28c38d324efee0c7db57ced1f626767ee0b902e052263d76191476b731a3",
+        "comparableSha": "65d92f26b2ecf58ed28eceac80205f280d5761647eca0fa79c71719c99fd2c78",
+        "npcCount": 100,
+        "stock": 0,
+        "lots": 0,
+        "actionsPerLot": [],
+        "departures": 0,
+        "utcStart": "2026-11-24T12:37:56.401+00:00",
+        "utcFinish": "2026-11-24T12:37:57.932+00:00",
+        "command": "node C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c14\\bench-worker.mjs C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 prepare control C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c14\\timings\\head-control.json C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c14\\save-size\\largest-save.json",
+        "exit": 0
+      }
+    }
+  },
+  "market": {
+    "inputs": {
+      "main": {
+        "variant": "market",
+        "bytes": 291760,
+        "sha256": "d63a70463008cdc348d5a59c45bc6ce13c9d8f4dc4d1e90a295aaaa55ac12f89",
+        "comparableSha": "c8f376d95c86766a8a92e5e5103320fb09387d382b184f325198c20bc74d942c",
+        "npcCount": 100,
+        "stock": 0,
+        "lots": 0,
+        "actionsPerLot": [],
+        "departures": 0,
+        "utcStart": "2026-11-24T12:37:57.932+00:00",
+        "utcFinish": "2026-11-24T12:37:59.413+00:00",
+        "command": "node C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c14\\bench-worker.mjs \"D:\\QI Technology\\Temp\\p7b-b3-main-timing-96_hmgzn\" C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 prepare market C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c14\\timings\\main-market.json C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c14\\save-size\\largest-save.json",
+        "exit": 0
+      },
+      "head": {
+        "variant": "market",
+        "bytes": 293842,
+        "sha256": "fe61f7cd33761cde17fb445c4f0cf491db75ceab5b6aa055d949d5aa6ad6a453",
+        "comparableSha": "c8f376d95c86766a8a92e5e5103320fb09387d382b184f325198c20bc74d942c",
+        "npcCount": 100,
+        "stock": 12,
+        "lots": 2,
+        "actionsPerLot": [
+          4,
+          4
+        ],
+        "departures": 14,
+        "utcStart": "2026-11-24T12:37:59.413+00:00",
+        "utcFinish": "2026-11-24T12:38:01.002+00:00",
+        "command": "node C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c14\\bench-worker.mjs C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 C:\\Users\\Admin\\.t3\\worktrees\\Build-Settlement\\qa-g6-closeout-01 prepare market C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c14\\timings\\head-market.json C:\\Users\\Admin\\.t3\\local-drafts\\p7b-prB3\\builder-b3\\c14\\save-size\\largest-save.json",
+        "exit": 0
+      }
+    }
+  }
+}

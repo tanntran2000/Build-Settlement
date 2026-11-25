@@ -1,0 +1,14 @@
+HEAD and tree
+dfcc524b043ee3135746121f4384342a8dbf6e5e
+1bb1779f9e610d4ab3f83432625f52ba0eea45d1
+Status before command
+CI=
+UTC start 2026-11-24T14:26:23+00:00
+CWD C:\Users\Admin\.t3\worktrees\Build-Settlement\qa-g6-closeout-01
+$ python C:/Users/Admin/.t3/local-drafts/p7b-prB3/builder-b3/c19/apply-c19.py
+tests/e2e/character-life-navigation-accessibility.spec.ts: 3 spans; e9de9e2712c5f43509c99a6c82f2cdf62fb3d25312b3d8bb32d9c8617cab68d9 -> a95a4c61db0c58dfb0393c255e3849b05b7c488fa8fb8b4872fe304a1f40160a
+tests/e2e/npc-sheet.spec.ts: 2 spans; 6ca5b3fb6c7e0da00aea75ea4de6cb859861cb0a2f5cf7091628630d5cf7fcae -> 12499296d193eee86346cb2831113ad121bd4a4f1e107edd9ca81a6b22d1eb38
+Applied only the two fixture scopes and the long-report command oracle week argument.
+
+UTC finish 2026-11-24T14:26:23+00:00
+Exit 0
