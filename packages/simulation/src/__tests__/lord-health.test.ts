@@ -65,7 +65,7 @@ it('a wound leaving exactly one survives and then receives Hospital and gear reg
 it('CITY_FALLEN blocks every later city, NPC and item command without mutation', () => {
   const s = wound(); s.player.character.health = 20;
   const fallen = command(s,'END_WEEK',{expectedWeek:1}).next, before = structuredClone(fallen);
-  for (const type of ['BUILD','REPLACE','UPGRADE','SET_WORKERS','SET_ENABLED','END_WEEK','NEXT_WEEK','ENACT_LAW','REPEAL_LAW','CHOOSE_CARD_OPTION','ASSIGN_NPC','UNASSIGN_NPC','MOVE_NPC_HOME','BUY_NPC','BID_NPC','WITHDRAW_BID','SELL_NPC','RELEASE_NPC','EXTEND_WALL','SET_TRAINING','CLEAR','SET_RESEARCH','BUILD_DEEP_SHAFT',...ITEM_COMMAND_TYPES]) {
+  for (const type of ['BUILD','REPLACE','UPGRADE','SET_WORKERS','SET_ENABLED','END_WEEK','NEXT_WEEK','ENACT_LAW','REPEAL_LAW','CHOOSE_CARD_OPTION','ASSIGN_NPC','UNASSIGN_NPC','MOVE_NPC_HOME','BUY_NPC','BID_NPC','WITHDRAW_BID','SELL_NPC','RELEASE_NPC','ANSWER_NOTICE','EXTEND_WALL','SET_TRAINING','CLEAR','SET_RESEARCH','BUILD_DEEP_SHAFT',...ITEM_COMMAND_TYPES]) {
     expect(executeCharacterLifeCommand(fallen,{type,expectedRevision:fallen.city.revision})).toMatchObject({success:false,error:{code:'CITY_FALLEN'}});
   }
   expect(fallen).toEqual(before);

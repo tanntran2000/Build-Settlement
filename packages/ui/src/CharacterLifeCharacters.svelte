@@ -1,5 +1,6 @@
 <script lang="ts">
   import EquipmentView from './EquipmentView.svelte';
+  import HouseholdNotice from './HouseholdNotice.svelte';
   import { tick } from 'svelte';
   import { departureReason } from './acquisition-view.js';
   import { homeBeds, managerSlotTileIds, npcAge, PLAYER_CHARACTER_ID, TRIAL_BUILDINGS, type CharacterLifeSessionState, type CharacterView } from '@haven/core';
@@ -11,7 +12,7 @@
   export let locked: boolean;
   export let onapply: (next: CharacterLifeSessionState) => void;
   export let onpostdrafts: (entries: PostDraftEntry[]) => void;
-  let selectedCharacterId = PLAYER_CHARACTER_ID;
+  let requestedCharacterId = PLAYER_CHARACTER_ID;
   let areas: Record<string, CharacterArea> = {};
   let drafts: Record<string, string> = {};
   let assignError: { npcId: string; message: string } | null = null;
@@ -19,9 +20,10 @@
   $: held = new Set(session.npcs.map(npc => npc.postTileId));
   $: freeSlots = slots.filter(id => !held.has(id));
   $: roster = [
-    { id: PLAYER_CHARACTER_ID, name: 'You', role: 'Leader of Haven' },
-    ...session.npcs.map(npc => ({ id: npc.character.id, name: npc.character.name, role: postLabel(npc.postTileId) })),
+    { id: PLAYER_CHARACTER_ID, name: 'You', role: 'Leader of Haven', npc: null },
+    ...session.npcs.map(npc => ({ id: npc.character.id, name: npc.character.name, role: postLabel(npc.postTileId), npc })),
   ];
+  $: selectedCharacterId = roster.some(person => person.id === requestedCharacterId) ? requestedCharacterId : PLAYER_CHARACTER_ID;
   $: selectedIndex = roster.findIndex(person => person.id === selectedCharacterId);
   $: npc = session.npcs.find(person => person.character.id === selectedCharacterId);
   $: view = (npc ? {
@@ -47,16 +49,29 @@
   function postLabel(tileId: string | null) { return tileId ? slotName(tileId) : 'Unassigned'; }
   export function openWork(npcId: string): void {
     if (!session.npcs.some(npc => npc.character.id === npcId)) return;
-    selectedCharacterId = npcId;
+    requestedCharacterId = npcId;
     areas[npcId] = 'work';
   }
   let playerButton: HTMLButtonElement;
+  const rosterButtons: Record<string, HTMLButtonElement> = {};
+  let noticeError: { npcId: string; message: string } | null = null;
+
+  function answer(npcId: string, choice: string): boolean {
+    const result = executeCharacterLifeCommand(session, {
+      type: 'ANSWER_NOTICE', expectedRevision: session.city.revision, npcId, choice,
+    });
+    noticeError = result.success ? null : { npcId, message: result.error.message };
+    if (!result.success) return false;
+    if (choice === 'release' && selectedCharacterId === npcId) requestedCharacterId = PLAYER_CHARACTER_ID;
+    onapply(result.next);
+    return true;
+  }
   async function release(npcId: string, reason: string) {
     if (reason) return;
     const result = executeCharacterLifeCommand(session, { type: 'RELEASE_NPC', expectedRevision: session.city.revision, npcId });
     if (!result.success) { assignError = { npcId, message: result.error.message }; return; }
     assignError = null;
-    selectedCharacterId = PLAYER_CHARACTER_ID;
+    requestedCharacterId = PLAYER_CHARACTER_ID;
     onapply(result.next);
     await tick();
     playerButton.focus();
@@ -75,10 +90,17 @@
   {#each roster as person (person.id)}
     {#if person.id === PLAYER_CHARACTER_ID}
       <button bind:this={playerButton} data-testid={`character-${person.id}`} aria-pressed={selectedCharacterId === person.id}
-        onclick={() => { selectedCharacterId = person.id; }}>{person.name} · {person.role}</button>
+        onclick={() => { requestedCharacterId = person.id; }}>{person.name} · {person.role}</button>
     {:else}
-      <button data-testid={`character-${person.id}`} aria-pressed={selectedCharacterId === person.id}
-        onclick={() => { selectedCharacterId = person.id; }}>{person.name} · {person.role}</button>
+      <div class="roster-entry">
+        <button bind:this={rosterButtons[person.id]} data-testid={`character-${person.id}`} aria-pressed={selectedCharacterId === person.id}
+          onclick={() => { requestedCharacterId = person.id; }}>{person.name} · {person.role}</button>
+        {#if person.npc?.household.notice}
+          <HouseholdNotice city={session.city} npc={person.npc} {locked}
+            onanswer={choice => answer(person.id, choice)} onanswered={() => (rosterButtons[person.id] ?? playerButton).focus()} />
+          {#if noticeError?.npcId === person.id}<p role="alert">{noticeError.message}</p>{/if}
+        {/if}
+      </div>
     {/if}
   {/each}
 </nav>
@@ -87,12 +109,19 @@
   <header>
     <h3>{view.character.name}</h3>
     <p>{npc ? postLabel(npc.postTileId) : 'You · Leader of Haven'}</p>
-    <button disabled={selectedIndex === 0} onclick={() => { selectedCharacterId = roster[selectedIndex - 1].id; }}>Previous</button>
-    <button disabled={selectedIndex === roster.length - 1} onclick={() => { selectedCharacterId = roster[selectedIndex + 1].id; }}>Next</button>
+    <button disabled={selectedIndex === 0} onclick={() => { requestedCharacterId = roster[selectedIndex - 1].id; }}>Previous</button>
+    <button disabled={selectedIndex === roster.length - 1} onclick={() => { requestedCharacterId = roster[selectedIndex + 1].id; }}>Next</button>
   </header>
   {#key selectedCharacterId}
     <CharacterProfile {view} {npc} traitIds={npc?.traits ?? []} relationship={npc?.character.relationshipToPlayer ?? null}
       area={areas[selectedCharacterId] ?? 'description'} onarea={area => { areas[selectedCharacterId] = area; }}>
+      {#snippet notice()}
+        {#if npc?.household.notice}
+          {@const id = npc.character.id}
+          <HouseholdNotice city={session.city} {npc} {locked}
+            onanswer={choice => answer(id, choice)} onanswered={() => (rosterButtons[id] ?? playerButton).focus()} />
+        {/if}
+      {/snippet}
       {#snippet inventory()}<EquipmentView {session} characterId={selectedCharacterId} {locked} {onapply} />{/snippet}
       {#snippet work()}
         {#if npc}
@@ -135,7 +164,7 @@
 </section>
 
 <style>
-  section, header, .roster { min-width: 0; overflow-wrap: anywhere; }
+  section, header, .roster, .roster-entry { min-width: 0; overflow-wrap: anywhere; }
   .roster { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
   h3 { margin: 0; } p { margin: 8px 0; }
   select, button { font: inherit; border-radius: 6px; padding: 10px; border: 1px solid var(--border-color); max-width: 100%; }

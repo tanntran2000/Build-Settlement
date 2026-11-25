@@ -223,6 +223,10 @@ export function householdReportRows(report: Readonly<Pick<TileTrialReport, 'hous
       kind: 'lotsToRivals', label: 'Lot sold to a rival',
       value: `${source === 'auction-house' ? 'Auction House' : 'Slave Market'} · ${formatMilli(priceMilli)} Gold`,
     })),
+    ...(household.wagesPaidMilli ? [{ kind: 'wagesPaidMilli', label: 'Wages paid', value: formatMilli(household.wagesPaidMilli) + ' Gold' }] : []),
+    ...household.unpaid.map(value => ({ kind: 'unpaid', label: 'Wage unpaid', value })),
+    ...household.notices.map(value => ({ kind: 'notices', label: 'Contract notice', value })),
+    ...household.left.map(value => ({ kind: 'left', label: 'Left', value })),
   ];
 }
 

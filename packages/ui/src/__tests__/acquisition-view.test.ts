@@ -34,4 +34,11 @@ it('renders named acquisition rows and a 55 Gold lot by source', () => {
     { kind: 'lotsToRivals', label: 'Lot sold to a rival', value: 'Auction House · 55 Gold' },
   ]);
   expect(householdReportRows({})).toStrictEqual([]);
+  const household = { ...report.household, wagesPaidMilli: 2500, unpaid: ['D'], notices: ['E'], left: ['F'] };
+  expect(householdReportRows({ household }).slice(4)).toStrictEqual([
+    { kind: 'wagesPaidMilli', label: 'Wages paid', value: '2.5 Gold' },
+    { kind: 'unpaid', label: 'Wage unpaid', value: 'D' },
+    { kind: 'notices', label: 'Contract notice', value: 'E' },
+    { kind: 'left', label: 'Left', value: 'F' },
+  ]);
 });

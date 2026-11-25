@@ -22,7 +22,9 @@ for (const viewport of [{ width: 375, height: 812 }, { width: 1280, height: 900 
     if (!result.success) throw Error(result.error.message);
     await keyActivate(page, page.getByTestId('life-end-week'));
     const report = await expectReport(page, result.report!);
-    debit += report.before.gold + report.taxMilli + report.goods.revenueMilli - report.after.gold;
+    const wagesPaidMilli = report.household?.wagesPaidMilli ?? 0;
+    expect(wagesPaidMilli).toBe(4000);
+    debit += report.before.gold + report.taxMilli + report.goods.revenueMilli - report.after.gold - wagesPaidMilli;
     expect(report.unpaidUpkeepMilli).toBe(0); expect(report.goodsStock!.closingMilli).toBe(10000 - week * 1450);
     if (week === 5) {
       await page.locator('[data-life-view="reports"]').evaluate(node => { node.closest('.content')!.scrollTop = 0; window.scrollTo(0, 0); });

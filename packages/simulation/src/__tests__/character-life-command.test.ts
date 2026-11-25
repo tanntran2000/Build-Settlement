@@ -15,7 +15,16 @@ function life(seed = 0): CharacterLifeSessionState {
 }
 
 function legacy(s: CharacterLifeSessionState, raw: Record<string, unknown>): CharacterLifeCommandResult {
-  const world = { city: s.city, outside: s.outside, npcs: s.npcs };
+  const city = raw.type === 'END_WEEK' ? structuredClone(s.city) : s.city;
+  const gold = city.world.settlements[city.world.activeSettlementId!].inventory;
+  const beforeGold = gold.gold;
+  const wagesPaidMilli = raw.type === 'END_WEEK'
+    ? s.npcs.reduce((sum, npc) => sum + npc.household.contract!.wageMilli, 0) : 0;
+  if (raw.type === 'END_WEEK') {
+    expect(gold.gold).toBeGreaterThanOrEqual(wagesPaidMilli);
+    gold.gold -= wagesPaidMilli;
+  }
+  const world = { city, outside: s.outside, npcs: s.npcs };
   const r: delegates.WorldNpcCityResult = raw.type === 'ASSIGN_NPC' || raw.type === 'UNASSIGN_NPC'
     ? delegates.executeWorldNpcCommand(world, raw) : delegates.executeWorldNpcCityCommand(world, raw);
   if (!r.success) return r;
@@ -33,13 +42,18 @@ function legacy(s: CharacterLifeSessionState, raw: Record<string, unknown>): Cha
       expect(npc.life.working).toBe(true);
       expect((next.city.world.week - npc.life.birthWeek) % P7A_TRIAL.weeksPerYear).not.toBe(0);
       npc.life.arousal = Math.min(100, npc.life.arousal + Math.floor(npc.life.lust / P7A_TRIAL.arousalDivisor));
+      expect(npc.household.home).toBe('estate-2');
+      expect(npc.household.notice).toBeNull();
+      expect(npc.household.contract!.weeksLeft).toBeGreaterThan(1);
+      npc.household.contract!.weeksLeft--;
     }
   }
-  if (r.report && s.city.society!.acquisition.week === r.report.week) {
-    // These cases start with this week's Guild recruits and no enabled market next week.
-    next.city.society!.acquisition = emptyAcquisition();
-    const household = { ...emptyHouseholdReport(), bought: s.npcs.map(npc => npc.character.name) };
-    return { ...r, next, report: { ...r.report, household } };
+  if (r.report) {
+    // These cases start with Guild recruits and no enabled market next week.
+    const recruited = s.city.society!.acquisition.week === r.report.week;
+    if (recruited) next.city.society!.acquisition = emptyAcquisition();
+    const household = { ...emptyHouseholdReport(), bought: recruited ? s.npcs.map(npc => npc.character.name) : [], wagesPaidMilli };
+    return { ...r, next, report: { ...r.report, before: { ...r.report.before, gold: beforeGold }, household } };
   }
   return { ...r, next };
 }

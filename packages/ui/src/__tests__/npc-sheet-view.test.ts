@@ -37,6 +37,35 @@ describe('NPC sheet projection', () => {
     expect(JSON.stringify(npc)).toBe(before);
   });
 
+  it('projects contract, home and will and classifies the two split boundaries', () => {
+    const npc = generated();
+    npc.household.will = { preference: { id: 'patient', strength: 64 }, flaw: { id: 'restless', strength: 42 } };
+    npc.household.obedience = 50;
+    npc.character.relationshipToPlayer.affection = 50;
+    npc.household.contract = { weeksLeft: 19, wageMilli: 2000, unpaidWeeks: 1, stressHits: 2 };
+    expect(project()(npc).household).toStrictEqual({
+      status: 'Servant', home: "Retainers' Hall (estate-2)", contract: { weeksLeft: 19, wageMilli: 2000 },
+      obedience: 50, quadrant: 'Devoted', preference: { label: 'Patient', strength: 64 },
+      flaw: { label: 'Restless', strength: 42 },
+    });
+    for (const [affection, obedience, quadrant] of [
+      [50, 50, 'Devoted'], [50, 49, 'Willful lover'], [49, 50, 'Submissive out of fear'], [49, 49, 'Rebellious'],
+    ] as const) {
+      npc.character.relationshipToPlayer.affection = affection;
+      npc.household.obedience = obedience;
+      expect(project()(npc).household.quadrant).toBe(quadrant);
+    }
+  });
+
+  it('projects actual starting past as names and counts in approved order', () => {
+    const npc = generated();
+    npc.life.history.counters = { 'partners.outsider': 2, 'sex.hand.outsider': 4, 'act.withNpc': 1 };
+    expect(project()(npc).history.groups.at(-1)).toStrictEqual({ label: 'Starting past', counters: [
+      { label: 'Hand · Outsider encounters', count: 4 }, { label: 'Outsider partners', count: 2 },
+      { label: 'With another NPC', count: 1 },
+    ] });
+  });
+
   it('assigns the exact Stress bands and reads working independently', () => {
     const npc = generated(), build = project();
     npc.life.working = true;

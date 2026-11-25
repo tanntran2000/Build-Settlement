@@ -1,4 +1,4 @@
-import { NPC_HOBBIES, NPC_ORIGINS, P7A_TRIAL, REQUIRED_SKILLS, type SexPart, type WorldNpc } from '@haven/core';
+import { NPC_HOBBIES, NPC_ORIGINS, P7A_TRIAL, P7B_TRIAL, REQUIRED_SKILLS, TRIAL_BUILDINGS, type SexPart, type WorldNpc } from '@haven/core';
 
 const partLabels = {
   hand: 'Hand', mouth: 'Mouth', breast: 'Breast', vagina: 'Vagina', ass: 'Ass',
@@ -26,6 +26,15 @@ function eventLabel(kind: string): string {
     : title(kind.replaceAll('-', ' '));
 }
 
+const startingPast = [
+  ...parts.map(part => ({ key: 'sex.' + part + '.outsider', label: partLabels[part] + ' · Outsider encounters' })),
+  { key: 'partners.outsider', label: 'Outsider partners' },
+  { key: 'brothel.customers', label: 'Brothel customers' },
+  { key: 'act.threesome', label: 'Threesome' },
+  { key: 'act.withNpc', label: 'With another NPC' },
+];
+const pastKeys = new Set(startingPast.map(row => row.key));
+
 function historyView({ counters, recent }: WorldNpc['life']['history']) {
   const counter = (kind: string) => ({
     label: eventLabel(kind),
@@ -33,7 +42,11 @@ function historyView({ counters, recent }: WorldNpc['life']['history']) {
   });
   const categories: { label: string; counters: ReturnType<typeof counter>[] }[] =
     groups.map(({ label, kinds }) => ({ label, counters: kinds.map(counter) }));
-  const other = Object.keys(counters).filter(kind => !Object.hasOwn(eventLabels, kind)).sort();
+  const knownPast = startingPast.filter(row => Object.hasOwn(counters, row.key));
+  if (knownPast.length) categories.push({
+    label: 'Starting past', counters: knownPast.map(({ key, label }) => ({ label, count: counters[key] })),
+  });
+  const other = Object.keys(counters).filter(kind => !Object.hasOwn(eventLabels, kind) && !pastKeys.has(kind)).sort();
   if (other.length) categories.push({ label: 'Other', counters: other.map(counter) });
   return {
     groups: categories,
@@ -41,11 +54,28 @@ function historyView({ counters, recent }: WorldNpc['life']['history']) {
   };
 }
 
-export function buildNpcSheetView({ character, life }: WorldNpc) {
+export function buildNpcSheetView({ character, life, household }: WorldNpc) {
+  const { quadrantSplit } = P7B_TRIAL.household;
+  const affection = character.relationshipToPlayer.affection;
+  const obedient = household.obedience >= quadrantSplit;
+  const quadrant = affection >= quadrantSplit
+    ? (obedient ? 'Devoted' : 'Willful lover')
+    : (obedient ? 'Submissive out of fear' : 'Rebellious');
+  const homeType = household.home === 'estate-1' ? 'mansion' : 'retainers-hall';
+  const will = ({ id, strength }: { id: string; strength: number }) => ({
+    label: title(id.replaceAll('-', ' ')), strength,
+  });
   return {
+    household: {
+      status: { slave: 'Slave', servant: 'Servant', lifelong: 'Lifelong' }[household.status],
+      home: TRIAL_BUILDINGS[homeType].name + ' (' + household.home + ')',
+      contract: household.contract && { weeksLeft: household.contract.weeksLeft, wageMilli: household.contract.wageMilli },
+      obedience: household.obedience, quadrant,
+      preference: will(household.will.preference), flaw: will(household.will.flaw),
+    },
     origin: NPC_ORIGINS[life.origin].name,
     hobbies: life.hobbies.map(id => NPC_HOBBIES[id].name),
-    affection: character.relationshipToPlayer.affection,
+    affection,
     skills: REQUIRED_SKILLS.map(key => ({ label: title(key), score: character.skills[key] })),
     stress: {
       value: life.stress,

@@ -90,7 +90,7 @@ for (const width of [1280, 1600]) {
     await keyActivate(page, page.getByTestId('life-end-week'));
     await expectReport(page, result.report!);
     await expect(page.getByRole('region', { name: 'Household activity' }).getByRole('listitem')).toHaveText([
-      'Recruited · Ardis Frostmere', 'Lot sold to a rival · Auction House · 55 Gold', 'Lot sold to a rival · Slave Market · 45 Gold',
+      'Recruited · Ardis Frostmere', 'Lot sold to a rival · Auction House · 55 Gold', 'Lot sold to a rival · Slave Market · 45 Gold', 'Wages paid · 2 Gold',
     ]);
     expect(markers).toStrictEqual(['inside', 'inside']);
   });

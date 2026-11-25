@@ -15,6 +15,7 @@
   export let onarea: (area: CharacterArea) => void = () => {};
   export let work: Snippet | undefined = undefined;
   export let inventory: Snippet | undefined = undefined;
+  export let notice: Snippet | undefined = undefined;
   const title = (key: string) => key[0].toUpperCase() + key.slice(1);
   const tabs: { id: CharacterArea; label: string }[] = [
     { id: 'description', label: 'Description' }, { id: 'inventory', label: 'Inventory' },
@@ -77,7 +78,7 @@
           </details>
         {/if}
       {/snippet}
-      {#if npc}<NpcSheet {npc} age={c.age} {description} />{:else}{@render description()}{/if}
+      {#if npc}<NpcSheet {npc} age={c.age} {description} {notice} />{:else}{@render description()}{/if}
     {:else if area === 'inventory'}
       {#if inventory}{@render inventory()}{/if}
     {:else if area === 'work'}

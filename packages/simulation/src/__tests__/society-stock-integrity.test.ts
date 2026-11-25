@@ -121,7 +121,11 @@ describe('retained society Goods stock flow', () => {
     expect(observation.settlement.goodsStock).toEqual({ rulesetId: GOODS_STOCK_RULESET, amountMilli: 8550 });
     expect(observation.lastReport!.goodsStock).not.toBe(next.report!.goodsStock);
     expect(s.npcs.map(npc => npc.life.arousal)).toEqual([0, 0, 0]);
-    expect(next.next.npcs).toEqual(s.npcs.map(npc => ({ ...npc, life: { ...npc.life, arousal: Math.floor(npc.life.lust / P7A_TRIAL.arousalDivisor) } })));
+    expect(next.next.npcs).toEqual(s.npcs.map(npc => ({
+      ...npc,
+      life: { ...npc.life, arousal: Math.floor(npc.life.lust / P7A_TRIAL.arousalDivisor) },
+      household: { ...npc.household, contract: { ...npc.household.contract!, weeksLeft: 19 } },
+    })));
   });
 });
 

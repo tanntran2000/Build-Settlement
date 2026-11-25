@@ -509,6 +509,20 @@
       70
     ],
     "contractWeeks": 20,
+    "household": {
+      "unpaidAffectionLoss": 5,
+      "unpaidObedienceLoss": 5,
+      "mansionObedienceGain": 1,
+      "stressObedienceLoss": 2,
+      "unpaidRefusalWeeks": 3,
+      "stressRefusalHits": 3,
+      "lifelongAffectionMin": 75,
+      "lifelongObedienceMin": 50,
+      "lifelongAskGapWeeks": 10,
+      "renewalWageMultiplier": 1.25,
+      "renewalWageStepMilli": 1000,
+      "quadrantSplit": 50
+    },
     "wageMilli": [
       1000,
       2000

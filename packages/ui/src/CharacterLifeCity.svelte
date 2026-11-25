@@ -6,6 +6,7 @@
   import CouncilPanel from './CouncilPanel.svelte';
   import LibraryPanel from './LibraryPanel.svelte';
   import InsideCity from './InsideCity.svelte';
+  import HouseholdNotice from './HouseholdNotice.svelte';
   import { buildOptions } from './society-view.js';
   import { formatMilli as units } from './milli-format.js';
 
@@ -103,6 +104,11 @@
                     : ''}
                   <li>
                     <strong>{resident.character.name}</strong>
+                    {#if resident.household.notice}
+                      <HouseholdNotice city={state} npc={resident} {locked}
+                        onanswer={choice => oncommand('ANSWER_NOTICE', { npcId: id, choice })}
+                        onanswered={focusManage} />
+                    {/if}
                     <label for={`npc-home-destination-${id}`}>Destination for {resident.character.name}</label>
                     <select id={`npc-home-destination-${id}`} value={destination} disabled={locked || !hasDestination}
                       aria-describedby={reason ? `npc-home-reason-${id}` : undefined}
@@ -119,7 +125,7 @@
                 {/each}
               </ul>
             {/if}
-            {#if managementError?.action === 'MOVE_NPC_HOME'}
+            {#if managementError?.action === 'MOVE_NPC_HOME' || managementError?.action === 'ANSWER_NOTICE'}
               <p id="trial-management-error" role="alert" use:revealManagementError={managementError}>{managementError.message}</p>
             {/if}
           </section>
