@@ -35,7 +35,9 @@ for (const width of [1280, 1600]) {
     await profile.focus();
     await profile.press('End');
     await expect(sheet.getByRole('tab', { name: 'History' })).toBeFocused();
-    await expect(sheet.getByRole('region', { name: 'Starting past' })).toContainText('Outsider partners2');
+    const past = sheet.getByRole('region', { name: 'Starting past', exact: true });
+    const outsiderPartners = past.getByText('Outsider partners', { exact: true });
+    await expect(outsiderPartners.locator('xpath=following-sibling::dd')).toHaveText('2');
     const result = act(state, 'END_WEEK', { expectedWeek: 1 });
     await keyActivate(page, page.getByTestId('life-end-week'));
     await expectReport(page, result.report!);
