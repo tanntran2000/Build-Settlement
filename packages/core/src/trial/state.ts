@@ -7,6 +7,7 @@ import { GOODS_STOCK_RULESET } from './goods-stock.js';
 import { ESTATE_BUILDINGS,SOCIETY_BUILDINGS,societyPlot,societyStaff,type StaffClass } from './society-map.js';
 import { createSocietyState,isSocietyState,societyPopulation } from './society.js';
 import type { TileTrialState } from "./types.js";
+import { isAcquisitionReplay } from './acquisition-replay.js';
 
 const integer = (n: unknown): n is number => Number.isSafeInteger(n) && (n as number) >= 0;
 export function isTileTrialState(raw: unknown): raw is TileTrialState {
@@ -19,6 +20,7 @@ export function isTileTrialState(raw: unknown): raw is TileTrialState {
     if (!isCanonicalGameState(s.world) || !s.world.activeSettlementId || !integer(s.revision) ||
       !["planning", "report"].includes(s.phase) || !Number.isFinite(s.happiness) || s.happiness < 0 || s.happiness > 100 || !Array.isArray(s.tiles)) return false;
     if (s.society) {
+      if (s.society.acquisition.week > s.world.week) return false;
       const settlement=s.world.settlements[s.world.activeSettlementId];
       const cohorts=readDenseArray(settlement.cohorts) as typeof settlement.cohorts|null;
       if(!cohorts)return false;
@@ -100,7 +102,7 @@ export function isTileTrialPlanningState(raw: unknown): raw is TileTrialState {
       if (tiles.filter(tile=>tile.building?.typeId===typeId).length>1) return false;
     }
     if (tiles.filter(tile=>tile.building?.typeId==='retainers-hall').length>RETAINERS_HALL_TRIAL.maxPerCity) return false;
-    return isTileTrialState(raw);
+    return isTileTrialState(raw) && isAcquisitionReplay(raw);
   } catch { return false; }
 }
 

@@ -4,8 +4,8 @@ import type { CharacterLifeSessionState, TileTrialState } from '@haven/core';
 import { createMemoryGameStore, recordsToSession, sessionToRecords } from '@haven/persistence';
 import { readLocalCharacterLife } from '../character-life-session.js';
 
-it('decodes normalized v10 rows only to refuse the old checkpoint unchanged', async () => {
-  const url = new URL('../../../persistence/src/__tests__/fixtures/society-v10/life-5-weeks.json', import.meta.url);
+it.each([10, 12])('decodes normalized v%s rows only to refuse the old checkpoint unchanged', async version => {
+  const url = new URL(`../../../persistence/src/__tests__/fixtures/society-v${version}/life-5-weeks.json`, import.meta.url);
   const source = readFileSync(url, 'utf8');
   const old: CharacterLifeSessionState = JSON.parse(source).state;
   const rows = sessionToRecords('main', old);

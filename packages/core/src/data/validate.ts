@@ -316,7 +316,7 @@ type GOODS_STOCK_TRIALData = Readonly<{
     goldPerGoodsMilli: 1000;
 }>;
 type SOCIETY_TRIALData = Readonly<{
-    readonly rulesetId: "tile-society-12";
+    readonly rulesetId: "tile-society-13";
     readonly standing: 50;
     readonly laws: Readonly<{
         active: never[];
@@ -640,7 +640,7 @@ const tuningSchemas: Record<string, Rule> = {
             "tension": nonnegative
         })
     }), "SOCIETY_TRIAL": object({
-        "rulesetId": literal("tile-society-12"), "standing": nonnegative, "laws": object({
+        "rulesetId": literal("tile-society-13"), "standing": nonnegative, "laws": object({
             "active": tuple([]), "votedWeek": literal(null), "repealedUntil": object({}), "promise": literal(null)
         }), "order": object({
             "security": nonnegative, "crime": nonnegative, "authority": nonnegative
@@ -1064,6 +1064,39 @@ const denseChoices = (item: Rule, allowEmpty = false): Rule => (value, ref, fiel
     checked.forEach((entry, index) => item(entry, ref, child(field, String(index))));
 };
 const npcWordIds = (entries: readonly { readonly id: string }[]) => oneOf(...entries.map(entry => entry.id));
+
+export interface AcquisitionCatalog {
+    AUCTION_TRIAL: Readonly<{
+        marker: 'TRIAL'; rivalCount: NpcRange; ceilingBps: NpcRange; steadyBps: number; keenBps: number;
+        openingBps: number; openingStepMilli: number; playerRaisesMilli: NpcRange; rivalStepMilli: number;
+    }>;
+    CARD_TRIAL: Readonly<{ marker: 'TRIAL'; topSkillCount: number }>;
+    rivalNames: readonly string[];
+}
+export function validateNpcAcquisition(json: unknown): AcquisitionCatalog {
+    const file = 'npc-acquisition.json';
+    const ref = file + '#AUCTION_TRIAL';
+    const root = record(json, file + '#catalog', 'entries');
+    object({ AUCTION_TRIAL: record, CARD_TRIAL: record, rivalNames: denseChoices(text) })(root, file + '#catalog', '');
+    object({ marker: literal('TRIAL'), rivalCount: ascending(positive), ceilingBps: ascending(positive),
+        steadyBps: positive, keenBps: positive, openingBps: positive, openingStepMilli: positive,
+        playerRaisesMilli: ascending(positive), rivalStepMilli: positive })(root.AUCTION_TRIAL, ref, '');
+    object({ marker: literal('TRIAL'), topSkillCount: positive })(root.CARD_TRIAL, file + '#CARD_TRIAL', '');
+    const data = root as unknown as AcquisitionCatalog;
+    const auction = data.AUCTION_TRIAL;
+    if (auction.rivalCount[1] > data.rivalNames.length) fail(ref, 'rivalCount', 'expected enough distinct rival names');
+    if (!(auction.openingBps <= auction.ceilingBps[0] && auction.ceilingBps[0] < auction.steadyBps &&
+        auction.steadyBps < auction.keenBps && auction.keenBps <= auction.ceilingBps[1]))
+        fail(ref, 'ceilingBps', 'expected opening <= floor < steady < keen <= ceiling');
+    if (auction.playerRaisesMilli[0] === auction.playerRaisesMilli[1]) fail(ref, 'playerRaisesMilli', 'expected two distinct raises');
+    for (const field of ['openingStepMilli', 'rivalStepMilli'] as const) {
+        if (auction[field] % SOCIAL_RESOURCE_SCALE) fail(ref, field, 'expected whole Gold steps');
+    }
+    for (const [index, amount] of auction.playerRaisesMilli.entries()) {
+        if (amount % SOCIAL_RESOURCE_SCALE) fail(ref, 'playerRaisesMilli[' + index + ']', 'expected whole Gold steps');
+    }
+    return data;
+}
 
 export function validateNpcGenerator(json: unknown): NpcGeneratorCatalog {
     const ref = `${npcGeneratorFile}#catalog`;

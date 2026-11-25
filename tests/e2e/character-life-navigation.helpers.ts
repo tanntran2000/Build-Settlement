@@ -545,6 +545,29 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
     const [, paid, unpaid] = amounts;
     actual.householdUpkeep = { paidMilli: milli(paid), unpaidMilli: unpaid === undefined ? 0 : milli(unpaid) };
   }
+  const householdRows = panel.locator('[data-household-kind]');
+  if (await householdRows.count()) {
+    const household: NonNullable<TileTrialReport['household']> = {
+      bought: [], sold: [], released: [], left: [], lotsToRivals: [], wagesPaidMilli: 0, unpaid: [], notices: [],
+    };
+    for (const row of await householdRows.all()) {
+      const kind = await row.getAttribute('data-household-kind');
+      const value = (await row.locator('strong').innerText()).trim();
+      await expect(row).toBeVisible();
+      if (kind === 'lotsToRivals') {
+        const match = /^(Auction House|Slave Market) · ([\d,.]+) Gold$/.exec(value);
+        if (!match) throw Error('Invalid household auction row.');
+        await expect(row).toHaveText(`Lot sold to a rival · ${value}`);
+        household.lotsToRivals.push({ source: match[1] === 'Auction House' ? 'auction-house' : 'slave-market', priceMilli: milli(match[2]) });
+      } else if (kind === 'bought' || kind === 'sold' || kind === 'released') {
+        const labels = { bought: 'Recruited', sold: 'Sold', released: 'Released' };
+        if (!value) throw Error('Missing household row name.');
+        await expect(row).toHaveText(`${labels[kind]} · ${value}`);
+        household[kind].push(value);
+      } else throw Error('Unknown household row.');
+    }
+    actual.household = household;
+  }
   const { society, luxuryImportedMilli, trainingGoldMilli, ...baseReport } = expected;
   expect(actual).toEqual(baseReport);
   if (society) {
@@ -571,7 +594,12 @@ export async function lifeUiSnapshot(page: Page) {
   return page.getByTestId('life-shell').evaluate(shell => {
     const copy = shell.cloneNode(true) as HTMLElement;
     copy.querySelectorAll('[data-life-error], [aria-label="Planning checkpoints"] [role="status"]').forEach(node => node.remove());
+    const acquisition = [...shell.querySelectorAll('[data-acquisition-action], [data-acquisition-panel] [role="tab"], [data-household-kind]')].map(node => ({
+      text: node.textContent, selected: node.getAttribute('aria-selected'), disabled: node.getAttribute('aria-disabled'),
+      reason: node.getAttribute('aria-describedby'),
+    }));
     return {
+      ...(acquisition.length ? { acquisition } : {}),
       markup: copy.outerHTML,
       controls: [...shell.querySelectorAll<HTMLInputElement | HTMLSelectElement>('input:not([type="file"]),select')].map(node => ({
         id: node.id, value: node.value, disabled: node.disabled,

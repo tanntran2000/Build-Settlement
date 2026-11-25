@@ -1,6 +1,6 @@
 import { expect, it } from 'vitest';
 import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';
-import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, isItemsState, type ItemsState } from '@haven/core';
+import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, emptyAcquisition, isItemsState, type ItemsState } from '@haven/core';
 import { executeCharacterLifeCommand } from '@haven/simulation';
 import { deserializeCharacterLifeSave, serializeCharacterLifeSave } from '../character-life-save.js';
 import { recordsToSession, sessionToRecords } from '../session-records.js';
@@ -56,7 +56,7 @@ it.each(mutations)('refuses byte-changing %s while its canonical counterpart rou
   if (exported.success) assertExactBytes(s);
   expect(isItemsState(s.city.society!.items, ['player', ...s.npcs.map(n => n.character.id)])).toBe(false);
   expect(exported).toMatchObject({ success: false, error: { code: 'INVALID_SAVE_STATE' } });
-  const checkpoint = JSON.stringify({ format: 'haven.character-life-session.save', schemaVersion: 1, cityRulesetId: 'tile-society-12', state: s });
+  const checkpoint = JSON.stringify({ format: 'haven.character-life-session.save', schemaVersion: 1, cityRulesetId: 'tile-society-13', state: s });
   expect(deserializeCharacterLifeSave(checkpoint)).toMatchObject({ success: false, error: { code: 'INVALID_SAVE_STATE' } });
   expect(JSON.stringify(s)).toBe(unchanged);
 });
@@ -67,6 +67,7 @@ it('keeps commands and reconstruction valid for numeric and prototype-named equi
     s.npcs[index].character.id = id;
     s.profiles[index].id = id;
   }
+  s.city.society!.acquisition = emptyAcquisition();
   s.city.society!.items.equipped = {};
   s.city.society!.items.inventory = [1, 2, 3].map(id => ({ id, defId: 'rare-weapon' }));
   s.city.society!.items.consumables = [];

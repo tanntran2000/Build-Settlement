@@ -40,7 +40,8 @@ function populate(homes: readonly string[], maxBeds = false): Populated {
   const start = newGame();
   const session: Populated = { ...start, npcs: [], profiles: [] };
   session.city.society!.wallRing = 2;
-  session.city.world.week = 8;
+  // All residents in this no-market fixture already lived here before the current week.
+  session.city.world.week = 9;
   for (const [id, contents] of [
     ['estate-1', building('mansion', maxBeds ? 3 : 1)],
     ['estate-2', building('retainers-hall', maxBeds ? 2 : 1)],
@@ -98,7 +99,7 @@ function roundTrip(session: CharacterLifeSessionState) {
   return { state: loaded.state, text: saved.text };
 }
 
-describe('NPC homes and v12 saves', () => {
+describe('NPC homes and v13 saves', () => {
   it('starts New Game with no NPCs or profiles, 120 Gold, and both fixed L1 homes', () => {
     const session = newGame();
     const world = createNpcWorldSession(2026);
@@ -111,7 +112,7 @@ describe('NPC homes and v12 saves', () => {
     }
     expect([homeBeds(session.city, 'estate-1'), homeBeds(session.city, 'estate-2')]).toStrictEqual([10, 25]);
     const loaded = roundTrip(session);
-    expect([JSON.parse(loaded.text).cityRulesetId, loaded.state.city.society!.rulesetId]).toStrictEqual(['tile-society-12', 'tile-society-12']);
+    expect([JSON.parse(loaded.text).cityRulesetId, loaded.state.city.society!.rulesetId]).toStrictEqual(['tile-society-13', 'tile-society-13']);
   });
 
   it('rejects 45000 in generator data once the live tuning is 120000', () => {
@@ -153,7 +154,7 @@ describe('NPC homes and v12 saves', () => {
     }
   });
 
-  it('rejects a v12 checkpoint with fractional NPC affection', () => {
+  it('rejects a v13 checkpoint with fractional NPC affection', () => {
     const { text } = roundTrip(populate(['estate-2']));
     const checkpoint = JSON.parse(text) as { state: CharacterLifeSessionState };
     checkpoint.state.npcs[0].character.relationshipToPlayer.affection = 20.5;

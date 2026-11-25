@@ -1,5 +1,5 @@
 import {
-  describeLong, describeShort, managerSlotTileIds, profileRows, REQUIRED_EMOTIONS, REQUIRED_NEEDS,
+  acquisitionEnabled, describeLong, describeShort, managerSlotTileIds, profileRows, REQUIRED_EMOTIONS, REQUIRED_NEEDS,
   REQUIRED_RELATIONSHIP, REQUIRED_SKILLS, summarizeOutside, TRIAL_BUILDINGS, WEEKLY_RESOURCE_KEYS,
   weeklyWorkforceMilli, WORLD_TRAITS,
   type CharacterLifeSessionState, type CharacterView, type NamedCharacter, type Relationship8D,
@@ -19,6 +19,7 @@ export interface VisibleCharacter {
 }
 export interface VisibleReport {
   goodsStock?: TileTrialReport['goodsStock'];
+  household?: TileTrialReport['household'];
   week: number; before: WeeklyStocks; after: WeeklyStocks;
   taxMilli: number; farmBatchGoldMilli: number; farmExtraUpkeepMilli: number;
   upkeepPaidMilli: number; unpaidUpkeepMilli: number;
@@ -82,6 +83,7 @@ function visibleReport(r: Readonly<TileTrialReport>): VisibleReport {
       woodUsed: r.goods.woodUsed, ironUsed: r.goods.ironUsed, revenueMilli: r.goods.revenueMilli },
     activities: [...r.activities],
   };
+  if (r.household) report.household = structuredClone(r.household);
   if (r.goodsStock) report.goodsStock = { ...r.goodsStock };
   if (r.immigration) report.immigration = { populationBefore: r.immigration.populationBefore,
     arrivals: r.immigration.arrivals, populationAfter: r.immigration.populationAfter };
@@ -104,7 +106,11 @@ export function observeCharacterLife(session: CharacterLifeSessionState, lastRep
     week: city.world.week, phase: city.phase, revision: city.revision,
     actionTypes: city.phase === 'report' ? ['NEXT_WEEK']
       : ['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED', 'END_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC',
-        ...(city.society ? ['EXTEND_WALL', 'SET_TRAINING'] as const : [])],
+        ...(city.society ? ['EXTEND_WALL', 'SET_TRAINING'] as const : []),
+        ...(acquisitionEnabled(city, 'guild') || acquisitionEnabled(city, 'auction-house') || acquisitionEnabled(city, 'slave-market') ? ['BUY_NPC'] as const : []),
+        ...(acquisitionEnabled(city, 'auction-house') || acquisitionEnabled(city, 'slave-market') ? ['BID_NPC', 'WITHDRAW_BID'] as const : []),
+        ...(acquisitionEnabled(city, 'slave-market') && session.npcs.length ? ['SELL_NPC'] as const : []),
+        ...(session.npcs.length ? ['RELEASE_NPC'] as const : [])],
     disabledReasons,
     settlement: { stocks: numbers(settlement.inventory, WEEKLY_RESOURCE_KEYS),
       ...(city.goodsStock ? { goodsStock: { ...city.goodsStock } } : {}),

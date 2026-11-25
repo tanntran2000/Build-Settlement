@@ -72,12 +72,23 @@ export interface TileTrialReport {
   upkeepPaidMilli: number;
   unpaidUpkeepMilli: number;
   householdUpkeep?: { paidMilli: number; unpaidMilli: number };
+  household?: HouseholdReport;
   foodDemandMilli: number;
   foodConsumedMilli: number;
   happinessBefore: number;
   happinessAfter: number;
   goods: { demandMilli: number; servedMilli: number; fulfillmentBps: number; woodUsed: number; ironUsed: number; revenueMilli: number };
   activities: readonly string[];
+}
+export interface HouseholdReport {
+  bought: string[];
+  sold: string[];
+  released: string[];
+  left: string[];
+  lotsToRivals: { source: 'auction-house' | 'slave-market'; priceMilli: number }[];
+  wagesPaidMilli: number;
+  unpaid: string[];
+  notices: string[];
 }
 export interface ItemWeekReport {
   materials: {tileId:string;materialId:string;lost:boolean}[];

@@ -72,6 +72,37 @@ it.each(cases)('$file has recursively frozen typed views', entry => {
   else Object.values(view).forEach(frozen);
 });
 
+it('validates the acquisition TRIAL data and pins malformed bands with a named error', async () => {
+  const api = await validators();
+  const source = data('npc-acquisition.json');
+  expect(api.validateNpcAcquisition(source)).toStrictEqual(source);
+  const bad = structuredClone(source) as { AUCTION_TRIAL: { steadyBps: number } };
+  bad.AUCTION_TRIAL.steadyBps = 12_000;
+  let thrown: unknown;
+  try { api.validateNpcAcquisition(bad); } catch (error) { thrown = error; }
+  expect(thrown).toBeInstanceOf(api.CatalogError);
+  expect((thrown as Error).message).toBe('npc-acquisition.json#AUCTION_TRIAL.ceilingBps: expected opening <= floor < steady < keen <= ceiling');
+});
+
+it.each([
+  ['openingStepMilli', 0],
+  ['rivalStepMilli', 0],
+  ['playerRaisesMilli', 0],
+  ['playerRaisesMilli', 1],
+] as const)('names the malformed whole-Gold step %s at index %i', async (field, index) => {
+  const api = await validators();
+  const bad = data('npc-acquisition.json') as {
+    AUCTION_TRIAL: Record<'openingStepMilli' | 'rivalStepMilli', number> & { playerRaisesMilli: number[] };
+  };
+  if (field === 'playerRaisesMilli') bad.AUCTION_TRIAL[field][index] += 1;
+  else bad.AUCTION_TRIAL[field] += 1;
+  let thrown: unknown;
+  try { api.validateNpcAcquisition(bad); } catch (error) { thrown = error; }
+  const path = field === 'playerRaisesMilli' ? field + '[' + index + ']' : field;
+  expect(thrown).toBeInstanceOf(api.CatalogError);
+  expect((thrown as Error).message).toBe('npc-acquisition.json#AUCTION_TRIAL.' + path + ': expected whole Gold steps');
+});
+
 it('preserves the original vote message literal type', () => {
   expectTypeOf(LAW_MESSAGES.VOTE_SHORT).toEqualTypeOf<'The vote would fail: For {F} · Against {A}.'>();
 });
@@ -90,7 +121,7 @@ const pinnedCatalogs = [
   { name: 'GARRISON_TRIAL', value: GARRISON_TRIAL, hash: '4143c1462f581114f45b89afa976c6917d984ea1550601205c4eb7655602c5ef' },
   { name: 'CRIME_TRIAL', value: CRIME_TRIAL, hash: 'f0870b86f87072a009bef7a53511704f6b0ddb5b2e5d9c1de6a7b6dbb44ce1d1' },
   { name: 'CRISIS_TRIAL', value: CRISIS_TRIAL, hash: 'e84e3064f8941cfbf4187fb6708577d62ada085696047d19dc52d62e16e528d6' },
-  { name: 'SOCIETY_TRIAL', value: SOCIETY_TRIAL, hash: 'ca0be2865a31944b2e11e32aa0f3af64486a67fdf5743e42a263dbd81c0088d3' },
+  { name: 'SOCIETY_TRIAL', value: SOCIETY_TRIAL, hash: '81e7d6d5713873814d0e46d88d4d19fde5f584fd61e96e8af9b7883139a998ad' },
   { name: 'GOODS_STOCK_TRIAL', value: GOODS_STOCK_TRIAL, hash: 'd92145743557d8c74bf6f91af7645e7fa7553d6839e4ae0c8d2a441a1079fe65' },
   { name: 'TILE_TRIAL_BALANCE', value: TILE_TRIAL_BALANCE, hash: '8c6f563db7d15d0e01ca16852bd5700d2c8504a279f63d14ffcd7e01999b6075' },
   { name: 'IMMIGRATION_TRIAL_DEFAULTS', value: IMMIGRATION_TRIAL_DEFAULTS, hash: '9a3a102558fc1ac452d330d72d162a21793b674002acf3026b9f2b5a6e9bdcef' },

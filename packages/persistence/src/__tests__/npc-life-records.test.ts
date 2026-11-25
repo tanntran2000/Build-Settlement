@@ -1,5 +1,6 @@
 import { expect, it } from 'vitest';
 import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';
+import { createHash } from 'node:crypto';
 import { readFileSync, readdirSync } from 'node:fs';
 import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, type NpcLife } from '@haven/core';
 import { createMemoryGameStore } from '../memory-store.js';
@@ -51,13 +52,22 @@ it('requires life in every current NPC record and retains the last valid stored 
   expect(JSON.stringify(await store.read('main'))).toBe(before);
 });
 
-it('matches v11 and v12 checkpoint filenames and round-trips every current life checkpoint byte-identically', () => {
-  const current = new URL('./fixtures/society-v12/', import.meta.url), historical = new URL('./fixtures/society-v11/', import.meta.url);
+it('pins the original bytes of all ten historical v12 checkpoints', () => {
+  const historical = new URL('./fixtures/society-v12/', import.meta.url);
+  const files = readdirSync(historical).sort();
+  expect(files).toHaveLength(10);
+  const hash = createHash('sha256');
+  for (const file of files) hash.update(file).update('\0').update(readFileSync(new URL(file, historical))).update('\0');
+  expect(hash.digest('hex')).toBe('f21b183ab20596596c19357e620213b295bebd539e0ae19fa1f96652c78b8255');
+});
+
+it('matches v12 and v13 checkpoint filenames and round-trips every current life checkpoint byte-identically', () => {
+  const current = new URL('./fixtures/society-v13/', import.meta.url), historical = new URL('./fixtures/society-v12/', import.meta.url);
   const files = readdirSync(current).sort(); expect(files).toEqual(readdirSync(historical).sort()); expect(files).toHaveLength(10);
   for (const file of files.filter(name => name.startsWith('life-'))) {
     const bytes = readFileSync(new URL(file, current), 'utf8'), decoded = deserializeCharacterLifeSave(bytes);
     expect(decoded.success).toBe(true); if (!decoded.success) throw Error(decoded.error.message);
-    expect(decoded.state.city.society!.rulesetId).toBe('tile-society-12');
+    expect(decoded.state.city.society!.rulesetId).toBe('tile-society-13');
     expect(decoded.state.npcs).toStrictEqual([]);
     expect(decoded.state.npcs.every(npc => Object.hasOwn(npc, 'life'))).toBe(true);
     const rows = sessionToRecords('main', decoded.state), before = JSON.stringify(rows);
@@ -68,7 +78,7 @@ it('matches v11 and v12 checkpoint filenames and round-trips every current life 
 
 it('round-trips exhausted life, levels and full history without resetting state in the current checkpoint', () => {
   const state = life(), npc = state.npcs[0];
-  expect(state.city.society!.rulesetId).toBe('tile-society-12');
+  expect(state.city.society!.rulesetId).toBe('tile-society-13');
   npc.life.working = false; npc.life.stress = 95;
   npc.life.sexExp.hand = { level: 'professional', exp: 200 }; npc.life.sexExp.ass = { level: 'expert', exp: 300 };
   npc.life.history = { counters: { exhausted: 2, birthday: 20 }, recent: Array.from({ length: 20 }, (_, i) => ({ week: i + 1, kind: 'birthday' })) };

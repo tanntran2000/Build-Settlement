@@ -1,6 +1,6 @@
 import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';
 import {
-createCharacterLifeSession,DEFAULT_PLAYER_DRAFT,describeLong,describeShort,
+createCharacterLifeSession,DEFAULT_PLAYER_DRAFT,describeLong,describeShort,emptyHouseholdReport,
 isLiveCharacterLifeSessionState,managerSlotTileIds,profileRows,summarizeOutside,
 TRIAL_BUILDINGS,weeklyWorkforceMilli,WORLD_TRAITS,
 type CharacterLifeSessionState,type CharacterView,type TileTrialReport,
@@ -56,7 +56,8 @@ function characterContract(c: VisibleCharacter) {
 }
 
 function reportContract(r: VisibleReport) {
-  keys(r, [...reportKeys, ...(r.goodsStock ? ['goodsStock'] : []), ...(r.immigration ? ['immigration'] : [])]);
+  keys(r, [...reportKeys, ...(r.goodsStock ? ['goodsStock'] : []), ...(r.immigration ? ['immigration'] : []), ...(r.household ? ['household'] : [])]);
+  if (r.household) keys(r.household, ['bought', 'sold', 'released', 'left', 'lotsToRivals', 'wagesPaidMilli', 'unpaid', 'notices']);
   keys(r.before, stockKeys); keys(r.after, stockKeys);
   keys(r.goods, ['demandMilli', 'servedMilli', 'fulfillmentBps', 'woodUsed', 'ironUsed', 'revenueMilli']);
   if (r.immigration) keys(r.immigration, ['populationBefore', 'arrivals', 'populationAfter']);
@@ -109,7 +110,7 @@ function rendered(c: VisibleCharacter, view: CharacterView) {
 
 const noPost = 'No free manager post. Build a Farm, Processor, Logging Camp, Mine, Workshop or Market.';
 const checkpointLock = 'Choose Plan next week before saving, continuing, exporting or importing.';
-const planningActions = ['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED', 'END_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC', 'EXTEND_WALL', 'SET_TRAINING'];
+const planningActions = ['BUILD', 'REPLACE', 'UPGRADE', 'SET_WORKERS', 'SET_ENABLED', 'END_WEEK', 'ASSIGN_NPC', 'UNASSIGN_NPC', 'EXTEND_WALL', 'SET_TRAINING', 'RELEASE_NPC'];
 
 describe('explicit nested allowlist and disclosure', () => {
   it('exports the projector and exposes only rendered character fields and exact nested keys', () => {
@@ -323,7 +324,8 @@ describe('detached complete visible report', () => {
   });
 
   it('keeps the real END_WEEK report after NEXT_WEEK and preserves frozen report inputs', () => {
-    const result = act(life(), { type: 'END_WEEK', expectedWeek: 1 }), r = result.report!;
+    const session = life();
+    const result = act(session, { type: 'END_WEEK', expectedWeek: 1 }), r = result.report!;
     expect(r).toBeDefined(); expect(Object.isFrozen(r)).toBe(true);
     const o = observeCharacterLife(result.next, r);
     expect([o.week, o.phase, o.revision]).toEqual([result.next.city.world.week, 'report', result.next.city.revision]);
@@ -334,6 +336,7 @@ describe('detached complete visible report', () => {
       foodDemandMilli: r.foodDemandMilli, foodConsumedMilli: r.foodConsumedMilli,
       happinessBefore: r.happinessBefore, happinessAfter: r.happinessAfter, goods: r.goods, goodsStock: r.goodsStock, activities: r.activities,
       immigration: { populationBefore: r.immigration!.populationBefore, arrivals: r.immigration!.arrivals, populationAfter: r.immigration!.populationAfter },
+      household: { ...emptyHouseholdReport(), bought: session.npcs.map(npc => npc.character.name) },
     });
     const next = act(result.next, { type: 'NEXT_WEEK' }).next, retained = observeCharacterLife(next, r);
     expect(retained.actionTypes).toEqual(planningActions); expect(retained.disabledReasons).toEqual([]);

@@ -1,6 +1,6 @@
 import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';
 import {
-createCharacterLifeSession,DEFAULT_PLAYER_DRAFT,isCharacterLifeSessionState,
+createCharacterLifeSession,DEFAULT_PLAYER_DRAFT,emptyAcquisition,emptyHouseholdReport,isCharacterLifeSessionState,
 isLiveCharacterLifeSessionState,P7A_TRIAL,type CharacterLifeSessionState
 } from '@haven/core';
 import { deserializeCharacterLifeSave,serializeCharacterLifeSave } from '@haven/persistence';
@@ -16,7 +16,7 @@ function life(seed = 0): CharacterLifeSessionState {
 
 function legacy(s: CharacterLifeSessionState, raw: Record<string, unknown>): CharacterLifeCommandResult {
   const world = { city: s.city, outside: s.outside, npcs: s.npcs };
-  const r = raw.type === 'ASSIGN_NPC' || raw.type === 'UNASSIGN_NPC'
+  const r: delegates.WorldNpcCityResult = raw.type === 'ASSIGN_NPC' || raw.type === 'UNASSIGN_NPC'
     ? delegates.executeWorldNpcCommand(world, raw) : delegates.executeWorldNpcCityCommand(world, raw);
   if (!r.success) return r;
   const next = { ...r.next, player: structuredClone(s.player), profiles: structuredClone(s.profiles) };
@@ -34,6 +34,12 @@ function legacy(s: CharacterLifeSessionState, raw: Record<string, unknown>): Cha
       expect((next.city.world.week - npc.life.birthWeek) % P7A_TRIAL.weeksPerYear).not.toBe(0);
       npc.life.arousal = Math.min(100, npc.life.arousal + Math.floor(npc.life.lust / P7A_TRIAL.arousalDivisor));
     }
+  }
+  if (r.report && s.city.society!.acquisition.week === r.report.week) {
+    // These cases start with this week's Guild recruits and no enabled market next week.
+    next.city.society!.acquisition = emptyAcquisition();
+    const household = { ...emptyHouseholdReport(), bought: s.npcs.map(npc => npc.character.name) };
+    return { ...r, next, report: { ...r.report, household } };
   }
   return { ...r, next };
 }

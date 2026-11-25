@@ -2,6 +2,7 @@ import { hasWeeklyKeys } from '../domain/canonical-state.js';
 import type { NamedCharacter } from '../domain/character.js';
 import { createSocietyState } from '../trial/society.js';
 import { isTileTrialState } from '../trial/state.js';
+import { hasAcquisitionRosterProof } from '../trial/acquisition-replay.js';
 import { readDenseArray } from '../world/arrays.js';
 import { isNamedCharacterRecord,isNpcWorldSessionState,isWorldNpcList,type WorldNpc } from '../world/npc.js';
 import { isWorldSessionState } from '../world/session.js';
@@ -83,6 +84,7 @@ export function isCharacterLifeSessionState(raw: unknown): raw is CharacterLifeS
     const npcs = raw.npcs as WorldNpc[];
     if (!hasCharacterLifeProfiles(raw, npcs)) return false;
     const city = raw.city as CharacterLifeSessionState['city'];
+    if (city.society && !hasAcquisitionRosterProof(city, npcs)) return false;
     return !city.society || Object.keys(city.society.items.equipped).every(owner =>
       owner === PLAYER_CHARACTER_ID || npcs.some(npc => npc.character.id === owner));
   } catch { return false; }

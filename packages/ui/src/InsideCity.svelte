@@ -1,12 +1,14 @@
 <script lang="ts">
  import MarketPanel from './MarketPanel.svelte';
+ import AcquisitionPanel from './AcquisitionPanel.svelte';
  import PotionPanel from './PotionPanel.svelte';
  import WorkshopPanel from './WorkshopPanel.svelte';
- import { TRIAL_BUILDINGS, societyStaff, type TileTrialState, type SocietyGroupKey, type WorldNpc } from '@haven/core';
+ import { TRIAL_BUILDINGS, isAcquisitionSource, societyStaff, type TileTrialState, type SocietyGroupKey, type WorldNpc } from '@haven/core';
  import { insideTiers, wallStatus, TOWN_PLOT_COUNT, buildingColour, effectLine, CLASS_LABELS } from './society-view.js';
  export let state:TileTrialState;
  export let npcs:WorldNpc[]=[];
  export let selectedId:string;
+ export let uiEpoch:number;
  export let locked:boolean;
  export let managementError:{action:string;message:string}|null;
  export let onselect:(id:string)=>void;
@@ -14,6 +16,8 @@
  let target:SocietyGroupKey|''='';
  $: target=state.society!.training.target??'';
  $: wall=wallStatus(state);
+ $: selectedBuilding=state.tiles.find(tile=>tile.id===selectedId)?.building;
+ $: source=selectedBuilding?.enabled && isAcquisitionSource(selectedBuilding.typeId) ? selectedBuilding.typeId : null;
 </script>
 <section aria-label="Inside City">
  <h3>Inside City</h3>
@@ -51,6 +55,11 @@
   <MarketPanel {state} {locked} {managementError} {oncommand} />
  {/if}
  {#if state.tiles.find(t=>t.id===selectedId)?.building?.typeId==='smithy'}<WorkshopPanel {state} {npcs} tileId={selectedId} {locked} {managementError} {oncommand} />{/if}
+ {#if source}
+  {#key `${selectedId}:${uiEpoch}`}
+   <AcquisitionPanel {state} {npcs} {source} tileId={selectedId} {locked} {managementError} {oncommand} />
+  {/key}
+ {/if}
  <PotionPanel {state} {npcs} tileId={selectedId} {locked} {managementError} {oncommand} />
 </section>
 <style>
