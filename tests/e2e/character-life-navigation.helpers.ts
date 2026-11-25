@@ -559,8 +559,13 @@ export async function expectReport(page: Page, expected: Readonly<TileTrialRepor
         if (!match) throw Error('Invalid household auction row.');
         await expect(row).toHaveText(`Lot sold to a rival · ${value}`);
         household.lotsToRivals.push({ source: match[1] === 'Auction House' ? 'auction-house' : 'slave-market', priceMilli: milli(match[2]) });
-      } else if (kind === 'bought' || kind === 'sold' || kind === 'released') {
-        const labels = { bought: 'Recruited', sold: 'Sold', released: 'Released' };
+      } else if (kind === 'wagesPaidMilli') {
+        const match = /^([\d,.]+) Gold$/.exec(value);
+        if (!match) throw Error('Invalid household wage row.');
+        await expect(row).toHaveText('Wages paid · ' + value);
+        household.wagesPaidMilli = milli(match[1]);
+      } else if (kind === 'bought' || kind === 'sold' || kind === 'released' || kind === 'left' || kind === 'unpaid' || kind === 'notices') {
+        const labels = { bought: 'Recruited', sold: 'Sold', released: 'Released', left: 'Left', unpaid: 'Wage unpaid', notices: 'Contract notice' };
         if (!value) throw Error('Missing household row name.');
         await expect(row).toHaveText(`${labels[kind]} · ${value}`);
         household[kind].push(value);
@@ -594,7 +599,7 @@ export async function lifeUiSnapshot(page: Page) {
   return page.getByTestId('life-shell').evaluate(shell => {
     const copy = shell.cloneNode(true) as HTMLElement;
     copy.querySelectorAll('[data-life-error], [aria-label="Planning checkpoints"] [role="status"]').forEach(node => node.remove());
-    const acquisition = [...shell.querySelectorAll('[data-acquisition-action], [data-acquisition-panel] [role="tab"], [data-household-kind]')].map(node => ({
+    const acquisition = [...shell.querySelectorAll('[data-acquisition-action], [data-acquisition-panel] [role="tab"], [data-household-kind], [data-household-notice], [data-notice-choice]')].map(node => ({
       text: node.textContent, selected: node.getAttribute('aria-selected'), disabled: node.getAttribute('aria-disabled'),
       reason: node.getAttribute('aria-describedby'),
     }));

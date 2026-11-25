@@ -40,6 +40,7 @@
   let importRead = 0;
   let checkpointAction = 0;
   let report: Readonly<TileTrialReport> | null = null;
+  let reportNpcs: WorldNpc[] = [];
   let outside: OutsideWorldState | null = null;
   let npcs: WorldNpc[] | null = null;
   let player: PlayerCharacter | null = null;
@@ -77,7 +78,7 @@
       return false;
     }
     if (!result.success) {
-      const known = ['INVALID_COMMAND', 'STALE_COMMAND', 'FORBIDDEN', 'UNSUPPORTED_RULESET', 'INVALID_STATE', 'INVALID_WORKFORCE', 'INVALID_PLAN', 'EXECUTION_ERROR', 'WEEK_MISMATCH', 'INVALID_TILE', 'INVALID_BUILDING', 'INVALID_PLACEMENT', 'OCCUPIED', 'EMPTY_TILE', 'MAX_LEVEL', 'INSUFFICIENT_RESOURCES', 'LOCKED_PLOT', 'NOT_AVAILABLE', 'WRONG_TIER', 'WALL_COMPLETE', 'PREREQUISITE_MISSING', 'UNSUPPORTED_ACTION', 'CARD_PENDING', 'CITY_FALLEN', 'UNKNOWN_CARD', 'UNKNOWN_OPTION', 'OPTION_UNAVAILABLE', 'SLOT_MISMATCH', 'KIND_MISMATCH', 'NOT_ENOUGH_GOLD', 'INVENTORY_FULL', 'NO_SHOP', 'ITEM_UNKNOWN', 'NOT_SELLABLE', 'RECIPE_UNKNOWN', 'NO_WORKSHOP', 'MISSING_INPUT', 'QUEUE_FULL', 'ORDER_UNKNOWN', 'WORKSHOP_BUSY', 'FIXED_BUILDING', 'HOME_OCCUPIED', 'ONE_PER_CITY', 'HALL_LIMIT', 'UNKNOWN_NPC', 'NO_BED', 'NOT_A_HOME', 'NO_BUILDING', 'OFFER_GONE', 'NPC_CAP', 'NOT_A_SLAVE', 'STORAGE_FULL'];
+      const known = ['INVALID_COMMAND', 'STALE_COMMAND', 'FORBIDDEN', 'UNSUPPORTED_RULESET', 'INVALID_STATE', 'INVALID_WORKFORCE', 'INVALID_PLAN', 'EXECUTION_ERROR', 'WEEK_MISMATCH', 'INVALID_TILE', 'INVALID_BUILDING', 'INVALID_PLACEMENT', 'OCCUPIED', 'EMPTY_TILE', 'MAX_LEVEL', 'INSUFFICIENT_RESOURCES', 'LOCKED_PLOT', 'NOT_AVAILABLE', 'WRONG_TIER', 'WALL_COMPLETE', 'PREREQUISITE_MISSING', 'UNSUPPORTED_ACTION', 'CARD_PENDING', 'CITY_FALLEN', 'UNKNOWN_CARD', 'UNKNOWN_OPTION', 'OPTION_UNAVAILABLE', 'SLOT_MISMATCH', 'KIND_MISMATCH', 'NOT_ENOUGH_GOLD', 'INVENTORY_FULL', 'NO_SHOP', 'ITEM_UNKNOWN', 'NOT_SELLABLE', 'RECIPE_UNKNOWN', 'NO_WORKSHOP', 'MISSING_INPUT', 'QUEUE_FULL', 'ORDER_UNKNOWN', 'WORKSHOP_BUSY', 'FIXED_BUILDING', 'HOME_OCCUPIED', 'ONE_PER_CITY', 'HALL_LIMIT', 'UNKNOWN_NPC', 'NO_BED', 'NOT_A_HOME', 'NO_BUILDING', 'OFFER_GONE', 'NPC_CAP', 'NOT_A_SLAVE', 'STORAGE_FULL', 'NOTICE_MISSING', 'NOTICE_CHOICE'];
       if (!known.includes(result.error.code)) {
         error = 'The action failed. Download the error log for review.';
         errorLog.record(type === 'END_WEEK' ? 'END_WEEK' : 'RUNTIME', 'UNKNOWN_COMMAND_FAILURE');
@@ -86,13 +87,16 @@
       error = '';
       if (type === 'SET_WORKERS') workforceError = result.error.message;
       else if (['BUY_ITEM','SELL_ITEM','SELL_MATERIAL','BUY_POTION','USE_CONSUMABLE','CLAIM_STORED_ITEM','DESTROY_ITEM','EQUIP_ITEM','UNEQUIP_ITEM','PLACE_CRAFT_ORDER','CANCEL_CRAFT_ORDER'].includes(type)) managementError = {action:type,message:itemError(result.error.code)};
-      else if (['BUILD', 'REPLACE', 'UPGRADE', 'SET_ENABLED', 'EXTEND_WALL', 'SET_TRAINING', 'CLEAR', 'MOVE_NPC_HOME', 'BUY_NPC', 'BID_NPC', 'WITHDRAW_BID', 'SELL_NPC', 'RELEASE_NPC'].includes(type)) managementError = { action: type, message: result.error.message };
+      else if (['BUILD', 'REPLACE', 'UPGRADE', 'SET_ENABLED', 'EXTEND_WALL', 'SET_TRAINING', 'CLEAR', 'MOVE_NPC_HOME', 'BUY_NPC', 'BID_NPC', 'WITHDRAW_BID', 'SELL_NPC', 'RELEASE_NPC', 'ANSWER_NOTICE'].includes(type)) managementError = { action: type, message: result.error.message };
       else error = result.error.message;
       errorLog.record(type === 'END_WEEK' ? 'END_WEEK' : 'RUNTIME', result.error.code === 'INVALID_WORKFORCE' ? 'INVALID_WORKFORCE_INPUT' : 'INVALID_COMMAND');
       return false;
     }
+    if (result.report) {
+      report = result.report;
+      reportNpcs = report.npcLife ? npcs ?? [] : [];
+    }
     ({ city: state, outside, npcs, player, profiles } = result.next);
-    if (result.report) report = result.report;
     // Keep the last report mounted so a repeated pointer click cannot fall onto End Week.
     if (type === 'LOAD_TRIAL') report = null;
     workers = String(state.tiles.find(t => t.id === selectedId)!.building?.workers ?? 0);
@@ -274,7 +278,7 @@
       {/if}
     {/snippet}
     {#snippet reports()}
-      <SoloWeekReport {report} npcs={npcs ?? []} planningWeek={state.world.week} {locked} onnextweek={nextLifeWeek} />
+      <SoloWeekReport {report} npcs={reportNpcs} planningWeek={state.world.week} {locked} onnextweek={nextLifeWeek} />
     {/snippet}
     {#snippet session()}
   <section class="card" aria-label="Planning checkpoints">

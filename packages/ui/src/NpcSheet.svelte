@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { WorldNpc } from '@haven/core';
   import type { Snippet } from 'svelte';
+  import { formatMilli } from './milli-format.js';
   import { formatLifeWeek } from './life-calendar.js';
   import { buildNpcSheetView } from './npc-sheet-view.js';
 
@@ -8,9 +9,10 @@
     npc: WorldNpc;
     age: number;
     description: Snippet;
+    notice?: Snippet;
   }
 
-  let { npc, description }: Props = $props();
+  let { npc, description, notice }: Props = $props();
   const id = $props.id();
   const tabs = ['Profile', 'Skills', '18+', 'History'] as const;
   const buttons: HTMLButtonElement[] = [];
@@ -33,6 +35,7 @@
 </script>
 
 <div class="npc-sheet ledger-parchment" data-testid="npc-sheet">
+  {#if notice}{@render notice()}{/if}
   <div class="tabs" role="tablist" aria-label="NPC sheet">
     {#each tabs as name, index}
       <button
@@ -64,6 +67,15 @@
             <div><dt>Life origin</dt><dd>{sheet.origin}</dd></div>
             <div><dt>Hobbies</dt><dd>{sheet.hobbies.join(' · ')}</dd></div>
             <div><dt>Affection</dt><dd>{sheet.affection}</dd></div>
+            <div><dt>Status</dt><dd>{sheet.household.status}</dd></div>
+            <div><dt>Home</dt><dd>{sheet.household.home}</dd></div>
+            {#if sheet.household.contract}
+              <div><dt>Weeks left</dt><dd>{sheet.household.contract.weeksLeft}</dd></div>
+              <div><dt>Weekly wage</dt><dd>{formatMilli(sheet.household.contract.wageMilli)} Gold</dd></div>
+            {/if}
+            <div><dt>Obedience</dt><dd>{sheet.household.obedience} · {sheet.household.quadrant}</dd></div>
+            <div><dt>Preference</dt><dd>{sheet.household.preference.label} · {sheet.household.preference.strength}</dd></div>
+            <div><dt>Flaw</dt><dd>{sheet.household.flaw.label} · {sheet.household.flaw.strength}</dd></div>
           </dl>
           {@render description()}
         {:else if name === 'Skills'}
