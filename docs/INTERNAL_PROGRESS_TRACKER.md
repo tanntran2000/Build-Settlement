@@ -1,5 +1,31 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## P7-B PR B3 (buy, hire, live auction, sell, release) — PR #104 G6 (2026-11-25 UTC)
+
+**G6 PASS (Claude, Orchestrator/Tester).** P7-B PR B3 of 4 is merged; B4 (wages, contracts, obedience, notices) waits for the owner to start its Step 0.
+
+- **Merge.** PR #104 (`feat: P7-B B3 buy, hire, live auction, sell and release`) was merged under G5 at 2026-11-25T02:58:53Z (GitHub account `tanntran2000`; the owner reported "Dot đã merge và xanh, bạn kiểm tra G6").
+  - Merge/main commit: `95821832a8c95988c3203b4c38f5f9ae665978e9` (parents `b184357`, `15f8c02`).
+  - Accepted head: `15f8c0224b4e398df3220c533bee404a08ca5fb3`. Base: `b184357` (B2 #103 merged).
+- **Trees.** The merge tree `83c11b3a8362be1c1c69f632808c76a0c101caa8` is identical to the accepted head tree. Claude checked this locally.
+- **Main CI.** Quality Gate run [45536735794](https://github.com/tanntran2000/Build-Settlement/actions/runs/45536735794), job 138945072517 (push, exact merge SHA), SUCCESS at 2026-11-25T03:20:33Z: 3,264 unit tests (142 files) and 415/415 Chromium smoke (19.9 min). The dependency audit passed (0 vulnerabilities).
+- **Pre-merge, at `15f8c02`:**
+  - Claude Tester gates 1–7 exit 0 (3,264 unit), full smoke 415/415 with `CI=1` (2026-11-25T01:47:26Z–02:31:43Z). A first run at the same head had 414/415 ("fulfillment states match strip and report" hit its 60 s timeout); paired main-vs-B3 timing showed the case takes 56–60 s on both, so it is machine load (R-028). No timeout changed.
+  - PR CI: quality-gate run 45533678434 SUCCESS (415 smoke, 19.6 min); claude-review run 45533678436 pass.
+  - Astra 6.2 high, thread `mcp:fd8900de`: rounds 1–3 FAIL (fixed by corrections 14, 16–20); round 4 at `15f8c02` PASS, no new findings.
+  - Builder (Sol 6.2 xhigh, `mcp:20680f03`): Step 0 HOLD → correction 12; HOLDs answered by corrections 13, 17, 18, 19; smoke 414/415 with one timeout during a recorded Windows sleep.
+  - Measurements: bundle 169.863 kB gzip (+11.44 kB vs main); largest save 293,842 bytes; full-market End Week about +1 ms, accepted by the owner under R-026 (correction 15).
+- **Evidence.** [`docs/verification/p7b-pr104/`](https://github.com/tanntran2000/Build-Settlement/tree/71c67902404944383d252ba8e19db8eebeea2c34/docs/verification/p7b-pr104) on branch `docs/p7-npc-design`, at `71c6790`. Risk register `38a9367` on `docs/playtest-risk-register` (R-026 B3 addendum, R-027, R-028).
+- **Owner instructions** (verbatim; full table in `owner-approval-record.md`):
+  - "Start B3 Step 0";
+  - Plan corrections: 12 "Duyệt v13 (Recommended)", "Duyệt lưu cả 2 (Recommended)", "Duyệt tất cả (Recommended)", "Yêu cầu kiểm replay đầy đủ"; 13 "Duyệt sửa test (Recommended)"; 14 "Sửa cả 11 (Recommended)", "Ghi Rút lui vào dãy trả giá (Recommended)"; 15 "Chấp nhận, ghi vào R-026 (Recommended)"; 16 "Sửa cả 4 (Recommended)", "Ghi sổ rủi ro, không chặn B3 (Recommended)"; 17 "Duyệt sửa kiểu + fixture (Recommended)"; 18 "Duyệt + cho sửa kiểu nhỏ (Recommended)"; 19 "Duyệt sửa 2 fixture (Recommended)"; 20 "Duyệt sửa helper (Recommended)";
+  - Merge report: "Dot đã merge và xanh, bạn kiểm tra G6".
+- **Disclosed.**
+  - Astra rounds 1–3 failed before the PASS; Builder typecheck HOLDs hit the two-attempt rule twice (corrections 17–18).
+  - Hand-edited saves that rewrite a whole legal history, or use a custom resident id, still load (R-027, owner stop rule).
+  - The fulfillment smoke case is now close to its 60 s timeout on this machine, on main too (R-028).
+  - R-026 (End Week over 50 ms at 100 NPCs) is still open. Smoke runs on Chromium only. Large files, Playwright artifact folders and long paths stay local, listed by SHA-256 in the evidence.
+
 ## P7-B PR B2 (seeded NPC generator, homes, no starter NPCs) — PR #103 G6 (2026-11-24 UTC)
 
 **G6 PASS (Claude, Orchestrator/Tester).** P7-B PR B2 of 4 is merged; B3 (buy, hire, auction, sell) is next.
