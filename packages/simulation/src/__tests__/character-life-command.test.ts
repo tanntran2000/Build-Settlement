@@ -53,7 +53,7 @@ function legacy(s: CharacterLifeSessionState, raw: Record<string, unknown>): Cha
     const recruited = s.city.society!.acquisition.week === r.report.week;
     if (recruited) next.city.society!.acquisition = emptyAcquisition();
     const household = { ...emptyHouseholdReport(), bought: recruited ? s.npcs.map(npc => npc.character.name) : [], wagesPaidMilli };
-    return { ...r, next, report: { ...r.report, before: { ...r.report.before, gold: beforeGold }, household } };
+    return { ...r, next, report: { ...r.report, before: { ...r.report.before, gold: beforeGold }, household, purse: { levyPercent: 0, levyDueMilli: 0, levyPaidMilli: 0, donationsMilli: 0, donationGoldMilli: 0, moneyAfterMilli: 0 } } };
   }
   return { ...r, next };
 }

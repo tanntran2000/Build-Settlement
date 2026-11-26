@@ -20,6 +20,7 @@ function life() {
   if (!made.success) throw Error(made.error.message);
   const s = withNpcs(made.value, [{ week: 1, source: 'guild', slot: 0 }]);
   stock(s).gold = 100000;
+  s.player.purse.moneyMilli = 100000;
   s.city.society!.stocksMilli.herbs = 10000;
   for (const [id, typeId, workers] of [['spec-2', 'smithy', 1], ['service-1', 'hospital', 2], ['slum-1', 'drug-store', 0]] as const) {
     s.city.tiles.find(t => t.id === id)!.building = { typeId, level: 1, workers, enabled: true };

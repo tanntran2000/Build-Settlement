@@ -1,3 +1,5 @@
+import { PURSE_TRIAL } from './purse.js';
+export { PURSE_TRIAL } from './purse.js';
 import { hasWeeklyKeys } from '../domain/canonical-state.js';
 import type { NamedCharacter } from '../domain/character.js';
 import { createSocietyState } from '../trial/society.js';
@@ -12,8 +14,6 @@ EYE_COLORS,FACE_FEATURES,FACE_SHAPES,HAIR_COLORS,HAIR_LENGTHS,HAIR_STYLES,HAIR_T
 CHARACTER_LIMITS as L,
 OUTFITS,PLACES,PLAYER_CHARACTER_ID,PLAYER_PROFESSIONS,REGIONS,SKIN_TONES,UPBRINGINGS,
 } from './catalog.js';
-import tuningJson from '../data/tuning.json' with { type: 'json' };
-import { deepFreeze, validateTuning } from '../data/validate.js';
 import type { CharacterLifeSessionState,CharacterProfile,PlayerCharacter } from './types.js';
 
 const ids = (list: readonly { id: string }[]) => list.map(w => w.id);
@@ -27,7 +27,6 @@ const keysOf = (v: unknown, required: string[], optional: string[] = []): v is R
   hasWeeklyKeys(v, [...required, ...optional.filter(k => typeof v === 'object' && v !== null && Object.hasOwn(v, k))]);
 const adult = (c: NamedCharacter) => c.age >= L.ageMin;
 const inAgeRange = (c: NamedCharacter) => c.age >= L.ageMin && c.age <= L.ageMax;
-export const PURSE_TRIAL = deepFreeze(validateTuning(tuningJson).PURSE_TRIAL);
 const { levyMaxPercent } = PURSE_TRIAL;
 const balanceRange = [0, Number.MAX_SAFE_INTEGER] as const;
 const DISCLOSURES = ['known', 'unknown'];

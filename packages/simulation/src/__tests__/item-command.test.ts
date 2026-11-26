@@ -30,17 +30,17 @@ it('rejects a three-piece set swap when fewer than three spaces remain after rem
  const set=add(s,'common-set');while(items(s).inventory.length<49)add(s,'common-ring');
  reject(s,'EQUIP_ITEM',{itemId:set,characterId:'player'},'INVENTORY_FULL');
 });
-it('buys at exact price and rejects insufficient Gold without mutation',()=>{
- const s=life();const price=items(s).market[0].priceMilli;gold(s).gold=price;const next=ok(s,'BUY_ITEM',{offerIndex:0});expect(gold(next).gold).toBe(0);expect(items(next).inventory).toHaveLength(1);expect(items(next).market).toHaveLength(7);
- gold(s).gold=price-1;reject(s,'BUY_ITEM',{offerIndex:0},'NOT_ENOUGH_GOLD');
+it('buys at exact price and rejects insufficient Money without mutation',()=>{
+ const s=life();const price=items(s).market[0].priceMilli;s.player.purse.moneyMilli=price;const next=ok(s,'BUY_ITEM',{offerIndex:0});expect(next.player.purse.moneyMilli).toBe(0);expect(gold(next)).toEqual(gold(s));expect(items(next).inventory).toHaveLength(1);expect(items(next).market).toHaveLength(7);
+ s.player.purse.moneyMilli=price-1;reject(s,'BUY_ITEM',{offerIndex:0},'NOT_ENOUGH_MONEY');
 });
 it.each([['common-weapon',1500],['rare-weapon',4500],['epic-weapon',12000]])('sells %s for 30 percent', (defId,price)=>{
- const s=life(),itemId=add(s,defId),before=gold(s).gold;const next=ok(s,'SELL_ITEM',{itemId});expect(gold(next).gold).toBe(before+price);expect(items(next).inventory).toHaveLength(0);
+ const s=life(),itemId=add(s,defId),before=s.player.purse.moneyMilli;const next=ok(s,'SELL_ITEM',{itemId});expect(next.player.purse.moneyMilli).toBe(before+price);expect(gold(next)).toEqual(gold(s));expect(items(next).inventory).toHaveLength(0);
 });
 it('refuses sale of Legendary wearables',()=>{const s=life();reject(s,'SELL_ITEM',{itemId:add(s,'wardens-oath')},'NOT_SELLABLE');});
 it('sells materials within stack bounds and refuses Legendary material',()=>{
- const s=life();items(s).materials.iron=2;items(s).materials.ruby=1;const before=gold(s).gold;
- const next=ok(s,'SELL_MATERIAL',{materialId:'iron',count:2});expect(gold(next).gold).toBe(before+600);expect(items(next).materials.iron).toBeUndefined();
+ const s=life();items(s).materials.iron=2;items(s).materials.ruby=1;const before=s.player.purse.moneyMilli;
+ const next=ok(s,'SELL_MATERIAL',{materialId:'iron',count:2});expect(next.player.purse.moneyMilli).toBe(before+600);expect(gold(next)).toEqual(gold(s));expect(items(next).materials.iron).toBeUndefined();
  reject(s,'SELL_MATERIAL',{materialId:'iron',count:3},'ITEM_UNKNOWN');reject(s,'SELL_MATERIAL',{materialId:'ruby',count:1},'NOT_SELLABLE');
 });
 it('destroys an inventory item',()=>{const s=life();const next=ok(s,'DESTROY_ITEM',{itemId:add(s,'common-ring')});expect(items(next).inventory).toHaveLength(0);});
@@ -58,7 +58,7 @@ it.each([[1,5],[2,10],[3,15]])('potion %i heals %i, clamps at 100, costs no acti
 it('buys potions at an operating Hospital and rejects absent or idle shops',()=>{
  const s=life();reject(s,'BUY_POTION',{tileId:'service-1',potion:1},'NO_SHOP');
  s.city.society!.classes.luminaries.common=20;s.city.society!.classes.free=47;
- s.city.tiles.find(t=>t.id==='service-1')!.building={typeId:'hospital',level:1,workers:2,enabled:true};s.city.society!.stocksMilli.herbs=1000;gold(s).gold=10000;
+ s.city.tiles.find(t=>t.id==='service-1')!.building={typeId:'hospital',level:1,workers:2,enabled:true};s.city.society!.stocksMilli.herbs=1000;gold(s).gold=10000;s.player.purse.moneyMilli=10000;
  expect(items(ok(s,'BUY_POTION',{tileId:'service-1',potion:2})).consumables[0].defId).toBe('heal-potion-2');
  s.city.society!.stocksMilli.herbs=0;reject(s,'BUY_POTION',{tileId:'service-1',potion:1},'NO_SHOP');
 });
@@ -67,8 +67,8 @@ it.each(commands)('%s rejects Report and stale revision atomically',(type,fields
  const s=life();reject(s,type,{...fields,expectedRevision:1},'STALE_COMMAND');s.city.phase='report';reject(s,type,fields,'FORBIDDEN');
 });
 it('refuses full purchase inventory and permits consumable sale',()=>{
- const s=life();while(items(s).inventory.length<50)add(s,'common-ring');reject(s,'BUY_ITEM',{offerIndex:0},'INVENTORY_FULL');
- const id=add(s,'heal-potion-1',true),before=gold(s).gold;expect(gold(ok(s,'SELL_ITEM',{itemId:id})).gold).toBe(before+900);
+ const s=life();s.player.purse.moneyMilli=items(s).market[0].priceMilli;while(items(s).inventory.length<50)add(s,'common-ring');reject(s,'BUY_ITEM',{offerIndex:0},'INVENTORY_FULL');
+ const id=add(s,'heal-potion-1',true),before=s.player.purse.moneyMilli;const sold=ok(s,'SELL_ITEM',{itemId:id});expect(sold.player.purse.moneyMilli).toBe(before+900);expect(gold(sold)).toEqual(gold(s));
 });
 it('equips an NPC whose id is a prototype name without touching global prototypes',()=>{
  const s=life();s.npcs[0].character.id='__proto__';s.profiles[0].id='__proto__';

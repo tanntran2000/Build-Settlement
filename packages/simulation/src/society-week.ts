@@ -14,7 +14,7 @@ export interface SocietyEmployment { workforce: Record<SocietyClassId, number>; 
 export interface SocietyWeekInput {
   lawTerms: LawTerms;
   society: SocietyState; foodAvailableMilli: number; goodsServableMilli: number; luxuryImportedMilli: number;
-  facilities: SocietyFacilities; employment: SocietyEmployment; arrivalsBudget: number; goldAvailableMilli: number;
+  facilities: SocietyFacilities; employment: SocietyEmployment; arrivalsBudget: number; goldAvailableMilli: number; levyPenalty?: number;
 }
 export type SocietyNote = 'food-short' | 'goods-short' | 'luxury-short' | 'overcrowded' | 'housing-full' | 'no-slave-room' | 'training-no-housing' | 'training-no-gold' | 'unemployed' | 'debt-enslavement';
 export interface SocietyClassReport {
@@ -197,6 +197,7 @@ export function resolveSocietyWeek(i:SocietyWeekInput):SocietyWeekResult {
   society.tension=clamp(resolveTension(before.tension,a.bound.foodBps,society.desperation)+terms.tension);
   society.corruption=resolveCorruption(before.corruption,f.operatingSlumBuildings,terms.corruptionTarget);
   society.luxuryStockMilli=allocation.luxuryAfterMilli;
+  if(i.levyPenalty)for(const id of citizens)society.satisfaction[id]=clamp(society.satisfaction[id]-i.levyPenalty);
   const reports=record(id=>{
     const notes:SocietyNote[]=[...debt.notes[id]];
     if(counts[id]>0) {

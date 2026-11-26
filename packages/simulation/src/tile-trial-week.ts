@@ -13,7 +13,7 @@ import { finishOutsideLand,spoilOutsideStocks } from './outside-week.js';
 import { resolveTrialImmigration } from "./tile-trial-immigration.js";
 import { PROCESSOR_FOOD_PER_BATCH_MILLI,PROCESSOR_MAX_BATCHES,PROCESSOR_WHEAT_PER_BATCH_MILLI } from "./weekly.js";
 
-export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext): Readonly<TileTrialReport> {
+export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext,levyPenalty=0): Readonly<TileTrialReport> {
   if (!s.society || !s.goodsStock) throw Error('Invalid society city.');
   const profile=difficultyProfile(s.society.difficulty);
   const operation=resolveWorkshopOperation(s,ctx);
@@ -103,7 +103,7 @@ export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext): Readon
     immigration = resolveTrialImmigration(s, {fundedTileIds,farmBatches,processorBatches,woodProducedMilli,ironProducedMilli,operatingDebitMilli,foodDemandMilli,foodConsumedMilli,unpaidUpkeepMilli});
     arrivalsBudgetBefore=immigration.arrivals;
     arrivalsBudgetAfter=authorityArrivals(orderBefore.authority,arrivalsBudgetBefore,immigration.reason==='arrivals'&&immigration.target>immigration.populationAfter);
-    const resolved = resolveSocietyWeek({lawTerms:terms,society:s.society!,foodAvailableMilli:stocks.food,goodsServableMilli:servedMilli,luxuryImportedMilli,facilities:facilities!,employment:societyEmployment(s),arrivalsBudget:arrivalsBudgetAfter,goldAvailableMilli:stocks.gold});
+    const resolved = resolveSocietyWeek({lawTerms:terms,society:s.society!,foodAvailableMilli:stocks.food,goodsServableMilli:servedMilli,luxuryImportedMilli,facilities:facilities!,employment:societyEmployment(s),arrivalsBudget:arrivalsBudgetAfter,goldAvailableMilli:stocks.gold,levyPenalty});
     stocks.food -= resolved.foodConsumedMilli; stocks.gold -= resolved.goldSpentMilli;
     trainingGoldMilli = resolved.goldSpentMilli; s.society = resolved.society;
     s.happiness = resolved.cityHappiness; societyReport = resolved.report;

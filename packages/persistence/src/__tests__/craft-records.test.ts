@@ -7,7 +7,7 @@ import { deserializeCharacterLifeSave, serializeCharacterLifeSave } from '../cha
 function act(s:CharacterLifeSessionState,type:string,fields:Record<string,unknown>){const r=executeCharacterLifeCommand(s,{type,expectedRevision:s.city.revision,...fields});if(!r.success)throw Error(r.error.code);return r.next;}
 function session(){
   const r=createCharacterLifeSession(42,{...structuredClone(DEFAULT_PLAYER_DRAFT),currentName:'Ana'});if(!r.success)throw Error();
-  const s=r.value;Object.assign(s.city.world.settlements[s.city.world.activeSettlementId!].inventory,{gold:1_000_000,wood:1_000_000,iron:1_000_000});
+  const s=r.value;s.player.purse.moneyMilli=1_000_000;Object.assign(s.city.world.settlements[s.city.world.activeSettlementId!].inventory,{gold:1_000_000,wood:1_000_000,iron:1_000_000});
   s.city.tiles.find(t=>t.id==='spec-2')!.building={typeId:'smithy',level:1,workers:0,enabled:true};
   s.city.tiles.find(t=>t.id==='service-1')!.building={typeId:'hospital',level:1,workers:0,enabled:true};
   Object.assign(s.city.society!.items,{nextItemId:3,inventory:[{id:1,defId:'common-ring'}],consumables:[{id:2,defId:'heal-potion-1'}],materials:{iron:4,nitrate:1,'green-leaf':4,'red-leaf':1}});
@@ -37,14 +37,14 @@ it('round-trips held items, mixed ready indices and ready materials byte-identic
   expect(before.success).toBe(true);const rebuilt=recordsToSession(rows.reverse());
   expect(rebuilt).toEqual(s);expect(serializeCharacterLifeSave(rebuilt)).toEqual(before);expect(rows.reverse()).toEqual(snapshot);
 });
-it('cancel after save/import/rebuild returns the exact ids, stacks and Gold once',()=>{
+it('cancel after save/import/rebuild returns the exact ids, stacks and Money once',()=>{
   const initial=session(),gold=initial.city.world.settlements[initial.city.world.activeSettlementId!].inventory.gold;
   let s=act(initial,'PLACE_CRAFT_ORDER',{tileId:'spec-2',recipeId:'upgrade-rare-ring-player',itemId:1});
   s=act(s,'PLACE_CRAFT_ORDER',{tileId:'service-1',recipeId:'upgrade-heal-potion-2',itemId:2});
   const saved=serializeCharacterLifeSave(recordsToSession(sessionToRecords('main',s)));expect(saved.success).toBe(true);if(!saved.success)throw Error();
   const loaded=deserializeCharacterLifeSave(saved.text);expect(loaded.success).toBe(true);if(!loaded.success)throw Error();
   s=act(loaded.state,'CANCEL_CRAFT_ORDER',{tileId:'spec-2',index:0});s=act(s,'CANCEL_CRAFT_ORDER',{tileId:'service-1',index:0});
-  expect(s.city.society!.items).toEqual(initial.city.society!.items);expect(s.city.world.settlements[s.city.world.activeSettlementId!].inventory.gold).toBe(gold);
+  expect(s.city.society!.items).toEqual(initial.city.society!.items);expect(s.player.purse).toEqual(initial.player.purse);expect(s.city.world.settlements[s.city.world.activeSettlementId!].inventory.gold).toBe(gold);
   const before=structuredClone(s),again=executeCharacterLifeCommand(s,{type:'CANCEL_CRAFT_ORDER',tileId:'spec-2',index:0,expectedRevision:s.city.revision});
   expect(again).toMatchObject({success:false,error:{code:'ORDER_UNKNOWN'}});expect(s).toEqual(before);
   expect(serializeCharacterLifeSave(recordsToSession(sessionToRecords('main',s)))).toEqual(serializeCharacterLifeSave(s));
