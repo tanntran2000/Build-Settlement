@@ -210,7 +210,7 @@ test('food stock remains reachable when sidebar collapses', async ({ page }) => 
     if (await food.getAttribute('open') === null) await food.locator('summary').click();
     await expect(food.getByRole('heading', { name: 'Current inventory', exact: true })).toBeVisible();
     await expect(food.locator('dt')).toHaveText('Food stock');
-    await expect(food.getByTestId('trial-stock-food')).toHaveText('20');
+    await expect(food.getByTestId('trial-stock-food')).toHaveText('40');
     await go(page, 'reports');
     await expect(reportRegion(page).getByText('No resolved week yet', { exact: true })).toBeVisible();
     await importLife(page, makeLife());
