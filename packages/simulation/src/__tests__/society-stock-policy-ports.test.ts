@@ -1,7 +1,13 @@
-﻿import { describe, expect, it } from 'vitest';
+﻿import { describe, expect, it, vi } from 'vitest';
 import { createSocietyState, isTileTrialState, type TileTrialState } from '@haven/core';
 import { executeTileTrialCommand } from '../tile-trial.js';
 import { allocateRequirements } from '../society-week.js';
+
+// Keep the original balance inputs for exact opening/closing Goods and incomplete Wood-batch behavior.
+vi.mock('../../../core/src/data/tuning.json', async load => {
+  const { legacyEconomyTuning } = await import('./fixtures/legacy-economy.js');
+  return legacyEconomyTuning(load);
+});
 
 const stocks = (s: TileTrialState) => s.world.settlements[s.world.activeSettlementId!].inventory;
 function freeCity() {

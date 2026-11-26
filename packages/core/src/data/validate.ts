@@ -418,7 +418,7 @@ export interface TuningCatalog {
     DIFFICULTY_TRIAL: Readonly<{
         marker: "TRIAL";
         profiles: Readonly<Record<'normal' | 'easy', Readonly<{
-            taxBps: number; goodsPriceBps: number; lawPayBps: number; upkeepBps: number;
+            taxBps: number; goodsPriceBps: number; lawPayBps: number; upkeepBps: number; levyMoneyBps: number;
         }>>>;
     }>;
     PURSE_TRIAL: Readonly<{ marker: "TRIAL"; levyMaxPercent: 20 }>;
@@ -575,7 +575,7 @@ const normalDifficultyBps: Rule = (value, ref, field) => {
     if (value !== 10000) fail(ref, field, 'must be 10000');
 };
 const difficultyProfileRule = (bps: Rule): Rule =>
-    object({ taxBps: bps, goodsPriceBps: bps, lawPayBps: bps, upkeepBps: bps });
+    object({ taxBps: bps, goodsPriceBps: bps, lawPayBps: bps, upkeepBps: bps, levyMoneyBps: bps });
 const tuningSchemas: Record<string, Rule> = {
     DIFFICULTY_TRIAL: object({
         marker: literal("TRIAL"),

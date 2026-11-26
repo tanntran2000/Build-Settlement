@@ -13,7 +13,7 @@
         "wood": 2000,
         "iron": 0
       },
-      "upkeepMilli": 500
+      "upkeepMilli": 7500
     },
     "herb-garden": {
       "name": "Herb Garden",
@@ -28,7 +28,7 @@
         "wood": 1000,
         "iron": 0
       },
-      "upkeepMilli": 500
+      "upkeepMilli": 7500
     },
     "quarry": {
       "name": "Quarry",
@@ -43,7 +43,7 @@
         "wood": 1000,
         "iron": 1000
       },
-      "upkeepMilli": 500
+      "upkeepMilli": 7500
     },
     "weaver": {
       "name": "Weaver",
@@ -163,7 +163,7 @@
         "wood": 0,
         "iron": 0
       },
-      "upkeepMilli": 500
+      "upkeepMilli": 7500
     },
     "mine": {
       "name": "Iron Mine",
@@ -178,7 +178,7 @@
         "wood": 1000,
         "iron": 0
       },
-      "upkeepMilli": 500
+      "upkeepMilli": 7500
     },
     "workshop": {
       "name": "Goods Workshop",

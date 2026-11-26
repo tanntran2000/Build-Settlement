@@ -75,7 +75,7 @@ for(const width of [1280,1600])test(`opens Ring 4 and uses the fixed estate cont
  await expect(manage.getByRole('heading',{name:'house-12 · town',exact:true})).toBeVisible();
  const after=await exportLife(page);
  expect(after.city.society!.stocksMilli.stone).toBe(0);
- expect(after.city.world.settlements[after.city.world.activeSettlementId!].inventory).toStrictEqual({gold:100000,wheat:0,food:20000,wood:40000,iron:20000});
+ expect(after.city.world.settlements[after.city.world.activeSettlementId!].inventory).toStrictEqual({gold:100000,wheat:0,food:40000,wood:40000,iron:20000});
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
 });
 test('NPC choices include the inside Market and a built Town Hall',async({page})=>{

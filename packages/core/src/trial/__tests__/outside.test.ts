@@ -64,7 +64,7 @@ it('rejects hostile outside fields without invoking getters',()=>{
  expect(isSocietyState(s)).toBe(false);expect(reads).toBe(0);
 });
 it('pins activated catalog costs and workforce classes',()=>{
- const rows=[['sheep-pasture','Sheep Pasture','wool','pasture',2,2,3000,2000,0,500,'basic'],['herb-garden','Herb Garden','herbs','meadow',2,2,2000,1000,0,500,'basic'],['quarry','Quarry','stone','rock',3,2,3000,1000,1000,500,'basic'],['weaver','Weaver','cloth','plain',2,1,3000,2000,0,500,'makers'],['library','Library','society','town',2,1,8000,6000,2000,1000,'luminaries'],['warehouse','Warehouse','society','town',3,1,6000,8000,0,500,'makers']] as const;
+ const rows=[['sheep-pasture','Sheep Pasture','wool','pasture',2,2,3000,2000,0,7500,'basic'],['herb-garden','Herb Garden','herbs','meadow',2,2,2000,1000,0,7500,'basic'],['quarry','Quarry','stone','rock',3,2,3000,1000,1000,7500,'basic'],['weaver','Weaver','cloth','plain',2,1,3000,2000,0,500,'makers'],['library','Library','society','town',2,1,8000,6000,2000,1000,'luminaries'],['warehouse','Warehouse','society','town',3,1,6000,8000,0,500,'makers']] as const;
  for(const [id,name,operation,terrain,maxLevel,maxWorkers,gold,wood,iron,upkeepMilli,staff] of rows){
   expect(trialBuilding(id)).toEqual({name,operation,terrain:[terrain],maxLevel,maxWorkers,cost:{gold,wood,iron},upkeepMilli});expect(societyStaff(id)).toBe(staff);
  }

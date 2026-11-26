@@ -5,11 +5,11 @@ import { applyDifficulty, difficultyProfile } from '../difficulty.js';
 
 it('keeps each Normal multiplier at 10000 bps', () => {
   expect(difficultyProfile('normal')).toStrictEqual({
-    taxBps: 10000, goodsPriceBps: 10000, lawPayBps: 10000, upkeepBps: 10000,
+    taxBps: 10000, goodsPriceBps: 10000, lawPayBps: 10000, upkeepBps: 10000, levyMoneyBps: 10000,
   });
 });
 
-it.each(['taxBps', 'goodsPriceBps', 'lawPayBps', 'upkeepBps'] as const)(
+it.each(['taxBps', 'goodsPriceBps', 'lawPayBps', 'upkeepBps', 'levyMoneyBps'] as const)(
   'rejects non-identity Normal %s at its catalog path', field => {
     const data = structuredClone(tuningJson);
     data.DIFFICULTY_TRIAL.profiles.normal[field] = 10001;
@@ -18,6 +18,10 @@ it.each(['taxBps', 'goodsPriceBps', 'lawPayBps', 'upkeepBps'] as const)(
     );
   },
 );
+
+it('stores the Easy levy conversion for the later levy implementation', () => {
+  expect(difficultyProfile('easy').levyMoneyBps).toBe(20000);
+});
 
 it('floors the scaled milli amount and keeps Normal exact', () => {
   expect(applyDifficulty(1001, 15000)).toBe(1501);

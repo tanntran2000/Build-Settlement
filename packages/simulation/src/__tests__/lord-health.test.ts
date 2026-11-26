@@ -1,9 +1,15 @@
 import { readFileSync } from 'node:fs';
-import { expect, it } from 'vitest';
+import { expect, it, vi } from 'vitest';
 import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, TRIAL_BUILDINGS, SOCIETY_BUILDINGS, type CharacterLifeSessionState } from '@haven/core';
 import { deserializeCharacterLifeSave } from '@haven/persistence';
 import { executeCharacterLifeCommand } from '../character-life-command.js';
 import { ITEM_COMMAND_TYPES } from '../item-command.js';
+
+// Keep the original balance inputs for the exact budget that leaves the Hospital unfunded.
+vi.mock('../../../core/src/data/tuning.json', async load => {
+  const { legacyEconomyTuning } = await import('./fixtures/legacy-economy.js');
+  return legacyEconomyTuning(load);
+});
 
 function life() {
   const made = createCharacterLifeSession(42,{...structuredClone(DEFAULT_PLAYER_DRAFT),currentName:'Keeper'});

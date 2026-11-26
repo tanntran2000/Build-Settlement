@@ -1,8 +1,18 @@
-import { expect, it } from 'vitest';
+import { expect, it, vi } from 'vitest';
 import { createSocietyState, societyPopulation, type TileTrialState } from '@haven/core';
 import { executeTileTrialCommand } from '../tile-trial.js';
 import { societyFacilities } from '../society-facilities.js';
 import { resolveWorkshopOperation } from '../workshop-operation.js';
+
+// Keep the original balance inputs for exact Ring and housing Gold and Food, and the two-home payment cutoff.
+vi.mock('../../../core/src/data/tuning.json', async load => {
+  const { legacyEconomyTuning } = await import('./fixtures/legacy-economy.js');
+  return legacyEconomyTuning(load);
+});
+vi.mock('../../../core/src/data/buildings.json', async load => {
+  const { legacyExtractionUpkeep } = await import('./fixtures/legacy-economy.js');
+  return legacyExtractionUpkeep(load);
+});
 
 const hall = { typeId: 'retainers-hall', level: 1, workers: 0, enabled: true };
 const tile = (city: TileTrialState, id: string) => city.tiles.find(t => t.id === id)!;

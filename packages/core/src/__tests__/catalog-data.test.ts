@@ -111,7 +111,7 @@ it('preserves the original vote message literal type', () => {
 // SHA-256 of JSON.stringify for each approved catalog value.
 // Unchanged catalog entries keep their hashes from 5cc2522f27e01b49baaa6e44bba01904edcea5c0.
 const pinnedCatalogs = [
-  { name: 'TRIAL_BUILDINGS', value: TRIAL_BUILDINGS, hash: '11eabe3f7b69f2b87e06936bd57934e3ed27c80138dda99793a5347d399de941' },
+  { name: 'TRIAL_BUILDINGS', value: TRIAL_BUILDINGS, hash: 'a67949260849653f415b003dc8077d4275c11ee65438c1d15f1b79ea5311d607' },
   { name: 'SOCIETY_BUILDINGS', value: SOCIETY_BUILDINGS, hash: 'ff8b32c50fbe6112bb65f87c1fcc2b80ad402b131b965faec0188b9b79764565' },
   { name: 'LAW_CATALOG', value: LAW_CATALOG, hash: '349c5a8109867abfd74ca3a7f2eddfedfe1ea3383744609a30e7d81b98a42783' },
   { name: 'LAW_TRIAL', value: LAW_TRIAL, hash: 'eb531c3aa1fad89b2d4c918b13a040f4c6940f48295bccda8feb01b5b76ad5d9' },
@@ -123,8 +123,8 @@ const pinnedCatalogs = [
   { name: 'CRIME_TRIAL', value: CRIME_TRIAL, hash: 'f0870b86f87072a009bef7a53511704f6b0ddb5b2e5d9c1de6a7b6dbb44ce1d1' },
   { name: 'CRISIS_TRIAL', value: CRISIS_TRIAL, hash: 'e84e3064f8941cfbf4187fb6708577d62ada085696047d19dc52d62e16e528d6' },
   { name: 'SOCIETY_TRIAL', value: SOCIETY_TRIAL, hash: '7f9df69f986ec05ae331a2fe8a8b7e4e94d29c6523412cf4f6cda3b03dd9aec6' },
-  { name: 'GOODS_STOCK_TRIAL', value: GOODS_STOCK_TRIAL, hash: 'd92145743557d8c74bf6f91af7645e7fa7553d6839e4ae0c8d2a441a1079fe65' },
-  { name: 'TILE_TRIAL_BALANCE', value: TILE_TRIAL_BALANCE, hash: '8c6f563db7d15d0e01ca16852bd5700d2c8504a279f63d14ffcd7e01999b6075' },
+  { name: 'GOODS_STOCK_TRIAL', value: GOODS_STOCK_TRIAL, hash: '778e8fc5f1ae28e6235478a5102a71f1b082172b19a4c0d9ea4052a8979f7609' },
+  { name: 'TILE_TRIAL_BALANCE', value: TILE_TRIAL_BALANCE, hash: 'fc58f55091b8c4f436192371dd8af078b95ecfbdd11ef59343267075ed5ecca0' },
   { name: 'IMMIGRATION_TRIAL_DEFAULTS', value: IMMIGRATION_TRIAL_DEFAULTS, hash: '9a3a102558fc1ac452d330d72d162a21793b674002acf3026b9f2b5a6e9bdcef' },
   { name: 'OUTSIDE_TRIAL', value: OUTSIDE_TRIAL, hash: 'e4d5ed7cc9056c8ec0e89263f7633c0d6d262feba89afb3a88484a312417e5db' },
 ] as const;

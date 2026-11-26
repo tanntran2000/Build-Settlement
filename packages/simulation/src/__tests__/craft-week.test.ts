@@ -8,6 +8,16 @@ import { runTileTrialWeek } from '../tile-trial-week.js';
 import { executeCharacterLifeCommand } from '../character-life-command.js';
 import { completeCraftOrders as complete } from '../craft-week.js';
 
+// Keep the original balance inputs for sixty-week replay digests and the Hospital nonpayment branch.
+vi.mock('../../../core/src/data/tuning.json', async load => {
+  const { legacyEconomyTuning } = await import('./fixtures/legacy-economy.js');
+  return legacyEconomyTuning(load);
+});
+vi.mock('../../../core/src/data/buildings.json', async load => {
+  const { legacyExtractionUpkeep } = await import('./fixtures/legacy-economy.js');
+  return legacyExtractionUpkeep(load);
+});
+
 const hash = (value: unknown) => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 // Captured from untouched 0de2d1f before the first PR B product edit.
 const noOrderBaseline: Record<number, {reports:string;items:string;city:string;priorCity:string}> = {

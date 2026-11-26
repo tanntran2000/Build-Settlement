@@ -1,5 +1,5 @@
 import { LAW_CATALOG, lawTerms, ITEM_CATALOG, ITEM_TRIAL, effectiveSkills, isWearable, isOpenItemSlot,
-  TILE_TRIAL_BALANCE as B, OUTSIDE_TRIAL as O, buildingWorkerCap, npcBeds, trialBuilding,
+  applyDifficulty, difficultyProfile, TILE_TRIAL_BALANCE as B, OUTSIDE_TRIAL as O, buildingWorkerCap, npcBeds, trialBuilding,
   type ItemWeekContext, type TileTrialReport, type TileTrialState, type WeeklyResource, type WorldNpc } from '@haven/core';
 import { authorityTaxBps } from './order-week.js';
 import { FARM_GOLD_PER_BATCH_MILLI, FARM_MAX_BATCHES, FARM_WHEAT_PER_BATCH_MILLI } from './weekly.js';
@@ -51,18 +51,23 @@ export function resolveWorkshopOperation(input:TileTrialState,context?:ItemWeekC
   const newStocks=s.society.stocksMilli;
   const add = (key: WeeklyResource, amount: number) => { stocks[key] = trialSafe(stocks[key] + amount); };
   const population = settlement.cohorts.reduce((n, c) => trialSafe(n + c.count), 0);
+  const profile = difficultyProfile(s.society.difficulty);
   const baseTaxMilli=scaled(population,B.taxGoldPerResident);
   const taxModifierBps=authorityTaxBps(orderBefore.authority)+lawTerms(s.society.laws.active).taxBps;
-  const creditedTaxMilli=taxModifierBps<0?scaled(baseTaxMilli,10000+taxModifierBps,10000):baseTaxMilli;
+  const guaranteedTaxMilli=taxModifierBps<0?scaled(baseTaxMilli,10000+taxModifierBps,10000):baseTaxMilli;
+  const creditedTaxMilli=applyDifficulty(guaranteedTaxMilli,profile.taxBps);
   add('gold',creditedTaxMilli);
-  for(const id of s.society.laws.active)add('gold',LAW_CATALOG[id].effect.incomeMilli??0);
+  const baseLawIncomeMilli = s.society.laws.active.reduce((total,id) =>
+    trialSafe(total + (LAW_CATALOG[id].effect.incomeMilli ?? 0)), 0);
+  const lawIncomeMilli = applyDifficulty(baseLawIncomeMilli,profile.lawPayBps);
+  add('gold',lawIncomeMilli);
   let farmBatchGoldMilli = 0, farmExtraUpkeepMilli = 0, upkeepPaidMilli = 0, unpaidUpkeepMilli = 0;
   const funded: typeof s.tiles = [];
   const fundedTileIds: string[] = [];
   let farmBatches = 0, woodProducedMilli = 0, ironProducedMilli = 0, operatingDebitMilli = 0;
   for (const tile of s.tiles) {
     const b = tile.building; if (!b || !b.enabled || npcBeds(b.typeId,b.level)>0) continue;
-    const d = trialBuilding(b.typeId)!; const due = scaled(d.upkeepMilli, b.level);
+    const d = trialBuilding(b.typeId)!; const due = applyDifficulty(scaled(d.upkeepMilli, b.level),profile.upkeepBps);
     const batches = d.operation === "farm" ? Math.min(b.workers, FARM_MAX_BATCHES, Math.floor(stocks.gold / FARM_GOLD_PER_BATCH_MILLI)) : 0;
     const batchGold = batches * FARM_GOLD_PER_BATCH_MILLI;
     const extra = Math.max(0, due - batchGold); const debit = trialSafe(batchGold + extra);
@@ -119,6 +124,6 @@ export function resolveWorkshopOperation(input:TileTrialState,context?:ItemWeekC
   // gates. byTile also includes the stricter Smithy/Hospital crafting gates.
   return {byTile,operatingIds,fundedTileIds,fundedNonFarmTileIds:funded.map(tile=>tile.id),
     stocks,stocksMilli:newStocks,outsidePlots:s.society.outside,before,orderBefore,activities,outside,
-    population,baseTaxMilli,taxModifierBps,creditedTaxMilli,farmBatchGoldMilli,farmExtraUpkeepMilli,
+    population,baseTaxMilli,taxModifierBps,creditedTaxMilli,lawIncomeMilli,farmBatchGoldMilli,farmExtraUpkeepMilli,
     upkeepPaidMilli,unpaidUpkeepMilli,farmBatches,woodProducedMilli,ironProducedMilli,operatingDebitMilli};
 }

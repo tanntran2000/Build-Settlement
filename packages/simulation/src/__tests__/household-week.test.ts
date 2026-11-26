@@ -1,10 +1,16 @@
-import { expect, it } from 'vitest';
+import { expect, it, vi } from 'vitest';
 import {
   emptyHouseholdReport, isCharacterLifeSessionState, P7B_TRIAL, type CharacterLifeSessionState,
 } from '@haven/core';
 import { deserializeCharacterLifeSave, serializeCharacterLifeSave } from '@haven/persistence';
 import { payNpcWages, runHouseholdWeek } from '../household-week.js';
 import { command, stock, succeeded, town } from './acquisition-fixture.js';
+
+// Keep the original balance inputs for the budget where wages, tile operations and only one home can be paid.
+vi.mock('../../../core/src/data/tuning.json', async load => {
+  const { legacyEconomyTuning } = await import('./fixtures/legacy-economy.js');
+  return legacyEconomyTuning(load);
+});
 
 function recruit(count = 1) {
   let session = succeeded(town(), 'BUILD', { tileId: 'service-1', typeId: 'guild' }).next;

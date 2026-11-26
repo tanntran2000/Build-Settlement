@@ -1,10 +1,20 @@
-﻿import { describe, expect, it } from 'vitest';
+﻿import { describe, expect, it, vi } from 'vitest';
 import { NPC_TEST_KEYS, withNpcs } from '@haven/core/testing/npcs';
 import { createCharacterLifeSession, createSocietyState, DEFAULT_PLAYER_DRAFT, GOODS_STOCK_RULESET, P7A_TRIAL, type TileTrialState } from '@haven/core';
 import { executeTileTrialCommand } from '../tile-trial.js';
 import { executeCharacterLifeCommand } from '../character-life-command.js';
 import { observeCharacterLife } from '../character-life-observation.js';
 import { resolveTrialImmigration, type ImmigrationFacts } from '../tile-trial-immigration.js';
+
+// Keep the original balance inputs for exact-budget stock arithmetic, Gold revenue floors, and the immigration liquidity branch.
+vi.mock('../../../core/src/data/tuning.json', async load => {
+  const { legacyEconomyTuning } = await import('./fixtures/legacy-economy.js');
+  return legacyEconomyTuning(load);
+});
+vi.mock('../../../core/src/data/buildings.json', async load => {
+  const { legacyExtractionUpkeep } = await import('./fixtures/legacy-economy.js');
+  return legacyExtractionUpkeep(load);
+});
 
 const stocks = (s: TileTrialState) => s.world.settlements[s.world.activeSettlementId!].inventory;
 const cohort = (s: TileTrialState) => s.world.settlements[s.world.activeSettlementId!].cohorts[0];

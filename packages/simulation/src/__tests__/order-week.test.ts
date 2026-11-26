@@ -1,9 +1,15 @@
 import { createSocietyState, isTileTrialState, type TileTrialState } from '@haven/core';
-import { expect, it } from 'vitest';
+import { expect, it, vi } from 'vitest';
 import { authorityTaxBps, authorityArrivals, orderFacts, resolveOrderWeek } from '../order-week.js';
 import { cityHappiness, societyCounts } from '../society-week.js';
 import { executeTileTrialCommand } from '../tile-trial.js';
 import { runTileTrialWeek } from '../tile-trial-week.js';
+
+// Keep the original balance inputs for the valid zero-opening-Gold case with unpaid operating and home charges, plus independent authority-floor arithmetic.
+vi.mock('../../../core/src/data/tuning.json', async load => {
+  const { legacyEconomyTuning } = await import('./fixtures/legacy-economy.js');
+  return legacyEconomyTuning(load);
+});
 
 const tile = (s: TileTrialState, id: string) => s.tiles.find(t => t.id === id)!;
 const partial = (s: TileTrialState) => ({ before: {...s.society!.order}, taxModifierBps:0, taxDeltaMilli:0, arrivalsBudgetBefore:0, arrivalsBudgetAfter:0 });

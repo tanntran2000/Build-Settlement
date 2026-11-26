@@ -24,8 +24,8 @@ it.each(['goodsStock getter', 'amountMilli getter', 'hidden amountMilli', 'extra
 it('keeps the retained starting stocks while the Market is inside', () => {
   const state = createSocietyState();
   expect(state.world.settlements[state.world.activeSettlementId!].inventory)
-    .toMatchObject({ food: 20000, gold: 120000, wood: 8000, iron: 4000, wheat: 0 });
-  expect(state).toHaveProperty('goodsStock', { rulesetId: GOODS_STOCK_RULESET, amountMilli: 10000 });
+    .toMatchObject({ food: 40000, gold: 120000, wood: 8000, iron: 4000, wheat: 0 });
+  expect(state).toHaveProperty('goodsStock', { rulesetId: GOODS_STOCK_RULESET, amountMilli: 30000 });
   expect(state.tiles.find(t => t.id === 'spec-1')!.building)
     .toEqual({ typeId: 'town-market', level: 1, workers: 0, enabled: true });
 });

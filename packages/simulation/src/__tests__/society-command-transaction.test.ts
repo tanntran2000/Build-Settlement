@@ -3,6 +3,12 @@ import * as core from '@haven/core';
 import { createSocietyState, isTileTrialState, type TileTrialState } from '@haven/core';
 import { executeTileTrialCommand } from '../tile-trial.js';
 
+// Keep the original balance inputs for exact-budget atomic refusals, whole batch counts and inventory conservation.
+vi.mock('../../../core/src/data/tuning.json', async load => {
+  const { legacyEconomyTuning } = await import('./fixtures/legacy-economy.js');
+  return legacyEconomyTuning(load);
+});
+
 const stocks = (s: TileTrialState) => s.world.settlements[s.world.activeSettlementId!].inventory;
 function city() {
   const s = createSocietyState();
