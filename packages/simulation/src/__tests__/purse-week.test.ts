@@ -48,7 +48,10 @@ describe('weekly levy', () => {
 
   it('floors gross levy before scaling Money', () => {
     const s = start('easy', 5);
-    expect(runLevyWeek(s, 24019)).toMatchObject({ levyDueMilli: 1200, levyPaidMilli: 1200, moneyAfterMilli: 2400 });
+    expect(runLevyWeek(s, 24019)).toStrictEqual({
+      levyPercent: 5, levyDueMilli: 1200, levyPaidMilli: 1200,
+      donationsMilli: 0, donationGoldMilli: 0, moneyAfterMilli: 2400,
+    });
   });
 
   it.each([[0, 0], [1, 0], [2, 0], [3, 1], [5, 3], [10, 9], [20, 21]])(

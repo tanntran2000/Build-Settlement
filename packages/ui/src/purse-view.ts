@@ -9,10 +9,15 @@ export function parseDonationMilli(text: string): number | null {
 export function purseControls(purse: PlayerCharacter['purse'], input: string, locked: boolean, difficulty: DifficultyId) {
   const amountMilli = parseDonationMilli(input);
   const lockReason = locked ? 'Plan next week before changing the purse.' : '';
+  const levyCost = levySatisfactionCost(purse.levyPercent);
+  const donatedGoldMilli = donationGoldMilli(purse.donatedThisWeekMilli, difficulty);
+  const happinessCost = levySatisfactionCost(purse.levyPercent, donatedGoldMilli);
   return {
     amountMilli,
     goldMilli: amountMilli === null ? null : donationGoldMilli(amountMilli, difficulty),
-    happinessCost: levySatisfactionCost(purse.levyPercent),
+    happinessCost,
+    levyCost,
+    donationOffset: levyCost - happinessCost,
     decreaseReason: lockReason || (purse.levyPercent === 0 ? 'Weekly levy is at its minimum.' : ''),
     increaseReason: lockReason || (purse.levyPercent === PURSE_TRIAL.levyMaxPercent ? 'Weekly levy is at its maximum.' : ''),
     donateReason: lockReason || (amountMilli === null ? 'Enter a positive whole amount.' :

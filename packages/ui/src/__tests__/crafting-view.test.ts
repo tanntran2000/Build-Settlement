@@ -135,7 +135,7 @@ describe('C1 crafting recipe projection', () => {
   it('allows Brew placement without staffing, Herbs stock or upkeep, but not without the fee', () => {
     const s = life(); supply(s, 'brew-heal-potion-1');
     s.city.tiles.find(t => t.id === 'service-1')!.building!.workers = 0;
-    s.city.society!.stocksMilli.herbs = 0; s.player.purse.moneyMilli = 1000;
+    s.city.society!.stocksMilli.herbs = 0; s.player.purse.moneyMilli = 1000; stock(s).gold = 0;
     expect(view.potionShop(s.city, 'service-1')).toBe(false);
     for (const tileId of ['service-1', 'slum-1']) expect(view.craftingRecipes(s.city, tileId, s.player.purse.moneyMilli).map(r => r.recipeId)).toContain('brew-heal-potion-1');
     s.player.purse.moneyMilli = 999; expect(view.craftingRecipes(s.city, 'service-1', s.player.purse.moneyMilli)).toEqual([]);

@@ -67,8 +67,11 @@ describe('place craft orders',()=>{
   });
   it.each(['smithy','hospital','drug-store'])('queues at enabled %s without requiring workers or current Herbs/upkeep',typeId=>{
     const s=life(),tileId=typeId==='smithy'?'spec-2':typeId==='hospital'?'service-1':'slum-1',recipeId=typeId==='smithy'?'refine-silver':'brew-heal-potion-1';
-    stockRecipe(s,recipeId);s.player.purse.moneyMilli=1000;
-    expect(items(act(s,'PLACE_CRAFT_ORDER',{tileId,recipeId})).workshops![tileId].orders).toHaveLength(1);
+    stockRecipe(s,recipeId);s.player.purse.moneyMilli=1000;goldStock(s).gold=0;
+    const next=act(s,'PLACE_CRAFT_ORDER',{tileId,recipeId});
+    expect(items(next).workshops![tileId].orders).toHaveLength(1);
+    expect(next.player.purse.moneyMilli).toBe(0);
+    expect(goldStock(next).gold).toBe(0);
   });
   it('RECIPE_UNKNOWN is atomic',()=>refuse(life(),{...place,recipeId:'unknown'},'RECIPE_UNKNOWN'));
   it.each(['wrong','unbuilt','disabled','unknown'])('NO_WORKSHOP for %s is atomic',kind=>{

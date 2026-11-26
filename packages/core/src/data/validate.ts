@@ -585,12 +585,12 @@ const lawMessagesSchema = object({
 const normalDifficultyBps: Rule = (value, ref, field) => {
     if (value !== 10000) fail(ref, field, 'must be 10000');
 };
-const difficultyProfileRule = (bps: Rule): Rule =>
-    object({ taxBps: bps, goodsPriceBps: bps, lawPayBps: bps, upkeepBps: bps, levyMoneyBps: bps });
+const difficultyProfileRule = (bps: Rule, levyMoneyBps: Rule = bps): Rule =>
+    object({ taxBps: bps, goodsPriceBps: bps, lawPayBps: bps, upkeepBps: bps, levyMoneyBps });
 const tuningSchemas: Record<string, Rule> = {
     DIFFICULTY_TRIAL: object({
         marker: literal("TRIAL"),
-        profiles: object({ normal: difficultyProfileRule(normalDifficultyBps), easy: difficultyProfileRule(nonnegative) })
+        profiles: object({ normal: difficultyProfileRule(normalDifficultyBps), easy: difficultyProfileRule(nonnegative, positive) })
     }),
     PURSE_TRIAL: object({
         marker: literal("TRIAL"),

@@ -32,7 +32,10 @@
   </div>
   {#if controls.decreaseReason}<p id="levy-decrease-reason">{controls.decreaseReason}</p>{/if}
   {#if controls.increaseReason && controls.increaseReason !== controls.decreaseReason}<p id="levy-increase-reason">{controls.increaseReason}</p>{/if}
-  <p>Happiness cost: {controls.happinessCost ? '−' : ''}{controls.happinessCost} a week</p>
+  <p>
+    Happiness cost: {controls.happinessCost ? '−' : ''}{controls.happinessCost} a week{controls.donationOffset
+      ? ` (levy −${controls.levyCost}, donation +${controls.donationOffset})` : ''}
+  </p>
   <p>Safe amount — · At risk —</p>
   <form onsubmit={donate}>
     <label for="purse-donate-amount">Donation amount in Money</label>
