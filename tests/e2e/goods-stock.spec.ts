@@ -7,7 +7,7 @@ for (const viewport of [{ width: 375, height: 812 }, { width: 1280, height: 900 
   let session = makeLifeWithNpcs(20261028);
   await importLife(page, session);
   await page.getByText('Goods requirements', { exact: true }).click();
-  await expect(page.getByTestId('trial-stock-goods')).toHaveText('10');
+  await expect(page.getByTestId('trial-stock-goods')).toHaveText('30');
   const before = await exportLife(page);
   for (const destination of ['city', 'characters', 'help', 'session'] as const) await go(page, destination);
   expect(await exportLife(page)).toEqual(before);
@@ -25,7 +25,7 @@ for (const viewport of [{ width: 375, height: 812 }, { width: 1280, height: 900 
     const wagesPaidMilli = report.household?.wagesPaidMilli ?? 0;
     expect(wagesPaidMilli).toBe(4000);
     debit += report.before.gold + report.taxMilli + report.goods.revenueMilli - report.after.gold - wagesPaidMilli;
-    expect(report.unpaidUpkeepMilli).toBe(0); expect(report.goodsStock!.closingMilli).toBe(10000 - week * 1450);
+    expect(report.unpaidUpkeepMilli).toBe(0); expect(report.goodsStock!.closingMilli).toBe(30000 - week * 1450);
     if (week === 5) {
       await page.locator('[data-life-view="reports"]').evaluate(node => { node.closest('.content')!.scrollTop = 0; window.scrollTo(0, 0); });
       await page.screenshot({ path: info.outputPath('goods-week5-report.png') });
@@ -36,7 +36,7 @@ for (const viewport of [{ width: 375, height: 812 }, { width: 1280, height: 900 
     expect(await exportLife(page)).toEqual(session);
   }
   expect(debit).toBe(30000);
-  await go(page, 'city'); await expect(page.getByTestId('trial-stock-goods')).toHaveText('2.75');
+  await go(page, 'city'); await expect(page.getByTestId('trial-stock-goods')).toHaveText('22.75');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.screenshot({ path: info.outputPath('goods-week5-city.png'), fullPage: true });
 });

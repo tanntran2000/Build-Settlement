@@ -11,7 +11,7 @@ describe("weekly fixture uses the canonical world", () => {
     expect(Object.keys(state).sort()).toEqual(["activeSettlementId", "settlements", "week", "worldMetadata"]);
     expect(state.week).toBe(1);
     expect(state.worldMetadata).toEqual({ worldSeed: 2026, gameVersion: "0.1.0" });
-    expect(active(state)).toMatchObject({ id: state.activeSettlementId, name: "Haven", status: "active", foodProcessorOperational: true, inventory: { gold: 120000, wheat: 0, food: 20000, wood: 8000, iron: 4000 } });
+    expect(active(state)).toMatchObject({ id: state.activeSettlementId, name: "Haven", status: "active", foodProcessorOperational: true, inventory: { gold: 120000, wheat: 0, food: 40000, wood: 8000, iron: 4000 } });
     expect(Object.keys(active(state).inventory)).toEqual(["gold", "wheat", "food", "wood", "iron"]);
     expect(active(state).cohorts).toHaveLength(1);
     expect(active(state).cohorts[0]).toMatchObject({ socialClass: "common", legalStatus: "citizen", count: 100 });

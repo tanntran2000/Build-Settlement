@@ -230,7 +230,7 @@
 {#if state.society?.crisis.stage === 'fallen'}
   <CityFallen fallCause={state.society.crisis.fallCause!} weeks={state.world.week-1} {onnewgame} />
 {:else if lifeMode && outside && npcs && player && profiles}
-  <CharacterLifeShell bind:this={lifeShell} {state} {report} recoveryLine={healthLine({city:state,outside,npcs,player,profiles})} bind:destination bind:activeWindow {error} status={lifeStatus} {unapplied} onchoose={(cardId,option)=>command('CHOOSE_CARD_OPTION',{cardId,option})} onendweek={endLifeWeek} onmainmenu={mainMenu}>
+  <CharacterLifeShell bind:this={lifeShell} {state} {report} storageSession={{city:state,outside,npcs,player,profiles}} recoveryLine={healthLine({city:state,outside,npcs,player,profiles})} bind:destination bind:activeWindow {error} status={lifeStatus} {unapplied} onchoose={(cardId,option)=>command('CHOOSE_CARD_OPTION',{cardId,option})} onendweek={endLifeWeek} onmainmenu={mainMenu}>
     {#snippet playerInfo()}
       <p>{player!.character.name}</p><p>Leader of Haven</p>
     {/snippet}
@@ -283,6 +283,7 @@
     {#snippet session()}
   <section class="card" aria-label="Planning checkpoints">
     <h3>Planning checkpoint</h3>
+    <p>Difficulty: {state.society?.difficulty === 'easy' ? 'Easy' : 'Normal'}</p>
     <p>Save or restore a Planning checkpoint in this browser or a JSON file.</p>
     <details><summary>About checkpoints</summary>
     <p>Save locally keeps one checkpoint in this browser profile and site, replacing the previous one; clearing site data removes it. Export a JSON file as a portable backup; Import replaces the current plan after validation. Checkpoints from older versions of Haven cannot be played.</p>

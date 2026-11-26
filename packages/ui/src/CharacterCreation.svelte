@@ -2,10 +2,11 @@
   import {
     axisBand, BUILDS, createPlayerCharacter, DEFAULT_PLAYER_DRAFT, describeLong, describeShort, EYE_COLORS, FACE_FEATURES, FACE_SHAPES,
     HAIR_COLORS, HAIR_LENGTHS, HAIR_STYLES, HAIR_TEXTURES, OUTFITS, PLACES, PLAYER_APPEARANCE_PRESETS, PLAYER_PROFESSIONS, PROFESSION_LABELS,
-    REGIONS, SKIN_TONES, UPBRINGINGS, validatePlayerDraft, type PlayerDraft,
+    REGIONS, SKIN_TONES, UPBRINGINGS, validatePlayerDraft, type DifficultyId, type PlayerDraft,
   } from '@haven/core';
 
-  export let oncreate: (draft: PlayerDraft) => void;
+  export let oncreate: (draft: PlayerDraft, difficulty: DifficultyId) => void;
+  let difficulty: DifficultyId = 'normal';
   export let oncancel: () => void;
   const TABS = ['Identity', 'Origin', 'Appearance', 'Traits', 'Review'];
   // Fields per tab, so the Review summary can say where to fix each error; the rest belong to Appearance.
@@ -47,7 +48,7 @@
   function create() {
     if (created || !valid) return;
     created = true;
-    oncreate(draft);
+    oncreate(draft, difficulty);
   }
 </script>
 
@@ -69,6 +70,11 @@
 
 <section class="card" aria-label="Character Creation">
   <h2>Character Creation</h2>
+  <fieldset role="radiogroup" aria-labelledby="cc-difficulty">
+    <legend id="cc-difficulty">Difficulty</legend>
+    <label><input type="radio" name="difficulty" value="normal" bind:group={difficulty} /> Normal</label>
+    <label><input type="radio" name="difficulty" value="easy" bind:group={difficulty} /> Easy</label>
+  </fieldset>
   <div role="tablist" aria-label="Character Creation steps">
     {#each TABS as name, i}
       <button bind:this={tabs[i]} id={`cc-tab-${i}`} role="tab" aria-selected={tab === i} aria-controls="cc-panel" tabindex={tab === i ? 0 : -1}

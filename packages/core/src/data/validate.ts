@@ -19,13 +19,13 @@ import { SOCIAL_RESOURCE_SCALE } from '../social/profile.js';
 type IMMIGRATION_TRIAL_DEFAULTSData = Readonly<ImmigrationTrialConfig>;
 type TRIAL_BUILDINGSData = Readonly<Record<string, TrialBuildingDefinition>>;
 type TILE_TRIAL_BALANCEData = Readonly<{
-    initialWoodMilli: 8000;
-    initialIronMilli: 4000;
+    initialWoodMilli: number;
+    initialIronMilli: number;
     initialHappiness: 80;
     loggingWoodPerWorker: 2000;
     mineIronPerWorker: 1000;
     goodsDemandPerResident: 20;
-    taxGoldPerResident: 30;
+    taxGoldPerResident: number;
     goldPerServiceMilli: 1000;
     foodDemandPerResident: 40;
 }>;
@@ -307,16 +307,16 @@ type LAW_MESSAGESData = Readonly<{
     LAW_INACTIVE: "This law is not in force.";
 }>;
 type GOODS_STOCK_TRIALData = Readonly<{
-    initialFoodMilli: 20000;
-    initialGoodsMilli: 10000;
+    initialFoodMilli: number;
+    initialGoodsMilli: number;
     initialGoldMilli: number;
     woodPerBatchMilli: 2000;
     goodsPerBatchMilli: 2000;
     capacityPerLevelMilli: 2000;
-    goldPerGoodsMilli: 1000;
+    goldPerGoodsMilli: number;
 }>;
 type SOCIETY_TRIALData = Readonly<{
-    readonly rulesetId: "tile-society-13";
+    readonly rulesetId: "tile-society-14";
     readonly standing: 50;
     readonly laws: Readonly<{
         active: never[];
@@ -415,6 +415,13 @@ export interface TuningCatalog {
     GARRISON_TRIAL: GARRISON_TRIALData;
     CRIME_TRIAL: CRIME_TRIALData;
     CRISIS_TRIAL: CRISIS_TRIALData;
+    DIFFICULTY_TRIAL: Readonly<{
+        marker: "TRIAL";
+        profiles: Readonly<Record<'normal' | 'easy', Readonly<{
+            taxBps: number; goodsPriceBps: number; lawPayBps: number; upkeepBps: number; levyMoneyBps: number;
+        }>>>;
+    }>;
+    PURSE_TRIAL: Readonly<{ marker: "TRIAL"; levyMaxPercent: 20 }>;
     SOCIETY_TRIAL: SOCIETY_TRIALData;
     GOODS_STOCK_TRIAL: GOODS_STOCK_TRIALData;
     TILE_TRIAL_BALANCE: TILE_TRIAL_BALANCEData;
@@ -564,7 +571,17 @@ const lawTrialSchema = object({
 const lawMessagesSchema = object({
     CARD_PENDING: text, UNKNOWN_LAW: text, TOWN_HALL_CLOSED: text, VOTE_USED: text, LAW_ACTIVE: text, LAW_SLOTS_FULL: text, LAW_COOLDOWN: text, LOBBY_INVALID: text, VOTE_SHORT: text, LAW_INACTIVE: text
 });
+const normalDifficultyBps: Rule = (value, ref, field) => {
+    if (value !== 10000) fail(ref, field, 'must be 10000');
+};
+const difficultyProfileRule = (bps: Rule): Rule =>
+    object({ taxBps: bps, goodsPriceBps: bps, lawPayBps: bps, upkeepBps: bps, levyMoneyBps: bps });
 const tuningSchemas: Record<string, Rule> = {
+    DIFFICULTY_TRIAL: object({
+        marker: literal("TRIAL"),
+        profiles: object({ normal: difficultyProfileRule(normalDifficultyBps), easy: difficultyProfileRule(nonnegative) })
+    }),
+    PURSE_TRIAL: object({ marker: literal("TRIAL"), levyMaxPercent: literal(20) }),
     "ORDER_TRIAL": object({
         "newGame": object({
             "security": nonnegative, "crime": nonnegative, "authority": nonnegative
@@ -640,7 +657,7 @@ const tuningSchemas: Record<string, Rule> = {
             "tension": nonnegative
         })
     }), "SOCIETY_TRIAL": object({
-        "rulesetId": literal("tile-society-13"), "standing": nonnegative, "laws": object({
+        "rulesetId": literal("tile-society-14"), "standing": nonnegative, "laws": object({
             "active": tuple([]), "votedWeek": literal(null), "repealedUntil": object({}), "promise": literal(null)
         }), "order": object({
             "security": nonnegative, "crime": nonnegative, "authority": nonnegative

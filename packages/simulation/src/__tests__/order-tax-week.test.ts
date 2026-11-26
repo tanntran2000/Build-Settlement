@@ -1,7 +1,13 @@
 import { createSocietyState, isTileTrialState } from '@haven/core';
-import { expect, it } from 'vitest';
+import { expect, it, vi } from 'vitest';
 import { runTileTrialWeek } from '../tile-trial-week.js';
 import { executeTileTrialCommand } from '../tile-trial.js';
+
+// Keep the original balance inputs for independent authority/tax arithmetic and the cutoff with no cash between guaranteed credit and top-up.
+vi.mock('../../../core/src/data/tuning.json', async load => {
+  const { legacyEconomyTuning } = await import('./fixtures/legacy-economy.js');
+  return legacyEconomyTuning(load);
+});
 
 it.each([[0,2424,-606],[50,3030,0],[100,3636,606]])('applies Authority %i without a Counting House',(authority,tax,delta)=>{
  const s=createSocietyState();s.society!.order.authority=authority;s.society!.classes.free=56;

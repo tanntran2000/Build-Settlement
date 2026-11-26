@@ -177,8 +177,16 @@
       "tension": 5
     }
   },
+  "DIFFICULTY_TRIAL": {
+    "marker": "TRIAL",
+    "profiles": {
+      "normal": { "taxBps": 10000, "goodsPriceBps": 10000, "lawPayBps": 10000, "upkeepBps": 10000, "levyMoneyBps": 10000 },
+      "easy": { "taxBps": 10000, "goodsPriceBps": 16500, "lawPayBps": 11500, "upkeepBps": 8160, "levyMoneyBps": 20000 }
+    }
+  },
+  "PURSE_TRIAL": { "marker": "TRIAL", "levyMaxPercent": 20 },
   "SOCIETY_TRIAL": {
-    "rulesetId": "tile-society-13",
+    "rulesetId": "tile-society-14",
     "standing": 50,
     "laws": {
       "active": [],
@@ -534,13 +542,13 @@
     "wallRing": 1
   },
   "GOODS_STOCK_TRIAL": {
-    "initialFoodMilli": 20000,
-    "initialGoodsMilli": 10000,
+    "initialFoodMilli": 40000,
+    "initialGoodsMilli": 30000,
     "initialGoldMilli": 120000,
     "woodPerBatchMilli": 2000,
     "goodsPerBatchMilli": 2000,
     "capacityPerLevelMilli": 2000,
-    "goldPerGoodsMilli": 1000
+    "goldPerGoodsMilli": 1900
   },
   "TILE_TRIAL_BALANCE": {
     "initialWoodMilli": 8000,
@@ -549,7 +557,7 @@
     "loggingWoodPerWorker": 2000,
     "mineIronPerWorker": 1000,
     "goodsDemandPerResident": 20,
-    "taxGoldPerResident": 30,
+    "taxGoldPerResident": 240,
     "goldPerServiceMilli": 1000,
     "foodDemandPerResident": 40
   },

@@ -1,7 +1,7 @@
 <script lang="ts">
   import './ledger-theme.css';
   import { tick, type Snippet } from 'svelte';
-  import { type TileTrialState, type TileTrialReport } from '@haven/core';
+  import { type CharacterLifeSessionState, type TileTrialState, type TileTrialReport } from '@haven/core';
   import { soldiersRow, lawsRow, storageView, orderRows, crisisRow, standingRow, crimeChanceRow } from './society-view.js';
   import CrisisCard from './CrisisCard.svelte';
   import SocietyPopulation from './SocietyPopulation.svelte';
@@ -11,6 +11,7 @@
   import type { LifeDestination, LifeWindow } from './character-life-navigation.js';
 
   export let state: TileTrialState;
+  export let storageSession: CharacterLifeSessionState;
   export let recoveryLine: string;
   export let report: Readonly<TileTrialReport> | null;
   export let destination: LifeDestination;
@@ -137,7 +138,7 @@
       <div class="information-columns">
       <div><h3>Resources</h3><dl class="stocks">
         <div><dt>Gold</dt><dd data-testid="trial-stock-gold">{formatMilli(settlement.inventory.gold)}</dd></div>
-        {#each storageView(state) as row}<div><dt>{row.good}</dt><dd><span data-testid={`trial-storage-${row.good.toLowerCase()}`}>{formatMilli(Math.round(row.amount*1000))}</span> / {formatMilli(Math.round(row.capacity*1000))}</dd></div>{/each}
+        {#each storageView(state, storageSession) as row}<div><dt>{row.good}</dt><dd><span data-testid={`trial-storage-${row.good.toLowerCase()}`}>{formatMilli(Math.round(row.amount*1000))}</span> / {formatMilli(Math.round(row.capacity*1000))}</dd></div>{/each}
       </dl></div>
       <div class="city-status"><h3>City status</h3>
       <p data-testid="trial-laws">{lawsRow(state)}</p>

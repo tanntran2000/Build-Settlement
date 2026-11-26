@@ -1,5 +1,5 @@
 import { createSocietyState,isTileTrialState,societyPopulation,TILE_TRIAL_BALANCE } from '@haven/core';
-import { expect,it } from 'vitest';
+import { expect,it, vi } from 'vitest';
 import { societyFacilities } from '../society-facilities.js';
 import { runTileTrialWeek } from '../tile-trial-week.js';
 import { executeTileTrialCommand } from '../tile-trial.js';
@@ -36,6 +36,16 @@ it.each([{gold:3999,imported:0,closing:2999},{gold:4000,imported:2000,closing:0}
  expect(report.luxuryImportedMilli).toBe(imported);
  expect(city.society!.luxuryStockMilli).toBe(imported);
  expect(settlement.inventory.gold).toBe(closing);
+});
+
+// Keep the original balance inputs for exact Goods distribution, an unfunded Slave Quarters before the tax bonus, and a funded immigration target.
+vi.mock('../../../core/src/data/tuning.json', async load => {
+  const { legacyEconomyTuning } = await import('./fixtures/legacy-economy.js');
+  return legacyEconomyTuning(load);
+});
+vi.mock('../../../core/src/data/buildings.json', async load => {
+  const { legacyExtractionUpkeep } = await import('./fixtures/legacy-economy.js');
+  return legacyExtractionUpkeep(load);
 });
 
 it('credits the Counting House bonus after upkeep, leaving Slave Quarters unfunded', () => {

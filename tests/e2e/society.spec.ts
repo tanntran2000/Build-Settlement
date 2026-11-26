@@ -14,7 +14,7 @@ function rich(){const s=makeLife(20261028);Object.assign(s.city.world.settlement
 for(const url of ['/','/?mode=weekly','/?mode=tiles','/?mode=population','/?mode=world','/?mode=world-npc','/?mode=world-life']){
  test(`one society New Game at ${url}`,async({page})=>{
   await page.goto(url);await expect(button(page,'New Game')).toBeVisible();await button(page,'New Game').click();await page.getByLabel('Name',{exact:true}).fill('Synthetic Keeper');await page.getByRole('tab',{name:'Review',exact:true}).click();await button(page,'Create character').click();
-  const saved=await exportLife(page);expect(saved.city.society!.rulesetId).toBe('tile-society-13');
+  const saved=await exportLife(page);expect(saved.city.society!.rulesetId).toBe('tile-society-14');
   const dialog=await population(page);
   for(const [id,count,limit] of [['free',55,70],['makers',20,25],['luminaries',12,18],['merchants',13,15],['bound',0,0]] as const){const row=dialog.getByTestId(`society-class-${id}`);await expect(row).toContainText(`Count: ${count}`);await expect(row).toContainText('Satisfaction: 80 / 100');await expect(row).toContainText(`Housing (planned): ${count} / ${limit}`);}
  });
@@ -75,7 +75,7 @@ for(const width of [1280,1600])test(`opens Ring 4 and uses the fixed estate cont
  await expect(manage.getByRole('heading',{name:'house-12 · town',exact:true})).toBeVisible();
  const after=await exportLife(page);
  expect(after.city.society!.stocksMilli.stone).toBe(0);
- expect(after.city.world.settlements[after.city.world.activeSettlementId!].inventory).toStrictEqual({gold:100000,wheat:0,food:20000,wood:40000,iron:20000});
+ expect(after.city.world.settlements[after.city.world.activeSettlementId!].inventory).toStrictEqual({gold:100000,wheat:0,food:40000,wood:40000,iron:20000});
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
 });
 test('NPC choices include the inside Market and a built Town Hall',async({page})=>{

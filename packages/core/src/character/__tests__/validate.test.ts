@@ -23,7 +23,7 @@ const player = () => {
   profile.traits = { ...profile.traits, intimacyKnowledge: 40 };
   profile.appearance = { ...profile.appearance, presentation: 'androgynous', measurements: { chestCm: 86, waistCm: 68, hipsCm: 92, disclosure: 'known' } };
   profile.private = { intimateHistory: { value: 'some', disclosure: 'known' } };
-  return { character: playerCharacter(), profile };
+  return { character: playerCharacter(), profile, purse: { moneyMilli: 0, levyPercent: 0, donatedThisWeekMilli: 0, robbery: null } };
 };
 const lifeSession = () => { const r = createNpcWorldSession(0); if (!r.success) throw Error(r.error.message); return withNpcs({ ...r.value, player: player(), profiles: [] as CharacterProfile[] }, NPC_TEST_KEYS); };
 const character = (age = 27) => ({ ...npcSession().npcs[0].character, age });
@@ -138,7 +138,7 @@ describe('isPlayerCharacter', () => {
     expect(isPlayerCharacter({ ...player(), character: playerCharacter({ id: 'npc_w1_guild_0' }) })).toBe(false);
     expect(isPlayerCharacter({ ...player(), extra: 1 })).toBe(false);
     expect(isPlayerCharacter({ ...player(), profile: base('npc_w1_guild_0') })).toBe(false);
-    expect(isPlayerCharacter({ character: { ...playerCharacter(), memories: [{ id: 'm' }] }, profile: player().profile })).toBe(false);
+    expect(isPlayerCharacter({ ...player(), character: { ...playerCharacter(), memories: [{ id: 'm' }] }, profile: player().profile })).toBe(false);
   });
 });
 

@@ -8,12 +8,22 @@ import { runTileTrialWeek } from '../tile-trial-week.js';
 import { executeCharacterLifeCommand } from '../character-life-command.js';
 import { completeCraftOrders as complete } from '../craft-week.js';
 
+// Keep the original balance inputs for sixty-week replay digests and the Hospital nonpayment branch.
+vi.mock('../../../core/src/data/tuning.json', async load => {
+  const { legacyEconomyTuning } = await import('./fixtures/legacy-economy.js');
+  return legacyEconomyTuning(load);
+});
+vi.mock('../../../core/src/data/buildings.json', async load => {
+  const { legacyExtractionUpkeep } = await import('./fixtures/legacy-economy.js');
+  return legacyExtractionUpkeep(load);
+});
+
 const hash = (value: unknown) => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 // Captured from untouched 0de2d1f before the first PR B product edit.
 const noOrderBaseline: Record<number, {reports:string;items:string;city:string;priorCity:string}> = {
-  0: {reports:'9393b71033175e5dc6c1da65ed116a574521672d2c1a3631141ba57e654d8a45',items:'cddabceee23c2746d4dd3408d05e71ee624dd800d8a0f761cb88f130122deb65',city:'11706d8ebd13aabbf0475e67a4eb697c733a451298f7a98d03313491bddc6615',priorCity:'cb607d6b5265d7785f66cc110ef489bf616c242efac0b965be55a09b75708693'},
-  42: {reports:'6238af7420c55fcf75acef911011bb4b50138231397853150d5433cf76fbb319',items:'283da6a1e4fed8fdc3a419e72e00827020ab1ace63f68277db0c1d7cee5616e8',city:'06150fcf4a1e0ed0adfe70d81aa29a940fee0bd7f734054071fb76edf74e5b7e',priorCity:'e648285ab2b75d05498b2a3fb6bf72c362a0c8a63b5beeef0ced78b4360e0577'},
-  20261028: {reports:'e7c96f5378373cc7108072dbda1dbb123d60dfd623c49c8a1f0f69368da7275d',items:'3ad4de4ea7c6a0687ac6d8481778a2513e841dd061e1712429d8bb2dacc31515',city:'30af762981aef72e4f3643b7e4d72de89b41414302f945b587370d99dd4ef9a8',priorCity:'a2bf676b0d60745f0350eb54ce1884b35151d541bf30d54b6deb3f2fb4e28af5'},
+  0: {reports:'9393b71033175e5dc6c1da65ed116a574521672d2c1a3631141ba57e654d8a45',items:'cddabceee23c2746d4dd3408d05e71ee624dd800d8a0f761cb88f130122deb65',city:'8e572bc49c9ecd1d578032548a16ce0785dac863dc0dd0ff1be9961764fc6857',priorCity:'cb607d6b5265d7785f66cc110ef489bf616c242efac0b965be55a09b75708693'},
+  42: {reports:'6238af7420c55fcf75acef911011bb4b50138231397853150d5433cf76fbb319',items:'283da6a1e4fed8fdc3a419e72e00827020ab1ace63f68277db0c1d7cee5616e8',city:'f558e188697a8279c0e5bd65a4ea0c56c993cacd98f9c46bdd352c10062a1813',priorCity:'e648285ab2b75d05498b2a3fb6bf72c362a0c8a63b5beeef0ced78b4360e0577'},
+  20261028: {reports:'e7c96f5378373cc7108072dbda1dbb123d60dfd623c49c8a1f0f69368da7275d',items:'3ad4de4ea7c6a0687ac6d8481778a2513e841dd061e1712429d8bb2dacc31515',city:'9f4b8aa3adfb2ef5a0a9759c1f8b07aed63c307992ca50ac5373bda5d692efdf',priorCity:'a2bf676b0d60745f0350eb54ce1884b35151d541bf30d54b6deb3f2fb4e28af5'},
 };
 it.each([0, 42, 20261028])('preserves all no-order reports and item states for sixty weeks at seed %i', seed => {
   const city = createSocietyState();
@@ -30,7 +40,7 @@ it.each([0, 42, 20261028])('preserves all no-order reports and item states for s
   const { priorCity, ...expected } = noOrderBaseline[seed];
   expect({ reports:hash(reports),items:hash(itemStates),city:hash(city) }).toEqual(expected);
   expect(city.society!.acquisition).toStrictEqual({ week: 0, stock: [], lots: [], departures: [] });
-  const { acquisition, ...v12Society } = city.society!;
+  const { acquisition, difficulty, ...v12Society } = city.society!;
   expect(hash({ ...city, society: { ...v12Society, rulesetId: 'tile-society-12' } })).toBe(priorCity);
   expect(city.world.week).toBe(61);
   expect(isItemsState(city.society!.items, ['player'])).toBe(true);

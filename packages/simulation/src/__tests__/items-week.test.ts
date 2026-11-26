@@ -1,7 +1,17 @@
 import { createHash } from 'node:crypto';
-import { expect, it } from 'vitest';
+import { expect, it, vi } from 'vitest';
 import { createSocietyState, ITEM_CATALOG, ITEM_TRIAL, itemRandom, isItemsState, RESEARCH_TOPICS, type ItemWeekContext, type TileTrialState } from '@haven/core';
 import { runTileTrialWeek } from '../tile-trial-week.js';
+
+// Keep the original balance inputs for the unchanged 60-week PR A report digests.
+vi.mock('../../../core/src/data/tuning.json', async load => {
+  const { legacyEconomyTuning } = await import('./fixtures/legacy-economy.js');
+  return legacyEconomyTuning(load);
+});
+vi.mock('../../../core/src/data/buildings.json', async load => {
+  const { legacyExtractionUpkeep } = await import('./fixtures/legacy-economy.js');
+  return legacyExtractionUpkeep(load);
+});
 
 const skills = { management: 50, technical: 50, medical: 50, combat: 50, negotiation: 50 };
 function context(ids: string[] = []): ItemWeekContext {

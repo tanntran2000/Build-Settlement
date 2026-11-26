@@ -18,7 +18,7 @@ it('creates isolated society v3 outside state, full deposits and zero stocks', (
  const city=createSocietyState(), s=city.society!;
  expect(city.tiles).toHaveLength(75);
  expect(city.tiles.slice(0,30).map(t=>t.id)).toEqual(OUTSIDE_PLOTS.map(p=>p.id));
- expect(s.rulesetId).toBe('tile-society-13');
+ expect(s.rulesetId).toBe('tile-society-14');
  expect(s.stocksMilli).toEqual({stone:0,wool:0,cloth:0,herbs:0});
  expect(s.research).toEqual({topic:null,progressMilli:{'deep-mining':0,'watch-patrols':0,'barracks-drill':0},paid:[],completed:[]});
  for(const p of OUTSIDE_PLOTS) {
@@ -64,7 +64,7 @@ it('rejects hostile outside fields without invoking getters',()=>{
  expect(isSocietyState(s)).toBe(false);expect(reads).toBe(0);
 });
 it('pins activated catalog costs and workforce classes',()=>{
- const rows=[['sheep-pasture','Sheep Pasture','wool','pasture',2,2,3000,2000,0,500,'basic'],['herb-garden','Herb Garden','herbs','meadow',2,2,2000,1000,0,500,'basic'],['quarry','Quarry','stone','rock',3,2,3000,1000,1000,500,'basic'],['weaver','Weaver','cloth','plain',2,1,3000,2000,0,500,'makers'],['library','Library','society','town',2,1,8000,6000,2000,1000,'luminaries'],['warehouse','Warehouse','society','town',3,1,6000,8000,0,500,'makers']] as const;
+ const rows=[['sheep-pasture','Sheep Pasture','wool','pasture',2,2,3000,2000,0,7500,'basic'],['herb-garden','Herb Garden','herbs','meadow',2,2,2000,1000,0,7500,'basic'],['quarry','Quarry','stone','rock',3,2,3000,1000,1000,7500,'basic'],['weaver','Weaver','cloth','plain',2,1,3000,2000,0,500,'makers'],['library','Library','society','town',2,1,8000,6000,2000,1000,'luminaries'],['warehouse','Warehouse','society','town',3,1,6000,8000,0,500,'makers']] as const;
  for(const [id,name,operation,terrain,maxLevel,maxWorkers,gold,wood,iron,upkeepMilli,staff] of rows){
   expect(trialBuilding(id)).toEqual({name,operation,terrain:[terrain],maxLevel,maxWorkers,cost:{gold,wood,iron},upkeepMilli});expect(societyStaff(id)).toBe(staff);
  }

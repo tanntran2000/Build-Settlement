@@ -20,7 +20,7 @@
  <article>
   <button data-testid={`council-law-${id}`} aria-pressed={selected===id} disabled={locked} onclick={()=>choose(id)}>{LAW_CATALOG[id].name}</button>
   {#if LAW_CATALOG[id].tag}<span>{LAW_CATALOG[id].tag==='light'?'Light':'Dark'}</span>{/if}
-  <p>{lawEffectLine(id)}</p>
+  <p>{lawEffectLine(id,state.society!.difficulty)}</p>
   <div class="stances">{#each groups as group}<span style={`color: var(--class-${group})`}>{GROUP_LABELS[group]}: {LAW_CATALOG[id].stances[group]==='for'?'For':LAW_CATALOG[id].stances[group]==='against'?'Against':'Neutral'}</span>{/each}</div>
   {#if state.society!.laws.active.includes(id)}<p>In force</p><p>Authority −5; cannot return for 4 weeks.</p><button data-testid={`council-repeal-${id}`} disabled={locked} onclick={()=>oncommand('REPEAL_LAW',{lawId:id})}>Repeal {LAW_CATALOG[id].name}</button>{/if}
   {#if (state.society!.laws.repealedUntil[id]??0)>state.world.week}<p>Returns in week {state.society!.laws.repealedUntil[id]}.</p>{/if}

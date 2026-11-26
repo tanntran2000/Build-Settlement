@@ -137,8 +137,10 @@ test('checkpoint errors stay in checkpoints and a valid load clears building fee
 test('stock ledger preserves grouped integer milli digits and a negative net',async({page})=>{
  const session=makeLife();const c=session.city.society!.classes;
  Object.assign(c,{free:50,makers:{common:50,elite:0},luminaries:{common:0,elite:0},merchants:{common:0,elite:0}});
- const settlement=session.city.world.settlements[session.city.world.activeSettlementId!];settlement.cohorts[0].count=societyPopulation(session.city.society!);settlement.inventory.gold=Number.MAX_SAFE_INTEGER-3000;
+ const settlement=session.city.world.settlements[session.city.world.activeSettlementId!];settlement.cohorts[0].count=societyPopulation(session.city.society!);settlement.inventory.gold=Number.MAX_SAFE_INTEGER-30000;
  for(const id of ['field-1','plain-1'])session.city.tiles.find(t=>t.id===id)!.building!.workers=5;
+ for(const [id,typeId] of [['forest-1','logging'],['forest-2','logging'],['ore-1','mine'],['ore-2','mine']] as const)
+  session.city.tiles.find(t=>t.id===id)!.building={typeId,level:1,workers:0,enabled:true};
  await page.goto('/');await importLife(page,session);
  const before=await exportLife(page);const result=executeCharacterLifeCommand(before,{type:'END_WEEK',expectedRevision:before.city.revision,expectedWeek:before.city.world.week});if(!result.success||!result.report)throw Error('ledger oracle failed');
  await page.getByTestId('life-end-week').click();const r=result.report;expect(r.after.gold-r.before.gold).toBeLessThan(0);

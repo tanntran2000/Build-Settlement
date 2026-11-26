@@ -1,7 +1,17 @@
-﻿import { describe, expect, it } from 'vitest';
+﻿import { describe, expect, it, vi } from 'vitest';
 import { createSocietyState, isTileTrialState, societyPopulation, type TileTrialState } from '@haven/core';
 import { executeTileTrialCommand } from '../tile-trial.js';
 import { resolveTrialImmigration, type ImmigrationFacts } from '../tile-trial-immigration.js';
+
+// Keep the original balance inputs for the immigration liquidity and target refusals and the 45-week stop/resume sequence.
+vi.mock('../../../core/src/data/tuning.json', async load => {
+  const { legacyEconomyTuning } = await import('./fixtures/legacy-economy.js');
+  return legacyEconomyTuning(load);
+});
+vi.mock('../../../core/src/data/buildings.json', async load => {
+  const { legacyExtractionUpkeep } = await import('./fixtures/legacy-economy.js');
+  return legacyExtractionUpkeep(load);
+});
 
 const settlement = (s: TileTrialState) => s.world.settlements[s.world.activeSettlementId!];
 const count = (s: TileTrialState) => settlement(s).cohorts.reduce((n, c) => n + c.count, 0);

@@ -8,14 +8,16 @@ import { createOutsideWorld } from './generate.js';
 import { OUTSIDE_TRIAL_SCENARIO,scenarioById,SUPPORTED_OUTSIDE_GENERATORS } from './scenario.js';
 import type { OutsideWorldState,WorldResult,WorldSessionState } from './types.js';
 
+import type { DifficultyId } from '../trial/difficulty.js';
+
 export const WORLD_SESSION_CITY_RULESET = SOCIETY_RULESET;
 const id = (value: unknown): value is string => typeof value === 'string' && value.length > 0 && value.length <= 64 && value.trim() === value;
 
-export function createWorldSession(seed: unknown): WorldResult<WorldSessionState> {
+export function createWorldSession(seed: unknown, difficulty: DifficultyId = 'normal'): WorldResult<WorldSessionState> {
   try {
     const outside = createOutsideWorld(OUTSIDE_TRIAL_SCENARIO, seed);
     if (!outside.success) return outside;
-    const city = createSocietyState();
+    const city = createSocietyState(difficulty);
     city.world.worldMetadata.worldSeed = outside.value.seed;
     city.society!.items = createItemsState(outside.value.seed);
     return { success: true, value: { city, outside: outside.value } };

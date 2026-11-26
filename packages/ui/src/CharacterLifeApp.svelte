@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { createCharacterLifeSession, type CharacterLifeSessionState, type PlayerDraft } from '@haven/core';
+  import { createCharacterLifeSession, type CharacterLifeSessionState, type DifficultyId, type PlayerDraft } from '@haven/core';
   import { deserializeCharacterLifeSave, TILE_SAVE_MAX_BYTES } from '@haven/persistence';
   import CharacterCreation from './CharacterCreation.svelte';
   import TitleScreen from './TitleScreen.svelte';
@@ -28,11 +28,11 @@
   }
   onMount(() => { void readSlot(); });
   function newGame() { importRead++; error = ''; screen = 'create'; }
-  function create(draft: PlayerDraft) {
+  function create(draft: PlayerDraft, difficulty: DifficultyId) {
     // A repeated Create (or one after Cancel) must not start a second session.
     if (session || screen !== 'create') return;
     try {
-      const result = createCharacterLifeSession(crypto.getRandomValues(new Uint32Array(1))[0], draft);
+      const result = createCharacterLifeSession(crypto.getRandomValues(new Uint32Array(1))[0], draft, difficulty);
       if (result.success) { session = result.value; return; }
       error = result.error.message;
     } catch { error = 'Could not start a Character Life session. Choose New Game to try again.'; }

@@ -1,7 +1,17 @@
 import { createSocietyState, isTileTrialState, societyPopulation, type TileTrialState } from '@haven/core';
-import { expect, it } from 'vitest';
+import { expect, it, vi } from 'vitest';
 import { executeTileTrialCommand } from '../tile-trial.js';
 import { resolveTrialImmigration } from '../tile-trial-immigration.js';
+
+// Keep the original balance inputs for fixed-liquidity immigration branches at Authority 70.
+vi.mock('../../../core/src/data/tuning.json', async load => {
+  const { legacyEconomyTuning } = await import('./fixtures/legacy-economy.js');
+  return legacyEconomyTuning(load);
+});
+vi.mock('../../../core/src/data/buildings.json', async load => {
+  const { legacyExtractionUpkeep } = await import('./fixtures/legacy-economy.js');
+  return legacyExtractionUpkeep(load);
+});
 
 const tile=(s:TileTrialState,id:string)=>s.tiles.find(t=>t.id===id)!;
 const settlement=(s:TileTrialState)=>s.world.settlements[s.world.activeSettlementId!];

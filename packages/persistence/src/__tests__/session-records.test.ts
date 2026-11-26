@@ -12,7 +12,7 @@ for (const version of readdirSync(root)) {
       const before = serializeCharacterLifeSave(s);
       const decoded = recordsToSession(sessionToRecords('main', s));
       const after = serializeCharacterLifeSave(decoded);
-      if (version === 'society-v13') {
+      if (version === 'society-v14') {
         expect(before.success).toBe(true); expect(after.success).toBe(true);
         if (!before.success || !after.success) throw Error('Current fixture must serialize successfully');
         expect(after.text).toBe(before.text);
@@ -32,7 +32,7 @@ it('rebuilds detached v11 item rows for refusal while preserving every stored ro
   state.city.society.items.nextItemId = 2;
   state.city.society.items.equipped[npcId] = { necklace: { id: 1, defId: 'rare-necklace' } };
   const staged = structuredClone(state);
-  staged.city.society.rulesetId = 'tile-society-13';
+  staged.city.society.rulesetId = 'tile-society-14';
   const rows = sessionToRecords('main', staged);
   const meta = rows.find(row => row.table === 'meta')!.value as { rulesetId: string };
   const city = rows.find(row => row.table === 'city')!.value as { society: { rulesetId: string } };
@@ -57,10 +57,14 @@ it('rebuilds v12 detached rows with household NPCs and refuses the checkpoint wi
   current.city.society!.items.equipped[npcId] = { necklace: { id: 1, defId: 'rare-necklace' } };
   const rows = sessionToRecords('main', current);
   const meta = rows.find(row => row.table === 'meta')!.value as { rulesetId: string };
-  const city = rows.find(row => row.table === 'city')!.value as { society: { rulesetId: string; acquisition?: unknown } };
+  const city = rows.find(row => row.table === 'city')!.value as { society: { rulesetId: string; acquisition?: unknown; difficulty?: unknown } };
   meta.rulesetId = 'tile-society-12';
   city.society.rulesetId = 'tile-society-12';
   delete city.society.acquisition;
+  delete city.society.difficulty;
+  const playerRow = rows.find(row => row.table === 'characters' && row.id === 'player')!.value as { player: { purse?: unknown } };
+  const { purse, ...historicalPlayer } = playerRow.player;
+  playerRow.player = historicalPlayer;
   const before = structuredClone(rows);
   const decoded = recordsToSession(rows);
   expect(decoded.npcs).toStrictEqual(current.npcs);

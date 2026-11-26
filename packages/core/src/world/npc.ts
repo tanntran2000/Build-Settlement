@@ -11,6 +11,8 @@ import { CHARACTER_LIMITS } from '../character/catalog.js';
 import { createWorldSession,isWorldSessionState } from './session.js';
 import type { WorldResult,WorldSessionState } from './types.js';
 
+import type { DifficultyId } from '../trial/difficulty.js';
+
 export interface TraitDefinition { id: string; name: string; summary: string }
 // `character.occupation` is background only; the current post is `postTileId`.
 export interface WorldNpc { character: NamedCharacter; traits: string[]; postTileId: string | null; life: NpcLife; household: NpcHousehold }
@@ -78,8 +80,8 @@ export function isNpcWorldSessionState(raw: unknown): raw is NpcWorldSessionStat
 }
 
 // New Game owns no NPCs.
-export function createNpcWorldSession(seed: unknown): WorldResult<NpcWorldSessionState> {
-  const base = createWorldSession(seed);
+export function createNpcWorldSession(seed: unknown, difficulty: DifficultyId = 'normal'): WorldResult<NpcWorldSessionState> {
+  const base = createWorldSession(seed, difficulty);
   if (!base.success) return base;
   return { success: true, value: { ...base.value, npcs: [] } };
 }

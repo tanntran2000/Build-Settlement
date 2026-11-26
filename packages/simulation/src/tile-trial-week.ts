@@ -6,7 +6,7 @@ import { resolveLawGold, resolveLawPromiseWeek } from './law-week.js';
 import { resolveCrimeWeek } from './crime-week.js';
 import { resolveCrisisWeek } from './crisis-week.js';
 import { authorityArrivals, resolveOrderWeek } from './order-week.js';
-import { crimeRandom,GOODS_STOCK_TRIAL as G,OUTSIDE_TRIAL as O,societyPopulation,buildingWorkerCap,npcBeds,trialBuilding,type TileTrialReport,type TileTrialState,type WeeklyResource } from '@haven/core';
+import { applyDifficulty,difficultyProfile,crimeRandom,GOODS_STOCK_TRIAL as G,OUTSIDE_TRIAL as O,societyPopulation,buildingWorkerCap,npcBeds,trialBuilding,type TileTrialReport,type TileTrialState,type WeeklyResource } from '@haven/core';
 import { releaseSocietyWorkers,societyEmployment,societyFacilities } from './society-facilities.js';
 import { allocateRequirements,resolveSocietyWeek,cityHappiness,societyCounts } from './society-week.js';
 import { finishOutsideLand,spoilOutsideStocks } from './outside-week.js';
@@ -15,8 +15,9 @@ import { PROCESSOR_FOOD_PER_BATCH_MILLI,PROCESSOR_MAX_BATCHES,PROCESSOR_WHEAT_PE
 
 export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext): Readonly<TileTrialReport> {
   if (!s.society || !s.goodsStock) throw Error('Invalid society city.');
+  const profile=difficultyProfile(s.society.difficulty);
   const operation=resolveWorkshopOperation(s,ctx);
-  const {before,orderBefore,activities,outside,population,baseTaxMilli,taxModifierBps,creditedTaxMilli,
+  const {before,orderBefore,activities,outside,population,baseTaxMilli,taxModifierBps,creditedTaxMilli,lawIncomeMilli,
     farmBatchGoldMilli,farmExtraUpkeepMilli,upkeepPaidMilli,unpaidUpkeepMilli,farmBatches,
     woodProducedMilli,ironProducedMilli,operatingDebitMilli,fundedTileIds,operatingIds}=operation;
   const settlement=s.world.settlements[s.world.activeSettlementId!],stocks=settlement.inventory,newStocks=s.society.stocksMilli;
@@ -31,8 +32,8 @@ export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext): Readon
   const materialPosts=s.tiles.flatMap(tile=>tile.building&&ctx?.postSkills[tile.id]?[{tileId:tile.id,typeId:tile.building.typeId}]:[]);
   const facilities = societyFacilities(s, operatingIds);
   const withCHTaxMilli=scaled(baseTaxMilli,100+10*facilities.countingHouseLevels,100);
-  const taxMilli=scaled(withCHTaxMilli,10000+taxModifierBps,10000);
-  const taxDeltaMilli=taxMilli-withCHTaxMilli;
+  const taxMilli=applyDifficulty(scaled(withCHTaxMilli,10000+taxModifierBps,10000),profile.taxBps);
+  const taxDeltaMilli=taxMilli-applyDifficulty(withCHTaxMilli,profile.taxBps);
   // The final spec tax must cover the guaranteed credit; reject a negative top-up.
   add('gold',trialSafe(taxMilli-creditedTaxMilli));
   const lawGold=resolveLawGold(s,stocks),terms=lawTerms(lawGold.applied);
@@ -89,7 +90,7 @@ export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext): Readon
       capacityMilli: marketCapacity, limitedBy: unmetMilli === 0 ? 'none' : marketCapacity <= available ? 'capacity' : 'stock' });
   }
   const fulfillmentBps = demandMilli === 0 ? 10000 : scaled(servedMilli, 10000, demandMilli);
-  const revenueMilli = scaled(servedMilli, G.goldPerGoodsMilli, 1000); add("gold", revenueMilli);
+  const revenueMilli = applyDifficulty(scaled(servedMilli, G.goldPerGoodsMilli, 1000),profile.goodsPriceBps); add("gold", revenueMilli);
   const happinessBefore = s.happiness;
   let foodDemandMilli: number, foodConsumedMilli: number;
   let immigration: ReturnType<typeof resolveTrialImmigration> | undefined;
@@ -121,7 +122,7 @@ export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext): Readon
   }
   const lawPromise=resolveLawPromiseWeek(s);
   if(lawPromise?.outcome==='broken')societyReport.classes[lawPromise.group].satisfactionAfter=s.society.satisfaction[lawPromise.group];
-  const laws={inForce:[...s.society.laws.active],costs:lawGold.costs,unfunded:lawGold.unfunded,incomeMilli:lawGold.incomeMilli,promise:lawPromise};
+  const laws={inForce:[...s.society.laws.active],costs:lawGold.costs,unfunded:lawGold.unfunded,incomeMilli:lawIncomeMilli,promise:lawPromise};
   const crimeEvent=resolveCrimeWeek(s,operatingIds,crimeRandom(s.world.worldMetadata.worldSeed,s.world.week-1),ctx);
   if(immigration&&crimeEvent.event?.soldiersKilled)immigration=Object.freeze({...immigration,populationAfter:societyPopulation(s.society)});
   const crisis=s.society.crisis.fallCause==='assassination'?undefined:resolveCrisisWeek(s,{foodDemandMilli,foodConsumedMilli});
@@ -138,7 +139,7 @@ export function runTileTrialWeek(s: TileTrialState,ctx?:ItemWeekContext): Readon
   for (const { building } of s.tiles) {
     if (!building || npcBeds(building.typeId,building.level) === 0) continue;
     householdUpkeep ??= { paidMilli: 0, unpaidMilli: 0 };
-    const due = scaled(trialBuilding(building.typeId)!.upkeepMilli,building.level);
+    const due = applyDifficulty(scaled(trialBuilding(building.typeId)!.upkeepMilli,building.level),profile.upkeepBps);
     if (stocks.gold < due) {
       householdUpkeep.unpaidMilli = trialSafe(householdUpkeep.unpaidMilli + due);
       continue;

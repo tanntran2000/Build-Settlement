@@ -1,4 +1,4 @@
-import { buildingWorkerCap, societySoldiers, garrisonSecurity, idleWatchHouse, SOCIETY_BUILDINGS, SOCIETY_PLOT_IDS, societyPlot, societyStaff, TRIAL_BUILDINGS, GOODS_STOCK_TRIAL, type TileTrialState, RING4_TRIAL, RETAINERS_HALL_TRIAL, npcBeds, type SocietyTier, type SocietyWallRing } from '@haven/core';
+import { applyDifficulty, difficultyProfile, buildingWorkerCap, societySoldiers, garrisonSecurity, idleWatchHouse, SOCIETY_BUILDINGS, SOCIETY_PLOT_IDS, societyPlot, societyStaff, TRIAL_BUILDINGS, GOODS_STOCK_TRIAL, type TileTrialState, RING4_TRIAL, RETAINERS_HALL_TRIAL, npcBeds, type SocietyTier, type SocietyWallRing, type DifficultyId } from '@haven/core';
 import { societyWorkforce, SOCIETY_WEEK_TRIAL as T, type SocietyNote } from '@haven/simulation';
 export type ClassId = 'free' | 'makers' | 'luminaries' | 'merchants' | 'bound';
 export type ColourKey = ClassId | 'none';
@@ -82,8 +82,10 @@ export function workforceSummary(city:TileTrialState):string {
  const pools=staffPools(city);
  return Object.entries(pools).map(([id,p])=>`${id[0].toUpperCase()+id.slice(1)} ${p.assigned}/${p.available}`).join(' · ')+' WF assigned';
 }
-import { OUTSIDE_PLOTS, OUTSIDE_TRIAL as O, outsidePlot, type TileTrialReport, TILE_TRIAL_BALANCE } from '@haven/core';
-import { FARM_MAX_BATCHES, FARM_GOLD_PER_BATCH_MILLI } from '@haven/simulation';
+import { buildItemWeekContext, OUTSIDE_PLOTS, OUTSIDE_TRIAL as O, outsidePlot, type CharacterLifeSessionState, type TileTrialReport } from '@haven/core';
+import { resolveWorkshopOperation } from '@haven/simulation';
+import { payNpcWages } from '../../simulation/src/household-week.js';
+import { runTileTrialWeek } from '../../simulation/src/tile-trial-week.js';
 import { formatMilli } from './milli-format.js';
 export function outsideRings(city:TileTrialState) {
  return ([1,2,3] as const).map(ring=>({ring,locked:ring>city.society!.wallRing,plots:OUTSIDE_PLOTS.filter(p=>p.ring===ring).map(p=>{
@@ -94,15 +96,45 @@ export function outsideRings(city:TileTrialState) {
  deepShaftAllowed:ring<=city.society!.wallRing&&!o.wild&&!o.deepShaft&&o.depositMilli!>0&&!!b&&['mine','quarry'].includes(b.typeId)&&city.society!.research.completed.includes('deep-mining')};
  })}));
 }
-export function storageView(city:TileTrialState) {
+function workshopOpening(city: TileTrialState, session?: CharacterLifeSessionState) {
+  if (!session) return { city, context: undefined };
+  const opening = payNpcWages(session).session;
+  return { city: opening.city, context: buildItemWeekContext(opening) };
+}
+export function forecastWorkshopOperation(city: TileTrialState, session?: CharacterLifeSessionState) {
+  try {
+    const opening = workshopOpening(city, session);
+    return resolveWorkshopOperation(opening.city, opening.context);
+  } catch {
+    // A valid checkpoint can still exceed safe arithmetic when the week is simulated.
+    return undefined;
+  }
+}
+function staffedWarehouses(city: TileTrialState) {
+  return city.tiles.filter(({ building }) =>
+    building?.enabled && building.typeId === 'warehouse' && building.workers === buildingWorkerCap(building.typeId, building.level));
+}
+function storageCapacityMilli(city: TileTrialState, session?: CharacterLifeSessionState): number {
+  const warehouses = staffedWarehouses(city);
+  if (!warehouses.length) return O.storage.baseMilli;
+  try {
+    const opening = workshopOpening(city, session);
+    const { operatingIds } = resolveWorkshopOperation(opening.city, opening.context);
+    if (!warehouses.some(tile => operatingIds.has(tile.id))) return O.storage.baseMilli;
+
+    // The week can release a funded Warehouse's workers before it caps stocks.
+    const projected = structuredClone(opening.city);
+    runTileTrialWeek(projected, opening.context);
+    return staffedWarehouses(projected).reduce((capacity, tile) =>
+      capacity + (operatingIds.has(tile.id) ? O.storage.warehousePerLevelMilli * tile.building!.level : 0),
+      Number(O.storage.baseMilli));
+  } catch {
+    return O.storage.baseMilli;
+  }
+}
+export function storageView(city: TileTrialState, session?: CharacterLifeSessionState) {
  const society=city.society!,settlement=city.world.settlements[city.world.activeSettlementId!],stocks=settlement.inventory;
- let gold=stocks.gold+settlement.cohorts.reduce((n,c)=>n+c.count,0)*TILE_TRIAL_BALANCE.taxGoldPerResident;
- let capacity:number=O.storage.baseMilli;
- for(const tile of city.tiles){const b=tile.building;if(!b?.enabled||npcBeds(b.typeId,b.level)>0)continue;const d=TRIAL_BUILDINGS[b.typeId];
- const batches=d.operation==='farm'?Math.min(b.workers,FARM_MAX_BATCHES,Math.floor(gold/FARM_GOLD_PER_BATCH_MILLI)):0;
- const debit=Math.max(d.upkeepMilli*b.level,batches*FARM_GOLD_PER_BATCH_MILLI);if(gold<debit)continue;gold-=debit;
- if(b.typeId==='warehouse'&&b.workers===buildingWorkerCap(b.typeId,b.level))capacity+=O.storage.warehousePerLevelMilli*b.level;
- }
+ const capacity = storageCapacityMilli(city, session);
  const amounts={Food:stocks.food,Wheat:stocks.wheat,Wood:stocks.wood,Iron:stocks.iron,Stone:society.stocksMilli.stone,Wool:society.stocksMilli.wool,Cloth:society.stocksMilli.cloth,Herbs:society.stocksMilli.herbs,Goods:city.goodsStock!.amountMilli,Luxury:society.luxuryStockMilli};
  return Object.entries(amounts).map(([good,amount])=>({good,amount:amount/1000,capacity:capacity/1000}));
 }
@@ -185,8 +217,9 @@ export function crimeReportLine(report:Readonly<TileTrialReport>):string {
 import { LAW_CATALOG, type LawId, type SocietyClassKey } from '@haven/core';
 export const GROUP_LABELS: Record<SocietyClassKey,string> = {free:'Free residents',makers:'Makers',luminaries:'Luminaries',merchants:'Merchants'};
 export function lawsRow(state:TileTrialState):string { return `Laws ${state.society!.laws.active.length}/3`; }
-export function lawEffectLine(id:LawId):string {
- const copy:Record<LawId,string>={curfew:'Security target +10; Free satisfaction −2','watch-levy':'Costs 1 Gold; Crime target −5','guild-charters':'Makers satisfaction +2; Merchants satisfaction −2','war-tithe':"Tax +10 %; every group's satisfaction −1",'poor-relief':'Costs 1.5 Gold; Desperation −3; Free satisfaction +2','free-assembly':'Tension −3; Authority target −5','public-punishments':'Crime target −10; Tension +2','licensed-vice':'Earns 1.5 Gold; Luminaries satisfaction −2'};
+export function lawEffectLine(id:LawId,difficulty:DifficultyId='normal'):string {
+ const vicePay=formatMilli(applyDifficulty(LAW_CATALOG['licensed-vice'].effect.incomeMilli??0,difficultyProfile(difficulty).lawPayBps));
+ const copy:Record<LawId,string>={curfew:'Security target +10; Free satisfaction −2','watch-levy':'Costs 1 Gold; Crime target −5','guild-charters':'Makers satisfaction +2; Merchants satisfaction −2','war-tithe':"Tax +10 %; every group's satisfaction −1",'poor-relief':'Costs 1.5 Gold; Desperation −3; Free satisfaction +2','free-assembly':'Tension −3; Authority target −5','public-punishments':'Crime target −10; Tension +2','licensed-vice':`Earns ${vicePay} Gold; Luminaries satisfaction −2`};
  return copy[id];
 }
 export function lawReportLines(report:Readonly<TileTrialReport>):string[] {

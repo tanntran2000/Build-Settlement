@@ -1,9 +1,19 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { createCharacterLifeSession, DEFAULT_PLAYER_DRAFT, ITEM_CATALOG, RECIPES, type CharacterLifeSessionState, type ItemWeekReport, type TileTrialReport } from '@haven/core';
 import * as view from '../items-view.js';
 import { reportLetters } from '../report-letters.js';
 import { executeCharacterLifeCommand, resolveWorkshopOperation } from '@haven/simulation';
 import { withNpcs } from '../../../core/src/__tests__/helpers/npcs.js';
+
+// Keep the original balance inputs for same-week Herbs consumption and the exact unfunded-tile actual/estimate checks.
+vi.mock('../../../core/src/data/tuning.json', async load => {
+  const { legacyEconomyTuning } = await import('../../../simulation/src/__tests__/fixtures/legacy-economy.js');
+  return legacyEconomyTuning(load);
+});
+vi.mock('../../../core/src/data/buildings.json', async load => {
+  const { legacyExtractionUpkeep } = await import('../../../simulation/src/__tests__/fixtures/legacy-economy.js');
+  return legacyExtractionUpkeep(load);
+});
 
 function life() {
   const made = createCharacterLifeSession(42, { ...structuredClone(DEFAULT_PLAYER_DRAFT), currentName: 'Ana' });
