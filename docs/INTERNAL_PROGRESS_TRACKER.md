@@ -1,5 +1,29 @@
 # Bảng Theo Dõi Tiến Độ Kỹ Thuật Nội Bộ (INTERNAL_PROGRESS_TRACKER.md)
 
+## Money M1 (difficulty Normal/Easy, purse shape, Gold retune) — PR #106 G6 (2026-11-26 UTC)
+
+**G6 PASS (Claude, Orchestrator/Tester).** Money PR M1 of 3 is merged. Next in queue: M2 (purse, levy, donation, Money spending), only when the owner starts it.
+
+- **Merge.** PR #106 (`Money M1: difficulty Normal/Easy, purse shape and Gold retune`) was merged under G5 at 2026-11-26T11:45:22Z (GitHub account `tanntran2000`; the owner reported "Dot đã merge và xanh, bạn kiểm tra G6").
+  - Merge/main commit: `f1fac9498f47fc7be8f6498ee3321800e14f2894` (parents `ab83228`, `21956b6`).
+  - Accepted head: `21956b639f0f4a302968008f01bbea0654ed5438`. Base: `ab83228` (P7-B B4 #105 merged).
+- **Trees.** The merge tree `7c8f6cb1b85a2193358bbab86d43f3c7d807cd50` is identical to the accepted head tree `7c8f6cb1b85a2193358bbab86d43f3c7d807cd50`. Claude checked this locally.
+- **Main CI.** Quality Gate run [45813424193](https://github.com/tanntran2000/Build-Settlement/actions/runs/45813424193), job 139886881731 (push, exact merge SHA), SUCCESS at 2026-11-26T12:03:41Z: 3,319 unit tests (147 files) and 419/419 Chromium smoke (16.8 min); the dependency audit reported 0 vulnerabilities.
+- **Pre-merge, at `21956b6`:**
+  - Claude Tester gates 1–7 exit 0 (154 architecture, 3,319 unit), full smoke 419/419 with `CI=1` on the first run (2026-11-26T09:18Z–11:02Z).
+  - PR CI: quality-gate run 45806946795 SUCCESS (419 smoke, 20.0 min); claude-review pass.
+  - Astra 6.2 high, thread `mcp:75a46f91`: round 1 FAIL (2 P1 loose refusal/diagnostic tests, 2 P2 Easy storage/health forecasts) → correction 6; round 2 at `3f1467a` FAIL (P2 Warehouse worker released mid-week, P2 Normal forecast changes, P3 `?` characters in Builder evidence) → correction 7; round 3 at `21956b6` PASS.
+  - Builder (Sol 6.2 xhigh, `mcp:23b5599d`): retune HOLDs answered by corrections 1–5; calibration hit all 18 cells (Normal/Easy × Good/Average/Bad × seeds 2026–2028).
+- **Evidence.** [`docs/verification/money-pr106/`](https://github.com/tanntran2000/Build-Settlement/tree/43057d3efd98dca747b5da3b338c84ae32df8beb/docs/verification/money-pr106) on branch `docs/money-difficulty-design`, at `43057d3`.
+- **Owner instructions** (verbatim; full table in `owner-approval-record.md`):
+  - "Thiết kế Money"; "Duyệt thiết kế"; "Duyệt, giao M1";
+  - Plan corrections: 1 "Duyệt đề xuất (Recommended)", "Duyệt, giữ chỗ cũ (Recommended)", "Cho phép chỉnh luật nhỏ", "Duyệt 2 bước (Recommended)"; 2 "Duyệt sửa (Recommended)"; 3 "Duyệt cả 4 (Recommended)"; 4 "Duyệt, làm tiếp (Recommended)"; 5 "Duyệt cả 2 (Recommended)"; 6 "Duyệt sửa cả 4 (Recommended)"; 7 "Sửa luôn trong M1", "Chấp nhận (Recommended)";
+  - Merge report: "Dot đã merge và xanh, bạn kiểm tra G6".
+- **Disclosed.**
+  - Astra failed twice before the PASS. Normal storage and Hospital forecasts now match End Week in more saves than before (owner accepted, correction 7); the simulation result on Normal is unchanged.
+  - Claude's gate 5 symlink case took 3,535,679 ms (Builder run 94 ms) while a folder walk ran at the same time; it passed 154/154.
+  - Open playtest risks: R-028 (fulfillment smoke case near its 60 s timeout), R-029 (scripted calibration routes), R-030 (7.5 Gold upkeep on an idle extractor), R-031 (storage preview runs a full End Week clone per refresh, fold into the R-026 perf WP). Smoke runs on Chromium only. Large files and Playwright artifact folders stay local, listed by SHA-256 in the evidence.
+
 ## P7-B PR B4 (servant wages, contracts, obedience, notices) — PR #105 G6 (2026-11-25 UTC)
 
 **G6 PASS (Claude, Orchestrator/Tester).** P7-B PR B4 of 4 is merged; P7-B (B1–B4) is complete. Next in queue: the Player Money purse design (owner idea, 2026-11-25).
